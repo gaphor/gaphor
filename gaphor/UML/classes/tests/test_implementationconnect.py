@@ -1,71 +1,70 @@
 """Test implementation (interface realization) item connectors."""
 
 from gaphor import UML
-from gaphor.tests import TestCase
 from gaphor.UML.classes.implementation import ImplementationItem
 from gaphor.UML.classes.interface import InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
 
 
-class ImplementationTestCase(TestCase):
-    def test_non_interface_glue(self):
+class TestImplementation:
+    def test_non_interface_glue(self, case):
         """Test non-interface gluing with implementation."""
 
-        impl = self.create(ImplementationItem)
-        clazz = self.create(ClassItem, UML.Class)
+        impl = case.create(ImplementationItem)
+        clazz = case.create(ClassItem, UML.Class)
 
-        glued = self.allow(impl, impl.head, clazz)
+        glued = case.allow(impl, impl.head, clazz)
         # connecting head to non-interface item is disallowed
-        self.assertFalse(glued)
+        assert not glued
 
-    def test_interface_glue(self):
+    def test_interface_glue(self, case):
         """Test interface gluing with implementation."""
-        iface = self.create(InterfaceItem, UML.Interface)
-        impl = self.create(ImplementationItem)
+        iface = case.create(InterfaceItem, UML.Interface)
+        impl = case.create(ImplementationItem)
 
-        glued = self.allow(impl, impl.head, iface)
+        glued = case.allow(impl, impl.head, iface)
         assert glued
 
-    def test_classifier_glue(self):
+    def test_classifier_glue(self, case):
         """Test classifier gluing with implementation."""
-        impl = self.create(ImplementationItem)
-        clazz = self.create(ClassItem, UML.Class)
+        impl = case.create(ImplementationItem)
+        clazz = case.create(ClassItem, UML.Class)
 
-        glued = self.allow(impl, impl.tail, clazz)
+        glued = case.allow(impl, impl.tail, clazz)
         assert glued
 
-    def test_connection(self):
+    def test_connection(self, case):
         """Test connection of class and interface with implementation."""
-        iface = self.create(InterfaceItem, UML.Interface)
-        impl = self.create(ImplementationItem)
-        clazz = self.create(ClassItem, UML.Class)
+        iface = case.create(InterfaceItem, UML.Interface)
+        impl = case.create(ImplementationItem)
+        clazz = case.create(ClassItem, UML.Class)
 
-        self.connect(impl, impl.head, iface)
-        self.connect(impl, impl.tail, clazz)
+        case.connect(impl, impl.head, iface)
+        case.connect(impl, impl.tail, clazz)
 
         # check the datamodel
-        self.assertTrue(isinstance(impl.subject, UML.Implementation))
-        ct = self.get_connected(impl.head)
+        assert isinstance(impl.subject, UML.Implementation)
+        ct = case.get_connected(impl.head)
         assert ct is iface
         assert impl.subject is not None
         assert impl.subject.contract is iface.subject
         assert impl.subject.implementatingClassifier is clazz.subject
 
-    def test_reconnection(self):
+    def test_reconnection(self, case):
         """Test reconnection of class and interface with implementation."""
-        iface = self.create(InterfaceItem, UML.Interface)
-        c1 = self.create(ClassItem, UML.Class)
-        c2 = self.create(ClassItem, UML.Class)
-        impl = self.create(ImplementationItem)
+        iface = case.create(InterfaceItem, UML.Interface)
+        c1 = case.create(ClassItem, UML.Class)
+        c2 = case.create(ClassItem, UML.Class)
+        impl = case.create(ImplementationItem)
 
         # connect: iface -> c1
-        self.connect(impl, impl.head, iface)
-        self.connect(impl, impl.tail, c1)
+        case.connect(impl, impl.head, iface)
+        case.connect(impl, impl.tail, c1)
 
         s = impl.subject
 
         # reconnect: iface -> c2
-        self.connect(impl, impl.tail, c2)
+        case.connect(impl, impl.tail, c2)
 
         assert s is impl.subject
         assert iface.subject is impl.subject.contract
