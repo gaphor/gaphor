@@ -89,7 +89,7 @@ class TestAssociationItem:
         try:
             a.orthogonal = True
         except ValueError:
-            pass  # Expected, hanve only 2 handles, need 3 or more
+            pass  # Expected, have only 2 handles, need 3 or more
         else:
             assert False, "Can not set line to orthogonal with less than 3 handles"
 
