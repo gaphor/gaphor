@@ -1,29 +1,28 @@
 """Test connector item."""
 
 from gaphor import UML
-from gaphor.tests.testcase import TestCase
 from gaphor.UML.components.connector import ConnectorItem
 
 
-class ConnectorItemTestCase(TestCase):
+class TestConnectorItem:
     """Connector item basic tests."""
 
-    def test_create(self):
+    def test_create(self, case):
         """Test creation of connector item."""
-        conn = self.create(ConnectorItem, UML.Connector)
+        conn = case.create(ConnectorItem, UML.Connector)
         assert conn.subject is not None
 
-    def test_persistence(self):
+    def test_persistence(self, case):
         """Test connector item saving/loading."""
-        conn = self.create(ConnectorItem, UML.Connector)
+        conn = case.create(ConnectorItem, UML.Connector)
 
-        end = self.element_factory.create(UML.ConnectorEnd)
+        end = case.element_factory.create(UML.ConnectorEnd)
         conn.end = end
 
-        data = self.save()
+        data = case.save()
         assert end.id in data
 
-        self.load(data)
+        case.load(data)
 
-        assert self.diagram.select(ConnectorItem)
-        assert self.kindof(UML.ConnectorEnd)
+        assert case.diagram.select(ConnectorItem)
+        assert case.kindof(UML.ConnectorEnd)
