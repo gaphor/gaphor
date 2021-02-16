@@ -1,27 +1,26 @@
 """Test classes."""
 
 from gaphor import UML
-from gaphor.tests import TestCase
 from gaphor.UML.classes.interface import Folded, InterfaceItem
 
 
-class InterfaceTestCase(TestCase):
-    def test_interface_creation(self):
+class TestInterface:
+    def test_interface_creation(self, case):
         """Test interface creation."""
-        iface = self.create(InterfaceItem, UML.Interface)
+        iface = case.create(InterfaceItem, UML.Interface)
         assert isinstance(iface.subject, UML.Interface)
 
-    def test_folded_interface_persistence(self):
+    def test_folded_interface_persistence(self, case):
         """Test folded interface saving/loading."""
-        iface = self.create(InterfaceItem, UML.Interface)
+        iface = case.create(InterfaceItem, UML.Interface)
 
         # note: assembly folded mode..
         iface.folded = Folded.REQUIRED
 
-        data = self.save()
-        self.load(data)
+        data = case.save()
+        case.load(data)
 
-        interfaces = list(self.diagram.select(InterfaceItem))
+        interfaces = list(case.diagram.select(InterfaceItem))
         assert len(interfaces) == 1
         # ... gives provided folded mode on load;
         # correct folded mode is determined by connections, which will be

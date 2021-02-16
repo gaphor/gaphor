@@ -8,14 +8,10 @@ from gi.repository import GLib, Gtk
 
 from gaphor.application import distribution
 from gaphor.storage.storage import load
-from gaphor.tests import TestCase
 
 
-class CyclicDiagramTestCase(TestCase):
-    def setUp(self):
-        super().setUp()
-
-    def test_bug(self):
+class TestCyclicDiagram:
+    def test_bug(self, case):
         """Load file.
 
         This does not nearly resemble the error, since the model should
@@ -23,9 +19,9 @@ class CyclicDiagramTestCase(TestCase):
         updates).
         """
         path = distribution().locate_file("test-models/dbus.gaphor")
-        load(path, self.element_factory, self.modeling_language)
+        load(path, case.element_factory, case.modeling_language)
 
-    def test_bug_idle(self):
+    def test_bug_idle(self, case):
         """Load file in gtk main loop.
 
         This does not nearly resemble the error, since the model should
@@ -36,7 +32,7 @@ class CyclicDiagramTestCase(TestCase):
         def handler():
             try:
                 path = distribution().locate_file("test-models/dbus.gaphor")
-                load(path, self.element_factory, self.modeling_language)
+                load(path, case.element_factory, case.modeling_language)
             finally:
                 Gtk.main_quit()
 

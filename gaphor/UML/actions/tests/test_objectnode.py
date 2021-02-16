@@ -1,24 +1,23 @@
 from gaphor import UML
-from gaphor.tests.testcase import TestCase
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
 
-class ObjectNodeTestCase(TestCase):
-    def test_object_node(self):
-        self.create(ObjectNodeItem, UML.ObjectNode)
+class TestObjectNode:
+    def test_object_node(self, case):
+        case.create(ObjectNodeItem, UML.ObjectNode)
 
-    def test_name(self):
+    def test_name(self, case):
         """Test updating of object node name."""
-        node = self.create(ObjectNodeItem, UML.ObjectNode)
+        node = case.create(ObjectNodeItem, UML.ObjectNode)
         name = node.shape.icon.children[1]
 
         node.subject.name = "Blah"
 
         assert "Blah" == name.text()
 
-    def test_ordering(self):
+    def test_ordering(self, case):
         """Test updating of ObjectNodeItem.ordering."""
-        node = self.create(ObjectNodeItem, UML.ObjectNode)
+        node = case.create(ObjectNodeItem, UML.ObjectNode)
         ordering = node.shape.children[1]
 
         node.subject.ordering = "unordered"

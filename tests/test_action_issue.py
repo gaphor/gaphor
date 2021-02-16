@@ -1,15 +1,14 @@
 from gaphor import UML
 from gaphor.application import distribution
 from gaphor.storage import storage
-from gaphor.tests import TestCase
 from gaphor.UML.actions import ActionItem, FlowItem
 
 
-class ActionIssueTestCase(TestCase):
-    def test_it(self):
+class TestActionIssue:
+    def test_it(self, case):
         """Test an issue when loading a freshly created action diagram."""
-        ef = self.element_factory
-        modeling_language = self.modeling_language
+        ef = case.element_factory
+        modeling_language = case.modeling_language
         path = distribution().locate_file("test-models/action-issue.gaphor")
         storage.load(path, ef, modeling_language)
 

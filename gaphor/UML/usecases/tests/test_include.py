@@ -1,64 +1,63 @@
 """Test include item connections."""
 
 from gaphor import UML
-from gaphor.tests import TestCase
 from gaphor.UML.usecases.include import IncludeItem
 from gaphor.UML.usecases.usecase import UseCaseItem
 
 
-class IncludeItemTestCase(TestCase):
-    def test_use_case_glue(self):
+class TestIncludeItem:
+    def test_use_case_glue(self, case):
         """Test "include" gluing to use cases."""
 
-        uc1 = self.create(UseCaseItem, UML.UseCase)
-        include = self.create(IncludeItem)
+        uc1 = case.create(UseCaseItem, UML.UseCase)
+        include = case.create(IncludeItem)
 
-        glued = self.allow(include, include.head, uc1)
+        glued = case.allow(include, include.head, uc1)
         assert glued
 
-    def test_use_case_connect(self):
+    def test_use_case_connect(self, case):
         """Test connecting "include" to use cases."""
-        uc1 = self.create(UseCaseItem, UML.UseCase)
-        uc2 = self.create(UseCaseItem, UML.UseCase)
-        include = self.create(IncludeItem)
+        uc1 = case.create(UseCaseItem, UML.UseCase)
+        uc2 = case.create(UseCaseItem, UML.UseCase)
+        include = case.create(IncludeItem)
 
-        self.connect(include, include.head, uc1)
-        assert self.get_connected(include.head), uc1
+        case.connect(include, include.head, uc1)
+        assert case.get_connected(include.head), uc1
 
-        self.connect(include, include.tail, uc2)
-        assert self.get_connected(include.tail), uc2
+        case.connect(include, include.tail, uc2)
+        assert case.get_connected(include.tail), uc2
 
-    def test_use_case_reconnect(self):
+    def test_use_case_reconnect(self, case):
         """Test reconnecting use cases with "include"."""
-        uc1 = self.create(UseCaseItem, UML.UseCase)
-        uc2 = self.create(UseCaseItem, UML.UseCase)
-        uc3 = self.create(UseCaseItem, UML.UseCase)
-        include = self.create(IncludeItem)
+        uc1 = case.create(UseCaseItem, UML.UseCase)
+        uc2 = case.create(UseCaseItem, UML.UseCase)
+        uc3 = case.create(UseCaseItem, UML.UseCase)
+        include = case.create(IncludeItem)
 
         # connect: uc1 -> uc2
-        self.connect(include, include.head, uc1)
-        self.connect(include, include.tail, uc2)
+        case.connect(include, include.head, uc1)
+        case.connect(include, include.tail, uc2)
         e = include.subject
 
         # reconnect: uc1 -> uc2
-        self.connect(include, include.tail, uc3)
+        case.connect(include, include.tail, uc3)
 
         assert e is include.subject
         assert include.subject.addition is uc1.subject
         assert include.subject.includingCase is uc3.subject
 
-    def test_use_case_disconnect(self):
+    def test_use_case_disconnect(self, case):
         """Test disconnecting "include" from use cases."""
-        uc1 = self.create(UseCaseItem, UML.UseCase)
-        uc2 = self.create(UseCaseItem, UML.UseCase)
-        include = self.create(IncludeItem)
+        uc1 = case.create(UseCaseItem, UML.UseCase)
+        uc2 = case.create(UseCaseItem, UML.UseCase)
+        include = case.create(IncludeItem)
 
-        self.connect(include, include.head, uc1)
-        self.connect(include, include.tail, uc2)
+        case.connect(include, include.head, uc1)
+        case.connect(include, include.tail, uc2)
 
-        self.disconnect(include, include.head)
-        assert self.get_connected(include.head) is None
+        case.disconnect(include, include.head)
+        assert case.get_connected(include.head) is None
         assert include.subject is None
 
-        self.disconnect(include, include.tail)
-        assert self.get_connected(include.tail) is None
+        case.disconnect(include, include.tail)
+        assert case.get_connected(include.tail) is None

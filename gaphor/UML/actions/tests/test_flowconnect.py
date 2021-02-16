@@ -4,7 +4,6 @@ from typing import Type
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
-from gaphor.tests import TestCase
 from gaphor.UML.actions.action import ActionItem
 from gaphor.UML.actions.activitynodes import (
     ActivityFinalNodeItem,
@@ -17,166 +16,166 @@ from gaphor.UML.actions.flow import FlowItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
 
-class FlowItemBasicNodesConnectionTestCase(TestCase):
+class TestFlowItemBasicNodesConnection:
     """Tests for flow item connecting to basic activity nodes."""
 
-    def test_initial_node_glue(self):
+    def test_initial_node_glue(self, case):
         """Test flow item gluing to initial node item."""
 
-        flow = self.create(FlowItem)
-        node = self.create(InitialNodeItem, UML.InitialNode)
+        flow = case.create(FlowItem)
+        node = case.create(InitialNodeItem, UML.InitialNode)
 
         # tail may not connect to initial node item
-        allowed = self.allow(flow, flow.tail, node)
+        allowed = case.allow(flow, flow.tail, node)
         assert not allowed
 
-        allowed = self.allow(flow, flow.head, node)
+        allowed = case.allow(flow, flow.head, node)
         assert allowed
 
-    def test_flow_final_node_glue(self):
+    def test_flow_final_node_glue(self, case):
         """Test flow item gluing to flow final node item."""
 
-        flow = self.create(FlowItem)
-        node = self.create(FlowFinalNodeItem, UML.FlowFinalNode)
+        flow = case.create(FlowItem)
+        node = case.create(FlowFinalNodeItem, UML.FlowFinalNode)
 
         # head may not connect to flow final node item
-        allowed = self.allow(flow, flow.head, node)
+        allowed = case.allow(flow, flow.head, node)
         assert not allowed
 
-        allowed = self.allow(flow, flow.tail, node)
+        allowed = case.allow(flow, flow.tail, node)
         assert allowed
 
-    def test_activity_final_node_glue(self):
+    def test_activity_final_node_glue(self, case):
         """Test flow item gluing to activity final node item."""
-        flow = self.create(FlowItem)
-        node = self.create(ActivityFinalNodeItem, UML.ActivityFinalNode)
+        flow = case.create(FlowItem)
+        node = case.create(ActivityFinalNodeItem, UML.ActivityFinalNode)
 
         # head may not connect to activity final node item
-        glued = self.allow(flow, flow.head, node)
+        glued = case.allow(flow, flow.head, node)
         assert not glued
 
-        glued = self.allow(flow, flow.tail, node)
+        glued = case.allow(flow, flow.tail, node)
         assert glued
 
 
-class FlowItemObjectNodeTestCase(TestCase):
+class TestFlowItemObjectNode:
     """Flow item connecting to object node item tests."""
 
-    def test_glue_to_object_node(self):
-        flow = self.create(FlowItem)
-        onode = self.create(ObjectNodeItem, UML.ObjectNode)
-        glued = self.allow(flow, flow.head, onode)
+    def test_glue_to_object_node(self, case):
+        flow = case.create(FlowItem)
+        onode = case.create(ObjectNodeItem, UML.ObjectNode)
+        glued = case.allow(flow, flow.head, onode)
         assert glued
 
-    def test_connect_to_object_node(self):
-        flow = self.create(FlowItem)
-        anode = self.create(ActionItem, UML.Action)
-        onode = self.create(ObjectNodeItem, UML.ObjectNode)
+    def test_connect_to_object_node(self, case):
+        flow = case.create(FlowItem)
+        anode = case.create(ActionItem, UML.Action)
+        onode = case.create(ObjectNodeItem, UML.ObjectNode)
 
-        self.connect(flow, flow.head, anode)
-        self.connect(flow, flow.tail, onode)
+        case.connect(flow, flow.head, anode)
+        case.connect(flow, flow.tail, onode)
         assert flow.subject
         assert isinstance(flow.subject, UML.ObjectFlow)
 
-        self.disconnect(flow, flow.head)
-        self.disconnect(flow, flow.tail)
+        case.disconnect(flow, flow.head)
+        case.disconnect(flow, flow.tail)
 
         # opposite connection
-        self.connect(flow, flow.head, onode)
-        self.connect(flow, flow.tail, anode)
+        case.connect(flow, flow.head, onode)
+        case.connect(flow, flow.tail, anode)
         assert flow.subject
         assert isinstance(flow.subject, UML.ObjectFlow)
 
-    def test_object_flow_reconnect(self):
-        flow = self.create(FlowItem)
-        a1 = self.create(ActionItem, UML.Action)
-        o1 = self.create(ObjectNodeItem, UML.ObjectNode)
-        o2 = self.create(ObjectNodeItem, UML.ObjectNode)
+    def test_object_flow_reconnect(self, case):
+        flow = case.create(FlowItem)
+        a1 = case.create(ActionItem, UML.Action)
+        o1 = case.create(ObjectNodeItem, UML.ObjectNode)
+        o2 = case.create(ObjectNodeItem, UML.ObjectNode)
 
         # connect: a1 -> o1
-        self.connect(flow, flow.head, a1)
-        self.connect(flow, flow.tail, o1)
+        case.connect(flow, flow.head, a1)
+        case.connect(flow, flow.tail, o1)
 
         f = flow.subject
         f.name = "tname"
         f.guard = "tguard"
 
         # reconnect: a1 -> o2
-        self.connect(flow, flow.tail, o2)
+        case.connect(flow, flow.tail, o2)
 
         assert len(a1.subject.incoming) == 0
         assert len(a1.subject.outgoing) == 1
         # no connections to o1
-        self.assertEqual(0, len(o1.subject.incoming))
+        assert len(o1.subject.incoming) == 0
         assert len(o1.subject.outgoing) == 0
         # connections to o2 instead
-        self.assertEqual(1, len(o2.subject.incoming))
+        assert len(o2.subject.incoming) == 1
         assert len(o2.subject.outgoing) == 0
 
-        assert len(self.kindof(UML.ObjectFlow)) == 1
+        assert len(case.kindof(UML.ObjectFlow)) == 1
         # one guard
-        self.assertEqual("tname", flow.subject.name)
-        assert "tguard" == flow.subject.guard
+        assert flow.subject.name == "tname"
+        assert flow.subject.guard == "tguard"
 
-    def test_control_flow_reconnection(self):
+    def test_control_flow_reconnection(self, case):
         """Test control flow becoming object flow due to reconnection."""
-        flow = self.create(FlowItem)
-        a1 = self.create(ActionItem, UML.Action)
-        a2 = self.create(ActionItem, UML.Action)
-        o1 = self.create(ObjectNodeItem, UML.ObjectNode)
+        flow = case.create(FlowItem)
+        a1 = case.create(ActionItem, UML.Action)
+        a2 = case.create(ActionItem, UML.Action)
+        o1 = case.create(ObjectNodeItem, UML.ObjectNode)
 
         # connect with control flow: a1 -> a2
-        self.connect(flow, flow.head, a1)
-        self.connect(flow, flow.tail, a2)
+        case.connect(flow, flow.head, a1)
+        case.connect(flow, flow.tail, a2)
 
         f = flow.subject
         f.name = "tname"
         f.guard = "tguard"
 
         # reconnect with object flow: a1 -> o1
-        self.connect(flow, flow.tail, o1)
+        case.connect(flow, flow.tail, o1)
 
         assert len(a1.subject.incoming) == 0
         assert len(a1.subject.outgoing) == 1
         # no connections to a2
-        self.assertEqual(0, len(a2.subject.incoming))
+        assert len(a2.subject.incoming) == 0
         assert len(a2.subject.outgoing) == 0
         # connections to o1 instead
-        self.assertEqual(1, len(o1.subject.incoming))
+        assert len(o1.subject.incoming) == 1
         assert len(o1.subject.outgoing) == 0
 
-        assert len(self.kindof(UML.ControlFlow)) == 0
-        assert len(self.kindof(UML.ObjectFlow)) == 1
+        assert len(case.kindof(UML.ControlFlow)) == 0
+        assert len(case.kindof(UML.ObjectFlow)) == 1
         # one guard, not changed
-        self.assertEqual("tname", flow.subject.name)
-        assert "tguard" == flow.subject.guard
+        assert flow.subject.name == "tname"
+        assert flow.subject.guard == "tguard"
 
 
-class FlowItemActionTestCase(TestCase):
+class TestFlowItemAction:
     """Flow item connecting to action item tests."""
 
-    def test_glue(self):
+    def test_glue(self, case):
         """Test flow item gluing to action items."""
 
-        flow = self.create(FlowItem)
-        a1 = self.create(ActionItem, UML.Action)
-        a2 = self.create(ActionItem, UML.Action)
+        flow = case.create(FlowItem)
+        a1 = case.create(ActionItem, UML.Action)
+        a2 = case.create(ActionItem, UML.Action)
 
-        glued = self.allow(flow, flow.head, a1)
+        glued = case.allow(flow, flow.head, a1)
         assert glued
 
-        self.connect(flow, flow.head, a1)
+        case.connect(flow, flow.head, a1)
 
-        glued = self.allow(flow, flow.tail, a2)
+        glued = case.allow(flow, flow.tail, a2)
         assert glued
 
-    def test_connect_to_action_item(self):
-        flow = self.create(FlowItem)
-        a1 = self.create(ActionItem, UML.Action)
-        a2 = self.create(ActionItem, UML.Action)
+    def test_connect_to_action_item(self, case):
+        flow = case.create(FlowItem)
+        a1 = case.create(ActionItem, UML.Action)
+        a2 = case.create(ActionItem, UML.Action)
 
-        self.connect(flow, flow.head, a1)
-        self.connect(flow, flow.tail, a2)
+        case.connect(flow, flow.head, a1)
+        case.connect(flow, flow.tail, a2)
 
         assert isinstance(flow.subject, UML.ControlFlow)
 
@@ -190,92 +189,91 @@ class FlowItemActionTestCase(TestCase):
         assert flow.subject in a2.subject.incoming
         assert flow.subject.target is a2.subject
 
-    def test_disconnect_from_action_item(self):
+    def test_disconnect_from_action_item(self, case):
         """Test flow item disconnection from action items."""
-        flow = self.create(FlowItem)
-        a1 = self.create(ActionItem, UML.Action)
-        a2 = self.create(ActionItem, UML.Action)
+        flow = case.create(FlowItem)
+        a1 = case.create(ActionItem, UML.Action)
+        a2 = case.create(ActionItem, UML.Action)
 
-        self.connect(flow, flow.head, a1)
-        self.connect(flow, flow.tail, a2)
+        case.connect(flow, flow.head, a1)
+        case.connect(flow, flow.tail, a2)
 
-        self.disconnect(flow, flow.head)
+        case.disconnect(flow, flow.head)
         assert flow.subject is None
         assert len(a1.subject.incoming) == 0
         assert len(a2.subject.incoming) == 0
         assert len(a1.subject.outgoing) == 0
         assert len(a2.subject.outgoing) == 0
 
-    def test_reconnect(self):
+    def test_reconnect(self, case):
         """Test flow item reconnection."""
-        flow = self.create(FlowItem)
-        a1 = self.create(ActionItem, UML.Action)
-        a2 = self.create(ActionItem, UML.Action)
-        a3 = self.create(ActionItem, UML.Action)
+        flow = case.create(FlowItem)
+        a1 = case.create(ActionItem, UML.Action)
+        a2 = case.create(ActionItem, UML.Action)
+        a3 = case.create(ActionItem, UML.Action)
 
         # a1 -> a2
-        self.connect(flow, flow.head, a1)
-        self.connect(flow, flow.tail, a2)
+        case.connect(flow, flow.head, a1)
+        case.connect(flow, flow.tail, a2)
         f = flow.subject
         f.name = "tname"
         f.guard = "tguard"
 
         # reconnect: a1 -> a3
-        self.connect(flow, flow.tail, a3)
+        case.connect(flow, flow.tail, a3)
 
         assert len(a1.subject.incoming) == 0
         assert len(a1.subject.outgoing) == 1
         # no connections to a2
-        self.assertEqual(0, len(a2.subject.incoming))
+        assert len(a2.subject.incoming) == 0
         assert len(a2.subject.outgoing) == 0
         # connections to a3 instead
-        self.assertEqual(1, len(a3.subject.incoming))
+        assert len(a3.subject.incoming) == 1
         assert len(a3.subject.outgoing) == 0
 
-        assert len(self.kindof(UML.ControlFlow)) == 1
+        assert len(case.kindof(UML.ControlFlow)) == 1
         # one guard
-        self.assertEqual("tname", flow.subject.name)
-        assert "tguard" == flow.subject.guard
+        assert flow.subject.name == "tname"
+        assert flow.subject.guard == "tguard"
 
-    def test_object_flow_reconnection(self):
+    def test_object_flow_reconnection(self, case):
         """Test object flow becoming control flow due to reconnection."""
-        flow = self.create(FlowItem)
-        a1 = self.create(ActionItem, UML.Action)
-        a2 = self.create(ActionItem, UML.Action)
-        o1 = self.create(ObjectNodeItem, UML.ObjectNode)
+        flow = case.create(FlowItem)
+        a1 = case.create(ActionItem, UML.Action)
+        a2 = case.create(ActionItem, UML.Action)
+        o1 = case.create(ObjectNodeItem, UML.ObjectNode)
 
         # connect with control flow: a1 -> o1
-        self.connect(flow, flow.head, a1)
-        self.connect(flow, flow.tail, o1)
+        case.connect(flow, flow.head, a1)
+        case.connect(flow, flow.tail, o1)
 
         f = flow.subject
         f.name = "tname"
         f.guard = "tguard"
 
         # reconnect with object flow: a1 -> a2
-        self.connect(flow, flow.tail, a2)
+        case.connect(flow, flow.tail, a2)
 
         assert len(a1.subject.incoming) == 0
         assert len(a1.subject.outgoing) == 1
         # no connections to o1
-        self.assertEqual(0, len(o1.subject.incoming))
+        assert len(o1.subject.incoming) == 0
         assert len(o1.subject.outgoing) == 0
         # connections to a2 instead
-        self.assertEqual(1, len(a2.subject.incoming))
+        assert len(a2.subject.incoming) == 1
         assert len(a2.subject.outgoing) == 0
 
-        assert len(self.kindof(UML.ControlFlow)) == 1
-        assert len(self.kindof(UML.ObjectFlow)) == 0
+        assert len(case.kindof(UML.ControlFlow)) == 1
+        assert len(case.kindof(UML.ObjectFlow)) == 0
         # one guard, not changed
-        self.assertEqual("tname", flow.subject.name)
-        assert "tguard" == flow.subject.guard
+        assert flow.subject.name == "tname"
+        assert flow.subject.guard == "tguard"
 
 
-class FlowItemDesisionAndForkNodes:
+class FlowItemDecisionAndForkNodes:
     """Base class for flow connecting to decision and fork nodes.
 
-    See `FlowItemDecisionNodeTestCase` and `FlowItemForkNodeTestCase` test
-    cases.
+    See `TestFlowItemDecisionNode` and `Test FlowItemForkNode` test cases.
 
     Not tested yet
 
@@ -289,21 +287,21 @@ class FlowItemDesisionAndForkNodes:
     fork_node_cls: Type[UML.ControlNode]
     join_node_cls: Type[UML.ControlNode]
 
-    def test_glue(self):
+    def test_glue(self, case):
         """Test decision/fork nodes glue."""
-        flow = self.create(FlowItem)
-        action = self.create(ActionItem, UML.Action)
-        node = self.create(self.item_cls, self.join_node_cls)
+        flow = case.create(FlowItem)
+        action = case.create(ActionItem, UML.Action)
+        node = case.create(self.item_cls, self.join_node_cls)
 
-        glued = self.allow(flow, flow.head, node)
+        glued = case.allow(flow, flow.head, node)
         assert glued
 
-        self.connect(flow, flow.head, action)
+        case.connect(flow, flow.head, action)
 
-        glued = self.allow(flow, flow.tail, node)
+        glued = case.allow(flow, flow.tail, node)
         assert glued
 
-    def test_node_class_change(self):
+    def test_node_class_change(self, case):
         """Test node incoming edges.
 
         Connection scheme is presented below::
@@ -315,29 +313,29 @@ class FlowItemDesisionAndForkNodes:
 
         Node class changes due to two incoming edges and one outgoing edge.
         """
-        flow1 = self.create(FlowItem)
-        flow2 = self.create(FlowItem)
-        flow3 = self.create(FlowItem)
-        a1 = self.create(ActionItem, UML.Action)
-        a2 = self.create(ActionItem, UML.Action)
-        jn = self.create(self.item_cls, self.fork_node_cls)
+        flow1 = case.create(FlowItem)
+        flow2 = case.create(FlowItem)
+        flow3 = case.create(FlowItem)
+        a1 = case.create(ActionItem, UML.Action)
+        a2 = case.create(ActionItem, UML.Action)
+        jn = case.create(self.item_cls, self.fork_node_cls)
 
         assert isinstance(jn.subject, self.fork_node_cls)
 
         # connect actions first
-        self.connect(flow1, flow1.head, a1)
-        self.connect(flow2, flow2.head, a2)
-        self.connect(flow3, flow3.tail, a2)
+        case.connect(flow1, flow1.head, a1)
+        case.connect(flow2, flow2.head, a2)
+        case.connect(flow3, flow3.tail, a2)
 
         # connect to the node
-        self.connect(flow1, flow1.tail, jn)
-        self.connect(flow2, flow2.tail, jn)
-        self.connect(flow3, flow3.head, jn)
+        case.connect(flow1, flow1.tail, jn)
+        case.connect(flow2, flow2.tail, jn)
+        case.connect(flow3, flow3.head, jn)
 
         # node class changes
-        self.assertTrue(isinstance(jn.subject, self.join_node_cls))
+        assert isinstance(jn.subject, self.join_node_cls)
 
-    def test_outgoing_edges(self):
+    def test_outgoing_edges(self, case):
         """Test outgoing edges.
 
         Connection scheme is presented below::
@@ -346,23 +344,23 @@ class FlowItemDesisionAndForkNodes:
             [ a1 ] --flow1--> [ jn ]
                                  | --flow3-->[ a3 ]
         """
-        flow1 = self.create(FlowItem)
-        flow2 = self.create(FlowItem)
-        flow3 = self.create(FlowItem)
-        a1 = self.create(ActionItem, UML.Action)
-        a2 = self.create(ActionItem, UML.Action)
-        jn = self.create(self.item_cls, self.join_node_cls)
+        flow1 = case.create(FlowItem)
+        flow2 = case.create(FlowItem)
+        flow3 = case.create(FlowItem)
+        a1 = case.create(ActionItem, UML.Action)
+        a2 = case.create(ActionItem, UML.Action)
+        jn = case.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
-        self.connect(flow1, flow1.head, a1)
-        self.connect(flow2, flow2.tail, a2)
-        self.connect(flow3, flow3.tail, a2)
+        case.connect(flow1, flow1.head, a1)
+        case.connect(flow2, flow2.tail, a2)
+        case.connect(flow3, flow3.tail, a2)
 
         # connect to the node
-        self.connect(flow1, flow1.tail, jn)
+        case.connect(flow1, flow1.tail, jn)
         assert isinstance(jn.subject, self.join_node_cls)
 
-        self.connect(flow2, flow2.head, jn)
+        case.connect(flow2, flow2.head, jn)
         assert isinstance(jn.subject, self.join_node_cls)
 
         assert len(jn.subject.incoming) == 1
@@ -370,12 +368,12 @@ class FlowItemDesisionAndForkNodes:
         assert flow1.subject in jn.subject.incoming
         assert flow2.subject in jn.subject.outgoing
 
-        self.connect(flow3, flow3.head, jn)
+        case.connect(flow3, flow3.head, jn)
         assert len(jn.subject.outgoing) == 2
 
         assert isinstance(jn.subject, self.fork_node_cls), f"{jn.subject}"
 
-    def test_combined_nodes_connection(self):
+    def test_combined_nodes_connection(self, case):
         """Test combined nodes connection.
 
         Connection scheme is presented below::
@@ -386,36 +384,36 @@ class FlowItemDesisionAndForkNodes:
 
         Flow `flow4` will force the node to become a combined node.
         """
-        flow1 = self.create(FlowItem)
-        flow2 = self.create(FlowItem)
-        flow3 = self.create(FlowItem)
-        flow4 = self.create(FlowItem)
-        a1 = self.create(ActionItem, UML.Action)
-        a2 = self.create(ActionItem, UML.Action)
-        a4 = self.create(ActionItem, UML.Action)
-        jn = self.create(self.item_cls, self.join_node_cls)
+        flow1 = case.create(FlowItem)
+        flow2 = case.create(FlowItem)
+        flow3 = case.create(FlowItem)
+        flow4 = case.create(FlowItem)
+        a1 = case.create(ActionItem, UML.Action)
+        a2 = case.create(ActionItem, UML.Action)
+        a4 = case.create(ActionItem, UML.Action)
+        jn = case.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
-        self.connect(flow1, flow1.head, a1)
-        self.connect(flow2, flow2.tail, a2)
-        self.connect(flow3, flow3.tail, a2)
-        self.connect(flow4, flow4.head, a4)
+        case.connect(flow1, flow1.head, a1)
+        case.connect(flow2, flow2.tail, a2)
+        case.connect(flow3, flow3.tail, a2)
+        case.connect(flow4, flow4.head, a4)
 
         # connect to the node
-        self.connect(flow1, flow1.tail, jn)
-        self.connect(flow2, flow2.head, jn)
-        self.connect(flow3, flow3.head, jn)
+        case.connect(flow1, flow1.tail, jn)
+        case.connect(flow2, flow2.head, jn)
+        case.connect(flow3, flow3.head, jn)
 
-        self.connect(flow4, flow4.tail, jn)
+        case.connect(flow4, flow4.tail, jn)
         assert isinstance(jn.subject, self.join_node_cls)
         assert jn.combined is not None
 
         # check node combination
-        self.assertTrue(1, len(jn.subject.outgoing))
-        assert 1, len(jn.combined.incoming)
+        assert len(jn.subject.outgoing) == 1
+        assert len(jn.combined.incoming) == 1
         assert jn.subject.outgoing[0] is jn.combined.incoming[0]
 
-    def test_combined_node_disconnection(self):
+    def test_combined_node_disconnection(self, case):
         """Test combined nodes disconnection.
 
         Connection scheme is presented below::
@@ -426,51 +424,51 @@ class FlowItemDesisionAndForkNodes:
 
         Flow `flow4` will force the node to become a combined node.
         """
-        flow1 = self.create(FlowItem)
-        flow2 = self.create(FlowItem)
-        flow3 = self.create(FlowItem)
-        flow4 = self.create(FlowItem)
-        a1 = self.create(ActionItem, UML.Action)
-        a2 = self.create(ActionItem, UML.Action)
-        a4 = self.create(ActionItem, UML.Action)
-        jn = self.create(self.item_cls, self.join_node_cls)
+        flow1 = case.create(FlowItem)
+        flow2 = case.create(FlowItem)
+        flow3 = case.create(FlowItem)
+        flow4 = case.create(FlowItem)
+        a1 = case.create(ActionItem, UML.Action)
+        a2 = case.create(ActionItem, UML.Action)
+        a4 = case.create(ActionItem, UML.Action)
+        jn = case.create(self.item_cls, self.join_node_cls)
 
         # connect actions first
-        self.connect(flow1, flow1.head, a1)
-        self.connect(flow2, flow2.tail, a2)
-        self.connect(flow3, flow3.tail, a2)
-        self.connect(flow4, flow4.head, a4)
+        case.connect(flow1, flow1.head, a1)
+        case.connect(flow2, flow2.tail, a2)
+        case.connect(flow3, flow3.tail, a2)
+        case.connect(flow4, flow4.head, a4)
 
         # connect to the node
-        self.connect(flow1, flow1.tail, jn)
-        self.connect(flow2, flow2.head, jn)
-        self.connect(flow3, flow3.head, jn)
-        self.connect(flow4, flow4.tail, jn)
+        case.connect(flow1, flow1.tail, jn)
+        case.connect(flow2, flow2.head, jn)
+        case.connect(flow3, flow3.head, jn)
+        case.connect(flow4, flow4.tail, jn)
 
         # needed for tests below
         cflow = jn.subject.outgoing[0]
         cnode = jn.combined
-        assert cflow in self.kindof(UML.ControlFlow)
-        assert cnode in self.kindof(self.fork_node_cls)
+        assert cflow in case.kindof(UML.ControlFlow)
+        assert cnode in case.kindof(self.fork_node_cls)
 
         # test disconnection
-        self.disconnect(flow4, flow4.head)
-        assert self.get_connected(flow4.head) is None
+        case.disconnect(flow4, flow4.head)
+        assert case.get_connected(flow4.head) is None
         assert jn.combined is None
 
-        flows = self.kindof(UML.ControlFlow)
-        nodes = self.kindof(self.fork_node_cls)
+        flows = case.kindof(UML.ControlFlow)
+        nodes = case.kindof(self.fork_node_cls)
         assert cnode not in nodes, f"{cnode} in {nodes}"
         assert cflow not in flows, f"{cflow} in {flows}"
 
 
-class FlowItemForkNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):
+class TestFlowItemForkNode(FlowItemDecisionAndForkNodes):
     item_cls = ForkNodeItem
     fork_node_cls = UML.ForkNode
     join_node_cls = UML.JoinNode
 
 
-class FlowItemDecisionNodeTestCase(FlowItemDesisionAndForkNodes, TestCase):
+class TestFlowItemDecisionNode(FlowItemDecisionAndForkNodes):
     item_cls = DecisionNodeItem
     fork_node_cls = UML.DecisionNode
     join_node_cls = UML.MergeNode
