@@ -6,7 +6,6 @@ from gaphor.C4Model.grouping import ContainerGroup
 
 def container(diagram, element_factory):
     subject = element_factory.create(C4Container)
-    print(diagram)
     return diagram.create(C4ContainerItem, subject=subject)
 
 

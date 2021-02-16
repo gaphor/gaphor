@@ -1,5 +1,4 @@
-"""The SysML Modeling Language module is the entrypoint for SysML related
-assets."""
+"""C4 Model Language entrypoint."""
 
 import gaphor.C4Model.grouping  # noqa
 import gaphor.C4Model.iconname  # noqa
