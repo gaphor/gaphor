@@ -12,7 +12,7 @@ from gaphor.diagram.presentation import Classified, Named
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.generalization import GeneralizationItem
-from gaphor.UML.classes.implementation import ImplementationItem
+from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
 
 
 @Connector.register(Named, DependencyItem)
@@ -171,9 +171,10 @@ class AssociationConnect(UnaryRelationshipConnect):
                 e.type = None
 
 
-@Connector.register(Named, ImplementationItem)
-class ImplementationConnect(RelationshipConnect):
-    """Connect Interface and a BehavioredClassifier using an Implementation."""
+@Connector.register(Named, InterfaceRealizationItem)
+class InterfaceRealizationConnect(RelationshipConnect):
+    """Connect Interface and a BehavioredClassifier using an
+    InterfaceRealization."""
 
     def allow(self, handle, port):
         line = self.line
@@ -194,7 +195,7 @@ class ImplementationConnect(RelationshipConnect):
     def reconnect(self, handle, port):
         line = self.line
         impl = line.subject
-        assert isinstance(impl, UML.Implementation)
+        assert isinstance(impl, UML.InterfaceRealization)
         if handle is line.head:
             for s in impl.contract:
                 del impl.contract[s]
@@ -202,15 +203,15 @@ class ImplementationConnect(RelationshipConnect):
             del impl.implementatingClassifier
         self.reconnect_relationship(
             handle,
-            UML.Implementation.contract,
-            UML.Implementation.implementatingClassifier,
+            UML.InterfaceRealization.contract,
+            UML.InterfaceRealization.implementatingClassifier,
         )
 
     def connect_subject(self, handle):
         """Perform implementation relationship connection."""
         relation = self.relationship_or_new(
-            UML.Implementation,
-            UML.Implementation.contract,
-            UML.Implementation.implementatingClassifier,
+            UML.InterfaceRealization,
+            UML.InterfaceRealization.contract,
+            UML.InterfaceRealization.implementatingClassifier,
         )
         self.line.subject = relation

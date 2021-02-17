@@ -19,7 +19,7 @@ def element_factory():
     c1.ownedAttribute[0].name = "attr"
     c1.ownedOperation = ef.create(UML.Operation)
     c1.ownedOperation[0].name = "oper"
-    c1.ownedOperation[0].formalParameter = ef.create(UML.Parameter)
+    c1.ownedOperation[0].ownedParameter = ef.create(UML.Parameter)
 
     UML.model.create_dependency(c1, c2)
     UML.model.create_generalization(c1, c2)

@@ -225,20 +225,27 @@ def parse_operation(el: uml.Operation, s: str) -> None:
     if not m or m.group("garbage"):
         el.name = s
         del el.visibility
-        list(map(uml.Parameter.unlink, list(el.returnResult)))
-        list(map(uml.Parameter.unlink, list(el.formalParameter)))
+        for param in list(el.ownedParameter):
+            param.unlink()
     else:
         g = m.group
         create = el.model.create
         _set_visibility(el, g("vis"))
         el.name = g("name")
-        if not el.returnResult:
-            el.returnResult = create(uml.Parameter)
-        p = el.returnResult[0]
-        p.direction = "return"
-        p.typeValue = g("type")
-        p.lowerValue = g("mult_l")
-        p.upperValue = g("mult_u")
+
+        defined_params = set()
+        if g("type"):
+            returnParameters = [p for p in el.ownedParameter if p.direction == "return"]
+            if returnParameters:
+                p = returnParameters[0]
+            else:
+                p = create(uml.Parameter)
+                el.ownedParameter = p
+                p.direction = "return"
+            p.typeValue = g("type")
+            p.lowerValue = g("mult_l")
+            p.upperValue = g("mult_u")
+            defined_params.add(p)
 
         pindex = 0
         params = g("params")
@@ -248,7 +255,9 @@ def parse_operation(el: uml.Operation, s: str) -> None:
                 break
             g = m.group
             try:
-                p = el.formalParameter[pindex]
+                while el.ownedParameter[pindex] in defined_params:
+                    pindex += 1
+                p = el.ownedParameter[pindex]
             except IndexError:
                 p = create(uml.Parameter)
             p.direction = g("dir") or "in"
@@ -257,15 +266,15 @@ def parse_operation(el: uml.Operation, s: str) -> None:
             p.lowerValue = g("mult_l")
             p.upperValue = g("mult_u")
             p.defaultValue = g("default")
-            el.formalParameter = p
-
+            el.ownedParameter = p
+            defined_params.add(p)
             # Do the next parameter:
             params = g("rest")
-            pindex += 1
 
         # Remove remaining parameters:
-        for fp in el.formalParameter[pindex:]:
-            fp.unlink()
+        for op in list(el.ownedParameter):
+            if op not in defined_params:
+                op.unlink()
 
 
 def parse_lifeline(el: uml.Lifeline, s: str) -> None:

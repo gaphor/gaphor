@@ -47,7 +47,7 @@ class DependencyItem(LinePresentation, Named):
         additional_stereotype = {
             UML.Usage: ("use",),
             UML.Realization: ("realize",),
-            UML.Implementation: ("implements",),
+            UML.InterfaceRealization: ("implements",),
         }
 
         self.shape_middle = Box(

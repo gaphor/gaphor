@@ -174,7 +174,7 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
     )
     yield from _load_attributes_and_references(elements, update_status_queue)
 
-    ensure_style_sheet_is_present(factory)
+    upgrade_ensure_style_sheet_is_present(factory)
 
     for id, elem in list(elements.items()):
         yield from update_status_queue()
@@ -196,6 +196,7 @@ def _load_elements_and_canvasitems(
         for item in canvasitems:
             item = upgrade_canvas_item_to_1_0_2(item)
             item = upgrade_canvas_item_to_1_3_0(item)
+            item = upgrade_implementation_item_to_interface_realization_item(item)
             if version_lower_than(gaphor_version, (1, 1, 0)):
                 item = upgrade_presentation_item_to_1_1_0(item)
             cls = modeling_language.lookup_diagram_item(item.type)
@@ -207,7 +208,12 @@ def _load_elements_and_canvasitems(
         yield from update_status_queue()
         if isinstance(elem, parser.element):
             if version_lower_than(gaphor_version, (2, 1, 0)):
-                elem = upgrade_element_to_2_1_0(elem)
+                elem = upgrade_element_owned_comment_to_comment(elem)
+            if version_lower_than(gaphor_version, (2, 3, 0)):
+                elem = upgrade_package_owned_classifier_to_owned_type(elem)
+                elem = upgrade_implementation_to_interface_realization(elem)
+                elem = upgrade_feature_parameters_to_owned_parameter(elem)
+                elem = upgrade_parameter_owner_formal_param(elem)
 
             cls = modeling_language.lookup_element(elem.type)
             assert cls, f"Type {elem.type} can not be loaded: no such element"
@@ -368,7 +374,8 @@ def clone_canvasitem(item, subject_id):
     return new_item
 
 
-def ensure_style_sheet_is_present(factory):
+# since 2.2.0
+def upgrade_ensure_style_sheet_is_present(factory):
     style_sheet = next(factory.select(StyleSheet), None)
     if not style_sheet:
         factory.create(StyleSheet)
@@ -408,9 +415,60 @@ def upgrade_canvas_item_to_1_3_0(item):
     return item
 
 
-def upgrade_element_to_2_1_0(elem):
+# since 2.1.0
+def upgrade_element_owned_comment_to_comment(elem):
     for name, refids in dict(elem.references).items():
         if name == "ownedComment":
             elem.references["comment"] = refids
             del elem.references["ownedComment"]
+            break
+    return elem
+
+
+# since 2.3.0
+def upgrade_package_owned_classifier_to_owned_type(elem):
+    for name, refids in dict(elem.references).items():
+        if name == "ownedClassifier":
+            elem.references["ownedType"] = refids
+            del elem.references["ownedClassifier"]
+            break
+    return elem
+
+
+# since 2.3.0
+def upgrade_implementation_to_interface_realization(elem):
+    if elem.type == "Implementation":
+        elem.type = "InterfaceRealization"
+    return elem
+
+
+# since 2.3.0
+def upgrade_implementation_item_to_interface_realization_item(item):
+    if item.type == "ImplementationItem":
+        item.type = "InterfaceRealizationItem"
+    return item
+
+
+# since 2.3.0
+def upgrade_feature_parameters_to_owned_parameter(elem):
+    formal_params = []
+    return_results = []
+    for name, refids in dict(elem.references).items():
+        if name == "formalParameter":
+            formal_params = refids
+            del elem.references["formalParameter"]
+        if name == "returnResult":
+            return_results = refids
+            del elem.references["returnResult"]
+    elem.references["ownedParameter"] = formal_params + return_results
+    return elem
+
+
+# since 2.3.0
+def upgrade_parameter_owner_formal_param(elem):
+    for name, refids in dict(elem.references).items():
+        if name == "ownerReturnParam":
+            elem.references["ownerFormalParam"] = refids
+            del elem.references["ownerReturnParam"]
+            break
     return elem

@@ -260,7 +260,7 @@ def test_namedelement_qualifiedname(factory):
 
     assert ["Class"] == c.qualifiedName
 
-    p.ownedClassifier = c
+    p.ownedType = c
 
     assert ["Package", "Class"] == c.qualifiedName
 

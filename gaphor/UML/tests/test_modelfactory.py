@@ -267,9 +267,9 @@ def test_usage_by_component(element_factory):
 
 def test_realization(element_factory):
     """Test automatic dependency: realization."""
-    c = element_factory.create(UML.Component)
     cls = element_factory.create(UML.Class)
-    dt = UML.model.dependency_type(c, cls)
+    comp = element_factory.create(UML.Component)
+    dt = UML.model.dependency_type(cls, comp)
     assert UML.Realization == dt
 
 

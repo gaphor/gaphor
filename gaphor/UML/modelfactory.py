@@ -22,7 +22,6 @@ from gaphor.UML.uml import (
     Extension,
     ExtensionEnd,
     Generalization,
-    Implementation,
     InstanceSpecification,
     Interface,
     Message,
@@ -224,17 +223,6 @@ def create_generalization(general, specific):
     return gen
 
 
-def create_implementation(contract, implementatingClassifier):
-    assert (
-        contract.model is implementatingClassifier.model
-    ), "Contract and Implementing classifier are from different models"
-    model = contract.model
-    impl = model.create(Implementation)
-    impl.contract = contract
-    impl.implementatingClassifier = implementatingClassifier
-    return impl
-
-
 def create_association(type_a, type_b):
     """Create an association between two items."""
     assert type_a.model is type_b.model, "Head and Tail end are from different models"
@@ -360,7 +348,7 @@ def dependency_type(client, supplier):
     # test interface first as it is a classifier
     if isinstance(supplier, Interface):
         dt = Usage
-    elif isinstance(client, Component) and isinstance(supplier, Classifier):
+    elif isinstance(supplier, Component) and isinstance(client, Classifier):
         dt = Realization
 
     return dt

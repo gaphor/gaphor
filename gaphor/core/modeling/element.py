@@ -94,12 +94,8 @@ class Element:
 
         Make sure that for every load postload() should be called.
         """
-        try:
-            prop = getattr(type(self), name)
-        except AttributeError:
-            log.exception(f"'{type(self).__name__}' has no property '{name}'")
-        else:
-            prop.load(self, value)
+        prop = getattr(type(self), name)
+        prop.load(self, value)
 
     def __str__(self):
         return f"<{self.__class__.__module__}.{self.__class__.__name__} element {self._id}>"

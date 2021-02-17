@@ -312,19 +312,13 @@ class OperationsPage(PropertyPageBase):
         self.watcher.watch("ownedOperation.name", handler).watch(
             "ownedOperation.isAbstract", handler
         ).watch("ownedOperation.visibility", handler).watch(
-            "ownedOperation.returnResult.lowerValue", handler
+            "ownedOperation.ownedParameter.lowerValue", handler
         ).watch(
-            "ownedOperation.returnResult.upperValue", handler
+            "ownedOperation.ownedParameter.upperValue", handler
         ).watch(
-            "ownedOperation.returnResult.typeValue", handler
+            "ownedOperation.ownedParameter.typeValue", handler
         ).watch(
-            "ownedOperation.formalParameter.lowerValue", handler
-        ).watch(
-            "ownedOperation.formalParameter.upperValue", handler
-        ).watch(
-            "ownedOperation.formalParameter.typeValue", handler
-        ).watch(
-            "ownedOperation.formalParameter.defaultValue", handler
+            "ownedOperation.ownedParameter.defaultValue", handler
         )
 
         builder.connect_signals(
@@ -356,7 +350,7 @@ class DependencyPropertyPage(PropertyPageBase):
         (gettext("Dependency"), UML.Dependency),
         (gettext("Usage"), UML.Usage),
         (gettext("Realization"), UML.Realization),
-        (gettext("Implementation"), UML.Implementation),
+        (gettext("Implementation"), UML.InterfaceRealization),
     )
 
     def __init__(self, item):

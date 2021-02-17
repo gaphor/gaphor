@@ -68,7 +68,7 @@ def event():
 
 def test_register_handler(dispatcher, uml_class, uml_parameter, uml_operation, event):
     element = uml_class
-    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    dispatcher.subscribe(event.handler, element, "ownedOperation.ownedParameter.name")
     assert len(dispatcher._handlers) == 1
     assert list(dispatcher._handlers.keys())[0] == (element, UML.Class.ownedOperation)
 
@@ -77,10 +77,10 @@ def test_register_handler(dispatcher, uml_class, uml_parameter, uml_operation, e
     # 1:
     element.ownedOperation = uml_operation
     # 2:
-    p = element.ownedOperation[0].formalParameter = uml_parameter
+    p = element.ownedOperation[0].ownedParameter = uml_parameter
     # 3:
     p.name = "func"
-    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    dispatcher.subscribe(event.handler, element, "ownedOperation.ownedParameter.name")
     assert len(event.events) == 3
     assert len(dispatcher._handlers) == 3
 
@@ -92,17 +92,17 @@ def test_register_handler_twice(
     # Add some properties:
     element = uml_class
     element.ownedOperation = uml_operation
-    p = element.ownedOperation[0].formalParameter = uml_parameter
-    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    p = element.ownedOperation[0].ownedParameter = uml_parameter
+    dispatcher.subscribe(event.handler, element, "ownedOperation.ownedParameter.name")
 
     n_handlers = len(dispatcher._handlers)
 
     assert len(event.events) == 0
-    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    dispatcher.subscribe(event.handler, element, "ownedOperation.ownedParameter.name")
     assert n_handlers == len(dispatcher._handlers)
-    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    dispatcher.subscribe(event.handler, element, "ownedOperation.ownedParameter.name")
     assert n_handlers == len(dispatcher._handlers)
-    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    dispatcher.subscribe(event.handler, element, "ownedOperation.ownedParameter.name")
     assert n_handlers == len(dispatcher._handlers)
 
     p.name = "func"
@@ -113,12 +113,12 @@ def test_unregister_handler(dispatcher, uml_class, uml_operation, uml_parameter,
     # First some setup:
     element = uml_class
     o = element.ownedOperation = uml_operation
-    p = element.ownedOperation[0].formalParameter = uml_parameter
+    p = element.ownedOperation[0].ownedParameter = uml_parameter
     p.name = "func"
-    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    dispatcher.subscribe(event.handler, element, "ownedOperation.ownedParameter.name")
     assert len(dispatcher._handlers) == 3
     assert dispatcher._handlers[element, UML.Class.ownedOperation]
-    assert dispatcher._handlers[o, UML.Operation.parameter]
+    assert dispatcher._handlers[o, UML.Operation.ownedParameter]
     assert dispatcher._handlers[p, UML.Parameter.name]
 
     dispatcher.unsubscribe(event.handler)
@@ -135,9 +135,9 @@ def test_notification(
     """Test notifications with Class object."""
     element = uml_class
     o = element.ownedOperation = uml_operation
-    p = element.ownedOperation[0].formalParameter = uml_parameter
+    p = element.ownedOperation[0].ownedParameter = uml_parameter
     p.name = "func"
-    dispatcher.subscribe(event.handler, element, "ownedOperation.parameter.name")
+    dispatcher.subscribe(event.handler, element, "ownedOperation.ownedParameter.name")
     assert len(dispatcher._handlers) == 3
     assert not event.events
 
@@ -270,11 +270,13 @@ class TestElementDispatcherAsService:
         dispatcher = case.dispatcher
         element = case.element_factory.create(UML.Class)
         o = element.ownedOperation = case.element_factory.create(UML.Operation)
-        p = element.ownedOperation[0].formalParameter = case.element_factory.create(
+        p = element.ownedOperation[0].ownedParameter = case.element_factory.create(
             UML.Parameter
         )
         p.name = "func"
-        dispatcher.subscribe(case._handler, element, "ownedOperation.parameter.name")
+        dispatcher.subscribe(
+            case._handler, element, "ownedOperation.ownedParameter.name"
+        )
         assert len(dispatcher._handlers) == 4
         assert not case.events
 

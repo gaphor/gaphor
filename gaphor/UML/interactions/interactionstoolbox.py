@@ -19,7 +19,7 @@ def interaction_config(new_item):
     package = diagram.namespace
 
     interactions = (
-        [i for i in package.ownedClassifier if isinstance(i, UML.Interaction)]
+        [i for i in package.ownedType if isinstance(i, UML.Interaction)]
         if package
         else diagram.model.lselect(
             lambda e: isinstance(e, UML.Interaction) and e.package is None

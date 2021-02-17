@@ -2175,8 +2175,8 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="implementation"
-     inkscape:label="implementation"
+     id="interface-realization"
+     inkscape:label="interface-realization"
      style="display:inline"
      sodipodi:insensitive="true">
     <path

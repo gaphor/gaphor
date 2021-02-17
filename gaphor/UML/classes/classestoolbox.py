@@ -119,11 +119,11 @@ classes = ToolSection(
             new_item_factory(diagramitems.GeneralizationItem),
         ),
         ToolDef(
-            "toolbox-implementation",
-            gettext("Implementation"),
-            "gaphor-implementation-symbolic",
+            "toolbox-interface-realization",
+            gettext("Interface Realization"),
+            "gaphor-interface-realization-symbolic",
             "<Shift>I",
-            new_item_factory(diagramitems.ImplementationItem),
+            new_item_factory(diagramitems.InterfaceRealizationItem),
         ),
     ),
 )

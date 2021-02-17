@@ -46,7 +46,7 @@ def test_pointer(tab):
         "toolbox-association",
         "toolbox-dependency",
         "toolbox-generalization",
-        "toolbox-implementation",
+        "toolbox-interface-realization",
         # Components:
         "toolbox-component",
         "toolbox-node",

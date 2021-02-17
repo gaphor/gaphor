@@ -19,7 +19,7 @@ def activity_config(new_item):
     package = diagram.namespace
 
     activities = (
-        [i for i in package.ownedClassifier if isinstance(i, UML.Activity)]
+        [i for i in package.ownedType if isinstance(i, UML.Activity)]
         if package
         else diagram.model.lselect(
             lambda e: isinstance(e, UML.Activity) and e.package is None

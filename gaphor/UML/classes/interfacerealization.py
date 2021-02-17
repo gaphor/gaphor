@@ -10,8 +10,8 @@ from gaphor.UML.classes.interface import Folded, InterfacePort
 from gaphor.UML.modelfactory import stereotypes_str
 
 
-@represents(UML.Implementation)
-class ImplementationItem(LinePresentation, Named):
+@represents(UML.InterfaceRealization)
+class InterfaceRealizationItem(LinePresentation, Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, style={"dash-style": (7.0, 5.0)})
 

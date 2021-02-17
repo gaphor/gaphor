@@ -7,26 +7,29 @@ documentation for details.
 
 
 from gaphor.diagram.connectors import Connector
-from gaphor.UML.classes.classconnect import DependencyConnect, ImplementationConnect
+from gaphor.UML.classes.classconnect import (
+    DependencyConnect,
+    InterfaceRealizationConnect,
+)
 from gaphor.UML.classes.dependency import DependencyItem
-from gaphor.UML.classes.implementation import ImplementationItem
 from gaphor.UML.classes.interface import InterfaceItem
+from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
 
 
-@Connector.register(InterfaceItem, ImplementationItem)
-class ImplementationInterfaceConnect(ImplementationConnect):
+@Connector.register(InterfaceItem, InterfaceRealizationItem)
+class InterfaceRealizationInterfaceConnect(InterfaceRealizationConnect):
     """Connect interface item and a behaviored classifier using an
     implementation."""
 
     def connect(self, handle, port):
-        """Implementation item can be changed to draw in solid mode, when
+        """Realization item can be changed to draw in solid mode, when
         connected to folded interface."""
         super().connect(handle, port)
         if handle is self.line.head:
             self.line.request_update()
 
     def disconnect(self, handle):
-        """If implementation item is no longer connected to an interface, then
+        """If realization item is no longer connected to an interface, then
         draw it in non-solid mode."""
         super().disconnect(handle)
         if handle is self.line.head:

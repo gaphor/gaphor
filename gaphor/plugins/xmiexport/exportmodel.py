@@ -111,7 +111,7 @@ class XMIExport:
 
         xmi.startElement(f"{self.XMI_PREFIX}:Operation", attrs=attributes)
 
-        for ownedParameter in element.parameter:
+        for ownedParameter in element.ownedParameter:
             xmi.startElement("ownedElement", attrs=dict())
             self.handle(xmi, ownedParameter)
             xmi.endElement("ownedElement")
@@ -254,4 +254,4 @@ class XMIExport:
         return element.__class__.__name__ == "Generalization"
 
     def select_realization(self, element):
-        return element.__class__.__name__ == "Implementation"
+        return element.__class__.__name__ == "InterfaceRealization"

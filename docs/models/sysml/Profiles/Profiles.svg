@@ -51,10 +51,8 @@
 <path style="stroke:none;" d="M 1.28125 -10.203125 L 3.921875 -10.203125 L 3.921875 -4.09375 C 3.921875 -3.25 4.054688 -2.644531 4.328125 -2.28125 C 4.609375 -1.914062 5.0625 -1.734375 5.6875 -1.734375 C 6.3125 -1.734375 6.757812 -1.914062 7.03125 -2.28125 C 7.3125 -2.644531 7.453125 -3.25 7.453125 -4.09375 L 7.453125 -10.203125 L 10.078125 -10.203125 L 10.078125 -4.09375 C 10.078125 -2.644531 9.710938 -1.566406 8.984375 -0.859375 C 8.265625 -0.148438 7.164062 0.203125 5.6875 0.203125 C 4.195312 0.203125 3.085938 -0.148438 2.359375 -0.859375 C 1.640625 -1.566406 1.28125 -2.644531 1.28125 -4.09375 Z M 1.28125 -10.203125 "/>
 </symbol>
 </g>
-<clipPath id="clip1">
-  <rect x="0" y="0" width="303" height="171"/>
-</clipPath>
-<g id="surface620" clip-path="url(#clip1)">
+</defs>
+<g id="surface614">
 <path style="fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 49.998383 20.000641 L 49.998383 0.000640869 L -0.00161743 0.000640869 L -0.00161743 70.000641 L 101.998383 70.000641 L 101.998383 20.000641 L -0.00161743 20.000641 " transform="matrix(1,0,0,1,195.618805,95.222015)"/>
 <g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
   <use xlink:href="#glyph0-1" x="215.617188" y="138.722656"/>
@@ -73,11 +71,6 @@
   <use xlink:href="#glyph1-4" x="248.617188" y="155.722656"/>
   <use xlink:href="#glyph1-5" x="262.617188" y="155.722656"/>
 </g>
-</g>
-<clipPath id="clip2">
-  <rect x="0" y="0" width="303" height="171"/>
-</clipPath>
-<g id="surface623" clip-path="url(#clip2)">
 <path style="fill:none;stroke-width:2;stroke-linecap:butt;stroke-linejoin:round;stroke:rgb(0%,0%,0%);stroke-opacity:1;stroke-miterlimit:10;" d="M 50 20 L 50 0 L 0 0 L 0 70 L 102 70 L 102 20 L 0 20 " transform="matrix(1,0,0,1,6,6)"/>
 <g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
   <use xlink:href="#glyph0-1" x="26" y="49.5"/>
@@ -94,10 +87,5 @@
   <use xlink:href="#glyph1-4" x="51" y="66.5"/>
   <use xlink:href="#glyph1-5" x="65" y="66.5"/>
 </g>
-</g>
-</defs>
-<g id="surface616">
-<use xlink:href="#surface620"/>
-<use xlink:href="#surface623"/>
 </g>
 </svg>
