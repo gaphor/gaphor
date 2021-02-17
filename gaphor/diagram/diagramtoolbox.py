@@ -18,11 +18,13 @@ from gaphor.diagram.diagramtools import new_item_factory
 ItemFactory = Callable[[Diagram, Optional[Presentation]], Presentation]
 
 
+def default_namespace(new_item):
+    new_item.subject.package = new_item.diagram.namespace
+
+
 def namespace_config(new_item):
-    subject = new_item.subject
-    diagram = new_item.diagram
-    subject.package = diagram.namespace
-    subject.name = f"New{type(subject).__name__}"
+    default_namespace(new_item)
+    new_item.subject.name = f"New{type(new_item.subject).__name__}"
 
 
 class ToolDef(NamedTuple):

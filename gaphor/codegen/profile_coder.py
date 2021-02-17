@@ -57,6 +57,10 @@ def find_enumerations(
     return classes, enumerations
 
 
+def filter_out_gaphor_profile(classes: List[UML.Class]) -> List[UML.Class]:
+    return [cls for cls in classes if cls.qualifiedName[0] != "Gaphor Profile"]
+
+
 def get_class_extensions(cls: UML.Class):
     """Get the meta classes connected with extensions."""
     for a in cls.attribute["it.association"]:  # type: ignore
@@ -65,7 +69,9 @@ def get_class_extensions(cls: UML.Class):
             yield meta_cls
 
 
-def create_class_trees(classes: List[UML.Class]) -> Dict[UML.Class, List[UML.Class]]:
+def create_class_hierarchy(
+    classes: List[UML.Class],
+) -> Dict[UML.Class, List[UML.Class]]:
     """Create a tree of UML.Class elements.
 
     The relationship between the classes is a generalization. Since the
@@ -73,38 +79,23 @@ def create_class_trees(classes: List[UML.Class]) -> Dict[UML.Class, List[UML.Cla
     the children know who their parents are, the parents don't know the
     children.
     """
-    trees = {}
+    hierarchy = {}
     for cls in classes:
         base_classes = [base_cls for base_cls in cls.general]
         meta_classes = [meta_cls for meta_cls in get_class_extensions(cls)]
         # Lambda key sort issue in mypy: https://github.com/python/mypy/issues/9656
-        trees[cls] = sorted(base_classes + meta_classes, key=lambda e: e.name)  # type: ignore
-    return trees
+        hierarchy[cls] = sorted(base_classes + meta_classes, key=lambda e: e.name)  # type: ignore
+    return hierarchy
 
 
-def create_referenced(classes: List[UML.Class]) -> Set[UML.Class]:
-    """UML.Class elements that are referenced by others.
-
-    We consider a UML.Class referenced when its child UML.Class has a
-    generalization relationship to it.
-    """
-    referenced = set()
-    for cls in classes:
-        for gen in cls.general:
-            referenced.add(gen)
-        for meta_cls in get_class_extensions(cls):
-            referenced.add(meta_cls)
-    return referenced
-
-
-def write_class_def(cls, trees, f, cls_written=set()) -> None:
+def write_class_def(cls, hierarchy, f, cls_written=set()) -> None:
     """Write the Class definition."""
     if cls in cls_written:
         return
 
-    generalizations = trees[cls]
+    generalizations = hierarchy[cls]
     for g in generalizations:
-        write_class_def(g, trees, f, cls_written)
+        write_class_def(g, hierarchy, f, cls_written)
 
     f.write(f"class {cls.name}({', '.join(g.name for g in generalizations)}):\n")
     write_attributes(cls, f)
@@ -115,7 +106,7 @@ def write_attributes(cls: UML.Class, f: TextIO) -> None:
     """Write attributes based on attribute type."""
 
     written = False
-    for a in cls.attribute:  # type: ignore
+    for a in sorted(cls.attribute, key=lambda a: a.name or ""):  # type: ignore
         # TODO: do write derived values if override is available
         if not a.name or a.name == "baseClass" or a.isDerived:
             continue
@@ -144,35 +135,41 @@ def write_properties(
     for a in cls.attribute:
         if not a.name or a.name == "baseClass" or a.isDerived:
             continue
+
         type_value = type_converter(a)
         if type_value in ("int", "str"):
             # TODO: add default value, if there is one
             f.write(f'{cls.name}.{a.name} = attribute("{a.name}", {type_value})\n')
+        elif not type_value:
+            print(f"No type for {cls.name}.{a.name}")
+        elif "Kind" in type_value:
+            enum = enumerations.get(type_value)
+            if enum:
+                values = tuple(a.name for a in enum.attribute)
+            f.write(
+                f'{cls.name}.{a.name} = enumeration("{a.name}", {values}, "{values[0]}")\n'
+            )
         else:
-            if not type_value:
-                print(f"No type for {cls.name}.{a.name}")
-                continue
-            if "Kind" in type_value:
-                enum = enumerations.get(type_value)
-                if enum:
-                    values = tuple(a.name for a in enum.attribute)
-                f.write(
-                    f'{cls.name}.{a.name} = enumeration("kind", {values}, "{values[0]}")\n'
-                )
-            else:
-                lower = "" if a.lowerValue in (None, "0") else f", lower={a.lowerValue}"
-                upper = (
-                    "" if a.upperValue == "*" else f", upper=" f"{a.upperValue or 1}"
-                )
-                composite = ", composite=True" if a.aggregation == "composite" else ""
-                opposite = (
-                    f', opposite="{a.opposite.name}"'
-                    if a.opposite and a.opposite.name and a.opposite.class_
-                    else ""
-                )
+            lower = "" if a.lowerValue in (None, "0") else f", lower={a.lowerValue}"
+            upper = "" if a.upperValue == "*" else f", upper=" f"{a.upperValue or 1}"
+            composite = ", composite=True" if a.aggregation == "composite" else ""
+            opposite = (
+                f', opposite="{a.opposite.name}"'
+                if a.opposite and a.opposite.name and a.opposite.class_
+                else ""
+            )
 
+            f.write(
+                f'{cls.name}.{a.name} = association("{a.name}", {type_value}{lower}{upper}{composite}{opposite})\n'
+            )
+
+
+def write_subsets(cls, f):
+    for a in cls.attribute:
+        for slot in a.appliedStereotype[:].slot:
+            if slot.definingFeature.name == "subsets":
                 f.write(
-                    f'{cls.name}.{a.name} = association("{a.name}", {type_value}{lower}{upper}{composite}{opposite})\n'
+                    f"{cls.name}.{slot.value}.subsets.add({cls.name}.{a.name})  # type: ignore[attr-defined]\n"
                 )
 
 
@@ -195,31 +192,36 @@ def generate(
             element_factory,
             modeling_language,
         )
+
+    classes: List = element_factory.lselect(UML.Class)
+    classes, enumerations = find_enumerations(classes)
+    classes = filter_out_gaphor_profile(classes)
+
+    # Lambda key sort issue in mypy: https://github.com/python/mypy/issues/9656
+    classes = sorted(
+        (cls for cls in classes if cls.name[0] != "~"), key=lambda c: c.name  # type: ignore
+    )
+
+    hierarchy = create_class_hierarchy(classes)
+
+    uml_classes = filter_uml_classes(classes, modeling_language)
+
     with open(outfile, "w") as f:
         f.write(header)
-        classes: List = element_factory.lselect(UML.Class)
-        classes, enumerations = find_enumerations(classes)
-
-        # Lambda key sort issue in mypy: https://github.com/python/mypy/issues/9656
-        classes = sorted(
-            (cls for cls in classes if cls.name[0] != "~"), key=lambda c: c.name  # type: ignore
-        )
-
-        trees = create_class_trees(classes)
-        create_referenced(classes)
-
-        uml_classes = filter_uml_classes(classes, modeling_language)
         for cls in uml_classes:
             f.write(f"from gaphor.UML import {cls.name}\n")
 
         cls_written: Set[Element] = set(uml_classes)
-        for cls in trees.keys():
+        for cls in hierarchy.keys():
             cls.attribute.sort(key=lambda a: a.name or "")  # type: ignore[attr-defined]
-            write_class_def(cls, trees, f, cls_written)
+            write_class_def(cls, hierarchy, f, cls_written)
 
         f.write("\n\n")
 
-        for cls in trees.keys():
+        for cls in hierarchy.keys():
             write_properties(cls, f, enumerations)
+
+        for cls in hierarchy.keys():
+            write_subsets(cls, f)
 
     element_factory.shutdown()
