@@ -5,7 +5,7 @@
 To setup a development environment in Windows:
 1) Go to http://www.msys2.org/ and download the x86_64 installer
 1) Follow the instructions on the page for setting up the basic environment
-1) Run ``C:\msys64\mingw64.exe`` - a terminal window should pop up
+1) Run `C:\msys64\mingw64.exe` - a terminal window should pop up
 ```bash
 $ pacman -Suy
 $ pacman -S git mingw-w64-x86_64-gcc mingw-w64-x86_64-gtk3 \
@@ -14,12 +14,15 @@ mingw-w64-x86_64-gobject-introspection mingw-w64-x86_64-python \
 mingw-w64-x86_64-python-gobject mingw-w64-x86_64-python-cairo \
 mingw-w64-x86_64-python-pip
 ```
-
+Install Poetry (you may want to consider installing poetry via [pipx](https://pypi.org/project/pipx/), instead of pip):
+```bash
+pip install --user poetry
+```
 [Clone the
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 ```bash
 $ cd gaphor
-$ source venv
+$ poetry install
 $ poetry run gaphor
 ```
 
