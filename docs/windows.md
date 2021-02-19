@@ -20,7 +20,7 @@ $ pacman -S git \
     mingw-w64-x86_64-python-pip \
     mingw-w64-x86_64-python-setuptools \
 ```
-Install Poetry (you may want to consider installing poetry via [pipx](https://pypi.org/project/pipx/), instead of pip):
+Install Poetry:
 ```bash
 pip install --user poetry
 ```
