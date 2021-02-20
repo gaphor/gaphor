@@ -23,3 +23,4 @@ pacman --noconfirm -S --needed \
     mingw-w64-x86_64-python-cairo \
     mingw-w64-x86_64-python-pip \
     mingw-w64-x86_64-python-setuptools \
+    mingw-w64-x86_64-python-wheel \
