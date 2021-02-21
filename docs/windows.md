@@ -3,13 +3,14 @@
 ## Development Environment
 
 To setup a development environment in Windows:
+1) Install Git for Windows from https://gitforwindows.org
 1) Go to http://www.msys2.org/ and download the x86_64 installer
 1) Follow the instructions on the page for setting up the basic environment
 1) Run `C:\msys64\mingw64.exe` - a terminal window should pop up
+
 ```bash
 $ pacman -Suy
-$ pacman -S git \
-    mingw-w64-x86_64-gcc \
+$ pacman -S mingw-w64-x86_64-gcc \
     mingw-w64-x86_64-gtk3 \
     mingw-w64-x86_64-pkg-config \
     mingw-w64-x86_64-cairo \
@@ -20,7 +21,7 @@ $ pacman -S git \
     mingw-w64-x86_64-python-pip \
     mingw-w64-x86_64-python-setuptools \
     mingw-w64-x86_64-python-wheel
-$ echo 'export PATH=/mingw64/bin:$PATH' >> ~/.bash_profile
+$ echo 'export PATH="/c/Program Files/Git/bin:$PATH"' >> ~/.bash_profile
 ```
 
 Restart your terminal.
