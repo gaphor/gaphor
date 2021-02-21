@@ -8309,7 +8309,7 @@ Figure 9.36</val>
 <val>(1.0, 0.0, 0.0, 1.0, 141.5223388671875, 243.68771362304688)</val>
 </matrix>
 <width>
-<val>127.0</val>
+<val>134.0</val>
 </width>
 <height>
 <val>74.0</val>
@@ -8344,7 +8344,7 @@ Figure 9.36</val>
 <val>(1.0, 0.0, 0.0, 1.0, 201.97174072265625, 170.1216583251953)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (0.0, 73.56605529785156), (1.61651611328125, 73.56605529785156)]</val>
+<val>[(0.0, 0.0), (0.0, 73.56605529785156), (5.037472221795042, 73.56605529785156)]</val>
 </points>
 <head-connection>
 <ref refid="5aa86394-2a6c-11ea-99a7-7d79dbbd423e"/>
@@ -8384,7 +8384,7 @@ Figure 9.36</val>
 </reflist>
 </generalization>
 <name>
-<val>Partial Function</val>
+<val>PartialFunction</val>
 </name>
 <package>
 <ref refid="ea8708ce-242e-11ea-99a7-7d79dbbd423e"/>
@@ -34247,7 +34247,7 @@ Figure 9.87</val>
 <val>(1.0, 0.0, 0.0, 1.0, 44.168670654296875, 150.52545166015625)</val>
 </matrix>
 <width>
-<val>251.0</val>
+<val>261.0</val>
 </width>
 <height>
 <val>58.0</val>
@@ -34282,7 +34282,7 @@ Figure 9.87</val>
 <val>(1.0, 0.0, 0.0, 1.0, 163.94345092773438, 91.37042236328125)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (0.0, 59.155029296875), (4.969907895163374, 59.155029296875)]</val>
+<val>[(0.0, 0.0), (0.0, 59.155029296875), (9.939815790326747, 59.155029296875)]</val>
 </points>
 <head-connection>
 <ref refid="fa8b594c-2b3a-11ea-99a7-7d79dbbd423e"/>
@@ -34322,7 +34322,7 @@ Figure 9.87</val>
 </reflist>
 </generalization>
 <name>
-<val>Inadequate Controller Decisions</val>
+<val>InadequateControllerDecisions</val>
 </name>
 <package>
 <ref refid="4e7e2b3a-2b2f-11ea-99a7-7d79dbbd423e"/>
@@ -34403,7 +34403,7 @@ Figure 9.88</val>
 <val>(1.0, 0.0, 0.0, 1.0, 12.4490966796875, 152.73101806640625)</val>
 </matrix>
 <width>
-<val>231.0</val>
+<val>243.0</val>
 </width>
 <height>
 <val>74.0</val>
@@ -34438,7 +34438,7 @@ Figure 9.88</val>
 <val>(1.0, 0.0, 0.0, 1.0, 127.9490966796875, 101.91252136230469)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (0.0, 50.81849670410156), (-6.061846618652339, 50.81849670410156)]</val>
+<val>[(0.0, 0.0), (0.0, 50.81849670410156), (-0.3767477416992193, 50.81849670410156)]</val>
 </points>
 <head-connection>
 <ref refid="735e9c12-2b3b-11ea-99a7-7d79dbbd423e"/>
@@ -34455,7 +34455,7 @@ Figure 9.88</val>
 <val>100.0</val>
 </width>
 <height>
-<val>50.0</val>
+<val>61.0</val>
 </height>
 <diagram>
 <ref refid="6b303802-2b3b-11ea-99a7-7d79dbbd423e"/>
@@ -34478,7 +34478,7 @@ Figure 9.88</val>
 </reflist>
 </generalization>
 <name>
-<val>Inadequate Control Execution</val>
+<val>InadequateControlExecution</val>
 </name>
 <package>
 <ref refid="4e7e2b3a-2b2f-11ea-99a7-7d79dbbd423e"/>
@@ -34559,7 +34559,7 @@ Figure 9.89</val>
 <val>(1.0, 0.0, 0.0, 1.0, 14.89862060546875, 162.72503662109375)</val>
 </matrix>
 <width>
-<val>229.0</val>
+<val>236.0</val>
 </width>
 <height>
 <val>58.0</val>
@@ -34594,7 +34594,7 @@ Figure 9.89</val>
 <val>(1.0, 0.0, 0.0, 1.0, 126.7791748046875, 93.85617065429688)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (0.0, 68.86886596679688), (0.0, 68.86886596679688)]</val>
+<val>[(0.0, 0.0), (0.0, 68.86886596679688), (3.41992960434294, 68.86886596679688)]</val>
 </points>
 <head-connection>
 <ref refid="16af9768-2b3c-11ea-99a7-7d79dbbd423e"/>
@@ -34634,7 +34634,7 @@ Figure 9.89</val>
 </reflist>
 </generalization>
 <name>
-<val>Inadequate Process Behavior</val>
+<val>InadequateProcessBehavior</val>
 </name>
 <package>
 <ref refid="4e7e2b3a-2b2f-11ea-99a7-7d79dbbd423e"/>
@@ -34692,7 +34692,7 @@ Figure 9.90</val>
 <val>(1.0, 0.0, 0.0, 1.0, 20.4029541015625, 135.76266479492188)</val>
 </matrix>
 <width>
-<val>255.0</val>
+<val>263.0</val>
 </width>
 <height>
 <val>58.0</val>
@@ -34750,7 +34750,7 @@ Figure 9.90</val>
 <val>(1.0, 0.0, 0.0, 1.0, 144.81924438476562, 51.78034973144531)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (0.0, 83.98231506347656), (-1.703582763671875, 83.98231506347656)]</val>
+<val>[(0.0, 0.0), (0.0, 83.98231506347656), (2.146227668313429, 83.98231506347656)]</val>
 </points>
 <head-connection>
 <ref refid="556c91f4-2b3c-11ea-99a7-7d79dbbd423e"/>
@@ -34764,7 +34764,7 @@ Figure 9.90</val>
 <val>(1.0, 0.0, 0.0, 1.0, 266.7884521484375, -21.219650268554688)</val>
 </matrix>
 <width>
-<val>100.0</val>
+<val>124.2115478515625</val>
 </width>
 <height>
 <val>50.0</val>
@@ -34790,7 +34790,7 @@ Figure 9.90</val>
 </reflist>
 </generalization>
 <name>
-<val>Inadequate Feedback and Inputs</val>
+<val>InadequateFeedbackAndInputs</val>
 </name>
 <package>
 <ref refid="4e7e2b3a-2b2f-11ea-99a7-7d79dbbd423e"/>
