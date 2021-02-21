@@ -20,15 +20,30 @@ $ pacman -S git \
     mingw-w64-x86_64-python-pip \
     mingw-w64-x86_64-python-setuptools \
     mingw-w64-x86_64-python-wheel
+$ echo 'export PATH=/mingw64/bin:$PATH' >> ~/.bash_profile
 ```
+
+Restart your terminal.
+
 Install Poetry:
+
 ```bash
-pip install --user poetry
+$ pip install poetry
 ```
+
 [Clone the
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
+
+Create and activate a virtual environment in which Gaphor can be installed.
 ```bash
 $ cd gaphor
+$ python -m venv .venv
+$ source .venv/bin/activate
+```
+
+Install Gaphor and give it a try:
+
+```bash
 $ poetry install
 $ poetry run gaphor
 ```
