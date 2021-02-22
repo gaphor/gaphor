@@ -8,11 +8,15 @@ To setup a development environment with macOS:
 ```bash
 $ brew install python3 gobject-introspection gtk+3 adwaita-icon-theme gtk-mac-integration
 ```
+Install Poetry (you may want to consider installing poetry via [pipx](https://pypi.org/project/pipx/), instead of pip):
+```bash
+pip install --user poetry
+```
 [Clone the
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 ```
 $ cd gaphor
-$ source ./venv
+$ poetry install
 $ poetry run gaphor
 ```
 
