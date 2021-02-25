@@ -5903,7 +5903,6 @@ Figure 9.29</val>
 <Stereotype id="2741c35e-242e-11ea-99a7-7d79dbbd423e">
 <generalization>
 <reflist>
-<ref refid="2feac334-242e-11ea-99a7-7d79dbbd423e"/>
 <ref refid="0c859e5c-757f-11eb-9172-18cf5efc6bb9"/>
 </reflist>
 </generalization>
@@ -5969,19 +5968,6 @@ Figure 9.29</val>
 <ref refid="2741c35e-242e-11ea-99a7-7d79dbbd423e"/>
 </type>
 </ExtensionEnd>
-<Generalization id="2feac334-242e-11ea-99a7-7d79dbbd423e">
-<general>
-<ref refid="7833aba0-2362-11ea-ab0b-c72c0738acd2"/>
-</general>
-<presentation>
-<reflist>
-<ref refid="2a6b462a-6110-11eb-99b9-cd6db3e64d02"/>
-</reflist>
-</presentation>
-<specific>
-<ref refid="2741c35e-242e-11ea-99a7-7d79dbbd423e"/>
-</specific>
-</Generalization>
 <Comment id="3c613419-242e-11ea-99a7-7d79dbbd423e">
 <body>
 <val>RAAML 1.0
@@ -32226,13 +32212,13 @@ Figure 9.80</val>
 <val>1</val>
 </orthogonal>
 <subject>
-<ref refid="4f5f38c6-2b36-11ea-99a7-7d79dbbd423e"/>
+<ref refid="113e7866-6cd2-11eb-9cb6-b14bb5bac2d1"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 157.51043701171875, 133.7564697265625)</val>
 </matrix>
 <points>
-<val>[(-0.19521407793666867, -37.0), (-0.19521407793666867, 67.05575561523438), (2.0, 67.05575561523438)]</val>
+<val>[(1.48956298828125, -37.0), (1.48956298828125, 67.05575561523438), (2.0, 67.05575561523438)]</val>
 </points>
 <head-connection>
 <ref refid="c02de368-7649-11eb-9fe2-18cf5efc6bb9"/>
@@ -32285,7 +32271,6 @@ Figure 9.80</val>
 </appliedStereotype>
 <generalization>
 <reflist>
-<ref refid="4f5f38c6-2b36-11ea-99a7-7d79dbbd423e"/>
 <ref refid="113e7866-6cd2-11eb-9cb6-b14bb5bac2d1"/>
 </reflist>
 </generalization>
@@ -32314,19 +32299,6 @@ Figure 9.80</val>
 </reflist>
 </extended>
 </InstanceSpecification>
-<Generalization id="4f5f38c6-2b36-11ea-99a7-7d79dbbd423e">
-<general>
-<ref refid="9e91f0ea-2b3c-11ea-99a7-7d79dbbd423e"/>
-</general>
-<presentation>
-<reflist>
-<ref refid="4dcf6148-2b36-11ea-99a7-7d79dbbd423e"/>
-</reflist>
-</presentation>
-<specific>
-<ref refid="2a5465c4-2b36-11ea-99a7-7d79dbbd423e"/>
-</specific>
-</Generalization>
 <Comment id="5310ae1f-2b36-11ea-99a7-7d79dbbd423e">
 <body>
 <val>RAAML 1.0
@@ -32402,7 +32374,7 @@ Figure 9.81</val>
 <val>0</val>
 </horizontal>
 <subject>
-<ref refid="fd391240-7640-11eb-9fe2-18cf5efc6bb9"/>
+<ref refid="ee69c034-7640-11eb-9fe2-18cf5efc6bb9"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 161.5655847255451, 101.0)</val>
@@ -32445,7 +32417,6 @@ Figure 9.81</val>
 <generalization>
 <reflist>
 <ref refid="ee69c034-7640-11eb-9fe2-18cf5efc6bb9"/>
-<ref refid="fd391240-7640-11eb-9fe2-18cf5efc6bb9"/>
 </reflist>
 </generalization>
 <name>
@@ -44200,6 +44171,7 @@ Figure 9.7</val>
 <ref refid="dede39aa-6110-11eb-99b9-cd6db3e64d02"/>
 <ref refid="30d623c6-757f-11eb-9172-18cf5efc6bb9"/>
 <ref refid="e5c310a0-757f-11eb-9172-18cf5efc6bb9"/>
+<ref refid="02628bb6-7704-11eb-9fe2-18cf5efc6bb9"/>
 </reflist>
 </ownedPresentation>
 <package>
@@ -44531,13 +44503,13 @@ Figure 9.7</val>
 <val>1</val>
 </orthogonal>
 <subject>
-<ref refid="2feac334-242e-11ea-99a7-7d79dbbd423e"/>
+<ref refid="0c859e5c-757f-11eb-9172-18cf5efc6bb9"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 691.640625, 113.0)</val>
 </matrix>
 <points>
-<val>[(35.81216917778238, 70.0), (35.81216917778238, 97.0), (189.86734693877554, 97.0), (189.86734693877554, 131.0)]</val>
+<val>[(37.74348001197575, 70.0), (37.74348001197575, 97.0), (189.86734693877554, 97.0), (189.86734693877554, 131.0)]</val>
 </points>
 <head-connection>
 <ref refid="30d623c6-757f-11eb-9172-18cf5efc6bb9"/>
@@ -44684,6 +44656,23 @@ Figure 9.7</val>
 </diagram>
 <subject>
 <ref refid="dde0bab8-235f-11ea-ab0b-c72c0738acd2"/>
+</subject>
+</item>
+<item id="02628bb6-7704-11eb-9fe2-18cf5efc6bb9" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 805.3841050119757, 45.870745823408136)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<diagram>
+<ref refid="c77ff188-610e-11eb-99b9-cd6db3e64d02"/>
+</diagram>
+<subject>
+<ref refid="02626c3a-7704-11eb-9fe2-18cf5efc6bb9"/>
 </subject>
 </item>
 </canvas>
@@ -49941,6 +49930,7 @@ Figure 10.9</val>
 <presentation>
 <reflist>
 <ref refid="0fccf55c-6cd2-11eb-9cb6-b14bb5bac2d1"/>
+<ref refid="4dcf6148-2b36-11ea-99a7-7d79dbbd423e"/>
 </reflist>
 </presentation>
 <specific>
@@ -54832,6 +54822,7 @@ Text: Proposals shall support the assignment of the integrity levels to safety-r
 <presentation>
 <reflist>
 <ref refid="2e467072-242e-11ea-99a7-7d79dbbd423e"/>
+<ref refid="2a6b462a-6110-11eb-99b9-cd6db3e64d02"/>
 </reflist>
 </presentation>
 <specific>
@@ -54857,18 +54848,6 @@ Text: Proposals shall support the assignment of the integrity levels to safety-r
 <presentation>
 <reflist>
 <ref refid="edae83c8-7640-11eb-9fe2-18cf5efc6bb9"/>
-</reflist>
-</presentation>
-<specific>
-<ref refid="8d519386-2b36-11ea-99a7-7d79dbbd423e"/>
-</specific>
-</Generalization>
-<Generalization id="fd391240-7640-11eb-9fe2-18cf5efc6bb9">
-<general>
-<ref refid="9e91f0ea-2b3c-11ea-99a7-7d79dbbd423e"/>
-</general>
-<presentation>
-<reflist>
 <ref refid="fc6bb1ba-7640-11eb-9fe2-18cf5efc6bb9"/>
 </reflist>
 </presentation>
@@ -55249,4 +55228,15 @@ Text: Proposals shall support the assignment of the integrity levels to safety-r
 <ref refid="03a676ea-2430-11ea-99a7-7d79dbbd423e"/>
 </type>
 </ExtensionEnd>
+<Comment id="02626c3a-7704-11eb-9fe2-18cf5efc6bb9">
+<body>
+<val>RAAML 1.0
+Figure 10.4</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="02628bb6-7704-11eb-9fe2-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Comment>
 </gaphor>
