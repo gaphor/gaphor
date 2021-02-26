@@ -40,11 +40,11 @@ class StatusWindow:
         be referenced later.
         """
 
-        frame = Gtk.Frame()
-        vbox = Gtk.VBox(spacing=12)
-        label = Gtk.Label(label=self.message)
+        frame = Gtk.Frame.new(None)
+        vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, spacing=12)
+        label = Gtk.Label.new(self.message)
 
-        self.progress_bar = Gtk.ProgressBar()
+        self.progress_bar = Gtk.ProgressBar.new()
         self.window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
 
         self.window.set_title(self.title)
