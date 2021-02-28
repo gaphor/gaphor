@@ -16,8 +16,8 @@ changes, and helping you finalize your pull requests.
 
 Gaphor is an open source project and we love to receive contributions from our
 community — you! There are many ways to contribute, from writing tutorials or
-blog posts, improving the documentation, submitting bug reports and feature
-requests or writing code which can be incorporated into Gaphor itself.
+blog posts, improving the documentation, translating the app, submitting bug reports
+and feature requests or writing code which can be incorporated into Gaphor itself.
 
 ### What we are not Looking For
 
@@ -117,6 +117,11 @@ needs. Many of the features that Gaphor has today have been added
 because our users saw the need. Open an issue on our issues list on GitHub
 which describes the feature you would like to see, why you need it, and how it
 should work.
+
+# How to translate the app
+Go to the [translation folder](https://github.com/gaphor/gaphor/tree/master/po).
+If needed, edit an existing language file (.po) or start and a new translation
+with the "gaphor.pot" file and send a Pull Request.
 
 # Code review process
 
