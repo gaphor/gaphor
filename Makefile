@@ -36,6 +36,9 @@ gaphor/UML/uml.py: models/UML.gaphor models/UML.override gaphor/codegen/uml_code
 gaphor/SysML/sysml.py: models/SysML.gaphor models/SysML.override gaphor/codegen/profile_coder.py gaphor/codegen/override.py gaphor/codegen/writer.py
 	poetry run gaphor/codegen/codegen.py --profile models/SysML.gaphor $@ models/SysML.override && black $@ && isort $@ && mypy gaphor/SysML
 
+gaphor/RAAML/fta.py: models/FTA.gaphor models/FTA.override gaphor/codegen/profile_coder.py gaphor/codegen/override.py gaphor/codegen/writer.py
+	poetry run gaphor/codegen/codegen.py --profile models/FTA.gaphor $@ models/FTA.override && mypy gaphor/RAAML/fta* && isort $@ && black $@
+
 gaphor/RAAML/raaml.py: models/RAAML.gaphor models/RAAML.override gaphor/codegen/profile_coder.py gaphor/codegen/override.py gaphor/codegen/writer.py
 	poetry run gaphor/codegen/codegen.py --profile models/RAAML.gaphor $@ models/RAAML.override && mypy gaphor/RAAML && isort $@ && black $@
 
