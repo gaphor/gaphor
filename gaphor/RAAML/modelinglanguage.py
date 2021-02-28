@@ -5,8 +5,9 @@ import gaphor.SysML.propertypages  # noqa
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
+from gaphor.RAAML import diagramitems
+from gaphor.RAAML import fta as raaml
 from gaphor.RAAML.toolbox import raaml_toolbox_actions
-from gaphor.SysML import diagramitems, sysml
 
 
 class RAAMLModelingLanguage(ModelingLanguage):
@@ -19,7 +20,7 @@ class RAAMLModelingLanguage(ModelingLanguage):
         return raaml_toolbox_actions
 
     def lookup_element(self, name):
-        return getattr(sysml, name, None)
+        return getattr(raaml, name, None)
 
     def lookup_diagram_item(self, name):
         return getattr(diagramitems, name, None)

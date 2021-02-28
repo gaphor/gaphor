@@ -9,8 +9,7 @@ from gaphor.diagram.diagramtoolbox import (
     namespace_config,
 )
 from gaphor.diagram.diagramtools import new_item_factory
-from gaphor.SysML import diagramitems as sysml_items
-from gaphor.SysML import sysml
+from gaphor.RAAML import diagramitems, raaml
 from gaphor.UML import diagramitems as uml_items
 
 FTA = ToolSection(
@@ -22,7 +21,7 @@ FTA = ToolSection(
             "gaphor-and-symbolic",
             "a",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.ANDItem, raaml.AND, config_func=namespace_config
             ),
         ),
         ToolDef(
@@ -31,7 +30,7 @@ FTA = ToolSection(
             "gaphor-or-symbolic",
             "o",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.ORItem, raaml.OR, config_func=namespace_config
             ),
         ),
         ToolDef(
@@ -40,7 +39,7 @@ FTA = ToolSection(
             "gaphor-not-symbolic",
             "n",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.NOTItem, raaml.NOT, config_func=namespace_config
             ),
         ),
         ToolDef(
@@ -49,7 +48,7 @@ FTA = ToolSection(
             "gaphor-seq-symbolic",
             "n",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.SEQItem, raaml.SEQ, config_func=namespace_config
             ),
         ),
         ToolDef(
@@ -58,7 +57,7 @@ FTA = ToolSection(
             "gaphor-xor-symbolic",
             "x",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.XORItem, raaml.XOR, config_func=namespace_config
             ),
         ),
         ToolDef(
@@ -67,7 +66,9 @@ FTA = ToolSection(
             "gaphor-majority-vote-symbolic",
             "m",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.MajorityVoteItem,
+                raaml.MAJORITY_VOTE,
+                config_func=namespace_config,
             ),
         ),
         ToolDef(
@@ -76,7 +77,9 @@ FTA = ToolSection(
             "gaphor-transfer-in-symbolic",
             "t",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.TransferInItem,
+                raaml.TransferIn,
+                config_func=namespace_config,
             ),
         ),
         ToolDef(
@@ -85,7 +88,7 @@ FTA = ToolSection(
             "gaphor-inhibit-symbolic",
             "i",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.InhibitItem, raaml.INHIBIT, config_func=namespace_config
             ),
         ),
         ToolDef(
@@ -94,7 +97,9 @@ FTA = ToolSection(
             "gaphor-basic-event-symbolic",
             "b",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.BasicEventItem,
+                raaml.BasicEvent,
+                config_func=namespace_config,
             ),
         ),
         ToolDef(
@@ -103,7 +108,9 @@ FTA = ToolSection(
             "gaphor-conditional-event-symbolic",
             "b",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.ConditionalEventItem,
+                raaml.ConditionalEvent,
+                config_func=namespace_config,
             ),
         ),
         ToolDef(
@@ -112,7 +119,9 @@ FTA = ToolSection(
             "gaphor-dormant-event-symbolic",
             "b",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.DormantEventItem,
+                raaml.DormantEvent,
+                config_func=namespace_config,
             ),
         ),
         ToolDef(
@@ -121,7 +130,9 @@ FTA = ToolSection(
             "gaphor-house-event-symbolic",
             "h",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.HouseEventItem,
+                raaml.HouseEvent,
+                config_func=namespace_config,
             ),
         ),
         ToolDef(
@@ -130,7 +141,9 @@ FTA = ToolSection(
             "gaphor-zero-event-symbolic",
             "z",
             new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
+                diagramitems.ZeroEventItem,
+                raaml.ZeroEvent,
+                config_func=namespace_config,
             ),
         ),
         ToolDef(
