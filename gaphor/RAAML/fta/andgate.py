@@ -1,52 +1,46 @@
 """AND gate item definition."""
 
-from gaphas.geometry import Rectangle
-
-from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
 )
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
+from gaphor.diagram.shapes import Box, EditableText, IconBox, Text
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
+from gaphor.RAAML.fta.svgicon import draw_svg_icon, load_svg_icon
 from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(raaml.AND)
 class ANDItem(ElementPresentation, Classified):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        self.icon, width, height = load_svg_icon("and.svg")
+        super().__init__(diagram, id, width=width, height=height)
+
+        for handle in self.handles():
+            handle.movable = False
 
         self.watch("subject[NamedElement].name").watch(
             "subject[NamedElement].namespace.name"
         )
 
     def update_shapes(self, event=None):
-        self.shape = Box(
-            Box(
-                Text(
-                    text=lambda: stereotypes_str(self.subject, ["AND"]),
-                ),
-                EditableText(
-                    text=lambda: self.subject.name or "",
-                    width=lambda: self.width - 4,
-                    style={
-                        "font-weight": FontWeight.BOLD,
-                        "font-style": FontStyle.NORMAL,
-                    },
-                ),
-                Text(
-                    text=lambda: from_package_str(self),
-                    style={"font-size": "x-small"},
-                ),
-                style={"padding": (12, 4, 12, 4)},
+        self.shape = IconBox(
+            Box(draw=draw_svg_icon(self.icon)),
+            Text(
+                text=lambda: stereotypes_str(self.subject),
             ),
-            draw=draw_and_gate,
+            EditableText(
+                text=lambda: self.subject.name or "",
+                style={
+                    "font-weight": FontWeight.BOLD,
+                    "font-style": FontStyle.NORMAL,
+                },
+            ),
+            Text(
+                text=lambda: from_package_str(self),
+                style={"font-size": "x-small"},
+            ),
         )
-
-
-def draw_and_gate(box, context: DrawContext, bounding_box: Rectangle):
-    draw_border(box, context, bounding_box)
