@@ -48,7 +48,7 @@ def on_motion(controller, x, y, item_class: Type[Presentation]):
             Connector, parent_type, item_class  # type: ignore[arg-type]
         )
         view.selection.dropzone_item = parent if dropzone else None
-        model.request_update(parent, matrix=False)
+        model.request_update(parent)
     else:
         if view.selection.dropzone_item:
             model.request_update(view.selection.dropzone_item)
@@ -86,14 +86,14 @@ class DropZoneMove(GuidedItemMove):
             group = Group(current_parent, item)
             if group:
                 view.selection.dropzone_item = current_parent
-                current_parent.request_update(matrix=False)
+                current_parent.request_update()
 
         if over_item:
             # are we going to add to parent?
             group = Group(over_item, item)
             if group and group.can_contain():
                 view.selection.dropzone_item = over_item
-                over_item.request_update(matrix=False)
+                over_item.request_update()
 
     def stop_move(self, pos):
         """Motion stops: drop!"""
@@ -106,7 +106,7 @@ class DropZoneMove(GuidedItemMove):
 
             if new_parent is old_parent:
                 if old_parent is not None:
-                    old_parent.request_update(matrix=False)
+                    old_parent.request_update()
                 return
 
             if old_parent:

@@ -194,7 +194,7 @@ class ConnectorConnectBase(BaseConnector):
             for ci in connections:
                 c = self.get_component(ci.item)
                 self.drop_uml(ci.item, c)
-                line.request_update(matrix=False)  # type: ignore[call-arg] # noqa: F821
+                line.request_update()
             connector.unlink()
         else:
             c = self.get_component(line)

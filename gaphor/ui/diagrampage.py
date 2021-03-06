@@ -302,7 +302,7 @@ class DiagramPage:
 
         view.queue_redraw()
 
-    def _on_view_selection_changed(self):
+    def _on_view_selection_changed(self, item):
         view = self.view
         assert view
         selection = view.selection
