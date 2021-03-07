@@ -1,7 +1,5 @@
 """SEQ gate item definition."""
 
-from math import pi
-
 from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling import DrawContext
@@ -15,6 +13,7 @@ from gaphor.diagram.shapes import Box, EditableText, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
+from gaphor.RAAML.fta.andgate import draw_and_gate
 from gaphor.UML.modelfactory import stereotypes_str
 
 
@@ -56,6 +55,7 @@ class SEQItem(ElementPresentation, Classified):
 
 
 def draw_seq_gate(box, context: DrawContext, bounding_box: Rectangle):
+    draw_and_gate(box, context, bounding_box)
     cr = context.cairo
     left = bounding_box.width / 3.0
     right = bounding_box.width * 2.0 / 3.0
@@ -63,40 +63,9 @@ def draw_seq_gate(box, context: DrawContext, bounding_box: Rectangle):
     wall_top = bounding_box.height / 4.0 + 4.0
     wall_bottom = shape_height * 4.0 / 5.0 + 4.0
 
-    # Left wall
-    cr.move_to(left, wall_bottom)
-    cr.line_to(left, wall_top)
-
-    # Right wall
-    cr.move_to(right, wall_bottom)
-    cr.line_to(right, wall_top)
-
-    # Top arc
-    rx = right - left
-    ry = bounding_box.height * 2.0 / 5.0
-    cr.move_to(left, wall_top)
-    cr.save()
-    cr.translate(left + rx / 2.0, wall_top)
-    cr.scale(rx / 2.0, ry / 2.0)
-    cr.arc(0.0, 0.0, 1.0, pi, 0)
-    cr.restore()
-
     # Triangle
     cr.move_to(left, wall_bottom)
-    cr.line_to(right, wall_bottom)
+    ry = bounding_box.height * 2.0 / 5.0
     cr.line_to(bounding_box.width / 2.0, wall_top - ry / 2.0)
-    cr.line_to(left, wall_bottom)
-
-    # Bottom vertical lines
-    left_line = left + rx / 5.0
-    cr.move_to(left_line, wall_bottom)
-    cr.line_to(left_line, bounding_box.height - 40)
-    right_line = right - rx / 5.0
-    cr.move_to(right_line, wall_bottom)
-    cr.line_to(right_line, bounding_box.height - 40)
-
-    # Top vertical line
-    center = bounding_box.width / 2.0
-    cr.move_to(center, wall_top - ry / 2.0)
-    cr.line_to(center, 0)
+    cr.line_to(right, wall_bottom)
     stroke(context)
