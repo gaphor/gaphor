@@ -10,8 +10,8 @@ class ViewMock:
         self.updates = []
         diagram.register_view(self)
 
-    def request_update(self, items=(), matrix_items=(), removed_items=()):
-        self.updates.append((items, matrix_items, removed_items))
+    def request_update(self, items=(), removed_items=()):
+        self.updates.append((items, removed_items))
 
 
 def test_undo_should_remove_show_item_on_diagram(
@@ -27,7 +27,7 @@ def test_undo_should_remove_show_item_on_diagram(
 
     undo_manager.undo_transaction()
 
-    items, matrix_items, removed_items = view.updates[-1]
+    items, removed_items = view.updates[-1]
 
     assert cls in removed_items, view.updates
 
@@ -45,6 +45,6 @@ def test_redo_should_show_item_on_diagram(event_manager, element_factory, undo_m
     undo_manager.undo_transaction()
     undo_manager.redo_transaction()
 
-    items, matrix_items, removed_items = view.updates[-1]
+    items, removed_items = view.updates[-1]
 
     assert cls in items, view.updates

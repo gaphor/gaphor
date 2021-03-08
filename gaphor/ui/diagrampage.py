@@ -5,10 +5,10 @@ from typing import Dict, Optional, Sequence, Tuple
 
 from gaphas.guide import GuidePainter
 from gaphas.painter import (
-    BoundingBoxPainter,
     FreeHandPainter,
     HandlePainter,
     PainterChain,
+    RenderedItemPainter,
 )
 from gaphas.segment import LineSegmentPainter
 from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
@@ -290,17 +290,17 @@ class DiagramPage:
         if sloppiness:
             item_painter = FreeHandPainter(item_painter, sloppiness=sloppiness)
 
+        view.bounding_box_painter = item_painter
         view.painter = (
             PainterChain()
-            .append(item_painter)
+            .append(RenderedItemPainter(view))
             .append(HandlePainter(view))
             .append(LineSegmentPainter(view.selection))
             .append(GuidePainter(view))
             .append(RubberbandPainter(self.rubberband_state))
         )
-        view.bounding_box_painter = BoundingBoxPainter(item_painter)
 
-        view.queue_redraw()
+        view.request_update(self.diagram.get_all_items())
 
     def _on_view_selection_changed(self, item):
         view = self.view
