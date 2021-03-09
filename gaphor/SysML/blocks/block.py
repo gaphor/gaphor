@@ -7,7 +7,6 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import (
     Box,
-    EditableText,
     Text,
     TextAlign,
     VerticalAlign,
@@ -57,7 +56,7 @@ class BlockItem(ElementPresentation[Block], Classified):
                 Text(
                     text=lambda: stereotypes_str(self.subject, ["block"]),
                 ),
-                EditableText(
+                Text(
                     text=lambda: self.subject.name or "",
                     width=lambda: self.width - 4,
                     style={

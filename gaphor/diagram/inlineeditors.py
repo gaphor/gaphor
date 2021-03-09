@@ -8,8 +8,7 @@ from gaphas.geometry import Rectangle
 from gi.repository import Gdk, Gtk
 
 from gaphor.core import transactional
-from gaphor.diagram import shapes as _shapes
-from gaphor.diagram.presentation import ElementPresentation, LinePresentation, Named
+from gaphor.diagram.presentation import LinePresentation, Named
 
 
 @singledispatch
@@ -36,8 +35,13 @@ def named_item_inline_editor(item, view, pos=None) -> bool:
     if not subject:
         return False
 
-    box = editable_text_box(view, view.selection.hovered_item)
-    if not box:
+    if isinstance(item, LinePresentation):
+        box = item.middle_shape_size
+        i2v = view.get_matrix_i2v(item)
+        x, y = i2v.transform_point(box.x, box.y)
+        w, h = i2v.transform_distance(box.width, box.height)
+        box = Rectangle(x, y, w, h)
+    else:
         box = view.get_item_bounding_box(view.selection.hovered_item)
     name = subject.name or ""
     entry = popup_entry(name, update_text)
@@ -82,24 +86,3 @@ def show_popover(widget, view, box, escape=None):
     popover.connect("key-press-event", on_escape)
     popover.popup()
     return popover
-
-
-def editable_text_box(view, item):
-    def find(*shapes):
-        for shape in shapes:
-            if isinstance(shape, (_shapes.Box, _shapes.IconBox)):
-                box = find(*shape.children)
-                if box:
-                    return box
-            elif isinstance(shape, _shapes.EditableText):
-                box = shape.bounding_box
-                i2v = view.get_matrix_i2v(item)
-                x, y = i2v.transform_point(box.x, box.y)
-                w, h = i2v.transform_distance(box.width, box.height)
-                # Add a little bit of padding, 'cause that makes it look so good
-                return Rectangle(x - 6, y - 6, w + 12, h + 12)
-
-    if isinstance(item, ElementPresentation):
-        return find(item.shape)
-    elif isinstance(item, LinePresentation):
-        return find(item.shape_middle, item.shape_head, item.shape_tail)

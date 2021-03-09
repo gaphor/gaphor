@@ -1,9 +1,6 @@
 """Support classes for dealing with text."""
 
-from typing import Tuple, Union
-
 from gaphas.canvas import instant_cairo_context
-from gaphas.geometry import Rectangle
 from gaphas.painter.boundingboxpainter import CairoBoundingBoxContext
 from gaphas.painter.freehand import FreeHandCairoContext
 from gi.repository import GLib, Pango, PangoCairo
@@ -123,25 +120,6 @@ class Layout:
             cr.stroke()
         else:
             PangoCairo.show_layout(cr, layout)
-
-
-def focus_box_pos(
-    bounding_box: Rectangle,
-    text_size: Tuple[Union[float, int], Union[float, int]],
-    text_align: TextAlign,
-) -> Tuple[int, int]:
-    """Calculate the focus box position based on alignment style."""
-    x, y, width, height = bounding_box
-    w, h = text_size
-
-    if text_align is TextAlign.CENTER:
-        x += (width - w) / 2
-    elif text_align is TextAlign.RIGHT:
-        x += width - w
-
-    y += (height - h) / 2
-
-    return x, y
 
 
 def text_point_at_line(points, size, text_align):

@@ -202,6 +202,10 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     orthogonal: attribute[int] = attribute("orthogonal", int, 0)
     horizontal: attribute[int] = attribute("horizontal", int, 0)
 
+    @property
+    def middle_shape_size(self) -> Rectangle:
+        return self._shape_middle_rect
+
     def insert_handle(self, index: int, handle: Handle) -> None:
         super().insert_handle(index, handle)
         self.watch_handle(handle)

@@ -4,7 +4,7 @@ from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import FontWeight, VerticalAlign
 from gaphor.diagram.presentation import Classified, ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state, draw_border
+from gaphor.diagram.shapes import Box, Text, cairo_state, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments
 
@@ -31,7 +31,7 @@ class ComponentItem(ElementPresentation, Classified):
                 Text(
                     text=lambda: UML.model.stereotypes_str(self.subject),
                 ),
-                EditableText(
+                Text(
                     text=lambda: self.subject.name or "",
                     style={"font-weight": FontWeight.BOLD},
                 ),
