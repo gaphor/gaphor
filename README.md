@@ -18,13 +18,9 @@
 Gaphor is a UML and SysML modeling application written in Python.
 It is designed to be easy to use, while still being powerful. Gaphor implements a fully-compliant UML 2 data model, so it is much more than a picture drawing tool. You can use Gaphor to quickly visualize different aspects of a system as well as create complete, highly complex models.
 
-<div align="center">
-<br/>
-<img src="https://github.com/gaphor/gaphor/blob/master/docs/images/gaphor-demo.gif?raw=true" width="75%">
-<br/><br/>
-</div>
+![Gaphor Demo](https://raw.githubusercontent.com/gaphor/gaphor/master/docs/images/gaphor-demo.gif)
 
-## :bookmark_tabs: Table of Contents
+## 📑 Table of Contents
 
 - [Background](#background)
 - [Install](#floppy_disk-install)
@@ -32,7 +28,7 @@ It is designed to be easy to use, while still being powerful. Gaphor implements 
 - [Contributing](#contributing)
 - [License](#license)
 
-## :scroll: Background
+## 📜 Background
 
 Gaphor is a UML and SysML modeling application written in Python. We designed
 it to be easy to use, while still being powerful. Gaphor implements a
@@ -51,7 +47,7 @@ Gaphor is a GUI application that is built on
 [Gaphas](https://github.com/gaphor/gaphas) provides
 the foundational diagramming functionality.
 
-## :floppy_disk: Install
+## 💾 Install
 
 You can find [the latest version](https://gaphor.org/download) on the [gaphor.org website](https://gaphor.org/download).
 Gaphor ships installers for macOS and Windows. Those can be found there.
@@ -62,7 +58,7 @@ All releases are available on
 
 If you want to start developing on Gaphor, have a look at the [Installation section of our Tech docs](https://gaphor.readthedocs.io/en/latest/).
 
-## :flashlight: Usage
+## 🔦 Usage
 ### Creating models
 
 Once Gaphor is started a new empty model is automatically created. The main
@@ -104,7 +100,7 @@ Elements can also be dragged within the Navigation in order to rearrange them
 in to different packages.
 
 
-## :heart: Contributing
+## ♥ Contributing
 
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
@@ -189,8 +185,9 @@ specification. Contributions of any kind are welcome!
 See [the contributing file](CONTRIBUTING.md)!
 
 
-## :copyright: License
-Copyright (C) Arjan Molenaar and Dan Yeaw
+## © License
+
+Copyright © Arjan Molenaar and Dan Yeaw
 
 Licensed under the [Apache License v2](LICENSE.txt).
 
