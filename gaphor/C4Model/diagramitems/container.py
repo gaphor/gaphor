@@ -2,7 +2,7 @@ from gaphor.C4Model import c4model
 from gaphor.core import gettext
 from gaphor.core.styling import FontWeight, TextAlign, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
+from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
 
 
@@ -22,7 +22,7 @@ class C4ContainerItem(ElementPresentation, Named):
             TextAlign.LEFT if self.diagram and self.children else TextAlign.CENTER
         )
         self.shape = Box(
-            EditableText(
+            Text(
                 text=lambda: self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD, "text-align": text_align},
             ),

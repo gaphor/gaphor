@@ -3,7 +3,7 @@
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, draw_border
+from gaphor.diagram.shapes import Box, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -27,7 +27,7 @@ class ObjectNodeItem(ElementPresentation, Named):
                     Text(
                         text=lambda: stereotypes_str(self.subject),
                     ),
-                    EditableText(text=lambda: self.subject.name or ""),
+                    Text(text=lambda: self.subject.name or ""),
                     style={
                         "padding": (4, 12, 4, 12),
                     },

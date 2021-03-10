@@ -33,7 +33,7 @@ from gaphas.solver import STRONG, MultiConstraint
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state, stroke
+from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.modelfactory import stereotypes_str
@@ -156,7 +156,7 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(
+            Text(
                 text=lambda: self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD},
             ),

@@ -4,7 +4,7 @@ from math import pi
 
 from gaphor import UML
 from gaphor.diagram.presentation import Classified, ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
+from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.modelfactory import stereotypes_str
@@ -33,7 +33,7 @@ class ActorItem(ElementPresentation, Classified):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(
+            Text(
                 text=lambda: self.subject.name or "",
                 style={"font-weight": FontWeight.BOLD},
             ),

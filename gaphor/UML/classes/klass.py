@@ -15,13 +15,7 @@ from gaphor.diagram.presentation import (
     ElementPresentation,
     from_package_str,
 )
-from gaphor.diagram.shapes import (
-    Box,
-    EditableText,
-    Text,
-    draw_border,
-    draw_top_separator,
-)
+from gaphor.diagram.shapes import Box, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments
 
@@ -75,7 +69,7 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
                         self.subject, self.additional_stereotypes()
                     ),
                 ),
-                EditableText(
+                Text(
                     text=lambda: self.subject.name or "",
                     style={
                         "font-weight": FontWeight.BOLD,

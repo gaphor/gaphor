@@ -24,13 +24,11 @@ from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
     Box,
-    EditableText,
     Text,
     cairo_state,
     draw_default_head,
     draw_default_tail,
     stroke,
-    text_draw_focus_box,
 )
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout, middle_segment
@@ -63,7 +61,7 @@ class AssociationItem(LinePresentation[UML.Association], Named):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(text=lambda: self.subject.name or ""),
+            Text(text=lambda: self.subject.name or ""),
         )
 
         # For the association ends:
@@ -488,6 +486,3 @@ class AssociationEnd:
         self._name_layout.show_layout(cr)
         cr.move_to(self._mult_bounds.x, self._mult_bounds.y)
         self._mult_layout.show_layout(cr)
-
-        for b in (self._name_bounds, self._mult_bounds):
-            text_draw_focus_box(context, b.x, b.y, b.width, b.height)

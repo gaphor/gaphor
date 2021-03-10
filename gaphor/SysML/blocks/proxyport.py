@@ -8,7 +8,6 @@ from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import HandlePositionUpdate, Named, postload_connect
 from gaphor.diagram.shapes import (
     Box,
-    EditableText,
     IconBox,
     Text,
     TextAlign,
@@ -67,7 +66,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
         self.shape = IconBox(
             Box(style={"background-color": (1, 1, 1, 1)}, draw=draw_border),
             Text(text=lambda: stereotypes_str(self.subject, ("proxy",))),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            Text(text=lambda: self.subject and self.subject.name or ""),
             style=text_position(self.connected_side()),
         )
         self.request_update()

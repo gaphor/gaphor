@@ -49,7 +49,7 @@ from math import atan2, pi
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state, stroke
+from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import middle_segment
 from gaphor.UML.interactions.lifeline import LifelineItem
@@ -82,7 +82,7 @@ class MessageItem(LinePresentation[UML.Message], Named):
                 Text(
                     text=lambda: stereotypes_str(self.subject),
                 ),
-                EditableText(text=lambda: self.subject.name or ""),
+                Text(text=lambda: self.subject.name or ""),
             ),
         )
 
