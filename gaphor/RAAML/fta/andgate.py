@@ -31,7 +31,7 @@ class ANDItem(ElementPresentation, Classified):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: stereotypes_str(self.subject),
+                    text=lambda: stereotypes_str(self.subject, ["AND"]),
                 ),
                 EditableText(
                     text=lambda: self.subject.name or "",
