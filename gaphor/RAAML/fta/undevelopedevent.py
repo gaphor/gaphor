@@ -9,7 +9,7 @@ from gaphor.diagram.presentation import (
     ElementPresentation,
     from_package_str,
 )
-from gaphor.diagram.shapes import Box, EditableText, Text, stroke
+from gaphor.diagram.shapes import Box, EditableText, Text, draw_diamond
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
@@ -54,30 +54,8 @@ class UndevelopedEventItem(ElementPresentation, Classified):
 
 
 def draw_undeveloped_event(box, context: DrawContext, bounding_box: Rectangle):
-    cr = context.cairo
-
-    # Outer diamond
-    outer_x1 = bounding_box.width / 4.0
-    outer_x2 = bounding_box.width * 3.0 / 4.0
-    center_x = bounding_box.width / 2.0
-    center_y = bounding_box.height / 2.0 - 25.0
-    outer_y1 = 4
-    outer_y2 = bounding_box.height - 50
-    cr.move_to(outer_x1, center_y)
-    cr.line_to(center_x, outer_y2)
-    cr.line_to(outer_x2, center_y)
-    cr.line_to(center_x, outer_y1)
-    cr.line_to(outer_x1, center_y)
-
-    # Inner diamond
-    inner_x1 = bounding_box.width / 3.0
-    inner_x2 = bounding_box.width * 2.0 / 3.0
-    inner_y1 = bounding_box.height / 8.0
-    inner_y2 = bounding_box.height * 7.0 / 8.0 - 46
-    cr.move_to(inner_x1, center_y)
-    cr.line_to(center_x, inner_y2)
-    cr.line_to(inner_x2, center_y)
-    cr.line_to(center_x, inner_y1)
-    cr.line_to(inner_x1, center_y)
-
-    stroke(context)
+    x1 = bounding_box.width / 4.0
+    x2 = bounding_box.width * 3.0 / 4.0
+    y1 = 4
+    y2 = bounding_box.height - 50
+    draw_diamond(context, x1, x2, y1, y2)

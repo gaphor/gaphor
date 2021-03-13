@@ -359,3 +359,18 @@ def text_draw_focus_box(context, x, y, w, h):
             cr.set_line_width(0.5)
             cr.rectangle(x, y, w, h)
             cr.stroke()
+
+
+def draw_diamond(
+    context: DrawContext, x1: float, x2: float, y1: float, y2: float
+) -> None:
+    """Draw a diamond."""
+    cr = context.cairo
+    center_x = x2 - x1
+    center_y = y2 - y1
+    cr.move_to(x1, center_y)
+    cr.line_to(center_x, y2)
+    cr.line_to(x2, center_y)
+    cr.line_to(center_x, y1)
+    cr.line_to(x1, center_y)
+    stroke(context)
