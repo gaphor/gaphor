@@ -9,7 +9,7 @@ from gaphor.diagram.presentation import (
     ElementPresentation,
     from_package_str,
 )
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_diamond
+from gaphor.diagram.shapes import Box, Text, draw_diamond
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
@@ -31,7 +31,7 @@ class UndevelopedEventItem(ElementPresentation, Classified):
                 Text(
                     text=lambda: stereotypes_str(self.subject, ["UndevelopedEvent"]),
                 ),
-                EditableText(
+                Text(
                     text=lambda: self.subject.name or "",
                     width=lambda: self.width - 4,
                     style={

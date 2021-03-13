@@ -8,7 +8,7 @@ from gaphor.diagram.presentation import (
     ElementPresentation,
     from_package_str,
 )
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_border
+from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
@@ -30,7 +30,7 @@ class TopEventItem(ElementPresentation, Classified):
                 Text(
                     text=lambda: stereotypes_str(self.subject, ["Top Event"]),
                 ),
-                EditableText(
+                Text(
                     text=lambda: self.subject.name or "",
                     width=lambda: self.width - 4,
                     style={
