@@ -6,22 +6,21 @@ resolving of diagram items).
 
 from gi.repository import GLib, Gtk
 
-from gaphor.application import distribution
 from gaphor.storage.storage import load
 
 
 class TestCyclicDiagram:
-    def test_bug(self, case):
+    def test_bug(self, case, test_models):
         """Load file.
 
         This does not nearly resemble the error, since the model should
         be loaded from within the mainloop (which will delay all
         updates).
         """
-        path = distribution().locate_file("test-models/dbus.gaphor")
+        path = test_models / "dbus.gaphor"
         load(path, case.element_factory, case.modeling_language)
 
-    def test_bug_idle(self, case):
+    def test_bug_idle(self, case, test_models):
         """Load file in gtk main loop.
 
         This does not nearly resemble the error, since the model should
@@ -31,7 +30,7 @@ class TestCyclicDiagram:
 
         def handler():
             try:
-                path = distribution().locate_file("test-models/dbus.gaphor")
+                path = test_models / "dbus.gaphor"
                 load(path, case.element_factory, case.modeling_language)
             finally:
                 Gtk.main_quit()
