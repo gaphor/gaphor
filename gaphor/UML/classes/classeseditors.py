@@ -2,12 +2,7 @@ from gaphas.geometry import Rectangle, distance_point_point_fast
 
 from gaphor.core import transactional
 from gaphor.core.format import format, parse
-from gaphor.diagram.inlineeditors import (
-    InlineEditor,
-    editable_text_box,
-    popup_entry,
-    show_popover,
-)
+from gaphor.diagram.inlineeditors import InlineEditor, popup_entry, show_popover
 from gaphor.UML.classes.association import AssociationItem
 
 
@@ -42,7 +37,7 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
                 end_item.subject,
                 visibility=True,
                 is_derived=True,
-                type=True,
+                type=False,
                 multiplicity=True,
                 default=True,
             )
@@ -64,7 +59,12 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
             item.subject.name = text
 
         entry = popup_entry(text, update_text)
-        box = editable_text_box(view, view.selection.hovered_item)
+
+        box = item.middle_shape_size
+        i2v = view.get_matrix_i2v(item)
+        x, y = i2v.transform_point(box.x, box.y)
+        w, h = i2v.transform_distance(box.width, box.height)
+        box = Rectangle(x, y, w, h)
 
     show_popover(entry, view, box, escape)
     return True

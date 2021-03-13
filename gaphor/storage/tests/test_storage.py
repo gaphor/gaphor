@@ -6,7 +6,6 @@ from io import StringIO
 import pytest
 
 from gaphor import UML
-from gaphor.application import distribution
 from gaphor.core.modeling import StyleSheet
 from gaphor.diagram.general import CommentItem
 from gaphor.storage import storage
@@ -139,8 +138,8 @@ class TestStorage:
         assert elements[0].name == difficult_name, elements[0].name
 
     @pytest.mark.slow
-    def test_load_uml_metamodel(self, case):
-        path = distribution().locate_file("models/UML.gaphor")
+    def test_load_uml_metamodel(self, case, models):
+        path = models / "UML.gaphor"
 
         with open(path) as ifile:
             storage.load(
@@ -230,8 +229,8 @@ class TestStorage:
         assert cinfo_tail.connected is not None
         assert cinfo_head.connected is not cinfo_tail.connected
 
-    def test_load_and_save_of_a_model(self, case):
-        path = distribution().locate_file("test-models/simple-items.gaphor")
+    def test_load_and_save_of_a_model(self, case, test_models):
+        path = test_models / "simple-items.gaphor"
 
         with open(path, "r") as ifile:
             storage.load(
@@ -257,9 +256,9 @@ class TestStorage:
         case.maxDiff = None
         assert copy == orig, "Saved model does not match copy"
 
-    def test_can_not_load_models_older_that_0_17_0(self, case):
+    def test_can_not_load_models_older_that_0_17_0(self, case, test_models):
 
-        path = distribution().locate_file("test-models/old-gaphor-version.gaphor")
+        path = test_models / "old-gaphor-version.gaphor"
 
         def load_old_model():
             with open(path, "r") as ifile:

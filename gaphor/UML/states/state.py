@@ -4,7 +4,7 @@
 from gaphor import UML
 from gaphor.core.styling import TextAlign, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_top_separator, stroke
+from gaphor.diagram.shapes import Box, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -59,7 +59,7 @@ class StateItem(ElementPresentation[UML.State], VertexItem):
                 Text(
                     text=lambda: stereotypes_str(self.subject),
                 ),
-                EditableText(text=lambda: self.subject.name or ""),
+                Text(text=lambda: self.subject.name or ""),
                 style={"padding": (4, 4, 4, 4)},
             ),
             compartment,

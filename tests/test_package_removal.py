@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor import UML
-from gaphor.application import Session, distribution
+from gaphor.application import Session
 from gaphor.core import Transaction
 from gaphor.storage.storage import load
 
@@ -19,10 +19,10 @@ def event_manager(session):
 
 
 @pytest.fixture
-def element_factory(session):
+def element_factory(session, test_models):
     element_factory = session.get_service("element_factory")
     modeling_language = session.get_service("modeling_language")
-    path = distribution().locate_file("test-models/issue_53.gaphor")
+    path = test_models / "issue_53.gaphor"
     load(path, element_factory, modeling_language)
     yield element_factory
     element_factory.shutdown()

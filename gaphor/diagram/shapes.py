@@ -8,7 +8,7 @@ from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling import DrawContext, UpdateContext
 from gaphor.core.styling import Style, TextAlign, VerticalAlign, merge_styles
-from gaphor.diagram.text import Layout, focus_box_pos
+from gaphor.diagram.text import Layout
 
 
 class cairo_state:
@@ -289,38 +289,6 @@ class Text:
             layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
 
 
-class EditableText(Text):
-    def __init__(self, text=lambda: "", width=lambda: -1, style: Style = {}):
-        super().__init__(text, width, {"min-width": 30, "min-height": 14, **style})  # type: ignore[misc]
-        self.focus_box = Rectangle()
-
-    @property
-    def bounding_box(self):
-        """Bounding box is used by the inline editor."""
-        return self.focus_box
-
-    def size(self, context: UpdateContext):
-        text_size = super().size(context)
-        w, h = text_size
-        self.focus_box.width = w
-        self.focus_box.height = h
-        return text_size
-
-    def draw(self, context: DrawContext, bounding_box: Rectangle):
-        """Draw the editable text."""
-        super().draw(context, bounding_box)
-        style = merge_styles(context.style, self._inline_style)
-
-        text_box = self.text_box(style, bounding_box)
-        text_align = style.get("text-align", TextAlign.CENTER)
-        focus_box = self.focus_box
-        x, y = focus_box_pos(text_box, (focus_box.width, focus_box.height), text_align)
-        focus_box.x = x
-        focus_box.y = y
-
-        text_draw_focus_box(context, *focus_box)
-
-
 def draw_default_head(context: DrawContext):
     """Default head drawer: move cursor to the first handle."""
     context.cairo.move_to(0, 0)
@@ -346,19 +314,6 @@ def draw_arrow_tail(context: DrawContext):
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
-
-
-def text_draw_focus_box(context, x, y, w, h):
-    if context.hovered or context.focused:
-        with cairo_state(context.cairo) as cr:
-            cr.set_dash((), 0)
-            if context.focused:
-                cr.set_source_rgb(0.6, 0.6, 0.6)
-            else:
-                cr.set_source_rgb(0.8, 0.8, 0.8)
-            cr.set_line_width(0.5)
-            cr.rectangle(x, y, w, h)
-            cr.stroke()
 
 
 def draw_diamond(

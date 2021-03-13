@@ -3,7 +3,7 @@
 from gaphor import UML
 from gaphor.core.styling import TextAlign, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, stroke
+from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -21,7 +21,7 @@ class InteractionItem(ElementPresentation, Named):
                         "text-align": TextAlign.LEFT,
                     },
                 ),
-                EditableText(
+                Text(
                     text=lambda: self.subject.name or "",
                     style={"text-align": TextAlign.LEFT},
                 ),

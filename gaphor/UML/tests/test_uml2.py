@@ -252,6 +252,18 @@ def test_property_navigability(factory):
     assert a.memberEnd[1].navigability is None
 
 
+def test_property_navigability_with_extension_end(factory):
+    p = factory.create(UML.Property)
+    assert p.navigability is None
+
+    mc = factory.create(UML.Class)
+    st = factory.create(UML.Stereotype)
+    a = UML.model.create_extension(mc, st)
+
+    assert a.memberEnd[0].navigability is True
+    assert a.memberEnd[1].navigability is True
+
+
 def test_namedelement_qualifiedname(factory):
     p = factory.create(UML.Package)
     p.name = "Package"

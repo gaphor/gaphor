@@ -28,12 +28,17 @@ $ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
 gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
 ```
 
+Install Poetry (you may want to consider installing poetry via [pipx](https://pypi.org/project/pipx/), instead of pip):
+```bash
+pip install --user poetry
+```
+
 [Clone the
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
 ```bash
 $ cd gaphor
-$ source venv
+$ poetry install
 $ poetry run gaphor
 ```
 
@@ -83,7 +88,7 @@ installation or root access.
 We build our AppImage by first bundling Gaphor with PyInstaller and then
 converting it in to an AppImage.
 
-1. Activate your virtualenv, `source venv`
+1. Activate your virtualenv, `poetry shell`
 
 1. `cd appimage`
 

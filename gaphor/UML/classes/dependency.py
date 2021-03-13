@@ -18,7 +18,7 @@ import ast
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, stroke
+from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.interface import Folded, InterfacePort
 from gaphor.UML.modelfactory import stereotypes_str
@@ -56,7 +56,7 @@ class DependencyItem(LinePresentation, Named):
                     self.subject, additional_stereotype.get(self._dependency_type, ())
                 ),
             ),
-            EditableText(text=lambda: self.subject.name or ""),
+            Text(text=lambda: self.subject.name or ""),
         )
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
