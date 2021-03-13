@@ -2,7 +2,6 @@ from typing import Dict, List
 
 import pytest
 
-from gaphor.application import distribution
 from gaphor.codegen.profile_coder import (
     filter_uml_classes,
     find_enumerations,
@@ -326,9 +325,9 @@ def test_write_properties_for_association(filename, element_factory):
     )
 
 
-def test_model_header(tmp_path):
+def test_model_header(test_models, tmp_path):
     """Load a model with no relationships to test header."""
-    path = distribution().locate_file("test-models/multiple-messages.gaphor")
+    path = test_models / "multiple-messages.gaphor"
     outfile = tmp_path / "profile.py"
 
     generate(path, outfile)
@@ -336,9 +335,9 @@ def test_model_header(tmp_path):
     assert header in outfile.read_text()
 
 
-def test_model_with_extension(tmp_path):
+def test_model_with_extension(test_models, tmp_path):
     """Load a model with an extension relationship."""
-    path = distribution().locate_file("test-models/codegen-extension.gaphor")
+    path = test_models / "codegen-extension.gaphor"
     outfile = tmp_path / "profile.py"
 
     generate(path, outfile)
