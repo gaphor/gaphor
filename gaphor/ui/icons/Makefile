@@ -83,12 +83,15 @@ ICONS=diagram \
 	xor \
 	majority-vote \
 	transfer-in \
+	transfer-out \
 	inhibit \
 	basic-event \
 	conditional-event \
 	dormant-event \
+	undeveloped-event \
 	house-event \
-	zero-event
+	zero-event \
+	top-event
 
 ICON_THEME=hicolor/scalable/actions
 
