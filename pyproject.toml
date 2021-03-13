@@ -31,6 +31,8 @@ classifiers = [
     "Topic :: Software Development :: Documentation",
 ]
 
+exclude = ["**/tests", "gaphor/conftest.py" ]
+
 [tool.poetry.dependencies]
 python = "^3.7"
 pycairo = "^1.18"
