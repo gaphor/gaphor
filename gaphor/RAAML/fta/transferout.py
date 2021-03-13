@@ -1,4 +1,4 @@
-"""Transfer In gate item definition."""
+"""Transfer Out item definition."""
 
 from gaphas.geometry import Rectangle
 
@@ -16,8 +16,8 @@ from gaphor.RAAML import raaml
 from gaphor.UML.modelfactory import stereotypes_str
 
 
-@represents(raaml.TransferIn)
-class TransferInItem(ElementPresentation, Classified):
+@represents(raaml.TransferOut)
+class TransferOutItem(ElementPresentation, Classified):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
@@ -29,7 +29,7 @@ class TransferInItem(ElementPresentation, Classified):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: stereotypes_str(self.subject, ["Transfer In"]),
+                    text=lambda: stereotypes_str(self.subject, ["Transfer Out"]),
                 ),
                 EditableText(
                     text=lambda: self.subject.name or "",
@@ -49,11 +49,11 @@ class TransferInItem(ElementPresentation, Classified):
                 },
             ),
             style={"vertical-align": VerticalAlign.BOTTOM},
-            draw=draw_transfer_in_gate,
+            draw=draw_transfer_out,
         )
 
 
-def draw_transfer_in_gate(box, context: DrawContext, bounding_box: Rectangle):
+def draw_transfer_out(box, context: DrawContext, bounding_box: Rectangle):
     cr = context.cairo
     x1 = bounding_box.width / 4.0
     x2 = bounding_box.width * 3.0 / 4.0

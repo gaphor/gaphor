@@ -16,8 +16,15 @@ FTA = ToolSection(
     gettext("Fault Tree Analysis"),
     (
         ToolDef(
+            "dependency",
+            gettext("Dependency"),
+            "gaphor-dependency-symbolic",
+            "<Shift>D",
+            new_item_factory(uml_items.DependencyItem),
+        ),
+        ToolDef(
             "and",
-            gettext("AND"),
+            gettext("AND Gate"),
             "gaphor-and-symbolic",
             "a",
             new_item_factory(
@@ -26,7 +33,7 @@ FTA = ToolSection(
         ),
         ToolDef(
             "or",
-            gettext("OR"),
+            gettext("OR Gate"),
             "gaphor-or-symbolic",
             "o",
             new_item_factory(
@@ -35,7 +42,7 @@ FTA = ToolSection(
         ),
         ToolDef(
             "not",
-            gettext("NOT"),
+            gettext("NOT Gate"),
             "gaphor-not-symbolic",
             "n",
             new_item_factory(
@@ -44,7 +51,7 @@ FTA = ToolSection(
         ),
         ToolDef(
             "seq",
-            gettext("SEQ"),
+            gettext("Sequence Enforcing (SEQ) Gate"),
             "gaphor-seq-symbolic",
             "n",
             new_item_factory(
@@ -53,7 +60,7 @@ FTA = ToolSection(
         ),
         ToolDef(
             "xor",
-            gettext("XOR"),
+            gettext("Exclusive OR Gate"),
             "gaphor-xor-symbolic",
             "x",
             new_item_factory(
@@ -62,13 +69,22 @@ FTA = ToolSection(
         ),
         ToolDef(
             "majority-vote",
-            gettext("Majority Vote"),
+            gettext("Majority Vote Gate"),
             "gaphor-majority-vote-symbolic",
             "m",
             new_item_factory(
                 diagramitems.MajorityVoteItem,
                 raaml.MAJORITY_VOTE,
                 config_func=namespace_config,
+            ),
+        ),
+        ToolDef(
+            "inhibit",
+            gettext("Inhibit Gate"),
+            "gaphor-inhibit-symbolic",
+            "i",
+            new_item_factory(
+                diagramitems.InhibitItem, raaml.INHIBIT, config_func=namespace_config
             ),
         ),
         ToolDef(
@@ -83,12 +99,14 @@ FTA = ToolSection(
             ),
         ),
         ToolDef(
-            "inhibit",
-            gettext("Inhibit"),
-            "gaphor-inhibit-symbolic",
-            "i",
+            "transfer-out",
+            gettext("Transfer Out"),
+            "gaphor-transfer-out-symbolic",
+            "t",
             new_item_factory(
-                diagramitems.InhibitItem, raaml.INHIBIT, config_func=namespace_config
+                diagramitems.TransferOutItem,
+                raaml.TransferOut,
+                config_func=namespace_config,
             ),
         ),
         ToolDef(
@@ -110,6 +128,17 @@ FTA = ToolSection(
             new_item_factory(
                 diagramitems.ConditionalEventItem,
                 raaml.ConditionalEvent,
+                config_func=namespace_config,
+            ),
+        ),
+        ToolDef(
+            "undeveloped-event",
+            gettext("Undeveloped Event"),
+            "gaphor-undeveloped-event-symbolic",
+            "b",
+            new_item_factory(
+                diagramitems.UndevelopedEventItem,
+                raaml.Undeveloped,
                 config_func=namespace_config,
             ),
         ),
@@ -147,11 +176,15 @@ FTA = ToolSection(
             ),
         ),
         ToolDef(
-            "dependency",
-            gettext("Dependency"),
-            "gaphor-dependency-symbolic",
-            "<Shift>D",
-            new_item_factory(uml_items.DependencyItem),
+            "top-event",
+            gettext("Top Event"),
+            "gaphor-top-event-symbolic",
+            "z",
+            new_item_factory(
+                diagramitems.TopEventItem,
+                raaml.TopEvent,
+                config_func=namespace_config,
+            ),
         ),
     ),
 )

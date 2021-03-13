@@ -8,6 +8,9 @@ from gaphor.RAAML.fta.majorityvotegate import MajorityVoteItem
 from gaphor.RAAML.fta.notgate import NOTItem
 from gaphor.RAAML.fta.orgate import ORItem
 from gaphor.RAAML.fta.seqgate import SEQItem
-from gaphor.RAAML.fta.transferingate import TransferInItem
+from gaphor.RAAML.fta.topevent import TopEventItem
+from gaphor.RAAML.fta.transferin import TransferInItem
+from gaphor.RAAML.fta.transferout import TransferOutItem
+from gaphor.RAAML.fta.undevelopedevent import UndevelopedEventItem
 from gaphor.RAAML.fta.xorgate import XORItem
 from gaphor.RAAML.fta.zeroevent import ZeroEventItem
