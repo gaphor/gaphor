@@ -99,9 +99,6 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
     implement the method `update_shapes()` and set self.shape there.
     """
 
-    width: int
-    height: int
-
     _port_sides = ("top", "right", "bottom", "left")
 
     def __init__(self, diagram: Diagram, id=None, shape=None, width=100, height=50):
