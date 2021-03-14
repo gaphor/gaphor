@@ -162,6 +162,8 @@ def parse_padding(prop, value) -> Optional[Padding]:
 def parse_sequence_numbers(
     prop, value: Union[Number, Sequence[Number]]
 ) -> Optional[Sequence[Number]]:
+    if value == 0:
+        return ()
     if isinstance(value, number):
         return (value, value)
     elif all(isinstance(v, (int, float)) for v in value):

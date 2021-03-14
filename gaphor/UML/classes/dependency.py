@@ -38,7 +38,7 @@ class DependencyItem(LinePresentation, Named):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id, style={"dash-style": (7.0, 5.0)})
+        super().__init__(diagram, id)
 
         self._dependency_type = UML.Dependency
         # auto_dependency is used by connection logic, not in this class itself
@@ -76,20 +76,18 @@ class DependencyItem(LinePresentation, Named):
             self._dependency_type = self.subject.__class__
         super().postload()
 
-    def connected_to_folded_interface(self):
+    @property
+    def on_folded_interface(self):
         connection = self._connections.get_connection(self.head)
         return (
-            connection
-            and isinstance(connection.port, InterfacePort)
-            and connection.connected.folded != Folded.NONE
+            (
+                connection
+                and isinstance(connection.port, InterfacePort)
+                and connection.connected.folded != Folded.NONE
+            )
+            and "true"
+            or "false"
         )
-
-    def post_update(self, context):
-        super().post_update(context)
-        if self.connected_to_folded_interface():
-            self.style["dash-style"] = ()
-        else:
-            self.style["dash-style"] = (7.0, 5.0)
 
     def set_dependency_type(self, dependency_type):
         self._dependency_type = dependency_type
