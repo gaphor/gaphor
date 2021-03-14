@@ -52,7 +52,7 @@ class TestDependency:
 
         case.connect(dep, dep.head, iface)
         case.connect(dep, dep.tail, clazz)
-        iface.request_update()
+        iface.update_shapes()
         case.diagram.update_now((clazz, iface, dep))
 
         assert dep.subject
