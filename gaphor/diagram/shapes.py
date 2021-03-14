@@ -321,8 +321,8 @@ def draw_diamond(
 ) -> None:
     """Draw a diamond."""
     cr = context.cairo
-    center_x = x2 - x1
-    center_y = y2 - y1
+    center_x = x1 + (x2 - x1) / 2.0
+    center_y = y1 + (y2 - y1) / 2.0
     cr.move_to(x1, center_y)
     cr.line_to(center_x, y2)
     cr.line_to(x2, center_y)
