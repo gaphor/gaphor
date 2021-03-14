@@ -53,7 +53,7 @@ FTA = ToolSection(
             "seq",
             gettext("Sequence Enforcing (SEQ) Gate"),
             "gaphor-seq-symbolic",
-            "n",
+            "s",
             new_item_factory(
                 diagramitems.SEQItem, raaml.SEQ, config_func=namespace_config
             ),
@@ -102,7 +102,7 @@ FTA = ToolSection(
             "transfer-out",
             gettext("Transfer Out"),
             "gaphor-transfer-out-symbolic",
-            "t",
+            "<Shift>t",
             new_item_factory(
                 diagramitems.TransferOutItem,
                 raaml.TransferOut,
@@ -113,7 +113,7 @@ FTA = ToolSection(
             "basic-event",
             gettext("Basic Event"),
             "gaphor-basic-event-symbolic",
-            "b",
+            "<Shift>b",
             new_item_factory(
                 diagramitems.BasicEventItem,
                 raaml.BasicEvent,
@@ -124,7 +124,7 @@ FTA = ToolSection(
             "conditional-event",
             gettext("Conditional Event"),
             "gaphor-conditional-event-symbolic",
-            "b",
+            "c",
             new_item_factory(
                 diagramitems.ConditionalEventItem,
                 raaml.ConditionalEvent,
@@ -135,7 +135,7 @@ FTA = ToolSection(
             "undeveloped-event",
             gettext("Undeveloped Event"),
             "gaphor-undeveloped-event-symbolic",
-            "b",
+            "u",
             new_item_factory(
                 diagramitems.UndevelopedEventItem,
                 raaml.Undeveloped,
@@ -146,7 +146,7 @@ FTA = ToolSection(
             "dormant-event",
             gettext("Dormant Event"),
             "gaphor-dormant-event-symbolic",
-            "b",
+            "d",
             new_item_factory(
                 diagramitems.DormantEventItem,
                 raaml.DormantEvent,
@@ -179,10 +179,21 @@ FTA = ToolSection(
             "top-event",
             gettext("Top Event"),
             "gaphor-top-event-symbolic",
-            "z",
+            "p",
             new_item_factory(
                 diagramitems.TopEventItem,
                 raaml.TopEvent,
+                config_func=namespace_config,
+            ),
+        ),
+        ToolDef(
+            "intermediate-event",
+            gettext("Intermediate Event"),
+            "gaphor-intermediate-event-symbolic",
+            "<Shift>i",
+            new_item_factory(
+                diagramitems.IntermediateEventItem,
+                raaml.IntermediateEvent,
                 config_func=namespace_config,
             ),
         ),

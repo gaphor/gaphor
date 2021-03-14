@@ -91,7 +91,8 @@ ICONS=diagram \
 	undeveloped-event \
 	house-event \
 	zero-event \
-	top-event
+	top-event \
+	intermediate-event
 
 ICON_THEME=hicolor/scalable/actions
 

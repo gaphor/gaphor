@@ -59,11 +59,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.5035565"
-     inkscape:cx="315.54879"
-     inkscape:cy="151.52269"
+     inkscape:zoom="15.566408"
+     inkscape:cx="280.69994"
+     inkscape:cy="201.24252"
      inkscape:document-units="px"
-     inkscape:current-layer="top-event"
+     inkscape:current-layer="intermediate-event"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
@@ -1206,11 +1206,45 @@
        width="4.2333331"
        id="rect990-4-94-1-6"
        style="display:inline;overflow:visible;visibility:visible;fill:#f0f0f0;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.132292;marker:none;enable-background:accumulate" />
+    <rect
+       width="4.2333331"
+       inkscape:label="512x512"
+       y="55.033333"
+       x="69.850006"
+       height="4.2333331"
+       id="rect980-8-62-6"
+       style="display:inline;overflow:visible;visibility:visible;fill:#f0f0f0;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.132292;marker:none;enable-background:accumulate" />
+    <rect
+       width="4.2333331"
+       style="display:inline;overflow:visible;visibility:visible;fill:#f0f0f0;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.132292;marker:none;enable-background:accumulate"
+       id="rect982-6-6-7"
+       height="4.2333331"
+       x="85.724998"
+       y="55.03334"
+       inkscape:label="512x512" />
+    <rect
+       width="4.2333331"
+       inkscape:label="512x512"
+       y="55.03334"
+       x="77.787506"
+       height="4.2333331"
+       id="rect986-0-1-5"
+       style="display:inline;overflow:visible;visibility:visible;fill:#f0f0f0;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.132292;marker:none;enable-background:accumulate" />
+    <rect
+       width="4.2333331"
+       inkscape:label="512x512"
+       y="55.033333"
+       x="93.662506"
+       height="4.2333331"
+       id="rect990-48-8-3"
+       style="display:inline;overflow:visible;visibility:visible;fill:#f0f0f0;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.132292;marker:none;enable-background:accumulate" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="top-event"
-     inkscape:label="top-event">
+     inkscape:label="top-event"
+     sodipodi:insensitive="true"
+     style="display:inline">
     <rect
        style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1357"
@@ -1230,6 +1264,31 @@
          id="tspan1359"
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">TE</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="intermediate-event"
+     inkscape:label="intermediate-event"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect544-6"
+       width="3.7041667"
+       height="3.7041667"
+       x="70.114578"
+       y="55.297916"
+       ry="0" />
+    <text
+       id="text548-2"
+       y="57.811058"
+       x="70.529892"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         sodipodi:role="line"
+         id="tspan580"
+         x="70.529892"
+         y="57.811058">IE</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -1312,7 +1371,8 @@
      inkscape:groupmode="layer"
      id="inhibit"
      inkscape:label="inhibit"
-     style="display:inline">
+     style="display:inline"
+     sodipodi:insensitive="true">
     <path
        id="polygon1200"
        style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.0396403;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000;stop-opacity:1"

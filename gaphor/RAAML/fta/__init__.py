@@ -4,6 +4,7 @@ from gaphor.RAAML.fta.conditionalevent import ConditionalEventItem
 from gaphor.RAAML.fta.dormantevent import DormantEventItem
 from gaphor.RAAML.fta.houseevent import HouseEventItem
 from gaphor.RAAML.fta.inhibitgate import InhibitItem
+from gaphor.RAAML.fta.intermediateevent import IntermediateEventItem
 from gaphor.RAAML.fta.majorityvotegate import MajorityVoteItem
 from gaphor.RAAML.fta.notgate import NOTItem
 from gaphor.RAAML.fta.orgate import ORItem
