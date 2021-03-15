@@ -108,16 +108,13 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
 
         self.update_shapes()
 
-    def pre_update(self, context):
+    def update(self, context):
         side = self.connected_side()
         if self._last_connected_side != side:
             self._last_connected_side = side
             self.update_shapes()
 
         self.shape.size(context)
-
-    def post_update(self, context):
-        pass
 
     def draw(self, context):
         self.shape.draw(context, self.dimensions())

@@ -369,29 +369,18 @@ class Diagram(PackageableElement):
                 yield from gaphas.canvas.ancestors(self, item)
 
         all_dirty_items = list(reversed(list(sort(dirty_items_with_ancestors()))))
-        contexts = self._pre_update_items(all_dirty_items)
+        self._update_items(all_dirty_items)
 
         self._resolved_items.clear()
 
         self._connections.solve()
 
         all_dirty_items.extend(self._resolved_items)
-        self._post_update_items(reversed(list(sort(all_dirty_items))), contexts)
 
-    def _pre_update_items(self, items):
-        contexts = {}
+    def _update_items(self, items):
         for item in items:
             context = UpdateContext(style=self.style(StyledItem(item)))
-            item.pre_update(context)
-            contexts[item] = context
-        return contexts
-
-    def _post_update_items(self, items, contexts):
-        for item in items:
-            context = contexts.get(item)
-            if not context:
-                context = UpdateContext(style=self.style(StyledItem(item)))
-            item.post_update(context)
+            item.update(context)
 
     def _on_constraint_solved(self, cinfo: gaphas.connections.Connection) -> None:
         dirty_items = set()

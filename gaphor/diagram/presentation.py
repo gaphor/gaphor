@@ -128,14 +128,11 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
         """Updating the shape configuration, e.g. when extra elements have to
         be drawn or when styling changes."""
 
-    def pre_update(self, context):
+    def update(self, context):
         if not self.shape:
             self.update_shapes()
         if self.shape:
             self.min_width, self.min_height = self.shape.size(context)
-
-    def post_update(self, context):
-        pass
 
     def draw(self, context):
         x, y = self.handles()[0].pos
@@ -224,10 +221,10 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self.remove_watch_handle(handle)
         super().remove_handle(handle)
 
-    def pre_update(self, context):
+    def update(self, context):
         pass
 
-    def post_update(self, context):
+    def update_shape_bounds(self, context):
         def shape_bounds(shape, align):
             if shape:
                 size = shape.size(context)
@@ -268,6 +265,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         style = merge_styles(context.style, self.style)
         context = replace(context, style=style)
 
+        self.update_shape_bounds(context)
         cr = context.cairo
 
         handles = self._handles
