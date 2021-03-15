@@ -278,7 +278,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
         draw_line_end(handles[-1], handles[-2], self.draw_tail)
 
-        cr.set_dash(style.get("dash-style", ()), 0)
         stroke(context)
 
         for shape, rect in (

@@ -23,7 +23,7 @@ class cairo_state:
         self._cr.restore()
 
 
-def stroke(context: DrawContext, fill=True):
+def stroke(context: DrawContext, fill=True, dash=True):
     style = context.style
     cr = context.cairo
     fill_color = style.get("background-color")
@@ -39,6 +39,8 @@ def stroke(context: DrawContext, fill=True):
         line_width = style.get("line-width")
         if line_width:
             cr.set_line_width(line_width)
+        if dash:
+            cr.set_dash(style.get("dash-style", ()), 0)
         cr.stroke()
 
 
@@ -301,16 +303,23 @@ def draw_default_tail(context: DrawContext):
 
 def draw_arrow_head(context: DrawContext):
     cr = context.cairo
+    cr.save()
     cr.set_dash((), 0)
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
+    stroke(context, dash=False)
+    cr.restore()
     cr.move_to(0, 0)
 
 
 def draw_arrow_tail(context: DrawContext):
     cr = context.cairo
     cr.line_to(0, 0)
+    cr.save()
+    cr.set_dash((), 0)
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
+    stroke(context, dash=False)
+    cr.restore()
