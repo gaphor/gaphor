@@ -16,6 +16,7 @@ from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
+from gaphor.diagram.shapes import stroke
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
@@ -166,6 +167,18 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
         self.update_shapes()
 
 
+class MinimalValueConstraint(BaseConstraint):
+    def __init__(self, var, min):
+        super().__init__(var)
+        self._min = min
+
+    def solve_for(self, var):
+        min = self._min
+        if var is min:
+            return
+        var.value = max(var.value, min)
+
+
 class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     def __init__(
         self,
@@ -244,7 +257,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         def draw_line_end(end_handle, second_handle, draw):
             pos, p1 = end_handle.pos, second_handle.pos
             angle = atan2(p1.y - pos.y, p1.x - pos.x)
-            cr = context.cairo
             cr.save()
             try:
                 cr.translate(*pos)
@@ -257,11 +269,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         context = replace(context, style=style)
 
         cr = context.cairo
-        cr.set_line_width(style["line-width"])
-        cr.set_dash(style.get("dash-style", ()), 0)
-        stroke = style["color"]
-        if stroke:
-            cr.set_source_rgba(*stroke)
 
         handles = self._handles
         draw_line_end(handles[0], handles[1], self.draw_head)
@@ -271,7 +278,8 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
         draw_line_end(handles[-1], handles[-2], self.draw_tail)
 
-        cr.stroke()
+        cr.set_dash(style.get("dash-style", ()), 0)
+        stroke(context)
 
         for shape, rect in (
             (self.shape_head, self._shape_head_rect),
@@ -335,13 +343,3 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
     def _on_horizontal(self, event):
         self._set_horizontal(event.new_value)
-
-
-class MinimalValueConstraint(BaseConstraint):
-    def __init__(self, var, min):
-        super().__init__(var)
-        self._min = min
-
-    def solve_for(self, var):
-        min = self._min
-        var.value = max(var.value, min)
