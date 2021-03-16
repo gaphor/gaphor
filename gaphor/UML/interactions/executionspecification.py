@@ -112,11 +112,11 @@ class ExecutionSpecificationItem(
             if c:
                 save_func(name, c.connected)
 
-        points = [tuple(map(float, h.pos)) for h in self.handles()]
+        points = [tuple(map(float, h.pos)) for h in self._handles]
 
         save_func("matrix", tuple(self.matrix))
         save_func("points", points)
-        save_connection("head-connection", self.handles()[0])
+        save_connection("head-connection", self._handles[0])
         super().save(save_func)
 
     def load(self, name, value):
@@ -124,7 +124,7 @@ class ExecutionSpecificationItem(
             self.matrix.set(*ast.literal_eval(value))
         elif name == "points":
             points = ast.literal_eval(value)
-            for h, p in zip(self.handles(), points):
+            for h, p in zip(self._handles, points):
                 h.pos = p
         elif name == "head-connection":
             self._load_head_connection = value
@@ -133,7 +133,7 @@ class ExecutionSpecificationItem(
 
     def postload(self):
         if hasattr(self, "_load_head_connection"):
-            postload_connect(self, self.handles()[0], self._load_head_connection)
+            postload_connect(self, self._handles[0], self._load_head_connection)
             del self._load_head_connection
 
         super().postload()

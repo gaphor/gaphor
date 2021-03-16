@@ -254,7 +254,7 @@ class ForkNodeItem(Presentation[UML.ForkNode], HandlePositionUpdate, Named):
             super().load(name, value)
 
     def draw(self, context):
-        h1, h2 = self.handles()
+        h1, h2 = self._handles
         height = h2.pos.y - h1.pos.y
         self.shape.draw(context, Rectangle(0, 0, 1, height))
 

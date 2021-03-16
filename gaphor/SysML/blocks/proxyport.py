@@ -36,9 +36,8 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
         super().__init__(diagram, id)
         self._connections = diagram.connections
 
-        h1 = Handle(connectable=True)
-        self._handles = [h1]
-        self.watch_handle(h1)
+        self._handle = Handle(connectable=True)
+        self.watch_handle(self._handle)
 
         d = self.dimensions()
         top_left = Position(d.x, d.y)
@@ -57,7 +56,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
         self.update_shapes()
 
     def handles(self):
-        return self._handles
+        return [self._handle]
 
     def ports(self):
         return self._ports
@@ -72,12 +71,12 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
         self.request_update()
 
     def connected_side(self) -> Optional[str]:
-        cinfo = self._connections.get_connection(self._handles[0])
+        cinfo = self._connections.get_connection(self._handle)
 
         return cinfo.connected.port_side(cinfo.port) if cinfo else None
 
     def dimensions(self):
-        x, y = self._handles[0].pos
+        x, y = self._handle.pos
         return Rectangle(x - 8, y - 8, 16, 16)
 
     def point(self, x, y):
@@ -86,7 +85,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
 
-        c = self._connections.get_connection(self.handles()[0])
+        c = self._connections.get_connection(self._handle)
         if c:
             save_func("connection", c.connected)
 
@@ -103,7 +102,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
     def postload(self):
         super().postload()
         if hasattr(self, "_load_connection"):
-            postload_connect(self, self.handles()[0], self._load_connection)
+            postload_connect(self, self._handle, self._load_connection)
             del self._load_connection
 
         self.update_shapes()

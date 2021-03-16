@@ -110,7 +110,7 @@ class Box:
         return self.children[index]
 
     def size(self, context: UpdateContext):
-        style: Style = merge_styles(context.style, self._inline_style)
+        style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
@@ -131,7 +131,7 @@ class Box:
             return min_width, min_height
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style: Style = merge_styles(context.style, self._inline_style)
+        style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         valign = style.get("vertical-align", VerticalAlign.MIDDLE)
