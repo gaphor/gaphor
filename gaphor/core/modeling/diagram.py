@@ -230,10 +230,6 @@ class Diagram(PackageableElement):
         self._watcher = self.watcher()
         self._watcher.watch("ownedPresentation", self._presentation_removed)
 
-        # Record all items changed during constraint solving,
-        # so their `post_update()` method can be called.
-        self._resolved_items: Set[gaphas.item.Item] = set()
-
     ownedPresentation: relation_many[Presentation] = association(
         "ownedPresentation", Presentation, composite=True, opposite="diagram"
     )
@@ -360,7 +356,6 @@ class Diagram(PackageableElement):
         dirty_matrix_items: Sequence[Presentation] = (),
     ) -> None:
         """Update the diagram canvas."""
-
         sort = self.sort
 
         def dirty_items_with_ancestors():
@@ -371,11 +366,7 @@ class Diagram(PackageableElement):
         all_dirty_items = list(reversed(list(sort(dirty_items_with_ancestors()))))
         self._update_items(all_dirty_items)
 
-        self._resolved_items.clear()
-
         self._connections.solve()
-
-        all_dirty_items.extend(self._resolved_items)
 
     def _update_items(self, items):
         for item in items:
@@ -386,10 +377,8 @@ class Diagram(PackageableElement):
         dirty_items = set()
         if cinfo.item:
             dirty_items.add(cinfo.item)
-            self._resolved_items.add(cinfo.item)
         if cinfo.connected:
             dirty_items.add(cinfo.connected)
-            self._resolved_items.add(cinfo.connected)
         if dirty_items:
             self._update_views(dirty_items)
 
