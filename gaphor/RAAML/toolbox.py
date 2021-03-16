@@ -68,9 +68,9 @@ FTA = ToolSection(
             ),
         ),
         ToolDef(
-            "majority-vote",
+            "majority_vote",
             gettext("Majority Vote Gate"),
-            "gaphor-majority-vote-symbolic",
+            "gaphor-majority_vote-symbolic",
             "m",
             new_item_factory(
                 diagramitems.MajorityVoteItem,

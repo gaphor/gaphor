@@ -81,7 +81,7 @@ ICONS=diagram \
 	not \
 	seq \
 	xor \
-	majority-vote \
+	majority_vote \
 	transfer-in \
 	transfer-out \
 	inhibit \
