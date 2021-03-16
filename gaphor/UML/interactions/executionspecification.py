@@ -100,9 +100,6 @@ class ExecutionSpecificationItem(
         pt, pb = (h.pos for h in self._handles)
         return Rectangle(pt.x - d / 2, pt.y, d, y1=pb.y)
 
-    def update(self, context):
-        pass
-
     def draw(self, context):
         self.shape.draw(context, self.dimensions())
 

@@ -240,9 +240,6 @@ class ForkNodeItem(Presentation[UML.ForkNode], HandlePositionUpdate, Named):
     def ports(self):
         return self._ports
 
-    def update(self, context):
-        pass
-
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
         save_func("height", float(self._handles[1].pos.y))

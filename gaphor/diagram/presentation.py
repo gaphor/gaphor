@@ -221,9 +221,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self.remove_watch_handle(handle)
         super().remove_handle(handle)
 
-    def update(self, context):
-        pass
-
     def update_shape_bounds(self, context):
         def shape_bounds(shape, align):
             if shape:

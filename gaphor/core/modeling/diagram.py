@@ -370,8 +370,9 @@ class Diagram(PackageableElement):
 
     def _update_items(self, items):
         for item in items:
-            context = UpdateContext(style=self.style(StyledItem(item)))
-            item.update(context)
+            update = getattr(item, "update", None)
+            if update:
+                update(UpdateContext(style=self.style(StyledItem(item))))
 
     def _on_constraint_solved(self, cinfo: gaphas.connections.Connection) -> None:
         dirty_items = set()
