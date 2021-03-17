@@ -158,7 +158,9 @@ class InterfaceItem(ElementPresentation, Classified):
     RADIUS_REQUIRED = 14
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(
+            diagram, id, width=self.RADIUS_PROVIDED * 2, height=self.RADIUS_PROVIDED * 2
+        )
         self._folded = Folded.NONE
         self.side = Side.N
 
@@ -235,15 +237,7 @@ class InterfaceItem(ElementPresentation, Classified):
             else:  # required interface or assembly icon mode
                 icon_size = self.RADIUS_REQUIRED * 2
 
-            self.min_width, self.min_height = icon_size, icon_size
-            self.width, self.height = icon_size, icon_size
-
-            # update only h_se handle - rest of handles should be updated by
-            # constraints
-            h_nw = self._handles[NW]
-            h_se = self._handles[SE]
-            h_se.pos.x = h_nw.pos.x + self.min_width
-            h_se.pos.y = h_nw.pos.y + self.min_height
+            self.min_width = self.min_height = self.width = self.height = icon_size
 
             movable = False
 
@@ -258,7 +252,7 @@ class InterfaceItem(ElementPresentation, Classified):
         doc="Check or set folded notation, see Folded.* enum.",
     )
 
-    def pre_update(self, context):
+    def update_shapes(self, event=None):
         connected_items = [
             c.item for c in self.diagram.connections.get_connections(connected=self)
         ]
@@ -281,10 +275,7 @@ class InterfaceItem(ElementPresentation, Classified):
                 self.folded = Folded.REQUIRED
             else:
                 self.folded = Folded.PROVIDED
-            self.update_shapes(connectors=connectors)
-        super().pre_update(context)
 
-    def update_shapes(self, event=None, connectors=None):
         if self._folded == Folded.NONE:
             self.shape = self.class_shape()
         else:

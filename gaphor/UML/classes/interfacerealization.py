@@ -13,7 +13,7 @@ from gaphor.UML.modelfactory import stereotypes_str
 @represents(UML.InterfaceRealization)
 class InterfaceRealizationItem(LinePresentation, Named):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id, style={"dash-style": (7.0, 5.0)})
+        super().__init__(diagram, id)
 
         self.shape_middle = Box(
             Text(
@@ -25,20 +25,18 @@ class InterfaceRealizationItem(LinePresentation, Named):
         self.watch("subject.appliedStereotype.classifier.name")
         self._inline_style: Style = {}
 
-    def connected_to_folded_interface(self):
+    @property
+    def on_folded_interface(self):
         connection = self._connections.get_connection(self.head)
         return (
-            connection
-            and isinstance(connection.port, InterfacePort)
-            and connection.connected.folded != Folded.NONE
+            (
+                connection
+                and isinstance(connection.port, InterfacePort)
+                and connection.connected.folded != Folded.NONE
+            )
+            and "true"
+            or "false"
         )
-
-    def post_update(self, context):
-        super().post_update(context)
-        if self.connected_to_folded_interface():
-            self.style["dash-style"] = ()
-        else:
-            self.style["dash-style"] = (7.0, 5.0)
 
     def draw_head(self, context):
         cr = context.cairo
@@ -48,5 +46,5 @@ class InterfaceRealizationItem(LinePresentation, Named):
             cr.line_to(15, -10)
             cr.line_to(15, 10)
             cr.close_path()
-            stroke(context)
+            stroke(context, dash=False)
             cr.move_to(15, 0)
