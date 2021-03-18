@@ -30,6 +30,16 @@ SYSTEM_STYLE_SHEET = textwrap.dedent(
     diagram {
      background-color: white;
     }
+
+    dependency,
+    interfacerealization {
+        dash-style: 7 5;
+    }
+
+    dependency[on_folded_interface = true],
+    interfacerealization[on_folded_interface = true] {
+        dash-style: 0;
+    }
     """
 )
 

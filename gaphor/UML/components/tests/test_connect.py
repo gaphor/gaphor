@@ -116,7 +116,7 @@ class TestInterfaceConnect:
 
         case.connect(line, line.head, iface)
         case.connect(line, line.tail, comp)
-        iface.request_update()
+        iface.update_shapes()
         case.diagram.update_now((iface, comp, line))
 
         # interface goes into assembly mode

@@ -376,6 +376,15 @@
         "translation",
         "doc"
       ]
+    },
+    {
+      "login": "freezed-or-frozen",
+      "name": "freezed-or-frozen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28558919?v=4",
+      "profile": "https://github.com/freezed-or-frozen",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,

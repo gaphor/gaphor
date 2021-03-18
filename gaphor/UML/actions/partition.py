@@ -31,7 +31,7 @@ class PartitionItem(ElementPresentation):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("partition.name")
-        self.watch("partition")
+        self.watch("partition", self.update_partition)
 
     partition = association("partition", UML.ActivityPartition, composite=True)
 
@@ -40,9 +40,10 @@ class PartitionItem(ElementPresentation):
         if self.subject and self.subject not in self.partition:
             self.partition = self.subject
 
-    def pre_update(self, context: DrawContext) -> None:
+    def update_partition(self, context: DrawContext) -> None:
         """Set the min width of all the swimlanes."""
         self.min_width = 150 * len(self.partition)
+        self.request_update()
 
     def draw_swimlanes(
         self, box: Box, context: DrawContext, bounding_box: Rectangle

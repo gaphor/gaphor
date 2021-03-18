@@ -139,12 +139,6 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         """Handle events and update text on association end."""
         for end in (self._head_end, self._tail_end):
             end.set_text()
-        self.request_update()
-
-    def post_update(self, context):
-        """Update the shapes and sub-items of the association."""
-
-        handles = self.handles()
 
         # Update line endings:
         head_subject = self.head_subject
@@ -181,14 +175,7 @@ class AssociationItem(LinePresentation[UML.Association], Named):
             self.draw_head = draw_default_head
             self.draw_tail = draw_default_tail
 
-        # update relationship after self.set calls to avoid circural updates
-        super().post_update(context)
-
-        # Calculate alignment of the head name and multiplicity
-        self._head_end.post_update(context, handles[0].pos, handles[1].pos)
-
-        # Calculate alignment of the tail name and multiplicity
-        self._tail_end.post_update(context, handles[-1].pos, handles[-2].pos)
+        self.request_update()
 
     def point(self, x, y):
         """Returns the distance from the Association to the (mouse) cursor."""
@@ -198,6 +185,15 @@ class AssociationItem(LinePresentation[UML.Association], Named):
 
     def draw(self, context):
         super().draw(context)
+
+        handles = self.handles()
+
+        # Calculate alignment of the head name and multiplicity
+        self._head_end.update_position(context, handles[0].pos, handles[1].pos)
+
+        # Calculate alignment of the tail name and multiplicity
+        self._tail_end.update_position(context, handles[-1].pos, handles[-2].pos)
+
         self._head_end.draw(context)
         self._tail_end.draw(context)
         if self.show_direction:
@@ -376,7 +372,7 @@ class AssociationEnd:
     def get_mult(self):
         return self._mult
 
-    def post_update(self, context, p1, p2):
+    def update_position(self, context, p1, p2):
         """Update label placement for association's name and multiplicity
         label.
 

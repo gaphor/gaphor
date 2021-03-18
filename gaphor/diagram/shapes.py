@@ -23,7 +23,7 @@ class cairo_state:
         self._cr.restore()
 
 
-def stroke(context: DrawContext, fill=True):
+def stroke(context: DrawContext, fill=True, dash=True):
     style = context.style
     cr = context.cairo
     fill_color = style.get("background-color")
@@ -39,6 +39,8 @@ def stroke(context: DrawContext, fill=True):
         line_width = style.get("line-width")
         if line_width:
             cr.set_line_width(line_width)
+        if dash:
+            cr.set_dash(style.get("dash-style", ()), 0)
         cr.stroke()
 
 
@@ -108,7 +110,7 @@ class Box:
         return self.children[index]
 
     def size(self, context: UpdateContext):
-        style: Style = merge_styles(context.style, self._inline_style)
+        style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
@@ -129,7 +131,7 @@ class Box:
             return min_width, min_height
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style: Style = merge_styles(context.style, self._inline_style)
+        style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         valign = style.get("vertical-align", VerticalAlign.MIDDLE)
@@ -301,19 +303,26 @@ def draw_default_tail(context: DrawContext):
 
 def draw_arrow_head(context: DrawContext):
     cr = context.cairo
+    cr.save()
     cr.set_dash((), 0)
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
+    stroke(context, dash=False)
+    cr.restore()
     cr.move_to(0, 0)
 
 
 def draw_arrow_tail(context: DrawContext):
     cr = context.cairo
     cr.line_to(0, 0)
+    cr.save()
+    cr.set_dash((), 0)
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
+    stroke(context, dash=False)
+    cr.restore()
 
 
 def draw_diamond(
