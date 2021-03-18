@@ -17,7 +17,7 @@ module.
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import Classified, ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, Text, VerticalAlign, stroke
+from gaphor.diagram.shapes import Box, Text, VerticalAlign, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.classes.stereotype import stereotype_compartments
@@ -52,7 +52,7 @@ class NodeItem(ElementPresentation, Classified):
                         isinstance(self.subject, UML.Device) and ("device",) or (),
                     ),
                 ),
-                EditableText(
+                Text(
                     text=lambda: self.subject.name or "",
                     style={"font-weight": FontWeight.BOLD},
                 ),

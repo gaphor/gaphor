@@ -4,7 +4,7 @@ from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
+from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 from gaphor.UML.states.state import VertexItem
@@ -22,7 +22,7 @@ class FinalStateItem(ElementPresentation, VertexItem):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            Text(text=lambda: self.subject and self.subject.name or ""),
         )
 
         self.watch("subject[NamedElement].name")

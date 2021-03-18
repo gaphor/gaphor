@@ -49,7 +49,7 @@ from math import atan2, pi
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, cairo_state, stroke
+from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import middle_segment
 from gaphor.UML.interactions.lifeline import LifelineItem
@@ -82,7 +82,7 @@ class MessageItem(LinePresentation[UML.Message], Named):
                 Text(
                     text=lambda: stereotypes_str(self.subject),
                 ),
-                EditableText(text=lambda: self.subject.name or ""),
+                Text(text=lambda: self.subject.name or ""),
             ),
         )
 
@@ -92,16 +92,6 @@ class MessageItem(LinePresentation[UML.Message], Named):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-
-    def post_update(self, context):
-        """Update communication diagram information."""
-        super().post_update(context)
-
-        self._is_communication = self.is_communication()
-        if self._is_communication:
-            pos, angle = self._get_center_pos()
-            self._arrow_pos = pos
-            self._arrow_angle = angle
 
     def _get_center_pos(self):
         """Return position in the centre of middle segment of a line.
@@ -226,7 +216,11 @@ class MessageItem(LinePresentation[UML.Message], Named):
 
         # on communication diagram draw decorating arrows for messages and
         # inverted messages
+        self._is_communication = self.is_communication()
         if self._is_communication:
+            pos, angle = self._get_center_pos()
+            self._arrow_pos = pos
+            self._arrow_angle = angle
             cr = context.cairo
             self._draw_decorating_arrow(cr)
 
@@ -236,8 +230,10 @@ class MessageItem(LinePresentation[UML.Message], Named):
         c1 = self._connections.get_connection(self.head)
         c2 = self._connections.get_connection(self.tail)
         return (
-            isinstance(c1, LifelineItem)
+            c1
+            and isinstance(c1.connected, LifelineItem)
             and not c1.connected.lifetime.visible
-            or isinstance(c2, LifelineItem)
+            or c2
+            and isinstance(c2.connected, LifelineItem)
             and not c2.connected.lifetime.visible
         )

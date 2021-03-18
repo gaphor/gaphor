@@ -4,7 +4,7 @@ ExtensionItem -- Graphical representation of an association.
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text
+from gaphor.diagram.shapes import Box, Text
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -24,7 +24,7 @@ class ExtensionItem(LinePresentation, Named):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(text=lambda: self.subject.name or ""),
+            Text(text=lambda: self.subject.name or ""),
         )
 
         self.watch("subject[NamedElement].name")

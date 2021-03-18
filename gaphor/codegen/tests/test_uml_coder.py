@@ -1,6 +1,5 @@
 """Test case that checks the working of the uml_coder.py module."""
 
-from gaphor.application import distribution
 from gaphor.codegen.override import Overrides
 from gaphor.codegen.uml_coder import generate
 
@@ -16,8 +15,8 @@ class PseudoFile:
         pass
 
 
-def test_loading():
-    model_file = distribution().locate_file("test-models/test-model.gaphor")
+def test_loading(test_models):
+    model_file = test_models / "test-model.gaphor"
     outfile = PseudoFile()
 
     generate(model_file, outfile)

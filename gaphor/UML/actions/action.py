@@ -2,7 +2,7 @@
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, draw_border, stroke
+from gaphor.diagram.shapes import Box, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -16,7 +16,7 @@ class ActionItem(ElementPresentation, Named):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(text=lambda: self.subject.name or ""),
+            Text(text=lambda: self.subject.name or ""),
             style={
                 "padding": (4, 12, 4, 12),
                 "border-radius": 15,
@@ -37,7 +37,7 @@ class SendSignalActionItem(ElementPresentation, Named):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(text=lambda: self.subject.name or ""),
+            Text(text=lambda: self.subject.name or ""),
             style={"padding": (4, 24, 4, 12)},
             draw=self.draw_border,
         )
@@ -68,7 +68,7 @@ class AcceptEventActionItem(ElementPresentation, Named):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(text=lambda: self.subject.name or ""),
+            Text(text=lambda: self.subject.name or ""),
             style={"padding": (4, 12, 4, 24)},
             draw=self.draw_border,
         )

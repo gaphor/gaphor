@@ -18,7 +18,7 @@ import ast
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, EditableText, Text, stroke
+from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.interface import Folded, InterfacePort
 from gaphor.UML.modelfactory import stereotypes_str
@@ -38,7 +38,7 @@ class DependencyItem(LinePresentation, Named):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id, style={"dash-style": (7.0, 5.0)})
+        super().__init__(diagram, id)
 
         self._dependency_type = UML.Dependency
         # auto_dependency is used by connection logic, not in this class itself
@@ -56,7 +56,7 @@ class DependencyItem(LinePresentation, Named):
                     self.subject, additional_stereotype.get(self._dependency_type, ())
                 ),
             ),
-            EditableText(text=lambda: self.subject.name or ""),
+            Text(text=lambda: self.subject.name or ""),
         )
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
@@ -76,20 +76,18 @@ class DependencyItem(LinePresentation, Named):
             self._dependency_type = self.subject.__class__
         super().postload()
 
-    def connected_to_folded_interface(self):
+    @property
+    def on_folded_interface(self):
         connection = self._connections.get_connection(self.head)
         return (
-            connection
-            and isinstance(connection.port, InterfacePort)
-            and connection.connected.folded != Folded.NONE
+            (
+                connection
+                and isinstance(connection.port, InterfacePort)
+                and connection.connected.folded != Folded.NONE
+            )
+            and "true"
+            or "false"
         )
-
-    def post_update(self, context):
-        super().post_update(context)
-        if self.connected_to_folded_interface():
-            self.style["dash-style"] = ()
-        else:
-            self.style["dash-style"] = (7.0, 5.0)
 
     def set_dependency_type(self, dependency_type):
         self._dependency_type = dependency_type
@@ -103,5 +101,5 @@ class DependencyItem(LinePresentation, Named):
             cr.move_to(15, -6)
             cr.line_to(0, 0)
             cr.line_to(15, 6)
-            stroke(context)
+            stroke(context, dash=False)
         cr.move_to(0, 0)

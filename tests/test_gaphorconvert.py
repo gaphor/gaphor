@@ -17,7 +17,7 @@ def test_help_output(capsys):
 
 
 def test_export_pdf(tmp_path):
-    gaphorconvert.main(["-v", "-d", str(tmp_path), "examples/all-elements.gaphor"])
+    gaphorconvert.main(["-v", "-d", str(tmp_path), "test-models/all-elements.gaphor"])
 
     model_path = tmp_path / "New model"
 
@@ -27,7 +27,7 @@ def test_export_pdf(tmp_path):
 
 def test_export_png(tmp_path):
     gaphorconvert.main(
-        ["-v", "-f", "png", "-d", str(tmp_path), "examples/all-elements.gaphor"]
+        ["-v", "-f", "png", "-d", str(tmp_path), "test-models/all-elements.gaphor"]
     )
 
     model_path = tmp_path / "New model"
@@ -38,7 +38,7 @@ def test_export_png(tmp_path):
 
 def test_export_svg(tmp_path):
     gaphorconvert.main(
-        ["-v", "-f", "svg", "-d", str(tmp_path), "examples/all-elements.gaphor"]
+        ["-v", "-f", "svg", "-d", str(tmp_path), "test-models/all-elements.gaphor"]
     )
 
     model_path = tmp_path / "New model"

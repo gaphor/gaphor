@@ -31,6 +31,8 @@ classifiers = [
     "Topic :: Software Development :: Documentation",
 ]
 
+exclude = ["**/tests", "gaphor/conftest.py" ]
+
 [tool.poetry.dependencies]
 python = "^3.7"
 pycairo = "^1.18"
@@ -49,13 +51,13 @@ pytest-mock = "^3.5.1"
 pytest-runner = "^5.3"
 black = "^20.8b1"
 mypy = "0.812"
-pre-commit = "^2.10"
+pre-commit = "^2.11"
 sphinx = "^3.5"
 recommonmark = "^0.7"
 sphinx-rtd-theme = "^0.5"
 babel = "^2.9.0"
 babelgladeextractor = "^0.7"
-flake8 = "^3.8"
+flake8 = "^3.9"
 isort = "^5.7"
 
 [tool.poetry.scripts]

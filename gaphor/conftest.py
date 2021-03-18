@@ -6,6 +6,7 @@ services and start off.
 
 import logging
 from io import StringIO
+from pathlib import Path
 from typing import Type, TypeVar
 
 import pytest
@@ -172,3 +173,15 @@ def case():
     case = Case()
     yield case
     case.shutdown()
+
+
+@pytest.fixture
+def test_models():
+    """The folder where test models can be found."""
+    return Path(__file__).parent.parent / "test-models"
+
+
+@pytest.fixture
+def models():
+    """The folder where test models can be found."""
+    return Path(__file__).parent.parent / "models"

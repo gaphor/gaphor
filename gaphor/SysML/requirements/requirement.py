@@ -6,7 +6,6 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import (
     Box,
-    EditableText,
     Text,
     TextAlign,
     VerticalAlign,
@@ -61,7 +60,7 @@ class RequirementItem(ElementPresentation[Requirement], Classified):
                 Text(
                     text=lambda: stereotypes_str(self.subject, ["requirement"]),
                 ),
-                EditableText(
+                Text(
                     text=lambda: self.subject.name or "",
                     width=lambda: self.width - 4,
                     style={

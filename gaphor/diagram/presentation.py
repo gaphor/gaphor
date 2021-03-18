@@ -16,6 +16,7 @@ from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.core.modeling.presentation import Presentation, S
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
+from gaphor.diagram.shapes import stroke
 from gaphor.diagram.text import TextAlign, text_point_at_line
 
 
@@ -99,9 +100,6 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
     implement the method `update_shapes()` and set self.shape there.
     """
 
-    width: int
-    height: int
-
     _port_sides = ("top", "right", "bottom", "left")
 
     def __init__(self, diagram: Diagram, id=None, shape=None, width=100, height=50):
@@ -130,14 +128,11 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
         """Updating the shape configuration, e.g. when extra elements have to
         be drawn or when styling changes."""
 
-    def pre_update(self, context):
+    def update(self, context):
         if not self.shape:
             self.update_shapes()
         if self.shape:
             self.min_width, self.min_height = self.shape.size(context)
-
-    def post_update(self, context):
-        pass
 
     def draw(self, context):
         x, y = self.handles()[0].pos
@@ -167,6 +162,18 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
     def postload(self):
         super().postload()
         self.update_shapes()
+
+
+class MinimalValueConstraint(BaseConstraint):
+    def __init__(self, var, min):
+        super().__init__(var)
+        self._min = min
+
+    def solve_for(self, var):
+        min = self._min
+        if var is min:
+            return
+        var.value = max(var.value, min)
 
 
 class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
@@ -202,6 +209,10 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     orthogonal: attribute[int] = attribute("orthogonal", int, 0)
     horizontal: attribute[int] = attribute("horizontal", int, 0)
 
+    @property
+    def middle_shape_size(self) -> Rectangle:
+        return self._shape_middle_rect
+
     def insert_handle(self, index: int, handle: Handle) -> None:
         super().insert_handle(index, handle)
         self.watch_handle(handle)
@@ -210,10 +221,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self.remove_watch_handle(handle)
         super().remove_handle(handle)
 
-    def pre_update(self, context):
-        pass
-
-    def post_update(self, context):
+    def update_shape_bounds(self, context):
         def shape_bounds(shape, align):
             if shape:
                 size = shape.size(context)
@@ -243,7 +251,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         def draw_line_end(end_handle, second_handle, draw):
             pos, p1 = end_handle.pos, second_handle.pos
             angle = atan2(p1.y - pos.y, p1.x - pos.x)
-            cr = context.cairo
             cr.save()
             try:
                 cr.translate(*pos)
@@ -255,12 +262,8 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         style = merge_styles(context.style, self.style)
         context = replace(context, style=style)
 
+        self.update_shape_bounds(context)
         cr = context.cairo
-        cr.set_line_width(style["line-width"])
-        cr.set_dash(style.get("dash-style", ()), 0)
-        stroke = style["color"]
-        if stroke:
-            cr.set_source_rgba(*stroke)
 
         handles = self._handles
         draw_line_end(handles[0], handles[1], self.draw_head)
@@ -270,7 +273,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
         draw_line_end(handles[-1], handles[-2], self.draw_tail)
 
-        cr.stroke()
+        stroke(context)
 
         for shape, rect in (
             (self.shape_head, self._shape_head_rect),
@@ -334,13 +337,3 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
     def _on_horizontal(self, event):
         self._set_horizontal(event.new_value)
-
-
-class MinimalValueConstraint(BaseConstraint):
-    def __init__(self, var, min):
-        super().__init__(var)
-        self._min = min
-
-    def solve_for(self, var):
-        min = self._min
-        var.value = max(var.value, min)

@@ -12,7 +12,7 @@ from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.core.modeling.properties import association, relation_one
 from gaphor.diagram.presentation import ElementPresentation, HandlePositionUpdate, Named
-from gaphor.diagram.shapes import Box, EditableText, IconBox, Text, stroke
+from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.modelfactory import stereotypes_str
 
@@ -48,7 +48,7 @@ class InitialNodeItem(ElementPresentation, ActivityNodeItem):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            Text(text=lambda: self.subject and self.subject.name or ""),
         )
 
         self.watch("subject[NamedElement].name")
@@ -86,7 +86,7 @@ class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            Text(text=lambda: self.subject and self.subject.name or ""),
         )
 
         self.watch("subject[NamedElement].name")
@@ -133,7 +133,7 @@ class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            Text(text=lambda: self.subject and self.subject.name or ""),
         )
 
         self.watch("subject[NamedElement].name")
@@ -169,7 +169,7 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            Text(text=lambda: self.subject and self.subject.name or ""),
         )
 
         self.watch("subject[NamedElement].name")
@@ -212,7 +212,7 @@ class ForkNodeItem(Presentation[UML.ForkNode], HandlePositionUpdate, Named):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            EditableText(text=lambda: self.subject and self.subject.name or ""),
+            Text(text=lambda: self.subject and self.subject.name or ""),
             Text(
                 text=lambda: isinstance(self.subject, UML.JoinNode)
                 and self.subject.joinSpec not in (None, DEFAULT_JOIN_SPEC)
@@ -240,12 +240,6 @@ class ForkNodeItem(Presentation[UML.ForkNode], HandlePositionUpdate, Named):
     def ports(self):
         return self._ports
 
-    def pre_update(self, context):
-        pass
-
-    def post_update(self, context):
-        pass
-
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
         save_func("height", float(self._handles[1].pos.y))
@@ -260,7 +254,7 @@ class ForkNodeItem(Presentation[UML.ForkNode], HandlePositionUpdate, Named):
             super().load(name, value)
 
     def draw(self, context):
-        h1, h2 = self.handles()
+        h1, h2 = self._handles
         height = h2.pos.y - h1.pos.y
         self.shape.draw(context, Rectangle(0, 0, 1, height))
 
