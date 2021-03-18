@@ -4,12 +4,7 @@ import logging
 from typing import Dict, Optional, Sequence, Tuple
 
 from gaphas.guide import GuidePainter
-from gaphas.painter import (
-    FreeHandPainter,
-    HandlePainter,
-    PainterChain,
-    RenderedItemPainter,
-)
+from gaphas.painter import FreeHandPainter, HandlePainter, PainterChain
 from gaphas.segment import LineSegmentPainter
 from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
@@ -293,7 +288,7 @@ class DiagramPage:
         view.bounding_box_painter = item_painter
         view.painter = (
             PainterChain()
-            .append(RenderedItemPainter(view))
+            .append(item_painter)
             .append(HandlePainter(view))
             .append(LineSegmentPainter(view.selection))
             .append(GuidePainter(view))
