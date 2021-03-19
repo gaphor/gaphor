@@ -40,16 +40,18 @@ class PartitionPropertyPage(PropertyPageBase):
         treeview.set_model(self.list_store)
 
         renderer_text = Gtk.CellRendererText()
-        column_text = Gtk.TreeViewColumn(title="#", cell_renderer=renderer_text, text=0)
-        treeview.append_column(column_text)
+        treeview.append_column(
+            Gtk.TreeViewColumn(title="#", cell_renderer=renderer_text, text=0)
+        )
 
         renderer_editable_text = Gtk.CellRendererText()
         renderer_editable_text.set_property("editable", True)
 
-        column_Text = Gtk.TreeViewColumn(
-            title="Name", cell_renderer=renderer_editable_text, text=1
+        treeview.append_column(
+            Gtk.TreeViewColumn(
+                title="Name", cell_renderer=renderer_editable_text, text=1
+            )
         )
-        treeview.append_column(column_Text)
 
         renderer_editable_text.connect("edited", self._on_partition_name_changed)
 
