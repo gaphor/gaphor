@@ -6,6 +6,9 @@ _____
 - Enable arrow keys to expand and collapse namespace tree
 - Allow Gaphor profiles to be copy and pasted between models
 - Improve diagram drawing and scrolling speed
+- Add Croatian translation
+- Remove gray borders around editable text
+- Complete converting all tests to pytest
 - Fix guides are misaligned when top-left handle is moved
 - Update development environment instructions
 - Fix undo and redo does not set attributes
