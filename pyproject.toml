@@ -97,6 +97,7 @@ gaphorconvert = 'gaphor.plugins.diagramexport.gaphorconvert:main'
 "UML" = "gaphor.UML.modelinglanguage:UMLModelingLanguage"
 "SysML" = "gaphor.SysML.modelinglanguage:SysMLModelingLanguage"
 "C4Model" = "gaphor.C4Model.modelinglanguage:C4ModelLanguage"
+"RAAML" = "gaphor.RAAML.modelinglanguage:RAAMLModelingLanguage"
 
 [tool.pytest.ini_options]
 testpaths = [

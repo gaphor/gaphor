@@ -24,7 +24,8 @@ icons:		## Generate icons from stensil (requires Inkscape)
 translations:	## Translate and update .po and .mo files
 	poetry run $(MAKE) -C po
 
-models: gaphor/core/modeling/coremodel.py gaphor/UML/uml.py gaphor/SysML/sysml.py gaphor/C4Model/c4model.py	## Generate Python model files from Gaphor models
+## Generate Python model files from Gaphor models
+models: gaphor/core/modeling/coremodel.py gaphor/UML/uml.py gaphor/SysML/sysml.py gaphor/C4Model/c4model.py gaphor/RAAML/raaml.py
 
 gaphor/core/modeling/coremodel.py: models/Core.gaphor models/Core.override gaphor/codegen/uml_coder.py gaphor/codegen/override.py gaphor/codegen/writer.py
 	poetry run gaphor/codegen/codegen.py models/Core.gaphor $@ models/Core.override && black $@ && mypy gaphor/core/modeling && isort gaphor/core/modeling/coremodel.py
@@ -35,8 +36,8 @@ gaphor/UML/uml.py: models/UML.gaphor models/UML.override gaphor/codegen/uml_code
 gaphor/SysML/sysml.py: models/SysML.gaphor models/SysML.override gaphor/codegen/profile_coder.py gaphor/codegen/override.py gaphor/codegen/writer.py
 	poetry run gaphor/codegen/codegen.py --profile models/SysML.gaphor $@ models/SysML.override && black $@ && isort $@ && mypy gaphor/SysML
 
-gaphor/RAAML/raaml.py: models/RAAML.gaphor models/RAAML.override gaphor/codegen/profile_coder.py.py gaphor/codegen/override.py gaphor/codegen/writer.py
-	poetry run gaphor/codegen/codegen.py --profile models/RAAML.gaphor $@ models/RAAML.override && mypy gaphor/RAAML && isort $@ && black $@
+gaphor/RAAML/raaml.py: models/FTA.gaphor models/FTA.override gaphor/codegen/profile_coder.py gaphor/codegen/override.py gaphor/codegen/writer.py
+	poetry run gaphor/codegen/codegen.py --profile models/FTA.gaphor $@ models/FTA.override && mypy gaphor/RAAML && isort $@ && black $@
 
 gaphor/C4Model/c4model.py: models/C4Model.gaphor models/C4Model.override gaphor/codegen/profile_coder.py gaphor/codegen/override.py gaphor/codegen/writer.py
 	poetry run gaphor/codegen/codegen.py --profile models/C4Model.gaphor $@ models/C4Model.override && mypy gaphor/C4Model && isort $@ && black $@
