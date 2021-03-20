@@ -1,7 +1,6 @@
 """Support classes for dealing with text."""
 
 from gaphas.canvas import instant_cairo_context
-from gaphas.painter.boundingboxpainter import CairoBoundingBoxContext
 from gaphas.painter.freehand import FreeHandCairoContext
 from gi.repository import GLib, Pango, PangoCairo
 
@@ -114,10 +113,6 @@ class Layout:
 
         if isinstance(cr, FreeHandCairoContext):
             PangoCairo.show_layout(cr.cr, layout)
-        elif isinstance(cr, CairoBoundingBoxContext):
-            w, h = layout.get_pixel_size()
-            cr.rel_line_to(w, h)
-            cr.stroke()
         else:
             PangoCairo.show_layout(cr, layout)
 

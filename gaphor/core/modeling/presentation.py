@@ -55,9 +55,9 @@ class Presentation(Matrices, Element, Generic[S]):
     parent: relation_one[Presentation]
     children: relation_many[Presentation]
 
-    def request_update(self, matrix=True):
+    def request_update(self):
         if self.diagram:
-            self.diagram.request_update(self, matrix=matrix)
+            self.diagram.request_update(self)
 
     def watch(self, path, handler=None):
         """Watch a certain path of elements starting with the DiagramItem. The

@@ -4,12 +4,7 @@ import logging
 from typing import Dict, Optional, Sequence, Tuple
 
 from gaphas.guide import GuidePainter
-from gaphas.painter import (
-    BoundingBoxPainter,
-    FreeHandPainter,
-    HandlePainter,
-    PainterChain,
-)
+from gaphas.painter import FreeHandPainter, HandlePainter, PainterChain
 from gaphas.segment import LineSegmentPainter
 from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
@@ -290,6 +285,7 @@ class DiagramPage:
         if sloppiness:
             item_painter = FreeHandPainter(item_painter, sloppiness=sloppiness)
 
+        view.bounding_box_painter = item_painter
         view.painter = (
             PainterChain()
             .append(item_painter)
@@ -298,11 +294,10 @@ class DiagramPage:
             .append(GuidePainter(view))
             .append(RubberbandPainter(self.rubberband_state))
         )
-        view.bounding_box_painter = BoundingBoxPainter(item_painter)
 
-        view.queue_redraw()
+        view.request_update(self.diagram.get_all_items())
 
-    def _on_view_selection_changed(self):
+    def _on_view_selection_changed(self, item):
         view = self.view
         assert view
         selection = view.selection

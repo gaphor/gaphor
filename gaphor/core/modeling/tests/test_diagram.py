@@ -76,7 +76,7 @@ class ViewMock:
     def __init__(self):
         self.removed_items = set()
 
-    def request_update(self, items, matrix_only_items, removed_items) -> None:
+    def request_update(self, items, removed_items) -> None:
         self.removed_items.update(removed_items)
 
 
