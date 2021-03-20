@@ -1,3 +1,17 @@
+2.3.0
+_____
+- Add support for C4 model
+- Add support for Fault Tree Analysis with RAAML
+- Update the UML data model to align closer to version 2.5.1
+- Enable arrow keys to expand and collapse namespace tree
+- Allow Gaphor profiles to be copy and pasted between models
+- Improve diagram drawing and scrolling speed
+- Fix guides are misaligned when top-left handle is moved
+- Update development environment instructions
+- Fix undo and redo does not set attributes
+- Fix selection lasso is in the wrong place after scrolling
+
+
 2.2.2
 _____
 - Fix undo of deleted elements
