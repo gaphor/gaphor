@@ -16,8 +16,6 @@ $ pacman -S mingw-w64-x86_64-gcc \
     mingw-w64-x86_64-cairo \
     mingw-w64-x86_64-gobject-introspection \
     mingw-w64-x86_64-python \
-    mingw-w64-x86_64-python-gobject \
-    mingw-w64-x86_64-python-cairo \
     mingw-w64-x86_64-python-pip \
     mingw-w64-x86_64-python-setuptools \
     mingw-w64-x86_64-python-wheel
