@@ -1,15 +1,14 @@
 # Italian translations for PROJECT.
 # Copyright (C) 2020 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# ALBANO BATTISTELLA <albano_battistella@hotmail.com>, 2020.
+# ALBANO BATTISTELLA <albano_battistella@hotmail.com>, 2020,2021.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-05-26 08:26+0200\n"
-"PO-Revision-Date: 2020-10-25 08:30+0100\n"
+"PO-Revision-Date: 2021-03-21 14:30+0100\n"
 "Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
 "Language: it\n"
 "Language-Team: Italian <LL@li.org>\n"
@@ -45,7 +44,7 @@ msgstr ""
 
 #: ../gaphor/SysML/propertypages.glade
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: ../gaphor/SysML/propertypages.glade
 msgid "Text"
@@ -176,7 +175,7 @@ msgstr "Controllo/flusso oggetto"
 
 #: ../gaphor/SysML/toolbox.py:296 ../gaphor/UML/toolbox.py:300
 msgid "Send signal action"
-msgstr ""
+msgstr "Invia segnale azione"
 
 #: ../gaphor/SysML/toolbox.py:308 ../gaphor/UML/toolbox.py:312
 msgid "Accept event action"
@@ -266,7 +265,7 @@ msgstr "Artefatto"
 
 #: ../gaphor/UML/toolbox.py:181
 msgid "Node"
-msgstr "odo"
+msgstr "Nodo"
 
 #: ../gaphor/UML/toolbox.py:191
 msgid "Device"
@@ -614,7 +613,7 @@ msgstr "Gaphor è un semplice strumento di modellazione scritto in Python"
 
 #: ../gaphor/services/helpservice/about.glade
 msgid "Fork me on GitHub"
-msgstr "Fork me su GitHub"
+msgstr "Forkami su GitHub"
 
 #: ../gaphor/services/helpservice/about.glade
 msgid ""
