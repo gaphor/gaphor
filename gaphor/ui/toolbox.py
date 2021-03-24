@@ -109,11 +109,8 @@ class Toolbox(UIComponent, ActionProvider):
             self.properties.set("toolbox-collapsed", collapsed)
 
         for index, (title, items) in enumerate(toolbox_actions):
-            tool_item_group = Gtk.ToolItemGroup.new("")
-            label = Gtk.Label.new(title)
-            label.set_halign(Gtk.Align.START)
-            label.show()
-            tool_item_group.set_label_widget(label)
+            tool_item_group = Gtk.ToolItemGroup.new(title)
+            tool_item_group.get_label_widget().set_halign(Gtk.Align.START)
             tool_item_group.set_property("collapsed", collapsed.get(index, False))
             tool_item_group.connect("notify::collapsed", on_collapsed, index)
             for action_name, label, icon_name, shortcut, *rest in items:
