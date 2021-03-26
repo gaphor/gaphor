@@ -14,6 +14,7 @@ ICONS=diagram \
 	block \
 	proxyport \
 	package \
+	containment \
 	interface \
 	association \
 	composite-association \
