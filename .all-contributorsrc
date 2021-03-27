@@ -394,6 +394,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "TomBous",
+      "name": "TomBous",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10131977?v=4",
+      "profile": "https://github.com/TomBous",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
