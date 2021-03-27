@@ -325,6 +325,21 @@ def draw_arrow_tail(context: DrawContext):
     cr.restore()
 
 
+def draw_crossed_circle_head(context: DrawContext):
+    cr = context.cairo
+    radius = 7
+    cr.save()
+    cr.set_dash((), 0)
+    cr.arc(radius, 0.0, radius, 0.0, 2 * pi)
+    cr.move_to(0, 0)
+    cr.line_to(2 * radius, 0)
+    cr.move_to(radius, radius)
+    cr.line_to(radius, -radius)
+    stroke(context, dash=False)
+    cr.restore()
+    cr.move_to(0, 0)
+
+
 def draw_diamond(
     context: DrawContext, x1: float, x2: float, y1: float, y2: float
 ) -> None:
