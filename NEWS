@@ -1,3 +1,9 @@
+2.3.1
+_____
+- Fix scrollbars cause the diagram to disappear
+- Update Italian translation
+- Left align the toolbox header labels
+
 2.3.0
 _____
 - Add support for C4 model
