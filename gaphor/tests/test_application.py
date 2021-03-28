@@ -1,10 +1,19 @@
+import pytest
+
 from gaphor.application import Application
+from gaphor.event import ModelLoaded, ModelSaved
 
 
-def test_service_load():
+@pytest.fixture
+def application():
+    application = Application()
+    yield application
+    application.shutdown()
+
+
+def test_service_load(application):
     """Test loading services and querying utilities."""
 
-    application = Application()
     session = application.new_session()
 
     assert (
@@ -15,4 +24,16 @@ def test_service_load():
         session.get_service("file_manager") is not None
     ), "Failed to load the file manager service"
 
-    application.shutdown()
+
+def test_model_loaded(application):
+    session = application.new_session()
+    session.event_manager.handle(ModelLoaded(None, "some_file_name"))
+
+    assert session.filename == "some_file_name"
+
+
+def test_model_saved(application):
+    session = application.new_session()
+    session.event_manager.handle(ModelSaved(None, "some_file_name"))
+
+    assert session.filename == "some_file_name"

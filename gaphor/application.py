@@ -20,6 +20,8 @@ from gaphor.entrypoint import initialize
 from gaphor.event import (
     ActiveSessionChanged,
     ApplicationShutdown,
+    ModelLoaded,
+    ModelSaved,
     ServiceInitializedEvent,
     ServiceShutdownEvent,
     SessionCreated,
@@ -169,6 +171,7 @@ class Session(Service):
     def __init__(self, services=None):
         """Initialize the application."""
         services_by_name: Dict[str, Service] = initialize("gaphor.services", services)
+        self._filename = None
 
         self.event_manager: EventManager = cast(
             EventManager, services_by_name["event_manager"]
@@ -181,6 +184,8 @@ class Session(Service):
             logger.info(f"Initializing service {name}")
             self.component_registry.register(name, srv)
             self.event_manager.handle(ServiceInitializedEvent(name, srv))
+
+        self.event_manager.subscribe(self.on_filename_changed)
 
     @property
     def is_new(self):
@@ -201,8 +206,11 @@ class Session(Service):
 
         return self.component_registry.get_service(name)
 
-    def shutdown(self):
+    @property
+    def filename(self):
+        return self._filename
 
+    def shutdown(self):
         if self.component_registry:
             for name, srv in reversed(list(self.component_registry.all(Service))):  # type: ignore[misc]
                 self.shutdown_service(name, srv)
@@ -213,3 +221,7 @@ class Session(Service):
         self.event_manager.handle(ServiceShutdownEvent(name, srv))
         self.component_registry.unregister(srv)
         srv.shutdown()
+
+    @event_handler(SessionCreated, ModelLoaded, ModelSaved)
+    def on_filename_changed(self, event):
+        self._filename = event.filename
