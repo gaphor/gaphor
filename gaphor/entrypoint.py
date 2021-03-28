@@ -16,7 +16,7 @@ def initialize(scope, services=None, **known_services: T) -> Dict[str, T]:
 def load_entrypoints(scope, services=None) -> Dict[str, Type[T]]:
     """Load services from resources."""
     uninitialized_services = {}
-    for ep in importlib_metadata.entry_points()[scope]:
+    for ep in importlib_metadata.entry_points(group=scope):
         cls = ep.load()
         if not services or ep.name in services:
             logger.debug(f'found service entry point "{ep.name}"')
