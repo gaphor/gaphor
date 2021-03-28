@@ -9,16 +9,17 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import Diagram, ModelReady
-from gaphor.event import ActionEnabled, ActiveSessionChanged, SessionShutdownRequested
+from gaphor.event import (
+    ActionEnabled,
+    ActiveSessionChanged,
+    ModelLoaded,
+    ModelSaved,
+    SessionShutdownRequested,
+)
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
-from gaphor.ui.event import (
-    DiagramOpened,
-    FileLoaded,
-    FileSaved,
-    ModelingLanguageChanged,
-)
+from gaphor.ui.event import DiagramOpened, ModelingLanguageChanged
 from gaphor.ui.layout import deserialize
 from gaphor.ui.notification import InAppNotifier
 from gaphor.ui.recentfiles import HOME, RecentFilesMenu
@@ -239,7 +240,7 @@ class MainWindow(Service, ActionProvider):
         ):
             self.event_manager.handle(DiagramOpened(diagram))
 
-    @event_handler(FileLoaded, FileSaved)
+    @event_handler(ModelLoaded, ModelSaved)
     def _on_file_manager_state_changed(self, event):
         self.model_changed = False
         self.filename = event.filename

@@ -55,6 +55,18 @@ class SessionShutdown(ServiceEvent):
     """The session is emitting this event when it's ready to shut down."""
 
 
+class ModelLoaded:
+    def __init__(self, service, filename=None):
+        self.service = service
+        self.filename = filename
+
+
+class ModelSaved:
+    def __init__(self, service, filename=None):
+        self.service = service
+        self.filename = filename
+
+
 class TransactionBegin:
     """This event denotes the beginning of a transaction.
 

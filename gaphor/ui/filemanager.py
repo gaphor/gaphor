@@ -6,11 +6,15 @@ from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
-from gaphor.event import SessionShutdown, SessionShutdownRequested
+from gaphor.event import (
+    ModelLoaded,
+    ModelSaved,
+    SessionShutdown,
+    SessionShutdownRequested,
+)
 from gaphor.storage import storage, verify
 from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.errorhandler import error_handler
-from gaphor.ui.event import FileLoaded, FileSaved
 from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
 from gaphor.ui.gidlethread import GIdleThread, Queue
 from gaphor.ui.questiondialog import QuestionDialog
@@ -109,7 +113,7 @@ class FileManager(Service, ActionProvider):
                 worker.reraise()
 
             self.filename = filename
-            self.event_manager.handle(FileLoaded(self, filename))
+            self.event_manager.handle(ModelLoaded(self, filename))
         except Exception:
             error_handler(
                 message=gettext("Unable to open model “{filename}”.").format(
@@ -185,7 +189,7 @@ class FileManager(Service, ActionProvider):
                 worker.reraise()
 
             self.filename = filename
-            self.event_manager.handle(FileSaved(self, filename))
+            self.event_manager.handle(ModelSaved(self, filename))
         except Exception as e:
             error_handler(
                 message=gettext("Unable to save model “{filename}”.").format(
