@@ -116,8 +116,7 @@ class AssociationItem(LinePresentation[UML.Association], Named):
 
     def postload(self):
         super().postload()
-        self._head_end.set_text()
-        self._tail_end.set_text()
+        self.on_association_end_value()
 
     head_end = property(lambda self: self._head_end)
     tail_end = property(lambda self: self._tail_end)
@@ -135,7 +134,7 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         )
         self.request_update()
 
-    def on_association_end_value(self, event):
+    def on_association_end_value(self, event=None):
         """Handle events and update text on association end."""
         for end in (self._head_end, self._tail_end):
             end.set_text()
