@@ -1,47 +1,40 @@
 import pytest
 
-from gaphor.services.properties import FileBackend, Properties, get_config_dir
-
-
-class MockEventManager(list):
-    def handle(self, event):
-        self.append(event)
+import gaphor.services.properties
+from gaphor.event import ModelLoaded, ModelSaved
 
 
 @pytest.fixture
-def prop(tmpdir):
-    backend = FileBackend(tmpdir)
-    events = MockEventManager()
-    properties = Properties(events, backend)
-
+def properties(event_manager, tmpdir, monkeypatch):
+    monkeypatch.setattr(gaphor.services.properties, "get_cache_dir", lambda: tmpdir)
+    properties = gaphor.services.properties.Properties(event_manager)
     yield properties
     properties.shutdown()
 
 
-def test_properties(prop):
-    prop.set("test1", 2)
-    assert len(prop.event_manager) == 1, prop.event_manager
-    event = prop.event_manager[0]
-    assert "test1" == event.key
-    assert None is event.old_value
-    assert event.new_value == 2
-    assert prop("test1") == 2
+def test_set_property(properties):
+    properties.on_model_loaded(ModelLoaded(None, "some_file_name"))
 
-    prop.set("test1", 2)
-    assert len(prop.event_manager) == 1
+    properties.set("test", 1)
 
-    prop.set("test1", "foo")
-    assert len(prop.event_manager) == 2
-    event = prop.event_manager[1]
-    assert "test1" == event.key
-    assert event.old_value == 2
-    assert "foo" == event.new_value
-    assert "foo" == prop("test1")
+    assert properties.get("test") == 1
 
-    assert prop("test2", 3) == 3
-    assert prop("test2", 4) == 3
+
+def test_load_properties(properties, event_manager):
+    properties.set("test", 1)
+    properties.on_model_saved(ModelSaved(None, "test_load_properties"))
+
+    new_properties = gaphor.services.properties.Properties(event_manager)
+    new_properties.on_model_loaded(ModelLoaded(None, "test_load_properties"))
+
+    assert new_properties.get("test") == 1
 
 
 def test_config_dir():
-    config_dir = get_config_dir()
+    config_dir = gaphor.services.properties.get_config_dir()
     assert config_dir.endswith("gaphor")
+
+
+def test_cache_dir():
+    cache_dir = gaphor.services.properties.get_cache_dir()
+    assert cache_dir.endswith("gaphor")
