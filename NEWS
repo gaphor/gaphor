@@ -1,3 +1,8 @@
+2.3.2
+_____
+- Fix issue where ornaments were not show on associations
+  after loading a model
+
 2.3.1
 _____
 - Fix scrollbars cause the diagram to disappear
