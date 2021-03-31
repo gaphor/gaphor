@@ -1,5 +1,7 @@
 """Application lifecycle events are managed here."""
 
+from typing import Optional
+
 from gaphor.abc import Service
 
 
@@ -34,10 +36,11 @@ class ApplicationShutdown(ServiceEvent):
 class SessionCreated(ServiceEvent):
     """The session is emitting this event when it's ready to shut down."""
 
-    def __init__(self, applicaton: Service, session: Service):
+    def __init__(self, applicaton: Service, session: Service, filename: Optional[str]):
         super().__init__(applicaton)
         self.application = applicaton
         self.session = session
+        self.filename = filename
 
 
 class ActiveSessionChanged(ServiceEvent):

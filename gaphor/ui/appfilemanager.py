@@ -43,18 +43,14 @@ class AppFileManager(Service, ActionProvider):
         reuse_session = self.session_is_new(self.application.active_session)
         if reuse_session:
             session = self.application.active_session
-        else:
-            session = self.application.new_session()
-
-        file_manager = session.get_service("file_manager")
-        try:
-            file_manager.load(filename)
-        except Exception:
-            if reuse_session:
+            file_manager = session.get_service("file_manager")
+            try:
+                file_manager.load(filename)
+            except Exception:
                 load_default_model(session)
-            else:
-                self.application.shutdown_session(session)
-            raise
+                raise
+        else:
+            session = self.application.new_session(filename=filename)
 
     def new(self):
         session = self.application.new_session()

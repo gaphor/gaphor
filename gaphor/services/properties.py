@@ -14,7 +14,7 @@ from gi.repository import GLib
 
 from gaphor.abc import Service
 from gaphor.core import event_handler
-from gaphor.event import ModelLoaded, ModelSaved
+from gaphor.event import ModelLoaded, ModelSaved, SessionCreated
 
 
 def get_config_dir() -> str:
@@ -85,9 +85,9 @@ class Properties(Service):
         self.event_manager.unsubscribe(self.on_model_loaded)
         self.event_manager.unsubscribe(self.on_model_saved)
 
-    @event_handler(ModelLoaded)
+    @event_handler(ModelLoaded, SessionCreated)
     def on_model_loaded(self, event):
-        self.filename = os.path.join(get_cache_dir(), file_hash(event.filename))
+        self.filename = os.path.join(get_cache_dir(), file_hash(event.filename or ""))
         self.load()
 
     @event_handler(ModelSaved)

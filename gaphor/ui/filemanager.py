@@ -9,6 +9,7 @@ from gaphor.core import action, event_handler, gettext
 from gaphor.event import (
     ModelLoaded,
     ModelSaved,
+    SessionCreated,
     SessionShutdown,
     SessionShutdownRequested,
 )
@@ -59,10 +60,12 @@ class FileManager(Service, ActionProvider):
         self._filename = None
 
         event_manager.subscribe(self._on_session_shutdown_request)
+        event_manager.subscribe(self._on_session_created)
 
     def shutdown(self):
         """Called when shutting down the file manager service."""
         self.event_manager.unsubscribe(self._on_session_shutdown_request)
+        self.event_manager.unsubscribe(self._on_session_created)
 
     def get_filename(self):
         """Return the current file name.
@@ -239,6 +242,11 @@ class FileManager(Service, ActionProvider):
             return True
 
         return False
+
+    @event_handler(SessionCreated)
+    def _on_session_created(self, event: SessionCreated):
+        if event.filename:
+            self.load(event.filename)
 
     @event_handler(SessionShutdownRequested)
     def _on_session_shutdown_request(self, event):
