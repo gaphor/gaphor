@@ -419,7 +419,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "pygobject"
-version = "3.40.0"
+version = "3.40.1"
 description = "Python bindings for GObject Introspection"
 category = "main"
 optional = false
@@ -1081,7 +1081,7 @@ pygments = [
     {file = "Pygments-2.8.1.tar.gz", hash = "sha256:2656e1a6edcdabf4275f9a3640db59fd5de107d88e8663c5d4e9a0fa62f77f94"},
 ]
 pygobject = [
-    {file = "PyGObject-3.40.0.tar.gz", hash = "sha256:98d83f71e6313dadc29793450fec23b2eaa5c3f1c4b073d0a4f9c31b5cdb5fca"},
+    {file = "PyGObject-3.40.1.tar.gz", hash = "sha256:6fb599aa59ceb9dd05fafb0d72b3862943e7d5e85c8ef6c74856bc6d4321cbab"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
