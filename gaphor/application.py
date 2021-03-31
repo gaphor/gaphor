@@ -75,7 +75,7 @@ class Application(Service, ActionProvider):
     def active_session(self):
         return self._active_session
 
-    def new_session(self, services=None):
+    def new_session(self, *, services=None):
         """Initialize an application session."""
         session = Session()
 
