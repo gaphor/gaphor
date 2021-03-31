@@ -2,7 +2,9 @@ from typing import Dict
 
 from gaphor.abc import ActionProvider, ModelingLanguage, Service
 from gaphor.action import action
+from gaphor.core import event_handler
 from gaphor.entrypoint import initialize
+from gaphor.services.properties import PropertyChanged
 from gaphor.ui.event import ModelingLanguageChanged
 
 
@@ -23,9 +25,10 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
         self._modeling_languages: Dict[str, ModelingLanguage] = initialize(
             "gaphor.modelinglanguages"
         )
+        self.event_manager.subscribe(self.on_property_changed)
 
     def shutdown(self):
-        pass
+        self.event_manager.subscribe(self.on_property_changed)
 
     @property
     def modeling_languages(self):
@@ -77,3 +80,8 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
     def action_select_modeling_language(self, modeling_language: str):
         self.properties.set("modeling-language", modeling_language)
         self.event_manager.handle(ModelingLanguageChanged(modeling_language))
+
+    @event_handler(PropertyChanged)
+    def on_property_changed(self, event: PropertyChanged):
+        if event.key == "modeling-language":
+            self.event_manager.handle(ModelingLanguageChanged(event.new_value))
