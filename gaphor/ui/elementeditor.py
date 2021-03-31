@@ -70,6 +70,7 @@ class ElementEditor(UIComponent, ActionProvider):
         builder = new_builder("elementeditor", "style-sheet-buffer")
 
         self.revealer = builder.get_object("elementeditor")
+        self.revealer.set_reveal_child(self.properties.get("show-editors", True))
         self.editor_stack = builder.get_object("editor-stack")
 
         self.editors.open(builder)
@@ -89,9 +90,14 @@ class ElementEditor(UIComponent, ActionProvider):
 
         return True
 
-    @action(name="show-editors", shortcut="<Primary>e", state=True)
+    @action(
+        name="show-editors",
+        shortcut="<Primary>e",
+        state=lambda self: self.properties.get("show-editors", True),
+    )
     def toggle_editor_visibility(self, active):
         self.revealer.set_reveal_child(active)
+        self.properties.set("show-editors", active)
 
     @action(name="show-settings", state=False)
     def toggle_editor_settings(self, active):
