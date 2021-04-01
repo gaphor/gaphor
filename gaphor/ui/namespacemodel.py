@@ -170,7 +170,7 @@ class NamespaceModel:
     @event_handler(ModelReady, ModelFlushed)
     def refresh(self, event=None):
         """Load a new model completely."""
-        log.info("Rebuilding namespace model")
+        log.debug("Rebuilding namespace model")
 
         self.model.clear()
 
