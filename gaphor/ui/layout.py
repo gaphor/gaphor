@@ -85,13 +85,13 @@ def paned(parent, index, properties, name, orientation, position=None):
 
 
 @factory("box")
-def box(parent, index, properties, orientation):
+def box(parent, index, properties, orientation, resize="false"):
     box = Gtk.Box.new(
         Gtk.Orientation.HORIZONTAL
         if orientation == "horizontal"
         else Gtk.Orientation.VERTICAL,
         0,
     )
-    add(box, index, parent)
+    add(box, index, parent, resize == "true")
     box.show()
     return box
