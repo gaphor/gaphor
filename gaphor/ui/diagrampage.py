@@ -109,7 +109,7 @@ class DiagramPage:
         """
         assert self.diagram
 
-        view = GtkView(model=self.diagram, selection=Selection())
+        view = GtkView(selection=Selection())
         view.drag_dest_set(
             Gtk.DestDefaults.ALL,
             DiagramPage.VIEW_DND_TARGETS,
@@ -137,6 +137,9 @@ class DiagramPage:
         self.select_tool("toolbox-pointer")
 
         self.set_drawing_style()
+
+        # Set model only after the painters are set
+        view.model = self.diagram
 
         return self.widget
 
