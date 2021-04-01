@@ -8,7 +8,6 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import event_handler, gettext
-from gaphor.core.modeling import Diagram, ModelReady
 from gaphor.event import (
     ActionEnabled,
     ActiveSessionChanged,
@@ -19,7 +18,7 @@ from gaphor.event import (
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
-from gaphor.ui.event import DiagramOpened, ModelingLanguageChanged
+from gaphor.ui.event import ModelingLanguageChanged
 from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.notification import InAppNotifier
 from gaphor.ui.recentfiles import HOME, RecentFilesMenu
@@ -133,7 +132,6 @@ class MainWindow(Service, ActionProvider):
         em = self.event_manager
         em.unsubscribe(self._on_file_manager_state_changed)
         em.unsubscribe(self._on_undo_manager_state_changed)
-        em.unsubscribe(self._new_model_content)
         em.unsubscribe(self._on_action_enabled)
         em.unsubscribe(self._on_modeling_language_selection_changed)
         if self.in_app_notifier:
@@ -190,20 +188,17 @@ class MainWindow(Service, ActionProvider):
 
         self._on_modeling_language_selection_changed()
 
+        self.window.set_resizable(True)
         self.window.show_all()
 
         self.window.connect("notify::is-active", self._on_window_active)
         self.window.connect("delete-event", self._on_window_delete)
-
-        # We want to store the window size, so it can be reloaded on startup
-        self.window.set_resizable(True)
         self.window.connect("size-allocate", self._on_window_size_allocate)
 
         self.in_app_notifier = InAppNotifier(builder)
         em = self.event_manager
         em.subscribe(self._on_file_manager_state_changed)
         em.subscribe(self._on_undo_manager_state_changed)
-        em.subscribe(self._new_model_content)
         em.subscribe(self._on_action_enabled)
         em.subscribe(self._on_modeling_language_selection_changed)
         em.subscribe(self.in_app_notifier.handle)
@@ -230,15 +225,6 @@ class MainWindow(Service, ActionProvider):
         self.window.get_titlebar().set_subtitle(subtitle)
 
     # Signal callbacks:
-
-    @event_handler(ModelReady)
-    def _new_model_content(self, event):
-        """Open the toplevel element and load toplevel diagrams."""
-        for diagram in self.element_factory.select(
-            lambda e: e.isKindOf(Diagram)
-            and not (e.namespace and e.namespace.namespace)
-        ):
-            self.event_manager.handle(DiagramOpened(diagram))
 
     @event_handler(ModelLoaded, ModelSaved)
     def _on_file_manager_state_changed(self, event):

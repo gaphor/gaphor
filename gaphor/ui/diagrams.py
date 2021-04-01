@@ -6,7 +6,7 @@ from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import action, event_handler, gettext
-from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed
+from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed, ModelReady
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.event import DiagramClosed, DiagramOpened, DiagramSelectionChanged
@@ -24,6 +24,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.properties = properties
         self.modeling_language = modeling_language
         self._notebook: Gtk.Notebook = None
+        self._remove_signal_id = ()
 
     def open(self):
         """Open the diagrams component.
@@ -36,15 +37,25 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook.props.scrollable = True
         self._notebook.show()
         self._notebook.connect("switch-page", self._on_switch_page)
+        self._notebook.connect("show", self._on_notebook_show)
+        self._notebook.connect("destroy", self._on_notebook_destroy)
+        self._page_handler_ids = (
+            self._notebook.connect("page-added", self._on_page_changed),
+            self._notebook.connect("page-removed", self._on_page_changed),
+            self._notebook.connect("page-reordered", self._on_page_changed),
+        )
         self.event_manager.subscribe(self._on_show_diagram)
         self.event_manager.subscribe(self._on_close_diagram)
         self.event_manager.subscribe(self._on_name_change)
         self.event_manager.subscribe(self._on_flush_model)
+        self.event_manager.subscribe(self._on_model_ready)
+
         return self._notebook
 
     def close(self):
         """Close the diagrams component."""
 
+        self.event_manager.unsubscribe(self._on_model_ready)
         self.event_manager.unsubscribe(self._on_flush_model)
         self.event_manager.unsubscribe(self._on_name_change)
         self.event_manager.unsubscribe(self._on_close_diagram)
@@ -52,6 +63,13 @@ class Diagrams(UIComponent, ActionProvider):
         if self._notebook:
             self._notebook.destroy()
             self._notebook = None
+
+    def _on_notebook_show(self, notebook):
+        self._on_model_ready()
+
+    def _on_notebook_destroy(self, notebook):
+        for id in self._page_handler_ids:
+            self._notebook.disconnect(id)
 
     def get_current_diagram(self):
         """Returns the current page of the notebook.
@@ -156,6 +174,19 @@ class Diagrams(UIComponent, ActionProvider):
             )
         )
 
+    def _on_page_changed(self, notebook, _page, _page_num):
+        def diagram_ids():
+            notebook = self._notebook
+            for page_num in range(notebook.get_n_pages()):
+                page = notebook.get_nth_page(page_num)
+                if page:
+                    diagram = page.diagram_page.get_diagram()
+                    if diagram:
+                        yield diagram.id
+
+        self.properties.set("opened-diagrams", list(diagram_ids()))
+        print("pages changed", self.properties.get("opened-diagrams"))
+
     def _add_ui_settings(self, page):
         window = page.get_toplevel()
         window.insert_action_group("diagram", page.action_group.actions)
@@ -170,6 +201,20 @@ class Diagrams(UIComponent, ActionProvider):
     def close_current_tab(self):
         diagram = self.get_current_diagram()
         self.event_manager.handle(DiagramClosed(diagram))
+
+    @event_handler(ModelReady)
+    def _on_model_ready(self, event=None):
+        """Open the toplevel element and load toplevel diagrams."""
+        diagram_ids = self.properties.get("opened-diagrams", [])
+        diagrams = [self.element_factory.lookup(id) for id in diagram_ids]
+        if not any(diagrams):
+            diagrams = self.element_factory.select(
+                lambda e: e.isKindOf(Diagram)
+                and not (e.namespace and e.namespace.namespace)
+            )
+        for diagram in diagrams:
+            if diagram:
+                self.event_manager.handle(DiagramOpened(diagram))
 
     @event_handler(DiagramOpened)
     def _on_show_diagram(self, event):
