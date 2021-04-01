@@ -279,8 +279,10 @@ class MainWindow(Service, ActionProvider):
 
     def _on_window_size_allocate(self, window, allocation):
         """Store the window size in a property."""
-        width, height = window.get_size()
-        self.properties.set("ui.window-size", (width, height))
+        window_state = window.get_window().get_state()
+        if not window_state & (Gdk.WindowState.MAXIMIZED | Gdk.WindowState.FULLSCREEN):
+            width, height = window.get_size()
+            self.properties.set("ui.window-size", (width, height))
 
 
 Gtk.AccelMap.add_filter("gaphor")
