@@ -20,7 +20,7 @@ from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.event import DiagramOpened, ModelingLanguageChanged
-from gaphor.ui.layout import deserialize
+from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.notification import InAppNotifier
 from gaphor.ui.recentfiles import HOME, RecentFilesMenu
 
@@ -85,7 +85,7 @@ class MainWindow(Service, ActionProvider):
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
 
-    size = property(lambda s: s.properties.get("ui.window-size", (760, 580)))
+    size = property(lambda s: s.properties.get("ui.window-size", (860, 580)))
 
     def __init__(
         self,
@@ -279,8 +279,7 @@ class MainWindow(Service, ActionProvider):
 
     def _on_window_size_allocate(self, window, allocation):
         """Store the window size in a property."""
-        window_state = window.get_window().get_state()
-        if not window_state & (Gdk.WindowState.MAXIMIZED | Gdk.WindowState.FULLSCREEN):
+        if not is_maximized(window):
             width, height = window.get_size()
             self.properties.set("ui.window-size", (width, height))
 

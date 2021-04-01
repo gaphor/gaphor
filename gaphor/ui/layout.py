@@ -3,7 +3,13 @@
 from typing import Callable, Dict
 from xml.etree.ElementTree import fromstring
 
-from gi.repository import Gtk
+from gi.repository import Gdk, Gtk
+
+
+def is_maximized(window: Gtk.Window):
+    window_state = window.get_window().get_state()
+    return window_state & (Gdk.WindowState.MAXIMIZED | Gdk.WindowState.FULLSCREEN)
+
 
 widget_factory: Dict[str, Callable] = {}
 
@@ -66,7 +72,8 @@ def factory(typename):
 
 
 def _position_changed(paned, _gparam, properties):
-    properties.set(paned.get_name(), paned.props.position)
+    if not is_maximized(paned.get_toplevel()):
+        properties.set(paned.get_name(), paned.props.position)
 
 
 @factory("paned")
