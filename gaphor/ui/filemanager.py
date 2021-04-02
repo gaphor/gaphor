@@ -1,8 +1,10 @@
 """The file service is responsible for loading and saving the user data."""
 
 import logging
+from queue import Queue
 
-from gi.repository import Gtk
+from gaphas.decorators import g_async
+from gi.repository import GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
@@ -17,7 +19,6 @@ from gaphor.storage import storage, verify
 from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
-from gaphor.ui.gidlethread import GIdleThread, Queue
 from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
 
@@ -95,7 +96,7 @@ class FileManager(Service, ActionProvider):
         successful, the filename is set.
         """
 
-        queue = Queue()
+        queue: Queue[int] = Queue(0)
         status_window = StatusWindow(
             gettext("Loading..."),
             gettext("Loading model from {filename}").format(filename=filename),
@@ -103,33 +104,36 @@ class FileManager(Service, ActionProvider):
             queue=queue,
         )
 
-        try:
-            loader = storage.load_generator(
-                filename.encode("utf-8"), self.element_factory, self.modeling_language
-            )
-            worker = GIdleThread(loader, queue)
+        # Use low prio, so screen updates do happen
+        @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
+        def async_loader():
+            try:
+                for percentage in storage.load_generator(
+                    filename.encode("utf-8"),
+                    self.element_factory,
+                    self.modeling_language,
+                ):
+                    queue.put(percentage)
+                    yield percentage
 
-            worker.start()
-            worker.wait()
+                self.filename = filename
+                self.event_manager.handle(ModelLoaded(self, filename))
+            except Exception:
+                error_handler(
+                    message=gettext("Unable to open model “{filename}”.").format(
+                        filename=filename
+                    ),
+                    secondary_message=gettext(
+                        "This file does not contain a valid Gaphor model."
+                    ),
+                    window=self.main_window.window,
+                )
+                raise
+            finally:
+                status_window.destroy()
 
-            if worker.error:
-                worker.reraise()
-
-            self.filename = filename
-            self.event_manager.handle(ModelLoaded(self, filename))
-        except Exception:
-            error_handler(
-                message=gettext("Unable to open model “{filename}”.").format(
-                    filename=filename
-                ),
-                secondary_message=gettext(
-                    "This file does not contain a valid Gaphor model."
-                ),
-                window=self.main_window.window,
-            )
-            raise
-        finally:
-            status_window.destroy()
+        for _ in async_loader():
+            pass
 
     def verify_orphans(self):
         """Verify that no orphaned elements are saved.
@@ -174,36 +178,40 @@ class FileManager(Service, ActionProvider):
         self.verify_orphans()
 
         main_window = self.main_window
-        queue = Queue()
+        queue: Queue[int] = Queue(0)
         status_window = StatusWindow(
             gettext("Saving..."),
             gettext("Saving model to {filename}").format(filename=filename),
             parent=main_window.window,
             queue=queue,
         )
-        try:
-            with open(filename.encode("utf-8"), "w") as out:
-                saver = storage.save_generator(XMLWriter(out), self.element_factory)
-                worker = GIdleThread(saver, queue)
-                worker.start()
-                worker.wait()
 
-            if worker.error:
-                worker.reraise()
+        @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
+        def async_saver():
+            try:
+                with open(filename.encode("utf-8"), "w") as out:
+                    for percentage in storage.save_generator(
+                        XMLWriter(out), self.element_factory
+                    ):
+                        queue.put(percentage)
+                        yield
 
-            self.filename = filename
-            self.event_manager.handle(ModelSaved(self, filename))
-        except Exception as e:
-            error_handler(
-                message=gettext("Unable to save model “{filename}”.").format(
-                    filename=filename
-                ),
-                secondary_message=error_message(e),
-                window=self.main_window.window,
-            )
-            raise
-        finally:
-            status_window.destroy()
+                self.filename = filename
+                self.event_manager.handle(ModelSaved(self, filename))
+            except Exception as e:
+                error_handler(
+                    message=gettext("Unable to save model “{filename}”.").format(
+                        filename=filename
+                    ),
+                    secondary_message=error_message(e),
+                    window=self.main_window.window,
+                )
+                raise
+            finally:
+                status_window.destroy()
+
+        for _ in async_saver():
+            pass
 
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
