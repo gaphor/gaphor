@@ -85,9 +85,9 @@ class Application(Service, ActionProvider):
         else:
             return self._new_session(filename=filename, services=services)
 
-    def _new_session(self, *, filename=None, services=None):
+    def _new_session(self, filename=None, services=None):
         """Initialize an application session."""
-        session = Session()
+        session = Session(services=services)
 
         @event_handler(ActiveSessionChanged)
         def on_active_session_changed(event):
