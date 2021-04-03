@@ -95,6 +95,8 @@ class FileManager(Service, ActionProvider):
         GIdleThread which executes the load generator.  If loading is
         successful, the filename is set.
         """
+        # First claim file name, so any other files will be opened in a different session
+        self.filename = filename
 
         queue: Queue[int] = Queue(0)
         status_window = StatusWindow(
@@ -116,9 +118,9 @@ class FileManager(Service, ActionProvider):
                     queue.put(percentage)
                     yield percentage
 
-                self.filename = filename
                 self.event_manager.handle(ModelLoaded(self, filename))
             except Exception:
+                self.filename = None
                 error_handler(
                     message=gettext("Unable to open model “{filename}”.").format(
                         filename=filename

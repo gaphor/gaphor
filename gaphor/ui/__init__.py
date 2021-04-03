@@ -109,7 +109,6 @@ def run(args):
         if hint == "__new__":
             app_file_manager.new()
         else:
-            assert n_files == 1
             for file in files:
                 app_file_manager.load(file.get_path())
 
