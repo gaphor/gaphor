@@ -78,7 +78,7 @@ class Application(Service, ActionProvider):
     def new_session(self, *, filename=None, services=None):
         if filename is None:
             return self._new_session(services=services)
-        if self._active_session and self._active_session.is_new:
+        elif self._active_session and self._active_session.is_new:
             file_manager = self._active_session.get_service("file_manager")
             file_manager.load(filename)
             return self._active_session
