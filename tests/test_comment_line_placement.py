@@ -11,15 +11,16 @@ from gaphor.diagram.diagramtools.placement import (
     placement_tool,
 )
 from gaphor.diagram.general import CommentLineItem
-from gaphor.ui.appfilemanager import load_default_model
 from gaphor.ui.diagrampage import DiagramPage
+from gaphor.ui.filemanager import load_default_model
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture
 def session():
     session = Session()
-    load_default_model(session)
+    element_factory = session.get_service("element_factory")
+    load_default_model(element_factory)
     yield session
     session.shutdown()
 

@@ -6,8 +6,10 @@ from queue import Queue
 from gaphas.decorators import g_async
 from gi.repository import GLib, Gtk
 
+from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
+from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.event import (
     ModelLoaded,
     ModelSaved,
@@ -44,6 +46,18 @@ def error_message(e):
     return gettext(
         "The model cannot be stored at this location:\n{exc}\nPlease check that you typed the location correctly and try again."
     ).format(exc=str(e))
+
+
+def load_default_model(element_factory):
+    element_factory.flush()
+    with element_factory.block_events():
+        element_factory.create(StyleSheet)
+        model = element_factory.create(UML.Package)
+        model.name = gettext("New model")
+        diagram = element_factory.create(UML.Diagram)
+        diagram.package = model
+        diagram.name = gettext("main")
+    element_factory.model_ready()
 
 
 class FileManager(Service, ActionProvider):
@@ -130,6 +144,7 @@ class FileManager(Service, ActionProvider):
                     ),
                     window=self.main_window.window,
                 )
+                load_default_model(self.element_factory)
                 raise
             finally:
                 status_window.destroy()
@@ -257,6 +272,8 @@ class FileManager(Service, ActionProvider):
     def _on_session_created(self, event: SessionCreated):
         if event.filename:
             self.load(event.filename)
+        else:
+            load_default_model(self.element_factory)
 
     @event_handler(SessionShutdownRequested)
     def _on_session_shutdown_request(self, event):

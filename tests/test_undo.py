@@ -38,8 +38,7 @@ def undo_manager(session):
 
 
 def test_class_association_undo_redo(event_manager, element_factory, undo_manager):
-    with Transaction(event_manager):
-        diagram = element_factory.create(Diagram)
+    diagram = next(element_factory.select(Diagram))
 
     assert 0 == len(diagram.connections.solver.constraints)
 
@@ -57,8 +56,8 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
         connect(a, a.head, ci1)
         connect(a, a.tail, ci2)
 
-    # Diagram, Association, 2x Class, Property, LiteralSpecification
-    assert 6 == len(element_factory.lselect())
+    # Diagram, Association, 2x Class, Property, LiteralSpecification, StyleSheet, Package
+    assert 8 == len(element_factory.lselect())
     assert 18 == len(diagram.connections.solver.constraints)
 
     undo_manager.clear_undo_stack()

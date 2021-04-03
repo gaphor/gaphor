@@ -1,10 +1,8 @@
 import logging
 import os.path
 
-from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
-from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.ui.filedialog import open_file_dialog
 
 log = logging.getLogger(__name__)
@@ -13,19 +11,6 @@ log = logging.getLogger(__name__)
 FILTERS = [
     (gettext("All Gaphor Models"), "*.gaphor", "application/x-gaphor"),
 ]
-
-
-def load_default_model(session):
-    element_factory = session.get_service("element_factory")
-    element_factory.flush()
-    with element_factory.block_events():
-        element_factory.create(StyleSheet)
-        model = element_factory.create(UML.Package)
-        model.name = gettext("New model")
-        diagram = element_factory.create(UML.Diagram)
-        diagram.package = model
-        diagram.name = gettext("main")
-    element_factory.model_ready()
 
 
 class AppFileManager(Service, ActionProvider):
@@ -44,17 +29,12 @@ class AppFileManager(Service, ActionProvider):
         if reuse_session:
             session = self.application.active_session
             file_manager = session.get_service("file_manager")
-            try:
-                file_manager.load(filename)
-            except Exception:
-                load_default_model(session)
-                raise
+            file_manager.load(filename)
         else:
             session = self.application.new_session(filename=filename)
 
     def new(self):
-        session = self.application.new_session()
-        load_default_model(session)
+        self.application.new_session()
 
     def session_is_new(self, session):
         """If it's a new model, there is no state change (undo & redo) and no
