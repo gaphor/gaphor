@@ -76,6 +76,16 @@ class Application(Service, ActionProvider):
         return self._active_session
 
     def new_session(self, *, filename=None, services=None):
+        if filename is None:
+            return self._new_session(services=services)
+        if self._active_session and self._active_session.is_new:
+            file_manager = self._active_session.get_service("file_manager")
+            file_manager.load(filename)
+            return self._active_session
+        else:
+            return self._new_session(filename=filename, services=services)
+
+    def _new_session(self, *, filename=None, services=None):
         """Initialize an application session."""
         session = Session()
 
@@ -171,6 +181,19 @@ class Session(Service):
             logger.info(f"Initializing service {name}")
             self.component_registry.register(name, srv)
             self.event_manager.handle(ServiceInitializedEvent(name, srv))
+
+    @property
+    def is_new(self):
+        """If it's a new model, there is no state change (undo & redo) and no
+        file name is defined."""
+        undo_manager = self.get_service("undo_manager")
+        file_manager = self.get_service("file_manager")
+
+        return (
+            not undo_manager.can_undo()
+            and not undo_manager.can_redo()
+            and not file_manager.filename
+        )
 
     def get_service(self, name):
         if not self.component_registry:

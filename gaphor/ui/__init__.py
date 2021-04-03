@@ -99,18 +99,16 @@ def run(args):
     def app_activate(gtk_app):
         assert application
         if not application.has_sessions():
-            app_file_manager = application.get_service("app_file_manager")
-            app_file_manager.new()
+            application.new_session()
 
     def app_open(gtk_app, files, n_files, hint):
         # appfilemanager should take care of this:
         assert application
-        app_file_manager = application.get_service("app_file_manager")
         if hint == "__new__":
-            app_file_manager.new()
+            application.new_session()
         else:
             for file in files:
-                app_file_manager.load(file.get_path())
+                application.new_session(filename=file.get_path())
 
     gtk_app = Gtk.Application(
         application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
