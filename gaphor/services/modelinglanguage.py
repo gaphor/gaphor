@@ -28,7 +28,7 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
         self.event_manager.subscribe(self.on_property_changed)
 
     def shutdown(self):
-        self.event_manager.subscribe(self.on_property_changed)
+        self.event_manager.unsubscribe(self.on_property_changed)
 
     @property
     def modeling_languages(self):
