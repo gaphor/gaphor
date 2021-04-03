@@ -111,7 +111,6 @@ class FileManager(Service, ActionProvider):
         """
         # First claim file name, so any other files will be opened in a different session
         self.filename = filename
-
         queue: Queue[int] = Queue(0)
         status_window = StatusWindow(
             gettext("Loading..."),

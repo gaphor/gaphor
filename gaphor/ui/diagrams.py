@@ -36,6 +36,15 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook = Gtk.Notebook()
         self._notebook.props.scrollable = True
         self._notebook.show()
+
+        self.event_manager.subscribe(self._on_show_diagram)
+        self.event_manager.subscribe(self._on_close_diagram)
+        self.event_manager.subscribe(self._on_name_change)
+        self.event_manager.subscribe(self._on_flush_model)
+        self.event_manager.subscribe(self._on_model_ready)
+
+        self._on_model_ready()
+
         self._notebook.connect("switch-page", self._on_switch_page)
         self._notebook.connect("show", self._on_notebook_show)
         self._notebook.connect("destroy", self._on_notebook_destroy)
@@ -44,12 +53,6 @@ class Diagrams(UIComponent, ActionProvider):
             self._notebook.connect("page-removed", self._on_page_changed),
             self._notebook.connect("page-reordered", self._on_page_changed),
         )
-        self.event_manager.subscribe(self._on_show_diagram)
-        self.event_manager.subscribe(self._on_close_diagram)
-        self.event_manager.subscribe(self._on_name_change)
-        self.event_manager.subscribe(self._on_flush_model)
-        self.event_manager.subscribe(self._on_model_ready)
-
         return self._notebook
 
     def close(self):
@@ -185,7 +188,7 @@ class Diagrams(UIComponent, ActionProvider):
                         yield diagram.id
 
         self.properties.set("opened-diagrams", list(diagram_ids()))
-        print("pages changed", self.properties.get("opened-diagrams"))
+        log.debug(f"pages changed: {self.properties.get('opened-diagrams')}")
 
     def _add_ui_settings(self, page):
         window = page.get_toplevel()
