@@ -8,6 +8,7 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import event_handler, gettext
+from gaphor.core.modeling import Diagram, ModelReady
 from gaphor.event import (
     ActionEnabled,
     ActiveSessionChanged,
@@ -18,7 +19,7 @@ from gaphor.event import (
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
-from gaphor.ui.event import ModelingLanguageChanged
+from gaphor.ui.event import DiagramOpened, ModelingLanguageChanged
 from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.notification import InAppNotifier
 from gaphor.ui.recentfiles import HOME, RecentFilesMenu
@@ -130,6 +131,7 @@ class MainWindow(Service, ActionProvider):
             self.window = None
 
         em = self.event_manager
+        em.unsubscribe(self._on_model_ready)
         em.unsubscribe(self._on_file_manager_state_changed)
         em.unsubscribe(self._on_undo_manager_state_changed)
         em.unsubscribe(self._on_action_enabled)
@@ -197,11 +199,14 @@ class MainWindow(Service, ActionProvider):
 
         self.in_app_notifier = InAppNotifier(builder)
         em = self.event_manager
+        em.subscribe(self._on_model_ready)
         em.subscribe(self._on_file_manager_state_changed)
         em.subscribe(self._on_undo_manager_state_changed)
         em.subscribe(self._on_action_enabled)
         em.subscribe(self._on_modeling_language_selection_changed)
         em.subscribe(self.in_app_notifier.handle)
+
+        self._on_model_ready()
 
     def open_welcome_page(self):
         """Create a new tab with a textual welcome page, a sort of 101 for
@@ -225,6 +230,20 @@ class MainWindow(Service, ActionProvider):
         self.window.get_titlebar().set_subtitle(subtitle)
 
     # Signal callbacks:
+
+    @event_handler(ModelReady)
+    def _on_model_ready(self, event=None):
+        """Open the toplevel element and load toplevel diagrams."""
+        diagram_ids = self.properties.get("opened-diagrams", [])
+        diagrams = [self.element_factory.lookup(id) for id in diagram_ids]
+        if not any(diagrams):
+            diagrams = self.element_factory.select(
+                lambda e: e.isKindOf(Diagram)
+                and not (e.namespace and e.namespace.namespace)
+            )
+        for diagram in diagrams:
+            if diagram:
+                self.event_manager.handle(DiagramOpened(diagram))
 
     @event_handler(ModelLoaded, ModelSaved)
     def _on_file_manager_state_changed(self, event):
