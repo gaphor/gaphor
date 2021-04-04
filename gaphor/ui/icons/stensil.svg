@@ -63,7 +63,7 @@
      inkscape:cx="108.61942"
      inkscape:cy="62.442299"
      inkscape:document-units="px"
-     inkscape:current-layer="valuetype"
+     inkscape:current-layer="primitive"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
@@ -2253,8 +2253,8 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="primative"
-     inkscape:label="primative"
+     id="primitive"
+     inkscape:label="primitive"
      style="display:inline"
      sodipodi:insensitive="true">
     <rect
@@ -2279,8 +2279,8 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="datatype"
-     inkscape:label="datatype"
+     id="data-type"
+     inkscape:label="data-type"
      style="display:inline"
      sodipodi:insensitive="true">
     <rect
@@ -2334,7 +2334,8 @@
      inkscape:groupmode="layer"
      id="valuetype"
      inkscape:label="valuetype"
-     style="display:inline">
+     style="display:inline"
+     sodipodi:insensitive="true">
     <rect
        style="display:inline;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1104"
