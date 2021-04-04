@@ -56,9 +56,11 @@ class ContainmentConnect(BaseConnector):
         hct = self.get_connected(handle)
 
         if hct and oct:
-            if hct.subject:
-                del oct.subject.ownedElement[hct.subject]
-            elif oct.subject:
-                del hct.subject.ownedElement[oct.subject]
+            if hct.subject in oct.subject.ownedElement:
+                assert isinstance(hct.subject, (UML.Type, UML.Package, UML.Diagram))
+                hct.subject.package = hct.diagram.package
+            if oct.subject in hct.subject.ownedElement:
+                assert isinstance(oct.subject, (UML.Type, UML.Package, UML.Diagram))
+                oct.subject.package = oct.diagram.package
 
         super().disconnect(handle)

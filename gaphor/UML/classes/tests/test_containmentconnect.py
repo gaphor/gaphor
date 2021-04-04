@@ -1,7 +1,7 @@
 """Test connection of containment relationship."""
 
 from gaphor import UML
-from gaphor.diagram.tests.fixtures import allow, connect
+from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.classes import ClassItem, PackageItem
 from gaphor.UML.classes.containment import ContainmentItem
 
@@ -25,10 +25,26 @@ def test_containment_package_class(create, diagram):
     """Test containment connecting to a package and a class."""
     package = create(PackageItem, UML.Package)
     line = create(ContainmentItem)
-    ac = create(ClassItem, UML.Class)
+    klass = create(ClassItem, UML.Class)
 
     connect(line, line.head, package)
-    connect(line, line.tail, ac)
-    assert diagram.connections.get_connection(line.tail).connected is ac
+    connect(line, line.tail, klass)
+    assert diagram.connections.get_connection(line.tail).connected is klass
     assert len(package.subject.ownedElement) == 1
-    assert ac.subject in package.subject.ownedElement
+    assert klass.subject in package.subject.ownedElement
+
+
+def test_disconnect_containment_package_class(create, diagram, element_factory):
+    """Test containment connecting to a package and a class."""
+    parent_package = element_factory.create(UML.Package)
+    diagram.package = parent_package
+
+    package = create(PackageItem, UML.Package)
+    line = create(ContainmentItem)
+    klass = create(ClassItem, UML.Class)
+
+    connect(line, line.head, package)
+    connect(line, line.tail, klass)
+    disconnect(line, line.head)
+
+    assert klass.subject in parent_package.ownedElement
