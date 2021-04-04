@@ -48,8 +48,8 @@ class StatusWindow:
         self.window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
 
         self.window.set_title(self.title)
+        self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
         if self.parent:
-            self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
             self.window.set_transient_for(self.parent)
         self.window.set_modal(True)
         self.window.set_resizable(False)
