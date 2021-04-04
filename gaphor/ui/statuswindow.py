@@ -1,8 +1,8 @@
 """Defines a status window class for displaying the progress of a queue."""
 
-from gi.repository import Gdk, GLib, Gtk, Pango
+from queue import Empty
 
-from gaphor.ui.gidlethread import QueueEmpty
+from gi.repository import Gdk, GLib, Gtk, Pango
 
 
 class StatusWindow:
@@ -49,10 +49,12 @@ class StatusWindow:
 
         self.window.set_title(self.title)
         self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
-        self.window.set_transient_for(self.parent)
+        if self.parent:
+            self.window.set_transient_for(self.parent)
         self.window.set_modal(True)
         self.window.set_resizable(False)
         self.window.set_decorated(False)
+        self.window.set_keep_above(True)
         self.window.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN)
         self.window.add(frame)
 
@@ -73,7 +75,6 @@ class StatusWindow:
         gobject idle handle is created.  Once the window is destroyed,
         this handler is removed.
         """
-
         self.window.show_all()
 
         if self.queue:
@@ -81,7 +82,7 @@ class StatusWindow:
                 progress_idle_handler,
                 self.progress_bar,
                 self.queue,
-                priority=GLib.PRIORITY_LOW,
+                priority=GLib.PRIORITY_DEFAULT_IDLE,
             )
             self.window.connect("destroy", remove_idle_handler, self.idle_id)
 
@@ -103,9 +104,8 @@ def progress_idle_handler(progress_bar, queue):
 
     percentage = 0
     try:
-        while True:
-            percentage = queue.get()
-    except QueueEmpty:
+        percentage = queue.get(block=False)
+    except Empty:
         pass
     if percentage:
         progress_bar.set_fraction(min(percentage, 100.0) / 100.0)

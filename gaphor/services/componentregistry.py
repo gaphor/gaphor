@@ -1,6 +1,6 @@
 """A registry for components (e.g. services) and event handling."""
 
-from typing import Iterator, Set, Tuple, Type, TypeVar
+from typing import Iterator, List, Tuple, Type, TypeVar
 
 from gaphor.abc import Service
 
@@ -16,7 +16,7 @@ class ComponentRegistry(Service):
     components."""
 
     def __init__(self) -> None:
-        self._comp: Set[Tuple[str, object]] = set()
+        self._comp: List[Tuple[str, object]] = list()
 
     def shutdown(self) -> None:
         pass
@@ -29,10 +29,10 @@ class ComponentRegistry(Service):
         return self.get(Service, name)  # type: ignore[misc] # noqa: F821
 
     def register(self, name: str, component: object) -> None:
-        self._comp.add((name, component))
+        self._comp.append((name, component))
 
     def unregister(self, component: object) -> None:
-        self._comp = {(n, c) for n, c in self._comp if c is not component}
+        self._comp = [(n, c) for n, c in self._comp if c is not component]
 
     def get(self, base: Type[T], name: str) -> T:
         found = [(n, c) for n, c in self._comp if isinstance(c, base) and n == name]

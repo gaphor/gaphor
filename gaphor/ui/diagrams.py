@@ -24,6 +24,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.properties = properties
         self.modeling_language = modeling_language
         self._notebook: Gtk.Notebook = None
+        self._page_handler_ids: List[int] = []
 
     def open(self):
         """Open the diagrams component.
@@ -35,11 +36,20 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook = Gtk.Notebook()
         self._notebook.props.scrollable = True
         self._notebook.show()
+
+        self._notebook.connect("destroy", self._on_notebook_destroy)
         self._notebook.connect("switch-page", self._on_switch_page)
+        self._page_handler_ids = [
+            self._notebook.connect("page-added", self._on_page_changed),
+            self._notebook.connect("page-removed", self._on_page_changed),
+            self._notebook.connect("page-reordered", self._on_page_changed),
+        ]
+
         self.event_manager.subscribe(self._on_show_diagram)
         self.event_manager.subscribe(self._on_close_diagram)
         self.event_manager.subscribe(self._on_name_change)
         self.event_manager.subscribe(self._on_flush_model)
+
         return self._notebook
 
     def close(self):
@@ -144,6 +154,10 @@ class Diagrams(UIComponent, ActionProvider):
             widgets_on_pages.append((page_num, widget))
         return widgets_on_pages
 
+    def _on_notebook_destroy(self, notebook):
+        for id in self._page_handler_ids:
+            notebook.disconnect(id)
+
     def _on_switch_page(self, notebook, page, new_page_num):
         current_page_num = notebook.get_current_page()
         if current_page_num >= 0:
@@ -155,6 +169,19 @@ class Diagrams(UIComponent, ActionProvider):
                 view, view.selection.focused_item, view.selection.selected_items
             )
         )
+
+    def _on_page_changed(self, notebook, _page, _page_num):
+        def diagram_ids():
+            notebook = self._notebook
+            for page_num in range(notebook.get_n_pages()):
+                page = notebook.get_nth_page(page_num)
+                if page:
+                    diagram = page.diagram_page.get_diagram()
+                    if diagram:
+                        yield diagram.id
+
+        self.properties.set("opened-diagrams", list(diagram_ids()))
+        log.debug(f"pages changed: {self.properties.get('opened-diagrams')}")
 
     def _add_ui_settings(self, page):
         window = page.get_toplevel()

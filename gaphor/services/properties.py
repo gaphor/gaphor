@@ -5,15 +5,17 @@ These are things like preferences.
 """
 
 import ast
+import hashlib
 import os
 import pprint
-import sys
 from typing import Dict
 
-from gaphas.decorators import g_async
 from gi.repository import GLib
 
 from gaphor.abc import Service
+from gaphor.core import event_handler
+from gaphor.core.modeling.event import ModelFlushed
+from gaphor.event import ModelLoaded, ModelSaved, SessionCreated
 
 
 def get_config_dir() -> str:
@@ -26,6 +28,22 @@ def get_config_dir() -> str:
     os.makedirs(config_dir, exist_ok=True)
 
     return config_dir
+
+
+def get_cache_dir() -> str:
+    """Return the directory where the user's cache is stored.
+
+    This varies depending on platform.
+    """
+
+    cache_dir = os.path.join(GLib.get_user_cache_dir(), "gaphor")
+    os.makedirs(cache_dir, exist_ok=True)
+
+    return cache_dir
+
+
+def file_hash(filename: str) -> str:
+    return hashlib.blake2b(filename.encode("utf-8"), digest_size=24).hexdigest()
 
 
 class PropertyChanged:
@@ -50,25 +68,40 @@ class Properties(Service):
     Properties are persisted to the local file system.
     """
 
-    def __init__(self, event_manager, backend=None):
-        """Constructor.
-
-        Initialize the Gaphor application object, the dictionary for
-        storing properties in memory, and the storage backend. This
-        defaults to FileBackend
-        """
+    def __init__(self, event_manager):
         self.event_manager = event_manager
-        self._resources: Dict[str, object] = {}
-        self._backend = backend or FileBackend()
-        self._backend.load(self._resources)
+        self.filename: str = ""
+        self._properties: Dict[str, object] = {}
+
+        event_manager.subscribe(self.on_model_loaded)
+        event_manager.subscribe(self.on_model_saved)
+        event_manager.subscribe(self.on_model_flushed)
 
     def shutdown(self):
         """Shutdown the properties service.
 
         This will ensure that all properties are saved.
         """
+        self.save()
 
-        self._backend.save(self._resources)
+        self.event_manager.unsubscribe(self.on_model_loaded)
+        self.event_manager.unsubscribe(self.on_model_saved)
+        self.event_manager.unsubscribe(self.on_model_flushed)
+
+    @event_handler(ModelLoaded, SessionCreated)
+    def on_model_loaded(self, event):
+        self.filename = os.path.join(get_cache_dir(), file_hash(event.filename or ""))
+        self.load()
+
+    @event_handler(ModelSaved)
+    def on_model_saved(self, event):
+        self.filename = os.path.join(get_cache_dir(), file_hash(event.filename))
+        self.save()
+
+    @event_handler(ModelFlushed)
+    def on_model_flushed(self, event):
+        if self.filename:
+            self.save()
 
     def __call__(self, key, default=_no_default):
         """Retrieve the specified property.
@@ -79,23 +112,32 @@ class Properties(Service):
 
         return self.get(key, default)
 
+    def load(self):
+        """Load properties from a file.
+
+        Resources are loaded like you do with a dict().
+        """
+
+        filename = self.filename
+
+        if os.path.exists(filename) and os.path.isfile(filename):
+
+            with open(filename) as ifile:
+                data = ifile.read()
+
+            self._properties = ast.literal_eval(data)
+            for key, value in self._properties.items():
+                self.event_manager.handle(PropertyChanged(key, None, value))
+
     def save(self):
         """Save all properties by calling save() on the properties storage
         backend."""
 
-        self._backend.save(self._resources)
+        if not self.filename:
+            return
 
-    def _items(self):
-        """Return an iterator for all stored properties."""
-
-        return iter(self._resources.items())
-
-    def dump(self, stream=sys.stdout):
-        """
-        TODO: define resources that are persistent (have to be saved
-        and loaded.
-        """
-        pprint.pprint(list(self._resources.items()), stream)
+        with open(self.filename, "w") as ofile:
+            pprint.pprint(self._properties, ofile)
 
     def get(self, key: str, default=_no_default):
         """Locate a property.
@@ -106,7 +148,7 @@ class Properties(Service):
         """
 
         try:
-            return self._resources[key]
+            return self._properties[key]
         except KeyError:
             if default is _no_default:
                 raise KeyError(f'No resource with name "{key}"')
@@ -121,73 +163,9 @@ class Properties(Service):
         resource() method does).
         """
 
-        resources = self._resources
-        old_value = resources.get(key)
+        properties = self._properties
+        old_value = properties.get(key)
 
         if value != old_value:
-            resources[key] = value
+            properties[key] = value
             self.event_manager.handle(PropertyChanged(key, old_value, value))
-            self._backend.update(resources, key, value)
-
-
-class FileBackend:
-    """Resource backend that stores data to a resource file
-    ($HOME/.gaphor/resource)."""
-
-    RESOURCE_FILE = "resources"
-
-    def __init__(self, datadir=get_config_dir()):
-        """Constructor.
-
-        Initialize the directory used for storing properties.
-        """
-
-        self.datadir = datadir
-
-    def get_filename(self, create=False):
-        """Return the current file used to store Gaphor properties.
-
-        If the created parameter is set to True, the file is created if
-        it doesn't exist.  This defaults to False.
-        """
-
-        datadir = self.datadir
-
-        if create and not os.path.exists(datadir):
-            os.mkdir(datadir)
-
-        return os.path.join(datadir, self.RESOURCE_FILE)
-
-    def load(self, resource):
-        """Load resources from a file.
-
-        Resources are saved like you do with a dict().
-        """
-
-        filename = self.get_filename()
-
-        if os.path.exists(filename) and os.path.isfile(filename):
-
-            with open(filename) as ifile:
-                data = ifile.read()
-
-            for key, value in ast.literal_eval(data).items():
-                resource[key] = value
-
-    def save(self, resource):
-        """Save persist resources from the resources dictionary.
-
-        @resource is the Resource instance
-        @persistent is a list of persistent resource names.
-        """
-
-        filename = self.get_filename(create=True)
-
-        with open(filename, "w") as ofile:
-            pprint.pprint(resource, ofile)
-
-    @g_async(single=True, timeout=500)
-    def update(self, resource, key, value):
-        """Update the properties file with any changes in the background."""
-
-        self.save(resource)
