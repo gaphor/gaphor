@@ -14,6 +14,7 @@ from gi.repository import GLib
 
 from gaphor.abc import Service
 from gaphor.core import event_handler
+from gaphor.core.modeling.event import ModelFlushed
 from gaphor.event import ModelLoaded, ModelSaved, SessionCreated
 
 
@@ -74,6 +75,7 @@ class Properties(Service):
 
         event_manager.subscribe(self.on_model_loaded)
         event_manager.subscribe(self.on_model_saved)
+        event_manager.subscribe(self.on_model_flushed)
 
     def shutdown(self):
         """Shutdown the properties service.
@@ -84,6 +86,7 @@ class Properties(Service):
 
         self.event_manager.unsubscribe(self.on_model_loaded)
         self.event_manager.unsubscribe(self.on_model_saved)
+        self.event_manager.unsubscribe(self.on_model_flushed)
 
     @event_handler(ModelLoaded, SessionCreated)
     def on_model_loaded(self, event):
@@ -94,6 +97,11 @@ class Properties(Service):
     def on_model_saved(self, event):
         self.filename = os.path.join(get_cache_dir(), file_hash(event.filename))
         self.save()
+
+    @event_handler(ModelFlushed)
+    def on_model_flushed(self, event):
+        if self.filename:
+            self.save()
 
     def __call__(self, key, default=_no_default):
         """Retrieve the specified property.
@@ -161,4 +169,3 @@ class Properties(Service):
         if value != old_value:
             properties[key] = value
             self.event_manager.handle(PropertyChanged(key, old_value, value))
-        self.save()
