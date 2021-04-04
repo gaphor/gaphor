@@ -54,6 +54,7 @@ class StatusWindow:
         self.window.set_modal(True)
         self.window.set_resizable(False)
         self.window.set_decorated(False)
+        self.window.set_keep_above(True)
         self.window.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN)
         self.window.add(frame)
 
