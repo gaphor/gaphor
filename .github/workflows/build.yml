@@ -98,6 +98,7 @@ jobs:
       MSYS2_ARCH: x86_64
       CHERE_INVOKING: yes
       PY_IGNORE_IMPORTMISMATCH: yes
+      SECRETS_AVAILABLE: ${{ secrets.SECRETS_AVAILABLE }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -138,6 +139,7 @@ jobs:
           timestampUrl: http://timestamp.digicert.com
           installer: "packaging/dist/gaphor-${{ steps.meta.outputs.version }}-installer.exe"
           portable: "packaging/dist/gaphor-${{ steps.meta.outputs.version }}-portable.exe"
+        if: env.SECRETS_AVAILABLE != null
         shell: powershell
         run: |
           $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
@@ -148,11 +150,13 @@ jobs:
           Remove-Item 'certificate.pfx'
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v2
+        if: env.SECRETS_AVAILABLE != null
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-installer.exe
           path: packaging/dist/gaphor-${{ steps.meta.outputs.version }}-installer.exe
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-portable.exe
         uses: actions/upload-artifact@v2
+        if: env.SECRETS_AVAILABLE != null
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-portable.exe
           path: packaging/dist/gaphor-${{ steps.meta.outputs.version }}-portable.exe
@@ -171,6 +175,7 @@ jobs:
     env:
       LDFLAGS: -L/usr/local/opt/python@3.8/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.8/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      SECRETS_AVAILABLE: ${{ secrets.SECRETS_AVAILABLE }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -201,6 +206,7 @@ jobs:
           make all
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1
+        if: env.SECRETS_AVAILABLE != null
         with:
           p12-file-base64: ${{ secrets.BASE64_ENCODED_P12 }}
           p12-password: ${{ secrets.CERTPASSWORD_P12 }}
@@ -213,15 +219,18 @@ jobs:
           -o runtime "dist/Gaphor.app"
       - name: Notarize app
         uses: devbotsxyz/xcode-notarize@v1
+        if: env.SECRETS_AVAILABLE != null
         with:
           product-path: "packaging/dist/Gaphor.app"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
           appstore-connect-password: ${{ secrets.AC_PASSWORD }}
       - name: Staple app
         uses: devbotsxyz/xcode-staple@v1
+        if: env.SECRETS_AVAILABLE != null
         with:
           product-path: "packaging/dist/Gaphor.app"
       - name: Create dmg
+        if: env.SECRETS_AVAILABLE != null
         run: >
           cd packaging
 
@@ -233,6 +242,7 @@ jobs:
           "dist/Gaphor.app"
       - name: Notarize dmg
         uses: devbotsxyz/xcode-notarize@v1
+        if: env.SECRETS_AVAILABLE != null
         with:
           product-path: "packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
@@ -240,10 +250,12 @@ jobs:
           primary-bundle-id: org.gaphor.gaphor
       - name: Staple .dmg
         uses: devbotsxyz/xcode-staple@v1
+        if: env.SECRETS_AVAILABLE != null
         with:
           product-path: "packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
       - name: Upload Gaphor-${{ steps.meta.outputs.version }}.dmg
         uses: actions/upload-artifact@v2
+        if: env.SECRETS_AVAILABLE != null
         with:
           name: Gaphor-${{ steps.meta.outputs.version }}.dmg
           path: packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg
