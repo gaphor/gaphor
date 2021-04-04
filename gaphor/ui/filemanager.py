@@ -248,28 +248,7 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(SessionShutdown(self))
 
         if self.main_window.model_changed:
-            dialog = Gtk.MessageDialog(
-                self.main_window.window,
-                Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-                Gtk.MessageType.WARNING,
-            )
-            dialog.props.text = gettext("Save changed to your model before closing?")
-            dialog.props.secondary_text = gettext(
-                "If you close without saving, your changes will be discarded."
-            )
-
-            dialog.add_buttons(
-                gettext("Close _without saving"),
-                Gtk.ResponseType.REJECT,
-                Gtk.STOCK_CANCEL,
-                Gtk.ResponseType.CANCEL,
-                Gtk.STOCK_SAVE,
-                Gtk.ResponseType.YES,
-            )
-            dialog.set_default_response(Gtk.ResponseType.YES)
-            response = dialog.run()
-            dialog.destroy()
-
+            response = save_changes_before_closing_dialog(self.main_window.window)
             if response == Gtk.ResponseType.YES:
                 saved = self.action_save()
                 if saved:
@@ -278,3 +257,29 @@ class FileManager(Service, ActionProvider):
                 confirm_shutdown()
         else:
             confirm_shutdown()
+
+
+def save_changes_before_closing_dialog(window):
+    dialog = Gtk.MessageDialog(
+        window,
+        Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+        Gtk.MessageType.WARNING,
+    )
+    dialog.props.text = gettext("Save changed to your model before closing?")
+    dialog.props.secondary_text = gettext(
+        "If you close without saving, your changes will be discarded."
+    )
+
+    dialog.add_buttons(
+        gettext("Close _without saving"),
+        Gtk.ResponseType.REJECT,
+        Gtk.STOCK_CANCEL,
+        Gtk.ResponseType.CANCEL,
+        Gtk.STOCK_SAVE,
+        Gtk.ResponseType.YES,
+    )
+    dialog.set_default_response(Gtk.ResponseType.YES)
+    response = dialog.run()
+    dialog.destroy()
+
+    return response
