@@ -11,7 +11,11 @@ ICONS=diagram \
 	comment \
 	comment-line \
 	class \
+	datatype \
+	enumeration \
+	primative \
 	block \
+	valuetype \
 	proxyport \
 	package \
 	containment \
