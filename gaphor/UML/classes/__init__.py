@@ -2,6 +2,7 @@ from gaphor.UML.classes import (
     classconnect,
     classeseditors,
     classespropertypages,
+    containmentconnect,
     copypaste,
     interfaceconnect,
 )

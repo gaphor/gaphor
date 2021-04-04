@@ -39,10 +39,16 @@ class ContainmentConnect(BaseConnector):
             connected_to = self.get_connected(opposite)
             if connected_to and connected_to.subject:
                 if isinstance(connected_to.subject, UML.Package):
-                    connected_to.subject.ownedElement = self.element.subject
+                    assert isinstance(
+                        self.element.subject, (UML.Type, UML.Package, UML.Diagram)
+                    )
+                    self.element.subject.package = connected_to.subject
                 else:
                     assert isinstance(self.element.subject, UML.Package)
-                    self.element.subject.ownedElement = connected_to.subject
+                    assert isinstance(
+                        connected_to.subject, (UML.Type, UML.Package, UML.Diagram)
+                    )
+                    connected_to.subject.package = self.element.subject
 
     def disconnect(self, handle):
         opposite = self.line.opposite(handle)

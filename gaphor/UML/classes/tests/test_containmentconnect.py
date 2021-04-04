@@ -23,7 +23,7 @@ def test_containment_package_glue(create):
 
 def test_containment_package_class(create, diagram):
     """Test containment connecting to a package and a class."""
-    package = create(ContainmentItem, UML.Package)
+    package = create(PackageItem, UML.Package)
     line = create(ContainmentItem)
     ac = create(ClassItem, UML.Class)
 
