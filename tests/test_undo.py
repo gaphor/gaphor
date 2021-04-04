@@ -38,28 +38,7 @@ def undo_manager(session):
 
 
 def test_class_association_undo_redo(event_manager, element_factory, undo_manager):
-    with Transaction(event_manager):
-        diagram = element_factory.create(Diagram)
-
-    assert 0 == len(diagram.connections.solver.constraints)
-
-    with Transaction(event_manager):
-        ci1 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    assert 8 == len(diagram.connections.solver.constraints)
-
-    with Transaction(event_manager):
-        ci2 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    assert 16 == len(diagram.connections.solver.constraints)
-
-    with Transaction(event_manager):
-        a = diagram.create(AssociationItem)
-
-        connect(a, a.head, ci1)
-        connect(a, a.tail, ci2)
-
-    # Diagram, Association, 2x Class, Property, LiteralSpecification
-    assert 6 == len(element_factory.lselect())
-    assert 18 == len(diagram.connections.solver.constraints)
+    diagram, ci1, ci2, a = set_up_class_and_association(event_manager, element_factory)
 
     undo_manager.clear_undo_stack()
     assert not undo_manager.can_undo()
@@ -90,6 +69,33 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
         assert ci2.id == get_connected(a.tail).id
 
         undo_manager.redo_transaction()
+
+
+def set_up_class_and_association(event_manager, element_factory):
+    with Transaction(event_manager):
+        diagram = element_factory.create(Diagram)
+
+    assert 0 == len(diagram.connections.solver.constraints)
+
+    with Transaction(event_manager):
+        ci1 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    assert 8 == len(diagram.connections.solver.constraints)
+
+    with Transaction(event_manager):
+        ci2 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    assert 16 == len(diagram.connections.solver.constraints)
+
+    with Transaction(event_manager):
+        a = diagram.create(AssociationItem)
+
+        connect(a, a.head, ci1)
+        connect(a, a.tail, ci2)
+
+    # Diagram, Association, 2x Class, Property, LiteralSpecification
+    assert 6 == len(element_factory.lselect())
+    assert 18 == len(diagram.connections.solver.constraints)
+
+    return diagram, ci1, ci2, a
 
 
 def test_diagram_item_can_undo_and_redo(
