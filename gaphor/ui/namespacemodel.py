@@ -31,16 +31,18 @@ class RELATIONSHIPS:
 
 
 def relationship_iter(model, iter):
-    if iter is None or isinstance(model.get_value(iter, 0), UML.Package):
-        child_iter = model.iter_children(iter)
-        while child_iter:
-            maybe_relationships = model.get_value(child_iter, 0)
-            if maybe_relationships is RELATIONSHIPS:
-                return child_iter
-            child_iter = model.iter_next(child_iter)
-        return model.append(iter, [RELATIONSHIPS])
-    else:
+    if iter is not None and not isinstance(
+        model.get_value(iter, 0), UML.Package
+    ):
         return iter
+
+    child_iter = model.iter_children(iter)
+    while child_iter:
+        maybe_relationships = model.get_value(child_iter, 0)
+        if maybe_relationships is RELATIONSHIPS:
+            return child_iter
+        child_iter = model.iter_next(child_iter)
+    return model.append(iter, [RELATIONSHIPS])
 
 
 def relationship_iter_parent(model, iter):
