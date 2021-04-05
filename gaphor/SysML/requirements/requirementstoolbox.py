@@ -7,6 +7,7 @@ from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
 from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.SysML import diagramitems as sysml_items
 from gaphor.SysML import sysml
+from gaphor.UML.classes import ContainmentItem
 
 requirements = ToolSection(
     gettext("Requirements"),
@@ -57,6 +58,13 @@ requirements = ToolSection(
             "gaphor-verify-symbolic",
             "<Shift>V",
             new_item_factory(sysml_items.VerifyItem),
+        ),
+        ToolDef(
+            "toolbox-containment",
+            gettext("Containment"),
+            "gaphor-containment-symbolic",
+            "<Shift>M",
+            new_item_factory(ContainmentItem),
         ),
     ),
 )
