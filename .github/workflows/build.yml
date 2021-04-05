@@ -20,7 +20,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2.2.1
       - name: Lint with Pre-commit
-        uses: pre-commit/action@v2.0.0
+        uses: pre-commit/action@v2.0.1
 
   linux:
     needs: lint
