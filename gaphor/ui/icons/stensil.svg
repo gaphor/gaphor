@@ -63,7 +63,7 @@
      inkscape:cx="108.61942"
      inkscape:cy="62.442299"
      inkscape:document-units="px"
-     inkscape:current-layer="primitive"
+     inkscape:current-layer="value-type"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
@@ -2332,8 +2332,8 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="valuetype"
-     inkscape:label="valuetype"
+     id="value-type"
+     inkscape:label="value-type"
      style="display:inline"
      sodipodi:insensitive="true">
     <rect

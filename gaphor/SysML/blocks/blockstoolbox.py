@@ -75,5 +75,40 @@ blocks = ToolSection(
             "<Shift>G",
             new_item_factory(uml_items.GeneralizationItem),
         ),
+        ToolDef(
+            "toolbox-value-type",
+            gettext("ValueType"),
+            "gaphor-value-type-symbolic",
+            "<Shift>V",
+            new_item_factory(
+                uml_items.ClassItem,
+                sysml.ValueType,
+                config_func=namespace_config,
+            ),
+        ),
+        ToolDef(
+            "toolbox-enumeration",
+            gettext("Enumeration"),
+            "gaphor-enumeration-symbolic",
+            "<Shift>E",
+            new_item_factory(
+                uml_items.ClassItem,
+                UML.Enumeration,
+                config_func=namespace_config,
+            ),
+            handle_index=SE,
+        ),
+        ToolDef(
+            "toolbox-primitive",
+            gettext("Primitive"),
+            "gaphor-primitive-symbolic",
+            "<Shift>P",
+            new_item_factory(
+                uml_items.ClassItem,
+                UML.PrimitiveType,
+                config_func=namespace_config,
+            ),
+            handle_index=SE,
+        ),
     ),
 )

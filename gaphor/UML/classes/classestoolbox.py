@@ -125,5 +125,40 @@ classes = ToolSection(
             "<Shift>I",
             new_item_factory(diagramitems.InterfaceRealizationItem),
         ),
+        ToolDef(
+            "toolbox-data-type",
+            gettext("DataType"),
+            "gaphor-data-type-symbolic",
+            "<Shift>T",
+            new_item_factory(
+                diagramitems.ClassItem,
+                UML.DataType,
+                config_func=namespace_config,
+            ),
+        ),
+        ToolDef(
+            "toolbox-enumeration",
+            gettext("Enumeration"),
+            "gaphor-enumeration-symbolic",
+            "<Shift>E",
+            new_item_factory(
+                diagramitems.ClassItem,
+                UML.Enumeration,
+                config_func=namespace_config,
+            ),
+            handle_index=SE,
+        ),
+        ToolDef(
+            "toolbox-primitive",
+            gettext("Primitive"),
+            "gaphor-primitive-symbolic",
+            "<Shift>P",
+            new_item_factory(
+                diagramitems.ClassItem,
+                UML.PrimitiveType,
+                config_func=namespace_config,
+            ),
+            handle_index=SE,
+        ),
     ),
 )
