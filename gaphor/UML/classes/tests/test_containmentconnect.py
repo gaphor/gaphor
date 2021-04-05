@@ -35,7 +35,7 @@ def test_containment_package_class(create, diagram):
 
 
 def test_containment_package_class_disconnect(create, diagram, element_factory):
-    """Test containment connecting to a package and a class."""
+    """Test containment disconnecting from a package and a class."""
     parent_package = element_factory.create(UML.Package)
     diagram.package = parent_package
 
