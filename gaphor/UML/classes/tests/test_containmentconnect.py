@@ -43,8 +43,8 @@ def test_disconnect_containment_package_class(create, diagram, element_factory):
     line = create(ContainmentItem)
     klass = create(ClassItem, UML.Class)
 
-    connect(line, line.head, package)
     connect(line, line.tail, klass)
+    connect(line, line.head, package)
     disconnect(line, line.head)
 
     assert klass.subject in parent_package.ownedElement

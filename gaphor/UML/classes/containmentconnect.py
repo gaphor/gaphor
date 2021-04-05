@@ -8,7 +8,10 @@ from gaphor.UML.classes.containment import ContainmentItem
 
 @Connector.register(ElementPresentation, ContainmentItem)
 class ContainmentConnect(BaseConnector):
-    """Connect a containment relationship to elements that can be nested."""
+    """Connect a containment relationship to elements that can be nested.
+
+    Head is the container, tail connects to the contained item.
+    """
 
     line: ContainmentItem
 
@@ -33,22 +36,25 @@ class ContainmentConnect(BaseConnector):
 
         return super().allow(handle, port)
 
-    def connect(self, handle, port):
-        if super().connect(handle, port):
-            opposite = self.line.opposite(handle)
-            connected_to = self.get_connected(opposite)
-            if connected_to and connected_to.subject:
-                if isinstance(connected_to.subject, UML.Package):
-                    assert isinstance(
-                        self.element.subject, (UML.Type, UML.Package, UML.Diagram)
-                    )
-                    self.element.subject.package = connected_to.subject
-                else:
-                    assert isinstance(self.element.subject, UML.Package)
-                    assert isinstance(
-                        connected_to.subject, (UML.Type, UML.Package, UML.Diagram)
-                    )
-                    connected_to.subject.package = self.element.subject
+    def container_and_contained_element(self, handle):
+        line = self.line
+        opposite = line.opposite(handle)
+        connected_to = self.get_connected(opposite)
+        if not (connected_to and connected_to.subject):
+            return None, None
+        elif handle is line.head:
+            return self.element.subject, connected_to.subject
+        else:
+            return connected_to.subject, self.element.subject
+
+    def connect(self, handle, port) -> bool:
+        container, contained = self.container_and_contained_element(handle)
+        if isinstance(container, UML.Package) and isinstance(
+            contained, (UML.Type, UML.Package, UML.Diagram)
+        ):
+            contained.package = container
+            return True
+        return False
 
     def disconnect(self, handle):
         opposite = self.line.opposite(handle)
