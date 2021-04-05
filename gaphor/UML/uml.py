@@ -1457,6 +1457,7 @@ Namespace.ownedMember = derivedunion(
     Region.subvertex,
     Node.nestedNode,
     ParameterSet.behavioralFeature,
+    Class.nestedClassifier,
     Stereotype.icon,
     Namespace.ownedRule,
     Artifact.nestedArtifact,

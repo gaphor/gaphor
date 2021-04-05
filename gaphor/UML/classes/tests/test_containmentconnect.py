@@ -34,7 +34,7 @@ def test_containment_package_class(create, diagram):
     assert klass.subject in package.subject.ownedElement
 
 
-def test_disconnect_containment_package_class(create, diagram, element_factory):
+def test_containment_package_class_disconnect(create, diagram, element_factory):
     """Test containment connecting to a package and a class."""
     parent_package = element_factory.create(UML.Package)
     diagram.package = parent_package
@@ -47,4 +47,38 @@ def test_disconnect_containment_package_class(create, diagram, element_factory):
     connect(line, line.head, package)
     disconnect(line, line.head)
 
+    assert klass.subject in parent_package.ownedElement
+
+
+def test_containment_class_class(create, diagram, element_factory):
+    """Test containment connecting to a package and a class."""
+    parent_package = element_factory.create(UML.Package)
+    container = create(ClassItem, UML.Class)
+    container.subject.package = parent_package
+    line = create(ContainmentItem)
+    klass = create(ClassItem, UML.Class)
+    klass.subject.package = parent_package
+
+    connect(line, line.head, container)
+    connect(line, line.tail, klass)
+    assert diagram.connections.get_connection(line.tail).connected is klass
+    assert len(container.subject.ownedElement) == 1
+    assert klass.subject.owner is container.subject
+    assert klass.subject in container.subject.ownedElement
+
+
+def test_containment_class_class_disconnect(create, diagram, element_factory):
+    """Test containment connecting to a package and a class."""
+    parent_package = element_factory.create(UML.Package)
+    diagram.package = parent_package
+
+    container = create(ClassItem, UML.Class)
+    line = create(ContainmentItem)
+    klass = create(ClassItem, UML.Class)
+
+    connect(line, line.head, container)
+    connect(line, line.tail, klass)
+    disconnect(line, line.head)
+
+    assert klass.subject.owner is parent_package
     assert klass.subject in parent_package.ownedElement

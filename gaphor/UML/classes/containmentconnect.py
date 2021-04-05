@@ -54,6 +54,10 @@ class ContainmentConnect(BaseConnector):
         ):
             contained.package = container
             return True
+        elif isinstance(container, UML.Class) and isinstance(contained, UML.Classifier):
+            del contained.package
+            contained.nestingClass = container
+            return True
         return False
 
     def disconnect(self, handle):
@@ -64,9 +68,13 @@ class ContainmentConnect(BaseConnector):
         if hct and oct:
             if hct.subject in oct.subject.ownedElement:
                 assert isinstance(hct.subject, (UML.Type, UML.Package, UML.Diagram))
+                if isinstance(hct.subject, UML.Classifier):
+                    del hct.subject.nestingClass
                 hct.subject.package = hct.diagram.package
             if oct.subject in hct.subject.ownedElement:
                 assert isinstance(oct.subject, (UML.Type, UML.Package, UML.Diagram))
+                if isinstance(oct.subject, UML.Classifier):
+                    del oct.subject.nestingClass
                 oct.subject.package = oct.diagram.package
 
         super().disconnect(handle)
