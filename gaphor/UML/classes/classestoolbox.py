@@ -129,7 +129,7 @@ classes = ToolSection(
             "toolbox-data-type",
             gettext("DataType"),
             "gaphor-data-type-symbolic",
-            "<Shift>T",
+            "<Shift>L",
             new_item_factory(
                 diagramitems.ClassItem,
                 UML.DataType,
@@ -140,7 +140,7 @@ classes = ToolSection(
             "toolbox-enumeration",
             gettext("Enumeration"),
             "gaphor-enumeration-symbolic",
-            "<Shift>E",
+            "<Shift>W",
             new_item_factory(
                 diagramitems.ClassItem,
                 UML.Enumeration,
@@ -152,7 +152,7 @@ classes = ToolSection(
             "toolbox-primitive",
             gettext("Primitive"),
             "gaphor-primitive-symbolic",
-            "<Shift>P",
+            "<Shift>H",
             new_item_factory(
                 diagramitems.ClassItem,
                 UML.PrimitiveType,

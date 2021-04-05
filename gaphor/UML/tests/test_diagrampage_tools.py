@@ -2,7 +2,10 @@ import pytest
 from gi.repository import Gtk
 
 from gaphor import UML
+from gaphor.C4Model.toolbox import c4model_toolbox_actions
 from gaphor.diagram.diagramtools.placement import PlacementState, on_drag_begin
+from gaphor.RAAML.toolbox import raaml_toolbox_actions
+from gaphor.SysML.toolbox import sysml_toolbox_actions
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.toolbox import uml_toolbox_actions
@@ -93,11 +96,20 @@ def test_placement_partition(tab, element_factory, event_manager):
     assert len(element_factory.lselect(UML.ActivityPartition)) == 2
 
 
-def test_uml_toolbox_actions_shortcut_unique():
+@pytest.mark.parametrize(
+    "toolbox_actions",
+    [
+        uml_toolbox_actions,
+        sysml_toolbox_actions,
+        raaml_toolbox_actions,
+        c4model_toolbox_actions,
+    ],
+)
+def test_uml_toolbox_actions_shortcut_unique(toolbox_actions):
 
     shortcuts = {}
 
-    for category, items in uml_toolbox_actions:
+    for category, items in toolbox_actions:
         for action_name, label, icon_name, shortcut, *rest in items:
             try:
                 shortcuts[shortcut].append(action_name)
