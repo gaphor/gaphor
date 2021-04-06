@@ -81,14 +81,15 @@ class Application(Service, ActionProvider):
     def active_session(self):
         return self._active_session
 
-    def new_session(self, *, filename=None, services=None):
+    def new_session(self, *, filename=None, services=None, force=False):
         if filename is None:
             return self._new_session(services=services)
 
-        for session in self._sessions:
-            if session.filename == filename:
-                session.foreground()
-                return
+        if not force:
+            for session in self._sessions:
+                if session.filename == filename:
+                    session.foreground()
+                    return
 
         if self._active_session and self._active_session.is_new:
             file_manager = self._active_session.get_service("file_manager")
@@ -126,6 +127,11 @@ class Application(Service, ActionProvider):
 
     def has_sessions(self):
         return bool(self._active_session)
+
+    def has_session(self, filename):
+        return any(
+            session for session in self._sessions if session.filename == filename
+        )
 
     def shutdown_session(self, session):
         assert session
