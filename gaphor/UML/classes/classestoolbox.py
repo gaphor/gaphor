@@ -76,6 +76,13 @@ classes = ToolSection(
             handle_index=SE,
         ),
         ToolDef(
+            "toolbox-containment",
+            gettext("Containment"),
+            "gaphor-containment-symbolic",
+            "<Shift>C",
+            new_item_factory(diagramitems.ContainmentItem),
+        ),
+        ToolDef(
             "toolbox-composite-association",
             gettext("Composite Association"),
             "gaphor-composite-association-symbolic",
