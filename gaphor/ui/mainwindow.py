@@ -14,6 +14,7 @@ from gaphor.event import (
     ActiveSessionChanged,
     ModelLoaded,
     ModelSaved,
+    SessionCreated,
     SessionShutdownRequested,
 )
 from gaphor.services.undomanager import UndoManagerStateChanged
@@ -113,6 +114,8 @@ class MainWindow(Service, ActionProvider):
         self.modeling_language_name = None
         self.in_app_notifier = None
 
+        event_manager.subscribe(self._on_file_manager_state_changed)
+
         self.init_styling()
 
     def init_styling(self):
@@ -200,7 +203,6 @@ class MainWindow(Service, ActionProvider):
         self.in_app_notifier = InAppNotifier(builder)
         em = self.event_manager
         em.subscribe(self._on_model_ready)
-        em.subscribe(self._on_file_manager_state_changed)
         em.subscribe(self._on_undo_manager_state_changed)
         em.subscribe(self._on_action_enabled)
         em.subscribe(self._on_modeling_language_selection_changed)
@@ -245,7 +247,7 @@ class MainWindow(Service, ActionProvider):
             if diagram:
                 self.event_manager.handle(DiagramOpened(diagram))
 
-    @event_handler(ModelLoaded, ModelSaved)
+    @event_handler(SessionCreated, ModelLoaded, ModelSaved)
     def _on_file_manager_state_changed(self, event):
         self.model_changed = False
         self.filename = event.filename
