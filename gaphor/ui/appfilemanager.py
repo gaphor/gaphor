@@ -36,18 +36,6 @@ class AppFileManager(Service, ActionProvider):
         """
         self.application.new_session()
 
-    @action(name="app.file-new-template")
-    def action_new_from_template(self):
-        """This menu action opens the new model from template dialog."""
-        filenames = open_file_dialog(
-            gettext("New Gaphor Model From Template"),
-            parent=self.main_window.window,
-            filters=FILTERS,
-        )
-        for filename in filenames:
-            self.application.new_session(filename=filename)
-            self.last_dir = os.path.dirname(filename)
-
     @action(name="app.file-open", shortcut="<Primary>o")
     def action_open(self):
         """This menu action opens the standard model open dialog."""
