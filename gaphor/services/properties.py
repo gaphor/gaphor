@@ -70,12 +70,14 @@ class Properties(Service):
 
     def __init__(self, event_manager):
         self.event_manager = event_manager
-        self.filename: str = ""
+        self.filename = os.path.join(get_cache_dir(), file_hash(""))
         self._properties: Dict[str, object] = {}
 
         event_manager.subscribe(self.on_model_loaded)
         event_manager.subscribe(self.on_model_saved)
         event_manager.subscribe(self.on_model_flushed)
+
+        self.load()
 
     def shutdown(self):
         """Shutdown the properties service.
