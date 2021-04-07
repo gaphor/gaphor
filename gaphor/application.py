@@ -91,12 +91,12 @@ class Application(Service, ActionProvider):
                     session.foreground()
                     return
 
-        if self._active_session and self._active_session.is_new:
-            file_manager = self._active_session.get_service("file_manager")
-            file_manager.load(filename)
-            return self._active_session
-        else:
+        if not self._active_session or not self._active_session.is_new:
             return self._new_session(filename=filename, services=services)
+
+        file_manager = self._active_session.get_service("file_manager")
+        file_manager.load(filename)
+        return self._active_session
 
     def _new_session(self, filename=None, services=None):
         """Initialize an application session."""
