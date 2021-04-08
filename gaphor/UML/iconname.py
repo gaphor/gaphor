@@ -1,4 +1,4 @@
-from gaphor.ui.iconname import get_default_icon_name, get_icon_name
+from gaphor.diagram.iconname import get_default_icon_name, get_icon_name
 from gaphor.UML import uml as UML
 
 

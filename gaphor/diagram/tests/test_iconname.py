@@ -1,4 +1,4 @@
-from gaphor.ui.iconname import to_kebab_case
+from gaphor.diagram.iconname import to_kebab_case
 
 
 def test_kebab_case():

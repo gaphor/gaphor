@@ -1,5 +1,5 @@
 from gaphor.C4Model.c4model import C4Container, C4Database
-from gaphor.ui.iconname import get_default_icon_name, get_icon_name
+from gaphor.diagram.iconname import get_default_icon_name, get_icon_name
 
 
 @get_icon_name.register(C4Container)

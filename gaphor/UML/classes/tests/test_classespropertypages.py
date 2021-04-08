@@ -1,4 +1,5 @@
 import pytest
+from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.UML.classes.classespropertypages import (
@@ -6,10 +7,22 @@ from gaphor.UML.classes.classespropertypages import (
     AttributesPage,
     ClassifierPropertyPage,
     DependencyPropertyPage,
+    Folded,
     InterfacePropertyPage,
     NamedElementPropertyPage,
     OperationsPage,
 )
+
+
+def find(widget, name):
+    if Gtk.Buildable.get_name(widget) == name:
+        return widget
+    if isinstance(widget, Gtk.Container):
+        for child in widget.get_children():
+            found = find(child, name)
+            if found:
+                return found
+    return None
 
 
 @pytest.fixture
@@ -25,8 +38,10 @@ def test_named_element_property_page(element_factory):
     property_page = NamedElementPropertyPage(subject)
 
     widget = property_page.construct()
+    name_entry = find(widget, "name-entry")
+    name_entry.set_text("Name")
 
-    assert widget
+    assert subject.name == "Name"
 
 
 def test_no_named_element_property_page_for_metaclass(metaclass):
@@ -41,8 +56,10 @@ def test_classifier_property_page(element_factory):
     property_page = ClassifierPropertyPage(subject)
 
     widget = property_page.construct()
+    abstract = find(widget, "abstract")
+    abstract.set_state(True)
 
-    assert widget
+    assert subject.isAbstract
 
 
 def test_no_classifier_property_page_for_metaclass(metaclass):
@@ -59,8 +76,10 @@ def test_interface_property_page(diagram, element_factory):
     property_page = InterfacePropertyPage(item)
 
     widget = property_page.construct()
+    folded = find(widget, "folded")
+    folded.set_state(True)
 
-    assert widget
+    assert item.folded == Folded.PROVIDED
 
 
 def test_attributes_page(diagram, element_factory):
