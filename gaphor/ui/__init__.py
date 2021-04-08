@@ -9,9 +9,9 @@ from typing import Optional
 
 from gi.repository import Gdk, Gio, GLib, Gtk
 
-from gaphor.application import Application
+from gaphor.application import Application, Session
 from gaphor.core import event_handler
-from gaphor.event import ApplicationShutdown, SessionCreated
+from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
 from gaphor.ui.actiongroup import apply_application_actions
 from gaphor.ui.macosshim import macos_init
 
@@ -77,8 +77,17 @@ def run(args):
 
         @event_handler(SessionCreated)
         def on_session_created(event):
+            event_manager = event.session.get_service("event_manager")
+            event_manager.subscribe(on_session_changed)
             main_window = event.session.get_service("main_window")
             main_window.open(gtk_app)
+
+        @event_handler(ActiveSessionChanged)
+        def on_session_changed(event):
+            if isinstance(event.service, Session):
+                main_window = event.service.get_service("main_window")
+                if main_window.window:
+                    main_window.window.present_with_time(Gdk.CURRENT_TIME)
 
         @event_handler(ApplicationShutdown)
         def on_quit(event):

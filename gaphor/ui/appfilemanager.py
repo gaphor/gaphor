@@ -4,6 +4,7 @@ import os.path
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
 from gaphor.ui.filedialog import open_file_dialog
+from gaphor.ui.questiondialog import QuestionDialog
 
 log = logging.getLogger(__name__)
 
@@ -47,7 +48,19 @@ class AppFileManager(Service, ActionProvider):
         )
 
         for filename in filenames:
-            self.application.new_session(filename=filename)
+            force_new_session = False
+            if self.application.has_session(filename):
+                dialog = QuestionDialog(
+                    gettext(
+                        "{filename} is already opened. Do you want to switch to the opened window instead?"
+                    ).format(filename=filename),
+                    parent=self.main_window.window,
+                )
+
+                force_new_session = not dialog.answer
+                dialog.destroy()
+
+            self.application.new_session(filename=filename, force=force_new_session)
             self.last_dir = os.path.dirname(filename)
 
     @action(name="app.file-open-recent")
