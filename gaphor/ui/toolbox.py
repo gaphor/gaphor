@@ -12,8 +12,8 @@ from gaphor.abc import ActionProvider
 from gaphor.core import gettext
 from gaphor.core.eventmanager import event_handler
 from gaphor.diagram.diagramtoolbox import ToolDef
+from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.event import ModelingLanguageChanged
 
 log = logging.getLogger(__name__)
 
