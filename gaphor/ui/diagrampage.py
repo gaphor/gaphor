@@ -1,7 +1,7 @@
 import functools
 import importlib
 import logging
-from typing import Dict, Optional, Sequence, Tuple
+from typing import Dict, Optional
 
 from gaphas.guide import GuidePainter
 from gaphas.painter import FreeHandPainter, HandlePainter, PainterChain
@@ -15,7 +15,7 @@ from gaphor.core import action, event_handler, gettext
 from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
-from gaphor.diagram.diagramtoolbox import ToolDef
+from gaphor.diagram.diagramtoolbox import tooliter
 from gaphor.diagram.diagramtools import apply_default_tool_set, apply_placement_tool_set
 from gaphor.diagram.diagramtools.placement import create_item
 from gaphor.diagram.event import DiagramItemPlaced
@@ -27,12 +27,6 @@ from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramSelectionChanged, Notification
 
 log = logging.getLogger(__name__)
-
-
-def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
-    """Iterate toolbox items, regardless of section headers."""
-    for name, section in toolbox_actions:
-        yield from section
 
 
 @functools.lru_cache(maxsize=1)
