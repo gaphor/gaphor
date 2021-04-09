@@ -1,7 +1,7 @@
 import pytest
-from gi.repository import Gtk
 
 from gaphor import UML
+from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.classes.classespropertypages import (
     AssociationPropertyPage,
     AttributesPage,
@@ -12,17 +12,6 @@ from gaphor.UML.classes.classespropertypages import (
     NamedElementPropertyPage,
     OperationsPage,
 )
-
-
-def find(widget, name):
-    if Gtk.Buildable.get_name(widget) == name:
-        return widget
-    if isinstance(widget, Gtk.Container):
-        for child in widget.get_children():
-            found = find(child, name)
-            if found:
-                return found
-    return None
 
 
 @pytest.fixture
