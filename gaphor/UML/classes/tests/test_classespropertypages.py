@@ -66,7 +66,7 @@ def test_interface_property_page(diagram, element_factory):
 
     widget = property_page.construct()
     folded = find(widget, "folded")
-    folded.set_state(True)
+    folded.set_active(True)
 
     assert item.folded == Folded.PROVIDED
 
@@ -79,7 +79,7 @@ def test_attributes_page(diagram, element_factory):
 
     widget = property_page.construct()
     show_attributes = find(widget, "show-attributes")
-    show_attributes.set_state(False)
+    show_attributes.set_active(False)
 
     assert not item.show_attributes
 
@@ -106,7 +106,7 @@ def test_operations_page(diagram, element_factory):
 
     widget = property_page.construct()
     show_operations = find(widget, "show-operations")
-    show_operations.set_state(False)
+    show_operations.set_active(False)
 
     assert not item.show_operations
 
