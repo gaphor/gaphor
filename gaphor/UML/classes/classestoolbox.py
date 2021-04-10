@@ -142,7 +142,7 @@ classes = ToolSection(
             "gaphor-enumeration-symbolic",
             "<Shift>W",
             new_item_factory(
-                diagramitems.ClassItem,
+                diagramitems.EnumerationItem,
                 UML.Enumeration,
                 config_func=namespace_config,
             ),

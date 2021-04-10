@@ -12,6 +12,7 @@ from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.classes.package import PackageItem
+from gaphor.UML.classes.enumeration import EnumerationItem
 
 __all__ = [
     "AssociationItem",
@@ -21,4 +22,5 @@ __all__ = [
     "InterfaceItem",
     "ClassItem",
     "PackageItem",
+    "EnumerationItem",
 ]

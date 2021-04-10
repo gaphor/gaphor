@@ -61,12 +61,10 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
     def additional_stereotypes(self):
         if isinstance(self.subject, UML.Stereotype):
             return ["stereotype"]
-        elif isinstance(self.subject, UML.Enumeration):
-            return ["enumeration"]
         elif isinstance(self.subject, UML.PrimitiveType):
             return ["primitive"]
         elif isinstance(self.subject, sysml.DataType):
-            return ["vataType"]
+            return ["valueType"]
         elif isinstance(self.subject, UML.DataType):
             return ["dataType"]
         elif UML.model.is_metaclass(self.subject):
