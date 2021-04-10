@@ -6,7 +6,7 @@ from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_bu
 
 
 @PropertyPages.register(Comment)
-class CommentItemPropertyPage(PropertyPageBase):
+class CommentPropertyPage(PropertyPageBase):
     """Property page for Comments."""
 
     def __init__(self, subject):
