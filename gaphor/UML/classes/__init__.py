@@ -2,6 +2,7 @@ from gaphor.UML.classes import (
     classconnect,
     classeseditors,
     classespropertypages,
+    containmentconnect,
     copypaste,
     interfaceconnect,
 )
@@ -13,9 +14,11 @@ from gaphor.UML.classes.interface import Folded, InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.classes.package import PackageItem
 from gaphor.UML.classes.enumeration import EnumerationItem
+from gaphor.UML.classes.containment import ContainmentItem
 
 __all__ = [
     "AssociationItem",
+    "ContainmentItem",
     "DependencyItem",
     "GeneralizationItem",
     "InterfaceRealizationItem",

@@ -92,7 +92,7 @@ def set_up_class_and_association(event_manager, element_factory):
         connect(a, a.tail, ci2)
 
     # Diagram, Association, 2x Class, Property, LiteralSpecification
-    assert 6 == len(element_factory.lselect())
+    assert 9 == len(element_factory.lselect())
     assert 18 == len(diagram.connections.solver.constraints)
 
     return diagram, ci1, ci2, a

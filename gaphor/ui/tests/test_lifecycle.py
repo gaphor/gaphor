@@ -13,9 +13,9 @@ def application():
 
 
 def two_sessions(application):
-    session1 = application.new_session(["event_manager"])
+    session1 = application.new_session(services=["component_registry", "event_manager"])
 
-    session2 = application.new_session(["event_manager"])
+    session2 = application.new_session(services=["component_registry", "event_manager"])
 
     return session1, session2
 

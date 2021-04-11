@@ -20,6 +20,8 @@ from gaphor.entrypoint import initialize
 from gaphor.event import (
     ActiveSessionChanged,
     ApplicationShutdown,
+    ModelLoaded,
+    ModelSaved,
     ServiceInitializedEvent,
     ServiceShutdownEvent,
     SessionCreated,
@@ -55,7 +57,7 @@ class Application(Service, ActionProvider):
 
     def __init__(self):
         self._active_session: Optional[Session] = None
-        self.sessions: Set[Session] = set()
+        self._sessions: Set[Session] = set()
 
         self._services_by_name = initialize("gaphor.appservices", application=self)
 
@@ -72,12 +74,33 @@ class Application(Service, ActionProvider):
         return self._services_by_name[name]
 
     @property
+    def sessions(self):
+        return self._sessions
+
+    @property
     def active_session(self):
         return self._active_session
 
-    def new_session(self, services=None):
+    def new_session(self, *, filename=None, services=None, force=False):
+        if filename is None:
+            return self._new_session(services=services)
+
+        if not force:
+            for session in self._sessions:
+                if session.filename == filename:
+                    session.foreground()
+                    return
+
+        if not self._active_session or not self._active_session.is_new:
+            return self._new_session(filename=filename, services=services)
+
+        file_manager = self._active_session.get_service("file_manager")
+        file_manager.load(filename)
+        return self._active_session
+
+    def _new_session(self, filename=None, services=None):
         """Initialize an application session."""
-        session = Session()
+        session = Session(services=services)
 
         @event_handler(ActiveSessionChanged)
         def on_active_session_changed(event):
@@ -86,26 +109,34 @@ class Application(Service, ActionProvider):
         @event_handler(SessionShutdown)
         def on_session_shutdown(event):
             self.shutdown_session(session)
-            if not self.sessions:
+            if not self._sessions:
                 self.quit()
 
         event_manager = session.get_service("event_manager")
         event_manager.subscribe(on_active_session_changed)
         event_manager.subscribe(on_session_shutdown)
 
-        self.sessions.add(session)
+        self._sessions.add(session)
         self._active_session = session
 
-        self.event_manager.handle(SessionCreated(self, session))
+        session_created = SessionCreated(self, session, filename)
+        event_manager.handle(session_created)
+        self.event_manager.handle(session_created)
+
         return session
 
     def has_sessions(self):
         return bool(self._active_session)
 
+    def has_session(self, filename):
+        return any(
+            session for session in self._sessions if session.filename == filename
+        )
+
     def shutdown_session(self, session):
         assert session
         session.shutdown()
-        self.sessions.discard(session)
+        self._sessions.discard(session)
         if session is self._active_session:
             self._active_session = None
 
@@ -116,8 +147,8 @@ class Application(Service, ActionProvider):
         """
         transaction.subscribers.discard(self._transaction_proxy)
 
-        while self.sessions:
-            self.shutdown_session(self.sessions.pop())
+        while self._sessions:
+            self.shutdown_session(self._sessions.pop())
 
         self.event_manager.handle(ApplicationShutdown(self))
 
@@ -129,7 +160,7 @@ class Application(Service, ActionProvider):
     @action(name="app.quit", shortcut="<Primary>q")
     def quit(self):
         """The user's application Quit command."""
-        for session in list(self.sessions):
+        for session in list(self._sessions):
             self._active_session = session
             event_manager = session.get_service("event_manager")
             event_manager.handle(SessionShutdownRequested(self))
@@ -156,6 +187,7 @@ class Session(Service):
     def __init__(self, services=None):
         """Initialize the application."""
         services_by_name: Dict[str, Service] = initialize("gaphor.services", services)
+        self._filename = None
 
         self.event_manager: EventManager = cast(
             EventManager, services_by_name["event_manager"]
@@ -169,16 +201,37 @@ class Session(Service):
             self.component_registry.register(name, srv)
             self.event_manager.handle(ServiceInitializedEvent(name, srv))
 
+        self.event_manager.subscribe(self.on_filename_changed)
+
+    @property
+    def is_new(self):
+        """If it's a new model, there is no state change (undo & redo) and no
+        file name is defined."""
+        undo_manager = self.get_service("undo_manager")
+        file_manager = self.get_service("file_manager")
+
+        return (
+            not undo_manager.can_undo()
+            and not undo_manager.can_redo()
+            and not file_manager.filename
+        )
+
     def get_service(self, name):
         if not self.component_registry:
             raise NotInitializedError("Session is no longer alive")
 
         return self.component_registry.get_service(name)
 
-    def shutdown(self):
+    @property
+    def filename(self):
+        return self._filename
 
+    def foreground(self):
+        self.event_manager.handle(ActiveSessionChanged(self))
+
+    def shutdown(self):
         if self.component_registry:
-            for name, srv in self.component_registry.all(Service):  # type: ignore[misc]
+            for name, srv in reversed(list(self.component_registry.all(Service))):  # type: ignore[misc]
                 self.shutdown_service(name, srv)
 
     def shutdown_service(self, name, srv):
@@ -187,3 +240,7 @@ class Session(Service):
         self.event_manager.handle(ServiceShutdownEvent(name, srv))
         self.component_registry.unregister(srv)
         srv.shutdown()
+
+    @event_handler(SessionCreated, ModelLoaded, ModelSaved)
+    def on_filename_changed(self, event):
+        self._filename = event.filename

@@ -5,8 +5,8 @@ from gi.repository import Gio, GLib, Gtk
 
 from gaphor.abc import Service
 from gaphor.core import event_handler, gettext
+from gaphor.event import ModelLoaded, ModelSaved
 from gaphor.ui import APPLICATION_ID
-from gaphor.ui.event import FileLoaded, FileSaved
 
 HOME = str(Path.home())
 
@@ -21,7 +21,7 @@ class RecentFiles(Service):
     def shutdown(self):
         self.event_manager.unsubscribe(self._on_filename_changed)
 
-    @event_handler(FileLoaded, FileSaved)
+    @event_handler(ModelLoaded, ModelSaved)
     def _on_filename_changed(self, event):
         filename = event.filename
         if not filename:

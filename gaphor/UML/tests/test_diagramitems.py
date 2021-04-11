@@ -27,7 +27,13 @@ def all_items_and_elements():
     [cls for cls in diagramitems.__dict__.values() if _issubclass(cls, Presentation)],
 )
 def test_all_diagram_items_have_a_model_element_mapping(item_class):
-    if item_class in (Box, Line, Ellipse, CommentLineItem):
+    if item_class in (
+        Box,
+        Line,
+        Ellipse,
+        CommentLineItem,
+        diagramitems.ContainmentItem,
+    ):
         assert not get_model_element(item_class)
     else:
         assert get_model_element(item_class)
