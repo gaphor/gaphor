@@ -1,7 +1,12 @@
 from gaphor import UML
 from gaphor.core.format import format, parse
 from gaphor.diagram.tests.fixtures import connect, copy_and_paste, copy_clear_and_paste
-from gaphor.UML.classes import AssociationItem, ClassItem, InterfaceItem
+from gaphor.UML.classes import (
+    AssociationItem,
+    ClassItem,
+    EnumerationItem,
+    InterfaceItem,
+)
 
 
 def test_class_with_attributes(diagram, element_factory):
@@ -35,6 +40,21 @@ def test_class_with_operation(diagram, element_factory):
         format(new_cls_item.subject.ownedOperation[0])
         == "- oper(inout param: str): str"
     )
+
+
+def test_enumeration_with_literal(diagram, element_factory):
+    enum = element_factory.create(UML.Enumeration)
+    literal = element_factory.create(UML.EnumerationLiteral)
+    parse(literal, "apple")
+    enum.ownedLiteral = literal
+
+    enum_item = diagram.create(EnumerationItem, subject=enum)
+
+    new_items = copy_clear_and_paste({enum_item}, diagram, element_factory)
+    new_enum_item = new_items.pop()
+
+    assert isinstance(new_enum_item, EnumerationItem)
+    assert format(new_enum_item.subject.ownedLiteral[0]) == "apple"
 
 
 def test_interface_with_attributes_and_operation(diagram, element_factory):
