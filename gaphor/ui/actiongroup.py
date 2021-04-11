@@ -17,7 +17,7 @@ def apply_application_actions(component_registry, gtk_app):
             a = create_gio_action(act, provider, attrname)
             gtk_app.add_action(a)
             if act.shortcut:
-                gtk_app.add_accelerator(act.shortcut, f"{scope}.{act.name}", None)
+                gtk_app.set_accels_for_action(f"{scope}.{act.name}", [act.shortcut])
     return gtk_app
 
 
