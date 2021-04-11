@@ -1,5 +1,3 @@
-import pytest
-
 from gaphor import UML
 from gaphor.core import Transaction
 from gaphor.UML.classes import ClassItem
@@ -32,7 +30,6 @@ def test_undo_should_remove_show_item_on_diagram(
     assert cls in removed_items, view.updates
 
 
-@pytest.mark.skip
 def test_redo_should_show_item_on_diagram(event_manager, element_factory, undo_manager):
     with Transaction(event_manager):
         diagram = element_factory.create(UML.Diagram)
@@ -47,4 +44,4 @@ def test_redo_should_show_item_on_diagram(event_manager, element_factory, undo_m
 
     items, removed_items = view.updates[-1]
 
-    assert cls in items, view.updates
+    assert cls.id in (item.id for item in items), items

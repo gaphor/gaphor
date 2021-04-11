@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 from gaphor.core.modeling import Comment, Diagram
@@ -32,7 +34,10 @@ def test_placement(diagram, page, element_factory):
     assert len(element_factory.lselect()) == 2
 
 
-@pytest.mark.skip(reason="This test cases a Segmentation Fault when run from VSCode")
+@pytest.mark.skipif(
+    bool(os.environ.get("GDK_PIXBUF_MODULE_FILE")),
+    reason="Causes a SegFault when run from VSCode",
+)
 def test_placement_icon_base_is_loaded_once():
     icon1 = placement_icon_base()
     icon2 = placement_icon_base()
