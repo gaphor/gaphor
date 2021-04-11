@@ -98,7 +98,7 @@ c4 = ToolSection(
             "c4-component",
             gettext("Component"),
             "gaphor-c4-component-symbolic",
-            "<Shift>C",
+            "<Shift>X",
             new_item_factory(
                 diagramitems.C4ContainerItem,
                 c4model.C4Container,
