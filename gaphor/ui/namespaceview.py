@@ -9,7 +9,7 @@ from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.core.format import format, parse
 from gaphor.core.modeling import Diagram, Element
-from gaphor.ui.iconname import get_icon_name
+from gaphor.diagram.iconname import get_icon_name
 from gaphor.ui.namespacemodel import RELATIONSHIPS, relationship_iter_parent
 
 log = logging.getLogger(__name__)

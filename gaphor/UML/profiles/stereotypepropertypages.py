@@ -71,7 +71,7 @@ def stereotype_model(subject):
     )
     refresh(subject, model)
 
-    return model, (_toggle_stereotype, subject, model), (_set_value, model)
+    return model, (toggle_stereotype, subject, model), (set_value, model)
 
 
 def refresh(subject, model):
@@ -128,7 +128,7 @@ def refresh(subject, model):
 
 
 @transactional
-def _toggle_stereotype(renderer, path, subject, model):
+def toggle_stereotype(renderer, path, subject, model):
     row = model[path]
     name, old_value, is_applied, _, _, stereotype, _, _ = row
     value = not is_applied
@@ -144,11 +144,8 @@ def _toggle_stereotype(renderer, path, subject, model):
 
 
 @transactional
-def _set_value(renderer, path, value, model):
-    """Set value of stereotype property applied to an UML element.
-
-    Slot is created if instance Create valuChange value of instance spe
-    """
+def set_value(renderer, path, value, model):
+    """Set value of stereotype property applied to an UML element."""
     row = model[path]
     name, old_value, is_applied, _, _, attr, applied, slot = row
     if isinstance(attr, UML.Stereotype):

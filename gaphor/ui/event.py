@@ -18,11 +18,6 @@ class DiagramSelectionChanged:
         self.selected_items = selected_items
 
 
-class ModelingLanguageChanged:
-    def __init__(self, modeling_language):
-        self.modeling_language = modeling_language
-
-
 class Notification:
     def __init__(self, message):
         self.message = message

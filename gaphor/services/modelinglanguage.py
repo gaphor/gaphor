@@ -5,7 +5,11 @@ from gaphor.action import action
 from gaphor.core import event_handler
 from gaphor.entrypoint import initialize
 from gaphor.services.properties import PropertyChanged
-from gaphor.ui.event import ModelingLanguageChanged
+
+
+class ModelingLanguageChanged:
+    def __init__(self, modeling_language):
+        self.modeling_language = modeling_language
 
 
 class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):

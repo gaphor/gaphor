@@ -3,6 +3,7 @@ from io import StringIO
 import pytest
 from gaphas.aspect.connector import ConnectionSink
 from gaphas.aspect.connector import Connector as ConnectorAspect
+from gi.repository import Gtk
 
 from gaphor.core import Transaction
 from gaphor.core.eventmanager import EventManager
@@ -142,3 +143,14 @@ def copy_clear_and_paste(items, diagram, element_factory, retain=[]):
     buffer = copy(items)
     clear_model(diagram, element_factory, retain)
     return paste(buffer, diagram, element_factory.lookup)
+
+
+def find(widget, name):
+    if Gtk.Buildable.get_name(widget) == name:
+        return widget
+    if isinstance(widget, Gtk.Container):
+        for child in widget.get_children():
+            found = find(child, name)
+            if found:
+                return found
+    return None

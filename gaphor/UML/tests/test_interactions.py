@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor import UML
-from gaphor.ui.diagrampage import tooliter
+from gaphor.diagram.diagramtoolbox import tooliter
 from gaphor.UML.interactions.interaction import InteractionItem
 from gaphor.UML.toolbox import uml_toolbox_actions
 

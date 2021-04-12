@@ -5,7 +5,7 @@ We bind the Toolbox to a diagram. When a diagram page (tab) is switched,
 the actions bound to the toolbuttons should change as well.
 """
 
-from typing import Callable, NamedTuple, Optional, Sequence
+from typing import Callable, NamedTuple, Optional, Sequence, Tuple
 
 from gaphas.item import SE
 
@@ -42,6 +42,12 @@ class ToolSection(NamedTuple):
 
 
 ToolboxDefinition = Sequence[ToolSection]
+
+
+def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
+    """Iterate toolbox items, regardless of section headers."""
+    for name, section in toolbox_actions:
+        yield from section
 
 
 general_tools = ToolSection(

@@ -17,10 +17,11 @@ from gaphor.event import (
     SessionCreated,
     SessionShutdownRequested,
 )
+from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
-from gaphor.ui.event import DiagramOpened, ModelingLanguageChanged
+from gaphor.ui.event import DiagramOpened
 from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.notification import InAppNotifier
 from gaphor.ui.recentfiles import HOME, RecentFilesMenu
