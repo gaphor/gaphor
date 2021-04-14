@@ -3,7 +3,7 @@
 #toolbox > expander {
   border-top: 1px solid @unfocused_borders;
   margin-top: 6px;
-  padding-top: 6px;
+  padding: 6px 3px 0px 3px;
 }
 
 #toolbox > expander:first-child {
