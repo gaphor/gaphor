@@ -1,24 +1,26 @@
 
 /* Custom styling for tool box */
-toolitemgroup > button {
-    border-width: 1px 0px 0px 0px;
-    border-radius: 0px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    background-image: none;
-    box-shadow: none;
+#toolbox > expander {
+  border-top: 1px solid @unfocused_borders;
+  margin-top: 6px;
+  padding-top: 6px;
 }
 
-toolitemgroup:first-child > button {
-    border-width: 0px;
+#toolbox > expander:first-child {
+  border-top: none;
+  margin-top: 0px;
+}
+
+#toolbox flowboxchild {
+  padding: 0
 }
 
 #diagrams {
-    border-top-width: 0px;
+  border-top-width: 0px;
 }
 
 diagramview {
-    background: white;
+  background: white;
 }
 
 @binding-set expand-collapse-row {
