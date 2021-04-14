@@ -90,7 +90,6 @@ class Toolbox(UIComponent, ActionProvider):
             button.drag_source_set_icon_name(icon_name)
             button.connect("drag-data-get", self._button_drag_data_get, action_name)
 
-        icon.show()
         return button
 
     def create_toolbox(
@@ -101,7 +100,6 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         toolbox.set_name("toolbox")
         toolbox.connect("destroy", self._on_toolbox_destroyed)
-
         collapsed = self.properties.get("toolbox-collapsed", {})
 
         def on_expanded(widget, prop, index):
@@ -113,6 +111,8 @@ class Toolbox(UIComponent, ActionProvider):
             expander.set_property("expanded", not collapsed.get(index, False))
             expander.connect("notify::expanded", on_expanded, index)
             flowbox = Gtk.FlowBox.new()
+            flowbox.set_homogeneous(True)
+            flowbox.set_max_children_per_line(12)
             expander.add(flowbox)
             for action_name, label, icon_name, shortcut, *rest in items:
                 button = self.create_toolbox_button(
