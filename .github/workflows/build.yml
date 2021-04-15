@@ -18,7 +18,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v2.2.1
+        uses: actions/setup-python@v2.2.2
       - name: Lint with Pre-commit
         uses: pre-commit/action@v2.0.2
 
@@ -32,7 +32,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v2.2.1
+        uses: actions/setup-python@v2.2.2
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.4
         with:
@@ -181,7 +181,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v2.2.1
+        uses: actions/setup-python@v2.2.2
       - name: Install Dependencies
         run: brew install gobject-introspection gtk+3 adwaita-icon-theme gtk-mac-integration create-dmg upx
       - name: Install Poetry
