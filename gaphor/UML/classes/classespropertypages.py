@@ -106,6 +106,7 @@ class ClassEnumerationLiterals(EditableTreeModel):
     def _create_object(self):
         literal = self._item.model.create(UML.EnumerationLiteral)
         self._item.subject.ownedLiteral = literal
+        literal.enumeration = self._item.subject
         return literal
 
     @transactional
