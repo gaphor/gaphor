@@ -26,7 +26,6 @@ log = logging.getLogger(__name__)
 @represents(UML.Class)
 @represents(UML.Stereotype)
 @represents(UML.DataType)
-@represents(UML.Enumeration)
 @represents(UML.PrimitiveType)
 @represents(sysml.ValueType)
 class ClassItem(ElementPresentation[UML.Class], Classified):
@@ -63,7 +62,7 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
             return ["stereotype"]
         elif isinstance(self.subject, UML.PrimitiveType):
             return ["primitive"]
-        elif isinstance(self.subject, sysml.DataType):
+        elif isinstance(self.subject, sysml.ValueType):
             return ["valueType"]
         elif isinstance(self.subject, UML.DataType):
             return ["dataType"]
