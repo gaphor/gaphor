@@ -95,8 +95,6 @@ class Toolbox(UIComponent, ActionProvider):
     def create_toolbox(
         self, toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]
     ) -> Gtk.Box:
-        """Create the Gtk.ToolPalette for the toolbox."""
-
         toolbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         toolbox.set_name("toolbox")
         toolbox.connect("destroy", self._on_toolbox_destroyed)
@@ -127,14 +125,7 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox.show()
         return toolbox
 
-    def create_toolbox_container(self, toolbox: Gtk.ToolPalette) -> Gtk.ScrolledWindow:
-        """Create a toolbox container.
-
-        Args:
-            toolbox: The Gtk.ToolPalette to add.
-
-        Returns: The Gtk.ScrolledWindow.
-        """
+    def create_toolbox_container(self, toolbox: Gtk.Widget) -> Gtk.ScrolledWindow:
         toolbox_container = Gtk.ScrolledWindow()
         toolbox_container.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         toolbox_container.add(toolbox)
