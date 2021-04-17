@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.2 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
-  <requires lib="gtk+" version="3.20"/>
+  <requires lib="gtk+" version="3.24"/>
   <object class="GtkLabel" id="00-instructions">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
+    <property name="can-focus">False</property>
     <property name="label" translatable="yes">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
 Remove Parent.
 
 Padding between elements is 6px.
 Top margin is 6 px, 12px for expanders.
-Edit, from the popup menu, will allow you to add cell 
+Edit, from the popup menu, will allow you to add cell
 renderers and such.</property>
     <property name="xalign">0</property>
   </object>
   <object class="GtkBox" id="association-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
+    <property name="can-focus">False</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <signal name="destroy" handler="association-editor-destroy" swapped="no"/>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Show Direction</property>
           </object>
           <packing>
@@ -41,37 +41,35 @@ renderers and such.</property>
         <child>
           <object class="GtkSwitch" id="show-direction">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <property name="valign">center</property>
             <signal name="notify::active" handler="show-direction-changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="pack_type">end</property>
+            <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">True</property>
-            <property name="tooltip_text" translatable="yes">Invert direction</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="tooltip-text" translatable="yes">Invert direction</property>
             <property name="relief">none</property>
             <signal name="clicked" handler="invert-direction-changed" swapped="no"/>
             <child>
               <object class="GtkImage">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="icon_name">object-flip-horizontal-symbolic</property>
+                <property name="can-focus">False</property>
+                <property name="icon-name">object-flip-horizontal-symbolic</property>
               </object>
             </child>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="pack_type">end</property>
+            <property name="fill">True</property>
             <property name="position">2</property>
           </packing>
         </child>
@@ -85,20 +83,20 @@ renderers and such.</property>
     <child>
       <object class="GtkExpander">
         <property name="visible">True</property>
-        <property name="can_focus">True</property>
+        <property name="can-focus">True</property>
         <property name="expanded">True</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_top">6</property>
+            <property name="can-focus">False</property>
+            <property name="margin-top">6</property>
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkEntry" id="head-name">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="secondary_icon_tooltip_text" translatable="yes">Enter attribute name and multiplicity, for example
+                <property name="can-focus">True</property>
+                <property name="secondary-icon-tooltip-text" translatable="yes">Enter attribute name and multiplicity, for example
 - name
 + name [1]
 - name [1..2]
@@ -115,7 +113,7 @@ renderers and such.</property>
             <child>
               <object class="GtkComboBoxText" id="head-navigation">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <items>
                   <item id="0" translatable="yes">Unknown navigation</item>
                   <item id="1" translatable="yes">Not navigable</item>
@@ -132,7 +130,7 @@ renderers and such.</property>
             <child>
               <object class="GtkComboBoxText" id="head-aggregation">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <items>
                   <item id="0" translatable="yes">No aggregation</item>
                   <item id="1" translatable="yes">Shared</item>
@@ -149,13 +147,13 @@ renderers and such.</property>
             <child>
               <object class="GtkFrame" id="head-stereotype-frame">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label_xalign">0</property>
-                <property name="shadow_type">in</property>
+                <property name="can-focus">False</property>
+                <property name="label-xalign">0</property>
+                <property name="shadow-type">in</property>
                 <child>
                   <object class="GtkTreeView" id="head-stereotype-list">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection"/>
                     </child>
@@ -210,7 +208,7 @@ renderers and such.</property>
         <child type="label">
           <object class="GtkLabel" id="head-title">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Head:</property>
             <attributes>
               <attribute name="weight" value="bold"/>
@@ -227,21 +225,21 @@ renderers and such.</property>
     <child>
       <object class="GtkExpander">
         <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="margin_top">6</property>
+        <property name="can-focus">True</property>
+        <property name="margin-top">6</property>
         <property name="expanded">True</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="margin_top">6</property>
+            <property name="can-focus">False</property>
+            <property name="margin-top">6</property>
             <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkEntry" id="tail-name">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="secondary_icon_tooltip_text" translatable="yes">Enter attribute name and multiplicity, for example
+                <property name="can-focus">True</property>
+                <property name="secondary-icon-tooltip-text" translatable="yes">Enter attribute name and multiplicity, for example
 - name
 + name [1]
 - name [1..2]
@@ -258,7 +256,7 @@ renderers and such.</property>
             <child>
               <object class="GtkComboBoxText" id="tail-navigation">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <items>
                   <item id="0" translatable="yes">Unknown navigation</item>
                   <item id="1" translatable="yes">Not navigable</item>
@@ -275,8 +273,8 @@ renderers and such.</property>
             <child>
               <object class="GtkComboBoxText" id="tail-aggregation">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="tearoff_title" translatable="yes">title</property>
+                <property name="can-focus">False</property>
+                <property name="tearoff-title" translatable="yes">title</property>
                 <items>
                   <item id="0" translatable="yes">No aggregation</item>
                   <item id="1" translatable="yes">Shared</item>
@@ -293,13 +291,13 @@ renderers and such.</property>
             <child>
               <object class="GtkFrame" id="tail-stereotype-frame">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label_xalign">0</property>
-                <property name="shadow_type">in</property>
+                <property name="can-focus">False</property>
+                <property name="label-xalign">0</property>
+                <property name="shadow-type">in</property>
                 <child>
                   <object class="GtkTreeView" id="tail-stereotype-list">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection"/>
                     </child>
@@ -355,7 +353,7 @@ renderers and such.</property>
         <child type="label">
           <object class="GtkLabel" id="tail-title">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Tail:</property>
             <attributes>
               <attribute name="weight" value="bold"/>
@@ -372,25 +370,25 @@ renderers and such.</property>
   </object>
   <object class="GtkExpander" id="attributes-editor">
     <property name="visible">True</property>
-    <property name="can_focus">True</property>
-    <property name="margin_top">12</property>
+    <property name="can-focus">True</property>
+    <property name="margin-top">12</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_top">6</property>
+        <property name="can-focus">False</property>
+        <property name="margin-top">6</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Show Attributes</property>
               </object>
               <packing>
@@ -402,13 +400,13 @@ renderers and such.</property>
             <child>
               <object class="GtkSwitch" id="show-attributes">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can-focus">True</property>
                 <signal name="notify::active" handler="show-attributes-changed" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="pack_type">end</property>
+                <property name="pack-type">end</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -422,15 +420,15 @@ renderers and such.</property>
         <child>
           <object class="GtkFrame">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label_xalign">0</property>
-            <property name="shadow_type">in</property>
+            <property name="can-focus">False</property>
+            <property name="label-xalign">0</property>
+            <property name="shadow-type">in</property>
             <child>
               <object class="GtkTreeView" id="attributes-list">
-                <property name="height_request">112</property>
+                <property name="height-request">112</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="tooltip_text" translatable="yes">Add and edit class attributes according to UML syntax.
+                <property name="can-focus">True</property>
+                <property name="tooltip-text" translatable="yes">Add and edit class attributes according to UML syntax.
 Attribute syntax examples
 - attr
 - + attr: int
@@ -438,11 +436,11 @@ Attribute syntax examples
 
 Press ENTER to edit item, BS/DEL to remove item.
 Use -/= to move items up or down.</property>
-                <property name="headers_clickable">False</property>
+                <property name="headers-clickable">False</property>
                 <property name="reorderable">True</property>
-                <property name="enable_search">False</property>
-                <property name="show_expanders">False</property>
-                <property name="enable_grid_lines">horizontal</property>
+                <property name="enable-search">False</property>
+                <property name="show-expanders">False</property>
+                <property name="enable-grid-lines">horizontal</property>
                 <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
                 <signal name="key-press-event" handler="attributes-keypress" swapped="no"/>
                 <child internal-child="selection">
@@ -497,7 +495,7 @@ Use -/= to move items up or down.</property>
     <child type="label">
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Attributes</property>
         <attributes>
           <attribute name="weight" value="bold"/>
@@ -507,18 +505,18 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="classifier-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Abstract</property>
           </object>
           <packing>
@@ -530,13 +528,13 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkSwitch" id="abstract">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <signal name="notify::active" handler="abstract-changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
-            <property name="pack_type">end</property>
+            <property name="pack-type">end</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -550,14 +548,14 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="comment-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Comment</property>
         <property name="xalign">0</property>
         <attributes>
@@ -573,21 +571,14 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkFrame">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label_xalign">0</property>
-        <property name="shadow_type">in</property>
+        <property name="can-focus">False</property>
+        <property name="label-xalign">0</property>
+        <property name="shadow-type">in</property>
         <child>
-          <object class="GtkAlignment">
-            <property name="height_request">100</property>
+          <object class="GtkTextView" id="comment">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkTextView" id="comment">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="wrap_mode">word</property>
-              </object>
-            </child>
+            <property name="can-focus">True</property>
+            <property name="wrap-mode">word</property>
           </object>
         </child>
         <child type="label_item">
@@ -603,18 +594,18 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="component-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Indirectly Instantiated</property>
           </object>
           <packing>
@@ -626,13 +617,13 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkSwitch" id="indirectly-instantiated">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <signal name="notify::active" handler="indirectly-instantiated-changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
-            <property name="pack_type">end</property>
+            <property name="pack-type">end</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -646,14 +637,14 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="dependency-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Dependency type</property>
         <property name="xalign">0</property>
         <attributes>
@@ -669,11 +660,11 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Automatic</property>
           </object>
           <packing>
@@ -685,13 +676,12 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkSwitch" id="automatic">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <signal name="notify::active" handler="automatic-changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="pack_type">end</property>
+            <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -705,7 +695,7 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkComboBox" id="dependency-combo">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <signal name="changed" handler="dependency-type-changed" swapped="no"/>
         <child>
           <object class="GtkCellRendererText"/>
@@ -723,18 +713,18 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="fork-node-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Horizontal</property>
           </object>
           <packing>
@@ -746,13 +736,13 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkSwitch" id="horizontal">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <signal name="notify::active" handler="horizontal-changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
-            <property name="pack_type">end</property>
+            <property name="pack-type">end</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -766,17 +756,17 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="interface-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Folded</property>
           </object>
           <packing>
@@ -788,13 +778,12 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkSwitch" id="folded">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <signal name="notify::active" handler="folded-changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="pack_type">end</property>
+            <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -808,14 +797,14 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="join-node-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Join Specification</property>
         <property name="xalign">0</property>
         <attributes>
@@ -831,7 +820,7 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkEntry" id="join-spec">
         <property name="visible">True</property>
-        <property name="can_focus">True</property>
+        <property name="can-focus">True</property>
         <signal name="changed" handler="join-spec-changed" swapped="no"/>
       </object>
       <packing>
@@ -843,24 +832,24 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkExpander" id="line-editor">
     <property name="visible">True</property>
-    <property name="can_focus">True</property>
-    <property name="margin_top">12</property>
+    <property name="can-focus">True</property>
+    <property name="margin-top">12</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_top">6</property>
-        <property name="margin_bottom">12</property>
+        <property name="can-focus">False</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">12</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkCheckButton" id="line-rectilinear">
             <property name="label" translatable="yes">Rectilinear</property>
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">False</property>
-            <property name="draw_indicator">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
             <signal name="toggled" handler="rectilinear-changed" swapped="no"/>
           </object>
           <packing>
@@ -873,9 +862,9 @@ Use -/= to move items up or down.</property>
           <object class="GtkCheckButton" id="flip-orientation">
             <property name="label" translatable="yes">Flip orientation</property>
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="receives_default">False</property>
-            <property name="draw_indicator">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">False</property>
+            <property name="draw-indicator">True</property>
             <signal name="toggled" handler="orientation-changed" swapped="no"/>
           </object>
           <packing>
@@ -889,7 +878,7 @@ Use -/= to move items up or down.</property>
     <child type="label">
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Style</property>
         <attributes>
           <attribute name="weight" value="bold"/>
@@ -899,14 +888,14 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="message-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Message Sort</property>
         <property name="xalign">0</property>
         <attributes>
@@ -922,7 +911,7 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkComboBox" id="message-combo">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <signal name="changed" handler="message-combo-changed" swapped="no"/>
         <child>
           <object class="GtkCellRendererText"/>
@@ -940,14 +929,14 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="metaclass-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Name</property>
         <property name="xalign">0</property>
         <attributes>
@@ -963,13 +952,13 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkComboBoxText" id="metaclass-combo">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="has_entry">True</property>
+        <property name="can-focus">False</property>
+        <property name="has-entry">True</property>
         <signal name="changed" handler="metaclass-combo-changed" swapped="no"/>
         <signal name="destroy" handler="metaclass-combo-destroy" swapped="no"/>
         <child internal-child="entry">
           <object class="GtkEntry">
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <property name="text" translatable="yes">NamedElement</property>
           </object>
         </child>
@@ -983,15 +972,15 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="named-element-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
-    <property name="baseline_position">top</property>
+    <property name="baseline-position">top</property>
     <child>
       <object class="GtkLabel" id="label1">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Name</property>
         <property name="xalign">0</property>
         <attributes>
@@ -1000,14 +989,14 @@ Use -/= to move items up or down.</property>
       </object>
       <packing>
         <property name="expand">False</property>
-        <property name="fill">False</property>
+        <property name="fill">True</property>
         <property name="position">0</property>
       </packing>
     </child>
     <child>
       <object class="GtkEntry" id="name-entry">
         <property name="visible">True</property>
-        <property name="can_focus">True</property>
+        <property name="can-focus">True</property>
         <signal name="changed" handler="name-changed" swapped="no"/>
         <signal name="destroy" handler="name-entry-destroyed" swapped="no"/>
       </object>
@@ -1020,14 +1009,14 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="object-node-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Upper Bound</property>
         <property name="xalign">0</property>
         <attributes>
@@ -1043,7 +1032,7 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkEntry" id="upper-bound">
         <property name="visible">True</property>
-        <property name="can_focus">True</property>
+        <property name="can-focus">True</property>
         <signal name="changed" handler="upper-bound-changed" swapped="no"/>
       </object>
       <packing>
@@ -1055,11 +1044,11 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Show Ordering</property>
           </object>
           <packing>
@@ -1071,13 +1060,12 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkSwitch" id="show-ordering">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <signal name="notify::active" handler="show-ordering-changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="pack_type">end</property>
+            <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -1091,7 +1079,7 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkComboBoxText" id="ordering">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <items>
           <item id="0" translatable="yes">ordered</item>
           <item id="1" translatable="yes">unordered</item>
@@ -1109,25 +1097,25 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkExpander" id="operations-editor">
     <property name="visible">True</property>
-    <property name="can_focus">True</property>
-    <property name="margin_top">12</property>
+    <property name="can-focus">True</property>
+    <property name="margin-top">12</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_top">6</property>
+        <property name="can-focus">False</property>
+        <property name="margin-top">6</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Show Operations</property>
               </object>
               <packing>
@@ -1139,13 +1127,12 @@ Use -/= to move items up or down.</property>
             <child>
               <object class="GtkSwitch" id="show-operations">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can-focus">True</property>
                 <signal name="notify::active" handler="show-operations-changed" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="pack_type">end</property>
+                <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -1159,26 +1146,26 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkFrame">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label_xalign">0</property>
-            <property name="shadow_type">in</property>
+            <property name="can-focus">False</property>
+            <property name="label-xalign">0</property>
+            <property name="shadow-type">in</property>
             <child>
               <object class="GtkTreeView" id="operations-list">
-                <property name="height_request">112</property>
+                <property name="height-request">112</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="tooltip_text" translatable="yes">Add and edit class operations according to UML syntax. Operation syntax examples
+                <property name="can-focus">True</property>
+                <property name="tooltip-text" translatable="yes">Add and edit class operations according to UML syntax. Operation syntax examples
 - call()
 - + call(a: int, b: str)
 - # call(a: int: b: str): bool
 
 Press ENTER to edit item, BS/DEL to remove item.
 Use -/= to move items up or down.</property>
-                <property name="headers_clickable">False</property>
+                <property name="headers-clickable">False</property>
                 <property name="reorderable">True</property>
-                <property name="enable_search">False</property>
-                <property name="show_expanders">False</property>
-                <property name="enable_grid_lines">horizontal</property>
+                <property name="enable-search">False</property>
+                <property name="show-expanders">False</property>
+                <property name="enable-grid-lines">horizontal</property>
                 <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
                 <signal name="key-press-event" handler="operations-keypress" swapped="no"/>
                 <child internal-child="selection">
@@ -1246,7 +1233,7 @@ Use -/= to move items up or down.</property>
     <child type="label">
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Operations</property>
         <attributes>
           <attribute name="weight" value="bold"/>
@@ -1256,18 +1243,18 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="partition-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Partitions</property>
           </object>
           <packing>
@@ -1279,14 +1266,14 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkSpinButton" id="num-partitions">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <property name="numeric">True</property>
             <signal name="value-changed" handler="partitions-changed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">False</property>
-            <property name="pack_type">end</property>
+            <property name="pack-type">end</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -1300,7 +1287,7 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Partition Names</property>
         <property name="xalign">0</property>
         <attributes>
@@ -1316,7 +1303,7 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkTreeView" id="partition-treeview">
         <property name="visible">True</property>
-        <property name="can_focus">True</property>
+        <property name="can-focus">True</property>
         <child internal-child="selection">
           <object class="GtkTreeSelection"/>
         </child>
@@ -1330,20 +1317,20 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkExpander" id="state-editor">
     <property name="visible">True</property>
-    <property name="can_focus">True</property>
-    <property name="margin_top">12</property>
+    <property name="can-focus">True</property>
+    <property name="margin-top">12</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_top">6</property>
+        <property name="can-focus">False</property>
+        <property name="margin-top">6</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Entry</property>
             <property name="xalign">0</property>
           </object>
@@ -1356,7 +1343,7 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkEntry" id="entry">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <signal name="changed" handler="entry-changed" swapped="no"/>
           </object>
           <packing>
@@ -1368,7 +1355,7 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Exit</property>
             <property name="xalign">0</property>
           </object>
@@ -1381,7 +1368,7 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkEntry" id="exit">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <signal name="changed" handler="exit-changed" swapped="no"/>
           </object>
           <packing>
@@ -1393,7 +1380,7 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Do Activity</property>
             <property name="xalign">0</property>
           </object>
@@ -1406,7 +1393,7 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkEntry" id="do-activity">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <signal name="changed" handler="do-activity-changed" swapped="no"/>
           </object>
           <packing>
@@ -1420,7 +1407,7 @@ Use -/= to move items up or down.</property>
     <child type="label">
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Activities</property>
         <attributes>
           <attribute name="weight" value="bold"/>
@@ -1430,25 +1417,25 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkExpander" id="stereotypes-editor">
     <property name="visible">True</property>
-    <property name="can_focus">True</property>
-    <property name="margin_top">12</property>
+    <property name="can-focus">True</property>
+    <property name="margin-top">12</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_top">6</property>
+        <property name="can-focus">False</property>
+        <property name="margin-top">6</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Show Stereotypes</property>
               </object>
               <packing>
@@ -1460,13 +1447,13 @@ Use -/= to move items up or down.</property>
             <child>
               <object class="GtkSwitch" id="show-stereotypes">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can-focus">True</property>
                 <signal name="notify::active" handler="show-stereotypes-changed" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="pack_type">end</property>
+                <property name="pack-type">end</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -1480,13 +1467,13 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkFrame">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label_xalign">0</property>
-            <property name="shadow_type">in</property>
+            <property name="can-focus">False</property>
+            <property name="label-xalign">0</property>
+            <property name="shadow-type">in</property>
             <child>
               <object class="GtkTreeView" id="stereotype-list">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can-focus">True</property>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>
@@ -1541,7 +1528,7 @@ Use -/= to move items up or down.</property>
     <child type="label">
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Stereotypes</property>
         <attributes>
           <attribute name="weight" value="bold"/>
@@ -1551,15 +1538,15 @@ Use -/= to move items up or down.</property>
   </object>
   <object class="GtkBox" id="transition-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <signal name="destroy" handler="transition-destroy" swapped="no"/>
     <child>
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Guard</property>
         <property name="xalign">0</property>
         <attributes>
@@ -1575,7 +1562,7 @@ Use -/= to move items up or down.</property>
     <child>
       <object class="GtkEntry" id="guard">
         <property name="visible">True</property>
-        <property name="can_focus">True</property>
+        <property name="can-focus">True</property>
         <signal name="changed" handler="guard-changed" swapped="no"/>
       </object>
       <packing>

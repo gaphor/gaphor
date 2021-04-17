@@ -291,4 +291,4 @@ class MainWindow(Service, ActionProvider):
             self.properties.set("ui.window-size", (width, height))
 
 
-Gtk.AccelMap.add_filter("gaphor")
+# Gtk.AccelMap.add_filter("gaphor")

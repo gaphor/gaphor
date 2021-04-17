@@ -113,7 +113,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.text = Gtk.TextView()
         self.text.set_wrap_mode(True)
         self.text.set_monospace(True)
-        self.text.set_border_width(4)
+        # self.text.set_border_width(4)
 
         self.interpreter = code.InteractiveInterpreter(locals)
 
