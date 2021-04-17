@@ -37,7 +37,7 @@ class Toolbox(UIComponent, ActionProvider):
         self.main_window = main_window
         self.properties = properties
         self.modeling_language = modeling_language
-        self._toolbox: Optional[Gtk.ToolPalette] = None
+        self._toolbox: Optional[Gtk.Box] = None
         self._toolbox_container: Optional[Gtk.ScrolledWindow] = None
 
     def open(self) -> Gtk.ScrolledWindow:
@@ -56,7 +56,7 @@ class Toolbox(UIComponent, ActionProvider):
 
     def create_toolbox_button(
         self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]
-    ) -> Gtk.ToggleToolButton:
+    ) -> Gtk.Button:
         """Creates a tool button for the toolbox.
 
         Args:
@@ -67,11 +67,12 @@ class Toolbox(UIComponent, ActionProvider):
 
         Returns: The Gtk.ToggleToolButton.
         """
-        button = Gtk.ToggleToolButton.new()
+        button = Gtk.ToggleButton.new()
         icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
-        button.set_icon_widget(icon)
+        button.add(icon)
         button.set_action_name("diagram.select-tool")
         button.set_action_target_value(GLib.Variant.new_string(action_name))
+        button.set_relief(Gtk.ReliefStyle.NONE)
         if label:
             if shortcut:
                 a, m = Gtk.accelerator_parse(shortcut)
@@ -81,59 +82,50 @@ class Toolbox(UIComponent, ActionProvider):
 
         # Enable Drag and Drop
         if action_name != "toolbox-pointer":
-            inner_button = button.get_children()[0]
-            inner_button.drag_source_set(
+            button.drag_source_set(
                 Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
                 self.DND_TARGETS,
                 Gdk.DragAction.COPY | Gdk.DragAction.LINK,
             )
-            inner_button.drag_source_set_icon_name(icon_name)
-            inner_button.connect(
-                "drag-data-get", self._button_drag_data_get, action_name
-            )
+            button.drag_source_set_icon_name(icon_name)
+            button.connect("drag-data-get", self._button_drag_data_get, action_name)
 
         return button
 
     def create_toolbox(
         self, toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]
-    ) -> Gtk.ToolPalette:
-        """Create the Gtk.ToolPalette for the toolbox."""
-
-        toolbox = Gtk.ToolPalette.new()
+    ) -> Gtk.Box:
+        toolbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
+        toolbox.set_name("toolbox")
         toolbox.connect("destroy", self._on_toolbox_destroyed)
-
         collapsed = self.properties.get("toolbox-collapsed", {})
 
-        def on_collapsed(widget, prop, index):
-            collapsed[index] = widget.get_property("collapsed")
+        def on_expanded(widget, prop, index):
+            collapsed[index] = not widget.get_property("expanded")
             self.properties.set("toolbox-collapsed", collapsed)
 
         for index, (title, items) in enumerate(toolbox_actions):
-            tool_item_group = Gtk.ToolItemGroup.new(title)
-            tool_item_group.get_label_widget().set_halign(Gtk.Align.START)
-            tool_item_group.set_property("collapsed", collapsed.get(index, False))
-            tool_item_group.connect("notify::collapsed", on_collapsed, index)
+            expander = Gtk.Expander.new(title)
+            expander.set_property("expanded", not collapsed.get(index, False))
+            expander.connect("notify::expanded", on_expanded, index)
+            flowbox = Gtk.FlowBox.new()
+            flowbox.set_homogeneous(True)
+            flowbox.set_max_children_per_line(12)
+            expander.add(flowbox)
             for action_name, label, icon_name, shortcut, *rest in items:
                 button = self.create_toolbox_button(
                     action_name, icon_name, label, shortcut
                 )
-                tool_item_group.insert(button, -1)
+                flowbox.insert(button, -1)
                 button.show_all()
 
-            toolbox.add(tool_item_group)
-            tool_item_group.show()
+            toolbox.add(expander)
+            expander.show()
 
         toolbox.show()
         return toolbox
 
-    def create_toolbox_container(self, toolbox: Gtk.ToolPalette) -> Gtk.ScrolledWindow:
-        """Create a toolbox container.
-
-        Args:
-            toolbox: The Gtk.ToolPalette to add.
-
-        Returns: The Gtk.ScrolledWindow.
-        """
+    def create_toolbox_container(self, toolbox: Gtk.Widget) -> Gtk.ScrolledWindow:
         toolbox_container = Gtk.ScrolledWindow()
         toolbox_container.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         toolbox_container.add(toolbox)
