@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkPopover" id="hamburger">
+    <property name="can_focus">0</property>
+  </object>
+  <object class="GtkPopover" id="recent-files">
+    <property name="can_focus">0</property>
+  </object>
+  <object class="GtkPopover" id="select-modeling-language">
+    <property name="can_focus">0</property>
+  </object>
+  <object class="GtkApplicationWindow" id="main-window">
+    <property name="can_focus">0</property>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="header">
+        <property name="can_focus">0</property>
+        <child>
+          <object class="GtkBox">
+            <property name="can_focus">0</property>
+            <child>
+              <object class="GtkButton">
+                <property name="halign">center</property>
+                <property name="label" translatable="yes">Open</property>
+                <property name="can_focus">0</property>
+                <property name="receives_default">1</property>
+                <property name="action_name">app.file-open</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuButton">
+                <property name="halign">center</property>
+                <property name="receives_default">1</property>
+                <property name="popover">recent-files</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="can_focus">0</property>
+                    <property name="icon_name">pan-down-symbolic</property>
+                    <property name="icon_size">1</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <style>
+              <class name="linked"/>
+            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="receives_default">1</property>
+            <property name="action_name">tree-view.create-diagram</property>
+            <child>
+              <object class="GtkImage">
+                <property name="can_focus">0</property>
+                <property name="icon_name">gaphor-new-diagram-symbolic</property>
+                <property name="icon_size">1</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuButton">
+            <property name="focus_on_click">0</property>
+            <property name="receives_default">1</property>
+            <property name="popover">select-modeling-language</property>
+            <child>
+              <object class="GtkBox">
+                <property name="can_focus">0</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="can_focus">0</property>
+                    <property name="icon_name">pan-down-symbolic</property>
+                    <property name="icon_size">1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="modeling-language-name">
+                    <property name="can_focus">0</property>
+                    <property name="label" translatable="yes">UML</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkMenuButton">
+            <property name="receives_default">1</property>
+            <property name="popover">hamburger</property>
+            <child>
+              <object class="GtkImage">
+                <property name="can_focus">0</property>
+                <property name="icon_name">open-menu-symbolic</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkButton">
+            <property name="receives_default">1</property>
+            <property name="action_name">win.show-editors</property>
+            <child>
+              <object class="GtkImage">
+                <property name="can_focus">0</property>
+                <property name="icon_name">gaphor-view-editor-symbolic</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkOverlay">
+        <property name="name">overlay</property>
+        <property name="can_focus">0</property>
+        <property name="child">
+          <object class="GtkFrame" id="main-content">
+            <property name="can_focus">0</property>
+          </object>
+        </property>
+        <child type="overlay">
+          <object class="GtkRevealer" id="notification-revealer">
+            <property name="can_focus">0</property>
+            <property name="halign">center</property>
+            <property name="valign">start</property>
+            <property name="child">
+              <object class="GtkBox">
+                <property name="can_focus">0</property>
+                <property name="halign">center</property>
+                <property name="valign">start</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkLabel" id="notification-message">
+                    <property name="can_focus">0</property>
+                    <property name="margin-start">6</property>
+                    <property name="label" translatable="yes">Here goes a short informative message.</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="notification-close">
+                    <property name="receives_default">1</property>
+                    <!-- <signal name="clicked" handler="close-notification" object="notification-revealer" swapped="no"/> -->
+                    <child>
+                      <object class="GtkImage">
+                        <property name="can_focus">0</property>
+                        <property name="icon_name">window-close-symbolic</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <style>
+                  <class name="app-notification"/>
+                </style>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
