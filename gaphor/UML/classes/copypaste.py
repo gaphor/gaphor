@@ -1,10 +1,11 @@
 import itertools
 
 from gaphor.diagram.copypaste import copy, copy_named_element
-from gaphor.UML import Association, Class, Enumeration, Interface, Operation
+from gaphor.UML import Association, Class, DataType, Enumeration, Interface, Operation
 
 
 @copy.register(Class)
+@copy.register(DataType)
 @copy.register(Interface)
 def copy_class(element):
     yield element.id, copy_named_element(element)
@@ -18,8 +19,12 @@ def copy_class(element):
 @copy.register
 def copy_enumeration(element: Enumeration):
     yield element.id, copy_named_element(element)
-    for literal in element.ownedLiteral:
-        yield from copy(literal)
+    for feature in itertools.chain(
+        element.ownedAttribute,
+        element.ownedOperation,
+        element.ownedLiteral,
+    ):
+        yield from copy(feature)
 
 
 @copy.register

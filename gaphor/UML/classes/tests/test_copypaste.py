@@ -1,41 +1,60 @@
+import pytest
+
 from gaphor import UML
 from gaphor.core.format import format, parse
 from gaphor.diagram.tests.fixtures import connect, copy_and_paste, copy_clear_and_paste
 from gaphor.UML.classes import (
     AssociationItem,
     ClassItem,
+    DataTypeItem,
     EnumerationItem,
     InterfaceItem,
 )
 
 
-def test_class_with_attributes(diagram, element_factory):
-    cls = element_factory.create(UML.Class)
+@pytest.mark.parametrize(
+    "cls_type,item",
+    [
+        (UML.Class, ClassItem),
+        (UML.DataType, DataTypeItem),
+        (UML.Enumeration, EnumerationItem),
+    ],
+)
+def test_class_with_attributes(diagram, element_factory, cls_type, item):
+    cls = element_factory.create(cls_type)
     attr = element_factory.create(UML.Property)
     parse(attr, "- attr: str")
     cls.ownedAttribute = attr
 
-    cls_item = diagram.create(ClassItem, subject=cls)
+    cls_item = diagram.create(item, subject=cls)
 
     new_items = copy_clear_and_paste({cls_item}, diagram, element_factory)
     new_cls_item = new_items.pop()
 
-    assert isinstance(new_cls_item, ClassItem)
+    assert isinstance(new_cls_item, item)
     assert format(new_cls_item.subject.ownedAttribute[0]) == "- attr: str"
 
 
-def test_class_with_operation(diagram, element_factory):
-    cls = element_factory.create(UML.Class)
+@pytest.mark.parametrize(
+    "cls_type,item",
+    [
+        (UML.Class, ClassItem),
+        (UML.DataType, DataTypeItem),
+        (UML.Enumeration, EnumerationItem),
+    ],
+)
+def test_class_with_operation(diagram, element_factory, cls_type, item):
+    cls = element_factory.create(cls_type)
     oper = element_factory.create(UML.Operation)
     parse(oper, "- oper(inout param: str): str")
     cls.ownedOperation = oper
 
-    cls_item = diagram.create(ClassItem, subject=cls)
+    cls_item = diagram.create(item, subject=cls)
 
     new_items = copy_clear_and_paste({cls_item}, diagram, element_factory)
     new_cls_item = new_items.pop()
 
-    assert isinstance(new_cls_item, ClassItem)
+    assert isinstance(new_cls_item, item)
     assert (
         format(new_cls_item.subject.ownedOperation[0])
         == "- oper(inout param: str): str"
