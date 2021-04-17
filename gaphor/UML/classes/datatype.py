@@ -2,14 +2,15 @@ import logging
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontStyle, FontWeight, TextAlign, VerticalAlign
+from gaphor.core.styling import FontStyle, FontWeight, VerticalAlign
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
 )
-from gaphor.diagram.shapes import Box, Text, draw_border, draw_top_separator
+from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
+from gaphor.SysML import sysml
 from gaphor.UML.classes.klass import (
     attribute_watches,
     attributes_compartment,
@@ -22,14 +23,15 @@ from gaphor.UML.classes.klass import (
 log = logging.getLogger(__name__)
 
 
-@represents(UML.Enumeration)
-class EnumerationItem(ElementPresentation[UML.Enumeration], Classified):
-    """This item visualizes a Enumeration instance.
+@represents(UML.DataType)
+@represents(UML.PrimitiveType)
+@represents(sysml.ValueType)
+class DataTypeItem(ElementPresentation[UML.DataType], Classified):
+    """This item visualizes a Data Type instance.
 
-    An EnumerationItem contains three compartments:
-    1. Enumeration Literals
-    2. Attributes
-    3. Operations
+    A DataTypeItem contains two compartments:
+    1. Attributes
+    2. Operations
     """
 
     def __init__(self, diagram, id=None):
@@ -37,17 +39,11 @@ class EnumerationItem(ElementPresentation[UML.Enumeration], Classified):
 
         self.watch("show_attributes", self.update_shapes).watch(
             "show_operations", self.update_shapes
-        ).watch("show_enumerations", self.update_shapes).watch(
-            "subject[NamedElement].name"
-        ).watch(
+        ).watch("subject[NamedElement].name").watch(
             "subject[NamedElement].namespace.name"
-        ).watch(
-            "subject[Enumeration].ownedLiteral", self.update_shapes
-        ).watch(
-            "subject[Enumeration].ownedLiteral.name", self.update_shapes
         )
-        attribute_watches(self, "Enumeration")
-        operation_watches(self, "Enumeration")
+        attribute_watches(self, "DataType")
+        operation_watches(self, "DataType")
         stereotype_watches(self)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
@@ -56,16 +52,22 @@ class EnumerationItem(ElementPresentation[UML.Enumeration], Classified):
 
     show_operations: attribute[int] = attribute("show_operations", int, default=True)
 
-    show_enumerations: attribute[int] = attribute(
-        "show_enumerations", int, default=True
-    )
+    def additional_stereotypes(self):
+        if isinstance(self.subject, UML.PrimitiveType):
+            return ["primitive"]
+        elif isinstance(self.subject, sysml.ValueType):
+            return ["valueType"]
+        elif isinstance(self.subject, UML.DataType):
+            return ["dataType"]
+        else:
+            return ()
 
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
                 Text(
                     text=lambda: UML.model.stereotypes_str(
-                        self.subject, ["enumeration"]
+                        self.subject, self.additional_stereotypes()
                     ),
                 ),
                 Text(
@@ -82,12 +84,6 @@ class EnumerationItem(ElementPresentation[UML.Enumeration], Classified):
                     style={"font-size": "x-small"},
                 ),
                 style={"padding": (12, 4, 12, 4)},
-            ),
-            *(
-                self.show_enumerations
-                and self.subject
-                and [enumerations_compartment(self.subject)]
-                or []
             ),
             *(
                 self.show_attributes
@@ -107,22 +103,3 @@ class EnumerationItem(ElementPresentation[UML.Enumeration], Classified):
             },
             draw=draw_border,
         )
-
-
-def enumerations_compartment(subject):
-    def lazy_format(literal):
-        return lambda: format(literal)
-
-    return Box(
-        *(
-            Text(
-                text=lazy_format(literal.name),
-                style={
-                    "text-align": TextAlign.LEFT,
-                },
-            )
-            for literal in subject.ownedLiteral
-        ),
-        style={"padding": (4, 4, 4, 4)},
-        draw=draw_top_separator,
-    )

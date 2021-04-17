@@ -81,7 +81,7 @@ blocks = ToolSection(
             "gaphor-value-type-symbolic",
             "<Shift>L",
             new_item_factory(
-                uml_items.ClassItem,
+                uml_items.DataTypeItem,
                 sysml.ValueType,
                 config_func=namespace_config,
             ),
@@ -104,7 +104,7 @@ blocks = ToolSection(
             "gaphor-primitive-symbolic",
             "<Shift>H",
             new_item_factory(
-                uml_items.ClassItem,
+                uml_items.DataTypeItem,
                 UML.PrimitiveType,
                 config_func=namespace_config,
             ),

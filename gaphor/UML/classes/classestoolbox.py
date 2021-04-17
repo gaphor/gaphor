@@ -138,10 +138,11 @@ classes = ToolSection(
             "gaphor-data-type-symbolic",
             "<Shift>L",
             new_item_factory(
-                diagramitems.ClassItem,
+                diagramitems.DataTypeItem,
                 UML.DataType,
                 config_func=namespace_config,
             ),
+            handle_index=SE,
         ),
         ToolDef(
             "toolbox-enumeration",
@@ -161,7 +162,7 @@ classes = ToolSection(
             "gaphor-primitive-symbolic",
             "<Shift>H",
             new_item_factory(
-                diagramitems.ClassItem,
+                diagramitems.DataTypeItem,
                 UML.PrimitiveType,
                 config_func=namespace_config,
             ),

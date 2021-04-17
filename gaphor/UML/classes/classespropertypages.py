@@ -17,6 +17,7 @@ from gaphor.diagram.propertypages import (
     on_text_cell_edited,
 )
 from gaphor.UML.classes.association import AssociationItem
+from gaphor.UML.classes.datatype import DataTypeItem
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.enumeration import EnumerationItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
@@ -236,6 +237,7 @@ class InterfacePropertyPage(PropertyPageBase):
         item.folded = Folded.PROVIDED if fold else Folded.NONE
 
 
+@PropertyPages.register(DataTypeItem)
 @PropertyPages.register(ClassItem)
 @PropertyPages.register(InterfaceItem)
 class AttributesPage(PropertyPageBase):
@@ -300,6 +302,7 @@ class AttributesPage(PropertyPageBase):
         self.item.request_update()
 
 
+@PropertyPages.register(DataTypeItem)
 @PropertyPages.register(ClassItem)
 @PropertyPages.register(InterfaceItem)
 class OperationsPage(PropertyPageBase):

@@ -17,7 +17,6 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import Box, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
-from gaphor.SysML import sysml
 from gaphor.UML.classes.stereotype import stereotype_compartments
 
 log = logging.getLogger(__name__)
@@ -25,9 +24,6 @@ log = logging.getLogger(__name__)
 
 @represents(UML.Class)
 @represents(UML.Stereotype)
-@represents(UML.DataType)
-@represents(UML.PrimitiveType)
-@represents(sysml.ValueType)
 class ClassItem(ElementPresentation[UML.Class], Classified):
     """This item visualizes a Class instance.
 
@@ -60,12 +56,6 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
     def additional_stereotypes(self):
         if isinstance(self.subject, UML.Stereotype):
             return ["stereotype"]
-        elif isinstance(self.subject, UML.PrimitiveType):
-            return ["primitive"]
-        elif isinstance(self.subject, sysml.ValueType):
-            return ["valueType"]
-        elif isinstance(self.subject, UML.DataType):
-            return ["dataType"]
         elif UML.model.is_metaclass(self.subject):
             return ["metaclass"]
         else:
