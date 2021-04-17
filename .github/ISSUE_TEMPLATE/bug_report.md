@@ -25,7 +25,7 @@ If applicable, add screenshots to help explain your problem.
 
 **OS**
 - [ ] Linux (Please put in notes the specific distro)
-- [ ] MacOS
+- [ ] macOS
 - [ ] Windows
 
 NOTES:
