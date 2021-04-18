@@ -14,12 +14,6 @@ from typing import Dict, List
 
 from gi.repository import Gdk, Gtk, Pango
 
-if __name__ == "__main__":
-    import gi
-
-    gi.require_version("Gtk", "3.0")
-
-
 banner = f"""\
 Gaphor Interactive Python Console
 {sys.version}
@@ -113,7 +107,6 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.text = Gtk.TextView()
         self.text.set_wrap_mode(True)
         self.text.set_monospace(True)
-        # self.text.set_border_width(4)
 
         self.interpreter = code.InteractiveInterpreter(locals)
 
@@ -124,8 +117,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.ps1 = ">>> "
         self.ps2 = "... "
 
-        self.text.add_events(Gdk.EventMask.KEY_PRESS_MASK)
-        self.text.connect("key_press_event", self.key_pressed)
+        self.text_controller = Gtk.EventControllerKey.new(self.text)
+        self.text_controller.connect("key-pressed", self.key_pressed)
 
         self.current_history = -1
 
@@ -209,33 +202,31 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         return more
 
-    def key_pressed(self, widget, event):
-        if event.keyval == Gdk.keyval_from_name("Return"):
+    def key_pressed(self, widget, keyval, keycode, state):
+        if keyval == Gdk.keyval_from_name("Return"):
             return self.execute_line()
-        if event.keyval == Gdk.keyval_from_name("Tab"):
+        if keyval == Gdk.keyval_from_name("Tab"):
             return self.complete_line()
 
-        if event.keyval == Gdk.keyval_from_name("Up"):
+        if keyval == Gdk.keyval_from_name("Up"):
             self.current_history = self.current_history - 1
             if self.current_history < -len(self.history):
                 self.current_history = -len(self.history)
             return self.show_history()
-        if event.keyval == Gdk.keyval_from_name("Down"):
+        if keyval == Gdk.keyval_from_name("Down"):
             self.current_history = self.current_history + 1
             if self.current_history > 0:
                 self.current_history = 0
             return self.show_history()
 
-        ctrl = event.state & Gdk.ModifierType.CONTROL_MASK
-        if (event.keyval == Gdk.keyval_from_name("Home")) or (
-            ctrl and event.keyval == Gdk.KEY_a
-        ):
+        ctrl = state & Gdk.ModifierType.CONTROL_MASK
+        if (keyval == Gdk.keyval_from_name("Home")) or (ctrl and keyval == Gdk.KEY_a):
             line_count = self.text.get_buffer().get_line_count() - 1
             start = self.text.get_buffer().get_iter_at_line_offset(line_count, 4)
             self.text.get_buffer().place_cursor(start)
             return True
 
-        if ctrl and event.keyval == Gdk.KEY_e:
+        if ctrl and keyval == Gdk.KEY_e:
             end = self.text.get_buffer().get_end_iter()
             self.text.get_buffer().place_cursor(end)
             return True
@@ -327,18 +318,14 @@ def main(main_loop=True):
     def destroy(arg=None):
         Gtk.main_quit()
 
-    def key_event(widget, event):
-        if (
-            event.keyval == Gdk.KEY_d
-            and event.get_state() & Gdk.ModifierType.CONTROL_MASK
-        ):
+    def key_event(widget, keyval, keycode, state):
+        if keyval == Gdk.KEY_d and state & Gdk.ModifierType.CONTROL_MASK:
             destroy()
         return False
 
     w.connect("destroy", destroy)
 
-    w.add_events(Gdk.EventMask.KEY_PRESS_MASK)
-    w.connect("key_press_event", key_event)
+    console.text_controller.connect("key-pressed", key_event)
     w.show_all()
 
     if main_loop:

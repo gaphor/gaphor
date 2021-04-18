@@ -46,7 +46,7 @@ def test_history():
     console = GTKInterpreterConsole(locals={})
     console.history.append("my_history()")
 
-    console.key_pressed(console, KeyEvent(Gdk.keyval_from_name("Up")))
+    console.key_pressed(console, Gdk.keyval_from_name("Up"), -1, 0)
     text = console_text(console)
 
     assert ">>> my_history()" in text
@@ -58,10 +58,10 @@ def test_deep_history():
     console.history.append("deeper()")
     console.history.append("deep()")
 
-    console.key_pressed(console, KeyEvent(Gdk.keyval_from_name("Up")))
-    console.key_pressed(console, KeyEvent(Gdk.keyval_from_name("Up")))
-    console.key_pressed(console, KeyEvent(Gdk.keyval_from_name("Up")))
-    console.key_pressed(console, KeyEvent(Gdk.keyval_from_name("Down")))
+    console.key_pressed(console, Gdk.keyval_from_name("Up"), -1, 0)
+    console.key_pressed(console, Gdk.keyval_from_name("Up"), -1, 0)
+    console.key_pressed(console, Gdk.keyval_from_name("Up"), -1, 0)
+    console.key_pressed(console, Gdk.keyval_from_name("Down"), -1, 0)
     text = console_text(console)
 
     assert ">>> deeper()" in text
@@ -71,7 +71,7 @@ def test_run_line():
     console = GTKInterpreterConsole(locals={})
 
     console.buffer.append("help")
-    console.key_pressed(console, KeyEvent(Gdk.keyval_from_name("Return")))
+    console.key_pressed(console, Gdk.keyval_from_name("Return"), -1, 0)
 
     text = console_text(console)
 
