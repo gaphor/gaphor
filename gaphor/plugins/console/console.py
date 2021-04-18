@@ -117,7 +117,12 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.ps1 = ">>> "
         self.ps2 = "... "
 
-        self.text_controller = Gtk.EventControllerKey.new(self.text)
+        if Gtk.get_major_version() == 3:
+            self.text_controller = Gtk.EventControllerKey.new(self.text)
+        else:
+            self.text_controller = Gtk.EventControllerKey.new()
+            self.text.add_controller(self.text_controller)
+
         self.text_controller.connect("key-pressed", self.key_pressed)
 
         self.current_history = -1
@@ -158,7 +163,10 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.current_prompt = lambda: ""
         locals["help"] = Help(self.stdout, locals)
 
-        self.add(self.text)
+        if Gtk.get_major_version() == 3:
+            self.add(self.text)
+        else:
+            self.set_child(self.text)
         self.text.show()
 
         self.write_line(self.banner, self.style_banner)
@@ -247,7 +255,10 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         txt_buffer = self.text.get_buffer()
         line_count = txt_buffer.get_line_count() - 1
 
-        start = txt_buffer.get_iter_at_line(line_count)
+        if Gtk.get_major_version() == 3:
+            start = txt_buffer.get_iter_at_line(line_count)
+        else:
+            _, start = txt_buffer.get_iter_at_line(line_count)
         if start.get_chars_in_line() >= 4:
             start.forward_chars(4)
         end = txt_buffer.get_end_iter()
@@ -311,9 +322,12 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
 
 def main(main_loop=True):
-    w = Gtk.Window()
+    w = Gtk.ApplicationWindow()
     console = GTKInterpreterConsole(locals())
-    w.add(console)
+    if Gtk.get_major_version() == 3:
+        w.add(console)
+    else:
+        w.set_child(console)
 
     def destroy(arg=None):
         Gtk.main_quit()
@@ -326,10 +340,19 @@ def main(main_loop=True):
     w.connect("destroy", destroy)
 
     console.text_controller.connect("key-pressed", key_event)
-    w.show_all()
+    if Gtk.get_major_version() == 3:
+        w.show_all()
+    else:
+        w.show()
 
     if main_loop:
-        Gtk.main()
+
+        def on_startup(app):
+            app.add_window(w)
+
+        app = Gtk.Application.new("org.gaphor.Console", 0)
+        app.connect("startup", on_startup)
+        app.run()
 
 
 if __name__ == "__main__":
