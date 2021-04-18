@@ -1,8 +1,20 @@
+import importlib
+
 from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
+
+
+def new_builder(*object_ids):
+    builder = Gtk.Builder()
+    builder.set_translation_domain("gaphor")
+    with importlib.resources.path(
+        "gaphor.UML.profiles", "propertypages.glade"
+    ) as glade_file:
+        builder.add_objects_from_file(str(glade_file), object_ids)
+    return builder
 
 
 def _issubclass(c, b):

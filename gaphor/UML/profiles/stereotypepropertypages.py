@@ -1,10 +1,10 @@
 """Stereotype property page."""
-
 from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
+from gaphor.UML.profiles.metaclasspropertypage import new_builder
 
 
 @PropertyPages.register(UML.Element)
