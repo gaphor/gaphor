@@ -106,8 +106,9 @@ class MainWindow(Service, ActionProvider):
         self.export_menu = export_menu
         self.tools_menu = tools_menu
 
-        self.title = "Gaphor"
         self.window: Gtk.Window = None
+        self.title: Gtk.Label = None
+        self.subtitle: Gtk.Label = None
         self.filename = None
         self.model_changed = False
         self.layout = None
@@ -167,6 +168,8 @@ class MainWindow(Service, ActionProvider):
         recent_files = builder.get_object("recent-files")
         recent_files.bind_model(create_recent_files_model(), None)
 
+        self.title = builder.get_object("title")
+        self.subtitle = builder.get_object("subtitle")
         self.set_title()
 
         self.window.set_default_size(*self.size)
@@ -224,12 +227,12 @@ class MainWindow(Service, ActionProvider):
             title = p.name
             subtitle = str(p.parent).replace(HOME, "~")
         else:
-            title = self.title
-            subtitle = ""
+            title = "Gaphor"
+            subtitle = gettext("New model")
         if self.model_changed:
             title += " [" + gettext("edited") + "]"
-        self.window.set_title(title)
-        self.window.get_titlebar().set_subtitle(subtitle)
+        self.title.set_text(title)
+        self.subtitle.set_text(subtitle)
 
     # Signal callbacks:
 
@@ -289,6 +292,3 @@ class MainWindow(Service, ActionProvider):
         if not is_maximized(window):
             width, height = window.get_size()
             self.properties.set("ui.window-size", (width, height))
-
-
-# Gtk.AccelMap.add_filter("gaphor")

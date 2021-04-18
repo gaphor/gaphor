@@ -15,6 +15,31 @@
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header">
         <property name="can_focus">0</property>
+        <child type="title">
+          <object class="GtkBox">
+            <property name="can-focus">0</property>
+            <property name="orientation">vertical</property>
+            <property name="valign">center</property>
+            <child>
+              <object class="GtkLabel" id="title">
+                <property name="can-focus">0</property>
+                <property name="label">Gaphor</property>
+                <style>
+                  <class name="title"/>
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="subtitle">
+                <property name="can-focus">0</property>
+                <property name="label" translatable="yes">New model</property>
+                <style>
+                  <class name="subtitle"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
         <child>
           <object class="GtkBox">
             <property name="can_focus">0</property>
