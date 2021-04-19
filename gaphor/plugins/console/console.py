@@ -218,13 +218,11 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         if keyval == Gdk.keyval_from_name("Up"):
             self.current_history = self.current_history - 1
-            if self.current_history < -len(self.history):
-                self.current_history = -len(self.history)
+            self.current_history = max(self.current_history, -len(self.history))
             return self.show_history()
         if keyval == Gdk.keyval_from_name("Down"):
             self.current_history = self.current_history + 1
-            if self.current_history > 0:
-                self.current_history = 0
+            self.current_history = min(self.current_history, 0)
             return self.show_history()
 
         ctrl = state & Gdk.ModifierType.CONTROL_MASK
