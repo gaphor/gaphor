@@ -274,7 +274,6 @@ renderers and such.</property>
               <object class="GtkComboBoxText" id="tail-aggregation">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="tearoff-title" translatable="yes">title</property>
                 <items>
                   <item id="0" translatable="yes">No aggregation</item>
                   <item id="1" translatable="yes">Shared</item>
