@@ -117,12 +117,10 @@ class Toolbox(UIComponent, ActionProvider):
                     action_name, icon_name, label, shortcut
                 )
                 flowbox.insert(button, -1)
-                button.show_all()
 
             toolbox.add(expander)
-            expander.show()
 
-        toolbox.show()
+        toolbox.show_all()
         return toolbox
 
     def create_toolbox_container(self, toolbox: Gtk.Widget) -> Gtk.ScrolledWindow:
