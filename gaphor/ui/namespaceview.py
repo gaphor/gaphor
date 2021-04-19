@@ -67,6 +67,8 @@ class NamespaceView(Gtk.TreeView):
         self.connect("drag-motion", NamespaceView.on_drag_motion)
         self.connect("drag-data-received", NamespaceView.on_drag_data_received)
 
+        self._controller = tree_view_expand_collapse(self)
+
     def get_selected_element(self) -> Optional[Element]:
         selection = self.get_selection()
         model, iter = selection.get_selected()
@@ -218,3 +220,19 @@ class NamespaceView(Gtk.TreeView):
                 context.finish(False, False, time)
             else:
                 context.finish(True, True, time)
+
+
+def tree_view_expand_collapse(view):
+    def on_key_pressed(controller, keyval, keycode, state):
+        if keyval == Gdk.KEY_Right:
+            path, _column = view.get_cursor()
+            view.expand_row(path, state & Gdk.ModifierType.SHIFT_MASK)
+            return True
+        elif keyval == Gdk.KEY_Left:
+            path, _column = view.get_cursor()
+            view.collapse_row(path)
+            return True
+
+    controller = Gtk.EventControllerKey.new(view)
+    controller.connect("key-pressed", on_key_pressed)
+    return controller

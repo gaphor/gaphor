@@ -22,12 +22,3 @@
 diagramview {
   background: white;
 }
-
-@binding-set expand-collapse-row {
-  bind "Left" { "expand-collapse-cursor-row" (1, 0, 0) };
-  bind "Right" { "expand-collapse-cursor-row" (1, 1, 0) };
-}
-
-treeview {
-  -gtk-key-bindings: expand-collapse-row;
-}
