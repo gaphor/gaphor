@@ -57,7 +57,6 @@ renderers and such.</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
             <property name="tooltip-text" translatable="yes">Invert direction</property>
-            <property name="relief">none</property>
             <signal name="clicked" handler="invert-direction-changed" swapped="no"/>
             <child>
               <object class="GtkImage">
@@ -66,6 +65,9 @@ renderers and such.</property>
                 <property name="icon-name">object-flip-horizontal-symbolic</property>
               </object>
             </child>
+            <style>
+              <class name="flat"/>
+            </style>
           </object>
           <packing>
             <property name="expand">False</property>

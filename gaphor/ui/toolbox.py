@@ -72,7 +72,7 @@ class Toolbox(UIComponent, ActionProvider):
         button.add(icon)
         button.set_action_name("diagram.select-tool")
         button.set_action_target_value(GLib.Variant.new_string(action_name))
-        button.set_relief(Gtk.ReliefStyle.NONE)
+        button.get_style_context().add_class("flat")
         if label:
             if shortcut:
                 a, m = Gtk.accelerator_parse(shortcut)

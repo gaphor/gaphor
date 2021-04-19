@@ -117,7 +117,7 @@ class Diagrams(UIComponent, ActionProvider):
             icon_name="window-close", size=Gtk.IconSize.BUTTON
         )
         button = Gtk.Button()
-        button.set_relief(Gtk.ReliefStyle.NONE)
+        button.get_style_context().add_class("flat")
 
         # TODO: Call button.set_focus_on_click directly once PyGObject issue
         #  #371 is fixed

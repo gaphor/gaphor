@@ -79,7 +79,6 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <property name="relief">none</property>
                     <signal name="clicked" handler="close-notification" object="notification-revealer" swapped="no"/>
                     <child>
                       <object class="GtkImage">
@@ -88,6 +87,9 @@
                         <property name="icon-name">window-close-symbolic</property>
                       </object>
                     </child>
+                    <style>
+                      <class name="flat"/>
+                    </style>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -253,7 +255,6 @@
             <property name="can-focus">True</property>
             <property name="focus-on-click">False</property>
             <property name="receives-default">True</property>
-            <property name="relief">none</property>
             <property name="popover">select-modeling-language</property>
             <child>
               <object class="GtkBox">
@@ -287,6 +288,9 @@
                 </child>
               </object>
             </child>
+            <style>
+              <class name="flat"/>
+            </style>
           </object>
           <packing>
             <property name="position">4</property>
