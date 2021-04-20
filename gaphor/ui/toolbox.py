@@ -20,15 +20,16 @@ log = logging.getLogger(__name__)
 
 class Toolbox(UIComponent, ActionProvider):
 
-    TARGET_STRING = 0
-    TARGET_TOOLBOX_ACTION = 1
-    DND_TARGETS = [
-        Gtk.TargetEntry.new("STRING", Gtk.TargetFlags.SAME_APP, TARGET_STRING),
-        Gtk.TargetEntry.new("text/plain", Gtk.TargetFlags.SAME_APP, TARGET_STRING),
-        Gtk.TargetEntry.new(
-            "gaphor/toolbox-action", Gtk.TargetFlags.SAME_APP, TARGET_TOOLBOX_ACTION
-        ),
-    ]
+    if Gtk.get_major_version() == 3:
+        TARGET_STRING = 0
+        TARGET_TOOLBOX_ACTION = 1
+        DND_TARGETS = [
+            Gtk.TargetEntry.new("STRING", Gtk.TargetFlags.SAME_APP, TARGET_STRING),
+            Gtk.TargetEntry.new("text/plain", Gtk.TargetFlags.SAME_APP, TARGET_STRING),
+            Gtk.TargetEntry.new(
+                "gaphor/toolbox-action", Gtk.TargetFlags.SAME_APP, TARGET_TOOLBOX_ACTION
+            ),
+        ]
 
     title = gettext("Toolbox")
 
@@ -82,14 +83,17 @@ class Toolbox(UIComponent, ActionProvider):
 
         # Enable Drag and Drop
         if action_name != "toolbox-pointer":
-            button.drag_source_set(
-                Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
-                self.DND_TARGETS,
-                Gdk.DragAction.COPY | Gdk.DragAction.LINK,
-            )
-            button.drag_source_set_icon_name(icon_name)
-            button.connect("drag-data-get", self._button_drag_data_get, action_name)
-
+            if Gtk.get_major_version() == 3:
+                button.drag_source_set(
+                    Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
+                    self.DND_TARGETS,
+                    Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+                )
+                button.drag_source_set_icon_name(icon_name)
+                button.connect("drag-data-get", _button_drag_data_get, action_name)
+            else:
+                # TODO: Gtk4 - use controllers DragSource and DropTarget
+                pass
         return button
 
     def create_toolbox(
@@ -147,6 +151,9 @@ class Toolbox(UIComponent, ActionProvider):
 
     def _on_toolbox_destroyed(self, widget):
         self._toolbox = None
+
+
+if Gtk.get_major_version() == 3:
 
     def _button_drag_data_get(self, button, context, data, info, time, action_name):
         """The drag-data-get event signal handler.

@@ -20,7 +20,11 @@ from gaphor.diagram.presentation import (
 def drop_zone_tool(
     view: GtkView, item_class: Type[Presentation]
 ) -> Gtk.EventController:
-    ctrl = Gtk.EventControllerMotion.new(view)
+    ctrl = (
+        Gtk.EventControllerMotion.new(view)
+        if Gtk.get_major_version() == 3
+        else Gtk.EventControllerMotion.new()
+    )
     ctrl.connect("motion", on_motion, item_class)
     return ctrl
 

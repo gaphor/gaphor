@@ -123,11 +123,18 @@ class MainWindow(Service, ActionProvider):
         with importlib.resources.path("gaphor.ui", "layout.css") as css_file:
             style_provider = Gtk.CssProvider()
             style_provider.load_from_path(str(css_file))
-            Gtk.StyleContext.add_provider_for_screen(
-                Gdk.Screen.get_default(),
-                style_provider,
-                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-            )
+            if Gtk.get_major_version() == 3:
+                Gtk.StyleContext.add_provider_for_screen(
+                    Gdk.Screen.get_default(),
+                    style_provider,
+                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+                )
+            else:
+                Gtk.StyleContext.add_provider_for_display(
+                    Gdk.Display.get_default(),
+                    style_provider,
+                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
+                )
 
     def shutdown(self):
         if self.window:
