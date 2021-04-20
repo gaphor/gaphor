@@ -56,7 +56,11 @@ class ConsoleWindow(UIComponent, ActionProvider):
             self.window = None
 
     def construct(self):
-        window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+        window = (
+            Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+            if Gtk.get_major_version() == 3
+            else Gtk.Window.new()
+        )
         window.set_transient_for(self.main_window.window)
         window.set_title(self.title)
 
@@ -67,21 +71,21 @@ class ConsoleWindow(UIComponent, ActionProvider):
                 "select": element_factory.lselect,
             }
         )
-        console.show()
-        window.add(console)
+        if Gtk.get_major_version() == 3:
+            console.show()
+            window.add(console)
+        else:
+            window.set_child(console)
         window.show()
 
         self.window = window
 
-        def key_event(widget, event):
-            if (
-                event.keyval == Gdk.KEY_d
-                and event.get_state() & Gdk.ModifierType.CONTROL_MASK
-            ):
+        def key_event(widget, keyval, keycode, state):
+            if keyval == Gdk.KEY_d and state & Gdk.ModifierType.CONTROL_MASK:
                 window.destroy()
             return False
 
-        window.connect("key_press_event", key_event)
+        console.text_controller.connect("key-pressed", key_event)
 
         window.connect("destroy", self.close)
 
