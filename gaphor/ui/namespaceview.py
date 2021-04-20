@@ -19,13 +19,14 @@ if TYPE_CHECKING:
 
 
 class NamespaceView(Gtk.TreeView):
-    TARGET_STRING = 0
-    TARGET_ELEMENT_ID = 1
-    DND_TARGETS = [
-        Gtk.TargetEntry.new("STRING", 0, TARGET_STRING),
-        Gtk.TargetEntry.new("text/plain", 0, TARGET_STRING),
-        Gtk.TargetEntry.new("gaphor/element-id", 0, TARGET_ELEMENT_ID),
-    ]
+    if Gtk.get_major_version() == 3:
+        TARGET_STRING = 0
+        TARGET_ELEMENT_ID = 1
+        DND_TARGETS = [
+            Gtk.TargetEntry.new("STRING", 0, TARGET_STRING),
+            Gtk.TargetEntry.new("text/plain", 0, TARGET_STRING),
+            Gtk.TargetEntry.new("gaphor/element-id", 0, TARGET_ELEMENT_ID),
+        ]
 
     def __init__(self, model: Gtk.TreeModel, element_factory: ElementFactory):
         Gtk.TreeView.__init__(self)
@@ -51,22 +52,27 @@ class NamespaceView(Gtk.TreeView):
 
         self.append_column(column)
 
-        # drag
-        self.drag_source_set(
-            Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
-            NamespaceView.DND_TARGETS,
-            Gdk.DragAction.COPY | Gdk.DragAction.MOVE,
-        )
-        self.connect("drag-data-get", NamespaceView.on_drag_data_get)
-        self.connect("drag-data-delete", NamespaceView.on_drag_data_delete)
+        if Gtk.get_major_version() == 3:
+            # drag
+            self.drag_source_set(
+                Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
+                NamespaceView.DND_TARGETS,
+                Gdk.DragAction.COPY | Gdk.DragAction.MOVE,
+            )
+            self.connect("drag-data-get", NamespaceView.on_drag_data_get)
+            self.connect("drag-data-delete", NamespaceView.on_drag_data_delete)
 
-        # drop
-        self.drag_dest_set(
-            Gtk.DestDefaults.ALL, [NamespaceView.DND_TARGETS[-1]], Gdk.DragAction.MOVE
-        )
-        self.connect("drag-motion", NamespaceView.on_drag_motion)
-        self.connect("drag-data-received", NamespaceView.on_drag_data_received)
-
+            # drop
+            self.drag_dest_set(
+                Gtk.DestDefaults.ALL,
+                [NamespaceView.DND_TARGETS[-1]],
+                Gdk.DragAction.MOVE,
+            )
+            self.connect("drag-motion", NamespaceView.on_drag_motion)
+            self.connect("drag-data-received", NamespaceView.on_drag_data_received)
+        else:
+            # TODO: Gtk4 - use controllers DragSource and DropTarget
+            pass
         self._controller = tree_view_expand_collapse(self)
 
     def get_selected_element(self) -> Optional[Element]:

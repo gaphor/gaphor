@@ -7,7 +7,7 @@ from gaphor.abc import ActionProvider
 
 class ActionGroup(NamedTuple):
     actions: Gio.SimpleActionGroup
-    shortcuts: Gtk.AccelGroup
+    shortcuts: object  # Gtk.AccelGroup
 
 
 def apply_application_actions(component_registry, gtk_app):

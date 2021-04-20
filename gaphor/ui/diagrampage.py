@@ -61,13 +61,14 @@ def get_placement_cursor(display, icon_name):
 
 class DiagramPage:
 
-    VIEW_TARGET_STRING = 0
-    VIEW_TARGET_ELEMENT_ID = 1
-    VIEW_TARGET_TOOLBOX_ACTION = 2
-    VIEW_DND_TARGETS = [
-        Gtk.TargetEntry.new("gaphor/element-id", 0, VIEW_TARGET_ELEMENT_ID),
-        Gtk.TargetEntry.new("gaphor/toolbox-action", 0, VIEW_TARGET_TOOLBOX_ACTION),
-    ]
+    if Gtk.get_major_version() == 3:
+        VIEW_TARGET_STRING = 0
+        VIEW_TARGET_ELEMENT_ID = 1
+        VIEW_TARGET_TOOLBOX_ACTION = 2
+        VIEW_DND_TARGETS = [
+            Gtk.TargetEntry.new("gaphor/element-id", 0, VIEW_TARGET_ELEMENT_ID),
+            Gtk.TargetEntry.new("gaphor/toolbox-action", 0, VIEW_TARGET_TOOLBOX_ACTION),
+        ]
 
     def __init__(
         self, diagram, event_manager, element_factory, properties, modeling_language
@@ -104,11 +105,16 @@ class DiagramPage:
         assert self.diagram
 
         view = GtkView(selection=Selection())
-        view.drag_dest_set(
-            Gtk.DestDefaults.ALL,
-            DiagramPage.VIEW_DND_TARGETS,
-            Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
-        )
+        if Gtk.get_major_version() == 3:
+            view.drag_dest_set(
+                Gtk.DestDefaults.ALL,
+                DiagramPage.VIEW_DND_TARGETS,
+                Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+            )
+        else:
+            # TODO: Gtk4 - use controllers DragSource and DropTarget
+            pass
+
         self.diagram_css = Gtk.CssProvider.new()
         view.get_style_context().add_provider(
             self.diagram_css, Gtk.STYLE_PROVIDER_PRIORITY_USER
