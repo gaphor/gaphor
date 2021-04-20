@@ -1,4 +1,4 @@
-from gi.repository import Gdk, Gtk
+from gi.repository import Gdk, GLib
 
 from gaphor.plugins.console.console import GTKInterpreterConsole, Help, main
 
@@ -23,9 +23,15 @@ class DummyWriter:
         pass
 
 
+def iteration():
+    ctx = GLib.main_context_default()
+    while ctx.pending():
+        ctx.iteration(False)
+
+
 def test_console_opening():
     main(main_loop=False)
-    Gtk.main_iteration()
+    iteration()
 
 
 def test_help():
