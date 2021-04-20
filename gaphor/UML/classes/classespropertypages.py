@@ -17,7 +17,9 @@ from gaphor.diagram.propertypages import (
     on_text_cell_edited,
 )
 from gaphor.UML.classes.association import AssociationItem
+from gaphor.UML.classes.datatype import DataTypeItem
 from gaphor.UML.classes.dependency import DependencyItem
+from gaphor.UML.classes.enumeration import EnumerationItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.components.connector import ConnectorItem
@@ -93,6 +95,33 @@ class ClassOperations(EditableTreeModel):
 
     def _swap_objects(self, o1, o2):
         return self._item.subject.ownedOperation.swap(o1, o2)
+
+
+class ClassEnumerationLiterals(EditableTreeModel):
+    """GTK tree model to edit enumeration literals."""
+
+    def _get_rows(self):
+        for literal in self._item.subject.ownedLiteral:
+            yield [format(literal), literal]
+
+    def _create_object(self):
+        literal = self._item.model.create(UML.EnumerationLiteral)
+        self._item.subject.ownedLiteral = literal
+        literal.enumeration = self._item.subject
+        return literal
+
+    @transactional
+    def _set_object_value(self, row, col, value):
+        literal = row[-1]
+        if col == 0:
+            parse(literal, value)
+            row[0] = format(literal)
+        elif col == 1:
+            # Value in attribute object changed:
+            row[0] = format(literal)
+
+    def _swap_objects(self, o1, o2):
+        return self._item.subject.ownedLiteral.swap(o1, o2)
 
 
 @PropertyPages.register(NamedElement)
@@ -208,6 +237,7 @@ class InterfacePropertyPage(PropertyPageBase):
         item.folded = Folded.PROVIDED if fold else Folded.NONE
 
 
+@PropertyPages.register(DataTypeItem)
 @PropertyPages.register(ClassItem)
 @PropertyPages.register(InterfaceItem)
 class AttributesPage(PropertyPageBase):
@@ -272,6 +302,7 @@ class AttributesPage(PropertyPageBase):
         self.item.request_update()
 
 
+@PropertyPages.register(DataTypeItem)
 @PropertyPages.register(ClassItem)
 @PropertyPages.register(InterfaceItem)
 class OperationsPage(PropertyPageBase):
@@ -338,6 +369,60 @@ class OperationsPage(PropertyPageBase):
     def _on_show_operations_change(self, button, gparam):
         self.item.show_operations = button.get_active()
         self.item.request_update()
+
+
+@PropertyPages.register(EnumerationItem)
+class EnumerationPage(PropertyPageBase):
+    """An editor for enumeration literals for an enumeration."""
+
+    order = 20
+
+    def __init__(self, item):
+        super().__init__()
+        self.item = item
+        self.watcher = item.subject and item.subject.watcher()
+
+    def construct(self):
+        if not isinstance(self.item.subject, UML.Enumeration):
+            return
+
+        builder = new_builder("enumerations-editor")
+        page = builder.get_object("enumerations-editor")
+
+        show_enumerations = builder.get_object("show-enumerations")
+        show_enumerations.set_active(self.item.show_enumerations)
+
+        self.model = ClassEnumerationLiterals(self.item, (str, object))
+
+        tree_view: Gtk.TreeView = builder.get_object("enumerations-list")
+        tree_view.set_model(self.model)
+
+        def handler(event):
+            enumeration = event.element
+            for row in self.model:
+                if row[-1] is enumeration:
+                    row[:] = [format(enumeration), enumeration]
+
+        self.watcher.watch("ownedLiteral.name", handler)
+
+        builder.connect_signals(
+            {
+                "show-enumerations-changed": (self._on_show_enumerations_change,),
+                "enumerations-name-edited": (on_text_cell_edited, self.model, 0),
+                "tree-view-destroy": (self.watcher.unsubscribe_all,),
+                "enumerations-keypress": (on_keypress_event,),
+            }
+        )
+        return page
+
+    @transactional
+    def _on_show_enumerations_change(self, button, gparam):
+        self.item.show_attributes = button.get_active()
+        self.item.request_update()
+
+
+PropertyPages.register(EnumerationItem)(AttributesPage)
+PropertyPages.register(EnumerationItem)(OperationsPage)
 
 
 @PropertyPages.register(DependencyItem)

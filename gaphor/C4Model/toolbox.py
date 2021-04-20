@@ -65,7 +65,7 @@ c4 = ToolSection(
             "c4-software-system",
             gettext("Software System"),
             "gaphor-c4-software-system-symbolic",
-            "s",
+            "<Shift>S",
             new_item_factory(
                 diagramitems.C4ContainerItem,
                 c4model.C4Container,
@@ -87,7 +87,7 @@ c4 = ToolSection(
             "c4-container-database",
             gettext("Container: Database"),
             "gaphor-c4-database-symbolic",
-            "d",
+            "<Shift>B",
             new_item_factory(
                 diagramitems.C4ContainerDatabaseItem,
                 c4model.C4Database,
@@ -98,7 +98,7 @@ c4 = ToolSection(
             "c4-component",
             gettext("Component"),
             "gaphor-c4-component-symbolic",
-            "c",
+            "<Shift>X",
             new_item_factory(
                 diagramitems.C4ContainerItem,
                 c4model.C4Container,
@@ -109,7 +109,7 @@ c4 = ToolSection(
             "c4-dependency",
             gettext("Dependency"),
             "gaphor-dependency-symbolic",
-            "<Shift>D",
+            "d",
             new_item_factory(uml_items.DependencyItem),
         ),
     ),

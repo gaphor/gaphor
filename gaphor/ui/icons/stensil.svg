@@ -59,17 +59,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.7832041"
-     inkscape:cx="35.522901"
-     inkscape:cy="61.316044"
+     inkscape:zoom="1.945801"
+     inkscape:cx="265.60333"
+     inkscape:cy="92.497515"
      inkscape:document-units="px"
-     inkscape:current-layer="containment"
+     inkscape:current-layer="backplane"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
      inkscape:window-height="1016"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      showborder="false"
      inkscape:document-rotation="0">
@@ -2187,6 +2187,19 @@
   </g>
   <g
      inkscape:groupmode="layer"
+     id="comment"
+     inkscape:label="comment"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 3.96875,-3.8312589 -2.38125,5e-7 v 2.6458329 H 5.291666 V -2.5083421 L 3.96875,-3.8312589 v 1.3229168 h 1.322916"
+       id="path4675"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
      id="diagram"
      inkscape:label="diagram"
      style="display:inline"
@@ -2214,16 +2227,81 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="comment"
-     inkscape:label="comment"
+     id="enumeration"
+     inkscape:label="enumeration"
      style="display:inline"
      sodipodi:insensitive="true">
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 3.96875,-3.8312589 -2.38125,5e-7 v 2.6458329 H 5.291666 V -2.5083421 L 3.96875,-3.8312589 v 1.3229168 h 1.322916"
-       id="path4675"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccccc" />
+    <rect
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1264-7-9-0"
+       width="3.7041667"
+       height="3.7041667"
+       x="25.4"
+       y="15.610416"
+       ry="0" />
+    <text
+       id="text84-8-3-5-4-9"
+       y="18.123556"
+       x="25.815313"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         y="18.123556"
+         x="25.815313"
+         id="tspan456-6-3-8-1"
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">EN</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="primitive"
+     inkscape:label="primitive"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <rect
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1096"
+       width="3.7041667"
+       height="3.7041667"
+       x="1.5875002"
+       y="20.902082"
+       ry="0" />
+    <text
+       id="text1100"
+       y="23.415222"
+       x="1.9498911"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         y="23.415222"
+         x="1.9498911"
+         id="tspan1098"
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">PR</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="data-type"
+     inkscape:label="data-type"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <rect
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1082"
+       width="3.7041667"
+       height="3.7041667"
+       x="17.4625"
+       y="15.610416"
+       ry="0" />
+    <text
+       id="text1086"
+       y="18.123556"
+       x="17.877813"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         y="18.123556"
+         x="17.877813"
+         id="tspan1084"
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">DT</tspan></text>
   </g>
   <g
      sodipodi:insensitive="true"
@@ -2251,6 +2329,32 @@
        id="path4897"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="value-type"
+     inkscape:label="value-type"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <rect
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect1104"
+       width="3.7041667"
+       height="3.7041667"
+       x="93.927086"
+       y="5.0270834"
+       ry="0" />
+    <text
+       id="text1108"
+       y="7.5402231"
+       x="94.342476"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         y="7.5402231"
+         x="94.342476"
+         id="tspan1106"
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">VT</tspan></text>
   </g>
   <g
      style="display:inline"
@@ -3340,8 +3444,8 @@
      inkscape:groupmode="layer"
      id="c4-component"
      inkscape:label="c4-component"
-     sodipodi:insensitive="true"
-     style="display:inline">
+     style="display:inline"
+     sodipodi:insensitive="true">
     <rect
        style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1264-7-9"

@@ -14,89 +14,90 @@ def context():
     return UpdateContext(style=FALLBACK_STYLE)
 
 
-class TestClass:
-    def test_compartments(self, case):
-        """Test creation of classes and working of compartments."""
-        element_factory = case.element_factory
-        diagram = element_factory.create(UML.Diagram)
-        klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+def test_compartments(case):
+    """Test creation of classes and working of compartments."""
+    element_factory = case.element_factory
+    diagram = element_factory.create(UML.Diagram)
+    klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
-        assert 2 == len(compartments(klass))
-        assert 0 == len(compartments(klass)[0].children)
-        assert 0 == len(compartments(klass)[1].children)
+    assert 2 == len(compartments(klass))
+    assert 0 == len(compartments(klass)[0].children)
+    assert 0 == len(compartments(klass)[1].children)
 
-        diagram.update_now((klass,))
+    diagram.update_now((klass,))
 
-        assert 50 == float(klass.min_height)
-        assert 100 == float(klass.min_width)
+    assert 50 == float(klass.min_height)
+    assert 100 == float(klass.min_width)
 
-        attr = element_factory.create(UML.Property)
-        attr.name = 4 * "x"  # about 44 pixels
-        klass.subject.ownedAttribute = attr
+    attr = element_factory.create(UML.Property)
+    attr.name = 4 * "x"  # about 44 pixels
+    klass.subject.ownedAttribute = attr
 
-        diagram.update_now((klass,))
+    diagram.update_now((klass,))
 
-        assert 1 == len(compartments(klass)[0])
-        assert compartments(klass)[0].size(context()) > (44.0, 20.0)
+    assert 1 == len(compartments(klass)[0])
+    assert compartments(klass)[0].size(context()) > (44.0, 20.0)
 
-        oper = element_factory.create(UML.Operation)
-        oper.name = 4 * "x"  # about 44 pixels
-        klass.subject.ownedOperation = oper
+    oper = element_factory.create(UML.Operation)
+    oper.name = 4 * "x"  # about 44 pixels
+    klass.subject.ownedOperation = oper
 
-        oper = element_factory.create(UML.Operation)
-        oper.name = 6 * "x"  # about 66 pixels
-        klass.subject.ownedOperation = oper
+    oper = element_factory.create(UML.Operation)
+    oper.name = 6 * "x"  # about 66 pixels
+    klass.subject.ownedOperation = oper
 
-        diagram.update_now((klass,))
-        assert 2 == len(compartments(klass)[1])
-        assert compartments(klass)[1].size(context()) > (63.0, 34.0)
+    diagram.update_now((klass,))
+    assert 2 == len(compartments(klass)[1])
+    assert compartments(klass)[1].size(context()) > (63.0, 34.0)
 
-    def test_attribute_removal(self, case):
 
-        element_factory = case.element_factory
-        diagram = element_factory.create(UML.Diagram)
-        klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-        diagram.update_now((klass,))
+def test_attribute_removal(case):
 
-        attr = element_factory.create(UML.Property)
-        attr.name = "blah1"
-        klass.subject.ownedAttribute = attr
+    element_factory = case.element_factory
+    diagram = element_factory.create(UML.Diagram)
+    klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    diagram.update_now((klass,))
 
-        attr2 = element_factory.create(UML.Property)
-        attr2.name = "blah2"
-        klass.subject.ownedAttribute = attr2
+    attr = element_factory.create(UML.Property)
+    attr.name = "blah1"
+    klass.subject.ownedAttribute = attr
 
-        attr = element_factory.create(UML.Property)
-        attr.name = "blah3"
-        klass.subject.ownedAttribute = attr
+    attr2 = element_factory.create(UML.Property)
+    attr2.name = "blah2"
+    klass.subject.ownedAttribute = attr2
 
-        assert len(compartments(klass)[0]) == 3
+    attr = element_factory.create(UML.Property)
+    attr.name = "blah3"
+    klass.subject.ownedAttribute = attr
 
-        attr2.unlink()
+    assert len(compartments(klass)[0]) == 3
 
-        assert len(compartments(klass)[0]) == 2
+    attr2.unlink()
 
-    def test_compartment_resizing(self, case):
-        element_factory = case.element_factory
-        diagram = element_factory.create(UML.Diagram)
-        klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-        klass.subject.name = "Class1"
+    assert len(compartments(klass)[0]) == 2
 
-        diagram.update_now((klass,))
 
-        attr = element_factory.create(UML.Property)
-        attr.name = "blah"
-        klass.subject.ownedAttribute = attr
+def test_compartment_resizing(case):
+    element_factory = case.element_factory
+    diagram = element_factory.create(UML.Diagram)
+    klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    klass.subject.name = "Class1"
 
-        oper = element_factory.create(UML.Operation)
-        oper.name = "method"
-        klass.subject.ownedOperation = oper
+    diagram.update_now((klass,))
 
-        assert klass.width == 100
+    attr = element_factory.create(UML.Property)
+    attr.name = "blah"
+    klass.subject.ownedAttribute = attr
 
-        attr.name = "x" * 25
+    oper = element_factory.create(UML.Operation)
+    oper.name = "method"
+    klass.subject.ownedOperation = oper
 
-        diagram.update_now((klass,))
+    assert klass.width == 100
 
-        width = klass.width
-        assert width >= 170.0
+    attr.name = "x" * 25
+
+    diagram.update_now((klass,))
+
+    width = klass.width
+    assert width >= 170.0

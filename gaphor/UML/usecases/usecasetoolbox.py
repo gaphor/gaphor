@@ -39,7 +39,7 @@ use_cases = ToolSection(
             "toolbox-use-case-association",
             gettext("Association"),
             "gaphor-association-symbolic",
-            "<Shift>B",
+            "<Shift>J",
             new_item_factory(diagramitems.AssociationItem),
         ),
         ToolDef(

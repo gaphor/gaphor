@@ -102,7 +102,7 @@ FTA = ToolSection(
             "transfer-out",
             gettext("Transfer Out"),
             "gaphor-transfer-out-symbolic",
-            "<Shift>t",
+            "<Shift>T",
             new_item_factory(
                 diagramitems.TransferOutItem,
                 raaml.TransferOut,
@@ -113,7 +113,7 @@ FTA = ToolSection(
             "basic-event",
             gettext("Basic Event"),
             "gaphor-basic-event-symbolic",
-            "<Shift>b",
+            "<Shift>B",
             new_item_factory(
                 diagramitems.BasicEventItem,
                 raaml.BasicEvent,
@@ -190,7 +190,7 @@ FTA = ToolSection(
             "intermediate-event",
             gettext("Intermediate Event"),
             "gaphor-intermediate-event-symbolic",
-            "<Shift>i",
+            "<Shift>I",
             new_item_factory(
                 diagramitems.IntermediateEventItem,
                 raaml.IntermediateEvent,

@@ -42,14 +42,14 @@ requirements = ToolSection(
             "toolbox-trace-dependency",
             gettext("Trace"),
             "gaphor-trace-symbolic",
-            "<Shift>E",
+            "y",
             new_item_factory(sysml_items.TraceItem),
         ),
         ToolDef(
             "toolbox-refine-dependency",
             gettext("Refine"),
             "gaphor-refine-symbolic",
-            "<Shift>N",
+            None,
             new_item_factory(sysml_items.RefineItem),
         ),
         ToolDef(
