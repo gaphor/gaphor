@@ -1,3 +1,14 @@
+2.4.0
+-----
+- Add support for DataType, ValueType, Primitive, and Enumeration
+- Model state is stored per model, restores where you left off
+- Add support for Containment Relationship
+- Focus already opened model when opening a model file
+- Remove the New From Template option
+- Upgrade toolbox to be compatible with GTK 4
+- Add regression tests
+- Fix build fails when GitHub Actions secrets are not available
+
 2.3.2
 _____
 - Fix issue where ornaments were not show on associations
