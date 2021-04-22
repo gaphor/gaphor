@@ -34,10 +34,12 @@ class CopyService(Service, ActionProvider):
         self.diagrams = diagrams
 
         self.clipboard = Gtk.Clipboard.get_default(Gdk.Display.get_default())
-        self.clipboard.connect("owner_change", self.on_clipboard_owner_change)
+        self._owner_change_id = self.clipboard.connect(
+            "owner_change", self.on_clipboard_owner_change
+        )
 
     def shutdown(self):
-        pass
+        self.clipboard.disconnect(self._owner_change_id)
 
     def on_clipboard_owner_change(self, clipboard, event):
         view = self.diagrams.get_current_view()
