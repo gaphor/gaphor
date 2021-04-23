@@ -118,10 +118,7 @@ class Diagrams(UIComponent, ActionProvider):
         )
         button = Gtk.Button()
         button.set_relief(Gtk.ReliefStyle.NONE)
-
-        # TODO: Call button.set_focus_on_click directly once PyGObject issue
-        #  #371 is fixed
-        Gtk.Widget.set_focus_on_click(button, False)
+        button.set_focus_on_click(False)
 
         button.add(close_image)
         button.connect(
