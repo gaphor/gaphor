@@ -80,6 +80,7 @@ class Namespace(UIComponent):
 
         self.model: Optional[NamespaceModel] = None
         self.view: Optional[NamespaceView] = None
+        self.scrolled_window: Optional[Gtk.ScrolledWindow] = None
         self.ctrl: Set[Gtk.EventController] = set()
 
     def open(self):
@@ -145,6 +146,7 @@ class Namespace(UIComponent):
             pass
 
         self.view = view
+        self.scrolled_window = scrolled_window
         self.model.refresh()
 
         return scrolled_window
@@ -152,8 +154,12 @@ class Namespace(UIComponent):
     def close(self):
         self.ctrl.clear()
         if self.view:
-            self.view.destroy()
+            if Gtk.get_major_version() == 3:
+                self.view.destroy()
+            elif self.scrolled_window:
+                self.scrolled_window.unparent()
             self.view = None
+            self.scrolled_window = None
         if self.model:
             self.model.shutdown()
             self.model = None

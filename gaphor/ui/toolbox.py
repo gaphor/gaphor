@@ -51,7 +51,10 @@ class Toolbox(UIComponent, ActionProvider):
 
     def close(self):
         if self._toolbox:
-            self._toolbox.destroy()
+            if Gtk.get_major_version() == 3:
+                self._toolbox.destroy()
+            elif self._toolbox_container:
+                self._toolbox_container.unparent()
             self._toolbox = None
         self.event_manager.unsubscribe(self._on_modeling_language_changed)
 

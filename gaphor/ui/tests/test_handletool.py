@@ -4,7 +4,7 @@ import pytest
 from gaphas.aspect.connector import ConnectionSink
 from gaphas.aspect.connector import Connector as ConnectorAspect
 from gaphas.aspect.handlemove import HandleMove
-from gi.repository import Gtk
+from gi.repository import GLib, Gtk
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector
@@ -19,14 +19,23 @@ from gaphor.UML.usecases.actor import ActorItem
 
 @pytest.fixture
 def diagrams(event_manager, element_factory, properties):
-    window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
     diagrams = Diagrams(
         event_manager, element_factory, properties, UMLModelingLanguage()
     )
-    window.add(diagrams.open())
+    if Gtk.get_major_version() == 3:
+        window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+        window.add(diagrams.open())
+    else:
+        window = Gtk.Window.new()
+        box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+        window.set_child(box)
+        box.append(diagrams.open())
     window.show()
     yield diagrams
     diagrams.close()
+
+    if Gtk.get_major_version() != 3:
+        assert box.get_first_child() is None
 
 
 @pytest.fixture
@@ -75,8 +84,9 @@ def current_diagram_view(diagrams):
     view = diagrams.get_current_view()
 
     # realize view, forces bounding box recalculation
-    while Gtk.events_pending():
-        Gtk.main_iteration()
+    ctx = GLib.main_context_default()
+    while ctx.pending():
+        ctx.iteration(False)
 
     return view
 
