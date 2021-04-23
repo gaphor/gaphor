@@ -24,11 +24,10 @@ log = logging.getLogger(__name__)
 
 def new_builder(*object_ids):
     if Gtk.get_major_version() == 3:
-        builder = Gtk.Builder()
         ui_file = "elementeditor.glade"
     else:
-        builder = Gtk.Builder()
         ui_file = "elementeditor.ui"
+    builder = Gtk.Builder()
     builder.set_translation_domain("gaphor")
     with importlib.resources.path("gaphor.ui", ui_file) as glade_file:
         builder.add_objects_from_file(str(glade_file), object_ids)
