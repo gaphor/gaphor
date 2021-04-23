@@ -167,8 +167,14 @@ class EditorStack:
     def clear_pages(self):
         """Remove all tabs from the notebook."""
         assert self.vbox
-        for page in self.vbox.get_children():
-            page.destroy()
+        if Gtk.get_major_version() == 3:
+            for page in self.vbox.get_children():
+                page.destroy()
+        else:
+            page = self.vbox.get_first_child()
+            while page:
+                page.remove()
+                page = page.get_next_sibling()
 
     def on_expand(self, widget, name):
         self._expanded_pages[name] = widget.get_expanded()
@@ -181,7 +187,12 @@ class EditorStack:
         """
         assert self.vbox
         item = event and event.focused_item or focused_item
-        if item is self._current_item and self.vbox.get_children():
+        children = (
+            self.vbox.get_children()
+            if Gtk.get_major_version() == 3
+            else self.vbox.get_first_child()
+        )
+        if item is self._current_item and children:
             return
 
         self._current_item = item
@@ -196,12 +207,15 @@ class EditorStack:
         assert self.vbox
         builder = new_builder("no-item-selected")
 
-        self.vbox.pack_start(
-            child=builder.get_object("no-item-selected"),
-            expand=False,
-            fill=True,
-            padding=0,
-        )
+        if Gtk.get_major_version() == 3:
+            self.vbox.pack_start(
+                child=builder.get_object("no-item-selected"),
+                expand=False,
+                fill=True,
+                padding=0,
+            )
+        else:
+            self.vbox.append(builder.get_object("no-item-selected"))
 
         tips = builder.get_object("tips")
 

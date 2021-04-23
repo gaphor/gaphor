@@ -10,11 +10,8 @@ class InAppNotifier:
     def __init__(self, builder):
         self.revealer = builder.get_object("notification-revealer")
         self.message_label = builder.get_object("notification-message")
-        builder.connect_signals(
-            {
-                "close-notification": close_notification,
-            }
-        )
+        close = builder.get_object("notification-close")
+        close.connect("clicked", close_notification)
 
     @event_handler(Notification)
     def handle(self, event: Notification):

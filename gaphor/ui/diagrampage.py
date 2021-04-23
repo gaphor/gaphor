@@ -122,16 +122,19 @@ class DiagramPage:
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.add(view)
-        scrolled_window.show_all()
-        self.widget = scrolled_window
+        if Gtk.get_major_version() == 3:
+            scrolled_window.add(view)
+            scrolled_window.show_all()
+            view.connect("drag-data-received", self._on_drag_data_received)
+            scrolled_window.action_group = create_action_group(self, "diagram")
+        else:
+            scrolled_window.set_child(view)
+            scrolled_window.show()
 
         view.selection.add_handler(self._on_view_selection_changed)
-        view.connect("drag-data-received", self._on_drag_data_received)
 
         self.view = view
-
-        self.widget.action_group = create_action_group(self, "diagram")
+        self.widget = scrolled_window
 
         self.select_tool("toolbox-pointer")
 
@@ -250,11 +253,17 @@ class DiagramPage:
         if self.view:
             self.apply_tool_set(tool_name)
             icon_name = self.get_tool_icon_name(tool_name)
-            window = self.view.get_window()
-            if icon_name and window:
-                window.set_cursor(get_placement_cursor(window.get_display(), icon_name))
-            elif window:
-                window.set_cursor(None)
+            if Gtk.get_major_version() == 3:
+                window = self.view.get_window()
+                if icon_name and window:
+                    window.set_cursor(
+                        get_placement_cursor(window.get_display(), icon_name)
+                    )
+                elif window:
+                    window.set_cursor(None)
+            else:
+                # TODO: set cursor
+                pass
 
     @event_handler(DiagramItemPlaced)
     def _on_diagram_item_placed(self, event):

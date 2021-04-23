@@ -145,12 +145,33 @@ def copy_clear_and_paste(items, diagram, element_factory, retain=[]):
     return paste(buffer, diagram, element_factory.lookup)
 
 
-def find(widget, name):
-    if Gtk.Buildable.get_name(widget) == name:
-        return widget
-    if isinstance(widget, Gtk.Container):
-        for child in widget.get_children():
+if Gtk.get_major_version() == 3:
+
+    def find(widget, name):
+        if Gtk.Buildable.get_name(widget) == name:
+            return widget
+        if isinstance(widget, Gtk.Container):
+            for child in widget.get_children():
+                found = find(child, name)
+                if found:
+                    return found
+        return None
+
+
+else:
+
+    def find(widget, name):
+        if widget.get_buildable_id() == name:
+            return widget
+        sibling = widget.get_next_sibling()
+        if sibling:
+            found = find(sibling, name)
+            if found:
+                return found
+        child = widget.get_first_child()
+        if child:
             found = find(child, name)
             if found:
                 return found
-    return None
+
+        return None

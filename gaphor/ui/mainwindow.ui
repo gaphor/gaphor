@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <object class="GtkPopover" id="hamburger">
+  <object class="GtkPopoverMenu" id="hamburger">
     <property name="can_focus">0</property>
   </object>
-  <object class="GtkPopover" id="recent-files">
+  <object class="GtkPopoverMenu" id="recent-files">
     <property name="can_focus">0</property>
   </object>
-  <object class="GtkPopover" id="select-modeling-language">
+  <object class="GtkPopoverMenu" id="select-modeling-language">
     <property name="can_focus">0</property>
   </object>
   <object class="GtkApplicationWindow" id="main-window">
@@ -165,7 +165,6 @@
                 <child>
                   <object class="GtkButton" id="notification-close">
                     <property name="receives_default">1</property>
-                    <!-- <signal name="clicked" handler="close-notification" object="notification-revealer" swapped="no"/> -->
                     <child>
                       <object class="GtkImage">
                         <property name="can_focus">0</property>

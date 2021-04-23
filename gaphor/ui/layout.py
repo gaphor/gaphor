@@ -49,16 +49,35 @@ def deserialize(container, layoutstr, itemfactory, properties):
     return layout
 
 
-def add(widget, index, parent_widget, resize=False, shrink=False):
-    if isinstance(parent_widget, Gtk.Paned):
-        if index == 0:
-            parent_widget.pack1(child=widget, resize=resize, shrink=shrink)
-        elif index == 1:
-            parent_widget.pack2(child=widget, resize=resize, shrink=shrink)
-    elif isinstance(parent_widget, Gtk.Box):
-        parent_widget.pack_start(widget, resize, resize, 0)
-    else:
-        parent_widget.add(widget)
+if Gtk.get_major_version() == 3:
+
+    def add(widget, index, parent_widget, resize=False, shrink=False):
+        if isinstance(parent_widget, Gtk.Paned):
+            if index == 0:
+                parent_widget.pack1(child=widget, resize=resize, shrink=shrink)
+            elif index == 1:
+                parent_widget.pack2(child=widget, resize=resize, shrink=shrink)
+        elif isinstance(parent_widget, Gtk.Box):
+            parent_widget.pack_start(widget, resize, resize, 0)
+        else:
+            parent_widget.add(widget)
+
+
+else:
+
+    def add(widget, index, parent_widget, resize=False, shrink=False):
+        if isinstance(parent_widget, Gtk.Paned):
+            if index == 0:
+                parent_widget.set_start_child(widget)
+                # , resize=resize, shrink=shrink)
+            elif index == 1:
+                parent_widget.set_end_child(widget)
+                #  resize=resize, shrink=shrink)
+        elif isinstance(parent_widget, Gtk.Box):
+            parent_widget.append(widget)
+            # , resize, resize, 0)
+        else:
+            parent_widget.set_child(widget)
 
 
 def factory(typename):

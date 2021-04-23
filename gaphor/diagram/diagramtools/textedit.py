@@ -4,9 +4,16 @@ from gaphor.diagram.inlineeditors import InlineEditor
 
 
 def text_edit_tools(view):
-    key_tool = Gtk.EventControllerKey.new(view)
+    if Gtk.get_major_version() == 3:
+        key_tool = Gtk.EventControllerKey.new(view)
+        click_tool = Gtk.GestureMultiPress.new(view)
+    else:
+        key_tool = Gtk.EventControllerKey.new()
+        view.add_controller(key_tool)
+        click_tool = Gtk.GestureClick.new()
+        view.add_controller(click_tool)
+
     key_tool.connect("key-pressed", on_key_pressed)
-    click_tool = Gtk.GestureMultiPress.new(view)
     click_tool.connect("released", on_double_click)
     return key_tool, click_tool
 

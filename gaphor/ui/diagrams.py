@@ -110,12 +110,6 @@ class Diagrams(UIComponent, ActionProvider):
 
     def tab_label(self, title, widget):
         tab_box = Gtk.Box.new(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
-        label = Gtk.Label.new(title)
-        tab_box.pack_start(child=label, expand=True, fill=True, padding=0)
-
-        close_image = Gtk.Image.new_from_icon_name(
-            icon_name="window-close", size=Gtk.IconSize.BUTTON
-        )
         button = Gtk.Button()
         button.get_style_context().add_class("flat")
 
@@ -123,15 +117,29 @@ class Diagrams(UIComponent, ActionProvider):
         #  #371 is fixed
         Gtk.Widget.set_focus_on_click(button, False)
 
-        button.add(close_image)
         button.connect(
             "clicked",
             lambda _button: self.event_manager.handle(
                 DiagramClosed(widget.diagram_page.get_diagram())
             ),
         )
-        tab_box.pack_start(child=button, expand=False, fill=False, padding=0)
-        tab_box.show_all()
+
+        label = Gtk.Label.new(title)
+        if Gtk.get_major_version() == 3:
+            tab_box.pack_start(child=label, expand=True, fill=True, padding=0)
+            close_image = Gtk.Image.new_from_icon_name(
+                icon_name="window-close", size=Gtk.IconSize.BUTTON
+            )
+            button.add(close_image)
+            tab_box.pack_start(child=button, expand=False, fill=False, padding=0)
+            tab_box.show_all()
+        else:
+            tab_box.append(label)
+            close_image = Gtk.Image.new_from_icon_name("window-close")
+            button.set_child(close_image)
+            tab_box.append(button)
+            tab_box.show()
+
         return tab_box
 
     def get_widgets_on_pages(self):
