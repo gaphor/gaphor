@@ -32,7 +32,8 @@ log = logging.getLogger(__name__)
 def new_builder():
     builder = Gtk.Builder()
     builder.set_translation_domain("gaphor")
-    with importlib.resources.path("gaphor.ui", "mainwindow.glade") as glade_file:
+    ui_file = "mainwindow.glade" if Gtk.get_major_version() == 3 else "mainwindow.ui"
+    with importlib.resources.path("gaphor.ui", ui_file) as glade_file:
         builder.add_from_file(str(glade_file))
     return builder
 
@@ -162,18 +163,32 @@ class MainWindow(Service, ActionProvider):
         self.window.set_application(gtk_app)
 
         select_modeling_language = builder.get_object("select-modeling-language")
-        select_modeling_language.bind_model(
-            create_modeling_language_model(self.modeling_language), None
-        )
+        if Gtk.get_major_version() == 3:
+            select_modeling_language.bind_model(
+                create_modeling_language_model(self.modeling_language), None
+            )
+        else:
+            select_modeling_language.set_menu_model(
+                create_modeling_language_model(self.modeling_language)
+            )
         self.modeling_language_name = builder.get_object("modeling-language-name")
 
         hamburger = builder.get_object("hamburger")
-        hamburger.bind_model(
-            create_hamburger_model(self.export_menu.menu, self.tools_menu.menu), None
-        )
+        if Gtk.get_major_version() == 3:
+            hamburger.bind_model(
+                create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
+                None,
+            )
+        else:
+            hamburger.set_menu_model(
+                create_hamburger_model(self.export_menu.menu, self.tools_menu.menu)
+            )
 
         recent_files = builder.get_object("recent-files")
-        recent_files.bind_model(create_recent_files_model(), None)
+        if Gtk.get_major_version() == 3:
+            recent_files.bind_model(create_recent_files_model(), None)
+        else:
+            recent_files.set_menu_model(create_recent_files_model())
 
         self.title = builder.get_object("title")
         self.subtitle = builder.get_object("subtitle")
@@ -188,27 +203,40 @@ class MainWindow(Service, ActionProvider):
             # Okay, this may be hackish. Action groups on component level are also added
             # to the main window. This ensures that we can call those items from the
             # (main) menus as well. Also this makes enabling/disabling work.
-            for prefix in widget.list_action_prefixes():
-                assert prefix not in ("app", "win")
-                self.window.insert_action_group(prefix, widget.get_action_group(prefix))
+            if Gtk.get_major_version() == 3:
+                for prefix in widget.list_action_prefixes():
+                    assert prefix not in ("app", "win")
+                    self.window.insert_action_group(
+                        prefix, widget.get_action_group(prefix)
+                    )
+            else:
+                # TODO: attach shortcuts
+                pass
             return widget
 
         with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
             main_content = builder.get_object("main-content")
             self.layout = deserialize(main_content, f.read(), _factory, self.properties)
 
-        action_group, accel_group = window_action_group(self.component_registry)
-        self.window.insert_action_group("win", action_group)
-        self.window.add_accel_group(accel_group)
+        if Gtk.get_major_version() == 3:
+            action_group, accel_group = window_action_group(self.component_registry)
+            self.window.insert_action_group("win", action_group)
+            self.window.add_accel_group(accel_group)
+        else:
+            # TODO: fix window shortcuts
+            pass
 
         self._on_modeling_language_selection_changed()
 
         self.window.set_resizable(True)
-        self.window.show_all()
+        if Gtk.get_major_version() == 3:
+            self.window.show_all()
+            self.window.connect("delete-event", self._on_window_delete)
+            self.window.connect("size-allocate", self._on_window_size_allocate)
+        else:
+            self.window.show()
 
         self.window.connect("notify::is-active", self._on_window_active)
-        self.window.connect("delete-event", self._on_window_delete)
-        self.window.connect("size-allocate", self._on_window_size_allocate)
 
         self.in_app_notifier = InAppNotifier(builder)
         em = self.event_manager

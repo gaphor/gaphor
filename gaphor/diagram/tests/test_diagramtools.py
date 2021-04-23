@@ -1,7 +1,7 @@
 import logging
 
 import pytest
-from gi.repository import Gdk
+from gi.repository import Gdk, Gtk
 
 from gaphor import UML
 from gaphor.conftest import Case
@@ -41,6 +41,7 @@ class TestDiagramConnector:
         yield case
         case.shutdown()
 
+    @pytest.mark.skipif(Gtk.get_major_version() != 3, reason="Works only for GTK+ 3")
     def test_item_reconnect(self, case):
         # Setting the stage:
         ci1 = case.create(ClassItem, UML.Class)

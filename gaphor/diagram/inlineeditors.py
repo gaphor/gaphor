@@ -65,8 +65,11 @@ def popup_entry(text, update_text, done=None):
 
 def show_popover(widget, view, box, escape=None):
     popover = Gtk.Popover.new()
-    popover.add(widget)
-    popover.set_relative_to(view)
+    if Gtk.get_major_version() == 3:
+        popover.add(widget)
+        popover.set_relative_to(view)
+    else:
+        popover.set_child(widget)
     gdk_rect = Gdk.Rectangle()
     gdk_rect.x = box.x
     gdk_rect.y = box.y
@@ -74,15 +77,26 @@ def show_popover(widget, view, box, escape=None):
     gdk_rect.height = box.height
     popover.set_pointing_to(gdk_rect)
 
-    def on_escape(popover, event):
-        if event.keyval == Gdk.KEY_Return and not event.get_state() & (
+    def on_escape(popover, keyval, keycode, state):
+        if keyval == Gdk.KEY_Return and not state & (
             Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
         ):
             popover.popdown()
             return True
-        elif event.keyval == Gdk.KEY_Escape and escape:
+        elif keyval == Gdk.KEY_Escape and escape:
             escape()
 
-    popover.connect("key-press-event", on_escape)
-    popover.popup()
+    if Gtk.get_major_version() == 3:
+
+        def on_escape3(popover, event):
+            return on_escape(popover, event.keyval, event.keycode, event.get_state())
+
+        popover.connect("key-press-event", on_escape)
+        popover.popup()
+    else:
+        controller = Gtk.EventControllerKey.new()
+        popover.add_controller(controller)
+        controller.connect("key-pressed", on_escape)
+        popover.present()
+
     return popover

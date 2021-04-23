@@ -79,7 +79,6 @@
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
-                    <signal name="clicked" handler="close-notification" object="notification-revealer" swapped="no"/>
                     <child>
                       <object class="GtkImage">
                         <property name="visible">True</property>

@@ -239,6 +239,10 @@ def tree_view_expand_collapse(view):
             view.collapse_row(path)
             return True
 
-    controller = Gtk.EventControllerKey.new(view)
+    if Gtk.get_major_version() == 3:
+        controller = Gtk.EventControllerKey.new(view)
+    else:
+        controller = Gtk.EventControllerKey.new()
+        view.add_controller(controller)
     controller.connect("key-pressed", on_key_pressed)
     return controller

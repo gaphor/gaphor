@@ -36,13 +36,19 @@ from gaphor.core import transactional
 from gaphor.core.modeling import Element
 
 
-def new_builder(*object_ids):
-    builder = Gtk.Builder()
+def new_builder(object_id, signals=None):
+    if Gtk.get_major_version() == 3:
+        builder = Gtk.Builder()
+        ui_file = "propertypages.glade"
+    else:
+        builder = Gtk.Builder(signals)
+        ui_file = "propertypages.ui"
+
     builder.set_translation_domain("gaphor")
-    with importlib.resources.path(
-        "gaphor.diagram", "propertypages.glade"
-    ) as glade_file:
-        builder.add_objects_from_file(str(glade_file), object_ids)
+    with importlib.resources.path("gaphor.diagram", ui_file) as glade_file:
+        builder.add_objects_from_file(str(glade_file), [object_id])
+    if Gtk.get_major_version() == 3:
+        builder.connect_signals(signals)
     return builder
 
 
@@ -276,7 +282,13 @@ class LineStylePage(PropertyPageBase):
         self.horizontal_button: Gtk.Button
 
     def construct(self):
-        builder = new_builder("line-editor")
+        builder = new_builder(
+            "line-editor",
+            signals={
+                "rectilinear-changed": (self._on_orthogonal_change,),
+                "orientation-changed": (self._on_horizontal_change,),
+            },
+        )
 
         rectilinear_button = builder.get_object("line-rectilinear")
         rectilinear_button.set_active(self.item.orthogonal)
@@ -286,12 +298,6 @@ class LineStylePage(PropertyPageBase):
         horizontal_button.set_sensitive(self.item.orthogonal)
         self.horizontal_button = horizontal_button
 
-        builder.connect_signals(
-            {
-                "rectilinear-changed": (self._on_orthogonal_change,),
-                "orientation-changed": (self._on_horizontal_change,),
-            }
-        )
         return builder.get_object("line-editor")
 
     @transactional

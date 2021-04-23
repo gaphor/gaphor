@@ -69,14 +69,21 @@ class Toolbox(UIComponent, ActionProvider):
         Returns: The Gtk.ToggleToolButton.
         """
         button = Gtk.ToggleButton.new()
-        icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
-        button.add(icon)
+        if Gtk.get_major_version() == 3:
+            icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+            button.add(icon)
+        else:
+            icon = Gtk.Image.new_from_icon_name(icon_name)
+            button.set_child(icon)
         button.set_action_name("diagram.select-tool")
         button.set_action_target_value(GLib.Variant.new_string(action_name))
         button.get_style_context().add_class("flat")
         if label:
             if shortcut:
-                a, m = Gtk.accelerator_parse(shortcut)
+                if Gtk.get_major_version() == 3:
+                    a, m = Gtk.accelerator_parse(shortcut)
+                else:
+                    _, a, m = Gtk.accelerator_parse(shortcut)
                 button.set_tooltip_text(f"{label} ({Gtk.accelerator_get_label(a, m)})")
             else:
                 button.set_tooltip_text(f"{label}")
@@ -115,15 +122,22 @@ class Toolbox(UIComponent, ActionProvider):
             flowbox = Gtk.FlowBox.new()
             flowbox.set_homogeneous(True)
             flowbox.set_max_children_per_line(12)
-            expander.add(flowbox)
+            if Gtk.get_major_version() == 3:
+                expander.add(flowbox)
+            else:
+                expander.set_child(flowbox)
             for action_name, label, icon_name, shortcut, *rest in items:
                 button = self.create_toolbox_button(
                     action_name, icon_name, label, shortcut
                 )
                 flowbox.insert(button, -1)
-                button.show_all()
+                if Gtk.get_major_version() == 3:
+                    button.show_all()
 
-            toolbox.add(expander)
+            if Gtk.get_major_version() == 3:
+                toolbox.add(expander)
+            else:
+                toolbox.append(expander)
             expander.show()
 
         toolbox.show()
@@ -132,7 +146,10 @@ class Toolbox(UIComponent, ActionProvider):
     def create_toolbox_container(self, toolbox: Gtk.Widget) -> Gtk.ScrolledWindow:
         toolbox_container = Gtk.ScrolledWindow()
         toolbox_container.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-        toolbox_container.add(toolbox)
+        if Gtk.get_major_version() == 3:
+            toolbox_container.add(toolbox)
+        else:
+            toolbox_container.set_child(toolbox)
         toolbox_container.show()
         return toolbox_container
 
