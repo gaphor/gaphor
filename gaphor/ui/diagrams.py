@@ -60,7 +60,12 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self._on_close_diagram)
         self.event_manager.unsubscribe(self._on_show_diagram)
         if self._notebook:
-            self._notebook.destroy()
+            if Gtk.get_major_version() == 3:
+                self._notebook.destroy()
+            else:
+                parent = self._notebook.get_parent()
+                if parent:
+                    parent.remove(self._notebook)
             self._notebook = None
 
     def get_current_diagram(self):
@@ -192,14 +197,22 @@ class Diagrams(UIComponent, ActionProvider):
         log.debug(f"pages changed: {self.properties.get('opened-diagrams')}")
 
     def _add_ui_settings(self, page):
-        window = page.get_toplevel()
-        window.insert_action_group("diagram", page.action_group.actions)
-        window.add_accel_group(page.action_group.shortcuts)
+        if Gtk.get_major_version() == 3:
+            window = page.get_toplevel()
+            window.insert_action_group("diagram", page.action_group.actions)
+            window.add_accel_group(page.action_group.shortcuts)
+        else:
+            # TODO: handle shortcuts
+            pass
 
     def _clear_ui_settings(self, page):
-        window = page.get_toplevel()
-        window.insert_action_group("diagram", None)
-        window.remove_accel_group(page.action_group.shortcuts)
+        if Gtk.get_major_version() == 3:
+            window = page.get_toplevel()
+            window.insert_action_group("diagram", None)
+            window.remove_accel_group(page.action_group.shortcuts)
+        else:
+            # TODO: handle shortcuts
+            pass
 
     @action(name="close-current-tab", shortcut="<Primary>w")
     def close_current_tab(self):

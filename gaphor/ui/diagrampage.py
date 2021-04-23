@@ -202,7 +202,13 @@ class DiagramPage:
         Do the same thing that would be done if Close was pressed.
         """
         assert self.widget
-        self.widget.destroy()
+        if Gtk.get_major_version() == 3:
+            self.widget.destroy()
+        else:
+            parent = self.widget.get_parent()
+            if parent:
+                parent.remove(self.widget)
+
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_style_sheet_updated)
         self.event_manager.unsubscribe(self._on_diagram_item_placed)
