@@ -78,6 +78,8 @@ else:
             # , resize, resize, 0)
         else:
             parent_widget.set_child(widget)
+        widget.set_hexpand_set(True)
+        widget.set_hexpand(resize)
 
 
 def factory(typename):
