@@ -27,7 +27,10 @@ class PartitionPropertyPage(PropertyPageBase):
 
     def construct(self):
         """Creates the Partition Property Page."""
-        builder = new_builder("partition-editor")
+        builder = new_builder(
+            "partition-editor",
+            signals={"partitions-changed": (self._on_num_partitions_changed,)},
+        )
 
         num_partitions = builder.get_object("num-partitions")
         adjustment = Gtk.Adjustment(
@@ -38,9 +41,6 @@ class PartitionPropertyPage(PropertyPageBase):
             page_increment=5,
         )
         num_partitions.set_adjustment(adjustment)
-        builder.connect_signals(
-            {"partitions-changed": (self._on_num_partitions_changed,)}
-        )
 
         treeview = builder.get_object("partition-treeview")
         treeview.set_model(self.list_store)

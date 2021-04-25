@@ -131,12 +131,14 @@ class PropertyPropertyPage(PropertyPageBase):
         if not self.subject:
             return
 
-        builder = new_builder("property-editor")
+        builder = new_builder(
+            "property-editor",
+            signals={"aggregation-changed": (self._on_aggregation_change,)},
+        )
 
         aggregation = builder.get_object("aggregation")
         aggregation.set_active(self.AGGREGATION.index(self.subject.aggregation))
 
-        builder.connect_signals({"aggregation-changed": (self._on_aggregation_change,)})
         return builder.get_object("property-editor")
 
     @transactional

@@ -45,7 +45,13 @@ class MetaclassPropertyPage(PropertyPageBase):
         if not UML.model.is_metaclass(self.subject):
             return
 
-        builder = new_builder("metaclass-editor")
+        builder = new_builder(
+            "metaclass-editor",
+            signals={
+                "metaclass-combo-changed": (self._on_name_changed,),
+                "metaclass-combo-destroy": (self.watcher.unsubscribe_all,),
+            },
+        )
 
         combo = builder.get_object("metaclass-combo")
         for c in self.CLASSES:
@@ -66,13 +72,6 @@ class MetaclassPropertyPage(PropertyPageBase):
                 entry.set_text(event.new_value)
 
         self.watcher.watch("name", handler)
-
-        builder.connect_signals(
-            {
-                "metaclass-combo-changed": (self._on_name_changed,),
-                "metaclass-combo-destroy": (self.watcher.unsubscribe_all,),
-            }
-        )
 
         return builder.get_object("metaclass-editor")
 

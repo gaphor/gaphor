@@ -14,4 +14,4 @@ def test_partition_page(diagram, element_factory):
     num_partitions = find(widget, "num-partitions")
     num_partitions.set_value(2)
 
-    assert len(item.partition) == 1
+    assert len(item.partition) == 2

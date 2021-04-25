@@ -40,7 +40,10 @@ class MessagePropertyPage(PropertyPageBase):
         if not subject or item.is_communication():
             return
 
-        builder = new_builder("message-editor")
+        builder = new_builder(
+            "message-editor",
+            signals={"message-combo-changed": (self._on_message_sort_change,)},
+        )
 
         sort_data = self.MESSAGE_SORT
         lifeline = get_lifeline(item, item.tail)
@@ -62,9 +65,6 @@ class MessagePropertyPage(PropertyPageBase):
         index = self.model.get_index(subject.messageSort)
         combo.set_active(index)
 
-        builder.connect_signals(
-            {"message-combo-changed": (self._on_message_sort_change,)}
-        )
         return builder.get_object("message-editor")
 
     @transactional

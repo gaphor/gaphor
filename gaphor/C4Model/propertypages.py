@@ -24,7 +24,13 @@ class DescriptionPropertyPage(PropertyPageBase):
         self.watcher = subject.watcher()
 
     def construct(self):
-        builder = new_builder("description-editor", "description-text-buffer")
+        builder = new_builder(
+            "description-editor",
+            "description-text-buffer",
+            signals={
+                "container-destroyed": (self.watcher.unsubscribe_all,),
+            },
+        )
         subject = self.subject
 
         description = builder.get_object("description")
@@ -43,11 +49,6 @@ class DescriptionPropertyPage(PropertyPageBase):
 
         self.watcher.watch("description", text_handler)
 
-        builder.connect_signals(
-            {
-                "container-destroyed": (self.watcher.unsubscribe_all,),
-            }
-        )
         return builder.get_object("description-editor")
 
     @transactional
@@ -68,17 +69,17 @@ class TechnologyPropertyPage(PropertyPageBase):
         self.subject = subject
 
     def construct(self):
-        builder = new_builder("technology-editor")
+        builder = new_builder(
+            "technology-editor",
+            signals={
+                "technology-changed": (self._on_technology_changed,),
+            },
+        )
         subject = self.subject
 
         technology = builder.get_object("technology")
         technology.set_text(subject.technology or "")
 
-        builder.connect_signals(
-            {
-                "technology-changed": (self._on_technology_changed,),
-            }
-        )
         return builder.get_object("technology-editor")
 
     @transactional

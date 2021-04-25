@@ -32,7 +32,14 @@ class ObjectNodePropertyPage(PropertyPageBase):
         if not subject:
             return
 
-        builder = new_builder("object-node-editor")
+        builder = new_builder(
+            "object-node-editor",
+            signals={
+                "upper-bound-changed": (self._on_upper_bound_change,),
+                "ordering-changed": (self._on_ordering_change,),
+                "show-ordering-changed": (self._on_ordering_show_change,),
+            },
+        )
 
         upper_bound = builder.get_object("upper-bound")
         upper_bound.set_text(subject.upperBound or "")
@@ -42,14 +49,6 @@ class ObjectNodePropertyPage(PropertyPageBase):
 
         show_ordering = builder.get_object("show-ordering")
         show_ordering.set_active(self.item.show_ordering)
-
-        builder.connect_signals(
-            {
-                "upper-bound-changed": (self._on_upper_bound_change,),
-                "ordering-changed": (self._on_ordering_change,),
-                "show-ordering-changed": (self._on_ordering_show_change,),
-            }
-        )
 
         return builder.get_object("object-node-editor")
 
@@ -77,12 +76,14 @@ class ForkNodePropertyPage(PropertyPageBase):
         self.item = item
 
     def construct(self):
-        builder = new_builder("fork-node-editor")
+        builder = new_builder(
+            "fork-node-editor",
+            signals={"horizontal-changed": (self._on_horizontal_change,)},
+        )
 
         horizontal = builder.get_object("horizontal")
         horizontal.set_active(self.item.matrix[2] != 0)
 
-        builder.connect_signals({"horizontal-changed": (self._on_horizontal_change,)})
         return builder.get_object("fork-node-editor")
 
     @transactional
@@ -110,12 +111,14 @@ class JoinNodePropertyPage(PropertyPageBase):
         if not subject:
             return
 
-        builder = new_builder("join-node-editor")
+        builder = new_builder(
+            "join-node-editor",
+            signals={"join-spec-changed": (self._on_join_spec_change,)},
+        )
 
         join_spec = builder.get_object("join-spec")
         join_spec.set_text(subject.joinSpec or "")
 
-        builder.connect_signals({"join-spec-changed": (self._on_join_spec_change,)})
         return builder.get_object("join-node-editor")
 
     @transactional
@@ -143,7 +146,13 @@ class FlowPropertyPageAbstract(PropertyPageBase):
         if not subject:
             return
 
-        builder = new_builder("transition-editor")
+        builder = new_builder(
+            "transition-editor",
+            signals={
+                "guard-changed": (self._on_guard_change,),
+                "transition-destroy": (self.watcher.unsubscribe_all,),
+            },
+        )
 
         guard = builder.get_object("guard")
         guard.set_text(subject.guard or "")
@@ -154,12 +163,6 @@ class FlowPropertyPageAbstract(PropertyPageBase):
 
         self.watcher.watch("guard", handler)
 
-        builder.connect_signals(
-            {
-                "guard-changed": (self._on_guard_change,),
-                "transition-destroy": (self.watcher.unsubscribe_all,),
-            }
-        )
         return builder.get_object("transition-editor")
 
     @transactional

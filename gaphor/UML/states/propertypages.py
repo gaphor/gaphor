@@ -31,7 +31,13 @@ class TransitionPropertyPage(PropertyPageBase):
         if not subject:
             return
 
-        builder = new_builder("transition-editor")
+        builder = new_builder(
+            "transition-editor",
+            signals={
+                "guard-changed": (self._on_guard_change,),
+                "transition-destroy": (self.watcher.unsubscribe_all,),
+            },
+        )
 
         guard = builder.get_object("guard")
         if subject.guard:
@@ -43,12 +49,6 @@ class TransitionPropertyPage(PropertyPageBase):
 
         self.watcher.watch("guard[Constraint].specification", handler)
 
-        builder.connect_signals(
-            {
-                "guard-changed": (self._on_guard_change,),
-                "transition-destroy": (self.watcher.unsubscribe_all,),
-            }
-        )
         return builder.get_object("transition-editor")
 
     @transactional
@@ -74,7 +74,14 @@ class StatePropertyPage(PropertyPageBase):
         if not subject:
             return
 
-        builder = new_builder("state-editor")
+        builder = new_builder(
+            "state-editor",
+            signals={
+                "entry-changed": (self.on_text_change, self.set_entry),
+                "exit-changed": (self.on_text_change, self.set_exit),
+                "do-activity-changed": (self.on_text_change, self.set_do_activity),
+            },
+        )
 
         entry = builder.get_object("entry")
         if subject.entry:
@@ -88,13 +95,6 @@ class StatePropertyPage(PropertyPageBase):
         if subject.doActivity:
             do_activity.set_text(self.subject.doActivity.name or "")
 
-        builder.connect_signals(
-            {
-                "entry-changed": (self.on_text_change, self.set_entry),
-                "exit-changed": (self.on_text_change, self.set_exit),
-                "do-activity-changed": (self.on_text_change, self.set_do_activity),
-            }
-        )
         return builder.get_object("state-editor")
 
     @transactional

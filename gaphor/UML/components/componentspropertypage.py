@@ -25,14 +25,14 @@ class ComponentPropertyPage(PropertyPageBase):
         if not subject:
             return
 
-        builder = new_builder("component-editor")
+        builder = new_builder(
+            "component-editor",
+            signals={"indirectly-instantiated-changed": (self._on_ii_change,)},
+        )
 
         ii = builder.get_object("indirectly-instantiated")
         ii.set_active(subject.isIndirectlyInstantiated)
 
-        builder.connect_signals(
-            {"indirectly-instantiated-changed": (self._on_ii_change,)}
-        )
         return builder.get_object("component-editor")
 
     @transactional

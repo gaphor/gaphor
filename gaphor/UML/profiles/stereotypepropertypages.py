@@ -25,7 +25,18 @@ class StereotypePage(PropertyPageBase):
         if not stereotypes:
             return None
 
-        builder = new_builder("stereotypes-editor")
+        model, toggle_stereotype_handler, set_slot_value_handler = stereotype_model(
+            subject
+        )
+
+        builder = new_builder(
+            "stereotypes-editor",
+            signals={
+                "show-stereotypes-changed": (self._on_show_stereotypes_change,),
+                "toggle-stereotype": toggle_stereotype_handler,
+                "set-slot-value": set_slot_value_handler,
+            },
+        )
 
         show_stereotypes = builder.get_object("show-stereotypes")
 
@@ -34,20 +45,8 @@ class StereotypePage(PropertyPageBase):
         else:
             show_stereotypes.destroy()
 
-        model, toggle_stereotype_handler, set_slot_value_handler = stereotype_model(
-            subject
-        )
-
         stereotype_list = builder.get_object("stereotype-list")
         stereotype_list.set_model(model)
-
-        builder.connect_signals(
-            {
-                "show-stereotypes-changed": (self._on_show_stereotypes_change,),
-                "toggle-stereotype": toggle_stereotype_handler,
-                "set-slot-value": set_slot_value_handler,
-            }
-        )
 
         return builder.get_object("stereotypes-editor")
 

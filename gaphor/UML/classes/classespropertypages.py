@@ -116,16 +116,19 @@ class NamedElementPropertyPage(PropertyPageBase):
         self.watcher = subject.watcher() if subject else None
 
     def construct(self):
-        if UML.model.is_metaclass(self.subject):
-            return
-
-        builder = new_builder("named-element-editor")
-
-        subject = self.subject
-        if not subject:
+        if not self.subject or UML.model.is_metaclass(self.subject):
             return
 
         assert self.watcher
+        builder = new_builder(
+            "named-element-editor",
+            signals={
+                "name-changed": (self._on_name_changed,),
+                "name-entry-destroyed": (self.watcher.unsubscribe_all,),
+            },
+        )
+
+        subject = self.subject
 
         entry = builder.get_object("name-entry")
         entry.set_text(subject and subject.name or "")
@@ -136,12 +139,6 @@ class NamedElementPropertyPage(PropertyPageBase):
 
         self.watcher.watch("name", handler)
 
-        builder.connect_signals(
-            {
-                "name-changed": (self._on_name_changed,),
-                "name-entry-destroyed": (self.watcher.unsubscribe_all,),
-            }
-        )
         return builder.get_object("named-element-editor")
 
     @transactional
@@ -161,12 +158,13 @@ class ClassifierPropertyPage(PropertyPageBase):
         if UML.model.is_metaclass(self.subject):
             return
 
-        builder = new_builder("classifier-editor")
+        builder = new_builder(
+            "classifier-editor",
+            signals={"abstract-changed": (self._on_abstract_change,)},
+        )
 
         abstract = builder.get_object("abstract")
         abstract.set_active(self.subject.isAbstract)
-
-        builder.connect_signals({"abstract-changed": (self._on_abstract_change,)})
 
         return builder.get_object("classifier-editor")
 
@@ -185,7 +183,10 @@ class InterfacePropertyPage(PropertyPageBase):
         self.item = item
 
     def construct(self):
-        builder = new_builder("interface-editor")
+        builder = new_builder(
+            "interface-editor", signals={"folded-changed": (self._on_fold_change,)}
+        )
+
         item = self.item
 
         connected_items = [
@@ -197,8 +198,6 @@ class InterfacePropertyPage(PropertyPageBase):
         folded = builder.get_object("folded")
         folded.set_active(item.folded != Folded.NONE)
         folded.set_sensitive(can_fold)
-
-        builder.connect_signals({"folded-changed": (self._on_fold_change,)})
 
         return builder.get_object("interface-editor")
 
@@ -227,13 +226,22 @@ class AttributesPage(PropertyPageBase):
         if not self.item.subject:
             return
 
-        builder = new_builder("attributes-editor")
+        self.model = ClassAttributes(self.item, (str, bool, object))
+
+        builder = new_builder(
+            "attributes-editor",
+            signals={
+                "show-attributes-changed": (self._on_show_attributes_change,),
+                "attributes-name-edited": (on_text_cell_edited, self.model, 0),
+                "attributes-static-edited": (on_bool_cell_edited, self.model, 1),
+                "tree-view-destroy": (self.watcher.unsubscribe_all,),
+                "attributes-keypress": (on_keypress_event,),
+            },
+        )
         page = builder.get_object("attributes-editor")
 
         show_attributes = builder.get_object("show-attributes")
         show_attributes.set_active(self.item.show_attributes)
-
-        self.model = ClassAttributes(self.item, (str, bool, object))
 
         tree_view: Gtk.TreeView = builder.get_object("attributes-list")
         tree_view.set_model(self.model)
@@ -258,15 +266,6 @@ class AttributesPage(PropertyPageBase):
             "ownedAttribute.typeValue", handler
         )
 
-        builder.connect_signals(
-            {
-                "show-attributes-changed": (self._on_show_attributes_change,),
-                "attributes-name-edited": (on_text_cell_edited, self.model, 0),
-                "attributes-static-edited": (on_bool_cell_edited, self.model, 1),
-                "tree-view-destroy": (self.watcher.unsubscribe_all,),
-                "attributes-keypress": (on_keypress_event,),
-            }
-        )
         return page
 
     @transactional
@@ -291,12 +290,22 @@ class OperationsPage(PropertyPageBase):
         if not self.item.subject:
             return
 
-        builder = new_builder("operations-editor")
+        self.model = ClassOperations(self.item, (str, bool, bool, object))
+
+        builder = new_builder(
+            "operations-editor",
+            signals={
+                "show-operations-changed": (self._on_show_operations_change,),
+                "operations-name-edited": (on_text_cell_edited, self.model, 0),
+                "operations-abstract-edited": (on_bool_cell_edited, self.model, 1),
+                "operations-static-edited": (on_bool_cell_edited, self.model, 2),
+                "tree-view-destroy": (self.watcher.unsubscribe_all,),
+                "operations-keypress": (on_keypress_event,),
+            },
+        )
 
         show_operations = builder.get_object("show-operations")
         show_operations.set_active(self.item.show_operations)
-
-        self.model = ClassOperations(self.item, (str, bool, bool, object))
 
         tree_view: Gtk.TreeView = builder.get_object("operations-list")
         tree_view.set_model(self.model)
@@ -324,17 +333,6 @@ class OperationsPage(PropertyPageBase):
             "ownedOperation.ownedParameter.defaultValue", handler
         )
 
-        builder.connect_signals(
-            {
-                "show-operations-changed": (self._on_show_operations_change,),
-                "operations-name-edited": (on_text_cell_edited, self.model, 0),
-                "operations-abstract-edited": (on_bool_cell_edited, self.model, 1),
-                "operations-static-edited": (on_bool_cell_edited, self.model, 2),
-                "tree-view-destroy": (self.watcher.unsubscribe_all,),
-                "operations-keypress": (on_keypress_event,),
-            }
-        )
-
         return builder.get_object("operations-editor")
 
     @transactional
@@ -360,7 +358,14 @@ class DependencyPropertyPage(PropertyPageBase):
         super().__init__()
         self.item = item
         self.watcher = self.item.watcher()
-        self.builder = new_builder("dependency-editor")
+        self.builder = new_builder(
+            "dependency-editor",
+            signals={
+                "dependency-type-changed": (self._on_dependency_type_change,),
+                "automatic-changed": (self._on_auto_dependency_change,),
+                "dependency-type-destroy": (self.watcher.unsubscribe_all,),
+            },
+        )
 
     def construct(self):
         dependency_combo = self.builder.get_object("dependency-combo")
@@ -373,14 +378,6 @@ class DependencyPropertyPage(PropertyPageBase):
         self.update()
 
         self.watcher.watch("subject", self._on_subject_change)
-
-        self.builder.connect_signals(
-            {
-                "dependency-type-changed": (self._on_dependency_type_change,),
-                "automatic-changed": (self._on_auto_dependency_change,),
-                "dependency-type-destroy": (self.watcher.unsubscribe_all,),
-            }
-        )
 
         return self.builder.get_object("dependency-editor")
 
@@ -433,7 +430,23 @@ class AssociationPropertyPage(PropertyPageBase):
         self.watcher = item.subject and self.subject.watcher()
         self.semaphore = 0
 
-    def construct_end(self, builder, end_name, end):
+    def handlers_end(self, end_name, end):
+        subject = end.subject
+
+        stereotypes = UML.model.get_stereotypes(subject)
+        if stereotypes:
+            model, toggle_handler, set_value_handler = stereotype_model(subject)
+            return model, {
+                f"{end_name}-toggle-stereotype": toggle_handler,
+                f"{end_name}-set-slot-value": set_value_handler,
+            }
+        else:
+            return None, {
+                f"{end_name}-toggle-stereotype": (_dummy_handler,),
+                f"{end_name}-set-slot-value": (_dummy_handler,),
+            }
+
+    def construct_end(self, builder, end_name, end, stereotypes_model):
         subject = end.subject
         title = builder.get_object(f"{end_name}-title")
         if subject.type:
@@ -447,22 +460,12 @@ class AssociationPropertyPage(PropertyPageBase):
         aggregation = builder.get_object(f"{end_name}-aggregation")
         aggregation.set_active(self.AGGREGATION.index(subject.aggregation))
 
-        stereotypes = UML.model.get_stereotypes(subject)
-        if stereotypes:
+        if stereotypes_model:
             stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
-            model, toggle_handler, set_value_handler = stereotype_model(subject)
-            stereotype_list.set_model(model)
-            return {
-                f"{end_name}-toggle-stereotype": toggle_handler,
-                f"{end_name}-set-slot-value": set_value_handler,
-            }
+            stereotype_list.set_model(stereotypes_model)
         else:
             stereotype_frame = builder.get_object(f"{end_name}-stereotype-frame")
             stereotype_frame.destroy()
-            return {
-                f"{end_name}-toggle-stereotype": (_dummy_handler,),
-                f"{end_name}-set-slot-value": (_dummy_handler,),
-            }
 
     def update_end_name(self, builder, end_name, subject):
         name = builder.get_object(f"{end_name}-name")
@@ -485,16 +488,34 @@ class AssociationPropertyPage(PropertyPageBase):
         if not self.subject:
             return None
 
-        builder = new_builder("association-editor")
-
         head = self.item.head_end
         tail = self.item.tail_end
+
+        head_model, head_signal_handlers = self.handlers_end("head", head)
+        tail_model, tail_signal_handlers = self.handlers_end("tail", tail)
+
+        builder = new_builder(
+            "association-editor",
+            signals={
+                "show-direction-changed": (self._on_show_direction_change,),
+                "invert-direction-changed": (self._on_invert_direction_change,),
+                "head-name-changed": (self._on_end_name_change, head),
+                "head-navigation-changed": (self._on_end_navigability_change, head),
+                "head-aggregation-changed": (self._on_end_aggregation_change, head),
+                "tail-name-changed": (self._on_end_name_change, tail),
+                "tail-navigation-changed": (self._on_end_navigability_change, tail),
+                "tail-aggregation-changed": (self._on_end_aggregation_change, tail),
+                "association-editor-destroy": (self.watcher.unsubscribe_all,),
+                **head_signal_handlers,
+                **tail_signal_handlers,
+            },
+        )
 
         show_direction = builder.get_object("show-direction")
         show_direction.set_active(self.item.show_direction)
 
-        head_signal_handlers = self.construct_end(builder, "head", head)
-        tail_signal_handlers = self.construct_end(builder, "tail", tail)
+        self.construct_end(builder, "head", head, head_model)
+        self.construct_end(builder, "tail", tail, tail_model)
 
         def name_handler(event):
             end_name = "head" if event.element is head.subject else "tail"
@@ -515,22 +536,6 @@ class AssociationPropertyPage(PropertyPageBase):
         ).watch(
             "memberEnd[Property].type",
             restore_nav_handler,
-        )
-
-        builder.connect_signals(
-            {
-                "show-direction-changed": (self._on_show_direction_change,),
-                "invert-direction-changed": (self._on_invert_direction_change,),
-                "head-name-changed": (self._on_end_name_change, head),
-                "head-navigation-changed": (self._on_end_navigability_change, head),
-                "head-aggregation-changed": (self._on_end_aggregation_change, head),
-                "tail-name-changed": (self._on_end_name_change, tail),
-                "tail-navigation-changed": (self._on_end_navigability_change, tail),
-                "tail-aggregation-changed": (self._on_end_aggregation_change, tail),
-                "association-editor-destroy": (self.watcher.unsubscribe_all,),
-                **head_signal_handlers,
-                **tail_signal_handlers,
-            }
         )
 
         return builder.get_object("association-editor")
