@@ -1,4 +1,3 @@
-import importlib
 import logging
 
 from gi.repository import Gtk
@@ -12,6 +11,7 @@ from gaphor.diagram.propertypages import (
     EditableTreeModel,
     PropertyPageBase,
     PropertyPages,
+    new_resource_builder,
     on_bool_cell_edited,
     on_keypress_event,
     on_text_cell_edited,
@@ -26,14 +26,7 @@ from gaphor.UML.profiles.stereotypepropertypages import stereotype_model
 log = logging.getLogger(__name__)
 
 
-def new_builder(*object_ids):
-    builder = Gtk.Builder()
-    builder.set_translation_domain("gaphor")
-    with importlib.resources.path(
-        "gaphor.UML.classes", "propertypages.glade"
-    ) as glade_file:
-        builder.add_objects_from_file(str(glade_file), object_ids)
-    return builder
+new_builder = new_resource_builder("gaphor.UML.classes")
 
 
 class ClassAttributes(EditableTreeModel):

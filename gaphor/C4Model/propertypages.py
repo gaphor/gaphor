@@ -1,21 +1,14 @@
-import importlib.resources
 from typing import Union
-
-from gi.repository import Gtk
 
 from gaphor.C4Model import c4model
 from gaphor.core import transactional
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
+from gaphor.diagram.propertypages import (
+    PropertyPageBase,
+    PropertyPages,
+    new_resource_builder,
+)
 
-
-def new_builder(*object_ids):
-    builder = Gtk.Builder()
-    builder.set_translation_domain("gaphor")
-    with importlib.resources.path(
-        "gaphor.C4Model", "propertypages.glade"
-    ) as glade_file:
-        builder.add_objects_from_file(str(glade_file), object_ids)
-    return builder
+new_builder = new_resource_builder("gaphor.C4Model")
 
 
 @PropertyPages.register(c4model.C4Container)

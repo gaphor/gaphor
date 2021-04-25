@@ -36,14 +36,26 @@ from gaphor.core import transactional
 from gaphor.core.modeling import Element
 
 
-def new_builder(*object_ids):
-    builder = Gtk.Builder()
-    builder.set_translation_domain("gaphor")
-    with importlib.resources.path(
-        "gaphor.diagram", "propertypages.glade"
-    ) as glade_file:
-        builder.add_objects_from_file(str(glade_file), object_ids)
-    return builder
+def new_resource_builder(package, property_pages="propertypages"):
+    def new_builder(*object_ids, signals=None):
+        if Gtk.get_major_version() == 3:
+            builder = Gtk.Builder()
+            ui_file = f"{property_pages}.glade"
+        else:
+            builder = Gtk.Builder(signals)
+            ui_file = f"{property_pages}.ui"
+
+        builder.set_translation_domain("gaphor")
+        with importlib.resources.path(package, ui_file) as glade_file:
+            builder.add_objects_from_file(str(glade_file), object_ids)
+        if signals and Gtk.get_major_version() == 3:
+            builder.connect_signals(signals)
+        return builder
+
+    return new_builder
+
+
+new_builder = new_resource_builder("gaphor.diagram")
 
 
 class _PropertyPages:
@@ -276,7 +288,13 @@ class LineStylePage(PropertyPageBase):
         self.horizontal_button: Gtk.Button
 
     def construct(self):
-        builder = new_builder("line-editor")
+        builder = new_builder(
+            "line-editor",
+            signals={
+                "rectilinear-changed": (self._on_orthogonal_change,),
+                "orientation-changed": (self._on_horizontal_change,),
+            },
+        )
 
         rectilinear_button = builder.get_object("line-rectilinear")
         rectilinear_button.set_active(self.item.orthogonal)
@@ -286,12 +304,6 @@ class LineStylePage(PropertyPageBase):
         horizontal_button.set_sensitive(self.item.orthogonal)
         self.horizontal_button = horizontal_button
 
-        builder.connect_signals(
-            {
-                "rectilinear-changed": (self._on_orthogonal_change,),
-                "orientation-changed": (self._on_horizontal_change,),
-            }
-        )
         return builder.get_object("line-editor")
 
     @transactional

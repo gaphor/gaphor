@@ -1,6 +1,5 @@
 """The element editor is a utility window used for editing elements."""
 
-import importlib.resources
 import logging
 from typing import Optional
 
@@ -15,19 +14,14 @@ from gaphor.core.modeling.event import (
     ElementCreated,
     ModelReady,
 )
-from gaphor.diagram.propertypages import PropertyPages
+from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramSelectionChanged
 
 log = logging.getLogger(__name__)
 
 
-def new_builder(*object_ids):
-    builder = Gtk.Builder()
-    builder.set_translation_domain("gaphor")
-    with importlib.resources.path("gaphor.ui", "elementeditor.glade") as glade_file:
-        builder.add_objects_from_file(str(glade_file), object_ids)
-    return builder
+new_builder = new_resource_builder("gaphor.ui", "elementeditor")
 
 
 class DelayedFunction:

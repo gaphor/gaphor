@@ -4,8 +4,14 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
+from gaphor.diagram.propertypages import (
+    PropertyPageBase,
+    PropertyPages,
+    new_resource_builder,
+)
 from gaphor.UML.actions.partition import PartitionItem
+
+new_builder = new_resource_builder("gaphor.UML.actions")
 
 
 @PropertyPages.register(PartitionItem)

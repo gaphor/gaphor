@@ -1,21 +1,15 @@
-import importlib.resources
-
-from gi.repository import Gtk
-
 from gaphor.core import transactional
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
+from gaphor.diagram.propertypages import (
+    PropertyPageBase,
+    PropertyPages,
+    new_resource_builder,
+)
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
 from gaphor.SysML.requirements.requirement import RequirementItem
 from gaphor.UML.classes.classespropertypages import AttributesPage, OperationsPage
 
-
-def new_builder(*object_ids):
-    builder = Gtk.Builder()
-    builder.set_translation_domain("gaphor")
-    with importlib.resources.path("gaphor.SysML", "propertypages.glade") as glade_file:
-        builder.add_objects_from_file(str(glade_file), object_ids)
-    return builder
+new_builder = new_resource_builder("gaphor.SysML")
 
 
 @PropertyPages.register(sysml.Requirement)
@@ -30,7 +24,14 @@ class RequirementPropertyPage(PropertyPageBase):
         self.watcher = subject.watcher()
 
     def construct(self):
-        builder = new_builder("requirement-editor", "requirement-text-buffer")
+        builder = new_builder(
+            "requirement-editor",
+            "requirement-text-buffer",
+            signals={
+                "requirement-id-changed": (self._on_id_changed,),
+                "requirement-destroyed": (self.watcher.unsubscribe_all,),
+            },
+        )
         subject = self.subject
 
         entry = builder.get_object("requirement-id")
@@ -52,12 +53,6 @@ class RequirementPropertyPage(PropertyPageBase):
 
         self.watcher.watch("text", text_handler)
 
-        builder.connect_signals(
-            {
-                "requirement-id-changed": (self._on_id_changed,),
-                "requirement-destroyed": (self.watcher.unsubscribe_all,),
-            }
-        )
         return builder.get_object("requirement-editor")
 
     @transactional
@@ -90,7 +85,13 @@ class PartsAndReferencesPage(PropertyPageBase):
         if not self.item.subject:
             return
 
-        builder = new_builder("parts-and-references-editor")
+        builder = new_builder(
+            "parts-and-references-editor",
+            signals={
+                "show-parts-changed": (self._on_show_parts_change,),
+                "show-references-changed": (self._on_show_references_change,),
+            },
+        )
 
         show_parts = builder.get_object("show-parts")
         show_parts.set_active(self.item.show_parts)
@@ -98,12 +99,6 @@ class PartsAndReferencesPage(PropertyPageBase):
         show_references = builder.get_object("show-references")
         show_references.set_active(self.item.show_references)
 
-        builder.connect_signals(
-            {
-                "show-parts-changed": (self._on_show_parts_change,),
-                "show-references-changed": (self._on_show_references_change,),
-            }
-        )
         return builder.get_object("parts-and-references-editor")
 
     @transactional

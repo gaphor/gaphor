@@ -1,23 +1,16 @@
-import importlib
 import math
-
-from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
+from gaphor.diagram.propertypages import (
+    PropertyPageBase,
+    PropertyPages,
+    new_resource_builder,
+)
 from gaphor.UML.actions.activitynodes import ForkNodeItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
-
-def new_builder(*object_ids):
-    builder = Gtk.Builder()
-    builder.set_translation_domain("gaphor")
-    with importlib.resources.path(
-        "gaphor.UML.actions", "propertypages.glade"
-    ) as glade_file:
-        builder.add_objects_from_file(str(glade_file), object_ids)
-    return builder
+new_builder = new_resource_builder("gaphor.UML.actions")
 
 
 @PropertyPages.register(ObjectNodeItem)
