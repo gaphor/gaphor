@@ -38,7 +38,7 @@ class HelpService(Service, ActionProvider):
 
         about.set_transient_for(self.window)
 
-        about.show_all()
+        about.show()
         about.run()
         about.destroy()
 
@@ -54,5 +54,5 @@ class HelpService(Service, ActionProvider):
         shortcuts.set_modal(True)
         shortcuts.set_transient_for(self.window)
 
-        shortcuts.show_all()
+        shortcuts.show()
         return shortcuts
