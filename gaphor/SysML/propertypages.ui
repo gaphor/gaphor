@@ -139,9 +139,6 @@ renderers and such.</property>
             <property name="buffer">requirement-text-buffer</property>
           </object>
         </child>
-        <child type="label_item">
-          <placeholder/>
-        </child>
       </object>
     </child>
   </object>

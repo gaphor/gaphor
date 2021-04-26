@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkLabel" id="00-instructions">
+    <property name="can-focus">0</property>
+    <property name="label" translatable="yes">To create a fresh model: create a window, create the
+desired element, in the tree view pop upmenu, select
+Remove Parent.
+
+Padding between elements is 6px.
+Top margin is 6 px, 12px for expanders.
+Edit, from the popup menu, will allow you to add cell
+renderers and such.</property>
+    <property name="xalign">0</property>
+  </object>
+  <object class="GtkBox" id="association-editor">
+    <property name="can-focus">0</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <signal name="destroy" handler="association-editor-destroy" swapped="no"/>
+    <child>
+      <object class="GtkBox">
+        <property name="can-focus">0</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="can-focus">0</property>
+            <property name="label" translatable="yes">Show Direction</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-direction">
+            <property name="valign">center</property>
+            <signal name="notify::active" handler="show-direction-changed" swapped="no"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton">
+            <property name="receives-default">1</property>
+            <property name="tooltip-text" translatable="yes">Invert direction</property>
+            <signal name="clicked" handler="invert-direction-changed" swapped="no"/>
+            <child>
+              <object class="GtkImage">
+                <property name="can-focus">0</property>
+                <property name="icon-name">object-flip-horizontal-symbolic</property>
+              </object>
+            </child>
+            <style>
+              <class name="flat"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkExpander">
+        <property name="expanded">1</property>
+        <child>
+          <object class="GtkBox">
+            <property name="can-focus">0</property>
+            <property name="margin-top">6</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkEntry" id="head-name">
+                <property name="secondary-icon-tooltip-text" translatable="yes">Enter attribute name and multiplicity, for example
+- name
++ name [1]
+- name [1..2]
+~ 1..2
+- [1..2]</property>
+                <signal name="changed" handler="head-name-changed" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="head-navigation">
+                <property name="can-focus">0</property>
+                <items>
+                  <item id="0" translatable="yes">Unknown navigation</item>
+                  <item id="1" translatable="yes">Not navigable</item>
+                  <item id="2" translatable="yes">Navigable</item>
+                </items>
+                <signal name="changed" handler="head-navigation-changed" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="head-aggregation">
+                <property name="can-focus">0</property>
+                <items>
+                  <item id="0" translatable="yes">No aggregation</item>
+                  <item id="1" translatable="yes">Shared</item>
+                  <item id="2" translatable="yes">Composite</item>
+                </items>
+                <signal name="changed" handler="head-aggregation-changed" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame" id="head-stereotype-frame">
+                <property name="can-focus">0</property>
+                <property name="child">
+                  <object class="GtkTreeView" id="head-stereotype-list">
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection"/>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn">
+                        <property name="title" translatable="yes">Attributes</property>
+                        <child>
+                          <object class="GtkCellRendererToggle">
+                            <signal name="toggled" handler="head-toggle-stereotype" swapped="no"/>
+                          </object>
+                          <attributes>
+                            <attribute name="visible">3</attribute>
+                            <attribute name="active">2</attribute>
+                          </attributes>
+                        </child>
+                        <child>
+                          <object class="GtkCellRendererText"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn">
+                        <property name="title" translatable="yes">Value</property>
+                        <child>
+                          <object class="GtkCellRendererText">
+                            <signal name="edited" handler="head-set-slot-value" swapped="no"/>
+                          </object>
+                          <attributes>
+                            <attribute name="editable">4</attribute>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child type="label">
+          <object class="GtkLabel" id="head-title">
+            <property name="can-focus">0</property>
+            <property name="label" translatable="yes">Head:</property>
+            <attributes>
+              <attribute name="weight" value="bold"></attribute>
+            </attributes>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkExpander">
+        <property name="margin-top">6</property>
+        <property name="expanded">1</property>
+        <child>
+          <object class="GtkBox">
+            <property name="can-focus">0</property>
+            <property name="margin-top">6</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkEntry" id="tail-name">
+                <property name="secondary-icon-tooltip-text" translatable="yes">Enter attribute name and multiplicity, for example
+- name
++ name [1]
+- name [1..2]
+~ 1..2
+- [1..2]</property>
+                <signal name="changed" handler="tail-name-changed" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="tail-navigation">
+                <property name="can-focus">0</property>
+                <items>
+                  <item id="0" translatable="yes">Unknown navigation</item>
+                  <item id="1" translatable="yes">Not navigable</item>
+                  <item id="2" translatable="yes">Navigable</item>
+                </items>
+                <signal name="changed" handler="tail-navigation-changed" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="tail-aggregation">
+                <property name="can-focus">0</property>
+                <items>
+                  <item id="0" translatable="yes">No aggregation</item>
+                  <item id="1" translatable="yes">Shared</item>
+                  <item id="2" translatable="yes">Composite</item>
+                </items>
+                <signal name="changed" handler="tail-aggregation-changed" swapped="no"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame" id="tail-stereotype-frame">
+                <property name="can-focus">0</property>
+                <property name="child">
+                  <object class="GtkTreeView" id="tail-stereotype-list">
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection"/>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn">
+                        <property name="title" translatable="yes">Attributes</property>
+                        <child>
+                          <object class="GtkCellRendererToggle">
+                            <signal name="toggled" handler="tail-toggle-stereotype" swapped="no"/>
+                          </object>
+                          <attributes>
+                            <attribute name="visible">3</attribute>
+                            <attribute name="active">2</attribute>
+                          </attributes>
+                        </child>
+                        <child>
+                          <object class="GtkCellRendererText"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn">
+                        <property name="title" translatable="yes">Value</property>
+                        <signal name="clicked" handler="tail-set-slot-value" swapped="no"/>
+                        <child>
+                          <object class="GtkCellRendererText">
+                            <signal name="edited" handler="tail-set-slot-value" swapped="no"/>
+                          </object>
+                          <attributes>
+                            <attribute name="editable">4</attribute>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child type="label">
+          <object class="GtkLabel" id="tail-title">
+            <property name="can-focus">0</property>
+            <property name="label" translatable="yes">Tail:</property>
+            <attributes>
+              <attribute name="weight" value="bold"></attribute>
+            </attributes>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkExpander" id="attributes-editor">
+    <property name="margin-top">12</property>
+    <property name="expanded">1</property>
+    <child>
+      <object class="GtkBox">
+        <property name="can-focus">0</property>
+        <property name="margin-top">6</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkBox">
+            <property name="can-focus">0</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="can-focus">0</property>
+                <property name="label" translatable="yes">Show Attributes</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="show-attributes">
+                <signal name="notify::active" handler="show-attributes-changed" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkFrame">
+            <property name="can-focus">0</property>
+            <property name="child">
+              <object class="GtkTreeView" id="attributes-list">
+                <property name="height-request">112</property>
+                <property name="tooltip-text" translatable="yes">Add and edit class attributes according to UML syntax.
+Attribute syntax examples
+- attr
+- + attr: int
+- # /attr: int
+
+Press ENTER to edit item, BS/DEL to remove item.
+Use -/= to move items up or down.</property>
+                <property name="headers-clickable">0</property>
+                <property name="reorderable">1</property>
+                <property name="enable-search">0</property>
+                <property name="show-expanders">0</property>
+                <property name="enable-grid-lines">horizontal</property>
+                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
+                <signal name="key-press-event" handler="attributes-keypress" swapped="no"/>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="resizable">1</property>
+                    <property name="title" translatable="yes">Attributes</property>
+                    <property name="expand">1</property>
+                    <child>
+                      <object class="GtkCellRendererText">
+                        <property name="xpad">2</property>
+                        <property name="ypad">2</property>
+                        <property name="xalign">0</property>
+                        <property name="editable">1</property>
+                        <signal name="edited" handler="attributes-name-edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="title" translatable="yes">S</property>
+                    <child>
+                      <object class="GtkCellRendererToggle">
+                        <signal name="toggled" handler="attributes-static-edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="active">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="can-focus">0</property>
+        <property name="label" translatable="yes">Attributes</property>
+        <attributes>
+          <attribute name="weight" value="bold"></attribute>
+        </attributes>
+      </object>
+    </child>
+  </object>
+  <object class="GtkBox" id="classifier-editor">
+    <property name="can-focus">0</property>
+    <property name="margin-top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkBox">
+        <property name="can-focus">0</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="can-focus">0</property>
+            <property name="label" translatable="yes">Abstract</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="abstract">
+            <property name="halign">center</property>
+            <signal name="notify::active" handler="abstract-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkBox" id="dependency-editor">
+    <property name="can-focus">0</property>
+    <property name="margin-top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="can-focus">0</property>
+        <property name="label" translatable="yes">Dependency type</property>
+        <property name="xalign">0</property>
+        <attributes>
+          <attribute name="weight" value="bold"></attribute>
+        </attributes>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="can-focus">0</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="can-focus">0</property>
+            <property name="label" translatable="yes">Automatic</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="automatic">
+            <property name="halign">center</property>
+            <signal name="notify::active" handler="automatic-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkComboBox" id="dependency-combo">
+        <property name="can-focus">0</property>
+        <signal name="changed" handler="dependency-type-changed" swapped="no"/>
+        <child>
+          <object class="GtkCellRendererText"/>
+          <attributes>
+            <attribute name="text">0</attribute>
+          </attributes>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkBox" id="interface-editor">
+    <property name="can-focus">0</property>
+    <property name="margin-top">6</property>
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkBox">
+        <property name="can-focus">0</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="can-focus">0</property>
+            <property name="halign">start</property>
+            <property name="label" translatable="yes">Folded</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="folded">
+            <property name="halign">center</property>
+            <signal name="notify::active" handler="folded-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkBox" id="named-element-editor">
+    <property name="can-focus">0</property>
+    <property name="margin-top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <property name="baseline-position">top</property>
+    <child>
+      <object class="GtkLabel" id="label1">
+        <property name="can-focus">0</property>
+        <property name="label" translatable="yes">Name</property>
+        <property name="xalign">0</property>
+        <attributes>
+          <attribute name="weight" value="bold"></attribute>
+        </attributes>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="name-entry">
+        <signal name="changed" handler="name-changed" swapped="no"/>
+        <signal name="destroy" handler="name-entry-destroyed" swapped="no"/>
+      </object>
+    </child>
+  </object>
+  <object class="GtkExpander" id="operations-editor">
+    <property name="margin-top">12</property>
+    <property name="expanded">1</property>
+    <child>
+      <object class="GtkBox">
+        <property name="can-focus">0</property>
+        <property name="margin-top">6</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkBox">
+            <property name="can-focus">0</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="can-focus">0</property>
+                <property name="label" translatable="yes">Show Operations</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="show-operations">
+                <signal name="notify::active" handler="show-operations-changed" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkFrame">
+            <property name="can-focus">0</property>
+            <property name="child">
+              <object class="GtkTreeView" id="operations-list">
+                <property name="height-request">112</property>
+                <property name="tooltip-text" translatable="yes">Add and edit class operations according to UML syntax. Operation syntax examples
+- call()
+- + call(a: int, b: str)
+- # call(a: int: b: str): bool
+
+Press ENTER to edit item, BS/DEL to remove item.
+Use -/= to move items up or down.</property>
+                <property name="headers-clickable">0</property>
+                <property name="reorderable">1</property>
+                <property name="enable-search">0</property>
+                <property name="show-expanders">0</property>
+                <property name="enable-grid-lines">horizontal</property>
+                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
+                <signal name="key-press-event" handler="operations-keypress" swapped="no"/>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="resizable">1</property>
+                    <property name="title" translatable="yes">Operations</property>
+                    <property name="expand">1</property>
+                    <child>
+                      <object class="GtkCellRendererText">
+                        <property name="xpad">2</property>
+                        <property name="ypad">2</property>
+                        <property name="xalign">0</property>
+                        <property name="editable">1</property>
+                        <signal name="edited" handler="operations-name-edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="title" translatable="yes">A</property>
+                    <child>
+                      <object class="GtkCellRendererToggle">
+                        <signal name="toggled" handler="operations-abstract-edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="active">1</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="title" translatable="yes">S</property>
+                    <child>
+                      <object class="GtkCellRendererToggle">
+                        <signal name="toggled" handler="operations-static-edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="active">2</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="can-focus">0</property>
+        <property name="label" translatable="yes">Operations</property>
+        <attributes>
+          <attribute name="weight" value="bold"></attribute>
+        </attributes>
+      </object>
+    </child>
+  </object>
+</interface>
