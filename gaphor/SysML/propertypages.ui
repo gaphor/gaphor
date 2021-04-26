@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkLabel" id="00-instructions">
+    <property name="can_focus">0</property>
+    <property name="label" translatable="yes">To create a fresh model: create a window, create the
+desired element, in the tree view pop upmenu, select
+Remove Parent.
+
+Padding between elements is 6px.
+Top margin is 6 px, 12px for expanders.
+Edit, from the popup menu, will allow you to add cell
+renderers and such.</property>
+    <property name="xalign">0</property>
+  </object>
+  <object class="GtkExpander" id="parts-and-references-editor">
+    <property name="margin_top">12</property>
+    <property name="expanded">1</property>
+    <child>
+      <object class="GtkBox">
+        <property name="can_focus">0</property>
+        <property name="margin_top">6</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkBox">
+            <property name="can_focus">0</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="can_focus">0</property>
+                <property name="label" translatable="yes">Show Parts</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="show-parts">
+                <property name="halign">center</property>
+                <signal name="notify::active" handler="show-parts-changed" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="can_focus">0</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="can_focus">0</property>
+                <property name="label" translatable="yes">Show references</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="show-references">
+                <property name="halign">center</property>
+                <signal name="notify::active" handler="show-references-changed" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="can_focus">0</property>
+        <property name="label" translatable="yes">Parts and References</property>
+        <attributes>
+          <attribute name="weight" value="bold"></attribute>
+        </attributes>
+      </object>
+    </child>
+  </object>
+  <object class="GtkBox" id="property-editor">
+    <property name="can_focus">0</property>
+    <property name="margin_top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkLabel" id="label3">
+        <property name="valign">center</property>
+        <property name="label" translatable="yes">Aggregation</property>
+        <property name="xalign">0</property>
+        <attributes>
+          <attribute name="weight" value="bold"></attribute>
+        </attributes>
+      </object>
+    </child>
+    <child>
+      <object class="GtkComboBoxText" id="aggregation">
+        <property name="can_focus">0</property>
+        <items>
+          <item id="0" translatable="yes">No aggregation</item>
+          <item id="1" translatable="yes">Shared</item>
+          <item id="2" translatable="yes">Composite</item>
+        </items>
+        <signal name="changed" handler="aggregation-changed" swapped="no"/>
+      </object>
+    </child>
+  </object>
+  <object class="GtkTextBuffer" id="requirement-text-buffer"/>
+  <object class="GtkBox" id="requirement-editor">
+    <property name="can_focus">0</property>
+    <property name="margin_top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <property name="baseline_position">top</property>
+    <signal name="destroy" handler="requirement-destroyed" swapped="no"/>
+    <child>
+      <object class="GtkLabel" id="label1">
+        <property name="valign">center</property>
+        <property name="can_focus">0</property>
+        <property name="label" translatable="yes">Id</property>
+        <property name="xalign">0</property>
+        <attributes>
+          <attribute name="weight" value="bold"></attribute>
+        </attributes>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="requirement-id">
+        <signal name="changed" handler="requirement-id-changed" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel" id="label2">
+        <property name="valign">center</property>
+        <property name="can_focus">0</property>
+        <property name="margin_top">6</property>
+        <property name="label" translatable="yes">Text</property>
+        <property name="xalign">0</property>
+        <attributes>
+          <attribute name="weight" value="bold"></attribute>
+        </attributes>
+      </object>
+    </child>
+    <child>
+      <object class="GtkFrame">
+        <child>
+          <object class="GtkTextView" id="requirement-text">
+            <property name="wrap_mode">word</property>
+            <property name="buffer">requirement-text-buffer</property>
+          </object>
+        </child>
+        <child type="label_item">
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
