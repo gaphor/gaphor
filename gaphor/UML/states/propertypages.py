@@ -44,7 +44,7 @@ class TransitionPropertyPage(PropertyPageBase):
             guard.set_text(subject.guard.specification or "")
 
         def handler(event):
-            if event.element is subject.guard:
+            if event.element is subject.guard and guard.get_text() != event.new_value:
                 guard.set_text(event.new_value or "")
 
         self.watcher.watch("guard[Constraint].specification", handler)
