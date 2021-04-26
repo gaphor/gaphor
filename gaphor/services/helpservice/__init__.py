@@ -28,7 +28,7 @@ class HelpService(Service, ActionProvider):
     def about(self):
         builder = Gtk.Builder()
         with importlib.resources.path(
-            "gaphor.services.helpservice", "about.glade"
+            "gaphor.services.helpservice", "about.ui"
         ) as glade_file:
             builder.add_objects_from_file(str(glade_file), ("about",))
 
@@ -46,7 +46,7 @@ class HelpService(Service, ActionProvider):
     def shortcuts(self):
         builder = Gtk.Builder()
         with importlib.resources.path(
-            "gaphor.services.helpservice", "shortcuts.glade"
+            "gaphor.services.helpservice", "shortcuts.ui"
         ) as glade_file:
             builder.add_objects_from_file(str(glade_file), ("shortcuts-gaphor",))
 
