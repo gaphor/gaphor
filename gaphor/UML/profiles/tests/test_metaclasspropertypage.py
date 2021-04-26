@@ -4,6 +4,7 @@ import pytest
 from gi.repository import Gtk
 
 from gaphor import UML
+from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.profiles.metaclasspropertypage import MetaclassPropertyPage
 
 
@@ -36,7 +37,7 @@ def test_name_selection_for_metaclass(element_factory, class_):
 
     assert page
 
-    combo = page.get_children()[1]
+    combo = find(page, "metaclass-combo")
 
     assert type(combo) is Gtk.ComboBoxText
     assert combo.get_child().get_text() == "Class"

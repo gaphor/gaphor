@@ -68,8 +68,8 @@ class MetaclassPropertyPage(PropertyPageBase):
         entry.set_text(self.subject and self.subject.name or "")
 
         def handler(event):
-            if event.element is self.subject and event.new_value is not None:
-                entry.set_text(event.new_value)
+            if event.element is self.subject and entry.get_text() != event.new_value:
+                entry.set_text(event.new_value or "")
 
         self.watcher.watch("name", handler)
 

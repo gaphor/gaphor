@@ -4,6 +4,7 @@ import pytest
 from gi.repository import Gtk
 
 from gaphor import UML
+from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.profiles.stereotypepropertypages import StereotypePage
 
@@ -40,9 +41,7 @@ def test_stereotype_page_with_stereotype(element_factory, diagram, class_):
     editor = StereotypePage(class_)
     page = editor.construct()
 
-    box = page.get_children()[0]
-    frame = box.get_children()[1]
-    stereotype_view = frame.get_children()[0]
+    stereotype_view = find(page, "stereotype-list")
 
     assert isinstance(stereotype_view, Gtk.TreeView)
     assert len(stereotype_view.get_model()) == 1
