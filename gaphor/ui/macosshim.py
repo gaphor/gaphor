@@ -1,7 +1,11 @@
 try:
     import gi
+    from gi.repository import Gtk
 
-    gi.require_version("GtkosxApplication", "1.0")
+    if Gtk.get_major_version() == 3:
+        gi.require_version("GtkosxApplication", "1.0")
+    else:
+        raise ValueError()
 except ValueError:
     macos_init = None
 else:
