@@ -275,9 +275,13 @@ class DiagramPage:
     def _on_diagram_item_placed(self, event):
         assert self.widget
         if self.properties.get("reset-tool-after-create", True):
-            self.widget.action_group.actions.lookup_action("select-tool").activate(
-                GLib.Variant.new_string("toolbox-pointer")
-            )
+            if Gtk.get_major_version() == 3:
+                self.widget.action_group.actions.lookup_action("select-tool").activate(
+                    GLib.Variant.new_string("toolbox-pointer")
+                )
+            else:
+                # TODO: GTK4 - activate toolbox-painter
+                pass
 
     def set_drawing_style(self):
         """Set the drawing style for the diagram based on the active style

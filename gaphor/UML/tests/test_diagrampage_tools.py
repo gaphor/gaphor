@@ -20,8 +20,13 @@ def tab(event_manager, element_factory, properties):
         diagram, event_manager, element_factory, properties, UMLModelingLanguage()
     )
 
-    window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
-    window.add(tab.construct())
+    if Gtk.get_major_version() == 3:
+        window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+        window.add(tab.construct())
+    else:
+        window = Gtk.Window.new()
+        window.set_child(tab.construct())
+
     window.show()
     yield tab
     window.destroy()
@@ -74,7 +79,11 @@ def test_pointer(tab):
 )
 def test_placement_action(tab, tool_name, event_manager):
     tool_def = tab.get_tool_def(tool_name)
-    tool = Gtk.GestureDrag.new(tab.view)
+    if Gtk.get_major_version() == 3:
+        tool = Gtk.GestureDrag.new(tab.view)
+    else:
+        tool = Gtk.GestureDrag.new()
+        tab.view.add_controller(tool)
     placement_state = PlacementState(
         tool_def.item_factory, event_manager, tool_def.handle_index
     )

@@ -43,7 +43,10 @@ def test_cyclic_diagram_bug_idle(element_factory, modeling_language, test_models
             Gtk.main_quit()
 
     assert GLib.timeout_add(1, handler) > 0
-    Gtk.main()
+
+    ctx = GLib.main_context_default()
+    while ctx.pending():
+        ctx.iteration(False)
 
 
 def test_association_ends_are_set(element_factory, modeling_language, test_models):
