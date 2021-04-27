@@ -159,7 +159,8 @@ class FlowPropertyPageAbstract(PropertyPageBase):
 
         def handler(event):
             v = event.new_value
-            guard.set_text(v or "")
+            if v != guard.get_text():
+                guard.set_text(v or "")
 
         self.watcher.watch("guard", handler)
 
