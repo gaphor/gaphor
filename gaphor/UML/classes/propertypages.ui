@@ -303,7 +303,6 @@ Use -/= to move items up or down.</property>
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
                 <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
-                <signal name="key-press-event" handler="attributes-keypress" swapped="no"/>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>
@@ -514,7 +513,6 @@ Use -/= to move items up or down.</property>
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
                 <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
-                <signal name="key-press-event" handler="operations-keypress" swapped="no"/>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>

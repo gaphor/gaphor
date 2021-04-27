@@ -1,6 +1,6 @@
 import logging
 
-from gi.repository import Gtk
+from gi.repository import Gdk, Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
@@ -13,7 +13,6 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     new_resource_builder,
     on_bool_cell_edited,
-    on_keypress_event,
     on_text_cell_edited,
 )
 from gaphor.UML.classes.association import AssociationItem
@@ -27,6 +26,23 @@ log = logging.getLogger(__name__)
 
 
 new_builder = new_resource_builder("gaphor.UML.classes")
+
+
+@transactional
+def on_keypress_event(ctrl, keyval, keycode, state, tree):
+    k = Gdk.keyval_name(keyval).lower()
+    if k in ("backspace", "delete"):
+        model, iter = tree.get_selection().get_selected()
+        if iter:
+            model.remove(iter)
+    elif k in ("equal", "plus"):
+        model, iter = tree.get_selection().get_selected()
+        model.swap(iter, model.iter_next(iter))
+        return True
+    elif k in ("minus", "underscore"):
+        model, iter = tree.get_selection().get_selected()
+        model.swap(iter, model.iter_previous(iter))
+        return True
 
 
 class ClassAttributes(EditableTreeModel):
@@ -235,7 +251,6 @@ class AttributesPage(PropertyPageBase):
                 "attributes-name-edited": (on_text_cell_edited, self.model, 0),
                 "attributes-static-edited": (on_bool_cell_edited, self.model, 1),
                 "tree-view-destroy": (self.watcher.unsubscribe_all,),
-                "attributes-keypress": (on_keypress_event,),
             },
         )
         page = builder.get_object("attributes-editor")
@@ -245,6 +260,12 @@ class AttributesPage(PropertyPageBase):
 
         tree_view: Gtk.TreeView = builder.get_object("attributes-list")
         tree_view.set_model(self.model)
+        if Gtk.get_major_version() == 3:
+            controller = self.key_controller = Gtk.EventControllerKey.new(tree_view)
+        else:
+            controller = Gtk.EventControllerKey.new()
+            tree_view.add_controller(controller)
+        controller.connect("key-pressed", on_keypress_event, tree_view)
 
         def handler(event):
             attribute = event.element
@@ -300,7 +321,6 @@ class OperationsPage(PropertyPageBase):
                 "operations-abstract-edited": (on_bool_cell_edited, self.model, 1),
                 "operations-static-edited": (on_bool_cell_edited, self.model, 2),
                 "tree-view-destroy": (self.watcher.unsubscribe_all,),
-                "operations-keypress": (on_keypress_event,),
             },
         )
 
@@ -309,6 +329,12 @@ class OperationsPage(PropertyPageBase):
 
         tree_view: Gtk.TreeView = builder.get_object("operations-list")
         tree_view.set_model(self.model)
+        if Gtk.get_major_version() == 3:
+            controller = self.key_controller = Gtk.EventControllerKey.new(tree_view)
+        else:
+            controller = Gtk.EventControllerKey.new()
+            tree_view.add_controller(controller)
+        controller.connect("key-pressed", on_keypress_event, tree_view)
 
         def handler(event):
             operation = event.element
@@ -465,7 +491,7 @@ class AssociationPropertyPage(PropertyPageBase):
             stereotype_list.set_model(stereotypes_model)
         else:
             stereotype_frame = builder.get_object(f"{end_name}-stereotype-frame")
-            stereotype_frame.destroy()
+            stereotype_frame.hide()
 
     def update_end_name(self, builder, end_name, subject):
         name = builder.get_object(f"{end_name}-name")

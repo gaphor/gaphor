@@ -30,7 +30,7 @@ from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
 from gaphas.segment import Segment
-from gi.repository import Gdk, Gtk
+from gi.repository import Gtk
 
 from gaphor.core import transactional
 from gaphor.core.modeling import Element
@@ -218,23 +218,6 @@ def on_bool_cell_edited(renderer, path, model, col):
 
     iter = model.get_iter(path)
     model.update(iter, col, renderer.get_active())
-
-
-@transactional
-def on_keypress_event(tree, event):
-    k = Gdk.keyval_name(event.keyval).lower()
-    if k in ("backspace", "delete"):
-        model, iter = tree.get_selection().get_selected()
-        if iter:
-            model.remove(iter)
-    elif k in ("equal", "plus"):
-        model, iter = tree.get_selection().get_selected()
-        model.swap(iter, model.iter_next(iter))
-        return True
-    elif k in ("minus", "underscore"):
-        model, iter = tree.get_selection().get_selected()
-        model.swap(iter, model.iter_previous(iter))
-        return True
 
 
 class ComboModel(Gtk.ListStore):
