@@ -31,8 +31,6 @@ class Box(ElementPresentation):
 
 
 class Ellipse(ElementPresentation):
-    """"""
-
     def __init__(self, diagram, id=None):
         super().__init__(diagram=diagram, id=id)
 
