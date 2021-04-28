@@ -4,6 +4,7 @@ import pathlib
 block_cipher = None
 
 glade_files = [(str(p), str(pathlib.Path(*p.parts[1:-1]))) for p in pathlib.Path("../gaphor").rglob("*.glade")]
+ui_files = [(str(p), str(pathlib.Path(*p.parts[1:-1]))) for p in pathlib.Path("../gaphor").rglob("*.ui")]
 
 a = Analysis(
     ["gaphor-script.py"],
@@ -22,6 +23,7 @@ a = Analysis(
         ("../gaphor/locale/*", "gaphor/locale"),
     ]
     + glade_files
+    + ui_files
     + copy_metadata("gaphor")
     + copy_metadata("gaphas"),
     # Fixes issue with setuptools https://github.com/pypa/setuptools/issues/1963
