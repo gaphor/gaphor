@@ -69,13 +69,10 @@ else:
         if isinstance(parent_widget, Gtk.Paned):
             if index == 0:
                 parent_widget.set_start_child(widget)
-                # , resize=resize, shrink=shrink)
             elif index == 1:
                 parent_widget.set_end_child(widget)
-                #  resize=resize, shrink=shrink)
         elif isinstance(parent_widget, Gtk.Box):
             parent_widget.append(widget)
-            # , resize, resize, 0)
         else:
             parent_widget.set_child(widget)
         widget.set_hexpand_set(True)
