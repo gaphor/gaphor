@@ -1,21 +1,19 @@
 from PyInstaller.utils.hooks import copy_metadata
-
+import pathlib
 
 block_cipher = None
+
+glade_files = [(str(p), str(pathlib.Path(*p.parts[1:-1]))) for p in pathlib.Path("../gaphor").rglob("*.glade")]
 
 a = Analysis(
     ["gaphor-script.py"],
     pathex=["../"],
     binaries=[],
     datas=[
-        ("../gaphor/diagram/*.glade", "gaphor/diagram"),
         ("../gaphor/ui/layout.xml", "gaphor/ui"),
         ("../gaphor/ui/layout.css", "gaphor/ui"),
-        ("../gaphor/ui/*.glade", "gaphor/ui"),
         ("../gaphor/ui/*.png", "gaphor/ui"),
-        ("../gaphor/SysML/*.glade", "gaphor/SysML"),
         ("../gaphor/services/helpservice/*.svg", "gaphor/services/helpservice"),
-        ("../gaphor/services/helpservice/*.glade", "gaphor/services/helpservice"),
         (
             "../gaphor/ui/icons/hicolor/scalable/actions/*.svg",
             "gaphor/ui/icons/hicolor/scalable/actions",
@@ -23,6 +21,7 @@ a = Analysis(
         ("../LICENSE.txt", "gaphor"),
         ("../gaphor/locale/*", "gaphor/locale"),
     ]
+    + glade_files
     + copy_metadata("gaphor")
     + copy_metadata("gaphas"),
     # Fixes issue with setuptools https://github.com/pypa/setuptools/issues/1963
