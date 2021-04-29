@@ -37,6 +37,10 @@ class action:
         self.state = state
         self.arg_type = None
 
+    @property
+    def detailed_name(self):
+        return f"{self.scope}.{self.name}"
+
     def __call__(self, func):
         type_hints = get_type_hints(func)
         if len(type_hints) == 1:

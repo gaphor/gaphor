@@ -218,13 +218,13 @@ class MainWindow(Service, ActionProvider):
             main_content = builder.get_object("main-content")
             self.layout = deserialize(main_content, f.read(), _factory, self.properties)
 
+        action_group, shortcuts = window_action_group(self.component_registry)
+        self.window.insert_action_group("win", action_group)
+
         if Gtk.get_major_version() == 3:
-            action_group, accel_group = window_action_group(self.component_registry)
-            self.window.insert_action_group("win", action_group)
-            self.window.add_accel_group(accel_group)
+            self.window.add_accel_group(shortcuts)
         else:
-            # TODO: fix window shortcuts
-            pass
+            self.window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
 
         self._on_modeling_language_selection_changed()
 

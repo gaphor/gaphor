@@ -5,11 +5,6 @@ from gi.repository import Gio, GLib, Gtk
 from gaphor.abc import ActionProvider
 
 
-class ActionGroup(NamedTuple):
-    actions: Gio.SimpleActionGroup
-    shortcuts: object  # Gtk.AccelGroup
-
-
 def apply_application_actions(component_registry, gtk_app):
     scope = "app"
     for _name, provider in component_registry.all(ActionProvider):
@@ -21,42 +16,83 @@ def apply_application_actions(component_registry, gtk_app):
     return gtk_app
 
 
-def window_action_group(component_registry):
-    scope = "win"
-    action_group = Gio.SimpleActionGroup.new()
-    accel_group = Gtk.AccelGroup.new()
+if Gtk.get_major_version() == 3:
 
-    for _name, provider in component_registry.all(ActionProvider):
-        create_action_group(
-            provider, scope, action_group=action_group, accel_group=accel_group
-        )
+    class ActionGroup(NamedTuple):
+        actions: Gio.SimpleActionGroup
+        shortcuts: Gtk.AccelGroup
 
-    return ActionGroup(actions=action_group, shortcuts=accel_group)
-
-
-def _accel_handler(scope, name):
-    return (
-        lambda agrp, win, key, mod: win.get_action_group(scope)
-        .lookup_action(name)
-        .activate()
-    )
-
-
-def create_action_group(provider, scope, action_group=None, accel_group=None):
-    if not action_group:
+    def window_action_group(component_registry) -> ActionGroup:
+        scope = "win"
         action_group = Gio.SimpleActionGroup.new()
-    if not accel_group:
         accel_group = Gtk.AccelGroup.new()
 
-    for attrname, act in iter_actions(provider, scope):
-        a = create_gio_action(act, provider, attrname)
-        action_group.add_action(a)
-        if act.shortcut:
-            key, mod = Gtk.accelerator_parse(act.shortcut)
-            accel_group.connect(
-                key, mod, Gtk.AccelFlags.VISIBLE, _accel_handler(scope, act.name)
+        for _name, provider in component_registry.all(ActionProvider):
+            create_action_group(
+                provider, scope, action_group=action_group, accel_group=accel_group
             )
-    return ActionGroup(actions=action_group, shortcuts=accel_group)
+
+        return ActionGroup(actions=action_group, shortcuts=accel_group)
+
+    def _accel_handler(scope, name):
+        return (
+            lambda agrp, win, key, mod: win.get_action_group(scope)
+            .lookup_action(name)
+            .activate()
+        )
+
+    def create_action_group(
+        provider, scope, action_group=None, accel_group=None
+    ) -> ActionGroup:
+        if not action_group:
+            action_group = Gio.SimpleActionGroup.new()
+        if not accel_group:
+            accel_group = Gtk.AccelGroup.new()
+
+        for attrname, act in iter_actions(provider, scope):
+            a = create_gio_action(act, provider, attrname)
+            action_group.add_action(a)
+            if act.shortcut:
+                key, mod = Gtk.accelerator_parse(act.shortcut)
+                accel_group.connect(
+                    key, mod, Gtk.AccelFlags.VISIBLE, _accel_handler(scope, act.name)
+                )
+        return ActionGroup(actions=action_group, shortcuts=accel_group)
+
+
+else:
+
+    class ActionGroup(NamedTuple):  # type: ignore[no-redef]
+        actions: Gio.SimpleActionGroup
+        shortcuts: Gio.ListModel
+
+    def window_action_group(component_registry) -> ActionGroup:
+        action_group = Gio.SimpleActionGroup.new()
+        store = Gio.ListStore.new(Gtk.Shortcut)
+        scope = "win"
+        for _name, provider in component_registry.all(ActionProvider):
+            for attrname, act in iter_actions(provider, scope):
+                a = create_gio_action(act, provider, attrname)
+                action_group.add_action(a)
+                if act.shortcut:
+                    store.append(_new_shortcut(act))
+        return ActionGroup(actions=action_group, shortcuts=store)
+
+    def create_action_group(provider, scope) -> ActionGroup:  # type: ignore[misc]
+        action_group = Gio.SimpleActionGroup.new()
+        store = Gio.ListStore.new(Gtk.Shortcut)
+        for attrname, act in iter_actions(provider, scope):
+            a = create_gio_action(act, provider, attrname)
+            action_group.add_action(a)
+            if act.shortcut:
+                store.append(_new_shortcut(act))
+        return ActionGroup(actions=action_group, shortcuts=store)
+
+    def _new_shortcut(act):
+        return Gtk.Shortcut.new(
+            trigger=Gtk.ShortcutTrigger.parse_string(act.shortcut),
+            action=Gtk.NamedAction.new(act.detailed_name),
+        )
 
 
 def create_gio_action(act, provider, attrname):

@@ -1,5 +1,5 @@
 import pytest
-from gi.repository import Gio, GLib, Gtk
+from gi.repository import Gio, GLib
 
 from gaphor.abc import ActionProvider
 from gaphor.action import action
@@ -50,9 +50,8 @@ def component_registry(dummy_action_provider):
     return component_registry
 
 
-@pytest.mark.skipif(Gtk.get_major_version() != 3, reason="Works only for GTK+ 3")
 def test_window_action_group(component_registry):
-    action_group, accel_group = window_action_group(component_registry)
+    action_group, shortcuts = window_action_group(component_registry)
 
     assert action_group.lookup_action("new")
     assert not action_group.lookup_action("quit")
@@ -77,9 +76,8 @@ def test_activate_application_action(component_registry, dummy_action_provider):
     assert dummy_action_provider.quit_called
 
 
-@pytest.mark.skipif(Gtk.get_major_version() != 3, reason="Works only for GTK+ 3")
 def test_activate_toggle_action(component_registry, dummy_action_provider):
-    action_group, accel_group = window_action_group(component_registry)
+    action_group, shortcuts = window_action_group(component_registry)
     action_group.lookup_action("toggle").change_state(GLib.Variant.new_boolean(True))
 
     assert dummy_action_provider.toggle_state is True
@@ -122,9 +120,8 @@ def test_invalid_gvariant_to_python():
         from_variant(GLib.Variant.new_double(1.0))
 
 
-@pytest.mark.skipif(Gtk.get_major_version() != 3, reason="Works only for GTK+ 3")
 def test_dynamic_state(component_registry):
-    action_group, accel_group = window_action_group(component_registry)
+    action_group, shortcuts = window_action_group(component_registry)
 
     assert action_group.lookup_action("my-action")
     assert (
