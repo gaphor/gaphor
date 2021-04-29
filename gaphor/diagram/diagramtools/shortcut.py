@@ -12,7 +12,6 @@ def shortcut_tool(view, modeling_language, event_manager):
         ctrl = Gtk.EventControllerKey.new(view)
     else:
         ctrl = Gtk.EventControllerKey.new()
-        view.add_controller(ctrl)
     ctrl.connect("key-pressed", on_delete, event_manager)
     ctrl.connect("key-pressed", on_shortcut, modeling_language)
     return ctrl
