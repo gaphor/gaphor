@@ -1,5 +1,4 @@
 
-/* Custom styling for tool box */
 #toolbox > expander {
   border-top: 1px solid @unfocused_borders;
   margin-top: 6px;
@@ -21,4 +20,8 @@
 
 diagramview {
   background: white;
+}
+
+.status-window box {
+  padding: 12px;
 }

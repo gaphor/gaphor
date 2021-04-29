@@ -2,7 +2,7 @@
 
 from queue import Empty
 
-from gi.repository import Gdk, GLib, Gtk, Pango
+from gi.repository import GLib, Gtk, Pango
 
 
 class StatusWindow:
@@ -43,30 +43,31 @@ class StatusWindow:
         frame = Gtk.Frame.new(None)
         vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, spacing=12)
         label = Gtk.Label.new(self.message)
+        label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
 
         self.progress_bar = Gtk.ProgressBar.new()
-        self.window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+        self.progress_bar.set_size_request(400, -1)
+
+        if Gtk.get_major_version() == 3:
+            self.window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+            self.window.add(frame)
+            frame.add(vbox)
+            vbox.pack_start(label, True, True, 0)
+            vbox.pack_start(self.progress_bar, expand=False, fill=False, padding=0)
+        else:
+            self.window = Gtk.Window.new()
+            self.window.set_child(frame)
+            frame.set_child(vbox)
+            vbox.append(label)
+            vbox.append(self.progress_bar)
 
         self.window.set_title(self.title)
-        self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
+        self.window.get_style_context().add_class("status-window")
         if self.parent:
             self.window.set_transient_for(self.parent)
         self.window.set_modal(True)
         self.window.set_resizable(False)
         self.window.set_decorated(False)
-        self.window.set_keep_above(True)
-        self.window.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN)
-        self.window.add(frame)
-
-        self.progress_bar.set_size_request(400, -1)
-
-        frame.add(vbox)
-
-        label.set_ellipsize(Pango.EllipsizeMode.MIDDLE)
-
-        vbox.set_border_width(12)
-        vbox.pack_start(label, True, True, 0)
-        vbox.pack_start(self.progress_bar, expand=False, fill=False, padding=0)
 
     def display(self):
         """Display the status window.
@@ -75,7 +76,10 @@ class StatusWindow:
         gobject idle handle is created.  Once the window is destroyed,
         this handler is removed.
         """
-        self.window.show_all()
+        if Gtk.get_major_version() == 3:
+            self.window.show_all()
+        else:
+            self.window.show()
 
         if self.queue:
             self.idle_id = GLib.idle_add(
