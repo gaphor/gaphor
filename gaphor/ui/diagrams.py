@@ -186,6 +186,8 @@ class Diagrams(UIComponent, ActionProvider):
     def _on_page_changed(self, notebook, _page, _page_num):
         def diagram_ids():
             notebook = self._notebook
+            if not notebook:
+                return
             for page_num in range(notebook.get_n_pages()):
                 page = notebook.get_nth_page(page_num)
                 if page:
