@@ -48,14 +48,12 @@
                 <property name="halign">center</property>
                 <property name="label" translatable="yes">Open</property>
                 <property name="can_focus">0</property>
-                <property name="receives_default">1</property>
                 <property name="action_name">app.file-open</property>
               </object>
             </child>
             <child>
               <object class="GtkMenuButton">
                 <property name="halign">center</property>
-                <property name="receives_default">1</property>
                 <property name="popover">recent-files</property>
                 <property name="icon_name">pan-down-symbolic</property>
               </object>
@@ -67,46 +65,25 @@
         </child>
         <child>
           <object class="GtkButton">
-            <property name="receives_default">1</property>
             <property name="action_name">tree-view.create-diagram</property>
             <property name="icon_name">gaphor-new-diagram-symbolic</property>
           </object>
         </child>
         <child>
-          <object class="GtkMenuButton">
+          <object class="GtkMenuButton" id="modeling-language-name">
             <property name="focus_on_click">0</property>
-            <property name="receives_default">1</property>
             <property name="popover">select-modeling-language</property>
-            <child>
-              <object class="GtkBox">
-                <property name="can_focus">0</property>
-                <child>
-                  <object class="GtkImage">
-                    <property name="can_focus">0</property>
-                    <property name="icon_name">pan-down-symbolic</property>
-                    <property name="icon_size">1</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="modeling-language-name">
-                    <property name="can_focus">0</property>
-                    <property name="label" translatable="yes">UML</property>
-                  </object>
-                </child>
-              </object>
-            </child>
+            <property name="icon_name">pan-down-symbolic</property>
           </object>
         </child>
         <child type="end">
           <object class="GtkMenuButton">
-            <property name="receives_default">1</property>
             <property name="popover">hamburger</property>
             <property name="icon_name">open-menu-symbolic</property>
           </object>
         </child>
         <child type="end">
           <object class="GtkButton">
-            <property name="receives_default">1</property>
             <property name="action_name">win.show-editors</property>
             <child>
               <object class="GtkImage">
@@ -147,7 +124,6 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="notification-close">
-                    <property name="receives_default">1</property>
                     <child>
                       <object class="GtkImage">
                         <property name="can_focus">0</property>

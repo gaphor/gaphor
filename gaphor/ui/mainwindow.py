@@ -313,7 +313,7 @@ class MainWindow(Service, ActionProvider):
     @event_handler(ModelingLanguageChanged)
     def _on_modeling_language_selection_changed(self, event=None):
         if self.modeling_language_name:
-            self.modeling_language_name.set_text(
+            self.modeling_language_name.set_label(
                 gettext("Profile: {}").format(
                     self.modeling_language.active_modeling_language_name
                 )
