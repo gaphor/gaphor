@@ -96,14 +96,9 @@
       </object>
     </child>
     <child>
-      <object class="GtkOverlay">
+      <object class="GtkOverlay" id="main-content">
         <property name="name">overlay</property>
         <property name="can_focus">0</property>
-        <property name="child">
-          <object class="GtkFrame" id="main-content">
-            <property name="can_focus">0</property>
-          </object>
-        </property>
         <child type="overlay">
           <object class="GtkRevealer" id="notification-revealer">
             <property name="can_focus">0</property>
