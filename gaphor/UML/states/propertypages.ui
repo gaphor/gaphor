@@ -2,7 +2,6 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <object class="GtkLabel" id="00-instructions">
-    <property name="can-focus">0</property>
     <property name="label" translatable="yes">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
 Remove Parent.
@@ -18,13 +17,11 @@ renderers and such.</property>
     <property name="expanded">1</property>
     <child>
       <object class="GtkBox">
-        <property name="can-focus">0</property>
         <property name="margin-top">6</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkLabel">
-            <property name="can-focus">0</property>
             <property name="label" translatable="yes">Entry</property>
             <property name="xalign">0</property>
           </object>
@@ -36,7 +33,6 @@ renderers and such.</property>
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="can-focus">0</property>
             <property name="label" translatable="yes">Exit</property>
             <property name="xalign">0</property>
           </object>
@@ -48,7 +44,6 @@ renderers and such.</property>
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="can-focus">0</property>
             <property name="label" translatable="yes">Do Activity</property>
             <property name="xalign">0</property>
           </object>
@@ -62,7 +57,6 @@ renderers and such.</property>
     </child>
     <child type="label">
       <object class="GtkLabel">
-        <property name="can-focus">0</property>
         <property name="label" translatable="yes">Activities</property>
         <attributes>
           <attribute name="weight" value="bold"></attribute>
@@ -77,7 +71,6 @@ renderers and such.</property>
     <signal name="destroy" handler="transition-destroy"/>
     <child>
       <object class="GtkLabel">
-        <property name="can-focus">0</property>
         <property name="label" translatable="yes">Guard</property>
         <property name="xalign">0</property>
         <attributes>

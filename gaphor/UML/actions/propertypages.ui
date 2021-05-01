@@ -2,28 +2,24 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <object class="GtkLabel" id="00-instructions">
-    <property name="can-focus">0</property>
     <property name="label" translatable="yes">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
 Remove Parent.
 
 Padding between elements is 6px.
 Top margin is 6 px, 12px for expanders.
-Edit, from the popup menu, will allow you to add cell 
+Edit, from the popup menu, will allow you to add cell
 renderers and such.</property>
     <property name="xalign">0</property>
   </object>
   <object class="GtkBox" id="fork-node-editor">
-    <property name="can-focus">0</property>
     <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkBox">
-        <property name="can-focus">0</property>
         <child>
           <object class="GtkLabel">
-            <property name="can-focus">0</property>
             <property name="label" translatable="yes">Horizontal</property>
           </object>
         </child>
@@ -37,13 +33,11 @@ renderers and such.</property>
     </child>
   </object>
   <object class="GtkBox" id="join-node-editor">
-    <property name="can-focus">0</property>
     <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
-        <property name="can-focus">0</property>
         <property name="label" translatable="yes">Join Specification</property>
         <property name="xalign">0</property>
         <attributes>
@@ -58,13 +52,11 @@ renderers and such.</property>
     </child>
   </object>
   <object class="GtkBox" id="object-node-editor">
-    <property name="can-focus">0</property>
     <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
-        <property name="can-focus">0</property>
         <property name="label" translatable="yes">Upper Bound</property>
         <property name="xalign">0</property>
         <attributes>
@@ -79,10 +71,8 @@ renderers and such.</property>
     </child>
     <child>
       <object class="GtkBox">
-        <property name="can-focus">0</property>
         <child>
           <object class="GtkLabel">
-            <property name="can-focus">0</property>
             <property name="label" translatable="yes">Show Ordering</property>
           </object>
         </child>
@@ -96,7 +86,6 @@ renderers and such.</property>
     </child>
     <child>
       <object class="GtkComboBoxText" id="ordering">
-        <property name="can-focus">0</property>
         <items>
           <item id="0" translatable="yes">ordered</item>
           <item id="1" translatable="yes">unordered</item>
@@ -108,16 +97,13 @@ renderers and such.</property>
     </child>
   </object>
   <object class="GtkBox" id="partition-editor">
-    <property name="can-focus">0</property>
     <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkBox">
-        <property name="can-focus">0</property>
         <child>
           <object class="GtkLabel">
-            <property name="can-focus">0</property>
             <property name="label" translatable="yes">Partitions</property>
           </object>
         </child>
@@ -132,7 +118,6 @@ renderers and such.</property>
     </child>
     <child>
       <object class="GtkLabel">
-        <property name="can-focus">0</property>
         <property name="label" translatable="yes">Partition Names</property>
         <property name="xalign">0</property>
         <attributes>
@@ -149,14 +134,12 @@ renderers and such.</property>
     </child>
   </object>
   <object class="GtkBox" id="transition-editor">
-    <property name="can-focus">0</property>
     <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <signal name="destroy" handler="transition-destroy" swapped="no"/>
     <child>
       <object class="GtkLabel">
-        <property name="can-focus">0</property>
         <property name="label" translatable="yes">Guard</property>
         <property name="xalign">0</property>
         <attributes>

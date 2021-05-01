@@ -2,7 +2,6 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <object class="GtkLabel" id="00-instructions">
-    <property name="can_focus">0</property>
     <property name="label" translatable="yes">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
 Remove Parent.
@@ -18,16 +17,13 @@ renderers and such.</property>
     <property name="expanded">1</property>
     <child>
       <object class="GtkBox">
-        <property name="can_focus">0</property>
         <property name="margin_top">6</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
-            <property name="can_focus">0</property>
             <child>
               <object class="GtkLabel">
-                <property name="can_focus">0</property>
                 <property name="label" translatable="yes">Show Parts</property>
               </object>
             </child>
@@ -41,10 +37,8 @@ renderers and such.</property>
         </child>
         <child>
           <object class="GtkBox">
-            <property name="can_focus">0</property>
             <child>
               <object class="GtkLabel">
-                <property name="can_focus">0</property>
                 <property name="label" translatable="yes">Show references</property>
               </object>
             </child>
@@ -60,7 +54,6 @@ renderers and such.</property>
     </child>
     <child type="label">
       <object class="GtkLabel">
-        <property name="can_focus">0</property>
         <property name="label" translatable="yes">Parts and References</property>
         <attributes>
           <attribute name="weight" value="bold"></attribute>
@@ -69,7 +62,6 @@ renderers and such.</property>
     </child>
   </object>
   <object class="GtkBox" id="property-editor">
-    <property name="can_focus">0</property>
     <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
@@ -85,7 +77,6 @@ renderers and such.</property>
     </child>
     <child>
       <object class="GtkComboBoxText" id="aggregation">
-        <property name="can_focus">0</property>
         <items>
           <item id="0" translatable="yes">No aggregation</item>
           <item id="1" translatable="yes">Shared</item>
@@ -97,7 +88,6 @@ renderers and such.</property>
   </object>
   <object class="GtkTextBuffer" id="requirement-text-buffer"/>
   <object class="GtkBox" id="requirement-editor">
-    <property name="can_focus">0</property>
     <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
@@ -106,7 +96,6 @@ renderers and such.</property>
     <child>
       <object class="GtkLabel" id="label1">
         <property name="valign">center</property>
-        <property name="can_focus">0</property>
         <property name="label" translatable="yes">Id</property>
         <property name="xalign">0</property>
         <attributes>
@@ -122,7 +111,6 @@ renderers and such.</property>
     <child>
       <object class="GtkLabel" id="label2">
         <property name="valign">center</property>
-        <property name="can_focus">0</property>
         <property name="margin_top">6</property>
         <property name="label" translatable="yes">Text</property>
         <property name="xalign">0</property>

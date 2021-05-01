@@ -2,27 +2,20 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <object class="GtkPopoverMenu" id="hamburger">
-    <property name="can_focus">0</property>
   </object>
   <object class="GtkPopoverMenu" id="recent-files">
-    <property name="can_focus">0</property>
   </object>
   <object class="GtkPopoverMenu" id="select-modeling-language">
-    <property name="can_focus">0</property>
   </object>
   <object class="GtkApplicationWindow" id="main-window">
-    <property name="can_focus">0</property>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header">
-        <property name="can_focus">0</property>
         <child type="title">
           <object class="GtkBox">
-            <property name="can-focus">0</property>
             <property name="orientation">vertical</property>
             <property name="valign">center</property>
             <child>
               <object class="GtkLabel" id="title">
-                <property name="can-focus">0</property>
                 <property name="label">Gaphor</property>
                 <style>
                   <class name="title"/>
@@ -31,7 +24,6 @@
             </child>
             <child>
               <object class="GtkLabel" id="subtitle">
-                <property name="can-focus">0</property>
                 <property name="label" translatable="yes">New model</property>
                 <style>
                   <class name="subtitle"/>
@@ -42,12 +34,10 @@
         </child>
         <child>
           <object class="GtkBox">
-            <property name="can_focus">0</property>
             <child>
               <object class="GtkButton">
                 <property name="halign">center</property>
                 <property name="label" translatable="yes">Open</property>
-                <property name="can_focus">0</property>
                 <property name="action_name">app.file-open</property>
               </object>
             </child>
@@ -87,7 +77,6 @@
             <property name="action_name">win.show-editors</property>
             <child>
               <object class="GtkImage">
-                <property name="can_focus">0</property>
                 <property name="icon_name">gaphor-view-editor-symbolic</property>
               </object>
             </child>
@@ -98,21 +87,17 @@
     <child>
       <object class="GtkOverlay" id="main-content">
         <property name="name">overlay</property>
-        <property name="can_focus">0</property>
         <child type="overlay">
           <object class="GtkRevealer" id="notification-revealer">
-            <property name="can_focus">0</property>
             <property name="halign">center</property>
             <property name="valign">start</property>
             <property name="child">
               <object class="GtkBox">
-                <property name="can_focus">0</property>
                 <property name="halign">center</property>
                 <property name="valign">start</property>
                 <property name="spacing">6</property>
                 <child>
                   <object class="GtkLabel" id="notification-message">
-                    <property name="can_focus">0</property>
                     <property name="margin-start">6</property>
                     <property name="label" translatable="yes">Here goes a short informative message.</property>
                   </object>
@@ -121,7 +106,6 @@
                   <object class="GtkButton" id="notification-close">
                     <child>
                       <object class="GtkImage">
-                        <property name="can_focus">0</property>
                         <property name="icon_name">window-close-symbolic</property>
                       </object>
                     </child>

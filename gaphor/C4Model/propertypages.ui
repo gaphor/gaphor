@@ -2,7 +2,6 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <object class="GtkLabel" id="00-instructions">
-    <property name="can_focus">0</property>
     <property name="label" translatable="yes">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
 Remove Parent.
@@ -15,7 +14,6 @@ renderers and such.</property>
   </object>
   <object class="GtkTextBuffer" id="description-text-buffer"/>
   <object class="GtkBox" id="description-editor">
-    <property name="can_focus">0</property>
     <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
@@ -24,7 +22,6 @@ renderers and such.</property>
     <child>
       <object class="GtkLabel" id="label2">
         <property name="valign">center</property>
-        <property name="can_focus">0</property>
         <property name="label" translatable="yes">Description</property>
         <property name="xalign">0</property>
         <attributes>
@@ -34,7 +31,6 @@ renderers and such.</property>
     </child>
     <child>
       <object class="GtkFrame">
-        <property name="can_focus">0</property>
         <child>
           <object class="GtkTextView" id="description">
             <property name="wrap_mode">word</property>
@@ -45,7 +41,6 @@ renderers and such.</property>
     </child>
   </object>
   <object class="GtkBox" id="technology-editor">
-    <property name="can_focus">0</property>
     <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
@@ -53,7 +48,6 @@ renderers and such.</property>
     <child>
       <object class="GtkLabel" id="label4">
         <property name="valign">center</property>
-        <property name="can_focus">0</property>
         <property name="label" translatable="yes">Technology</property>
         <property name="xalign">0</property>
         <attributes>

@@ -2,7 +2,6 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <object class="GtkLabel" id="00-instructions">
-    <property name="can-focus">0</property>
     <property name="label" translatable="yes">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
 Remove Parent.
@@ -14,16 +13,13 @@ renderers and such.</property>
     <property name="xalign">0</property>
   </object>
   <object class="GtkBox" id="component-editor">
-    <property name="can-focus">0</property>
     <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkBox">
-        <property name="can-focus">0</property>
         <child>
           <object class="GtkLabel">
-            <property name="can-focus">0</property>
             <property name="label" translatable="yes">Indirectly Instantiated</property>
           </object>
         </child>

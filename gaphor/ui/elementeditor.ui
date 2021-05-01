@@ -54,24 +54,20 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
   </object>
   <object class="GtkTextBuffer" id="style-sheet-buffer"/>
   <object class="GtkRevealer" id="elementeditor">
-    <property name="can_focus">0</property>
     <property name="transition_type">slide-left</property>
     <property name="transition_duration">200</property>
     <property name="reveal_child">1</property>
     <property name="child">
       <object class="GtkBox">
-        <property name="can_focus">0</property>
         <property name="margin_top">2</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkBox">
-            <property name="can_focus">0</property>
             <property name="margin_start">2</property>
             <property name="margin_end">2</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkBox">
-                <property name="can_focus">0</property>
                 <child>
                   <object class="GtkButton">
                     <property name="receives_default">1</property>
@@ -79,7 +75,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     <property name="action_name">win.edit-undo</property>
                     <child>
                       <object class="GtkImage">
-                        <property name="can_focus">0</property>
                         <property name="icon_name">edit-undo-symbolic</property>
                       </object>
                     </child>
@@ -91,7 +86,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     <property name="action_name">win.edit-redo</property>
                     <child>
                       <object class="GtkImage">
-                        <property name="can_focus">0</property>
                         <property name="tooltip_text" translatable="yes">Redo</property>
                         <property name="icon_name">edit-redo-symbolic</property>
                       </object>
@@ -105,7 +99,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
             </child>
             <child>
               <object class="GtkBox">
-                <property name="can_focus">0</property>
                 <child>
                   <object class="GtkButton">
                     <property name="receives_default">1</property>
@@ -113,7 +106,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     <property name="action_name">diagram.zoom-in</property>
                     <child>
                       <object class="GtkImage">
-                        <property name="can_focus">0</property>
                         <property name="icon_name">zoom-in-symbolic</property>
                       </object>
                     </child>
@@ -126,7 +118,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     <property name="action_name">diagram.zoom-100</property>
                     <child>
                       <object class="GtkImage">
-                        <property name="can_focus">0</property>
                         <property name="icon_name">zoom-original-symbolic</property>
                       </object>
                     </child>
@@ -139,7 +130,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     <property name="action_name">diagram.zoom-out</property>
                     <child>
                       <object class="GtkImage">
-                        <property name="can_focus">0</property>
                         <property name="icon_name">zoom-out-symbolic</property>
                       </object>
                     </child>
@@ -156,7 +146,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                 <property name="action_name">win.show-settings</property>
                 <child>
                   <object class="GtkImage">
-                    <property name="can_focus">0</property>
                     <property name="icon_name">document-properties-symbolic</property>
                   </object>
                 </child>
@@ -166,7 +155,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
         </child>
         <child>
           <object class="GtkSeparator">
-            <property name="can_focus">0</property>
             <property name="margin_start">2</property>
             <property name="margin_end">2</property>
             <property name="margin_top">2</property>
@@ -185,10 +173,8 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     <property name="hscrollbar_policy">never</property>
                     <property name="child">
                       <object class="GtkViewport">
-                        <property name="can_focus">0</property>
                         <property name="child">
                           <object class="GtkBox" id="editors">
-                            <property name="can_focus">0</property>
                             <property name="margin_start">6</property>
                             <property name="margin_end">6</property>
                             <property name="margin_top">6</property>
@@ -208,7 +194,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                 <property name="title" translatable="yes">Settings</property>
                 <property name="child">
                   <object class="GtkBox">
-                    <property name="can_focus">0</property>
                     <property name="margin_start">6</property>
                     <property name="margin_end">6</property>
                     <property name="margin_top">12</property>
@@ -217,7 +202,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     <property name="spacing">6</property>
                     <child>
                       <object class="GtkLabel">
-                        <property name="can_focus">0</property>
                         <property name="label" translatable="yes">Preferences</property>
                         <property name="xalign">0</property>
                         <attributes>
@@ -227,11 +211,9 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     </child>
                     <child>
                       <object class="GtkBox">
-                        <property name="can_focus">0</property>
                         <child>
                           <object class="GtkLabel">
                             <property name="hexpand">1</property>
-                            <property name="can_focus">0</property>
                             <property name="label" translatable="yes">Reset tool automatically</property>
                             <property name="xalign">0</property>
                           </object>
@@ -246,7 +228,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="can_focus">0</property>
                         <property name="margin_top">6</property>
                         <property name="label" translatable="yes">Style sheet</property>
                         <property name="xalign">0</property>
@@ -268,7 +249,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="can_focus">0</property>
                         <property name="label" translatable="yes">🔗 &lt;a href=&quot;https://gaphor.readthedocs.io/en/latest/style_sheets.html&quot;&gt;Style sheets in Gaphor&lt;/a&gt;</property>
                         <property name="use_markup">1</property>
                         <property name="wrap">1</property>

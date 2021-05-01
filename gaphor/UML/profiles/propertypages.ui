@@ -2,7 +2,6 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <object class="GtkLabel" id="00-instructions">
-    <property name="can-focus">0</property>
     <property name="label" translatable="yes">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
 Remove Parent.
@@ -14,13 +13,11 @@ renderers and such.</property>
     <property name="xalign">0</property>
   </object>
   <object class="GtkBox" id="metaclass-editor">
-    <property name="can-focus">0</property>
     <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
-        <property name="can-focus">0</property>
         <property name="label" translatable="yes">Name</property>
         <property name="xalign">0</property>
         <attributes>
@@ -30,7 +27,6 @@ renderers and such.</property>
     </child>
     <child>
       <object class="GtkComboBoxText" id="metaclass-combo">
-        <property name="can-focus">0</property>
         <property name="has-entry">1</property>
         <signal name="changed" handler="metaclass-combo-changed" swapped="no"/>
         <signal name="destroy" handler="metaclass-combo-destroy" swapped="no"/>
@@ -48,17 +44,14 @@ renderers and such.</property>
     <property name="expanded">1</property>
     <child>
       <object class="GtkBox">
-        <property name="can-focus">0</property>
         <property name="margin-top">6</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
-            <property name="can-focus">0</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkLabel">
-                <property name="can-focus">0</property>
                 <property name="label" translatable="yes">Show Stereotypes</property>
               </object>
             </child>
@@ -71,7 +64,6 @@ renderers and such.</property>
         </child>
         <child>
           <object class="GtkFrame">
-            <property name="can-focus">0</property>
             <property name="child">
               <object class="GtkTreeView" id="stereotype-list">
                 <child internal-child="selection">
@@ -119,7 +111,6 @@ renderers and such.</property>
     </child>
     <child type="label">
       <object class="GtkLabel">
-        <property name="can-focus">0</property>
         <property name="label" translatable="yes">Stereotypes</property>
         <attributes>
           <attribute name="weight" value="bold"></attribute>
