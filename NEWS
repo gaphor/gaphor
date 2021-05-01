@@ -8,6 +8,7 @@
 - Upgrade toolbox to be compatible with GTK 4
 - Add regression tests
 - Fix build fails when GitHub Actions secrets are not available
+- Fix association direction arrow is not updated
 
 2.3.2
 _____
