@@ -130,6 +130,9 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         )
         self.request_update()
 
+    def update_ends(self):
+        self.on_association_end_value()
+
     def on_association_end_value(self, event=None):
         """Handle events and update text on association end."""
         for end in (self._head_end, self._tail_end):

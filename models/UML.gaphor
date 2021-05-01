@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.3.1">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.3.2">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -38361,6 +38361,7 @@ swimlanes</val>
 <ref refid="dda913e0-64ba-11eb-9492-9757bcbe474b"/>
 <ref refid="34e2842a-6529-11eb-9492-9757bcbe474b"/>
 <ref refid="42a8be12-6529-11eb-9492-9757bcbe474b"/>
+<ref refid="7656921e-aa7c-11eb-ad49-8b526b5558f5"/>
 </reflist>
 </slot>
 <typeValue>
@@ -40314,6 +40315,11 @@ swimlanes</val>
 <ref refid="DCE:0E0139EC-4B56-11D7-A5E6-6257AF3C5118"/>
 </reflist>
 </extended>
+<slot>
+<reflist>
+<ref refid="7656921e-aa7c-11eb-ad49-8b526b5558f5"/>
+</reflist>
+</slot>
 </InstanceSpecification>
 <InstanceSpecification id="172b2122-fa90-11de-bd51-00224128e79d">
 <classifier>
@@ -54077,4 +54083,15 @@ have an opposite end.
 </reflist>
 </presentation>
 </Comment>
+<Slot id="7656921e-aa7c-11eb-ad49-8b526b5558f5">
+<definingFeature>
+<ref refid="16f8dfbe-fa90-11de-bd51-00224128e79d"/>
+</definingFeature>
+<owningInstance>
+<ref refid="172ae50e-fa90-11de-bd51-00224128e79d"/>
+</owningInstance>
+<value>
+<val>memberNamespace</val>
+</value>
+</Slot>
 </gaphor>

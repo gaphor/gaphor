@@ -3,7 +3,12 @@
 import pytest
 
 from gaphor import UML
-from gaphor.UML.classes.association import AssociationItem
+from gaphor.UML.classes.association import (
+    AssociationItem,
+    draw_default_head,
+    draw_head_navigable,
+    draw_head_none,
+)
 from gaphor.UML.classes.klass import ClassItem
 
 
@@ -101,3 +106,19 @@ def test_association_orthogonal(case):
 def test_association_end_owner_handles(case):
     assert case.assoc.head_end.owner_handle is case.assoc.head
     assert case.assoc.tail_end.owner_handle is case.assoc.tail
+
+
+@pytest.mark.parametrize(
+    "navigability,draw_func",
+    [[None, draw_default_head], [True, draw_head_navigable], [False, draw_head_none]],
+)
+def test_association_head_end_not_navigable(case, navigability, draw_func):
+    case.connect(case.assoc, case.assoc.head, case.class1)
+    case.connect(case.assoc, case.assoc.tail, case.class2)
+
+    end = case.assoc.head_end
+    UML.model.set_navigability(end.subject.association, end.subject, navigability)
+    case.assoc.update_ends()
+
+    assert case.assoc.head_subject.navigability is navigability
+    assert case.assoc.draw_head is draw_func

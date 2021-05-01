@@ -318,6 +318,7 @@ def set_navigability(assoc, end, nav):
         assoc.ownedEnd.remove(end)
     if end in assoc.navigableOwnedEnd:
         assoc.navigableOwnedEnd.remove(end)
+
     assert end not in assoc.ownedEnd
     assert end not in assoc.navigableOwnedEnd
 
