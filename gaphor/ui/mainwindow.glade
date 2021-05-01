@@ -27,27 +27,10 @@
   <object class="GtkApplicationWindow" id="main-window">
     <property name="can-focus">False</property>
     <child>
-      <object class="GtkOverlay">
+      <object class="GtkOverlay" id="main-content">
         <property name="name">overlay</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <child>
-          <object class="GtkFrame" id="main-content">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label-xalign">0</property>
-            <property name="shadow-type">none</property>
-            <child>
-              <placeholder/>
-            </child>
-            <child type="label_item">
-              <placeholder/>
-            </child>
-          </object>
-          <packing>
-            <property name="index">-1</property>
-          </packing>
-        </child>
         <child type="overlay">
           <object class="GtkRevealer" id="notification-revealer">
             <property name="visible">True</property>
