@@ -129,7 +129,17 @@ class DiagramPage:
             scrolled_window.action_group = create_action_group(self, "diagram")
         else:
             scrolled_window.set_child(view)
-            scrolled_window.show()
+
+            action_group, shortcuts = create_action_group(self, "diagram")
+            view.insert_action_group("diagram", action_group)
+            print(
+                shortcuts.get_item(0).get_action().to_string(),
+                shortcuts.get_item(0).get_trigger().to_string(),
+            )
+            ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
+            ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
+            # Work around Gaphas' GtkView capability to remove all controllers
+            Gtk.Widget.add_controller(view, ctrl)
 
         view.selection.add_handler(self._on_view_selection_changed)
 
