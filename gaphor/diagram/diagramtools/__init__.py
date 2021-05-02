@@ -34,8 +34,7 @@ def apply_default_tool_set(view, modeling_language, event_manager, rubberband_st
     view.add_controller(scroll_tool(view))
     view.add_controller(zoom_tool(view))
     view.add_controller(view_focus_tool(view))
-    if Gtk.get_major_version() == 3:
-        view.add_controller(shortcut_tool(view, modeling_language, event_manager))
+    view.add_controller(shortcut_tool(view, modeling_language, event_manager))
 
 
 def apply_placement_tool_set(
@@ -52,5 +51,4 @@ def apply_placement_tool_set(
     view.add_controller(drop_zone_tool(view, item_factory.item_class))
     view.add_controller(scroll_tool(view))
     view.add_controller(zoom_tool(view))
-    if Gtk.get_major_version() == 3:
-        view.add_controller(shortcut_tool(view, modeling_language, event_manager))
+    view.add_controller(shortcut_tool(view, modeling_language, event_manager))
