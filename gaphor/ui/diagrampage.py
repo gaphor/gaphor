@@ -79,7 +79,7 @@ else:
                 Gtk.IconLookupFlags.FORCE_SYMBOLIC,
             )
             icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-                theme_icon.get_file().get_path(), 48, 48, True
+                theme_icon.get_file().get_path(), 32, 32, True
             )
             icon.copy_area(
                 0,

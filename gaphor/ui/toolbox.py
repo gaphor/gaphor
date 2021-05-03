@@ -134,16 +134,14 @@ class Toolbox(UIComponent, ActionProvider):
                     action_name, icon_name, label, shortcut
                 )
                 flowbox.insert(button, -1)
-                if Gtk.get_major_version() == 3:
-                    button.show_all()
 
             if Gtk.get_major_version() == 3:
                 toolbox.add(expander)
             else:
                 toolbox.append(expander)
-            expander.show()
 
-        toolbox.show()
+        if Gtk.get_major_version() == 3:
+            toolbox.show_all()
         return toolbox
 
     def create_toolbox_container(self, toolbox: Gtk.Widget) -> Gtk.ScrolledWindow:
@@ -165,8 +163,11 @@ class Toolbox(UIComponent, ActionProvider):
         """
         toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
         if self._toolbox_container:
-            self._toolbox_container.remove(self._toolbox_container.get_child())
-            self._toolbox_container.add(toolbox)
+            if Gtk.get_major_version() == 3:
+                self._toolbox_container.remove(self._toolbox_container.get_child())
+                self._toolbox_container.add(toolbox)
+            else:
+                self._toolbox_container.set_child(toolbox)
         self._toolbox = toolbox
 
     def _on_toolbox_destroyed(self, widget):
