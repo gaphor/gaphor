@@ -37,26 +37,62 @@ def placement_icon_base():
 
 GtkView.set_css_name("diagramview")
 
-_placement_pixbuf_map: Dict[str, GdkPixbuf.Pixbuf] = {}
+
+if Gtk.get_major_version() == 3:
+    _placement_pixbuf_map: Dict[str, GdkPixbuf.Pixbuf] = {}
+
+    def get_placement_cursor(display, icon_name):
+        if icon_name in _placement_pixbuf_map:
+            pixbuf = _placement_pixbuf_map[icon_name]
+        else:
+            pixbuf = placement_icon_base().copy()
+            icon = Gtk.IconTheme.get_default().load_icon(icon_name, 24, 0)
+            icon.copy_area(
+                0,
+                0,
+                icon.get_width(),
+                icon.get_height(),
+                pixbuf,
+                9,
+                15,
+            )
+            _placement_pixbuf_map[icon_name] = pixbuf
+        return Gdk.Cursor.new_from_pixbuf(display, pixbuf, 1, 1)
 
 
-def get_placement_cursor(display, icon_name):
-    if icon_name in _placement_pixbuf_map:
-        pixbuf = _placement_pixbuf_map[icon_name]
-    else:
-        pixbuf = placement_icon_base().copy()
-        icon = Gtk.IconTheme.get_default().load_icon(icon_name, 24, 0)
-        icon.copy_area(
-            0,
-            0,
-            icon.get_width(),
-            icon.get_height(),
-            pixbuf,
-            9,
-            15,
-        )
-        _placement_pixbuf_map[icon_name] = pixbuf
-    return Gdk.Cursor.new_from_pixbuf(display, pixbuf, 1, 1)
+else:
+    _placement_texture_map: Dict[str, Gdk.Texture] = {}
+
+    def get_placement_cursor(display, icon_name):
+        if display is None:
+            display = Gdk.Display.get_default()
+        if icon_name in _placement_texture_map:
+            texture = _placement_texture_map[icon_name]
+        else:
+            pixbuf = placement_icon_base().copy()
+            theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
+                icon_name,
+                None,
+                24,
+                1,
+                Gtk.TextDirection.NONE,
+                Gtk.IconLookupFlags.FORCE_SYMBOLIC,
+            )
+            icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+                theme_icon.get_file().get_path(), 48, 48, True
+            )
+            icon.copy_area(
+                0,
+                0,
+                icon.get_width(),
+                icon.get_height(),
+                pixbuf,
+                9,
+                15,
+            )
+            texture = Gdk.Texture.new_for_pixbuf(pixbuf)
+            _placement_texture_map[icon_name] = texture
+        return Gdk.Cursor.new_from_texture(texture, 1, 1)
 
 
 class DiagramPage:
@@ -132,10 +168,6 @@ class DiagramPage:
 
             action_group, shortcuts = create_action_group(self, "diagram")
             view.insert_action_group("diagram", action_group)
-            print(
-                shortcuts.get_item(0).get_action().to_string(),
-                shortcuts.get_item(0).get_trigger().to_string(),
-            )
             ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
             ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
             # Work around Gaphas' GtkView capability to remove all controllers
@@ -278,8 +310,10 @@ class DiagramPage:
                 elif window:
                     window.set_cursor(None)
             else:
-                # TODO: set cursor
-                pass
+                if icon_name:
+                    self.view.set_cursor(get_placement_cursor(None, icon_name))
+                else:
+                    self.view.set_cursor(None)
 
     @event_handler(DiagramItemPlaced)
     def _on_diagram_item_placed(self, event):

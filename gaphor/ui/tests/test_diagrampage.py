@@ -1,11 +1,12 @@
 import os
 
 import pytest
+from gi.repository import Gdk
 
 from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general import Box
 from gaphor.diagram.general.comment import CommentItem
-from gaphor.ui.diagrampage import DiagramPage, placement_icon_base
+from gaphor.ui.diagrampage import DiagramPage, get_placement_cursor, placement_icon_base
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
@@ -43,3 +44,10 @@ def test_placement_icon_base_is_loaded_once():
     icon2 = placement_icon_base()
 
     assert icon1 is icon2
+
+
+def test_placement_cursor():
+    display = Gdk.Display.get_default()
+    cursor = get_placement_cursor(display, "gaphor-box-symbolic")
+
+    assert cursor

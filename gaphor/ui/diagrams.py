@@ -273,7 +273,8 @@ class Diagrams(UIComponent, ActionProvider):
             self._clear_ui_settings(widget)
         self._notebook.remove_page(page_num)
         widget.diagram_page.close()
-        widget.destroy()
+        if Gtk.get_major_version() == 3:
+            widget.destroy()
 
     @event_handler(ModelFlushed)
     def _on_flush_model(self, event):
