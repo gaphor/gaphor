@@ -1,6 +1,6 @@
 # Keep until RTD fully support pyproject.toml
 docutils==0.16
-Pygments==2.8.1
+Pygments==2.9.0
 recommonmark==0.7.1
 Sphinx==3.5.4
 sphinx-rtd-theme==0.5.2
