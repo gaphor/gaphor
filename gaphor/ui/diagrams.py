@@ -204,8 +204,10 @@ class Diagrams(UIComponent, ActionProvider):
             window.insert_action_group("diagram", page.action_group.actions)
             window.add_accel_group(page.action_group.shortcuts)
         else:
-            # TODO: handle shortcuts
-            pass
+            window = page.get_root()
+            print("adding", page.action_group.actions)
+            window.insert_action_group("diagram", page.action_group.actions)
+            print("done", page.action_group.actions)
 
     def _clear_ui_settings(self, page):
         if Gtk.get_major_version() == 3:
@@ -213,8 +215,8 @@ class Diagrams(UIComponent, ActionProvider):
             window.insert_action_group("diagram", None)
             window.remove_accel_group(page.action_group.shortcuts)
         else:
-            # TODO: handle shortcuts
-            pass
+            window = page.get_root()
+            window.insert_action_group("diagram", None)
 
     @action(name="close-current-tab", shortcut="<Primary>w")
     def close_current_tab(self):
