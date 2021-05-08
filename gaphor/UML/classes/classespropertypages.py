@@ -61,6 +61,9 @@ class ClassAttributes(EditableTreeModel):
     def swap_objects(self, o1, o2):
         return self._item.subject.ownedAttribute.swap(o1, o2)
 
+    def sync_model(self, new_order):
+        self._item.subject.ownedAttribute.order(new_order.index)
+
 
 class ClassOperations(EditableTreeModel):
     """GTK tree model to edit class operations."""
@@ -102,6 +105,9 @@ class ClassOperations(EditableTreeModel):
     def swap_objects(self, o1, o2):
         return self._item.subject.ownedOperation.swap(o1, o2)
 
+    def sync_model(self, new_order):
+        self._item.subject.ownedOperation.order(new_order.index)
+
 
 class ClassEnumerationLiterals(EditableTreeModel):
     """GTK tree model to edit enumeration literals."""
@@ -131,6 +137,9 @@ class ClassEnumerationLiterals(EditableTreeModel):
 
     def swap_objects(self, o1, o2):
         return self._item.subject.ownedLiteral.swap(o1, o2)
+
+    def sync_model(self, new_order):
+        self._item.subject.ownedLiteral.order(new_order.index)
 
 
 @PropertyPages.register(NamedElement)

@@ -5,6 +5,7 @@ from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.classes.classespropertypages import (
     AssociationPropertyPage,
     AttributesPage,
+    ClassAttributes,
     ClassifierPropertyPage,
     DependencyPropertyPage,
     Folded,
@@ -96,6 +97,30 @@ def test_attributes_page_add_attribute(diagram, element_factory):
 
     assert item.subject.attribute[0].name == "attr"
     assert item.subject.attribute[0].typeValue == "str"
+
+
+def test_attribute_reorder_after_dnd(diagram, element_factory):
+    item = diagram.create(
+        UML.classes.ClassItem, subject=element_factory.create(UML.Class)
+    )
+    attr1 = element_factory.create(UML.Property)
+    attr1.name = "attr1"
+    item.subject.ownedAttribute = attr1
+    attr2 = element_factory.create(UML.Property)
+    attr2.name = "attr2"
+    item.subject.ownedAttribute = attr2
+    attr3 = element_factory.create(UML.Property)
+    attr3.name = "attr3"
+    item.subject.ownedAttribute = attr3
+
+    list_store = ClassAttributes(item)
+
+    new_order = [attr3, attr1, attr2]
+    list_store.sync_model(new_order)
+
+    assert item.subject.ownedAttribute[0] is attr3
+    assert item.subject.ownedAttribute[1] is attr1
+    assert item.subject.ownedAttribute[2] is attr2
 
 
 def test_operations_page(diagram, element_factory):

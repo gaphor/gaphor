@@ -29,6 +29,7 @@ import importlib
 from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
+from gaphas.decorators import g_async
 from gaphas.segment import Segment
 from gi.repository import Gdk, Gtk
 
@@ -114,6 +115,19 @@ class EditableTreeModel(Gtk.ListStore):
         for data in self.get_rows():
             self.append(data)
         self._add_empty()
+        self.connect_after("row-inserted", self.on_row_inserted)
+
+    def on_row_inserted(self, model, path, iter):
+        """This method is called when new elements are added and when a row is
+        moved via DnD."""
+        self._sync_model()
+
+    @g_async(single=True)
+    def _sync_model(self):
+        """Align the order of elements in the model with the order in the list
+        store."""
+        new_order = [row[-1] for row in self if row[-1]]
+        self.sync_model(new_order)
 
     def get_rows(self):
         """Return rows to be edited.
