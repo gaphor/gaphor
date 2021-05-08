@@ -31,18 +31,18 @@ log = logging.getLogger(__name__)
 class ClassAttributes(EditableTreeModel):
     """GTK tree model to edit class attributes."""
 
-    def _get_rows(self):
+    def get_rows(self):
         for attr in self._item.subject.ownedAttribute:
             if not attr.association:
                 yield [format(attr), attr.isStatic, attr]
 
-    def _create_object(self):
+    def create_object(self):
         attr = self._item.model.create(UML.Property)
         self._item.subject.ownedAttribute = attr
         return attr
 
     @transactional
-    def _set_object_value(self, row, col, value):
+    def set_object_value(self, row, col, value):
         attr = row[-1]
         if col == 0:
             parse(attr, value)
@@ -55,14 +55,14 @@ class ClassAttributes(EditableTreeModel):
             row[0] = format(attr)
             row[1] = attr.isStatic
 
-    def _swap_objects(self, o1, o2):
+    def swap_objects(self, o1, o2):
         return self._item.subject.ownedAttribute.swap(o1, o2)
 
 
 class ClassOperations(EditableTreeModel):
     """GTK tree model to edit class operations."""
 
-    def _get_rows(self):
+    def get_rows(self):
         for operation in self._item.subject.ownedOperation:
             yield [
                 format(operation),
@@ -71,13 +71,13 @@ class ClassOperations(EditableTreeModel):
                 operation,
             ]
 
-    def _create_object(self):
+    def create_object(self):
         operation = self._item.model.create(UML.Operation)
         self._item.subject.ownedOperation = operation
         return operation
 
     @transactional
-    def _set_object_value(self, row, col, value):
+    def set_object_value(self, row, col, value):
         operation = row[-1]
         if col == 0:
             parse(operation, value)
@@ -93,25 +93,25 @@ class ClassOperations(EditableTreeModel):
             row[1] = operation.isAbstract
             row[2] = operation.isStatic
 
-    def _swap_objects(self, o1, o2):
+    def swap_objects(self, o1, o2):
         return self._item.subject.ownedOperation.swap(o1, o2)
 
 
 class ClassEnumerationLiterals(EditableTreeModel):
     """GTK tree model to edit enumeration literals."""
 
-    def _get_rows(self):
+    def get_rows(self):
         for literal in self._item.subject.ownedLiteral:
             yield [format(literal), literal]
 
-    def _create_object(self):
+    def create_object(self):
         literal = self._item.model.create(UML.EnumerationLiteral)
         self._item.subject.ownedLiteral = literal
         literal.enumeration = self._item.subject
         return literal
 
     @transactional
-    def _set_object_value(self, row, col, value):
+    def set_object_value(self, row, col, value):
         literal = row[-1]
         if col == 0:
             parse(literal, value)
@@ -120,7 +120,7 @@ class ClassEnumerationLiterals(EditableTreeModel):
             # Value in attribute object changed:
             row[0] = format(literal)
 
-    def _swap_objects(self, o1, o2):
+    def swap_objects(self, o1, o2):
         return self._item.subject.ownedLiteral.swap(o1, o2)
 
 

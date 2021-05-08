@@ -114,11 +114,11 @@ class EditableTreeModel(Gtk.ListStore):
         super().__init__(*cols)
         self._item = item
 
-        for data in self._get_rows():
+        for data in self.get_rows():
             self.append(data)
         self._add_empty()
 
-    def _get_rows(self):
+    def get_rows(self):
         """Return rows to be edited.
 
         Last column has to contain object being edited.
@@ -126,15 +126,15 @@ class EditableTreeModel(Gtk.ListStore):
 
         raise NotImplementedError
 
-    def _create_object(self):
+    def create_object(self):
         """Create new object."""
         raise NotImplementedError
 
-    def _set_object_value(self, row, col, value):
+    def set_object_value(self, row, col, value):
         """Update row's column with a value."""
         raise NotImplementedError
 
-    def _swap_objects(self, o1, o2):
+    def swap_objects(self, o1, o2):
         """Swap two objects.
 
         If objects are swapped, then return ``True``.
@@ -157,7 +157,7 @@ class EditableTreeModel(Gtk.ListStore):
             return
         o1 = self[a][-1]
         o2 = self[b][-1]
-        if o1 and o2 and self._swap_objects(o1, o2):
+        if o1 and o2 and self.swap_objects(o1, o2):
             super().swap(a, b)
 
     def _add_empty(self):
@@ -174,13 +174,13 @@ class EditableTreeModel(Gtk.ListStore):
 
         elif col == 0 and value and not row[-1]:
             # create new object
-            obj = self._create_object()
+            obj = self.create_object()
             row[-1] = obj
-            self._set_object_value(row, col, value)
+            self.set_object_value(row, col, value)
             self._add_empty()
 
         elif row[-1]:
-            self._set_object_value(row, col, value)
+            self.set_object_value(row, col, value)
 
     def remove(self, iter):
         """Remove object from GTK model and destroy it."""
