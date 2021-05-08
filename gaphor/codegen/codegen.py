@@ -17,12 +17,19 @@ def main() -> None:
     parser.add_argument("modelfile", type=Path, help="gaphor model filename")
     parser.add_argument("outfile", type=Path, help="python data model filename")
     parser.add_argument("overrides", type=Path, help="override filename")
-    parser.add_argument("--profile", help="generate a profile", action="store_true")
+    parser.add_argument(
+        "--uml_profile", help="generate a UML profile", action="store_true"
+    )
+    parser.add_argument(
+        "--sysml_profile", help="generate a SysML profile", action="store_true"
+    )
     args = parser.parse_args()
     print(f"Generating {args.outfile} from {args.modelfile}...")
     print("  (warnings can be ignored)")
-    if args.profile:
+    if args.uml_profile:
         profile_coder.generate(args.modelfile, args.outfile, args.overrides)
+    elif args.sysml_profile:
+        profile_coder.generate(args.modelfile, args.outfile, args.overrides, True)
     else:
         uml_coder.generate(args.modelfile, args.outfile, args.overrides)
     byte_compile([str(args.outfile)])

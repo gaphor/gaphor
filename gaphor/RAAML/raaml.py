@@ -8,6 +8,7 @@ from gaphor.core.modeling.properties import (
     relation_many,
     relation_one,
 )
+from gaphor.SysML.sysml import Block, DirectedRelationshipPropertyPath
 from gaphor.UML import Class, DataType, Dependency, Element, Property, State
 
 
@@ -85,10 +86,6 @@ class BasicEventDef(EventDef):
     pass
 
 
-class Block:
-    isEncapsulated: attribute[int]
-
-
 class Cause(AbstractCause):
     pass
 
@@ -118,10 +115,6 @@ class ControlledProcess(Property):
 
 
 class Controller(Property):
-    pass
-
-
-class DirectedRelationshipPropertyPath:
     pass
 
 
