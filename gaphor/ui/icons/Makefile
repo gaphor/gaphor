@@ -11,11 +11,11 @@ ICONS=diagram \
 	comment \
 	comment-line \
 	class \
-	datatype \
+	data-type \
 	enumeration \
-	primative \
+	primitive \
 	block \
-	valuetype \
+	value-type \
 	proxyport \
 	package \
 	containment \
@@ -97,7 +97,17 @@ ICONS=diagram \
 	house-event \
 	zero-event \
 	top-event \
-	intermediate-event
+	intermediate-event \
+	loss \
+	hazard \
+	situation \
+	controller \
+	actuator \
+	controlled-process \
+	abstract-operational-situation \
+	operational-situation \
+	unsafe-control-action
+
 
 ICON_THEME=hicolor/scalable/actions
 
