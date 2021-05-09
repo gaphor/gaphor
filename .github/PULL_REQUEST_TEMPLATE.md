@@ -4,14 +4,14 @@
 ### PR Checklist
 Please check if your PR fulfills the following requirements:
 
-- [ ] I have read, and am following the [Contributor guide](https://github.com/gaphor/gaphor/blob/master/CONTRIBUTING.md)
-- [ ] I have read and I understood the [Code of Conduct](https://github.com/gaphor/gaphor/blob/master/CODE_OF_CONDUCT.md)
+- [ ] I have read, and I am following the [Contributor guide](https://github.com/gaphor/gaphor/blob/master/CONTRIBUTING.md)
+- [ ] I have read, and I understand the [Code of Conduct](https://github.com/gaphor/gaphor/blob/master/CODE_OF_CONDUCT.md)
 
 ### PR Type
 What kind of change does this PR introduce?
 
 <!-- Please check the one that applies to this PR using "x". -->
-- [ ] Bugfix
+- [ ] Bug fix
 - [ ] Feature
 - [ ] Chore (refactoring, formatting, local variables, other cleanup)
 - [ ] Documentation content changes
