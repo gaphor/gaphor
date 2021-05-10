@@ -101,16 +101,13 @@ class EditableTreeModel(Gtk.ListStore):
     new values.
     """
 
-    def __init__(self, item, cols=None):
+    def __init__(self, item, cols):
         """Create new model.
 
         Args:
           item (Presentation): diagram item owning tree model
           cols (tuple): model column types, defaults to [str, object]
         """
-
-        if cols is None:
-            cols = (str, object)
         super().__init__(*cols)
         self._item = item
 

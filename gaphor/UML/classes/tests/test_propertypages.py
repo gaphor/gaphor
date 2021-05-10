@@ -10,7 +10,7 @@ from gaphor.UML.classes.classespropertypages import (
 
 def test_attribute_editing(case):
     class_item = case.create(ClassItem, UML.Class)
-    model = ClassAttributes(class_item, (str, bool, object))
+    model = ClassAttributes(class_item)
     model.append([None, False, None])
     path = Gtk.TreePath.new_first()
     iter = model.get_iter(path)
@@ -21,7 +21,7 @@ def test_attribute_editing(case):
 
 def test_enumeration_editing(case):
     enum_item = case.create(EnumerationItem, UML.Enumeration)
-    model = ClassEnumerationLiterals(enum_item, (str, object))
+    model = ClassEnumerationLiterals(enum_item)
     model.append([None, None])
     path = Gtk.TreePath.new_first()
     iter = model.get_iter(path)

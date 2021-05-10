@@ -31,6 +31,9 @@ log = logging.getLogger(__name__)
 class ClassAttributes(EditableTreeModel):
     """GTK tree model to edit class attributes."""
 
+    def __init__(self, item):
+        super().__init__(item, cols=(str, bool, object))
+
     def get_rows(self):
         for attr in self._item.subject.ownedAttribute:
             if not attr.association:
@@ -61,6 +64,9 @@ class ClassAttributes(EditableTreeModel):
 
 class ClassOperations(EditableTreeModel):
     """GTK tree model to edit class operations."""
+
+    def __init__(self, item):
+        super().__init__(item, cols=(str, bool, bool, object))
 
     def get_rows(self):
         for operation in self._item.subject.ownedOperation:
@@ -99,6 +105,9 @@ class ClassOperations(EditableTreeModel):
 
 class ClassEnumerationLiterals(EditableTreeModel):
     """GTK tree model to edit enumeration literals."""
+
+    def __init__(self, item):
+        super().__init__(item, cols=(str, object))
 
     def get_rows(self):
         for literal in self._item.subject.ownedLiteral:
@@ -260,7 +269,7 @@ class AttributesPage(PropertyPageBase):
         show_attributes = builder.get_object("show-attributes")
         show_attributes.set_active(self.item.show_attributes)
 
-        self.model = ClassAttributes(self.item, (str, bool, object))
+        self.model = ClassAttributes(self.item)
 
         tree_view: Gtk.TreeView = builder.get_object("attributes-list")
         tree_view.set_model(self.model)
@@ -324,7 +333,7 @@ class OperationsPage(PropertyPageBase):
         show_operations = builder.get_object("show-operations")
         show_operations.set_active(self.item.show_operations)
 
-        self.model = ClassOperations(self.item, (str, bool, bool, object))
+        self.model = ClassOperations(self.item)
 
         tree_view: Gtk.TreeView = builder.get_object("operations-list")
         tree_view.set_model(self.model)
@@ -392,7 +401,7 @@ class EnumerationPage(PropertyPageBase):
         show_enumerations = builder.get_object("show-enumerations")
         show_enumerations.set_active(self.item.show_enumerations)
 
-        self.model = ClassEnumerationLiterals(self.item, (str, object))
+        self.model = ClassEnumerationLiterals(self.item)
 
         tree_view: Gtk.TreeView = builder.get_object("enumerations-list")
         tree_view.set_model(self.model)
