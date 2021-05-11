@@ -31,18 +31,21 @@ log = logging.getLogger(__name__)
 class ClassAttributes(EditableTreeModel):
     """GTK tree model to edit class attributes."""
 
-    def _get_rows(self):
+    def __init__(self, item):
+        super().__init__(item, cols=(str, bool, object))
+
+    def get_rows(self):
         for attr in self._item.subject.ownedAttribute:
             if not attr.association:
                 yield [format(attr), attr.isStatic, attr]
 
-    def _create_object(self):
+    def create_object(self):
         attr = self._item.model.create(UML.Property)
         self._item.subject.ownedAttribute = attr
         return attr
 
     @transactional
-    def _set_object_value(self, row, col, value):
+    def set_object_value(self, row, col, value):
         attr = row[-1]
         if col == 0:
             parse(attr, value)
@@ -55,14 +58,20 @@ class ClassAttributes(EditableTreeModel):
             row[0] = format(attr)
             row[1] = attr.isStatic
 
-    def _swap_objects(self, o1, o2):
+    def swap_objects(self, o1, o2):
         return self._item.subject.ownedAttribute.swap(o1, o2)
+
+    def sync_model(self, new_order):
+        self._item.subject.ownedAttribute.order(new_order.index)
 
 
 class ClassOperations(EditableTreeModel):
     """GTK tree model to edit class operations."""
 
-    def _get_rows(self):
+    def __init__(self, item):
+        super().__init__(item, cols=(str, bool, bool, object))
+
+    def get_rows(self):
         for operation in self._item.subject.ownedOperation:
             yield [
                 format(operation),
@@ -71,13 +80,13 @@ class ClassOperations(EditableTreeModel):
                 operation,
             ]
 
-    def _create_object(self):
+    def create_object(self):
         operation = self._item.model.create(UML.Operation)
         self._item.subject.ownedOperation = operation
         return operation
 
     @transactional
-    def _set_object_value(self, row, col, value):
+    def set_object_value(self, row, col, value):
         operation = row[-1]
         if col == 0:
             parse(operation, value)
@@ -93,25 +102,31 @@ class ClassOperations(EditableTreeModel):
             row[1] = operation.isAbstract
             row[2] = operation.isStatic
 
-    def _swap_objects(self, o1, o2):
+    def swap_objects(self, o1, o2):
         return self._item.subject.ownedOperation.swap(o1, o2)
+
+    def sync_model(self, new_order):
+        self._item.subject.ownedOperation.order(new_order.index)
 
 
 class ClassEnumerationLiterals(EditableTreeModel):
     """GTK tree model to edit enumeration literals."""
 
-    def _get_rows(self):
+    def __init__(self, item):
+        super().__init__(item, cols=(str, object))
+
+    def get_rows(self):
         for literal in self._item.subject.ownedLiteral:
             yield [format(literal), literal]
 
-    def _create_object(self):
+    def create_object(self):
         literal = self._item.model.create(UML.EnumerationLiteral)
         self._item.subject.ownedLiteral = literal
         literal.enumeration = self._item.subject
         return literal
 
     @transactional
-    def _set_object_value(self, row, col, value):
+    def set_object_value(self, row, col, value):
         literal = row[-1]
         if col == 0:
             parse(literal, value)
@@ -120,8 +135,11 @@ class ClassEnumerationLiterals(EditableTreeModel):
             # Value in attribute object changed:
             row[0] = format(literal)
 
-    def _swap_objects(self, o1, o2):
+    def swap_objects(self, o1, o2):
         return self._item.subject.ownedLiteral.swap(o1, o2)
+
+    def sync_model(self, new_order):
+        self._item.subject.ownedLiteral.order(new_order.index)
 
 
 @PropertyPages.register(NamedElement)
@@ -260,7 +278,7 @@ class AttributesPage(PropertyPageBase):
         show_attributes = builder.get_object("show-attributes")
         show_attributes.set_active(self.item.show_attributes)
 
-        self.model = ClassAttributes(self.item, (str, bool, object))
+        self.model = ClassAttributes(self.item)
 
         tree_view: Gtk.TreeView = builder.get_object("attributes-list")
         tree_view.set_model(self.model)
@@ -324,7 +342,7 @@ class OperationsPage(PropertyPageBase):
         show_operations = builder.get_object("show-operations")
         show_operations.set_active(self.item.show_operations)
 
-        self.model = ClassOperations(self.item, (str, bool, bool, object))
+        self.model = ClassOperations(self.item)
 
         tree_view: Gtk.TreeView = builder.get_object("operations-list")
         tree_view.set_model(self.model)
@@ -392,7 +410,7 @@ class EnumerationPage(PropertyPageBase):
         show_enumerations = builder.get_object("show-enumerations")
         show_enumerations.set_active(self.item.show_enumerations)
 
-        self.model = ClassEnumerationLiterals(self.item, (str, object))
+        self.model = ClassEnumerationLiterals(self.item)
 
         tree_view: Gtk.TreeView = builder.get_object("enumerations-list")
         tree_view.set_model(self.model)
