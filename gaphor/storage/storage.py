@@ -456,7 +456,7 @@ def upgrade_feature_parameters_to_owned_parameter(elem):
         if name == "formalParameter":
             formal_params = refids
             del elem.references["formalParameter"]
-        if name == "returnResult":
+        elif name == "returnResult":
             return_results = refids
             del elem.references["returnResult"]
     elem.references["ownedParameter"] = formal_params + return_results
