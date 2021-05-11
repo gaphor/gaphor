@@ -210,7 +210,7 @@ class MainWindow(Service, ActionProvider):
                         prefix, widget.get_action_group(prefix)
                     )
             else:
-                # TODO: attach shortcuts
+                # TODO: GTK4 - attach shortcuts
                 pass
             return widget
 
@@ -235,6 +235,7 @@ class MainWindow(Service, ActionProvider):
             self.window.connect("size-allocate", self._on_window_size_allocate)
         else:
             self.window.show()
+            # TODO: GTK4 - handle window delete and size allocation
 
         self.window.connect("notify::is-active", self._on_window_active)
 
@@ -307,7 +308,7 @@ class MainWindow(Service, ActionProvider):
             a = ag.lookup_action(event.name)
             a.set_enabled(event.enabled)
         else:
-            # TODO: enable an action (shortcut?)
+            # TODO: GTK4 - enable an action (shortcut?)
             pass
 
     @event_handler(ModelingLanguageChanged)

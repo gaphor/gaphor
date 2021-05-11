@@ -8,7 +8,6 @@ from gaphas.tool import (
     view_focus_tool,
     zoom_tool,
 )
-from gi.repository import Gtk
 
 import gaphor.diagram.diagramtools.connector
 import gaphor.diagram.diagramtools.grayout

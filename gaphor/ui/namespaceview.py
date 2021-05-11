@@ -71,7 +71,7 @@ class NamespaceView(Gtk.TreeView):
             self.connect("drag-motion", NamespaceView.on_drag_motion)
             self.connect("drag-data-received", NamespaceView.on_drag_data_received)
         else:
-            # TODO: Gtk4 - use controllers DragSource and DropTarget
+            # TODO: GTK4 - use controllers DragSource and DropTarget
             pass
         self._controller = tree_view_expand_collapse(self)
 

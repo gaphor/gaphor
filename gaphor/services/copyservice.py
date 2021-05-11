@@ -39,7 +39,7 @@ class CopyService(Service, ActionProvider):
                 "owner_change", self.on_clipboard_owner_change
             )
         else:
-            # TODO: implement Gdk.Clipboard
+            # TODO: GTK4 - implement Gdk.Clipboard
             pass
 
     def shutdown(self):

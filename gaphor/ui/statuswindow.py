@@ -2,7 +2,7 @@
 
 from queue import Empty
 
-from gi.repository import GLib, Gtk, Pango
+from gi.repository import Gdk, GLib, Gtk, Pango
 
 
 class StatusWindow:
@@ -50,6 +50,9 @@ class StatusWindow:
 
         if Gtk.get_major_version() == 3:
             self.window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+            self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
+            self.window.set_keep_above(True)
+            self.window.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN)
             self.window.add(frame)
             frame.add(vbox)
             vbox.pack_start(label, True, True, 0)

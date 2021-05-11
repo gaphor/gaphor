@@ -398,7 +398,6 @@ def upgrade_message_item_to_1_1_0(canvasitems):
             for m_id in inverted:
                 new_item = clone_canvasitem(item, m_id)
                 new_canvasitems.append(new_item)
-                # todo: invert handles, points will follow on connect
                 (
                     new_item.references["head-connection"],
                     new_item.references["tail-connection"],

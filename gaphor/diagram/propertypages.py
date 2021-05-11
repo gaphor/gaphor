@@ -2,26 +2,6 @@
 
 To register property pages implemented in this module, it is imported in
 gaphor.adapter package.
-
-# TODO: make all labels align top-left
-# Add hidden columns for list stores where i can put the actual object
-# being edited.
-
-TODO:
- - stereotypes
- - association / association ends.
- - Follow HIG guidelines:
-   * Leave a 12-pixel border between the edge of the window and
-     the nearest controls.
-   * Leave a 12-pixel horizontal gap between a control and its label. (The gap
-     may be bigger for other controls in the same group, due to differences in
-     the lengths of the labels.)
-   * Labels must be concise and make sense when taken out of context.
-     Otherwise, users relying on screenreaders or similar assistive
-     technologies will not always be able to immediately understand the
-     relationship between a control and those surrounding it.
-   * Assign access keys to all editable controls. Ensure that using the access
-     key focuses its associated control.
 """
 
 import abc
