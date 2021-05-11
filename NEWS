@@ -1,3 +1,7 @@
+2.4.1
+-----
+- Fix reordering attributes and operations with drag and drop
+
 2.4.0
 -----
 - Add support for DataType, ValueType, Primitive, and Enumeration
