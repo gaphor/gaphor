@@ -214,7 +214,7 @@ jobs:
           cd packaging
           make all
       - name: Import codesign certificate
-        uses: apple-actions/import-codesign-certs@v1
+        uses: apple-actions/import-codesign-certs@v1.0.4
         if: env.SECRETS_AVAILABLE != null
         with:
           p12-file-base64: ${{ secrets.BASE64_ENCODED_P12 }}
