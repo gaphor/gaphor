@@ -410,6 +410,7 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                       <object class="GtkTextView" id="style-sheet-view">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="indent">2</property>
                         <property name="buffer">style-sheet-buffer</property>
                         <property name="monospace">True</property>
                       </object>
