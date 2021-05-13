@@ -14,7 +14,7 @@ jobs:
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
@@ -28,7 +28,7 @@ jobs:
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
@@ -109,7 +109,7 @@ jobs:
       PY_IGNORE_IMPORTMISMATCH: yes
       SECRETS_AVAILABLE: ${{ secrets.SECRETS_AVAILABLE }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up MSYS2
@@ -186,7 +186,7 @@ jobs:
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.8/lib/pkgconfig:${PKG_CONFIG_PATH:-}
       SECRETS_AVAILABLE: ${{ secrets.SECRETS_AVAILABLE }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
