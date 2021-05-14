@@ -252,7 +252,7 @@ class SettingsStack:
         self.style_sheet_view.set_auto_indent(True)
         self.style_sheet_view.set_indent_width(2)
         self.style_sheet_view.set_input_hints(Gtk.InputHints.NO_EMOJI)
-        self.style_sheet_view.set_insert_spaces_instead_of_tabs(True) 
+        self.style_sheet_view.set_insert_spaces_instead_of_tabs(True)
 
         self.event_manager.subscribe(self._model_ready)
         self.event_manager.subscribe(self._style_sheet_created)
