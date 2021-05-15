@@ -24,7 +24,11 @@ class AND_Def(GateDef):
     pass
 
 
-class AnySituation:
+class Situation(Block, Class):
+    pass
+
+
+class AnySituation(Situation):
     pass
 
 
@@ -131,10 +135,6 @@ class DormantEvent(Class):
 
 
 class DormantEventDef(EventDef):
-    pass
-
-
-class Situation(Block, Class):
     pass
 
 

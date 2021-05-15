@@ -220,7 +220,7 @@ def generate(
             for cls in sysml_classes:
                 if cls not in uml_classes:
                     f.write(f"from gaphor.SysML.sysml import {cls.name}\n")
-            cls_written.union(sysml_classes)
+            cls_written = cls_written.union(sysml_classes)
         for cls in hierarchy.keys():
             cls.attribute.sort(key=lambda a: a.name or "")  # type: ignore[attr-defined]
             write_class_def(cls, hierarchy, f, cls_written)
