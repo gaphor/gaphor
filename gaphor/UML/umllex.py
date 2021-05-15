@@ -297,7 +297,6 @@ def parse_lifeline(el: uml.Lifeline, s: str) -> None:
 
 
 def render_lifeline(el: uml.Lifeline) -> str:
-    """"""
     return el.name or ""
 
 

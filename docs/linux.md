@@ -2,10 +2,13 @@
 
 ## Development Environment
 
-To setup a development environment with Linux, you first need the latest
-stable version of Python. In order to get the latest stable version, we
-recommend that you install [pyenv](https://github.com/pyenv/pyenv).
-Install the pyenv
+To set up a development environment with Linux, you first need a fairly new
+Linux distribution version. For example, the latest Ubuntu LTS or newer, Arch,
+Debian Testing, SUSE Tumbleweed, or similar. Gaphor depends on newer versions of
+GTK, and we don't test for backwards compatibility. You will also need the
+latest stable version of Python. In order to get the latest stable version, we
+recommend that you install [pyenv](https://github.com/pyenv/pyenv). Install the
+pyenv
 [prerequisites](https://github.com/pyenv/pyenv/wiki/Common-build-problems)
 first, and then install pyenv:
 

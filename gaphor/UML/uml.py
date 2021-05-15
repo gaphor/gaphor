@@ -1577,7 +1577,7 @@ Namespace.member = derivedunion(
     StructuredClassifier.role,
 )
 NamedElement.memberNamespace = derivedunion(
-    "memberNamespace", Namespace, 0, "*", NamedElement.namespace
+    "memberNamespace", Namespace, 0, "*", Property.association, NamedElement.namespace
 )
 # 103: override Component.required: property
 # defined in umloverrides.py

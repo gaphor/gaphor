@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/psf/black
-  rev: 20.8b1
+  rev: 21.5b1
   hooks:
   - id: black
     language_version: python3
@@ -9,7 +9,7 @@ repos:
   hooks:
   - id: mypy
 - repo: https://github.com/PyCQA/flake8
-  rev: 3.9.0
+  rev: 3.9.2
   hooks:
   - id: flake8
     additional_dependencies: [flake8-eradicate==1.0.0]
@@ -29,6 +29,6 @@ repos:
   - id: docformatter
     args: [--in-place]
 - repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: v0.7.1.1
+  rev: v0.7.2.1
   hooks:
   - id: shellcheck

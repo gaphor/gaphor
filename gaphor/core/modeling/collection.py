@@ -162,3 +162,4 @@ class collection(Generic[T]):
 
     def order(self, key):
         self.items.sort(key=key)
+        self.object.handle(AssociationUpdated(self.object, self.property))

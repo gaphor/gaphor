@@ -5,6 +5,7 @@ from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.classes.classespropertypages import (
     AssociationPropertyPage,
     AttributesPage,
+    ClassAttributes,
     ClassifierPropertyPage,
     DependencyPropertyPage,
     Folded,
@@ -98,6 +99,30 @@ def test_attributes_page_add_attribute(diagram, element_factory):
     assert item.subject.attribute[0].typeValue == "str"
 
 
+def test_attribute_reorder_after_dnd(diagram, element_factory):
+    item = diagram.create(
+        UML.classes.ClassItem, subject=element_factory.create(UML.Class)
+    )
+    attr1 = element_factory.create(UML.Property)
+    attr1.name = "attr1"
+    item.subject.ownedAttribute = attr1
+    attr2 = element_factory.create(UML.Property)
+    attr2.name = "attr2"
+    item.subject.ownedAttribute = attr2
+    attr3 = element_factory.create(UML.Property)
+    attr3.name = "attr3"
+    item.subject.ownedAttribute = attr3
+
+    list_store = ClassAttributes(item)
+
+    new_order = [attr3, attr1, attr2]
+    list_store.sync_model(new_order)
+
+    assert item.subject.ownedAttribute[0] is attr3
+    assert item.subject.ownedAttribute[1] is attr1
+    assert item.subject.ownedAttribute[2] is attr2
+
+
 def test_operations_page(diagram, element_factory):
     item = diagram.create(
         UML.classes.InterfaceItem, subject=element_factory.create(UML.Interface)
@@ -170,3 +195,18 @@ def test_association_property_page_with_no_subject(diagram, element_factory):
     widget = property_page.construct()
 
     assert widget is None
+
+
+def test_association_property_page_invert_direction(diagram, element_factory):
+    end1 = element_factory.create(UML.Class)
+    end2 = element_factory.create(UML.Class)
+    item = diagram.create(
+        UML.classes.AssociationItem, subject=UML.model.create_association(end1, end2)
+    )
+    item.head_subject = item.subject.memberEnd[0]
+    item.tail_subject = item.subject.memberEnd[1]
+    property_page = AssociationPropertyPage(item)
+
+    property_page._on_invert_direction_change(None)
+
+    assert item.tail_subject is item.subject.memberEnd[0]

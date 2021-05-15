@@ -53,10 +53,6 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         self._head_end = AssociationEnd(owner=self, end="head")
         self._tail_end = AssociationEnd(owner=self, end="tail")
 
-        # Direction depends on the ends that hold the ownedEnd attributes.
-        self._dir_angle = 0
-        self._dir_pos = 0, 0
-
         self.shape_middle = Box(
             Text(
                 text=lambda: stereotypes_str(self.subject),
@@ -134,6 +130,9 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         )
         self.request_update()
 
+    def update_ends(self):
+        self.on_association_end_value()
+
     def on_association_end_value(self, event=None):
         """Handle events and update text on association end."""
         for end in (self._head_end, self._tail_end):
@@ -165,11 +164,6 @@ class AssociationItem(LinePresentation[UML.Association], Named):
                 self.draw_tail = draw_tail_none
             else:
                 self.draw_tail = draw_default_tail
-            if self.show_direction:
-                inverted = self.tail_subject is self.subject.memberEnd[0]
-                pos, angle = get_center_pos(self.handles(), inverted)
-                self._dir_pos = pos
-                self._dir_angle = angle
         else:
             self.draw_head = draw_default_head
             self.draw_tail = draw_default_tail
@@ -196,9 +190,13 @@ class AssociationItem(LinePresentation[UML.Association], Named):
         self._head_end.draw(context)
         self._tail_end.draw(context)
         if self.show_direction:
+            inverted = (
+                self.tail_subject and self.tail_subject is self.subject.memberEnd[0]
+            )
+            pos, angle = get_center_pos(handles, inverted)
             with cairo_state(context.cairo) as cr:
-                cr.translate(*self._dir_pos)
-                cr.rotate(self._dir_angle)
+                cr.translate(*pos)
+                cr.rotate(angle)
                 cr.move_to(0, 0)
                 cr.line_to(6, 5)
                 cr.line_to(0, 10)

@@ -70,7 +70,7 @@ states = ToolSection(
             "toolbox-initial-pseudostate",
             gettext("Initial Pseudostate"),
             "gaphor-initial-pseudostate-symbolic",
-            "<Shift>S",
+            None,
             new_item_factory(
                 diagramitems.PseudostateItem,
                 UML.Pseudostate,
@@ -82,7 +82,7 @@ states = ToolSection(
             "toolbox-final-state",
             gettext("Final State"),
             "gaphor-final-state-symbolic",
-            "x",
+            None,
             new_item_factory(
                 diagramitems.FinalStateItem,
                 UML.FinalState,

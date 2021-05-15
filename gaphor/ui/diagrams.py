@@ -117,10 +117,7 @@ class Diagrams(UIComponent, ActionProvider):
         tab_box = Gtk.Box.new(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
         button = Gtk.Button()
         button.get_style_context().add_class("flat")
-
-        # TODO: Call button.set_focus_on_click directly once PyGObject issue
-        #  #371 is fixed
-        Gtk.Widget.set_focus_on_click(button, False)
+        button.set_focus_on_click(False)
 
         button.connect(
             "clicked",

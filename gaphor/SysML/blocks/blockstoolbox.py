@@ -21,7 +21,7 @@ blocks = ToolSection(
             "toolbox-block",
             gettext("Block"),
             "gaphor-block-symbolic",
-            "l",
+            "<Shift>B",
             new_item_factory(
                 sysml_items.BlockItem, sysml.Block, config_func=namespace_config
             ),
@@ -74,6 +74,41 @@ blocks = ToolSection(
             "gaphor-generalization-symbolic",
             "<Shift>G",
             new_item_factory(uml_items.GeneralizationItem),
+        ),
+        ToolDef(
+            "toolbox-value-type",
+            gettext("ValueType"),
+            "gaphor-value-type-symbolic",
+            "<Shift>L",
+            new_item_factory(
+                uml_items.DataTypeItem,
+                sysml.ValueType,
+                config_func=namespace_config,
+            ),
+        ),
+        ToolDef(
+            "toolbox-enumeration",
+            gettext("Enumeration"),
+            "gaphor-enumeration-symbolic",
+            "<Shift>W",
+            new_item_factory(
+                uml_items.EnumerationItem,
+                UML.Enumeration,
+                config_func=namespace_config,
+            ),
+            handle_index=SE,
+        ),
+        ToolDef(
+            "toolbox-primitive",
+            gettext("Primitive"),
+            "gaphor-primitive-symbolic",
+            "<Shift>H",
+            new_item_factory(
+                uml_items.DataTypeItem,
+                UML.PrimitiveType,
+                config_func=namespace_config,
+            ),
+            handle_index=SE,
         ),
     ),
 )

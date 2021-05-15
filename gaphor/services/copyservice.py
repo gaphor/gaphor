@@ -36,7 +36,7 @@ class CopyService(Service, ActionProvider):
         if Gtk.get_major_version() == 3:
             self.clipboard = Gtk.Clipboard.get_default(Gdk.Display.get_default())
             self._owner_change_id = self.clipboard.connect(
-                "owner_change", self.on_clipboard_owner_change
+                "owner-change", self.on_clipboard_owner_change
             )
         else:
             # TODO: GTK4 - implement Gdk.Clipboard

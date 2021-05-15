@@ -1,6 +1,6 @@
 # Style Sheets
 
-Since Gaphor 2.0, Gaphor diagrams can have a different look by means of style
+Since Gaphor 2.0, diagrams can have a different look by means of style
 sheets. Style sheets use the Cascading Style Sheets (CSS) syntax. CSS is used
 to describe the presentation of a document written in a markup language, and is
 most commonly used with HTML for web pages.
@@ -105,17 +105,17 @@ of CSS. Below you'll find a summary of all CSS features supported by Gaphor.
 ```
 
 * The official specification of [CSS3 attribute selectors](https://www.w3.org/TR/2018/REC-selectors-3-20181106/#attribute-selectors).
-* We provide the `|=` attribute selector for the sake of completeness. It's
-  probably not very useful in a Gaphor context.
+* Gaphor provides the `|=` attribute selector for the sake of completeness. It's
+  probably not very useful in this context, though.
 * Please note that Gaphor CSS does not support IDs for diagram items, so the
   CSS syntax for IDs (`#some-id`) is not used. Also, class syntax
-  (`.some-class`) is not supported.
+  (`.some-class`) is not supported currently.
 
 ## Style properties
 
 Gaphor supports a subset of CSS properties and some Gaphor specific properties.
-The style sheet interpreter is relatively straight forward. We measure all
-widths, heights, and sizes in pixels. We don't support complex style
+The style sheet interpreter is relatively straight forward. All
+widths, heights, and sizes are measured in pixels. You can't use complex style
 declarations, like the `font` property in HTML/CSS which can contain font
 family, size, weight.
 
@@ -139,7 +139,7 @@ family, size, weight.
 ```
 
 * A color can be any [CSS3 color code](https://www.w3.org/TR/2018/REC-css-color-3-20180619/),
-  as described in the CSS documentation. We support all color notations:
+  as described in the CSS documentation. Gaphor supports all color notations:
   `rgb()`, `rgba()`, `hsl()`, `hsla()`, Hex code (`#ffffff`) and color names.
 
 ### Text and fonts
@@ -191,7 +191,7 @@ family, size, weight.
 ### Diagram styles
 
 Only a few properties can be defined on a diagram, namely `background-color`
-and `line-style`. We define the diagram style separately from the diagram item
+and `line-style`. You define the diagram style separately from the diagram item
 styles. That way it's possible to set the background color for diagrams
 specifically. The line style can be the normal straight lines, or a more
 playful "sloppy" style. For the sloppy style an optional wobliness factor can

@@ -9,6 +9,7 @@ import importlib
 from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
+from gaphas.decorators import g_async
 from gaphas.segment import Segment
 from gi.repository import Gtk
 
@@ -93,24 +94,34 @@ class EditableTreeModel(Gtk.ListStore):
     new values.
     """
 
-    def __init__(self, item, cols=None):
+    def __init__(self, item, cols):
         """Create new model.
 
         Args:
           item (Presentation): diagram item owning tree model
           cols (tuple): model column types, defaults to [str, object]
         """
-
-        if cols is None:
-            cols = (str, object)
         super().__init__(*cols)
         self._item = item
 
-        for data in self._get_rows():
+        for data in self.get_rows():
             self.append(data)
         self._add_empty()
+        self.connect_after("row-inserted", self.on_row_inserted)
 
-    def _get_rows(self):
+    def on_row_inserted(self, model, path, iter):
+        """This method is called when new elements are added and when a row is
+        moved via DnD."""
+        self._sync_model()
+
+    @g_async(single=True)
+    def _sync_model(self):
+        """Align the order of elements in the model with the order in the list
+        store."""
+        new_order = [row[-1] for row in self if row[-1]]
+        self.sync_model(new_order)
+
+    def get_rows(self):
         """Return rows to be edited.
 
         Last column has to contain object being edited.
@@ -118,15 +129,15 @@ class EditableTreeModel(Gtk.ListStore):
 
         raise NotImplementedError
 
-    def _create_object(self):
+    def create_object(self):
         """Create new object."""
         raise NotImplementedError
 
-    def _set_object_value(self, row, col, value):
+    def set_object_value(self, row, col, value):
         """Update row's column with a value."""
         raise NotImplementedError
 
-    def _swap_objects(self, o1, o2):
+    def swap_objects(self, o1, o2):
         """Swap two objects.
 
         If objects are swapped, then return ``True``.
@@ -149,7 +160,7 @@ class EditableTreeModel(Gtk.ListStore):
             return
         o1 = self[a][-1]
         o2 = self[b][-1]
-        if o1 and o2 and self._swap_objects(o1, o2):
+        if o1 and o2 and self.swap_objects(o1, o2):
             super().swap(a, b)
 
     def _add_empty(self):
@@ -166,13 +177,13 @@ class EditableTreeModel(Gtk.ListStore):
 
         elif col == 0 and value and not row[-1]:
             # create new object
-            obj = self._create_object()
+            obj = self.create_object()
             row[-1] = obj
-            self._set_object_value(row, col, value)
+            self.set_object_value(row, col, value)
             self._add_empty()
 
         elif row[-1]:
-            self._set_object_value(row, col, value)
+            self.set_object_value(row, col, value)
 
     def remove(self, iter):
         """Remove object from GTK model and destroy it."""
