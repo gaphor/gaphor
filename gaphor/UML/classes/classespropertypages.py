@@ -142,6 +142,22 @@ class ClassEnumerationLiterals(EditableTreeModel):
         self._item.subject.ownedLiteral.order(new_order.index)
 
 
+def tree_view_column_tooltips(tree_view, tooltips):
+    assert tree_view.get_n_columns() == len(tooltips)
+
+    def on_query_tooltip(widget, x, y, keyboard_mode, tooltip):
+        path_and_more = widget.get_path_at_pos(x, y)
+        if path_and_more:
+            path, column, cx, cy = path_and_more
+            n = widget.get_columns().index(column)
+            if tooltips[n]:
+                tooltip.set_text(tooltips[n])
+                return True
+        return False
+
+    tree_view.connect("query-tooltip", on_query_tooltip)
+
+
 @PropertyPages.register(NamedElement)
 class NamedElementPropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.
@@ -282,6 +298,7 @@ class AttributesPage(PropertyPageBase):
 
         tree_view: Gtk.TreeView = builder.get_object("attributes-list")
         tree_view.set_model(self.model)
+        tree_view_column_tooltips(tree_view, ["", gettext("Static")])
 
         def handler(event):
             attribute = event.element
@@ -346,6 +363,9 @@ class OperationsPage(PropertyPageBase):
 
         tree_view: Gtk.TreeView = builder.get_object("operations-list")
         tree_view.set_model(self.model)
+        tree_view_column_tooltips(
+            tree_view, ["", gettext("Abstract"), gettext("Static")]
+        )
 
         def handler(event):
             operation = event.element
