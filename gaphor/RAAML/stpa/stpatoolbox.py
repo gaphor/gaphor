@@ -1,8 +1,9 @@
 """The definition for the STPA section of the RAAML toolbox."""
 
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection
+from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
 from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.i18n import gettext
+from gaphor.RAAML import diagramitems, raaml
 from gaphor.UML import diagramitems as uml_items
 
 stpa = ToolSection(
@@ -13,7 +14,9 @@ stpa = ToolSection(
             gettext("Loss"),
             "gaphor-loss-symbolic",
             "",
-            new_item_factory(uml_items.ClassItem),
+            new_item_factory(
+                diagramitems.LossItem, raaml.Loss, config_func=namespace_config
+            ),
         ),
         ToolDef(
             "hazard",
