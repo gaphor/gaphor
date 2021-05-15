@@ -26,6 +26,13 @@ stpa = ToolSection(
     "STPA",
     (
         ToolDef(
+            "toolbox-generalization",
+            gettext("Generalization"),
+            "gaphor-generalization-symbolic",
+            "<Shift>G",
+            new_item_factory(uml_items.GeneralizationItem),
+        ),
+        ToolDef(
             "loss",
             gettext("Loss"),
             "gaphor-loss-symbolic",

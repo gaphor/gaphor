@@ -17,6 +17,8 @@ from gaphor.UML.modelfactory import stereotypes_str
 
 
 @represents(raaml.Situation)
+@represents(raaml.Loss)
+@represents(raaml.Hazard)
 class SituationItem(ElementPresentation, Classified):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
