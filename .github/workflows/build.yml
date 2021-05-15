@@ -275,3 +275,36 @@ jobs:
         with:
           files: "packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  macos-gtk4:
+    needs: lint
+    runs-on: macos-latest
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    env:
+      LDFLAGS: -L/usr/local/opt/python@3.8/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.8/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      GAPHOR_USE_GTK: 4
+    steps:
+      - uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Set up Python
+        uses: actions/setup-python@v2.2.2
+      - name: Install Dependencies
+        run: brew install gobject-introspection gtk4
+      - name: Install Poetry
+        run: pip install poetry==$POETRY_VERSION
+      - name: Collect Project Data
+        id: meta
+        run: .github/scripts/metadata.sh
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v2.1.5
+        with:
+          path: ~/Library/Caches/pip
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: ${{ runner.os }}-poetry-
+      - name: Install Python Dependencies
+        run: make install
+      - name: Test with Pytest for GTK 4
+        run: make test-all
