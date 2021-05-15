@@ -1,1 +1,1 @@
-from gaphor.RAAML.stpa.loss import LossItem
+from gaphor.RAAML.stpa.situation import SituationItem

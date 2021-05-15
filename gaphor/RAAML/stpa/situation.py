@@ -1,4 +1,4 @@
-"""Loss item definition."""
+"""Situation item definition."""
 
 from gaphas.geometry import Rectangle
 
@@ -16,8 +16,8 @@ from gaphor.RAAML import raaml
 from gaphor.UML.modelfactory import stereotypes_str
 
 
-@represents(raaml.Loss)
-class LossItem(ElementPresentation, Classified):
+@represents(raaml.Situation)
+class SituationItem(ElementPresentation, Classified):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
@@ -29,7 +29,7 @@ class LossItem(ElementPresentation, Classified):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: stereotypes_str(self.subject, [gettext("Loss")]),
+                    text=lambda: stereotypes_str(self.subject, [gettext("Situation")]),
                 ),
                 Text(
                     text=lambda: self.subject.name or "",
@@ -45,9 +45,9 @@ class LossItem(ElementPresentation, Classified):
                 ),
                 style={"padding": (12, 4, 12, 4)},
             ),
-            draw=draw_loss,
+            draw=draw_situation,
         )
 
 
-def draw_loss(box, context: DrawContext, bounding_box: Rectangle):
+def draw_situation(box, context: DrawContext, bounding_box: Rectangle):
     draw_border(box, context, bounding_box)

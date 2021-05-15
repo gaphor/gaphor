@@ -1,10 +1,26 @@
 """The definition for the STPA section of the RAAML toolbox."""
 
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    default_namespace,
+    namespace_config,
+)
 from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.i18n import gettext
 from gaphor.RAAML import diagramitems, raaml
 from gaphor.UML import diagramitems as uml_items
+
+
+def loss_config(new_item):
+    default_namespace(new_item)
+    new_item.subject.name = "Loss"
+
+
+def hazard_config(new_item):
+    default_namespace(new_item)
+    new_item.subject.name = "Hazard"
+
 
 stpa = ToolSection(
     "STPA",
@@ -15,7 +31,7 @@ stpa = ToolSection(
             "gaphor-loss-symbolic",
             "",
             new_item_factory(
-                diagramitems.LossItem, raaml.Loss, config_func=namespace_config
+                diagramitems.SituationItem, raaml.Loss, config_func=loss_config
             ),
         ),
         ToolDef(
@@ -23,14 +39,20 @@ stpa = ToolSection(
             gettext("Hazard"),
             "gaphor-hazard-symbolic",
             "",
-            new_item_factory(uml_items.ClassItem),
+            new_item_factory(
+                diagramitems.SituationItem, raaml.Hazard, config_func=hazard_config
+            ),
         ),
         ToolDef(
             "situation",
             gettext("Situation"),
             "gaphor-situation-symbolic",
             "",
-            new_item_factory(uml_items.ClassItem),
+            new_item_factory(
+                diagramitems.SituationItem,
+                raaml.Situation,
+                config_func=namespace_config,
+            ),
         ),
         ToolDef(
             "controller",
