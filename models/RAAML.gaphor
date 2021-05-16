@@ -306,6 +306,7 @@
 <ref refid="9973b790-b026-11eb-a838-18cf5efc6bb9"/>
 <ref refid="7666633c-b027-11eb-a838-18cf5efc6bb9"/>
 <ref refid="37970e18-b5a9-11eb-9e03-18cf5efc6bb9"/>
+<ref refid="eac4a00c-b66e-11eb-aa87-18cf5efc6bb9"/>
 </reflist>
 </presentation>
 </Stereotype>
@@ -19303,6 +19304,8 @@ Figure 9.149</val>
 <ref refid="d65d44cc-b027-11eb-a838-18cf5efc6bb9"/>
 <ref refid="d65e23d8-b027-11eb-a838-18cf5efc6bb9"/>
 <ref refid="d65edc9c-b027-11eb-a838-18cf5efc6bb9"/>
+<ref refid="eac4a00c-b66e-11eb-aa87-18cf5efc6bb9"/>
+<ref refid="eede7e2e-b66e-11eb-aa87-18cf5efc6bb9"/>
 </reflist>
 </ownedPresentation>
 <package>
@@ -19323,7 +19326,7 @@ Figure 9.149</val>
 <ref refid="5d8ff6b9-2b10-11ea-99a7-7d79dbbd423e"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 143.36480712890625, 124.76823425292969)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 145.36480712890625, 234.7682342529297)</val>
 </matrix>
 <points>
 <val>[(0.0, 0.0), (0.0, 79.08749389648438), (1.20098876953125, 79.08749389648438)]</val>
@@ -19337,7 +19340,7 @@ Figure 9.149</val>
 </item>
 <item id="d65c03d2-b027-11eb-a838-18cf5efc6bb9" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 121.73211669921875, 50.76823425292969)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 123.73211669921875, 160.7682342529297)</val>
 </matrix>
 <width>
 <val>169.0</val>
@@ -19360,7 +19363,7 @@ Figure 9.149</val>
 </item>
 <item id="d65d44cc-b027-11eb-a838-18cf5efc6bb9" type="ClassItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 100.92181396484375, 203.85572814941406)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 102.92181396484375, 313.85572814941406)</val>
 </matrix>
 <width>
 <val>229.0</val>
@@ -19418,13 +19421,53 @@ Figure 9.149</val>
 <ref refid="662f6cba-2b10-11ea-99a7-7d79dbbd423e"/>
 </tail_subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 266.86578369140625, 124.76823425292969)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 268.86578369140625, 234.7682342529297)</val>
 </matrix>
 <points>
 <val>[(-2.281821877540409, 0.0), (-1.080322265625, 79.08749389648438)]</val>
 </points>
 <tail-connection>
 <ref refid="d65d44cc-b027-11eb-a838-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="eac4a00c-b66e-11eb-aa87-18cf5efc6bb9" type="ClassItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 158.23211669921875, 28.999999999999886)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>71.0</val>
+</height>
+<diagram>
+<ref refid="9c8993ea-b027-11eb-a838-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="dde0bab8-235f-11ea-ab0b-c72c0738acd2"/>
+</subject>
+</item>
+<item id="eede7e2e-b66e-11eb-aa87-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="9c8993ea-b027-11eb-a838-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="ef5a542c-b66e-11eb-aa87-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 209.0, 60.999999999999886)</val>
+</matrix>
+<points>
+<val>[(0.15378632642293155, 39.0), (-0.8856699201795806, 99.7682342529298)]</val>
+</points>
+<head-connection>
+<ref refid="eac4a00c-b66e-11eb-aa87-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="d65c03d2-b027-11eb-a838-18cf5efc6bb9"/>
 </tail-connection>
 </item>
 </canvas>
@@ -19448,6 +19491,11 @@ Figure 9.149</val>
 <ref refid="ded32dce-b027-11eb-a838-18cf5efc6bb9"/>
 </reflist>
 </appliedStereotype>
+<generalization>
+<reflist>
+<ref refid="ef5a542c-b66e-11eb-aa87-18cf5efc6bb9"/>
+</reflist>
+</generalization>
 <name>
 <val>OperationalCondition</val>
 </name>
@@ -22442,6 +22490,19 @@ Figure x (No Figure)</val>
 </presentation>
 <specific>
 <ref refid="dde0bab8-235f-11ea-ab0b-c72c0738acd2"/>
+</specific>
+</Generalization>
+<Generalization id="ef5a542c-b66e-11eb-aa87-18cf5efc6bb9">
+<general>
+<ref refid="dde0bab8-235f-11ea-ab0b-c72c0738acd2"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="eede7e2e-b66e-11eb-aa87-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="1131b50e-2b10-11ea-99a7-7d79dbbd423e"/>
 </specific>
 </Generalization>
 </gaphor>

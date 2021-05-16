@@ -52,7 +52,7 @@ class AbstractFailureMode(DysfunctionalEvent):
     pass
 
 
-class OperationalCondition:
+class OperationalCondition(Situation):
     pass
 
 

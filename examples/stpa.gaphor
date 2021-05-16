@@ -20,11 +20,13 @@ situation {
 </StyleSheet>
 <Package id="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9">
 <name>
-<val>New model</val>
+<val>STPA Example Model</val>
 </name>
 <ownedDiagram>
 <reflist>
 <ref refid="c4035380-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+<ref refid="7e97e97e-b5e3-11eb-a24a-18cf5efc6bb9"/>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
 </reflist>
 </ownedDiagram>
 <ownedType>
@@ -98,7 +100,7 @@ situation {
 <canvas>
 <item id="e23d2902-b5ad-11eb-b5c7-18cf5efc6bb9" type="CommentItem">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 328.0, -80.37109375)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 328.0, -96.37109375)</val>
 </matrix>
 <width>
 <val>164.0</val>
@@ -1216,4 +1218,22 @@ Figure 2.9</val>
 </reflist>
 </presentation>
 </Comment>
+<Diagram id="7e97e97e-b5e3-11eb-a24a-18cf5efc6bb9">
+<name>
+<val>Mapping of losses and hazards</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+<canvas/>
+</Diagram>
+<Diagram id="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9">
+<name>
+<val>Operational situations of the system</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+<canvas/>
+</Diagram>
 </gaphor>

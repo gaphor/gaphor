@@ -22,6 +22,11 @@ def hazard_config(new_item):
     new_item.subject.name = "Hazard"
 
 
+def abstract_operational_situation_config(new_item):
+    default_namespace(new_item)
+    new_item.subject.name = "AbstractOperationalSituation"
+
+
 stpa = ToolSection(
     "STPA",
     (
@@ -87,14 +92,22 @@ stpa = ToolSection(
             gettext("Abstract Operational Situation"),
             "gaphor-abstract-operational-situation-symbolic",
             "",
-            new_item_factory(uml_items.ClassItem),
+            new_item_factory(
+                diagramitems.OperationalSituationItem,
+                raaml.AbstractOperationalSituation,
+                config_func=abstract_operational_situation_config,
+            ),
         ),
         ToolDef(
             "operational-situation",
             gettext("Operational Situation"),
             "gaphor-operational-situation-symbolic",
             "",
-            new_item_factory(uml_items.ClassItem),
+            new_item_factory(
+                diagramitems.OperationalSituationItem,
+                raaml.OperationalSituation,
+                config_func=namespace_config,
+            ),
         ),
         ToolDef(
             "unsafe-control-action",
