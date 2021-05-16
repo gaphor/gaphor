@@ -15,6 +15,10 @@ diagram {
 
 situation {
   background-color: beige;
+}
+
+operationalsituation {
+  background-color: beige;
 }</val>
 </styleSheet>
 </StyleSheet>
@@ -25,7 +29,6 @@ situation {
 <ownedDiagram>
 <reflist>
 <ref refid="c4035380-b5ad-11eb-b5c7-18cf5efc6bb9"/>
-<ref refid="7e97e97e-b5e3-11eb-a24a-18cf5efc6bb9"/>
 <ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
 </reflist>
 </ownedDiagram>
@@ -47,6 +50,11 @@ situation {
 <ref refid="8ba6ecd8-b5dd-11eb-a24a-18cf5efc6bb9"/>
 <ref refid="b6f8e92c-b5dd-11eb-a24a-18cf5efc6bb9"/>
 <ref refid="66eea578-b5df-11eb-a24a-18cf5efc6bb9"/>
+<ref refid="dd17c612-b675-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="e0e52776-b675-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="1906eee6-b676-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="1b188140-b676-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="1d10994c-b676-11eb-88b6-18cf5efc6bb9"/>
 </reflist>
 </ownedType>
 </Package>
@@ -1218,22 +1226,438 @@ Figure 2.9</val>
 </reflist>
 </presentation>
 </Comment>
-<Diagram id="7e97e97e-b5e3-11eb-a24a-18cf5efc6bb9">
-<name>
-<val>Mapping of losses and hazards</val>
-</name>
-<package>
-<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
-</package>
-<canvas/>
-</Diagram>
 <Diagram id="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9">
 <name>
 <val>Operational situations of the system</val>
 </name>
+<ownedPresentation>
+<reflist>
+<ref refid="dd19217e-b675-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="e0e5da22-b675-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="e283720e-b675-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="e87e5a7a-b675-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="19074df0-b676-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="1b18e00e-b676-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="1d10f018-b676-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="3de4a456-b676-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="40652016-b676-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="44b795fe-b676-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="496d791a-b676-11eb-88b6-18cf5efc6bb9"/>
+<ref refid="dc5a520c-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</ownedPresentation>
 <package>
 <ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
 </package>
-<canvas/>
+<canvas>
+<item id="dd19217e-b675-11eb-88b6-18cf5efc6bb9" type="OperationalSituationItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 76.0, -70.0)</val>
+</matrix>
+<width>
+<val>197.0</val>
+</width>
+<height>
+<val>58.0</val>
+</height>
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="dd17c612-b675-11eb-88b6-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="e0e5da22-b675-11eb-88b6-18cf5efc6bb9" type="OperationalSituationItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 151.99999999999994, 16.699999999999932)</val>
+</matrix>
+<width>
+<val>171.0</val>
+</width>
+<height>
+<val>58.0</val>
+</height>
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="e0e52776-b675-11eb-88b6-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="e283720e-b675-11eb-88b6-18cf5efc6bb9" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 212.99999999999994, -165.30000000000007)</val>
+</matrix>
+<width>
+<val>157.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="e28354cc-b675-11eb-88b6-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="e87e5a7a-b675-11eb-88b6-18cf5efc6bb9" type="CommentLineItem">
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 147.99999999999994, -46.30000000000007)</val>
+</matrix>
+<points>
+<val>[(24.626577840112134, -23.699999999999932), (73.22983870967744, -69.0)]</val>
+</points>
+<head-connection>
+<ref refid="dd19217e-b675-11eb-88b6-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="e283720e-b675-11eb-88b6-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="19074df0-b676-11eb-88b6-18cf5efc6bb9" type="OperationalSituationItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 151.99999999999994, 102.69999999999993)</val>
+</matrix>
+<width>
+<val>171.0</val>
+</width>
+<height>
+<val>58.0</val>
+</height>
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="1906eee6-b676-11eb-88b6-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="1b18e00e-b676-11eb-88b6-18cf5efc6bb9" type="OperationalSituationItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 237.49999999999994, 203.69999999999993)</val>
+</matrix>
+<width>
+<val>271.50000000000006</val>
+</width>
+<height>
+<val>58.0</val>
+</height>
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="1b188140-b676-11eb-88b6-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="1d10f018-b676-11eb-88b6-18cf5efc6bb9" type="OperationalSituationItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 151.99999999999994, 277.69999999999993)</val>
+</matrix>
+<width>
+<val>171.0</val>
+</width>
+<height>
+<val>58.0</val>
+</height>
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="1d10994c-b676-11eb-88b6-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="3de4a456-b676-11eb-88b6-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<subject>
+<ref refid="3e5cb0ea-b676-11eb-88b6-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 116.0078125, -28.300000000000068)</val>
+</matrix>
+<points>
+<val>[(-3.683728903711966, 16.300000000000068), (-3.683728903711966, 78.0), (35.99218749999994, 78.0)]</val>
+</points>
+<head-connection>
+<ref refid="dd19217e-b675-11eb-88b6-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="e0e5da22-b675-11eb-88b6-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="40652016-b676-11eb-88b6-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<subject>
+<ref refid="40f776f0-b676-11eb-88b6-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 109.0078125, -40.30000000000007)</val>
+</matrix>
+<points>
+<val>[(3.8847593269316647, 28.300000000000068), (3.8847593269316647, 173.0), (42.99218749999994, 173.0)]</val>
+</points>
+<head-connection>
+<ref refid="dd19217e-b675-11eb-88b6-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="19074df0-b676-11eb-88b6-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="44b795fe-b676-11eb-88b6-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<subject>
+<ref refid="467f1682-b676-11eb-88b6-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 107.0078125, -44.30000000000007)</val>
+</matrix>
+<points>
+<val>[(5.60628198188634, 32.30000000000007), (5.60628198188634, 347.0), (44.99218749999994, 347.0)]</val>
+</points>
+<head-connection>
+<ref refid="dd19217e-b675-11eb-88b6-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="1d10f018-b676-11eb-88b6-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="496d791a-b676-11eb-88b6-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="4a0dfee4-b676-11eb-88b6-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 280.0078125, 132.69999999999993)</val>
+</matrix>
+<points>
+<val>[(-1.1897387557231411, 28.0), (-1.3191489361702224, 71.0)]</val>
+</points>
+<head-connection>
+<ref refid="19074df0-b676-11eb-88b6-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="1b18e00e-b676-11eb-88b6-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="dc5a520c-b676-11eb-88b6-18cf5efc6bb9" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 296.0078125, -243.30000000000007)</val>
+</matrix>
+<width>
+<val>164.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<diagram>
+<ref refid="f9f0d900-b5e8-11eb-a24a-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="dc5a2688-b676-11eb-88b6-18cf5efc6bb9"/>
+</subject>
+</item>
+</canvas>
 </Diagram>
+<AbstractOperationalSituation id="dd17c612-b675-11eb-88b6-18cf5efc6bb9">
+<comment>
+<reflist>
+<ref refid="e28354cc-b675-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</comment>
+<name>
+<val>AbstractOperationalSituation</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="dd19217e-b675-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</AbstractOperationalSituation>
+<OperationalSituation id="e0e52776-b675-11eb-88b6-18cf5efc6bb9">
+<generalization>
+<reflist>
+<ref refid="3e5cb0ea-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</generalization>
+<name>
+<val>normal takeoff</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="e0e5da22-b675-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</OperationalSituation>
+<Comment id="e28354cc-b675-11eb-88b6-18cf5efc6bb9">
+<annotatedElement>
+<reflist>
+<ref refid="dd17c612-b675-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</annotatedElement>
+<body>
+<val>Operational Contexts</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="e283720e-b675-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Comment>
+<OperationalSituation id="1906eee6-b676-11eb-88b6-18cf5efc6bb9">
+<generalization>
+<reflist>
+<ref refid="40f776f0-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</generalization>
+<name>
+<val>landing roll</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="19074df0-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</OperationalSituation>
+<OperationalSituation id="1b188140-b676-11eb-88b6-18cf5efc6bb9">
+<generalization>
+<reflist>
+<ref refid="4a0dfee4-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</generalization>
+<name>
+<val>landing roll before taxi speed is attained</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="1b18e00e-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</OperationalSituation>
+<OperationalSituation id="1d10994c-b676-11eb-88b6-18cf5efc6bb9">
+<generalization>
+<reflist>
+<ref refid="467f1682-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</generalization>
+<name>
+<val>touchdown</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="1d10f018-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</OperationalSituation>
+<Generalization id="3e5cb0ea-b676-11eb-88b6-18cf5efc6bb9">
+<general>
+<ref refid="dd17c612-b675-11eb-88b6-18cf5efc6bb9"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="3de4a456-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="e0e52776-b675-11eb-88b6-18cf5efc6bb9"/>
+</specific>
+</Generalization>
+<Generalization id="40f776f0-b676-11eb-88b6-18cf5efc6bb9">
+<general>
+<ref refid="dd17c612-b675-11eb-88b6-18cf5efc6bb9"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="40652016-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="1906eee6-b676-11eb-88b6-18cf5efc6bb9"/>
+</specific>
+</Generalization>
+<Generalization id="467f1682-b676-11eb-88b6-18cf5efc6bb9">
+<general>
+<ref refid="dd17c612-b675-11eb-88b6-18cf5efc6bb9"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="44b795fe-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="1d10994c-b676-11eb-88b6-18cf5efc6bb9"/>
+</specific>
+</Generalization>
+<Generalization id="4a0dfee4-b676-11eb-88b6-18cf5efc6bb9">
+<general>
+<ref refid="1906eee6-b676-11eb-88b6-18cf5efc6bb9"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="496d791a-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="1b188140-b676-11eb-88b6-18cf5efc6bb9"/>
+</specific>
+</Generalization>
+<Comment id="dc5a2688-b676-11eb-88b6-18cf5efc6bb9">
+<body>
+<val>RAAML Examples 1.0
+Figure 2.12</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="dc5a520c-b676-11eb-88b6-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Comment>
 </gaphor>
