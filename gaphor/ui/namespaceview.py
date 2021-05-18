@@ -20,11 +20,8 @@ if TYPE_CHECKING:
 
 class NamespaceView(Gtk.TreeView):
     if Gtk.get_major_version() == 3:
-        TARGET_STRING = 0
-        TARGET_ELEMENT_ID = 1
+        TARGET_ELEMENT_ID = 0
         DND_TARGETS = [
-            Gtk.TargetEntry.new("STRING", 0, TARGET_STRING),
-            Gtk.TargetEntry.new("text/plain", 0, TARGET_STRING),
             Gtk.TargetEntry.new("gaphor/element-id", 0, TARGET_ELEMENT_ID),
         ]
 
