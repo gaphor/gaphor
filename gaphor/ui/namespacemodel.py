@@ -76,7 +76,7 @@ class NamespaceModel:
 
     def sorted(self):
         """Get a sorted version of this model."""
-        sorted_model = Gtk.TreeModelSort(model=self.model)
+        sorted_model = self.model
 
         def sort_func(model, iter_a, iter_b, userdata):
             va = model.get_value(iter_a, 0)

@@ -251,12 +251,10 @@ class Namespace(UIComponent):
         assert self.view
 
         model = self.view.get_model()
-        child_iter = self.model.iter_for_element(element)
-        if not child_iter:
+        tree_iter = self.model.iter_for_element(element)
+        if not tree_iter:
             return
 
-        ok, tree_iter = model.convert_child_iter_to_iter(child_iter)
-        assert ok, "Could not convert model iterator to view"
         path = model.get_path(tree_iter)
         path_indices = path.get_indices()
 
