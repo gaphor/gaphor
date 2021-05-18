@@ -100,7 +100,7 @@ def test_change_element_name(namespace, element_factory):
     def handle_row_changed(*args):
         events.append(args)
 
-    namespace.model.connect("row-changed", handle_row_changed)
+    namespace.connect("row-changed", handle_row_changed)
 
     p1.name = "pack"
 

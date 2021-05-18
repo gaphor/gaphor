@@ -90,8 +90,6 @@ class Namespace(UIComponent):
         self.event_manager.subscribe(self._on_model_refreshed)
         self.event_manager.subscribe(self._on_diagram_selection_changed)
 
-        sorted_model = self.model.sorted()
-
         def search_func(model, column, key, rowiter):
             # Note that this function returns `False` for a match!
             assert column == 0
@@ -114,7 +112,7 @@ class Namespace(UIComponent):
 
             return not matched  # False means match found!
 
-        view = NamespaceView(sorted_model, self.element_factory)
+        view = NamespaceView(self.model, self.element_factory)
         view.set_search_equal_func(search_func)
 
         scrolled_window = Gtk.ScrolledWindow()
