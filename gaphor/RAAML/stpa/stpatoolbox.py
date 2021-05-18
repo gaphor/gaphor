@@ -114,7 +114,11 @@ stpa = ToolSection(
             gettext("Unsafe Control Action"),
             "gaphor-unsafe-control-action-symbolic",
             "",
-            new_item_factory(uml_items.ClassItem),
+            new_item_factory(
+                diagramitems.UnsafeControlActionItem,
+                raaml.UnsafeControlAction,
+                config_func=namespace_config,
+            ),
         ),
     ),
 )
