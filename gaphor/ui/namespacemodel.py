@@ -6,11 +6,12 @@ from typing import TYPE_CHECKING
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import event_handler
+from gaphor.core import Transaction, event_handler
 from gaphor.core.format import format
 from gaphor.core.modeling import (
     AttributeUpdated,
     DerivedSet,
+    Diagram,
     ElementCreated,
     ElementDeleted,
     ModelFlushed,
@@ -54,11 +55,95 @@ class NamespaceModelRefreshed:
         self.model = model
 
 
+class NamespaceTreeStore(Gtk.TreeStore):
+    def __init__(self, types, event_manager):
+        super().__init__(*types)
+        self.event_manager = event_manager
+
+    def do_row_draggable(self, path):
+        return True
+
+    def do_drag_data_get(self, path, selection_data):
+        target = str(selection_data.get_target())
+        row = self[path]
+        element = row[0]
+        if target == "gaphor/element-id":
+            selection_data.set(selection_data.get_target(), 8, str(element.id).encode())
+            return True
+        elif target == "GTK_TREE_MODEL_ROW":
+            return Gtk.tree_set_row_drag_data(selection_data, self, path)
+        return False
+
+    def do_row_drop_possible(self, dest_path, selection_data):
+        src_data = Gtk.tree_get_row_drag_data(selection_data)
+        if not src_data:
+            return False
+        ok, src_model, src_path = src_data
+        if not ok or src_model is not self:
+            log.warning("DnD from different tree model")
+            return False
+
+        src_row = self[src_path]
+        element = src_row[0]
+
+        return isinstance(element, (Diagram, UML.Package, UML.Type))
+
+    def do_drag_data_received(self, dest_path, selection_data):
+        if str(selection_data.get_target()) != "GTK_TREE_MODEL_ROW":
+            log.warning(f"Wrong drag data type {selection_data.get_target()}")
+            return False
+
+        ok, src_model, src_path = Gtk.tree_get_row_drag_data(selection_data)
+        if not ok or src_model is not self:
+            log.debug("Can't DnD from different tree model")
+            return False
+
+        src_row = self[src_path]
+        element = src_row[0]
+
+        dest_path.up()
+        try:
+            iter = self.get_iter(dest_path)
+        except ValueError:
+            log.debug(f"Invalid path: '{dest_path}'")
+            return False
+
+        dest_element = self.get_value(iter, 0)
+
+        if dest_element is RELATIONSHIPS:
+            iter = relationship_iter_parent(self, iter)
+            dest_element = self.get_value(iter, 0)
+
+        if element.package is dest_element:
+            return False
+
+        # Check if element is part of the namespace of dest_element:
+        ns = dest_element
+        while ns:
+            if ns is element:
+                log.info("Can not create a cycle")
+                return False
+            ns = ns.namespace
+
+        try:
+            # Set package. This only works for classifiers, packages and
+            # diagrams. Properties and operations should not be moved.
+            with Transaction(self.event_manager):
+                if dest_element is None:
+                    del element.package
+                else:
+                    element.package = dest_element
+            return True
+        except AttributeError as e:
+            log.info(f"Unable to drop data {e}")
+        return False
+
+
 class NamespaceModel:
     def __init__(self, event_manager: EventManager, element_factory: ElementFactory):
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self.model = Gtk.TreeStore.new([object])
+        self.model = NamespaceTreeStore(types=[object], event_manager=event_manager)
 
         event_manager.subscribe(self.refresh)
         event_manager.subscribe(self._on_element_create)

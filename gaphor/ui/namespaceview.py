@@ -10,7 +10,7 @@ from gaphor.core import gettext, transactional
 from gaphor.core.format import format, parse
 from gaphor.core.modeling import Diagram, Element
 from gaphor.diagram.iconname import get_icon_name
-from gaphor.ui.namespacemodel import RELATIONSHIPS, relationship_iter_parent
+from gaphor.ui.namespacemodel import RELATIONSHIPS
 
 log = logging.getLogger(__name__)
 
@@ -21,8 +21,16 @@ if TYPE_CHECKING:
 class NamespaceView(Gtk.TreeView):
     if Gtk.get_major_version() == 3:
         TARGET_ELEMENT_ID = 0
+        TARGET_GTK_TREE_MODEL_ROW = 1
         DND_TARGETS = [
-            Gtk.TargetEntry.new("gaphor/element-id", 0, TARGET_ELEMENT_ID),
+            Gtk.TargetEntry.new(
+                "gaphor/element-id", Gtk.TargetFlags.SAME_APP, TARGET_ELEMENT_ID
+            ),
+            Gtk.TargetEntry.new(
+                "GTK_TREE_MODEL_ROW",
+                Gtk.TargetFlags.SAME_APP,
+                TARGET_GTK_TREE_MODEL_ROW,
+            ),
         ]
 
     def __init__(self, model: Gtk.TreeModel, element_factory: ElementFactory):
@@ -50,23 +58,15 @@ class NamespaceView(Gtk.TreeView):
         self.append_column(column)
 
         if Gtk.get_major_version() == 3:
-            # drag
-            self.drag_source_set(
+            self.enable_model_drag_source(
                 Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
                 NamespaceView.DND_TARGETS,
                 Gdk.DragAction.COPY | Gdk.DragAction.MOVE,
             )
-            self.connect("drag-data-get", NamespaceView.on_drag_data_get)
-            self.connect("drag-data-delete", NamespaceView.on_drag_data_delete)
-
-            # drop
-            self.drag_dest_set(
-                Gtk.DestDefaults.ALL,
+            self.enable_model_drag_dest(
                 [NamespaceView.DND_TARGETS[-1]],
                 Gdk.DragAction.MOVE,
             )
-            self.connect("drag-motion", NamespaceView.on_drag_motion)
-            self.connect("drag-data-received", NamespaceView.on_drag_data_received)
         else:
             # TODO: GTK4 - use controllers DragSource and DropTarget
             pass
@@ -133,96 +133,6 @@ class NamespaceView(Gtk.TreeView):
             parse(element, new_text)
         except TypeError:
             log.debug(f"No parser for {element}")
-
-    def on_drag_data_get(self, context, selection_data, info, time):
-        """Get the data to be dropped by on_drag_data_received().
-
-        We send the id of the dragged element.
-        """
-        selection = self.get_selection()
-        model, iter = selection.get_selected()
-        if iter:
-            element = model.get_value(iter, 0)
-            if info == NamespaceView.TARGET_ELEMENT_ID:
-                selection_data.set(
-                    selection_data.get_target(), 8, str(element.id).encode()
-                )
-            else:
-                selection_data.set(
-                    selection_data.get_target(), 8, str(element.name).encode()
-                )
-        return True
-
-    def on_drag_data_delete(self, context):
-        """Delete data from original site, when `ACTION_MOVE` is used."""
-        self.emit_stop_by_name("drag-data-delete")
-
-    # Drop
-    def on_drag_motion(self, context, x, y, time):
-        path_pos_or_none = self.get_dest_row_at_pos(x, y)
-        if path_pos_or_none:
-            self.set_drag_dest_row(*path_pos_or_none)
-        else:
-            self.set_drag_dest_row(
-                Gtk.TreePath.new_from_indices([len(self.get_model()) - 1]),
-                Gtk.TreeViewDropPosition.AFTER,
-            )
-        return True
-
-    @transactional
-    def on_drag_data_received(self, context, x, y, selection, info, time):
-        """Drop the data send by on_drag_data_get()."""
-        self.stop_emission_by_name("drag-data-received")
-        if info == NamespaceView.TARGET_ELEMENT_ID:
-            element_id = selection.get_data().decode()
-            drop_info = self.get_dest_row_at_pos(x, y)
-        else:
-            drop_info = None
-
-        if drop_info:
-            model = self.get_model()
-            element = self.element_factory.lookup(element_id)
-            if not isinstance(element, (Diagram, UML.Package, UML.Type)):
-                log.debug("Element {element} can not be dropped")
-                return context.finish(False, False, time)
-            path, position = drop_info
-            iter = model.get_iter(path)
-            dest_element = model.get_value(iter, 0)
-            assert dest_element
-            if dest_element is RELATIONSHIPS:
-                iter = relationship_iter_parent(model, iter)
-                dest_element = model.get_value(iter, 0)
-
-            # Add the item to the parent if it is dropped on the same level,
-            # else add it to the item.
-            if position in (
-                Gtk.TreeViewDropPosition.BEFORE,
-                Gtk.TreeViewDropPosition.AFTER,
-            ):
-                parent_iter = model.iter_parent(iter)
-                dest_element = (
-                    None if parent_iter is None else model.get_value(parent_iter, 0)
-                )
-            try:
-                # Check if element is part of the namespace of dest_element:
-                ns = dest_element
-                while ns:
-                    if ns is element:
-                        raise AttributeError
-                    ns = ns.namespace
-
-                # Set package. This only works for classifiers, packages and
-                # diagrams. Properties and operations should not be moved.
-                if dest_element is None:
-                    del element.package
-                else:
-                    element.package = dest_element
-
-            except AttributeError as e:
-                log.info(f"Unable to drop data {e}")
-                context.finish(False, False, time)
-            else:
-                context.finish(True, True, time)
 
 
 def tree_view_expand_collapse(view):
