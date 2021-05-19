@@ -212,11 +212,11 @@ class NamespaceModel(Gtk.TreeStore):
         target = str(selection_data.get_target())
         row = self[path]
         element = row[0]
-        if target == "gaphor/element-id":
+        if target == "GTK_TREE_MODEL_ROW":
+            return Gtk.tree_set_row_drag_data(selection_data, self, path)
+        elif target == "gaphor/element-id":
             selection_data.set(selection_data.get_target(), 8, str(element.id).encode())
             return True
-        elif target == "GTK_TREE_MODEL_ROW":
-            return Gtk.tree_set_row_drag_data(selection_data, self, path)
         return False
 
     def do_row_drop_possible(self, dest_path, selection_data):
