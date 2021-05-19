@@ -21,7 +21,7 @@ def test_popup_model(namespace, diagram, element_factory):
     )
     namespace.select_element(item.subject)
 
-    popup = popup_model(namespace.view)
+    popup = popup_model(namespace.get_selected_element())
 
     assert popup
 
