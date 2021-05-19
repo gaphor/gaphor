@@ -241,28 +241,31 @@ class NamespaceModel(Gtk.TreeStore):
         element = src_row[0]
 
         dest_path.up()
-        try:
-            iter = self.get_iter(dest_path)
-        except ValueError:
-            log.debug(f"Invalid path: '{dest_path}'")
-            return False
+        if not dest_path:
+            dest_element = None
+        else:
+            try:
+                iter = self.get_iter(dest_path)
+            except ValueError:
+                log.debug(f"Invalid path: '{dest_path}'")
+                return False
 
-        dest_element = self.get_value(iter, 0)
-
-        if dest_element is RELATIONSHIPS:
-            iter = relationship_iter_parent(self, iter)
             dest_element = self.get_value(iter, 0)
 
-        if element.package is dest_element:
-            return False
+            if dest_element is RELATIONSHIPS:
+                iter = relationship_iter_parent(self, iter)
+                dest_element = self.get_value(iter, 0)
 
-        # Check if element is part of the namespace of dest_element:
-        ns = dest_element
-        while ns:
-            if ns is element:
-                log.info("Can not create a cycle")
+            if element.package is dest_element:
                 return False
-            ns = ns.namespace
+
+            # Check if element is part of the namespace of dest_element:
+            ns = dest_element
+            while ns:
+                if ns is element:
+                    log.info("Can not create a cycle")
+                    return False
+                ns = ns.namespace
 
         try:
             # Set package. This only works for classifiers, packages and
