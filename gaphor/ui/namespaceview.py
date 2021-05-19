@@ -60,6 +60,7 @@ def namespace_view(model: Gtk.TreeModel):
             DND_TARGETS,
             Gdk.DragAction.MOVE,
         )
+        view._controller = tree_view_expand_collapse(view)
     else:
         view.enable_model_drag_source(
             Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
@@ -70,7 +71,33 @@ def namespace_view(model: Gtk.TreeModel):
             DND_TARGETS,
             Gdk.DragAction.MOVE,
         )
-    view._controller = tree_view_expand_collapse(view)
+        tree_view_expand_collapse(view)
+
+    def search_func(model, column, key, rowiter):
+        # Note that this function returns `False` for a match!
+        assert column == 0
+        row = model[rowiter]
+        not_matched = True
+
+        # Search in child rows.  If any element in the underlying
+        # tree matches, it will expand.
+        for inner in row.iterchildren():
+            if not search_func(model, column, key, inner.iter):
+                view.expand_to_path(row.path)
+                not_matched = False
+
+        element = list(row)[column]
+        if element is not RELATIONSHIPS:
+            s = format(element)
+            if s and key.lower() in s.lower():
+                not_matched = False
+
+        if not_matched:
+            view.collapse_row(row.path)
+
+        return not_matched
+
+    view.set_search_equal_func(search_func)
 
     return view
 

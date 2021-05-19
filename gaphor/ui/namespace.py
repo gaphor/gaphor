@@ -14,7 +14,6 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext, transactional
-from gaphor.core.format import format
 from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
@@ -89,30 +88,6 @@ class Namespace(UIComponent):
         view = namespace_view(self.model)
         self.event_manager.subscribe(self._on_model_refreshed)
         self.event_manager.subscribe(self._on_diagram_selection_changed)
-
-        def search_func(model, column, key, rowiter):
-            # Note that this function returns `False` for a match!
-            assert column == 0
-            row = model[rowiter]
-            matched = False
-
-            # Search in child rows.  If any element in the underlying
-            # tree matches, it will expand.
-            for inner in row.iterchildren():
-                if not search_func(model, column, key, inner.iter):
-                    view.expand_to_path(row.path)
-                    matched = True
-
-            element = list(row)[column]
-            s = format(element)
-            if s and key.lower() in s.lower():
-                matched = True
-            elif not matched:
-                view.collapse_row(row.path)
-
-            return not matched  # False means match found!
-
-        view.set_search_equal_func(search_func)
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
