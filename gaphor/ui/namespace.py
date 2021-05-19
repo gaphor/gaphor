@@ -21,6 +21,7 @@ from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged
 from gaphor.ui.namespacemodel import (
     RELATIONSHIPS,
     NamespaceModel,
+    NamespaceModelElementDropped,
     NamespaceModelRefreshed,
 )
 from gaphor.ui.namespaceview import namespace_view
@@ -87,6 +88,7 @@ class Namespace(UIComponent):
         self.model = NamespaceModel(self.event_manager, self.element_factory)
         view = namespace_view(self.model)
         self.event_manager.subscribe(self._on_model_refreshed)
+        self.event_manager.subscribe(self._on_model_dropped)
         self.event_manager.subscribe(self._on_diagram_selection_changed)
 
         scrolled_window = Gtk.ScrolledWindow()
@@ -143,6 +145,7 @@ class Namespace(UIComponent):
             self.model.shutdown()
             self.model = None
         self.event_manager.unsubscribe(self._on_model_refreshed)
+        self.event_manager.unsubscribe(self._on_model_dropped)
         self.event_manager.unsubscribe(self._on_diagram_selection_changed)
 
     @event_handler(NamespaceModelRefreshed)
@@ -151,6 +154,11 @@ class Namespace(UIComponent):
         if self.view:
             self.view.expand_row(path=Gtk.TreePath.new_first(), open_all=False)
             self._on_view_cursor_changed(self.view)
+
+    @event_handler(NamespaceModelElementDropped)
+    def _on_model_dropped(self, event):
+        element = event.element
+        self.select_element(element)
 
     @event_handler(DiagramSelectionChanged)
     def _on_diagram_selection_changed(self, event):

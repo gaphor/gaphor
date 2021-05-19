@@ -55,6 +55,12 @@ class NamespaceModelRefreshed:
         self.model = model
 
 
+class NamespaceModelElementDropped:
+    def __init__(self, model, element):
+        self.model = model
+        self.element = element
+
+
 class NamespaceModel(Gtk.TreeStore):
     def __init__(self, event_manager: EventManager, element_factory: ElementFactory):
         super().__init__(object)
@@ -275,6 +281,7 @@ class NamespaceModel(Gtk.TreeStore):
                     del element.package
                 else:
                     element.package = dest_element
+                self.event_manager.handle(NamespaceModelElementDropped(self, element))
             return True
         except AttributeError as e:
             log.info(f"Unable to drop data {e}")
