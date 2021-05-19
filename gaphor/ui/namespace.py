@@ -24,7 +24,7 @@ from gaphor.ui.namespacemodel import (
     NamespaceModel,
     NamespaceModelRefreshed,
 )
-from gaphor.ui.namespaceview import NamespaceView
+from gaphor.ui.namespaceview import namespace_view
 
 if TYPE_CHECKING:
     from gaphor.core.eventmanager import EventManager
@@ -80,12 +80,13 @@ class Namespace(UIComponent):
         self.element_factory = element_factory
 
         self.model: Optional[NamespaceModel] = None
-        self.view: Optional[NamespaceView] = None
+        self.view: Optional[Gtk.TreeView] = None
         self.scrolled_window: Optional[Gtk.ScrolledWindow] = None
         self.ctrl: Set[Gtk.EventController] = set()
 
     def open(self):
         self.model = NamespaceModel(self.event_manager, self.element_factory)
+        view = namespace_view(self.model)
         self.event_manager.subscribe(self._on_model_refreshed)
         self.event_manager.subscribe(self._on_diagram_selection_changed)
 
@@ -111,7 +112,6 @@ class Namespace(UIComponent):
 
             return not matched  # False means match found!
 
-        view = NamespaceView(self.model)
         view.set_search_equal_func(search_func)
 
         scrolled_window = Gtk.ScrolledWindow()
