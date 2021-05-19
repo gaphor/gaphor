@@ -112,7 +112,7 @@ class Namespace(UIComponent):
 
             return not matched  # False means match found!
 
-        view = NamespaceView(self.model, self.element_factory)
+        view = NamespaceView(self.model)
         view.set_search_equal_func(search_func)
 
         scrolled_window = Gtk.ScrolledWindow()

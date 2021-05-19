@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
 
 from gi.repository import Gdk, Gtk, Pango
 
@@ -14,9 +14,6 @@ from gaphor.ui.namespacemodel import RELATIONSHIPS
 
 log = logging.getLogger(__name__)
 
-if TYPE_CHECKING:
-    from gaphor.core.modeling import ElementFactory
-
 
 class NamespaceView(Gtk.TreeView):
     if Gtk.get_major_version() == 3:
@@ -24,19 +21,22 @@ class NamespaceView(Gtk.TreeView):
         TARGET_GTK_TREE_MODEL_ROW = 1
         DND_TARGETS = [
             Gtk.TargetEntry.new(
-                "gaphor/element-id", Gtk.TargetFlags.SAME_APP, TARGET_ELEMENT_ID
-            ),
-            Gtk.TargetEntry.new(
                 "GTK_TREE_MODEL_ROW",
                 Gtk.TargetFlags.SAME_APP,
                 TARGET_GTK_TREE_MODEL_ROW,
             ),
+            Gtk.TargetEntry.new(
+                "gaphor/element-id", Gtk.TargetFlags.SAME_APP, TARGET_ELEMENT_ID
+            ),
         ]
+    else:
+        DND_TARGETS = Gdk.ContentFormats.new(
+            ["gaphor/element-id", "GTK_TREE_MODEL_ROW"]
+        )
 
-    def __init__(self, model: Gtk.TreeModel, element_factory: ElementFactory):
+    def __init__(self, model: Gtk.TreeModel):
         Gtk.TreeView.__init__(self)
         self.set_model(model)
-        self.element_factory = element_factory
 
         self.set_property("headers-visible", False)
         self.set_property("search-column", 0)
@@ -64,12 +64,19 @@ class NamespaceView(Gtk.TreeView):
                 Gdk.DragAction.COPY | Gdk.DragAction.MOVE,
             )
             self.enable_model_drag_dest(
-                [NamespaceView.DND_TARGETS[-1]],
+                NamespaceView.DND_TARGETS,
                 Gdk.DragAction.MOVE,
             )
         else:
-            # TODO: GTK4 - use controllers DragSource and DropTarget
-            pass
+            self.enable_model_drag_source(
+                Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
+                NamespaceView.DND_TARGETS,
+                Gdk.DragAction.COPY | Gdk.DragAction.MOVE,
+            )
+            self.enable_model_drag_dest(
+                NamespaceView.DND_TARGETS,
+                Gdk.DragAction.MOVE,
+            )
         self._controller = tree_view_expand_collapse(self)
 
     def get_selected_element(self) -> Optional[Element]:
