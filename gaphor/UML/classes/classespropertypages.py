@@ -703,11 +703,14 @@ class AssociationPropertyPage(PropertyPageBase):
 
     @transactional
     def _on_end_navigability_change(self, combo, end):
-        UML.model.set_navigability(
-            end.subject.association, end.subject, self.NAVIGABILITY[combo.get_active()]
-        )
-        # Call this again, or non-navigability will not be displayed
-        self.item.update_ends()
+        if end.subject and end.subject.opposite and end.subject.opposite.type:
+            UML.model.set_navigability(
+                end.subject.association,
+                end.subject,
+                self.NAVIGABILITY[combo.get_active()],
+            )
+            # Call this again, or non-navigability will not be displayed
+            self.item.update_ends()
 
     @transactional
     def _on_end_aggregation_change(self, combo, end):
