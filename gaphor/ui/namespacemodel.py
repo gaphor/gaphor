@@ -6,11 +6,12 @@ from typing import TYPE_CHECKING
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import event_handler
+from gaphor.core import Transaction, event_handler
 from gaphor.core.format import format
 from gaphor.core.modeling import (
     AttributeUpdated,
     DerivedSet,
+    Diagram,
     ElementCreated,
     ElementDeleted,
     ModelFlushed,
@@ -54,17 +55,26 @@ class NamespaceModelRefreshed:
         self.model = model
 
 
-class NamespaceModel:
+class NamespaceModelElementDropped:
+    def __init__(self, model, element):
+        self.model = model
+        self.element = element
+
+
+class NamespaceModel(Gtk.TreeStore):
     def __init__(self, event_manager: EventManager, element_factory: ElementFactory):
+        super().__init__(object)
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self.model = Gtk.TreeStore.new([object])
 
         event_manager.subscribe(self.refresh)
         event_manager.subscribe(self._on_element_create)
         event_manager.subscribe(self._on_element_delete)
         event_manager.subscribe(self._on_association_set)
         event_manager.subscribe(self._on_attribute_change)
+
+        self.set_sort_func(0, sort_func, None)
+        self.set_sort_column_id(0, Gtk.SortType.ASCENDING)
 
     def shutdown(self):
         em = self.event_manager
@@ -74,41 +84,8 @@ class NamespaceModel:
         em.unsubscribe(self._on_association_set)
         em.unsubscribe(self._on_attribute_change)
 
-    def sorted(self):
-        """Get a sorted version of this model."""
-        sorted_model = Gtk.TreeModelSort(model=self.model)
-
-        def sort_func(model, iter_a, iter_b, userdata):
-            va = model.get_value(iter_a, 0)
-            vb = model.get_value(iter_b, 0)
-
-            # Put Relationships pseudo-node at top
-            if va is RELATIONSHIPS:
-                return -1
-            if vb is RELATIONSHIPS:
-                return 1
-
-            a = (format(va) or "").lower()
-            b = (format(vb) or "").lower()
-            if a == b:
-                return 0
-            if a > b:
-                return 1
-            return -1
-
-        sorted_model.set_sort_func(0, sort_func, None)
-        sorted_model.set_sort_column_id(0, Gtk.SortType.ASCENDING)
-
-        return sorted_model
-
-    def iter_children(self, iter):
-        return self.model.iter_children(iter)
-
-    def iter_n_children(self, iter):
-        return self.model.iter_n_children(iter)
-
     def get_element(self, iter):
-        return self.model.get_value(iter, 0)
+        return self.get_value(iter, 0)
 
     def iter_for_element(self, element, old_owner=0):
         """Get the Gtk.TreeIter for an element in the Namespace.
@@ -129,13 +106,13 @@ class NamespaceModel:
             parent_iter = None
 
         if isinstance(element, UML.Relationship):
-            parent_iter = relationship_iter(self.model, parent_iter)
+            parent_iter = relationship_iter(self, parent_iter)
 
-        child_iter = self.model.iter_children(parent_iter)
+        child_iter = self.iter_children(parent_iter)
         while child_iter:
-            if self.model.get_value(child_iter, 0) is element:
+            if self.get_value(child_iter, 0) is element:
                 return child_iter
-            child_iter = self.model.iter_next(child_iter)
+            child_iter = self.iter_next(child_iter)
         return None
 
     def _visible(self, element):
@@ -148,8 +125,8 @@ class NamespaceModel:
     def _add(self, element, iter=None):
         if self._visible(element):
             if isinstance(element, UML.Relationship):
-                iter = relationship_iter(self.model, iter)
-            child_iter = self.model.append(iter, [element])
+                iter = relationship_iter(self, iter)
+            child_iter = self.append(iter, [element])
             for e in element.ownedElement:
                 # check if owned element is indeed within parent's owner
                 # This is important since we should be able to traverse this relation both ways
@@ -158,21 +135,21 @@ class NamespaceModel:
 
     def _remove(self, iter):
         if iter:
-            parent_iter = self.model.iter_parent(iter)
-            self.model.remove(iter)
+            parent_iter = self.iter_parent(iter)
+            self.remove(iter)
             if (
                 parent_iter
-                and not self.model.iter_has_child(parent_iter)
-                and self.model.get_value(parent_iter, 0) is RELATIONSHIPS
+                and not self.iter_has_child(parent_iter)
+                and self.get_value(parent_iter, 0) is RELATIONSHIPS
             ):
-                self.model.remove(parent_iter)
+                self.remove(parent_iter)
 
     @event_handler(ModelReady, ModelFlushed)
     def refresh(self, event=None):
         """Load a new model completely."""
         log.debug("Rebuilding namespace model")
 
-        self.model.clear()
+        self.clear()
 
         toplevel = self.element_factory.select(
             lambda e: self._visible(e) and not e.owner
@@ -225,5 +202,106 @@ class NamespaceModel:
 
             iter = self.iter_for_element(element)
             if iter:
-                path = self.model.get_path(iter)
-                self.model.row_changed(path, iter)
+                path = self.get_path(iter)
+                self.row_changed(path, iter)
+
+    def do_row_draggable(self, path):
+        return True
+
+    def do_drag_data_get(self, path, selection_data):
+        target = str(selection_data.get_target())
+        row = self[path]
+        element = row[0]
+        if target == "GTK_TREE_MODEL_ROW":
+            return Gtk.tree_set_row_drag_data(selection_data, self, path)
+        elif target == "gaphor/element-id":
+            selection_data.set(selection_data.get_target(), 8, str(element.id).encode())
+            return True
+        return False
+
+    def do_row_drop_possible(self, dest_path, selection_data):
+        src_data = Gtk.tree_get_row_drag_data(selection_data)
+        if not src_data:
+            return False
+        ok, src_model, src_path = src_data
+        if not ok or src_model is not self:
+            log.warning("DnD from different tree model")
+            return False
+
+        src_row = self[src_path]
+        element = src_row[0]
+
+        return isinstance(element, (Diagram, UML.Package, UML.Type))
+
+    def do_drag_data_received(self, dest_path, selection_data):
+        if str(selection_data.get_target()) != "GTK_TREE_MODEL_ROW":
+            log.warning(f"Wrong drag data type {selection_data.get_target()}")
+            return False
+
+        ok, src_model, src_path = Gtk.tree_get_row_drag_data(selection_data)
+        if not ok or src_model is not self:
+            log.debug("Can't DnD from different tree model")
+            return False
+
+        src_row = self[src_path]
+        element = src_row[0]
+
+        dest_path.up()
+        if not dest_path:
+            dest_element = None
+        else:
+            try:
+                iter = self.get_iter(dest_path)
+            except ValueError:
+                log.debug(f"Invalid path: '{dest_path}'")
+                return False
+
+            dest_element = self.get_value(iter, 0)
+
+            if dest_element is RELATIONSHIPS:
+                iter = relationship_iter_parent(self, iter)
+                dest_element = self.get_value(iter, 0)
+
+            if element.package is dest_element:
+                return False
+
+            # Check if element is part of the namespace of dest_element:
+            ns = dest_element
+            while ns:
+                if ns is element:
+                    log.info("Can not create a cycle")
+                    return False
+                ns = ns.namespace
+
+        try:
+            # Set package. This only works for classifiers, packages and
+            # diagrams. Properties and operations should not be moved.
+            with Transaction(self.event_manager):
+                if dest_element is None:
+                    del element.package
+                else:
+                    element.package = dest_element
+                self.event_manager.handle(NamespaceModelElementDropped(self, element))
+            return True
+        except AttributeError as e:
+            log.info(f"Unable to drop data {e}")
+        return False
+
+
+def sort_func(model, iter_a, iter_b, userdata):
+    va = model.get_value(iter_a, 0)
+    vb = model.get_value(iter_b, 0)
+
+    # Put Relationships pseudo-node at top
+    if va is RELATIONSHIPS:
+        return -1
+    if vb is RELATIONSHIPS:
+        return 1
+
+    a = (format(va) or "").lower()
+    b = (format(vb) or "").lower()
+    if a == b:
+        return 0
+    if a > b:
+        return 1
+    return -1

@@ -89,9 +89,9 @@ def show_popover(widget, view, box, escape=None):
     if Gtk.get_major_version() == 3:
 
         def on_escape3(popover, event):
-            return on_escape(popover, event.keyval, event.keycode, event.get_state())
+            return on_escape(popover, event.keyval, 0, event.get_state())
 
-        popover.connect("key-press-event", on_escape)
+        popover.connect("key-press-event", on_escape3)
         popover.popup()
     else:
         controller = Gtk.EventControllerKey.new()

@@ -1,4 +1,5 @@
 import pytest
+from gi.repository import Gtk
 
 import gaphor.core.eventmanager
 from gaphor import UML
@@ -100,7 +101,7 @@ def test_change_element_name(namespace, element_factory):
     def handle_row_changed(*args):
         events.append(args)
 
-    namespace.model.connect("row-changed", handle_row_changed)
+    namespace.connect("row-changed", handle_row_changed)
 
     p1.name = "pack"
 
@@ -166,3 +167,59 @@ def test_relationship__in_non_package_element(namespace, element_factory):
     assert namespace.iter_n_children(None) == 1
     assert namespace.iter_n_children(iter) == 1
     assert namespace.iter_for_element(g)
+
+
+def test_all_elements_are_draggable(namespace, element_factory):
+    assert namespace.do_row_draggable((0,))
+
+
+class MockSelectionData:
+    def __init__(self, target="GTK_TREE_MODEL_ROW"):
+        self._target = target
+        self.set_data = None
+
+    def get_target(self):
+        return self._target
+
+    def set(self, mock_type, mock_format, data):
+        self.set_data = (mock_type, mock_format, data)
+
+
+def test_droppable(namespace, element_factory, mocker):
+    element_factory.create(UML.Class)
+    selection_data = MockSelectionData()
+    tree_get_row_drag_data = mocker.patch.object(Gtk, "tree_get_row_drag_data")
+    tree_get_row_drag_data.return_value = (True, namespace, (0,))
+
+    assert namespace.do_row_drop_possible((1,), selection_data)
+
+
+def test_drag_data_get_for_model_row(namespace, element_factory, mocker):
+    element_factory.create(UML.Class)
+    selection_data = MockSelectionData()
+    tree_set_row_drag_data = mocker.patch.object(Gtk, "tree_set_row_drag_data")
+    tree_set_row_drag_data.return_value = True
+
+    assert namespace.do_drag_data_get((0,), selection_data)
+    tree_set_row_drag_data.assert_called_once()
+
+
+def test_drag_data_get_element_id(namespace, element_factory):
+    c = element_factory.create(UML.Class)
+    selection_data = MockSelectionData(target="gaphor/element-id")
+    assert namespace.do_drag_data_get((0,), selection_data)
+    type, format, data = selection_data.set_data
+
+    assert data == c.id.encode()
+
+
+def test_drag_data_received(namespace, element_factory, mocker):
+    element_factory.create(UML.Class)
+    element_factory.create(UML.Package)
+    selection_data = MockSelectionData()
+    tree_get_row_drag_data = mocker.patch.object(Gtk, "tree_get_row_drag_data")
+    tree_get_row_drag_data.return_value = (True, namespace, (0,))
+
+    assert namespace.do_drag_data_received(
+        Gtk.TreePath.new_from_indices((1, 0)), selection_data
+    )
