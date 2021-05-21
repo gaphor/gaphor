@@ -1,0 +1,26 @@
+# flake8: noqa F401,F811
+from gaphor import UML
+from gaphor.core.modeling import Diagram
+from gaphor.diagram.tests.fixtures import (
+    connect,
+    create,
+    diagram,
+    element_factory,
+    event_manager,
+)
+from gaphor.UML.classes import AssociationItem, ClassItem
+from gaphor.UML.classes.classespropertypages import AssociationPropertyPage
+from gaphor.UML.classes.classestoolbox import composite_association_config
+
+
+def test_connect_composite_association(create, diagram):
+    c1 = create(ClassItem, UML.Class)
+    c2 = create(ClassItem, UML.Class)
+    a = create(AssociationItem, UML.Association)
+    composite_association_config(a)
+
+    property_page = AssociationPropertyPage(a)
+    widget = property_page.construct()
+
+    connect(a, a.head, c1)
+    connect(a, a.tail, c2)
