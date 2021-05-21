@@ -1,5 +1,6 @@
 from gaphor.C4Model.diagramitems import C4ContainerDatabaseItem, C4ContainerItem
 from gaphor.diagram.grouping import AbstractGroup, Group
+from gaphor.UML.modelfactory import owner_package
 
 
 @Group.register(C4ContainerItem, C4ContainerItem)
@@ -14,4 +15,4 @@ class ContainerGroup(AbstractGroup):
         self.item.subject.package = self.parent.subject
 
     def ungroup(self):
-        self.item.subject.package = self.item.diagram.package
+        self.item.subject.package = owner_package(self.item.diagram.owner)

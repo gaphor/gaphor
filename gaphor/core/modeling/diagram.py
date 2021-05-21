@@ -241,12 +241,6 @@ class Diagram(Element):
             self._update_views(removed_items=(event.old_value,))
 
     @property
-    def package(self):
-        from gaphor.UML.modelfactory import owner_package
-
-        return owner_package(self)
-
-    @property
     def styleSheet(self) -> Optional[StyleSheet]:
         return next(self.model.select(StyleSheet), None)
 
