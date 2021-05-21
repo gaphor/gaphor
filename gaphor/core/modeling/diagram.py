@@ -8,21 +8,22 @@ import logging
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import TYPE_CHECKING, Iterable, Iterator, Optional, Sequence, Set, Union
+from typing import Iterable, Iterator, Optional, Sequence, Set, Union
 
 import gaphas
 
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.coremodel import Element, PackageableElement
-from gaphor.core.modeling.element import Id, RepositoryProtocol
+from gaphor.core.modeling.element import Element, Id, RepositoryProtocol
 from gaphor.core.modeling.event import AssociationDeleted, DiagramItemCreated
 from gaphor.core.modeling.presentation import Presentation
-from gaphor.core.modeling.properties import association, relation_many, relation_one
+from gaphor.core.modeling.properties import (
+    association,
+    attribute,
+    relation_many,
+    relation_one,
+)
 from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.core.styling import Style, StyleNode
-
-if TYPE_CHECKING:
-    from gaphor.UML import Package
 
 log = logging.getLogger(__name__)
 
@@ -208,10 +209,11 @@ class PseudoCanvas:
                 save_func(item)
 
 
-class Diagram(PackageableElement):
+class Diagram(Element):
     """Diagrams may contain model elements and can be owned by a Package."""
 
-    package: relation_one[Package]
+    name: attribute[str]
+    element: relation_one[Element]
 
     def __init__(
         self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None
@@ -237,6 +239,12 @@ class Diagram(PackageableElement):
     def _presentation_removed(self, event):
         if isinstance(event, AssociationDeleted) and event.old_value:
             self._update_views(removed_items=(event.old_value,))
+
+    @property
+    def package(self):
+        from gaphor.UML.modelfactory import owner_package
+
+        return owner_package(self)
 
     @property
     def styleSheet(self) -> Optional[StyleSheet]:

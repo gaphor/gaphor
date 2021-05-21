@@ -271,12 +271,13 @@ class LineStylePage(PropertyPageBase):
         )
 
         rectilinear_button = builder.get_object("line-rectilinear")
-        rectilinear_button.set_active(self.item.orthogonal)
-
         horizontal_button = builder.get_object("flip-orientation")
+
+        self.horizontal_button = horizontal_button
+
+        rectilinear_button.set_active(self.item.orthogonal)
         horizontal_button.set_active(self.item.horizontal)
         horizontal_button.set_sensitive(self.item.orthogonal)
-        self.horizontal_button = horizontal_button
 
         return builder.get_object("line-editor")
 

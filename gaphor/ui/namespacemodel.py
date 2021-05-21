@@ -262,7 +262,7 @@ class NamespaceModel(Gtk.TreeStore):
                 iter = relationship_iter_parent(self, iter)
                 dest_element = self.get_value(iter, 0)
 
-            if element.package is dest_element:
+            if element.owner is dest_element:
                 return False
 
             # Check if element is part of the namespace of dest_element:
@@ -279,6 +279,8 @@ class NamespaceModel(Gtk.TreeStore):
             with Transaction(self.event_manager):
                 if dest_element is None:
                     del element.package
+                elif isinstance(element, Diagram):
+                    element.element = dest_element
                 else:
                     element.package = dest_element
                 self.event_manager.handle(NamespaceModelElementDropped(self, element))

@@ -55,7 +55,7 @@ def load_default_model(element_factory):
         model = element_factory.create(UML.Package)
         model.name = gettext("New model")
         diagram = element_factory.create(UML.Diagram)
-        diagram.package = model
+        diagram.element = model
         diagram.name = gettext("main")
     element_factory.model_ready()
 

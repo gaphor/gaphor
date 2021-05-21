@@ -5,7 +5,6 @@ from gi.repository import Gdk, Gtk
 from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.core.format import format, parse
-from gaphor.core.modeling import NamedElement
 from gaphor.diagram.propertypages import (
     ComboModel,
     EditableTreeModel,
@@ -177,7 +176,7 @@ def tree_view_column_tooltips(tree_view, tooltips):
     tree_view.connect("query-tooltip", on_query_tooltip)
 
 
-@PropertyPages.register(NamedElement)
+@PropertyPages.register(UML.NamedElement)
 class NamedElementPropertyPage(PropertyPageBase):
     """An adapter which works for any named item view.
 
@@ -186,9 +185,9 @@ class NamedElementPropertyPage(PropertyPageBase):
 
     order = 10
 
-    def __init__(self, subject: NamedElement):
+    def __init__(self, subject: UML.NamedElement):
         super().__init__()
-        assert subject is None or isinstance(subject, NamedElement), "%s" % type(
+        assert subject is None or isinstance(subject, UML.NamedElement), "%s" % type(
             subject
         )
         self.subject = subject

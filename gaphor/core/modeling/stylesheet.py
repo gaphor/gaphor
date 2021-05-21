@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import textwrap
 
-from gaphor.core.modeling import Element
+from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.event import AttributeUpdated
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode

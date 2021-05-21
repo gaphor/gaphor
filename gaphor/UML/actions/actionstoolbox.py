@@ -16,7 +16,7 @@ def activity_config(new_item):
         return
 
     diagram = new_item.diagram
-    package = diagram.namespace
+    package = diagram.owner
 
     activities = (
         [i for i in package.ownedType if isinstance(i, UML.Activity)]

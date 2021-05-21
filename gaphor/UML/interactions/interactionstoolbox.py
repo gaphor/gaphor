@@ -7,6 +7,7 @@ from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
 from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.UML import diagramitems
+from gaphor.UML.modelfactory import owner_package
 
 
 def interaction_config(new_item):
@@ -16,7 +17,7 @@ def interaction_config(new_item):
         return
 
     diagram = new_item.diagram
-    package = diagram.namespace
+    package = owner_package(diagram.owner)
 
     interactions = (
         [i for i in package.ownedType if isinstance(i, UML.Interaction)]

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 
 from gaphas.item import Matrices
 
-from gaphor.core.modeling import Element
+from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.event import DiagramItemDeleted, RevertibeEvent
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 

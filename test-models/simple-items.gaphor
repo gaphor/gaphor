@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.1.1">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.4.1">
 <Package id="DCE:658E43CC-3A1D-11DC-8B61-000D93868322">
 <name>
 <val>New model</val>
@@ -11,6 +11,9 @@
 </ownedDiagram>
 </Package>
 <Diagram id="DCE:658E851A-3A1D-11DC-8B61-000D93868322">
+<element>
+<ref refid="DCE:658E43CC-3A1D-11DC-8B61-000D93868322"/>
+</element>
 <name>
 <val>main</val>
 </name>
@@ -21,9 +24,6 @@
 <ref refid="DCE:68ECCFB2-3A1D-11DC-8B61-000D93868322"/>
 </reflist>
 </ownedPresentation>
-<package>
-<ref refid="DCE:658E43CC-3A1D-11DC-8B61-000D93868322"/>
-</package>
 <canvas>
 <item id="DCE:6719E9C4-3A1D-11DC-8B61-000D93868322" type="Line">
 <diagram>
@@ -47,7 +47,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 215.0, 121.0)</val>
 </matrix>
 <width>
-<val>96.0</val>
+<val>100.0</val>
 </width>
 <height>
 <val>71.0</val>
@@ -61,7 +61,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 332.0, 137.0)</val>
 </matrix>
 <width>
-<val>60.0</val>
+<val>100.0</val>
 </width>
 <height>
 <val>60.0</val>

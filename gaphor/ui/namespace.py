@@ -295,7 +295,7 @@ class Namespace(UIComponent):
         while not isinstance(element, UML.Package):
             element = element.owner
         diagram = self.element_factory.create(Diagram)
-        diagram.package = element
+        diagram.element = element
 
         diagram.name = f"{element.name} diagram" if element else "New diagram"
         self.select_element(diagram)

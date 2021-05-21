@@ -127,7 +127,7 @@ class AssociationConnect(UnaryRelationshipConnect):
 
             if not line.subject:
                 relation = UML.model.create_association(c1.subject, c2.subject)
-                relation.package = element.diagram.namespace
+                relation.package = element.diagram.owner
                 line.head_subject = relation.memberEnd[0]
                 line.tail_subject = relation.memberEnd[1]
 

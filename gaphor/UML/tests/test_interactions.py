@@ -41,7 +41,7 @@ def test_create_lifeline_on_diagram_in_package_should_create_an_interaction(
     diagram, element_factory, lifeline_factory
 ):
     package = element_factory.create(UML.Package)
-    diagram.package = package
+    diagram.element = package
     lifeline = lifeline_factory(diagram)
 
     assert lifeline.subject.interaction

@@ -47,7 +47,7 @@ def test_create_action_should_add_to_existing_activity_in_package(
     diagram, item_factory, element_factory
 ):
     package = element_factory.create(UML.Package)
-    diagram.package = package
+    diagram.element = package
     activity = element_factory.create(UML.Activity)
     activity.package = package
     action = item_factory(diagram)

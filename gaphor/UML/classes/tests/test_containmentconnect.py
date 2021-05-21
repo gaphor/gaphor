@@ -37,7 +37,7 @@ def test_containment_package_class(create, diagram):
 def test_containment_package_class_disconnect(create, diagram, element_factory):
     """Test containment disconnecting from a package and a class."""
     parent_package = element_factory.create(UML.Package)
-    diagram.package = parent_package
+    diagram.element = parent_package
 
     package = create(PackageItem, UML.Package)
     line = create(ContainmentItem)
@@ -70,7 +70,7 @@ def test_containment_class_class(create, diagram, element_factory):
 def test_containment_class_class_disconnect(create, diagram, element_factory):
     """Test containment connecting to a package and a class."""
     parent_package = element_factory.create(UML.Package)
-    diagram.package = parent_package
+    diagram.element = parent_package
 
     container = create(ClassItem, UML.Class)
     line = create(ContainmentItem)

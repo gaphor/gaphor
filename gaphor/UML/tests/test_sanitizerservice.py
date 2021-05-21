@@ -187,6 +187,6 @@ def test_diagram_move(element_factory, mocker):
     mocked_func = mocker.patch.object(diagram, "request_update")
 
     package = element_factory.create(UML.Package)
-    diagram.package = package
+    diagram.element = package
 
     mocked_func.assert_called()

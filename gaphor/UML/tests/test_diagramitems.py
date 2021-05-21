@@ -1,10 +1,10 @@
 import pytest
 
-from gaphor.core.modeling import NamedElement, Presentation
+from gaphor.core.modeling import Presentation
 from gaphor.diagram.general import Box, CommentLineItem, Ellipse, Line
 from gaphor.diagram.presentation import Classified, Named
 from gaphor.diagram.support import get_model_element
-from gaphor.UML import Classifier, diagramitems
+from gaphor.UML import Classifier, NamedElement, diagramitems
 
 
 def _issubclass(child, parent):
