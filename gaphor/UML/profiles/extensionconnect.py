@@ -71,8 +71,7 @@ class ExtensionConnect(RelationshipConnect):
             else:
                 # Create a new Extension relationship
                 relation = UML.model.create_extension(head_type, tail_type)
-                # TODO: look up for package
-                relation.package = owner_package(element.diagram.element)
+                relation.package = owner_package(element.diagram.owner)
                 line.subject = relation
 
     def disconnect_subject(self, handle):

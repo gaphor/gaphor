@@ -13,6 +13,7 @@ from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.generalization import GeneralizationItem
 from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
+from gaphor.UML.modelfactory import owner_package
 
 
 @Connector.register(Named, DependencyItem)
@@ -127,7 +128,7 @@ class AssociationConnect(UnaryRelationshipConnect):
 
             if not line.subject:
                 relation = UML.model.create_association(c1.subject, c2.subject)
-                relation.package = element.diagram.owner
+                relation.package = owner_package(element.diagram.owner)
                 line.head_subject = relation.memberEnd[0]
                 line.tail_subject = relation.memberEnd[1]
 
