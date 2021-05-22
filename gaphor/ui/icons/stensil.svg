@@ -60,10 +60,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="7.783204"
-     inkscape:cx="458.8916"
-     inkscape:cy="168.93043"
+     inkscape:cx="445.45845"
+     inkscape:cy="149.05203"
      inkscape:document-units="px"
-     inkscape:current-layer="operational-situation"
+     inkscape:current-layer="abstract-operational-situation"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
@@ -1543,6 +1543,34 @@
   </g>
   <g
      inkscape:groupmode="layer"
+     id="relevant-to"
+     inkscape:label="relevant-to"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <path
+       id="path677"
+       d="m 130.95603,38.889564 a 0.26460979,0.26460979 0 0 0 -0.0586,0.0098 l -1.85156,0.529297 a 0.26492938,0.26492938 0 1 0 0.14453,0.509766 l 1.39453,-0.398438 -0.39844,1.394531 a 0.26493157,0.26493157 0 1 0 0.50977,0.144532 l 0.52929,-1.851563 a 0.26460979,0.26460979 0 0 0 -0.26953,-0.33789 z"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.82223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="129.50731"
+       y="43.136337"
+       id="text681"><tspan
+         sodipodi:role="line"
+         id="tspan679"
+         x="129.50731"
+         y="43.136337"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.82223px;font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold';stroke-width:0.264583">R</tspan></text>
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path684"
+       d="m 127.26458,42.862501 3.43959,-3.439584"
+       style="display:inline;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.529167, 1.05833;stroke-dashoffset:0;stroke-opacity:1" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
      id="operational-situation"
      inkscape:label="operational-situation"
      style="display:inline"
@@ -1552,46 +1580,20 @@
        id="rect707"
        width="3.7041667"
        height="3.7041667"
-       x="127.26458"
-       y="39.422916"
-       ry="0" />
-    <text
-       id="text711"
-       y="41.936058"
-       x="127.67989"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       xml:space="preserve"><tspan
-         y="41.936058"
-         x="127.67989"
-         id="tspan709"
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">OS</tspan></text>
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="abstract-operational-situation"
-     inkscape:label="abstract-operational-situation"
-     style="display:inline"
-     sodipodi:insensitive="true">
-    <rect
-       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-       id="rect699"
-       width="3.7041667"
-       height="3.7041667"
        x="119.32708"
        y="39.422916"
        ry="0" />
     <text
-       id="text703"
-       y="41.74527"
-       x="119.65517"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;line-height:0;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       xml:space="preserve"><tspan
-         y="41.74527"
-         x="119.65517"
-         id="tspan701"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.82223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="119.90653"
+       y="42.50769"
+       id="text687-0"><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:1.76389px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">AOS</tspan></text>
+         id="tspan685-2"
+         x="119.90653"
+         y="42.50769"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold';stroke-width:0.264583">O</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -1608,16 +1610,16 @@
        y="44.714584"
        ry="0" />
     <text
-       id="text719"
-       y="47.036938"
-       x="103.70088"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;line-height:0;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       xml:space="preserve"><tspan
-         y="47.036938"
-         x="103.70088"
-         id="tspan717"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.82223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="104.00722"
+       y="47.809555"
+       id="text687-7"><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:1.76389px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">UCA</tspan></text>
+         id="tspan685-9"
+         x="104.00722"
+         y="47.809555"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.23333px;font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold';stroke-width:0.264583">U</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -1644,6 +1646,32 @@
          id="tspan693"
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">CP</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="abstract-operational-situation"
+     inkscape:label="abstract-operational-situation"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect688"
+       width="3.7041667"
+       height="3.7041667"
+       x="111.38958"
+       y="44.714584"
+       ry="0" />
+    <text
+       id="text692"
+       y="47.227726"
+       x="111.80489"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         y="47.227726"
+         x="111.80489"
+         id="tspan690"
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">AO</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"

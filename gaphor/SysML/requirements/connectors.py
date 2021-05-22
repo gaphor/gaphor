@@ -46,7 +46,7 @@ class DeriveReqtConnect(DirectedRelationshipPropertyPathConnect):
 
 
 @Connector.register(Classified, RefineItem)
-class RefinefyConnect(DirectedRelationshipPropertyPathConnect):
+class RefineConnect(DirectedRelationshipPropertyPathConnect):
 
     relation_type = Refine
 

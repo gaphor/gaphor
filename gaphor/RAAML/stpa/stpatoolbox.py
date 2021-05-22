@@ -120,5 +120,15 @@ stpa = ToolSection(
                 config_func=namespace_config,
             ),
         ),
+        ToolDef(
+            "relevant-to",
+            gettext("Relevant To"),
+            "gaphor-relevant-to-symbolic",
+            "",
+            new_item_factory(
+                diagramitems.RelevantToItem,
+                raaml.RelevantTo,
+            ),
+        ),
     ),
 )

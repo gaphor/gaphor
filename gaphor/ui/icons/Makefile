@@ -106,7 +106,8 @@ ICONS=diagram \
 	controlled-process \
 	abstract-operational-situation \
 	operational-situation \
-	unsafe-control-action
+	unsafe-control-action \
+	relevant-to
 
 
 ICON_THEME=hicolor/scalable/actions
