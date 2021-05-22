@@ -130,5 +130,16 @@ stpa = ToolSection(
                 raaml.RelevantTo,
             ),
         ),
+        ToolDef(
+            "control-action",
+            gettext("Control Action"),
+            "gaphor-control-action-symbolic",
+            "",
+            new_item_factory(
+                diagramitems.ControlActionItem,
+                raaml.ControlAction,
+                config_func=namespace_config,
+            ),
+        ),
     ),
 )

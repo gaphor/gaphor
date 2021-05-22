@@ -63,13 +63,13 @@
      inkscape:cx="445.45845"
      inkscape:cy="149.05203"
      inkscape:document-units="px"
-     inkscape:current-layer="abstract-operational-situation"
+     inkscape:current-layer="control-action"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
      inkscape:window-height="1011"
      inkscape:window-x="0"
-     inkscape:window-y="32"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
      showborder="false"
      inkscape:document-rotation="0">
@@ -1646,6 +1646,32 @@
          id="tspan693"
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">CP</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="control-action"
+     inkscape:label="control-action"
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect610"
+       width="3.7041667"
+       height="3.7041667"
+       x="119.32708"
+       y="44.979168"
+       ry="0" />
+    <text
+       id="text614"
+       y="47.487663"
+       x="119.68665"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve"><tspan
+         y="47.487663"
+         x="119.68665"
+         id="tspan612"
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">CA</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
