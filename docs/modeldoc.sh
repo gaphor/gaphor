@@ -30,7 +30,8 @@ $H1
   :maxdepth: 1
 
 EOF
-else
+elif test "$M" == "sysml"
+then
   cat > "models/$(basename "$M").rst" << EOF
 Systems Modeling Language
 $H1
@@ -42,6 +43,22 @@ $H1
   :maxdepth: 1
 
 EOF
+elif test "$M" == "c4model"
+then
+  cat > "models/$(basename "$M").rst" << EOF
+C4 Model
+$H1
+
+.. image:: $M/Overview.svg
+
+.. toctree::
+  :caption: Packages
+  :maxdepth: 1
+
+EOF
+else
+  echo "*** Unknown model $M"
+  exit 1
 fi
 
 find "models/${M}" -mindepth 1 -type d -printf "%P\n" | sort | while read -r PACKAGE
@@ -55,9 +72,12 @@ do
     find "models/${M}/${PACKAGE}" -mindepth 1 -printf "%P\n" | sort | while read -r DIAGRAM
     do
       name=${DIAGRAM%.svg}
-      echo "${name//_/ }"
-      echo $H2
-      echo
+      if test "$name" != "$PACKAGE"
+      then
+        echo "${name//_/ }"
+        echo $H2
+        echo
+      fi
       echo ".. thumbnail:: ${PACKAGE}/${DIAGRAM}"
       echo "  :group: ${PACKAGE}"
       echo

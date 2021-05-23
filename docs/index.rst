@@ -44,6 +44,7 @@ plug-in.
    models/core
    models/uml
    models/SysML
+   models/c4model
 
 .. toctree::
    :caption: Services
