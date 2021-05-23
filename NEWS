@@ -1,3 +1,13 @@
+2.5.0
+-----
+- Allow diagrams to be nested under any element
+- Fix AttributeError when creating composite associations
+- Add tooltips for A and S in attribute editor
+- Improve drag and drop for TreeView
+- Started to add support for GTK4
+- Upload Linux assets during release automatically
+- Sign only builds on the master branch
+
 2.4.1
 -----
 - Fix reordering attributes and operations with drag and drop
