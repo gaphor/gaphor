@@ -1,6 +1,5 @@
-2.5.0
+2.4.2
 -----
-- Allow diagrams to be nested under any element
 - Fix AttributeError when creating composite associations
 - Add tooltips for A and S in attribute editor
 - Improve drag and drop for TreeView
