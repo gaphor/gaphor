@@ -145,6 +145,10 @@ models/SysML.rst: ../models/SysML.gaphor
 	gaphorconvert --format=svg --dir=models/sysml --use-underscores $< && \
 	./modeldoc.sh sysml/Profiles/SysML
 
+models/RAAML.rst: ../models/FTA.gaphor
+	gaphorconvert --format=svg --dir=models/raaml --use-underscores $< && \
+	./modeldoc.sh raaml/Profiles/RAAML
+
 models/c4model.rst: ../models/C4Model.gaphor
 	gaphorconvert --format=svg --dir=models/c4model --use-underscores $< && \
 	./modeldoc.sh c4model
