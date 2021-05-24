@@ -74,13 +74,11 @@ class ContainmentConnect(BaseConnector):
                 assert isinstance(hct.subject, (UML.Type, UML.Package))
                 if isinstance(hct.subject, UML.Classifier):
                     del hct.subject.nestingClass
-                # TODO: look up package
                 hct.subject.package = owner_package(hct.diagram.owner)
             if oct.subject in hct.subject.ownedElement:
                 assert isinstance(oct.subject, (UML.Type, UML.Package))
                 if isinstance(oct.subject, UML.Classifier):
                     del oct.subject.nestingClass
-                # TODO: look up packkage
                 oct.subject.package = owner_package(oct.diagram.owner)
 
         super().disconnect(handle)
