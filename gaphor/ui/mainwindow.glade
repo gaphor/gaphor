@@ -178,6 +178,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="tooltip-text" translatable="yes">New diagram</property>
             <property name="action-name">tree-view.create-diagram</property>
             <child>
               <object class="GtkImage">
@@ -216,6 +217,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="tooltip-text" translatable="yes">Show/Hide Editor</property>
             <property name="action-name">win.show-editors</property>
             <property name="use-popover">False</property>
             <child>

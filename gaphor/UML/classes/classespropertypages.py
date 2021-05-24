@@ -213,7 +213,7 @@ class NamedElementPropertyPage(PropertyPageBase):
 
         def handler(event):
             if event.element is subject and event.new_value != entry.get_text():
-                entry.set_text(event.new_value)
+                entry.set_text(event.new_value or "")
 
         self.watcher.watch("name", handler)
 
