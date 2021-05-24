@@ -9,6 +9,7 @@ from gaphor.diagram.diagramtoolbox import (
 from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.i18n import gettext
 from gaphor.RAAML import diagramitems, raaml
+from gaphor.SysML import diagramitems as sysml_items
 from gaphor.UML import diagramitems as uml_items
 
 
@@ -43,7 +44,7 @@ stpa = ToolSection(
             "gaphor-loss-symbolic",
             "",
             new_item_factory(
-                diagramitems.SituationItem, raaml.Loss, config_func=loss_config
+                sysml_items.BlockItem, raaml.Loss, config_func=loss_config
             ),
         ),
         ToolDef(
@@ -52,7 +53,7 @@ stpa = ToolSection(
             "gaphor-hazard-symbolic",
             "",
             new_item_factory(
-                diagramitems.SituationItem, raaml.Hazard, config_func=hazard_config
+                sysml_items.BlockItem, raaml.Hazard, config_func=hazard_config
             ),
         ),
         ToolDef(
@@ -61,7 +62,7 @@ stpa = ToolSection(
             "gaphor-situation-symbolic",
             "",
             new_item_factory(
-                diagramitems.SituationItem,
+                sysml_items.BlockItem,
                 raaml.Situation,
                 config_func=namespace_config,
             ),
