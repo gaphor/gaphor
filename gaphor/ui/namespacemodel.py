@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import Transaction, event_handler
+from gaphor.core import Transaction, event_handler, gettext
 from gaphor.core.format import format
 from gaphor.core.modeling import (
     AttributeUpdated,
@@ -17,6 +17,7 @@ from gaphor.core.modeling import (
     ModelFlushed,
     ModelReady,
 )
+from gaphor.ui.event import Notification
 
 if TYPE_CHECKING:
     from gaphor.core.eventmanager import EventManager
@@ -288,6 +289,13 @@ class NamespaceModel(Gtk.TreeStore):
             return True
         except AttributeError as e:
             log.info(f"Unable to drop data {e}")
+            self.event_manager.handle(
+                Notification(
+                    gettext("A {} can't be part of a {}.").format(
+                        type(element).__name__, type(dest_element).__name__
+                    )
+                )
+            )
         return False
 
 
