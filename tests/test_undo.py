@@ -279,3 +279,19 @@ def test_can_undo_connected_association(
     assert new_association_item.head_subject
     assert new_association_item.tail_subject
     assert not caplog.records
+
+
+def test_can_undo_diagram_with_content(event_manager, element_factory, undo_manager):
+    with Transaction(event_manager):
+        diagram: Diagram = element_factory.create(Diagram)
+        diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+
+    with Transaction(event_manager):
+        diagram.unlink()
+
+    undo_manager.undo_transaction()
+
+    new_diagram = next(element_factory.select(Diagram))
+
+    assert new_diagram
+    assert new_diagram.ownedPresentation
