@@ -7,6 +7,7 @@ from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection
 from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.UML import diagramitems
+from gaphor.UML.modelfactory import owner_package
 
 
 def initial_pseudostate_config(new_item):
@@ -26,7 +27,7 @@ def state_machine_config(new_item):
         return
 
     diagram = new_item.diagram
-    package = diagram.namespace
+    package = owner_package(diagram.owner)
 
     state_machines = (
         [i for i in package.ownedType if isinstance(i, UML.StateMachine)]

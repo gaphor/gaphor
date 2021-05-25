@@ -55,7 +55,7 @@ def test_containment_between_requirements(create, diagram):
 def test_containment_container_req_class_disconnect(create, diagram, element_factory):
     """Test containment disconnecting from two requirements."""
     parent_package = element_factory.create(UML.Package)
-    diagram.package = parent_package
+    diagram.element = parent_package
     container_req = create(RequirementItem, sysml.Requirement)
     contained_req = create(RequirementItem, sysml.Requirement)
     line = create(ContainmentItem)

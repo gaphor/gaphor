@@ -105,7 +105,7 @@ class Namespace(UIComponent):
         view.connect("destroy", self._on_view_destroyed)
 
         action_group, shortcuts = create_action_group(self, "tree-view")
-        view.insert_action_group("tree-view", action_group)
+        scrolled_window.insert_action_group("tree-view", action_group)
 
         if Gtk.get_major_version() == 3:
             ctrl = Gtk.GestureMultiPress.new(view)
@@ -201,10 +201,6 @@ class Namespace(UIComponent):
             action_group = view.get_action_group("tree-view")
 
             action_group.lookup_action("open").set_enabled(isinstance(element, Diagram))
-            action_group.lookup_action("create-diagram").set_enabled(
-                isinstance(element, UML.Package)
-                or (element and isinstance(element.owner, UML.Package))
-            )
             action_group.lookup_action("create-package").set_enabled(
                 isinstance(element, UML.Package)
             )
@@ -291,13 +287,12 @@ class Namespace(UIComponent):
     def tree_view_create_diagram(self):
         assert self.view
         element = self.get_selected_element()
-        assert element
-        while not isinstance(element, UML.Package):
-            element = element.owner
         diagram = self.element_factory.create(Diagram)
-        diagram.package = element
-
-        diagram.name = f"{element.name} diagram" if element else "New diagram"
+        if isinstance(element, UML.NamedElement):
+            diagram.element = element
+            diagram.name = f"{element.name} diagram"
+        else:
+            diagram.name = "New diagram"
         self.select_element(diagram)
         self.event_manager.handle(DiagramOpened(diagram))
         self.tree_view_rename_selected()

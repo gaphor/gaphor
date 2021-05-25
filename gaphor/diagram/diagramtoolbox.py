@@ -14,12 +14,13 @@ from gaphor.core import gettext
 from gaphor.core.modeling import Diagram, Presentation
 from gaphor.diagram import general
 from gaphor.diagram.diagramtools import new_item_factory
+from gaphor.UML.modelfactory import owner_package
 
 ItemFactory = Callable[[Diagram, Optional[Presentation]], Presentation]
 
 
 def default_namespace(new_item):
-    new_item.subject.package = new_item.diagram.namespace
+    new_item.subject.package = owner_package(new_item.diagram)
 
 
 def namespace_config(new_item):

@@ -279,8 +279,7 @@ class MainWindow(Service, ActionProvider):
         diagrams = [self.element_factory.lookup(id) for id in diagram_ids]
         if not any(diagrams):
             diagrams = self.element_factory.select(
-                lambda e: e.isKindOf(Diagram)
-                and not (e.namespace and e.namespace.namespace)
+                lambda e: e.isKindOf(Diagram) and not (e.owner and e.owner.owner)
             )
         for diagram in diagrams:
             if diagram:

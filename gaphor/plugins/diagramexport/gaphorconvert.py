@@ -98,7 +98,7 @@ def main(argv=sys.argv[1:]):
         message("ready for rendering")
 
         for diagram in factory.select(Diagram):
-            odir = pkg2dir(diagram.package)
+            odir = pkg2dir(diagram.owner)
 
             # just diagram name
             dname = diagram.name

@@ -63,7 +63,7 @@ def test_create_state_should_add_to_existing_state_machine_and_region_in_package
     region.stateMachine = state_machine
 
     package = element_factory.create(UML.Package)
-    diagram.package = package
+    diagram.element = package
     state_machine.package = package
 
     state = item_factory(diagram)
@@ -78,7 +78,7 @@ def test_create_state_should_add_to_existing_state_machine_in_package(
     state_machine = element_factory.create(UML.StateMachine)
 
     package = element_factory.create(UML.Package)
-    diagram.package = package
+    diagram.element = package
     state_machine.package = package
 
     state = item_factory(diagram)

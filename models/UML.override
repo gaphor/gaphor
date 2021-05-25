@@ -14,12 +14,6 @@ comment
 override Element
 from gaphor.core.modeling import Comment, Element
 %%
-override NamedElement
-from gaphor.core.modeling import NamedElement
-%%
-override PackageableElement
-from gaphor.core.modeling import PackageableElement
-%%
 override Diagram
 from gaphor.core.modeling import Diagram, StyleSheet
 %%
@@ -84,6 +78,23 @@ Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggre
 %%
 override Constraint.context: derivedunion[Namespace]
 Constraint.context = derivedunion('context', Namespace, 0, 1)
+%%
+override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
+
+def _namedelement_qualifiedname(self) -> List[str]:
+    """Returns the qualified name of the element as a tuple."""
+    if self.namespace:
+        return _namedelement_qualifiedname(self.namespace) + [self.name]
+    else:
+        return [self.name]
+
+NamedElement.qualifiedName = derived(
+    "qualifiedName",
+    List[str],
+    0,
+    1,
+    lambda obj: [_namedelement_qualifiedname(obj)],
+)
 %%
 override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
 # defined in umloverrides.py

@@ -65,7 +65,7 @@ def test_connection(element_factory, diagram):
 def test_connection_namespace(element_factory, diagram):
     """Test extension item connection."""
     pkg = element_factory.create(UML.Package)
-    diagram.package = pkg
+    diagram.element = pkg
     ext = diagram.create(ExtensionItem)
     st = diagram.create(ClassItem, subject=element_factory.create(UML.Stereotype))
     cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))

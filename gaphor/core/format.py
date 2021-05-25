@@ -6,7 +6,7 @@
 
 from functools import singledispatch
 
-from gaphor.core.modeling import Element
+from gaphor.core.modeling import Diagram, Element
 
 
 @singledispatch
@@ -19,3 +19,13 @@ def format(el: Element) -> str:
 def parse(el: Element, text: str) -> None:
     """Parse text and update `el` accordingly."""
     raise TypeError(f"Parsing routine for type {type(el)} not implemented yet")
+
+
+@format.register(Diagram)
+def format_diagram(el, **kwargs):
+    return el.name or ""
+
+
+@parse.register(Diagram)
+def parse_Diagram(el: Diagram, text: str) -> None:
+    el.name = text

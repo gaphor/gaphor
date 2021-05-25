@@ -15,6 +15,7 @@ from gaphor.core.modeling.properties import relation_many, relation_one, umlprop
 
 if TYPE_CHECKING:
     from gaphor.core.modeling.coremodel import Comment
+    from gaphor.core.modeling.diagram import Diagram
     from gaphor.core.modeling.presentation import Presentation
 
 __all__ = ["Element"]
@@ -42,6 +43,7 @@ class Element:
     owner: relation_one[Element]
     presentation: relation_many[Presentation]
     relationship: relation_many[Presentation]
+    ownedDiagram: relation_many[Diagram]
 
     def __init__(
         self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None

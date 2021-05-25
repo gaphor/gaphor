@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import Transaction, event_handler
+from gaphor.core import Transaction, event_handler, gettext
 from gaphor.core.format import format
 from gaphor.core.modeling import (
     AttributeUpdated,
@@ -17,6 +17,7 @@ from gaphor.core.modeling import (
     ModelFlushed,
     ModelReady,
 )
+from gaphor.ui.event import Notification
 
 if TYPE_CHECKING:
     from gaphor.core.eventmanager import EventManager
@@ -117,7 +118,7 @@ class NamespaceModel(Gtk.TreeStore):
 
     def _visible(self, element):
         return isinstance(
-            element, (UML.Relationship, UML.NamedElement)
+            element, (UML.Relationship, UML.NamedElement, Diagram)
         ) and not isinstance(
             element, (UML.InstanceSpecification, UML.OccurrenceSpecification)
         )
@@ -196,6 +197,7 @@ class NamespaceModel(Gtk.TreeStore):
         if (
             event.property is UML.Classifier.isAbstract
             or event.property is UML.BehavioralFeature.isAbstract
+            or event.property is UML.Diagram.name
             or event.property is UML.NamedElement.name
         ):
             element = event.element
@@ -262,7 +264,7 @@ class NamespaceModel(Gtk.TreeStore):
                 iter = relationship_iter_parent(self, iter)
                 dest_element = self.get_value(iter, 0)
 
-            if element.package is dest_element:
+            if element.owner is dest_element:
                 return False
 
             # Check if element is part of the namespace of dest_element:
@@ -271,7 +273,7 @@ class NamespaceModel(Gtk.TreeStore):
                 if ns is element:
                     log.info("Can not create a cycle")
                     return False
-                ns = ns.namespace
+                ns = ns.owner
 
         try:
             # Set package. This only works for classifiers, packages and
@@ -279,13 +281,25 @@ class NamespaceModel(Gtk.TreeStore):
             with Transaction(self.event_manager):
                 if dest_element is None:
                     del element.package
+                elif isinstance(element, Diagram):
+                    element.element = dest_element
                 else:
                     element.package = dest_element
                 self.event_manager.handle(NamespaceModelElementDropped(self, element))
             return True
         except AttributeError as e:
-            log.info(f"Unable to drop data {e}")
+            self.namespace_exception(dest_element, e, element)
         return False
+
+    def namespace_exception(self, dest_element, e, element):
+        log.info(f"Unable to drop data {e}")
+        self.event_manager.handle(
+            Notification(
+                gettext("A {} can't be part of a {}.").format(
+                    type(element).__name__, type(dest_element).__name__
+                )
+            )
+        )
 
 
 def sort_func(model, iter_a, iter_b, userdata):

@@ -214,7 +214,7 @@ Console, in the Hamburger menu). Drop us a line on
 All diagrams in the package "Drafts" should be drawn using sloppy lines:
 
 ```css
-diagram[namespace.name=drafts] {
+diagram[owner.name=drafts] {
   line-style: sloppy 0.3;
 }
 

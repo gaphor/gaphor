@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.3.2">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.4.1">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -3196,7 +3196,7 @@
 <ref refid="DCE:6CEA1744-7653-11D7-8271-9A319BBF187B"/>
 </association>
 <class_>
-<ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </class_>
 <name>
 <val>ownedDiagram</val>
@@ -6356,8 +6356,10 @@
 <ref refid="DCE:B71C4ADE-65C6-11D7-89A9-9C62884CFFDE"/>
 <ref refid="DCE:BAEADF3E-65C6-11D7-89A9-9C62884CFFDE"/>
 <ref refid="DCE:D33A9738-4694-11D7-B567-379CA7034986"/>
-<ref refid="aa8a8fb0-e185-11ea-b7ab-f5b4c130f24e"/>
+<ref refid="90a6d158-b9b1-11eb-93ad-535118859f0b"/>
 <ref refid="DCE:B7B7E77C-4694-11D7-B567-379CA7034986"/>
+<ref refid="98bdb712-b9b1-11eb-93ad-535118859f0b"/>
+<ref refid="aa8a8fb0-e185-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -7264,6 +7266,7 @@
 <ref refid="DCE:53614994-E81E-11DD-BD54-000D936B094A"/>
 <ref refid="DCE:53759D24-45CF-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:522B4098-45D1-11D7-B5CA-613352B2821F"/>
+<ref refid="DCE:6CEA5152-7653-11D7-8271-9A319BBF187B"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -7279,6 +7282,7 @@
 <ref refid="DCE:C6A7D496-AAE5-11DA-B34F-000D936B094A"/>
 <ref refid="fa6dda7a-e967-11ea-96dc-bf74f1f80424"/>
 <ref refid="92ab6c36-ea01-11ea-96dc-bf74f1f80424"/>
+<ref refid="ba0f194a-b9a9-11eb-93ad-535118859f0b"/>
 </reflist>
 </presentation>
 </Class>
@@ -12062,10 +12066,10 @@
 <val>0</val>
 </lowerValue>
 <name>
-<val>package</val>
+<val>element</val>
 </name>
 <type>
-<ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </type>
 <upperValue>
 <val>1</val>
@@ -12073,9 +12077,6 @@
 <upperValue>
 <val>1</val>
 </upperValue>
-<visibility>
-<val>public</val>
-</visibility>
 </Property>
 <Property id="DCE:7265A7FE-83D9-11D7-ADE2-4B1972AF3391">
 <association>
@@ -22646,7 +22647,6 @@ specially for Gaphor</val>
 </name>
 <ownedAttribute>
 <reflist>
-<ref refid="DCE:6CEA5152-7653-11D7-8271-9A319BBF187B"/>
 <ref refid="DCE:8A1B2122-50A2-11D7-807A-302CB4EF44FD"/>
 <ref refid="DCE:B71D5D18-83E2-11D7-ADE2-4B1972AF3391"/>
 <ref refid="DCE:2C688CEE-50A3-11D7-807A-302CB4EF44FD"/>
@@ -22663,7 +22663,6 @@ specially for Gaphor</val>
 <ref refid="DCE:0D9DCE64-97BA-11D8-9E36-00C00C03A405"/>
 <ref refid="DCE:C4730890-50A1-11D7-807A-302CB4EF44FD"/>
 <ref refid="DCE:B4456442-4695-11D7-B567-379CA7034986"/>
-<ref refid="DCE:4FC7F7C4-7653-11D7-8271-9A319BBF187B"/>
 </reflist>
 </presentation>
 </Class>
@@ -22895,8 +22894,9 @@ specially for Gaphor</val>
 <ref refid="DCE:F43FCFAC-7650-11D7-8271-9A319BBF187B"/>
 <ref refid="DCE:03932B14-7651-11D7-8271-9A319BBF187B"/>
 <ref refid="DCE:7A74F3EE-A35B-11D8-B05A-00C00C03A405"/>
-<ref refid="DCE:4FC7F7C4-7653-11D7-8271-9A319BBF187B"/>
 <ref refid="DCE:67940870-7653-11D7-8271-9A319BBF187B"/>
+<ref refid="ba0f194a-b9a9-11eb-93ad-535118859f0b"/>
+<ref refid="254ed7e5-b9ab-11eb-93ad-535118859f0b"/>
 </reflist>
 </ownedPresentation>
 <package>
@@ -22969,32 +22969,6 @@ specially for Gaphor</val>
 <ref refid="DCE:03932B14-7651-11D7-8271-9A319BBF187B"/>
 </tail-connection>
 </item>
-<item id="DCE:4FC7F7C4-7653-11D7-8271-9A319BBF187B" type="ClassItem">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 613.5, 181.5)</val>
-</matrix>
-<width>
-<val>154.0</val>
-</width>
-<height>
-<val>64.0</val>
-</height>
-<diagram>
-<ref refid="DCE:9A2FCEFE-7650-11D7-8271-9A319BBF187B"/>
-</diagram>
-<show_attributes>
-<val>0</val>
-</show_attributes>
-<show_operations>
-<val>0</val>
-</show_operations>
-<show_stereotypes>
-<val>0</val>
-</show_stereotypes>
-<subject>
-<ref refid="DCE:B445FB00-4695-11D7-B567-379CA7034986"/>
-</subject>
-</item>
 <item id="DCE:67940870-7653-11D7-8271-9A319BBF187B" type="AssociationItem">
 <diagram>
 <ref refid="DCE:9A2FCEFE-7650-11D7-8271-9A319BBF187B"/>
@@ -23021,14 +22995,54 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 173.5, 206.5)</val>
 </matrix>
 <points>
-<val>[(-1.5, 1.5), (440.0, -0.6800000000000068)]</val>
+<val>[(-1.5, 1.5), (422.5, 1.5)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:F43FCFAC-7650-11D7-8271-9A319BBF187B"/>
 </head-connection>
 <tail-connection>
-<ref refid="DCE:4FC7F7C4-7653-11D7-8271-9A319BBF187B"/>
+<ref refid="ba0f194a-b9a9-11eb-93ad-535118859f0b"/>
 </tail-connection>
+</item>
+<item id="ba0f194a-b9a9-11eb-93ad-535118859f0b" type="ClassItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 596.0, 185.5)</val>
+</matrix>
+<width>
+<val>161.0</val>
+</width>
+<height>
+<val>60.0</val>
+</height>
+<diagram>
+<ref refid="DCE:9A2FCEFE-7650-11D7-8271-9A319BBF187B"/>
+</diagram>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<subject>
+<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
+</subject>
+</item>
+<item id="254ed7e5-b9ab-11eb-93ad-535118859f0b" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 323.0, 262.0)</val>
+</matrix>
+<width>
+<val>148.0</val>
+</width>
+<height>
+<val>95.0</val>
+</height>
+<diagram>
+<ref refid="DCE:9A2FCEFE-7650-11D7-8271-9A319BBF187B"/>
+</diagram>
+<subject>
+<ref refid="254ed7e4-b9ab-11eb-93ad-535118859f0b"/>
+</subject>
 </item>
 </canvas>
 </Diagram>
@@ -38864,7 +38878,7 @@ swimlanes</val>
 <ref refid="17044c1e-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>ownedMember</val>
+<val>ownedElement</val>
 </value>
 </Slot>
 <InstanceSpecification id="170502e4-fa90-11de-bd51-00224128e79d">
@@ -40815,7 +40829,7 @@ swimlanes</val>
 <ref refid="17358496-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>namespace</val>
+<val>owner</val>
 </value>
 </Slot>
 <InstanceSpecification id="17362914-fa90-11de-bd51-00224128e79d">
@@ -54094,4 +54108,63 @@ have an opposite end.
 <val>memberNamespace</val>
 </value>
 </Slot>
+<Comment id="254ed7e4-b9ab-11eb-93ad-535118859f0b">
+<body>
+<val>This diagram is temporary, until the core model supports derived unions.</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="254ed7e5-b9ab-11eb-93ad-535118859f0b"/>
+</reflist>
+</presentation>
+</Comment>
+<Property id="90a6d158-b9b1-11eb-93ad-535118859f0b">
+<class_>
+<ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
+</class_>
+<isDerived>
+<val>1</val>
+</isDerived>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<name>
+<val>qualifiedName</val>
+</name>
+<typeValue>
+<val>String</val>
+</typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
+</Property>
+<Property id="98bdb712-b9b1-11eb-93ad-535118859f0b">
+<class_>
+<ref refid="DCE:FF594BE0-464C-11D7-AA08-1B85D5275D8A"/>
+</class_>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<name>
+<val>name</val>
+</name>
+<typeValue>
+<val>String</val>
+</typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
+</Property>
 </gaphor>

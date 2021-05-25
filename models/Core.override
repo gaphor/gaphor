@@ -1,44 +1,10 @@
 header
-from typing import TYPE_CHECKING
-from gaphor.core.modeling.element import Element
-
-if TYPE_CHECKING:
-    from gaphor.UML import Dependency, Namespace, Package
 %%
 override Element
-# defined above
+from gaphor.core.modeling.element import Element
 %%
-override NamedElement
-# Define extra attributes defined in UML model
-class NamedElement(Element):
-    name: attribute[str]
-    qualifiedName: derived[List[str]]
-    visibility: enumeration
-    namespace: relation_one[Namespace]
-    clientDependency: relation_many[Dependency]
-    supplierDependency: relation_many[Dependency]
-    memberNamespace: relation_many[Namespace]
-%%
-override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
-
-def _namedelement_qualifiedname(self) -> List[str]:
-    """Returns the qualified name of the element as a tuple."""
-    if self.namespace:
-        return _namedelement_qualifiedname(self.namespace) + [self.name]
-    else:
-        return [self.name]
-
-NamedElement.qualifiedName = derived(
-    "qualifiedName",
-    List[str],
-    0,
-    1,
-    lambda obj: [_namedelement_qualifiedname(obj)],
-)
-%%
-override PackageableElement
-class PackageableElement(NamedElement):
-    owningPackage: relation_one[Package]
+override Diagram
+from gaphor.core.modeling.diagram import Diagram
 %%
 override StyleSheet
 # defined in gaphor.core.modeling.presentation
@@ -63,9 +29,6 @@ override Presentation.parent
 %%
 override Presentation.children
 # defined in gaphor.core.modeling.presentation
-%%
-override Diagram
-# defined in gaphor.core.modeling.diagram
 %%
 override Diagram.ownedPresentation
 # defined in gaphor.core.modeling.presentation

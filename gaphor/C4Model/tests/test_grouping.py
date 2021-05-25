@@ -42,7 +42,7 @@ def test_group_container_group_from_package_to_container(diagram, element_factor
 
 def test_group_container_ungroup(diagram, element_factory):
     package = element_factory.create(UML.Package)
-    diagram.package = package
+    diagram.element = package
     parent = container(diagram, element_factory)
     child = container(diagram, element_factory)
     child.subject.package = parent.subject

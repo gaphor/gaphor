@@ -7,7 +7,7 @@ Functions collected in this module allow to
 """
 
 import itertools
-from typing import Iterable, Sequence
+from typing import Iterable, Optional, Sequence
 
 from gaphor.UML.uml import (
     Association,
@@ -26,6 +26,7 @@ from gaphor.UML.uml import (
     Interface,
     Message,
     MessageOccurrenceSpecification,
+    Package,
     Port,
     Property,
     Realization,
@@ -381,6 +382,12 @@ def clone_message(msg, inverted=False):
         message.sendEvent = send
         message.receiveEvent = receive
     return message
+
+
+def owner_package(element: Optional[Element]) -> Optional[Package]:
+    if element is None or isinstance(element, Package):
+        return element
+    return owner_package(element.owner)
 
 
 def swap_element(element, new_class):

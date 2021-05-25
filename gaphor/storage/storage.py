@@ -214,6 +214,8 @@ def _load_elements_and_canvasitems(
                 elem = upgrade_implementation_to_interface_realization(elem)
                 elem = upgrade_feature_parameters_to_owned_parameter(elem)
                 elem = upgrade_parameter_owner_formal_param(elem)
+            if version_lower_than(gaphor_version, (2, 5, 0)):
+                elem = upgrade_diagram_element(elem)
 
             cls = modeling_language.lookup_element(elem.type)
             assert cls, f"Type {elem.type} can not be loaded: no such element"
@@ -470,4 +472,15 @@ def upgrade_parameter_owner_formal_param(elem):
             elem.references["ownerFormalParam"] = refids
             del elem.references["ownerReturnParam"]
             break
+    return elem
+
+
+# since 2.5.0
+def upgrade_diagram_element(elem):
+    if elem.type == "Diagram":
+        for name, refids in dict(elem.references).items():
+            if name == "package":
+                elem.references["element"] = refids
+                del elem.references["package"]
+                break
     return elem

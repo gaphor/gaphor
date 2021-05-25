@@ -154,7 +154,7 @@ def test_copy_remove_paste_items_when_namespace_is_removed(diagram, element_fact
     cls_item = diagram.create(ClassItem, subject=cls)
 
     diagram_package = element_factory.create(UML.Package)
-    diagram.package = diagram_package
+    diagram.element = diagram_package
 
     copy_clear_and_paste({cls_item}, diagram, element_factory, retain=[diagram_package])
 

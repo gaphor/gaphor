@@ -79,7 +79,7 @@ class relation_one(Protocol[E]):
     def __get__(self, obj, class_=None) -> E:
         ...
 
-    def __set__(self, obj, value: E) -> None:
+    def __set__(self, obj, value: Optional[E]) -> None:
         ...
 
     def __delete__(self, obj) -> None:

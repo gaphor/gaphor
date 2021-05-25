@@ -28,9 +28,11 @@ from typing import (
 
 import gaphas
 
-from gaphor.core.modeling import Diagram, NamedElement, Presentation
+from gaphor.core.modeling import Diagram, Presentation
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element, Id
+from gaphor.UML import NamedElement
+from gaphor.UML.modelfactory import owner_package
 
 Opaque = object
 
@@ -137,7 +139,7 @@ def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
     yield element
     next(paster, None)
     if copy_data.with_namespace and not element.namespace:
-        element.package = diagram.namespace
+        element.package = owner_package(diagram.owner)
 
 
 paste.register(NamedElementCopy, paste_named_element)
