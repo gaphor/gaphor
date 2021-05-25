@@ -273,7 +273,11 @@ class NamespaceModel(Gtk.TreeStore):
                 if ns is element:
                     log.info("Can not create a cycle")
                     return False
-                ns = ns.namespace
+                try:
+                    ns = ns.namespace
+                except AttributeError as e:
+                    self.namespace_exception(dest_element, e, element)
+                    return False
 
         try:
             # Set package. This only works for classifiers, packages and
@@ -288,15 +292,18 @@ class NamespaceModel(Gtk.TreeStore):
                 self.event_manager.handle(NamespaceModelElementDropped(self, element))
             return True
         except AttributeError as e:
-            log.info(f"Unable to drop data {e}")
-            self.event_manager.handle(
-                Notification(
-                    gettext("A {} can't be part of a {}.").format(
-                        type(element).__name__, type(dest_element).__name__
-                    )
+            self.namespace_exception(dest_element, e, element)
+        return False
+
+    def namespace_exception(self, dest_element, e, element):
+        log.info(f"Unable to drop data {e}")
+        self.event_manager.handle(
+            Notification(
+                gettext("A {} can't be part of a {}.").format(
+                    type(element).__name__, type(dest_element).__name__
                 )
             )
-        return False
+        )
 
 
 def sort_func(model, iter_a, iter_b, userdata):
