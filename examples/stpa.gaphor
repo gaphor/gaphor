@@ -44,8 +44,17 @@ property {
 </StyleSheet>
 <Package id="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9">
 <name>
-<val>STPA Example Model</val>
+<val>STPA Example - Aircraft WBS</val>
 </name>
+<nestedPackage>
+<reflist>
+<ref refid="06c5dcfc-bcf6-11eb-8f28-18cf5efc6bb9"/>
+<ref refid="0c3184f2-bcf6-11eb-8f28-18cf5efc6bb9"/>
+<ref refid="22d69daa-bcf6-11eb-8f28-18cf5efc6bb9"/>
+<ref refid="29251b5a-bcf6-11eb-8f28-18cf5efc6bb9"/>
+<ref refid="3c4854ea-bcf6-11eb-8f28-18cf5efc6bb9"/>
+</reflist>
+</nestedPackage>
 <ownedDiagram>
 <reflist>
 <ref refid="c4035380-b5ad-11eb-b5c7-18cf5efc6bb9"/>
@@ -2546,7 +2555,7 @@ Figure 2.14</val>
 <val>(1.0, 0.0, 0.0, 1.0, 330.0, 292.0)</val>
 </matrix>
 <points>
-<val>[(13.25110864745011, -15.0), (11.636982698625928, -137.0)]</val>
+<val>[(13.25110864745011, -15.0), (212.0, -137.0)]</val>
 </points>
 <head-connection>
 <ref refid="e2f315ae-bc25-11eb-ad9d-18cf5efc6bb9"/>
@@ -2643,7 +2652,7 @@ Figure 2.14</val>
 <val>(1.0, 0.0, 0.0, 1.0, 491.0, 287.0)</val>
 </matrix>
 <points>
-<val>[(11.357107107107112, -10.0), (9.738410708005311, -132.0)]</val>
+<val>[(11.357107107107112, -10.0), (51.0, -132.0)]</val>
 </points>
 <head-connection>
 <ref refid="1e8daeb2-bc26-11eb-ad9d-18cf5efc6bb9"/>
@@ -2776,7 +2785,7 @@ Figure 2.14</val>
 <val>(1.0, 0.0, 0.0, 1.0, 398.0, 491.0)</val>
 </matrix>
 <points>
-<val>[(26.586206896551722, -29.0), (29.35111182726395, -336.0)]</val>
+<val>[(26.586206896551722, -29.0), (144.0, -336.0)]</val>
 </points>
 <head-connection>
 <ref refid="a0114570-bc26-11eb-ad9d-18cf5efc6bb9"/>
@@ -4631,4 +4640,44 @@ Figure 2.14</val>
 <ref refid="76661c7a-bc33-11eb-92be-18cf5efc6bb9"/>
 </type>
 </Property>
+<Package id="06c5dcfc-bcf6-11eb-8f28-18cf5efc6bb9">
+<name>
+<val>Logical Level System</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+</Package>
+<Package id="0c3184f2-bcf6-11eb-8f28-18cf5efc6bb9">
+<name>
+<val>Loss Scenarios, Process Flaws and Casual Factors</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+</Package>
+<Package id="22d69daa-bcf6-11eb-8f28-18cf5efc6bb9">
+<name>
+<val>Operational Contexts</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+</Package>
+<Package id="29251b5a-bcf6-11eb-8f28-18cf5efc6bb9">
+<name>
+<val>UCAs, Risks and Losses</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+</Package>
+<Package id="3c4854ea-bcf6-11eb-8f28-18cf5efc6bb9">
+<name>
+<val>Unsafe Control Factors</val>
+</name>
+<package>
+<ref refid="c403507e-b5ad-11eb-b5c7-18cf5efc6bb9"/>
+</package>
+</Package>
 </gaphor>

@@ -30,6 +30,7 @@ from gaphor.UML.umlfmt import format_property
 @represents(raaml.Situation)
 @represents(raaml.Loss)
 @represents(raaml.Hazard)
+@represents(raaml.ControlStructure)
 class BlockItem(ElementPresentation[Block], Classified):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
@@ -57,6 +58,8 @@ class BlockItem(ElementPresentation[Block], Classified):
     def additional_stereotypes(self):
         if isinstance(self.subject, raaml.Situation):
             return ["Situation"]
+        elif isinstance(self.subject, raaml.ControlStructure):
+            return ["ControlStructure"]
         elif isinstance(self.subject, Block):
             return ["block"]
         else:

@@ -68,6 +68,17 @@ stpa = ToolSection(
             ),
         ),
         ToolDef(
+            "control-structure",
+            gettext("Control Structure"),
+            "gaphor-control-structure-symbolic",
+            "",
+            new_item_factory(
+                sysml_items.BlockItem,
+                raaml.ControlStructure,
+                config_func=namespace_config,
+            ),
+        ),
+        ToolDef(
             "controller",
             gettext("Controller"),
             "gaphor-controller-symbolic",

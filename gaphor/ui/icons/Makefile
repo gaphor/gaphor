@@ -108,7 +108,8 @@ ICONS=diagram \
 	operational-situation \
 	unsafe-control-action \
 	relevant-to \
-	control-action
+	control-action \
+	control-structure
 
 
 ICON_THEME=hicolor/scalable/actions
