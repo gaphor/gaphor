@@ -291,7 +291,7 @@ def test_can_undo_diagram_with_content(event_manager, element_factory, undo_mana
 
     undo_manager.undo_transaction()
 
-    new_diagram = next(element_factory.select(Diagram))
+    new_diagram = element_factory.lookup(diagram.id)
 
     assert new_diagram
     assert new_diagram.ownedPresentation
