@@ -9,7 +9,7 @@ from gaphor.diagram.support import represents
 
 
 @represents(c4model.C4Database)
-class C4ContainerDatabaseItem(ElementPresentation, Named):
+class C4DatabaseItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 

@@ -89,7 +89,7 @@ c4 = ToolSection(
             "gaphor-c4-database-symbolic",
             "<Shift>B",
             new_item_factory(
-                diagramitems.C4ContainerDatabaseItem,
+                diagramitems.C4DatabaseItem,
                 c4model.C4Database,
                 config_func=container_database_config,
             ),

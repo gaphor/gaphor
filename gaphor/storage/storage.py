@@ -196,9 +196,10 @@ def _load_elements_and_canvasitems(
         for item in canvasitems:
             item = upgrade_canvas_item_to_1_0_2(item)
             item = upgrade_canvas_item_to_1_3_0(item)
-            item = upgrade_implementation_item_to_interface_realization_item(item)
             if version_lower_than(gaphor_version, (1, 1, 0)):
                 item = upgrade_presentation_item_to_1_1_0(item)
+            item = upgrade_implementation_item_to_interface_realization_item(item)
+            item = upgrade_c4_diagram_item_name(item)
             cls = modeling_language.lookup_diagram_item(item.type)
             assert cls, f"No diagram item for type {item.type}"
             item.element = diagram.create_as(cls, item.id, parent=parent)
@@ -473,6 +474,13 @@ def upgrade_parameter_owner_formal_param(elem):
             del elem.references["ownerReturnParam"]
             break
     return elem
+
+
+# since 2.4.3
+def upgrade_c4_diagram_item_name(item):
+    if item.type == "C4ContainerDatabaseItem":
+        item.type = "C4DatabaseItem"
+    return item
 
 
 # since 2.5.0
