@@ -273,11 +273,7 @@ class NamespaceModel(Gtk.TreeStore):
                 if ns is element:
                     log.info("Can not create a cycle")
                     return False
-                try:
-                    ns = ns.namespace
-                except AttributeError as e:
-                    self.namespace_exception(dest_element, e, element)
-                    return False
+                ns = ns.owner
 
         try:
             # Set package. This only works for classifiers, packages and
