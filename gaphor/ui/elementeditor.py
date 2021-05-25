@@ -265,6 +265,7 @@ class SettingsStack:
         self.event_manager.subscribe(self._style_sheet_created)
         self.event_manager.subscribe(self._style_sheet_changed)
         self.style_sheet_buffer.connect("changed", self.on_style_sheet_changed)
+        self.update_text()
 
     def close(self):
         self.event_manager.unsubscribe(self._model_ready)
