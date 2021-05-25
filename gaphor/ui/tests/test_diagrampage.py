@@ -36,7 +36,7 @@ def test_placement(diagram, page, element_factory):
 
 
 @pytest.mark.skipif(
-    bool(os.environ.get("GDK_PIXBUF_MODULE_FILE")),
+    bool(os.environ.get("GDK_PIXBUF_MODULEDIR")),
     reason="Causes a SegFault when run from VSCode",
 )
 def test_placement_icon_base_is_loaded_once():
@@ -46,6 +46,10 @@ def test_placement_icon_base_is_loaded_once():
     assert icon1 is icon2
 
 
+@pytest.mark.skipif(
+    bool(os.environ.get("GDK_PIXBUF_MODULEDIR")),
+    reason="Causes a SegFault when run from VSCode",
+)
 def test_placement_cursor():
     display = Gdk.Display.get_default()
     cursor = get_placement_cursor(display, "gaphor-box-symbolic")
