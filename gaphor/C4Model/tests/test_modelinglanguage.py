@@ -20,7 +20,7 @@ def test_elements(name):
     [
         "C4PersonItem",
         "C4ContainerItem",
-        "C4ContainerDatabaseItem",
+        "C4DatabaseItem",
     ],
 )
 def test_diagram_items(name):
