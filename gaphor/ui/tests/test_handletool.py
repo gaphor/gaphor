@@ -13,14 +13,17 @@ from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.ui.diagrams import Diagrams
 from gaphor.ui.event import DiagramOpened
+from gaphor.ui.toolbox import Toolbox
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.usecases.actor import ActorItem
 
 
 @pytest.fixture
 def diagrams(event_manager, element_factory, properties):
+    modeling_language = UMLModelingLanguage()
+    toolbox = Toolbox(event_manager, properties, modeling_language)
     diagrams = Diagrams(
-        event_manager, element_factory, properties, UMLModelingLanguage()
+        event_manager, element_factory, properties, modeling_language, toolbox
     )
     if Gtk.get_major_version() == 3:
         window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)

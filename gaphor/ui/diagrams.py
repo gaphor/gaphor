@@ -15,11 +15,15 @@ log = logging.getLogger(__name__)
 
 
 class Diagrams(UIComponent, ActionProvider):
-    def __init__(self, event_manager, element_factory, properties, modeling_language):
+
+    def __init__(
+        self, event_manager, element_factory, properties, modeling_language, toolbox
+    ):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.properties = properties
         self.modeling_language = modeling_language
+        self.toolbox = toolbox
         self._notebook: Gtk.Notebook = None
         self._page_handler_ids: List[int] = []
 
@@ -193,24 +197,20 @@ class Diagrams(UIComponent, ActionProvider):
         log.debug(f"pages changed: {self.properties.get('opened-diagrams')}")
 
     def _add_ui_settings(self, page):
+        self.toolbox.set_actions(page.action_group.actions)
         if Gtk.get_major_version() == 3:
-            window = page.get_toplevel()
-            window.insert_action_group("diagram", page.action_group.actions)
-            window.add_accel_group(page.action_group.shortcuts)
+            page.get_toplevel().add_accel_group(page.action_group.shortcuts)
         else:
-            window = page.get_root()
-            print("adding", page.action_group.actions)
-            window.insert_action_group("diagram", page.action_group.actions)
-            print("done", page.action_group.actions)
+            # TODO: GTK4 - set shortcuts
+            pass
 
     def _clear_ui_settings(self, page):
+        self.toolbox.set_actions(None)
         if Gtk.get_major_version() == 3:
-            window = page.get_toplevel()
-            window.insert_action_group("diagram", None)
-            window.remove_accel_group(page.action_group.shortcuts)
+            page.get_toplevel().remove_accel_group(page.action_group.shortcuts)
         else:
-            window = page.get_root()
-            window.insert_action_group("diagram", None)
+            # TODO: GTK4 - unset shortcuts
+            pass
 
     @action(name="close-current-tab", shortcut="<Primary>w")
     def close_current_tab(self):

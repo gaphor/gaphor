@@ -6,7 +6,7 @@ This is the toolbox in the lower left of the screen.
 import logging
 from typing import Optional, Sequence, Tuple
 
-from gi.repository import Gdk, GLib, Gtk
+from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core.eventmanager import event_handler
@@ -36,6 +36,7 @@ class Toolbox(UIComponent, ActionProvider):
         self.modeling_language = modeling_language
         self._toolbox: Optional[Gtk.Box] = None
         self._toolbox_container: Optional[Gtk.ScrolledWindow] = None
+        self._toolbox_action_group: Optional[Gio.ActionGroup] = None
 
     def open(self) -> Gtk.ScrolledWindow:
         toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
@@ -53,6 +54,11 @@ class Toolbox(UIComponent, ActionProvider):
                 self._toolbox_container.unparent()
             self._toolbox = None
         self.event_manager.unsubscribe(self._on_modeling_language_changed)
+
+    def set_actions(self, action_group: Optional[Gio.ActionGroup]) -> None:
+        if self._toolbox_container:
+            self._toolbox_container.insert_action_group("diagram", action_group)
+            self._toolbox_action_group = action_group
 
     def create_toolbox_button(
         self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]
