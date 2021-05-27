@@ -9,7 +9,6 @@ from typing import Optional, Sequence, Tuple
 from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.abc import ActionProvider
-from gaphor.core import gettext
 from gaphor.core.eventmanager import event_handler
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
@@ -31,11 +30,8 @@ class Toolbox(UIComponent, ActionProvider):
             ),
         ]
 
-    title = gettext("Toolbox")
-
-    def __init__(self, event_manager, main_window, properties, modeling_language):
+    def __init__(self, event_manager, properties, modeling_language):
         self.event_manager = event_manager
-        self.main_window = main_window
         self.properties = properties
         self.modeling_language = modeling_language
         self._toolbox: Optional[Gtk.Box] = None

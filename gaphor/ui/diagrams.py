@@ -5,7 +5,7 @@ from generic.event import Event
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
-from gaphor.core import action, event_handler, gettext
+from gaphor.core import action, event_handler
 from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.diagrampage import DiagramPage
@@ -15,9 +15,6 @@ log = logging.getLogger(__name__)
 
 
 class Diagrams(UIComponent, ActionProvider):
-
-    title = gettext("Diagrams")
-
     def __init__(self, event_manager, element_factory, properties, modeling_language):
         self.event_manager = event_manager
         self.element_factory = element_factory

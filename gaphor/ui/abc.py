@@ -9,8 +9,6 @@ class UIComponent(Service):
 
     ui_name: str  # "The UIComponent name, provided by the loader"
 
-    title: str  # "Title of the component"
-
     size: Tuple[int, int]  # "Size used for floating the component"
 
     @abc.abstractmethod
