@@ -8,7 +8,7 @@ from gaphas.painter import FreeHandPainter, HandlePainter, PainterChain
 from gaphas.segment import LineSegmentPainter
 from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
-from gi.repository import Gdk, GdkPixbuf, GLib, Gtk
+from gi.repository import Gdk, GdkPixbuf, Gtk
 
 from gaphor import UML
 from gaphor.core import action, event_handler, gettext
@@ -18,13 +18,12 @@ from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import tooliter
 from gaphor.diagram.diagramtools import apply_default_tool_set, apply_placement_tool_set
 from gaphor.diagram.diagramtools.placement import create_item
-from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
 from gaphor.diagram.support import get_diagram_item
 from gaphor.transaction import Transaction
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import DiagramSelectionChanged, Notification
+from gaphor.ui.event import DiagramSelectionChanged, Notification, ToolSelected
 
 log = logging.getLogger(__name__)
 
@@ -123,7 +122,7 @@ class DiagramPage:
 
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_style_sheet_updated)
-        self.event_manager.subscribe(self._on_diagram_item_placed)
+        self.event_manager.subscribe(self._on_tool_selected)
 
     title = property(lambda s: s.diagram and s.diagram.name or gettext("<None>"))
 
@@ -222,6 +221,10 @@ class DiagramPage:
             if t.id == tool_name
         ).icon_name
 
+    @event_handler(ToolSelected)
+    def _on_tool_selected(self, event: ToolSelected):
+        self.select_tool(event.tool_name)
+
     @event_handler(ElementDeleted)
     def _on_element_delete(self, event: ElementDeleted):
         if event.element is self.diagram:
@@ -251,7 +254,7 @@ class DiagramPage:
 
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_style_sheet_updated)
-        self.event_manager.unsubscribe(self._on_diagram_item_placed)
+        self.event_manager.unsubscribe(self._on_tool_selected)
         self.view = None
 
     @action(
@@ -294,7 +297,6 @@ class DiagramPage:
         if self.view.has_focus():
             self.view.selection.unselect_all()
 
-    @action(name="diagram.select-tool", state="toolbox-pointer")
     def select_tool(self, tool_name: str):
         if self.view:
             self.apply_tool_set(tool_name)
@@ -312,14 +314,6 @@ class DiagramPage:
                     self.view.set_cursor(get_placement_cursor(None, icon_name))
                 else:
                     self.view.set_cursor(None)
-
-    @event_handler(DiagramItemPlaced)
-    def _on_diagram_item_placed(self, event):
-        if self.properties.get("reset-tool-after-create", True):
-            assert self.widget
-            self.widget.action_group.actions.lookup_action("select-tool").activate(
-                GLib.Variant.new_string("toolbox-pointer")
-            )
 
     def set_drawing_style(self):
         """Set the drawing style for the diagram based on the active style
