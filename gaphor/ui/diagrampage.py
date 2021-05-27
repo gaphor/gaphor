@@ -11,7 +11,7 @@ from gaphas.view import GtkView
 from gi.repository import Gdk, GdkPixbuf, Gtk
 
 from gaphor import UML
-from gaphor.core import action, event_handler, gettext
+from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
@@ -22,7 +22,6 @@ from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
 from gaphor.diagram.support import get_diagram_item
 from gaphor.transaction import Transaction
-from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramSelectionChanged, Notification, ToolSelected
 
 log = logging.getLogger(__name__)
@@ -161,14 +160,8 @@ class DiagramPage:
             scrolled_window.add(view)
             scrolled_window.show_all()
             view.connect("drag-data-received", self._on_drag_data_received)
-            scrolled_window.action_group = create_action_group(self, "diagram")
         else:
             scrolled_window.set_child(view)
-            scrolled_window.action_group = create_action_group(self, "diagram")
-            _, shortcuts = scrolled_window.action_group
-            ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
-            ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
-            scrolled_window.add_controller(ctrl)
 
         view.selection.add_handler(self._on_view_selection_changed)
 
@@ -256,46 +249,6 @@ class DiagramPage:
         self.event_manager.unsubscribe(self._on_style_sheet_updated)
         self.event_manager.unsubscribe(self._on_tool_selected)
         self.view = None
-
-    @action(
-        name="diagram.zoom-in",
-        shortcut="<Primary>plus",
-    )
-    def zoom_in(self):
-        assert self.view
-        self.view.zoom(1.2)
-
-    @action(
-        name="diagram.zoom-out",
-        shortcut="<Primary>minus",
-    )
-    def zoom_out(self):
-        assert self.view
-        self.view.zoom(1 / 1.2)
-
-    @action(
-        name="diagram.zoom-100",
-        shortcut="<Primary>0",
-    )
-    def zoom_100(self):
-        assert self.view
-        zx = self.view.matrix[0]
-        self.view.zoom(1 / zx)
-
-    @action(
-        name="diagram.select-all",
-        shortcut="<Primary>a",
-    )
-    def select_all(self):
-        assert self.view
-        if self.view.has_focus():
-            self.view.selection.select_items(*self.view.model.get_all_items())
-
-    @action(name="diagram.unselect-all", shortcut="<Primary><Shift>a")
-    def unselect_all(self):
-        assert self.view
-        if self.view.has_focus():
-            self.view.selection.unselect_all()
 
     def select_tool(self, tool_name: str):
         if self.view:

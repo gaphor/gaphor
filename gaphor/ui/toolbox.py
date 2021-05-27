@@ -3,10 +3,11 @@
 This is the toolbox in the lower left of the screen.
 """
 
+import functools
 import logging
 from typing import Optional, Sequence, Tuple
 
-from gi.repository import Gdk, Gio, GLib, Gtk
+from gi.repository import Gdk, GLib, Gtk
 
 <<<<<<< HEAD
 from gaphor.abc import ActionProvider
@@ -41,7 +42,7 @@ class Toolbox(UIComponent):
         self.event_manager = event_manager
         self.properties = properties
         self.modeling_language = modeling_language
-        self._action_group, self._shortcuts = create_action_group(self, "toolbox")
+        self._action_group, _ = create_action_group(self, "toolbox")
         self._toolbox: Optional[Gtk.Box] = None
         self._toolbox_container: Optional[Gtk.ScrolledWindow] = None
 
@@ -64,10 +65,20 @@ class Toolbox(UIComponent):
         self.event_manager.unsubscribe(self._on_modeling_language_changed)
         self.event_manager.unsubscribe(self._on_diagram_item_placed)
 
-    def set_actions(self, action_group: Optional[Gio.ActionGroup]) -> None:
-        if self._toolbox_container:
-            self._toolbox_container.insert_action_group("diagram", action_group)
-            self._toolbox_action_group = action_group
+    def activate_shortcut(self, keyval, state):
+        # Accelerator keys are lower case. Since we handle them in a key-press event
+        # handler, we'll need the upper-case versions as well in case Shift is pressed.
+        for _title, items in self.modeling_language.toolbox_definition:
+            for action_name, _label, _icon_name, shortcut, *rest in items:
+                if not shortcut:
+                    continue
+                keys, mod = parse_shortcut(shortcut)
+                if state == mod and keyval in keys:
+                    self._action_group.activate_action(
+                        "select-tool", GLib.Variant.new_string(action_name)
+                    )
+                    return True
+        return False
 
     def create_toolbox_button(
         self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]
@@ -168,7 +179,6 @@ class Toolbox(UIComponent):
 
     @action(name="toolbox.select-tool", state="toolbox-pointer")
     def select_tool(self, tool_name: str):
-        print("select tool", tool_name)
         self.event_manager.handle(ToolSelected(tool_name))
 
     @event_handler(DiagramItemPlaced)
@@ -216,3 +226,15 @@ if Gtk.get_major_version() == 3:
             time (int): The timestamp at which the data was received.
         """
         data.set(type=data.get_target(), format=8, data=action_name.encode())
+
+
+_upper_offset = ord("A") - ord("a")
+
+
+@functools.lru_cache(maxsize=None)
+def parse_shortcut(shortcut):
+    if Gtk.get_major_version() == 3:
+        key, mod = Gtk.accelerator_parse(shortcut)
+    else:
+        _, key, mod = Gtk.accelerator_parse(shortcut)
+    return (key, key + _upper_offset), mod

@@ -75,12 +75,11 @@ class Diagrams(UIComponent, ActionProvider):
         Returns (DiagramPage): The current diagram page.
         """
 
+        if not self._notebook:
+            return None
         page_num = self._notebook.get_current_page()
         child_widget = self._notebook.get_nth_page(page_num)
-        if child_widget is not None:
-            return child_widget.diagram_page.get_diagram()
-        else:
-            return None
+        return child_widget and child_widget.diagram_page.get_diagram()
 
     def get_current_view(self):
         """Returns the current view of the diagram page.
@@ -88,7 +87,7 @@ class Diagrams(UIComponent, ActionProvider):
         Returns (GtkView): The current view.
         """
         if not self._notebook:
-            return
+            return None
         page_num = self._notebook.get_current_page()
         child_widget = self._notebook.get_nth_page(page_num)
         return child_widget and child_widget.diagram_page.get_view()
@@ -170,10 +169,6 @@ class Diagrams(UIComponent, ActionProvider):
             notebook.disconnect(id)
 
     def _on_switch_page(self, notebook, page, new_page_num):
-        current_page_num = notebook.get_current_page()
-        if current_page_num >= 0:
-            self._clear_ui_settings(notebook.get_nth_page(current_page_num))
-        self._add_ui_settings(page)
         view = page.diagram_page.view
         self.event_manager.handle(
             DiagramSelectionChanged(
@@ -196,26 +191,53 @@ class Diagrams(UIComponent, ActionProvider):
         self.properties.set("opened-diagrams", list(diagram_ids()))
         log.debug(f"pages changed: {self.properties.get('opened-diagrams')}")
 
-    def _add_ui_settings(self, page):
-        self.toolbox.set_actions(page.action_group.actions)
-        if Gtk.get_major_version() == 3:
-            page.get_toplevel().add_accel_group(page.action_group.shortcuts)
-        else:
-            # TODO: GTK4 - set shortcuts
-            pass
-
-    def _clear_ui_settings(self, page):
-        self.toolbox.set_actions(None)
-        if Gtk.get_major_version() == 3:
-            page.get_toplevel().remove_accel_group(page.action_group.shortcuts)
-        else:
-            # TODO: GTK4 - unset shortcuts
-            pass
-
     @action(name="close-current-tab", shortcut="<Primary>w")
     def close_current_tab(self):
         diagram = self.get_current_diagram()
         self.event_manager.handle(DiagramClosed(diagram))
+
+    @action(
+        name="zoom-in",
+        shortcut="<Primary>plus",
+    )
+    def zoom_in(self):
+        view = self.get_current_view()
+        if view:
+            view.zoom(1.2)
+
+    @action(
+        name="zoom-out",
+        shortcut="<Primary>minus",
+    )
+    def zoom_out(self):
+        view = self.get_current_view()
+        if view:
+            view.zoom(1 / 1.2)
+
+    @action(
+        name="zoom-100",
+        shortcut="<Primary>0",
+    )
+    def zoom_100(self):
+        view = self.get_current_view()
+        if view:
+            zx = view.matrix[0]
+            view.zoom(1 / zx)
+
+    @action(
+        name="select-all",
+        shortcut="<Primary>a",
+    )
+    def select_all(self):
+        view = self.get_current_view()
+        if view and view.has_focus():
+            view.selection.select_items(*view.model.get_all_items())
+
+    @action(name="unselect-all", shortcut="<Primary><Shift>a")
+    def unselect_all(self):
+        view = self.get_current_view()
+        if view and view.has_focus():
+            view.selection.unselect_all()
 
     @event_handler(DiagramOpened)
     def _on_show_diagram(self, event):
@@ -248,6 +270,7 @@ class Diagrams(UIComponent, ActionProvider):
         widget = page.construct()
         widget.diagram_page = page
 
+        apply_shortcut_controller(widget, self.toolbox)
         self.create_tab(diagram.name, widget)
         self.get_current_view().grab_focus()
         return page
@@ -265,8 +288,6 @@ class Diagrams(UIComponent, ActionProvider):
             log.warn(f"No tab found for diagram {diagram}")
             return
 
-        if diagram is self.get_current_diagram():
-            self._clear_ui_settings(widget)
         self._notebook.remove_page(page_num)
         widget.diagram_page.close()
         if Gtk.get_major_version() == 3:
@@ -287,3 +308,17 @@ class Diagrams(UIComponent, ActionProvider):
                     self._notebook.set_tab_label(
                         widget, self.tab_label(event.new_value, widget)
                     )
+
+
+def apply_shortcut_controller(widget, toolbox):
+    if Gtk.get_major_version() == 3:
+        ctrl = Gtk.EventControllerKey.new(widget)
+        widget._toolbox_controller = ctrl
+    else:
+        ctrl = Gtk.EventControllerKey.new()
+        widget.add_controller(ctrl)
+
+    def on_shortcut(_ctrl, keyval, _keycode, state):
+        toolbox.activate_shortcut(keyval, state)
+
+    ctrl.connect("key-pressed", on_shortcut)
