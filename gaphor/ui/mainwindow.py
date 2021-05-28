@@ -198,8 +198,7 @@ class MainWindow(Service, ActionProvider):
 
         def _factory(name):
             comp = self.get_ui_component(name)
-            widget = comp.open()
-            return widget
+            return comp.open()
 
         with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
             main_content = builder.get_object("main-content")
