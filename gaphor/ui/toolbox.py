@@ -9,11 +9,7 @@ from typing import Optional, Sequence, Tuple
 
 from gi.repository import Gdk, GLib, Gtk
 
-<<<<<<< HEAD
-from gaphor.abc import ActionProvider
-=======
-from gaphor.core import action, gettext
->>>>>>> 3b251489 (Move tool selection to toolbox)
+from gaphor.core import action
 from gaphor.core.eventmanager import event_handler
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.event import DiagramItemPlaced

@@ -15,7 +15,6 @@ log = logging.getLogger(__name__)
 
 
 class Diagrams(UIComponent, ActionProvider):
-
     def __init__(
         self, event_manager, element_factory, properties, modeling_language, toolbox
     ):
@@ -101,7 +100,7 @@ class Diagrams(UIComponent, ActionProvider):
         """
 
         page_num = self._notebook.append_page(
-            child=widget, tab_label=self.tab_label(title, widget)
+            child=widget, tab_label=tab_label(title, widget, self.event_manager)
         )
         self._notebook.set_current_page(page_num)
         self._notebook.set_tab_reorderable(widget, True)
@@ -112,57 +111,6 @@ class Diagrams(UIComponent, ActionProvider):
                 view, view.selection.focused_item, view.selection.selected_items
             )
         )
-
-    def tab_label(self, title, widget):
-        tab_box = Gtk.Box.new(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
-        button = Gtk.Button()
-        button.get_style_context().add_class("flat")
-        button.set_focus_on_click(False)
-
-        button.connect(
-            "clicked",
-            lambda _button: self.event_manager.handle(
-                DiagramClosed(widget.diagram_page.get_diagram())
-            ),
-        )
-
-        label = Gtk.Label.new(title)
-        if Gtk.get_major_version() == 3:
-            tab_box.pack_start(child=label, expand=True, fill=True, padding=0)
-            close_image = Gtk.Image.new_from_icon_name(
-                icon_name="window-close", size=Gtk.IconSize.BUTTON
-            )
-            button.add(close_image)
-            tab_box.pack_start(child=button, expand=False, fill=False, padding=0)
-            tab_box.show_all()
-        else:
-            tab_box.append(label)
-            close_image = Gtk.Image.new_from_icon_name("window-close")
-            button.set_child(close_image)
-            tab_box.append(button)
-            tab_box.show()
-
-        return tab_box
-
-    def get_widgets_on_pages(self):
-        """Gets the widget on each open page Notebook page.
-
-        The page is the page number in the Notebook (0 indexed) and the widget
-        is the child widget on each page.
-
-        Returns:
-            List of tuples (page, widget) of the currently open Notebook pages.
-        """
-
-        widgets_on_pages: List[Tuple[int, Gtk.Widget]] = []
-        if not self._notebook:
-            return widgets_on_pages
-
-        num_pages = self._notebook.get_n_pages()
-        for page_num in range(num_pages):
-            widget = self._notebook.get_nth_page(page_num)
-            widgets_on_pages.append((page_num, widget))
-        return widgets_on_pages
 
     def _on_notebook_destroy(self, notebook):
         for id in self._page_handler_ids:
@@ -253,7 +201,7 @@ class Diagrams(UIComponent, ActionProvider):
         diagram = event.diagram
 
         # Try to find an existing diagram page and give it focus
-        for page, widget in self.get_widgets_on_pages():
+        for page, widget in get_widgets_on_pages(self._notebook):
             if widget.diagram_page.get_diagram() is diagram:
                 self._notebook.set_current_page(page)
                 self.get_current_view().grab_focus()
@@ -270,7 +218,7 @@ class Diagrams(UIComponent, ActionProvider):
         widget = page.construct()
         widget.diagram_page = page
 
-        apply_shortcut_controller(widget, self.toolbox)
+        apply_tool_select_controller(widget, self.toolbox)
         self.create_tab(diagram.name, widget)
         self.get_current_view().grab_focus()
         return page
@@ -281,7 +229,7 @@ class Diagrams(UIComponent, ActionProvider):
 
         diagram = event.diagram
 
-        for page_num, widget in self.get_widgets_on_pages():
+        for page_num, widget in get_widgets_on_pages(self._notebook):
             if widget.diagram_page.get_diagram() is diagram:
                 break
         else:
@@ -306,11 +254,11 @@ class Diagrams(UIComponent, ActionProvider):
                 widget = self._notebook.get_nth_page(page)
                 if event.element is widget.diagram_page.diagram:
                     self._notebook.set_tab_label(
-                        widget, self.tab_label(event.new_value, widget)
+                        widget, tab_label(event.new_value, widget, self.event_manager)
                     )
 
 
-def apply_shortcut_controller(widget, toolbox):
+def apply_tool_select_controller(widget, toolbox):
     if Gtk.get_major_version() == 3:
         ctrl = Gtk.EventControllerKey.new(widget)
         widget._toolbox_controller = ctrl
@@ -322,3 +270,56 @@ def apply_shortcut_controller(widget, toolbox):
         toolbox.activate_shortcut(keyval, state)
 
     ctrl.connect("key-pressed", on_shortcut)
+
+
+def tab_label(title, widget, event_manager):
+    tab_box = Gtk.Box.new(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
+    button = Gtk.Button()
+    button.get_style_context().add_class("flat")
+    button.set_focus_on_click(False)
+
+    button.connect(
+        "clicked",
+        lambda _button: event_manager.handle(
+            DiagramClosed(widget.diagram_page.get_diagram())
+        ),
+    )
+
+    label = Gtk.Label.new(title)
+    if Gtk.get_major_version() == 3:
+        tab_box.pack_start(child=label, expand=True, fill=True, padding=0)
+        close_image = Gtk.Image.new_from_icon_name(
+            icon_name="window-close", size=Gtk.IconSize.BUTTON
+        )
+        button.add(close_image)
+        tab_box.pack_start(child=button, expand=False, fill=False, padding=0)
+        tab_box.show_all()
+    else:
+        tab_box.append(label)
+        close_image = Gtk.Image.new_from_icon_name("window-close")
+        button.set_child(close_image)
+        tab_box.append(button)
+        tab_box.show()
+
+    return tab_box
+
+
+def get_widgets_on_pages(notebook):
+    """Gets the widget on each open page Notebook page.
+
+    The page is the page number in the Notebook (0 indexed) and the widget
+    is the child widget on each page.
+
+    Returns:
+        List of tuples (page, widget) of the currently open Notebook pages.
+    """
+
+    widgets_on_pages: List[Tuple[int, Gtk.Widget]] = []
+    if not notebook:
+        return widgets_on_pages
+
+    num_pages = notebook.get_n_pages()
+    for page_num in range(num_pages):
+        widget = notebook.get_nth_page(page_num)
+        widgets_on_pages.append((page_num, widget))
+    return widgets_on_pages
