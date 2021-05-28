@@ -7,6 +7,7 @@ from gi.repository import Gtk
 from gaphor.abc import ActionProvider
 from gaphor.core import action, event_handler
 from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed
+from gaphor.event import ActionEnabled
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.event import DiagramClosed, DiagramOpened, DiagramSelectionChanged
@@ -221,6 +222,7 @@ class Diagrams(UIComponent, ActionProvider):
         apply_tool_select_controller(widget, self.toolbox)
         self.create_tab(diagram.name, widget)
         self.get_current_view().grab_focus()
+        self._update_action_state()
         return page
 
     @event_handler(DiagramClosed)
@@ -240,12 +242,20 @@ class Diagrams(UIComponent, ActionProvider):
         widget.diagram_page.close()
         if Gtk.get_major_version() == 3:
             widget.destroy()
+        self._update_action_state()
 
     @event_handler(ModelFlushed)
     def _on_flush_model(self, event):
         """Close all tabs."""
         while self._notebook.get_n_pages():
             self._notebook.remove_page(0)
+        self._update_action_state()
+
+    def _update_action_state(self):
+        enabled = self._notebook and self._notebook.get_n_pages() > 0
+
+        for action_name in ["win.zoom-in", "win.zoom-out", "win.zoom-100"]:
+            self.event_manager.handle(ActionEnabled(action_name, enabled))
 
     @event_handler(AttributeUpdated)
     def _on_name_change(self, event):
