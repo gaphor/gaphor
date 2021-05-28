@@ -55,7 +55,7 @@
         </child>
         <child>
           <object class="GtkButton">
-            <property name="action_name">tree-view.create-diagram</property>
+            <property name="action_name">win.create-diagram</property>
             <property name="icon_name">gaphor-new-diagram-symbolic</property>
           </object>
         </child>

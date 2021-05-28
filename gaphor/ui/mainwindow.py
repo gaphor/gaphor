@@ -199,19 +199,6 @@ class MainWindow(Service, ActionProvider):
         def _factory(name):
             comp = self.get_ui_component(name)
             widget = comp.open()
-
-            # Okay, this may be hackish. Action groups on component level are also added
-            # to the main window. This ensures that we can call those items from the
-            # (main) menus as well. Also this makes enabling/disabling work.
-            if Gtk.get_major_version() == 3:
-                for prefix in widget.list_action_prefixes():
-                    assert prefix not in ("app", "win")
-                    self.window.insert_action_group(
-                        prefix, widget.get_action_group(prefix)
-                    )
-            else:
-                # TODO: GTK4 - attach shortcuts
-                pass
             return widget
 
         with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
