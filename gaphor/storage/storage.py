@@ -14,7 +14,7 @@ from functools import partial
 
 from gaphor import application
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.diagram import Diagram, PseudoCanvas
+from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.stylesheet import StyleSheet
@@ -137,10 +137,6 @@ def save_element(name, value, writer):
         save_reference(name, value)
     elif isinstance(value, collection):
         save_collection(name, value)
-    elif isinstance(value, PseudoCanvas):
-        writer.startElement("canvas", {})
-        value.save(save_diagram)
-        writer.endElement("canvas")
     else:
         save_value(name, value)
 
@@ -184,6 +180,29 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
 def _load_elements_and_canvasitems(
     elements, factory, modeling_language, gaphor_version, update_status_queue
 ):
+    def create_element(elem):
+        if elem.element:
+            return
+        if version_lower_than(gaphor_version, (2, 1, 0)):
+            elem = upgrade_element_owned_comment_to_comment(elem)
+        if version_lower_than(gaphor_version, (2, 3, 0)):
+            elem = upgrade_package_owned_classifier_to_owned_type(elem)
+            elem = upgrade_implementation_to_interface_realization(elem)
+            elem = upgrade_feature_parameters_to_owned_parameter(elem)
+            elem = upgrade_parameter_owner_formal_param(elem)
+        if version_lower_than(gaphor_version, (2, 5, 0)):
+            elem = upgrade_diagram_element(elem)
+
+        cls = modeling_language.lookup_element(elem.type)
+        assert cls, f"Type {elem.type} can not be loaded: no such element"
+        if issubclass(cls, Presentation):
+            diagram_id = elem.references["diagram"]
+            diagram_elem = elements[diagram_id]
+            create_element(diagram_elem)
+            elem.element = factory.create_as(cls, id, diagram_elem.element)
+        else:
+            elem.element = factory.create_as(cls, id)
+
     def create_canvasitems(diagram, canvasitems, parent=None):
         """Diagram is a Core Diagram, items is a list of
         parser.canvasitem's."""
@@ -208,20 +227,10 @@ def _load_elements_and_canvasitems(
     for id, elem in list(elements.items()):
         yield from update_status_queue()
         if isinstance(elem, parser.element):
-            if version_lower_than(gaphor_version, (2, 1, 0)):
-                elem = upgrade_element_owned_comment_to_comment(elem)
-            if version_lower_than(gaphor_version, (2, 3, 0)):
-                elem = upgrade_package_owned_classifier_to_owned_type(elem)
-                elem = upgrade_implementation_to_interface_realization(elem)
-                elem = upgrade_feature_parameters_to_owned_parameter(elem)
-                elem = upgrade_parameter_owner_formal_param(elem)
-            if version_lower_than(gaphor_version, (2, 5, 0)):
-                elem = upgrade_diagram_element(elem)
-
-            cls = modeling_language.lookup_element(elem.type)
-            assert cls, f"Type {elem.type} can not be loaded: no such element"
-            elem.element = factory.create_as(cls, id)
-            if isinstance(elem.element, Diagram):
+            create_element(elem)
+            if version_lower_than(gaphor_version, (2, 5, 0)) and isinstance(
+                elem.element, Diagram
+            ):
                 assert elem.canvas
                 create_canvasitems(elem.element, elem.canvas.canvasitems)
         elif not isinstance(elem, parser.canvasitem):

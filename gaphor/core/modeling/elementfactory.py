@@ -35,6 +35,7 @@ if TYPE_CHECKING:
 
 
 T = TypeVar("T", bound=Element)
+P = TypeVar("P", bound=Presentation)
 
 
 class ElementFactory(Service):
@@ -66,18 +67,33 @@ class ElementFactory(Service):
         """Create a new model element of type ``type``."""
         return self.create_as(type, str(uuid.uuid1()))
 
-    def create_as(self, type: Type[T], id: str) -> T:
+    def create_as(self, type: Type[T], id: str, diagram: Diagram = None) -> T:
         """Create a new model element of type 'type' with 'id' as its ID.
 
         This method should only be used when loading models, since it
         does not emit an ElementCreated event.
         """
-        if not type or not issubclass(type, Element) or issubclass(type, Presentation):
+        if not type:
+            raise TypeError(f"Type {type} not defined")
+        elif issubclass(type, Presentation):
+            if not diagram:
+                raise TypeError("Presentation types require a diagram")
+
+            # Avoid events that reference this element before its created-event is emitted.
+            with self.block_events():
+                item = type(diagram=diagram, id=id)
+            self._elements[id] = item
+            self.handle(ElementCreated(self, item, diagram))
+            return item
+        elif issubclass(type, Element):
+            if diagram:
+                raise TypeError("Element types require no diagram")
+            obj = type(id, self)
+            self._elements[id] = obj
+            self.handle(ElementCreated(self, obj))
+            return obj
+        else:
             raise TypeError(f"Type {type} is not a valid model element")
-        obj = type(id, self)
-        self._elements[id] = obj
-        self.handle(ElementCreated(self, obj))
-        return obj
 
     def size(self) -> int:
         """Return the amount of elements currently in the factory."""
@@ -181,6 +197,8 @@ class ElementFactory(Service):
             try:
                 del self._elements[element.id]
             except KeyError:
+                return
+            if isinstance(event.element, Presentation):
                 return
             event = ElementDeleted(self, event.element)
         if self.event_manager and not self._block_events:

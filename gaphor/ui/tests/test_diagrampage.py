@@ -32,7 +32,7 @@ def test_placement(diagram, page, element_factory):
     page.view.request_update([box])
 
     diagram.create(CommentItem, subject=element_factory.create(Comment))
-    assert len(element_factory.lselect()) == 2
+    assert len(element_factory.lselect()) == 4
 
 
 @pytest.mark.skipif(

@@ -8,13 +8,14 @@ import logging
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Iterable, Iterator, Optional, Sequence, Set, Union
+from typing import Iterable, Iterator, Optional, Sequence, Set, Type, TypeVar, Union
 
 import gaphas
+from typing_extensions import Protocol, runtime_checkable
 
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element, Id, RepositoryProtocol
-from gaphor.core.modeling.event import AssociationDeleted, ElementCreated
+from gaphor.core.modeling.event import AssociationDeleted
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import (
     association,
@@ -197,18 +198,6 @@ class StyledItem:
         )
 
 
-class PseudoCanvas:
-    """A "pseudo" canvas implementation, for storing items."""
-
-    def __init__(self, diagram: Diagram):
-        self.diagram = diagram
-
-    def save(self, save_func):
-        for item in self.diagram.ownedPresentation:
-            if not item.parent:
-                save_func(item)
-
-
 class Diagram(Element):
     """Diagrams may contain model elements and can be owned by a Package."""
 
@@ -252,7 +241,6 @@ class Diagram(Element):
         """Apply the supplied save function to this diagram and the canvas."""
 
         super().save(save_func)
-        save_func("canvas", PseudoCanvas(self))
 
     def postload(self):
         """Handle post-load functionality for the diagram."""
@@ -270,17 +258,10 @@ class Diagram(Element):
         return self.create_as(type, str(uuid.uuid1()), parent, subject)
 
     def create_as(self, type, id, parent=None, subject=None):
-        if not (type and issubclass(type, Presentation)):
-            raise TypeError(
-                f"Type {type} can not be added to a diagram as it is not a diagram item"
-            )
-        # Avoid events that reference this element before its created-event is emitted.
-        with self.model.block_events():
-            item = type(diagram=self, id=id)
-        assert isinstance(
-            item, gaphas.Item
-        ), f"Type {type} does not comply with Item protocol"
-        self.model.handle(ElementCreated(self.model, item, self))
+        assert isinstance(self.model, PresentationRepositoryProtocol)
+        item = self.model.create_as(type, id, diagram=self)
+        if not isinstance(item, gaphas.Item):
+            raise TypeError(f"Type {type} does not comply with Item protocol")
         if subject:
             item.subject = subject
         if parent:
@@ -388,3 +369,12 @@ class Diagram(Element):
 Presentation.diagram = association(
     "diagram", Diagram, upper=1, opposite="ownedPresentation"
 )
+
+
+P = TypeVar("P", bound=Presentation)
+
+
+@runtime_checkable
+class PresentationRepositoryProtocol(Protocol):
+    def create_as(self, type: Type[P], id: str, diagram: Diagram) -> P:
+        ...

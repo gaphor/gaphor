@@ -2,7 +2,6 @@
 
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.diagram import PseudoCanvas
 
 
 def orphan_references(factory):
@@ -37,8 +36,6 @@ def orphan_references(factory):
             verify_reference(name, value)
         elif isinstance(value, collection):
             verify_collection(name, value)
-        elif isinstance(value, PseudoCanvas):
-            value.save(verify_canvas)
 
     def verify_canvas(value):
         elements.add(value.id)
