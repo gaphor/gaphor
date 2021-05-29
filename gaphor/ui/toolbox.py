@@ -15,7 +15,7 @@ from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.actiongroup import create_action_group
+from gaphor.ui.actiongroup import create_action_group, from_variant
 from gaphor.ui.event import ToolSelected
 
 log = logging.getLogger(__name__)
@@ -75,6 +75,11 @@ class Toolbox(UIComponent):
                     )
                     return True
         return False
+
+    @property
+    def active_tool_name(self):
+        gvar = self._action_group.get_action_state("select-tool")
+        return gvar and from_variant(gvar)
 
     def create_toolbox_button(
         self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]

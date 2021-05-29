@@ -221,6 +221,7 @@ class Diagrams(UIComponent, ActionProvider):
 
         apply_tool_select_controller(widget, self.toolbox)
         self.create_tab(diagram.name, widget)
+        page.select_tool(self.toolbox.active_tool_name)
         self.get_current_view().grab_focus()
         self._update_action_state()
         return page
