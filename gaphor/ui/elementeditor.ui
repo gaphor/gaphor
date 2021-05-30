@@ -103,7 +103,7 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                   <object class="GtkButton">
                     <property name="receives_default">1</property>
                     <property name="tooltip_text" translatable="yes">Zoom In</property>
-                    <property name="action_name">diagram.zoom-in</property>
+                    <property name="action_name">win.zoom-in</property>
                     <child>
                       <object class="GtkImage">
                         <property name="icon_name">zoom-in-symbolic</property>
@@ -115,7 +115,7 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                   <object class="GtkButton">
                     <property name="receives_default">1</property>
                     <property name="tooltip_text" translatable="yes">Zoom 100%</property>
-                    <property name="action_name">diagram.zoom-100</property>
+                    <property name="action_name">win.zoom-100</property>
                     <child>
                       <object class="GtkImage">
                         <property name="icon_name">zoom-original-symbolic</property>
@@ -127,7 +127,7 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                   <object class="GtkButton">
                     <property name="receives_default">1</property>
                     <property name="tooltip_text" translatable="yes">Zoom Out</property>
-                    <property name="action_name">diagram.zoom-out</property>
+                    <property name="action_name">win.zoom-out</property>
                     <child>
                       <object class="GtkImage">
                         <property name="icon_name">zoom-out-symbolic</property>

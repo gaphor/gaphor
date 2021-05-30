@@ -1,7 +1,5 @@
-import functools
-
 from gaphas.view import GtkView
-from gi.repository import Gdk, GLib, Gtk
+from gi.repository import Gdk, Gtk
 
 from gaphor.core import Transaction
 from gaphor.core.modeling import Presentation
@@ -13,7 +11,6 @@ def shortcut_tool(view, modeling_language, event_manager):
     else:
         ctrl = Gtk.EventControllerKey.new()
     ctrl.connect("key-pressed", on_delete, event_manager)
-    ctrl.connect("key-pressed", on_shortcut, modeling_language)
     return ctrl
 
 
@@ -41,37 +38,3 @@ def delete_selected_items(view: GtkView, event_manager):
             else:
                 if i.diagram:
                     i.diagram.remove(i)
-
-
-def on_shortcut(ctrl, keyval, keycode, state, modeling_language):
-    # accelerator keys are lower case. Since we handle them in a key-press event
-    # handler, we'll need the upper-case versions as well in case Shift is pressed.
-    view: GtkView = ctrl.get_widget()
-    for _title, items in modeling_language.toolbox_definition:
-        for action_name, _label, _icon_name, shortcut, *rest in items:
-            if not shortcut:
-                continue
-            keys, mod = parse_shortcut(shortcut)
-            if state == mod and keyval in keys:
-                if Gtk.get_major_version() == 3:
-                    view.get_toplevel().get_action_group("diagram").lookup_action(
-                        "select-tool"
-                    ).change_state(GLib.Variant.new_string(action_name))
-                else:
-                    view.activate_action(
-                        "diagram.select-tool", GLib.Variant.new_string(action_name)
-                    )
-                return True
-    return False
-
-
-_upper_offset = ord("A") - ord("a")
-
-
-@functools.lru_cache(maxsize=None)
-def parse_shortcut(shortcut):
-    if Gtk.get_major_version() == 3:
-        key, mod = Gtk.accelerator_parse(shortcut)
-    else:
-        _, key, mod = Gtk.accelerator_parse(shortcut)
-    return (key, key + _upper_offset), mod

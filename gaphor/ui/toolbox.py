@@ -3,21 +3,25 @@
 This is the toolbox in the lower left of the screen.
 """
 
+import functools
 import logging
 from typing import Optional, Sequence, Tuple
 
 from gi.repository import Gdk, GLib, Gtk
 
-from gaphor.abc import ActionProvider
+from gaphor.core import action
 from gaphor.core.eventmanager import event_handler
 from gaphor.diagram.diagramtoolbox import ToolDef
+from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.ui.abc import UIComponent
+from gaphor.ui.actiongroup import create_action_group, from_variant
+from gaphor.ui.event import ToolSelected
 
 log = logging.getLogger(__name__)
 
 
-class Toolbox(UIComponent, ActionProvider):
+class Toolbox(UIComponent):
 
     if Gtk.get_major_version() == 3:
         TARGET_STRING = 0
@@ -34,12 +38,14 @@ class Toolbox(UIComponent, ActionProvider):
         self.event_manager = event_manager
         self.properties = properties
         self.modeling_language = modeling_language
+        self._action_group, _ = create_action_group(self, "toolbox")
         self._toolbox: Optional[Gtk.Box] = None
         self._toolbox_container: Optional[Gtk.ScrolledWindow] = None
 
     def open(self) -> Gtk.ScrolledWindow:
         toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
         toolbox_container = self.create_toolbox_container(toolbox)
+        self.event_manager.subscribe(self._on_diagram_item_placed)
         self.event_manager.subscribe(self._on_modeling_language_changed)
         self._toolbox = toolbox
         self._toolbox_container = toolbox_container
@@ -53,6 +59,27 @@ class Toolbox(UIComponent, ActionProvider):
                 self._toolbox_container.unparent()
             self._toolbox = None
         self.event_manager.unsubscribe(self._on_modeling_language_changed)
+        self.event_manager.unsubscribe(self._on_diagram_item_placed)
+
+    def activate_shortcut(self, keyval, state):
+        # Accelerator keys are lower case. Since we handle them in a key-press event
+        # handler, we'll need the upper-case versions as well in case Shift is pressed.
+        for _title, items in self.modeling_language.toolbox_definition:
+            for action_name, _label, _icon_name, shortcut, *rest in items:
+                if not shortcut:
+                    continue
+                keys, mod = parse_shortcut(shortcut)
+                if state == mod and keyval in keys:
+                    self._action_group.activate_action(
+                        "select-tool", GLib.Variant.new_string(action_name)
+                    )
+                    return True
+        return False
+
+    @property
+    def active_tool_name(self):
+        gvar = self._action_group.get_action_state("select-tool")
+        return gvar and from_variant(gvar)
 
     def create_toolbox_button(
         self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]
@@ -74,7 +101,7 @@ class Toolbox(UIComponent, ActionProvider):
         else:
             icon = Gtk.Image.new_from_icon_name(icon_name)
             button.set_child(icon)
-        button.set_action_name("diagram.select-tool")
+        button.set_action_name("toolbox.select-tool")
         button.set_action_target_value(GLib.Variant.new_string(action_name))
         button.get_style_context().add_class("flat")
         if label:
@@ -108,6 +135,7 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         toolbox.set_name("toolbox")
         toolbox.connect("destroy", self._on_toolbox_destroyed)
+        toolbox.insert_action_group("toolbox", self._action_group)
         collapsed = self.properties.get("toolbox-collapsed", {})
 
         def on_expanded(widget, prop, index):
@@ -145,10 +173,21 @@ class Toolbox(UIComponent, ActionProvider):
         toolbox_container.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
         if Gtk.get_major_version() == 3:
             toolbox_container.add(toolbox)
+            toolbox_container.show()
         else:
             toolbox_container.set_child(toolbox)
-        toolbox_container.show()
         return toolbox_container
+
+    @action(name="toolbox.select-tool", state="toolbox-pointer")
+    def select_tool(self, tool_name: str):
+        self.event_manager.handle(ToolSelected(tool_name))
+
+    @event_handler(DiagramItemPlaced)
+    def _on_diagram_item_placed(self, event):
+        if self.properties.get("reset-tool-after-create", True):
+            self._action_group.lookup_action("select-tool").activate(
+                GLib.Variant.new_string("toolbox-pointer")
+            )
 
     @event_handler(ModelingLanguageChanged)
     def _on_modeling_language_changed(self, event) -> None:
@@ -188,3 +227,15 @@ if Gtk.get_major_version() == 3:
             time (int): The timestamp at which the data was received.
         """
         data.set(type=data.get_target(), format=8, data=action_name.encode())
+
+
+_upper_offset = ord("A") - ord("a")
+
+
+@functools.lru_cache(maxsize=None)
+def parse_shortcut(shortcut):
+    if Gtk.get_major_version() == 3:
+        key, mod = Gtk.accelerator_parse(shortcut)
+    else:
+        _, key, mod = Gtk.accelerator_parse(shortcut)
+    return (key, key + _upper_offset), mod

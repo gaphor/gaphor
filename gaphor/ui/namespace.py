@@ -13,6 +13,7 @@ from typing import TYPE_CHECKING, Optional, Set
 from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor import UML
+from gaphor.abc import ActionProvider
 from gaphor.core import action, event_handler, gettext, transactional
 from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.ui.abc import UIComponent
@@ -43,7 +44,7 @@ def popup_model(element):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append(gettext("New _Diagram"), "tree-view.create-diagram")
+    part.append(gettext("New _Diagram"), "win.create-diagram")
     part.append(gettext("New _Package"), "tree-view.create-package")
     model.append_section(None, part)
 
@@ -74,7 +75,7 @@ def popup_model(element):
     return model
 
 
-class Namespace(UIComponent):
+class Namespace(UIComponent, ActionProvider):
     def __init__(self, event_manager: EventManager, element_factory: ElementFactory):
         self.event_manager = event_manager
         self.element_factory = element_factory
@@ -282,7 +283,7 @@ class Namespace(UIComponent):
             view.set_cursor(path, column, True)
             cell.set_property("editable", 0)
 
-    @action(name="tree-view.create-diagram")
+    @action(name="win.create-diagram")
     @transactional
     def tree_view_create_diagram(self):
         assert self.view

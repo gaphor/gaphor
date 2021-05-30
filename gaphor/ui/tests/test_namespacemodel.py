@@ -194,6 +194,7 @@ def test_droppable(namespace, element_factory, mocker):
     assert namespace.do_row_drop_possible((1,), selection_data)
 
 
+@pytest.mark.skipif(Gtk.get_major_version() != 3, reason="Works only for GTK+ 3")
 def test_drag_data_get_for_model_row(namespace, element_factory, mocker):
     element_factory.create(UML.Class)
     selection_data = MockSelectionData()

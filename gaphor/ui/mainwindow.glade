@@ -179,7 +179,7 @@
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
             <property name="tooltip-text" translatable="yes">New diagram</property>
-            <property name="action-name">tree-view.create-diagram</property>
+            <property name="action-name">win.create-diagram</property>
             <child>
               <object class="GtkImage">
                 <property name="visible">True</property>
