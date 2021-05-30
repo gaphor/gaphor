@@ -226,20 +226,20 @@ class ElementDeleted(ServiceEvent):
         self.element = element
 
 
-class DiagramItemCreated:
+class DiagramItemCreated(ElementCreated):
     """A diagram item has been created."""
 
     def __init__(self, diagram, element):
+        super().__init__(diagram, element)
         self.diagram = diagram
-        self.element = element
 
 
-class DiagramItemDeleted:
+class DiagramItemDeleted(ElementDeleted):
     """A diagram item has been deleted."""
 
     def __init__(self, diagram, element):
+        super().__init__(diagram, element)
         self.diagram = diagram
-        self.element = element
 
 
 class ModelReady(ServiceEvent):

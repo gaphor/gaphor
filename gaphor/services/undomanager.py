@@ -30,6 +30,7 @@ from gaphor.core.modeling.event import (
     ModelReady,
     RevertibeEvent,
 )
+from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import association as association_property
 from gaphor.diagram.copypaste import deserialize, serialize
 from gaphor.event import (
@@ -288,8 +289,6 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.subscribe(self.undo_reversible_event)
         self.event_manager.subscribe(self.undo_create_element_event)
         self.event_manager.subscribe(self.undo_delete_element_event)
-        self.event_manager.subscribe(self.undo_create_diagram_item_event)
-        self.event_manager.subscribe(self.undo_delete_diagram_item_event)
         self.event_manager.subscribe(self.undo_attribute_change_event)
         self.event_manager.subscribe(self.undo_association_set_event)
         self.event_manager.subscribe(self.undo_association_add_event)
@@ -302,8 +301,6 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self.undo_reversible_event)
         self.event_manager.unsubscribe(self.undo_create_element_event)
         self.event_manager.unsubscribe(self.undo_delete_element_event)
-        self.event_manager.unsubscribe(self.undo_create_diagram_item_event)
-        self.event_manager.unsubscribe(self.undo_delete_diagram_item_event)
         self.event_manager.unsubscribe(self.undo_attribute_change_event)
         self.event_manager.unsubscribe(self.undo_association_set_event)
         self.event_manager.unsubscribe(self.undo_association_add_event)
@@ -327,6 +324,11 @@ class UndoManager(Service, ActionProvider):
 
     @event_handler(ElementCreated)
     def undo_create_element_event(self, event: ElementCreated):
+        if isinstance(event.element, Presentation):
+            assert isinstance(event, DiagramItemCreated)
+            self.undo_create_diagram_item_event(event)
+            return
+
         element_id = event.element.id
 
         def c_undo_create_event():
@@ -340,6 +342,11 @@ class UndoManager(Service, ActionProvider):
 
     @event_handler(ElementDeleted)
     def undo_delete_element_event(self, event: ElementDeleted):
+        if isinstance(event.element, Presentation):
+            assert isinstance(event, DiagramItemDeleted)
+            self.undo_delete_diagram_item_event(event)
+            return
+
         element_type = type(event.element)
         element_id = event.element.id
 
@@ -351,7 +358,6 @@ class UndoManager(Service, ActionProvider):
 
         self.add_undo_action(a_undo_delete_event)
 
-    @event_handler(DiagramItemCreated)
     def undo_create_diagram_item_event(self, event: DiagramItemCreated):
         element_id = event.element.id
 
@@ -364,7 +370,6 @@ class UndoManager(Service, ActionProvider):
 
         self.add_undo_action(c_undo_create_event)
 
-    @event_handler(DiagramItemDeleted)
     def undo_delete_diagram_item_event(self, event: DiagramItemDeleted):
         diagram_id = event.diagram.id
         element_type = type(event.element)
