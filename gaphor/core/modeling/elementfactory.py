@@ -65,7 +65,6 @@ class ElementFactory(Service):
     def create(self, type: Type[T]) -> T:
         """Create a new model element of type ``type``."""
         obj = self.create_as(type, str(uuid.uuid1()))
-        self.handle(ElementCreated(self, obj))
         return obj
 
     def create_as(self, type: Type[T], id: str) -> T:
@@ -78,6 +77,7 @@ class ElementFactory(Service):
             raise TypeError(f"Type {type} is not a valid model element")
         obj = type(id, self)
         self._elements[id] = obj
+        self.handle(ElementCreated(self, obj))
         return obj
 
     def size(self) -> int:
