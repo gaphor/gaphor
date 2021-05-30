@@ -344,8 +344,7 @@ class UndoManager(Service, ActionProvider):
         element_id = event.element.id
 
         def a_undo_delete_event():
-            element = self.element_factory.create_as(element_type, element_id)
-            self.event_manager.handle(ElementCreated(self.element_factory, element))
+            self.element_factory.create_as(element_type, element_id)
 
         a_undo_delete_event.__doc__ = f"Recreate element {element_type} ({element_id})."
         del event
