@@ -64,8 +64,7 @@ class ElementFactory(Service):
 
     def create(self, type: Type[T]) -> T:
         """Create a new model element of type ``type``."""
-        obj = self.create_as(type, str(uuid.uuid1()))
-        return obj
+        return self.create_as(type, str(uuid.uuid1()))
 
     def create_as(self, type: Type[T], id: str) -> T:
         """Create a new model element of type 'type' with 'id' as its ID.
