@@ -322,10 +322,6 @@ class UndoManager(Service, ActionProvider):
 
     @event_handler(ElementCreated)
     def undo_create_element_event(self, event: ElementCreated):
-        if isinstance(event.element, Presentation):
-            self.undo_create_diagram_item_event(event)
-            return
-
         element_id = event.element.id
 
         def d_undo_create_event():
@@ -339,55 +335,36 @@ class UndoManager(Service, ActionProvider):
 
     @event_handler(ElementDeleted)
     def undo_delete_element_event(self, event: ElementDeleted):
+        element_type = type(event.element)
+        element_id = event.element.id
+
         if isinstance(event.element, Presentation):
-            self.undo_delete_diagram_item_event(event)
-            return
+            diagram_id = event.diagram.id
+            data = {}
 
-        element_type = type(event.element)
-        element_id = event.element.id
+            def save_func(name, value):
+                data[name] = serialize(value)
 
-        def a_undo_delete_event():
-            self.element_factory.create_as(element_type, element_id)
+            event.element.save(save_func)
 
-        a_undo_delete_event.__doc__ = f"Recreate element {element_type} ({element_id})."
+            def b_undo_delete_event():
+                diagram: Diagram = self.deep_lookup(diagram_id)  # type: ignore[assignment]
+                element = diagram.create_as(element_type, element_id)
+                for name, ser in data.items():
+                    for value in deserialize(ser, lambda ref: None):
+                        element.load(name, value)
+
+            undo_delete_event = b_undo_delete_event
+        else:
+            def a_undo_delete_event():
+                self.element_factory.create_as(element_type, element_id)
+
+            undo_delete_event = a_undo_delete_event
+
+        undo_delete_event.__doc__ = f"Recreate element {element_type} ({element_id})."
         del event
 
-        self.add_undo_action(a_undo_delete_event)
-
-    def undo_create_diagram_item_event(self, event: ElementCreated):
-        element_id = event.element.id
-
-        def d_undo_create_event():
-            element = self.deep_lookup(element_id)
-            element.unlink()
-
-        d_undo_create_event.__doc__ = f"Undo create diagram item {event.element}."
-        del event
-
-        self.add_undo_action(d_undo_create_event)
-
-    def undo_delete_diagram_item_event(self, event: ElementDeleted):
-        diagram_id = event.diagram.id
-        element_type = type(event.element)
-        element_id = event.element.id
-        data = {}
-
-        def save_func(name, value):
-            data[name] = serialize(value)
-
-        event.element.save(save_func)
-
-        def b_undo_delete_event():
-            diagram: Diagram = self.deep_lookup(diagram_id)  # type: ignore[assignment]
-            element = diagram.create_as(element_type, element_id)
-            for name, ser in data.items():
-                for value in deserialize(ser, lambda ref: None):
-                    element.load(name, value)
-
-        b_undo_delete_event.__doc__ = f"Undo delete diagram item {event.element}."
-        del event
-
-        self.add_undo_action(b_undo_delete_event)
+        self.add_undo_action(undo_delete_event)
 
     @event_handler(AttributeUpdated)
     def undo_attribute_change_event(self, event: AttributeUpdated):
