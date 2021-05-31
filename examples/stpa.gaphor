@@ -13,7 +13,11 @@ diagram {
  /* line-style: sloppy 0.3; */
 }
 
-block[name*=Aircraft] {
+block[name^="The BSCU"] {
+  background-color: lightcyan;
+}
+
+block[name=Aircraft] {
   background-color: beige;
 }
 
@@ -5687,6 +5691,11 @@ Figure 2.10</val>
 <ref refid="f37bef14-b5ad-11eb-b5c7-18cf5efc6bb9"/>
 <ref refid="dd17c612-b675-11eb-88b6-18cf5efc6bb9"/>
 <ref refid="56fa98d6-be7a-11eb-b6ee-18cf5efc6bb9"/>
+<ref refid="f25b4b42-c1b1-11eb-a874-18cf5efc6bb9"/>
+<ref refid="3272aff4-c1b2-11eb-a874-18cf5efc6bb9"/>
+<ref refid="21aae90c-c1b2-11eb-a874-18cf5efc6bb9"/>
+<ref refid="16849e42-c1b2-11eb-a874-18cf5efc6bb9"/>
+<ref refid="03526228-c1b2-11eb-a874-18cf5efc6bb9"/>
 </reflist>
 </ownedType>
 <package>
@@ -6326,6 +6335,7 @@ Figure 2.10</val>
 <reflist>
 <ref refid="1f874a14-be77-11eb-8de7-18cf5efc6bb9"/>
 <ref refid="b74804ae-c1a8-11eb-a874-18cf5efc6bb9"/>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
 </reflist>
 </ownedDiagram>
 <ownedType>
@@ -6340,6 +6350,8 @@ Figure 2.10</val>
 <ref refid="be335dda-c1a9-11eb-a874-18cf5efc6bb9"/>
 <ref refid="cd7396e8-c1a9-11eb-a874-18cf5efc6bb9"/>
 <ref refid="e392988e-c1a9-11eb-a874-18cf5efc6bb9"/>
+<ref refid="3fd2f5a4-c1b3-11eb-a874-18cf5efc6bb9"/>
+<ref refid="65fb5a78-c1b3-11eb-a874-18cf5efc6bb9"/>
 </reflist>
 </ownedType>
 <package>
@@ -6713,7 +6725,7 @@ Figure 2.10</val>
 </reflist>
 </generalization>
 <name>
-<val>The BSU is armed and the aircraft begins landing roll. The BSCU does not provide the Brake control action [UCA-2] because the BSCU incorrectly believes the aircraft has already come to a stop. The flawed process model will occur if the received feedback momentarily indicates zero speed during landing roll. The received feedback may momentarily indicate zero speed during anti-skid operation, even though the aircraft is not stopped.</val>
+<val>The BSCU is armed and the aircraft begins landing roll. The BSCU does not provide the Brake control action [UCA-2] because the BSCU incorrectly believes the aircraft has already come to a stop. The flawed process model will occur if the received feedback momentarily indicates zero speed during landing roll. The received feedback may momentarily indicate zero speed during anti-skid operation, even though the aircraft is not stopped.</val>
 </name>
 <ownedAttribute>
 <reflist>
@@ -7918,7 +7930,7 @@ Figure 2.11</val>
 <val>(1.0, 0.0, 0.0, 1.0, 125.0, 497.0)</val>
 </matrix>
 <points>
-<val>[(0.0, -3.0), (1.5139491232403062, -365.0)]</val>
+<val>[(0.0, -3.0), (7.0, -365.0)]</val>
 </points>
 <head-connection>
 <ref refid="a0b72b4c-c1a4-11eb-a874-18cf5efc6bb9"/>
@@ -9305,7 +9317,7 @@ Figure 2.15</val>
 <val>(1.0, 0.0, 0.0, 1.0, 175.578125, 639.56640625)</val>
 </matrix>
 <points>
-<val>[(9.449919063628442, -36.56640625), (8.0, -483.56640625)]</val>
+<val>[(9.449919063628442, -36.56640625), (185.421875, -483.56640625)]</val>
 </points>
 <head-connection>
 <ref refid="ad8e2b7c-c1a9-11eb-a874-18cf5efc6bb9"/>
@@ -9433,6 +9445,11 @@ Figure 2.15</val>
 </canvas>
 </Diagram>
 <Situation id="383f7cd6-c1a9-11eb-a874-18cf5efc6bb9">
+<generalization>
+<reflist>
+<ref refid="a753c532-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</generalization>
 <name>
 <val>The BSCU incorrectly believes the aircraft is in the air and has not touched down</val>
 </name>
@@ -9442,6 +9459,7 @@ Figure 2.15</val>
 <presentation>
 <reflist>
 <ref refid="3840480a-c1a9-11eb-a874-18cf5efc6bb9"/>
+<ref refid="b408438a-c1b2-11eb-a874-18cf5efc6bb9"/>
 </reflist>
 </presentation>
 </Situation>
@@ -10072,6 +10090,573 @@ Figure 2.13</val>
 <presentation>
 <reflist>
 <ref refid="d37eeed4-c1ae-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Comment>
+<Diagram id="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9">
+<element>
+<ref refid="0c676ef0-be77-11eb-8de7-18cf5efc6bb9"/>
+</element>
+<name>
+<val>Process Flaws</val>
+</name>
+<ownedPresentation>
+<reflist>
+<ref refid="f25c2292-c1b1-11eb-a874-18cf5efc6bb9"/>
+<ref refid="0352c380-c1b2-11eb-a874-18cf5efc6bb9"/>
+<ref refid="16857e66-c1b2-11eb-a874-18cf5efc6bb9"/>
+<ref refid="21abbf30-c1b2-11eb-a874-18cf5efc6bb9"/>
+<ref refid="32739612-c1b2-11eb-a874-18cf5efc6bb9"/>
+<ref refid="b408438a-c1b2-11eb-a874-18cf5efc6bb9"/>
+<ref refid="3fd3fac6-c1b3-11eb-a874-18cf5efc6bb9"/>
+<ref refid="6a61e762-c1b3-11eb-a874-18cf5efc6bb9"/>
+<ref refid="9abb3152-c1b3-11eb-a874-18cf5efc6bb9"/>
+<ref refid="a4437fb8-c1b3-11eb-a874-18cf5efc6bb9"/>
+<ref refid="a6f76be8-c1b3-11eb-a874-18cf5efc6bb9"/>
+<ref refid="ada5b24c-c1b3-11eb-a874-18cf5efc6bb9"/>
+<ref refid="b0618bc8-c1b3-11eb-a874-18cf5efc6bb9"/>
+<ref refid="b2fa8934-c1b3-11eb-a874-18cf5efc6bb9"/>
+<ref refid="b75d7432-c1b3-11eb-a874-18cf5efc6bb9"/>
+<ref refid="663e3f36-c1b4-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</ownedPresentation>
+<canvas>
+<item id="f25c2292-c1b1-11eb-a874-18cf5efc6bb9" type="BlockItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 232.0, 182.0)</val>
+</matrix>
+<width>
+<val>401.49609375</val>
+</width>
+<height>
+<val>73.0</val>
+</height>
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="f25b4b42-c1b1-11eb-a874-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="0352c380-c1b2-11eb-a874-18cf5efc6bb9" type="BlockItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 41.0, 377.0)</val>
+</matrix>
+<width>
+<val>232.0</val>
+</width>
+<height>
+<val>71.0</val>
+</height>
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="03526228-c1b2-11eb-a874-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="16857e66-c1b2-11eb-a874-18cf5efc6bb9" type="BlockItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 173.5, 503.0)</val>
+</matrix>
+<width>
+<val>211.5</val>
+</width>
+<height>
+<val>71.0</val>
+</height>
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="16849e42-c1b2-11eb-a874-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="21abbf30-c1b2-11eb-a874-18cf5efc6bb9" type="BlockItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 359.0, 377.0)</val>
+</matrix>
+<width>
+<val>220.0</val>
+</width>
+<height>
+<val>71.0</val>
+</height>
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="21aae90c-c1b2-11eb-a874-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="32739612-c1b2-11eb-a874-18cf5efc6bb9" type="BlockItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 512.0, 503.0)</val>
+</matrix>
+<width>
+<val>216.0</val>
+</width>
+<height>
+<val>71.0</val>
+</height>
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="3272aff4-c1b2-11eb-a874-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="b408438a-c1b2-11eb-a874-18cf5efc6bb9" type="BlockItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 853.0, 642.0)</val>
+</matrix>
+<width>
+<val>260.0</val>
+</width>
+<height>
+<val>100.0</val>
+</height>
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="383f7cd6-c1a9-11eb-a874-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="3fd3fac6-c1b3-11eb-a874-18cf5efc6bb9" type="BlockItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 314.36328125, 642.0)</val>
+</matrix>
+<width>
+<val>301.0</val>
+</width>
+<height>
+<val>75.0</val>
+</height>
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="3fd2f5a4-c1b3-11eb-a874-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="6a61e762-c1b3-11eb-a874-18cf5efc6bb9" type="BlockItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -23.0, 642.0)</val>
+</matrix>
+<width>
+<val>296.0</val>
+</width>
+<height>
+<val>126.0</val>
+</height>
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="65fb5a78-c1b3-11eb-a874-18cf5efc6bb9"/>
+</subject>
+</item>
+<item id="9abb3152-c1b3-11eb-a874-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="9f826e62-c1b3-11eb-a874-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 216.3125, 657.0)</val>
+</matrix>
+<points>
+<val>[(-8.0, -83.0), (-7.0, -15.0)]</val>
+</points>
+<head-connection>
+<ref refid="16857e66-c1b2-11eb-a874-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="6a61e762-c1b3-11eb-a874-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="a4437fb8-c1b3-11eb-a874-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="a4af0d50-c1b3-11eb-a874-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 601.40234375, 540.0)</val>
+</matrix>
+<points>
+<val>[(-17.92708333333333, 34.0), (-55.28125, 102.0)]</val>
+</points>
+<head-connection>
+<ref refid="32739612-c1b2-11eb-a874-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="3fd3fac6-c1b3-11eb-a874-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="a6f76be8-c1b3-11eb-a874-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="a753c532-c1b3-11eb-a874-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 677.40234375, 556.0)</val>
+</matrix>
+<points>
+<val>[(13.18039556618126, 18.0), (175.59765625, 86.0)]</val>
+</points>
+<head-connection>
+<ref refid="32739612-c1b2-11eb-a874-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="b408438a-c1b2-11eb-a874-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="ada5b24c-c1b3-11eb-a874-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="ae11a2e0-c1b3-11eb-a874-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 322.05859375, 215.0)</val>
+</matrix>
+<points>
+<val>[(-73.5625, 40.0), (-73.26795580110496, 162.0)]</val>
+</points>
+<head-connection>
+<ref refid="f25c2292-c1b1-11eb-a874-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="0352c380-c1b2-11eb-a874-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="b0618bc8-c1b3-11eb-a874-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="b0c9dc0a-c1b3-11eb-a874-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 357.05859375, 221.0)</val>
+</matrix>
+<points>
+<val>[(78.34968179302712, 34.0), (80.8076923076923, 156.0)]</val>
+</points>
+<head-connection>
+<ref refid="f25c2292-c1b1-11eb-a874-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="21abbf30-c1b2-11eb-a874-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="b2fa8934-c1b3-11eb-a874-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="b45eaca6-c1b3-11eb-a874-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 323.05859375, 238.0)</val>
+</matrix>
+<points>
+<val>[(4.036347132373621, 17.0), (5.764900662251648, 265.0)]</val>
+</points>
+<head-connection>
+<ref refid="f25c2292-c1b1-11eb-a874-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="16857e66-c1b2-11eb-a874-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="b75d7432-c1b3-11eb-a874-18cf5efc6bb9" type="GeneralizationItem">
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="b839510a-c1b3-11eb-a874-18cf5efc6bb9"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 362.05859375, 218.0)</val>
+</matrix>
+<points>
+<val>[(234.69664872965058, 37.0), (240.68867924528303, 285.0)]</val>
+</points>
+<head-connection>
+<ref refid="f25c2292-c1b1-11eb-a874-18cf5efc6bb9"/>
+</head-connection>
+<tail-connection>
+<ref refid="32739612-c1b2-11eb-a874-18cf5efc6bb9"/>
+</tail-connection>
+</item>
+<item id="663e3f36-c1b4-11eb-a874-18cf5efc6bb9" type="CommentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 672.49609375, 108.0)</val>
+</matrix>
+<width>
+<val>166.50390625</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<diagram>
+<ref refid="a162b4ce-c1b0-11eb-a874-18cf5efc6bb9"/>
+</diagram>
+<subject>
+<ref refid="663e2348-c1b4-11eb-a874-18cf5efc6bb9"/>
+</subject>
+</item>
+</canvas>
+</Diagram>
+<Situation id="f25b4b42-c1b1-11eb-a874-18cf5efc6bb9">
+<name>
+<val>ProcessModel</val>
+</name>
+<package>
+<ref refid="1a2f3332-bcfc-11eb-98b0-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="f25c2292-c1b1-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Situation>
+<Situation id="03526228-c1b2-11eb-a874-18cf5efc6bb9">
+<generalization>
+<reflist>
+<ref refid="ae11a2e0-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</generalization>
+<name>
+<val>Inadequate Controller Decisions</val>
+</name>
+<package>
+<ref refid="1a2f3332-bcfc-11eb-98b0-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="0352c380-c1b2-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Situation>
+<Situation id="16849e42-c1b2-11eb-a874-18cf5efc6bb9">
+<generalization>
+<reflist>
+<ref refid="b45eaca6-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</generalization>
+<name>
+<val>Inadequate Control Execution</val>
+</name>
+<package>
+<ref refid="1a2f3332-bcfc-11eb-98b0-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="16857e66-c1b2-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Situation>
+<Situation id="21aae90c-c1b2-11eb-a874-18cf5efc6bb9">
+<generalization>
+<reflist>
+<ref refid="b0c9dc0a-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</generalization>
+<name>
+<val>Inadequate Process Behavior</val>
+</name>
+<package>
+<ref refid="1a2f3332-bcfc-11eb-98b0-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="21abbf30-c1b2-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Situation>
+<Situation id="3272aff4-c1b2-11eb-a874-18cf5efc6bb9">
+<generalization>
+<reflist>
+<ref refid="b839510a-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</generalization>
+<name>
+<val>Inadequate Feedback and Inputs</val>
+</name>
+<package>
+<ref refid="1a2f3332-bcfc-11eb-98b0-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="32739612-c1b2-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Situation>
+<Situation id="3fd2f5a4-c1b3-11eb-a874-18cf5efc6bb9">
+<generalization>
+<reflist>
+<ref refid="a4af0d50-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</generalization>
+<name>
+<val>The BSCU incorrectly believes the aircraft has already come to a stop.</val>
+</name>
+<package>
+<ref refid="0c676ef0-be77-11eb-8de7-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="3fd3fac6-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Situation>
+<Situation id="65fb5a78-c1b3-11eb-a874-18cf5efc6bb9">
+<generalization>
+<reflist>
+<ref refid="9f826e62-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</generalization>
+<name>
+<val>The BSCU Autobrake physical controller fails during landing roll when BSCU is armed, causing the Brake control action to not be provided. As a result, insufficient deceleration may be provided upon landing.</val>
+</name>
+<package>
+<ref refid="0c676ef0-be77-11eb-8de7-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="6a61e762-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+</Situation>
+<Generalization id="9f826e62-c1b3-11eb-a874-18cf5efc6bb9">
+<general>
+<ref refid="16849e42-c1b2-11eb-a874-18cf5efc6bb9"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="9abb3152-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="65fb5a78-c1b3-11eb-a874-18cf5efc6bb9"/>
+</specific>
+</Generalization>
+<Generalization id="a4af0d50-c1b3-11eb-a874-18cf5efc6bb9">
+<general>
+<ref refid="3272aff4-c1b2-11eb-a874-18cf5efc6bb9"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="a4437fb8-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="3fd2f5a4-c1b3-11eb-a874-18cf5efc6bb9"/>
+</specific>
+</Generalization>
+<Generalization id="a753c532-c1b3-11eb-a874-18cf5efc6bb9">
+<general>
+<ref refid="3272aff4-c1b2-11eb-a874-18cf5efc6bb9"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="a6f76be8-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="383f7cd6-c1a9-11eb-a874-18cf5efc6bb9"/>
+</specific>
+</Generalization>
+<Generalization id="ae11a2e0-c1b3-11eb-a874-18cf5efc6bb9">
+<general>
+<ref refid="f25b4b42-c1b1-11eb-a874-18cf5efc6bb9"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="ada5b24c-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="03526228-c1b2-11eb-a874-18cf5efc6bb9"/>
+</specific>
+</Generalization>
+<Generalization id="b0c9dc0a-c1b3-11eb-a874-18cf5efc6bb9">
+<general>
+<ref refid="f25b4b42-c1b1-11eb-a874-18cf5efc6bb9"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="b0618bc8-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="21aae90c-c1b2-11eb-a874-18cf5efc6bb9"/>
+</specific>
+</Generalization>
+<Generalization id="b45eaca6-c1b3-11eb-a874-18cf5efc6bb9">
+<general>
+<ref refid="f25b4b42-c1b1-11eb-a874-18cf5efc6bb9"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="b2fa8934-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="16849e42-c1b2-11eb-a874-18cf5efc6bb9"/>
+</specific>
+</Generalization>
+<Generalization id="b839510a-c1b3-11eb-a874-18cf5efc6bb9">
+<general>
+<ref refid="f25b4b42-c1b1-11eb-a874-18cf5efc6bb9"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="b75d7432-c1b3-11eb-a874-18cf5efc6bb9"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="3272aff4-c1b2-11eb-a874-18cf5efc6bb9"/>
+</specific>
+</Generalization>
+<Comment id="663e2348-c1b4-11eb-a874-18cf5efc6bb9">
+<body>
+<val>RAAML Examples 1.0
+Figure 2.18</val>
+</body>
+<presentation>
+<reflist>
+<ref refid="663e3f36-c1b4-11eb-a874-18cf5efc6bb9"/>
 </reflist>
 </presentation>
 </Comment>
