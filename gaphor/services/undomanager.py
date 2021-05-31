@@ -325,7 +325,6 @@ class UndoManager(Service, ActionProvider):
     @event_handler(ElementCreated)
     def undo_create_element_event(self, event: ElementCreated):
         if isinstance(event.element, Presentation):
-            assert isinstance(event, DiagramItemCreated)
             self.undo_create_diagram_item_event(event)
             return
 
@@ -343,7 +342,6 @@ class UndoManager(Service, ActionProvider):
     @event_handler(ElementDeleted)
     def undo_delete_element_event(self, event: ElementDeleted):
         if isinstance(event.element, Presentation):
-            assert isinstance(event, DiagramItemDeleted)
             self.undo_delete_diagram_item_event(event)
             return
 

@@ -90,7 +90,7 @@ class Presentation(Matrices, Element, Generic[S]):
             diagram.connections.remove_connections_to_item(self)
         super().unlink()
         if diagram:
-            self.handle(DiagramItemDeleted(diagram, self))
+            self.handle(DiagramItemDeleted(self.model, self, diagram))
 
     def _on_diagram_changed(self, event):
         log.debug("Diagram changed. Unlinking %s.", self)
@@ -98,7 +98,7 @@ class Presentation(Matrices, Element, Generic[S]):
         if diagram:
             diagram.connections.remove_connections_to_item(self)
             self.unlink()
-            self.handle(DiagramItemDeleted(diagram, self))
+            self.handle(DiagramItemDeleted(self.model, self, diagram))
         if event.new_value:
             raise ValueError("Can not change diagram for a presentation")
 

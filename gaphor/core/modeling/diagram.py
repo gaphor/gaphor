@@ -280,7 +280,7 @@ class Diagram(Element):
         assert isinstance(
             item, gaphas.Item
         ), f"Type {type} does not comply with Item protocol"
-        self.model.handle(DiagramItemCreated(self, item))
+        self.model.handle(DiagramItemCreated(self.model, item, self))
         if subject:
             item.subject = subject
         if parent:
