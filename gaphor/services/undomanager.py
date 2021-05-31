@@ -23,8 +23,6 @@ from gaphor.core.modeling.event import (
     AssociationDeleted,
     AssociationSet,
     AttributeUpdated,
-    DiagramItemCreated,
-    DiagramItemDeleted,
     ElementCreated,
     ElementDeleted,
     ModelReady,
@@ -356,7 +354,7 @@ class UndoManager(Service, ActionProvider):
 
         self.add_undo_action(a_undo_delete_event)
 
-    def undo_create_diagram_item_event(self, event: DiagramItemCreated):
+    def undo_create_diagram_item_event(self, event: ElementCreated):
         element_id = event.element.id
 
         def d_undo_create_event():
@@ -368,7 +366,7 @@ class UndoManager(Service, ActionProvider):
 
         self.add_undo_action(d_undo_create_event)
 
-    def undo_delete_diagram_item_event(self, event: DiagramItemDeleted):
+    def undo_delete_diagram_item_event(self, event: ElementDeleted):
         diagram_id = event.diagram.id
         element_type = type(event.element)
         element_id = event.element.id

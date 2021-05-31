@@ -5,7 +5,7 @@ from gaphas.solver import Variable
 
 from gaphor.core.eventmanager import event_handler
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.event import DiagramItemDeleted
+from gaphor.core.modeling.event import ElementDeleted
 from gaphor.core.modeling.presentation import Presentation
 
 
@@ -29,7 +29,7 @@ def test_should_emit_event_when_unlinked(diagram, event_manager):
     presentation = diagram.create(Example)
     events = []
 
-    @event_handler(DiagramItemDeleted)
+    @event_handler(ElementDeleted)
     def handler(event):
         events.append(event)
 
@@ -66,7 +66,7 @@ def test_should_emit_event_when_diagram_changes(diagram, event_manager):
     presentation = diagram.create(Example)
     events = []
 
-    @event_handler(DiagramItemDeleted)
+    @event_handler(ElementDeleted)
     def handler(event):
         events.append(event)
 

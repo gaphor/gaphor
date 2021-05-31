@@ -228,12 +228,6 @@ class ElementDeleted(ServiceEvent):
         self.diagram = diagram
 
 
-DiagramItemCreated = ElementCreated
-
-
-DiagramItemDeleted = ElementDeleted
-
-
 class ModelReady(ServiceEvent):
     """A generic element factory event."""
 
