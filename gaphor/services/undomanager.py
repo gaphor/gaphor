@@ -356,6 +356,7 @@ class UndoManager(Service, ActionProvider):
 
             undo_delete_event = b_undo_delete_event
         else:
+
             def a_undo_delete_event():
                 self.element_factory.create_as(element_type, element_id)
 
