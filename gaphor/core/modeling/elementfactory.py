@@ -198,8 +198,6 @@ class ElementFactory(Service):
                 del self._elements[element.id]
             except KeyError:
                 return
-            if isinstance(event.element, Presentation):
-                return
-            event = ElementDeleted(self, event.element)
+            event = ElementDeleted(self, event.element, event.diagram)
         if self.event_manager and not self._block_events:
             self.event_manager.handle(event)

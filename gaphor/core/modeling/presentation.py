@@ -7,8 +7,8 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 
 from gaphas.item import Matrices
 
-from gaphor.core.modeling.element import Element
-from gaphor.core.modeling.event import ElementDeleted, RevertibeEvent
+from gaphor.core.modeling.element import Element, UnlinkEvent
+from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 
 if TYPE_CHECKING:
@@ -78,6 +78,9 @@ class Presentation(Matrices, Element, Generic[S]):
 
     def unlink(self):
         """Remove the item from the diagram and set subject to None."""
+        self.inner_unlink(UnlinkEvent(self, diagram=self.diagram))
+
+    def inner_unlink(self, unlink_event: UnlinkEvent):
         self._watcher.unsubscribe_all()
         self.matrix.remove_handler(self._on_matrix_changed)
 
@@ -85,20 +88,16 @@ class Presentation(Matrices, Element, Generic[S]):
         if parent:
             self.parent.matrix_i2c.remove_handler(self._on_matrix_changed)
 
-        diagram = self.diagram
+        diagram = unlink_event.diagram
         if diagram:
             diagram.connections.remove_connections_to_item(self)
-        super().unlink()
-        if diagram:
-            self.handle(ElementDeleted(self.model, self, diagram))
+        super().inner_unlink(unlink_event)
 
     def _on_diagram_changed(self, event):
         log.debug("Diagram changed. Unlinking %s.", self)
         diagram = event.old_value
         if diagram:
-            diagram.connections.remove_connections_to_item(self)
-            self.unlink()
-            self.handle(ElementDeleted(self.model, self, diagram))
+            self.inner_unlink(UnlinkEvent(self, diagram))
         if event.new_value:
             raise ValueError("Can not change diagram for a presentation")
 
