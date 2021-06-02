@@ -201,7 +201,7 @@ class RedefinedDeleted(AssociationDeleted):
 class ElementCreated(ServiceEvent):
     """An element has been created."""
 
-    def __init__(self, service, element):
+    def __init__(self, service, element, diagram=None):
         """Constructor.
 
         The service parameter is the service responsible for creating
@@ -210,12 +210,13 @@ class ElementCreated(ServiceEvent):
         """
         super().__init__(service)
         self.element = element
+        self.diagram = diagram
 
 
 class ElementDeleted(ServiceEvent):
     """An element has been deleted."""
 
-    def __init__(self, service, element):
+    def __init__(self, service, element, diagram=None):
         """Constructor.
 
         The service parameter is the service responsible for deleting
@@ -224,22 +225,7 @@ class ElementDeleted(ServiceEvent):
         """
         super().__init__(service)
         self.element = element
-
-
-class DiagramItemCreated:
-    """A diagram item has been created."""
-
-    def __init__(self, diagram, element):
         self.diagram = diagram
-        self.element = element
-
-
-class DiagramItemDeleted:
-    """A diagram item has been deleted."""
-
-    def __init__(self, diagram, element):
-        self.diagram = diagram
-        self.element = element
 
 
 class ModelReady(ServiceEvent):

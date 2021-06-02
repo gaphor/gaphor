@@ -14,7 +14,7 @@ import gaphas
 
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element, Id, RepositoryProtocol
-from gaphor.core.modeling.event import AssociationDeleted, DiagramItemCreated
+from gaphor.core.modeling.event import AssociationDeleted, ElementCreated
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import (
     association,
@@ -280,7 +280,7 @@ class Diagram(Element):
         assert isinstance(
             item, gaphas.Item
         ), f"Type {type} does not comply with Item protocol"
-        self.model.handle(DiagramItemCreated(self, item))
+        self.model.handle(ElementCreated(self.model, item, self))
         if subject:
             item.subject = subject
         if parent:

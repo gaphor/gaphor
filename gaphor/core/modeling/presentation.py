@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 from gaphas.item import Matrices
 
 from gaphor.core.modeling.element import Element
-from gaphor.core.modeling.event import DiagramItemDeleted, RevertibeEvent
+from gaphor.core.modeling.event import ElementDeleted, RevertibeEvent
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 
 if TYPE_CHECKING:
@@ -27,8 +27,8 @@ class Presentation(Matrices, Element, Generic[S]):
     Note that Presentations are not managed by the Element Factory.
     Instead, Presentation objects are owned by Diagram. As a result they
     do not emit ElementCreated and ElementDeleted events. Presentations
-    have their own create and delete events: DiagramItemCreated and
-    DiagramItemDeleted.
+    have their own create and delete events: ElementCreated and
+    ElementDeleted.
     """
 
     def __init__(self, diagram: Diagram, id=None):
@@ -90,7 +90,7 @@ class Presentation(Matrices, Element, Generic[S]):
             diagram.connections.remove_connections_to_item(self)
         super().unlink()
         if diagram:
-            self.handle(DiagramItemDeleted(diagram, self))
+            self.handle(ElementDeleted(self.model, self, diagram))
 
     def _on_diagram_changed(self, event):
         log.debug("Diagram changed. Unlinking %s.", self)
@@ -98,7 +98,7 @@ class Presentation(Matrices, Element, Generic[S]):
         if diagram:
             diagram.connections.remove_connections_to_item(self)
             self.unlink()
-            self.handle(DiagramItemDeleted(diagram, self))
+            self.handle(ElementDeleted(self.model, self, diagram))
         if event.new_value:
             raise ValueError("Can not change diagram for a presentation")
 
