@@ -39,6 +39,8 @@ from collections import OrderedDict
 from typing import IO, Dict, List, Optional, Tuple, Union
 from xml.sax import handler
 
+from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
+
 __all__ = ["parse", "ParserException"]
 
 log = logging.getLogger(__name__)
@@ -93,6 +95,7 @@ class canvasitem(base):
         self.id = id
         self.type = type
         self.canvasitems: List[canvasitem] = canvasitems or []
+        self.element: object = None
 
 
 XMLNS = "http://gaphor.sourceforge.net/model"
@@ -289,6 +292,12 @@ class GaphorLoader(handler.ContentHandler):
             n = self.peek(2)
             # Three levels up: the element instance (element or canvasitem)
             self.peek(3).values[n] = self.text
+        elif self.state() == ITEM:
+            item = self.pop()
+            new_canvasitems = upgrade_canvasitem(item, self.gaphor_version)
+            for new_item in new_canvasitems:
+                self.elements[new_item.id] = new_item
+            return
         self.pop()
 
     def startElementNS(self, name, qname, attrs):

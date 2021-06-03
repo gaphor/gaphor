@@ -2,12 +2,16 @@ import pytest
 
 from gaphor.storage.parser import canvas, canvasitem, element
 from gaphor.storage.storage import load_elements
+from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 from gaphor.UML import diagramitems
 
 
 @pytest.fixture
 def loader(element_factory, modeling_language):
     def _loader(*parsed_items):
+        for item in parsed_items:
+            item.references["diagram"] = "1"
+            upgrade_canvasitem(item, "1.0.0")
         parsed_data = {
             "1": element(
                 id="1", type="Diagram", canvas=canvas(canvasitems=list(parsed_items))

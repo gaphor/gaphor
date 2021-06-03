@@ -18,7 +18,6 @@ from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.storage import parser
-from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 
 FILE_FORMAT_VERSION = "3.0"
 NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"
@@ -207,13 +206,9 @@ def _load_elements_and_canvasitems(
         """Diagram is a Core Diagram, items is a list of
         parser.canvasitem's."""
 
-        for item in list(canvasitems):
-            new_canvasitems = upgrade_canvasitem(item, gaphor_version)
-            canvasitems.extend(new_canvasitems)
-            for item in new_canvasitems:
-                elements[item.id] = item
-
         for item in canvasitems:
+            if item.element:
+                continue
             cls = modeling_language.lookup_element(item.type)
             assert cls, f"No diagram item for type {item.type}"
             item.element = diagram.create_as(cls, item.id, parent=parent)
@@ -221,14 +216,14 @@ def _load_elements_and_canvasitems(
 
     for id, elem in list(elements.items()):
         yield from update_status_queue()
-        if isinstance(elem, parser.element):
+        if isinstance(elem, (parser.element, parser.canvasitem)):
             create_element(elem)
             if version_lower_than(gaphor_version, (2, 5, 0)) and isinstance(
                 elem.element, Diagram
             ):
                 assert elem.canvas
                 create_canvasitems(elem.element, elem.canvas.canvasitems)
-        elif not isinstance(elem, parser.canvasitem):
+        else:
             raise ValueError(
                 f"Item with id {id} and type {type(elem)} can not be instantiated"
             )
@@ -238,7 +233,7 @@ def _load_attributes_and_references(elements, update_status_queue):
     for id, elem in list(elements.items()):
         yield from update_status_queue()
         # Ensure that all elements have their element instance ready...
-        assert hasattr(elem, "element")
+        assert elem.element
 
         # load attributes and references:
         for name, value in list(elem.values.items()):
