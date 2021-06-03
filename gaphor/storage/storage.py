@@ -219,7 +219,7 @@ def _load_elements_and_canvasitems(
                 item = upgrade_presentation_item_to_1_1_0(item)
             item = upgrade_implementation_item_to_interface_realization_item(item)
             item = upgrade_c4_diagram_item_name(item)
-            cls = modeling_language.lookup_diagram_item(item.type)
+            cls = modeling_language.lookup_element(item.type)
             assert cls, f"No diagram item for type {item.type}"
             item.element = diagram.create_as(cls, item.id, parent=parent)
             create_canvasitems(diagram, item.canvasitems, parent=item.element)

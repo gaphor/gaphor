@@ -20,8 +20,5 @@ class UMLModelingLanguage(ModelingLanguage):
     def lookup_element(self, name):
         element_type = getattr(uml, name, None)
         if not element_type:
-            element_type = self.lookup_diagram_item(name)
+            element_type = getattr(diagramitems, name, None)
         return element_type
-
-    def lookup_diagram_item(self, name):
-        return getattr(diagramitems, name, None)
