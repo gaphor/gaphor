@@ -217,6 +217,12 @@ class GaphorLoader(handler.ContentHandler):
             id = attrs["id"]
             ci = canvasitem(id, attrs["type"])
             assert id not in self.elements.keys(), f"{id} already defined"
+            parent_or_canvas = self.peek()
+            if state == ITEM:
+                ci.references["parent"] = parent_or_canvas.id
+                ci.references["diagram"] = parent_or_canvas.references["diagram"]
+            else:
+                ci.references["diagram"] = self.peek(2).id
             self.elements[id] = ci
             self.peek().canvasitems.append(ci)
             self.push(ci, ITEM)
