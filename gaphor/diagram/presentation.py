@@ -317,6 +317,8 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
             super().load(name, value)
 
     def postload(self):
+        super().postload()
+
         if self.orthogonal:
             self._set_orthogonal(self.orthogonal)
 
@@ -329,8 +331,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
             postload_connect(self, self.tail, self._load_tail_connection)
             assert self._connections.get_connection(self.tail)
             del self._load_tail_connection
-
-        super().postload()
 
     def _on_orthogonal(self, event):
         self._set_orthogonal(event.new_value)

@@ -199,9 +199,9 @@ def _load_elements_and_canvasitems(
             diagram_id = elem.references["diagram"]
             diagram_elem = elements[diagram_id]
             create_element(diagram_elem)
-            elem.element = factory.create_as(cls, id, diagram_elem.element)
+            elem.element = factory.create_as(cls, elem.id, diagram_elem.element)
         else:
-            elem.element = factory.create_as(cls, id)
+            elem.element = factory.create_as(cls, elem.id)
 
     def create_canvasitems(diagram, canvasitems, parent=None):
         """Diagram is a Core Diagram, items is a list of
