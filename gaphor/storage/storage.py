@@ -13,7 +13,6 @@ from functools import partial
 
 from gaphor import application
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.stylesheet import StyleSheet
@@ -202,31 +201,9 @@ def _load_elements_and_canvasitems(
         else:
             elem.element = factory.create_as(cls, elem.id)
 
-    def create_canvasitems(diagram, canvasitems, parent=None):
-        """Diagram is a Core Diagram, items is a list of
-        parser.canvasitem's."""
-
-        for item in canvasitems:
-            if item.element:
-                continue
-            cls = modeling_language.lookup_element(item.type)
-            assert cls, f"No diagram item for type {item.type}"
-            item.element = diagram.create_as(cls, item.id, parent=parent)
-            create_canvasitems(diagram, item.canvasitems, parent=item.element)
-
     for id, elem in list(elements.items()):
         yield from update_status_queue()
-        if isinstance(elem, (parser.element, parser.canvasitem)):
-            create_element(elem)
-            if version_lower_than(gaphor_version, (2, 5, 0)) and isinstance(
-                elem.element, Diagram
-            ):
-                assert elem.canvas
-                create_canvasitems(elem.element, elem.canvas.canvasitems)
-        else:
-            raise ValueError(
-                f"Item with id {id} and type {type(elem)} can not be instantiated"
-            )
+        create_element(elem)
 
 
 def _load_attributes_and_references(elements, update_status_queue):
