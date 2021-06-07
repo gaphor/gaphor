@@ -6,25 +6,14 @@ This module contains only one interesting function:
 
 which returns a dictionary of ID -> <parsed_object> pairs.
 
-A parsed_object is one of element, canvas or canvasitem.
-
 A parsed_object contains values and references. values is a dictionary of
 name -> value pairs. A value contains a string with the value read from the
 model file. references contains a list of name -> reference_list pairs, where
 reference_list is a list of ID's.
 
-element objects can contain a canvas object (which is the case for elements
-of type Diagram). Each element has a type, which corresponds to a class name
-in the gaphor.UML module. Elements also have a unique ID, by which they are
+Each element has a type, which corresponds to a class name in one of the
+ModelingLanguage modules. Elements also have a unique ID, by which they are
 referered to in the dictionary returned by parse().
-
-canvas does not have an ID, but contains a list of canvasitems (which is a
-list of real canvasitem objects, not references).
-
-canvasitem objects can also contain a list of canvasitems (canvasitems can be
-nested). They also have a unique ID by which they have been added to the
-dictionary returned by parse(). Each canvasitem has a type, which maps to a
-class name in the gaphor.diagram module.
 
 The generator parse_generator(filename, loader) may be used if the loading
 takes a long time. The yielded values are the percentage of the file read.
@@ -47,7 +36,7 @@ log = logging.getLogger(__name__)
 
 
 class base:
-    """Simple base class for element, canvas and canvasitem."""
+    """Simple base class for element, and canvas."""
 
     def __init__(self):
         self.values: Dict[str, str] = {}
@@ -77,25 +66,11 @@ class element(base):
         base.__init__(self)
         self.id = id
         self.type = type
-        self.canvas = canvas
         self.element: object = None
 
 
 class canvas(base):
-    def __init__(self, canvasitems: Optional[List[canvasitem]] = None):
-        base.__init__(self)
-        self.canvasitems: List[canvasitem] = canvasitems or []
-
-
-class canvasitem(base):
-    def __init__(
-        self, id: str, type: str, canvasitems: Optional[List[canvasitem]] = None
-    ):
-        base.__init__(self)
-        self.id = id
-        self.type = type
-        self.canvasitems: List[canvasitem] = canvasitems or []
-        self.element: object = None
+    pass
 
 
 XMLNS = "http://gaphor.sourceforge.net/model"
@@ -111,8 +86,8 @@ class ParserException(Exception):
     GAPHOR,  # Expect UML classes (tag name is the UML class name)
     ELEMENT,  # Expect properties of UML object
     DIAGRAM,  # Expect properties of Diagram object + canvas
-    CANVAS,  # Expect canvas properties + <item>
-    ITEM,  # Expect item attributes and nested items
+    CANVAS,  # Expect canvas properties + <item> (Gaphor < 2.5)
+    ITEM,  # Expect item attributes and nested items (Gaphor < 2.5)
     ATTR,  # Reading contents of an attribute (such as a <val> or <ref>)
     VAL,  # Redaing contents of a <val> tag
     REFLIST,  # In a <reflist>
@@ -164,8 +139,8 @@ class GaphorLoader(handler.ContentHandler):
         """Start of document: all our attributes are initialized."""
         self.version = None
         self.gaphor_version = None
-        self.elements: Dict[str, Union[element, canvasitem]] = OrderedDict()
-        self._stack: List[Tuple[Union[element, canvas, canvasitem], State]] = []
+        self.elements: Dict[str, Union[element]] = OrderedDict()
+        self._stack: List[Tuple[Union[element, canvas], State]] = []
         self.text = ""
         self._start_element_handlers = (
             self.start_element,
@@ -207,18 +182,19 @@ class GaphorLoader(handler.ContentHandler):
             return True
 
     def start_canvas(self, state, name, attrs):
+        # NB. Only used for pre-2.5 models.
         # Special treatment for the <canvas> tag in a Diagram:
         if state == DIAGRAM and name == "canvas":
             c = canvas()
-            self.peek().canvas = c
             self.push(c, CANVAS)
             return True
 
     def start_canvas_item(self, state, name, attrs):
+        # NB. Only used for pre-2.5 models.
         # Items in a canvas are referenced by the <item> tag:
         if state in (CANVAS, ITEM) and name == "item":
             id = attrs["id"]
-            ci = canvasitem(id, attrs["type"])
+            ci = element(id, attrs["type"])
             assert id not in self.elements.keys(), f"{id} already defined"
             parent_or_canvas = self.peek()
             if state == ITEM:
@@ -227,7 +203,6 @@ class GaphorLoader(handler.ContentHandler):
             else:
                 ci.references["diagram"] = self.peek(2).id
             self.elements[id] = ci
-            self.peek().canvasitems.append(ci)
             self.push(ci, ITEM)
             return True
 
@@ -290,7 +265,7 @@ class GaphorLoader(handler.ContentHandler):
         if self.state() == VAL:
             # Two levels up: the attribute name
             n = self.peek(2)
-            # Three levels up: the element instance (element or canvasitem)
+            # Three levels up: the element instance
             self.peek(3).values[n] = self.text
         elif self.state() == ITEM:
             item = self.pop()
@@ -316,8 +291,8 @@ class GaphorLoader(handler.ContentHandler):
         self.text = self.text + content
 
 
-def parse(filename):
-    """Parse a file and return a dictionary ID:element/canvasitem."""
+def parse(filename) -> Dict[str, element]:
+    """Parse a file and return a dictionary ID:element."""
     loader = GaphorLoader()
 
     for _ in parse_generator(filename, loader):
@@ -403,9 +378,10 @@ def parse_file(filename, parser):
         is_fd = False
         file_obj = open(filename, "r")
 
-    yield from ProgressGenerator(file_obj, parser)
+    try:
+        yield from ProgressGenerator(file_obj, parser)
+    finally:
+        parser.close()
 
-    parser.close()
-
-    if not is_fd:
-        file_obj.close()
+        if not is_fd:
+            file_obj.close()

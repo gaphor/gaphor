@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.storage.parser import canvas, canvasitem, element
+from gaphor.storage.parser import element
 from gaphor.storage.storage import load_elements
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 from gaphor.UML import diagramitems
@@ -13,9 +13,7 @@ def loader(element_factory, modeling_language):
             item.references["diagram"] = "1"
             upgrade_canvasitem(item, "1.0.0")
         parsed_data = {
-            "1": element(
-                id="1", type="Diagram", canvas=canvas(canvasitems=list(parsed_items))
-            ),
+            "1": element(id="1", type="Diagram"),
             **{p.id: p for p in parsed_items},
         }
         load_elements(parsed_data, element_factory, modeling_language)
@@ -25,19 +23,19 @@ def loader(element_factory, modeling_language):
 
 
 def test_upgrade_metaclass_item_to_class_item(loader):
-    item = loader(canvasitem(id="2", type="MetaclassItem"))
+    item = loader(element(id="2", type="MetaclassItem"))
 
     assert type(item) == diagramitems.ClassItem
 
 
 def test_upgrade_subsystem_item_to_class_item(loader):
-    item = loader(canvasitem(id="2", type="SubsystemItem"))
+    item = loader(element(id="2", type="SubsystemItem"))
 
     assert type(item) == diagramitems.ComponentItem
 
 
 def test_rename_stereotype_attrs_field(loader):
-    parsed_item = canvasitem(id="2", type="ClassItem")
+    parsed_item = element(id="2", type="ClassItem")
     parsed_item.values["show_stereotypes_attrs"] = "1"
     item = loader(parsed_item)
 
@@ -46,7 +44,7 @@ def test_rename_stereotype_attrs_field(loader):
 
 
 def test_rename_show_attributes_and_operations_field(loader):
-    parsed_item = canvasitem(id="2", type="ClassItem")
+    parsed_item = element(id="2", type="ClassItem")
     parsed_item.values["show-attributes"] = "0"
     parsed_item.values["show-operations"] = "0"
     item = loader(parsed_item)
@@ -56,7 +54,7 @@ def test_rename_show_attributes_and_operations_field(loader):
 
 
 def test_interface_drawing_style_normal(loader):
-    parsed_item = canvasitem(id="2", type="InterfaceItem")
+    parsed_item = element(id="2", type="InterfaceItem")
     parsed_item.values["drawing-style"] = "0"  # DRAW_NONE
     item = loader(parsed_item)
 
@@ -64,7 +62,7 @@ def test_interface_drawing_style_normal(loader):
 
 
 def test_interface_drawing_style_folded(loader):
-    parsed_item = canvasitem(id="2", type="InterfaceItem")
+    parsed_item = element(id="2", type="InterfaceItem")
     parsed_item.values["drawing-style"] = "3"  # DRAW_ICON
     item = loader(parsed_item)
 
