@@ -120,9 +120,7 @@ class ExecutionSpecificationItem(
         super().save(save_func)
 
     def load(self, name, value):
-        if name == "matrix":
-            self.matrix.set(*ast.literal_eval(value))
-        elif name == "points":
+        if name == "points":
             points = ast.literal_eval(value)
             for h, p in zip(self._handles, points):
                 h.pos = p
