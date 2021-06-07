@@ -68,10 +68,10 @@ class ExecutionSpecificationItem(
             constraint(horizontal=(ne, ht.pos)),
             constraint(horizontal=(sw, hb.pos)),
             constraint(horizontal=(se, hb.pos)),
-            constraint(vertical=(nw, ht.pos), delta=-r),
-            constraint(vertical=(ne, ht.pos), delta=r),
-            constraint(vertical=(sw, hb.pos), delta=-r),
-            constraint(vertical=(se, hb.pos), delta=r),
+            constraint(vertical=(nw, ht.pos), delta=r),
+            constraint(vertical=(ne, ht.pos), delta=-r),
+            constraint(vertical=(sw, hb.pos), delta=r),
+            constraint(vertical=(se, hb.pos), delta=-r),
         ):
             self._connections.add_constraint(self, c)
 
@@ -130,6 +130,15 @@ class ExecutionSpecificationItem(
             self._load_head_connection = value
         else:
             super().load(name, value)
+        if name == "points":
+            # Fix ports, so connections are made properly
+            pl, pr = self._ports
+            ht, hb = self._handles
+            r = self.bar_width / 2
+            pl.start.y = pr.start.y = ht.pos.y
+            pl.end.y = pr.end.y = hb.pos.y
+            pl.start.x = pl.end.x = ht.pos.x - r
+            pr.start.x = pr.end.x = ht.pos.x + r
 
     def postload(self):
         if hasattr(self, "_load_head_connection"):
