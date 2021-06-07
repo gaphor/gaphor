@@ -150,9 +150,7 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
         super().save(save_func)
 
     def load(self, name, value):
-        if name == "matrix":
-            self.matrix.set(*ast.literal_eval(value))
-        elif name == "width":
+        if name == "width":
             self.width = ast.literal_eval(value)
         elif name == "height":
             self.height = ast.literal_eval(value)
@@ -298,9 +296,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         save_connection("tail-connection", self.tail)
 
     def load(self, name, value):
-        if name == "matrix":
-            self.matrix.set(*ast.literal_eval(value))
-        elif name == "points":
+        if name == "points":
             points = ast.literal_eval(value)
             for _ in range(len(points) - 2):
                 h = Handle((0, 0))

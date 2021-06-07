@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import logging
 from typing import TYPE_CHECKING, Generic, TypeVar
 
@@ -71,9 +72,22 @@ class Presentation(Matrices, Element, Generic[S]):
         self._watcher.watch(path, handler)
         return self
 
+    def load(self, name, value):
+        if name == "matrix":
+            self.matrix.set(*ast.literal_eval(value))
+        elif name == "parent":
+            if self.parent and self.parent is not value:
+                raise ValueError(f"Parent can not be set twice on {self}")
+            super().load(name, value)
+            self.parent.matrix_i2c.add_handler(self._on_matrix_changed)
+            self._on_matrix_changed(None, ())
+        else:
+            super().load(name, value)
+
     def postload(self):
         super().postload()
         if self.parent:
+            # Set handler here again, for old models
             self.parent.matrix_i2c.add_handler(self._on_matrix_changed)
 
     def unlink(self):
