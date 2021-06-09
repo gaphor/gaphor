@@ -2,7 +2,6 @@
 
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.diagram import PseudoCanvas
 
 
 def orphan_references(factory):
@@ -37,24 +36,6 @@ def orphan_references(factory):
             verify_reference(name, value)
         elif isinstance(value, collection):
             verify_collection(name, value)
-        elif isinstance(value, PseudoCanvas):
-            value.save(verify_canvas)
-
-    def verify_canvas(value):
-        elements.add(value.id)
-        value.save(verify_canvasitem)
-        for child in value.children:
-            verify_canvas(child)
-
-    def verify_canvasitem(name, value):
-        """Verify attributes and references in a gaphor.diagram.* object.
-
-        The extra attribute referenced can be used to force UML.
-        """
-        if isinstance(value, collection):
-            verify_collection(name, value)
-        elif isinstance(value, Element):
-            verify_reference(name, value)
 
     for e in list(factory.values()):
         assert e.id

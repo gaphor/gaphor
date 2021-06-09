@@ -26,8 +26,9 @@ log = logging.getLogger(__name__)
 class UnlinkEvent:
     """Used to tell event handlers this element should be unlinked."""
 
-    def __init__(self, element: Element):
+    def __init__(self, element: Element, diagram: Optional[Diagram] = None):
         self.element = element
+        self.diagram = diagram
 
 
 Id = str
@@ -115,7 +116,9 @@ class Element:
         The unlink lock is acquired while unlinking this elements
         properties to avoid recursion problems.
         """
+        self.inner_unlink(UnlinkEvent(self))
 
+    def inner_unlink(self, unlink_event):
         if self._unlink_lock:
             return
 
@@ -126,7 +129,8 @@ class Element:
                 prop.unlink(self)
 
             log.debug("unlinking %s", self)
-            self.handle(UnlinkEvent(self))
+            self.handle(unlink_event)
+            self._model = None
         finally:
             self._unlink_lock -= 1
 

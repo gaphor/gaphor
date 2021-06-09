@@ -68,8 +68,8 @@ class TestStorage:
 
         assert "<Diagram " in out.data
         assert "<Comment " in out.data
-        assert "<canvas>" in out.data
-        assert ' type="CommentItem"' in out.data, out.data
+        assert "<canvas>" not in out.data
+        assert "<CommentItem " in out.data, out.data
 
     def test_load_uml(self, case):
         """Test loading of a freshly saved model."""
@@ -101,7 +101,7 @@ class TestStorage:
         data = case.save()
         case.load(data)
 
-        assert len(case.element_factory.lselect()) == 6
+        assert len(case.element_factory.lselect()) == 9
         assert len(case.element_factory.lselect(UML.Package)) == 1
         assert len(case.element_factory.lselect(UML.Diagram)) == 1
         d = case.element_factory.lselect(UML.Diagram)[0]
@@ -163,7 +163,7 @@ class TestStorage:
         data = case.save()
         case.load(data)
 
-        assert len(case.element_factory.lselect()) == 5
+        assert len(case.element_factory.lselect()) == 8
         assert len(case.element_factory.lselect(UML.Package)) == 1
         assert len(case.element_factory.lselect(UML.Diagram)) == 1
         d = case.element_factory.lselect(UML.Diagram)[0]

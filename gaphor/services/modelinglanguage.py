@@ -68,9 +68,6 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
     def lookup_element(self, name):
         return self.first(lambda provider: provider.lookup_element(name))
 
-    def lookup_diagram_item(self, name):
-        return self.first(lambda provider: provider.lookup_diagram_item(name))
-
     def first(self, predicate):
         for _, provider in self._modeling_languages.items():
             type = predicate(provider)

@@ -18,7 +18,7 @@ class UMLModelingLanguage(ModelingLanguage):
         return uml_toolbox_actions
 
     def lookup_element(self, name):
-        return getattr(uml, name, None)
-
-    def lookup_diagram_item(self, name):
-        return getattr(diagramitems, name, None)
+        element_type = getattr(uml, name, None)
+        if not element_type:
+            element_type = getattr(diagramitems, name, None)
+        return element_type

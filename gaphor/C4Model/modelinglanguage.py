@@ -20,7 +20,7 @@ class C4ModelLanguage(ModelingLanguage):
         return c4model_toolbox_actions  # type: ignore[no-any-return]
 
     def lookup_element(self, name):
-        return getattr(c4model, name, None)
-
-    def lookup_diagram_item(self, name):
-        return getattr(diagramitems, name, None)
+        element_type = getattr(c4model, name, None)
+        if not element_type:
+            element_type = getattr(diagramitems, name, None)
+        return element_type

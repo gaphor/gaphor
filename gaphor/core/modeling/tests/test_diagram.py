@@ -38,7 +38,7 @@ def test_canvas_is_saved():
     saved_keys = []
     diagram.save(lambda name, val: saved_keys.append(name))
 
-    assert "canvas" in saved_keys
+    assert "canvas" not in saved_keys
 
 
 def test_canvas_item_is_created(element_factory):

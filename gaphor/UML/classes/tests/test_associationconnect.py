@@ -49,7 +49,7 @@ def test_association_item_connect(connected_association, element_factory):
     asc, c1, c2 = connected_association
 
     # Diagram, Class *2, Property *2, Association
-    assert len(element_factory.lselect()) == 6
+    assert len(element_factory.lselect()) == 9
     assert asc.head_subject is not None
     assert asc.tail_subject is not None
 

@@ -150,9 +150,7 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
         super().save(save_func)
 
     def load(self, name, value):
-        if name == "matrix":
-            self.matrix.set(*ast.literal_eval(value))
-        elif name == "width":
+        if name == "width":
             self.width = ast.literal_eval(value)
         elif name == "height":
             self.height = ast.literal_eval(value)
@@ -298,9 +296,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         save_connection("tail-connection", self.tail)
 
     def load(self, name, value):
-        if name == "matrix":
-            self.matrix.set(*ast.literal_eval(value))
-        elif name == "points":
+        if name == "points":
             points = ast.literal_eval(value)
             for _ in range(len(points) - 2):
                 h = Handle((0, 0))
@@ -317,6 +313,8 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
             super().load(name, value)
 
     def postload(self):
+        super().postload()
+
         if self.orthogonal:
             self._set_orthogonal(self.orthogonal)
 
@@ -329,8 +327,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
             postload_connect(self, self.tail, self._load_tail_connection)
             assert self._connections.get_connection(self.tail)
             del self._load_tail_connection
-
-        super().postload()
 
     def _on_orthogonal(self, event):
         self._set_orthogonal(event.new_value)

@@ -26,4 +26,4 @@ def test_elements(name):
 def test_diagram_items(name):
     ml = C4ModelLanguage()
 
-    assert ml.lookup_diagram_item(name)
+    assert ml.lookup_element(name)

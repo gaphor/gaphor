@@ -34,7 +34,7 @@ def test_line_create(diagram, undo_manager, event_manager, caplog):
 
 def test_line_delete(diagram, undo_manager, event_manager):
     with Transaction(event_manager):
-        line = LinePresentation(diagram)
+        line = diagram.create(LinePresentation)
         line.insert_handle(1, Handle((20, 20)))
         line.matrix.translate(10, 10)
 

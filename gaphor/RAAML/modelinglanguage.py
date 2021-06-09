@@ -20,7 +20,7 @@ class RAAMLModelingLanguage(ModelingLanguage):
         return raaml_toolbox_actions
 
     def lookup_element(self, name):
-        return getattr(raaml, name, None)
-
-    def lookup_diagram_item(self, name):
-        return getattr(diagramitems, name, None)
+        element_type = getattr(raaml, name, None)
+        if not element_type:
+            element_type = getattr(diagramitems, name, None)
+        return element_type

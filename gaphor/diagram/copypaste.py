@@ -212,7 +212,7 @@ def _paste_all(copy_data: CopyData, diagram, lookup) -> Set[Presentation]:
             return new_elements[ref]
 
         looked_up = lookup(ref)
-        if looked_up:
+        if looked_up and not isinstance(looked_up, Presentation):
             return looked_up
 
         elif ref in copy_data.elements:

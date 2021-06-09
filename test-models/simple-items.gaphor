@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.4.1">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.5.0">
 <Package id="DCE:658E43CC-3A1D-11DC-8B61-000D93868322">
 <name>
 <val>New model</val>
@@ -24,8 +24,8 @@
 <ref refid="DCE:68ECCFB2-3A1D-11DC-8B61-000D93868322"/>
 </reflist>
 </ownedPresentation>
-<canvas>
-<item id="DCE:6719E9C4-3A1D-11DC-8B61-000D93868322" type="Line">
+</Diagram>
+<Line id="DCE:6719E9C4-3A1D-11DC-8B61-000D93868322">
 <diagram>
 <ref refid="DCE:658E851A-3A1D-11DC-8B61-000D93868322"/>
 </diagram>
@@ -41,8 +41,8 @@
 <points>
 <val>[(0.0, 0.0), (93.0, -2.0), (87.0, 83.0)]</val>
 </points>
-</item>
-<item id="DCE:680E2142-3A1D-11DC-8B61-000D93868322" type="Box">
+</Line>
+<Box id="DCE:680E2142-3A1D-11DC-8B61-000D93868322">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 215.0, 121.0)</val>
 </matrix>
@@ -55,8 +55,8 @@
 <diagram>
 <ref refid="DCE:658E851A-3A1D-11DC-8B61-000D93868322"/>
 </diagram>
-</item>
-<item id="DCE:68ECCFB2-3A1D-11DC-8B61-000D93868322" type="Ellipse">
+</Box>
+<Ellipse id="DCE:68ECCFB2-3A1D-11DC-8B61-000D93868322">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 332.0, 137.0)</val>
 </matrix>
@@ -69,9 +69,7 @@
 <diagram>
 <ref refid="DCE:658E851A-3A1D-11DC-8B61-000D93868322"/>
 </diagram>
-</item>
-</canvas>
-</Diagram>
+</Ellipse>
 <StyleSheet id="d8c43f36-c545-11ea-9af2-f5ca580d221e">
 <styleSheet>
 <val>diagram {
