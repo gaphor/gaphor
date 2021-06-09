@@ -5,4 +5,5 @@ from gaphor.SysML.requirements.relationships import DirectedRelationshipProperty
 
 @represents(raaml.RelevantTo)
 class RelevantToItem(DirectedRelationshipPropertyPathItem):
+
     relation_type = "relevantTo"
