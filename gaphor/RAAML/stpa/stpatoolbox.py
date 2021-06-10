@@ -83,21 +83,29 @@ stpa = ToolSection(
             gettext("Controller"),
             "gaphor-controller-symbolic",
             "w",
-            new_item_factory(uml_items.ClassItem),
+            new_item_factory(
+                sysml_items.PropertyItem, raaml.Controller, config_func=namespace_config
+            ),
         ),
         ToolDef(
             "actuator",
             gettext("Actuator"),
             "gaphor-actuator-symbolic",
             "q",
-            new_item_factory(uml_items.ClassItem),
+            new_item_factory(
+                sysml_items.PropertyItem, raaml.Actuator, config_func=namespace_config
+            ),
         ),
         ToolDef(
             "controlled-process",
             gettext("Controlled Process"),
             "gaphor-controlled-process-symbolic",
             "<Shift>P",
-            new_item_factory(uml_items.ClassItem),
+            new_item_factory(
+                sysml_items.PropertyItem,
+                raaml.ControlledProcess,
+                config_func=namespace_config,
+            ),
         ),
         ToolDef(
             "abstract-operational-situation",
