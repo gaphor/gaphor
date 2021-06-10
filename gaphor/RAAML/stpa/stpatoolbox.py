@@ -42,7 +42,7 @@ stpa = ToolSection(
             "loss",
             gettext("Loss"),
             "gaphor-loss-symbolic",
-            "",
+            "<Shift>L",
             new_item_factory(
                 sysml_items.BlockItem, raaml.Loss, config_func=loss_config
             ),
@@ -51,7 +51,7 @@ stpa = ToolSection(
             "hazard",
             gettext("Hazard"),
             "gaphor-hazard-symbolic",
-            "",
+            "<Shift>H",
             new_item_factory(
                 sysml_items.BlockItem, raaml.Hazard, config_func=hazard_config
             ),
@@ -60,7 +60,7 @@ stpa = ToolSection(
             "situation",
             gettext("Situation"),
             "gaphor-situation-symbolic",
-            "",
+            "s",
             new_item_factory(
                 sysml_items.BlockItem,
                 raaml.Situation,
@@ -71,7 +71,7 @@ stpa = ToolSection(
             "control-structure",
             gettext("Control Structure"),
             "gaphor-control-structure-symbolic",
-            "",
+            "f",
             new_item_factory(
                 sysml_items.BlockItem,
                 raaml.ControlStructure,
@@ -82,28 +82,28 @@ stpa = ToolSection(
             "controller",
             gettext("Controller"),
             "gaphor-controller-symbolic",
-            "",
+            "w",
             new_item_factory(uml_items.ClassItem),
         ),
         ToolDef(
             "actuator",
             gettext("Actuator"),
             "gaphor-actuator-symbolic",
-            "",
+            "q",
             new_item_factory(uml_items.ClassItem),
         ),
         ToolDef(
             "controlled-process",
             gettext("Controlled Process"),
             "gaphor-controlled-process-symbolic",
-            "",
+            "<Shift>P",
             new_item_factory(uml_items.ClassItem),
         ),
         ToolDef(
-            "abstraction-operational-situation",
+            "abstract-operational-situation",
             gettext("Abstract Operational Situation"),
             "gaphor-abstract-operational-situation-symbolic",
-            "",
+            "<Shift>J",
             new_item_factory(
                 diagramitems.OperationalSituationItem,
                 raaml.AbstractOperationalSituation,
@@ -114,7 +114,7 @@ stpa = ToolSection(
             "operational-situation",
             gettext("Operational Situation"),
             "gaphor-operational-situation-symbolic",
-            "",
+            "<Shift>O",
             new_item_factory(
                 diagramitems.OperationalSituationItem,
                 raaml.OperationalSituation,
@@ -125,7 +125,7 @@ stpa = ToolSection(
             "unsafe-control-action",
             gettext("Unsafe Control Action"),
             "gaphor-unsafe-control-action-symbolic",
-            "",
+            "u",
             new_item_factory(
                 diagramitems.UnsafeControlActionItem,
                 raaml.UnsafeControlAction,
@@ -136,7 +136,7 @@ stpa = ToolSection(
             "relevant-to",
             gettext("Relevant To"),
             "gaphor-relevant-to-symbolic",
-            "",
+            "r",
             new_item_factory(
                 diagramitems.RelevantToItem,
                 raaml.RelevantTo,
@@ -146,7 +146,7 @@ stpa = ToolSection(
             "control-action",
             gettext("Control Action"),
             "gaphor-control-action-symbolic",
-            "",
+            "<Shift>M",
             new_item_factory(
                 diagramitems.ControlActionItem,
                 raaml.ControlAction,

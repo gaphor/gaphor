@@ -47,7 +47,7 @@ fta = ToolSection(
             "seq",
             gettext("Sequence Enforcing (SEQ) Gate"),
             "gaphor-seq-symbolic",
-            "s",
+            "<Shift>S",
             new_item_factory(
                 diagramitems.SEQItem, raaml.SEQ, config_func=namespace_config
             ),
@@ -129,7 +129,7 @@ fta = ToolSection(
             "undeveloped-event",
             gettext("Undeveloped Event"),
             "gaphor-undeveloped-event-symbolic",
-            "u",
+            "<Shift>U",
             new_item_factory(
                 diagramitems.UndevelopedEventItem,
                 raaml.Undeveloped,
