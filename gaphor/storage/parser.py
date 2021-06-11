@@ -277,9 +277,7 @@ class GaphorLoader(handler.ContentHandler):
 
     def startElementNS(self, name, qname, attrs):
         if not name[0] or name[0] == XMLNS:
-            a = {}
-            for key, val in list(attrs.items()):
-                a[key[1]] = val
+            a = {key[1]: val for key, val in list(attrs.items())}
             self.startElement(name[1], a)
 
     def endElementNS(self, name, qname):
