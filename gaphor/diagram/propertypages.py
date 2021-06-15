@@ -295,3 +295,47 @@ class LineStylePage(PropertyPageBase):
     def _on_horizontal_change(self, button):
         self.item.horizontal = button.get_active()
         self.item.diagram.update_now((self.item,))
+
+
+@PropertyPages.register(Element)
+class NotePropertyPage(PropertyPageBase):
+    """A facility to add a little note/remark."""
+
+    order = 300
+
+    def __init__(self, subject):
+        self.subject = subject
+        self.watcher = subject and subject.watcher()
+
+    def construct(self):
+        subject = self.subject
+
+        if not subject:
+            return
+
+        builder = new_builder("note-editor")
+        text_view = builder.get_object("note")
+
+        buffer = Gtk.TextBuffer()
+        if subject.note:
+            buffer.set_text(subject.note)
+        text_view.set_buffer(buffer)
+
+        changed_id = buffer.connect("changed", self._on_body_change)
+
+        def handler(event):
+            if not text_view.props.has_focus:
+                buffer.handler_block(changed_id)
+                buffer.set_text(event.new_value or "")
+                buffer.handler_unblock(changed_id)
+
+        self.watcher.watch("note", handler)
+        text_view.connect("destroy", self.watcher.unsubscribe_all)
+
+        return builder.get_object("note-editor")
+
+    @transactional
+    def _on_body_change(self, buffer):
+        self.subject.note = buffer.get_text(
+            buffer.get_start_iter(), buffer.get_end_iter(), False
+        )
