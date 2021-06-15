@@ -9,12 +9,10 @@ __all__ = ["load", "save"]
 import io
 import logging
 import os.path
-import uuid
 from functools import partial
 
 from gaphor import application
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.stylesheet import StyleSheet
@@ -203,47 +201,16 @@ def _load_elements_and_canvasitems(
         else:
             elem.element = factory.create_as(cls, elem.id)
 
-    def create_canvasitems(diagram, canvasitems, parent=None):
-        """Diagram is a Core Diagram, items is a list of
-        parser.canvasitem's."""
-        if version_lower_than(gaphor_version, (1, 1, 0)):
-            new_canvasitems = upgrade_message_item_to_1_1_0(canvasitems)
-            canvasitems.extend(new_canvasitems)
-            for item in new_canvasitems:
-                elements[item.id] = item
-
-        for item in canvasitems:
-            item = upgrade_canvas_item_to_1_0_2(item)
-            item = upgrade_canvas_item_to_1_3_0(item)
-            if version_lower_than(gaphor_version, (1, 1, 0)):
-                item = upgrade_presentation_item_to_1_1_0(item)
-            item = upgrade_implementation_item_to_interface_realization_item(item)
-            item = upgrade_c4_diagram_item_name(item)
-            cls = modeling_language.lookup_element(item.type)
-            assert cls, f"No diagram item for type {item.type}"
-            item.element = diagram.create_as(cls, item.id, parent=parent)
-            create_canvasitems(diagram, item.canvasitems, parent=item.element)
-
     for id, elem in list(elements.items()):
         yield from update_status_queue()
-        if isinstance(elem, parser.element):
-            create_element(elem)
-            if version_lower_than(gaphor_version, (2, 5, 0)) and isinstance(
-                elem.element, Diagram
-            ):
-                assert elem.canvas
-                create_canvasitems(elem.element, elem.canvas.canvasitems)
-        elif not isinstance(elem, parser.canvasitem):
-            raise ValueError(
-                f"Item with id {id} and type {type(elem)} can not be instantiated"
-            )
+        create_element(elem)
 
 
 def _load_attributes_and_references(elements, update_status_queue):
     for id, elem in list(elements.items()):
         yield from update_status_queue()
         # Ensure that all elements have their element instance ready...
-        assert hasattr(elem, "element")
+        assert elem.element
 
         # load attributes and references:
         for name, value in list(elem.values.items()):
@@ -340,90 +307,11 @@ def version_lower_than(gaphor_version, version):
     return tuple(map(int, parts[:2])) < version[:2]
 
 
-def upgrade_canvas_item_to_1_0_2(item):
-    if item.type == "MetaclassItem":
-        item.type = "ClassItem"
-    elif item.type == "SubsystemItem":
-        item.type = "ComponentItem"
-    return item
-
-
-def upgrade_presentation_item_to_1_1_0(item):
-    if "show_stereotypes_attrs" in item.values:
-        if item.type in (
-            "ClassItem",
-            "InterfaceItem",
-            "ArtifactItem",
-            "ComponentItem",
-            "NodeItem",
-        ):
-            item.values["show_stereotypes"] = item.values["show_stereotypes_attrs"]
-        del item.values["show_stereotypes_attrs"]
-
-    if "drawing-style" in item.values:
-        if item.type == "InterfaceItem":
-            item.values["folded"] = "1" if item.values["drawing-style"] == "3" else "0"
-        del item.values["drawing-style"]
-
-    if "show-attributes" in item.values and item.type in ("ClassItem", "InterfaceItem"):
-        item.values["show_attributes"] = item.values["show-attributes"]
-        del item.values["show-attributes"]
-
-    if "show-operations" in item.values and item.type in ("ClassItem", "InterfaceItem"):
-        item.values["show_operations"] = item.values["show-operations"]
-        del item.values["show-operations"]
-
-    return item
-
-
-def clone_canvasitem(item, subject_id):
-    assert not item.canvasitems, "Can not clone a canvas item with children"
-    assert isinstance(item.references["subject"], str)
-    new_item = parser.canvasitem(str(uuid.uuid1()), item.type)
-    new_item.values = dict(item.values)
-    new_item.references = dict(item.references)
-    new_item.references["subject"] = subject_id
-    return new_item
-
-
 # since 2.2.0
 def upgrade_ensure_style_sheet_is_present(factory):
     style_sheet = next(factory.select(StyleSheet), None)
     if not style_sheet:
         factory.create(StyleSheet)
-
-
-def upgrade_message_item_to_1_1_0(canvasitems):
-    """Create new MessageItem's for each `message` and `inverted` message."""
-    new_canvasitems = []
-    for item in canvasitems:
-        if item.type == "MessageItem" and item.references.get("subject"):
-            messages = item.references.get("message", [])
-            inverted = item.references.get("inverted", [])
-            if messages:
-                del item.references["message"]
-            if inverted:
-                del item.references["inverted"]
-            for m_id in messages:
-                new_item = clone_canvasitem(item, m_id)
-                new_canvasitems.append(new_item)
-            for m_id in inverted:
-                new_item = clone_canvasitem(item, m_id)
-                new_canvasitems.append(new_item)
-                (
-                    new_item.references["head-connection"],
-                    new_item.references["tail-connection"],
-                ) = (
-                    new_item.references["tail-connection"],
-                    new_item.references["head-connection"],
-                )
-    return new_canvasitems
-
-
-def upgrade_canvas_item_to_1_3_0(item):
-    if item.type in ("InitialPseudostateItem", "HistoryPseudostateItem"):
-        item.type = "PseudostateItem"
-    return item
 
 
 # since 2.1.0
@@ -454,13 +342,6 @@ def upgrade_implementation_to_interface_realization(elem):
 
 
 # since 2.3.0
-def upgrade_implementation_item_to_interface_realization_item(item):
-    if item.type == "ImplementationItem":
-        item.type = "InterfaceRealizationItem"
-    return item
-
-
-# since 2.3.0
 def upgrade_feature_parameters_to_owned_parameter(elem):
     formal_params = []
     return_results = []
@@ -483,13 +364,6 @@ def upgrade_parameter_owner_formal_param(elem):
             del elem.references["ownerReturnParam"]
             break
     return elem
-
-
-# since 2.4.3
-def upgrade_c4_diagram_item_name(item):
-    if item.type == "C4ContainerDatabaseItem":
-        item.type = "C4DatabaseItem"
-    return item
 
 
 # since 2.5.0
