@@ -38,6 +38,8 @@ def add_tag_is_foo_metadata_field(e, factory):
         ("- myattr:int[0..1]", "- myattr: int[0..1]"),
         ("/myattr:int", "+ /myattr: int"),
         ("myattr:int=3", "+ myattr: int = 3"),
+        ("myattr: int#some note", "+ myattr: int # some note"),
+        ("# myattr:int=3 #some note", "# myattr: int = 3 # some note"),
     ],
 )
 def test_attribute(factory, text, formatted_text):
@@ -45,7 +47,7 @@ def test_attribute(factory, text, formatted_text):
     a = factory.create(UML.Property)
     parse(a, text)
 
-    assert formatted_text == format(a)
+    assert formatted_text == format(a, note=True)
 
 
 def test_attribute_with_applied_stereotype(factory):
@@ -110,6 +112,7 @@ def test_association_end_with_applied_stereotype(factory):
             "- myoper(in p1: str[2], in p2: int[1..*])",
         ),
         ("+ (param: str): int", "+ (param: str): int"),
+        ("+ myoper(param: str): int#a note", "+ myoper(in param: str): int # a note"),
     ],
 )
 def test_operation(factory, text, formatted_text):
@@ -117,7 +120,7 @@ def test_operation(factory, text, formatted_text):
     o = factory.create(UML.Operation)
     parse(o, text)
 
-    assert formatted_text == format(o)
+    assert formatted_text == format(o, note=True)
 
 
 def test_slot(factory):

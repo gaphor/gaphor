@@ -59,7 +59,7 @@ def test_parse_property_complex(factory):
     """Test complex property parsing."""
     a = factory.create(UML.Property)
 
-    parse(a, '+ / name : str[0..*] = "aap" { static }')
+    parse(a, '+ / name : str[0..*] = "aap" { static }# and a note')
     assert "public" == a.visibility
     assert a.isDerived
     assert "name" == a.name
@@ -67,6 +67,7 @@ def test_parse_property_complex(factory):
     assert "0" == a.lowerValue
     assert "*" == a.upperValue
     assert '"aap"' == a.defaultValue
+    assert "and a note" == a.note
 
 
 def test_parse_property_with_space_in_name(factory):
@@ -77,6 +78,16 @@ def test_parse_property_with_space_in_name(factory):
     assert "public" == a.visibility
     assert "name with space" == a.name
     assert "str" == a.typeValue
+
+
+def test_parse_property_with_default_value_and_note(factory):
+    a = factory.create(UML.Property)
+
+    parse(a, "name=3 #note")
+
+    assert "name" == a.name
+    assert "3" == a.defaultValue
+    assert "note" == a.note
 
 
 def test_parse_property_invalid(factory):
@@ -161,6 +172,16 @@ def test_parse_association_end_with_type(factory):
     assert not p.defaultValue
 
 
+def test_parse_association_end_with_note(factory):
+    a = factory.create(UML.Association)
+    p = factory.create(UML.Property)
+    p.association = a
+
+    parse(p, "end # some note")
+    assert "end" == p.name
+    assert "some note" == p.note
+
+
 def test_parse_operation(factory):
     """Test parsing simple operation."""
     o = factory.create(UML.Operation)
@@ -221,3 +242,11 @@ def test_parse_operation_invalid_syntax(factory):
     o = factory.create(UML.Operation)
     parse(o, "- myfunc2: myType2")
     assert "- myfunc2: myType2" == o.name
+
+
+def test_parse_operation_with_note(factory):
+    """Test parsing simple operation."""
+    o = factory.create(UML.Operation)
+    parse(o, "myfunc() # and a note")
+    assert "myfunc" == o.name
+    assert "and a note" == o.note
