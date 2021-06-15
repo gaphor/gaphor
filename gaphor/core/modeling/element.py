@@ -11,7 +11,12 @@ from typing import TYPE_CHECKING, Callable, Iterator, Optional, Type, TypeVar, o
 from typing_extensions import Protocol
 
 from gaphor.core.modeling.event import ElementUpdated
-from gaphor.core.modeling.properties import relation_many, relation_one, umlproperty
+from gaphor.core.modeling.properties import (
+    attribute,
+    relation_many,
+    relation_one,
+    umlproperty,
+)
 
 if TYPE_CHECKING:
     from gaphor.core.modeling.coremodel import Comment
@@ -37,6 +42,7 @@ Id = str
 class Element:
     """Base class for all model data classes."""
 
+    note: attribute[str]
     appliedStereotype: relation_many[Element]
     comment: relation_many[Comment]
     directedRelationship: relation_many[Presentation]

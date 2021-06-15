@@ -31,6 +31,7 @@ class Comment(Element):
 # defined in gaphor.core.modeling.presentation
 
 
+Element.note = attribute("note", str)
 Diagram.name = attribute("name", str)
 Comment.body = attribute("body", str)
 # 12: override StyleSheet.styleSheet
