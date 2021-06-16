@@ -246,9 +246,7 @@ class ForkNodeItem(Presentation[UML.ForkNode], HandlePositionUpdate, Named):
         super().save(save_func)
 
     def load(self, name, value):
-        if name == "matrix":
-            self.matrix.set(*ast.literal_eval(value))
-        elif name == "height":
+        if name == "height":
             self._handles[1].pos.y = ast.literal_eval(value)
         else:
             super().load(name, value)

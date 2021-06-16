@@ -84,12 +84,6 @@ class Presentation(Matrices, Element, Generic[S]):
         else:
             super().load(name, value)
 
-    def postload(self):
-        super().postload()
-        if self.parent:
-            # Set handler here again, for old models
-            self.parent.matrix_i2c.add_handler(self._on_matrix_changed)
-
     def unlink(self):
         """Remove the item from the diagram and set subject to None."""
         self.inner_unlink(UnlinkEvent(self, diagram=self.diagram))

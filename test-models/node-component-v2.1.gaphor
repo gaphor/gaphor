@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.1.0">
+<Package id="c739f1a2-c7ab-11eb-8571-ab8ca2b4820a">
+<name>
+<val>New model</val>
+</name>
+<ownedClassifier>
+<reflist>
+<ref refid="cb45ceba-c7ab-11eb-8571-ab8ca2b4820a"/>
+<ref refid="cd4f6be4-c7ab-11eb-8571-ab8ca2b4820a"/>
+</reflist>
+</ownedClassifier>
+<ownedDiagram>
+<reflist>
+<ref refid="c739f684-c7ab-11eb-8571-ab8ca2b4820a"/>
+</reflist>
+</ownedDiagram>
+</Package>
+<Diagram id="c739f684-c7ab-11eb-8571-ab8ca2b4820a">
+<name>
+<val>main</val>
+</name>
+<package>
+<ref refid="c739f1a2-c7ab-11eb-8571-ab8ca2b4820a"/>
+</package>
+<canvas>
+<item id="cb46a5d8-c7ab-11eb-8571-ab8ca2b4820a" type="NodeItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 87.90625, 148.5390625)</val>
+</matrix>
+<width>
+<val>216.5703125</val>
+</width>
+<height>
+<val>197.1796875</val>
+</height>
+<subject>
+<ref refid="cb45ceba-c7ab-11eb-8571-ab8ca2b4820a"/>
+</subject>
+<item id="cd4fc33c-c7ab-11eb-8571-ab8ca2b4820a" type="ComponentItem">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 26.78515625, 73.58984375)</val>
+</matrix>
+<width>
+<val>163.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<subject>
+<ref refid="cd4f6be4-c7ab-11eb-8571-ab8ca2b4820a"/>
+</subject>
+</item>
+</item>
+</canvas>
+</Diagram>
+<StyleSheet id="c73a7d0c-c7ab-11eb-8571-ab8ca2b4820a">
+<styleSheet>
+<val>* {
+ background-color: transparent;
+ color: black;
+ font-family: sans;
+ font-size: 14;
+ highlight-color: rgba(0, 0, 255, 0.4);
+ line-width: 2;
+ padding: 0;
+}
+
+diagram {
+ background-color: white;
+ line-style: normal;
+ /* line-style: sloppy 0.3; */
+}
+</val>
+</styleSheet>
+</StyleSheet>
+<Node id="cb45ceba-c7ab-11eb-8571-ab8ca2b4820a">
+<name>
+<val>NewNode</val>
+</name>
+<ownedAttribute>
+<reflist>
+<ref refid="cd50d39e-c7ab-11eb-8571-ab8ca2b4820a"/>
+</reflist>
+</ownedAttribute>
+<ownedConnector>
+<reflist>
+<ref refid="cd514158-c7ab-11eb-8571-ab8ca2b4820a"/>
+</reflist>
+</ownedConnector>
+<package>
+<ref refid="c739f1a2-c7ab-11eb-8571-ab8ca2b4820a"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="cb46a5d8-c7ab-11eb-8571-ab8ca2b4820a"/>
+</reflist>
+</presentation>
+</Node>
+<Component id="cd4f6be4-c7ab-11eb-8571-ab8ca2b4820a">
+<name>
+<val>NewComponent</val>
+</name>
+<ownedAttribute>
+<reflist>
+<ref refid="cd50fd10-c7ab-11eb-8571-ab8ca2b4820a"/>
+</reflist>
+</ownedAttribute>
+<package>
+<ref refid="c739f1a2-c7ab-11eb-8571-ab8ca2b4820a"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="cd4fc33c-c7ab-11eb-8571-ab8ca2b4820a"/>
+</reflist>
+</presentation>
+</Component>
+<Property id="cd50d39e-c7ab-11eb-8571-ab8ca2b4820a">
+<aggregation>
+<val>composite</val>
+</aggregation>
+<class_>
+<ref refid="cb45ceba-c7ab-11eb-8571-ab8ca2b4820a"/>
+</class_>
+<end>
+<reflist>
+<ref refid="cd511a70-c7ab-11eb-8571-ab8ca2b4820a"/>
+</reflist>
+</end>
+</Property>
+<Property id="cd50fd10-c7ab-11eb-8571-ab8ca2b4820a">
+<class_>
+<ref refid="cd4f6be4-c7ab-11eb-8571-ab8ca2b4820a"/>
+</class_>
+<end>
+<reflist>
+<ref refid="cd512286-c7ab-11eb-8571-ab8ca2b4820a"/>
+</reflist>
+</end>
+</Property>
+<ConnectorEnd id="cd511a70-c7ab-11eb-8571-ab8ca2b4820a">
+<role>
+<ref refid="cd50d39e-c7ab-11eb-8571-ab8ca2b4820a"/>
+</role>
+</ConnectorEnd>
+<ConnectorEnd id="cd512286-c7ab-11eb-8571-ab8ca2b4820a">
+<role>
+<ref refid="cd50fd10-c7ab-11eb-8571-ab8ca2b4820a"/>
+</role>
+</ConnectorEnd>
+<Connector id="cd514158-c7ab-11eb-8571-ab8ca2b4820a">
+<end>
+<reflist>
+<ref refid="cd511a70-c7ab-11eb-8571-ab8ca2b4820a"/>
+<ref refid="cd512286-c7ab-11eb-8571-ab8ca2b4820a"/>
+</reflist>
+</end>
+<structuredClassifier>
+<ref refid="cb45ceba-c7ab-11eb-8571-ab8ca2b4820a"/>
+</structuredClassifier>
+</Connector>
+</gaphor>

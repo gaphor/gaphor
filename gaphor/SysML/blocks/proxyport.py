@@ -1,4 +1,3 @@
-import ast
 from typing import Optional
 
 from gaphas.connector import Handle, LinePort, Position
@@ -92,9 +91,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
         super().save(save_func)
 
     def load(self, name, value):
-        if name == "matrix":
-            self.matrix.set(*ast.literal_eval(value))
-        elif name == "connection":
+        if name == "connection":
             self._load_connection = value
         else:
             super().load(name, value)
