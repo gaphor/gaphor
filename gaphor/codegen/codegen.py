@@ -29,7 +29,9 @@ def main() -> None:
     if args.uml_profile:
         profile_coder.generate(args.modelfile, args.outfile, args.overrides)
     elif args.sysml_profile:
-        profile_coder.generate(args.modelfile, args.outfile, args.overrides, True)
+        profile_coder.generate(
+            args.modelfile, args.outfile, args.overrides, includes_sysml=True
+        )
     else:
         uml_coder.generate(args.modelfile, args.outfile, args.overrides)
     byte_compile([str(args.outfile)])
