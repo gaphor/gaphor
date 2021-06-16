@@ -37,9 +37,10 @@ class Ellipse(ElementPresentation):
     def draw(self, context):
         cr = context.cairo
 
+        x, y = self.handles()[0].pos
         rx = self.width / 2.0
         ry = self.height / 2.0
 
-        cr.move_to(self.width, ry)
-        path_ellipse(cr, rx, ry, self.width, self.height)
+        cr.move_to(x + self.width, y + ry)
+        path_ellipse(cr, x + rx, y + ry, self.width, self.height)
         stroke(context)
