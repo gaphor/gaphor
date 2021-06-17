@@ -44,6 +44,9 @@ rest_subpat = r"\s*(,\s*(?P<rest>.*))?"
 # Direction of a parameter (optional, default in) ::= 'in' | 'out' | 'inout'
 dir_subpat = r"\s*((?P<dir>in|out|inout)\s)?"
 
+# A note ::= '#' text
+note_subpat = r"\s*(#\s*(?P<note>.*))?"
+
 # Some trailing garbage => no valid syntax...
 garbage_subpat = r"\s*(?P<garbage>.*)"
 
@@ -63,6 +66,7 @@ attribute_pat = compile(
     + mult_subpat
     + default_subpat
     + tags_subpat
+    + note_subpat
     + garbage_subpat
 )
 
@@ -78,6 +82,7 @@ association_end_name_pat = compile(
     + mult_subpat
     + ")?"
     + tags_subpat
+    + note_subpat
     + garbage_subpat
 )
 
@@ -95,6 +100,7 @@ operation_pat = compile(
     + type_subpat
     + mult_subpat
     + tags_subpat
+    + note_subpat
     + garbage_subpat
 )
 
@@ -151,6 +157,8 @@ def parse_attribute(el: uml.Property, s: str) -> None:
             el.upperValue = None
         if el.defaultValue:
             el.defaultValue = None
+        if el.note:
+            el.note = None
     else:
         g = m.group
         _set_visibility(el, g("vis"))
@@ -160,6 +168,7 @@ def parse_attribute(el: uml.Property, s: str) -> None:
         el.lowerValue = g("mult_l")
         el.upperValue = g("mult_u")
         el.defaultValue = g("default")
+        el.note = g("note")
 
 
 def parse_association_end(el: uml.Property, s: str) -> None:
@@ -192,10 +201,12 @@ def parse_association_end(el: uml.Property, s: str) -> None:
             el.name = s
             del el.visibility
             del el.isDerived
+            del el.note
         else:
             _set_visibility(el, g("vis"))
             el.isDerived = g("derived") and True or False
             el.name = g("name")
+            el.note = g("note")
             # Optionally, the multiplicity and tagged values may be defined:
             if g("mult_l"):
                 el.lowerValue = g("mult_l")
@@ -232,6 +243,7 @@ def parse_operation(el: uml.Operation, s: str) -> None:
         create = el.model.create
         _set_visibility(el, g("vis"))
         el.name = g("name")
+        el.note = g("note")
 
         defined_params = set()
         if g("type"):

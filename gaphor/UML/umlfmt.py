@@ -20,6 +20,7 @@ def format_property(
     multiplicity=False,
     default=False,
     tags=False,
+    note=False,
 ):
     """Create a OCL representation of the attribute, Returns the attribute as a
     string. If one or more of the parameters (visibility, is_derived, type,
@@ -66,6 +67,10 @@ def format_property(
         slots = [format(slot) for slot in el.appliedStereotype[:].slot if slot]
         if slots:
             s.append(" { %s }" % ", ".join(slots))
+
+    if note and el.note:
+        s.append(f" # {el.note}")
+
     return "".join(s)
 
 
@@ -101,6 +106,7 @@ def format_operation(
     default=False,
     tags=False,
     direction=False,
+    note=False,
 ):
     """Create a OCL representation of the operation, Returns the operation as a
     string."""
@@ -138,6 +144,10 @@ def format_operation(
     rr = next((p for p in el.ownedParameter if p.direction == "return"), None)
     if rr:
         s.append(format(rr, type=type, multiplicity=multiplicity, default=default))
+
+    if note and el.note:
+        s.append(f" # {el.note}")
+
     return "".join(s)
 
 

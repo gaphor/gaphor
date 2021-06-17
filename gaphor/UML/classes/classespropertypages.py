@@ -55,7 +55,7 @@ class ClassAttributes(EditableTreeModel):
     def get_rows(self):
         for attr in self._item.subject.ownedAttribute:
             if not attr.association:
-                yield [format(attr), attr.isStatic, attr]
+                yield [format(attr, note=True), attr.isStatic, attr]
 
     def create_object(self):
         attr = self._item.model.create(UML.Property)
@@ -67,13 +67,13 @@ class ClassAttributes(EditableTreeModel):
         attr = row[-1]
         if col == 0:
             parse(attr, value)
-            row[0] = format(attr)
+            row[0] = format(attr, note=True)
         elif col == 1:
             attr.isStatic = not attr.isStatic
             row[1] = attr.isStatic
         elif col == 2:
             # Value in attribute object changed:
-            row[0] = format(attr)
+            row[0] = format(attr, note=True)
             row[1] = attr.isStatic
 
     def swap_objects(self, o1, o2):
@@ -92,7 +92,7 @@ class ClassOperations(EditableTreeModel):
     def get_rows(self):
         for operation in self._item.subject.ownedOperation:
             yield [
-                format(operation),
+                format(operation, note=True),
                 operation.isAbstract,
                 operation.isStatic,
                 operation,
@@ -108,7 +108,7 @@ class ClassOperations(EditableTreeModel):
         operation = row[-1]
         if col == 0:
             parse(operation, value)
-            row[0] = format(operation)
+            row[0] = format(operation, note=True)
         elif col == 1:
             operation.isAbstract = not operation.isAbstract
             row[1] = operation.isAbstract
@@ -116,7 +116,7 @@ class ClassOperations(EditableTreeModel):
             operation.isStatic = not operation.isStatic
             row[2] = operation.isStatic
         elif col == 3:
-            row[0] = format(operation)
+            row[0] = format(operation, note=True)
             row[1] = operation.isAbstract
             row[2] = operation.isStatic
 
@@ -335,7 +335,11 @@ class AttributesPage(PropertyPageBase):
             attribute = event.element
             for row in self.model:
                 if row[-1] is attribute:
-                    row[:] = [format(attribute), attribute.isStatic, attribute]
+                    row[:] = [
+                        format(attribute, note=True),
+                        attribute.isStatic,
+                        attribute,
+                    ]
 
         self.watcher.watch("ownedAttribute.name", handler).watch(
             "ownedAttribute.isDerived", handler
@@ -409,7 +413,7 @@ class OperationsPage(PropertyPageBase):
             for row in self.model:
                 if row[-1] is operation:
                     row[:] = [
-                        format(operation),
+                        format(operation, note=True),
                         operation.isAbstract,
                         operation.isStatic,
                         operation,

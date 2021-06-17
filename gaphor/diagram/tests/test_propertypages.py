@@ -1,5 +1,5 @@
 from gaphor.diagram.general import Line
-from gaphor.diagram.propertypages import LineStylePage
+from gaphor.diagram.propertypages import LineStylePage, NotePropertyPage
 from gaphor.diagram.tests.fixtures import find
 
 
@@ -22,3 +22,13 @@ def test_line_style_page_orientation(diagram):
     flip_orientation.set_active(True)
 
     assert item.horizontal
+
+
+def test_note_page(diagram):
+    item = diagram.create(Line)
+    property_page = NotePropertyPage(item)
+    widget = property_page.construct()
+    note = find(widget, "note")
+    note.get_buffer().set_text("A new note")
+
+    assert item.note == "A new note"
