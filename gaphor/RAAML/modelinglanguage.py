@@ -5,8 +5,7 @@ import gaphor.SysML.propertypages  # noqa
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
-from gaphor.RAAML import diagramitems
-from gaphor.RAAML import fta as raaml
+from gaphor.RAAML import diagramitems, raaml
 from gaphor.RAAML.toolbox import raaml_toolbox_actions
 
 

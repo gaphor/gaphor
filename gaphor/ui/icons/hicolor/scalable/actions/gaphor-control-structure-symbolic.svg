@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="16.000013"
+   height="16.000002"
+   viewBox="0 0 4.2333368 4.233334"
+   version="1.1"
+   id="svg4268">
+  <defs
+     id="defs4262" />
+  <metadata
+     id="metadata4265">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <path
+     style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000;stop-opacity:1;opacity:1"
+     d="M 0.26367188 0 A 0.26460996 0.26460996 0 0 0 0 0.26367188 L 0 3.96875 A 0.26460996 0.26460996 0 0 0 0.26367188 4.2324219 L 3.96875 4.2324219 A 0.26460996 0.26460996 0 0 0 4.2324219 3.96875 L 4.2324219 0.26367188 A 0.26460996 0.26460996 0 0 0 3.96875 0 L 0.26367188 0 z M 0.52929688 0.52929688 L 3.7050781 0.52929688 L 3.7050781 3.7050781 L 0.52929688 3.7050781 L 0.52929688 0.52929688 z "
+     id="rect618" />
+  <g
+     aria-label="CS"
+     id="text622"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+     transform="translate(-127,-44.714585)">
+    <path
+       d="m 128.43907,47.275291 q 0.11606,0 0.19755,-0.02716 0.084,-0.02963 0.11854,-0.06174 0.0346,-0.03457 0.0691,-0.06174 0.037,-0.02963 0.0692,-0.02963 0.0494,0 0.0864,0.03704 0.037,0.03704 0.037,0.08643 0,0.106186 -0.17039,0.204964 -0.16793,0.09878 -0.41487,0.09878 -0.31362,0 -0.52105,-0.182738 -0.20497,-0.185208 -0.20497,-0.466724 V 46.70979 q 0,-0.296333 0.19262,-0.496358 0.19262,-0.200024 0.47907,-0.200024 0.17286,0 0.35066,0.08396 l 0.0247,0.0099 q 0.042,-0.05927 0.10371,-0.05927 0.0716,0 0.0963,0.04198 0.0272,0.04198 0.0272,0.121003 v 0.207433 q 0,0.162983 -0.12348,0.162983 -0.0445,0 -0.0741,-0.0247 -0.0272,-0.02469 -0.0346,-0.04445 -0.005,-0.02222 -0.0123,-0.06174 -0.0148,-0.07408 -0.0914,-0.118533 -0.0741,-0.04692 -0.13829,-0.05927 -0.0642,-0.01235 -0.11853,-0.01235 -0.18768,0 -0.31115,0.12841 -0.12347,0.125942 -0.12347,0.321028 v 0.158044 q 0,0.185208 0.13088,0.296333 0.13335,0.111124 0.3556,0.111124 z"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       id="path1443" />
+    <path
+       d="m 130.26151,46.013408 q 0.0741,0 0.0963,0.04198 0.0247,0.04198 0.0247,0.121003 v 0.21731 q 0,0.165453 -0.121,0.165453 -0.0197,0 -0.037,-0.0025 -0.0148,-0.0049 -0.0272,-0.0099 -0.01,-0.0074 -0.0198,-0.01729 -0.01,-0.01235 -0.0148,-0.01976 -0.005,-0.0074 -0.01,-0.02222 -0.005,-0.01482 -0.007,-0.01976 0,-0.0074 -0.005,-0.02222 -0.002,-0.01729 -0.002,-0.01976 -0.0173,-0.07408 -0.0988,-0.118533 -0.079,-0.04692 -0.19508,-0.04692 -0.11607,0 -0.19756,0.05433 -0.0815,0.05433 -0.0815,0.13335 0,0.08396 0.0815,0.13088 0.0815,0.04445 0.19015,0.05927 0.10865,0.01235 0.242,0.04939 0.13335,0.03457 0.20991,0.09631 0.14569,0.116064 0.14569,0.30868 0,0.192616 -0.15557,0.311149 -0.15558,0.118533 -0.40993,0.118533 -0.20496,0 -0.38523,-0.09631 -0.0494,0.05927 -0.0988,0.05927 -0.12594,0 -0.12594,-0.162983 v -0.162983 q 0,-0.08149 0.0272,-0.121003 0.0272,-0.04198 0.0963,-0.04198 0.0222,0 0.0395,0.0049 0.0198,0.0049 0.0321,0.01482 0.0123,0.0099 0.0198,0.01976 0.01,0.0074 0.0148,0.02222 0.007,0.01482 0.01,0.02222 0.002,0.0074 0.005,0.01976 0.005,0.01235 0.005,0.01482 0.0173,0.06667 0.11854,0.113594 0.10124,0.04692 0.22471,0.04692 0.13829,0 0.23213,-0.05433 0.0938,-0.05433 0.0938,-0.13335 0,-0.07408 -0.0741,-0.118533 -0.0716,-0.04445 -0.16792,-0.05927 -0.0938,-0.01482 -0.22225,-0.04445 -0.12595,-0.02963 -0.2025,-0.07161 -0.0938,-0.05433 -0.14816,-0.145697 -0.0543,-0.09137 -0.0543,-0.197556 0,-0.187677 0.1531,-0.311149 0.15311,-0.125941 0.38277,-0.125941 0.19014,0 0.32102,0.08149 0.0198,-0.04692 0.0395,-0.06421 0.0198,-0.01729 0.0568,-0.01729 z"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.46944px;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       id="path1445" />
+  </g>
+</svg>
