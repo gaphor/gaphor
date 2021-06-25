@@ -442,6 +442,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "kainne44",
+      "name": "Matthew Maclaine",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50899654?v=4",
+      "profile": "https://github.com/kainne44",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
