@@ -1,3 +1,15 @@
+2.5.0
+-----
+- Add initial support for STPA in RAAML
+- Add support for notes in property pages and attributes
+- Allow for diagrams to be nested under all elements
+- Fix delete and undo of a diagram
+- Rename C4ContainerDatabaseItem to C4DatabaseItem
+- Cleanup model loading
+- Change diagram item management to the element factory
+- Organize and simplify element events
+- Cleanup toolbox and diagram action code
+
 2.4.2
 -----
 - Fix AttributeError when creating composite associations
