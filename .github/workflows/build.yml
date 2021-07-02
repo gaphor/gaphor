@@ -145,7 +145,8 @@ jobs:
           timestampUrl: http://timestamp.digicert.com
           installer: "packaging/dist/gaphor-${{ steps.meta.outputs.version }}-installer.exe"
           portable: "packaging/dist/gaphor-${{ steps.meta.outputs.version }}-portable.exe"
-        if: env.SECRETS_AVAILABLE != null && github.ref == 'refs/heads/master'
+          NOT_PR: ${{github.ref == 'refs/heads/master' || startsWith(github.ref, '/refs/tags/')}}
+        if: env.SECRETS_AVAILABLE != null && env.NOT_PR 
         shell: powershell
         run: |
           $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
@@ -182,6 +183,7 @@ jobs:
       LDFLAGS: -L/usr/local/opt/python@3.8/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.8/lib/pkgconfig:${PKG_CONFIG_PATH:-}
       SECRETS_AVAILABLE: ${{ secrets.SECRETS_AVAILABLE }}
+      NOT_PR: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, '/refs/tags/') }}
     steps:
       - uses: actions/checkout@v2.3.4
         with:
@@ -212,12 +214,12 @@ jobs:
           make all
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1.0.4
-        if: env.SECRETS_AVAILABLE != null && github.ref == 'refs/heads/master'
+        if: env.SECRETS_AVAILABLE != null && env.NOT_PR 
         with:
           p12-file-base64: ${{ secrets.BASE64_ENCODED_P12 }}
           p12-password: ${{ secrets.CERTPASSWORD_P12 }}
       - name: Sign app
-        if: env.SECRETS_AVAILABLE != null && github.ref == 'refs/heads/master'
+        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
         run: >
           cd packaging
 
@@ -226,14 +228,14 @@ jobs:
           -o runtime "dist/Gaphor.app"
       - name: Notarize app
         uses: devbotsxyz/xcode-notarize@v1
-        if: env.SECRETS_AVAILABLE != null && github.ref == 'refs/heads/master'
+        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor.app"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
           appstore-connect-password: ${{ secrets.AC_PASSWORD }}
       - name: Staple app
         uses: devbotsxyz/xcode-staple@v1
-        if: env.SECRETS_AVAILABLE != null && github.ref == 'refs/heads/master'
+        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor.app"
       - name: Create dmg
@@ -248,7 +250,7 @@ jobs:
           "dist/Gaphor.app"
       - name: Notarize dmg
         uses: devbotsxyz/xcode-notarize@v1
-        if: env.SECRETS_AVAILABLE != null && github.ref == 'refs/heads/master'
+        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
@@ -256,7 +258,7 @@ jobs:
           primary-bundle-id: org.gaphor.gaphor
       - name: Staple .dmg
         uses: devbotsxyz/xcode-staple@v1
-        if: env.SECRETS_AVAILABLE != null && github.ref == 'refs/heads/master'
+        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
       - name: Upload Gaphor-${{ steps.meta.outputs.version }}.dmg
