@@ -3,8 +3,8 @@
 ## Development Environment
 
 To setup a development environment in Windows:
-1) Install Git for Windows from https://gitforwindows.org
-1) Go to http://www.msys2.org/ and download the x86_64 installer
+1) Install [Git for Windows](https://gitforwindows.org)
+1) Go to [MSYS2 website](http://www.msys2.org) and download the x86_64 installer
 1) Follow the instructions on the page for setting up the basic environment
 1) Run `C:\msys64\mingw64.exe` - a terminal window should pop up
 
@@ -24,12 +24,6 @@ $ echo 'export PATH="/c/Program Files/Git/bin:$PATH"' >> ~/.bash_profile
 
 Restart your terminal.
 
-Install Poetry:
-
-```bash
-$ pip install poetry
-```
-
 [Clone the
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
@@ -40,8 +34,13 @@ $ python -m venv .venv
 $ source .venv/bin/activate
 ```
 
-Install Gaphor and give it a try:
+Install and configure Poetry:
+```bash
+$ pip install poetry wheel
+$ poetry config virtualenvs.create false
+```
 
+Install Gaphor and give it a try:
 ```bash
 $ poetry install
 $ poetry run gaphor
