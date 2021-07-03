@@ -8,7 +8,7 @@ import logging
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Iterable, Iterator, Optional, Sequence, Set, Type, TypeVar, Union
+from typing import Iterable, Iterator, Sequence, TypeVar
 
 import gaphas
 from typing_extensions import Protocol, runtime_checkable
@@ -119,7 +119,7 @@ def attrstr(obj):
 
 class StyledDiagram:
     def __init__(
-        self, diagram: Diagram, selection: Optional[gaphas.view.Selection] = None
+        self, diagram: Diagram, selection: gaphas.view.Selection | None = None
     ):
         self.diagram = diagram
         self.selection = selection or gaphas.view.Selection()
@@ -153,7 +153,7 @@ class StyledItem:
     """
 
     def __init__(
-        self, item: Presentation, selection: Optional[gaphas.view.Selection] = None
+        self, item: Presentation, selection: gaphas.view.Selection | None = None
     ):
         assert item.diagram
         self.item = item
@@ -163,7 +163,7 @@ class StyledItem:
     def name(self) -> str:
         return removesuffix(type(self.item).__name__, "Item").lower()
 
-    def parent(self) -> Union[StyledItem, StyledDiagram]:
+    def parent(self) -> StyledItem | StyledDiagram:
         parent = self.item.parent
         return (
             StyledItem(parent, self.selection)
@@ -204,9 +204,7 @@ class Diagram(Element):
     name: attribute[str]
     element: relation_one[Element]
 
-    def __init__(
-        self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None
-    ):
+    def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):
         """Initialize the diagram with an optional id and element model.
 
         The diagram also has a canvas.
@@ -216,7 +214,7 @@ class Diagram(Element):
         self._connections = gaphas.connections.Connections()
         self._connections.add_handler(self._on_constraint_solved)
 
-        self._registered_views: Set[gaphas.view.model.View] = set()
+        self._registered_views: set[gaphas.view.model.View] = set()
 
         self._watcher = self.watcher()
         self._watcher.watch("ownedPresentation", self._presentation_removed)
@@ -230,7 +228,7 @@ class Diagram(Element):
             self._update_views(removed_items=(event.old_value,))
 
     @property
-    def styleSheet(self) -> Optional[StyleSheet]:
+    def styleSheet(self) -> StyleSheet | None:
         return next(self.model.select(StyleSheet), None)
 
     def style(self, node: StyleNode) -> Style:
@@ -307,7 +305,7 @@ class Diagram(Element):
                 yield root
                 yield from iter_children(root)
 
-    def get_parent(self, item: Presentation) -> Optional[Presentation]:
+    def get_parent(self, item: Presentation) -> Presentation | None:
         return item.parent
 
     def get_children(self, item: Presentation) -> Iterable[Presentation]:
@@ -376,5 +374,5 @@ P = TypeVar("P", bound=Presentation)
 
 @runtime_checkable
 class PresentationRepositoryProtocol(Protocol):
-    def create_as(self, type: Type[P], id: str, diagram: Diagram) -> P:
+    def create_as(self, type: type[P], id: str, diagram: Diagram) -> P:
         ...

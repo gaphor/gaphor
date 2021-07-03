@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import List, Optional
-
 from gaphor.core import event_handler
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.collection import collectionlist
@@ -22,7 +20,7 @@ def test_association_1_x():
     # 1:-
     #
     class A(Element):
-        one: relation_one[Optional[B]]
+        one: relation_one[B | None]
 
     class B(Element):
         two: relation_one[A]
@@ -257,7 +255,7 @@ def test_association_swap():
     assert a.one[0] is b1
     assert a.one[1] is b2
 
-    events: List[object] = []
+    events: list[object] = []
 
     @event_handler(AssociationUpdated)
     def handler(event, events=events):

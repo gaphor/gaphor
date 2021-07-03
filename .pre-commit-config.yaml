@@ -32,3 +32,7 @@ repos:
   rev: v0.7.2.1
   hooks:
   - id: shellcheck
+- repo: https://github.com/asottile/pyupgrade
+  rev: v2.19.4
+  hooks:
+  - id: pyupgrade

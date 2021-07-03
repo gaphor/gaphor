@@ -8,7 +8,6 @@ normal properties.
 from __future__ import annotations
 
 import itertools
-from typing import List, Optional
 
 from gaphor.core.modeling.properties import derived
 from gaphor.UML import uml, umllex
@@ -33,7 +32,7 @@ def extension_metaclass(self):
 uml.Extension.metaclass = property(extension_metaclass, doc=extension_metaclass.__doc__)
 
 
-def property_opposite(self: uml.Property) -> List[Optional[uml.Property]]:
+def property_opposite(self: uml.Property) -> list[uml.Property | None]:
     """In the case where the property is one navigable end of a binary
     association with both ends navigable, this gives the other end.
 
@@ -52,7 +51,7 @@ def property_opposite(self: uml.Property) -> List[Optional[uml.Property]]:
 uml.Property.opposite = derived("opposite", uml.Property, 0, 1, property_opposite)
 
 
-def property_navigability(self: uml.Property) -> List[Optional[bool]]:
+def property_navigability(self: uml.Property) -> list[bool | None]:
     """Get navigability of an association end.
 
     If no association is related to the property, then unknown
@@ -103,7 +102,7 @@ def _pr_rc_interface_deps(component, dep_type):
     )
 
 
-def component_provided(self) -> List[uml.Realization]:
+def component_provided(self) -> list[uml.Realization]:
     """Interfaces provided to component environment."""
     implementations = (
         impl.contract[0]
@@ -122,7 +121,7 @@ def component_provided(self) -> List[uml.Realization]:
 uml.Component.provided = property(component_provided, doc=component_provided.__doc__)
 
 
-def component_required(self) -> List[uml.Usage]:
+def component_required(self) -> list[uml.Usage]:
     """Interfaces required by component."""
     usages = _pr_interface_deps(self, uml.Usage)
 

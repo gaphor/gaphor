@@ -8,8 +8,6 @@ and handles).
 
 from __future__ import annotations
 
-from typing import Optional
-
 from cairo import LINE_JOIN_ROUND
 
 from gaphor.core.modeling.diagram import DrawContext, StyledItem
@@ -21,7 +19,7 @@ TOLERANCE = 0.8
 
 
 class ItemPainter:
-    def __init__(self, selection: Optional[Selection] = None):
+    def __init__(self, selection: Selection | None = None):
         self.selection: Selection = selection or Selection()
 
     def paint_item(self, item, cairo):

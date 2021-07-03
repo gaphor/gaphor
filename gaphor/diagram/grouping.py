@@ -17,7 +17,6 @@ to be aware `AbstractGroup.item` can be null.
 from __future__ import annotations
 
 import abc
-from typing import Type
 
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
@@ -68,7 +67,7 @@ class NoGrouping(AbstractGroup):
         pass
 
 
-Group: FunctionDispatcher[Type[AbstractGroup]] = multidispatch(object, object)(
+Group: FunctionDispatcher[type[AbstractGroup]] = multidispatch(object, object)(
     NoGrouping
 )
 

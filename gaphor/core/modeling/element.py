@@ -6,7 +6,7 @@ from __future__ import annotations
 import logging
 import uuid
 from contextlib import contextmanager
-from typing import TYPE_CHECKING, Callable, Iterator, Optional, Type, TypeVar, overload
+from typing import TYPE_CHECKING, Callable, Iterator, TypeVar, overload
 
 from typing_extensions import Protocol
 
@@ -31,7 +31,7 @@ log = logging.getLogger(__name__)
 class UnlinkEvent:
     """Used to tell event handlers this element should be unlinked."""
 
-    def __init__(self, element: Element, diagram: Optional[Diagram] = None):
+    def __init__(self, element: Element, diagram: Diagram | None = None):
         self.element = element
         self.diagram = diagram
 
@@ -52,9 +52,7 @@ class Element:
     relationship: relation_many[Presentation]
     ownedDiagram: relation_many[Diagram]
 
-    def __init__(
-        self, id: Optional[Id] = None, model: Optional[RepositoryProtocol] = None
-    ):
+    def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):
         """Create an element. As optional parameters an id and model can be
         given.
 
@@ -153,7 +151,7 @@ class Element:
         else:
             return DummyEventWatcher()
 
-    def isKindOf(self, class_: Type[Element]) -> bool:
+    def isKindOf(self, class_: type[Element]) -> bool:
         """Returns true if the object is an instance of `class_`."""
         return isinstance(self, class_)
 
@@ -163,7 +161,7 @@ class Element:
 
 
 class DummyEventWatcher:
-    def watch(self, path: str, handler: Optional[Handler] = None) -> DummyEventWatcher:
+    def watch(self, path: str, handler: Handler | None = None) -> DummyEventWatcher:
         return self
 
     def unsubscribe_all(self) -> None:
@@ -176,10 +174,10 @@ Handler = Callable[[ElementUpdated], None]
 
 
 class RepositoryProtocol(Protocol):
-    def create(self, type: Type[T]) -> T:
+    def create(self, type: type[T]) -> T:
         ...
 
-    def create_as(self, type: Type[T], id: str) -> T:
+    def create_as(self, type: type[T], id: str) -> T:
         ...
 
     @overload
@@ -187,18 +185,18 @@ class RepositoryProtocol(Protocol):
         ...
 
     @overload
-    def select(self, expression: Type[T]) -> Iterator[T]:
+    def select(self, expression: type[T]) -> Iterator[T]:
         ...
 
     @overload
     def select(self, expression: None) -> Iterator[Element]:
         ...
 
-    def lookup(self, id: str) -> Optional[Element]:
+    def lookup(self, id: str) -> Element | None:
         ...
 
     def watcher(
-        self, element: Element, default_handler: Optional[Handler] = None
+        self, element: Element, default_handler: Handler | None = None
     ) -> EventWatcherProtocol:
         ...
 
@@ -211,9 +209,7 @@ class RepositoryProtocol(Protocol):
 
 
 class EventWatcherProtocol(Protocol):
-    def watch(
-        self, path: str, handler: Optional[Handler] = None
-    ) -> EventWatcherProtocol:
+    def watch(self, path: str, handler: Handler | None = None) -> EventWatcherProtocol:
         ...
 
     def unsubscribe_all(self) -> None:

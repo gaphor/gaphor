@@ -25,7 +25,7 @@ import io
 import logging
 import os
 from collections import OrderedDict
-from typing import IO, Dict, List, Optional, Tuple, Union
+from typing import IO
 from xml.sax import handler
 
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
@@ -39,8 +39,8 @@ class base:
     """Simple base class for element, and canvas."""
 
     def __init__(self):
-        self.values: Dict[str, str] = {}
-        self.references: Dict[str, Union[str, List[str]]] = {}
+        self.values: dict[str, str] = {}
+        self.references: dict[str, str | list[str]] = {}
 
     def __getattr__(self, key):
         try:
@@ -62,7 +62,7 @@ class base:
 
 
 class element(base):
-    def __init__(self, id: str, type: str, canvas: Optional[canvas] = None):
+    def __init__(self, id: str, type: str, canvas: canvas | None = None):
         base.__init__(self)
         self.id = id
         self.type = type
@@ -139,8 +139,8 @@ class GaphorLoader(handler.ContentHandler):
         """Start of document: all our attributes are initialized."""
         self.version = None
         self.gaphor_version = None
-        self.elements: Dict[str, Union[element]] = OrderedDict()
-        self._stack: List[Tuple[Union[element, canvas], State]] = []
+        self.elements: dict[str, element] = OrderedDict()
+        self._stack: list[tuple[element | canvas, State]] = []
         self.text = ""
         self._start_element_handlers = (
             self.start_element,
@@ -289,7 +289,7 @@ class GaphorLoader(handler.ContentHandler):
         self.text = self.text + content
 
 
-def parse(filename) -> Dict[str, element]:
+def parse(filename) -> dict[str, element]:
     """Parse a file and return a dictionary ID:element."""
     loader = GaphorLoader()
 
@@ -371,7 +371,7 @@ def parse_file(filename, parser):
     is_fd = True
 
     if isinstance(filename, io.IOBase):
-        file_obj: Union[IO, io.IOBase] = filename
+        file_obj: IO | io.IOBase = filename
     else:
         is_fd = False
         file_obj = open(filename, "r")

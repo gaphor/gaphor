@@ -8,7 +8,7 @@ classifiers are shown here.
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Optional, Set
+from typing import TYPE_CHECKING
 
 from gi.repository import Gdk, Gio, GLib, Gtk
 
@@ -80,10 +80,10 @@ class Namespace(UIComponent, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
 
-        self.model: Optional[NamespaceModel] = None
-        self.view: Optional[Gtk.TreeView] = None
-        self.scrolled_window: Optional[Gtk.ScrolledWindow] = None
-        self.ctrl: Set[Gtk.EventController] = set()
+        self.model: NamespaceModel | None = None
+        self.view: Gtk.TreeView | None = None
+        self.scrolled_window: Gtk.ScrolledWindow | None = None
+        self.ctrl: set[Gtk.EventController] = set()
 
     def open(self):
         self.model = NamespaceModel(self.event_manager, self.element_factory)
@@ -247,7 +247,7 @@ class Namespace(UIComponent, ActionProvider):
         self.view.scroll_to_cell(path, None, False, 0, 0)
         self._on_view_cursor_changed(self.view)
 
-    def get_selected_element(self) -> Optional[Element]:
+    def get_selected_element(self) -> Element | None:
         assert self.view
         selection = self.view.get_selection()
         model, iter = selection.get_selected()

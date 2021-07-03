@@ -6,7 +6,7 @@ gaphor.adapter package.
 
 from __future__ import annotations
 
-from typing import List, Optional, Type, TypeVar, Union
+from typing import TypeVar
 
 from gaphas.connections import Connection
 from gaphas.connector import Handle, Port
@@ -72,11 +72,11 @@ class BaseConnector:
         self.line = line
         self.diagram: Diagram = element.diagram
 
-    def get_connection(self, handle: Handle) -> Optional[Connection]:
+    def get_connection(self, handle: Handle) -> Connection | None:
         """Get connection information."""
         return self.diagram.connections.get_connection(handle)
 
-    def get_connected(self, handle: Handle) -> Optional[Presentation[Element]]:
+    def get_connected(self, handle: Handle) -> Presentation[Element] | None:
         """Get item connected to a handle."""
         cinfo = self.diagram.connections.get_connection(handle)
         if cinfo:
@@ -123,7 +123,7 @@ class NoConnector:
 
 # Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
 # This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
-Connector: FunctionDispatcher[Type[ConnectorProtocol]] = multidispatch(object, object)(
+Connector: FunctionDispatcher[type[ConnectorProtocol]] = multidispatch(object, object)(
     NoConnector
 )
 
@@ -143,8 +143,8 @@ class UnaryRelationshipConnect(BaseConnector):
     line: LinePresentation[Element]
 
     def relationship(
-        self, required_type: Type[Element], head: relation, tail: relation
-    ) -> Optional[Element]:
+        self, required_type: type[Element], head: relation, tail: relation
+    ) -> Element | None:
         """Find an existing relationship in the model that meets the required
         type and is connected to the same model element the head and tail of
         the line are connected to.
@@ -193,7 +193,7 @@ class UnaryRelationshipConnect(BaseConnector):
                     continue
 
             # Check for this entry on line.diagram
-            item: Union[ElementPresentation, LinePresentation]
+            item: ElementPresentation | LinePresentation
             for item in gen.presentation:
                 # Allow line to be returned. Avoids strange
                 # behaviour during loading
@@ -203,7 +203,7 @@ class UnaryRelationshipConnect(BaseConnector):
                 return gen
         return None
 
-    def relationship_or_new(self, type: Type[T], head: relation, tail: relation) -> T:
+    def relationship_or_new(self, type: type[T], head: relation, tail: relation) -> T:
         """Like relation(), but create a new instance if none was found."""
         relation = self.relationship(type, head, tail)
         if not relation:
@@ -260,7 +260,7 @@ class UnaryRelationshipConnect(BaseConnector):
             )
             adapter.connect(cinfo.handle, cinfo.port)
 
-    def disconnect_connected_items(self) -> List[Connection]:
+    def disconnect_connected_items(self) -> list[Connection]:
         """Cause items connected to @line to be disconnected. This is necessary
         if the subject of the @line is to be removed.
 
