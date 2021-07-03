@@ -147,12 +147,14 @@ class HelloWorldPlugin(Service, ActionProvider):     # 1.
     def shutdown(self):                              # 4.
         self.tools_menu.remove_actions(self)
 
-    @action(name='helloworld',                       # 5.
-            label=_('Hello world'),
-            tooltip=_('Every application ...'))
+    @action(                                         # 5.
+        name="helloworld",
+        label=_("Hello world"),
+        tooltip=_("Every application ..."),
+    )
     def helloworld_action(self):
         main_window = self.main_window
-        pass # gtk code left out
+        pass  # gtk code left out
 ```
 
 1.  As stated before, a plugin should implement the `Service` interface.

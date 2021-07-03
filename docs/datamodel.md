@@ -52,7 +52,7 @@ before the value is requested, it returns and empty string '':
 ```python
 m = Class()
 print(m.name)              # Returns ''
-m.name = 'MyName'
+m.name = "MyName"
 print(m.name)              # Returns 'MyName'
 
 m = Element()
