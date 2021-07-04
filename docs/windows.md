@@ -36,7 +36,7 @@ $ source .venv/bin/activate
 
 Install and configure Poetry:
 ```bash
-$ pip install poetry wheel
+$ pip install poetry
 $ poetry config virtualenvs.create false
 ```
 
