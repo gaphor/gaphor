@@ -121,11 +121,11 @@ jobs:
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Dependencies
         run: ./packaging/windows/msys2-install.sh
-      - name: Install Poetry
+      - name: Install Poetry and Wheel
         run: |
           python3.9 -m venv .venv
           source .venv/bin/activate
-          pip install poetry==$POETRY_VERSION
+          pip install poetry==$POETRY_VERSION wheel
           poetry config virtualenvs.create false
       - name: Collect Project Data
         id: meta
