@@ -21,4 +21,4 @@ pacman --noconfirm -S --needed \
     mingw-w64-x86_64-python \
     mingw-w64-x86_64-python-pip \
     mingw-w64-x86_64-python-setuptools \
-    mingw-w64-x86_64-python-wheel \
+    mingw-w64-x86_64-python3.9
