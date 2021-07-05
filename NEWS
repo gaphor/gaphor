@@ -1,3 +1,7 @@
+2.5.1
+-----
+- Fix app release signing in Windows and macOS
+
 2.5.0
 -----
 - Add initial support for STPA in RAAML
