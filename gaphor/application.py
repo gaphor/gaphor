@@ -7,7 +7,7 @@ session is represented as a window in which a diagram can be edited.
 from __future__ import annotations
 
 import logging
-from typing import Dict, Iterator, Optional, Set, Tuple, Type, TypeVar, cast
+from typing import Iterator, TypeVar, cast
 
 import importlib_metadata
 
@@ -56,8 +56,8 @@ class Application(Service, ActionProvider):
     """
 
     def __init__(self):
-        self._active_session: Optional[Session] = None
-        self._sessions: Set[Session] = set()
+        self._active_session: Session | None = None
+        self._sessions: set[Session] = set()
 
         self._services_by_name = initialize("gaphor.appservices", application=self)
 
@@ -170,7 +170,7 @@ class Application(Service, ActionProvider):
         self.shutdown()
         return True
 
-    def all(self, base: Type[T]) -> Iterator[Tuple[str, T]]:
+    def all(self, base: type[T]) -> Iterator[tuple[str, T]]:
         return (
             (n, c) for n, c in self._services_by_name.items() if isinstance(c, base)
         )
@@ -186,7 +186,7 @@ class Session(Service):
 
     def __init__(self, services=None):
         """Initialize the application."""
-        services_by_name: Dict[str, Service] = initialize("gaphor.services", services)
+        services_by_name: dict[str, Service] = initialize("gaphor.services", services)
         self._filename = None
 
         self.event_manager: EventManager = cast(

@@ -321,7 +321,7 @@ def generate(filename, outfile=None, overridesfile=None):  # noqa: C901
             ):
                 assert not derivedunions.get(
                     e1.name
-                ), "%s.%s is already in derived union set in class %s" % (
+                ), "{}.{} is already in derived union set in class {}".format(
                     e1.class_name,
                     e1.name,
                     derivedunions.get(e1.name).class_name,  # type: ignore[union-attr]

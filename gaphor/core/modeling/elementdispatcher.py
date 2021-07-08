@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import logging
-from typing import Dict, List, Optional, Set, Tuple
 
 from gaphor.abc import Service
 from gaphor.core import event_handler
@@ -26,15 +25,15 @@ class EventWatcher:
     def __init__(
         self,
         element: Element,
-        element_dispatcher: Optional[ElementDispatcher],
-        default_handler: Optional[Handler] = None,
+        element_dispatcher: ElementDispatcher | None,
+        default_handler: Handler | None = None,
     ):
         self.element = element
         self.element_dispatcher = element_dispatcher
-        self.default_handler: Optional[Handler] = default_handler
-        self._watched_paths: Dict[str, Handler] = dict()
+        self.default_handler: Handler | None = default_handler
+        self._watched_paths: dict[str, Handler] = dict()
 
-    def watch(self, path: str, handler: Optional[Handler] = None) -> EventWatcher:
+    def watch(self, path: str, handler: Handler | None = None) -> EventWatcher:
         """Watch a certain path of elements starting with the DiagramItem. The
         handler is optional and will default the default provided at
         construction time.
@@ -102,11 +101,11 @@ class ElementDispatcher(Service):
 
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
-        self._handlers: Dict[Tuple[Element, umlproperty], Dict[Handler, Set]] = dict()
+        self._handlers: dict[tuple[Element, umlproperty], dict[Handler, set]] = dict()
 
         # Fast resolution when handlers are disconnected
         # handler: [(element, property), ..]
-        self._reverse: Dict[Handler, List[Tuple[Element, umlproperty]]] = dict()
+        self._reverse: dict[Handler, list[tuple[Element, umlproperty]]] = dict()
 
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)

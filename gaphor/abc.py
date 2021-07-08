@@ -4,8 +4,6 @@ import abc
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from typing import Optional, Type
-
     from gaphor.core.modeling import Element
     from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 
@@ -36,5 +34,5 @@ class ModelingLanguage(metaclass=abc.ABCMeta):
         """Get structure for the toolbox."""
 
     @abc.abstractmethod
-    def lookup_element(self, name: str) -> Optional[Type[Element]]:
+    def lookup_element(self, name: str) -> type[Element] | None:
         """Look up a model element type (class) by name."""

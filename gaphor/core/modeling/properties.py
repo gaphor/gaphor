@@ -26,19 +26,7 @@ methods:
 from __future__ import annotations
 
 import logging
-from typing import (
-    Any,
-    Callable,
-    Generic,
-    List,
-    Optional,
-    Sequence,
-    Set,
-    Type,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import Any, Callable, Generic, Sequence, TypeVar, Union, overload
 
 from typing_extensions import Literal, Protocol
 
@@ -79,7 +67,7 @@ class relation_one(Protocol[E]):
     def __get__(self, obj, class_=None) -> E:
         ...
 
-    def __set__(self, obj, value: Optional[E]) -> None:
+    def __set__(self, obj, value: E | None) -> None:
         ...
 
     def __delete__(self, obj) -> None:
@@ -129,7 +117,7 @@ class umlproperty:
     upper: Upper = 1
 
     def __init__(self, name: str):
-        self._dependent_properties: Set[Union[derived, redefine]] = set()
+        self._dependent_properties: set[derived | redefine] = set()
         self.name = name
         self._name = "_" + name
 
@@ -161,13 +149,13 @@ class umlproperty:
         """This is called from the Element to denote the element is
         unlinking."""
 
-    def _get(self, obj) -> Union[Optional[T], collection[T]]:
+    def _get(self, obj) -> T | None | collection[T]:
         raise NotImplementedError()
 
-    def _set(self, obj, value: Optional[T]) -> None:
+    def _set(self, obj, value: T | None) -> None:
         raise NotImplementedError()
 
-    def _del(self, obj, value: Optional[T]) -> None:
+    def _del(self, obj, value: T | None) -> None:
         raise NotImplementedError()
 
     def handle(self, event):
@@ -186,12 +174,12 @@ class attribute(umlproperty, Generic[T]):
     def __init__(
         self,
         name: str,
-        type: Type[Union[str, int]],
-        default: Optional[Union[str, int]] = None,
+        type: type[str | int],
+        default: str | int | None = None,
     ):
         super().__init__(name)
         self.type = type
-        self.default: Optional[Union[str, int]] = default
+        self.default: str | int | None = default
 
     def load(self, obj, value: str):
         """Load the attribute value."""
@@ -211,7 +199,7 @@ class attribute(umlproperty, Generic[T]):
 
     def _get(self, obj):
         try:
-            v: Optional[Union[str, int]] = getattr(obj, self._name)
+            v: str | int | None = getattr(obj, self._name)
             return v
         except AttributeError:
             return self.default
@@ -321,11 +309,11 @@ class association(umlproperty):
     def __init__(
         self,
         name: str,
-        type: Type,
+        type: type,
         lower: Lower = 0,
         upper: Upper = "*",
         composite: bool = False,
-        opposite: Optional[str] = None,
+        opposite: str | None = None,
     ):
         super().__init__(name)
         self.type = type
@@ -333,7 +321,7 @@ class association(umlproperty):
         self.upper = upper
         self.composite = composite
         self.opposite = opposite
-        self.stub: Optional[associationstub] = None
+        self.stub: associationstub | None = None
 
     def save(self, obj, save_func: Callable[[str, object], None]):
         if hasattr(obj, self._name):
@@ -367,12 +355,12 @@ class association(umlproperty):
         else:
             return self._get_many(obj)
 
-    def _get_one(self, obj) -> Optional[T]:
-        v: Optional[T] = getattr(obj, self._name, None)
+    def _get_one(self, obj) -> T | None:
+        v: T | None = getattr(obj, self._name, None)
         return v
 
     def _get_many(self, obj) -> collection[T]:
-        v: Optional[collection[T]] = getattr(obj, self._name, None)
+        v: collection[T] | None = getattr(obj, self._name, None)
         if v is None:
             # Create the empty collection here since it might
             # be used to add.
@@ -380,7 +368,7 @@ class association(umlproperty):
             setattr(obj, self._name, v)
         return v
 
-    def _set(self, obj, value: Optional[T], from_opposite=False) -> None:
+    def _set(self, obj, value: T | None, from_opposite=False) -> None:
         """Set a new value for our attribute. If this is a collection, append
         to the existing collection.
 
@@ -438,7 +426,7 @@ class association(umlproperty):
 
         self.handle(AssociationAdded(obj, self, value))
 
-    def _set_opposite(self, obj, value: Optional[T], from_opposite=False) -> None:
+    def _set_opposite(self, obj, value: T | None, from_opposite=False) -> None:
         if not from_opposite and self.opposite:
             opposite = getattr(type(value), self.opposite)
             if not opposite.opposite:
@@ -597,10 +585,10 @@ class derived(umlproperty, Generic[T]):
     def __init__(  # type: ignore[misc]
         self,
         name: str,
-        type: Type[T],
+        type: type[T],
         lower: Lower,
         upper: Upper,
-        filter: Callable[[Any], List[Optional[T]]],
+        filter: Callable[[Any], list[T | None]],
         *subsets: relation,
     ) -> None:
         super().__init__(name)
@@ -746,7 +734,7 @@ class derivedunion(derived[T]):
     def __init__(
         self,
         name: str,
-        type: Type[T],
+        type: type[T],
         lower: Lower,
         upper: Upper,
         *subsets: relation,
@@ -755,7 +743,7 @@ class derivedunion(derived[T]):
 
     def _union(self, obj, exclude=None):
         """Returns a union of all values as a set."""
-        u: Set[T] = set()
+        u: set[T] = set()
         for s in self.subsets:
             if s is exclude or not object_has_property(obj, s):
                 continue
@@ -845,9 +833,9 @@ class redefine(umlproperty):
 
     def __init__(
         self,
-        decl_class: Type[E],
+        decl_class: type[E],
         name: str,
-        type: Type[T],
+        type: type[T],
         original: relation,
     ):
         super().__init__(name)
@@ -856,14 +844,14 @@ class redefine(umlproperty):
         ), f"expected association or derived, got {original}"
         self.decl_class = decl_class
         self.type = type
-        self.original: Union[association, derived] = original
+        self.original: association | derived = original
         self.upper = original.upper
         self.lower = original.lower
 
         original._dependent_properties.add(self)
 
     @property
-    def opposite(self) -> Optional[str]:
+    def opposite(self) -> str | None:
         return (
             self.original.opposite if isinstance(self.original, association) else None
         )

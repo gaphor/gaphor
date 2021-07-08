@@ -5,18 +5,7 @@ from __future__ import annotations
 import uuid
 from collections import OrderedDict
 from contextlib import contextmanager
-from typing import (
-    TYPE_CHECKING,
-    Callable,
-    Dict,
-    Iterator,
-    List,
-    Optional,
-    Type,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import TYPE_CHECKING, Callable, Iterator, TypeVar, overload
 
 from gaphor.abc import Service
 from gaphor.core.modeling.diagram import Diagram
@@ -52,22 +41,22 @@ class ElementFactory(Service):
 
     def __init__(
         self,
-        event_manager: Optional[EventManager] = None,
-        element_dispatcher: Optional[ElementDispatcher] = None,
+        event_manager: EventManager | None = None,
+        element_dispatcher: ElementDispatcher | None = None,
     ):
         self.event_manager = event_manager
         self.element_dispatcher = element_dispatcher
-        self._elements: Dict[str, Element] = OrderedDict()
+        self._elements: dict[str, Element] = OrderedDict()
         self._block_events = 0
 
     def shutdown(self):
         self.flush()
 
-    def create(self, type: Type[T]) -> T:
+    def create(self, type: type[T]) -> T:
         """Create a new model element of type ``type``."""
         return self.create_as(type, str(uuid.uuid1()))
 
-    def create_as(self, type: Type[T], id: str, diagram: Diagram = None) -> T:
+    def create_as(self, type: type[T], id: str, diagram: Diagram = None) -> T:
         """Create a new model element of type 'type' with 'id' as its ID.
 
         This method should only be used when loading models, since it
@@ -99,7 +88,7 @@ class ElementFactory(Service):
         """Return the amount of elements currently in the factory."""
         return len(self._elements)
 
-    def lookup(self, id: str) -> Optional[Element]:
+    def lookup(self, id: str) -> Element | None:
         """Find element with a specific id."""
         return self._elements.get(id)
 
@@ -114,7 +103,7 @@ class ElementFactory(Service):
         ...
 
     @overload
-    def select(self, expression: Type[T]) -> Iterator[T]:
+    def select(self, expression: type[T]) -> Iterator[T]:
         ...
 
     @overload
@@ -131,8 +120,8 @@ class ElementFactory(Service):
             yield from (e for e in self._elements.values() if expression(e))
 
     def lselect(
-        self, expression: Union[Callable[[Element], bool], Type[T], None] = None
-    ) -> List[Element]:
+        self, expression: Callable[[Element], bool] | type[T] | None = None
+    ) -> list[Element]:
         """Get a list of elements that comply with expression.
 
         The expression can be one of:

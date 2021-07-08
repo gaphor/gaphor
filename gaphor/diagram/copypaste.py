@@ -14,17 +14,7 @@ from __future__ import annotations
 
 import itertools
 from functools import singledispatch
-from typing import (
-    Callable,
-    Dict,
-    Iterator,
-    NamedTuple,
-    Optional,
-    Set,
-    Tuple,
-    Type,
-    Union,
-)
+from typing import Callable, Iterator, NamedTuple
 
 import gaphas
 
@@ -38,7 +28,7 @@ Opaque = object
 
 
 @singledispatch
-def copy(obj: Element) -> Iterator[Tuple[Id, Opaque]]:
+def copy(obj: Element) -> Iterator[tuple[Id, Opaque]]:
     """Create a copy of an element (or list of elements).
 
     The returned type should be distinct, so the `paste()` function can
@@ -82,9 +72,9 @@ def deserialize(ser, lookup):
 
 
 class ElementCopy(NamedTuple):
-    cls: Type[Element]
-    id: Union[str, bool]
-    data: Dict[str, Tuple[str, str]]
+    cls: type[Element]
+    id: str | bool
+    data: dict[str, tuple[str, str]]
 
 
 def copy_element(element: Element) -> ElementCopy:
@@ -100,7 +90,7 @@ def copy_element(element: Element) -> ElementCopy:
 
 
 @copy.register
-def _copy_element(element: Element) -> Iterator[Tuple[Id, ElementCopy]]:
+def _copy_element(element: Element) -> Iterator[tuple[Id, ElementCopy]]:
     yield element.id, copy_element(element)
 
 
@@ -129,7 +119,7 @@ def copy_named_element(element: NamedElement) -> NamedElementCopy:
 
 
 @copy.register
-def _copy_named_element(element: NamedElement) -> Iterator[Tuple[Id, NamedElementCopy]]:
+def _copy_named_element(element: NamedElement) -> Iterator[tuple[Id, NamedElementCopy]]:
     yield element.id, copy_named_element(element)
 
 
@@ -146,9 +136,9 @@ paste.register(NamedElementCopy, paste_named_element)
 
 
 class PresentationCopy(NamedTuple):
-    cls: Type[Element]
-    data: Dict[str, Tuple[str, str]]
-    parent: Optional[str]
+    cls: type[Element]
+    data: dict[str, tuple[str, str]]
+    parent: str | None
 
 
 def copy_presentation(item: Presentation) -> PresentationCopy:
@@ -171,7 +161,7 @@ def copy_presentation(item: Presentation) -> PresentationCopy:
 
 
 @copy.register
-def _copy_presentation(item: Presentation) -> Iterator[Tuple[Id, object]]:
+def _copy_presentation(item: Presentation) -> Iterator[tuple[Id, object]]:
     yield item.id, copy_presentation(item)
     if item.subject:
         yield from copy(item.subject)
@@ -194,7 +184,7 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
 
 
 class CopyData(NamedTuple):
-    elements: Dict[str, object]
+    elements: dict[str, object]
 
 
 @copy.register
@@ -204,8 +194,8 @@ def _copy_all(items: set) -> CopyData:
 
 
 @paste.register
-def _paste_all(copy_data: CopyData, diagram, lookup) -> Set[Presentation]:
-    new_elements: Dict[str, Optional[Presentation]] = {}
+def _paste_all(copy_data: CopyData, diagram, lookup) -> set[Presentation]:
+    new_elements: dict[str, Presentation | None] = {}
 
     def element_lookup(ref: str):
         if ref in new_elements:
@@ -234,4 +224,4 @@ def _paste_all(copy_data: CopyData, diagram, lookup) -> Set[Presentation]:
         assert element
         element.postload()
 
-    return set(e for e in new_elements.values() if isinstance(e, Presentation))
+    return {e for e in new_elements.values() if isinstance(e, Presentation)}

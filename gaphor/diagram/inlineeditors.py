@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from functools import singledispatch
-from typing import Optional, Tuple
 
 from gaphas import Item
 from gaphas.geometry import Rectangle
@@ -12,7 +11,7 @@ from gaphor.diagram.presentation import LinePresentation, Named
 
 
 @singledispatch
-def InlineEditor(item: Item, view, pos: Optional[Tuple[int, int]] = None) -> bool:
+def InlineEditor(item: Item, view, pos: tuple[int, int] | None = None) -> bool:
     """Show a small editor popup in the diagram. Makes for easy editing without
     resorting to the Element editor.
 

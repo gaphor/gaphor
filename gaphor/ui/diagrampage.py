@@ -280,7 +280,7 @@ class DiagramPage:
         self.diagram_css.load_from_data(
             f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}".encode()
             if bg
-            else "".encode()
+            else b""
         )
 
         view = self.view

@@ -24,7 +24,7 @@ class NamedElement(Element):
     visibility: enumeration
     clientDependency: relation_many[Dependency]
     supplierDependency: relation_many[Dependency]
-    qualifiedName: derived[List[str]]
+    qualifiedName: derived[list[str]]
     namespace: relation_one[Namespace]
     memberNamespace: relation_many[Namespace]
 
@@ -322,8 +322,8 @@ class Property(StructuralFeature, ConnectableElement):
     owningAssociation: relation_one[Association]
     artifact: relation_one[Artifact]
     isComposite: derived[bool]
-    navigability: derived[Optional[bool]]
-    opposite: relation_one[Optional[Property]]
+    navigability: derived[bool | None]
+    opposite: relation_one[Property | None]
 
 
 class ExtensionEnd(Property):
@@ -1311,7 +1311,7 @@ Artifact.ownedOperation = association(
 # 82: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
 
-def _namedelement_qualifiedname(self) -> List[str]:
+def _namedelement_qualifiedname(self) -> list[str]:
     """Returns the qualified name of the element as a tuple."""
     if self.namespace:
         return _namedelement_qualifiedname(self.namespace) + [self.name]

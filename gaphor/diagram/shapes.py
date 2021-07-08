@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 from math import pi
-from typing import Callable, List, Optional, Tuple
+from typing import Callable
 
 from gaphas.geometry import Rectangle
 
@@ -93,10 +93,10 @@ class Box:
         self,
         *children,
         style: Style = {},
-        draw: Optional[Callable[[Box, DrawContext, Rectangle], None]] = None,
+        draw: Callable[[Box, DrawContext, Rectangle], None] | None = None,
     ):
         self.children = children
-        self.sizes: List[Tuple[int, int]] = []
+        self.sizes: list[tuple[int, int]] = []
         self._inline_style = style
         self._draw_border = draw
 
@@ -170,7 +170,7 @@ class IconBox:
     def __init__(self, icon, *children, style: Style = {}):
         self.icon = icon
         self.children = children
-        self.sizes: List[Tuple[int, int]] = []
+        self.sizes: list[tuple[int, int]] = []
         self._inline_style = style
 
     def size(self, context: UpdateContext):
