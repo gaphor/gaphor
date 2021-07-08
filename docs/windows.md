@@ -3,8 +3,8 @@
 ## Development Environment
 
 To setup a development environment in Windows:
-1) Install Git for Windows from https://gitforwindows.org
-1) Go to http://www.msys2.org/ and download the x86_64 installer
+1) Install [Git for Windows](https://gitforwindows.org)
+1) Go to [MSYS2 website](http://www.msys2.org) and download the x86_64 installer
 1) Follow the instructions on the page for setting up the basic environment
 1) Run `C:\msys64\mingw64.exe` - a terminal window should pop up
 
@@ -12,36 +12,35 @@ To setup a development environment in Windows:
 $ pacman -Suy
 $ pacman -S mingw-w64-x86_64-gcc \
     mingw-w64-x86_64-gtk3 \
-    mingw-w64-x86_64-pkg-config \
+    mingw-w64-x86_64-pkgconf \
     mingw-w64-x86_64-cairo \
     mingw-w64-x86_64-gobject-introspection \
     mingw-w64-x86_64-python \
     mingw-w64-x86_64-python-pip \
     mingw-w64-x86_64-python-setuptools \
-    mingw-w64-x86_64-python-wheel
+    mingw-w64-x86_64-python3.9
 $ echo 'export PATH="/c/Program Files/Git/bin:$PATH"' >> ~/.bash_profile
 ```
 
 Restart your terminal.
 
-Install Poetry:
-
-```bash
-$ pip install poetry
-```
-
 [Clone the
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
-Create and activate a virtual environment in which Gaphor can be installed.
+Create and activate a virtual environment in which Gaphor can be installed:
 ```bash
 $ cd gaphor
-$ python -m venv .venv
+$ python3.9 -m venv .venv
 $ source .venv/bin/activate
 ```
 
-Install Gaphor and give it a try:
+Install and configure Poetry:
+```bash
+$ pip install poetry wheel
+$ poetry config virtualenvs.create false
+```
 
+Install Gaphor and give it a try:
 ```bash
 $ poetry install
 $ poetry run gaphor
@@ -59,6 +58,10 @@ script that creates a Windows installer using
 1. Follow the instructions for settings up a development environment above
 1. Run ``C:\msys64\mingw64.exe`` - a terminal window should pop up
 ```bash
-$ cd packaging/windows
-$ ./build-installer.sh
+$ source .venv/bin/activate
+$ mingw32-make dist
+$ cd packaging
+$ mingw32-make all
+$ cd windows
+$ mingw32-make all
 ```
