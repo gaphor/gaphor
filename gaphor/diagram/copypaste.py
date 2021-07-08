@@ -187,7 +187,7 @@ class CopyData(NamedTuple):
     elements: dict[str, object]
 
 
-@copy.register
+@copy.register  # type: ignore[arg-type]
 def _copy_all(items: set) -> CopyData:
     elements = itertools.chain.from_iterable(copy(item) for item in items)
     return CopyData(elements=dict(elements))
