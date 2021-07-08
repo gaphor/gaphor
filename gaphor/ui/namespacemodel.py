@@ -221,6 +221,9 @@ class NamespaceModel(Gtk.TreeStore):
             return True
         return False
 
+    def do_drag_data_delete(self, path):
+        return False
+
     def do_row_drop_possible(self, dest_path, selection_data):
         src_data = Gtk.tree_get_row_drag_data(selection_data)
         if not src_data:
