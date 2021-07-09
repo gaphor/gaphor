@@ -157,7 +157,7 @@ class MessageItem(LinePresentation[UML.Message], Named):
             cr.set_dash((7.0, 5.0), 0)
 
         cr.line_to(0, 0)
-        stroke(context)
+        stroke(context, dash=False)
 
         cr.set_dash((), 0)
 

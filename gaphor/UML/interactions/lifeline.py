@@ -221,7 +221,7 @@ class LifelineItem(ElementPresentation[UML.Lifeline], Named):
                 top = self.lifetime.top
                 cr.move_to(top.pos.x, top.pos.y)
                 cr.line_to(bottom.pos.x, bottom.pos.y)
-                stroke(context)
+                stroke(context, dash=False)
 
             # draw destruction event
             if self.is_destroyed:
