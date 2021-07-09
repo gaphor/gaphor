@@ -13,10 +13,6 @@ from cairo import LINE_JOIN_ROUND
 from gaphor.core.modeling.diagram import DrawContext, StyledItem
 from gaphor.diagram.selection import Selection
 
-# The tolerance for Cairo. Bigger values increase speed and reduce accuracy
-# (default: 0.1)
-TOLERANCE = 0.8
-
 
 class ItemPainter:
     def __init__(self, selection: Selection | None = None):
@@ -29,6 +25,7 @@ class ItemPainter:
 
         cairo.save()
         try:
+            cairo.set_line_join(LINE_JOIN_ROUND)
             cairo.set_source_rgba(*style["color"])
             cairo.transform(item.matrix_i2c.to_cairo())
 
@@ -48,7 +45,5 @@ class ItemPainter:
 
     def paint(self, items, cairo):
         """Draw the items."""
-        cairo.set_tolerance(TOLERANCE)
-        cairo.set_line_join(LINE_JOIN_ROUND)
         for item in items:
             self.paint_item(item, cairo)
