@@ -82,6 +82,11 @@ C:\Python36\python.exe .\build.py build -p=x64 --vs-ver=16 --msys-dir=C:\tools\m
 ```
 Grab a coffee, the build will take a few minutes to complete.
 
+Once it is complete, add GTK to your path:
+```PowerShell
+$env:Path = "C:\gtk-build\gtk\x64\release\bin;" + $env:Path
+```
+
 #### Install the Latest Python for Gaphor
 
 Download and install the latest version of Python. For this you have a few options:
@@ -114,7 +119,13 @@ Install and configure Poetry
 (.venv) PS > poetry config virtualenvs.create false
 ```
 
-Install Gaphor's dependencies and give it a try:
+Install PyGObject and pycairo from gvsbuild
+```PowerShell
+(.venv) PS > pip install C:\gtk-build\build\x64\release\pygobject\dist\PyGObject-*-cp39-cp39-win_amd64.whl
+(.venv) PS > pip install C:\gtk-build\build\x64\release\pycairo\dist\pycairo-*-cp39-cp39-win_amd64.whl
+```
+
+Install Gaphor's other dependencies and give it a try
 ```PowerShell
 (.venv) PS > poetry install
 (.venv) PS > gaphor
