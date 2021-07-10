@@ -12,6 +12,10 @@ To install it, open PowerShell as an administrator, then execute:
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 
+To run local scripts in follow-on steps, also execute
+`Set-ExecutionPolicy RemoteSigned`. This allows for local PowerShell scripts
+to run without signing, but still requires signing for remote scripts.
+
 ### Git
 To setup a development environment in Windows first install
 [Git](https://gitforwindows.org) by executing as an adminstrator:
@@ -60,9 +64,9 @@ select Customize installation
 1. Allow the installation to finish
 
 #### Install gvsbuild
-We have forked gvsbuild for now because the upstream project is a little slow at
-accepting our Pull Requests. If we can get our changes upstream, then we'll
-switch back to using that version directly.
+We have forked gvsbuild for now because gaphor has slightly newer dependency
+requirements than the upstream project. If we can get our changes upstream,
+then we'll switch back to using that version directly.
 
 Open a new regular user PowerShell terminal and execute:
 
@@ -121,8 +125,7 @@ Install and configure Poetry
 
 Install PyGObject and pycairo from gvsbuild
 ```PowerShell
-(.venv) PS > pip install C:\gtk-build\build\x64\release\pygobject\dist\PyGObject-*-cp39-cp39-win_amd64.whl
-(.venv) PS > pip install C:\gtk-build\build\x64\release\pycairo\dist\pycairo-*-cp39-cp39-win_amd64.whl
+(.venv) PS > Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl | ForEach-Object -process { pip install $_ }
 ```
 
 Install Gaphor's other dependencies and give it a try
