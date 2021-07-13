@@ -43,7 +43,7 @@ Note: gvsbuild says it requires msys2, but does it for our needs?
 
 First we will install the gvsbuild dependencies:
 1. Visual C++ build tools workload for Visual Studio 2019 Build Tools
-1. Python 3.6 (yes, this version is pretty old)
+1. Python
 
 #### Install Visual Studio 2019
 With your admin PowerShell terminal:
@@ -52,16 +52,12 @@ With your admin PowerShell terminal:
 choco install visualstudio2019-workload-vctools
 ```
 
-#### Install Python 3.6
+#### Install the Latest Python
 
-1. Download [Python 3.6.8](https://www.python.org/ftp/python/3.6.8/python-3.6.8-amd64-webinstall.exe)
-1. Launch the installer by double clicking on it
-1. On the first screen of the installation wizard, leave the default options and
-select Customize installation
-1. On the Optional Features screen, select Next to keep the defaults
-1. On the Advanced Options screen, unselect the two selected options
-1. In the Customize install location field enter `C:\Python36` and select Install
-1. Allow the installation to finish
+Download and install the latest version of Python:
+
+1. Install from Chocolately with `choco install python` with admin PowerShell
+1. Restart your PowerShell terminal as a normal user and check that `python --version` is correct.
 
 #### Install gvsbuild
 We have forked gvsbuild for now because gaphor has slightly newer dependency
@@ -82,20 +78,10 @@ git clone https://github.com/gaphor/gvsbuild.git
 In the same PowerShell terminal, execute:
 
 ```PowerShell
-C:\Python36\python.exe .\build.py build -p=x64 --vs-ver=16 --msys-dir=C:\tools\msys64 --enable-gi --py-wheel --gtk3-ver=3.24 gobject-introspection gtk3 pycairo pygobject adwaita-icon-theme hicolor-icon-theme
+cd C:\gtk-build\github\gvsbuild
+python .\build.py build -p=x64 --vs-ver=16 --msys-dir=C:\tools\msys64 --enable-gi --py-wheel --gtk3-ver=3.24 gobject-introspection gtk3 pycairo pygobject adwaita-icon-theme hicolor-icon-theme
 ```
 Grab a coffee, the build will take a few minutes to complete.
-
-#### Install the Latest Python for Gaphor
-
-Download and install the latest version of Python. For this you have a few options:
-
-1. Install from Chocolately with `choco install python` as an admin 
-1. Install from the Windows Store
-1. If you need to test with multiple versions of Python, install
-[pyenv-win](https://github.com/pyenv-win/pyenv-win)
-
-Restart your PowerShell terminal as a normal user and check that `python --version` is correct.
 
 #### Setup Gaphor
 
