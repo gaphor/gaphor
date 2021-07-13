@@ -69,11 +69,11 @@ has changed, and that you need to update your branch so it's easier to merge.
 For something that is bigger than a one or two line fix:
 
 1. Create your own fork of the code
-2. Install all development dependencies using:
-`$ poetry install`
-`$ pre-commit install`
-If you haven't used poetry before, just run `pip install poetry`, and then run the commands above, it will do the correct thing.
-3. Add tests for your changes, run the tests with `pytest`.
+2. Set up a development environment as per
+  - Linux: https://gaphor.readthedocs.io/en/latest/linux.html
+  - MacOS: https://gaphor.readthedocs.io/en/latest/macos.html
+  - Windows: https://gaphor.readthedocs.io/en/latest/windows.html
+3. Add tests for your changes, run the tests with `make test`.
 4. Do the changes in your fork.
 5. If you like the change and think the project could use it:
     * Be sure you have the pre-commit hook installed above, it will ensure that
