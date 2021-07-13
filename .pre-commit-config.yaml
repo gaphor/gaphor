@@ -19,7 +19,7 @@ repos:
   - id: check-toml
   - id: check-yaml
 - repo: https://github.com/PyCQA/isort
-  rev: 5.9.1
+  rev: 5.9.2
   hooks:
   - id: isort
     additional_dependencies: [toml]
@@ -33,6 +33,6 @@ repos:
   hooks:
   - id: shellcheck
 - repo: https://github.com/asottile/pyupgrade
-  rev: v2.19.4
+  rev: v2.21.0
   hooks:
   - id: pyupgrade
