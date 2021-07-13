@@ -374,6 +374,9 @@ class association(umlproperty):
 
         This method is called from the opposite association property.
         """
+        if obj is value:
+            raise AttributeError(f"Can not set {obj}.{self.name} to itself")
+
         if self.upper == 1:
             self._set_one(obj, value, from_opposite)
         else:
