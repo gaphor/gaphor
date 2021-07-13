@@ -797,32 +797,31 @@ class derivedunion(derived[T]):
                     new_value = next(iter(values))
             # Only one subset element, so pass the values on
             self.handle(DerivedSet(event.element, self, old_value, new_value))
+        elif isinstance(event, AssociationSet):
+            old_value, new_value = event.old_value, event.new_value
+            if old_value and old_value not in values:
+                self.handle(DerivedDeleted(event.element, self, old_value))
+            if new_value and new_value not in values:
+                self.handle(DerivedAdded(event.element, self, new_value))
+
+        elif isinstance(event, AssociationAdded):
+            new_value = event.new_value
+            if new_value not in values:
+                self.handle(DerivedAdded(event.element, self, new_value))
+
+        elif isinstance(event, AssociationDeleted):
+            old_value = event.old_value
+            if old_value not in values:
+                self.handle(DerivedDeleted(event.element, self, old_value))
+
+        elif isinstance(event, AssociationUpdated):
+            self.handle(DerivedUpdated(event.element, self))
         else:
-            if isinstance(event, AssociationSet):
-                old_value, new_value = event.old_value, event.new_value
-                if old_value and old_value not in values:
-                    self.handle(DerivedDeleted(event.element, self, old_value))
-                if new_value and new_value not in values:
-                    self.handle(DerivedAdded(event.element, self, new_value))
-
-            elif isinstance(event, AssociationAdded):
-                new_value = event.new_value
-                if new_value not in values:
-                    self.handle(DerivedAdded(event.element, self, new_value))
-
-            elif isinstance(event, AssociationDeleted):
-                old_value = event.old_value
-                if old_value not in values:
-                    self.handle(DerivedDeleted(event.element, self, old_value))
-
-            elif isinstance(event, AssociationUpdated):
-                self.handle(DerivedUpdated(event.element, self))
-            else:
-                log.error(
-                    "Don't know how to handle event "
-                    + str(event)
-                    + " for derived union"
-                )
+            log.error(
+                "Don't know how to handle event "
+                + str(event)
+                + " for derived union"
+            )
 
 
 class redefine(umlproperty):
