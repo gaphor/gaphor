@@ -305,9 +305,10 @@ def test_set_association_outside_transaction(
 
     with Transaction(event_manager):
         a = element_factory.create(A)
+        b = element_factory.create(A)
 
     with pytest.raises(NotInTransactionException):
-        a.a = a
+        a.a = b
 
     assert not a.b
     assert a.a is None
@@ -324,9 +325,10 @@ def test_set_multi_association_outside_transaction(
 
     with Transaction(event_manager):
         a = element_factory.create(A)
+        b = element_factory.create(A)
 
     with pytest.raises(NotInTransactionException):
-        a.b = a
+        a.b = b
 
     assert not a.b
     assert a.a is None
@@ -343,14 +345,15 @@ def test_update_association_outside_transaction(
 
     with Transaction(event_manager):
         a = element_factory.create(A)
-        a.a = a
+        b = element_factory.create(A)
+        a.a = b
         other = element_factory.create(A)
 
     with pytest.raises(NotInTransactionException):
         a.a = other
 
-    assert a in a.b
-    assert a.a is a
+    assert a in b.b
+    assert a.a is b
 
 
 def test_set_derived_union_outside_transaction(
@@ -366,12 +369,13 @@ def test_set_derived_union_outside_transaction(
 
     with Transaction(event_manager):
         a = element_factory.create(A)
+        b = element_factory.create(A)
 
     with pytest.raises(NotInTransactionException):
-        a.a = a
+        a.a = b
 
     with pytest.raises(NotInTransactionException):
-        a.b = a
+        a.b = b
 
     assert not a.b
     assert not a.a

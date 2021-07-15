@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from gaphor.core import event_handler
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.collection import collectionlist
@@ -95,12 +97,11 @@ def test_association_1_1():
     assert b.two is None
 
     c = C()
-    try:
+
+    with pytest.raises(AttributeError):
         a.one = c
-    except Exception:
-        pass
-    else:
-        assert a.one is not c
+
+    assert a.one is not c
 
     del a.one
     assert a.one is None
@@ -340,6 +341,18 @@ def test_association_unlink_2():
     assert a1 in b2.two
 
 
+def test_can_not_set_association_to_owner(element_factory, event_manager):
+    class A(Element):
+        pass
+
+    A.a = association("a", A, upper=1)
+
+    a = element_factory.create(A)
+
+    with pytest.raises(AttributeError):
+        a.a = a
+
+
 def test_attributes():
     class A(Element):
         a: attribute[str]
@@ -352,12 +365,9 @@ def test_attributes():
     assert a.a == "bar", a.a
     del a.a
     assert a.a == "default"
-    try:
+
+    with pytest.raises(AttributeError):
         a.a = 1
-    except AttributeError:
-        pass  # ok
-    else:
-        assert 0, "should not set integer"
 
 
 def test_enumerations():
@@ -371,12 +381,12 @@ def test_enumerations():
     assert a.a == "two"
     a.a = "three"
     assert a.a == "three"
-    try:
+
+    with pytest.raises(AttributeError):
         a.a = "four"
-    except AttributeError:
-        assert a.a == "three"
-    else:
-        assert 0, "a.a could not be four"
+
+    assert a.a == "three"
+
     del a.a
     assert a.a == "one"
 
