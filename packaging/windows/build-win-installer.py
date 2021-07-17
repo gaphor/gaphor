@@ -2,9 +2,6 @@ import os
 import shutil
 import subprocess
 from pathlib import Path
-from typing import Text
-
-import requests
 
 version = subprocess.run(
     ["poetry", "version", "-s"], capture_output=True, text=True
@@ -25,7 +22,8 @@ MINGW = "mingw64"
 def clean_files():
     print("Cleaning files")
     shutil.rmtree(portable, ignore_errors=True)
-    payload.unlink(missing_ok=True)
+    if payload.is_file:
+        payload.unlink()
 
 
 def build_installer():
@@ -45,7 +43,7 @@ def build_installer():
     )
 
     shutil.move(
-        dist_location / "gaphor-LATEST.exe",
+        str(dist_location / "gaphor-LATEST.exe"),
         dir / "dist" / f"gaphor-{version}-installer.exe",
     )
 
@@ -55,13 +53,6 @@ def concatenate_files(input_files, output_file):
         with open(input_file, "rb") as reader, open(output_file, "wb") as writer:
             data = reader.readlines()
             writer.writelines(data)
-
-
-def download_url(url, save_path, chunk_size=128):
-    r = requests.get(url, stream=True)
-    with open(save_path, "wb") as fd:
-        for chunk in r.iter_content(chunk_size=chunk_size):
-            fd.write(chunk)
 
 
 def unix2dos(file_path):
