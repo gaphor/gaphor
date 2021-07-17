@@ -147,7 +147,7 @@ jobs:
           cd packaging
           mingw32-make all
           cd windows
-          mingw32-make all
+          python build-win-installer.py
       - name: Sign Executables
         env:
           password: "${{ secrets.CERTPASSWORD }}"
