@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 import shutil
 import subprocess
@@ -7,33 +9,31 @@ version = subprocess.run(
     ["poetry", "version", "-s"], capture_output=True, text=True
 ).stdout.rstrip()
 
-dir = Path(__file__).resolve().parents[1]
-Path(dir / "dist" / "gaphor").mkdir(parents=True, exist_ok=True)
+dir: Path = Path(__file__).resolve().parents[1]
+dist: Path = dir / "dist"
+Path(dist / "gaphor").mkdir(parents=True, exist_ok=True)
 
-dist_location = dir / "dist" / "gaphor"
-seven_zip = Path("C:/Program Files/7-Zip/7z.exe")
-makensis = Path("C:/Program Files (x86)/NSIS/makensis.exe")
-payload = dir / "dist" / "payload.7z"
-portable = dir / "dist" / f"gaphor-{version}-portable"
-
-MINGW = "mingw64"
+gaphor_dist: Path = dist / "gaphor"
+seven_zip: Path = Path("C:/Program Files/7-Zip/7z.exe")
+payload: Path = dist / "payload.7z"
+portable: Path = dist / f"gaphor-{version}-portable"
 
 
-def clean_files():
+def clean_files() -> None:
     print("Cleaning files")
     shutil.rmtree(portable, ignore_errors=True)
     if payload.is_file:
         payload.unlink()
 
 
-def build_installer():
+def build_installer() -> None:
     print("Building Installer")
     icon = dir / "windows" / "gaphor.ico"
-    shutil.copy(icon, dist_location / "gaphor.ico")
-    os.chdir(dist_location)
+    shutil.copy(icon, gaphor_dist / "gaphor.ico")
+    os.chdir(gaphor_dist)
     subprocess.run(
         [
-            str(makensis),
+            "makensis",
             "-NOCD",
             f"-DVERSION={version}",
             str(dir / "windows" / "win_installer.nsi"),
@@ -43,19 +43,19 @@ def build_installer():
     )
 
     shutil.move(
-        str(dist_location / "gaphor-LATEST.exe"),
-        dir / "dist" / f"gaphor-{version}-installer.exe",
+        str(gaphor_dist / "gaphor-LATEST.exe"),
+        dist / f"gaphor-{version}-installer.exe",
     )
 
 
-def concatenate_files(input_files, output_file):
+def concatenate_files(input_files: list[Path], output_file: Path) -> None:
     for input_file in input_files:
         with open(input_file, "rb") as reader, open(output_file, "wb") as writer:
             data = reader.readlines()
             writer.writelines(data)
 
 
-def unix2dos(file_path):
+def unix2dos(file_path: Path) -> None:
     win_line_ending = b"\r\n"
     unix_line_ending = b"\n"
 
@@ -66,7 +66,7 @@ def unix2dos(file_path):
         open_file.write(content)
 
 
-def build_portable_installer():
+def build_portable_installer() -> None:
     print("Building portable installer")
     portable.mkdir(parents=True)
     shutil.copy(dir / "windows" / "gaphor.lnk", portable / "gaphor.lnk")
@@ -74,10 +74,12 @@ def build_portable_installer():
     unix2dos(portable / "README.txt")
     config_path = portable / "config"
     config_path.mkdir()
-    shutil.copytree(dist_location, portable / "data")
+    shutil.copytree(gaphor_dist, portable / "data")
 
     subprocess.run([str(seven_zip), "a", str(payload), str(portable)])
-    concatenate_files([seven_zip.parent / "7z.sfx", payload], f"{portable}.exe")
+    concatenate_files(
+        [seven_zip.parent / "7z.sfx", payload], dist / "gaphor-{version}-portable.exe"
+    )
 
 
 clean_files()
