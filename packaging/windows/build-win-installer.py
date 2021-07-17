@@ -1,10 +1,10 @@
-from pathlib import Path
 import os
-import subprocess
 import shutil
+import subprocess
+from pathlib import Path
 from typing import Text
-import requests
 
+import requests
 
 version = subprocess.run(
     ["poetry", "version", "-s"], capture_output=True, text=True
