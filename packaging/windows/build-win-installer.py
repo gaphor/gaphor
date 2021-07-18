@@ -22,8 +22,7 @@ portable: Path = dist / f"gaphor-{version}-portable"
 def clean_files() -> None:
     print("Cleaning files")
     shutil.rmtree(portable, ignore_errors=True)
-    if payload.is_file:
-        payload.unlink()
+    payload.unlink(missing_ok=True)  # type: ignore[call-arg]
 
 
 def build_installer() -> None:
