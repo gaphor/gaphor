@@ -56,7 +56,6 @@ def concatenate_files(input_files: list[Path], output_file: Path) -> None:
                 shutil.copyfileobj(reader, writer)
 
 
-
 def unix2dos(file_path: Path) -> None:
     win_line_ending = b"\r\n"
     unix_line_ending = b"\n"
