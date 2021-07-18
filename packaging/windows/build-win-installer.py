@@ -48,10 +48,13 @@ def build_installer() -> None:
 
 
 def concatenate_files(input_files: list[Path], output_file: Path) -> None:
-    for input_file in input_files:
-        with open(input_file, "rb") as reader, open(output_file, "wb") as writer:
-            data = reader.readlines()
-            writer.writelines(data)
+    print(f"Opening {output_file} for write")
+    with open(output_file, "wb") as writer:
+        for input_file in input_files:
+            print(f"Writing {input_file}")
+            with open(input_file, "rb") as reader:
+                shutil.copyfileobj(reader, writer)
+
 
 
 def unix2dos(file_path: Path) -> None:
@@ -76,6 +79,15 @@ def build_portable_installer() -> None:
     shutil.copytree(gaphor_dist, portable / "data")
 
     subprocess.run([str(seven_zip), "a", str(payload), str(portable)])
+    if payload.is_file():
+        print(f"Payload 7z archive found at {payload}")
+    else:
+        print("Payload 7z archive not found")
+    sfx_path = seven_zip.parent / "7z.sfx"
+    if sfx_path.is_file():
+        print(f"Sfx file found at {sfx_path}")
+    else:
+        print("Sfx file not found")
     concatenate_files(
         [seven_zip.parent / "7z.sfx", payload], dist / f"gaphor-{version}-portable.exe"
     )
