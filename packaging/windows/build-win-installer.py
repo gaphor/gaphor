@@ -77,7 +77,7 @@ def build_portable_installer() -> None:
 
     subprocess.run([str(seven_zip), "a", str(payload), str(portable)])
     concatenate_files(
-        [seven_zip.parent / "7z.sfx", payload], dist / "gaphor-{version}-portable.exe"
+        [seven_zip.parent / "7z.sfx", payload], dist / f"gaphor-{version}-portable.exe"
     )
 
 
