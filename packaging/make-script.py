@@ -1,10 +1,10 @@
 import sys
-
-import tomlkit
 from pathlib import Path
-import pyinstaller_versionfile
 
-packaging_path = Path(__file__).resolve().parent 
+import pyinstaller_versionfile
+import tomlkit
+
+packaging_path = Path(__file__).resolve().parent
 
 
 def get_version() -> str:
@@ -14,7 +14,7 @@ def get_version() -> str:
 
 
 def make_gaphor_script():
-    pyproject_toml = packaging_path.parent / "pyproject.toml" 
+    pyproject_toml = packaging_path.parent / "pyproject.toml"
     with open(pyproject_toml) as f:
         toml = tomlkit.parse(f.read())
 
