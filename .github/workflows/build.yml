@@ -49,9 +49,9 @@ jobs:
         id: meta
         run: .github/scripts/metadata.sh
       - name: Install Python Dependencies
-        run: make install
+        run: poetry install
       - name: Test with Pytest
-        run: xvfb-run make test-all
+        run: xvfb-run poe test-all
       - name: Upload Code Coverage to Code Climate
         uses: paambaati/codeclimate-action@v2.7.5
         env:
@@ -59,7 +59,7 @@ jobs:
         with:
           coverageCommand: poetry run coverage xml
       - name: Create Source Dist and Wheel
-        run: make dist
+        run: poe dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz
         uses: actions/upload-artifact@v2
         with:
@@ -72,8 +72,7 @@ jobs:
           path: dist/gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
       - name: Build AppImage
         run: |
-          cd packaging
-          make all
+          poe pyinstall
           cd appimage
           make dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-x86_64.AppImage
@@ -135,19 +134,17 @@ jobs:
       - name: Install Python Dependencies
         run: |
           source .venv/bin/activate
-          mingw32-make install
+          poe install
       - name: Test with PyTest
         run: |
           source .venv/bin/activate
-          mingw32-make test-all
+          poe test-all
       - name: Create Windows Installers
         run: |
           source .venv/bin/activate
-          mingw32-make dist
-          cd packaging
-          mingw32-make all
-          cd windows
-          python build-win-installer.py
+          poe dist
+          poe package
+          poe win-installer
       - name: Sign Executables
         env:
           password: "${{ secrets.CERTPASSWORD }}"
@@ -213,9 +210,9 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Python Dependencies
-        run: make install
+        run: poetry install
       - name: Test with Pytest
-        run: make test-all
+        run: poe test-all
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1.0.4
         if: env.SECRETS_AVAILABLE != null && env.NOT_PR 
@@ -224,9 +221,8 @@ jobs:
           p12-password: ${{ secrets.CERTPASSWORD_P12 }}
       - name: Create macOS Application
         run: |
-          make dist
-          cd packaging
-          make all
+          poetry run poe dist
+          poetry run poe pyinstall
       - name: Notarize app
         uses: devbotsxyz/xcode-notarize@v1
         if: env.SECRETS_AVAILABLE != null && env.NOT_PR
@@ -303,7 +299,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Python Dependencies
-        run: make install
+        run: poetry install
       - name: Test with Pytest for GTK 4
         continue-on-error: true
-        run: make test-all
+        run: poe test-all

@@ -55,16 +55,63 @@ pre-commit = "^2.14"
 sphinx = "^4.1"
 recommonmark = "^0.7"
 sphinx-rtd-theme = "^0.5"
+sphinxcontrib-images = "^0.9.3"
 babel = "^2.9.1"
 babelgladeextractor = "^0.7"
 flake8 = "^3.9"
 isort = "^5.9"
-sphinxcontrib-images = "^0.9.3"
+pyinstaller = "^4.3"
+pyinstaller-versionfile = "^2.0.0"
 poethepoet = "^0.10.0"
 
 [tool.poetry.scripts]
-gaphor = 'gaphor.ui:main'
-gaphorconvert = 'gaphor.plugins.diagramexport.gaphorconvert:main'
+gaphor = "gaphor.ui:main"
+gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
+
+
+[tool.poe.tasks]
+test = "pytest -m 'not slow'"
+test-all = "pytest --cov=gaphor/"
+dist = "poetry build"
+install = "poetry install"
+coremodel = [
+    { "cmd" = "gaphor/codegen/codegen.py models/Core.gaphor gaphor/core/modeling/coremodel.py models/Core.override" },
+    { "cmd" = "black gaphor/core/modeling/coremodel.py" },
+    { "cmd" = "mypy gaphor/core/modeling" },
+    { "cmd" = "isort gaphor/core/modeling/coremodel.py" },
+]
+uml = [
+    { "cmd" = "python gaphor/codegen/codegen.py models/UML.gaphor gaphor/UML/uml.py models/UML.override" },
+    { "cmd" = "mypy gaphor/UML" },
+    { "cmd" = "isort gaphor/UML" },
+    { "cmd" = "black gaphor/UML/uml.py" },
+]
+sysml = [
+    { "cmd" = "python gaphor/codegen/codegen.py --uml_profile models/SysML.gaphor gaphor/SysML/sysml.py models/SysML.override" },
+    { "cmd" = "black gaphor/SysML/sysml.py" },
+    { "cmd" = "isort gaphor/SysML" },
+    { "cmd" = "mypy gaphor/SysML" },
+]
+raaml = [
+    { "cmd" = "python gaphor/codegen/codegen.py --sysml_profile models/RAAML.gaphor gaphor/RAAML/raaml.py models/RAAML.override" },
+    { "cmd" = "mypy gaphor/RAAML" },
+    { "cmd" = "isort gaphor/RAAML" },
+    { "cmd" = "black gaphor/RAAML/raaml.py" },
+]
+c4model = [
+    { "cmd" = "python gaphor/codegen/codegen.py --uml_profile models/C4Model.gaphor gaphor/C4Model/raaml.py models/C4Model.override" },
+    { "cmd" = "mypy gaphor/C4Model" },
+    { "cmd" = "isort gaphor/C4Model" },
+    { "cmd" = "black gaphor/C4Model/raaml.py" },
+]
+lint = "pre-commit run --all-files"
+docs = "sphinx-build docs docs/_build/html"
+clean = { "shell" = "rm -rf dist build packaging/dist packaging/build packaging/windows/file_version_info.txt packaging/gaphor-script.py docs/_build" }
+gaphor-script = { "script" = "packaging.make-script:make_gaphor_script" }
+version-file = { "script" = "packaging.make-script:make_file_version_info" }
+pyinstall = "pyinstaller -y --distpath packaging/dist --workpath packaging/build packaging/gaphor.spec"
+package = ["gaphor-script", "version-file", "pyinstall"]
+win-installer = { "script" = "packaging.windows.build-win-installer:main" }
 
 [tool.poetry.plugins."gaphor.appservices"]
 "event_manager" = "gaphor.core.eventmanager:EventManager"
