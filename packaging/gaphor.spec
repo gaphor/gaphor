@@ -1,10 +1,25 @@
 from PyInstaller.utils.hooks import copy_metadata
-import pathlib
+from pathlib import Path
+from tomlkit import parse
 
 block_cipher = None
 
-glade_files = [(str(p), str(pathlib.Path(*p.parts[1:-1]))) for p in pathlib.Path("../gaphor").rglob("*.glade")]
-ui_files = [(str(p), str(pathlib.Path(*p.parts[1:-1]))) for p in pathlib.Path("../gaphor").rglob("*.ui")]
+project_dir = Path.cwd()
+
+glade_files = [
+    (str(p), str(Path(*p.parts[1:-1])))
+    for p in project_dir.rglob("*.glade")
+]
+ui_files = [
+    (str(p), str(Path(*p.parts[1:-1])))
+    for p in project_dir.rglob("*.ui")
+]
+
+
+def get_version() -> str:
+    f = project_dir / "pyproject.toml"
+    return str(parse(f.read_text())["tool"]["poetry"]["version"])
+
 
 a = Analysis(
     ["gaphor-script.py"],
@@ -60,5 +75,5 @@ app = BUNDLE(
     name="Gaphor.app",
     icon="macos/gaphor.icns",
     bundle_identifier="org.gaphor.gaphor",
-    version="__version__",
+    version=get_version(),
 )
