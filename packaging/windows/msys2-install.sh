@@ -16,5 +16,4 @@ pacman --noconfirm -S --needed \
     mingw-w64-x86_64-gobject-introspection \
     mingw-w64-x86_64-python \
     mingw-w64-x86_64-python-pip \
-    mingw-w64-x86_64-python-setuptools \
-    mingw-w64-x86_64-python3.9
+    mingw-w64-x86_64-python-setuptools
