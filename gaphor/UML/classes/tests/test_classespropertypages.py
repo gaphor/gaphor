@@ -3,11 +3,9 @@ import pytest
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.classes.classespropertypages import (
-    AssociationPropertyPage,
     AttributesPage,
     ClassAttributes,
     ClassifierPropertyPage,
-    DependencyPropertyPage,
     Folded,
     InterfacePropertyPage,
     NamedElementPropertyPage,
@@ -147,66 +145,3 @@ def test_operations_page_add_operation(diagram, element_factory):
     property_page.model.update(iter, 0, "+ oper()")
 
     assert item.subject.ownedOperation[0].name == "oper"
-
-
-def test_dependency_property_page(diagram, element_factory):
-    item = diagram.create(
-        UML.classes.DependencyItem, subject=element_factory.create(UML.Dependency)
-    )
-    property_page = DependencyPropertyPage(item)
-
-    widget = property_page.construct()
-    dependency_combo = find(widget, "dependency-combo")
-    dependency_combo.set_active(2)
-
-    assert item.dependency_type is UML.Realization
-
-
-def test_dependency_property_page_without_subject(diagram, element_factory):
-    item = diagram.create(UML.classes.DependencyItem)
-    property_page = DependencyPropertyPage(item)
-
-    widget = property_page.construct()
-
-    assert widget
-
-
-def test_association_property_page(diagram, element_factory):
-    end1 = element_factory.create(UML.Class)
-    end2 = element_factory.create(UML.Class)
-    item = diagram.create(
-        UML.classes.AssociationItem, subject=UML.model.create_association(end1, end2)
-    )
-    item.head_subject = item.subject.memberEnd[0]
-    item.tail_subject = item.subject.memberEnd[1]
-    property_page = AssociationPropertyPage(item)
-
-    widget = property_page.construct()
-    head_name = find(widget, "head-name")
-    head_name.set_text("head")
-
-    assert item.subject.memberEnd[0].name == "head"
-
-
-def test_association_property_page_with_no_subject(diagram, element_factory):
-    item = diagram.create(UML.classes.AssociationItem)
-    property_page = AssociationPropertyPage(item)
-
-    widget = property_page.construct()
-
-    assert widget is None
-
-
-def test_association_property_page_invert_direction(diagram, element_factory):
-    end1 = element_factory.create(UML.Class)
-    end2 = element_factory.create(UML.Class)
-    item = diagram.create(
-        UML.classes.AssociationItem, subject=UML.model.create_association(end1, end2)
-    )
-    item.head_subject = item.subject.memberEnd[0]
-    item.tail_subject = item.subject.memberEnd[1]
-    property_page = AssociationPropertyPage(item)
-
-    property_page._on_invert_direction_change(None)
-
-    assert item.tail_subject is item.subject.memberEnd[0]

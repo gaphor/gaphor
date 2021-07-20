@@ -9,7 +9,7 @@ from gaphor.diagram.tests.fixtures import (
     event_manager,
 )
 from gaphor.UML.classes import AssociationItem, ClassItem
-from gaphor.UML.classes.classespropertypages import AssociationPropertyPage
+from gaphor.UML.classes.associationpropertypages import AssociationPropertyPage
 from gaphor.UML.classes.classestoolbox import composite_association_config
 
 
