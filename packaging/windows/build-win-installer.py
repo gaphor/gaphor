@@ -19,10 +19,13 @@ payload: Path = dist / "payload.7z"
 portable: Path = dist / f"gaphor-{version}-portable"
 
 
-def clean_files() -> None:
+def clean_files(paths: list[Path]) -> None:
     print("Cleaning files")
-    shutil.rmtree(portable, ignore_errors=True)
-    payload.unlink(missing_ok=True)  # type: ignore[call-arg]
+    for path in paths:
+        if path.is_dir():
+            shutil.rmtree(path, ignore_errors=True)
+        elif path.is_file():
+            path.unlink(missing_ok=True)  # type: ignore[call-arg]
 
 
 def build_installer() -> None:
@@ -92,8 +95,9 @@ def build_portable_installer() -> None:
     )
 
 
-clean_files()
-build_installer()
-build_portable_installer()
-clean_files()
-print("Windows Installer builds are complete!")
+if __name__ == "__main__":
+    clean_files([portable, payload])
+    build_installer()
+    build_portable_installer()
+    clean_files([portable, payload])
+    print("Windows Installer builds are complete!")
