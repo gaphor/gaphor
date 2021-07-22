@@ -216,25 +216,17 @@ jobs:
         run: make install
       - name: Test with Pytest
         run: make test-all
-      - name: Create macOS Application
-        run: |
-          make dist
-          cd packaging
-          make all
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1.0.4
         if: env.SECRETS_AVAILABLE != null && env.NOT_PR 
         with:
           p12-file-base64: ${{ secrets.BASE64_ENCODED_P12 }}
           p12-password: ${{ secrets.CERTPASSWORD_P12 }}
-      - name: Sign app
-        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
-        run: >
+      - name: Create macOS Application
+        run: |
+          make dist
           cd packaging
-
-          codesign --sign "Developer ID Application: Daniel Yeaw (Z7V37BLNR9)"
-          --verbose --deep --timestamp --entitlements macos/entitlements.plist
-          -o runtime "dist/Gaphor.app"
+          make all
       - name: Notarize app
         uses: devbotsxyz/xcode-notarize@v1
         if: env.SECRETS_AVAILABLE != null && env.NOT_PR
