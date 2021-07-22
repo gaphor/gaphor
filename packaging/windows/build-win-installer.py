@@ -9,15 +9,6 @@ version = subprocess.run(
     ["poetry", "version", "-s"], capture_output=True, text=True
 ).stdout.rstrip()
 
-dir: Path = Path(__file__).resolve().parents[1]
-dist: Path = dir / "dist"
-Path(dist / "gaphor").mkdir(parents=True, exist_ok=True)
-
-gaphor_dist: Path = dist / "gaphor"
-seven_zip: Path = Path("C:/Program Files/7-Zip/7z.exe")
-payload: Path = dist / "payload.7z"
-portable: Path = dist / f"gaphor-{version}-portable"
-
 
 def clean_files(paths: list[Path]) -> None:
     print("Cleaning files")
@@ -28,26 +19,22 @@ def clean_files(paths: list[Path]) -> None:
             path.unlink(missing_ok=True)  # type: ignore[call-arg]
 
 
-def build_installer() -> None:
+def build_installer(icon: Path, files_to_package: Path, output_file: Path) -> None:
     print("Building Installer")
-    icon = dir / "windows" / "gaphor.ico"
-    shutil.copy(icon, gaphor_dist / "gaphor.ico")
-    os.chdir(gaphor_dist)
+    shutil.copy(icon, files_to_package / "gaphor.ico")
+    os.chdir(files_to_package)
     subprocess.run(
         [
             "makensis",
             "-NOCD",
             f"-DVERSION={version}",
-            str(dir / "windows" / "win_installer.nsi"),
+            str(working_dir / "windows" / "win_installer.nsi"),
         ],
         capture_output=True,
         text=True,
     )
 
-    shutil.move(
-        str(gaphor_dist / "gaphor-LATEST.exe"),
-        dist / f"gaphor-{version}-installer.exe",
-    )
+    shutil.move(str(files_to_package / "gaphor-LATEST.exe"), output_file)
 
 
 def concatenate_files(input_files: list[Path], output_file: Path) -> None:
@@ -70,34 +57,59 @@ def unix2dos(file_path: Path) -> None:
         open_file.write(content)
 
 
-def build_portable_installer() -> None:
+def build_portable_installer(
+    symlink_path: Path,
+    readme_path: Path,
+    files_to_package: Path,
+    portable_path: Path,
+    payload_path: Path,
+    seven_zip_path: Path,
+    output_file: Path,
+) -> None:
     print("Building portable installer")
-    portable.mkdir(parents=True)
-    shutil.copy(dir / "windows" / "gaphor.lnk", portable / "gaphor.lnk")
-    shutil.copy(dir / "windows" / "README-PORTABLE.txt", portable / "README.txt")
-    unix2dos(portable / "README.txt")
-    config_path = portable / "config"
+    shutil.copy(symlink_path, portable_path / symlink_path.name)
+    shutil.copy(readme_path, portable_path / "README.txt")
+    unix2dos(portable_path / "README.txt")
+    config_path = portable_path / "config"
     config_path.mkdir()
-    shutil.copytree(gaphor_dist, portable / "data")
+    shutil.copytree(files_to_package, portable_path / "data")
 
-    subprocess.run([str(seven_zip), "a", str(payload), str(portable)])
-    if payload.is_file():
-        print(f"Payload 7z archive found at {payload}")
+    subprocess.run([str(seven_zip_path), "a", str(payload_path), str(portable_path)])
+    if payload_path.is_file():
+        print(f"Payload 7z archive found at {payload_path}")
     else:
         print("Payload 7z archive not found")
-    sfx_path = seven_zip.parent / "7z.sfx"
+    sfx_path = seven_zip_path.parent / "7z.sfx"
     if sfx_path.is_file():
         print(f"Sfx file found at {sfx_path}")
     else:
         print("Sfx file not found")
-    concatenate_files(
-        [seven_zip.parent / "7z.sfx", payload], dist / f"gaphor-{version}-portable.exe"
-    )
+    concatenate_files([seven_zip_path.parent / "7z.sfx", payload_path], output_file)
 
 
 if __name__ == "__main__":
+    working_dir: Path = Path(__file__).resolve().parents[1]
+    dist: Path = working_dir / "dist"
+    Path(dist / "gaphor").mkdir(parents=True, exist_ok=True)
+
+    portable: Path = dist / f"gaphor-{version}-portable"
+    payload: Path = dist / "payload.7z"
+
     clean_files([portable, payload])
-    build_installer()
-    build_portable_installer()
+
+    icon = working_dir / "windows" / "gaphor.ico"
+    gaphor_files: Path = dist / "gaphor"
+    installer = dist / f"gaphor-{version}-installer.exe"
+    build_installer(icon, gaphor_files, installer)
+
+    portable.mkdir(parents=True)
+    symlink = working_dir / "windows" / "gaphor.lnk"
+    readme = working_dir / "windows" / "README-PORTABLE.txt"
+    seven_zip: Path = Path("C:/Program Files/7-Zip/7z.exe")
+    installer = dist / f"gaphor-{version}-portable.exe"
+    build_portable_installer(
+        symlink, readme, gaphor_files, portable, payload, seven_zip, installer
+    )
+
     clean_files([portable, payload])
     print("Windows Installer builds are complete!")
