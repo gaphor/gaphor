@@ -68,7 +68,6 @@ poethepoet = "^0.10.0"
 gaphor = "gaphor.ui:main"
 gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 
-
 [tool.poe.tasks]
 test = "pytest -m 'not slow'"
 test-all = "pytest --cov=gaphor/"
@@ -99,10 +98,10 @@ raaml = [
     { "cmd" = "black gaphor/RAAML/raaml.py" },
 ]
 c4model = [
-    { "cmd" = "python gaphor/codegen/codegen.py --uml_profile models/C4Model.gaphor gaphor/C4Model/raaml.py models/C4Model.override" },
+    { "cmd" = "python gaphor/codegen/codegen.py --uml_profile models/C4Model.gaphor gaphor/C4Model/c4model.py models/C4Model.override" },
     { "cmd" = "mypy gaphor/C4Model" },
     { "cmd" = "isort gaphor/C4Model" },
-    { "cmd" = "black gaphor/C4Model/raaml.py" },
+    { "cmd" = "black gaphor/C4Model/c4model.py" },
 ]
 lint = "pre-commit run --all-files"
 docs = "sphinx-build docs docs/_build/html"
