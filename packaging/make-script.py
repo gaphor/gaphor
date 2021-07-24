@@ -34,8 +34,12 @@ def make_file_version_info():
     metadata = win_packaging_path / "versionfile_metadata.yml"
     file_version_out = win_packaging_path / "file_version_info.txt"
 
+    version = get_version()
+    if "dev" in version:
+        version = version[: version.rfind(".dev")]
+
     pyinstaller_versionfile.create_versionfile_from_input_file(
         output_file=file_version_out,
         input_file=metadata,
-        version=get_version(),
+        version=version,
     )
