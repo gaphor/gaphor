@@ -73,7 +73,7 @@ jobs:
       - name: Build AppImage
         run: |
           poetry run poe package
-          cd appimage
+          cd packaging/appimage
           make dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-x86_64.AppImage
         uses: actions/upload-artifact@v2
