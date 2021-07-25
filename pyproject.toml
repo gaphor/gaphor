@@ -111,6 +111,10 @@ version-file = { "script" = "packaging.make-script:make_file_version_info" }
 pyinstall = "pyinstaller -y --distpath packaging/dist --workpath packaging/build packaging/gaphor.spec"
 package = ["gaphor-script", "version-file", "pyinstall"]
 win-installer = { "script" = "packaging.windows.build-win-installer:main" }
+gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini gaphor"
+gettext-po = { "script" = "po.build-babel:update_po_files" }
+gettext-mo = { "script" = "po.build-babel:compile_mo_files" }
+update-translations = ["gettext-pot", "gettext-po", "gettext-mo"]
 
 [tool.poetry.plugins."gaphor.appservices"]
 "event_manager" = "gaphor.core.eventmanager:EventManager"
