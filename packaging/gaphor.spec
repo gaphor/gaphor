@@ -65,7 +65,7 @@ exe = EXE(
     version="windows/file_version_info.txt",
     console=False,
     codesign_identity="Developer ID Application: Daniel Yeaw (Z7V37BLNR9)",
-    entitlements_file="macos/entitlements.plist",
+    entitlements_file="packaging/macos/entitlements.plist",
 )
 coll = COLLECT(
     exe, a.binaries, a.zipfiles, a.datas, strip=False, upx=True, name="gaphor"
