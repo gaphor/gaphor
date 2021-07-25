@@ -222,7 +222,7 @@ jobs:
       - name: Create macOS Application
         run: |
           poetry run poe dist
-          poetry run poe pyinstall
+          poetry run poe package
       - name: Notarize app
         uses: devbotsxyz/xcode-notarize@v1
         if: env.SECRETS_AVAILABLE != null && env.NOT_PR
