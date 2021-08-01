@@ -4,19 +4,18 @@ from tomlkit import parse
 
 block_cipher = None
 
-project_dir = Path.cwd()
 
 glade_files = [
-    (str(p), str(Path(*p.parts[1:-1])))
-    for p in project_dir.rglob("*.glade")
+    (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.glade")
 ]
 ui_files = [
-    (str(p), str(Path(*p.parts[1:-1])))
-    for p in project_dir.rglob("*.ui")
+    (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.ui")
 ]
 
 
 def get_version() -> str:
+    project_dir = Path.cwd().parent
+    print(project_dir.resolve())
     f = project_dir / "pyproject.toml"
     return str(parse(f.read_text())["tool"]["poetry"]["version"])
 
