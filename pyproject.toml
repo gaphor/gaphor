@@ -108,7 +108,7 @@ docs = "sphinx-build docs docs/_build/html"
 clean = { "shell" = "rm -rf dist build packaging/dist packaging/build packaging/windows/file_version_info.txt packaging/gaphor-script.py docs/_build" }
 gaphor-script = { "script" = "packaging.make-script:make_gaphor_script" }
 version-file = { "script" = "packaging.make-script:make_file_version_info" }
-pyinstall = "pyinstaller -y --distpath packaging/dist --workpath packaging/build packaging/gaphor.spec"
+pyinstall = { "script" = "packaging.make-script:make_pyinstaller" }
 package = ["gaphor-script", "version-file", "pyinstall"]
 win-installer = { "script" = "packaging.windows.build-win-installer:main" }
 gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini gaphor"
