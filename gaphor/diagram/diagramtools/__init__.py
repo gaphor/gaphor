@@ -4,7 +4,7 @@ from gaphas.tool import (
     hover_tool,
     item_tool,
     rubberband_tool,
-    scroll_tool,
+    scroll_tools,
     view_focus_tool,
     zoom_tool,
 )
@@ -30,7 +30,7 @@ def apply_default_tool_set(view, modeling_language, event_manager, rubberband_st
     )
     view.add_controller(*text_edit_tools(view))
     view.add_controller(rubberband_tool(view, rubberband_state))
-    view.add_controller(scroll_tool(view))
+    view.add_controller(*scroll_tools(view))
     view.add_controller(zoom_tool(view))
     view.add_controller(view_focus_tool(view))
     view.add_controller(shortcut_tool(view, modeling_language, event_manager))
@@ -48,6 +48,6 @@ def apply_placement_tool_set(
         )
     )
     view.add_controller(drop_zone_tool(view, item_factory.item_class))
-    view.add_controller(scroll_tool(view))
+    view.add_controller(*scroll_tools(view))
     view.add_controller(zoom_tool(view))
     view.add_controller(shortcut_tool(view, modeling_language, event_manager))
