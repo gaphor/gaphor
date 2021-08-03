@@ -147,7 +147,7 @@ class Diagrams(UIComponent, ActionProvider):
 
     @action(
         name="zoom-in",
-        shortcut="<Primary>plus",
+        shortcut="<Primary>equal",
     )
     def zoom_in(self):
         view = self.get_current_view()
