@@ -91,6 +91,7 @@ jobs:
         run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
   gvsbuild:
+    needs: lint
     runs-on: windows-latest
     timeout-minutes: 45
     env:
