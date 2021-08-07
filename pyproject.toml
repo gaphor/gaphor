@@ -117,6 +117,9 @@ gettext-po = { "script" = "po.build-babel:update_po_files" }
 gettext-mo = { "script" = "po.build-babel:compile_mo_files" }
 update-translations = ["gettext-pot", "gettext-po", "gettext-mo"]
 
+[tool.poe.executor]
+type = "virtualenv"
+
 [tool.poetry.plugins."gaphor.appservices"]
 "event_manager" = "gaphor.core.eventmanager:EventManager"
 "session" = "gaphor.services.session:Session"
