@@ -24,6 +24,7 @@ class NamedElement(Element):
     visibility: enumeration
     clientDependency: relation_many[Dependency]
     supplierDependency: relation_many[Dependency]
+    informationFlow: relation_many[InformationFlow]
     qualifiedName: derived[list[str]]
     namespace: relation_one[Namespace]
     memberNamespace: relation_many[Namespace]
@@ -745,6 +746,20 @@ class ComponentRealization(Realization):
     abstraction: relation_one[Component]  # type: ignore[assignment]
 
 
+class InformationItem(Classifier):
+    represented: relation_many[Classifier]
+
+
+class InformationFlow(PackageableElement, DirectedRelationship):
+    conveyed: relation_many[Classifier]
+    realization: relation_many[Relationship]
+    realizingMessage: relation_many[Message]
+    realizingActivityEdge: relation_many[ActivityEdge]
+    realizingConnector: relation_many[Connector]
+    informationTarget: relation_many[NamedElement]
+    informationSource: relation_many[NamedElement]
+
+
 # class 'Expression' has been stereotyped as 'SimpleAttribute'
 # class 'OpaqueExpression' has been stereotyped as 'SimpleAttribute'
 # class 'ValueSpecification' has been stereotyped as 'SimpleAttribute'
@@ -1308,6 +1323,23 @@ Operation.artifact = association(
 Artifact.ownedOperation = association(
     "ownedOperation", Operation, composite=True, opposite="artifact"
 )
+InformationItem.represented = association("represented", Classifier)
+InformationFlow.conveyed = association("conveyed", Classifier, lower=1)
+InformationFlow.realization = association("realization", Relationship)
+InformationFlow.realizingMessage = association("realizingMessage", Message)
+InformationFlow.realizingActivityEdge = association(
+    "realizingActivityEdge", ActivityEdge
+)
+InformationFlow.realizingConnector = association("realizingConnector", Connector)
+NamedElement.informationFlow = association(
+    "informationFlow", InformationFlow, opposite="informationTarget"
+)
+InformationFlow.informationTarget = association(
+    "informationTarget", NamedElement, lower=1, opposite="informationFlow"
+)
+InformationFlow.informationSource = association(
+    "informationSource", NamedElement, lower=1
+)
 # 82: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
 
 
@@ -1545,6 +1577,7 @@ DirectedRelationship.target = derivedunion(
     ElementImport.importedElement,
     Dependency.supplier,
     Dependency.client,
+    InformationFlow.informationTarget,
 )
 Element.directedRelationship = derivedunion(
     "directedRelationship",
@@ -1568,6 +1601,7 @@ DirectedRelationship.source = derivedunion(
     Generalization.specific,
     PackageImport.importingNamespace,
     PackageMerge.mergingPackage,
+    InformationFlow.informationSource,
 )
 Action.context_ = derivedunion("context_", Classifier, 0, 1)
 Element.relationship = derivedunion(
