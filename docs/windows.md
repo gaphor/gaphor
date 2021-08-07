@@ -91,27 +91,20 @@ cd (to the location you want to put Gaphor)
 git clone https://github.com/gaphor/gaphor.git
 ```
 
-Create and activate a virtual environment in which Gaphor can be installed.
-```PowerShell
-PS > cd gaphor
-PS > python -m venv .venv
-PS > .\.venv\Scripts\activate.ps1
-```
-
-Install and configure Poetry
-```PowerShell
-(.venv) PS > pip install poetry
-(.venv) PS > poetry config virtualenvs.create false
+Install Poetry (you may want to consider installing poetry via [pipx](https://pypi.org/project/pipx/), instead of pip):
+```bash
+PS > pip install --user poetry
+PS > poetry config virtualenvs.in-project true
 ```
 
 Install PyGObject and pycairo from gvsbuild
 ```PowerShell
-(.venv) PS > Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl | ForEach-Object -process { pip install $_ }
+PS > Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl | ForEach-Object -process { poetry run pip install $_ }
 ```
 
 Install Gaphor's other dependencies
 ```PowerShell
-(.venv) PS > poetry install
+PS > poetry install
 ```
 
 Add GTK to your path:
@@ -121,7 +114,7 @@ $env:Path = "C:\gtk-build\gtk\x64\release\bin;" + $env:Path
 
 Launch Gaphor!
 ```PowerShell
-(.venv) PS > gaphor
+PS > poetry run gaphor
 ```
 
 ### GTK and Python with MSYS2 (alternative method)

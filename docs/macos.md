@@ -16,6 +16,7 @@ pip install --user poetry
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 ```
 $ cd gaphor
+$ poetry config virtualenvs.in-project true
 $ poetry install
 $ poetry run gaphor
 ```

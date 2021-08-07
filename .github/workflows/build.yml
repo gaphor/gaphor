@@ -49,7 +49,9 @@ jobs:
         id: meta
         run: .github/scripts/metadata.sh
       - name: Install Python Dependencies
-        run: poetry install
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install
       - name: Test with Pytest
         run: xvfb-run poetry run poe test-all
       - name: Upload Code Coverage to Code Climate
@@ -175,6 +177,7 @@ jobs:
       - name: Install Poetry and Wheel
         run: |
           pip install poetry==$Env:POETRY_VERSION
+          poetry config virtualenvs.in-project true
       - name: Install PyGObject and pycairo
         run: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
       - name: Collect Project Data
@@ -256,7 +259,9 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Python Dependencies
-        run: poetry install
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install
       - name: Test with Pytest
         run: poetry run poe test-all
       - name: Import codesign certificate
@@ -345,7 +350,9 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Python Dependencies
-        run: poetry install
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install
       - name: Test with Pytest for GTK 4
         continue-on-error: true
         run: poetry run poe test-all
