@@ -59,7 +59,7 @@ babel = "^2.9.1"
 babelgladeextractor = "^0.7"
 flake8 = "^3.9"
 isort = "^5.9"
-sphinxcontrib-images = "^0.9.3"
+sphinxcontrib-images = "^0.9.4"
 
 [tool.poetry.scripts]
 gaphor = 'gaphor.ui:main'
