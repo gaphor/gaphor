@@ -9,4 +9,4 @@ sphinxcontrib-images==0.9.4
 tomlkit==0.7.2
 generic==1.0.0
 typing_extensions==3.10.0.0
-importlib_metadata==4.6.3
+importlib_metadata==4.6.4
