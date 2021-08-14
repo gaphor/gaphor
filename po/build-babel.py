@@ -9,9 +9,9 @@ def run_babel(command: str, input: Path, output_file: Path, locale: str):
         [
             "pybabel",
             command,
-            f'--input={input}',
-            f'--output-file={output_file}',
-            f'--locale={locale}',
+            f"--input={input}",
+            f"--output-file={output_file}",
+            f"--locale={locale}",
             "--domain=gaphor",
         ]
     )
