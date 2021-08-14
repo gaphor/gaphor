@@ -191,9 +191,7 @@ jobs:
       - name: Create Windows Installers
         run: |
           poetry run poe dist
-          poetry run poe gaphor-script
-          poetry run poe version-file
-          poetry run poe pyinstall
+          poetry run poe package
           poetry run poe win-installer
       - name: Sign Executables
         env:
@@ -212,13 +210,11 @@ jobs:
           Remove-Item 'certificate.pfx'
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v2
-        if: env.SECRETS_AVAILABLE != null
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-installer.exe
           path: packaging/dist/gaphor-${{ steps.meta.outputs.version }}-installer.exe
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-portable.exe
         uses: actions/upload-artifact@v2
-        if: env.SECRETS_AVAILABLE != null
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-portable.exe
           path: packaging/dist/gaphor-${{ steps.meta.outputs.version }}-portable.exe
@@ -266,7 +262,7 @@ jobs:
         run: poetry run poe test-all
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1.0.4
-        if: env.SECRETS_AVAILABLE != null && env.NOT_PR 
+        if: env.CERT_AVAILABLE != null && env.NOT_PR 
         with:
           p12-file-base64: ${{ secrets.BASE64_ENCODED_P12 }}
           p12-password: ${{ secrets.CERTPASSWORD_P12 }}
@@ -276,14 +272,14 @@ jobs:
           poetry run poe package
       - name: Notarize app
         uses: devbotsxyz/xcode-notarize@v1
-        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
+        if: env.CERT_AVAILABLE!= null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor.app"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
           appstore-connect-password: ${{ secrets.AC_PASSWORD }}
       - name: Staple app
         uses: devbotsxyz/xcode-staple@v1
-        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
+        if: env.CERT_AVAILABLE!= null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor.app"
       - name: Create dmg
@@ -298,7 +294,7 @@ jobs:
           "dist/Gaphor.app"
       - name: Notarize dmg
         uses: devbotsxyz/xcode-notarize@v1
-        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
+        if: env.CERT_AVAILABLE!= null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
