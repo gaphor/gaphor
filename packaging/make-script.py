@@ -21,6 +21,14 @@ def make_gaphor_script():
 
     gaphor_script = packaging_path / "gaphor-script.py"
     with open(gaphor_script, "w") as file:
+
+        # https://github.com/pyinstaller/pyinstaller/issues/6100
+        # On one Windows computer, PyInstaller was adding a ; to
+        # end of the path, this removes it if it exists
+        file.write("import os\n")
+        file.write("if os.environ['PATH'][-1] == ';':\n")
+        file.write("    os.environ['PATH'] = os.environ['PATH'][:-1]\n")
+
         plugins = toml["tool"]["poetry"]["plugins"]
         for cat in plugins.values():
             for entrypoint in cat.values():
