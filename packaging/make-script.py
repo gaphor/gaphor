@@ -58,3 +58,11 @@ def make_file_version_info():
 def make_pyinstaller():
     os.chdir(packaging_path)
     subprocess.run(["pyinstaller", "-y", "gaphor.spec"])
+
+
+def make_pyinstaller_macos_signed():
+    os.chdir(packaging_path)
+    identity = "Developer ID Application: Daniel Yeaw (Z7V37BLNR9)"
+    subprocess.run(
+        ["pyinstaller", "-y", "--codesign-identity", identity, "gaphor.spec"]
+    )

@@ -191,7 +191,7 @@ jobs:
       - name: Create Windows Installers
         run: |
           poetry run poe dist
-          poetry run poe package
+          poetry run poe package-win
           poetry run poe win-installer
       - name: Sign Executables
         env:
@@ -266,20 +266,24 @@ jobs:
         with:
           p12-file-base64: ${{ secrets.BASE64_ENCODED_P12 }}
           p12-password: ${{ secrets.CERTPASSWORD_P12 }}
-      - name: Create macOS Application
-        run: |
-          poetry run poe dist
-          poetry run poe package
+      - name: Build Wheel
+        run: poetry run poe dist
+      - name: Create Unsigned macOS Application
+        if: env.CERT_AVAILABLE == null || env.NOT_PR == 'false'
+        run: poetry run poe package
+      - name: Create Signed macOS Application
+        if: env.CERT_AVAILABLE != null && env.NOT_PR
+        run: poetry run poe package-macos-signed
       - name: Notarize app
         uses: devbotsxyz/xcode-notarize@v1
-        if: env.CERT_AVAILABLE!= null && env.NOT_PR
+        if: env.CERT_AVAILABLE != null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor.app"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
           appstore-connect-password: ${{ secrets.AC_PASSWORD }}
       - name: Staple app
         uses: devbotsxyz/xcode-staple@v1
-        if: env.CERT_AVAILABLE!= null && env.NOT_PR
+        if: env.CERT_AVAILABLE != null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor.app"
       - name: Create dmg
@@ -294,7 +298,7 @@ jobs:
           "dist/Gaphor.app"
       - name: Notarize dmg
         uses: devbotsxyz/xcode-notarize@v1
-        if: env.CERT_AVAILABLE!= null && env.NOT_PR
+        if: env.CERT_AVAILABLE != null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
