@@ -29,7 +29,7 @@ execute:
 
 ```bash
 $ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
-gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
+gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev libgtksourceview-4-dev
 ```
 
 Install Poetry (you may want to consider [alternative methods](https://python-poetry.org/docs/#alternative-installation-methods-not-recommended)):
