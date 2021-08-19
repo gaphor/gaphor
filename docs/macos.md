@@ -6,7 +6,7 @@ To setup a development environment with macOS:
 1. Install [homebrew](https://brew.sh)
 1. Open a terminal and execute:
 ```bash
-$ brew install python3 gobject-introspection gtk+3 adwaita-icon-theme gtk-mac-integration
+$ brew install python3 gobject-introspection gtk+3 gtksourceview4 adwaita-icon-theme gtk-mac-integration
 ```
 Install Poetry (you may want to consider installing poetry via [pipx](https://pypi.org/project/pipx/), instead of pip):
 ```bash
