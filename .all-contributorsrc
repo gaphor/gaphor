@@ -471,6 +471,15 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "Gytree",
+      "name": "Gytree",
+      "avatar_url": "https://avatars.githubusercontent.com/u/28499079?v=4",
+      "profile": "https://github.com/Gytree",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
