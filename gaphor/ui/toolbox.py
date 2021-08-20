@@ -10,10 +10,11 @@ from typing import Optional, Sequence, Tuple
 from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.core import action
-from gaphor.core.eventmanager import event_handler
+from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.event import DiagramItemPlaced
-from gaphor.services.modelinglanguage import ModelingLanguageChanged
+from gaphor.services.modelinglanguage import ModelingLanguage, ModelingLanguageChanged
+from gaphor.services.properties import Properties
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group, from_variant
 from gaphor.ui.event import ToolSelected
@@ -34,7 +35,12 @@ class Toolbox(UIComponent):
             ),
         ]
 
-    def __init__(self, event_manager, properties, modeling_language):
+    def __init__(
+        self,
+        event_manager: EventManager,
+        properties: Properties,
+        modeling_language: ModelingLanguage,
+    ):
         self.event_manager = event_manager
         self.properties = properties
         self.modeling_language = modeling_language
@@ -51,7 +57,7 @@ class Toolbox(UIComponent):
         self._toolbox_container = toolbox_container
         return toolbox_container
 
-    def close(self):
+    def close(self) -> None:
         if self._toolbox:
             if Gtk.get_major_version() == 3:
                 self._toolbox.destroy()
@@ -61,7 +67,7 @@ class Toolbox(UIComponent):
         self.event_manager.unsubscribe(self._on_modeling_language_changed)
         self.event_manager.unsubscribe(self._on_diagram_item_placed)
 
-    def activate_shortcut(self, keyval, state):
+    def activate_shortcut(self, keyval, state) -> bool:
         # Accelerator keys are lower case. Since we handle them in a key-press event
         # handler, we'll need the upper-case versions as well in case Shift is pressed.
         for _title, items in self.modeling_language.toolbox_definition:
@@ -84,16 +90,7 @@ class Toolbox(UIComponent):
     def create_toolbox_button(
         self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]
     ) -> Gtk.Button:
-        """Creates a tool button for the toolbox.
-
-        Args:
-            action_name (str): The action for the button.
-            icon_name (str): The button icon.
-            label (str): The label for the button.
-            shortcut (str): The optional button shortcut.
-
-        Returns: The Gtk.ToggleToolButton.
-        """
+        """Creates a tool button for the toolbox."""
         button = Gtk.ToggleButton.new()
         if Gtk.get_major_version() == 3:
             icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
@@ -115,18 +112,14 @@ class Toolbox(UIComponent):
                 button.set_tooltip_text(f"{label}")
 
         # Enable Drag and Drop
-        if action_name != "toolbox-pointer":
-            if Gtk.get_major_version() == 3:
-                button.drag_source_set(
-                    Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
-                    self.DND_TARGETS,
-                    Gdk.DragAction.COPY | Gdk.DragAction.LINK,
-                )
-                button.drag_source_set_icon_name(icon_name)
-                button.connect("drag-data-get", _button_drag_data_get, action_name)
-            else:
-                # TODO: Gtk4 - use controllers DragSource and DropTarget
-                pass
+        if action_name != "toolbox-pointer" and Gtk.get_major_version() == 3:
+            button.drag_source_set(
+                Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
+                self.DND_TARGETS,
+                Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+            )
+            button.drag_source_set_icon_name(icon_name)
+            button.connect("drag-data-get", _button_drag_data_get, action_name)
         return button
 
     def create_toolbox(
@@ -183,19 +176,15 @@ class Toolbox(UIComponent):
         self.event_manager.handle(ToolSelected(tool_name))
 
     @event_handler(DiagramItemPlaced)
-    def _on_diagram_item_placed(self, event):
+    def _on_diagram_item_placed(self, event: DiagramItemPlaced) -> None:
         if self.properties.get("reset-tool-after-create", True):
             self._action_group.lookup_action("select-tool").activate(
                 GLib.Variant.new_string("toolbox-pointer")
             )
 
     @event_handler(ModelingLanguageChanged)
-    def _on_modeling_language_changed(self, event) -> None:
-        """Reconfigures the toolbox based on the modeling language selected.
-
-        Args:
-            event: The ModelingLanguageChanged event.
-        """
+    def _on_modeling_language_changed(self, event: ModelingLanguageChanged) -> None:
+        """Reconfigures the toolbox based on the modeling language selected."""
         toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
         if self._toolbox_container:
             if Gtk.get_major_version() == 3:
@@ -205,35 +194,34 @@ class Toolbox(UIComponent):
                 self._toolbox_container.set_child(toolbox)
         self._toolbox = toolbox
 
-    def _on_toolbox_destroyed(self, widget):
+    def _on_toolbox_destroyed(self, widget: Gtk.Widget) -> None:
         self._toolbox = None
 
 
 if Gtk.get_major_version() == 3:
 
-    def _button_drag_data_get(self, button, context, data, info, time, action_name):
+    def _button_drag_data_get(
+        self,
+        button: Gtk.Button,
+        context: Gdk.DragContext,
+        data: Gtk.SelectionData,
+        info: int,
+        time: int,
+        action_name: str,
+    ) -> None:
         """The drag-data-get event signal handler.
 
-        The drag-data-get signal is emitted on the drag source when the drop
-        site requests the data which is dragged.
-
-        Args:
-            button (Gtk.Button): The button that received the signal.
-            context (Gdk.DragContext): The drag context.
-            data (Gtk.SelectionData): The data to be filled with the dragged
-                data.
-            info (int): The info that has been registered with the target in
-                the Gtk.TargetList
-            time (int): The timestamp at which the data was received.
+        The drag-data-get signal is emitted on the drag source when the
+        drop site requests the data which is dragged.
         """
         data.set(type=data.get_target(), format=8, data=action_name.encode())
 
 
-_upper_offset = ord("A") - ord("a")
+_upper_offset: int = ord("A") - ord("a")
 
 
 @functools.lru_cache(maxsize=None)
-def parse_shortcut(shortcut):
+def parse_shortcut(shortcut: str) -> Tuple[Tuple[int, int], Gdk.ModifierType]:
     if Gtk.get_major_version() == 3:
         key, mod = Gtk.accelerator_parse(shortcut)
     else:
