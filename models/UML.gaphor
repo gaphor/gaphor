@@ -44835,7 +44835,7 @@ removed.</val>
 </annotatedElement>
 <body>
 <val>Multiplicity was '*'. Changed
-to accomodate simpleAttribute</val>
+to accommodate simpleAttribute</val>
 </body>
 <presentation>
 <reflist>
@@ -52192,7 +52192,7 @@ association:not([memberEnd.navigability*=true]) {
 </Comment>
 <Comment id="cf01a548-e966-11ea-96dc-bf74f1f80424">
 <body>
-<val>Should be called 
+<val>Should be called
 /ownedType</val>
 </body>
 <presentation>
