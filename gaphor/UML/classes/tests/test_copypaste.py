@@ -109,8 +109,8 @@ def two_classes_and_an_association(diagram, element_factory):
     gen_cls.name = "Gen"
     spc_cls.name = "Spc"
 
-    connect(assoc_item, assoc_item.handles()[0], gen_cls_item)
-    connect(assoc_item, assoc_item.handles()[1], spc_cls_item)
+    connect(assoc_item, assoc_item.handles()[0], spc_cls_item)
+    connect(assoc_item, assoc_item.handles()[1], gen_cls_item)
     UML.model.set_navigability(
         assoc_item.subject, assoc_item.subject.memberEnd[0], True
     )
@@ -119,7 +119,7 @@ def two_classes_and_an_association(diagram, element_factory):
         assoc_item.subject.memberEnd[0]
         in assoc_item.subject.memberEnd[1].type.ownedAttribute
     )
-    assert spc_cls.ownedAttribute
+    # assert gen_cls_item.ownedAttribute
 
     return gen_cls_item, spc_cls_item, assoc_item
 
@@ -164,8 +164,8 @@ def test_copy_remove_paste_items_with_connections(diagram, element_factory):
     )
     new_assoc = next(element_factory.select(UML.Association))
 
-    assert new_assoc.memberEnd[0].type is new_cls1
-    assert new_assoc.memberEnd[1].type is new_cls2
+    assert new_assoc.memberEnd[0].type is new_cls2
+    assert new_assoc.memberEnd[1].type is new_cls1
     assert new_assoc.memberEnd[0] in new_assoc.memberEnd[1].type.ownedAttribute
     assert new_cls1.presentation[0] in new_items
     assert new_cls2.presentation[0] in new_items

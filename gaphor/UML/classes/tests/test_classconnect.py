@@ -196,8 +196,8 @@ def test_generalization_connection(create):
 
     connect(gen, gen.head, c2)
     assert gen.subject is not None
-    assert gen.subject.general is c2.subject
-    assert gen.subject.specific is c1.subject
+    assert gen.subject.general is c1.subject
+    assert gen.subject.specific is c2.subject
 
 
 def test_generalization_reconnection(create, element_factory):
@@ -214,8 +214,8 @@ def test_generalization_reconnection(create, element_factory):
 
     connect(gen, gen.head, c2)
     assert gen.subject is not None
-    assert gen.subject.general is c2.subject
-    assert gen.subject.specific is c1.subject
+    assert gen.subject.general is c1.subject
+    assert gen.subject.specific is c2.subject
 
     # Now do the same on a new diagram:
     diagram2 = element_factory.create(UML.Diagram)
@@ -230,8 +230,8 @@ def test_generalization_reconnection(create, element_factory):
 
     connect(gen2, gen2.tail, c4)
     assert gen.subject is not gen2.subject
-    assert len(c1.subject.generalization) == 1
-    assert c1.subject.generalization[0] is gen.subject
+    assert len(c2.subject.generalization) == 1
+    assert c2.subject.generalization[0] is gen.subject
 
 
 def test_generalization_reconnection2(create):
@@ -251,6 +251,6 @@ def test_generalization_reconnection2(create):
     connect(gen, gen.tail, c3)
 
     assert s is gen.subject
-    assert c1.subject is gen.subject.general
-    assert c3.subject is gen.subject.specific
-    assert c2.subject is not gen.subject.specific
+    assert c1.subject is gen.subject.specific
+    assert c3.subject is gen.subject.general
+    assert c2.subject is not gen.subject.general

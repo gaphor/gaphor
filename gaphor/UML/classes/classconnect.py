@@ -76,12 +76,12 @@ class GeneralizationConnect(RelationshipConnect):
 
     def reconnect(self, handle, port):
         self.reconnect_relationship(
-            handle, UML.Generalization.general, UML.Generalization.specific
+            handle, UML.Generalization.specific, UML.Generalization.general
         )
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(
-            UML.Generalization, UML.Generalization.general, UML.Generalization.specific
+            UML.Generalization, UML.Generalization.specific, UML.Generalization.general
         )
         self.line.subject = relation
 
