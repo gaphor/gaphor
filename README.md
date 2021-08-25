@@ -203,8 +203,8 @@ See [the contributing file](CONTRIBUTING.md)!
 
 ### Translations
 
-Translation of Gaphor is done using [Weblate](https://hosted.weblate.org/projects/gaphor/gaphor/). Thank you so much for yur effort
-helping us keep it available in many languages!
+Translation of Gaphor is done using [Weblate](https://hosted.weblate.org/projects/gaphor/gaphor/). Thank you so much for your effort
+in helping us keep it available in many languages!
 
 ## © License
 
