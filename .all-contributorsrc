@@ -500,6 +500,15 @@
         "ideas",
         "translation"
       ]
+    },
+    {
+      "login": "jirilebl",
+      "name": "Jiří Lebl",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3384911?v=4",
+      "profile": "http://www.jirka.org/",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
