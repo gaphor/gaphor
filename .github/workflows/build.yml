@@ -92,7 +92,7 @@ jobs:
         if: github.event_name == 'release'
         run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
-  gvsbuild:
+  windows-build-gtk:
     needs: lint
     runs-on: windows-latest
     timeout-minutes: 45
@@ -143,7 +143,7 @@ jobs:
         run: echo "::set-output name=cachekey::gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}"
 
   windows:
-    needs: [lint, gvsbuild]
+    needs: [lint, windows-build-gtk]
     runs-on: windows-latest
     timeout-minutes: 45
     if: "!contains(github.event.head_commit.message, 'skip ci')"
