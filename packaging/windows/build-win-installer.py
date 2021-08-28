@@ -19,7 +19,9 @@ def clean_files(paths: list[Path]) -> None:
             path.unlink(missing_ok=True)  # type: ignore[call-arg]
 
 
-def build_installer(icon: Path, files_to_package: Path, output_file: Path) -> None:
+def build_installer(
+    icon: Path, nsi: Path, files_to_package: Path, output_file: Path
+) -> None:
     print("Building Installer")
     shutil.copy(icon, files_to_package / "gaphor.ico")
     os.chdir(files_to_package)
@@ -28,7 +30,7 @@ def build_installer(icon: Path, files_to_package: Path, output_file: Path) -> No
             "makensis",
             "-NOCD",
             f"-DVERSION={version}",
-            str(working_dir / "windows" / "win_installer.nsi"),
+            str(nsi),
         ],
         capture_output=True,
         text=True,
@@ -87,7 +89,7 @@ def build_portable_installer(
     concatenate_files([seven_zip_path.parent / "7z.sfx", payload_path], output_file)
 
 
-if __name__ == "__main__":
+def main():
     working_dir: Path = Path(__file__).resolve().parents[1]
     dist: Path = working_dir / "dist"
     Path(dist / "gaphor").mkdir(parents=True, exist_ok=True)
@@ -98,9 +100,10 @@ if __name__ == "__main__":
     clean_files([portable, payload])
 
     icon = working_dir / "windows" / "gaphor.ico"
+    nsi = working_dir / "windows" / "win_installer.nsi"
     gaphor_files: Path = dist / "gaphor"
     installer = dist / f"gaphor-{version}-installer.exe"
-    build_installer(icon, gaphor_files, installer)
+    build_installer(icon, nsi, gaphor_files, installer)
 
     portable.mkdir(parents=True)
     symlink = working_dir / "windows" / "gaphor.lnk"
@@ -113,3 +116,7 @@ if __name__ == "__main__":
 
     clean_files([portable, payload])
     print("Windows Installer builds are complete!")
+
+
+if __name__ == "__main__":
+    main()

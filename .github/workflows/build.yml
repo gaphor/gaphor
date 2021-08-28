@@ -1,7 +1,7 @@
 name: Build
 
 env:
-  POETRY_VERSION: 1.1.5
+  POETRY_VERSION: 1.1.7
 
 on:
   push:
@@ -49,9 +49,11 @@ jobs:
         id: meta
         run: .github/scripts/metadata.sh
       - name: Install Python Dependencies
-        run: make install
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install
       - name: Test with Pytest
-        run: xvfb-run make test-all
+        run: xvfb-run poetry run poe test-all
       - name: Upload Code Coverage to Code Climate
         uses: paambaati/codeclimate-action@v2.7.5
         env:
@@ -59,7 +61,7 @@ jobs:
         with:
           coverageCommand: poetry run coverage xml
       - name: Create Source Dist and Wheel
-        run: make dist
+        run: poetry run poe dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz
         uses: actions/upload-artifact@v2
         with:
@@ -72,9 +74,8 @@ jobs:
           path: dist/gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
       - name: Build AppImage
         run: |
-          cd packaging
-          make all
-          cd appimage
+          poetry run poe package
+          cd packaging/appimage
           make dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-x86_64.AppImage
         uses: actions/upload-artifact@v2
@@ -91,63 +92,107 @@ jobs:
         if: github.event_name == 'release'
         run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
-  windows:
+  windows-build-gtk:
     needs: lint
     runs-on: windows-latest
     timeout-minutes: 45
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
-    defaults:
-      run:
-        shell: msys2 {0}
     env:
-      MSYSTEM: MINGW64
-      MSYS2_ARCH: x86_64
-      CHERE_INVOKING: yes
-      PY_IGNORE_IMPORTMISMATCH: yes
+      # Git revision of gvsbuild we use for to build GTK and the other dependencies
+      gvsbuildref: f596eca9924cbfcdd65a6f8e4303f40628dcd654
+      # Bump this number if you want to force a rebuild of gvsbuild with the same revision
+      gvsbuildupdate: 1
+    outputs:
+      cachekey: ${{ steps.output.outputs.cachekey }}
+    steps:
+      - name: GTK binaries create dir
+        run: mkdir C:\gtk-build\gtk\x64\release
+      - name: GTK binaries get from cache
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: C:\gtk-build\gtk\x64\release\**
+          key: gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}
+      - name: GTK binaries checkout gvsbuild
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/checkout@v2
+        with:
+          repository: gaphor/gvsbuild
+          ref: ${{ env.gvsbuildref }}
+          path: gvsbuild
+      # Temporarily move the preinstalled git, it causes errors related to cygwin.
+      - name: GTK binaries move git binary
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: move "C:\Program Files\Git\usr\bin" "C:\Program Files\Git\usr\notbin"
+        shell: cmd
+      - name: Set up Python
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/setup-python@v2.2.2
+      - name: GTK binaries run gvsbuild
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: gvsbuild
+        run: python .\build.py build -p=x64 --vs-ver=16 --msys-dir=C:\msys64 --enable-gi --py-wheel --gtk3-ver=3.24 gobject-introspection gtk3 pycairo pygobject adwaita-icon-theme hicolor-icon-theme
+      - name: Copy wheels to cached directory
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl | ForEach-Object -process { cp $_ C:\gtk-build\gtk\x64\release\ }
+      - name: GTK binaries restore git binary
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: move "C:\Program Files\Git\usr\notbin" "C:\Program Files\Git\usr\bin"
+        shell: cmd
+      - name: GTK binaries output cache key
+        id: output
+        run: echo "::set-output name=cachekey::gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}"
+
+  windows:
+    needs: [lint, windows-build-gtk]
+    runs-on: windows-latest
+    timeout-minutes: 45
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    env:
       SECRETS_AVAILABLE: ${{ secrets.SECRETS_AVAILABLE }}
     steps:
+      - name: Create GTK binaries dir
+        run: mkdir C:\gtk-build\gtk\x64\release
+      - name: Get GTK binaries from cache
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: C:\gtk-build\gtk\x64\release\**
+          key: ${{needs.gvsbuild.outputs.cachekey}}
+      - name: Set up env
+        run: |
+          echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
+          echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
+        shell: bash
       - uses: actions/checkout@v2.3.4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: Set up MSYS2
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.6
         with:
           path: ~\AppData\Local\pip\Cache
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
-      - name: Install Dependencies
-        run: ./packaging/windows/msys2-install.sh
+      - name: Set up Python
+        uses: actions/setup-python@v2.2.2
       - name: Install Poetry and Wheel
         run: |
-          python3.9 -m venv .venv
-          source .venv/bin/activate
-          pip install poetry==$POETRY_VERSION wheel
-          poetry config virtualenvs.create false
+          pip install poetry==$Env:POETRY_VERSION
+          poetry config virtualenvs.in-project true
+      - name: Install PyGObject and pycairo
+        run: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
       - name: Collect Project Data
         id: meta
-        run: |
-          source .venv/bin/activate
-          .github/scripts/metadata.sh
+        run: .github/scripts/metadata.sh
+        shell: bash
       - name: Install Python Dependencies
-        run: |
-          source .venv/bin/activate
-          mingw32-make install
+        run: poetry install
       - name: Test with PyTest
-        run: |
-          source .venv/bin/activate
-          mingw32-make test-all
+        run: poetry run poe test-all
       - name: Create Windows Installers
         run: |
-          source .venv/bin/activate
-          mingw32-make dist
-          cd packaging
-          mingw32-make all
-          cd windows
-          python build-win-installer.py
+          poetry run poe dist
+          poetry run poe package-win
+          poetry run poe win-installer
       - name: Sign Executables
         env:
           password: "${{ secrets.CERTPASSWORD }}"
@@ -156,7 +201,6 @@ jobs:
           portable: "packaging/dist/gaphor-${{ steps.meta.outputs.version }}-portable.exe"
           NOT_PR: ${{github.ref == 'refs/heads/master' || startsWith(github.ref, '/refs/tags/')}}
         if: env.SECRETS_AVAILABLE != null && env.NOT_PR 
-        shell: powershell
         run: |
           $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
           $currentDirectory = Get-Location
@@ -166,13 +210,11 @@ jobs:
           Remove-Item 'certificate.pfx'
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v2
-        if: env.SECRETS_AVAILABLE != null
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-installer.exe
           path: packaging/dist/gaphor-${{ steps.meta.outputs.version }}-installer.exe
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-portable.exe
         uses: actions/upload-artifact@v2
-        if: env.SECRETS_AVAILABLE != null
         with:
           name: gaphor-${{ steps.meta.outputs.version }}-portable.exe
           path: packaging/dist/gaphor-${{ steps.meta.outputs.version }}-portable.exe
@@ -213,30 +255,35 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Python Dependencies
-        run: make install
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install
       - name: Test with Pytest
-        run: make test-all
+        run: poetry run poe test-all
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1.0.4
-        if: env.SECRETS_AVAILABLE != null && env.NOT_PR 
+        if: env.CERT_AVAILABLE != null && env.NOT_PR 
         with:
           p12-file-base64: ${{ secrets.BASE64_ENCODED_P12 }}
           p12-password: ${{ secrets.CERTPASSWORD_P12 }}
-      - name: Create macOS Application
-        run: |
-          make dist
-          cd packaging
-          make all
+      - name: Build Wheel
+        run: poetry run poe dist
+      - name: Create Unsigned macOS Application
+        if: env.CERT_AVAILABLE == null || env.NOT_PR == 'false'
+        run: poetry run poe package
+      - name: Create Signed macOS Application
+        if: env.CERT_AVAILABLE != null && env.NOT_PR
+        run: poetry run poe package-macos-signed
       - name: Notarize app
         uses: devbotsxyz/xcode-notarize@v1
-        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
+        if: env.CERT_AVAILABLE != null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor.app"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
           appstore-connect-password: ${{ secrets.AC_PASSWORD }}
       - name: Staple app
         uses: devbotsxyz/xcode-staple@v1
-        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
+        if: env.CERT_AVAILABLE != null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor.app"
       - name: Create dmg
@@ -251,7 +298,7 @@ jobs:
           "dist/Gaphor.app"
       - name: Notarize dmg
         uses: devbotsxyz/xcode-notarize@v1
-        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
+        if: env.CERT_AVAILABLE != null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
@@ -303,7 +350,9 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Python Dependencies
-        run: make install
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install
       - name: Test with Pytest for GTK 4
         continue-on-error: true
-        run: make test-all
+        run: poetry run poe test-all

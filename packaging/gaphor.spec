@@ -1,10 +1,24 @@
 from PyInstaller.utils.hooks import copy_metadata
-import pathlib
+from pathlib import Path
+from tomlkit import parse
 
 block_cipher = None
 
-glade_files = [(str(p), str(pathlib.Path(*p.parts[1:-1]))) for p in pathlib.Path("../gaphor").rglob("*.glade")]
-ui_files = [(str(p), str(pathlib.Path(*p.parts[1:-1]))) for p in pathlib.Path("../gaphor").rglob("*.ui")]
+
+glade_files = [
+    (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.glade")
+]
+ui_files = [
+    (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.ui")
+]
+
+
+def get_version() -> str:
+    project_dir = Path.cwd().parent
+    print(project_dir.resolve())
+    f = project_dir / "pyproject.toml"
+    return str(parse(f.read_text())["tool"]["poetry"]["version"])
+
 
 a = Analysis(
     ["gaphor-script.py"],
@@ -45,11 +59,10 @@ exe = EXE(
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
-    upx=True,
+    upx=False,
     icon="windows/gaphor.ico",
     version="windows/file_version_info.txt",
     console=False,
-    codesign_identity="Developer ID Application: Daniel Yeaw (Z7V37BLNR9)",
     entitlements_file="macos/entitlements.plist",
 )
 coll = COLLECT(
@@ -60,5 +73,5 @@ app = BUNDLE(
     name="Gaphor.app",
     icon="macos/gaphor.icns",
     bundle_identifier="org.gaphor.gaphor",
-    version="__version__",
+    version=get_version(),
 )
