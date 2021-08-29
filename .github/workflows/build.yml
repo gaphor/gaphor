@@ -306,7 +306,7 @@ jobs:
           primary-bundle-id: org.gaphor.gaphor
       - name: Staple .dmg
         uses: devbotsxyz/xcode-staple@v1
-        if: env.SECRETS_AVAILABLE != null && env.NOT_PR
+        if: env.CERT_AVAILABLE != null && env.NOT_PR
         with:
           product-path: "packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
       - name: Upload Gaphor-${{ steps.meta.outputs.version }}.dmg
