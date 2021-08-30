@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-08-28 21:01+0200\n"
-"PO-Revision-Date: 2021-08-27 20:46+0000\n"
+"PO-Revision-Date: 2021-08-31 00:11+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
@@ -441,11 +442,11 @@ msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:157
 msgid "Send signal action"
-msgstr ""
+msgstr "Lähetä signaali -toiminto"
 
 #: gaphor/UML/actions/actionstoolbox.py:169
 msgid "Accept event action"
-msgstr ""
+msgstr "Hyväksy tapahtuma -toiminto"
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
@@ -655,7 +656,7 @@ msgstr "Riippuvuuden tyyppi"
 #: gaphor/UML/classes/propertypages.glade:581
 #: gaphor/UML/classes/propertypages.ui:374
 msgid "Automatic"
-msgstr ""
+msgstr "Automaattinen"
 
 #: gaphor/UML/classes/propertypages.glade:642
 #: gaphor/UML/classes/propertypages.ui:405
@@ -984,15 +985,16 @@ msgstr "Kaikki XMI-tiedostot"
 
 #: gaphor/services/helpservice/about.ui:8
 msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
-msgstr ""
+msgstr "Tekijänoikeus © 2001-2021 Arjan J. Molenaar ja Dan Yeaw"
 
 #: gaphor/services/helpservice/about.ui:9
 msgid "Gaphor is the simple modeling tool written in Python"
 msgstr ""
+"Gaphor on yksinkertainen mallinnustyökalu, joka on toteutettu Pythonilla"
 
 #: gaphor/services/helpservice/about.ui:11
 msgid "Fork me on GitHub"
-msgstr ""
+msgstr "Haarauta GitHubissa"
 
 #: gaphor/services/helpservice/about.ui:14
 msgid ""
@@ -1006,9 +1008,8 @@ msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:18
-#, fuzzy
 msgid "Application"
-msgstr "Realisaatio"
+msgstr "Sovellus"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
 #: gaphor/ui/elementeditor.glade:339 gaphor/ui/elementeditor.ui:205
@@ -1016,14 +1017,12 @@ msgid "Preferences"
 msgstr "Asetukset"
 
 #: gaphor/services/helpservice/shortcuts.ui:32
-#, fuzzy
 msgid "Quit Gaphor"
-msgstr "Tietoja - Gaphor"
+msgstr "Lopeta Gaphor"
 
 #: gaphor/services/helpservice/shortcuts.ui:43
-#, fuzzy
 msgid "Files"
-msgstr "Profiilit"
+msgstr "Tiedostot"
 
 #: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:45
 msgid "New Window"
@@ -1039,9 +1038,8 @@ msgid "Save"
 msgstr "Tallenna"
 
 #: gaphor/services/helpservice/shortcuts.ui:73
-#, fuzzy
 msgid "Save As"
-msgstr "Käyttötapaus"
+msgstr "Tallenna nimellä"
 
 #: gaphor/services/helpservice/shortcuts.ui:84
 #: gaphor/services/helpservice/shortcuts.ui:90
@@ -1055,14 +1053,12 @@ msgid "Redo"
 msgstr "Tee uudelleen"
 
 #: gaphor/services/helpservice/shortcuts.ui:109
-#, fuzzy
 msgid "Diagrams"
-msgstr "Uusi kaavio"
+msgstr "Kaaviot"
 
 #: gaphor/services/helpservice/shortcuts.ui:115
-#, fuzzy
 msgid "Edit"
-msgstr "muokattu"
+msgstr "Muokkaa"
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:220
 msgid "Show/Hide Editor"
@@ -1070,34 +1066,31 @@ msgstr "Näytä/piilota editori"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
 msgid "Select All"
-msgstr ""
+msgstr "Valitse kaikki"
 
 #: gaphor/services/helpservice/shortcuts.ui:139
 msgid "Deselect All"
-msgstr ""
+msgstr "Älä valitse mitään"
 
 #: gaphor/services/helpservice/shortcuts.ui:147
 msgid "Copy"
-msgstr ""
+msgstr "Kopioi"
 
 #: gaphor/services/helpservice/shortcuts.ui:155
-#, fuzzy
 msgid "Paste"
-msgstr "Tila"
+msgstr "Liitä"
 
 #: gaphor/services/helpservice/shortcuts.ui:163
-#, fuzzy
 msgid "Delete"
-msgstr "Po_ista"
+msgstr "Poista"
 
 #: gaphor/services/helpservice/shortcuts.ui:171
-#, fuzzy
 msgid "Close Diagram"
-msgstr "Uusi kaavio"
+msgstr "Sulje kaavio"
 
 #: gaphor/services/helpservice/shortcuts.ui:182
 msgid "Zoom"
-msgstr ""
+msgstr "Mittakaava"
 
 #: gaphor/services/helpservice/shortcuts.ui:188
 #: gaphor/ui/elementeditor.glade:178 gaphor/ui/elementeditor.ui:105
@@ -1383,4 +1376,3 @@ msgstr ""
 #: gaphor/ui/recentfiles.py:67
 msgid "No recently opened models"
 msgstr "Ei viimeksi avattuja malleja"
-
