@@ -206,7 +206,7 @@ See [the contributing file](CONTRIBUTING.md)!
 
 Translation of Gaphor is mostly done using [Weblate](https://hosted.weblate.org/projects/gaphor/gaphor/).
 
-The desktop entry comment string is found at https://github.com/flathub/org.gaphor.Gaphor/blob/master/share/org.gaphor.Gaphor.desktop
+For the Linux Flatpak, the desktop entry comment string can be translated at our [Flatpak repository](https://github.com/flathub/org.gaphor.Gaphor/blob/master/share/org.gaphor.Gaphor.desktop).
 
 Thank you so much for your effort in helping us keep it available in many languages!
 
