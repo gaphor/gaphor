@@ -30,7 +30,7 @@ version = ""
 project_dir = Path(__file__).resolve().parent.parent
 f = project_dir.joinpath("pyproject.toml")
 release = str(parse(f.read_text())["tool"]["poetry"]["version"])
-sys.path.insert(0, str(project_dir))
+sys.path.append(str(project_dir))
 
 # -- General configuration ---------------------------------------------------
 
