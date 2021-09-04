@@ -500,6 +500,15 @@
         "ideas",
         "translation"
       ]
+    },
+    {
+      "login": "darkcircle",
+      "name": "Seong-ho Cho",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1160498?v=4",
+      "profile": "https://github.com/darkcircle",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
