@@ -16,8 +16,8 @@ from datetime import date
 from pathlib import Path
 from typing import Dict, List
 
+import tomli
 from recommonmark.transform import AutoStructify
-from tomlkit import parse
 
 # -- Project information -----------------------------------------------------
 
@@ -29,7 +29,7 @@ author = "Arjan J. Molenaar"
 version = ""
 project_dir = Path(__file__).resolve().parent.parent
 f = project_dir.joinpath("pyproject.toml")
-release = str(parse(f.read_text())["tool"]["poetry"]["version"])
+release = str(tomli.loads(f.read_text())["tool"]["poetry"]["version"])
 sys.path.append(str(project_dir))
 
 # -- General configuration ---------------------------------------------------
