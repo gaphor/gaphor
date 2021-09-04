@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-08-28 21:01+0200\n"
-"PO-Revision-Date: 2021-08-27 20:46+0000\n"
+"PO-Revision-Date: 2021-09-01 14:36+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
@@ -733,7 +734,6 @@ msgid "A"
 msgstr "A"
 
 #: gaphor/UML/classes/propertypages.ui:280
-#, fuzzy
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "Attribute syntax examples\n"
@@ -748,13 +748,12 @@ msgstr ""
 "Ejemplos de sintaxis de atributos\n"
 "- attr\n"
 "- + attr: int\n"
-"- /attr: int # una nota\n"
+"- # /attr: int\n"
 "\n"
 "Pulse ENTER para editar el elemento, BS/DEL para eliminarlo.\n"
 "Utilice -/= para mover los elementos hacia arriba o hacia abajo."
 
 #: gaphor/UML/classes/propertypages.ui:472
-#, fuzzy
 msgid ""
 "Add and edit class operations according to UML syntax. Operation syntax "
 "examples\n"
@@ -768,7 +767,7 @@ msgstr ""
 "Añadir y editar operaciones de clase según la sintaxis UML. Ejemplos de "
 "sintaxis de operaciones\n"
 "- call()\n"
-"- + call(a: int, b: str) # una nota\n"
+"- + call(a: int, b: str)\n"
 "- # call(a: int: b: str): bool\n"
 "\n"
 "Pulse ENTER para editar un elemento, BS/DEL para eliminarlo.\n"
@@ -1042,15 +1041,15 @@ msgstr "Todos los archivos XMI"
 
 #: gaphor/services/helpservice/about.ui:8
 msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
-msgstr ""
+msgstr "Copyright © 2001-2021 Arjan J. Molenaar y Dan Yeaw"
 
 #: gaphor/services/helpservice/about.ui:9
 msgid "Gaphor is the simple modeling tool written in Python"
-msgstr ""
+msgstr "Gaphor es una sencilla herramienta de modelado escrita en Python"
 
 #: gaphor/services/helpservice/about.ui:11
 msgid "Fork me on GitHub"
-msgstr ""
+msgstr "Bifurqueme en GitHub"
 
 #: gaphor/services/helpservice/about.ui:14
 msgid ""
@@ -1058,15 +1057,17 @@ msgid ""
 "Apache Software License, version 2.0.\n"
 "See the LICENSE.txt file for details."
 msgstr ""
+"Este software se publica bajo los términos de la\n"
+"Apache Software License, versión 2.0.\n"
+"Consulte el archivo LICENSE.txt para más detalles."
 
 #: gaphor/services/helpservice/about.ui:19
 msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
-msgstr ""
+msgstr "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
 
 #: gaphor/services/helpservice/shortcuts.ui:18
-#, fuzzy
 msgid "Application"
-msgstr "Realización"
+msgstr "Aplicación"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
 #: gaphor/ui/elementeditor.glade:339 gaphor/ui/elementeditor.ui:205
@@ -1074,14 +1075,12 @@ msgid "Preferences"
 msgstr "Preferencias"
 
 #: gaphor/services/helpservice/shortcuts.ui:32
-#, fuzzy
 msgid "Quit Gaphor"
-msgstr "Acerca de Gaphor"
+msgstr "Salir de Gaphor"
 
 #: gaphor/services/helpservice/shortcuts.ui:43
-#, fuzzy
 msgid "Files"
-msgstr "Perfiles"
+msgstr "Archivos"
 
 #: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:45
 msgid "New Window"
@@ -1097,9 +1096,8 @@ msgid "Save"
 msgstr "Guardar"
 
 #: gaphor/services/helpservice/shortcuts.ui:73
-#, fuzzy
 msgid "Save As"
-msgstr "Caso de uso"
+msgstr "Guardar como"
 
 #: gaphor/services/helpservice/shortcuts.ui:84
 #: gaphor/services/helpservice/shortcuts.ui:90
@@ -1113,14 +1111,12 @@ msgid "Redo"
 msgstr "Rehacer"
 
 #: gaphor/services/helpservice/shortcuts.ui:109
-#, fuzzy
 msgid "Diagrams"
-msgstr "Diagrama nuevo"
+msgstr "Diagramas"
 
 #: gaphor/services/helpservice/shortcuts.ui:115
-#, fuzzy
 msgid "Edit"
-msgstr "editaado"
+msgstr "Editar"
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:220
 msgid "Show/Hide Editor"
@@ -1128,34 +1124,31 @@ msgstr "Mostrar/Ocultar editor"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
 msgid "Select All"
-msgstr ""
+msgstr "Seleccionar todo"
 
 #: gaphor/services/helpservice/shortcuts.ui:139
 msgid "Deselect All"
-msgstr ""
+msgstr "Deseleccionar todo"
 
 #: gaphor/services/helpservice/shortcuts.ui:147
 msgid "Copy"
-msgstr ""
+msgstr "Copiar"
 
 #: gaphor/services/helpservice/shortcuts.ui:155
-#, fuzzy
 msgid "Paste"
-msgstr "partes"
+msgstr "Pegar"
 
 #: gaphor/services/helpservice/shortcuts.ui:163
-#, fuzzy
 msgid "Delete"
-msgstr "_Borrar"
+msgstr "Eliminar"
 
 #: gaphor/services/helpservice/shortcuts.ui:171
-#, fuzzy
 msgid "Close Diagram"
-msgstr "Diagrama nuevo"
+msgstr "Cerrar diagrama"
 
 #: gaphor/services/helpservice/shortcuts.ui:182
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 #: gaphor/services/helpservice/shortcuts.ui:188
 #: gaphor/ui/elementeditor.glade:178 gaphor/ui/elementeditor.ui:105
@@ -1473,4 +1466,3 @@ msgstr "No hay modelos abiertos recientemente"
 
 #~ msgid "Toolbox"
 #~ msgstr "Herramientas"
-
