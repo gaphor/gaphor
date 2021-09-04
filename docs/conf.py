@@ -11,13 +11,13 @@
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
+from __future__ import annotations
+
 import sys
 from datetime import date
 from pathlib import Path
-from typing import Dict, List
 
 import tomli
-from recommonmark.transform import AutoStructify
 
 # -- Project information -----------------------------------------------------
 
@@ -103,7 +103,7 @@ html_title = ""
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path: List[str] = []
+html_static_path: list[str] = []
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -124,7 +124,7 @@ htmlhelp_basename = "Gaphordoc"
 
 # -- Options for LaTeX output ------------------------------------------------
 
-latex_elements: Dict[str, str] = {
+latex_elements: dict[str, str] = {
     # The paper size ('letterpaper' or 'a4paper').
     #
     # 'papersize': 'letterpaper',
