@@ -34,7 +34,7 @@ We expose the first three by methods defined on the ModelingLanguage class. We
 then expose the others by adding handlers to the respective generic functions.
 
 
-```eval_rst
+```{eval-rst}
 .. autoclass:: gaphor.abc.ModelingLanguage
    :members:
 ```
@@ -46,7 +46,7 @@ Connectors are used to connect one element to another.
 Connectors should adhere to the `ConnectorProtocol`.
 Normally you would inherit from `BaseConnector`.
 
-```eval_rst
+```{eval-rst}
 .. autoclass:: gaphor.diagram.connectors.BaseConnector
    :members:
 ```
@@ -57,7 +57,7 @@ Grouping is done by dragging one item on top of another.
 
 Grouping dispatch objects are normally inheriting from `AbstractGroup`.
 
-```eval_rst
+```{eval-rst}
 .. autoclass:: gaphor.diagram.grouping.AbstractGroup
    :members:
 ```
@@ -69,7 +69,7 @@ so there is a UI snippet that allows you to edit a name.
 
 Each property page (snippet) should inherit from `PropertyPageBase`.
 
-```eval_rst
+```{eval-rst}
 .. autoclass:: gaphor.diagram.propertypages.PropertyPageBase
    :members:
 ```
@@ -80,7 +80,7 @@ When you double click on an item in a diagram, a popup can show up so you can ea
 
 By default this works for any named element. You can register your own inline editor function if you need to.
 
-```eval_rst
+```{eval-rst}
 .. function:: gaphor.diagram.inlineeditors.InlineEditor(item: Item, view, pos: Optional[Tuple[int, int]] = None) -> bool
 
    Show a small editor popup in the diagram. Makes for
@@ -101,7 +101,7 @@ Sometimes items need more than one model element to work. For example an Associa
 In those specific cases you need to implement your own copy and paste functions. To create such a thing you'll need to create
 two functions: one for copying and one for pasting.
 
-```eval_rst
+```{eval-rst}
 .. function:: gaphor.diagram.copypaste.copy(obj: Element) -> T
 
    Create a copy of an element (or list of elements).
@@ -117,7 +117,7 @@ two functions: one for copying and one for pasting.
 
 To serialize the copied elements and deserialize them again, there are two functions available:
 
-```eval_rst
+```{eval-rst}
 .. function:: gaphor.diagram.copypaste.serialize(value)
 
    Return a serialized version of a value. If the ``value`` is an element,

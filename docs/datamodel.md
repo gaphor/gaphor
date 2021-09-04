@@ -83,6 +83,6 @@ screen by a `DiagramView` class.
 
 ## UML.Element
 
-```eval_rst
+```{eval-rst}
 .. autoclass:: gaphor.core.modeling.Element
 ```

@@ -47,8 +47,8 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.coverage",
     "sphinx.ext.viewcode",
-    "sphinx.ext.autosectionlabel",  # Auto-generate section labels.
-    "recommonmark",  # Markdown Support
+    "sphinx.ext.autosectionlabel",
+    "myst_parser",
     "sphinxcontrib.images",
 ]
 
@@ -196,18 +196,3 @@ epub_exclude_files = ["search.html"]
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {"https://docs.python.org/": None}
-
-
-# AutoStructify for Recommonmark
-def setup(app):
-    app.add_config_value(
-        "recommonmark_config",
-        {
-            "auto_toc_tree_section": "Contents",
-            "enable_math": False,
-            "enable_inline_math": False,
-            "enable_eval_rst": True,
-        },
-        True,
-    )
-    app.add_transform(AutoStructify)
