@@ -510,6 +510,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "yeager",
+      "name": "Daniel Nylander",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1206564?v=4",
+      "profile": "http://www.DanielNylander.se",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
