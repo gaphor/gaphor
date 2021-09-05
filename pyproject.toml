@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "2.5.1"
+version = "2.6.0"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
