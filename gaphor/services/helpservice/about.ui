@@ -15,8 +15,19 @@ See the LICENSE.txt file for details.</property>
     <property name="authors">Arjan Molenaar, Artur Wroblewski,
 Jeroen Vloothuis, Dan Yeaw,
 Enno Groeper, Adam Boduch,
-Alexis Howells, Melis Doğan</property>
-    <property name="translator_credits" translatable="yes">Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)</property>
+Alexis Howells, Melis Doğan,
+Christian Hoff, Ikko Ashimine,
+Mark Kennedy, Tiemen Schuijbroek,
+Óscar Fernández Díaz (es)
+    </property>
+    <property name="translator_credits">Jordi Mallach (ca),
+Óscar Fernández Díaz (es),
+Jiri Grönroos (fi), Antonin Delpeuch (fr),
+milotype (hr), ovari (hu),
+albanobattistella (it), Seong-ho Cho (ko),
+Arjan Molenaar (nl), Ygor Mutti (pt_BR),
+Евгений Лежнин (ru), Daniel Nylander (sv)
+    </property>
     <property name="logo">org.gaphor.Gaphor.svg</property>
   </object>
 </interface>
