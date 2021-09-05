@@ -510,6 +510,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "zlv",
+      "name": "Евгений Лежнин",
+      "avatar_url": "https://avatars.githubusercontent.com/u/602210?v=4",
+      "profile": "https://github.com/zlv",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
