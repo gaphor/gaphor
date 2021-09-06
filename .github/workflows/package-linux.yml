@@ -41,7 +41,7 @@ jobs:
       - name: Install Python Dependencies
         run: |
           poetry config virtualenvs.in-project true
-          poetry install --no-dev
+          poetry install --no-dev --extras poethepoet
       - name: Create Source Dist and Wheel
         run: poetry run poe dist
       - name: Upload gaphor-${{ steps.meta.outputs.version }}.tar.gz

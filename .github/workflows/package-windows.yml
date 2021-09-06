@@ -103,7 +103,7 @@ jobs:
         run: .github/scripts/metadata.sh
         shell: bash
       - name: Install Python Dependencies
-        run: poetry run poe install-nodev
+        run: poetry install --no-dev --extras poethepoet
       - name: Create Windows Installers
         run: |
           poetry run poe dist

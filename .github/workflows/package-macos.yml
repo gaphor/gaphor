@@ -42,7 +42,7 @@ jobs:
       - name: Install Python Dependencies
         run: |
           poetry config virtualenvs.in-project true
-          poetry run poe install-nodev
+          poetry install --no-dev --extras poethepoet
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1.0.4
         with:

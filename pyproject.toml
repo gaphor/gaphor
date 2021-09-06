@@ -66,6 +66,7 @@ isort = "^5.9"
 poethepoet = "^0.10.0"
 
 [tool.poetry.extras]
+poethepoet = ["poethepoet"]
 pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile"]
 
 [tool.poetry.scripts]
