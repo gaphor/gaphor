@@ -50,8 +50,6 @@ jobs:
           p12-password: ${{ secrets.CERTPASSWORD_P12 }}
       - name: Build Wheel
         run: poetry run poe dist
-      - name: Create Unsigned macOS Application
-        run: poetry run poe package
       - name: Create Signed macOS Application
         run: poetry run poe package-macos-signed
       - name: Notarize app
