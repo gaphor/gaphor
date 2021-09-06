@@ -107,7 +107,7 @@ jobs:
       - name: Create Windows Installers
         run: |
           poetry run poe dist
-          poetry run poe package-win
+          poetry run poe package
           poetry run poe win-installer
       - name: Sign Executables
         env:

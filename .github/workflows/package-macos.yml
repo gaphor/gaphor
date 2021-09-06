@@ -43,15 +43,15 @@ jobs:
         run: |
           poetry config virtualenvs.in-project true
           poetry install --no-dev --extras poethepoet
+      - name: Build Wheel
+        run: poetry run poe dist
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1.0.4
         with:
           p12-file-base64: ${{ secrets.BASE64_ENCODED_P12 }}
           p12-password: ${{ secrets.CERTPASSWORD_P12 }}
-      - name: Build Wheel
-        run: poetry run poe dist
       - name: Create Signed macOS Application
-        run: poetry run poe package-macos-signed
+        run: poetry run poe package
       - name: Notarize app
         uses: devbotsxyz/xcode-notarize@v1
         with:
