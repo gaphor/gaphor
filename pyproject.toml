@@ -68,6 +68,7 @@ poethepoet = "^0.10.0"
 
 [tool.poetry.extras]
 pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
+poethepoet = ["poethepoet"]
 
 [tool.poetry.scripts]
 gaphor = "gaphor.ui:main"
