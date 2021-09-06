@@ -18,7 +18,7 @@ an AttributeUpdated event is a subtype of ElementUpdated. If we are interested
 in all changes to elements, we can also register ElementUpdated and receive all
 AttributeUpdated events as well.
 
-```eval_rst
+```{eval-rst}
 .. autoclass:: gaphor.core.eventmanager.EventManager
    :members:
 ```

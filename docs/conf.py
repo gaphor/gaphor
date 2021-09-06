@@ -11,13 +11,13 @@
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
+from __future__ import annotations
+
 import sys
 from datetime import date
 from pathlib import Path
-from typing import Dict, List
 
-from recommonmark.transform import AutoStructify
-from tomlkit import parse
+import tomli
 
 # -- Project information -----------------------------------------------------
 
@@ -29,8 +29,8 @@ author = "Arjan J. Molenaar"
 version = ""
 project_dir = Path(__file__).resolve().parent.parent
 f = project_dir.joinpath("pyproject.toml")
-release = str(parse(f.read_text())["tool"]["poetry"]["version"])
-sys.path.insert(0, str(project_dir))
+release = str(tomli.loads(f.read_text())["tool"]["poetry"]["version"])
+sys.path.append(str(project_dir))
 
 # -- General configuration ---------------------------------------------------
 
@@ -47,8 +47,8 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.coverage",
     "sphinx.ext.viewcode",
-    "sphinx.ext.autosectionlabel",  # Auto-generate section labels.
-    "recommonmark",  # Markdown Support
+    "sphinx.ext.autosectionlabel",
+    "myst_parser",
     "sphinxcontrib.images",
 ]
 
@@ -103,7 +103,7 @@ html_title = ""
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path: List[str] = []
+html_static_path: list[str] = []
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -124,7 +124,7 @@ htmlhelp_basename = "Gaphordoc"
 
 # -- Options for LaTeX output ------------------------------------------------
 
-latex_elements: Dict[str, str] = {
+latex_elements: dict[str, str] = {
     # The paper size ('letterpaper' or 'a4paper').
     #
     # 'papersize': 'letterpaper',
@@ -196,18 +196,3 @@ epub_exclude_files = ["search.html"]
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {"https://docs.python.org/": None}
-
-
-# AutoStructify for Recommonmark
-def setup(app):
-    app.add_config_value(
-        "recommonmark_config",
-        {
-            "auto_toc_tree_section": "Contents",
-            "enable_math": False,
-            "enable_inline_math": False,
-            "enable_eval_rst": True,
-        },
-        True,
-    )
-    app.add_transform(AutoStructify)

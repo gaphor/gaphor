@@ -88,7 +88,7 @@ export plugin would be defined as follows in the `pyproject.toml`:
 
 Each service (and plugin) should implement the `gaphor.abc.Service` interface:
 
-```eval_rst
+```{eval-rst}
 .. autoclass:: gaphor.abc.Service
    :members:
 ```
@@ -98,7 +98,7 @@ is the UI Component service. Services that use this interface are used to
 define windows and user interface functionality. A UI component should
 implement the `gaphor.ui.abc.UIComponent` interface:
 
-```eval_rst
+```{eval-rst}
 .. autoclass:: gaphor.ui.abc.UIComponent
    :members:
 ```
@@ -108,7 +108,7 @@ to the user, by means of menu entries. Every service and UI component
 can advertise actions by implementing the `gaphor.abc.ActionProvider`
 interface:
 
-```eval_rst
+```{eval-rst}
 .. autoclass:: gaphor.abc.ActionProvider 
    :members:
 ```

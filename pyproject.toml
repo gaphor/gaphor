@@ -45,9 +45,10 @@ tinycss2 = "^1.0.2"
 pyinstaller = { version = "^4.3", optional = true } 
 pyinstaller-versionfile = { version = "^2.0.0", optional = true }
 poethepoet = { version = "^0.10.0", optional = true }
+tomli = { version = "^1.2", optional = true }
 
 [tool.poetry.dev-dependencies]
-tomlkit = "^0.7"
+tomli = "^1.2"
 pytest = "^6.2"
 pytest-cov = "^2.12"
 pytest-mock = "^3.6.1"
@@ -56,7 +57,7 @@ black = "^21.8b0"
 mypy = "0.910"
 pre-commit = "^2.15"
 sphinx = "^4.1"
-recommonmark = "^0.7"
+myst-parser = "^0.15"
 sphinx-rtd-theme = "^0.5"
 sphinxcontrib-images = "^0.9.4"
 babel = "^2.9.1"
@@ -66,7 +67,7 @@ isort = "^5.9"
 poethepoet = "^0.10.0"
 
 [tool.poetry.extras]
-pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile"]
+pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 
 [tool.poetry.scripts]
 gaphor = "gaphor.ui:main"

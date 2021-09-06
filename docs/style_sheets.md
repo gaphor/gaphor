@@ -71,7 +71,7 @@ for the lines (strokes) that make the layout of a diagram item.
 Since we are dealing with diagrams and models, we do not need all the features
 of CSS. Below you'll find a summary of all CSS features supported by Gaphor.
 
-```eval_rst
+```{eval-rst}
 ============================= ============================
 ``*``                         All items on the diagram, including the diagram itself.
 ``node component``            Any component item which is a descendant of a node.
@@ -121,15 +121,14 @@ family, size, weight.
 
 ### Colors
 
-```eval_rst
-.. |br| raw:: html
-
-   <br />
-
+```{eval-rst}
 ======================= =======================================
-``background-color``    Examples: |br|
-                        ``background-color: azure;`` |br|
-                        ``background-color: rgb(255, 255, 255);`` |br|
+``background-color``    Examples:
+
+                        ``background-color: azure;``
+                        
+                        ``background-color: rgb(255, 255, 255);``
+                        
                         ``background-color: hsl(130, 95%, 10%);``
 ``color``               Color used for lines
 ``text-color``          Color for text
@@ -144,7 +143,7 @@ family, size, weight.
 
 ### Text and fonts
 
-```eval_rst
+```{eval-rst}
 ======================= =======================================
 ``font-family``         A single font name (e.g. ``sans``, ``serif``, ``courier``)
 ``font-size``           An absolute size (e.g. ``14``) or a size value (e.g. ``small``)
@@ -168,7 +167,7 @@ family, size, weight.
 
 ### Drawing and spacing
 
-```eval_rst
+```{eval-rst}
 ======================= =======================================
 ``border-radius``       Radius for rectangles: ``border-radius: 4``
 ``dash-style``          Style for dashed lines: ``dash-style: 7 5``
