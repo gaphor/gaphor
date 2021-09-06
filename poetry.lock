@@ -931,12 +931,12 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 
 [extras]
 poethepoet = ["poethepoet"]
-pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile"]
+pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomlkit"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "dd54534140d53ba5dfa32ac81f482e2e74e8ef7bd899436d1e9d41e8036ba95a"
+content-hash = "d452d2fff31e3f1cdcd496da53416ba2332f8201e6e9c39fd02646cc6f869cb5"
 
 [metadata.files]
 alabaster = [

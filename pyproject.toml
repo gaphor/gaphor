@@ -45,6 +45,7 @@ tinycss2 = "^1.0.2"
 pyinstaller = { version = "^4.3", optional = true } 
 pyinstaller-versionfile = { version = "^2.0.0", optional = true }
 poethepoet = { version = "^0.10.0", optional = true }
+tomlkit = { version = "^0.7", optional = true }
 
 [tool.poetry.dev-dependencies]
 tomlkit = "^0.7"
@@ -67,7 +68,7 @@ poethepoet = "^0.10.0"
 
 [tool.poetry.extras]
 poethepoet = ["poethepoet"]
-pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile"]
+pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomlkit"]
 
 [tool.poetry.scripts]
 gaphor = "gaphor.ui:main"
