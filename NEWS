@@ -1,3 +1,19 @@
+2.6.0
+-----
+- Improve zoom and pan for mouse
+- Add Finnish, Hungarian, and Korean, update Spanish translations
+- Fix disappearing elements from tree view on Windows
+- Convert CI from mingw to gvsbuild
+- Upgrade Windows Build Script from Bash to Python
+- Add translations for UI files
+- Add information flows to UML model
+- Add extra rules to avoid cyclic references
+- Fix typo in UML.gaphor
+- Refactor class property pages in to multiple modules
+- Fix Windows and other developer documentation updates
+- Enable pyupgrade
+- Update the README on How to Translate the Flatpak String
+
 2.5.1
 -----
 - Fix app release signing in Windows and macOS
