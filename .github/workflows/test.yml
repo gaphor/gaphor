@@ -1,0 +1,222 @@
+name: Test
+
+env:
+  POETRY_VERSION: 1.1.7
+
+on:
+  pull_request:
+
+jobs:
+
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Set up Python
+        uses: actions/setup-python@v2.2.2
+      - name: Lint with Pre-commit
+        uses: pre-commit/action@v2.0.3
+
+  linux:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Set up Python
+        uses: actions/setup-python@v2.2.2
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
+      - name: Install Dependencies
+        run: >
+          sudo apt-get update -q && sudo apt-get install
+          --no-install-recommends -y xvfb python3-dev python3-gi upx
+          python3-gi-cairo gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev
+      - name: Install Poetry
+        run: pip install poetry==$POETRY_VERSION
+      - name: Collect Project Data
+        id: meta
+        run: .github/scripts/metadata.sh
+      - name: Install Python Dependencies
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install
+      - name: Test with Pytest
+        run: xvfb-run poetry run poe test-all
+      - name: Upload Code Coverage to Code Climate
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
+        with:
+          coverageCommand: poetry run coverage xml
+
+  macos:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    env:
+      LDFLAGS: -L/usr/local/opt/python@3.9/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.9/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+    steps:
+      - uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Set up Python
+        uses: actions/setup-python@v2.2.2
+      - name: Install Dependencies
+        run: brew install gobject-introspection gtk+3 adwaita-icon-theme gtk-mac-integration create-dmg upx
+      - name: Install Poetry
+        run: pip install poetry==$POETRY_VERSION
+      - name: Collect Project Data
+        id: meta
+        run: .github/scripts/metadata.sh
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/Library/Caches/pip
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: ${{ runner.os }}-poetry-
+      - name: Install Python Dependencies
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install
+      - name: Test with Pytest
+        run: poetry run poe test-all
+
+  macos-gtk4:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    env:
+      LDFLAGS: -L/usr/local/opt/python@3.9/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.9/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      GAPHOR_USE_GTK: 4
+    steps:
+      - uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Set up Python
+        uses: actions/setup-python@v2.2.2
+      - name: Install Dependencies
+        run: brew install gobject-introspection gtk4 adwaita-icon-theme
+      - name: Install Poetry
+        run: pip install poetry==$POETRY_VERSION
+      - name: Collect Project Data
+        id: meta
+        run: .github/scripts/metadata.sh
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/Library/Caches/pip
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: ${{ runner.os }}-poetry-
+      - name: Install Python Dependencies
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install
+      - name: Test with Pytest for GTK 4
+        continue-on-error: true
+        run: poetry run poe test-all
+
+  windows-build-gtk:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    env:
+      # Git revision of gvsbuild we use for to build GTK and the other dependencies
+      gvsbuildref: f596eca9924cbfcdd65a6f8e4303f40628dcd654
+      # Bump this number if you want to force a rebuild of gvsbuild with the same revision
+      gvsbuildupdate: 1
+    outputs:
+      cachekey: ${{ steps.output.outputs.cachekey }}
+    steps:
+      - name: GTK binaries create dir
+        run: mkdir C:\gtk-build\gtk\x64\release
+      - name: GTK binaries get from cache
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: C:\gtk-build\gtk\x64\release\**
+          key: gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}
+      - name: GTK binaries checkout gvsbuild
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/checkout@v2
+        with:
+          repository: gaphor/gvsbuild
+          ref: ${{ env.gvsbuildref }}
+          path: gvsbuild
+      # Temporarily move the preinstalled git, it causes errors related to cygwin.
+      - name: GTK binaries move git binary
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: move "C:\Program Files\Git\usr\bin" "C:\Program Files\Git\usr\notbin"
+        shell: cmd
+      - name: Set up Python
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/setup-python@v2.2.2
+      - name: GTK binaries run gvsbuild
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: gvsbuild
+        run: python .\build.py build -p=x64 --vs-ver=16 --msys-dir=C:\msys64 --enable-gi --py-wheel --gtk3-ver=3.24 gobject-introspection gtk3 pycairo pygobject adwaita-icon-theme hicolor-icon-theme
+      - name: Copy wheels to cached directory
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl | ForEach-Object -process { cp $_ C:\gtk-build\gtk\x64\release\ }
+      - name: GTK binaries restore git binary
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: move "C:\Program Files\Git\usr\notbin" "C:\Program Files\Git\usr\bin"
+        shell: cmd
+      - name: GTK binaries output cache key
+        id: output
+        run: echo "::set-output name=cachekey::gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}"
+
+  windows:
+    needs: windows-build-gtk
+    runs-on: windows-latest
+    timeout-minutes: 45
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - name: Create GTK binaries dir
+        run: mkdir C:\gtk-build\gtk\x64\release
+      - name: Get GTK binaries from cache
+        uses: actions/cache@v2
+        id: cache
+        with:
+          path: C:\gtk-build\gtk\x64\release\**
+          key: ${{needs.windows-build-gtk.outputs.cachekey}}
+      - name: Set up env
+        run: |
+          echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
+          echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
+        shell: bash
+      - uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: ${{ runner.os }}-poetry-
+      - name: Set up Python
+        uses: actions/setup-python@v2.2.2
+      - name: Install Poetry and Wheel
+        run: |
+          pip install poetry==$Env:POETRY_VERSION
+          poetry config virtualenvs.in-project true
+      - name: Install PyGObject and pycairo
+        run: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
+      - name: Collect Project Data
+        id: meta
+        run: .github/scripts/metadata.sh
+        shell: bash
+      - name: Install Python Dependencies
+        run: poetry install
+      - name: Test with PyTest
+        run: poetry run poe test-all
