@@ -22,6 +22,7 @@ jobs:
         uses: pre-commit/action@v2.0.3
 
   linux:
+    needs: lint
     runs-on: ubuntu-20.04
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
@@ -60,6 +61,7 @@ jobs:
           coverageCommand: poetry run coverage xml
 
   macos:
+    needs: lint
     runs-on: macos-latest
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
@@ -93,6 +95,7 @@ jobs:
         run: poetry run poe test-all
 
   macos-gtk4:
+    needs: lint
     runs-on: macos-latest
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
@@ -128,6 +131,7 @@ jobs:
         run: poetry run poe test-all
 
   windows-build-gtk:
+    needs: lint
     runs-on: windows-latest
     timeout-minutes: 45
     env:
@@ -177,7 +181,7 @@ jobs:
         run: echo "::set-output name=cachekey::gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}"
 
   windows:
-    needs: windows-build-gtk
+    needs: [lint, windows-build-gtk]
     runs-on: windows-latest
     timeout-minutes: 45
     if: "!contains(github.event.head_commit.message, 'skip ci')"
