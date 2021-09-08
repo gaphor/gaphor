@@ -255,6 +255,7 @@ class MainWindow(Service, ActionProvider):
             title += " [" + gettext("edited") + "]"
         self.title.set_text(title)
         self.subtitle.set_text(subtitle)
+        self.window.set_title(title)
 
     # Signal callbacks:
 
