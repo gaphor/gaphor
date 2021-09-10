@@ -132,7 +132,6 @@ jobs:
       - name: GTK binaries output cache key
         id: output
         run: echo "::set-output name=cachekey::gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}"
-        shell: cmd
 
   windows:
     needs: [lint, windows-build-gtk]
@@ -147,7 +146,7 @@ jobs:
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
-          key: ${{ needs.windows-build-gtk.output.outputs.cachekey }}
+          key: ${{ needs.windows-build-gtk.outputs.cachekey }}
       - name: Set up env
         run: |
           echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
