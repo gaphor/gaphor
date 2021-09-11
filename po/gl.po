@@ -8,18 +8,21 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-08-28 21:01+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-09-12 13:20+0000\n"
+"Last-Translator: Fran Diéguez <fran.dieguez@mabishu.com>\n"
+"Language-Team: Galician <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"gl/>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
 msgid "C4 model"
-msgstr ""
+msgstr "Modelo C4"
 
 #: gaphor/C4Model/propertypages.glade:15 gaphor/SysML/propertypages.glade:15
 #: gaphor/UML/actions/propertypages.glade:15
@@ -40,7 +43,7 @@ msgstr ""
 
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
-msgstr ""
+msgstr "Tecnoloxía"
 
 #: gaphor/C4Model/propertypages.ui:12 gaphor/SysML/propertypages.ui:12
 #: gaphor/UML/actions/propertypages.ui:12
@@ -72,7 +75,7 @@ msgstr ""
 
 #: gaphor/C4Model/toolbox.py:55
 msgid "Person"
-msgstr ""
+msgstr "Persona"
 
 #: gaphor/C4Model/toolbox.py:66
 msgid "Software System"
@@ -80,7 +83,7 @@ msgstr ""
 
 #: gaphor/C4Model/toolbox.py:77
 msgid "Container"
-msgstr ""
+msgstr "Contenedor"
 
 #: gaphor/C4Model/toolbox.py:88
 msgid "Container: Database"
@@ -88,17 +91,17 @@ msgstr ""
 
 #: gaphor/C4Model/toolbox.py:99 gaphor/UML/components/componentstoolbox.py:16
 msgid "Component"
-msgstr ""
+msgstr "Compoñente"
 
 #: gaphor/C4Model/toolbox.py:110 gaphor/RAAML/fta/ftatoolbox.py:14
 #: gaphor/UML/classes/classestoolbox.py:116
 #: gaphor/UML/classes/dependencypropertypages.py:16
 msgid "Dependency"
-msgstr ""
+msgstr "Dependencia"
 
 #: gaphor/RAAML/modelinglanguage.py:15
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:10
 msgid "Fault Tree Analysis"
@@ -174,24 +177,24 @@ msgstr ""
 
 #: gaphor/RAAML/stpa/controlaction.py:33
 msgid "ControlAction"
-msgstr ""
+msgstr "ControlAction"
 
 #: gaphor/RAAML/stpa/operationalsituation.py:34
 msgid "OperationalSituation"
-msgstr ""
+msgstr "OperationalSituation"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:123
 msgid "Generalization"
-msgstr ""
+msgstr "Xeneralización"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:43
 msgid "Loss"
-msgstr ""
+msgstr "Perda"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:52
 msgid "Hazard"
-msgstr ""
+msgstr "Risco"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61
 msgid "Situation"
