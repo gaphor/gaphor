@@ -517,7 +517,7 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/1206564?v=4",
       "profile": "http://www.DanielNylander.se",
       "contributions": [
-      "translation"
+        "translation"
       ]
     },
     {
@@ -525,6 +525,15 @@
       "name": "Евгений Лежнин",
       "avatar_url": "https://avatars.githubusercontent.com/u/602210?v=4",
       "profile": "https://github.com/zlv",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "frandieguez",
+      "name": "Fran Diéguez",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4584?v=4",
+      "profile": "http://www.frandieguez.dev",
       "contributions": [
         "translation"
       ]
