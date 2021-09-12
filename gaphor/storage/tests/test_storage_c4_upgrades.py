@@ -23,6 +23,6 @@ def element_factory(event_manager, modeling_language):
 
 def test_c4_database_item(loader):  # noqa: F811
     parsed_item = element(id="2", type="C4ContainerDatabaseItem")
-    item = loader(parsed_item)
+    item = loader(parsed_item)[0]
 
     assert item.__class__.__name__ == "C4DatabaseItem"

@@ -190,6 +190,8 @@ def _load_elements_and_canvasitems(
             elem = upgrade_parameter_owner_formal_param(elem)
         if version_lower_than(gaphor_version, (2, 5, 0)):
             elem = upgrade_diagram_element(elem)
+        if version_lower_than(gaphor_version, (2, 6, 0)):
+            elem = upgrade_generalization_arrow_direction(elem)
 
         cls = modeling_language.lookup_element(elem.type)
         assert cls, f"Type {elem.type} can not be loaded: no such element"
@@ -374,4 +376,21 @@ def upgrade_diagram_element(elem):
                 elem.references["element"] = refids
                 del elem.references["package"]
                 break
+    return elem
+
+
+# since 2.6.0
+def upgrade_generalization_arrow_direction(elem):
+    if elem.type == "GeneralizationItem":
+        head_ids, tail_ids = 0, 0
+        for name, refids in dict(elem.references).items():
+            if name == "head-connection":
+                head_ids = refids
+            elif name == "tail-connection":
+                tail_ids = refids
+        if head_ids and tail_ids:
+            elem.references["head-connection"], elem.references["tail-connection"] = (
+                tail_ids,
+                head_ids,
+            )
     return elem
