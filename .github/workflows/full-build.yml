@@ -234,6 +234,8 @@ jobs:
       - uses: ./.github/actions/windows_executables
         with:
           version: ${{ steps.meta.outputs.version }}
+          cert_password: ${{ secrets.CERTPASSWORD }}
+          base64_encoded_pfx: ${{ secrets.Base64_Encoded_Pfx }}
       - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v2
         with:
