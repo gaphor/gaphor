@@ -62,7 +62,6 @@ class Element:
 
         A model can be provided to refer to the model this element belongs to.
         """
-        super().__init__()
         self._id: Id = id or str(uuid.uuid1())
         # The model this element belongs to.
         self._model = model
