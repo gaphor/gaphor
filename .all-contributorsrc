@@ -546,6 +546,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "c4tachan",
+      "name": "Michael Patrick Tkacik",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2130211?v=4",
+      "profile": "https://github.com/c4tachan",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
