@@ -1,7 +1,7 @@
 Although we strive to make releases as automated as possible, there are a few steps that we need to take to release a new version.
 
-- [ ] Ensure all of the PRs since the last release are labeled with chore, fix, feature, or skip-changelog.
-All of the items in the draft release should be under the Features, Bug Fixes, or Maintenance headings.
+- [ ] Ensure all of the PRs since the last release are labeled with chore, fix, feature, translation, or skip-changelog.
+All of the items in the draft release should be under the Features, Bug Fixes, Maintenance, or Translation headings.
 - [ ] Test the previous build packages in Windows and macOS to ensure they launch successfully.
 - [ ] Bump the version by updating it in the `pyproject.toml` file or by running `poetry version X.X.X`.
 - [ ] Bump the AppImage version by running `cd packaging/appimage`, `make update VERSION=a.b.c`
