@@ -35,7 +35,8 @@ jobs:
       - uses: actions/checkout@v2.3.4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - uses: ./.github/actions/linux_dependencies
+      - name: Install Linux Dependencies
+        uses: ./.github/actions/linux_dependencies
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
       - name: Use Python Dependency Cache
@@ -43,7 +44,8 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
-      - uses: ./.github/actions/setup_and_test
+      - name: Install Dependencies and Test
+        uses: ./.github/actions/setup_and_test
         with:
           xvfb_command: 'xvfb-run'
       - name: Upload Code Coverage to Code Climate
@@ -98,7 +100,8 @@ jobs:
       - uses: actions/checkout@v2.3.4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - uses: ./.github/actions/macos_dependencies
+      - name: Install macOS Dependencies
+        uses: ./.github/actions/macos_dependencies
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
       - name: Use Python Dependency Cache
@@ -107,7 +110,8 @@ jobs:
           path: ~/Library/Caches/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
-      - uses: ./.github/actions/setup_and_test
+      - name: Install Dependencies and Test
+        uses: ./.github/actions/setup_and_test
       - name: Install Build Dependencies
         run: poetry install --no-dev --extras poethepoet
       - name: Build Wheel
@@ -192,7 +196,8 @@ jobs:
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/setup-python@v2.2.2
-      - if: steps.cache.outputs.cache-hit != 'true'
+      - name: GTK with gvsbuild
+        if: steps.cache.outputs.cache-hit != 'true'
         uses: ./.github/actions/gvsbuild
       - name: GTK binaries output cache key
         id: output
@@ -228,10 +233,12 @@ jobs:
           path: ~\AppData\Local\pip\Cache
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
-      - uses: ./.github/actions/setup_and_test
+      - name: Install Dependencies and Test
+        uses: ./.github/actions/setup_and_test
         with:
           install_others: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
-      - uses: ./.github/actions/windows_executables
+      - name: Windows Executables
+        uses: ./.github/actions/windows_executables
         with:
           version: ${{ steps.meta.outputs.version }}
           cert_password: ${{ secrets.CERTPASSWORD }}
