@@ -68,6 +68,7 @@ poethepoet = "^0.10.0"
 
 [tool.poetry.extras]
 pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
+poethepoet = ["poethepoet"]
 
 [tool.poetry.scripts]
 gaphor = "gaphor.ui:main"
@@ -116,10 +117,7 @@ clean = { "shell" = "rm -rf dist build packaging/dist packaging/build packaging/
 gaphor-script = { "script" = "packaging.make-script:make_gaphor_script" }
 version-file = { "script" = "packaging.make-script:make_file_version_info" }
 pyinstall = { "script" = "packaging.make-script:make_pyinstaller" }
-pyinstall-macos-signed = { "script" = "packaging.make-script:make_pyinstaller_macos_signed" }
-package = ["install-pyinstall", "gaphor-script", "pyinstall"]
-package-win = ["install-pyinstall", "gaphor-script", "version-file", "pyinstall"]
-package-macos-signed = ["install-pyinstall", "gaphor-script", "pyinstall-macos-signed"]
+package = ["install-pyinstall", "gaphor-script", "version-file", "pyinstall"]
 win-installer = { "script" = "packaging.windows.build-win-installer:main" }
 gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini gaphor"
 gettext-po = { "script" = "po.build-babel:update_po_files" }

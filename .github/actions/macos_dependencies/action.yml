@@ -1,0 +1,7 @@
+name: 'Install macOS Dependencies'
+description: 'Installs macOS GTK and Python Dependencies'
+runs:
+  using: composite
+  steps:
+    - run: brew install gobject-introspection gtk+3 gtk4 adwaita-icon-theme gtk-mac-integration create-dmg upx
+      shell: bash
