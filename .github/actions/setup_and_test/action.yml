@@ -12,7 +12,6 @@ inputs:
 outputs:
   version:
     description: 'Build version with added dev reference for non-releases'
-    required: true
     value: ${{ steps.meta.outputs.version }}
 runs:
   using: composite
