@@ -3,7 +3,7 @@ docutils==0.16
 Pygments==2.10.0
 myst-parser==0.15.2
 Sphinx==4.1.2
-sphinx-rtd-theme==0.5.2
+sphinx-rtd-theme==1.0.0
 sphinxcontrib-websupport==1.2.4
 sphinxcontrib-images==0.9.4
 tomli==1.2.1
