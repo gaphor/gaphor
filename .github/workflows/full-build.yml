@@ -45,6 +45,7 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
       - name: Install Dependencies and Test
+        id: setup_and_test
         uses: ./.github/actions/setup_and_test
         with:
           xvfb_command: 'xvfb-run'
@@ -111,6 +112,7 @@ jobs:
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ runner.os }}-poetry-
       - name: Install Dependencies and Test
+        id: setup_and_test
         uses: ./.github/actions/setup_and_test
       - name: Install Build Dependencies
         run: poetry install --no-dev --extras poethepoet
