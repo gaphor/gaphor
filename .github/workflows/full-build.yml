@@ -245,7 +245,7 @@ jobs:
         with:
           version: ${{ steps.setup_and_test.outputs.version }}
           cert_password: ${{ secrets.CERTPASSWORD }}
-          base64_encoded_pfx: ${{ secrets.Base64_Encoded_Pfx }}
+          base64_encoded_pfx: ${{ secrets.BASE64_ENCODED_PFX }}
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v2
         with:
