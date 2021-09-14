@@ -27,11 +27,12 @@ runs:
         timestampUrl: http://timestamp.digicert.com
         installer: "packaging/dist/gaphor-${{ inputs.version }}-installer.exe"
         portable: "packaging/dist/gaphor-${{ inputs.version }}-portable.exe"
+        password: "${{ inputs.cert_password }}"
       run: |
         $pfx_cert_byte = [System.Convert]::FromBase64String("${{ inputs.base64_encoded_pfx }}")
         $currentDirectory = Get-Location
         $certificatePath = Join-Path -Path $currentDirectory -ChildPath 'certificate.pfx'
         [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
-        & 'C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86\signtool.exe' sign /f 'certificate.pfx' /tr $env:timestampUrl /td sha256 /fd sha256 /p "${{ inputs.cert_password }}" $env:installer $env:portable
+        & 'C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86\signtool.exe' sign /f 'certificate.pfx' /tr $env:timestampUrl /td sha256 /fd sha256 /p $env:password $env:installer $env:portable
         Remove-Item 'certificate.pfx'
       shell: PowerShell
