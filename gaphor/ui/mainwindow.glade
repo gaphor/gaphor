@@ -188,6 +188,9 @@
                 <property name="icon_size">1</property>
               </object>
             </child>
+            <style>
+              <class name="flat"/>
+            </style>
           </object>
           <packing>
             <property name="position">1</property>
@@ -206,6 +209,9 @@
                 <property name="icon-name">open-menu-symbolic</property>
               </object>
             </child>
+            <style>
+              <class name="flat"/>
+            </style>
           </object>
           <packing>
             <property name="pack-type">end</property>
@@ -227,6 +233,9 @@
                 <property name="icon-name">gaphor-view-editor-symbolic</property>
               </object>
             </child>
+            <style>
+              <class name="flat"/>
+            </style>
           </object>
           <packing>
             <property name="pack-type">end</property>
