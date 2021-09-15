@@ -33,7 +33,12 @@ class FlowItem(LinePresentation, Named):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-        self.shape_middle = Text(text=lambda: self.subject and self.subject.guard or "")
+        self.shape_middle = Text(
+            text=lambda: self.subject
+            and self.subject.guard
+            and f"[{self.subject.guard}]"
+            or ""
+        )
 
         self.watch("subject[ControlFlow].guard")
         self.watch("subject[ObjectFlow].guard")

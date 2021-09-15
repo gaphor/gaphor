@@ -30,7 +30,7 @@ class TestFlow:
         assert "" == guard.text()
 
         flow.subject.guard = "GuardMe"
-        assert "GuardMe" == guard.text()
+        assert "[GuardMe]" == guard.text()
 
         flow.subject = None
         assert "" == guard.text()
