@@ -201,7 +201,6 @@ class Toolbox(UIComponent):
 if Gtk.get_major_version() == 3:
 
     def _button_drag_data_get(
-        self,
         button: Gtk.Button,
         context: Gdk.DragContext,
         data: Gtk.SelectionData,
