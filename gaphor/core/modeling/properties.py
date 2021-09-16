@@ -198,11 +198,7 @@ class attribute(umlproperty, Generic[T]):
         return f"<attribute {self.name}: {self.type} = {self.default}>"
 
     def _get(self, obj):
-        try:
-            v: str | int | None = getattr(obj, self._name)
-            return v
-        except AttributeError:
-            return self.default
+        return getattr(obj, self._name, self.default)
 
     def _set(self, obj, value):
         if (
@@ -257,10 +253,7 @@ class enumeration(umlproperty):
         return f"<enumeration {self.name}: {self.values} = {self.default}>"
 
     def _get(self, obj):
-        try:
-            return getattr(obj, self._name)
-        except AttributeError:
-            return self.default
+        return getattr(obj, self._name, self.default)
 
     def load(self, obj, value):
         if value not in self.values:
