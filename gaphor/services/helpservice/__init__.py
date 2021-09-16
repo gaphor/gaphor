@@ -3,7 +3,6 @@
 (help browser anyone?)
 """
 
-
 import importlib
 
 import importlib_metadata
@@ -38,7 +37,8 @@ class HelpService(Service, ActionProvider):
         about.set_modal(True)
         about.set_transient_for(self.window)
 
-        about.show()
+        about.run()
+        about.destroy()
 
     @action(name="app.shortcuts")
     def shortcuts(self):
