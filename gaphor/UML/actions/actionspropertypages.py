@@ -82,15 +82,20 @@ class ForkNodePropertyPage(PropertyPageBase):
         )
 
         horizontal = builder.get_object("horizontal")
-        horizontal.set_active(self.item.matrix[2] != 0)
+        horizontal.set_active(self.is_horizontal())
 
         return builder.get_object("fork-node-editor")
 
+    def is_horizontal(self):
+        return self.item.matrix[2] != 0
+
     @transactional
     def _on_horizontal_change(self, button, gparam):
-        if button.get_active():
+        active = button.get_active()
+        horizontal = self.is_horizontal()
+        if active and not horizontal:
             self.item.matrix.rotate(math.pi / 2)
-        else:
+        elif not active and horizontal:
             self.item.matrix.rotate(-math.pi / 2)
         self.item.request_update()
 
