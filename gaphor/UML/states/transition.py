@@ -28,6 +28,7 @@ class TransitionItem(LinePresentation[UML.Transition], Named):
             text=lambda: self.subject
             and self.subject.guard
             and self.subject.guard.specification
+            and f"[{self.subject.guard.specification}]"
             or ""
         )
 

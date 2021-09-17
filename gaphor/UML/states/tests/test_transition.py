@@ -19,10 +19,10 @@ class TestTransition:
 
         item.subject.guard = c
         assert item.subject.guard is c
-        assert guard.text() == "blah", guard.text()
+        assert guard.text() == "[blah]", guard.text()
 
         del c.specification
         assert guard.text() == "", guard.text()
 
         c.specification = "foo"
-        assert guard.text() == "foo", item._guard.text()
+        assert guard.text() == "[foo]", guard.text()
