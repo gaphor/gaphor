@@ -44,7 +44,7 @@ ICONS=diagram \
 	state-machine \
 	region \
 	object-node \
-	partition \
+	activity-partition \
 	control-flow \
 	send-signal-action \
 	accept-event-action \
@@ -124,9 +124,6 @@ verify: stensil.svg
 
 $(ICON_THEME)/gaphor-%-symbolic.svg: stensil.svg
 	$(INKSCAPE) --export-id=$* --export-id-only --export-text-to-path \
-		--export-plain-svg --export-overwrite --export-filename=.$*.svg $< && \
-	$(INKSCAPE) --with-gui --batch-process \
-		--verb="EditSelectAll;SelectionUnGroup;EditSelectAll;StrokeToPath;FileSave" \
-		--export-plain-svg --export-overwrite --export-filename=$@ .$*.svg && rm .$*.svg
+		--export-plain-svg --export-overwrite --export-filename=$@ $<
 
 .PHONY: all verify
