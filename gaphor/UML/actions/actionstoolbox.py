@@ -137,7 +137,7 @@ actions = ToolSection(
         ToolDef(
             "toolbox-partition",
             gettext("Swimlane"),
-            "gaphor-partition-symbolic",
+            "gaphor-activity-partition-symbolic",
             "<Shift>P",
             new_item_factory(
                 diagramitems.PartitionItem,
