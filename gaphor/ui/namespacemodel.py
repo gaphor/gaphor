@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
+from gaphas.decorators import g_async
 from gi.repository import Gtk
 
 from gaphor import UML
@@ -206,6 +207,14 @@ class NamespaceModel(Gtk.TreeStore):
             if iter:
                 path = self.get_path(iter)
                 self.row_changed(path, iter)
+                self.sort()
+
+    @g_async(single=True)
+    def sort(self):
+        self.set_sort_column_id(
+            Gtk.TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID, Gtk.SortType.ASCENDING
+        )
+        self.set_sort_column_id(0, Gtk.SortType.ASCENDING)
 
     def do_row_draggable(self, path):
         return True
