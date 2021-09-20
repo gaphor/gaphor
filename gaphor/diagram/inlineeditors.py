@@ -6,8 +6,8 @@ from gaphas import Item
 from gaphas.geometry import Rectangle
 from gi.repository import Gdk, Gtk
 
-from gaphor.core import transactional
 from gaphor.diagram.presentation import LinePresentation, Named
+from gaphor.transaction import Transaction
 
 
 @singledispatch
@@ -27,10 +27,17 @@ def InlineEditor(
 def named_item_inline_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
 
-    @transactional
+    commit = True
+
     def update_text(text):
-        item.subject.name = text
-        return True
+        if not commit:
+            return
+        with Transaction(event_manager):
+            item.subject.name = text
+
+    def escape():
+        nonlocal commit
+        commit = False
 
     subject = item.subject
     if not subject:
@@ -46,11 +53,6 @@ def named_item_inline_editor(item, view, event_manager, pos=None) -> bool:
         box = view.get_item_bounding_box(view.selection.hovered_item)
     name = subject.name or ""
     entry = popup_entry(name, update_text)
-
-    @transactional
-    def escape():
-        subject.name = name
-
     show_popover(entry, view, box, escape)
 
     return True
@@ -60,7 +62,10 @@ def popup_entry(text, update_text, done=None):
     buffer = Gtk.EntryBuffer()
     buffer.set_text(text, -1)
     entry = Gtk.Entry.new_with_buffer(buffer)
-    entry.connect("changed", lambda entry: update_text(entry.get_buffer().get_text()))
+    entry.connect(
+        "focus-out-event",
+        lambda entry, _event: update_text(entry.get_buffer().get_text()),
+    )
     entry.show()
     return entry
 

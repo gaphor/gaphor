@@ -1,20 +1,24 @@
 from gaphor.core import transactional
 from gaphor.diagram.inlineeditors import InlineEditor, popup_entry, show_popover
+from gaphor.transaction import Transaction
 from gaphor.UML.actions.activitynodes import ForkNodeItem
 
 
 @InlineEditor.register(ForkNodeItem)
 def fork_node_item_inline_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
+    commit = True
 
-    @transactional
     def update_text(text):
-        item.subject.joinSpec = text
-        return True
+        if not commit:
+            return
+        with Transaction(event_manager):
+            item.subject.joinSpec = text
 
     @transactional
     def escape():
-        item.subject.joinSpec = join_spec
+        nonlocal commit
+        commit = False
 
     subject = item.subject
     if not subject:

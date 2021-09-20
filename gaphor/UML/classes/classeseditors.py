@@ -1,25 +1,32 @@
 from gaphas.geometry import Rectangle, distance_point_point_fast
 
-from gaphor.core import transactional
 from gaphor.core.format import format, parse
 from gaphor.diagram.inlineeditors import InlineEditor, popup_entry, show_popover
+from gaphor.transaction import Transaction
 from gaphor.UML.classes.association import AssociationItem
 
 
 @InlineEditor.register(AssociationItem)
 def association_item_inline_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
+    commit = True
 
-    @transactional
     def update_text(text):
-        item.subject.name = text
-        return True
+        if not commit:
+            return
+        with Transaction(event_manager):
+            item.subject.name = text
 
-    @transactional
     def update_end_text(text):
+        if not commit:
+            return
         assert end_item
-        parse(end_item.subject, text)
-        return True
+        with Transaction(event_manager):
+            parse(end_item.subject, text)
+
+    def escape():
+        nonlocal commit
+        commit = False
 
     subject = item.subject
     if not subject:
@@ -44,21 +51,12 @@ def association_item_inline_editor(item, view, event_manager, pos=None) -> bool:
             or ""
         )
 
-        @transactional
-        def escape():
-            assert end_item
-            parse(end_item.subject, text)
-
         entry = popup_entry(text, update_end_text)
         bb = end_item.name_bounds
         x, y = view.get_matrix_i2v(item).transform_point(bb.x, bb.y)
         box = Rectangle(x, y, 10, 10)
     else:
         text = item.subject.name or ""
-
-        @transactional
-        def escape():
-            item.subject.name = text
 
         entry = popup_entry(text, update_text)
 
