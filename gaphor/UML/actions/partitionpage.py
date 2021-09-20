@@ -3,7 +3,7 @@
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import transactional
+from gaphor.core import gettext, transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -89,7 +89,7 @@ class PartitionPropertyPage(PropertyPageBase):
             return
         if num_partitions > len(self.item.partition):
             partition = self.item.subject.model.create(UML.ActivityPartition)
-            partition.name = "NewActivityPartition"
+            partition.name = gettext("New Swimlane")
             partition.activity = self.item.subject.activity
             self.item.partition.append(partition)
         elif num_partitions < len(self.item.partition):

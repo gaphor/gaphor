@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
    width="11.999996"
    height="11.999982"
    viewBox="0 0 3.1749989 3.1749953"
    version="1.1"
-   id="svg4268">
+   id="svg4268"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4262" />
   <metadata
@@ -24,8 +24,13 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <path
-     id="path1183-6"
-     style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="M 3.174999,1.5874975 A 1.5874995,1.5874976 0 0 1 1.5875,3.1749951 1.5874995,1.5874976 0 0 1 0,1.5874975 1.5874995,1.5874976 0 0 1 1.5875,0 1.5874995,1.5874976 0 0 1 3.174999,1.5874975 Z" />
+  <g
+     id="initial-pseudostate"
+     style="display:inline"
+     transform="translate(-44.081476,-5.1740257)">
+    <path
+       id="path1183-6"
+       style="opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round"
+       d="m 47.256475,6.7615232 a 1.5874995,1.5874976 0 0 1 -1.587499,1.5874976 1.5874995,1.5874976 0 0 1 -1.5875,-1.5874976 1.5874995,1.5874976 0 0 1 1.5875,-1.5874975 1.5874995,1.5874976 0 0 1 1.587499,1.5874975 z" />
+  </g>
 </svg>

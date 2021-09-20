@@ -189,7 +189,11 @@ class NamedElementPropertyPage(PropertyPageBase):
         self.watcher = subject.watcher() if subject else None
 
     def construct(self):
-        if not self.subject or UML.model.is_metaclass(self.subject):
+        if (
+            not self.subject
+            or UML.model.is_metaclass(self.subject)
+            or isinstance(self.subject, UML.ActivityPartition)
+        ):
             return
 
         assert self.watcher
