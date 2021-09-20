@@ -32,7 +32,7 @@ class CommentPropertyPage(PropertyPageBase):
         def handler(event):
             if not text_view.props.has_focus:
                 buffer.handler_block(changed_id)
-                buffer.set_text(event.new_value)
+                buffer.set_text(event.new_value or "")
                 buffer.handler_unblock(changed_id)
 
         self.watcher.watch("body", handler)

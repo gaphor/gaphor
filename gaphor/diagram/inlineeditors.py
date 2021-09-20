@@ -27,18 +27,6 @@ def InlineEditor(
 def named_item_inline_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
 
-    commit = True
-
-    def update_text(text):
-        if not commit:
-            return
-        with Transaction(event_manager):
-            item.subject.name = text
-
-    def escape():
-        nonlocal commit
-        commit = False
-
     subject = item.subject
     if not subject:
         return False
@@ -52,25 +40,26 @@ def named_item_inline_editor(item, view, event_manager, pos=None) -> bool:
     else:
         box = view.get_item_bounding_box(view.selection.hovered_item)
     name = subject.name or ""
-    entry = popup_entry(name, update_text)
-    show_popover(entry, view, box, escape)
+    entry = popup_entry(name)
+
+    def update_text():
+        with Transaction(event_manager):
+            item.subject.name = entry.get_buffer().get_text()
+
+    show_popover(entry, view, box, update_text)
 
     return True
 
 
-def popup_entry(text, update_text, done=None):
+def popup_entry(text, update_text=None, done=None):
     buffer = Gtk.EntryBuffer()
     buffer.set_text(text, -1)
     entry = Gtk.Entry.new_with_buffer(buffer)
-    entry.connect(
-        "focus-out-event",
-        lambda entry, _event: update_text(entry.get_buffer().get_text()),
-    )
     entry.show()
     return entry
 
 
-def show_popover(widget, view, box, escape=None):
+def show_popover(widget, view, box, commit):
     popover = Gtk.Popover.new()
     if Gtk.get_major_version() == 3:
         popover.add(widget)
@@ -84,14 +73,23 @@ def show_popover(widget, view, box, escape=None):
     gdk_rect.height = box.height
     popover.set_pointing_to(gdk_rect)
 
+    should_commit = True
+
+    def on_closed(popover):
+        if should_commit:
+            commit()
+
+    popover.connect("closed", on_closed)
+
     def on_escape(popover, keyval, keycode, state):
         if keyval == Gdk.KEY_Return and not state & (
             Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
         ):
             popover.popdown()
             return True
-        elif keyval == Gdk.KEY_Escape and escape:
-            escape()
+        elif keyval == Gdk.KEY_Escape:
+            nonlocal should_commit
+            should_commit = False
 
     if Gtk.get_major_version() == 3:
 

@@ -9,24 +9,6 @@ from gaphor.UML.classes.association import AssociationItem
 @InlineEditor.register(AssociationItem)
 def association_item_inline_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
-    commit = True
-
-    def update_text(text):
-        if not commit:
-            return
-        with Transaction(event_manager):
-            item.subject.name = text
-
-    def update_end_text(text):
-        if not commit:
-            return
-        assert end_item
-        with Transaction(event_manager):
-            parse(end_item.subject, text)
-
-    def escape():
-        nonlocal commit
-        commit = False
 
     subject = item.subject
     if not subject:
@@ -51,14 +33,24 @@ def association_item_inline_editor(item, view, event_manager, pos=None) -> bool:
             or ""
         )
 
-        entry = popup_entry(text, update_end_text)
+        entry = popup_entry(text)
+
+        def update_text():
+            assert end_item
+            with Transaction(event_manager):
+                parse(end_item.subject, entry.get_buffer().get_text())
+
         bb = end_item.name_bounds
         x, y = view.get_matrix_i2v(item).transform_point(bb.x, bb.y)
         box = Rectangle(x, y, 10, 10)
     else:
         text = item.subject.name or ""
 
-        entry = popup_entry(text, update_text)
+        entry = popup_entry(text)
+
+        def update_text():
+            with Transaction(event_manager):
+                item.subject.name = entry.get_buffer().get_text()
 
         box = item.middle_shape_size
         i2v = view.get_matrix_i2v(item)
@@ -66,5 +58,5 @@ def association_item_inline_editor(item, view, event_manager, pos=None) -> bool:
         w, h = i2v.transform_distance(box.width, box.height)
         box = Rectangle(x, y, w, h)
 
-    show_popover(entry, view, box, escape)
+    show_popover(entry, view, box, update_text)
     return True

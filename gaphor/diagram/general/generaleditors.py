@@ -7,20 +7,12 @@ from gaphor.transaction import Transaction
 
 @InlineEditor.register(CommentItem)
 def CommentItemInlineEditor(item, view, event_manager, pos=None) -> bool:
-    commit = True
-
     def update_text():
-        if not commit:
-            return
         text = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), include_hidden_chars=True
         )
         with Transaction(event_manager):
             item.subject.body = text
-
-    def escape():
-        nonlocal commit
-        commit = False
 
     subject = item.subject
     if not subject:
@@ -43,7 +35,6 @@ def CommentItemInlineEditor(item, view, event_manager, pos=None) -> bool:
     text_view.show()
     frame.show()
 
-    popover = show_popover(frame, view, box, escape)
-    popover.connect("closed", lambda _: update_text())
+    show_popover(frame, view, box, update_text)
 
     return True
