@@ -548,14 +548,14 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "pygobject"
-version = "3.40.1"
+version = "3.42.0"
 description = "Python bindings for GObject Introspection"
 category = "main"
 optional = false
 python-versions = ">=3.6, <4"
 
 [package.dependencies]
-pycairo = ">=1.16.0"
+pycairo = ">=1.16,<2.0"
 
 [[package]]
 name = "pyinstaller"
@@ -1302,7 +1302,7 @@ pygments = [
     {file = "Pygments-2.10.0.tar.gz", hash = "sha256:f398865f7eb6874156579fdf36bc840a03cab64d1cde9e93d68f46a425ec52c6"},
 ]
 pygobject = [
-    {file = "PyGObject-3.40.1.tar.gz", hash = "sha256:6fb599aa59ceb9dd05fafb0d72b3862943e7d5e85c8ef6c74856bc6d4321cbab"},
+    {file = "PyGObject-3.42.0.tar.gz", hash = "sha256:b9803991ec0b0b4175e81fee0ad46090fa7af438fe169348a9b18ae53447afcd"},
 ]
 pyinstaller = [
     {file = "pyinstaller-4.5.1-py3-none-macosx_10_13_universal2.whl", hash = "sha256:ecc2baadeeefd2b6fbf39d13c65d4aa603afdda1c6aaaebc4577ba72893fee9e"},
