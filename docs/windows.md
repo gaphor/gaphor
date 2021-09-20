@@ -166,17 +166,17 @@ $ poetry run gaphor
 
 Start a new PowerShell terminal, and set current directory to the project folder:
 ```PowerShell
-cd <your-git-location>
+PS > cd (to the location you put gaphor)
 ```
 
 Ensure that path environment variable is set:
 ```PowerShell
-$env:Path = "C:\gtk-build\gtk\x64\release\bin;" + $env:Path
+PS > $env:Path = "C:\gtk-build\gtk\x64\release\bin;" + $env:Path
 ```
 
 Start Visual Studio Code:
 ```PowerShell
-code .
+PS > code .
 ```
 
 To start the debugger, execute the following steps:
