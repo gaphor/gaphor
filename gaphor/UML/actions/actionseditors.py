@@ -4,7 +4,7 @@ from gaphor.UML.actions.activitynodes import ForkNodeItem
 
 
 @InlineEditor.register(ForkNodeItem)
-def fork_node_item_inline_editor(item, view, pos=None) -> bool:
+def fork_node_item_inline_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
 
     @transactional

@@ -6,7 +6,7 @@ from gaphor.diagram.inlineeditors import InlineEditor, show_popover
 
 
 @InlineEditor.register(CommentItem)
-def CommentItemInlineEditor(item, view, pos=None) -> bool:
+def CommentItemInlineEditor(item, view, event_manager, pos=None) -> bool:
     @transactional
     def update_text():
         text = buffer.get_text(

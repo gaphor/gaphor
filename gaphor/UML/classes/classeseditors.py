@@ -7,7 +7,7 @@ from gaphor.UML.classes.association import AssociationItem
 
 
 @InlineEditor.register(AssociationItem)
-def association_item_inline_editor(item, view, pos=None) -> bool:
+def association_item_inline_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
 
     @transactional

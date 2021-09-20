@@ -81,7 +81,7 @@ When you double click on an item in a diagram, a popup can show up so you can ea
 By default this works for any named element. You can register your own inline editor function if you need to.
 
 ```{eval-rst}
-.. function:: gaphor.diagram.inlineeditors.InlineEditor(item: Item, view, pos: Optional[Tuple[int, int]] = None) -> bool
+.. function:: gaphor.diagram.inlineeditors.InlineEditor(item: Item, view, event_manager, pos: Optional[Tuple[int, int]] = None) -> bool
 
    Show a small editor popup in the diagram. Makes for
    easy editing without resorting to the Element editor.

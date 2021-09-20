@@ -28,7 +28,7 @@ def apply_default_tool_set(view, modeling_language, event_manager, rubberband_st
             segment_tool(view), item_tool(view), event_manager=event_manager
         )
     )
-    view.add_controller(*text_edit_tools(view))
+    view.add_controller(*text_edit_tools(view, event_manager))
     view.add_controller(rubberband_tool(view, rubberband_state))
     view.add_controller(*scroll_tools(view))
     view.add_controller(zoom_tool(view))

@@ -11,7 +11,9 @@ from gaphor.diagram.presentation import LinePresentation, Named
 
 
 @singledispatch
-def InlineEditor(item: Item, view, pos: tuple[int, int] | None = None) -> bool:
+def InlineEditor(
+    item: Item, view, event_manager, pos: tuple[int, int] | None = None
+) -> bool:
     """Show a small editor popup in the diagram. Makes for easy editing without
     resorting to the Element editor.
 
@@ -22,7 +24,7 @@ def InlineEditor(item: Item, view, pos: tuple[int, int] | None = None) -> bool:
 
 
 @InlineEditor.register(Named)
-def named_item_inline_editor(item, view, pos=None) -> bool:
+def named_item_inline_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
 
     @transactional
