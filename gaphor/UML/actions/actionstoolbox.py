@@ -38,10 +38,11 @@ def activity_config(new_item):
 def partition_config(new_item):
     activity_config(new_item)
     subject = new_item.subject
+    subject.name = gettext("Swimlane One")
     new_item.partition = subject
 
     partition = subject.model.create(UML.ActivityPartition)
-    partition.name = "NewActivityPartition"
+    partition.name = gettext("Swimlane Two")
     partition.activity = subject.activity
     new_item.partition = partition
 
@@ -135,8 +136,8 @@ actions = ToolSection(
         ),
         ToolDef(
             "toolbox-partition",
-            gettext("Partition"),
-            "gaphor-partition-symbolic",
+            gettext("Swimlane"),
+            "gaphor-activity-partition-symbolic",
             "<Shift>P",
             new_item_factory(
                 diagramitems.PartitionItem,
