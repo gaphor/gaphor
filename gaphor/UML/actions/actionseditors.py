@@ -12,6 +12,7 @@ def fork_node_item_inline_editor(item, view, pos=None) -> bool:
         item.subject.joinSpec = text
         return True
 
+    @transactional
     def escape():
         item.subject.joinSpec = join_spec
 

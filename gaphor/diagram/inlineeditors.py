@@ -45,6 +45,7 @@ def named_item_inline_editor(item, view, pos=None) -> bool:
     name = subject.name or ""
     entry = popup_entry(name, update_text)
 
+    @transactional
     def escape():
         subject.name = name
 

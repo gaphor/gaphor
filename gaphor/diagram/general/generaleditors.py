@@ -15,6 +15,7 @@ def CommentItemInlineEditor(item, view, pos=None) -> bool:
         item.subject.body = text
         return True
 
+    @transactional
     def escape():
         subject.body = body
 

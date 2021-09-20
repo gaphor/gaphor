@@ -44,6 +44,7 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
             or ""
         )
 
+        @transactional
         def escape():
             assert end_item
             parse(end_item.subject, text)
@@ -55,6 +56,7 @@ def association_item_inline_editor(item, view, pos=None) -> bool:
     else:
         text = item.subject.name or ""
 
+        @transactional
         def escape():
             item.subject.name = text
 
