@@ -162,6 +162,32 @@ $ poetry install
 $ poetry run gaphor
 ```
 
+### Debugging using Visual Studio Code
+
+Start a new PowerShell terminal, and set current directory to the project folder:
+```PowerShell
+PS > cd (to the location you put gaphor)
+```
+
+Ensure that path environment variable is set:
+```PowerShell
+PS > $env:Path = "C:\gtk-build\gtk\x64\release\bin;" + $env:Path
+```
+
+Start Visual Studio Code:
+```PowerShell
+PS > code .
+```
+
+To start the debugger, execute the following steps:
+1. Open `__main__.py` file from `gaphor` folder
+2. Add a breakpoint on line `main(sys.argv)`
+3. In the menu, select Run → Start debugging
+4. Choose Select module from the list
+5. Enter `gaphor` as module name
+
+Visual Studio Code will start the application in debug mode, and will stop at main.
+
 ## Packaging for Windows
 
 In order to create an exe installation package for Windows, we utilize
