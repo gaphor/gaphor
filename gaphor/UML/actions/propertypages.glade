@@ -168,8 +168,8 @@ renderers and such.</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <items>
-          <item id="0" translatable="yes">ordered</item>
-          <item id="1" translatable="yes">unordered</item>
+          <item id="0" translatable="yes">unordered</item>
+          <item id="1" translatable="yes">ordered</item>
           <item id="2" translatable="yes">LIFO</item>
           <item id="3" translatable="yes">FIFO</item>
         </items>
