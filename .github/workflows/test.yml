@@ -130,9 +130,15 @@ jobs:
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/setup-python@v2.2.2
-      - name: GTK with gvsbuild
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: ./.github/actions/gvsbuild
+      - name: GTK binaries move git binary
+        run: move "C:\Program Files\Git\usr\bin" "C:\Program Files\Git\usr\notbin"
+      - name: GTK binaries run gvsbuild
+        working-directory: gvsbuild
+        run: python .\build.py build -p=x64 --vs-ver=16 --msys-dir=C:\msys64 --enable-gi --py-wheel --gtk3-ver=3.24 gobject-introspection gtk3 pycairo pygobject adwaita-icon-theme hicolor-icon-theme
+      - name: Copy wheels to cached directory
+        run: Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl | ForEach-Object -process { cp $_ C:\gtk-build\gtk\x64\release\ }
+      - name: GTK binaries restore git binary
+        run: move "C:\Program Files\Git\usr\notbin" "C:\Program Files\Git\usr\bin"
       - name: GTK binaries output cache key
         id: output
         run: echo "::set-output name=cachekey::gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}"
@@ -156,7 +162,8 @@ jobs:
           echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
           echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
         shell: bash
-      - uses: actions/checkout@v2.3.5
+      - name: Checkout gaphor
+        uses: actions/checkout@v2.3.5
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
