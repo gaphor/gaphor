@@ -29,6 +29,9 @@ def make_gaphor_script():
         file.write("if os.environ['PATH'][-1] == ';':\n")
         file.write("    os.environ['PATH'] = os.environ['PATH'][:-1]\n")
 
+        # Check for and remove two semicolons in path
+        file.write("os.environ['PATH'] = os.environ['PATH'].replace(';;', ';')\n")
+
         plugins = toml["tool"]["poetry"]["plugins"]
         for cat in plugins.values():
             for entrypoint in cat.values():
