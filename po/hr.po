@@ -5,46 +5,24 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gaphor\n"
+"Project-Id-Version:  Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-08-28 21:01+0200\n"
+"POT-Creation-Date: 2021-09-24 16:33+0200\n"
 "PO-Revision-Date: 2021-09-14 20:38+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
-"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hr/>\n"
 "Language: hr\n"
+"Language-Team: Croatian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hr/>\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
 msgid "C4 model"
 msgstr "C4 model"
-
-#: gaphor/C4Model/propertypages.glade:15 gaphor/SysML/propertypages.glade:15
-#: gaphor/UML/actions/propertypages.glade:15
-msgid ""
-"To create a fresh model: create a window, create the\n"
-"desired element, in the tree view pop upmenu, select\n"
-"Remove Parent.\n"
-"\n"
-"Padding between elements is 6px.\n"
-"Top margin is 6 px, 12px for expanders.\n"
-"Edit, from the popup menu, will allow you to add cell \n"
-"renderers and such."
-msgstr ""
-"Stvori novi model na sljedeći način: stvori prozor, stvori\n"
-"željeni element, u skočnom izborniku stablastog prikaza\n"
-"odaberi Ukloni nadređeni.\n"
-"\n"
-"Razmak između elemenata iznosi 6 piksela.\n"
-"Gornja margina je 6 piksela, 12 piksela za proširivače.\n"
-"Uređivanje putem skočnog izbornika omogućuje dodavanje\n"
-"iscrtavače ćelija i slično."
 
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
 msgid "Description"
@@ -53,38 +31,6 @@ msgstr "Opis"
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
 msgstr "Tehnologija"
-
-#: gaphor/C4Model/propertypages.ui:12 gaphor/SysML/propertypages.ui:12
-#: gaphor/UML/actions/propertypages.ui:12
-#: gaphor/UML/classes/propertypages.glade:15
-#: gaphor/UML/classes/propertypages.ui:12
-#: gaphor/UML/components/propertypages.glade:15
-#: gaphor/UML/components/propertypages.ui:12
-#: gaphor/UML/interactions/propertypages.glade:15
-#: gaphor/UML/interactions/propertypages.ui:12
-#: gaphor/UML/profiles/propertypages.glade:15
-#: gaphor/UML/profiles/propertypages.ui:12
-#: gaphor/UML/states/propertypages.glade:15
-#: gaphor/UML/states/propertypages.ui:12 gaphor/diagram/propertypages.glade:15
-#: gaphor/diagram/propertypages.ui:12
-msgid ""
-"To create a fresh model: create a window, create the\n"
-"desired element, in the tree view pop upmenu, select\n"
-"Remove Parent.\n"
-"\n"
-"Padding between elements is 6px.\n"
-"Top margin is 6 px, 12px for expanders.\n"
-"Edit, from the popup menu, will allow you to add cell\n"
-"renderers and such."
-msgstr ""
-"Stvori novi model na sljedeći način: stvori prozor, stvori\n"
-"željeni element, u skočnom izborniku stablastog prikaza\n"
-"odaberi Ukloni nadređeni.\n"
-"\n"
-"Razmak između elemenata iznosi 6 piksela.\n"
-"Gornja margina je 6 piksela, 12 piksela za proširivače.\n"
-"Uređivanje putem skočnog izbornika omogućuje dodavanje\n"
-"iscrtavače ćelija i slično."
 
 #: gaphor/C4Model/toolbox.py:51
 msgid "C4 Model"
@@ -413,57 +359,69 @@ msgstr "Provjeri"
 msgid "Containment"
 msgstr "Sadrži"
 
-#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:265
+#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:274
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/actionstoolbox.py:50
+#: gaphor/UML/actions/actionstoolbox.py:41
+msgid "Swimlane One"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:45
+msgid "Swimlane Two"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:51
 msgid "Actions"
 msgstr "Radnje"
 
-#: gaphor/UML/actions/actionstoolbox.py:54
+#: gaphor/UML/actions/actionstoolbox.py:55
 msgid "Action"
 msgstr "Radnja"
 
-#: gaphor/UML/actions/actionstoolbox.py:66
+#: gaphor/UML/actions/actionstoolbox.py:67
 msgid "Initial node"
 msgstr "Početni čvor"
 
-#: gaphor/UML/actions/actionstoolbox.py:78
+#: gaphor/UML/actions/actionstoolbox.py:79
 msgid "Activity final node"
 msgstr "Krajnji čvor aktivnosti"
 
-#: gaphor/UML/actions/actionstoolbox.py:90
+#: gaphor/UML/actions/actionstoolbox.py:91
 msgid "Flow final node"
 msgstr "Krajnji čvor tijeka"
 
-#: gaphor/UML/actions/actionstoolbox.py:102
+#: gaphor/UML/actions/actionstoolbox.py:103
 msgid "Decision/merge node"
 msgstr "Čvor odluke/sjedinjavanja"
 
-#: gaphor/UML/actions/actionstoolbox.py:114
+#: gaphor/UML/actions/actionstoolbox.py:115
 msgid "Fork/join node"
 msgstr "Čvor račvanja/spajanja"
 
-#: gaphor/UML/actions/actionstoolbox.py:126
+#: gaphor/UML/actions/actionstoolbox.py:127
 msgid "Object node"
 msgstr "Čvor objekta"
 
-#: gaphor/UML/actions/actionstoolbox.py:138
-msgid "Partition"
-msgstr "Particija"
+#: gaphor/UML/actions/actionstoolbox.py:139
+msgid "Swimlane"
+msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:150
+#: gaphor/UML/actions/actionstoolbox.py:151
 msgid "Control/object flow"
 msgstr "Tijek kontrola/objekata"
 
-#: gaphor/UML/actions/actionstoolbox.py:157
+#: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Send signal action"
 msgstr "Radnja slanja signala"
 
-#: gaphor/UML/actions/actionstoolbox.py:169
+#: gaphor/UML/actions/actionstoolbox.py:170
 msgid "Accept event action"
 msgstr "Radnja prihvaćanja događaja"
+
+#: gaphor/UML/actions/partitionpage.py:92
+msgid "New Swimlane"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
@@ -486,14 +444,14 @@ msgid "Show Ordering"
 msgstr "Prikaži redoslijed"
 
 #: gaphor/UML/actions/propertypages.glade:171
-#: gaphor/UML/actions/propertypages.ui:90
-msgid "ordered"
-msgstr "razvrstano"
-
-#: gaphor/UML/actions/propertypages.glade:172
 #: gaphor/UML/actions/propertypages.ui:91
 msgid "unordered"
 msgstr "nerazvrstano"
+
+#: gaphor/UML/actions/propertypages.glade:172
+#: gaphor/UML/actions/propertypages.ui:90
+msgid "ordered"
+msgstr "razvrstano"
 
 #: gaphor/UML/actions/propertypages.glade:173
 #: gaphor/UML/actions/propertypages.ui:92
@@ -522,12 +480,12 @@ msgstr "Imena particija"
 msgid "Guard"
 msgstr "Provjera"
 
-#: gaphor/UML/classes/classespropertypages.py:321
-#: gaphor/UML/classes/classespropertypages.py:397
+#: gaphor/UML/classes/classespropertypages.py:325
+#: gaphor/UML/classes/classespropertypages.py:401
 msgid "Static"
 msgstr "Statički"
 
-#: gaphor/UML/classes/classespropertypages.py:397
+#: gaphor/UML/classes/classespropertypages.py:401
 #: gaphor/UML/classes/propertypages.glade:522
 #: gaphor/UML/classes/propertypages.ui:345
 msgid "Abstract"
@@ -1066,10 +1024,6 @@ msgstr ""
 "Apache softverske licence, verzija 2.0.\n"
 "Pojedinosti potraži u datoteci LICENSE.txt."
 
-#: gaphor/services/helpservice/about.ui:19
-msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
-msgstr "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
-
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
 msgstr "Program"
@@ -1123,7 +1077,7 @@ msgstr "Dijagrami"
 msgid "Edit"
 msgstr "Uredi"
 
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:220
+#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:226
 msgid "Show/Hide Editor"
 msgstr "Prikaži/sakrij uređivač"
 
@@ -1183,8 +1137,8 @@ msgid ""
 "{filename} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr ""
-"Datoteka {filename} je već otvorena. Želiš li se umjesto toga prebaciti na "
-"otvoreni prozor?"
+"Datoteka {filename} je već otvorena. Želiš li se umjesto toga prebaciti "
+"na otvoreni prozor?"
 
 #: gaphor/ui/diagrampage.py:126
 msgid "<None>"
@@ -1195,8 +1149,8 @@ msgid ""
 "Drag to diagram is (temporarily) limited to Classifiers, Packages, and "
 "Properties, not {type}."
 msgstr ""
-"Povlačenje na dijagram (privremeno) je ograničeno na klasifikatore, pakete i "
-"svojstva, ne na {type}."
+"Povlačenje na dijagram (privremeno) je ograničeno na klasifikatore, "
+"pakete i svojstva, ne na {type}."
 
 #: gaphor/ui/elementeditor.glade:15 gaphor/ui/elementeditor.ui:10
 msgid "No item selected"
@@ -1228,15 +1182,15 @@ msgstr ""
 "\n"
 "Ova se ploča može sakriti pritiskom na ikonu olovke u zaglavlju.\n"
 "\n"
-"<b>Savjet:</b> Većina elemenata u ploči alata ima tipkovni prečac (npr. \"c\""
-" za klasu).\n"
+"<b>Savjet:</b> Većina elemenata u ploči alata ima tipkovni prečac (npr. "
+"\"c\" za klasu).\n"
 "Biranje alata funkcionira samo iz dijagrama. Ako se alat ne odabere, "
 "pritisni jednom na dijagram (tako da je aktivan), a zatim pritisni tipku "
 "prečaca.\n"
 "\n"
-"<b>Savjet:</b> Za traženje elementa u stablastom prikazu, odaberi element u "
-"stablastom prikazu i počni tipkati. Automatski će se pojaviti okvir pretrage."
-"\n"
+"<b>Savjet:</b> Za traženje elementa u stablastom prikazu, odaberi element"
+" u stablastom prikazu i počni tipkati. Automatski će se pojaviti okvir "
+"pretrage.\n"
 
 #: gaphor/ui/elementeditor.glade:322 gaphor/ui/elementeditor.ui:170
 msgid "Editors"
@@ -1256,8 +1210,9 @@ msgid ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
-"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\""
-">Stilski predlošci u Gaphoru</a>"
+"🔗 <a "
+"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Stilski"
+" predlošci u Gaphoru</a>"
 
 #: gaphor/ui/elementeditor.glade:443 gaphor/ui/elementeditor.ui:194
 msgid "Settings"
@@ -1268,8 +1223,8 @@ msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
-"Čini se da je Gaphor pokrenut iz naredbenog retka. Želiš li otvoriti sesiju "
-"otklanjanja grešaka?"
+"Čini se da je Gaphor pokrenut iz naredbenog retka. Želiš li otvoriti "
+"sesiju otklanjanja grešaka?"
 
 #: gaphor/ui/errorhandler.py:30
 msgid "Start debug session"
@@ -1305,8 +1260,8 @@ msgid ""
 "location."
 msgstr ""
 "Za spremanje modela nemaš dovoljno slobodnog prostora na uređaju.\n"
-"Oslobodi dio prostora na disku i pokušaj ponovo ili spremi model na jedno "
-"drugo mjesto."
+"Oslobodi dio prostora na disku i pokušaj ponovo ili spremi model na jedno"
+" drugo mjesto."
 
 #: gaphor/ui/filemanager.py:46
 msgid ""
@@ -1419,7 +1374,7 @@ msgstr "Nedavno otvorene datoteke"
 msgid "edited"
 msgstr "promijenjeno"
 
-#: gaphor/ui/mainwindow.py:303
+#: gaphor/ui/mainwindow.py:304
 msgid "Profile: {}"
 msgstr "Profil: {}"
 
@@ -1447,7 +1402,7 @@ msgstr "Iz_briši"
 msgid "Show in \"{diagram}\""
 msgstr "Prikaži u „{diagram}”"
 
-#: gaphor/ui/namespacemodel.py:301
+#: gaphor/ui/namespacemodel.py:310
 msgid "A {} can't be part of a {}."
 msgstr "{} ne može biti dio od {}."
 
@@ -1490,10 +1445,7 @@ msgstr "Nema nedavno otvorenih modela"
 #~ "Pojedinosti potraži u datoteci LICENSE.txt."
 
 #~ msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
-#~ msgstr ""
-#~ "Jordi Mallach (ca), Antonin Delpeuch "
-#~ "(fr), Milo Ivir (hr), Ygor Mutti "
-#~ "(pt_BR)"
+#~ msgstr "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
 
 #~ msgid "Application"
 #~ msgstr "Program"
@@ -1573,3 +1525,45 @@ msgstr "Nema nedavno otvorenih modela"
 
 #~ msgid "Toolbox"
 #~ msgstr "Kutija alata"
+
+#~ msgid ""
+#~ "To create a fresh model: create a window, create the\n"
+#~ "desired element, in the tree view pop upmenu, select\n"
+#~ "Remove Parent.\n"
+#~ "\n"
+#~ "Padding between elements is 6px.\n"
+#~ "Top margin is 6 px, 12px for expanders.\n"
+#~ "Edit, from the popup menu, will allow you to add cell \n"
+#~ "renderers and such."
+#~ msgstr ""
+#~ "Stvori novi model na sljedeći način: stvori prozor, stvori\n"
+#~ "željeni element, u skočnom izborniku stablastog prikaza\n"
+#~ "odaberi Ukloni nadređeni.\n"
+#~ "\n"
+#~ "Razmak između elemenata iznosi 6 piksela.\n"
+#~ "Gornja margina je 6 piksela, 12 piksela za proširivače.\n"
+#~ "Uređivanje putem skočnog izbornika omogućuje dodavanje\n"
+#~ "iscrtavače ćelija i slično."
+
+#~ msgid ""
+#~ "To create a fresh model: create a window, create the\n"
+#~ "desired element, in the tree view pop upmenu, select\n"
+#~ "Remove Parent.\n"
+#~ "\n"
+#~ "Padding between elements is 6px.\n"
+#~ "Top margin is 6 px, 12px for expanders.\n"
+#~ "Edit, from the popup menu, will allow you to add cell\n"
+#~ "renderers and such."
+#~ msgstr ""
+#~ "Stvori novi model na sljedeći način: stvori prozor, stvori\n"
+#~ "željeni element, u skočnom izborniku stablastog prikaza\n"
+#~ "odaberi Ukloni nadređeni.\n"
+#~ "\n"
+#~ "Razmak između elemenata iznosi 6 piksela.\n"
+#~ "Gornja margina je 6 piksela, 12 piksela za proširivače.\n"
+#~ "Uređivanje putem skočnog izbornika omogućuje dodavanje\n"
+#~ "iscrtavače ćelija i slično."
+
+#~ msgid "Partition"
+#~ msgstr "Particija"
+

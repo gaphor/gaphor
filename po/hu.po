@@ -7,43 +7,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-08-28 21:01+0200\n"
+"POT-Creation-Date: 2021-09-24 16:33+0200\n"
 "PO-Revision-Date: 2021-08-31 00:11+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hu/>\n"
 "Language: hu\n"
+"Language-Team: Hungarian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
 msgid "C4 model"
 msgstr "C4-modell"
-
-#: gaphor/C4Model/propertypages.glade:15 gaphor/SysML/propertypages.glade:15
-#: gaphor/UML/actions/propertypages.glade:15
-msgid ""
-"To create a fresh model: create a window, create the\n"
-"desired element, in the tree view pop upmenu, select\n"
-"Remove Parent.\n"
-"\n"
-"Padding between elements is 6px.\n"
-"Top margin is 6 px, 12px for expanders.\n"
-"Edit, from the popup menu, will allow you to add cell \n"
-"renderers and such."
-msgstr ""
-"Friss modell létrehozása: hozzon létre egy ablakot, hozza létre\n"
-"a kívánt elemet, a fa nézet előugró menüjében válassza a\n"
-"Szülő eltávolítása lehetőséget.\n"
-"\n"
-"Az elemek közötti párnázás 6 képpont.\n"
-"A felső margó 6 képpont, a bővítők esetében 12 képpont.\n"
-"A szerkesztés a felugró menüből lehetővé teszi cellarenderelők\n"
-"és hasonlók hozzáadását."
 
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
 msgid "Description"
@@ -52,38 +30,6 @@ msgstr "Leírás"
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
 msgstr "Technológia"
-
-#: gaphor/C4Model/propertypages.ui:12 gaphor/SysML/propertypages.ui:12
-#: gaphor/UML/actions/propertypages.ui:12
-#: gaphor/UML/classes/propertypages.glade:15
-#: gaphor/UML/classes/propertypages.ui:12
-#: gaphor/UML/components/propertypages.glade:15
-#: gaphor/UML/components/propertypages.ui:12
-#: gaphor/UML/interactions/propertypages.glade:15
-#: gaphor/UML/interactions/propertypages.ui:12
-#: gaphor/UML/profiles/propertypages.glade:15
-#: gaphor/UML/profiles/propertypages.ui:12
-#: gaphor/UML/states/propertypages.glade:15
-#: gaphor/UML/states/propertypages.ui:12 gaphor/diagram/propertypages.glade:15
-#: gaphor/diagram/propertypages.ui:12
-msgid ""
-"To create a fresh model: create a window, create the\n"
-"desired element, in the tree view pop upmenu, select\n"
-"Remove Parent.\n"
-"\n"
-"Padding between elements is 6px.\n"
-"Top margin is 6 px, 12px for expanders.\n"
-"Edit, from the popup menu, will allow you to add cell\n"
-"renderers and such."
-msgstr ""
-"Friss modell létrehozása: hozzon létre egy ablakot, hozza létre\n"
-"a kívánt elemet, a fa nézet előugró menüjében válassza a\n"
-"Szülő eltávolítása lehetőséget.\n"
-"\n"
-"Az elemek közötti párnázás 6 képpont.\n"
-"A felső margó 6 képpont, a bővítők esetében 12 képpont.\n"
-"A szerkesztés a felugró menüből lehetővé teszi cellarenderelők\n"
-"és hasonlók hozzáadását."
 
 #: gaphor/C4Model/toolbox.py:51
 msgid "C4 Model"
@@ -412,57 +358,69 @@ msgstr "Ellenőrzés"
 msgid "Containment"
 msgstr "Tartalmazás"
 
-#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:265
+#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:274
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/actionstoolbox.py:50
+#: gaphor/UML/actions/actionstoolbox.py:41
+msgid "Swimlane One"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:45
+msgid "Swimlane Two"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:51
 msgid "Actions"
 msgstr "Műveletek"
 
-#: gaphor/UML/actions/actionstoolbox.py:54
+#: gaphor/UML/actions/actionstoolbox.py:55
 msgid "Action"
 msgstr "Művelet"
 
-#: gaphor/UML/actions/actionstoolbox.py:66
+#: gaphor/UML/actions/actionstoolbox.py:67
 msgid "Initial node"
 msgstr "Kezdeti csomópont"
 
-#: gaphor/UML/actions/actionstoolbox.py:78
+#: gaphor/UML/actions/actionstoolbox.py:79
 msgid "Activity final node"
 msgstr "Tevékenység végső csomópontja"
 
-#: gaphor/UML/actions/actionstoolbox.py:90
+#: gaphor/UML/actions/actionstoolbox.py:91
 msgid "Flow final node"
 msgstr "Folyamat végső csomópontja"
 
-#: gaphor/UML/actions/actionstoolbox.py:102
+#: gaphor/UML/actions/actionstoolbox.py:103
 msgid "Decision/merge node"
 msgstr "Döntő/egyesítő csomópont"
 
-#: gaphor/UML/actions/actionstoolbox.py:114
+#: gaphor/UML/actions/actionstoolbox.py:115
 msgid "Fork/join node"
 msgstr "Csomópont elágazása"
 
-#: gaphor/UML/actions/actionstoolbox.py:126
+#: gaphor/UML/actions/actionstoolbox.py:127
 msgid "Object node"
 msgstr "Objektum csomópont"
 
-#: gaphor/UML/actions/actionstoolbox.py:138
-msgid "Partition"
-msgstr "Felosztás"
+#: gaphor/UML/actions/actionstoolbox.py:139
+msgid "Swimlane"
+msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:150
+#: gaphor/UML/actions/actionstoolbox.py:151
 msgid "Control/object flow"
 msgstr "Vezérlés/objektum folyamata"
 
-#: gaphor/UML/actions/actionstoolbox.py:157
+#: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Send signal action"
 msgstr "Jelküldési művelet"
 
-#: gaphor/UML/actions/actionstoolbox.py:169
+#: gaphor/UML/actions/actionstoolbox.py:170
 msgid "Accept event action"
 msgstr "Eseményművelet elfogadása"
+
+#: gaphor/UML/actions/partitionpage.py:92
+msgid "New Swimlane"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
@@ -485,14 +443,14 @@ msgid "Show Ordering"
 msgstr "Sorrend megjelenítése"
 
 #: gaphor/UML/actions/propertypages.glade:171
-#: gaphor/UML/actions/propertypages.ui:90
-msgid "ordered"
-msgstr "elrendelt"
-
-#: gaphor/UML/actions/propertypages.glade:172
 #: gaphor/UML/actions/propertypages.ui:91
 msgid "unordered"
 msgstr "rendezetlen"
+
+#: gaphor/UML/actions/propertypages.glade:172
+#: gaphor/UML/actions/propertypages.ui:90
+msgid "ordered"
+msgstr "elrendelt"
 
 #: gaphor/UML/actions/propertypages.glade:173
 #: gaphor/UML/actions/propertypages.ui:92
@@ -521,12 +479,12 @@ msgstr "Felosztás nevek"
 msgid "Guard"
 msgstr "Védő"
 
-#: gaphor/UML/classes/classespropertypages.py:321
-#: gaphor/UML/classes/classespropertypages.py:397
+#: gaphor/UML/classes/classespropertypages.py:325
+#: gaphor/UML/classes/classespropertypages.py:401
 msgid "Static"
 msgstr "Ritkán módosul"
 
-#: gaphor/UML/classes/classespropertypages.py:397
+#: gaphor/UML/classes/classespropertypages.py:401
 #: gaphor/UML/classes/propertypages.glade:522
 #: gaphor/UML/classes/propertypages.ui:345
 msgid "Abstract"
@@ -752,8 +710,8 @@ msgid ""
 "Press ENTER to edit item, BS/DEL to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
-"Az osztályattribútumak hozzáadása és szerkesztése az UML szintaxisa szerint."
-"\n"
+"Az osztályattribútumak hozzáadása és szerkesztése az UML szintaxisa "
+"szerint.\n"
 "Példák attribútum szintaxisra\n"
 "- attr\n"
 "- + attr: int\n"
@@ -774,7 +732,8 @@ msgid ""
 "Press ENTER to edit item, BS/DEL to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
-"Az osztályműveletek hozzáadása és szerkesztése az UML szintaxisa szerint.\n"
+"Az osztályműveletek hozzáadása és szerkesztése az UML szintaxisa szerint."
+"\n"
 "Példák a műveleti szintaxisra\n"
 "- call()\n"
 "- + call(a: int, b: str) # a jegyzet\n"
@@ -1074,10 +1033,6 @@ msgstr ""
 "Apache Software License 2.0 verziója szerint tették közzé.\n"
 "A részletekért tekintse meg a LICENSE.txt fájlt."
 
-#: gaphor/services/helpservice/about.ui:19
-msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
-msgstr "Mallach Jordi (ca), Delpeuch Antonin (fr), Mutti Ygor (pt_BR)"
-
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
 msgstr "Alkalmazás"
@@ -1131,7 +1086,7 @@ msgstr "Ábrák"
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:220
+#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:226
 msgid "Show/Hide Editor"
 msgstr "Szerkesztő megjelenítése/elrejtése"
 
@@ -1427,7 +1382,7 @@ msgstr "Nemrég megnyitott fájlok"
 msgid "edited"
 msgstr "szerkesztett"
 
-#: gaphor/ui/mainwindow.py:303
+#: gaphor/ui/mainwindow.py:304
 msgid "Profile: {}"
 msgstr "Profil: {}"
 
@@ -1455,7 +1410,7 @@ msgstr "_Törlés"
 msgid "Show in \"{diagram}\""
 msgstr "Megjelenítés a(z) „{diagram}”-ábrán"
 
-#: gaphor/ui/namespacemodel.py:301
+#: gaphor/ui/namespacemodel.py:310
 msgid "A {} can't be part of a {}."
 msgstr "A {} nem lehet része a következőnek: {}."
 
@@ -1466,3 +1421,48 @@ msgstr "&lt;Kapcsolatok&gt;"
 #: gaphor/ui/recentfiles.py:67
 msgid "No recently opened models"
 msgstr "Nincsenek nemrégiben megnyitott modellek"
+
+#~ msgid ""
+#~ "To create a fresh model: create a window, create the\n"
+#~ "desired element, in the tree view pop upmenu, select\n"
+#~ "Remove Parent.\n"
+#~ "\n"
+#~ "Padding between elements is 6px.\n"
+#~ "Top margin is 6 px, 12px for expanders.\n"
+#~ "Edit, from the popup menu, will allow you to add cell \n"
+#~ "renderers and such."
+#~ msgstr ""
+#~ "Friss modell létrehozása: hozzon létre egy ablakot, hozza létre\n"
+#~ "a kívánt elemet, a fa nézet előugró menüjében válassza a\n"
+#~ "Szülő eltávolítása lehetőséget.\n"
+#~ "\n"
+#~ "Az elemek közötti párnázás 6 képpont.\n"
+#~ "A felső margó 6 képpont, a bővítők esetében 12 képpont.\n"
+#~ "A szerkesztés a felugró menüből lehetővé teszi cellarenderelők\n"
+#~ "és hasonlók hozzáadását."
+
+#~ msgid ""
+#~ "To create a fresh model: create a window, create the\n"
+#~ "desired element, in the tree view pop upmenu, select\n"
+#~ "Remove Parent.\n"
+#~ "\n"
+#~ "Padding between elements is 6px.\n"
+#~ "Top margin is 6 px, 12px for expanders.\n"
+#~ "Edit, from the popup menu, will allow you to add cell\n"
+#~ "renderers and such."
+#~ msgstr ""
+#~ "Friss modell létrehozása: hozzon létre egy ablakot, hozza létre\n"
+#~ "a kívánt elemet, a fa nézet előugró menüjében válassza a\n"
+#~ "Szülő eltávolítása lehetőséget.\n"
+#~ "\n"
+#~ "Az elemek közötti párnázás 6 képpont.\n"
+#~ "A felső margó 6 képpont, a bővítők esetében 12 képpont.\n"
+#~ "A szerkesztés a felugró menüből lehetővé teszi cellarenderelők\n"
+#~ "és hasonlók hozzáadását."
+
+#~ msgid "Partition"
+#~ msgstr "Felosztás"
+
+#~ msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
+#~ msgstr "Mallach Jordi (ca), Delpeuch Antonin (fr), Mutti Ygor (pt_BR)"
+

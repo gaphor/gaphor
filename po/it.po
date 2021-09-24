@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-08-28 21:01+0200\n"
+"POT-Creation-Date: 2021-09-24 16:33+0200\n"
 "PO-Revision-Date: 2021-03-21 14:30+0100\n"
 "Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
 "Language: it\n"
@@ -23,27 +23,6 @@ msgstr ""
 msgid "C4 model"
 msgstr "Nuovo modello"
 
-#: gaphor/C4Model/propertypages.glade:15 gaphor/SysML/propertypages.glade:15
-#: gaphor/UML/actions/propertypages.glade:15
-msgid ""
-"To create a fresh model: create a window, create the\n"
-"desired element, in the tree view pop upmenu, select\n"
-"Remove Parent.\n"
-"\n"
-"Padding between elements is 6px.\n"
-"Top margin is 6 px, 12px for expanders.\n"
-"Edit, from the popup menu, will allow you to add cell \n"
-"renderers and such."
-msgstr ""
-"Per creare un nuovo modello: crea una finestra, crea l'\n"
-"elemento desiderato, nel menu a comparsa della vista ad albero, seleziona"
-"\n"
-"Rimuovi Padre.\n"
-"\\ NIl riempimento tra gli elementi è 6px.\n"
-"Il margine superiore è di 6 px, 12px per gli espansori.\n"
-"Modifica, dal menu popup, ti permetterà di aggiungere la cella\n"
-"renderer e simili."
-
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
 #, fuzzy
 msgid "Description"
@@ -52,39 +31,6 @@ msgstr "Associazione"
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
 msgstr ""
-
-#: gaphor/C4Model/propertypages.ui:12 gaphor/SysML/propertypages.ui:12
-#: gaphor/UML/actions/propertypages.ui:12
-#: gaphor/UML/classes/propertypages.glade:15
-#: gaphor/UML/classes/propertypages.ui:12
-#: gaphor/UML/components/propertypages.glade:15
-#: gaphor/UML/components/propertypages.ui:12
-#: gaphor/UML/interactions/propertypages.glade:15
-#: gaphor/UML/interactions/propertypages.ui:12
-#: gaphor/UML/profiles/propertypages.glade:15
-#: gaphor/UML/profiles/propertypages.ui:12
-#: gaphor/UML/states/propertypages.glade:15
-#: gaphor/UML/states/propertypages.ui:12 gaphor/diagram/propertypages.glade:15
-#: gaphor/diagram/propertypages.ui:12
-#, fuzzy
-msgid ""
-"To create a fresh model: create a window, create the\n"
-"desired element, in the tree view pop upmenu, select\n"
-"Remove Parent.\n"
-"\n"
-"Padding between elements is 6px.\n"
-"Top margin is 6 px, 12px for expanders.\n"
-"Edit, from the popup menu, will allow you to add cell\n"
-"renderers and such."
-msgstr ""
-"Per creare un nuovo modello: crea una finestra, crea l'\n"
-"elemento desiderato, nel menu a comparsa della vista ad albero, seleziona"
-"\n"
-"Rimuovi Padre.\n"
-"\\ NIl riempimento tra gli elementi è 6px.\n"
-"Il margine superiore è di 6 px, 12px per gli espansori.\n"
-"Modifica, dal menu popup, ti permetterà di aggiungere la cella\n"
-"renderer e simili."
 
 #: gaphor/C4Model/toolbox.py:51
 #, fuzzy
@@ -435,57 +381,69 @@ msgstr "Verifica"
 msgid "Containment"
 msgstr ""
 
-#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:265
+#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:274
 msgid "UML"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:50
+#: gaphor/UML/actions/actionstoolbox.py:41
+msgid "Swimlane One"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:45
+msgid "Swimlane Two"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:51
 msgid "Actions"
 msgstr "Azioni"
 
-#: gaphor/UML/actions/actionstoolbox.py:54
+#: gaphor/UML/actions/actionstoolbox.py:55
 msgid "Action"
 msgstr "Azione"
 
-#: gaphor/UML/actions/actionstoolbox.py:66
+#: gaphor/UML/actions/actionstoolbox.py:67
 msgid "Initial node"
 msgstr "Nodo iniziale"
 
-#: gaphor/UML/actions/actionstoolbox.py:78
+#: gaphor/UML/actions/actionstoolbox.py:79
 msgid "Activity final node"
 msgstr "Nodo finale attività"
 
-#: gaphor/UML/actions/actionstoolbox.py:90
+#: gaphor/UML/actions/actionstoolbox.py:91
 msgid "Flow final node"
 msgstr "Nodo finale del flusso"
 
-#: gaphor/UML/actions/actionstoolbox.py:102
+#: gaphor/UML/actions/actionstoolbox.py:103
 msgid "Decision/merge node"
 msgstr "Nodo di decisione/unione"
 
-#: gaphor/UML/actions/actionstoolbox.py:114
+#: gaphor/UML/actions/actionstoolbox.py:115
 msgid "Fork/join node"
 msgstr "Forka/unisci nodo"
 
-#: gaphor/UML/actions/actionstoolbox.py:126
+#: gaphor/UML/actions/actionstoolbox.py:127
 msgid "Object node"
 msgstr "Nodo oggetto"
 
-#: gaphor/UML/actions/actionstoolbox.py:138
-msgid "Partition"
-msgstr "Partizione"
+#: gaphor/UML/actions/actionstoolbox.py:139
+msgid "Swimlane"
+msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:150
+#: gaphor/UML/actions/actionstoolbox.py:151
 msgid "Control/object flow"
 msgstr "Controllo/flusso oggetto"
 
-#: gaphor/UML/actions/actionstoolbox.py:157
+#: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Send signal action"
 msgstr "Invia segnale azione"
 
-#: gaphor/UML/actions/actionstoolbox.py:169
+#: gaphor/UML/actions/actionstoolbox.py:170
 msgid "Accept event action"
 msgstr "Accetta azione evento"
+
+#: gaphor/UML/actions/partitionpage.py:92
+msgid "New Swimlane"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
@@ -508,14 +466,14 @@ msgid "Show Ordering"
 msgstr "Mostra ordine"
 
 #: gaphor/UML/actions/propertypages.glade:171
-#: gaphor/UML/actions/propertypages.ui:90
-msgid "ordered"
-msgstr "ordine"
-
-#: gaphor/UML/actions/propertypages.glade:172
 #: gaphor/UML/actions/propertypages.ui:91
 msgid "unordered"
 msgstr "non ordinato"
+
+#: gaphor/UML/actions/propertypages.glade:172
+#: gaphor/UML/actions/propertypages.ui:90
+msgid "ordered"
+msgstr "ordine"
 
 #: gaphor/UML/actions/propertypages.glade:173
 #: gaphor/UML/actions/propertypages.ui:92
@@ -546,13 +504,13 @@ msgstr "Partizione"
 msgid "Guard"
 msgstr "uardia"
 
-#: gaphor/UML/classes/classespropertypages.py:321
-#: gaphor/UML/classes/classespropertypages.py:397
+#: gaphor/UML/classes/classespropertypages.py:325
+#: gaphor/UML/classes/classespropertypages.py:401
 #, fuzzy
 msgid "Static"
 msgstr "Automatico"
 
-#: gaphor/UML/classes/classespropertypages.py:397
+#: gaphor/UML/classes/classespropertypages.py:401
 #: gaphor/UML/classes/propertypages.glade:522
 #: gaphor/UML/classes/propertypages.ui:345
 msgid "Abstract"
@@ -1106,10 +1064,6 @@ msgid ""
 "See the LICENSE.txt file for details."
 msgstr ""
 
-#: gaphor/services/helpservice/about.ui:19
-msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
-msgstr ""
-
 #: gaphor/services/helpservice/shortcuts.ui:18
 #, fuzzy
 msgid "Application"
@@ -1169,7 +1123,7 @@ msgstr "Nuovo_Diagrama"
 msgid "Edit"
 msgstr "Modificati"
 
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:220
+#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:226
 msgid "Show/Hide Editor"
 msgstr "Mostra/Nascondi Editor"
 
@@ -1440,7 +1394,7 @@ msgstr "File aperti di ricente"
 msgid "edited"
 msgstr "Modificati"
 
-#: gaphor/ui/mainwindow.py:303
+#: gaphor/ui/mainwindow.py:304
 msgid "Profile: {}"
 msgstr "Profilo: {}"
 
@@ -1468,7 +1422,7 @@ msgstr "Can_cella"
 msgid "Show in \"{diagram}\""
 msgstr "Mostra in \"{diagram}\""
 
-#: gaphor/ui/namespacemodel.py:301
+#: gaphor/ui/namespacemodel.py:310
 msgid "A {} can't be part of a {}."
 msgstr ""
 
@@ -1511,7 +1465,7 @@ msgstr "Nessun modello aperto di recente"
 #~ "Per i dettagli, consultare il file LICENSE.txt."
 
 #~ msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
-#~ msgstr "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
+#~ msgstr ""
 
 #~ msgid "Application"
 #~ msgstr "Applicazione"
@@ -1593,4 +1547,45 @@ msgstr "Nessun modello aperto di recente"
 
 #~ msgid "Toolbox"
 #~ msgstr "Strumenti"
+
+#~ msgid ""
+#~ "To create a fresh model: create a window, create the\n"
+#~ "desired element, in the tree view pop upmenu, select\n"
+#~ "Remove Parent.\n"
+#~ "\n"
+#~ "Padding between elements is 6px.\n"
+#~ "Top margin is 6 px, 12px for expanders.\n"
+#~ "Edit, from the popup menu, will allow you to add cell \n"
+#~ "renderers and such."
+#~ msgstr ""
+#~ "Per creare un nuovo modello: crea una finestra, crea l'\n"
+#~ "elemento desiderato, nel menu a comparsa"
+#~ " della vista ad albero, seleziona\n"
+#~ "Rimuovi Padre.\n"
+#~ "\\ NIl riempimento tra gli elementi è 6px.\n"
+#~ "Il margine superiore è di 6 px, 12px per gli espansori.\n"
+#~ "Modifica, dal menu popup, ti permetterà di aggiungere la cella\n"
+#~ "renderer e simili."
+
+#~ msgid ""
+#~ "To create a fresh model: create a window, create the\n"
+#~ "desired element, in the tree view pop upmenu, select\n"
+#~ "Remove Parent.\n"
+#~ "\n"
+#~ "Padding between elements is 6px.\n"
+#~ "Top margin is 6 px, 12px for expanders.\n"
+#~ "Edit, from the popup menu, will allow you to add cell\n"
+#~ "renderers and such."
+#~ msgstr ""
+#~ "Per creare un nuovo modello: crea una finestra, crea l'\n"
+#~ "elemento desiderato, nel menu a comparsa"
+#~ " della vista ad albero, seleziona\n"
+#~ "Rimuovi Padre.\n"
+#~ "\\ NIl riempimento tra gli elementi è 6px.\n"
+#~ "Il margine superiore è di 6 px, 12px per gli espansori.\n"
+#~ "Modifica, dal menu popup, ti permetterà di aggiungere la cella\n"
+#~ "renderer e simili."
+
+#~ msgid "Partition"
+#~ msgstr "Partizione"
 

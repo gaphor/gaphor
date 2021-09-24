@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-08-28 21:01+0200\n"
+"POT-Creation-Date: 2021-09-24 16:33+0200\n"
 "PO-Revision-Date: 2011-08-22 22:15+0000\n"
 "Last-Translator: Евгений Лежнин <z_lezhnin@mail2000.ru>\n"
 "Language: ru\n"
@@ -20,19 +20,6 @@ msgstr ""
 msgid "C4 model"
 msgstr "Новая модель"
 
-#: gaphor/C4Model/propertypages.glade:15 gaphor/SysML/propertypages.glade:15
-#: gaphor/UML/actions/propertypages.glade:15
-msgid ""
-"To create a fresh model: create a window, create the\n"
-"desired element, in the tree view pop upmenu, select\n"
-"Remove Parent.\n"
-"\n"
-"Padding between elements is 6px.\n"
-"Top margin is 6 px, 12px for expanders.\n"
-"Edit, from the popup menu, will allow you to add cell \n"
-"renderers and such."
-msgstr ""
-
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
 #, fuzzy
 msgid "Description"
@@ -40,30 +27,6 @@ msgstr "Ассоциация"
 
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
-msgstr ""
-
-#: gaphor/C4Model/propertypages.ui:12 gaphor/SysML/propertypages.ui:12
-#: gaphor/UML/actions/propertypages.ui:12
-#: gaphor/UML/classes/propertypages.glade:15
-#: gaphor/UML/classes/propertypages.ui:12
-#: gaphor/UML/components/propertypages.glade:15
-#: gaphor/UML/components/propertypages.ui:12
-#: gaphor/UML/interactions/propertypages.glade:15
-#: gaphor/UML/interactions/propertypages.ui:12
-#: gaphor/UML/profiles/propertypages.glade:15
-#: gaphor/UML/profiles/propertypages.ui:12
-#: gaphor/UML/states/propertypages.glade:15
-#: gaphor/UML/states/propertypages.ui:12 gaphor/diagram/propertypages.glade:15
-#: gaphor/diagram/propertypages.ui:12
-msgid ""
-"To create a fresh model: create a window, create the\n"
-"desired element, in the tree view pop upmenu, select\n"
-"Remove Parent.\n"
-"\n"
-"Padding between elements is 6px.\n"
-"Top margin is 6 px, 12px for expanders.\n"
-"Edit, from the popup menu, will allow you to add cell\n"
-"renderers and such."
 msgstr ""
 
 #: gaphor/C4Model/toolbox.py:51
@@ -407,57 +370,68 @@ msgstr ""
 msgid "Containment"
 msgstr ""
 
-#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:265
+#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:274
 msgid "UML"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:50
+#: gaphor/UML/actions/actionstoolbox.py:41
+msgid "Swimlane One"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:45
+msgid "Swimlane Two"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:51
 msgid "Actions"
 msgstr "Действия"
 
-#: gaphor/UML/actions/actionstoolbox.py:54
+#: gaphor/UML/actions/actionstoolbox.py:55
 msgid "Action"
 msgstr "Действие"
 
-#: gaphor/UML/actions/actionstoolbox.py:66
+#: gaphor/UML/actions/actionstoolbox.py:67
 msgid "Initial node"
 msgstr "Начальный узел"
 
-#: gaphor/UML/actions/actionstoolbox.py:78
+#: gaphor/UML/actions/actionstoolbox.py:79
 msgid "Activity final node"
 msgstr "Финальный узел деятельности"
 
-#: gaphor/UML/actions/actionstoolbox.py:90
+#: gaphor/UML/actions/actionstoolbox.py:91
 msgid "Flow final node"
 msgstr "Узел завершения потока"
 
-#: gaphor/UML/actions/actionstoolbox.py:102
+#: gaphor/UML/actions/actionstoolbox.py:103
 msgid "Decision/merge node"
 msgstr "Узел принятия решения или узел слияния"
 
-#: gaphor/UML/actions/actionstoolbox.py:114
+#: gaphor/UML/actions/actionstoolbox.py:115
 msgid "Fork/join node"
 msgstr "Узел раздвоения/слияния"
 
-#: gaphor/UML/actions/actionstoolbox.py:126
+#: gaphor/UML/actions/actionstoolbox.py:127
 msgid "Object node"
 msgstr "Узел данных"
 
-#: gaphor/UML/actions/actionstoolbox.py:138
-#, fuzzy
-msgid "Partition"
-msgstr "Раздел"
+#: gaphor/UML/actions/actionstoolbox.py:139
+msgid "Swimlane"
+msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:150
+#: gaphor/UML/actions/actionstoolbox.py:151
 msgid "Control/object flow"
 msgstr "Поток управления/объектов"
 
-#: gaphor/UML/actions/actionstoolbox.py:157
+#: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Send signal action"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:169
+#: gaphor/UML/actions/actionstoolbox.py:170
 msgid "Accept event action"
+msgstr ""
+
+#: gaphor/UML/actions/partitionpage.py:92
+msgid "New Swimlane"
 msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:32
@@ -481,13 +455,13 @@ msgid "Show Ordering"
 msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:171
-#: gaphor/UML/actions/propertypages.ui:90
-msgid "ordered"
+#: gaphor/UML/actions/propertypages.ui:91
+msgid "unordered"
 msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:172
-#: gaphor/UML/actions/propertypages.ui:91
-msgid "unordered"
+#: gaphor/UML/actions/propertypages.ui:90
+msgid "ordered"
 msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:173
@@ -519,13 +493,13 @@ msgstr "Раздел"
 msgid "Guard"
 msgstr "Защита"
 
-#: gaphor/UML/classes/classespropertypages.py:321
-#: gaphor/UML/classes/classespropertypages.py:397
+#: gaphor/UML/classes/classespropertypages.py:325
+#: gaphor/UML/classes/classespropertypages.py:401
 #, fuzzy
 msgid "Static"
 msgstr "Автоматический"
 
-#: gaphor/UML/classes/classespropertypages.py:397
+#: gaphor/UML/classes/classespropertypages.py:401
 #: gaphor/UML/classes/propertypages.glade:522
 #: gaphor/UML/classes/propertypages.ui:345
 msgid "Abstract"
@@ -1022,10 +996,6 @@ msgid ""
 "See the LICENSE.txt file for details."
 msgstr ""
 
-#: gaphor/services/helpservice/about.ui:19
-msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
-msgstr ""
-
 #: gaphor/services/helpservice/shortcuts.ui:18
 #, fuzzy
 msgid "Application"
@@ -1083,7 +1053,7 @@ msgstr "_Новая диаграмма"
 msgid "Edit"
 msgstr ""
 
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:220
+#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:226
 msgid "Show/Hide Editor"
 msgstr ""
 
@@ -1351,7 +1321,7 @@ msgstr ""
 msgid "edited"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:303
+#: gaphor/ui/mainwindow.py:304
 msgid "Profile: {}"
 msgstr ""
 
@@ -1379,7 +1349,7 @@ msgstr "Удалить"
 msgid "Show in \"{diagram}\""
 msgstr ""
 
-#: gaphor/ui/namespacemodel.py:301
+#: gaphor/ui/namespacemodel.py:310
 msgid "A {} can't be part of a {}."
 msgstr ""
 
@@ -1580,4 +1550,29 @@ msgstr ""
 
 #~ msgid "Toolbox"
 #~ msgstr ""
+
+#~ msgid ""
+#~ "To create a fresh model: create a window, create the\n"
+#~ "desired element, in the tree view pop upmenu, select\n"
+#~ "Remove Parent.\n"
+#~ "\n"
+#~ "Padding between elements is 6px.\n"
+#~ "Top margin is 6 px, 12px for expanders.\n"
+#~ "Edit, from the popup menu, will allow you to add cell \n"
+#~ "renderers and such."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "To create a fresh model: create a window, create the\n"
+#~ "desired element, in the tree view pop upmenu, select\n"
+#~ "Remove Parent.\n"
+#~ "\n"
+#~ "Padding between elements is 6px.\n"
+#~ "Top margin is 6 px, 12px for expanders.\n"
+#~ "Edit, from the popup menu, will allow you to add cell\n"
+#~ "renderers and such."
+#~ msgstr ""
+
+#~ msgid "Partition"
+#~ msgstr "Раздел"
 

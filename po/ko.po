@@ -1,48 +1,26 @@
-# Translations template for Gaphor.
+# Korean translations for Gaphor.
 # Copyright (C) 2021 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
+# This file is distributed under the same license as the Gaphor project.
 # Seong-ho Cho <shcho@gnome.org>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
-"POT-Creation-Date: 2021-08-28 21:01+0200\n"
+"POT-Creation-Date: 2021-09-24 16:33+0200\n"
 "PO-Revision-Date: 2021-08-31 14:20+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
+"Language: ko\n"
 "Language-Team: 한국어 <gnome-kr@googlegroups.com>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
-"X-Generator: Poedit 2.3.1\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"Language: ko\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
 msgid "C4 model"
 msgstr "C4 모델"
-
-#: gaphor/C4Model/propertypages.glade:15 gaphor/SysML/propertypages.glade:15
-#: gaphor/UML/actions/propertypages.glade:15
-msgid ""
-"To create a fresh model: create a window, create the\n"
-"desired element, in the tree view pop upmenu, select\n"
-"Remove Parent.\n"
-"\n"
-"Padding between elements is 6px.\n"
-"Top margin is 6 px, 12px for expanders.\n"
-"Edit, from the popup menu, will allow you to add cell \n"
-"renderers and such."
-msgstr ""
-"새 모델 만들기: 창을 만들고, 원하는 요소를 만든 후,\n"
-"트리 보기 팝업 메뉴에서, \"상위 요소 제거\"를 선택\n"
-"합니다.\n"
-"\n"
-"구성 요소별 안 여백은 6px 입니다.\n"
-"상단 밖 여백은 6px이며, 확장 요소에 대해 12px입니다.\n"
-"팝업 메뉴에서 편집을 선택하면, 셀 렌더러 등을 추가할\n"
-"수 있습니다."
 
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
 msgid "Description"
@@ -51,38 +29,6 @@ msgstr "설명"
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
 msgstr "기술"
-
-#: gaphor/C4Model/propertypages.ui:12 gaphor/SysML/propertypages.ui:12
-#: gaphor/UML/actions/propertypages.ui:12
-#: gaphor/UML/classes/propertypages.glade:15
-#: gaphor/UML/classes/propertypages.ui:12
-#: gaphor/UML/components/propertypages.glade:15
-#: gaphor/UML/components/propertypages.ui:12
-#: gaphor/UML/interactions/propertypages.glade:15
-#: gaphor/UML/interactions/propertypages.ui:12
-#: gaphor/UML/profiles/propertypages.glade:15
-#: gaphor/UML/profiles/propertypages.ui:12
-#: gaphor/UML/states/propertypages.glade:15
-#: gaphor/UML/states/propertypages.ui:12 gaphor/diagram/propertypages.glade:15
-#: gaphor/diagram/propertypages.ui:12
-msgid ""
-"To create a fresh model: create a window, create the\n"
-"desired element, in the tree view pop upmenu, select\n"
-"Remove Parent.\n"
-"\n"
-"Padding between elements is 6px.\n"
-"Top margin is 6 px, 12px for expanders.\n"
-"Edit, from the popup menu, will allow you to add cell\n"
-"renderers and such."
-msgstr ""
-"새 모델 만들기: 창을 만들고, 원하는 요소를 만든 후,\n"
-"트리 보기 팝업 메뉴에서, \"상위 요소 제거\"를 선택\n"
-"합니다.\n"
-"\n"
-"구성 요소별 안 여백은 6px 입니다.\n"
-"상단 밖 여백은 6px이며, 확장 요소에 대해 12px입니다.\n"
-"팝업 메뉴에서 편집을 선택하면, 셀 렌더러 등을 추가할\n"
-"수 있습니다."
 
 #: gaphor/C4Model/toolbox.py:51
 msgid "C4 Model"
@@ -411,57 +357,69 @@ msgstr "검증"
 msgid "Containment"
 msgstr "견제"
 
-#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:265
+#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:274
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/actionstoolbox.py:50
+#: gaphor/UML/actions/actionstoolbox.py:41
+msgid "Swimlane One"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:45
+msgid "Swimlane Two"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:51
 msgid "Actions"
 msgstr "동작(복수)"
 
-#: gaphor/UML/actions/actionstoolbox.py:54
+#: gaphor/UML/actions/actionstoolbox.py:55
 msgid "Action"
 msgstr "동작"
 
-#: gaphor/UML/actions/actionstoolbox.py:66
+#: gaphor/UML/actions/actionstoolbox.py:67
 msgid "Initial node"
 msgstr "초기 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:78
+#: gaphor/UML/actions/actionstoolbox.py:79
 msgid "Activity final node"
 msgstr "활동 종단 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:90
+#: gaphor/UML/actions/actionstoolbox.py:91
 msgid "Flow final node"
 msgstr "흐름 종단 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:102
+#: gaphor/UML/actions/actionstoolbox.py:103
 msgid "Decision/merge node"
 msgstr "결정/병합 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:114
+#: gaphor/UML/actions/actionstoolbox.py:115
 msgid "Fork/join node"
 msgstr "분리/결합 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:126
+#: gaphor/UML/actions/actionstoolbox.py:127
 msgid "Object node"
 msgstr "객체 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:138
-msgid "Partition"
-msgstr "분할"
+#: gaphor/UML/actions/actionstoolbox.py:139
+msgid "Swimlane"
+msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:150
+#: gaphor/UML/actions/actionstoolbox.py:151
 msgid "Control/object flow"
 msgstr "제어/객체 흐름"
 
-#: gaphor/UML/actions/actionstoolbox.py:157
+#: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Send signal action"
 msgstr "시그널 보내기 동작"
 
-#: gaphor/UML/actions/actionstoolbox.py:169
+#: gaphor/UML/actions/actionstoolbox.py:170
 msgid "Accept event action"
 msgstr "이벤트 허용 동작"
+
+#: gaphor/UML/actions/partitionpage.py:92
+msgid "New Swimlane"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
@@ -484,14 +442,14 @@ msgid "Show Ordering"
 msgstr "순서 표시"
 
 #: gaphor/UML/actions/propertypages.glade:171
-#: gaphor/UML/actions/propertypages.ui:90
-msgid "ordered"
-msgstr "정렬함"
-
-#: gaphor/UML/actions/propertypages.glade:172
 #: gaphor/UML/actions/propertypages.ui:91
 msgid "unordered"
 msgstr "정렬안함"
+
+#: gaphor/UML/actions/propertypages.glade:172
+#: gaphor/UML/actions/propertypages.ui:90
+msgid "ordered"
+msgstr "정렬함"
 
 #: gaphor/UML/actions/propertypages.glade:173
 #: gaphor/UML/actions/propertypages.ui:92
@@ -520,12 +478,12 @@ msgstr "분할 명칭"
 msgid "Guard"
 msgstr "가드"
 
-#: gaphor/UML/classes/classespropertypages.py:321
-#: gaphor/UML/classes/classespropertypages.py:397
+#: gaphor/UML/classes/classespropertypages.py:325
+#: gaphor/UML/classes/classespropertypages.py:401
 msgid "Static"
 msgstr "정적"
 
-#: gaphor/UML/classes/classespropertypages.py:397
+#: gaphor/UML/classes/classespropertypages.py:401
 #: gaphor/UML/classes/propertypages.glade:522
 #: gaphor/UML/classes/propertypages.ui:345
 msgid "Abstract"
@@ -716,8 +674,7 @@ msgid ""
 "Press ENTER to edit item, BS/DEL to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
-"UML 문법에 따라 클래스 동작을 추가 및 편집합니다. 동작 문법 예제는 다음과 같"
-"습니다\n"
+"UML 문법에 따라 클래스 동작을 추가 및 편집합니다. 동작 문법 예제는 다음과 같습니다\n"
 "- call()\n"
 "- + call(a: int, b: str) # a note\n"
 "- # call(a: int: b: str): bool\n"
@@ -770,8 +727,7 @@ msgid ""
 "Press ENTER to edit item, BS/DEL to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
-"UML 문법에 따라 클래스 동작을 추가 및 편집합니다. 동작 문법 예제는 다음과 같"
-"습니다\n"
+"UML 문법에 따라 클래스 동작을 추가 및 편집합니다. 동작 문법 예제는 다음과 같습니다\n"
 "- call()\n"
 "- + call(a: int, b: str) # a note\n"
 "- # call(a: int: b: str): bool\n"
@@ -1069,10 +1025,6 @@ msgstr ""
 "2.0에 따라 출시했습니다.\n"
 "자세한 내용은 LICENSE.txt 파일을 참고하십시오."
 
-#: gaphor/services/helpservice/about.ui:19
-msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
-msgstr "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
-
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
 msgstr "프로그램"
@@ -1126,7 +1078,7 @@ msgstr "다이어그램"
 msgid "Edit"
 msgstr "편집"
 
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:220
+#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:226
 msgid "Show/Hide Editor"
 msgstr "편집기 표시/숨김"
 
@@ -1185,8 +1137,7 @@ msgstr "가포 모델 열기"
 msgid ""
 "{filename} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr ""
-"{filename}을(를) 이미 열었습니다. 이미 열어둔 창으로 대신 전환하시겠습니까?"
+msgstr "{filename}을(를) 이미 열었습니다. 이미 열어둔 창으로 대신 전환하시겠습니까?"
 
 #: gaphor/ui/diagrampage.py:126
 msgid "<None>"
@@ -1197,8 +1148,8 @@ msgid ""
 "Drag to diagram is (temporarily) limited to Classifiers, Packages, and "
 "Properties, not {type}."
 msgstr ""
-"다이어그램으로 (임시로) 끌어다 놓는 동작은 {type} 형식이 아닌 Classifiers, "
-"Packages, Properties에 한정합니다."
+"다이어그램으로 (임시로) 끌어다 놓는 동작은 {type} 형식이 아닌 Classifiers, Packages, Properties에"
+" 한정합니다."
 
 #: gaphor/ui/elementeditor.glade:15 gaphor/ui/elementeditor.ui:10
 msgid "No item selected"
@@ -1210,31 +1161,30 @@ msgstr "팁 표시"
 
 #: gaphor/ui/elementeditor.glade:80 gaphor/ui/elementeditor.ui:48
 msgid ""
-"Add a model element from the tool box to the diagram. Here you will see it's "
-"properties appear.\n"
+"Add a model element from the tool box to the diagram. Here you will see "
+"it's properties appear.\n"
 "\n"
 "This pane can be hidden by clicking the pensil icon in the header.\n"
 "\n"
-"<b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. \"c"
-"\" for Class).\n"
-"Tool selection only works from the diagram. If a tool does not get selected, "
-"click on the diagram once (so it's focused) and then hit the shortcut key.\n"
+"<b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. "
+"\"c\" for Class).\n"
+"Tool selection only works from the diagram. If a tool does not get "
+"selected, click on the diagram once (so it's focused) and then hit the "
+"shortcut key.\n"
 "\n"
-"<b>Tip:</b> To search for an element in the tree view, select an element in "
-"the tree view and start typing. A search box will automatically appear.\n"
+"<b>Tip:</b> To search for an element in the tree view, select an element "
+"in the tree view and start typing. A search box will automatically "
+"appear.\n"
 msgstr ""
-"도구 상자의 모델 항목을 다이어그램에 추가합니다. 여기서 속성이 나타나는걸 보"
-"실 수 있습니다.\n"
+"도구 상자의 모델 항목을 다이어그램에 추가합니다. 여기서 속성이 나타나는걸 보실 수 있습니다.\n"
 "\n"
 "이 창은 헤더의 연필 아이콘을 누르면 숨길 수 있습니다.\n"
 "\n"
-"<b>팁:</b> 도구 상자 대부분의 항목은 키보드 바로 가기 키를 가지고 있습니다"
-"(예: 클래스의 \"c\")\n"
-"도구 선택은 다이어그램에서만 동작합니다. 그럼에도 불구하고 선택을 못할 경우 "
-"다이어그램을 한 번 더 누르고(포커스를 준 후) 단축키를 치십시오.\n"
+"<b>팁:</b> 도구 상자 대부분의 항목은 키보드 바로 가기 키를 가지고 있습니다(예: 클래스의 \"c\")\n"
+"도구 선택은 다이어그램에서만 동작합니다. 그럼에도 불구하고 선택을 못할 경우 다이어그램을 한 번 더 누르고(포커스를 준 후) "
+"단축키를 치십시오.\n"
 "\n"
-"<b>팁:</b> 트리뷰의 항목을 검색하려면, 트리뷰의 항목을 선택한 후 입력을 시작"
-"하십시오. 검색 상자가 자동으로 나타납니다.\n"
+"<b>팁:</b> 트리뷰의 항목을 검색하려면, 트리뷰의 항목을 선택한 후 입력을 시작하십시오. 검색 상자가 자동으로 나타납니다.\n"
 
 #: gaphor/ui/elementeditor.glade:322 gaphor/ui/elementeditor.ui:170
 msgid "Editors"
@@ -1250,11 +1200,13 @@ msgstr "스타일시트"
 
 #: gaphor/ui/elementeditor.glade:428 gaphor/ui/elementeditor.ui:252
 msgid ""
-"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html"
-"\">Style sheets in Gaphor</a>"
+"🔗 <a "
+"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
+"sheets in Gaphor</a>"
 msgstr ""
-"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">가포 "
-"스타일 시트</a>"
+"🔗 <a "
+"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">가포 스타일"
+" 시트</a>"
 
 #: gaphor/ui/elementeditor.glade:443 gaphor/ui/elementeditor.ui:194
 msgid "Settings"
@@ -1262,8 +1214,8 @@ msgstr "설정"
 
 #: gaphor/ui/errorhandler.py:27
 msgid ""
-"It looks like Gaphor is started from the command line. Do you want to open a "
-"debug session?"
+"It looks like Gaphor is started from the command line. Do you want to "
+"open a debug session?"
 msgstr "가포를 명령행에서 실행한 것 같습니다. 디버깅 세션을 여시겠습니까?"
 
 #: gaphor/ui/errorhandler.py:30
@@ -1276,7 +1228,8 @@ msgstr "모든 파일"
 
 #: gaphor/ui/filemanager.py:35
 msgid ""
-"Gaphor was not able to store the model, probably due to an internal error:\n"
+"Gaphor was not able to store the model, probably due to an internal "
+"error:\n"
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
@@ -1338,11 +1291,9 @@ msgstr "이 파일에 적절한 가포 모델이 없습니다."
 
 #: gaphor/ui/filemanager.py:169
 msgid ""
-"The model contains some references to items that are not maintained. Do you "
-"want to clean the model before saving?"
-msgstr ""
-"모델에 비관리 항목 참조가 일부 들어있습니다. 저장하기 전 해당 모델을 정리하시"
-"겠습니까?"
+"The model contains some references to items that are not maintained. Do "
+"you want to clean the model before saving?"
+msgstr "모델에 비관리 항목 참조가 일부 들어있습니다. 저장하기 전 해당 모델을 정리하시겠습니까?"
 
 #: gaphor/ui/filemanager.py:199
 msgid "Saving..."
@@ -1412,7 +1363,7 @@ msgstr "최근 연 파일"
 msgid "edited"
 msgstr "편집함"
 
-#: gaphor/ui/mainwindow.py:303
+#: gaphor/ui/mainwindow.py:304
 msgid "Profile: {}"
 msgstr "프로파일: {}"
 
@@ -1440,7 +1391,7 @@ msgstr "삭제(_L)"
 msgid "Show in \"{diagram}\""
 msgstr "\"{diagram}\"에 표시"
 
-#: gaphor/ui/namespacemodel.py:301
+#: gaphor/ui/namespacemodel.py:310
 msgid "A {} can't be part of a {}."
 msgstr "{}은(는) {}의 일부일 수 없습니다."
 
@@ -1451,3 +1402,48 @@ msgstr "<Relationships>"
 #: gaphor/ui/recentfiles.py:67
 msgid "No recently opened models"
 msgstr "최근 연 모델 없음"
+
+#~ msgid ""
+#~ "To create a fresh model: create a window, create the\n"
+#~ "desired element, in the tree view pop upmenu, select\n"
+#~ "Remove Parent.\n"
+#~ "\n"
+#~ "Padding between elements is 6px.\n"
+#~ "Top margin is 6 px, 12px for expanders.\n"
+#~ "Edit, from the popup menu, will allow you to add cell \n"
+#~ "renderers and such."
+#~ msgstr ""
+#~ "새 모델 만들기: 창을 만들고, 원하는 요소를 만든 후,\n"
+#~ "트리 보기 팝업 메뉴에서, \"상위 요소 제거\"를 선택\n"
+#~ "합니다.\n"
+#~ "\n"
+#~ "구성 요소별 안 여백은 6px 입니다.\n"
+#~ "상단 밖 여백은 6px이며, 확장 요소에 대해 12px입니다.\n"
+#~ "팝업 메뉴에서 편집을 선택하면, 셀 렌더러 등을 추가할\n"
+#~ "수 있습니다."
+
+#~ msgid ""
+#~ "To create a fresh model: create a window, create the\n"
+#~ "desired element, in the tree view pop upmenu, select\n"
+#~ "Remove Parent.\n"
+#~ "\n"
+#~ "Padding between elements is 6px.\n"
+#~ "Top margin is 6 px, 12px for expanders.\n"
+#~ "Edit, from the popup menu, will allow you to add cell\n"
+#~ "renderers and such."
+#~ msgstr ""
+#~ "새 모델 만들기: 창을 만들고, 원하는 요소를 만든 후,\n"
+#~ "트리 보기 팝업 메뉴에서, \"상위 요소 제거\"를 선택\n"
+#~ "합니다.\n"
+#~ "\n"
+#~ "구성 요소별 안 여백은 6px 입니다.\n"
+#~ "상단 밖 여백은 6px이며, 확장 요소에 대해 12px입니다.\n"
+#~ "팝업 메뉴에서 편집을 선택하면, 셀 렌더러 등을 추가할\n"
+#~ "수 있습니다."
+
+#~ msgid "Partition"
+#~ msgstr "분할"
+
+#~ msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
+#~ msgstr "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
+
