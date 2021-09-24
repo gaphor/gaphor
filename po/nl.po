@@ -3,32 +3,32 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  0.6.0\n"
+"Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-09-24 16:33+0200\n"
 "PO-Revision-Date: 2019-11-11 08:45+0100\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
-"Language: nl_NL\n"
-"Language-Team: Dutch - The Netherlands <gaphor@gmail.com>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
+"\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
-#, fuzzy
 msgid "C4 model"
-msgstr "New model"
+msgstr "C4 model"
 
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
-#, fuzzy
 msgid "Description"
-msgstr "Associatie"
+msgstr "Beschrijving"
 
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
-msgstr ""
+msgstr "Technologie"
 
 #: gaphor/C4Model/toolbox.py:51
 #, fuzzy
@@ -1582,4 +1582,3 @@ msgstr "Geen recent geopende modellen"
 
 #~ msgid "Partition"
 #~ msgstr "Partition"
-
