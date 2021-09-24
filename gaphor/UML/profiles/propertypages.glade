@@ -5,7 +5,7 @@
   <object class="GtkLabel" id="00-instructions">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="label" translatable="yes">To create a fresh model: create a window, create the
+    <property name="label">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
 Remove Parent.
 

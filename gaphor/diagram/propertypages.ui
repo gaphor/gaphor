@@ -2,7 +2,7 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <object class="GtkLabel" id="00-instructions">
-    <property name="label" translatable="yes">To create a fresh model: create a window, create the
+    <property name="label">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
 Remove Parent.
 
