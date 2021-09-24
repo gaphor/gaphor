@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-09-24 16:33+0200\n"
-"PO-Revision-Date: 2021-08-31 00:11+0000\n"
+"PO-Revision-Date: 2021-09-25 12:52+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
@@ -364,11 +365,11 @@ msgstr "UML"
 
 #: gaphor/UML/actions/actionstoolbox.py:41
 msgid "Swimlane One"
-msgstr ""
+msgstr "1. sáv"
 
 #: gaphor/UML/actions/actionstoolbox.py:45
 msgid "Swimlane Two"
-msgstr ""
+msgstr "2. sáv"
 
 #: gaphor/UML/actions/actionstoolbox.py:51
 msgid "Actions"
@@ -404,7 +405,7 @@ msgstr "Objektum csomópont"
 
 #: gaphor/UML/actions/actionstoolbox.py:139
 msgid "Swimlane"
-msgstr ""
+msgstr "Sáv"
 
 #: gaphor/UML/actions/actionstoolbox.py:151
 msgid "Control/object flow"
@@ -420,7 +421,7 @@ msgstr "Eseményművelet elfogadása"
 
 #: gaphor/UML/actions/partitionpage.py:92
 msgid "New Swimlane"
-msgstr ""
+msgstr "Új sáv"
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
@@ -1465,4 +1466,3 @@ msgstr "Nincsenek nemrégiben megnyitott modellek"
 
 #~ msgid "Jordi Mallach (ca), Antonin Delpeuch (fr), Ygor Mutti (pt_BR)"
 #~ msgstr "Mallach Jordi (ca), Delpeuch Antonin (fr), Mutti Ygor (pt_BR)"
-
