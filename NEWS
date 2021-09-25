@@ -1,3 +1,16 @@
+2.6.1
+-----
+ - Display guard conditions in square brackets
+ - Use flat buttons in the header bar
+ - Fix translation support
+ - Fix parameter is incorrect error with ";;" in path
+ - Improve inline editor undo/redo behavior
+ - Fixed closing of about dialog
+ - Add VSCode debug instructions for Windows
+ - Rename usage of Partitions to Swimlanes
+ - Update Dutch and Hungarian Translations
+ - Croatian translation updates
+
 2.6.0
 -----
 - Improve zoom and pan for mouse
