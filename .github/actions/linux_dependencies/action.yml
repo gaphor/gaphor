@@ -3,7 +3,7 @@ description: 'Installs Ubuntu GTK and Python Dependencies'
 runs:
   using: composite
   steps:
-    - run: |
-        sudo apt update -qq
-        sudo apt install -qq --no-install-recommends gir1.2-gtk-3.0 libgirepository1.0-dev upx
+    - run: >
+        sudo apt update -qq && sudo apt install -qq --no-install-recommends
+        gir1.2-gtk-3.0 libgirepository1.0-dev libgtksourceview4-dev upx
       shell: bash
