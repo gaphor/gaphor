@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-09-24 16:33+0200\n"
-"PO-Revision-Date: 2019-11-11 08:45+0100\n"
+"PO-Revision-Date: 2021-09-25 12:52+0000\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
 "\n"
@@ -31,27 +31,24 @@ msgid "Technology"
 msgstr "Technologie"
 
 #: gaphor/C4Model/toolbox.py:51
-#, fuzzy
 msgid "C4 Model"
-msgstr "New model"
+msgstr "C4 Model"
 
 #: gaphor/C4Model/toolbox.py:55
-#, fuzzy
 msgid "Person"
-msgstr "Open"
+msgstr "Persoon"
 
 #: gaphor/C4Model/toolbox.py:66
 msgid "Software System"
-msgstr ""
+msgstr "Software Systeem"
 
 #: gaphor/C4Model/toolbox.py:77
-#, fuzzy
 msgid "Container"
-msgstr "Aanwijzer"
+msgstr "Container"
 
 #: gaphor/C4Model/toolbox.py:88
 msgid "Container: Database"
-msgstr ""
+msgstr "Container: Database"
 
 #: gaphor/C4Model/toolbox.py:99 gaphor/UML/components/componentstoolbox.py:16
 msgid "Component"
@@ -65,89 +62,88 @@ msgstr "Dependency"
 
 #: gaphor/RAAML/modelinglanguage.py:15
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:10
 msgid "Fault Tree Analysis"
-msgstr ""
+msgstr "Fault Tree Analysis"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:21
 msgid "AND Gate"
-msgstr ""
+msgstr "AND Gate"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "OR Gate"
-msgstr ""
+msgstr "OR Gate"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:39
-#, fuzzy
 msgid "NOT Gate"
-msgstr "State"
+msgstr "NOT Gate"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:48
+#, fuzzy
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr ""
+msgstr "Sequence Enforcing (SEQ) Gate"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Exclusive OR Gate"
-msgstr ""
+msgstr "Exclusive OR Gate"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:66
 msgid "Majority Vote Gate"
-msgstr ""
+msgstr "Majority Vote Gate"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:77
 msgid "Inhibit Gate"
-msgstr ""
+msgstr "Inhibit Gate"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:86
 msgid "Transfer In"
-msgstr ""
+msgstr "Transfer In"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:97
 msgid "Transfer Out"
-msgstr ""
+msgstr "Transfer Out"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:108
 msgid "Basic Event"
-msgstr ""
+msgstr "Basis Event"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:119
 msgid "Conditional Event"
-msgstr ""
+msgstr "Conditioneel Event"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:130
 msgid "Undeveloped Event"
-msgstr ""
+msgstr "Onontwikkeld Event"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:141
 msgid "Dormant Event"
-msgstr ""
+msgstr "Slapend Event"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:152
 msgid "House Event"
-msgstr ""
+msgstr "Huis Event"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:163
 msgid "Zero Event"
-msgstr ""
+msgstr "Nul Event"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:174
 msgid "Top Event"
-msgstr ""
+msgstr "Top Event"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:185
 msgid "Intermediate Event"
-msgstr ""
+msgstr "Intermediate Event"
 
 #: gaphor/RAAML/stpa/controlaction.py:33
-#, fuzzy
 msgid "ControlAction"
-msgstr "Interactie"
+msgstr "ControlAction"
 
 #: gaphor/RAAML/stpa/operationalsituation.py:34
 msgid "OperationalSituation"
-msgstr ""
+msgstr "OperationalSituation"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:123
@@ -155,69 +151,64 @@ msgid "Generalization"
 msgstr "Generalisatie"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:43
-#, fuzzy
 msgid "Loss"
-msgstr "Klasse"
+msgstr "Loss"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:52
 msgid "Hazard"
-msgstr ""
+msgstr "Hazard"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61
-#, fuzzy
 msgid "Situation"
-msgstr "Associatie"
+msgstr "Situatie"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
-msgstr ""
+msgstr "Control Structure"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:83
 msgid "Controller"
-msgstr ""
+msgstr "Controller"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:92
-#, fuzzy
 msgid "Actuator"
-msgstr "Actor"
+msgstr "Actuator"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:101
 msgid "Controlled Process"
-msgstr ""
+msgstr "Gecontroleerd Proces"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:112
 msgid "Abstract Operational Situation"
-msgstr ""
+msgstr "Abstract Operational Situation"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:123
 msgid "Operational Situation"
-msgstr ""
+msgstr "Operational Situation"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:134
 msgid "Unsafe Control Action"
-msgstr ""
+msgstr "Unsafe Control Action"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:145
 msgid "Relevant To"
-msgstr ""
+msgstr "Relevant voor"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:155
-#, fuzzy
 msgid "Control Action"
-msgstr "Interactie"
+msgstr "Control Action"
 
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
-#, fuzzy
 msgid "UnsafeControlAction"
-msgstr "Interactie"
+msgstr "UnsafeControlAction"
 
 #: gaphor/SysML/modelinglanguage.py:15
 msgid "SysML"
-msgstr ""
+msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:38 gaphor/SysML/propertypages.ui:27
 msgid "Show Parts"
-msgstr ""
+msgstr "Toon Onderdelen"
 
 #: gaphor/SysML/propertypages.glade:74 gaphor/SysML/propertypages.ui:42
 #, fuzzy
@@ -225,14 +216,12 @@ msgid "Show references"
 msgstr "Instellingen"
 
 #: gaphor/SysML/propertypages.glade:108 gaphor/SysML/propertypages.ui:57
-#, fuzzy
 msgid "Parts and References"
-msgstr "Instellingen"
+msgstr "Onderdelen en Referenties"
 
 #: gaphor/SysML/propertypages.glade:125 gaphor/SysML/propertypages.ui:71
-#, fuzzy
 msgid "Aggregation"
-msgstr "Partition"
+msgstr "Aggregatie"
 
 #: gaphor/SysML/propertypages.glade:142 gaphor/SysML/propertypages.ui:81
 #: gaphor/UML/classes/propertypages.glade:139
@@ -240,7 +229,7 @@ msgstr "Partition"
 #: gaphor/UML/classes/propertypages.ui:82
 #: gaphor/UML/classes/propertypages.ui:179
 msgid "No aggregation"
-msgstr ""
+msgstr "Geen aggregatie"
 
 #: gaphor/SysML/propertypages.glade:143 gaphor/SysML/propertypages.ui:82
 #: gaphor/UML/classes/propertypages.glade:140
@@ -248,7 +237,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:83
 #: gaphor/UML/classes/propertypages.ui:180
 msgid "Shared"
-msgstr ""
+msgstr "Gedeeld"
 
 #: gaphor/SysML/propertypages.glade:144 gaphor/SysML/propertypages.ui:83
 #: gaphor/UML/classes/propertypages.glade:141
@@ -256,71 +245,66 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:84
 #: gaphor/UML/classes/propertypages.ui:181
 msgid "Composite"
-msgstr ""
+msgstr "Composiet"
 
 #: gaphor/SysML/propertypages.glade:168 gaphor/SysML/propertypages.ui:99
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:115
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: gaphor/SysML/toolbox.py:23
 msgid "Internal Blocks"
-msgstr ""
+msgstr "Interne Blokken"
 
 #: gaphor/SysML/toolbox.py:27
 msgid "Connector"
 msgstr "Connector"
 
 #: gaphor/SysML/toolbox.py:34
-#, fuzzy
 msgid "Property"
-msgstr "Eigenschappen"
+msgstr "Eigenschap"
 
 #: gaphor/SysML/toolbox.py:43
-#, fuzzy
 msgid "Proxy Port"
-msgstr "Exporteer"
+msgstr "Proxy Poort"
 
 #: gaphor/SysML/blocks/block.py:97
 msgid "parts"
-msgstr ""
+msgstr "onderdelen"
 
 #: gaphor/SysML/blocks/block.py:108
-#, fuzzy
 msgid "references"
-msgstr "Instellingen"
+msgstr "referenties"
 
 #: gaphor/SysML/blocks/block.py:124
 msgid "unnamed"
-msgstr ""
+msgstr "naamloos"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:18
 msgid "Blocks"
-msgstr ""
+msgstr "Blokken"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:22
 msgid "Block"
-msgstr ""
+msgstr "Blok"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:32
 #: gaphor/UML/classes/classestoolbox.py:68
 msgid "Package"
-msgstr "Package"
+msgstr "Pakket"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:44
 #: gaphor/UML/classes/classestoolbox.py:87
-#, fuzzy
 msgid "Composite Association"
-msgstr "Associatie"
+msgstr "Composiet Associatie"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:55
 #: gaphor/UML/classes/classestoolbox.py:98
-#, fuzzy
 msgid "Shared Association"
-msgstr "Associatie"
+msgstr "Gedeelde Associatie"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:66
 #: gaphor/UML/classes/classestoolbox.py:109
@@ -330,26 +314,25 @@ msgstr "Associatie"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:80
 msgid "ValueType"
-msgstr ""
+msgstr "WaardeType"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:91
 #: gaphor/UML/classes/classestoolbox.py:149
-#, fuzzy
 msgid "Enumeration"
-msgstr "Interactie"
+msgstr "Enumeratie"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:103
 #: gaphor/UML/classes/classestoolbox.py:161
 msgid "Primitive"
-msgstr ""
+msgstr "Primitieve"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 msgid "Requirements"
-msgstr ""
+msgstr "Eisen"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 msgid "Requirement"
-msgstr ""
+msgstr "Eis"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
@@ -357,36 +340,36 @@ msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:36
 msgid "Derive Reqt"
-msgstr ""
+msgstr "Afgeleide Eis"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
-msgstr ""
+msgstr "Volgen"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
-msgstr ""
+msgstr "Verfijnen"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
-msgstr ""
+msgstr "Verifiëren"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:64
 #: gaphor/UML/classes/classestoolbox.py:80
 msgid "Containment"
-msgstr ""
+msgstr "Bevat"
 
 #: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:274
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: gaphor/UML/actions/actionstoolbox.py:41
 msgid "Swimlane One"
-msgstr ""
+msgstr "Zwembaan Een"
 
 #: gaphor/UML/actions/actionstoolbox.py:45
 msgid "Swimlane Two"
-msgstr ""
+msgstr "Zwembaan Twee"
 
 #: gaphor/UML/actions/actionstoolbox.py:51
 msgid "Actions"
@@ -422,7 +405,7 @@ msgstr "Object node"
 
 #: gaphor/UML/actions/actionstoolbox.py:139
 msgid "Swimlane"
-msgstr ""
+msgstr "Zwembaan"
 
 #: gaphor/UML/actions/actionstoolbox.py:151
 msgid "Control/object flow"
@@ -438,7 +421,7 @@ msgstr "Accept event action"
 
 #: gaphor/UML/actions/partitionpage.py:92
 msgid "New Swimlane"
-msgstr ""
+msgstr "Nieuwe Zwembaan"
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
@@ -448,22 +431,22 @@ msgstr "Horizontaal"
 #: gaphor/UML/actions/propertypages.glade:71
 #: gaphor/UML/actions/propertypages.ui:41
 msgid "Join Specification"
-msgstr ""
+msgstr "Join Specification"
 
 #: gaphor/UML/actions/propertypages.glade:106
 #: gaphor/UML/actions/propertypages.ui:60
 msgid "Upper Bound"
-msgstr ""
+msgstr "Upper Bound"
 
 #: gaphor/UML/actions/propertypages.glade:138
 #: gaphor/UML/actions/propertypages.ui:76
 msgid "Show Ordering"
-msgstr ""
+msgstr "Toon Volgorde"
 
 #: gaphor/UML/actions/propertypages.glade:171
 #: gaphor/UML/actions/propertypages.ui:91
 msgid "unordered"
-msgstr ""
+msgstr "unordered"
 
 #: gaphor/UML/actions/propertypages.glade:172
 #: gaphor/UML/actions/propertypages.ui:90
