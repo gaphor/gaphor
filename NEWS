@@ -3,13 +3,18 @@
  - Display guard conditions in square brackets
  - Use flat buttons in the header bar
  - Fix translation support
+ - Fix drag and drop of elements does not work on diagrams
  - Fix parameter is incorrect error with ";;" in path
+ - Fix fork/join node incorrectly rotates
+ - Fix close button on about dialog doesn't work in Windows
+ - Fix wrong label is displayed when object node ordering is enabled
  - Improve inline editor undo/redo behavior
  - Fixed closing of about dialog
  - Add VSCode debug instructions for Windows
  - Rename usage of Partitions to Swimlanes
  - Update Dutch and Hungarian Translations
  - Croatian translation updates
+ - Simplify attribute and enumeration lookup
 
 2.6.0
 -----
