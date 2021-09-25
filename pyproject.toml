@@ -31,6 +31,7 @@ classifiers = [
     "Topic :: Software Development :: Documentation",
 ]
 
+include = ["gaphor/locale/*/LC_MESSAGES/*"]
 exclude = ["**/tests", "gaphor/conftest.py" ]
 
 [tool.poetry.dependencies]

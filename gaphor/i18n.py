@@ -11,13 +11,13 @@ import logging
 log = logging.getLogger(__name__)
 
 try:
-
-    with importlib.resources.path("gaphor", "locale") as path:
-        translate = _gettext.translation("gaphor", localedir=str(path), fallback=True)
+    with importlib.resources.path("gaphor", "__init__.py") as path:
+        localedir = path.parent / "locale"
+        translate = _gettext.translation("gaphor", localedir=localedir, fallback=True)
         gettext = translate.gettext
 
 except OSError as e:
-    log.info(f"No translations were found: {e}")
+    log.warning(f"No translations were found: {e}")
 
     def gettext(s):
         return s
