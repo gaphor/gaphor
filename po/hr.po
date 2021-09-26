@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-24 16:33+0200\n"
+"POT-Creation-Date: 2021-09-26 22:18+0200\n"
 "PO-Revision-Date: 2021-09-14 20:38+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language: hr\n"
@@ -955,6 +955,21 @@ msgstr "Stil"
 msgid "Note / Remark"
 msgstr "Napomena"
 
+#: gaphor/plugins/console/console.py:19
+msgid ""
+"Gaphor Interactive Python Console\n"
+"{version}\n"
+"Type \"help\" for more information.\n"
+msgstr ""
+
+#: gaphor/plugins/console/consolewindow.py:20
+msgid "Gaphor Console"
+msgstr ""
+
+#: gaphor/plugins/console/consolewindow.py:43
+msgid "Console"
+msgstr ""
+
 #: gaphor/plugins/diagramexport/__init__.py:52
 msgid "All {ext} Files"
 msgstr "Sve {ext} datoteke"
@@ -1334,10 +1349,6 @@ msgstr "Ako zatvoriš bez spremanja, izgubit ćeš sve urađene promjene."
 msgid "Close _without saving"
 msgstr "Zatvori be_z spremanja"
 
-#: gaphor/ui/mainwindow.glade:52 gaphor/ui/mainwindow.ui:102
-msgid "Here goes a short informative message."
-msgstr "Ovdje se upisuje kratka informativna poruka."
-
 #: gaphor/ui/mainwindow.glade:105
 msgid "Gaphor"
 msgstr "Gaphor"
@@ -1377,6 +1388,10 @@ msgstr "promijenjeno"
 #: gaphor/ui/mainwindow.py:304
 msgid "Profile: {}"
 msgstr "Profil: {}"
+
+#: gaphor/ui/mainwindow.ui:102
+msgid "Here goes a short informative message."
+msgstr "Ovdje se upisuje kratka informativna poruka."
 
 #: gaphor/ui/namespace.py:42
 msgid "_Open"
@@ -1566,4 +1581,7 @@ msgstr "Nema nedavno otvorenih modela"
 
 #~ msgid "Partition"
 #~ msgstr "Particija"
+
+#~ msgid "_Console"
+#~ msgstr ""
 

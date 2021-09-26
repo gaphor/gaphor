@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-24 16:33+0200\n"
+"POT-Creation-Date: 2021-09-26 22:18+0200\n"
 "PO-Revision-Date: 2021-03-21 14:30+0100\n"
 "Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
 "Language: it\n"
@@ -997,6 +997,21 @@ msgstr "Stile"
 msgid "Note / Remark"
 msgstr ""
 
+#: gaphor/plugins/console/console.py:19
+msgid ""
+"Gaphor Interactive Python Console\n"
+"{version}\n"
+"Type \"help\" for more information.\n"
+msgstr ""
+
+#: gaphor/plugins/console/consolewindow.py:20
+msgid "Gaphor Console"
+msgstr ""
+
+#: gaphor/plugins/console/consolewindow.py:43
+msgid "Console"
+msgstr ""
+
 #: gaphor/plugins/diagramexport/__init__.py:52
 msgid "All {ext} Files"
 msgstr ""
@@ -1353,10 +1368,6 @@ msgstr "Se chiudi senza salvare, le modifiche verranno ignorate."
 msgid "Close _without saving"
 msgstr "Chiudi_senza salvare"
 
-#: gaphor/ui/mainwindow.glade:52 gaphor/ui/mainwindow.ui:102
-msgid "Here goes a short informative message."
-msgstr ""
-
 #: gaphor/ui/mainwindow.glade:105
 msgid "Gaphor"
 msgstr "Gaphor"
@@ -1397,6 +1408,10 @@ msgstr "Modificati"
 #: gaphor/ui/mainwindow.py:304
 msgid "Profile: {}"
 msgstr "Profilo: {}"
+
+#: gaphor/ui/mainwindow.ui:102
+msgid "Here goes a short informative message."
+msgstr ""
 
 #: gaphor/ui/namespace.py:42
 msgid "_Open"
@@ -1588,4 +1603,7 @@ msgstr "Nessun modello aperto di recente"
 
 #~ msgid "Partition"
 #~ msgstr "Partizione"
+
+#~ msgid "_Console"
+#~ msgstr ""
 
