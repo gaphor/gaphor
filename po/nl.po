@@ -3,19 +3,18 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.6.0\n"
+"Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-24 16:33+0200\n"
+"POT-Creation-Date: 2021-09-26 22:18+0200\n"
 "PO-Revision-Date: 2021-09-25 12:52+0000\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
-"\n"
 "Language: nl\n"
+"Language-Team: Dutch "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/nl/>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
@@ -446,34 +445,34 @@ msgstr "Toon Volgorde"
 #: gaphor/UML/actions/propertypages.glade:171
 #: gaphor/UML/actions/propertypages.ui:91
 msgid "unordered"
-msgstr "unordered"
+msgstr "ongeordend"
 
 #: gaphor/UML/actions/propertypages.glade:172
 #: gaphor/UML/actions/propertypages.ui:90
 msgid "ordered"
-msgstr ""
+msgstr "geordend"
 
 #: gaphor/UML/actions/propertypages.glade:173
 #: gaphor/UML/actions/propertypages.ui:92
 msgid "LIFO"
-msgstr ""
+msgstr "LIFO"
 
 #: gaphor/UML/actions/propertypages.glade:174
 #: gaphor/UML/actions/propertypages.ui:93
 msgid "FIFO"
-msgstr ""
+msgstr "FIFO"
 
 #: gaphor/UML/actions/propertypages.glade:199
 #: gaphor/UML/actions/propertypages.ui:107
 #, fuzzy
 msgid "Partitions"
-msgstr "Partition"
+msgstr "Partitions"
 
 #: gaphor/UML/actions/propertypages.glade:232
 #: gaphor/UML/actions/propertypages.ui:121
 #, fuzzy
 msgid "Partition Names"
-msgstr "Partition"
+msgstr "Partitie Namen"
 
 #: gaphor/UML/actions/propertypages.glade:270
 #: gaphor/UML/actions/propertypages.ui:143
@@ -486,7 +485,7 @@ msgstr "Guard"
 #: gaphor/UML/classes/classespropertypages.py:401
 #, fuzzy
 msgid "Static"
-msgstr "Automatisch"
+msgstr "Statisch"
 
 #: gaphor/UML/classes/classespropertypages.py:401
 #: gaphor/UML/classes/propertypages.glade:522
@@ -532,13 +531,13 @@ msgstr "Implementation"
 #: gaphor/UML/classes/propertypages.ui:24
 #, fuzzy
 msgid "Show Direction"
-msgstr "Ton richting"
+msgstr "Toon richting"
 
 #: gaphor/UML/classes/propertypages.glade:60
 #: gaphor/UML/classes/propertypages.ui:36
 #, fuzzy
 msgid "Invert direction"
-msgstr "Ton richting"
+msgstr "Keer richting om"
 
 #: gaphor/UML/classes/propertypages.glade:108
 #: gaphor/UML/classes/propertypages.glade:251
@@ -558,21 +557,21 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:72
 #: gaphor/UML/classes/propertypages.ui:169
 msgid "Unknown navigation"
-msgstr ""
+msgstr "Onbekende navigeerbaarheid"
 
 #: gaphor/UML/classes/propertypages.glade:123
 #: gaphor/UML/classes/propertypages.glade:266
 #: gaphor/UML/classes/propertypages.ui:73
 #: gaphor/UML/classes/propertypages.ui:170
 msgid "Not navigable"
-msgstr ""
+msgstr "Niet navigeerbaar"
 
 #: gaphor/UML/classes/propertypages.glade:124
 #: gaphor/UML/classes/propertypages.glade:267
 #: gaphor/UML/classes/propertypages.ui:74
 #: gaphor/UML/classes/propertypages.ui:171
 msgid "Navigable"
-msgstr ""
+msgstr "Navigeerbaar"
 
 #: gaphor/UML/classes/propertypages.glade:166
 #: gaphor/UML/classes/propertypages.glade:309
@@ -599,17 +598,17 @@ msgstr "Waarde"
 #: gaphor/UML/classes/propertypages.glade:216
 #: gaphor/UML/classes/propertypages.ui:138
 msgid "Head:"
-msgstr ""
+msgstr "Kop:"
 
 #: gaphor/UML/classes/propertypages.glade:360
 #: gaphor/UML/classes/propertypages.ui:236
 msgid "Tail:"
-msgstr ""
+msgstr "StaartL"
 
 #: gaphor/UML/classes/propertypages.glade:395
 #: gaphor/UML/classes/propertypages.ui:258
 msgid "Show Attributes"
-msgstr ""
+msgstr "Toon Attributen"
 
 #: gaphor/UML/classes/propertypages.glade:441
 msgid ""
@@ -655,7 +654,7 @@ msgstr "Naam"
 #: gaphor/UML/classes/propertypages.glade:730
 #: gaphor/UML/classes/propertypages.ui:451
 msgid "Show Operations"
-msgstr ""
+msgstr "Toon Operaties"
 
 #: gaphor/UML/classes/propertypages.glade:775
 msgid ""
@@ -674,7 +673,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:485
 #: gaphor/UML/classes/propertypages.ui:535
 msgid "Operations"
-msgstr ""
+msgstr "Operaties"
 
 #: gaphor/UML/classes/propertypages.glade:806
 #: gaphor/UML/classes/propertypages.ui:503
@@ -741,7 +740,7 @@ msgstr "Lifeline"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:68
 msgid "Execution Specification"
-msgstr ""
+msgstr "Execution Specification"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:76
 msgid "Message"
@@ -750,7 +749,7 @@ msgstr "Message"
 #: gaphor/UML/interactions/propertypages.glade:28
 #: gaphor/UML/interactions/propertypages.ui:21
 msgid "Message Sort"
-msgstr ""
+msgstr "Message Sort"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
@@ -774,23 +773,23 @@ msgstr "Extension"
 
 #: gaphor/UML/profiles/profilestoolbox.py:63
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
 #: gaphor/UML/profiles/propertypages.glade:50
 #: gaphor/UML/profiles/propertypages.ui:36
 msgid "NamedElement"
-msgstr ""
+msgstr "NamedElement"
 
 #: gaphor/UML/profiles/propertypages.glade:82
 #: gaphor/UML/profiles/propertypages.ui:55
 #, fuzzy
 msgid "Show Stereotypes"
-msgstr "Stereotype"
+msgstr "Toon Stereotypen"
 
 #: gaphor/UML/profiles/propertypages.glade:175
 #: gaphor/UML/profiles/propertypages.ui:114
 msgid "Stereotypes"
-msgstr ""
+msgstr "Stereotypen"
 
 #: gaphor/UML/states/propertypages.glade:34
 #: gaphor/UML/states/propertypages.ui:25
@@ -810,7 +809,7 @@ msgstr "Do Activity"
 #: gaphor/UML/states/propertypages.glade:111
 #: gaphor/UML/states/propertypages.ui:60
 msgid "Activities"
-msgstr ""
+msgstr "Activities"
 
 #: gaphor/UML/states/statestoolbox.py:58
 msgid "States"
@@ -850,7 +849,7 @@ msgstr "Actor"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
-msgstr "Include"
+msgstr "Include\"Realizatio"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:54
 msgid "Extend"
@@ -906,23 +905,41 @@ msgstr ""
 
 #: gaphor/diagram/propertypages.glade:200 gaphor/diagram/propertypages.ui:49
 msgid "Rectilinear"
-msgstr ""
+msgstr "Hoekig"
 
 #: gaphor/diagram/propertypages.glade:215 gaphor/diagram/propertypages.ui:55
 msgid "Flip orientation"
-msgstr ""
+msgstr "Orientatie wisselen"
 
 #: gaphor/diagram/propertypages.glade:234 gaphor/diagram/propertypages.ui:63
 msgid "Style"
-msgstr ""
+msgstr "Stijl"
 
 #: gaphor/diagram/propertypages.glade:270 gaphor/diagram/propertypages.ui:75
 msgid "Note / Remark"
+msgstr "Notitie / Opmerking"
+
+#: gaphor/plugins/console/console.py:19
+msgid ""
+"Gaphor Interactive Python Console\n"
+"{version}\n"
+"Type \"help\" for more information.\n"
 msgstr ""
+"Gaphor Interactieve Python Console\n"
+"{version}\n"
+"Type \"help\" voor meer informatie.\n"
+
+#: gaphor/plugins/console/consolewindow.py:20
+msgid "Gaphor Console"
+msgstr "Gaphor Console"
+
+#: gaphor/plugins/console/consolewindow.py:43
+msgid "Console"
+msgstr "Console"
 
 #: gaphor/plugins/diagramexport/__init__.py:52
 msgid "All {ext} Files"
-msgstr ""
+msgstr "Alle {ext} Bestanden"
 
 #: gaphor/plugins/diagramexport/__init__.py:100
 msgid "Export to SVG"
@@ -964,9 +981,8 @@ msgid "Export model to XMI file"
 msgstr "Exporteer model naar XMI bestand"
 
 #: gaphor/plugins/xmiexport/__init__.py:34
-#, fuzzy
 msgid "All XMI Files"
-msgstr "Alle bestanden"
+msgstr "Alle XMI bestanden"
 
 #: gaphor/services/helpservice/about.ui:8
 msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
@@ -988,9 +1004,8 @@ msgid ""
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:18
-#, fuzzy
 msgid "Application"
-msgstr "Realization"
+msgstr "Applicatie"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
 #: gaphor/ui/elementeditor.glade:339 gaphor/ui/elementeditor.ui:205
@@ -998,32 +1013,29 @@ msgid "Preferences"
 msgstr "Instellingen"
 
 #: gaphor/services/helpservice/shortcuts.ui:32
-#, fuzzy
 msgid "Quit Gaphor"
-msgstr "Over Gaphor"
+msgstr "Gaphor Afsluiten"
 
 #: gaphor/services/helpservice/shortcuts.ui:43
-#, fuzzy
 msgid "Files"
-msgstr "Profielen"
+msgstr "Betsanden"
 
 #: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:45
 msgid "New Window"
-msgstr ""
+msgstr "Nieuw Venster"
 
 #: gaphor/services/helpservice/shortcuts.ui:57 gaphor/ui/mainwindow.glade:138
 #: gaphor/ui/mainwindow.ui:40
 msgid "Open"
-msgstr "Open"
+msgstr "Openen"
 
 #: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:49
 msgid "Save"
 msgstr "Opslaan"
 
 #: gaphor/services/helpservice/shortcuts.ui:73
-#, fuzzy
 msgid "Save As"
-msgstr "Use case"
+msgstr "Opslaan Als"
 
 #: gaphor/services/helpservice/shortcuts.ui:84
 #: gaphor/services/helpservice/shortcuts.ui:90
@@ -1034,57 +1046,52 @@ msgstr "Ongedaan maken"
 #: gaphor/services/helpservice/shortcuts.ui:98
 #: gaphor/ui/elementeditor.glade:148 gaphor/ui/elementeditor.ui:89
 msgid "Redo"
-msgstr "Hoertoepassen"
+msgstr "Hertoepassen"
 
 #: gaphor/services/helpservice/shortcuts.ui:109
-#, fuzzy
 msgid "Diagrams"
-msgstr "Nieuw _Diagram"
+msgstr "Diagrammen"
 
 #: gaphor/services/helpservice/shortcuts.ui:115
-#, fuzzy
 msgid "Edit"
-msgstr "gewijzigd"
+msgstr "Wijzigen"
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:226
 msgid "Show/Hide Editor"
-msgstr ""
+msgstr "Toon/Verberg Editor"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
 msgid "Select All"
-msgstr ""
+msgstr "Selecteer Alles"
 
 #: gaphor/services/helpservice/shortcuts.ui:139
 msgid "Deselect All"
-msgstr ""
+msgstr "Deselecteer Alles"
 
 #: gaphor/services/helpservice/shortcuts.ui:147
 msgid "Copy"
-msgstr ""
+msgstr "Kopieren"
 
 #: gaphor/services/helpservice/shortcuts.ui:155
-#, fuzzy
 msgid "Paste"
-msgstr "State"
+msgstr "Plakken"
 
 #: gaphor/services/helpservice/shortcuts.ui:163
-#, fuzzy
 msgid "Delete"
-msgstr "_Verwijder"
+msgstr "Verwijder"
 
 #: gaphor/services/helpservice/shortcuts.ui:171
-#, fuzzy
 msgid "Close Diagram"
-msgstr "Nieuw _Diagram"
+msgstr "Sluit Diagram"
 
 #: gaphor/services/helpservice/shortcuts.ui:182
 msgid "Zoom"
-msgstr ""
+msgstr "Vergroten"
 
 #: gaphor/services/helpservice/shortcuts.ui:188
 #: gaphor/ui/elementeditor.glade:178 gaphor/ui/elementeditor.ui:105
 msgid "Zoom In"
-msgstr ""
+msgstr "Vergroot"
 
 #: gaphor/services/helpservice/shortcuts.ui:196
 #: gaphor/ui/elementeditor.glade:220 gaphor/ui/elementeditor.ui:129
@@ -1097,13 +1104,12 @@ msgid "Zoom 100%"
 msgstr "Zoom 100%"
 
 #: gaphor/ui/appfilemanager.py:13
-#, fuzzy
 msgid "All Gaphor Models"
-msgstr "Sla Gaphor model op als"
+msgstr "Alle Gaphor modellen"
 
 #: gaphor/ui/appfilemanager.py:44
 msgid "Open Gaphor Model"
-msgstr "Sla Gaphor model op"
+msgstr "Open Gaphor model"
 
 #: gaphor/ui/appfilemanager.py:54
 msgid ""
@@ -1113,7 +1119,7 @@ msgstr ""
 
 #: gaphor/ui/diagrampage.py:126
 msgid "<None>"
-msgstr "<None>"
+msgstr "<Niets>"
 
 #: gaphor/ui/diagrampage.py:341
 msgid ""
@@ -1127,7 +1133,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:36 gaphor/ui/elementeditor.ui:22
 msgid "Show Tips"
-msgstr ""
+msgstr "Toon Tips"
 
 #: gaphor/ui/elementeditor.glade:80 gaphor/ui/elementeditor.ui:48
 msgid ""
@@ -1148,17 +1154,16 @@ msgid ""
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:322 gaphor/ui/elementeditor.ui:170
-#, fuzzy
 msgid "Editors"
-msgstr "gewijzigd"
+msgstr "Editors"
 
 #: gaphor/ui/elementeditor.glade:359 gaphor/ui/elementeditor.ui:217
 msgid "Reset tool automatically"
-msgstr ""
+msgstr "Herstel tool automatisch"
 
 #: gaphor/ui/elementeditor.glade:392 gaphor/ui/elementeditor.ui:232
 msgid "Style sheet"
-msgstr ""
+msgstr "Style sheet"
 
 #: gaphor/ui/elementeditor.glade:428 gaphor/ui/elementeditor.ui:252
 msgid ""
@@ -1169,7 +1174,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:443 gaphor/ui/elementeditor.ui:194
 msgid "Settings"
-msgstr ""
+msgstr "Instellingen"
 
 #: gaphor/ui/errorhandler.py:27
 msgid ""
@@ -1179,7 +1184,7 @@ msgstr ""
 
 #: gaphor/ui/errorhandler.py:30
 msgid "Start debug session"
-msgstr ""
+msgstr "Start debug sessie"
 
 #: gaphor/ui/filedialog.py:32
 msgid "All Files"
@@ -1231,9 +1236,8 @@ msgid "Loading model from {filename}"
 msgstr "Laden van model {filename}"
 
 #: gaphor/ui/filemanager.py:138
-#, fuzzy
 msgid "Unable to open model “{filename}”."
-msgstr "Opslaan van model {filename}"
+msgstr "Kan model {filename} niet openen."
 
 #: gaphor/ui/filemanager.py:141
 msgid "This file does not contain a valid Gaphor model."
@@ -1249,16 +1253,15 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:199
 msgid "Saving..."
-msgstr "Bezig met opslaan..."
+msgstr "Opslaan..."
 
 #: gaphor/ui/filemanager.py:200
 msgid "Saving model to {filename}"
 msgstr "Opslaan van model {filename}"
 
 #: gaphor/ui/filemanager.py:219
-#, fuzzy
 msgid "Unable to save model “{filename}”."
-msgstr "Opslaan van model {filename}"
+msgstr "Kan model {filename} niet opslaan."
 
 #: gaphor/ui/filemanager.py:257
 msgid "Save Gaphor Model As"
@@ -1274,20 +1277,15 @@ msgstr "Als je afsluit zonder opslaan, verdwijnen uw wijzigingen "
 
 #: gaphor/ui/filemanager.py:312
 msgid "Close _without saving"
-msgstr "Afsluiten zonder opslaan"
-
-#: gaphor/ui/mainwindow.glade:52 gaphor/ui/mainwindow.ui:102
-msgid "Here goes a short informative message."
-msgstr ""
+msgstr "Afsluiten _zonder opslaan"
 
 #: gaphor/ui/mainwindow.glade:105
 msgid "Gaphor"
-msgstr ""
+msgstr "Gaphor"
 
 #: gaphor/ui/mainwindow.glade:181
-#, fuzzy
 msgid "New diagram"
-msgstr "Nieuw _Diagram"
+msgstr "Nieuw diagram"
 
 #: gaphor/ui/mainwindow.py:50
 msgid "Save As..."
@@ -1303,7 +1301,7 @@ msgstr "Gereedschap"
 
 #: gaphor/ui/mainwindow.py:59
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Sneltoetsen"
 
 #: gaphor/ui/mainwindow.py:60
 msgid "About Gaphor"
@@ -1319,6 +1317,10 @@ msgstr "gewijzigd"
 
 #: gaphor/ui/mainwindow.py:304
 msgid "Profile: {}"
+msgstr "Profiel: {}"
+
+#: gaphor/ui/mainwindow.ui:102
+msgid "Here goes a short informative message."
 msgstr ""
 
 #: gaphor/ui/namespace.py:42
@@ -1410,7 +1412,7 @@ msgstr "Geen recent geopende modellen"
 #~ msgstr "Zoom uit"
 
 #~ msgid "title"
-#~ msgstr ""
+#~ msgstr "titel"
 
 #~ msgid ""
 #~ "Add and edit class attributes according to UML syntax.\n"
