@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="16.010202"
+   width="16.005657"
    height="16.052382"
-   viewBox="0 0 4.2360326 4.2471927"
+   viewBox="0 0 4.23483 4.2471927"
    version="1.1"
    id="svg4268"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,11 +27,11 @@
   <g
      id="relevant-to"
      style="display:inline"
-     transform="translate(-127,-38.889151)">
+     transform="translate(-127.0012,-38.889151)">
     <path
-       id="path677"
+       style="color:#000000;fill:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
        d="m 130.95603,38.889564 a 0.26460979,0.26460979 0 0 0 -0.0586,0.0098 l -1.85156,0.529297 a 0.26492938,0.26492938 0 1 0 0.14453,0.509766 l 1.39453,-0.398438 -0.39844,1.394531 a 0.26493157,0.26493157 0 1 0 0.50977,0.144532 l 0.52929,-1.851563 a 0.26460979,0.26460979 0 0 0 -0.26953,-0.33789 z"
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+       id="path677" />
     <g
        aria-label="R"
        id="text681"
@@ -39,11 +39,11 @@
       <path
          d="m 130.61939,42.164818 q 0.0606,0.0124 0.10473,0.05788 0.0455,0.0441 0.11024,0.173634 l 0.37207,0.740008 h -0.44648 l -0.24805,-0.519522 q -0.011,-0.02205 -0.0289,-0.06063 -0.10886,-0.23289 -0.25631,-0.23289 h -0.12954 v 0.813045 h -0.40652 v -2.057416 h 0.58704 q 0.39688,0 0.56914,0.14056 0.17363,0.14056 0.17363,0.45751 0,0.212218 -0.10335,0.33762 -0.10336,0.125402 -0.29766,0.150207 z m -0.52228,-0.744143 v 0.560863 h 0.19155 q 0.16674,0 0.2384,-0.06477 0.073,-0.06615 0.073,-0.216353 0,-0.150206 -0.0717,-0.214974 -0.0717,-0.06477 -0.23978,-0.06477 z"
          style="font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold'"
-         id="path1404" />
+         id="path1605" />
     </g>
     <path
-       id="path684"
-       d="m 127.26458,42.862501 3.43959,-3.439584"
-       style="display:inline;fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.529167, 1.05833;stroke-dashoffset:0;stroke-opacity:1" />
+       style="color:#000000;fill:#000000;stroke-linecap:round;stroke-dasharray:0.529167, 1.05833;-inkscape-stroke:none"
+       d="m 130.70508,39.158203 a 0.2645835,0.2645835 0 0 0 -0.1875,0.07813 l -0.0723,0.07227 a 0.2645835,0.2645835 0 0 0 0,0.373047 0.2645835,0.2645835 0 0 0 0.37305,0 l 0.0723,-0.07227 a 0.2645835,0.2645835 0 0 0 0,-0.373047 0.2645835,0.2645835 0 0 0 -0.18554,-0.07813 z m -1.00781,0.898438 -0.375,0.373046 a 0.2645835,0.2645835 0 0 0 0,0.375 0.2645835,0.2645835 0 0 0 0.375,0 l 0.37304,-0.375 a 0.2645835,0.2645835 0 0 0 0,-0.373046 0.2645835,0.2645835 0 0 0 -0.37304,0 z m -0.93555,1.044921 a 0.2645835,0.2645835 0 0 0 -0.1875,0.07617 l -0.375,0.375 a 0.2645835,0.2645835 0 0 0 0,0.375 0.2645835,0.2645835 0 0 0 0.375,0 l 0.375,-0.375 a 0.2645835,0.2645835 0 0 0 0,-0.375 0.2645835,0.2645835 0 0 0 -0.1875,-0.07617 z m -1.12305,1.123047 a 0.2645835,0.2645835 0 0 0 -0.1875,0.07617 l -0.37304,0.375 a 0.2645835,0.2645835 0 0 0 0,0.373047 0.2645835,0.2645835 0 0 0 0.37304,0 l 0.375,-0.373047 a 0.2645835,0.2645835 0 0 0 0,-0.375 0.2645835,0.2645835 0 0 0 -0.1875,-0.07617 z"
+       id="path684" />
   </g>
 </svg>

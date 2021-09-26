@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="15.999999"
-   height="12.000002"
-   viewBox="0 0 4.233333 3.1750006"
+   width="16.003952"
+   height="12.002968"
+   viewBox="0 0 4.2343789 3.1757853"
    version="1.1"
    id="svg4268"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,10 +27,17 @@
   <g
      id="comment"
      style="display:inline"
-     transform="translate(-1.3229165,4.0958424)">
-    <path
-       style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 3.96875,-3.8312589 -2.38125,5e-7 v 2.6458329 H 5.291666 V -2.5083421 L 3.96875,-3.8312589 v 1.3229168 h 1.322916"
-       id="path4675" />
+     transform="translate(-1.3222636,4.0957051)">
+    <g
+       id="path4675">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 3.96875,-3.8312589 -2.38125,5e-7 v 2.6458329 H 5.291666 V -2.5083421 L 3.96875,-3.8312589 v 1.3229168 h 1.322916"
+         id="path3510" />
+      <path
+         style="color:#000000;fill:#000000;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 1.5878906,-4.0957031 a 0.26460996,0.26460996 0 0 0 -0.265625,0.2636718 v 2.6464844 a 0.26460996,0.26460996 0 0 0 0.265625,0.26562502 h 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,-0.26562502 v -1.3222656 a 0.26460996,0.26460996 0 0 0 -0.078125,-0.1875 L 4.15625,-4.0175781 a 0.26460996,0.26460996 0 0 0 -0.1875,-0.037109 v -0.041016 z m 0.2636719,0.5292968 h 1.8535156 v 1.0585938 A 0.26460996,0.26460996 0 0 0 3.96875,-2.2441406 h 1.0585937 v 0.7949219 H 1.8515625 Z m 2.3808594,0.3730469 0.4199218,0.4199219 H 4.2324219 Z"
+         id="path3512" />
+    </g>
   </g>
 </svg>

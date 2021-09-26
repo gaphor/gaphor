@@ -29,9 +29,9 @@
      style="display:inline"
      transform="translate(-119.06159,-33.866536)">
     <path
-       id="path667"
+       style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none"
        d="m 119.32526,33.866536 a 0.26460982,0.26460982 0 0 0 -0.26367,0.263672 v 3.705078 a 0.26460982,0.26460982 0 0 0 0.26367,0.263672 h 3.70508 a 0.26460982,0.26460982 0 0 0 0.26367,-0.263672 v -3.705078 a 0.26460982,0.26460982 0 0 0 -0.26367,-0.263672 z m 0.26562,0.529297 h 3.17579 v 3.175781 h -3.17579 z"
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:0;fill-rule:nonzero;stroke:none;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+       id="path667" />
     <g
        aria-label="S"
        id="text671"
@@ -39,7 +39,7 @@
       <path
          d="m 120.99905,35.872283 q -0.46096,-0.1757 -0.62426,-0.367936 -0.16329,-0.194304 -0.16329,-0.520898 0,-0.419613 0.26871,-0.659391 0.26872,-0.239779 0.73794,-0.239779 0.21291,0 0.42582,0.04961 0.2129,0.04754 0.42168,0.142627 v 0.595312 q -0.19637,-0.138493 -0.39895,-0.21084 -0.20257,-0.07235 -0.401,-0.07235 -0.22118,0 -0.339,0.08888 -0.11782,0.08888 -0.11782,0.254248 0,0.128158 0.0847,0.212907 0.0868,0.08268 0.35966,0.183968 l 0.26252,0.09922 q 0.37207,0.136425 0.54777,0.361734 0.1757,0.225309 0.1757,0.568441 0,0.467154 -0.27699,0.698664 -0.27492,0.229444 -0.83302,0.229444 -0.22944,0 -0.46095,-0.05581 -0.22945,-0.05374 -0.44442,-0.16123 v -0.630452 q 0.24391,0.173632 0.47129,0.258382 0.22944,0.08475 0.45268,0.08475 0.22531,0 0.34934,-0.101286 0.12402,-0.103353 0.12402,-0.28732 0,-0.138493 -0.0827,-0.241846 -0.0827,-0.10542 -0.23978,-0.165364 z"
          style="font-size:4.23333px;font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold'"
-         id="path1448" />
+         id="path1643" />
     </g>
   </g>
 </svg>

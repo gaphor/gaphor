@@ -29,9 +29,9 @@
      style="display:inline"
      transform="translate(-103.18659,-39.157422)">
     <path
-       id="path683"
+       style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none"
        d="m 103.45026,39.157422 a 0.26460982,0.26460982 0 0 0 -0.26367,0.263672 v 3.705078 a 0.26460982,0.26460982 0 0 0 0.26367,0.263672 h 3.70508 a 0.26460982,0.26460982 0 0 0 0.26367,-0.263672 v -3.705078 a 0.26460982,0.26460982 0 0 0 -0.26367,-0.263672 z m 0.26562,0.529297 h 3.17579 V 42.8625 h -3.17579 z"
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:0;fill-rule:nonzero;stroke:none;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate" />
+       id="path683" />
     <g
        aria-label="A"
        id="text687"
@@ -39,7 +39,7 @@
       <path
          d="m 105.34315,39.989081 -0.28732,1.262971 h 0.57671 z m -0.37207,-0.558105 h 0.74621 l 0.83302,3.086114 h -0.60978 l -0.19017,-0.762744 h -0.81648 l -0.18604,0.762744 h -0.60978 z"
          style="font-size:4.23333px;font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold'"
-         id="path1433" />
+         id="path1629" />
     </g>
   </g>
 </svg>
