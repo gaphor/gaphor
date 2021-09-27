@@ -22,7 +22,7 @@ def parse(el: Element, text: str) -> None:
 
 
 @format.register(Diagram)
-def format_diagram(el, **kwargs):
+def format_diagram(el, **kwargs) -> str:
     return el.name or ""
 
 

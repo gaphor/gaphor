@@ -9,7 +9,12 @@ from typing import TYPE_CHECKING, Callable, Iterator, TypeVar, overload
 
 from gaphor.abc import Service
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.element import Element, UnlinkEvent
+from gaphor.core.modeling.element import (
+    Element,
+    EventWatcherProtocol,
+    Handler,
+    UnlinkEvent,
+)
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.core.modeling.event import (
     ElementCreated,
@@ -49,7 +54,7 @@ class ElementFactory(Service):
         self._elements: dict[str, Element] = OrderedDict()
         self._block_events = 0
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         self.flush()
 
     def create(self, type: type[T]) -> T:
@@ -143,7 +148,9 @@ class ElementFactory(Service):
         """Returns True if the factory holds no elements."""
         return bool(self._elements)
 
-    def watcher(self, element: Element, default_handler=None):
+    def watcher(
+        self, element: Element, default_handler: Handler | None = None
+    ) -> EventWatcherProtocol:
         element_dispatcher = self.element_dispatcher
         return EventWatcher(element, element_dispatcher, default_handler)
 

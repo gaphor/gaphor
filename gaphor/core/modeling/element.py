@@ -81,7 +81,7 @@ class Element:
         return self._model
 
     @classmethod
-    def umlproperties(class_):
+    def umlproperties(class_) -> Iterator[umlproperty]:
         """Iterate over all properties."""
         umlprop = umlproperty
         for propname in dir(class_):
@@ -143,7 +143,7 @@ class Element:
         if model:
             model.handle(event)
 
-    def watcher(self, default_handler=None) -> EventWatcherProtocol:
+    def watcher(self, default_handler: Handler | None = None) -> EventWatcherProtocol:
         model = self._model
         if model:
             return model.watcher(self, default_handler)

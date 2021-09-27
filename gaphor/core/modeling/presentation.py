@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 
 from gaphas.item import Matrices
 
-from gaphor.core.modeling.element import Element, UnlinkEvent
+from gaphor.core.modeling.element import Element, Id, UnlinkEvent
 from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.core.modeling.properties import association, relation_many, relation_one
 
@@ -32,7 +32,7 @@ class Presentation(Matrices, Element, Generic[S]):
     ElementDeleted.
     """
 
-    def __init__(self, diagram: Diagram, id=None):
+    def __init__(self, diagram: Diagram, id: Id | None = None) -> None:
         super().__init__(id=id, model=diagram.model)
         self.diagram = diagram
 
@@ -88,7 +88,7 @@ class Presentation(Matrices, Element, Generic[S]):
         """Remove the item from the diagram and set subject to None."""
         self.inner_unlink(UnlinkEvent(self, diagram=self.diagram))
 
-    def inner_unlink(self, unlink_event: UnlinkEvent):
+    def inner_unlink(self, unlink_event: UnlinkEvent) -> None:
         self._watcher.unsubscribe_all()
         self.matrix.remove_handler(self._on_matrix_changed)
 

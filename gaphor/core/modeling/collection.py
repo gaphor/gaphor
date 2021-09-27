@@ -1,6 +1,6 @@
 """1:n and n:m relations in the data model are saved using a collection."""
 
-from typing import Generic, List, Type, TypeVar, Union, overload
+from typing import Generic, List, Type, TypeVar, overload
 
 from gaphor.core.modeling.event import AssociationUpdated
 from gaphor.core.modeling.listmixins import querymixin, recursemixin, recurseproxy
@@ -72,7 +72,7 @@ class collection(Generic[T]):
     def __getitem__(self, key: slice) -> recurseproxy[T]:
         ...
 
-    def __getitem__(self, key: Union[int, slice]):
+    def __getitem__(self, key):
         return self.items.__getitem__(key)
 
     def __contains__(self, obj) -> bool:

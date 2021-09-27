@@ -110,9 +110,34 @@ class ElementDispatcher(Service):
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         self.event_manager.unsubscribe(self.on_element_change_event)
         self.event_manager.unsubscribe(self.on_model_loaded)
+
+    def subscribe(self, handler: Handler, element: Element, path: str) -> None:
+        props = self._path_to_properties(element, path)
+        self._add_handlers(element, props, handler)
+
+    def unsubscribe(self, handler: Handler) -> None:
+        """Unregister a handler from the registry."""
+        try:
+            reverse = reversed(self._reverse[handler])
+        except KeyError:
+            return
+
+        for key in reverse:
+            try:
+                handlers = self._handlers[key]
+            except KeyError:
+                pass
+            else:
+                try:
+                    del handlers[handler]
+                except KeyError:
+                    pass
+                if not handlers:
+                    del self._handlers[key]
+        del self._reverse[handler]
 
     def _path_to_properties(self, element, path):
         """Given a start element and a path, return a tuple of properties
@@ -205,31 +230,6 @@ class ElementDispatcher(Service):
 
         if not handlers:
             del self._handlers[key]
-
-    def subscribe(self, handler, element, path):
-        props = self._path_to_properties(element, path)
-        self._add_handlers(element, props, handler)
-
-    def unsubscribe(self, handler):
-        """Unregister a handler from the registry."""
-        try:
-            reverse = reversed(self._reverse[handler])
-        except KeyError:
-            return
-
-        for key in reverse:
-            try:
-                handlers = self._handlers[key]
-            except KeyError:
-                pass
-            else:
-                try:
-                    del handlers[handler]
-                except KeyError:
-                    pass
-                if not handlers:
-                    del self._handlers[key]
-        del self._reverse[handler]
 
     @event_handler(ElementUpdated)
     def on_element_change_event(self, event):

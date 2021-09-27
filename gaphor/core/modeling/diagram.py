@@ -8,7 +8,7 @@ import logging
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Iterable, Iterator, Sequence, TypeVar
+from typing import Callable, Iterable, Iterator, Sequence, TypeVar, overload
 
 import gaphas
 from typing_extensions import Protocol, runtime_checkable
@@ -27,7 +27,6 @@ from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.core.styling import Style, StyleNode
 
 log = logging.getLogger(__name__)
-
 
 # Not all styles are requires: "background-color", "font-weight",
 # "text-color", and "text-decoration" are optional (can default to None)
@@ -198,6 +197,9 @@ class StyledItem:
         )
 
 
+P = TypeVar("P", bound=Presentation)
+
+
 class Diagram(Element):
     """Diagrams may contain model elements and can be owned by a Package."""
 
@@ -279,7 +281,21 @@ class Diagram(Element):
         self._watcher.unsubscribe_all()
         super().unlink()
 
-    def select(self, expression=None) -> Iterator[Presentation]:
+    @overload
+    def select(
+        self, expression: Callable[[Presentation], bool]
+    ) -> Iterator[Presentation]:
+        ...
+
+    @overload
+    def select(self, expression: type[P]) -> Iterator[P]:
+        ...
+
+    @overload
+    def select(self, expression: None) -> Iterator[Presentation]:
+        ...
+
+    def select(self, expression=None):
         """Return a iterator of all canvas items that match expression."""
         if expression is None:
             yield from self.get_all_items()
@@ -367,9 +383,6 @@ class Diagram(Element):
 Presentation.diagram = association(
     "diagram", Diagram, upper=1, opposite="ownedPresentation"
 )
-
-
-P = TypeVar("P", bound=Presentation)
 
 
 @runtime_checkable

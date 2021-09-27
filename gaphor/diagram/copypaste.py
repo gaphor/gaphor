@@ -16,8 +16,6 @@ import itertools
 from functools import singledispatch
 from typing import Callable, Iterator, NamedTuple
 
-import gaphas
-
 from gaphor.core.modeling import Diagram, Presentation
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element, Id
@@ -48,7 +46,7 @@ def paste(copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element])
 
 
 def serialize(value):
-    if isinstance(value, (Element, gaphas.Item)):
+    if isinstance(value, Element):
         return ("r", value.id)
     elif isinstance(value, collection):
         return ("c", [serialize(v) for v in value])
