@@ -3,6 +3,7 @@
 Everything is about services so the Case can define it's required
 services and start off.
 """
+from __future__ import annotations
 
 import logging
 from io import StringIO
@@ -25,6 +26,7 @@ from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
 
 T = TypeVar("T")
+S = TypeVar("S")
 
 log = logging.getLogger("Gaphor")
 log.setLevel(logging.WARNING)
@@ -60,7 +62,12 @@ class Case:
     def get_service(self, name):
         return self.session.get_service(name)
 
-    def create(self, item_cls: Type[T], subject_cls=None, subject=None) -> T:
+    def create(
+        self,
+        item_cls: type[T],
+        subject_cls: type[S] | None = None,
+        subject: S | None = None,
+    ) -> T:
         """Create an item with specified subject."""
         if subject_cls is not None:
             subject = self.element_factory.create(subject_cls)
