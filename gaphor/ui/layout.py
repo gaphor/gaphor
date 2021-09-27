@@ -6,9 +6,9 @@ from xml.etree.ElementTree import fromstring
 from gi.repository import Gdk, Gtk
 
 
-def is_maximized(window: Gtk.Window):
+def is_maximized(window: Gtk.Window) -> bool:
     window_state = window.get_window().get_state()
-    return window_state & (Gdk.WindowState.MAXIMIZED | Gdk.WindowState.FULLSCREEN)
+    return window_state & (Gdk.WindowState.MAXIMIZED | Gdk.WindowState.FULLSCREEN)  # type: ignore[no-any-return]
 
 
 widget_factory: Dict[str, Callable] = {}

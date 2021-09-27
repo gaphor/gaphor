@@ -93,7 +93,7 @@ class TransactionRollback:
 class ActionEnabled:
     """Signal if an action can be activated or not."""
 
-    def __init__(self, action_name, enabled: bool):
+    def __init__(self, action_name: str, enabled: bool) -> None:
         self.scope, self.name = (
             action_name.split(".", 2) if "." in action_name else ("win", action_name)
         )

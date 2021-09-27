@@ -67,7 +67,7 @@ class Toolbox(UIComponent):
         self.event_manager.unsubscribe(self._on_modeling_language_changed)
         self.event_manager.unsubscribe(self._on_diagram_item_placed)
 
-    def activate_shortcut(self, keyval, state) -> bool:
+    def activate_shortcut(self, keyval: int, state: Gdk.ModifierType) -> bool:
         # Accelerator keys are lower case. Since we handle them in a key-press event
         # handler, we'll need the upper-case versions as well in case Shift is pressed.
         for _title, items in self.modeling_language.toolbox_definition:
@@ -172,7 +172,7 @@ class Toolbox(UIComponent):
         return toolbox_container
 
     @action(name="toolbox.select-tool", state="toolbox-pointer")
-    def select_tool(self, tool_name: str):
+    def select_tool(self, tool_name: str) -> None:
         self.event_manager.handle(ToolSelected(tool_name))
 
     @event_handler(DiagramItemPlaced)

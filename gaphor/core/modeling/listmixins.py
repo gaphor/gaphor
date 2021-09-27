@@ -18,7 +18,7 @@ __all__ = ["querymixin", "recursemixin"]
 T = TypeVar("T")
 
 
-def matcher(expr) -> Callable[[T], bool]:
+def matcher(expr: str) -> Callable[[T], bool]:
     """Returns True if the expression returns True. The context for the
     expression is the element.
 
@@ -147,7 +147,7 @@ class recurseproxy(Generic[T]):
         """
         return iter(self.__sequence)
 
-    def __getattr__(self, key) -> recurseproxy[T]:
+    def __getattr__(self, key: str) -> recurseproxy[T]:
         """Create a new proxy for the attribute."""
 
         def mygetattr():

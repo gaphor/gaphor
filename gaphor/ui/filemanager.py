@@ -268,14 +268,14 @@ class FileManager(Service, ActionProvider):
         return False
 
     @event_handler(SessionCreated)
-    def _on_session_created(self, event: SessionCreated):
+    def _on_session_created(self, event: SessionCreated) -> None:
         if event.filename:
             self.load(event.filename)
         else:
             load_default_model(self.element_factory)
 
     @event_handler(SessionShutdownRequested)
-    def _on_session_shutdown_request(self, event):
+    def _on_session_shutdown_request(self, event: SessionShutdownRequested) -> None:
         """Ask user to close window if the model has changed.
 
         The user is asked to either discard the changes, keep the
@@ -297,7 +297,7 @@ class FileManager(Service, ActionProvider):
             confirm_shutdown()
 
 
-def save_changes_before_closing_dialog(window):
+def save_changes_before_closing_dialog(window: Gtk.Window) -> Gtk.ResponseType:
     dialog = Gtk.MessageDialog(
         window,
         Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,

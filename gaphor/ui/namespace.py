@@ -264,7 +264,7 @@ class Namespace(UIComponent, ActionProvider):
             log.debug(f"No action defined for element {type(element).__name__}")
 
     @action(name="tree-view.show-in-diagram")
-    def tree_view_show_in_diagram(self, diagram_id: str):
+    def tree_view_show_in_diagram(self, diagram_id: str) -> None:
         element = self.element_factory.lookup(diagram_id)
         self.event_manager.handle(DiagramOpened(element))
 

@@ -1,4 +1,5 @@
 """Support classes for dealing with text."""
+from __future__ import annotations
 
 from gaphas.canvas import instant_cairo_context
 from gaphas.painter.freehand import FreeHandCairoContext
@@ -10,14 +11,16 @@ from gaphor.core.styling import FontStyle, FontWeight, Style, TextAlign, TextDec
 class Layout:
     def __init__(
         self,
-        text="",
-        font=None,
-        text_align=TextAlign.CENTER,
-        default_size=(0, 0),
+        text: str = "",
+        font: Style | None = None,
+        text_align: TextAlign = TextAlign.CENTER,
+        default_size: tuple[int, int] = (0, 0),
     ):
         self.layout = PangoCairo.create_layout(instant_cairo_context())
         self.underline = False
-        self.font_id = None
+        self.font_id: tuple[
+            str, float | str, FontWeight | None, FontStyle | None
+        ] | None = None
         self.text = ""
         self.width = -1
         self.default_size = default_size
@@ -39,7 +42,7 @@ class Layout:
         if text_align:
             self.set_alignment(text_align)
 
-    def set_font(self, font: Style):
+    def set_font(self, font: Style) -> None:
         font_family = font.get("font-family")
         font_size = font.get("font-size")
         font_weight = font.get("font-weight")
@@ -74,12 +77,12 @@ class Layout:
             self.underline = underline
             self.update_text()
 
-    def set_text(self, text: str):
+    def set_text(self, text: str) -> None:
         if text != self.text:
             self.text = text
             self.update_text()
 
-    def update_text(self):
+    def update_text(self) -> None:
         if self.underline:
             # TODO: can this be done via Pango attributes instead?
             self.layout.set_markup(
@@ -88,21 +91,21 @@ class Layout:
         else:
             self.layout.set_text(self.text, length=-1)
 
-    def set_width(self, width: int):
+    def set_width(self, width: int) -> None:
         self.width = width
         if width == -1:
             self.layout.set_width(-1)
         else:
             self.layout.set_width(int(width * Pango.SCALE))
 
-    def set_alignment(self, text_align: TextAlign):
+    def set_alignment(self, text_align: TextAlign) -> None:
         self.layout.set_alignment(getattr(Pango.Alignment, text_align.name))
 
-    def size(self):
+    def size(self) -> tuple[int, int]:
         if not self.text:
             return self.default_size
         self.set_width(self.width)
-        return self.layout.get_pixel_size()
+        return self.layout.get_pixel_size()  # type: ignore[no-any-return]
 
     def show_layout(self, cr, width=None, default_size=None):
         layout = self.layout
