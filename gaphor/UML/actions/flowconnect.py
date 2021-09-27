@@ -100,7 +100,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
     """Abstract class with common behaviour for Fork/Join node and
     Decision/Merge node."""
 
-    element: Union[ForkNodeItem, DecisionNodeItem]  # type: ignore[assignment]
+    element: Union[ForkNodeItem, DecisionNodeItem]
     fork_node_cls: Type[UML.ControlNode]
     join_node_cls: Type[UML.ControlNode]
 

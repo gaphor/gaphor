@@ -198,7 +198,7 @@ class MessageLifelineConnect(BaseConnector):
 @Connector.register(ExecutionSpecificationItem, MessageItem)
 class ExecutionSpecificationMessageConnect(BaseConnector):
 
-    element: ExecutionSpecificationItem  # type: ignore[assignment]
+    element: ExecutionSpecificationItem
     line: MessageItem
 
     def connect(self, handle, _port):
@@ -219,7 +219,7 @@ class ExecutionSpecificationMessageConnect(BaseConnector):
 class LifelineExecutionSpecificationConnect(BaseConnector):
 
     element: LifelineItem
-    line: ExecutionSpecificationItem  # type: ignore[assignment]
+    line: ExecutionSpecificationItem
 
     def allow(self, handle, port):
         lifetime = self.element.lifetime
@@ -266,7 +266,7 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 
         if self.line.parent is self.element:
             new_parent = self.element.parent
-            self.line.parent = new_parent  # type: ignore[assignment]
+            self.line.parent = new_parent
 
         for cinfo in diagram.connections.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).disconnect(cinfo.handle)
@@ -275,8 +275,8 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 @Connector.register(ExecutionSpecificationItem, ExecutionSpecificationItem)
 class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
 
-    element: ExecutionSpecificationItem  # type: ignore[assignment]
-    line: ExecutionSpecificationItem  # type: ignore[assignment]
+    element: ExecutionSpecificationItem
+    line: ExecutionSpecificationItem
 
     def connect(self, handle, _port):
         parent_exec_spec = self.element.subject

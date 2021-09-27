@@ -135,8 +135,8 @@ class AssociationConnect(UnaryRelationshipConnect):
                 # Set subject last so that event handlers can trigger
                 line.subject = relation
 
-            line.head_subject.type = c1.subject  # type: ignore[assignment]
-            line.tail_subject.type = c2.subject  # type: ignore[assignment]
+            line.head_subject.type = c1.subject
+            line.tail_subject.type = c2.subject
 
     def reconnect(self, handle, port):
         line = self.line

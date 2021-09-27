@@ -17,7 +17,7 @@ class C4ModelLanguage(ModelingLanguage):
 
     @property
     def toolbox_definition(self) -> ToolboxDefinition:
-        return c4model_toolbox_actions  # type: ignore[no-any-return]
+        return c4model_toolbox_actions
 
     def lookup_element(self, name):
         element_type = getattr(c4model, name, None)

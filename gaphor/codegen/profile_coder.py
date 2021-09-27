@@ -108,7 +108,7 @@ def write_attributes(cls: UML.Class, f: TextIO) -> None:
     """Write attributes based on attribute type."""
 
     written = False
-    for a in sorted(cls.attribute, key=lambda a: a.name or ""):  # type: ignore
+    for a in sorted(cls.attribute, key=lambda a: a.name or ""):
         # TODO: do write derived values if override is available
         if not a.name or a.name == "baseClass" or a.isDerived:
             continue

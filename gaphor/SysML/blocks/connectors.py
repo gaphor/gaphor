@@ -48,7 +48,7 @@ class BlockProperyProxyPortConnector:
         if proxy_port.subject and proxy_port.diagram:
             subject = proxy_port.subject
             del proxy_port.subject
-            proxy_port.parent = None  # type: ignore[assignment]
+            proxy_port.parent = None
             subject.unlink()
 
 
