@@ -7,29 +7,6 @@ from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollbac
 
 log = logging.getLogger(__name__)
 
-# Sessions should subscribe a hook to receive events emitted via @transactional
-subscribers: Set[Callable[[object], None]] = set()
-
-
-def transactional(func):
-    """The transactional decorator makes a function transactional. Events are
-    emitted through the (global) `subscribers` set.
-
-    It is preferred to use the `Transaction` context manager. The
-    context manager emits events in the context of the session in scope,
-    whereas the `@transactional` decorator emits a global event which is
-    sent to the active session.
-    """
-
-    def _transactional(*args, **kwargs):
-        if __debug__ and args and hasattr(args[0], "event_manager"):
-            log.warning(f"Consider using the Transaction context manager for {args[0]}")
-
-        with Transaction(_SubscribersHandler):
-            return func(*args, **kwargs)
-
-    return _transactional
-
 
 class TransactionError(Exception):
     """Errors related to the transaction module."""
@@ -150,6 +127,30 @@ class Transaction:
                 log.error("Rollback failed", exc_info=True)
         else:
             self.commit()
+
+
+# Add a `handler(event) -> None` to receive events emitted via @transactional
+subscribers: Set[Callable[[object], None]] = set()
+
+
+def transactional(func):
+    """The transactional decorator makes a function transactional. Events are
+    emitted through the (global) `subscribers` set.
+
+    It is preferred to use the `Transaction` context manager. The
+    context manager emits events in the context of the session in scope,
+    whereas the `@transactional` decorator emits a global event which is
+    sent to the active session.
+    """
+
+    def _transactional(*args, **kwargs):
+        if __debug__ and args and hasattr(args[0], "event_manager"):
+            log.warning(f"Consider using the Transaction context manager for {args[0]}")
+
+        with Transaction(_SubscribersHandler):
+            return func(*args, **kwargs)
+
+    return _transactional
 
 
 class _SubscribersHandler:
