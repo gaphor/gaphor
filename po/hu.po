@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-09-28 11:19+0200\n"
-"PO-Revision-Date: 2021-09-25 12:52+0000\n"
+"PO-Revision-Date: 2021-09-27 02:39+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language: hu\n"
 "Language-Team: Hungarian "
@@ -985,42 +985,43 @@ msgstr "Minden {ext}-fájl"
 
 #: gaphor/plugins/diagramexport/__init__.py:100
 msgid "Export to SVG"
-msgstr "Exportálás SVG-fájlba"
+msgstr "Exportálás SVG-fájlként"
 
 #: gaphor/plugins/diagramexport/__init__.py:101
 #: gaphor/plugins/diagramexport/__init__.py:106
 msgid "Export diagram to SVG"
-msgstr "Ábra exportálása SVG-fájlba"
+msgstr "Ábra exportálása SVG-fájlként"
 
 #: gaphor/plugins/diagramexport/__init__.py:113
 msgid "Export to PNG"
-msgstr "Exportálás PNG-fájlba"
+msgstr "Exportálás PNG-fájlként"
 
 #: gaphor/plugins/diagramexport/__init__.py:114
 #: gaphor/plugins/diagramexport/__init__.py:119
 msgid "Export diagram to PNG"
-msgstr "Ábra exportálása PNG-fájlba"
+msgstr "Ábra exportálása PNG-fájlként"
 
 #: gaphor/plugins/diagramexport/__init__.py:126
 msgid "Export to PDF"
-msgstr "Exportálás PDF-fájlba"
+msgstr "Exportálás PDF-fájlként"
 
 #: gaphor/plugins/diagramexport/__init__.py:127
 #: gaphor/plugins/diagramexport/__init__.py:132
 msgid "Export diagram to PDF"
-msgstr "Ábra exportálása PDF-fájlba"
+msgstr "Ábra exportálása PDF-fájlként"
 
 #: gaphor/plugins/xmiexport/__init__.py:24
 msgid "Export to XMI"
-msgstr "Exportálás XMI-fájlba"
+msgstr "Exportálás XMI-fájlként"
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export model to XMI (XML Model Interchange) format"
-msgstr "Modell exportálása XMI (XML Model Interchange) formátumba"
+msgstr ""
+"Modell exportálása XMI-fájlként (XML Model Interchange – XML-modellcsere)"
 
 #: gaphor/plugins/xmiexport/__init__.py:31
 msgid "Export model to XMI file"
-msgstr "Modell exportálása XMI-fájlba"
+msgstr "Modell exportálása XMI-fájlként"
 
 #: gaphor/plugins/xmiexport/__init__.py:34
 msgid "All XMI Files"
