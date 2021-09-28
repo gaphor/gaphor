@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="9.9998293"
-   height="15.999918"
-   viewBox="0 0 2.6457881 4.2333118"
+   width="10.000033"
+   height="15.996569"
+   viewBox="0 0 2.6458421 4.2324256"
    version="1.1"
    id="svg4268"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,14 +27,21 @@
   <g
      id="generalization"
      style="display:inline"
-     transform="translate(-10.054189,-9.9270957)">
+     transform="translate(-10.054032,-9.9277326)">
+    <g
+       id="path4621">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 11.377083,10.191658 -1.058333,1.5875 h 2.116667 z"
+         id="path3644" />
+      <path
+         style="color:#000000;fill:#000000;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="M 11.376953,9.9277344 A 0.26460996,0.26460996 0 0 0 11.15625,10.044922 l -1.058594,1.587891 a 0.26460996,0.26460996 0 0 0 0.220703,0.410156 h 2.117188 A 0.26460996,0.26460996 0 0 0 12.65625,11.632813 L 11.597656,10.044922 A 0.26460996,0.26460996 0 0 0 11.376953,9.9277344 Z m 0,0.7402346 0.5625,0.845703 h -1.125 z"
+         id="path3646" />
+    </g>
     <path
-       style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 11.377083,10.191658 -1.058333,1.5875 h 2.116667 z"
-       id="path4621" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 11.377083,12.043741 v 1.852083"
+       style="color:#000000;fill:#000000;stroke-linecap:round;-inkscape-stroke:none"
+       d="m 11.376953,11.779297 a 0.2645835,0.2645835 0 0 0 -0.263672,0.263672 v 1.853515 a 0.2645835,0.2645835 0 0 0 0.263672,0.263672 0.2645835,0.2645835 0 0 0 0.265625,-0.263672 v -1.853515 a 0.2645835,0.2645835 0 0 0 -0.265625,-0.263672 z"
        id="path4625" />
   </g>
 </svg>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="16.000002"
-   height="14.000001"
-   viewBox="0 0 4.2333337 3.704167"
+   width="15.996555"
+   height="14.003445"
+   viewBox="0 0 4.2324218 3.7050782"
    version="1.1"
    id="svg4268"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,14 +27,14 @@
   <g
      id="constraint"
      style="display:inline"
-     transform="translate(-35.71875,-51.858333)">
+     transform="translate(-35.71875,-51.857422)">
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 37.041666,52.122916 h -1.058333 v 3.175 h 1.058333"
+       style="color:#000000;fill:#000000;-inkscape-stroke:none"
+       d="M 35.71875,51.857422 V 55.5625 h 1.322266 v -0.529297 h -0.792969 v -2.646484 h 0.792969 v -0.529297 z"
        id="path1268" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 38.629166,52.122916 H 39.6875 v 3.175 h -1.058334"
+       style="color:#000000;fill:#000000;-inkscape-stroke:none"
+       d="m 38.628906,51.857422 v 0.529297 h 0.794922 v 2.646484 H 38.628906 V 55.5625 h 1.322266 v -3.705078 z"
        id="path1270" />
   </g>
 </svg>

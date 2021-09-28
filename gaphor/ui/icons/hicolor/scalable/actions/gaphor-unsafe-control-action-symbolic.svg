@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="16.000013"
-   height="16.000002"
-   viewBox="0 0 4.2333368 4.233334"
+   width="15.996563"
+   height="16.003937"
+   viewBox="0 0 4.2324239 4.2343751"
    version="1.1"
    id="svg4268"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,11 +27,18 @@
   <g
      id="unsafe-control-action"
      style="display:inline"
-     transform="translate(-103.1875,-44.450001)">
-    <path
-       id="rect715"
-       style="fill-opacity:0;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round"
-       d="m 103.45208,44.714584 h 3.70417 v 3.704167 h -3.70417 z" />
+     transform="translate(-103.1875,-44.449219)">
+    <g
+       id="rect715">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 103.45208,44.714584 h 3.70417 v 3.704167 h -3.70417 z"
+         id="path2169" />
+      <path
+         style="color:#000000;fill:#000000;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 103.45117,44.449219 a 0.26460996,0.26460996 0 0 0 -0.26367,0.265625 v 3.703125 a 0.26460996,0.26460996 0 0 0 0.26367,0.265625 h 3.70508 a 0.26460996,0.26460996 0 0 0 0.26367,-0.265625 v -3.703125 a 0.26460996,0.26460996 0 0 0 -0.26367,-0.265625 z m 0.26563,0.529297 h 3.17578 v 3.175781 h -3.17578 z"
+         id="path2171" />
+    </g>
     <g
        aria-label="U"
        transform="scale(1.1452508,0.87317119)"
@@ -40,7 +47,7 @@
       <path
          d="m 91.007427,53.775745 v -1.700209 h 0.532444 v 1.833771 q 0,0.202148 0.102878,0.317661 0.102879,0.113708 0.285174,0.113708 0.182294,0 0.285173,-0.113708 0.102878,-0.115513 0.102878,-0.317661 v -1.833771 h 0.532444 v 1.700209 q 0,0.548687 -0.218392,0.797762 -0.218392,0.249076 -0.702103,0.249076 -0.481907,0 -0.702104,-0.249076 -0.218392,-0.249075 -0.218392,-0.797762 z"
          style="font-size:3.69642px;font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold'"
-         id="path1412" />
+         id="path1611" />
     </g>
   </g>
 </svg>

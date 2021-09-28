@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="13.410036"
-   height="13.409998"
-   viewBox="0 0 3.548072 3.5480621"
+   width="13.412919"
+   height="13.412915"
+   viewBox="0 0 3.5488347 3.5488339"
    version="1.1"
    id="svg4268"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,18 +27,32 @@
   <g
      id="connector"
      style="display:inline"
-     transform="translate(-103.53014,-10.396802)">
+     transform="translate(-103.5293,-10.396482)">
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 104.775,12.7 1.05833,-1.058334"
+       style="color:#000000;fill:#000000;-inkscape-stroke:none"
+       d="m 105.64648,11.455078 -1.05859,1.058594 0.375,0.373047 1.05664,-1.058594 z"
        id="path1166" />
-    <path
-       id="rect1168"
-       style="opacity:1;fill-opacity:0;stroke:#000000;stroke-width:0.373062;stroke-linecap:round;stroke-linejoin:round"
-       d="m 105.83334,10.583333 h 1.05834 v 1.058333 h -1.05834 z" />
-    <path
-       id="rect1170"
-       style="opacity:1;fill-opacity:0;stroke:#000000;stroke-width:0.373062;stroke-linecap:round;stroke-linejoin:round"
-       d="m 103.71667,12.7 h 1.05833 v 1.058333 h -1.05833 z" />
+    <g
+       id="rect1168">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.373062;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 105.83334,10.583333 h 1.05834 v 1.058333 h -1.05834 z"
+         id="path2734" />
+      <path
+         style="color:#000000;fill:#000000;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 105.83398,10.396484 a 0.18654966,0.18654966 0 0 0 -0.1875,0.1875 v 1.058594 a 0.18654966,0.18654966 0 0 0 0.1875,0.185547 h 1.0586 a 0.18654966,0.18654966 0 0 0 0.18555,-0.185547 v -1.058594 a 0.18654966,0.18654966 0 0 0 -0.18555,-0.1875 z m 0.18555,0.373047 h 0.68555 v 0.685547 h -0.68555 z"
+         id="path2736" />
+    </g>
+    <g
+       id="rect1170">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.373062;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 103.71667,12.7 h 1.05833 v 1.058333 h -1.05833 z"
+         id="path2726" />
+      <path
+         style="color:#000000;fill:#000000;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 103.7168,12.513672 a 0.18654966,0.18654966 0 0 0 -0.1875,0.185547 v 1.058594 a 0.18654966,0.18654966 0 0 0 0.1875,0.1875 h 1.05859 a 0.18654966,0.18654966 0 0 0 0.18555,-0.1875 v -1.058594 a 0.18654966,0.18654966 0 0 0 -0.18555,-0.185547 z m 0.18554,0.373047 h 0.68555 v 0.685547 h -0.68555 z"
+         id="path2728" />
+    </g>
   </g>
 </svg>

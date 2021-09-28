@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="13.000002"
-   height="13.000001"
-   viewBox="0 0 3.4395838 3.4395837"
+   width="13.001554"
+   height="13.006065"
+   viewBox="0 0 3.4399943 3.4411882"
    version="1.1"
    id="svg4268"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,10 +27,10 @@
   <g
      id="line"
      style="display:inline"
-     transform="translate(-9.5249997,9.6520919)">
+     transform="translate(-9.5236557,9.6523438)">
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="M 9.7895832,-6.4770917 12.7,-9.3875084"
+       style="color:#000000;fill:#000000;stroke-linecap:round;-inkscape-stroke:none"
+       d="m 12.699219,-9.6523438 a 0.2645835,0.2645835 0 0 0 -0.185547,0.078125 l -2.9121095,2.9101563 a 0.2645835,0.2645835 0 0 0 0,0.375 0.2645835,0.2645835 0 0 0 0.375,0 l 2.9101565,-2.9121094 a 0.2645835,0.2645835 0 0 0 0,-0.3730469 0.2645835,0.2645835 0 0 0 -0.1875,-0.078125 z"
        id="path906" />
   </g>
 </svg>

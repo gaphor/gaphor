@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="16.000013"
-   height="16.000002"
-   viewBox="0 0 4.2333368 4.233334"
+   width="15.996563"
+   height="16.003937"
+   viewBox="0 0 4.2324239 4.2343751"
    version="1.1"
    id="svg4268"
    xmlns="http://www.w3.org/2000/svg"
@@ -27,11 +27,18 @@
   <g
      id="operational-situation"
      style="display:inline"
-     transform="translate(-119.0625,-39.158333)">
-    <path
-       id="rect707"
-       style="fill-opacity:0;stroke:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round"
-       d="m 119.32708,39.422916 h 3.70417 v 3.704167 h -3.70417 z" />
+     transform="translate(-119.0625,-39.158203)">
+    <g
+       id="rect707">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 119.32708,39.422916 h 3.70417 v 3.704167 h -3.70417 z"
+         id="path2161" />
+      <path
+         style="color:#000000;fill:#000000;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 119.32617,39.158203 a 0.26460996,0.26460996 0 0 0 -0.26367,0.265625 v 3.703125 a 0.26460996,0.26460996 0 0 0 0.26367,0.265625 h 3.70508 a 0.26460996,0.26460996 0 0 0 0.26367,-0.265625 v -3.703125 a 0.26460996,0.26460996 0 0 0 -0.26367,-0.265625 z m 0.26563,0.529297 h 3.17578 v 3.175781 h -3.17578 z"
+         id="path2163" />
+    </g>
     <g
        aria-label="O"
        transform="scale(1.1288445,0.8858616)"
@@ -40,7 +47,7 @@
       <path
          d="m 107.34856,45.701078 q -0.20692,0 -0.30213,0.221566 -0.0952,0.219735 -0.0952,0.712307 0,0.490741 0.0952,0.712307 0.0952,0.219735 0.30213,0.219735 0.20875,0 0.30397,-0.219735 0.0952,-0.221566 0.0952,-0.712307 0,-0.492572 -0.0952,-0.712307 -0.0952,-0.221566 -0.30397,-0.221566 z m -0.95951,0.933873 q 0,-0.70132 0.24171,-1.06022 0.24354,-0.3589 0.7178,-0.3589 0.47609,0 0.7178,0.3589 0.24354,0.3589 0.24354,1.06022 0,0.699489 -0.24354,1.058389 -0.24171,0.3589 -0.7178,0.3589 -0.47426,0 -0.7178,-0.3589 -0.24171,-0.3589 -0.24171,-1.058389 z"
          style="font-size:3.75014px;font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold'"
-         id="path1408" />
+         id="path1608" />
     </g>
   </g>
 </svg>
