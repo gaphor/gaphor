@@ -1,4 +1,3 @@
-# Croatian translation for Gaphor.
 # Copyright (C) 2020 ORGANIZATION
 # This file is distributed under the same license as the  project.
 # Milo Ivir <mail@milotype.de>, 2021.
@@ -7,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-26 22:18+0200\n"
+"POT-Creation-Date: 2021-09-28 11:19+0200\n"
 "PO-Revision-Date: 2021-09-14 20:38+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language: hr\n"
@@ -1180,7 +1179,7 @@ msgid ""
 "Add a model element from the tool box to the diagram. Here you will see "
 "it's properties appear.\n"
 "\n"
-"This pane can be hidden by clicking the pensil icon in the header.\n"
+"This pane can be hidden by clicking the pane icon in the header.\n"
 "\n"
 "<b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. "
 "\"c\" for Class).\n"
