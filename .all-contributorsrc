@@ -558,6 +558,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "mskorkowski",
+      "name": "mskorkowski",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90662755?v=4",
+      "profile": "https://github.com/mskorkowski",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
