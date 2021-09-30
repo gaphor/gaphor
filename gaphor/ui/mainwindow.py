@@ -292,9 +292,6 @@ class MainWindow(Service, ActionProvider):
             ag = self.window.get_action_group(event.scope)
             a = ag.lookup_action(event.name)
             a.set_enabled(event.enabled)
-        else:
-            # TODO: GTK4 - enable an action (shortcut?)
-            pass
 
     @event_handler(ModelingLanguageChanged)
     def _on_modeling_language_selection_changed(self, event=None):
