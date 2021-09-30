@@ -43,7 +43,9 @@ class action:
 
     def __call__(self, func):
         type_hints = get_type_hints(func)
-        if len(type_hints) == 1:
+        if "return" in type_hints:
+            del type_hints["return"]
+        if len(type_hints) >= 1:
             # assume the first argument (exclusing self) is our parameter
             self.arg_type = next(iter(type_hints.values()))
         func.__action__ = self

@@ -14,6 +14,10 @@ class ActionsMock:
     def param_action(self, arg: str):
         pass
 
+    @action(name="fully-typed-action")
+    def fully_typed_action(self, arg: str) -> None:
+        pass
+
 
 def test_simplest_action():
     action_data = ActionsMock.simplest_action.__action__
@@ -36,4 +40,10 @@ def test_param_action():
     action_data = ActionsMock.param_action.__action__
 
     assert action_data.name == "param-action"
+    assert action_data.arg_type is str
+
+
+def test_fully_typed_action():
+    action_data = ActionsMock.fully_typed_action.__action__
+
     assert action_data.arg_type is str
