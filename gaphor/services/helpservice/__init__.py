@@ -10,6 +10,7 @@ from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action
+from gaphor.diagram.uibuilder import translated_ui_string
 
 
 class HelpService(Service, ActionProvider):
@@ -26,10 +27,9 @@ class HelpService(Service, ActionProvider):
     @action(name="app.about")
     def about(self):
         builder = Gtk.Builder()
-        with importlib.resources.path(
-            "gaphor.services.helpservice", "about.ui"
-        ) as glade_file:
-            builder.add_objects_from_file(str(glade_file), ("about",))
+        builder.add_objects_from_string(
+            translated_ui_string("gaphor.services.helpservice", "about.ui"), ("about",)
+        )
 
         about = builder.get_object("about")
 
@@ -43,10 +43,10 @@ class HelpService(Service, ActionProvider):
     @action(name="app.shortcuts")
     def shortcuts(self):
         builder = Gtk.Builder()
-        with importlib.resources.path(
-            "gaphor.services.helpservice", "shortcuts.ui"
-        ) as glade_file:
-            builder.add_objects_from_file(str(glade_file), ("shortcuts-gaphor",))
+        builder.add_objects_from_string(
+            translated_ui_string("gaphor.services.helpservice", "shortcuts.ui"),
+            ("shortcuts-gaphor",),
+        )
 
         shortcuts = builder.get_object("shortcuts-gaphor")
         shortcuts.set_modal(True)
