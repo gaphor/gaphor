@@ -5,7 +5,6 @@ gaphor.adapter package.
 """
 
 import abc
-import importlib
 from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
@@ -15,6 +14,7 @@ from gi.repository import Gtk
 
 from gaphor.core import transactional
 from gaphor.core.modeling import Element
+from gaphor.diagram.uibuilder import translated_ui_string
 
 
 def new_resource_builder(package, property_pages="propertypages"):
@@ -26,9 +26,9 @@ def new_resource_builder(package, property_pages="propertypages"):
             builder = Gtk.Builder(signals)
             ui_file = f"{property_pages}.ui"
 
-        builder.set_translation_domain("gaphor")
-        with importlib.resources.path(package, ui_file) as glade_file:
-            builder.add_objects_from_file(str(glade_file), object_ids)
+        builder.add_objects_from_string(
+            translated_ui_string(package, ui_file), object_ids
+        )
         if signals and Gtk.get_major_version() == 3:
             builder.connect_signals(signals)
         return builder
