@@ -9,6 +9,7 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import Diagram, ModelReady
+from gaphor.diagram.uibuilder import translated_ui_string
 from gaphor.event import (
     ActionEnabled,
     ActiveSessionChanged,
@@ -31,10 +32,8 @@ log = logging.getLogger(__name__)
 
 def new_builder():
     builder = Gtk.Builder()
-    builder.set_translation_domain("gaphor")
     ui_file = "mainwindow.glade" if Gtk.get_major_version() == 3 else "mainwindow.ui"
-    with importlib.resources.path("gaphor.ui", ui_file) as glade_file:
-        builder.add_from_file(str(glade_file))
+    builder.add_from_string(translated_ui_string("gaphor.ui", ui_file))
     return builder
 
 
