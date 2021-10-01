@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-09-28 11:19+0200\n"
-"PO-Revision-Date: 2021-08-31 00:11+0000\n"
+"PO-Revision-Date: 2021-09-30 19:15+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
@@ -220,7 +221,7 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.glade:125 gaphor/SysML/propertypages.ui:71
 msgid "Aggregation"
-msgstr "Kooste"
+msgstr "Yhdistäminen"
 
 #: gaphor/SysML/propertypages.glade:142 gaphor/SysML/propertypages.ui:81
 #: gaphor/UML/classes/propertypages.glade:139
@@ -228,7 +229,7 @@ msgstr "Kooste"
 #: gaphor/UML/classes/propertypages.ui:82
 #: gaphor/UML/classes/propertypages.ui:179
 msgid "No aggregation"
-msgstr "Ei koostetta"
+msgstr "Ei yhdistämistä"
 
 #: gaphor/SysML/propertypages.glade:143 gaphor/SysML/propertypages.ui:82
 #: gaphor/UML/classes/propertypages.glade:140
@@ -364,11 +365,11 @@ msgstr "UML"
 
 #: gaphor/UML/actions/actionstoolbox.py:41
 msgid "Swimlane One"
-msgstr ""
+msgstr "Uimarata yksi"
 
 #: gaphor/UML/actions/actionstoolbox.py:45
 msgid "Swimlane Two"
-msgstr ""
+msgstr "Uimarata kaksi"
 
 #: gaphor/UML/actions/actionstoolbox.py:51
 msgid "Actions"
@@ -404,7 +405,7 @@ msgstr "Oliosolmu"
 
 #: gaphor/UML/actions/actionstoolbox.py:139
 msgid "Swimlane"
-msgstr ""
+msgstr "Uimarata"
 
 #: gaphor/UML/actions/actionstoolbox.py:151
 msgid "Control/object flow"
@@ -420,7 +421,7 @@ msgstr "Hyväksy tapahtuma -toiminto"
 
 #: gaphor/UML/actions/partitionpage.py:92
 msgid "New Swimlane"
-msgstr ""
+msgstr "Uusi uimarata"
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
@@ -800,7 +801,7 @@ msgstr ""
 #: gaphor/UML/states/propertypages.glade:111
 #: gaphor/UML/states/propertypages.ui:60
 msgid "Activities"
-msgstr ""
+msgstr "Aktiviteetit"
 
 #: gaphor/UML/states/statestoolbox.py:58
 msgid "States"
@@ -916,14 +917,17 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
+"Gaphorin vuorovaikutteinen Python-konsoli\n"
+"{version}\n"
+"Kirjoita \"help\" saadaksesi lisätietoja.\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
 msgid "Gaphor Console"
-msgstr ""
+msgstr "Gaphorin konsoli"
 
 #: gaphor/plugins/console/consolewindow.py:43
 msgid "Console"
-msgstr ""
+msgstr "Konsoli"
 
 #: gaphor/plugins/diagramexport/__init__.py:52
 msgid "All {ext} Files"
@@ -990,6 +994,9 @@ msgid ""
 "Apache Software License, version 2.0.\n"
 "See the LICENSE.txt file for details."
 msgstr ""
+"Tämä ohjelmisto on julkaistu lisenssillä\n"
+"Apache Software License, versio 2.0.\n"
+"Lue LICENSE.txt saadaksesi lisätietoja."
 
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
@@ -1089,7 +1096,7 @@ msgstr "Loitonna"
 #: gaphor/services/helpservice/shortcuts.ui:204
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.ui:117
 msgid "Zoom 100%"
-msgstr "Suurennus 100%"
+msgstr "Suurennus 100 %"
 
 #: gaphor/ui/appfilemanager.py:13
 msgid "All Gaphor Models"
@@ -1192,6 +1199,9 @@ msgid ""
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
+"Gaphor ei voinut tallettaa mallia, luultavasti sisäisen virheen vuoksi:\n"
+"{exc}\n"
+"Jos luulet tämän olevan ohjelmistovirhe, ole yhteydessä kehittäjiin."
 
 #: gaphor/ui/filemanager.py:39
 msgid ""
@@ -1391,4 +1401,3 @@ msgstr "Ei viimeksi avattuja malleja"
 
 #~ msgid "_Console"
 #~ msgstr ""
-
