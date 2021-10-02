@@ -6,12 +6,11 @@ gaphor.adapter package.
 
 from __future__ import annotations
 
-from typing import TypeVar
+from typing import Protocol, TypeVar
 
 from gaphas.connections import Connection
 from gaphas.connector import Handle, Port
 from generic.multidispatch import FunctionDispatcher, multidispatch
-from typing_extensions import Protocol
 
 from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.core.modeling.properties import association, redefine, relation

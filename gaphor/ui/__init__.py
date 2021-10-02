@@ -24,7 +24,7 @@ icon_theme = (
     else Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
 )
 if sys.version_info >= (3, 9):
-    path: Path = importlib.resources.files("gaphor") / "ui" / "icons"
+    path: Path = importlib.resources.files("gaphor") / "ui" / "icons"  # type: ignore[assignment]
     if Gtk.get_major_version() == 3:
         icon_theme.append_search_path(str(path))
     else:

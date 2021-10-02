@@ -8,10 +8,18 @@ import logging
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Callable, Iterable, Iterator, Sequence, TypeVar, overload
+from typing import (
+    Callable,
+    Iterable,
+    Iterator,
+    Protocol,
+    Sequence,
+    TypeVar,
+    overload,
+    runtime_checkable,
+)
 
 import gaphas
-from typing_extensions import Protocol, runtime_checkable
 
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element, Id, RepositoryProtocol

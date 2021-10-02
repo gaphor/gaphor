@@ -26,9 +26,17 @@ methods:
 from __future__ import annotations
 
 import logging
-from typing import Any, Callable, Generic, Sequence, TypeVar, Union, overload
-
-from typing_extensions import Literal, Protocol
+from typing import (
+    Any,
+    Callable,
+    Generic,
+    Literal,
+    Protocol,
+    Sequence,
+    TypeVar,
+    Union,
+    overload,
+)
 
 from gaphor.core.modeling.collection import collection, collectionlist
 from gaphor.core.modeling.event import (
