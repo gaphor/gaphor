@@ -103,11 +103,10 @@ def rgetattr(obj, names):
                 yield from rgetattr(m, tail)
         else:
             yield from v
-    else:
-        if tail:
-            yield from rgetattr(v, tail)
-        elif v is not None:
-            yield v
+    elif tail:
+        yield from rgetattr(v, tail)
+    elif v is not None:
+        yield v
 
 
 def attrstr(obj):
