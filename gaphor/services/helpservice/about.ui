@@ -28,6 +28,6 @@ albanobattistella (it), Seong-ho Cho (ko),
 Arjan Molenaar (nl), Ygor Mutti (pt_BR),
 Евгений Лежнин (ru), Daniel Nylander (sv)
     </property>
-    <property name="logo">org.gaphor.Gaphor.svg</property>
+    <property name="logo-icon-name">org.gaphor.Gaphor</property>
   </object>
 </interface>

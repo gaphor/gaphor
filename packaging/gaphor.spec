@@ -29,10 +29,13 @@ a = Analysis(
         ("../gaphor/ui/layout.xml", "gaphor/ui"),
         ("../gaphor/ui/layout.css", "gaphor/ui"),
         ("../gaphor/ui/*.png", "gaphor/ui"),
-        ("../gaphor/services/helpservice/*.svg", "gaphor/services/helpservice"),
         (
             "../gaphor/ui/icons/hicolor/scalable/actions/*.svg",
             "gaphor/ui/icons/hicolor/scalable/actions",
+        ),
+        (
+            "../gaphor/ui/icons/hicolor/scalable/apps/*.svg",
+            "gaphor/ui/icons/hicolor/scalable/apps",
         ),
         ("../LICENSE.txt", "gaphor"),
         ("../gaphor/locale/*", "gaphor/locale"),
