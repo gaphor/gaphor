@@ -25,6 +25,7 @@
     </p>
   </description>
   <releases>
+    <release version="2.6.3" date="2021-10-03"/>
     <release version="2.6.2" date="2021-10-01"/>
     <release version="2.6.1" date="2021-09-25"/>
     <release version="2.6.0" date="2021-09-13"/>

@@ -1,3 +1,12 @@
+2.6.3
+-----
+- Fix about dialog logo
+- Add translation of more elements
+- Remove importlib_metadata dependency
+- Simpler services for about dialog
+- Up typing compliance to 3.9, and remove typing_extensions
+- Finnish translation updates
+
 2.6.2
 -----
  - Fix localization of UI files
