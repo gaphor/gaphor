@@ -36,7 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 def distribution():
-    """The PkgResources distribution for Gaphor."""
+    """The distribution metadata for Gaphor."""
     return importlib.metadata.distribution("gaphor")
 
 
