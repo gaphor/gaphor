@@ -6,10 +6,9 @@ session is represented as a window in which a diagram can be edited.
 
 from __future__ import annotations
 
+import importlib.metadata
 import logging
 from typing import Iterator, TypeVar, cast
-
-import importlib_metadata
 
 from gaphor import transaction
 from gaphor.abc import ActionProvider, Service
@@ -38,7 +37,7 @@ logger = logging.getLogger(__name__)
 
 def distribution():
     """The PkgResources distribution for Gaphor."""
-    return importlib_metadata.distribution("gaphor")
+    return importlib.metadata.distribution("gaphor")
 
 
 class NotInitializedError(Exception):
