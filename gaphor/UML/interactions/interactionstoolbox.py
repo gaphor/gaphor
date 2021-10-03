@@ -13,7 +13,7 @@ from gaphor.UML.modelfactory import owner_package
 def interaction_config(new_item):
     subject = new_item.subject
     translated_new = gettext("New")
-    subject.name = f"{translated_new}{type(subject).__name__}"
+    subject.name = f"{translated_new} {type(subject).__name__}"
     if subject.interaction:
         return
 

@@ -11,7 +11,7 @@ from gaphor.UML import diagramitems
 
 def metaclass_config(new_item):
     namespace_config(new_item)
-    new_item.subject.name = "Class"
+    new_item.subject.name = gettext("Class")
 
 
 profiles: ToolSection = ToolSection(
