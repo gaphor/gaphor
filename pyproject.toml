@@ -131,7 +131,6 @@ type = "virtualenv"
 [tool.poetry.plugins."gaphor.appservices"]
 "event_manager" = "gaphor.core.eventmanager:EventManager"
 "session" = "gaphor.services.session:Session"
-"help" = "gaphor.services.helpservice:HelpService"
 "app_file_manager" = "gaphor.ui.appfilemanager:AppFileManager"
 
 [tool.poetry.plugins."gaphor.services"]
@@ -156,6 +155,7 @@ type = "virtualenv"
 "elementeditor" = "gaphor.ui.elementeditor:ElementEditor"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
+"help" = "gaphor.services.helpservice:HelpService"
 
 [tool.poetry.plugins."gaphor.modelinglanguages"]
 "UML" = "gaphor.UML.modelinglanguage:UMLModelingLanguage"
