@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-02 21:59-0400\n"
+"POT-Creation-Date: 2021-10-03 17:07+0200\n"
 "PO-Revision-Date: 2006-05-11 16:34+0000\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language: sv\n"
@@ -81,6 +81,22 @@ msgstr ""
 msgid "RAAML"
 msgstr ""
 
+#: gaphor/RAAML/fta/andgate.py:37
+msgid "AND"
+msgstr ""
+
+#: gaphor/RAAML/fta/basicevent.py:36
+msgid "BasicEvent"
+msgstr ""
+
+#: gaphor/RAAML/fta/conditionalevent.py:33
+msgid "ConditionalEvent"
+msgstr ""
+
+#: gaphor/RAAML/fta/dormantevent.py:35
+msgid "DormantEvent"
+msgstr ""
+
 #: gaphor/RAAML/fta/ftatoolbox.py:10
 msgid "Fault Tree Analysis"
 msgstr ""
@@ -113,11 +129,11 @@ msgstr ""
 msgid "Inhibit Gate"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:86
+#: gaphor/RAAML/fta/ftatoolbox.py:86 gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:97
+#: gaphor/RAAML/fta/ftatoolbox.py:97 gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
 msgstr ""
 
@@ -145,12 +161,48 @@ msgstr ""
 msgid "Zero Event"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:174
+#: gaphor/RAAML/fta/ftatoolbox.py:174 gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:185
+#: gaphor/RAAML/fta/ftatoolbox.py:185 gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
+msgstr ""
+
+#: gaphor/RAAML/fta/houseevent.py:35
+msgid "HouseEvent"
+msgstr ""
+
+#: gaphor/RAAML/fta/inhibitgate.py:35
+msgid "INHIBIT"
+msgstr ""
+
+#: gaphor/RAAML/fta/majorityvotegate.py:40
+msgid "MAJORITY_VOTE"
+msgstr ""
+
+#: gaphor/RAAML/fta/notgate.py:35
+msgid "NOT"
+msgstr ""
+
+#: gaphor/RAAML/fta/orgate.py:37
+msgid "OR"
+msgstr ""
+
+#: gaphor/RAAML/fta/seqgate.py:36
+msgid "SEQ"
+msgstr ""
+
+#: gaphor/RAAML/fta/undevelopedevent.py:36
+msgid "UndevelopedEvent"
+msgstr ""
+
+#: gaphor/RAAML/fta/xorgate.py:36
+msgid "XOR"
+msgstr ""
+
+#: gaphor/RAAML/fta/zeroevent.py:36
+msgid "ZeroEvent"
 msgstr ""
 
 #: gaphor/RAAML/stpa/controlaction.py:33
@@ -181,7 +233,7 @@ msgstr ""
 msgid "Generalization"
 msgstr "Interaktioner"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:60
 #, fuzzy
 msgid "Situation"
 msgstr "Åtgärder"
@@ -297,6 +349,14 @@ msgstr ""
 msgid "Proxy Port"
 msgstr ""
 
+#: gaphor/SysML/blocks/block.py:62
+msgid "ControlStructure"
+msgstr ""
+
+#: gaphor/SysML/blocks/block.py:64
+msgid "block"
+msgstr ""
+
 #: gaphor/SysML/blocks/block.py:97
 msgid "parts"
 msgstr ""
@@ -354,6 +414,36 @@ msgstr "Interaktioner"
 #: gaphor/SysML/blocks/blockstoolbox.py:103
 #: gaphor/UML/classes/classestoolbox.py:161
 msgid "Primitive"
+msgstr ""
+
+#: gaphor/SysML/blocks/proxyport.py:67
+msgid "proxy"
+msgstr ""
+
+#: gaphor/SysML/requirements/relationships.py:32
+msgid "satisfy"
+msgstr ""
+
+#: gaphor/SysML/requirements/relationships.py:38
+msgid "deriveReqt"
+msgstr ""
+
+#: gaphor/SysML/requirements/relationships.py:44
+#, fuzzy
+msgid "trace"
+msgstr "Interaktioner"
+
+#: gaphor/SysML/requirements/relationships.py:50
+msgid "verify"
+msgstr ""
+
+#: gaphor/SysML/requirements/relationships.py:56
+#, fuzzy
+msgid "refine"
+msgstr "Profiler"
+
+#: gaphor/SysML/requirements/requirement.py:63
+msgid "requirement"
 msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
@@ -565,17 +655,30 @@ msgstr "Interaktioner"
 msgid "DataType"
 msgstr ""
 
-#: gaphor/UML/classes/datatype.py:58
+#: gaphor/UML/classes/datatype.py:59
 msgid "primitive"
 msgstr ""
 
-#: gaphor/UML/classes/datatype.py:60
+#: gaphor/UML/classes/datatype.py:61
 msgid "valueType"
 msgstr ""
 
-#: gaphor/UML/classes/datatype.py:62
+#: gaphor/UML/classes/datatype.py:63
 msgid "dataType"
 msgstr ""
+
+#: gaphor/UML/classes/dependency.py:49
+msgid "use"
+msgstr ""
+
+#: gaphor/UML/classes/dependency.py:50
+msgid "realize"
+msgstr ""
+
+#: gaphor/UML/classes/dependency.py:51
+#, fuzzy
+msgid "implements"
+msgstr "Interaktioner"
 
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
@@ -590,15 +693,28 @@ msgstr ""
 msgid "Implementation"
 msgstr "Interaktioner"
 
-#: gaphor/UML/classes/enumeration.py:69
+#: gaphor/UML/classes/enumeration.py:70
 #, fuzzy
 msgid "enumeration"
 msgstr "Interaktioner"
 
-#: gaphor/UML/classes/interface.py:290
+#: gaphor/UML/classes/interface.py:291
 #, fuzzy
 msgid "interface"
 msgstr "Interaktioner"
+
+#: gaphor/UML/classes/klass.py:59
+msgid "stereotype"
+msgstr ""
+
+#: gaphor/UML/classes/klass.py:61
+msgid "metaclass"
+msgstr ""
+
+#: gaphor/UML/classes/package.py:23
+#, fuzzy
+msgid "profile"
+msgstr "Profiler"
 
 #: gaphor/UML/classes/propertypages.glade:33
 #: gaphor/UML/classes/propertypages.ui:24
@@ -784,6 +900,10 @@ msgstr ""
 msgid "Device"
 msgstr ""
 
+#: gaphor/UML/components/node.py:54
+msgid "device"
+msgstr ""
+
 #: gaphor/UML/components/propertypages.glade:32
 #: gaphor/UML/components/propertypages.ui:23
 msgid "Indirectly Instantiated"
@@ -818,6 +938,10 @@ msgstr ""
 #: gaphor/UML/interactions/propertypages.glade:28
 #: gaphor/UML/interactions/propertypages.ui:21
 msgid "Message Sort"
+msgstr ""
+
+#: gaphor/UML/profiles/packageimport.py:19
+msgid "import"
 msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
@@ -911,6 +1035,14 @@ msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:109
 msgid "Transition"
+msgstr ""
+
+#: gaphor/UML/usecases/extend.py:19
+msgid "extend"
+msgstr ""
+
+#: gaphor/UML/usecases/include.py:19
+msgid "include"
 msgstr ""
 
 # Osäker på denna
@@ -1674,12 +1806,6 @@ msgstr ""
 #~ msgid "_Console"
 #~ msgstr ""
 
-#~ msgid "NewSoftwareSystem"
-#~ msgstr ""
-
-#~ msgid "NewContainer"
-#~ msgstr ""
-
-#~ msgid "NewDatabase"
-#~ msgstr ""
+#~ msgid "C4 model"
+#~ msgstr "Ny modell"
 

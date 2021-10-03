@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-02 21:59-0400\n"
+"POT-Creation-Date: 2021-10-03 17:07+0200\n"
 "PO-Revision-Date: 2021-03-21 14:30+0100\n"
 "Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
 "Language: it\n"
@@ -87,6 +87,22 @@ msgstr "Dipendenze"
 msgid "RAAML"
 msgstr ""
 
+#: gaphor/RAAML/fta/andgate.py:37
+msgid "AND"
+msgstr ""
+
+#: gaphor/RAAML/fta/basicevent.py:36
+msgid "BasicEvent"
+msgstr ""
+
+#: gaphor/RAAML/fta/conditionalevent.py:33
+msgid "ConditionalEvent"
+msgstr ""
+
+#: gaphor/RAAML/fta/dormantevent.py:35
+msgid "DormantEvent"
+msgstr ""
+
 #: gaphor/RAAML/fta/ftatoolbox.py:10
 msgid "Fault Tree Analysis"
 msgstr ""
@@ -120,11 +136,11 @@ msgstr ""
 msgid "Inhibit Gate"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:86
+#: gaphor/RAAML/fta/ftatoolbox.py:86 gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:97
+#: gaphor/RAAML/fta/ftatoolbox.py:97 gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
 msgstr ""
 
@@ -152,13 +168,51 @@ msgstr ""
 msgid "Zero Event"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:174
+#: gaphor/RAAML/fta/ftatoolbox.py:174 gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:185
+#: gaphor/RAAML/fta/ftatoolbox.py:185 gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
 msgstr ""
+
+#: gaphor/RAAML/fta/houseevent.py:35
+msgid "HouseEvent"
+msgstr ""
+
+#: gaphor/RAAML/fta/inhibitgate.py:35
+msgid "INHIBIT"
+msgstr ""
+
+#: gaphor/RAAML/fta/majorityvotegate.py:40
+msgid "MAJORITY_VOTE"
+msgstr ""
+
+#: gaphor/RAAML/fta/notgate.py:35
+msgid "NOT"
+msgstr ""
+
+#: gaphor/RAAML/fta/orgate.py:37
+msgid "OR"
+msgstr ""
+
+#: gaphor/RAAML/fta/seqgate.py:36
+msgid "SEQ"
+msgstr ""
+
+#: gaphor/RAAML/fta/undevelopedevent.py:36
+msgid "UndevelopedEvent"
+msgstr ""
+
+#: gaphor/RAAML/fta/xorgate.py:36
+#, fuzzy
+msgid "XOR"
+msgstr "Esporta"
+
+#: gaphor/RAAML/fta/zeroevent.py:36
+#, fuzzy
+msgid "ZeroEvent"
+msgstr "Requisito"
 
 #: gaphor/RAAML/stpa/controlaction.py:33
 #, fuzzy
@@ -190,7 +244,7 @@ msgstr "Operazioni"
 msgid "Generalization"
 msgstr "Generalizzazione"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:60
 #, fuzzy
 msgid "Situation"
 msgstr "Associazione"
@@ -312,6 +366,15 @@ msgstr "Proprietà"
 msgid "Proxy Port"
 msgstr "Esporta"
 
+#: gaphor/SysML/blocks/block.py:62
+msgid "ControlStructure"
+msgstr ""
+
+#: gaphor/SysML/blocks/block.py:64
+#, fuzzy
+msgid "block"
+msgstr "Blocco"
+
 #: gaphor/SysML/blocks/block.py:97
 msgid "parts"
 msgstr ""
@@ -370,6 +433,40 @@ msgstr "Interazione"
 #: gaphor/UML/classes/classestoolbox.py:161
 msgid "Primitive"
 msgstr ""
+
+#: gaphor/SysML/blocks/proxyport.py:67
+msgid "proxy"
+msgstr ""
+
+#: gaphor/SysML/requirements/relationships.py:32
+#, fuzzy
+msgid "satisfy"
+msgstr "Soddisfa"
+
+#: gaphor/SysML/requirements/relationships.py:38
+#, fuzzy
+msgid "deriveReqt"
+msgstr "Derivato Richiesto"
+
+#: gaphor/SysML/requirements/relationships.py:44
+#, fuzzy
+msgid "trace"
+msgstr "raccia\""
+
+#: gaphor/SysML/requirements/relationships.py:50
+#, fuzzy
+msgid "verify"
+msgstr "Verifica"
+
+#: gaphor/SysML/requirements/relationships.py:56
+#, fuzzy
+msgid "refine"
+msgstr "Perfeziona"
+
+#: gaphor/SysML/requirements/requirement.py:63
+#, fuzzy
+msgid "requirement"
+msgstr "Requisito"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 msgid "Requirements"
@@ -581,18 +678,31 @@ msgstr "Generalizzazione"
 msgid "DataType"
 msgstr "Stato"
 
-#: gaphor/UML/classes/datatype.py:58
+#: gaphor/UML/classes/datatype.py:59
 msgid "primitive"
 msgstr ""
 
-#: gaphor/UML/classes/datatype.py:60
+#: gaphor/UML/classes/datatype.py:61
 msgid "valueType"
 msgstr ""
 
-#: gaphor/UML/classes/datatype.py:62
+#: gaphor/UML/classes/datatype.py:63
 #, fuzzy
 msgid "dataType"
 msgstr "Stato"
+
+#: gaphor/UML/classes/dependency.py:49
+msgid "use"
+msgstr ""
+
+#: gaphor/UML/classes/dependency.py:50
+msgid "realize"
+msgstr ""
+
+#: gaphor/UML/classes/dependency.py:51
+#, fuzzy
+msgid "implements"
+msgstr "Implementazione"
 
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
@@ -606,15 +716,29 @@ msgstr "Realizzazione"
 msgid "Implementation"
 msgstr "Implementazione"
 
-#: gaphor/UML/classes/enumeration.py:69
+#: gaphor/UML/classes/enumeration.py:70
 #, fuzzy
 msgid "enumeration"
 msgstr "Interazione"
 
-#: gaphor/UML/classes/interface.py:290
+#: gaphor/UML/classes/interface.py:291
 #, fuzzy
 msgid "interface"
 msgstr "Interfaccia"
+
+#: gaphor/UML/classes/klass.py:59
+#, fuzzy
+msgid "stereotype"
+msgstr "Stereotipo"
+
+#: gaphor/UML/classes/klass.py:61
+msgid "metaclass"
+msgstr ""
+
+#: gaphor/UML/classes/package.py:23
+#, fuzzy
+msgid "profile"
+msgstr "Profilo"
 
 #: gaphor/UML/classes/propertypages.glade:33
 #: gaphor/UML/classes/propertypages.ui:24
@@ -846,6 +970,11 @@ msgstr "Nodo"
 msgid "Device"
 msgstr "Dispositivo"
 
+#: gaphor/UML/components/node.py:54
+#, fuzzy
+msgid "device"
+msgstr "Dispositivo"
+
 #: gaphor/UML/components/propertypages.glade:32
 #: gaphor/UML/components/propertypages.ui:23
 #, fuzzy
@@ -881,6 +1010,11 @@ msgstr "Messaggio"
 #: gaphor/UML/interactions/propertypages.ui:21
 msgid "Message Sort"
 msgstr "Ordinamento dei messaggi"
+
+#: gaphor/UML/profiles/packageimport.py:19
+#, fuzzy
+msgid "import"
+msgstr "Importa"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
@@ -973,6 +1107,16 @@ msgstr "Cronologia Pseudostato"
 #: gaphor/UML/states/statestoolbox.py:109
 msgid "Transition"
 msgstr "Transizione"
+
+#: gaphor/UML/usecases/extend.py:19
+#, fuzzy
+msgid "extend"
+msgstr "Estendi"
+
+#: gaphor/UML/usecases/include.py:19
+#, fuzzy
+msgid "include"
+msgstr "Includi"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:12
 msgid "Use Cases"
@@ -1679,9 +1823,6 @@ msgstr "Nessun modello aperto di recente"
 #~ msgid "_Console"
 #~ msgstr ""
 
-#~ msgid "NewSoftwareSystem"
-#~ msgstr ""
-
-#~ msgid "NewDatabase"
-#~ msgstr ""
+#~ msgid "C4 model"
+#~ msgstr "Nuovo modello"
 

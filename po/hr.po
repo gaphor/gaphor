@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-02 21:59-0400\n"
+"POT-Creation-Date: 2021-10-03 17:07+0200\n"
 "PO-Revision-Date: 2021-09-14 20:38+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language: hr\n"
@@ -20,6 +20,7 @@ msgstr ""
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
+#, fuzzy
 msgid "C4 model"
 msgstr "C4 model"
 
@@ -85,6 +86,25 @@ msgstr "Ovisnost"
 msgid "RAAML"
 msgstr "RAAML"
 
+#: gaphor/RAAML/fta/andgate.py:37
+msgid "AND"
+msgstr ""
+
+#: gaphor/RAAML/fta/basicevent.py:36
+#, fuzzy
+msgid "BasicEvent"
+msgstr "Osnovni događaj"
+
+#: gaphor/RAAML/fta/conditionalevent.py:33
+#, fuzzy
+msgid "ConditionalEvent"
+msgstr "Uvjetni događaj"
+
+#: gaphor/RAAML/fta/dormantevent.py:35
+#, fuzzy
+msgid "DormantEvent"
+msgstr "Neaktivni događaj"
+
 #: gaphor/RAAML/fta/ftatoolbox.py:10
 msgid "Fault Tree Analysis"
 msgstr "Analiza stabla kvarova"
@@ -117,11 +137,11 @@ msgstr "Sklop većina glasova"
 msgid "Inhibit Gate"
 msgstr "Sklop I s uvjetom"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:86
+#: gaphor/RAAML/fta/ftatoolbox.py:86 gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
 msgstr "Prijenos u"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:97
+#: gaphor/RAAML/fta/ftatoolbox.py:97 gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
 msgstr "Prijenos iz"
 
@@ -149,13 +169,55 @@ msgstr "Kućni događaj"
 msgid "Zero Event"
 msgstr "Nula događaj"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:174
+#: gaphor/RAAML/fta/ftatoolbox.py:174 gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
 msgstr "Vrhunski događaj"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:185
+#: gaphor/RAAML/fta/ftatoolbox.py:185 gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
 msgstr "Intermedijarni događaj"
+
+#: gaphor/RAAML/fta/houseevent.py:35
+#, fuzzy
+msgid "HouseEvent"
+msgstr "Kućni događaj"
+
+#: gaphor/RAAML/fta/inhibitgate.py:35
+#, fuzzy
+msgid "INHIBIT"
+msgstr "Sklop I s uvjetom"
+
+#: gaphor/RAAML/fta/majorityvotegate.py:40
+#, fuzzy
+msgid "MAJORITY_VOTE"
+msgstr "Sklop većina glasova"
+
+#: gaphor/RAAML/fta/notgate.py:35
+msgid "NOT"
+msgstr ""
+
+#: gaphor/RAAML/fta/orgate.py:37
+msgid "OR"
+msgstr ""
+
+#: gaphor/RAAML/fta/seqgate.py:36
+msgid "SEQ"
+msgstr ""
+
+#: gaphor/RAAML/fta/undevelopedevent.py:36
+#, fuzzy
+msgid "UndevelopedEvent"
+msgstr "Nerazvijeni događaj"
+
+#: gaphor/RAAML/fta/xorgate.py:36
+#, fuzzy
+msgid "XOR"
+msgstr "Izvezi"
+
+#: gaphor/RAAML/fta/zeroevent.py:36
+#, fuzzy
+msgid "ZeroEvent"
+msgstr "Nula događaj"
 
 #: gaphor/RAAML/stpa/controlaction.py:33
 msgid "ControlAction"
@@ -183,7 +245,7 @@ msgstr "Apstraktna operacijska situacija"
 msgid "Generalization"
 msgstr "Generalizacija"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:60
 msgid "Situation"
 msgstr "Situacija"
 
@@ -295,6 +357,16 @@ msgstr "Svojstvo"
 msgid "Proxy Port"
 msgstr "Proxy priključak"
 
+#: gaphor/SysML/blocks/block.py:62
+#, fuzzy
+msgid "ControlStructure"
+msgstr "Struktura kontrole"
+
+#: gaphor/SysML/blocks/block.py:64
+#, fuzzy
+msgid "block"
+msgstr "Blok"
+
 #: gaphor/SysML/blocks/block.py:97
 msgid "parts"
 msgstr "dijelovi"
@@ -349,6 +421,40 @@ msgstr "Enumeracija"
 #: gaphor/UML/classes/classestoolbox.py:161
 msgid "Primitive"
 msgstr "Primitivne"
+
+#: gaphor/SysML/blocks/proxyport.py:67
+msgid "proxy"
+msgstr ""
+
+#: gaphor/SysML/requirements/relationships.py:32
+#, fuzzy
+msgid "satisfy"
+msgstr "Zadovolji"
+
+#: gaphor/SysML/requirements/relationships.py:38
+#, fuzzy
+msgid "deriveReqt"
+msgstr "Izvedi zahtjev"
+
+#: gaphor/SysML/requirements/relationships.py:44
+#, fuzzy
+msgid "trace"
+msgstr "Precrtaj"
+
+#: gaphor/SysML/requirements/relationships.py:50
+#, fuzzy
+msgid "verify"
+msgstr "Provjeri"
+
+#: gaphor/SysML/requirements/relationships.py:56
+#, fuzzy
+msgid "refine"
+msgstr "Razradi"
+
+#: gaphor/SysML/requirements/requirement.py:63
+#, fuzzy
+msgid "requirement"
+msgstr "Zahtjev"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 msgid "Requirements"
@@ -555,20 +661,33 @@ msgstr "Realizacija sučelja"
 msgid "DataType"
 msgstr "Vrsta podataka"
 
-#: gaphor/UML/classes/datatype.py:58
+#: gaphor/UML/classes/datatype.py:59
 #, fuzzy
 msgid "primitive"
 msgstr "Primitivne"
 
-#: gaphor/UML/classes/datatype.py:60
+#: gaphor/UML/classes/datatype.py:61
 #, fuzzy
 msgid "valueType"
 msgstr "Vrsta vrijednosti"
 
-#: gaphor/UML/classes/datatype.py:62
+#: gaphor/UML/classes/datatype.py:63
 #, fuzzy
 msgid "dataType"
 msgstr "Vrsta podataka"
+
+#: gaphor/UML/classes/dependency.py:49
+msgid "use"
+msgstr ""
+
+#: gaphor/UML/classes/dependency.py:50
+msgid "realize"
+msgstr ""
+
+#: gaphor/UML/classes/dependency.py:51
+#, fuzzy
+msgid "implements"
+msgstr "Implementacija"
 
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
@@ -582,15 +701,30 @@ msgstr "Realizacija"
 msgid "Implementation"
 msgstr "Implementacija"
 
-#: gaphor/UML/classes/enumeration.py:69
+#: gaphor/UML/classes/enumeration.py:70
 #, fuzzy
 msgid "enumeration"
 msgstr "Enumeracija"
 
-#: gaphor/UML/classes/interface.py:290
+#: gaphor/UML/classes/interface.py:291
 #, fuzzy
 msgid "interface"
 msgstr "Sučelje"
+
+#: gaphor/UML/classes/klass.py:59
+#, fuzzy
+msgid "stereotype"
+msgstr "Stereotip"
+
+#: gaphor/UML/classes/klass.py:61
+#, fuzzy
+msgid "metaclass"
+msgstr "Metaklasa"
+
+#: gaphor/UML/classes/package.py:23
+#, fuzzy
+msgid "profile"
+msgstr "Profil"
 
 #: gaphor/UML/classes/propertypages.glade:33
 #: gaphor/UML/classes/propertypages.ui:24
@@ -814,6 +948,11 @@ msgstr "Čvor"
 msgid "Device"
 msgstr "Uređaj"
 
+#: gaphor/UML/components/node.py:54
+#, fuzzy
+msgid "device"
+msgstr "Uređaj"
+
 #: gaphor/UML/components/propertypages.glade:32
 #: gaphor/UML/components/propertypages.ui:23
 msgid "Indirectly Instantiated"
@@ -848,6 +987,11 @@ msgstr "Poruka"
 #: gaphor/UML/interactions/propertypages.ui:21
 msgid "Message Sort"
 msgstr "Razvrstavanje poruka"
+
+#: gaphor/UML/profiles/packageimport.py:19
+#, fuzzy
+msgid "import"
+msgstr "Uvoz"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
@@ -939,6 +1083,16 @@ msgstr "Povijest pseudostanja"
 #: gaphor/UML/states/statestoolbox.py:109
 msgid "Transition"
 msgstr "Prijelaz"
+
+#: gaphor/UML/usecases/extend.py:19
+#, fuzzy
+msgid "extend"
+msgstr "Proširi"
+
+#: gaphor/UML/usecases/include.py:19
+#, fuzzy
+msgid "include"
+msgstr "Uključi"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:12
 msgid "Use Cases"
@@ -1659,4 +1813,7 @@ msgstr "Nema nedavno otvorenih modela"
 
 #~ msgid "_Console"
 #~ msgstr ""
+
+#~ msgid "C4 model"
+#~ msgstr "C4 model"
 
