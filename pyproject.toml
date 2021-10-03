@@ -130,7 +130,6 @@ type = "virtualenv"
 
 [tool.poetry.plugins."gaphor.appservices"]
 "event_manager" = "gaphor.core.eventmanager:EventManager"
-"session" = "gaphor.services.session:Session"
 "app_file_manager" = "gaphor.ui.appfilemanager:AppFileManager"
 
 [tool.poetry.plugins."gaphor.services"]
