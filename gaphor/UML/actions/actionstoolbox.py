@@ -30,7 +30,7 @@ def activity_config(new_item):
         subject.activity = activities[0]
     else:
         activity = subject.model.create(UML.Activity)
-        activity.name = "Activity"
+        activity.name = gettext("Activity")
         activity.package = package
         subject.activity = activity
 
