@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-import itertools
 import operator
-from typing import Callable, Dict, Iterator, List, Optional, Sequence, Tuple, Union
+from typing import Callable, Dict, Iterator, Sequence, Tuple, Union
 
 import tinycss2
 from typing_extensions import Literal, Protocol
