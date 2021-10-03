@@ -4,6 +4,7 @@ from math import pi
 
 from gaphas.geometry import Rectangle
 
+from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -33,7 +34,7 @@ class ANDItem(ElementPresentation, Classified):
                 draw=draw_and_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, ["AND"]),
+                text=lambda: stereotypes_str(self.subject, [gettext("AND")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

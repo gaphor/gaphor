@@ -1,3 +1,4 @@
+from gaphor.core import gettext
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_arrow_head
 from gaphor.diagram.support import represents
@@ -28,28 +29,28 @@ class DirectedRelationshipPropertyPathItem(LinePresentation, Named):
 @represents(sysml.Satisfy)
 class SatisfyItem(DirectedRelationshipPropertyPathItem):
 
-    relation_type = "satisfy"
+    relation_type = gettext("satisfy")
 
 
 @represents(sysml.DeriveReqt)
 class DeriveReqtItem(DirectedRelationshipPropertyPathItem):
 
-    relation_type = "deriveReqt"
+    relation_type = gettext("deriveReqt")
 
 
 @represents(sysml.Trace)
 class TraceItem(DirectedRelationshipPropertyPathItem):
 
-    relation_type = "trace"
+    relation_type = gettext("trace")
 
 
 @represents(sysml.Verify)
 class VerifyItem(DirectedRelationshipPropertyPathItem):
 
-    relation_type = "verify"
+    relation_type = gettext("verify")
 
 
 @represents(sysml.Refine)
 class RefineItem(DirectedRelationshipPropertyPathItem):
 
-    relation_type = "refine"
+    relation_type = gettext("refine")

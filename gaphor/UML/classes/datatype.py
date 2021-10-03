@@ -1,6 +1,7 @@
 import logging
 
 from gaphor import UML
+from gaphor.core import gettext
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import FontStyle, FontWeight, VerticalAlign
 from gaphor.diagram.presentation import (
@@ -54,11 +55,11 @@ class DataTypeItem(ElementPresentation[UML.DataType], Classified):
 
     def additional_stereotypes(self):
         if isinstance(self.subject, UML.PrimitiveType):
-            return ["primitive"]
+            return [gettext("primitive")]
         elif isinstance(self.subject, sysml.ValueType):
-            return ["valueType"]
+            return [gettext("valueType")]
         elif isinstance(self.subject, UML.DataType):
-            return ["dataType"]
+            return [gettext("dataType")]
         else:
             return ()
 

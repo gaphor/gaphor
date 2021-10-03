@@ -1,5 +1,6 @@
 """Conditional Event item definition."""
 
+from gaphor.core import gettext
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
@@ -28,7 +29,9 @@ class ConditionalEventItem(ElementPresentation, Classified):
                 draw=draw_basic_event,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, ["ConditionalEvent"]),
+                text=lambda: stereotypes_str(
+                    self.subject, [gettext("ConditionalEvent")]
+                ),
             ),
             Text(
                 text=lambda: self.subject.name or "",

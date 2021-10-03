@@ -2,6 +2,7 @@
 
 from gaphas.geometry import Rectangle
 
+from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -31,7 +32,9 @@ class UndevelopedEventItem(ElementPresentation, Classified):
                 draw=draw_undeveloped_event,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, ["UndevelopedEvent"]),
+                text=lambda: stereotypes_str(
+                    self.subject, [gettext("UndevelopedEvent")]
+                ),
             ),
             Text(
                 text=lambda: self.subject.name or "",

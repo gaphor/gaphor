@@ -1,3 +1,4 @@
+from gaphor.core import gettext
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     Classified,
@@ -58,7 +59,9 @@ class RequirementItem(ElementPresentation[Requirement], Classified):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: stereotypes_str(self.subject, ["requirement"]),
+                    text=lambda: stereotypes_str(
+                        self.subject, [gettext("requirement")]
+                    ),
                 ),
                 Text(
                     text=lambda: self.subject.name or "",

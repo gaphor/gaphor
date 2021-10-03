@@ -1,6 +1,7 @@
 import logging
 
 from gaphor import UML
+from gaphor.core import gettext
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import FontStyle, FontWeight, TextAlign, VerticalAlign
 from gaphor.diagram.presentation import (
@@ -65,7 +66,7 @@ class EnumerationItem(ElementPresentation[UML.Enumeration], Classified):
             Box(
                 Text(
                     text=lambda: UML.model.stereotypes_str(
-                        self.subject, ["enumeration"]
+                        self.subject, [gettext("enumeration")]
                     ),
                 ),
                 Text(

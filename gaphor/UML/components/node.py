@@ -15,6 +15,7 @@ module.
 """
 
 from gaphor import UML
+from gaphor.core import gettext
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, Text, VerticalAlign, stroke
@@ -49,7 +50,9 @@ class NodeItem(ElementPresentation, Classified):
                 Text(
                     text=lambda: UML.model.stereotypes_str(
                         self.subject,
-                        isinstance(self.subject, UML.Device) and ("device",) or (),
+                        isinstance(self.subject, UML.Device)
+                        and (gettext("device"),)
+                        or (),
                     ),
                 ),
                 Text(

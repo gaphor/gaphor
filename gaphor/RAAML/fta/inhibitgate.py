@@ -2,6 +2,7 @@
 
 from gaphas.geometry import Rectangle
 
+from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -31,7 +32,7 @@ class InhibitItem(ElementPresentation, Classified):
                 draw=draw_inhibit_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, ["INHIBIT"]),
+                text=lambda: stereotypes_str(self.subject, [gettext("INHIBIT")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",
