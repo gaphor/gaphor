@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-03 17:07+0200\n"
-"PO-Revision-Date: 2021-09-30 19:15+0000\n"
+"PO-Revision-Date: 2021-10-03 18:26+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
-#, fuzzy
 msgid "C4 model"
 msgstr "C4-malli"
 
@@ -38,19 +38,16 @@ msgid "New Software System"
 msgstr "Järjestelmäohjelmisto"
 
 #: gaphor/C4Model/toolbox.py:32
-#, fuzzy
 msgid "New Container"
-msgstr "Kontti"
+msgstr "Uusi kontti"
 
 #: gaphor/C4Model/toolbox.py:40
-#, fuzzy
 msgid "New Database"
-msgstr "Kontti: tietokanta"
+msgstr "Uusi tietokanta"
 
 #: gaphor/C4Model/toolbox.py:47
-#, fuzzy
 msgid "New Component"
-msgstr "Komponentti"
+msgstr "Uusi komponentti"
 
 #: gaphor/C4Model/toolbox.py:51
 msgid "C4 Model"
@@ -485,12 +482,11 @@ msgstr "UML"
 #: gaphor/UML/interactions/interactionstoolbox.py:15
 #: gaphor/UML/states/statestoolbox.py:25 gaphor/diagram/diagramtoolbox.py:28
 msgid "New"
-msgstr ""
+msgstr "Uusi"
 
 #: gaphor/UML/actions/actionstoolbox.py:34
-#, fuzzy
 msgid "Activity"
-msgstr "Aktiviteetit"
+msgstr "Aktiviteetti"
 
 #: gaphor/UML/actions/actionstoolbox.py:42
 msgid "Swimlane One"
@@ -897,9 +893,8 @@ msgid "Device"
 msgstr "Laite"
 
 #: gaphor/UML/components/node.py:54
-#, fuzzy
 msgid "device"
-msgstr "Laite"
+msgstr "laite"
 
 #: gaphor/UML/components/propertypages.glade:32
 #: gaphor/UML/components/propertypages.ui:23
@@ -1619,4 +1614,3 @@ msgstr "Ei viimeksi avattuja malleja"
 
 #~ msgid "C4 model"
 #~ msgstr "C4-malli"
-
