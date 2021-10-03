@@ -3,6 +3,7 @@ from typing import Optional
 from gaphas.connector import Handle, LinePort, Position
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
+from gaphor.core import gettext
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import HandlePositionUpdate, Named, postload_connect
 from gaphor.diagram.shapes import (
@@ -63,7 +64,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
     def update_shapes(self):
         self.shape = IconBox(
             Box(style={"background-color": (1, 1, 1, 1)}, draw=draw_border),
-            Text(text=lambda: stereotypes_str(self.subject, ("proxy",))),
+            Text(text=lambda: stereotypes_str(self.subject, [gettext("proxy")])),
             Text(text=lambda: self.subject and self.subject.name or ""),
             style=text_position(self.connected_side()),
         )

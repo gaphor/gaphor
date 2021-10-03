@@ -3,6 +3,7 @@
 from gaphas.geometry import Rectangle
 from gaphas.util import path_ellipse
 
+from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -32,7 +33,7 @@ class BasicEventItem(ElementPresentation, Classified):
                 draw=draw_basic_event,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, ["BasicEvent"]),
+                text=lambda: stereotypes_str(self.subject, [gettext("BasicEvent")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

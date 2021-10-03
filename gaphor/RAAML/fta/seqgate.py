@@ -2,6 +2,7 @@
 
 from gaphas.geometry import Rectangle
 
+from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -32,7 +33,7 @@ class SEQItem(ElementPresentation, Classified):
                 draw=draw_seq_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, ["SEQ"]),
+                text=lambda: stereotypes_str(self.subject, [gettext("SEQ")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

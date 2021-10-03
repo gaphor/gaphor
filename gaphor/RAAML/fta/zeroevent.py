@@ -2,6 +2,7 @@
 
 from gaphas.geometry import Rectangle
 
+from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -32,7 +33,7 @@ class ZeroEventItem(ElementPresentation, Classified):
                 draw=draw_zero_event,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, ["ZeroEvent"]),
+                text=lambda: stereotypes_str(self.subject, [gettext("ZeroEvent")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

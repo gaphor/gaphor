@@ -17,6 +17,7 @@ type of a dependency in automatic way.
 import ast
 
 from gaphor import UML
+from gaphor.core import gettext
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
@@ -45,9 +46,9 @@ class DependencyItem(LinePresentation, Named):
         self.auto_dependency = True
 
         additional_stereotype = {
-            UML.Usage: ("use",),
-            UML.Realization: ("realize",),
-            UML.InterfaceRealization: ("implements",),
+            UML.Usage: (gettext("use"),),
+            UML.Realization: (gettext("realize"),),
+            UML.InterfaceRealization: (gettext("implements"),),
         }
 
         self.shape_middle = Box(
