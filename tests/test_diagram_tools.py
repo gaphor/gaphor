@@ -34,56 +34,56 @@ class DiagramItemConnectorCase(Case):
         self.event_manager.handle(DiagramOpened(self.diagram))
 
 
-class TestDiagramConnector:
-    @pytest.fixture(scope="module")
-    def case(self):
-        case = DiagramItemConnectorCase()
-        yield case
-        case.shutdown()
+@pytest.fixture(scope="module")
+def case():
+    case = DiagramItemConnectorCase()
+    yield case
+    case.shutdown()
 
-    @pytest.mark.skipif(Gtk.get_major_version() != 3, reason="Works only for GTK+ 3")
-    def test_item_reconnect(self, case):
-        # Setting the stage:
-        ci1 = case.create(ClassItem, UML.Class)
-        ci2 = case.create(ClassItem, UML.Class)
-        a = case.create(AssociationItem)
 
-        case.connect(a, a.head, ci1)
-        case.connect(a, a.tail, ci2)
+@pytest.mark.skipif(Gtk.get_major_version() != 3, reason="Works only for GTK+ 3")
+def test_item_reconnect(case):
+    # Setting the stage:
+    ci1 = case.create(ClassItem, UML.Class)
+    ci2 = case.create(ClassItem, UML.Class)
+    a = case.create(AssociationItem)
 
-        assert a.subject
-        assert a.head_subject
-        assert a.tail_subject
+    case.connect(a, a.head, ci1)
+    case.connect(a, a.tail, ci2)
 
-        the_association = a.subject
+    assert a.subject
+    assert a.head_subject
+    assert a.tail_subject
 
-        # The act: perform button press event and button release
-        view = case.component_registry.get(UIComponent, "diagrams").get_current_view()
+    the_association = a.subject
 
-        assert case.diagram is view.model
+    # The act: perform button press event and button release
+    view = case.component_registry.get(UIComponent, "diagrams").get_current_view()
 
-        p = view.get_matrix_i2v(a).transform_point(*a.head.pos)
+    assert case.diagram is view.model
 
-        event = Gdk.Event()
-        event.x, event.y, event.type, event.state = (
-            p[0],
-            p[1],
-            Gdk.EventType.BUTTON_PRESS,
-            0,
-        )
+    p = view.get_matrix_i2v(a).transform_point(*a.head.pos)
 
-        view.event(event)
+    event = Gdk.Event()
+    event.x, event.y, event.type, event.state = (
+        p[0],
+        p[1],
+        Gdk.EventType.BUTTON_PRESS,
+        0,
+    )
 
-        assert the_association is a.subject
+    view.event(event)
 
-        event = Gdk.Event()
-        event.x, event.y, event.type, event.state = (
-            p[0],
-            p[1],
-            Gdk.EventType.BUTTON_RELEASE,
-            0,
-        )
+    assert the_association is a.subject
 
-        view.event(event)
+    event = Gdk.Event()
+    event.x, event.y, event.type, event.state = (
+        p[0],
+        p[1],
+        Gdk.EventType.BUTTON_RELEASE,
+        0,
+    )
 
-        assert the_association is a.subject
+    view.event(event)
+
+    assert the_association is a.subject
