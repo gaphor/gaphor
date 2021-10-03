@@ -25,8 +25,8 @@ class HelpService(Service, ActionProvider):
     @action(name="app.about")
     def about(self):
         builder = Gtk.Builder()
-        builder.add_objects_from_string(
-            translated_ui_string("gaphor.services.helpservice", "about.ui"), ("about",)
+        builder.add_from_string(
+            translated_ui_string("gaphor.services.helpservice", "about.ui")
         )
 
         about = builder.get_object("about")
@@ -41,9 +41,8 @@ class HelpService(Service, ActionProvider):
     @action(name="app.shortcuts")
     def shortcuts(self):
         builder = Gtk.Builder()
-        builder.add_objects_from_string(
-            translated_ui_string("gaphor.services.helpservice", "shortcuts.ui"),
-            ("shortcuts-gaphor",),
+        builder.add_from_string(
+            translated_ui_string("gaphor.services.helpservice", "shortcuts.ui")
         )
 
         shortcuts = builder.get_object("shortcuts-gaphor")
