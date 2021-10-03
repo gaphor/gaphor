@@ -55,7 +55,7 @@ class PartitionPropertyPage(PropertyPageBase):
 
         treeview.append_column(
             Gtk.TreeViewColumn(
-                title="Name", cell_renderer=renderer_editable_text, text=1
+                title=gettext("Name"), cell_renderer=renderer_editable_text, text=1
             )
         )
 

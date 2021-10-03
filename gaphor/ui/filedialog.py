@@ -9,7 +9,7 @@ from gi.repository import Gtk
 
 from gaphor.i18n import gettext
 
-GAPHOR_FILTER = [("All Gaphor Models", "*.gaphor", "application/x-gaphor")]
+GAPHOR_FILTER = [(gettext("All Gaphor Models"), "*.gaphor", "application/x-gaphor")]
 
 
 def new_filter(name, pattern, mime_type=None):

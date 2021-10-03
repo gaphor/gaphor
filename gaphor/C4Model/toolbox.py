@@ -22,14 +22,14 @@ def software_system_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
     subject.type = "Software System"
-    subject.name = "NewSoftwareSystem"
+    subject.name = gettext("NewSoftwareSystem")
 
 
 def container_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
     subject.type = "Container"
-    subject.name = "NewContainer"
+    subject.name = gettext("NewContainer")
 
 
 def container_database_config(new_item):
@@ -37,14 +37,14 @@ def container_database_config(new_item):
     subject = new_item.subject
     subject.type = "Container"
     subject.technology = "Database"
-    subject.name = "NewDatabase"
+    subject.name = gettext("NewDatabase")
 
 
 def component_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
     subject.type = "Component"
-    subject.name = "NewComponent"
+    subject.name = gettext("NewComponent")
 
 
 c4 = ToolSection(

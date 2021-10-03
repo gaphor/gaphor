@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
-"POT-Creation-Date: 2021-09-28 11:19+0200\n"
+"POT-Creation-Date: 2021-10-02 20:56-0400\n"
 "PO-Revision-Date: 2021-08-31 14:20+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language: ko\n"
@@ -28,6 +28,26 @@ msgstr "설명"
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
 msgstr "기술"
+
+#: gaphor/C4Model/toolbox.py:25
+#, fuzzy
+msgid "NewSoftwareSystem"
+msgstr "소프트웨어 시스템"
+
+#: gaphor/C4Model/toolbox.py:32
+#, fuzzy
+msgid "NewContainer"
+msgstr "컨테이너"
+
+#: gaphor/C4Model/toolbox.py:40
+#, fuzzy
+msgid "NewDatabase"
+msgstr "컨테이너: 데이터베이스"
+
+#: gaphor/C4Model/toolbox.py:47
+#, fuzzy
+msgid "NewComponent"
+msgstr "구성요소"
 
 #: gaphor/C4Model/toolbox.py:51
 msgid "C4 Model"
@@ -360,61 +380,75 @@ msgstr "견제"
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/actionstoolbox.py:41
+#: gaphor/UML/actions/actionstoolbox.py:15
+#: gaphor/UML/interactions/interactionstoolbox.py:15
+#: gaphor/UML/states/statestoolbox.py:25 gaphor/diagram/diagramtoolbox.py:28
+msgid "New"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:42
 msgid "Swimlane One"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:45
+#: gaphor/UML/actions/actionstoolbox.py:46
 msgid "Swimlane Two"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:51
+#: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Actions"
 msgstr "동작(복수)"
 
-#: gaphor/UML/actions/actionstoolbox.py:55
+#: gaphor/UML/actions/actionstoolbox.py:56
 msgid "Action"
 msgstr "동작"
 
-#: gaphor/UML/actions/actionstoolbox.py:67
+#: gaphor/UML/actions/actionstoolbox.py:68
 msgid "Initial node"
 msgstr "초기 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:79
+#: gaphor/UML/actions/actionstoolbox.py:80
 msgid "Activity final node"
 msgstr "활동 종단 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:91
+#: gaphor/UML/actions/actionstoolbox.py:92
 msgid "Flow final node"
 msgstr "흐름 종단 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:103
+#: gaphor/UML/actions/actionstoolbox.py:104
 msgid "Decision/merge node"
 msgstr "결정/병합 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:115
+#: gaphor/UML/actions/actionstoolbox.py:116
 msgid "Fork/join node"
 msgstr "분리/결합 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:127
+#: gaphor/UML/actions/actionstoolbox.py:128
 msgid "Object node"
 msgstr "객체 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:139
+#: gaphor/UML/actions/actionstoolbox.py:140
 msgid "Swimlane"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:151
+#: gaphor/UML/actions/actionstoolbox.py:152
 msgid "Control/object flow"
 msgstr "제어/객체 흐름"
 
-#: gaphor/UML/actions/actionstoolbox.py:158
+#: gaphor/UML/actions/actionstoolbox.py:159
 msgid "Send signal action"
 msgstr "시그널 보내기 동작"
 
-#: gaphor/UML/actions/actionstoolbox.py:170
+#: gaphor/UML/actions/actionstoolbox.py:171
 msgid "Accept event action"
 msgstr "이벤트 허용 동작"
+
+#: gaphor/UML/actions/partitionpage.py:58
+#: gaphor/UML/classes/propertypages.glade:683
+#: gaphor/UML/classes/propertypages.ui:424
+#: gaphor/UML/profiles/propertypages.glade:28
+#: gaphor/UML/profiles/propertypages.ui:21
+msgid "Name"
+msgstr "이름"
 
 #: gaphor/UML/actions/partitionpage.py:92
 msgid "New Swimlane"
@@ -508,6 +542,21 @@ msgstr "인터페이스 실체화"
 msgid "DataType"
 msgstr "데이터형식"
 
+#: gaphor/UML/classes/datatype.py:58
+#, fuzzy
+msgid "primitive"
+msgstr "원시"
+
+#: gaphor/UML/classes/datatype.py:60
+#, fuzzy
+msgid "valueType"
+msgstr "값 형식"
+
+#: gaphor/UML/classes/datatype.py:62
+#, fuzzy
+msgid "dataType"
+msgstr "데이터형식"
+
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
 msgstr "사용법"
@@ -519,6 +568,16 @@ msgstr "실체화"
 #: gaphor/UML/classes/dependencypropertypages.py:19
 msgid "Implementation"
 msgstr "구현"
+
+#: gaphor/UML/classes/enumeration.py:69
+#, fuzzy
+msgid "enumeration"
+msgstr "열거"
+
+#: gaphor/UML/classes/interface.py:290
+#, fuzzy
+msgid "interface"
+msgstr "인터페이스"
 
 #: gaphor/UML/classes/propertypages.glade:33
 #: gaphor/UML/classes/propertypages.ui:24
@@ -650,13 +709,6 @@ msgstr "자동"
 msgid "Folded"
 msgstr "접힘"
 
-#: gaphor/UML/classes/propertypages.glade:683
-#: gaphor/UML/classes/propertypages.ui:424
-#: gaphor/UML/profiles/propertypages.glade:28
-#: gaphor/UML/profiles/propertypages.ui:21
-msgid "Name"
-msgstr "이름"
-
 #: gaphor/UML/classes/propertypages.glade:730
 #: gaphor/UML/classes/propertypages.ui:451
 msgid "Show Operations"
@@ -756,23 +808,24 @@ msgstr "장치"
 msgid "Indirectly Instantiated"
 msgstr "간접 초기화"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:40
-msgid "Interactions"
-msgstr "상호작용"
-
-#: gaphor/UML/interactions/interactionstoolbox.py:44
+#: gaphor/UML/interactions/interactionstoolbox.py:34
+#: gaphor/UML/interactions/interactionstoolbox.py:45
 msgid "Interaction"
 msgstr "상호작용"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:56
+#: gaphor/UML/interactions/interactionstoolbox.py:41
+msgid "Interactions"
+msgstr "상호작용"
+
+#: gaphor/UML/interactions/interactionstoolbox.py:57
 msgid "Lifeline"
 msgstr "생명선"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:68
+#: gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Execution Specification"
 msgstr "실행 명세"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:76
+#: gaphor/UML/interactions/interactionstoolbox.py:77
 msgid "Message"
 msgstr "메시지"
 
@@ -840,27 +893,35 @@ msgstr "활동 수행"
 msgid "Activities"
 msgstr "활동"
 
-#: gaphor/UML/states/statestoolbox.py:58
+#: gaphor/UML/states/statestoolbox.py:45
+msgid "StateMachine"
+msgstr ""
+
+#: gaphor/UML/states/statestoolbox.py:52
+msgid "DefaultRegion"
+msgstr ""
+
+#: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
 msgstr "상태(복수)"
 
-#: gaphor/UML/states/statestoolbox.py:62
+#: gaphor/UML/states/statestoolbox.py:63
 msgid "State"
 msgstr "상태"
 
-#: gaphor/UML/states/statestoolbox.py:72
+#: gaphor/UML/states/statestoolbox.py:73
 msgid "Initial Pseudostate"
 msgstr "초기 의사상태"
 
-#: gaphor/UML/states/statestoolbox.py:84
+#: gaphor/UML/states/statestoolbox.py:85
 msgid "Final State"
 msgstr "최종 상태"
 
-#: gaphor/UML/states/statestoolbox.py:96
+#: gaphor/UML/states/statestoolbox.py:97
 msgid "History Pseudostate"
 msgstr "기록 의사상태"
 
-#: gaphor/UML/states/statestoolbox.py:108
+#: gaphor/UML/states/statestoolbox.py:109
 msgid "Transition"
 msgstr "전이"
 
@@ -884,32 +945,32 @@ msgstr "포함"
 msgid "Extend"
 msgstr "확장"
 
-#: gaphor/diagram/diagramtoolbox.py:55
+#: gaphor/diagram/diagramtoolbox.py:56
 msgid "General"
 msgstr "일반"
 
-#: gaphor/diagram/diagramtoolbox.py:59
+#: gaphor/diagram/diagramtoolbox.py:60
 msgid "Pointer"
 msgstr "점"
 
-#: gaphor/diagram/diagramtoolbox.py:66
+#: gaphor/diagram/diagramtoolbox.py:67
 msgid "Line"
 msgstr "선"
 
-#: gaphor/diagram/diagramtoolbox.py:73
+#: gaphor/diagram/diagramtoolbox.py:74
 msgid "Box"
 msgstr "상자"
 
-#: gaphor/diagram/diagramtoolbox.py:81
+#: gaphor/diagram/diagramtoolbox.py:82
 msgid "Ellipse"
 msgstr "직사각형"
 
-#: gaphor/diagram/diagramtoolbox.py:89 gaphor/diagram/propertypages.glade:28
+#: gaphor/diagram/diagramtoolbox.py:90 gaphor/diagram/propertypages.glade:28
 #: gaphor/diagram/propertypages.ui:21
 msgid "Comment"
 msgstr "설명"
 
-#: gaphor/diagram/diagramtoolbox.py:97
+#: gaphor/diagram/diagramtoolbox.py:98
 msgid "Comment line"
 msgstr "설명줄"
 
@@ -1056,7 +1117,7 @@ msgstr "가포 끝내기"
 msgid "Files"
 msgstr "파일"
 
-#: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:45
+#: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:44
 msgid "New Window"
 msgstr "새 창"
 
@@ -1065,7 +1126,7 @@ msgstr "새 창"
 msgid "Open"
 msgstr "열기"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:49
+#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:48
 msgid "Save"
 msgstr "저장"
 
@@ -1139,7 +1200,7 @@ msgstr "축소"
 msgid "Zoom 100%"
 msgstr "원본 크기"
 
-#: gaphor/ui/appfilemanager.py:13
+#: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
 msgstr "모든 가포 모델"
 
@@ -1278,7 +1339,7 @@ msgstr ""
 "{exc}\n"
 "위치를 올바르게 입력했는지 확인하고 다시 시도하십시오."
 
-#: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:253
+#: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:252
 #: gaphor/ui/mainwindow.ui:27
 msgid "New model"
 msgstr "새 모델"
@@ -1345,35 +1406,35 @@ msgstr "가포"
 msgid "New diagram"
 msgstr "새 다이어그램"
 
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/mainwindow.py:49
 msgid "Save As..."
 msgstr "다른 이름으로 저장..."
 
-#: gaphor/ui/mainwindow.py:51
+#: gaphor/ui/mainwindow.py:50
 msgid "Export"
 msgstr "내보내기"
 
-#: gaphor/ui/mainwindow.py:55
+#: gaphor/ui/mainwindow.py:54
 msgid "Tools"
 msgstr "도구"
 
-#: gaphor/ui/mainwindow.py:59
+#: gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
 msgstr "키보드 바로 가기 키"
 
-#: gaphor/ui/mainwindow.py:60
+#: gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
 msgstr "가포 정보"
 
-#: gaphor/ui/mainwindow.py:69
+#: gaphor/ui/mainwindow.py:68
 msgid "Recently opened files"
 msgstr "최근 연 파일"
 
-#: gaphor/ui/mainwindow.py:255
+#: gaphor/ui/mainwindow.py:254
 msgid "edited"
 msgstr "편집함"
 
-#: gaphor/ui/mainwindow.py:304
+#: gaphor/ui/mainwindow.py:303
 msgid "Profile: {}"
 msgstr "프로파일: {}"
 

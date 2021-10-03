@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-28 11:19+0200\n"
+"POT-Creation-Date: 2021-10-02 20:56-0400\n"
 "PO-Revision-Date: 2021-09-25 12:52+0000\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
 "Language: nl\n"
@@ -28,6 +28,26 @@ msgstr "Beschrijving"
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
 msgstr "Technologie"
+
+#: gaphor/C4Model/toolbox.py:25
+#, fuzzy
+msgid "NewSoftwareSystem"
+msgstr "Software Systeem"
+
+#: gaphor/C4Model/toolbox.py:32
+#, fuzzy
+msgid "NewContainer"
+msgstr "Container"
+
+#: gaphor/C4Model/toolbox.py:40
+#, fuzzy
+msgid "NewDatabase"
+msgstr "Container: Database"
+
+#: gaphor/C4Model/toolbox.py:47
+#, fuzzy
+msgid "NewComponent"
+msgstr "Component"
 
 #: gaphor/C4Model/toolbox.py:51
 msgid "C4 Model"
@@ -362,61 +382,75 @@ msgstr "Bevat"
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/actionstoolbox.py:41
+#: gaphor/UML/actions/actionstoolbox.py:15
+#: gaphor/UML/interactions/interactionstoolbox.py:15
+#: gaphor/UML/states/statestoolbox.py:25 gaphor/diagram/diagramtoolbox.py:28
+msgid "New"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:42
 msgid "Swimlane One"
 msgstr "Zwembaan Een"
 
-#: gaphor/UML/actions/actionstoolbox.py:45
+#: gaphor/UML/actions/actionstoolbox.py:46
 msgid "Swimlane Two"
 msgstr "Zwembaan Twee"
 
-#: gaphor/UML/actions/actionstoolbox.py:51
+#: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Actions"
 msgstr "Acties"
 
-#: gaphor/UML/actions/actionstoolbox.py:55
+#: gaphor/UML/actions/actionstoolbox.py:56
 msgid "Action"
 msgstr "Actie"
 
-#: gaphor/UML/actions/actionstoolbox.py:67
+#: gaphor/UML/actions/actionstoolbox.py:68
 msgid "Initial node"
 msgstr "Initiële node"
 
-#: gaphor/UML/actions/actionstoolbox.py:79
+#: gaphor/UML/actions/actionstoolbox.py:80
 msgid "Activity final node"
 msgstr "Activity final node"
 
-#: gaphor/UML/actions/actionstoolbox.py:91
+#: gaphor/UML/actions/actionstoolbox.py:92
 msgid "Flow final node"
 msgstr "Flow final node"
 
-#: gaphor/UML/actions/actionstoolbox.py:103
+#: gaphor/UML/actions/actionstoolbox.py:104
 msgid "Decision/merge node"
 msgstr "Decision/merge node"
 
-#: gaphor/UML/actions/actionstoolbox.py:115
+#: gaphor/UML/actions/actionstoolbox.py:116
 msgid "Fork/join node"
 msgstr "Fork/join node"
 
-#: gaphor/UML/actions/actionstoolbox.py:127
+#: gaphor/UML/actions/actionstoolbox.py:128
 msgid "Object node"
 msgstr "Object node"
 
-#: gaphor/UML/actions/actionstoolbox.py:139
+#: gaphor/UML/actions/actionstoolbox.py:140
 msgid "Swimlane"
 msgstr "Zwembaan"
 
-#: gaphor/UML/actions/actionstoolbox.py:151
+#: gaphor/UML/actions/actionstoolbox.py:152
 msgid "Control/object flow"
 msgstr "Control/object flow"
 
-#: gaphor/UML/actions/actionstoolbox.py:158
+#: gaphor/UML/actions/actionstoolbox.py:159
 msgid "Send signal action"
 msgstr "Send signal action"
 
-#: gaphor/UML/actions/actionstoolbox.py:170
+#: gaphor/UML/actions/actionstoolbox.py:171
 msgid "Accept event action"
 msgstr "Accept event action"
+
+#: gaphor/UML/actions/partitionpage.py:58
+#: gaphor/UML/classes/propertypages.glade:683
+#: gaphor/UML/classes/propertypages.ui:424
+#: gaphor/UML/profiles/propertypages.glade:28
+#: gaphor/UML/profiles/propertypages.ui:21
+msgid "Name"
+msgstr "Naam"
 
 #: gaphor/UML/actions/partitionpage.py:92
 msgid "New Swimlane"
@@ -515,6 +549,21 @@ msgstr "Generalisatie"
 msgid "DataType"
 msgstr "State"
 
+#: gaphor/UML/classes/datatype.py:58
+#, fuzzy
+msgid "primitive"
+msgstr "Primitieve"
+
+#: gaphor/UML/classes/datatype.py:60
+#, fuzzy
+msgid "valueType"
+msgstr "WaardeType"
+
+#: gaphor/UML/classes/datatype.py:62
+#, fuzzy
+msgid "dataType"
+msgstr "State"
+
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
 msgstr "Usage"
@@ -526,6 +575,16 @@ msgstr "Realization"
 #: gaphor/UML/classes/dependencypropertypages.py:19
 msgid "Implementation"
 msgstr "Implementation"
+
+#: gaphor/UML/classes/enumeration.py:69
+#, fuzzy
+msgid "enumeration"
+msgstr "Enumeratie"
+
+#: gaphor/UML/classes/interface.py:290
+#, fuzzy
+msgid "interface"
+msgstr "Interface"
 
 #: gaphor/UML/classes/propertypages.glade:33
 #: gaphor/UML/classes/propertypages.ui:24
@@ -644,13 +703,6 @@ msgstr "Automatisch"
 msgid "Folded"
 msgstr "Opgevouwen"
 
-#: gaphor/UML/classes/propertypages.glade:683
-#: gaphor/UML/classes/propertypages.ui:424
-#: gaphor/UML/profiles/propertypages.glade:28
-#: gaphor/UML/profiles/propertypages.ui:21
-msgid "Name"
-msgstr "Naam"
-
 #: gaphor/UML/classes/propertypages.glade:730
 #: gaphor/UML/classes/propertypages.ui:451
 msgid "Show Operations"
@@ -726,23 +778,24 @@ msgstr "Device"
 msgid "Indirectly Instantiated"
 msgstr "Indirect geïnstantieerd"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:40
-msgid "Interactions"
-msgstr "Interacties"
-
-#: gaphor/UML/interactions/interactionstoolbox.py:44
+#: gaphor/UML/interactions/interactionstoolbox.py:34
+#: gaphor/UML/interactions/interactionstoolbox.py:45
 msgid "Interaction"
 msgstr "Interactie"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:56
+#: gaphor/UML/interactions/interactionstoolbox.py:41
+msgid "Interactions"
+msgstr "Interacties"
+
+#: gaphor/UML/interactions/interactionstoolbox.py:57
 msgid "Lifeline"
 msgstr "Lifeline"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:68
+#: gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Execution Specification"
 msgstr "Execution Specification"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:76
+#: gaphor/UML/interactions/interactionstoolbox.py:77
 msgid "Message"
 msgstr "Message"
 
@@ -811,27 +864,35 @@ msgstr "Do Activity"
 msgid "Activities"
 msgstr "Activities"
 
-#: gaphor/UML/states/statestoolbox.py:58
+#: gaphor/UML/states/statestoolbox.py:45
+msgid "StateMachine"
+msgstr ""
+
+#: gaphor/UML/states/statestoolbox.py:52
+msgid "DefaultRegion"
+msgstr ""
+
+#: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
 msgstr "Statussen"
 
-#: gaphor/UML/states/statestoolbox.py:62
+#: gaphor/UML/states/statestoolbox.py:63
 msgid "State"
 msgstr "State"
 
-#: gaphor/UML/states/statestoolbox.py:72
+#: gaphor/UML/states/statestoolbox.py:73
 msgid "Initial Pseudostate"
 msgstr "Initial Pseudostate"
 
-#: gaphor/UML/states/statestoolbox.py:84
+#: gaphor/UML/states/statestoolbox.py:85
 msgid "Final State"
 msgstr "Final State"
 
-#: gaphor/UML/states/statestoolbox.py:96
+#: gaphor/UML/states/statestoolbox.py:97
 msgid "History Pseudostate"
 msgstr "History Pseudostate"
 
-#: gaphor/UML/states/statestoolbox.py:108
+#: gaphor/UML/states/statestoolbox.py:109
 msgid "Transition"
 msgstr "Transition"
 
@@ -855,32 +916,32 @@ msgstr "Include\"Realizatio"
 msgid "Extend"
 msgstr "Extend"
 
-#: gaphor/diagram/diagramtoolbox.py:55
+#: gaphor/diagram/diagramtoolbox.py:56
 msgid "General"
 msgstr "Algemeen"
 
-#: gaphor/diagram/diagramtoolbox.py:59
+#: gaphor/diagram/diagramtoolbox.py:60
 msgid "Pointer"
 msgstr "Aanwijzer"
 
-#: gaphor/diagram/diagramtoolbox.py:66
+#: gaphor/diagram/diagramtoolbox.py:67
 msgid "Line"
 msgstr "Lijn"
 
-#: gaphor/diagram/diagramtoolbox.py:73
+#: gaphor/diagram/diagramtoolbox.py:74
 msgid "Box"
 msgstr "Rechthoek"
 
-#: gaphor/diagram/diagramtoolbox.py:81
+#: gaphor/diagram/diagramtoolbox.py:82
 msgid "Ellipse"
 msgstr "Ellips"
 
-#: gaphor/diagram/diagramtoolbox.py:89 gaphor/diagram/propertypages.glade:28
+#: gaphor/diagram/diagramtoolbox.py:90 gaphor/diagram/propertypages.glade:28
 #: gaphor/diagram/propertypages.ui:21
 msgid "Comment"
 msgstr "Commentaar"
 
-#: gaphor/diagram/diagramtoolbox.py:97
+#: gaphor/diagram/diagramtoolbox.py:98
 msgid "Comment line"
 msgstr "Commentaarlijn"
 
@@ -1020,7 +1081,7 @@ msgstr "Gaphor Afsluiten"
 msgid "Files"
 msgstr "Betsanden"
 
-#: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:45
+#: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:44
 msgid "New Window"
 msgstr "Nieuw Venster"
 
@@ -1029,7 +1090,7 @@ msgstr "Nieuw Venster"
 msgid "Open"
 msgstr "Openen"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:49
+#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:48
 msgid "Save"
 msgstr "Opslaan"
 
@@ -1103,7 +1164,7 @@ msgstr ""
 msgid "Zoom 100%"
 msgstr "Zoom 100%"
 
-#: gaphor/ui/appfilemanager.py:13
+#: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
 msgstr "Alle Gaphor modellen"
 
@@ -1233,7 +1294,7 @@ msgid ""
 "Please check that you typed the location correctly and try again."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:253
+#: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:252
 #: gaphor/ui/mainwindow.ui:27
 msgid "New model"
 msgstr "New model"
@@ -1302,35 +1363,35 @@ msgstr "Gaphor"
 msgid "New diagram"
 msgstr "Nieuw diagram"
 
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/mainwindow.py:49
 msgid "Save As..."
 msgstr "Opslaan als..."
 
-#: gaphor/ui/mainwindow.py:51
+#: gaphor/ui/mainwindow.py:50
 msgid "Export"
 msgstr "Exporteer"
 
-#: gaphor/ui/mainwindow.py:55
+#: gaphor/ui/mainwindow.py:54
 msgid "Tools"
 msgstr "Gereedschap"
 
-#: gaphor/ui/mainwindow.py:59
+#: gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
 msgstr "Sneltoetsen"
 
-#: gaphor/ui/mainwindow.py:60
+#: gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
 msgstr "Over Gaphor"
 
-#: gaphor/ui/mainwindow.py:69
+#: gaphor/ui/mainwindow.py:68
 msgid "Recently opened files"
 msgstr "Recent geopende bestanden"
 
-#: gaphor/ui/mainwindow.py:255
+#: gaphor/ui/mainwindow.py:254
 msgid "edited"
 msgstr "gewijzigd"
 
-#: gaphor/ui/mainwindow.py:304
+#: gaphor/ui/mainwindow.py:303
 msgid "Profile: {}"
 msgstr "Profiel: {}"
 

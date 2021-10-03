@@ -85,6 +85,7 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import Box, IconBox, Text, draw_border, stroke
 from gaphor.diagram.support import represents
+from gaphor.i18n import gettext
 from gaphor.UML.classes.klass import (
     attribute_watches,
     attributes_compartment,
@@ -286,7 +287,7 @@ class InterfaceItem(ElementPresentation, Classified):
             Box(
                 Text(
                     text=lambda: UML.model.stereotypes_str(
-                        self.subject, ("interface",)
+                        self.subject, (gettext("interface"),)
                     ),
                 ),
                 Text(

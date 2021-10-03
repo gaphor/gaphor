@@ -12,7 +12,8 @@ from gaphor.UML.modelfactory import owner_package
 
 def interaction_config(new_item):
     subject = new_item.subject
-    subject.name = f"New{type(subject).__name__}"
+    translated_new = gettext("New")
+    subject.name = f"{translated_new}{type(subject).__name__}"
     if subject.interaction:
         return
 
@@ -30,7 +31,7 @@ def interaction_config(new_item):
         interaction = interactions[0]
     else:
         interaction = subject.model.create(UML.Interaction)
-        interaction.name = "Interaction"
+        interaction.name = gettext("Interaction")
         interaction.package = package
 
     subject.interaction = interaction
