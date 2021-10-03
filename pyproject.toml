@@ -37,9 +37,8 @@ exclude = ["**/tests", "gaphor/conftest.py" ]
 [tool.poetry.dependencies]
 python = "^3.9"
 pycairo = "^1.18"
-PyGObject = "^3.30"
+PyGObject = "<3.42.0"
 gaphas = "^3.1.0"
-importlib_metadata = ">=1.4,<5.0"
 generic = "^1.0.0"
 tinycss2 = "^1.0.2"
 pyinstaller = { version = "^4.3", optional = true } 
@@ -186,7 +185,7 @@ include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
 line_length = 88
-known_third_party = ["cairo", "gaphas", "generic", "gi", "importlib_metadata", "pytest", "recommonmark", "tinycss2", "tomlkit"]
+known_third_party = ["cairo", "gaphas", "generic", "gi", "pytest", "tinycss2", "tomli"]
 skip = "flatpak,.venv,build,dist"
 skip_glob = "gaphor/diagram/general/__init__.py,gaphor/UML/__init__.py,gaphor/UML/*/__init__.py,gaphor/RAAML/stpa/__init__.py"
 

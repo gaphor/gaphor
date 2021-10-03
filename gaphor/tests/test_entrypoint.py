@@ -1,4 +1,4 @@
-from gaphor.entrypoint import init_entrypoints
+from gaphor.entrypoint import init_entry_points
 
 
 class ServiceA:
@@ -19,7 +19,7 @@ class ServiceC:
 def test_load_single_service():
     uninitialized_services = {"service_a": ServiceA}
 
-    initialized = init_entrypoints(uninitialized_services)
+    initialized = init_entry_points(uninitialized_services)
 
     assert "service_a" in initialized
     assert isinstance(initialized["service_a"], ServiceA)
@@ -28,7 +28,7 @@ def test_load_single_service():
 def test_load_dependent_service():
     uninitialized_services = {"service_a": ServiceA, "service_b": ServiceB}
 
-    initialized = init_entrypoints(uninitialized_services)
+    initialized = init_entry_points(uninitialized_services)
 
     assert "service_b" in initialized
     assert isinstance(initialized["service_b"], ServiceB)
@@ -42,7 +42,7 @@ def test_load_multi_dependent_service():
         "service_c": ServiceC,
     }
 
-    initialized = init_entrypoints(uninitialized_services)
+    initialized = init_entry_points(uninitialized_services)
 
     assert "service_c" in initialized
     assert isinstance(initialized["service_c"], ServiceC)

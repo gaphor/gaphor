@@ -8,4 +8,3 @@ sphinxcontrib-websupport==1.2.4
 sphinxcontrib-images==0.9.4
 tomli==1.2.1
 generic==1.0.0
-importlib_metadata==4.8.1
