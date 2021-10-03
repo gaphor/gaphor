@@ -7,21 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-28 11:19+0200\n"
+"POT-Creation-Date: 2021-10-03 15:27+0200\n"
 "PO-Revision-Date: 2021-09-29 01:12+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hu/>\n"
 "Language: hu\n"
+"Language-Team: Hungarian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: gaphor/C4Model/modelinglanguage.py:16
-msgid "C4 model"
+#: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:51
+msgid "C4 Model"
 msgstr "C4-modell"
 
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
@@ -31,10 +30,6 @@ msgstr "Leírás"
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
 msgstr "Technológia"
-
-#: gaphor/C4Model/toolbox.py:51
-msgid "C4 Model"
-msgstr "C4-modell"
 
 #: gaphor/C4Model/toolbox.py:55
 msgid "Person"
@@ -65,6 +60,25 @@ msgstr "Függőség"
 #: gaphor/RAAML/modelinglanguage.py:15
 msgid "RAAML"
 msgstr "RAAML"
+
+#: gaphor/RAAML/fta/andgate.py:37
+msgid "AND"
+msgstr ""
+
+#: gaphor/RAAML/fta/basicevent.py:36
+#, fuzzy
+msgid "BasicEvent"
+msgstr "Elemi esemény"
+
+#: gaphor/RAAML/fta/conditionalevent.py:33
+#, fuzzy
+msgid "ConditionalEvent"
+msgstr "Feltételes esemény"
+
+#: gaphor/RAAML/fta/dormantevent.py:35
+#, fuzzy
+msgid "DormantEvent"
+msgstr "Szunnyadó esemény"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:10
 msgid "Fault Tree Analysis"
@@ -98,11 +112,11 @@ msgstr "Többségi szavazókapu"
 msgid "Inhibit Gate"
 msgstr "Akadály kapu"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:86
+#: gaphor/RAAML/fta/ftatoolbox.py:86 gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
 msgstr "Bejövő átmozgatás"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:97
+#: gaphor/RAAML/fta/ftatoolbox.py:97 gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
 msgstr "Kimenő átmozgatás"
 
@@ -130,13 +144,55 @@ msgstr "Kibontható/becsukható esemény"
 msgid "Zero Event"
 msgstr "Nulla esemény"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:174
+#: gaphor/RAAML/fta/ftatoolbox.py:174 gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
 msgstr "Nemkívánatos esemény"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:185
+#: gaphor/RAAML/fta/ftatoolbox.py:185 gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
 msgstr "Köztes esemény"
+
+#: gaphor/RAAML/fta/houseevent.py:35
+#, fuzzy
+msgid "HouseEvent"
+msgstr "Kibontható/becsukható esemény"
+
+#: gaphor/RAAML/fta/inhibitgate.py:35
+#, fuzzy
+msgid "INHIBIT"
+msgstr "Akadály kapu"
+
+#: gaphor/RAAML/fta/majorityvotegate.py:40
+#, fuzzy
+msgid "MAJORITY_VOTE"
+msgstr "Többségi szavazókapu"
+
+#: gaphor/RAAML/fta/notgate.py:35
+msgid "NOT"
+msgstr ""
+
+#: gaphor/RAAML/fta/orgate.py:37
+msgid "OR"
+msgstr ""
+
+#: gaphor/RAAML/fta/seqgate.py:36
+msgid "SEQ"
+msgstr ""
+
+#: gaphor/RAAML/fta/undevelopedevent.py:36
+#, fuzzy
+msgid "UndevelopedEvent"
+msgstr "Ki nem fejtett esemény"
+
+#: gaphor/RAAML/fta/xorgate.py:36
+#, fuzzy
+msgid "XOR"
+msgstr "Exportálás"
+
+#: gaphor/RAAML/fta/zeroevent.py:36
+#, fuzzy
+msgid "ZeroEvent"
+msgstr "Nulla esemény"
 
 #: gaphor/RAAML/stpa/controlaction.py:33
 msgid "ControlAction"
@@ -159,7 +215,7 @@ msgstr "Veszteség"
 msgid "Hazard"
 msgstr "Veszély"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:60
 msgid "Situation"
 msgstr "Helyzet"
 
@@ -271,6 +327,16 @@ msgstr "Tulajdonság"
 msgid "Proxy Port"
 msgstr "Közvetít kikötő"
 
+#: gaphor/SysML/blocks/block.py:62
+#, fuzzy
+msgid "ControlStructure"
+msgstr "Ellenőrzési szerkezet"
+
+#: gaphor/SysML/blocks/block.py:64
+#, fuzzy
+msgid "block"
+msgstr "Blokkdiagram"
+
 #: gaphor/SysML/blocks/block.py:97
 msgid "parts"
 msgstr "Alkatrészek"
@@ -325,6 +391,40 @@ msgstr "Felsorolás"
 #: gaphor/UML/classes/classestoolbox.py:161
 msgid "Primitive"
 msgstr "Egyszerű"
+
+#: gaphor/SysML/blocks/proxyport.py:67
+msgid "proxy"
+msgstr ""
+
+#: gaphor/SysML/requirements/relationships.py:32
+#, fuzzy
+msgid "satisfy"
+msgstr "Megfelelő"
+
+#: gaphor/SysML/requirements/relationships.py:38
+#, fuzzy
+msgid "deriveReqt"
+msgstr "Származtatási követelmény"
+
+#: gaphor/SysML/requirements/relationships.py:44
+#, fuzzy
+msgid "trace"
+msgstr "Nyom"
+
+#: gaphor/SysML/requirements/relationships.py:50
+#, fuzzy
+msgid "verify"
+msgstr "Ellenőrzés"
+
+#: gaphor/SysML/requirements/relationships.py:56
+#, fuzzy
+msgid "refine"
+msgstr "Finomítás"
+
+#: gaphor/SysML/requirements/requirement.py:63
+#, fuzzy
+msgid "requirement"
+msgstr "Követelmény"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 msgid "Requirements"
@@ -511,6 +611,34 @@ msgstr "Felület megvalósítása"
 msgid "DataType"
 msgstr "AdatTípus"
 
+#: gaphor/UML/classes/datatype.py:58
+#, fuzzy
+msgid "primitive"
+msgstr "Egyszerű"
+
+#: gaphor/UML/classes/datatype.py:60
+#, fuzzy
+msgid "valueType"
+msgstr "ÉrtékTipusa"
+
+#: gaphor/UML/classes/datatype.py:62
+#, fuzzy
+msgid "dataType"
+msgstr "AdatTípus"
+
+#: gaphor/UML/classes/dependency.py:49
+msgid "use"
+msgstr ""
+
+#: gaphor/UML/classes/dependency.py:50
+msgid "realize"
+msgstr ""
+
+#: gaphor/UML/classes/dependency.py:51
+#, fuzzy
+msgid "implements"
+msgstr "Megvalósítás"
+
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
 msgstr "Felhasználás"
@@ -522,6 +650,31 @@ msgstr "Megvalósítás"
 #: gaphor/UML/classes/dependencypropertypages.py:19
 msgid "Implementation"
 msgstr "Megvalósítás"
+
+#: gaphor/UML/classes/enumeration.py:69
+#, fuzzy
+msgid "enumeration"
+msgstr "Felsorolás"
+
+#: gaphor/UML/classes/interface.py:290
+#, fuzzy
+msgid "interface"
+msgstr "Felület"
+
+#: gaphor/UML/classes/klass.py:59
+#, fuzzy
+msgid "stereotype"
+msgstr "SztereoTípus"
+
+#: gaphor/UML/classes/klass.py:61
+#, fuzzy
+msgid "metaclass"
+msgstr "Metaosztály"
+
+#: gaphor/UML/classes/package.py:23
+#, fuzzy
+msgid "profile"
+msgstr "Profil"
 
 #: gaphor/UML/classes/propertypages.glade:33
 #: gaphor/UML/classes/propertypages.ui:24
@@ -760,6 +913,11 @@ msgstr "Csomópont"
 msgid "Device"
 msgstr "Eszköz"
 
+#: gaphor/UML/components/node.py:54
+#, fuzzy
+msgid "device"
+msgstr "Eszköz"
+
 #: gaphor/UML/components/propertypages.glade:32
 #: gaphor/UML/components/propertypages.ui:23
 msgid "Indirectly Instantiated"
@@ -789,6 +947,11 @@ msgstr "Üzenet"
 #: gaphor/UML/interactions/propertypages.ui:21
 msgid "Message Sort"
 msgstr "Üzenetek rendezése"
+
+#: gaphor/UML/profiles/packageimport.py:19
+#, fuzzy
+msgid "import"
+msgstr "Importálás"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
@@ -872,6 +1035,16 @@ msgstr "Álállapotok-előzmények"
 #: gaphor/UML/states/statestoolbox.py:108
 msgid "Transition"
 msgstr "Átmenet"
+
+#: gaphor/UML/usecases/extend.py:19
+#, fuzzy
+msgid "extend"
+msgstr "Bővítés"
+
+#: gaphor/UML/usecases/include.py:19
+#, fuzzy
+msgid "include"
+msgstr "Beágyazás"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:12
 msgid "Use Cases"
@@ -1020,8 +1193,7 @@ msgstr "Exportálás XMI-fájlként"
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export model to XMI (XML Model Interchange) format"
-msgstr ""
-"Modell exportálása XMI-fájlként (XML Model Interchange – XML-modellcsere)"
+msgstr "Modell exportálása XMI-fájlként (XML Model Interchange – XML-modellcsere)"
 
 #: gaphor/plugins/xmiexport/__init__.py:31
 msgid "Export model to XMI file"
@@ -1070,7 +1242,7 @@ msgstr "A Gaphor bezárása"
 msgid "Files"
 msgstr "Fájlok"
 
-#: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:45
+#: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:44
 msgid "New Window"
 msgstr "Új ablak"
 
@@ -1079,7 +1251,7 @@ msgstr "Új ablak"
 msgid "Open"
 msgstr "Megnyitás"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:49
+#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:48
 msgid "Save"
 msgstr "Mentés"
 
@@ -1153,7 +1325,7 @@ msgstr "Kicsinyítés"
 msgid "Zoom 100%"
 msgstr "Tényleges méret"
 
-#: gaphor/ui/appfilemanager.py:13
+#: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
 msgstr "Minden Gaphor-modell"
 
@@ -1301,7 +1473,7 @@ msgstr ""
 "{exc}\n"
 "Kérjük, ellenőrizze, hogy helyesen beírta a helyet, és próbálja újra."
 
-#: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:253
+#: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:252
 #: gaphor/ui/mainwindow.ui:27
 msgid "New model"
 msgstr "Új modell"
@@ -1370,35 +1542,35 @@ msgstr "Gaphor"
 msgid "New diagram"
 msgstr "Új ábra"
 
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/mainwindow.py:49
 msgid "Save As..."
 msgstr "Mentés másként…"
 
-#: gaphor/ui/mainwindow.py:51
+#: gaphor/ui/mainwindow.py:50
 msgid "Export"
 msgstr "Exportálás"
 
-#: gaphor/ui/mainwindow.py:55
+#: gaphor/ui/mainwindow.py:54
 msgid "Tools"
 msgstr "Eszközök"
 
-#: gaphor/ui/mainwindow.py:59
+#: gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
 msgstr "Billentyűparancsok"
 
-#: gaphor/ui/mainwindow.py:60
+#: gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
 msgstr "A Gaphor névjegye"
 
-#: gaphor/ui/mainwindow.py:69
+#: gaphor/ui/mainwindow.py:68
 msgid "Recently opened files"
 msgstr "Nemrég megnyitott fájlok"
 
-#: gaphor/ui/mainwindow.py:255
+#: gaphor/ui/mainwindow.py:254
 msgid "edited"
 msgstr "szerkesztett"
 
-#: gaphor/ui/mainwindow.py:304
+#: gaphor/ui/mainwindow.py:303
 msgid "Profile: {}"
 msgstr "Profil: {}"
 
@@ -1488,3 +1660,7 @@ msgstr "Nincsenek nemrégiben megnyitott modellek"
 
 #~ msgid "_Console"
 #~ msgstr ""
+
+#~ msgid "C4 model"
+#~ msgstr "C4-modell"
+

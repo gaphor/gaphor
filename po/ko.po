@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
-"POT-Creation-Date: 2021-09-28 11:19+0200\n"
+"POT-Creation-Date: 2021-10-03 15:27+0200\n"
 "PO-Revision-Date: 2021-08-31 14:20+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language: ko\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: gaphor/C4Model/modelinglanguage.py:16
-msgid "C4 model"
+#: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:51
+msgid "C4 Model"
 msgstr "C4 모델"
 
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
@@ -28,10 +28,6 @@ msgstr "설명"
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
 msgstr "기술"
-
-#: gaphor/C4Model/toolbox.py:51
-msgid "C4 Model"
-msgstr "C4 모델"
 
 #: gaphor/C4Model/toolbox.py:55
 msgid "Person"
@@ -62,6 +58,25 @@ msgstr "의존요소"
 #: gaphor/RAAML/modelinglanguage.py:15
 msgid "RAAML"
 msgstr "RAAML"
+
+#: gaphor/RAAML/fta/andgate.py:37
+msgid "AND"
+msgstr ""
+
+#: gaphor/RAAML/fta/basicevent.py:36
+#, fuzzy
+msgid "BasicEvent"
+msgstr "기본 이벤트"
+
+#: gaphor/RAAML/fta/conditionalevent.py:33
+#, fuzzy
+msgid "ConditionalEvent"
+msgstr "조건 이벤트"
+
+#: gaphor/RAAML/fta/dormantevent.py:35
+#, fuzzy
+msgid "DormantEvent"
+msgstr "휴면 이벤트"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:10
 msgid "Fault Tree Analysis"
@@ -95,11 +110,11 @@ msgstr "다수결 투표 게이트"
 msgid "Inhibit Gate"
 msgstr "억제 게이트"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:86
+#: gaphor/RAAML/fta/ftatoolbox.py:86 gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
 msgstr "수신"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:97
+#: gaphor/RAAML/fta/ftatoolbox.py:97 gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
 msgstr "송신"
 
@@ -127,13 +142,55 @@ msgstr "하우스 이벤트"
 msgid "Zero Event"
 msgstr "제로 이벤트"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:174
+#: gaphor/RAAML/fta/ftatoolbox.py:174 gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
 msgstr "최상단 이벤트"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:185
+#: gaphor/RAAML/fta/ftatoolbox.py:185 gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
 msgstr "중간 이벤트"
+
+#: gaphor/RAAML/fta/houseevent.py:35
+#, fuzzy
+msgid "HouseEvent"
+msgstr "하우스 이벤트"
+
+#: gaphor/RAAML/fta/inhibitgate.py:35
+#, fuzzy
+msgid "INHIBIT"
+msgstr "억제 게이트"
+
+#: gaphor/RAAML/fta/majorityvotegate.py:40
+#, fuzzy
+msgid "MAJORITY_VOTE"
+msgstr "다수결 투표 게이트"
+
+#: gaphor/RAAML/fta/notgate.py:35
+msgid "NOT"
+msgstr ""
+
+#: gaphor/RAAML/fta/orgate.py:37
+msgid "OR"
+msgstr ""
+
+#: gaphor/RAAML/fta/seqgate.py:36
+msgid "SEQ"
+msgstr ""
+
+#: gaphor/RAAML/fta/undevelopedevent.py:36
+#, fuzzy
+msgid "UndevelopedEvent"
+msgstr "미개발 이벤트"
+
+#: gaphor/RAAML/fta/xorgate.py:36
+#, fuzzy
+msgid "XOR"
+msgstr "내보내기"
+
+#: gaphor/RAAML/fta/zeroevent.py:36
+#, fuzzy
+msgid "ZeroEvent"
+msgstr "제로 이벤트"
 
 #: gaphor/RAAML/stpa/controlaction.py:33
 msgid "ControlAction"
@@ -156,7 +213,7 @@ msgstr "손실"
 msgid "Hazard"
 msgstr "위험"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:60
 msgid "Situation"
 msgstr "상황"
 
@@ -268,6 +325,16 @@ msgstr "속성"
 msgid "Proxy Port"
 msgstr "프록시 포트"
 
+#: gaphor/SysML/blocks/block.py:62
+#, fuzzy
+msgid "ControlStructure"
+msgstr "제어 구조"
+
+#: gaphor/SysML/blocks/block.py:64
+#, fuzzy
+msgid "block"
+msgstr "블록"
+
 #: gaphor/SysML/blocks/block.py:97
 msgid "parts"
 msgstr "부분"
@@ -322,6 +389,40 @@ msgstr "열거"
 #: gaphor/UML/classes/classestoolbox.py:161
 msgid "Primitive"
 msgstr "원시"
+
+#: gaphor/SysML/blocks/proxyport.py:67
+msgid "proxy"
+msgstr ""
+
+#: gaphor/SysML/requirements/relationships.py:32
+#, fuzzy
+msgid "satisfy"
+msgstr "만족"
+
+#: gaphor/SysML/requirements/relationships.py:38
+#, fuzzy
+msgid "deriveReqt"
+msgstr "파생 요구"
+
+#: gaphor/SysML/requirements/relationships.py:44
+#, fuzzy
+msgid "trace"
+msgstr "추적"
+
+#: gaphor/SysML/requirements/relationships.py:50
+#, fuzzy
+msgid "verify"
+msgstr "검증"
+
+#: gaphor/SysML/requirements/relationships.py:56
+#, fuzzy
+msgid "refine"
+msgstr "정제"
+
+#: gaphor/SysML/requirements/requirement.py:63
+#, fuzzy
+msgid "requirement"
+msgstr "요구"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 msgid "Requirements"
@@ -508,6 +609,34 @@ msgstr "인터페이스 실체화"
 msgid "DataType"
 msgstr "데이터형식"
 
+#: gaphor/UML/classes/datatype.py:58
+#, fuzzy
+msgid "primitive"
+msgstr "원시"
+
+#: gaphor/UML/classes/datatype.py:60
+#, fuzzy
+msgid "valueType"
+msgstr "값 형식"
+
+#: gaphor/UML/classes/datatype.py:62
+#, fuzzy
+msgid "dataType"
+msgstr "데이터형식"
+
+#: gaphor/UML/classes/dependency.py:49
+msgid "use"
+msgstr ""
+
+#: gaphor/UML/classes/dependency.py:50
+msgid "realize"
+msgstr ""
+
+#: gaphor/UML/classes/dependency.py:51
+#, fuzzy
+msgid "implements"
+msgstr "구현"
+
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
 msgstr "사용법"
@@ -519,6 +648,31 @@ msgstr "실체화"
 #: gaphor/UML/classes/dependencypropertypages.py:19
 msgid "Implementation"
 msgstr "구현"
+
+#: gaphor/UML/classes/enumeration.py:69
+#, fuzzy
+msgid "enumeration"
+msgstr "열거"
+
+#: gaphor/UML/classes/interface.py:290
+#, fuzzy
+msgid "interface"
+msgstr "인터페이스"
+
+#: gaphor/UML/classes/klass.py:59
+#, fuzzy
+msgid "stereotype"
+msgstr "이중형식"
+
+#: gaphor/UML/classes/klass.py:61
+#, fuzzy
+msgid "metaclass"
+msgstr "메타클래스"
+
+#: gaphor/UML/classes/package.py:23
+#, fuzzy
+msgid "profile"
+msgstr "프로파일"
 
 #: gaphor/UML/classes/propertypages.glade:33
 #: gaphor/UML/classes/propertypages.ui:24
@@ -751,6 +905,11 @@ msgstr "노드"
 msgid "Device"
 msgstr "장치"
 
+#: gaphor/UML/components/node.py:54
+#, fuzzy
+msgid "device"
+msgstr "장치"
+
 #: gaphor/UML/components/propertypages.glade:32
 #: gaphor/UML/components/propertypages.ui:23
 msgid "Indirectly Instantiated"
@@ -780,6 +939,11 @@ msgstr "메시지"
 #: gaphor/UML/interactions/propertypages.ui:21
 msgid "Message Sort"
 msgstr "메시지 정렬"
+
+#: gaphor/UML/profiles/packageimport.py:19
+#, fuzzy
+msgid "import"
+msgstr "가져오기"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
@@ -863,6 +1027,16 @@ msgstr "기록 의사상태"
 #: gaphor/UML/states/statestoolbox.py:108
 msgid "Transition"
 msgstr "전이"
+
+#: gaphor/UML/usecases/extend.py:19
+#, fuzzy
+msgid "extend"
+msgstr "확장"
+
+#: gaphor/UML/usecases/include.py:19
+#, fuzzy
+msgid "include"
+msgstr "포함"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:12
 msgid "Use Cases"
@@ -1056,7 +1230,7 @@ msgstr "가포 끝내기"
 msgid "Files"
 msgstr "파일"
 
-#: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:45
+#: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:44
 msgid "New Window"
 msgstr "새 창"
 
@@ -1065,7 +1239,7 @@ msgstr "새 창"
 msgid "Open"
 msgstr "열기"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:49
+#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:48
 msgid "Save"
 msgstr "저장"
 
@@ -1139,7 +1313,7 @@ msgstr "축소"
 msgid "Zoom 100%"
 msgstr "원본 크기"
 
-#: gaphor/ui/appfilemanager.py:13
+#: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
 msgstr "모든 가포 모델"
 
@@ -1278,7 +1452,7 @@ msgstr ""
 "{exc}\n"
 "위치를 올바르게 입력했는지 확인하고 다시 시도하십시오."
 
-#: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:253
+#: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:252
 #: gaphor/ui/mainwindow.ui:27
 msgid "New model"
 msgstr "새 모델"
@@ -1345,35 +1519,35 @@ msgstr "가포"
 msgid "New diagram"
 msgstr "새 다이어그램"
 
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/mainwindow.py:49
 msgid "Save As..."
 msgstr "다른 이름으로 저장..."
 
-#: gaphor/ui/mainwindow.py:51
+#: gaphor/ui/mainwindow.py:50
 msgid "Export"
 msgstr "내보내기"
 
-#: gaphor/ui/mainwindow.py:55
+#: gaphor/ui/mainwindow.py:54
 msgid "Tools"
 msgstr "도구"
 
-#: gaphor/ui/mainwindow.py:59
+#: gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
 msgstr "키보드 바로 가기 키"
 
-#: gaphor/ui/mainwindow.py:60
+#: gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
 msgstr "가포 정보"
 
-#: gaphor/ui/mainwindow.py:69
+#: gaphor/ui/mainwindow.py:68
 msgid "Recently opened files"
 msgstr "최근 연 파일"
 
-#: gaphor/ui/mainwindow.py:255
+#: gaphor/ui/mainwindow.py:254
 msgid "edited"
 msgstr "편집함"
 
-#: gaphor/ui/mainwindow.py:304
+#: gaphor/ui/mainwindow.py:303
 msgid "Profile: {}"
 msgstr "프로파일: {}"
 
@@ -1463,4 +1637,7 @@ msgstr "최근 연 모델 없음"
 
 #~ msgid "_Console"
 #~ msgstr ""
+
+#~ msgid "C4 model"
+#~ msgstr "C4 모델"
 
