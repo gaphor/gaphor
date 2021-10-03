@@ -3,12 +3,10 @@
 (help browser anyone?)
 """
 
-import importlib
-
-import importlib_metadata
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
+from gaphor.application import distribution
 from gaphor.core import action
 from gaphor.i18n import translated_ui_string
 
@@ -33,7 +31,7 @@ class HelpService(Service, ActionProvider):
 
         about = builder.get_object("about")
 
-        about.set_version(importlib_metadata.version("gaphor"))
+        about.set_version(distribution().version)
         about.set_modal(True)
         about.set_transient_for(self.window)
 
