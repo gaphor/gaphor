@@ -6,9 +6,7 @@ from __future__ import annotations
 import logging
 import uuid
 from contextlib import contextmanager
-from typing import TYPE_CHECKING, Callable, Iterator, TypeVar, overload
-
-from typing_extensions import Protocol
+from typing import TYPE_CHECKING, Callable, Iterator, Protocol, TypeVar, overload
 
 from gaphor.core.modeling.event import ElementUpdated
 from gaphor.core.modeling.properties import (

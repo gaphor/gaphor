@@ -1,8 +1,6 @@
 """Definitions (types) for style sheets."""
 from enum import Enum
-from typing import Sequence, Tuple, Union
-
-from typing_extensions import TypedDict
+from typing import Sequence, Tuple, TypedDict, Union
 
 Color = Tuple[float, float, float, float]  # RGBA
 Padding = Tuple[float, float, float, float]  # top/right/bottom/left

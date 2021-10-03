@@ -1,10 +1,9 @@
 from __future__ import annotations
 
 import operator
-from typing import Callable, Dict, Iterator, Sequence, Tuple, Union
+from typing import Callable, Dict, Iterator, Literal, Protocol, Sequence, Tuple, Union
 
 import tinycss2
-from typing_extensions import Literal, Protocol
 
 from gaphor.core.styling.declarations import (
     FONT_SIZE_VALUES,

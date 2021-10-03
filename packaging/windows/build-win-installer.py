@@ -16,7 +16,7 @@ def clean_files(paths: list[Path]) -> None:
         if path.is_dir():
             shutil.rmtree(path, ignore_errors=True)
         elif path.is_file():
-            path.unlink(missing_ok=True)  # type: ignore[call-arg]
+            path.unlink(missing_ok=True)
 
 
 def build_installer(

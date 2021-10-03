@@ -26,9 +26,17 @@ methods:
 from __future__ import annotations
 
 import logging
-from typing import Any, Callable, Generic, Sequence, TypeVar, Union, overload
-
-from typing_extensions import Literal, Protocol
+from typing import (
+    Any,
+    Callable,
+    Generic,
+    Literal,
+    Protocol,
+    Sequence,
+    TypeVar,
+    Union,
+    overload,
+)
 
 from gaphor.core.modeling.collection import collection, collectionlist
 from gaphor.core.modeling.event import (
@@ -866,7 +874,7 @@ class redefine(umlproperty):
             self.original.unlink(obj)
 
     def __str__(self) -> str:
-        return f"<redefine {self.name}[{self.lower}..{self.upper}]: {self.type.__name__} = {str(self.original)}>"
+        return f"<redefine {self.name}[{self.lower}..{self.upper}]: {self.type.__name__} = {self.original}>"
 
     def _get(self, obj):
         return self.original._get(obj)
