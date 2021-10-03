@@ -1,14 +1,30 @@
+from typing import Dict, List
+
 import pytest
 from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.C4Model.toolbox import c4model_toolbox_actions
+from gaphor.core.eventmanager import EventManager
+from gaphor.core.modeling.elementfactory import ElementFactory
 from gaphor.diagram.diagramtools.placement import PlacementState, on_drag_begin
 from gaphor.RAAML.toolbox import raaml_toolbox_actions
 from gaphor.SysML.toolbox import sysml_toolbox_actions
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 from gaphor.UML.toolbox import uml_toolbox_actions
+
+
+@pytest.fixture
+def event_manager():
+    return EventManager()
+
+
+@pytest.fixture
+def element_factory(event_manager):
+    element_factory = ElementFactory(event_manager)
+    yield element_factory
+    element_factory.shutdown()
 
 
 @pytest.fixture
@@ -116,7 +132,7 @@ def test_placement_partition(tab, element_factory, event_manager):
 )
 def test_uml_toolbox_actions_shortcut_unique(toolbox_actions):
 
-    shortcuts = {}
+    shortcuts: Dict[str, List[str]] = {}
 
     for category, items in toolbox_actions:
         for action_name, label, icon_name, shortcut, *rest in items:
