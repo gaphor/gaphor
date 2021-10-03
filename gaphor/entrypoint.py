@@ -9,10 +9,10 @@ logger = logging.getLogger(__name__)
 
 
 def initialize(scope, services=None, **known_services: T) -> Dict[str, T]:
-    return init_entrypoints(load_entrypoints(scope, services), **known_services)
+    return init_entry_points(load_entry_points(scope, services), **known_services)
 
 
-def load_entrypoints(scope, services=None) -> Dict[str, Type[T]]:
+def load_entry_points(scope, services=None) -> Dict[str, Type[T]]:
     """Load services from resources."""
     uninitialized_services = {}
     for ep in importlib.metadata.entry_points()[scope]:
@@ -23,7 +23,7 @@ def load_entrypoints(scope, services=None) -> Dict[str, Type[T]]:
     return uninitialized_services
 
 
-def init_entrypoints(
+def init_entry_points(
     uninitialized_services: Dict[str, Type[T]], **known_services: T
 ) -> Dict[str, T]:
     """Instantiate service definitions, taking into account dependencies
