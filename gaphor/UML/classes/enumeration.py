@@ -11,7 +11,6 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import Box, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
-from gaphor.i18n import gettext
 from gaphor.UML.classes.klass import (
     attribute_watches,
     attributes_compartment,
