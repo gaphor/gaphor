@@ -1,3 +1,7 @@
+2.6.4
+-----
+- Fix Flatpak build failure by reverting to previous dependencies
+
 2.6.3
 -----
 - Fix about dialog logo
