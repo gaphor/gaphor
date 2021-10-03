@@ -1,4 +1,4 @@
-"""The action definition for the C4 model toolbox."""
+"""The action definition for the C4 Model toolbox."""
 
 from gaphor.C4Model import c4model, diagramitems
 from gaphor.core import gettext

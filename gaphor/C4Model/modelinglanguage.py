@@ -13,7 +13,7 @@ from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 class C4ModelLanguage(ModelingLanguage):
     @property
     def name(self) -> str:
-        return gettext("C4 model")
+        return gettext("C4 Model")
 
     @property
     def toolbox_definition(self) -> ToolboxDefinition:
