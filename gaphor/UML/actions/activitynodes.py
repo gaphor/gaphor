@@ -164,7 +164,7 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
         no_movable_handles(self)
 
         self.shape = IconBox(
-            Box(draw=draw_decision_node),
+            Box(draw=self.draw_decision_node),
             # Text should be left-top
             Text(
                 text=lambda: stereotypes_str(self.subject),
@@ -174,24 +174,36 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[ActivityNode].incoming")
+        self.watch("combined.outgoing")
 
     combined: relation_one[UML.ControlNode] = association(
         "combined", UML.ControlNode, upper=1
     )
 
+    def draw_decision_node(self, _box, context, _bounding_box):
+        """Draw diamond shape, which represents decision and merge nodes."""
+        cr = context.cairo
+        cr.move_to(0, 0)
+        draw_diamond(cr, 15)
+        stroke(context)
 
-def draw_decision_node(_box, context, _bounding_box):
-    """Draw diamond shape, which represents decision and merge nodes."""
-    cr = context.cairo
-    r = 15
+        if isinstance(self.subject, UML.MergeNode):
+            cr.move_to(6, 9)
+            draw_diamond(cr, 6)
+            if self.subject and len(self.subject.incoming) > 1 and not self.combined:
+                cr.fill_preserve()
+            stroke(context)
+
+
+def draw_diamond(cr, r):
     r2 = r * 2 / 3
 
-    cr.move_to(r2, 0)
-    cr.line_to(r2 * 2, r)
-    cr.line_to(r2, r * 2)
-    cr.line_to(0, r)
+    cr.rel_move_to(r2, 0)
+    cr.rel_line_to(r2, r)
+    cr.rel_line_to(-r2, r)
+    cr.rel_line_to(-r2, -r)
     cr.close_path()
-    stroke(context)
 
 
 @represents(UML.ForkNode)
