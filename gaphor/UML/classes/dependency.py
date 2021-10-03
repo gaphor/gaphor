@@ -80,15 +80,11 @@ class DependencyItem(LinePresentation, Named):
     @property
     def on_folded_interface(self):
         connection = self._connections.get_connection(self.head)
-        return (
-            (
+        return "true" if (
                 connection
                 and isinstance(connection.port, InterfacePort)
                 and connection.connected.folded != Folded.NONE
-            )
-            and "true"
-            or "false"
-        )
+            ) else "false"
 
     def set_dependency_type(self, dependency_type):
         self._dependency_type = dependency_type
