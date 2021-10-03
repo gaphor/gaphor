@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-02 20:56-0400\n"
+"POT-Creation-Date: 2021-10-02 21:59-0400\n"
 "PO-Revision-Date: 2006-05-11 16:34+0000\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language: sv\n"
@@ -29,20 +29,20 @@ msgid "Technology"
 msgstr ""
 
 #: gaphor/C4Model/toolbox.py:25
-msgid "NewSoftwareSystem"
+msgid "New Software System"
 msgstr ""
 
 #: gaphor/C4Model/toolbox.py:32
-msgid "NewContainer"
+msgid "New Container"
 msgstr ""
 
 #: gaphor/C4Model/toolbox.py:40
-msgid "NewDatabase"
+msgid "New Database"
 msgstr ""
 
 #: gaphor/C4Model/toolbox.py:47
 #, fuzzy
-msgid "NewComponent"
+msgid "New Component"
 msgstr "Komponenter"
 
 #: gaphor/C4Model/toolbox.py:51
@@ -162,20 +162,24 @@ msgstr "Interaktioner"
 msgid "OperationalSituation"
 msgstr ""
 
+#: gaphor/RAAML/stpa/stpatoolbox.py:18 gaphor/RAAML/stpa/stpatoolbox.py:43
+#, fuzzy
+msgid "Loss"
+msgstr "Klasser"
+
+#: gaphor/RAAML/stpa/stpatoolbox.py:23 gaphor/RAAML/stpa/stpatoolbox.py:52
+msgid "Hazard"
+msgstr ""
+
+#: gaphor/RAAML/stpa/stpatoolbox.py:28
+msgid "AbstractOperationalSituation"
+msgstr ""
+
 #: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:123
 #, fuzzy
 msgid "Generalization"
 msgstr "Interaktioner"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:43
-#, fuzzy
-msgid "Loss"
-msgstr "Klasser"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:52
-msgid "Hazard"
-msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61
 #, fuzzy
@@ -395,6 +399,10 @@ msgstr ""
 msgid "New"
 msgstr ""
 
+#: gaphor/UML/actions/actionstoolbox.py:34
+msgid "Activity"
+msgstr ""
+
 #: gaphor/UML/actions/actionstoolbox.py:42
 msgid "Swimlane One"
 msgstr ""
@@ -538,6 +546,7 @@ msgid "Classes"
 msgstr "Klasser"
 
 #: gaphor/UML/classes/classestoolbox.py:46
+#: gaphor/UML/profiles/profilestoolbox.py:14
 #, fuzzy
 msgid "Class"
 msgstr "Klasser"
@@ -778,6 +787,10 @@ msgstr ""
 #: gaphor/UML/components/propertypages.glade:32
 #: gaphor/UML/components/propertypages.ui:23
 msgid "Indirectly Instantiated"
+msgstr ""
+
+#: gaphor/UML/interactions/interactionsconnect.py:76
+msgid "call()"
 msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:34
@@ -1054,19 +1067,23 @@ msgstr "_Exportera"
 msgid "All XMI Files"
 msgstr ""
 
-#: gaphor/services/helpservice/about.ui:8
-msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+#: gaphor/services/helpservice/about.ui:7 gaphor/ui/mainwindow.py:59
+msgid "About Gaphor"
 msgstr ""
 
 #: gaphor/services/helpservice/about.ui:9
+msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+msgstr ""
+
+#: gaphor/services/helpservice/about.ui:10
 msgid "Gaphor is the simple modeling tool written in Python"
 msgstr ""
 
-#: gaphor/services/helpservice/about.ui:11
+#: gaphor/services/helpservice/about.ui:12
 msgid "Fork me on GitHub"
 msgstr ""
 
-#: gaphor/services/helpservice/about.ui:14
+#: gaphor/services/helpservice/about.ui:15
 msgid ""
 "This software is published under the terms of the\n"
 "Apache Software License, version 2.0.\n"
@@ -1383,10 +1400,6 @@ msgstr ""
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:59
-msgid "About Gaphor"
-msgstr ""
-
 #: gaphor/ui/mainwindow.py:68
 msgid "Recently opened files"
 msgstr ""
@@ -1659,5 +1672,14 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "_Console"
+#~ msgstr ""
+
+#~ msgid "NewSoftwareSystem"
+#~ msgstr ""
+
+#~ msgid "NewContainer"
+#~ msgstr ""
+
+#~ msgid "NewDatabase"
 #~ msgstr ""
 

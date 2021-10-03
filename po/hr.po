@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-02 20:56-0400\n"
+"POT-Creation-Date: 2021-10-02 21:59-0400\n"
 "PO-Revision-Date: 2021-09-14 20:38+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language: hr\n"
@@ -33,22 +33,22 @@ msgstr "Tehnologija"
 
 #: gaphor/C4Model/toolbox.py:25
 #, fuzzy
-msgid "NewSoftwareSystem"
+msgid "New Software System"
 msgstr "Softverski sustav"
 
 #: gaphor/C4Model/toolbox.py:32
 #, fuzzy
-msgid "NewContainer"
+msgid "New Container"
 msgstr "Kontejner"
 
 #: gaphor/C4Model/toolbox.py:40
 #, fuzzy
-msgid "NewDatabase"
+msgid "New Database"
 msgstr "Kontejner: Baza podataka"
 
 #: gaphor/C4Model/toolbox.py:47
 #, fuzzy
-msgid "NewComponent"
+msgid "New Component"
 msgstr "Komponenta"
 
 #: gaphor/C4Model/toolbox.py:51
@@ -165,18 +165,23 @@ msgstr "Kontrolna radnja"
 msgid "OperationalSituation"
 msgstr "Operacijska situacija"
 
+#: gaphor/RAAML/stpa/stpatoolbox.py:18 gaphor/RAAML/stpa/stpatoolbox.py:43
+msgid "Loss"
+msgstr "Gubitak"
+
+#: gaphor/RAAML/stpa/stpatoolbox.py:23 gaphor/RAAML/stpa/stpatoolbox.py:52
+msgid "Hazard"
+msgstr "Opasnost"
+
+#: gaphor/RAAML/stpa/stpatoolbox.py:28
+#, fuzzy
+msgid "AbstractOperationalSituation"
+msgstr "Apstraktna operacijska situacija"
+
 #: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:123
 msgid "Generalization"
 msgstr "Generalizacija"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:43
-msgid "Loss"
-msgstr "Gubitak"
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:52
-msgid "Hazard"
-msgstr "Opasnost"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61
 msgid "Situation"
@@ -388,6 +393,11 @@ msgstr "UML"
 msgid "New"
 msgstr ""
 
+#: gaphor/UML/actions/actionstoolbox.py:34
+#, fuzzy
+msgid "Activity"
+msgstr "Aktivnost koja se može prekinuti"
+
 #: gaphor/UML/actions/actionstoolbox.py:42
 msgid "Swimlane One"
 msgstr ""
@@ -529,6 +539,7 @@ msgid "Classes"
 msgstr "Klase"
 
 #: gaphor/UML/classes/classestoolbox.py:46
+#: gaphor/UML/profiles/profilestoolbox.py:14
 msgid "Class"
 msgstr "Klasa"
 
@@ -808,6 +819,10 @@ msgstr "Uređaj"
 msgid "Indirectly Instantiated"
 msgstr "Indirektno izrađeno"
 
+#: gaphor/UML/interactions/interactionsconnect.py:76
+msgid "call()"
+msgstr ""
+
 #: gaphor/UML/interactions/interactionstoolbox.py:34
 #: gaphor/UML/interactions/interactionstoolbox.py:45
 msgid "Interaction"
@@ -1077,19 +1092,23 @@ msgstr "Izvezi model u XMI datoteku"
 msgid "All XMI Files"
 msgstr "Sve XMI datoteke"
 
-#: gaphor/services/helpservice/about.ui:8
+#: gaphor/services/helpservice/about.ui:7 gaphor/ui/mainwindow.py:59
+msgid "About Gaphor"
+msgstr "O programu Gaphor"
+
+#: gaphor/services/helpservice/about.ui:9
 msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
 msgstr "Copyright © 2001. – 2021. Arjan J. Molenaar i Dan Yeaw"
 
-#: gaphor/services/helpservice/about.ui:9
+#: gaphor/services/helpservice/about.ui:10
 msgid "Gaphor is the simple modeling tool written in Python"
 msgstr "Gaphor je jednostavan program za modeliranje napisan na Pythonu"
 
-#: gaphor/services/helpservice/about.ui:11
+#: gaphor/services/helpservice/about.ui:12
 msgid "Fork me on GitHub"
 msgstr "Kopiraj projekt na GitHubu"
 
-#: gaphor/services/helpservice/about.ui:14
+#: gaphor/services/helpservice/about.ui:15
 msgid ""
 "This software is published under the terms of the\n"
 "Apache Software License, version 2.0.\n"
@@ -1432,10 +1451,6 @@ msgstr "Alati"
 #: gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
 msgstr "Tipkovni prečaci"
-
-#: gaphor/ui/mainwindow.py:59
-msgid "About Gaphor"
-msgstr "O programu Gaphor"
 
 #: gaphor/ui/mainwindow.py:68
 msgid "Recently opened files"
