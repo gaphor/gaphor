@@ -15,17 +15,17 @@ from gaphor.UML import diagramitems as uml_items
 
 def loss_config(new_item):
     default_namespace(new_item)
-    new_item.subject.name = "Loss"
+    new_item.subject.name = gettext("Loss")
 
 
 def hazard_config(new_item):
     default_namespace(new_item)
-    new_item.subject.name = "Hazard"
+    new_item.subject.name = gettext("Hazard")
 
 
 def abstract_operational_situation_config(new_item):
     default_namespace(new_item)
-    new_item.subject.name = "AbstractOperationalSituation"
+    new_item.subject.name = gettext("AbstractOperationalSituation")
 
 
 stpa = ToolSection(
