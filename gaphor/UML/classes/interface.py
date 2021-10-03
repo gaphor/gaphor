@@ -76,6 +76,7 @@ from gaphas.geometry import distance_line_point, distance_point_point
 from gaphas.item import NE, NW, SE, SW
 
 from gaphor import UML
+from gaphor.core import gettext
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import FontWeight, VerticalAlign
 from gaphor.diagram.presentation import (
@@ -286,7 +287,7 @@ class InterfaceItem(ElementPresentation, Classified):
             Box(
                 Text(
                     text=lambda: UML.model.stereotypes_str(
-                        self.subject, ("interface",)
+                        self.subject, (gettext("interface"),)
                     ),
                 ),
                 Text(

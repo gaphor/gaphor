@@ -5,6 +5,7 @@ from math import pi
 import cairo
 from gaphas.geometry import Rectangle
 
+from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -36,7 +37,7 @@ class MajorityVoteItem(ElementPresentation, Classified):
                 draw=draw_majority_vote_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, ["MAJORITY_VOTE"]),
+                text=lambda: stereotypes_str(self.subject, [gettext("MAJORITY_VOTE")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

@@ -25,7 +25,8 @@ def default_namespace(new_item):
 
 def namespace_config(new_item):
     default_namespace(new_item)
-    new_item.subject.name = f"New{type(new_item.subject).__name__}"
+    translated_new = gettext("New")
+    new_item.subject.name = f"{translated_new} {type(new_item.subject).__name__}"
 
 
 class ToolDef(NamedTuple):

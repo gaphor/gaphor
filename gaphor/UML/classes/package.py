@@ -1,6 +1,7 @@
 """Package diagram item."""
 
 from gaphor import UML
+from gaphor.core import gettext
 from gaphor.diagram.presentation import ElementPresentation, Named, from_package_str
 from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
@@ -18,7 +19,9 @@ class PackageItem(ElementPresentation, Named):
             Text(
                 text=lambda: stereotypes_str(
                     self.subject,
-                    isinstance(self.subject, UML.Profile) and ("profile",) or (),
+                    isinstance(self.subject, UML.Profile)
+                    and (gettext("profile"),)
+                    or (),
                 ),
             ),
             Text(

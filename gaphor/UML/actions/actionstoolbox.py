@@ -12,7 +12,8 @@ from gaphor.UML.modelfactory import owner_package
 
 def activity_config(new_item):
     subject = new_item.subject
-    subject.name = f"New{type(subject).__name__}"
+    translated_new = gettext("New")
+    subject.name = f"{translated_new} {type(subject).__name__}"
     if subject.activity:
         return
 
@@ -30,7 +31,7 @@ def activity_config(new_item):
         subject.activity = activities[0]
     else:
         activity = subject.model.create(UML.Activity)
-        activity.name = "Activity"
+        activity.name = gettext("Activity")
         activity.package = package
         subject.activity = activity
 

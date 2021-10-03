@@ -57,11 +57,11 @@ class BlockItem(ElementPresentation[Block], Classified):
 
     def additional_stereotypes(self):
         if isinstance(self.subject, raaml.Situation):
-            return ["Situation"]
+            return [gettext("Situation")]
         elif isinstance(self.subject, raaml.ControlStructure):
-            return ["ControlStructure"]
+            return [gettext("ControlStructure")]
         elif isinstance(self.subject, Block):
-            return ["block"]
+            return [gettext("block")]
         else:
             return ()
 

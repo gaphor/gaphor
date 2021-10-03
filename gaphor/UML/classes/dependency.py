@@ -17,6 +17,7 @@ type of a dependency in automatic way.
 import ast
 
 from gaphor import UML
+from gaphor.core import gettext
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
@@ -45,9 +46,9 @@ class DependencyItem(LinePresentation, Named):
         self.auto_dependency = True
 
         additional_stereotype = {
-            UML.Usage: ("use",),
-            UML.Realization: ("realize",),
-            UML.InterfaceRealization: ("implements",),
+            UML.Usage: (gettext("use"),),
+            UML.Realization: (gettext("realize"),),
+            UML.InterfaceRealization: (gettext("implements"),),
         }
 
         self.shape_middle = Box(
@@ -80,13 +81,13 @@ class DependencyItem(LinePresentation, Named):
     def on_folded_interface(self):
         connection = self._connections.get_connection(self.head)
         return (
-            (
+            "true"
+            if (
                 connection
                 and isinstance(connection.port, InterfacePort)
                 and connection.connected.folded != Folded.NONE
             )
-            and "true"
-            or "false"
+            else "false"
         )
 
     def set_dependency_type(self, dependency_type):

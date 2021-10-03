@@ -22,7 +22,8 @@ def history_pseudostate_config(new_item):
 
 def state_machine_config(new_item):
     subject = new_item.subject
-    subject.name = f"New{type(subject).__name__}"
+    translated_new = gettext("New")
+    subject.name = f"{translated_new} {type(subject).__name__}"
     if subject.container:
         return
 
@@ -41,14 +42,14 @@ def state_machine_config(new_item):
         state_machine = state_machines[0]
     else:
         state_machine = subject.model.create(UML.StateMachine)
-        state_machine.name = "StateMachine"
+        state_machine.name = gettext("StateMachine")
         state_machine.package = package
 
     if state_machine.region:
         region = state_machine.region[0]
     else:
         region = subject.model.create(UML.Region)
-        region.name = "DefaultRegion"
+        region.name = gettext("DefaultRegion")
         region.stateMachine = state_machine
 
     subject.container = region
