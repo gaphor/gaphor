@@ -14,7 +14,7 @@ from gi.repository import Gtk
 
 from gaphor.core import transactional
 from gaphor.core.modeling import Element
-from gaphor.diagram.uibuilder import translated_ui_string
+from gaphor.i18n import translated_ui_string
 
 
 def new_resource_builder(package, property_pages="propertypages"):

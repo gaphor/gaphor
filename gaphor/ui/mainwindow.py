@@ -9,7 +9,6 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import Diagram, ModelReady
-from gaphor.diagram.uibuilder import translated_ui_string
 from gaphor.event import (
     ActionEnabled,
     ActiveSessionChanged,
@@ -18,6 +17,7 @@ from gaphor.event import (
     SessionCreated,
     SessionShutdownRequested,
 )
+from gaphor.i18n import translated_ui_string
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.abc import UIComponent

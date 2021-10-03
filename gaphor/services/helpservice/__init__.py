@@ -10,7 +10,7 @@ from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action
-from gaphor.diagram.uibuilder import translated_ui_string
+from gaphor.i18n import translated_ui_string
 
 
 class HelpService(Service, ActionProvider):
