@@ -49,7 +49,7 @@ tomli = { version = "^1.2", optional = true }
 [tool.poetry.dev-dependencies]
 tomli = "^1.2"
 pytest = "^6.2"
-pytest-cov = "^2.12"
+pytest-cov = "^3.0"
 pytest-mock = "^3.6.1"
 pytest-runner = "^5.3"
 black = "^21.9b0"
