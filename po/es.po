@@ -4,19 +4,19 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-03 17:07+0200\n"
-"PO-Revision-Date: 2021-09-27 02:39+0000\n"
+"PO-Revision-Date: 2021-10-09 19:04+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16
-#, fuzzy
 msgid "C4 model"
 msgstr "Modelo C4"
 
@@ -29,24 +29,20 @@ msgid "Technology"
 msgstr "Tecnología"
 
 #: gaphor/C4Model/toolbox.py:25
-#, fuzzy
 msgid "New Software System"
-msgstr "Sistema de software"
+msgstr "Sistema de software nuevo"
 
 #: gaphor/C4Model/toolbox.py:32
-#, fuzzy
 msgid "New Container"
-msgstr "Contenedor"
+msgstr "Contenedor nuevo"
 
 #: gaphor/C4Model/toolbox.py:40
-#, fuzzy
 msgid "New Database"
-msgstr "Contenedor: Base de datos"
+msgstr "Base de datos nueva"
 
 #: gaphor/C4Model/toolbox.py:47
-#, fuzzy
 msgid "New Component"
-msgstr "Componente"
+msgstr "Componente nuevo"
 
 #: gaphor/C4Model/toolbox.py:51
 msgid "C4 Model"
@@ -84,22 +80,19 @@ msgstr "RAAML"
 
 #: gaphor/RAAML/fta/andgate.py:37
 msgid "AND"
-msgstr ""
+msgstr "AND"
 
 #: gaphor/RAAML/fta/basicevent.py:36
-#, fuzzy
 msgid "BasicEvent"
-msgstr "Evento básico"
+msgstr "EventoBásico"
 
 #: gaphor/RAAML/fta/conditionalevent.py:33
-#, fuzzy
 msgid "ConditionalEvent"
-msgstr "Evento condicional"
+msgstr "EventoCondicional"
 
 #: gaphor/RAAML/fta/dormantevent.py:35
-#, fuzzy
 msgid "DormantEvent"
-msgstr "Evento inactivo"
+msgstr "EventoInactivo"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:10
 msgid "Fault Tree Analysis"
@@ -174,46 +167,40 @@ msgid "Intermediate Event"
 msgstr "Evento intermedio"
 
 #: gaphor/RAAML/fta/houseevent.py:35
-#, fuzzy
 msgid "HouseEvent"
-msgstr "Evento en casa"
+msgstr "EventoCasa"
 
 #: gaphor/RAAML/fta/inhibitgate.py:35
-#, fuzzy
 msgid "INHIBIT"
-msgstr "Puerta inhibida"
+msgstr "INHIBIT"
 
 #: gaphor/RAAML/fta/majorityvotegate.py:40
-#, fuzzy
 msgid "MAJORITY_VOTE"
-msgstr "Puerta del voto mayoritario"
+msgstr "MAJORITY_VOTE"
 
 #: gaphor/RAAML/fta/notgate.py:35
 msgid "NOT"
-msgstr ""
+msgstr "NOT"
 
 #: gaphor/RAAML/fta/orgate.py:37
 msgid "OR"
-msgstr ""
+msgstr "OR"
 
 #: gaphor/RAAML/fta/seqgate.py:36
 msgid "SEQ"
-msgstr ""
+msgstr "SEQ"
 
 #: gaphor/RAAML/fta/undevelopedevent.py:36
-#, fuzzy
 msgid "UndevelopedEvent"
-msgstr "Evento sin desarrollar"
+msgstr "EventoSinDesarrollar"
 
 #: gaphor/RAAML/fta/xorgate.py:36
-#, fuzzy
 msgid "XOR"
-msgstr "Exportar"
+msgstr "XOR"
 
 #: gaphor/RAAML/fta/zeroevent.py:36
-#, fuzzy
 msgid "ZeroEvent"
-msgstr "Evento cero"
+msgstr "EventoCero"
 
 #: gaphor/RAAML/stpa/controlaction.py:33
 msgid "ControlAction"
@@ -232,9 +219,8 @@ msgid "Hazard"
 msgstr "Riesgo"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:28
-#, fuzzy
 msgid "AbstractOperationalSituation"
-msgstr "Situación operativa abstracta"
+msgstr "SituaciónOperativaAbstracta"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:123
@@ -354,14 +340,12 @@ msgid "Proxy Port"
 msgstr "Puerto proxy"
 
 #: gaphor/SysML/blocks/block.py:62
-#, fuzzy
 msgid "ControlStructure"
-msgstr "Estructura de control"
+msgstr "EstructuraControl"
 
 #: gaphor/SysML/blocks/block.py:64
-#, fuzzy
 msgid "block"
-msgstr "Bloque"
+msgstr "bloque"
 
 #: gaphor/SysML/blocks/block.py:97
 msgid "parts"
@@ -420,37 +404,31 @@ msgstr "Primitivo"
 
 #: gaphor/SysML/blocks/proxyport.py:67
 msgid "proxy"
-msgstr ""
+msgstr "proxy"
 
 #: gaphor/SysML/requirements/relationships.py:32
-#, fuzzy
 msgid "satisfy"
-msgstr "Satisfacer"
+msgstr "satisfacer"
 
 #: gaphor/SysML/requirements/relationships.py:38
-#, fuzzy
 msgid "deriveReqt"
-msgstr "Derivar req"
+msgstr "deriveReqt"
 
 #: gaphor/SysML/requirements/relationships.py:44
-#, fuzzy
 msgid "trace"
-msgstr "Trazar"
+msgstr "trazar"
 
 #: gaphor/SysML/requirements/relationships.py:50
-#, fuzzy
 msgid "verify"
-msgstr "Verificar"
+msgstr "verificar"
 
 #: gaphor/SysML/requirements/relationships.py:56
-#, fuzzy
 msgid "refine"
-msgstr "Refinar"
+msgstr "refinar"
 
 #: gaphor/SysML/requirements/requirement.py:63
-#, fuzzy
 msgid "requirement"
-msgstr "Requisito"
+msgstr "requisito"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 msgid "Requirements"
@@ -493,12 +471,11 @@ msgstr "UML"
 #: gaphor/UML/interactions/interactionstoolbox.py:15
 #: gaphor/UML/states/statestoolbox.py:25 gaphor/diagram/diagramtoolbox.py:28
 msgid "New"
-msgstr ""
+msgstr "nuevo"
 
 #: gaphor/UML/actions/actionstoolbox.py:34
-#, fuzzy
 msgid "Activity"
-msgstr "Hacer actividad"
+msgstr "Actividad"
 
 #: gaphor/UML/actions/actionstoolbox.py:42
 msgid "Swimlane One"
@@ -658,32 +635,28 @@ msgid "DataType"
 msgstr "TipoDato"
 
 #: gaphor/UML/classes/datatype.py:59
-#, fuzzy
 msgid "primitive"
-msgstr "Primitivo"
+msgstr "primitivo"
 
 #: gaphor/UML/classes/datatype.py:61
-#, fuzzy
 msgid "valueType"
-msgstr "TipoValor"
+msgstr "tipoValor"
 
 #: gaphor/UML/classes/datatype.py:63
-#, fuzzy
 msgid "dataType"
-msgstr "TipoDato"
+msgstr "tipoDato"
 
 #: gaphor/UML/classes/dependency.py:49
 msgid "use"
-msgstr ""
+msgstr "usar"
 
 #: gaphor/UML/classes/dependency.py:50
 msgid "realize"
-msgstr ""
+msgstr "realizar"
 
 #: gaphor/UML/classes/dependency.py:51
-#, fuzzy
 msgid "implements"
-msgstr "Implementación"
+msgstr "implementa"
 
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
@@ -698,29 +671,24 @@ msgid "Implementation"
 msgstr "Implementación"
 
 #: gaphor/UML/classes/enumeration.py:70
-#, fuzzy
 msgid "enumeration"
-msgstr "Enumeración"
+msgstr "enumeración"
 
 #: gaphor/UML/classes/interface.py:291
-#, fuzzy
 msgid "interface"
-msgstr "Interfaz"
+msgstr "interfaz"
 
 #: gaphor/UML/classes/klass.py:59
-#, fuzzy
 msgid "stereotype"
-msgstr "Estereotipo"
+msgstr "estereotipo"
 
 #: gaphor/UML/classes/klass.py:61
-#, fuzzy
 msgid "metaclass"
-msgstr "Metaclase"
+msgstr "metaclase"
 
 #: gaphor/UML/classes/package.py:23
-#, fuzzy
 msgid "profile"
-msgstr "Perfil"
+msgstr "perfil"
 
 #: gaphor/UML/classes/propertypages.glade:33
 #: gaphor/UML/classes/propertypages.ui:24
@@ -945,9 +913,8 @@ msgid "Device"
 msgstr "Dispositivo"
 
 #: gaphor/UML/components/node.py:54
-#, fuzzy
 msgid "device"
-msgstr "Dispositivo"
+msgstr "dispositivo"
 
 #: gaphor/UML/components/propertypages.glade:32
 #: gaphor/UML/components/propertypages.ui:23
@@ -956,7 +923,7 @@ msgstr "Instanciada indirectamente"
 
 #: gaphor/UML/interactions/interactionsconnect.py:76
 msgid "call()"
-msgstr ""
+msgstr "call()"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:34
 #: gaphor/UML/interactions/interactionstoolbox.py:45
@@ -985,9 +952,8 @@ msgid "Message Sort"
 msgstr "Orden de los mensajes"
 
 #: gaphor/UML/profiles/packageimport.py:19
-#, fuzzy
 msgid "import"
-msgstr "Importar"
+msgstr "importar"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
@@ -1050,11 +1016,11 @@ msgstr "Actividades"
 
 #: gaphor/UML/states/statestoolbox.py:45
 msgid "StateMachine"
-msgstr ""
+msgstr "MáquinaEstados"
 
 #: gaphor/UML/states/statestoolbox.py:52
 msgid "DefaultRegion"
-msgstr ""
+msgstr "RegiónPredeterminada"
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
@@ -1081,14 +1047,12 @@ msgid "Transition"
 msgstr "Transición"
 
 #: gaphor/UML/usecases/extend.py:19
-#, fuzzy
 msgid "extend"
-msgstr "Extender"
+msgstr "extender"
 
 #: gaphor/UML/usecases/include.py:19
-#, fuzzy
 msgid "include"
-msgstr "Incluir"
+msgstr "incluir"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:12
 msgid "Use Cases"
@@ -1186,14 +1150,17 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
+"Consola interactiva de Python de Gaphor\n"
+"{version}\n"
+"Escriba \"help\" para obtener más información.\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
 msgid "Gaphor Console"
-msgstr ""
+msgstr "Consola de Gaphor"
 
 #: gaphor/plugins/console/consolewindow.py:43
 msgid "Console"
-msgstr ""
+msgstr "Consola"
 
 #: gaphor/plugins/diagramexport/__init__.py:52
 msgid "All {ext} Files"
@@ -1716,4 +1683,3 @@ msgstr "No hay modelos abiertos recientemente"
 
 #~ msgid "C4 model"
 #~ msgstr "Modelo C4"
-
