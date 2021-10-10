@@ -34,7 +34,7 @@ class ANDItem(ElementPresentation, Classified):
                 draw=draw_and_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("AND")]),
+                text=lambda: stereotypes_str(self.subject, [gettext("AND Gate")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

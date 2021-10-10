@@ -97,39 +97,39 @@ class DiagramExport(Service, ActionProvider):
 
     @action(
         name="file-export-svg",
-        label=gettext("Export to SVG"),
-        tooltip=gettext("Export diagram to SVG"),
+        label=gettext("Export as SVG"),
+        tooltip=gettext("Export diagram as SVG"),
     )
     def save_svg_action(self):
         diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(
-            diagram, gettext("Export diagram to SVG"), "svg", "image/svg+xml"
+            diagram, gettext("Export diagram as SVG"), "svg", "image/svg+xml"
         )
         if filename:
             self.save_svg(filename, diagram)
 
     @action(
         name="file-export-png",
-        label=gettext("Export to PNG"),
-        tooltip=gettext("Export diagram to PNG"),
+        label=gettext("Export as PNG"),
+        tooltip=gettext("Export diagram as PNG"),
     )
     def save_png_action(self):
         diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(
-            diagram, gettext("Export diagram to PNG"), "png", "image/png"
+            diagram, gettext("Export diagram as PNG"), "png", "image/png"
         )
         if filename:
             self.save_png(filename, diagram)
 
     @action(
         name="file-export-pdf",
-        label=gettext("Export to PDF"),
-        tooltip=gettext("Export diagram to PDF"),
+        label=gettext("Export as PDF"),
+        tooltip=gettext("Export diagram as PDF"),
     )
     def save_pdf_action(self):
         diagram = self.diagrams.get_current_diagram()
         filename = self.save_dialog(
-            diagram, gettext("Export diagram to PDF"), "pdf", "application/pdf"
+            diagram, gettext("Export diagram as PDF"), "pdf", "application/pdf"
         )
         if filename:
             self.save_pdf(filename, diagram)

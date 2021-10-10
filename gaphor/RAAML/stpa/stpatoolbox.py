@@ -25,7 +25,7 @@ def hazard_config(new_item):
 
 def abstract_operational_situation_config(new_item):
     default_namespace(new_item)
-    new_item.subject.name = gettext("AbstractOperationalSituation")
+    new_item.subject.name = gettext("Abstract Operational Situation")
 
 
 stpa = ToolSection(

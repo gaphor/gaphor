@@ -32,7 +32,7 @@ class InhibitItem(ElementPresentation, Classified):
                 draw=draw_inhibit_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("INHIBIT")]),
+                text=lambda: stereotypes_str(self.subject, [gettext("Inhibit Gate")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

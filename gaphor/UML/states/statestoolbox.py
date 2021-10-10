@@ -42,14 +42,14 @@ def state_machine_config(new_item):
         state_machine = state_machines[0]
     else:
         state_machine = subject.model.create(UML.StateMachine)
-        state_machine.name = gettext("StateMachine")
+        state_machine.name = gettext("State Machine")
         state_machine.package = package
 
     if state_machine.region:
         region = state_machine.region[0]
     else:
         region = subject.model.create(UML.Region)
-        region.name = gettext("DefaultRegion")
+        region.name = gettext("Default Region")
         region.stateMachine = state_machine
 
     subject.container = region

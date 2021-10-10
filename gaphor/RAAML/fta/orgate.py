@@ -34,7 +34,7 @@ class ORItem(ElementPresentation, Classified):
                 draw=draw_or_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("OR")]),
+                text=lambda: stereotypes_str(self.subject, [gettext("OR Gate")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

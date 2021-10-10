@@ -303,13 +303,13 @@ def save_changes_before_closing_dialog(window: Gtk.Window) -> Gtk.ResponseType:
         Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
         Gtk.MessageType.WARNING,
     )
-    dialog.props.text = gettext("Save changed to your model before closing?")
+    dialog.props.text = gettext("Save changes before closing?")
     dialog.props.secondary_text = gettext(
-        "If you close without saving, your changes will be discarded."
+        "Closing will cause any unsaved changes to be discarded."
     )
 
     dialog.add_buttons(
-        gettext("Close _without saving"),
+        gettext("Close _without saving changes"),
         Gtk.ResponseType.REJECT,
         Gtk.STOCK_CANCEL,
         Gtk.ResponseType.CANCEL,

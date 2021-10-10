@@ -30,7 +30,7 @@ class UnsafeControlActionItem(ElementPresentation, Classified):
             Box(
                 Text(
                     text=lambda: stereotypes_str(
-                        self.subject, [gettext("UnsafeControlAction")]
+                        self.subject, [gettext("Unsafe Control Action")]
                     ),
                 ),
                 Text(

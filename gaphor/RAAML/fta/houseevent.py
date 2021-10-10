@@ -32,7 +32,7 @@ class HouseEventItem(ElementPresentation, Classified):
                 draw=draw_house_event,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("HouseEvent")]),
+                text=lambda: stereotypes_str(self.subject, [gettext("House Event")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

@@ -33,7 +33,7 @@ class BasicEventItem(ElementPresentation, Classified):
                 draw=draw_basic_event,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("BasicEvent")]),
+                text=lambda: stereotypes_str(self.subject, [gettext("Basic Event")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

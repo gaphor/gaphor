@@ -33,7 +33,7 @@ class UndevelopedEventItem(ElementPresentation, Classified):
             ),
             Text(
                 text=lambda: stereotypes_str(
-                    self.subject, [gettext("UndevelopedEvent")]
+                    self.subject, [gettext("Undeveloped Event")]
                 ),
             ),
             Text(

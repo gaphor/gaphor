@@ -32,7 +32,7 @@ class NOTItem(ElementPresentation, Classified):
                 draw=draw_not_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("NOT")]),
+                text=lambda: stereotypes_str(self.subject, [gettext("NOT Gate")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

@@ -72,7 +72,7 @@ renderers and such.</property>
     <property name="expanded">1</property>
     <child type="label">
       <object class="GtkLabel">
-        <property name="label" translatable="yes">Note / Remark</property>
+        <property name="label" translatable="yes">Note or Remark</property>
         <property name="xalign">0</property>
         <attributes>
           <attribute name="weight" value="bold"></attribute>

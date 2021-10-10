@@ -21,14 +21,14 @@ class XMIExport(Service, ActionProvider):
 
     @action(
         name="file-export-xmi",
-        label=gettext("Export to XMI"),
-        tooltip=gettext("Export model to XMI (XML Model Interchange) format"),
+        label=gettext("Export as XMI"),
+        tooltip=gettext("Export model as XMI (XML Model Interchange) format"),
     )
     def execute(self):
         filename = self.file_manager.filename
         filename = filename.replace(".gaphor", ".xmi") if filename else "model.xmi"
         filename = save_file_dialog(
-            gettext("Export model to XMI file"),
+            gettext("Export model as XMI file"),
             filename=filename,
             extension=".xmi",
             filters=[(gettext("All XMI Files"), ".xmi", "text/xml")],

@@ -32,7 +32,7 @@ class DormantEventItem(ElementPresentation, Classified):
                 draw=draw_dormant_event,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("DormantEvent")]),
+                text=lambda: stereotypes_str(self.subject, [gettext("Dormant Event")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",
