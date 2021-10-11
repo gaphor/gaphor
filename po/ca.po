@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.15\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-03 17:07+0200\n"
+"POT-Creation-Date: 2021-10-11 22:10+0200\n"
 "PO-Revision-Date: 2011-03-05 20:26+0100\n"
 "Last-Translator: Jordi Vilalta Prat <jvprat@gmail.com>\n"
 "Language: ca\n"
@@ -14,9 +14,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: gaphor/C4Model/modelinglanguage.py:16
+#: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:51
 #, fuzzy
-msgid "C4 model"
+msgid "C4 Model"
 msgstr "Model nou"
 
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
@@ -45,11 +45,6 @@ msgstr ""
 #, fuzzy
 msgid "New Component"
 msgstr "Component"
-
-#: gaphor/C4Model/toolbox.py:51
-#, fuzzy
-msgid "C4 Model"
-msgstr "Model nou"
 
 #: gaphor/C4Model/toolbox.py:55
 msgid "Person"
@@ -481,7 +476,7 @@ msgstr ""
 msgid "Containment"
 msgstr ""
 
-#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:274
+#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:279
 msgid "UML"
 msgstr ""
 
@@ -659,15 +654,15 @@ msgstr "Generalització"
 msgid "DataType"
 msgstr "Estat"
 
-#: gaphor/UML/classes/datatype.py:59
+#: gaphor/UML/classes/datatype.py:58
 msgid "primitive"
 msgstr ""
 
-#: gaphor/UML/classes/datatype.py:61
+#: gaphor/UML/classes/datatype.py:60
 msgid "valueType"
 msgstr ""
 
-#: gaphor/UML/classes/datatype.py:63
+#: gaphor/UML/classes/datatype.py:62
 #, fuzzy
 msgid "dataType"
 msgstr "Estat"
@@ -697,12 +692,12 @@ msgstr "Realització"
 msgid "Implementation"
 msgstr "Implementació"
 
-#: gaphor/UML/classes/enumeration.py:70
+#: gaphor/UML/classes/enumeration.py:69
 #, fuzzy
 msgid "enumeration"
 msgstr "Interacció"
 
-#: gaphor/UML/classes/interface.py:291
+#: gaphor/UML/classes/interface.py:290
 #, fuzzy
 msgid "interface"
 msgstr "Interfície"
@@ -1232,7 +1227,7 @@ msgid "Application"
 msgstr "Realització"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
-#: gaphor/ui/elementeditor.glade:339 gaphor/ui/elementeditor.ui:205
+#: gaphor/ui/elementeditor.glade:340 gaphor/ui/elementeditor.ui:205
 msgid "Preferences"
 msgstr ""
 
@@ -1283,7 +1278,7 @@ msgstr "_Diagrama"
 msgid "Edit"
 msgstr ""
 
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:226
+#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:230
 msgid "Show/Hide Editor"
 msgstr ""
 
@@ -1384,26 +1379,30 @@ msgid ""
 "appear.\n"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:322 gaphor/ui/elementeditor.ui:170
+#: gaphor/ui/elementeditor.glade:251
+msgid "Show/Hide Preferences"
+msgstr ""
+
+#: gaphor/ui/elementeditor.glade:323 gaphor/ui/elementeditor.ui:170
 msgid "Editors"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:359 gaphor/ui/elementeditor.ui:217
+#: gaphor/ui/elementeditor.glade:360 gaphor/ui/elementeditor.ui:217
 msgid "Reset tool automatically"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:392 gaphor/ui/elementeditor.ui:232
+#: gaphor/ui/elementeditor.glade:393 gaphor/ui/elementeditor.ui:232
 msgid "Style sheet"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:428 gaphor/ui/elementeditor.ui:252
+#: gaphor/ui/elementeditor.glade:429 gaphor/ui/elementeditor.ui:252
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:443 gaphor/ui/elementeditor.ui:194
+#: gaphor/ui/elementeditor.glade:444 gaphor/ui/elementeditor.ui:194
 msgid "Settings"
 msgstr ""
 
@@ -1518,10 +1517,15 @@ msgstr ""
 msgid "Gaphor"
 msgstr ""
 
-#: gaphor/ui/mainwindow.glade:181
+#: gaphor/ui/mainwindow.glade:184
 #, fuzzy
-msgid "New diagram"
+msgid "Create New diagram"
 msgstr "_Diagrama"
+
+#: gaphor/ui/mainwindow.glade:212
+#, fuzzy
+msgid "Open Application Menu"
+msgstr ""
 
 #: gaphor/ui/mainwindow.py:49
 msgid "Save As..."

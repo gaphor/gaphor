@@ -7,21 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-03 17:07+0200\n"
+"POT-Creation-Date: 2021-10-11 22:10+0200\n"
 "PO-Revision-Date: 2021-10-10 18:20+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hu/>\n"
 "Language: hu\n"
+"Language-Team: Hungarian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: gaphor/C4Model/modelinglanguage.py:16
-msgid "C4 model"
+#: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:51
+msgid "C4 Model"
 msgstr "C4-modell"
 
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
@@ -47,10 +46,6 @@ msgstr "Új adatbázis"
 #: gaphor/C4Model/toolbox.py:47
 msgid "New Component"
 msgstr "Új összetevő"
-
-#: gaphor/C4Model/toolbox.py:51
-msgid "C4 Model"
-msgstr "C4-modell"
 
 #: gaphor/C4Model/toolbox.py:55
 msgid "Person"
@@ -467,7 +462,7 @@ msgstr "Ellenőrzés"
 msgid "Containment"
 msgstr "Tartalmazás"
 
-#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:274
+#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:279
 msgid "UML"
 msgstr "UML"
 
@@ -638,15 +633,15 @@ msgstr "Felület megvalósítása"
 msgid "DataType"
 msgstr "Adattípus"
 
-#: gaphor/UML/classes/datatype.py:59
+#: gaphor/UML/classes/datatype.py:58
 msgid "primitive"
 msgstr "egyszerű"
 
-#: gaphor/UML/classes/datatype.py:61
+#: gaphor/UML/classes/datatype.py:60
 msgid "valueType"
 msgstr "értéktipus"
 
-#: gaphor/UML/classes/datatype.py:63
+#: gaphor/UML/classes/datatype.py:62
 msgid "dataType"
 msgstr "adattípus"
 
@@ -674,11 +669,11 @@ msgstr "Megvalósítás"
 msgid "Implementation"
 msgstr "Megvalósítás"
 
-#: gaphor/UML/classes/enumeration.py:70
+#: gaphor/UML/classes/enumeration.py:69
 msgid "enumeration"
 msgstr "felsorolás"
 
-#: gaphor/UML/classes/interface.py:291
+#: gaphor/UML/classes/interface.py:290
 msgid "interface"
 msgstr "felület"
 
@@ -841,7 +836,8 @@ msgid ""
 "Press ENTER to edit item, BS/DEL to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
-"Az osztályműveletek hozzáadása és szerkesztése az UML szintaxisa szerint.\n"
+"Az osztályműveletek hozzáadása és szerkesztése az UML szintaxisa szerint."
+"\n"
 "Példák a műveleti szintaxisra\n"
 "- call()\n"
 "- + call(a: int, b: str) # a jegyzet\n"
@@ -896,7 +892,8 @@ msgid ""
 "Press ENTER to edit item, BS/DEL to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
-"Az osztályműveletek hozzáadása és szerkesztése az UML szintaxisa szerint.\n"
+"Az osztályműveletek hozzáadása és szerkesztése az UML szintaxisa szerint."
+"\n"
 "Példák a műveleti szintaxisra\n"
 "- hívás()\n"
 "- + hívás(a: int, b: str) # a jegyzet\n"
@@ -1252,7 +1249,7 @@ msgid "Application"
 msgstr "Alkalmazás"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
-#: gaphor/ui/elementeditor.glade:339 gaphor/ui/elementeditor.ui:205
+#: gaphor/ui/elementeditor.glade:340 gaphor/ui/elementeditor.ui:205
 msgid "Preferences"
 msgstr "Beállítások"
 
@@ -1300,7 +1297,7 @@ msgstr "Ábrák"
 msgid "Edit"
 msgstr "Szerkesztés"
 
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:226
+#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:230
 msgid "Show/Hide Editor"
 msgstr "Szerkesztő megjelenítése/elrejtése"
 
@@ -1415,19 +1412,24 @@ msgstr ""
 "elemet a faszerkezetes nézetben, és kezdjen el gépelni. Egy keresőmező "
 "önműködően megjelenik.\n"
 
-#: gaphor/ui/elementeditor.glade:322 gaphor/ui/elementeditor.ui:170
+#: gaphor/ui/elementeditor.glade:251
+#, fuzzy
+msgid "Show/Hide Preferences"
+msgstr ""
+
+#: gaphor/ui/elementeditor.glade:323 gaphor/ui/elementeditor.ui:170
 msgid "Editors"
 msgstr "Szerkesztők"
 
-#: gaphor/ui/elementeditor.glade:359 gaphor/ui/elementeditor.ui:217
+#: gaphor/ui/elementeditor.glade:360 gaphor/ui/elementeditor.ui:217
 msgid "Reset tool automatically"
 msgstr "Az eszköz önműködő visszaállítása"
 
-#: gaphor/ui/elementeditor.glade:392 gaphor/ui/elementeditor.ui:232
+#: gaphor/ui/elementeditor.glade:393 gaphor/ui/elementeditor.ui:232
 msgid "Style sheet"
 msgstr "Stíluslap"
 
-#: gaphor/ui/elementeditor.glade:428 gaphor/ui/elementeditor.ui:252
+#: gaphor/ui/elementeditor.glade:429 gaphor/ui/elementeditor.ui:252
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
@@ -1436,7 +1438,7 @@ msgstr ""
 "🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html"
 "\">Gaphor-stíluslapok</a>"
 
-#: gaphor/ui/elementeditor.glade:443 gaphor/ui/elementeditor.ui:194
+#: gaphor/ui/elementeditor.glade:444 gaphor/ui/elementeditor.ui:194
 msgid "Settings"
 msgstr "Beállítások"
 
@@ -1560,9 +1562,15 @@ msgstr "Bezárás a módosítások mentése _nélkül"
 msgid "Gaphor"
 msgstr "Gaphor"
 
-#: gaphor/ui/mainwindow.glade:181
-msgid "New diagram"
+#: gaphor/ui/mainwindow.glade:184
+#, fuzzy
+msgid "Create New diagram"
 msgstr "Új ábra"
+
+#: gaphor/ui/mainwindow.glade:212
+#, fuzzy
+msgid "Open Application Menu"
+msgstr ""
 
 #: gaphor/ui/mainwindow.py:49
 msgid "Save As..."
@@ -1681,3 +1689,4 @@ msgstr "Nincsenek nemrégiben megnyitott modellek"
 
 #~ msgid "C4 model"
 #~ msgstr "C4-modell"
+

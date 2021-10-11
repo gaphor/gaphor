@@ -7,21 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-03 17:07+0200\n"
+"POT-Creation-Date: 2021-10-11 22:10+0200\n"
 "PO-Revision-Date: 2021-10-03 18:26+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
-"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
-">\n"
 "Language: fi\n"
+"Language-Team: Finnish "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: gaphor/C4Model/modelinglanguage.py:16
-msgid "C4 model"
+#: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:51
+msgid "C4 Model"
 msgstr "C4-malli"
 
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
@@ -48,10 +47,6 @@ msgstr "Uusi tietokanta"
 #: gaphor/C4Model/toolbox.py:47
 msgid "New Component"
 msgstr "Uusi komponentti"
-
-#: gaphor/C4Model/toolbox.py:51
-msgid "C4 Model"
-msgstr "C4-malli"
 
 #: gaphor/C4Model/toolbox.py:55
 msgid "Person"
@@ -474,7 +469,7 @@ msgstr ""
 msgid "Containment"
 msgstr ""
 
-#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:274
+#: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:279
 msgid "UML"
 msgstr "UML"
 
@@ -645,15 +640,15 @@ msgstr "Rajapinnan realisaatio"
 msgid "DataType"
 msgstr ""
 
-#: gaphor/UML/classes/datatype.py:59
+#: gaphor/UML/classes/datatype.py:58
 msgid "primitive"
 msgstr ""
 
-#: gaphor/UML/classes/datatype.py:61
+#: gaphor/UML/classes/datatype.py:60
 msgid "valueType"
 msgstr ""
 
-#: gaphor/UML/classes/datatype.py:63
+#: gaphor/UML/classes/datatype.py:62
 #, fuzzy
 msgid "dataType"
 msgstr "Tila"
@@ -683,12 +678,12 @@ msgstr "Realisaatio"
 msgid "Implementation"
 msgstr "Implementaatio"
 
-#: gaphor/UML/classes/enumeration.py:70
+#: gaphor/UML/classes/enumeration.py:69
 #, fuzzy
 msgid "enumeration"
 msgstr "Interaktio"
 
-#: gaphor/UML/classes/interface.py:291
+#: gaphor/UML/classes/interface.py:290
 #, fuzzy
 msgid "interface"
 msgstr "Rajapinta"
@@ -1217,7 +1212,7 @@ msgid "Application"
 msgstr "Sovellus"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
-#: gaphor/ui/elementeditor.glade:339 gaphor/ui/elementeditor.ui:205
+#: gaphor/ui/elementeditor.glade:340 gaphor/ui/elementeditor.ui:205
 msgid "Preferences"
 msgstr "Asetukset"
 
@@ -1265,7 +1260,7 @@ msgstr "Kaaviot"
 msgid "Edit"
 msgstr "Muokkaa"
 
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:226
+#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:230
 msgid "Show/Hide Editor"
 msgstr "Näytä/piilota editori"
 
@@ -1364,19 +1359,24 @@ msgid ""
 "appear.\n"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:322 gaphor/ui/elementeditor.ui:170
+#: gaphor/ui/elementeditor.glade:251
+#, fuzzy
+msgid "Show/Hide Preferences"
+msgstr ""
+
+#: gaphor/ui/elementeditor.glade:323 gaphor/ui/elementeditor.ui:170
 msgid "Editors"
 msgstr "Editorit"
 
-#: gaphor/ui/elementeditor.glade:359 gaphor/ui/elementeditor.ui:217
+#: gaphor/ui/elementeditor.glade:360 gaphor/ui/elementeditor.ui:217
 msgid "Reset tool automatically"
 msgstr "Nollaa työkalu automaattisesti"
 
-#: gaphor/ui/elementeditor.glade:392 gaphor/ui/elementeditor.ui:232
+#: gaphor/ui/elementeditor.glade:393 gaphor/ui/elementeditor.ui:232
 msgid "Style sheet"
 msgstr "Tyylisivu"
 
-#: gaphor/ui/elementeditor.glade:428 gaphor/ui/elementeditor.ui:252
+#: gaphor/ui/elementeditor.glade:429 gaphor/ui/elementeditor.ui:252
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
@@ -1386,7 +1386,7 @@ msgstr ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Tyylisivut"
 " Gaphorissa</a>"
 
-#: gaphor/ui/elementeditor.glade:443 gaphor/ui/elementeditor.ui:194
+#: gaphor/ui/elementeditor.glade:444 gaphor/ui/elementeditor.ui:194
 msgid "Settings"
 msgstr "Asetukset"
 
@@ -1509,9 +1509,15 @@ msgstr "Sulje _tallentamatta"
 msgid "Gaphor"
 msgstr "Gaphor"
 
-#: gaphor/ui/mainwindow.glade:181
-msgid "New diagram"
+#: gaphor/ui/mainwindow.glade:184
+#, fuzzy
+msgid "Create New diagram"
 msgstr "Uusi kaavio"
+
+#: gaphor/ui/mainwindow.glade:212
+#, fuzzy
+msgid "Open Application Menu"
+msgstr ""
 
 #: gaphor/ui/mainwindow.py:49
 msgid "Save As..."
@@ -1614,3 +1620,4 @@ msgstr "Ei viimeksi avattuja malleja"
 
 #~ msgid "C4 model"
 #~ msgstr "C4-malli"
+
