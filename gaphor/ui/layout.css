@@ -25,3 +25,8 @@ diagramview {
 .status-window box {
   padding: 12px;
 }
+
+.dropdown-small {
+  padding-left: 4px;
+  padding-right: 4px;
+}

@@ -161,6 +161,9 @@
                     <property name="icon_size">1</property>
                   </object>
                 </child>
+                <style>
+                  <class name="dropdown-small"/>
+                </style>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -178,7 +181,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
-            <property name="tooltip-text" translatable="yes">New diagram</property>
+            <property name="tooltip-text" translatable="yes">Create New diagram</property>
             <property name="action-name">win.create-diagram</property>
             <child>
               <object class="GtkImage">
@@ -206,6 +209,7 @@
               <object class="GtkImage">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">Open Application Menu</property>
                 <property name="icon-name">open-menu-symbolic</property>
               </object>
             </child>
@@ -257,6 +261,7 @@
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
+                    <property name="margin-left">2</property>
                     <property name="icon-name">pan-down-symbolic</property>
                     <property name="icon_size">1</property>
                   </object>
