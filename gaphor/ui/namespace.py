@@ -210,7 +210,7 @@ class Namespace(UIComponent, ActionProvider):
                 or (isinstance(element, UML.Package) and not element.presentation)
             )
             action_group.lookup_action("rename").set_enabled(
-                isinstance(element, UML.NamedElement)
+                isinstance(element, (Diagram, UML.NamedElement))
             )
         else:
             # TODO: GTK4 - enable/disable actions based on view state
