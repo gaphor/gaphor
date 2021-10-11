@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-11 22:10+0200\n"
-"PO-Revision-Date: 2021-10-10 18:20+0000\n"
+"PO-Revision-Date: 2021-10-12 00:12+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:51
@@ -1413,9 +1414,8 @@ msgstr ""
 "önműködően megjelenik.\n"
 
 #: gaphor/ui/elementeditor.glade:251
-#, fuzzy
 msgid "Show/Hide Preferences"
-msgstr ""
+msgstr "Beállítások megjelenítése/elrejtése"
 
 #: gaphor/ui/elementeditor.glade:323 gaphor/ui/elementeditor.ui:170
 msgid "Editors"
@@ -1563,14 +1563,12 @@ msgid "Gaphor"
 msgstr "Gaphor"
 
 #: gaphor/ui/mainwindow.glade:184
-#, fuzzy
 msgid "Create New diagram"
-msgstr "Új ábra"
+msgstr "Új ábra létrehozása"
 
 #: gaphor/ui/mainwindow.glade:212
-#, fuzzy
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Alkalmazásmenü megnyitása"
 
 #: gaphor/ui/mainwindow.py:49
 msgid "Save As..."
@@ -1689,4 +1687,3 @@ msgstr "Nincsenek nemrégiben megnyitott modellek"
 
 #~ msgid "C4 model"
 #~ msgstr "C4-modell"
-
