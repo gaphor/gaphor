@@ -11,9 +11,15 @@ from gaphor.diagram.general import CommentLineItem
 
 
 def undo_guard(func):
+    """Do not execute the sanitizer if we're undoing a transaction.
+
+    The sanitizer actions are already part of that transaction.
+    """
+
     def guard(self, event):
-        if not (self.undo_manager and self.undo_manager.in_undo_transaction()):
-            func(self, event)
+        if self.undo_manager and self.undo_manager.in_undo_transaction():
+            return
+        return func(self, event)
 
     return guard
 
@@ -48,6 +54,7 @@ class SanitizerService(Service):
         """Unlink the model element if no more presentations link to the
         `item`'s subject or the deleted item was the only item currently
         linked."""
+        print("sanitizer _unlink_on_subject_delete set", event)
         if event.property is Presentation.subject:  # type: ignore[misc]
             old_subject = event.old_value
             if old_subject and not old_subject.presentation:
@@ -107,6 +114,7 @@ class SanitizerService(Service):
     @event_handler(AssociationSet)
     @undo_guard
     def _disconnect_extension_end(self, event):
+        print("sanitizer association set", event)
         if event.property is UML.ExtensionEnd.type and event.old_value:
             ext = event.element
             p = ext.opposite
