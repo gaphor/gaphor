@@ -204,12 +204,12 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="tooltip-text" translatable="yes">Open Application Menu</property>
             <property name="popover">hamburger</property>
             <child>
               <object class="GtkImage">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="tooltip-text" translatable="yes">Open Application Menu</property>
                 <property name="icon-name">open-menu-symbolic</property>
               </object>
             </child>
