@@ -8,7 +8,6 @@ from gaphor.diagram.propertypages import (
     on_text_cell_edited,
 )
 from gaphor.transaction import transactional
-from gaphor.UML.classes import EnumerationItem
 from gaphor.UML.classes.classespropertypages import (
     AttributesPage,
     ClassEnumerationLiterals,
@@ -16,6 +15,7 @@ from gaphor.UML.classes.classespropertypages import (
     new_builder,
     on_keypress_event,
 )
+from gaphor.UML.classes.enumeration import EnumerationItem
 
 
 @PropertyPages.register(EnumerationItem)

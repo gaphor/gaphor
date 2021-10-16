@@ -2,7 +2,7 @@ from gaphor import UML
 from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.transaction import transactional
-from gaphor.UML.classes import AssociationItem
+from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.classespropertypages import new_builder
 from gaphor.UML.profiles.stereotypepropertypages import stereotype_model
 

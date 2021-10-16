@@ -2,8 +2,8 @@ from gaphor import UML
 from gaphor.diagram.propertypages import ComboModel, PropertyPageBase, PropertyPages
 from gaphor.i18n import gettext
 from gaphor.transaction import transactional
-from gaphor.UML.classes import DependencyItem
 from gaphor.UML.classes.classespropertypages import new_builder
+from gaphor.UML.classes.dependency import DependencyItem
 
 
 @PropertyPages.register(DependencyItem)
