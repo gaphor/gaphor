@@ -170,8 +170,8 @@ renderers and such.</property>
         <items>
           <item id="0" translatable="yes">unordered</item>
           <item id="1" translatable="yes">ordered</item>
-          <item id="2" translatable="yes">LIFO</item>
-          <item id="3" translatable="yes">FIFO</item>
+          <item id="2" translatable="yes">Last In First Out (LIFO)</item>
+          <item id="3" translatable="yes">First In First Out (FIFO)</item>
         </items>
         <signal name="changed" handler="ordering-changed" swapped="no"/>
       </object>

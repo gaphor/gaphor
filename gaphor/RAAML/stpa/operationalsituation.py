@@ -31,7 +31,7 @@ class OperationalSituationItem(ElementPresentation, Classified):
             Box(
                 Text(
                     text=lambda: stereotypes_str(
-                        self.subject, [gettext("OperationalSituation")]
+                        self.subject, [gettext("Operational Situation")]
                     ),
                 ),
                 Text(

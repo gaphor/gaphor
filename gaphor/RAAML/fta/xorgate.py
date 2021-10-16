@@ -33,7 +33,7 @@ class XORItem(ElementPresentation, Classified):
                 draw=draw_xor_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("XOR")]),
+                text=lambda: stereotypes_str(self.subject, [gettext("XOR Gate")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

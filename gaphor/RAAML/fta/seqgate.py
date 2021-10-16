@@ -33,7 +33,9 @@ class SEQItem(ElementPresentation, Classified):
                 draw=draw_seq_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("SEQ")]),
+                text=lambda: stereotypes_str(
+                    self.subject, [gettext("Sequence Enforcing Gate")]
+                ),
             ),
             Text(
                 text=lambda: self.subject.name or "",

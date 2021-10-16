@@ -33,7 +33,7 @@ class ZeroEventItem(ElementPresentation, Classified):
                 draw=draw_zero_event,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("ZeroEvent")]),
+                text=lambda: stereotypes_str(self.subject, [gettext("Zero Event")]),
             ),
             Text(
                 text=lambda: self.subject.name or "",

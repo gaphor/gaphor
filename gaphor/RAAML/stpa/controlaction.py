@@ -30,7 +30,7 @@ class ControlActionItem(ElementPresentation, Classified):
             Box(
                 Text(
                     text=lambda: stereotypes_str(
-                        self.subject, [gettext("ControlAction")]
+                        self.subject, [gettext("Control Action")]
                     ),
                 ),
                 Text(

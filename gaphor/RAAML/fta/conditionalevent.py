@@ -30,7 +30,7 @@ class ConditionalEventItem(ElementPresentation, Classified):
             ),
             Text(
                 text=lambda: stereotypes_str(
-                    self.subject, [gettext("ConditionalEvent")]
+                    self.subject, [gettext("Conditional Event")]
                 ),
             ),
             Text(

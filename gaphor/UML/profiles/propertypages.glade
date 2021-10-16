@@ -47,7 +47,7 @@ renderers and such.</property>
         <child internal-child="entry">
           <object class="GtkEntry">
             <property name="can-focus">True</property>
-            <property name="text" translatable="yes">NamedElement</property>
+            <property name="text" translatable="yes">Named Element</property>
           </object>
         </child>
       </object>

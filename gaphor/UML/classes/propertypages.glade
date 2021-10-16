@@ -437,7 +437,7 @@ Attribute syntax examples
 - + attr: int
 - # /attr: int # a note
 
-Press ENTER to edit item, BS/DEL to remove item.
+Press Enter to edit item, Backspace/Delete to remove item.
 Use -/= to move items up or down.</property>
                 <property name="headers-clickable">False</property>
                 <property name="reorderable">True</property>
@@ -766,12 +766,13 @@ Use -/= to move items up or down.</property>
                 <property name="height-request">112</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="tooltip-text" translatable="yes">Add and edit class operations according to UML syntax. Operation syntax examples
+		<property name="tooltip-text" translatable="yes">Add and edit class operations according to UML syntax.
+Operation syntax examples
 - call()
 - + call(a: int, b: str) # a note
-- # call(a: int: b: str): bool
+- # call(a: int, b: str): bool
 
-Press ENTER to edit item, BS/DEL to remove item.
+Press Enter to edit item, Backspace/Delete to remove item.
 Use -/= to move items up or down.</property>
                 <property name="headers-clickable">False</property>
                 <property name="reorderable">True</property>

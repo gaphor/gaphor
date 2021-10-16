@@ -37,7 +37,9 @@ class MajorityVoteItem(ElementPresentation, Classified):
                 draw=draw_majority_vote_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("MAJORITY_VOTE")]),
+                text=lambda: stereotypes_str(
+                    self.subject, [gettext("Majority Vote Gate")]
+                ),
             ),
             Text(
                 text=lambda: self.subject.name or "",
