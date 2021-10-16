@@ -3,16 +3,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-11 21:05-0400\n"
-"PO-Revision-Date: 2021-10-09 19:04+0000\n"
-"Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
+"POT-Creation-Date: 2021-10-11 22:10+0200\n"
+"PO-Revision-Date: 2021-10-14 03:39+0000\n"
+"Last-Translator: Cesar Iglesias <cesarfoc@hotmail.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: ../gaphor/C4Model/modelinglanguage.py:16 ../gaphor/C4Model/toolbox.py:51
@@ -1376,7 +1377,7 @@ msgstr ""
 #: ../gaphor/ui/elementeditor.glade:251
 #, fuzzy
 msgid "Show/Hide Preferences"
-msgstr ""
+msgstr "Mostrar/Ocultar Preferencias"
 
 #: ../gaphor/ui/elementeditor.glade:323 ../gaphor/ui/elementeditor.ui:170
 msgid "Editors"
@@ -1535,12 +1536,12 @@ msgstr "Gaphor"
 #: ../gaphor/ui/mainwindow.glade:184
 #, fuzzy
 msgid "Create New diagram"
-msgstr "Diagrama nuevo"
+msgstr "Nuevo Diagrama"
 
 #: ../gaphor/ui/mainwindow.glade:212
 #, fuzzy
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Mostrar Menu"
 
 #: ../gaphor/ui/mainwindow.py:49
 msgid "Save As..."
@@ -1667,66 +1668,6 @@ msgstr "No hay modelos abiertos recientemente"
 #~ msgid "C4 model"
 #~ msgstr "Modelo C4"
 
-#~ msgid "AND"
-#~ msgstr "AND"
-
-#~ msgid "BasicEvent"
-#~ msgstr "EventoBásico"
-
-#~ msgid "ConditionalEvent"
-#~ msgstr "EventoCondicional"
-
-#~ msgid "DormantEvent"
-#~ msgstr "EventoInactivo"
-
-#~ msgid "HouseEvent"
-#~ msgstr "EventoCasa"
-
-#~ msgid "INHIBIT"
-#~ msgstr "INHIBIT"
-
-#~ msgid "MAJORITY_VOTE"
-#~ msgstr "MAJORITY_VOTE"
-
-#~ msgid "NOT"
-#~ msgstr "NOT"
-
-#~ msgid "OR"
-#~ msgstr "OR"
-
-#~ msgid "SEQ"
-#~ msgstr "SEQ"
-
-#~ msgid "UndevelopedEvent"
-#~ msgstr "EventoSinDesarrollar"
-
-#~ msgid "XOR"
-#~ msgstr "XOR"
-
-#~ msgid "ZeroEvent"
-#~ msgstr "EventoCero"
-
-#~ msgid "ControlAction"
-#~ msgstr "AcciónControl"
-
-#~ msgid "OperationalSituation"
-#~ msgstr "SituaciónOperativa"
-
-#~ msgid "AbstractOperationalSituation"
-#~ msgstr "SituaciónOperativaAbstracta"
-
-#~ msgid "UnsafeControlAction"
-#~ msgstr "AcciónControlNoSegura"
-
-#~ msgid "Derive Reqt"
-#~ msgstr "Derivar req"
-
-#~ msgid "LIFO"
-#~ msgstr "LIFO"
-
-#~ msgid "FIFO"
-#~ msgstr "FIFO"
-
 #~ msgid "Export to SVG"
 #~ msgstr "Exportar a SVG"
 
@@ -1744,7 +1685,3 @@ msgstr "No hay modelos abiertos recientemente"
 
 #~ msgid "Export to XMI"
 #~ msgstr "Exportar a XMI"
-
-#~ msgid "Zoom 100%"
-#~ msgstr "Zoom 100%"
-
