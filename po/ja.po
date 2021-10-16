@@ -8,13 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-11 22:10+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-10-16 14:50+0000\n"
+"Last-Translator: Tomo Dote <fu7mu4@gmail.com>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:51
@@ -1334,11 +1337,11 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:251
 msgid "Show/Hide Preferences"
-msgstr ""
+msgstr "設定の表示/非表示"
 
 #: gaphor/ui/elementeditor.glade:323 gaphor/ui/elementeditor.ui:170
 msgid "Editors"
-msgstr ""
+msgstr "エディタ"
 
 #: gaphor/ui/elementeditor.glade:360 gaphor/ui/elementeditor.ui:217
 msgid "Reset tool automatically"
@@ -1346,7 +1349,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:393 gaphor/ui/elementeditor.ui:232
 msgid "Style sheet"
-msgstr ""
+msgstr "スタイルシート"
 
 #: gaphor/ui/elementeditor.glade:429 gaphor/ui/elementeditor.ui:252
 msgid ""
@@ -1354,10 +1357,12 @@ msgid ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
+"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\""
+">Gaphor のスタイルシート</a>"
 
 #: gaphor/ui/elementeditor.glade:444 gaphor/ui/elementeditor.ui:194
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #: gaphor/ui/errorhandler.py:27
 msgid ""
@@ -1380,12 +1385,17 @@ msgid ""
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
+"Gaphor はこのモデルを保存できませんでした。恐らく内部エラーによるものです:\n"
+"{exc}\n"
+"これがバグだと考えるなら開発者に連絡してください。"
 
 #: gaphor/ui/filemanager.py:39
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"あなたはこのモデルを保存するために必要な権限を持っていません。\n"
+"入力した場所を確認してからお試しください。"
 
 #: gaphor/ui/filemanager.py:43
 msgid ""
@@ -1393,6 +1403,8 @@ msgid ""
 "Please free up some disk space and try again or save it in a different "
 "location."
 msgstr ""
+"このモデルを保存するのに十分な容量がこのデバイスにありません。\n"
+"ディスクの空き容量を確認してもう一度試すか別の場所に保存してください。"
 
 #: gaphor/ui/filemanager.py:46
 msgid ""
@@ -1400,11 +1412,14 @@ msgid ""
 "{exc}\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"この場所にモデルを保存できません:\n"
+"{exc}\n"
+"あなたが指定した場所を確認して、もう一度試してください。"
 
 #: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:252
 #: gaphor/ui/mainwindow.ui:27
 msgid "New model"
-msgstr ""
+msgstr "新モデル"
 
 #: gaphor/ui/filemanager.py:59
 msgid "main"
@@ -1412,33 +1427,33 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:116
 msgid "Loading..."
-msgstr ""
+msgstr "読み込み..."
 
 #: gaphor/ui/filemanager.py:117
 msgid "Loading model from {filename}"
-msgstr ""
+msgstr "{filename} からモデルを読み込み"
 
 #: gaphor/ui/filemanager.py:138
 msgid "Unable to open model “{filename}”."
-msgstr ""
+msgstr "モデルを “{filename}” から読み込めません。"
 
 #: gaphor/ui/filemanager.py:141
 msgid "This file does not contain a valid Gaphor model."
-msgstr ""
+msgstr "このファイルには妥当な Gaphor モデルがありません。"
 
 #: gaphor/ui/filemanager.py:169
 msgid ""
 "The model contains some references to items that are not maintained. Do "
 "you want to clean the model before saving?"
-msgstr ""
+msgstr "このモデルには、現在メンテナンスされていないアイテムへのリファレンスが含まれています。保存する前に整理しますか?"
 
 #: gaphor/ui/filemanager.py:199
 msgid "Saving..."
-msgstr ""
+msgstr "保存..."
 
 #: gaphor/ui/filemanager.py:200
 msgid "Saving model to {filename}"
-msgstr ""
+msgstr "モデルを{filename}に保存"
 
 #: gaphor/ui/filemanager.py:219
 msgid "Unable to save model “{filename}”."
@@ -1446,51 +1461,51 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:257
 msgid "Save Gaphor Model As"
-msgstr ""
+msgstr "Gaphor モデルを別形式で保存する"
 
 #: gaphor/ui/filemanager.py:306
 msgid "Save changed to your model before closing?"
-msgstr ""
+msgstr "閉じる前に変更をモデルに保存しますか?"
 
 #: gaphor/ui/filemanager.py:307
 msgid "If you close without saving, your changes will be discarded."
-msgstr ""
+msgstr "保存せずに閉じた場合、変更は破棄されます。"
 
 #: gaphor/ui/filemanager.py:312
 msgid "Close _without saving"
-msgstr ""
+msgstr "保存せずに閉じる(_w)"
 
 #: gaphor/ui/mainwindow.glade:105
 msgid "Gaphor"
-msgstr ""
+msgstr "Gaphor"
 
 #: gaphor/ui/mainwindow.glade:184
 msgid "Create New diagram"
-msgstr ""
+msgstr "新ダイアグラムを作成"
 
 #: gaphor/ui/mainwindow.glade:212
 msgid "Open Application Menu"
-msgstr ""
+msgstr "アプリケーションメニューを開く"
 
 #: gaphor/ui/mainwindow.py:49
 msgid "Save As..."
-msgstr ""
+msgstr "別名で保存..."
 
 #: gaphor/ui/mainwindow.py:50
 msgid "Export"
-msgstr ""
+msgstr "エクスポート"
 
 #: gaphor/ui/mainwindow.py:54
 msgid "Tools"
-msgstr ""
+msgstr "ツール"
 
 #: gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "キーボードショートカット"
 
 #: gaphor/ui/mainwindow.py:68
 msgid "Recently opened files"
-msgstr ""
+msgstr "最近開いたファイル"
 
 #: gaphor/ui/mainwindow.py:254
 msgid "edited"
@@ -1498,15 +1513,15 @@ msgstr ""
 
 #: gaphor/ui/mainwindow.py:303
 msgid "Profile: {}"
-msgstr ""
+msgstr "プロファイル: {}"
 
 #: gaphor/ui/mainwindow.ui:102
 msgid "Here goes a short informative message."
-msgstr ""
+msgstr "ここにショートカットの説明を書きます。"
 
 #: gaphor/ui/namespace.py:42
 msgid "_Open"
-msgstr ""
+msgstr "開く(_O)"
 
 #: gaphor/ui/namespace.py:43
 msgid "_Rename"
@@ -1514,15 +1529,15 @@ msgstr ""
 
 #: gaphor/ui/namespace.py:47
 msgid "New _Diagram"
-msgstr ""
+msgstr "新ダイアグラム(_D)"
 
 #: gaphor/ui/namespace.py:48
 msgid "New _Package"
-msgstr ""
+msgstr "新パッケージ(_P)"
 
 #: gaphor/ui/namespace.py:52
 msgid "De_lete"
-msgstr ""
+msgstr "削除(_l)"
 
 #: gaphor/ui/namespace.py:63
 msgid "Show in \"{diagram}\""
@@ -1530,7 +1545,7 @@ msgstr ""
 
 #: gaphor/ui/namespacemodel.py:310
 msgid "A {} can't be part of a {}."
-msgstr ""
+msgstr "{} は {} の一部ではない。"
 
 #: gaphor/ui/namespaceview.py:140
 msgid "<Relationships>"
@@ -1538,4 +1553,4 @@ msgstr ""
 
 #: gaphor/ui/recentfiles.py:67
 msgid "No recently opened models"
-msgstr ""
+msgstr "最近開いたモデルはありません。"
