@@ -586,6 +586,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "Mek101",
+      "name": "Mek101",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34246799?v=4",
+      "profile": "https://github.com/Mek101",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
