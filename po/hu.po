@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-11 21:05-0400\n"
-"PO-Revision-Date: 2021-10-12 00:12+0000\n"
+"PO-Revision-Date: 2021-10-16 23:58+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: ../gaphor/C4Model/modelinglanguage.py:16 ../gaphor/C4Model/toolbox.py:51
@@ -157,13 +158,12 @@ msgid "Intermediate Event"
 msgstr "Köztes esemény"
 
 #: ../gaphor/RAAML/fta/seqgate.py:37
-#, fuzzy
 msgid "Sequence Enforcing Gate"
-msgstr "Sorozat végrehajtó (SEQ) kapu"
+msgstr "Sorozat végrehajtó kapu"
 
 #: ../gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr ""
+msgstr "KIZÁRÓ VAGY kapu"
 
 #: ../gaphor/RAAML/stpa/controlaction.py:33
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:155
@@ -397,9 +397,8 @@ msgid "Satisfy"
 msgstr "Megfelelő"
 
 #: ../gaphor/SysML/requirements/requirementstoolbox.py:36
-#, fuzzy
 msgid "Derive Requirement"
-msgstr "követelmény"
+msgstr "Származtatási követelmény"
 
 #: ../gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
@@ -534,12 +533,12 @@ msgstr "elrendelt"
 #: ../gaphor/UML/actions/propertypages.glade:173
 #: ../gaphor/UML/actions/propertypages.ui:92
 msgid "Last In First Out (LIFO)"
-msgstr ""
+msgstr "Fordított érkezési sorrendben (Last In First Out - LIFO)"
 
 #: ../gaphor/UML/actions/propertypages.glade:174
 #: ../gaphor/UML/actions/propertypages.ui:93
 msgid "First In First Out (FIFO)"
-msgstr ""
+msgstr "Érkezési sorrendben (First In First Out - FIFO)"
 
 #: ../gaphor/UML/actions/propertypages.glade:199
 #: ../gaphor/UML/actions/propertypages.ui:107
@@ -734,7 +733,6 @@ msgid "Show Attributes"
 msgstr "Attribútumok megjelenítése"
 
 #: ../gaphor/UML/classes/propertypages.glade:441
-#, fuzzy
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "Attribute syntax examples\n"
@@ -745,8 +743,8 @@ msgid ""
 "Press Enter to edit item, Backspace/Delete to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
-"Az osztályattribútumak hozzáadása és szerkesztése az UML szintaxisa "
-"szerint.\n"
+"Az osztályattribútumak hozzáadása és szerkesztése az UML szintaxisa szerint."
+"\n"
 "Példák attribútum szintaxisra\n"
 "- attr\n"
 "- + attr: int\n"
@@ -784,7 +782,6 @@ msgid "Show Operations"
 msgstr "Műveletek megjelenítése"
 
 #: ../gaphor/UML/classes/propertypages.glade:776
-#, fuzzy
 msgid ""
 "Add and edit class operations according to UML syntax.\n"
 "Operation syntax examples\n"
@@ -795,8 +792,7 @@ msgid ""
 "Press Enter to edit item, Backspace/Delete to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
-"Az osztályműveletek hozzáadása és szerkesztése az UML szintaxisa szerint."
-"\n"
+"Az osztályműveletek hozzáadása és szerkesztése az UML szintaxisa szerint.\n"
 "Példák a műveleti szintaxisra\n"
 "- call()\n"
 "- + call(a: int, b: str) # a jegyzet\n"
@@ -947,7 +943,6 @@ msgstr "Importálás"
 
 #: ../gaphor/UML/profiles/propertypages.glade:50
 #: ../gaphor/UML/profiles/propertypages.ui:36
-#, fuzzy
 msgid "Named Element"
 msgstr "Nevezett elem"
 
@@ -982,12 +977,10 @@ msgid "Activities"
 msgstr "Tevékenységek"
 
 #: ../gaphor/UML/states/statestoolbox.py:45
-#, fuzzy
 msgid "State Machine"
 msgstr "Állapotautomata"
 
 #: ../gaphor/UML/states/statestoolbox.py:52
-#, fuzzy
 msgid "Default Region"
 msgstr "Alapértelmezett régió"
 
@@ -1117,7 +1110,6 @@ msgstr "Stílus"
 
 #: ../gaphor/diagram/propertypages.glade:270
 #: ../gaphor/diagram/propertypages.ui:75
-#, fuzzy
 msgid "Note or Remark"
 msgstr "Megjegyzés"
 
@@ -1145,45 +1137,41 @@ msgstr "Minden {ext}-fájl"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:100
 msgid "Export as SVG"
-msgstr ""
+msgstr "Exportálás SVG-fájlként"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:101
 #: ../gaphor/plugins/diagramexport/__init__.py:106
-#, fuzzy
 msgid "Export diagram as SVG"
 msgstr "Ábra exportálása SVG-fájlként"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:113
 msgid "Export as PNG"
-msgstr ""
+msgstr "Exportálás PNG-fájlként"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:114
 #: ../gaphor/plugins/diagramexport/__init__.py:119
-#, fuzzy
 msgid "Export diagram as PNG"
-msgstr "Ábra exportálása SVG-fájlként"
+msgstr "Ábra exportálása PNG-fájlként"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:126
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exportálás PDF-fájlként"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:127
 #: ../gaphor/plugins/diagramexport/__init__.py:132
-#, fuzzy
 msgid "Export diagram as PDF"
-msgstr "Ábra exportálása SVG-fájlként"
+msgstr "Ábra exportálása PDF-fájlként"
 
 #: ../gaphor/plugins/xmiexport/__init__.py:24
 msgid "Export as XMI"
-msgstr ""
+msgstr "Exportálás XMI-fájlként"
 
 #: ../gaphor/plugins/xmiexport/__init__.py:25
-#, fuzzy
 msgid "Export model as XMI (XML Model Interchange) format"
-msgstr "Modell exportálása XMI-fájlként (XML Model Interchange – XML-modellcsere)"
+msgstr ""
+"Modell exportálása XMI-fájlként (XML Model Interchange – XML-modellcsere)"
 
 #: ../gaphor/plugins/xmiexport/__init__.py:31
-#, fuzzy
 msgid "Export model as XMI file"
 msgstr "Modell exportálása XMI-fájlként"
 
@@ -1316,7 +1304,7 @@ msgstr "Kicsinyítés"
 #: ../gaphor/services/helpservice/shortcuts.ui:204
 #: ../gaphor/ui/elementeditor.glade:199 ../gaphor/ui/elementeditor.ui:117
 msgid "Actual Size"
-msgstr ""
+msgstr "Tényleges méret"
 
 #: ../gaphor/ui/appfilemanager.py:13 ../gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
@@ -1520,17 +1508,14 @@ msgid "Save Gaphor Model As"
 msgstr "A Gaphor-modell mentése másként"
 
 #: ../gaphor/ui/filemanager.py:306
-#, fuzzy
 msgid "Save changes before closing?"
-msgstr "Menti a módosításokat a modellben a bezárás előtt?"
+msgstr "Menti a módosításokat a bezárás előtt?"
 
 #: ../gaphor/ui/filemanager.py:307
-#, fuzzy
 msgid "Closing will cause any unsaved changes to be discarded."
-msgstr "Ha mentés nélkül bezárja, a módosításokat elveti."
+msgstr "A bezárás következtében a nem mentett módosítások elvesznek majd."
 
 #: ../gaphor/ui/filemanager.py:312
-#, fuzzy
 msgid "Close _without saving changes"
 msgstr "Bezárás a módosítások mentése _nélkül"
 
@@ -1744,4 +1729,3 @@ msgstr "Nincsenek nemrégiben megnyitott modellek"
 
 #~ msgid "Zoom 100%"
 #~ msgstr "Tényleges méret"
-
