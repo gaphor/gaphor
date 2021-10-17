@@ -12,7 +12,7 @@ class ViewMock:
         self.updates.append((items, removed_items))
 
 
-def test_undo_should_remove_show_item_on_diagram(
+def test_undo_should_remove_shown_item_on_diagram(
     event_manager, element_factory, undo_manager
 ):
     with Transaction(event_manager):
