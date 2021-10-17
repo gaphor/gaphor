@@ -1502,12 +1502,12 @@ msgstr "Caricamento in corso..."
 
 #: ../gaphor/ui/filemanager.py:117
 msgid "Loading model from {filename}"
-msgstr "Caricamento modello da {nome file}"
+msgstr "Caricamento modello da {filename}"
 
 #: ../gaphor/ui/filemanager.py:138
 #, fuzzy
 msgid "Unable to open model “{filename}”."
-msgstr "Salvataggio del modello in {nome file}"
+msgstr "Salvataggio del modello in {filename}"
 
 #: ../gaphor/ui/filemanager.py:141
 msgid "This file does not contain a valid Gaphor model."
@@ -1527,12 +1527,12 @@ msgstr "Salvataggio..."
 
 #: ../gaphor/ui/filemanager.py:200
 msgid "Saving model to {filename}"
-msgstr "Salvataggio del modello in {nome file}"
+msgstr "Salvataggio del modello in {filename}"
 
 #: ../gaphor/ui/filemanager.py:219
 #, fuzzy
 msgid "Unable to save model “{filename}”."
-msgstr "Salvataggio del modello in {nome file}"
+msgstr "Salvataggio del modello in {filename}"
 
 #: ../gaphor/ui/filemanager.py:257
 msgid "Save Gaphor Model As"
@@ -1645,7 +1645,7 @@ msgstr "Nessun modello aperto di recente"
 #~ msgstr "Mostra attributi stereotipati"
 
 #~ msgid "The file {filename} already exists. Do you want to replace it?"
-#~ msgstr "Il file {nomefile} esiste già. Vuoi sostituirlo?"
+#~ msgstr "Il file {filename} esiste già. Vuoi sostituirlo?"
 
 #~ msgid "Copyright © 2001-2020 Arjan J. Molenaar and Dan Yeaw"
 #~ msgstr "Copyright © 2001-2020 Arjan J. Molenaar and Dan Yeaw"
@@ -1727,10 +1727,10 @@ msgstr "Nessun modello aperto di recente"
 #~ "(Gaphor avrebbe dovuto essere avviato dalla riga di comando)"
 
 #~ msgid "Error while loading model from file {filename}"
-#~ msgstr "Errore durante il caricamento del modello dal file {nome file}"
+#~ msgstr "Errore durante il caricamento del modello dal file {filename}"
 
 #~ msgid "Error while saving model to file {filename}"
-#~ msgstr "Errore durante il salvataggio del modello nel file {nome file}"
+#~ msgstr "Errore durante il salvataggio del modello nel file {filename}"
 
 #~ msgid "New from Template"
 #~ msgstr "Nuovo dal modello"
