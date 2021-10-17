@@ -265,14 +265,9 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.handle(ActionEnabled("win.edit-redo", self.can_redo()))
         self.event_manager.handle(UndoManagerStateChanged(self))
 
-    def deep_lookup(self, id: str) -> Element:
+    def lookup(self, id: str) -> Element:
         element: Optional[Element] = self.element_factory.lookup(id)
         if not element:
-            for diagram in self.element_factory.select(Diagram):
-                presentation: Element
-                for presentation in diagram.ownedPresentation:
-                    if presentation.id == id:
-                        return presentation
             raise ValueError(f"Element with id {id} not found in model")
         return element
 
@@ -309,7 +304,7 @@ class UndoManager(Service, ActionProvider):
         element_id = event.element.id
 
         def b_undo_reversible_event():
-            element = self.deep_lookup(element_id)
+            element = self.lookup(element_id)
             event.revert(element)
 
         b_undo_reversible_event.__doc__ = (
@@ -325,7 +320,7 @@ class UndoManager(Service, ActionProvider):
         element_id = event.element.id
 
         def d_undo_create_event():
-            element = self.deep_lookup(element_id)
+            element = self.lookup(element_id)
             element.unlink()
 
         d_undo_create_event.__doc__ = f"Undo create element {event.element}."
@@ -348,7 +343,7 @@ class UndoManager(Service, ActionProvider):
             event.element.save(save_func)
 
             def b_undo_delete_event():
-                diagram: Diagram = self.deep_lookup(diagram_id)  # type: ignore[assignment]
+                diagram: Diagram = self.lookup(diagram_id)  # type: ignore[assignment]
                 element = diagram.create_as(element_type, element_id)
                 for name, ser in data.items():
                     for value in deserialize(ser, lambda ref: None):
@@ -374,7 +369,7 @@ class UndoManager(Service, ActionProvider):
         value = event.old_value
 
         def c_undo_attribute_change_event():
-            element = self.deep_lookup(element_id)
+            element = self.lookup(element_id)
             attribute._set(element, value)
 
         c_undo_attribute_change_event.__doc__ = (
@@ -393,8 +388,8 @@ class UndoManager(Service, ActionProvider):
         value_id = event.old_value and event.old_value.id
 
         def c_undo_association_set_event():
-            element = self.deep_lookup(element_id)
-            value = value_id and self.deep_lookup(value_id)
+            element = self.lookup(element_id)
+            value = value_id and self.lookup(value_id)
             association._set(element, value, from_opposite=True)
 
         c_undo_association_set_event.__doc__ = (
@@ -413,8 +408,8 @@ class UndoManager(Service, ActionProvider):
         value_id = event.new_value.id
 
         def c_undo_association_add_event():
-            element = self.deep_lookup(element_id)
-            value = self.deep_lookup(value_id)
+            element = self.lookup(element_id)
+            value = self.lookup(value_id)
             association._del(element, value, from_opposite=True)
 
         c_undo_association_add_event.__doc__ = (
@@ -433,8 +428,8 @@ class UndoManager(Service, ActionProvider):
         value_id = event.old_value.id
 
         def c_undo_association_delete_event():
-            element = self.deep_lookup(element_id)
-            value = self.deep_lookup(value_id)
+            element = self.lookup(element_id)
+            value = self.lookup(value_id)
             association._set(element, value, from_opposite=True)
 
         c_undo_association_delete_event.__doc__ = (
