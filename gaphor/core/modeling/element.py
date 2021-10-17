@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import logging
 import uuid
-from contextlib import contextmanager
 from typing import TYPE_CHECKING, Callable, Iterator, Protocol, TypeVar, overload
 
 from gaphor.core.modeling.event import ElementUpdated
@@ -198,10 +197,6 @@ class RepositoryProtocol(Protocol):
         ...
 
     def handle(self, event: object) -> None:
-        ...
-
-    @contextmanager
-    def block_events(self) -> Iterator[RepositoryProtocol]:
         ...
 
 

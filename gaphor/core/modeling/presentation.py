@@ -23,14 +23,7 @@ log = logging.getLogger(__name__)
 
 class Presentation(Matrices, Element, Generic[S]):
     """This presentation is used to link the behaviors of
-    `gaphor.core.modeling` and `gaphas.Item`.
-
-    Note that Presentations are not managed by the Element Factory.
-    Instead, Presentation objects are owned by Diagram. As a result they
-    do not emit ElementCreated and ElementDeleted events. Presentations
-    have their own create and delete events: ElementCreated and
-    ElementDeleted.
-    """
+    `gaphor.core.modeling` and `gaphas.Item`."""
 
     def __init__(self, diagram: Diagram, id: Id | None = None) -> None:
         super().__init__(id=id, model=diagram.model)

@@ -51,7 +51,7 @@ def test_line_delete(diagram, undo_manager, event_manager):
 
 def test_line_orthogonal_property(diagram, undo_manager, event_manager):
     with Transaction(event_manager):
-        line = LinePresentation(diagram)
+        line = diagram.create(LinePresentation)
         line.insert_handle(0, Handle())
 
     with Transaction(event_manager):
@@ -70,7 +70,7 @@ def test_line_orthogonal_property(diagram, undo_manager, event_manager):
 
 def test_line_horizontal_property(diagram, undo_manager, event_manager):
     with Transaction(event_manager):
-        line = LinePresentation(diagram)
+        line = diagram.create(LinePresentation)
         line.insert_handle(0, Handle())
 
     with Transaction(event_manager):
@@ -99,7 +99,7 @@ def test_line_horizontal_property(diagram, undo_manager, event_manager):
 def test_matrix_operation(action, diagram, undo_manager, event_manager):
 
     with Transaction(event_manager):
-        line = LinePresentation(diagram)
+        line = diagram.create(LinePresentation)
         line.matrix.translate(10, 0)
 
     original = tuple(line.matrix)

@@ -323,10 +323,15 @@ class Diagram(Element):
                 yield child
                 yield from iter_children(child)
 
-        for root in self.ownedPresentation:
-            if not root.parent:
-                yield root
-                yield from iter_children(root)
+        def traverse_items() -> Iterable[Presentation]:
+            for root in self.ownedPresentation:
+                if not root.parent:
+                    yield root
+                    yield from iter_children(root)
+
+        yield from sorted(
+            traverse_items(), key=lambda e: int(isinstance(e, gaphas.Line))
+        )
 
     def get_parent(self, item: Presentation) -> Presentation | None:
         return item.parent

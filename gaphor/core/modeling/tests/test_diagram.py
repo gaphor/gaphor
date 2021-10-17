@@ -1,10 +1,7 @@
 import gaphas
 import pytest
 
-from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import Diagram, ElementFactory, Presentation, StyleSheet
-from gaphor.core.modeling.elementdispatcher import ElementDispatcher
-from gaphor.UML.modelinglanguage import UMLModelingLanguage
+from gaphor.core.modeling import Diagram, Presentation, StyleSheet
 
 
 class Example(gaphas.Element, Presentation):
@@ -16,15 +13,18 @@ class Example(gaphas.Element, Presentation):
         super().unlink()
 
 
+class ExampleLine(gaphas.Line, Presentation):
+    def __init__(self, diagram, id):
+        super().__init__(connections=diagram.connections, diagram=diagram, id=id)
+
+    def unlink(self):
+        self.test_unlinked = True
+        super().unlink()
+
+
 @pytest.fixture
-def element_factory():
-    event_manager = EventManager()
-    element_dispatcher = ElementDispatcher(event_manager, UMLModelingLanguage())
-    element_factory = ElementFactory(event_manager, element_dispatcher)
-    yield element_factory
-    element_factory.shutdown()
-    element_dispatcher.shutdown()
-    event_manager.shutdown()
+def diagram(element_factory):
+    return element_factory.create(Diagram)
 
 
 def test_diagram_can_be_used_as_gtkview_model():
@@ -82,7 +82,6 @@ class ViewMock:
 
 def test_remove_presentation_triggers_view(element_factory):
     diagram = element_factory.create(Diagram)
-    print(diagram.watcher())
     view = ViewMock()
     diagram.register_view(view)
 
@@ -93,3 +92,29 @@ def test_remove_presentation_triggers_view(element_factory):
     assert example.diagram is None
     assert example not in diagram.ownedPresentation
     assert example in view.removed_items
+
+
+def test_order_presentations_lines_are_last(diagram):
+    example_line = diagram.create(ExampleLine)
+    example = diagram.create(Example)
+
+    assert list(diagram.get_all_items()) == [example, example_line]
+
+
+def test_order_presentations_line_is_grouped(diagram):
+    example_line = diagram.create(ExampleLine)
+    example_1 = diagram.create(Example)
+    example_2 = diagram.create(Example)
+
+    example_line.parent = example_1
+
+    assert list(diagram.get_all_items()) == [example_1, example_2, example_line]
+
+
+def test_order_grouped_presentations(diagram):
+    example_1 = diagram.create(Example)
+    example_2 = diagram.create(Example)
+
+    example_1.parent = example_2
+
+    assert list(diagram.get_all_items()) == [example_2, example_1]
