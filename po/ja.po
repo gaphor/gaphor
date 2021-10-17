@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-11 22:10+0200\n"
-"PO-Revision-Date: 2021-10-16 14:50+0000\n"
+"PO-Revision-Date: 2021-10-17 15:45+0000\n"
 "Last-Translator: Tomo Dote <fu7mu4@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "ja/>\n"
@@ -22,61 +22,61 @@ msgstr ""
 
 #: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:51
 msgid "C4 Model"
-msgstr ""
+msgstr "C4 モデル"
 
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
 msgid "Technology"
-msgstr ""
+msgstr "テクノロジー"
 
 #: gaphor/C4Model/toolbox.py:25
 msgid "New Software System"
-msgstr ""
+msgstr "新ソフトウェアシステム"
 
 #: gaphor/C4Model/toolbox.py:32
 msgid "New Container"
-msgstr ""
+msgstr "新コンテナ"
 
 #: gaphor/C4Model/toolbox.py:40
 msgid "New Database"
-msgstr ""
+msgstr "新データベース"
 
 #: gaphor/C4Model/toolbox.py:47
 msgid "New Component"
-msgstr ""
+msgstr "新コンポーネント"
 
 #: gaphor/C4Model/toolbox.py:55
 msgid "Person"
-msgstr ""
+msgstr "人"
 
 #: gaphor/C4Model/toolbox.py:66
 msgid "Software System"
-msgstr ""
+msgstr "ソフトウェアシステム"
 
 #: gaphor/C4Model/toolbox.py:77
 msgid "Container"
-msgstr ""
+msgstr "コンテナ"
 
 #: gaphor/C4Model/toolbox.py:88
 msgid "Container: Database"
-msgstr ""
+msgstr "コンテナ: データベース"
 
 #: gaphor/C4Model/toolbox.py:99 gaphor/UML/components/componentstoolbox.py:16
 msgid "Component"
-msgstr ""
+msgstr "コンポーネント"
 
 #: gaphor/C4Model/toolbox.py:110 gaphor/RAAML/fta/ftatoolbox.py:14
 #: gaphor/UML/classes/classestoolbox.py:116
 #: gaphor/UML/classes/dependencypropertypages.py:16
 msgid "Dependency"
-msgstr ""
+msgstr "依存性"
 
 #: gaphor/RAAML/modelinglanguage.py:15
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: gaphor/RAAML/fta/andgate.py:37
 msgid "AND"
@@ -96,35 +96,35 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:10
 msgid "Fault Tree Analysis"
-msgstr ""
+msgstr "フォルトツリー解析"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:21
 msgid "AND Gate"
-msgstr ""
+msgstr "AND ゲート"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "OR Gate"
-msgstr ""
+msgstr "OR ゲート"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:39
 msgid "NOT Gate"
-msgstr ""
+msgstr "NOT ゲート"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:48
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr ""
+msgstr "SEQ ゲート"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Exclusive OR Gate"
-msgstr ""
+msgstr "XOR ゲート"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:66
 msgid "Majority Vote Gate"
-msgstr ""
+msgstr "多数決ゲート"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:77
 msgid "Inhibit Gate"
-msgstr ""
+msgstr "抑止ゲート"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:86 gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
@@ -273,7 +273,7 @@ msgstr ""
 
 #: gaphor/SysML/modelinglanguage.py:15
 msgid "SysML"
-msgstr ""
+msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:38 gaphor/SysML/propertypages.ui:27
 msgid "Show Parts"
@@ -289,7 +289,7 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.glade:125 gaphor/SysML/propertypages.ui:71
 msgid "Aggregation"
-msgstr ""
+msgstr "集約"
 
 #: gaphor/SysML/propertypages.glade:142 gaphor/SysML/propertypages.ui:81
 #: gaphor/UML/classes/propertypages.glade:139
@@ -333,7 +333,7 @@ msgstr ""
 
 #: gaphor/SysML/toolbox.py:34
 msgid "Property"
-msgstr ""
+msgstr "プロパティ"
 
 #: gaphor/SysML/toolbox.py:43
 msgid "Proxy Port"
@@ -361,16 +361,16 @@ msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:18
 msgid "Blocks"
-msgstr ""
+msgstr "ブロック"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:22
 msgid "Block"
-msgstr ""
+msgstr "ブロック"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:32
 #: gaphor/UML/classes/classestoolbox.py:68
 msgid "Package"
-msgstr ""
+msgstr "パッケージ"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:44
 #: gaphor/UML/classes/classestoolbox.py:87
@@ -465,33 +465,33 @@ msgstr ""
 
 #: gaphor/UML/modelinglanguage.py:14 gaphor/ui/mainwindow.glade:279
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: gaphor/UML/actions/actionstoolbox.py:15
 #: gaphor/UML/interactions/interactionstoolbox.py:15
 #: gaphor/UML/states/statestoolbox.py:25 gaphor/diagram/diagramtoolbox.py:28
 msgid "New"
-msgstr ""
+msgstr "新"
 
 #: gaphor/UML/actions/actionstoolbox.py:34
 msgid "Activity"
-msgstr ""
+msgstr "アクティビティ"
 
 #: gaphor/UML/actions/actionstoolbox.py:42
 msgid "Swimlane One"
-msgstr ""
+msgstr "スイムレーン1"
 
 #: gaphor/UML/actions/actionstoolbox.py:46
 msgid "Swimlane Two"
-msgstr ""
+msgstr "スイムレーン2"
 
 #: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Actions"
-msgstr ""
+msgstr "アクション"
 
 #: gaphor/UML/actions/actionstoolbox.py:56
 msgid "Action"
-msgstr ""
+msgstr "アクション"
 
 #: gaphor/UML/actions/actionstoolbox.py:68
 msgid "Initial node"
@@ -515,11 +515,11 @@ msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:128
 msgid "Object node"
-msgstr ""
+msgstr "オブジェクトノード"
 
 #: gaphor/UML/actions/actionstoolbox.py:140
 msgid "Swimlane"
-msgstr ""
+msgstr "スイムレーン"
 
 #: gaphor/UML/actions/actionstoolbox.py:152
 msgid "Control/object flow"
@@ -539,11 +539,11 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:28
 #: gaphor/UML/profiles/propertypages.ui:21
 msgid "Name"
-msgstr ""
+msgstr "名前"
 
 #: gaphor/UML/actions/partitionpage.py:92
 msgid "New Swimlane"
-msgstr ""
+msgstr "新スイムレーン"
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
@@ -615,16 +615,16 @@ msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:42
 msgid "Classes"
-msgstr ""
+msgstr "クラス"
 
 #: gaphor/UML/classes/classestoolbox.py:46
 #: gaphor/UML/profiles/profilestoolbox.py:14
 msgid "Class"
-msgstr ""
+msgstr "クラス"
 
 #: gaphor/UML/classes/classestoolbox.py:56
 msgid "Interface"
-msgstr ""
+msgstr "インターフェース"
 
 #: gaphor/UML/classes/classestoolbox.py:130
 msgid "Interface Realization"
@@ -676,19 +676,19 @@ msgstr ""
 
 #: gaphor/UML/classes/interface.py:290
 msgid "interface"
-msgstr ""
+msgstr "インターフェース"
 
 #: gaphor/UML/classes/klass.py:59
 msgid "stereotype"
-msgstr ""
+msgstr "ステレオタイプ"
 
 #: gaphor/UML/classes/klass.py:61
 msgid "metaclass"
-msgstr ""
+msgstr "メタクラス"
 
 #: gaphor/UML/classes/package.py:23
 msgid "profile"
-msgstr ""
+msgstr "プロファイル"
 
 #: gaphor/UML/classes/propertypages.glade:33
 #: gaphor/UML/classes/propertypages.ui:24
@@ -745,7 +745,7 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:125
 #: gaphor/UML/profiles/propertypages.ui:74
 msgid "Attributes"
-msgstr ""
+msgstr "属性"
 
 #: gaphor/UML/classes/propertypages.glade:186
 #: gaphor/UML/classes/propertypages.glade:329
@@ -808,7 +808,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.glade:730
 #: gaphor/UML/classes/propertypages.ui:451
 msgid "Show Operations"
-msgstr ""
+msgstr "操作の表示"
 
 #: gaphor/UML/classes/propertypages.glade:775
 msgid ""
@@ -827,7 +827,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:485
 #: gaphor/UML/classes/propertypages.ui:535
 msgid "Operations"
-msgstr ""
+msgstr "操作"
 
 #: gaphor/UML/classes/propertypages.glade:806
 #: gaphor/UML/classes/propertypages.ui:503
@@ -860,23 +860,23 @@ msgstr ""
 
 #: gaphor/UML/components/componentstoolbox.py:12
 msgid "Components"
-msgstr ""
+msgstr "コンポーネント"
 
 #: gaphor/UML/components/componentstoolbox.py:28
 msgid "Artifact"
-msgstr ""
+msgstr "アーティファクト"
 
 #: gaphor/UML/components/componentstoolbox.py:40
 msgid "Node"
-msgstr ""
+msgstr "ノード"
 
 #: gaphor/UML/components/componentstoolbox.py:52
 msgid "Device"
-msgstr ""
+msgstr "デバイス"
 
 #: gaphor/UML/components/node.py:54
 msgid "device"
-msgstr ""
+msgstr "デバイス"
 
 #: gaphor/UML/components/propertypages.glade:32
 #: gaphor/UML/components/propertypages.ui:23
@@ -898,7 +898,7 @@ msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:57
 msgid "Lifeline"
-msgstr ""
+msgstr "ライフライン"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Execution Specification"
@@ -915,23 +915,23 @@ msgstr ""
 
 #: gaphor/UML/profiles/packageimport.py:19
 msgid "import"
-msgstr ""
+msgstr "インポート"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
-msgstr ""
+msgstr "プロファイル"
 
 #: gaphor/UML/profiles/profilestoolbox.py:22
 msgid "Profile"
-msgstr ""
+msgstr "プロファイル"
 
 #: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
-msgstr ""
+msgstr "メタクラス"
 
 #: gaphor/UML/profiles/profilestoolbox.py:44
 msgid "Stereotype"
-msgstr ""
+msgstr "ステレオタイプ"
 
 #: gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
@@ -939,7 +939,7 @@ msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:63
 msgid "Import"
-msgstr ""
+msgstr "インポート"
 
 #: gaphor/UML/profiles/propertypages.glade:50
 #: gaphor/UML/profiles/propertypages.ui:36
@@ -949,12 +949,12 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:82
 #: gaphor/UML/profiles/propertypages.ui:55
 msgid "Show Stereotypes"
-msgstr ""
+msgstr "ステレオタイプを表示"
 
 #: gaphor/UML/profiles/propertypages.glade:175
 #: gaphor/UML/profiles/propertypages.ui:114
 msgid "Stereotypes"
-msgstr ""
+msgstr "ステレオタイプ"
 
 #: gaphor/UML/states/propertypages.glade:34
 #: gaphor/UML/states/propertypages.ui:25
@@ -974,7 +974,7 @@ msgstr ""
 #: gaphor/UML/states/propertypages.glade:111
 #: gaphor/UML/states/propertypages.ui:60
 msgid "Activities"
-msgstr ""
+msgstr "アクティビティ"
 
 #: gaphor/UML/states/statestoolbox.py:45
 msgid "StateMachine"
@@ -986,27 +986,27 @@ msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
-msgstr ""
+msgstr "状態"
 
 #: gaphor/UML/states/statestoolbox.py:63
 msgid "State"
-msgstr ""
+msgstr "状態"
 
 #: gaphor/UML/states/statestoolbox.py:73
 msgid "Initial Pseudostate"
-msgstr ""
+msgstr "初期擬状態"
 
 #: gaphor/UML/states/statestoolbox.py:85
 msgid "Final State"
-msgstr ""
+msgstr "終状態"
 
 #: gaphor/UML/states/statestoolbox.py:97
 msgid "History Pseudostate"
-msgstr ""
+msgstr "履歴擬状態"
 
 #: gaphor/UML/states/statestoolbox.py:109
 msgid "Transition"
-msgstr ""
+msgstr "遷移"
 
 #: gaphor/UML/usecases/extend.py:19
 msgid "extend"
@@ -1018,15 +1018,15 @@ msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:12
 msgid "Use Cases"
-msgstr ""
+msgstr "ユースケース"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
-msgstr ""
+msgstr "ユースケース"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:28
 msgid "Actor"
-msgstr ""
+msgstr "アクター"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
@@ -1042,28 +1042,28 @@ msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:60
 msgid "Pointer"
-msgstr ""
+msgstr "ポインター"
 
 #: gaphor/diagram/diagramtoolbox.py:67
 msgid "Line"
-msgstr ""
+msgstr "線"
 
 #: gaphor/diagram/diagramtoolbox.py:74
 msgid "Box"
-msgstr ""
+msgstr "箱"
 
 #: gaphor/diagram/diagramtoolbox.py:82
 msgid "Ellipse"
-msgstr ""
+msgstr "楕円"
 
 #: gaphor/diagram/diagramtoolbox.py:90 gaphor/diagram/propertypages.glade:28
 #: gaphor/diagram/propertypages.ui:21
 msgid "Comment"
-msgstr ""
+msgstr "コメント"
 
 #: gaphor/diagram/diagramtoolbox.py:98
 msgid "Comment line"
-msgstr ""
+msgstr "コメント行"
 
 #: gaphor/diagram/propertypages.glade:86
 msgid "Show Enumeration Literals"
@@ -1094,7 +1094,7 @@ msgstr ""
 
 #: gaphor/diagram/propertypages.glade:234 gaphor/diagram/propertypages.ui:63
 msgid "Style"
-msgstr ""
+msgstr "スタイル"
 
 #: gaphor/diagram/propertypages.glade:270 gaphor/diagram/propertypages.ui:75
 msgid "Note / Remark"
@@ -1106,18 +1106,21 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
+"Gaphor のインタラクティブ Python コンソール\n"
+"{version}\n"
+"詳細を知るには\"help\"と入力してください。\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
 msgid "Gaphor Console"
-msgstr ""
+msgstr "Gaphorコンソール"
 
 #: gaphor/plugins/console/consolewindow.py:43
 msgid "Console"
-msgstr ""
+msgstr "コンソール"
 
 #: gaphor/plugins/diagramexport/__init__.py:52
 msgid "All {ext} Files"
-msgstr ""
+msgstr "拡張子が{ext}の全ファイル"
 
 #: gaphor/plugins/diagramexport/__init__.py:100
 msgid "Export to SVG"
@@ -1160,23 +1163,23 @@ msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:34
 msgid "All XMI Files"
-msgstr ""
+msgstr "全てのXMIファイル"
 
 #: gaphor/services/helpservice/about.ui:7 gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
-msgstr ""
+msgstr "Gaphor について"
 
 #: gaphor/services/helpservice/about.ui:9
 msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
-msgstr ""
+msgstr "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
 
 #: gaphor/services/helpservice/about.ui:10
 msgid "Gaphor is the simple modeling tool written in Python"
-msgstr ""
+msgstr "Gaphor はPython製のシンプルなモデリングツールです"
 
 #: gaphor/services/helpservice/about.ui:12
 msgid "Fork me on GitHub"
-msgstr ""
+msgstr "GitHubでフォークする"
 
 #: gaphor/services/helpservice/about.ui:15
 msgid ""
@@ -1184,101 +1187,104 @@ msgid ""
 "Apache Software License, version 2.0.\n"
 "See the LICENSE.txt file for details."
 msgstr ""
+"このソフトウェアは次のライセンス条項の元でリリースされています。\n"
+"Apache Software License, version 2.0.\n"
+"詳細については LICENSE.txt ファイルを確認してください。"
 
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
-msgstr ""
+msgstr "アプリケーション"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
 #: gaphor/ui/elementeditor.glade:340 gaphor/ui/elementeditor.ui:205
 msgid "Preferences"
-msgstr ""
+msgstr "設定"
 
 #: gaphor/services/helpservice/shortcuts.ui:32
 msgid "Quit Gaphor"
-msgstr ""
+msgstr "Gaphor終了"
 
 #: gaphor/services/helpservice/shortcuts.ui:43
 msgid "Files"
-msgstr ""
+msgstr "ファイル"
 
 #: gaphor/services/helpservice/shortcuts.ui:49 gaphor/ui/mainwindow.py:44
 msgid "New Window"
-msgstr ""
+msgstr "新ウィンドウ"
 
 #: gaphor/services/helpservice/shortcuts.ui:57 gaphor/ui/mainwindow.glade:138
 #: gaphor/ui/mainwindow.ui:40
 msgid "Open"
-msgstr ""
+msgstr "開く"
 
 #: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:48
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: gaphor/services/helpservice/shortcuts.ui:73
 msgid "Save As"
-msgstr ""
+msgstr "別名保存"
 
 #: gaphor/services/helpservice/shortcuts.ui:84
 #: gaphor/services/helpservice/shortcuts.ui:90
 #: gaphor/ui/elementeditor.glade:122 gaphor/ui/elementeditor.ui:74
 msgid "Undo"
-msgstr ""
+msgstr "取消"
 
 #: gaphor/services/helpservice/shortcuts.ui:98
 #: gaphor/ui/elementeditor.glade:148 gaphor/ui/elementeditor.ui:89
 msgid "Redo"
-msgstr ""
+msgstr "再実行"
 
 #: gaphor/services/helpservice/shortcuts.ui:109
 msgid "Diagrams"
-msgstr ""
+msgstr "ダイアグラム"
 
 #: gaphor/services/helpservice/shortcuts.ui:115
 msgid "Edit"
-msgstr ""
+msgstr "編集"
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:230
 msgid "Show/Hide Editor"
-msgstr ""
+msgstr "エディタの表示/非表示"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
 msgid "Select All"
-msgstr ""
+msgstr "全て選択"
 
 #: gaphor/services/helpservice/shortcuts.ui:139
 msgid "Deselect All"
-msgstr ""
+msgstr "全ての選択を解除"
 
 #: gaphor/services/helpservice/shortcuts.ui:147
 msgid "Copy"
-msgstr ""
+msgstr "コピー"
 
 #: gaphor/services/helpservice/shortcuts.ui:155
 msgid "Paste"
-msgstr ""
+msgstr "ペースト"
 
 #: gaphor/services/helpservice/shortcuts.ui:163
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 #: gaphor/services/helpservice/shortcuts.ui:171
 msgid "Close Diagram"
-msgstr ""
+msgstr "ダイアグラムを閉じる"
 
 #: gaphor/services/helpservice/shortcuts.ui:182
 msgid "Zoom"
-msgstr ""
+msgstr "ズーム"
 
 #: gaphor/services/helpservice/shortcuts.ui:188
 #: gaphor/ui/elementeditor.glade:178 gaphor/ui/elementeditor.ui:105
 msgid "Zoom In"
-msgstr ""
+msgstr "ズームイン"
 
 #: gaphor/services/helpservice/shortcuts.ui:196
 #: gaphor/ui/elementeditor.glade:220 gaphor/ui/elementeditor.ui:129
 msgid "Zoom Out"
-msgstr ""
+msgstr "ズームアウト"
 
 #: gaphor/services/helpservice/shortcuts.ui:204
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.ui:117
@@ -1287,17 +1293,17 @@ msgstr ""
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
-msgstr ""
+msgstr "全Gaphorモデル"
 
 #: gaphor/ui/appfilemanager.py:44
 msgid "Open Gaphor Model"
-msgstr ""
+msgstr "Gaphorモデルを開く"
 
 #: gaphor/ui/appfilemanager.py:54
 msgid ""
 "{filename} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr ""
+msgstr "{filename} はすでに開いています。開いているウィンドウに切り替えますか?"
 
 #: gaphor/ui/diagrampage.py:126
 msgid "<None>"
@@ -1307,7 +1313,7 @@ msgstr ""
 msgid ""
 "Drag to diagram is (temporarily) limited to Classifiers, Packages, and "
 "Properties, not {type}."
-msgstr ""
+msgstr "ダイアグラムへのドラッグは、一時的に分類子、パッケージ、プロパティに制限されています。{type}はできません。"
 
 #: gaphor/ui/elementeditor.glade:15 gaphor/ui/elementeditor.ui:10
 msgid "No item selected"
@@ -1345,7 +1351,7 @@ msgstr "エディタ"
 
 #: gaphor/ui/elementeditor.glade:360 gaphor/ui/elementeditor.ui:217
 msgid "Reset tool automatically"
-msgstr ""
+msgstr "ツールの自動リセット"
 
 #: gaphor/ui/elementeditor.glade:393 gaphor/ui/elementeditor.ui:232
 msgid "Style sheet"
@@ -1368,15 +1374,15 @@ msgstr "設定"
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
-msgstr ""
+msgstr "Gaphor をコマンドラインから起動したものに似ています。デバッグセッションを開始しますか?"
 
 #: gaphor/ui/errorhandler.py:30
 msgid "Start debug session"
-msgstr ""
+msgstr "デバッグセッションの開始"
 
 #: gaphor/ui/filedialog.py:32
 msgid "All Files"
-msgstr ""
+msgstr "全ファイル"
 
 #: gaphor/ui/filemanager.py:35
 msgid ""
@@ -1457,7 +1463,7 @@ msgstr "モデルを{filename}に保存"
 
 #: gaphor/ui/filemanager.py:219
 msgid "Unable to save model “{filename}”."
-msgstr ""
+msgstr "モデルを {filename} に保存できません。"
 
 #: gaphor/ui/filemanager.py:257
 msgid "Save Gaphor Model As"
@@ -1525,7 +1531,7 @@ msgstr "開く(_O)"
 
 #: gaphor/ui/namespace.py:43
 msgid "_Rename"
-msgstr ""
+msgstr "別名(_R)"
 
 #: gaphor/ui/namespace.py:47
 msgid "New _Diagram"
@@ -1553,4 +1559,4 @@ msgstr ""
 
 #: gaphor/ui/recentfiles.py:67
 msgid "No recently opened models"
-msgstr "最近開いたモデルはありません。"
+msgstr "最近開いたモデルはありません"
