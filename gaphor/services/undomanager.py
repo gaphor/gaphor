@@ -60,7 +60,7 @@ class ActionStack:
         self._actions.append(action)
 
     def can_execute(self):
-        return self._actions and True or False
+        return bool(self._actions)
 
     @transactional
     def execute(self):
