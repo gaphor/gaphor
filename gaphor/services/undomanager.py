@@ -64,6 +64,7 @@ class ActionStack:
 
     @transactional
     def execute(self):
+        self._actions.reverse()
         self._actions.sort(key=lambda fn: fn.__name__)
 
         for act in self._actions:

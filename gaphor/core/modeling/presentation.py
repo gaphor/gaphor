@@ -136,8 +136,10 @@ Presentation.children = association(
 
 class MatrixUpdated(RevertibeEvent):
     def __init__(self, element, old_value):
+        print(f"new matrix update {element}, {old_value}")
         super().__init__(element)
         self.old_value = old_value
 
     def revert(self, target):
+        print(f"revert old value {self.old_value}")
         target.matrix.set(*self.old_value)
