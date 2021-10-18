@@ -13,12 +13,11 @@ from gaphor.core.modeling.element import (
     Element,
     EventWatcherProtocol,
     Handler,
+    RepositoryProtocol,
     UnlinkEvent,
 )
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.core.modeling.event import (
-    AssociationAdded,
-    AssociationSet,
     ElementCreated,
     ElementDeleted,
     ModelFlushed,
@@ -32,6 +31,24 @@ if TYPE_CHECKING:
 
 T = TypeVar("T", bound=Element)
 P = TypeVar("P", bound=Presentation)
+
+
+class BlockingEventManager:
+    def handle(self, *events):
+        pass
+
+
+class RecordingEventManager:
+    def __init__(self, event_manager):
+        self.event_manager = event_manager
+        self.events = []
+
+    def handle(self, *events):
+        self.events.extend(events)
+
+    def replay(self):
+        if self.event_manager:
+            self.event_manager.handle(*self.events)
 
 
 class ElementFactory(Service):
@@ -54,7 +71,6 @@ class ElementFactory(Service):
         self.event_manager = event_manager
         self.element_dispatcher = element_dispatcher
         self._elements: dict[str, Element] = OrderedDict()
-        self._block_events = 0
 
     def shutdown(self) -> None:
         self.flush()
@@ -69,32 +85,26 @@ class ElementFactory(Service):
         This method should only be used when loading models, since it
         does not emit an ElementCreated event.
         """
-        if not type:
-            raise TypeError(f"Type {type} not defined")
-        elif issubclass(type, Presentation):
+        type_args: dict[str, Diagram | RepositoryProtocol]
+        if issubclass(type, Presentation):
             if not diagram:
                 raise TypeError("Presentation types require a diagram")
-
-            # Avoid events that reference this element before its created-event is emitted.
-            with self.block_events():
-                item = type(diagram=diagram, id=id)
-            self._elements[id] = item
-            self.handle(ElementCreated(self, item, diagram))
-
-            # Replay events that happen when a diagram is connected to an item
-            self.handle(AssociationSet(item, Presentation.diagram, None, diagram))
-            self.handle(AssociationAdded(diagram, Diagram.ownedPresentation, item))
-
-            return item
+            type_args = {"diagram": diagram}
         elif issubclass(type, Element):
             if diagram:
                 raise TypeError("Element types require no diagram")
-            obj = type(id, self)
-            self._elements[id] = obj
-            self.handle(ElementCreated(self, obj))
-            return obj
+            type_args = {"model": self}
         else:
             raise TypeError(f"Type {type} is not a valid model element")
+
+        # Avoid events that reference this element before its created-event is emitted.
+        event_recorder = RecordingEventManager(self.event_manager)
+        with self.block_events(event_recorder):
+            element = type(id=id, **type_args)  # type: ignore[arg-type]
+        self._elements[id] = element
+        self.handle(ElementCreated(self, element, diagram))
+        event_recorder.replay()
+        return element
 
     def size(self) -> int:
         """Return the amount of elements currently in the factory."""
@@ -183,14 +193,18 @@ class ElementFactory(Service):
         self.handle(ModelReady(self))
 
     @contextmanager
-    def block_events(self):
-        """Block events from being emitted."""
-        self._block_events += 1
+    def block_events(self, new_event_manager=BlockingEventManager()):
+        """Block events from being emitted.
 
+        Instead, events are directed to `new_event_manager`, which
+        defaults to a blocking event manager.
+        """
+        current_event_manager = self.event_manager
+        self.event_manager = new_event_manager
         try:
             yield self
         finally:
-            self._block_events -= 1
+            self.event_manager = current_event_manager
 
     def handle(self, event: object) -> None:
         """Handle events coming from elements."""
@@ -202,5 +216,5 @@ class ElementFactory(Service):
             except KeyError:
                 return
             event = ElementDeleted(self, event.element, event.diagram)
-        if self.event_manager and not self._block_events:
+        if self.event_manager:
             self.event_manager.handle(event)
