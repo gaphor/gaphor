@@ -23,7 +23,7 @@ import gaphas
 
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element, Id, RepositoryProtocol
-from gaphor.core.modeling.event import AssociationDeleted
+from gaphor.core.modeling.event import AssociationAdded, AssociationDeleted
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import (
     association,
@@ -226,15 +226,35 @@ class Diagram(Element):
         self._registered_views: set[gaphas.view.model.View] = set()
 
         self._watcher = self.watcher()
-        self._watcher.watch("ownedPresentation", self._presentation_removed)
+        self._watcher.watch("ownedPresentation", self._owned_presentation_changed)
+        self._watcher.watch("ownedPresentation.parent", self._order_owned_presentation)
 
     ownedPresentation: relation_many[Presentation] = association(
         "ownedPresentation", Presentation, composite=True, opposite="diagram"
     )
 
-    def _presentation_removed(self, event):
+    def _owned_presentation_changed(self, event):
         if isinstance(event, AssociationDeleted) and event.old_value:
             self._update_views(removed_items=(event.old_value,))
+        elif isinstance(event, AssociationAdded):
+            self._order_owned_presentation()
+
+    def _order_owned_presentation(self, event=None):
+        if event and event.property is not Presentation.parent:
+            return
+
+        ownedPresentation = self.ownedPresentation
+
+        def traverse_items(parent=None) -> Iterable[Presentation]:
+            for item in ownedPresentation:
+                if item.parent is parent:
+                    yield item
+                    yield from traverse_items(item)
+
+        new_order = sorted(
+            traverse_items(), key=lambda e: int(isinstance(e, gaphas.Line))
+        )
+        self.ownedPresentation.order(new_order.index)
 
     @property
     def styleSheet(self) -> StyleSheet | None:
@@ -251,6 +271,7 @@ class Diagram(Element):
 
     def postload(self):
         """Handle post-load functionality for the diagram."""
+        self._order_owned_presentation()
         super().postload()
 
     def create(self, type, parent=None, subject=None):
@@ -317,21 +338,7 @@ class Diagram(Element):
 
     def get_all_items(self) -> Iterable[Presentation]:
         """Get all items owned by this diagram, ordered depth-first."""
-
-        def iter_children(item):
-            for child in item.children:
-                yield child
-                yield from iter_children(child)
-
-        def traverse_items() -> Iterable[Presentation]:
-            for root in self.ownedPresentation:
-                if not root.parent:
-                    yield root
-                    yield from iter_children(root)
-
-        yield from sorted(
-            traverse_items(), key=lambda e: int(isinstance(e, gaphas.Line))
-        )
+        yield from self.ownedPresentation
 
     def get_parent(self, item: Presentation) -> Presentation | None:
         return item.parent
