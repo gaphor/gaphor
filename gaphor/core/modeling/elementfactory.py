@@ -17,6 +17,8 @@ from gaphor.core.modeling.element import (
 )
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.core.modeling.event import (
+    AssociationAdded,
+    AssociationSet,
     ElementCreated,
     ElementDeleted,
     ModelFlushed,
@@ -78,6 +80,11 @@ class ElementFactory(Service):
                 item = type(diagram=diagram, id=id)
             self._elements[id] = item
             self.handle(ElementCreated(self, item, diagram))
+
+            # Replay events that happen when a diagram is connected to an item
+            self.handle(AssociationSet(item, Presentation.diagram, None, diagram))
+            self.handle(AssociationAdded(diagram, Diagram.ownedPresentation, item))
+
             return item
         elif issubclass(type, Element):
             if diagram:

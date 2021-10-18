@@ -344,7 +344,8 @@ class Diagram(Element):
         return (n for n in self.get_all_items() if n in items_set)
 
     def request_update(self, item: gaphas.item.Item) -> None:
-        self._update_views(dirty_items=(item,))
+        if item in self.ownedPresentation:
+            self._update_views(dirty_items=(item,))
 
     def _update_views(self, dirty_items=(), removed_items=()):
         """Send an update notification to all registered views."""
