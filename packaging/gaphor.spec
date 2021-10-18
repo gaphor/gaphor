@@ -45,7 +45,14 @@ a = Analysis(
     + copy_metadata("gaphor")
     + copy_metadata("gaphas"),
     hiddenimports=[],
-    hookspath=[],
+    hookspath=["hooks"],
+    hooksconfig={
+        "gi": {
+            "module-versions": {
+                "GtkSource": "4",
+            },
+        },
+    },
     runtime_hooks=[],
     excludes=["lib2to3", "tcl", "tk", "_tkinter", "tkinter", "Tkinter"],
     win_no_prefer_redirects=False,

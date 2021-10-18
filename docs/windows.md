@@ -129,6 +129,7 @@ heavily patched to be built this way and often breaks.
 $ pacman -Suy
 $ pacman -S mingw-w64-x86_64-gcc \
     mingw-w64-x86_64-gtk3 \
+    mingw-w64-x86_64-gtksourceview4 \
     mingw-w64-x86_64-pkgconf \
     mingw-w64-x86_64-cairo \
     mingw-w64-x86_64-gobject-introspection \
