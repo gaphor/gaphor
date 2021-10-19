@@ -251,7 +251,7 @@ Gaphor's data model.
 
 ```css
 association:not([memberEnd.navigability*=true]) {
- color: blue;
+  color: blue;
 }
 ```
 
