@@ -7,6 +7,7 @@ from gaphor.diagram.tests.fixtures import (
     diagram,
     element_factory,
     event_manager,
+    modeling_language,
 )
 from gaphor.UML.classes import AssociationItem, ClassItem
 from gaphor.UML.classes.associationpropertypages import AssociationPropertyPage
