@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-11 21:05-0400\n"
-"PO-Revision-Date: 2021-10-03 18:26+0000\n"
+"PO-Revision-Date: 2021-10-20 01:51+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: ../gaphor/C4Model/modelinglanguage.py:16 ../gaphor/C4Model/toolbox.py:51
@@ -34,9 +35,8 @@ msgid "Technology"
 msgstr "Teknologia"
 
 #: ../gaphor/C4Model/toolbox.py:25
-#, fuzzy
 msgid "New Software System"
-msgstr "Järjestelmäohjelmisto"
+msgstr "Uusi ohjelmistojärjestelmä"
 
 #: ../gaphor/C4Model/toolbox.py:32
 msgid "New Container"
@@ -56,7 +56,7 @@ msgstr "Henkilö"
 
 #: ../gaphor/C4Model/toolbox.py:66
 msgid "Software System"
-msgstr "Järjestelmäohjelmisto"
+msgstr "Ohjelmistojärjestelmä"
 
 #: ../gaphor/C4Model/toolbox.py:77
 msgid "Container"
@@ -87,16 +87,16 @@ msgstr "AND-portti"
 
 #: ../gaphor/RAAML/fta/basicevent.py:36 ../gaphor/RAAML/fta/ftatoolbox.py:108
 msgid "Basic Event"
-msgstr ""
+msgstr "Perustapahtuma"
 
 #: ../gaphor/RAAML/fta/conditionalevent.py:33
 #: ../gaphor/RAAML/fta/ftatoolbox.py:119
 msgid "Conditional Event"
-msgstr ""
+msgstr "Ehdollinen tapahtuma"
 
 #: ../gaphor/RAAML/fta/dormantevent.py:35 ../gaphor/RAAML/fta/ftatoolbox.py:141
 msgid "Dormant Event"
-msgstr ""
+msgstr "Uinuva tapahtuma"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:10
 msgid "Fault Tree Analysis"
@@ -121,75 +121,74 @@ msgstr "Poissulkeva portti (XOR)"
 #: ../gaphor/RAAML/fta/ftatoolbox.py:66
 #: ../gaphor/RAAML/fta/majorityvotegate.py:41
 msgid "Majority Vote Gate"
-msgstr ""
+msgstr "Enemmistön äänestysportti"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:77 ../gaphor/RAAML/fta/inhibitgate.py:35
 msgid "Inhibit Gate"
-msgstr ""
+msgstr "Rajoittava portti"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:86 ../gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
-msgstr ""
+msgstr "Siirto sisään"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:97 ../gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
-msgstr ""
+msgstr "Siirto ulos"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:130
 #: ../gaphor/RAAML/fta/undevelopedevent.py:36
 msgid "Undeveloped Event"
-msgstr ""
+msgstr "Kehittymätön tapahtuma"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:152 ../gaphor/RAAML/fta/houseevent.py:35
 msgid "House Event"
-msgstr ""
+msgstr "Talotapahtuma"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:163 ../gaphor/RAAML/fta/zeroevent.py:36
 msgid "Zero Event"
-msgstr ""
+msgstr "Nollatapahtuma"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:174 ../gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
-msgstr ""
+msgstr "Ylätapahtuma"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:185
 #: ../gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
-msgstr ""
+msgstr "Välitason tapahtuma"
 
 #: ../gaphor/RAAML/fta/seqgate.py:37
-#, fuzzy
 msgid "Sequence Enforcing Gate"
-msgstr "Sekvenssin pakottava portti (SEQ)"
+msgstr "Sekvenssin pakottava portti"
 
 #: ../gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr ""
+msgstr "Poissulkeva portti (XOR)"
 
 #: ../gaphor/RAAML/stpa/controlaction.py:33
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:155
 msgid "Control Action"
-msgstr ""
+msgstr "Kontrollitoiminto"
 
 #: ../gaphor/RAAML/stpa/operationalsituation.py:34
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:123
 msgid "Operational Situation"
-msgstr ""
+msgstr "Operationaalinen tilanne"
 
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:18
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:43
 msgid "Loss"
-msgstr ""
+msgstr "Menetys"
 
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:23
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:52
 msgid "Hazard"
-msgstr ""
+msgstr "Hasardi"
 
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:28
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:112
 msgid "Abstract Operational Situation"
-msgstr ""
+msgstr "Abstrakti operationaalinen tilanne"
 
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:36
 #: ../gaphor/SysML/blocks/blockstoolbox.py:73
@@ -199,32 +198,32 @@ msgstr "Yleistys"
 
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:61 ../gaphor/SysML/blocks/block.py:60
 msgid "Situation"
-msgstr ""
+msgstr "Tilanne"
 
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
-msgstr ""
+msgstr "Kontrollirakenne"
 
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:83
 msgid "Controller"
-msgstr ""
+msgstr "Kontrolleri"
 
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:92
 msgid "Actuator"
-msgstr ""
+msgstr "Aktuaattori"
 
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:101
 msgid "Controlled Process"
-msgstr ""
+msgstr "Kontrolloitu prosessi"
 
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:134
 #: ../gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "Unsafe Control Action"
-msgstr ""
+msgstr "Epäturvallinen kontrollitoiminto"
 
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:145
 msgid "Relevant To"
-msgstr ""
+msgstr "Relevantti kenelle"
 
 #: ../gaphor/SysML/modelinglanguage.py:15
 msgid "SysML"
@@ -232,15 +231,15 @@ msgstr "SysML"
 
 #: ../gaphor/SysML/propertypages.glade:38 ../gaphor/SysML/propertypages.ui:27
 msgid "Show Parts"
-msgstr ""
+msgstr "Näytä osat"
 
 #: ../gaphor/SysML/propertypages.glade:74 ../gaphor/SysML/propertypages.ui:42
 msgid "Show references"
-msgstr ""
+msgstr "Näytä viittaukset"
 
 #: ../gaphor/SysML/propertypages.glade:108 ../gaphor/SysML/propertypages.ui:57
 msgid "Parts and References"
-msgstr ""
+msgstr "Osat ja viittaukset"
 
 #: ../gaphor/SysML/propertypages.glade:125 ../gaphor/SysML/propertypages.ui:71
 msgid "Aggregation"
@@ -284,32 +283,31 @@ msgstr "Sisäiset lohkot"
 
 #: ../gaphor/SysML/toolbox.py:27
 msgid "Connector"
-msgstr ""
+msgstr "Yhdistäjä"
 
 #: ../gaphor/SysML/toolbox.py:34
 msgid "Property"
-msgstr ""
+msgstr "Ominaisuus"
 
 #: ../gaphor/SysML/toolbox.py:43
 msgid "Proxy Port"
-msgstr ""
+msgstr "Proxyn portti"
 
 #: ../gaphor/SysML/blocks/block.py:62
 msgid "ControlStructure"
-msgstr ""
+msgstr "KontrolliRakenne"
 
 #: ../gaphor/SysML/blocks/block.py:64
-#, fuzzy
 msgid "block"
-msgstr "Lohko"
+msgstr "lohko"
 
 #: ../gaphor/SysML/blocks/block.py:97
 msgid "parts"
-msgstr ""
+msgstr "osat"
 
 #: ../gaphor/SysML/blocks/block.py:108
 msgid "references"
-msgstr ""
+msgstr "viittaukset"
 
 #: ../gaphor/SysML/blocks/block.py:124
 msgid "unnamed"
@@ -346,48 +344,45 @@ msgstr "Assosisaatio"
 
 #: ../gaphor/SysML/blocks/blockstoolbox.py:80
 msgid "ValueType"
-msgstr ""
+msgstr "ArvoTyyppi"
 
 #: ../gaphor/SysML/blocks/blockstoolbox.py:91
 #: ../gaphor/UML/classes/classestoolbox.py:149
 msgid "Enumeration"
-msgstr ""
+msgstr "Enumeraatio"
 
 #: ../gaphor/SysML/blocks/blockstoolbox.py:103
 #: ../gaphor/UML/classes/classestoolbox.py:161
 msgid "Primitive"
-msgstr ""
+msgstr "Primitiivi"
 
 #: ../gaphor/SysML/blocks/proxyport.py:67
 msgid "proxy"
-msgstr ""
+msgstr "proxy"
 
 #: ../gaphor/SysML/requirements/relationships.py:32
 msgid "satisfy"
-msgstr ""
+msgstr "tyydytä"
 
 #: ../gaphor/SysML/requirements/relationships.py:38
 msgid "deriveReqt"
 msgstr ""
 
 #: ../gaphor/SysML/requirements/relationships.py:44
-#, fuzzy
 msgid "trace"
-msgstr "Rajapinta"
+msgstr "jälki"
 
 #: ../gaphor/SysML/requirements/relationships.py:50
 msgid "verify"
-msgstr ""
+msgstr "vahvista"
 
 #: ../gaphor/SysML/requirements/relationships.py:56
-#, fuzzy
 msgid "refine"
-msgstr "Profiili"
+msgstr "tarkenna"
 
 #: ../gaphor/SysML/requirements/requirement.py:63
-#, fuzzy
 msgid "requirement"
-msgstr "Vaatimus"
+msgstr "vaatimus"
 
 #: ../gaphor/SysML/requirements/requirementstoolbox.py:13
 msgid "Requirements"
@@ -399,29 +394,28 @@ msgstr "Vaatimus"
 
 #: ../gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
-msgstr ""
+msgstr "Tyydytä"
 
 #: ../gaphor/SysML/requirements/requirementstoolbox.py:36
-#, fuzzy
 msgid "Derive Requirement"
-msgstr "Vaatimus"
+msgstr "Johdannaisvaatimus"
 
 #: ../gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
-msgstr ""
+msgstr "Jälki"
 
 #: ../gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
-msgstr ""
+msgstr "Tarkenna"
 
 #: ../gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
-msgstr ""
+msgstr "Vahvista"
 
 #: ../gaphor/SysML/requirements/requirementstoolbox.py:64
 #: ../gaphor/UML/classes/classestoolbox.py:80
 msgid "Containment"
-msgstr ""
+msgstr "Eristäminen"
 
 #: ../gaphor/UML/modelinglanguage.py:14 ../gaphor/ui/mainwindow.glade:279
 msgid "UML"
@@ -460,15 +454,15 @@ msgstr "Alkusolmu"
 
 #: ../gaphor/UML/actions/actionstoolbox.py:80
 msgid "Activity final node"
-msgstr ""
+msgstr "Aktiviteetin viimeinen solmu"
 
 #: ../gaphor/UML/actions/actionstoolbox.py:92
 msgid "Flow final node"
-msgstr ""
+msgstr "Virran viimeinen solmu"
 
 #: ../gaphor/UML/actions/actionstoolbox.py:104
 msgid "Decision/merge node"
-msgstr ""
+msgstr "Päätös-/yhdistämissolmu"
 
 #: ../gaphor/UML/actions/actionstoolbox.py:116
 msgid "Fork/join node"
@@ -484,7 +478,7 @@ msgstr "Uimarata"
 
 #: ../gaphor/UML/actions/actionstoolbox.py:152
 msgid "Control/object flow"
-msgstr ""
+msgstr "Kontrolli-/objektivirta"
 
 #: ../gaphor/UML/actions/actionstoolbox.py:159
 msgid "Send signal action"
@@ -514,7 +508,7 @@ msgstr "Vaakatasossa"
 #: ../gaphor/UML/actions/propertypages.glade:71
 #: ../gaphor/UML/actions/propertypages.ui:41
 msgid "Join Specification"
-msgstr ""
+msgstr "Liitosspesifikaatio"
 
 #: ../gaphor/UML/actions/propertypages.glade:106
 #: ../gaphor/UML/actions/propertypages.ui:60
@@ -549,12 +543,12 @@ msgstr ""
 #: ../gaphor/UML/actions/propertypages.glade:199
 #: ../gaphor/UML/actions/propertypages.ui:107
 msgid "Partitions"
-msgstr ""
+msgstr "Osiot"
 
 #: ../gaphor/UML/actions/propertypages.glade:232
 #: ../gaphor/UML/actions/propertypages.ui:121
 msgid "Partition Names"
-msgstr ""
+msgstr "Osion nimet"
 
 #: ../gaphor/UML/actions/propertypages.glade:270
 #: ../gaphor/UML/actions/propertypages.ui:143
@@ -566,13 +560,13 @@ msgstr "Vartija"
 #: ../gaphor/UML/classes/classespropertypages.py:325
 #: ../gaphor/UML/classes/classespropertypages.py:401
 msgid "Static"
-msgstr ""
+msgstr "Staattinen"
 
 #: ../gaphor/UML/classes/classespropertypages.py:401
 #: ../gaphor/UML/classes/propertypages.glade:522
 #: ../gaphor/UML/classes/propertypages.ui:345
 msgid "Abstract"
-msgstr ""
+msgstr "Abstrakti"
 
 #: ../gaphor/UML/classes/classestoolbox.py:42
 msgid "Classes"
@@ -593,33 +587,31 @@ msgstr "Rajapinnan realisaatio"
 
 #: ../gaphor/UML/classes/classestoolbox.py:137
 msgid "DataType"
-msgstr ""
+msgstr "DataTyyppi"
 
 #: ../gaphor/UML/classes/datatype.py:58
 msgid "primitive"
-msgstr ""
+msgstr "primitiivi"
 
 #: ../gaphor/UML/classes/datatype.py:60
 msgid "valueType"
-msgstr ""
+msgstr "arvoTyyppi"
 
 #: ../gaphor/UML/classes/datatype.py:62
-#, fuzzy
 msgid "dataType"
-msgstr "Tila"
+msgstr "dataTyyppi"
 
 #: ../gaphor/UML/classes/dependency.py:49
 msgid "use"
-msgstr ""
+msgstr "käytä"
 
 #: ../gaphor/UML/classes/dependency.py:50
 msgid "realize"
-msgstr ""
+msgstr "realisoi"
 
 #: ../gaphor/UML/classes/dependency.py:51
-#, fuzzy
 msgid "implements"
-msgstr "Implementaatio"
+msgstr "implementoi"
 
 #: ../gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
@@ -634,29 +626,24 @@ msgid "Implementation"
 msgstr "Implementaatio"
 
 #: ../gaphor/UML/classes/enumeration.py:69
-#, fuzzy
 msgid "enumeration"
-msgstr "Interaktio"
+msgstr "enumeraatio"
 
 #: ../gaphor/UML/classes/interface.py:290
-#, fuzzy
 msgid "interface"
-msgstr "Rajapinta"
+msgstr "rajapinta"
 
 #: ../gaphor/UML/classes/klass.py:59
-#, fuzzy
 msgid "stereotype"
-msgstr "Stereotyyppi"
+msgstr "stereotyyppi"
 
 #: ../gaphor/UML/classes/klass.py:61
-#, fuzzy
 msgid "metaclass"
-msgstr "Metaluokka"
+msgstr "metaluokka"
 
 #: ../gaphor/UML/classes/package.py:23
-#, fuzzy
 msgid "profile"
-msgstr "Profiili"
+msgstr "profiili"
 
 #: ../gaphor/UML/classes/propertypages.glade:33
 #: ../gaphor/UML/classes/propertypages.ui:24
@@ -680,6 +667,12 @@ msgid ""
 "~ 1..2\n"
 "- [1..2]"
 msgstr ""
+"Kirjoita ominaisuuden nimi ja multiplisiteetti, esimerkiksi\n"
+"- nimi\n"
+"+ nimi [1]\n"
+"- nimi [1..2]\n"
+"~ 1..2\n"
+"- [1..2]"
 
 #: ../gaphor/UML/classes/propertypages.glade:122
 #: ../gaphor/UML/classes/propertypages.glade:265
@@ -727,12 +720,12 @@ msgstr "Arvo"
 #: ../gaphor/UML/classes/propertypages.glade:216
 #: ../gaphor/UML/classes/propertypages.ui:138
 msgid "Head:"
-msgstr ""
+msgstr "Pää:"
 
 #: ../gaphor/UML/classes/propertypages.glade:360
 #: ../gaphor/UML/classes/propertypages.ui:236
 msgid "Tail:"
-msgstr ""
+msgstr "Häntä:"
 
 #: ../gaphor/UML/classes/propertypages.glade:395
 #: ../gaphor/UML/classes/propertypages.ui:258
@@ -832,7 +825,7 @@ msgstr "Komponentit"
 
 #: ../gaphor/UML/components/componentstoolbox.py:28
 msgid "Artifact"
-msgstr "Artifakti"
+msgstr "Artefakti"
 
 #: ../gaphor/UML/components/componentstoolbox.py:40
 msgid "Node"
@@ -866,11 +859,11 @@ msgstr "Interaktiot"
 
 #: ../gaphor/UML/interactions/interactionstoolbox.py:57
 msgid "Lifeline"
-msgstr ""
+msgstr "Elämänlanka"
 
 #: ../gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Execution Specification"
-msgstr ""
+msgstr "Suorituspesifikaatio"
 
 #: ../gaphor/UML/interactions/interactionstoolbox.py:77
 msgid "Message"
@@ -904,17 +897,16 @@ msgstr "Stereotyyppi"
 
 #: ../gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
-msgstr ""
+msgstr "Laajennus"
 
 #: ../gaphor/UML/profiles/profilestoolbox.py:63
 msgid "Import"
-msgstr ""
+msgstr "Tuonti"
 
 #: ../gaphor/UML/profiles/propertypages.glade:50
 #: ../gaphor/UML/profiles/propertypages.ui:36
-#, fuzzy
 msgid "Named Element"
-msgstr "Implementaatio"
+msgstr "Nimetty elementti"
 
 #: ../gaphor/UML/profiles/propertypages.glade:82
 #: ../gaphor/UML/profiles/propertypages.ui:55
@@ -929,12 +921,12 @@ msgstr "Stereotyypit"
 #: ../gaphor/UML/states/propertypages.glade:34
 #: ../gaphor/UML/states/propertypages.ui:25
 msgid "Entry"
-msgstr ""
+msgstr "Sisään"
 
 #: ../gaphor/UML/states/propertypages.glade:59
 #: ../gaphor/UML/states/propertypages.ui:36
 msgid "Exit"
-msgstr ""
+msgstr "Ulos"
 
 #: ../gaphor/UML/states/propertypages.glade:84
 #: ../gaphor/UML/states/propertypages.ui:47
@@ -948,7 +940,7 @@ msgstr "Aktiviteetit"
 
 #: ../gaphor/UML/states/statestoolbox.py:45
 msgid "State Machine"
-msgstr ""
+msgstr "Tilakone"
 
 #: ../gaphor/UML/states/statestoolbox.py:52
 msgid "Default Region"
@@ -964,29 +956,27 @@ msgstr "Tila"
 
 #: ../gaphor/UML/states/statestoolbox.py:73
 msgid "Initial Pseudostate"
-msgstr ""
+msgstr "Alustava pseudotila"
 
 #: ../gaphor/UML/states/statestoolbox.py:85
 msgid "Final State"
-msgstr ""
+msgstr "Viimeinen tila"
 
 #: ../gaphor/UML/states/statestoolbox.py:97
 msgid "History Pseudostate"
-msgstr ""
+msgstr "Historian pseudotila"
 
 #: ../gaphor/UML/states/statestoolbox.py:109
 msgid "Transition"
 msgstr "Transitio"
 
 #: ../gaphor/UML/usecases/extend.py:19
-#, fuzzy
 msgid "extend"
-msgstr "Laajenna"
+msgstr "laajenna"
 
 #: ../gaphor/UML/usecases/include.py:19
-#, fuzzy
 msgid "include"
-msgstr "Sisällytä"
+msgstr "sisällytä"
 
 #: ../gaphor/UML/usecases/usecasetoolbox.py:12
 msgid "Use Cases"
@@ -1074,9 +1064,8 @@ msgstr "Tyyli"
 
 #: ../gaphor/diagram/propertypages.glade:270
 #: ../gaphor/diagram/propertypages.ui:75
-#, fuzzy
 msgid "Note or Remark"
-msgstr "Huomio / muistutus"
+msgstr "Huomio tai muistutus"
 
 #: ../gaphor/plugins/console/console.py:19
 msgid ""
@@ -1102,45 +1091,40 @@ msgstr "Kaikki {ext}-tiedostot"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:100
 msgid "Export as SVG"
-msgstr ""
+msgstr "Vie SVG-kuvaksi"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:101
 #: ../gaphor/plugins/diagramexport/__init__.py:106
-#, fuzzy
 msgid "Export diagram as SVG"
 msgstr "Vie kaavio SVG-muotoon"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:113
 msgid "Export as PNG"
-msgstr ""
+msgstr "Vie PNG-kuvaksi"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:114
 #: ../gaphor/plugins/diagramexport/__init__.py:119
-#, fuzzy
 msgid "Export diagram as PNG"
-msgstr "Vie kaavio SVG-muotoon"
+msgstr "Vie kaavio PNG-muotoon"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:126
 msgid "Export as PDF"
-msgstr ""
+msgstr "Vie PDF-tiedostoksi"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:127
 #: ../gaphor/plugins/diagramexport/__init__.py:132
-#, fuzzy
 msgid "Export diagram as PDF"
-msgstr "Vie kaavio SVG-muotoon"
+msgstr "Vie kaavio PDF-muotoon"
 
 #: ../gaphor/plugins/xmiexport/__init__.py:24
 msgid "Export as XMI"
-msgstr ""
+msgstr "Vie XMI-muotoon"
 
 #: ../gaphor/plugins/xmiexport/__init__.py:25
-#, fuzzy
 msgid "Export model as XMI (XML Model Interchange) format"
-msgstr "Vie malli XMI (XML Model Interchange) -muotoon"
+msgstr "Vie malli XMI-muotoon (XML Model Interchange)"
 
 #: ../gaphor/plugins/xmiexport/__init__.py:31
-#, fuzzy
 msgid "Export model as XMI file"
 msgstr "Vie malli XMI-tiedostoksi"
 
@@ -1273,7 +1257,7 @@ msgstr "Loitonna"
 #: ../gaphor/services/helpservice/shortcuts.ui:204
 #: ../gaphor/ui/elementeditor.glade:199 ../gaphor/ui/elementeditor.ui:117
 msgid "Actual Size"
-msgstr ""
+msgstr "Todellinen koko"
 
 #: ../gaphor/ui/appfilemanager.py:13 ../gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
@@ -1307,7 +1291,7 @@ msgstr "Ei kohdetta valittuna"
 
 #: ../gaphor/ui/elementeditor.glade:36 ../gaphor/ui/elementeditor.ui:22
 msgid "Show Tips"
-msgstr "Näytä vihjeet"
+msgstr "Näytä vinkit"
 
 #: ../gaphor/ui/elementeditor.glade:80 ../gaphor/ui/elementeditor.ui:48
 msgid ""
@@ -1326,11 +1310,25 @@ msgid ""
 "in the tree view and start typing. A search box will automatically "
 "appear.\n"
 msgstr ""
+"Lisää mallielementti kaavioon työkalulaatikosta. Näet elementin ominaisuudet "
+"tässä.\n"
+"\n"
+"Tämä palkki on mahdollista piilottaa napsauttamalla otsakepalkissa olevaa "
+"painiketta.\n"
+"\n"
+"<b>Vinkki:</b> Useimmille työkalulaatikon elementeille on määritetty "
+"pikanäppäin (esim. \"c\" luokkaa varten [Class]).\n"
+"Työkalun valinta toimii vain kaaviosta. Jos työkalu ei tule valituksi, "
+"napsauta kaaviota kerran (niin että se on kohdistettuna) ja paina sen "
+"jälkeen pikanäppäintä.\n"
+"\n"
+"<b>Vinkki:</b> Etsiäksesi elementtiä puunäkymässä, valitse puunäkymän "
+"elementti ja aloita kirjoittaminen. Hakukenttä ilmestyy näkyviin "
+"automaattisesti.\n"
 
 #: ../gaphor/ui/elementeditor.glade:251
-#, fuzzy
 msgid "Show/Hide Preferences"
-msgstr ""
+msgstr "Näytä/piilota asetukset"
 
 #: ../gaphor/ui/elementeditor.glade:323 ../gaphor/ui/elementeditor.ui:170
 msgid "Editors"
@@ -1462,33 +1460,28 @@ msgid "Save Gaphor Model As"
 msgstr "Tallenna Gaphor-malli nimellä"
 
 #: ../gaphor/ui/filemanager.py:306
-#, fuzzy
 msgid "Save changes before closing?"
-msgstr "Tallennetaanko muutokset malliin ennen sulkemista?"
+msgstr "Tallennetaanko muutokset ennen sulkemista?"
 
 #: ../gaphor/ui/filemanager.py:307
-#, fuzzy
 msgid "Closing will cause any unsaved changes to be discarded."
 msgstr "Jos suljet tallentamatta, tekemäsi muutokset hylätään."
 
 #: ../gaphor/ui/filemanager.py:312
-#, fuzzy
 msgid "Close _without saving changes"
-msgstr "Sulje _tallentamatta"
+msgstr "Sulje _tallentamatta muutoksia"
 
 #: ../gaphor/ui/mainwindow.glade:105
 msgid "Gaphor"
 msgstr "Gaphor"
 
 #: ../gaphor/ui/mainwindow.glade:184
-#, fuzzy
 msgid "Create New diagram"
-msgstr "Uusi kaavio"
+msgstr "Luo uusi kaavio"
 
 #: ../gaphor/ui/mainwindow.glade:212
-#, fuzzy
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Avaa sovellusvalikko"
 
 #: ../gaphor/ui/mainwindow.py:49
 msgid "Save As..."
@@ -1704,4 +1697,3 @@ msgstr "Ei viimeksi avattuja malleja"
 
 #~ msgid "Zoom 100%"
 #~ msgstr "Suurennus 100 %"
-
