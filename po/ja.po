@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-11 22:10+0200\n"
-"PO-Revision-Date: 2021-10-17 15:45+0000\n"
+"PO-Revision-Date: 2021-10-20 01:51+0000\n"
 "Last-Translator: Tomo Dote <fu7mu4@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "ja/>\n"
@@ -212,11 +212,11 @@ msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:18 gaphor/RAAML/stpa/stpatoolbox.py:43
 msgid "Loss"
-msgstr ""
+msgstr "アクシデント"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:23 gaphor/RAAML/stpa/stpatoolbox.py:52
 msgid "Hazard"
-msgstr ""
+msgstr "ハザード"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:28
 msgid "AbstractOperationalSituation"
@@ -225,47 +225,47 @@ msgstr ""
 #: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:123
 msgid "Generalization"
-msgstr ""
+msgstr "汎化"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:60
 msgid "Situation"
-msgstr ""
+msgstr "場面"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
-msgstr ""
+msgstr "制御構造"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:83
 msgid "Controller"
-msgstr ""
+msgstr "コントローラー"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:92
 msgid "Actuator"
-msgstr ""
+msgstr "アクチュエータ"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:101
 msgid "Controlled Process"
-msgstr ""
+msgstr "制御されたプロセス"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:112
 msgid "Abstract Operational Situation"
-msgstr ""
+msgstr "抽象操作場面"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:123
 msgid "Operational Situation"
-msgstr ""
+msgstr "操作場面"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:134
 msgid "Unsafe Control Action"
-msgstr ""
+msgstr "安全ではない制御アクション"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:145
 msgid "Relevant To"
-msgstr ""
+msgstr "関連する"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:155
 msgid "Control Action"
-msgstr ""
+msgstr "制御アクション"
 
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "UnsafeControlAction"
@@ -297,7 +297,7 @@ msgstr "集約"
 #: gaphor/UML/classes/propertypages.ui:82
 #: gaphor/UML/classes/propertypages.ui:179
 msgid "No aggregation"
-msgstr ""
+msgstr "集約なし"
 
 #: gaphor/SysML/propertypages.glade:143 gaphor/SysML/propertypages.ui:82
 #: gaphor/UML/classes/propertypages.glade:140
@@ -305,7 +305,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:83
 #: gaphor/UML/classes/propertypages.ui:180
 msgid "Shared"
-msgstr ""
+msgstr "共有"
 
 #: gaphor/SysML/propertypages.glade:144 gaphor/SysML/propertypages.ui:83
 #: gaphor/UML/classes/propertypages.glade:141
@@ -313,23 +313,23 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:84
 #: gaphor/UML/classes/propertypages.ui:181
 msgid "Composite"
-msgstr ""
+msgstr "コンポジット"
 
 #: gaphor/SysML/propertypages.glade:168 gaphor/SysML/propertypages.ui:99
 msgid "Id"
-msgstr ""
+msgstr "ID"
 
 #: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:115
 msgid "Text"
-msgstr ""
+msgstr "テキスト"
 
 #: gaphor/SysML/toolbox.py:23
 msgid "Internal Blocks"
-msgstr ""
+msgstr "内部ブロック"
 
 #: gaphor/SysML/toolbox.py:27
 msgid "Connector"
-msgstr ""
+msgstr "コネクタ"
 
 #: gaphor/SysML/toolbox.py:34
 msgid "Property"
@@ -337,7 +337,7 @@ msgstr "プロパティ"
 
 #: gaphor/SysML/toolbox.py:43
 msgid "Proxy Port"
-msgstr ""
+msgstr "プロキシポート"
 
 #: gaphor/SysML/blocks/block.py:62
 msgid "ControlStructure"
@@ -345,7 +345,7 @@ msgstr ""
 
 #: gaphor/SysML/blocks/block.py:64
 msgid "block"
-msgstr ""
+msgstr "ブロック"
 
 #: gaphor/SysML/blocks/block.py:97
 msgid "parts"
@@ -357,7 +357,7 @@ msgstr ""
 
 #: gaphor/SysML/blocks/block.py:124
 msgid "unnamed"
-msgstr ""
+msgstr "無名の"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:18
 msgid "Blocks"
@@ -375,18 +375,18 @@ msgstr "パッケージ"
 #: gaphor/SysML/blocks/blockstoolbox.py:44
 #: gaphor/UML/classes/classestoolbox.py:87
 msgid "Composite Association"
-msgstr ""
+msgstr "コンポジット関連"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:55
 #: gaphor/UML/classes/classestoolbox.py:98
 msgid "Shared Association"
-msgstr ""
+msgstr "共有関連"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:66
 #: gaphor/UML/classes/classestoolbox.py:109
 #: gaphor/UML/usecases/usecasetoolbox.py:40
 msgid "Association"
-msgstr ""
+msgstr "関連"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:80
 msgid "ValueType"
@@ -395,16 +395,16 @@ msgstr ""
 #: gaphor/SysML/blocks/blockstoolbox.py:91
 #: gaphor/UML/classes/classestoolbox.py:149
 msgid "Enumeration"
-msgstr ""
+msgstr "Enumeration"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:103
 #: gaphor/UML/classes/classestoolbox.py:161
 msgid "Primitive"
-msgstr ""
+msgstr "Primitive"
 
 #: gaphor/SysML/blocks/proxyport.py:67
 msgid "proxy"
-msgstr ""
+msgstr "プロキシ"
 
 #: gaphor/SysML/requirements/relationships.py:32
 msgid "satisfy"
@@ -712,6 +712,12 @@ msgid ""
 "~ 1..2\n"
 "- [1..2]"
 msgstr ""
+"属性名と多重度を入力します。例えば、\n"
+"- name\n"
+"+ name [1]\n"
+"- name [1..2]\n"
+"~ 1..2\n"
+"- [1..2]"
 
 #: gaphor/UML/classes/propertypages.glade:122
 #: gaphor/UML/classes/propertypages.glade:265
@@ -769,7 +775,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.glade:395
 #: gaphor/UML/classes/propertypages.ui:258
 msgid "Show Attributes"
-msgstr ""
+msgstr "属性を表示"
 
 #: gaphor/UML/classes/propertypages.glade:441
 msgid ""
@@ -845,6 +851,14 @@ msgid ""
 "Press ENTER to edit item, BS/DEL to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
+"UML シンタックスにのっとって、クラス属性を追加または編集します。\n"
+"属性のシンタックスの例\n"
+"- attr\n"
+"- + attr: int\n"
+"- # /attr: int\n"
+"\n"
+"ENTER を押下してアイテムを編集し、BS/DEL でアイテムを削除します。\n"
+"-/= を使ってアイテムを上または下に移動します。"
 
 #: gaphor/UML/classes/propertypages.ui:472
 msgid ""
@@ -857,6 +871,13 @@ msgid ""
 "Press ENTER to edit item, BS/DEL to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
+"UML のシンタックスにのっとって、クラスの操作を追加または編集します。操作のシッタクスの例\n"
+"- call()\n"
+"- + call(a: int, b: str)\n"
+"- # call(a: int: b: str): bool\n"
+"\n"
+"ENTER を押下してアイテムを編集し、BS/DEL でアイテムを削除します。\n"
+"-/= を使ってアイテムを上下に移動します。"
 
 #: gaphor/UML/components/componentstoolbox.py:12
 msgid "Components"
@@ -906,7 +927,7 @@ msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:77
 msgid "Message"
-msgstr ""
+msgstr "メッセージ"
 
 #: gaphor/UML/interactions/propertypages.glade:28
 #: gaphor/UML/interactions/propertypages.ui:21
