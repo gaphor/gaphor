@@ -1,3 +1,14 @@
+2.6.5
+-----
+- Update style sheet editor to be a code editor
+- Update strings to improve ability to translate
+- Ensure all relationships are brought to top
+- Fix errors in Italian translation which prevented model saving
+- Add association end properties to editor pane
+- Restore rename right click option to diagrams in tree view
+- Add Japanese translation
+- Update Hungarian, Croatian, and Spanish translations
+
 2.6.4
 -----
 - Fix Flatpak build failure by reverting to previous dependencies
