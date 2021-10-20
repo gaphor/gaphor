@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-11 22:10+0200\n"
-"PO-Revision-Date: 2021-10-20 01:51+0000\n"
+"PO-Revision-Date: 2021-10-21 12:41+0000\n"
 "Last-Translator: Tomo Dote <fu7mu4@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "ja/>\n"
@@ -277,15 +277,15 @@ msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:38 gaphor/SysML/propertypages.ui:27
 msgid "Show Parts"
-msgstr ""
+msgstr "部品の表示"
 
 #: gaphor/SysML/propertypages.glade:74 gaphor/SysML/propertypages.ui:42
 msgid "Show references"
-msgstr ""
+msgstr "参照の表示"
 
 #: gaphor/SysML/propertypages.glade:108 gaphor/SysML/propertypages.ui:57
 msgid "Parts and References"
-msgstr ""
+msgstr "部品と参照"
 
 #: gaphor/SysML/propertypages.glade:125 gaphor/SysML/propertypages.ui:71
 msgid "Aggregation"
@@ -349,11 +349,11 @@ msgstr "ブロック"
 
 #: gaphor/SysML/blocks/block.py:97
 msgid "parts"
-msgstr ""
+msgstr "部品"
 
 #: gaphor/SysML/blocks/block.py:108
 msgid "references"
-msgstr ""
+msgstr "参照"
 
 #: gaphor/SysML/blocks/block.py:124
 msgid "unnamed"
@@ -428,15 +428,15 @@ msgstr ""
 
 #: gaphor/SysML/requirements/requirement.py:63
 msgid "requirement"
-msgstr ""
+msgstr "要求"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 msgid "Requirements"
-msgstr ""
+msgstr "要求"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 msgid "Requirement"
-msgstr ""
+msgstr "要求"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
@@ -568,12 +568,12 @@ msgstr ""
 #: gaphor/UML/actions/propertypages.glade:171
 #: gaphor/UML/actions/propertypages.ui:91
 msgid "unordered"
-msgstr ""
+msgstr "順序なし"
 
 #: gaphor/UML/actions/propertypages.glade:172
 #: gaphor/UML/actions/propertypages.ui:90
 msgid "ordered"
-msgstr ""
+msgstr "順序あり"
 
 #: gaphor/UML/actions/propertypages.glade:173
 #: gaphor/UML/actions/propertypages.ui:92
@@ -588,30 +588,30 @@ msgstr ""
 #: gaphor/UML/actions/propertypages.glade:199
 #: gaphor/UML/actions/propertypages.ui:107
 msgid "Partitions"
-msgstr ""
+msgstr "パーティション"
 
 #: gaphor/UML/actions/propertypages.glade:232
 #: gaphor/UML/actions/propertypages.ui:121
 msgid "Partition Names"
-msgstr ""
+msgstr "パーティション名"
 
 #: gaphor/UML/actions/propertypages.glade:270
 #: gaphor/UML/actions/propertypages.ui:143
 #: gaphor/UML/states/propertypages.glade:129
 #: gaphor/UML/states/propertypages.ui:74
 msgid "Guard"
-msgstr ""
+msgstr "ガード"
 
 #: gaphor/UML/classes/classespropertypages.py:325
 #: gaphor/UML/classes/classespropertypages.py:401
 msgid "Static"
-msgstr ""
+msgstr "静的"
 
 #: gaphor/UML/classes/classespropertypages.py:401
 #: gaphor/UML/classes/propertypages.glade:522
 #: gaphor/UML/classes/propertypages.ui:345
 msgid "Abstract"
-msgstr ""
+msgstr "抽象"
 
 #: gaphor/UML/classes/classestoolbox.py:42
 msgid "Classes"
@@ -664,11 +664,11 @@ msgstr ""
 
 #: gaphor/UML/classes/dependencypropertypages.py:18
 msgid "Realization"
-msgstr ""
+msgstr "実現化"
 
 #: gaphor/UML/classes/dependencypropertypages.py:19
 msgid "Implementation"
-msgstr ""
+msgstr "実装"
 
 #: gaphor/UML/classes/enumeration.py:69
 msgid "enumeration"
@@ -760,7 +760,7 @@ msgstr "属性"
 #: gaphor/UML/profiles/propertypages.glade:145
 #: gaphor/UML/profiles/propertypages.ui:94
 msgid "Value"
-msgstr ""
+msgstr "値"
 
 #: gaphor/UML/classes/propertypages.glade:216
 #: gaphor/UML/classes/propertypages.ui:138
@@ -799,7 +799,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.glade:561
 #: gaphor/UML/classes/propertypages.ui:363
 msgid "Dependency type"
-msgstr ""
+msgstr "依存関係の種類"
 
 #: gaphor/UML/classes/propertypages.glade:581
 #: gaphor/UML/classes/propertypages.ui:374
