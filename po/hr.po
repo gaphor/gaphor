@@ -4,19 +4,20 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  Gaphor\n"
+"Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-11 21:05-0400\n"
-"PO-Revision-Date: 2021-10-10 18:20+0000\n"
+"PO-Revision-Date: 2021-10-21 12:41+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hr/>\n"
 "Language: hr\n"
-"Language-Team: Croatian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hr/>\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: ../gaphor/C4Model/modelinglanguage.py:16 ../gaphor/C4Model/toolbox.py:51
@@ -111,7 +112,7 @@ msgstr "Sklop NE"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:48
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr "Sklop sprovođenja slijeda"
+msgstr "Sklop sprovođenja slijeda (SEQ)"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Exclusive OR Gate"
@@ -157,13 +158,12 @@ msgid "Intermediate Event"
 msgstr "Intermedijarni događaj"
 
 #: ../gaphor/RAAML/fta/seqgate.py:37
-#, fuzzy
 msgid "Sequence Enforcing Gate"
 msgstr "Sklop sprovođenja slijeda"
 
 #: ../gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr ""
+msgstr "Sklop XILI"
 
 #: ../gaphor/RAAML/stpa/controlaction.py:33
 #: ../gaphor/RAAML/stpa/stpatoolbox.py:155
@@ -397,9 +397,8 @@ msgid "Satisfy"
 msgstr "Zadovolji"
 
 #: ../gaphor/SysML/requirements/requirementstoolbox.py:36
-#, fuzzy
 msgid "Derive Requirement"
-msgstr "zahtjev"
+msgstr "Izvedi zahtjev"
 
 #: ../gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
@@ -534,12 +533,12 @@ msgstr "razvrstano"
 #: ../gaphor/UML/actions/propertypages.glade:173
 #: ../gaphor/UML/actions/propertypages.ui:92
 msgid "Last In First Out (LIFO)"
-msgstr ""
+msgstr "Zadnji nutra prvi van (LIFO)"
 
 #: ../gaphor/UML/actions/propertypages.glade:174
 #: ../gaphor/UML/actions/propertypages.ui:93
 msgid "First In First Out (FIFO)"
-msgstr ""
+msgstr "Prvi nutra prvi van (FIFO)"
 
 #: ../gaphor/UML/actions/propertypages.glade:199
 #: ../gaphor/UML/actions/propertypages.ui:107
@@ -734,7 +733,6 @@ msgid "Show Attributes"
 msgstr "Prikaži svojstva"
 
 #: ../gaphor/UML/classes/propertypages.glade:441
-#, fuzzy
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "Attribute syntax examples\n"
@@ -782,7 +780,6 @@ msgid "Show Operations"
 msgstr "Prikaži operacije"
 
 #: ../gaphor/UML/classes/propertypages.glade:776
-#, fuzzy
 msgid ""
 "Add and edit class operations according to UML syntax.\n"
 "Operation syntax examples\n"
@@ -793,11 +790,11 @@ msgid ""
 "Press Enter to edit item, Backspace/Delete to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
-"Dodaj i uredi operacije klasa prema UML sintaksi. Primjeri sintakse za "
-"operacije:\n"
+"Dodaj i uredi operacije klasa prema UML sintaksi.\n"
+"Primjeri sintakse za operacije:\n"
 "- call()\n"
 "- + call(a: int, b: str) # napomena\n"
-"- # call(a: int: b: str): bool\n"
+"- # call(a: int: b: str): boo\n"
 "\n"
 "Za uređivanje elementa pritisni ENTER, za uklanjanje BS/DEL.\n"
 "Koristi -/= za premještanje elemenata prema gore ili dolje."
@@ -939,7 +936,6 @@ msgstr "Uvoz"
 
 #: ../gaphor/UML/profiles/propertypages.glade:50
 #: ../gaphor/UML/profiles/propertypages.ui:36
-#, fuzzy
 msgid "Named Element"
 msgstr "Imenovani element"
 
@@ -974,12 +970,10 @@ msgid "Activities"
 msgstr "Aktivnosti"
 
 #: ../gaphor/UML/states/statestoolbox.py:45
-#, fuzzy
 msgid "State Machine"
 msgstr "Uređaj stanja"
 
 #: ../gaphor/UML/states/statestoolbox.py:52
-#, fuzzy
 msgid "Default Region"
 msgstr "Standardno područje"
 
@@ -1107,9 +1101,8 @@ msgstr "Stil"
 
 #: ../gaphor/diagram/propertypages.glade:270
 #: ../gaphor/diagram/propertypages.ui:75
-#, fuzzy
 msgid "Note or Remark"
-msgstr "Napomena"
+msgstr "Napomena ili opaska"
 
 #: ../gaphor/plugins/console/console.py:19
 msgid ""
@@ -1135,47 +1128,42 @@ msgstr "Sve {ext} datoteke"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:100
 msgid "Export as SVG"
-msgstr ""
+msgstr "Izvezi kao SVG"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:101
 #: ../gaphor/plugins/diagramexport/__init__.py:106
-#, fuzzy
 msgid "Export diagram as SVG"
-msgstr "Izvezi dijagram u SVG"
+msgstr "Izvezi dijagram kao SVG"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:113
 msgid "Export as PNG"
-msgstr ""
+msgstr "Izvezi kao PNG"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:114
 #: ../gaphor/plugins/diagramexport/__init__.py:119
-#, fuzzy
 msgid "Export diagram as PNG"
-msgstr "Izvezi dijagram u SVG"
+msgstr "Izvezi dijagram kao SVG"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:126
 msgid "Export as PDF"
-msgstr ""
+msgstr "Izvezi kao PDF"
 
 #: ../gaphor/plugins/diagramexport/__init__.py:127
 #: ../gaphor/plugins/diagramexport/__init__.py:132
-#, fuzzy
 msgid "Export diagram as PDF"
-msgstr "Izvezi dijagram u SVG"
+msgstr "Izvezi dijagram kao PDF"
 
 #: ../gaphor/plugins/xmiexport/__init__.py:24
 msgid "Export as XMI"
-msgstr ""
+msgstr "Izvezi kao XMI"
 
 #: ../gaphor/plugins/xmiexport/__init__.py:25
-#, fuzzy
 msgid "Export model as XMI (XML Model Interchange) format"
-msgstr "Izvezi model u XMI (XML Model Interchange) format"
+msgstr "Izvezi model kao XMI (XML Model Interchange) format"
 
 #: ../gaphor/plugins/xmiexport/__init__.py:31
-#, fuzzy
 msgid "Export model as XMI file"
-msgstr "Izvezi model u XMI datoteku"
+msgstr "Izvezi model kao XMI datoteku"
 
 #: ../gaphor/plugins/xmiexport/__init__.py:34
 msgid "All XMI Files"
@@ -1306,7 +1294,7 @@ msgstr "Umanji"
 #: ../gaphor/services/helpservice/shortcuts.ui:204
 #: ../gaphor/ui/elementeditor.glade:199 ../gaphor/ui/elementeditor.ui:117
 msgid "Actual Size"
-msgstr ""
+msgstr "Stvarna veličina"
 
 #: ../gaphor/ui/appfilemanager.py:13 ../gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
@@ -1377,9 +1365,8 @@ msgstr ""
 "pretrage.\n"
 
 #: ../gaphor/ui/elementeditor.glade:251
-#, fuzzy
 msgid "Show/Hide Preferences"
-msgstr ""
+msgstr "Prikaži/sakrij postavke"
 
 #: ../gaphor/ui/elementeditor.glade:323 ../gaphor/ui/elementeditor.ui:170
 msgid "Editors"
@@ -1512,33 +1499,28 @@ msgid "Save Gaphor Model As"
 msgstr "Spremi Gaphor model kao"
 
 #: ../gaphor/ui/filemanager.py:306
-#, fuzzy
 msgid "Save changes before closing?"
-msgstr "Spremiti promjene prije zatvaranja modela?"
+msgstr "Spremiti promjene prije zatvaranja?"
 
 #: ../gaphor/ui/filemanager.py:307
-#, fuzzy
 msgid "Closing will cause any unsaved changes to be discarded."
-msgstr "Ako zatvoriš bez spremanja, izgubit ćeš sve urađene promjene."
+msgstr "Zatvaranjem bez spremanja, odbacuju se sve nespremljene promjene."
 
 #: ../gaphor/ui/filemanager.py:312
-#, fuzzy
 msgid "Close _without saving changes"
-msgstr "Zatvori be_z spremanja"
+msgstr "Zatvori be_z spremanja promjena"
 
 #: ../gaphor/ui/mainwindow.glade:105
 msgid "Gaphor"
 msgstr "Gaphor"
 
 #: ../gaphor/ui/mainwindow.glade:184
-#, fuzzy
 msgid "Create New diagram"
-msgstr "Novi dijagram"
+msgstr "Stvori novi dijagram"
 
 #: ../gaphor/ui/mainwindow.glade:212
-#, fuzzy
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Otvori izbornik programa"
 
 #: ../gaphor/ui/mainwindow.py:49
 msgid "Save As..."
@@ -1847,4 +1829,3 @@ msgstr "Nema nedavno otvorenih modela"
 
 #~ msgid "Zoom 100%"
 #~ msgstr "Uvećanje 100 %"
-
