@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-11 21:05-0400\n"
-"PO-Revision-Date: 2021-10-20 01:51+0000\n"
+"PO-Revision-Date: 2021-10-21 12:41+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
 ">\n"
@@ -466,7 +466,7 @@ msgstr "Päätös-/yhdistämissolmu"
 
 #: ../gaphor/UML/actions/actionstoolbox.py:116
 msgid "Fork/join node"
-msgstr "Haarautumisen/liittymisen solmu"
+msgstr "Haarautumis-/liittymissolmu"
 
 #: ../gaphor/UML/actions/actionstoolbox.py:128
 msgid "Object node"
@@ -513,32 +513,32 @@ msgstr "Liitosspesifikaatio"
 #: ../gaphor/UML/actions/propertypages.glade:106
 #: ../gaphor/UML/actions/propertypages.ui:60
 msgid "Upper Bound"
-msgstr ""
+msgstr "Yläraja"
 
 #: ../gaphor/UML/actions/propertypages.glade:138
 #: ../gaphor/UML/actions/propertypages.ui:76
 msgid "Show Ordering"
-msgstr ""
+msgstr "Näytä järjestys"
 
 #: ../gaphor/UML/actions/propertypages.glade:171
 #: ../gaphor/UML/actions/propertypages.ui:91
 msgid "unordered"
-msgstr ""
+msgstr "järjestämätön"
 
 #: ../gaphor/UML/actions/propertypages.glade:172
 #: ../gaphor/UML/actions/propertypages.ui:90
 msgid "ordered"
-msgstr ""
+msgstr "järjestetty"
 
 #: ../gaphor/UML/actions/propertypages.glade:173
 #: ../gaphor/UML/actions/propertypages.ui:92
 msgid "Last In First Out (LIFO)"
-msgstr ""
+msgstr "Viimeinen sisään, ensimmäinen ulos (LIFO)"
 
 #: ../gaphor/UML/actions/propertypages.glade:174
 #: ../gaphor/UML/actions/propertypages.ui:93
 msgid "First In First Out (FIFO)"
-msgstr ""
+msgstr "Ensimmäinen sisään, ensimmäinen ulos (FIFO)"
 
 #: ../gaphor/UML/actions/propertypages.glade:199
 #: ../gaphor/UML/actions/propertypages.ui:107
@@ -764,7 +764,7 @@ msgstr "Automaattinen"
 #: ../gaphor/UML/classes/propertypages.glade:642
 #: ../gaphor/UML/classes/propertypages.ui:405
 msgid "Folded"
-msgstr ""
+msgstr "Taitettu"
 
 #: ../gaphor/UML/classes/propertypages.glade:730
 #: ../gaphor/UML/classes/propertypages.ui:451
@@ -829,7 +829,7 @@ msgstr "Artefakti"
 
 #: ../gaphor/UML/components/componentstoolbox.py:40
 msgid "Node"
-msgstr "Noodi"
+msgstr "Solmu"
 
 #: ../gaphor/UML/components/componentstoolbox.py:52
 msgid "Device"
@@ -842,7 +842,7 @@ msgstr "laite"
 #: ../gaphor/UML/components/propertypages.glade:32
 #: ../gaphor/UML/components/propertypages.ui:23
 msgid "Indirectly Instantiated"
-msgstr ""
+msgstr "Epäsuorasti luotu ilmentymä"
 
 #: ../gaphor/UML/interactions/interactionsconnect.py:76
 msgid "call()"
@@ -931,7 +931,7 @@ msgstr "Ulos"
 #: ../gaphor/UML/states/propertypages.glade:84
 #: ../gaphor/UML/states/propertypages.ui:47
 msgid "Do Activity"
-msgstr ""
+msgstr "Tee-aktiviteetti"
 
 #: ../gaphor/UML/states/propertypages.glade:111
 #: ../gaphor/UML/states/propertypages.ui:60
@@ -944,7 +944,7 @@ msgstr "Tilakone"
 
 #: ../gaphor/UML/states/statestoolbox.py:52
 msgid "Default Region"
-msgstr ""
+msgstr "Oletusalue"
 
 #: ../gaphor/UML/states/statestoolbox.py:59
 msgid "States"
@@ -1030,7 +1030,7 @@ msgstr "Kommenttirivi"
 
 #: ../gaphor/diagram/propertypages.glade:86
 msgid "Show Enumeration Literals"
-msgstr ""
+msgstr "Näytä enumeraation literaalit"
 
 #: ../gaphor/diagram/propertypages.glade:130
 msgid ""
@@ -1045,7 +1045,7 @@ msgstr ""
 #: ../gaphor/diagram/propertypages.glade:144
 #: ../gaphor/diagram/propertypages.glade:178
 msgid "Enumeration Literals"
-msgstr ""
+msgstr "Enumeraation literaalit"
 
 #: ../gaphor/diagram/propertypages.glade:200
 #: ../gaphor/diagram/propertypages.ui:49
@@ -1284,6 +1284,8 @@ msgid ""
 "Drag to diagram is (temporarily) limited to Classifiers, Packages, and "
 "Properties, not {type}."
 msgstr ""
+"Raahaus kaavioon on väliaikaisesti rajattu luokittelijoihin, pakkauksiin ja "
+"ominaisuuksiin, ei tyyppiin {type}."
 
 #: ../gaphor/ui/elementeditor.glade:15 ../gaphor/ui/elementeditor.ui:10
 msgid "No item selected"
@@ -1541,11 +1543,11 @@ msgstr "Näytä kaaviossa \"{diagram}\""
 
 #: ../gaphor/ui/namespacemodel.py:310
 msgid "A {} can't be part of a {}."
-msgstr ""
+msgstr "{} ei voi olla osana {}."
 
 #: ../gaphor/ui/namespaceview.py:140
 msgid "<Relationships>"
-msgstr ""
+msgstr "&lt;Suhteet&gt;"
 
 #: ../gaphor/ui/recentfiles.py:67
 msgid "No recently opened models"
