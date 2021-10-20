@@ -239,8 +239,8 @@ class A(Element):
     one: association
     two: association
 
-    def __init__(self, id=None, event_handler=None):
-        super().__init__(id, event_handler)
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
 
 
 A.one = association("one", A, lower=0, upper=1, composite=True)
