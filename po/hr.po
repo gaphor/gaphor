@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-10-11 21:05-0400\n"
-"PO-Revision-Date: 2021-10-21 12:41+0000\n"
+"PO-Revision-Date: 2021-10-23 10:44+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -100,7 +100,7 @@ msgstr "Neaktivni događaj"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:10
 msgid "Fault Tree Analysis"
-msgstr "Analiza stabla kvarova"
+msgstr "Analiza kvarova stabla"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:30 ../gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
@@ -150,7 +150,7 @@ msgstr "Nula događaj"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:174 ../gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
-msgstr "Vrhunski događaj"
+msgstr "Neželjeni događaj"
 
 #: ../gaphor/RAAML/fta/ftatoolbox.py:185
 #: ../gaphor/RAAML/fta/intermediateevent.py:33
