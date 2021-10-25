@@ -7,6 +7,8 @@ on:
       - 'packaging/**'
   release:
     types: [published, prereleased]
+env:
+  PYTHON_VERSION: '3.9'
 
 jobs:
 
@@ -21,7 +23,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
         with:
-          python-version: '3.9'
+          python-version: $PYTHON_VERSION
       - name: Lint with Pre-commit
         uses: pre-commit/action@v2.0.3
 
@@ -39,7 +41,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
         with:
-          python-version: '3.9'
+          python-version: $PYTHON_VERSION
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.6
         with:
@@ -107,7 +109,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
         with:
-          python-version: '3.9'
+          python-version: $PYTHON_VERSION
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.6
         with:
@@ -202,7 +204,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/setup-python@v2.2.2
         with:
-          python-version: '3.9'
+          python-version: $PYTHON_VERSION
       - name: GTK binaries move git binary
         if: steps.cache.outputs.cache-hit != 'true'
         run: move "C:\Program Files\Git\usr\bin" "C:\Program Files\Git\usr\notbin"
@@ -248,7 +250,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
         with:
-          python-version: '3.9'
+          python-version: $PYTHON_VERSION
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.6
         with:

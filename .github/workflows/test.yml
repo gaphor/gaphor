@@ -1,7 +1,8 @@
 name: Test
-
 on:
   pull_request:
+env:
+  PYTHON_VERSION: '3.9'
 
 jobs:
 
@@ -15,6 +16,8 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
+        with:
+          python-version: $PYTHON_VERSION
       - name: Lint with Pre-commit
         uses: pre-commit/action@v2.0.3
 
@@ -31,6 +34,8 @@ jobs:
         uses: ./.github/actions/linux_dependencies
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
+        with:
+          python-version: $PYTHON_VERSION
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.6
         with:
@@ -63,6 +68,8 @@ jobs:
         uses: ./.github/actions/macos_dependencies
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
+        with:
+          python-version: $PYTHON_VERSION
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.6
         with:
@@ -87,6 +94,8 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
+        with:
+          python-version: $PYTHON_VERSION
       - name: Install macOS Dependencies
         uses: ./.github/actions/macos_dependencies
       - name: Use Python Dependency Cache
@@ -129,9 +138,9 @@ jobs:
           path: gvsbuild
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
-        with:
-          python-version: '3.9'
         uses: actions/setup-python@v2.2.2
+        with:
+          python-version: $PYTHON_VERSION
       - name: GTK binaries move git binary
         if: steps.cache.outputs.cache-hit != 'true'
         run: move "C:\Program Files\Git\usr\bin" "C:\Program Files\Git\usr\notbin"
@@ -178,7 +187,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2.2.2
         with:
-          python-version: '3.9'
+          python-version: $PYTHON_VERSION
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.6
         with:
