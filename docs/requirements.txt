@@ -6,5 +6,5 @@ Sphinx==4.2.0
 sphinx-rtd-theme==1.0.0
 sphinxcontrib-websupport==1.2.4
 sphinxcontrib-images==0.9.4
-tomli==1.2.1
+tomli==1.2.2
 generic==1.0.0
