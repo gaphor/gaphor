@@ -1,5 +1,5 @@
 # Keep until RTD fully support pyproject.toml
-docutils==0.18
+docutils==0.17.1
 Pygments==2.10.0
 myst-parser==0.15.2
 Sphinx==4.2.0
