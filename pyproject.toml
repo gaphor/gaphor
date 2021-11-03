@@ -37,7 +37,8 @@ exclude = ["**/tests", "gaphor/conftest.py" ]
 [tool.poetry.dependencies]
 python = "^3.9, <3.11"
 pycairo = "^1.18"
-PyGObject = "^3.30"
+# pygobject = "^3.30"
+pygobject = { git = "https://gitlab.gnome.org/GNOME/pygobject.git", rev = "963c5f27"}
 gaphas = "^3.1.0"
 generic = "^1.0.0"
 tinycss2 = "^1.0.2"
