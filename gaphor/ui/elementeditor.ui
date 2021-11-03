@@ -240,7 +240,7 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                       <object class="GtkScrolledWindow">
                         <property name="vexpand">1</property>
                         <property name="child">
-                          <object class="GtkSourceView" id="style-sheet-view">
+                          <object class="GtkTextView" id="style-sheet-view">
                             <property name="buffer">style-sheet-buffer</property>
                             <property name="monospace">1</property>
                           </object>

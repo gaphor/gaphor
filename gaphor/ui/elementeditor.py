@@ -3,7 +3,7 @@
 import logging
 from typing import Optional
 
-from gi.repository import GLib, Gtk, GtkSource
+from gi.repository import GLib, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import Transaction, action, event_handler
@@ -17,6 +17,10 @@ from gaphor.core.modeling.event import (
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramSelectionChanged
+
+if Gtk.get_major_version() == 3:
+    from gi.repository import GtkSource
+
 
 log = logging.getLogger(__name__)
 
@@ -247,7 +251,8 @@ class SettingsStack:
     def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self.lang_manager = GtkSource.LanguageManager.get_default()
+        if Gtk.get_major_version() == 3:
+            self.lang_manager = GtkSource.LanguageManager.get_default()
 
         def tx_update_style_sheet(style_sheet, text):
             self._in_update = 1
@@ -260,8 +265,10 @@ class SettingsStack:
 
     def open(self, builder):
         self.style_sheet_buffer = builder.get_object("style-sheet-buffer")
-        self.style_sheet_buffer.set_language(self.lang_manager.get_language("css"))
         self.style_sheet_view = builder.get_object("style-sheet-view")
+
+        if Gtk.get_major_version() == 3:
+            self.style_sheet_buffer.set_language(self.lang_manager.get_language("css"))
 
         self.event_manager.subscribe(self._model_ready)
         self.event_manager.subscribe(self._style_sheet_created)
