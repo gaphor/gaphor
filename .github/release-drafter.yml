@@ -1,5 +1,5 @@
 name-template: 'Version $NEXT_PATCH_VERSION - Summary Here🌈'
-tag-template: 'v$NEXT_PATCH_VERSION'
+tag-template: '$NEXT_PATCH_VERSION'
 exclude-labels:
   - 'skip-changelog'
 categories:
