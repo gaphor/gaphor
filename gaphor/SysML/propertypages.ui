@@ -17,8 +17,6 @@ renderers and such.</property>
     <property name="expanded">1</property>
     <child>
       <object class="GtkBox">
-        <property name="margin_top">6</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
