@@ -6,8 +6,8 @@ Provides the CLI for the code generator which transforms a Gaphor models
 """
 
 import argparse
-from distutils.util import byte_compile
 from pathlib import Path
+from py_compile import compile
 
 from gaphor.codegen import profile_coder, uml_coder
 
@@ -34,7 +34,7 @@ def main() -> None:
         )
     else:
         uml_coder.generate(args.modelfile, args.outfile, args.overrides)
-    byte_compile([str(args.outfile)])
+    compile(args.outfile)
 
 
 if __name__ == "__main__":
