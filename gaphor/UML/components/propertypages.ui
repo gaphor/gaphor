@@ -32,4 +32,31 @@ renderers and such.</property>
       </object>
     </child>
   </object>
+  <object class="GtkBox" id="information-flow-editor">
+    <property name="margin-top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Information Flow</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+            </attributes>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="use-information-flow">
+            <signal name="notify::active" handler="information-flow-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="information-flow-name">
+        <signal name="changed" handler="information-flow-name-changed" swapped="no"/>
+      </object>
+    </child>
+  </object>
 </interface>
