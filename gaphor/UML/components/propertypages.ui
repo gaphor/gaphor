@@ -60,12 +60,26 @@ renderers and such.</property>
       </object>
     </child>
     <child>
-      <object class="GtkComboBoxText" id="information-flow-combo">
-        <property name="has-entry">True</property>
-        <signal name="changed" handler="information-flow-combo-changed" swapped="no"/>
-        <child internal-child="entry">
-          <object class="GtkEntry">
-            <property name="text" translatable="yes"></property>
+      <object class="GtkBox">
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkComboBoxText" id="information-flow-combo">
+            <property name="has-entry">True</property>
+            <signal name="changed" handler="information-flow-combo-changed" swapped="no"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="information-flow-invert">
+            <property name="tooltip-text" translatable="yes">Invert direction</property>
+            <signal name="clicked" handler="invert-direction-changed" swapped="no"/>
+            <child>
+              <object class="GtkImage">
+                <property name="icon-name">object-flip-horizontal-symbolic</property>
+              </object>
+            </child>
+            <style>
+              <class name="flat"/>
+            </style>
           </object>
         </child>
       </object>

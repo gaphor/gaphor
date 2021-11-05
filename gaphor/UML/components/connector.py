@@ -137,6 +137,7 @@ class ConnectorItem(LinePresentation[UML.Connector], Named):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Connector].informationFlow.informationSource")
         self.watch("subject[Connector].informationFlow.conveyed.name")
 
     def draw(self, context):
@@ -144,7 +145,9 @@ class ConnectorItem(LinePresentation[UML.Connector], Named):
         subject = self.subject
         if subject and subject.informationFlow:
 
-            inverted = subject.end[0] in subject.informationFlow[:].informationTarget
+            inverted = (
+                subject.end[0].role in subject.informationFlow[:].informationTarget
+            )
             handles = self.handles()
             pos, angle = get_center_pos(handles, inverted)
             with cairo_state(context.cairo) as cr:

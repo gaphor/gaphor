@@ -70,6 +70,7 @@ class InformationFlowPropertyPage(PropertyPageBase):
                 "information-flow-combo-changed": (
                     self._on_information_flow_name_changed,
                 ),
+                "invert-direction-changed": (self._invert_direction_changed,),
             },
         )
 
@@ -118,3 +119,13 @@ class InformationFlowPropertyPage(PropertyPageBase):
                 iitem = model.lookup(id)
                 assert isinstance(iitem, UML.Classifier)
                 iflow.conveyed = iitem
+
+    @transactional
+    def _invert_direction_changed(self, button):
+        if self.subject.informationFlow:
+            print("invert")
+            iflow = self.subject.informationFlow[0]
+            iflow.informationSource, iflow.informationTarget = (
+                iflow.informationTarget,
+                iflow.informationSource,
+            )

@@ -757,8 +757,8 @@ class InformationFlow(PackageableElement, DirectedRelationship):
     realizingMessage: relation_many[Message]
     realizingActivityEdge: relation_many[ActivityEdge]
     realizingConnector: relation_one[Connector]
-    informationTarget: relation_many[NamedElement]
-    informationSource: relation_many[NamedElement]
+    informationTarget: relation_one[NamedElement]
+    informationSource: relation_one[NamedElement]
 
 
 # class 'Expression' has been stereotyped as 'SimpleAttribute'
@@ -1341,10 +1341,10 @@ NamedElement.informationFlow = association(
     "informationFlow", InformationFlow, opposite="informationTarget"
 )
 InformationFlow.informationTarget = association(
-    "informationTarget", NamedElement, lower=1, opposite="informationFlow"
+    "informationTarget", NamedElement, lower=1, upper=1, opposite="informationFlow"
 )
 InformationFlow.informationSource = association(
-    "informationSource", NamedElement, lower=1
+    "informationSource", NamedElement, lower=1, upper=1
 )
 # 82: override NamedElement.qualifiedName(NamedElement.namespace): derived[list[str]]
 
