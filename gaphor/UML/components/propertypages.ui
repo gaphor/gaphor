@@ -54,8 +54,20 @@ renderers and such.</property>
       </object>
     </child>
     <child>
-      <object class="GtkEntry" id="information-flow-name">
-        <signal name="changed" handler="information-flow-name-changed" swapped="no"/>
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <property name="label" translatable="yes">Information Item (Class):</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkComboBoxText" id="information-flow-combo">
+        <property name="has-entry">True</property>
+        <signal name="changed" handler="information-flow-combo-changed" swapped="no"/>
+        <child internal-child="entry">
+          <object class="GtkEntry">
+            <property name="text" translatable="yes"></property>
+          </object>
+        </child>
       </object>
     </child>
   </object>

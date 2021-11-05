@@ -136,8 +136,8 @@ class recurseproxy(Generic[T]):
     def __init__(self, sequence: Sequence[T]):
         self.__sequence = sequence
 
-    def __getitem__(self, key: int) -> T:
-        return self.__sequence.__getitem__(key)
+    def __getitem__(self, key: int | slice) -> T:
+        return self.__sequence.__getitem__(key)  # type: ignore[return-value]
 
     def __iter__(self):
         """Iterate over the items.

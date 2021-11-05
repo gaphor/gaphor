@@ -130,11 +130,14 @@ class ConnectorItem(LinePresentation[UML.Connector], Named):
                 text=lambda: stereotypes_str(self.subject),
             ),
             Text(text=lambda: self.subject.name or ""),
+            Text(
+                text=lambda: ", ".join(self.subject.informationFlow[:].conveyed[:].name)
+            ),
         )
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject[Connector].informationFlow.name")
+        self.watch("subject[Connector].informationFlow.conveyed.name")
 
     def draw(self, context):
         super().draw(context)
