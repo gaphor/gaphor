@@ -1,6 +1,15 @@
+import pytest
 from gi.repository import GLib, Gtk
 
-from gaphor.ui import main
+import gaphor.ui
+
+
+@pytest.fixture(autouse=True)
+def custom_application_id():
+    orig_app_id = gaphor.ui.APPLICATION_ID
+    gaphor.ui.APPLICATION_ID = "org.gaphor.TestMain"
+    yield
+    gaphor.ui.APPLICATION_ID = orig_app_id
 
 
 def fake_run(monkeypatch):
@@ -22,7 +31,7 @@ def fake_run(monkeypatch):
 def test_application_startup(monkeypatch):
     run = fake_run(monkeypatch)
 
-    main(["gaphor"])
+    gaphor.ui.main(["gaphor"])
 
     assert run == ["gaphor"]
 
@@ -30,6 +39,6 @@ def test_application_startup(monkeypatch):
 def test_application_startup_with_model(monkeypatch):
     run = fake_run(monkeypatch)
 
-    main(["gaphor", "test-models/all-elements.gaphor"])
+    gaphor.ui.main(["gaphor", "test-models/all-elements.gaphor"])
 
     assert run == ["gaphor", "test-models/all-elements.gaphor"]
