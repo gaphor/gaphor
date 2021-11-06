@@ -11,7 +11,6 @@ if Gtk.get_major_version() == 3:
         window_state = window.get_window().get_state()
         return window_state & (Gdk.WindowState.MAXIMIZED | Gdk.WindowState.FULLSCREEN)  # type: ignore[no-any-return]
 
-
 else:
 
     def is_maximized(window: Gtk.Window) -> bool:

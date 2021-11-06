@@ -13,7 +13,7 @@ import gaphor.diagram.tools.grayout
 import gaphor.diagram.tools.segment
 from gaphor.diagram.tools.dropzone import drop_zone_tool
 from gaphor.diagram.tools.magnet import magnet_tool
-from gaphor.diagram.tools.placement import new_item_factory, placement_tool
+from gaphor.diagram.tools.placement import placement_tool
 from gaphor.diagram.tools.shortcut import shortcut_tool
 from gaphor.diagram.tools.textedit import text_edit_tools
 from gaphor.diagram.tools.txtool import transactional_tool
