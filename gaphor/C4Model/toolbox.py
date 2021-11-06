@@ -14,8 +14,8 @@ from gaphor.diagram.diagramtoolbox import (
     default_namespace,
     general_tools,
     namespace_config,
+    new_item_factory,
 )
-from gaphor.diagram.tools import new_item_factory
 from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.classes.classestoolbox import classes
