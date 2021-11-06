@@ -2,8 +2,12 @@
 
 from functools import partial
 
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
-from gaphor.diagram.diagramtools import new_item_factory
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    namespace_config,
+    new_item_factory,
+)
 from gaphor.i18n import gettext
 from gaphor.RAAML import diagramitems, raaml
 from gaphor.UML import diagramitems as uml_items

@@ -5,8 +5,8 @@ from gaphor.diagram.diagramtoolbox import (
     ToolSection,
     default_namespace,
     namespace_config,
+    new_item_factory,
 )
-from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.i18n import gettext
 from gaphor.RAAML import diagramitems, raaml
 from gaphor.SysML import diagramitems as sysml_items

@@ -4,8 +4,7 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection
-from gaphor.diagram.diagramtools import new_item_factory
+from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
 from gaphor.UML import diagramitems
 from gaphor.UML.modelfactory import owner_package
 

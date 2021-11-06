@@ -1,5 +1,5 @@
 import logging
-from typing import Callable, Optional, Type, TypeVar
+from typing import Optional
 
 from gaphas.aspect import HandleMove, MoveType
 from gaphas.decorators import g_async
@@ -7,22 +7,18 @@ from gaphas.view import GtkView
 from gi.repository import GLib, Gtk
 
 from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import Diagram, Element
+from gaphor.diagram.diagramtoolbox import ItemFactory
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.inlineeditors import InlineEditor
-from gaphor.diagram.presentation import ElementPresentation, Presentation
+from gaphor.diagram.presentation import ElementPresentation
 
 log = logging.getLogger(__name__)
-
-P = TypeVar("P", bound=Presentation, covariant=True)
-FactoryType = Callable[[Diagram, Optional[Presentation]], Presentation]
-ConfigFuncType = Callable[[P], None]
 
 
 class PlacementState:
     def __init__(
-        self, factory: FactoryType, event_manager: EventManager, handle_index: int
+        self, factory: ItemFactory, event_manager: EventManager, handle_index: int
     ):
         self.factory = factory
         self.event_manager = event_manager
@@ -31,7 +27,7 @@ class PlacementState:
 
 
 def placement_tool(
-    view: GtkView, factory: FactoryType, event_manager, handle_index: int
+    view: GtkView, factory: ItemFactory, event_manager, handle_index: int
 ):
     gesture = (
         Gtk.GestureDrag.new(view)
@@ -110,33 +106,3 @@ def on_drag_end(gesture, offset_x, offset_y, placement_state):
 def open_editor(item, view, event_manager):
     if isinstance(item, ElementPresentation):
         InlineEditor(item, view, event_manager)
-
-
-def new_item_factory(
-    item_class: Type[Presentation],
-    subject_class: Optional[Type[Element]] = None,
-    config_func: Optional[ConfigFuncType] = None,
-):
-    """``config_func`` may be a function accepting the newly created item."""
-
-    def item_factory(diagram, parent=None):
-        if subject_class:
-            element_factory = diagram.model
-            subject = element_factory.create(subject_class)
-        else:
-            subject = None
-
-        item = diagram.create(item_class, subject=subject)
-
-        adapter = Group(parent, item)
-        if parent and adapter.can_contain():
-            item.parent = parent
-            adapter.group()
-
-        if config_func:
-            config_func(item)
-
-        return item
-
-    item_factory.item_class = item_class  # type: ignore[attr-defined]
-    return item_factory

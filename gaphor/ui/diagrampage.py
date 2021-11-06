@@ -15,7 +15,7 @@ from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
-from gaphor.diagram.diagramtoolbox import tooliter
+from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
 from gaphor.diagram.diagramtools import apply_default_tool_set, apply_placement_tool_set
 from gaphor.diagram.diagramtools.placement import create_item, open_editor
 from gaphor.diagram.painter import ItemPainter
@@ -177,13 +177,6 @@ class DiagramPage:
 
         return self.widget
 
-    def get_tool_def(self, tool_name):
-        return next(
-            t
-            for t in tooliter(self.modeling_language.toolbox_definition)
-            if t.id == tool_name
-        )
-
     def apply_tool_set(self, tool_name):
         """Return a tool associated with an id (action name)."""
         if tool_name == "toolbox-pointer":
@@ -194,7 +187,7 @@ class DiagramPage:
                 self.rubberband_state,
             )
 
-        tool_def = self.get_tool_def(tool_name)
+        tool_def = get_tool_def(self.modeling_language, tool_name)
         item_factory = tool_def.item_factory
         handle_index = tool_def.handle_index
         return apply_placement_tool_set(
@@ -318,7 +311,7 @@ class DiagramPage:
             and data.get_format() == 8
             and info == DiagramPage.VIEW_TARGET_TOOLBOX_ACTION
         ):
-            tool_def = self.get_tool_def(data.get_data().decode())
+            tool_def = get_tool_def(self.modeling_language, data.get_data().decode())
             with Transaction(self.event_manager):
                 item = create_item(view, tool_def.item_factory, x, y)
             open_editor(item, view, self.event_manager)

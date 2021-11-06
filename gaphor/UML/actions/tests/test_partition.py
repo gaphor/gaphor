@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor import UML
-from gaphor.diagram.diagramtools import new_item_factory
+from gaphor.diagram.diagramtoolbox import new_item_factory
 from gaphor.diagram.tests.fixtures import copy_and_paste, copy_clear_and_paste
 from gaphor.UML.actions.actionstoolbox import partition_config
 from gaphor.UML.actions.partition import PartitionItem

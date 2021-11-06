@@ -3,7 +3,7 @@ import pytest
 from gaphor.application import Session
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.diagramtools import new_item_factory
+from gaphor.diagram.diagramtoolbox import new_item_factory
 from gaphor.diagram.diagramtools.placement import (
     PlacementState,
     on_drag_begin,

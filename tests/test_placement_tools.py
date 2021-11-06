@@ -7,6 +7,7 @@ from gaphor import UML
 from gaphor.C4Model.toolbox import c4model_toolbox_actions
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling.elementfactory import ElementFactory
+from gaphor.diagram.diagramtoolbox import get_tool_def
 from gaphor.diagram.diagramtools.placement import PlacementState, on_drag_begin
 from gaphor.RAAML.toolbox import raaml_toolbox_actions
 from gaphor.SysML.toolbox import sysml_toolbox_actions
@@ -97,7 +98,7 @@ def test_pointer(tab):
     ],
 )
 def test_placement_action(tab, tool_name, event_manager):
-    tool_def = tab.get_tool_def(tool_name)
+    tool_def = get_tool_def(tab.modeling_language, tool_name)
     if Gtk.get_major_version() == 3:
         tool = Gtk.GestureDrag.new(tab.view)
     else:
