@@ -7,7 +7,7 @@ import functools
 import logging
 from typing import Optional, Tuple
 
-from gi.repository import Gdk, Gtk
+from gi.repository import Gdk, GObject, Gtk
 
 from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
@@ -109,14 +109,19 @@ class Toolbox(UIComponent):
             flowbox_add_hover_support(flowbox)
             flowbox.connect("child-activated", self._on_tool_activated)
 
-            # Enable Drag and Drop
-            flowbox.drag_source_set(
-                Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
-                self.DND_TARGETS,
-                Gdk.DragAction.COPY | Gdk.DragAction.LINK,
-            )
-            flowbox.connect("drag-begin", _flowbox_drag_begin)
-            flowbox.connect("drag-data-get", _flowbox_drag_data_get)
+            if Gtk.get_major_version() == 3:
+                # Enable Drag and Drop
+                flowbox.drag_source_set(
+                    Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
+                    self.DND_TARGETS,
+                    Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+                )
+                flowbox.connect("drag-begin", _flowbox_drag_begin)
+                flowbox.connect("drag-data-get", _flowbox_drag_data_get)
+            else:
+                drag_source = Gtk.DragSource.new()
+                drag_source.connect("prepare", _flowbox_drag_prepare)
+                flowbox.add_controller(drag_source)
 
             if Gtk.get_major_version() == 3:
                 expander.add(flowbox)
@@ -275,6 +280,26 @@ if Gtk.get_major_version() == 3:
             format=8,
             data=flowbox._dnd_child.action_name.encode(),
         )
+
+else:
+
+    def _flowbox_drag_prepare(source: Gtk.DragSource, x: int, y: int):
+        child = source.get_widget().get_child_at_pos(x, y)
+
+        display = Gdk.Display.get_default()
+        theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
+            child.icon_name,
+            None,
+            24,
+            1,
+            Gtk.TextDirection.NONE,
+            Gtk.IconLookupFlags.FORCE_SYMBOLIC,
+        )
+        source.set_icon(theme_icon, 0, 0)
+
+        v = GObject.Value(GObject.TYPE_STRING)
+        v.set_string(child, child.action_name)
+        return Gdk.ContentProvider.new_for_value(v)
 
 
 _upper_offset: int = ord("A") - ord("a")

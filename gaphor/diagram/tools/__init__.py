@@ -7,10 +7,12 @@ from gaphas.tool import (
     view_focus_tool,
     zoom_tool,
 )
+from gi.repository import Gtk
 
 import gaphor.diagram.tools.connector
 import gaphor.diagram.tools.grayout
 import gaphor.diagram.tools.segment
+from gaphor.diagram.tools.dnd import drop_target_tool
 from gaphor.diagram.tools.dropzone import drop_zone_tool
 from gaphor.diagram.tools.magnet import magnet_tool
 from gaphor.diagram.tools.placement import placement_tool
@@ -60,3 +62,5 @@ def add_basic_tools(view, modeling_language, event_manager):
     view.add_controller(zoom_tool(view))
     view.add_controller(view_focus_tool(view))
     view.add_controller(shortcut_tool(view, modeling_language, event_manager))
+    if Gtk.get_major_version() != 3:
+        view.add_controller(drop_target_tool(modeling_language, event_manager))
