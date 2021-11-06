@@ -7,7 +7,7 @@ import functools
 import logging
 from typing import Optional, Sequence, Tuple
 
-from gi.repository import Gdk, GLib, Gtk
+from gi.repository import Gdk, GLib, GObject, Gtk
 
 from gaphor.core import action
 from gaphor.core.eventmanager import EventManager, event_handler
@@ -120,6 +120,12 @@ class Toolbox(UIComponent):
             )
             button.drag_source_set_icon_name(icon_name)
             button.connect("drag-data-get", _button_drag_data_get, action_name)
+        elif action_name != "toolbox-pointer":
+            drag_source = Gtk.DragSource.new()
+            drag_source.connect("prepare", _button_drag_prepare, action_name)
+            drag_source.connect("begin", _button_drag_begin, icon_name)
+            button.add_controller(drag_source)
+
         return button
 
     def create_toolbox(
@@ -214,6 +220,26 @@ if Gtk.get_major_version() == 3:
         drop site requests the data which is dragged.
         """
         data.set(type=data.get_target(), format=8, data=action_name.encode())
+
+
+else:
+
+    def _button_drag_prepare(source: Gtk.DragSource, x: int, y: int, action_name: str):
+        v = GObject.Value(GObject.TYPE_STRING)
+        v.set_string(action_name)
+        return Gdk.ContentProvider.new_for_value(v)
+
+    def _button_drag_begin(source: Gtk.DragSource, drag: Gdk.Drag, icon_name: str):
+        display = Gdk.Display.get_default()
+        theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
+            icon_name,
+            None,
+            24,
+            1,
+            Gtk.TextDirection.NONE,
+            Gtk.IconLookupFlags.FORCE_SYMBOLIC,
+        )
+        source.set_icon(theme_icon, 0, 0)
 
 
 _upper_offset: int = ord("A") - ord("a")

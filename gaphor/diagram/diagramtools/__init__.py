@@ -9,10 +9,12 @@ from gaphas.tool import (
     view_focus_tool,
     zoom_tool,
 )
+from gi.repository import Gtk
 
 import gaphor.diagram.diagramtools.connector
 import gaphor.diagram.diagramtools.grayout
 import gaphor.diagram.diagramtools.segment
+from gaphor.diagram.diagramtools.dnd import drop_target_tool
 from gaphor.diagram.diagramtools.dropzone import drop_zone_tool
 from gaphor.diagram.diagramtools.placement import placement_tool
 from gaphor.diagram.diagramtools.shortcut import shortcut_tool
@@ -35,6 +37,8 @@ def apply_default_tool_set(view, modeling_language, event_manager, rubberband_st
     view.add_controller(zoom_tool(view))
     view.add_controller(view_focus_tool(view))
     view.add_controller(shortcut_tool(view, modeling_language, event_manager))
+    if Gtk.get_major_version() != 3:
+        view.add_controller(drop_target_tool(modeling_language, event_manager))
 
 
 def apply_placement_tool_set(
@@ -52,3 +56,5 @@ def apply_placement_tool_set(
     view.add_controller(*scroll_tools(view))
     view.add_controller(zoom_tool(view))
     view.add_controller(shortcut_tool(view, modeling_language, event_manager))
+    if Gtk.get_major_version() != 3:
+        view.add_controller(drop_target_tool(modeling_language, event_manager))
