@@ -109,7 +109,7 @@ class Toolbox(UIComponent):
                     _, a, m = Gtk.accelerator_parse(shortcut)
                 button.set_tooltip_text(f"{label} ({Gtk.accelerator_get_label(a, m)})")
             else:
-                button.set_tooltip_text(f"{label}")
+                button.set_tooltip_text(label)
 
         # Enable Drag and Drop
         if action_name != "toolbox-pointer" and Gtk.get_major_version() == 3:

@@ -37,9 +37,6 @@ def diagrams(event_manager, element_factory, properties):
     yield diagrams
     diagrams.close()
 
-    if Gtk.get_major_version() != 3:
-        assert box.get_first_child() is None
-
 
 @pytest.fixture
 def connections(diagram):
