@@ -45,7 +45,6 @@ a = Analysis(
     + copy_metadata("gaphor")
     + copy_metadata("gaphas"),
     hiddenimports=[],
-    hookspath=["hooks"],
     hooksconfig={
         "gi": {
             "module-versions": {
