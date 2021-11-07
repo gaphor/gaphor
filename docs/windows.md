@@ -79,7 +79,7 @@ In the same PowerShell terminal, execute:
 
 ```PowerShell
 cd C:\gtk-build\github\gvsbuild
-python .\build.py build -p=x64 --vs-ver=16 --msys-dir=C:\tools\msys64 --enable-gi --py-wheel --gtk3-ver=3.24 gobject-introspection gtk3 pycairo pygobject adwaita-icon-theme hicolor-icon-theme
+python .\build.py build -p=x64 --vs-ver=16 --msys-dir=C:\tools\msys64 --enable-gi --py-wheel --gtk3-ver=3.24 gobject-introspection gtk3 pycairo pygobject gtksourceview adwaita-icon-theme hicolor-icon-theme
 ```
 Grab a coffee, the build will take a few minutes to complete.
 
