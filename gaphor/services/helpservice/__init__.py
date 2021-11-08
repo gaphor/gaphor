@@ -32,7 +32,6 @@ class HelpService(Service, ActionProvider):
         about = builder.get_object("about")
 
         about.set_version(distribution().version)
-        about.set_modal(True)
         about.set_transient_for(self.window)
 
         about.run()
