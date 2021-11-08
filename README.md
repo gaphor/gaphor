@@ -1,5 +1,4 @@
-<div align="center"><img src="https://github.com/gaphor/gaphor/blob/master/logos/org.gaphor.Gaphor.svg?raw=true" alt="Gaphor logo" width="64" /></div>
-<h1 align="center">Gaphor</h1>
+<h1 align="center"><img src="https://github.com/gaphor/gaphor/blob/master/logos/gaphor-logo-full.svg?raw=true" alt="Gaphor - UML/SysML Modeling" height="96"/></h1>
 
 [![Build](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml/badge.svg)](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml)
 [![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)](https://gaphor.readthedocs.io)
