@@ -23030,7 +23030,6 @@ specially for Gaphor</val>
 <ref refid="DCE:6C0DC6D8-4695-11D7-B567-379CA7034986"/>
 <ref refid="DCE:A70E26A6-4695-11D7-B567-379CA7034986"/>
 <ref refid="DCE:B4456442-4695-11D7-B567-379CA7034986"/>
-<ref refid="ad9647bd-e185-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="7bc86a7e-e187-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="DCE:0CD87EBC-464D-11D7-AA08-1B85D5275D8A"/>
 <ref refid="DCE:793D3FDC-464D-11D7-AA08-1B85D5275D8A"/>
@@ -23044,7 +23043,6 @@ specially for Gaphor</val>
 <ref refid="DCE:BBD8A99E-4695-11D7-B567-379CA7034986"/>
 <ref refid="DCE:DEA58C3E-4696-11D7-B567-379CA7034986"/>
 <ref refid="DCE:7BDD89AE-4697-11D7-B567-379CA7034986"/>
-<ref refid="bc2b2697-e185-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="5bae3240-e96c-11ea-96dc-bf74f1f80424"/>
 </reflist>
 </ownedPresentation>
@@ -23196,7 +23194,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 524.5, 317.66666666666663)</val>
 </matrix>
 <points>
-<val>[(398.33333333333337, 85.62844036693025), (398.33333333333337, 47.12844036693025), (36.5, 47.12844036693025), (36.5, 2.842170943040401e-14)]</val>
+<val>[(474.3375121233686, 85.62844036693025), (474.3375121233686, 47.12844036693025), (1.5, 47.12844036693025), (1.5, 2.842170943040401e-14)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:6D97E670-464D-11D7-AA08-1B85D5275D8A"/>
@@ -23658,43 +23656,6 @@ specially for Gaphor</val>
 <ref refid="DCE:A70E26A6-4695-11D7-B567-379CA7034986"/>
 </tail-connection>
 </AssociationItem>
-<CommentItem id="ad9647bd-e185-11ea-b7ab-f5b4c130f24e">
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 625.5, 200.66666666666666)</val>
-</matrix>
-<width>
-<val>129.0</val>
-</width>
-<height>
-<val>95.33333333333334</val>
-</height>
-<diagram>
-<ref refid="DCE:D2653A36-464C-11D7-AA08-1B85D5275D8A"/>
-</diagram>
-<subject>
-<ref refid="ad9647bc-e185-11ea-b7ab-f5b4c130f24e"/>
-</subject>
-</CommentItem>
-<CommentLineItem id="bc2b2697-e185-11ea-b7ab-f5b4c130f24e">
-<diagram>
-<ref refid="DCE:D2653A36-464C-11D7-AA08-1B85D5275D8A"/>
-</diagram>
-<horizontal>
-<val>0</val>
-</horizontal>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 625.5, 247.5185185185186)</val>
-</matrix>
-<points>
-<val>[(0.0, 0.0), (-64.5, 17.999999999999986)]</val>
-</points>
-<head-connection>
-<ref refid="ad9647bd-e185-11ea-b7ab-f5b4c130f24e"/>
-</head-connection>
-</CommentLineItem>
 <ClassItem id="7bc86a7e-e187-11ea-b7ab-f5b4c130f24e">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 363.0, 1169.0)</val>
@@ -50319,16 +50280,6 @@ association:not([memberEnd.navigability*=true]) {
 <val>1</val>
 </upperValue>
 </Property>
-<Comment id="ad9647bc-e185-11ea-b7ab-f5b4c130f24e">
-<body>
-<val>name and qualifiedName are defined in the Core model.</val>
-</body>
-<presentation>
-<reflist>
-<ref refid="ad9647bd-e185-11ea-b7ab-f5b4c130f24e"/>
-</reflist>
-</presentation>
-</Comment>
 <InstanceSpecification id="2de9d91e-e187-11ea-b7ab-f5b4c130f24e">
 <classifier>
 <reflist>
