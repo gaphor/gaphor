@@ -94,11 +94,16 @@ images_config = {"default_image_width": "", "default_image_height": ""}
 html_theme = "sphinx_rtd_theme"
 html_favicon = "../logos/gaphor-24x24.png"
 html_title = ""
+html_logo = "../logos/gaphor-logo-full-white.svg"
+
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    "logo_only": True,
+    "navigation_depth": 5,
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
