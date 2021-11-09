@@ -90,7 +90,9 @@ class InformationFlowPropertyPage(PropertyPageBase):
 
         use_flow.set_active(self.subject.informationFlow)
         self.combo.set_sensitive(use_flow.get_active())
-        if self.subject.informationFlow and self.subject.informationFlow[:].conveyed:
+        if self.subject.informationFlow and any(
+            self.subject.informationFlow[:].conveyed
+        ):
             entry.set_text(self.subject.informationFlow[0].conveyed[0].name or "")
 
         return builder.get_object("information-flow-editor")
