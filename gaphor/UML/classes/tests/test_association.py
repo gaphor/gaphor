@@ -95,12 +95,8 @@ def test_association_orthogonal(case):
     c = case.get_connected(a.tail)
     assert c is c2
 
-    try:
+    with pytest.raises(ValueError):
         a.orthogonal = True
-    except ValueError:
-        pass  # Expected, have only 2 handles, need 3 or more
-    else:
-        assert False, "Can not set line to orthogonal with less than 3 handles"
 
 
 def test_association_end_owner_handles(case):

@@ -316,7 +316,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         super().postload()
 
         if self.orthogonal:
-            self._set_orthogonal(self.orthogonal)
+            self._on_orthogonal(None)
 
         if hasattr(self, "_load_head_connection"):
             postload_connect(self, self.head, self._load_head_connection)
@@ -328,8 +328,10 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
             assert self._connections.get_connection(self.tail)
             del self._load_tail_connection
 
-    def _on_orthogonal(self, event):
-        self._set_orthogonal(event.new_value)
+    def _on_orthogonal(self, _event):
+        if self.orthogonal and len(self.handles()) < 3:
+            raise ValueError("Can't set orthogonal line with less than 3 handles")
+        self.update_orthogonal_constraints(self.orthogonal)
 
-    def _on_horizontal(self, event):
-        self._set_horizontal(event.new_value)
+    def _on_horizontal(self, _event):
+        self.update_orthogonal_constraints(self.orthogonal)
