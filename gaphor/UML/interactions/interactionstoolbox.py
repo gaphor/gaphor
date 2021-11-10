@@ -1,6 +1,7 @@
 """The definition for the interactions section of the toolbox."""
 
 from gaphas.item import SE
+from gaphas.segment import Segment
 
 from gaphor import UML
 from gaphor.core import gettext
@@ -35,6 +36,16 @@ def interaction_config(new_item):
         interaction.package = package
 
     subject.interaction = interaction
+
+
+def reflexive_message_config(new_item):
+    Segment(new_item, new_item.diagram).split_segment(0, count=3)
+
+    new_item.handles()[1].pos = (40, 0)
+    new_item.handles()[2].pos = (40, 20)
+    new_item.handles()[-1].pos = (0, 20)
+    new_item.horizontal = True
+    new_item.orthogonal = True
 
 
 interactions = ToolSection(
@@ -78,6 +89,15 @@ interactions = ToolSection(
             "gaphor-message-symbolic",
             "M",
             new_item_factory(diagramitems.MessageItem),
+        ),
+        ToolDef(
+            "toolbox-reflexive-message",
+            gettext("Reflexive message"),
+            "gaphor-reflexive-message-symbolic",
+            None,
+            new_item_factory(
+                diagramitems.MessageItem, config_func=reflexive_message_config
+            ),
         ),
     ),
 )
