@@ -30,8 +30,3 @@ diagramview {
   padding-left: 4px;
   padding-right: 4px;
 }
-
-/* Style fixes for TextView boxes */
-frame .view {
-  padding: 6px;
-}

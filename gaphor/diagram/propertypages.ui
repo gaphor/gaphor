@@ -30,6 +30,10 @@ renderers and such.</property>
         <property name="child">
           <object class="GtkTextView" id="comment">
             <property name="wrap-mode">word</property>
+            <property name="left-margin">6</property>
+            <property name="right-margin">6</property>
+            <property name="top-margin">6</property>
+            <property name="bottom-margin">6</property>
           </object>
         </property>
       </object>
@@ -85,6 +89,10 @@ renderers and such.</property>
         <property name="child">
           <object class="GtkTextView" id="note">
             <property name="wrap-mode">word</property>
+            <property name="left-margin">6</property>
+            <property name="right-margin">6</property>
+            <property name="top-margin">6</property>
+            <property name="bottom-margin">6</property>
           </object>
         </property>
       </object>

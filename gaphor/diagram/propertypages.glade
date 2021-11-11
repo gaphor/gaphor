@@ -49,6 +49,10 @@ renderers and such.</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="wrap-mode">word</property>
+            <property name="left-margin">6</property>
+            <property name="right-margin">6</property>
+            <property name="top-margin">6</property>
+            <property name="bottom-margin">6</property>
           </object>
         </child>
         <child type="label_item">
@@ -256,6 +260,10 @@ Use -/= to move items up or down.</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="wrap-mode">word</property>
+            <property name="left-margin">6</property>
+            <property name="right-margin">6</property>
+            <property name="top-margin">6</property>
+            <property name="bottom-margin">6</property>
           </object>
         </child>
         <child type="label_item">

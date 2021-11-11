@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.2 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkLabel" id="00-instructions">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
+    <property name="can-focus">False</property>
     <property name="label">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
 Remove Parent.
@@ -17,24 +17,24 @@ renderers and such.</property>
   </object>
   <object class="GtkExpander" id="parts-and-references-editor">
     <property name="visible">True</property>
-    <property name="can_focus">True</property>
-    <property name="margin_top">12</property>
+    <property name="can-focus">True</property>
+    <property name="margin-top">12</property>
     <property name="expanded">True</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_top">6</property>
+        <property name="can-focus">False</property>
+        <property name="margin-top">6</property>
         <property name="orientation">vertical</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Show Parts</property>
               </object>
               <packing>
@@ -46,13 +46,13 @@ renderers and such.</property>
             <child>
               <object class="GtkSwitch" id="show-parts">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can-focus">True</property>
                 <signal name="notify::active" handler="show-parts-changed" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
-                <property name="pack_type">end</property>
+                <property name="pack-type">end</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -66,11 +66,11 @@ renderers and such.</property>
         <child>
           <object class="GtkBox">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <child>
               <object class="GtkLabel">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Show references</property>
               </object>
               <packing>
@@ -82,13 +82,13 @@ renderers and such.</property>
             <child>
               <object class="GtkSwitch" id="show-references">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can-focus">True</property>
                 <signal name="notify::active" handler="show-references-changed" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
-                <property name="pack_type">end</property>
+                <property name="pack-type">end</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -104,7 +104,7 @@ renderers and such.</property>
     <child type="label">
       <object class="GtkLabel">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Parts and References</property>
         <attributes>
           <attribute name="weight" value="bold"/>
@@ -114,14 +114,14 @@ renderers and such.</property>
   </object>
   <object class="GtkBox" id="property-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel" id="label3">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Aggregation</property>
         <property name="xalign">0</property>
         <attributes>
@@ -137,7 +137,7 @@ renderers and such.</property>
     <child>
       <object class="GtkComboBoxText" id="aggregation">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <items>
           <item id="0" translatable="yes">No aggregation</item>
           <item id="1" translatable="yes">Shared</item>
@@ -155,16 +155,16 @@ renderers and such.</property>
   <object class="GtkTextBuffer" id="requirement-text-buffer"/>
   <object class="GtkBox" id="requirement-editor">
     <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="margin_top">6</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
-    <property name="baseline_position">top</property>
+    <property name="baseline-position">top</property>
     <signal name="destroy" handler="requirement-destroyed" swapped="no"/>
     <child>
       <object class="GtkLabel" id="label1">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="label" translatable="yes">Id</property>
         <property name="xalign">0</property>
         <attributes>
@@ -180,7 +180,7 @@ renderers and such.</property>
     <child>
       <object class="GtkEntry" id="requirement-id">
         <property name="visible">True</property>
-        <property name="can_focus">True</property>
+        <property name="can-focus">True</property>
         <signal name="changed" handler="requirement-id-changed" swapped="no"/>
       </object>
       <packing>
@@ -192,8 +192,8 @@ renderers and such.</property>
     <child>
       <object class="GtkLabel" id="label2">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_top">6</property>
+        <property name="can-focus">False</property>
+        <property name="margin-top">6</property>
         <property name="label" translatable="yes">Text</property>
         <property name="xalign">0</property>
         <attributes>
@@ -209,19 +209,23 @@ renderers and such.</property>
     <child>
       <object class="GtkFrame">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label_xalign">0</property>
-        <property name="shadow_type">in</property>
+        <property name="can-focus">False</property>
+        <property name="label-xalign">0</property>
+        <property name="shadow-type">in</property>
         <child>
           <object class="GtkAlignment">
-            <property name="height_request">100</property>
+            <property name="height-request">100</property>
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <child>
               <object class="GtkTextView" id="requirement-text">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="wrap_mode">word</property>
+                <property name="can-focus">True</property>
+                <property name="wrap-mode">word</property>
+                <property name="left-margin">6</property>
+                <property name="right-margin">6</property>
+                <property name="top-margin">6</property>
+                <property name="bottom-margin">6</property>
                 <property name="buffer">requirement-text-buffer</property>
               </object>
             </child>

@@ -122,6 +122,10 @@ renderers and such.</property>
         <child>
           <object class="GtkTextView" id="requirement-text">
             <property name="wrap_mode">word</property>
+            <property name="left-margin">6</property>
+            <property name="right-margin">6</property>
+            <property name="top-margin">6</property>
+            <property name="bottom-margin">6</property>
             <property name="buffer">requirement-text-buffer</property>
           </object>
         </child>
