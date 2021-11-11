@@ -17,7 +17,7 @@ from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import tooliter
 from gaphor.diagram.diagramtools import apply_default_tool_set, apply_placement_tool_set
-from gaphor.diagram.diagramtools.placement import create_item
+from gaphor.diagram.diagramtools.placement import create_item, open_editor
 from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
 from gaphor.diagram.support import get_diagram_item
@@ -322,7 +322,8 @@ class DiagramPage:
         ):
             tool_def = self.get_tool_def(data.get_data().decode())
             with Transaction(self.event_manager):
-                create_item(view, tool_def.item_factory, x, y)
+                item = create_item(view, tool_def.item_factory, x, y)
+            open_editor(item, view, self.event_manager)
             context.finish(True, False, time)
         elif (
             data
