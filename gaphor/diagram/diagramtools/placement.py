@@ -2,14 +2,16 @@ import logging
 from typing import Callable, Optional, Type, TypeVar
 
 from gaphas.aspect import HandleMove, MoveType
+from gaphas.decorators import g_async
 from gaphas.view import GtkView
-from gi.repository import Gtk
+from gi.repository import GLib, Gtk
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, Element
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.grouping import Group
-from gaphor.diagram.presentation import Presentation
+from gaphor.diagram.inlineeditors import InlineEditor
+from gaphor.diagram.presentation import ElementPresentation, Presentation
 
 log = logging.getLogger(__name__)
 
@@ -101,6 +103,13 @@ def on_drag_end(gesture, offset_x, offset_y, placement_state):
         placement_state.moving.stop_move((x + offset_x, y + offset_y))
         connect_opposite_handle(view, item, x, y, placement_state.handle_index)
         placement_state.event_manager.handle(DiagramItemPlaced(item))
+        open_editor(item, view, placement_state.event_manager)
+
+
+@g_async(priority=GLib.PRIORITY_LOW)
+def open_editor(item, view, event_manager):
+    if isinstance(item, ElementPresentation):
+        InlineEditor(item, view, event_manager)
 
 
 def new_item_factory(
