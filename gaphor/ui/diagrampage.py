@@ -254,9 +254,7 @@ class DiagramPage:
         if Gtk.get_major_version() == 3:
             window = self.view.get_window()
             if icon_name and window:
-                window.set_cursor(
-                    get_placement_cursor(window.get_display(), icon_name)
-                )
+                window.set_cursor(get_placement_cursor(window.get_display(), icon_name))
             elif window:
                 window.set_cursor(None)
         elif icon_name:
