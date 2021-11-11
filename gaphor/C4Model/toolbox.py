@@ -1,5 +1,7 @@
 """The action definition for the C4 Model toolbox."""
 
+from gaphas.item import SE
+
 from gaphor.C4Model import c4model, diagramitems
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import (
@@ -60,6 +62,7 @@ c4 = ToolSection(
                 c4model.C4Person,
                 config_func=namespace_config,
             ),
+            handle_index=SE,
         ),
         ToolDef(
             "c4-software-system",
@@ -71,6 +74,7 @@ c4 = ToolSection(
                 c4model.C4Container,
                 config_func=software_system_config,
             ),
+            handle_index=SE,
         ),
         ToolDef(
             "c4-container",
@@ -82,6 +86,7 @@ c4 = ToolSection(
                 c4model.C4Container,
                 config_func=container_config,
             ),
+            handle_index=SE,
         ),
         ToolDef(
             "c4-container-database",
@@ -93,6 +98,7 @@ c4 = ToolSection(
                 c4model.C4Database,
                 config_func=container_database_config,
             ),
+            handle_index=SE,
         ),
         ToolDef(
             "c4-component",
@@ -104,6 +110,7 @@ c4 = ToolSection(
                 c4model.C4Container,
                 config_func=component_config,
             ),
+            handle_index=SE,
         ),
         ToolDef(
             "c4-dependency",
