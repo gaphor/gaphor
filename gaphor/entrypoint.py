@@ -14,12 +14,12 @@ def initialize(scope, services=None, **known_services: T) -> Dict[str, T]:
 
 
 @functools.lru_cache(maxsize=4)
-def list_entry_points(scope):
-    eps = importlib.metadata.entry_points()
-    if hasattr(eps, "select"):
-        # Python 3.10+:
-        return eps.select(group=scope)  # type: ignore[attr-defined]
-    return eps[scope]
+def list_entry_points(group):
+    try:
+        return importlib.metadata.entry_points(group=group)  # type: ignore[call-arg]
+    except TypeError:
+        # Fallback for Python < 3.10
+        return importlib.metadata.entry_points()[group]
 
 
 def load_entry_points(scope, services=None) -> Dict[str, Type[T]]:
