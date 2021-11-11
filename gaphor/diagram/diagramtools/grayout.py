@@ -1,8 +1,8 @@
 from typing import Optional
 
 from gaphas.aspect.handlemove import ConnectionSinkType, HandleMove, ItemHandleMove
+from gaphas.guide import GuidedItemHandleMoveMixin
 from gaphas.item import Line
-from gaphas.segment import LineHandleMove
 from gaphas.types import Pos
 
 from gaphor.diagram.connectors import Connector
@@ -18,7 +18,7 @@ def connectable(line, handle, element):
 
 
 @HandleMove.register(Line)
-class GrayOutLineHandleMove(LineHandleMove):
+class GrayOutLineHandleMove(GuidedItemHandleMoveMixin, ItemHandleMove):
     def start_move(self, pos):
         super().start_move(pos)
         handle = self.handle

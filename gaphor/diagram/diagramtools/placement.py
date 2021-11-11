@@ -1,8 +1,7 @@
 import logging
 from typing import Callable, Optional, Type, TypeVar
 
-from gaphas.aspect.handlemove import HandleMove
-from gaphas.tool.itemtool import MoveType
+from gaphas.aspect import HandleMove, MoveType
 from gaphas.view import GtkView
 from gi.repository import Gtk
 
