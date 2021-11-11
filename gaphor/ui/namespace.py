@@ -206,8 +206,18 @@ class Namespace(UIComponent, ActionProvider):
                 isinstance(element, UML.Package)
             )
             action_group.lookup_action("delete").set_enabled(
-                isinstance(element, Diagram)
-                or (isinstance(element, UML.Package) and not element.presentation)
+                isinstance(
+                    element,
+                    (
+                        Diagram,
+                        UML.Package,
+                        UML.Interaction,
+                        UML.StateMachine,
+                        UML.Region,
+                        UML.Activity,
+                    ),
+                )
+                and not element.presentation
             )
             action_group.lookup_action("rename").set_enabled(
                 isinstance(element, (Diagram, UML.NamedElement))
@@ -314,9 +324,7 @@ class Namespace(UIComponent, ActionProvider):
     @transactional
     def tree_view_delete(self):
         element = self.get_selected_element()
-        if isinstance(element, UML.Package):
-            element.unlink()
-        elif isinstance(element, Diagram):
+        if isinstance(element, Diagram):
             m = Gtk.MessageDialog(
                 None,
                 Gtk.DialogFlags.MODAL,
@@ -334,3 +342,5 @@ class Namespace(UIComponent, ActionProvider):
                     i.unlink()
                 element.unlink()
             m.destroy()
+        elif element:
+            element.unlink()
