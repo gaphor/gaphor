@@ -558,6 +558,7 @@ class Connector(Feature):
     end: relation_many[ConnectorEnd]
     type: relation_one[Association]
     contract: relation_many[Behavior]
+    informationFlow: relation_many[InformationFlow]
 
 
 class ConnectorEnd(MultiplicityElement):
@@ -755,9 +756,9 @@ class InformationFlow(PackageableElement, DirectedRelationship):
     realization: relation_many[Relationship]
     realizingMessage: relation_many[Message]
     realizingActivityEdge: relation_many[ActivityEdge]
-    realizingConnector: relation_many[Connector]
-    informationTarget: relation_many[NamedElement]
-    informationSource: relation_many[NamedElement]
+    realizingConnector: relation_one[Connector]
+    informationTarget: relation_one[NamedElement]
+    informationSource: relation_one[NamedElement]
 
 
 # class 'Expression' has been stereotyped as 'SimpleAttribute'
@@ -1330,17 +1331,22 @@ InformationFlow.realizingMessage = association("realizingMessage", Message)
 InformationFlow.realizingActivityEdge = association(
     "realizingActivityEdge", ActivityEdge
 )
-InformationFlow.realizingConnector = association("realizingConnector", Connector)
+Connector.informationFlow = association(
+    "informationFlow", InformationFlow, composite=True, opposite="realizingConnector"
+)
+InformationFlow.realizingConnector = association(
+    "realizingConnector", Connector, upper=1, opposite="informationFlow"
+)
 NamedElement.informationFlow = association(
     "informationFlow", InformationFlow, opposite="informationTarget"
 )
 InformationFlow.informationTarget = association(
-    "informationTarget", NamedElement, lower=1, opposite="informationFlow"
+    "informationTarget", NamedElement, lower=1, upper=1, opposite="informationFlow"
 )
 InformationFlow.informationSource = association(
-    "informationSource", NamedElement, lower=1
+    "informationSource", NamedElement, lower=1, upper=1
 )
-# 82: override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
+# 82: override NamedElement.qualifiedName(NamedElement.namespace): derived[list[str]]
 
 
 def _namedelement_qualifiedname(self) -> list[str]:
@@ -1370,7 +1376,7 @@ Property.isComposite = derived(
     "isComposite", bool, 0, 1, lambda obj: [obj.aggregation == "composite"]
 )
 
-# 99: override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
+# 99: override Property.navigability(Property.opposite, Property.association): derived[bool | None]
 # defined in umloverrides.py
 
 RedefinableElement.redefinedElement = derivedunion(
@@ -1421,7 +1427,7 @@ Feature.featuringClassifier = derivedunion(
     Operation.interface_,
     Operation.artifact,
 )
-# 73: override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
+# 73: override Property.opposite(Property.association, Association.memberEnd): relation_one[Property | None]
 # defined in umloverrides.py
 
 Action.output = derivedunion("output", OutputPin, 0, "*")
@@ -1678,6 +1684,7 @@ Element.owner = derivedunion(
     GeneralOrdering.interactionFragment,
     Constraint.parameterSet,
     ActivityNode.activity,
+    InformationFlow.realizingConnector,
 )
 Element.ownedElement = derivedunion(
     "ownedElement",
@@ -1712,6 +1719,7 @@ Element.ownedElement = derivedunion(
     ParameterSet.condition,
     Connector.end,
     Activity.node,
+    Connector.informationFlow,
 )
 # 120: override StructuredClassifier.part: property
 StructuredClassifier.part = property(

@@ -121,7 +121,8 @@ win-installer = { "script" = "packaging.windows.build-win-installer:main" }
 gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini gaphor"
 gettext-po = { "script" = "po.build-babel:update_po_files" }
 gettext-mo = { "script" = "po.build-babel:compile_mo_files" }
-update-translations = ["gettext-pot", "gettext-po", "gettext-mo"]
+translations = ["gettext-pot", "gettext-po", "gettext-mo"]
+icons = { "shell" = "make -C gaphor/ui/icons" }
 
 [tool.poe.executor]
 type = "virtualenv"

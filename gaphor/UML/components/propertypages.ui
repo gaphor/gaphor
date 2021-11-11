@@ -32,4 +32,57 @@ renderers and such.</property>
       </object>
     </child>
   </object>
+  <object class="GtkBox" id="information-flow-editor">
+    <property name="margin-top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Information Flow</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+            </attributes>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="use-information-flow">
+            <signal name="notify::active" handler="information-flow-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="xalign">0</property>
+        <property name="label" translatable="yes">Information Item (Class):</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkComboBoxText" id="information-flow-combo">
+            <property name="has-entry">True</property>
+            <signal name="changed" handler="information-flow-combo-changed" swapped="no"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="information-flow-invert">
+            <property name="tooltip-text" translatable="yes">Invert direction</property>
+            <signal name="clicked" handler="invert-direction-changed" swapped="no"/>
+            <child>
+              <object class="GtkImage">
+                <property name="icon-name">object-flip-horizontal-symbolic</property>
+              </object>
+            </child>
+            <style>
+              <class name="flat"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
 </interface>

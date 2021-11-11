@@ -101,8 +101,9 @@ interfaces are connectable elements.
 
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, Text
+from gaphor.diagram.shapes import Box, Text, cairo_state
 from gaphor.diagram.support import represents
+from gaphor.UML.classes.association import get_center_pos
 from gaphor.UML.modelfactory import stereotypes_str
 
 
@@ -129,10 +130,33 @@ class ConnectorItem(LinePresentation[UML.Connector], Named):
                 text=lambda: stereotypes_str(self.subject),
             ),
             Text(text=lambda: self.subject.name or ""),
+            Text(
+                text=lambda: ", ".join(self.subject.informationFlow[:].conveyed[:].name)
+            ),
         )
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Connector].informationFlow.informationSource")
+        self.watch("subject[Connector].informationFlow.conveyed.name")
+
+    def draw(self, context):
+        super().draw(context)
+        subject = self.subject
+        if subject and subject.informationFlow:
+
+            inverted = (
+                subject.end[0].role in subject.informationFlow[:].informationTarget
+            )
+            handles = self.handles()
+            pos, angle = get_center_pos(handles, inverted)
+            with cairo_state(context.cairo) as cr:
+                cr.translate(*pos)
+                cr.rotate(angle)
+                cr.move_to(0, 0)
+                cr.line_to(-12, 8)
+                cr.line_to(-12, -8)
+                cr.fill()
 
     def draw_tail(self, context):
         cr = context.cairo

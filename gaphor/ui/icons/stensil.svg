@@ -59,11 +59,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.7517782"
-     inkscape:cx="173.88756"
-     inkscape:cy="80.311705"
+     inkscape:zoom="11.007113"
+     inkscape:cx="407.23667"
+     inkscape:cy="43.971567"
      inkscape:document-units="px"
-     inkscape:current-layer="c4-person"
+     inkscape:current-layer="information-flow"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
@@ -2637,6 +2637,39 @@
          id="tspan456-7"
          x="70.666451"
          y="24.938807">P</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="information-flow"
+     inkscape:label="information-flow">
+    <path
+       style="color:#000000;display:inline;fill:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+       d="m 115.07694,10.054533 a 0.26460979,0.26460979 0 0 0 -0.0586,0.0098 l -1.85156,0.529297 a 0.26492938,0.26492938 0 1 0 0.14453,0.509766 l 1.39453,-0.398438 -0.39844,1.394531 a 0.26493144,0.26493144 0 1 0 0.50977,0.144531 l 0.5293,-1.851562 a 0.26460979,0.26460979 0 0 0 -0.26954,-0.337895 z"
+       id="path4594-6-2-7-3" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.82223px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="113.83969"
+       y="14.245264"
+       id="text150-6"><tspan
+         sodipodi:role="line"
+         id="tspan148-75"
+         x="113.83969"
+         y="14.245264"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:2.82223px;font-family:FreeMono;-inkscape-font-specification:'FreeMono Bold';stroke-width:0.264583">F</tspan></text>
+    <g
+       id="path4598-1-2-5-3"
+       style="display:inline"
+       transform="translate(33.3375,19.843751)">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linecap:round;stroke-dasharray:0.529167, 1.05833;-inkscape-stroke:none"
+         d="m 78.052084,-5.8208333 3.439583,-3.4395839"
+         id="path2556-5" />
+      <path
+         style="color:#000000;fill:#000000;stroke-linecap:round;stroke-dasharray:0.529167, 1.05833;-inkscape-stroke:none"
+         d="M 81.304687,-9.4472656 81.232422,-9.375 a 0.2645835,0.2645835 0 0 0 0,0.3730469 0.2645835,0.2645835 0 0 0 0.375,0 l 0.07227,-0.072266 a 0.2645835,0.2645835 0 0 0 0,-0.3730468 0.2645835,0.2645835 0 0 0 -0.375,0 z m -0.820312,0.8203125 -0.375,0.3730468 a 0.2645835,0.2645835 0 0 0 0,0.3750001 0.2645835,0.2645835 0 0 0 0.375,0 l 0.375,-0.3750001 a 0.2645835,0.2645835 0 0 0 0,-0.3730468 0.2645835,0.2645835 0 0 0 -0.375,0 z m -1.123047,1.1230469 -0.373047,0.3730468 a 0.2645835,0.2645835 0 0 0 0,0.375 0.2645835,0.2645835 0 0 0 0.373047,0 l 0.375,-0.375 a 0.2645835,0.2645835 0 0 0 0,-0.3730468 0.2645835,0.2645835 0 0 0 -0.375,0 z m -0.935547,1.0449218 a 0.2645835,0.2645835 0 0 0 -0.1875,0.076172 l -0.373047,0.375 a 0.2645835,0.2645835 0 0 0 0,0.375 0.2645835,0.2645835 0 0 0 0.373047,0 l 0.375,-0.375 a 0.2645835,0.2645835 0 0 0 0,-0.375 0.2645835,0.2645835 0 0 0 -0.1875,-0.076172 z"
+         id="path2558-6" />
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"

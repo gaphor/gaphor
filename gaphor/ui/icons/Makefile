@@ -33,6 +33,7 @@ ICONS=diagram \
 	node \
 	device \
 	connector \
+	information-flow \
 	action \
 	initial-node \
 	activity-final-node \

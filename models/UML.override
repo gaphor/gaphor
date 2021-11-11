@@ -70,7 +70,7 @@ Class.superClass = Classifier.general
 override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 %%
-override Property.opposite(Property.association, Association.memberEnd): relation_one[Optional[Property]]
+override Property.opposite(Property.association, Association.memberEnd): relation_one[Property | None]
 # defined in umloverrides.py
 %%
 override Property.isComposite(Property.aggregation): derived[bool]
@@ -79,9 +79,9 @@ Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggre
 override Constraint.context: derivedunion[Namespace]
 Constraint.context = derivedunion('context', Namespace, 0, 1)
 %%
-override NamedElement.qualifiedName(NamedElement.namespace): derived[List[str]]
+override NamedElement.qualifiedName(NamedElement.namespace): derived[list[str]]
 
-def _namedelement_qualifiedname(self) -> List[str]:
+def _namedelement_qualifiedname(self) -> list[str]:
     """Returns the qualified name of the element as a tuple."""
     if self.namespace:
         return _namedelement_qualifiedname(self.namespace) + [self.name]
@@ -96,7 +96,7 @@ NamedElement.qualifiedName = derived(
     lambda obj: [_namedelement_qualifiedname(obj)],
 )
 %%
-override Property.navigability(Property.opposite, Property.association): derived[Optional[bool]]
+override Property.navigability(Property.opposite, Property.association): derived[bool | None]
 # defined in umloverrides.py
 %%
 override Operation.type: derivedunion[DataType]
