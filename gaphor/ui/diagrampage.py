@@ -145,10 +145,6 @@ class DiagramPage:
                 DiagramPage.VIEW_DND_TARGETS,
                 Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
             )
-        else:
-            # TODO: Gtk4 - use controllers DragSource and DropTarget
-            pass
-
         self.diagram_css = Gtk.CssProvider.new()
         view.get_style_context().add_provider(
             self.diagram_css, Gtk.STYLE_PROVIDER_PRIORITY_USER
@@ -251,22 +247,22 @@ class DiagramPage:
         self.view = None
 
     def select_tool(self, tool_name: str):
-        if self.view:
-            self.apply_tool_set(tool_name)
-            icon_name = self.get_tool_icon_name(tool_name)
-            if Gtk.get_major_version() == 3:
-                window = self.view.get_window()
-                if icon_name and window:
-                    window.set_cursor(
-                        get_placement_cursor(window.get_display(), icon_name)
-                    )
-                elif window:
-                    window.set_cursor(None)
-            else:
-                if icon_name:
-                    self.view.set_cursor(get_placement_cursor(None, icon_name))
-                else:
-                    self.view.set_cursor(None)
+        if not self.view:
+            return
+        self.apply_tool_set(tool_name)
+        icon_name = self.get_tool_icon_name(tool_name)
+        if Gtk.get_major_version() == 3:
+            window = self.view.get_window()
+            if icon_name and window:
+                window.set_cursor(
+                    get_placement_cursor(window.get_display(), icon_name)
+                )
+            elif window:
+                window.set_cursor(None)
+        elif icon_name:
+            self.view.set_cursor(get_placement_cursor(None, icon_name))
+        else:
+            self.view.set_cursor(None)
 
     def set_drawing_style(self):
         """Set the drawing style for the diagram based on the active style
