@@ -38,7 +38,7 @@ def named_item_inline_editor(item, view, event_manager, pos=None) -> bool:
         w, h = i2v.transform_distance(box.width, box.height)
         box = Rectangle(x, y, w, h)
     else:
-        box = view.get_item_bounding_box(view.selection.hovered_item)
+        box = view.get_item_bounding_box(item)
     name = subject.name or ""
     entry = popup_entry(name)
 
