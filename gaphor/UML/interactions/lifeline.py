@@ -20,16 +20,12 @@ lifeline.
 """
 
 from gaphas.connector import Handle, LinePort
-from gaphas.constraint import (
-    CenterConstraint,
-    EqualsConstraint,
-    LessThanConstraint,
-    LineAlignConstraint,
-)
+from gaphas.constraint import CenterConstraint, EqualsConstraint, LessThanConstraint
 from gaphas.geometry import distance_line_point
 from gaphas.item import SE, SW
 from gaphas.position import MatrixProjection
 from gaphas.solver import STRONG, MultiConstraint
+from gaphas.solver.constraint import BaseConstraint
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
@@ -37,6 +33,25 @@ from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.modelfactory import stereotypes_str
+
+
+class BetweenConstraint(BaseConstraint):
+    """b <= a <= c.
+
+    Only a will change.
+    """
+
+    def __init__(self, a, b, c):
+        super().__init__(a, b, c)
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def solve(self):
+        if self.a.value > self.c.value:
+            self.a.value = self.c.value
+        if self.a.value < self.b.value:
+            self.a.value = self.b.value
 
 
 class LifetimePort(LinePort):
@@ -47,20 +62,12 @@ class LifetimePort(LinePort):
         end = MatrixProjection(self.end, glue_item.matrix_i2c)
         point = MatrixProjection(handle.pos, item.matrix_i2c)
 
-        x, y = item.matrix_i2c.transform_point(*handle.pos)
-        x, y = glue_item.matrix_i2c.inverse().transform_point(x, y)
+        cx = EqualsConstraint(start.x, point.x)
+        cy = BetweenConstraint(point.y, start.y, end.y)
 
-        # keep message at the same distance from head or bottom of lifetime
-        # line depending on situation
-        height = self.end.y - self.start.y
-        if y / height < 0.5:
-            delta = y - self.start.y
-            align = 0
-        else:
-            delta = y - self.end.y
-            align = 1
-        line = LineAlignConstraint((start, end), point, align, delta)
-        return MultiConstraint(start, end, point, line)
+        print((start.x, start.y), (end.x, end.y), (point.x, point.y), cx, cy)
+
+        return MultiConstraint(start, end, point, cx, cy)
 
 
 class LifetimeItem:
