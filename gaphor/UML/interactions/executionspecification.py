@@ -23,7 +23,7 @@ behavior, whereas ActionExecutionSpecification has a [1] relation to action.
 import ast
 
 from gaphas import Handle
-from gaphas.connector import LinePort, Position
+from gaphas.connector import Position
 from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver import WEAK
@@ -33,6 +33,7 @@ from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import HandlePositionUpdate, postload_connect
 from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
+from gaphor.UML.interactions.lifeline import BetweenPort
 
 
 @represents(UML.ExecutionSpecification)
@@ -75,7 +76,7 @@ class ExecutionSpecificationItem(
         ):
             self._connections.add_constraint(self, c)
 
-        self._ports = [LinePort(nw, sw), LinePort(ne, se)]
+        self._ports = [BetweenPort(nw, sw), BetweenPort(ne, se)]
 
         self.shape = Box(
             style={"background-color": (1.0, 1.0, 1.0, 1.0)}, draw=draw_border
