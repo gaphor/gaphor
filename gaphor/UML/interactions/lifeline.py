@@ -24,7 +24,7 @@ from gaphas.constraint import CenterConstraint, EqualsConstraint, LessThanConstr
 from gaphas.geometry import distance_line_point
 from gaphas.item import SE, SW
 from gaphas.position import MatrixProjection, Position
-from gaphas.solver import STRONG, MultiConstraint
+from gaphas.solver import VERY_STRONG, MultiConstraint
 from gaphas.solver.constraint import BaseConstraint
 from gaphas.types import Pos, SupportsFloatPos
 
@@ -48,7 +48,10 @@ class BetweenConstraint(BaseConstraint):
         self.lower = lower
         self.upper = upper
 
-    def solve(self):
+    def solve_for(self, var):
+        if var is not self.v:
+            return
+
         lower = self.lower.value
         upper = self.upper.value
         if lower > upper:
@@ -81,7 +84,7 @@ class BetweenPort(Port):
         end = MatrixProjection(self.end, glue_item.matrix_i2c)
         point = MatrixProjection(handle.pos, item.matrix_i2c)
 
-        cx = BetweenConstraint(point.x, start.x, end.x)
+        cx = EqualsConstraint(point.x, start.x)
         cy = BetweenConstraint(point.y, start.y, end.y)
 
         return MultiConstraint(start, end, point, cx, cy)
@@ -105,8 +108,8 @@ class LifetimeItem:
     def __init__(self):
         super().__init__()
 
-        self.top = Handle(strength=STRONG - 1)
-        self.bottom = Handle(strength=STRONG)
+        self.top = Handle(strength=VERY_STRONG - 1)
+        self.bottom = Handle(strength=VERY_STRONG)
 
         self.top.movable = False
         self.top.visible = False

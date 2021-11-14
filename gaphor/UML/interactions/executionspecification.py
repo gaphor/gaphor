@@ -26,7 +26,7 @@ from gaphas import Handle
 from gaphas.connector import Position
 from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
-from gaphas.solver import WEAK
+from gaphas.solver import STRONG
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
@@ -49,7 +49,7 @@ class ExecutionSpecificationItem(
 
         self.bar_width = 12
 
-        ht, hb = Handle(), Handle()
+        ht, hb = Handle(strength=STRONG), Handle(strength=STRONG)
         ht.connectable = True
 
         self._handles = [ht, hb]
@@ -59,10 +59,10 @@ class ExecutionSpecificationItem(
         self._connections.add_constraint(self, constraint(vertical=(ht.pos, hb.pos)))
 
         r = self.bar_width / 2
-        nw = Position(-r, 0, strength=WEAK)
-        ne = Position(r, 0, strength=WEAK)
-        se = Position(r, 0, strength=WEAK)
-        sw = Position(-r, 0, strength=WEAK)
+        nw = Position(-r, 0, strength=STRONG)
+        ne = Position(r, 0, strength=STRONG)
+        se = Position(r, 0, strength=STRONG)
+        sw = Position(-r, 0, strength=STRONG)
 
         for c in (
             constraint(horizontal=(nw, ht.pos)),
