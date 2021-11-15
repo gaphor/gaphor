@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="15.996563"
+   height="14.001177"
+   viewBox="0 0 4.2324239 3.7044781"
+   version="1.1"
+   id="svg4268"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs4262" />
+  <metadata
+     id="metadata4265">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="reflexive-message"
+     transform="translate(-43.65625,4.2333333)">
+    <path
+       style="color:#000000;fill:#000000;stroke-linejoin:round;-inkscape-stroke:none"
+       d="m 44.449219,-3.96875 v 0.5292969 h 2.912109 v 1.5878906 h -2.912109 v 0.5292969 H 47.625 a 0.26460981,0.26460981 0 0 0 0.263672,-0.265625 V -3.7050781 A 0.26460981,0.26460981 0 0 0 47.625,-3.96875 Z"
+       id="path2315" />
+    <path
+       style="color:#000000;display:inline;fill:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+       d="m 44.714583,-3.7041667 a 0.52916664,0.52916664 0 0 1 -0.529167,0.5291666 0.52916664,0.52916664 0 0 1 -0.529166,-0.5291666 0.52916664,0.52916664 0 0 1 0.529166,-0.5291666 0.52916664,0.52916664 0 0 1 0.529167,0.5291666 z"
+       id="path1025-5" />
+    <path
+       style="color:#000000;fill:#000000;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+       d="m 45.107422,-2.6074219 -1.322266,0.7929688 a 0.26460996,0.26460996 0 0 0 0,0.453125 l 1.322266,0.79492185 a 0.2645835,0.2645835 0 0 0 0.363281,-0.0917969 0.2645835,0.2645835 0 0 0 -0.0918,-0.36328125 l -0.945312,-0.5664062 0.945312,-0.5664063 a 0.2645835,0.2645835 0 0 0 0.0918,-0.3632812 0.2645835,0.2645835 0 0 0 -0.363281,-0.089844 z"
+       id="path1909" />
+  </g>
+</svg>

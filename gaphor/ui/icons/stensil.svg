@@ -6,7 +6,7 @@
    version="1.1"
    id="svg4268"
    sodipodi:docname="stensil.svg"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -59,11 +59,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="11.007113"
-     inkscape:cx="407.23667"
-     inkscape:cy="43.971567"
+     inkscape:zoom="7.7832042"
+     inkscape:cx="160.08831"
+     inkscape:cy="-21.327977"
      inkscape:document-units="px"
-     inkscape:current-layer="information-flow"
+     inkscape:current-layer="reflexive-message"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
@@ -3640,6 +3640,23 @@
          d="m 5.2910156,44.322266 a 0.2645835,0.2645835 0 0 0 -0.1855469,0.07813 l -3.4414062,3.439453 a 0.2645835,0.2645835 0 0 0 0,0.375 0.2645835,0.2645835 0 0 0 0.375,0 l 3.4394531,-3.439453 a 0.2645835,0.2645835 0 0 0 0,-0.375 0.2645835,0.2645835 0 0 0 -0.1875,-0.07813 z"
          id="path4032" />
     </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="reflexive-message"
+     inkscape:label="reflexive-message">
+    <path
+       style="color:#000000;fill:#000000;stroke-linejoin:round;-inkscape-stroke:none"
+       d="m 44.449219,-3.96875 v 0.5292969 h 2.912109 v 1.5878906 h -2.912109 v 0.5292969 H 47.625 a 0.26460981,0.26460981 0 0 0 0.263672,-0.265625 V -3.7050781 A 0.26460981,0.26460981 0 0 0 47.625,-3.96875 Z"
+       id="path2315" />
+    <path
+       style="color:#000000;display:inline;fill:#000000;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+       d="m 44.714583,-3.7041667 a 0.52916664,0.52916664 0 0 1 -0.529167,0.5291666 0.52916664,0.52916664 0 0 1 -0.529166,-0.5291666 0.52916664,0.52916664 0 0 1 0.529166,-0.5291666 0.52916664,0.52916664 0 0 1 0.529167,0.5291666 z"
+       id="path1025-5" />
+    <path
+       style="color:#000000;fill:#000000;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+       d="m 45.107422,-2.6074219 -1.322266,0.7929688 a 0.26460996,0.26460996 0 0 0 0,0.453125 l 1.322266,0.79492185 a 0.2645835,0.2645835 0 0 0 0.363281,-0.0917969 0.2645835,0.2645835 0 0 0 -0.0918,-0.36328128 l -0.945312,-0.5664062 0.945312,-0.5664063 a 0.2645835,0.2645835 0 0 0 0.0918,-0.3632812 0.2645835,0.2645835 0 0 0 -0.363281,-0.089844 z"
+       id="path1909" />
   </g>
   <g
      inkscape:groupmode="layer"
