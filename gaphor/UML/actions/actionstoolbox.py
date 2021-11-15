@@ -1,4 +1,5 @@
 """The definition for the actions section of the toolbox."""
+from functools import partial
 
 from gaphas.item import SE
 
@@ -10,10 +11,9 @@ from gaphor.UML import diagramitems
 from gaphor.UML.modelfactory import owner_package
 
 
-def activity_config(new_item):
+def activity_config(new_item, name=None):
     subject = new_item.subject
-    translated_new = gettext("New")
-    subject.name = f"{translated_new} {type(subject).__name__}"
+    subject.name = gettext("New {name}").format(name=name or type(subject).__name__)
     if subject.activity:
         return
 
@@ -59,7 +59,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.ActionItem,
                 UML.Action,
-                config_func=activity_config,
+                config_func=partial(activity_config, name=gettext("Action")),
             ),
             handle_index=SE,
         ),
@@ -71,7 +71,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.InitialNodeItem,
                 UML.InitialNode,
-                config_func=activity_config,
+                config_func=partial(activity_config, name=gettext("Initial node")),
             ),
             handle_index=SE,
         ),
@@ -83,7 +83,9 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.ActivityFinalNodeItem,
                 UML.ActivityFinalNode,
-                config_func=activity_config,
+                config_func=partial(
+                    activity_config, name=gettext("Activity final node")
+                ),
             ),
             handle_index=SE,
         ),
@@ -95,7 +97,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.FlowFinalNodeItem,
                 UML.FlowFinalNode,
-                config_func=activity_config,
+                config_func=partial(activity_config, name=gettext("Flow final node")),
             ),
             handle_index=SE,
         ),
@@ -107,7 +109,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.DecisionNodeItem,
                 UML.DecisionNode,
-                config_func=activity_config,
+                config_func=partial(activity_config, name=gettext("Decision node")),
             ),
             handle_index=SE,
         ),
@@ -119,7 +121,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.ForkNodeItem,
                 UML.JoinNode,
-                config_func=activity_config,
+                config_func=partial(activity_config, name=gettext("Fork/join node")),
             ),
             handle_index=1,
         ),
@@ -131,7 +133,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.ObjectNodeItem,
                 UML.ObjectNode,
-                config_func=activity_config,
+                config_func=partial(activity_config, name=gettext("Object node")),
             ),
             handle_index=SE,
         ),
@@ -162,7 +164,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.SendSignalActionItem,
                 UML.SendSignalAction,
-                config_func=activity_config,
+                config_func=partial(activity_config, name=gettext("Send signal")),
             ),
             handle_index=SE,
         ),
@@ -174,7 +176,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.AcceptEventActionItem,
                 UML.AcceptEventAction,
-                config_func=activity_config,
+                config_func=partial(activity_config, name=gettext("Accept event")),
             ),
             handle_index=SE,
         ),
