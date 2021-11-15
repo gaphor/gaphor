@@ -1,4 +1,5 @@
 """The action definition for the C4 Model toolbox."""
+from functools import partial
 
 from gaphas.item import SE
 
@@ -60,7 +61,7 @@ c4 = ToolSection(
             new_item_factory(
                 diagramitems.C4PersonItem,
                 c4model.C4Person,
-                config_func=namespace_config,
+                config_func=partial(namespace_config, name=gettext("Person")),
             ),
             handle_index=SE,
         ),
