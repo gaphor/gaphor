@@ -38,7 +38,7 @@ def container_database_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
     subject.type = "Container"
-    subject.technology = "Database"
+    subject.technology = gettext("Database")
     subject.name = gettext("New Database")
 
 
