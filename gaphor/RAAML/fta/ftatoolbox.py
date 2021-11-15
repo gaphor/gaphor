@@ -1,5 +1,7 @@
 """The definition for the FTA section of the RAAML toolbox."""
 
+from functools import partial
+
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
 from gaphor.diagram.diagramtools import new_item_factory
 from gaphor.i18n import gettext
@@ -22,7 +24,9 @@ fta = ToolSection(
             "gaphor-and-symbolic",
             "a",
             new_item_factory(
-                diagramitems.ANDItem, raaml.AND, config_func=namespace_config
+                diagramitems.ANDItem,
+                raaml.AND,
+                config_func=partial(namespace_config, name=gettext("AND")),
             ),
         ),
         ToolDef(
@@ -31,7 +35,9 @@ fta = ToolSection(
             "gaphor-or-symbolic",
             "o",
             new_item_factory(
-                diagramitems.ORItem, raaml.OR, config_func=namespace_config
+                diagramitems.ORItem,
+                raaml.OR,
+                config_func=partial(namespace_config, name=gettext("OR")),
             ),
         ),
         ToolDef(
@@ -40,7 +46,9 @@ fta = ToolSection(
             "gaphor-not-symbolic",
             "n",
             new_item_factory(
-                diagramitems.NOTItem, raaml.NOT, config_func=namespace_config
+                diagramitems.NOTItem,
+                raaml.NOT,
+                config_func=partial(namespace_config, name=gettext("NOT")),
             ),
         ),
         ToolDef(
@@ -49,7 +57,9 @@ fta = ToolSection(
             "gaphor-seq-symbolic",
             "<Shift>S",
             new_item_factory(
-                diagramitems.SEQItem, raaml.SEQ, config_func=namespace_config
+                diagramitems.SEQItem,
+                raaml.SEQ,
+                config_func=partial(namespace_config, name=gettext("SEQ")),
             ),
         ),
         ToolDef(
@@ -58,7 +68,9 @@ fta = ToolSection(
             "gaphor-xor-symbolic",
             "x",
             new_item_factory(
-                diagramitems.XORItem, raaml.XOR, config_func=namespace_config
+                diagramitems.XORItem,
+                raaml.XOR,
+                config_func=partial(namespace_config, name=gettext("XOR")),
             ),
         ),
         ToolDef(
@@ -69,7 +81,9 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.MajorityVoteItem,
                 raaml.MAJORITY_VOTE,
-                config_func=namespace_config,
+                config_func=partial(
+                    namespace_config, name=gettext("Majority Vote Gate")
+                ),
             ),
         ),
         ToolDef(
@@ -78,7 +92,9 @@ fta = ToolSection(
             "gaphor-inhibit-symbolic",
             "i",
             new_item_factory(
-                diagramitems.InhibitItem, raaml.INHIBIT, config_func=namespace_config
+                diagramitems.InhibitItem,
+                raaml.INHIBIT,
+                config_func=partial(namespace_config, name=gettext("Inhibit Gate")),
             ),
         ),
         ToolDef(
@@ -89,7 +105,7 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.TransferInItem,
                 raaml.TransferIn,
-                config_func=namespace_config,
+                config_func=partial(namespace_config, name=gettext("Transfer In")),
             ),
         ),
         ToolDef(
@@ -100,7 +116,7 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.TransferOutItem,
                 raaml.TransferOut,
-                config_func=namespace_config,
+                config_func=partial(namespace_config, name=gettext("Transfer Out")),
             ),
         ),
         ToolDef(
@@ -111,7 +127,7 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.BasicEventItem,
                 raaml.BasicEvent,
-                config_func=namespace_config,
+                config_func=partial(namespace_config, name=gettext("Basic Event")),
             ),
         ),
         ToolDef(
@@ -122,7 +138,9 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.ConditionalEventItem,
                 raaml.ConditionalEvent,
-                config_func=namespace_config,
+                config_func=partial(
+                    namespace_config, name=gettext("Conditional Event")
+                ),
             ),
         ),
         ToolDef(
@@ -133,7 +151,9 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.UndevelopedEventItem,
                 raaml.Undeveloped,
-                config_func=namespace_config,
+                config_func=partial(
+                    namespace_config, name=gettext("Undeveloped Event")
+                ),
             ),
         ),
         ToolDef(
@@ -144,7 +164,7 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.DormantEventItem,
                 raaml.DormantEvent,
-                config_func=namespace_config,
+                config_func=partial(namespace_config, name=gettext("Dormant Event")),
             ),
         ),
         ToolDef(
@@ -155,7 +175,7 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.HouseEventItem,
                 raaml.HouseEvent,
-                config_func=namespace_config,
+                config_func=partial(namespace_config, name=gettext("House Event")),
             ),
         ),
         ToolDef(
@@ -166,7 +186,7 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.ZeroEventItem,
                 raaml.ZeroEvent,
-                config_func=namespace_config,
+                config_func=partial(namespace_config, name=gettext("Zero Event")),
             ),
         ),
         ToolDef(
@@ -177,7 +197,7 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.TopEventItem,
                 raaml.TopEvent,
-                config_func=namespace_config,
+                config_func=partial(namespace_config, name=gettext("Top Event")),
             ),
         ),
         ToolDef(
@@ -188,7 +208,9 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.IntermediateEventItem,
                 raaml.IntermediateEvent,
-                config_func=namespace_config,
+                config_func=partial(
+                    namespace_config, name=gettext("Intermediate Event")
+                ),
             ),
         ),
     ),

@@ -26,7 +26,7 @@ def default_namespace(new_item):
 def namespace_config(new_item, name=None):
     default_namespace(new_item)
     new_item.subject.name = gettext("New {name}").format(
-        name={name or type(new_item.subject).__name__}
+        name=name or type(new_item.subject).__name__
     )
 
 
