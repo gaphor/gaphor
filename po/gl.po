@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-10-11 22:10+0200\n"
+"POT-Creation-Date: 2021-11-15 21:44+0100\n"
 "PO-Revision-Date: 2021-09-12 13:20+0000\n"
 "Last-Translator: Fran Diéguez <fran.dieguez@mabishu.com>\n"
 "Language: gl\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:51
+#: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:54
 msgid "C4 Model"
 msgstr ""
 
@@ -27,49 +27,53 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: gaphor/C4Model/propertypages.glade:86 gaphor/C4Model/propertypages.ui:51
+#: gaphor/C4Model/propertypages.glade:90 gaphor/C4Model/propertypages.ui:55
 msgid "Technology"
 msgstr "Tecnoloxía"
 
-#: gaphor/C4Model/toolbox.py:25
+#: gaphor/C4Model/toolbox.py:28
 msgid "New Software System"
 msgstr ""
 
-#: gaphor/C4Model/toolbox.py:32
+#: gaphor/C4Model/toolbox.py:35
 #, fuzzy
 msgid "New Container"
 msgstr "Contenedor"
 
-#: gaphor/C4Model/toolbox.py:40
+#: gaphor/C4Model/toolbox.py:42
+msgid "Database"
+msgstr ""
+
+#: gaphor/C4Model/toolbox.py:43
 msgid "New Database"
 msgstr ""
 
-#: gaphor/C4Model/toolbox.py:47
+#: gaphor/C4Model/toolbox.py:50
 #, fuzzy
 msgid "New Component"
 msgstr "Compoñente"
 
-#: gaphor/C4Model/toolbox.py:55
+#: gaphor/C4Model/toolbox.py:58 gaphor/C4Model/toolbox.py:64
 msgid "Person"
 msgstr "Persona"
 
-#: gaphor/C4Model/toolbox.py:66
+#: gaphor/C4Model/toolbox.py:70
 msgid "Software System"
 msgstr ""
 
-#: gaphor/C4Model/toolbox.py:77
+#: gaphor/C4Model/toolbox.py:82
 msgid "Container"
 msgstr "Contenedor"
 
-#: gaphor/C4Model/toolbox.py:88
+#: gaphor/C4Model/toolbox.py:94
 msgid "Container: Database"
 msgstr ""
 
-#: gaphor/C4Model/toolbox.py:99 gaphor/UML/components/componentstoolbox.py:16
+#: gaphor/C4Model/toolbox.py:106 gaphor/UML/components/componentstoolbox.py:16
 msgid "Component"
 msgstr "Compoñente"
 
-#: gaphor/C4Model/toolbox.py:110 gaphor/RAAML/fta/ftatoolbox.py:14
+#: gaphor/C4Model/toolbox.py:118 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:116
 #: gaphor/UML/classes/dependencypropertypages.py:16
 msgid "Dependency"
@@ -79,137 +83,126 @@ msgstr "Dependencia"
 msgid "RAAML"
 msgstr "RAAML"
 
-#: gaphor/RAAML/fta/andgate.py:37
-msgid "AND"
-msgstr ""
-
-#: gaphor/RAAML/fta/basicevent.py:36
-msgid "BasicEvent"
-msgstr ""
-
-#: gaphor/RAAML/fta/conditionalevent.py:33
-msgid "ConditionalEvent"
-msgstr ""
-
-#: gaphor/RAAML/fta/dormantevent.py:35
-msgid "DormantEvent"
-msgstr ""
-
-#: gaphor/RAAML/fta/ftatoolbox.py:10
-msgid "Fault Tree Analysis"
-msgstr ""
-
-#: gaphor/RAAML/fta/ftatoolbox.py:21
+#: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:23
 msgid "AND Gate"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:30
-msgid "OR Gate"
-msgstr ""
-
-#: gaphor/RAAML/fta/ftatoolbox.py:39
-msgid "NOT Gate"
-msgstr ""
-
-#: gaphor/RAAML/fta/ftatoolbox.py:48
-msgid "Sequence Enforcing (SEQ) Gate"
-msgstr ""
-
-#: gaphor/RAAML/fta/ftatoolbox.py:57
-msgid "Exclusive OR Gate"
-msgstr ""
-
-#: gaphor/RAAML/fta/ftatoolbox.py:66
-msgid "Majority Vote Gate"
-msgstr ""
-
-#: gaphor/RAAML/fta/ftatoolbox.py:77
-msgid "Inhibit Gate"
-msgstr ""
-
-#: gaphor/RAAML/fta/ftatoolbox.py:86 gaphor/RAAML/fta/transferin.py:35
-msgid "Transfer In"
-msgstr ""
-
-#: gaphor/RAAML/fta/ftatoolbox.py:97 gaphor/RAAML/fta/transferout.py:36
-msgid "Transfer Out"
-msgstr ""
-
-#: gaphor/RAAML/fta/ftatoolbox.py:108
+#: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:124
+#: gaphor/RAAML/fta/ftatoolbox.py:130
 msgid "Basic Event"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:119
+#: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:135
+#: gaphor/RAAML/fta/ftatoolbox.py:142
 msgid "Conditional Event"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:130
-msgid "Undeveloped Event"
-msgstr ""
-
-#: gaphor/RAAML/fta/ftatoolbox.py:141
+#: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:161
+#: gaphor/RAAML/fta/ftatoolbox.py:167
 msgid "Dormant Event"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:152
-msgid "House Event"
+#: gaphor/RAAML/fta/ftatoolbox.py:12
+msgid "Fault Tree Analysis"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:163
-msgid "Zero Event"
+#: gaphor/RAAML/fta/ftatoolbox.py:29
+msgid "AND"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:174 gaphor/RAAML/fta/topevent.py:32
-msgid "Top Event"
+#: gaphor/RAAML/fta/ftatoolbox.py:34 gaphor/RAAML/fta/orgate.py:37
+msgid "OR Gate"
 msgstr ""
 
-#: gaphor/RAAML/fta/ftatoolbox.py:185 gaphor/RAAML/fta/intermediateevent.py:33
-msgid "Intermediate Event"
-msgstr ""
-
-#: gaphor/RAAML/fta/houseevent.py:35
-msgid "HouseEvent"
-msgstr ""
-
-#: gaphor/RAAML/fta/inhibitgate.py:35
-msgid "INHIBIT"
-msgstr ""
-
-#: gaphor/RAAML/fta/majorityvotegate.py:40
-msgid "MAJORITY_VOTE"
-msgstr ""
-
-#: gaphor/RAAML/fta/notgate.py:35
-msgid "NOT"
-msgstr ""
-
-#: gaphor/RAAML/fta/orgate.py:37
+#: gaphor/RAAML/fta/ftatoolbox.py:40
 msgid "OR"
 msgstr ""
 
-#: gaphor/RAAML/fta/seqgate.py:36
+#: gaphor/RAAML/fta/ftatoolbox.py:45 gaphor/RAAML/fta/notgate.py:35
+msgid "NOT Gate"
+msgstr ""
+
+#: gaphor/RAAML/fta/ftatoolbox.py:51
+msgid "NOT"
+msgstr ""
+
+#: gaphor/RAAML/fta/ftatoolbox.py:56
+msgid "Sequence Enforcing (SEQ) Gate"
+msgstr ""
+
+#: gaphor/RAAML/fta/ftatoolbox.py:62
 msgid "SEQ"
 msgstr ""
 
-#: gaphor/RAAML/fta/undevelopedevent.py:36
-msgid "UndevelopedEvent"
+#: gaphor/RAAML/fta/ftatoolbox.py:67
+msgid "Exclusive OR Gate"
 msgstr ""
 
-#: gaphor/RAAML/fta/xorgate.py:36
+#: gaphor/RAAML/fta/ftatoolbox.py:73
 msgid "XOR"
 msgstr ""
 
-#: gaphor/RAAML/fta/zeroevent.py:36
-msgid "ZeroEvent"
+#: gaphor/RAAML/fta/ftatoolbox.py:78 gaphor/RAAML/fta/ftatoolbox.py:85
+#: gaphor/RAAML/fta/majorityvotegate.py:41
+msgid "Majority Vote Gate"
 msgstr ""
 
-#: gaphor/RAAML/stpa/controlaction.py:33
-msgid "ControlAction"
-msgstr "ControlAction"
+#: gaphor/RAAML/fta/ftatoolbox.py:91 gaphor/RAAML/fta/ftatoolbox.py:97
+#: gaphor/RAAML/fta/inhibitgate.py:35
+msgid "Inhibit Gate"
+msgstr ""
+
+#: gaphor/RAAML/fta/ftatoolbox.py:102 gaphor/RAAML/fta/ftatoolbox.py:108
+#: gaphor/RAAML/fta/transferin.py:35
+msgid "Transfer In"
+msgstr ""
+
+#: gaphor/RAAML/fta/ftatoolbox.py:113 gaphor/RAAML/fta/ftatoolbox.py:119
+#: gaphor/RAAML/fta/transferout.py:36
+msgid "Transfer Out"
+msgstr ""
+
+#: gaphor/RAAML/fta/ftatoolbox.py:148 gaphor/RAAML/fta/ftatoolbox.py:155
+#: gaphor/RAAML/fta/undevelopedevent.py:36
+msgid "Undeveloped Event"
+msgstr ""
+
+#: gaphor/RAAML/fta/ftatoolbox.py:172 gaphor/RAAML/fta/ftatoolbox.py:178
+#: gaphor/RAAML/fta/houseevent.py:35
+msgid "House Event"
+msgstr ""
+
+#: gaphor/RAAML/fta/ftatoolbox.py:183 gaphor/RAAML/fta/ftatoolbox.py:189
+#: gaphor/RAAML/fta/zeroevent.py:36
+msgid "Zero Event"
+msgstr ""
+
+#: gaphor/RAAML/fta/ftatoolbox.py:194 gaphor/RAAML/fta/ftatoolbox.py:200
+#: gaphor/RAAML/fta/topevent.py:32
+msgid "Top Event"
+msgstr ""
+
+#: gaphor/RAAML/fta/ftatoolbox.py:205 gaphor/RAAML/fta/ftatoolbox.py:212
+#: gaphor/RAAML/fta/intermediateevent.py:33
+msgid "Intermediate Event"
+msgstr ""
+
+#: gaphor/RAAML/fta/seqgate.py:37
+msgid "Sequence Enforcing Gate"
+msgstr ""
+
+#: gaphor/RAAML/fta/xorgate.py:36
+msgid "XOR Gate"
+msgstr ""
+
+#: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:155
+msgid "Control Action"
+msgstr ""
 
 #: gaphor/RAAML/stpa/operationalsituation.py:34
-msgid "OperationalSituation"
-msgstr "OperationalSituation"
+#: gaphor/RAAML/stpa/stpatoolbox.py:123
+msgid "Operational Situation"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:18 gaphor/RAAML/stpa/stpatoolbox.py:43
 msgid "Loss"
@@ -219,10 +212,9 @@ msgstr "Perda"
 msgid "Hazard"
 msgstr "Risco"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:28
-#, fuzzy
-msgid "AbstractOperationalSituation"
-msgstr "OperationalSituation"
+#: gaphor/RAAML/stpa/stpatoolbox.py:28 gaphor/RAAML/stpa/stpatoolbox.py:112
+msgid "Abstract Operational Situation"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:123
@@ -249,15 +241,8 @@ msgstr ""
 msgid "Controlled Process"
 msgstr ""
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:112
-msgid "Abstract Operational Situation"
-msgstr ""
-
-#: gaphor/RAAML/stpa/stpatoolbox.py:123
-msgid "Operational Situation"
-msgstr ""
-
 #: gaphor/RAAML/stpa/stpatoolbox.py:134
+#: gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "Unsafe Control Action"
 msgstr ""
 
@@ -265,35 +250,27 @@ msgstr ""
 msgid "Relevant To"
 msgstr ""
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:155
-msgid "Control Action"
-msgstr ""
-
-#: gaphor/RAAML/stpa/unsafecontrolaction.py:33
-msgid "UnsafeControlAction"
-msgstr ""
-
 #: gaphor/SysML/modelinglanguage.py:15
 msgid "SysML"
 msgstr ""
 
-#: gaphor/SysML/propertypages.glade:38 gaphor/SysML/propertypages.ui:27
+#: gaphor/SysML/propertypages.glade:38 gaphor/SysML/propertypages.ui:25
 msgid "Show Parts"
 msgstr ""
 
-#: gaphor/SysML/propertypages.glade:74 gaphor/SysML/propertypages.ui:42
+#: gaphor/SysML/propertypages.glade:74 gaphor/SysML/propertypages.ui:40
 msgid "Show references"
 msgstr ""
 
-#: gaphor/SysML/propertypages.glade:108 gaphor/SysML/propertypages.ui:57
+#: gaphor/SysML/propertypages.glade:108 gaphor/SysML/propertypages.ui:55
 msgid "Parts and References"
 msgstr ""
 
-#: gaphor/SysML/propertypages.glade:125 gaphor/SysML/propertypages.ui:71
+#: gaphor/SysML/propertypages.glade:125 gaphor/SysML/propertypages.ui:69
 msgid "Aggregation"
 msgstr ""
 
-#: gaphor/SysML/propertypages.glade:142 gaphor/SysML/propertypages.ui:81
+#: gaphor/SysML/propertypages.glade:142 gaphor/SysML/propertypages.ui:79
 #: gaphor/UML/classes/propertypages.glade:139
 #: gaphor/UML/classes/propertypages.glade:282
 #: gaphor/UML/classes/propertypages.ui:82
@@ -301,7 +278,7 @@ msgstr ""
 msgid "No aggregation"
 msgstr ""
 
-#: gaphor/SysML/propertypages.glade:143 gaphor/SysML/propertypages.ui:82
+#: gaphor/SysML/propertypages.glade:143 gaphor/SysML/propertypages.ui:80
 #: gaphor/UML/classes/propertypages.glade:140
 #: gaphor/UML/classes/propertypages.glade:283
 #: gaphor/UML/classes/propertypages.ui:83
@@ -309,7 +286,7 @@ msgstr ""
 msgid "Shared"
 msgstr ""
 
-#: gaphor/SysML/propertypages.glade:144 gaphor/SysML/propertypages.ui:83
+#: gaphor/SysML/propertypages.glade:144 gaphor/SysML/propertypages.ui:81
 #: gaphor/UML/classes/propertypages.glade:141
 #: gaphor/UML/classes/propertypages.glade:284
 #: gaphor/UML/classes/propertypages.ui:84
@@ -317,11 +294,11 @@ msgstr ""
 msgid "Composite"
 msgstr ""
 
-#: gaphor/SysML/propertypages.glade:168 gaphor/SysML/propertypages.ui:99
+#: gaphor/SysML/propertypages.glade:168 gaphor/SysML/propertypages.ui:97
 msgid "Id"
 msgstr ""
 
-#: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:115
+#: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:113
 msgid "Text"
 msgstr ""
 
@@ -445,7 +422,7 @@ msgid "Satisfy"
 msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:36
-msgid "Derive Reqt"
+msgid "Derive Requirement"
 msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
@@ -469,10 +446,10 @@ msgstr ""
 msgid "UML"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:15
+#: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:15
 #: gaphor/UML/states/statestoolbox.py:25 gaphor/diagram/diagramtoolbox.py:28
-msgid "New"
+msgid "New {name}"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:34
@@ -492,47 +469,85 @@ msgid "Actions"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:56
+#: gaphor/UML/actions/actionstoolbox.py:62
 msgid "Action"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:68
+#: gaphor/UML/actions/actionstoolbox.py:74
 msgid "Initial node"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:80
+#: gaphor/UML/actions/actionstoolbox.py:87
 msgid "Activity final node"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:92
+#: gaphor/UML/actions/actionstoolbox.py:94
+#: gaphor/UML/actions/actionstoolbox.py:100
 msgid "Flow final node"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:104
+#: gaphor/UML/actions/actionstoolbox.py:106
 msgid "Decision/merge node"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:116
+#: gaphor/UML/actions/actionstoolbox.py:112
+msgid "Decision node"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:118
+#: gaphor/UML/actions/actionstoolbox.py:124
 msgid "Fork/join node"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:128
+#: gaphor/UML/actions/actionstoolbox.py:130
+#: gaphor/UML/actions/actionstoolbox.py:136
 msgid "Object node"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:140
+#: gaphor/UML/actions/actionstoolbox.py:142
 msgid "Swimlane"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:152
+#: gaphor/UML/actions/actionstoolbox.py:154
 msgid "Control/object flow"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:159
+#: gaphor/UML/actions/actionstoolbox.py:161
 msgid "Send signal action"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:171
+#: gaphor/UML/actions/actionstoolbox.py:167
+msgid "Send signal"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:173
 msgid "Accept event action"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:179
+msgid "Accept event"
+msgstr ""
+
+#: gaphor/UML/actions/objectnode.py:14
+#: gaphor/UML/actions/propertypages.glade:171
+#: gaphor/UML/actions/propertypages.ui:91
+msgid "unordered"
+msgstr ""
+
+#: gaphor/UML/actions/objectnode.py:15
+#: gaphor/UML/actions/propertypages.glade:172
+#: gaphor/UML/actions/propertypages.ui:90
+msgid "ordered"
+msgstr ""
+
+#: gaphor/UML/actions/objectnode.py:16
+msgid "LIFO"
+msgstr ""
+
+#: gaphor/UML/actions/objectnode.py:17
+msgid "FIFO"
 msgstr ""
 
 #: gaphor/UML/actions/partitionpage.py:58
@@ -567,24 +582,14 @@ msgstr ""
 msgid "Show Ordering"
 msgstr ""
 
-#: gaphor/UML/actions/propertypages.glade:171
-#: gaphor/UML/actions/propertypages.ui:91
-msgid "unordered"
-msgstr ""
-
-#: gaphor/UML/actions/propertypages.glade:172
-#: gaphor/UML/actions/propertypages.ui:90
-msgid "ordered"
-msgstr ""
-
 #: gaphor/UML/actions/propertypages.glade:173
 #: gaphor/UML/actions/propertypages.ui:92
-msgid "LIFO"
+msgid "Last In First Out (LIFO)"
 msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:174
 #: gaphor/UML/actions/propertypages.ui:93
-msgid "FIFO"
+msgid "First In First Out (FIFO)"
 msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:199
@@ -700,6 +705,8 @@ msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:60
 #: gaphor/UML/classes/propertypages.ui:36
+#: gaphor/UML/components/propertypages.glade:142
+#: gaphor/UML/components/propertypages.ui:73
 msgid "Invert direction"
 msgstr ""
 
@@ -782,12 +789,12 @@ msgid ""
 "- + attr: int\n"
 "- # /attr: int # a note\n"
 "\n"
-"Press ENTER to edit item, BS/DEL to remove item.\n"
+"Press Enter to edit item, Backspace/Delete to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:472
-#: gaphor/UML/classes/propertypages.glade:819
+#: gaphor/UML/classes/propertypages.glade:820
 #: gaphor/UML/classes/propertypages.ui:311
 #: gaphor/UML/classes/propertypages.ui:516
 msgid "S"
@@ -813,26 +820,26 @@ msgstr ""
 msgid "Show Operations"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:775
+#: gaphor/UML/classes/propertypages.glade:776
 msgid ""
-"Add and edit class operations according to UML syntax. Operation syntax "
-"examples\n"
+"Add and edit class operations according to UML syntax.\n"
+"Operation syntax examples\n"
 "- call()\n"
 "- + call(a: int, b: str) # a note\n"
-"- # call(a: int: b: str): bool\n"
+"- # call(a: int, b: str): bool\n"
 "\n"
-"Press ENTER to edit item, BS/DEL to remove item.\n"
+"Press Enter to edit item, Backspace/Delete to remove item.\n"
 "Use -/= to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:788
-#: gaphor/UML/classes/propertypages.glade:848
+#: gaphor/UML/classes/propertypages.glade:789
+#: gaphor/UML/classes/propertypages.glade:849
 #: gaphor/UML/classes/propertypages.ui:485
 #: gaphor/UML/classes/propertypages.ui:535
 msgid "Operations"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:806
+#: gaphor/UML/classes/propertypages.glade:807
 #: gaphor/UML/classes/propertypages.ui:503
 msgid "A"
 msgstr ""
@@ -886,28 +893,38 @@ msgstr ""
 msgid "Indirectly Instantiated"
 msgstr ""
 
+#: gaphor/UML/components/propertypages.glade:75
+#: gaphor/UML/components/propertypages.ui:43
+msgid "Information Flow"
+msgstr ""
+
+#: gaphor/UML/components/propertypages.glade:110
+#: gaphor/UML/components/propertypages.ui:59
+msgid "Information Item (Class):"
+msgstr ""
+
 #: gaphor/UML/interactions/interactionsconnect.py:76
 msgid "call()"
 msgstr ""
 
-#: gaphor/UML/interactions/interactionstoolbox.py:34
-#: gaphor/UML/interactions/interactionstoolbox.py:45
+#: gaphor/UML/interactions/interactionstoolbox.py:33
+#: gaphor/UML/interactions/interactionstoolbox.py:44
 msgid "Interaction"
 msgstr ""
 
-#: gaphor/UML/interactions/interactionstoolbox.py:41
+#: gaphor/UML/interactions/interactionstoolbox.py:40
 msgid "Interactions"
 msgstr ""
 
-#: gaphor/UML/interactions/interactionstoolbox.py:57
+#: gaphor/UML/interactions/interactionstoolbox.py:56
 msgid "Lifeline"
 msgstr ""
 
-#: gaphor/UML/interactions/interactionstoolbox.py:69
+#: gaphor/UML/interactions/interactionstoolbox.py:68
 msgid "Execution Specification"
 msgstr ""
 
-#: gaphor/UML/interactions/interactionstoolbox.py:77
+#: gaphor/UML/interactions/interactionstoolbox.py:76
 msgid "Message"
 msgstr ""
 
@@ -946,7 +963,7 @@ msgstr ""
 
 #: gaphor/UML/profiles/propertypages.glade:50
 #: gaphor/UML/profiles/propertypages.ui:36
-msgid "NamedElement"
+msgid "Named Element"
 msgstr ""
 
 #: gaphor/UML/profiles/propertypages.glade:82
@@ -979,35 +996,35 @@ msgstr ""
 msgid "Activities"
 msgstr ""
 
-#: gaphor/UML/states/statestoolbox.py:45
-msgid "StateMachine"
+#: gaphor/UML/states/statestoolbox.py:44
+msgid "State Machine"
 msgstr ""
 
-#: gaphor/UML/states/statestoolbox.py:52
-msgid "DefaultRegion"
+#: gaphor/UML/states/statestoolbox.py:51
+msgid "Default Region"
 msgstr ""
 
-#: gaphor/UML/states/statestoolbox.py:59
+#: gaphor/UML/states/statestoolbox.py:58
 msgid "States"
 msgstr ""
 
-#: gaphor/UML/states/statestoolbox.py:63
+#: gaphor/UML/states/statestoolbox.py:62
 msgid "State"
 msgstr ""
 
-#: gaphor/UML/states/statestoolbox.py:73
+#: gaphor/UML/states/statestoolbox.py:72
 msgid "Initial Pseudostate"
 msgstr ""
 
-#: gaphor/UML/states/statestoolbox.py:85
+#: gaphor/UML/states/statestoolbox.py:84
 msgid "Final State"
 msgstr ""
 
-#: gaphor/UML/states/statestoolbox.py:97
+#: gaphor/UML/states/statestoolbox.py:96
 msgid "History Pseudostate"
 msgstr ""
 
-#: gaphor/UML/states/statestoolbox.py:109
+#: gaphor/UML/states/statestoolbox.py:108
 msgid "Transition"
 msgstr ""
 
@@ -1039,40 +1056,44 @@ msgstr ""
 msgid "Extend"
 msgstr ""
 
-#: gaphor/diagram/diagramtoolbox.py:56
+#: gaphor/diagram/diagramtoolbox.py:57
 msgid "General"
 msgstr ""
 
-#: gaphor/diagram/diagramtoolbox.py:60
+#: gaphor/diagram/diagramtoolbox.py:61
 msgid "Pointer"
 msgstr ""
 
-#: gaphor/diagram/diagramtoolbox.py:67
+#: gaphor/diagram/diagramtoolbox.py:68
 msgid "Line"
 msgstr ""
 
-#: gaphor/diagram/diagramtoolbox.py:74
+#: gaphor/diagram/diagramtoolbox.py:75
 msgid "Box"
 msgstr ""
 
-#: gaphor/diagram/diagramtoolbox.py:82
+#: gaphor/diagram/diagramtoolbox.py:83
 msgid "Ellipse"
 msgstr ""
 
-#: gaphor/diagram/diagramtoolbox.py:90 gaphor/diagram/propertypages.glade:28
+#: gaphor/diagram/diagramtoolbox.py:91 gaphor/diagram/propertypages.glade:28
 #: gaphor/diagram/propertypages.ui:21
 msgid "Comment"
 msgstr ""
 
-#: gaphor/diagram/diagramtoolbox.py:98
+#: gaphor/diagram/diagramtoolbox.py:99
 msgid "Comment line"
 msgstr ""
 
-#: gaphor/diagram/propertypages.glade:86
+#: gaphor/diagram/presentation.py:49
+msgid "(from {namespace})"
+msgstr ""
+
+#: gaphor/diagram/propertypages.glade:90
 msgid "Show Enumeration Literals"
 msgstr ""
 
-#: gaphor/diagram/propertypages.glade:130
+#: gaphor/diagram/propertypages.glade:134
 msgid ""
 "Add and edit enumeration literals according to UML syntax.\n"
 "Enumeration literal syntax examples\n"
@@ -1082,25 +1103,25 @@ msgid ""
 "Use -/= to move items up or down."
 msgstr ""
 
-#: gaphor/diagram/propertypages.glade:144
-#: gaphor/diagram/propertypages.glade:178
+#: gaphor/diagram/propertypages.glade:148
+#: gaphor/diagram/propertypages.glade:182
 msgid "Enumeration Literals"
 msgstr ""
 
-#: gaphor/diagram/propertypages.glade:200 gaphor/diagram/propertypages.ui:49
+#: gaphor/diagram/propertypages.glade:204 gaphor/diagram/propertypages.ui:53
 msgid "Rectilinear"
 msgstr ""
 
-#: gaphor/diagram/propertypages.glade:215 gaphor/diagram/propertypages.ui:55
+#: gaphor/diagram/propertypages.glade:219 gaphor/diagram/propertypages.ui:59
 msgid "Flip orientation"
 msgstr ""
 
-#: gaphor/diagram/propertypages.glade:234 gaphor/diagram/propertypages.ui:63
+#: gaphor/diagram/propertypages.glade:238 gaphor/diagram/propertypages.ui:67
 msgid "Style"
 msgstr ""
 
-#: gaphor/diagram/propertypages.glade:270 gaphor/diagram/propertypages.ui:75
-msgid "Note / Remark"
+#: gaphor/diagram/propertypages.glade:278 gaphor/diagram/propertypages.ui:79
+msgid "Note or Remark"
 msgstr ""
 
 #: gaphor/plugins/console/console.py:19
@@ -1123,69 +1144,77 @@ msgid "All {ext} Files"
 msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:100
-msgid "Export to SVG"
+msgid "Export as SVG"
 msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:101
 #: gaphor/plugins/diagramexport/__init__.py:106
-msgid "Export diagram to SVG"
+msgid "Export diagram as SVG"
 msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:113
-msgid "Export to PNG"
+msgid "Export as PNG"
 msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:114
 #: gaphor/plugins/diagramexport/__init__.py:119
-msgid "Export diagram to PNG"
+msgid "Export diagram as PNG"
 msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:126
-msgid "Export to PDF"
+msgid "Export as PDF"
 msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:127
 #: gaphor/plugins/diagramexport/__init__.py:132
-msgid "Export diagram to PDF"
+msgid "Export diagram as PDF"
 msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:24
-msgid "Export to XMI"
+msgid "Export as XMI"
 msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:25
-msgid "Export model to XMI (XML Model Interchange) format"
+msgid "Export model as XMI (XML Model Interchange) format"
 msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:31
-msgid "Export model to XMI file"
+msgid "Export model as XMI file"
 msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:34
 msgid "All XMI Files"
 msgstr ""
 
-#: gaphor/services/helpservice/about.ui:7 gaphor/ui/mainwindow.py:59
+#: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
 msgstr ""
 
-#: gaphor/services/helpservice/about.ui:9
+#: gaphor/services/helpservice/about.ui:10
 msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
 msgstr ""
 
-#: gaphor/services/helpservice/about.ui:10
+#: gaphor/services/helpservice/about.ui:11
 msgid "Gaphor is the simple modeling tool written in Python"
 msgstr ""
 
-#: gaphor/services/helpservice/about.ui:12
+#: gaphor/services/helpservice/about.ui:13
 msgid "Fork me on GitHub"
 msgstr ""
 
-#: gaphor/services/helpservice/about.ui:15
+#: gaphor/services/helpservice/about.ui:25
 msgid ""
-"This software is published under the terms of the\n"
-"Apache Software License, version 2.0.\n"
-"See the LICENSE.txt file for details."
+"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
+"you may not use this application except in compliance with the\n"
+"License. You may obtain a copy of the License at\n"
+"\n"
+"http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Unless required by applicable law or agreed to in writing, software\n"
+"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
+"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
+"express or implied. See the License for the specific language\n"
+"governing permissions and limitations under the License.\n"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:18
@@ -1193,7 +1222,7 @@ msgid "Application"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:24
-#: gaphor/ui/elementeditor.glade:340 gaphor/ui/elementeditor.ui:205
+#: gaphor/ui/elementeditor.glade:341 gaphor/ui/elementeditor.ui:205
 msgid "Preferences"
 msgstr ""
 
@@ -1224,12 +1253,12 @@ msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:84
 #: gaphor/services/helpservice/shortcuts.ui:90
-#: gaphor/ui/elementeditor.glade:122 gaphor/ui/elementeditor.ui:74
+#: gaphor/ui/elementeditor.glade:123 gaphor/ui/elementeditor.ui:74
 msgid "Undo"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:98
-#: gaphor/ui/elementeditor.glade:148 gaphor/ui/elementeditor.ui:89
+#: gaphor/ui/elementeditor.glade:149 gaphor/ui/elementeditor.ui:89
 msgid "Redo"
 msgstr ""
 
@@ -1274,18 +1303,18 @@ msgid "Zoom"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:188
-#: gaphor/ui/elementeditor.glade:178 gaphor/ui/elementeditor.ui:105
+#: gaphor/ui/elementeditor.glade:179 gaphor/ui/elementeditor.ui:105
 msgid "Zoom In"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:196
-#: gaphor/ui/elementeditor.glade:220 gaphor/ui/elementeditor.ui:129
+#: gaphor/ui/elementeditor.glade:221 gaphor/ui/elementeditor.ui:129
 msgid "Zoom Out"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:204
-#: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.ui:117
-msgid "Zoom 100%"
+#: gaphor/ui/elementeditor.glade:200 gaphor/ui/elementeditor.ui:117
+msgid "Actual Size"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
@@ -1302,7 +1331,7 @@ msgid ""
 "instead?"
 msgstr ""
 
-#: gaphor/ui/diagrampage.py:126
+#: gaphor/ui/diagrampage.py:126 gaphor/ui/namespace.py:333
 msgid "<None>"
 msgstr ""
 
@@ -1312,15 +1341,15 @@ msgid ""
 "Properties, not {type}."
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:15 gaphor/ui/elementeditor.ui:10
+#: gaphor/ui/elementeditor.glade:16 gaphor/ui/elementeditor.ui:10
 msgid "No item selected"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:36 gaphor/ui/elementeditor.ui:22
+#: gaphor/ui/elementeditor.glade:37 gaphor/ui/elementeditor.ui:22
 msgid "Show Tips"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:80 gaphor/ui/elementeditor.ui:48
+#: gaphor/ui/elementeditor.glade:81 gaphor/ui/elementeditor.ui:48
 msgid ""
 "Add a model element from the tool box to the diagram. Here you will see "
 "it's properties appear.\n"
@@ -1338,30 +1367,30 @@ msgid ""
 "appear.\n"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:251
+#: gaphor/ui/elementeditor.glade:252
 msgid "Show/Hide Preferences"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:323 gaphor/ui/elementeditor.ui:170
+#: gaphor/ui/elementeditor.glade:324 gaphor/ui/elementeditor.ui:170
 msgid "Editors"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:360 gaphor/ui/elementeditor.ui:217
+#: gaphor/ui/elementeditor.glade:361 gaphor/ui/elementeditor.ui:217
 msgid "Reset tool automatically"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:393 gaphor/ui/elementeditor.ui:232
+#: gaphor/ui/elementeditor.glade:394 gaphor/ui/elementeditor.ui:232
 msgid "Style sheet"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:429 gaphor/ui/elementeditor.ui:252
+#: gaphor/ui/elementeditor.glade:433 gaphor/ui/elementeditor.ui:252
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:444 gaphor/ui/elementeditor.ui:194
+#: gaphor/ui/elementeditor.glade:448 gaphor/ui/elementeditor.ui:194
 msgid "Settings"
 msgstr ""
 
@@ -1408,7 +1437,7 @@ msgid ""
 msgstr ""
 
 #: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:252
-#: gaphor/ui/mainwindow.ui:27
+#: gaphor/ui/mainwindow.ui:27 gaphor/ui/namespace.py:312
 msgid "New model"
 msgstr ""
 
@@ -1455,15 +1484,15 @@ msgid "Save Gaphor Model As"
 msgstr ""
 
 #: gaphor/ui/filemanager.py:306
-msgid "Save changed to your model before closing?"
+msgid "Save changes before closing?"
 msgstr ""
 
 #: gaphor/ui/filemanager.py:307
-msgid "If you close without saving, your changes will be discarded."
+msgid "Closing will cause any unsaved changes to be discarded."
 msgstr ""
 
 #: gaphor/ui/filemanager.py:312
-msgid "Close _without saving"
+msgid "Close _without saving changes"
 msgstr ""
 
 #: gaphor/ui/mainwindow.glade:105
@@ -1474,7 +1503,7 @@ msgstr ""
 msgid "Create New diagram"
 msgstr ""
 
-#: gaphor/ui/mainwindow.glade:212
+#: gaphor/ui/mainwindow.glade:207
 msgid "Open Application Menu"
 msgstr ""
 
@@ -1534,6 +1563,26 @@ msgstr ""
 msgid "Show in \"{diagram}\""
 msgstr ""
 
+#: gaphor/ui/namespace.py:294
+msgid "{name} diagram"
+msgstr ""
+
+#: gaphor/ui/namespace.py:296
+msgid "New diagram"
+msgstr ""
+
+#: gaphor/ui/namespace.py:310
+msgid "{name} package"
+msgstr ""
+
+#: gaphor/ui/namespace.py:329
+msgid ""
+"Do you really want to delete diagram {name}?\n"
+"\n"
+"This will possibly delete diagram items\n"
+"that are not shown in other diagrams."
+msgstr ""
+
 #: gaphor/ui/namespacemodel.py:310
 msgid "A {} can't be part of a {}."
 msgstr ""
@@ -1550,5 +1599,127 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "New diagram"
+#~ msgstr ""
+
+#~ msgid "BasicEvent"
+#~ msgstr ""
+
+#~ msgid "ConditionalEvent"
+#~ msgstr ""
+
+#~ msgid "DormantEvent"
+#~ msgstr ""
+
+#~ msgid "HouseEvent"
+#~ msgstr ""
+
+#~ msgid "INHIBIT"
+#~ msgstr ""
+
+#~ msgid "MAJORITY_VOTE"
+#~ msgstr ""
+
+#~ msgid "UndevelopedEvent"
+#~ msgstr ""
+
+#~ msgid "ZeroEvent"
+#~ msgstr ""
+
+#~ msgid "ControlAction"
+#~ msgstr "ControlAction"
+
+#~ msgid "OperationalSituation"
+#~ msgstr "OperationalSituation"
+
+#~ msgid "AbstractOperationalSituation"
+#~ msgstr "OperationalSituation"
+
+#~ msgid "UnsafeControlAction"
+#~ msgstr ""
+
+#~ msgid "Derive Reqt"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Add and edit class attributes according to UML syntax.\n"
+#~ "Attribute syntax examples\n"
+#~ "- attr\n"
+#~ "- + attr: int\n"
+#~ "- # /attr: int # a note\n"
+#~ "\n"
+#~ "Press ENTER to edit item, BS/DEL to remove item.\n"
+#~ "Use -/= to move items up or down."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Add and edit class operations according"
+#~ " to UML syntax. Operation syntax "
+#~ "examples\n"
+#~ "- call()\n"
+#~ "- + call(a: int, b: str) # a note\n"
+#~ "- # call(a: int: b: str): bool\n"
+#~ "\n"
+#~ "Press ENTER to edit item, BS/DEL to remove item.\n"
+#~ "Use -/= to move items up or down."
+#~ msgstr ""
+
+#~ msgid "NamedElement"
+#~ msgstr ""
+
+#~ msgid "StateMachine"
+#~ msgstr ""
+
+#~ msgid "DefaultRegion"
+#~ msgstr ""
+
+#~ msgid "Note / Remark"
+#~ msgstr ""
+
+#~ msgid "Export to SVG"
+#~ msgstr ""
+
+#~ msgid "Export diagram to SVG"
+#~ msgstr ""
+
+#~ msgid "Export to PNG"
+#~ msgstr ""
+
+#~ msgid "Export diagram to PNG"
+#~ msgstr ""
+
+#~ msgid "Export to PDF"
+#~ msgstr ""
+
+#~ msgid "Export diagram to PDF"
+#~ msgstr ""
+
+#~ msgid "Export to XMI"
+#~ msgstr ""
+
+#~ msgid "Export model to XMI (XML Model Interchange) format"
+#~ msgstr ""
+
+#~ msgid "Export model to XMI file"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This software is published under the terms of the\n"
+#~ "Apache Software License, version 2.0.\n"
+#~ "See the LICENSE.txt file for details."
+#~ msgstr ""
+
+#~ msgid "Zoom 100%"
+#~ msgstr ""
+
+#~ msgid "Save changed to your model before closing?"
+#~ msgstr ""
+
+#~ msgid "If you close without saving, your changes will be discarded."
+#~ msgstr ""
+
+#~ msgid "Close _without saving"
+#~ msgstr ""
+
+#~ msgid "New"
 #~ msgstr ""
 
