@@ -117,6 +117,7 @@ classes = ToolSection(
             "gaphor-dependency-symbolic",
             "<Shift>D",
             new_item_factory(diagramitems.DependencyItem),
+            handle_index=0,
         ),
         ToolDef(
             "toolbox-generalization",
