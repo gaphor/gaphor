@@ -224,7 +224,7 @@ class Namespace(UIComponent, ActionProvider):
             )
         else:
             # TODO: GTK4 - enable/disable actions based on view state
-            pass
+            ...
 
     def _on_view_destroyed(self, widget):
         self.close()
@@ -301,9 +301,9 @@ class Namespace(UIComponent, ActionProvider):
         diagram = self.element_factory.create(Diagram)
         if isinstance(element, UML.NamedElement):
             diagram.element = element
-            diagram.name = f"{element.name} diagram"
+            diagram.name = gettext("{name} diagram").format(name=element.name)
         else:
-            diagram.name = "New diagram"
+            diagram.name = gettext("New diagram")
         self.select_element(diagram)
         self.event_manager.handle(DiagramOpened(diagram))
         self.tree_view_rename_selected()
@@ -316,7 +316,11 @@ class Namespace(UIComponent, ActionProvider):
         package = self.element_factory.create(UML.Package)
         package.package = element
 
-        package.name = f"{element.name} package" if element else "New model"
+        package.name = (
+            gettext("{name} package").format(name=element.name)
+            if element
+            else gettext("New model")
+        )
         self.select_element(package)
         self.tree_view_rename_selected()
 
@@ -330,9 +334,11 @@ class Namespace(UIComponent, ActionProvider):
                 Gtk.DialogFlags.MODAL,
                 Gtk.MessageType.QUESTION,
                 Gtk.ButtonsType.YES_NO,
-                "Do you really want to delete diagram %s?\n\n"
-                "This will possibly delete diagram items\n"
-                "that are not shown in other diagrams." % (element.name or "<None>"),
+                gettext(
+                    "Do you really want to delete diagram {name}?\n\n"
+                    "This will possibly delete diagram items\n"
+                    "that are not shown in other diagrams."
+                ).format(name=element.name or gettext("<None>")),
             )
             if m.run() == Gtk.ResponseType.YES:
                 for i in reversed(list(element.get_all_items())):

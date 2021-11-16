@@ -1,4 +1,5 @@
 """The action definition for the C4 Model toolbox."""
+from functools import partial
 
 from gaphas.item import SE
 
@@ -38,7 +39,7 @@ def container_database_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
     subject.type = "Container"
-    subject.technology = "Database"
+    subject.technology = gettext("Database")
     subject.name = gettext("New Database")
 
 
@@ -60,7 +61,7 @@ c4 = ToolSection(
             new_item_factory(
                 diagramitems.C4PersonItem,
                 c4model.C4Person,
-                config_func=namespace_config,
+                config_func=partial(namespace_config, name=gettext("Person")),
             ),
             handle_index=SE,
         ),
