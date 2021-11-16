@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-11-15 21:44+0100\n"
-"PO-Revision-Date: 2021-10-16 23:58+0000\n"
+"PO-Revision-Date: 2021-11-16 13:43+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.9.1-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:54
@@ -40,9 +41,8 @@ msgid "New Container"
 msgstr "Új tároló"
 
 #: gaphor/C4Model/toolbox.py:42
-#, fuzzy
 msgid "Database"
-msgstr "Új adatbázis"
+msgstr "Adatbázis"
 
 #: gaphor/C4Model/toolbox.py:43
 msgid "New Database"
@@ -107,7 +107,7 @@ msgstr "Hibafaelemzés"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:29
 msgid "AND"
-msgstr ""
+msgstr "ÉS kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:34 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
@@ -115,7 +115,7 @@ msgstr "VAGY kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:40
 msgid "OR"
-msgstr ""
+msgstr "VAGY kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:45 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
@@ -123,25 +123,23 @@ msgstr "NEM kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:51
 msgid "NOT"
-msgstr ""
+msgstr "NEM kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:56
 msgid "Sequence Enforcing (SEQ) Gate"
 msgstr "Sorozat végrehajtó (SEQ) kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:62
-#, fuzzy
 msgid "SEQ"
-msgstr "használat"
+msgstr "Sorozat végrehajtó (SEQ) kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:67
 msgid "Exclusive OR Gate"
 msgstr "Kizáró VAGY kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:73
-#, fuzzy
 msgid "XOR"
-msgstr "Exportálás"
+msgstr "Kizáró VAGY kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:78 gaphor/RAAML/fta/ftatoolbox.py:85
 #: gaphor/RAAML/fta/majorityvotegate.py:41
@@ -451,7 +449,7 @@ msgstr "UML"
 #: gaphor/UML/interactions/interactionstoolbox.py:15
 #: gaphor/UML/states/statestoolbox.py:25 gaphor/diagram/diagramtoolbox.py:28
 msgid "New {name}"
-msgstr ""
+msgstr "Új {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:34
 msgid "Activity"
@@ -494,7 +492,6 @@ msgid "Decision/merge node"
 msgstr "Döntő/egyesítő csomópont"
 
 #: gaphor/UML/actions/actionstoolbox.py:112
-#, fuzzy
 msgid "Decision node"
 msgstr "Döntő/egyesítő csomópont"
 
@@ -521,7 +518,6 @@ msgid "Send signal action"
 msgstr "Jelküldési művelet"
 
 #: gaphor/UML/actions/actionstoolbox.py:167
-#, fuzzy
 msgid "Send signal"
 msgstr "Jelküldési művelet"
 
@@ -530,7 +526,6 @@ msgid "Accept event action"
 msgstr "Eseményművelet elfogadása"
 
 #: gaphor/UML/actions/actionstoolbox.py:179
-#, fuzzy
 msgid "Accept event"
 msgstr "Eseményművelet elfogadása"
 
@@ -548,11 +543,11 @@ msgstr "elrendelt"
 
 #: gaphor/UML/actions/objectnode.py:16
 msgid "LIFO"
-msgstr ""
+msgstr "Fordított érkezési sorrendben (Last In First Out - LIFO)"
 
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
-msgstr ""
+msgstr "Érkezési sorrendben (First In First Out - FIFO)"
 
 #: gaphor/UML/actions/partitionpage.py:58
 #: gaphor/UML/classes/propertypages.glade:683
@@ -945,12 +940,12 @@ msgstr "Közvetetten példányosítva"
 #: gaphor/UML/components/propertypages.glade:75
 #: gaphor/UML/components/propertypages.ui:43
 msgid "Information Flow"
-msgstr ""
+msgstr "Információfolyam"
 
 #: gaphor/UML/components/propertypages.glade:110
 #: gaphor/UML/components/propertypages.ui:59
 msgid "Information Item (Class):"
-msgstr ""
+msgstr "Információs elem (osztály):"
 
 #: gaphor/UML/interactions/interactionsconnect.py:76
 msgid "call()"
@@ -1136,7 +1131,7 @@ msgstr "Megjegyzési sor"
 
 #: gaphor/diagram/presentation.py:49
 msgid "(from {namespace})"
-msgstr ""
+msgstr "(forrás: {namespace})"
 
 #: gaphor/diagram/propertypages.glade:90
 msgid "Show Enumeration Literals"
@@ -1276,6 +1271,18 @@ msgid ""
 "express or implied. See the License for the specific language\n"
 "governing permissions and limitations under the License.\n"
 msgstr ""
+"Licenc az Apache Licenc 2.0-s verziója alatt (a „Licenc”);\n"
+"ezt az alkalmazást csak a Licencnek megfelelően használhatja.\n"
+"A Licenc másolatát a következő címen szerezheti be:\n"
+"\n"
+"http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Hacsak a vonatkozó jogszabályok nem írják elő, vagy írásos\n"
+"megállapodást nem írnak elő, a Licenc alapján terjesztett\n"
+"szoftvereket „AHOGY VAN” ALAPJÁN terjesztik, BÁRMILYEN, akár\n"
+"kifejezett, akár hallgatólagos GARANCIA VAGY FELTÉTEL NÉLKÜL.\n"
+"Tekintse meg a Licencben az adott nyelvi engedélyeket és\n"
+"korlátozásokat a Licenc alatt.\n"
 
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
@@ -1659,19 +1666,16 @@ msgid "Show in \"{diagram}\""
 msgstr "Megjelenítés a(z) „{diagram}”-ábrán"
 
 #: gaphor/ui/namespace.py:294
-#, fuzzy
 msgid "{name} diagram"
-msgstr "Új á_bra"
+msgstr "{name}-ábra"
 
 #: gaphor/ui/namespace.py:296
-#, fuzzy
 msgid "New diagram"
-msgstr "Új á_bra"
+msgstr "Új ábra"
 
 #: gaphor/ui/namespace.py:310
-#, fuzzy
 msgid "{name} package"
-msgstr "Új _csomag"
+msgstr "{name}-csomag"
 
 #: gaphor/ui/namespace.py:329
 msgid ""
@@ -1680,6 +1684,10 @@ msgid ""
 "This will possibly delete diagram items\n"
 "that are not shown in other diagrams."
 msgstr ""
+"Biztosan törölni szeretné a(z) {name}-ábrát?\n"
+"\n"
+"Ez esetleg törli azokat az ábraelemeket,\n"
+"amelyek más ábrákon nem szerepelnek."
 
 #: gaphor/ui/namespacemodel.py:310
 msgid "A {} can't be part of a {}."
@@ -1835,4 +1843,3 @@ msgstr "Nincsenek nemrégiben megnyitott modellek"
 
 #~ msgid "New"
 #~ msgstr "Új"
-
