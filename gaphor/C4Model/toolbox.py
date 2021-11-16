@@ -119,6 +119,7 @@ c4 = ToolSection(
             "gaphor-dependency-symbolic",
             "d",
             new_item_factory(uml_items.DependencyItem),
+            handle_index=0,
         ),
     ),
 )
