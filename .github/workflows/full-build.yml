@@ -8,7 +8,7 @@ on:
   release:
     types: [published, prereleased]
 env:
-  python_version: '3.9.9'
+  python_version: '3.10'
 
 jobs:
 

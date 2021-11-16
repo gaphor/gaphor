@@ -2,7 +2,7 @@ name: Test
 on:
   pull_request:
 env:
-  python_version: '3.9.9'
+  python_version: '3.10'
 
 jobs:
 
@@ -117,7 +117,7 @@ jobs:
       # Git revision of gvsbuild we use for to build GTK and the other dependencies
       gvsbuildref: 4b8029b3ae10ae926db8fe211f11f1ec160b975d
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuildupdate: 1
+      gvsbuildupdate: 2
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
