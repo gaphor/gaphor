@@ -44,13 +44,17 @@ class ObjectNodeItem(ElementPresentation, Named):
                 Text(
                     text=lambda: self.subject.upperBound
                     not in (None, "", DEFAULT_UPPER_BOUND)
-                    and f"{{ {gettext('upperBound')} = {self.subject.upperBound} }}"
+                    and "{{ {} = {} }}".format(
+                        gettext("upperBound"), self.subject.upperBound
+                    )
                     or "",
                 ),
                 Text(
                     text=lambda: self.show_ordering
                     and self.subject.ordering
-                    and f"{{ {gettext('ordering')} = {ORDERING_TEXT.get(self.subject.ordering)} }}"
+                    and "{{ {} = {} }}".format(
+                        gettext("ordering"), ORDERING_TEXT.get(self.subject.ordering)
+                    )
                     or "",
                 ),
             ),
