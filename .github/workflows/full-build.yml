@@ -98,8 +98,8 @@ jobs:
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
-      LDFLAGS: -L/usr/local/opt/python@3.9/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.9/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      LDFLAGS: -L/usr/local/opt/python@3.10/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
       - uses: actions/checkout@v2.4.0
         with:
@@ -181,7 +181,7 @@ jobs:
       # Git revision of gvsbuild we use for to build GTK and the other dependencies
       gvsbuildref: 4b8029b3ae10ae926db8fe211f11f1ec160b975d
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuildupdate: 1
+      gvsbuildupdate: 2
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
@@ -212,7 +212,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         working-directory: gvsbuild
         run: >
-          python .\build.py build -p=x64 --vs-ver=16 --python-ver=3.9 --msys-dir=C:\msys64
+          python .\build.py build -p=x64 --vs-ver=16 --python-ver=${{ env.python_version }} --msys-dir=C:\msys64
           --enable-gi --py-wheel --gtk3-ver=3.24 gobject-introspection gtk3 pycairo pygobject
           gtksourceview adwaita-icon-theme hicolor-icon-theme
       - name: Copy wheels to cached directory
