@@ -145,6 +145,10 @@ class DiagramPage:
                 DiagramPage.VIEW_DND_TARGETS,
                 Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
             )
+        else:
+            # TODO: GTK4 - use controllers DragSource and DropTarget
+            ...
+
         self.diagram_css = Gtk.CssProvider.new()
         view.get_style_context().add_provider(
             self.diagram_css, Gtk.STYLE_PROVIDER_PRIORITY_USER

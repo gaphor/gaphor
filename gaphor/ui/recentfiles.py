@@ -46,7 +46,7 @@ class RecentFilesMenu(Gio.Menu):
             )
         else:
             # TODO: GTK4 - Why is updating the recent files so slow?
-            pass
+            ...
 
     def _on_recent_manager_changed(self, recent_manager):
         self.remove_all()

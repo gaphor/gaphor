@@ -40,7 +40,7 @@ class CopyService(Service, ActionProvider):
             )
         else:
             # TODO: GTK4 - implement Gdk.Clipboard
-            pass
+            ...
 
     def shutdown(self):
         if Gtk.get_major_version() == 3:

@@ -224,7 +224,7 @@ class Namespace(UIComponent, ActionProvider):
             )
         else:
             # TODO: GTK4 - enable/disable actions based on view state
-            pass
+            ...
 
     def _on_view_destroyed(self, widget):
         self.close()
