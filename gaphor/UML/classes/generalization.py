@@ -14,6 +14,9 @@ class GeneralizationItem(LinePresentation):
     def __init__(self, diagram: Diagram, id: str = None):
         super().__init__(diagram, id, style={"dash-style": ()})
 
+        self._handles[0].pos = (30, 20)
+        self._handles[1].pos = (0, 0)
+
         self.shape_middle = Box(
             Text(
                 text=lambda: stereotypes_str(self.subject),

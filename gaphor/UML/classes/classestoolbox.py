@@ -124,6 +124,7 @@ classes = ToolSection(
             "gaphor-generalization-symbolic",
             "<Shift>G",
             new_item_factory(diagramitems.GeneralizationItem),
+            handle_index=0,
         ),
         ToolDef(
             "toolbox-interface-realization",
