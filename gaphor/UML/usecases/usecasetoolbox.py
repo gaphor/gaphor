@@ -48,6 +48,7 @@ use_cases = ToolSection(
             "gaphor-include-symbolic",
             "<Shift>U",
             new_item_factory(diagramitems.IncludeItem),
+            handle_index=0,
         ),
         ToolDef(
             "toolbox-extend",
@@ -55,6 +56,7 @@ use_cases = ToolSection(
             "gaphor-extend-symbolic",
             "<Shift>X",
             new_item_factory(diagramitems.ExtendItem),
+            handle_index=0,
         ),
     ),
 )
