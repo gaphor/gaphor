@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-15 21:44+0100\n"
+"POT-Creation-Date: 2021-11-16 20:13+0100\n"
 "PO-Revision-Date: 2021-11-16 13:43+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hu/>\n"
 "Language: hu\n"
+"Language-Team: Hungarian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9.1-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:54
@@ -548,6 +547,16 @@ msgstr "Fordított érkezési sorrendben (Last In First Out - LIFO)"
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
 msgstr "Érkezési sorrendben (First In First Out - FIFO)"
+
+#: gaphor/UML/actions/objectnode.py:48
+#, fuzzy
+msgid "upperBound"
+msgstr "Felső határérték"
+
+#: gaphor/UML/actions/objectnode.py:56
+#, fuzzy
+msgid "ordering"
+msgstr "Sorrend megjelenítése"
 
 #: gaphor/UML/actions/partitionpage.py:58
 #: gaphor/UML/classes/propertypages.glade:683
@@ -1400,11 +1409,11 @@ msgstr ""
 "A(z) „{filename}”-fájl már meg van nyitva. Ehelyett a megnyitott ablakra "
 "szeretne váltani?"
 
-#: gaphor/ui/diagrampage.py:126 gaphor/ui/namespace.py:333
+#: gaphor/ui/diagrampage.py:126 gaphor/ui/namespace.py:341
 msgid "<None>"
 msgstr "&lt;Nincs&gt;"
 
-#: gaphor/ui/diagrampage.py:341
+#: gaphor/ui/diagrampage.py:340
 msgid ""
 "Drag to diagram is (temporarily) limited to Classifiers, Packages, and "
 "Properties, not {type}."
@@ -1537,7 +1546,7 @@ msgstr ""
 "Kérjük, ellenőrizze, hogy helyesen beírta a helyet, és próbálja újra."
 
 #: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:252
-#: gaphor/ui/mainwindow.ui:27 gaphor/ui/namespace.py:312
+#: gaphor/ui/mainwindow.ui:27 gaphor/ui/namespace.py:322
 msgid "New model"
 msgstr "Új modell"
 
@@ -1665,19 +1674,19 @@ msgstr "_Törlés"
 msgid "Show in \"{diagram}\""
 msgstr "Megjelenítés a(z) „{diagram}”-ábrán"
 
-#: gaphor/ui/namespace.py:294
+#: gaphor/ui/namespace.py:304
 msgid "{name} diagram"
 msgstr "{name}-ábra"
 
-#: gaphor/ui/namespace.py:296
+#: gaphor/ui/namespace.py:306
 msgid "New diagram"
 msgstr "Új ábra"
 
-#: gaphor/ui/namespace.py:310
+#: gaphor/ui/namespace.py:320
 msgid "{name} package"
 msgstr "{name}-csomag"
 
-#: gaphor/ui/namespace.py:329
+#: gaphor/ui/namespace.py:337
 msgid ""
 "Do you really want to delete diagram {name}?\n"
 "\n"
@@ -1843,3 +1852,4 @@ msgstr "Nincsenek nemrégiben megnyitott modellek"
 
 #~ msgid "New"
 #~ msgstr "Új"
+

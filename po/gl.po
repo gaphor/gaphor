@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-15 21:44+0100\n"
+"POT-Creation-Date: 2021-11-16 20:13+0100\n"
 "PO-Revision-Date: 2021-09-12 13:20+0000\n"
 "Last-Translator: Fran Diéguez <fran.dieguez@mabishu.com>\n"
 "Language: gl\n"
@@ -548,6 +548,14 @@ msgstr ""
 
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
+msgstr ""
+
+#: gaphor/UML/actions/objectnode.py:48
+msgid "upperBound"
+msgstr ""
+
+#: gaphor/UML/actions/objectnode.py:56
+msgid "ordering"
 msgstr ""
 
 #: gaphor/UML/actions/partitionpage.py:58
@@ -1331,11 +1339,11 @@ msgid ""
 "instead?"
 msgstr ""
 
-#: gaphor/ui/diagrampage.py:126 gaphor/ui/namespace.py:333
+#: gaphor/ui/diagrampage.py:126 gaphor/ui/namespace.py:341
 msgid "<None>"
 msgstr ""
 
-#: gaphor/ui/diagrampage.py:341
+#: gaphor/ui/diagrampage.py:340
 msgid ""
 "Drag to diagram is (temporarily) limited to Classifiers, Packages, and "
 "Properties, not {type}."
@@ -1437,7 +1445,7 @@ msgid ""
 msgstr ""
 
 #: gaphor/ui/filemanager.py:56 gaphor/ui/mainwindow.py:252
-#: gaphor/ui/mainwindow.ui:27 gaphor/ui/namespace.py:312
+#: gaphor/ui/mainwindow.ui:27 gaphor/ui/namespace.py:322
 msgid "New model"
 msgstr ""
 
@@ -1563,19 +1571,19 @@ msgstr ""
 msgid "Show in \"{diagram}\""
 msgstr ""
 
-#: gaphor/ui/namespace.py:294
+#: gaphor/ui/namespace.py:304
 msgid "{name} diagram"
 msgstr ""
 
-#: gaphor/ui/namespace.py:296
+#: gaphor/ui/namespace.py:306
 msgid "New diagram"
 msgstr ""
 
-#: gaphor/ui/namespace.py:310
+#: gaphor/ui/namespace.py:320
 msgid "{name} package"
 msgstr ""
 
-#: gaphor/ui/namespace.py:329
+#: gaphor/ui/namespace.py:337
 msgid ""
 "Do you really want to delete diagram {name}?\n"
 "\n"
