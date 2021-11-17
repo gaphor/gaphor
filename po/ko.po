@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
-"POT-Creation-Date: 2021-11-16 20:13+0100\n"
+"POT-Creation-Date: 2021-11-16 22:05-0500\n"
 "PO-Revision-Date: 2021-08-31 14:20+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language: ko\n"
@@ -458,90 +458,81 @@ msgstr "견제"
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/actionstoolbox.py:16
+#: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:15
-#: gaphor/UML/states/statestoolbox.py:25 gaphor/diagram/diagramtoolbox.py:28
+#: gaphor/UML/states/statestoolbox.py:30 gaphor/diagram/diagramtoolbox.py:28
 msgid "New {name}"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:34
+#: gaphor/UML/actions/actionstoolbox.py:35
 #, fuzzy
 msgid "Activity"
 msgstr "활동 수행"
 
-#: gaphor/UML/actions/actionstoolbox.py:42
+#: gaphor/UML/actions/actionstoolbox.py:43
 msgid "Swimlane One"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:46
+#: gaphor/UML/actions/actionstoolbox.py:47
 msgid "Swimlane Two"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:52
+#: gaphor/UML/actions/actionstoolbox.py:53
 msgid "Actions"
 msgstr "동작(복수)"
 
-#: gaphor/UML/actions/actionstoolbox.py:56
-#: gaphor/UML/actions/actionstoolbox.py:62
+#: gaphor/UML/actions/actionstoolbox.py:57
+#: gaphor/UML/actions/actionstoolbox.py:63
 msgid "Action"
 msgstr "동작"
 
-#: gaphor/UML/actions/actionstoolbox.py:68
-#: gaphor/UML/actions/actionstoolbox.py:74
+#: gaphor/UML/actions/actionstoolbox.py:69
 msgid "Initial node"
 msgstr "초기 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:80
-#: gaphor/UML/actions/actionstoolbox.py:87
+#: gaphor/UML/actions/actionstoolbox.py:81
 msgid "Activity final node"
 msgstr "활동 종단 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:94
-#: gaphor/UML/actions/actionstoolbox.py:100
+#: gaphor/UML/actions/actionstoolbox.py:93
 msgid "Flow final node"
 msgstr "흐름 종단 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:106
+#: gaphor/UML/actions/actionstoolbox.py:105
 msgid "Decision/merge node"
 msgstr "결정/병합 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:112
-#, fuzzy
-msgid "Decision node"
-msgstr "결정/병합 노드"
-
-#: gaphor/UML/actions/actionstoolbox.py:118
-#: gaphor/UML/actions/actionstoolbox.py:124
+#: gaphor/UML/actions/actionstoolbox.py:117
 msgid "Fork/join node"
 msgstr "분리/결합 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:130
-#: gaphor/UML/actions/actionstoolbox.py:136
+#: gaphor/UML/actions/actionstoolbox.py:129
+#: gaphor/UML/actions/actionstoolbox.py:135
 msgid "Object node"
 msgstr "객체 노드"
 
-#: gaphor/UML/actions/actionstoolbox.py:142
+#: gaphor/UML/actions/actionstoolbox.py:141
 msgid "Swimlane"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:154
+#: gaphor/UML/actions/actionstoolbox.py:153
 msgid "Control/object flow"
 msgstr "제어/객체 흐름"
 
-#: gaphor/UML/actions/actionstoolbox.py:161
+#: gaphor/UML/actions/actionstoolbox.py:160
 msgid "Send signal action"
 msgstr "시그널 보내기 동작"
 
-#: gaphor/UML/actions/actionstoolbox.py:167
+#: gaphor/UML/actions/actionstoolbox.py:166
 #, fuzzy
 msgid "Send signal"
 msgstr "시그널 보내기 동작"
 
-#: gaphor/UML/actions/actionstoolbox.py:173
+#: gaphor/UML/actions/actionstoolbox.py:172
 msgid "Accept event action"
 msgstr "이벤트 허용 동작"
 
-#: gaphor/UML/actions/actionstoolbox.py:179
+#: gaphor/UML/actions/actionstoolbox.py:178
 #, fuzzy
 msgid "Accept event"
 msgstr "이벤트 허용 동작"
@@ -1075,35 +1066,35 @@ msgstr "활동 수행"
 msgid "Activities"
 msgstr "활동"
 
-#: gaphor/UML/states/statestoolbox.py:44
-msgid "State Machine"
-msgstr ""
-
-#: gaphor/UML/states/statestoolbox.py:51
-msgid "Default Region"
-msgstr ""
-
-#: gaphor/UML/states/statestoolbox.py:58
-msgid "States"
-msgstr "상태(복수)"
-
-#: gaphor/UML/states/statestoolbox.py:62
+#: gaphor/UML/states/statestoolbox.py:14 gaphor/UML/states/statestoolbox.py:67
 msgid "State"
 msgstr "상태"
 
-#: gaphor/UML/states/statestoolbox.py:72
+#: gaphor/UML/states/statestoolbox.py:49
+msgid "State Machine"
+msgstr ""
+
+#: gaphor/UML/states/statestoolbox.py:56
+msgid "Default Region"
+msgstr ""
+
+#: gaphor/UML/states/statestoolbox.py:63
+msgid "States"
+msgstr "상태(복수)"
+
+#: gaphor/UML/states/statestoolbox.py:79
 msgid "Initial Pseudostate"
 msgstr "초기 의사상태"
 
-#: gaphor/UML/states/statestoolbox.py:84
+#: gaphor/UML/states/statestoolbox.py:91
 msgid "Final State"
 msgstr "최종 상태"
 
-#: gaphor/UML/states/statestoolbox.py:96
+#: gaphor/UML/states/statestoolbox.py:103
 msgid "History Pseudostate"
 msgstr "기록 의사상태"
 
-#: gaphor/UML/states/statestoolbox.py:108
+#: gaphor/UML/states/statestoolbox.py:115
 msgid "Transition"
 msgstr "전이"
 
@@ -1849,4 +1840,7 @@ msgstr "최근 연 모델 없음"
 
 #~ msgid "New"
 #~ msgstr ""
+
+#~ msgid "Decision node"
+#~ msgstr "결정/병합 노드"
 

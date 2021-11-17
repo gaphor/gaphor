@@ -13,7 +13,8 @@ from gaphor.UML.modelfactory import owner_package
 
 def activity_config(new_item, name=None):
     subject = new_item.subject
-    subject.name = gettext("New {name}").format(name=name or type(subject).__name__)
+    if name:
+        subject.name = gettext("New {name}").format(name=name)
     if subject.activity:
         return
 
@@ -71,7 +72,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.InitialNodeItem,
                 UML.InitialNode,
-                config_func=partial(activity_config, name=gettext("Initial node")),
+                config_func=activity_config,
             ),
             handle_index=SE,
         ),
@@ -83,9 +84,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.ActivityFinalNodeItem,
                 UML.ActivityFinalNode,
-                config_func=partial(
-                    activity_config, name=gettext("Activity final node")
-                ),
+                config_func=activity_config,
             ),
             handle_index=SE,
         ),
@@ -97,7 +96,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.FlowFinalNodeItem,
                 UML.FlowFinalNode,
-                config_func=partial(activity_config, name=gettext("Flow final node")),
+                config_func=activity_config,
             ),
             handle_index=SE,
         ),
@@ -109,7 +108,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.DecisionNodeItem,
                 UML.DecisionNode,
-                config_func=partial(activity_config, name=gettext("Decision node")),
+                config_func=activity_config,
             ),
             handle_index=SE,
         ),
@@ -121,7 +120,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.ForkNodeItem,
                 UML.JoinNode,
-                config_func=partial(activity_config, name=gettext("Fork/join node")),
+                config_func=activity_config,
             ),
             handle_index=1,
         ),

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-16 20:13+0100\n"
+"POT-Creation-Date: 2021-11-16 22:05-0500\n"
 "PO-Revision-Date: 2021-10-21 12:41+0000\n"
 "Last-Translator: Tomo Dote <fu7mu4@gmail.com>\n"
 "Language: ja\n"
@@ -447,87 +447,79 @@ msgstr ""
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/actionstoolbox.py:16
+#: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:15
-#: gaphor/UML/states/statestoolbox.py:25 gaphor/diagram/diagramtoolbox.py:28
+#: gaphor/UML/states/statestoolbox.py:30 gaphor/diagram/diagramtoolbox.py:28
 msgid "New {name}"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:34
+#: gaphor/UML/actions/actionstoolbox.py:35
 msgid "Activity"
 msgstr "アクティビティ"
 
-#: gaphor/UML/actions/actionstoolbox.py:42
+#: gaphor/UML/actions/actionstoolbox.py:43
 msgid "Swimlane One"
 msgstr "スイムレーン1"
 
-#: gaphor/UML/actions/actionstoolbox.py:46
+#: gaphor/UML/actions/actionstoolbox.py:47
 msgid "Swimlane Two"
 msgstr "スイムレーン2"
 
-#: gaphor/UML/actions/actionstoolbox.py:52
+#: gaphor/UML/actions/actionstoolbox.py:53
 msgid "Actions"
 msgstr "アクション"
 
-#: gaphor/UML/actions/actionstoolbox.py:56
-#: gaphor/UML/actions/actionstoolbox.py:62
+#: gaphor/UML/actions/actionstoolbox.py:57
+#: gaphor/UML/actions/actionstoolbox.py:63
 msgid "Action"
 msgstr "アクション"
 
-#: gaphor/UML/actions/actionstoolbox.py:68
-#: gaphor/UML/actions/actionstoolbox.py:74
+#: gaphor/UML/actions/actionstoolbox.py:69
 msgid "Initial node"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:80
-#: gaphor/UML/actions/actionstoolbox.py:87
+#: gaphor/UML/actions/actionstoolbox.py:81
 msgid "Activity final node"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:94
-#: gaphor/UML/actions/actionstoolbox.py:100
+#: gaphor/UML/actions/actionstoolbox.py:93
 msgid "Flow final node"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:106
+#: gaphor/UML/actions/actionstoolbox.py:105
 msgid "Decision/merge node"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:112
-msgid "Decision node"
-msgstr ""
-
-#: gaphor/UML/actions/actionstoolbox.py:118
-#: gaphor/UML/actions/actionstoolbox.py:124
+#: gaphor/UML/actions/actionstoolbox.py:117
 msgid "Fork/join node"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:130
-#: gaphor/UML/actions/actionstoolbox.py:136
+#: gaphor/UML/actions/actionstoolbox.py:129
+#: gaphor/UML/actions/actionstoolbox.py:135
 msgid "Object node"
 msgstr "オブジェクトノード"
 
-#: gaphor/UML/actions/actionstoolbox.py:142
+#: gaphor/UML/actions/actionstoolbox.py:141
 msgid "Swimlane"
 msgstr "スイムレーン"
 
-#: gaphor/UML/actions/actionstoolbox.py:154
+#: gaphor/UML/actions/actionstoolbox.py:153
 msgid "Control/object flow"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:161
+#: gaphor/UML/actions/actionstoolbox.py:160
 msgid "Send signal action"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:167
+#: gaphor/UML/actions/actionstoolbox.py:166
 msgid "Send signal"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:173
+#: gaphor/UML/actions/actionstoolbox.py:172
 msgid "Accept event action"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:179
+#: gaphor/UML/actions/actionstoolbox.py:178
 msgid "Accept event"
 msgstr ""
 
@@ -1043,35 +1035,35 @@ msgstr ""
 msgid "Activities"
 msgstr "アクティビティ"
 
-#: gaphor/UML/states/statestoolbox.py:44
-msgid "State Machine"
-msgstr ""
-
-#: gaphor/UML/states/statestoolbox.py:51
-msgid "Default Region"
-msgstr ""
-
-#: gaphor/UML/states/statestoolbox.py:58
-msgid "States"
-msgstr "状態"
-
-#: gaphor/UML/states/statestoolbox.py:62
+#: gaphor/UML/states/statestoolbox.py:14 gaphor/UML/states/statestoolbox.py:67
 msgid "State"
 msgstr "状態"
 
-#: gaphor/UML/states/statestoolbox.py:72
+#: gaphor/UML/states/statestoolbox.py:49
+msgid "State Machine"
+msgstr ""
+
+#: gaphor/UML/states/statestoolbox.py:56
+msgid "Default Region"
+msgstr ""
+
+#: gaphor/UML/states/statestoolbox.py:63
+msgid "States"
+msgstr "状態"
+
+#: gaphor/UML/states/statestoolbox.py:79
 msgid "Initial Pseudostate"
 msgstr "初期擬状態"
 
-#: gaphor/UML/states/statestoolbox.py:84
+#: gaphor/UML/states/statestoolbox.py:91
 msgid "Final State"
 msgstr "終状態"
 
-#: gaphor/UML/states/statestoolbox.py:96
+#: gaphor/UML/states/statestoolbox.py:103
 msgid "History Pseudostate"
 msgstr "履歴擬状態"
 
-#: gaphor/UML/states/statestoolbox.py:108
+#: gaphor/UML/states/statestoolbox.py:115
 msgid "Transition"
 msgstr "遷移"
 
@@ -1779,4 +1771,7 @@ msgstr "最近開いたモデルはありません"
 
 #~ msgid "New"
 #~ msgstr "新"
+
+#~ msgid "Decision node"
+#~ msgstr ""
 

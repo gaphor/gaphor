@@ -10,6 +10,10 @@ from gaphor.UML import diagramitems
 from gaphor.UML.modelfactory import owner_package
 
 
+def state_config(new_item):
+    state_machine_config(new_item, name=gettext("State"))
+
+
 def initial_pseudostate_config(new_item):
     new_item.subject.kind = "initial"
     state_machine_config(new_item)
@@ -20,9 +24,10 @@ def history_pseudostate_config(new_item):
     state_machine_config(new_item)
 
 
-def state_machine_config(new_item):
+def state_machine_config(new_item, name=None):
     subject = new_item.subject
-    subject.name = gettext("New {name}").format(name=type(subject).__name__)
+    if name:
+        subject.name = gettext("New {name}").format(name=name)
     if subject.container:
         return
 
@@ -63,7 +68,9 @@ states = ToolSection(
             "gaphor-state-symbolic",
             "s",
             new_item_factory(
-                diagramitems.StateItem, UML.State, config_func=state_machine_config
+                diagramitems.StateItem,
+                UML.State,
+                config_func=state_config,
             ),
             handle_index=SE,
         ),

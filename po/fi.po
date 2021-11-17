@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-16 20:13+0100\n"
+"POT-Creation-Date: 2021-11-16 22:05-0500\n"
 "PO-Revision-Date: 2021-10-21 12:41+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language: fi\n"
@@ -447,89 +447,80 @@ msgstr "Eristäminen"
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/actionstoolbox.py:16
+#: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:15
-#: gaphor/UML/states/statestoolbox.py:25 gaphor/diagram/diagramtoolbox.py:28
+#: gaphor/UML/states/statestoolbox.py:30 gaphor/diagram/diagramtoolbox.py:28
 msgid "New {name}"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:34
+#: gaphor/UML/actions/actionstoolbox.py:35
 msgid "Activity"
 msgstr "Aktiviteetti"
 
-#: gaphor/UML/actions/actionstoolbox.py:42
+#: gaphor/UML/actions/actionstoolbox.py:43
 msgid "Swimlane One"
 msgstr "Uimarata yksi"
 
-#: gaphor/UML/actions/actionstoolbox.py:46
+#: gaphor/UML/actions/actionstoolbox.py:47
 msgid "Swimlane Two"
 msgstr "Uimarata kaksi"
 
-#: gaphor/UML/actions/actionstoolbox.py:52
+#: gaphor/UML/actions/actionstoolbox.py:53
 msgid "Actions"
 msgstr "Toiminnot"
 
-#: gaphor/UML/actions/actionstoolbox.py:56
-#: gaphor/UML/actions/actionstoolbox.py:62
+#: gaphor/UML/actions/actionstoolbox.py:57
+#: gaphor/UML/actions/actionstoolbox.py:63
 msgid "Action"
 msgstr "Toiminto"
 
-#: gaphor/UML/actions/actionstoolbox.py:68
-#: gaphor/UML/actions/actionstoolbox.py:74
+#: gaphor/UML/actions/actionstoolbox.py:69
 msgid "Initial node"
 msgstr "Alkusolmu"
 
-#: gaphor/UML/actions/actionstoolbox.py:80
-#: gaphor/UML/actions/actionstoolbox.py:87
+#: gaphor/UML/actions/actionstoolbox.py:81
 msgid "Activity final node"
 msgstr "Aktiviteetin viimeinen solmu"
 
-#: gaphor/UML/actions/actionstoolbox.py:94
-#: gaphor/UML/actions/actionstoolbox.py:100
+#: gaphor/UML/actions/actionstoolbox.py:93
 msgid "Flow final node"
 msgstr "Virran viimeinen solmu"
 
-#: gaphor/UML/actions/actionstoolbox.py:106
+#: gaphor/UML/actions/actionstoolbox.py:105
 msgid "Decision/merge node"
 msgstr "Päätös-/yhdistämissolmu"
 
-#: gaphor/UML/actions/actionstoolbox.py:112
-#, fuzzy
-msgid "Decision node"
-msgstr "Päätös-/yhdistämissolmu"
-
-#: gaphor/UML/actions/actionstoolbox.py:118
-#: gaphor/UML/actions/actionstoolbox.py:124
+#: gaphor/UML/actions/actionstoolbox.py:117
 msgid "Fork/join node"
 msgstr "Haarautumis-/liittymissolmu"
 
-#: gaphor/UML/actions/actionstoolbox.py:130
-#: gaphor/UML/actions/actionstoolbox.py:136
+#: gaphor/UML/actions/actionstoolbox.py:129
+#: gaphor/UML/actions/actionstoolbox.py:135
 msgid "Object node"
 msgstr "Oliosolmu"
 
-#: gaphor/UML/actions/actionstoolbox.py:142
+#: gaphor/UML/actions/actionstoolbox.py:141
 msgid "Swimlane"
 msgstr "Uimarata"
 
-#: gaphor/UML/actions/actionstoolbox.py:154
+#: gaphor/UML/actions/actionstoolbox.py:153
 msgid "Control/object flow"
 msgstr "Kontrolli-/objektivirta"
 
-#: gaphor/UML/actions/actionstoolbox.py:161
+#: gaphor/UML/actions/actionstoolbox.py:160
 msgid "Send signal action"
 msgstr "Lähetä signaali -toiminto"
 
-#: gaphor/UML/actions/actionstoolbox.py:167
+#: gaphor/UML/actions/actionstoolbox.py:166
 #, fuzzy
 msgid "Send signal"
 msgstr "Lähetä signaali -toiminto"
 
-#: gaphor/UML/actions/actionstoolbox.py:173
+#: gaphor/UML/actions/actionstoolbox.py:172
 msgid "Accept event action"
 msgstr "Hyväksy tapahtuma -toiminto"
 
-#: gaphor/UML/actions/actionstoolbox.py:179
+#: gaphor/UML/actions/actionstoolbox.py:178
 #, fuzzy
 msgid "Accept event"
 msgstr "Hyväksy tapahtuma -toiminto"
@@ -1016,35 +1007,35 @@ msgstr "Tee-aktiviteetti"
 msgid "Activities"
 msgstr "Aktiviteetit"
 
-#: gaphor/UML/states/statestoolbox.py:44
-msgid "State Machine"
-msgstr "Tilakone"
-
-#: gaphor/UML/states/statestoolbox.py:51
-msgid "Default Region"
-msgstr "Oletusalue"
-
-#: gaphor/UML/states/statestoolbox.py:58
-msgid "States"
-msgstr "Tilat"
-
-#: gaphor/UML/states/statestoolbox.py:62
+#: gaphor/UML/states/statestoolbox.py:14 gaphor/UML/states/statestoolbox.py:67
 msgid "State"
 msgstr "Tila"
 
-#: gaphor/UML/states/statestoolbox.py:72
+#: gaphor/UML/states/statestoolbox.py:49
+msgid "State Machine"
+msgstr "Tilakone"
+
+#: gaphor/UML/states/statestoolbox.py:56
+msgid "Default Region"
+msgstr "Oletusalue"
+
+#: gaphor/UML/states/statestoolbox.py:63
+msgid "States"
+msgstr "Tilat"
+
+#: gaphor/UML/states/statestoolbox.py:79
 msgid "Initial Pseudostate"
 msgstr "Alustava pseudotila"
 
-#: gaphor/UML/states/statestoolbox.py:84
+#: gaphor/UML/states/statestoolbox.py:91
 msgid "Final State"
 msgstr "Viimeinen tila"
 
-#: gaphor/UML/states/statestoolbox.py:96
+#: gaphor/UML/states/statestoolbox.py:103
 msgid "History Pseudostate"
 msgstr "Historian pseudotila"
 
-#: gaphor/UML/states/statestoolbox.py:108
+#: gaphor/UML/states/statestoolbox.py:115
 msgid "Transition"
 msgstr "Transitio"
 
@@ -1815,4 +1806,7 @@ msgstr "Ei viimeksi avattuja malleja"
 
 #~ msgid "New"
 #~ msgstr "Uusi"
+
+#~ msgid "Decision node"
+#~ msgstr "Päätös-/yhdistämissolmu"
 
