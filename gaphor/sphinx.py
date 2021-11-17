@@ -54,31 +54,45 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
 
     def run(self) -> list[nodes.Node]:
         name = self.arguments[0]
-
-        model_file = self.config.gaphor_models.get("default")
+        model_name = "default"
+        model_file = self.config.gaphor_models.get(model_name)
 
         if not model_file:
-            return [nodes.paragraph(text=f"No diagram {name} in model {model_file}")]
+            return [
+                nodes.paragraph(
+                    text=f"No model file configured for model '{model_name}'"
+                )
+            ]
 
         model = load_model(model_file)
         outdir = Path(self.env.app.doctreedir).relative_to(Path.cwd()) / ".." / "gaphor"
         outdir.mkdir(exist_ok=True)
 
-        # TODO: find by qualified name
-
-        # find by name
-
         diagram = next(
-            model.select(lambda e: isinstance(e, Diagram) and e.name == name)
+            model.select(lambda e: isinstance(e, Diagram) and qualifiedName(e) == name),
+            None,
         )
 
-        DiagramExport().save_svg(outdir / f"{diagram.id}.svg", diagram)
+        if not diagram:
+            diagram = next(
+                model.select(lambda e: isinstance(e, Diagram) and e.name == name), None
+            )
+
+        if not diagram:
+            return [
+                nodes.paragraph(
+                    text=f"No diagram {name} in model {model_name} ({model_file})"
+                )
+            ]
+
+        outfile = outdir / f"{diagram.id}.svg"
+        DiagramExport().save_svg(outfile, diagram)
 
         return [
             nodes.paragraph(text=f"Diagram placeholder for {name}, {model_file}"),
             nodes.image(
                 rawsource=self.block_text,
-                uri=str(outdir / f"{diagram.id}.svg"),
+                uri=str(outfile),
                 **self.options,
             ),
         ]
@@ -93,3 +107,11 @@ def load_model(model_file: str) -> ElementFactory:
         modeling_language=ModelingLanguageService(EventManager()),
     )
     return element_factory
+
+
+def qualifiedName(diagram: Diagram) -> str:
+    """Returns the qualified name of the element as a tuple."""
+    if diagram.owner:
+        return f"{qualifiedName(diagram.owner)}.{diagram.name}"  # type: ignore[arg-type]
+    else:
+        return diagram.name  # type: ignore[no-any-return]
