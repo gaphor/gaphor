@@ -41,9 +41,9 @@ def config_inited(app, config):
 
 
 class DiagramDirective(sphinx.util.docutils.SphinxDirective):
-    """The "``..
+    """The Gaphor diagram directive.
 
-    diagram::``" directive.
+    Usage: "``.. diagram:: diagram-name``".
     """
 
     has_content = False
@@ -54,6 +54,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         "alt": directives.unchanged,
         "height": directives.length_or_unitless,
         "width": directives.length_or_percentage_or_unitless,
+        "align": directives.images.Image.align,
         "scale": directives.percentage,
         "target": directives.unchanged_required,
         "class": directives.class_option,
@@ -62,7 +63,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
 
     def run(self) -> list[nodes.Node]:
         name = self.arguments[0]
-        model_name = "default"
+        model_name = self.options.get("model", "default")
         model_file = self.config.gaphor_models.get(model_name)
 
         if not model_file:
@@ -97,7 +98,6 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         DiagramExport().save_svg(outfile, diagram)
 
         return [
-            nodes.paragraph(text=f"Diagram placeholder for {name}, {model_file}"),
             nodes.image(
                 rawsource=self.block_text,
                 uri=str(outfile),
