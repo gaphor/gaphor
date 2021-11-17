@@ -85,6 +85,7 @@ class MessageItem(LinePresentation[UML.Message], Named):
                 Text(text=lambda: self.subject.name or ""),
             ),
         )
+        self.handles()[1].pos = (40, 0)
 
         self._is_communication = False
         self._arrow_pos = 0, 0

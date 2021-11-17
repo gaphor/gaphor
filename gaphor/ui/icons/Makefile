@@ -53,6 +53,7 @@ ICONS=diagram \
 	behavior-execution-specification \
 	execution-specification \
 	message \
+	reflexive-message \
 	interaction \
 	state \
 	initial-pseudostate \
