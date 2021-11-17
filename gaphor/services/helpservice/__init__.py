@@ -34,8 +34,12 @@ class HelpService(Service, ActionProvider):
         about.set_version(distribution().version)
         about.set_transient_for(self.window)
 
-        about.run()
-        about.destroy()
+        if Gtk.get_major_version() == 3:
+            about.run()
+            about.destroy()
+        else:
+            about.set_modal(True)
+            about.show()
 
     @action(name="win.shortcuts")
     def shortcuts(self):
