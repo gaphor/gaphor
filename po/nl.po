@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-16 20:13+0100\n"
+"POT-Creation-Date: 2021-11-16 22:05-0500\n"
 "PO-Revision-Date: 2021-09-25 12:52+0000\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
 "Language: nl\n"
@@ -459,90 +459,81 @@ msgstr "Bevat"
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/actions/actionstoolbox.py:16
+#: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:15
-#: gaphor/UML/states/statestoolbox.py:25 gaphor/diagram/diagramtoolbox.py:28
+#: gaphor/UML/states/statestoolbox.py:30 gaphor/diagram/diagramtoolbox.py:28
 msgid "New {name}"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:34
+#: gaphor/UML/actions/actionstoolbox.py:35
 #, fuzzy
 msgid "Activity"
 msgstr "Do Activity"
 
-#: gaphor/UML/actions/actionstoolbox.py:42
+#: gaphor/UML/actions/actionstoolbox.py:43
 msgid "Swimlane One"
 msgstr "Zwembaan Een"
 
-#: gaphor/UML/actions/actionstoolbox.py:46
+#: gaphor/UML/actions/actionstoolbox.py:47
 msgid "Swimlane Two"
 msgstr "Zwembaan Twee"
 
-#: gaphor/UML/actions/actionstoolbox.py:52
+#: gaphor/UML/actions/actionstoolbox.py:53
 msgid "Actions"
 msgstr "Acties"
 
-#: gaphor/UML/actions/actionstoolbox.py:56
-#: gaphor/UML/actions/actionstoolbox.py:62
+#: gaphor/UML/actions/actionstoolbox.py:57
+#: gaphor/UML/actions/actionstoolbox.py:63
 msgid "Action"
 msgstr "Actie"
 
-#: gaphor/UML/actions/actionstoolbox.py:68
-#: gaphor/UML/actions/actionstoolbox.py:74
+#: gaphor/UML/actions/actionstoolbox.py:69
 msgid "Initial node"
 msgstr "Initiële node"
 
-#: gaphor/UML/actions/actionstoolbox.py:80
-#: gaphor/UML/actions/actionstoolbox.py:87
+#: gaphor/UML/actions/actionstoolbox.py:81
 msgid "Activity final node"
 msgstr "Activity final node"
 
-#: gaphor/UML/actions/actionstoolbox.py:94
-#: gaphor/UML/actions/actionstoolbox.py:100
+#: gaphor/UML/actions/actionstoolbox.py:93
 msgid "Flow final node"
 msgstr "Flow final node"
 
-#: gaphor/UML/actions/actionstoolbox.py:106
+#: gaphor/UML/actions/actionstoolbox.py:105
 msgid "Decision/merge node"
 msgstr "Decision/merge node"
 
-#: gaphor/UML/actions/actionstoolbox.py:112
-#, fuzzy
-msgid "Decision node"
-msgstr "Decision/merge node"
-
-#: gaphor/UML/actions/actionstoolbox.py:118
-#: gaphor/UML/actions/actionstoolbox.py:124
+#: gaphor/UML/actions/actionstoolbox.py:117
 msgid "Fork/join node"
 msgstr "Fork/join node"
 
-#: gaphor/UML/actions/actionstoolbox.py:130
-#: gaphor/UML/actions/actionstoolbox.py:136
+#: gaphor/UML/actions/actionstoolbox.py:129
+#: gaphor/UML/actions/actionstoolbox.py:135
 msgid "Object node"
 msgstr "Object node"
 
-#: gaphor/UML/actions/actionstoolbox.py:142
+#: gaphor/UML/actions/actionstoolbox.py:141
 msgid "Swimlane"
 msgstr "Zwembaan"
 
-#: gaphor/UML/actions/actionstoolbox.py:154
+#: gaphor/UML/actions/actionstoolbox.py:153
 msgid "Control/object flow"
 msgstr "Control/object flow"
 
-#: gaphor/UML/actions/actionstoolbox.py:161
+#: gaphor/UML/actions/actionstoolbox.py:160
 msgid "Send signal action"
 msgstr "Send signal action"
 
-#: gaphor/UML/actions/actionstoolbox.py:167
+#: gaphor/UML/actions/actionstoolbox.py:166
 #, fuzzy
 msgid "Send signal"
 msgstr "Send signal action"
 
-#: gaphor/UML/actions/actionstoolbox.py:173
+#: gaphor/UML/actions/actionstoolbox.py:172
 msgid "Accept event action"
 msgstr "Accept event action"
 
-#: gaphor/UML/actions/actionstoolbox.py:179
+#: gaphor/UML/actions/actionstoolbox.py:178
 #, fuzzy
 msgid "Accept event"
 msgstr "Accept event action"
@@ -1043,35 +1034,35 @@ msgstr "Do Activity"
 msgid "Activities"
 msgstr "Activities"
 
-#: gaphor/UML/states/statestoolbox.py:44
-msgid "State Machine"
-msgstr ""
-
-#: gaphor/UML/states/statestoolbox.py:51
-msgid "Default Region"
-msgstr ""
-
-#: gaphor/UML/states/statestoolbox.py:58
-msgid "States"
-msgstr "Statussen"
-
-#: gaphor/UML/states/statestoolbox.py:62
+#: gaphor/UML/states/statestoolbox.py:14 gaphor/UML/states/statestoolbox.py:67
 msgid "State"
 msgstr "State"
 
-#: gaphor/UML/states/statestoolbox.py:72
+#: gaphor/UML/states/statestoolbox.py:49
+msgid "State Machine"
+msgstr ""
+
+#: gaphor/UML/states/statestoolbox.py:56
+msgid "Default Region"
+msgstr ""
+
+#: gaphor/UML/states/statestoolbox.py:63
+msgid "States"
+msgstr "Statussen"
+
+#: gaphor/UML/states/statestoolbox.py:79
 msgid "Initial Pseudostate"
 msgstr "Initial Pseudostate"
 
-#: gaphor/UML/states/statestoolbox.py:84
+#: gaphor/UML/states/statestoolbox.py:91
 msgid "Final State"
 msgstr "Final State"
 
-#: gaphor/UML/states/statestoolbox.py:96
+#: gaphor/UML/states/statestoolbox.py:103
 msgid "History Pseudostate"
 msgstr "History Pseudostate"
 
-#: gaphor/UML/states/statestoolbox.py:108
+#: gaphor/UML/states/statestoolbox.py:115
 msgid "Transition"
 msgstr "Transition"
 
@@ -2000,4 +1991,7 @@ msgstr "Geen recent geopende modellen"
 
 #~ msgid "Zoom 100%"
 #~ msgstr "Zoom 100%"
+
+#~ msgid "Decision node"
+#~ msgstr "Decision/merge node"
 
