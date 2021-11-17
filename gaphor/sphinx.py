@@ -6,6 +6,7 @@ from pathlib import Path
 
 import sphinx.util.docutils
 from docutils import nodes
+from docutils.parsers.rst import directives  # type: ignore[attr-defined]
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
@@ -48,9 +49,16 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
     has_content = False
     required_arguments = 1
     final_argument_whitespace = True
-
-    # optional arguments: model name
-    # width/height/alt
+    option_spec = {
+        "model": directives.unchanged,
+        "alt": directives.unchanged,
+        "height": directives.length_or_unitless,
+        "width": directives.length_or_percentage_or_unitless,
+        "scale": directives.percentage,
+        "target": directives.unchanged_required,
+        "class": directives.class_option,
+        "name": directives.unchanged,
+    }
 
     def run(self) -> list[nodes.Node]:
         name = self.arguments[0]
