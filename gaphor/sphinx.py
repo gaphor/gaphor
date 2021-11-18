@@ -6,7 +6,8 @@ from pathlib import Path
 
 import sphinx.util.docutils
 from docutils import nodes
-from docutils.parsers.rst import directives  # type: ignore[attr-defined]
+from docutils.parsers.rst import directives
+from docutils.parsers.rst.directives import images
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
@@ -38,7 +39,7 @@ def setup(app: sphinx.application.Sphinx) -> dict[str, object]:
 
 
 def config_inited(app, config):
-    logger.info(f"Gaphor models: {str(config.gaphor_models)}")
+    logger.info(f"Gaphor models: {config.gaphor_models}")
     if isinstance(config.gaphor_models, str):
         config.gaphor_models = {"default": config.gaphor_models}
 
@@ -57,7 +58,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         "alt": directives.unchanged,
         "height": directives.length_or_unitless,
         "width": directives.length_or_percentage_or_unitless,
-        "align": directives.images.Image.align,
+        "align": images.Image.align,
         "scale": directives.percentage,
         "target": directives.unchanged_required,
         "class": directives.class_option,

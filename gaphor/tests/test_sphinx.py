@@ -5,9 +5,10 @@ from gaphor.sphinx import setup as sphinx_setup
 
 
 def test_setup(tmp_path):
+    (tmp_path / "conf.py").write_text("")
     gen = sphinx.application.Sphinx(
         srcdir="docs",
-        confdir="docs",
+        confdir=tmp_path,
         outdir=tmp_path,
         doctreedir=tmp_path,
         buildername="html",
