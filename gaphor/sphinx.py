@@ -8,9 +8,11 @@ import sphinx.util.docutils
 from docutils import nodes
 from docutils.parsers.rst import directives
 from docutils.parsers.rst.directives import images
+from sphinx.util.console import bold, darkred, red
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
+from gaphor.i18n import gettext
 from gaphor.plugins.diagramexport import DiagramExport
 from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.storage import storage
@@ -20,7 +22,7 @@ from gaphor.storage import storage
 # TODO: Add warning/note blocks when diagram render fails
 # TODO: Add Diagram.qualifiedName
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 
 
 def setup(app: sphinx.application.Sphinx) -> dict[str, object]:
@@ -39,7 +41,7 @@ def setup(app: sphinx.application.Sphinx) -> dict[str, object]:
 
 
 def config_inited(app, config):
-    logger.info(f"Gaphor models: {config.gaphor_models}")
+    log.info(f"Gaphor models: {config.gaphor_models}")
     if isinstance(config.gaphor_models, str):
         config.gaphor_models = {"default": config.gaphor_models}
 
@@ -71,10 +73,12 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         model_file = self.config.gaphor_models.get(model_name)
 
         if not model_file:
+            text = gettext("No model file configured for model '{model_name}'.").format(
+                model_name=model_name
+            )
+            log.error(darkred(bold(gettext("Gaphor diagram: "))) + red(text))
             return [
-                nodes.paragraph(
-                    text=f"No model file configured for model '{model_name}'"
-                )
+                nodes.error("", nodes.paragraph(text=text), title="Gaphor model error")
             ]
 
         model = load_model(model_file)
@@ -92,11 +96,11 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
             )
 
         if not diagram:
-            return [
-                nodes.paragraph(
-                    text=f"No diagram {name} in model {model_name} ({model_file})"
-                )
-            ]
+            text = gettext(
+                "No diagram '{name}' in model '{model_name}' ({model_file})."
+            ).format(name=name, model_name=model_name, model_file=model_file)
+            log.error(darkred(bold(gettext("Gaphor diagram: "))) + red(text))
+            return [nodes.error("", nodes.paragraph(text=text))]
 
         outfile = outdir / f"{diagram.id}.svg"
         DiagramExport().save_svg(outfile, diagram)
