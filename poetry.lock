@@ -72,7 +72,7 @@ testing = ["pytest (>=4.6)", "pytest-flake8", "pytest-cov", "pytest-black (>=0.3
 
 [[package]]
 name = "black"
-version = "21.10b0"
+version = "21.11b0"
 description = "The uncompromising code formatter."
 category = "dev"
 optional = false
@@ -938,7 +938,7 @@ pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9, <3.11"
-content-hash = "39519f22ec548fea5ade8e06074243ecd3dd66f2d1f91cdbeab2eff08d188235"
+content-hash = "c480bd9961c04ae74d2b33145c89c7821f6fd81a527069bcc77717ded9315540"
 
 [metadata.files]
 alabaster = [
@@ -969,8 +969,8 @@ babelgladeextractor = [
     {file = "backports.entry_points_selectable-1.1.0.tar.gz", hash = "sha256:988468260ec1c196dab6ae1149260e2f5472c9110334e5d51adcb77867361f6a"},
 ]
 black = [
-    {file = "black-21.10b0-py3-none-any.whl", hash = "sha256:6eb7448da9143ee65b856a5f3676b7dda98ad9abe0f87fce8c59291f15e82a5b"},
-    {file = "black-21.10b0.tar.gz", hash = "sha256:a9952229092e325fe5f3dae56d81f639b23f7131eb840781947e4b2886030f33"},
+    {file = "black-21.11b0-py3-none-any.whl", hash = "sha256:0b1f66cbfadcd332ceeaeecf6373d9991d451868d2e2219ad0ac1213fb701117"},
+    {file = "black-21.11b0.tar.gz", hash = "sha256:83f3852301c8dcb229e9c444dd79f573c8d31c7c2dad9bbaaa94c808630e32aa"},
 ]
 certifi = [
     {file = "certifi-2021.10.8-py2.py3-none-any.whl", hash = "sha256:d62a0163eb4c2344ac042ab2bdf75399a71a2d8c7d47eac2e2ee91b9d6339569"},
