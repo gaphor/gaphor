@@ -17,11 +17,6 @@ from gaphor.plugins.diagramexport import DiagramExport
 from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.storage import storage
 
-# TODO: How to know a model has changed and we should regenerate images?
-# TODO: test with PDF output
-# TODO: Add warning/note blocks when diagram render fails
-# TODO: Add Diagram.qualifiedName
-
 log = logging.getLogger(__name__)
 
 
@@ -57,14 +52,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
     final_argument_whitespace = True
     option_spec = {
         "model": directives.unchanged,
-        "alt": directives.unchanged,
-        "height": directives.length_or_unitless,
-        "width": directives.length_or_percentage_or_unitless,
-        "align": images.Image.align,
-        "scale": directives.percentage,
-        "target": directives.unchanged_required,
-        "class": directives.class_option,
-        "name": directives.unchanged,
+        **images.Image.option_spec,
     }
 
     def run(self) -> list[nodes.Node]:
@@ -73,13 +61,11 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         model_file = self.config.gaphor_models.get(model_name)
 
         if not model_file:
-            text = gettext("No model file configured for model '{model_name}'.").format(
-                model_name=model_name
+            return logging_error_node(
+                gettext("No model file configured for model '{model_name}'.").format(
+                    model_name=model_name
+                )
             )
-            log.error(darkred(bold(gettext("Gaphor diagram: "))) + red(text))
-            return [
-                nodes.error("", nodes.paragraph(text=text), title="Gaphor model error")
-            ]
 
         model = load_model(model_file)
         outdir = (
@@ -99,11 +85,11 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
             )
 
         if not diagram:
-            text = gettext(
-                "No diagram '{name}' in model '{model_name}' ({model_file})."
-            ).format(name=name, model_name=model_name, model_file=model_file)
-            log.error(darkred(bold(gettext("Gaphor diagram: "))) + red(text))
-            return [nodes.error("", nodes.paragraph(text=text))]
+            return logging_error_node(
+                gettext(
+                    "No diagram '{name}' in model '{model_name}' ({model_file})."
+                ).format(name=name, model_name=model_name, model_file=model_file)
+            )
 
         outfile = outdir / f"{diagram.id}.svg"
         DiagramExport().save_svg(outfile, diagram)
@@ -134,3 +120,8 @@ def qualifiedName(diagram: Diagram) -> str:
         return f"{qualifiedName(diagram.owner)}.{diagram.name}"  # type: ignore[arg-type]
     else:
         return diagram.name  # type: ignore[no-any-return]
+
+
+def logging_error_node(text: str) -> list[nodes.Node]:
+    log.error(darkred(bold(gettext("Gaphor diagram: "))) + red(text))
+    return [nodes.error("", nodes.paragraph(text=text))]
