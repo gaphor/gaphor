@@ -38,7 +38,7 @@ def setup(app: sphinx.application.Sphinx) -> dict[str, object]:
 
 
 def config_inited(app, config):
-    logger.info(f'Gaphor models: {config.gaphor_models}')
+    logger.info(f"Gaphor models: {config.gaphor_models}")
     if isinstance(config.gaphor_models, str):
         config.gaphor_models = {"default": config.gaphor_models}
 
