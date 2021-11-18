@@ -82,7 +82,9 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
             ]
 
         model = load_model(model_file)
-        outdir = Path(self.env.app.doctreedir).relative_to(Path.cwd()) / ".." / "gaphor"
+        outdir = (
+            Path(self.env.app.doctreedir).relative_to(self.env.srcdir) / ".." / "gaphor"
+        )
         outdir.mkdir(exist_ok=True)
         self.state.document.settings.record_dependencies.add(model_file)
 
