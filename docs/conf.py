@@ -75,7 +75,10 @@ pygments_style = None
 
 images_config = {"default_image_width": "", "default_image_height": ""}
 
-gaphor_models = {"connect": "connect.gaphor"}
+gaphor_models = {
+    "connect": "connect.gaphor",
+    "example": "../examples/sequence-diagram.gaphor",
+}
 
 # -- Options for HTML output -------------------------------------------------
 
