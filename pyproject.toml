@@ -112,12 +112,12 @@ c4model = [
 ]
 lint = "pre-commit run --all-files"
 docs = "sphinx-build docs docs/_build/html"
-clean = { "shell" = "rm -rf dist build packaging/dist packaging/build packaging/windows/file_version_info.txt packaging/gaphor-script.py docs/_build" }
-gaphor-script = { "script" = "packaging.make-script:make_gaphor_script" }
-version-file = { "script" = "packaging.make-script:make_file_version_info" }
-pyinstall = { "script" = "packaging.make-script:make_pyinstaller" }
+clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt _packaging/gaphor-script.py docs/_build" }
+gaphor-script = { "script" = "_packaging.make-script:make_gaphor_script" }
+version-file = { "script" = "_packaging.make-script:make_file_version_info" }
+pyinstall = { "script" = "_packaging.make-script:make_pyinstaller" }
 package = ["install-pyinstall", "gaphor-script", "version-file", "pyinstall"]
-win-installer = { "script" = "packaging.windows.build-win-installer:main" }
+win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
 gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini gaphor"
 gettext-po = { "script" = "po.build-babel:update_po_files" }
 gettext-mo = { "script" = "po.build-babel:compile_mo_files" }
