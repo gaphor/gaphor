@@ -27,6 +27,3 @@ Some things to keep in mind when working with profiles:
   "update" a profile within a model.
 - Stereotypes that you define should be instantiated in your model when you
   create a stereotyped class.
-
-``` note:: There is no way to connect a stereotype with a class other than an Association.
-```
