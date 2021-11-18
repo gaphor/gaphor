@@ -15,6 +15,9 @@ from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.storage import storage
 
 # TODO: How to know a model has changed and we should regenerate images?
+# TODO: test with PDF output
+# TODO: Add warning/note blocks when diagram render fails
+# TODO: Add Diagram.qualifiedName
 
 logger = logging.getLogger(__name__)
 

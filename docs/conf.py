@@ -50,6 +50,7 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     "myst_parser",
     "sphinxcontrib.images",
+    "gaphor.sphinx",
 ]
 
 autodoc_mock_imports = ["gaphas", "gi", "tinycss2"]
@@ -85,6 +86,8 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 pygments_style = None
 
 images_config = {"default_image_width": "", "default_image_height": ""}
+
+gaphor_models = {"connect": "connect.gaphor"}
 
 # -- Options for HTML output -------------------------------------------------
 
