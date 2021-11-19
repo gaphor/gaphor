@@ -35,7 +35,6 @@ plug-in.
    modeling_language
    style_sheets
    transaction
-   items
 
 .. toctree::
    :caption: Modeling languages
