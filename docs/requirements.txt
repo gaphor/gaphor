@@ -1,10 +1,7 @@
 # Keep until RTD fully support pyproject.toml
-docutils==0.17.1
-Pygments==2.10.0
 myst-parser==0.15.2
 Sphinx==4.3.0
 sphinx-rtd-theme==1.0.0
-sphinxcontrib-websupport==1.2.4
 sphinxcontrib-images==0.9.4
 tomli==1.2.2
 generic==1.0.1
