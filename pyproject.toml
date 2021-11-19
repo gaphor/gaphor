@@ -69,7 +69,7 @@ poethepoet = ">=0.10,<0.12"
 [tool.poetry.extras]
 pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 poethepoet = ["poethepoet"]
-docs = [ "sphinx", "sphinx-rtd-theme", "sphinxcontrib-images", "myst-parser", "tomli"]
+docs = [ "sphinx", "sphinx-rtd-theme", "sphinxcontrib-images", "myst-parser"]
 
 [tool.poetry.scripts]
 gaphor = "gaphor.ui:main"

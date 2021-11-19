@@ -13,24 +13,13 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 from __future__ import annotations
 
-import sys
 from datetime import date
-from pathlib import Path
-
-import tomli
 
 # -- Project information -----------------------------------------------------
 
 project = "Gaphor"
 copyright = f"2001-{date.today().year}, Arjan J. Molenaar"
 author = "Arjan J. Molenaar"
-
-# The short X.Y version
-version = ""
-project_dir = Path(__file__).resolve().parent.parent
-f = project_dir.joinpath("pyproject.toml")
-release = str(tomli.loads(f.read_text())["tool"]["poetry"]["version"])
-sys.path.append(str(project_dir))
 
 # -- General configuration ---------------------------------------------------
 
