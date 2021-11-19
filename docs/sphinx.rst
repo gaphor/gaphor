@@ -82,7 +82,7 @@ The model can not be found:
 The model can be found, but the diagram can notnot be found:
 
 .. diagram:: Wrong name
-   :model: connect
+   :model: example
 
 
 .. _Sphinx: https://sphinx-doc.org
