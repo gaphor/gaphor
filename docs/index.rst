@@ -48,20 +48,15 @@ plug-in.
    models/c4model
 
 .. toctree::
-   :caption: Services
-   :maxdepth: 1
-
-   storage
-   undo
-
-.. toctree::
-   :caption: Data model internals
+   :caption: Internals
    :maxdepth: 1
 
    model
    stereotypes
    datamodel
    connect
+   storage
+   undo
 
 External links
 --------------
