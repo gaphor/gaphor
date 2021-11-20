@@ -1,14 +1,13 @@
 from __future__ import annotations
 
 import functools
-import logging
 from pathlib import Path
 
 import sphinx.util.docutils
 from docutils import nodes
 from docutils.parsers.rst import directives
 from docutils.parsers.rst.directives import images
-from sphinx.util.console import bold, darkred, red
+from sphinx.util import logging
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
@@ -61,18 +60,20 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         model_file = self.config.gaphor_models.get(model_name)
 
         if not model_file:
-            return logging_error_node(
+            return self.logging_error_node(
                 gettext("No model file configured for model '{model_name}'.").format(
                     model_name=model_name
                 )
             )
 
-        model = load_model(model_file)
+        rel_filename, filename = self.env.relfn2path(model_file)
+        self.env.note_dependency(rel_filename)
+        model = load_model(filename)
+
         outdir = (
             Path(self.env.app.doctreedir).relative_to(self.env.srcdir) / ".." / "gaphor"
         )
         outdir.mkdir(exist_ok=True)
-        self.state.document.settings.record_dependencies.add(model_file)
 
         diagram = next(
             model.select(lambda e: isinstance(e, Diagram) and qualifiedName(e) == name),
@@ -85,7 +86,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
             )
 
         if not diagram:
-            return logging_error_node(
+            return self.logging_error_node(
                 gettext(
                     "No diagram '{name}' in model '{model_name}' ({model_file})."
                 ).format(name=name, model_name=model_name, model_file=model_file)
@@ -101,6 +102,11 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
                 **self.options,
             ),
         ]
+
+    def logging_error_node(self, text: str) -> list[nodes.Node]:
+        location = self.state_machine.get_source_and_line(self.lineno)
+        log.error(text, location=location)
+        return [nodes.error("", nodes.paragraph(text=text))]
 
 
 @functools.lru_cache(maxsize=None)
@@ -120,8 +126,3 @@ def qualifiedName(diagram: Diagram) -> str:
         return f"{qualifiedName(diagram.owner)}.{diagram.name}"  # type: ignore[arg-type]
     else:
         return diagram.name  # type: ignore[no-any-return]
-
-
-def logging_error_node(text: str) -> list[nodes.Node]:
-    log.error(darkred(bold(gettext("Gaphor diagram: "))) + red(text))
-    return [nodes.error("", nodes.paragraph(text=text))]
