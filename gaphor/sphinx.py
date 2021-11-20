@@ -76,7 +76,9 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         outdir.mkdir(exist_ok=True)
 
         diagram = next(
-            model.select(lambda e: isinstance(e, Diagram) and qualifiedName(e) == name),
+            model.select(
+                lambda e: isinstance(e, Diagram) and ".".join(e.qualifiedName) == name
+            ),
             None,
         )
 
@@ -119,11 +121,3 @@ def load_model(model_file: str) -> ElementFactory:
         modeling_language=ModelingLanguageService(EventManager()),
     )
     return element_factory
-
-
-def qualifiedName(diagram: Diagram) -> str:
-    """Returns the qualified name of the element as a tuple."""
-    if diagram.owner:
-        return f"{qualifiedName(diagram.owner)}.{diagram.name}"  # type: ignore[arg-type]
-    else:
-        return diagram.name  # type: ignore[no-any-return]

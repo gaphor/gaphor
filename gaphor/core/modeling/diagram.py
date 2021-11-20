@@ -123,6 +123,15 @@ def attrstr(obj):
     return ""
 
 
+def qualifiedName(element: Element) -> list[str]:
+    """Returns the qualified name of the element as a tuple."""
+    name: str = getattr(element, "name", "??")
+    if element.owner:
+        return qualifiedName(element.owner) + [name]
+    else:
+        return [name]
+
+
 class StyledDiagram:
     def __init__(
         self, diagram: Diagram, selection: gaphas.view.Selection | None = None
@@ -232,6 +241,11 @@ class Diagram(Element):
     ownedPresentation: relation_many[Presentation] = association(
         "ownedPresentation", Presentation, composite=True, opposite="diagram"
     )
+
+    @property
+    def qualifiedName(self) -> list[str]:
+        """Returns the qualified name of the element as a tuple."""
+        return qualifiedName(self)
 
     def _owned_presentation_changed(self, event):
         if isinstance(event, AssociationDeleted) and event.old_value:

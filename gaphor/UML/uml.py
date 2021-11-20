@@ -817,7 +817,7 @@ Action.effect = attribute("effect", str)
 PackageImport.visibility = enumeration(
     "visibility", ("public", "private", "package", "protected"), "public"
 )
-# 117: override Message.messageKind: property
+# 112: override Message.messageKind: property
 # defined in umloverrides.py
 
 Message.messageSort = enumeration(
@@ -1348,21 +1348,14 @@ InformationFlow.informationSource = association(
 )
 # 82: override NamedElement.qualifiedName(NamedElement.namespace): derived[list[str]]
 
-
-def _namedelement_qualifiedname(self) -> list[str]:
-    """Returns the qualified name of the element as a tuple."""
-    if self.namespace:
-        return _namedelement_qualifiedname(self.namespace) + [self.name]
-    else:
-        return [self.name]
-
+from gaphor.core.modeling.diagram import qualifiedName
 
 NamedElement.qualifiedName = derived(
     "qualifiedName",
     List[str],
     0,
     1,
-    lambda obj: [_namedelement_qualifiedname(obj)],
+    lambda obj: [qualifiedName(obj)],
 )
 
 # 32: override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
@@ -1376,7 +1369,7 @@ Property.isComposite = derived(
     "isComposite", bool, 0, 1, lambda obj: [obj.aggregation == "composite"]
 )
 
-# 99: override Property.navigability(Property.opposite, Property.association): derived[bool | None]
+# 94: override Property.navigability(Property.opposite, Property.association): derived[bool | None]
 # defined in umloverrides.py
 
 RedefinableElement.redefinedElement = derivedunion(
@@ -1547,7 +1540,7 @@ Association.endType = derived(
 )
 
 
-# 102: override Operation.type: derivedunion[DataType]
+# 97: override Operation.type: derivedunion[DataType]
 Operation.type = derivedunion("type", DataType, 0, 1)
 
 Stereotype.profile = derivedunion("profile", Profile, 1, 1)
@@ -1649,14 +1642,14 @@ Namespace.member = derivedunion(
 NamedElement.memberNamespace = derivedunion(
     "memberNamespace", Namespace, 0, "*", Property.association, NamedElement.namespace
 )
-# 114: override Component.required: property
+# 109: override Component.required: property
 # defined in umloverrides.py
 
 # 70: override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion("importedMember", PackageableElement, 0, "*")
 
 Action.input = derivedunion("input", InputPin, 0, "*", SendSignalAction.target)
-# 111: override Component.provided: property
+# 106: override Component.provided: property
 # defined in umloverrides.py
 
 Element.owner = derivedunion(
@@ -1721,7 +1714,7 @@ Element.ownedElement = derivedunion(
     Activity.node,
     Connector.informationFlow,
 )
-# 120: override StructuredClassifier.part: property
+# 115: override StructuredClassifier.part: property
 StructuredClassifier.part = property(
     lambda self: tuple(a for a in self.ownedAttribute if a.isComposite),
     doc="""
@@ -1729,7 +1722,7 @@ StructuredClassifier.part = property(
 """,
 )
 
-# 125: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+# 120: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.start = derived(
     "start",
     OccurrenceSpecification,
@@ -1740,7 +1733,7 @@ ExecutionSpecification.start = derived(
     ],
 )
 
-# 129: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+# 124: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.finish = derived(
     "finish",
     OccurrenceSpecification,
@@ -1810,8 +1803,8 @@ StateInvariant.covered = redefine(
 OccurrenceSpecification.covered = redefine(
     OccurrenceSpecification, "covered", Lifeline, InteractionFragment.covered
 )
-# 105: override Lifeline.parse: Callable[[Lifeline, str], None]
+# 100: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
 
-# 108: override Lifeline.render: Callable[[Lifeline], str]
+# 103: override Lifeline.render: Callable[[Lifeline], str]
 # defined in umloverrides.py

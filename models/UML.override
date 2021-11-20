@@ -81,19 +81,14 @@ Constraint.context = derivedunion('context', Namespace, 0, 1)
 %%
 override NamedElement.qualifiedName(NamedElement.namespace): derived[list[str]]
 
-def _namedelement_qualifiedname(self) -> list[str]:
-    """Returns the qualified name of the element as a tuple."""
-    if self.namespace:
-        return _namedelement_qualifiedname(self.namespace) + [self.name]
-    else:
-        return [self.name]
+from gaphor.core.modeling.diagram import qualifiedName
 
 NamedElement.qualifiedName = derived(
     "qualifiedName",
     List[str],
     0,
     1,
-    lambda obj: [_namedelement_qualifiedname(obj)],
+    lambda obj: [qualifiedName(obj)],
 )
 %%
 override Property.navigability(Property.opposite, Property.association): derived[bool | None]
