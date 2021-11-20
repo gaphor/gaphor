@@ -12,10 +12,12 @@ from gaphor.UML.classes.classespropertypages import (
     AttributesPage,
     ClassEnumerationLiterals,
     OperationsPage,
-    new_builder,
+    new_resource_builder,
     on_keypress_event,
 )
 from gaphor.UML.classes.enumeration import EnumerationItem
+
+new_builder = new_resource_builder("gaphor.UML.classes")
 
 
 @PropertyPages.register(EnumerationItem)
@@ -33,16 +35,29 @@ class EnumerationPage(PropertyPageBase):
         if not isinstance(self.item.subject, UML.Enumeration):
             return
 
-        builder = new_builder("enumerations-editor")
-        page = builder.get_object("enumerations-editor")
+        self.model = ClassEnumerationLiterals(self.item)
+
+        builder = new_builder(
+            "enumerations-editor",
+            signals={
+                "show-enumerations-changed": (self._on_show_enumerations_change,),
+                "enumerations-name-edited": (on_text_cell_edited, self.model, 0),
+                "tree-view-destroy": (self.watcher.unsubscribe_all,),
+            },
+        )
 
         show_enumerations = builder.get_object("show-enumerations")
         show_enumerations.set_active(self.item.show_enumerations)
 
-        self.model = ClassEnumerationLiterals(self.item)
-
         tree_view: Gtk.TreeView = builder.get_object("enumerations-list")
         tree_view.set_model(self.model)
+
+        if Gtk.get_major_version() == 3:
+            controller = self.key_controller = Gtk.EventControllerKey.new(tree_view)
+        else:
+            controller = Gtk.EventControllerKey.new()
+            tree_view.add_controller(controller)
+        controller.connect("key-pressed", on_keypress_event, tree_view)
 
         def handler(event):
             enumeration = event.element
@@ -52,19 +67,11 @@ class EnumerationPage(PropertyPageBase):
 
         self.watcher.watch("ownedLiteral.name", handler)
 
-        builder.connect_signals(
-            {
-                "show-enumerations-changed": (self._on_show_enumerations_change,),
-                "enumerations-name-edited": (on_text_cell_edited, self.model, 0),
-                "tree-view-destroy": (self.watcher.unsubscribe_all,),
-                "enumerations-keypress": (on_keypress_event,),
-            }
-        )
-        return page
+        return builder.get_object("enumerations-editor")
 
     @transactional
     def _on_show_enumerations_change(self, button, gparam):
-        self.item.show_attributes = button.get_active()
+        self.item.show_enumerations = button.get_active()
         self.item.request_update()
 
 
