@@ -203,7 +203,7 @@ script that creates a Windows installer using
 ```bash
 $ source .venv/bin/activate
 $ mingw32-make dist
-$ cd packaging
+$ cd _packaging
 $ mingw32-make all
 $ cd windows
 $ mingw32-make all

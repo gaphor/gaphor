@@ -25,8 +25,8 @@ runs:
     - name: Sign Executables
       env:
         timestampUrl: http://timestamp.digicert.com
-        installer: "packaging/dist/gaphor-${{ inputs.version }}-installer.exe"
-        portable: "packaging/dist/gaphor-${{ inputs.version }}-portable.exe"
+        installer: "_packaging/dist/gaphor-${{ inputs.version }}-installer.exe"
+        portable: "_packaging/dist/gaphor-${{ inputs.version }}-portable.exe"
         password: "${{ inputs.cert_password }}"
       run: |
         $pfx_cert_byte = [System.Convert]::FromBase64String("${{ inputs.base64_encoded_pfx }}")
