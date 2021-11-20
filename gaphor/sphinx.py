@@ -66,9 +66,8 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
                 )
             )
 
-        rel_filename, filename = self.env.relfn2path(model_file)
-        self.env.note_dependency(rel_filename)
-        model = load_model(filename)
+        self.env.note_dependency(model_file)
+        model = load_model(Path(self.env.srcdir) / model_file)
 
         outdir = (
             Path(self.env.app.doctreedir).relative_to(self.env.srcdir) / ".." / "gaphor"
