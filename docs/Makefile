@@ -130,25 +130,3 @@ doctest:
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
-
-models: models/core.rst models/uml.rst models/SysML.rst
-
-models/core.rst: ../models/Core.gaphor
-	gaphorconvert --format=svg --dir=models/core --use-underscores $< && \
-	./modeldoc.sh core
-
-models/uml.rst: ../models/UML.gaphor
-	gaphorconvert --format=svg --dir=models/uml --use-underscores $< && \
-	./modeldoc.sh uml
-
-models/SysML.rst: ../models/SysML.gaphor
-	gaphorconvert --format=svg --dir=models/sysml --use-underscores $< && \
-	./modeldoc.sh sysml/Profiles/SysML
-
-models/RAAML.rst: ../models/FTA.gaphor
-	gaphorconvert --format=svg --dir=models/raaml --use-underscores $< && \
-	./modeldoc.sh raaml/Profiles/RAAML
-
-models/c4model.rst: ../models/C4Model.gaphor
-	gaphorconvert --format=svg --dir=models/c4model --use-underscores $< && \
-	./modeldoc.sh c4model
