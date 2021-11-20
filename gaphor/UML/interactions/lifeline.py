@@ -19,17 +19,14 @@ bottom of the lifeline's lifetime when delete message is connected to a
 lifeline.
 """
 
-from gaphas.connector import Handle, LinePort
-from gaphas.constraint import (
-    CenterConstraint,
-    EqualsConstraint,
-    LessThanConstraint,
-    LineAlignConstraint,
-)
+from gaphas.connector import Handle, Port
+from gaphas.constraint import CenterConstraint, EqualsConstraint, LessThanConstraint
 from gaphas.geometry import distance_line_point
 from gaphas.item import SE, SW
-from gaphas.position import MatrixProjection
-from gaphas.solver import STRONG, MultiConstraint
+from gaphas.position import MatrixProjection, Position
+from gaphas.solver import VERY_STRONG, MultiConstraint
+from gaphas.solver.constraint import BaseConstraint
+from gaphas.types import Pos, SupportsFloatPos
 
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
@@ -39,7 +36,47 @@ from gaphor.diagram.text import FontWeight
 from gaphor.UML.modelfactory import stereotypes_str
 
 
-class LifetimePort(LinePort):
+class BetweenConstraint(BaseConstraint):
+    """b <= a <= c.
+
+    Only a will change.
+    """
+
+    def __init__(self, v, lower, upper):
+        super().__init__(v, lower, upper)
+        self.v = v
+        self.lower = lower
+        self.upper = upper
+
+    def solve_for(self, var):
+        if var is not self.v:
+            return
+
+        lower = self.lower.value
+        upper = self.upper.value
+        if lower > upper:
+            lower, upper = upper, lower
+        if self.v.value < lower:
+            self.v.value = lower
+        if self.v.value > upper:
+            self.v.value = upper
+
+
+class BetweenPort(Port):
+    """Port defined as a line between two handles."""
+
+    def __init__(self, start: Position, end: Position) -> None:
+        super().__init__()
+
+        self.start = start
+        self.end = end
+
+    def glue(self, pos: SupportsFloatPos) -> tuple[Pos, float]:
+        d, pl = distance_line_point(
+            self.start.tuple(), self.end.tuple(), (float(pos[0]), float(pos[1]))
+        )
+        return pl, d
+
     def constraint(self, item, handle, glue_item):
         """Create connection line constraint between item's handle and the
         port."""
@@ -47,20 +84,10 @@ class LifetimePort(LinePort):
         end = MatrixProjection(self.end, glue_item.matrix_i2c)
         point = MatrixProjection(handle.pos, item.matrix_i2c)
 
-        x, y = item.matrix_i2c.transform_point(*handle.pos)
-        x, y = glue_item.matrix_i2c.inverse().transform_point(x, y)
+        cx = EqualsConstraint(point.x, start.x)
+        cy = BetweenConstraint(point.y, start.y, end.y)
 
-        # keep message at the same distance from head or bottom of lifetime
-        # line depending on situation
-        height = self.end.y - self.start.y
-        if y / height < 0.5:
-            delta = y - self.start.y
-            align = 0
-        else:
-            delta = y - self.end.y
-            align = 1
-        line = LineAlignConstraint((start, end), point, align, delta)
-        return MultiConstraint(start, end, point, line)
+        return MultiConstraint(start, end, point, cx, cy)
 
 
 class LifetimeItem:
@@ -81,13 +108,13 @@ class LifetimeItem:
     def __init__(self):
         super().__init__()
 
-        self.top = Handle(strength=STRONG - 1)
-        self.bottom = Handle(strength=STRONG)
+        self.top = Handle(strength=VERY_STRONG - 1)
+        self.bottom = Handle(strength=VERY_STRONG)
 
         self.top.movable = False
         self.top.visible = False
 
-        self.port = LifetimePort(self.top.pos, self.bottom.pos)
+        self.port = BetweenPort(self.top.pos, self.bottom.pos)
         self.visible = False
 
         self._c_min_length = None  # to be set by lifeline item

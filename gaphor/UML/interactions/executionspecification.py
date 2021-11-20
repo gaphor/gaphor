@@ -23,16 +23,17 @@ behavior, whereas ActionExecutionSpecification has a [1] relation to action.
 import ast
 
 from gaphas import Handle
-from gaphas.connector import LinePort, Position
+from gaphas.connector import Position
 from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
-from gaphas.solver import WEAK
+from gaphas.solver import STRONG
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.presentation import HandlePositionUpdate, postload_connect
 from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
+from gaphor.UML.interactions.lifeline import BetweenPort
 
 
 @represents(UML.ExecutionSpecification)
@@ -48,7 +49,7 @@ class ExecutionSpecificationItem(
 
         self.bar_width = 12
 
-        ht, hb = Handle(), Handle()
+        ht, hb = Handle(strength=STRONG), Handle(strength=STRONG)
         ht.connectable = True
 
         self._handles = [ht, hb]
@@ -58,10 +59,10 @@ class ExecutionSpecificationItem(
         self._connections.add_constraint(self, constraint(vertical=(ht.pos, hb.pos)))
 
         r = self.bar_width / 2
-        nw = Position(-r, 0, strength=WEAK)
-        ne = Position(r, 0, strength=WEAK)
-        se = Position(r, 0, strength=WEAK)
-        sw = Position(-r, 0, strength=WEAK)
+        nw = Position(-r, 0, strength=STRONG)
+        ne = Position(r, 0, strength=STRONG)
+        se = Position(r, 0, strength=STRONG)
+        sw = Position(-r, 0, strength=STRONG)
 
         for c in (
             constraint(horizontal=(nw, ht.pos)),
@@ -75,7 +76,7 @@ class ExecutionSpecificationItem(
         ):
             self._connections.add_constraint(self, c)
 
-        self._ports = [LinePort(nw, sw), LinePort(ne, se)]
+        self._ports = [BetweenPort(nw, sw), BetweenPort(ne, se)]
 
         self.shape = Box(
             style={"background-color": (1.0, 1.0, 1.0, 1.0)}, draw=draw_border

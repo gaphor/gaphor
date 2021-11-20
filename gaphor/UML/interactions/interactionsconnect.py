@@ -34,6 +34,9 @@ def order_lifeline_covered_by(lifeline):
     def y_and_occurence(connected):
         for conn in diagram.connections.get_connections(connected=connected):
             m = conn.item.matrix_i2c
+            if not conn.item.subject:
+                # Can happen during DnD
+                continue
             if isinstance(conn.item, ExecutionSpecificationItem):
                 yield (
                     m.transform_point(*conn.item.top.pos)[1],
