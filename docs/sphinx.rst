@@ -92,12 +92,12 @@ Errors
 
 Errors are shown on the console when the documentation is built and in the document.
 
-The model can not be found:
+The model cannot be found:
 
 .. diagram:: Wrong name
    :model: not-a-model
 
-The model can be found, but the diagram can notnot be found:
+The model can be found, but the diagram cannot be found:
 
 .. diagram:: Wrong name
    :model: example
