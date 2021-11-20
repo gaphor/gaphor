@@ -79,6 +79,11 @@ gaphor_models = {
     "connect": "connect.gaphor",
     "example": "../examples/sequence-diagram.gaphor",
     "style-sheets": "style-sheet-examples.gaphor",
+    "core": "../models/Core.gaphor",
+    "uml": "../models/UML.gaphor",
+    "sysml": "../models/SysML.gaphor",
+    "raaml": "../models/RAAML.gaphor",
+    "c4model": "../models/C4Model.gaphor",
 }
 
 # -- Options for HTML output -------------------------------------------------
