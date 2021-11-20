@@ -47,7 +47,6 @@ poethepoet = { version = ">=0.10,<0.12", optional = true }
 tomli = { version = "^1.2", optional = true }
 sphinx = { version = "^4.3", optional = true }
 sphinx-rtd-theme = { version = "^1.0", optional = true }
-sphinxcontrib-images = { version = "^0.9", optional = true }
 myst-parser = { version = "^0.15", optional = true }
 
 [tool.poetry.dev-dependencies]
@@ -69,7 +68,7 @@ poethepoet = ">=0.10,<0.12"
 [tool.poetry.extras]
 pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 poethepoet = ["poethepoet"]
-docs = [ "sphinx", "sphinx-rtd-theme", "sphinxcontrib-images", "myst-parser"]
+docs = [ "sphinx", "sphinx-rtd-theme", "myst-parser"]
 
 [tool.poetry.scripts]
 gaphor = "gaphor.ui:main"

@@ -809,18 +809,6 @@ lint = ["flake8", "mypy", "docutils-stubs"]
 test = ["pytest", "html5lib"]
 
 [[package]]
-name = "sphinxcontrib-images"
-version = "0.9.4"
-description = "Sphinx extension for thumbnails"
-category = "main"
-optional = true
-python-versions = "*"
-
-[package.dependencies]
-requests = ">2.2,<3"
-sphinx = {version = ">=2.0", markers = "python_version >= \"3.0\""}
-
-[[package]]
 name = "sphinxcontrib-jsmath"
 version = "1.0.1"
 description = "A sphinx extension which renders display math in HTML via JavaScript"
@@ -935,14 +923,14 @@ optional = false
 python-versions = "*"
 
 [extras]
-docs = ["sphinx", "sphinx-rtd-theme", "sphinxcontrib-images", "myst-parser"]
+docs = ["sphinx", "sphinx-rtd-theme", "myst-parser"]
 poethepoet = ["poethepoet"]
 pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9, <3.11"
-content-hash = "8023dc9d435d6c0d0a0a9d6370b873f87f28df6e71187c0bdd301418091b794e"
+content-hash = "4dc50cae218bacc6107b241abea62fe4a0b5a9f02fd7a4d6d5bed2a58b1819c9"
 
 [metadata.files]
 alabaster = [
@@ -1412,10 +1400,6 @@ sphinxcontrib-devhelp = [
 sphinxcontrib-htmlhelp = [
     {file = "sphinxcontrib-htmlhelp-2.0.0.tar.gz", hash = "sha256:f5f8bb2d0d629f398bf47d0d69c07bc13b65f75a81ad9e2f71a63d4b7a2f6db2"},
     {file = "sphinxcontrib_htmlhelp-2.0.0-py2.py3-none-any.whl", hash = "sha256:d412243dfb797ae3ec2b59eca0e52dac12e75a241bf0e4eb861e450d06c6ed07"},
-]
-sphinxcontrib-images = [
-    {file = "sphinxcontrib-images-0.9.4.tar.gz", hash = "sha256:f6c237d0430793e65d91dbddb13b1fb26a2cf838040a9deeb52112969fbc4a4b"},
-    {file = "sphinxcontrib_images-0.9.4-py2.py3-none-any.whl", hash = "sha256:8863e8e8533a116f45cb92523938ab25879cc31dc594f5de4c3dbd9ab3d440b0"},
 ]
 sphinxcontrib-jsmath = [
     {file = "sphinxcontrib-jsmath-1.0.1.tar.gz", hash = "sha256:a9925e4a4587247ed2191a22df5f6970656cb8ca2bd6284309578f2153e0c4b8"},

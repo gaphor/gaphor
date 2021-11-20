@@ -38,7 +38,6 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.autosectionlabel",
     "myst_parser",
-    "sphinxcontrib.images",
     "gaphor.sphinx",
 ]
 
