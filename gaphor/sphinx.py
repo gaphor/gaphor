@@ -92,13 +92,14 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
                 ).format(name=name, model_name=model_name, model_file=model_file)
             )
 
-        outfile = outdir / f"{diagram.id}.svg"
-        DiagramExport().save_svg(outfile, diagram)
+        outfile = outdir / f"{diagram.id}"
+        DiagramExport().save_svg(outfile.with_suffix(".svg"), diagram)
+        DiagramExport().save_pdf(outfile.with_suffix(".pdf"), diagram)
 
         return [
             nodes.image(
                 rawsource=self.block_text,
-                uri=str(outfile),
+                uri=str(outfile) + ".*",
                 **self.options,
             ),
         ]
