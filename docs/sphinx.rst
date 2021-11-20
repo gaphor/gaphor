@@ -69,6 +69,24 @@ Step 2: Add references to models
 
 Now include ``diagram`` directives in your documents.
 
+
+Read the Docs
+~~~~~~~~~~~~~
+
+The diagram directive plays nice with `Read the docs`_.
+To make diagrams render, it's best to use a `.readthedocs.yaml`_ file in your project.
+Make sure to include the extra ``apt_packages`` as shown below.
+
+This is the ``.readthedocs.yaml`` file we use for Gaphor:
+
+.. literalinclude :: ../.readthedocs.yaml
+   :language: yaml
+
+* ``libgirepository1.0-dev`` is required to build PyGObject.
+* ``gir1.2-pango-1.0`` is required for text rendering.
+* ``gir1.2-gtk-3.0`` and ``gir1.2-gtksource-4`` are needed, although we do not use the GUI.
+
+
 Errors
 ------
 
@@ -87,3 +105,5 @@ The model can be found, but the diagram can notnot be found:
 
 .. _Sphinx: https://sphinx-doc.org
 .. _Image properties: https://docutils.sourceforge.io/docs/ref/rst/directives.html#image
+.. _Read the Docs: https://readthedocs.org
+.. _.readthedocs.yaml: https://docs.readthedocs.io/en/stable/config-file/v2.html
