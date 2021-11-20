@@ -57,6 +57,11 @@ plug-in.
    storage
    undo
 
+.. toctree::
+   :caption: Extras
+
+   sphinx
+   
 External links
 --------------
 

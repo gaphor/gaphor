@@ -8,6 +8,8 @@ repos:
   rev: v0.910-1
   hooks:
   - id: mypy
+    additional_dependencies:
+    - types-docutils
 - repo: https://github.com/PyCQA/flake8
   rev: 4.0.1
   hooks:
