@@ -2,7 +2,7 @@ name: Test
 on:
   pull_request:
 env:
-  python_version: '3.9'
+  python_version: '3.9.9'
 
 jobs:
 
