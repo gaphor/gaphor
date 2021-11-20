@@ -42,8 +42,8 @@ plug-in.
 
    models/core
    models/uml
-   models/SysML
-   models/RAAML
+   models/sysml
+   models/raaml
    models/c4model
 
 .. toctree::
