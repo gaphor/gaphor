@@ -78,6 +78,7 @@ images_config = {"default_image_width": "", "default_image_height": ""}
 gaphor_models = {
     "connect": "connect.gaphor",
     "example": "../examples/sequence-diagram.gaphor",
+    "style-sheets": "style-sheet-examples.gaphor",
 }
 
 # -- Options for HTML output -------------------------------------------------
