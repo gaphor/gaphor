@@ -38,7 +38,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.autosectionlabel",
     "myst_parser",
-    "gaphor.sphinx",
+    "gaphor.extensions.sphinx",
 ]
 
 autodoc_mock_imports = ["gi"]

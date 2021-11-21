@@ -1,7 +1,7 @@
 import sphinx.application
 import sphinx.util.docutils
 
-from gaphor.sphinx import setup as sphinx_setup
+from gaphor.extensions.sphinx import setup as sphinx_setup
 
 
 def test_setup(tmp_path):
