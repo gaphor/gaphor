@@ -12,7 +12,7 @@ from sphinx.util import logging
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.i18n import gettext
-from gaphor.plugins.diagramexport import DiagramExport
+from gaphor.plugins.diagramexport import save_pdf, save_svg
 from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.storage import storage
 
@@ -96,11 +96,11 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
             )
 
         outfile = outdir / f"{diagram.id}"
-        DiagramExport().save_svg(outfile.with_suffix(".svg"), diagram)
-        DiagramExport().save_pdf(outfile.with_suffix(".pdf"), diagram)
+        save_svg(outfile.with_suffix(".svg"), diagram)
+        save_pdf(outfile.with_suffix(".pdf"), diagram)
 
         # Image needs a relative path. Make our outfile path relative to the doc
-        for i in range(len(Path(self.env.docname).parts) - 1):
+        for _ in Path(self.env.docname).parts[:-1]:
             outfile = Path("..") / outfile
 
         return [

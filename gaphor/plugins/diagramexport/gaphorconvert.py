@@ -8,6 +8,7 @@ from typing import List
 
 from gaphor.application import Session
 from gaphor.core.modeling import Diagram
+from gaphor.plugins.diagramexport import save_pdf, save_png, save_svg
 from gaphor.storage import storage
 
 
@@ -80,12 +81,10 @@ def main(argv=sys.argv[1:]):
             "element_factory",
             "element_dispatcher",
             "modeling_language",
-            "diagram_export",
         ]
     )
     factory = session.get_service("element_factory")
     modeling_language = session.get_service("modeling_language")
-    diagram_export = session.get_service("diagram_export")
 
     name_re = None
     if options.regex:
@@ -125,10 +124,10 @@ def main(argv=sys.argv[1:]):
             message(f"rendering: {pname} -> {outfilename}...")
 
             if options.format == "pdf":
-                diagram_export.save_pdf(outfilename, diagram)
+                save_pdf(outfilename, diagram)
             elif options.format == "svg":
-                diagram_export.save_svg(outfilename, diagram)
+                save_svg(outfilename, diagram)
             elif options.format == "png":
-                diagram_export.save_png(outfilename, diagram)
+                save_png(outfilename, diagram)
             else:
                 raise RuntimeError(f"Unknown file format: {options.format}")
