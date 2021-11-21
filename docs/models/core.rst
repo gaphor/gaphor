@@ -1,5 +1,5 @@
 Modeling Language Core
 ==================================================
 
-.. image:: core/Core/main.svg
-
+.. diagram:: main
+   :model: core

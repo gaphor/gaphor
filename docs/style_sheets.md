@@ -30,7 +30,11 @@ class {
 }
 ```
 
-![background beige](style-sheets/class.png)
+```{eval-rst}
+.. diagram:: class
+   :model: style-sheets
+   :alt: background beige
+```
 
 Or change the color of a component, only when it's nested in a node:
 
@@ -40,14 +44,18 @@ node component {
 }
 ```
 
-![nested component](style-sheets/node-component.png)
+```{eval-rst}
+.. diagram:: node-component
+   :model: style-sheets
+   :alt: nested component
+```
 
 The diagram itself is also expressed as a CSS node. It's pretty easy to define
 a "dark" style:
 
 ``` css
 diagram {
-  background-color: black;
+  background-color: #343131;
 }
 
 * {
@@ -56,11 +64,13 @@ diagram {
 }
 ```
 
-<p>
- <span style="display: inline-block; background-color: black; padding: 16px">
-  <img alt="dark style" src="_images/dark.png"/>
- </span>
-</p>
+```{eval-rst}
+.. diagram:: dark
+   :model: style-sheets
+   :alt: dark-style
+   :class: dark-style
+   :name: dark-style
+```
 
 Here you already see the first custom attribute: `text-color`. This property
 allows you to control the color of the text drawn in an item. `color` is used
@@ -222,7 +232,11 @@ diagram[name=draft] * {
 }
 ```
 
-![draft style](style-sheets/draft.png)
+```{eval-rst}
+.. diagram:: draft
+   :model: style-sheets
+   :alt: draft style
+```
 
 ### Unconnected relationships
 
@@ -239,7 +253,11 @@ never have a backing model element.
 }
 ```
 
-![unconnected relationship](style-sheets/unconnected.png)
+```{eval-rst}
+.. diagram:: unconnected
+   :model: style-sheets
+   :alt: unconnected relationship
+```
 
 ### Navigable associations
 
@@ -255,4 +273,8 @@ association:not([memberEnd.navigability*=true]) {
 }
 ```
 
-![navigable association](style-sheets/navigable-association.png)
+```{eval-rst}
+.. diagram:: navigable-association
+   :model: style-sheets
+   :alt: navigable association
+```

@@ -4,12 +4,12 @@
 1. Packages
 --------------------------------------------------
 
-.. thumbnail:: 06._Packaging/1._Packages.svg
-  :group: 06._Packaging
+.. diagram:: 1. Packages
+   :model: uml
 
 2. Profiles
 --------------------------------------------------
 
-.. thumbnail:: 06._Packaging/2._Profiles.svg
-  :group: 06._Packaging
+.. diagram:: 2. Profiles
+   :model: uml
 

@@ -4,6 +4,6 @@
 UseCases
 --------------------------------------------------
 
-.. thumbnail:: 12._Use_Cases/UseCases.svg
-  :group: 12._Use_Cases
+.. diagram:: UseCases
+   :model: uml
 

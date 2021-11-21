@@ -4,6 +4,6 @@
 1. Behavior State Machines
 --------------------------------------------------
 
-.. thumbnail:: 08._State_Machines/1._Behavior_State_Machines.svg
-  :group: 08._State_Machines
+.. diagram:: 1. Behavior State Machines
+   :model: uml
 

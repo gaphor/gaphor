@@ -4,18 +4,18 @@
 1. Deployments
 --------------------------------------------------
 
-.. thumbnail:: 13._Deployments/1._Deployments.svg
-  :group: 13._Deployments
+.. diagram:: 1. Deployments
+   :model: uml
 
 2. Artifacts
 --------------------------------------------------
 
-.. thumbnail:: 13._Deployments/2._Artifacts.svg
-  :group: 13._Deployments
+.. diagram:: 2. Artifacts
+   :model: uml
 
 3. Nodes
 --------------------------------------------------
 
-.. thumbnail:: 13._Deployments/3._Nodes.svg
-  :group: 13._Deployments
+.. diagram:: 3. Nodes
+   :model: uml
 

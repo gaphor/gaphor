@@ -4,30 +4,30 @@
 1. Activities
 --------------------------------------------------
 
-.. thumbnail:: 09._Activities/1._Activities.svg
-  :group: 09._Activities
+.. diagram:: 1. Activities
+   :model: uml
 
 2. Control Nodes
 --------------------------------------------------
 
-.. thumbnail:: 09._Activities/2._Control_Nodes.svg
-  :group: 09._Activities
+.. diagram:: 2. Control Nodes
+   :model: uml
 
 3. Object Nodes
 --------------------------------------------------
 
-.. thumbnail:: 09._Activities/3._Object_Nodes.svg
-  :group: 09._Activities
+.. diagram:: 3. Object Nodes
+   :model: uml
 
 4. Executable Nodes
 --------------------------------------------------
 
-.. thumbnail:: 09._Activities/4._Executable_Nodes.svg
-  :group: 09._Activities
+.. diagram:: 4. Executable Nodes
+   :model: uml
 
 5. Activity Groups
 --------------------------------------------------
 
-.. thumbnail:: 09._Activities/5._Activity_Groups.svg
-  :group: 09._Activities
+.. diagram:: 5. Activity Groups
+   :model: uml
 

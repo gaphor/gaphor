@@ -1,15 +1,15 @@
-02. Values
+Allocations
 ==================================================
 
-1. Literals
+AllocatedActivityPartition
 --------------------------------------------------
 
-.. diagram:: 1. Literals
-   :model: uml
+.. diagram:: AllocatedActivityPartition
+   :model: sysml
 
-2. Expressions
+Allocation
 --------------------------------------------------
 
-.. diagram:: 2. Expressions
-   :model: uml
+.. diagram:: Allocation
+   :model: sysml
 

@@ -51,7 +51,7 @@ Step 1: Add gaphor as extension.
 .. code:: python
 
    extensions = [
-       "gaphor.sphinx",
+       "gaphor.extensions.sphinx",
    ]
 
 Step 2: Add references to models

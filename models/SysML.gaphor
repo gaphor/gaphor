@@ -11230,7 +11230,6 @@ otherwise MRO can not be resolved.</val>
 }
 
 diagram {
- background-color: white;
  line-style: normal;
  /* line-style: sloppy 0.3; */
 }

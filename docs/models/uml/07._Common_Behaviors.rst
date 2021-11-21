@@ -4,12 +4,12 @@
 1. Behaviors
 --------------------------------------------------
 
-.. thumbnail:: 07._Common_Behaviors/1._Behaviors.svg
-  :group: 07._Common_Behaviors
+.. diagram:: 1. Behaviors
+   :model: uml
 
 2. Events
 --------------------------------------------------
 
-.. thumbnail:: 07._Common_Behaviors/2._Events.svg
-  :group: 07._Common_Behaviors
+.. diagram:: 2. Events
+   :model: uml
 

@@ -1,5 +1,6 @@
-C4 Model
+Libraries
 ==================================================
 
-.. diagram:: C4
-   :model: c4model
+.. diagram:: Libraries
+   :model: sysml
+

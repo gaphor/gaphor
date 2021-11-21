@@ -275,10 +275,11 @@ class DiagramPage:
         style = self.diagram.style(StyledDiagram(self.diagram, self.view))
 
         bg = style.get("background-color")
+        # Default background to white, slightly gray in dark mode
+        if not bg or bg[3] == 0.0:
+            bg = (1.0, 1.0, 1.0, 0.94)
         self.diagram_css.load_from_data(
             f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}".encode()
-            if bg
-            else b""
         )
 
         view = self.view

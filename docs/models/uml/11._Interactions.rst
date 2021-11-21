@@ -4,24 +4,24 @@
 1. Interactions
 --------------------------------------------------
 
-.. thumbnail:: 11._Interactions/1._Interactions.svg
-  :group: 11._Interactions
+.. diagram:: 1. Interactions
+   :model: uml
 
 2. Lifelines
 --------------------------------------------------
 
-.. thumbnail:: 11._Interactions/2._Lifelines.svg
-  :group: 11._Interactions
+.. diagram:: 2. Lifelines
+   :model: uml
 
 3. Messages
 --------------------------------------------------
 
-.. thumbnail:: 11._Interactions/3._Messages.svg
-  :group: 11._Interactions
+.. diagram:: 3. Messages
+   :model: uml
 
 4. Occurences
 --------------------------------------------------
 
-.. thumbnail:: 11._Interactions/4._Occurences.svg
-  :group: 11._Interactions
+.. diagram:: 4. Occurences
+   :model: uml
 

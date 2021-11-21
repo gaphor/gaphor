@@ -1,7 +1,8 @@
 Unified Modeling Language
 ==================================================
 
-.. image:: uml/00._Overview.svg
+.. diagram:: 00. Overview
+   :model: uml
 
 .. toctree::
   :caption: Packages
