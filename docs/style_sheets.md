@@ -55,7 +55,7 @@ a "dark" style:
 
 ``` css
 diagram {
-  background-color: black;
+  background-color: #343131;
 }
 
 * {

@@ -72,7 +72,7 @@ node component {
 
 
 diagram[name=dark] {
-  background-color: black;
+  background-color: #343131;
 }
 
 diagram[name=dark] * {
