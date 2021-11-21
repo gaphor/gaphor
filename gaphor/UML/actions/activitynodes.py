@@ -170,23 +170,22 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            *(
-                (Text(text=self.node_type, style={"font-size": "small"}),)
-                if self.show_underlaying_type
-                else ()
-            ),
+            Text(text=self.node_type, style={"font-size": "small"}),
             Text(text=lambda: self.subject and self.subject.name or ""),
         )
 
+        self.watch("show_underlaying_type")
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-    show_underlaying_type: attribute[int] = attribute("show_type", int, 1)
+    show_underlaying_type: attribute[int] = attribute("show_type", int, 0)
     combined: relation_one[UML.ControlNode] = association(
         "combined", UML.ControlNode, upper=1
     )
 
     def node_type(self):
+        if not self.show_underlaying_type:
+            return ""
         if self.combined:
             return gettext("merge/decision")
         elif isinstance(self.subject, UML.MergeNode):

@@ -7,7 +7,7 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     new_resource_builder,
 )
-from gaphor.UML.actions.activitynodes import ForkNodeItem
+from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
 new_builder = new_resource_builder("gaphor.UML.actions")
@@ -65,6 +65,30 @@ class ObjectNodePropertyPage(PropertyPageBase):
     @transactional
     def _on_ordering_show_change(self, button, gparam):
         self.item.show_ordering = button.get_active()
+
+
+@PropertyPages.register(DecisionNodeItem)
+class DecisionNodePropertyPage(PropertyPageBase):
+
+    order = 20
+
+    def __init__(self, item):
+        self.item = item
+
+    def construct(self):
+        builder = new_builder(
+            "decision-node-editor",
+            signals={"show-type-changed": (self._on_show_type_change,)},
+        )
+
+        show_type = builder.get_object("show-type")
+        show_type.set_active(self.item.show_underlaying_type)
+
+        return builder.get_object("decision-node-editor")
+
+    @transactional
+    def _on_show_type_change(self, button, gparam):
+        self.item.show_underlaying_type = button.get_active()
 
 
 @PropertyPages.register(ForkNodeItem)
