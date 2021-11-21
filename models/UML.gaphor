@@ -50231,7 +50231,6 @@ Fig. 9.9</val>
 }
 
 diagram {
- background-color: white;
  line-style: normal;
  /* line-style: sloppy 0.3; */
 }
