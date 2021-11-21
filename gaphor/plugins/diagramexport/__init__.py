@@ -17,7 +17,7 @@ from gaphor.ui.questiondialog import QuestionDialog
 logger = logging.getLogger(__name__)
 
 
-def render(diagram, new_surface):
+def render(diagram, new_surface, padding=8):
     diagram.update_now(diagram.get_all_items())
 
     painter = new_painter(diagram)
@@ -32,10 +32,17 @@ def render(diagram, new_surface):
     tmpcr.show_page()
     tmpsurface.flush()
 
-    w, h = bounding_box.width, bounding_box.height
+    w, h = bounding_box.width + 2 * padding, bounding_box.height + 2 * padding
     surface = new_surface(w, h)
     cr = cairo.Context(surface)
-    cr.translate(-bounding_box.x, -bounding_box.y)
+
+    bg_color = diagram.style(StyledDiagram(diagram)).get("background-color")
+    if bg_color and bg_color[3]:
+        cr.rectangle(0, 0, w, h)
+        cr.set_source_rgba(*bg_color)
+        cr.fill()
+
+    cr.translate(-bounding_box.x + padding, -bounding_box.y + padding)
     painter.paint(items=diagram.get_all_items(), cairo=cr)
     cr.show_page()
     return surface

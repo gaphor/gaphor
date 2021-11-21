@@ -28,7 +28,7 @@ SYSTEM_STYLE_SHEET = textwrap.dedent(
     }
 
     diagram {
-     background-color: white;
+     background-color: transparent;
     }
 
     dependency,
