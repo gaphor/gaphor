@@ -1,16 +1,13 @@
 Blocks
 ==================================================
 
+.. diagram:: Blocks
+   :model: sysml
+
 Adjunt and Classifier Behavior Properties
 --------------------------------------------------
 
 .. diagram:: Adjunt and Classifier Behavior Properties
-   :model: sysml
-
-Blocks
---------------------------------------------------
-
-.. diagram:: Blocks
    :model: sysml
 
 Bound References
