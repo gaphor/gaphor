@@ -1,11 +1,9 @@
-Sphinx support
-==============
+Sphinx extension
+================
 
 What's more awesome than to use Gaphor diagrams directly in your `Sphinx`_ documentation.
 
 In case you use multiple Gaphor source files, you need to define a ``:model:`` attribute.
-
-Diagrams can be referenced by their name, or by their fully qualified name.
 
 .. code:: rst
 

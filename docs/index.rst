@@ -26,15 +26,12 @@ plug-in.
    windows
 
 .. toctree::
-   :caption: Concepts
+   :caption: Features
    :maxdepth: 1
 
-   framework
-   service_oriented
-   event_system
-   modeling_language
    style_sheets
-   transaction
+   stereotypes
+   sphinx
 
 .. toctree::
    :caption: Modeling languages
@@ -47,21 +44,26 @@ plug-in.
    models/c4model
 
 .. toctree::
+   :caption: Concepts
+   :maxdepth: 1
+
+   framework
+   service_oriented
+   event_system
+   modeling_language
+   transaction
+
+.. toctree::
    :caption: Internals
    :maxdepth: 1
 
    model
-   stereotypes
    datamodel
    connect
    storage
    undo
 
-.. toctree::
-   :caption: Extras
 
-   sphinx
-   
 External links
 --------------
 
