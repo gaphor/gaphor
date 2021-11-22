@@ -93,7 +93,7 @@ of CSS. Below you'll find a summary of all CSS features supported by Gaphor.
 ``diagram[name*=draft]``      A diagram with a name containing the text "draft".
 ``diagram[name~=draft item]`` A diagram with a name of "draft" or "item".
 ``diagram[name|=draft]``      A diagram with a name is "draft" or starts with "draft-".
-``\*:focus``                  The focused item. Other pseudo classes are:
+``*:focus``                   The focused item. Other pseudo classes are:
 
                               - ``:active`` selected items
                               - ``:hover`` for the item under the mouse
