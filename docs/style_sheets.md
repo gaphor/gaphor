@@ -31,9 +31,8 @@ class {
 ```
 
 ```{diagram} class
----
-model: style-sheets
-alt: background beige
+:model: style-sheets
+:alt: background beige
 ```
 
 Or change the color of a component, only when it's nested in a node:
@@ -45,9 +44,8 @@ node component {
 ```
 
 ```{diagram} node-component
----
-model: style-sheets
-alt: nested component
+:model: style-sheets
+:alt: nested component
 ```
 
 The diagram itself is also expressed as a CSS node. It's pretty easy to define
@@ -65,11 +63,10 @@ diagram {
 ```
 
 ```{diagram} dark
----
-model: style-sheets
-alt: dark-style
-class: dark-style
-name: dark-style
+:model: style-sheets
+:alt: dark-style
+:class: dark-style
+:name: dark-style
 ```
 
 Here you already see the first custom attribute: `text-color`. This property
@@ -233,9 +230,8 @@ diagram[name=draft] * {
 ```
 
 ```{diagram} draft
----
-model: style-sheets
-alt: draft style
+:model: style-sheets
+:alt: draft style
 ```
 
 ### Unconnected relationships
@@ -254,9 +250,8 @@ never have a backing model element.
 ```
 
 ```{diagram} unconnected
----
-model: style-sheets
-alt: unconnected relationship
+:model: style-sheets
+:alt: unconnected relationship
 ```
 
 ### Navigable associations
@@ -274,7 +269,6 @@ association:not([memberEnd.navigability*=true]) {
 ```
 
 ```{diagram} navigable-association
----
-model: style-sheets
-alt: navigable association
+:model: style-sheets
+:alt: navigable association
 ```

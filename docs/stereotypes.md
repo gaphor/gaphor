@@ -25,8 +25,7 @@ Or even `Element` if you want to use the stereotype on all elements.
 Your stereotype declaration may look something like this:
 
 ```{diagram} profile
----
-model: stereotypes
+:model: stereotypes
 ```
 
 The `Asynchronous` stereotype has a property `priority`. This property can
@@ -36,8 +35,7 @@ association end.
 When applied in you can create a little diagram like this:
 
 ```{diagram} application
----
-model: stereotypes
+:model: stereotypes
 ```
 
 When a stereotype can be applied to a model element, a *Stereotype* section

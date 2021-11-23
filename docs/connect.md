@@ -6,9 +6,7 @@ GUI point of view, a button release event is what kicks of the decision whether
 the connection is allowed.
 
 ```{diagram} connect.main
----
-model: connect
----
+:model: connect
 ```
 
 The check if a connection is allowed should also check if it is valid to
