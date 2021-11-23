@@ -2,30 +2,42 @@ Sphinx extension
 ================
 
 What's more awesome than to use Gaphor diagrams directly in your `Sphinx`_ documentation.
+Whether you write your docs in `reStructured Text`_ or `Markdown`_, we've got you covered.
 
-In case you use multiple Gaphor source files, you need to define a ``:model:`` attribute.
+.. tip::
+
+   Here we cover the reStructured Text syntax. If you prefer markdown, we suggest you
+   have a look at the `MyST-parser <https://myst-parser.readthedocs.io/>`_, as it 
+   `supports Sphinx directives <https://myst-parser.readthedocs.io/en/latest/syntax/syntax.html>`_.
+
+It requires `minimal effort to set up <#configuration>`_. Adding a diagram is as simple as:
+
+.. code:: rst
+
+   .. diagram:: main
+
+.. diagram:: main
+   :model: example
+
+In case you use multiple Gaphor source files, you need to define a ``:model:`` attribute
+and add the model names to the Sphinx configuration file (``conf.py``).
 
 .. code:: rst
 
    .. diagram:: main
       :model: example
-
-.. diagram:: main
-   :model: example
 
 Diagrams can be referenced by their name, or by their fully qualified name.
 
 .. code:: rst
 
    .. diagram:: New model.main
-      :model: example
 
 `Image properties`_ can also be applied:
 
 .. code:: rst
 
    .. diagram:: main
-      :model: example
       :width: 50%
       :align: right
       :alt: A description suitable for an example
@@ -102,6 +114,8 @@ The model can be found, but the diagram cannot be found:
 
 
 .. _Sphinx: https://sphinx-doc.org
+.. _reStructured Text: https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html
+.. _Markdown: https://myst-parser.readthedocs.io
 .. _Image properties: https://docutils.sourceforge.io/docs/ref/rst/directives.html#image
 .. _Read the Docs: https://readthedocs.org
 .. _.readthedocs.yaml: https://docs.readthedocs.io/en/stable/config-file/v2.html
