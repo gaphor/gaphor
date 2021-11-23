@@ -76,6 +76,7 @@ images_config = {"default_image_width": "", "default_image_height": ""}
 
 gaphor_models = {
     "connect": "connect.gaphor",
+    "stereotypes": "stereotypes.gaphor",
     "example": "../examples/sequence-diagram.gaphor",
     "style-sheets": "style-sheet-examples.gaphor",
     "core": "../models/Core.gaphor",

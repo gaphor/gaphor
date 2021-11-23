@@ -1,29 +1,48 @@
 # Stereotypes
 
-UML defines a concept called a stereotype, which is how you can extend an
-existing metaclass. This allows you to create new notation that can add to or
-replace existing elements. In order to create a stereotype in Gaphor, first you
-need to create a Profile. A profile is a collection of stereotypes. Next a
-Diagram can be created within the profile. Although a diagram in Gaphor can
-accept any type of element, by convention, the profile diagram should only
-contain items that are useful within a profile:
+In UML, stereotypes are way to extend the application of the UML language to
+new domains. For example: SysML started as a profile for UML.
 
--   Classes, which will function as a `<<metaclass>>`.
--   Stereotype, which will be defined as `<<stereotype>>`.
--   Extensions, connecting metaclasses and stereotypes.
+Gaphor supports stereotypes too. They're *the* way for you to adapt your models
+to your specific needs.
 
-Comment, Association, Generalization, and Dependency can also be used within a
-profile diagram, just like other UML diagrams.
+The UML, SysML, RAAML and other models used in Gaphor – the code is 
+generated from Gaphor model files – make use of stereotypes to provide
+specific information used when generating the data model code.
 
-Some things to keep in mind when working with profiles:
+To create a stereotype, ensure the UML Profile is active and open the *Profile*
+section of the toolbox. First add a *Metaclass* to your diagram. Next add a
+*Stereotype*, and connect both with a *Extension*.
+The `«metaclass»` stereotype will only show once the *Extension* is connected
+both class and stereotype.
 
-- Profiles are reusable and its common to share them across different models.
-- A stereotype can only be owned by a profile, it can not be in a normal
-  Package.
-- In order to make use of a stereotype, Gaphor has to perform a lookup if the
-  MetaClass it is extended from is part of the model.
-- A stereotype can contain an image, which can be used instead of its name.
-- Profiles should be saved with the model too. It should also be possible to
-  "update" a profile within a model.
-- Stereotypes that you define should be instantiated in your model when you
-  create a stereotyped class.
+```{note}
+The class names in the metaclass should be a class name from the UML model,
+such as `Class`, `Interface`, `Property`, `Association`.
+Or even `Element` if you want to use the stereotype on all elements.
+```
+
+Your stereotype declaration may look something like this:
+
+```{diagram} profile
+---
+model: stereotypes
+---
+```
+
+The `Asynchronous` stereotype has a property `priority`. This property can
+be proved a value once the stereotype is applied to a *Property*, such as an
+association end.
+
+When applied in you can create a little diagram like this:
+
+```{diagram} application
+---
+model: stereotypes
+---
+```
+
+When a stereotype can be applied to a model element, a *Stereotype* section
+will appear in the editor.
+
+![Stereotype usage example](images/stereotype-usage.png)
