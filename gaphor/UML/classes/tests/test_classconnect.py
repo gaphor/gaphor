@@ -3,7 +3,6 @@
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect, get_connected
 from gaphor.UML.classes.dependency import DependencyItem
-from gaphor.UML.classes.generalization import GeneralizationItem
 from gaphor.UML.classes.interface import InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.usecases.actor import ActorItem
@@ -165,92 +164,3 @@ def test_dependency_type_auto(create, element_factory):
     assert dep.subject is not None
     assert isinstance(dep.subject, UML.Usage), dep.subject
     assert dep.subject in element_factory.select()
-
-
-def test_generalization_glue(create):
-    """Test generalization item gluing using two classes."""
-
-    gen = create(GeneralizationItem)
-    c1 = create(ClassItem, UML.Class)
-    c2 = create(ClassItem, UML.Class)
-
-    glued = allow(gen, gen.tail, c1)
-    assert glued
-
-    connect(gen, gen.tail, c1)
-    assert get_connected(gen, gen.tail) is c1
-    assert gen.subject is None
-
-    glued = allow(gen, gen.head, c2)
-    assert glued
-
-
-def test_generalization_connection(create):
-    """Test generalization item connection using two classes."""
-    gen = create(GeneralizationItem)
-    c1 = create(ClassItem, UML.Class)
-    c2 = create(ClassItem, UML.Class)
-
-    connect(gen, gen.tail, c1)
-    assert get_connected(gen, gen.tail) is c1
-
-    connect(gen, gen.head, c2)
-    assert gen.subject is not None
-    assert gen.subject.general is c1.subject
-    assert gen.subject.specific is c2.subject
-
-
-def test_generalization_reconnection(create, element_factory):
-    """Test generalization item connection using two classes.
-
-    On reconnection a new Generalization is created.
-    """
-    gen = create(GeneralizationItem)
-    c1 = create(ClassItem, UML.Class)
-    c2 = create(ClassItem, UML.Class)
-
-    connect(gen, gen.tail, c1)
-    assert get_connected(gen, gen.tail) is c1
-
-    connect(gen, gen.head, c2)
-    assert gen.subject is not None
-    assert gen.subject.general is c1.subject
-    assert gen.subject.specific is c2.subject
-
-    # Now do the same on a new diagram:
-    diagram2 = element_factory.create(UML.Diagram)
-    c3 = diagram2.create(ClassItem, subject=c1.subject)
-    c4 = diagram2.create(ClassItem, subject=c2.subject)
-    gen2 = diagram2.create(GeneralizationItem)
-
-    connect(gen2, gen2.head, c3)
-    cinfo = diagram2.connections.get_connection(gen2.head)
-    assert cinfo is not None
-    assert cinfo.connected is c3
-
-    connect(gen2, gen2.tail, c4)
-    assert gen.subject is not gen2.subject
-    assert len(c2.subject.generalization) == 1
-    assert c2.subject.generalization[0] is gen.subject
-
-
-def test_generalization_reconnection2(create):
-    """Test reconnection of generalization."""
-    c1 = create(ClassItem, UML.Class)
-    c2 = create(ClassItem, UML.Class)
-    c3 = create(ClassItem, UML.Class)
-    gen = create(GeneralizationItem)
-
-    # connect: c1 -> c2
-    connect(gen, gen.head, c1)
-    connect(gen, gen.tail, c2)
-
-    s = gen.subject
-
-    # reconnect: c2 -> c3
-    connect(gen, gen.tail, c3)
-
-    assert s is gen.subject
-    assert c1.subject is gen.subject.specific
-    assert c3.subject is gen.subject.general
-    assert c2.subject is not gen.subject.general
