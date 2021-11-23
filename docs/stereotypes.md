@@ -27,7 +27,6 @@ Your stereotype declaration may look something like this:
 ```{diagram} profile
 ---
 model: stereotypes
----
 ```
 
 The `Asynchronous` stereotype has a property `priority`. This property can
@@ -39,7 +38,6 @@ When applied in you can create a little diagram like this:
 ```{diagram} application
 ---
 model: stereotypes
----
 ```
 
 When a stereotype can be applied to a model element, a *Stereotype* section

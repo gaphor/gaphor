@@ -5,10 +5,10 @@ relationship, the connection is also made at semantic level (the model). From a
 GUI point of view, a button release event is what kicks of the decision whether
 the connection is allowed.
 
-```{eval-rst}
-.. diagram:: connect.main
-   :model: connect
-   
+```{diagram} connect.main
+---
+model: connect
+---
 ```
 
 The check if a connection is allowed should also check if it is valid to

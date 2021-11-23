@@ -76,12 +76,10 @@ same name is used for different relationships. Some n:m relationships
 have been made 1:n. These are all small changes and should not restrict
 the usability of Gaphor's model.
 
-The biggest change is the addition of a whole new class: Diagram.
-Diagram is inherited from Namespace and is used to hold a diagram. It
-contains a `gaphas.canvas.Canvas` object which can be displayed on
-screen by a `DiagramView` class.
+The biggest change is the addition of a whole new class: `Diagram`.
+Diagram is part of the modeling core. It contains instances of type `Presentation`.
 
-## UML.Element
+## gaphor.core.modeling.Element
 
 ```{eval-rst}
 .. autoclass:: gaphor.core.modeling.Element
