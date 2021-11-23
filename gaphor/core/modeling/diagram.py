@@ -20,6 +20,7 @@ from typing import (
 )
 
 import gaphas
+from cairo import Context as CairoContext
 
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element, Id, RepositoryProtocol
@@ -66,7 +67,7 @@ class DrawContext:
     like selected and focused.
     """
 
-    cairo: gaphas.types.CairoContext
+    cairo: CairoContext
     style: Style
     selected: bool
     focused: bool

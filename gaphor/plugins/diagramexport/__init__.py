@@ -22,7 +22,7 @@ def render(diagram, new_surface, padding=8):
 
     painter = new_painter(diagram)
 
-    # Update bounding boxes with a temporary CairoContext
+    # Update bounding boxes with a temporary Cairo Context
     # (used for stuff like calculating font metrics)
     tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
     tmpcr = cairo.Context(tmpsurface)
