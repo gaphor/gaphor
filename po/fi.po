@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-11-16 22:05-0500\n"
-"PO-Revision-Date: 2021-10-21 12:41+0000\n"
+"PO-Revision-Date: 2021-11-22 19:18+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:54
@@ -40,9 +41,8 @@ msgid "New Container"
 msgstr "Uusi kontti"
 
 #: gaphor/C4Model/toolbox.py:42
-#, fuzzy
 msgid "Database"
-msgstr "Uusi tietokanta"
+msgstr "Tietokanta"
 
 #: gaphor/C4Model/toolbox.py:43
 msgid "New Database"
@@ -107,7 +107,7 @@ msgstr "Vikapuuanalyysi"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:29
 msgid "AND"
-msgstr ""
+msgstr "JA"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:34 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
@@ -115,7 +115,7 @@ msgstr "OR-portti"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:40
 msgid "OR"
-msgstr ""
+msgstr "TAI"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:45 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
@@ -123,7 +123,7 @@ msgstr "NOT-portti"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:51
 msgid "NOT"
-msgstr ""
+msgstr "EI"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:56
 msgid "Sequence Enforcing (SEQ) Gate"
@@ -451,7 +451,7 @@ msgstr "UML"
 #: gaphor/UML/interactions/interactionstoolbox.py:15
 #: gaphor/UML/states/statestoolbox.py:30 gaphor/diagram/diagramtoolbox.py:28
 msgid "New {name}"
-msgstr ""
+msgstr "Uusi {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:35
 msgid "Activity"
@@ -1614,19 +1614,16 @@ msgid "Show in \"{diagram}\""
 msgstr "Näytä kaaviossa \"{diagram}\""
 
 #: gaphor/ui/namespace.py:304
-#, fuzzy
 msgid "{name} diagram"
-msgstr "Uusi k_aavio"
+msgstr "{name}-kaavio"
 
 #: gaphor/ui/namespace.py:306
-#, fuzzy
 msgid "New diagram"
-msgstr "Uusi k_aavio"
+msgstr "Uusi kaavio"
 
 #: gaphor/ui/namespace.py:320
-#, fuzzy
 msgid "{name} package"
-msgstr "Uusi _pakkaus"
+msgstr "{name}-pakkaus"
 
 #: gaphor/ui/namespace.py:337
 msgid ""
@@ -1635,6 +1632,10 @@ msgid ""
 "This will possibly delete diagram items\n"
 "that are not shown in other diagrams."
 msgstr ""
+"Haluatko varmasti poistaa kaavion {name}?\n"
+"\n"
+"Tämä mahdollisesti poistaa kaaviotietueet,\n"
+"joita ei näy muissa kaavioissa."
 
 #: gaphor/ui/namespacemodel.py:310
 msgid "A {} can't be part of a {}."
@@ -1809,4 +1810,3 @@ msgstr "Ei viimeksi avattuja malleja"
 
 #~ msgid "Decision node"
 #~ msgstr "Päätös-/yhdistämissolmu"
-
