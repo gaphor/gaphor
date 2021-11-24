@@ -8,9 +8,9 @@ from gi.repository import GLib, Gtk
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.diagramtools.connector import PresentationConnector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
+from gaphor.diagram.tools.connector import PresentationConnector
 from gaphor.ui.diagrams import Diagrams
 from gaphor.ui.event import DiagramOpened
 from gaphor.ui.toolbox import Toolbox

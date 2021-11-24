@@ -9,14 +9,14 @@ from gaphas.tool import (
     zoom_tool,
 )
 
-import gaphor.diagram.diagramtools.connector
-import gaphor.diagram.diagramtools.grayout
-import gaphor.diagram.diagramtools.segment
-from gaphor.diagram.diagramtools.dropzone import drop_zone_tool
-from gaphor.diagram.diagramtools.placement import new_item_factory, placement_tool
-from gaphor.diagram.diagramtools.shortcut import shortcut_tool
-from gaphor.diagram.diagramtools.textedit import text_edit_tools
-from gaphor.diagram.diagramtools.txtool import transactional_tool
+import gaphor.diagram.tools.connector
+import gaphor.diagram.tools.grayout
+import gaphor.diagram.tools.segment
+from gaphor.diagram.tools.dropzone import drop_zone_tool
+from gaphor.diagram.tools.placement import new_item_factory, placement_tool
+from gaphor.diagram.tools.shortcut import shortcut_tool
+from gaphor.diagram.tools.textedit import text_edit_tools
+from gaphor.diagram.tools.txtool import transactional_tool
 
 
 def apply_default_tool_set(view, modeling_language, event_manager, rubberband_state):

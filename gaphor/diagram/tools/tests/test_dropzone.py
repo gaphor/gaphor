@@ -1,5 +1,5 @@
 from gaphor import UML
-from gaphor.diagram.diagramtools.dropzone import drop_zone_tool, on_motion
+from gaphor.diagram.tools.dropzone import drop_zone_tool, on_motion
 from gaphor.UML.components import ComponentItem, NodeItem
 
 

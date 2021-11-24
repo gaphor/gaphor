@@ -9,7 +9,7 @@ from gaphor.diagram.diagramtoolbox import (
     general_tools,
     namespace_config,
 )
-from gaphor.diagram.diagramtools import new_item_factory
+from gaphor.diagram.tools import new_item_factory
 from gaphor.SysML import diagramitems as sysml_items
 from gaphor.SysML.blocks.blockstoolbox import blocks
 from gaphor.SysML.requirements.requirementstoolbox import requirements

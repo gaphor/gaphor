@@ -16,11 +16,11 @@ from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import tooliter
-from gaphor.diagram.diagramtools import apply_default_tool_set, apply_placement_tool_set
-from gaphor.diagram.diagramtools.placement import create_item, open_editor
 from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
 from gaphor.diagram.support import get_diagram_item
+from gaphor.diagram.tools import apply_default_tool_set, apply_placement_tool_set
+from gaphor.diagram.tools.placement import create_item, open_editor
 from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramSelectionChanged, Notification, ToolSelected
 

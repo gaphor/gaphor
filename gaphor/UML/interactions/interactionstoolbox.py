@@ -6,7 +6,7 @@ from gaphas.segment import Segment
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, namespace_config
-from gaphor.diagram.diagramtools import new_item_factory
+from gaphor.diagram.tools import new_item_factory
 from gaphor.UML import diagramitems
 from gaphor.UML.modelfactory import owner_package
 

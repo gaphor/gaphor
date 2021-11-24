@@ -17,7 +17,7 @@ from gaphas.painter import BoundingBoxPainter
 from gaphas.view import GtkView
 
 # For DiagramItemConnector aspect:
-import gaphor.diagram.diagramtools  # noqa
+import gaphor.diagram.tools  # noqa
 from gaphor import UML
 from gaphor.application import Session
 from gaphor.diagram.connectors import Connector

@@ -1,7 +1,7 @@
 from gaphas.segment import Segment
 
-from gaphor.diagram.diagramtools.segment import PresentationSegment
 from gaphor.diagram.presentation import LinePresentation
+from gaphor.diagram.tools.segment import PresentationSegment
 
 
 def test_presentation_segment_is_selected(diagram):

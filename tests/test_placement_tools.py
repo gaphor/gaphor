@@ -7,7 +7,7 @@ from gaphor import UML
 from gaphor.C4Model.toolbox import c4model_toolbox_actions
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling.elementfactory import ElementFactory
-from gaphor.diagram.diagramtools.placement import PlacementState, on_drag_begin
+from gaphor.diagram.tools.placement import PlacementState, on_drag_begin
 from gaphor.RAAML.toolbox import raaml_toolbox_actions
 from gaphor.SysML.toolbox import sysml_toolbox_actions
 from gaphor.ui.diagrampage import DiagramPage

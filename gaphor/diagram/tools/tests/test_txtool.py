@@ -1,12 +1,7 @@
 import pytest
 from gi.repository import Gtk
 
-from gaphor.diagram.diagramtools.txtool import (
-    TxData,
-    on_begin,
-    on_end,
-    transactional_tool,
-)
+from gaphor.diagram.tools.txtool import TxData, on_begin, on_end, transactional_tool
 from gaphor.transaction import TransactionBegin
 
 

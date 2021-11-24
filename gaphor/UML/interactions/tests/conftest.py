@@ -1,4 +1,4 @@
-import gaphor.diagram.diagramtools
+import gaphor.diagram.tools
 from gaphor.diagram.tests.fixtures import (
     diagram,
     element_factory,
