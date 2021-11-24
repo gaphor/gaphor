@@ -68,6 +68,13 @@ class PackageMerge(DirectedRelationship):
     mergedPackage: relation_one[Package]
 
 
+class RedefinableElement(NamedElement):
+    isLeaf: attribute[int]
+    visibility: enumeration
+    redefinedElement: relation_many[RedefinableElement]
+    redefinitionContext: relation_many[Classifier]
+
+
 class Namespace(NamedElement):
     elementImport: relation_many[ElementImport]
     packageImport: relation_many[PackageImport]
@@ -81,15 +88,9 @@ class Type(PackageableElement):
     package: relation_one[Package]
 
 
-class RedefinableElement(NamedElement):
-    isLeaf: attribute[int]
-    visibility: enumeration
-    redefinedElement: relation_many[RedefinableElement]
-    redefinitionContext: relation_many[Classifier]
-
-
-class Classifier(Namespace, Type, RedefinableElement):
+class Classifier(RedefinableElement, Namespace, Type):
     isAbstract: attribute[int]
+    specialization: relation_many[Generalization]
     ownedUseCase: relation_many[UseCase]
     generalization: relation_many[Generalization]
     useCase: relation_many[UseCase]
@@ -936,7 +937,12 @@ DataType.ownedOperation = association(
 Operation.datatype = association(
     "datatype", DataType, upper=1, opposite="ownedOperation"
 )
-Generalization.general = association("general", Classifier, lower=1, upper=1)
+Generalization.general = association(
+    "general", Classifier, lower=1, upper=1, opposite="specialization"
+)
+Classifier.specialization = association(
+    "specialization", Generalization, opposite="general"
+)
 Classifier.ownedUseCase = association("ownedUseCase", UseCase, composite=True)
 # 'MultiplicityElement.upperValue' is a simple attribute
 MultiplicityElement.upperValue = attribute("upperValue", str)
@@ -1584,6 +1590,7 @@ Element.directedRelationship = derivedunion(
     0,
     "*",
     NamedElement.supplierDependency,
+    Classifier.specialization,
     NamedElement.clientDependency,
     UseCase.include,
     Package.packageMerge,
