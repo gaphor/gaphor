@@ -10,10 +10,11 @@ from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
-from gaphor.core.modeling.properties import association, relation_one
+from gaphor.core.modeling.properties import association, attribute, relation_one
 from gaphor.diagram.presentation import ElementPresentation, HandlePositionUpdate, Named
 from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
+from gaphor.i18n import gettext
 from gaphor.UML.modelfactory import stereotypes_str
 
 DEFAULT_JOIN_SPEC = "and"
@@ -169,15 +170,29 @@ class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
+            Text(text=self.node_type, style={"font-size": "small"}),
             Text(text=lambda: self.subject and self.subject.name or ""),
         )
 
+        self.watch("show_underlaying_type")
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
+    show_underlaying_type: attribute[int] = attribute("show_type", int, 0)
     combined: relation_one[UML.ControlNode] = association(
         "combined", UML.ControlNode, upper=1
     )
+
+    def node_type(self):
+        if not self.show_underlaying_type:
+            return ""
+        if self.combined:
+            return gettext("merge/decision")
+        elif isinstance(self.subject, UML.MergeNode):
+            return gettext("merge")
+        elif isinstance(self.subject, UML.DecisionNode):
+            return gettext("decision")
+        return ""
 
 
 def draw_decision_node(_box, context, _bounding_box):

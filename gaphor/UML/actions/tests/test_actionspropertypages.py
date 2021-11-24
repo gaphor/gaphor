@@ -1,6 +1,7 @@
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.actions.actionspropertypages import (
+    DecisionNodePropertyPage,
     FlowPropertyPageAbstract,
     ForkNodePropertyPage,
     JoinNodePropertyPage,
@@ -46,6 +47,19 @@ def test_object_node_property_page_ordering(diagram, element_factory):
     ordering.set_active(0)
 
     assert item.subject.ordering == "unordered"
+
+
+def test_decision_node_property_page_show_type(diagram, element_factory):
+    item = diagram.create(
+        UML.actions.DecisionNodeItem, subject=element_factory.create(UML.DecisionNode)
+    )
+    property_page = DecisionNodePropertyPage(item)
+
+    widget = property_page.construct()
+    show_type = find(widget, "show-type")
+    show_type.set_active(True)
+
+    assert item.show_underlaying_type
 
 
 def test_fork_node_property_page(diagram, element_factory):
