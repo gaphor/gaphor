@@ -64,6 +64,7 @@ class ConsoleWindow(UIComponent, ActionProvider):
         )
         window.set_transient_for(self.main_window.window)
         window.set_title(self.title)
+        window.set_default_size(640, 480)
 
         element_factory = self.component_registry.get_service("element_factory")
         console = GTKInterpreterConsole(
