@@ -5,6 +5,10 @@
 #  See www.python.org/2.2/license.html for
 #  license details.
 #
+#  Took some good ideas from the GEdit Python Console:
+#  https://gitlab.gnome.org/GNOME/gedit/-/blob/master/plugins/pythonconsole/pythonconsole/console.py
+#  Licensed under GPL
+
 
 import code
 import sys
@@ -23,6 +27,9 @@ Gaphor Interactive Python Console
 Type "help" for more information.
 """
 ).format(version=sys.version)
+
+ps1 = ">>> "
+ps2 = "... "
 
 
 def docstring_dedent(docstr: str) -> str:
@@ -116,8 +123,6 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.buffer: List[str] = []
         self.history: List[str] = []
         self.banner = banner
-        self.ps1 = ">>> "
-        self.ps2 = "... "
 
         if Gtk.get_major_version() == 3:
             self.text_controller = Gtk.EventControllerKey.new(self.text)
@@ -129,8 +134,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         self.current_history = -1
 
-        self.mark = self.text.get_buffer().create_mark(
-            "End", self.text.get_buffer().get_end_iter(), False
+        self.text.get_buffer().create_mark(
+            "input", self.text.get_buffer().get_end_iter(), True
         )
 
         # setup colors
@@ -148,6 +153,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.style_out = Gtk.TextTag.new("stdout")
         self.style_out.set_property("foreground", "midnight blue")
         self.style_out.set_property("editable", False)
+
         self.style_err = Gtk.TextTag.new("stderr")
         self.style_err.set_property("style", Pango.Style.ITALIC)
         self.style_err.set_property("foreground", "red")
@@ -182,20 +188,27 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     def prompt_ps1(self):
         self.current_prompt = self.prompt_ps1
-        self.write_line(self.ps1, self.style_ps1)
+        self.write_line(ps1, self.style_ps1)
+        self.move_input_mark()
 
     def prompt_ps2(self):
         self.current_prompt = self.prompt_ps2
-        self.write_line(self.ps2, self.style_ps2)
+        self.write_line(ps2, self.style_ps2)
+        self.move_input_mark()
 
     def write_line(self, text, style=None):
-        start, end = self.text.get_buffer().get_bounds()
+        buffer = self.text.get_buffer()
+        start, end = buffer.get_bounds()
         if style:
-            self.text.get_buffer().insert_with_tags(end, text, style)
+            buffer.insert_with_tags(end, text, style)
         else:
-            self.text.get_buffer().insert(end, text)
+            buffer.insert(end, text)
 
-        self.text.scroll_to_mark(self.mark, 0, True, 1, 1)
+    def move_input_mark(self):
+        buffer = self.text.get_buffer()
+        input_mark = buffer.get_mark("input")
+        buffer.move_mark(input_mark, buffer.get_end_iter())
+        self.text.scroll_to_mark(input_mark, 0, True, 1, 1)
 
     def push(self, line):
         self.buffer.append(line)
@@ -252,16 +265,10 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         return self.text.get_buffer().get_text(start, end, True)
 
     def current_line_bounds(self):
-        txt_buffer = self.text.get_buffer()
-        line_count = txt_buffer.get_line_count() - 1
-
-        if Gtk.get_major_version() == 3:
-            start = txt_buffer.get_iter_at_line(line_count)
-        else:
-            _, start = txt_buffer.get_iter_at_line(line_count)
-        if start.get_chars_in_line() >= 4:
-            start.forward_chars(4)
-        end = txt_buffer.get_end_iter()
+        buffer = self.text.get_buffer()
+        input_mark = buffer.get_mark("input")
+        start = buffer.get_iter_at_mark(input_mark)
+        end = buffer.get_end_iter()
         return start, end
 
     def replace_line(self, txt):
