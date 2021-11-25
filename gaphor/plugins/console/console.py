@@ -32,6 +32,24 @@ ps1 = ">>> "
 ps2 = "... "
 
 
+def _text_tag(name, **properties):
+    tag = Gtk.TextTag.new(name)
+    for prop, val in properties.items():
+        tag.set_property(prop, val)
+    return name, tag
+
+
+style = dict(
+    [
+        _text_tag("banner", foreground="saddle brown"),
+        _text_tag("ps1", foreground="DarkOrchid4", editable=False),
+        _text_tag("ps2", foreground="DarkOliveGreen", editable=False),
+        _text_tag("stdout", foreground="midnight blue", editable=False),
+        _text_tag("stderr", style=Pango.Style.ITALIC, foreground="red", editable=False),
+    ]
+)
+
+
 def docstring_dedent(docstr: str) -> str:
     if docstr.startswith(" "):
         return textwrap.dedent(docstr)
@@ -80,16 +98,15 @@ class TextViewWriter:
     and too a GTK textview.
     """
 
-    def __init__(self, name, view, style):
+    def __init__(self, name, view):
         self.name = name
         self.out = getattr(sys, name)
         self.view = view
-        self.style = style
 
     def write(self, text):
         buffer = self.view.get_buffer()
         end = buffer.get_end_iter()
-        buffer.insert_with_tags(end, text, self.style)
+        buffer.insert_with_tags(end, text, style[self.name])
 
     def __enter__(self):
         setattr(sys, self.name, self)
@@ -100,7 +117,7 @@ class TextViewWriter:
 
 
 class GTKInterpreterConsole(Gtk.ScrolledWindow):
-    """An InteractiveConsole for GTK.
+    """An Interactive Console for GTK.
 
     It's an actual widget, so it can be dropped in just about anywhere.
     """
@@ -134,75 +151,49 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         self.current_history = -1
 
-        self.text.get_buffer().create_mark(
-            "input", self.text.get_buffer().get_end_iter(), True
-        )
+        buffer = self.text.get_buffer()
+        buffer.create_mark("input", buffer.get_end_iter(), True)
 
-        # setup colors
-        self.style_banner = Gtk.TextTag.new("banner")
-        self.style_banner.set_property("foreground", "saddle brown")
+        for tag in style.values():
+            buffer.get_tag_table().add(tag)
 
-        self.style_ps1 = Gtk.TextTag.new("ps1")
-        self.style_ps1.set_property("foreground", "DarkOrchid4")
-        self.style_ps1.set_property("editable", False)
-
-        self.style_ps2 = Gtk.TextTag.new("ps2")
-        self.style_ps2.set_property("foreground", "DarkOliveGreen")
-        self.style_ps2.set_property("editable", False)
-
-        self.style_out = Gtk.TextTag.new("stdout")
-        self.style_out.set_property("foreground", "midnight blue")
-        self.style_out.set_property("editable", False)
-
-        self.style_err = Gtk.TextTag.new("stderr")
-        self.style_err.set_property("style", Pango.Style.ITALIC)
-        self.style_err.set_property("foreground", "red")
-        self.style_err.set_property("editable", False)
-
-        self.text.get_buffer().get_tag_table().add(self.style_banner)
-        self.text.get_buffer().get_tag_table().add(self.style_ps1)
-        self.text.get_buffer().get_tag_table().add(self.style_ps2)
-        self.text.get_buffer().get_tag_table().add(self.style_out)
-        self.text.get_buffer().get_tag_table().add(self.style_err)
-
-        self.stdout = TextViewWriter("stdout", self.text, self.style_out)
-        self.stderr = TextViewWriter("stderr", self.text, self.style_err)
+        self.stdout = TextViewWriter("stdout", self.text)
+        self.stderr = TextViewWriter("stderr", self.text)
 
         self.current_prompt = lambda: ""
         locals["help"] = Help(self.stdout, locals)
 
         if Gtk.get_major_version() == 3:
             self.add(self.text)
+            self.text.show()
         else:
             self.set_child(self.text)
-        self.text.show()
 
-        self.write_line(self.banner, self.style_banner)
+        self.write(self.banner, style["banner"])
         self.prompt_ps1()
-
-    def reset_history(self):
-        self.history = []
 
     def reset_buffer(self):
         self.buffer = []
 
     def prompt_ps1(self):
         self.current_prompt = self.prompt_ps1
-        self.write_line(ps1, self.style_ps1)
+        self.write(ps1, style["ps1"])
         self.move_input_mark()
 
     def prompt_ps2(self):
         self.current_prompt = self.prompt_ps2
-        self.write_line(ps2, self.style_ps2)
+        self.write(ps2, style["ps2"])
         self.move_input_mark()
 
-    def write_line(self, text, style=None):
+    def write(self, text, style=None):
         buffer = self.text.get_buffer()
         start, end = buffer.get_bounds()
         if style:
             buffer.insert_with_tags(end, text, style)
         else:
             buffer.insert(end, text)
+
+        buffer.place_cursor(buffer.get_end_iter())
 
     def move_input_mark(self):
         buffer = self.text.get_buffer()
@@ -252,6 +243,12 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
             self.text.get_buffer().place_cursor(end)
             return True
 
+        if ctrl and keyval == Gdk.KEY_c:
+            self.write("^C\n")
+            self.reset_buffer()
+            self.prompt_ps1()
+            return True
+
         return False
 
     def show_history(self):
@@ -274,16 +271,14 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
     def replace_line(self, txt):
         start, end = self.current_line_bounds()
         self.text.get_buffer().delete(start, end)
-        self.write_line(txt)
+        self.write(txt)
 
     def execute_line(self):
         line = self.current_line()
 
-        self.write_line("\n")
+        self.write("\n")
 
         more = self.push(line)
-
-        self.text.get_buffer().place_cursor(self.text.get_buffer().get_end_iter())
 
         if more:
             self.prompt_ps2()
@@ -314,12 +309,12 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
             per_line = 80 // max_len
             for i, c in enumerate(completions):
                 if i % per_line == 0:
-                    self.write_line("\n")
-                self.write_line(c, self.style_ps1)
-                self.write_line(" " * (max_len - len(c)), self.style_ps1)
-            self.write_line("\n")
+                    self.write("\n")
+                self.write(c, style["ps1"])
+                self.write(" " * (max_len - len(c)), style["ps1"])
+            self.write("\n")
             self.current_prompt()
-            self.write_line(line)
+            self.write(line)
         elif len(completions) == 1:
             i = line.rfind(token)
             line = line[0:i] + completions[0]
@@ -332,34 +327,29 @@ def main(main_loop=True):
     w = Gtk.ApplicationWindow()
     w.set_default_size(640, 480)
     console = GTKInterpreterConsole(locals())
-    if Gtk.get_major_version() == 3:
-        w.add(console)
-    else:
-        w.set_child(console)
-
-    def destroy(arg=None):
-        Gtk.main_quit()
 
     def key_event(widget, keyval, keycode, state):
         if keyval == Gdk.KEY_d and state & Gdk.ModifierType.CONTROL_MASK:
-            destroy()
+            app.quit()
         return False
 
-    w.connect("destroy", destroy)
-
+    w.connect("destroy", lambda w: app.quit())
     console.text_controller.connect("key-pressed", key_event)
+
     if Gtk.get_major_version() == 3:
+        w.add(console)
         w.show_all()
     else:
+        w.set_child(console)
         w.show()
 
     if main_loop:
 
-        def on_startup(app):
+        def on_activate(app):
             app.add_window(w)
 
         app = Gtk.Application.new("org.gaphor.Console", 0)
-        app.connect("startup", on_startup)
+        app.connect("activate", on_activate)
         app.run()
 
 
