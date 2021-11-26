@@ -298,7 +298,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         if len(completions) > 1:
             max_len = max(map(lambda c: len(c.name), completions)) + 2
-            per_line = 80 // max_len
+            per_line = 76 // max_len
             for i, c in enumerate(completions):
                 if i % per_line == 0:
                     self.write("\n")
