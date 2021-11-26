@@ -28,9 +28,6 @@ Type "help" for more information.
 """
 ).format(version=sys.version)
 
-ps1 = ">>> "
-ps2 = "... "
-
 
 def _text_tag(name, **properties):
     tag = Gtk.TextTag.new(name)
@@ -38,6 +35,11 @@ def _text_tag(name, **properties):
         tag.set_property(prop, val)
     return name, tag
 
+
+prompt = {
+    "ps1": ">>> ",
+    "ps2": "... ",
+}
 
 style = dict(
     [
@@ -159,8 +161,11 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.stdout = TextViewWriter("stdout", self.text)
         self.stderr = TextViewWriter("stderr", self.text)
 
-        self.current_prompt = lambda: ""
+        self.current_prompt = "ps1"
         locals["help"] = Help(self.stdout, locals)
+
+        self.write(self.banner, style["banner"])
+        self.prompt()
 
         if Gtk.get_major_version() == 3:
             self.add(self.text)
@@ -168,23 +173,12 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         else:
             self.set_child(self.text)
 
-        self.write(self.banner, style["banner"])
-        self.prompt_ps1()
-
     def reset_buffer(self):
         self.buffer = []
 
-    def prompt_ps1(self):
-        self.current_prompt = self.prompt_ps1
-        self.write(ps1, style["ps1"])
+    def prompt(self):
+        self.write(prompt[self.current_prompt], style[self.current_prompt])
         self.move_input_mark()
-        GLib.idle_add(self.scroll_to_end)
-
-    def prompt_ps2(self):
-        self.current_prompt = self.prompt_ps2
-        self.write(ps2, style["ps2"])
-        self.move_input_mark()
-        self.scroll_to_end()
         GLib.idle_add(self.scroll_to_end)
 
     def write(self, text, style=None):
@@ -253,7 +247,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         if ctrl and keyval == Gdk.KEY_c:
             self.write("^C\n")
             self.reset_buffer()
-            self.prompt_ps1()
+            self.current_prompt = "ps1"
+            self.prompt()
             return True
 
         return False
@@ -287,11 +282,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         more = self.push(line)
 
-        if more:
-            self.prompt_ps2()
-        else:
-            self.prompt_ps1()
-
+        self.current_prompt = "ps2" if more else "ps1"
+        self.prompt()
         self.current_history = 0
 
         return True
@@ -311,7 +303,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
                 self.write(c.name, style["ps1"])
                 self.write(" " * (max_len - len(c.name)), style["ps1"])
             self.write("\n")
-            self.current_prompt()
+            self.prompt()
             self.write(line)
         elif len(completions) == 1:
             self.write(completions[0].complete)
