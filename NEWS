@@ -1,3 +1,31 @@
+2.7.0
+-----
+- Add Reflexive Message item for Interactions
+- Allow messages to move freely on Lifeline and ExecutionSpec
+- Pop-up element name editor on creation of a new element
+- Add option to show underlying DecisionNode type
+- Add InformationFlow for Connectors
+- Swap relationship direction for Generalization, Dependency, Import, Include, and Extend
+- Use Jedi for autocomplete in the Python Console
+- Sphinx directive for embedding Gaphor models into docs
+- Fix lifeline ordering when not all items are linked in a diagram
+- Allow generalizations to be reused
+- Allow auto-generated elements (Activity, State Machine, Interaction, Region) to be removed
+- Fix Windows build by updating to Python 3.9.9
+- Emit events for Diagram.ownedPresentation and Presentation.diagram after element creation
+- Show underlaying DecisionNode type
+- Add documentation dependencies to pyproject.toml
+- Move enumeration layout to UML.classes
+- Rename packaging to _packaging
+- Remove names for initial/final nodes
+- Update to latest gvsbuild
+- Update to PyInstaller 4.6
+- Add gtksourceview to Windows docs
+- Fix Python 3.10 warnings
+- Fix indention in Style Sheet docs
+- Expand the number of strings translated
+- Hungarian, Spanish, Japanese, Finnish, and Croatian translation updates
+
 2.6.5
 -----
 - Update style sheet editor to be a code editor
