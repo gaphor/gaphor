@@ -246,13 +246,16 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
             self.text.get_buffer().place_cursor(end)
             return True
 
-        if ctrl and keyval == Gdk.KEY_c:
-            if not self.text.get_buffer().get_selection_bounds():
-                self.write("^C\n")
-                self.reset_buffer()
-                self.current_prompt = "ps1"
-                self.prompt()
-                return True
+        if (
+            ctrl
+            and keyval == Gdk.KEY_c
+            and not self.text.get_buffer().get_selection_bounds()
+        ):
+            self.write("^C\n")
+            self.reset_buffer()
+            self.current_prompt = "ps1"
+            self.prompt()
+            return True
 
         return False
 
