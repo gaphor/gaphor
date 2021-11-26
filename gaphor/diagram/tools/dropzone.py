@@ -42,7 +42,7 @@ def on_motion(controller, x, y, item_class: Type[Presentation]):
     model = view.model
 
     try:
-        parent = item_at_point(view, (x, y))
+        parent = next(item_at_point(view, (x, y)), None)
     except KeyError:
         parent = None
 
@@ -79,7 +79,9 @@ class DropZoneMove(GuidedItemMove):
         x, y = pos
 
         current_parent = item.parent
-        over_item = item_at_point(view, (x, y), exclude=view.selection.selected_items)
+        over_item = next(
+            item_at_point(view, (x, y), exclude=view.selection.selected_items), None
+        )
 
         if not over_item:
             view.selection.dropzone_item = None

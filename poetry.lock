@@ -208,7 +208,7 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
 name = "gaphas"
-version = "3.3.0"
+version = "3.4.0"
 description = "Gaphas is a GTK+ based diagramming widget"
 category = "main"
 optional = false
@@ -217,6 +217,9 @@ python-versions = ">=3.8,<4.0"
 [package.dependencies]
 pycairo = ">=1.20.0,<2.0.0"
 PyGObject = ">=3.38.0,<4.0.0"
+
+[package.extras]
+docs = ["sphinx (>=4.3,<5.0)", "sphinx-rtd-theme (>=1.0,<2.0)"]
 
 [[package]]
 name = "generic"
@@ -1080,8 +1083,8 @@ future = [
     {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
 ]
 gaphas = [
-    {file = "gaphas-3.3.0-py3-none-any.whl", hash = "sha256:94c52219548a948a59dd4b0cd29de25ed4ad56c798700134ac043d976dbb5156"},
-    {file = "gaphas-3.3.0.tar.gz", hash = "sha256:faa441581f1f61ffdbf4e035bbea68b00e3e1617870b9afac7624de79fccd7b6"},
+    {file = "gaphas-3.4.0-py3-none-any.whl", hash = "sha256:08ac32a5aa495b63ae26921d7a39dd6e98f2d036894159a0eb637bcbea1fd47a"},
+    {file = "gaphas-3.4.0.tar.gz", hash = "sha256:38005cff90d1a0cbef731ba3dcb2b930d41f255c2ee6b1338f578ec07c78a17a"},
 ]
 generic = [
     {file = "generic-1.0.1-py3-none-any.whl", hash = "sha256:e6be6d8490a2458c9f8e28e151c4f4a0687f40ac364da35578f7147b0220f264"},
