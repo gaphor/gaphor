@@ -43,11 +43,13 @@ prompt = {
 
 style = dict(
     [
-        _text_tag("banner", foreground="saddle brown"),
-        _text_tag("ps1", foreground="DarkOrchid4", editable=False),
-        _text_tag("ps2", foreground="DarkOliveGreen", editable=False),
-        _text_tag("stdout", foreground="midnight blue", editable=False),
-        _text_tag("stderr", style=Pango.Style.ITALIC, foreground="red", editable=False),
+        _text_tag("banner", foreground="#77767b"),
+        _text_tag("ps1", editable=False),
+        _text_tag("ps2", foreground="#77767b", editable=False),
+        _text_tag("stdout", editable=False),
+        _text_tag(
+            "stderr", style=Pango.Style.ITALIC, foreground="#cc0000", editable=False
+        ),
     ]
 )
 
