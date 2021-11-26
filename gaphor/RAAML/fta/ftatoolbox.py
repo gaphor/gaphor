@@ -17,6 +17,7 @@ fta = ToolSection(
             "gaphor-dependency-symbolic",
             "<Shift>D",
             new_item_factory(uml_items.DependencyItem),
+            handle_index=0,
         ),
         ToolDef(
             "and",

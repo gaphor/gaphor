@@ -37,6 +37,7 @@ stpa = ToolSection(
             "gaphor-generalization-symbolic",
             "<Shift>G",
             new_item_factory(uml_items.GeneralizationItem),
+            handle_index=0,
         ),
         ToolDef(
             "loss",

@@ -64,6 +64,7 @@ profiles: ToolSection = ToolSection(
             "gaphor-import-symbolic",
             "<Shift>M",
             new_item_factory(diagramitems.PackageImportItem),
+            handle_index=0,
         ),
     ),
 )

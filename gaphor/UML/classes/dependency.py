@@ -41,6 +41,9 @@ class DependencyItem(LinePresentation, Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
+        self._handles[0].pos = (30, 20)
+        self._handles[1].pos = (0, 0)
+
         self._dependency_type = UML.Dependency
         # auto_dependency is used by connection logic, not in this class itself
         self.auto_dependency = True
