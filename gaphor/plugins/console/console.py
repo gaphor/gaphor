@@ -13,10 +13,10 @@
 import code
 import sys
 import textwrap
-from rlcompleter import Completer
 from typing import Dict, List
 
-from gi.repository import Gdk, Gtk, Pango
+import jedi
+from gi.repository import Gdk, GLib, Gtk, Pango
 
 from gaphor.i18n import gettext
 
@@ -28,9 +28,6 @@ Type "help" for more information.
 """
 ).format(version=sys.version)
 
-ps1 = ">>> "
-ps2 = "... "
-
 
 def _text_tag(name, **properties):
     tag = Gtk.TextTag.new(name)
@@ -39,13 +36,20 @@ def _text_tag(name, **properties):
     return name, tag
 
 
+prompt = {
+    "ps1": ">>> ",
+    "ps2": "... ",
+}
+
 style = dict(
     [
-        _text_tag("banner", foreground="saddle brown"),
-        _text_tag("ps1", foreground="DarkOrchid4", editable=False),
-        _text_tag("ps2", foreground="DarkOliveGreen", editable=False),
-        _text_tag("stdout", foreground="midnight blue", editable=False),
-        _text_tag("stderr", style=Pango.Style.ITALIC, foreground="red", editable=False),
+        _text_tag("banner", foreground="#77767b"),
+        _text_tag("ps1", editable=False),
+        _text_tag("ps2", foreground="#77767b", editable=False),
+        _text_tag("stdout", editable=False),
+        _text_tag(
+            "stderr", style=Pango.Style.ITALIC, foreground="#cc0000", editable=False
+        ),
     ]
 )
 
@@ -126,7 +130,6 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     def __init__(self, locals: Dict[str, object], banner=banner):
         Gtk.ScrolledWindow.__init__(self)
-        self.locals = dict(locals)
 
         self.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
 
@@ -135,8 +138,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.text.set_monospace(True)
 
         self.interpreter = code.InteractiveInterpreter(locals)
+        self.locals = locals
 
-        self.completer = Completer(locals)
         self.buffer: List[str] = []
         self.history: List[str] = []
         self.banner = banner
@@ -160,8 +163,11 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.stdout = TextViewWriter("stdout", self.text)
         self.stderr = TextViewWriter("stderr", self.text)
 
-        self.current_prompt = lambda: ""
+        self.current_prompt = "ps1"
         locals["help"] = Help(self.stdout, locals)
+
+        self.write(self.banner, style["banner"])
+        self.prompt()
 
         if Gtk.get_major_version() == 3:
             self.add(self.text)
@@ -169,21 +175,13 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         else:
             self.set_child(self.text)
 
-        self.write(self.banner, style["banner"])
-        self.prompt_ps1()
-
     def reset_buffer(self):
         self.buffer = []
 
-    def prompt_ps1(self):
-        self.current_prompt = self.prompt_ps1
-        self.write(ps1, style["ps1"])
+    def prompt(self):
+        self.write(prompt[self.current_prompt], style[self.current_prompt])
         self.move_input_mark()
-
-    def prompt_ps2(self):
-        self.current_prompt = self.prompt_ps2
-        self.write(ps2, style["ps2"])
-        self.move_input_mark()
+        GLib.idle_add(self.scroll_to_end)
 
     def write(self, text, style=None):
         buffer = self.text.get_buffer()
@@ -199,7 +197,12 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         buffer = self.text.get_buffer()
         input_mark = buffer.get_mark("input")
         buffer.move_mark(input_mark, buffer.get_end_iter())
+
+    def scroll_to_end(self):
+        buffer = self.text.get_buffer()
+        input_mark = buffer.get_mark("input")
         self.text.scroll_to_mark(input_mark, 0, True, 1, 1)
+        return False
 
     def push(self, line):
         self.buffer.append(line)
@@ -243,10 +246,15 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
             self.text.get_buffer().place_cursor(end)
             return True
 
-        if ctrl and keyval == Gdk.KEY_c:
+        if (
+            ctrl
+            and keyval == Gdk.KEY_c
+            and not self.text.get_buffer().get_selection_bounds()
+        ):
             self.write("^C\n")
             self.reset_buffer()
-            self.prompt_ps1()
+            self.current_prompt = "ps1"
+            self.prompt()
             return True
 
         return False
@@ -280,45 +288,31 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         more = self.push(line)
 
-        if more:
-            self.prompt_ps2()
-        else:
-            self.prompt_ps1()
-
+        self.current_prompt = "ps2" if more else "ps1"
+        self.prompt()
         self.current_history = 0
 
         return True
 
     def complete_line(self):
         line = self.current_line()
-        tokens = line.split()
-
-        if tokens:
-            token = tokens[-1]
-            completions: List[str] = []
-            p = self.completer.complete(token, len(completions))
-            while p:
-                assert p
-                completions.append(p)
-                p = self.completer.complete(token, len(completions))
-        else:
-            completions = list(self.locals.keys())
+        source = "\n".join(self.buffer + [line])
+        script = jedi.Interpreter(source, [self.locals])
+        completions = script.complete()
 
         if len(completions) > 1:
-            max_len = max(map(len, completions)) + 2
-            per_line = 80 // max_len
+            max_len = max(map(lambda c: len(c.name), completions)) + 2
+            per_line = 76 // max_len
             for i, c in enumerate(completions):
                 if i % per_line == 0:
                     self.write("\n")
-                self.write(c, style["ps1"])
-                self.write(" " * (max_len - len(c)), style["ps1"])
+                self.write(c.name, style["ps1"])
+                self.write(" " * (max_len - len(c.name)), style["ps1"])
             self.write("\n")
-            self.current_prompt()
+            self.prompt()
             self.write(line)
         elif len(completions) == 1:
-            i = line.rfind(token)
-            line = line[0:i] + completions[0]
-            self.replace_line(line)
+            self.write(completions[0].complete)
 
         return True
 
