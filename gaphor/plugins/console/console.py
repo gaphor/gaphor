@@ -13,10 +13,10 @@
 import code
 import sys
 import textwrap
-from rlcompleter import Completer
 from typing import Dict, List
 
-from gi.repository import Gdk, Gtk, Pango
+import jedi
+from gi.repository import Gdk, GLib, Gtk, Pango
 
 from gaphor.i18n import gettext
 
@@ -126,7 +126,6 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     def __init__(self, locals: Dict[str, object], banner=banner):
         Gtk.ScrolledWindow.__init__(self)
-        self.locals = dict(locals)
 
         self.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
 
@@ -135,8 +134,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.text.set_monospace(True)
 
         self.interpreter = code.InteractiveInterpreter(locals)
+        self.locals = locals
 
-        self.completer = Completer(locals)
         self.buffer: List[str] = []
         self.history: List[str] = []
         self.banner = banner
@@ -179,11 +178,14 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.current_prompt = self.prompt_ps1
         self.write(ps1, style["ps1"])
         self.move_input_mark()
+        GLib.idle_add(self.scroll_to_end)
 
     def prompt_ps2(self):
         self.current_prompt = self.prompt_ps2
         self.write(ps2, style["ps2"])
         self.move_input_mark()
+        self.scroll_to_end()
+        GLib.idle_add(self.scroll_to_end)
 
     def write(self, text, style=None):
         buffer = self.text.get_buffer()
@@ -199,7 +201,12 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         buffer = self.text.get_buffer()
         input_mark = buffer.get_mark("input")
         buffer.move_mark(input_mark, buffer.get_end_iter())
+
+    def scroll_to_end(self):
+        buffer = self.text.get_buffer()
+        input_mark = buffer.get_mark("input")
         self.text.scroll_to_mark(input_mark, 0, True, 1, 1)
+        return False
 
     def push(self, line):
         self.buffer.append(line)
@@ -291,34 +298,23 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
     def complete_line(self):
         line = self.current_line()
-        tokens = line.split()
-
-        if tokens:
-            token = tokens[-1]
-            completions: List[str] = []
-            p = self.completer.complete(token, len(completions))
-            while p:
-                assert p
-                completions.append(p)
-                p = self.completer.complete(token, len(completions))
-        else:
-            completions = list(self.locals.keys())
+        source = "\n".join(self.buffer + [line])
+        script = jedi.Interpreter(source, [self.locals])
+        completions = script.complete()
 
         if len(completions) > 1:
-            max_len = max(map(len, completions)) + 2
+            max_len = max(map(lambda c: len(c.name), completions)) + 2
             per_line = 80 // max_len
             for i, c in enumerate(completions):
                 if i % per_line == 0:
                     self.write("\n")
-                self.write(c, style["ps1"])
-                self.write(" " * (max_len - len(c)), style["ps1"])
+                self.write(c.name, style["ps1"])
+                self.write(" " * (max_len - len(c.name)), style["ps1"])
             self.write("\n")
             self.current_prompt()
             self.write(line)
         elif len(completions) == 1:
-            i = line.rfind(token)
-            line = line[0:i] + completions[0]
-            self.replace_line(line)
+            self.write(completions[0].complete)
 
         return True
 
