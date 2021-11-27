@@ -106,16 +106,12 @@ Errors
 
 Errors are shown on the console when the documentation is built and in the document.
 
-The model cannot be found:
+An error will appear in the documentation. Something like this:
 
-.. diagram:: Wrong name
-   :model: not-a-model
+.. error::
 
-The model can be found, but the diagram cannot be found:
-
-.. diagram:: Wrong name
-   :model: example
-
+   No diagram ‘Wrong name’ in model ‘example’ (../examples/sequence-diagram.gaphor).
+   
 
 .. _Sphinx: https://sphinx-doc.org
 .. _reStructured Text: https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html
