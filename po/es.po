@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-11-16 22:05-0500\n"
-"PO-Revision-Date: 2021-10-21 12:41+0000\n"
+"PO-Revision-Date: 2021-11-28 23:52+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:54
@@ -36,9 +37,8 @@ msgid "New Container"
 msgstr "Contenedor nuevo"
 
 #: gaphor/C4Model/toolbox.py:42
-#, fuzzy
 msgid "Database"
-msgstr "Base de datos nueva"
+msgstr "Base de datos"
 
 #: gaphor/C4Model/toolbox.py:43
 msgid "New Database"
@@ -103,7 +103,7 @@ msgstr "Análisis del árbol de fallos"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:29
 msgid "AND"
-msgstr ""
+msgstr "AND"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:34 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
@@ -111,7 +111,7 @@ msgstr "Puerta OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:40
 msgid "OR"
-msgstr ""
+msgstr "OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:45 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
@@ -119,25 +119,23 @@ msgstr "Puerta NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:51
 msgid "NOT"
-msgstr ""
+msgstr "NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:56
 msgid "Sequence Enforcing (SEQ) Gate"
 msgstr "Puerta de aplicación de la secuencia (SEQ)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:62
-#, fuzzy
 msgid "SEQ"
-msgstr "usar"
+msgstr "SEQ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:67
 msgid "Exclusive OR Gate"
 msgstr "Puerta OR exclusiva"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:73
-#, fuzzy
 msgid "XOR"
-msgstr "Exportar"
+msgstr "XOR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:78 gaphor/RAAML/fta/ftatoolbox.py:85
 #: gaphor/RAAML/fta/majorityvotegate.py:41
@@ -447,7 +445,7 @@ msgstr "UML"
 #: gaphor/UML/interactions/interactionstoolbox.py:15
 #: gaphor/UML/states/statestoolbox.py:30 gaphor/diagram/diagramtoolbox.py:28
 msgid "New {name}"
-msgstr ""
+msgstr "Nuevo {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:35
 msgid "Activity"
@@ -508,18 +506,16 @@ msgid "Send signal action"
 msgstr "Enviar la acción de la señal"
 
 #: gaphor/UML/actions/actionstoolbox.py:166
-#, fuzzy
 msgid "Send signal"
-msgstr "Enviar la acción de la señal"
+msgstr "Enviar señal"
 
 #: gaphor/UML/actions/actionstoolbox.py:172
 msgid "Accept event action"
 msgstr "Aceptar la acción del evento"
 
 #: gaphor/UML/actions/actionstoolbox.py:178
-#, fuzzy
 msgid "Accept event"
-msgstr "Aceptar la acción del evento"
+msgstr "Aceptar evento"
 
 #: gaphor/UML/actions/objectnode.py:14
 #: gaphor/UML/actions/propertypages.glade:171
@@ -535,21 +531,19 @@ msgstr "ordenado"
 
 #: gaphor/UML/actions/objectnode.py:16
 msgid "LIFO"
-msgstr ""
+msgstr "LIFO"
 
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
-msgstr ""
+msgstr "FIFO"
 
 #: gaphor/UML/actions/objectnode.py:48
-#, fuzzy
 msgid "upperBound"
-msgstr "Límite superior"
+msgstr "límiteSuperior"
 
 #: gaphor/UML/actions/objectnode.py:56
-#, fuzzy
 msgid "ordering"
-msgstr "Mostrar orden"
+msgstr "solicitar"
 
 #: gaphor/UML/actions/partitionpage.py:58
 #: gaphor/UML/classes/propertypages.glade:683
@@ -935,12 +929,12 @@ msgstr "Instanciada indirectamente"
 #: gaphor/UML/components/propertypages.glade:75
 #: gaphor/UML/components/propertypages.ui:43
 msgid "Information Flow"
-msgstr ""
+msgstr "Flujo de información"
 
 #: gaphor/UML/components/propertypages.glade:110
 #: gaphor/UML/components/propertypages.ui:59
 msgid "Information Item (Class):"
-msgstr ""
+msgstr "Elemento informativo (clase):"
 
 #: gaphor/UML/interactions/interactionsconnect.py:76
 msgid "call()"
@@ -1126,7 +1120,7 @@ msgstr "Línea de comentario"
 
 #: gaphor/diagram/presentation.py:49
 msgid "(from {namespace})"
-msgstr ""
+msgstr "(de {namespace})"
 
 #: gaphor/diagram/propertypages.glade:90
 msgid "Show Enumeration Literals"
@@ -1264,6 +1258,17 @@ msgid ""
 "express or implied. See the License for the specific language\n"
 "governing permissions and limitations under the License.\n"
 msgstr ""
+"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
+"you may not use this application except in compliance with the\n"
+"License. You may obtain a copy of the License at\n"
+"\n"
+"http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Unless required by applicable law or agreed to in writing, software\n"
+"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
+"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
+"express or implied. See the License for the specific language\n"
+"governing permissions and limitations under the License.\n"
 
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
@@ -1654,19 +1659,16 @@ msgid "Show in \"{diagram}\""
 msgstr "Mostrar en \"{diagram}\""
 
 #: gaphor/ui/namespace.py:304
-#, fuzzy
 msgid "{name} diagram"
-msgstr "_Diagrama nuevo"
+msgstr "{name} diagrama"
 
 #: gaphor/ui/namespace.py:306
-#, fuzzy
 msgid "New diagram"
-msgstr "_Diagrama nuevo"
+msgstr "Diagrama nuevo"
 
 #: gaphor/ui/namespace.py:320
-#, fuzzy
 msgid "{name} package"
-msgstr "_Paquete nuevo"
+msgstr "Paquete {name}"
 
 #: gaphor/ui/namespace.py:337
 msgid ""
@@ -1675,6 +1677,10 @@ msgid ""
 "This will possibly delete diagram items\n"
 "that are not shown in other diagrams."
 msgstr ""
+"¿Realmente desea eliminar el diagrama {name}?\n"
+"\n"
+"Esto posiblemente borrará elementos del diagrama\n"
+"que no se muestran en otros diagramas."
 
 #: gaphor/ui/namespacemodel.py:310
 msgid "A {} can't be part of a {}."
@@ -1777,4 +1783,3 @@ msgstr "No hay modelos abiertos recientemente"
 
 #~ msgid "Decision node"
 #~ msgstr "Nodo de decisión/fusión"
-
