@@ -94,7 +94,11 @@ This is the ``.readthedocs.yaml`` file we use for Gaphor:
 
 * ``libgirepository1.0-dev`` is required to build PyGObject.
 * ``gir1.2-pango-1.0`` is required for text rendering.
-* ``gir1.2-gtk-3.0`` and ``gir1.2-gtksource-4`` are needed, although we do not use the GUI.
+
+.. note::
+
+   For Gaphor 2.7.0, ``gir1.2-gtk-3.0`` and ``gir1.2-gtksource-4`` are required ``apt_packages``, although we do not use the GUI.
+   From Gaphor 2.7.1 onwards all you need is GI-repository and Pango.
 
 
 Errors
