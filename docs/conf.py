@@ -16,11 +16,14 @@ from __future__ import annotations
 import os
 from datetime import date
 
+from gaphor.application import distribution
+
 # -- Project information -----------------------------------------------------
 
 project = "Gaphor"
 copyright = f"2001-{date.today().year}, Arjan J. Molenaar"
 author = "Arjan J. Molenaar"
+version = distribution().version
 
 # -- General configuration ---------------------------------------------------
 
