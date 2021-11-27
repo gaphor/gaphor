@@ -54,6 +54,10 @@ Configuration
 
 To add Gaphor diagram support to Sphinx, make sure Gaphor is listed as a dependency.
 
+.. important::
+
+   Gaphor requires at least Python 3.9.
+   
 Secondly, add the following to your ``conf.py`` file:
 
 Step 1: Add gaphor as extension.
@@ -94,7 +98,11 @@ This is the ``.readthedocs.yaml`` file we use for Gaphor:
 
 * ``libgirepository1.0-dev`` is required to build PyGObject.
 * ``gir1.2-pango-1.0`` is required for text rendering.
-* ``gir1.2-gtk-3.0`` and ``gir1.2-gtksource-4`` are needed, although we do not use the GUI.
+
+.. note::
+
+   For Gaphor 2.7.0, ``gir1.2-gtk-3.0`` and ``gir1.2-gtksource-4`` are required ``apt_packages``, although we do not use the GUI.
+   From Gaphor 2.7.1 onwards all you need is GI-repository and Pango.
 
 
 Errors
@@ -102,16 +110,12 @@ Errors
 
 Errors are shown on the console when the documentation is built and in the document.
 
-The model cannot be found:
+An error will appear in the documentation. Something like this:
 
-.. diagram:: Wrong name
-   :model: not-a-model
+.. error::
 
-The model can be found, but the diagram cannot be found:
-
-.. diagram:: Wrong name
-   :model: example
-
+   No diagram ‘Wrong name’ in model ‘example’ (../examples/sequence-diagram.gaphor).
+   
 
 .. _Sphinx: https://sphinx-doc.org
 .. _reStructured Text: https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html

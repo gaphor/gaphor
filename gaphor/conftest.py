@@ -5,25 +5,32 @@ services and start off.
 """
 from __future__ import annotations
 
+# isort: skip_file
+
 import logging
 from io import StringIO
 from pathlib import Path
-from typing import Type, TypeVar
+from typing import TypeVar
 
 import pytest
+
+# Load gaphor.ui first, so GTK library versions are set corrently
+import gaphor.ui
+
 from gaphas.aspect.connector import ConnectionSink
 from gaphas.aspect.connector import Connector as ConnectorAspect
 from gaphas.painter import BoundingBoxPainter
 from gaphas.view import GtkView
 
 # For DiagramItemConnector aspect:
-import gaphor.diagram.tools  # noqa
+import gaphor.diagram.tools
 from gaphor import UML
 from gaphor.application import Session
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
+
 
 T = TypeVar("T")
 S = TypeVar("S")
@@ -46,7 +53,7 @@ class Case:
         self.session = Session(services=self.services)
         self.element_factory = self.session.get_service("element_factory")
         self.modeling_language = self.session.get_service("modeling_language")
-        assert len(list(self.element_factory.select())) == 0, list(
+        assert not list(self.element_factory.select()), list(
             self.element_factory.select()
         )
         self.diagram = self.element_factory.create(UML.Diagram)
