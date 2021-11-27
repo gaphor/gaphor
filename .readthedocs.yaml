@@ -9,6 +9,7 @@ build:
   - gir1.2-pango-1.0
 sphinx:
   configuration: docs/conf.py
+  fail_on_warning: true
 python:
   install:
   - method: pip
