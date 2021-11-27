@@ -7,6 +7,7 @@ import sphinx.util.docutils
 from docutils import nodes
 from docutils.parsers.rst import directives
 from docutils.parsers.rst.directives import images
+from sphinx.ext.autodoc.mock import mock
 from sphinx.util import logging
 
 from gaphor.core.eventmanager import EventManager
@@ -120,9 +121,13 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
 @functools.lru_cache(maxsize=None)
 def load_model(model_file: str) -> ElementFactory:
     element_factory = ElementFactory()
+
+    with mock(["gi.repository.Gtk", "gi.repository.Gdk"]):
+        modeling_language = ModelingLanguageService(EventManager())
+
     storage.load(
         model_file,
         element_factory,
-        modeling_language=ModelingLanguageService(EventManager()),
+        modeling_language,
     )
     return element_factory
