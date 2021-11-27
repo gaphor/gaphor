@@ -11,8 +11,8 @@ from sphinx.util import logging
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
+from gaphor.diagram.export import save_pdf, save_svg
 from gaphor.i18n import gettext
-from gaphor.plugins.diagramexport import save_pdf, save_svg
 from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.storage import storage
 

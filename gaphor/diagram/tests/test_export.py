@@ -1,12 +1,7 @@
 import pytest
 
+from gaphor.diagram.export import save_pdf, save_png, save_svg
 from gaphor.diagram.general import Box
-from gaphor.plugins.diagramexport import DiagramExport, save_pdf, save_png, save_svg
-
-
-@pytest.fixture
-def diagram_export():
-    return DiagramExport(diagrams=None)
 
 
 @pytest.fixture
