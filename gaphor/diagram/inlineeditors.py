@@ -82,7 +82,7 @@ def show_popover(widget, view, box, commit):
     popover.connect("closed", on_closed)
 
     def on_escape(popover, keyval, keycode, state):
-        if keyval == Gdk.KEY_Return and not state & (
+        if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter) and not state & (
             Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
         ):
             popover.popdown()
