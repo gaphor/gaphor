@@ -53,7 +53,7 @@ class Case:
         self.session = Session(services=self.services)
         self.element_factory = self.session.get_service("element_factory")
         self.modeling_language = self.session.get_service("modeling_language")
-        assert len(list(self.element_factory.select())) == 0, list(
+        assert not list(self.element_factory.select()), list(
             self.element_factory.select()
         )
         self.diagram = self.element_factory.create(UML.Diagram)
