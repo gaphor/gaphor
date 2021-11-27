@@ -54,6 +54,10 @@ Configuration
 
 To add Gaphor diagram support to Sphinx, make sure Gaphor is listed as a dependency.
 
+.. important::
+
+   Gaphor requires at least Python 3.9.
+   
 Secondly, add the following to your ``conf.py`` file:
 
 Step 1: Add gaphor as extension.
