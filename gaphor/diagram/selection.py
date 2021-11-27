@@ -1,7 +1,7 @@
 from typing import Iterable, Optional, Set
 
 from gaphas.item import Item
-from gaphas.view import Selection as _Selection
+from gaphas.selection import Selection as _Selection
 
 
 class Selection(_Selection):

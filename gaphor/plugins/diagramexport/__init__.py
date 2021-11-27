@@ -1,18 +1,15 @@
 """Service dedicated to exporting diagrams to a variety of file formats."""
 
 import logging
-import os
 
 import cairo
 from gaphas.painter import BoundingBoxPainter, FreeHandPainter
-from gaphas.view import GtkView
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.diagram.painter import ItemPainter
 from gaphor.ui.filedialog import save_file_dialog
-from gaphor.ui.questiondialog import QuestionDialog
 
 logger = logging.getLogger(__name__)
 
