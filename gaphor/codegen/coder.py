@@ -14,6 +14,8 @@ Notes:
 * Enumerations are classes ending with "Kind"
 * Two stereotypes: Tagged and SimpleAttribute
 """
+from __future__ import annotations
+
 from gaphor import UML
 
 
@@ -55,9 +57,17 @@ def is_simple_attribute(c: UML.Class) -> bool:
     return False
 
 
-def is_profile_class(c: UML.Class):
-    ...
+def is_in_profile(c: UML.Class):
+    def test(p: UML.Package):
+        return isinstance(p, UML.Profile) or (p.owningPackage and test(p.owningPackage))
+
+    return test(c.owningPackage)
 
 
 def is_in_toplevel_package(c: UML.Class, package_name: str):
-    ...
+    def test(p: UML.Package):
+        return (not p.owningPackage and p.name == package_name) or (
+            p.owningPackage and test(p.owningPackage)
+        )
+
+    return test(c.owningPackage)

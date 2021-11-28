@@ -4,6 +4,8 @@ from gaphor import UML
 from gaphor.codegen.coder import (
     Coder,
     is_enumeration,
+    is_in_profile,
+    is_in_toplevel_package,
     is_simple_attribute,
     super_classes,
 )
@@ -92,6 +94,34 @@ def test_enumeration():
 
     assert not is_enumeration(class_)
     assert is_enumeration(enum)
+
+
+def test_in_profile():
+    class_ = UML.Class()
+    profile = UML.Profile()
+    profile.ownedType = class_
+
+    assert is_in_profile(class_)
+
+
+def test_not_in_profile():
+    class_ = UML.Class()
+    package = UML.Package()
+    package.ownedType = class_
+
+    assert not is_in_profile(class_)
+
+
+def test_in_toplevel_package():
+    class_ = UML.Class()
+    package = UML.Package()
+    nested = UML.Package()
+    package.name = "Foo"
+    package.nestedPackage = nested
+    nested.ownedType = class_
+
+    assert is_in_toplevel_package(class_, "Foo")
+    assert not is_in_toplevel_package(class_, "Bar")
 
 
 @pytest.fixture(scope="session")
