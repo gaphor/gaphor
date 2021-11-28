@@ -31,10 +31,15 @@ class Coder:
             for attr in sorted(self._class.attribute, key=lambda a: a.name or ""):
                 if attr.association:
                     yield f"{attr.name}: relation_{'one' if attr.upper == '1' else 'many'}[{attr.type.name}]"
+                elif attr.typeValue.endswith("Kind"):
+                    yield f"{attr.name}: enumeration"
                 else:
                     yield f"{attr.name}: attribute[{attr.typeValue}]"
         else:
             yield "pass"
+
+    # get used property types
+    # handle overrides
 
 
 def super_classes(c: UML.Class):
@@ -71,3 +76,7 @@ def is_in_toplevel_package(c: UML.Class, package_name: str):
         )
 
     return test(c.owningPackage)
+
+
+if __name__ == "__main__":
+    ...

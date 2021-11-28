@@ -51,6 +51,16 @@ def test_coder_write_class_with_attributes():
     assert attr_def == ["first: attribute[str]", "second: attribute[int]"]
 
 
+def test_coder_write_class_with_enumeration():
+    class_ = UML.Class()
+    class_.ownedAttribute = create_attribute("first: EnumKind")
+    coder = Coder(class_)
+
+    attr_def = list(coder)
+
+    assert attr_def == ["first: enumeration"]
+
+
 @pytest.fixture
 def navigable_association(element_factory):
     class_a = element_factory.create(UML.Class)
