@@ -16,7 +16,14 @@ Notes:
 """
 from __future__ import annotations
 
+import argparse
+from pathlib import Path
+from typing import Iterable
+
 from gaphor import UML
+from gaphor.core.modeling import ElementFactory
+from gaphor.storage import storage
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 class Coder:
@@ -24,14 +31,17 @@ class Coder:
         self._class = class_
 
     def __str__(self):
-        return f"class {self._class.name}:"
+        base_classes = ", ".join(
+            c.name for c in sorted(bases(self._class), key=lambda c: c.name)  # type: ignore[no-any-return]
+        )
+        return f"class {self._class.name}({base_classes}):"
 
     def __iter__(self):
         if self._class.attribute:
             for attr in sorted(self._class.attribute, key=lambda a: a.name or ""):
                 if attr.association:
                     yield f"{attr.name}: relation_{'one' if attr.upper == '1' else 'many'}[{attr.type.name}]"
-                elif attr.typeValue.endswith("Kind"):
+                elif attr.typeValue and attr.typeValue.endswith("Kind"):
                     yield f"{attr.name}: enumeration"
                 else:
                     yield f"{attr.name}: attribute[{attr.typeValue}]"
@@ -42,10 +52,24 @@ class Coder:
     # handle overrides
 
 
-def super_classes(c: UML.Class):
+def order_classes(classes: Iterable[UML.Class]) -> Iterable[UML.Class]:
+    seen_classes = set()
+
+    def order(c):
+        if c not in seen_classes:
+            for b in bases(c):
+                yield from order(b)
+            yield c
+            seen_classes.add(c)
+
+    for c in classes:  # sorted(classes, key=lambda c: c.name):  # type: ignore
+        yield from order(c)
+
+
+def bases(c: UML.Class) -> Iterable[UML.Class]:
     for g in c.generalization:
         yield g.general
-        yield from super_classes(g.general)
+    # TODO: Add bases from extensions
 
 
 def is_enumeration(c: UML.Class) -> bool:
@@ -78,5 +102,37 @@ def is_in_toplevel_package(c: UML.Class, package_name: str):
     return test(c.owningPackage)
 
 
+def coder(modelfile, outfile):
+    element_factory = ElementFactory()
+    uml_modeling_language = UMLModelingLanguage()
+    storage.load(
+        modelfile,
+        element_factory,
+        uml_modeling_language,
+    )
+
+    classes = list(
+        order_classes(
+            c
+            for c in element_factory.select(UML.Class)
+            if not (is_enumeration(c) or is_simple_attribute(c) or is_in_profile(c))
+        )
+    )
+
+    for c in classes:
+        coder = Coder(c)
+        print(coder)
+        for a in coder:
+            print("    " + a)
+        print()
+        print()
+
+
 if __name__ == "__main__":
-    ...
+    parser = argparse.ArgumentParser()
+    parser.add_argument("modelfile", type=Path, help="gaphor model filename")
+    parser.add_argument("outfile", type=Path, help="python data model filename")
+
+    args = parser.parse_args()
+
+    coder(args.modelfile, args.outfile)

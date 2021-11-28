@@ -3,11 +3,12 @@ import pytest
 from gaphor import UML
 from gaphor.codegen.coder import (
     Coder,
+    bases,
     is_enumeration,
     is_in_profile,
     is_in_toplevel_package,
     is_simple_attribute,
-    super_classes,
+    order_classes,
 )
 from gaphor.core.format import parse
 from gaphor.core.modeling import ElementFactory
@@ -149,10 +150,10 @@ def with_name(name):
 def test_bases(uml_metamodel: ElementFactory):
     package = next(uml_metamodel.select(with_name("Package")))
 
-    names = list(s.name for s in super_classes(package))
+    names = list(s.name for s in bases(package))
 
-    assert "Element" in names
-    assert "NamedElement" in names
+    assert "Namespace" in names
+    assert "PackageableElement" in names
 
 
 def test_simple_attribute(uml_metamodel: ElementFactory):
@@ -165,8 +166,15 @@ def test_simple_attribute(uml_metamodel: ElementFactory):
     assert is_simple_attribute(literal_spec)
 
 
+def test_order_classes(uml_metamodel):
+    classes = list(order_classes(uml_metamodel.select(UML.Class)))
+
+    assert classes[0].name == "Element"
+    assert classes[1].name == "Relationship"
+    assert classes[3].name == "NamedElement"
+
+
 # Ideas:
 # Primitive types?
 # Overrides
-# Class ordering
 # Metaclass: class is owned by a Profile
