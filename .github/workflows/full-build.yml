@@ -179,7 +179,7 @@ jobs:
     timeout-minutes: 45
     env:
       # Git revision of gvsbuild we use for to build GTK and the other dependencies
-      gvsbuildref: 4b8029b3ae10ae926db8fe211f11f1ec160b975d
+      gvsbuildref: ce4c9de92dc3487d15b8f5ecc200705f951b6ae8
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
       gvsbuildupdate: 1
     outputs:
