@@ -10,7 +10,10 @@ class Coder:
 
     def __iter__(self):
         if self._class.attribute:
-            for attr in self._class.attribute:
-                yield f"{attr.name}: attribute[{attr.typeValue}]"
+            for attr in sorted(self._class.attribute, key=lambda a: a.name or ""):
+                if attr.association:
+                    yield f"{attr.name}: relation_{'one' if attr.upper == '1' else 'many'}[{attr.type.name}]"
+                else:
+                    yield f"{attr.name}: attribute[{attr.typeValue}]"
         else:
             yield "pass"
