@@ -1,8 +1,15 @@
 import pytest
 
 from gaphor import UML
-from gaphor.codegen.coder import Coder
+from gaphor.codegen.coder import (
+    Coder,
+    is_enumeration,
+    is_simple_attribute,
+    super_classes,
+)
 from gaphor.core.format import parse
+from gaphor.core.modeling import ElementFactory
+from gaphor.storage import storage
 
 
 def test_coder_write_class():
@@ -75,6 +82,47 @@ def test_coder_write_class_with_1_n_association(navigable_association):
 
     assert class_a.name == "A"
     assert attr_def == ["b: relation_one[B]"]
+
+
+def test_enumeration():
+    class_ = UML.Class()
+    class_.name = "A"
+    enum = UML.Class()
+    enum.name = "AKind"
+
+    assert not is_enumeration(class_)
+    assert is_enumeration(enum)
+
+
+@pytest.fixture(scope="session")
+def uml_metamodel(modeling_language):
+    element_factory = ElementFactory()
+    storage.load("models/UML.gaphor", element_factory, modeling_language)
+    yield element_factory
+    element_factory.shutdown()
+
+
+def with_name(name):
+    return lambda e: isinstance(e, UML.Class) and e.name == name
+
+
+def test_bases(uml_metamodel: ElementFactory):
+    package = next(uml_metamodel.select(with_name("Package")))
+
+    names = list(s.name for s in super_classes(package))
+
+    assert "Element" in names
+    assert "NamedElement" in names
+
+
+def test_simple_attribute(uml_metamodel: ElementFactory):
+    package = next(uml_metamodel.select(with_name("Package")))
+    value_spec = next(uml_metamodel.select(with_name("ValueSpecification")))
+    literal_spec = next(uml_metamodel.select(with_name("LiteralSpecification")))
+
+    assert not is_simple_attribute(package)
+    assert is_simple_attribute(value_spec)
+    assert is_simple_attribute(literal_spec)
 
 
 # Ideas:

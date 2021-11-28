@@ -30,7 +30,7 @@ def element_factory(event_manager, modeling_language):
     element_factory.shutdown()
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def modeling_language():
     return UMLModelingLanguage()
 
