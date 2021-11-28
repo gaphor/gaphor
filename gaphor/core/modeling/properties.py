@@ -660,10 +660,10 @@ class derived(umlproperty, Generic[T]):
         return uc.data
 
     def _set(self, obj, value):
-        raise AttributeError("Can not set values on a union")
+        raise AttributeError(f"Can not set values on union {self.name}: {self.type}")
 
     def _del(self, obj, value=None):
-        raise AttributeError("Can not delete values on a union")
+        raise AttributeError(f"Can not delete values on union {self.name}: {self.type}")
 
     def propagate(self, event):
         """Re-emit state change for the derived properties as Derived*Event's.
