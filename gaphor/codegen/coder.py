@@ -71,7 +71,10 @@ class Coder:
                     mult = "one" if attr.upper == "1" else "many"
                     yield f"{attr.name}: relation_{mult}[{attr.type.name}]"
                 elif is_enumeration(attr.type):
-                    yield f"{attr.name}: enumeration"
+                    enum_values = ", ".join(
+                        f'"{e.name}"' for e in attr.type.ownedAttribute
+                    )
+                    yield f'{attr.name}: enumeration = enumeration("{attr.name}", ({enum_values}), "{attr.type.ownedAttribute[0].name}")'
                 else:
                     if attr.defaultValue:
                         if attr.typeValue == "int":
