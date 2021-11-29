@@ -39,9 +39,12 @@ class Coder:
     def __iter__(self):
         if self._class.attribute:
             for attr in sorted(self._class.attribute, key=lambda a: a.name or ""):
-                if attr.association:
-                    yield f"{attr.name}: relation_{'one' if attr.upper == '1' else 'many'}[{attr.type.name}]"
-                elif attr.typeValue and attr.typeValue.endswith("Kind"):
+                if attr.association and is_simple_attribute(attr.type):
+                    yield f"{attr.name}: attribute[{attr.typeValue}]"
+                elif attr.association:
+                    mult = "one" if attr.upper == "1" else "many"
+                    yield f"{attr.name}: relation_{mult}[{attr.type.name}]"
+                elif is_enumeration(attr.typeValue):
                     yield f"{attr.name}: enumeration"
                 else:
                     yield f"{attr.name}: attribute[{attr.typeValue}]"
@@ -72,8 +75,8 @@ def bases(c: UML.Class) -> Iterable[UML.Class]:
     # TODO: Add bases from extensions
 
 
-def is_enumeration(c: UML.Class) -> bool:
-    return bool(c.name and c.name.endswith("Kind"))
+def is_enumeration(name: str) -> bool:
+    return bool(name and (name.endswith("Kind") or name.endswith("Sort")))
 
 
 def is_simple_attribute(c: UML.Class) -> bool:
@@ -115,7 +118,9 @@ def coder(modelfile, outfile):
         order_classes(
             c
             for c in element_factory.select(UML.Class)
-            if not (is_enumeration(c) or is_simple_attribute(c) or is_in_profile(c))
+            if not (
+                is_enumeration(c.name) or is_simple_attribute(c) or is_in_profile(c)
+            )
         )
     )
 
