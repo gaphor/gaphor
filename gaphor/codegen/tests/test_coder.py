@@ -23,7 +23,7 @@ def test_coder_write_class():
 
     class_def = str(coder)
 
-    assert class_def == "class TestClass:"
+    assert class_def == "class TestClass():"
 
 
 def test_coder_write_class_no_attributes():
@@ -98,13 +98,8 @@ def test_coder_write_class_with_1_n_association(navigable_association):
 
 
 def test_enumeration():
-    class_ = UML.Class()
-    class_.name = "A"
-    enum = UML.Class()
-    enum.name = "AKind"
-
-    assert not is_enumeration(class_)
-    assert is_enumeration(enum)
+    assert not is_enumeration("A")
+    assert is_enumeration("AKind")
 
 
 def test_in_profile():
@@ -170,8 +165,7 @@ def test_order_classes(uml_metamodel):
     classes = list(order_classes(uml_metamodel.select(UML.Class)))
 
     assert classes[0].name == "Element"
-    assert classes[1].name == "Relationship"
-    assert classes[3].name == "NamedElement"
+    assert classes[1].name == "NamedElement"
 
 
 # Ideas:
