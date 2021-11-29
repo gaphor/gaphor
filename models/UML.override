@@ -17,18 +17,6 @@ from gaphor.core.modeling import Comment, Element
 override Diagram
 from gaphor.core.modeling import Diagram, StyleSheet
 %%
-override Transition
-# Invert order of superclasses to avoid MRO issues
-class Transition(RedefinableElement, NamedElement):
-    kind: enumeration
-    container: relation_one[Region]
-    source: relation_one[Vertex]
-    target: relation_one[Vertex]
-    effect: relation_one[Behavior]
-    guard: relation_one[Constraint]
-    redefinitionContext: relation_many[Classifier]
-    redefinedTransition: relation_many[Transition]
-%%
 override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 %%
