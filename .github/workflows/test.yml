@@ -2,7 +2,7 @@ name: Test
 on:
   pull_request:
 env:
-  python_version: '3.9.9'
+  python_version: '3.10'
 
 jobs:
 
@@ -26,6 +26,9 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
+    strategy:
+      matrix:
+        python_version: ["3.9", "3.10"]
     steps:
       - uses: actions/checkout@v2.4.0
         with:
@@ -35,7 +38,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2.3.1
         with:
-          python-version: ${{ env.python_version }}
+          python-version: ${{ matrix.python_version }}
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.7
         with:
@@ -58,8 +61,8 @@ jobs:
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
-      LDFLAGS: -L/usr/local/opt/python@3.9/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.9/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      LDFLAGS: -L/usr/local/opt/python@3.10/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
       - uses: actions/checkout@v2.4.0
         with:
@@ -85,8 +88,8 @@ jobs:
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
-      LDFLAGS: -L/usr/local/opt/python@3.9/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.9/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      LDFLAGS: -L/usr/local/opt/python@3.10/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
       GAPHOR_USE_GTK: 4
     steps:
       - uses: actions/checkout@v2.4.0
@@ -117,7 +120,7 @@ jobs:
       # Git revision of gvsbuild we use for to build GTK and the other dependencies
       gvsbuildref: ce4c9de92dc3487d15b8f5ecc200705f951b6ae8
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuildupdate: 1
+      gvsbuildupdate: 3
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
@@ -148,7 +151,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         working-directory: gvsbuild
         run: >
-          python .\build.py build -p=x64 --vs-ver=16 --python-ver=3.9 --msys-dir=C:\msys64
+          python .\build.py build -p=x64 --vs-ver=16 --python-ver=${{ env.python_version }} --msys-dir=C:\msys64
           --enable-gi --py-wheel --gtk3-ver=3.24 gobject-introspection gtk3 pycairo pygobject
           gtksourceview adwaita-icon-theme hicolor-icon-theme
       - name: Copy wheels to cached directory
