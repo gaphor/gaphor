@@ -64,35 +64,22 @@ def class_declaration(class_: UML.Class):
 
 def variables(class_: UML.Class, overrides: Overrides | None = None):
     if class_.ownedAttribute:
-        for attr in sorted(class_.ownedAttribute, key=lambda a: a.name or ""):
-            full_name = f"{class_.name}.{attr.name}"
+        for a in sorted(class_.ownedAttribute, key=lambda a: a.name or ""):
+            full_name = f"{class_.name}.{a.name}"
             if overrides and overrides.has_override(full_name):
-                yield f"{attr.name}: {overrides.get_type(full_name)}"
-            elif attr.isDerived and not attr.association:
+                yield f"{a.name}: {overrides.get_type(full_name)}"
+            elif a.isDerived and not a.association:
                 log.warning(f"Derived attribute {full_name} has no implementation.")
-            elif attr.association and is_simple_attribute(attr.type):
-                yield f'{attr.name}: attribute[str] = attribute("{attr.name}", str)'
-            elif attr.association:
-                mult = "one" if attr.upper == "1" else "many"
-                yield f"{attr.name}: relation_{mult}[{attr.type.name}]"
-            elif is_enumeration(attr.type):
-                enum_values = ", ".join(f'"{e.name}"' for e in attr.type.ownedAttribute)
-                yield f'{attr.name} = enumeration("{attr.name}", ({enum_values}), "{attr.type.ownedAttribute[0].name}")'
+            elif a.association and is_simple_attribute(a.type):
+                yield f'{a.name}: attribute[str] = attribute("{a.name}", str)'
+            elif a.association:
+                mult = "one" if a.upper == "1" else "many"
+                yield f"{a.name}: relation_{mult}[{a.type.name}]"
+            elif is_enumeration(a.type):
+                enum_values = ", ".join(f'"{e.name}"' for e in a.type.ownedAttribute)
+                yield f'{a.name} = enumeration("{a.name}", ({enum_values}), "{a.type.ownedAttribute[0].name}")'
             else:
-                if attr.defaultValue:
-                    if attr.typeValue == "int":
-                        defaultValue = attr.defaultValue.title()
-                    elif attr.typeValue == "str":
-                        defaultValue = f'"{attr.defaultValue}"'
-                    else:
-                        raise ValueError(
-                            f"Unknown default value type: {class_.name}.{attr.name}: {attr.typeValue} = {attr.defaultValue}"
-                        )
-
-                    default = f", default={defaultValue}"
-                else:
-                    default = ""
-                yield f'{attr.name}: attribute[{attr.typeValue}] = attribute("{attr.name}", {attr.typeValue}{default})'
+                yield f'{a.name}: attribute[{a.typeValue}] = attribute("{a.name}", {a.typeValue}{default_value(a)})'
 
 
 def associations(c: UML.Class, overrides: Overrides | None = None):
@@ -102,29 +89,52 @@ def associations(c: UML.Class, overrides: Overrides | None = None):
             yield overrides.get_override(full_name)
         elif not a.association or is_simple_attribute(a.type):
             continue
-        elif overrides and overrides.has_override(full_name):
-            yield overrides.get_override(full_name)
         elif redefines(a):
             yield f'{full_name} = redefine({c.name}, "{a.name}", {a.type.name}, {redefines(a)})'
         elif a.isDerived:
-            lower = "" if a.lowerValue in (None, "0") else f", lower={a.lowerValue}"
-            upper = "" if a.upperValue == "*" else f", upper=" f"{a.upperValue or 1}"
-            yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower}{upper})'
+            yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
         else:
-            lower = "" if a.lowerValue in (None, "0") else f", lower={a.lowerValue}"
-            upper = "" if a.upperValue == "*" else f", upper=" f"{a.upperValue or 1}"
-            composite = ", composite=True" if a.aggregation == "composite" else ""
-            opposite = (
-                f', opposite="{a.opposite.name}"'
-                if a.opposite and a.opposite.name and a.opposite.class_
-                else ""
-            )
-            yield f'{full_name} = association("{a.name}", {a.type.name}{lower}{upper}{composite}{opposite})'
+            yield f'{full_name} = association("{a.name}", {a.type.name}{lower(a)}{upper(a)}{composite(a)}{opposite(a)})'
 
         for slot in a.appliedStereotype[:].slot:
             if slot.definingFeature.name == "subsets":
                 for value in slot.value.split(","):
                     yield f"{c.name}.{value.strip()}.subsets.add({full_name})"
+
+
+def default_value(a):
+    if a.defaultValue:
+        if a.typeValue == "int":
+            defaultValue = a.defaultValue.title()
+        elif a.typeValue == "str":
+            defaultValue = f'"{a.defaultValue}"'
+        else:
+            raise ValueError(
+                f"Unknown default value type: {a.owner.name}.{a.name}: {a.typeValue} = {a.defaultValue}"
+            )
+
+        return f", default={defaultValue}"
+    return ""
+
+
+def lower(a):
+    return "" if a.lowerValue in (None, "0") else f", lower={a.lowerValue}"
+
+
+def upper(a):
+    return "" if a.upperValue == "*" else f", upper=" f"{a.upperValue or 1}"
+
+
+def composite(a):
+    return ", composite=True" if a.aggregation == "composite" else ""
+
+
+def opposite(a):
+    return (
+        f', opposite="{a.opposite.name}"'
+        if a.opposite and a.opposite.name and a.opposite.class_
+        else ""
+    )
 
 
 def order_classes(classes: Iterable[UML.Class]) -> Iterable[UML.Class]:
