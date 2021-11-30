@@ -55272,7 +55272,7 @@ have an opposite end.
 <ref refid="0c8675aa-ebec-11eb-8d68-2d4b211d5079"/>
 </owningInstance>
 <value>
-<val>directedRelationShip</val>
+<val>directedRelationship</val>
 </value>
 </Slot>
 <InstanceSpecification id="1973521a-ebec-11eb-8d68-2d4b211d5079">
