@@ -40,6 +40,8 @@ header = textwrap.dedent(
 
     from __future__ import annotations
 
+    from typing import Callable
+
     from gaphor.core.modeling.properties import (
         association,
         attribute as _attribute,
@@ -82,6 +84,14 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
             else:
                 yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
 
+    if class_.ownedOperation:
+        for o in sorted(class_.ownedOperation, key=lambda a: a.name or ""):
+            full_name = f"{class_.name}.{o.name}"
+            if overrides and overrides.has_override(full_name):
+                yield f"{o.name}: {overrides.get_type(full_name)}"
+            else:
+                log.warning(f"Operation {full_name} has no implementation")
+
 
 def associations(c: UML.Class, overrides: Overrides | None = None):
     redefinitions = []
@@ -120,6 +130,14 @@ def associations(c: UML.Class, overrides: Overrides | None = None):
                         log.warning(
                             f"{full_name} wants to subset {value.strip()}, but it is not a derived union"
                         )
+
+
+def operations(c: UML.Class, overrides: Overrides | None = None):
+    if c.ownedOperation:
+        for o in sorted(c.ownedOperation, key=lambda a: a.name or ""):
+            full_name = f"{c.name}.{o.name}"
+            if overrides and overrides.has_override(full_name):
+                yield overrides.get_override(full_name)
 
 
 def default_value(a):
@@ -295,6 +313,12 @@ def coder(modelfile, overrides, outfile):
                 print("    pass", file=outfile)
         print(file=outfile)
         print(file=outfile)
+
+    for c in classes:
+        for o in operations(c, overrides):
+            print(o, file=outfile)
+
+    print(file=outfile)
 
     for c in classes:
         for a in associations(c, overrides):
