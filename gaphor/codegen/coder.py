@@ -42,10 +42,10 @@ header = textwrap.dedent(
 
     from gaphor.core.modeling.properties import (
         association,
-        attribute,
+        attribute as _attribute,
         derived,
         derivedunion,
-        enumeration,
+        enumeration as _enumeration,
         redefine,
         relation_many,
         relation_one,
@@ -70,16 +70,17 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 yield f"{a.name}: {overrides.get_type(full_name)}"
             elif a.isDerived and not a.association:
                 log.warning(f"Derived attribute {full_name} has no implementation.")
-            elif a.association and is_simple_attribute(a.type):
-                yield f'{a.name}: attribute[str] = attribute("{a.name}", str)'
+            elif a.association and is_simple_type(a.type):
+                yield f'{a.name}: _attribute[str] = _attribute("{a.name}", str)'
             elif a.association:
                 mult = "one" if a.upper == "1" else "many"
-                yield f"{a.name}: relation_{mult}[{a.type.name}]"
+                comment = "  # type: ignore[assignment]" if is_reassignment(a) else ""
+                yield f"{a.name}: relation_{mult}[{a.type.name}]{comment}"
             elif is_enumeration(a.type):
                 enum_values = ", ".join(f'"{e.name}"' for e in a.type.ownedAttribute)
-                yield f'{a.name} = enumeration("{a.name}", ({enum_values}), "{a.type.ownedAttribute[0].name}")'
+                yield f'{a.name} = _enumeration("{a.name}", ({enum_values}), "{a.type.ownedAttribute[0].name}")'
             else:
-                yield f'{a.name}: attribute[{a.typeValue}] = attribute("{a.name}", {a.typeValue}{default_value(a)})'
+                yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
 
 
 def associations(c: UML.Class, overrides: Overrides | None = None):
@@ -88,7 +89,7 @@ def associations(c: UML.Class, overrides: Overrides | None = None):
         full_name = f"{c.name}.{a.name}"
         if overrides and overrides.has_override(full_name):
             yield overrides.get_override(full_name)
-        elif not a.association or is_simple_attribute(a.type):
+        elif not a.association or is_simple_type(a.type):
             continue
         elif redefines(a):
             redefinitions.append(
@@ -104,7 +105,7 @@ def associations(c: UML.Class, overrides: Overrides | None = None):
     for a in c.ownedAttribute:
         for slot in a.appliedStereotype[:].slot:
             if slot.definingFeature.name == "subsets":
-                if is_simple_attribute(a.type):
+                if is_simple_type(a.type):
                     continue
                 full_name = f"{c.name}.{a.name}"
                 for value in slot.value.split(","):
@@ -180,14 +181,24 @@ def is_enumeration(c: UML.Class) -> bool:
     return c and c.name and (c.name.endswith("Kind") or c.name.endswith("Sort"))  # type: ignore[return-value]
 
 
-def is_simple_attribute(c: UML.Class) -> bool:
+def is_simple_type(c: UML.Class) -> bool:
     for s in UML.model.get_applied_stereotypes(c):
         if s.name == "SimpleAttribute":
             return True
     for g in c.generalization:
-        if is_simple_attribute(g.general):
+        if is_simple_type(g.general):
             return True
     return False
+
+
+def is_reassignment(a: UML.Property) -> bool:
+    def test(c: UML.Class):
+        for attr in c.ownedAttribute:
+            if attr.name == a.name:
+                return True
+        return any(test(base) for base in bases(c))
+
+    return any(test(base) for base in bases(a.owner))  # type:ignore[arg-type]
 
 
 def is_in_profile(c: UML.Class) -> bool:
@@ -265,7 +276,7 @@ def coder(modelfile, overrides, outfile):
         order_classes(
             c
             for c in element_factory.select(UML.Class)
-            if not (is_enumeration(c) or is_simple_attribute(c) or is_in_profile(c))
+            if not (is_enumeration(c) or is_simple_type(c) or is_in_profile(c))
         )
     )
 

@@ -17,10 +17,10 @@ from gaphor.core.modeling import Comment, Element
 override Diagram
 from gaphor.core.modeling import Diagram, StyleSheet
 %%
-override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
+override MultiplicityElement.lower(MultiplicityElement.lowerValue): _attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 %%
-override MultiplicityElement.upper(MultiplicityElement.upperValue): attribute[str]
+override MultiplicityElement.upper(MultiplicityElement.upperValue): _attribute[str]
 MultiplicityElement.upper = MultiplicityElement.upperValue
 %%
 override Association.endType(Association.memberEnd, Property.type): derived[Type]

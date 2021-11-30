@@ -8,7 +8,7 @@ from gaphor.codegen.coder import (
     is_enumeration,
     is_in_profile,
     is_in_toplevel_package,
-    is_simple_attribute,
+    is_simple_type,
     last_minute_updates,
     load_model,
     order_classes,
@@ -52,8 +52,8 @@ def test_coder_write_class_with_attributes():
     attr_def = list(variables(class_))
 
     assert attr_def == [
-        'first: attribute[str] = attribute("first", str)',
-        'second: attribute[int] = attribute("second", int)',
+        'first: _attribute[str] = _attribute("first", str)',
+        'second: _attribute[int] = _attribute("second", int)',
     ]
 
 
@@ -70,7 +70,7 @@ def test_coder_write_class_with_enumeration(element_factory: ElementFactory):
 
     attr_def = list(variables(class_))
 
-    assert attr_def == ['first = enumeration("first", ("in", "out"), "in")']
+    assert attr_def == ['first = _enumeration("first", ("in", "out"), "in")']
 
 
 @pytest.fixture
@@ -170,9 +170,9 @@ def test_simple_attribute(uml_metamodel: ElementFactory):
     value_spec = next(uml_metamodel.select(by_name("ValueSpecification")))
     literal_spec = next(uml_metamodel.select(by_name("LiteralSpecification")))
 
-    assert not is_simple_attribute(package)
-    assert is_simple_attribute(value_spec)
-    assert is_simple_attribute(literal_spec)
+    assert not is_simple_type(package)
+    assert is_simple_type(value_spec)
+    assert is_simple_type(literal_spec)
 
 
 def test_order_classes(uml_metamodel):
