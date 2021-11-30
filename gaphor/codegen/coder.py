@@ -49,50 +49,44 @@ from gaphor.core.modeling.properties import (
 """
 
 
-class Coder:
-    def __init__(self, class_: UML.Class, overrides: Overrides | None = None):
-        self._class = class_
-        self.overrides = overrides
+def class_declaration(class_: UML.Class):
+    base_classes = ", ".join(
+        c.name for c in sorted(bases(class_), key=lambda c: c.name)  # type: ignore[no-any-return]
+    )
+    return f"class {class_.name}({base_classes}):"
 
-    def __str__(self):
-        base_classes = ", ".join(
-            c.name for c in sorted(bases(self._class), key=lambda c: c.name)  # type: ignore[no-any-return]
-        )
-        return f"class {self._class.name}({base_classes}):"
 
-    def __iter__(self):
-        if self._class.ownedAttribute:
-            for attr in sorted(self._class.ownedAttribute, key=lambda a: a.name or ""):
-                full_name = f"{self._class.name}.{attr.name}"
-                if self.overrides and self.overrides.has_override(full_name):
-                    yield f"{attr.name}: {self.overrides.get_type(full_name)}"
-                elif attr.isDerived:
-                    pass
-                elif attr.association and is_simple_attribute(attr.type):
-                    yield f'{attr.name}: attribute[str] = attribute("{attr.name}", str)'
-                elif attr.association:
-                    mult = "one" if attr.upper == "1" else "many"
-                    yield f"{attr.name}: relation_{mult}[{attr.type.name}]"
-                elif is_enumeration(attr.type):
-                    enum_values = ", ".join(
-                        f'"{e.name}"' for e in attr.type.ownedAttribute
-                    )
-                    yield f'{attr.name} = enumeration("{attr.name}", ({enum_values}), "{attr.type.ownedAttribute[0].name}")'
-                else:
-                    if attr.defaultValue:
-                        if attr.typeValue == "int":
-                            defaultValue = attr.defaultValue.title()
-                        elif attr.typeValue == "str":
-                            defaultValue = f'"{attr.defaultValue}"'
-                        else:
-                            raise ValueError(
-                                f"Unknown default value type: {self._class.name}.{attr.name}: {attr.typeValue} = {attr.defaultValue}"
-                            )
-
-                        default = f", default={defaultValue}"
+def variables(class_: UML.Class, overrides: Overrides | None = None):
+    if class_.ownedAttribute:
+        for attr in sorted(class_.ownedAttribute, key=lambda a: a.name or ""):
+            full_name = f"{class_.name}.{attr.name}"
+            if overrides and overrides.has_override(full_name):
+                yield f"{attr.name}: {overrides.get_type(full_name)}"
+            elif attr.isDerived:
+                pass
+            elif attr.association and is_simple_attribute(attr.type):
+                yield f'{attr.name}: attribute[str] = attribute("{attr.name}", str)'
+            elif attr.association:
+                mult = "one" if attr.upper == "1" else "many"
+                yield f"{attr.name}: relation_{mult}[{attr.type.name}]"
+            elif is_enumeration(attr.type):
+                enum_values = ", ".join(f'"{e.name}"' for e in attr.type.ownedAttribute)
+                yield f'{attr.name} = enumeration("{attr.name}", ({enum_values}), "{attr.type.ownedAttribute[0].name}")'
+            else:
+                if attr.defaultValue:
+                    if attr.typeValue == "int":
+                        defaultValue = attr.defaultValue.title()
+                    elif attr.typeValue == "str":
+                        defaultValue = f'"{attr.defaultValue}"'
                     else:
-                        default = ""
-                    yield f'{attr.name}: attribute[{attr.typeValue}] = attribute("{attr.name}", {attr.typeValue}{default})'
+                        raise ValueError(
+                            f"Unknown default value type: {class_.name}.{attr.name}: {attr.typeValue} = {attr.defaultValue}"
+                        )
+
+                    default = f", default={defaultValue}"
+                else:
+                    default = ""
+                yield f'{attr.name}: attribute[{attr.typeValue}] = attribute("{attr.name}", {attr.typeValue}{default})'
 
 
 def associations(c: UML.Class):
@@ -205,13 +199,12 @@ def coder(modelfile, overrides, outfile):
         if overrides.has_override(c.name):
             print(overrides.get_override(c.name), file=outfile)
         else:
-            coder = Coder(c, overrides)
-            print(coder, file=outfile)
-            has_fields = False
-            for a in coder:
-                print("    " + a, file=outfile)
-                has_fields = True
-            if not has_fields:
+            print(class_declaration(c), file=outfile)
+            properties = list(variables(c, overrides))
+            if properties:
+                for p in properties:
+                    print("    " + p, file=outfile)
+            else:
                 print("    pass", file=outfile)
         print(file=outfile)
         print(file=outfile)

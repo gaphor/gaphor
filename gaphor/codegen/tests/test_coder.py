@@ -2,15 +2,16 @@ import pytest
 
 from gaphor import UML
 from gaphor.codegen.coder import (
-    Coder,
     associations,
     bases,
+    class_declaration,
     is_enumeration,
     is_in_profile,
     is_in_toplevel_package,
     is_simple_attribute,
     last_minute_updates,
     order_classes,
+    variables,
 )
 from gaphor.core.format import parse
 from gaphor.core.modeling import ElementFactory
@@ -21,18 +22,15 @@ def test_coder_write_class():
     class_ = UML.Class()
     class_.name = "TestClass"
 
-    coder = Coder(class_)
-
-    class_def = str(coder)
+    class_def = class_declaration(class_)
 
     assert class_def == "class TestClass():"
 
 
 def test_coder_write_class_no_attributes():
     class_ = UML.Class()
-    coder = Coder(class_)
 
-    attr_def = list(coder)
+    attr_def = list(variables(class_))
 
     assert attr_def == []
 
@@ -50,9 +48,8 @@ def test_coder_write_class_with_attributes():
     class_ = UML.Class()
     class_.ownedAttribute = create_attribute("first: str")
     class_.ownedAttribute = create_attribute("second: int")
-    coder = Coder(class_)
 
-    attr_def = list(coder)
+    attr_def = list(variables(class_))
 
     assert attr_def == [
         'first: attribute[str] = attribute("first", str)',
@@ -71,9 +68,7 @@ def test_coder_write_class_with_enumeration(element_factory: ElementFactory):
 
     last_minute_updates(element_factory)
 
-    coder = Coder(class_)
-
-    attr_def = list(coder)
+    attr_def = list(variables(class_))
 
     assert attr_def == ['first = enumeration("first", ("in", "out"), "in")']
 
@@ -94,9 +89,8 @@ def navigable_association(element_factory):
 
 def test_coder_write_class_with_n_m_association(navigable_association):
     class_a = navigable_association.memberEnd[0].type
-    coder = Coder(class_a)
 
-    attr_def = list(coder)
+    attr_def = list(variables(class_a))
 
     assert class_a.name == "A"
     assert attr_def == ["b: relation_many[B]"]
@@ -105,9 +99,8 @@ def test_coder_write_class_with_n_m_association(navigable_association):
 def test_coder_write_class_with_1_n_association(navigable_association):
     class_a = navigable_association.memberEnd[0].type
     navigable_association.memberEnd[1].upper = "1"
-    coder = Coder(class_a)
 
-    attr_def = list(coder)
+    attr_def = list(variables(class_a))
 
     assert class_a.name == "A"
     assert attr_def == ["b: relation_one[B]"]
