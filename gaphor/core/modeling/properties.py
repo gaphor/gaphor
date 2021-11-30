@@ -601,14 +601,19 @@ class derived(umlproperty, Generic[T]):
         self.lower = lower
         self.upper = upper
         self.filter = filter
-        self.subsets = set(subsets)
-        self.single = len(subsets) == 1
+        self.subsets: set[umlproperty] = set()
+        self.single = False
 
         for s in subsets:
-            assert isinstance(
-                s, (association, derived)
-            ), f"have element {s}, expected association"
-            s._dependent_properties.add(self)
+            self.add(s)
+
+    def add(self, subset):
+        self.subsets.add(subset)
+        self.single = len(self.subsets) == 1
+        assert isinstance(
+            subset, (association, derived)
+        ), f"have element {subset}, expected association"
+        subset._dependent_properties.add(self)
 
     def load(self, obj, value):
         raise ValueError(

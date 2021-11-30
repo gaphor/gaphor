@@ -104,11 +104,13 @@ def associations(c: UML.Class, overrides: Overrides | None = None):
     for a in c.ownedAttribute:
         for slot in a.appliedStereotype[:].slot:
             if slot.definingFeature.name == "subsets":
+                if is_simple_attribute(a.type):
+                    continue
                 full_name = f"{c.name}.{a.name}"
                 for value in slot.value.split(","):
                     d = attribute(c, value.strip())
                     if d and d.isDerived:
-                        yield f"{d.owner.name}.{d.name}.subsets.add({full_name})"  # type: ignore[attr-defined]
+                        yield f"{d.owner.name}.{d.name}.add({full_name})"  # type: ignore[attr-defined]
                     elif not d:
                         log.warning(
                             f"{full_name} wants to subset {value.strip()}, but it is not defined"
