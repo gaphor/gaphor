@@ -10,12 +10,12 @@ from gaphor.codegen.coder import (
     is_in_toplevel_package,
     is_simple_attribute,
     last_minute_updates,
+    load_model,
     order_classes,
     variables,
 )
 from gaphor.core.format import parse
 from gaphor.core.modeling import ElementFactory
-from gaphor.storage import storage
 
 
 def test_coder_write_class():
@@ -147,9 +147,7 @@ def test_in_toplevel_package():
 
 @pytest.fixture(scope="session")
 def uml_metamodel(modeling_language):
-    element_factory = ElementFactory()
-    storage.load("models/UML.gaphor", element_factory, modeling_language)
-    last_minute_updates(element_factory)
+    element_factory = load_model("models/UML.gaphor")
     yield element_factory
     element_factory.shutdown()
 
@@ -178,6 +176,8 @@ def test_simple_attribute(uml_metamodel: ElementFactory):
 
 
 def test_order_classes(uml_metamodel):
+    print(uml_metamodel)
+
     classes = list(order_classes(uml_metamodel.select(UML.Class)))
 
     assert classes[0].name == "Element"
