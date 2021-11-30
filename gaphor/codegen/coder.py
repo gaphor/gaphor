@@ -83,6 +83,7 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
 
 
 def associations(c: UML.Class, overrides: Overrides | None = None):
+    redefinitions = []
     for a in c.ownedAttribute:
         full_name = f"{c.name}.{a.name}"
         if overrides and overrides.has_override(full_name):
@@ -90,16 +91,32 @@ def associations(c: UML.Class, overrides: Overrides | None = None):
         elif not a.association or is_simple_attribute(a.type):
             continue
         elif redefines(a):
-            yield f'{full_name} = redefine({c.name}, "{a.name}", {a.type.name}, {redefines(a)})'
+            redefinitions.append(
+                f'{full_name} = redefine({c.name}, "{a.name}", {a.type.name}, {redefines(a)})'
+            )
         elif a.isDerived:
             yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
         else:
             yield f'{full_name} = association("{a.name}", {a.type.name}{lower(a)}{upper(a)}{composite(a)}{opposite(a)})'
 
+    yield from redefinitions
+
+    for a in c.ownedAttribute:
         for slot in a.appliedStereotype[:].slot:
             if slot.definingFeature.name == "subsets":
+                full_name = f"{c.name}.{a.name}"
                 for value in slot.value.split(","):
-                    yield f"{c.name}.{value.strip()}.subsets.add({full_name})"
+                    d = attribute(c, value.strip())
+                    if d and d.isDerived:
+                        yield f"{d.owner.name}.{d.name}.subsets.add({full_name})"  # type: ignore[attr-defined]
+                    elif not d:
+                        log.warning(
+                            f"{full_name} wants to subset {value.strip()}, but it is not defined"
+                        )
+                    else:
+                        log.warning(
+                            f"{full_name} wants to subset {value.strip()}, but it is not a derived union"
+                        )
 
 
 def default_value(a):
@@ -122,7 +139,7 @@ def lower(a):
 
 
 def upper(a):
-    return "" if a.upperValue == "*" else f", upper=" f"{a.upperValue or 1}"
+    return "" if a.upperValue in (None, "*") else f", upper={a.upperValue}"
 
 
 def composite(a):
@@ -192,6 +209,17 @@ def redefines(a: UML.Property) -> str | None:
     for slot in a.appliedStereotype[:].slot:
         if slot.definingFeature.name == "redefines":
             return slot.value  # type: ignore[no-any-return]
+    return None
+
+
+def attribute(c: UML.Class, name: str) -> UML.Property | None:
+    for a in c.ownedAttribute:
+        if a.name == name:
+            return a  # type: ignore[no-any-return]
+    for base in bases(c):
+        p = attribute(base, name)
+        if p:
+            return p
     return None
 
 

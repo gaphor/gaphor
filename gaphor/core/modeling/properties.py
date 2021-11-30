@@ -739,8 +739,8 @@ class derivedunion(derived[T]):
         self,
         name: str,
         type: type[T],
-        lower: Lower,
-        upper: Upper,
+        lower: Lower = 0,
+        upper: Upper = "*",
         *subsets: relation,
     ):
         super().__init__(name, type, lower, upper, self._union, *subsets)

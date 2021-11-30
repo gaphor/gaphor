@@ -188,7 +188,7 @@ def test_coder_write_association(navigable_association: UML.Association):
 
     a = list(associations(navigable_association.memberEnd[0].type))
 
-    assert a == ['A.b = association("b", B, upper=1, opposite="a")']
+    assert a == ['A.b = association("b", B, opposite="a")']
 
 
 def test_coder_write_association_lower_value(navigable_association: UML.Association):
@@ -197,16 +197,16 @@ def test_coder_write_association_lower_value(navigable_association: UML.Associat
 
     a = list(associations(navigable_association.memberEnd[0].type))
 
-    assert a == ['A.b = association("b", B, lower=1, upper=1, opposite="a")']
+    assert a == ['A.b = association("b", B, lower=1, opposite="a")']
 
 
 def test_coder_write_association_upper_value(navigable_association: UML.Association):
     end = navigable_association.memberEnd[1]
-    end.upperValue = "*"
+    end.upperValue = "1"
 
     a = list(associations(navigable_association.memberEnd[0].type))
 
-    assert a == ['A.b = association("b", B, opposite="a")']
+    assert a == ['A.b = association("b", B, upper=1, opposite="a")']
 
 
 def test_coder_write_association_composite(navigable_association: UML.Association):
@@ -215,7 +215,7 @@ def test_coder_write_association_composite(navigable_association: UML.Associatio
 
     a = list(associations(navigable_association.memberEnd[0].type))
 
-    assert a == ['A.b = association("b", B, upper=1, composite=True, opposite="a")']
+    assert a == ['A.b = association("b", B, composite=True, opposite="a")']
 
 
 def test_coder_write_association_not_navigable(navigable_association: UML.Association):
@@ -237,4 +237,4 @@ def test_coder_write_association_opposite_not_navigable(
 
     a = list(associations(navigable_association.memberEnd[0].type))
 
-    assert a == ['A.b = association("b", B, upper=1)']
+    assert a == ['A.b = association("b", B)']
