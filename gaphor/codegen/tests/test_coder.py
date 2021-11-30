@@ -3,6 +3,7 @@ import pytest
 from gaphor import UML
 from gaphor.codegen.coder import (
     Coder,
+    associations,
     bases,
     is_enumeration,
     is_in_profile,
@@ -155,16 +156,17 @@ def test_in_toplevel_package():
 def uml_metamodel(modeling_language):
     element_factory = ElementFactory()
     storage.load("models/UML.gaphor", element_factory, modeling_language)
+    last_minute_updates(element_factory)
     yield element_factory
     element_factory.shutdown()
 
 
-def with_name(name):
+def by_name(name):
     return lambda e: isinstance(e, UML.Class) and e.name == name
 
 
 def test_bases(uml_metamodel: ElementFactory):
-    package = next(uml_metamodel.select(with_name("Package")))
+    package = next(uml_metamodel.select(by_name("Package")))
 
     names = list(s.name for s in bases(package))
 
@@ -173,9 +175,9 @@ def test_bases(uml_metamodel: ElementFactory):
 
 
 def test_simple_attribute(uml_metamodel: ElementFactory):
-    package = next(uml_metamodel.select(with_name("Package")))
-    value_spec = next(uml_metamodel.select(with_name("ValueSpecification")))
-    literal_spec = next(uml_metamodel.select(with_name("LiteralSpecification")))
+    package = next(uml_metamodel.select(by_name("Package")))
+    value_spec = next(uml_metamodel.select(by_name("ValueSpecification")))
+    literal_spec = next(uml_metamodel.select(by_name("LiteralSpecification")))
 
     assert not is_simple_attribute(package)
     assert is_simple_attribute(value_spec)
@@ -189,7 +191,57 @@ def test_order_classes(uml_metamodel):
     assert classes[1].name == "NamedElement"
 
 
-# Ideas:
-# Primitive types?
-# Overrides
-# Metaclass: class is owned by a Profile
+def test_coder_write_association(navigable_association: UML.Association):
+
+    a = list(associations(navigable_association.memberEnd[0].type))
+
+    assert a == ['A.b = association("b", B, upper=1, opposite="a")']
+
+
+def test_coder_write_association_lower_value(navigable_association: UML.Association):
+    end = navigable_association.memberEnd[1]
+    end.lowerValue = "1"
+
+    a = list(associations(navigable_association.memberEnd[0].type))
+
+    assert a == ['A.b = association("b", B, lower=1, upper=1, opposite="a")']
+
+
+def test_coder_write_association_upper_value(navigable_association: UML.Association):
+    end = navigable_association.memberEnd[1]
+    end.upperValue = "*"
+
+    a = list(associations(navigable_association.memberEnd[0].type))
+
+    assert a == ['A.b = association("b", B, opposite="a")']
+
+
+def test_coder_write_association_composite(navigable_association: UML.Association):
+    end = navigable_association.memberEnd[1]
+    end.aggregation = "composite"
+
+    a = list(associations(navigable_association.memberEnd[0].type))
+
+    assert a == ['A.b = association("b", B, upper=1, composite=True, opposite="a")']
+
+
+def test_coder_write_association_not_navigable(navigable_association: UML.Association):
+    UML.model.set_navigability(
+        navigable_association, navigable_association.memberEnd[1], None
+    )
+
+    a = list(associations(navigable_association.memberEnd[0].type))
+
+    assert a == []
+
+
+def test_coder_write_association_opposite_not_navigable(
+    navigable_association: UML.Association,
+):
+    UML.model.set_navigability(
+        navigable_association, navigable_association.memberEnd[0], None
+    )
+
+    a = list(associations(navigable_association.memberEnd[0].type))
+
+    assert a == ['A.b = association("b", B, upper=1)']

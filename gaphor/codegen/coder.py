@@ -95,6 +95,22 @@ class Coder:
                     yield f'{attr.name}: attribute[{attr.typeValue}] = attribute("{attr.name}", {attr.typeValue}{default})'
 
 
+def associations(c: UML.Class):
+    for a in c.ownedAttribute:
+        if not a.association:
+            continue
+        lower = "" if a.lowerValue in (None, "0") else f", lower={a.lowerValue}"
+        upper = "" if a.upperValue == "*" else f", upper=" f"{a.upperValue or 1}"
+        composite = ", composite=True" if a.aggregation == "composite" else ""
+        opposite = (
+            f', opposite="{a.opposite.name}"'
+            if a.opposite and a.opposite.name and a.opposite.class_
+            else ""
+        )
+
+        yield f'{c.name}.{a.name} = association("{a.name}", {a.type.name}{lower}{upper}{composite}{opposite})'
+
+
 def order_classes(classes: Iterable[UML.Class]) -> Iterable[UML.Class]:
     seen_classes = set()
 
@@ -198,6 +214,11 @@ def coder(modelfile, overrides, outfile):
             if not has_fields:
                 print("    pass", file=outfile)
         print(file=outfile)
+        print(file=outfile)
+
+    for c in classes:
+        for a in associations(c):
+            print(a, file=outfile)
         print(file=outfile)
 
 
