@@ -77,7 +77,7 @@ class Coder:
                     enum_values = ", ".join(
                         f'"{e.name}"' for e in attr.type.ownedAttribute
                     )
-                    yield f'{attr.name}: enumeration = enumeration("{attr.name}", ({enum_values}), "{attr.type.ownedAttribute[0].name}")'
+                    yield f'{attr.name} = enumeration("{attr.name}", ({enum_values}), "{attr.type.ownedAttribute[0].name}")'
                 else:
                     if attr.defaultValue:
                         if attr.typeValue == "int":

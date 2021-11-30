@@ -74,9 +74,7 @@ def test_coder_write_class_with_enumeration(element_factory: ElementFactory):
 
     attr_def = list(coder)
 
-    assert attr_def == [
-        'first: enumeration = enumeration("first", ("in", "out"), "in")'
-    ]
+    assert attr_def == ['first = enumeration("first", ("in", "out"), "in")']
 
 
 @pytest.fixture
