@@ -50,7 +50,7 @@ from gaphor.core.modeling.properties import (
 
 
 class Coder:
-    def __init__(self, class_: UML.Class, overrides: Overrides):
+    def __init__(self, class_: UML.Class, overrides: Overrides | None = None):
         self._class = class_
         self.overrides = overrides
 
@@ -61,13 +61,13 @@ class Coder:
         return f"class {self._class.name}({base_classes}):"
 
     def __iter__(self):
-        if self._class.attribute:
-            for attr in sorted(self._class.attribute, key=lambda a: a.name or ""):
+        if self._class.ownedAttribute:
+            for attr in sorted(self._class.ownedAttribute, key=lambda a: a.name or ""):
                 full_name = f"{self._class.name}.{attr.name}"
-                if self.overrides.has_override(full_name):
+                if self.overrides and self.overrides.has_override(full_name):
                     yield f"{attr.name}: {self.overrides.get_type(full_name)}"
                 elif attr.isDerived:
-                    yield "pass"
+                    pass
                 elif attr.association and is_simple_attribute(attr.type):
                     yield f'{attr.name}: attribute[str] = attribute("{attr.name}", str)'
                 elif attr.association:
@@ -93,8 +93,6 @@ class Coder:
                     else:
                         default = ""
                     yield f'{attr.name}: attribute[{attr.typeValue}] = attribute("{attr.name}", {attr.typeValue}{default})'
-        else:
-            yield "pass"
 
 
 def order_classes(classes: Iterable[UML.Class]) -> Iterable[UML.Class]:
@@ -193,8 +191,12 @@ def coder(modelfile, overrides, outfile):
         else:
             coder = Coder(c, overrides)
             print(coder, file=outfile)
+            has_fields = False
             for a in coder:
                 print("    " + a, file=outfile)
+                has_fields = True
+            if not has_fields:
+                print("    pass", file=outfile)
         print(file=outfile)
         print(file=outfile)
 
