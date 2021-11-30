@@ -33,7 +33,6 @@ from gaphor.UML import (
     NamedElement,
     ObjectNode,
     Operation,
-    Optional,
     Parameter,
     ParameterSet,
     Port,
