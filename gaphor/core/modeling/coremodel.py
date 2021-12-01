@@ -19,17 +19,17 @@ from gaphor.core.modeling.properties import (
 )
 
 
-# 3: override Element
+# 1: override Element
 from gaphor.core.modeling.element import Element
 
 
 
-# 6: override Diagram
+# 4: override Diagram
 from gaphor.core.modeling.diagram import Diagram
 
 
 
-# 9: override Presentation
+# 7: override Presentation
 from gaphor.core.modeling.presentation import Presentation
 
 
@@ -39,7 +39,7 @@ class Comment(Element):
     body: _attribute[str] = _attribute("body", str)
 
 
-# 15: override StyleSheet
+# 13: override StyleSheet
 from gaphor.core.modeling.stylesheet import StyleSheet
 
 
@@ -51,7 +51,7 @@ Element.ownedElement = derivedunion("ownedElement", Element)
 Element.owner = derivedunion("owner", Element, upper=1)
 Element.ownedDiagram = association("ownedDiagram", Diagram, composite=True, opposite="element")
 Element.ownedElement.add(Element.ownedDiagram)  # type: ignore[attr-defined]
-# 12: override Diagram.qualifiedName: property[list[str]]
+# 10: override Diagram.qualifiedName: property[list[str]]
 # defined in gaphor.core.modeling.diagram
 
 Diagram.ownedPresentation = association("ownedPresentation", Presentation, composite=True, opposite="diagram")

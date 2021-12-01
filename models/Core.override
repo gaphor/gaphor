@@ -1,5 +1,3 @@
-header
-%%
 override Element
 from gaphor.core.modeling.element import Element
 %%
