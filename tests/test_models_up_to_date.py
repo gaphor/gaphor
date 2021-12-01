@@ -3,7 +3,22 @@
 from pathlib import Path
 
 from gaphor.codegen.coder import main
+from gaphor.core.modeling import coremodel
 from gaphor.UML import uml
+
+
+def test_core_model(tmp_path):
+    outfile = tmp_path / "coremodel.py"
+    main(
+        modelfile="models/Core.gaphor",
+        overridesfile="models/Core.override",
+        outfile=outfile,
+    )
+
+    current_model = Path(coremodel.__file__).read_text()
+    generated_model = outfile.read_text()
+
+    assert current_model == generated_model
 
 
 def test_uml_model(tmp_path):
