@@ -83,12 +83,7 @@ dist = "poetry build"
 install = "poetry install"
 install-nodev = "poetry install --no-dev"
 install-pyinstall = "poetry install --no-dev --extras pyinstall"
-coremodel = [
-    { "cmd" = "gaphor/codegen/codegen.py models/Core.gaphor gaphor/core/modeling/coremodel.py models/Core.override" },
-    { "cmd" = "black gaphor/core/modeling/coremodel.py" },
-    { "cmd" = "mypy gaphor/core/modeling" },
-    { "cmd" = "isort gaphor/core/modeling/coremodel.py" },
-]
+coremodel = { "script" = "gaphor.codegen.coder:main(modelfile='models/Core.gaphor', overridesfile='models/Core.override', outfile='gaphor/core/modeling/coremodel.py')" }
 uml = { "script" = "gaphor.codegen.coder:main(modelfile='models/UML.gaphor', overridesfile='models/UML.override', outfile='gaphor/UML/uml.py')" }
 sysml = [
     { "cmd" = "python gaphor/codegen/codegen.py --uml_profile models/SysML.gaphor gaphor/SysML/sysml.py models/SysML.override" },
