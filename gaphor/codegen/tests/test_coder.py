@@ -165,6 +165,16 @@ def test_bases(uml_metamodel: ElementFactory):
     assert "PackageableElement" in names
 
 
+def test_extension_bases(element_factory: ElementFactory):
+    metaclass = element_factory.create(UML.Class)
+    stereotype = element_factory.create(UML.Stereotype)
+    UML.model.create_extension(metaclass, stereotype)
+
+    supers = list(bases(stereotype))
+
+    assert supers == [metaclass]
+
+
 def test_simple_attribute(uml_metamodel: ElementFactory):
     package = next(uml_metamodel.select(by_name("Package")))
     value_spec = next(uml_metamodel.select(by_name("ValueSpecification")))

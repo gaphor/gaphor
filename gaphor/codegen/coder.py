@@ -193,7 +193,11 @@ def order_classes(classes: Iterable[UML.Class]) -> Iterable[UML.Class]:
 def bases(c: UML.Class) -> Iterable[UML.Class]:
     for g in c.generalization:
         yield g.general
-    # TODO: Add bases from extensions
+
+    for a in c.ownedAttribute:
+        if a.association and a.name == "baseClass":
+            meta_cls = a.association.ownedEnd.class_
+            yield meta_cls
 
 
 def is_enumeration(c: UML.Class) -> bool:
