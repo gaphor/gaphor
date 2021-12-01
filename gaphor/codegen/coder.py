@@ -302,7 +302,7 @@ def coder(modelfile, overrides, out):
     print(header, file=out)
 
     for c in classes:
-        if overrides.has_override(c.name):
+        if overrides and overrides.has_override(c.name):
             print(overrides.get_override(c.name), file=out)
         else:
             print(class_declaration(c), file=out)
