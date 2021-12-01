@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.6.5">
-<Package id="7273ceaa-20df-11ea-9209-e76c3117c943">
-<name>
-<val>Profiles</val>
-</name>
-<nestedPackage>
-<reflist>
-<ref refid="00555550-20e9-11ea-9209-e76c3117c943"/>
-<ref refid="20f0de7c-85cc-11ea-9e67-15eb92d7f2b9"/>
-</reflist>
-</nestedPackage>
-<ownedDiagram>
-<reflist>
-<ref refid="7273ceab-20df-11ea-9209-e76c3117c943"/>
-</reflist>
-</ownedDiagram>
-</Package>
 <Diagram id="7273ceab-20df-11ea-9209-e76c3117c943">
-<element>
-<ref refid="7273ceaa-20df-11ea-9209-e76c3117c943"/>
-</element>
 <name>
 <val>Profiles</val>
 </name>
@@ -459,6 +440,9 @@
 <diagram>
 <ref refid="b354e9ca-20e1-11ea-9209-e76c3117c943"/>
 </diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
 <subject>
 <ref refid="57282c66-4bc3-11ec-8e7f-0456e5e540ed"/>
 </subject>
@@ -1269,6 +1253,11 @@
 <ref refid="2d1ce65f-20e2-11ea-9209-e76c3117c943"/>
 </reflist>
 </presentation>
+<specialization>
+<reflist>
+<ref refid="57282c66-4bc3-11ec-8e7f-0456e5e540ed"/>
+</reflist>
+</specialization>
 </Stereotype>
 <Property id="6f61f5d4-20e4-11ea-9209-e76c3117c943">
 <class_>
@@ -1482,6 +1471,14 @@
 <ref refid="4b3c5149-20e6-11ea-9209-e76c3117c943"/>
 </reflist>
 </presentation>
+<specialization>
+<reflist>
+<ref refid="18c6c02c-4bc3-11ec-8e7f-0456e5e540ed"/>
+<ref refid="1b0e4184-4bc3-11ec-8e7f-0456e5e540ed"/>
+<ref refid="28e96fa4-4bc3-11ec-8e7f-0456e5e540ed"/>
+<ref refid="32630310-4bc3-11ec-8e7f-0456e5e540ed"/>
+</reflist>
+</specialization>
 </Stereotype>
 <Stereotype id="574def1e-20e6-11ea-9209-e76c3117c943">
 <generalization>
@@ -1700,6 +1697,12 @@
 <ref refid="323d944a-2140-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </presentation>
+<specialization>
+<reflist>
+<ref refid="f7aad898-4bc1-11ec-8e7f-0456e5e540ed"/>
+<ref refid="a7ffb56a-4bc2-11ec-8e7f-0456e5e540ed"/>
+</reflist>
+</specialization>
 </Stereotype>
 <Property id="6c2d7f8e-20e7-11ea-9209-e76c3117c943">
 <class_>
@@ -1715,7 +1718,7 @@
 <val>Boolean</val>
 </typeValue>
 </Property>
-<Profile id="00555550-20e9-11ea-9209-e76c3117c943">
+<Package id="00555550-20e9-11ea-9209-e76c3117c943">
 <name>
 <val>SysML</val>
 </name>
@@ -1736,15 +1739,12 @@
 <ref refid="1bad943e-20e9-11ea-9209-e76c3117c943"/>
 </reflist>
 </ownedDiagram>
-<package>
-<ref refid="7273ceaa-20df-11ea-9209-e76c3117c943"/>
-</package>
 <presentation>
 <reflist>
 <ref refid="00555551-20e9-11ea-9209-e76c3117c943"/>
 </reflist>
 </presentation>
-</Profile>
+</Package>
 <Diagram id="1bad943e-20e9-11ea-9209-e76c3117c943">
 <element>
 <ref refid="00555550-20e9-11ea-9209-e76c3117c943"/>
@@ -3338,6 +3338,14 @@
 <ref refid="dfdeb6a8-9097-11ea-9685-03ae027faeeb"/>
 </reflist>
 </presentation>
+<specialization>
+<reflist>
+<ref refid="4de822ac-4bc1-11ec-8e7f-0456e5e540ed"/>
+<ref refid="6f5c8e7c-4bc2-11ec-8e7f-0456e5e540ed"/>
+<ref refid="7e515fc0-4bc2-11ec-8e7f-0456e5e540ed"/>
+<ref refid="80757fd4-4bc2-11ec-8e7f-0456e5e540ed"/>
+</reflist>
+</specialization>
 </Stereotype>
 <Association id="b6f05de8-2105-11ea-ab0b-c72c0738acd2">
 <memberEnd>
@@ -3449,6 +3457,13 @@
 <ref refid="a9dd011e-2142-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </presentation>
+<specialization>
+<reflist>
+<ref refid="cb380aac-4bc0-11ec-8e7f-0456e5e540ed"/>
+<ref refid="47adcc96-4bc3-11ec-8e7f-0456e5e540ed"/>
+<ref refid="69d6200c-4bc3-11ec-8e7f-0456e5e540ed"/>
+</reflist>
+</specialization>
 </Stereotype>
 <Extension id="863f06e6-2109-11ea-ab0b-c72c0738acd2">
 <memberEnd>
@@ -4312,6 +4327,11 @@
 <ref refid="efc51367-210a-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </presentation>
+<specialization>
+<reflist>
+<ref refid="26071de2-4bc1-11ec-8e7f-0456e5e540ed"/>
+</reflist>
+</specialization>
 </Stereotype>
 <Stereotype id="f19164ec-210a-11ea-ab0b-c72c0738acd2">
 <comment>
@@ -5177,6 +5197,9 @@
 <diagram>
 <ref refid="d86faf8c-210f-11ea-ab0b-c72c0738acd2"/>
 </diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
 <subject>
 <ref refid="b88a42ec-4bc2-11ec-8e7f-0456e5e540ed"/>
 </subject>
@@ -5345,6 +5368,11 @@
 <ref refid="4830f1e5-2112-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </presentation>
+<specialization>
+<reflist>
+<ref refid="b88a42ec-4bc2-11ec-8e7f-0456e5e540ed"/>
+</reflist>
+</specialization>
 </Stereotype>
 <Stereotype id="6047ba92-2112-11ea-ab0b-c72c0738acd2">
 <generalization>
@@ -9061,7 +9089,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 254.54451185657132, 271.5296936035156)</val>
 </matrix>
 <points>
-<val>[(-79.88355543849855, 73.70306396484375), (-79.88355543849855, 49.12969970703131), (16.369367537959988, 49.12969970703131), (16.369367537959988, -2.842170943040401e-14)]</val>
+<val>[(-79.88355543849855, 73.70306396484375), (-79.88355543849855, 49.12969970703131), (16.369367537959988, 49.12969970703131), (16.369367537959988, 0.0)]</val>
 </points>
 <head-connection>
 <ref refid="f8d44721-2140-11ea-ab0b-c72c0738acd2"/>
@@ -9087,7 +9115,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 253.8513793945313, 271.5296936035156)</val>
 </matrix>
 <points>
-<val>[(79.0625, 73.70306396484375), (79.0625, 49.12969970703131), (17.5625, 49.12969970703131), (17.5625, -2.842170943040401e-14)]</val>
+<val>[(79.0625, 73.70306396484375), (79.0625, 49.12969970703131), (17.5625, 49.12969970703131), (17.5625, 0.0)]</val>
 </points>
 <head-connection>
 <ref refid="fdc0f685-2140-11ea-ab0b-c72c0738acd2"/>
@@ -9246,6 +9274,12 @@
 <ref refid="e6b008c3-2140-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </presentation>
+<specialization>
+<reflist>
+<ref refid="9bd6e4c2-4bc0-11ec-8e7f-0456e5e540ed"/>
+<ref refid="a49a71aa-4bc0-11ec-8e7f-0456e5e540ed"/>
+</reflist>
+</specialization>
 </Stereotype>
 <Stereotype id="ecd77fe6-2140-11ea-ab0b-c72c0738acd2">
 <name>
@@ -10645,7 +10679,7 @@
 <ref refid="4d61886c-235c-11ea-ab0b-c72c0738acd2"/>
 </type>
 </ExtensionEnd>
-<Profile id="20f0de7c-85cc-11ea-9e67-15eb92d7f2b9">
+<Package id="20f0de7c-85cc-11ea-9e67-15eb92d7f2b9">
 <name>
 <val>UML</val>
 </name>
@@ -10682,15 +10716,12 @@
 <ref refid="515d800c-2144-11ea-ab0b-c72c0738acd2"/>
 </reflist>
 </ownedType>
-<package>
-<ref refid="7273ceaa-20df-11ea-9209-e76c3117c943"/>
-</package>
 <presentation>
 <reflist>
 <ref refid="20f1e60a-85cc-11ea-9e67-15eb92d7f2b9"/>
 </reflist>
 </presentation>
-</Profile>
+</Package>
 <Extension id="8b7bc5bc-85cd-11ea-9e67-15eb92d7f2b9">
 <memberEnd>
 <reflist>
