@@ -66,6 +66,8 @@ def class_declaration(class_: UML.Class):
 def variables(class_: UML.Class, overrides: Overrides | None = None):
     if class_.ownedAttribute:
         for a in sorted(class_.ownedAttribute, key=lambda a: a.name or ""):
+            if is_extension_end(a):
+                continue
             full_name = f"{class_.name}.{a.name}"
             if overrides and overrides.has_override(full_name):
                 yield f"{a.name}: {overrides.get_type(full_name)}"
@@ -92,17 +94,17 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 log.warning(f"Operation {full_name} has no implementation")
 
 
-def associations(c: UML.Class, overrides: Overrides | None = None):
+def associations(
+    c: UML.Class,
+    super_models: list[tuple[str, ElementFactory]] = [],
+    overrides: Overrides | None = None,
+):
     redefinitions = []
     for a in c.ownedAttribute:
         full_name = f"{c.name}.{a.name}"
         if overrides and overrides.has_override(full_name):
             yield overrides.get_override(full_name)
-        elif (
-            not a.association
-            or is_simple_type(a.type)
-            or isinstance(a.association, UML.Extension)
-        ):
+        elif not a.association or is_simple_type(a.type) or is_extension_end(a):
             continue
         elif redefines(a):
             redefinitions.append(
@@ -122,8 +124,11 @@ def associations(c: UML.Class, overrides: Overrides | None = None):
                     continue
                 full_name = f"{c.name}.{a.name}"
                 for value in slot.value.split(","):
-                    d = attribute(c, value.strip())
+                    # TODO: also find derived class in super_models
+                    pkg, d = attribute(c, value.strip(), super_models)
                     if d and d.isDerived:
+                        if pkg:
+                            yield f"from {pkg} import {d.owner.name}"  # type: ignore[attr-defined]
                         yield f"{d.owner.name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"  # type: ignore[attr-defined]
                     elif not d:
                         log.warning(
@@ -216,6 +221,10 @@ def is_simple_type(c: UML.Class) -> bool:
     return False
 
 
+def is_extension_end(a: UML.Property):
+    return isinstance(a.association, UML.Extension)
+
+
 def is_reassignment(a: UML.Property) -> bool:
     def test(c: UML.Class):
         for attr in c.ownedAttribute:
@@ -250,17 +259,23 @@ def redefines(a: UML.Property) -> str | None:
     return None
 
 
-def attribute(c: UML.Class, name: str) -> UML.Property | None:
+def attribute(
+    c: UML.Class, name: str, super_models: list[tuple[str, ElementFactory]]
+) -> tuple[str | None, UML.Property | None]:
     for a in c.ownedAttribute:
         if a.name == name:
-            return a  # type: ignore[no-any-return]
+            return None, a
 
-    # TODO: also lookup parent class in super_models
     for base in bases(c):
-        p = attribute(base, name)
-        if p:
-            return p
-    return None
+        pkg, a = attribute(base, name, super_models)
+        if a:
+            return pkg, a
+
+    maybe_super = in_super_model(c, super_models)
+    if maybe_super:
+        return maybe_super[0], attribute(maybe_super[1], name, [])[1]
+
+    return None, None
 
 
 def last_minute_updates(element_factory: ElementFactory) -> None:
@@ -353,7 +368,7 @@ def coder(modelfile, overrides, supermodelfiles, out):
     print(file=out)
 
     for c in classes:
-        for a in associations(c, overrides):
+        for a in associations(c, super_models, overrides):
             print(a, file=out)
 
 

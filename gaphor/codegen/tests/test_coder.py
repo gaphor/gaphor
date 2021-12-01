@@ -3,6 +3,7 @@ import pytest
 from gaphor import UML
 from gaphor.codegen.coder import (
     associations,
+    attribute,
     bases,
     class_declaration,
     is_enumeration,
@@ -248,3 +249,13 @@ def test_coder_write_association_opposite_not_navigable(
     a = list(associations(navigable_association.memberEnd[0].type))
 
     assert a == ['A.b = association("b", B)']
+
+
+def test_attribute_from_super_model(uml_metamodel: ElementFactory):
+    class_ = UML.Class()
+    class_.name = "Namespace"
+
+    pkg, base = attribute(class_, "owner", [("pkg", uml_metamodel)])
+
+    assert pkg == "pkg"
+    assert base.owner.name == "Element"
