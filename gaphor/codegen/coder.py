@@ -41,8 +41,6 @@ header = textwrap.dedent(
 
     from __future__ import annotations
 
-    from typing import Callable
-
     from gaphor.core.modeling.properties import (
         association,
         attribute as _attribute,
@@ -100,7 +98,11 @@ def associations(c: UML.Class, overrides: Overrides | None = None):
         full_name = f"{c.name}.{a.name}"
         if overrides and overrides.has_override(full_name):
             yield overrides.get_override(full_name)
-        elif not a.association or is_simple_type(a.type):
+        elif (
+            not a.association
+            or is_simple_type(a.type)
+            or isinstance(a.association, UML.Extension)
+        ):
             continue
         elif redefines(a):
             redefinitions.append(
@@ -252,6 +254,8 @@ def attribute(c: UML.Class, name: str) -> UML.Property | None:
     for a in c.ownedAttribute:
         if a.name == name:
             return a  # type: ignore[no-any-return]
+
+    # TODO: also lookup parent class in super_models
     for base in bases(c):
         p = attribute(base, name)
         if p:
@@ -292,7 +296,17 @@ def load_model(modelfile) -> ElementFactory:
     return element_factory
 
 
-def coder(modelfile, overrides, out):
+def in_super_model(c, super_models):
+    for pkg, factory in super_models:
+        for cls in factory.select(
+            lambda e: isinstance(e, UML.Class) and e.name == c.name
+        ):
+            if not (is_in_profile(cls) or is_enumeration(cls)):
+                return pkg, cls
+    return None
+
+
+def coder(modelfile, overrides, supermodelfiles, out):
 
     element_factory = load_model(modelfile)
     classes = list(
@@ -303,19 +317,32 @@ def coder(modelfile, overrides, out):
         )
     )
 
+    super_models = (
+        [(pkg, load_model(f)) for pkg, f in supermodelfiles] if supermodelfiles else []
+    )
+
     print(header, file=out)
+    if overrides and overrides.header:
+        print(overrides.header, file=out)
 
     for c in classes:
         if overrides and overrides.has_override(c.name):
             print(overrides.get_override(c.name), file=out)
+            continue
+
+        super_class = in_super_model(c, super_models)
+        if super_class:
+            pkg, cls = super_class
+            print(f"from {pkg} import {cls.name}", file=out)
+            continue
+
+        print(class_declaration(c), file=out)
+        properties = list(variables(c, overrides))
+        if properties:
+            for p in properties:
+                print(f"    {p}", file=out)
         else:
-            print(class_declaration(c), file=out)
-            properties = list(variables(c, overrides))
-            if properties:
-                for p in properties:
-                    print(f"    {p}", file=out)
-            else:
-                print("    pass", file=out)
+            print("    pass", file=out)
         print(file=out)
         print(file=out)
 
@@ -330,13 +357,15 @@ def coder(modelfile, overrides, out):
             print(a, file=out)
 
 
-def main(modelfile, overridesfile=None, outfile=None):
+def main(modelfile, overridesfile=None, supermodelfiles=None, outfile=None):
+    logging.basicConfig()
+
     overrides = Overrides(overridesfile) if overridesfile else None
     if outfile:
         with open(outfile, "w") as out:
-            coder(modelfile, overrides, out)
+            coder(modelfile, overrides, supermodelfiles, out)
     else:
-        coder(modelfile, overrides, sys.stdout)
+        coder(modelfile, overrides, supermodelfiles, sys.stdout)
 
 
 if __name__ == "__main__":
@@ -346,6 +375,17 @@ if __name__ == "__main__":
         "-o", dest="outfile", type=Path, help="Python data model filename"
     )
     parser.add_argument("-r", dest="overridesfile", type=Path, help="Override filename")
-    args = parser.parse_args()
+    parser.add_argument(
+        "-s",
+        dest="supermodelfiles",
+        type=str,
+        action="append",
+        help="Reference to dependenct model file (e.g. gaphor.UML.uml:models/UML.gaphor)",
+    )
 
-    main(args.modelfile, args.overridesfile, args.outfile)
+    args = parser.parse_args()
+    supermodelfiles = (
+        [s.split(":") for s in args.supermodelfiles] if args.supermodelfiles else []
+    )
+
+    main(args.modelfile, args.overridesfile, supermodelfiles, args.outfile)

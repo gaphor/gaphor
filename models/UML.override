@@ -11,9 +11,11 @@ comment
   on, since attributes have been written anyway. Note that no smart things
   wrt inheritance is done.
 %%
-override Element
-from gaphor.core.modeling import Comment, Diagram, Element, StyleSheet
-# NB. Diagram and StyleSheet added to support model loading
+header
+from typing import Callable
+
+from gaphor.core.modeling.coremodel import Comment, Diagram, StyleSheet
+
 %%
 override Element.owner
 # defined in Core model

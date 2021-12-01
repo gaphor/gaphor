@@ -26,6 +26,7 @@ def test_uml_model(tmp_path):
     main(
         modelfile="models/UML.gaphor",
         overridesfile="models/UML.override",
+        supermodelfiles=[("gaphor.core.modeling.coremodel", "models/Core.gaphor")],
         outfile=outfile,
     )
 
