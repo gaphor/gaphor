@@ -5,8 +5,6 @@
 
 from __future__ import annotations
 
-from typing import Callable
-
 from gaphor.core.modeling.properties import (
     association,
     attribute as _attribute,
@@ -22,17 +20,11 @@ from gaphor.core.modeling.properties import (
 # 1: override Element
 from gaphor.core.modeling.element import Element
 
-
-
 # 4: override Diagram
 from gaphor.core.modeling.diagram import Diagram
 
-
-
 # 7: override Presentation
 from gaphor.core.modeling.presentation import Presentation
-
-
 
 class Comment(Element):
     annotatedElement: relation_many[Element]
@@ -41,8 +33,6 @@ class Comment(Element):
 
 # 13: override StyleSheet
 from gaphor.core.modeling.stylesheet import StyleSheet
-
-
 
 
 Element.presentation = association("presentation", Presentation, opposite="subject")
