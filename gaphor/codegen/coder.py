@@ -122,7 +122,7 @@ def associations(c: UML.Class, overrides: Overrides | None = None):
                 for value in slot.value.split(","):
                     d = attribute(c, value.strip())
                     if d and d.isDerived:
-                        yield f"{d.owner.name}.{d.name}.add({full_name})"  # type: ignore[attr-defined]
+                        yield f"{d.owner.name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"  # type: ignore[attr-defined]
                     elif not d:
                         log.warning(
                             f"{full_name} wants to subset {value.strip()}, but it is not defined"

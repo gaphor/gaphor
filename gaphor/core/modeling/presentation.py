@@ -10,7 +10,7 @@ from gaphas.item import Matrices
 
 from gaphor.core.modeling.element import Element, Id, UnlinkEvent
 from gaphor.core.modeling.event import RevertibeEvent
-from gaphor.core.modeling.properties import association, relation_many, relation_one
+from gaphor.core.modeling.properties import relation_many, relation_one
 
 if TYPE_CHECKING:
     from gaphor.core.modeling.diagram import Diagram
@@ -41,12 +41,8 @@ class Presentation(Matrices, Element, Generic[S]):
         self.watch("parent", self._on_parent_changed)
         self.matrix.add_handler(self._on_matrix_changed)
 
-    subject: relation_one[S] = association(
-        "subject", Element, upper=1, opposite="presentation"
-    )
-
+    subject: relation_one[S]
     diagram: relation_one[Diagram]
-
     parent: relation_one[Presentation]
     children: relation_many[Presentation]
 
@@ -122,15 +118,6 @@ class Presentation(Matrices, Element, Generic[S]):
         self.request_update()
         if matrix is self.matrix:
             self.handle(MatrixUpdated(self, old_value))
-
-
-Element.presentation = association(
-    "presentation", Presentation, composite=True, opposite="subject"
-)
-Presentation.parent = association("parent", Presentation, upper=1, opposite="children")
-Presentation.children = association(
-    "children", Presentation, composite=True, opposite="parent"
-)
 
 
 class MatrixUpdated(RevertibeEvent):

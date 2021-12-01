@@ -12,10 +12,14 @@ comment
   wrt inheritance is done.
 %%
 override Element
-from gaphor.core.modeling import Comment, Element
+from gaphor.core.modeling import Comment, Diagram, Element, StyleSheet
+# NB. Diagram and StyleSheet added to support model loading
 %%
-override Diagram
-from gaphor.core.modeling import Diagram, StyleSheet
+override Element.owner
+# defined in Core model
+%%
+override Element.ownedElement
+# defined in Core model
 %%
 override MultiplicityElement.lower(MultiplicityElement.lowerValue): _attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue

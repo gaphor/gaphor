@@ -220,7 +220,7 @@ P = TypeVar("P", bound=Presentation)
 class Diagram(Element):
     """Diagrams may contain model elements and can be owned by a Package."""
 
-    name: attribute[str]
+    name: attribute[str] = attribute("name", str)
     element: relation_one[Element]
 
     def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):
@@ -413,11 +413,6 @@ class Diagram(Element):
 
     def unregister_view(self, view: gaphas.view.model.View[Presentation]) -> None:
         self._registered_views.discard(view)
-
-
-Presentation.diagram = association(
-    "diagram", Diagram, upper=1, opposite="ownedPresentation"
-)
 
 
 @runtime_checkable
