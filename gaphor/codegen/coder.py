@@ -1,19 +1,20 @@
-"""The Coder.
+"""The code generator for modeling languages.
 
-The idea:
-* Get all classes from a model
-  * Drop all classes declared in a Profile
-  * Drop all classes from a package blacklist
-  * Drop all classes derived from SimpleAttribute's
-  * Order all classes in hierarchical order
-* Write class definitions
-* Write attributes, derived unions, associations, redefines, etc.
-  (not sure if there should be an order)
+This is the code generator for the models used by Gaphor.
+
+In order to work with the code generator, a model should follow some convensions:
+
+* `Profile` packages are only for profiles (excluded from generation)
+* A stereotype `simpleAttribute` can be defined, which converts an association
+  to a `str` attribute
+
+The coder first write the class declarations, including attributes and enumerations.
+After that, associations are filled in, including derived unions and redefines.
 
 Notes:
-* Enumerations are classes ending with "Kind"
-* Two stereotypes: Tagged and SimpleAttribute
+* Enumerations are classes ending with "Kind". They are refered to by attributes.
 """
+
 from __future__ import annotations
 
 import argparse
