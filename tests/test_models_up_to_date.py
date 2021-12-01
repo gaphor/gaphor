@@ -2,6 +2,7 @@
 
 from pathlib import Path
 
+from gaphor.C4Model import c4model
 from gaphor.codegen.coder import main
 from gaphor.core.modeling import coremodel
 from gaphor.UML import uml
@@ -31,6 +32,20 @@ def test_uml_model(tmp_path):
     )
 
     current_model = Path(uml.__file__).read_text()
+    generated_model = outfile.read_text()
+
+    assert current_model == generated_model
+
+
+def test_c4model_model(tmp_path):
+    outfile = tmp_path / "c4model.py"
+    main(
+        modelfile="models/C4Model.gaphor",
+        supermodelfiles=[("gaphor.UML.uml", "models/UML.gaphor")],
+        outfile=outfile,
+    )
+
+    current_model = Path(c4model.__file__).read_text()
     generated_model = outfile.read_text()
 
     assert current_model == generated_model

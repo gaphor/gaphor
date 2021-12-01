@@ -97,12 +97,7 @@ raaml = [
     { "cmd" = "isort gaphor/RAAML" },
     { "cmd" = "black gaphor/RAAML/raaml.py" },
 ]
-c4model = [
-    { "cmd" = "python gaphor/codegen/codegen.py --uml_profile models/C4Model.gaphor gaphor/C4Model/c4model.py models/C4Model.override" },
-    { "cmd" = "mypy gaphor/C4Model" },
-    { "cmd" = "isort gaphor/C4Model" },
-    { "cmd" = "black gaphor/C4Model/c4model.py" },
-]
+c4model = { "script" = "gaphor.codegen.coder:main(modelfile='models/C4Model.gaphor', outfile='gaphor/C4Model/c4model.py', supermodelfiles=[('gaphor.UML.uml', 'models/UML.gaphor')])" }
 lint = "pre-commit run --all-files"
 docs = "sphinx-build docs docs/_build/html"
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt _packaging/gaphor-script.py docs/_build" }
