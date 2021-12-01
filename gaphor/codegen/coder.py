@@ -287,7 +287,7 @@ def load_model(modelfile) -> ElementFactory:
     return element_factory
 
 
-def coder(modelfile, overrides, outfile):
+def coder(modelfile, overrides, out):
 
     element_factory = load_model(modelfile)
     classes = list(
@@ -298,31 +298,40 @@ def coder(modelfile, overrides, outfile):
         )
     )
 
-    print(header, file=outfile)
+    print(header, file=out)
 
     for c in classes:
         if overrides.has_override(c.name):
-            print(overrides.get_override(c.name), file=outfile)
+            print(overrides.get_override(c.name), file=out)
         else:
-            print(class_declaration(c), file=outfile)
+            print(class_declaration(c), file=out)
             properties = list(variables(c, overrides))
             if properties:
                 for p in properties:
-                    print(f"    {p}", file=outfile)
+                    print(f"    {p}", file=out)
             else:
-                print("    pass", file=outfile)
-        print(file=outfile)
-        print(file=outfile)
+                print("    pass", file=out)
+        print(file=out)
+        print(file=out)
 
     for c in classes:
         for o in operations(c, overrides):
-            print(o, file=outfile)
+            print(o, file=out)
 
-    print(file=outfile)
+    print(file=out)
 
     for c in classes:
         for a in associations(c, overrides):
-            print(a, file=outfile)
+            print(a, file=out)
+
+
+def main(modelfile, overridesfile=None, outfile=None):
+    overrides = Overrides(overridesfile) if overridesfile else None
+    if outfile:
+        with open(outfile, "w") as out:
+            coder(modelfile, overrides, out)
+    else:
+        coder(modelfile, overrides, sys.stdout)
 
 
 if __name__ == "__main__":
@@ -334,9 +343,4 @@ if __name__ == "__main__":
     parser.add_argument("-r", dest="overridesfile", type=Path, help="Override filename")
     args = parser.parse_args()
 
-    overrides = Overrides(args.overridesfile)
-    if args.outfile:
-        with open(args.outfile, "w") as outfile:
-            coder(args.modelfile, overrides, outfile)
-    else:
-        coder(args.modelfile, overrides, sys.stdout)
+    main(args.modelfile, args.overridesfile, args.outfile)

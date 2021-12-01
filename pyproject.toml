@@ -89,12 +89,7 @@ coremodel = [
     { "cmd" = "mypy gaphor/core/modeling" },
     { "cmd" = "isort gaphor/core/modeling/coremodel.py" },
 ]
-uml = [
-    { "cmd" = "python gaphor/codegen/codegen.py models/UML.gaphor gaphor/UML/uml.py models/UML.override" },
-    { "cmd" = "mypy gaphor/UML" },
-    { "cmd" = "isort gaphor/UML" },
-    { "cmd" = "black gaphor/UML/uml.py" },
-]
+uml = { "script" = "gaphor.codegen.coder:main(modelfile='models/UML.gaphor', overridesfile='models/UML.override', outfile='gaphor/UML/uml.py')" }
 sysml = [
     { "cmd" = "python gaphor/codegen/codegen.py --uml_profile models/SysML.gaphor gaphor/SysML/sysml.py models/SysML.override" },
     { "cmd" = "black gaphor/SysML/sysml.py" },

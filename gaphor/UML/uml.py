@@ -764,6 +764,13 @@ class InformationFlow(DirectedRelationship, PackageableElement):
     realizingMessage: relation_many[Message]
 
 
+# 88: override Lifeline.parse: Callable[[Lifeline, str], None]
+# defined in umloverrides.py
+
+# 91: override Lifeline.render: Callable[[Lifeline], str]
+# defined in umloverrides.py
+
+
 Element.owner = derivedunion("owner", Element, upper=1)
 Element.ownedElement = derivedunion("ownedElement", Element)
 Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, opposite="extended")
@@ -1293,11 +1300,3 @@ InformationFlow.informationTarget = association("informationTarget", NamedElemen
 Element.owner.add(InformationFlow.realizingConnector)
 DirectedRelationship.source.add(InformationFlow.informationSource)
 DirectedRelationship.target.add(InformationFlow.informationTarget)
-
-# 88: override Lifeline.parse: Callable[[Lifeline, str], None]
-# defined in umloverrides.py
-
-# 91: override Lifeline.render: Callable[[Lifeline], str]
-# defined in umloverrides.py
-
-# EOF #
