@@ -9797,7 +9797,7 @@
 <val>probability</val>
 </name>
 <typeValue>
-<val>ValueSpecification</val>
+<val>str</val>
 </typeValue>
 </Property>
 <Extension id="c74c6baa-2141-11ea-ab0b-c72c0738acd2">

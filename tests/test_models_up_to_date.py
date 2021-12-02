@@ -5,6 +5,7 @@ from pathlib import Path
 from gaphor.C4Model import c4model
 from gaphor.codegen.coder import main
 from gaphor.core.modeling import coremodel
+from gaphor.SysML import sysml
 from gaphor.UML import uml
 
 
@@ -46,6 +47,23 @@ def test_c4model_model(tmp_path):
     )
 
     current_model = Path(c4model.__file__).read_text()
+    generated_model = outfile.read_text()
+
+    assert current_model == generated_model
+
+
+def test_sysml_model(tmp_path):
+    outfile = tmp_path / "sysml.py"
+    main(
+        modelfile="models/SysML.gaphor",
+        supermodelfiles=[
+            ("gaphor.core.modeling.coremodel", "models/Core.gaphor"),
+            ("gaphor.UML.uml", "models/UML.gaphor"),
+        ],
+        outfile=outfile,
+    )
+
+    current_model = Path(sysml.__file__).read_text()
     generated_model = outfile.read_text()
 
     assert current_model == generated_model
