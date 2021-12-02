@@ -68,22 +68,23 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
         for a in sorted(class_.ownedAttribute, key=lambda a: a.name or ""):
             if is_extension_end(a):
                 continue
+
             full_name = f"{class_.name}.{a.name}"
             if overrides and overrides.has_override(full_name):
                 yield f"{a.name}: {overrides.get_type(full_name)}"
-            elif a.isDerived and not a.association:
+            elif a.isDerived and not a.type:
                 log.warning(f"Derived attribute {full_name} has no implementation.")
-            elif a.association and is_simple_type(a.type):
-                yield f'{a.name}: _attribute[str] = _attribute("{a.name}", str)'
-            elif a.association:
-                mult = "one" if a.upper == "1" else "many"
-                comment = "  # type: ignore[assignment]" if is_reassignment(a) else ""
-                yield f"{a.name}: relation_{mult}[{a.type.name}]{comment}"
+            elif a.typeValue:
+                yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
             elif is_enumeration(a.type):
                 enum_values = ", ".join(f'"{e.name}"' for e in a.type.ownedAttribute)
                 yield f'{a.name} = _enumeration("{a.name}", ({enum_values}), "{a.type.ownedAttribute[0].name}")'
+            elif a.type:
+                mult = "one" if a.upper == "1" else "many"
+                comment = "  # type: ignore[assignment]" if is_reassignment(a) else ""
+                yield f"{a.name}: relation_{mult}[{a.type.name}]{comment}"
             else:
-                yield f'{a.name}: _attribute[{a.typeValue}] = _attribute("{a.name}", {a.typeValue}{default_value(a)})'
+                raise ValueError(f"{a.name}: {a.type} can not be written")
 
     if class_.ownedOperation:
         for o in sorted(class_.ownedOperation, key=lambda a: a.name or ""):
@@ -104,7 +105,12 @@ def associations(
         full_name = f"{c.name}.{a.name}"
         if overrides and overrides.has_override(full_name):
             yield overrides.get_override(full_name)
-        elif not a.association or is_simple_type(a.type) or is_extension_end(a):
+        elif (
+            not a.type
+            or is_simple_type(a.type)
+            or is_enumeration(a.type)
+            or is_extension_end(a)
+        ):
             continue
         elif redefines(a):
             redefinitions.append(
@@ -118,10 +124,15 @@ def associations(
     yield from redefinitions
 
     for a in c.ownedAttribute:
+        if (
+            not a.type
+            or is_simple_type(a.type)
+            or is_enumeration(a.type)
+            or is_extension_end(a)
+        ):
+            continue
         for slot in a.appliedStereotype[:].slot:
             if slot.definingFeature.name == "subsets":
-                if is_simple_type(a.type):
-                    continue
                 full_name = f"{c.name}.{a.name}"
                 for value in slot.value.split(","):
                     # TODO: also find derived class in super_models
@@ -221,6 +232,10 @@ def is_simple_type(c: UML.Class) -> bool:
     return False
 
 
+def is_tilde_type(c: UML.Class) -> bool:
+    return c and c.name and c.name.startswith("~")  # type: ignore[return-value]
+
+
 def is_extension_end(a: UML.Property):
     return isinstance(a.association, UML.Extension)
 
@@ -271,19 +286,35 @@ def attribute(
         if a:
             return pkg, a
 
-    maybe_super = in_super_model(c, super_models)
+    maybe_super = in_super_model(c.name, super_models)
     if maybe_super:
         return maybe_super[0], attribute(maybe_super[1], name, [])[1]
 
     return None, None
 
 
-def last_minute_updates(element_factory: ElementFactory) -> None:
+def in_super_model(name, super_models):
+    for pkg, factory in super_models:
+        for cls in factory.select(
+            lambda e: isinstance(e, UML.Class) and e.name == name
+        ):
+            if not (is_in_profile(cls) or is_enumeration(cls)):
+                return pkg, cls
+    return None
+
+
+def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
     """Some model updates that are hard to do from Gaphor itself."""
     for prop in element_factory.select(UML.Property):
-        if prop.typeValue == "String":
+        if prop.typeValue in ("String", "str", "object"):
             prop.typeValue = "str"
-        elif prop.typeValue in ("Integer", "Boolean"):
+        elif prop.typeValue in (
+            "Integer",
+            "int",
+            "Boolean",
+            "bool",
+            "UnlimitedNatural",
+        ):
             prop.typeValue = "int"
         else:
             c: UML.Class | None = next(
@@ -296,6 +327,13 @@ def last_minute_updates(element_factory: ElementFactory) -> None:
                 prop.type = c
                 del prop.typeValue
 
+        if prop.type and is_simple_type(prop.type):  # type: ignore[arg-type]
+            prop.typeValue = "str"
+            del prop.type
+
+        if not (prop.type or prop.typeValue in ("str", "int", None)):
+            raise ValueError(f"Property value type {prop.typeValue} can not be found")
+
 
 def load_model(modelfile) -> ElementFactory:
     element_factory = ElementFactory()
@@ -306,19 +344,9 @@ def load_model(modelfile) -> ElementFactory:
         uml_modeling_language,
     )
 
-    last_minute_updates(element_factory)
+    resolve_attribute_type_values(element_factory)
 
     return element_factory
-
-
-def in_super_model(c, super_models):
-    for pkg, factory in super_models:
-        for cls in factory.select(
-            lambda e: isinstance(e, UML.Class) and e.name == c.name
-        ):
-            if not (is_in_profile(cls) or is_enumeration(cls)):
-                return pkg, cls
-    return None
 
 
 def coder(modelfile, overrides, supermodelfiles, out):
@@ -328,7 +356,12 @@ def coder(modelfile, overrides, supermodelfiles, out):
         order_classes(
             c
             for c in element_factory.select(UML.Class)
-            if not (is_enumeration(c) or is_simple_type(c) or is_in_profile(c))
+            if not (
+                is_enumeration(c)
+                or is_simple_type(c)
+                or is_in_profile(c)
+                or is_tilde_type(c)
+            )
         )
     )
 
@@ -345,7 +378,7 @@ def coder(modelfile, overrides, supermodelfiles, out):
             print(overrides.get_override(c.name), file=out)
             continue
 
-        super_class = in_super_model(c, super_models)
+        super_class = in_super_model(c.name, super_models)
         if super_class:
             pkg, cls = super_class
             print(f"from {pkg} import {cls.name}", file=out)

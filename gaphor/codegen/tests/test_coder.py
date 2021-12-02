@@ -10,9 +10,9 @@ from gaphor.codegen.coder import (
     is_in_profile,
     is_in_toplevel_package,
     is_simple_type,
-    last_minute_updates,
     load_model,
     order_classes,
+    resolve_attribute_type_values,
     variables,
 )
 from gaphor.core.format import parse
@@ -67,7 +67,7 @@ def test_coder_write_class_with_enumeration(element_factory: ElementFactory):
     enum.ownedAttribute = create_attribute("in", element_factory)
     enum.ownedAttribute = create_attribute("out", element_factory)
 
-    last_minute_updates(element_factory)
+    resolve_attribute_type_values(element_factory)
 
     attr_def = list(variables(class_))
 
@@ -149,8 +149,7 @@ def test_in_toplevel_package():
 @pytest.fixture(scope="session")
 def uml_metamodel(modeling_language):
     element_factory = load_model("models/UML.gaphor")
-    yield element_factory
-    element_factory.shutdown()
+    return element_factory
 
 
 def by_name(name):
@@ -259,3 +258,16 @@ def test_attribute_from_super_model(uml_metamodel: ElementFactory):
 
     assert pkg == "pkg"
     assert base.owner.name == "Element"
+
+
+def test_replace_simple_attribute(uml_metamodel: ElementFactory):
+    instancespec = next(
+        uml_metamodel.select(
+            lambda e: isinstance(e, UML.Class) and e.name == "InstanceSpecification"
+        )
+    )
+    a = instancespec.ownedAttribute["it.name == 'specification'"][0]
+
+    assert a.name == "specification"
+    assert a.typeValue == "str"
+    assert not a.type
