@@ -62,7 +62,6 @@ def upgrade_presentation_item_to_1_1_0(item):
 
 
 def clone_canvasitem(item, subject_id):
-    assert not item.canvasitems, "Can not clone a canvas item with children"
     assert isinstance(item.references["subject"], str)
     new_item = type(item)(str(uuid.uuid1()), item.type)
     new_item.values = dict(item.values)
