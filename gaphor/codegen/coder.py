@@ -84,7 +84,9 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
                 comment = "  # type: ignore[assignment]" if is_reassignment(a) else ""
                 yield f"{a.name}: relation_{mult}[{a.type.name}]{comment}"
             else:
-                raise ValueError(f"{a.name}: {a.type} can not be written")
+                raise ValueError(
+                    f"{a.name}: {a.type} can not be written; owner={a.owner.name}"
+                )
 
     if class_.ownedOperation:
         for o in sorted(class_.ownedOperation, key=lambda a: a.name or ""):
@@ -119,6 +121,9 @@ def associations(
         elif a.isDerived:
             yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
         else:
+            # if not a.name:
+            #     raise ValueError(f"Unnamed attribute: {full_name} ({a.association})")
+
             yield f'{full_name} = association("{a.name}", {a.type.name}{lower(a)}{upper(a)}{composite(a)}{opposite(a)})'
 
     yield from redefinitions

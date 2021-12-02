@@ -101,12 +101,14 @@ sysml.script = """gaphor.codegen.coder:main(
         ('gaphor.core.modeling.coremodel', 'models/Core.gaphor'),
         ('gaphor.UML.uml', 'models/UML.gaphor')]
     )"""
-raaml = [
-    { "cmd" = "python gaphor/codegen/codegen.py --sysml_profile models/RAAML.gaphor gaphor/RAAML/raaml.py models/RAAML.override" },
-    { "cmd" = "mypy gaphor/RAAML" },
-    { "cmd" = "isort gaphor/RAAML" },
-    { "cmd" = "black gaphor/RAAML/raaml.py" },
-]
+raaml.script = """gaphor.codegen.coder:main(
+    modelfile='models/RAAML.gaphor', 
+    outfile='gaphor/RAAML/raaml.py', 
+    supermodelfiles=[
+        ('gaphor.core.modeling.coremodel', 'models/Core.gaphor'),
+        ('gaphor.UML.uml', 'models/UML.gaphor'),
+        ('gaphor.SysML.sysml', 'models/SysML.gaphor')]
+    )"""
 c4model.script = """gaphor.codegen.coder:main(
     modelfile='models/C4Model.gaphor',
     outfile='gaphor/C4Model/c4model.py',
