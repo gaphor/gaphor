@@ -6,7 +6,7 @@ All of the items in the draft release should be under the Features, Bug Fixes, M
 - [ ] Bump the version by updating it in the `pyproject.toml` file or by running `poetry version X.X.X`.
 - [ ] Bump the AppImage version by running `cd _packaging/appimage`, `make update VERSION=a.b.c`
 - [ ] Go to the release, click on edit draft. Add a summary to the title in the draft release.
-- [ ] In the draft release, update tnkmhe version tag to the correct version (remove the v in front). Click on Publish Release.
+- [ ] In the draft release, update the version tag to the correct version (remove the v in front). Click on Publish Release.
 - [ ] Wait for the build to finish and the release artifacts to be uploaded. The PyPI release is made automatically during
 the build.
 - [ ] In the https://github.com/flathub/org.gaphor.Gaphor repo, create a new branch. Run `make update VERSION=X.X.X`.

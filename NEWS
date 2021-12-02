@@ -1,3 +1,10 @@
+2.7.1
+_____
+- Fix lines don't disconnect when moved
+- No GTK required anymore for generating docs
+- Update Python to 3.10.0
+- Spanish translation updates
+
 2.7.0
 -----
 - Add Reflexive Message item for Interactions
