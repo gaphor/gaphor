@@ -1140,7 +1140,6 @@
 <ref refid="DCE:79C3FCAA-4695-11D7-B567-379CA7034986"/>
 <ref refid="DCE:6A5E8372-4A87-11D7-B089-133D836EF880"/>
 <ref refid="DCE:8F7C5ED8-464D-11D7-AA08-1B85D5275D8A"/>
-<ref refid="DCE:BCAD18B6-45D0-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:72656E80-83D9-11D7-ADE2-4B1972AF3391"/>
 <ref refid="DCE:07DBA3DA-4A8A-11D7-B090-133D836EF880"/>
 <ref refid="DCE:52EE3722-863A-11D7-8239-5A25B8C2F569"/>
@@ -6438,43 +6437,6 @@
 <ref refid="DCE:309D5284-4B32-11D7-B391-02BBFE4396CE"/>
 </specific>
 </Generalization>
-<Property id="DCE:BCAD9C70-45D0-11D7-B5CA-613352B2821F">
-<appliedStereotype>
-<reflist>
-<ref refid="171ad830-fa90-11de-bd51-00224128e79d"/>
-</reflist>
-</appliedStereotype>
-<association>
-<ref refid="DCE:BCAD18B6-45D0-11D7-B5CA-613352B2821F"/>
-</association>
-<class_>
-<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
-</class_>
-<isDerived>
-<val>1</val>
-</isDerived>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<lowerValue>
-<val>0</val>
-</lowerValue>
-<name>
-<val>owner</val>
-</name>
-<type>
-<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
-</type>
-<upperValue>
-<val>1</val>
-</upperValue>
-<upperValue>
-<val>1</val>
-</upperValue>
-<visibility>
-<val>public</val>
-</visibility>
-</Property>
 <Association id="DCE:215BFFFA-97BC-11D8-9E3D-00C00C03A405">
 <memberEnd>
 <reflist>
@@ -7298,8 +7260,6 @@
 <ref refid="DCE:53614994-E81E-11DD-BD54-000D936B094A"/>
 <ref refid="DCE:53759D24-45CF-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:522B4098-45D1-11D7-B5CA-613352B2821F"/>
-<ref refid="DCE:BCAD5222-45D0-11D7-B5CA-613352B2821F"/>
-<ref refid="DCE:BCAD9C70-45D0-11D7-B5CA-613352B2821F"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -10021,40 +9981,6 @@
 </reflist>
 </presentation>
 </Association>
-<Property id="DCE:BCAD5222-45D0-11D7-B5CA-613352B2821F">
-<aggregation>
-<val>composite</val>
-</aggregation>
-<appliedStereotype>
-<reflist>
-<ref refid="1726c5a0-fa90-11de-bd51-00224128e79d"/>
-</reflist>
-</appliedStereotype>
-<association>
-<ref refid="DCE:BCAD18B6-45D0-11D7-B5CA-613352B2821F"/>
-</association>
-<class_>
-<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
-</class_>
-<isDerived>
-<val>1</val>
-</isDerived>
-<name>
-<val>ownedElement</val>
-</name>
-<type>
-<ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
-</type>
-<upperValue>
-<val>*</val>
-</upperValue>
-<upperValue>
-<val>*</val>
-</upperValue>
-<visibility>
-<val>public</val>
-</visibility>
-</Property>
 <Property id="DCE:2889D960-6693-11D7-A84E-6C8643AD0CA4">
 <aggregation>
 <val>composite</val>
@@ -17122,14 +17048,12 @@
 <ref refid="a06fc75a-7cf9-11ea-b719-1f391582df99"/>
 <ref refid="e993ec75-ec89-11ea-96dc-bf74f1f80424"/>
 <ref refid="0a356994-52b9-11ec-b0e5-0456e5e540ed"/>
-<ref refid="DCE:07D8C5A8-45CF-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:4C625AC4-45CF-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:51414BA2-45CF-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:4D4F8048-45D1-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:508961AC-45D1-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:5AF4E59E-45D1-11D7-B5CA-613352B2821F"/>
 <ref refid="18a9b72f-ec8a-11ea-96dc-bf74f1f80424"/>
-<ref refid="124e7ee0-52b9-11ec-b0e5-0456e5e540ed"/>
 <ref refid="cc955e1a-52bc-11ec-b0e5-0456e5e540ed"/>
 </reflist>
 </ownedPresentation>
@@ -17160,41 +17084,6 @@
 <ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </subject>
 </ClassItem>
-<AssociationItem id="DCE:07D8C5A8-45CF-11D7-B5CA-613352B2821F">
-<diagram>
-<ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
-</diagram>
-<head_subject>
-<ref refid="DCE:BCAD5222-45D0-11D7-B5CA-613352B2821F"/>
-</head_subject>
-<horizontal>
-<val>1</val>
-</horizontal>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<show_direction>
-<val>0</val>
-</show_direction>
-<subject>
-<ref refid="DCE:BCAD18B6-45D0-11D7-B5CA-613352B2821F"/>
-</subject>
-<tail_subject>
-<ref refid="DCE:BCAD9C70-45D0-11D7-B5CA-613352B2821F"/>
-</tail_subject>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 423.0, 186.5535714285714)</val>
-</matrix>
-<points>
-<val>[(0.0, 0.0), (133.0, 0.0), (133.0, -72.55357142857139), (-32.26446280991735, -72.55357142857139), (-32.26446280991735, -28.553571428571388)]</val>
-</points>
-<head-connection>
-<ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
-</head-connection>
-<tail-connection>
-<ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>
-</tail-connection>
-</AssociationItem>
 <ClassItem id="DCE:38CAFEF6-45CF-11D7-B5CA-613352B2821F">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 285.9691780821917, 365.5)</val>
@@ -23940,27 +23829,6 @@ specially for Gaphor</val>
 <presentation>
 <reflist>
 <ref refid="DCE:88E6A506-50A2-11D7-807A-302CB4EF44FD"/>
-</reflist>
-</presentation>
-</Association>
-<Association id="DCE:BCAD18B6-45D0-11D7-B5CA-613352B2821F">
-<comment>
-<reflist>
-<ref refid="0a355dbe-52b9-11ec-b0e5-0456e5e540ed"/>
-</reflist>
-</comment>
-<memberEnd>
-<reflist>
-<ref refid="DCE:BCAD9C70-45D0-11D7-B5CA-613352B2821F"/>
-<ref refid="DCE:BCAD5222-45D0-11D7-B5CA-613352B2821F"/>
-</reflist>
-</memberEnd>
-<package>
-<ref refid="DCE:E085A412-45CE-11D7-B5CA-613352B2821F"/>
-</package>
-<presentation>
-<reflist>
-<ref refid="DCE:07D8C5A8-45CF-11D7-B5CA-613352B2821F"/>
 </reflist>
 </presentation>
 </Association>
@@ -39721,11 +39589,6 @@ swimlanes</val>
 <ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
 </reflist>
 </classifier>
-<extended>
-<reflist>
-<ref refid="DCE:BCAD9C70-45D0-11D7-B5CA-613352B2821F"/>
-</reflist>
-</extended>
 </InstanceSpecification>
 <InstanceSpecification id="171b12aa-fa90-11de-bd51-00224128e79d">
 <classifier>
@@ -40147,11 +40010,6 @@ swimlanes</val>
 <ref refid="16f6b5f4-fa90-11de-bd51-00224128e79d"/>
 </reflist>
 </classifier>
-<extended>
-<reflist>
-<ref refid="DCE:BCAD5222-45D0-11D7-B5CA-613352B2821F"/>
-</reflist>
-</extended>
 </InstanceSpecification>
 <InstanceSpecification id="172709f2-fa90-11de-bd51-00224128e79d">
 <classifier>
@@ -55590,7 +55448,6 @@ have an opposite end.
 <Comment id="0a355dbe-52b9-11ec-b0e5-0456e5e540ed">
 <annotatedElement>
 <reflist>
-<ref refid="DCE:BCAD18B6-45D0-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:FC139C48-45CE-11D7-B5CA-613352B2821F"/>
 </reflist>
 </annotatedElement>
@@ -55605,7 +55462,7 @@ have an opposite end.
 </Comment>
 <CommentItem id="0a356994-52b9-11ec-b0e5-0456e5e540ed">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 535.0, 208.44926264044943)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 483.0, 196.44926264044943)</val>
 </matrix>
 <width>
 <val>100.0</val>
@@ -55620,26 +55477,6 @@ have an opposite end.
 <ref refid="0a355dbe-52b9-11ec-b0e5-0456e5e540ed"/>
 </subject>
 </CommentItem>
-<CommentLineItem id="124e7ee0-52b9-11ec-b0e5-0456e5e540ed">
-<diagram>
-<ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
-</diagram>
-<horizontal>
-<val>0</val>
-</horizontal>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 547.0, 184.44926264044943)</val>
-</matrix>
-<points>
-<val>[(0.0, 2.104308788121955), (24.402175063547134, 24.0)]</val>
-</points>
-<head-connection>
-<ref refid="DCE:07D8C5A8-45CF-11D7-B5CA-613352B2821F"/>
-</head-connection>
-<tail-connection>
-<ref refid="0a356994-52b9-11ec-b0e5-0456e5e540ed"/>
-</tail-connection>
-</CommentLineItem>
 <CommentLineItem id="cc955e1a-52bc-11ec-b0e5-0456e5e540ed">
 <diagram>
 <ref refid="DCE:E71AAA3E-45CE-11D7-B5CA-613352B2821F"/>
@@ -55651,7 +55488,7 @@ have an opposite end.
 <val>(1.0, 0.0, 0.0, 1.0, 389.2109375, 235.44926264044943)</val>
 </matrix>
 <points>
-<val>[(33.7890625, 2.5142513752965527), (145.7890625, 8.690854315470254)]</val>
+<val>[(33.7890625, 2.5142513752965527), (93.7890625, -3.3091456845297387)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:FC12D436-45CE-11D7-B5CA-613352B2821F"/>

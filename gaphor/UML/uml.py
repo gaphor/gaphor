@@ -758,27 +758,21 @@ class InformationFlow(DirectedRelationship, PackageableElement):
     realizingMessage: relation_many[Message]
 
 
-# 94: override Lifeline.parse: Callable[[Lifeline, str], None]
+# 88: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
 
-# 97: override Lifeline.render: Callable[[Lifeline], str]
+# 91: override Lifeline.render: Callable[[Lifeline], str]
 # defined in umloverrides.py
 
 
 Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, opposite="extended")
 Element.relationship = derivedunion("relationship", Relationship)
 Element.directedRelationship = derivedunion("directedRelationship", DirectedRelationship)
-# 23: override Element.ownedElement
-# defined in Core model
-
-# 20: override Element.owner
-# defined in Core model
-
 Element.relationship.add(Element.directedRelationship)  # type: ignore[attr-defined]
 NamedElement.supplierDependency = association("supplierDependency", Dependency, opposite="supplier")
 NamedElement.clientDependency = association("clientDependency", Dependency, composite=True, opposite="client")
 NamedElement.namespace = derivedunion("namespace", Namespace, upper=1)
-# 76: override NamedElement.qualifiedName: derived[list[str]]
+# 70: override NamedElement.qualifiedName: derived[list[str]]
 
 from gaphor.core.modeling.diagram import qualifiedName
 
@@ -822,7 +816,7 @@ Element.owner.add(PackageMerge.mergingPackage)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(PackageMerge.mergedPackage)  # type: ignore[attr-defined]
 RedefinableElement.redefinedElement = derivedunion("redefinedElement", RedefinableElement)
 RedefinableElement.redefinitionContext = derivedunion("redefinitionContext", Classifier)
-# 64: override Namespace.importedMember: derivedunion[PackageableElement]
+# 58: override Namespace.importedMember: derivedunion[PackageableElement]
 Namespace.importedMember = derivedunion('importedMember', PackageableElement, 0, '*')
 
 Namespace.ownedMember = derivedunion("ownedMember", NamedElement)
@@ -840,12 +834,12 @@ PackageableElement.owningPackage.add(Type.package)  # type: ignore[attr-defined]
 Classifier.generalization = association("generalization", Generalization, composite=True, opposite="specific")
 Classifier.ownedUseCase = association("ownedUseCase", UseCase, composite=True)
 Classifier.redefinedClassifier = association("redefinedClassifier", Classifier)
-# 55: override Classifier.inheritedMember: derivedunion[NamedElement]
+# 49: override Classifier.inheritedMember: derivedunion[NamedElement]
 Classifier.inheritedMember = derivedunion('inheritedMember', NamedElement, 0, '*')
 
 Classifier.feature = derivedunion("feature", Feature)
 Classifier.attribute = derivedunion("attribute", Property)
-# 58: override Classifier.general(Generalization.general): derived[Classifier]
+# 52: override Classifier.general(Generalization.general): derived[Classifier]
 Classifier.general = derived('general', Classifier, 0, '*', lambda self: [g.general for g in self.generalization])
 
 Classifier.useCase = association("useCase", UseCase, opposite="subject")
@@ -860,7 +854,7 @@ Classifier.feature.add(Classifier.attribute)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Classifier.nestingClass)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Classifier.nestingClass)  # type: ignore[attr-defined]
 Element.directedRelationship.add(Classifier.specialization)  # type: ignore[attr-defined]
-# 32: override Association.endType(Association.memberEnd, Property.type): derived[Type]
+# 26: override Association.endType(Association.memberEnd, Property.type): derived[Type]
 
 # References the classifiers that are used as types of the ends of the
 # association.
@@ -874,7 +868,7 @@ Association.navigableOwnedEnd = association("navigableOwnedEnd", Property)
 Classifier.feature.add(Association.ownedEnd)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Association.ownedEnd)  # type: ignore[attr-defined]
 Namespace.member.add(Association.memberEnd)  # type: ignore[attr-defined]
-# 52: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
+# 46: override Extension.metaclass(Extension.ownedEnd, Association.memberEnd): property
 # defined in umloverrides.py
 
 Extension.ownedEnd = association("ownedEnd", ExtensionEnd, upper=1, composite=True)
@@ -902,10 +896,10 @@ Element.owner.add(Dependency.client)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(Dependency.client)  # type: ignore[attr-defined]
 TypedElement.type = association("type", Type, upper=1)
 ObjectNode.selection = association("selection", Behavior, upper=1)
-# 26: override MultiplicityElement.lower(MultiplicityElement.lowerValue): _attribute[str]
+# 20: override MultiplicityElement.lower(MultiplicityElement.lowerValue): _attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 
-# 29: override MultiplicityElement.upper(MultiplicityElement.upperValue): _attribute[str]
+# 23: override MultiplicityElement.upper(MultiplicityElement.upperValue): _attribute[str]
 MultiplicityElement.upper = MultiplicityElement.upperValue
 
 Generalization.specific = association("specific", Classifier, upper=1, opposite="generalization")
@@ -915,7 +909,7 @@ Element.owner.add(Generalization.specific)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(Generalization.general)  # type: ignore[attr-defined]
 StructuredClassifier.role = derivedunion("role", ConnectableElement)
 StructuredClassifier.ownedAttribute = association("ownedAttribute", Property, composite=True)
-# 109: override StructuredClassifier.part: property
+# 103: override StructuredClassifier.part: property
 StructuredClassifier.part = property(lambda self: tuple(a for a in self.ownedAttribute if a.isComposite), doc="""
     Properties owned by a classifier by composition.
 """)
@@ -930,7 +924,7 @@ Classifier.feature.add(StructuredClassifier.ownedConnector)  # type: ignore[attr
 EncapsulatedClassifer.ownedPort = association("ownedPort", Port, composite=True, opposite="encapsulatedClassifier")
 Class.ownedAttribute = association("ownedAttribute", Property, composite=True, opposite="class_")
 Class.ownedOperation = association("ownedOperation", Operation, composite=True, opposite="class_")
-# 40: override Class.extension(Extension.metaclass): property
+# 34: override Class.extension(Extension.metaclass): property
 # See https://www.omg.org/spec/UML/2.5/PDF, section 11.8.3.6, page 219
 # It defines `Extension.allInstances()`, which basically means we have to query the element factory.
 
@@ -942,7 +936,7 @@ Class.extension = property(lambda self: self.model.lselect(lambda e: e.isKindOf(
 metaclass. The property is derived from the extensions whose memberEnds
 are typed by the Class.""")
 
-# 61: override Class.superClass: derived[Classifier]
+# 55: override Class.superClass: derived[Classifier]
 Class.superClass = Classifier.general
 
 Class.nestedClassifier = association("nestedClassifier", Classifier, composite=True, opposite="nestingClass")
@@ -965,11 +959,11 @@ Element.directedRelationship.add(UseCase.include)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(UseCase.include)  # type: ignore[attr-defined]
 Manifestation.artifact = association("artifact", Artifact, upper=1, opposite="manifestation")
 Element.owner.add(Manifestation.artifact)  # type: ignore[attr-defined]
-# 100: override Component.provided: property
+# 94: override Component.provided: property
 # defined in umloverrides.py
 
 Component.packagedElement = association("packagedElement", PackageableElement, composite=True, opposite="component")
-# 103: override Component.required: property
+# 97: override Component.required: property
 # defined in umloverrides.py
 
 Component.realization = redefine(Component, "realization", ComponentRealization, NamedElement.supplierDependency)
@@ -1005,14 +999,14 @@ Property.subsettedProperty = association("subsettedProperty", Property)
 Property.association = association("association", Association, upper=1, opposite="memberEnd")
 Property.owningAssociation = association("owningAssociation", Association, upper=1, opposite="ownedEnd")
 Property.classifier = association("classifier", Classifier, upper=1, opposite="attribute")
-# 70: override Property.isComposite(Property.aggregation): derived[bool]
+# 64: override Property.isComposite(Property.aggregation): derived[bool]
 Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggregation == 'composite'])
 
 Property.datatype = association("datatype", DataType, upper=1, opposite="ownedAttribute")
-# 67: override Property.opposite(Property.association, Association.memberEnd): relation_one[Property | None]
+# 61: override Property.opposite(Property.association, Association.memberEnd): relation_one[Property | None]
 # defined in umloverrides.py
 
-# 88: override Property.navigability(Property.opposite, Property.association): derived[bool | None]
+# 82: override Property.navigability(Property.opposite, Property.association): derived[bool | None]
 # defined in umloverrides.py
 
 Property.artifact = association("artifact", Artifact, upper=1, opposite="ownedAttribute")
@@ -1098,7 +1092,7 @@ Operation.redefinedOperation = association("redefinedOperation", Operation)
 Operation.raisedException = association("raisedException", Type)
 Operation.bodyCondition = association("bodyCondition", Constraint, upper=1, composite=True)
 Operation.datatype = association("datatype", DataType, upper=1, opposite="ownedOperation")
-# 91: override Operation.type: derivedunion[DataType]
+# 85: override Operation.type: derivedunion[DataType]
 Operation.type = derivedunion('type', DataType, 0, 1)
 
 Operation.interface_ = association("interface_", Interface, upper=1, opposite="ownedOperation")
@@ -1173,7 +1167,7 @@ Element.ownedElement.add(StateInvariant.invariant)  # type: ignore[attr-defined]
 Lifeline.coveredBy = association("coveredBy", InteractionFragment, opposite="covered")
 Lifeline.interaction = association("interaction", Interaction, upper=1, opposite="lifeline")
 NamedElement.namespace.add(Lifeline.interaction)  # type: ignore[attr-defined]
-# 106: override Message.messageKind: property
+# 100: override Message.messageKind: property
 # defined in umloverrides.py
 
 Message.sendEvent = association("sendEvent", MessageEnd, upper=1, composite=True, opposite="sendMessage")
@@ -1265,11 +1259,11 @@ Collaboration.collaborationRole = association("collaborationRole", ConnectableEl
 StructuredClassifier.role.add(Collaboration.collaborationRole)  # type: ignore[attr-defined]
 Trigger.event = association("event", Event, upper=1)
 Trigger.port = association("port", Port)
-# 118: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+# 112: override ExecutionSpecification.finish(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.finish = derived('finish', OccurrenceSpecification, 0, 1,
     lambda obj: [eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 1])
 
-# 114: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
+# 108: override ExecutionSpecification.start(ExecutionSpecification.executionOccurrenceSpecification): relation_one[ExecutionOccurrenceSpecification]
 ExecutionSpecification.start = derived('start', OccurrenceSpecification, 0, 1,
     lambda obj: [eos for i, eos in enumerate(obj.executionOccurrenceSpecification) if i == 0])
 

@@ -17,12 +17,6 @@ from typing import Callable
 from gaphor.core.modeling.coremodel import Comment, Diagram, StyleSheet
 
 %%
-override Element.owner
-# defined in Core model
-%%
-override Element.ownedElement
-# defined in Core model
-%%
 override MultiplicityElement.lower(MultiplicityElement.lowerValue): _attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 %%

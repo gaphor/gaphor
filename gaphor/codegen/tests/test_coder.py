@@ -252,9 +252,9 @@ def test_coder_write_association_opposite_not_navigable(
 
 def test_attribute_from_super_model(uml_metamodel: ElementFactory):
     class_ = UML.Class()
-    class_.name = "Namespace"
+    class_.name = "Package"
 
-    pkg, base = attribute(class_, "owner", [("pkg", uml_metamodel)])
+    pkg, base = attribute(class_, "relationship", [("pkg", uml_metamodel)])
 
     assert pkg == "pkg"
     assert base.owner.name == "Element"
