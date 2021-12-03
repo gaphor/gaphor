@@ -7,12 +7,13 @@ In order to work with the code generator, a model should follow some convensions
 * `Profile` packages are only for profiles (excluded from generation)
 * A stereotype `simpleAttribute` can be defined, which converts an association
   to a `str` attribute
+* A stereotype attribute `subsets` can be defined in case an association is derived
 
-The coder first writeln the class declarations, including attributes and enumerations.
+The coder first write the class declarations, including attributes and enumerations.
 After that, associations are filled in, including derived unions and redefines.
 
 Notes:
-* Enumerations are classes ending with "Kind". They are refered to by attributes.
+* Enumerations are classes ending with "Kind" or "Sort".
 """
 
 from __future__ import annotations
