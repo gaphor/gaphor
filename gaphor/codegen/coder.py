@@ -8,7 +8,7 @@ In order to work with the code generator, a model should follow some convensions
 * A stereotype `simpleAttribute` can be defined, which converts an association
   to a `str` attribute
 
-The coder first write the class declarations, including attributes and enumerations.
+The coder first writeln the class declarations, including attributes and enumerations.
 After that, associations are filled in, including derived unions and redefines.
 
 Notes:
@@ -18,11 +18,12 @@ Notes:
 from __future__ import annotations
 
 import argparse
+import contextlib
 import logging
 import sys
+import textwrap
 from pathlib import Path
 from typing import Iterable
-import textwrap
 
 from gaphor import UML
 from gaphor.codegen.override import Overrides
@@ -121,8 +122,8 @@ def associations(
         elif a.isDerived:
             yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
         else:
-            # if not a.name:
-            #     raise ValueError(f"Unnamed attribute: {full_name} ({a.association})")
+            if not a.name:
+                raise ValueError(f"Unnamed attribute: {full_name} ({a.association})")
 
             yield f'{full_name} = association("{a.name}", {a.type.name}{lower(a)}{upper(a)}{composite(a)}{opposite(a)})'
 
@@ -298,9 +299,12 @@ def attribute(
     return None, None
 
 
-def in_super_model(name, super_models):
+def in_super_model(
+    name: str, super_models: list[tuple[str, ElementFactory]]
+) -> tuple[str, UML.Class] | None:
     for pkg, factory in super_models:
-        for cls in factory.select(
+        cls: UML.Class
+        for cls in factory.select(  # type: ignore[assignment]
             lambda e: isinstance(e, UML.Class) and e.name == name
         ):
             if not (is_in_profile(cls) or is_enumeration(cls)):
@@ -340,7 +344,7 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             raise ValueError(f"Property value type {prop.typeValue} can not be found")
 
 
-def load_model(modelfile) -> ElementFactory:
+def load_model(modelfile: str) -> ElementFactory:
     element_factory = ElementFactory()
     uml_modeling_language = UMLModelingLanguage()
     storage.load(
@@ -354,13 +358,16 @@ def load_model(modelfile) -> ElementFactory:
     return element_factory
 
 
-def coder(modelfile, overrides, supermodelfiles, out):
+def coder(
+    model: ElementFactory,
+    super_models: list[tuple[str, ElementFactory]],
+    overrides: Overrides | None,
+) -> Iterable[str]:
 
-    element_factory = load_model(modelfile)
     classes = list(
         order_classes(
             c
-            for c in element_factory.select(UML.Class)
+            for c in model.select(UML.Class)
             if not (
                 is_enumeration(c)
                 or is_simple_type(c)
@@ -370,55 +377,59 @@ def coder(modelfile, overrides, supermodelfiles, out):
         )
     )
 
-    super_models = (
-        [(pkg, load_model(f)) for pkg, f in supermodelfiles] if supermodelfiles else []
-    )
-
-    print(header, file=out)
+    yield header
     if overrides and overrides.header:
-        print(overrides.header, file=out)
+        yield overrides.header
 
     for c in classes:
         if overrides and overrides.has_override(c.name):
-            print(overrides.get_override(c.name), file=out)
+            yield overrides.get_override(c.name)
             continue
 
         super_class = in_super_model(c.name, super_models)
         if super_class:
             pkg, cls = super_class
-            print(f"from {pkg} import {cls.name}", file=out)
+            yield f"from {pkg} import {cls.name}"
             continue
 
-        print(class_declaration(c), file=out)
+        yield class_declaration(c)
         properties = list(variables(c, overrides))
         if properties:
             for p in properties:
-                print(f"    {p}", file=out)
+                yield f"    {p}"
         else:
-            print("    pass", file=out)
-        print(file=out)
-        print(file=out)
+            yield "    pass"
+        yield ""
+        yield ""
 
     for c in classes:
         for o in operations(c, overrides):
-            print(o, file=out)
+            yield o
 
-    print(file=out)
+    yield ""
 
     for c in classes:
         for a in associations(c, super_models, overrides):
-            print(a, file=out)
+            yield a
 
 
-def main(modelfile, overridesfile=None, supermodelfiles=None, outfile=None):
+def main(
+    modelfile: str,
+    supermodelfiles: list[tuple[str, str]] = [],
+    overridesfile: str | None = None,
+    outfile: str | None = None,
+):
     logging.basicConfig()
 
+    model = load_model(modelfile)
+    super_models = (
+        [(pkg, load_model(f)) for pkg, f in supermodelfiles] if supermodelfiles else []
+    )
     overrides = Overrides(overridesfile) if overridesfile else None
-    if outfile:
-        with open(outfile, "w") as out:
-            coder(modelfile, overrides, supermodelfiles, out)
-    else:
-        coder(modelfile, overrides, supermodelfiles, sys.stdout)
+
+    with (open(outfile, "w") if outfile else contextlib.nullcontext(sys.stdout)) as out:
+        for line in coder(model, super_models, overrides):
+            print(line, file=out)
 
 
 if __name__ == "__main__":
@@ -441,4 +452,4 @@ if __name__ == "__main__":
         [s.split(":") for s in args.supermodelfiles] if args.supermodelfiles else []
     )
 
-    main(args.modelfile, args.overridesfile, supermodelfiles, args.outfile)
+    main(args.modelfile, supermodelfiles, args.overridesfile, args.outfile)
