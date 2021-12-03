@@ -92,7 +92,7 @@ def test_generalization_reconnection(create, element_factory):
     assert gen.subject.specific is c2.subject
 
     # Now do the same on a new diagram:
-    diagram2 = element_factory.create(UML.Diagram)
+    diagram2 = element_factory.create(Diagram)
     c3 = diagram2.create(ClassItem, subject=c1.subject)
     c4 = diagram2.create(ClassItem, subject=c2.subject)
     gen2 = diagram2.create(GeneralizationItem)

@@ -1,6 +1,7 @@
 """Containment connection adapters."""
 
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.connectors import BaseConnector, Connector
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.UML.classes.containment import ContainmentItem
@@ -55,7 +56,7 @@ class ContainmentConnect(BaseConnector):
         ):
             contained.package = container
             return True
-        if isinstance(container, UML.Package) and isinstance(contained, (UML.Diagram)):
+        if isinstance(container, UML.Package) and isinstance(contained, (Diagram)):
             contained.element = container
             return True
         elif isinstance(container, UML.Class) and isinstance(contained, UML.Classifier):

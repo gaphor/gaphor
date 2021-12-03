@@ -1,6 +1,7 @@
 """Classes related adapter connection tests."""
 
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect, get_connected
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.interface import InterfaceItem
@@ -131,7 +132,7 @@ def test_multiple_dependencies(create, element_factory):
 
     # Do the same thing, but now on a new diagram:
 
-    diagram2 = element_factory.create(UML.Diagram)
+    diagram2 = element_factory.create(Diagram)
     actoritem3 = diagram2.create(ActorItem, subject=actor1)
     actoritem4 = diagram2.create(ActorItem, subject=actor2)
     dep2 = diagram2.create(DependencyItem)

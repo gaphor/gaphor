@@ -198,7 +198,7 @@ class NamespaceModel(Gtk.TreeStore):
         if (
             event.property is UML.Classifier.isAbstract
             or event.property is UML.BehavioralFeature.isAbstract
-            or event.property is UML.Diagram.name
+            or event.property is Diagram.name
             or event.property is UML.NamedElement.name
         ):
             element = event.element

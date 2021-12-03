@@ -7,7 +7,7 @@ from gaphas.aspect.handlemove import HandleMove
 from gi.repository import GLib, Gtk
 
 from gaphor import UML
-from gaphor.core.modeling import Comment
+from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
@@ -98,7 +98,7 @@ def current_diagram_view(diagrams):
 def test_iconnect(event_manager, element_factory, diagrams):
     """Test basic glue functionality using CommentItem and CommentLine
     items."""
-    diagram = element_factory.create(UML.Diagram)
+    diagram = element_factory.create(Diagram)
     event_manager.handle(DiagramOpened(diagram))
     comment = diagram.create(CommentItem, subject=element_factory.create(Comment))
 
@@ -129,7 +129,7 @@ def test_iconnect(event_manager, element_factory, diagrams):
 
 def test_connect_comment_and_actor(event_manager, element_factory, diagrams):
     """Test connect/disconnect on comment and actor using comment-line."""
-    diagram = element_factory.create(UML.Diagram)
+    diagram = element_factory.create(Diagram)
     event_manager.handle(DiagramOpened(diagram))
     comment = diagram.create(CommentItem, subject=element_factory.create(Comment))
 

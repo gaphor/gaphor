@@ -1,6 +1,7 @@
 from gaphas.item import Item
 
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
 
 
@@ -17,7 +18,7 @@ def test_decision_node_persistence(diagram, element_factory, saver, loader):
 
     data = saver()
     loader(data)
-    new_diagram = next(element_factory.select(UML.Diagram))
+    new_diagram = next(element_factory.select(Diagram))
     item = next(new_diagram.select(DecisionNodeItem))
 
     assert item.combined is None, item.combined
@@ -32,7 +33,7 @@ def test_combined_decision_node_persistence(diagram, element_factory, saver, loa
 
     data = saver()
     loader(data)
-    new_diagram = next(element_factory.select(UML.Diagram))
+    new_diagram = next(element_factory.select(Diagram))
     item = next(new_diagram.select(DecisionNodeItem))
 
     assert item.combined is not None, item.combined
@@ -45,7 +46,7 @@ def test_fork_node_persistence(diagram, element_factory, saver, loader):
     data = saver()
     loader(data)
 
-    new_diagram = next(element_factory.select(UML.Diagram))
+    new_diagram = next(element_factory.select(Diagram))
     item = next(new_diagram.select(ForkNodeItem))
     assert item.combined is None, item.combined
 
@@ -58,7 +59,7 @@ def test_combined_fork_node_persistence(diagram, element_factory, saver, loader)
 
     data = saver()
     loader(data)
-    new_diagram = next(element_factory.select(UML.Diagram))
+    new_diagram = next(element_factory.select(Diagram))
     item = next(new_diagram.select(ForkNodeItem))
 
     assert item.combined is not None, item.combined

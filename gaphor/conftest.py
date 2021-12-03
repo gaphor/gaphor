@@ -25,6 +25,7 @@ from gaphas.view import GtkView
 # For DiagramItemConnector aspect:
 import gaphor.diagram.tools
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.application import Session
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.grouping import Group
@@ -56,7 +57,7 @@ class Case:
         assert not list(self.element_factory.select()), list(
             self.element_factory.select()
         )
-        self.diagram = self.element_factory.create(UML.Diagram)
+        self.diagram = self.element_factory.create(Diagram)
 
         # We need to hook up a view for now, so updates are done instantly
         self.view = GtkView(self.diagram, selection=Selection())
@@ -175,7 +176,7 @@ class Case:
         )
         f.close()
 
-        self.diagram = self.element_factory.lselect(UML.Diagram)[0]
+        self.diagram = self.element_factory.lselect(Diagram)[0]
 
     def shutdown(self):
         self.element_factory.shutdown()

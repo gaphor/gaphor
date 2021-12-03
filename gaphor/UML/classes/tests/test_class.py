@@ -2,7 +2,7 @@
 
 from gaphor import UML
 from gaphor.core.modeling import UpdateContext
-from gaphor.core.modeling.diagram import FALLBACK_STYLE
+from gaphor.core.modeling.diagram import FALLBACK_STYLE, Diagram
 from gaphor.UML.classes.klass import ClassItem
 
 
@@ -17,7 +17,7 @@ def context():
 def test_compartments(case):
     """Test creation of classes and working of compartments."""
     element_factory = case.element_factory
-    diagram = element_factory.create(UML.Diagram)
+    diagram = element_factory.create(Diagram)
     klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
     assert 2 == len(compartments(klass))
@@ -54,7 +54,7 @@ def test_compartments(case):
 def test_attribute_removal(case):
 
     element_factory = case.element_factory
-    diagram = element_factory.create(UML.Diagram)
+    diagram = element_factory.create(Diagram)
     klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
     diagram.update_now((klass,))
 
@@ -79,7 +79,7 @@ def test_attribute_removal(case):
 
 def test_compartment_resizing(case):
     element_factory = case.element_factory
-    diagram = element_factory.create(UML.Diagram)
+    diagram = element_factory.create(Diagram)
     klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
     klass.subject.name = "Class1"
 
