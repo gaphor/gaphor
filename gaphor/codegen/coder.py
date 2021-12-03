@@ -85,6 +85,8 @@ def coder(
     overrides: Overrides | None,
 ) -> Iterable[str]:
 
+    already_imported = set()
+
     classes = list(
         order_classes(
             c
@@ -110,7 +112,9 @@ def coder(
         super_class = in_super_model(c.name, super_models)
         if super_class:
             pkg, cls = super_class
-            yield f"from {pkg} import {cls.name}"
+            line = f"from {pkg} import {cls.name}"
+            yield line
+            already_imported.add(line)
             continue
 
         yield class_declaration(c)
@@ -129,7 +133,13 @@ def coder(
 
     for c in classes:
         yield from associations(c, overrides)
-        yield from subsets(c, super_models)
+        for line in subsets(c, super_models):
+            if line.startswith("from "):
+                if line not in already_imported:
+                    yield line
+                already_imported.add(line)
+            else:
+                yield line
 
 
 def class_declaration(class_: UML.Class):
