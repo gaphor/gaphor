@@ -115,22 +115,20 @@ def coder(
         yield class_declaration(c)
         properties = list(variables(c, overrides))
         if properties:
-            for p in properties:
-                yield f"    {p}"
+            yield from (f"    {p}" for p in properties)
         else:
             yield "    pass"
         yield ""
         yield ""
 
     for c in classes:
-        for o in operations(c, overrides):
-            yield o
+        yield from operations(c, overrides)
 
     yield ""
 
     for c in classes:
-        for a in associations(c, super_models, overrides):
-            yield a
+        yield from associations(c, overrides)
+        yield from subsets(c, super_models)
 
 
 def class_declaration(class_: UML.Class):
@@ -176,7 +174,6 @@ def variables(class_: UML.Class, overrides: Overrides | None = None):
 
 def associations(
     c: UML.Class,
-    super_models: list[tuple[str, ElementFactory]] = [],
     overrides: Overrides | None = None,
 ):
     redefinitions = []
@@ -205,6 +202,11 @@ def associations(
 
     yield from redefinitions
 
+
+def subsets(
+    c: UML.Class,
+    super_models: list[tuple[str, ElementFactory]],
+):
     for a in c.ownedAttribute:
         if (
             not a.type
