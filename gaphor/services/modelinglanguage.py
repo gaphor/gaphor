@@ -38,7 +38,8 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
     def modeling_languages(self):
         """A Generator, returns tuples (id, localized name)."""
         for id, provider in self._modeling_languages.items():
-            yield id, provider.name
+            if provider.name:
+                yield id, provider.name
 
     @property
     def active_modeling_language(self):
