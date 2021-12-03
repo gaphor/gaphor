@@ -1,10 +1,10 @@
-from gaphor import UML
+from gaphor.core.modeling import Comment
 from gaphor.diagram.general.generalpropertypages import CommentPropertyPage
 from gaphor.diagram.tests.fixtures import find
 
 
 def test_comment_property_page_body(element_factory):
-    subject = element_factory.create(UML.Comment)
+    subject = element_factory.create(Comment)
     property_page = CommentPropertyPage(subject)
 
     widget = property_page.construct()
@@ -15,7 +15,7 @@ def test_comment_property_page_body(element_factory):
 
 
 def test_comment_property_page_update_text(element_factory):
-    subject = element_factory.create(UML.Comment)
+    subject = element_factory.create(Comment)
     property_page = CommentPropertyPage(subject)
 
     widget = property_page.construct()

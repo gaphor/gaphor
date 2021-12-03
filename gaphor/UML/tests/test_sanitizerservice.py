@@ -1,6 +1,7 @@
 import pytest
 
 from gaphor import UML
+from gaphor.core.modeling import Comment
 from gaphor.diagram.general import CommentItem, CommentLineItem
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import ClassItem, GeneralizationItem
@@ -31,7 +32,7 @@ def create_item(element_factory, diagram):
 
 
 def test_connect_element_with_comments(create_item, diagram):
-    comment = create_item(CommentItem, UML.Comment)
+    comment = create_item(CommentItem, Comment)
     line = create_item(CommentLineItem)
     gi = create_item(GeneralizationItem)
     clazz1 = create_item(ClassItem, UML.Class)
@@ -183,7 +184,7 @@ def test_stereotype_deletion(element_factory):
 
 def test_diagram_move(element_factory, mocker):
     diagram = element_factory.create(UML.Diagram)
-    diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
+    diagram.create(CommentItem, subject=element_factory.create(Comment))
     mocked_func = mocker.patch.object(diagram, "request_update")
 
     package = element_factory.create(UML.Package)
