@@ -1,6 +1,12 @@
 import pytest
 
 from gaphor.ui.toolbox import Toolbox
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
+
+
+@pytest.fixture
+def modeling_language():
+    return UMLModelingLanguage()
 
 
 @pytest.fixture

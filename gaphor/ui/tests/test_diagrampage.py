@@ -7,13 +7,12 @@ from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general import Box
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.ui.diagrampage import DiagramPage, get_placement_cursor, placement_icon_base
-from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture
-def page(diagram, event_manager, element_factory, properties):
+def page(diagram, event_manager, element_factory, modeling_language, properties):
     page = DiagramPage(
-        diagram, event_manager, element_factory, properties, UMLModelingLanguage()
+        diagram, event_manager, element_factory, properties, modeling_language
     )
     page.construct()
     assert page.diagram == diagram

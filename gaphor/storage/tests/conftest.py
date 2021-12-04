@@ -9,7 +9,6 @@ from gaphor.diagram.tests.fixtures import (
     modeling_language,
 )
 from gaphor.storage import storage
-from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture

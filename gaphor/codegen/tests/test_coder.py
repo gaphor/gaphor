@@ -19,6 +19,12 @@ from gaphor.core.format import parse
 from gaphor.core.modeling import ElementFactory
 
 
+@pytest.fixture(scope="session")
+def uml_metamodel():
+    element_factory = load_model("models/UML.gaphor")
+    return element_factory
+
+
 def test_coder_write_class():
     class_ = UML.Class()
     class_.name = "TestClass"
@@ -144,12 +150,6 @@ def test_in_toplevel_package():
 
     assert is_in_toplevel_package(class_, "Foo")
     assert not is_in_toplevel_package(class_, "Bar")
-
-
-@pytest.fixture(scope="session")
-def uml_metamodel(modeling_language):
-    element_factory = load_model("models/UML.gaphor")
-    return element_factory
 
 
 def by_name(name):
