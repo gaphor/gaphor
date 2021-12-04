@@ -67,13 +67,16 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
         return self._modeling_language.toolbox_definition
 
     def lookup_element(self, name):
-        return self.first(lambda provider: provider.lookup_element(name))
-
-    def first(self, predicate):
-        for _, provider in self._modeling_languages.items():
-            type = predicate(provider)
-            if type:
-                return type
+        return next(
+            filter(
+                None,
+                map(
+                    lambda provider: provider.lookup_element(name),
+                    self._modeling_languages.values(),
+                ),
+            ),
+            None,
+        )
 
     @action(
         name="select-modeling-language",
