@@ -1,15 +1,9 @@
 A. Gaphor Specific Constructs
 ==================================================
 
-1. Presentations
+1. Stereotype Applications
 --------------------------------------------------
 
-.. diagram:: 1. Presentations
-   :model: uml
-
-2. Stereotype Applications
---------------------------------------------------
-
-.. diagram:: 2. Stereotype Applications
+.. diagram:: 1. Stereotype Applications
    :model: uml
 

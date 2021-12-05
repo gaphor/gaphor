@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.6.5">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.7.1">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -26979,7 +26979,7 @@ specially for Gaphor</val>
 <ref refid="DCE:599504CC-379C-11D9-9FA4-00C00C03A405"/>
 </element>
 <name>
-<val>2. Stereotype Applications</val>
+<val>1. Stereotype Applications</val>
 </name>
 <ownedPresentation>
 <reflist>
@@ -53976,7 +53976,7 @@ have an opposite end.
 </Property>
 <Package id="34985146-ebea-11eb-8d68-2d4b211d5079">
 <name>
-<val>14. InformationFlows</val>
+<val>14. Information Flows</val>
 </name>
 <ownedDiagram>
 <reflist>
@@ -54025,7 +54025,7 @@ have an opposite end.
 <ref refid="34985146-ebea-11eb-8d68-2d4b211d5079"/>
 </element>
 <name>
-<val>1. InformationFlows</val>
+<val>1. Information Flows</val>
 </name>
 <ownedPresentation>
 <reflist>

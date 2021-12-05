@@ -21,5 +21,6 @@ Unified Modeling Language
   uml/11._Interactions
   uml/12._Use_Cases
   uml/13._Deployments
+  uml/14._Information_Flows
   uml/A._Gaphor_Specific_Constructs
   uml/B._Gaphor_Profile

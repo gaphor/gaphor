@@ -1,0 +1,5 @@
+14. Information Flows
+==================================================
+
+.. diagram:: 1. Information Flows
+   :model: uml
