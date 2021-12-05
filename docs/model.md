@@ -14,13 +14,16 @@ The events are sent using a signaling mechanism, called handlers.
 Pay attention to the following changes/additions with respect to the
 official Gaphor model, in the `models/UML.gaphor` file:
 
--   Additions to the model have been put in the package
-    AuxiliaryConstructs.Presentations and .Stereotypes.
--   A Diagram element is added in order to model the diagrams.
--   A special construct has been put into place in order to apply
-    stereotypes to model elements. The current UML Specification is not
-    clear on that subject.
--   The Slot.value reference is singular.
--   ValueSpecification is generated as if it were a normal attribute. As a
-    result, its subclasses (Expression, OpaqueExpression, InstanceValue,
-    LiteralSpecification and its Literal* subclasses) are not available.
+- Additions to the model have been put in the package
+  AuxiliaryConstructs.Stereotypes.
+- A special construct has been put into place in order to apply
+  stereotypes to model elements. The current UML Specification is not
+  clear on that subject.
+- The UML language depends on Gaphor's Core language, which provides
+  constructs for diagrams, presentations (elements on diagrams) and styling.
+- ValueSpecification is generated as if it were a normal attribute. As a
+  result, its subclasses (Expression, OpaqueExpression, InstanceValue,
+  LiteralSpecification and its Literal* subclasses) are not available.
+- On several places multiplicity has been changed to make it comply with
+  Gaphor's internal model. In particular when m:n relationships subset 1:n
+  relationships.
