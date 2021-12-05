@@ -205,6 +205,48 @@ be provided to set the level of line wobbliness. 0.5 is default, 0.0 is a
 straight line. The value should be between -2.0 and 2.0. Values between 0.0 and
 0.5 make for a subtle effect.
 
+## Working with model elements
+
+Gaphor has many model elements. How can you find out which item should be styled?
+
+Gaphor pnly styles the elements that are in the model, so you should be explicit
+on their names. For example: `Component` inherits from `Class` in the UML model,
+but changing a color for `Class` does not change it for `Component`.
+
+If you hover over a button the toolbox (bottom-left section), a popup will appear
+with the item's name and a shortcut. As a general rule, ou can use the component
+name, glued together as the name in the stylesheet.
+A *Component* can be addressed as `component`, *Use Case* as 
+`usecase`. The name matching is case insensitive.
+CSS names are written in lower case by default.
+
+However, since the CSS element names are derived from names used within Gaphor, there are a few exceptions:
+
+```{eval-rst}
+========  ============  ===================  =============================
+Profile   Group         Element              CSS element
+========  ============  ===================  =============================
+UML       Classes       all Association's    ``association``
+UML       Compoments    Device               ``node`` (like *Node Item*)
+UML       Actions       Decision/Merge Node  ``decisionnode``
+UML       Actions       Fork/Join Node       ``forknode``
+UML       Actions       Swimlane             ``partition``
+UML       Interactions  Reflexive message    ``message``
+UML       States        Initial Pseudostate  ``pseudostate``
+UML       States        History Pseudostate  ``pseudostate``
+UML       Profiles      Metaclass            ``class``
+C4 model  C4 model      Person               ``c4person``
+C4 model  C4 model      Software System      ``c4container``
+C4 model  C4 model      Container            ``c4container``
+C4 model  C4 model      Container: Database  ``c4database``
+SysML     Blocks        ValueType            ``datatype``
+SysML     Blocks        Primitive            ``datatype``
+SysML     Requirements  Derive Requirement   ``derivedreq``
+RAAML     FTA           any AND/OR/... Gate  ``and``, ``or``, etc.
+========  ============  ===================  =============================
+```
+
+
 ## Ideas
 
 Here are some ideas that go just beyond changing a color or a font. With the
