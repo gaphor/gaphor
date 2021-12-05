@@ -139,7 +139,7 @@ def _set_text(column, cell, model, iter, data):
     if element is RELATIONSHIPS:
         text = gettext("<Relationships>")
     else:
-        text = format(element) or "<None>"
+        text = format(element) or gettext("<None>")
     cell.set_property("text", text)
 
 
