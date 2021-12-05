@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-11-16 22:05-0500\n"
+"POT-Creation-Date: 2021-12-05 19:28+0100\n"
 "PO-Revision-Date: 2021-11-22 19:18+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
-"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
-">\n"
 "Language: fi\n"
+"Language-Team: Finnish "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:54
@@ -82,22 +81,22 @@ msgstr "Riippuvuus"
 msgid "RAAML"
 msgstr "RAAML"
 
-#: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:23
+#: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
 msgstr "AND-portti"
 
-#: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:124
-#: gaphor/RAAML/fta/ftatoolbox.py:130
+#: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr "Perustapahtuma"
 
-#: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:135
-#: gaphor/RAAML/fta/ftatoolbox.py:142
+#: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr "Ehdollinen tapahtuma"
 
-#: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:161
-#: gaphor/RAAML/fta/ftatoolbox.py:167
+#: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
+#: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
 msgstr "Uinuva tapahtuma"
 
@@ -105,85 +104,85 @@ msgstr "Uinuva tapahtuma"
 msgid "Fault Tree Analysis"
 msgstr "Vikapuuanalyysi"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:29
+#: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
 msgstr "JA"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:34 gaphor/RAAML/fta/orgate.py:37
+#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
 msgstr "OR-portti"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:40
+#: gaphor/RAAML/fta/ftatoolbox.py:41
 msgid "OR"
 msgstr "TAI"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:45 gaphor/RAAML/fta/notgate.py:35
+#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
 msgstr "NOT-portti"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:51
+#: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
 msgstr "EI"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:56
+#: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
 msgstr "Sekvenssin pakottava portti (SEQ)"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:62
+#: gaphor/RAAML/fta/ftatoolbox.py:63
 #, fuzzy
 msgid "SEQ"
 msgstr "käytä"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:67
+#: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
 msgstr "Poissulkeva portti (XOR)"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:73
+#: gaphor/RAAML/fta/ftatoolbox.py:74
 #, fuzzy
 msgid "XOR"
 msgstr "Vie"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:78 gaphor/RAAML/fta/ftatoolbox.py:85
+#: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:41
 msgid "Majority Vote Gate"
 msgstr "Enemmistön äänestysportti"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:91 gaphor/RAAML/fta/ftatoolbox.py:97
+#: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:35
 msgid "Inhibit Gate"
 msgstr "Rajoittava portti"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:102 gaphor/RAAML/fta/ftatoolbox.py:108
+#: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
 msgstr "Siirto sisään"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:113 gaphor/RAAML/fta/ftatoolbox.py:119
+#: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
 #: gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
 msgstr "Siirto ulos"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:148 gaphor/RAAML/fta/ftatoolbox.py:155
+#: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:36
 msgid "Undeveloped Event"
 msgstr "Kehittymätön tapahtuma"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:172 gaphor/RAAML/fta/ftatoolbox.py:178
+#: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
 #: gaphor/RAAML/fta/houseevent.py:35
 msgid "House Event"
 msgstr "Talotapahtuma"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:183 gaphor/RAAML/fta/ftatoolbox.py:189
+#: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
 #: gaphor/RAAML/fta/zeroevent.py:36
 msgid "Zero Event"
 msgstr "Nollatapahtuma"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:194 gaphor/RAAML/fta/ftatoolbox.py:200
+#: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
 msgstr "Ylätapahtuma"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:205 gaphor/RAAML/fta/ftatoolbox.py:212
+#: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
 msgstr "Välitason tapahtuma"
@@ -196,58 +195,58 @@ msgstr "Sekvenssin pakottava portti"
 msgid "XOR Gate"
 msgstr "Poissulkeva portti (XOR)"
 
-#: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:155
+#: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:156
 msgid "Control Action"
 msgstr "Kontrollitoiminto"
 
 #: gaphor/RAAML/stpa/operationalsituation.py:34
-#: gaphor/RAAML/stpa/stpatoolbox.py:123
+#: gaphor/RAAML/stpa/stpatoolbox.py:124
 msgid "Operational Situation"
 msgstr "Operationaalinen tilanne"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:18 gaphor/RAAML/stpa/stpatoolbox.py:43
+#: gaphor/RAAML/stpa/stpatoolbox.py:18 gaphor/RAAML/stpa/stpatoolbox.py:44
 msgid "Loss"
 msgstr "Menetys"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:23 gaphor/RAAML/stpa/stpatoolbox.py:52
+#: gaphor/RAAML/stpa/stpatoolbox.py:23 gaphor/RAAML/stpa/stpatoolbox.py:53
 msgid "Hazard"
 msgstr "Hasardi"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:28 gaphor/RAAML/stpa/stpatoolbox.py:112
+#: gaphor/RAAML/stpa/stpatoolbox.py:28 gaphor/RAAML/stpa/stpatoolbox.py:113
 msgid "Abstract Operational Situation"
 msgstr "Abstrakti operationaalinen tilanne"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:73
-#: gaphor/UML/classes/classestoolbox.py:123
+#: gaphor/UML/classes/classestoolbox.py:124
 msgid "Generalization"
 msgstr "Yleistys"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:60
+#: gaphor/RAAML/stpa/stpatoolbox.py:62 gaphor/SysML/blocks/block.py:60
 msgid "Situation"
 msgstr "Tilanne"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:72
+#: gaphor/RAAML/stpa/stpatoolbox.py:73
 msgid "Control Structure"
 msgstr "Kontrollirakenne"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:83
+#: gaphor/RAAML/stpa/stpatoolbox.py:84
 msgid "Controller"
 msgstr "Kontrolleri"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:92
+#: gaphor/RAAML/stpa/stpatoolbox.py:93
 msgid "Actuator"
 msgstr "Aktuaattori"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:101
+#: gaphor/RAAML/stpa/stpatoolbox.py:102
 msgid "Controlled Process"
 msgstr "Kontrolloitu prosessi"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:134
+#: gaphor/RAAML/stpa/stpatoolbox.py:135
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "Unsafe Control Action"
 msgstr "Epäturvallinen kontrollitoiminto"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:145
+#: gaphor/RAAML/stpa/stpatoolbox.py:146
 msgid "Relevant To"
 msgstr "Relevantti kenelle"
 
@@ -373,12 +372,12 @@ msgid "ValueType"
 msgstr "ArvoTyyppi"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:91
-#: gaphor/UML/classes/classestoolbox.py:149
+#: gaphor/UML/classes/classestoolbox.py:151
 msgid "Enumeration"
 msgstr "Enumeraatio"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:103
-#: gaphor/UML/classes/classestoolbox.py:161
+#: gaphor/UML/classes/classestoolbox.py:163
 msgid "Primitive"
 msgstr "Primitiivi"
 
@@ -448,7 +447,7 @@ msgid "UML"
 msgstr "UML"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
-#: gaphor/UML/interactions/interactionstoolbox.py:15
+#: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:30 gaphor/diagram/diagramtoolbox.py:28
 msgid "New {name}"
 msgstr "Uusi {name}"
@@ -525,15 +524,27 @@ msgstr "Hyväksy tapahtuma -toiminto"
 msgid "Accept event"
 msgstr "Hyväksy tapahtuma -toiminto"
 
+#: gaphor/UML/actions/activitynodes.py:190
+msgid "merge/decision"
+msgstr ""
+
+#: gaphor/UML/actions/activitynodes.py:192
+msgid "merge"
+msgstr ""
+
+#: gaphor/UML/actions/activitynodes.py:194
+msgid "decision"
+msgstr ""
+
 #: gaphor/UML/actions/objectnode.py:14
-#: gaphor/UML/actions/propertypages.glade:171
-#: gaphor/UML/actions/propertypages.ui:91
+#: gaphor/UML/actions/propertypages.glade:214
+#: gaphor/UML/actions/propertypages.ui:110
 msgid "unordered"
 msgstr "järjestämätön"
 
 #: gaphor/UML/actions/objectnode.py:15
-#: gaphor/UML/actions/propertypages.glade:172
-#: gaphor/UML/actions/propertypages.ui:90
+#: gaphor/UML/actions/propertypages.glade:215
+#: gaphor/UML/actions/propertypages.ui:109
 msgid "ordered"
 msgstr "järjestetty"
 
@@ -569,46 +580,52 @@ msgstr "Uusi uimarata"
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
+#, fuzzy
+msgid "Show type"
+msgstr "Näytä stereotyypit"
+
+#: gaphor/UML/actions/propertypages.glade:75
+#: gaphor/UML/actions/propertypages.ui:42
 msgid "Horizontal"
 msgstr "Vaakatasossa"
 
-#: gaphor/UML/actions/propertypages.glade:71
-#: gaphor/UML/actions/propertypages.ui:41
+#: gaphor/UML/actions/propertypages.glade:114
+#: gaphor/UML/actions/propertypages.ui:60
 msgid "Join Specification"
 msgstr "Liitosspesifikaatio"
 
-#: gaphor/UML/actions/propertypages.glade:106
-#: gaphor/UML/actions/propertypages.ui:60
+#: gaphor/UML/actions/propertypages.glade:149
+#: gaphor/UML/actions/propertypages.ui:79
 msgid "Upper Bound"
 msgstr "Yläraja"
 
-#: gaphor/UML/actions/propertypages.glade:138
-#: gaphor/UML/actions/propertypages.ui:76
+#: gaphor/UML/actions/propertypages.glade:181
+#: gaphor/UML/actions/propertypages.ui:95
 msgid "Show Ordering"
 msgstr "Näytä järjestys"
 
-#: gaphor/UML/actions/propertypages.glade:173
-#: gaphor/UML/actions/propertypages.ui:92
+#: gaphor/UML/actions/propertypages.glade:216
+#: gaphor/UML/actions/propertypages.ui:111
 msgid "Last In First Out (LIFO)"
 msgstr "Viimeinen sisään, ensimmäinen ulos (LIFO)"
 
-#: gaphor/UML/actions/propertypages.glade:174
-#: gaphor/UML/actions/propertypages.ui:93
+#: gaphor/UML/actions/propertypages.glade:217
+#: gaphor/UML/actions/propertypages.ui:112
 msgid "First In First Out (FIFO)"
 msgstr "Ensimmäinen sisään, ensimmäinen ulos (FIFO)"
 
-#: gaphor/UML/actions/propertypages.glade:199
-#: gaphor/UML/actions/propertypages.ui:107
+#: gaphor/UML/actions/propertypages.glade:242
+#: gaphor/UML/actions/propertypages.ui:126
 msgid "Partitions"
 msgstr "Osiot"
 
-#: gaphor/UML/actions/propertypages.glade:232
-#: gaphor/UML/actions/propertypages.ui:121
+#: gaphor/UML/actions/propertypages.glade:275
+#: gaphor/UML/actions/propertypages.ui:140
 msgid "Partition Names"
 msgstr "Osion nimet"
 
-#: gaphor/UML/actions/propertypages.glade:270
-#: gaphor/UML/actions/propertypages.ui:143
+#: gaphor/UML/actions/propertypages.glade:313
+#: gaphor/UML/actions/propertypages.ui:162
 #: gaphor/UML/states/propertypages.glade:129
 #: gaphor/UML/states/propertypages.ui:74
 msgid "Guard"
@@ -638,11 +655,11 @@ msgstr "Luokka"
 msgid "Interface"
 msgstr "Rajapinta"
 
-#: gaphor/UML/classes/classestoolbox.py:130
+#: gaphor/UML/classes/classestoolbox.py:132
 msgid "Interface Realization"
 msgstr "Rajapinnan realisaatio"
 
-#: gaphor/UML/classes/classestoolbox.py:137
+#: gaphor/UML/classes/classestoolbox.py:139
 msgid "DataType"
 msgstr "DataTyyppi"
 
@@ -658,15 +675,15 @@ msgstr "arvoTyyppi"
 msgid "dataType"
 msgstr "dataTyyppi"
 
-#: gaphor/UML/classes/dependency.py:49
+#: gaphor/UML/classes/dependency.py:52
 msgid "use"
 msgstr "käytä"
 
-#: gaphor/UML/classes/dependency.py:50
+#: gaphor/UML/classes/dependency.py:53
 msgid "realize"
 msgstr "realisoi"
 
-#: gaphor/UML/classes/dependency.py:51
+#: gaphor/UML/classes/dependency.py:54
 msgid "implements"
 msgstr "implementoi"
 
@@ -854,6 +871,29 @@ msgstr "Operaatiot"
 msgid "A"
 msgstr ""
 
+#: gaphor/UML/classes/propertypages.glade:877
+#: gaphor/UML/classes/propertypages.ui:555
+msgid "Show Enumeration Literals"
+msgstr "Näytä enumeraation literaalit"
+
+#: gaphor/UML/classes/propertypages.glade:921
+#: gaphor/UML/classes/propertypages.ui:576
+msgid ""
+"Add and edit enumeration literals according to UML syntax.\n"
+"Enumeration literal syntax examples\n"
+"- enum\n"
+"\n"
+"Press ENTER to edit item, BS/DEL to remove item.\n"
+"Use -/= to move items up or down."
+msgstr ""
+
+#: gaphor/UML/classes/propertypages.glade:933
+#: gaphor/UML/classes/propertypages.glade:966
+#: gaphor/UML/classes/propertypages.ui:589
+#: gaphor/UML/classes/propertypages.ui:613
+msgid "Enumeration Literals"
+msgstr "Enumeraation literaalit"
+
 #: gaphor/UML/classes/propertypages.ui:280
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
@@ -913,37 +953,41 @@ msgstr ""
 msgid "Information Item (Class):"
 msgstr ""
 
-#: gaphor/UML/interactions/interactionsconnect.py:76
+#: gaphor/UML/interactions/interactionsconnect.py:79
 msgid "call()"
 msgstr ""
 
-#: gaphor/UML/interactions/interactionstoolbox.py:33
-#: gaphor/UML/interactions/interactionstoolbox.py:44
+#: gaphor/UML/interactions/interactionstoolbox.py:34
+#: gaphor/UML/interactions/interactionstoolbox.py:55
 msgid "Interaction"
 msgstr "Interaktio"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:40
+#: gaphor/UML/interactions/interactionstoolbox.py:51
 msgid "Interactions"
 msgstr "Interaktiot"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:56
+#: gaphor/UML/interactions/interactionstoolbox.py:67
 msgid "Lifeline"
 msgstr "Elämänlanka"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:68
+#: gaphor/UML/interactions/interactionstoolbox.py:79
 msgid "Execution Specification"
 msgstr "Suorituspesifikaatio"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:76
+#: gaphor/UML/interactions/interactionstoolbox.py:87
 msgid "Message"
 msgstr "Viesti"
+
+#: gaphor/UML/interactions/interactionstoolbox.py:94
+msgid "Reflexive message"
+msgstr ""
 
 #: gaphor/UML/interactions/propertypages.glade:28
 #: gaphor/UML/interactions/propertypages.ui:21
 msgid "Message Sort"
 msgstr ""
 
-#: gaphor/UML/profiles/packageimport.py:19
+#: gaphor/UML/profiles/packageimport.py:22
 #, fuzzy
 msgid "import"
 msgstr "Vie"
@@ -1039,11 +1083,11 @@ msgstr "Historian pseudotila"
 msgid "Transition"
 msgstr "Transitio"
 
-#: gaphor/UML/usecases/extend.py:19
+#: gaphor/UML/usecases/extend.py:22
 msgid "extend"
 msgstr "laajenna"
 
-#: gaphor/UML/usecases/include.py:19
+#: gaphor/UML/usecases/include.py:22
 msgid "include"
 msgstr "sisällytä"
 
@@ -1063,7 +1107,7 @@ msgstr "Toimija"
 msgid "Include"
 msgstr "Sisällytä"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:54
+#: gaphor/UML/usecases/usecasetoolbox.py:55
 msgid "Extend"
 msgstr "Laajenna"
 
@@ -1100,42 +1144,31 @@ msgstr "Kommenttirivi"
 msgid "(from {namespace})"
 msgstr ""
 
-#: gaphor/diagram/propertypages.glade:90
-msgid "Show Enumeration Literals"
-msgstr "Näytä enumeraation literaalit"
-
-#: gaphor/diagram/propertypages.glade:134
-msgid ""
-"Add and edit enumeration literals according to UML syntax.\n"
-"Enumeration literal syntax examples\n"
-"- enum\n"
-"\n"
-"Press ENTER to edit item, BS/DEL to remove item.\n"
-"Use -/= to move items up or down."
-msgstr ""
-
-#: gaphor/diagram/propertypages.glade:148
-#: gaphor/diagram/propertypages.glade:182
-msgid "Enumeration Literals"
-msgstr "Enumeraation literaalit"
-
-#: gaphor/diagram/propertypages.glade:204 gaphor/diagram/propertypages.ui:53
+#: gaphor/diagram/propertypages.glade:84 gaphor/diagram/propertypages.ui:53
 msgid "Rectilinear"
 msgstr "Suorakulmainen"
 
-#: gaphor/diagram/propertypages.glade:219 gaphor/diagram/propertypages.ui:59
+#: gaphor/diagram/propertypages.glade:99 gaphor/diagram/propertypages.ui:59
 msgid "Flip orientation"
 msgstr "Käännä suunta"
 
-#: gaphor/diagram/propertypages.glade:238 gaphor/diagram/propertypages.ui:67
+#: gaphor/diagram/propertypages.glade:118 gaphor/diagram/propertypages.ui:67
 msgid "Style"
 msgstr "Tyyli"
 
-#: gaphor/diagram/propertypages.glade:278 gaphor/diagram/propertypages.ui:79
+#: gaphor/diagram/propertypages.glade:158 gaphor/diagram/propertypages.ui:79
 msgid "Note or Remark"
 msgstr "Huomio tai muistutus"
 
-#: gaphor/plugins/console/console.py:19
+#: gaphor/extensions/sphinx.py:65
+msgid "No model file configured for model '{model_name}'."
+msgstr ""
+
+#: gaphor/extensions/sphinx.py:94
+msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
+msgstr ""
+
+#: gaphor/plugins/console/console.py:23
 msgid ""
 "Gaphor Interactive Python Console\n"
 "{version}\n"
@@ -1153,34 +1186,34 @@ msgstr "Gaphorin konsoli"
 msgid "Console"
 msgstr "Konsoli"
 
-#: gaphor/plugins/diagramexport/__init__.py:52
+#: gaphor/plugins/diagramexport/__init__.py:28
 msgid "All {ext} Files"
 msgstr "Kaikki {ext}-tiedostot"
 
-#: gaphor/plugins/diagramexport/__init__.py:100
+#: gaphor/plugins/diagramexport/__init__.py:34
 msgid "Export as SVG"
 msgstr "Vie SVG-kuvaksi"
 
-#: gaphor/plugins/diagramexport/__init__.py:101
-#: gaphor/plugins/diagramexport/__init__.py:106
+#: gaphor/plugins/diagramexport/__init__.py:35
+#: gaphor/plugins/diagramexport/__init__.py:40
 msgid "Export diagram as SVG"
 msgstr "Vie kaavio SVG-muotoon"
 
-#: gaphor/plugins/diagramexport/__init__.py:113
+#: gaphor/plugins/diagramexport/__init__.py:47
 msgid "Export as PNG"
 msgstr "Vie PNG-kuvaksi"
 
-#: gaphor/plugins/diagramexport/__init__.py:114
-#: gaphor/plugins/diagramexport/__init__.py:119
+#: gaphor/plugins/diagramexport/__init__.py:48
+#: gaphor/plugins/diagramexport/__init__.py:53
 msgid "Export diagram as PNG"
 msgstr "Vie kaavio PNG-muotoon"
 
-#: gaphor/plugins/diagramexport/__init__.py:126
+#: gaphor/plugins/diagramexport/__init__.py:60
 msgid "Export as PDF"
 msgstr "Vie PDF-tiedostoksi"
 
-#: gaphor/plugins/diagramexport/__init__.py:127
-#: gaphor/plugins/diagramexport/__init__.py:132
+#: gaphor/plugins/diagramexport/__init__.py:61
+#: gaphor/plugins/diagramexport/__init__.py:66
 msgid "Export diagram as PDF"
 msgstr "Vie kaavio PDF-muotoon"
 
@@ -1348,10 +1381,11 @@ msgstr ""
 "ikkunaan?"
 
 #: gaphor/ui/diagrampage.py:126 gaphor/ui/namespace.py:341
+#: gaphor/ui/namespaceview.py:142
 msgid "<None>"
 msgstr "&lt;Ei mitään&gt;"
 
-#: gaphor/ui/diagrampage.py:340
+#: gaphor/ui/diagrampage.py:341
 msgid ""
 "Drag to diagram is (temporarily) limited to Classifiers, Packages, and "
 "Properties, not {type}."
@@ -1810,3 +1844,4 @@ msgstr "Ei viimeksi avattuja malleja"
 
 #~ msgid "Decision node"
 #~ msgstr "Päätös-/yhdistämissolmu"
+
