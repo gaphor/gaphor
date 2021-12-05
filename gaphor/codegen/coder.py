@@ -2,7 +2,7 @@
 
 This is the code generator for the models used by Gaphor.
 
-In order to work with the code generator, a model should follow some convensions:
+In order to work with the code generator, a model should follow some conventions:
 
 * `Profile` packages are only for profiles (excluded from generation)
 * A stereotype `simpleAttribute` can be defined, which converts an association
@@ -62,7 +62,7 @@ header = textwrap.dedent(
 
 def main(
     modelfile: str,
-    supermodelfiles: list[tuple[str, str]] = [],
+    supermodelfiles: list[tuple[str, str]] | None = None,
     overridesfile: str | None = None,
     outfile: str | None = None,
 ):
@@ -205,10 +205,9 @@ def associations(
             )
         elif a.isDerived:
             yield f'{full_name} = derivedunion("{a.name}", {a.type.name}{lower(a)}{upper(a)})'
+        elif not a.name:
+            raise ValueError(f"Unnamed attribute: {full_name} ({a.association})")
         else:
-            if not a.name:
-                raise ValueError(f"Unnamed attribute: {full_name} ({a.association})")
-
             yield f'{full_name} = association("{a.name}", {a.type.name}{lower(a)}{upper(a)}{composite(a)}{opposite(a)})'
 
     yield from redefinitions
@@ -230,7 +229,6 @@ def subsets(
             if slot.definingFeature.name == "subsets":
                 full_name = f"{c.name}.{a.name}"
                 for value in slot.value.split(","):
-                    # TODO: also find derived class in super_models
                     pkg, d = attribute(c, value.strip(), super_models)
                     if d and d.isDerived:
                         if pkg:
@@ -299,7 +297,7 @@ def order_classes(classes: Iterable[UML.Class]) -> Iterable[UML.Class]:
             yield c
             seen_classes.add(c)
 
-    for c in classes:  # sorted(classes, key=lambda c: c.name):  # type: ignore
+    for c in classes:
         yield from order(c)
 
 
@@ -318,13 +316,9 @@ def is_enumeration(c: UML.Class) -> bool:
 
 
 def is_simple_type(c: UML.Class) -> bool:
-    for s in UML.model.get_applied_stereotypes(c):
-        if s.name == "SimpleAttribute":
-            return True
-    for g in c.generalization:
-        if is_simple_type(g.general):
-            return True
-    return False
+    return any(
+        s.name == "SimpleAttribute" for s in UML.model.get_applied_stereotypes(c)
+    ) or any(is_simple_type(g.general) for g in c.generalization)
 
 
 def is_tilde_type(c: UML.Class) -> bool:
@@ -459,7 +453,7 @@ if __name__ == "__main__":
         dest="supermodelfiles",
         type=str,
         action="append",
-        help="Reference to dependenct model file (e.g. gaphor.UML.uml:models/UML.gaphor)",
+        help="Reference to dependent model file (e.g. gaphor.UML.uml:models/UML.gaphor)",
     )
 
     args = parser.parse_args()
