@@ -32,12 +32,6 @@ The `Asynchronous` stereotype has a property `priority`. This property can
 be proved a value once the stereotype is applied to a *Property*, such as an
 association end.
 
-When applied in you can create a little diagram like this:
-
-```{diagram} application
-:model: stereotypes
-```
-
 When a stereotype can be applied to a model element, a *Stereotype* section
 will appear in the editor.
 
