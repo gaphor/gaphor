@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-12-05 19:28+0100\n"
-"PO-Revision-Date: 2021-11-18 06:50+0000\n"
+"PO-Revision-Date: 2021-12-06 15:18+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:54
@@ -522,15 +523,15 @@ msgstr "Eseményművelet elfogadása"
 
 #: gaphor/UML/actions/activitynodes.py:190
 msgid "merge/decision"
-msgstr ""
+msgstr "döntő/egyesítő"
 
 #: gaphor/UML/actions/activitynodes.py:192
 msgid "merge"
-msgstr ""
+msgstr "egyesítő"
 
 #: gaphor/UML/actions/activitynodes.py:194
 msgid "decision"
-msgstr ""
+msgstr "döntő"
 
 #: gaphor/UML/actions/objectnode.py:14
 #: gaphor/UML/actions/propertypages.glade:214
@@ -574,9 +575,8 @@ msgstr "Új sáv"
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
-#, fuzzy
 msgid "Show type"
-msgstr "Sztereotípusok megjelenítése"
+msgstr "Típus megjelenítése"
 
 #: gaphor/UML/actions/propertypages.glade:75
 #: gaphor/UML/actions/propertypages.ui:42
@@ -1022,7 +1022,7 @@ msgstr "Üzenet"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:94
 msgid "Reflexive message"
-msgstr ""
+msgstr "Visszaható üzenete"
 
 #: gaphor/UML/interactions/propertypages.glade:28
 #: gaphor/UML/interactions/propertypages.ui:21
@@ -1203,11 +1203,11 @@ msgstr "Megjegyzés"
 
 #: gaphor/extensions/sphinx.py:65
 msgid "No model file configured for model '{model_name}'."
-msgstr ""
+msgstr "Nincs beállítva modellfájl a(z) „{model_name}”-modellhez."
 
 #: gaphor/extensions/sphinx.py:94
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
-msgstr ""
+msgstr "Nincs ábra „{name}” a(z) „{model_name}”-modellben ({model_file})."
 
 #: gaphor/plugins/console/console.py:23
 msgid ""
@@ -1880,4 +1880,3 @@ msgstr "Nincsenek nemrégiben megnyitott modellek"
 
 #~ msgid "Decision node"
 #~ msgstr "Döntő/egyesítő csomópont"
-
