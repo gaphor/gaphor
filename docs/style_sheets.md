@@ -235,10 +235,10 @@ UML       Interactions  Reflexive message    ``message``
 UML       States        Initial Pseudostate  ``pseudostate``
 UML       States        History Pseudostate  ``pseudostate``
 UML       Profiles      Metaclass            ``class``
-C4 model  C4 model      Person               ``c4person``
-C4 model  C4 model      Software System      ``c4container``
-C4 model  C4 model      Container            ``c4container``
-C4 model  C4 model      Container: Database  ``c4database``
+C4 Model  C4 Model      Person               ``c4person``
+C4 Model  C4 Model      Software System      ``c4container``
+C4 Model  C4 Model      Container            ``c4container``
+C4 Model  C4 Model      Container: Database  ``c4database``
 SysML     Blocks        ValueType            ``datatype``
 SysML     Blocks        Primitive            ``datatype``
 SysML     Requirements  Derive Requirement   ``derivedreq``
