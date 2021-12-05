@@ -11,16 +11,16 @@ comment
   on, since attributes have been written anyway. Note that no smart things
   wrt inheritance is done.
 %%
-override Element
-from gaphor.core.modeling import Comment, Element
+header
+from typing import Callable
+
+from gaphor.core.modeling.coremodel import Comment, Diagram, StyleSheet
+
 %%
-override Diagram
-from gaphor.core.modeling import Diagram, StyleSheet
-%%
-override MultiplicityElement.lower(MultiplicityElement.lowerValue): attribute[str]
+override MultiplicityElement.lower(MultiplicityElement.lowerValue): _attribute[str]
 MultiplicityElement.lower = MultiplicityElement.lowerValue
 %%
-override MultiplicityElement.upper(MultiplicityElement.upperValue): attribute[str]
+override MultiplicityElement.upper(MultiplicityElement.upperValue): _attribute[str]
 MultiplicityElement.upper = MultiplicityElement.upperValue
 %%
 override Association.endType(Association.memberEnd, Property.type): derived[Type]
@@ -67,13 +67,13 @@ Property.isComposite = derived('isComposite', bool, 0, 1, lambda obj: [obj.aggre
 override Constraint.context: derivedunion[Namespace]
 Constraint.context = derivedunion('context', Namespace, 0, 1)
 %%
-override NamedElement.qualifiedName(NamedElement.namespace): derived[list[str]]
+override NamedElement.qualifiedName: derived[list[str]]
 
 from gaphor.core.modeling.diagram import qualifiedName
 
 NamedElement.qualifiedName = derived(
     "qualifiedName",
-    List[str],
+    list[str],
     0,
     1,
     lambda obj: [qualifiedName(obj)],

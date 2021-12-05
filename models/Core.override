@@ -1,34 +1,14 @@
-header
-%%
 override Element
 from gaphor.core.modeling.element import Element
 %%
 override Diagram
 from gaphor.core.modeling.diagram import Diagram
 %%
-override StyleSheet
-# defined in gaphor.core.modeling.presentation
-%%
-override StyleSheet.styleSheet
-# defined in gaphor.core.modeling.presentation
-%%
 override Presentation
-# defined in gaphor.core.modeling.presentation
+from gaphor.core.modeling.presentation import Presentation
 %%
-override Element.presentation
-# defined in gaphor.core.modeling.presentation
+override Diagram.qualifiedName: property[list[str]]
+# defined in gaphor.core.modeling.diagram
 %%
-override Presentation.diagram
-# defined in gaphor.core.modeling.presentation
-%%
-override Presentation.subject
-# defined in gaphor.core.modeling.presentation
-%%
-override Presentation.parent
-# defined in gaphor.core.modeling.presentation
-%%
-override Presentation.children
-# defined in gaphor.core.modeling.presentation
-%%
-override Diagram.ownedPresentation
-# defined in gaphor.core.modeling.presentation
+override StyleSheet
+from gaphor.core.modeling.stylesheet import StyleSheet

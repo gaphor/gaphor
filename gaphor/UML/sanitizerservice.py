@@ -120,7 +120,7 @@ class SanitizerService(Service):
                 return
             st = event.old_value
             if st:
-                meta = getattr(UML, p.type.name, None)
+                meta = p.type and getattr(UML, p.type.name, None)
                 self.perform_unlink_for_instances(st, meta)
 
     @event_handler(AssociationDeleted)

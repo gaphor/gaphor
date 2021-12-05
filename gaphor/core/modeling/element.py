@@ -39,7 +39,7 @@ Id = str
 class Element:
     """Base class for all model data classes."""
 
-    note: attribute[str]
+    note: attribute[str] = attribute("note", str)
     appliedStereotype: relation_many[Element]
     comment: relation_many[Comment]
     directedRelationship: relation_many[Presentation]

@@ -83,36 +83,37 @@ dist = "poetry build"
 install = "poetry install"
 install-nodev = "poetry install --no-dev"
 install-pyinstall = "poetry install --no-dev --extras pyinstall"
-coremodel = [
-    { "cmd" = "gaphor/codegen/codegen.py models/Core.gaphor gaphor/core/modeling/coremodel.py models/Core.override" },
-    { "cmd" = "black gaphor/core/modeling/coremodel.py" },
-    { "cmd" = "mypy gaphor/core/modeling" },
-    { "cmd" = "isort gaphor/core/modeling/coremodel.py" },
-]
-uml = [
-    { "cmd" = "python gaphor/codegen/codegen.py models/UML.gaphor gaphor/UML/uml.py models/UML.override" },
-    { "cmd" = "mypy gaphor/UML" },
-    { "cmd" = "isort gaphor/UML" },
-    { "cmd" = "black gaphor/UML/uml.py" },
-]
-sysml = [
-    { "cmd" = "python gaphor/codegen/codegen.py --uml_profile models/SysML.gaphor gaphor/SysML/sysml.py models/SysML.override" },
-    { "cmd" = "black gaphor/SysML/sysml.py" },
-    { "cmd" = "isort gaphor/SysML" },
-    { "cmd" = "mypy gaphor/SysML" },
-]
-raaml = [
-    { "cmd" = "python gaphor/codegen/codegen.py --sysml_profile models/RAAML.gaphor gaphor/RAAML/raaml.py models/RAAML.override" },
-    { "cmd" = "mypy gaphor/RAAML" },
-    { "cmd" = "isort gaphor/RAAML" },
-    { "cmd" = "black gaphor/RAAML/raaml.py" },
-]
-c4model = [
-    { "cmd" = "python gaphor/codegen/codegen.py --uml_profile models/C4Model.gaphor gaphor/C4Model/c4model.py models/C4Model.override" },
-    { "cmd" = "mypy gaphor/C4Model" },
-    { "cmd" = "isort gaphor/C4Model" },
-    { "cmd" = "black gaphor/C4Model/c4model.py" },
-]
+coremodel.script = """gaphor.codegen.coder:main(
+    modelfile='models/Core.gaphor',
+    overridesfile='models/Core.override',
+    outfile='gaphor/core/modeling/coremodel.py'
+    )"""
+uml.script = """gaphor.codegen.coder:main(
+    modelfile='models/UML.gaphor',
+    overridesfile='models/UML.override',
+    outfile='gaphor/UML/uml.py',
+    supermodelfiles=[('gaphor.core.modeling.coremodel', 'models/Core.gaphor')]
+    )"""
+sysml.script = """gaphor.codegen.coder:main(
+    modelfile='models/SysML.gaphor', 
+    outfile='gaphor/SysML/sysml.py', 
+    supermodelfiles=[
+        ('gaphor.core.modeling.coremodel', 'models/Core.gaphor'),
+        ('gaphor.UML.uml', 'models/UML.gaphor')]
+    )"""
+raaml.script = """gaphor.codegen.coder:main(
+    modelfile='models/RAAML.gaphor', 
+    outfile='gaphor/RAAML/raaml.py', 
+    supermodelfiles=[
+        ('gaphor.core.modeling.coremodel', 'models/Core.gaphor'),
+        ('gaphor.UML.uml', 'models/UML.gaphor'),
+        ('gaphor.SysML.sysml', 'models/SysML.gaphor')]
+    )"""
+c4model.script = """gaphor.codegen.coder:main(
+    modelfile='models/C4Model.gaphor',
+    outfile='gaphor/C4Model/c4model.py',
+    supermodelfiles=[('gaphor.UML.uml', 'models/UML.gaphor')]
+    )"""
 lint = "pre-commit run --all-files"
 docs = "sphinx-build docs docs/_build/html"
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt _packaging/gaphor-script.py docs/_build" }

@@ -601,14 +601,19 @@ class derived(umlproperty, Generic[T]):
         self.lower = lower
         self.upper = upper
         self.filter = filter
-        self.subsets = set(subsets)
-        self.single = len(subsets) == 1
+        self.subsets: set[umlproperty] = set()
+        self.single = False
 
         for s in subsets:
-            assert isinstance(
-                s, (association, derived)
-            ), f"have element {s}, expected association"
-            s._dependent_properties.add(self)
+            self.add(s)
+
+    def add(self, subset):
+        self.subsets.add(subset)
+        self.single = len(self.subsets) == 1
+        assert isinstance(
+            subset, (association, derived)
+        ), f"have element {subset}, expected association"
+        subset._dependent_properties.add(self)
 
     def load(self, obj, value):
         raise ValueError(
@@ -660,10 +665,10 @@ class derived(umlproperty, Generic[T]):
         return uc.data
 
     def _set(self, obj, value):
-        raise AttributeError("Can not set values on a union")
+        raise AttributeError(f"Can not set values on union {self.name}: {self.type}")
 
     def _del(self, obj, value=None):
-        raise AttributeError("Can not delete values on a union")
+        raise AttributeError(f"Can not delete values on union {self.name}: {self.type}")
 
     def propagate(self, event):
         """Re-emit state change for the derived properties as Derived*Event's.
@@ -739,8 +744,8 @@ class derivedunion(derived[T]):
         self,
         name: str,
         type: type[T],
-        lower: Lower,
-        upper: Upper,
+        lower: Lower = 0,
+        upper: Upper = "*",
         *subsets: relation,
     ):
         super().__init__(name, type, lower, upper, self._union, *subsets)

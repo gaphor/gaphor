@@ -1,14 +1,12 @@
 from gaphor import UML
-from gaphor.storage.parser import parse
-from gaphor.storage.storage import load_elements
+from gaphor.storage.storage import load
 from gaphor.UML import diagramitems
 
 
 def test_message_item_upgrade(element_factory, modeling_language, test_models):
     path = test_models / "multiple-messages.gaphor"
 
-    elements = parse(path)
-    load_elements(elements, element_factory, modeling_language)
+    load(path, element_factory, modeling_language)
 
     diagram = element_factory.lselect(UML.Diagram)[0]
     items = [e for e in diagram.get_all_items() if not e.parent]
