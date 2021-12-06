@@ -14,8 +14,9 @@ from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider
-from gaphor.core import action, event_handler, gettext, transactional
+from gaphor.core import action, event_handler, gettext
 from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged
@@ -294,38 +295,39 @@ class Namespace(UIComponent, ActionProvider):
             cell.set_property("editable", 0)
 
     @action(name="win.create-diagram")
-    @transactional
     def tree_view_create_diagram(self):
         assert self.view
         element = self.get_selected_element()
-        diagram = self.element_factory.create(Diagram)
-        if isinstance(element, UML.NamedElement):
-            diagram.element = element
-            diagram.name = gettext("{name} diagram").format(name=element.name)
-        else:
-            diagram.name = gettext("New diagram")
+        while element and not isinstance(element, UML.NamedElement):
+            element = element.owner
+
+        with Transaction(self.event_manager):
+            diagram = self.element_factory.create(Diagram)
+            if isinstance(element, UML.NamedElement):
+                diagram.element = element
+                diagram.name = gettext("{name} diagram").format(name=element.name)
+            else:
+                diagram.name = gettext("New diagram")
         self.select_element(diagram)
         self.event_manager.handle(DiagramOpened(diagram))
         self.tree_view_rename_selected()
 
     @action(name="tree-view.create-package")
-    @transactional
     def tree_view_create_package(self):
         element = self.get_selected_element()
         assert isinstance(element, UML.Package)
-        package = self.element_factory.create(UML.Package)
-        package.package = element
-
-        package.name = (
-            gettext("{name} package").format(name=element.name)
-            if element
-            else gettext("New model")
-        )
+        with Transaction(self.event_manager):
+            package = self.element_factory.create(UML.Package)
+            package.package = element
+            package.name = (
+                gettext("{name} package").format(name=element.name)
+                if element
+                else gettext("New model")
+            )
         self.select_element(package)
         self.tree_view_rename_selected()
 
     @action(name="tree-view.delete")
-    @transactional
     def tree_view_delete(self):
         element = self.get_selected_element()
         if isinstance(element, Diagram):
@@ -341,12 +343,14 @@ class Namespace(UIComponent, ActionProvider):
                 ).format(name=element.name or gettext("<None>")),
             )
             if m.run() == Gtk.ResponseType.YES:
-                for i in reversed(list(element.get_all_items())):
-                    s = i.subject
-                    if s and len(s.presentation) == 1:
-                        s.unlink()
-                    i.unlink()
-                element.unlink()
+                with Transaction(self.event_manager):
+                    for i in reversed(list(element.get_all_items())):
+                        s = i.subject
+                        if s and len(s.presentation) == 1:
+                            s.unlink()
+                        i.unlink()
+                    element.unlink()
             m.destroy()
         elif element:
-            element.unlink()
+            with Transaction(self.event_manager):
+                element.unlink()
