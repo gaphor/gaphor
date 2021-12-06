@@ -59,7 +59,6 @@ if Gtk.get_major_version() == 3:
                 )
         return ActionGroup(actions=action_group, shortcuts=accel_group)
 
-
 else:
 
     class ActionGroup(NamedTuple):  # type: ignore[no-redef]

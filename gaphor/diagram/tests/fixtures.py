@@ -157,7 +157,6 @@ if Gtk.get_major_version() == 3:
                     return found
         return None
 
-
 else:
 
     def find(widget, name):

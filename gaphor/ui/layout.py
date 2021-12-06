@@ -62,7 +62,6 @@ if Gtk.get_major_version() == 3:
         else:
             parent_widget.add(widget)
 
-
 else:
 
     def add(widget, index, parent_widget, resize=False, shrink=False):
