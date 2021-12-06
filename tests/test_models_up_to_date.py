@@ -1,13 +1,23 @@
 """Test if models are up to date."""
 
+import functools
 from pathlib import Path
 
+import pytest
+
 from gaphor.C4Model import c4model
+from gaphor.codegen import coder
 from gaphor.codegen.coder import main
 from gaphor.core.modeling import coremodel
 from gaphor.RAAML import raaml
 from gaphor.SysML import sysml
 from gaphor.UML import uml
+
+
+@pytest.fixture(scope="session", autouse=True)
+def cache_loaded_models():
+    """Speed up testing by caching loaded models."""
+    coder.load_model = functools.lru_cache(maxsize=None)(coder.load_model)
 
 
 def test_core_model(tmp_path):

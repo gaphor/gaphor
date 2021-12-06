@@ -137,17 +137,6 @@ class TestStorage:
         assert len(elements) == 2, elements
         assert elements[0].name == difficult_name, elements[0].name
 
-    @pytest.mark.slow
-    def test_load_uml_metamodel(self, case, models):
-        path = models / "UML.gaphor"
-
-        with open(path) as ifile:
-            storage.load(
-                ifile,
-                factory=case.element_factory,
-                modeling_language=case.modeling_language,
-            )
-
     def test_save_and_load_model_with_relationships(self, case):
         case.element_factory.create(UML.Package)
         case.create(CommentItem, UML.Comment)
