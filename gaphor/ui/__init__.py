@@ -80,14 +80,10 @@ def main(argv=sys.argv):
         import cProfile
         import pstats
 
-        cProfile.runctx(
-            "run(argv)",
-            globals(),
-            locals(),
-            filename="gaphor.prof",
-        )
+        with cProfile.Profile() as profile:
+            profile.runcall(run, argv)
 
-        profile_stats = pstats.Stats("gaphor.prof")
+        profile_stats = pstats.Stats(profile)
         profile_stats.strip_dirs().sort_stats("time").print_stats(50)
 
     else:
