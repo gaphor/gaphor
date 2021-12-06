@@ -291,7 +291,9 @@ class NamespaceModel(Gtk.TreeStore):
             # Set package. This only works for classifiers, packages and
             # diagrams. Properties and operations should not be moved.
             with Transaction(self.event_manager):
-                if dest_element is None:
+                if dest_element is None and isinstance(element, Diagram):
+                    del element.element
+                elif dest_element is None:
                     del element.package
                 elif isinstance(element, Diagram):
                     element.element = dest_element
