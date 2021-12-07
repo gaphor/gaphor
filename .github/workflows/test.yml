@@ -120,7 +120,7 @@ jobs:
       # Git revision of gvsbuild we use for to build GTK and the other dependencies
       gvsbuildref: ce4c9de92dc3487d15b8f5ecc200705f951b6ae8
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuildupdate: 3
+      gvsbuildupdate: 2
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
