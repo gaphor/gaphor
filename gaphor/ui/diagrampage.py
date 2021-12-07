@@ -57,7 +57,6 @@ if Gtk.get_major_version() == 3:
             _placement_pixbuf_map[icon_name] = pixbuf
         return Gdk.Cursor.new_from_pixbuf(display, pixbuf, 1, 1)
 
-
 else:
     _placement_texture_map: Dict[str, Gdk.Texture] = {}
 
