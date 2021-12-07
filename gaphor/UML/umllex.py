@@ -167,6 +167,8 @@ def parse_attribute(el: uml.Property, s: str) -> None:
         el.typeValue = g("type")
         el.lowerValue = g("mult_l")
         el.upperValue = g("mult_u")
+        if g("has_mult") and not g("mult_u"):
+            el.upperValue = "*"
         el.defaultValue = g("default")
         el.note = g("note")
 
@@ -215,6 +217,8 @@ def parse_association_end(el: uml.Property, s: str) -> None:
                 if not g("mult_l"):
                     el.lowerValue = None
                 el.upperValue = g("mult_u")
+            elif g("has_mult") and not g("mult_u"):
+                el.upperValue = "*"
 
 
 @parse.register(uml.Property)
