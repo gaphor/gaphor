@@ -250,3 +250,14 @@ def test_parse_operation_with_note(factory):
     parse(o, "myfunc() # and a note")
     assert "myfunc" == o.name
     assert "and a note" == o.note
+
+
+def test_parse_operation_with_square_brackets(factory):
+    """Test parsing simple operation."""
+    o: UML.Operation = factory.create(UML.Operation)
+    parse(o, "myfunc(args: string[])")
+    p = o.ownedParameter[0]
+    assert "args" == p.name
+    assert "string" == p.typeValue
+    assert "*" == p.upperValue
+    assert None is p.lowerValue

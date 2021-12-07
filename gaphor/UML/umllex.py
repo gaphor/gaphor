@@ -23,7 +23,7 @@ derived_subpat = r"\s*(?P<derived>/)?"
 name_subpat = r"\s*(?P<name>[a-zA-Z_]\w*( +\w+)*)"
 
 # Multiplicity ::= '[' [mult_l ..] mult_u ']'
-mult_subpat = r"\s*(\[\s*((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*))\s*\])?"
+mult_subpat = r"\s*(?P<has_mult>\[\s*((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*))?\s*\])?"
 multa_subpat = r"\s*(\[?((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*))\]?)?"
 
 # Type and multiplicity (optional) ::= ':' type
@@ -277,6 +277,8 @@ def parse_operation(el: uml.Operation, s: str) -> None:
             p.typeValue = g("type")
             p.lowerValue = g("mult_l")
             p.upperValue = g("mult_u")
+            if g("has_mult") and not g("mult_u"):
+                p.upperValue = "*"
             p.defaultValue = g("default")
             el.ownedParameter = p
             defined_params.add(p)
