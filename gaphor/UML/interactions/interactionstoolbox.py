@@ -72,7 +72,7 @@ interactions = ToolSection(
                 UML.Lifeline,
                 config_func=interaction_config,
             ),
-            handle_index=SE,
+            handle_index=-1,
         ),
         ToolDef(
             "toolbox-execution-specification",
