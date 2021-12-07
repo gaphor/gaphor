@@ -226,22 +226,25 @@ def subsets(
         ):
             continue
         for slot in a.appliedStereotype[:].slot:
-            if slot.definingFeature.name == "subsets":
-                full_name = f"{c.name}.{a.name}"
-                for value in slot.value.split(","):
-                    pkg, d = attribute(c, value.strip(), super_models)
-                    if d and d.isDerived:
-                        if pkg:
-                            yield f"from {pkg} import {d.owner.name}"  # type: ignore[attr-defined]
-                        yield f"{d.owner.name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"  # type: ignore[attr-defined]
-                    elif not d:
-                        log.warning(
-                            f"{full_name} wants to subset {value.strip()}, but it is not defined"
-                        )
-                    else:
-                        log.warning(
-                            f"{full_name} wants to subset {value.strip()}, but it is not a derived union"
-                        )
+            if slot.definingFeature.name != "subsets":
+                continue
+
+            full_name = f"{c.name}.{a.name}"
+            for value in slot.value.split(","):
+                pkg, d = attribute(c, value.strip(), super_models)
+                derived = d and d.isDerived
+                if derived and pkg:
+                    yield f"from {pkg} import {d.owner.name}"  # type: ignore[union-attr]
+                elif derived:
+                    yield f"{d.owner.name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"  # type: ignore[union-attr]
+                elif not d:
+                    log.warning(
+                        f"{full_name} wants to subset {value.strip()}, but it is not defined"
+                    )
+                else:
+                    log.warning(
+                        f"{full_name} wants to subset {value.strip()}, but it is not a derived union"
+                    )
 
 
 def operations(c: UML.Class, overrides: Overrides | None = None):
