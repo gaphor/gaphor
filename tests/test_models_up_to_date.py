@@ -31,7 +31,7 @@ def test_core_model(tmp_path):
     current_model = Path(coremodel.__file__).read_text()
     generated_model = outfile.read_text()
 
-    assert current_model == generated_model
+    assert generated_model == current_model
 
 
 def test_uml_model(tmp_path):
@@ -46,7 +46,7 @@ def test_uml_model(tmp_path):
     current_model = Path(uml.__file__).read_text()
     generated_model = outfile.read_text()
 
-    assert current_model == generated_model
+    assert generated_model == current_model
 
 
 def test_c4model_model(tmp_path):
@@ -60,7 +60,7 @@ def test_c4model_model(tmp_path):
     current_model = Path(c4model.__file__).read_text()
     generated_model = outfile.read_text()
 
-    assert current_model == generated_model
+    assert generated_model == current_model
 
 
 def test_sysml_model(tmp_path):
@@ -77,7 +77,7 @@ def test_sysml_model(tmp_path):
     current_model = Path(sysml.__file__).read_text()
     generated_model = outfile.read_text()
 
-    assert current_model == generated_model
+    assert generated_model == current_model
 
 
 def test_raaml_model(tmp_path):
@@ -95,4 +95,4 @@ def test_raaml_model(tmp_path):
     current_model = Path(raaml.__file__).read_text()
     generated_model = outfile.read_text()
 
-    assert current_model == generated_model
+    assert generated_model == current_model
