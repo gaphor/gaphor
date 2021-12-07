@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-12-05 19:28+0100\n"
-"PO-Revision-Date: 2021-12-07 02:34+0000\n"
-"Last-Translator: Amy Y <ctrlalternativedelete@gmail.com>\n"
+"PO-Revision-Date: 2021-12-08 15:53+0000\n"
+"Last-Translator: Bill ZHANG <zhangbo163126@outlook.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gaphor/gaphor/zh_Hans/>\n"
 "Language: zh_Hans\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:54
 msgid "C4 Model"
-msgstr ""
+msgstr "C4 模型"
 
 #: gaphor/C4Model/propertypages.glade:31 gaphor/C4Model/propertypages.ui:25
 msgid "Description"
@@ -107,7 +107,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
-msgstr ""
+msgstr "与"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
@@ -115,7 +115,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41
 msgid "OR"
-msgstr ""
+msgstr "或"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
@@ -123,7 +123,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
-msgstr ""
+msgstr "非"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
@@ -139,7 +139,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
-msgstr ""
+msgstr "异或"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:41
