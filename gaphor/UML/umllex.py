@@ -257,6 +257,8 @@ def parse_operation(el: uml.Operation, s: str) -> None:
             p.typeValue = g("type")
             p.lowerValue = g("mult_l")
             p.upperValue = g("mult_u")
+            if g("has_mult") and not g("mult_u"):
+                p.upperValue = "*"
             defined_params.add(p)
 
         pindex = 0
