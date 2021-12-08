@@ -1,7 +1,7 @@
 from typing import Optional
 
-from gaphas.aspect.handlemove import ConnectionSinkType, HandleMove, ItemHandleMove
 from gaphas.guide import GuidedItemHandleMoveMixin
+from gaphas.handlemove import ConnectionSinkType, HandleMove, ItemHandleMove
 from gaphas.item import Line
 from gaphas.types import Pos
 

@@ -1,9 +1,9 @@
 """Test handle tool functionality."""
 
 import pytest
-from gaphas.aspect.connector import ConnectionSink
-from gaphas.aspect.connector import Connector as ConnectorAspect
-from gaphas.aspect.handlemove import HandleMove
+from gaphas.connector import ConnectionSink
+from gaphas.connector import Connector as ConnectorAspect
+from gaphas.handlemove import HandleMove
 from gi.repository import GLib, Gtk
 
 from gaphor import UML

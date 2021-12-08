@@ -1,8 +1,8 @@
 import logging
 
-from gaphas.aspect.connector import ConnectionSink
-from gaphas.aspect.connector import Connector as ConnectorAspect
-from gaphas.aspect.connector import ItemConnector, LineConnector
+from gaphas.connector import ConnectionSink
+from gaphas.connector import Connector as ConnectorAspect
+from gaphas.connector import ItemConnector, LineConnector
 
 from gaphor.core import transactional
 from gaphor.core.modeling.event import RevertibeEvent

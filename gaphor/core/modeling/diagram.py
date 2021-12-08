@@ -135,10 +135,10 @@ def qualifiedName(element: Element) -> list[str]:
 
 class StyledDiagram:
     def __init__(
-        self, diagram: Diagram, selection: gaphas.view.Selection | None = None
+        self, diagram: Diagram, selection: gaphas.selection.Selection | None = None
     ):
         self.diagram = diagram
-        self.selection = selection or gaphas.view.Selection()
+        self.selection = selection or gaphas.selection.Selection()
 
     def name(self) -> str:
         return "diagram"
@@ -169,7 +169,7 @@ class StyledItem:
     """
 
     def __init__(
-        self, item: Presentation, selection: gaphas.view.Selection | None = None
+        self, item: Presentation, selection: gaphas.selection.Selection | None = None
     ):
         assert item.diagram
         self.item = item
@@ -233,7 +233,7 @@ class Diagram(Element):
         self._connections = gaphas.connections.Connections()
         self._connections.add_handler(self._on_constraint_solved)
 
-        self._registered_views: set[gaphas.view.model.View] = set()
+        self._registered_views: set[gaphas.model.View] = set()
 
         self._watcher = self.watcher()
         self._watcher.watch("ownedPresentation", self._owned_presentation_changed)
@@ -408,10 +408,10 @@ class Diagram(Element):
         if dirty_items:
             self._update_views(dirty_items)
 
-    def register_view(self, view: gaphas.view.model.View[Presentation]) -> None:
+    def register_view(self, view: gaphas.model.View[Presentation]) -> None:
         self._registered_views.add(view)
 
-    def unregister_view(self, view: gaphas.view.model.View[Presentation]) -> None:
+    def unregister_view(self, view: gaphas.model.View[Presentation]) -> None:
         self._registered_views.discard(view)
 
 

@@ -2,8 +2,8 @@ import functools
 import itertools
 from typing import Type
 
-from gaphas.aspect.move import Move as MoveAspect
 from gaphas.guide import GuidedItemMove
+from gaphas.move import Move as MoveAspect
 from gaphas.tool.itemtool import item_at_point
 from gaphas.view import GtkView
 from gi.repository import Gtk

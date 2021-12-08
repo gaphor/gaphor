@@ -17,8 +17,8 @@ import pytest
 # Load gaphor.ui first, so GTK library versions are set corrently
 import gaphor.ui
 
-from gaphas.aspect.connector import ConnectionSink
-from gaphas.aspect.connector import Connector as ConnectorAspect
+from gaphas.connector import ConnectionSink
+from gaphas.connector import Connector as ConnectorAspect
 from gaphas.painter import BoundingBoxPainter
 from gaphas.view import GtkView
 

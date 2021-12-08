@@ -5,8 +5,8 @@ from dataclasses import replace
 from math import atan2
 
 import gaphas
-from gaphas.aspect.connector import ConnectionSink
-from gaphas.aspect.connector import Connector as ConnectorAspect
+from gaphas.connector import ConnectionSink
+from gaphas.connector import Connector as ConnectorAspect
 from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver.constraint import BaseConstraint

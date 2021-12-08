@@ -1,8 +1,9 @@
 import logging
 from typing import Callable, Optional, Type, TypeVar
 
-from gaphas.aspect import HandleMove, MoveType
 from gaphas.decorators import g_async
+from gaphas.handlemove import HandleMove
+from gaphas.move import MoveType
 from gaphas.view import GtkView
 from gi.repository import GLib, Gtk
 

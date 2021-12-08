@@ -1,8 +1,8 @@
 from io import StringIO
 
 import pytest
-from gaphas.aspect.connector import ConnectionSink
-from gaphas.aspect.connector import Connector as ConnectorAspect
+from gaphas.connector import ConnectionSink
+from gaphas.connector import Connector as ConnectorAspect
 from gi.repository import Gtk
 
 from gaphor.core import Transaction

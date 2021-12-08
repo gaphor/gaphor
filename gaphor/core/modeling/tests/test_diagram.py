@@ -30,7 +30,7 @@ def diagram(element_factory):
 def test_diagram_can_be_used_as_gtkview_model():
     diagram = Diagram("id", None)
 
-    assert isinstance(diagram, gaphas.view.model.Model)
+    assert isinstance(diagram, gaphas.model.Model)
 
 
 def test_canvas_is_saved():
