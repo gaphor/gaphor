@@ -1,5 +1,6 @@
 from gaphor import UML
 from gaphor.core import Transaction
+from gaphor.core.modeling import Diagram
 from gaphor.UML.classes import ClassItem
 
 
@@ -16,7 +17,7 @@ def test_undo_should_remove_shown_item_on_diagram(
     event_manager, element_factory, undo_manager
 ):
     with Transaction(event_manager):
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(Diagram)
 
     view = ViewMock(diagram)
 
@@ -32,7 +33,7 @@ def test_undo_should_remove_shown_item_on_diagram(
 
 def test_redo_should_show_item_on_diagram(event_manager, element_factory, undo_manager):
     with Transaction(event_manager):
-        diagram = element_factory.create(UML.Diagram)
+        diagram = element_factory.create(Diagram)
 
     view = ViewMock(diagram)
 

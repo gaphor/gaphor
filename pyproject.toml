@@ -160,6 +160,7 @@ type = "virtualenv"
 "help" = "gaphor.services.helpservice:HelpService"
 
 [tool.poetry.plugins."gaphor.modelinglanguages"]
+"Core" = "gaphor.core.modeling.modelinglanguage:CoreModelingLanguage"
 "UML" = "gaphor.UML.modelinglanguage:UMLModelingLanguage"
 "SysML" = "gaphor.SysML.modelinglanguage:SysMLModelingLanguage"
 "C4Model" = "gaphor.C4Model.modelinglanguage:C4ModelLanguage"

@@ -1,4 +1,5 @@
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.storage import storage
 from gaphor.UML.actions import ActionItem, FlowItem
 
@@ -22,7 +23,7 @@ class TestActionIssue:
 
         # Okay, so far the data model is saved correctly. Now, how do the
         # handles behave?
-        diagrams = ef.lselect(UML.Diagram)
+        diagrams = ef.lselect(Diagram)
         assert 1 == len(diagrams)
 
         diagram = diagrams[0]

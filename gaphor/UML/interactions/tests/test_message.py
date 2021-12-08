@@ -1,6 +1,7 @@
 """Test messages."""
 
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.grouping import Group
 from gaphor.UML.interactions.interaction import InteractionItem
 from gaphor.UML.interactions.message import MessageItem
@@ -11,7 +12,7 @@ def test_message_persistence(diagram, element_factory, saver, loader):
 
     data = saver()
     loader(data)
-    new_diagram = next(element_factory.select(UML.Diagram))
+    new_diagram = next(element_factory.select(Diagram))
     item = next(new_diagram.select(MessageItem))
 
     assert item

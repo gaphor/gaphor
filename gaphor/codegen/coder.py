@@ -29,6 +29,10 @@ from typing import Iterable
 from gaphor import UML
 from gaphor.codegen.override import Overrides
 from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling.modelinglanguage import (
+    CoreModelingLanguage,
+    MockModelingLanguage,
+)
 from gaphor.storage import storage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
@@ -399,7 +403,9 @@ def in_super_model(
 
 def load_model(modelfile: str) -> ElementFactory:
     element_factory = ElementFactory()
-    uml_modeling_language = UMLModelingLanguage()
+    uml_modeling_language = MockModelingLanguage(
+        CoreModelingLanguage(), UMLModelingLanguage()
+    )
     storage.load(
         modelfile,
         element_factory,

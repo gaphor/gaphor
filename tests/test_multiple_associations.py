@@ -19,6 +19,7 @@ import pytest
 from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML import diagramitems
 from gaphor.UML.modelfactory import set_navigability
@@ -49,7 +50,7 @@ def copy(session):
 @pytest.fixture
 def diagram(event_manager, element_factory):
     with Transaction(event_manager):
-        return element_factory.create(UML.Diagram)
+        return element_factory.create(Diagram)
 
 
 @pytest.fixture
@@ -66,7 +67,7 @@ def class_and_association_with_copy(diagram, event_manager, element_factory, cop
         set_navigability(a.subject, a.subject.memberEnd[0], True)
 
         copy.copy({a, c})
-        new_diagram = element_factory.create(UML.Diagram)
+        new_diagram = element_factory.create(Diagram)
         pasted_items = copy.paste(new_diagram)
 
     aa = pasted_items.pop()

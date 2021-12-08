@@ -1,4 +1,5 @@
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.storage.storage import load
 from gaphor.UML import diagramitems
 
@@ -8,7 +9,7 @@ def test_message_item_upgrade(element_factory, modeling_language, test_models):
 
     load(path, element_factory, modeling_language)
 
-    diagram = element_factory.lselect(UML.Diagram)[0]
+    diagram = element_factory.lselect(Diagram)[0]
     items = [e for e in diagram.get_all_items() if not e.parent]
     message_items = [i for i in items if isinstance(i, diagramitems.MessageItem)]
     subjects = [m.subject for m in message_items]

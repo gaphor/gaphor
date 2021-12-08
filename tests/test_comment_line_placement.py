@@ -13,7 +13,6 @@ from gaphor.diagram.tools.placement import (
 )
 from gaphor.ui.diagrampage import DiagramPage
 from gaphor.ui.filemanager import load_default_model
-from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture
@@ -36,16 +35,19 @@ def element_factory(session):
 
 
 @pytest.fixture
+def modeling_language(session):
+    return session.get_service("modeling_language")
+
+
+@pytest.fixture
 def diagram(element_factory, event_manager):
     with Transaction(event_manager):
         return element_factory.create(Diagram)
 
 
 @pytest.fixture
-def view(diagram, event_manager, element_factory):
-    page = DiagramPage(
-        diagram, event_manager, element_factory, {}, UMLModelingLanguage()
-    )
+def view(diagram, event_manager, element_factory, modeling_language):
+    page = DiagramPage(diagram, event_manager, element_factory, {}, modeling_language)
     page.construct()
     return page.view
 

@@ -11,6 +11,7 @@ import pytest
 from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML import diagramitems
 
@@ -35,7 +36,7 @@ def element_factory(session):
 @pytest.fixture
 def diagram(element_factory, event_manager):
     with Transaction(event_manager):
-        return element_factory.create(UML.Diagram)
+        return element_factory.create(Diagram)
 
 
 def test_unioncache_in_derived_union(diagram, event_manager, element_factory):

@@ -9,9 +9,8 @@ from typing import Callable, NamedTuple, Optional, Sequence, Tuple
 
 from gaphas.item import SE
 
-from gaphor import UML
 from gaphor.core import gettext
-from gaphor.core.modeling import Diagram, Presentation
+from gaphor.core.modeling import Comment, Diagram, Presentation
 from gaphor.diagram import general
 from gaphor.diagram.tools import new_item_factory
 from gaphor.UML.modelfactory import owner_package
@@ -91,7 +90,7 @@ general_tools = ToolSection(
             gettext("Comment"),
             "gaphor-comment-symbolic",
             "k",
-            new_item_factory(general.CommentItem, UML.Comment),
+            new_item_factory(general.CommentItem, Comment),
             handle_index=SE,
         ),
         ToolDef(

@@ -3,6 +3,7 @@ import pytest
 from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
+from gaphor.core.modeling import Diagram
 from gaphor.storage.storage import load
 
 
@@ -50,13 +51,13 @@ def test_package_removal(session, event_manager, element_factory):
     # Check if the link is really removed:
     assert not classes[0].appliedStereotype
     assert not element_factory.lselect(UML.InstanceSpecification)
-    assert len(element_factory.lselect(UML.Diagram)) == 3
+    assert len(element_factory.lselect(Diagram)) == 3
 
 
 def test_package_removal_by_removing_the_diagram(event_manager, element_factory):
 
     diagram = element_factory.lselect(
-        lambda e: e.isKindOf(UML.Diagram) and e.name == "Stereotypes diagram"
+        lambda e: e.isKindOf(Diagram) and e.name == "Stereotypes diagram"
     )[0]
 
     assert diagram
@@ -72,4 +73,4 @@ def test_package_removal_by_removing_the_diagram(event_manager, element_factory)
     # Check if the link is really removed:
     assert not classes[0].appliedStereotype
     assert not element_factory.lselect(UML.InstanceSpecification)
-    assert len(element_factory.lselect(UML.Diagram)) == 2
+    assert len(element_factory.lselect(Diagram)) == 2

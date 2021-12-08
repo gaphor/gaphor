@@ -6,7 +6,7 @@ from io import StringIO
 import pytest
 
 from gaphor import UML
-from gaphor.core.modeling import StyleSheet
+from gaphor.core.modeling import Comment, Diagram, StyleSheet
 from gaphor.diagram.general import CommentItem
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
@@ -44,8 +44,8 @@ class TestStorage:
     def test_save_uml(self, case):
         """Saving gaphor.UML model elements."""
         case.element_factory.create(UML.Package)
-        case.element_factory.create(UML.Diagram)
-        case.element_factory.create(UML.Comment)
+        case.element_factory.create(Diagram)
+        case.element_factory.create(Comment)
         case.element_factory.create(UML.Class)
 
         out = PseudoFile()
@@ -59,8 +59,8 @@ class TestStorage:
 
     def test_save_item(self, case):
         """Save a diagram item too."""
-        diagram = case.element_factory.create(UML.Diagram)
-        diagram.create(CommentItem, subject=case.element_factory.create(UML.Comment))
+        diagram = case.element_factory.create(Diagram)
+        diagram.create(CommentItem, subject=case.element_factory.create(Comment))
 
         out = PseudoFile()
         storage.save(XMLWriter(out), factory=case.element_factory)
@@ -75,7 +75,7 @@ class TestStorage:
         """Test loading of a freshly saved model."""
         case.element_factory.create(UML.Package)
         # diagram is created in case's init
-        case.element_factory.create(UML.Comment)
+        case.element_factory.create(Comment)
         case.element_factory.create(UML.Class)
 
         data = case.save()
@@ -84,15 +84,15 @@ class TestStorage:
         assert len(case.element_factory.lselect()) == 5
         assert len(case.element_factory.lselect(UML.Package)) == 1
         # diagram is created in case's init
-        assert len(case.element_factory.lselect(UML.Diagram)) == 1
-        assert len(case.element_factory.lselect(UML.Comment)) == 1
+        assert len(case.element_factory.lselect(Diagram)) == 1
+        assert len(case.element_factory.lselect(Comment)) == 1
         assert len(case.element_factory.lselect(UML.Class)) == 1
         assert len(case.element_factory.lselect(StyleSheet)) == 1
 
     def test_load_uml_2(self, case):
         """Test loading of a freshly saved model."""
         case.element_factory.create(UML.Package)
-        case.create(CommentItem, UML.Comment)
+        case.create(CommentItem, Comment)
         case.create(ClassItem, UML.Class)
         iface = case.create(InterfaceItem, UML.Interface)
         iface.subject.name = "Circus"
@@ -103,9 +103,9 @@ class TestStorage:
 
         assert len(case.element_factory.lselect()) == 9
         assert len(case.element_factory.lselect(UML.Package)) == 1
-        assert len(case.element_factory.lselect(UML.Diagram)) == 1
-        d = case.element_factory.lselect(UML.Diagram)[0]
-        assert len(case.element_factory.lselect(UML.Comment)) == 1
+        assert len(case.element_factory.lselect(Diagram)) == 1
+        d = case.element_factory.lselect(Diagram)[0]
+        assert len(case.element_factory.lselect(Comment)) == 1
         assert len(case.element_factory.lselect(UML.Class)) == 1
         assert len(case.element_factory.lselect(UML.Interface)) == 1
 
@@ -139,7 +139,7 @@ class TestStorage:
 
     def test_save_and_load_model_with_relationships(self, case):
         case.element_factory.create(UML.Package)
-        case.create(CommentItem, UML.Comment)
+        case.create(CommentItem, Comment)
         case.create(ClassItem, UML.Class)
 
         a = case.diagram.create(AssociationItem)
@@ -154,9 +154,9 @@ class TestStorage:
 
         assert len(case.element_factory.lselect()) == 8
         assert len(case.element_factory.lselect(UML.Package)) == 1
-        assert len(case.element_factory.lselect(UML.Diagram)) == 1
-        d = case.element_factory.lselect(UML.Diagram)[0]
-        assert len(case.element_factory.lselect(UML.Comment)) == 1
+        assert len(case.element_factory.lselect(Diagram)) == 1
+        d = case.element_factory.lselect(Diagram)[0]
+        assert len(case.element_factory.lselect(Comment)) == 1
         assert len(case.element_factory.lselect(UML.Class)) == 1
         assert len(case.element_factory.lselect(UML.Association)) == 0
 
@@ -206,7 +206,7 @@ class TestStorage:
         )
         fd.close()
 
-        diagrams = list(case.kindof(UML.Diagram))
+        diagrams = list(case.kindof(Diagram))
         assert len(diagrams) == 1
         d = diagrams[0]
         a = next(d.select(lambda e: isinstance(e, AssociationItem)))

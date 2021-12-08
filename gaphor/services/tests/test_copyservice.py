@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor import UML
+from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general import CommentItem
 from gaphor.services.copyservice import CopyService
 
@@ -21,8 +21,8 @@ def copy_service(event_manager, element_factory, diagrams):
 
 
 def test_copy(copy_service, element_factory):
-    diagram = element_factory.create(UML.Diagram)
-    ci = diagram.create(CommentItem, subject=element_factory.create(UML.Comment))
+    diagram = element_factory.create(Diagram)
+    ci = diagram.create(CommentItem, subject=element_factory.create(Comment))
 
     copy_service.copy({ci})
     assert list(diagram.get_all_items()) == [ci]

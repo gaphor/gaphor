@@ -9,6 +9,10 @@ from gaphor.core import Transaction
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher
+from gaphor.core.modeling.modelinglanguage import (
+    CoreModelingLanguage,
+    MockModelingLanguage,
+)
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.copypaste import copy, paste
 from gaphor.storage import storage
@@ -30,9 +34,9 @@ def element_factory(event_manager, modeling_language):
     element_factory.shutdown()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def modeling_language():
-    return UMLModelingLanguage()
+    return MockModelingLanguage(CoreModelingLanguage(), UMLModelingLanguage())
 
 
 @pytest.fixture
