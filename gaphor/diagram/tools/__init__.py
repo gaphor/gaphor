@@ -1,5 +1,4 @@
 """Tools for handling items on a diagram."""
-from gaphas.segment import segment_tool
 from gaphas.tool import (
     hover_tool,
     item_tool,
@@ -24,9 +23,7 @@ def apply_default_tool_set(view, modeling_language, event_manager, rubberband_st
     view.remove_all_controllers()
     view.add_controller(hover_tool(view))
     view.add_controller(
-        *transactional_tool(
-            segment_tool(view), item_tool(view), event_manager=event_manager
-        )
+        *transactional_tool(item_tool(view), event_manager=event_manager)
     )
     view.add_controller(*text_edit_tools(view, event_manager))
     view.add_controller(rubberband_tool(view, rubberband_state))
