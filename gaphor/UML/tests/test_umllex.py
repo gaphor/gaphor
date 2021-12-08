@@ -90,6 +90,15 @@ def test_parse_property_with_default_value_and_note(factory):
     assert "note" == a.note
 
 
+def test_parse_property_with_square_brackets(factory):
+    a = factory.create(UML.Property)
+    parse(a, "attr[]")
+
+    assert "attr" == a.name
+    assert "*" == a.upperValue
+    assert None is a.lowerValue
+
+
 def test_parse_property_invalid(factory):
     """Test parsing property with invalid syntax."""
     a = factory.create(UML.Property)
@@ -182,6 +191,17 @@ def test_parse_association_end_with_note(factory):
     assert "some note" == p.note
 
 
+def test_parse_association_end_with_square_brackets(factory):
+    a = factory.create(UML.Association)
+    p = factory.create(UML.Property)
+    p.association = a
+
+    parse(p, "end[]")
+    assert "end" == p.name
+    assert "*" == p.upperValue
+    assert None is p.lowerValue
+
+
 def test_parse_operation(factory):
     """Test parsing simple operation."""
     o = factory.create(UML.Operation)
@@ -250,3 +270,23 @@ def test_parse_operation_with_note(factory):
     parse(o, "myfunc() # and a note")
     assert "myfunc" == o.name
     assert "and a note" == o.note
+
+
+def test_parse_operation_with_square_brackets(factory):
+    o: UML.Operation = factory.create(UML.Operation)
+    parse(o, "myfunc(args: string[])")
+    p = o.ownedParameter[0]
+    assert "args" == p.name
+    assert "string" == p.typeValue
+    assert "*" == p.upperValue
+    assert None is p.lowerValue
+
+
+def test_parse_operation_return_with_square_brackets(factory):
+    o: UML.Operation = factory.create(UML.Operation)
+    parse(o, "myfunc(): string[]")
+    p = o.ownedParameter[0]
+    assert "return" == p.direction
+    assert "string" == p.typeValue
+    assert "*" == p.upperValue
+    assert None is p.lowerValue
