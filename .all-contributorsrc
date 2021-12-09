@@ -622,6 +622,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "yonkeltron",
+      "name": "Jonathan E. Magen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/59451?v=4",
+      "profile": "https://twitter.com/yonkeltron",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
