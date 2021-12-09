@@ -1,3 +1,4 @@
+from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
@@ -144,3 +145,72 @@ class PropertyPropertyPage(PropertyPageBase):
     @transactional
     def _on_aggregation_change(self, combo):
         self.subject.aggregation = self.AGGREGATION[combo.get_active()]
+
+
+@PropertyPages.register(sysml.Connector)
+class ItemFlowPropertyPage(PropertyPageBase):
+    """Information Flow on Connectors."""
+
+    order = 35
+
+    def __init__(self, subject: sysml.Connector):
+        super().__init__()
+        self.subject = subject
+
+    def construct(self):
+        if not self.subject:
+            return
+
+        builder = new_builder(
+            "item-flow-editor",
+            signals={
+                "item-flow-active": (self._on_item_flow_active,),
+                "item-flow-changed": (self._on_item_flow_name_changed,),
+                "invert-direction-changed": (self._invert_direction_changed,),
+            },
+        )
+
+        use_flow = builder.get_object("use-item-flow")
+        self.entry = builder.get_object("item-flow-entry")
+
+        use_flow.set_active(self.subject.informationFlow)
+        self.entry.set_sensitive(use_flow.get_active())
+        if self.subject.informationFlow and any(
+            self.subject.informationFlow[:].itemProperty
+        ):
+            iflow = self.subject.informationFlow[0]
+            assert isinstance(iflow, sysml.ItemFlow)
+            self.entry.set_text(UML.format(iflow.itemProperty))
+
+        return builder.get_object("item-flow-editor")
+
+    @transactional
+    def _on_item_flow_active(self, switch, gparam):
+        active = switch.get_active()
+        subject = self.subject
+        if active and not subject.informationFlow:
+            iflow = subject.model.create(sysml.ItemFlow)
+            subject.informationFlow = iflow
+            iflow.informationSource = subject.end[0].role
+            iflow.informationTarget = subject.end[1].role
+            iflow.itemProperty = subject.model.create(sysml.Property)
+        elif not active and self.subject.informationFlow:
+            self.subject.informationFlow[0].unlink()
+        self.entry.set_sensitive(switch.get_active())
+        self.entry.set_text("")
+
+    @transactional
+    def _on_item_flow_name_changed(self, entry):
+        if self.subject.informationFlow:
+            iflow = self.subject.informationFlow[0]
+            assert isinstance(iflow, sysml.ItemFlow)
+            UML.parse(iflow.itemProperty, entry.get_text())
+
+    @transactional
+    def _invert_direction_changed(self, button):
+        if self.subject.informationFlow:
+            iflow = self.subject.informationFlow[0]
+            iflow.informationSource, iflow.informationTarget = (
+                iflow.informationTarget,
+                iflow.informationSource,
+            )
