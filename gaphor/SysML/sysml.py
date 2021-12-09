@@ -281,6 +281,11 @@ class ClassifierBehaviorProperty(Property):
     pass
 
 
+from gaphor.UML.uml import InformationFlow
+class ItemFlow(InformationFlow):
+    itemProperty: relation_one[Property]
+
+
 
 AbstractRequirement.derived = derivedunion("derived", AbstractRequirement)
 AbstractRequirement.derivedFrom = derivedunion("derivedFrom", AbstractRequirement)
@@ -313,3 +318,4 @@ Stakeholder.concernList = association("concernList", Comment)
 ElementGroup.member = derivedunion("member", Element)
 ElementGroup.orderedMember = association("orderedMember", Element)
 Rate.rate = association("rate", InstanceSpecification)
+ItemFlow.itemProperty = association("itemProperty", Property, upper=1)
