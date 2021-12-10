@@ -125,7 +125,6 @@ class InformationFlowPropertyPage(PropertyPageBase):
     @transactional
     def _invert_direction_changed(self, button):
         if self.subject.informationFlow:
-            print("invert")
             iflow = self.subject.informationFlow[0]
             iflow.informationSource, iflow.informationTarget = (
                 iflow.informationTarget,
