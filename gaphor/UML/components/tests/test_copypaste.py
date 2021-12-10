@@ -1,7 +1,22 @@
+import pytest
+
 from gaphor import UML
+from gaphor.core.modeling.modelinglanguage import (
+    CoreModelingLanguage,
+    MockModelingLanguage,
+)
 from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste
+from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.classes import InterfaceItem
 from gaphor.UML.components import ComponentItem, ConnectorItem
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
+
+
+@pytest.fixture
+def modeling_language():
+    return MockModelingLanguage(
+        CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()
+    )
 
 
 def test_connector(diagram, element_factory):

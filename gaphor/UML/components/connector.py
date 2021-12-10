@@ -133,12 +133,24 @@ class ConnectorItem(LinePresentation[UML.Connector], Named):
             Text(
                 text=lambda: ", ".join(self.subject.informationFlow[:].conveyed[:].name)
             ),
+            # Also support SysML ItemFlow:
+            Text(
+                text=lambda: UML.format(
+                    self.subject.informationFlow[0].itemProperty, type=True  # type: ignore[attr-defined]
+                )
+                if self.subject.informationFlow
+                else ""
+            ),
         )
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[Connector].informationFlow.informationSource")
         self.watch("subject[Connector].informationFlow.conveyed.name")
+        self.watch("subject[Connector].informationFlow[ItemFlow].itemProperty.name")
+        self.watch(
+            "subject[Connector].informationFlow[ItemFlow].itemProperty.typeValue"
+        )
 
     def draw(self, context):
         super().draw(context)
