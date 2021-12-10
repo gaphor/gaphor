@@ -440,6 +440,7 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             if c:
                 prop.type = c
                 del prop.typeValue
+                prop.aggregation = "composite"
 
         if prop.type and is_simple_type(prop.type):  # type: ignore[arg-type]
             prop.typeValue = "str"
