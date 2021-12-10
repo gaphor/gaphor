@@ -173,7 +173,16 @@ class ItemFlowPropertyPage(PropertyPageBase):
         use_flow = builder.get_object("use-item-flow")
         self.entry = builder.get_object("item-flow-entry")
 
-        use_flow.set_active(self.subject.informationFlow)
+        use_flow.set_active(
+            self.subject.informationFlow
+            and type(self.subject.informationFlow[0]) is sysml.ItemFlow
+        )
+        use_flow.set_sensitive(
+            not (
+                self.subject.informationFlow
+                and type(self.subject.informationFlow[0]) is UML.InformationFlow
+            )
+        )
         self.entry.set_sensitive(use_flow.get_active())
         if self.subject.informationFlow and any(
             self.subject.informationFlow[:].itemProperty

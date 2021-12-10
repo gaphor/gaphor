@@ -1,6 +1,7 @@
 import pytest
 
 from gaphor import UML, SysML
+from gaphor.diagram.propertypages import PropertyPages
 from gaphor.diagram.tests.fixtures import find
 from gaphor.SysML.propertypages import (
     ItemFlowPropertyPage,
@@ -115,6 +116,13 @@ def test_item_flow_name(connector):
     assert entry.get_text() == "foo:Bar"
     assert connector.informationFlow[0].itemProperty.name == "foo"
     assert connector.informationFlow[0].itemProperty.typeValue == "Bar"
+
+
+def test_item_flow_is_loaded(element_factory):
+    subject = element_factory.create(UML.Connector)
+    property_pages = PropertyPages(subject)
+
+    assert any(isinstance(page, ItemFlowPropertyPage) for page in property_pages)
 
 
 def test_item_flow_source_and_target(element_factory):
