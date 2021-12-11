@@ -50,7 +50,7 @@ def save_generator(writer, factory):
         clazz = e.__class__.__name__
         assert e.id
         writer.startElement(clazz, {"id": str(e.id)})
-        e.save(partial(save_element, writer=writer))
+        e.save(partial(save_element, factory=factory, writer=writer))
         writer.endElement(clazz)
 
         if n % 25 == 0:
@@ -61,7 +61,7 @@ def save_generator(writer, factory):
     writer.endDocument()
 
 
-def save_element(name, value, writer):
+def save_element(name, value, factory, writer):
     """Save attributes and references from items in the gaphor.UML module.
 
     A value may be a primitive (string, int), a
@@ -69,12 +69,21 @@ def save_element(name, value, writer):
     to other UML elements) or a Diagram (which contains diagram items).
     """
 
+    def resolvable(value):
+        if value.id and value in factory:
+            return True
+        else:
+            log.warning(
+                f"Model has unknown reference {value.id}. Reference will be skipped."
+            )
+            return False
+
     def save_reference(name, value):
         """Save a value as a reference to another element in the model.
 
         This applies to both UML as well as canvas items.
         """
-        if value.id:
+        if resolvable(value):
             writer.startElement(name, {})
             writer.startElement("ref", {"refid": value.id})
             writer.endElement("ref")
@@ -86,7 +95,7 @@ def save_element(name, value, writer):
             writer.startElement(name, {})
             writer.startElement("reflist", {})
             for v in value:
-                if v.id:
+                if resolvable(v):
                     writer.startElement("ref", {"refid": v.id})
                     writer.endElement("ref")
             writer.endElement("reflist")
