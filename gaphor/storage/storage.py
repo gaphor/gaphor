@@ -105,32 +105,6 @@ def save_element(name, value, writer):
             writer.endElement("val")
             writer.endElement(name)
 
-    def save_diagram(value):
-        """Save attributes and references in a gaphor.diagram.* object.
-
-        The extra attribute reference can be used to force UML
-        """
-        assert isinstance(value, Presentation)
-        writer.startElement("item", {"id": value.id, "type": value.__class__.__name__})
-        value.save(save_diagram_item)
-
-        for child in value.children:
-            save_diagram(child)
-
-        writer.endElement("item")
-
-    def save_diagram_item(name, value):
-        """Save attributes and references in a gaphor.diagram.* object.
-
-        The extra attribute reference can be used to force UML
-        """
-        if isinstance(value, collection):
-            save_collection(name, value)
-        elif isinstance(value, Element):
-            save_reference(name, value)
-        else:
-            save_value(name, value)
-
     if isinstance(value, Element):
         save_reference(name, value)
     elif isinstance(value, collection):
