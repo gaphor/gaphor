@@ -149,7 +149,7 @@ class PropertyPropertyPage(PropertyPageBase):
 
 @PropertyPages.register(sysml.Connector)
 class ItemFlowPropertyPage(PropertyPageBase):
-    """Information Flow on Connectors."""
+    """Item Flow on Connectors."""
 
     order = 35
 
