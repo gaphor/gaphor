@@ -281,6 +281,11 @@ class ClassifierBehaviorProperty(Property):
     pass
 
 
+from gaphor.UML.uml import InformationFlow
+class ItemFlow(InformationFlow):
+    itemProperty: relation_one[Property]
+
+
 
 AbstractRequirement.derived = derivedunion("derived", AbstractRequirement)
 AbstractRequirement.derivedFrom = derivedunion("derivedFrom", AbstractRequirement)
@@ -293,12 +298,12 @@ DirectedRelationshipPropertyPath.targetContext = association("targetContext", Cl
 DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", Classifier, upper=1)
 DirectedRelationshipPropertyPath.sourcePropertyPath = association("sourcePropertyPath", Property)
 DirectedRelationshipPropertyPath.targetPropertyPath = association("targetPropertyPath", Property)
-ConnectorProperty.connector = association("connector", Connector, upper=1)
-ParticipantProperty.end_ = association("end_", Property, upper=1)
+ConnectorProperty.connector = association("connector", Connector, upper=1, composite=True)
+ParticipantProperty.end_ = association("end_", Property, upper=1, composite=True)
 ValueType.unit = association("unit", InstanceSpecification, upper=1)
 ValueType.quantityKind = association("quantityKind", InstanceSpecification, upper=1)
 ElementPropertyPath.propertyPath = association("propertyPath", Property, lower=1)
-BoundReference.boundend = association("boundend", ConnectorEnd)
+BoundReference.boundend = association("boundend", ConnectorEnd, composite=True)
 BoundReference.bindingPath = derivedunion("bindingPath", Property, lower=1)
 AdjuntProperty.principal = association("principal", Element, upper=1)
 InvocationOnNestedPortAction.onNestedPort = association("onNestedPort", Port, lower=1)
@@ -306,10 +311,11 @@ TriggerOnNestedPort.onNestedPort = association("onNestedPort", Port, lower=1)
 ChangeSructuralFeatureEvent.structuralFeature = association("structuralFeature", StructuralFeature, upper=1)
 View.stakeholder = derivedunion("stakeholder", Stakeholder)
 View.viewpoint = derivedunion("viewpoint", Viewpoint, upper=1)
-Viewpoint.concernList = association("concernList", Comment)
+Viewpoint.concernList = association("concernList", Comment, composite=True)
 Viewpoint.method = derivedunion("method", Behavior)
-Viewpoint.stakeholder = association("stakeholder", Stakeholder)
-Stakeholder.concernList = association("concernList", Comment)
+Viewpoint.stakeholder = association("stakeholder", Stakeholder, composite=True)
+Stakeholder.concernList = association("concernList", Comment, composite=True)
 ElementGroup.member = derivedunion("member", Element)
-ElementGroup.orderedMember = association("orderedMember", Element)
-Rate.rate = association("rate", InstanceSpecification)
+ElementGroup.orderedMember = association("orderedMember", Element, composite=True)
+Rate.rate = association("rate", InstanceSpecification, composite=True)
+ItemFlow.itemProperty = association("itemProperty", Property, upper=1, composite=True)

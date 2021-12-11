@@ -395,7 +395,7 @@ class Threat(Factor):
 
 
 
-ControllingMeasure.affects = association("affects", Property)
+ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
 AnySituation.from_ = association("from_", AnySituation, opposite="to")
 AbstractCause.error = association("error", DysfunctionalEvent, opposite="fault")

@@ -58,7 +58,11 @@ class InformationFlowPropertyPage(PropertyPageBase):
         self.subject = subject
 
     def construct(self):
-        if not self.subject:
+        if not (
+            self.subject
+            and self.subject.informationFlow
+            and type(self.subject.informationFlow[0]) is UML.InformationFlow
+        ):
             return
 
         model = self.subject.model
@@ -88,7 +92,10 @@ class InformationFlowPropertyPage(PropertyPageBase):
         entry = combo.get_child()
         entry.set_completion(completion)
 
-        use_flow.set_active(self.subject.informationFlow)
+        use_flow.set_active(
+            self.subject.informationFlow
+            and type(self.subject.informationFlow[0]) is UML.InformationFlow
+        )
         self.combo.set_sensitive(use_flow.get_active())
         if self.subject.informationFlow and any(
             self.subject.informationFlow[:].conveyed
@@ -125,7 +132,6 @@ class InformationFlowPropertyPage(PropertyPageBase):
     @transactional
     def _invert_direction_changed(self, button):
         if self.subject.informationFlow:
-            print("invert")
             iflow = self.subject.informationFlow[0]
             iflow.informationSource, iflow.informationTarget = (
                 iflow.informationTarget,

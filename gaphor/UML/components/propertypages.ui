@@ -56,7 +56,7 @@ renderers and such.</property>
     <child>
       <object class="GtkLabel">
         <property name="xalign">0</property>
-        <property name="label" translatable="yes">Information Item (Class):</property>
+        <property name="label" translatable="yes">Information Item (Class)</property>
       </object>
     </child>
     <child>
