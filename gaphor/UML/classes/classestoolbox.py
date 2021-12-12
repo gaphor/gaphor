@@ -19,6 +19,7 @@ class AssociationType(Enum):
 def create_association(
     assoc_item: diagramitems.AssociationItem, association_type: AssociationType
 ) -> None:
+    namespace_config(assoc_item)
     assoc = assoc_item.subject
     assoc.memberEnd.append(assoc_item.model.create(UML.Property))
     assoc.memberEnd.append(assoc_item.model.create(UML.Property))
