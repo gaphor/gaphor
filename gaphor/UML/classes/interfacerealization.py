@@ -28,15 +28,11 @@ class InterfaceRealizationItem(LinePresentation, Named):
     @property
     def on_folded_interface(self):
         connection = self._connections.get_connection(self.head)
-        return (
-            (
+        return "true" if (
                 connection
                 and isinstance(connection.port, InterfacePort)
                 and connection.connected.folded != Folded.NONE
-            )
-            and "true"
-            or "false"
-        )
+            ) else "false"
 
     def draw_head(self, context):
         cr = context.cairo
