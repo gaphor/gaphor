@@ -165,7 +165,6 @@ def test_message_is_owned_by_interaction_item_connecting_to_one_end(
 
     assert msg.subject is not None
     assert msg.subject.interaction is interaction.subject
-    assert msg.parent is interaction
 
 
 def test_disconnection(diagram):

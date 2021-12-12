@@ -68,6 +68,7 @@ def owner_for_message(line, lifeline):
     if line.subject.interaction:
         return
     elif isinstance(maybe_interaction, InteractionItem):
+        line.parent = maybe_interaction
         Group(maybe_interaction, line).group()
     elif lifeline.subject and lifeline.subject.interaction:
         line.subject.interaction = lifeline.subject.interaction
