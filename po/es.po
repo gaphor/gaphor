@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-12-05 19:28+0100\n"
-"PO-Revision-Date: 2021-11-28 23:52+0000\n"
+"PO-Revision-Date: 2021-12-12 09:26+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:54
@@ -518,15 +519,15 @@ msgstr "Aceptar evento"
 
 #: gaphor/UML/actions/activitynodes.py:190
 msgid "merge/decision"
-msgstr ""
+msgstr "fusión/decisión"
 
 #: gaphor/UML/actions/activitynodes.py:192
 msgid "merge"
-msgstr ""
+msgstr "fusión"
 
 #: gaphor/UML/actions/activitynodes.py:194
 msgid "decision"
-msgstr ""
+msgstr "decisión"
 
 #: gaphor/UML/actions/objectnode.py:14
 #: gaphor/UML/actions/propertypages.glade:214
@@ -570,9 +571,8 @@ msgstr "Swimlane nuevo"
 
 #: gaphor/UML/actions/propertypages.glade:32
 #: gaphor/UML/actions/propertypages.ui:23
-#, fuzzy
 msgid "Show type"
-msgstr "Mostrar estereotipos"
+msgstr "Mostrar tipo"
 
 #: gaphor/UML/actions/propertypages.glade:75
 #: gaphor/UML/actions/propertypages.ui:42
@@ -1009,7 +1009,7 @@ msgstr "Mensaje"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:94
 msgid "Reflexive message"
-msgstr ""
+msgstr "Mensaje reflexivo"
 
 #: gaphor/UML/interactions/propertypages.glade:28
 #: gaphor/UML/interactions/propertypages.ui:21
@@ -1190,11 +1190,11 @@ msgstr "Nota o comentario"
 
 #: gaphor/extensions/sphinx.py:65
 msgid "No model file configured for model '{model_name}'."
-msgstr ""
+msgstr "No hay archivo de modelo configurado para el modelo '{model_name}'."
 
 #: gaphor/extensions/sphinx.py:94
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
-msgstr ""
+msgstr "No hay diagrama '{name}' en el modelo '{model_name}' ({model_file})."
 
 #: gaphor/plugins/console/console.py:23
 msgid ""
@@ -1634,7 +1634,7 @@ msgstr "Crear nuevo diagrama"
 
 #: gaphor/ui/mainwindow.glade:207
 msgid "Open Application Menu"
-msgstr "Abrir menú de la aplicación"
+msgstr "Abrir Menu"
 
 #: gaphor/ui/mainwindow.py:49
 msgid "Save As..."
@@ -1817,4 +1817,3 @@ msgstr "No hay modelos abiertos recientemente"
 
 #~ msgid "Decision node"
 #~ msgstr "Nodo de decisión/fusión"
-
