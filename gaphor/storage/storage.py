@@ -72,11 +72,10 @@ def save_element(name, value, factory, writer):
     def resolvable(value):
         if value.id and value in factory:
             return True
-        else:
-            log.warning(
-                f"Model has unknown reference {value.id}. Reference will be skipped."
-            )
-            return False
+        log.warning(
+            f"Model has unknown reference {value.id}. Reference will be skipped."
+        )
+        return False
 
     def save_reference(name, value):
         """Save a value as a reference to another element in the model.
