@@ -100,6 +100,21 @@ renderers and such.</property>
             </child>
           </object>
         </child>
+        <child>
+          <object class="GtkBox">
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Show Values</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="show-values">
+                <property name="halign">center</property>
+                <signal name="notify::active" handler="show-values-changed" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
     </child>
     <child type="label">

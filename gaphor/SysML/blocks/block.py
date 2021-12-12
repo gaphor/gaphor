@@ -16,7 +16,7 @@ from gaphor.diagram.shapes import (
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
-from gaphor.SysML.sysml import Block
+from gaphor.SysML.sysml import Block, ValueType
 from gaphor.UML.classes.klass import (
     attribute_watches,
     stereotype_compartments,
@@ -38,6 +38,8 @@ class BlockItem(ElementPresentation[Block], Classified):
         self.watch("show_stereotypes", self.update_shapes).watch(
             "show_parts", self.update_shapes
         ).watch("show_references", self.update_shapes).watch(
+            "show_values", self.update_shapes
+        ).watch(
             "subject[NamedElement].name"
         ).watch(
             "subject[NamedElement].namespace.name"
@@ -54,6 +56,8 @@ class BlockItem(ElementPresentation[Block], Classified):
     show_parts: attribute[int] = attribute("show_parts", int, default=False)
 
     show_references: attribute[int] = attribute("show_references", int, default=False)
+
+    show_values: attribute[int] = attribute("show_values", int, default=False)
 
     def additional_stereotypes(self):
         if isinstance(self.subject, raaml.Situation):
@@ -95,7 +99,7 @@ class BlockItem(ElementPresentation[Block], Classified):
                 and [
                     self.block_compartment(
                         gettext("parts"),
-                        lambda a: a.aggregation == "composite",
+                        lambda a: not a.association and a.aggregation == "composite",
                     )
                 ]
                 or []
@@ -106,7 +110,19 @@ class BlockItem(ElementPresentation[Block], Classified):
                 and [
                     self.block_compartment(
                         gettext("references"),
-                        lambda a: a.aggregation != "composite",
+                        lambda a: not a.association and a.aggregation != "composite",
+                    )
+                ]
+                or []
+            ),
+            *(
+                self.show_values
+                and self.subject
+                and [
+                    self.block_compartment(
+                        gettext("values"),
+                        lambda a: isinstance(a.type, ValueType)
+                        and a.aggregation == "composite",
                     )
                 ]
                 or []

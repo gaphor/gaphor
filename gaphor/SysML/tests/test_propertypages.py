@@ -71,6 +71,19 @@ def test_compartment_property_page_show_references(diagram, element_factory):
     assert item.show_references
 
 
+def test_compartment_property_page_show_values(diagram, element_factory):
+    item = diagram.create(
+        SysML.blocks.BlockItem, subject=element_factory.create(SysML.sysml.Block)
+    )
+    property_page = CompartmentPage(item)
+
+    widget = property_page.construct()
+    show_references = find(widget, "show-values")
+    show_references.set_active(True)
+
+    assert item.show_values
+
+
 def test_property_property_page(element_factory):
     subject = element_factory.create(SysML.sysml.Property)
     property_page = PropertyPropertyPage(subject)
