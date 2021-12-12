@@ -13,6 +13,7 @@ from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.inlineeditors import InlineEditor
 from gaphor.diagram.presentation import ElementPresentation, Presentation
+from gaphor.diagram.tools.dropzone import grow_parent
 
 log = logging.getLogger(__name__)
 
@@ -71,9 +72,19 @@ def create_item(view, factory, x, y):
     item = factory(view.model, parent)
     x, y = view.get_matrix_v2i(item).transform_point(x, y)
     item.matrix.translate(x, y)
+    view.model.update_now({item})
+    maybe_group(parent, item)
     selection.unselect_all()
     view.selection.focused_item = item
     return item
+
+
+def maybe_group(parent, item):
+    adapter = Group(parent, item)
+    if parent and adapter.can_contain():
+        grow_parent(parent, item)
+        item.parent = parent
+        adapter.group()
 
 
 def connect_opposite_handle(view, new_item, x, y, handle_index):
@@ -128,11 +139,6 @@ def new_item_factory(
             subject = None
 
         item = diagram.create(item_class, subject=subject)
-
-        adapter = Group(parent, item)
-        if parent and adapter.can_contain():
-            item.parent = parent
-            adapter.group()
 
         if config_func:
             config_func(item)
