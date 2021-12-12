@@ -139,9 +139,7 @@ def message_messageKind(self) -> str:
     """MessageKind."""
     kind = "unknown"
     if self.sendEvent:
-        kind = "lost"
-        if self.receiveEvent:
-            kind = "complete"
+        kind = "complete" if self.receiveEvent else "lost"
     elif self.receiveEvent:
         kind = "found"
     return kind
