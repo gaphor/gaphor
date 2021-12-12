@@ -1,5 +1,6 @@
 from gaphor import UML
 from gaphor.core import transactional
+from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -189,7 +190,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
         ):
             iflow = self.subject.informationFlow[0]
             assert isinstance(iflow, sysml.ItemFlow)
-            self.entry.set_text(UML.format(iflow.itemProperty))
+            self.entry.set_text(format(iflow.itemProperty))
 
         return builder.get_object("item-flow-editor")
 
@@ -213,7 +214,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
         if self.subject.informationFlow:
             iflow = self.subject.informationFlow[0]
             assert isinstance(iflow, sysml.ItemFlow)
-            UML.parse(iflow.itemProperty, entry.get_text())
+            parse(iflow.itemProperty, entry.get_text())
 
     @transactional
     def _invert_direction_changed(self, button):
