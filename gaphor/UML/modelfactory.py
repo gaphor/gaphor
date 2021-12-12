@@ -17,6 +17,7 @@ from gaphor.UML.uml import (
     ConnectableElement,
     Connector,
     ConnectorEnd,
+    DataType,
     Dependency,
     Element,
     Extension,
@@ -311,7 +312,7 @@ def set_navigability(assoc, end, nav):
     When an end is non-navigable, then it is just member of an association.
     """
     # remove "navigable" and "unspecified" navigation indicators first
-    if isinstance(end.type, (Class, Interface)):
+    if isinstance(end.type, (Class, DataType, Interface)):
         owner = end.opposite.type
         if owner and end in owner.ownedAttribute:
             owner.ownedAttribute.remove(end)
@@ -324,7 +325,7 @@ def set_navigability(assoc, end, nav):
     assert end not in assoc.navigableOwnedEnd
 
     if nav is True:
-        if isinstance(end.type, (Class, Interface)):
+        if isinstance(end.type, (Class, DataType, Interface)):
             owner = end.opposite.type
             owner.ownedAttribute = end
         else:
