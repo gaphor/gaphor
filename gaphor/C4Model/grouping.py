@@ -1,6 +1,6 @@
 from gaphor.C4Model.diagramitems import C4ContainerItem, C4DatabaseItem
 from gaphor.diagram.grouping import AbstractGroup, Group
-from gaphor.UML.modelfactory import owner_package
+from gaphor.UML.recipes import owner_package
 
 
 @Group.register(C4ContainerItem, C4ContainerItem)

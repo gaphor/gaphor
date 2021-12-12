@@ -32,7 +32,7 @@ from gaphor.diagram.shapes import (
 )
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout, middle_segment
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_association_end
 
 

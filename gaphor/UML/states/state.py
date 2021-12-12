@@ -6,7 +6,7 @@ from gaphor.core.styling import TextAlign, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 
 class VertexItem(Named):

@@ -22,7 +22,7 @@ from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.interface import Folded, InterfacePort
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Dependency)

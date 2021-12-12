@@ -13,7 +13,7 @@ from gaphor.core import gettext
 from gaphor.core.modeling import Comment, Diagram, Presentation
 from gaphor.diagram import general
 from gaphor.diagram.tools import new_item_factory
-from gaphor.UML.modelfactory import owner_package
+from gaphor.UML.recipes import owner_package
 
 ItemFactory = Callable[[Diagram, Optional[Presentation]], Presentation]
 
