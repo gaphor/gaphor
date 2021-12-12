@@ -48,10 +48,10 @@ def on_motion(controller, x, y, item_class: Type[Presentation]):
 
     if parent:
         parent_type = type(parent)
-        dropzone = has_registration(Group, parent_type, item_class) or has_registration(  # type: ignore[arg-type]
-            Connector, parent_type, item_class  # type: ignore[arg-type]
-        )
-        view.selection.dropzone_item = parent if dropzone else None
+        can_group = has_registration(Group, parent_type, item_class)  # type: ignore[arg-type]
+        can_connect = has_registration(Connector, parent_type, item_class)  # type: ignore[arg-type]
+
+        view.selection.dropzone_item = parent if can_group or can_connect else None
         model.request_update(parent)
     else:
         if view.selection.dropzone_item:
