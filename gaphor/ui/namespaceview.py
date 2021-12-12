@@ -37,6 +37,7 @@ def namespace_view(model: Gtk.TreeModel):
     selection = view.get_selection()
     selection.set_mode(Gtk.SelectionMode.BROWSE)
     column = Gtk.TreeViewColumn.new()
+    column.set_spacing(2)
     # First cell in the column is for an image...
     cell = Gtk.CellRendererPixbuf()
     column.pack_start(cell, 0)
