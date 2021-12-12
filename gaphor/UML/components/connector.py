@@ -100,6 +100,7 @@ interfaces are connectable elements.
 """
 
 from gaphor import UML
+from gaphor.core.format import format
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, cairo_state
 from gaphor.diagram.support import represents
@@ -135,7 +136,7 @@ class ConnectorItem(LinePresentation[UML.Connector], Named):
             ),
             # Also support SysML ItemFlow:
             Text(
-                text=lambda: UML.format(
+                text=lambda: format(
                     self.subject.informationFlow[0].itemProperty, type=True  # type: ignore[attr-defined]
                 )
                 if self.subject.informationFlow
