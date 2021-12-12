@@ -10,7 +10,7 @@ from gi.repository import GLib, Gtk
 from gaphor.core.eventmanager import EventManager
 from gaphor.diagram.diagramtoolbox import ItemFactory
 from gaphor.diagram.event import DiagramItemPlaced
-from gaphor.diagram.grouping import Group
+from gaphor.diagram.group import group
 from gaphor.diagram.inlineeditors import InlineEditor
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.tools.dropzone import grow_parent
@@ -76,11 +76,9 @@ def create_item(view, factory, x, y):
 
 
 def maybe_group(parent, item):
-    adapter = Group(parent, item)
-    if parent and adapter.can_contain():
+    if parent and group(parent.subject, item.subject):
         grow_parent(parent, item)
         item.change_parent(parent)
-        adapter.group()
 
 
 def connect_opposite_handle(view, new_item, x, y, handle_index):

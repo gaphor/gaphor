@@ -12,12 +12,13 @@ from gaphas.view import GtkView
 from gi.repository import Gtk
 
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.grouping import Group
+from gaphor.diagram.group import group
 from gaphor.diagram.presentation import (
     ElementPresentation,
     LinePresentation,
     Presentation,
 )
+from gaphor.UML.recipes import owner_package
 
 log = logging.getLogger(__name__)
 
@@ -53,7 +54,7 @@ def on_motion(controller, x, y, item_class: Type[Presentation]):
 
     if parent:
         parent_type = type(parent)
-        can_group = has_registration(Group, parent_type, item_class)  # type: ignore[arg-type]
+        can_group = has_registration(group, parent_type, item_class)  # type: ignore[arg-type]
         can_connect = has_registration(Connector, parent_type, item_class)  # type: ignore[arg-type]
 
         view.selection.dropzone_item = parent if can_group or can_connect else None
@@ -92,8 +93,9 @@ class DropZoneMove(GuidedItemMove):
             return
 
         # are we going to add to parent?
-        group = Group(over_item, item)
-        if group and group.can_contain():
+        can_group = has_registration(group, type(over_item), type(item))  # type: ignore[arg-type]
+
+        if can_group:
             view.selection.dropzone_item = over_item
             over_item.request_update()
 
@@ -111,24 +113,17 @@ class DropZoneMove(GuidedItemMove):
                     old_parent.request_update()
                 return
 
-            if old_parent:
-                item.change_parent(None)
-
-                adapter = Group(old_parent, item)
-                if adapter:
-                    adapter.ungroup()
-
-                old_parent.request_update()
-
-            if new_parent:
+            if new_parent and group(new_parent.subject, item.subject):
                 grow_parent(new_parent, item)
                 item.change_parent(new_parent)
-
-                adapter = Group(new_parent, item)
-                if adapter and adapter.can_contain():
-                    adapter.group()
-
                 new_parent.request_update()
+            else:
+                diagram_parent = owner_package(item.diagram)
+                group(diagram_parent, item.subject)
+                item.change_parent(None)
+
+            if old_parent:
+                old_parent.request_update()
         finally:
             view.selection.dropzone_item = None
 

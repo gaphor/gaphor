@@ -11,7 +11,6 @@ class InteractionLifelineGroup(AbstractGroup):
     def group(self):
         assert self.parent.diagram
         self.parent.subject.lifeline = self.item.subject
-        self.item.change_parent(self.parent)
 
     def ungroup(self):
         """Lifelines are not ungrouped on purpose.
@@ -29,7 +28,6 @@ class InteractionMessageGroup(AbstractGroup):
             return
         assert self.parent.diagram
         self.parent.subject.message = self.item.subject
-        self.item.change_parent(self.parent)
 
     def ungroup(self):
         """Messages are not ungrouped on purpose.
