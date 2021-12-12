@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-12-05 19:28+0100\n"
-"PO-Revision-Date: 2021-12-12 09:26+0000\n"
+"PO-Revision-Date: 2021-12-13 09:54+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
 ">\n"
@@ -445,7 +445,7 @@ msgstr "UML"
 #: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:30 gaphor/diagram/diagramtoolbox.py:28
 msgid "New {name}"
-msgstr "Nuevo {name}"
+msgstr "{name} nuevo"
 
 #: gaphor/UML/actions/actionstoolbox.py:35
 msgid "Activity"
@@ -1630,11 +1630,11 @@ msgstr "Gaphor"
 
 #: gaphor/ui/mainwindow.glade:184
 msgid "Create New diagram"
-msgstr "Crear nuevo diagrama"
+msgstr "Crear diagrama nuevo"
 
 #: gaphor/ui/mainwindow.glade:207
 msgid "Open Application Menu"
-msgstr "Abrir Menu"
+msgstr "Abrir Menú"
 
 #: gaphor/ui/mainwindow.py:49
 msgid "Save As..."
