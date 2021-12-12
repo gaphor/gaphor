@@ -259,3 +259,27 @@ class TestStorage:
 
         with pytest.raises(ValueError):
             load_old_model()
+
+
+def test_save_with_invalid_collection(element_factory, saver, caplog):
+    c = element_factory.create(UML.Class)
+
+    p = UML.Package()
+    c.package = p
+    data = saver()
+
+    assert c.id in data
+    assert p.id not in data
+    assert "Model has unknown reference" in caplog.text
+
+
+def test_save_with_invalidreference(element_factory, saver, caplog):
+    p = element_factory.create(UML.Package)
+
+    c = UML.Class()
+    c.package = p
+    data = saver()
+
+    assert p.id in data
+    assert c.id not in data
+    assert "Model has unknown reference" in caplog.text

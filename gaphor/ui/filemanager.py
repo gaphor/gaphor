@@ -17,11 +17,10 @@ from gaphor.event import (
     SessionShutdown,
     SessionShutdownRequested,
 )
-from gaphor.storage import storage, verify
+from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
-from gaphor.ui.questiondialog import QuestionDialog
 from gaphor.ui.statuswindow import StatusWindow
 
 DEFAULT_EXT = ".gaphor"
@@ -151,34 +150,6 @@ class FileManager(Service, ActionProvider):
         for _ in async_loader():
             pass
 
-    def verify_orphans(self):
-        """Verify that no orphaned elements are saved.
-
-        This method checks of there are any orphan references in the
-        element factory.  If orphans are found, a dialog is displayed
-        asking the user if it is OK to unlink them.
-        """
-
-        orphans = verify.orphan_references(self.element_factory)
-
-        if orphans:
-            log.info("Found orphan references %s", orphans)
-            main_window = self.main_window
-
-            dialog = QuestionDialog(
-                gettext(
-                    "The model contains some references to items that are not maintained. Do you want to clean the model before saving?"
-                ),
-                parent=main_window.window,
-            )
-
-            answer = dialog.answer
-            dialog.destroy()
-
-            if not answer:
-                for orphan in orphans:
-                    orphan.unlink()
-
     def save(self, filename):
         """Save the current UML model to the specified file name.
 
@@ -190,8 +161,6 @@ class FileManager(Service, ActionProvider):
 
         if not (filename and len(filename)):
             return
-
-        self.verify_orphans()
 
         main_window = self.main_window
         queue: Queue[int] = Queue(0)
