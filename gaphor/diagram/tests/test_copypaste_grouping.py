@@ -2,7 +2,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.diagram.copypaste import copy, paste_link
-from gaphor.diagram.grouping import Group
+from gaphor.diagram.group import group
 from gaphor.diagram.tests.fixtures import copy_clear_and_paste_link
 from gaphor.UML.deployments import ArtifactItem, NodeItem
 
@@ -14,7 +14,7 @@ def node_with_artifact(diagram, element_factory):
     node_item = diagram.create(NodeItem, subject=node)
     artifact_item = diagram.create(ArtifactItem, subject=artifact)
 
-    Group(node_item, artifact_item).group()
+    group(node_item, artifact_item)
     artifact_item.change_parent(node_item)
 
     assert artifact_item.parent is node_item

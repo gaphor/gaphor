@@ -127,11 +127,6 @@ class Case:
         """Get connection information."""
         return self.diagram.connections.get_connection(handle)
 
-    def can_group(self, parent, item):
-        """Check if an item can be grouped by parent."""
-        adapter = Group(parent, item)
-        return adapter.can_contain()
-
     def group(self, parent, item):
         """Group item within a parent."""
         item.parent = parent
