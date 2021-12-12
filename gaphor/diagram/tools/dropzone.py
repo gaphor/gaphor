@@ -1,8 +1,11 @@
 import functools
 import itertools
+import logging
 from typing import Type
 
+from gaphas.geometry import Rectangle
 from gaphas.guide import GuidedItemMove
+from gaphas.item import NW, SE
 from gaphas.move import Move as MoveAspect
 from gaphas.tool.itemtool import item_at_point
 from gaphas.view import GtkView
@@ -15,6 +18,8 @@ from gaphor.diagram.presentation import (
     LinePresentation,
     Presentation,
 )
+
+log = logging.getLogger(__name__)
 
 
 def drop_zone_tool(
@@ -125,6 +130,7 @@ class DropZoneMove(GuidedItemMove):
                 old_parent.request_update()
 
             if new_parent:
+                grow_parent(new_parent, item)
                 item.parent = new_parent
 
                 adapter = Group(new_parent, item)
@@ -134,3 +140,28 @@ class DropZoneMove(GuidedItemMove):
                 new_parent.request_update()
         finally:
             view.selection.dropzone_item = None
+
+
+def grow_parent(parent, item):
+    if not isinstance(item, ElementPresentation):
+        return
+
+    if not isinstance(parent, ElementPresentation):
+        log.warning(f"Can not grow item {parent}: not an ElementPresentation")
+        return
+
+    parent_bb = _bounds(parent)
+    item_bb = _bounds(item)
+    item_bb.expand(20)
+    new_parent_bb = parent_bb + item_bb
+
+    c2i = parent.matrix_i2c.inverse()
+    parent.handles()[NW].pos = c2i.transform_point(new_parent_bb.x, new_parent_bb.y)
+    parent.handles()[SE].pos = c2i.transform_point(new_parent_bb.x1, new_parent_bb.y1)
+
+
+def _bounds(item):
+    transform = item.matrix_i2c.transform_point
+    x0, y0 = transform(*item.handles()[NW].pos)
+    x1, y1 = transform(*item.handles()[SE].pos)
+    return Rectangle(x0, y0, x1=x1, y1=y1)
