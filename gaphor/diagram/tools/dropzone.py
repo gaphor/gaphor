@@ -92,19 +92,11 @@ class DropZoneMove(GuidedItemMove):
             view.selection.dropzone_item = None
             return
 
-        if current_parent and not over_item:
-            # are we going to remove from parent?
-            group = Group(current_parent, item)
-            if group:
-                view.selection.dropzone_item = current_parent
-                current_parent.request_update()
-
-        if over_item:
-            # are we going to add to parent?
-            group = Group(over_item, item)
-            if group and group.can_contain():
-                view.selection.dropzone_item = over_item
-                over_item.request_update()
+        # are we going to add to parent?
+        group = Group(over_item, item)
+        if group and group.can_contain():
+            view.selection.dropzone_item = over_item
+            over_item.request_update()
 
     def stop_move(self, pos):
         """Motion stops: drop!"""
