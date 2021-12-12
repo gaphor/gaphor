@@ -68,11 +68,10 @@ class ExtensionConnect(RelationshipConnect):
                     else:
                         line.subject = ext
                         return
-            else:
-                # Create a new Extension relationship
-                relation = UML.recipes.create_extension(head_type, tail_type)
-                relation.package = owner_package(element.diagram.owner)
-                line.subject = relation
+            # Create a new Extension relationship
+            relation = UML.recipes.create_extension(head_type, tail_type)
+            relation.package = owner_package(element.diagram.owner)
+            line.subject = relation
 
     def disconnect_subject(self, handle):
         """Disconnect model element.

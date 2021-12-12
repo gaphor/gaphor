@@ -21,8 +21,7 @@ from gaphor.core.modeling import ElementFactory
 
 @pytest.fixture(scope="session")
 def uml_metamodel():
-    element_factory = load_model("models/UML.gaphor")
-    return element_factory
+    return load_model("models/UML.gaphor")
 
 
 def test_coder_write_class():
@@ -159,7 +158,7 @@ def by_name(name):
 def test_bases(uml_metamodel: ElementFactory):
     package = next(uml_metamodel.select(by_name("Package")))
 
-    names = list(s.name for s in bases(package))
+    names = [s.name for s in bases(package)]
 
     assert "Namespace" in names
     assert "PackageableElement" in names
