@@ -29,7 +29,7 @@ class ComponentItem(ElementPresentation, Classified):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.model.stereotypes_str(self.subject),
+                    text=lambda: UML.recipes.stereotypes_str(self.subject),
                 ),
                 Text(
                     text=lambda: self.subject.name or "",

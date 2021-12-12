@@ -191,7 +191,7 @@ class NamedElementPropertyPage(PropertyPageBase):
     def construct(self):
         if (
             not self.subject
-            or UML.model.is_metaclass(self.subject)
+            or UML.recipes.is_metaclass(self.subject)
             or isinstance(self.subject, UML.ActivityPartition)
         ):
             return
@@ -232,7 +232,7 @@ class ClassifierPropertyPage(PropertyPageBase):
         self.subject = subject
 
     def construct(self):
-        if UML.model.is_metaclass(self.subject):
+        if UML.recipes.is_metaclass(self.subject):
             return
 
         builder = new_builder(

@@ -5,19 +5,19 @@ def test_stereotype_name(element_factory):
     """Test stereotype name."""
     stereotype = element_factory.create(UML.Stereotype)
     stereotype.name = "Test"
-    assert "test" == UML.model.stereotype_name(stereotype)
+    assert "test" == UML.recipes.stereotype_name(stereotype)
 
     stereotype.name = "TEST"
-    assert "TEST" == UML.model.stereotype_name(stereotype)
+    assert "TEST" == UML.recipes.stereotype_name(stereotype)
 
     stereotype.name = "T"
-    assert "t" == UML.model.stereotype_name(stereotype)
+    assert "t" == UML.recipes.stereotype_name(stereotype)
 
     stereotype.name = ""
-    assert "" == UML.model.stereotype_name(stereotype)
+    assert "" == UML.recipes.stereotype_name(stereotype)
 
     stereotype.name = None
-    assert "" == UML.model.stereotype_name(stereotype)
+    assert "" == UML.recipes.stereotype_name(stereotype)
 
 
 def test_stereotypes_conversion(element_factory):
@@ -30,17 +30,17 @@ def test_stereotypes_conversion(element_factory):
     s3.name = "s3"
 
     cls = element_factory.create(UML.Class)
-    UML.model.apply_stereotype(cls, s1)
-    UML.model.apply_stereotype(cls, s2)
-    UML.model.apply_stereotype(cls, s3)
+    UML.recipes.apply_stereotype(cls, s1)
+    UML.recipes.apply_stereotype(cls, s2)
+    UML.recipes.apply_stereotype(cls, s3)
 
-    assert ("«s1, s2, s3»") == UML.model.stereotypes_str(cls)
+    assert ("«s1, s2, s3»") == UML.recipes.stereotypes_str(cls)
 
 
 def test_no_stereotypes(element_factory):
     """Test stereotypes conversion without applied stereotypes."""
     cls = element_factory.create(UML.Class)
-    assert "" == UML.model.stereotypes_str(cls)
+    assert "" == UML.recipes.stereotypes_str(cls)
 
 
 def test_additional_stereotypes(element_factory):
@@ -53,11 +53,11 @@ def test_additional_stereotypes(element_factory):
     s3.name = "s3"
 
     cls = element_factory.create(UML.Class)
-    UML.model.apply_stereotype(cls, s1)
-    UML.model.apply_stereotype(cls, s2)
-    UML.model.apply_stereotype(cls, s3)
+    UML.recipes.apply_stereotype(cls, s1)
+    UML.recipes.apply_stereotype(cls, s2)
+    UML.recipes.apply_stereotype(cls, s3)
 
-    result = UML.model.stereotypes_str(cls, ("test",))
+    result = UML.recipes.stereotypes_str(cls, ("test",))
     assert ("«test, s1, s2, s3»") == result
 
 
@@ -65,7 +65,7 @@ def test_just_additional_stereotypes(element_factory):
     """Test additional stereotypes conversion without applied stereotypes."""
     cls = element_factory.create(UML.Class)
 
-    result = UML.model.stereotypes_str(cls, ("test",))
+    result = UML.recipes.stereotypes_str(cls, ("test",))
     assert ("«test»") == result
 
 
@@ -79,11 +79,11 @@ def test_getting_stereotypes(element_factory):
     st2.name = "st2"
 
     # first extend with st2, to check sorting
-    UML.model.create_extension(cls, st2)
-    UML.model.create_extension(cls, st1)
+    UML.recipes.create_extension(cls, st2)
+    UML.recipes.create_extension(cls, st1)
 
     c1 = element_factory.create(UML.Class)
-    result = tuple(st.name for st in UML.model.get_stereotypes(c1))
+    result = tuple(st.name for st in UML.recipes.get_stereotypes(c1))
     assert ("st1", "st2") == result
 
 
@@ -99,14 +99,14 @@ def test_getting_stereotypes_unique(element_factory):
     st2.name = "st2"
 
     # first extend with st2, to check sorting
-    UML.model.create_extension(cls1, st2)
-    UML.model.create_extension(cls1, st1)
+    UML.recipes.create_extension(cls1, st2)
+    UML.recipes.create_extension(cls1, st1)
 
-    UML.model.create_extension(cls2, st1)
-    UML.model.create_extension(cls2, st2)
+    UML.recipes.create_extension(cls2, st1)
+    UML.recipes.create_extension(cls2, st2)
 
     c1 = element_factory.create(UML.Component)
-    result = tuple(st.name for st in UML.model.get_stereotypes(c1))
+    result = tuple(st.name for st in UML.recipes.get_stereotypes(c1))
     assert ("st1", "st2") == result
 
 
@@ -119,11 +119,11 @@ def test_finding_stereotype_instances(element_factory):
 
     c1 = element_factory.create(UML.Class)
     c2 = element_factory.create(UML.Class)
-    UML.model.apply_stereotype(c1, s1)
-    UML.model.apply_stereotype(c1, s2)
-    UML.model.apply_stereotype(c2, s1)
+    UML.recipes.apply_stereotype(c1, s1)
+    UML.recipes.apply_stereotype(c1, s2)
+    UML.recipes.apply_stereotype(c2, s1)
 
-    result = [e.classifier[0].name for e in UML.model.find_instances(s1)]
+    result = [e.classifier[0].name for e in UML.recipes.find_instances(s1)]
     assert len(result) == 2
     assert "s1" in result, result
     assert "s2" not in result, result
@@ -136,14 +136,14 @@ def test_creation(element_factory):
     """Test association creation."""
     c1 = element_factory.create(UML.Class)
     c2 = element_factory.create(UML.Class)
-    assoc = UML.model.create_association(c1, c2)
+    assoc = UML.recipes.create_association(c1, c2)
     types = [p.type for p in assoc.memberEnd]
     assert c1 in types, assoc.memberEnd
     assert c2 in types, assoc.memberEnd
 
     c1 = element_factory.create(UML.Interface)
     c2 = element_factory.create(UML.Interface)
-    assoc = UML.model.create_association(c1, c2)
+    assoc = UML.recipes.create_association(c1, c2)
     types = [p.type for p in assoc.memberEnd]
     assert c1 in types, assoc.memberEnd
     assert c2 in types, assoc.memberEnd
@@ -156,13 +156,13 @@ def test_attribute_navigability(element_factory):
     """Test navigable attribute of a class or an interface."""
     c1 = element_factory.create(UML.Class)
     c2 = element_factory.create(UML.Class)
-    assoc = UML.model.create_association(c1, c2)
+    assoc = UML.recipes.create_association(c1, c2)
 
     end = assoc.memberEnd[0]
     assert end.type is c1
     assert end.type is c1
 
-    UML.model.set_navigability(assoc, end, True)
+    UML.recipes.set_navigability(assoc, end, True)
 
     # class/interface navigability, Association.navigableOwnedEnd not
     # involved
@@ -172,7 +172,7 @@ def test_attribute_navigability(element_factory):
     assert end.navigability is True
 
     # unknown navigability
-    UML.model.set_navigability(assoc, end, None)
+    UML.recipes.set_navigability(assoc, end, None)
     assert end not in assoc.navigableOwnedEnd
     assert end in assoc.ownedEnd
     assert end not in c2.ownedAttribute
@@ -180,7 +180,7 @@ def test_attribute_navigability(element_factory):
     assert end.navigability is None
 
     # non-navigability
-    UML.model.set_navigability(assoc, end, False)
+    UML.recipes.set_navigability(assoc, end, False)
     assert end not in assoc.navigableOwnedEnd
     assert end not in assoc.ownedEnd
     assert end not in c2.ownedAttribute
@@ -188,14 +188,14 @@ def test_attribute_navigability(element_factory):
     assert end.navigability is False
 
     # check other navigability change possibilities
-    UML.model.set_navigability(assoc, end, None)
+    UML.recipes.set_navigability(assoc, end, None)
     assert end not in assoc.navigableOwnedEnd
     assert end in assoc.ownedEnd
     assert end not in c2.ownedAttribute
     assert end.owner is assoc
     assert end.navigability is None
 
-    UML.model.set_navigability(assoc, end, True)
+    UML.recipes.set_navigability(assoc, end, True)
     assert end not in assoc.navigableOwnedEnd
     assert end not in assoc.ownedEnd
     assert end in c2.ownedAttribute
@@ -207,12 +207,12 @@ def test_relationship_navigability(element_factory):
     """Test navigable relationship of a classifier."""
     n1 = element_factory.create(UML.Node)
     n2 = element_factory.create(UML.Node)
-    assoc = UML.model.create_association(n1, n2)
+    assoc = UML.recipes.create_association(n1, n2)
 
     end = assoc.memberEnd[0]
     assert end.type is n1
 
-    UML.model.set_navigability(assoc, end, True)
+    UML.recipes.set_navigability(assoc, end, True)
 
     # class/interface navigability, Association.navigableOwnedEnd not
     # involved
@@ -221,24 +221,24 @@ def test_relationship_navigability(element_factory):
     assert end.navigability is True
 
     # unknown navigability
-    UML.model.set_navigability(assoc, end, None)
+    UML.recipes.set_navigability(assoc, end, None)
     assert end not in assoc.navigableOwnedEnd
     assert end in assoc.ownedEnd
     assert end.navigability is None
 
     # non-navigability
-    UML.model.set_navigability(assoc, end, False)
+    UML.recipes.set_navigability(assoc, end, False)
     assert end not in assoc.navigableOwnedEnd
     assert end not in assoc.ownedEnd
     assert end.navigability is False
 
     # check other navigability change possibilities
-    UML.model.set_navigability(assoc, end, None)
+    UML.recipes.set_navigability(assoc, end, None)
     assert end not in assoc.navigableOwnedEnd
     assert end in assoc.ownedEnd
     assert end.navigability is None
 
-    UML.model.set_navigability(assoc, end, True)
+    UML.recipes.set_navigability(assoc, end, True)
     assert end in n2.ownedAttribute
     assert end not in assoc.ownedEnd
     assert end.navigability is True
@@ -251,7 +251,7 @@ def test_usage(element_factory):
     """Test automatic dependency: usage."""
     cls = element_factory.create(UML.Class)
     iface = element_factory.create(UML.Interface)
-    dt = UML.model.dependency_type(cls, iface)
+    dt = UML.recipes.dependency_type(cls, iface)
     assert UML.Usage == dt
 
 
@@ -259,7 +259,7 @@ def test_usage_by_component(element_factory):
     """Test automatic dependency: usage (by component)."""
     c = element_factory.create(UML.Component)
     iface = element_factory.create(UML.Interface)
-    dt = UML.model.dependency_type(c, iface)
+    dt = UML.recipes.dependency_type(c, iface)
     # it should be usage not realization (interface is classifier as
     # well)
     assert UML.Usage == dt
@@ -269,7 +269,7 @@ def test_realization(element_factory):
     """Test automatic dependency: realization."""
     cls = element_factory.create(UML.Class)
     comp = element_factory.create(UML.Component)
-    dt = UML.model.dependency_type(cls, comp)
+    dt = UML.recipes.dependency_type(cls, comp)
     assert UML.Realization == dt
 
 
@@ -290,8 +290,8 @@ def test_interaction_messages_cloning(element_factory):
     m.sendEvent = send
     m.receiveEvent = receive
 
-    m1 = UML.model.clone_message(m, False)
-    m2 = UML.model.clone_message(m, True)
+    m1 = UML.recipes.clone_message(m, False)
+    m2 = UML.recipes.clone_message(m, True)
 
     assert m1.sendEvent.covered is sl
     assert m1.receiveEvent.covered is rl

@@ -70,7 +70,7 @@ class ExtensionConnect(RelationshipConnect):
                         return
             else:
                 # Create a new Extension relationship
-                relation = UML.model.create_extension(head_type, tail_type)
+                relation = UML.recipes.create_extension(head_type, tail_type)
                 relation.package = owner_package(element.diagram.owner)
                 line.subject = relation
 

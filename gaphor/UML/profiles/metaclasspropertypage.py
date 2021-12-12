@@ -42,7 +42,7 @@ class MetaclassPropertyPage(PropertyPageBase):
         self.watcher = subject.watcher()
 
     def construct(self):
-        if not UML.model.is_metaclass(self.subject):
+        if not UML.recipes.is_metaclass(self.subject):
             return
 
         builder = new_builder(

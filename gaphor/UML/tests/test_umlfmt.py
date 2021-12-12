@@ -5,7 +5,7 @@ import pytest
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.format import format, parse
 from gaphor.core.modeling import ElementFactory
-from gaphor.UML import model
+from gaphor.UML import recipes
 from gaphor.UML import uml as UML
 from gaphor.UML.umlfmt import format_association_end
 
@@ -21,8 +21,8 @@ def add_tag_is_foo_metadata_field(e, factory):
     s.ownedAttribute = factory.create(UML.Property)
     parse(s.ownedAttribute[0], "tag: str")
 
-    instance_spec = model.apply_stereotype(e, s)
-    slot = model.add_slot(instance_spec, s.ownedAttribute[0])
+    instance_spec = recipes.apply_stereotype(e, s)
+    slot = recipes.add_slot(instance_spec, s.ownedAttribute[0])
     slot.value = "foo"
     return slot
 
