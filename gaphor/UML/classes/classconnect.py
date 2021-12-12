@@ -13,7 +13,7 @@ from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.generalization import GeneralizationItem
 from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
-from gaphor.UML.modelfactory import owner_package
+from gaphor.UML.recipes import owner_package
 
 
 @Connector.register(Named, DependencyItem)

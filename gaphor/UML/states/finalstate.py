@@ -6,7 +6,7 @@ from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.states.state import VertexItem
 
 

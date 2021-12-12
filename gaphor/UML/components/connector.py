@@ -105,7 +105,7 @@ from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, cairo_state
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.association import get_center_pos
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Connector)
