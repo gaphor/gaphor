@@ -72,7 +72,7 @@ PropertyPages.register(RequirementItem)(OperationsPage)
 
 
 @PropertyPages.register(BlockItem)
-class PartsAndReferencesPage(PropertyPageBase):
+class CompartmentPage(PropertyPageBase):
     """An editor for Block items."""
 
     order = 30
@@ -87,7 +87,7 @@ class PartsAndReferencesPage(PropertyPageBase):
             return
 
         builder = new_builder(
-            "parts-and-references-editor",
+            "compartment-editor",
             signals={
                 "show-parts-changed": (self._on_show_parts_change,),
                 "show-references-changed": (self._on_show_references_change,),
@@ -100,7 +100,7 @@ class PartsAndReferencesPage(PropertyPageBase):
         show_references = builder.get_object("show-references")
         show_references.set_active(self.item.show_references)
 
-        return builder.get_object("parts-and-references-editor")
+        return builder.get_object("compartment-editor")
 
     @transactional
     def _on_show_parts_change(self, button, gparam):

@@ -124,7 +124,7 @@ renderers and such.</property>
       </packing>
     </child>
   </object>
-  <object class="GtkExpander" id="parts-and-references-editor">
+  <object class="GtkExpander" id="compartment-editor">
     <property name="visible">True</property>
     <property name="can-focus">True</property>
     <property name="margin-top">12</property>
@@ -180,7 +180,7 @@ renderers and such.</property>
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Show references</property>
+                <property name="label" translatable="yes">Show References</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -214,7 +214,7 @@ renderers and such.</property>
       <object class="GtkLabel">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Parts and References</property>
+        <property name="label" translatable="yes">Compartments</property>
         <attributes>
           <attribute name="weight" value="bold"/>
         </attributes>

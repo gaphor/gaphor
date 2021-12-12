@@ -64,7 +64,7 @@ renderers and such.</property>
       </object>
     </child>
   </object>
-  <object class="GtkExpander" id="parts-and-references-editor">
+  <object class="GtkExpander" id="compartment-editor">
     <property name="margin_top">12</property>
     <property name="expanded">1</property>
     <child>
@@ -89,7 +89,7 @@ renderers and such.</property>
           <object class="GtkBox">
             <child>
               <object class="GtkLabel">
-                <property name="label" translatable="yes">Show references</property>
+                <property name="label" translatable="yes">Show References</property>
               </object>
             </child>
             <child>
@@ -104,7 +104,7 @@ renderers and such.</property>
     </child>
     <child type="label">
       <object class="GtkLabel">
-        <property name="label" translatable="yes">Parts and References</property>
+        <property name="label" translatable="yes">Compartments</property>
         <attributes>
           <attribute name="weight" value="bold"></attribute>
         </attributes>

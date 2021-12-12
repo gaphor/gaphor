@@ -4,8 +4,8 @@ from gaphor import UML, SysML
 from gaphor.diagram.propertypages import PropertyPages
 from gaphor.diagram.tests.fixtures import find
 from gaphor.SysML.propertypages import (
+    CompartmentPage,
     ItemFlowPropertyPage,
-    PartsAndReferencesPage,
     PropertyPropertyPage,
     RequirementPropertyPage,
 )
@@ -45,11 +45,11 @@ def test_requirement_property_page_text(diagram, element_factory):
     assert subject.text == "test"
 
 
-def test_part_and_reference_property_page_show_parts(diagram, element_factory):
+def test_compartment_property_page_show_parts(diagram, element_factory):
     item = diagram.create(
         SysML.blocks.BlockItem, subject=element_factory.create(SysML.sysml.Block)
     )
-    property_page = PartsAndReferencesPage(item)
+    property_page = CompartmentPage(item)
 
     widget = property_page.construct()
     show_parts = find(widget, "show-parts")
@@ -58,11 +58,11 @@ def test_part_and_reference_property_page_show_parts(diagram, element_factory):
     assert item.show_parts
 
 
-def test_part_and_reference_property_page_show_references(diagram, element_factory):
+def test_compartment_property_page_show_references(diagram, element_factory):
     item = diagram.create(
         SysML.blocks.BlockItem, subject=element_factory.create(SysML.sysml.Block)
     )
-    property_page = PartsAndReferencesPage(item)
+    property_page = CompartmentPage(item)
 
     widget = property_page.construct()
     show_references = find(widget, "show-references")
