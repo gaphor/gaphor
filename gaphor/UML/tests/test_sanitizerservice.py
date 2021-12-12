@@ -76,8 +76,8 @@ def test_stereotype_attribute_delete(element_factory):
     stereotype.ownedAttribute = st_attr
 
     # Apply stereotype to class and create slot
-    instspec = UML.model.apply_stereotype(klass, stereotype)
-    slot = UML.model.add_slot(instspec, st_attr)
+    instspec = UML.recipes.apply_stereotype(klass, stereotype)
+    slot = UML.recipes.add_slot(instspec, st_attr)
 
     # Now, what happens if the attribute is deleted:
     assert st_attr in stereotype.ownedMember
@@ -97,11 +97,11 @@ def test_extension_disconnect(element_factory):
     stereotype = create(UML.Stereotype)
     st_attr = create(UML.Property)
     stereotype.ownedAttribute = st_attr
-    ext = UML.model.create_extension(metaklass, stereotype)
+    ext = UML.recipes.create_extension(metaklass, stereotype)
 
     # Apply stereotype to class and create slot
-    instspec = UML.model.apply_stereotype(klass, stereotype)
-    UML.model.add_slot(instspec, st_attr)
+    instspec = UML.recipes.apply_stereotype(klass, stereotype)
+    UML.recipes.add_slot(instspec, st_attr)
 
     assert stereotype in klass.appliedStereotype[:].classifier
 
@@ -119,11 +119,11 @@ def test_extension_deletion(element_factory):
     stereotype = create(UML.Stereotype)
     st_attr = create(UML.Property)
     stereotype.ownedAttribute = st_attr
-    ext = UML.model.create_extension(metaklass, stereotype)
+    ext = UML.recipes.create_extension(metaklass, stereotype)
 
     # Apply stereotype to class and create slot
-    instspec = UML.model.apply_stereotype(klass, stereotype)
-    UML.model.add_slot(instspec, st_attr)
+    instspec = UML.recipes.apply_stereotype(klass, stereotype)
+    UML.recipes.add_slot(instspec, st_attr)
 
     assert stereotype in klass.appliedStereotype[:].classifier
 
@@ -143,13 +143,13 @@ def test_extension_deletion_with_2_metaclasses(element_factory):
     stereotype = create(UML.Stereotype)
     st_attr = create(UML.Property)
     stereotype.ownedAttribute = st_attr
-    ext1 = UML.model.create_extension(metaklass, stereotype)
-    UML.model.create_extension(metaiface, stereotype)
+    ext1 = UML.recipes.create_extension(metaklass, stereotype)
+    UML.recipes.create_extension(metaiface, stereotype)
 
     # Apply stereotype to class and create slot
-    instspec1 = UML.model.apply_stereotype(klass, stereotype)
-    instspec2 = UML.model.apply_stereotype(iface, stereotype)
-    UML.model.add_slot(instspec1, st_attr)
+    instspec1 = UML.recipes.apply_stereotype(klass, stereotype)
+    instspec2 = UML.recipes.apply_stereotype(iface, stereotype)
+    UML.recipes.add_slot(instspec1, st_attr)
 
     assert stereotype in klass.appliedStereotype[:].classifier
     assert klass in element_factory
@@ -169,11 +169,11 @@ def test_stereotype_deletion(element_factory):
     stereotype = create(UML.Stereotype)
     st_attr = create(UML.Property)
     stereotype.ownedAttribute = st_attr
-    UML.model.create_extension(metaklass, stereotype)
+    UML.recipes.create_extension(metaklass, stereotype)
 
     # Apply stereotype to class and create slot
-    instspec = UML.model.apply_stereotype(klass, stereotype)
-    UML.model.add_slot(instspec, st_attr)
+    instspec = UML.recipes.apply_stereotype(klass, stereotype)
+    UML.recipes.add_slot(instspec, st_attr)
 
     assert stereotype in klass.appliedStereotype[:].classifier
 

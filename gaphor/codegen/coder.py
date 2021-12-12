@@ -323,7 +323,7 @@ def is_enumeration(c: UML.Class) -> bool:
 
 def is_simple_type(c: UML.Class) -> bool:
     return any(
-        s.name == "SimpleAttribute" for s in UML.model.get_applied_stereotypes(c)
+        s.name == "SimpleAttribute" for s in UML.recipes.get_applied_stereotypes(c)
     ) or any(is_simple_type(g.general) for g in c.generalization)
 
 

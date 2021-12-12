@@ -30,7 +30,7 @@ def test_name_selection_for_metaclass(element_factory, class_):
 
     stereotype = element_factory.create(UML.Stereotype)
     stereotype.name = "NewStereotype"
-    UML.model.create_extension(class_, stereotype)
+    UML.recipes.create_extension(class_, stereotype)
 
     editor = MetaclassPropertyPage(class_)
     page = editor.construct()

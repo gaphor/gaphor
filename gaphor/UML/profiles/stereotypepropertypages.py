@@ -21,7 +21,7 @@ class StereotypePage(PropertyPageBase):
         if not subject:
             return None
 
-        stereotypes = UML.model.get_stereotypes(subject)
+        stereotypes = UML.recipes.get_stereotypes(subject)
         if not stereotypes:
             return None
 
@@ -74,7 +74,7 @@ def stereotype_model(subject):
 
 
 def refresh(subject, model):
-    stereotypes = UML.model.get_stereotypes(subject)
+    stereotypes = UML.recipes.get_stereotypes(subject)
     instances = subject.appliedStereotype
 
     def upsert(path, parent, row_data):
@@ -133,9 +133,9 @@ def toggle_stereotype(renderer, path, subject, model):
     value = not is_applied
 
     if value:
-        UML.model.apply_stereotype(subject, stereotype)
+        UML.recipes.apply_stereotype(subject, stereotype)
     else:
-        UML.model.remove_stereotype(subject, stereotype)
+        UML.recipes.remove_stereotype(subject, stereotype)
 
     row[2] = value
 
@@ -154,7 +154,7 @@ def set_value(renderer, path, value, model):
         return  # nothing to do and don't create slot without value
 
     if slot is None:
-        slot = UML.model.add_slot(applied, attr)
+        slot = UML.recipes.add_slot(applied, attr)
 
     assert slot
 

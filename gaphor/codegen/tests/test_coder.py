@@ -86,9 +86,9 @@ def navigable_association(element_factory):
     class_a.name = "A"
     class_b = element_factory.create(UML.Class)
     class_b.name = "B"
-    association = UML.model.create_association(class_a, class_b)
-    UML.model.set_navigability(association, association.memberEnd[0], True)
-    UML.model.set_navigability(association, association.memberEnd[1], True)
+    association = UML.recipes.create_association(class_a, class_b)
+    UML.recipes.set_navigability(association, association.memberEnd[0], True)
+    UML.recipes.set_navigability(association, association.memberEnd[1], True)
     association.memberEnd[0].name = "a"
     association.memberEnd[1].name = "b"
     return association
@@ -168,7 +168,7 @@ def test_bases(uml_metamodel: ElementFactory):
 def test_extension_bases(element_factory: ElementFactory):
     metaclass = element_factory.create(UML.Class)
     stereotype = element_factory.create(UML.Stereotype)
-    UML.model.create_extension(metaclass, stereotype)
+    UML.recipes.create_extension(metaclass, stereotype)
 
     supers = list(bases(stereotype))
 
@@ -229,7 +229,7 @@ def test_coder_write_association_composite(navigable_association: UML.Associatio
 
 
 def test_coder_write_association_not_navigable(navigable_association: UML.Association):
-    UML.model.set_navigability(
+    UML.recipes.set_navigability(
         navigable_association, navigable_association.memberEnd[1], None
     )
 
@@ -241,7 +241,7 @@ def test_coder_write_association_not_navigable(navigable_association: UML.Associ
 def test_coder_write_association_opposite_not_navigable(
     navigable_association: UML.Association,
 ):
-    UML.model.set_navigability(
+    UML.recipes.set_navigability(
         navigable_association, navigable_association.memberEnd[0], None
     )
 

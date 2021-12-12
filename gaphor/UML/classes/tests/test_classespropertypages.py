@@ -17,7 +17,7 @@ from gaphor.UML.classes.classespropertypages import (
 def metaclass(element_factory):
     klass = element_factory.create(UML.Class)
     stereotype = element_factory.create(UML.Stereotype)
-    UML.model.create_extension(klass, stereotype)
+    UML.recipes.create_extension(klass, stereotype)
     return klass
 
 

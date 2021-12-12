@@ -57,7 +57,7 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
     def additional_stereotypes(self):
         if isinstance(self.subject, UML.Stereotype):
             return [gettext("stereotype")]
-        elif UML.model.is_metaclass(self.subject):
+        elif UML.recipes.is_metaclass(self.subject):
             return [gettext("metaclass")]
         else:
             return ()
@@ -66,7 +66,7 @@ class ClassItem(ElementPresentation[UML.Class], Classified):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.model.stereotypes_str(
+                    text=lambda: UML.recipes.stereotypes_str(
                         self.subject, self.additional_stereotypes()
                     ),
                 ),

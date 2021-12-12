@@ -111,7 +111,7 @@ def two_classes_and_an_association(diagram, element_factory):
 
     connect(assoc_item, assoc_item.handles()[0], spc_cls_item)
     connect(assoc_item, assoc_item.handles()[1], gen_cls_item)
-    UML.model.set_navigability(
+    UML.recipes.set_navigability(
         assoc_item.subject, assoc_item.subject.memberEnd[0], True
     )
 

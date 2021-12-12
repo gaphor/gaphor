@@ -113,7 +113,7 @@ def test_association_head_end_not_navigable(case, navigability, draw_func):
     case.connect(case.assoc, case.assoc.tail, case.class2)
 
     end = case.assoc.head_end
-    UML.model.set_navigability(end.subject.association, end.subject, navigability)
+    UML.recipes.set_navigability(end.subject.association, end.subject, navigability)
     case.assoc.update_ends()
 
     assert case.assoc.head_subject.navigability is navigability

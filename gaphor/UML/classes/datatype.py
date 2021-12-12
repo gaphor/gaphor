@@ -67,7 +67,7 @@ class DataTypeItem(ElementPresentation[UML.DataType], Classified):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.model.stereotypes_str(
+                    text=lambda: UML.recipes.stereotypes_str(
                         self.subject, self.additional_stereotypes()
                     ),
                 ),

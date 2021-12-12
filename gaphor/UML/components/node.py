@@ -48,7 +48,7 @@ class NodeItem(ElementPresentation, Classified):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.model.stereotypes_str(
+                    text=lambda: UML.recipes.stereotypes_str(
                         self.subject,
                         isinstance(self.subject, UML.Device)
                         and (gettext("device"),)

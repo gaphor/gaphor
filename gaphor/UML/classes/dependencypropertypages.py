@@ -67,7 +67,7 @@ class DependencyPropertyPage(PropertyPageBase):
         self.item.dependency_type = cls
         subject = self.item.subject
         if subject:
-            UML.model.swap_element(subject, cls)
+            UML.recipes.swap_element(subject, cls)
             self.item.request_update()
 
     @transactional
