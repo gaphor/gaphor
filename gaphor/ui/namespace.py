@@ -330,27 +330,6 @@ class Namespace(UIComponent, ActionProvider):
     @action(name="tree-view.delete")
     def tree_view_delete(self):
         element = self.get_selected_element()
-        if isinstance(element, Diagram):
-            m = Gtk.MessageDialog(
-                None,
-                Gtk.DialogFlags.MODAL,
-                Gtk.MessageType.QUESTION,
-                Gtk.ButtonsType.YES_NO,
-                gettext(
-                    "Do you really want to delete diagram {name}?\n\n"
-                    "This will possibly delete diagram items\n"
-                    "that are not shown in other diagrams."
-                ).format(name=element.name or gettext("<None>")),
-            )
-            if m.run() == Gtk.ResponseType.YES:
-                with Transaction(self.event_manager):
-                    for i in reversed(list(element.get_all_items())):
-                        s = i.subject
-                        if s and len(s.presentation) == 1:
-                            s.unlink()
-                        i.unlink()
-                    element.unlink()
-            m.destroy()
-        elif element:
+        if element:
             with Transaction(self.event_manager):
                 element.unlink()
