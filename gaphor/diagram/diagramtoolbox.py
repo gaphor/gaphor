@@ -63,6 +63,13 @@ general_tools = ToolSection(
             item_factory=None,
         ),
         ToolDef(
+            "toolbox-magnet",
+            gettext("Magnet"),
+            "start-here-symbolic",
+            "F1",
+            item_factory=None,
+        ),
+        ToolDef(
             "toolbox-line",
             gettext("Line"),
             "gaphor-line-symbolic",

@@ -112,7 +112,10 @@ class Toolbox(UIComponent):
                 button.set_tooltip_text(f"{label}")
 
         # Enable Drag and Drop
-        if action_name != "toolbox-pointer" and Gtk.get_major_version() == 3:
+        if (
+            action_name not in ("toolbox-pointer", "toolbox-magnet")
+            and Gtk.get_major_version() == 3
+        ):
             button.drag_source_set(
                 Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
                 self.DND_TARGETS,
