@@ -18,7 +18,7 @@ from gaphor.core.modeling import (
     ModelFlushed,
     ModelReady,
 )
-from gaphor.ui.event import Notification
+from gaphor.event import Notification
 
 if TYPE_CHECKING:
     from gaphor.core.eventmanager import EventManager

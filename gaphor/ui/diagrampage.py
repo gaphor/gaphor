@@ -21,8 +21,9 @@ from gaphor.diagram.selection import Selection
 from gaphor.diagram.support import get_diagram_item
 from gaphor.diagram.tools import apply_default_tool_set, apply_placement_tool_set
 from gaphor.diagram.tools.placement import create_item, open_editor
+from gaphor.event import Notification
 from gaphor.transaction import Transaction
-from gaphor.ui.event import DiagramSelectionChanged, Notification, ToolSelected
+from gaphor.ui.event import DiagramSelectionChanged, ToolSelected
 
 log = logging.getLogger(__name__)
 

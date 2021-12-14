@@ -98,3 +98,10 @@ class ActionEnabled:
             action_name.split(".", 2) if "." in action_name else ("win", action_name)
         )
         self.enabled = bool(enabled)
+
+
+class Notification:
+    """Inform the user about important events."""
+
+    def __init__(self, message):
+        self.message = message
