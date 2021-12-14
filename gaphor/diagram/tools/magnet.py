@@ -43,7 +43,8 @@ def on_drag_update(gesture, offset_x, offset_y, drag_state):
             drag_state.direction = 1
             drag_state.moving_items = set(
                 moving_items(
-                    view, set(view.get_items_in_rectangle((sx, -100000, 10000000, 1000000)))
+                    view,
+                    set(view.get_items_in_rectangle((sx, -100000, 10000000, 1000000))),
                 )
             )
             for moving in drag_state.moving_items:
@@ -52,7 +53,8 @@ def on_drag_update(gesture, offset_x, offset_y, drag_state):
             drag_state.direction = 2
             drag_state.moving_items = set(
                 moving_items(
-                    view, set(view.get_items_in_rectangle((-100000, sy, 10000000, 1000000)))
+                    view,
+                    set(view.get_items_in_rectangle((-100000, sy, 10000000, 1000000))),
                 )
             )
             for moving in drag_state.moving_items:
