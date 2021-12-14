@@ -8,6 +8,8 @@ from gaphor.core import event_handler
 from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.core.modeling.event import AssociationDeleted, AssociationSet, DerivedSet
 from gaphor.diagram.general import CommentLineItem
+from gaphor.event import Notification
+from gaphor.i18n import gettext
 
 
 def undo_guard(func):
@@ -58,6 +60,14 @@ class SanitizerService(Service):
             old_subject = event.old_value
             if old_subject and not old_subject.presentation:
                 old_subject.unlink()
+
+                self.event_manager.handle(
+                    Notification(
+                        gettext(
+                            "Model element(s) have been removed: they're not shown in a diagram anymore."
+                        )
+                    )
+                )
 
     @event_handler(AssociationSet)
     @undo_guard
