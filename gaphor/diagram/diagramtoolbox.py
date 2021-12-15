@@ -65,7 +65,7 @@ general_tools = ToolSection(
         ToolDef(
             "toolbox-magnet",
             gettext("Magnet"),
-            "start-here-symbolic",
+            "gaphor-magnet-symbolic",
             "F1",
             item_factory=None,
         ),
