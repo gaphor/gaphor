@@ -1,8 +1,11 @@
 import functools
 import itertools
+import logging
 from typing import Type
 
+from gaphas.geometry import Rectangle
 from gaphas.guide import GuidedItemMove
+from gaphas.item import NW, SE
 from gaphas.move import Move as MoveAspect
 from gaphas.tool.itemtool import item_at_point
 from gaphas.view import GtkView
@@ -15,6 +18,8 @@ from gaphor.diagram.presentation import (
     LinePresentation,
     Presentation,
 )
+
+log = logging.getLogger(__name__)
 
 
 def drop_zone_tool(
@@ -48,10 +53,10 @@ def on_motion(controller, x, y, item_class: Type[Presentation]):
 
     if parent:
         parent_type = type(parent)
-        dropzone = has_registration(Group, parent_type, item_class) or has_registration(  # type: ignore[arg-type]
-            Connector, parent_type, item_class  # type: ignore[arg-type]
-        )
-        view.selection.dropzone_item = parent if dropzone else None
+        can_group = has_registration(Group, parent_type, item_class)  # type: ignore[arg-type]
+        can_connect = has_registration(Connector, parent_type, item_class)  # type: ignore[arg-type]
+
+        view.selection.dropzone_item = parent if can_group or can_connect else None
         model.request_update(parent)
     else:
         if view.selection.dropzone_item:
@@ -78,7 +83,6 @@ class DropZoneMove(GuidedItemMove):
         view = self.view
         x, y = pos
 
-        current_parent = item.parent
         over_item = next(
             item_at_point(view, (x, y), exclude=view.selection.selected_items), None
         )
@@ -87,19 +91,11 @@ class DropZoneMove(GuidedItemMove):
             view.selection.dropzone_item = None
             return
 
-        if current_parent and not over_item:
-            # are we going to remove from parent?
-            group = Group(current_parent, item)
-            if group:
-                view.selection.dropzone_item = current_parent
-                current_parent.request_update()
-
-        if over_item:
-            # are we going to add to parent?
-            group = Group(over_item, item)
-            if group and group.can_contain():
-                view.selection.dropzone_item = over_item
-                over_item.request_update()
+        # are we going to add to parent?
+        group = Group(over_item, item)
+        if group and group.can_contain():
+            view.selection.dropzone_item = over_item
+            over_item.request_update()
 
     def stop_move(self, pos):
         """Motion stops: drop!"""
@@ -125,6 +121,7 @@ class DropZoneMove(GuidedItemMove):
                 old_parent.request_update()
 
             if new_parent:
+                grow_parent(new_parent, item)
                 item.parent = new_parent
 
                 adapter = Group(new_parent, item)
@@ -134,3 +131,28 @@ class DropZoneMove(GuidedItemMove):
                 new_parent.request_update()
         finally:
             view.selection.dropzone_item = None
+
+
+def grow_parent(parent, item):
+    if not isinstance(item, ElementPresentation):
+        return
+
+    if not isinstance(parent, ElementPresentation):
+        log.warning(f"Can not grow item {parent}: not an ElementPresentation")
+        return
+
+    parent_bb = _bounds(parent)
+    item_bb = _bounds(item)
+    item_bb.expand(20)
+    new_parent_bb = parent_bb + item_bb
+
+    c2i = parent.matrix_i2c.inverse()
+    parent.handles()[NW].pos = c2i.transform_point(new_parent_bb.x, new_parent_bb.y)
+    parent.handles()[SE].pos = c2i.transform_point(new_parent_bb.x1, new_parent_bb.y1)
+
+
+def _bounds(item):
+    transform = item.matrix_i2c.transform_point
+    x0, y0 = transform(*item.handles()[NW].pos)
+    x1, y1 = transform(*item.handles()[SE].pos)
+    return Rectangle(x0, y0, x1=x1, y1=y1)
