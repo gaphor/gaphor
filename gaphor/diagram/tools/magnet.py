@@ -38,34 +38,29 @@ def on_drag_update(gesture, offset_x, offset_y, drag_state):
     _, sx, sy = gesture.get_start_point()
     view = gesture.get_widget()
 
-    if (
-        not drag_state.direction
-        and abs(offset_x) > 10
-        and abs(offset_x) > abs(offset_y)
-    ):
-        drag_state.direction = 1
-        drag_state.moving_items = set(
-            moving_items(
-                view, set(view.get_items_in_rectangle((sx, -100000, 10000000, 1000000)))
+    if not drag_state.direction:
+        if abs(offset_x) > 10 and abs(offset_x) > abs(offset_y):
+            drag_state.direction = 1
+            drag_state.moving_items = set(
+                moving_items(
+                    view,
+                    set(view.get_items_in_rectangle((sx, -100000, 10000000, 1000000))),
+                )
             )
-        )
-        for moving in drag_state.moving_items:
-            moving.start_move((sx, 0))
-    elif (
-        not drag_state.direction
-        and abs(offset_y) > 10
-        and abs(offset_y) > abs(offset_x)
-    ):
-        drag_state.direction = 2
-        drag_state.moving_items = set(
-            moving_items(
-                view, set(view.get_items_in_rectangle((-100000, sy, 10000000, 1000000)))
+            for moving in drag_state.moving_items:
+                moving.start_move((sx, 0))
+        elif abs(offset_y) > 10 and abs(offset_y) > abs(offset_x):
+            drag_state.direction = 2
+            drag_state.moving_items = set(
+                moving_items(
+                    view,
+                    set(view.get_items_in_rectangle((-100000, sy, 10000000, 1000000))),
+                )
             )
-        )
-        for moving in drag_state.moving_items:
-            moving.start_move((0, sy))
-    elif not drag_state.direction:
-        return
+            for moving in drag_state.moving_items:
+                moving.start_move((0, sy))
+        else:
+            return
 
     if drag_state.direction == 1:
         x = sx + offset_x
