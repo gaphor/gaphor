@@ -85,7 +85,7 @@ class SanitizerService(Service):
             comment.annotatedElement = subject
 
     def perform_unlink_for_instances(self, st, meta):
-        inst = UML.model.find_instances(st)
+        inst = UML.recipes.find_instances(st)
 
         for i in list(inst):
             for e in i.extended:

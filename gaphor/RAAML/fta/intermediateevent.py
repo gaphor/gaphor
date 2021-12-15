@@ -13,7 +13,7 @@ from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(raaml.IntermediateEvent)

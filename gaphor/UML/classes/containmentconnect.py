@@ -5,7 +5,7 @@ from gaphor.core.modeling import Diagram
 from gaphor.diagram.connectors import BaseConnector, Connector
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.UML.classes.containment import ContainmentItem
-from gaphor.UML.modelfactory import owner_package
+from gaphor.UML.recipes import owner_package
 
 
 @Connector.register(ElementPresentation, ContainmentItem)

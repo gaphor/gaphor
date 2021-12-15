@@ -47,7 +47,7 @@ class PropertyItem(ElementPresentation[UML.Property], Named):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.model.stereotypes_str(self.subject),
+                    text=lambda: UML.recipes.stereotypes_str(self.subject),
                 ),
                 Text(
                     text=lambda: format_property(

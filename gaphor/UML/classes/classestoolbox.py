@@ -27,8 +27,8 @@ def create_association(
     assoc_item.head_subject = assoc.memberEnd[0]
     assoc_item.tail_subject = assoc.memberEnd[1]
 
-    UML.model.set_navigability(assoc, assoc_item.head_subject, None)
-    UML.model.set_navigability(assoc, assoc_item.tail_subject, True)
+    UML.recipes.set_navigability(assoc, assoc_item.head_subject, None)
+    UML.recipes.set_navigability(assoc, assoc_item.tail_subject, True)
     assoc_item.tail_subject.aggregation = association_type.value
 
 

@@ -28,7 +28,7 @@ class AssociationPropertyPage(PropertyPageBase):
     def handlers_end(self, end_name, end):
         subject = end.subject
 
-        stereotypes = UML.model.get_stereotypes(subject)
+        stereotypes = UML.recipes.get_stereotypes(subject)
         if stereotypes:
             model, toggle_handler, set_value_handler = stereotype_model(subject)
             return model, {
@@ -151,7 +151,7 @@ class AssociationPropertyPage(PropertyPageBase):
     @transactional
     def _on_end_navigability_change(self, combo, end):
         if end.subject and end.subject.opposite and end.subject.opposite.type:
-            UML.model.set_navigability(
+            UML.recipes.set_navigability(
                 end.subject.association,
                 end.subject,
                 self.NAVIGABILITY[combo.get_active()],

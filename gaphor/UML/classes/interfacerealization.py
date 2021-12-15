@@ -7,7 +7,7 @@ from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.interface import Folded, InterfacePort
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.InterfaceRealization)
@@ -29,13 +29,13 @@ class InterfaceRealizationItem(LinePresentation, Named):
     def on_folded_interface(self):
         connection = self._connections.get_connection(self.head)
         return (
-            (
+            "true"
+            if (
                 connection
                 and isinstance(connection.port, InterfacePort)
                 and connection.connected.folded != Folded.NONE
             )
-            and "true"
-            or "false"
+            else "false"
         )
 
     def draw_head(self, context):

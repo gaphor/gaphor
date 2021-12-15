@@ -6,7 +6,7 @@ from gaphor.diagram.presentation import ElementPresentation, Named, from_package
 from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Package)

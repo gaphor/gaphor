@@ -23,7 +23,7 @@ def test_stereotype_property_page_with_stereotype(diagram, element_factory):
     metaclass.name = "Class"
     stereotype = element_factory.create(UML.Stereotype)
     stereotype.name = "Stereotype"
-    UML.model.create_extension(metaclass, stereotype)
+    UML.recipes.create_extension(metaclass, stereotype)
 
     item = diagram.create(
         UML.classes.ClassItem, subject=element_factory.create(UML.Class)
@@ -42,7 +42,7 @@ def test_stereotype_property_page_apply_stereotype(diagram, element_factory):
     metaclass.name = "Class"
     stereotype = element_factory.create(UML.Stereotype)
     stereotype.name = "Stereotype"
-    UML.model.create_extension(metaclass, stereotype)
+    UML.recipes.create_extension(metaclass, stereotype)
 
     item = diagram.create(
         UML.classes.ClassItem, subject=element_factory.create(UML.Class)
@@ -63,7 +63,7 @@ def test_stereotype_property_page_slot_value(diagram, element_factory):
     stereotype = element_factory.create(UML.Stereotype)
     stereotype.name = "Stereotype"
     stereotype.ownedAttribute = element_factory.create(UML.Property)
-    UML.model.create_extension(metaclass, stereotype)
+    UML.recipes.create_extension(metaclass, stereotype)
 
     item = diagram.create(
         UML.classes.ClassItem, subject=element_factory.create(UML.Class)

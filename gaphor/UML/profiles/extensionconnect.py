@@ -1,8 +1,8 @@
 from gaphor import UML
 from gaphor.diagram.connectors import Connector, RelationshipConnect
 from gaphor.diagram.presentation import Classified
-from gaphor.UML.modelfactory import owner_package
 from gaphor.UML.profiles.extension import ExtensionItem
+from gaphor.UML.recipes import owner_package
 
 
 @Connector.register(Classified, ExtensionItem)
@@ -68,11 +68,10 @@ class ExtensionConnect(RelationshipConnect):
                     else:
                         line.subject = ext
                         return
-            else:
-                # Create a new Extension relationship
-                relation = UML.model.create_extension(head_type, tail_type)
-                relation.package = owner_package(element.diagram.owner)
-                line.subject = relation
+            # Create a new Extension relationship
+            relation = UML.recipes.create_extension(head_type, tail_type)
+            relation.package = owner_package(element.diagram.owner)
+            line.subject = relation
 
     def disconnect_subject(self, handle):
         """Disconnect model element.

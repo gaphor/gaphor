@@ -65,7 +65,7 @@ class EnumerationItem(ElementPresentation[UML.Enumeration], Classified):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.model.stereotypes_str(
+                    text=lambda: UML.recipes.stereotypes_str(
                         self.subject, [gettext("enumeration")]
                     ),
                 ),

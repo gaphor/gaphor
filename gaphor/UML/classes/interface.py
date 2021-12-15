@@ -286,7 +286,7 @@ class InterfaceItem(ElementPresentation, Classified):
         return Box(
             Box(
                 Text(
-                    text=lambda: UML.model.stereotypes_str(
+                    text=lambda: UML.recipes.stereotypes_str(
                         self.subject, (gettext("interface"),)
                     ),
                 ),
@@ -333,7 +333,7 @@ class InterfaceItem(ElementPresentation, Classified):
                 draw=self.draw_interface_ball_and_socket,
             ),
             Text(
-                text=lambda: UML.model.stereotypes_str(self.subject),
+                text=lambda: UML.recipes.stereotypes_str(self.subject),
             ),
             Text(
                 text=lambda: self.subject.name or "",

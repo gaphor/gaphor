@@ -33,8 +33,8 @@ class StereotypesAttributesCase(Case):
         attr.name = "st2_attr_1"
         st2.ownedAttribute = attr
 
-        self.ext1 = UML.model.create_extension(cls, st1)
-        self.ext2 = UML.model.create_extension(cls, st2)
+        self.ext1 = UML.recipes.create_extension(cls, st1)
+        self.ext2 = UML.recipes.create_extension(cls, st2)
 
     def shutdown(self):
         super().shutdown()
@@ -55,12 +55,12 @@ class TestStereotypesAttributes:
         c = case.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
-        instance_spec = UML.model.apply_stereotype(c.subject, case.st1)
+        instance_spec = UML.recipes.apply_stereotype(c.subject, case.st1)
 
         # test precondition
         assert not compartments(c)
 
-        slot = UML.model.add_slot(instance_spec, case.st1.ownedAttribute[0])
+        slot = UML.recipes.add_slot(instance_spec, case.st1.ownedAttribute[0])
         slot.value = "foo"
 
         assert len(compartments(c)) == 1
@@ -70,9 +70,9 @@ class TestStereotypesAttributes:
         c = case.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
-        instance_spec = UML.model.apply_stereotype(c.subject, case.st1)
+        instance_spec = UML.recipes.apply_stereotype(c.subject, case.st1)
 
-        slot = UML.model.add_slot(instance_spec, case.st1.ownedAttribute[0])
+        slot = UML.recipes.add_slot(instance_spec, case.st1.ownedAttribute[0])
         slot.value = "foo"
 
         # test precondition
@@ -87,8 +87,8 @@ class TestStereotypesAttributes:
 
         c.show_stereotypes = True
 
-        instance_spec = UML.model.apply_stereotype(c.subject, case.st1)
-        slot = UML.model.add_slot(instance_spec, case.st1.ownedAttribute[0])
+        instance_spec = UML.recipes.apply_stereotype(c.subject, case.st1)
+        slot = UML.recipes.add_slot(instance_spec, case.st1.ownedAttribute[0])
         slot.value = "foo"
 
         # test precondition
@@ -106,8 +106,8 @@ class TestStereotypesAttributes:
         c.show_stereotypes = True
 
         st1 = case.st1
-        instance_spec = UML.model.apply_stereotype(c.subject, st1)
-        slot = UML.model.add_slot(instance_spec, case.st1.ownedAttribute[0])
+        instance_spec = UML.recipes.apply_stereotype(c.subject, st1)
+        slot = UML.recipes.add_slot(instance_spec, case.st1.ownedAttribute[0])
         slot.value = "foo"
 
         # test precondition
@@ -127,14 +127,14 @@ class TestStereotypesAttributes:
 
         # test precondition
         assert len(compartments(c)) == 0
-        obj = UML.model.apply_stereotype(c.subject, case.st1)
+        obj = UML.recipes.apply_stereotype(c.subject, case.st1)
         # test precondition
         assert len(compartments(c)) == 0
 
         assert len(case.kindof(UML.Slot)) == 0
 
         attr = case.st1.ownedAttribute[0]
-        slot = UML.model.add_slot(obj, attr)
+        slot = UML.recipes.add_slot(obj, attr)
         slot.value = "foo"
         assert len(obj.slot) == 1
         assert len(case.kindof(UML.Slot)) == 1
@@ -152,12 +152,12 @@ class TestStereotypesAttributes:
         c = case.create(ComponentItem, UML.Component)
 
         c.show_stereotypes = True
-        UML.model.apply_stereotype(c.subject, case.st1)
-        obj = UML.model.apply_stereotype(c.subject, case.st2)
+        UML.recipes.apply_stereotype(c.subject, case.st1)
+        obj = UML.recipes.apply_stereotype(c.subject, case.st2)
 
         # change attribute of 2nd stereotype
         attr = case.st2.ownedAttribute[0]
-        slot = UML.model.add_slot(obj, attr)
+        slot = UML.recipes.add_slot(obj, attr)
         slot.value = "st2 test21"
 
         data = case.save()
@@ -173,8 +173,8 @@ class TestStereotypesAttributes:
 
         c.show_stereotypes = True
 
-        UML.model.apply_stereotype(c.subject, case.st1)
-        UML.model.apply_stereotype(c.subject, case.st2)
+        UML.recipes.apply_stereotype(c.subject, case.st1)
+        UML.recipes.apply_stereotype(c.subject, case.st2)
 
         assert len(case.st1.ownedAttribute) == 3
         attr1, attr2, attr3 = case.st1.ownedAttribute
@@ -183,9 +183,9 @@ class TestStereotypesAttributes:
         assert attr3.name == "baseClass", attr3.name
 
         obj = c.subject.appliedStereotype[0]
-        slot = UML.model.add_slot(obj, attr1)
+        slot = UML.recipes.add_slot(obj, attr1)
         slot.value = "st1 test1"
-        slot = UML.model.add_slot(obj, attr2)
+        slot = UML.recipes.add_slot(obj, attr2)
         slot.value = "st1 test2"
 
         data = case.save()

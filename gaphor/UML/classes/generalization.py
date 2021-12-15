@@ -6,7 +6,7 @@ from gaphor.core.modeling.diagram import Diagram
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.shapes import Box, Text
 from gaphor.diagram.support import represents
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Generalization)

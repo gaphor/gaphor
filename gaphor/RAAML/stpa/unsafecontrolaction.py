@@ -13,7 +13,7 @@ from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.i18n import gettext
 from gaphor.RAAML import raaml
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(raaml.UnsafeControlAction)
