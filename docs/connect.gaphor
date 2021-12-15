@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.0.1">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.7.1">
 <Package id="a26e1ce4-0092-11eb-8f71-7fd0147881a5">
 <name>
 <val>connect</val>
@@ -11,14 +11,43 @@
 </ownedDiagram>
 </Package>
 <Diagram id="a26e1ce5-0092-11eb-8f71-7fd0147881a5">
+<element>
+<ref refid="a26e1ce4-0092-11eb-8f71-7fd0147881a5"/>
+</element>
 <name>
 <val>main</val>
 </name>
-<package>
-<ref refid="a26e1ce4-0092-11eb-8f71-7fd0147881a5"/>
-</package>
-<canvas>
-<item id="a6e6483d-0092-11eb-8f71-7fd0147881a5" type="InitialNodeItem">
+<ownedPresentation>
+<reflist>
+<ref refid="a6e6483d-0092-11eb-8f71-7fd0147881a5"/>
+<ref refid="a91cfefd-0092-11eb-8f71-7fd0147881a5"/>
+<ref refid="b7ca8dad-0092-11eb-8f71-7fd0147881a5"/>
+<ref refid="dfca3399-0092-11eb-8f71-7fd0147881a5"/>
+<ref refid="3590f245-0093-11eb-8f71-7fd0147881a5"/>
+<ref refid="035d56f9-0094-11eb-8f71-7fd0147881a5"/>
+<ref refid="5337bbe3-0094-11eb-8f71-7fd0147881a5"/>
+<ref refid="a5d7ae62-0094-11eb-8f71-7fd0147881a5"/>
+<ref refid="29b44aa3-0097-11eb-8f71-7fd0147881a5"/>
+<ref refid="4859fda5-0097-11eb-8f71-7fd0147881a5"/>
+<ref refid="737761ea-0097-11eb-8f71-7fd0147881a5"/>
+<ref refid="b374785d-0092-11eb-8f71-7fd0147881a5"/>
+<ref refid="f7247d4a-0092-11eb-8f71-7fd0147881a5"/>
+<ref refid="106489cc-0093-11eb-8f71-7fd0147881a5"/>
+<ref refid="44175877-0093-11eb-8f71-7fd0147881a5"/>
+<ref refid="69fcbf89-0093-11eb-8f71-7fd0147881a5"/>
+<ref refid="d82f0d92-0093-11eb-8f71-7fd0147881a5"/>
+<ref refid="f15455e9-0093-11eb-8f71-7fd0147881a5"/>
+<ref refid="175402ac-0094-11eb-8f71-7fd0147881a5"/>
+<ref refid="3d675f9e-0094-11eb-8f71-7fd0147881a5"/>
+<ref refid="8c653495-0094-11eb-8f71-7fd0147881a5"/>
+<ref refid="a189d5be-0094-11eb-8f71-7fd0147881a5"/>
+<ref refid="a8df3642-0094-11eb-8f71-7fd0147881a5"/>
+<ref refid="adac3838-0094-11eb-8f71-7fd0147881a5"/>
+<ref refid="b7d7849a-0094-11eb-8f71-7fd0147881a5"/>
+</reflist>
+</ownedPresentation>
+</Diagram>
+<InitialNodeItem id="a6e6483d-0092-11eb-8f71-7fd0147881a5">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 235.0, 235.0)</val>
 </matrix>
@@ -28,11 +57,14 @@
 <height>
 <val>20.0</val>
 </height>
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
 <subject>
 <ref refid="a6e6483c-0092-11eb-8f71-7fd0147881a5"/>
 </subject>
-</item>
-<item id="a91cfefd-0092-11eb-8f71-7fd0147881a5" type="DecisionNodeItem">
+</InitialNodeItem>
+<DecisionNodeItem id="a91cfefd-0092-11eb-8f71-7fd0147881a5">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 313.3828125, 230.0)</val>
 </matrix>
@@ -42,23 +74,29 @@
 <height>
 <val>30.0</val>
 </height>
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
 <subject>
 <ref refid="a91cfefc-0092-11eb-8f71-7fd0147881a5"/>
 </subject>
-</item>
-<item id="b374785d-0092-11eb-8f71-7fd0147881a5" type="FlowItem">
+</DecisionNodeItem>
+<FlowItem id="b374785d-0092-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
 <subject>
 <ref refid="b9c464de-0092-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 322.82421875, 230.0)</val>
 </matrix>
-<orthogonal>
-<val>1</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
 <val>[(0.0, 0.0), (0.0, -70.0), (299.6171875, -70.0)]</val>
 </points>
@@ -68,8 +106,8 @@
 <tail-connection>
 <ref refid="b7ca8dad-0092-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="b7ca8dad-0092-11eb-8f71-7fd0147881a5" type="ActivityFinalNodeItem">
+</FlowItem>
+<ActivityFinalNodeItem id="b7ca8dad-0092-11eb-8f71-7fd0147881a5">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 622.44140625, 143.0)</val>
 </matrix>
@@ -79,11 +117,14 @@
 <height>
 <val>30.0</val>
 </height>
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
 <subject>
 <ref refid="b7ca8dac-0092-11eb-8f71-7fd0147881a5"/>
 </subject>
-</item>
-<item id="dfca3399-0092-11eb-8f71-7fd0147881a5" type="DecisionNodeItem">
+</ActivityFinalNodeItem>
+<DecisionNodeItem id="dfca3399-0092-11eb-8f71-7fd0147881a5">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 491.9414062499999, 230.0)</val>
 </matrix>
@@ -93,23 +134,29 @@
 <height>
 <val>30.0</val>
 </height>
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
 <subject>
 <ref refid="dfca3398-0092-11eb-8f71-7fd0147881a5"/>
 </subject>
-</item>
-<item id="f7247d4a-0092-11eb-8f71-7fd0147881a5" type="FlowItem">
+</DecisionNodeItem>
+<FlowItem id="f7247d4a-0092-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>1</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <subject>
 <ref refid="b1a5eb64-0093-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 333.3828125, 245.0)</val>
 </matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>1</val>
-</horizontal>
 <points>
 <val>[(0.0, 0.0), (158.5585937499999, 0.0)]</val>
 </points>
@@ -119,22 +166,25 @@
 <tail-connection>
 <ref refid="dfca3399-0092-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="106489cc-0093-11eb-8f71-7fd0147881a5" type="FlowItem">
+</FlowItem>
+<FlowItem id="106489cc-0093-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
 <subject>
 <ref refid="14112cc4-0093-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 502.8828124999999, 230.0)</val>
 </matrix>
-<orthogonal>
-<val>1</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, -36.0), (136.0000000000001, -36.0), (136.0000000000001, -57.0)]</val>
+<val>[(-0.94140625, 0.0), (-0.94140625, -36.0), (136.0000000000001, -36.0), (136.0000000000001, -57.0)]</val>
 </points>
 <head-connection>
 <ref refid="dfca3399-0092-11eb-8f71-7fd0147881a5"/>
@@ -142,8 +192,8 @@
 <tail-connection>
 <ref refid="b7ca8dad-0092-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="3590f245-0093-11eb-8f71-7fd0147881a5" type="DecisionNodeItem">
+</FlowItem>
+<DecisionNodeItem id="3590f245-0093-11eb-8f71-7fd0147881a5">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 705.0, 230.0)</val>
 </matrix>
@@ -153,25 +203,31 @@
 <height>
 <val>30.0</val>
 </height>
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
 <subject>
 <ref refid="3590f244-0093-11eb-8f71-7fd0147881a5"/>
 </subject>
-</item>
-<item id="44175877-0093-11eb-8f71-7fd0147881a5" type="FlowItem">
+</DecisionNodeItem>
+<FlowItem id="44175877-0093-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>1</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <subject>
 <ref refid="4593dfc6-0093-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 511.9414062499999, 247.0)</val>
 </matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>1</val>
-</horizontal>
 <points>
-<val>[(0.0, 0.0), (193.0585937500001, -2.0)]</val>
+<val>[(0.0, -1.0), (193.0585937500001, -2.5)]</val>
 </points>
 <head-connection>
 <ref refid="dfca3399-0092-11eb-8f71-7fd0147881a5"/>
@@ -179,20 +235,23 @@
 <tail-connection>
 <ref refid="3590f245-0093-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="69fcbf89-0093-11eb-8f71-7fd0147881a5" type="FlowItem">
+</FlowItem>
+<FlowItem id="69fcbf89-0093-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <subject>
 <ref refid="6be64506-0093-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 255.0, 243.5)</val>
 </matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
 <val>[(0.0, 0.0), (58.3828125, -0.5)]</val>
 </points>
@@ -202,22 +261,25 @@
 <tail-connection>
 <ref refid="a91cfefd-0092-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="d82f0d92-0093-11eb-8f71-7fd0147881a5" type="FlowItem">
+</FlowItem>
+<FlowItem id="d82f0d92-0093-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <subject>
 <ref refid="053e4d98-0094-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 725.0, 246.0)</val>
 </matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
-<val>[(0.0, 0.0), (110.94140625, 0.0)]</val>
+<val>[(0.0, 0.0), (110.94140625, -1.5)]</val>
 </points>
 <head-connection>
 <ref refid="3590f245-0093-11eb-8f71-7fd0147881a5"/>
@@ -225,22 +287,25 @@
 <tail-connection>
 <ref refid="035d56f9-0094-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="f15455e9-0093-11eb-8f71-7fd0147881a5" type="FlowItem">
+</FlowItem>
+<FlowItem id="f15455e9-0093-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <subject>
 <ref refid="58e0e9ba-0094-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 715.4414062499999, 260.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 735.4414062499999, 259.5)</val>
 </matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
-<val>[(0.0, 0.0), (0.05859375000011369, 92.5)]</val>
+<val>[(-20.0, 0.5), (-19.941406249999886, 93.0)]</val>
 </points>
 <head-connection>
 <ref refid="3590f245-0093-11eb-8f71-7fd0147881a5"/>
@@ -248,8 +313,8 @@
 <tail-connection>
 <ref refid="5337bbe3-0094-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="035d56f9-0094-11eb-8f71-7fd0147881a5" type="DecisionNodeItem">
+</FlowItem>
+<DecisionNodeItem id="035d56f9-0094-11eb-8f71-7fd0147881a5">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 835.94140625, 230.0)</val>
 </matrix>
@@ -259,25 +324,31 @@
 <height>
 <val>30.0</val>
 </height>
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
 <subject>
 <ref refid="035d56f8-0094-11eb-8f71-7fd0147881a5"/>
 </subject>
-</item>
-<item id="175402ac-0094-11eb-8f71-7fd0147881a5" type="FlowItem">
+</DecisionNodeItem>
+<FlowItem id="175402ac-0094-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
 <subject>
 <ref refid="1ad48906-0094-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 847.94140625, 230.0)</val>
 </matrix>
-<orthogonal>
-<val>1</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, -69.0), (-195.5, -69.0)]</val>
+<val>[(-2.0, 0.0), (-2.0, -69.0), (-195.5, -69.0)]</val>
 </points>
 <head-connection>
 <ref refid="035d56f9-0094-11eb-8f71-7fd0147881a5"/>
@@ -285,22 +356,25 @@
 <tail-connection>
 <ref refid="b7ca8dad-0092-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="3d675f9e-0094-11eb-8f71-7fd0147881a5" type="FlowItem">
+</FlowItem>
+<FlowItem id="3d675f9e-0094-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <subject>
 <ref refid="327a5628-0097-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 855.94140625, 244.5)</val>
 </matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
-<val>[(0.0, 0.0), (155.9999999999999, 0.0)]</val>
+<val>[(0.0, 0.0), (174.99999999999454, 0.0)]</val>
 </points>
 <head-connection>
 <ref refid="035d56f9-0094-11eb-8f71-7fd0147881a5"/>
@@ -308,8 +382,8 @@
 <tail-connection>
 <ref refid="29b44aa3-0097-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="5337bbe3-0094-11eb-8f71-7fd0147881a5" type="DecisionNodeItem">
+</FlowItem>
+<DecisionNodeItem id="5337bbe3-0094-11eb-8f71-7fd0147881a5">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 705.0, 352.5)</val>
 </matrix>
@@ -319,25 +393,31 @@
 <height>
 <val>30.0</val>
 </height>
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
 <subject>
 <ref refid="5337bbe2-0094-11eb-8f71-7fd0147881a5"/>
 </subject>
-</item>
-<item id="8c653495-0094-11eb-8f71-7fd0147881a5" type="FlowItem">
+</DecisionNodeItem>
+<FlowItem id="8c653495-0094-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <subject>
 <ref refid="4eb63078-0097-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 725.0, 368.0)</val>
 </matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
-<val>[(0.0, 0.0), (122.94140625, -1.5)]</val>
+<val>[(0.0, -0.5), (122.94140625, -1.5)]</val>
 </points>
 <head-connection>
 <ref refid="5337bbe3-0094-11eb-8f71-7fd0147881a5"/>
@@ -345,22 +425,25 @@
 <tail-connection>
 <ref refid="4859fda5-0097-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="a189d5be-0094-11eb-8f71-7fd0147881a5" type="FlowItem">
+</FlowItem>
+<FlowItem id="a189d5be-0094-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <subject>
 <ref refid="85488974-0097-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 705.0, 367.0)</val>
 </matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
-<val>[(0.0, 0.0), (-185.0585937500001, 0.5)]</val>
+<val>[(0.0, -0.5), (-179.05859375, 0.5)]</val>
 </points>
 <head-connection>
 <ref refid="5337bbe3-0094-11eb-8f71-7fd0147881a5"/>
@@ -368,10 +451,10 @@
 <tail-connection>
 <ref refid="737761ea-0097-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="a5d7ae62-0094-11eb-8f71-7fd0147881a5" type="ActivityFinalNodeItem">
+</FlowItem>
+<ActivityFinalNodeItem id="a5d7ae62-0094-11eb-8f71-7fd0147881a5">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1079.94140625, 352.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1100.4414062499945, 351.5)</val>
 </matrix>
 <width>
 <val>30.0</val>
@@ -379,25 +462,31 @@
 <height>
 <val>30.0</val>
 </height>
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
 <subject>
 <ref refid="a5d7ae61-0094-11eb-8f71-7fd0147881a5"/>
 </subject>
-</item>
-<item id="a8df3642-0094-11eb-8f71-7fd0147881a5" type="FlowItem">
+</ActivityFinalNodeItem>
+<FlowItem id="a8df3642-0094-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <subject>
 <ref refid="5370e6ee-0097-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 1059.94140625, 367.5)</val>
 </matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
-<val>[(0.0, 0.0), (20.0, 0.0)]</val>
+<val>[(5.0, 0.0), (40.49999999999454, -0.5)]</val>
 </points>
 <head-connection>
 <ref refid="4859fda5-0097-11eb-8f71-7fd0147881a5"/>
@@ -405,22 +494,25 @@
 <tail-connection>
 <ref refid="a5d7ae62-0094-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="adac3838-0094-11eb-8f71-7fd0147881a5" type="FlowItem">
+</FlowItem>
+<FlowItem id="adac3838-0094-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <subject>
 <ref refid="365f15d0-0097-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 1094.94140625, 257.5)</val>
 </matrix>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
-<val>[(0.0, 0.0), (0.5, 94.5)]</val>
+<val>[(21.99999999999409, 0.0), (20.999999999994543, 94.0)]</val>
 </points>
 <head-connection>
 <ref refid="29b44aa3-0097-11eb-8f71-7fd0147881a5"/>
@@ -428,22 +520,25 @@
 <tail-connection>
 <ref refid="a5d7ae62-0094-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="b7d7849a-0094-11eb-8f71-7fd0147881a5" type="FlowItem">
+</FlowItem>
+<FlowItem id="b7d7849a-0094-11eb-8f71-7fd0147881a5">
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
 <subject>
 <ref refid="85488975-0097-11eb-8f71-7fd0147881a5"/>
 </subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 438.94140625, 382.5)</val>
 </matrix>
-<orthogonal>
-<val>1</val>
-</orthogonal>
-<horizontal>
-<val>0</val>
-</horizontal>
 <points>
-<val>[(0.0, 0.0), (0.0, 85.0), (657.4999999999995, 85.0), (657.4999999999995, -0.5)]</val>
+<val>[(3.0, 0.0), (3.0, 85.0), (677.9999999999941, 85.0), (677.9999999999941, -1.0)]</val>
 </points>
 <head-connection>
 <ref refid="737761ea-0097-11eb-8f71-7fd0147881a5"/>
@@ -451,10 +546,10 @@
 <tail-connection>
 <ref refid="a5d7ae62-0094-11eb-8f71-7fd0147881a5"/>
 </tail-connection>
-</item>
-<item id="29b44aa3-0097-11eb-8f71-7fd0147881a5" type="ActionItem">
+</FlowItem>
+<ActionItem id="29b44aa3-0097-11eb-8f71-7fd0147881a5">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 1011.9414062499999, 227.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 1030.9414062499945, 227.5)</val>
 </matrix>
 <width>
 <val>169.0</val>
@@ -462,40 +557,47 @@
 <height>
 <val>30.0</val>
 </height>
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
 <subject>
 <ref refid="29b44aa2-0097-11eb-8f71-7fd0147881a5"/>
 </subject>
-</item>
-<item id="4859fda5-0097-11eb-8f71-7fd0147881a5" type="ActionItem">
+</ActionItem>
+<ActionItem id="4859fda5-0097-11eb-8f71-7fd0147881a5">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 847.94140625, 352.5)</val>
 </matrix>
 <width>
-<val>212.0</val>
+<val>217.0</val>
 </width>
 <height>
 <val>30.0</val>
 </height>
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
 <subject>
 <ref refid="4859fda4-0097-11eb-8f71-7fd0147881a5"/>
 </subject>
-</item>
-<item id="737761ea-0097-11eb-8f71-7fd0147881a5" type="ActionItem">
+</ActionItem>
+<ActionItem id="737761ea-0097-11eb-8f71-7fd0147881a5">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 357.94140625, 352.5)</val>
 </matrix>
 <width>
-<val>162.0</val>
+<val>168.0</val>
 </width>
 <height>
 <val>30.0</val>
 </height>
+<diagram>
+<ref refid="a26e1ce5-0092-11eb-8f71-7fd0147881a5"/>
+</diagram>
 <subject>
 <ref refid="737761e9-0097-11eb-8f71-7fd0147881a5"/>
 </subject>
-</item>
-</canvas>
-</Diagram>
+</ActionItem>
 <StyleSheet id="a26e1ce6-0092-11eb-8f71-7fd0147881a5">
 <styleSheet>
 <val>* {
@@ -564,7 +666,7 @@ diagram {
 </ActivityFinalNode>
 <ControlFlow id="b9c464de-0092-11eb-8f71-7fd0147881a5">
 <guard>
-<val>[now allowed]</val>
+<val>now allowed</val>
 </guard>
 <presentation>
 <reflist>
@@ -601,7 +703,7 @@ diagram {
 </DecisionNode>
 <ControlFlow id="14112cc4-0093-11eb-8f71-7fd0147881a5">
 <guard>
-<val>[not connected]</val>
+<val>not connected</val>
 </guard>
 <presentation>
 <reflist>
@@ -638,7 +740,7 @@ diagram {
 </DecisionNode>
 <ControlFlow id="4593dfc6-0093-11eb-8f71-7fd0147881a5">
 <guard>
-<val>[opposite end is connected]</val>
+<val>opposite end is connected</val>
 </guard>
 <presentation>
 <reflist>
@@ -667,7 +769,7 @@ diagram {
 </ControlFlow>
 <ControlFlow id="b1a5eb64-0093-11eb-8f71-7fd0147881a5">
 <guard>
-<val>[relation is allowed]</val>
+<val>relation is allowed</val>
 </guard>
 <presentation>
 <reflist>
@@ -704,7 +806,7 @@ diagram {
 </DecisionNode>
 <ControlFlow id="053e4d98-0094-11eb-8f71-7fd0147881a5">
 <guard>
-<val>[no subject]</val>
+<val>no subject</val>
 </guard>
 <presentation>
 <reflist>
@@ -720,7 +822,7 @@ diagram {
 </ControlFlow>
 <ControlFlow id="1ad48906-0094-11eb-8f71-7fd0147881a5">
 <guard>
-<val>[is same]</val>
+<val>is same</val>
 </guard>
 <name>
 <val></val>
@@ -760,7 +862,7 @@ diagram {
 </DecisionNode>
 <ControlFlow id="58e0e9ba-0094-11eb-8f71-7fd0147881a5">
 <guard>
-<val>[has subject]</val>
+<val>has subject</val>
 </guard>
 <presentation>
 <reflist>
@@ -810,7 +912,7 @@ diagram {
 </Action>
 <ControlFlow id="327a5628-0097-11eb-8f71-7fd0147881a5">
 <guard>
-<val>[subject is different]</val>
+<val>subject is different</val>
 </guard>
 <presentation>
 <reflist>
@@ -859,7 +961,7 @@ diagram {
 </Action>
 <ControlFlow id="4eb63078-0097-11eb-8f71-7fd0147881a5">
 <guard>
-<val>[No exiting rel.]</val>
+<val>No exiting rel.</val>
 </guard>
 <presentation>
 <reflist>
@@ -908,7 +1010,7 @@ diagram {
 </Action>
 <ControlFlow id="85488974-0097-11eb-8f71-7fd0147881a5">
 <guard>
-<val>[Have existing relation]</val>
+<val>Have existing relation</val>
 </guard>
 <presentation>
 <reflist>
