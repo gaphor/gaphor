@@ -806,7 +806,7 @@ diagram {
 </DecisionNode>
 <ControlFlow id="053e4d98-0094-11eb-8f71-7fd0147881a5">
 <guard>
-<val>no subject</val>
+<val>has subject</val>
 </guard>
 <presentation>
 <reflist>
@@ -862,7 +862,7 @@ diagram {
 </DecisionNode>
 <ControlFlow id="58e0e9ba-0094-11eb-8f71-7fd0147881a5">
 <guard>
-<val>has subject</val>
+<val>no subject</val>
 </guard>
 <presentation>
 <reflist>
@@ -897,7 +897,7 @@ diagram {
 </reflist>
 </incoming>
 <name>
-<val>Point to element</val>
+<val>Update relations</val>
 </name>
 <outgoing>
 <reflist>
