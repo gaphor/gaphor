@@ -5,16 +5,9 @@ older state or reversing the command that was done to the model being edited.
 With the possibility of undo, users can explore and work without fear of making
 mistakes, because they can easily be undone.
 
-Gaphor makes use of the [undo
-system](https://gaphas.readthedocs.io/en/latest/undo.html) in Gaphas, which is
-Gaphor's Canvas widget. Gaphas implements this undo system by storing the
-reverse operations to an undo list. For example, if you add a new item to the
-screen, it will save the remove operation to the undo list. If undo is then
-called, Gaphas will then remove the item from the screen that was added.
-
 ## Overview of Transactions
 
-Gaphor adds on to what Gaphas provides with an undo service, called the Undo
+The recording and playback of changes in Gaphor is handled by the the Undo
 Manager. The Undo Manager works transactionally. This means that if something is
 being updated by the user in a model, each change is divided into operations
 called transactions. Each operation must succeed or fail as a complete unit. If
