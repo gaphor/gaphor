@@ -30,8 +30,9 @@ class PartitionItem(ElementPresentation):
         )
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("partition.name")
         self.watch("partition", self.update_partition)
+        self.watch("partition.name")
+        self.watch("partition[ActivityPartition].represents[NamedElement].name")
 
     partition = association("partition", UML.ActivityPartition, composite=True)
 
@@ -83,7 +84,12 @@ class PartitionItem(ElementPresentation):
         for num, partition in enumerate(self.partition):
             cr.move_to(partition_width * num, 0)
             cr.line_to(partition_width * num, bounding_box.height)
-            layout.set(text=partition.name, font=style)
+            layout.set(
+                text=f"{partition.name}: {partition.represents.name}"
+                if isinstance(partition.represents, UML.NamedElement)
+                else partition.name,
+                font=style,
+            )
             cr.move_to(partition_width * num, padding_top * 3)
             layout.show_layout(
                 cr,
