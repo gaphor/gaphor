@@ -58,7 +58,7 @@ class SanitizerService(Service):
         `item`'s subject or the deleted item was the only item currently
         linked."""
         if (
-            not self.properties.get("remove-dangling-elements", True)
+            not self.properties.get("remove-unused-elements", True)
             or event.property is not Presentation.subject  # type: ignore[misc]
         ):
             return

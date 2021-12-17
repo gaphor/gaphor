@@ -233,14 +233,16 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                         <child>
                           <object class="GtkLabel">
                             <property name="hexpand">1</property>
-                            <property name="label" translatable="yes">Remove dangling elements</property>
+                            <property name="label" translatable="yes">Remove unused elements</property>
                             <property name="xalign">0</property>
+                            <property name="tooltip-text" translatable="yes">Automatically remove elements no longer in use in any diagram.</property>
                           </object>
                         </child>
                         <child>
                           <object class="GtkSwitch">
                             <property name="halign">center</property>
-                            <property name="action_name">win.remove-dangling-elements</property>
+                            <property name="action_name">win.remove-unused-elements</property>
+                            <property name="tooltip-text" translatable="yes">Automatically remove elements no longer in use in any diagram.</property>
                           </object>
                         </child>
                       </object>

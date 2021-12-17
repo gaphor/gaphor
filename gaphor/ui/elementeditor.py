@@ -105,11 +105,11 @@ class ElementEditor(UIComponent, ActionProvider):
         self.properties.set("reset-tool-after-create", active)
 
     @action(
-        name="remove-dangling-elements",
-        state=lambda self: self.properties.get("remove-dangling-elements", True),
+        name="remove-unused-elements",
+        state=lambda self: self.properties.get("remove-unused-elements", True),
     )
-    def remove_dangling_elements(self, active):
-        self.properties.set("remove-dangling-elements", active)
+    def remove_unused_elements(self, active):
+        self.properties.set("remove-unused-elements", active)
 
 
 class EditorStack:
