@@ -1,7 +1,5 @@
 """Activity partition property page."""
 
-from gi.repository import Gtk
-
 from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.diagram.propertypages import (
@@ -23,45 +21,14 @@ class PartitionPropertyPage(PropertyPageBase):
     def __init__(self, item: PartitionItem):
         super().__init__()
         self.item = item
-        self.list_store = Gtk.ListStore(int, str)
 
     def construct(self):
         """Creates the Partition Property Page."""
         builder = new_builder(
             "partition-editor",
+            "num-partitions-adjustment",
             signals={"partitions-changed": (self._on_num_partitions_changed,)},
         )
-
-        num_partitions = builder.get_object("num-partitions")
-        adjustment = Gtk.Adjustment(
-            value=len(self.item.partition),
-            lower=1,
-            upper=10,
-            step_increment=1,
-            page_increment=5,
-        )
-        num_partitions.set_adjustment(adjustment)
-
-        treeview = builder.get_object("partition-treeview")
-        treeview.set_model(self.list_store)
-
-        renderer_text = Gtk.CellRendererText()
-        treeview.append_column(
-            Gtk.TreeViewColumn(title="#", cell_renderer=renderer_text, text=0)
-        )
-
-        renderer_editable_text = Gtk.CellRendererText()
-        renderer_editable_text.set_property("editable", True)
-
-        treeview.append_column(
-            Gtk.TreeViewColumn(
-                title=gettext("Name"), cell_renderer=renderer_editable_text, text=1
-            )
-        )
-
-        renderer_editable_text.connect("edited", self._on_partition_name_changed)
-
-        self.update_list_store()
 
         return builder.get_object("partition-editor")
 
@@ -70,12 +37,10 @@ class PartitionPropertyPage(PropertyPageBase):
         """Event handler for partition number spin button."""
         num_partitions = spin_button.get_value_as_int()
         self.update_partitions(num_partitions)
-        self.update_list_store()
 
     @transactional
     def _on_partition_name_changed(self, widget, path, text):
         """Event handler for editing partition names."""
-        self.list_store[path][1] = text
         self.item.partition[int(path)].name = text
 
     def update_partitions(self, num_partitions) -> None:
@@ -95,8 +60,3 @@ class PartitionPropertyPage(PropertyPageBase):
         elif num_partitions < len(self.item.partition):
             partition = self.item.partition[-1]
             partition.unlink()
-
-    def update_list_store(self):
-        self.list_store.clear()
-        for num, partition in enumerate(self.item.partition, start=1):
-            self.list_store.append([num, partition.name])
