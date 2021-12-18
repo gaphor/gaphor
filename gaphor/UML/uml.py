@@ -1133,19 +1133,19 @@ ActivityGroup.subgroup = derivedunion("subgroup", ActivityGroup)
 Element.owner.add(ActivityGroup.superGroup)  # type: ignore[attr-defined]
 Element.owner.add(ActivityGroup.activity)  # type: ignore[attr-defined]
 Element.ownedElement.add(ActivityGroup.subgroup)  # type: ignore[attr-defined]
-Constraint.constrainedElement = association("constrainedElement", Element)
 Constraint.owningState = association("owningState", State, upper=1, opposite="statevariant")
 Constraint.parameterSet = association("parameterSet", ParameterSet, upper=1, opposite="condition")
 Constraint.transition = association("transition", Transition, upper=1, opposite="guard")
 Constraint.stateInvariant = association("stateInvariant", StateInvariant, upper=1, opposite="invariant")
+Constraint.constrainedElement = association("constrainedElement", Element)
 Element.owner.add(Constraint.parameterSet)  # type: ignore[attr-defined]
 Element.owner.add(Constraint.transition)  # type: ignore[attr-defined]
 Element.owner.add(Constraint.stateInvariant)  # type: ignore[attr-defined]
-PackageImport.importedPackage = association("importedPackage", Package, upper=1)
 PackageImport.importingNamespace = association("importingNamespace", Namespace, upper=1, opposite="packageImport")
-DirectedRelationship.target.add(PackageImport.importedPackage)  # type: ignore[attr-defined]
+PackageImport.importedPackage = association("importedPackage", Package, upper=1)
 DirectedRelationship.source.add(PackageImport.importingNamespace)  # type: ignore[attr-defined]
 Element.owner.add(PackageImport.importingNamespace)  # type: ignore[attr-defined]
+DirectedRelationship.target.add(PackageImport.importedPackage)  # type: ignore[attr-defined]
 InteractionFragment.generalOrdering = association("generalOrdering", GeneralOrdering, composite=True, opposite="interactionFragment")
 InteractionFragment.enclosingInteraction = association("enclosingInteraction", Interaction, upper=1, opposite="fragment")
 InteractionFragment.covered = association("covered", Lifeline, upper=1, opposite="coveredBy")
@@ -1237,8 +1237,8 @@ Element.ownedElement.add(State.doActivity)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.statevariant)  # type: ignore[attr-defined]
 Port.encapsulatedClassifier = association("encapsulatedClassifier", EncapsulatedClassifer, upper=1, opposite="ownedPort")
 RedefinableElement.redefinitionContext.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
-Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact)
 Deployment.location = association("location", DeploymentTarget, upper=1, opposite="deployment")
+Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact)
 Element.owner.add(Deployment.location)  # type: ignore[attr-defined]
 ActivityPartition.node = association("node", ActivityNode, opposite="inPartition")
 ActivityPartition.represents = association("represents", Element, upper=1)
