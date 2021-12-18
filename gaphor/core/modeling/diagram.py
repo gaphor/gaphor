@@ -221,6 +221,7 @@ class Diagram(Element):
     """Diagrams may contain model elements and can be owned by a Package."""
 
     name: attribute[str] = attribute("name", str)
+    diagramType: attribute[str] = attribute("diagramType", str)
     element: relation_one[Element]
 
     def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):
