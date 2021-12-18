@@ -13,7 +13,10 @@ from gaphor.core import action
 from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.diagram.diagramtoolbox import ToolDef
 from gaphor.diagram.event import DiagramItemPlaced
-from gaphor.services.modelinglanguage import ModelingLanguage, ModelingLanguageChanged
+from gaphor.services.modelinglanguage import (
+    ModelingLanguageChanged,
+    ModelingLanguageService,
+)
 from gaphor.services.properties import Properties
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group, from_variant
@@ -39,7 +42,7 @@ class Toolbox(UIComponent):
         self,
         event_manager: EventManager,
         properties: Properties,
-        modeling_language: ModelingLanguage,
+        modeling_language: ModelingLanguageService,
     ):
         self.event_manager = event_manager
         self.properties = properties
@@ -129,11 +132,14 @@ class Toolbox(UIComponent):
         toolbox.set_name("toolbox")
         toolbox.connect("destroy", self._on_toolbox_destroyed)
         toolbox.insert_action_group("toolbox", self._action_group)
-        collapsed = self.properties.get("toolbox-collapsed", {})
+        collapsed_property = (
+            f"toolbox-{self.modeling_language.active_modeling_language}-collapsed"
+        )
+        collapsed = self.properties.get(collapsed_property, {})
 
         def on_expanded(widget, prop, index):
             collapsed[index] = not widget.get_property("expanded")
-            self.properties.set("toolbox-collapsed", collapsed)
+            self.properties.set(collapsed_property, collapsed)
 
         for index, (title, items) in enumerate(toolbox_actions):
             expander = Gtk.Expander.new(title)

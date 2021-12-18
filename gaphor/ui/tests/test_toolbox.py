@@ -1,12 +1,12 @@
 import pytest
 
+from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.ui.toolbox import Toolbox
-from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture
-def modeling_language():
-    return UMLModelingLanguage()
+def modeling_language(event_manager):
+    return ModelingLanguageService(event_manager)
 
 
 @pytest.fixture
