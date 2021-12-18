@@ -99,6 +99,13 @@ def create_diagram_types_model(modeling_language):
     return model
 
 
+def popup_set_model(popup, model):
+    if Gtk.get_major_version() == 3:
+        popup.bind_model(model, None)
+    else:
+        popup.set_menu_model(model)
+
+
 class MainWindow(Service, ActionProvider):
     """The main window for the application.
 
@@ -181,36 +188,22 @@ class MainWindow(Service, ActionProvider):
         self.window.set_application(gtk_app)
 
         select_modeling_language = builder.get_object("select-modeling-language")
-        if Gtk.get_major_version() == 3:
-            select_modeling_language.bind_model(
-                create_modeling_language_model(self.modeling_language), None
-            )
-        else:
-            select_modeling_language.set_menu_model(
-                create_modeling_language_model(self.modeling_language)
-            )
+        popup_set_model(
+            select_modeling_language,
+            create_modeling_language_model(self.modeling_language),
+        )
         self.modeling_language_name = builder.get_object("modeling-language-name")
 
         self.diagram_types = builder.get_object("diagram-types")
-        if Gtk.get_major_version() == 3:
-            self.diagram_types.bind_model(
-                create_diagram_types_model(self.modeling_language), None
-            )
-        else:
-            self.diagram_types.set_menu_model(
-                create_diagram_types_model(self.modeling_language)
-            )
+        popup_set_model(
+            self.diagram_types, create_diagram_types_model(self.modeling_language)
+        )
 
         hamburger = builder.get_object("hamburger")
-        if Gtk.get_major_version() == 3:
-            hamburger.bind_model(
-                create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
-                None,
-            )
-        else:
-            hamburger.set_menu_model(
-                create_hamburger_model(self.export_menu.menu, self.tools_menu.menu)
-            )
+        popup_set_model(
+            hamburger,
+            create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
+        )
 
         recent_files = builder.get_object("recent-files")
         if Gtk.get_major_version() == 3:
