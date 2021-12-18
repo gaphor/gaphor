@@ -70,7 +70,7 @@ class SanitizerService(Service):
             self.event_manager.handle(
                 Notification(
                     gettext(
-                        "Dangling model element(s) have been removed: they're not shown in a diagram anymore."
+                        "Removed unused elements from the model: they are not used in any other diagram."
                     )
                 )
             )
