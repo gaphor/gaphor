@@ -139,6 +139,7 @@ class MainWindow(Service, ActionProvider):
         self.model_changed = False
         self.layout = None
         self.modeling_language_name = None
+        self.diagram_types = None
         self.in_app_notifier = None
 
         event_manager.subscribe(self._on_file_manager_state_changed)
@@ -323,6 +324,10 @@ class MainWindow(Service, ActionProvider):
         if self.modeling_language_name:
             self.modeling_language_name.set_label(
                 gettext("Profile: {}").format(self.modeling_language.name)
+            )
+        if self.diagram_types:
+            popup_set_model(
+                self.diagram_types, create_diagram_types_model(self.modeling_language)
             )
 
     def _on_window_active(self, window, prop):
