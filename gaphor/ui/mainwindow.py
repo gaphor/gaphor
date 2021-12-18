@@ -72,6 +72,25 @@ def create_modeling_language_model(modeling_language):
     return model
 
 
+def create_diagram_types_model(modeling_language):
+    model = Gio.Menu.new()
+
+    part = Gio.Menu.new()
+    for id, name in modeling_language.diagram_types:
+        menu_item = Gio.MenuItem.new(name, "win.create-diagram")
+        menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
+        part.append_item(menu_item)
+    model.append_section(None, part)
+
+    part = Gio.Menu.new()
+    menu_item = Gio.MenuItem.new(gettext("Generic Diagram"), "win.create-diagram")
+    menu_item.set_attribute_value("target", GLib.Variant.new_string(""))
+    part.append_item(menu_item)
+    model.append_section(None, part)
+
+    return model
+
+
 class MainWindow(Service, ActionProvider):
     """The main window for the application.
 
@@ -144,6 +163,16 @@ class MainWindow(Service, ActionProvider):
                 create_modeling_language_model(self.modeling_language)
             )
         self.modeling_language_name = builder.get_object("modeling-language-name")
+
+        self.diagram_types = builder.get_object("diagram-types")
+        if Gtk.get_major_version() == 3:
+            self.diagram_types.bind_model(
+                create_diagram_types_model(self.modeling_language), None
+            )
+        else:
+            self.diagram_types.set_menu_model(
+                create_diagram_types_model(self.modeling_language)
+            )
 
         hamburger = builder.get_object("hamburger")
         if Gtk.get_major_version() == 3:

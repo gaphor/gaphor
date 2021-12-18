@@ -7,6 +7,8 @@
   </object>
   <object class="GtkPopoverMenu" id="select-modeling-language">
   </object>
+  <object class="GtkPopover" id="diagram-types">
+  </object>
   <object class="GtkApplicationWindow" id="main-window">
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header">
@@ -54,9 +56,9 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton">
-            <property name="action_name">win.create-diagram</property>
+          <object class="GtkMenuButton">
             <property name="icon_name">gaphor-new-diagram-symbolic</property>
+            <property name="popover">diagram-types</property>
           </object>
         </child>
         <child>

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABCMeta, abstractmethod
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Iterable
 
 if TYPE_CHECKING:
     from gaphor.core.modeling import Element
@@ -34,6 +34,10 @@ class ModelingLanguage(metaclass=ABCMeta):
     @abstractmethod
     def toolbox_definition(self) -> ToolboxDefinition:
         """Get structure for the toolbox."""
+
+    @property
+    def diagram_types(self) -> Iterable[tuple[str, str]]:
+        return iter(())
 
     @abstractmethod
     def lookup_element(self, name: str) -> type[Element] | None:

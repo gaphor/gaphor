@@ -9,6 +9,13 @@
   <object class="GtkPopover" id="select-modeling-language">
     <property name="position">bottom</property>
   </object>
+  <object class="GtkPopover" id="diagram-types">
+    <property name="can-focus">False</property>
+    <property name="position">bottom</property>
+    <child>
+      <placeholder/>
+    </child>
+  </object>
   <object class="GtkApplicationWindow" id="main-window">
     <child>
       <object class="GtkOverlay" id="main-content">
@@ -134,17 +141,16 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton">
+          <object class="GtkMenuButton">
             <property name="visible">1</property>
             <property name="can-focus">1</property>
             <property name="receives-default">1</property>
             <property name="tooltip-text" translatable="yes">Create New diagram</property>
-            <property name="action-name">win.create-diagram</property>
+            <property name="popover">diagram-types</property>
             <child>
               <object class="GtkImage">
                 <property name="visible">1</property>
                 <property name="icon-name">gaphor-new-diagram-symbolic</property>
-                <property name="icon-size">1</property>
               </object>
             </child>
             <style>

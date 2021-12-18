@@ -30,7 +30,7 @@ def test_create_diagram(namespace, element_factory):
     package = element_factory.create(UML.Package)
     namespace.select_element(package)
 
-    namespace.tree_view_create_diagram()
+    namespace.tree_view_create_diagram("")
 
     assert element_factory.lselect(Diagram)
 
