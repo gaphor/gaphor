@@ -3,6 +3,8 @@
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import (
+    DiagramType,
+    DiagramTypes,
     ToolboxDefinition,
     ToolDef,
     ToolSection,
@@ -58,4 +60,17 @@ sysml_toolbox_actions: ToolboxDefinition = (
     interactions,
     states,
     use_cases,
+)
+
+
+# Not implemented: Parameter Diagram
+sysml_diagram_types: DiagramTypes = (
+    DiagramType("act", gettext("Activity Diagram"), (actions,)),
+    DiagramType("blk", gettext("Block Definition Diagram"), (blocks,)),
+    DiagramType("ibl", gettext("Internal Block Diagram"), (internal_blocks,)),
+    DiagramType("pkg", gettext("Package diagram"), (blocks,)),
+    DiagramType("req", gettext("Requirement diagram"), (requirements,)),
+    DiagramType("sd", gettext("Sequence Diagram"), (interactions,)),
+    DiagramType("stm", gettext("State Machine Diagram"), (states,)),
+    DiagramType("uc", gettext("Use Case Diagram"), (use_cases,)),
 )
