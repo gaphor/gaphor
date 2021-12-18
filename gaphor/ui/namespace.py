@@ -295,7 +295,7 @@ class Namespace(UIComponent, ActionProvider):
             cell.set_property("editable", 0)
 
     @action(name="win.create-diagram")
-    def tree_view_create_diagram(self):
+    def tree_view_create_diagram(self, diagram_type: str):
         assert self.view
         element = self.get_selected_element()
         while element and not isinstance(element, UML.NamedElement):
@@ -308,6 +308,7 @@ class Namespace(UIComponent, ActionProvider):
                 diagram.name = gettext("{name} diagram").format(name=element.name)
             else:
                 diagram.name = gettext("New diagram")
+            diagram.diagramType = diagram_type
         self.select_element(diagram)
         self.event_manager.handle(DiagramOpened(diagram))
         self.tree_view_rename_selected()

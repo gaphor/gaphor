@@ -46,6 +46,15 @@ class ToolSection(NamedTuple):
 ToolboxDefinition = Sequence[ToolSection]
 
 
+class DiagramType(NamedTuple):
+    id: str
+    name: str
+    sections: Sequence[ToolSection]
+
+
+DiagramTypes = Sequence[DiagramType]
+
+
 def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
     """Iterate toolbox items, regardless of section headers."""
     for name, section in toolbox_actions:
