@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Iterable
 
 if TYPE_CHECKING:
     from gaphor.core.modeling import Element
-    from gaphor.diagram.diagramtoolbox import ToolboxDefinition
+    from gaphor.diagram.diagramtoolbox import DiagramType, ToolboxDefinition
 
 
 class Service(metaclass=ABCMeta):
@@ -36,7 +36,7 @@ class ModelingLanguage(metaclass=ABCMeta):
         """Get structure for the toolbox."""
 
     @property
-    def diagram_types(self) -> Iterable[tuple[str, str]]:
+    def diagram_types(self) -> Iterable[DiagramType]:
         return iter(())
 
     @abstractmethod

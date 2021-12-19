@@ -5,13 +5,13 @@ This is the toolbox in the lower left of the screen.
 
 import functools
 import logging
-from typing import Optional, Sequence, Tuple
+from typing import Optional, Tuple
 
 from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.core import action
 from gaphor.core.eventmanager import EventManager, event_handler
-from gaphor.diagram.diagramtoolbox import ToolDef
+from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.services.modelinglanguage import (
     ModelingLanguageChanged,
@@ -20,7 +20,7 @@ from gaphor.services.modelinglanguage import (
 from gaphor.services.properties import Properties
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group, from_variant
-from gaphor.ui.event import ToolSelected
+from gaphor.ui.event import CurrentDiagramChanged, ToolSelected
 
 log = logging.getLogger(__name__)
 
@@ -50,12 +50,14 @@ class Toolbox(UIComponent):
         self._action_group, _ = create_action_group(self, "toolbox")
         self._toolbox: Optional[Gtk.Box] = None
         self._toolbox_container: Optional[Gtk.ScrolledWindow] = None
+        self._current_diagram_type = ""
 
     def open(self) -> Gtk.ScrolledWindow:
         toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
         toolbox_container = self.create_toolbox_container(toolbox)
         self.event_manager.subscribe(self._on_diagram_item_placed)
         self.event_manager.subscribe(self._on_modeling_language_changed)
+        self.event_manager.subscribe(self._on_current_diagram_changed)
         self._toolbox = toolbox
         self._toolbox_container = toolbox_container
         return toolbox_container
@@ -69,6 +71,7 @@ class Toolbox(UIComponent):
             self._toolbox = None
         self.event_manager.unsubscribe(self._on_modeling_language_changed)
         self.event_manager.unsubscribe(self._on_diagram_item_placed)
+        self.event_manager.unsubscribe(self._on_current_diagram_changed)
 
     def activate_shortcut(self, keyval: int, state: Gdk.ModifierType) -> bool:
         # Accelerator keys are lower case. Since we handle them in a key-press event
@@ -125,25 +128,19 @@ class Toolbox(UIComponent):
             button.connect("drag-data-get", _button_drag_data_get, action_name)
         return button
 
-    def create_toolbox(
-        self, toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]
-    ) -> Gtk.Box:
+    def create_toolbox(self, toolbox_actions: ToolboxDefinition) -> Gtk.Box:
         toolbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         toolbox.set_name("toolbox")
         toolbox.connect("destroy", self._on_toolbox_destroyed)
         toolbox.insert_action_group("toolbox", self._action_group)
-        collapsed_property = (
-            f"toolbox-{self.modeling_language.active_modeling_language}-collapsed"
-        )
-        collapsed = self.properties.get(collapsed_property, {})
+        expanded = self.expanded_sections()
 
-        def on_expanded(widget, prop, index):
-            collapsed[index] = not widget.get_property("expanded")
-            self.properties.set(collapsed_property, collapsed)
+        def on_expanded(widget, _prop, index):
+            self.expanded_sections(index, widget.get_property("expanded"))
 
         for index, (title, items) in enumerate(toolbox_actions):
             expander = Gtk.Expander.new(title)
-            expander.set_property("expanded", not collapsed.get(index, False))
+            expander.set_property("expanded", expanded[index])
             expander.connect("notify::expanded", on_expanded, index)
             flowbox = Gtk.FlowBox.new()
             flowbox.set_homogeneous(True)
@@ -177,6 +174,34 @@ class Toolbox(UIComponent):
             toolbox_container.set_child(toolbox)
         return toolbox_container
 
+    def expanded_sections(self, index=None, state=None):
+        diagram_type = self._current_diagram_type or ""
+        expanded_property = f"toolbox-{self.modeling_language.active_modeling_language}-{diagram_type}-expanded"
+        expanded_sections = next(
+            (
+                sections
+                for id, _, sections in self.modeling_language.diagram_types
+                if id == diagram_type
+            ),
+            (),
+        )
+        default_expanded = {
+            i: i == 0 or not bool(expanded_sections)
+            for i, _ in enumerate(self.modeling_language.toolbox_definition)
+        }
+        expanded = default_expanded | self.properties.get(expanded_property, {})
+
+        if index is not None:
+            expanded[index] = state
+            self.properties.set(expanded_property, expanded)
+
+        required_expanded = {
+            i: True
+            for i, section in enumerate(self.modeling_language.toolbox_definition)
+            if section in expanded_sections
+        }
+        return expanded | required_expanded
+
     @action(name="toolbox.select-tool", state="toolbox-pointer")
     def select_tool(self, tool_name: str) -> None:
         self.event_manager.handle(ToolSelected(tool_name))
@@ -199,6 +224,15 @@ class Toolbox(UIComponent):
             else:
                 self._toolbox_container.set_child(toolbox)
         self._toolbox = toolbox
+
+    @event_handler(CurrentDiagramChanged)
+    def _on_current_diagram_changed(self, event: CurrentDiagramChanged) -> None:
+        self._current_diagram_type = event.diagram and event.diagram.diagramType or ""
+
+        toolbox = self._toolbox_container.get_child().get_child()  # type: ignore[union-attr]
+        expanded = self.expanded_sections()
+        for index, expander in enumerate(toolbox.get_children()):
+            expander.set_property("expanded", expanded[index])
 
     def _on_toolbox_destroyed(self, widget: Gtk.Widget) -> None:
         self._toolbox = None
