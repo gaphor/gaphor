@@ -6,7 +6,7 @@ from typing import Iterable
 import gaphor.SysML.propertypages  # noqa
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import ToolboxDefinition
+from gaphor.diagram.diagramtoolbox import DiagramType, ToolboxDefinition
 from gaphor.SysML import diagramitems, sysml
 from gaphor.SysML.toolbox import sysml_diagram_types, sysml_toolbox_actions
 
@@ -21,8 +21,8 @@ class SysMLModelingLanguage(ModelingLanguage):
         return sysml_toolbox_actions
 
     @property
-    def diagram_types(self) -> Iterable[tuple[str, str]]:
-        return ((id, name) for id, name, _ in sysml_diagram_types)
+    def diagram_types(self) -> Iterable[DiagramType]:
+        yield from sysml_diagram_types
 
     def lookup_element(self, name):
         element_type = getattr(sysml, name, None)

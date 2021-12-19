@@ -76,7 +76,7 @@ def create_diagram_types_model(modeling_language):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    for id, name in modeling_language.diagram_types:
+    for id, name, _ in modeling_language.diagram_types:
         menu_item = Gio.MenuItem.new(name, "win.create-diagram")
         menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
         part.append_item(menu_item)
