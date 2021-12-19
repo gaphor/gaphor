@@ -46,12 +46,11 @@ class ToolSection(NamedTuple):
 ToolboxDefinition = Sequence[ToolSection]
 
 
-
-
-class DiagramType((NamedTuple)):
+class DiagramType(NamedTuple):
     id: str
     name: str
     sections: ToolboxDefinition
+
 
 DiagramTypes = Sequence[DiagramType]
 
