@@ -9,8 +9,9 @@ and handles).
 from __future__ import annotations
 
 from cairo import LINE_JOIN_ROUND
+from gi.repository import GLib, Pango, PangoCairo
 
-from gaphor.core.modeling.diagram import DrawContext, StyledItem
+from gaphor.core.modeling.diagram import DrawContext, StyledDiagram, StyledItem
 from gaphor.diagram.selection import Selection
 
 
@@ -18,20 +19,20 @@ class ItemPainter:
     def __init__(self, selection: Selection | None = None):
         self.selection: Selection = selection or Selection()
 
-    def paint_item(self, item, cairo):
+    def paint_item(self, item, cr):
         selection = self.selection
         diagram = item.diagram
         style = diagram.style(StyledItem(item, selection))
 
-        cairo.save()
+        cr.save()
         try:
-            cairo.set_line_join(LINE_JOIN_ROUND)
-            cairo.set_source_rgba(*style["color"])
-            cairo.transform(item.matrix_i2c.to_cairo())
+            cr.set_line_join(LINE_JOIN_ROUND)
+            cr.set_source_rgba(*style["color"])
+            cr.transform(item.matrix_i2c.to_cairo())
 
             item.draw(
                 DrawContext(
-                    cairo=cairo,
+                    cairo=cr,
                     style=style,
                     selected=(item in selection.selected_items),
                     focused=(item is selection.focused_item),
@@ -41,9 +42,54 @@ class ItemPainter:
             )
 
         finally:
-            cairo.restore()
+            cr.restore()
 
-    def paint(self, items, cairo):
+    def paint(self, items, cr):
         """Draw the items."""
         for item in items:
-            self.paint_item(item, cairo)
+            self.paint_item(item, cr)
+
+
+class DiagramTypePainter:
+    def __init__(self, diagram):
+        self.diagram = diagram
+
+    def paint(self, _items, cr):
+        diagram = self.diagram
+        if not diagram.diagramType:
+            return
+        style = diagram.style(StyledDiagram(diagram))
+        layout = PangoCairo.create_layout(cr)
+        escape = GLib.markup_escape_text
+        layout.set_markup(
+            f"<b>{escape(diagram.diagramType)}</b> {escape(diagram.name)}", length=-1
+        )
+
+        font_family = style.get("font-family")
+        font_size = style.get("font-size")
+
+        fd = Pango.FontDescription.new()
+        fd.set_family(font_family)
+        fd.set_absolute_size(font_size * Pango.SCALE)
+        layout.set_font_description(fd)
+
+        w, h = layout.get_pixel_size()
+        cr.save()
+        try:
+            cr.identity_matrix()
+            cr.set_line_width(1)
+
+            cr.move_to(-1, 16 + h)
+            cr.line_to(8 + w, 16 + h)
+            cr.line_to(16 + w, 8 + h)
+            cr.line_to(16 + w, -1)
+            cr.line_to(-1, -1)
+
+            cr.set_source_rgba(1.0, 1.0, 1.0, 0.6)
+            cr.fill_preserve()
+            cr.set_source_rgba(0.0, 0.0, 0.0, 1.0)
+            cr.stroke()
+            cr.move_to(8, 8)
+            PangoCairo.show_layout(cr, layout)
+        finally:
+            cr.restore()

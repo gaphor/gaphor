@@ -16,7 +16,7 @@ from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import tooliter
-from gaphor.diagram.painter import ItemPainter
+from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.selection import Selection
 from gaphor.diagram.support import get_diagram_item
 from gaphor.diagram.tools import (
@@ -282,7 +282,7 @@ class DiagramPage:
         assert self.view
         assert self.diagram_css
 
-        style = self.diagram.style(StyledDiagram(self.diagram, self.view))
+        style = self.diagram.style(StyledDiagram(self.diagram))
 
         bg = style.get("background-color")
         # Default background to white, slightly gray in dark mode
@@ -309,6 +309,7 @@ class DiagramPage:
             .append(GuidePainter(view))
             .append(MagnetPainter(view))
             .append(RubberbandPainter(self.rubberband_state))
+            .append(DiagramTypePainter(self.diagram))
         )
 
         view.request_update(self.diagram.get_all_items())
