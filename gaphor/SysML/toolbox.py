@@ -65,11 +65,11 @@ sysml_toolbox_actions: ToolboxDefinition = (
 
 # Not implemented: Parameter Diagram
 sysml_diagram_types: DiagramTypes = (
-    DiagramType("act", gettext("New Activity Diagram"), (actions,)),
     DiagramType("blk", gettext("New Block Definition Diagram"), (blocks,)),
     DiagramType("ibl", gettext("New Internal Block Diagram"), (internal_blocks,)),
     DiagramType("pkg", gettext("New Package Diagram"), (blocks,)),
     DiagramType("req", gettext("New Requirement Diagram"), (requirements,)),
+    DiagramType("act", gettext("New Activity Diagram"), (actions,)),
     DiagramType("sd", gettext("New Sequence Diagram"), (interactions,)),
     DiagramType("stm", gettext("New State Machine Diagram"), (states,)),
     DiagramType("uc", gettext("New Use Case Diagram"), (use_cases,)),

@@ -27,14 +27,14 @@ uml_toolbox_actions: ToolboxDefinition = (
 )
 
 uml_diagram_types: DiagramTypes = (
-    DiagramType("act", gettext("New Activity Diagram"), (actions,)),
     DiagramType("cls", gettext("New Class Diagram"), (classes,)),
+    DiagramType("pkg", gettext("New Package Diagram"), (classes,)),
     DiagramType("cmp", gettext("New Component Diagram"), (components,)),
     DiagramType("dep", gettext("New Deployment Diagram"), (components,)),
-    DiagramType("pkg", gettext("New Package Diagram"), (classes,)),
-    DiagramType("prf", gettext("New Profile Diagram"), (profiles,)),
-    DiagramType("stm", gettext("New State Machine Diagram"), (states,)),
+    DiagramType("act", gettext("New Activity Diagram"), (actions,)),
     DiagramType("sd", gettext("New Sequence Diagram"), (interactions,)),
     DiagramType("com", gettext("New Communication Diagram"), (interactions,)),
+    DiagramType("stm", gettext("New State Machine Diagram"), (states,)),
     DiagramType("uc", gettext("New Use Case Diagram"), (use_cases,)),
+    DiagramType("prf", gettext("New Profile Diagram"), (profiles,)),
 )

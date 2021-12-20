@@ -6,6 +6,8 @@ from gaphas.item import SE
 from gaphor.C4Model import c4model, diagramitems
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import (
+    DiagramType,
+    DiagramTypes,
     ToolboxDefinition,
     ToolDef,
     ToolSection,
@@ -132,4 +134,12 @@ c4model_toolbox_actions: ToolboxDefinition = (
     actions,
     interactions,
     states,
+)
+
+c4model_diagram_types: DiagramTypes = (
+    DiagramType("c4", gettext("New C4 Diagram"), (c4,)),
+    DiagramType("cls", gettext("New Class Diagram"), (classes,)),
+    DiagramType("act", gettext("New Activity Diagram"), (actions,)),
+    DiagramType("sd", gettext("New Sequence Diagram"), (interactions,)),
+    DiagramType("stm", gettext("New State Machine Diagram"), (states,)),
 )

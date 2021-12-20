@@ -36,8 +36,9 @@ class ModelingLanguage(metaclass=ABCMeta):
         """Get structure for the toolbox."""
 
     @property
+    @abstractmethod
     def diagram_types(self) -> Iterable[DiagramType]:
-        return iter(())
+        """Iterate diagram types."""
 
     @abstractmethod
     def lookup_element(self, name: str) -> type[Element] | None:
