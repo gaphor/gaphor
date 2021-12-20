@@ -359,7 +359,7 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Reset tool automatically</property>
+                        <property name="label" translatable="yes">Reset Tool Automatically</property>
                         <property name="xalign">0</property>
                       </object>
                       <packing>
@@ -396,7 +396,7 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Remove unused elements</property>
+                        <property name="label" translatable="yes">Remove Unused Elements</property>
                         <property name="tooltip-text" translatable="yes">Automatically remove elements no longer in use in any diagram.</property>
                         <property name="xalign">0</property>
                       </object>
@@ -431,7 +431,7 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="margin-top">6</property>
-                    <property name="label" translatable="yes">Style sheet</property>
+                    <property name="label" translatable="yes">Style Sheet</property>
                     <property name="xalign">0</property>
                     <attributes>
                       <attribute name="weight" value="bold"/>
