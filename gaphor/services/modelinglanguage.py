@@ -76,10 +76,7 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
             None,
         )
 
-    @action(
-        name="select-modeling-language",
-        state=lambda self: self.active_modeling_language,
-    )
+    @action(name="select-modeling-language")
     def select_modeling_language(self, modeling_language: str):
         self.properties.set("modeling-language", modeling_language)
         self.event_manager.handle(ModelingLanguageChanged(modeling_language))
