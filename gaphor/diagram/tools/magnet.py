@@ -83,8 +83,11 @@ def moving_items(view, selected_items):
 
 
 def on_drag_end(gesture, offset_x, offset_y, drag_state):
-    drag_state.reset()
     view = gesture.get_widget()
+    _, x, y = gesture.get_start_point()
+    for moving in drag_state.moving_items:
+        moving.stop_move((x + offset_x, y + offset_y))
+    drag_state.reset()
     view.update_back_buffer()
     try:
         del view.magnet
