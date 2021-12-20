@@ -83,7 +83,7 @@ def create_diagram_types_model(modeling_language):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    menu_item = Gio.MenuItem.new(gettext("Generic Diagram"), "win.create-diagram")
+    menu_item = Gio.MenuItem.new(gettext("New Generic Diagram"), "win.create-diagram")
     menu_item.set_attribute_value("target", GLib.Variant.new_string(""))
     part.append_item(menu_item)
     model.append_section(None, part)
