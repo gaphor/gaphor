@@ -55,7 +55,7 @@ class PartitionPropertyPage(PropertyPageBase):
         builder.get_object("partition-name").set_text(partition.name or "")
 
         combo = builder.get_object("partition-type")
-        for c in self.item.model.select(UML.Classifier):
+        for c in self.item.model.select(UML.Class):
             if c.name:
                 combo.append(c.id, c.name)
 
