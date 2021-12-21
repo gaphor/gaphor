@@ -73,6 +73,7 @@ def on_drag_update(gesture, offset_x, offset_y, drag_state):
         moving.move((x, y))
 
     view.magnet = (drag_state.direction, x, y)
+    view.update_back_buffer()
 
 
 def moving_items(view, selected_items):
