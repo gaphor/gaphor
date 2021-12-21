@@ -165,6 +165,8 @@ class ItemFlowPropertyPage(PropertyPageBase):
         if not self.subject:
             return
 
+        subject = self.subject
+
         builder = new_builder(
             "item-flow-editor",
             signals={
@@ -178,20 +180,18 @@ class ItemFlowPropertyPage(PropertyPageBase):
         self.entry = builder.get_object("item-flow-entry")
 
         use_flow.set_active(
-            self.subject.informationFlow
-            and type(self.subject.informationFlow[0]) is sysml.ItemFlow
+            subject.informationFlow
+            and type(subject.informationFlow[0]) is sysml.ItemFlow
         )
         use_flow.set_sensitive(
             not (
-                self.subject.informationFlow
-                and type(self.subject.informationFlow[0]) is UML.InformationFlow
+                subject.informationFlow
+                and type(subject.informationFlow[0]) is UML.InformationFlow
             )
         )
         self.entry.set_sensitive(use_flow.get_active())
-        if self.subject.informationFlow and any(
-            self.subject.informationFlow[:].itemProperty
-        ):
-            iflow = self.subject.informationFlow[0]
+        if subject.informationFlow and any(subject.informationFlow[:].itemProperty):
+            iflow = subject.informationFlow[0]
             assert isinstance(iflow, sysml.ItemFlow)
             self.entry.set_text(format(iflow.itemProperty))
 
