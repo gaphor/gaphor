@@ -279,7 +279,6 @@ Attribute syntax examples
 Press ENTER to edit item, BS/DEL to remove item.
 Use -/= to move items up or down.</property>
                 <property name="headers-clickable">0</property>
-                <property name="reorderable">1</property>
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
@@ -471,7 +470,6 @@ Use -/= to move items up or down.</property>
 Press ENTER to edit item, BS/DEL to remove item.
 Use -/= to move items up or down.</property>
                 <property name="headers-clickable">0</property>
-                <property name="reorderable">1</property>
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
@@ -575,7 +573,6 @@ Enumeration literal syntax examples
 Press ENTER to edit item, BS/DEL to remove item.
 Use -/= to move items up or down.</property>
                 <property name="headers-clickable">False</property>
-                <property name="reorderable">True</property>
                 <property name="enable-search">False</property>
                 <property name="show-expanders">False</property>
                 <property name="enable-grid-lines">horizontal</property>

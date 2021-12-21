@@ -42,8 +42,9 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
                 yield id, provider.name
 
     @property
-    def active_modeling_language(self):
-        modeling_language = self.properties.get(
+    def active_modeling_language(self) -> str:
+        """The identifier for the currently active modeling language."""
+        modeling_language: str = self.properties.get(
             "modeling-language", self.DEFAULT_LANGUAGE
         )
         if modeling_language not in self._modeling_languages:
@@ -51,20 +52,13 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
         return modeling_language
 
     @property
-    def active_modeling_language_name(self):
-        return self._modeling_languages[self.active_modeling_language].name
-
-    @property
-    def _modeling_language(self):
-        return self._modeling_languages[self.active_modeling_language]
-
-    @property
-    def name(self):
-        return self._modeling_language.name
+    def name(self) -> str:
+        """Localized name of the active modeling language."""
+        return self._modeling_language().name
 
     @property
     def toolbox_definition(self):
-        return self._modeling_language.toolbox_definition
+        return self._modeling_language().toolbox_definition
 
     def lookup_element(self, name):
         return next(
@@ -82,9 +76,12 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
         name="select-modeling-language",
         state=lambda self: self.active_modeling_language,
     )
-    def action_select_modeling_language(self, modeling_language: str):
+    def select_modeling_language(self, modeling_language: str):
         self.properties.set("modeling-language", modeling_language)
         self.event_manager.handle(ModelingLanguageChanged(modeling_language))
+
+    def _modeling_language(self) -> ModelingLanguage:
+        return self._modeling_languages[self.active_modeling_language]
 
     @event_handler(PropertyChanged)
     def on_property_changed(self, event: PropertyChanged):

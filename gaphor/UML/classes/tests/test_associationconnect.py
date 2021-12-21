@@ -58,7 +58,7 @@ def test_association_item_reconnect(connected_association, create):
     asc, c1, c2 = connected_association
     c3 = create(ClassItem, UML.Class)
 
-    UML.model.set_navigability(asc.subject, asc.tail_subject, True)
+    UML.recipes.set_navigability(asc.subject, asc.tail_subject, True)
 
     a = asc.subject
 
@@ -103,7 +103,7 @@ def test_disconnect_of_navigable_end_should_remove_owner_relationship(
 ):
     asc, c1, c2 = connected_association
 
-    UML.model.set_navigability(asc.subject, asc.head_subject, True)
+    UML.recipes.set_navigability(asc.subject, asc.head_subject, True)
 
     assert asc.head_subject in c2.subject.ownedAttribute
 

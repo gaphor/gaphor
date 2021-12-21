@@ -15,7 +15,7 @@ from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.constants import DEFAULT_FTA_MAJOR, DEFAULT_FTA_MINOR
 from gaphor.RAAML.fta.orgate import draw_or_gate
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(raaml.XOR)

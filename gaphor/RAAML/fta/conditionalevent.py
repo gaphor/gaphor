@@ -11,7 +11,7 @@ from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.basicevent import draw_basic_event
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(raaml.ConditionalEvent)

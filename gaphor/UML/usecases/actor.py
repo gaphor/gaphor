@@ -7,7 +7,7 @@ from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 HEAD = 11
 ARM = 19

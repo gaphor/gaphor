@@ -977,11 +977,11 @@ Namespace.ownedMember.add(Interface.nestedClassifier)  # type: ignore[attr-defin
 RedefinableElement.redefinedElement.add(Interface.redefinedInterface)  # type: ignore[attr-defined]
 Classifier.attribute.add(Interface.ownedAttribute)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Interface.ownedAttribute)  # type: ignore[attr-defined]
-Include.addition = association("addition", UseCase, upper=1)
 Include.includingCase = association("includingCase", UseCase, upper=1, opposite="include")
-DirectedRelationship.target.add(Include.addition)  # type: ignore[attr-defined]
+Include.addition = association("addition", UseCase, upper=1)
 NamedElement.namespace.add(Include.includingCase)  # type: ignore[attr-defined]
 DirectedRelationship.source.add(Include.includingCase)  # type: ignore[attr-defined]
+DirectedRelationship.target.add(Include.addition)  # type: ignore[attr-defined]
 ProfileApplication.appliedProfile = association("appliedProfile", Profile, upper=1)
 ExtensionPoint.useCase = association("useCase", UseCase, upper=1, opposite="extensionPoint")
 NamedElement.namespace.add(ExtensionPoint.useCase)  # type: ignore[attr-defined]
@@ -1120,8 +1120,8 @@ Element.ownedElement.add(Action.output)  # type: ignore[attr-defined]
 Element.owner.add(Action.interaction)  # type: ignore[attr-defined]
 Extend.extension = association("extension", UseCase, upper=1, opposite="extend")
 Extend.extensionLocation = association("extensionLocation", ExtensionPoint, lower=1)
-Extend.extendedCase = association("extendedCase", UseCase, upper=1)
 Extend.constraint = association("constraint", Constraint, upper=1, composite=True)
+Extend.extendedCase = association("extendedCase", UseCase, upper=1)
 NamedElement.namespace.add(Extend.extension)  # type: ignore[attr-defined]
 DirectedRelationship.source.add(Extend.extension)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(Extend.extendedCase)  # type: ignore[attr-defined]
@@ -1133,46 +1133,46 @@ ActivityGroup.subgroup = derivedunion("subgroup", ActivityGroup)
 Element.owner.add(ActivityGroup.superGroup)  # type: ignore[attr-defined]
 Element.owner.add(ActivityGroup.activity)  # type: ignore[attr-defined]
 Element.ownedElement.add(ActivityGroup.subgroup)  # type: ignore[attr-defined]
-Constraint.constrainedElement = association("constrainedElement", Element)
 Constraint.owningState = association("owningState", State, upper=1, opposite="statevariant")
-Constraint.stateInvariant = association("stateInvariant", StateInvariant, upper=1, opposite="invariant")
 Constraint.parameterSet = association("parameterSet", ParameterSet, upper=1, opposite="condition")
 Constraint.transition = association("transition", Transition, upper=1, opposite="guard")
-Element.owner.add(Constraint.stateInvariant)  # type: ignore[attr-defined]
+Constraint.stateInvariant = association("stateInvariant", StateInvariant, upper=1, opposite="invariant")
+Constraint.constrainedElement = association("constrainedElement", Element)
 Element.owner.add(Constraint.parameterSet)  # type: ignore[attr-defined]
 Element.owner.add(Constraint.transition)  # type: ignore[attr-defined]
-PackageImport.importedPackage = association("importedPackage", Package, upper=1)
+Element.owner.add(Constraint.stateInvariant)  # type: ignore[attr-defined]
 PackageImport.importingNamespace = association("importingNamespace", Namespace, upper=1, opposite="packageImport")
-DirectedRelationship.target.add(PackageImport.importedPackage)  # type: ignore[attr-defined]
+PackageImport.importedPackage = association("importedPackage", Package, upper=1)
 DirectedRelationship.source.add(PackageImport.importingNamespace)  # type: ignore[attr-defined]
 Element.owner.add(PackageImport.importingNamespace)  # type: ignore[attr-defined]
+DirectedRelationship.target.add(PackageImport.importedPackage)  # type: ignore[attr-defined]
+InteractionFragment.generalOrdering = association("generalOrdering", GeneralOrdering, composite=True, opposite="interactionFragment")
 InteractionFragment.enclosingInteraction = association("enclosingInteraction", Interaction, upper=1, opposite="fragment")
 InteractionFragment.covered = association("covered", Lifeline, upper=1, opposite="coveredBy")
-InteractionFragment.generalOrdering = association("generalOrdering", GeneralOrdering, composite=True, opposite="interactionFragment")
-NamedElement.namespace.add(InteractionFragment.enclosingInteraction)  # type: ignore[attr-defined]
 Element.ownedElement.add(InteractionFragment.generalOrdering)  # type: ignore[attr-defined]
-Interaction.fragment = association("fragment", InteractionFragment, opposite="enclosingInteraction")
+NamedElement.namespace.add(InteractionFragment.enclosingInteraction)  # type: ignore[attr-defined]
 Interaction.lifeline = association("lifeline", Lifeline, composite=True, opposite="interaction")
-Interaction.message = association("message", Message, composite=True, opposite="interaction")
 Interaction.action = association("action", Action, composite=True, opposite="interaction")
-Namespace.ownedMember.add(Interaction.fragment)  # type: ignore[attr-defined]
+Interaction.fragment = association("fragment", InteractionFragment, opposite="enclosingInteraction")
+Interaction.message = association("message", Message, composite=True, opposite="interaction")
 Namespace.ownedMember.add(Interaction.lifeline)  # type: ignore[attr-defined]
-Namespace.ownedMember.add(Interaction.message)  # type: ignore[attr-defined]
 Element.ownedElement.add(Interaction.action)  # type: ignore[attr-defined]
+Namespace.ownedMember.add(Interaction.fragment)  # type: ignore[attr-defined]
+Namespace.ownedMember.add(Interaction.message)  # type: ignore[attr-defined]
 StateInvariant.invariant = association("invariant", Constraint, upper=1, composite=True, opposite="stateInvariant")
 StateInvariant.covered = redefine(StateInvariant, "covered", Lifeline, InteractionFragment.covered)
 Element.ownedElement.add(StateInvariant.invariant)  # type: ignore[attr-defined]
-Lifeline.coveredBy = association("coveredBy", InteractionFragment, opposite="covered")
 Lifeline.interaction = association("interaction", Interaction, upper=1, opposite="lifeline")
+Lifeline.coveredBy = association("coveredBy", InteractionFragment, opposite="covered")
 NamedElement.namespace.add(Lifeline.interaction)  # type: ignore[attr-defined]
 # 98: override Message.messageKind: property
 # defined in umloverrides.py
 
 Message.sendEvent = association("sendEvent", MessageEnd, upper=1, composite=True, opposite="sendMessage")
 Message.receiveEvent = association("receiveEvent", MessageEnd, upper=1, composite=True, opposite="receiveMessage")
-Message.interaction = association("interaction", Interaction, upper=1, opposite="message")
 Message.signature = association("signature", NamedElement, upper=1)
 Message.messageEnd = derivedunion("messageEnd", MessageEnd, upper=2)
+Message.interaction = association("interaction", Interaction, upper=1, opposite="message")
 Message.messageEnd.add(Message.sendEvent)  # type: ignore[attr-defined]
 Message.messageEnd.add(Message.receiveEvent)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Message.interaction)  # type: ignore[attr-defined]
@@ -1237,8 +1237,8 @@ Element.ownedElement.add(State.doActivity)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.statevariant)  # type: ignore[attr-defined]
 Port.encapsulatedClassifier = association("encapsulatedClassifier", EncapsulatedClassifer, upper=1, opposite="ownedPort")
 RedefinableElement.redefinitionContext.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
-Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact)
 Deployment.location = association("location", DeploymentTarget, upper=1, opposite="deployment")
+Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact)
 Element.owner.add(Deployment.location)  # type: ignore[attr-defined]
 ActivityPartition.node = association("node", ActivityNode, opposite="inPartition")
 ActivityPartition.represents = association("represents", Element, upper=1)

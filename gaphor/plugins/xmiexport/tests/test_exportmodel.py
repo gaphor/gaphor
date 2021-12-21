@@ -21,9 +21,9 @@ def element_factory():
     c1.ownedOperation[0].name = "oper"
     c1.ownedOperation[0].ownedParameter = ef.create(UML.Parameter)
 
-    UML.model.create_dependency(c1, c2)
-    UML.model.create_generalization(c1, c2)
-    UML.model.create_association(c1, c2)
+    UML.recipes.create_dependency(c1, c2)
+    UML.recipes.create_generalization(c1, c2)
+    UML.recipes.create_association(c1, c2)
     return ef
 
 

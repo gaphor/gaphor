@@ -13,7 +13,7 @@ from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.generalization import GeneralizationItem
 from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
-from gaphor.UML.modelfactory import owner_package
+from gaphor.UML.recipes import owner_package
 
 
 @Connector.register(Named, DependencyItem)
@@ -60,7 +60,7 @@ class DependencyConnect(RelationshipConnect):
             else:
                 client = self.element.subject
                 supplier = other.subject
-            line.dependency_type = UML.model.dependency_type(client, supplier)
+            line.dependency_type = UML.recipes.dependency_type(client, supplier)
 
         relation = self.relationship_or_new(
             line.dependency_type,
@@ -127,7 +127,7 @@ class AssociationConnect(UnaryRelationshipConnect):
         if c1 and c2:
 
             if not line.subject:
-                relation = UML.model.create_association(c1.subject, c2.subject)
+                relation = UML.recipes.create_association(c1.subject, c2.subject)
                 relation.package = owner_package(element.diagram.owner)
                 line.head_subject = relation.memberEnd[0]
                 line.tail_subject = relation.memberEnd[1]
@@ -153,10 +153,10 @@ class AssociationConnect(UnaryRelationshipConnect):
 
         nav = oend.subject.navigability
 
-        UML.model.set_navigability(line.subject, end.subject, None)  # clear old data
+        UML.recipes.set_navigability(line.subject, end.subject, None)  # clear old data
 
         oend.subject.type = c.subject
-        UML.model.set_navigability(line.subject, oend.subject, nav)
+        UML.recipes.set_navigability(line.subject, oend.subject, nav)
 
     def disconnect_subject(self, handle: Handle) -> None:
         """Disconnect the type of each member end.
@@ -167,7 +167,7 @@ class AssociationConnect(UnaryRelationshipConnect):
         association = self.line.subject
         if association and len(association.presentation) <= 1:
             for e in list(association.memberEnd):
-                UML.model.set_navigability(association, e, None)
+                UML.recipes.set_navigability(association, e, None)
             for e in list(association.memberEnd):
                 e.type = None
 

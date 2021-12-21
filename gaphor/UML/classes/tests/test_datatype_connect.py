@@ -3,7 +3,7 @@ from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.datatype import DataTypeItem
 from gaphor.UML.classes.klass import ClassItem
-from gaphor.UML.modelfactory import set_navigability
+from gaphor.UML.recipes import set_navigability
 
 
 def test_connect_value_type_to_block(diagram, element_factory):

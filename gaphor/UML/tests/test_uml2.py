@@ -239,15 +239,15 @@ def test_property_navigability(factory):
 
     c1 = factory.create(UML.Class)
     c2 = factory.create(UML.Class)
-    a = UML.model.create_association(c1, c2)
+    a = UML.recipes.create_association(c1, c2)
     assert a.memberEnd[0].navigability is None
     assert a.memberEnd[1].navigability is None
 
-    UML.model.set_navigability(a, a.memberEnd[0], True)
+    UML.recipes.set_navigability(a, a.memberEnd[0], True)
     assert a.memberEnd[0].navigability is True
     assert a.memberEnd[1].navigability is None
 
-    UML.model.set_navigability(a, a.memberEnd[0], False)
+    UML.recipes.set_navigability(a, a.memberEnd[0], False)
     assert a.memberEnd[0].navigability is False
     assert a.memberEnd[1].navigability is None
 
@@ -258,7 +258,7 @@ def test_property_navigability_with_extension_end(factory):
 
     mc = factory.create(UML.Class)
     st = factory.create(UML.Stereotype)
-    a = UML.model.create_extension(mc, st)
+    a = UML.recipes.create_extension(mc, st)
 
     assert a.memberEnd[0].navigability is True
     assert a.memberEnd[1].navigability is True
@@ -283,7 +283,7 @@ def test_extension_metaclass(factory):
     s = factory.create(UML.Stereotype)
     s.name = "Stereotype"
 
-    e = UML.model.create_extension(c, s)
+    e = UML.recipes.create_extension(c, s)
 
     assert c == e.metaclass
 
@@ -297,7 +297,7 @@ def test_metaclass_extension(factory):
     assert [] == c.extension
     assert [] == s.extension
 
-    e = UML.model.create_extension(c, s)
+    e = UML.recipes.create_extension(c, s)
 
     print(e.memberEnd)
     assert [e] == c.extension

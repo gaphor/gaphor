@@ -24,7 +24,7 @@ from gaphor.UML.classes.klass import (
     stereotype_compartments,
     stereotype_watches,
 )
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(Requirement)

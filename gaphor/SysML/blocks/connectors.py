@@ -77,5 +77,5 @@ class PropertyConnectorConnector(UnaryRelationshipConnect):
         if c1 and c2 and not line.subject:
             assert isinstance(c1.subject, UML.ConnectableElement)
             assert isinstance(c2.subject, UML.ConnectableElement)
-            relation = UML.model.create_connector(c1.subject, c2.subject)
+            relation = UML.recipes.create_connector(c1.subject, c2.subject)
             line.subject = relation

@@ -22,7 +22,7 @@ from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML import diagramitems
-from gaphor.UML.modelfactory import set_navigability
+from gaphor.UML.recipes import set_navigability
 
 
 @pytest.fixture

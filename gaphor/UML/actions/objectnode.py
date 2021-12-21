@@ -6,7 +6,7 @@ from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.i18n import gettext
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 DEFAULT_UPPER_BOUND = "*"
 

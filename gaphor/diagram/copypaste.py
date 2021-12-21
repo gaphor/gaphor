@@ -20,7 +20,7 @@ from gaphor.core.modeling import Diagram, Presentation
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element, Id
 from gaphor.UML import NamedElement
-from gaphor.UML.modelfactory import owner_package
+from gaphor.UML.recipes import owner_package
 
 Opaque = object
 

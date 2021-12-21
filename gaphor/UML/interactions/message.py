@@ -53,7 +53,7 @@ from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import middle_segment
 from gaphor.UML.interactions.lifeline import LifelineItem
-from gaphor.UML.modelfactory import stereotypes_str
+from gaphor.UML.recipes import stereotypes_str
 
 PI_2 = pi / 2
 

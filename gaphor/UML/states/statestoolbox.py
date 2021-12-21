@@ -7,7 +7,7 @@ from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection
 from gaphor.diagram.tools import new_item_factory
 from gaphor.UML import diagramitems
-from gaphor.UML.modelfactory import owner_package
+from gaphor.UML.recipes import owner_package
 
 
 def state_config(new_item):

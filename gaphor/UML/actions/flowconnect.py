@@ -130,10 +130,10 @@ class FlowForkDecisionNodeConnect(FlowConnect):
         element = self.element
         subject = element.subject
         if len(subject.incoming) > 1 and len(subject.outgoing) < 2:
-            UML.model.swap_element(subject, join_node_cls)
+            UML.recipes.swap_element(subject, join_node_cls)
             element.request_update()
         elif len(subject.incoming) < 2 and len(subject.outgoing) > 1:
-            UML.model.swap_element(subject, fork_node_cls)
+            UML.recipes.swap_element(subject, fork_node_cls)
             element.request_update()
         elif (
             not element.combined
@@ -148,7 +148,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             else:
                 flow_class = UML.ControlFlow
 
-            UML.model.swap_element(join_node, join_node_cls)
+            UML.recipes.swap_element(join_node, join_node_cls)
             fork_node: UML.ControlNode = element.model.create(fork_node_cls)
             for flow in list(join_node.outgoing):
                 flow.source = fork_node
@@ -181,7 +181,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
                 # swap subject to fork node if outgoing > 1
                 if len(join_node.outgoing) > 1:
                     assert len(join_node.incoming) < 2
-                    UML.model.swap_element(join_node, fork_node_cls)
+                    UML.recipes.swap_element(join_node, fork_node_cls)
                 del element.combined
 
     def connect_subject(self, handle):

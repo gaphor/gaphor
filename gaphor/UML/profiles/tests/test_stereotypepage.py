@@ -34,7 +34,7 @@ def test_stereotype_page_with_stereotype(element_factory, diagram, class_):
     metaclass.name = "Class"
     stereotype = element_factory.create(UML.Stereotype)
     stereotype.name = "NewStereotype"
-    UML.model.create_extension(metaclass, stereotype)
+    UML.recipes.create_extension(metaclass, stereotype)
     attr = element_factory.create(UML.Property)
     attr.name = "Property"
 

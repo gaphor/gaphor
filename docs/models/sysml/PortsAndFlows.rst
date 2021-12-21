@@ -25,3 +25,9 @@ Provided and Required Features
 .. diagram:: Provided and Required Features
    :model: sysml
 
+Item Flow
+--------------------------------------------------
+
+.. diagram:: Item Flow
+   :model: sysml
+
