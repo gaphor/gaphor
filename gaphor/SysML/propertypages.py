@@ -10,6 +10,11 @@ from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
 from gaphor.SysML.requirements.requirement import RequirementItem
 from gaphor.UML.classes.classespropertypages import AttributesPage, OperationsPage
+from gaphor.UML.profiles.stereotypepropertypages import (
+    set_value,
+    stereotype_model,
+    toggle_stereotype,
+)
 
 new_builder = new_resource_builder("gaphor.SysML")
 
@@ -160,6 +165,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
     def __init__(self, subject: sysml.Connector):
         super().__init__()
         self.subject = subject
+        self._item_property_stereotype_model = None
 
     def construct(self):
         if not self.subject:
@@ -173,6 +179,12 @@ class ItemFlowPropertyPage(PropertyPageBase):
                 "item-flow-active": (self._on_item_flow_active,),
                 "item-flow-changed": (self._on_item_flow_name_changed,),
                 "invert-direction-changed": (self._invert_direction_changed,),
+                "item-flow-toggle-stereotype": (
+                    self._on_item_property_stereotype_toggle,
+                ),
+                "item-flow-set-slot-value": (
+                    self._on_item_property_stereotype_set_value,
+                ),
             },
         )
 
@@ -194,6 +206,16 @@ class ItemFlowPropertyPage(PropertyPageBase):
             iflow = subject.informationFlow[0]
             assert isinstance(iflow, sysml.ItemFlow)
             self.entry.set_text(format(iflow.itemProperty))
+
+            stereotypes = UML.recipes.get_stereotypes(iflow.itemProperty)
+            if stereotypes:
+                model, _, _ = stereotype_model(iflow.itemProperty)
+                stereotype_list = builder.get_object("item-flow-stereotype-list")
+                stereotype_list.set_model(model)
+                self._item_property_stereotype_model = model
+            else:
+                stereotype_frame = builder.get_object("item-flow-stereotype-frame")
+                stereotype_frame.hide()
 
         return builder.get_object("item-flow-editor")
 
@@ -227,3 +249,13 @@ class ItemFlowPropertyPage(PropertyPageBase):
                 iflow.informationTarget,
                 iflow.informationSource,
             )
+
+    def _on_item_property_stereotype_toggle(self, renderer, path):
+        iflow = self.subject.informationFlow[0]
+        assert isinstance(iflow, sysml.ItemFlow)
+        toggle_stereotype(
+            renderer, path, iflow.itemProperty, self._item_property_stereotype_model
+        )
+
+    def _on_item_property_stereotype_set_value(self, renderer, path, value):
+        set_value(renderer, path, value, self._item_property_stereotype_model)
