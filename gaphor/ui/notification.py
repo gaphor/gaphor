@@ -1,7 +1,7 @@
 from gi.repository import GLib
 
 from gaphor.core import event_handler
-from gaphor.ui.event import Notification
+from gaphor.event import Notification
 
 DELAY = 5_000
 

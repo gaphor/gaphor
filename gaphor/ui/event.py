@@ -21,8 +21,3 @@ class DiagramSelectionChanged:
 class ToolSelected:
     def __init__(self, tool_name):
         self.tool_name = tool_name
-
-
-class Notification:
-    def __init__(self, message):
-        self.message = message

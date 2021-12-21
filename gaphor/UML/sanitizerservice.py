@@ -8,6 +8,8 @@ from gaphor.core import event_handler
 from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.core.modeling.event import AssociationDeleted, AssociationSet, DerivedSet
 from gaphor.diagram.general import CommentLineItem
+from gaphor.event import Notification
+from gaphor.i18n import gettext
 
 
 def undo_guard(func):
@@ -28,8 +30,9 @@ class SanitizerService(Service):
     """Does some background cleanup jobs, such as removing elements from the
     model that have no presentations (and should have some)."""
 
-    def __init__(self, event_manager, undo_manager=None):
+    def __init__(self, event_manager, undo_manager=None, properties=None):
         self.event_manager = event_manager
+        self.properties = properties or {}
         self.undo_manager = undo_manager
 
         event_manager.subscribe(self._unlink_on_subject_delete)
@@ -54,10 +57,23 @@ class SanitizerService(Service):
         """Unlink the model element if no more presentations link to the
         `item`'s subject or the deleted item was the only item currently
         linked."""
-        if event.property is Presentation.subject:  # type: ignore[misc]
-            old_subject = event.old_value
-            if old_subject and not old_subject.presentation:
-                old_subject.unlink()
+        if (
+            not self.properties.get("remove-unused-elements", True)
+            or event.property is not Presentation.subject  # type: ignore[misc]
+        ):
+            return
+
+        old_subject = event.old_value
+        if old_subject and not old_subject.presentation:
+            old_subject.unlink()
+
+            self.event_manager.handle(
+                Notification(
+                    gettext(
+                        "Removed unused elements from the model: they are not used in any other diagram."
+                    )
+                )
+            )
 
     @event_handler(AssociationSet)
     @undo_guard

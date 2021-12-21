@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.ui.event import Notification
+from gaphor.event import Notification
 from gaphor.ui.mainwindow import new_builder
 from gaphor.ui.notification import InAppNotifier
 

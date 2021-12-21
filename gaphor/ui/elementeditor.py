@@ -104,6 +104,13 @@ class ElementEditor(UIComponent, ActionProvider):
     def reset_tool_after_create(self, active):
         self.properties.set("reset-tool-after-create", active)
 
+    @action(
+        name="remove-unused-elements",
+        state=lambda self: self.properties.get("remove-unused-elements", True),
+    )
+    def remove_unused_elements(self, active):
+        self.properties.set("remove-unused-elements", active)
+
 
 class EditorStack:
     def __init__(self, event_manager, diagrams, properties):
