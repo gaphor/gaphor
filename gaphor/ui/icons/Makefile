@@ -5,6 +5,7 @@ STENSIL=stensil.svg
 ICONS=diagram \
 	new-diagram \
 	pointer \
+	magnet \
 	box \
 	line \
 	ellipse \

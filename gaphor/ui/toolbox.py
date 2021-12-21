@@ -12,7 +12,7 @@ from gi.repository import Gdk, GLib, Gtk
 from gaphor.core import action
 from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.diagram.diagramtoolbox import ToolDef
-from gaphor.diagram.event import DiagramItemPlaced
+from gaphor.event import TransactionCommit
 from gaphor.services.modelinglanguage import (
     ModelingLanguageChanged,
     ModelingLanguageService,
@@ -115,7 +115,10 @@ class Toolbox(UIComponent):
                 button.set_tooltip_text(f"{label}")
 
         # Enable Drag and Drop
-        if action_name != "toolbox-pointer" and Gtk.get_major_version() == 3:
+        if (
+            action_name not in ("toolbox-pointer", "toolbox-magnet")
+            and Gtk.get_major_version() == 3
+        ):
             button.drag_source_set(
                 Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
                 self.DND_TARGETS,
@@ -181,8 +184,8 @@ class Toolbox(UIComponent):
     def select_tool(self, tool_name: str) -> None:
         self.event_manager.handle(ToolSelected(tool_name))
 
-    @event_handler(DiagramItemPlaced)
-    def _on_diagram_item_placed(self, event: DiagramItemPlaced) -> None:
+    @event_handler(TransactionCommit)
+    def _on_diagram_item_placed(self, event: TransactionCommit) -> None:
         if self.properties.get("reset-tool-after-create", True):
             self._action_group.lookup_action("select-tool").activate(
                 GLib.Variant.new_string("toolbox-pointer")
