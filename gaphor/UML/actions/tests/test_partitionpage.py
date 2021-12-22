@@ -12,6 +12,40 @@ def test_partition_page(diagram, element_factory):
     widget = property_page.construct()
 
     num_partitions = find(widget, "num-partitions")
-    num_partitions.set_value(2)
+    num_partitions.set_value(4)
 
-    assert len(item.partition) == 2
+    assert len(item.partition) == 4
+
+
+def test_partition_name(diagram, element_factory):
+    item = diagram.create(
+        UML.actions.PartitionItem, subject=element_factory.create(UML.ActivityPartition)
+    )
+    property_page = PartitionPropertyPage(item)
+    property_page.construct()
+    property_page.update_partitions(1)
+
+    widget = property_page.construct_partition(item.partition[0])
+
+    name = find(widget, "partition-name")
+    name.set_text("Name")
+
+    assert item.partition[0].name == "Name"
+
+
+def test_partition_type(diagram, element_factory):
+    class_ = element_factory.create(UML.Class)
+    class_.name = "Foobar"
+    item = diagram.create(
+        UML.actions.PartitionItem, subject=element_factory.create(UML.ActivityPartition)
+    )
+    property_page = PartitionPropertyPage(item)
+    property_page.construct()
+    property_page.update_partitions(1)
+
+    widget = property_page.construct_partition(item.partition[0])
+
+    combo = find(widget, "partition-type")
+    combo.set_active_id(class_.id)
+
+    assert item.partition[0].represents is class_

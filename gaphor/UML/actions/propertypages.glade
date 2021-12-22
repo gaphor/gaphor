@@ -136,6 +136,90 @@ renderers and such.</property>
       </packing>
     </child>
   </object>
+  <object class="GtkAdjustment" id="num-partitions-adjustment">
+    <property name="lower">1</property>
+    <property name="upper">10</property>
+    <property name="value">2</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">5</property>
+  </object>
+  <object class="GtkBox" id="partition-editor">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="margin-top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">Swimlanes</property>
+        <property name="xalign">0</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Partitions</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSpinButton" id="num-partitions">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="adjustment">num-partitions-adjustment</property>
+            <property name="numeric">True</property>
+            <signal name="value-changed" handler="partitions-changed" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="pack-type">end</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkBox" id="partitions">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">12</property>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+  </object>
   <object class="GtkBox" id="object-node-editor">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
@@ -225,42 +309,16 @@ renderers and such.</property>
       </packing>
     </child>
   </object>
-  <object class="GtkBox" id="partition-editor">
+  <object class="GtkBox" id="partition">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="margin-top">6</property>
-    <property name="orientation">vertical</property>
+    <property name="margin-start">6</property>
     <property name="spacing">6</property>
     <child>
-      <object class="GtkBox">
+      <object class="GtkSeparator">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Partitions</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkSpinButton" id="num-partitions">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="numeric">True</property>
-            <signal name="value-changed" handler="partitions-changed" swapped="no"/>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="pack-type">end</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
+        <property name="orientation">vertical</property>
       </object>
       <packing>
         <property name="expand">False</property>
@@ -269,33 +327,67 @@ renderers and such.</property>
       </packing>
     </child>
     <child>
-      <object class="GtkLabel">
+      <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="label" translatable="yes">Partition Names</property>
-        <property name="xalign">0</property>
-        <attributes>
-          <attribute name="weight" value="bold"/>
-        </attributes>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">1</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkTreeView" id="partition-treeview">
-        <property name="visible">True</property>
-        <property name="can-focus">True</property>
-        <child internal-child="selection">
-          <object class="GtkTreeSelection"/>
+        <property name="orientation">vertical</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Name</property>
+            <property name="xalign">0</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="partition-name">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <signal name="changed" handler="partition-name-changed" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Allocated Type</property>
+            <property name="xalign">0</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkComboBoxText" id="partition-type">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="has-entry">True</property>
+            <signal name="changed" handler="partition-type-changed" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
         </child>
       </object>
       <packing>
         <property name="expand">False</property>
         <property name="fill">True</property>
-        <property name="position">2</property>
+        <property name="position">1</property>
       </packing>
     </child>
   </object>
