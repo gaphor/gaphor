@@ -28,15 +28,6 @@ class AppFileManager(Service, ActionProvider):
     def main_window(self):
         return self.application.active_session.get_service("main_window")
 
-    @action(name="app.file-new", shortcut="<Primary>n")
-    def action_new(self):
-        """The new model menu action.
-
-        This action will create a new UML model.  This will trigger a
-        FileManagerStateChange event.
-        """
-        self.application.new_session()
-
     @action(name="app.file-open", shortcut="<Primary>o")
     def action_open(self):
         """This menu action opens the standard model open dialog."""
