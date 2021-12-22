@@ -298,6 +298,9 @@ DirectedRelationshipPropertyPath.targetContext = association("targetContext", Cl
 DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", Classifier, upper=1)
 DirectedRelationshipPropertyPath.sourcePropertyPath = association("sourcePropertyPath", Property)
 DirectedRelationshipPropertyPath.targetPropertyPath = association("targetPropertyPath", Property)
+Property.itemFlow = association("itemFlow", ItemFlow, upper=1, opposite="itemProperty")
+from gaphor.UML.uml import Element
+Element.owner.add(Property.itemFlow)  # type: ignore[attr-defined]
 ConnectorProperty.connector = association("connector", Connector, upper=1, composite=True)
 ParticipantProperty.end_ = association("end_", Property, upper=1, composite=True)
 ValueType.unit = association("unit", InstanceSpecification, upper=1)
@@ -318,4 +321,5 @@ Stakeholder.concernList = association("concernList", Comment, composite=True)
 ElementGroup.member = derivedunion("member", Element)
 ElementGroup.orderedMember = association("orderedMember", Element, composite=True)
 Rate.rate = association("rate", InstanceSpecification, composite=True)
-ItemFlow.itemProperty = association("itemProperty", Property, upper=1, composite=True)
+ItemFlow.itemProperty = association("itemProperty", Property, upper=1, composite=True, opposite="itemFlow")
+Element.ownedElement.add(ItemFlow.itemProperty)  # type: ignore[attr-defined]

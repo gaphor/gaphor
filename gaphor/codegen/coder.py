@@ -113,9 +113,8 @@ def coder(
             yield overrides.get_override(c.name)
             continue
 
-        super_class = in_super_model(c.name, super_models)
-        if super_class:
-            pkg, cls = super_class
+        pkg, cls = in_super_model(c.name, super_models)
+        if pkg and cls:
             line = f"from {pkg} import {cls.name}"
             yield line
             already_imported.add(line)
@@ -381,16 +380,16 @@ def attribute(
         if a:
             return pkg, a
 
-    maybe_super = in_super_model(c.name, super_models)
-    if maybe_super:
-        return maybe_super[0], attribute(maybe_super[1], name, [])[1]
+    pkg, super_class = in_super_model(c.name, super_models)
+    if super_class and c is not super_class:
+        return pkg, attribute(super_class, name, super_models)[1]
 
     return None, None
 
 
 def in_super_model(
     name: str, super_models: list[tuple[str, ElementFactory]]
-) -> tuple[str, UML.Class] | None:
+) -> tuple[str, UML.Class] | tuple[None, None]:
     for pkg, factory in super_models:
         cls: UML.Class
         for cls in factory.select(  # type: ignore[assignment]
@@ -398,7 +397,7 @@ def in_super_model(
         ):
             if not (is_in_profile(cls) or is_enumeration(cls)):
                 return pkg, cls
-    return None
+    return None, None
 
 
 def load_model(modelfile: str) -> ElementFactory:
