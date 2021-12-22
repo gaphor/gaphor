@@ -33,7 +33,11 @@ def _create_stereotype_compartment(appliedStereotype):
                 Text(text=lazy_format(slot), style={"text-align": TextAlign.LEFT})
                 for slot in slots
             ),
-            style={"padding": (4, 4, 4, 4), "vertical-align": VerticalAlign.TOP},
+            style={
+                "padding": (4, 4, 4, 4),
+                "min-height": 8,
+                "vertical-align": VerticalAlign.TOP,
+            },
             draw=draw_top_separator,
         )
     else:

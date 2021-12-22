@@ -124,6 +124,6 @@ def enumerations_compartment(subject):
             )
             for literal in subject.ownedLiteral
         ),
-        style={"padding": (4, 4, 4, 4)},
+        style={"padding": (4, 4, 4, 4), "min-height": 8},
         draw=draw_top_separator,
     )
