@@ -15,6 +15,9 @@ class RecentManagerStub:
     def add_full(self, uri, meta):
         self.items.append(uri)
 
+    def remove_item(self, uri):
+        pass
+
 
 @pytest.fixture
 def event_manager():

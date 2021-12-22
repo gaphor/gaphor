@@ -27,11 +27,24 @@ class RecentFiles(Service):
         if not filename:
             return
         uri = GLib.filename_to_uri(os.path.abspath(filename))
+        # Re-add, to ensure it's at the top of the list
+        self.remove(uri)
+        self.add(uri)
+
+    def add(self, uri):
         meta = Gtk.RecentData()
         meta.app_name = APPLICATION_ID
         meta.app_exec = f"{GLib.get_prgname()} %u"
         meta.mime_type = "application/x-gaphor"
         self.recent_manager.add_full(uri, meta)
+
+    def remove(self, uri):
+        # From: https://gitlab.gnome.org/GNOME/pitivi/-/blob/58b5e3b6/pitivi/application.py#L271
+        try:
+            self.recent_manager.remove_item(uri)
+        except GLib.Error as e:
+            if e.domain != "gtk-recent-manager-error-quark":
+                raise e
 
 
 class RecentFilesMenu(Gio.Menu):
