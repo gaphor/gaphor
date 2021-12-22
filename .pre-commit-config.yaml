@@ -5,7 +5,7 @@ repos:
   - id: black
     language_version: python3
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v0.910-1
+  rev: v0.920
   hooks:
   - id: mypy
     additional_dependencies:
@@ -31,7 +31,7 @@ repos:
   - id: docformatter
     args: [--in-place]
 - repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: v0.8.0.1
+  rev: v0.8.0.2
   hooks:
   - id: shellcheck
     args: [--exclude, SC1017]

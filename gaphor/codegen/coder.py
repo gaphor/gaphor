@@ -78,7 +78,7 @@ def main(
     )
     overrides = Overrides(overridesfile) if overridesfile else None
 
-    with (open(outfile, "w") if outfile else contextlib.nullcontext(sys.stdout)) as out:
+    with (open(outfile, "w") if outfile else contextlib.nullcontext(sys.stdout)) as out:  # type: ignore[attr-defined]
         for line in coder(model, super_models, overrides):
             print(line, file=out)
 

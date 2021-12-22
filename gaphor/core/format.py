@@ -10,7 +10,7 @@ from gaphor.core.modeling import Diagram, Element
 
 
 @singledispatch
-def format(el: Element) -> str:
+def format(el: Element, **kwargs) -> str:
     """Format an element."""
     raise TypeError(f"Format routine for type {type(el)} not implemented yet")
 

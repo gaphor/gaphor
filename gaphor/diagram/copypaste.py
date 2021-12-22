@@ -26,7 +26,7 @@ Opaque = object
 
 
 @singledispatch
-def copy(obj: Element) -> Iterator[tuple[Id, Opaque]]:
+def copy(obj: Element | set) -> Iterator[tuple[Id, Opaque]]:
     """Create a copy of an element (or list of elements).
 
     The returned type should be distinct, so the `paste()` function can
