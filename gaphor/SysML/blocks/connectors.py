@@ -34,7 +34,7 @@ class BlockProperyProxyPortConnector:
         proxy_port = self.proxy_port
         if not proxy_port.subject:
             proxy_port.subject = proxy_port.model.create(sysml.ProxyPort)
-        if isinstance(self.block.subject, UML.EncapsulatedClassifer):
+        if isinstance(self.block.subject, UML.EncapsulatedClassifier):
             proxy_port.subject.encapsulatedClassifier = self.block.subject
 
         # This raises the item in the item hierarchy

@@ -226,11 +226,11 @@ class StructuredClassifier(Classifier):
     role: relation_many[ConnectableElement]
 
 
-class EncapsulatedClassifer(StructuredClassifier):
+class EncapsulatedClassifier(StructuredClassifier):
     ownedPort: relation_many[Port]
 
 
-class Class(BehavioredClassifier, EncapsulatedClassifer):
+class Class(BehavioredClassifier, EncapsulatedClassifier):
     extension: property
     isActive: _attribute[int] = _attribute("isActive", int, default=False)
     nestedClassifier: relation_many[Classifier]
@@ -629,7 +629,7 @@ class FinalState(State):
 
 
 class Port(Property):
-    encapsulatedClassifier: relation_one[EncapsulatedClassifer]
+    encapsulatedClassifier: relation_one[EncapsulatedClassifier]
     isBehavior: _attribute[int] = _attribute("isBehavior", int)
     isService: _attribute[int] = _attribute("isService", int)
 
@@ -919,7 +919,7 @@ Classifier.attribute.add(StructuredClassifier.ownedAttribute)  # type: ignore[at
 Namespace.ownedMember.add(StructuredClassifier.ownedAttribute)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(StructuredClassifier.ownedConnector)  # type: ignore[attr-defined]
 Classifier.feature.add(StructuredClassifier.ownedConnector)  # type: ignore[attr-defined]
-EncapsulatedClassifer.ownedPort = association("ownedPort", Port, composite=True, opposite="encapsulatedClassifier")
+EncapsulatedClassifier.ownedPort = association("ownedPort", Port, composite=True, opposite="encapsulatedClassifier")
 Class.ownedAttribute = association("ownedAttribute", Property, composite=True, opposite="class_")
 Class.ownedOperation = association("ownedOperation", Operation, composite=True, opposite="class_")
 # 32: override Class.extension(Extension.metaclass): property
@@ -1235,7 +1235,7 @@ Element.ownedElement.add(State.entry)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.exit)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.doActivity)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.statevariant)  # type: ignore[attr-defined]
-Port.encapsulatedClassifier = association("encapsulatedClassifier", EncapsulatedClassifer, upper=1, opposite="ownedPort")
+Port.encapsulatedClassifier = association("encapsulatedClassifier", EncapsulatedClassifier, upper=1, opposite="ownedPort")
 RedefinableElement.redefinitionContext.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
 Deployment.location = association("location", DeploymentTarget, upper=1, opposite="deployment")
 Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact)
