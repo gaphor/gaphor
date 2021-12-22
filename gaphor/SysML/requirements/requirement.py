@@ -124,7 +124,7 @@ class RequirementItem(ElementPresentation[Requirement], Classified):
                     if subject and subject.text
                     else []
                 ),
-                style={"padding": (4, 4, 4, 4)},
+                style={"padding": (4, 4, 4, 4), "min-height": 8},
                 draw=draw_top_separator,
             )
         else:
