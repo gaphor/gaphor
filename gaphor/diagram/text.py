@@ -170,30 +170,19 @@ def _text_point_at_line_end(size, p1, p2):
 
     name_w, name_h = size
 
-    if dy == 0:
-        rc = 1000.0  # quite a lot...
-    else:
-        rc = dx / dy
+    rc = 1000.0 if dy == 0 else dx / dy
     abs_rc = abs(rc)
     h = dx > 0  # right side of the box
     v = dy > 0  # bottom side
 
     if abs_rc > 6:
         # horizontal line
-        if h:
-            name_dx = ofs
-            name_dy = -ofs - name_h
-        else:
-            name_dx = -ofs - name_w
-            name_dy = -ofs - name_h
+        name_dx = ofs if h else -ofs - name_w
+        name_dy = -ofs - name_h
     elif 0 <= abs_rc <= 0.2:
+        name_dx = -ofs - name_w
         # vertical line
-        if v:
-            name_dx = -ofs - name_w
-            name_dy = ofs
-        else:
-            name_dx = -ofs - name_w
-            name_dy = -ofs - name_h
+        name_dy = ofs if v else -ofs - name_h
     else:
         # Should both items be placed on the same side of the line?
         r = abs_rc < 1.0
@@ -201,14 +190,8 @@ def _text_point_at_line_end(size, p1, p2):
         # Find out alignment of text (depends on the direction of the line)
         align_left = h ^ r
         align_bottom = v ^ r
-        if align_left:
-            name_dx = ofs
-        else:
-            name_dx = -ofs - name_w
-        if align_bottom:
-            name_dy = -ofs - name_h
-        else:
-            name_dy = ofs
+        name_dx = ofs if align_left else -ofs - name_w
+        name_dy = -ofs - name_h if align_bottom else ofs
     return p1[0] + name_dx, p1[1] + name_dy
 
 
