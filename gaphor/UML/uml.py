@@ -906,20 +906,23 @@ DirectedRelationship.source.add(Generalization.specific)  # type: ignore[attr-de
 Element.owner.add(Generalization.specific)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(Generalization.general)  # type: ignore[attr-defined]
 StructuredClassifier.role = derivedunion("role", ConnectableElement)
-StructuredClassifier.ownedAttribute = association("ownedAttribute", Property, composite=True)
 # 101: override StructuredClassifier.part: property
 StructuredClassifier.part = property(lambda self: tuple(a for a in self.ownedAttribute if a.isComposite), doc="""
     Properties owned by a classifier by composition.
 """)
 
 StructuredClassifier.ownedConnector = association("ownedConnector", Connector, composite=True, opposite="structuredClassifier")
+StructuredClassifier.ownedAttribute = association("ownedAttribute", Property, composite=True)
 Namespace.member.add(StructuredClassifier.role)  # type: ignore[attr-defined]
+Namespace.ownedMember.add(StructuredClassifier.ownedConnector)  # type: ignore[attr-defined]
+Classifier.feature.add(StructuredClassifier.ownedConnector)  # type: ignore[attr-defined]
 StructuredClassifier.role.add(StructuredClassifier.ownedAttribute)  # type: ignore[attr-defined]
 Classifier.attribute.add(StructuredClassifier.ownedAttribute)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(StructuredClassifier.ownedAttribute)  # type: ignore[attr-defined]
-Namespace.ownedMember.add(StructuredClassifier.ownedConnector)  # type: ignore[attr-defined]
-Classifier.feature.add(StructuredClassifier.ownedConnector)  # type: ignore[attr-defined]
 EncapsulatedClassifier.ownedPort = association("ownedPort", Port, composite=True, opposite="encapsulatedClassifier")
+StructuredClassifier.role.add(EncapsulatedClassifier.ownedPort)  # type: ignore[attr-defined]
+Classifier.attribute.add(EncapsulatedClassifier.ownedPort)  # type: ignore[attr-defined]
+Namespace.ownedMember.add(EncapsulatedClassifier.ownedPort)  # type: ignore[attr-defined]
 Class.ownedAttribute = association("ownedAttribute", Property, composite=True, opposite="class_")
 Class.ownedOperation = association("ownedOperation", Operation, composite=True, opposite="class_")
 # 32: override Class.extension(Extension.metaclass): property
@@ -1236,7 +1239,7 @@ Element.ownedElement.add(State.exit)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.doActivity)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.statevariant)  # type: ignore[attr-defined]
 Port.encapsulatedClassifier = association("encapsulatedClassifier", EncapsulatedClassifier, upper=1, opposite="ownedPort")
-RedefinableElement.redefinitionContext.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
+NamedElement.namespace.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
 Deployment.location = association("location", DeploymentTarget, upper=1, opposite="deployment")
 Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact)
 Element.owner.add(Deployment.location)  # type: ignore[attr-defined]
