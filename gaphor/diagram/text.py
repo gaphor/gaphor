@@ -13,6 +13,7 @@ class Layout:
         self,
         text: str = "",
         font: Style | None = None,
+        width: int | None = None,
         text_align: TextAlign = TextAlign.CENTER,
         default_size: tuple[int, int] = (0, 0),
     ):
@@ -25,10 +26,12 @@ class Layout:
         self.width = -1
         self.default_size = default_size
 
-        if font:
-            self.set_font(font)
         if text:
             self.set_text(text)
+        if width is not None:
+            self.set_width(width)
+        if font:
+            self.set_font(font)
         self.set_alignment(text_align)
 
     def set(self, text=None, font=None, width=None, text_align=None):

@@ -6,7 +6,6 @@ from gaphor import UML
 from gaphor.core.modeling import DrawContext
 from gaphor.core.modeling.properties import association
 from gaphor.core.styling import VerticalAlign
-from gaphor.core.styling.properties import TextAlign
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, stroke
 from gaphor.diagram.support import represents
@@ -64,12 +63,13 @@ class PartitionItem(ElementPresentation):
         else:
             partition_width = bounding_box.width / 2
 
-        layout = Layout()
         padding_top, padding_right, padding_bottom, padding_left = context.style[
             "padding"
         ]
-        layout.set_width(partition_width - padding_left - padding_right)
-        style = context.style
+        layout = Layout(
+            font=context.style,
+            width=partition_width - padding_left - padding_right,
+        )
         header_height = 0.0
         for num, partition in enumerate(partitions):
             cr.move_to(partition_width * num, 0)
@@ -77,14 +77,10 @@ class PartitionItem(ElementPresentation):
             layout.set(
                 text=f"{partition.name}: {partition.represents.name}"
                 if isinstance(partition.represents, UML.NamedElement)
-                else partition.name,
-                font=style,
-                text_align=TextAlign.CENTER,
+                else partition.name
             )
             cr.move_to(partition_width * num + padding_left, padding_top)
-            layout.show_layout(
-                cr,
-            )
+            layout.show_layout(cr)
             _, h = layout.size()
             header_height = max(h, header_height)
 
