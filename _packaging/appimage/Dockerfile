@@ -7,19 +7,52 @@ ENV LC_ALL C.UTF-8
 ENV PYTHON_VERSION "3.10.1"
 ENV PYTHON_VERSION_SHORT "3.10"
 
+# Enable source lists for build-dep
 RUN sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && \
     sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list
 
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get build-dep -y \
+# Common dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    sudo \
+    vim \
+    wget
+# Python dependencies
+RUN apt-get install -y \
+    libbz2-dev \
+    libc6-dev \
+    libffi-dev \
+    libgdbm-dev \
+    libgdbm-compat-dev \
+    libncursesw5-dev \
+    libreadline-gplv2-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    tk-dev \
+    zlib1g-dev
+# Python deadsnakes
+RUN apt-get install -y \
+    software-properties-common \
+    && add-apt-repository ppa:deadsnakes/ppa \
+    && apt-get update && apt-get install -y \
+    python3.10 \
+    python3.10-dev \
+    python3.10-venv \
+    python3.10-distutils
+# fontconfig dependencies
+RUN apt-get build-dep -y \
     fontconfig \
-  && apt install -y \
+    && apt-get install -y \
+    uuid-dev \
+    devscripts
+# jhbuild dependencies
+RUN apt-get install -y \
     apt-file \
     autoconf \
     automake \
     autopoint \
     bison \
-    build-essential \
     desktop-file-utils \
     doxygen \
     flex \
@@ -43,7 +76,6 @@ RUN apt-get update && apt-get build-dep -y \
     libxkbcommon-dev \
     libxkbcommon-x11-dev \
     libxml2-dev \
-    libxrandr-dev \
     libxrender-dev \
     libxslt1-dev \
     libxtst-dev \
@@ -60,39 +92,29 @@ RUN apt-get update && apt-get build-dep -y \
     python3-pytest \
     ragel \
     shared-mime-info \
-    sudo \
     trang \
-    uuid-dev \
-    vim \
-    wget \
     xmlto \
-    yelp-tools \
-  && rm -rf /var/lib/apt/lists/*
+    yelp-tools
+# Dependency missed by jhbuild sysdeps
+RUN apt-get install -y \
+    libxrandr-dev
+
+# Build updated fontconfig deb files
+RUN apt-get source fontconfig
+ENV FONTCONFIG_VERSION 2.13.1
+RUN wget -q https://www.freedesktop.org/software/fontconfig/release/fontconfig-$FONTCONFIG_VERSION.tar.gz
+WORKDIR fontconfig-2.12.6
+RUN uupdate ../fontconfig-$FONTCONFIG_VERSION.tar.gz
+WORKDIR /fontconfig-$FONTCONFIG_VERSION
+RUN dpkg-buildpackage -us -uc -nc
+WORKDIR /
+RUN dpkg -i *.deb
+
+# Build apt-file search index for jhbuild
 RUN apt-file update
 
-RUN mkdir -p /opt
-
-# Install Python
-# WORKDIR /opt
-# RUN wget https://www.python.org/ftp/python/$PYTHON_VERSION/Python-$PYTHON_VERSION.tgz
-# RUN tar xvf Python-$PYTHON_VERSION.tgz
-# WORKDIR /opt/Python-$PYTHON_VERSION
-# RUN ./configure --enable-optimizations
-# RUN make
-# RUN make altinstall
-# RUN update-alternatives --install /usr/bin/python python /usr/local/bin/python$PYTHON_VERSION_SHORT 1
-# RUN update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python$PYTHON_VERSION_SHORT 1
-
-# Build Fontconfig
-WORKDIR /opt
-ENV FONTCONFIG_VERSION 2.13.1
-RUN wget https://www.freedesktop.org/software/fontconfig/release/fontconfig-$FONTCONFIG_VERSION.tar.gz
-RUN tar xzvf fontconfig-$FONTCONFIG_VERSION.tar.gz
-WORKDIR fontconfig-$FONTCONFIG_VERSION
-RUN ./configure
-RUN make
-RUN make install
-ENV PKG_CONFIG_PATH=/usr/local/lib:$PKG_CONFIG_PATH
+# Cleanup
+RUN rm -rf /var/lib/apt/lists/*
 
 ENV USER gnome
 RUN useradd -m -u 1000 $USER
@@ -101,15 +123,24 @@ RUN echo "$USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/nopasswd
 
 USER $USER
 
-run mkdir -p /home/$USER/.config
-RUN echo "modules = ['gtk+-3', 'gtksourceview-4', 'gobject-introspection']\n" > /home/$USER/.config/jhbuildrc
-
-ENV PATH "/home/$USER/.local/bin:$PATH"
-
-WORKDIR /home/$USER
+# Install jhbuild
+ENV CHECKOUT /home/$USER/jhbuild/checkout
+RUN mkdir -p $CHECKOUT
+WORKDIR $CHECKOUT
 RUN git clone --depth=1 https://gitlab.gnome.org/GNOME/jhbuild.git
-WORKDIR /home/$USER/jhbuild
+WORKDIR $CHECKOUT/jhbuild
 RUN ./autogen.sh --simple-install
 RUN make
 RUN make install
+WORKDIR /home/$USER
+
+ENV PATH "/home/$USER/.local/bin:$PATH"
+
+# Configure jhbuild
+run mkdir -p /home/$USER/.config
+RUN echo "modules = ['gtk+-3', 'gtksourceview-4', 'gobject-introspection']" >> /home/$USER/.config/jhbuildrc
+RUN echo "module_mesonargs['gtksourceview-4'] = '-D vapi=false'" >> /home/$USER/.config/jhbuildrc
+
+# Build GTK, GtkSourceView, and gobject-introspection
+# RUN jhbuild build
 
