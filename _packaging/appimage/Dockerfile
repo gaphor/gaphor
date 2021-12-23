@@ -116,6 +116,10 @@ RUN apt-file update
 # Cleanup
 RUN rm -rf /var/lib/apt/lists/*
 
+# Make Python 3.10 the default python3
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
+
+
 ENV USER gnome
 RUN useradd -m -u 1000 $USER
 
@@ -139,8 +143,13 @@ ENV PATH "/home/$USER/.local/bin:$PATH"
 # Configure jhbuild
 run mkdir -p /home/$USER/.config
 RUN echo "modules = ['gtk+-3', 'gtksourceview-4', 'gobject-introspection']" >> /home/$USER/.config/jhbuildrc
-RUN echo "module_mesonargs['gtksourceview-4'] = '-D vapi=false'" >> /home/$USER/.config/jhbuildrc
+RUN echo "module_mesonargs['gtksourceview-4'] = '-Dvapi=false'" >> /home/$USER/.config/jhbuildrc
+RUN echo "module_mesonargs['gobject-introspection'] = '-Dcairo=enabled'" >> /home/$USER/.config/jhbuildrc
 
 # Build GTK, GtkSourceView, and gobject-introspection
 # RUN jhbuild build
+# 
+ENV LD_LIBRARY_PATH "/home/$USER/jhbuild/install/lib"
+ENV PKG_CONFIG_PATH "/home/$USER/jhbuild/install/lib/pkgconfig"
+ENV PATH "/home/$USER/jhbuild/install/bin:$PATH"
 
