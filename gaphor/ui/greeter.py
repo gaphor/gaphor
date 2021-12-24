@@ -42,10 +42,15 @@ class Greeter(Service, ActionProvider):
 
         listbox = builder.get_object("greeter-recent-files")
         listbox.connect("row-activated", self._on_row_activated)
+        has_recent_files = False
         for widget in self.create_recent_files():
-            listbox.add(widget)
+            if Gtk.get_major_version() == 3:
+                listbox.add(widget)
+            else:
+                listbox.append(widget)
+            has_recent_files = True
 
-        if not listbox.get_children():
+        if not has_recent_files:
             stack = builder.get_object("stack")
             stack.set_visible_child_name("splash")
 
