@@ -134,6 +134,7 @@ type = "virtualenv"
 [tool.poetry.plugins."gaphor.appservices"]
 "event_manager" = "gaphor.core.eventmanager:EventManager"
 "app_file_manager" = "gaphor.ui.appfilemanager:AppFileManager"
+"styling" = "gaphor.ui.styling:Styling"
 "greeter" = "gaphor.ui.greeter:Greeter"
 
 [tool.poetry.plugins."gaphor.services"]

@@ -4,7 +4,7 @@ import importlib.resources
 import logging
 from pathlib import Path
 
-from gi.repository import Gdk, Gio, GLib, Gtk
+from gi.repository import Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import event_handler, gettext
@@ -108,25 +108,6 @@ class MainWindow(Service, ActionProvider):
         self.in_app_notifier = None
 
         event_manager.subscribe(self._on_file_manager_state_changed)
-
-        self.init_styling()
-
-    def init_styling(self):
-        with importlib.resources.path("gaphor.ui", "layout.css") as css_file:
-            style_provider = Gtk.CssProvider()
-            style_provider.load_from_path(str(css_file))
-            if Gtk.get_major_version() == 3:
-                Gtk.StyleContext.add_provider_for_screen(
-                    Gdk.Screen.get_default(),
-                    style_provider,
-                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-                )
-            else:
-                Gtk.StyleContext.add_provider_for_display(
-                    Gdk.Display.get_default(),
-                    style_provider,
-                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-                )
 
     def shutdown(self):
         if self.window:
