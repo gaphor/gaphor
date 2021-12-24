@@ -15,7 +15,7 @@
         <property name="margin-top">12</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkStack" id="surfaces">
+          <object class="GtkStack" id="stack">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="transition-type">crossfade</property>
@@ -79,7 +79,33 @@
                   </object>
                 </child>
               </object>
+              <packing>
+                <property name="name">recent-files</property>
+              </packing>
             </child>
+            <!-- new stack -->
+            <child>
+      <object class="GtkLabel">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;Welcome to Gaphor&lt;/b&gt;&lt;/big&gt;
+
+It's time to create your first model
+or open an existing model.
+
+Happy modeling!
+
+• &lt;a href="https://gaphor.org"&gt;Gaphor homepage&lt;/a&gt;
+• &lt;a href="https://github.com/gaphor"&gt;GitHub&lt;/a&gt;
+
+</property>
+        <property name="use-markup">True</property>
+      </object>
+              <packing>
+                <property name="name">splash</property>
+              </packing>
+            </child>
+
           </object>
           <packing>
             <property name="expand">False</property>

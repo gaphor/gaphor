@@ -41,10 +41,14 @@ class Greeter(Service, ActionProvider):
         greeter.set_application(self.gtk_app)
 
         listbox = builder.get_object("greeter-recent-files")
+        listbox.connect("row-activated", self._on_row_activated)
         for widget in self.create_recent_files():
             listbox.add(widget)
 
-        listbox.connect("row-activated", self._on_row_activated)
+        if not listbox.get_children():
+            stack = builder.get_object("stack")
+            stack.set_visible_child_name("splash")
+
         greeter.show()
         self.greeter = greeter
 
