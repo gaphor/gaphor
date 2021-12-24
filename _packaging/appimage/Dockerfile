@@ -1,5 +1,6 @@
 FROM ubuntu:18.04 AS build
 LABEL maintainer="dan@yeaw.me"
+LABEL org.opencontainers.image.source=https://github.com/gaphor/gaphor
 
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
