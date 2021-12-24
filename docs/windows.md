@@ -60,16 +60,13 @@ Download and install the latest version of Python:
 1. Restart your PowerShell terminal as a normal user and check that `python --version` is correct.
 
 #### Install gvsbuild
-We have forked gvsbuild for now because gaphor has slightly newer dependency
-requirements than the upstream project. If we can get our changes upstream,
-then we'll switch back to using that version directly.
 
 Open a new regular user PowerShell terminal and execute:
 
 ```PowerShell
 mkdir C:\gtk-build\github
 cd C:\gtk-build\github
-git clone https://github.com/gaphor/gvsbuild.git
+git clone https://github.com/wingtk/gvsbuild.git
 
 ```
 

@@ -179,9 +179,9 @@ jobs:
     timeout-minutes: 45
     env:
       # Git revision of gvsbuild we use for to build GTK and the other dependencies
-      gvsbuildref: ce4c9de92dc3487d15b8f5ecc200705f951b6ae8
+      gvsbuildref: b62737ea717bd717b1111934d4904eda0e6eea5a
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuildupdate: 2
+      gvsbuildupdate: 1
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
@@ -197,7 +197,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/checkout@v2.4.0
         with:
-          repository: gaphor/gvsbuild
+          repository: wingtk/gvsbuild
           ref: ${{ env.gvsbuildref }}
           path: gvsbuild
       - name: Set up Python
