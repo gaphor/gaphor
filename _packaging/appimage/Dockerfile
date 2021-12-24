@@ -1,54 +1,29 @@
 FROM ubuntu:18.04
 LABEL maintainer="dan@yeaw.me"
 
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
-
-ENV PYTHON_VERSION "3.10.1"
-ENV PYTHON_VERSION_SHORT "3.10"
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    PY_VERSION="3.10" \
+    FONTCONFIG_VERSION="2.13.1" \
+    DEBIAN_FRONTEND=noninteractive \
+    USER=runner \
+    CHECKOUT=/home/$USER/jhbuild/checkout \
+    LD_LIBRARY_PATH="/home/$USER/jhbuild/install/lib" \
+    PKG_CONFIG_PATH="/home/$USER/jhbuild/install/lib/pkgconfig" \
+    PATH="/home/$USER/jhbuild/install/bin:/home/$USER/.local/bin:$PATH"
 
 # Enable source lists for build-dep
 RUN sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && \
     sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list
 
-ENV DEBIAN_FRONTEND=noninteractive
-# Common dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    sudo \
-    vim \
-    wget
-# Python dependencies
-RUN apt-get install -y \
-    libbz2-dev \
-    libc6-dev \
-    libffi-dev \
-    libgdbm-dev \
-    libgdbm-compat-dev \
-    libncursesw5-dev \
-    libreadline-gplv2-dev \
-    libsqlite3-dev \
-    libssl-dev \
-    tk-dev \
-    zlib1g-dev
 # Python deadsnakes
-RUN apt-get install -y \
-    software-properties-common \
-    && add-apt-repository ppa:deadsnakes/ppa \
-    && apt-get update && apt-get install -y \
-    python3.10 \
-    python3.10-dev \
-    python3.10-venv \
-    python3.10-distutils
-# fontconfig dependencies
-RUN apt-get build-dep -y \
-    fontconfig \
-    && apt-get install -y \
-    uuid-dev \
-    devscripts
-# jhbuild dependencies
-RUN apt-get install -y \
-    apt-file \
+RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common \
+ && add-apt-repository ppa:deadsnakes/ppa \
+ && apt-get update && apt-get install -y --no-install-recommends \
+`# Common dependencies` \
+    build-essential \
+    wget \
+`# jhbuild dependencies` \
     autoconf \
     automake \
     autopoint \
@@ -94,62 +69,60 @@ RUN apt-get install -y \
     shared-mime-info \
     trang \
     xmlto \
-    yelp-tools
-# Dependency missed by jhbuild sysdeps
-RUN apt-get install -y \
-    libxrandr-dev
+    yelp-tools \
+`# Dependency missed by jhbuild sysdeps` \
+    libxrandr-dev \
+`# Dependency for building a deb package` \
+    devscripts \
+`# Python deadsnakes` \
+    python$PY_VERSION \
+    python$PY_VERSION-dev \
+    python$PY_VERSION-venv \
+    python$PY_VERSION-distutils \
+ && python$PY_VERSION -m ensurepip --upgrade \
+`# fontconfig dependencies` \
+ && apt-get build-dep -y fontconfig \
+ && apt-get install -y --no-install-recommends uuid-dev \
+ && rm -rf /var/lib/apt/lists/*
 
 # Build updated fontconfig deb files
-RUN apt-get source fontconfig
-ENV FONTCONFIG_VERSION 2.13.1
-RUN wget -q https://www.freedesktop.org/software/fontconfig/release/fontconfig-$FONTCONFIG_VERSION.tar.gz
-WORKDIR fontconfig-2.12.6
+RUN wget -q https://www.freedesktop.org/software/fontconfig/release/fontconfig-$FONTCONFIG_VERSION.tar.gz \
+ && apt-get update \
+ && apt-get source fontconfig \
+ && rm -rf /var/lib/apt/lists*
+WORKDIR /fontconfig-2.12.6
 RUN uupdate ../fontconfig-$FONTCONFIG_VERSION.tar.gz
 WORKDIR /fontconfig-$FONTCONFIG_VERSION
-RUN dpkg-buildpackage -us -uc -nc
+RUN dpkg-buildpackage --unsigned-source --unsigned-changes --no-pre-clean
 WORKDIR /
-RUN dpkg -i *.deb
+RUN dpkg -i *.deb \
+ && rm *.deb \
+ && rm -r /fontconfig-* \
+`# Make Deadsnakes Python the default python3` \
+ && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python$PY_VERSION 1
 
-# Build apt-file search index for jhbuild
-RUN apt-file update
-
-# Cleanup
-RUN rm -rf /var/lib/apt/lists/*
-
-# Make Python 3.10 the default python3
-RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 1
-
-
-ENV USER gnome
 RUN useradd -m -u 1000 $USER
-
-RUN echo "$USER ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/nopasswd
-
 USER $USER
 
 # Install jhbuild
-ENV CHECKOUT /home/$USER/jhbuild/checkout
 RUN mkdir -p $CHECKOUT
 WORKDIR $CHECKOUT
 RUN git clone --depth=1 https://gitlab.gnome.org/GNOME/jhbuild.git
 WORKDIR $CHECKOUT/jhbuild
-RUN ./autogen.sh --simple-install
-RUN make
-RUN make install
-WORKDIR /home/$USER
-
-ENV PATH "/home/$USER/.local/bin:$PATH"
+RUN ./autogen.sh --simple-install \
+ && make \
+ && make install
 
 # Configure jhbuild
-run mkdir -p /home/$USER/.config
-RUN echo "modules = ['gtk+-3', 'gtksourceview-4', 'gobject-introspection']" >> /home/$USER/.config/jhbuildrc
-RUN echo "module_mesonargs['gtksourceview-4'] = '-Dvapi=false'" >> /home/$USER/.config/jhbuildrc
-RUN echo "module_mesonargs['gobject-introspection'] = '-Dcairo=enabled'" >> /home/$USER/.config/jhbuildrc
+COPY --chown=$USER jhbuildrc /home/$USER/.config/jhbuildrc
 
 # Build GTK, GtkSourceView, and gobject-introspection
-# RUN jhbuild build
-# 
-ENV LD_LIBRARY_PATH "/home/$USER/jhbuild/install/lib"
-ENV PKG_CONFIG_PATH "/home/$USER/jhbuild/install/lib/pkgconfig"
-ENV PATH "/home/$USER/jhbuild/install/bin:$PATH"
+RUN jhbuild build \
+`# Setup poetry` \
+ && python$PY_VERSION -m pip install --user --upgrade \
+    pip \
+    urllib3 \
+    requests \
+    poetry \
+ && poetry config virtualenvs.in-project true
 
