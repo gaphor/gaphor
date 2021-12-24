@@ -5,7 +5,7 @@ from gi.repository import GLib, Gtk
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
-from gaphor.event import SessionCreated
+from gaphor.event import ActiveSessionChanged, SessionCreated
 from gaphor.i18n import translated_ui_string
 from gaphor.ui import APPLICATION_ID, HOME
 
@@ -67,14 +67,16 @@ class Greeter(Service, ActionProvider):
                 row.filename = filename
                 yield row
 
-    @event_handler(SessionCreated)
-    def on_session_created(self, _event=None):
+    def close(self):
         if self.greeter:
             self.greeter.destroy()
             self.greeter = None
 
+    @event_handler(SessionCreated, ActiveSessionChanged)
+    def on_session_created(self, _event=None):
+        self.close()
+
     def _on_row_activated(self, _listbox, row):
         filename = row.filename
         self.application.new_session(filename=filename)
-        # Always close the greeter: we may just focus another window
-        self.on_session_created()
+        self.close()
