@@ -20,6 +20,7 @@ from gaphor.event import (
 from gaphor.i18n import translated_ui_string
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
+from gaphor.ui import HOME
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.event import DiagramOpened
@@ -27,8 +28,6 @@ from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.notification import InAppNotifier
 
 log = logging.getLogger(__name__)
-
-HOME = str(Path.home())
 
 
 def new_builder():
@@ -232,8 +231,8 @@ class MainWindow(Service, ActionProvider):
 
         if self.filename:
             p = Path(self.filename)
-            title = p.name
-            subtitle = str(p.parent).replace(HOME, "~")
+            title = p.stem
+            subtitle = str(p).replace(HOME, "~")
         else:
             title = "Gaphor"
             subtitle = gettext("New model")

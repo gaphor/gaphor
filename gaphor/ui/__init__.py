@@ -29,6 +29,7 @@ from gaphor.ui.actiongroup import apply_application_actions
 from gaphor.ui.macosshim import macos_init
 
 APPLICATION_ID = "org.gaphor.Gaphor"
+HOME = str(Path.home())
 
 
 icon_theme = (
