@@ -25,9 +25,10 @@ from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.event import DiagramOpened
 from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.notification import InAppNotifier
-from gaphor.ui.recentfiles import HOME, RecentFilesMenu
 
 log = logging.getLogger(__name__)
+
+HOME = str(Path.home())
 
 
 def new_builder():
@@ -41,7 +42,8 @@ def create_hamburger_model(export_menu, tools_menu):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    part.append(gettext("New Window"), "app.new")
+    part.append(gettext("Open a Model…"), "app.new")
+    part.append(gettext("Create a New Model"), "app.new-model")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
@@ -59,15 +61,6 @@ def create_hamburger_model(export_menu, tools_menu):
     part.append(gettext("About Gaphor"), "win.about")
     model.append_section(None, part)
 
-    return model
-
-
-def create_recent_files_model(recent_manager=None):
-    model = Gio.Menu.new()
-    model.append_section(
-        gettext("Recently opened files"),
-        RecentFilesMenu(recent_manager or Gtk.RecentManager.get_default()),
-    )
     return model
 
 
@@ -182,12 +175,6 @@ class MainWindow(Service, ActionProvider):
             hamburger.set_menu_model(
                 create_hamburger_model(self.export_menu.menu, self.tools_menu.menu)
             )
-
-        recent_files = builder.get_object("recent-files")
-        if Gtk.get_major_version() == 3:
-            recent_files.bind_model(create_recent_files_model(), None)
-        else:
-            recent_files.set_menu_model(create_recent_files_model())
 
         self.title = builder.get_object("title")
         self.subtitle = builder.get_object("subtitle")

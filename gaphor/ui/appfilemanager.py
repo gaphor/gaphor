@@ -57,7 +57,3 @@ class AppFileManager(Service, ActionProvider):
 
             self.application.new_session(filename=filename, force=force_new_session)
             self.last_dir = os.path.dirname(filename)
-
-    @action(name="app.file-open-recent")
-    def action_open_recent(self, filename: str):
-        self.application.new_session(filename=filename)
