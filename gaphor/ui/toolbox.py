@@ -11,8 +11,8 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.core import action
 from gaphor.core.eventmanager import EventManager, event_handler
-from gaphor.event import TransactionCommit
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
+from gaphor.event import TransactionCommit
 from gaphor.services.modelinglanguage import (
     ModelingLanguageChanged,
     ModelingLanguageService,
