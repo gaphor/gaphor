@@ -4,8 +4,10 @@
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkWindow" id="greeter">
     <property name="width-request">600</property>
+    <property name="height-request">450</property>
     <property name="can-focus">False</property>
-    <property name="title" translatable="yes">Welcome to Gaphor</property>
+    <property name="modal">True</property>
+    <property name="window-position">center</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -15,27 +17,96 @@
         <child>
           <object class="GtkStack" id="surfaces">
             <property name="visible">True</property>
+            <property name="can-focus">False</property>
             <property name="transition-type">crossfade</property>
             <child>
+              <object class="GtkScrolledWindow">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="hscrollbar-policy">never</property>
+                <child>
+                  <object class="GtkViewport">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="vexpand">True</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label" translatable="yes">Recent files</property>
+                            <property name="xalign">0</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                            </attributes>
+                            <style>
+                              <class name="dim-label"/>
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFrame">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="label-xalign">0</property>
+                            <property name="shadow-type">in</property>
+                            <child>
+                              <object class="GtkListBox" id="greeter-recent-files">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <signal name="row-activated" handler="recent-file-selected" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkActionBar">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child type="center">
               <object class="GtkBox">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="halign">center</property>
-                <property name="vexpand">True</property>
-                <property name="orientation">vertical</property>
-                <property name="spacing">6</property>
+                <property name="margin-top">6</property>
+                <property name="margin-bottom">6</property>
+                <property name="spacing">10</property>
+                <property name="homogeneous">True</property>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkButton">
+                    <property name="label" translatable="yes">Create New Model…</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="label" translatable="yes">Recent files</property>
-                    <property name="xalign">0</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                    </attributes>
-                    <style>
-                      <class name="dim-label"/>
-                    </style>
+                    <property name="receives-default">True</property>
+                    <property name="action-name">app.new-model</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -44,9 +115,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkListBox" id="greeter-recent-files">
+                  <object class="GtkButton">
+                    <property name="label" translatable="yes">Open Existing Model…</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
+                    <property name="receives-default">True</property>
+                    <property name="action-name">app.file-open</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -55,40 +129,9 @@
                   </packing>
                 </child>
               </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkActionBar">
-            <property name="visible">True</property>
-            <!-- <property name="can-focus">False</property> -->
-            <!-- <property name="hexpand">True</property> -->
-            <child type="center">
-              <object class="GtkBox">
-                <!-- <property name="width-request">600</property> -->
-                <property name="orientation">horizontal</property>
-                <property name="homogeneous">true</property>
-                <property name="margin-bottom">6</property>
-                <property name="margin-top">6</property>
-                <property name="spacing">10</property>
-                <property name="visible">True</property>
-                <child>
-                  <object class="GtkButton">
-                    <property name="label" translatable="yes">Create New Model…</property>
-                    <property name="visible">True</property>
-                    <property name="receives-default">True</property>
-                    <property name="action-name">app.file-open</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton">
-                    <property name="label" translatable="yes">Open Existing Model…</property>
-                    <property name="visible">True</property>
-                    <property name="receives-default">True</property>
-                    <property name="action-name">app.file-open</property>
-                  </object>
-                </child>
-              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
             </child>
           </object>
           <packing>
@@ -99,5 +142,25 @@
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <object class="GtkHeaderBar" id="header">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="show-close-button">True</property>
+        <child type="title">
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Open a Gaphor Model</property>
+            <style>
+              <class name="title"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+    <style>
+      <class name="greeter"/>
+    </style>
   </object>
 </interface>

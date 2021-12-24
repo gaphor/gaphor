@@ -122,6 +122,7 @@ def run(args):
             event_manager = application.get_service("event_manager")
             event_manager.subscribe(on_session_created)
             event_manager.subscribe(on_quit)
+            application.get_service("greeter").init(gtk_app)
         except Exception:
             gtk_app.quit()
             raise
@@ -129,7 +130,7 @@ def run(args):
     def app_activate(gtk_app):
         assert application
         if not application.has_sessions():
-            application.new_session()
+            application.get_service("greeter").new()
 
     def app_open(gtk_app, files, n_files, hint):
         # appfilemanager should take care of this:

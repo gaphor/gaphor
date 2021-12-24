@@ -25,15 +25,19 @@ class AppFileManager(Service, ActionProvider):
         pass
 
     @property
-    def main_window(self):
-        return self.application.active_session.get_service("main_window")
+    def parent_window(self):
+        return (
+            self.application.active_session.get_service("main_window").window
+            if self.application.active_session
+            else None
+        )
 
     @action(name="app.file-open", shortcut="<Primary>o")
     def action_open(self):
         """This menu action opens the standard model open dialog."""
         filenames = open_file_dialog(
             gettext("Open Gaphor Model"),
-            parent=self.main_window.window,
+            parent=self.parent_window,
             dirname=self.last_dir,
             filters=FILTERS,
         )
@@ -45,7 +49,7 @@ class AppFileManager(Service, ActionProvider):
                     gettext(
                         "{filename} is already opened. Do you want to switch to the opened window instead?"
                     ).format(filename=filename),
-                    parent=self.main_window.window,
+                    parent=self.parent_window,
                 )
 
                 force_new_session = not dialog.answer
