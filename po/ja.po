@@ -1536,8 +1536,8 @@ msgid "main"
 msgstr ""
 
 #: gaphor/ui/filemanager.py:116
-msgid "Loading..."
-msgstr "読み込み..."
+msgid "Loading…"
+msgstr "読み込み…"
 
 #: gaphor/ui/filemanager.py:117
 msgid "Loading model from {filename}"
@@ -1558,8 +1558,8 @@ msgid ""
 msgstr "このモデルには、現在メンテナンスされていないアイテムへのリファレンスが含まれています。保存する前に整理しますか?"
 
 #: gaphor/ui/filemanager.py:199
-msgid "Saving..."
-msgstr "保存..."
+msgid "Saving…"
+msgstr "保存…"
 
 #: gaphor/ui/filemanager.py:200
 msgid "Saving model to {filename}"
@@ -1601,8 +1601,8 @@ msgid "Open Application Menu"
 msgstr "アプリケーションメニューを開く"
 
 #: gaphor/ui/mainwindow.py:49
-msgid "Save As..."
-msgstr "別名で保存..."
+msgid "Save As…"
+msgstr "別名で保存…"
 
 #: gaphor/ui/mainwindow.py:50
 msgid "Export"

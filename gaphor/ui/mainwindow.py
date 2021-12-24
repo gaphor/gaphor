@@ -46,7 +46,7 @@ def create_hamburger_model(export_menu, tools_menu):
 
     part = Gio.Menu.new()
     part.append(gettext("Save"), "win.file-save")
-    part.append(gettext("Save As..."), "win.file-save-as")
+    part.append(gettext("Save As…"), "win.file-save-as")
     part.append_submenu(gettext("Export"), export_menu)
     model.append_section(None, part)
 

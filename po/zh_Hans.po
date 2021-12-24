@@ -1478,7 +1478,7 @@ msgid "main"
 msgstr ""
 
 #: gaphor/ui/filemanager.py:116
-msgid "Loading..."
+msgid "Loading…"
 msgstr "加载中…"
 
 #: gaphor/ui/filemanager.py:117
@@ -1500,7 +1500,7 @@ msgid ""
 msgstr ""
 
 #: gaphor/ui/filemanager.py:199
-msgid "Saving..."
+msgid "Saving…"
 msgstr "保存中…"
 
 #: gaphor/ui/filemanager.py:200
@@ -1540,7 +1540,7 @@ msgid "Open Application Menu"
 msgstr "开启应用菜单"
 
 #: gaphor/ui/mainwindow.py:49
-msgid "Save As..."
+msgid "Save As…"
 msgstr "另存为…"
 
 #: gaphor/ui/mainwindow.py:50

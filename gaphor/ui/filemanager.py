@@ -112,7 +112,7 @@ class FileManager(Service, ActionProvider):
         self.filename = filename
         queue: Queue[int] = Queue(0)
         status_window = StatusWindow(
-            gettext("Loading..."),
+            gettext("Loading…"),
             gettext("Loading model from {filename}").format(filename=filename),
             parent=self.main_window.window,
             queue=queue,
@@ -165,7 +165,7 @@ class FileManager(Service, ActionProvider):
         main_window = self.main_window
         queue: Queue[int] = Queue(0)
         status_window = StatusWindow(
-            gettext("Saving..."),
+            gettext("Saving…"),
             gettext("Saving model to {filename}").format(filename=filename),
             parent=main_window.window,
             queue=queue,

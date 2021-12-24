@@ -150,7 +150,7 @@ class HelloWorldPlugin(Service, ActionProvider):     # 1.
     @action(                                         # 5.
         name="helloworld",
         label=_("Hello world"),
-        tooltip=_("Every application ..."),
+        tooltip=_("Every application…"),
     )
     def helloworld_action(self):
         main_window = self.main_window

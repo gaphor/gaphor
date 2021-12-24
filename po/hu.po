@@ -1580,7 +1580,7 @@ msgid "main"
 msgstr "fő"
 
 #: gaphor/ui/filemanager.py:116
-msgid "Loading..."
+msgid "Loading…"
 msgstr "Betöltés folyamatban van…"
 
 #: gaphor/ui/filemanager.py:117
@@ -1604,7 +1604,7 @@ msgstr ""
 "előtt meg szeretné tisztítani a modellt?"
 
 #: gaphor/ui/filemanager.py:199
-msgid "Saving..."
+msgid "Saving…"
 msgstr "Mentés folyamatban van…"
 
 #: gaphor/ui/filemanager.py:200
@@ -1644,7 +1644,7 @@ msgid "Open Application Menu"
 msgstr "Alkalmazásmenü megnyitása"
 
 #: gaphor/ui/mainwindow.py:49
-msgid "Save As..."
+msgid "Save As…"
 msgstr "Mentés másként…"
 
 #: gaphor/ui/mainwindow.py:50

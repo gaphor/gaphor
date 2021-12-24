@@ -1591,7 +1591,7 @@ msgid "main"
 msgstr "메인"
 
 #: gaphor/ui/filemanager.py:116
-msgid "Loading..."
+msgid "Loading…"
 msgstr "불러오는 중..."
 
 #: gaphor/ui/filemanager.py:117
@@ -1613,7 +1613,7 @@ msgid ""
 msgstr "모델에 비관리 항목 참조가 일부 들어있습니다. 저장하기 전 해당 모델을 정리하시겠습니까?"
 
 #: gaphor/ui/filemanager.py:199
-msgid "Saving..."
+msgid "Saving…"
 msgstr "저장중..."
 
 #: gaphor/ui/filemanager.py:200
@@ -1658,8 +1658,8 @@ msgid "Open Application Menu"
 msgstr ""
 
 #: gaphor/ui/mainwindow.py:49
-msgid "Save As..."
-msgstr "다른 이름으로 저장..."
+msgid "Save As…"
+msgstr "다른 이름으로 저장…"
 
 #: gaphor/ui/mainwindow.py:50
 msgid "Export"

@@ -1528,8 +1528,8 @@ msgid "main"
 msgstr ""
 
 #: gaphor/ui/filemanager.py:116
-msgid "Loading..."
-msgstr "Ladataan..."
+msgid "Loading…"
+msgstr "Ladataan…"
 
 #: gaphor/ui/filemanager.py:117
 msgid "Loading model from {filename}"
@@ -1552,8 +1552,8 @@ msgstr ""
 "ylläpidettyjä. Haluatko siivota mallin ennen tallentamista?"
 
 #: gaphor/ui/filemanager.py:199
-msgid "Saving..."
-msgstr "Tallennetaan..."
+msgid "Saving…"
+msgstr "Tallennetaan…"
 
 #: gaphor/ui/filemanager.py:200
 msgid "Saving model to {filename}"
@@ -1592,8 +1592,8 @@ msgid "Open Application Menu"
 msgstr "Avaa sovellusvalikko"
 
 #: gaphor/ui/mainwindow.py:49
-msgid "Save As..."
-msgstr "Tallenna nimellä..."
+msgid "Save As…"
+msgstr "Tallenna nimellä…"
 
 #: gaphor/ui/mainwindow.py:50
 msgid "Export"

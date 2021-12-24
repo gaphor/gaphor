@@ -1570,7 +1570,7 @@ msgid "main"
 msgstr "glavni"
 
 #: gaphor/ui/filemanager.py:116
-msgid "Loading..."
+msgid "Loading…"
 msgstr "Učitavanje …"
 
 #: gaphor/ui/filemanager.py:117
@@ -1594,7 +1594,7 @@ msgstr ""
 " prije spremanja?"
 
 #: gaphor/ui/filemanager.py:199
-msgid "Saving..."
+msgid "Saving…"
 msgstr "Spremanje …"
 
 #: gaphor/ui/filemanager.py:200
@@ -1634,7 +1634,7 @@ msgid "Open Application Menu"
 msgstr "Otvori izbornik programa"
 
 #: gaphor/ui/mainwindow.py:49
-msgid "Save As..."
+msgid "Save As…"
 msgstr "Spremi kao …"
 
 #: gaphor/ui/mainwindow.py:50

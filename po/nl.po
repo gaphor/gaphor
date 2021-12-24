@@ -1546,8 +1546,8 @@ msgid "main"
 msgstr "main"
 
 #: gaphor/ui/filemanager.py:116
-msgid "Loading..."
-msgstr "Bezig met laden..."
+msgid "Loading…"
+msgstr "Bezig met laden…"
 
 #: gaphor/ui/filemanager.py:117
 msgid "Loading model from {filename}"
@@ -1570,8 +1570,8 @@ msgstr ""
 "het model opschonen voor het op te slaan?"
 
 #: gaphor/ui/filemanager.py:199
-msgid "Saving..."
-msgstr "Opslaan..."
+msgid "Saving…"
+msgstr "Opslaan…"
 
 #: gaphor/ui/filemanager.py:200
 msgid "Saving model to {filename}"
@@ -1615,8 +1615,8 @@ msgid "Open Application Menu"
 msgstr ""
 
 #: gaphor/ui/mainwindow.py:49
-msgid "Save As..."
-msgstr "Opslaan als..."
+msgid "Save As…"
+msgstr "Opslaan als…"
 
 #: gaphor/ui/mainwindow.py:50
 msgid "Export"

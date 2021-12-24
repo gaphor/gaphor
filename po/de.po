@@ -1567,8 +1567,8 @@ msgid "main"
 msgstr "main"
 
 #: gaphor/ui/filemanager.py:116
-msgid "Loading..."
-msgstr "Laden..."
+msgid "Loading…"
+msgstr "Laden…"
 
 #: gaphor/ui/filemanager.py:117
 msgid "Loading model from {filename}"
@@ -1591,8 +1591,8 @@ msgstr ""
 "Möchten Sie das Modell vor dem Speichern bereinigen?"
 
 #: gaphor/ui/filemanager.py:199
-msgid "Saving..."
-msgstr "Speichern..."
+msgid "Saving…"
+msgstr "Speichern…"
 
 #: gaphor/ui/filemanager.py:200
 msgid "Saving model to {filename}"
@@ -1631,8 +1631,8 @@ msgid "Open Application Menu"
 msgstr "Anwendungsmenü öffnen"
 
 #: gaphor/ui/mainwindow.py:49
-msgid "Save As..."
-msgstr "Speichern unter..."
+msgid "Save As…"
+msgstr "Speichern unter…"
 
 #: gaphor/ui/mainwindow.py:50
 msgid "Export"
