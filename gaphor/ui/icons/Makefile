@@ -71,6 +71,7 @@ ICONS=diagram \
 	stereotype \
 	extension \
 	property \
+	item-flow \
 	requirement \
 	satisfy \
 	derive \
