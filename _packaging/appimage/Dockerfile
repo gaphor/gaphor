@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:18.04 AS build
 LABEL maintainer="dan@yeaw.me"
 
 ENV LANG=C.UTF-8 \
@@ -6,11 +6,7 @@ ENV LANG=C.UTF-8 \
     PY_VERSION="3.10" \
     FONTCONFIG_VERSION="2.13.1" \
     DEBIAN_FRONTEND=noninteractive \
-    USER=runner \
-    CHECKOUT=/home/$USER/jhbuild/checkout \
-    LD_LIBRARY_PATH="/home/$USER/jhbuild/install/lib" \
-    PKG_CONFIG_PATH="/home/$USER/jhbuild/install/lib/pkgconfig" \
-    PATH="/home/$USER/jhbuild/install/bin:/home/$USER/.local/bin:$PATH"
+    USER=runner
 
 # Enable source lists for build-dep
 RUN sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && \
@@ -103,6 +99,10 @@ RUN dpkg -i *.deb \
 
 RUN useradd -m -u 1000 $USER
 USER $USER
+ENV CHECKOUT=/home/$USER/jhbuild/checkout \
+    LD_LIBRARY_PATH="/home/$USER/jhbuild/install/lib" \
+    PKG_CONFIG_PATH="/home/$USER/jhbuild/install/lib/pkgconfig" \
+    PATH="/home/$USER/jhbuild/install/bin:/home/$USER/.local/bin:$PATH"
 
 # Install jhbuild
 RUN mkdir -p $CHECKOUT
