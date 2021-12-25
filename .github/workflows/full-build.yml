@@ -38,12 +38,6 @@ jobs:
       - uses: actions/checkout@v2.4.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: Install Linux Dependencies
-        uses: ./.github/actions/linux_dependencies
-      - name: Set up Python
-        uses: actions/setup-python@v2.3.1
-        with:
-          python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.7
         with:

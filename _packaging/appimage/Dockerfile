@@ -78,6 +78,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends software-proper
     python$PY_VERSION-distutils \
  && python$PY_VERSION -m ensurepip --upgrade \
  && python$PY_VERSION -m pip install --upgrade pip \
+ && python$PY_VERSION -m pip install --upgrade requests urllib3 \
 `# fontconfig dependencies` \
  && apt-get build-dep -y fontconfig \
  && apt-get install -y --no-install-recommends uuid-dev \
@@ -121,10 +122,3 @@ COPY --chown=$USER jhbuildrc /home/$USER/.config/jhbuildrc
 
 # Build GTK, GtkSourceView, and gobject-introspection
 RUN jhbuild build \
-`# Setup poetry` \
- && python$PY_VERSION -m pip install --user --upgrade \
-    pip \
-    urllib3 \
-    requests \
-    poetry \
- && poetry config virtualenvs.in-project true
