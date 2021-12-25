@@ -122,6 +122,9 @@ version-file = { "script" = "_packaging.make-script:make_file_version_info" }
 pyinstall = { "script" = "_packaging.make-script:make_pyinstaller" }
 package = ["install-pyinstall", "gaphor-script", "version-file", "pyinstall"]
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
+docker-build = "docker build -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"
+docker-push = "docker push ghcr.io/gaphor/gaphor-appimage:latest"
+docker-run = "docker run --rm -it --volume $PWD:/home/runner/gaphor ghcr.io/gaphor/gaphor-appimage"
 gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini gaphor"
 gettext-po = { "script" = "po.build-babel:update_po_files" }
 gettext-mo = { "script" = "po.build-babel:compile_mo_files" }
