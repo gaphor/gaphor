@@ -30,6 +30,9 @@ jobs:
   linux:
     needs: lint
     runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: /home/runner
     container:
       image: ghcr.io/gaphor/gaphor-appimage
     timeout-minutes: 30
