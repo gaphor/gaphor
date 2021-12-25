@@ -6,8 +6,7 @@ ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     PY_VERSION="3.10" \
     FONTCONFIG_VERSION="2.13.1" \
-    DEBIAN_FRONTEND=noninteractive \
-    USER=runner
+    DEBIAN_FRONTEND=noninteractive
 
 # Enable source lists for build-dep
 RUN sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && \
@@ -100,12 +99,11 @@ RUN dpkg -i *.deb \
 `# Make Deadsnakes Python the default python3` \
  && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python$PY_VERSION 1
 
-RUN useradd -m -u 1000 $USER
-USER $USER
-ENV CHECKOUT=/home/$USER/jhbuild/checkout \
-    LD_LIBRARY_PATH="/home/$USER/jhbuild/install/lib" \
-    PKG_CONFIG_PATH="/home/$USER/jhbuild/install/lib/pkgconfig" \
-    PATH="/home/$USER/jhbuild/install/bin:/home/$USER/.local/bin:$PATH"
+ENV CHECKOUT=/root/jhbuild/checkout \
+    LD_LIBRARY_PATH="/root/jhbuild/install/lib" \
+    PKG_CONFIG_PATH="/root/jhbuild/install/lib/pkgconfig" \
+    PATH="/root/jhbuild/install/bin:/root/.local/bin:$PATH" \
+    JHBUILD_RUN_AS_ROOT=""
 
 # Install jhbuild
 RUN mkdir -p $CHECKOUT
@@ -115,10 +113,10 @@ WORKDIR $CHECKOUT/jhbuild
 RUN ./autogen.sh --simple-install \
  && make \
  && make install
-WORKDIR /home/$USER
+WORKDIR /
 
 # Configure jhbuild
-COPY --chown=$USER jhbuildrc /home/$USER/.config/jhbuildrc
+COPY jhbuildrc /root/.config/jhbuildrc
 
 # Build GTK, GtkSourceView, and gobject-introspection
-RUN jhbuild build \
+RUN jhbuild build
