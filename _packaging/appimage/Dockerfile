@@ -12,13 +12,20 @@ ENV LANG=C.UTF-8 \
 RUN sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && \
     sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list
 
-# Python deadsnakes
-RUN apt-get update && apt-get install -y --no-install-recommends software-properties-common \
+# Add repositories for Python deadsnakes and PowerShell
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    apt-transport-https \
+    software-properties-common \
+    wget \
  && add-apt-repository ppa:deadsnakes/ppa \
+ && wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb \
+ && dpkg -i packages-microsoft-prod.deb \
  && apt-get update && apt-get install -y --no-install-recommends \
 `# Common dependencies` \
     build-essential \
-    wget \
+`# GitHub Actions dependencies` \
+    xvfb \
+    powershell \
 `# jhbuild dependencies` \
     autoconf \
     automake \
@@ -82,6 +89,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends software-proper
  && apt-get build-dep -y fontconfig \
  && apt-get install -y --no-install-recommends uuid-dev \
  && rm -rf /var/lib/apt/lists/*
+ # && jq -r 'to_entries | .[] | .key + "=" + .value' /tmp/dependencies.json | xargs apt-get install -y --no-install-recommends \
+ # && rm /tmp/dependencies.json \
 
 # Build updated fontconfig deb files
 RUN wget -q https://www.freedesktop.org/software/fontconfig/release/fontconfig-$FONTCONFIG_VERSION.tar.gz \
