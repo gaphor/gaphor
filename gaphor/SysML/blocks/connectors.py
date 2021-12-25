@@ -34,7 +34,7 @@ class BlockProperyProxyPortConnector:
         proxy_port = self.proxy_port
         if not proxy_port.subject:
             proxy_port.subject = proxy_port.model.create(sysml.ProxyPort)
-        if isinstance(self.block.subject, UML.EncapsulatedClassifer):
+        if isinstance(self.block.subject, UML.EncapsulatedClassifier):
             proxy_port.subject.encapsulatedClassifier = self.block.subject
 
         # This raises the item in the item hierarchy
@@ -77,5 +77,6 @@ class PropertyConnectorConnector(UnaryRelationshipConnect):
         if c1 and c2 and not line.subject:
             assert isinstance(c1.subject, UML.ConnectableElement)
             assert isinstance(c2.subject, UML.ConnectableElement)
-            relation = UML.recipes.create_connector(c1.subject, c2.subject)
-            line.subject = relation
+            connector = UML.recipes.create_connector(c1.subject, c2.subject)
+            line.subject = connector
+            connector.structuredClassifier = c1.subject.owner or c2.subject.owner

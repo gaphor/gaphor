@@ -23459,7 +23459,7 @@ specially for Gaphor</val>
 <val>(1.0, 0.0, 0.0, 1.0, 1028.5, 1036.5185185185187)</val>
 </matrix>
 <points>
-<val>[(-2.0, 1.1368683772161603e-13), (-2.0, 91.0)]</val>
+<val>[(-2.0, 0.0), (-2.0, 91.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:A70E26A6-4695-11D7-B567-379CA7034986"/>
@@ -31170,9 +31170,9 @@ directly in a model.</val>
 <ownedAttribute>
 <reflist>
 <ref refid="DCE:D56902FA-5FD6-11D9-89DE-0050040A5923"/>
-<ref refid="DCE:0CA69B9C-3509-11DA-8668-000D936B094A"/>
 <ref refid="DCE:10D3F714-3509-11DA-8668-000D936B094A"/>
 <ref refid="DCE:03A91174-5FD7-11D9-89DE-0050040A5923"/>
+<ref refid="DCE:0CA69B9C-3509-11DA-8668-000D936B094A"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -35720,7 +35720,7 @@ directly in a model.</val>
 </reflist>
 </generalization>
 <name>
-<val>EncapsulatedClassifer</val>
+<val>EncapsulatedClassifier</val>
 </name>
 <ownedAttribute>
 <reflist>
@@ -44326,7 +44326,7 @@ swimlanes</val>
 <ref refid="179563ca-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>redefinitionContext</val>
+<val>classifier, namespace</val>
 </value>
 </Slot>
 <InstanceSpecification id="17960afa-fa90-11de-bd51-00224128e79d">
@@ -44354,7 +44354,7 @@ swimlanes</val>
 <ref refid="17960afa-fa90-11de-bd51-00224128e79d"/>
 </owningInstance>
 <value>
-<val>ownedAttribute</val>
+<val>role, attribute, ownedMember</val>
 </value>
 </Slot>
 <InstanceSpecification id="1796bae0-fa90-11de-bd51-00224128e79d">
