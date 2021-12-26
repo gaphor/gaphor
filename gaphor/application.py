@@ -90,12 +90,7 @@ class Application(Service, ActionProvider):
                     session.foreground()
                     return
 
-        if not self._active_session or not self._active_session.is_new:
-            return self._new_session(filename=filename, services=services)
-
-        file_manager = self._active_session.get_service("file_manager")
-        file_manager.load(filename)
-        return self._active_session
+        return self._new_session(filename=filename, services=services)
 
     def _new_session(self, filename=None, services=None):
         """Initialize an application session."""
@@ -116,11 +111,11 @@ class Application(Service, ActionProvider):
         event_manager.subscribe(on_session_shutdown)
 
         self._sessions.add(session)
-        self._active_session = session
 
         session_created = SessionCreated(self, session, filename)
         event_manager.handle(session_created)
         self.event_manager.handle(session_created)
+        session.foreground()
 
         return session
 
@@ -201,19 +196,6 @@ class Session(Service):
             self.event_manager.handle(ServiceInitializedEvent(name, srv))
 
         self.event_manager.subscribe(self.on_filename_changed)
-
-    @property
-    def is_new(self):
-        """If it's a new model, there is no state change (undo & redo) and no
-        file name is defined."""
-        undo_manager = self.get_service("undo_manager")
-        file_manager = self.get_service("file_manager")
-
-        return (
-            not undo_manager.can_undo()
-            and not undo_manager.can_redo()
-            and not file_manager.filename
-        )
 
     def get_service(self, name):
         if not self.component_registry:

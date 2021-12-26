@@ -4,7 +4,7 @@ import importlib.resources
 import logging
 from pathlib import Path
 
-from gi.repository import Gdk, Gio, GLib, Gtk
+from gi.repository import Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import event_handler, gettext
@@ -20,12 +20,12 @@ from gaphor.event import (
 from gaphor.i18n import translated_ui_string
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
+from gaphor.ui import HOME
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.event import DiagramOpened
 from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.notification import InAppNotifier
-from gaphor.ui.recentfiles import HOME, RecentFilesMenu
 
 log = logging.getLogger(__name__)
 
@@ -41,7 +41,8 @@ def create_hamburger_model(export_menu, tools_menu):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    part.append(gettext("New Window"), "app.file-new")
+    part.append(gettext("Open a Model…"), "app.new")
+    part.append(gettext("Create a New Model"), "app.new-model")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
@@ -59,15 +60,6 @@ def create_hamburger_model(export_menu, tools_menu):
     part.append(gettext("About Gaphor"), "win.about")
     model.append_section(None, part)
 
-    return model
-
-
-def create_recent_files_model(recent_manager=None):
-    model = Gio.Menu.new()
-    model.append_section(
-        gettext("Recently opened files"),
-        RecentFilesMenu(recent_manager or Gtk.RecentManager.get_default()),
-    )
     return model
 
 
@@ -117,25 +109,6 @@ class MainWindow(Service, ActionProvider):
 
         event_manager.subscribe(self._on_file_manager_state_changed)
 
-        self.init_styling()
-
-    def init_styling(self):
-        with importlib.resources.path("gaphor.ui", "layout.css") as css_file:
-            style_provider = Gtk.CssProvider()
-            style_provider.load_from_path(str(css_file))
-            if Gtk.get_major_version() == 3:
-                Gtk.StyleContext.add_provider_for_screen(
-                    Gdk.Screen.get_default(),
-                    style_provider,
-                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-                )
-            else:
-                Gtk.StyleContext.add_provider_for_display(
-                    Gdk.Display.get_default(),
-                    style_provider,
-                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-                )
-
     def shutdown(self):
         if self.window:
             self.window.destroy()
@@ -182,12 +155,6 @@ class MainWindow(Service, ActionProvider):
             hamburger.set_menu_model(
                 create_hamburger_model(self.export_menu.menu, self.tools_menu.menu)
             )
-
-        recent_files = builder.get_object("recent-files")
-        if Gtk.get_major_version() == 3:
-            recent_files.bind_model(create_recent_files_model(), None)
-        else:
-            recent_files.set_menu_model(create_recent_files_model())
 
         self.title = builder.get_object("title")
         self.subtitle = builder.get_object("subtitle")
@@ -245,8 +212,8 @@ class MainWindow(Service, ActionProvider):
 
         if self.filename:
             p = Path(self.filename)
-            title = p.name
-            subtitle = str(p.parent).replace(HOME, "~")
+            title = p.stem
+            subtitle = str(p).replace(HOME, "~")
         else:
             title = "Gaphor"
             subtitle = gettext("New model")

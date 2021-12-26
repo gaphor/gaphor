@@ -1,9 +1,7 @@
 import pathlib
 
-import pytest
 from gi.repository import GLib
 
-from gaphor.core.eventmanager import EventManager
 from gaphor.event import ModelLoaded
 from gaphor.ui.recentfiles import RecentFiles
 
@@ -17,11 +15,6 @@ class RecentManagerStub:
 
     def remove_item(self, uri):
         pass
-
-
-@pytest.fixture
-def event_manager():
-    return EventManager()
 
 
 def test_add_new_recent_file(event_manager):
