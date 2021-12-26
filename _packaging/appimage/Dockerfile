@@ -31,6 +31,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     automake \
     autopoint \
     bison \
+    cargo  \
     desktop-file-utils \
     doxygen \
     flex \
@@ -71,6 +72,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ragel \
     shared-mime-info \
     trang \
+    valac \
     xmlto \
     yelp-tools \
 `# Dependency missed by jhbuild sysdeps` \
@@ -89,8 +91,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
  && apt-get build-dep -y fontconfig \
  && apt-get install -y --no-install-recommends uuid-dev \
  && rm -rf /var/lib/apt/lists/*
- # && jq -r 'to_entries | .[] | .key + "=" + .value' /tmp/dependencies.json | xargs apt-get install -y --no-install-recommends \
- # && rm /tmp/dependencies.json \
 
 # Build updated fontconfig deb files
 RUN wget -q https://www.freedesktop.org/software/fontconfig/release/fontconfig-$FONTCONFIG_VERSION.tar.gz \

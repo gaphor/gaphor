@@ -1,6 +1,13 @@
-modules = ['pycairo', 'pygobject', 'gtk+-3', 'gtksourceview-4', 'gobject-introspection']
+modules = [
+    'pycairo',
+    'pygobject',
+    'gtk+-3',
+    'gtksourceview-4',
+    'gobject-introspection',
+    'adwaita-icon-theme',
+    'hicolor-icon-theme'
+]
 module_mesonargs['gtksourceview-4'] = '-Dvapi=false'
 module_mesonargs['gobject-introspection'] = '-Dcairo=enabled'
 mesonargs = '--buildtype=release'
 autogenargs = '--disable-static --disable-gtk-doc'
-
