@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import NamedTuple
 
 from gi.repository import GLib, Gtk
 
@@ -6,7 +7,7 @@ from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, SessionCreated
-from gaphor.i18n import translated_ui_string
+from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui import APPLICATION_ID, HOME
 
 
@@ -23,6 +24,7 @@ class Greeter(Service, ActionProvider):
         self.event_manager = event_manager
         self.recent_manager = recent_manager or Gtk.RecentManager.get_default()
         self.greeter = None
+        self.stack = None
         self.gtk_app = None
         event_manager.subscribe(self.on_session_created)
 
@@ -35,32 +37,50 @@ class Greeter(Service, ActionProvider):
             self.greeter.destroy()
         self.gtk_app = None
 
-    @action(name="app.new", shortcut="<Primary>n")
-    def new(self):
+    def open(self) -> None:
+        if self.greeter:
+            return
+
         builder = new_builder("greeter")
-        greeter = builder.get_object("greeter")
-        greeter.set_application(self.gtk_app)
 
         listbox = builder.get_object("greeter-recent-files")
-        listbox.connect("row-activated", self._on_row_activated)
-        has_recent_files = False
+        listbox.connect("row-activated", self._on_recent_file_activated)
         for widget in self.create_recent_files():
             if Gtk.get_major_version() == 3:
                 listbox.add(widget)
             else:
                 listbox.append(widget)
-            has_recent_files = True
 
-        if not has_recent_files:
-            stack = builder.get_object("stack")
-            stack.set_visible_child_name("splash")
+        templates = builder.get_object("templates")
+        templates.connect("child-activated", self._on_template_activated)
+        for widget in self.create_templates():
+            if Gtk.get_major_version() == 3:
+                templates.add(widget)
+            else:
+                templates.append(widget)
 
-        greeter.show()
-        self.greeter = greeter
+        self.greeter = builder.get_object("greeter")
+        self.greeter.set_application(self.gtk_app)
+        self.greeter.show()
+        self.stack = builder.get_object("stack")
+
+    def close(self):
+        if self.greeter:
+            self.greeter.destroy()
+            self.greeter = None
+
+    @action(name="app.recent-files", shortcut="<Primary>n")
+    def recent_files(self):
+        self.open()
+        if not any(self.create_recent_files()):
+            assert self.stack
+            self.stack.set_visible_child_name("new-model")
 
     @action(name="app.new-model")
     def new_model(self):
-        self.application.new_session()
+        self.open()
+        assert self.stack
+        self.stack.set_visible_child_name("new-model")
 
     def create_recent_files(self):
         for item in self.recent_manager.get_items():
@@ -75,16 +95,41 @@ class Greeter(Service, ActionProvider):
                 row.filename = filename
                 yield row
 
-    def close(self):
-        if self.greeter:
-            self.greeter.destroy()
-            self.greeter = None
+    def create_templates(self):
+        for template in TEMPLATES:
+            builder = new_builder("greeter-model-template")
+            builder.get_object("template-name").set_text(template.name)
+            builder.get_object("template-icon").set_from_icon_name(
+                "org.gaphor.Gaphor", Gtk.IconSize.DIALOG
+            )
+            child = builder.get_object("model-template")
+            child.filename = template.filename
+
+            yield child
 
     @event_handler(SessionCreated, ActiveSessionChanged)
     def on_session_created(self, _event=None):
         self.close()
 
-    def _on_row_activated(self, _listbox, row):
+    def _on_recent_file_activated(self, _listbox, row):
         filename = row.filename
         self.application.new_session(filename=filename)
         self.close()
+
+    def _on_template_activated(self, _flowbox, child):
+        filename = child.filename
+        print(filename)
+        self.application.new_session(filename=filename)
+        self.close()
+
+
+class ModelTemplate(NamedTuple):
+    name: str
+    filename: str
+
+
+TEMPLATES = [
+    ModelTemplate(gettext("Generic"), "templates/blank.gaphor"),
+    ModelTemplate(gettext("C4 Model"), "templates/c4model.gaphor"),
+    ModelTemplate(gettext("SysML"), "templates/sysml-basic.gaphor"),
+]

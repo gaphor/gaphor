@@ -35,9 +35,23 @@ diagramview {
   border-bottom: 1px solid alpha(@borders, 0.2);
   transition-property: background, opacity;
 }
+
 .greeter list row:last-child {
   border-bottom: none;
 }
+
 .greeter frame border {
   border-color: alpha(@borders, 0.6);
+}
+
+.greeter flowboxchild {
+  border-radius: 11px;
+  outline-offset: -3px;
+  -gtk-outline-radius: 9px;
+  /* min-width: 164px;
+  min-height: 164px; */
+}
+
+.greeter flowboxchild:selected label {
+  color: @theme_selected_fg_color;
 }

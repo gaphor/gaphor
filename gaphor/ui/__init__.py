@@ -131,7 +131,7 @@ def run(args):
     def app_activate(gtk_app):
         assert application
         if not application.has_sessions():
-            application.get_service("greeter").new()
+            application.get_service("greeter").open()
 
     def app_open(gtk_app, files, n_files, hint):
         # appfilemanager should take care of this:
