@@ -10,7 +10,7 @@
     <property name="position">bottom</property>
   </object>
   <object class="GtkPopover" id="diagram-types">
-    <property name="can-focus">False</property>
+    <property name="can-focus">0</property>
     <property name="position">bottom</property>
     <child>
       <placeholder/>
