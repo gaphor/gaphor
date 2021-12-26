@@ -3,22 +3,20 @@
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkListBoxRow" id="greeter-recent-file">
-    <property name="visible">True</property>
-    <property name="can-focus">True</property>
+    <property name="visible">1</property>
+    <property name="can-focus">1</property>
     <property name="width-request">400</property>
-    <property name="selectable">false</property>
+    <property name="selectable">0</property>
     <child>
       <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="visible">1</property>
         <property name="margin-top">12</property>
         <property name="margin-bottom">12</property>
         <property name="margin-start">18</property>
         <property name="margin-end">18</property>
         <child>
           <object class="GtkBox">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="visible">1</property>
             <property name="margin-start">6</property>
             <property name="margin-end">6</property>
             <property name="margin-top">6</property>
@@ -27,24 +25,17 @@
             <property name="spacing">12</property>
             <child>
               <object class="GtkLabel" id="name">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
+                <property name="visible">1</property>
                 <property name="label" translatable="yes">Recent file 1</property>
                 <property name="xalign">0</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
                 </attributes>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <object class="GtkLabel" id="filename">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
+                <property name="visible">1</property>
                 <property name="label" translatable="yes">~/Development/gaphor/</property>
                 <property name="xalign">0</property>
                 <style>
@@ -52,27 +43,20 @@
                 </style>
               </object>
               <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
           </object>
           <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
+            <property name="expand">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkImage">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="visible">1</property>
             <property name="icon-name">go-next-symbolic</property>
           </object>
           <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
         </child>

@@ -3,8 +3,7 @@
 <interface>
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkLabel" id="00-instructions">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
+    <property name="visible">1</property>
     <property name="label">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
 Remove Parent.
@@ -16,38 +15,29 @@ renderers and such.</property>
     <property name="xalign">0</property>
   </object>
   <object class="GtkBox" id="comment-editor">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
+    <property name="visible">1</property>
     <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="visible">1</property>
         <property name="label" translatable="yes">Comment</property>
         <property name="xalign">0</property>
         <attributes>
           <attribute name="weight" value="bold"/>
         </attributes>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
     </child>
     <child>
       <object class="GtkFrame">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label-xalign">0</property>
+        <property name="visible">1</property>
         <property name="shadow-type">in</property>
         <child>
           <object class="GtkTextView" id="comment">
             <property name="height-request">96</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
             <property name="wrap-mode">word</property>
             <property name="left-margin">6</property>
             <property name="right-margin">6</property>
@@ -56,25 +46,21 @@ renderers and such.</property>
           </object>
         </child>
         <child type="label_item">
-          <placeholder/>
         </child>
       </object>
       <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
         <property name="position">1</property>
       </packing>
     </child>
   </object>
   <object class="GtkExpander" id="line-editor">
-    <property name="visible">True</property>
-    <property name="can-focus">True</property>
+    <property name="visible">1</property>
+    <property name="can-focus">1</property>
     <property name="margin-top">12</property>
-    <property name="expanded">True</property>
+    <property name="expanded">1</property>
     <child>
       <object class="GtkBox">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="visible">1</property>
         <property name="margin-top">6</property>
         <property name="margin-bottom">12</property>
         <property name="orientation">vertical</property>
@@ -82,30 +68,21 @@ renderers and such.</property>
         <child>
           <object class="GtkCheckButton" id="line-rectilinear">
             <property name="label" translatable="yes">Rectilinear</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">False</property>
-            <property name="draw-indicator">True</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="draw-indicator">1</property>
             <signal name="toggled" handler="rectilinear-changed" swapped="no"/>
           </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkCheckButton" id="flip-orientation">
             <property name="label" translatable="yes">Flip orientation</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">False</property>
-            <property name="draw-indicator">True</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="draw-indicator">1</property>
             <signal name="toggled" handler="orientation-changed" swapped="no"/>
           </object>
           <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -113,8 +90,7 @@ renderers and such.</property>
     </child>
     <child type="label">
       <object class="GtkLabel">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="visible">1</property>
         <property name="label" translatable="yes">Style</property>
         <attributes>
           <attribute name="weight" value="bold"/>
@@ -123,22 +99,20 @@ renderers and such.</property>
     </child>
   </object>
   <object class="GtkExpander" id="note-editor">
-    <property name="visible">True</property>
-    <property name="can-focus">True</property>
+    <property name="visible">1</property>
+    <property name="can-focus">1</property>
     <property name="margin-top">12</property>
-    <property name="expanded">True</property>
+    <property name="expanded">1</property>
     <child>
       <object class="GtkFrame">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="label-xalign">0</property>
+        <property name="visible">1</property>
         <property name="margin-top">6</property>
         <property name="shadow-type">in</property>
         <child>
           <object class="GtkTextView" id="note">
             <property name="height-request">78</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
             <property name="wrap-mode">word</property>
             <property name="left-margin">6</property>
             <property name="right-margin">6</property>
@@ -147,14 +121,12 @@ renderers and such.</property>
           </object>
         </child>
         <child type="label_item">
-          <placeholder/>
         </child>
       </object>
     </child>
     <child type="label">
       <object class="GtkLabel">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="visible">1</property>
         <property name="label" translatable="yes">Note or Remark</property>
         <attributes>
           <attribute name="weight" value="bold"/>
