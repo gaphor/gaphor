@@ -18,9 +18,10 @@ def new_builder(ui_file):
 
 
 class Greeter(Service, ActionProvider):
-    def __init__(self, application, event_manager):
+    def __init__(self, application, event_manager, recent_manager=None):
         self.application = application
         self.event_manager = event_manager
+        self.recent_manager = recent_manager or Gtk.RecentManager.get_default()
         self.greeter = None
         self.gtk_app = None
         event_manager.subscribe(self.on_session_created)
@@ -62,9 +63,7 @@ class Greeter(Service, ActionProvider):
         self.application.new_session()
 
     def create_recent_files(self):
-        recent_manager = Gtk.RecentManager.get_default()
-
-        for item in recent_manager.get_items():
+        for item in self.recent_manager.get_items():
             if APPLICATION_ID in item.get_applications() and item.exists():
                 builder = new_builder("greeter-recent-file")
                 filename, _host = GLib.filename_from_uri(item.get_uri())
