@@ -1,3 +1,4 @@
+import importlib.resources
 from pathlib import Path
 from typing import NamedTuple
 
@@ -117,7 +118,9 @@ class Greeter(Service, ActionProvider):
         self.close()
 
     def _on_template_activated(self, _flowbox, child):
-        filename = child.filename
+        filename: Path = (
+            importlib.resources.files("gaphor") / "templates" / child.filename
+        )
         self.application.new_session(filename=filename)
         self.close()
 
@@ -129,33 +132,39 @@ class ModelTemplate(NamedTuple):
 
 
 TEMPLATES = [
-    ModelTemplate(gettext("Generic"), "org.gaphor.Gaphor", "templates/blank.gaphor"),
-    ModelTemplate(gettext("C4 Model"), "org.gaphor.Gaphor", "models/C4Model.gaphor"),
-    ModelTemplate(gettext("UML"), "UML", "models/Core.gaphor"),
-    ModelTemplate(gettext("SysML"), "SysML", "templates/sysml-basic.gaphor"),
+    ModelTemplate(gettext("Generic"), "org.gaphor.Gaphor", "blank.gaphor"),
+    ModelTemplate(gettext("C4 Model"), "org.gaphor.Gaphor", "c4model.gaphor"),
 ]
 
 
-def flowbox_add_hover_support(flowbox):
-    flowbox.add_events(
-        Gdk.EventMask.ENTER_NOTIFY_MASK
-        | Gdk.EventMask.LEAVE_NOTIFY_MASK
-        | Gdk.EventMask.POINTER_MOTION_MASK
-    )
+if Gtk.get_major_version() == 3:
 
-    hover_child: Gtk.Widget = None
+    def flowbox_add_hover_support(flowbox):
+        flowbox.add_events(
+            Gdk.EventMask.ENTER_NOTIFY_MASK
+            | Gdk.EventMask.LEAVE_NOTIFY_MASK
+            | Gdk.EventMask.POINTER_MOTION_MASK
+        )
 
-    def hover(widget, event):
-        nonlocal hover_child
-        child = widget.get_child_at_pos(event.x, event.y)
-        if hover_child and child is not hover_child:
-            hover_child.unset_state_flags(Gtk.StateFlags.PRELIGHT)
-        child.set_state_flags(Gtk.StateFlags.PRELIGHT, False)
-        hover_child = child
+        hover_child: Gtk.Widget = None
 
-    def unhover(widget, event):
-        if hover_child:
-            hover_child.unset_state_flags(Gtk.StateFlags.PRELIGHT)
+        def hover(widget, event):
+            nonlocal hover_child
+            child = widget.get_child_at_pos(event.x, event.y)
+            if hover_child and child is not hover_child:
+                hover_child.unset_state_flags(Gtk.StateFlags.PRELIGHT)
+            if child:
+                child.set_state_flags(Gtk.StateFlags.PRELIGHT, False)
+            hover_child = child
 
-    flowbox.connect("motion-notify-event", hover)
-    flowbox.connect("leave-notify-event", unhover)
+        def unhover(widget, event):
+            if hover_child:
+                hover_child.unset_state_flags(Gtk.StateFlags.PRELIGHT)
+
+        flowbox.connect("motion-notify-event", hover)
+        flowbox.connect("leave-notify-event", unhover)
+
+else:
+
+    def flowbox_add_hover_support(flowbox):
+        pass
