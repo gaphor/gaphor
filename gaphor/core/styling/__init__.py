@@ -99,7 +99,7 @@ def parse_style_sheet(css: str) -> Iterator[Rule]:
     )
     for rule in rules:
         if rule.type == "error":
-            yield ("error", rule)  # type: ignore[misc]
+            yield "error", rule
             continue
 
         if rule.type != "qualified-rule":
@@ -108,7 +108,7 @@ def parse_style_sheet(css: str) -> Iterator[Rule]:
         try:
             selectors = compile_selector_list(rule.prelude)
         except SelectorError as e:
-            yield ("error", e)  # type: ignore[misc]
+            yield "error", e
             continue
 
         declaration = {
