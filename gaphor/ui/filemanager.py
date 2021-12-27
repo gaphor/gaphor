@@ -123,7 +123,7 @@ class FileManager(Service, ActionProvider):
         def async_loader():
             try:
                 for percentage in storage.load_generator(
-                    filename.encode("utf-8"),
+                    filename,
                     self.element_factory,
                     self.modeling_language,
                 ):
@@ -133,6 +133,7 @@ class FileManager(Service, ActionProvider):
                 self.event_manager.handle(ModelLoaded(self, filename))
             except Exception:
                 self.filename = None
+                status_window.destroy()
                 error_handler(
                     message=gettext("Unable to open model “{filename}”.").format(
                         filename=filename
@@ -174,7 +175,7 @@ class FileManager(Service, ActionProvider):
         @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
         def async_saver():
             try:
-                with open(filename.encode("utf-8"), "w") as out:
+                with open(filename, "w") as out:
                     for percentage in storage.save_generator(
                         XMLWriter(out), self.element_factory
                     ):
