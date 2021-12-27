@@ -110,6 +110,15 @@ class Toolbox(UIComponent):
             flowbox_add_hover_support(flowbox)
             flowbox.connect("child-activated", self._on_tool_activated)
 
+            # Enable Drag and Drop
+            flowbox.drag_source_set(
+                Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
+                self.DND_TARGETS,
+                Gdk.DragAction.COPY | Gdk.DragAction.LINK,
+            )
+            flowbox.connect("drag-begin", _flowbox_drag_begin)
+            flowbox.connect("drag-data-get", _flowbox_drag_data_get)
+
             if Gtk.get_major_version() == 3:
                 expander.add(flowbox)
             else:
@@ -228,6 +237,7 @@ def create_toolbox_button(
         icon = Gtk.Image.new_from_icon_name(icon_name)
         button.set_child(icon)
     button.action_name = action_name
+    button.icon_name = icon_name
     if label:
         if shortcut:
             if Gtk.get_major_version() == 3:
@@ -243,20 +253,30 @@ def create_toolbox_button(
 
 if Gtk.get_major_version() == 3:
 
-    def _button_drag_data_get(
-        button: Gtk.Button,
+    def _flowbox_drag_begin(flowbox: Gtk.FlowBox, context: Gdk.DragContext) -> None:
+        event = Gtk.get_current_event()
+        assert event
+        child = flowbox.get_child_at_pos(event.x, event.y)
+        flowbox.drag_source_set_icon_name(child.icon_name)
+        flowbox._dnd_child = child
+
+    def _flowbox_drag_data_get(
+        flowbox: Gtk.FlowBox,
         context: Gdk.DragContext,
         data: Gtk.SelectionData,
         info: int,
         time: int,
-        action_name: str,
     ) -> None:
         """The drag-data-get event signal handler.
 
         The drag-data-get signal is emitted on the drag source when the
         drop site requests the data which is dragged.
         """
-        data.set(type=data.get_target(), format=8, data=action_name.encode())
+        data.set(
+            type=data.get_target(),
+            format=8,
+            data=flowbox._dnd_child.action_name.encode(),
+        )
 
 
 _upper_offset: int = ord("A") - ord("a")
