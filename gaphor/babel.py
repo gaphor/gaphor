@@ -1,4 +1,9 @@
+import io
 import xml.etree.ElementTree as etree
+
+from gaphor.i18n import gettext
+
+NS = {"g": "http://gaphor.sourceforge.net/model"}
 
 
 def extract_gaphor(fileobj, keywords, comment_tags, options):
@@ -25,9 +30,20 @@ def extract_gaphor(fileobj, keywords, comment_tags, options):
     comments: list[str] = []
 
     tree = etree.parse(fileobj)
-    ns = {"g": "http://gaphor.sourceforge.net/model"}
 
-    for node in tree.findall(".//g:name/g:val", ns):
+    for node in tree.findall(".//g:name/g:val", NS):
         yield (lineno, funcname, node.text, comments)
-    for node in tree.findall(".//g:body/g:val", ns):
+    for node in tree.findall(".//g:body/g:val", NS):
         yield (lineno, funcname, node.text, comments)
+
+
+def translate_model(fileobj):
+
+    tree = etree.parse(fileobj)
+
+    for node in tree.findall(".//g:name/g:val", NS):
+        node.text = gettext(node.text or "")
+    for node in tree.findall(".//g:body/g:val", NS):
+        node.text = gettext(node.text or "")
+
+    return io.StringIO(etree.tostring(tree.getroot(), encoding="unicode", method="xml"))

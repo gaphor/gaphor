@@ -142,6 +142,7 @@ class FileManager(Service, ActionProvider):
                 self.filename = None
                 if status_window:
                     status_window.destroy()
+                log.exception(f"Unable to open model “{filename}”.", stack_info=True)
                 error_handler(
                     message=gettext("Unable to open model “{filename}”.").format(
                         filename=filename

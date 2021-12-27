@@ -37,3 +37,10 @@ def test_model_saved(application):
     session.event_manager.handle(ModelSaved(None, "some_file_name"))
 
     assert session.filename == "some_file_name"
+
+
+def test_new_session_from_template(application, test_models):
+    with (test_models / "test-model.gaphor").open() as model:
+        session = application.new_session(template=model)
+
+    assert any(session.get_service("element_factory").select())

@@ -12,3 +12,10 @@ def test_parsing_v2_1_model_with_grouped_item(test_models):
     assert component_item.references["diagram"] == diagram.id
     assert "parent" not in node_item.references
     assert node_item.references["diagram"] == diagram.id
+
+
+def test_parsing_of_open_file(test_models):
+    with (test_models / "test-model.gaphor").open() as model:
+        elements = parse(model)
+
+    assert elements

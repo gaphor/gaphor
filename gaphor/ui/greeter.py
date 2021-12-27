@@ -6,6 +6,7 @@ from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
+from gaphor.babel import translate_model
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
@@ -129,7 +130,8 @@ class Greeter(Service, ActionProvider):
         filename: Path = (
             importlib.resources.files("gaphor") / "templates" / child.filename
         )
-        session = self.application.new_session(template=filename)
+        translated_model = translate_model(filename)
+        session = self.application.new_session(template=translated_model)
         session.get_service("properties").set("modeling-language", child.lang)
         self.close()
 
