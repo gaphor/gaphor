@@ -13,10 +13,10 @@ from gi.repository import Gdk, GdkPixbuf, Gtk
 from gaphor import UML
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import StyleSheet
-from gaphor.core.modeling.diagram import StyledDiagram
+from gaphor.core.modeling.diagram import Diagram, StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import tooliter
-from gaphor.diagram.painter import ItemPainter
+from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.selection import Selection
 from gaphor.diagram.support import get_diagram_item
 from gaphor.diagram.tools import (
@@ -125,7 +125,7 @@ class DiagramPage:
         self.rubberband_state = RubberbandState()
 
         self.event_manager.subscribe(self._on_element_delete)
-        self.event_manager.subscribe(self._on_style_sheet_updated)
+        self.event_manager.subscribe(self._on_attribute_updated)
         self.event_manager.subscribe(self._on_tool_selected)
 
     title = property(lambda s: s.diagram and s.diagram.name or gettext("<None>"))
@@ -234,13 +234,15 @@ class DiagramPage:
             self.close()
 
     @event_handler(AttributeUpdated)
-    def _on_style_sheet_updated(self, event: AttributeUpdated):
+    def _on_attribute_updated(self, event: AttributeUpdated):
         if event.property is StyleSheet.styleSheet:
             self.set_drawing_style()
 
             diagram = self.diagram
             for item in diagram.get_all_items():
                 diagram.request_update(item)
+        elif event.property is Diagram.name and self.view:
+            self.view.update_back_buffer()
 
     def close(self):
         """Tab is destroyed.
@@ -256,7 +258,7 @@ class DiagramPage:
                 parent.remove(self.widget)
 
         self.event_manager.unsubscribe(self._on_element_delete)
-        self.event_manager.unsubscribe(self._on_style_sheet_updated)
+        self.event_manager.unsubscribe(self._on_attribute_updated)
         self.event_manager.unsubscribe(self._on_tool_selected)
         self.view = None
 
@@ -282,7 +284,7 @@ class DiagramPage:
         assert self.view
         assert self.diagram_css
 
-        style = self.diagram.style(StyledDiagram(self.diagram, self.view))
+        style = self.diagram.style(StyledDiagram(self.diagram))
 
         bg = style.get("background-color")
         # Default background to white, slightly gray in dark mode
@@ -309,6 +311,7 @@ class DiagramPage:
             .append(GuidePainter(view))
             .append(MagnetPainter(view))
             .append(RubberbandPainter(self.rubberband_state))
+            .append(DiagramTypePainter(self.diagram))
         )
 
         view.request_update(self.diagram.get_all_items())

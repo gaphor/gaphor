@@ -13,6 +13,10 @@ class CoreModelingLanguage(ModelingLanguage):
     def toolbox_definition(self):
         raise ValueError("No toolbox for the core model")
 
+    @property
+    def diagram_types(self):
+        raise ValueError("No diagram types for the core model")
+
     def lookup_element(self, name):
         return getattr(coremodel, name, None)
 
@@ -30,6 +34,10 @@ class MockModelingLanguage(ModelingLanguage):
     @property
     def toolbox_definition(self):
         raise ValueError("No toolbox for the mock model")
+
+    @property
+    def diagram_types(self):
+        raise ValueError("No diagram types for the core model")
 
     def lookup_element(self, name):
         return next(

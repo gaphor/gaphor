@@ -33,7 +33,7 @@ def render(diagram, new_surface, padding=8):
         cr.fill()
 
     cr.translate(-bounding_box.x + padding, -bounding_box.y + padding)
-    painter.paint(items=diagram.get_all_items(), cairo=cr)
+    painter.paint(diagram.get_all_items(), cr)
     cr.show_page()
     return surface
 

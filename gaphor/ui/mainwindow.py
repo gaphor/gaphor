@@ -72,6 +72,32 @@ def create_modeling_language_model(modeling_language):
     return model
 
 
+def create_diagram_types_model(modeling_language):
+    model = Gio.Menu.new()
+
+    part = Gio.Menu.new()
+    for id, name, _ in modeling_language.diagram_types:
+        menu_item = Gio.MenuItem.new(name, "win.create-diagram")
+        menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
+        part.append_item(menu_item)
+    model.append_section(None, part)
+
+    part = Gio.Menu.new()
+    menu_item = Gio.MenuItem.new(gettext("New Generic Diagram"), "win.create-diagram")
+    menu_item.set_attribute_value("target", GLib.Variant.new_string(""))
+    part.append_item(menu_item)
+    model.append_section(None, part)
+
+    return model
+
+
+def popup_set_model(popup, model):
+    if Gtk.get_major_version() == 3:
+        popup.bind_model(model, None)
+    else:
+        popup.set_menu_model(model)
+
+
 class MainWindow(Service, ActionProvider):
     """The main window for the application.
 
@@ -105,6 +131,7 @@ class MainWindow(Service, ActionProvider):
         self.model_changed = False
         self.layout = None
         self.modeling_language_name = None
+        self.diagram_types = None
         self.in_app_notifier = None
 
         event_manager.subscribe(self._on_file_manager_state_changed)
@@ -135,26 +162,22 @@ class MainWindow(Service, ActionProvider):
         self.window.set_application(gtk_app)
 
         select_modeling_language = builder.get_object("select-modeling-language")
-        if Gtk.get_major_version() == 3:
-            select_modeling_language.bind_model(
-                create_modeling_language_model(self.modeling_language), None
-            )
-        else:
-            select_modeling_language.set_menu_model(
-                create_modeling_language_model(self.modeling_language)
-            )
+        popup_set_model(
+            select_modeling_language,
+            create_modeling_language_model(self.modeling_language),
+        )
         self.modeling_language_name = builder.get_object("modeling-language-name")
 
+        self.diagram_types = builder.get_object("diagram-types")
+        popup_set_model(
+            self.diagram_types, create_diagram_types_model(self.modeling_language)
+        )
+
         hamburger = builder.get_object("hamburger")
-        if Gtk.get_major_version() == 3:
-            hamburger.bind_model(
-                create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
-                None,
-            )
-        else:
-            hamburger.set_menu_model(
-                create_hamburger_model(self.export_menu.menu, self.tools_menu.menu)
-            )
+        popup_set_model(
+            hamburger,
+            create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
+        )
 
         self.title = builder.get_object("title")
         self.subtitle = builder.get_object("subtitle")
@@ -268,6 +291,10 @@ class MainWindow(Service, ActionProvider):
         if self.modeling_language_name:
             self.modeling_language_name.set_label(
                 gettext("Profile: {}").format(self.modeling_language.name)
+            )
+        if self.diagram_types:
+            popup_set_model(
+                self.diagram_types, create_diagram_types_model(self.modeling_language)
             )
 
     def _on_window_active(self, window, prop):

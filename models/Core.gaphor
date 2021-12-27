@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.6.5">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.7.1">
 <Package id="3867dda4-7a95-11ea-a112-7f953848cf85">
 <name>
 <val>Core</val>
@@ -87,7 +87,7 @@
 <val>184.0</val>
 </width>
 <height>
-<val>84.82110595703125</val>
+<val>100.0</val>
 </height>
 <diagram>
 <ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
@@ -393,7 +393,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 451.0, 554.0)</val>
 </matrix>
 <points>
-<val>[(-41.31840448794179, -133.0899658203125), (36.234375, -133.0899658203125), (36.234375, -12.0), (109.86941528320312, -12.0)]</val>
+<val>[(-41.31840448794179, -133.0899658203125), (36.234375, -133.0899658203125), (36.234375, -8.316949369996792), (109.86941528320312, -8.316949369996792)]</val>
 </points>
 <head-connection>
 <ref refid="639b48d1-7a95-11ea-a112-7f953848cf85"/>
@@ -468,7 +468,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 505.0, 557.0)</val>
 </matrix>
 <points>
-<val>[(-17.765625, -84.47270662421835), (67.234375, -167.67120361328125)]</val>
+<val>[(-17.765625, -82.90272534861606), (67.234375, -167.67120361328125)]</val>
 </points>
 <head-connection>
 <ref refid="216581ca-4465-11eb-8946-9bdfa28f7a50"/>
@@ -500,7 +500,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 493.234375, 60.59765625)</val>
 </matrix>
 <points>
-<val>[(2.364360575935052, 0.0), (-393.0, 0.0), (-393.0, 525.40234375), (67.63504028320312, 525.40234375)]</val>
+<val>[(2.364360575935052, 0.0), (-393.0, 0.0), (-393.0, 536.9592758904489), (67.63504028320312, 536.9592758904489)]</val>
 </points>
 <head-connection>
 <ref refid="4cda498f-7a95-11ea-a112-7f953848cf85"/>
@@ -557,6 +557,7 @@
 <ref refid="e3513a58-ba68-11eb-a73b-13340a6bc6e1"/>
 <ref refid="216581cb-4465-11eb-8946-9bdfa28f7a50"/>
 <ref refid="1ee6aec5-b9a9-11eb-93ad-535118859f0b"/>
+<ref refid="5b2c0930-6000-11ec-a085-0456e5e540ed"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -1590,5 +1591,16 @@ diagram {
 <upperValue>
 <val>1</val>
 </upperValue>
+</Property>
+<Property id="5b2c0930-6000-11ec-a085-0456e5e540ed">
+<class_>
+<ref refid="5cdae47e-7a95-11ea-a112-7f953848cf85"/>
+</class_>
+<name>
+<val>diagramType</val>
+</name>
+<typeValue>
+<val>String</val>
+</typeValue>
 </Property>
 </gaphor>

@@ -10,7 +10,12 @@ from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed
 from gaphor.event import ActionEnabled
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.diagrampage import DiagramPage
-from gaphor.ui.event import DiagramClosed, DiagramOpened, DiagramSelectionChanged
+from gaphor.ui.event import (
+    CurrentDiagramChanged,
+    DiagramClosed,
+    DiagramOpened,
+    DiagramSelectionChanged,
+)
 
 log = logging.getLogger(__name__)
 
@@ -44,6 +49,7 @@ class Diagrams(UIComponent, ActionProvider):
             self._notebook.connect("page-added", self._on_page_changed),
             self._notebook.connect("page-removed", self._on_page_changed),
             self._notebook.connect("page-reordered", self._on_page_changed),
+            self._notebook.connect("notify::page", self._on_current_page_changed),
         ]
 
         self.event_manager.subscribe(self._on_show_diagram)
@@ -139,6 +145,9 @@ class Diagrams(UIComponent, ActionProvider):
 
         self.properties.set("opened-diagrams", list(diagram_ids()))
         log.debug(f"pages changed: {self.properties.get('opened-diagrams')}")
+
+    def _on_current_page_changed(self, notebook, gparam):
+        self.event_manager.handle(CurrentDiagramChanged(self.get_current_diagram()))
 
     @action(name="close-current-tab", shortcut="<Primary>w")
     def close_current_tab(self):

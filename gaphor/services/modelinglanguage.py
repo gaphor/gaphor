@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Iterable
 
 from gaphor.abc import ActionProvider, ModelingLanguage, Service
 from gaphor.action import action
@@ -35,8 +35,8 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
         self.event_manager.unsubscribe(self.on_property_changed)
 
     @property
-    def modeling_languages(self):
-        """A Generator, returns tuples (id, localized name)."""
+    def modeling_languages(self) -> Iterable[tuple[str, str]]:
+        """An Iterator, returns tuples (id, localized name)."""
         for id, provider in self._modeling_languages.items():
             if provider.name:
                 yield id, provider.name
@@ -60,6 +60,10 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
     def toolbox_definition(self):
         return self._modeling_language().toolbox_definition
 
+    @property
+    def diagram_types(self):
+        return self._modeling_language().diagram_types
+
     def lookup_element(self, name):
         return next(
             filter(
@@ -72,10 +76,7 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
             None,
         )
 
-    @action(
-        name="select-modeling-language",
-        state=lambda self: self.active_modeling_language,
-    )
+    @action(name="select-modeling-language")
     def select_modeling_language(self, modeling_language: str):
         self.properties.set("modeling-language", modeling_language)
         self.event_manager.handle(ModelingLanguageChanged(modeling_language))
