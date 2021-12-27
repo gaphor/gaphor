@@ -51,15 +51,13 @@ class Toolbox(UIComponent):
         self._current_diagram_type = ""
 
     def open(self) -> Gtk.ScrolledWindow:
-        toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
-        toolbox_container = self.create_toolbox_container(toolbox)
+        self._toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
+        self._toolbox_container = create_toolbox_container(self._toolbox)
         self.event_manager.subscribe(self._on_diagram_item_placed)
         self.event_manager.subscribe(self._on_modeling_language_changed)
         self.event_manager.subscribe(self._on_current_diagram_changed)
-        self._toolbox = toolbox
-        self._toolbox_container = toolbox_container
         self.select_tool("toolbox-pointer")
-        return toolbox_container
+        return self._toolbox_container
 
     def close(self) -> None:
         if self._toolbox:
@@ -93,30 +91,6 @@ class Toolbox(UIComponent):
                 return children[0].action_name
         return "toolbox-pointer"
 
-    def create_toolbox_button(
-        self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]
-    ) -> Gtk.Button:
-        """Creates a tool button for the toolbox."""
-        button = Gtk.FlowBoxChild.new()
-        if Gtk.get_major_version() == 3:
-            icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
-            button.add(icon)
-        else:
-            icon = Gtk.Image.new_from_icon_name(icon_name)
-            button.set_child(icon)
-        button.action_name = action_name
-        if label:
-            if shortcut:
-                if Gtk.get_major_version() == 3:
-                    a, m = Gtk.accelerator_parse(shortcut)
-                else:
-                    _, a, m = Gtk.accelerator_parse(shortcut)
-                button.set_tooltip_text(f"{label} ({Gtk.accelerator_get_label(a, m)})")
-            else:
-                button.set_tooltip_text(f"{label}")
-
-        return button
-
     def create_toolbox(self, toolbox_actions: ToolboxDefinition) -> Gtk.Box:
         toolbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         toolbox.set_name("toolbox")
@@ -141,9 +115,7 @@ class Toolbox(UIComponent):
             else:
                 expander.set_child(flowbox)
             for action_name, label, icon_name, shortcut, *rest in items:
-                button = self.create_toolbox_button(
-                    action_name, icon_name, label, shortcut
-                )
+                button = create_toolbox_button(action_name, icon_name, label, shortcut)
                 flowbox.insert(button, -1)
 
             if Gtk.get_major_version() == 3:
@@ -154,16 +126,6 @@ class Toolbox(UIComponent):
         if Gtk.get_major_version() == 3:
             toolbox.show_all()
         return toolbox
-
-    def create_toolbox_container(self, toolbox: Gtk.Widget) -> Gtk.ScrolledWindow:
-        toolbox_container = Gtk.ScrolledWindow()
-        toolbox_container.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-        if Gtk.get_major_version() == 3:
-            toolbox_container.add(toolbox)
-            toolbox_container.show()
-        else:
-            toolbox_container.set_child(toolbox)
-        return toolbox_container
 
     def expanded_sections(self, index=None, state=None):
         diagram_type = self._current_diagram_type or ""
@@ -241,6 +203,42 @@ class Toolbox(UIComponent):
 
     def _on_tool_activated(self, flowbox, child):
         self.select_tool(child.action_name)
+
+
+def create_toolbox_container(toolbox: Gtk.Widget) -> Gtk.ScrolledWindow:
+    toolbox_container = Gtk.ScrolledWindow()
+    toolbox_container.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+    if Gtk.get_major_version() == 3:
+        toolbox_container.add(toolbox)
+        toolbox_container.show()
+    else:
+        toolbox_container.set_child(toolbox)
+    return toolbox_container
+
+
+def create_toolbox_button(
+    action_name: str, icon_name: str, label: str, shortcut: Optional[str]
+) -> Gtk.Button:
+    """Creates a tool button for the toolbox."""
+    button = Gtk.FlowBoxChild.new()
+    if Gtk.get_major_version() == 3:
+        icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+        button.add(icon)
+    else:
+        icon = Gtk.Image.new_from_icon_name(icon_name)
+        button.set_child(icon)
+    button.action_name = action_name
+    if label:
+        if shortcut:
+            if Gtk.get_major_version() == 3:
+                a, m = Gtk.accelerator_parse(shortcut)
+            else:
+                _, a, m = Gtk.accelerator_parse(shortcut)
+            button.set_tooltip_text(f"{label} ({Gtk.accelerator_get_label(a, m)})")
+        else:
+            button.set_tooltip_text(f"{label}")
+
+    return button
 
 
 if Gtk.get_major_version() == 3:
