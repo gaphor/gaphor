@@ -168,6 +168,9 @@ type = "virtualenv"
 "C4Model" = "gaphor.C4Model.modelinglanguage:C4ModelLanguage"
 "RAAML" = "gaphor.RAAML.modelinglanguage:RAAMLModelingLanguage"
 
+[tool.poetry.plugins."babel.extractors"]
+"gaphor" = "gaphor.babel:extract_gaphor"
+
 [tool.pytest.ini_options]
 testpaths = [
     "gaphor",
