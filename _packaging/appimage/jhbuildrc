@@ -7,7 +7,13 @@ modules = [
     'adwaita-icon-theme',
     'hicolor-icon-theme'
 ]
+
+# Disable Vala API
 module_mesonargs['gtksourceview-4'] = '-Dvapi=false'
+
 module_mesonargs['gobject-introspection'] = '-Dcairo=enabled'
+
+# Minimize and optimize what is downloaded and built
 mesonargs = '--buildtype=release'
 autogenargs = '--disable-static --disable-gtk-doc'
+shallow_clone = True
