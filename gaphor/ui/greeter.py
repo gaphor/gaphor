@@ -38,9 +38,11 @@ class Greeter(Service, ActionProvider):
             self.greeter.destroy()
         self.gtk_app = None
 
-    def open(self) -> None:
-        if self.greeter:
-            self.close()
+    def open(self, stack_name="recent-files") -> None:
+        if self.greeter and self.stack:
+            self.stack.set_visible_child_name(stack_name)
+            self.greeter.present()
+            return
 
         builder = new_builder("greeter")
 
@@ -59,12 +61,21 @@ class Greeter(Service, ActionProvider):
                 templates.add(widget)
             else:
                 templates.append(widget)
-        templates.unselect_all()
         flowbox_add_hover_support(templates)
+        self.templates = templates
+
+        self.stack = builder.get_object("stack")
+        self.stack.set_visible_child_name(stack_name)
+
         self.greeter = builder.get_object("greeter")
         self.greeter.set_application(self.gtk_app)
+        if Gtk.get_major_version() == 3:
+            self.greeter.connect("delete-event", self._on_window_delete)
+        else:
+            ...  # TODO: Handle window close in GTK4
+
         self.greeter.show()
-        self.stack = builder.get_object("stack")
+        templates.unselect_all()
 
     def close(self):
         if self.greeter:
@@ -74,16 +85,11 @@ class Greeter(Service, ActionProvider):
 
     @action(name="app.recent-files", shortcut="<Primary>n")
     def recent_files(self):
-        if any(self.create_recent_files()):
-            self.open()
-        else:
-            self.new_model()
+        self.open("recent-files" if any(self.create_recent_files()) else "new-model")
 
     @action(name="app.new-model")
     def new_model(self):
-        self.open()
-        assert self.stack
-        self.stack.set_visible_child_name("new-model")
+        self.open("new-model")
 
     def create_recent_files(self):
         for item in self.recent_manager.get_items():
@@ -123,6 +129,9 @@ class Greeter(Service, ActionProvider):
             importlib.resources.files("gaphor") / "templates" / child.filename
         )
         self.application.new_session(template=filename)
+        self.close()
+
+    def _on_window_delete(self, window, event):
         self.close()
 
 

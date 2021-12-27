@@ -45,18 +45,13 @@ diagramview {
 }
 
 .greeter flowboxchild {
-  border-radius: 11px;
+  border-radius: 12px;
   outline-offset: -3px;
   -gtk-outline-radius: 9px;
-  /* min-width: 164px;
-  min-height: 164px; */
 }
 
 .greeter flowboxchild:hover {
   background-color: @theme_selected_bg_color;
-  /* GTK4: -gtk-icon-filter: brightness(1.2); */
-  /* GTK3 only: */
-  /* -gtk-icon-effect: highlight; */
 }
 
 .greeter flowboxchild:hover label {
