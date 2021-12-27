@@ -1,7 +1,11 @@
 """This module contains user interface related code, such as the main screen
 and diagram windows."""
 
+import logging
 import os
+import sys
+from pathlib import Path
+from typing import Optional
 
 import gi
 
@@ -14,11 +18,6 @@ if os.getenv("GAPHOR_USE_GTK") != "NONE":
     gi.require_version("Gdk", gtk_version)
     gi.require_version("GtkSource", gtk_source_version)
 
-import importlib.resources
-import logging
-import sys
-from pathlib import Path
-from typing import Optional
 
 from gi.repository import Gdk, Gio, GLib, Gtk
 
