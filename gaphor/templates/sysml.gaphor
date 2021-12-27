@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.7.1">
+<StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+<Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+<name>
+<val>1. Concept Level</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="a5353a7a-6716-11ec-ba25-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+</Package>
+<Package id="658aa470-6714-11ec-ba25-0456e5e540ed">
+<name>
+<val>2. Logical Level</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="9dae2104-6716-11ec-ba25-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+</Package>
+<Package id="678b59fe-6714-11ec-ba25-0456e5e540ed">
+<name>
+<val>4. Implementation Level</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="a120d674-6716-11ec-ba25-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+</Package>
+<Package id="69467c56-6714-11ec-ba25-0456e5e540ed">
+<name>
+<val>3. Technology Level</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="9f71b51e-6716-11ec-ba25-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+</Package>
+<Diagram id="9dae2104-6716-11ec-ba25-0456e5e540ed">
+<element>
+<ref refid="658aa470-6714-11ec-ba25-0456e5e540ed"/>
+</element>
+<name>
+<val>Logical diagram</val>
+</name>
+</Diagram>
+<Diagram id="9f71b51e-6716-11ec-ba25-0456e5e540ed">
+<element>
+<ref refid="69467c56-6714-11ec-ba25-0456e5e540ed"/>
+</element>
+<name>
+<val>Technology diagram</val>
+</name>
+</Diagram>
+<Diagram id="a120d674-6716-11ec-ba25-0456e5e540ed">
+<element>
+<ref refid="678b59fe-6714-11ec-ba25-0456e5e540ed"/>
+</element>
+<name>
+<val>Implementation diagram</val>
+</name>
+</Diagram>
+<Diagram id="a5353a7a-6716-11ec-ba25-0456e5e540ed">
+<element>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</element>
+<name>
+<val>Concept diagram</val>
+</name>
+</Diagram>
+</gaphor>
