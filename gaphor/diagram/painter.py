@@ -81,7 +81,7 @@ class DiagramTypePainter:
 
             cr.move_to(-1, 16 + h)
             cr.line_to(8 + w, 16 + h)
-            cr.line_to(16 + w, 8 + h)
+            cr.line_to(16 + w, 8 + h / 2)
             cr.line_to(16 + w, -1)
             cr.line_to(-1, -1)
 
