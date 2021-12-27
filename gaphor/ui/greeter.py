@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import NamedTuple
 
-from gi.repository import GLib, Gtk
+from gi.repository import Gdk, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
@@ -58,7 +58,8 @@ class Greeter(Service, ActionProvider):
                 templates.add(widget)
             else:
                 templates.append(widget)
-
+        templates.unselect_all()
+        flowbox_add_hover_support(templates)
         self.greeter = builder.get_object("greeter")
         self.greeter.set_application(self.gtk_app)
         self.greeter.show()
@@ -100,11 +101,10 @@ class Greeter(Service, ActionProvider):
             builder = new_builder("greeter-model-template")
             builder.get_object("template-name").set_text(template.name)
             builder.get_object("template-icon").set_from_icon_name(
-                "org.gaphor.Gaphor", Gtk.IconSize.DIALOG
+                template.icon, Gtk.IconSize.DIALOG
             )
             child = builder.get_object("model-template")
             child.filename = template.filename
-
             yield child
 
     @event_handler(SessionCreated, ActiveSessionChanged)
@@ -118,18 +118,44 @@ class Greeter(Service, ActionProvider):
 
     def _on_template_activated(self, _flowbox, child):
         filename = child.filename
-        print(filename)
         self.application.new_session(filename=filename)
         self.close()
 
 
 class ModelTemplate(NamedTuple):
     name: str
+    icon: str
     filename: str
 
 
 TEMPLATES = [
-    ModelTemplate(gettext("Generic"), "templates/blank.gaphor"),
-    ModelTemplate(gettext("C4 Model"), "templates/c4model.gaphor"),
-    ModelTemplate(gettext("SysML"), "templates/sysml-basic.gaphor"),
+    ModelTemplate(gettext("Generic"), "org.gaphor.Gaphor", "templates/blank.gaphor"),
+    ModelTemplate(gettext("C4 Model"), "org.gaphor.Gaphor", "models/C4Model.gaphor"),
+    ModelTemplate(gettext("UML"), "UML", "models/Core.gaphor"),
+    ModelTemplate(gettext("SysML"), "SysML", "templates/sysml-basic.gaphor"),
 ]
+
+
+def flowbox_add_hover_support(flowbox):
+    flowbox.add_events(
+        Gdk.EventMask.ENTER_NOTIFY_MASK
+        | Gdk.EventMask.LEAVE_NOTIFY_MASK
+        | Gdk.EventMask.POINTER_MOTION_MASK
+    )
+
+    hover_child: Gtk.Widget = None
+
+    def hover(widget, event):
+        nonlocal hover_child
+        child = widget.get_child_at_pos(event.x, event.y)
+        if hover_child and child is not hover_child:
+            hover_child.unset_state_flags(Gtk.StateFlags.PRELIGHT)
+        child.set_state_flags(Gtk.StateFlags.PRELIGHT, False)
+        hover_child = child
+
+    def unhover(widget, event):
+        if hover_child:
+            hover_child.unset_state_flags(Gtk.StateFlags.PRELIGHT)
+
+    flowbox.connect("motion-notify-event", hover)
+    flowbox.connect("leave-notify-event", unhover)

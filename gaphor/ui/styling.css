@@ -52,6 +52,13 @@ diagramview {
   min-height: 164px; */
 }
 
-.greeter flowboxchild:selected label {
+.greeter flowboxchild:hover {
+  background-color: @theme_selected_bg_color;
+  /* GTK4: -gtk-icon-filter: brightness(1.2); */
+  /* GTK3 only: */
+  /* -gtk-icon-effect: highlight; */
+}
+
+.greeter flowboxchild:hover label {
   color: @theme_selected_fg_color;
 }

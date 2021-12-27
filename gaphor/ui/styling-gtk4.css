@@ -1,0 +1,5 @@
+@import url("styling.css");
+
+.greeter flowboxchild:hover {
+  -gtk-icon-filter: brightness(1.2);
+}
