@@ -1686,7 +1686,7 @@ msgid "De_lete"
 msgstr "Iz_briši"
 
 #: gaphor/ui/namespace.py:63
-msgid "Show in \"{diagram}\""
+msgid "Show in “{diagram}”"
 msgstr "Prikaži u „{diagram}”"
 
 #: gaphor/ui/namespace.py:304

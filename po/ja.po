@@ -1653,7 +1653,7 @@ msgid "De_lete"
 msgstr "削除(_l)"
 
 #: gaphor/ui/namespace.py:63
-msgid "Show in \"{diagram}\""
+msgid "Show in “{diagram}”"
 msgstr ""
 
 #: gaphor/ui/namespace.py:304
