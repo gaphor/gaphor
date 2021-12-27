@@ -7,9 +7,8 @@ import functools
 import logging
 from typing import Optional, Tuple
 
-from gi.repository import Gdk, GLib, Gtk
+from gi.repository import Gdk, Gtk
 
-from gaphor.core import action
 from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 from gaphor.event import TransactionCommit
@@ -19,8 +18,8 @@ from gaphor.services.modelinglanguage import (
 )
 from gaphor.services.properties import Properties
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.actiongroup import create_action_group, from_variant
 from gaphor.ui.event import CurrentDiagramChanged, ToolSelected
+from gaphor.ui.flowbox import flowbox_add_hover_support
 
 log = logging.getLogger(__name__)
 
@@ -47,7 +46,6 @@ class Toolbox(UIComponent):
         self.event_manager = event_manager
         self.properties = properties
         self.modeling_language = modeling_language
-        self._action_group, _ = create_action_group(self, "toolbox")
         self._toolbox: Optional[Gtk.Box] = None
         self._toolbox_container: Optional[Gtk.ScrolledWindow] = None
         self._current_diagram_type = ""
@@ -60,6 +58,7 @@ class Toolbox(UIComponent):
         self.event_manager.subscribe(self._on_current_diagram_changed)
         self._toolbox = toolbox
         self._toolbox_container = toolbox_container
+        self.select_tool("toolbox-pointer")
         return toolbox_container
 
     def close(self) -> None:
@@ -82,31 +81,30 @@ class Toolbox(UIComponent):
                     continue
                 keys, mod = parse_shortcut(shortcut)
                 if state == mod and keyval in keys:
-                    self._action_group.activate_action(
-                        "select-tool", GLib.Variant.new_string(action_name)
-                    )
+                    self.select_tool(action_name)
                     return True
         return False
 
     @property
     def active_tool_name(self):
-        gvar = self._action_group.get_action_state("select-tool")
-        return gvar and from_variant(gvar)
+        for flowbox in self.flowboxes():
+            children = flowbox.get_selected_children()
+            if children:
+                return children[0].action_name
+        return "toolbox-pointer"
 
     def create_toolbox_button(
         self, action_name: str, icon_name: str, label: str, shortcut: Optional[str]
     ) -> Gtk.Button:
         """Creates a tool button for the toolbox."""
-        button = Gtk.ToggleButton.new()
+        button = Gtk.FlowBoxChild.new()
         if Gtk.get_major_version() == 3:
             icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
             button.add(icon)
         else:
             icon = Gtk.Image.new_from_icon_name(icon_name)
             button.set_child(icon)
-        button.set_action_name("toolbox.select-tool")
-        button.set_action_target_value(GLib.Variant.new_string(action_name))
-        button.get_style_context().add_class("flat")
+        button.action_name = action_name
         if label:
             if shortcut:
                 if Gtk.get_major_version() == 3:
@@ -117,25 +115,12 @@ class Toolbox(UIComponent):
             else:
                 button.set_tooltip_text(f"{label}")
 
-        # Enable Drag and Drop
-        if (
-            action_name not in ("toolbox-pointer", "toolbox-magnet")
-            and Gtk.get_major_version() == 3
-        ):
-            button.drag_source_set(
-                Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
-                self.DND_TARGETS,
-                Gdk.DragAction.COPY | Gdk.DragAction.LINK,
-            )
-            button.drag_source_set_icon_name(icon_name)
-            button.connect("drag-data-get", _button_drag_data_get, action_name)
         return button
 
     def create_toolbox(self, toolbox_actions: ToolboxDefinition) -> Gtk.Box:
         toolbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         toolbox.set_name("toolbox")
         toolbox.connect("destroy", self._on_toolbox_destroyed)
-        toolbox.insert_action_group("toolbox", self._action_group)
         expanded = self.expanded_sections()
 
         def on_expanded(widget, _prop, index):
@@ -148,6 +133,9 @@ class Toolbox(UIComponent):
             flowbox = Gtk.FlowBox.new()
             flowbox.set_homogeneous(True)
             flowbox.set_max_children_per_line(12)
+            flowbox_add_hover_support(flowbox)
+            flowbox.connect("child-activated", self._on_tool_activated)
+
             if Gtk.get_major_version() == 3:
                 expander.add(flowbox)
             else:
@@ -205,16 +193,26 @@ class Toolbox(UIComponent):
         }
         return expanded | required_expanded
 
-    @action(name="toolbox.select-tool", state="toolbox-pointer")
+    def flowboxes(self):
+        if self._toolbox:
+            for expander in self._toolbox.get_children():
+                yield expander.get_child()
+
     def select_tool(self, tool_name: str) -> None:
-        self.event_manager.handle(ToolSelected(tool_name))
+        for flowbox in self.flowboxes():
+            for child in flowbox.get_children():
+                if child.action_name == tool_name:
+                    flowbox.select_child(child)
+                    for fb in self.flowboxes():
+                        if fb is not flowbox:
+                            fb.unselect_all()
+                    self.event_manager.handle(ToolSelected(tool_name))
+                    return
 
     @event_handler(TransactionCommit)
     def _on_diagram_item_placed(self, event: TransactionCommit) -> None:
         if self.properties.get("reset-tool-after-create", True):
-            self._action_group.lookup_action("select-tool").activate(
-                GLib.Variant.new_string("toolbox-pointer")
-            )
+            self.select_tool("toolbox-pointer")
 
     @event_handler(ModelingLanguageChanged)
     def _on_modeling_language_changed(self, event: ModelingLanguageChanged) -> None:
@@ -227,6 +225,7 @@ class Toolbox(UIComponent):
             else:
                 self._toolbox_container.set_child(toolbox)
         self._toolbox = toolbox
+        self.select_tool("toolbox-pointer")
 
     @event_handler(CurrentDiagramChanged)
     def _on_current_diagram_changed(self, event: CurrentDiagramChanged) -> None:
@@ -239,6 +238,9 @@ class Toolbox(UIComponent):
 
     def _on_toolbox_destroyed(self, widget: Gtk.Widget) -> None:
         self._toolbox = None
+
+    def _on_tool_activated(self, flowbox, child):
+        self.select_tool(child.action_name)
 
 
 if Gtk.get_major_version() == 3:
