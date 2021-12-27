@@ -50,18 +50,13 @@ class Greeter(Service, ActionProvider):
         listbox = builder.get_object("greeter-recent-files")
         listbox.connect("row-activated", self._on_recent_file_activated)
         for widget in self.create_recent_files():
-            if Gtk.get_major_version() == 3:
-                listbox.add(widget)
-            else:
-                listbox.append(widget)
+            listbox.insert(widget, -1)
 
         templates = builder.get_object("templates")
         templates.connect("child-activated", self._on_template_activated)
         for widget in self.create_templates():
-            if Gtk.get_major_version() == 3:
-                templates.add(widget)
-            else:
-                templates.append(widget)
+            templates.insert(widget, -1)
+
         flowbox_add_hover_support(templates)
         self.templates = templates
 
@@ -109,9 +104,12 @@ class Greeter(Service, ActionProvider):
         for template in TEMPLATES:
             builder = new_builder("greeter-model-template")
             builder.get_object("template-name").set_text(template.name)
-            builder.get_object("template-icon").set_from_icon_name(
-                template.icon, Gtk.IconSize.DIALOG
-            )
+            if Gtk.get_major_version() == 3:
+                builder.get_object("template-icon").set_from_icon_name(
+                    template.icon, Gtk.IconSize.DIALOG
+                )
+            else:
+                builder.get_object("template-icon").set_from_icon_name(template.icon)
             child = builder.get_object("model-template")
             child.filename = template.filename
             child.lang = template.lang

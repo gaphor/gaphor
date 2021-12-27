@@ -4,10 +4,8 @@
   <object class="GtkWindow" id="greeter">
     <property name="width-request">800</property>
     <property name="height-request">600</property>
-    <!-- <property name="window-position">center</property> -->
     <property name="child">
       <object class="GtkBox">
-        <property name="margin-top">12</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkStack" id="stack">
@@ -26,9 +24,11 @@
                             <property name="vexpand">1</property>
                             <property name="orientation">vertical</property>
                             <property name="spacing">6</property>
+                            <property name="margin-top">18</property>
+                            <property name="margin-bottom">12</property>
                             <child>
                               <object class="GtkLabel">
-                                <property name="label" translatable="yes">Recent files</property>
+                                <property name="label" translatable="yes">Recently opened models</property>
                                 <property name="xalign">0</property>
                                 <attributes>
                                   <attribute name="weight" value="bold"></attribute>
@@ -40,7 +40,6 @@
                             </child>
                             <child>
                               <object class="GtkFrame">
-                                <!-- <property name="shadow-type">in</property> -->
                                 <property name="child">
                                   <object class="GtkListBox" id="greeter-recent-files"/>
                                 </property>
@@ -56,21 +55,45 @@
             </child>
             <child>
               <object class="GtkStackPage">
-                <property name="name">splash</property>
+                <property name="name">new-model</property>
                 <property name="child">
-                  <object class="GtkLabel">
-                    <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;Welcome to Gaphor&lt;/b&gt;&lt;/big&gt;
-
-It&apos;s time to create your first model
-or open an existing model.
-
-Happy modeling!
-
-• &lt;a href=&quot;https://gaphor.org&quot;&gt;Gaphor homepage&lt;/a&gt;
-• &lt;a href=&quot;https://github.com/gaphor&quot;&gt;GitHub&lt;/a&gt;
-
-</property>
-                    <property name="use-markup">1</property>
+                  <object class="GtkScrolledWindow">
+                    <property name="hscrollbar-policy">never</property>
+                    <property name="child">
+                      <object class="GtkViewport">
+                        <property name="child">
+                          <object class="GtkBox">
+                            <property name="halign">center</property>
+                            <property name="valign">start</property>
+                            <property name="orientation">vertical</property>
+                            <property name="spacing">6</property>
+                            <property name="margin-top">18</property>
+                            <property name="margin-bottom">12</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="valign">center</property>
+                                <property name="label" translatable="yes">Create a new model from a template</property>
+                                <property name="xalign">0</property>
+                                <attributes>
+                                  <attribute name="weight" value="bold"></attribute>
+                                </attributes>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkFlowBox" id="templates">
+                                <property name="valign">center</property>
+                                <property name="homogeneous">1</property>
+                                <property name="width-request">400</property>
+                                <property name="max_children_per_line">4</property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </property>
                   </object>
                 </property>
               </object>
@@ -85,6 +108,13 @@ Happy modeling!
                 <property name="margin-bottom">6</property>
                 <property name="spacing">10</property>
                 <property name="homogeneous">1</property>
+                <child>
+                  <object class="GtkButton">
+                    <property name="label" translatable="yes">Recent Model…</property>
+                    <property name="receives-default">1</property>
+                    <property name="action-name">app.recent-files</property>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkButton">
                     <property name="label" translatable="yes">Create New Model…</property>

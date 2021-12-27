@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkFlowBoxChild" id="model-template">
+    <property name="focusable">1</property>
+    <property name="child">
+      <object class="GtkBox">
+        <!-- <property name="border-width">12</property> -->
+        <property name="orientation">vertical</property>
+        <property name="hexpand">1</property>
+        <property name="vexpand">1</property>
+        <property name="spacing">6</property>
+        <child>
+          <object class="GtkImage" id="template-icon">
+            <property name="hexpand">1</property>
+            <property name="vexpand">1</property>
+            <property name="pixel-size">98</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="template-name">
+            <property name="hexpand">1</property>
+            <property name="vexpand">1</property>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>
