@@ -61,7 +61,7 @@ def popup_model(element):
         diagram = presentation.diagram
         if diagram:
             menu_item = Gio.MenuItem.new(
-                gettext('Show in "{diagram}"').format(diagram=diagram.name),
+                gettext("Show in “{diagram}”").format(diagram=diagram.name),
                 "tree-view.show-in-diagram",
             )
             menu_item.set_attribute_value("target", GLib.Variant.new_string(diagram.id))

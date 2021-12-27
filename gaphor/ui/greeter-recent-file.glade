@@ -26,7 +26,7 @@
             <child>
               <object class="GtkLabel" id="name">
                 <property name="visible">1</property>
-                <property name="label" translatable="yes">Recent file 1</property>
+                <property name="label">Recent file 1</property>
                 <property name="xalign">0</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
@@ -36,7 +36,7 @@
             <child>
               <object class="GtkLabel" id="filename">
                 <property name="visible">1</property>
-                <property name="label" translatable="yes">~/Development/gaphor/</property>
+                <property name="label">~/Development/gaphor/</property>
                 <property name="xalign">0</property>
                 <style>
                   <class name="dim-label"/>

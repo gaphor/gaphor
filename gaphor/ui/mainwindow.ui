@@ -101,7 +101,7 @@
                 <child>
                   <object class="GtkLabel" id="notification-message">
                     <property name="margin-start">6</property>
-                    <property name="label" translatable="yes">Here goes a short informative message.</property>
+                    <property name="label">Here goes a short informative message.</property>
                   </object>
                 </child>
                 <child>
