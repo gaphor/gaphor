@@ -40,7 +40,7 @@ class Greeter(Service, ActionProvider):
 
     def open(self) -> None:
         if self.greeter:
-            return
+            self.close()
 
         builder = new_builder("greeter")
 
@@ -70,13 +70,14 @@ class Greeter(Service, ActionProvider):
         if self.greeter:
             self.greeter.destroy()
             self.greeter = None
+            self.stack = None
 
     @action(name="app.recent-files", shortcut="<Primary>n")
     def recent_files(self):
-        self.open()
-        if not any(self.create_recent_files()):
-            assert self.stack
-            self.stack.set_visible_child_name("new-model")
+        if any(self.create_recent_files()):
+            self.open()
+        else:
+            self.new_model()
 
     @action(name="app.new-model")
     def new_model(self):
@@ -121,7 +122,7 @@ class Greeter(Service, ActionProvider):
         filename: Path = (
             importlib.resources.files("gaphor") / "templates" / child.filename
         )
-        self.application.new_session(filename=filename)
+        self.application.new_session(template=filename)
         self.close()
 
 

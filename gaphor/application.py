@@ -80,19 +80,21 @@ class Application(Service, ActionProvider):
     def active_session(self):
         return self._active_session
 
-    def new_session(self, *, filename=None, services=None, force=False):
-        if filename is None:
+    def new_session(self, *, filename=None, template=None, services=None, force=False):
+        if filename is None and template is None:
             return self._new_session(services=services)
 
-        if not force:
+        if filename and not force:
             for session in self._sessions:
                 if session.filename == filename:
                     session.foreground()
                     return
 
-        return self._new_session(filename=filename, services=services)
+        return self._new_session(
+            filename=filename, template=template, services=services
+        )
 
-    def _new_session(self, filename=None, services=None):
+    def _new_session(self, filename=None, template=None, services=None):
         """Initialize an application session."""
         session = Session(services=services)
 
@@ -112,7 +114,7 @@ class Application(Service, ActionProvider):
 
         self._sessions.add(session)
 
-        session_created = SessionCreated(self, session, filename)
+        session_created = SessionCreated(self, session, filename, template)
         event_manager.handle(session_created)
         self.event_manager.handle(session_created)
         session.foreground()
