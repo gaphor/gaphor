@@ -30,28 +30,6 @@ from gaphor.ui.macosshim import macos_init
 
 APPLICATION_ID = "org.gaphor.Gaphor"
 HOME = str(Path.home())
-
-
-icon_theme = (
-    Gtk.IconTheme.get_default()
-    if Gtk.get_major_version() == 3
-    else Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
-)
-if sys.version_info >= (3, 9):
-    path: Path = importlib.resources.files("gaphor") / "ui" / "icons"  # type: ignore[assignment]
-    # FixMe: check is only needed for RtD.
-    if icon_theme:
-        if Gtk.get_major_version() == 3:
-            icon_theme.append_search_path(str(path))
-        else:
-            icon_theme.add_search_path(str(path))
-else:
-    with importlib.resources.path("gaphor.ui", "icons") as path:
-        if Gtk.get_major_version() == 3:
-            icon_theme.append_search_path(str(path))
-        else:
-            icon_theme.add_search_path(str(path))
-
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
 
