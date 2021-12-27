@@ -113,6 +113,7 @@ class Greeter(Service, ActionProvider):
             )
             child = builder.get_object("model-template")
             child.filename = template.filename
+            child.lang = template.lang
             yield child
 
     @event_handler(SessionCreated, ActiveSessionChanged)
@@ -128,7 +129,8 @@ class Greeter(Service, ActionProvider):
         filename: Path = (
             importlib.resources.files("gaphor") / "templates" / child.filename
         )
-        self.application.new_session(template=filename)
+        session = self.application.new_session(template=filename)
+        session.get_service("properties").set("modeling-language", child.lang)
         self.close()
 
     def _on_window_delete(self, window, event):
@@ -138,13 +140,16 @@ class Greeter(Service, ActionProvider):
 class ModelTemplate(NamedTuple):
     name: str
     icon: str
+    lang: str
     filename: str
 
 
 TEMPLATES = [
-    ModelTemplate(gettext("Generic"), "org.gaphor.Gaphor", "blank.gaphor"),
-    ModelTemplate(gettext("C4 Model"), "org.gaphor.Gaphor", "c4model.gaphor"),
-    ModelTemplate(gettext("SysML"), "SysML", "sysml.gaphor"),
+    ModelTemplate(gettext("Generic"), "org.gaphor.Gaphor", "UML", "blank.gaphor"),
+    ModelTemplate(
+        gettext("C4 Model"), "org.gaphor.Gaphor", "C4Model", "c4model.gaphor"
+    ),
+    ModelTemplate(gettext("SysML"), "SysML", "SysML", "sysml.gaphor"),
 ]
 
 
