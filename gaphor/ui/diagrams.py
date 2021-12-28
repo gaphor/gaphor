@@ -6,7 +6,7 @@ from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import action, event_handler
-from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed
+from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed, ModelReady
 from gaphor.event import ActionEnabled
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.diagrampage import DiagramPage
@@ -56,12 +56,15 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.subscribe(self._on_close_diagram)
         self.event_manager.subscribe(self._on_name_change)
         self.event_manager.subscribe(self._on_flush_model)
+        self.event_manager.subscribe(self._on_model_ready)
 
+        self._on_model_ready()
         return self._notebook
 
     def close(self):
         """Close the diagrams component."""
 
+        self.event_manager.unsubscribe(self._on_model_ready)
         self.event_manager.unsubscribe(self._on_flush_model)
         self.event_manager.unsubscribe(self._on_name_change)
         self.event_manager.unsubscribe(self._on_close_diagram)
@@ -253,6 +256,19 @@ class Diagrams(UIComponent, ActionProvider):
         if Gtk.get_major_version() == 3:
             widget.destroy()
         self._update_action_state()
+
+    @event_handler(ModelReady)
+    def _on_model_ready(self, event=None):
+        """Open the toplevel element and load toplevel diagrams."""
+        diagram_ids = self.properties.get("opened-diagrams", [])
+        diagrams = [self.element_factory.lookup(id) for id in diagram_ids]
+        if not any(diagrams):
+            diagrams = self.element_factory.select(
+                lambda e: e.isKindOf(Diagram) and not (e.owner and e.owner.owner)
+            )
+        for diagram in diagrams:
+            if diagram:
+                self.event_manager.handle(DiagramOpened(diagram))
 
     @event_handler(ModelFlushed)
     def _on_flush_model(self, event):
