@@ -94,7 +94,6 @@ class Toolbox(UIComponent):
     def create_toolbox(self, toolbox_actions: ToolboxDefinition) -> Gtk.Box:
         toolbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         toolbox.set_name("toolbox")
-        toolbox.connect("destroy", self._on_toolbox_destroyed)
         expanded = self.expanded_sections()
 
         def on_expanded(widget, _prop, index):
@@ -200,15 +199,14 @@ class Toolbox(UIComponent):
 
     @event_handler(CurrentDiagramChanged)
     def _on_current_diagram_changed(self, event: CurrentDiagramChanged) -> None:
+        if not self._toolbox:
+            return
+
         self._current_diagram_type = event.diagram and event.diagram.diagramType or ""
 
-        toolbox = self._toolbox_container.get_child().get_child()  # type: ignore[union-attr]
         expanded = self.expanded_sections()
-        for index, expander in enumerate(toolbox.get_children()):
+        for index, expander in enumerate(self._toolbox.get_children()):
             expander.set_property("expanded", expanded[index])
-
-    def _on_toolbox_destroyed(self, widget: Gtk.Widget) -> None:
-        self._toolbox = None
 
     def _on_tool_activated(self, flowbox, child):
         self.select_tool(child.action_name)
