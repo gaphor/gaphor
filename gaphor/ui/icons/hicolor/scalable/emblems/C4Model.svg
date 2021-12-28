@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="127.24929mm"
+   height="127.40743mm"
+   viewBox="0 0 127.24929 127.40743"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="C4Model.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1.8116734"
+     inkscape:cx="251.97698"
+     inkscape:cy="294.75511"
+     inkscape:window-width="1920"
+     inkscape:window-height="1131"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer2"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Person"
+     transform="translate(-38.327106,-70.50651)">
+    <path
+       id="rect859"
+       style="opacity:1;fill:#073d71;fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
+       d="M 237.63281 0 A 106.65413 103.92809 0 0 0 130.97852 103.92773 A 106.65413 103.92809 0 0 0 184.6875 194.12891 L 78.873047 194.12891 C 35.177805 194.12891 0 229.30476 0 273 L 0 402.66797 C 0 446.36321 35.177805 481.53906 78.873047 481.53906 L 402.07031 481.53906 C 445.76555 481.53906 480.94141 446.36321 480.94141 402.66797 L 480.94141 273 C 480.94141 229.30476 445.76555 194.12891 402.07031 194.12891 L 290.57617 194.12891 A 106.65413 103.92809 0 0 0 344.28711 103.92773 A 106.65413 103.92809 0 0 0 237.63281 0 z "
+       transform="matrix(0.26458333,0,0,0.26458333,38.327106,70.50651)" />
+    <g
+       aria-label="C4"
+       id="text22937"
+       style="font-weight:bold;font-size:25.4px;line-height:1.25;font-family:Poppins;-inkscape-font-specification:'Poppins, Bold';fill:#ffffff;stroke-width:0.264583">
+      <path
+         d="m 82.96127,149.23751 q 0,-2.6416 1.143,-4.699 1.143,-2.0828 3.175,-3.2258 2.0574,-1.1684 4.6482,-1.1684 3.175,0 5.4356,1.6764 2.2606,1.6764 3.0226,4.572 h -4.7752 q -0.5334,-1.1176 -1.524,-1.7018 -0.9652,-0.5842 -2.2098,-0.5842 -2.0066,0 -3.2512,1.397 -1.2446,1.397 -1.2446,3.7338 0,2.3368 1.2446,3.7338 1.2446,1.397 3.2512,1.397 1.2446,0 2.2098,-0.5842 0.9906,-0.5842 1.524,-1.7018 h 4.7752 q -0.762,2.8956 -3.0226,4.572 -2.2606,1.651 -5.4356,1.651 -2.5908,0 -4.6482,-1.143 -2.032,-1.1684 -3.175,-3.2258 -1.143,-2.0574 -1.143,-4.699 z"
+         id="path26641" />
+      <path
+         d="m 102.72245,154.87631 v -3.5052 l 8.0264,-11.4808 h 4.8514 v 11.2268 h 2.0828 v 3.7592 h -2.0828 v 3.302 h -4.3434 v -3.302 z m 8.8392,-10.2108 -4.2672,6.4516 h 4.2672 z"
+         id="path26643" />
+    </g>
+  </g>
+</svg>

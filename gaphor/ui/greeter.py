@@ -13,6 +13,20 @@ from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui import APPLICATION_ID, HOME
 
 
+class ModelTemplate(NamedTuple):
+    name: str
+    icon: str
+    lang: str
+    filename: str
+
+
+TEMPLATES = [
+    ModelTemplate(gettext("Generic"), "org.gaphor.Gaphor", "UML", "blank.gaphor"),
+    ModelTemplate(gettext("C4 Model"), "C4Model", "C4Model", "c4model.gaphor"),
+    ModelTemplate(gettext("SysML"), "SysML", "SysML", "sysml.gaphor"),
+]
+
+
 def new_builder(ui_file):
     builder = Gtk.Builder()
     ui_file = f"{ui_file}.glade" if Gtk.get_major_version() == 3 else f"{ui_file}.ui"
@@ -135,22 +149,6 @@ class Greeter(Service, ActionProvider):
 
     def _on_window_delete(self, window, event):
         self.close()
-
-
-class ModelTemplate(NamedTuple):
-    name: str
-    icon: str
-    lang: str
-    filename: str
-
-
-TEMPLATES = [
-    ModelTemplate(gettext("Generic"), "org.gaphor.Gaphor", "UML", "blank.gaphor"),
-    ModelTemplate(
-        gettext("C4 Model"), "org.gaphor.Gaphor", "C4Model", "c4model.gaphor"
-    ),
-    ModelTemplate(gettext("SysML"), "SysML", "SysML", "sysml.gaphor"),
-]
 
 
 if Gtk.get_major_version() == 3:
