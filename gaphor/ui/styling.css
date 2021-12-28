@@ -10,10 +10,6 @@
   margin-top: 0px;
 }
 
-#toolbox flowboxchild {
-  padding: 0;
-}
-
 #diagrams {
   border-top-width: 0px;
 }
@@ -29,6 +25,19 @@ diagramview {
 .dropdown-small {
   padding-left: 4px;
   padding-right: 4px;
+}
+
+flowboxchild {
+  padding: 8px;
+  border-radius: 8px;
+}
+
+flowboxchild:hover {
+  background-color: @theme_selected_bg_color;
+}
+
+flowboxchild:hover label {
+  color: @theme_selected_fg_color;
 }
 
 .greeter list row {
@@ -48,12 +57,4 @@ diagramview {
   border-radius: 12px;
   outline-offset: -3px;
   -gtk-outline-radius: 9px;
-}
-
-.greeter flowboxchild:hover {
-  background-color: @theme_selected_bg_color;
-}
-
-.greeter flowboxchild:hover label {
-  color: @theme_selected_fg_color;
 }
