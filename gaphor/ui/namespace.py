@@ -13,13 +13,14 @@ from typing import TYPE_CHECKING
 from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor import UML
-from gaphor.abc import ActionProvider
+from gaphor.abc import ActionProvider, ModelingLanguage
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged
+from gaphor.ui.mainwindow import create_diagram_types_model
 from gaphor.ui.namespacemodel import (
     RELATIONSHIPS,
     NamespaceModel,
@@ -36,7 +37,7 @@ if TYPE_CHECKING:
 log = logging.getLogger(__name__)
 
 
-def popup_model(element):
+def popup_model(element, modeling_language):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
@@ -45,7 +46,9 @@ def popup_model(element):
     model.append_section(None, part)
 
     part = Gio.Menu.new()
-    part.append(gettext("New _Diagram"), "win.create-diagram")
+    part.append_submenu(
+        gettext("New _Diagram"), create_diagram_types_model(modeling_language)
+    )
     part.append(gettext("New _Package"), "tree-view.create-package")
     model.append_section(None, part)
 
@@ -77,9 +80,15 @@ def popup_model(element):
 
 
 class Namespace(UIComponent, ActionProvider):
-    def __init__(self, event_manager: EventManager, element_factory: ElementFactory):
+    def __init__(
+        self,
+        event_manager: EventManager,
+        element_factory: ElementFactory,
+        modeling_language: ModelingLanguage,
+    ):
         self.event_manager = event_manager
         self.element_factory = element_factory
+        self.modeling_language = modeling_language
 
         self.model: NamespaceModel | None = None
         self.view: Gtk.TreeView | None = None
@@ -170,12 +179,14 @@ class Namespace(UIComponent, ActionProvider):
 
     def _on_show_popup(self, ctrl, n_press, x, y):
         if Gtk.get_major_version() == 3:
-            menu = Gtk.Menu.new_from_model(popup_model(self.get_selected_element()))
+            menu = Gtk.Menu.new_from_model(
+                popup_model(self.get_selected_element(), self.modeling_language)
+            )
             menu.attach_to_widget(self.view, None)
             menu.popup_at_pointer(None)
         else:
             menu = Gtk.PopoverMenu.new_from_model(
-                popup_model(self.get_selected_element())
+                popup_model(self.get_selected_element(), self.modeling_language)
             )
             menu.set_pointing_to(Gdk.Rectangle(x, y, 1, 1))
             menu.set_offset(x, y)
