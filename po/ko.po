@@ -1509,7 +1509,7 @@ msgid "Edit"
 msgstr "편집"
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
-msgid "Show/Hide Editor"
+msgid "Editor"
 msgstr "편집기 표시/숨김"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
@@ -1706,7 +1706,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:199
 #, fuzzy
-msgid "Show/Hide Preferences"
+msgid "Preferences"
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:170

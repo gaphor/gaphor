@@ -1462,7 +1462,7 @@ msgid "Edit"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
-msgid "Show/Hide Editor"
+msgid "Editor"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:131
@@ -1649,7 +1649,7 @@ msgid ""
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:199
-msgid "Show/Hide Preferences"
+msgid "Preferences"
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:170

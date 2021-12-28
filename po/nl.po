@@ -1405,8 +1405,8 @@ msgid "Edit"
 msgstr "Wijzigen"
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
-msgid "Show/Hide Editor"
-msgstr "Toon/Verberg Editor"
+msgid "Editor"
+msgstr "Editor"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
 msgid "Select All"
@@ -1591,7 +1591,7 @@ msgstr ""
 " zal automatisch verschijnen.\n"
 
 #: gaphor/ui/elementeditor.glade:199
-msgid "Show/Hide Preferences"
+msgid "Preferences"
 msgstr "Instellingen"
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:170

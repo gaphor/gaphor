@@ -1477,7 +1477,7 @@ msgid "Edit"
 msgstr "Editar"
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
-msgid "Show/Hide Editor"
+msgid "Editor"
 msgstr "Mostrar/Ocultar editor"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
@@ -1681,7 +1681,7 @@ msgstr ""
 "automáticamente un cuadro de búsqueda.\n"
 
 #: gaphor/ui/elementeditor.glade:199
-msgid "Show/Hide Preferences"
+msgid "Preferences"
 msgstr "Mostrar/Ocultar preferencias"
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:170

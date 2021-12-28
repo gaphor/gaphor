@@ -1491,7 +1491,7 @@ msgid "Edit"
 msgstr "Szerkesztés"
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
-msgid "Show/Hide Editor"
+msgid "Editor"
 msgstr "Szerkesztő megjelenítése/elrejtése"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
@@ -1694,7 +1694,7 @@ msgstr ""
 "önműködően megjelenik.\n"
 
 #: gaphor/ui/elementeditor.glade:199
-msgid "Show/Hide Preferences"
+msgid "Preferences"
 msgstr "Beállítások megjelenítése/elrejtése"
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:170

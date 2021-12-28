@@ -1437,7 +1437,7 @@ msgid "Edit"
 msgstr "Muokkaa"
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
-msgid "Show/Hide Editor"
+msgid "Editor"
 msgstr "Näytä/piilota editori"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
@@ -1641,7 +1641,7 @@ msgstr ""
 "automaattisesti.\n"
 
 #: gaphor/ui/elementeditor.glade:199
-msgid "Show/Hide Preferences"
+msgid "Preferences"
 msgstr "Näytä/piilota asetukset"
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:170

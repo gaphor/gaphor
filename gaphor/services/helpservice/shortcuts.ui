@@ -120,7 +120,7 @@
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;Primary&gt;e</property>
-                <property name="title" translatable="yes">Show/Hide Editor</property>
+                <property name="title" translatable="yes">Editor</property>
               </object>
             </child>
 

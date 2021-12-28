@@ -188,7 +188,7 @@
             <property name="visible">1</property>
             <property name="can-focus">1</property>
             <property name="receives-default">1</property>
-            <property name="tooltip-text" translatable="yes">Show/Hide Editor</property>
+            <property name="tooltip-text" translatable="yes">Editor</property>
             <property name="action-name">win.show-editors</property>
             <property name="use-popover">0</property>
             <child>
