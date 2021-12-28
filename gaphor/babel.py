@@ -9,16 +9,17 @@ NS = {"g": "http://gaphor.sourceforge.net/model"}
 def extract_gaphor(fileobj, keywords, comment_tags, options):
     """Extract text from Gaphor models.
 
-    :param fileobj: the file-like object the messages should be extracted
-                    from
-    :param keywords: a list of keywords (i.e. function names) that should
-                     be recognized as translation functions
-    :param comment_tags: a list of translator tags to search for and
-                         include in the results
-    :param options: a dictionary of additional options (optional)
-    :return: an iterator over ``(lineno, funcname, message, comments)``
-             tuples
-    :rtype: ``iterator``
+    Args:
+        fileobj (obj): the file-like object the messages should be extracted from.
+        keywords (list): a list of keywords (i.e. function names) that should
+              be recognized as translation functions.
+        comment_tags (list): a list of translator tags to search for and
+                  include in the results.
+        options (dict, optional) : a dictionary of additional options.
+    Returns:
+        iterator: an iterator over ``(lineno, funcname, message, comments)``
+             tuples.
+
     See also:
 
     * babel.messages.extract.extract()
