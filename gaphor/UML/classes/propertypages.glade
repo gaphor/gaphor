@@ -334,6 +334,24 @@ renderers and such.</property>
               </object>
             </child>
             <child>
+              <object class="GtkEventBox" id="attributes-info-icon">
+                <property name="visible">1</property>
+                <signal name="button-release-event" handler="attribute-info-clicked" swapped="no"/>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">1</property>
+                    <property name="margin-start">6</property>
+                    <property name="margin-end">6</property>
+                    <property name="yalign">0</property>
+                    <property name="icon-name">info-symbolic</property>
+                  </object>
+                </child>
+                <style>
+                  <class name="info"/>
+                </style>
+              </object>
+            </child>
+            <child>
               <object class="GtkSwitch" id="show-attributes">
                 <property name="visible">1</property>
                 <property name="can-focus">1</property>
@@ -341,7 +359,6 @@ renderers and such.</property>
               </object>
               <packing>
                 <property name="pack-type">end</property>
-                <property name="position">1</property>
               </packing>
             </child>
           </object>
@@ -355,14 +372,6 @@ renderers and such.</property>
                 <property name="height-request">112</property>
                 <property name="visible">1</property>
                 <property name="can-focus">1</property>
-                <property name="tooltip-text" translatable="yes">Add and edit class attributes according to UML syntax.
-Attribute syntax examples
-- attr
-- + attr: int
-- # /attr: int # a note
-
-Press Enter to edit item, Backspace/Delete to remove item.
-Use -/= to move items up or down.</property>
                 <property name="headers-clickable">0</property>
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
@@ -421,6 +430,29 @@ Use -/= to move items up or down.</property>
         <attributes>
           <attribute name="weight" value="bold"/>
         </attributes>
+      </object>
+    </child>
+  </object>
+  <object class="GtkPopover" id="attributes-info">
+    <property name="relative-to">attributes-info-icon</property>
+    <property name="position">left</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="visible">1</property>
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="label" translatable="yes">Add and edit class attributes according to UML syntax.
+
+  • &lt;tt&gt;attr&lt;/tt&gt;
+  • &lt;tt&gt;+ attr: int&lt;/tt&gt; (public with type)
+  • &lt;tt&gt;+ attr: int[0..1]&lt;/tt&gt; (public, type, and multiplicity)
+  • &lt;tt&gt;# /attr: int # a note&lt;/tt&gt; (protected, derived, with remark)
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit item, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove item.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+        <property name="use-markup">1</property>
       </object>
     </child>
   </object>

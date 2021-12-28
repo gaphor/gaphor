@@ -308,14 +308,17 @@ class AttributesPage(PropertyPageBase):
 
         builder = new_builder(
             "attributes-editor",
+            "attributes-info",
             signals={
                 "show-attributes-changed": (self._on_show_attributes_change,),
                 "attributes-name-edited": (on_text_cell_edited, self.model, 0),
                 "attributes-static-edited": (on_bool_cell_edited, self.model, 1),
                 "tree-view-destroy": (self.watcher.unsubscribe_all,),
+                "attribute-info-clicked": (self.on_attribute_info_clicked),
             },
         )
         page = builder.get_object("attributes-editor")
+        self.info = builder.get_object("attributes-info")
 
         show_attributes = builder.get_object("show-attributes")
         show_attributes.set_active(self.item.show_attributes)
@@ -360,6 +363,9 @@ class AttributesPage(PropertyPageBase):
     def _on_show_attributes_change(self, button, gparam):
         self.item.show_attributes = button.get_active()
         self.item.request_update()
+
+    def on_attribute_info_clicked(self, image, event):
+        self.info.show()
 
 
 @PropertyPages.register(DataTypeItem)
