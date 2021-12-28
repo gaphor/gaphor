@@ -27,7 +27,7 @@ a = Analysis(
     binaries=[],
     datas=[
         ("../gaphor/ui/layout.xml", "gaphor/ui"),
-        ("../gaphor/ui/layout.css", "gaphor/ui"),
+        ("../gaphor/ui/styling*.css", "gaphor/ui"),
         ("../gaphor/ui/*.png", "gaphor/ui"),
         (
             "../gaphor/ui/icons/hicolor/scalable/actions/*.svg",
