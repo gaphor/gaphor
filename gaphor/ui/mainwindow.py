@@ -216,10 +216,6 @@ class MainWindow(Service, ActionProvider):
         em.subscribe(self._on_modeling_language_selection_changed)
         em.subscribe(self.in_app_notifier.handle)
 
-    def open_welcome_page(self):
-        """Create a new tab with a textual welcome page, a sort of 101 for
-        Gaphor."""
-
     def set_title(self):
         """Sets the window title."""
         if not self.window:
