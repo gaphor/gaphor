@@ -30,10 +30,11 @@
                         <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <property name="margin-top">18</property>
+                        <property name="margin-bottom">12</property>
                         <child>
                           <object class="GtkLabel">
                             <property name="visible">1</property>
-                            <property name="label" translatable="yes">Recent files</property>
+                            <property name="label" translatable="yes">Recently opened models</property>
                             <property name="xalign">0</property>
                             <attributes>
                               <attribute name="weight" value="bold"/>
@@ -68,23 +69,55 @@
             </child>
             <!-- new stack -->
             <child>
-              <object class="GtkLabel">
+              <object class="GtkScrolledWindow">
                 <property name="visible">1</property>
-                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;Welcome to Gaphor&lt;/b&gt;&lt;/big&gt;
-
-It&apos;s time to create your first model
-or open an existing model.
-
-Happy modeling!
-
-• &lt;a href=&quot;https://gaphor.org&quot;&gt;Gaphor homepage&lt;/a&gt;
-• &lt;a href=&quot;https://github.com/gaphor&quot;&gt;GitHub&lt;/a&gt;
-
-</property>
-                <property name="use-markup">1</property>
+                <property name="hscrollbar-policy">never</property>
+                <child>
+                  <object class="GtkViewport">
+                    <property name="visible">1</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">1</property>
+                        <property name="halign">center</property>
+                        <property name="valign">start</property>
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">6</property>
+                        <property name="margin-top">18</property>
+                        <property name="margin-bottom">12</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">1</property>
+                            <property name="label" translatable="yes">Create a new model from a template</property>
+                            <property name="xalign">0</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                            </attributes>
+                            <style>
+                              <class name="dim-label"/>
+                            </style>
+                          </object>
+                          <packing>
+                            <property name="fill">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFlowBox" id="templates">
+                            <property name="visible">1</property>
+                            <property name="homogeneous">1</property>
+                            <property name="width-request">400</property>
+                            <property name="max_children_per_line">4</property>
+                          </object>
+                          <packing>
+                            <property name="fill">0</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
               <packing>
-                <property name="name">splash</property>
+                <property name="name">new-model</property>
               </packing>
             </child>
           </object>
@@ -101,6 +134,14 @@ Happy modeling!
                 <property name="homogeneous">1</property>
                 <child>
                   <object class="GtkButton">
+                    <property name="label" translatable="yes">Recent Model…</property>
+                    <property name="visible">1</property>
+                    <property name="receives-default">1</property>
+                    <property name="action-name">app.recent-files</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton">
                     <property name="label" translatable="yes">Create New Model…</property>
                     <property name="visible">1</property>
                     <property name="receives-default">1</property>
@@ -114,16 +155,10 @@ Happy modeling!
                     <property name="receives-default">1</property>
                     <property name="action-name">app.file-open</property>
                   </object>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
               </object>
             </child>
           </object>
-          <packing>
-            <property name="position">2</property>
-          </packing>
         </child>
       </object>
     </child>

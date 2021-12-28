@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkFlowBoxChild" id="model-template">
+    <property name="visible">1</property>
+    <property name="can-focus">1</property>
+    <child>
+      <object class="GtkBox">
+        <property name="border-width">12</property>
+        <property name="orientation">vertical</property>
+        <property name="expand">1</property>
+        <property name="spacing">6</property>
+        <property name="visible">1</property>
+        <child>
+          <object class="GtkImage" id="template-icon">
+            <property name="expand">1</property>
+            <property name="pixel-size">98</property>
+            <property name="visible">1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="template-name">
+            <property name="expand">1</property>
+            <property name="visible">1</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

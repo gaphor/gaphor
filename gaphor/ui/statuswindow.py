@@ -27,8 +27,7 @@ class StatusWindow:
         self.message = message
         self.parent = parent
         self.queue = queue
-
-        self.init_window()
+        self.window: Gtk.Window = None
 
         if display:
             self.display()
@@ -79,6 +78,11 @@ class StatusWindow:
         gobject idle handle is created.  Once the window is destroyed,
         this handler is removed.
         """
+        if not self.window:
+            self.init_window()
+
+        assert self.window
+
         if Gtk.get_major_version() == 3:
             self.window.show_all()
         else:
@@ -98,8 +102,9 @@ class StatusWindow:
 
         This will also remove the gobject handler.
         """
-
-        self.window.destroy()
+        if self.window:
+            self.window.destroy()
+            self.window = None
 
 
 def progress_idle_handler(progress_bar, queue):

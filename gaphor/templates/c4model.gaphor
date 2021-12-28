@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.7.1">
+<StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+<Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+<name>
+<val>1. Context diagrams</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+</Package>
+<Diagram id="58d6c536-66f8-11ec-b4c8-0456e5e540ed">
+<element>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</element>
+<name>
+<val>Context diagram</val>
+</name>
+</Diagram>
+<Package id="216f41c4-6700-11ec-8be0-0456e5e540ed">
+<name>
+<val>2. Container diagrams</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="415009f6-6700-11ec-8be0-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+</Package>
+<Diagram id="415009f6-6700-11ec-8be0-0456e5e540ed">
+<element>
+<ref refid="216f41c4-6700-11ec-8be0-0456e5e540ed"/>
+</element>
+<name>
+<val>Container diagram</val>
+</name>
+</Diagram>
+<Package id="5847dae4-6700-11ec-8be0-0456e5e540ed">
+<name>
+<val>4. Code diagrams</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="790e745e-6700-11ec-8be0-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+</Package>
+<Package id="5aaf0244-6700-11ec-8be0-0456e5e540ed">
+<name>
+<val>3. Component diagrams</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="72148684-6700-11ec-8be0-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+</Package>
+<Diagram id="72148684-6700-11ec-8be0-0456e5e540ed">
+<element>
+<ref refid="5aaf0244-6700-11ec-8be0-0456e5e540ed"/>
+</element>
+<name>
+<val>Component diagram</val>
+</name>
+</Diagram>
+<Diagram id="790e745e-6700-11ec-8be0-0456e5e540ed">
+<element>
+<ref refid="5847dae4-6700-11ec-8be0-0456e5e540ed"/>
+</element>
+<name>
+<val>Code diagram</val>
+</name>
+</Diagram>
+</gaphor>

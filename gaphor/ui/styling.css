@@ -35,9 +35,25 @@ diagramview {
   border-bottom: 1px solid alpha(@borders, 0.2);
   transition-property: background, opacity;
 }
+
 .greeter list row:last-child {
   border-bottom: none;
 }
+
 .greeter frame border {
   border-color: alpha(@borders, 0.6);
+}
+
+.greeter flowboxchild {
+  border-radius: 12px;
+  outline-offset: -3px;
+  -gtk-outline-radius: 9px;
+}
+
+.greeter flowboxchild:hover {
+  background-color: @theme_selected_bg_color;
+}
+
+.greeter flowboxchild:hover label {
+  color: @theme_selected_fg_color;
 }

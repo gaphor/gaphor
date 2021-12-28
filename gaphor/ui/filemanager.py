@@ -81,14 +81,16 @@ class FileManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self._on_session_shutdown_request)
         self.event_manager.unsubscribe(self._on_session_created)
 
-    def get_filename(self):
+    @property
+    def filename(self):
         """Return the current file name.
 
         This method is used by the filename property.
         """
         return self._filename
 
-    def set_filename(self, filename):
+    @filename.setter
+    def filename(self, filename):
         """Sets the current file name.
 
         This method is used by the filename property. Setting the
@@ -97,8 +99,6 @@ class FileManager(Service, ActionProvider):
 
         if filename != self._filename:
             self._filename = filename
-
-    filename = property(get_filename, set_filename)
 
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.
@@ -118,21 +118,31 @@ class FileManager(Service, ActionProvider):
             queue=queue,
         )
 
+        self._load(filename, ModelLoaded(self, filename), queue, status_window)
+
+    def load_template(self, template):
+        self._load(template, ModelLoaded(self))
+
+    def _load(self, filename, model_loaded_event, queue=None, status_window=None):
         # Use low prio, so screen updates do happen
         @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
         def async_loader():
             try:
                 for percentage in storage.load_generator(
-                    filename.encode("utf-8"),
+                    filename,
                     self.element_factory,
                     self.modeling_language,
                 ):
-                    queue.put(percentage)
+                    if queue:
+                        queue.put(percentage)
                     yield percentage
 
-                self.event_manager.handle(ModelLoaded(self, filename))
+                self.event_manager.handle(model_loaded_event)
             except Exception:
                 self.filename = None
+                if status_window:
+                    status_window.destroy()
+                log.exception(f"Unable to open model “{filename}”.", stack_info=True)
                 error_handler(
                     message=gettext("Unable to open model “{filename}”.").format(
                         filename=filename
@@ -145,7 +155,8 @@ class FileManager(Service, ActionProvider):
                 load_default_model(self.element_factory)
                 raise
             finally:
-                status_window.destroy()
+                if status_window:
+                    status_window.destroy()
 
         for _ in async_loader():
             pass
@@ -174,7 +185,7 @@ class FileManager(Service, ActionProvider):
         @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
         def async_saver():
             try:
-                with open(filename.encode("utf-8"), "w") as out:
+                with open(filename, "w") as out:
                     for percentage in storage.save_generator(
                         XMLWriter(out), self.element_factory
                     ):
@@ -240,6 +251,8 @@ class FileManager(Service, ActionProvider):
     def _on_session_created(self, event: SessionCreated) -> None:
         if event.filename:
             self.load(event.filename)
+        elif event.template:
+            self.load_template(event.template)
         else:
             load_default_model(self.element_factory)
 

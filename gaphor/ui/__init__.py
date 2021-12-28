@@ -1,7 +1,11 @@
 """This module contains user interface related code, such as the main screen
 and diagram windows."""
 
+import logging
 import os
+import sys
+from pathlib import Path
+from typing import Optional
 
 import gi
 
@@ -14,11 +18,6 @@ if os.getenv("GAPHOR_USE_GTK") != "NONE":
     gi.require_version("Gdk", gtk_version)
     gi.require_version("GtkSource", gtk_source_version)
 
-import importlib.resources
-import logging
-import sys
-from pathlib import Path
-from typing import Optional
 
 from gi.repository import Gdk, Gio, GLib, Gtk
 
@@ -30,28 +29,6 @@ from gaphor.ui.macosshim import macos_init
 
 APPLICATION_ID = "org.gaphor.Gaphor"
 HOME = str(Path.home())
-
-
-icon_theme = (
-    Gtk.IconTheme.get_default()
-    if Gtk.get_major_version() == 3
-    else Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
-)
-if sys.version_info >= (3, 9):
-    path: Path = importlib.resources.files("gaphor") / "ui" / "icons"  # type: ignore[assignment]
-    # FixMe: check is only needed for RtD.
-    if icon_theme:
-        if Gtk.get_major_version() == 3:
-            icon_theme.append_search_path(str(path))
-        else:
-            icon_theme.add_search_path(str(path))
-else:
-    with importlib.resources.path("gaphor.ui", "icons") as path:
-        if Gtk.get_major_version() == 3:
-            icon_theme.append_search_path(str(path))
-        else:
-            icon_theme.add_search_path(str(path))
-
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
 
@@ -131,7 +108,7 @@ def run(args):
     def app_activate(gtk_app):
         assert application
         if not application.has_sessions():
-            application.get_service("greeter").new()
+            application.get_service("greeter").open()
 
     def app_open(gtk_app, files, n_files, hint):
         # appfilemanager should take care of this:

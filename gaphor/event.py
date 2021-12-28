@@ -36,11 +36,18 @@ class ApplicationShutdown(ServiceEvent):
 class SessionCreated(ServiceEvent):
     """The session is emitting this event when it's ready to shut down."""
 
-    def __init__(self, applicaton: Service, session: Service, filename: Optional[str]):
+    def __init__(
+        self,
+        applicaton: Service,
+        session: Service,
+        filename: Optional[str],
+        template: Optional[str],
+    ):
         super().__init__(applicaton)
         self.application = applicaton
         self.session = session
         self.filename = filename
+        self.template = template
 
 
 class ActiveSessionChanged(ServiceEvent):
