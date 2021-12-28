@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-12-05 19:28+0100\n"
+"POT-Creation-Date: 2021-12-28 13:37+0100\n"
 "PO-Revision-Date: 2021-09-25 12:52+0000\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
 "Language: nl\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
-#: gaphor/C4Model/modelinglanguage.py:16 gaphor/C4Model/toolbox.py:54
-#: gaphor/ui/greeter.py:152
+#: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
+#: gaphor/ui/greeter.py:150
 msgid "C4 Model"
 msgstr "C4 Model"
 
@@ -30,56 +30,86 @@ msgstr "Beschrijving"
 msgid "Technology"
 msgstr "Technologie"
 
-#: gaphor/C4Model/toolbox.py:28
-#, fuzzy
+#: gaphor/C4Model/toolbox.py:30
 msgid "New Software System"
 msgstr "Nieuw Software Systeem"
 
-#: gaphor/C4Model/toolbox.py:35
+#: gaphor/C4Model/toolbox.py:37
 msgid "New Container"
 msgstr "Nieuwe Container"
 
-#: gaphor/C4Model/toolbox.py:42
+#: gaphor/C4Model/toolbox.py:44
 msgid "Database"
 msgstr "Database"
 
-#: gaphor/C4Model/toolbox.py:43
+#: gaphor/C4Model/toolbox.py:45
 msgid "New Database"
 msgstr "Nieuwe Database"
 
-#: gaphor/C4Model/toolbox.py:50
+#: gaphor/C4Model/toolbox.py:52
 msgid "New Component"
 msgstr "Nieuw Component"
 
-#: gaphor/C4Model/toolbox.py:58 gaphor/C4Model/toolbox.py:64
+#: gaphor/C4Model/toolbox.py:60 gaphor/C4Model/toolbox.py:66
 msgid "Person"
 msgstr "Persoon"
 
-#: gaphor/C4Model/toolbox.py:70
+#: gaphor/C4Model/toolbox.py:72
 msgid "Software System"
 msgstr "Software Systeem"
 
-#: gaphor/C4Model/toolbox.py:82
+#: gaphor/C4Model/toolbox.py:84
 msgid "Container"
 msgstr "Container"
 
-#: gaphor/C4Model/toolbox.py:94
+#: gaphor/C4Model/toolbox.py:96
 msgid "Container: Database"
 msgstr "Container: Database"
 
-#: gaphor/C4Model/toolbox.py:106 gaphor/UML/components/componentstoolbox.py:16
+#: gaphor/C4Model/toolbox.py:108 gaphor/UML/components/componentstoolbox.py:16
 msgid "Component"
 msgstr "Component"
 
-#: gaphor/C4Model/toolbox.py:118 gaphor/RAAML/fta/ftatoolbox.py:16
+#: gaphor/C4Model/toolbox.py:120 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:123
 #: gaphor/UML/classes/dependencypropertypages.py:16
 msgid "Dependency"
 msgstr "Afhankelijkheid"
 
-#: gaphor/RAAML/modelinglanguage.py:15
+#: gaphor/C4Model/toolbox.py:140
+msgid "New C4 Diagram"
+msgstr "Nieuw C4 Diagram"
+
+#: gaphor/C4Model/toolbox.py:141 gaphor/UML/toolbox.py:30
+msgid "New Class Diagram"
+msgstr "Nieuw Class Diagram"
+
+#: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:72
+#: gaphor/UML/toolbox.py:34
+msgid "New Activity Diagram"
+msgstr "Nieuw Activiteiten Diagram"
+
+#: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:73
+#: gaphor/UML/toolbox.py:35
+msgid "New Sequence Diagram"
+msgstr "Nieuw Sequence Diagram"
+
+#: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:74
+#: gaphor/UML/toolbox.py:37
+msgid "New State Machine Diagram"
+msgstr "Nieuw State Machine Diagram"
+
+#: gaphor/RAAML/modelinglanguage.py:17
 msgid "RAAML"
 msgstr "RAAML"
+
+#: gaphor/RAAML/toolbox.py:19
+msgid "New FTA Diagram"
+msgstr "Nieuw FTA Diagram"
+
+#: gaphor/RAAML/toolbox.py:20
+msgid "New STPA Diagram"
+msgstr "Nieuw STPA Diagram"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -248,7 +278,7 @@ msgstr "Unsafe Control Action"
 msgid "Relevant To"
 msgstr "Relevant voor"
 
-#: gaphor/SysML/modelinglanguage.py:15 gaphor/ui/greeter.py:154
+#: gaphor/SysML/modelinglanguage.py:17 gaphor/ui/greeter.py:152
 msgid "SysML"
 msgstr "SysML"
 
@@ -273,9 +303,8 @@ msgid "Show Parts"
 msgstr "Toon Onderdelen"
 
 #: gaphor/SysML/propertypages.glade:138 gaphor/SysML/propertypages.ui:92
-#, fuzzy
 msgid "Show References"
-msgstr "Instellingen"
+msgstr "Toon Referenties"
 
 #: gaphor/SysML/propertypages.glade:164 gaphor/SysML/propertypages.ui:107
 msgid "Show Values"
@@ -321,21 +350,41 @@ msgstr "Id"
 msgid "Text"
 msgstr "Tekst"
 
-#: gaphor/SysML/toolbox.py:23
+#: gaphor/SysML/toolbox.py:25
 msgid "Internal Blocks"
 msgstr "Interne Blokken"
 
-#: gaphor/SysML/toolbox.py:27
+#: gaphor/SysML/toolbox.py:29
 msgid "Connector"
 msgstr "Connector"
 
-#: gaphor/SysML/toolbox.py:34
+#: gaphor/SysML/toolbox.py:36
 msgid "Property"
 msgstr "Eigenschap"
 
-#: gaphor/SysML/toolbox.py:43
+#: gaphor/SysML/toolbox.py:45
 msgid "Proxy Port"
 msgstr "Proxy Poort"
+
+#: gaphor/SysML/toolbox.py:68
+msgid "New Block Definition Diagram"
+msgstr "Nieuw Blok Definitie Diagram"
+
+#: gaphor/SysML/toolbox.py:69
+msgid "New Internal Block Diagram"
+msgstr "Nieuw Intern Blok Diagram"
+
+#: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
+msgid "New Package Diagram"
+msgstr "Nieuw Package Diagram"
+
+#: gaphor/SysML/toolbox.py:71
+msgid "New Requirement Diagram"
+msgstr "Nieuw Eisen Diagram"
+
+#: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
+msgid "New Use Case Diagram"
+msgstr "Nieuw Use Case Diagram"
 
 #: gaphor/SysML/blocks/block.py:66
 msgid "ControlStructure"
@@ -465,7 +514,7 @@ msgstr "Verifiëren"
 msgid "Containment"
 msgstr "Bevat"
 
-#: gaphor/UML/modelinglanguage.py:14
+#: gaphor/UML/modelinglanguage.py:16
 msgid "UML"
 msgstr "UML"
 
@@ -473,7 +522,25 @@ msgstr "UML"
 msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
-msgstr "Ongebruikte elementen zijn uit model verwijderd: ze waren niet meer in gebruik"
+msgstr ""
+"Ongebruikte elementen zijn uit model verwijderd: ze waren niet meer in "
+"gebruik"
+
+#: gaphor/UML/toolbox.py:32
+msgid "New Component Diagram"
+msgstr "Nieuw Componenten Diagram"
+
+#: gaphor/UML/toolbox.py:33
+msgid "New Deployment Diagram"
+msgstr "Nieuw Deployment Diagram"
+
+#: gaphor/UML/toolbox.py:36
+msgid "New Communication Diagram"
+msgstr "Nieuw Communicatie Diagram"
+
+#: gaphor/UML/toolbox.py:39
+msgid "New Profile Diagram"
+msgstr "Nieuw Profiel Diagram"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -548,7 +615,6 @@ msgid "Accept event action"
 msgstr "Accept event action"
 
 #: gaphor/UML/actions/actionstoolbox.py:178
-#, fuzzy
 msgid "Accept event"
 msgstr "Accept event"
 
@@ -1129,36 +1195,36 @@ msgstr "Include"
 msgid "Extend"
 msgstr "Extend"
 
-#: gaphor/diagram/diagramtoolbox.py:56
+#: gaphor/diagram/diagramtoolbox.py:65
 msgid "General"
 msgstr "Algemeen"
 
-#: gaphor/diagram/diagramtoolbox.py:60
+#: gaphor/diagram/diagramtoolbox.py:69
 msgid "Pointer"
 msgstr "Aanwijzer"
 
-#: gaphor/diagram/diagramtoolbox.py:67
+#: gaphor/diagram/diagramtoolbox.py:76
 msgid "Magnet"
 msgstr "Magneet"
 
-#: gaphor/diagram/diagramtoolbox.py:74
+#: gaphor/diagram/diagramtoolbox.py:83
 msgid "Line"
 msgstr "Lijn"
 
-#: gaphor/diagram/diagramtoolbox.py:81
+#: gaphor/diagram/diagramtoolbox.py:90
 msgid "Box"
 msgstr "Rechthoek"
 
-#: gaphor/diagram/diagramtoolbox.py:89
+#: gaphor/diagram/diagramtoolbox.py:98
 msgid "Ellipse"
 msgstr "Ellips"
 
-#: gaphor/diagram/diagramtoolbox.py:97 gaphor/diagram/propertypages.glade:25
+#: gaphor/diagram/diagramtoolbox.py:106 gaphor/diagram/propertypages.glade:25
 #: gaphor/diagram/propertypages.ui:21
 msgid "Comment"
 msgstr "Commentaar"
 
-#: gaphor/diagram/diagramtoolbox.py:105
+#: gaphor/diagram/diagramtoolbox.py:114
 msgid "Comment line"
 msgstr "Commentaarlijn"
 
@@ -1307,7 +1373,7 @@ msgstr "Bestanden"
 msgid "New Window"
 msgstr "Nieuw Venster"
 
-#: gaphor/services/helpservice/shortcuts.ui:57 gaphor/ui/mainwindow.ui:40
+#: gaphor/services/helpservice/shortcuts.ui:57 gaphor/ui/mainwindow.ui:42
 msgid "Open"
 msgstr "Openen"
 
@@ -1338,7 +1404,7 @@ msgstr "Diagrammen"
 msgid "Edit"
 msgstr "Wijzigen"
 
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:185
+#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
 msgid "Show/Hide Editor"
 msgstr "Toon/Verberg Editor"
 
@@ -1386,8 +1452,8 @@ msgid "Actual Size"
 msgstr ""
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:55
-#: gaphor/ui/mainwindow.py:219 gaphor/ui/mainwindow.ui:27
-#: gaphor/ui/namespace.py:325
+#: gaphor/ui/mainwindow.py:242 gaphor/ui/mainwindow.ui:29
+#: gaphor/ui/namespace.py:326
 msgid "New model"
 msgstr "Nieuw model"
 
@@ -1477,7 +1543,7 @@ msgstr ""
 msgid "<None>"
 msgstr "<Niets>"
 
-#: gaphor/ui/diagrampage.py:352
+#: gaphor/ui/diagrampage.py:355
 msgid ""
 "Drag to diagram is (temporarily) limited to Classifiers, Packages, and "
 "Properties, not {type}."
@@ -1646,55 +1712,47 @@ msgstr "Als je afsluit zonder opslaan, verdwijnen uw wijzigingen "
 msgid "Close _without saving changes"
 msgstr "Afsluiten _zonder opslaan"
 
-#: gaphor/ui/greeter.glade:37
+#: gaphor/ui/greeter.glade:37 gaphor/ui/greeter.ui:31
 msgid "Recently opened models"
 msgstr "Recent geopende modellen"
 
-#: gaphor/ui/greeter.glade:90
+#: gaphor/ui/greeter.glade:90 gaphor/ui/greeter.ui:75
 msgid "Create a new model from a template"
 msgstr "Maak een nieuw model op basis van een template"
 
-#: gaphor/ui/greeter.glade:137
-#, fuzzy
+#: gaphor/ui/greeter.glade:137 gaphor/ui/greeter.ui:113
 msgid "Recent Model…"
 msgstr "Recente modellen…"
 
-#: gaphor/ui/greeter.glade:145 gaphor/ui/greeter.ui:90
-#, fuzzy
+#: gaphor/ui/greeter.glade:145 gaphor/ui/greeter.ui:120
 msgid "Create New Model…"
 msgstr "Maak Nieuw Model…"
 
-#: gaphor/ui/greeter.glade:153 gaphor/ui/greeter.ui:97
+#: gaphor/ui/greeter.glade:153 gaphor/ui/greeter.ui:127
 msgid "Open Existing Model…"
 msgstr "Open Bestaand Model…"
 
-#: gaphor/ui/greeter.glade:172 gaphor/ui/greeter.ui:112
-#, fuzzy
+#: gaphor/ui/greeter.glade:172 gaphor/ui/greeter.ui:142
 msgid "Open a Gaphor Model"
-msgstr "Open Gaphor model"
+msgstr "Open Gaphor Model"
 
-#: gaphor/ui/greeter.py:150
+#: gaphor/ui/greeter.py:148
 msgid "Generic"
 msgstr "Generiek"
 
-#: gaphor/ui/greeter.ui:31
-msgid "Recent files"
-msgstr "Recent geopende bestanden"
-
-#: gaphor/ui/mainwindow.glade:77
+#: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
 msgstr "Gaphor"
 
-#: gaphor/ui/mainwindow.glade:141
+#: gaphor/ui/mainwindow.glade:148
 msgid "Create New diagram"
 msgstr "Maak Nieuw diagram"
 
-#: gaphor/ui/mainwindow.glade:163
+#: gaphor/ui/mainwindow.glade:169
 msgid "Open Application Menu"
 msgstr "Applicatie Menu"
 
 #: gaphor/ui/mainwindow.py:44
-#, fuzzy
 msgid "Open a Model…"
 msgstr "Open een Model…"
 
@@ -1718,11 +1776,15 @@ msgstr "Gereedschap"
 msgid "Keyboard Shortcuts"
 msgstr "Sneltoetsen"
 
-#: gaphor/ui/mainwindow.py:221
+#: gaphor/ui/mainwindow.py:86
+msgid "New Generic Diagram"
+msgstr "Nieuw Generiek Diagram"
+
+#: gaphor/ui/mainwindow.py:244
 msgid "edited"
 msgstr "gewijzigd"
 
-#: gaphor/ui/mainwindow.py:270
+#: gaphor/ui/mainwindow.py:293
 msgid "Profile: {}"
 msgstr "Profiel: {}"
 
@@ -1758,7 +1820,7 @@ msgstr "{name} diagram"
 msgid "New diagram"
 msgstr "Nieuw diagram"
 
-#: gaphor/ui/namespace.py:323
+#: gaphor/ui/namespace.py:324
 msgid "{name} package"
 msgstr "Nieuw package"
 
