@@ -72,7 +72,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ragel \
     shared-mime-info \
     trang \
-    valac \
     xmlto \
     yelp-tools \
 `# Dependency missed by jhbuild sysdeps` \

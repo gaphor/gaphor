@@ -8,12 +8,13 @@ modules = [
     'hicolor-icon-theme'
 ]
 
-# Disable Vala API
+# Disable Vala
+skip = ['vala']
 module_mesonargs['gtksourceview-4'] = '-Dvapi=false'
+module_autogenargs['librsvg'] = '--enable-vala=no'
 
 module_mesonargs['gobject-introspection'] = '-Dcairo=enabled'
 
 # Minimize and optimize what is downloaded and built
 mesonargs = '--buildtype=release'
-autogenargs = '--disable-static --disable-gtk-doc'
 shallow_clone = True
