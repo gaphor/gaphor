@@ -1,6 +1,5 @@
 from gi.repository import Gdk, Gtk
 
-
 if Gtk.get_major_version() == 3:
 
     def flowbox_add_hover_support(flowbox):
