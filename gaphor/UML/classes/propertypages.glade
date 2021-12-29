@@ -91,14 +91,11 @@ renderers and such.</property>
                 <child>
                   <object class="GtkEventBox" id="head-info-icon">
                     <property name="visible">1</property>
-                    <property name="can_focus">1</property>
-                    <property name="receives_default">1</property>
+                    <property name="valign">start</property>
                     <signal name="button-release-event" handler="head-info-clicked" swapped="no"/>
                     <child>
                       <object class="GtkImage">
                         <property name="visible">1</property>
-                        <property name="margin-start">6</property>
-                        <property name="margin-end">6</property>
                         <property name="icon-name">info-symbolic</property>
                       </object>
                     </child>
@@ -237,14 +234,11 @@ renderers and such.</property>
                 <child>
                   <object class="GtkEventBox" id="tail-info-icon">
                     <property name="visible">1</property>
-                    <property name="can_focus">1</property>
-                    <property name="receives_default">1</property>
+                    <property name="valign">start</property>
                     <signal name="button-release-event" handler="tail-info-clicked" swapped="no"/>
                     <child>
                       <object class="GtkImage">
                         <property name="visible">1</property>
-                        <property name="margin-start">6</property>
-                        <property name="margin-end">6</property>
                         <property name="icon-name">info-symbolic</property>
                       </object>
                     </child>
@@ -403,12 +397,11 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <child>
               <object class="GtkEventBox" id="attributes-info-icon">
                 <property name="visible">1</property>
+                <property name="valign">start</property>
                 <signal name="button-release-event" handler="attributes-info-clicked" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">1</property>
-                    <property name="margin-start">6</property>
-                    <property name="margin-end">6</property>
                     <property name="icon-name">info-symbolic</property>
                   </object>
                 </child>
@@ -685,12 +678,11 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <child>
               <object class="GtkEventBox" id="operations-info-icon">
                 <property name="visible">1</property>
+                <property name="valign">start</property>
                 <signal name="button-release-event" handler="operations-info-clicked" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">1</property>
-                    <property name="margin-start">6</property>
-                    <property name="margin-end">6</property>
                     <property name="icon-name">info-symbolic</property>
                   </object>
                 </child>
@@ -838,12 +830,11 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <child>
               <object class="GtkEventBox" id="enumerations-info-icon">
                 <property name="visible">1</property>
+                <property name="valign">start</property>
                 <signal name="button-release-event" handler="enumerations-info-clicked" swapped="no"/>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">1</property>
-                    <property name="margin-start">6</property>
-                    <property name="margin-end">6</property>
                     <property name="icon-name">info-symbolic</property>
                   </object>
                 </child>
