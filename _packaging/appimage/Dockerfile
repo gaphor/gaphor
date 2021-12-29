@@ -2,6 +2,9 @@ FROM ubuntu:18.04 AS build
 LABEL maintainer="dan@yeaw.me"
 LABEL org.opencontainers.image.source=https://github.com/gaphor/gaphor
 
+# WORKDIR is not used to be compatible with GitHub Actions:
+# https://docs.github.com/en/actions/creating-actions/dockerfile-support-for-github-actions#workdir
+
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     PY_VERSION="3.10" \
@@ -9,8 +12,8 @@ ENV LANG=C.UTF-8 \
     DEBIAN_FRONTEND=noninteractive
 
 # Enable source lists for build-dep
-RUN sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list && \
-    sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list
+RUN sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list \
+ && sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list
 
 # Add repositories for Python deadsnakes and PowerShell
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -95,13 +98,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN wget -q https://www.freedesktop.org/software/fontconfig/release/fontconfig-$FONTCONFIG_VERSION.tar.gz \
  && apt-get update \
  && apt-get source fontconfig \
- && rm -rf /var/lib/apt/lists*
-WORKDIR /fontconfig-2.12.6
-RUN uupdate ../fontconfig-$FONTCONFIG_VERSION.tar.gz
-WORKDIR /fontconfig-$FONTCONFIG_VERSION
-RUN dpkg-buildpackage --unsigned-source --unsigned-changes --no-pre-clean
-WORKDIR /
-RUN dpkg -i *.deb \
+ && rm -rf /var/lib/apt/lists* \
+ && cd /fontconfig-2.12.6 \
+ && uupdate ../fontconfig-$FONTCONFIG_VERSION.tar.gz \
+ && cd /fontconfig-$FONTCONFIG_VERSION \
+ && dpkg-buildpackage --unsigned-source --unsigned-changes --no-pre-clean \
+ && cd / \
+ && dpkg -i *.deb \
  && rm *.deb \
  && rm -r /fontconfig-* \
 `# Make Deadsnakes Python the default python3` \
@@ -114,14 +117,13 @@ ENV CHECKOUT=/root/jhbuild/checkout \
     JHBUILD_RUN_AS_ROOT=""
 
 # Install jhbuild
-RUN mkdir -p $CHECKOUT
-WORKDIR $CHECKOUT
-RUN git clone --depth=1 https://gitlab.gnome.org/GNOME/jhbuild.git
-WORKDIR $CHECKOUT/jhbuild
-RUN ./autogen.sh --simple-install \
+RUN mkdir -p $CHECKOUT \
+ && cd $CHECKOUT \
+ && git clone --depth=1 https://gitlab.gnome.org/GNOME/jhbuild.git \
+ && cd $CHECKOUT/jhbuild \
+ && ./autogen.sh --simple-install \
  && make \
  && make install
-WORKDIR /
 
 # Configure jhbuild
 COPY jhbuildrc /root/.config/jhbuildrc
