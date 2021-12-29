@@ -2,6 +2,7 @@ from gaphor import UML
 from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.transaction import transactional
+from gaphor.ui.hoversupport import widget_add_hover_support
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.classespropertypages import new_builder
 from gaphor.UML.profiles.stereotypepropertypages import stereotype_model
@@ -91,20 +92,27 @@ class AssociationPropertyPage(PropertyPageBase):
 
         builder = new_builder(
             "association-editor",
+            "association-info",
             signals={
                 "show-direction-changed": (self._on_show_direction_change,),
                 "invert-direction-changed": (self._on_invert_direction_change,),
                 "head-name-changed": (self._on_end_name_change, head),
                 "head-navigation-changed": (self._on_end_navigability_change, head),
                 "head-aggregation-changed": (self._on_end_aggregation_change, head),
+                "head-info-clicked": (self._on_association_info_clicked,),
                 "tail-name-changed": (self._on_end_name_change, tail),
                 "tail-navigation-changed": (self._on_end_navigability_change, tail),
                 "tail-aggregation-changed": (self._on_end_aggregation_change, tail),
+                "tail-info-clicked": (self._on_association_info_clicked,),
                 "association-editor-destroy": (self.watcher.unsubscribe_all,),
                 **head_signal_handlers,
                 **tail_signal_handlers,
             },
         )
+
+        self.info = builder.get_object("association-info")
+        widget_add_hover_support(builder.get_object("head-info-icon"))
+        widget_add_hover_support(builder.get_object("tail-info-icon"))
 
         show_direction = builder.get_object("show-direction")
         show_direction.set_active(self.item.show_direction)
@@ -162,3 +170,7 @@ class AssociationPropertyPage(PropertyPageBase):
     @transactional
     def _on_end_aggregation_change(self, combo, end):
         end.subject.aggregation = self.AGGREGATION[combo.get_active()]
+
+    def _on_association_info_clicked(self, widget, event):
+        self.info.set_relative_to(widget)
+        self.info.show()
