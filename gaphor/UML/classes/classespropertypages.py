@@ -315,7 +315,7 @@ class AttributesPage(PropertyPageBase):
                 "attributes-name-edited": (on_text_cell_edited, self.model, 0),
                 "attributes-static-edited": (on_bool_cell_edited, self.model, 1),
                 "tree-view-destroy": (self.watcher.unsubscribe_all,),
-                "attribute-info-clicked": (self.on_attribute_info_clicked),
+                "attributes-info-clicked": (self.on_attributes_info_clicked),
             },
         )
         page = builder.get_object("attributes-editor")
@@ -366,7 +366,7 @@ class AttributesPage(PropertyPageBase):
         self.item.show_attributes = button.get_active()
         self.item.request_update()
 
-    def on_attribute_info_clicked(self, image, event):
+    def on_attributes_info_clicked(self, image, event):
         self.info.show()
 
 
@@ -391,14 +391,19 @@ class OperationsPage(PropertyPageBase):
 
         builder = new_builder(
             "operations-editor",
+            "operations-info",
             signals={
                 "show-operations-changed": (self._on_show_operations_change,),
                 "operations-name-edited": (on_text_cell_edited, self.model, 0),
                 "operations-abstract-edited": (on_bool_cell_edited, self.model, 1),
                 "operations-static-edited": (on_bool_cell_edited, self.model, 2),
                 "tree-view-destroy": (self.watcher.unsubscribe_all,),
+                "operations-info-clicked": (self.on_operations_info_clicked),
             },
         )
+
+        self.info = builder.get_object("operations-info")
+        widget_add_hover_support(builder.get_object("operations-info-icon"))
 
         show_operations = builder.get_object("show-operations")
         show_operations.set_active(self.item.show_operations)
@@ -444,3 +449,6 @@ class OperationsPage(PropertyPageBase):
     def _on_show_operations_change(self, button, gparam):
         self.item.show_operations = button.get_active()
         self.item.request_update()
+
+    def on_operations_info_clicked(self, image, event):
+        self.info.show()
