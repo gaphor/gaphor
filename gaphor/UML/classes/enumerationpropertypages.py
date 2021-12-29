@@ -2,13 +2,13 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core.format import format
+from gaphor.diagram.hoversupport import widget_add_hover_support
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
     on_text_cell_edited,
 )
 from gaphor.transaction import transactional
-from gaphor.ui.hoversupport import widget_add_hover_support
 from gaphor.UML.classes.classespropertypages import (
     AttributesPage,
     ClassEnumerationLiterals,

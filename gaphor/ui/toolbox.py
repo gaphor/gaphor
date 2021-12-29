@@ -11,6 +11,7 @@ from gi.repository import Gdk, Gtk
 
 from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
+from gaphor.diagram.hoversupport import flowbox_add_hover_support
 from gaphor.event import TransactionCommit
 from gaphor.services.modelinglanguage import (
     ModelingLanguageChanged,
@@ -19,7 +20,6 @@ from gaphor.services.modelinglanguage import (
 from gaphor.services.properties import Properties
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import CurrentDiagramChanged, ToolSelected
-from gaphor.ui.hoversupport import flowbox_add_hover_support
 
 log = logging.getLogger(__name__)
 
