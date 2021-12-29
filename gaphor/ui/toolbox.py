@@ -19,7 +19,7 @@ from gaphor.services.modelinglanguage import (
 from gaphor.services.properties import Properties
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import CurrentDiagramChanged, ToolSelected
-from gaphor.ui.flowbox import flowbox_add_hover_support
+from gaphor.ui.hoversupport import flowbox_add_hover_support
 
 log = logging.getLogger(__name__)
 

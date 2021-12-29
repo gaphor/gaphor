@@ -36,7 +36,7 @@ flowboxchild:hover {
   background-color: @theme_selected_bg_color;
 }
 
-flowboxchild:hover label {
+flowboxchild:hover * {
   color: @theme_selected_fg_color;
 }
 
@@ -57,4 +57,12 @@ flowboxchild:hover label {
   border-radius: 12px;
   outline-offset: -3px;
   -gtk-outline-radius: 9px;
+}
+
+.info {
+  border-radius: 50%;
+}
+.info:hover {
+  color: @theme_selected_fg_color;
+  background-color: @theme_selected_bg_color;
 }

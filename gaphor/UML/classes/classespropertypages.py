@@ -13,6 +13,7 @@ from gaphor.diagram.propertypages import (
     on_bool_cell_edited,
     on_text_cell_edited,
 )
+from gaphor.ui.hoversupport import widget_add_hover_support
 from gaphor.UML.classes.datatype import DataTypeItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
@@ -319,6 +320,7 @@ class AttributesPage(PropertyPageBase):
         )
         page = builder.get_object("attributes-editor")
         self.info = builder.get_object("attributes-info")
+        widget_add_hover_support(builder.get_object("attributes-info-icon"))
 
         show_attributes = builder.get_object("show-attributes")
         show_attributes.set_active(self.item.show_attributes)

@@ -11,7 +11,7 @@ from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui import APPLICATION_ID, HOME
-from gaphor.ui.flowbox import flowbox_add_hover_support
+from gaphor.ui.hoversupport import flowbox_add_hover_support
 
 
 class ModelTemplate(NamedTuple):
