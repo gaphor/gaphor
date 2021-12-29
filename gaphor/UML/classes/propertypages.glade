@@ -334,8 +334,6 @@ renderers and such.</property>
                     </child>
                   </object>
                 </child>
-                <child type="label_item">
-                </child>
               </object>
               <packing>
                 <property name="position">3</property>
@@ -482,12 +480,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                 </child>
               </object>
             </child>
-            <child type="label_item">
-            </child>
           </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
         </child>
       </object>
     </child>
@@ -782,8 +775,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                 </child>
               </object>
             </child>
-            <child type="label_item">
-            </child>
           </object>
           <packing>
             <property name="position">1</property>
@@ -910,8 +901,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                   </object>
                 </child>
               </object>
-            </child>
-            <child type="label_item">
             </child>
           </object>
           <packing>
