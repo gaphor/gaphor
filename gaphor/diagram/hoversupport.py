@@ -45,5 +45,8 @@ if Gtk.get_major_version() == 3:
 
 else:
 
+    def widget_add_hover_support(widget):
+        pass
+
     def flowbox_add_hover_support(flowbox):
         pass
