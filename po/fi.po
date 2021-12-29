@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-12-28 13:46+0100\n"
-"PO-Revision-Date: 2021-12-13 09:54+0000\n"
+"PO-Revision-Date: 2021-12-30 12:50+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10.1\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -79,46 +80,39 @@ msgid "Dependency"
 msgstr "Riippuvuus"
 
 #: gaphor/C4Model/toolbox.py:140
-#, fuzzy
 msgid "New C4 Diagram"
-msgstr "Uusi kaavio"
+msgstr "Uusi C4-kaavio"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/UML/toolbox.py:30
-#, fuzzy
 msgid "New Class Diagram"
-msgstr "Uusi kaavio"
+msgstr "Uusi luokkakaavio"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
-#, fuzzy
 msgid "New Activity Diagram"
-msgstr "Uusi kaavio"
+msgstr "Uusi aktiviteettikaavio"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
-#, fuzzy
 msgid "New Sequence Diagram"
-msgstr "Uusi kaavio"
+msgstr "Uusi sekvenssikaavio"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
-#, fuzzy
 msgid "New State Machine Diagram"
-msgstr "Luo uusi kaavio"
+msgstr "Luo tilakonekaavio"
 
 #: gaphor/RAAML/modelinglanguage.py:17
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
-#, fuzzy
 msgid "New FTA Diagram"
-msgstr "Uusi kaavio"
+msgstr "Uusi FTA-kaavio"
 
 #: gaphor/RAAML/toolbox.py:20
-#, fuzzy
 msgid "New STPA Diagram"
-msgstr "Uusi kaavio"
+msgstr "Uusi STPA-kaavio"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -315,13 +309,12 @@ msgid "Show Parts"
 msgstr "Näytä osat"
 
 #: gaphor/SysML/propertypages.glade:138 gaphor/SysML/propertypages.ui:92
-#, fuzzy
 msgid "Show References"
 msgstr "Näytä viittaukset"
 
 #: gaphor/SysML/propertypages.glade:164 gaphor/SysML/propertypages.ui:107
 msgid "Show Values"
-msgstr ""
+msgstr "Näytä arvot"
 
 #: gaphor/SysML/propertypages.glade:189 gaphor/SysML/propertypages.ui:122
 #, fuzzy
@@ -382,26 +375,23 @@ msgstr "Proxyn portti"
 
 #: gaphor/SysML/toolbox.py:68
 msgid "New Block Definition Diagram"
-msgstr ""
+msgstr "Uusi lohkomäärityskaavio"
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr ""
+msgstr "Uusi sisäisen lohkon kaavio"
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
-#, fuzzy
 msgid "New Package Diagram"
-msgstr "{name}-kaavio"
+msgstr "Uusi pakettikaavio"
 
 #: gaphor/SysML/toolbox.py:71
-#, fuzzy
 msgid "New Requirement Diagram"
-msgstr "vaatimus"
+msgstr "Uusi vaatimuskaavio"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
-#, fuzzy
 msgid "New Use Case Diagram"
-msgstr "{name}-kaavio"
+msgstr "Uusi käyttötapauskaavio"
 
 #: gaphor/SysML/blocks/block.py:66
 msgid "ControlStructure"
@@ -420,9 +410,8 @@ msgid "references"
 msgstr "viittaukset"
 
 #: gaphor/SysML/blocks/block.py:123
-#, fuzzy
 msgid "values"
-msgstr "Arvo"
+msgstr "arvot"
 
 #: gaphor/SysML/blocks/block.py:140
 msgid "unnamed"
@@ -541,25 +530,24 @@ msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
+"Poistettu käyttämättömät elementit mallista: ne eivät ole käytössä "
+"yhdessäkään kaaviossa."
 
 #: gaphor/UML/toolbox.py:32
-#, fuzzy
 msgid "New Component Diagram"
-msgstr "Uusi komponentti"
+msgstr "Uusi komponenttikaavio"
 
 #: gaphor/UML/toolbox.py:33
-#, fuzzy
 msgid "New Deployment Diagram"
-msgstr "{name}-kaavio"
+msgstr "Uusi käyttöönottokaavio"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr ""
+msgstr "Uusi kommunikaatiokaavio"
 
 #: gaphor/UML/toolbox.py:39
-#, fuzzy
 msgid "New Profile Diagram"
-msgstr "Uusi kaavio"
+msgstr "Uusi profiilikaavio"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -701,9 +689,8 @@ msgid "Join Specification"
 msgstr "Liitosspesifikaatio"
 
 #: gaphor/UML/actions/propertypages.glade:116
-#, fuzzy
 msgid "Swimlanes"
-msgstr "Uimarata"
+msgstr "Uimaradat"
 
 #: gaphor/UML/actions/propertypages.glade:129
 #: gaphor/UML/actions/propertypages.ui:126
@@ -740,7 +727,7 @@ msgstr "Nimi"
 
 #: gaphor/UML/actions/propertypages.glade:264
 msgid "Allocated Type"
-msgstr ""
+msgstr "Allokoitu tyyppi"
 
 #: gaphor/UML/actions/propertypages.glade:296
 #: gaphor/UML/actions/propertypages.ui:162
@@ -1494,82 +1481,68 @@ msgid "main"
 msgstr ""
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "1. Context diagrams"
-msgstr "{name}-kaavio"
+msgstr "1. Kontekstikaaviot"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Context diagram"
-msgstr "Uusi kaavio"
+msgstr "Kontekstikaavio"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "2. Container diagrams"
-msgstr "{name}-kaavio"
+msgstr "2. Säilökaaviot"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Container diagram"
-msgstr "{name}-kaavio"
+msgstr "Säilökaavio"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "4. Code diagrams"
-msgstr "Uusi kaavio"
+msgstr "4. Koodikaaviot"
 
 #: gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
-msgstr ""
+msgstr "3. Komponenttikaaviot"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Component diagram"
-msgstr "{name}-kaavio"
+msgstr "Komponenttikaavio"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Code diagram"
-msgstr "Uusi kaavio"
+msgstr "Koodikaavio"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "1. Concept Level"
-msgstr "Hyväksy tapahtuma -toiminto"
+msgstr "1. Konseptitaso"
 
 #: gaphor/templates/sysml.gaphor
 msgid "2. Logical Level"
-msgstr ""
+msgstr "2. Looginen taso"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "4. Implementation Level"
-msgstr "Implementaatio"
+msgstr "4. Toteutustaso"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "3. Technology Level"
-msgstr "Teknologia"
+msgstr "3. Teknologiataso"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical diagram"
-msgstr "Sulje kaavio"
+msgstr "Looginen kaavio"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Technology diagram"
-msgstr "Teknologia"
+msgstr "Teknologiakaavio"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Implementation diagram"
-msgstr "Implementaatio"
+msgstr "Toteutuskaavio"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept diagram"
-msgstr "Uusi kaavio"
+msgstr "Konseptikaavio"
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
@@ -1649,21 +1622,21 @@ msgid "Editors"
 msgstr "Editorit"
 
 #: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:218
-#, fuzzy
 msgid "Reset Tool Automatically"
 msgstr "Nollaa työkalu automaattisesti"
 
 #: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:236
 msgid "Remove Unused Elements"
-msgstr ""
+msgstr "Poista käyttämättömät elementit"
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
 #: gaphor/ui/elementeditor.ui:238 gaphor/ui/elementeditor.ui:245
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
+"Poista automaattisesti elementit, jotka eivät ole käytössä yhdessäkään "
+"kaaviossa."
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:253
-#, fuzzy
 msgid "Style Sheet"
 msgstr "Tyylisivu"
 
@@ -1780,36 +1753,32 @@ msgid "Close _without saving changes"
 msgstr "Sulje _tallentamatta muutoksia"
 
 #: gaphor/ui/greeter.glade:37 gaphor/ui/greeter.ui:31
-#, fuzzy
 msgid "Recently opened models"
-msgstr "Ei viimeksi avattuja malleja"
+msgstr "Viimeksi avatut mallit"
 
 #: gaphor/ui/greeter.glade:90 gaphor/ui/greeter.ui:75
 msgid "Create a new model from a template"
-msgstr ""
+msgstr "Luo uusi malli mallipohjasta"
 
 #: gaphor/ui/greeter.glade:137 gaphor/ui/greeter.ui:113
-#, fuzzy
 msgid "Recent Model…"
-msgstr "Uusi malli"
+msgstr "Äskettäinen malli…"
 
 #: gaphor/ui/greeter.glade:145 gaphor/ui/greeter.ui:120
-#, fuzzy
 msgid "Create New Model…"
-msgstr "Uusi malli"
+msgstr "Luo uusi malli…"
 
 #: gaphor/ui/greeter.glade:153 gaphor/ui/greeter.ui:127
 msgid "Open Existing Model…"
-msgstr ""
+msgstr "Avaa olemassa oleva malli…"
 
 #: gaphor/ui/greeter.glade:172 gaphor/ui/greeter.ui:142
-#, fuzzy
 msgid "Open a Gaphor Model"
 msgstr "Avaa Gaphor-malli"
 
 #: gaphor/ui/greeter.py:148
 msgid "Generic"
-msgstr ""
+msgstr "Yleinen"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
@@ -1824,14 +1793,12 @@ msgid "Open Application Menu"
 msgstr "Avaa sovellusvalikko"
 
 #: gaphor/ui/mainwindow.py:44
-#, fuzzy
 msgid "Open a Model…"
-msgstr "Avaa Gaphor-malli"
+msgstr "Avaa malli…"
 
 #: gaphor/ui/mainwindow.py:45
-#, fuzzy
 msgid "New Model…"
-msgstr "Uusi malli"
+msgstr "Uusi malli…"
 
 #: gaphor/ui/mainwindow.py:50
 msgid "Save As…"
@@ -1850,9 +1817,8 @@ msgid "Keyboard Shortcuts"
 msgstr "Pikanäppäimet"
 
 #: gaphor/ui/mainwindow.py:86
-#, fuzzy
 msgid "New Generic Diagram"
-msgstr "Uusi kaavio"
+msgstr "Uusi yleinen kaavio"
 
 #: gaphor/ui/mainwindow.py:244
 msgid "edited"
@@ -2101,4 +2067,3 @@ msgstr "&lt;Suhteet&gt;"
 #~ "\n"
 #~ "Tämä mahdollisesti poistaa kaaviotietueet,\n"
 #~ "joita ei näy muissa kaavioissa."
-
