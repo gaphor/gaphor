@@ -105,7 +105,7 @@ RUN wget -q https://www.freedesktop.org/software/fontconfig/release/fontconfig-$
  && dpkg-buildpackage --unsigned-source --unsigned-changes --no-pre-clean \
  && cd / \
  && dpkg -i *.deb \
- && rm *.deb \
+ && rm *.deb *.ddeb *.tar.xz *.tar.bz2 *.dsc *.buildinfo *.changes \
  && rm -r /fontconfig-* \
 `# Make Deadsnakes Python the default python3` \
  && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python$PY_VERSION 1
@@ -129,4 +129,9 @@ RUN mkdir -p $CHECKOUT \
 COPY jhbuildrc /root/.config/jhbuildrc
 
 # Build GTK, GtkSourceView, and gobject-introspection
-RUN jhbuild build
+RUN jhbuild build \
+ && rm -r /root/jhbuild/checkout \
+ && rm -r /root/.local \
+ && rm -r /root/.config \
+ && rm -r /root/.cache
+
