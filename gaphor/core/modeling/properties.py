@@ -214,7 +214,7 @@ class attribute(umlproperty, Generic[T]):
             and not isinstance(value, self.type)
             and not isinstance(value, str)
         ):
-            raise AttributeError(
+            raise TypeError(
                 "Value should be of type %s" % hasattr(self.type, "__name__")
                 and self.type.__name__
                 or self.type
@@ -265,7 +265,7 @@ class enumeration(umlproperty):
 
     def load(self, obj, value):
         if value not in self.values:
-            raise AttributeError("Value should be one of %s" % str(self.values))
+            raise TypeError("Value should be one of %s" % str(self.values))
         setattr(obj, self._name, value)
 
     def unlink(self, obj):
@@ -273,7 +273,7 @@ class enumeration(umlproperty):
 
     def _set(self, obj, value):
         if value not in self.values:
-            raise AttributeError("Value should be one of %s" % str(self.values))
+            raise TypeError("Value should be one of %s" % str(self.values))
         old = self._get(obj)
         if value == old:
             return
@@ -332,7 +332,7 @@ class association(umlproperty):
 
     def load(self, obj, value):
         if not isinstance(value, self.type):
-            raise AttributeError(
+            raise TypeError(
                 "Value for %s should be of type %s (%s)"
                 % (self.name, self.type.__name__, type(value).__name__)
             )
@@ -376,7 +376,7 @@ class association(umlproperty):
         This method is called from the opposite association property.
         """
         if obj is value:
-            raise AttributeError(f"Can not set {obj}.{self.name} to itself")
+            raise TypeError(f"Can not set {obj}.{self.name} to itself")
 
         if self.upper == 1:
             self._set_one(obj, value, from_opposite)
@@ -385,7 +385,7 @@ class association(umlproperty):
 
     def _set_one(self, obj, value, from_opposite=False) -> None:
         if not (isinstance(value, self.type) or (value is None)):
-            raise AttributeError(
+            raise TypeError(
                 f"Value should be of type {self.type.__name__}, got a {type(value)} instead"
             )
 
@@ -411,7 +411,7 @@ class association(umlproperty):
 
     def _set_many(self, obj, value, from_opposite=False, from_load=False) -> None:
         if not isinstance(value, self.type):
-            raise AttributeError(f"Value should be of type {self.type.__name__}")
+            raise TypeError(f"Value should be of type {self.type.__name__}")
 
         # Set the actual value
         c: collection = self._get_many(obj)
@@ -886,7 +886,7 @@ class redefine(umlproperty):
 
     def _set(self, obj, value, from_opposite=False):
         if not (isinstance(value, self.type) or (self.upper == 1 and value is None)):
-            raise AttributeError(
+            raise TypeError(
                 f"Value should be of type {self.type.__name__}, got a {type(value)} instead"
             )
         assert isinstance(self.original, association)

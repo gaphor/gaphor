@@ -98,7 +98,7 @@ def test_association_1_1():
 
     c = C()
 
-    with pytest.raises(AttributeError):
+    with pytest.raises(TypeError):
         a.one = c
 
     assert a.one is not c
@@ -349,7 +349,7 @@ def test_can_not_set_association_to_owner(element_factory, event_manager):
 
     a = element_factory.create(A)
 
-    with pytest.raises(AttributeError):
+    with pytest.raises(TypeError):
         a.a = a
 
 
@@ -366,8 +366,20 @@ def test_attributes():
     del a.a
     assert a.a == "default"
 
-    with pytest.raises(AttributeError):
+    with pytest.raises(TypeError):
         a.a = 1
+
+
+def test_attributes_loading_failure():
+    class A(Element):
+        a: attribute[int]
+
+    A.a = attribute("a", int, 0)
+
+    a = A()
+
+    with pytest.raises(TypeError):
+        A.a.load(a, "not-int")
 
 
 def test_enumerations():
@@ -382,7 +394,7 @@ def test_enumerations():
     a.a = "three"
     assert a.a == "three"
 
-    with pytest.raises(AttributeError):
+    with pytest.raises(TypeError):
         a.a = "four"
 
     assert a.a == "three"

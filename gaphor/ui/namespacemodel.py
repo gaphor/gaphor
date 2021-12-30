@@ -301,7 +301,7 @@ class NamespaceModel(Gtk.TreeStore):
                     element.package = dest_element
                 self.event_manager.handle(NamespaceModelElementDropped(self, element))
             return True
-        except AttributeError as e:
+        except (AttributeError, TypeError) as e:
             self.namespace_exception(dest_element, e, element)
         return False
 
