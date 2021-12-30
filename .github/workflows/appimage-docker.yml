@@ -1,4 +1,4 @@
-name: Docker
+name: AppImage Docker Image Build and Push
 on:
   schedule:
     - cron: '15 1 * * 1' # Weekly at 01:15 UTC
@@ -36,5 +36,5 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           python -m pip install poethepoet
-          poe docker-build
-          poe docker-push
+          poe appimage-docker-build
+          poe appimage-docker-push
