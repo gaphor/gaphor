@@ -6,8 +6,8 @@ on:
     branches:
       - 'docker/**'
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  python_version: '3.10'
+  registry: ghcr.io
 
 jobs:
   build-and-push-image:
@@ -21,10 +21,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2.3.1
+        with:
+          python-version: ${{ env.python_version }}
+      - name: Lint with Pre-commit
+        uses: pre-commit/action@v2.0.3
       - name: Log in to the Container registry
         uses: docker/login-action@v1.12.0
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ${{ env.registry }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Install Poetry
