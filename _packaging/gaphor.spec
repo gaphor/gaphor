@@ -43,6 +43,7 @@ a = Analysis(
         ),
         ("../LICENSE.txt", "gaphor"),
         ("../gaphor/locale/*", "gaphor/locale"),
+        ("../gaphor/templates/*.gaphor", "gaphor/templates"),
     ]
     + glade_files
     + ui_files
