@@ -37,6 +37,10 @@ a = Analysis(
             "../gaphor/ui/icons/hicolor/scalable/apps/*.svg",
             "gaphor/ui/icons/hicolor/scalable/apps",
         ),
+        (
+            "../gaphor/ui/icons/hicolor/scalable/emblems/*.svg",
+            "gaphor/ui/icons/hicolor/scalable/emblems",
+        ),
         ("../LICENSE.txt", "gaphor"),
         ("../gaphor/locale/*", "gaphor/locale"),
     ]
