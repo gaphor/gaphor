@@ -1,6 +1,10 @@
 @import url("styling.css");
 
+.greeter flowboxchild {
+  -gtk-outline-radius: 9px;
+}
+  
 .greeter flowboxchild:hover {
-    -gtk-icon-effect: highlight;
+  -gtk-icon-effect: highlight;
 }
   
