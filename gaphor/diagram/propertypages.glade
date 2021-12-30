@@ -45,8 +45,6 @@ renderers and such.</property>
             <property name="bottom-margin">6</property>
           </object>
         </child>
-        <child type="label_item">
-        </child>
       </object>
       <packing>
         <property name="position">1</property>
@@ -119,8 +117,6 @@ renderers and such.</property>
             <property name="top-margin">6</property>
             <property name="bottom-margin">6</property>
           </object>
-        </child>
-        <child type="label_item">
         </child>
       </object>
     </child>

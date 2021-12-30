@@ -294,8 +294,6 @@ renderers and such.</property>
             </child>
           </object>
         </child>
-        <child type="label_item">
-        </child>
       </object>
       <packing>
         <property name="position">3</property>

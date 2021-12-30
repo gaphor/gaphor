@@ -8,10 +8,10 @@ from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.babel import translate_model
 from gaphor.core import event_handler
+from gaphor.diagram.hoversupport import flowbox_add_hover_support
 from gaphor.event import ActiveSessionChanged, SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui import APPLICATION_ID, HOME
-from gaphor.ui.flowbox import flowbox_add_hover_support
 
 
 class ModelTemplate(NamedTuple):
