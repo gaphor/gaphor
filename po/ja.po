@@ -1912,7 +1912,7 @@ msgid "{name} package"
 msgstr "新パッケージ(_P)"
 
 #: gaphor/ui/namespacemodel.py:312
-msgid "A {} can't be part of a {}."
+msgid "A {} can’t be part of a {}."
 msgstr "{} は {} の一部ではない。"
 
 #: gaphor/ui/namespaceview.py:141

@@ -1899,7 +1899,7 @@ msgid "{name} package"
 msgstr "{name}-pakkaus"
 
 #: gaphor/ui/namespacemodel.py:312
-msgid "A {} can't be part of a {}."
+msgid "A {} can’t be part of a {}."
 msgstr "{} ei voi olla osana {}."
 
 #: gaphor/ui/namespaceview.py:141

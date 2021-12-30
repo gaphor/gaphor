@@ -122,7 +122,7 @@ of CSS. Below you'll find a summary of all CSS features supported by Gaphor.
 
 Gaphor supports a subset of CSS properties and some Gaphor specific properties.
 The style sheet interpreter is relatively straight forward. All
-widths, heights, and sizes are measured in pixels. You can't use complex style
+widths, heights, and sizes are measured in pixels. You can’t use complex style
 declarations, like the `font` property in HTML/CSS which can contain font
 family, size, weight.
 

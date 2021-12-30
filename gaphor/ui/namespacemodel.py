@@ -309,7 +309,7 @@ class NamespaceModel(Gtk.TreeStore):
         log.info(f"Unable to drop data {e}")
         self.event_manager.handle(
             Notification(
-                gettext("A {} can't be part of a {}.").format(
+                gettext("A {} can’t be part of a {}.").format(
                     type(element).__name__, type(dest_element).__name__
                 )
             )

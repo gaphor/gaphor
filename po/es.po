@@ -1945,7 +1945,7 @@ msgid "{name} package"
 msgstr "Paquete {name}"
 
 #: gaphor/ui/namespacemodel.py:312
-msgid "A {} can't be part of a {}."
+msgid "A {} can’t be part of a {}."
 msgstr "Un {} no puede ser parte de un {}."
 
 #: gaphor/ui/namespaceview.py:141
