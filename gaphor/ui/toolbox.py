@@ -257,8 +257,7 @@ def create_toolbox_button(
 if Gtk.get_major_version() == 3:
 
     def iter_children(widget):
-        for child in widget.get_children():
-            yield child
+        yield from widget.get_children()
 
     def _flowbox_drag_begin(flowbox: Gtk.FlowBox, context: Gdk.DragContext) -> None:
         event = Gtk.get_current_event()
