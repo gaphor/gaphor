@@ -60,7 +60,8 @@ flowboxchild:hover * {
 }
 
 .info {
-  border-radius: 50%;
+  border-radius: 4px;
+  font-size: small;
 }
 .info:hover {
   color: @theme_selected_fg_color;
