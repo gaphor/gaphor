@@ -170,12 +170,12 @@ class Toolbox(UIComponent):
 
     def flowboxes(self):
         if self._toolbox:
-            for expander in self._toolbox.get_children():
+            for expander in iter_children(self._toolbox):
                 yield expander.get_child()
 
     def select_tool(self, tool_name: str) -> None:
         for flowbox in self.flowboxes():
-            for child in flowbox.get_children():
+            for child in iter_children(flowbox):
                 if child.action_name == tool_name:
                     flowbox.select_child(child)
                     for fb in self.flowboxes():
@@ -210,7 +210,7 @@ class Toolbox(UIComponent):
         self._current_diagram_type = event.diagram and event.diagram.diagramType or ""
 
         expanded = self.expanded_sections()
-        for index, expander in enumerate(self._toolbox.get_children()):
+        for index, expander in enumerate(iter_children(self._toolbox)):
             expander.set_property("expanded", expanded[index])
 
     def _on_tool_activated(self, flowbox, child):
@@ -256,6 +256,9 @@ def create_toolbox_button(
 
 if Gtk.get_major_version() == 3:
 
+    def iter_children(widget):
+        yield from widget.get_children()
+
     def _flowbox_drag_begin(flowbox: Gtk.FlowBox, context: Gdk.DragContext) -> None:
         event = Gtk.get_current_event()
         assert event
@@ -283,6 +286,12 @@ if Gtk.get_major_version() == 3:
 
 else:
 
+    def iter_children(widget):
+        child = widget.get_first_child()
+        while child:
+            yield child
+            child = child.get_next_sibling()
+
     def _flowbox_drag_prepare(source: Gtk.DragSource, x: int, y: int):
         child = source.get_widget().get_child_at_pos(x, y)
 
@@ -298,7 +307,7 @@ else:
         source.set_icon(theme_icon, 0, 0)
 
         v = GObject.Value(GObject.TYPE_STRING)
-        v.set_string(child, child.action_name)
+        v.set_string(child.action_name)
         return Gdk.ContentProvider.new_for_value(v)
 
 

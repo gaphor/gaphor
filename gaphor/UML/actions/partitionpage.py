@@ -37,9 +37,15 @@ class PartitionPropertyPage(PropertyPageBase):
 
         self.partitions = builder.get_object("partitions")
         for partition in self.item.partition:
-            self.partitions.pack_start(
-                self.construct_partition(partition), expand=False, fill=False, padding=0
-            )
+            if Gtk.get_major_version() == 3:
+                self.partitions.pack_start(
+                    self.construct_partition(partition),
+                    expand=False,
+                    fill=False,
+                    padding=0,
+                )
+            else:
+                self.partitions.append(self.construct_partition(partition))
 
         return builder.get_object("partition-editor")
 
@@ -108,10 +114,15 @@ class PartitionPropertyPage(PropertyPageBase):
             partition.activity = self.item.subject.activity
             self.item.partition.append(partition)
 
-            self.partitions.pack_start(
-                self.construct_partition(partition), expand=False, fill=False, padding=0
-            )
-
+            if Gtk.get_major_version() == 3:
+                self.partitions.pack_start(
+                    self.construct_partition(partition),
+                    expand=False,
+                    fill=False,
+                    padding=0,
+                )
+            else:
+                self.partitions.append(self.construct_partition(partition))
         while num_partitions < len(self.item.partition):
             partition = self.item.partition[-1]
             partition.unlink()

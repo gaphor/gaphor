@@ -7,7 +7,7 @@
   </object>
   <object class="GtkPopoverMenu" id="select-modeling-language">
   </object>
-  <object class="GtkPopover" id="diagram-types">
+  <object class="GtkPopoverMenu" id="diagram-types">
   </object>
   <object class="GtkApplicationWindow" id="main-window">
     <child type="titlebar">
