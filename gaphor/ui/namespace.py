@@ -316,9 +316,7 @@ class Namespace(UIComponent, ActionProvider):
             diagram = self.element_factory.create(Diagram)
             if isinstance(element, UML.NamedElement):
                 diagram.element = element
-                diagram.name = gettext("{name} diagram").format(name=element.name)
-            else:
-                diagram.name = gettext("New diagram")
+            diagram.name = diagram_name_for_type(self.modeling_language, diagram_type)
             diagram.diagramType = diagram_type
         self.select_element(diagram)
         self.event_manager.handle(DiagramOpened(diagram))
@@ -345,3 +343,10 @@ class Namespace(UIComponent, ActionProvider):
         if element:
             with Transaction(self.event_manager):
                 element.unlink()
+
+
+def diagram_name_for_type(modeling_language, diagram_type):
+    for id, name, _ in modeling_language.diagram_types:
+        if id == diagram_type:
+            return name
+    return gettext("New diagram")
