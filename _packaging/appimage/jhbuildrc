@@ -1,0 +1,21 @@
+modules = [
+    'pycairo',
+    'pygobject',
+    'gtk+-3',
+    'gtksourceview-4',
+    'gobject-introspection',
+    'adwaita-icon-theme',
+    'hicolor-icon-theme',
+    'libcanberra-gtk3'
+]
+
+# Disable Vala
+skip = ['vala']
+module_mesonargs['gtksourceview-4'] = '-Dvapi=false'
+module_autogenargs['librsvg'] = '--enable-vala=no'
+
+module_mesonargs['gobject-introspection'] = '-Dcairo=enabled'
+
+# Minimize and optimize what is downloaded and built
+mesonargs = '--buildtype=release'
+shallow_clone = True

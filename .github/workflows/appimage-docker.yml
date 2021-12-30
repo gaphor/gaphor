@@ -1,0 +1,40 @@
+name: AppImage Docker Image Build and Push
+on:
+  schedule:
+    - cron: '15 1 * * 1' # Weekly at 01:15 UTC
+  push:
+    branches:
+      - 'docker/**'
+env:
+  python_version: '3.10'
+  registry: ghcr.io
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2.3.1
+        with:
+          python-version: ${{ env.python_version }}
+      - name: Log in to the Container registry
+        uses: docker/login-action@v1.12.0
+        with:
+          registry: ${{ env.registry }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m pip install poethepoet
+          poe appimage-docker-build
+          poe appimage-docker-push

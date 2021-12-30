@@ -30,34 +30,24 @@ jobs:
   linux:
     needs: lint
     runs-on: ubuntu-20.04
+    container:
+      image: ghcr.io/gaphor/gaphor-appimage
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v2.4.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: Install Linux Dependencies
-        uses: ./.github/actions/linux_dependencies
-      - name: Set up Python
-        uses: actions/setup-python@v2.3.1
-        with:
-          python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
         uses: actions/cache@v2.1.7
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-container
       - name: Install Dependencies and Test
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
         with:
           xvfb_command: 'xvfb-run'
-      - name: Upload Code Coverage to Code Climate
-        uses: paambaati/codeclimate-action@v3.0.0
-        env:
-          CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
-        with:
-          coverageCommand: poetry run coverage xml
       - name: Install Build Dependencies
         run: poetry install --no-dev --extras poethepoet
       - name: Create Source Dist and Wheel
@@ -95,7 +85,7 @@ jobs:
   macos:
     needs: lint
     runs-on: macos-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
       LDFLAGS: -L/usr/local/opt/python@3.10/lib
