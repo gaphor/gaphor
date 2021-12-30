@@ -415,6 +415,54 @@ def test_derived():
     assert a.a == ["a", "b", "c"]
 
 
+def test_derived_single_properties():
+    class A(Element):
+        pass
+
+    class E(Element):
+        a: relation_one[A]
+        u: relation_one[A]
+
+        def handle(self, event):
+            if event.property is E.u:
+                self.notified = True
+
+    E.a = association("a", A, upper=1)
+    E.u = derived("u", A, 0, 1, lambda self: [self.a], E.a)
+
+    e = E()
+    e.a = A()
+
+    assert e.a is e.u
+    assert e.notified
+
+
+def test_derived_multi_properties():
+    class A(Element):
+        pass
+
+    class E(Element):
+        a: relation_one[A]
+        b: relation_many[A]
+        u: relation_many[A]
+
+        def handle(self, event):
+            if event.property is E.u:
+                self.notified = True
+
+    E.a = association("a", A, upper=1)
+    E.b = association("b", A)
+    E.u = derived("u", A, 0, "*", lambda self: {self.a, *self.b}, E.a, E.b)
+
+    e = E()
+    e.a = A()
+    e.b = A()
+
+    assert e.a in e.u
+    assert e.b[0] in e.u
+    assert e.notified
+
+
 def test_derivedunion():
     class A(Element):
         a: relation_many[A]
@@ -494,6 +542,27 @@ def test_derivedunion_notify_for_multiple_derived_properties():
     e.a = A()
 
     assert e.notified is True
+
+
+def test_derivedunion_notify_for_single_and_multi_derived_properties():
+    class A(Element):
+        pass
+
+    class E(Element):
+        a: relation_one[A]
+        b: relation_many[A]
+        u: relation_many[A]
+
+    E.a = association("a", A, upper=1)
+    E.b = association("b", A)
+    E.u = derivedunion("u", A, 0, "*", E.a, E.b)
+
+    e = E()
+    e.a = A()
+    e.b = A()
+
+    assert e.a in e.u
+    assert e.b[0] in e.u
 
 
 def test_derivedunion_listmixins():

@@ -683,7 +683,6 @@ class derived(umlproperty, Generic[T]):
             if value not in derived union and
         """
         if event.property not in self.subsets:
-
             return
         if not isinstance(event, AssociationUpdated):
             return
@@ -695,7 +694,7 @@ class derived(umlproperty, Generic[T]):
             # assert isinstance(
             #     event, AssociationSet
             # ), f"Can only handle [0..1] set-events, not {event} for {event.element}"
-            old_value = self._get(event.element)
+            old_value = hasattr(event.element, self._name) and self._get(event.element)
             # Make sure unions are created again
             self.version += 1
             new_value = self._get(event.element)
