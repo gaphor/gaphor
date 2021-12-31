@@ -16,6 +16,7 @@ from gaphor import UML
 from gaphor.abc import ActionProvider, ModelingLanguage
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.diagram.deletable import deletable
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
@@ -218,18 +219,7 @@ class Namespace(UIComponent, ActionProvider):
                 isinstance(element, UML.Package)
             )
             action_group.lookup_action("delete").set_enabled(
-                isinstance(
-                    element,
-                    (
-                        Diagram,
-                        UML.Package,
-                        UML.Interaction,
-                        UML.StateMachine,
-                        UML.Region,
-                        UML.Activity,
-                    ),
-                )
-                and not element.presentation
+                element and deletable(element)
             )
             action_group.lookup_action("rename").set_enabled(
                 isinstance(element, (Diagram, UML.NamedElement))
