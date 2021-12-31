@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-28 13:46+0100\n"
+"POT-Creation-Date: 2021-12-31 17:55-0500\n"
 "PO-Revision-Date: 2021-09-27 02:39+0000\n"
 "Last-Translator: JonnathanRiquelmo <jonnathan.riquelmo@gmail.com>\n"
 "Language: pt_BR\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
-#: gaphor/ui/greeter.py:150
+#: gaphor/ui/greeter.py:26
 msgid "C4 Model"
 msgstr "Modelo C4"
 
@@ -24,7 +24,7 @@ msgstr "Modelo C4"
 msgid "Description"
 msgstr "Descrição"
 
-#: gaphor/C4Model/propertypages.glade:77 gaphor/C4Model/propertypages.ui:55
+#: gaphor/C4Model/propertypages.glade:75 gaphor/C4Model/propertypages.ui:55
 msgid "Technology"
 msgstr "Tecnologia"
 
@@ -294,7 +294,7 @@ msgstr ""
 msgid "Relevant To"
 msgstr "Relevante para"
 
-#: gaphor/SysML/modelinglanguage.py:17 gaphor/ui/greeter.py:152
+#: gaphor/SysML/modelinglanguage.py:17 gaphor/ui/greeter.py:27
 #, fuzzy
 msgid "SysML"
 msgstr "SysML"
@@ -309,7 +309,7 @@ msgid "Item Property"
 msgstr "Propriedades"
 
 #: gaphor/SysML/propertypages.glade:74 gaphor/SysML/propertypages.ui:52
-#: gaphor/UML/classes/propertypages.glade:49
+#: gaphor/UML/classes/propertypages.glade:48
 #: gaphor/UML/classes/propertypages.ui:36
 #: gaphor/UML/components/propertypages.glade:107
 #: gaphor/UML/components/propertypages.ui:73
@@ -340,24 +340,24 @@ msgid "Aggregation"
 msgstr "Partição"
 
 #: gaphor/SysML/propertypages.glade:218 gaphor/SysML/propertypages.ui:146
-#: gaphor/UML/classes/propertypages.glade:110
-#: gaphor/UML/classes/propertypages.glade:233
+#: gaphor/UML/classes/propertypages.glade:119
+#: gaphor/UML/classes/propertypages.glade:246
 #: gaphor/UML/classes/propertypages.ui:82
 #: gaphor/UML/classes/propertypages.ui:179
 msgid "No aggregation"
 msgstr ""
 
 #: gaphor/SysML/propertypages.glade:219 gaphor/SysML/propertypages.ui:147
-#: gaphor/UML/classes/propertypages.glade:111
-#: gaphor/UML/classes/propertypages.glade:234
+#: gaphor/UML/classes/propertypages.glade:120
+#: gaphor/UML/classes/propertypages.glade:247
 #: gaphor/UML/classes/propertypages.ui:83
 #: gaphor/UML/classes/propertypages.ui:180
 msgid "Shared"
 msgstr ""
 
 #: gaphor/SysML/propertypages.glade:220 gaphor/SysML/propertypages.ui:148
-#: gaphor/UML/classes/propertypages.glade:112
-#: gaphor/UML/classes/propertypages.glade:235
+#: gaphor/UML/classes/propertypages.glade:121
+#: gaphor/UML/classes/propertypages.glade:248
 #: gaphor/UML/classes/propertypages.ui:84
 #: gaphor/UML/classes/propertypages.ui:181
 msgid "Composite"
@@ -746,7 +746,7 @@ msgid "First In First Out (FIFO)"
 msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:247
-#: gaphor/UML/classes/propertypages.glade:552
+#: gaphor/UML/classes/propertypages.glade:609
 #: gaphor/UML/classes/propertypages.ui:423
 #: gaphor/UML/profiles/propertypages.glade:25
 #: gaphor/UML/profiles/propertypages.ui:21
@@ -768,14 +768,14 @@ msgstr "Guarda"
 msgid "Partition Names"
 msgstr "Nomes de Partição"
 
-#: gaphor/UML/classes/classespropertypages.py:325
-#: gaphor/UML/classes/classespropertypages.py:401
+#: gaphor/UML/classes/classespropertypages.py:330
+#: gaphor/UML/classes/classespropertypages.py:414
 #, fuzzy
 msgid "Static"
 msgstr "Automático"
 
-#: gaphor/UML/classes/classespropertypages.py:401
-#: gaphor/UML/classes/propertypages.glade:438
+#: gaphor/UML/classes/classespropertypages.py:414
+#: gaphor/UML/classes/propertypages.glade:495
 #: gaphor/UML/classes/propertypages.ui:344
 #, fuzzy
 msgid "Abstract"
@@ -870,8 +870,176 @@ msgstr "Perfil"
 msgid "Show Direction"
 msgstr "Exibir Direção"
 
-#: gaphor/UML/classes/propertypages.glade:88
-#: gaphor/UML/classes/propertypages.glade:211
+#: gaphor/UML/classes/propertypages.glade:94
+#: gaphor/UML/classes/propertypages.glade:221
+#: gaphor/UML/classes/propertypages.glade:441
+#: gaphor/UML/classes/propertypages.glade:739
+#: gaphor/UML/classes/propertypages.glade:865
+msgid "🛈 Help"
+msgstr ""
+
+#: gaphor/UML/classes/propertypages.glade:107
+#: gaphor/UML/classes/propertypages.glade:234
+#: gaphor/UML/classes/propertypages.ui:72
+#: gaphor/UML/classes/propertypages.ui:169
+msgid "Unknown navigation"
+msgstr "Navegação desconhecida"
+
+#: gaphor/UML/classes/propertypages.glade:108
+#: gaphor/UML/classes/propertypages.glade:235
+#: gaphor/UML/classes/propertypages.ui:73
+#: gaphor/UML/classes/propertypages.ui:170
+msgid "Not navigable"
+msgstr "Não navegável"
+
+#: gaphor/UML/classes/propertypages.glade:109
+#: gaphor/UML/classes/propertypages.glade:236
+#: gaphor/UML/classes/propertypages.ui:74
+#: gaphor/UML/classes/propertypages.ui:171
+msgid "Navigable"
+msgstr "Navegável"
+
+#: gaphor/UML/classes/propertypages.glade:140
+#: gaphor/UML/classes/propertypages.glade:267
+#: gaphor/UML/classes/propertypages.glade:397
+#: gaphor/UML/classes/propertypages.glade:454
+#: gaphor/UML/classes/propertypages.ui:98
+#: gaphor/UML/classes/propertypages.ui:195
+#: gaphor/UML/classes/propertypages.ui:292
+#: gaphor/UML/classes/propertypages.ui:329
+#: gaphor/UML/profiles/propertypages.glade:100
+#: gaphor/UML/profiles/propertypages.ui:74
+msgid "Attributes"
+msgstr "Atributos"
+
+#: gaphor/UML/classes/propertypages.glade:160
+#: gaphor/UML/classes/propertypages.glade:287
+#: gaphor/UML/classes/propertypages.ui:118
+#: gaphor/UML/classes/propertypages.ui:215
+#: gaphor/UML/profiles/propertypages.glade:120
+#: gaphor/UML/profiles/propertypages.ui:94
+msgid "Value"
+msgstr "Valor"
+
+#: gaphor/UML/classes/propertypages.glade:181
+#: gaphor/UML/classes/propertypages.ui:138
+msgid "Head:"
+msgstr ""
+
+#: gaphor/UML/classes/propertypages.glade:309
+#: gaphor/UML/classes/propertypages.ui:236
+msgid "Tail:"
+msgstr ""
+
+#: gaphor/UML/classes/propertypages.glade:339
+msgid ""
+"Add and edit association ends according to UML syntax.\n"
+"\n"
+"  • <tt>+ name</tt>\n"
+"  • <tt>+ name[1]</tt>\n"
+"  • <tt>- name[1..2]</tt>\n"
+"  • <tt>1..2</tt>\n"
+"  • <tt>- [1..2]</tt>\n"
+"\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
+"items.\n"
+"Use <b>-</b>/<b>=</b> to move items up or down."
+msgstr ""
+
+#: gaphor/UML/classes/propertypages.glade:361
+#: gaphor/UML/classes/propertypages.ui:258
+msgid "Show Attributes"
+msgstr "Exibir Atributos"
+
+#: gaphor/UML/classes/propertypages.glade:415
+#: gaphor/UML/classes/propertypages.glade:713
+#: gaphor/UML/classes/propertypages.ui:310
+#: gaphor/UML/classes/propertypages.ui:514
+msgid "S"
+msgstr "S"
+
+#: gaphor/UML/classes/propertypages.glade:479
+msgid ""
+"Add and edit class attributes according to UML syntax.\n"
+"\n"
+"  • <tt>attr</tt> (name, defaults to public visibility)\n"
+"  • <tt>+ attr: int</tt> (public with type)\n"
+"  • <tt>+ attr: int[0..1]</tt> (public, type, and multiplicity)\n"
+"  • <tt># /attr: int # a note</tt> (protected, derived, with remark)\n"
+"\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
+"items.\n"
+"Use <b>-</b>/<b>=</b> to move items up or down."
+msgstr ""
+
+#: gaphor/UML/classes/propertypages.glade:521
+#: gaphor/UML/classes/propertypages.ui:362
+msgid "Dependency type"
+msgstr "Tipo de dependência"
+
+#: gaphor/UML/classes/propertypages.glade:534
+#: gaphor/UML/classes/propertypages.ui:373
+msgid "Automatic"
+msgstr "Automático"
+
+#: gaphor/UML/classes/propertypages.glade:581
+#: gaphor/UML/classes/propertypages.ui:404
+msgid "Folded"
+msgstr "Dobrado"
+
+#: gaphor/UML/classes/propertypages.glade:646
+#: gaphor/UML/classes/propertypages.ui:450
+msgid "Show Operations"
+msgstr "Exibir Operações"
+
+#: gaphor/UML/classes/propertypages.glade:682
+#: gaphor/UML/classes/propertypages.glade:752
+#: gaphor/UML/classes/propertypages.ui:483
+#: gaphor/UML/classes/propertypages.ui:533
+msgid "Operations"
+msgstr "Operações"
+
+#: gaphor/UML/classes/propertypages.glade:700
+#: gaphor/UML/classes/propertypages.ui:501
+msgid "A"
+msgstr "A"
+
+#: gaphor/UML/classes/propertypages.glade:776
+msgid ""
+"Add and edit class operations according to UML syntax.\n"
+"\n"
+"  • <tt>call()</tt>\n"
+"  • <tt>+ call(a: int[*], b: str): bool</tt> (public, parameters)\n"
+"  • <tt># call(a: int, b: str) # a note</tt> (protected, with remark)\n"
+"\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
+"items.\n"
+"Use <b>-</b>/<b>=</b> to move items up or down."
+msgstr ""
+
+#: gaphor/UML/classes/propertypages.glade:798
+#: gaphor/UML/classes/propertypages.ui:553
+msgid "Show Enumeration Literals"
+msgstr "Exibir literais de enumeração"
+
+#: gaphor/UML/classes/propertypages.glade:835
+#: gaphor/UML/classes/propertypages.glade:878
+#: gaphor/UML/classes/propertypages.ui:586
+#: gaphor/UML/classes/propertypages.ui:610
+msgid "Enumeration Literals"
+msgstr "Literais de Enumeração"
+
+#: gaphor/UML/classes/propertypages.glade:900
+msgid ""
+"Add and edit enumeration literals according to UML syntax.\n"
+"\n"
+"  • <tt>enum</tt>\n"
+"\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
+"items.\n"
+"Use <b>-</b>/<b>=</b> to move items up or down."
+msgstr ""
+
 #: gaphor/UML/classes/propertypages.ui:65
 #: gaphor/UML/classes/propertypages.ui:162
 msgid ""
@@ -888,174 +1056,6 @@ msgstr ""
 "- nome [1..2]\n"
 "~ 1..2\n"
 "- [1..2]"
-
-#: gaphor/UML/classes/propertypages.glade:96
-#: gaphor/UML/classes/propertypages.glade:219
-#: gaphor/UML/classes/propertypages.ui:72
-#: gaphor/UML/classes/propertypages.ui:169
-msgid "Unknown navigation"
-msgstr "Navegação desconhecida"
-
-#: gaphor/UML/classes/propertypages.glade:97
-#: gaphor/UML/classes/propertypages.glade:220
-#: gaphor/UML/classes/propertypages.ui:73
-#: gaphor/UML/classes/propertypages.ui:170
-msgid "Not navigable"
-msgstr "Não navegável"
-
-#: gaphor/UML/classes/propertypages.glade:98
-#: gaphor/UML/classes/propertypages.glade:221
-#: gaphor/UML/classes/propertypages.ui:74
-#: gaphor/UML/classes/propertypages.ui:171
-msgid "Navigable"
-msgstr "Navegável"
-
-#: gaphor/UML/classes/propertypages.glade:133
-#: gaphor/UML/classes/propertypages.glade:256
-#: gaphor/UML/classes/propertypages.glade:377
-#: gaphor/UML/classes/propertypages.glade:420
-#: gaphor/UML/classes/propertypages.ui:98
-#: gaphor/UML/classes/propertypages.ui:195
-#: gaphor/UML/classes/propertypages.ui:292
-#: gaphor/UML/classes/propertypages.ui:329
-#: gaphor/UML/profiles/propertypages.glade:100
-#: gaphor/UML/profiles/propertypages.ui:74
-msgid "Attributes"
-msgstr "Atributos"
-
-#: gaphor/UML/classes/propertypages.glade:153
-#: gaphor/UML/classes/propertypages.glade:276
-#: gaphor/UML/classes/propertypages.ui:118
-#: gaphor/UML/classes/propertypages.ui:215
-#: gaphor/UML/profiles/propertypages.glade:120
-#: gaphor/UML/profiles/propertypages.ui:94
-msgid "Value"
-msgstr "Valor"
-
-#: gaphor/UML/classes/propertypages.glade:179
-#: gaphor/UML/classes/propertypages.ui:138
-msgid "Head:"
-msgstr ""
-
-#: gaphor/UML/classes/propertypages.glade:303
-#: gaphor/UML/classes/propertypages.ui:236
-msgid "Tail:"
-msgstr ""
-
-#: gaphor/UML/classes/propertypages.glade:333
-#: gaphor/UML/classes/propertypages.ui:258
-msgid "Show Attributes"
-msgstr "Exibir Atributos"
-
-#: gaphor/UML/classes/propertypages.glade:365
-#, fuzzy
-msgid ""
-"Add and edit class attributes according to UML syntax.\n"
-"Attribute syntax examples\n"
-"- attr\n"
-"- + attr: int\n"
-"- # /attr: int # a note\n"
-"\n"
-"Press Enter to edit item, Backspace/Delete to remove item.\n"
-"Use -/= to move items up or down."
-msgstr ""
-"Adicione e edite atributos de classe de acordo com a sintaxe UML.\n"
-"Exemplos de sintaxe de atributo\n"
-"- attr\n"
-"- + attr: int\n"
-"- # /attr: int # uma nota\n"
-"\n"
-"Pressione ENTER para editar o item, BS/DEL para remover o item.\n"
-"Utilize -/= para mover os itens para cima ou para baixo."
-
-#: gaphor/UML/classes/propertypages.glade:395
-#: gaphor/UML/classes/propertypages.glade:664
-#: gaphor/UML/classes/propertypages.ui:310
-#: gaphor/UML/classes/propertypages.ui:514
-msgid "S"
-msgstr "S"
-
-#: gaphor/UML/classes/propertypages.glade:464
-#: gaphor/UML/classes/propertypages.ui:362
-msgid "Dependency type"
-msgstr "Tipo de dependência"
-
-#: gaphor/UML/classes/propertypages.glade:477
-#: gaphor/UML/classes/propertypages.ui:373
-msgid "Automatic"
-msgstr "Automático"
-
-#: gaphor/UML/classes/propertypages.glade:524
-#: gaphor/UML/classes/propertypages.ui:404
-msgid "Folded"
-msgstr "Dobrado"
-
-#: gaphor/UML/classes/propertypages.glade:589
-#: gaphor/UML/classes/propertypages.ui:450
-msgid "Show Operations"
-msgstr "Exibir Operações"
-
-#: gaphor/UML/classes/propertypages.glade:621
-#, fuzzy
-msgid ""
-"Add and edit class operations according to UML syntax.\n"
-"Operation syntax examples\n"
-"- call()\n"
-"- + call(a: int, b: str) # a note\n"
-"- # call(a: int, b: str): bool\n"
-"\n"
-"Press Enter to edit item, Backspace/Delete to remove item.\n"
-"Use -/= to move items up or down."
-msgstr ""
-"Adicione e edite operações de classe de acordo com a sintaxe UML. "
-"Exemplos de sintaxe de operação\n"
-"- call()\n"
-"- + call (a: int, b: str) # uma nota\n"
-"- # call (a: int: b: str): bool\n"
-"\n"
-"Pressione ENTER para editar o item, BS/DEL para remover o item.\n"
-"Utilize -/= para mover os itens para cima ou para baixo."
-
-#: gaphor/UML/classes/propertypages.glade:633
-#: gaphor/UML/classes/propertypages.glade:689
-#: gaphor/UML/classes/propertypages.ui:483
-#: gaphor/UML/classes/propertypages.ui:533
-msgid "Operations"
-msgstr "Operações"
-
-#: gaphor/UML/classes/propertypages.glade:651
-#: gaphor/UML/classes/propertypages.ui:501
-msgid "A"
-msgstr "A"
-
-#: gaphor/UML/classes/propertypages.glade:714
-#: gaphor/UML/classes/propertypages.ui:553
-msgid "Show Enumeration Literals"
-msgstr "Exibir literais de enumeração"
-
-#: gaphor/UML/classes/propertypages.glade:745
-#: gaphor/UML/classes/propertypages.ui:574
-msgid ""
-"Add and edit enumeration literals according to UML syntax.\n"
-"Enumeration literal syntax examples\n"
-"- enum\n"
-"\n"
-"Press ENTER to edit item, BS/DEL to remove item.\n"
-"Use -/= to move items up or down."
-msgstr ""
-"Adicione e edite literais de enumeração de acordo com a sintaxe UML.\n"
-"Exemplos de sintaxe literal de enumeração\n"
-"- enum\n"
-"\n"
-"Pressione ENTER para editar o item, BS/DEL para remover o item.\n"
-"Utilize -/= para mover os itens para cima ou para baixo."
-
-#: gaphor/UML/classes/propertypages.glade:756
-#: gaphor/UML/classes/propertypages.glade:785
-#: gaphor/UML/classes/propertypages.ui:586
-#: gaphor/UML/classes/propertypages.ui:610
-msgid "Enumeration Literals"
-msgstr "Literais de Enumeração"
 
 #: gaphor/UML/classes/propertypages.ui:280
 msgid ""
@@ -1093,6 +1093,22 @@ msgstr ""
 "- call()\n"
 "- + call(a: int, b: str)\n"
 "- # call(a: int: b: str): bool\n"
+"\n"
+"Pressione ENTER para editar o item, BS/DEL para remover o item.\n"
+"Utilize -/= para mover os itens para cima ou para baixo."
+
+#: gaphor/UML/classes/propertypages.ui:574
+msgid ""
+"Add and edit enumeration literals according to UML syntax.\n"
+"Enumeration literal syntax examples\n"
+"- enum\n"
+"\n"
+"Press ENTER to edit item, BS/DEL to remove item.\n"
+"Use -/= to move items up or down."
+msgstr ""
+"Adicione e edite literais de enumeração de acordo com a sintaxe UML.\n"
+"Exemplos de sintaxe literal de enumeração\n"
+"- enum\n"
 "\n"
 "Pressione ENTER para editar o item, BS/DEL para remover o item.\n"
 "Utilize -/= para mover os itens para cima ou para baixo."
@@ -1208,7 +1224,7 @@ msgstr "ElementoNomeado"
 msgid "Show Stereotypes"
 msgstr "Exibir Estereótipos"
 
-#: gaphor/UML/profiles/propertypages.glade:146
+#: gaphor/UML/profiles/propertypages.glade:144
 #: gaphor/UML/profiles/propertypages.ui:114
 msgid "Stereotypes"
 msgstr "Estereótipos"
@@ -1335,19 +1351,19 @@ msgstr "Linha de comentário"
 msgid "(from {namespace})"
 msgstr ""
 
-#: gaphor/diagram/propertypages.glade:70 gaphor/diagram/propertypages.ui:53
+#: gaphor/diagram/propertypages.glade:68 gaphor/diagram/propertypages.ui:53
 msgid "Rectilinear"
 msgstr "Retilíneo"
 
-#: gaphor/diagram/propertypages.glade:79 gaphor/diagram/propertypages.ui:59
+#: gaphor/diagram/propertypages.glade:77 gaphor/diagram/propertypages.ui:59
 msgid "Flip orientation"
 msgstr "Inverter orientação"
 
-#: gaphor/diagram/propertypages.glade:94 gaphor/diagram/propertypages.ui:67
+#: gaphor/diagram/propertypages.glade:92 gaphor/diagram/propertypages.ui:67
 msgid "Style"
 msgstr "Estilo"
 
-#: gaphor/diagram/propertypages.glade:130 gaphor/diagram/propertypages.ui:79
+#: gaphor/diagram/propertypages.glade:126 gaphor/diagram/propertypages.ui:79
 #, fuzzy
 msgid "Note or Remark"
 msgstr "Nota / Comentário"
@@ -1427,7 +1443,7 @@ msgstr "Exportar modelo para arquivo XMI"
 msgid "All XMI Files"
 msgstr "Todos os arquivos XMI"
 
-#: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:60
+#: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:58
 msgid "About Gaphor"
 msgstr "Sobre Gaphor"
 
@@ -1463,7 +1479,9 @@ msgid "Application"
 msgstr "Aplicação"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
-#: gaphor/ui/elementeditor.glade:269 gaphor/ui/elementeditor.ui:205
+#: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
+#: gaphor/ui/elementeditor.ui:205
+#, fuzzy
 msgid "Preferences"
 msgstr "Preferências"
 
@@ -1483,7 +1501,7 @@ msgstr "Nova Janela"
 msgid "Open"
 msgstr "Abrir"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:49
+#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:47
 msgid "Save"
 msgstr "Salvar"
 
@@ -1558,8 +1576,8 @@ msgid "Actual Size"
 msgstr ""
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:55
-#: gaphor/ui/mainwindow.py:242 gaphor/ui/mainwindow.ui:29
-#: gaphor/ui/namespace.py:326
+#: gaphor/ui/mainwindow.py:230 gaphor/ui/mainwindow.ui:29
+#: gaphor/ui/namespace.py:335
 msgid "New model"
 msgstr "Novo modelo"
 
@@ -1710,11 +1728,6 @@ msgstr ""
 "<b> Dica: </b> Para pesquisar um elemento na visualização em árvore, "
 "selecione um elemento na visualização em árvore e comece a digitar. Uma "
 "caixa de pesquisa aparecerá automaticamente.\n"
-
-#: gaphor/ui/elementeditor.glade:199
-#, fuzzy
-msgid "Preferences"
-msgstr ""
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:170
 msgid "Editors"
@@ -1882,7 +1895,7 @@ msgstr ""
 msgid "Open a Gaphor Model"
 msgstr "Abrir Modelo Gaphor"
 
-#: gaphor/ui/greeter.py:148
+#: gaphor/ui/greeter.py:25
 msgid "Generic"
 msgstr ""
 
@@ -1900,83 +1913,78 @@ msgstr "Novo _diagrama"
 msgid "Open Application Menu"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:44
+#: gaphor/ui/mainwindow.py:42
 #, fuzzy
 msgid "Open a Model…"
 msgstr "Abrir Modelo Gaphor"
 
-#: gaphor/ui/mainwindow.py:45
+#: gaphor/ui/mainwindow.py:43
 #, fuzzy
 msgid "New Model…"
 msgstr "Novo modelo"
 
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/mainwindow.py:48
 msgid "Save As…"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:51
+#: gaphor/ui/mainwindow.py:49
 msgid "Export"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:55
+#: gaphor/ui/mainwindow.py:53
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: gaphor/ui/mainwindow.py:59
+#: gaphor/ui/mainwindow.py:57
 msgid "Keyboard Shortcuts"
 msgstr "Atalhos do teclado"
 
-#: gaphor/ui/mainwindow.py:86
+#: gaphor/ui/mainwindow.py:84
 #, fuzzy
 msgid "New Generic Diagram"
 msgstr "Novo _Diagrama"
 
-#: gaphor/ui/mainwindow.py:244
+#: gaphor/ui/mainwindow.py:232
 msgid "edited"
 msgstr "editado"
 
-#: gaphor/ui/mainwindow.py:293
+#: gaphor/ui/mainwindow.py:268
 msgid "Profile: {}"
 msgstr "Perfil: {}"
 
-#: gaphor/ui/namespace.py:43
+#: gaphor/ui/namespace.py:44
 msgid "_Open"
 msgstr "_Abrir"
 
-#: gaphor/ui/namespace.py:44
+#: gaphor/ui/namespace.py:45
 msgid "_Rename"
 msgstr "_Renomear"
 
-#: gaphor/ui/namespace.py:48
+#: gaphor/ui/namespace.py:50
 msgid "New _Diagram"
 msgstr "Novo _Diagrama"
 
-#: gaphor/ui/namespace.py:49
+#: gaphor/ui/namespace.py:52
 msgid "New _Package"
 msgstr "Novo _Pacote"
 
-#: gaphor/ui/namespace.py:53
+#: gaphor/ui/namespace.py:56
 msgid "De_lete"
 msgstr "_Excluir"
 
-#: gaphor/ui/namespace.py:64
+#: gaphor/ui/namespace.py:67
 msgid "Show in “{diagram}”"
 msgstr "Exibir em \"{diagram}\""
 
-#: gaphor/ui/namespace.py:308
-#, fuzzy
-msgid "{name} diagram"
-msgstr "Novo _Diagrama"
-
-#: gaphor/ui/namespace.py:310
-#, fuzzy
-msgid "New diagram"
-msgstr "Novo _Diagrama"
-
-#: gaphor/ui/namespace.py:324
+#: gaphor/ui/namespace.py:333
 #, fuzzy
 msgid "{name} package"
 msgstr "Novo _Pacote"
+
+#: gaphor/ui/namespace.py:352
+#, fuzzy
+msgid "New diagram"
+msgstr "Novo _Diagrama"
 
 #: gaphor/ui/namespacemodel.py:312
 msgid "A {} can’t be part of a {}."
@@ -2325,4 +2333,46 @@ msgstr "&lt;Relacionamentos&gt;"
 #~ "This will possibly delete diagram items\n"
 #~ "that are not shown in other diagrams."
 #~ msgstr ""
+
+#~ msgid ""
+#~ "Add and edit class attributes according to UML syntax.\n"
+#~ "Attribute syntax examples\n"
+#~ "- attr\n"
+#~ "- + attr: int\n"
+#~ "- # /attr: int # a note\n"
+#~ "\n"
+#~ "Press Enter to edit item, Backspace/Delete to remove item.\n"
+#~ "Use -/= to move items up or down."
+#~ msgstr ""
+#~ "Adicione e edite atributos de classe de acordo com a sintaxe UML.\n"
+#~ "Exemplos de sintaxe de atributo\n"
+#~ "- attr\n"
+#~ "- + attr: int\n"
+#~ "- # /attr: int # uma nota\n"
+#~ "\n"
+#~ "Pressione ENTER para editar o item, BS/DEL para remover o item.\n"
+#~ "Utilize -/= para mover os itens para cima ou para baixo."
+
+#~ msgid ""
+#~ "Add and edit class operations according to UML syntax.\n"
+#~ "Operation syntax examples\n"
+#~ "- call()\n"
+#~ "- + call(a: int, b: str) # a note\n"
+#~ "- # call(a: int, b: str): bool\n"
+#~ "\n"
+#~ "Press Enter to edit item, Backspace/Delete to remove item.\n"
+#~ "Use -/= to move items up or down."
+#~ msgstr ""
+#~ "Adicione e edite operações de classe "
+#~ "de acordo com a sintaxe UML. "
+#~ "Exemplos de sintaxe de operação\n"
+#~ "- call()\n"
+#~ "- + call (a: int, b: str) # uma nota\n"
+#~ "- # call (a: int: b: str): bool\n"
+#~ "\n"
+#~ "Pressione ENTER para editar o item, BS/DEL para remover o item.\n"
+#~ "Utilize -/= para mover os itens para cima ou para baixo."
+
+#~ msgid "{name} diagram"
+#~ msgstr "Novo _Diagrama"
 
