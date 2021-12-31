@@ -640,6 +640,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "deifemu",
+      "name": "deifemu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81991548?v=4",
+      "profile": "https://github.com/deifemu",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
