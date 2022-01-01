@@ -143,7 +143,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             join_node = subject
 
             # determine flow class:
-            if [f for f in join_node.incoming if isinstance(f, UML.ObjectFlow)]:
+            if any(f for f in join_node.incoming if isinstance(f, UML.ObjectFlow)):
                 flow_class: Type[UML.ActivityEdge] = UML.ObjectFlow
             else:
                 flow_class = UML.ControlFlow
