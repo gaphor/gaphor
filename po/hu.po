@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-12-31 17:55-0500\n"
-"PO-Revision-Date: 2021-12-06 15:18+0000\n"
+"PO-Revision-Date: 2022-01-03 00:54+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10.1\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -79,46 +80,39 @@ msgid "Dependency"
 msgstr "Függőség"
 
 #: gaphor/C4Model/toolbox.py:140
-#, fuzzy
 msgid "New C4 Diagram"
-msgstr "Új ábra"
+msgstr "Új C4-ábra"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/UML/toolbox.py:30
-#, fuzzy
 msgid "New Class Diagram"
-msgstr "Új ábra"
+msgstr "Új osztályábra"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
-#, fuzzy
 msgid "New Activity Diagram"
-msgstr "Új ábra"
+msgstr "Új tevékenységábra"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
-#, fuzzy
 msgid "New Sequence Diagram"
-msgstr "Új ábra"
+msgstr "Új sorozatábra"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
-#, fuzzy
 msgid "New State Machine Diagram"
-msgstr "Új ábra létrehozása"
+msgstr "Új állapotautomataábra"
 
 #: gaphor/RAAML/modelinglanguage.py:17
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
-#, fuzzy
 msgid "New FTA Diagram"
-msgstr "Új ábra"
+msgstr "Új FTA-ábra"
 
 #: gaphor/RAAML/toolbox.py:20
-#, fuzzy
 msgid "New STPA Diagram"
-msgstr "Új ábra"
+msgstr "Új STPA-ábra"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -293,12 +287,11 @@ msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:28 gaphor/SysML/propertypages.ui:23
 msgid "Item Flow"
-msgstr ""
+msgstr "Tételfolyam"
 
 #: gaphor/SysML/propertypages.glade:51 gaphor/SysML/propertypages.ui:38
-#, fuzzy
 msgid "Item Property"
-msgstr "Tulajdonság"
+msgstr "Tételtulajdonság"
 
 #: gaphor/SysML/propertypages.glade:74 gaphor/SysML/propertypages.ui:52
 #: gaphor/UML/classes/propertypages.glade:48
@@ -313,13 +306,12 @@ msgid "Show Parts"
 msgstr "Alkatrészek megjelenítése"
 
 #: gaphor/SysML/propertypages.glade:138 gaphor/SysML/propertypages.ui:92
-#, fuzzy
 msgid "Show References"
 msgstr "Hivatkozások megjelenítése"
 
 #: gaphor/SysML/propertypages.glade:164 gaphor/SysML/propertypages.ui:107
 msgid "Show Values"
-msgstr ""
+msgstr "Értékek megjelenítése"
 
 #: gaphor/SysML/propertypages.glade:189 gaphor/SysML/propertypages.ui:122
 #, fuzzy
@@ -380,26 +372,23 @@ msgstr "Közvetít kikötő"
 
 #: gaphor/SysML/toolbox.py:68
 msgid "New Block Definition Diagram"
-msgstr ""
+msgstr "Új blokkelem-meghatározási ábra"
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr ""
+msgstr "Új belső blokkelemábra"
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
-#, fuzzy
 msgid "New Package Diagram"
-msgstr "{name}-ábra"
+msgstr "Új csomagábra"
 
 #: gaphor/SysML/toolbox.py:71
-#, fuzzy
 msgid "New Requirement Diagram"
-msgstr "követelmény"
+msgstr "Új követelményábra"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
-#, fuzzy
 msgid "New Use Case Diagram"
-msgstr "{name}-ábra"
+msgstr "Új használati eset ábra"
 
 #: gaphor/SysML/blocks/block.py:66
 msgid "ControlStructure"
@@ -407,7 +396,7 @@ msgstr "Ellenőrzési szerkezet"
 
 #: gaphor/SysML/blocks/block.py:68
 msgid "block"
-msgstr "blokkdiagram"
+msgstr "blokkelem"
 
 #: gaphor/SysML/blocks/block.py:101
 msgid "parts"
@@ -418,9 +407,8 @@ msgid "references"
 msgstr "hivatkozások"
 
 #: gaphor/SysML/blocks/block.py:123
-#, fuzzy
 msgid "values"
-msgstr "Érték"
+msgstr "értékek"
 
 #: gaphor/SysML/blocks/block.py:140
 msgid "unnamed"
@@ -428,11 +416,11 @@ msgstr "névtelen"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:18
 msgid "Blocks"
-msgstr "Blokkdiagramok"
+msgstr "Blokkelemek"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:22
 msgid "Block"
-msgstr "Blokkdiagram"
+msgstr "Blokkelem"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:32
 #: gaphor/UML/classes/classestoolbox.py:75
@@ -539,25 +527,25 @@ msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
+"A modellből eltávolították a nem használt elemeket: más ábrán nem "
+"szerepelnek."
 
 #: gaphor/UML/toolbox.py:32
 #, fuzzy
 msgid "New Component Diagram"
-msgstr "Új összetevő"
+msgstr "Új összetevőábra"
 
 #: gaphor/UML/toolbox.py:33
-#, fuzzy
 msgid "New Deployment Diagram"
-msgstr "{name}-ábra"
+msgstr "Új telepítési ábra"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr ""
+msgstr "Új kommunikációs ábra"
 
 #: gaphor/UML/toolbox.py:39
-#, fuzzy
 msgid "New Profile Diagram"
-msgstr "Új ábra"
+msgstr "Új profilábra"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -695,9 +683,8 @@ msgid "Join Specification"
 msgstr "Elágazási meghatározás"
 
 #: gaphor/UML/actions/propertypages.glade:116
-#, fuzzy
 msgid "Swimlanes"
-msgstr "Sáv"
+msgstr "Sávok"
 
 #: gaphor/UML/actions/propertypages.glade:129
 #: gaphor/UML/actions/propertypages.ui:126
@@ -846,7 +833,7 @@ msgstr "Irány megjelenítése"
 #: gaphor/UML/classes/propertypages.glade:739
 #: gaphor/UML/classes/propertypages.glade:865
 msgid "🛈 Help"
-msgstr ""
+msgstr "🛈 Súgó"
 
 #: gaphor/UML/classes/propertypages.glade:107
 #: gaphor/UML/classes/propertypages.glade:234
@@ -1121,9 +1108,8 @@ msgstr "Információfolyam"
 
 #: gaphor/UML/components/propertypages.glade:80
 #: gaphor/UML/components/propertypages.ui:59
-#, fuzzy
 msgid "Information Item (Class)"
-msgstr "Információs elem (osztály):"
+msgstr "Információs elem (osztály)"
 
 #: gaphor/UML/interactions/interactionsconnect.py:79
 msgid "call()"
@@ -1291,9 +1277,8 @@ msgid "Pointer"
 msgstr "Mutató"
 
 #: gaphor/diagram/diagramtoolbox.py:76
-#, fuzzy
 msgid "Magnet"
-msgstr "fő"
+msgstr "Mágnes"
 
 #: gaphor/diagram/diagramtoolbox.py:83
 msgid "Line"
@@ -1568,38 +1553,32 @@ msgid "1. Context diagrams"
 msgstr "{name}-ábra"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Context diagram"
-msgstr "Új ábra"
+msgstr "Környezetábra"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "2. Container diagrams"
-msgstr "{name}-ábra"
+msgstr "2. Tárolóábrák"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Container diagram"
-msgstr "{name}-ábra"
+msgstr "Tárolóábra"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "4. Code diagrams"
-msgstr "Új ábra"
+msgstr "4. Kódábrák"
 
 #: gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
 msgstr ""
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Component diagram"
-msgstr "{name}-ábra"
+msgstr "Összetevőábra"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Code diagram"
-msgstr "Új ábra"
+msgstr "Kódábra"
 
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
@@ -1853,14 +1832,12 @@ msgid "Create a new model from a template"
 msgstr ""
 
 #: gaphor/ui/greeter.glade:137 gaphor/ui/greeter.ui:113
-#, fuzzy
 msgid "Recent Model…"
-msgstr "Új modell"
+msgstr "Legutóbbi modell…"
 
 #: gaphor/ui/greeter.glade:145 gaphor/ui/greeter.ui:120
-#, fuzzy
 msgid "Create New Model…"
-msgstr "Új modell"
+msgstr "Új modell létrehozása…"
 
 #: gaphor/ui/greeter.glade:153 gaphor/ui/greeter.ui:127
 msgid "Open Existing Model…"
@@ -1888,14 +1865,12 @@ msgid "Open Application Menu"
 msgstr "Alkalmazásmenü megnyitása"
 
 #: gaphor/ui/mainwindow.py:42
-#, fuzzy
 msgid "Open a Model…"
-msgstr "Gaphor-modell megnyitása"
+msgstr "Modell megnyitása…"
 
 #: gaphor/ui/mainwindow.py:43
-#, fuzzy
 msgid "New Model…"
-msgstr "Új modell"
+msgstr "Új modell…"
 
 #: gaphor/ui/mainwindow.py:48
 msgid "Save As…"
@@ -2191,4 +2166,3 @@ msgstr "&lt;Kapcsolatok&gt;"
 
 #~ msgid "{name} diagram"
 #~ msgstr "{name}-ábra"
-
