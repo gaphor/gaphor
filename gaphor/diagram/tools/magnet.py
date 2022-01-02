@@ -6,15 +6,17 @@ from gaphas.move import Move
 from gaphas.view import GtkView
 from gi.repository import Gtk
 
+from gaphor.diagram.event import ToolCompleted
 
-def magnet_tool(view: GtkView) -> Gtk.GestureDrag:
+
+def magnet_tool(view: GtkView, event_manager) -> Gtk.GestureDrag:
     """Handle item movement and movement of handles."""
     gesture = (
         Gtk.GestureDrag.new(view)
         if Gtk.get_major_version() == 3
         else Gtk.GestureDrag.new()
     )
-    drag_state = DragState()
+    drag_state = DragState(event_manager)
     gesture.connect("drag-begin", on_drag_begin, drag_state)
     gesture.connect("drag-update", on_drag_update, drag_state)
     gesture.connect("drag-end", on_drag_end, drag_state)
@@ -22,7 +24,8 @@ def magnet_tool(view: GtkView) -> Gtk.GestureDrag:
 
 
 class DragState:
-    def __init__(self):
+    def __init__(self, event_manager):
+        self.event_manager = event_manager
         self.reset()
 
     def reset(self):
@@ -90,6 +93,7 @@ def on_drag_end(gesture, offset_x, offset_y, drag_state):
         moving.stop_move((x + offset_x, y + offset_y))
     drag_state.reset()
     view.update_back_buffer()
+    drag_state.event_manager.handle(ToolCompleted())
     try:
         del view.magnet
     except AttributeError:

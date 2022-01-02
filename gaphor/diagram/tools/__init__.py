@@ -37,7 +37,9 @@ def apply_magnet_tool_set(view, modeling_language, event_manager):
     """The default tool set."""
     view.remove_all_controllers()
     view.add_controller(
-        *transactional_tool(magnet_tool(view), event_manager=event_manager)
+        *transactional_tool(
+            magnet_tool(view, event_manager), event_manager=event_manager
+        )
     )
     add_basic_tools(view, modeling_language, event_manager)
 

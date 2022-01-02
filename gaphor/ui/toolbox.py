@@ -11,6 +11,7 @@ from gi.repository import Gdk, GObject, Gtk
 
 from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
+from gaphor.diagram.event import ToolCompleted
 from gaphor.diagram.hoversupport import flowbox_add_hover_support
 from gaphor.event import TransactionCommit
 from gaphor.services.modelinglanguage import (
@@ -184,7 +185,7 @@ class Toolbox(UIComponent):
                     self.event_manager.handle(ToolSelected(tool_name))
                     return
 
-    @event_handler(TransactionCommit)
+    @event_handler(ToolCompleted)
     def _on_diagram_item_placed(self, event: TransactionCommit) -> None:
         if self.properties.get("reset-tool-after-create", True):
             self.select_tool("toolbox-pointer")
