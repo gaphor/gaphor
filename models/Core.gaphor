@@ -518,12 +518,12 @@
 </name>
 <ownedAttribute>
 <reflist>
-<ref refid="69c2575a-7a95-11ea-a112-7f953848cf85"/>
 <ref refid="a4c6f704-ce0f-11eb-abe3-018035c40dd4"/>
 <ref refid="d092794e-e0b9-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="da0b2408-529e-11ec-b0e5-0456e5e540ed"/>
 <ref refid="da0b3ede-529e-11ec-b0e5-0456e5e540ed"/>
 <ref refid="1ee6aec6-b9a9-11eb-93ad-535118859f0b"/>
+<ref refid="69c2575a-7a95-11ea-a112-7f953848cf85"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -585,8 +585,8 @@
 <reflist>
 <ref refid="446a3745-4465-11eb-8946-9bdfa28f7a50"/>
 <ref refid="446a3746-4465-11eb-8946-9bdfa28f7a50"/>
-<ref refid="69c25759-7a95-11ea-a112-7f953848cf85"/>
 <ref refid="216581cc-4465-11eb-8946-9bdfa28f7a50"/>
+<ref refid="69c25759-7a95-11ea-a112-7f953848cf85"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -641,6 +641,9 @@
 </upperValue>
 </Property>
 <Property id="69c2575a-7a95-11ea-a112-7f953848cf85">
+<aggregation>
+<val>composite</val>
+</aggregation>
 <association>
 <ref refid="69c25758-7a95-11ea-a112-7f953848cf85"/>
 </association>
