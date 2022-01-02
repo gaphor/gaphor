@@ -7,43 +7,27 @@
 </name>
 <ownedDiagram>
 <reflist>
-<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+<ref refid="175611b4-6c1d-11ec-b539-0456e5e540ed"/>
 </reflist>
 </ownedDiagram>
 </Package>
-<Diagram id="58d6c536-66f8-11ec-b4c8-0456e5e540ed">
-<element>
-<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
-</element>
-<name>
-<val>Context diagram</val>
-</name>
-</Diagram>
 <Package id="216f41c4-6700-11ec-8be0-0456e5e540ed">
 <name>
 <val>2. Container diagrams</val>
 </name>
 <ownedDiagram>
 <reflist>
-<ref refid="415009f6-6700-11ec-8be0-0456e5e540ed"/>
+<ref refid="2be88602-6c1d-11ec-b539-0456e5e540ed"/>
 </reflist>
 </ownedDiagram>
 </Package>
-<Diagram id="415009f6-6700-11ec-8be0-0456e5e540ed">
-<element>
-<ref refid="216f41c4-6700-11ec-8be0-0456e5e540ed"/>
-</element>
-<name>
-<val>Container diagram</val>
-</name>
-</Diagram>
 <Package id="5847dae4-6700-11ec-8be0-0456e5e540ed">
 <name>
 <val>4. Code diagrams</val>
 </name>
 <ownedDiagram>
 <reflist>
-<ref refid="790e745e-6700-11ec-8be0-0456e5e540ed"/>
+<ref refid="42819cfa-6c1d-11ec-b539-0456e5e540ed"/>
 </reflist>
 </ownedDiagram>
 </Package>
@@ -53,11 +37,36 @@
 </name>
 <ownedDiagram>
 <reflist>
-<ref refid="72148684-6700-11ec-8be0-0456e5e540ed"/>
+<ref refid="350611dc-6c1d-11ec-b539-0456e5e540ed"/>
 </reflist>
 </ownedDiagram>
 </Package>
-<Diagram id="72148684-6700-11ec-8be0-0456e5e540ed">
+<Diagram id="175611b4-6c1d-11ec-b539-0456e5e540ed">
+<diagramType>
+<val>c4</val>
+</diagramType>
+<element>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</element>
+<name>
+<val>Context diagram</val>
+</name>
+</Diagram>
+<Diagram id="2be88602-6c1d-11ec-b539-0456e5e540ed">
+<diagramType>
+<val>c4</val>
+</diagramType>
+<element>
+<ref refid="216f41c4-6700-11ec-8be0-0456e5e540ed"/>
+</element>
+<name>
+<val>Container diagram</val>
+</name>
+</Diagram>
+<Diagram id="350611dc-6c1d-11ec-b539-0456e5e540ed">
+<diagramType>
+<val>c4</val>
+</diagramType>
 <element>
 <ref refid="5aaf0244-6700-11ec-8be0-0456e5e540ed"/>
 </element>
@@ -65,7 +74,10 @@
 <val>Component diagram</val>
 </name>
 </Diagram>
-<Diagram id="790e745e-6700-11ec-8be0-0456e5e540ed">
+<Diagram id="42819cfa-6c1d-11ec-b539-0456e5e540ed">
+<diagramType>
+<val>cls</val>
+</diagramType>
 <element>
 <ref refid="5847dae4-6700-11ec-8be0-0456e5e540ed"/>
 </element>
