@@ -6,6 +6,7 @@ import math
 from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_line_point
 from gaphas.item import Handle, LinePort
+from gaphas.matrix import Matrix
 from gaphas.util import path_ellipse
 
 from gaphor import UML
@@ -256,8 +257,10 @@ class ForkNodeItem(Presentation[UML.ForkNode], HandlePositionUpdate, Named):
         return self._ports
 
     def save(self, save_func):
-        save_func("matrix", tuple(self.matrix))
-        save_func("height", float(self._handles[1].pos.y))
+        m = Matrix(*self.matrix)
+        m.translate(0, self._handles[0].pos.y)
+        save_func("matrix", tuple(m))
+        save_func("height", float(self._handles[1].pos.y - self._handles[0].pos.y))
         super().save(save_func)
 
     def load(self, name, value):
