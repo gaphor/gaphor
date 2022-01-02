@@ -35,6 +35,7 @@ class DragState:
 
 def on_drag_begin(gesture, start_x, start_y, drag_state):
     drag_state.reset()
+    gesture.set_state(Gtk.EventSequenceState.CLAIMED)
 
 
 def on_drag_update(gesture, offset_x, offset_y, drag_state):
