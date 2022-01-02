@@ -26,12 +26,14 @@ renderers and such.</property>
         </child>
         <child>
           <object class="GtkSwitch" id="show-direction">
+            <property name="focusable">1</property>
             <property name="valign">center</property>
             <signal name="notify::active" handler="show-direction-changed" swapped="no"/>
           </object>
         </child>
         <child>
           <object class="GtkButton">
+            <property name="focusable">1</property>
             <property name="receives-default">1</property>
             <property name="tooltip-text" translatable="yes">Invert direction</property>
             <signal name="clicked" handler="invert-direction-changed" swapped="no"/>
@@ -49,25 +51,33 @@ renderers and such.</property>
     </child>
     <child>
       <object class="GtkExpander">
+        <property name="focusable">1</property>
         <property name="expanded">1</property>
         <child>
           <object class="GtkBox">
             <property name="margin-top">6</property>
             <property name="orientation">vertical</property>
-            <property name="spacing">6</property>
             <child>
               <object class="GtkEntry" id="head-name">
-                <property name="secondary-icon-tooltip-text" translatable="yes">Enter attribute name and multiplicity, for example
-- name
-+ name [1]
-- name [1..2]
-~ 1..2
-- [1..2]</property>
+                <property name="focusable">1</property>
                 <signal name="changed" handler="head-name-changed" swapped="no"/>
               </object>
             </child>
             <child>
+              <object class="GtkLabel" id="head-info-icon">
+                <property name="margin-top">3</property>
+                <property name="halign">end</property>
+                <property name="margin-start">2</property>
+                <property name="margin-end">2</property>
+                <property name="label" translatable="yes">🛈 Help</property>
+                <style>
+                  <class name="info"/>
+                </style>
+              </object>
+            </child>
+            <child>
               <object class="GtkComboBoxText" id="head-navigation">
+                <property name="margin-top">6</property>
                 <items>
                   <item id="0" translatable="yes">Unknown navigation</item>
                   <item id="1" translatable="yes">Not navigable</item>
@@ -78,6 +88,7 @@ renderers and such.</property>
             </child>
             <child>
               <object class="GtkComboBoxText" id="head-aggregation">
+                <property name="margin-top">6</property>
                 <items>
                   <item id="0" translatable="yes">No aggregation</item>
                   <item id="1" translatable="yes">Shared</item>
@@ -88,8 +99,10 @@ renderers and such.</property>
             </child>
             <child>
               <object class="GtkFrame" id="head-stereotype-frame">
+                <property name="margin-top">6</property>
                 <property name="child">
                   <object class="GtkTreeView" id="head-stereotype-list">
+                    <property name="focusable">1</property>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection"/>
                     </child>
@@ -145,26 +158,35 @@ renderers and such.</property>
     </child>
     <child>
       <object class="GtkExpander">
+        <property name="focusable">1</property>
         <property name="margin-top">6</property>
         <property name="expanded">1</property>
         <child>
           <object class="GtkBox">
             <property name="margin-top">6</property>
             <property name="orientation">vertical</property>
-            <property name="spacing">6</property>
             <child>
               <object class="GtkEntry" id="tail-name">
-                <property name="secondary-icon-tooltip-text" translatable="yes">Enter attribute name and multiplicity, for example
-- name
-+ name [1]
-- name [1..2]
-~ 1..2
-- [1..2]</property>
+                <property name="focusable">1</property>
                 <signal name="changed" handler="tail-name-changed" swapped="no"/>
               </object>
             </child>
             <child>
+              <object class="GtkLabel" id="tail-info-icon">
+                <property name="visible">1</property>
+                <property name="margin-top">3</property>
+                <property name="halign">end</property>
+                <property name="margin-start">2</property>
+                <property name="margin-end">2</property>
+                <property name="label" translatable="yes">🛈 Help</property>
+                <style>
+                  <class name="info"/>
+                </style>
+              </object>
+            </child>
+            <child>
               <object class="GtkComboBoxText" id="tail-navigation">
+                <property name="margin-top">6</property>
                 <items>
                   <item id="0" translatable="yes">Unknown navigation</item>
                   <item id="1" translatable="yes">Not navigable</item>
@@ -175,6 +197,7 @@ renderers and such.</property>
             </child>
             <child>
               <object class="GtkComboBoxText" id="tail-aggregation">
+                <property name="margin-top">6</property>
                 <items>
                   <item id="0" translatable="yes">No aggregation</item>
                   <item id="1" translatable="yes">Shared</item>
@@ -185,8 +208,10 @@ renderers and such.</property>
             </child>
             <child>
               <object class="GtkFrame" id="tail-stereotype-frame">
+                <property name="margin-top">6</property>
                 <property name="child">
                   <object class="GtkTreeView" id="tail-stereotype-list">
+                    <property name="focusable">1</property>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection"/>
                     </child>
@@ -242,14 +267,37 @@ renderers and such.</property>
       </object>
     </child>
   </object>
+  <object class="GtkPopover" id="association-info">
+    <!-- <property name="relative-to">attributes-info-icon</property> -->
+    <property name="position">top</property>
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="label" translatable="yes">Add and edit association ends according to UML syntax.
+
+  • &lt;tt&gt;+ name&lt;/tt&gt;
+  • &lt;tt&gt;+ name[1]&lt;/tt&gt;
+  • &lt;tt&gt;- name[1..2]&lt;/tt&gt;
+  • &lt;tt&gt;1..2&lt;/tt&gt;
+  • &lt;tt&gt;- [1..2]&lt;/tt&gt;
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+        <property name="use-markup">1</property>
+      </object>
+    </property>
+  </object>
   <object class="GtkExpander" id="attributes-editor">
+    <property name="focusable">1</property>
     <property name="margin-top">12</property>
     <property name="expanded">1</property>
     <child>
       <object class="GtkBox">
         <property name="margin-top">6</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
             <property name="spacing">6</property>
@@ -260,6 +308,7 @@ renderers and such.</property>
             </child>
             <child>
               <object class="GtkSwitch" id="show-attributes">
+                <property name="focusable">1</property>
                 <signal name="notify::active" handler="show-attributes-changed" swapped="no"/>
               </object>
             </child>
@@ -267,17 +316,11 @@ renderers and such.</property>
         </child>
         <child>
           <object class="GtkFrame">
+            <property name="margin-top">6</property>
             <property name="child">
               <object class="GtkTreeView" id="attributes-list">
                 <property name="height-request">112</property>
-                <property name="tooltip-text" translatable="yes">Add and edit class attributes according to UML syntax.
-Attribute syntax examples
-- attr
-- + attr: int
-- # /attr: int
-
-Press ENTER to edit item, BS/DEL to remove item.
-Use -/= to move items up or down.</property>
+                <property name="focusable">1</property>
                 <property name="headers-clickable">0</property>
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
@@ -322,6 +365,19 @@ Use -/= to move items up or down.</property>
             </property>
           </object>
         </child>
+        <child>
+          <object class="GtkLabel" id="attributes-info-icon">
+            <property name="visible">1</property>
+            <property name="margin-top">3</property>
+            <property name="halign">end</property>
+            <property name="margin-start">2</property>
+            <property name="margin-end">2</property>
+            <property name="label" translatable="yes">🛈 Help</property>
+            <style>
+              <class name="info"/>
+            </style>
+          </object>
+        </child>
       </object>
     </child>
     <child type="label">
@@ -332,6 +388,28 @@ Use -/= to move items up or down.</property>
         </attributes>
       </object>
     </child>
+  </object>
+  <object class="GtkPopover" id="attributes-info">
+    <!-- <property name="relative-to">attributes-info-icon</property> -->
+    <property name="position">top</property>
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="label" translatable="yes">Add and edit class attributes according to UML syntax.
+
+  • &lt;tt&gt;attr&lt;/tt&gt; (name, defaults to public visibility)
+  • &lt;tt&gt;+ attr: int&lt;/tt&gt; (public with type)
+  • &lt;tt&gt;+ attr: int[0..1]&lt;/tt&gt; (public, type, and multiplicity)
+  • &lt;tt&gt;# /attr: int # a note&lt;/tt&gt; (protected, derived, with remark)
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+        <property name="use-markup">1</property>
+      </object>
+    </property>
   </object>
   <object class="GtkBox" id="classifier-editor">
     <property name="margin-top">6</property>
@@ -347,6 +425,7 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkSwitch" id="abstract">
             <property name="halign">center</property>
+            <property name="focusable">1</property>
             <signal name="notify::active" handler="abstract-changed" swapped="no"/>
           </object>
         </child>
@@ -376,6 +455,7 @@ Use -/= to move items up or down.</property>
         <child>
           <object class="GtkSwitch" id="automatic">
             <property name="halign">center</property>
+            <property name="focusable">1</property>
             <signal name="notify::active" handler="automatic-changed" swapped="no"/>
           </object>
         </child>
@@ -406,6 +486,7 @@ Use -/= to move items up or down.</property>
         </child>
         <child>
           <object class="GtkSwitch" id="folded">
+            <property name="focusable">1</property>
             <property name="halign">center</property>
             <signal name="notify::active" handler="folded-changed" swapped="no"/>
           </object>
@@ -429,19 +510,20 @@ Use -/= to move items up or down.</property>
     </child>
     <child>
       <object class="GtkEntry" id="name-entry">
+        <property name="focusable">1</property>
         <signal name="changed" handler="name-changed" swapped="no"/>
         <signal name="destroy" handler="name-entry-destroyed" swapped="no"/>
       </object>
     </child>
   </object>
   <object class="GtkExpander" id="operations-editor">
+    <property name="focusable">1</property>
     <property name="margin-top">12</property>
     <property name="expanded">1</property>
     <child>
       <object class="GtkBox">
         <property name="margin-top">6</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
             <property name="spacing">6</property>
@@ -452,6 +534,7 @@ Use -/= to move items up or down.</property>
             </child>
             <child>
               <object class="GtkSwitch" id="show-operations">
+                <property name="focusable">1</property>
                 <signal name="notify::active" handler="show-operations-changed" swapped="no"/>
               </object>
             </child>
@@ -459,16 +542,11 @@ Use -/= to move items up or down.</property>
         </child>
         <child>
           <object class="GtkFrame">
+            <property name="margin-top">6</property>
             <property name="child">
               <object class="GtkTreeView" id="operations-list">
                 <property name="height-request">112</property>
-                <property name="tooltip-text" translatable="yes">Add and edit class operations according to UML syntax. Operation syntax examples
-- call()
-- + call(a: int, b: str)
-- # call(a: int: b: str): bool
-
-Press ENTER to edit item, BS/DEL to remove item.
-Use -/= to move items up or down.</property>
+                <property name="focusable">1</property>
                 <property name="headers-clickable">0</property>
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
@@ -526,6 +604,19 @@ Use -/= to move items up or down.</property>
             </property>
           </object>
         </child>
+        <child>
+          <object class="GtkLabel" id="operations-info-icon">
+            <property name="visible">1</property>
+            <property name="margin-top">3</property>
+            <property name="halign">end</property>
+            <property name="margin-start">2</property>
+            <property name="margin-end">2</property>
+            <property name="label" translatable="yes">🛈 Help</property>
+            <style>
+              <class name="info"/>
+            </style>
+          </object>
+        </child>
       </object>
     </child>
     <child type="label">
@@ -537,14 +628,35 @@ Use -/= to move items up or down.</property>
       </object>
     </child>
   </object>
+  <object class="GtkPopover" id="operations-info">
+    <!-- <property name="relative-to">operations-info-icon</property> -->
+    <property name="position">top</property>
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="label" translatable="yes">Add and edit class operations according to UML syntax.
+
+  • &lt;tt&gt;call()&lt;/tt&gt;
+  • &lt;tt&gt;+ call(a: int[*], b: str): bool&lt;/tt&gt; (public, parameters)
+  • &lt;tt&gt;# call(a: int, b: str) # a note&lt;/tt&gt; (protected, with remark)
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+        <property name="use-markup">1</property>
+      </object>
+    </property>
+  </object>
   <object class="GtkExpander" id="enumerations-editor">
+    <property name="focusable">1</property>
     <property name="margin-top">12</property>
-    <property name="expanded">True</property>
+    <property name="expanded">1</property>
     <child>
       <object class="GtkBox">
         <property name="margin-top">6</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">6</property>
         <child>
           <object class="GtkBox">
             <property name="spacing">6</property>
@@ -555,6 +667,8 @@ Use -/= to move items up or down.</property>
             </child>
             <child>
               <object class="GtkSwitch" id="show-enumerations">
+                <property name="halign">center</property>
+                <property name="focusable">1</property>
                 <signal name="notify::active" handler="show-enumerations-changed" swapped="no"/>
               </object>
             </child>
@@ -562,19 +676,14 @@ Use -/= to move items up or down.</property>
         </child>
         <child>
           <object class="GtkFrame">
-            <property name="label-xalign">0</property>
-            <child>
+            <property name="margin-top">6</property>
+            <property name="child">
               <object class="GtkTreeView" id="enumerations-list">
                 <property name="height-request">112</property>
-                <property name="tooltip-text" translatable="yes">Add and edit enumeration literals according to UML syntax.
-Enumeration literal syntax examples
-- enum
-
-Press ENTER to edit item, BS/DEL to remove item.
-Use -/= to move items up or down.</property>
-                <property name="headers-clickable">False</property>
-                <property name="enable-search">False</property>
-                <property name="show-expanders">False</property>
+                <property name="focusable">1</property>
+                <property name="headers-clickable">0</property>
+                <property name="enable-search">0</property>
+                <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
                 <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
                 <child internal-child="selection">
@@ -582,15 +691,13 @@ Use -/= to move items up or down.</property>
                 </child>
                 <child>
                   <object class="GtkTreeViewColumn">
-                    <property name="resizable">True</property>
                     <property name="title" translatable="yes">Enumeration Literals</property>
-                    <property name="expand">True</property>
                     <child>
                       <object class="GtkCellRendererText">
                         <property name="xpad">2</property>
                         <property name="ypad">2</property>
                         <property name="xalign">0</property>
-                        <property name="editable">True</property>
+                        <property name="editable">1</property>
                         <signal name="edited" handler="enumerations-name-edited" swapped="no"/>
                       </object>
                       <attributes>
@@ -600,7 +707,20 @@ Use -/= to move items up or down.</property>
                   </object>
                 </child>
               </object>
-            </child>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="enumerations-info-icon">
+            <property name="visible">1</property>
+            <property name="margin-top">3</property>
+            <property name="halign">end</property>
+            <property name="margin-start">2</property>
+            <property name="margin-end">2</property>
+            <property name="label" translatable="yes">🛈 Help</property>
+            <style>
+              <class name="info"/>
+            </style>
           </object>
         </child>
       </object>
@@ -609,9 +729,28 @@ Use -/= to move items up or down.</property>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Enumeration Literals</property>
         <attributes>
-          <attribute name="weight" value="bold"/>
+          <attribute name="weight" value="bold"></attribute>
         </attributes>
       </object>
     </child>
+  </object>
+  <object class="GtkPopover" id="enumerations-info">
+    <!-- <property name="relative-to">enumerations-info-icon</property> -->
+    <property name="position">top</property>
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="label" translatable="yes">Add and edit enumeration literals according to UML syntax.
+
+  • &lt;tt&gt;enum&lt;/tt&gt;
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+        <property name="use-markup">1</property>
+      </object>
+    </property>
   </object>
 </interface>

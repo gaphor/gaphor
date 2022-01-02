@@ -34,6 +34,7 @@ renderers and such.</property>
             <property name="right-margin">6</property>
             <property name="top-margin">6</property>
             <property name="bottom-margin">6</property>
+            <property name="height-request">96</property>
           </object>
         </property>
       </object>
@@ -93,6 +94,7 @@ renderers and such.</property>
             <property name="right-margin">6</property>
             <property name="top-margin">6</property>
             <property name="bottom-margin">6</property>
+            <property name="height-request">96</property>
           </object>
         </property>
       </object>

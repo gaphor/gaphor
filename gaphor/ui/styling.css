@@ -56,7 +56,6 @@ flowboxchild:hover * {
 .greeter flowboxchild {
   border-radius: 12px;
   outline-offset: -3px;
-  -gtk-outline-radius: 9px;
 }
 
 .info {

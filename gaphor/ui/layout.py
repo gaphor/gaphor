@@ -5,10 +5,16 @@ from xml.etree.ElementTree import fromstring
 
 from gi.repository import Gdk, Gtk
 
+if Gtk.get_major_version() == 3:
 
-def is_maximized(window: Gtk.Window) -> bool:
-    window_state = window.get_window().get_state()
-    return window_state & (Gdk.WindowState.MAXIMIZED | Gdk.WindowState.FULLSCREEN)  # type: ignore[no-any-return]
+    def is_maximized(window: Gtk.Window) -> bool:
+        window_state = window.get_window().get_state()
+        return window_state & (Gdk.WindowState.MAXIMIZED | Gdk.WindowState.FULLSCREEN)  # type: ignore[no-any-return]
+
+else:
+
+    def is_maximized(window: Gtk.Window) -> bool:
+        return window.is_maximized()  # type: ignore[no-any-return]
 
 
 widget_factory: Dict[str, Callable] = {}
@@ -89,7 +95,8 @@ def factory(typename):
 
 
 def _position_changed(paned, _gparam, properties):
-    if not is_maximized(paned.get_toplevel()):
+    window = paned.get_toplevel() if Gtk.get_major_version() == 3 else paned.get_root()
+    if not is_maximized(window):
         properties.set(paned.get_name(), paned.props.position)
 
 
