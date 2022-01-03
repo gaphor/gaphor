@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-12-31 17:55-0500\n"
-"PO-Revision-Date: 2021-12-30 12:50+0000\n"
+"PO-Revision-Date: 2022-01-03 00:54+0000\n"
 "Last-Translator: Fran Diéguez <fran.dieguez@mabishu.com>\n"
+"Language-Team: Galician <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"gl/>\n"
 "Language: gl\n"
-"Language-Team: Galician "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/gl/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10.1\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -828,7 +829,7 @@ msgstr "Mostrar enderezo"
 #: gaphor/UML/classes/propertypages.glade:739
 #: gaphor/UML/classes/propertypages.glade:865
 msgid "🛈 Help"
-msgstr ""
+msgstr "🛈 Axuda"
 
 #: gaphor/UML/classes/propertypages.glade:107
 #: gaphor/UML/classes/propertypages.glade:234
@@ -2073,4 +2074,3 @@ msgstr "<relationships></relationships>"
 
 #~ msgid "{name} diagram"
 #~ msgstr "Diagrama {name}"
-
