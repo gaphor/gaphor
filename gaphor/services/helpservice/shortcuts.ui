@@ -152,7 +152,7 @@
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;Primary&gt;v</property>
-                <property name="title" translatable="yes">Paste</property>
+                <property name="title" translatable="yes">Paste (link)</property>
               </object>
             </child>
 
@@ -184,7 +184,7 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
-                <property name="accelerator">&lt;Primary&gt;plus</property>
+                <property name="accelerator">&lt;Primary&gt;equal</property>
                 <property name="title" translatable="yes">Zoom In</property>
               </object>
             </child>
