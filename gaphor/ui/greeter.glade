@@ -133,7 +133,7 @@
                 <property name="spacing">10</property>
                 <property name="homogeneous">1</property>
                 <child>
-                  <object class="GtkButton">
+                  <object class="GtkButton" id="greeter-recent-files-button">
                     <property name="label" translatable="yes">Recent Model…</property>
                     <property name="visible">1</property>
                     <property name="receives-default">1</property>

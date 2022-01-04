@@ -54,18 +54,32 @@ class Greeter(Service, ActionProvider):
             self.greeter.destroy()
         self.gtk_app = None
 
-    def open(self, stack_name="recent-files") -> None:
+    def open(self, stack_name=None) -> None:
         if self.greeter and self.stack:
             self.stack.set_visible_child_name(stack_name)
             self.greeter.present()
             return
 
+        if not stack_name:
+            stack_name = (
+                "recent-files" if any(self.create_recent_files()) else "new-model"
+            )
+
         builder = new_builder("greeter")
 
         listbox = builder.get_object("greeter-recent-files")
         listbox.connect("row-activated", self._on_recent_file_activated)
+        have_recent_files = False
         for widget in self.create_recent_files():
             listbox.insert(widget, -1)
+            have_recent_files = True
+
+        if not have_recent_files:
+            btn = builder.get_object("greeter-recent-files-button")
+            if Gtk.get_major_version() == 3:
+                btn.destroy()
+            else:
+                btn.unparent()
 
         templates = builder.get_object("templates")
         templates.connect("child-activated", self._on_template_activated)
