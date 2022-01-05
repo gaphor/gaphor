@@ -49,7 +49,7 @@ def test_flush(factory):
 
     gc.collect()
 
-    assert len(list(factory.values())) == 0, list(factory.values())
+    assert not list(factory.values()), list(factory.values())
 
 
 def test_without_application(factory):
@@ -73,7 +73,7 @@ def test_unlink(factory):
 
     p.unlink()
 
-    assert len(list(factory.values())) == 0, list(factory.values())
+    assert not list(factory.values()), list(factory.values())
 
     p = factory.create(Parameter)
     p.defaultValue = "l"
@@ -83,7 +83,7 @@ def test_unlink(factory):
     p.unlink()
     del p
 
-    assert len(list(factory.values())) == 0, list(factory.values())
+    assert not list(factory.values()), list(factory.values())
 
 
 # Event handlers are registered as persisting top level handlers, since no
