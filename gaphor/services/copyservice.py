@@ -74,6 +74,20 @@ class CopyService(Service, ActionProvider):
 
         return new_items
 
+    def paste_full(self, diagram):
+        with Transaction(self.event_manager):
+            # Create new id's that have to be used to create the items:
+            new_items: Set[Presentation] = paste(
+                copy_buffer, diagram, self.element_factory.lookup
+            )
+
+            # move pasted items a bit, so user can see result of his action :)
+            for item in new_items:
+                if item.parent not in new_items:
+                    item.matrix.translate(10, 10)
+
+        return new_items
+
     @action(
         name="edit-copy",
         shortcut="<Primary>c",
@@ -98,6 +112,13 @@ class CopyService(Service, ActionProvider):
 
     @action(name="edit-paste-link", shortcut="<Primary>v")
     def paste_link_action(self):
+        self._paste_action(self.paste_link)
+
+    @action(name="edit-paste-full", shortcut="<Primary><Shift>v")
+    def paste_full_action(self):
+        self._paste_action(self.paste_full)
+
+    def _paste_action(self, paster):
         view = self.diagrams.get_current_view()
         diagram = self.diagrams.get_current_diagram()
         if not (view and view.is_focus()):
@@ -106,7 +127,7 @@ class CopyService(Service, ActionProvider):
         if not copy_buffer:
             return
 
-        new_items = self.paste_link(diagram)
+        new_items = paster(diagram)
 
         selection = view.selection
         selection.unselect_all()

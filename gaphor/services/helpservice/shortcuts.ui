@@ -159,6 +159,14 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
+                <property name="accelerator">&lt;Primary&gt;&lt;Shift&gt;v</property>
+                <property name="title" translatable="yes">Paste (full)</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">1</property>
                 <property name="accelerator">Delete</property>
                 <property name="title" translatable="yes">Delete</property>
               </object>
