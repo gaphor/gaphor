@@ -36,6 +36,14 @@ def copy(obj: Element | set) -> Iterator[tuple[Id, Opaque]]:
     raise ValueError(f"No copier for {obj}")
 
 
+def paste_link(copy_data, diagram, lookup) -> set[Presentation]:
+    return _paste(copy_data, diagram, lookup, full=False)
+
+
+def paste_full(copy_data, diagram, lookup) -> set[Presentation]:
+    return _paste(copy_data, diagram, lookup, full=True)
+
+
 @singledispatch
 def paste(copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element]):
     """Paste previously copied data.
@@ -190,14 +198,6 @@ class CopyData(NamedTuple):
 def _copy_all(items: set) -> CopyData:
     elements = itertools.chain.from_iterable(copy(item) for item in items)
     return CopyData(elements=dict(elements))
-
-
-def paste_link(copy_data, diagram, lookup) -> set[Presentation]:
-    return _paste(copy_data, diagram, lookup, full=False)
-
-
-def paste_full(copy_data, diagram, lookup) -> set[Presentation]:
-    return _paste(copy_data, diagram, lookup, full=True)
 
 
 def _paste(copy_data, diagram, lookup, full) -> set[Presentation]:
