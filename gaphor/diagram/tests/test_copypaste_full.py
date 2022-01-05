@@ -1,4 +1,5 @@
 from gaphor import UML
+from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.diagram.copypaste import copy, paste_full
 from gaphor.diagram.tests.test_copypaste_link import two_classes_and_a_generalization
 from gaphor.UML.classes import ClassItem, GeneralizationItem
@@ -49,3 +50,22 @@ def test_copy_items_with_connections(diagram, element_factory):
 
     assert new_gen.general in {new_cls1, new_cls2}
     assert new_gen.specific in {new_cls1, new_cls2}
+
+
+def test_copy_element_factory(diagram, element_factory):
+    """This case tests the boundaries of the copy/paste functionality:
+
+    it copies a complete element factory, something that's not possible
+    to do from the UI.
+    """
+    two_classes_and_a_generalization(diagram, element_factory)
+
+    buffer = copy(element_factory)
+
+    new_element_factory = ElementFactory()
+    new_diagram = new_element_factory.create(Diagram)
+    paste_full(buffer, new_diagram, new_element_factory.lookup)
+
+    # new element factory has one more diagram:
+    assert len(new_element_factory.lselect(Diagram)) == 2
+    assert element_factory.size() == new_element_factory.size() - 1

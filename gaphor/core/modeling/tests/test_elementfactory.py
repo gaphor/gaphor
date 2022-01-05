@@ -1,4 +1,5 @@
 import gc
+from collections.abc import Container, Iterable
 
 import pytest
 
@@ -20,6 +21,14 @@ from gaphor.UML import Parameter
 def factory():
     event_manager = EventManager()
     return ElementFactory(event_manager)
+
+
+def test_element_factory_is_an_iterable(factory):
+    assert isinstance(factory, Iterable)
+
+
+def test_element_factory_is_a_container(factory):
+    assert isinstance(factory, Container)
 
 
 def test_create(factory):

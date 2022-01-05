@@ -85,12 +85,13 @@ class ElementCopy(NamedTuple):
     data: dict[str, tuple[str, str]]
 
 
-def copy_element(element: Element) -> ElementCopy:
+def copy_element(element: Element, blacklist: list[str] | None = None) -> ElementCopy:
     data = {}
+    # do not copy Element.presentation, to avoid cyclic dependencies
+    blacklist_ = blacklist + ["presentation"] if blacklist else ["presentation"]
 
     def save_func(name, value):
-        # do not copy Element.presentation, to avoid cyclic dependencies
-        if name != "presentation":
+        if name not in blacklist_:
             data[name] = serialize(value)
 
     element.save(save_func)
@@ -120,9 +121,12 @@ class NamedElementCopy(NamedTuple):
     with_namespace: bool
 
 
-def copy_named_element(element: NamedElement) -> NamedElementCopy:
+def copy_named_element(
+    element: NamedElement, blacklist: list[str] | None = None
+) -> NamedElementCopy:
     return NamedElementCopy(
-        element_copy=copy_element(element), with_namespace=bool(element.namespace)
+        element_copy=copy_element(element, blacklist),
+        with_namespace=bool(element.namespace),
     )
 
 
@@ -143,6 +147,11 @@ def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
 paste.register(NamedElementCopy, paste_named_element)
 
 
+@copy.register
+def _copy_diagram(element: Diagram) -> Iterator[tuple[Id, ElementCopy]]:
+    yield element.id, copy_element(element, blacklist=["ownedPresentation"])
+
+
 class PresentationCopy(NamedTuple):
     cls: type[Element]
     data: dict[str, tuple[str, str]]
@@ -151,20 +160,12 @@ class PresentationCopy(NamedTuple):
 
 def copy_presentation(item: Presentation) -> PresentationCopy:
     assert item.diagram
-    data = {}
 
-    def save_func(name, value):
-        # Do not copy diagram, it's set when pasted,
-        # parent and children are set separately.
-        if name not in ("diagram", "parent", "children"):
-            data[name] = serialize(value)
-
-    item.save(save_func)
     parent = item.parent
     return PresentationCopy(
         cls=item.__class__,
-        data=data,
-        parent=parent.id if parent and isinstance(parent.id, str) else None,
+        data=copy_element(item, blacklist=["diagram", "parent", "children"]).data,
+        parent=parent.id if parent else None,
     )
 
 

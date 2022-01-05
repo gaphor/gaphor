@@ -116,6 +116,9 @@ class ElementFactory(Service):
 
     __getitem__ = lookup
 
+    def __iter__(self):
+        return iter(self._elements.values())
+
     def __contains__(self, element: Element) -> bool:
         assert isinstance(element.id, str)
         return self.lookup(element.id) is element
