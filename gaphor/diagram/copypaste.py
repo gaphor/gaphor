@@ -193,41 +193,14 @@ def _copy_all(items: set) -> CopyData:
 
 
 def paste_link(copy_data, diagram, lookup) -> set[Presentation]:
-    assert isinstance(copy_data, CopyData)
-
-    new_elements: dict[str, Presentation | None] = {}
-
-    def element_lookup(ref: str):
-        if ref in new_elements:
-            return new_elements[ref]
-
-        looked_up = lookup(ref)
-        if looked_up and not isinstance(looked_up, Presentation):
-            return looked_up
-
-        if ref in copy_data.elements:
-            paster = paste(copy_data.elements[ref], diagram, element_lookup)
-            new_elements[ref] = next(paster)
-            next(paster, None)
-            return new_elements[ref]
-
-        looked_up = diagram.lookup(ref)
-        if looked_up:
-            return looked_up
-
-    for old_id in copy_data.elements.keys():
-        if old_id in new_elements:
-            continue
-        element_lookup(old_id)
-
-    for element in new_elements.values():
-        assert element
-        element.postload()
-
-    return {e for e in new_elements.values() if isinstance(e, Presentation)}
+    return _paste(copy_data, diagram, lookup, full=False)
 
 
 def paste_full(copy_data, diagram, lookup) -> set[Presentation]:
+    return _paste(copy_data, diagram, lookup, full=True)
+
+
+def _paste(copy_data, diagram, lookup, full) -> set[Presentation]:
     assert isinstance(copy_data, CopyData)
 
     new_elements: dict[str, Presentation | None] = {}
@@ -236,14 +209,17 @@ def paste_full(copy_data, diagram, lookup) -> set[Presentation]:
         if ref in new_elements:
             return new_elements[ref]
 
+        looked_up = lookup(ref)
+        if not full and looked_up and not isinstance(looked_up, Presentation):
+            return looked_up
+
         if ref in copy_data.elements:
             paster = paste(copy_data.elements[ref], diagram, element_lookup)
             new_elements[ref] = next(paster)
             next(paster, None)
             return new_elements[ref]
 
-        looked_up = lookup(ref)
-        if looked_up and not isinstance(looked_up, Presentation):
+        if full and looked_up and not isinstance(looked_up, Presentation):
             return looked_up
 
         looked_up = diagram.lookup(ref)
