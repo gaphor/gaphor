@@ -14,6 +14,7 @@ the `paste()` function will load this data in a model.
 from __future__ import annotations
 
 import itertools
+from collections.abc import Iterable
 from functools import singledispatch
 from typing import Callable, Iterator, NamedTuple
 
@@ -27,7 +28,7 @@ Opaque = object
 
 
 @singledispatch
-def copy(obj: Element | set) -> Iterator[tuple[Id, Opaque]]:
+def copy(obj: Element | Iterable) -> Iterator[tuple[Id, Opaque]]:
     """Create a copy of an element (or list of elements).
 
     The returned type should be distinct, so the `paste()` function can
@@ -195,7 +196,7 @@ class CopyData(NamedTuple):
 
 
 @copy.register  # type: ignore[arg-type]
-def _copy_all(items: set) -> CopyData:
+def _copy_all(items: Iterable) -> CopyData:
     elements = itertools.chain.from_iterable(copy(item) for item in items)
     return CopyData(elements=dict(elements))
 
