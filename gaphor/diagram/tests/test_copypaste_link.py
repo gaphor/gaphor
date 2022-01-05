@@ -32,20 +32,6 @@ def test_copied_item_references_same_model_element(diagram, element_factory):
     assert item1.subject is item2.subject
 
 
-def test_copied_item_with_new_model_element(diagram, element_factory):
-    cls = element_factory.create(UML.Class)
-    cls_item = diagram.create(ClassItem, subject=cls)
-
-    _, buffer = next(copy(cls_item))
-
-    all(paste(buffer, diagram, element_factory.lookup))
-
-    assert len(list(diagram.get_all_items())) == 2
-    item1, item2 = diagram.get_all_items()
-
-    assert item1.subject is item2.subject
-
-
 def test_copy_multiple_items(diagram, element_factory):
     cls = element_factory.create(UML.Class)
     cls_item1 = diagram.create(ClassItem, subject=cls)
@@ -135,9 +121,9 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
 
     paste_link(buffer, diagram, element_factory.lookup)
     new_cls = element_factory.lselect(UML.Class)[0]
-    assert len(list(diagram.get_all_items())) == 1
+    (new_cls_item,) = diagram.get_all_items()
     assert new_cls.package is package
-    assert element_factory.lookup(orig_cls_id) is new_cls
+    assert new_cls_item.subject is new_cls
 
 
 def test_copy_remove_paste_items_with_connections(diagram, element_factory):

@@ -94,8 +94,8 @@ def _copy_element(element: Element) -> Iterator[tuple[Id, ElementCopy]]:
 
 
 def paste_element(copy_data: ElementCopy, diagram, lookup):
-    cls, id, data = copy_data
-    element = diagram.model.create_as(cls, id)
+    cls, _id, data = copy_data
+    element = diagram.model.create(cls)
     yield element
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
@@ -205,7 +205,7 @@ def paste_link(copy_data, diagram, lookup) -> set[Presentation]:
         if looked_up and not isinstance(looked_up, Presentation):
             return looked_up
 
-        elif ref in copy_data.elements:
+        if ref in copy_data.elements:
             paster = paste(copy_data.elements[ref], diagram, element_lookup)
             new_elements[ref] = next(paster)
             next(paster, None)
@@ -230,4 +230,33 @@ def paste_link(copy_data, diagram, lookup) -> set[Presentation]:
 def paste_full(copy_data, diagram, lookup) -> set[Presentation]:
     assert isinstance(copy_data, CopyData)
 
-    return set()
+    new_elements: dict[str, Presentation | None] = {}
+
+    def element_lookup(ref: str):
+        if ref in new_elements:
+            return new_elements[ref]
+
+        if ref in copy_data.elements:
+            paster = paste(copy_data.elements[ref], diagram, element_lookup)
+            new_elements[ref] = next(paster)
+            next(paster, None)
+            return new_elements[ref]
+
+        looked_up = lookup(ref)
+        if looked_up and not isinstance(looked_up, Presentation):
+            return looked_up
+
+        looked_up = diagram.lookup(ref)
+        if looked_up:
+            return looked_up
+
+    for old_id in copy_data.elements.keys():
+        if old_id in new_elements:
+            continue
+        element_lookup(old_id)
+
+    for element in new_elements.values():
+        assert element
+        element.postload()
+
+    return {e for e in new_elements.values() if isinstance(e, Presentation)}
