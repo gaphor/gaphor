@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-31 17:55-0500\n"
-"PO-Revision-Date: 2021-09-27 02:39+0000\n"
-"Last-Translator: JonnathanRiquelmo <jonnathan.riquelmo@gmail.com>\n"
+"PO-Revision-Date: 2022-01-06 13:55+0000\n"
+"Last-Translator: Gabriel Gian <gabrielgian@live.com>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
+"gaphor/gaphor/pt_BR/>\n"
 "Language: pt_BR\n"
-"Language-Team: Portuguese (Brazil) "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/pt_BR/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.10.1\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -29,29 +30,24 @@ msgid "Technology"
 msgstr "Tecnologia"
 
 #: gaphor/C4Model/toolbox.py:30
-#, fuzzy
 msgid "New Software System"
-msgstr "Sistema de Software"
+msgstr "Novo Sistema de Software"
 
 #: gaphor/C4Model/toolbox.py:37
-#, fuzzy
 msgid "New Container"
-msgstr "Ponteiro"
+msgstr "Novo Contêiner"
 
 #: gaphor/C4Model/toolbox.py:44
-#, fuzzy
 msgid "Database"
-msgstr "Container: Banco de Dados"
+msgstr "Banco de Dados"
 
 #: gaphor/C4Model/toolbox.py:45
-#, fuzzy
 msgid "New Database"
-msgstr "Container: Banco de Dados"
+msgstr "Novo Banco de Dados"
 
 #: gaphor/C4Model/toolbox.py:52
-#, fuzzy
 msgid "New Component"
-msgstr "Componente"
+msgstr "Novo Componente"
 
 #: gaphor/C4Model/toolbox.py:60 gaphor/C4Model/toolbox.py:66
 msgid "Person"
@@ -62,13 +58,12 @@ msgid "Software System"
 msgstr "Sistema de Software"
 
 #: gaphor/C4Model/toolbox.py:84
-#, fuzzy
 msgid "Container"
-msgstr "Ponteiro"
+msgstr "Contêiner"
 
 #: gaphor/C4Model/toolbox.py:96
 msgid "Container: Database"
-msgstr "Container: Banco de Dados"
+msgstr "Contêiner: Banco de Dados"
 
 #: gaphor/C4Model/toolbox.py:108 gaphor/UML/components/componentstoolbox.py:16
 msgid "Component"
@@ -81,50 +76,43 @@ msgid "Dependency"
 msgstr "Dependência"
 
 #: gaphor/C4Model/toolbox.py:140
-#, fuzzy
 msgid "New C4 Diagram"
-msgstr "Novo _Diagrama"
+msgstr "Novo Diagrama C4"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/UML/toolbox.py:30
-#, fuzzy
 msgid "New Class Diagram"
-msgstr "Novo _Diagrama"
+msgstr "Novo Diagrama de Classe"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
-#, fuzzy
 msgid "New Activity Diagram"
-msgstr "Novo _Diagrama"
+msgstr "Novo Diagrama de Atividade"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
-#, fuzzy
 msgid "New Sequence Diagram"
-msgstr "Novo _Diagrama"
+msgstr "Novo Diagrama de Sequência"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
-#, fuzzy
 msgid "New State Machine Diagram"
-msgstr "Novo _diagrama"
+msgstr "Novo Diagrama de Máquina de Estados"
 
 #: gaphor/RAAML/modelinglanguage.py:17
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
-#, fuzzy
 msgid "New FTA Diagram"
-msgstr "Novo _Diagrama"
+msgstr "Novo Diagrama de ADF"
 
 #: gaphor/RAAML/toolbox.py:20
-#, fuzzy
 msgid "New STPA Diagram"
-msgstr "Novo _Diagrama"
+msgstr "Novo Diagrama STPA"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
-msgstr ""
+msgstr "Portão AND"
 
 #: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
@@ -139,7 +127,7 @@ msgstr "Evento Condicional"
 #: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
-msgstr ""
+msgstr "Evento Dormente"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:12
 msgid "Fault Tree Analysis"
@@ -147,65 +135,64 @@ msgstr "Análise de Árvore de Falhas"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
-msgstr ""
+msgstr "AND"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
-msgstr ""
+msgstr "Portão OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41
 msgid "OR"
-msgstr ""
+msgstr "OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
-#, fuzzy
 msgid "NOT Gate"
-msgstr "Estado"
+msgstr "Portão NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
-msgstr ""
+msgstr "NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr ""
+msgstr "Portão SEQ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:63
 msgid "SEQ"
-msgstr ""
+msgstr "SEQ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
-msgstr ""
+msgstr "Portão OR Exclusivo"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
-msgstr ""
+msgstr "XOR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:41
 msgid "Majority Vote Gate"
-msgstr ""
+msgstr "Portão de Voto da Maioria"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:35
 msgid "Inhibit Gate"
-msgstr ""
+msgstr "Portão Inibir"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
-msgstr ""
+msgstr "Transferir para"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
 #: gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
-msgstr ""
+msgstr "Transferir de"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:36
 msgid "Undeveloped Event"
-msgstr ""
+msgstr "Evento Não-desenvolvido"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
 #: gaphor/RAAML/fta/houseevent.py:35
@@ -233,22 +220,20 @@ msgstr ""
 
 #: gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr ""
+msgstr "Portão XOR"
 
 #: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:156
-#, fuzzy
 msgid "Control Action"
-msgstr "Interação"
+msgstr "Ação de Controle"
 
 #: gaphor/RAAML/stpa/operationalsituation.py:34
 #: gaphor/RAAML/stpa/stpatoolbox.py:124
 msgid "Operational Situation"
-msgstr ""
+msgstr "Situação Operacional"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:18 gaphor/RAAML/stpa/stpatoolbox.py:44
-#, fuzzy
 msgid "Loss"
-msgstr "Classe"
+msgstr "Perda"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:23 gaphor/RAAML/stpa/stpatoolbox.py:53
 msgid "Hazard"
@@ -2375,4 +2360,3 @@ msgstr "&lt;Relacionamentos&gt;"
 
 #~ msgid "{name} diagram"
 #~ msgstr "Novo _Diagrama"
-
