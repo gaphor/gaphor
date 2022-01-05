@@ -59,7 +59,7 @@ class CopyService(Service, ActionProvider):
         if items:
             copy_buffer = copy(items)
 
-    def paste(self, diagram):
+    def paste_link(self, diagram):
         """Paste items in the copy-buffer to the diagram."""
         with Transaction(self.event_manager):
             # Create new id's that have to be used to create the items:
@@ -96,8 +96,8 @@ class CopyService(Service, ActionProvider):
                 for i in list(items):
                     i.unlink()
 
-    @action(name="edit-paste", shortcut="<Primary>v")
-    def paste_action(self):
+    @action(name="edit-paste-link", shortcut="<Primary>v")
+    def paste_link_action(self):
         view = self.diagrams.get_current_view()
         diagram = self.diagrams.get_current_diagram()
         if not (view and view.is_focus()):
@@ -106,7 +106,7 @@ class CopyService(Service, ActionProvider):
         if not copy_buffer:
             return
 
-        new_items = self.paste(diagram)
+        new_items = self.paste_link(diagram)
 
         selection = view.selection
         selection.unselect_all()
