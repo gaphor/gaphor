@@ -5,7 +5,7 @@ from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
     MockModelingLanguage,
 )
-from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste
+from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste_link
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.classes import InterfaceItem
 from gaphor.UML.components import ComponentItem, ConnectorItem
@@ -30,7 +30,9 @@ def test_connector(diagram, element_factory):
     connect(conn_item, conn_item.handles()[0], comp_item)
     connect(conn_item, conn_item.handles()[1], iface_item)
 
-    copy_clear_and_paste({comp_item, iface_item, conn_item}, diagram, element_factory)
+    copy_clear_and_paste_link(
+        {comp_item, iface_item, conn_item}, diagram, element_factory
+    )
 
     new_conn = element_factory.lselect(UML.Connector)[0]
     new_comp = element_factory.lselect(UML.Component)[0]

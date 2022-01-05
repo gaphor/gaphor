@@ -2,7 +2,11 @@ import pytest
 
 from gaphor import UML
 from gaphor.core.format import format, parse
-from gaphor.diagram.tests.fixtures import connect, copy_and_paste, copy_clear_and_paste
+from gaphor.diagram.tests.fixtures import (
+    connect,
+    copy_and_paste_link,
+    copy_clear_and_paste_link,
+)
 from gaphor.UML.classes import (
     AssociationItem,
     ClassItem,
@@ -28,7 +32,7 @@ def test_class_with_attributes(diagram, element_factory, cls_type, item):
 
     cls_item = diagram.create(item, subject=cls)
 
-    new_items = copy_clear_and_paste({cls_item}, diagram, element_factory)
+    new_items = copy_clear_and_paste_link({cls_item}, diagram, element_factory)
     new_cls_item = new_items.pop()
 
     assert isinstance(new_cls_item, item)
@@ -51,7 +55,7 @@ def test_class_with_operation(diagram, element_factory, cls_type, item):
 
     cls_item = diagram.create(item, subject=cls)
 
-    new_items = copy_clear_and_paste({cls_item}, diagram, element_factory)
+    new_items = copy_clear_and_paste_link({cls_item}, diagram, element_factory)
     new_cls_item = new_items.pop()
 
     assert isinstance(new_cls_item, item)
@@ -69,7 +73,7 @@ def test_enumeration_with_literal(diagram, element_factory):
 
     enum_item = diagram.create(EnumerationItem, subject=enum)
 
-    new_items = copy_clear_and_paste({enum_item}, diagram, element_factory)
+    new_items = copy_clear_and_paste_link({enum_item}, diagram, element_factory)
     new_enum_item = new_items.pop()
 
     assert isinstance(new_enum_item, EnumerationItem)
@@ -89,7 +93,7 @@ def test_interface_with_attributes_and_operation(diagram, element_factory):
 
     iface_item = diagram.create(InterfaceItem, subject=iface)
 
-    new_items = copy_clear_and_paste({iface_item}, diagram, element_factory)
+    new_items = copy_clear_and_paste_link({iface_item}, diagram, element_factory)
     new_iface_item = new_items.pop()
 
     assert isinstance(new_iface_item, InterfaceItem)
@@ -134,7 +138,9 @@ def test_copy_paste_items_with_connections(diagram, element_factory):
 
     assoc = assoc_item.subject
 
-    copy_and_paste({gen_cls_item, assoc_item, spc_cls_item}, diagram, element_factory)
+    copy_and_paste_link(
+        {gen_cls_item, assoc_item, spc_cls_item}, diagram, element_factory
+    )
 
     new_assoc_item = assoc.presentation[1]
 
@@ -149,7 +155,7 @@ def test_copy_remove_paste_items_with_connections(diagram, element_factory):
         diagram, element_factory
     )
 
-    new_items = copy_clear_and_paste(
+    new_items = copy_clear_and_paste_link(
         {gen_cls_item, assoc_item, spc_cls_item}, diagram, element_factory
     )
     new_cls1 = next(

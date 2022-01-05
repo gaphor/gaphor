@@ -3,8 +3,9 @@
 The `copy()` function will return all values serialized, either as string
 values or reference id's.
 
-The `paste()` function will resolve those values. Based on the elements
+The `paste_link()` function will resolve those values. Based on the elements
 that are already in the model,
+`paste_full()` will try copy every element involved.
 
 The copy() function returns only data that has to be part of the copy buffer.
 the `paste()` function will load this data in a model.
@@ -191,8 +192,9 @@ def _copy_all(items: set) -> CopyData:
     return CopyData(elements=dict(elements))
 
 
-@paste.register
-def _paste_all(copy_data: CopyData, diagram, lookup) -> set[Presentation]:
+def paste_link(copy_data, diagram, lookup) -> set[Presentation]:
+    assert isinstance(copy_data, CopyData)
+
     new_elements: dict[str, Presentation | None] = {}
 
     def element_lookup(ref: str):
@@ -213,7 +215,7 @@ def _paste_all(copy_data: CopyData, diagram, lookup) -> set[Presentation]:
         if looked_up:
             return looked_up
 
-    for old_id, data in copy_data.elements.items():
+    for old_id in copy_data.elements.keys():
         if old_id in new_elements:
             continue
         element_lookup(old_id)
@@ -223,3 +225,9 @@ def _paste_all(copy_data: CopyData, diagram, lookup) -> set[Presentation]:
         element.postload()
 
     return {e for e in new_elements.values() if isinstance(e, Presentation)}
+
+
+def paste_full(copy_data, diagram, lookup) -> set[Presentation]:
+    assert isinstance(copy_data, CopyData)
+
+    return set()

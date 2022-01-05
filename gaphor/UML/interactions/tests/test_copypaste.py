@@ -1,5 +1,5 @@
 from gaphor import UML
-from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste
+from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste_link
 from gaphor.UML.interactions import LifelineItem, MessageItem
 from gaphor.UML.interactions.tests.test_executionspecification import (
     create_lifeline_with_execution_specification,
@@ -17,7 +17,7 @@ def test_message(diagram, element_factory):
     connect(message_item, message_item.handles()[0], lifeline1_item)
     connect(message_item, message_item.handles()[1], lifeline2_item)
 
-    copy_clear_and_paste(
+    copy_clear_and_paste_link(
         {lifeline1_item, lifeline2_item, message_item}, diagram, element_factory
     )
 
@@ -36,7 +36,7 @@ def test_execution_specification(diagram, element_factory):
         diagram, element_factory
     )
 
-    copy_clear_and_paste({lifeline_item, exec_spec_item}, diagram, element_factory)
+    copy_clear_and_paste_link({lifeline_item, exec_spec_item}, diagram, element_factory)
 
     new_exec_spec: UML.ExecutionSpecification = element_factory.lselect(
         lambda e: isinstance(e, UML.ExecutionSpecification)

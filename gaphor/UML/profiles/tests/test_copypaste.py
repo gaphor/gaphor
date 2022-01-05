@@ -1,5 +1,9 @@
 from gaphor import UML
-from gaphor.diagram.tests.fixtures import connect, copy_and_paste, copy_clear_and_paste
+from gaphor.diagram.tests.fixtures import (
+    connect,
+    copy_and_paste_link,
+    copy_clear_and_paste_link,
+)
 from gaphor.UML.classes import ClassItem
 from gaphor.UML.profiles.extension import ExtensionItem
 
@@ -24,7 +28,7 @@ def test_copy_paste_of_stereotype(diagram, element_factory):
         diagram, element_factory
     )
 
-    copy_and_paste({m_cls_item, ext_item, st_cls_item}, diagram, element_factory)
+    copy_and_paste_link({m_cls_item, ext_item, st_cls_item}, diagram, element_factory)
 
     new_ext_item = ext_item.subject.presentation[1]
 
@@ -37,7 +41,9 @@ def test_cut_paste_of_stereotype(diagram, element_factory):
         diagram, element_factory
     )
 
-    copy_clear_and_paste({m_cls_item, st_cls_item, ext_item}, diagram, element_factory)
+    copy_clear_and_paste_link(
+        {m_cls_item, st_cls_item, ext_item}, diagram, element_factory
+    )
     new_m_cls = next(
         element_factory.select(
             lambda e: isinstance(e, UML.NamedElement) and e.name == "Class"

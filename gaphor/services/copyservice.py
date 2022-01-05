@@ -7,7 +7,7 @@ from gi.repository import Gdk, Gtk
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import Transaction, action
 from gaphor.core.modeling import Presentation
-from gaphor.diagram.copypaste import copy, paste
+from gaphor.diagram.copypaste import copy, paste_full, paste_link
 from gaphor.ui.event import DiagramSelectionChanged
 
 copy_buffer: object = None
@@ -63,7 +63,7 @@ class CopyService(Service, ActionProvider):
         """Paste items in the copy-buffer to the diagram."""
         with Transaction(self.event_manager):
             # Create new id's that have to be used to create the items:
-            new_items: Set[Presentation] = paste(
+            new_items: Set[Presentation] = paste_link(
                 copy_buffer, diagram, self.element_factory.lookup
             )
 
@@ -77,7 +77,7 @@ class CopyService(Service, ActionProvider):
     def paste_full(self, diagram):
         with Transaction(self.event_manager):
             # Create new id's that have to be used to create the items:
-            new_items: Set[Presentation] = paste(
+            new_items: Set[Presentation] = paste_full(
                 copy_buffer, diagram, self.element_factory.lookup
             )
 

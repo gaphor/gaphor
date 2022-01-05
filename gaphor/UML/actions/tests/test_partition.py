@@ -2,7 +2,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.diagram.diagramtoolbox import new_item_factory
-from gaphor.diagram.tests.fixtures import copy_and_paste, copy_clear_and_paste
+from gaphor.diagram.tests.fixtures import copy_and_paste_link, copy_clear_and_paste_link
 from gaphor.UML.actions.actionstoolbox import partition_config
 from gaphor.UML.actions.partition import PartitionItem
 
@@ -28,7 +28,7 @@ def test_partition_placement_adds_two_partitions(partition_item: PartitionItem):
 
 
 def test_copy_and_paste_partition_item(partition_item, diagram, element_factory):
-    new_items = copy_and_paste({partition_item}, diagram, element_factory)
+    new_items = copy_and_paste_link({partition_item}, diagram, element_factory)
 
     (new_item,) = new_items
 
@@ -38,7 +38,7 @@ def test_copy_and_paste_partition_item(partition_item, diagram, element_factory)
 
 
 def test_copy_remove_and_paste_partition_item(partition_item, diagram, element_factory):
-    copy_clear_and_paste({partition_item}, diagram, element_factory)
+    copy_clear_and_paste_link({partition_item}, diagram, element_factory)
 
     new_item = diagram.ownedPresentation[0]
 
