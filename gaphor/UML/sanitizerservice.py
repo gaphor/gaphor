@@ -7,6 +7,7 @@ from gaphor.abc import Service
 from gaphor.core import event_handler
 from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.core.modeling.event import AssociationDeleted, AssociationSet, DerivedSet
+from gaphor.diagram.deletable import deletable
 from gaphor.diagram.general import CommentLineItem
 from gaphor.event import Notification
 from gaphor.i18n import gettext
@@ -64,7 +65,7 @@ class SanitizerService(Service):
             return
 
         old_subject = event.old_value
-        if old_subject and not old_subject.presentation:
+        if old_subject and not old_subject.presentation and deletable(old_subject):
             old_subject.unlink()
 
             self.event_manager.handle(
