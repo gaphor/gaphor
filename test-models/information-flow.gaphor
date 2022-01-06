@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.7.1">
+<StyleSheet id="c081d47d-6efd-11ec-810e-7394cc5d26b3"/>
+<Package id="c08201d0-6efd-11ec-bc90-7394cc5d26b3">
+<name>
+<val>New model</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="c082035e-6efd-11ec-ba64-7394cc5d26b3"/>
+</reflist>
+</ownedDiagram>
+<ownedType>
+<reflist>
+<ref refid="cd86ab3d-6efd-11ec-9fda-7394cc5d26b3"/>
+</reflist>
+</ownedType>
+</Package>
+<Diagram id="c082035e-6efd-11ec-ba64-7394cc5d26b3">
+<element>
+<ref refid="c08201d0-6efd-11ec-bc90-7394cc5d26b3"/>
+</element>
+<name>
+<val>main</val>
+</name>
+<ownedPresentation>
+<reflist>
+<ref refid="c7bae182-6efd-11ec-8889-7394cc5d26b3"/>
+<ref refid="c96044f9-6efd-11ec-86e6-7394cc5d26b3"/>
+<ref refid="cd870a00-6efd-11ec-9fb7-7394cc5d26b3"/>
+<ref refid="caf3ea37-6efd-11ec-bcc0-7394cc5d26b3"/>
+</reflist>
+</ownedPresentation>
+</Diagram>
+<Property id="c7ba9c15-6efd-11ec-9432-7394cc5d26b3">
+<end>
+<reflist>
+<ref refid="cbc09a81-6efd-11ec-a30f-7394cc5d26b3"/>
+</reflist>
+</end>
+<name>
+<val>A</val>
+</name>
+<presentation>
+<reflist>
+<ref refid="c7bae182-6efd-11ec-8889-7394cc5d26b3"/>
+</reflist>
+</presentation>
+</Property>
+<PropertyItem id="c7bae182-6efd-11ec-8889-7394cc5d26b3">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 197.0, 180.0)</val>
+</matrix>
+<width>
+<val>116.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<diagram>
+<ref refid="c082035e-6efd-11ec-ba64-7394cc5d26b3"/>
+</diagram>
+<subject>
+<ref refid="c7ba9c15-6efd-11ec-9432-7394cc5d26b3"/>
+</subject>
+</PropertyItem>
+<Property id="c96019ab-6efd-11ec-a226-7394cc5d26b3">
+<end>
+<reflist>
+<ref refid="cbc0a301-6efd-11ec-920b-7394cc5d26b3"/>
+</reflist>
+</end>
+<informationFlow>
+<reflist>
+<ref refid="d6ec5427-6efd-11ec-93b1-7394cc5d26b3"/>
+</reflist>
+</informationFlow>
+<name>
+<val>B</val>
+</name>
+<presentation>
+<reflist>
+<ref refid="c96044f9-6efd-11ec-86e6-7394cc5d26b3"/>
+</reflist>
+</presentation>
+</Property>
+<PropertyItem id="c96044f9-6efd-11ec-86e6-7394cc5d26b3">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 193.21194762684127, 351.0)</val>
+</matrix>
+<width>
+<val>116.0</val>
+</width>
+<height>
+<val>50.0</val>
+</height>
+<diagram>
+<ref refid="c082035e-6efd-11ec-ba64-7394cc5d26b3"/>
+</diagram>
+<subject>
+<ref refid="c96019ab-6efd-11ec-a226-7394cc5d26b3"/>
+</subject>
+</PropertyItem>
+<ConnectorItem id="caf3ea37-6efd-11ec-bcc0-7394cc5d26b3">
+<diagram>
+<ref refid="c082035e-6efd-11ec-ba64-7394cc5d26b3"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="cbc06a00-6efd-11ec-a8ab-7394cc5d26b3"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 250.0, 210.0)</val>
+</matrix>
+<points>
+<val>[(1.2119476268412512, 20.0), (3.231178396072039, 141.0)]</val>
+</points>
+<head-connection>
+<ref refid="c7bae182-6efd-11ec-8889-7394cc5d26b3"/>
+</head-connection>
+<tail-connection>
+<ref refid="c96044f9-6efd-11ec-86e6-7394cc5d26b3"/>
+</tail-connection>
+</ConnectorItem>
+<Connector id="cbc06a00-6efd-11ec-a8ab-7394cc5d26b3">
+<end>
+<reflist>
+<ref refid="cbc09a81-6efd-11ec-a30f-7394cc5d26b3"/>
+<ref refid="cbc0a301-6efd-11ec-920b-7394cc5d26b3"/>
+</reflist>
+</end>
+<informationFlow>
+<reflist>
+<ref refid="d6ec5427-6efd-11ec-93b1-7394cc5d26b3"/>
+</reflist>
+</informationFlow>
+<presentation>
+<reflist>
+<ref refid="caf3ea37-6efd-11ec-bcc0-7394cc5d26b3"/>
+</reflist>
+</presentation>
+</Connector>
+<ConnectorEnd id="cbc09a81-6efd-11ec-a30f-7394cc5d26b3">
+<role>
+<ref refid="c7ba9c15-6efd-11ec-9432-7394cc5d26b3"/>
+</role>
+</ConnectorEnd>
+<ConnectorEnd id="cbc0a301-6efd-11ec-920b-7394cc5d26b3">
+<role>
+<ref refid="c96019ab-6efd-11ec-a226-7394cc5d26b3"/>
+</role>
+</ConnectorEnd>
+<Block id="cd86ab3d-6efd-11ec-9fda-7394cc5d26b3">
+<name>
+<val>Flow Type</val>
+</name>
+<package>
+<ref refid="c08201d0-6efd-11ec-bc90-7394cc5d26b3"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="cd870a00-6efd-11ec-9fb7-7394cc5d26b3"/>
+</reflist>
+</presentation>
+</Block>
+<BlockItem id="cd870a00-6efd-11ec-9fb7-7394cc5d26b3">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 55.0, 77.0)</val>
+</matrix>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>58.0</val>
+</height>
+<diagram>
+<ref refid="c082035e-6efd-11ec-ba64-7394cc5d26b3"/>
+</diagram>
+<subject>
+<ref refid="cd86ab3d-6efd-11ec-9fda-7394cc5d26b3"/>
+</subject>
+</BlockItem>
+<InformationFlow id="d6ec5427-6efd-11ec-93b1-7394cc5d26b3">
+<conveyed>
+<reflist>
+<ref refid="cd86ab3d-6efd-11ec-9fda-7394cc5d26b3"/>
+</reflist>
+</conveyed>
+<informationSource>
+<ref refid="c7ba9c15-6efd-11ec-9432-7394cc5d26b3"/>
+</informationSource>
+<informationTarget>
+<ref refid="c96019ab-6efd-11ec-a226-7394cc5d26b3"/>
+</informationTarget>
+<realizingConnector>
+<ref refid="cbc06a00-6efd-11ec-a8ab-7394cc5d26b3"/>
+</realizingConnector>
+</InformationFlow>
+</gaphor>
