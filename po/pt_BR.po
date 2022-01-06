@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-31 17:55-0500\n"
-"PO-Revision-Date: 2022-01-06 13:55+0000\n"
+"PO-Revision-Date: 2022-01-07 16:56+0000\n"
 "Last-Translator: Gabriel Gian <gabrielgian@live.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gaphor/gaphor/pt_BR/>\n"
@@ -112,7 +112,7 @@ msgstr "Novo Diagrama STPA"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
-msgstr "Portão AND"
+msgstr "Porta AND"
 
 #: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
@@ -139,7 +139,7 @@ msgstr "AND"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
-msgstr "Portão OR"
+msgstr "Porta OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41
 msgid "OR"
@@ -147,7 +147,7 @@ msgstr "OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
-msgstr "Portão NOT"
+msgstr "Porta NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
@@ -155,7 +155,7 @@ msgstr "NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr "Portão SEQ"
+msgstr "Porta SEQ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:63
 msgid "SEQ"
@@ -163,7 +163,7 @@ msgstr "SEQ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
-msgstr "Portão OR Exclusivo"
+msgstr "Porta OR Exclusiva"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
@@ -172,12 +172,12 @@ msgstr "XOR"
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:41
 msgid "Majority Vote Gate"
-msgstr "Portão de Voto da Maioria"
+msgstr "Porta de Voto da Maioria"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:35
 msgid "Inhibit Gate"
-msgstr "Portão Inibir"
+msgstr "Porta de Inibição"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:35
@@ -207,7 +207,7 @@ msgstr "Evento Zero"
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
-msgstr ""
+msgstr "Evento do topo"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:33
@@ -216,11 +216,11 @@ msgstr "Evento Intermediário"
 
 #: gaphor/RAAML/fta/seqgate.py:37
 msgid "Sequence Enforcing Gate"
-msgstr ""
+msgstr "Porta Sequencial"
 
 #: gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr "Portão XOR"
+msgstr "Porta XOR"
 
 #: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:156
 msgid "Control Action"
@@ -237,11 +237,11 @@ msgstr "Perda"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:23 gaphor/RAAML/stpa/stpatoolbox.py:53
 msgid "Hazard"
-msgstr ""
+msgstr "Risco"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:28 gaphor/RAAML/stpa/stpatoolbox.py:113
 msgid "Abstract Operational Situation"
-msgstr ""
+msgstr "Situação Operacional Abstrata"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:73
 #: gaphor/UML/classes/classestoolbox.py:131
@@ -249,9 +249,8 @@ msgid "Generalization"
 msgstr "Generalização"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:62 gaphor/SysML/blocks/block.py:64
-#, fuzzy
 msgid "Situation"
-msgstr "Associação"
+msgstr "Situação"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:73
 msgid "Control Structure"
@@ -259,7 +258,7 @@ msgstr "Estrutura de Controle"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:84
 msgid "Controller"
-msgstr ""
+msgstr "Controlador"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:93
 #, fuzzy
@@ -268,12 +267,12 @@ msgstr "Ator"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:102
 msgid "Controlled Process"
-msgstr ""
+msgstr "Processo Controlado"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:135
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "Unsafe Control Action"
-msgstr ""
+msgstr "Ação de Controle Insegura"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:146
 msgid "Relevant To"
@@ -286,12 +285,11 @@ msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:28 gaphor/SysML/propertypages.ui:23
 msgid "Item Flow"
-msgstr ""
+msgstr "Fluxo de Itens"
 
 #: gaphor/SysML/propertypages.glade:51 gaphor/SysML/propertypages.ui:38
-#, fuzzy
 msgid "Item Property"
-msgstr "Propriedades"
+msgstr "Propriedades do Item"
 
 #: gaphor/SysML/propertypages.glade:74 gaphor/SysML/propertypages.ui:52
 #: gaphor/UML/classes/propertypages.glade:48
@@ -303,26 +301,23 @@ msgstr "Inverter direção"
 
 #: gaphor/SysML/propertypages.glade:115 gaphor/SysML/propertypages.ui:77
 msgid "Show Parts"
-msgstr ""
+msgstr "Mostrar Partes"
 
 #: gaphor/SysML/propertypages.glade:138 gaphor/SysML/propertypages.ui:92
-#, fuzzy
 msgid "Show References"
-msgstr "Exibir referências"
+msgstr "Exibir Referências"
 
 #: gaphor/SysML/propertypages.glade:164 gaphor/SysML/propertypages.ui:107
 msgid "Show Values"
-msgstr ""
+msgstr "Mostrar Valores"
 
 #: gaphor/SysML/propertypages.glade:189 gaphor/SysML/propertypages.ui:122
-#, fuzzy
 msgid "Compartments"
-msgstr "Implementação"
+msgstr "Compartimentos"
 
 #: gaphor/SysML/propertypages.glade:204 gaphor/SysML/propertypages.ui:136
-#, fuzzy
 msgid "Aggregation"
-msgstr "Partição"
+msgstr "Agregação"
 
 #: gaphor/SysML/propertypages.glade:218 gaphor/SysML/propertypages.ui:146
 #: gaphor/UML/classes/propertypages.glade:119
@@ -330,7 +325,7 @@ msgstr "Partição"
 #: gaphor/UML/classes/propertypages.ui:82
 #: gaphor/UML/classes/propertypages.ui:179
 msgid "No aggregation"
-msgstr ""
+msgstr "Nenhuma agregação"
 
 #: gaphor/SysML/propertypages.glade:219 gaphor/SysML/propertypages.ui:147
 #: gaphor/UML/classes/propertypages.glade:120
@@ -338,7 +333,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:83
 #: gaphor/UML/classes/propertypages.ui:180
 msgid "Shared"
-msgstr ""
+msgstr "Compartilhado"
 
 #: gaphor/SysML/propertypages.glade:220 gaphor/SysML/propertypages.ui:148
 #: gaphor/UML/classes/propertypages.glade:121
@@ -346,11 +341,11 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:84
 #: gaphor/UML/classes/propertypages.ui:181
 msgid "Composite"
-msgstr ""
+msgstr "Composto"
 
 #: gaphor/SysML/propertypages.glade:240 gaphor/SysML/propertypages.ui:164
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: gaphor/SysML/propertypages.glade:264 gaphor/SysML/propertypages.ui:180
 msgid "Text"
@@ -358,42 +353,39 @@ msgstr "Texto"
 
 #: gaphor/SysML/toolbox.py:25
 msgid "Internal Blocks"
-msgstr ""
+msgstr "Blocos Internos"
 
 #: gaphor/SysML/toolbox.py:29
 msgid "Connector"
 msgstr "Conector"
 
 #: gaphor/SysML/toolbox.py:36
-#, fuzzy
 msgid "Property"
-msgstr "Propriedades"
+msgstr "Propriedade"
 
 #: gaphor/SysML/toolbox.py:45
 msgid "Proxy Port"
-msgstr ""
+msgstr "Porta Proxy"
 
 #: gaphor/SysML/toolbox.py:68
 msgid "New Block Definition Diagram"
-msgstr ""
+msgstr "Novo Diagrama de Definição de Blocos"
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr ""
+msgstr "Novo Diagrama de Bloco Interno"
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
-#, fuzzy
 msgid "New Package Diagram"
-msgstr "Novo _Diagrama"
+msgstr "Novo Diagrama de Pacote"
 
 #: gaphor/SysML/toolbox.py:71
 msgid "New Requirement Diagram"
-msgstr ""
+msgstr "Novo Diagrama de Requisitos"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
-#, fuzzy
 msgid "New Use Case Diagram"
-msgstr "Novo _Diagrama"
+msgstr "Novo Diagrama de Caso de Uso"
 
 #: gaphor/SysML/blocks/block.py:66
 #, fuzzy
@@ -402,20 +394,19 @@ msgstr "Estrutura de Controle"
 
 #: gaphor/SysML/blocks/block.py:68
 msgid "block"
-msgstr ""
+msgstr "bloco"
 
 #: gaphor/SysML/blocks/block.py:101
 msgid "parts"
-msgstr ""
+msgstr "partes"
 
 #: gaphor/SysML/blocks/block.py:112
 msgid "references"
-msgstr ""
+msgstr "referências"
 
 #: gaphor/SysML/blocks/block.py:123
-#, fuzzy
 msgid "values"
-msgstr "Valor"
+msgstr "valores"
 
 #: gaphor/SysML/blocks/block.py:140
 msgid "unnamed"
@@ -423,11 +414,11 @@ msgstr "sem nome"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:18
 msgid "Blocks"
-msgstr ""
+msgstr "Blocos"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:22
 msgid "Block"
-msgstr ""
+msgstr "Bloco"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:32
 #: gaphor/UML/classes/classestoolbox.py:75
@@ -436,15 +427,13 @@ msgstr "Pacote"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:44
 #: gaphor/UML/classes/classestoolbox.py:94
-#, fuzzy
 msgid "Composite Association"
-msgstr "Associação"
+msgstr "Associação Composta"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:55
 #: gaphor/UML/classes/classestoolbox.py:105
-#, fuzzy
 msgid "Shared Association"
-msgstr "Associação"
+msgstr "Associação Compartilhada"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:66
 #: gaphor/UML/classes/classestoolbox.py:116
@@ -454,129 +443,124 @@ msgstr "Associação"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:80
 msgid "ValueType"
-msgstr ""
+msgstr "Tipo de Valor"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:91
 #: gaphor/UML/classes/classestoolbox.py:158
-#, fuzzy
 msgid "Enumeration"
-msgstr "Interação"
+msgstr "Enumeração"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:103
 #: gaphor/UML/classes/classestoolbox.py:170
 msgid "Primitive"
-msgstr ""
+msgstr "Primitivo"
 
 #: gaphor/SysML/blocks/proxyport.py:67
 msgid "proxy"
-msgstr ""
+msgstr "proxy"
 
 #: gaphor/SysML/requirements/relationships.py:32
 msgid "satisfy"
-msgstr ""
+msgstr "satisfazer"
 
 #: gaphor/SysML/requirements/relationships.py:38
 msgid "deriveReqt"
-msgstr ""
+msgstr "Derivar Requisição"
 
 #: gaphor/SysML/requirements/relationships.py:44
-#, fuzzy
 msgid "trace"
-msgstr "Interface"
+msgstr "rastrear"
 
 #: gaphor/SysML/requirements/relationships.py:50
 msgid "verify"
-msgstr ""
+msgstr "verificar"
 
 #: gaphor/SysML/requirements/relationships.py:56
-#, fuzzy
 msgid "refine"
-msgstr "Perfil"
+msgstr "refinar"
 
 #: gaphor/SysML/requirements/requirement.py:63
 msgid "requirement"
-msgstr ""
+msgstr "requisito"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 msgid "Requirements"
-msgstr ""
+msgstr "Requisitos"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 msgid "Requirement"
-msgstr ""
+msgstr "Requisito"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
-msgstr ""
+msgstr "Satisfazer"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:36
 msgid "Derive Requirement"
-msgstr ""
+msgstr "Derivar Requisito"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
-msgstr ""
+msgstr "Rastrear"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
-msgstr ""
+msgstr "Refinar"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
-msgstr ""
+msgstr "Verificar"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:64
 #: gaphor/UML/classes/classestoolbox.py:87
 msgid "Containment"
-msgstr ""
+msgstr "Contenção"
 
 #: gaphor/UML/modelinglanguage.py:16
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: gaphor/UML/sanitizerservice.py:72
 msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
+"Elementos não usados do modelo foram removidos; eles não são usados em "
+"nenhum outro diagrama."
 
 #: gaphor/UML/toolbox.py:32
-#, fuzzy
 msgid "New Component Diagram"
-msgstr "Componente"
+msgstr "Novo Diagrama de Componentes"
 
 #: gaphor/UML/toolbox.py:33
-#, fuzzy
 msgid "New Deployment Diagram"
-msgstr "Novo _Diagrama"
+msgstr "Novo Diagrama de Deployment"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr ""
+msgstr "Novo Diagrama de Comunicação"
 
 #: gaphor/UML/toolbox.py:39
-#, fuzzy
 msgid "New Profile Diagram"
-msgstr "Novo _Diagrama"
+msgstr "Novo Diagrama de Perfil"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:30 gaphor/diagram/diagramtoolbox.py:27
 msgid "New {name}"
-msgstr ""
+msgstr "Novo {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:35
-#, fuzzy
 msgid "Activity"
-msgstr "Realizar atividade"
+msgstr "Atividade"
 
 #: gaphor/UML/actions/actionstoolbox.py:43
 msgid "Swimlane One"
-msgstr ""
+msgstr "Raia Um"
 
 #: gaphor/UML/actions/actionstoolbox.py:47
 msgid "Swimlane Two"
-msgstr ""
+msgstr "Raia Dois"
 
 #: gaphor/UML/actions/actionstoolbox.py:53
 msgid "Actions"
@@ -625,30 +609,28 @@ msgid "Send signal action"
 msgstr "Enviar sinal de ação"
 
 #: gaphor/UML/actions/actionstoolbox.py:166
-#, fuzzy
 msgid "Send signal"
-msgstr "Enviar sinal de ação"
+msgstr "Enviar sinal"
 
 #: gaphor/UML/actions/actionstoolbox.py:172
 msgid "Accept event action"
 msgstr "Aceitar ação do evento"
 
 #: gaphor/UML/actions/actionstoolbox.py:178
-#, fuzzy
 msgid "Accept event"
-msgstr "Aceitar ação do evento"
+msgstr "Aceitar evento"
 
 #: gaphor/UML/actions/activitynodes.py:190
 msgid "merge/decision"
-msgstr ""
+msgstr "intercalação/decisão"
 
 #: gaphor/UML/actions/activitynodes.py:192
 msgid "merge"
-msgstr ""
+msgstr "intercalar"
 
 #: gaphor/UML/actions/activitynodes.py:194
 msgid "decision"
-msgstr ""
+msgstr "decisão"
 
 #: gaphor/UML/actions/objectnode.py:14
 #: gaphor/UML/actions/propertypages.glade:217
@@ -664,11 +646,11 @@ msgstr "ordenado"
 
 #: gaphor/UML/actions/objectnode.py:16
 msgid "LIFO"
-msgstr ""
+msgstr "UEPS"
 
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
-msgstr ""
+msgstr "PEPS"
 
 #: gaphor/UML/actions/objectnode.py:48
 #, fuzzy
@@ -676,19 +658,17 @@ msgid "upperBound"
 msgstr "Limite Superior"
 
 #: gaphor/UML/actions/objectnode.py:56
-#, fuzzy
 msgid "ordering"
-msgstr "ordenado"
+msgstr "ordenação"
 
 #: gaphor/UML/actions/partitionpage.py:107
 msgid "New Swimlane"
-msgstr "Nova raia"
+msgstr "Nova Raia"
 
 #: gaphor/UML/actions/propertypages.glade:28
 #: gaphor/UML/actions/propertypages.ui:23
-#, fuzzy
 msgid "Show type"
-msgstr "Exibir Estereótipos"
+msgstr "Exibir tipo"
 
 #: gaphor/UML/actions/propertypages.glade:57
 #: gaphor/UML/actions/propertypages.ui:42
@@ -698,12 +678,11 @@ msgstr "Horizontal"
 #: gaphor/UML/actions/propertypages.glade:83
 #: gaphor/UML/actions/propertypages.ui:60
 msgid "Join Specification"
-msgstr ""
+msgstr "Juntar Especificação"
 
 #: gaphor/UML/actions/propertypages.glade:116
-#, fuzzy
 msgid "Swimlanes"
-msgstr "Raia"
+msgstr "Raias"
 
 #: gaphor/UML/actions/propertypages.glade:129
 #: gaphor/UML/actions/propertypages.ui:126
@@ -718,17 +697,17 @@ msgstr "Limite Superior"
 #: gaphor/UML/actions/propertypages.glade:193
 #: gaphor/UML/actions/propertypages.ui:95
 msgid "Show Ordering"
-msgstr ""
+msgstr "Mostrar Ordenação"
 
 #: gaphor/UML/actions/propertypages.glade:219
 #: gaphor/UML/actions/propertypages.ui:111
 msgid "Last In First Out (LIFO)"
-msgstr ""
+msgstr "Último a Entrar, Primeiro a Sair (UEPS)"
 
 #: gaphor/UML/actions/propertypages.glade:220
 #: gaphor/UML/actions/propertypages.ui:112
 msgid "First In First Out (FIFO)"
-msgstr ""
+msgstr "Primeiro a Entrar, Primeiro a Sair (PEPS)"
 
 #: gaphor/UML/actions/propertypages.glade:247
 #: gaphor/UML/classes/propertypages.glade:609
@@ -740,7 +719,7 @@ msgstr "Nome"
 
 #: gaphor/UML/actions/propertypages.glade:264
 msgid "Allocated Type"
-msgstr ""
+msgstr "Tipo Alocado"
 
 #: gaphor/UML/actions/propertypages.glade:296
 #: gaphor/UML/actions/propertypages.ui:162
