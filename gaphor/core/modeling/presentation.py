@@ -66,15 +66,16 @@ class Presentation(Matrices, Element, Generic[S]):
         """Change the parent and update the item's matrix so the item visualy
         remains in the same place."""
         old_parent = self.parent
+        if new_parent is old_parent:
+            return
+
         self.parent = new_parent
-
+        m = self.matrix
         if old_parent:
-            m = old_parent.matrix_i2c
-            self.matrix.set(*self.matrix.multiply(m))
-
+            m = m * old_parent.matrix_i2c
         if new_parent:
-            m = new_parent.matrix_i2c.inverse()
-            self.matrix.set(*self.matrix.multiply(m))
+            m = m * new_parent.matrix_i2c.inverse()
+        self.matrix.set(*m)
 
     def load(self, name, value):
         if name == "matrix":
@@ -120,7 +121,7 @@ class Presentation(Matrices, Element, Generic[S]):
         if new_parent:
             new_parent.matrix_i2c.add_handler(self._on_matrix_changed)
 
-        self._on_matrix_changed(self.matrix, self.matrix.tuple())
+        self._on_matrix_changed(None, ())
 
     def _on_matrix_changed(self, matrix, old_value):
         if self.parent:
