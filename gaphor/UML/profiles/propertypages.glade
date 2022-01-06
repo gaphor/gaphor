@@ -35,12 +35,6 @@ renderers and such.</property>
         <property name="has-entry">1</property>
         <signal name="changed" handler="metaclass-combo-changed" swapped="no"/>
         <signal name="destroy" handler="metaclass-combo-destroy" swapped="no"/>
-        <child internal-child="entry">
-          <object class="GtkEntry">
-            <property name="can-focus">1</property>
-            <property name="text" translatable="yes">Named Element</property>
-          </object>
-        </child>
       </object>
       <packing>
         <property name="position">1</property>

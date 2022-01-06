@@ -1,10 +1,9 @@
-from gi.repository import Gtk
-
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
+    combo_box_text_auto_complete,
     new_resource_builder,
 )
 
@@ -31,7 +30,7 @@ class MetaclassPropertyPage(PropertyPageBase):
 
     CLASSES = list(
         sorted(
-            c
+            (c, c)
             for c in dir(UML)
             if _issubclass(getattr(UML, c), UML.Element) and c != "Stereotype"
         )
@@ -54,18 +53,11 @@ class MetaclassPropertyPage(PropertyPageBase):
         )
 
         combo = builder.get_object("metaclass-combo")
-        for c in self.CLASSES:
-            combo.append_text(c)
-
-        completion = Gtk.EntryCompletion()
-        completion.set_model(combo.get_model())
-        completion.set_minimum_key_length(1)
-        completion.set_text_column(0)
+        combo_box_text_auto_complete(
+            combo, self.CLASSES, self.subject and self.subject.name or ""
+        )
 
         entry = combo.get_child()
-        entry.set_completion(completion)
-
-        entry.set_text(self.subject and self.subject.name or "")
 
         def handler(event):
             if event.element is self.subject and entry.get_text() != event.new_value:

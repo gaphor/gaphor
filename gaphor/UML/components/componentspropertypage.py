@@ -5,6 +5,7 @@ from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
+    combo_box_text_auto_complete,
     new_resource_builder,
 )
 
@@ -81,16 +82,9 @@ class InformationFlowPropertyPage(PropertyPageBase):
         self.combo = combo = builder.get_object("information-flow-combo")
         use_flow: Gtk.Switch = builder.get_object("use-information-flow")
 
-        for c in model.select(UML.Class):
-            combo.append(c.id, c.name)
-
-        completion = Gtk.EntryCompletion()
-        completion.set_model(combo.get_model())
-        completion.set_minimum_key_length(1)
-        completion.set_text_column(0)
-
-        entry = combo.get_child()
-        entry.set_completion(completion)
+        combo_box_text_auto_complete(
+            combo, ((c.id, c.name) for c in model.select(UML.Class))
+        )
 
         use_flow.set_active(
             self.subject.informationFlow
@@ -100,7 +94,9 @@ class InformationFlowPropertyPage(PropertyPageBase):
         if self.subject.informationFlow and any(
             self.subject.informationFlow[:].conveyed
         ):
-            entry.set_text(self.subject.informationFlow[0].conveyed[0].name or "")
+            combo.get_child().set_text(
+                self.subject.informationFlow[0].conveyed[0].name or ""
+            )
 
         return builder.get_object("information-flow-editor")
 
