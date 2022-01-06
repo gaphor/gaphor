@@ -62,7 +62,7 @@ def test_parent_matrix_updates(diagram):
     parent = diagram.create(Example)
     presentation = diagram.create(Example)
 
-    presentation.parent = parent
+    presentation.change_parent(parent)
     parent.matrix.scale(2, 2)
 
     assert tuple(presentation.matrix_i2c) == (2, 0, 0, 2, 0, 0)
@@ -73,7 +73,7 @@ def test_set_parent_updates_matrix_i2c(diagram):
     presentation = diagram.create(Example)
 
     parent.matrix.scale(2, 2)
-    presentation.parent = parent
+    presentation.change_parent(parent)
 
     assert tuple(presentation.matrix_i2c) == (1, 0, 0, 1, 0, 0)
 
@@ -83,8 +83,8 @@ def test_unset_parent_updates_matrix_i2c(diagram):
     presentation = diagram.create(Example)
 
     parent.matrix.scale(2, 2)
-    presentation.parent = parent
-    presentation.parent = None
+    presentation.change_parent(parent)
+    presentation.change_parent(None)
 
     assert tuple(presentation.matrix_i2c) == (1, 0, 0, 1, 0, 0)
 
@@ -96,7 +96,7 @@ def test_change_parent_updates_matrix_i2c_and_keeps_coordinates(diagram):
 
     parent.matrix.scale(2, 2)
     new_parent.matrix.translate(2, 2)
-    presentation.parent = parent
-    presentation.parent = new_parent
+    presentation.change_parent(parent)
+    presentation.change_parent(new_parent)
 
     assert tuple(presentation.matrix_i2c) == (1, 0, 0, 1, 0, 0)

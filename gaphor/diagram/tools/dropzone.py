@@ -112,7 +112,7 @@ class DropZoneMove(GuidedItemMove):
                 return
 
             if old_parent:
-                item.parent = None
+                item.change_parent(None)
 
                 adapter = Group(old_parent, item)
                 if adapter:
@@ -122,7 +122,7 @@ class DropZoneMove(GuidedItemMove):
 
             if new_parent:
                 grow_parent(new_parent, item)
-                item.parent = new_parent
+                item.change_parent(new_parent)
 
                 adapter = Group(new_parent, item)
                 if adapter and adapter.can_contain():

@@ -39,7 +39,7 @@ class BlockProperyProxyPortConnector:
 
         # This raises the item in the item hierarchy
         assert proxy_port.diagram
-        proxy_port.parent = self.block
+        proxy_port.change_parent(self.block)
 
         return True
 
@@ -48,7 +48,7 @@ class BlockProperyProxyPortConnector:
         if proxy_port.subject and proxy_port.diagram:
             subject = proxy_port.subject
             del proxy_port.subject
-            proxy_port.parent = None
+            proxy_port.change_parent(None)
             subject.unlink()
 
 
