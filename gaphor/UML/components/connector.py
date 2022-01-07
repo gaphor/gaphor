@@ -136,6 +136,13 @@ class ConnectorItem(LinePresentation[UML.Connector], Named):
             ),
             # Also support SysML ItemFlow:
             Text(
+                text=lambda: stereotypes_str(
+                    self.subject.informationFlow[0].itemProperty.type  # type: ignore[attr-defined]
+                )
+                if self.subject.informationFlow
+                else ""
+            ),
+            Text(
                 text=lambda: format(
                     self.subject.informationFlow[0].itemProperty, type=True  # type: ignore[attr-defined]
                 )
@@ -150,7 +157,10 @@ class ConnectorItem(LinePresentation[UML.Connector], Named):
         self.watch("subject[Connector].informationFlow.conveyed.name")
         self.watch("subject[Connector].informationFlow[ItemFlow].itemProperty.name")
         self.watch(
-            "subject[Connector].informationFlow[ItemFlow].itemProperty.typeValue"
+            "subject[Connector].informationFlow[ItemFlow].itemProperty.type.name"
+        )
+        self.watch(
+            "subject[Connector].informationFlow[ItemFlow].itemProperty.type.appliedStereotype.classifier.name"
         )
 
     def draw(self, context):
