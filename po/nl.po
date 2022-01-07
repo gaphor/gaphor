@@ -3,18 +3,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  0.6.0\n"
+"Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-12-31 17:55-0500\n"
-"PO-Revision-Date: 2021-09-25 12:52+0000\n"
+"PO-Revision-Date: 2022-01-09 06:56+0000\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
+"\n"
 "Language: nl\n"
-"Language-Team: Dutch "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/nl/>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 4.10.1\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -524,7 +525,7 @@ msgid ""
 "diagram."
 msgstr ""
 "Ongebruikte elementen zijn uit model verwijderd: ze waren niet meer in "
-"gebruik"
+"gebruik."
 
 #: gaphor/UML/toolbox.py:32
 msgid "New Component Diagram"
@@ -828,7 +829,7 @@ msgstr "Toon Richting"
 #: gaphor/UML/classes/propertypages.glade:739
 #: gaphor/UML/classes/propertypages.glade:865
 msgid "🛈 Help"
-msgstr ""
+msgstr "🛈 Help"
 
 #: gaphor/UML/classes/propertypages.glade:107
 #: gaphor/UML/classes/propertypages.glade:234
@@ -897,6 +898,17 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Association ends volgens de UML syntax.\n"
+"\n"
+"  • <tt>+ naam</tt>\n"
+"  • <tt>+ naam[1]</tt>\n"
+"  • <tt>- naam[1..2]</tt>\n"
+"  • <tt>1..2</tt>\n"
+"  • <tt>- [1..2]</tt>\n"
+"\n"
+"Druk <b>Enter</b> om te wijzigen, <b>Backspace</b>/<b>Delete</b> om items te "
+"verwijderen.\n"
+"Gebruik <b>-</b>/<b>=</b> om items naar boven of beneden te verplaatsen."
 
 #: gaphor/UML/classes/propertypages.glade:361
 #: gaphor/UML/classes/propertypages.ui:258
@@ -923,6 +935,16 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Klasse attributen volgens de UML syntax.\n"
+"\n"
+"  • <tt>attr</tt> (naam, standaard publieke zichtbaarheid)\n"
+"  • <tt>+ attr: int</tt> (publiek met type)\n"
+"  • <tt>+ attr: int[0..1]</tt> (publiek, type, en multiplicity)\n"
+"  • <tt># /attr: int # a note</tt> (beschermd, afgeleid, met opmerking)\n"
+"\n"
+"Druk <b>Enter</b> om te wijzigen, <b>Backspace</b>/<b>Delete</b> om items te "
+"verwijderen.\n"
+"Gebruik <b>-</b>/<b>=</b> om items naar boven of beneden te verplaatsen."
 
 #: gaphor/UML/classes/propertypages.glade:521
 #: gaphor/UML/classes/propertypages.ui:362
@@ -968,18 +990,27 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Klasse operaties volgens de UML syntax.\n"
+"\n"
+"  • <tt>call()</tt>\n"
+"  • <tt>+ call(a: int[*], b: str): bool</tt> (publiek, parameters)\n"
+"  • <tt># call(a: int, b: str) # a note</tt> (beschermd, met opmerking)\n"
+"\n"
+"Druk <b>Enter</b> om te wijzigen, <b>Backspace</b>/<b>Delete</b> om items te "
+"verwijderen.\n"
+"Gebruik <b>-</b>/<b>=</b> om items naar boven of beneden te verplaatsen."
 
 #: gaphor/UML/classes/propertypages.glade:798
 #: gaphor/UML/classes/propertypages.ui:553
 msgid "Show Enumeration Literals"
-msgstr ""
+msgstr "Toon Enumeratie Literals"
 
 #: gaphor/UML/classes/propertypages.glade:835
 #: gaphor/UML/classes/propertypages.glade:878
 #: gaphor/UML/classes/propertypages.ui:586
 #: gaphor/UML/classes/propertypages.ui:610
 msgid "Enumeration Literals"
-msgstr ""
+msgstr "Enumeratie Literals"
 
 #: gaphor/UML/classes/propertypages.glade:900
 msgid ""
@@ -991,6 +1022,13 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Enumeratie literals volgens de UML syntax.\n"
+"\n"
+"  • <tt>enum</tt>\n"
+"\n"
+"Druk <b>Enter</b> om te wijzigen, <b>Backspace</b>/<b>Delete</b> om items te "
+"verwijderen.\n"
+"Gebruik <b>-</b>/<b>=</b> om items naar boven of beneden te verplaatsen."
 
 #: gaphor/UML/classes/propertypages.ui:65
 #: gaphor/UML/classes/propertypages.ui:162
@@ -1065,16 +1103,16 @@ msgstr "Indirect Geïnstantieerd"
 #: gaphor/UML/components/propertypages.glade:57
 #: gaphor/UML/components/propertypages.ui:43
 msgid "Information Flow"
-msgstr ""
+msgstr "Information Flow"
 
 #: gaphor/UML/components/propertypages.glade:80
 #: gaphor/UML/components/propertypages.ui:59
 msgid "Information Item (Class)"
-msgstr ""
+msgstr "Information Item (Klasse)"
 
 #: gaphor/UML/interactions/interactionsconnect.py:79
 msgid "call()"
-msgstr ""
+msgstr "call()"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:34
 #: gaphor/UML/interactions/interactionstoolbox.py:55
@@ -1099,7 +1137,7 @@ msgstr "Message"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:94
 msgid "Reflexive message"
-msgstr ""
+msgstr "Reflexive message"
 
 #: gaphor/UML/interactions/propertypages.glade:25
 #: gaphor/UML/interactions/propertypages.ui:21
@@ -1175,11 +1213,11 @@ msgstr "State"
 
 #: gaphor/UML/states/statestoolbox.py:49
 msgid "State Machine"
-msgstr ""
+msgstr "State Machine"
 
 #: gaphor/UML/states/statestoolbox.py:56
 msgid "Default Region"
-msgstr ""
+msgstr "Standaard Regio"
 
 #: gaphor/UML/states/statestoolbox.py:63
 msgid "States"
@@ -1284,11 +1322,11 @@ msgstr "Notitie of Opmerking"
 
 #: gaphor/extensions/sphinx.py:65
 msgid "No model file configured for model '{model_name}'."
-msgstr ""
+msgstr "Geen modelbestand geconfigureerd voor model '{model_name}'."
 
 #: gaphor/extensions/sphinx.py:94
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
-msgstr ""
+msgstr "Geen diagram '{name}' in model '{model_name}' ({model_file})."
 
 #: gaphor/plugins/console/console.py:23
 msgid ""
@@ -1314,7 +1352,7 @@ msgstr "Alle {ext} Bestanden"
 
 #: gaphor/plugins/diagramexport/__init__.py:34
 msgid "Export as SVG"
-msgstr ""
+msgstr "Exporteer als SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:35
 #: gaphor/plugins/diagramexport/__init__.py:40
@@ -1341,7 +1379,7 @@ msgstr "Exporteer diagram naar PDF"
 
 #: gaphor/plugins/xmiexport/__init__.py:24
 msgid "Export as XMI"
-msgstr ""
+msgstr "Exporteer als XMI"
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export model as XMI (XML Model Interchange) format"
@@ -1361,7 +1399,7 @@ msgstr "Over Gaphor"
 
 #: gaphor/services/helpservice/about.ui:10
 msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
-msgstr ""
+msgstr "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
 
 #: gaphor/services/helpservice/about.ui:11
 msgid "Gaphor is the simple modeling tool written in Python"
@@ -1369,7 +1407,7 @@ msgstr "Gaphor is een eenvoudig te gebruiken modeleertool geschreven in Python"
 
 #: gaphor/services/helpservice/about.ui:13
 msgid "Fork me on GitHub"
-msgstr ""
+msgstr "Fork me op GitHub"
 
 #: gaphor/services/helpservice/about.ui:25
 msgid ""
@@ -1385,6 +1423,17 @@ msgid ""
 "express or implied. See the License for the specific language\n"
 "governing permissions and limitations under the License.\n"
 msgstr ""
+"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
+"you may not use this application except in compliance with the\n"
+"License. You may obtain a copy of the License at\n"
+"\n"
+"http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Unless required by applicable law or agreed to in writing, software\n"
+"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
+"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
+"express or implied. See the License for the specific language\n"
+"governing permissions and limitations under the License.\n"
 
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
@@ -1479,12 +1528,12 @@ msgstr "Vergroot"
 #: gaphor/services/helpservice/shortcuts.ui:196
 #: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:129
 msgid "Zoom Out"
-msgstr ""
+msgstr "Verklein"
 
 #: gaphor/services/helpservice/shortcuts.ui:204
 #: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:117
 msgid "Actual Size"
-msgstr ""
+msgstr "Ware grootte"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:55
 #: gaphor/ui/mainwindow.py:230 gaphor/ui/mainwindow.ui:29
@@ -1572,7 +1621,7 @@ msgstr "Open Gaphor model"
 msgid ""
 "{filename} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr ""
+msgstr "{filename} is reeds geopend. Wil je de geopende versie tonen?"
 
 #: gaphor/ui/diagrampage.py:131 gaphor/ui/namespaceview.py:143
 msgid "<None>"
@@ -1641,6 +1690,8 @@ msgstr "Verwijder Ongebruikte Elementen"
 #: gaphor/ui/elementeditor.ui:238 gaphor/ui/elementeditor.ui:245
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
+"Verwijder automatisch elementen die niet langer in gebruik zijn in enig "
+"diagram."
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:253
 msgid "Style Sheet"
@@ -1737,7 +1788,7 @@ msgstr "Wijzigingen opslaan voor afsluiten?"
 
 #: gaphor/ui/filemanager.py:289
 msgid "Closing will cause any unsaved changes to be discarded."
-msgstr "Als je afsluit zonder opslaan, verdwijnen uw wijzigingen "
+msgstr "Als je afsluit zonder opslaan, verdwijnen uw wijzigingen."
 
 #: gaphor/ui/filemanager.py:294
 msgid "Close _without saving changes"
@@ -1883,4 +1934,3 @@ msgstr ""
 
 #~ msgid "{name} diagram"
 #~ msgstr "{name} diagram"
-
