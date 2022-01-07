@@ -1,9 +1,9 @@
 from gaphor import UML
 from gaphor.core import transactional
-from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
+    combo_box_text_auto_complete,
     new_resource_builder,
 )
 from gaphor.SysML import sysml
@@ -169,13 +169,20 @@ class ItemFlowPropertyPage(PropertyPageBase):
             "item-flow-editor",
             signals={
                 "item-flow-active": (self._on_item_flow_active,),
-                "item-flow-changed": (self._on_item_flow_name_changed,),
+                "item-flow-name-changed": (self._on_item_flow_name_changed,),
+                "item-flow-type-changed": (self._on_item_flow_type_changed,),
                 "invert-direction-changed": (self._invert_direction_changed,),
             },
         )
 
         use_flow = builder.get_object("use-item-flow")
-        self.entry = builder.get_object("item-flow-entry")
+        self.entry = builder.get_object("item-flow-name")
+
+        combo = builder.get_object("item-flow-type")
+        combo_box_text_auto_complete(
+            combo,
+            ((c.id, c.name) for c in self.subject.model.select(UML.Classifier)),
+        )
 
         use_flow.set_active(
             self.subject.informationFlow
@@ -193,7 +200,9 @@ class ItemFlowPropertyPage(PropertyPageBase):
         ):
             iflow = self.subject.informationFlow[0]
             assert isinstance(iflow, sysml.ItemFlow)
-            self.entry.set_text(format(iflow.itemProperty))
+            self.entry.set_text(iflow.itemProperty.name)
+            if iflow.itemProperty.type:
+                combo.set_active_id(iflow.itemProperty.type.id)
 
         return builder.get_object("item-flow-editor")
 
@@ -214,16 +223,35 @@ class ItemFlowPropertyPage(PropertyPageBase):
 
     @transactional
     def _on_item_flow_name_changed(self, entry):
-        if self.subject.informationFlow:
-            iflow = self.subject.informationFlow[0]
-            assert isinstance(iflow, sysml.ItemFlow)
-            parse(iflow.itemProperty, entry.get_text())
+        if not self.subject.informationFlow:
+            return
+
+        iflow = self.subject.informationFlow[0]
+        assert isinstance(iflow, sysml.ItemFlow)
+        iflow.itemProperty.name = entry.get_text()
+
+    @transactional
+    def _on_item_flow_type_changed(self, combo):
+        if not self.subject.informationFlow:
+            return
+
+        iflow = self.subject.informationFlow[0]
+        assert isinstance(iflow, sysml.ItemFlow)
+        id = combo.get_active_id()
+        if id:
+            element = self.subject.model.lookup(id)
+            assert isinstance(element, UML.Type)
+            iflow.itemProperty.type = element
+        else:
+            del iflow.itemProperty.type
 
     @transactional
     def _invert_direction_changed(self, button):
-        if self.subject.informationFlow:
-            iflow = self.subject.informationFlow[0]
-            iflow.informationSource, iflow.informationTarget = (
-                iflow.informationTarget,
-                iflow.informationSource,
-            )
+        if not self.subject.informationFlow:
+            return
+
+        iflow = self.subject.informationFlow[0]
+        iflow.informationSource, iflow.informationTarget = (
+            iflow.informationTarget,
+            iflow.informationSource,
+        )

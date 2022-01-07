@@ -123,12 +123,26 @@ def test_item_flow_name(connector):
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
     use.set_active(True)
-    entry = find(widget, "item-flow-entry")
-    entry.set_text("foo:Bar")
+    entry = find(widget, "item-flow-name")
+    entry.set_text("foo")
 
-    assert entry.get_text() == "foo:Bar"
+    assert entry.get_text() == "foo"
     assert connector.informationFlow[0].itemProperty.name == "foo"
-    assert connector.informationFlow[0].itemProperty.typeValue == "Bar"
+
+
+def test_item_flow_type(connector, element_factory):
+    type = element_factory.create(UML.Class)
+    type.name = "Bar"
+    property_page = ItemFlowPropertyPage(connector)
+
+    widget = property_page.construct()
+    use = find(widget, "use-item-flow")
+    use.set_active(True)
+    combo = find(widget, "item-flow-type")
+    combo.set_active_id(type.id)
+
+    assert combo.get_child().get_text() == "Bar"
+    assert connector.informationFlow[0].itemProperty.type is type
 
 
 def test_item_flow_is_loaded(element_factory):

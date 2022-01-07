@@ -254,7 +254,8 @@ def combo_box_text_auto_complete(
     combo: Gtk.ComboBoxText, data_iterator: Iterable[tuple[str, str]], text: str = ""
 ) -> None:
     for id, name in data_iterator:
-        combo.append(id, name)
+        if name:
+            combo.append(id, name)
 
     completion = Gtk.EntryCompletion()
     completion.set_model(combo.get_model())
