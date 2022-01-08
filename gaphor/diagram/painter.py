@@ -79,17 +79,17 @@ class DiagramTypePainter:
             cr.identity_matrix()
             cr.set_line_width(1)
 
-            cr.move_to(-1, 16 + h)
-            cr.line_to(8 + w, 16 + h)
-            cr.line_to(16 + w, 8 + h / 2)
-            cr.line_to(16 + w, -1)
+            cr.move_to(-1, 12 + h)
+            cr.line_to(12 + w, 12 + h)
+            cr.line_to(18 + w, 8 + h / 2)
+            cr.line_to(18 + w, -1)
             cr.line_to(-1, -1)
 
             cr.set_source_rgba(1.0, 1.0, 1.0, 0.6)
             cr.fill_preserve()
             cr.set_source_rgba(0.0, 0.0, 0.0, 1.0)
             cr.stroke()
-            cr.move_to(8, 8)
+            cr.move_to(6, 8)
             PangoCairo.show_layout(cr, layout)
         finally:
             cr.restore()
