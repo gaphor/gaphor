@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import logging
-from typing import List, Tuple
 
 from generic.event import Event
 from gi.repository import Gtk
@@ -9,7 +10,7 @@ from gaphor.core import action, event_handler
 from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed, ModelReady
 from gaphor.event import ActionEnabled
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.diagrampage import DiagramPage
+from gaphor.ui.diagrampage import DiagramPage, GtkView
 from gaphor.ui.event import (
     CurrentDiagramChanged,
     DiagramClosed,
@@ -30,7 +31,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.modeling_language = modeling_language
         self.toolbox = toolbox
         self._notebook: Gtk.Notebook = None
-        self._page_handler_ids: List[int] = []
+        self._page_handler_ids: list[int] = []
 
     def open(self):
         """Open the diagrams component.
@@ -78,7 +79,7 @@ class Diagrams(UIComponent, ActionProvider):
                     parent.remove(self._notebook)
             self._notebook = None
 
-    def get_current_diagram(self):
+    def get_current_diagram(self) -> Diagram | None:
         """Returns the current page of the notebook.
 
         Returns (DiagramPage): The current diagram page.
@@ -88,9 +89,17 @@ class Diagrams(UIComponent, ActionProvider):
             return None
         page_num = self._notebook.get_current_page()
         child_widget = self._notebook.get_nth_page(page_num)
-        return child_widget and child_widget.diagram_page.get_diagram()
+        return child_widget and child_widget.diagram_page.get_diagram()  # type: ignore[no-any-return]
 
-    def get_current_view(self):
+    def set_current_diagram(self, diagram: Diagram) -> bool:
+        for page, widget in get_widgets_on_pages(self._notebook):
+            if widget.diagram_page.get_diagram() is diagram:
+                self._notebook.set_current_page(page)
+                self.get_current_view().grab_focus()
+                return True
+        return False
+
+    def get_current_view(self) -> GtkView:
         """Returns the current view of the diagram page.
 
         Returns (GtkView): The current view.
@@ -101,7 +110,25 @@ class Diagrams(UIComponent, ActionProvider):
         child_widget = self._notebook.get_nth_page(page_num)
         return child_widget and child_widget.diagram_page.get_view()
 
-    def create_tab(self, title, widget):
+    def create_diagram_page(self, diagram: Diagram) -> DiagramPage:
+        page = DiagramPage(
+            diagram,
+            self.event_manager,
+            self.element_factory,
+            self.properties,
+            self.modeling_language,
+        )
+        widget = page.construct()
+        widget.diagram_page = page
+
+        apply_tool_select_controller(widget, self.toolbox)
+        self._create_tab(diagram.name, widget)
+        page.select_tool(self.toolbox.active_tool_name)
+        self.get_current_view().grab_focus()
+        self._update_action_state()
+        return page
+
+    def _create_tab(self, title, widget):
         """Creates a new Notebook tab with a label and close button.
 
         Args:
@@ -147,10 +174,11 @@ class Diagrams(UIComponent, ActionProvider):
                         yield diagram.id
 
         self.properties.set("opened-diagrams", list(diagram_ids()))
-        log.debug(f"pages changed: {self.properties.get('opened-diagrams')}")
 
-    def _on_current_page_changed(self, notebook, gparam):
-        self.event_manager.handle(CurrentDiagramChanged(self.get_current_diagram()))
+    def _on_current_page_changed(self, _notebook, _gparam):
+        diagram = self.get_current_diagram()
+        self.event_manager.handle(CurrentDiagramChanged(diagram))
+        self.properties.set("current-diagram", diagram.id if diagram else None)
 
     @action(name="close-current-tab", shortcut="<Primary>w")
     def close_current_tab(self):
@@ -201,7 +229,7 @@ class Diagrams(UIComponent, ActionProvider):
             view.selection.unselect_all()
 
     @event_handler(DiagramOpened)
-    def _on_show_diagram(self, event):
+    def _on_show_diagram(self, event: DiagramOpened):
         """Show a Diagram element in the Notebook.
 
         If a diagram is already open on a Notebook page, show that one,
@@ -210,33 +238,9 @@ class Diagrams(UIComponent, ActionProvider):
         Args:
             event: The service event that is calling the method.
         """
-
         diagram = event.diagram
-
-        # Try to find an existing diagram page and give it focus
-        for page, widget in get_widgets_on_pages(self._notebook):
-            if widget.diagram_page.get_diagram() is diagram:
-                self._notebook.set_current_page(page)
-                self.get_current_view().grab_focus()
-                return widget.diagram_page
-
-        # No existing diagram page found, creating one
-        page = DiagramPage(
-            diagram,
-            self.event_manager,
-            self.element_factory,
-            self.properties,
-            self.modeling_language,
-        )
-        widget = page.construct()
-        widget.diagram_page = page
-
-        apply_tool_select_controller(widget, self.toolbox)
-        self.create_tab(diagram.name, widget)
-        page.select_tool(self.toolbox.active_tool_name)
-        self.get_current_view().grab_focus()
-        self._update_action_state()
-        return page
+        if not self.set_current_diagram(diagram):
+            self.create_diagram_page(diagram)
 
     @event_handler(DiagramClosed)
     def _on_close_diagram(self, event: Event) -> None:
@@ -261,6 +265,8 @@ class Diagrams(UIComponent, ActionProvider):
     def _on_model_ready(self, event=None):
         """Open the toplevel element and load toplevel diagrams."""
         diagram_ids = self.properties.get("opened-diagrams", [])
+        current_diagram_id = self.properties.get("current-diagram", None)
+
         diagrams = [self.element_factory.lookup(id) for id in diagram_ids]
         if not any(diagrams):
             diagrams = self.element_factory.select(
@@ -269,6 +275,13 @@ class Diagrams(UIComponent, ActionProvider):
         for diagram in diagrams:
             if diagram:
                 self.event_manager.handle(DiagramOpened(diagram))
+
+        if current_diagram_id:
+            current_diagram = self.element_factory.lookup(current_diagram_id)
+            if self.set_current_diagram(current_diagram):
+                return
+        if self._notebook and self._notebook.get_n_pages():
+            self._notebook.set_current_page(0)
 
     @event_handler(ModelFlushed)
     def _on_flush_model(self, event):
@@ -349,13 +362,8 @@ def get_widgets_on_pages(notebook):
     Returns:
         List of tuples (page, widget) of the currently open Notebook pages.
     """
-
-    widgets_on_pages: List[Tuple[int, Gtk.Widget]] = []
     if not notebook:
-        return widgets_on_pages
+        return
 
-    num_pages = notebook.get_n_pages()
-    for page_num in range(num_pages):
-        widget = notebook.get_nth_page(page_num)
-        widgets_on_pages.append((page_num, widget))
-    return widgets_on_pages
+    for page_num in range(notebook.get_n_pages()):
+        yield (page_num, notebook.get_nth_page(page_num))
