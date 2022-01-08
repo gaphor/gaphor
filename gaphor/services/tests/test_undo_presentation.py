@@ -121,9 +121,9 @@ def test_matrix_operation(action, diagram, undo_manager, event_manager):
 @pytest.mark.parametrize("index", range(4))
 def test_element_handle_position(diagram, undo_manager, event_manager, index):
     with Transaction(event_manager):
-        line = diagram.create(ElementPresentation)
+        element = diagram.create(ElementPresentation)
 
-    handle = line.handles()[index]
+    handle = element.handles()[index]
     old_pos = handle.pos.tuple()
     new_pos = (30, 40)
 
@@ -307,3 +307,23 @@ def test_line_merge_segment(diagram, undo_manager, event_manager):
     undo_manager.redo_transaction()
 
     assert len(line.handles()) == 2
+
+
+def test_undo_nested_element(diagram, undo_manager, event_manager):
+    with Transaction(event_manager):
+        parent = diagram.create(ElementPresentation)
+        child = diagram.create(ElementPresentation)
+        child.change_parent(parent)
+        child.matrix.translate(100, 100)
+        parent.matrix.translate(100, 100)
+
+    with Transaction(event_manager):
+        parent.unlink()
+
+    undo_manager.undo_transaction()
+
+    new_parent, new_child = diagram.ownedPresentation
+
+    assert new_child.parent is new_parent
+    assert tuple(new_parent.matrix_i2c) == (1.0, 0, 0, 1, 100, 100)
+    assert tuple(new_child.matrix_i2c) == (1.0, 0, 0, 1, 200, 200)

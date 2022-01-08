@@ -15,7 +15,7 @@ def node_with_component(diagram, element_factory):
     comp_item = diagram.create(ComponentItem, subject=comp)
 
     Group(node_item, comp_item).group()
-    comp_item.parent = node_item
+    comp_item.change_parent(node_item)
 
     assert comp_item.parent is node_item
 

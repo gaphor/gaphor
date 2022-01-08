@@ -79,7 +79,7 @@ def maybe_group(parent, item):
     adapter = Group(parent, item)
     if parent and adapter.can_contain():
         grow_parent(parent, item)
-        item.parent = parent
+        item.change_parent(parent)
         adapter.group()
 
 

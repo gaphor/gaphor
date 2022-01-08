@@ -96,7 +96,7 @@ def new_item_factory(
 
         adapter = Group(parent, item)
         if parent and adapter.can_contain():
-            item.parent = parent
+            item.change_parent(parent)
             adapter.group()
 
         if config_func:
