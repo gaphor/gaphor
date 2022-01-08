@@ -3,11 +3,12 @@
 The `copy()` function will return all values serialized, either as string
 values or reference id's.
 
-The `paste_link()` function will resolve those values. Based on the elements
-that are already in the model,
-`paste_full()` will try copy every element involved.
+The `paste_link()` function will resolve those values and place instances of
+them on the diagram using the same defining element.
+The `paste_full()` function is similar, but it creates new defining elements
+for the elements being pasted.
 
-The copy() function returns only data that has to be part of the copy buffer.
+The `copy()` function returns only data that has to be part of the copy buffer.
 the `paste()` function will load this data in a model.
 """
 
