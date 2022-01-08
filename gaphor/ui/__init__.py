@@ -32,7 +32,7 @@ if os.getenv("GAPHOR_USE_GTK") != "NONE":
 
 from gi.repository import Gdk, Gio, GLib, Gtk
 
-from gaphor.application import Application, Session
+from gaphor.application import Application, Session, distribution
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
 from gaphor.ui.actiongroup import apply_application_actions
@@ -56,7 +56,11 @@ def main(argv=sys.argv):
     def has_option(*options):
         return any(o in argv for o in options)
 
-    if has_option("-v", "--verbose"):
+    if has_option("-v", "--version"):
+        print(f"Gaphor {distribution().version}")
+        return
+
+    if has_option("-d", "--debug"):
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
         logging.getLogger("gaphor").setLevel(logging.DEBUG)
     elif has_option("-q", "--quiet"):
@@ -146,11 +150,19 @@ def add_main_options(gtk_app):
     Define them here, so they show up on `gaphor --help`.
     """
     gtk_app.add_main_option(
-        "verbose",
+        "version",
         ord("v"),
         GLib.OptionFlags.NONE,
         GLib.OptionArg.NONE,
-        "Verbose output",
+        "Print version and exit",
+        None,
+    )
+    gtk_app.add_main_option(
+        "debug",
+        ord("d"),
+        GLib.OptionFlags.NONE,
+        GLib.OptionArg.NONE,
+        "Debug output",
         None,
     )
     gtk_app.add_main_option(
