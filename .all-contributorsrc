@@ -667,6 +667,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "KhazAkar",
+      "name": "KhazAkar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12693890?v=4",
+      "profile": "https://github.com/KhazAkar",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
