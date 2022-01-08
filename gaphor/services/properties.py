@@ -128,7 +128,7 @@ class Properties(Service):
                 data = ifile.read()
 
             self._properties = ast.literal_eval(data)
-            for key, value in self._properties.items():
+            for key, value in list(self._properties.items()):
                 self.event_manager.handle(PropertyChanged(key, None, value))
 
     def save(self):
