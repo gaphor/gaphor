@@ -200,6 +200,6 @@ def raaml_stereotype_workaround(element):
         return ()
 
     name: str = type(element).__name__
-    if name in ("Controller", "Feedback", "ControlAction"):
+    if name in {"Controller", "Feedback", "ControlAction"}:
         return (name[0].lower() + name[1:],)
     return ()
