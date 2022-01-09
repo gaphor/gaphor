@@ -1,5 +1,5 @@
 from gaphor import UML
-from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste
+from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste_link
 from gaphor.UML.states import StateItem, TransitionItem
 
 
@@ -14,7 +14,7 @@ def test_state_with_behaviors(diagram, element_factory):
 
     state_item = diagram.create(StateItem, subject=state)
 
-    new_items = copy_clear_and_paste({state_item}, diagram, element_factory)
+    new_items = copy_clear_and_paste_link({state_item}, diagram, element_factory)
     new_state_item = new_items.pop()
 
     assert isinstance(new_state_item, StateItem)
@@ -32,7 +32,7 @@ def test_connected_transition(diagram, element_factory):
     connect(transition_item, transition_item.tail, state_item_2)
     transition_item.subject.guard.specification = "[test]"
 
-    new_items = copy_clear_and_paste({transition_item}, diagram, element_factory)
+    new_items = copy_clear_and_paste_link({transition_item}, diagram, element_factory)
     new_transition_item = new_items.pop()
 
     assert isinstance(new_transition_item, TransitionItem), new_items

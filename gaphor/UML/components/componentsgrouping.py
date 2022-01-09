@@ -25,26 +25,26 @@ class NodeComponentGroup(AbstractGroup):
         node = self.parent.subject
         component = self.item.subject
 
-        # node attribute
-        a1 = node.model.create(UML.Property)
-        a1.aggregation = "composite"
-        # component attribute
-        a2 = node.model.create(UML.Property)
+        # attributes
+        node_attr = node.model.create(UML.Property)
+        node_attr.aggregation = "composite"
+        comp_attr = node.model.create(UML.Property)
 
-        e1 = node.model.create(UML.ConnectorEnd)
-        e2 = node.model.create(UML.ConnectorEnd)
+        node_end = node.model.create(UML.ConnectorEnd)
+        comp_end = node.model.create(UML.ConnectorEnd)
 
         # create connection between node and component
-        e1.role = a1
-        e2.role = a2
+        node_end.role = node_attr
+        comp_end.role = comp_attr
+
         connector = node.model.create(UML.Connector)
-        connector.end = e1
-        connector.end = e2
+        connector.end = node_end
+        connector.end = comp_end
 
         # compose component within node
-        node.ownedAttribute = a1
+        node.ownedAttribute = node_attr
         node.ownedConnector = connector
-        component.ownedAttribute = a2
+        component.ownedAttribute = comp_attr
 
     def ungroup(self):
         node = self.parent.subject

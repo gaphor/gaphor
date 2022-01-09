@@ -1,8 +1,8 @@
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.copypaste import copy, paste
+from gaphor.diagram.copypaste import copy, paste, paste_link
 from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
-from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste
+from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste_link
 from gaphor.UML.classes import ClassItem, GeneralizationItem
 
 
@@ -24,8 +24,7 @@ def test_copied_item_references_same_model_element(diagram, element_factory):
 
     _, buffer = next(copy(cls_item))
 
-    for element in paste(buffer, diagram, element_factory.lookup):
-        pass
+    all(paste(buffer, diagram, element_factory.lookup))
 
     assert len(list(diagram.get_all_items())) == 2
     item1, item2 = diagram.get_all_items()
@@ -40,7 +39,7 @@ def test_copy_multiple_items(diagram, element_factory):
 
     buffer = copy({cls_item1, cls_item2})
 
-    paste(buffer, diagram, element_factory.lookup)
+    paste_link(buffer, diagram, element_factory.lookup)
 
     assert len(list(diagram.get_all_items())) == 4
     assert len(element_factory.lselect(UML.Class)) == 1
@@ -54,7 +53,7 @@ def test_copy_item_without_copying_connection(diagram, element_factory):
 
     buffer = copy({cls_item})
 
-    new_items = paste(buffer, diagram, element_factory.lookup)
+    new_items = paste_link(buffer, diagram, element_factory.lookup)
 
     assert len(list(diagram.get_all_items())) == 3
     assert len(element_factory.lselect(UML.Class)) == 1
@@ -80,7 +79,7 @@ def test_copy_item_with_connection(diagram, element_factory):
     )
     buffer = copy({gen_cls_item, gen_item, spc_cls_item})
 
-    new_items = paste(buffer, diagram, element_factory.lookup)
+    new_items = paste_link(buffer, diagram, element_factory.lookup)
     new_gen_item = next(i for i in new_items if isinstance(i, GeneralizationItem))
 
     new_cls_item1 = diagram.connections.get_connection(
@@ -120,13 +119,11 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
     assert cls not in element_factory.select()
     assert not element_factory.lookup(orig_cls_id)
 
-    print(buffer)
-
-    paste(buffer, diagram, element_factory.lookup)
+    paste_link(buffer, diagram, element_factory.lookup)
     new_cls = element_factory.lselect(UML.Class)[0]
-    assert len(list(diagram.get_all_items())) == 1
+    (new_cls_item,) = diagram.get_all_items()
     assert new_cls.package is package
-    assert element_factory.lookup(orig_cls_id) is new_cls
+    assert new_cls_item.subject is new_cls
 
 
 def test_copy_remove_paste_items_with_connections(diagram, element_factory):
@@ -134,7 +131,7 @@ def test_copy_remove_paste_items_with_connections(diagram, element_factory):
         diagram, element_factory
     )
 
-    new_items = copy_clear_and_paste(
+    new_items = copy_clear_and_paste_link(
         {gen_cls_item, gen_item, spc_cls_item}, diagram, element_factory
     )
     new_cls1, new_cls2 = element_factory.lselect(UML.Class)
@@ -156,7 +153,9 @@ def test_copy_remove_paste_items_when_namespace_is_removed(diagram, element_fact
     diagram_package = element_factory.create(UML.Package)
     diagram.element = diagram_package
 
-    copy_clear_and_paste({cls_item}, diagram, element_factory, retain=[diagram_package])
+    copy_clear_and_paste_link(
+        {cls_item}, diagram, element_factory, retain=[diagram_package]
+    )
 
     new_cls = element_factory.lselect(UML.Class)[0]
 
@@ -168,7 +167,9 @@ def test_copy_remove_paste_simple_items(diagram, element_factory):
     ellipse = diagram.create(Ellipse)
     line = diagram.create(Line)
 
-    new_items = copy_clear_and_paste({box, ellipse, line}, diagram, element_factory)
+    new_items = copy_clear_and_paste_link(
+        {box, ellipse, line}, diagram, element_factory
+    )
 
     new_box = next(item for item in new_items if isinstance(item, Box))
 
@@ -182,7 +183,7 @@ def test_copy_to_new_diagram(diagram, element_factory):
 
     buffer = copy({cls_item})
 
-    paste(buffer, new_diagram, element_factory.lookup)
+    paste_link(buffer, new_diagram, element_factory.lookup)
 
     assert len(list(new_diagram.get_all_items())) == 1
     assert next(new_diagram.get_all_items()).diagram is new_diagram

@@ -14,7 +14,7 @@ from gaphor.core.modeling.modelinglanguage import (
     MockModelingLanguage,
 )
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.copypaste import copy, paste
+from gaphor.diagram.copypaste import copy, paste_link
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
@@ -138,15 +138,15 @@ def clear_model(diagram, element_factory, retain=[]):
         item.unlink()
 
 
-def copy_and_paste(items, diagram, element_factory, retain=[]):
+def copy_and_paste_link(items, diagram, element_factory, retain=[]):
     buffer = copy(items)
-    return paste(buffer, diagram, element_factory.lookup)
+    return paste_link(buffer, diagram, element_factory.lookup)
 
 
-def copy_clear_and_paste(items, diagram, element_factory, retain=[]):
+def copy_clear_and_paste_link(items, diagram, element_factory, retain=[]):
     buffer = copy(items)
     clear_model(diagram, element_factory, retain)
-    return paste(buffer, diagram, element_factory.lookup)
+    return paste_link(buffer, diagram, element_factory.lookup)
 
 
 if Gtk.get_major_version() == 3:

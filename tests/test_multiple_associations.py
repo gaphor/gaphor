@@ -68,7 +68,7 @@ def class_and_association_with_copy(diagram, event_manager, element_factory, cop
 
         copy.copy({a, c})
         new_diagram = element_factory.create(Diagram)
-        pasted_items = copy.paste(new_diagram)
+        pasted_items = copy.paste_link(new_diagram)
 
     aa = pasted_items.pop()
     if not isinstance(aa, diagramitems.AssociationItem):

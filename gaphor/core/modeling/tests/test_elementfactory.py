@@ -1,4 +1,5 @@
 import gc
+from collections.abc import Container, Iterable
 
 import pytest
 
@@ -22,6 +23,14 @@ def factory():
     return ElementFactory(event_manager)
 
 
+def test_element_factory_is_an_iterable(factory):
+    assert isinstance(factory, Iterable)
+
+
+def test_element_factory_is_a_container(factory):
+    assert isinstance(factory, Container)
+
+
 def test_create(factory):
     factory.create(Parameter)
     assert len(list(factory.values())) == 1
@@ -40,7 +49,7 @@ def test_flush(factory):
 
     gc.collect()
 
-    assert len(list(factory.values())) == 0, list(factory.values())
+    assert not list(factory.values()), list(factory.values())
 
 
 def test_without_application(factory):
@@ -64,7 +73,7 @@ def test_unlink(factory):
 
     p.unlink()
 
-    assert len(list(factory.values())) == 0, list(factory.values())
+    assert not list(factory.values()), list(factory.values())
 
     p = factory.create(Parameter)
     p.defaultValue = "l"
@@ -74,7 +83,7 @@ def test_unlink(factory):
     p.unlink()
     del p
 
-    assert len(list(factory.values())) == 0, list(factory.values())
+    assert not list(factory.values()), list(factory.values())
 
 
 # Event handlers are registered as persisting top level handlers, since no
