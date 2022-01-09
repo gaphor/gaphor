@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2021-12-31 17:55-0500\n"
-"PO-Revision-Date: 2022-01-03 00:54+0000\n"
+"PO-Revision-Date: 2022-01-09 06:56+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hu/>\n"
@@ -314,9 +314,8 @@ msgid "Show Values"
 msgstr "Értékek megjelenítése"
 
 #: gaphor/SysML/propertypages.glade:189 gaphor/SysML/propertypages.ui:122
-#, fuzzy
 msgid "Compartments"
-msgstr "megvalósítás"
+msgstr "Rekeszek"
 
 #: gaphor/SysML/propertypages.glade:204 gaphor/SysML/propertypages.ui:136
 msgid "Aggregation"
@@ -531,7 +530,6 @@ msgstr ""
 "szerepelnek."
 
 #: gaphor/UML/toolbox.py:32
-#, fuzzy
 msgid "New Component Diagram"
 msgstr "Új összetevőábra"
 
@@ -721,7 +719,7 @@ msgstr "Név"
 
 #: gaphor/UML/actions/propertypages.glade:264
 msgid "Allocated Type"
-msgstr ""
+msgstr "Lefoglalt típus"
 
 #: gaphor/UML/actions/propertypages.glade:296
 #: gaphor/UML/actions/propertypages.ui:162
@@ -902,6 +900,17 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Társítási végek hozzáadása és szerkesztése az UML-szintaxis szerint.\n"
+"\n"
+"  • <tt>+ név</tt>\n"
+"  • <tt>+ név[1]</tt>\n"
+"  • <tt>- név[1..2]</tt>\n"
+"  • <tt>1..2</tt>\n"
+"  • <tt>- [1..2]</tt>\n"
+"\n"
+"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés "
+"(Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához.\n"
+"A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/classes/propertypages.glade:361
 #: gaphor/UML/classes/propertypages.ui:258
@@ -928,6 +937,19 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Osztályattribútumok hozzáadása és szerkesztése az UML-szintaxis szerint.\n"
+"\n"
+"  • <tt>attr</tt> (attribútum neve, alapértelmezés szerint a nyilvános "
+"láthatóság)\n"
+"  • <tt>+ attr: int</tt> (nyilvános attribútum típussal)\n"
+"  • <tt>+ attr: int[0..1]</tt> (nyilvános attribútum típussal és "
+"többszörösséggel)\n"
+"  • <tt># /attr: int # egy megjegyzés</tt> (védett és származtatott "
+"attribútum megjegyzéssel)\n"
+"\n"
+"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés "
+"(Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához.\n"
+"A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/classes/propertypages.glade:521
 #: gaphor/UML/classes/propertypages.ui:362
@@ -973,6 +995,17 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Osztályműveletek hozzáadása és szerkesztése az UML-szintaxis szerint.\n"
+"\n"
+"  • <tt>call()</tt>\n"
+"  • <tt>+ call(a: int[*], b: str): bool</tt> (nyilvános felhívás, "
+"paraméterek)\n"
+"  • <tt># call(a: int, b: str) # a note</tt> (védett felhívás, megjegyzéssel)"
+"\n"
+"\n"
+"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés "
+"(Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához.\n"
+"A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/classes/propertypages.glade:798
 #: gaphor/UML/classes/propertypages.ui:553
@@ -996,6 +1029,13 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Felsorolási literálok hozzáadása és szerkesztése az UML-szintaxis szerint.\n"
+"\n"
+"  • <tt>enum</tt>\n"
+"\n"
+"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés "
+"(Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához.\n"
+"A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/classes/propertypages.ui:65
 #: gaphor/UML/classes/propertypages.ui:162
@@ -1548,9 +1588,8 @@ msgid "main"
 msgstr "fő"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "1. Context diagrams"
-msgstr "{name}-ábra"
+msgstr "1. Szövegkörnyezet ábrák"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Context diagram"
@@ -1570,7 +1609,7 @@ msgstr "4. Kódábrák"
 
 #: gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
-msgstr ""
+msgstr "3. Összetevő ábrák"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Component diagram"
@@ -1581,43 +1620,36 @@ msgid "Code diagram"
 msgstr "Kódábra"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "1. Concept Level"
-msgstr "Eseményművelet elfogadása"
+msgstr "1. Fogalmi szint"
 
 #: gaphor/templates/sysml.gaphor
 msgid "2. Logical Level"
-msgstr ""
+msgstr "2. Logikai szint"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "4. Implementation Level"
-msgstr "Megvalósítás"
+msgstr "4. Megvalósítási szint"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "3. Technology Level"
-msgstr "Technológia"
+msgstr "3. Technológiai szint"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical diagram"
-msgstr "Ábra bezárása"
+msgstr "Logikai ábra"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Technology diagram"
-msgstr "Technológia"
+msgstr "Technológiai ábra"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Implementation diagram"
-msgstr "Megvalósítás"
+msgstr "Megvalósítási ábra"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept diagram"
-msgstr "Új ábra"
+msgstr "Fogalmi ábra"
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
@@ -1692,21 +1724,21 @@ msgid "Editors"
 msgstr "Szerkesztők"
 
 #: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:218
-#, fuzzy
 msgid "Reset Tool Automatically"
 msgstr "Az eszköz önműködő visszaállítása"
 
 #: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:236
 msgid "Remove Unused Elements"
-msgstr ""
+msgstr "Nem használt elemek eltávolítása"
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
 #: gaphor/ui/elementeditor.ui:238 gaphor/ui/elementeditor.ui:245
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
+"Önműködően távolítsa el azokat az elemeket, amelyeket már nem használnak az "
+"ábrákban."
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:253
-#, fuzzy
 msgid "Style Sheet"
 msgstr "Stíluslap"
 
@@ -1823,13 +1855,12 @@ msgid "Close _without saving changes"
 msgstr "Bezárás a módosítások mentése _nélkül"
 
 #: gaphor/ui/greeter.glade:37 gaphor/ui/greeter.ui:31
-#, fuzzy
 msgid "Recently opened models"
-msgstr "Nincsenek nemrégiben megnyitott modellek"
+msgstr "Legutóbb megnyitott modellek"
 
 #: gaphor/ui/greeter.glade:90 gaphor/ui/greeter.ui:75
 msgid "Create a new model from a template"
-msgstr ""
+msgstr "Új modell létrehozása sablonból"
 
 #: gaphor/ui/greeter.glade:137 gaphor/ui/greeter.ui:113
 msgid "Recent Model…"
@@ -1841,16 +1872,15 @@ msgstr "Új modell létrehozása…"
 
 #: gaphor/ui/greeter.glade:153 gaphor/ui/greeter.ui:127
 msgid "Open Existing Model…"
-msgstr ""
+msgstr "Meglévő modell megnyitása…"
 
 #: gaphor/ui/greeter.glade:172 gaphor/ui/greeter.ui:142
-#, fuzzy
 msgid "Open a Gaphor Model"
 msgstr "Gaphor-modell megnyitása"
 
 #: gaphor/ui/greeter.py:25
 msgid "Generic"
-msgstr ""
+msgstr "Általános"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
@@ -1889,9 +1919,8 @@ msgid "Keyboard Shortcuts"
 msgstr "Billentyűparancsok"
 
 #: gaphor/ui/mainwindow.py:84
-#, fuzzy
 msgid "New Generic Diagram"
-msgstr "Új ábra"
+msgstr "Új általános-ábra"
 
 #: gaphor/ui/mainwindow.py:232
 msgid "edited"
