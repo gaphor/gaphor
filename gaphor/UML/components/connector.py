@@ -137,7 +137,10 @@ class ConnectorItem(LinePresentation[UML.Connector], Named):
             # Also support SysML ItemFlow:
             Text(
                 text=lambda: stereotypes_str(
-                    self.subject.informationFlow[0].itemProperty.type  # type: ignore[attr-defined]
+                    self.subject.informationFlow[0].itemProperty.type,  # type: ignore[attr-defined]
+                    raaml_stereotype_workaround(
+                        self.subject.informationFlow[0].itemProperty.type  # type: ignore[attr-defined]
+                    ),
                 )
                 if self.subject.informationFlow
                 else ""
@@ -188,3 +191,15 @@ class ConnectorItem(LinePresentation[UML.Connector], Named):
             cr.move_to(15, -6)
             cr.line_to(0, 0)
             cr.line_to(15, 6)
+
+
+def raaml_stereotype_workaround(element):
+    """This is a temporary fix to ensure ItemFlow is showing proper stereotypes
+    for Controller, Feedback and ControlAction from RAAML."""
+    if not element:
+        return ()
+
+    name: str = type(element).__name__
+    if name in ("Controller", "Feedback", "ControlAction"):
+        return (name[0].lower() + name[1:],)
+    return ()
