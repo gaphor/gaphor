@@ -23,8 +23,10 @@ class ModelTemplate(NamedTuple):
 
 TEMPLATES = [
     ModelTemplate(gettext("Generic"), "org.gaphor.Gaphor", "UML", "blank.gaphor"),
+    ModelTemplate(gettext("UML"), "UML", "UML", "uml.gaphor"),
     ModelTemplate(gettext("C4 Model"), "C4Model", "C4Model", "c4model.gaphor"),
     ModelTemplate(gettext("SysML"), "SysML", "SysML", "sysml.gaphor"),
+    ModelTemplate(gettext("RAAML"), "RAAML", "RAAML", "raaml.gaphor"),
 ]
 
 
