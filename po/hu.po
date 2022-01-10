@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-09 10:13+0100\n"
-"PO-Revision-Date: 2022-01-09 06:56+0000\n"
+"PO-Revision-Date: 2022-01-11 02:56+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10.1\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -1384,7 +1385,6 @@ msgid "Fork me on GitHub"
 msgstr "Elágazható a GitHubon"
 
 #: gaphor/services/helpservice/about.ui:31
-#, fuzzy
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
 "you may not use this application except in compliance with the\n"
@@ -1416,6 +1416,12 @@ msgstr ""
 "kifejezett, akár hallgatólagos GARANCIA VAGY FELTÉTEL NÉLKÜL.\n"
 "Tekintse meg a Licencben az adott nyelvi engedélyeket és\n"
 "korlátozásokat a Licenc alatt.\n"
+"\n"
+"---\n"
+"\n"
+"Az UML, SysML és RAAML az Object Management Group, Inc.\n"
+"bejegyzett védjegyei vagy védjegyei az Egyesült Államokban\n"
+"és/vagy más országokban.\n"
 
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
@@ -1488,7 +1494,7 @@ msgstr "Másolás"
 
 #: gaphor/services/helpservice/shortcuts.ui:155
 msgid "Paste (link)"
-msgstr ""
+msgstr "Beillesztés (hivatkozás)"
 
 #: gaphor/services/helpservice/shortcuts.ui:163
 msgid "Delete"
@@ -2224,4 +2230,3 @@ msgstr "&lt;Kapcsolatok&gt;"
 
 #~ msgid "Paste"
 #~ msgstr "Beillesztés"
-
