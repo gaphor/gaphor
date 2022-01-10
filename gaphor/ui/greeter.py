@@ -110,11 +110,11 @@ class Greeter(Service, ActionProvider):
             self.greeter = None
             self.stack = None
 
-    @action(name="app.recent-files", shortcut="<Primary>n")
+    @action(name="app.recent-files", shortcut="<Primary>o")
     def recent_files(self):
         self.open("recent-files" if any(self.create_recent_files()) else "new-model")
 
-    @action(name="app.new-model")
+    @action(name="app.new-model", shortcut="<Primary>n")
     def new_model(self):
         self.open("new-model")
 

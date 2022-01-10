@@ -33,7 +33,7 @@ class AppFileManager(Service, ActionProvider):
             else None
         )
 
-    @action(name="app.file-open", shortcut="<Primary>o")
+    @action(name="app.file-open")
     def action_open(self):
         """This menu action opens the standard model open dialog."""
 
