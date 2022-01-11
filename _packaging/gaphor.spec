@@ -1,5 +1,5 @@
 from pathlib import Path
-
+import time
 import tomli
 from PyInstaller.utils.hooks import copy_metadata
 
@@ -90,4 +90,43 @@ app = BUNDLE(
     icon="macos/gaphor.icns",
     bundle_identifier="org.gaphor.gaphor",
     version=get_version(),
+    info_plist={
+        "CFBundleVersion": get_version(),
+        "NSHumanReadableCopyright": f"Copyright 2001-{time.strftime('%Y')} Gaphor Developers, Apache 2 License.",
+        "LSMinimumSystemVersion": "10.13",
+        "NSHighResolutionCapable": True,
+        "LSApplicationCategoryType": "public.app-category.developer-tools",
+        "NSPrincipalClass": "NSApplication",
+        "CFBundleDocumentTypes": [
+            {
+                "CFBundleTypeExtensions": ["gaphor"],
+                "CFBundleTypeIconFile": "gaphor.icns",
+                "CFBundleTypeMIMETypes": ["application/x-gaphor"],
+                "CFBundleTypeName": "Gaphor Model",
+                "CFBundleTypeOSTypes": ["GAPHOR"],
+                "CFBundleTypeRole": "Editor",
+                "LSIsAppleDefaultForType": True,
+                "LSItemContentTypes": ["org.gaphor.model"],
+            }
+        ],
+        "UTExportedTypeDeclarations": [
+            {
+                "UTTypeIdentifier": "org.gaphor.model",
+                "UTTypeConformsTo": ["gaphor.model"],
+                "UTTypeDescription": "Gaphor Model",
+                "UTTypeIconFile": "gaphor.icns",
+                "UTTypeReferenceURL": "https://gaphor.org",
+                "UTTypeTagSpecification": {
+                    "com.apple.ostype": "GAPHOR",
+                    "public.filename-extension": ["gaphor"],
+                    "public.mime-type": ["application/x-gaphor"],
+                },
+            }
+        ],
+        "NSDesktopFolderUsageDescription": "Gaphor needs your permission to load models from disk.",
+        "NSDocumentsFolderUsageDescription": "Gaphor needs your permission to load models from disk.",
+        "NSDownloadsFolderUsageDescription": "Gaphor needs your permission to load models from disk.",
+        "NSRequiresAquaSystemAppearance": "No",
+        "NSAppleScriptEnabled": False,
+    },
 )

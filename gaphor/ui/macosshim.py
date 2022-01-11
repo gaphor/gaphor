@@ -17,8 +17,7 @@ else:
         if path == __file__:
             return False
 
-        app_file_manager = application.get_service("app_file_manager")
-        app_file_manager.load(path)
+        application.new_session(filename=path)
 
         return True
 
