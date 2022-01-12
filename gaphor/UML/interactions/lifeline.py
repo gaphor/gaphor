@@ -115,7 +115,6 @@ class LifetimeItem:
         self.top.visible = False
 
         self.port = BetweenPort(self.top.pos, self.bottom.pos)
-        self.visible = False
 
         self._c_min_length = None  # to be set by lifeline item
 
@@ -143,7 +142,7 @@ class LifetimeItem:
     def _set_visible(self, visible):
         """Set lifetime visibility."""
         if visible:
-            self.bottom.pos.y = self.top.pos.y + 3 * self.MIN_LENGTH
+            self.bottom.pos.y = self.top.pos.y + self.MIN_LENGTH_VISIBLE
         else:
             self.bottom.pos.y = self.top.pos.y + self.MIN_LENGTH
 
