@@ -30,12 +30,6 @@ renderers and such.</property>
         <property name="has-entry">1</property>
         <signal name="changed" handler="metaclass-combo-changed" swapped="no"/>
         <signal name="destroy" handler="metaclass-combo-destroy" swapped="no"/>
-        <property name="child">
-          <object class="GtkEntry">
-            <property name="visible">0</property>
-            <property name="text" translatable="yes">Named Element</property>
-          </object>
-        </property>
       </object>
     </child>
   </object>

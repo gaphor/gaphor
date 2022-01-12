@@ -9,7 +9,12 @@ def connector_end_deletable(element: ConnectorEnd) -> bool:
 
 @deletable.register
 def property_deletable(element: Property) -> bool:
-    return not element.association and not element.end
+    return not (
+        element.association
+        or element.end
+        or element.informationFlow
+        or element.itemFlow  # type: ignore[attr-defined]
+    )
 
 
 @deletable.register

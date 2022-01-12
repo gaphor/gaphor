@@ -7,6 +7,7 @@ from gaphor.core import gettext, transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
+    combo_box_text_auto_complete,
     new_resource_builder,
 )
 from gaphor.UML.actions.partition import PartitionItem
@@ -61,17 +62,14 @@ class PartitionPropertyPage(PropertyPageBase):
         builder.get_object("partition-name").set_text(partition.name or "")
 
         combo = builder.get_object("partition-type")
-        for c in self.item.model.select(UML.Classifier):
-            if c.name and not isinstance(c, UML.Behavior):
-                combo.append(c.id, c.name)
-
-        completion = Gtk.EntryCompletion()
-        completion.set_model(combo.get_model())
-        completion.set_minimum_key_length(1)
-        completion.set_text_column(0)
-
-        entry = combo.get_child()
-        entry.set_completion(completion)
+        combo_box_text_auto_complete(
+            combo,
+            (
+                (c.id, c.name)
+                for c in self.item.model.select(UML.Classifier)
+                if c.name and not isinstance(c, UML.Behavior)
+            ),
+        )
         if partition.represents:
             combo.set_active_id(partition.represents.id)
 
