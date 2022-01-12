@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-09 10:13+0100\n"
-"PO-Revision-Date: 2021-12-13 09:54+0000\n"
+"PO-Revision-Date: 2022-01-12 10:56+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10.1\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -75,46 +76,39 @@ msgid "Dependency"
 msgstr "Dependencia"
 
 #: gaphor/C4Model/toolbox.py:140
-#, fuzzy
 msgid "New C4 Diagram"
-msgstr "Diagrama nuevo"
+msgstr "Diagrama C4 nuevo"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/UML/toolbox.py:30
-#, fuzzy
 msgid "New Class Diagram"
-msgstr "Diagrama nuevo"
+msgstr "Diagrama de clase nuevo"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
-#, fuzzy
 msgid "New Activity Diagram"
-msgstr "Diagrama nuevo"
+msgstr "Diagrama de actividad nuevo"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
-#, fuzzy
 msgid "New Sequence Diagram"
-msgstr "Diagrama nuevo"
+msgstr "Diagrama de secuencia nuevo"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
-#, fuzzy
 msgid "New State Machine Diagram"
-msgstr "Crear diagrama nuevo"
+msgstr "Diagrama de la máquina de estado nuevo"
 
 #: gaphor/RAAML/modelinglanguage.py:17
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
-#, fuzzy
 msgid "New FTA Diagram"
-msgstr "Diagrama nuevo"
+msgstr "Diagrama FTA nuevo"
 
 #: gaphor/RAAML/toolbox.py:20
-#, fuzzy
 msgid "New STPA Diagram"
-msgstr "Diagrama nuevo"
+msgstr "Diagrama STPA nuevo"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:28
 msgid "AND Gate"
@@ -289,12 +283,11 @@ msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:28 gaphor/SysML/propertypages.ui:23
 msgid "Item Flow"
-msgstr ""
+msgstr "Flujo del elemento"
 
 #: gaphor/SysML/propertypages.glade:51 gaphor/SysML/propertypages.ui:38
-#, fuzzy
 msgid "Item Property"
-msgstr "Propiedad"
+msgstr "Propiedad del elemento"
 
 #: gaphor/SysML/propertypages.glade:74 gaphor/SysML/propertypages.ui:52
 #: gaphor/UML/classes/propertypages.glade:48
@@ -309,18 +302,16 @@ msgid "Show Parts"
 msgstr "Mostrar partes"
 
 #: gaphor/SysML/propertypages.glade:138 gaphor/SysML/propertypages.ui:92
-#, fuzzy
 msgid "Show References"
 msgstr "Mostrar referencias"
 
 #: gaphor/SysML/propertypages.glade:164 gaphor/SysML/propertypages.ui:107
 msgid "Show Values"
-msgstr ""
+msgstr "Mostrar valores"
 
 #: gaphor/SysML/propertypages.glade:189 gaphor/SysML/propertypages.ui:122
-#, fuzzy
 msgid "Compartments"
-msgstr "implementa"
+msgstr "Compartimentos"
 
 #: gaphor/SysML/propertypages.glade:204 gaphor/SysML/propertypages.ui:136
 msgid "Aggregation"
@@ -376,26 +367,23 @@ msgstr "Puerto proxy"
 
 #: gaphor/SysML/toolbox.py:68
 msgid "New Block Definition Diagram"
-msgstr ""
+msgstr "Diagrama de definición de bloques nuevo"
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr ""
+msgstr "Diagrama de bloques internos nuevo"
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
-#, fuzzy
 msgid "New Package Diagram"
-msgstr "{name} diagrama"
+msgstr "Diagrama de paquete nuevo"
 
 #: gaphor/SysML/toolbox.py:71
-#, fuzzy
 msgid "New Requirement Diagram"
-msgstr "requisito"
+msgstr "Diagrama de requisitos nuevo"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
-#, fuzzy
 msgid "New Use Case Diagram"
-msgstr "{name} diagrama"
+msgstr "Diagrama de casos de uso nuevo"
 
 #: gaphor/SysML/blocks/block.py:66
 msgid "ControlStructure"
@@ -414,9 +402,8 @@ msgid "references"
 msgstr "referencias"
 
 #: gaphor/SysML/blocks/block.py:123
-#, fuzzy
 msgid "values"
-msgstr "Valor"
+msgstr "valores"
 
 #: gaphor/SysML/blocks/block.py:140
 msgid "unnamed"
@@ -535,11 +522,12 @@ msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
+"Se han eliminado los elementos no usados del modelo: no se usan en ningún "
+"otro diagrama."
 
 #: gaphor/UML/toolbox.py:32
-#, fuzzy
 msgid "New Component Diagram"
-msgstr "Componente nuevo"
+msgstr "Diagrama de componentes nuevo"
 
 #: gaphor/UML/toolbox.py:33
 #, fuzzy
@@ -2144,4 +2132,3 @@ msgstr "<Relationships>"
 
 #~ msgid "Paste"
 #~ msgstr "Pegar"
-
