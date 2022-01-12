@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-09 10:13+0100\n"
-"PO-Revision-Date: 2022-01-12 10:56+0000\n"
+"PO-Revision-Date: 2022-01-13 11:52+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
 ">\n"
@@ -530,18 +530,16 @@ msgid "New Component Diagram"
 msgstr "Diagrama de componentes nuevo"
 
 #: gaphor/UML/toolbox.py:33
-#, fuzzy
 msgid "New Deployment Diagram"
-msgstr "{name} diagrama"
+msgstr "Diagrama de despliegue nuevo"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr ""
+msgstr "Diagrama de comunicación nuevo"
 
 #: gaphor/UML/toolbox.py:39
-#, fuzzy
 msgid "New Profile Diagram"
-msgstr "Diagrama nuevo"
+msgstr "Diagrama de perfil nuevo"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
@@ -680,9 +678,8 @@ msgstr "Especificación de unión"
 
 #: gaphor/UML/actions/propertypages.glade:116
 #: gaphor/UML/actions/propertypages.ui:90
-#, fuzzy
 msgid "Swimlanes"
-msgstr "Swimlane"
+msgstr "Swimlanes"
 
 #: gaphor/UML/actions/propertypages.glade:129
 #: gaphor/UML/actions/propertypages.ui:101
@@ -721,7 +718,7 @@ msgstr "Nombre"
 #: gaphor/UML/actions/propertypages.glade:264
 #: gaphor/UML/actions/propertypages.ui:195
 msgid "Allocated Type"
-msgstr ""
+msgstr "Tipo asignado"
 
 #: gaphor/UML/actions/propertypages.glade:296
 #: gaphor/UML/actions/propertypages.ui:215
@@ -834,7 +831,7 @@ msgstr "Mostrar dirección"
 #: gaphor/UML/classes/propertypages.ui:614
 #: gaphor/UML/classes/propertypages.ui:720
 msgid "🛈 Help"
-msgstr ""
+msgstr "🛈 Ayuda"
 
 #: gaphor/UML/classes/propertypages.glade:107
 #: gaphor/UML/classes/propertypages.glade:234
@@ -904,6 +901,17 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Añada y edite los extremos de la asociación de acuerdo con la sintaxis UML.\n"
+"\n"
+"  • <tt>+ nombre</tt>\n"
+"  • <tt>+ nombre[1]</tt>\n"
+"  • <tt>- nombre[1..2]</tt>\n"
+"  • <tt>1..2</tt>\n"
+"  • <tt>- [1..2]</tt>\n"
+"\n"
+"Pulse <b>Enter</b> para editar, <b>Retroceso</b>/<b>Eliminar</b> para "
+"eliminar elementos.\n"
+"Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
 #: gaphor/UML/classes/propertypages.glade:361
 #: gaphor/UML/classes/propertypages.ui:306
@@ -931,6 +939,17 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Añada y edite los atributos de la clase según la sintaxis UML.\n"
+"\n"
+"  • <tt>attr</tt> (nombre, predeterminado a la visibilidad pública)\n"
+"  • <tt>+ attr: int</tt> (público con tipo)\n"
+"  • <tt>+ attr: int[0..1]</tt> (público, tipo, y multiplicidad)\n"
+"  • <tt># /attr: int # una nota</tt> (protegidas, derivadas, con observación)"
+"\n"
+"\n"
+"Pulse <b>Enter</b> to edit, <b>Retroceso</b>/<b>Eliminar</b> para eliminar "
+"elementos.\n"
+"Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
 #: gaphor/UML/classes/propertypages.glade:521
 #: gaphor/UML/classes/propertypages.ui:441
@@ -977,6 +996,15 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Añada y edite los atributos de la clase según la sintaxis UML.\n"
+"\n"
+"  • <tt>call()</tt>\n"
+"  • <tt>+ call(a: int[*], b: str): bool</tt> (público, parámetros)\n"
+"  • <tt># call(a: int, b: str) # a note</tt> (protegido, con observación)\n"
+"\n"
+"Pulse <b>Enter</b> to edit, <b>Retroceso</b>/<b>Eliminar</b> para eliminar "
+"elementos.\n"
+"Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
 #: gaphor/UML/classes/propertypages.glade:798
 #: gaphor/UML/classes/propertypages.ui:665
@@ -1001,6 +1029,13 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Añada y edite los atributos de la clase según la sintaxis UML.\n"
+"\n"
+"  • <tt>enum</tt>\n"
+"\n"
+"Pulse <b>Enter</b> to edit, <b>Retroceso</b>/<b>Eliminar</b> para eliminar "
+"elementos.\n"
+"Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
 #: gaphor/UML/components/componentstoolbox.py:16
 msgid "Components"
@@ -1034,9 +1069,8 @@ msgstr "Flujo de información"
 
 #: gaphor/UML/components/propertypages.glade:80
 #: gaphor/UML/components/propertypages.ui:59
-#, fuzzy
 msgid "Information Item (Class)"
-msgstr "Elemento informativo (clase):"
+msgstr "Elemento de información (clase)"
 
 #: gaphor/UML/interactions/interactionsconnect.py:79
 msgid "call()"
@@ -1204,9 +1238,8 @@ msgid "Pointer"
 msgstr "Puntero"
 
 #: gaphor/diagram/diagramtoolbox.py:123
-#, fuzzy
 msgid "Magnet"
-msgstr "principal"
+msgstr "Magnet"
 
 #: gaphor/diagram/diagramtoolbox.py:130
 msgid "Line"
@@ -1339,7 +1372,6 @@ msgid "Fork me on GitHub"
 msgstr "Bifurqueme en GitHub"
 
 #: gaphor/services/helpservice/about.ui:31
-#, fuzzy
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
 "you may not use this application except in compliance with the\n"
@@ -1359,17 +1391,25 @@ msgid ""
 "trademarks of Object Management Group, Inc. in the United States\n"
 "and/or other countries.\n"
 msgstr ""
-"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-"you may not use this application except in compliance with the\n"
-"License. You may obtain a copy of the License at\n"
+"Licenciado bajo la Licencia Apache, Versión 2.0 (la \"Licencia\");\n"
+"no puede usar esta aplicación si no es en cumplimiento de la\n"
+"Licencia. Puede obtener una copia de la Licencia en\n"
 "\n"
 "http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"Unless required by applicable law or agreed to in writing, software\n"
-"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
-"express or implied. See the License for the specific language\n"
-"governing permissions and limitations under the License.\n"
+"A menos que lo exija la legislación aplicable o se acuerde por escrito, el "
+"software\n"
+"distribuido bajo la Licencia se distribuye \"TAL CUAL\",\n"
+"SIN GARANTÍAS NI CONDICIONES DE NINGÚN TIPO, ni expresas ni implícitas.\n"
+"expresas o implícitas. Consulte la Licencia para conocer el lenguaje "
+"específico\n"
+"que rige los permisos y limitaciones bajo la Licencia.\n"
+"\n"
+"---\n"
+"\n"
+"UML, SysML y RAAML son marcas comerciales registradas o\n"
+"marcas comerciales de Object Management Group, Inc. en los Estados Unidos\n"
+"y/o en otros países.\n"
 
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
@@ -1442,7 +1482,7 @@ msgstr "Copiar"
 
 #: gaphor/services/helpservice/shortcuts.ui:155
 msgid "Paste (link)"
-msgstr ""
+msgstr "Pegar (enlace)"
 
 #: gaphor/services/helpservice/shortcuts.ui:163
 msgid "Delete"
@@ -1482,82 +1522,68 @@ msgid "main"
 msgstr "principal"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "1. Context diagrams"
-msgstr "{name} diagrama"
+msgstr "1. Diagramas de contexto"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "2. Container diagrams"
-msgstr "{name} diagrama"
+msgstr "2. Diagramas de contenedores"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "4. Code diagrams"
-msgstr "Diagrama nuevo"
+msgstr "4. Diagramas de códigos"
 
 #: gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
-msgstr ""
+msgstr "3. Diagramas de componentes"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Context diagram"
-msgstr "Diagrama nuevo"
+msgstr "Diagrama de contexto"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Container diagram"
-msgstr "{name} diagrama"
+msgstr "Diagrama del contenedor"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Component diagram"
-msgstr "{name} diagrama"
+msgstr "Diagrama de componentes"
 
 #: gaphor/templates/c4model.gaphor
-#, fuzzy
 msgid "Code diagram"
-msgstr "Diagrama nuevo"
+msgstr "Diagrama de códigos"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "1. Concept Level"
-msgstr "Aceptar evento"
+msgstr "1. Nivel de concepto"
 
 #: gaphor/templates/sysml.gaphor
 msgid "2. Logical Level"
-msgstr ""
+msgstr "2. Nivel lógico"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "4. Implementation Level"
-msgstr "Implementación"
+msgstr "4. Nivel de aplicación"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "3. Technology Level"
-msgstr "Tecnología"
+msgstr "3. Nivel tecnológico"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical diagram"
-msgstr "Cerrar diagrama"
+msgstr "Diagrama lógico"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Technology diagram"
-msgstr "Tecnología"
+msgstr "Diagrama tecnológico"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Implementation diagram"
-msgstr "Implementación"
+msgstr "Diagrama de implementación"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept diagram"
-msgstr "Diagrama nuevo"
+msgstr "Diagrama conceptual"
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
@@ -1633,21 +1659,21 @@ msgid "Editors"
 msgstr "Editores"
 
 #: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:218
-#, fuzzy
 msgid "Reset Tool Automatically"
 msgstr "Restablecer la herramienta automáticamente"
 
 #: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:236
 msgid "Remove Unused Elements"
-msgstr ""
+msgstr "Eliminar los elementos no usados"
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
 #: gaphor/ui/elementeditor.ui:238 gaphor/ui/elementeditor.ui:245
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
+"Eliminar automáticamente los elementos que ya no se usan en cualquier "
+"diagrama."
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:253
-#, fuzzy
 msgid "Style Sheet"
 msgstr "Hoja de estilo"
 
@@ -1770,36 +1796,32 @@ msgid "Close _without saving changes"
 msgstr "Cerrar _sin guardar los cambios"
 
 #: gaphor/ui/greeter.glade:37 gaphor/ui/greeter.ui:31
-#, fuzzy
 msgid "Recently opened models"
-msgstr "No hay modelos abiertos recientemente"
+msgstr "Modelos abiertos recientemente"
 
 #: gaphor/ui/greeter.glade:90 gaphor/ui/greeter.ui:75
 msgid "Create a new model from a template"
-msgstr ""
+msgstr "Crear un modelo nuevo a partir de una plantilla"
 
 #: gaphor/ui/greeter.glade:137 gaphor/ui/greeter.ui:113
-#, fuzzy
 msgid "Recent Model…"
-msgstr "Modelo nuevo"
+msgstr "Modelo reciente…"
 
 #: gaphor/ui/greeter.glade:145 gaphor/ui/greeter.ui:120
-#, fuzzy
 msgid "Create New Model…"
-msgstr "Modelo nuevo"
+msgstr "Crear un modelo nuevo…"
 
 #: gaphor/ui/greeter.glade:153 gaphor/ui/greeter.ui:127
 msgid "Open Existing Model…"
-msgstr ""
+msgstr "Abrir modelo existente…"
 
 #: gaphor/ui/greeter.glade:172 gaphor/ui/greeter.ui:142
-#, fuzzy
 msgid "Open a Gaphor Model"
-msgstr "Abrir modelo Gaphor"
+msgstr "Abrir un modelo Gaphor"
 
 #: gaphor/ui/greeter.py:25
 msgid "Generic"
-msgstr ""
+msgstr "Genérico"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
@@ -1814,14 +1836,12 @@ msgid "Open Application Menu"
 msgstr "Abrir Menú"
 
 #: gaphor/ui/mainwindow.py:42
-#, fuzzy
 msgid "Open a Model…"
-msgstr "Abrir modelo Gaphor"
+msgstr "Abrir un modelo…"
 
 #: gaphor/ui/mainwindow.py:43
-#, fuzzy
 msgid "New Model…"
-msgstr "Modelo nuevo"
+msgstr "Modelo nuevo…"
 
 #: gaphor/ui/mainwindow.py:48
 msgid "Save As…"
@@ -1840,9 +1860,8 @@ msgid "Keyboard Shortcuts"
 msgstr "Atajos de teclado"
 
 #: gaphor/ui/mainwindow.py:84
-#, fuzzy
 msgid "New Generic Diagram"
-msgstr "Diagrama nuevo"
+msgstr "Diagrama genérico nuevo"
 
 #: gaphor/ui/mainwindow.py:232
 msgid "edited"
