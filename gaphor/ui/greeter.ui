@@ -87,7 +87,7 @@
                                 <property name="valign">center</property>
                                 <property name="homogeneous">1</property>
                                 <property name="width-request">400</property>
-                                <property name="max_children_per_line">4</property>
+                                <property name="max_children_per_line">3</property>
                               </object>
                             </child>
                           </object>

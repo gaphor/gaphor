@@ -648,7 +648,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 91.140625, 365.5703125)</val>
 </matrix>
 <points>
-<val>[(-24.679108066870995, -7.740855135658933), (-24.679108066870995, -224.5703125)]</val>
+<val>[(-24.679108066870995, 12.259144864341067), (-24.679108066870995, -224.5703125)]</val>
 </points>
 <head-connection>
 <ref refid="05741e92-71bc-11ec-8ef5-f47b099bf663"/>
@@ -713,7 +713,7 @@
 </reflist>
 </generalization>
 <name>
-<val>System integrity is lost</val>
+<val>Hazard 2</val>
 </name>
 <package>
 <ref refid="44e9b2b0-71b9-11ec-8ef5-f47b099bf663"/>
@@ -748,7 +748,7 @@
 </reflist>
 </generalization>
 <name>
-<val>Fire</val>
+<val>Hazard 1</val>
 </name>
 <package>
 <ref refid="44e9b2b0-71b9-11ec-8ef5-f47b099bf663"/>
