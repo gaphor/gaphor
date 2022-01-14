@@ -76,7 +76,6 @@ renderers and such.</property>
       </object>
     </child>
   </object>
-  </object>
   <object class="GtkExpander" id="compartment-editor">
     <property name="margin_top">12</property>
     <property name="expanded">1</property>
