@@ -676,6 +676,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "mathiascode",
+      "name": "Mat",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8754153?v=4",
+      "profile": "https://github.com/mathiascode",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
