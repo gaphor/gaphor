@@ -1,3 +1,35 @@
+2.8.0
+-----
+- Add diagram type support
+- Improve the welcoming experience with a greeter window and starting templates
+- Add a Magnet-tool
+- Support SysML Item flow
+- Stereotypes for ItemFlow properties
+- Full Copy/Paste of model elements
+- Allow for deleting elements in the tree view
+- Allocation of structural types to swimlane partitions
+- User notification when model elements are automatically removed
+- Store toolbox settings per modeling language
+- Grow item when an item is dropped on it
+- Add "values" compartment to Block item and set a minimal height for compartments
+- Support empty square bracket notation in an Operation
+- New code generator
+- Fix AppImage GLIBC Error on Older Distro Versions
+- Fix Sequence diagram loading when message is close to lifeline body
+- Support for loading .gaphor files directly from the macOS Finder
+- Fix positions of nested items during undo
+- Fix ownership of Connector, ProxyPort, and ItemFlow
+- Improve GTK4 compatibility
+- Improve clarity of syntax for attributes and operations using a popover
+- Clean up Toolbox and remove some legacy code
+- Invert association creation
+- Ensure model consistency on save and fork node loading fixes
+- Core as a separate ModelingLanguage
+- Use symbolic close icon for notebook tabs
+- Update to latest gvsbuild, switch to wingtk repo
+- Spanish, Hungarian, Finnish, Dutch, Portuguese, Croation, Espanian, and Galician translations updates
+- Add Chinese (Simplified) translation
+
 2.7.1
 _____
 - Fix lines don't disconnect when moved
