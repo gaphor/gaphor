@@ -338,14 +338,14 @@ def tab_label(title, widget, event_manager):
     if Gtk.get_major_version() == 3:
         tab_box.pack_start(child=label, expand=True, fill=True, padding=0)
         close_image = Gtk.Image.new_from_icon_name(
-            icon_name="window-close", size=Gtk.IconSize.BUTTON
+            icon_name="window-close-symbolic", size=Gtk.IconSize.BUTTON
         )
         button.add(close_image)
         tab_box.pack_start(child=button, expand=False, fill=False, padding=0)
         tab_box.show_all()
     else:
         tab_box.append(label)
-        close_image = Gtk.Image.new_from_icon_name("window-close")
+        close_image = Gtk.Image.new_from_icon_name("window-close-symbolic")
         button.set_child(close_image)
         tab_box.append(button)
         tab_box.show()
