@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-14 18:15+0100\n"
-"PO-Revision-Date: 2022-01-12 07:53+0000\n"
+"PO-Revision-Date: 2022-01-16 13:30+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.10.1\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -291,12 +292,11 @@ msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:28 gaphor/SysML/propertypages.ui:23
 msgid "Item Flow"
-msgstr ""
+msgstr "Tietuevirta"
 
 #: gaphor/SysML/propertypages.glade:51 gaphor/SysML/propertypages.ui:38
-#, fuzzy
 msgid "Item Property"
-msgstr "Ominaisuus"
+msgstr "Tietueominaisuus"
 
 #: gaphor/SysML/propertypages.glade:71 gaphor/SysML/propertypages.ui:52
 #: gaphor/UML/classes/propertypages.glade:48
@@ -624,30 +624,28 @@ msgid "Send signal action"
 msgstr "Lähetä signaali -toiminto"
 
 #: gaphor/UML/actions/actionstoolbox.py:165
-#, fuzzy
 msgid "Send signal"
-msgstr "Lähetä signaali -toiminto"
+msgstr "Lähetä signaali"
 
 #: gaphor/UML/actions/actionstoolbox.py:171
 msgid "Accept event action"
 msgstr "Hyväksy tapahtuma -toiminto"
 
 #: gaphor/UML/actions/actionstoolbox.py:177
-#, fuzzy
 msgid "Accept event"
-msgstr "Hyväksy tapahtuma -toiminto"
+msgstr "Hyväksy tapahtuma"
 
 #: gaphor/UML/actions/activitynodes.py:191
 msgid "merge/decision"
-msgstr ""
+msgstr "yhdistäminen/päätös"
 
 #: gaphor/UML/actions/activitynodes.py:193
 msgid "merge"
-msgstr ""
+msgstr "yhdistäminen"
 
 #: gaphor/UML/actions/activitynodes.py:195
 msgid "decision"
-msgstr ""
+msgstr "päätös"
 
 #: gaphor/UML/actions/objectnode.py:14
 #: gaphor/UML/actions/propertypages.glade:217
@@ -1442,11 +1440,11 @@ msgstr "Kopioi"
 
 #: gaphor/services/helpservice/shortcuts.ui:155
 msgid "Paste (link defining elements)"
-msgstr ""
+msgstr "Liitä (linkitä määrittelevät elementit)"
 
 #: gaphor/services/helpservice/shortcuts.ui:163
 msgid "Paste (copy defining elements)"
-msgstr ""
+msgstr "Liitä (kopioi määrittelevät elementit)"
 
 #: gaphor/services/helpservice/shortcuts.ui:171
 msgid "Delete"
@@ -1519,7 +1517,7 @@ msgstr "Koodikaavio"
 
 #: gaphor/templates/raaml.gaphor gaphor/templates/uml.gaphor
 msgid "Model Name Here"
-msgstr ""
+msgstr "Mallin nimi tähän"
 
 #: gaphor/templates/raaml.gaphor
 msgid "STPA"
@@ -1527,7 +1525,7 @@ msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss Definition"
-msgstr ""
+msgstr "Menetyksen määritelmä"
 
 #: gaphor/templates/raaml.gaphor
 msgid "FTA"
@@ -1535,23 +1533,23 @@ msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of System"
-msgstr ""
+msgstr "Järjestelmän menetys"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Subsystem 1"
-msgstr ""
+msgstr "Alijärjestelmän 1 menetys"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Subsystem 2"
-msgstr ""
+msgstr "Alijärjestelmän 2 menetys"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard Definition"
-msgstr ""
+msgstr "Hasardin määritelmä"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Life or Injury of People"
-msgstr ""
+msgstr "Henkilön elämän menetys tai henkilön loukkaantuminen"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Mission"
@@ -1559,31 +1557,27 @@ msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Customer Satisfaction"
-msgstr ""
+msgstr "Asiakastyytyväisyyden menetys"
 
 #: gaphor/templates/raaml.gaphor
-#, fuzzy
 msgid "Hazard 2"
-msgstr "Hasardi"
+msgstr "Hasardi 2"
 
 #: gaphor/templates/raaml.gaphor
-#, fuzzy
 msgid "Hazard 1"
-msgstr "Hasardi"
+msgstr "Hasardi 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Mapping of Losses and Hazards"
 msgstr ""
 
 #: gaphor/templates/raaml.gaphor
-#, fuzzy
 msgid "Operational Situations"
-msgstr "Operationaalinen tilanne"
+msgstr "Operationaaliset tilanteet"
 
 #: gaphor/templates/raaml.gaphor
-#, fuzzy
 msgid "Operational Situation 1"
-msgstr "Operationaalinen tilanne"
+msgstr "Operationaalinen tilanne 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Context of UCAs"
@@ -1616,40 +1610,36 @@ msgid "3. Technology Level"
 msgstr "3. Teknologiataso"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "User"
-msgstr "käytä"
+msgstr "Käyttäjä"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Use Case #1"
-msgstr "Käyttötapaus"
+msgstr "Käyttötapaus #1"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Behavior"
-msgstr ""
+msgstr "Toiminta"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Structure"
-msgstr "KontrolliRakenne"
+msgstr "Rakenne"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Context"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Operator"
-msgstr "Operaatiot"
+msgstr "Operaattori"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature"
-msgstr ""
+msgstr "Ominaisuus"
 
 #: gaphor/templates/sysml.gaphor
 msgid "External Element"
-msgstr ""
+msgstr "Ulkoinen elementti"
 
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
@@ -1661,9 +1651,8 @@ msgid "Feature User Need"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical Structure"
-msgstr "Kontrollirakenne"
+msgstr "Looginen rakenne"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensor"
@@ -1674,43 +1663,36 @@ msgid "sensor"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "controller"
-msgstr "Kontrolleri"
+msgstr "kontrolleri"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical Boundary"
-msgstr "Looginen kaavio"
+msgstr "Looginen rajaus"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Technology Structure"
-msgstr "Kontrollirakenne"
+msgstr "Teknologiarakenne"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Technology Boundary"
-msgstr "Teknologiakaavio"
+msgstr "Teknologiarajaus"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Technology Requirements"
-msgstr "vaatimus"
+msgstr "Teknologiavaatimukset"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detailed Behavior"
-msgstr ""
+msgstr "Tarkennettu toiminta"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "System Requirements"
-msgstr "vaatimus"
+msgstr "Järjestelmävaatimukset"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical States"
-msgstr "Viimeinen tila"
+msgstr "Loogiset tilat"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Event Flow"
@@ -1753,7 +1735,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Command"
-msgstr ""
+msgstr "Komento"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Functional Boundary Behavior"
@@ -1952,42 +1934,36 @@ msgid "lastLogin"
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Second Class"
-msgstr "Käyttötapaus"
+msgstr "Toinen luokka"
 
 #: gaphor/templates/uml.gaphor
 msgid "released"
-msgstr ""
+msgstr "julkaistu"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Implementation Architecture"
-msgstr "Toteutuskaavio"
+msgstr "Toteutusarkkitehtuuri"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Node 1"
-msgstr "Solmu"
+msgstr "Solmu 1"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Artifact 1"
-msgstr "Artefakti"
+msgstr "Artefakti 1"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Node 2"
-msgstr "Solmu"
+msgstr "Solmu 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "protocol"
-msgstr ""
+msgstr "protokolla"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Artifact 2"
-msgstr "Artefakti"
+msgstr "Artefakti 2"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2655,4 +2631,3 @@ msgstr "&lt;Suhteet&gt;"
 
 #~ msgid "Concept diagram"
 #~ msgstr "Konseptikaavio"
-
