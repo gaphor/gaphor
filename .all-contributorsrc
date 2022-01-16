@@ -685,6 +685,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "gwutz",
+      "name": "Günther Wagner",
+      "avatar_url": "https://avatars.githubusercontent.com/u/373597?v=4",
+      "profile": "http://www.gunibert.de",
+      "contributions": [
+        "bug",
+        "translation",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
