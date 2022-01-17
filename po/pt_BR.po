@@ -2384,7 +2384,7 @@ msgstr "Um {} não pode fazer parte de um {}."
 
 #: gaphor/ui/namespaceview.py:141
 msgid "<Relationships>"
-msgstr "&lt;Relacionamentos&gt;"
+msgstr "<Relacionamentos>"
 
 #~ msgid ""
 #~ "Opening a new model will flush the currently loaded model.\n"

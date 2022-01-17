@@ -2239,7 +2239,7 @@ msgstr "Chargement du modèle à partir de {filename}"
 
 #: gaphor/ui/filemanager.py:147
 msgid "Unable to open model “{filename}”."
-msgstr "Impossible d'ouvrir le modèle « {nom du fichier} »."
+msgstr "Impossible d'ouvrir le modèle « {filename} »."
 
 #: gaphor/ui/filemanager.py:150
 msgid "This file does not contain a valid Gaphor model."

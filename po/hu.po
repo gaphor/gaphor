@@ -2096,7 +2096,7 @@ msgstr ""
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 msgid "<None>"
-msgstr "&lt;Nincs&gt;"
+msgstr "<Nincs>"
 
 #: gaphor/ui/diagrampage.py:348
 msgid ""
@@ -2395,7 +2395,7 @@ msgstr "A(z) {} nem lehet része a következőnek: {}."
 
 #: gaphor/ui/namespaceview.py:141
 msgid "<Relationships>"
-msgstr "&lt;Kapcsolatok&gt;"
+msgstr "<Kapcsolatok>"
 
 #~ msgid ""
 #~ "To create a fresh model: create a window, create the\n"

@@ -26,6 +26,8 @@ jobs:
           python-version: ${{ env.python_version }}
       - name: Lint with Pre-commit
         uses: pre-commit/action@v2.0.3
+      - name: Check translations
+        run: pip install babel && python po/check-babel.py
 
   linux:
     needs: lint
