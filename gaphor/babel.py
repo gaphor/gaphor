@@ -43,8 +43,8 @@ def translate_model(fileobj):
     tree = etree.parse(fileobj)
 
     for node in tree.findall(".//g:name/g:val", NS):
-        node.text = gettext(node.text or "")
+        node.text = gettext(node.text) if node.text else ""
     for node in tree.findall(".//g:body/g:val", NS):
-        node.text = gettext(node.text or "")
+        node.text = gettext(node.text) if node.text else ""
 
     return io.StringIO(etree.tostring(tree.getroot(), encoding="unicode", method="xml"))
