@@ -158,7 +158,10 @@ class Greeter(Service, ActionProvider):
         visible = self.stack.get_visible_child_name()
         if visible == "new-model":
             self.action_bar.set_visible(False)
-            self.back_button.set_visible(True)
+            if any(self.create_recent_files()):
+                self.back_button.set_visible(True)
+            else:
+                self.back_button.set_visible(False)
             self.header.set_title(gettext("Gaphor - Create a New Model"))
         else:
             self.action_bar.set_visible(True)
