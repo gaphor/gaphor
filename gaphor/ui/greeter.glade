@@ -108,7 +108,7 @@
                 <property name="spacing">10</property>
                 <property name="homogeneous">1</property>
                 <child>
-                  <object class="GtkButton" id="new-model-button">
+                  <object class="GtkButton">
                     <property name="label" translatable="yes">Create New Model…</property>
                     <property name="visible">1</property>
                     <property name="receives-default">1</property>
@@ -119,7 +119,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="open-existing-button">
+                  <object class="GtkButton">
                     <property name="label" translatable="yes">Open Other Model…</property>
                     <property name="visible">1</property>
                     <property name="receives-default">1</property>
@@ -142,7 +142,7 @@
       </object>
     </child>
     <child type="titlebar">
-      <object class="GtkHeaderBar" id="header">
+      <object class="GtkHeaderBar">
         <property name="visible">1</property>
         <property name="show-close-button">1</property>
         <child>
