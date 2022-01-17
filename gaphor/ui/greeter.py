@@ -47,7 +47,6 @@ class Greeter(Service, ActionProvider):
         self.stack: Gtk.Stack = None
         self.action_bar: Gtk.ActionBar = None
         self.back_button: Gtk.Button = None
-        self.header: Gtk.HeaderBar = None
         self.gtk_app: Gtk.Application = None
         event_manager.subscribe(self.on_session_created)
 
@@ -78,7 +77,6 @@ class Greeter(Service, ActionProvider):
         for widget in self.create_recent_files():
             listbox.insert(widget, -1)
 
-        self.header = builder.get_object("header")
         self.action_bar = builder.get_object("action-bar")
         self.back_button = builder.get_object("back-button")
 
@@ -93,7 +91,6 @@ class Greeter(Service, ActionProvider):
         self.stack = builder.get_object("stack")
         self.stack.set_visible_child_name(stack_name)
         self.stack.connect("notify::visible-child", self._on_stack_changed)
-        self.set_widgets_visible()
 
         self.greeter = builder.get_object("greeter")
         self.greeter.set_application(self.gtk_app)
@@ -102,6 +99,7 @@ class Greeter(Service, ActionProvider):
         else:
             ...  # TODO: Handle window close in GTK4
 
+        self.set_widgets_visible()
         self.greeter.show()
         templates.unselect_all()
 
@@ -162,11 +160,11 @@ class Greeter(Service, ActionProvider):
                 self.back_button.set_visible(True)
             else:
                 self.back_button.set_visible(False)
-            self.header.set_title(gettext("Gaphor - Create a New Model"))
+            self.greeter.set_title(gettext("Gaphor - Create a New Model"))
         else:
             self.action_bar.set_visible(True)
             self.back_button.set_visible(False)
-            self.header.set_title(gettext("Gaphor - Open a Recent Model"))
+            self.greeter.set_title(gettext("Gaphor - Open a Recent Model"))
 
     def _on_recent_file_activated(self, _listbox, row):
         filename = row.filename
