@@ -2360,7 +2360,7 @@ msgstr "Toon in “{diagram}”"
 
 #: gaphor/ui/namespace.py:323
 msgid "{name} package"
-msgstr "Nieuw package"
+msgstr "{name} package"
 
 #: gaphor/ui/namespace.py:342
 msgid "New diagram"

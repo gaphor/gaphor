@@ -1284,8 +1284,8 @@ msgid ""
 "Type \"help\" for more information.\n"
 msgstr ""
 "Gaphorova interaktivna Python konzola\n"
-"{verzija)\n"
-"Za daljnje informacije upiši “help\" (pomoć).\n"
+"{version}\n"
+"Za daljnje informacije upiši \"help\" (pomoć).\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
 msgid "Gaphor Console"
