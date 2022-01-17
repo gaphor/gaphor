@@ -7,6 +7,8 @@ import babel.messages.pofile as pofile
 
 def invalid(messages):
     placeholders = re.compile(r"{\w*}")
+    html_entity = re.compile(r"&\w+;")
+
     for message in messages:
         if not message.string or message.fuzzy:
             continue
@@ -19,6 +21,9 @@ def invalid(messages):
 
         if set(id_formats) != set(str_formats):
             yield message, f"Invalid placeholders for '{message.id}': '{message.string}'"
+
+        if html_entity.findall(message.string):
+            yield message, f"Translation contains HTML entities: '{message.string}'"
 
 
 def check_po_files():
