@@ -32,22 +32,6 @@
                         <property name="margin-top">18</property>
                         <property name="margin-bottom">12</property>
                         <child>
-                          <object class="GtkLabel">
-                            <property name="visible">1</property>
-                            <property name="label" translatable="yes">Recently opened models</property>
-                            <property name="xalign">0</property>
-                            <attributes>
-                              <attribute name="weight" value="bold"/>
-                            </attributes>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
-                          </object>
-                          <packing>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
                           <object class="GtkFrame">
                             <property name="visible">1</property>
                             <property name="shadow-type">in</property>
@@ -87,22 +71,6 @@
                         <property name="spacing">6</property>
                         <property name="margin-top">18</property>
                         <property name="margin-bottom">12</property>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">1</property>
-                            <property name="label" translatable="yes">Create a new model from a template</property>
-                            <property name="xalign">0</property>
-                            <attributes>
-                              <attribute name="weight" value="bold"/>
-                            </attributes>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
-                          </object>
-                          <packing>
-                            <property name="fill">0</property>
-                          </packing>
-                        </child>
                         <child>
                           <object class="GtkFlowBox" id="templates">
                             <property name="visible">1</property>
