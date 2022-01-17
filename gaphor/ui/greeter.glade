@@ -43,6 +43,9 @@
                               <class name="dim-label"/>
                             </style>
                           </object>
+                          <packing>
+                            <property name="position">0</property>
+                          </packing>
                         </child>
                         <child>
                           <object class="GtkFrame">
@@ -118,9 +121,13 @@
               </object>
               <packing>
                 <property name="name">new-model</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </object>
+          <packing>
+            <property name="position">0</property>
+          </packing>
         </child>
         <child>
           <object class="GtkActionBar">
@@ -133,32 +140,36 @@
                 <property name="spacing">10</property>
                 <property name="homogeneous">1</property>
                 <child>
-                  <object class="GtkButton" id="greeter-recent-files-button">
-                    <property name="label" translatable="yes">Recent Model…</property>
-                    <property name="visible">1</property>
-                    <property name="receives-default">1</property>
-                    <property name="action-name">app.recent-files</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton">
+                  <object class="GtkButton" id="new-model-button">
                     <property name="label" translatable="yes">Create New Model…</property>
                     <property name="visible">1</property>
                     <property name="receives-default">1</property>
                     <property name="action-name">app.new-model</property>
                   </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
                 <child>
-                  <object class="GtkButton">
+                  <object class="GtkButton" id="open-existing-button">
                     <property name="label" translatable="yes">Open Existing Model…</property>
                     <property name="visible">1</property>
                     <property name="receives-default">1</property>
                     <property name="action-name">app.file-open</property>
                   </object>
+                  <packing>
+                    <property name="position">2</property>
+                  </packing>
                 </child>
               </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
             </child>
           </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
         </child>
       </object>
     </child>
@@ -167,12 +178,22 @@
         <property name="visible">1</property>
         <property name="show-close-button">1</property>
         <child type="title">
-          <object class="GtkLabel">
+          <object class="GtkLabel" id="title">
             <property name="visible">1</property>
-            <property name="label" translatable="yes">Open a Gaphor Model</property>
-            <style>
-              <class name="title"/>
-            </style>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="back-button">
+            <property name="visible">1</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="action-name">app.recent-files</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">1</property>
+                <property name="icon-name">go-previous-symbolic</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>
