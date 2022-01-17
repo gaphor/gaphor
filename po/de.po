@@ -2077,7 +2077,7 @@ msgstr ""
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 msgid "<None>"
-msgstr "&lt;Keine&gt;"
+msgstr "<Keine>"
 
 #: gaphor/ui/diagrampage.py:348
 msgid ""
@@ -2391,7 +2391,7 @@ msgstr "Ein {} kann nicht Teil eines {} sein."
 
 #: gaphor/ui/namespaceview.py:141
 msgid "<Relationships>"
-msgstr "&lt;Beziehung&gt;"
+msgstr "<Beziehung>"
 
 #~ msgid "Parts and References"
 #~ msgstr "Teile und Verweise"

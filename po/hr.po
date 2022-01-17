@@ -2083,7 +2083,7 @@ msgstr ""
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 msgid "<None>"
-msgstr "&lt;Bez&gt;"
+msgstr "<Bez>"
 
 #: gaphor/ui/diagrampage.py:348
 msgid ""
@@ -2390,7 +2390,7 @@ msgstr "{} ne može biti dio od {}."
 
 #: gaphor/ui/namespaceview.py:141
 msgid "<Relationships>"
-msgstr "&lt;Odnosi&gt;"
+msgstr "<Odnosi>"
 
 #~ msgid "title"
 #~ msgstr "naslov"

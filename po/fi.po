@@ -2030,7 +2030,7 @@ msgstr ""
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 msgid "<None>"
-msgstr "&lt;Ei mitään&gt;"
+msgstr "<Ei mitään>"
 
 #: gaphor/ui/diagrampage.py:348
 msgid ""
@@ -2330,7 +2330,7 @@ msgstr "{} ei voi olla osana {}."
 
 #: gaphor/ui/namespaceview.py:141
 msgid "<Relationships>"
-msgstr "&lt;Suhteet&gt;"
+msgstr "<Suhteet>"
 
 #~ msgid ""
 #~ "To create a fresh model: create a window, create the\n"
