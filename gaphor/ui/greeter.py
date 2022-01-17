@@ -44,8 +44,7 @@ class Greeter(Service, ActionProvider):
         self.recent_manager = recent_manager or Gtk.RecentManager.get_default()
         self.greeter: Gtk.Window = None
         self.stack: Gtk.Stack = None
-        self.new_model_button: Gtk.Button = None
-        self.open_existing_button: Gtk.Button = None
+        self.action_bar: Gtk.ActionBar = None
         self.back_button: Gtk.Button = None
         self.title: Gtk.Label = None
         self.gtk_app: Gtk.Application = None
@@ -80,9 +79,7 @@ class Greeter(Service, ActionProvider):
 
         self.title = builder.get_object("title")
         self.title.set_label = "New Window"
-        print(self.title.get_label())
-        self.new_model_button = builder.get_object("new-model-button")
-        self.open_existing_button = builder.get_object("open-existing-button")
+        self.action_bar = builder.get_object("action-bar")
         self.back_button = builder.get_object("back-button")
 
         templates = builder.get_object("templates")
@@ -160,13 +157,11 @@ class Greeter(Service, ActionProvider):
     def set_widgets_visible(self):
         visible = self.stack.get_visible_child_name()
         if visible == "new-model":
-            self.new_model_button.set_visible(False)
-            self.open_existing_button.set_visible(False)
+            self.action_bar.set_visible(False)
             self.back_button.set_visible(True)
             self.title.set_label = "Create a New Model"
         else:
-            self.new_model_button.set_visible(True)
-            self.open_existing_button.set_visible(True)
+            self.action_bar.set_visible(True)
             self.back_button.set_visible(False)
             self.title.set_label = "Open a Recent Model"
 

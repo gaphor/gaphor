@@ -130,7 +130,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkActionBar">
+          <object class="GtkActionBar" id="action-bar">
             <property name="visible">1</property>
             <child type="center">
               <object class="GtkBox">
