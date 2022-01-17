@@ -152,7 +152,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="open-existing-button">
-                    <property name="label" translatable="yes">Open Existing Model…</property>
+                    <property name="label" translatable="yes">Open Other Model…</property>
                     <property name="visible">1</property>
                     <property name="receives-default">1</property>
                     <property name="action-name">app.file-open</property>
@@ -177,11 +177,6 @@
       <object class="GtkHeaderBar" id="header">
         <property name="visible">1</property>
         <property name="show-close-button">1</property>
-        <child type="title">
-          <object class="GtkLabel" id="title">
-            <property name="visible">1</property>
-          </object>
-        </child>
         <child>
           <object class="GtkButton" id="back-button">
             <property name="visible">1</property>

@@ -39,6 +39,7 @@ def new_builder(ui_file):
 
 class Greeter(Service, ActionProvider):
     def __init__(self, application, event_manager, recent_manager=None):
+        self.templates = None
         self.application = application
         self.event_manager = event_manager
         self.recent_manager = recent_manager or Gtk.RecentManager.get_default()
@@ -46,7 +47,7 @@ class Greeter(Service, ActionProvider):
         self.stack: Gtk.Stack = None
         self.action_bar: Gtk.ActionBar = None
         self.back_button: Gtk.Button = None
-        self.title: Gtk.Label = None
+        self.header: Gtk.HeaderBar = None
         self.gtk_app: Gtk.Application = None
         event_manager.subscribe(self.on_session_created)
 
@@ -77,8 +78,7 @@ class Greeter(Service, ActionProvider):
         for widget in self.create_recent_files():
             listbox.insert(widget, -1)
 
-        self.title = builder.get_object("title")
-        self.title.set_label = "New Window"
+        self.header = builder.get_object("header")
         self.action_bar = builder.get_object("action-bar")
         self.back_button = builder.get_object("back-button")
 
@@ -151,7 +151,7 @@ class Greeter(Service, ActionProvider):
     def on_session_created(self, _event=None):
         self.close()
 
-    def _on_stack_changed(self, stack, gparamstring):
+    def _on_stack_changed(self, stack: Gtk.Stack, gparam_object):
         self.set_widgets_visible()
 
     def set_widgets_visible(self):
@@ -159,11 +159,11 @@ class Greeter(Service, ActionProvider):
         if visible == "new-model":
             self.action_bar.set_visible(False)
             self.back_button.set_visible(True)
-            self.title.set_label = "Create a New Model"
+            self.header.set_title(gettext("Gaphor - Create a New Model"))
         else:
             self.action_bar.set_visible(True)
             self.back_button.set_visible(False)
-            self.title.set_label = "Open a Recent Model"
+            self.header.set_title(gettext("Gaphor - Open a Recent Model"))
 
     def _on_recent_file_activated(self, _listbox, row):
         filename = row.filename
