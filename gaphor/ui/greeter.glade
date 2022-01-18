@@ -41,9 +41,6 @@
                               </object>
                             </child>
                           </object>
-                          <packing>
-                            <property name="position">1</property>
-                          </packing>
                         </child>
                       </object>
                     </child>
@@ -78,9 +75,6 @@
                             <property name="width-request">400</property>
                             <property name="max_children_per_line">3</property>
                           </object>
-                          <packing>
-                            <property name="fill">0</property>
-                          </packing>
                         </child>
                       </object>
                     </child>
@@ -89,13 +83,9 @@
               </object>
               <packing>
                 <property name="name">new-model</property>
-                <property name="position">1</property>
               </packing>
             </child>
           </object>
-          <packing>
-            <property name="position">0</property>
-          </packing>
         </child>
         <child>
           <object class="GtkActionBar" id="action-bar">
@@ -111,33 +101,19 @@
                   <object class="GtkButton">
                     <property name="label" translatable="yes">Create New Model…</property>
                     <property name="visible">1</property>
-                    <property name="receives-default">1</property>
                     <property name="action-name">app.new-model</property>
                   </object>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkButton">
                     <property name="label" translatable="yes">Open Other Model…</property>
                     <property name="visible">1</property>
-                    <property name="receives-default">1</property>
                     <property name="action-name">app.file-open</property>
                   </object>
-                  <packing>
-                    <property name="position">2</property>
-                  </packing>
                 </child>
               </object>
-              <packing>
-                <property name="position">0</property>
-              </packing>
             </child>
           </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
         </child>
       </object>
     </child>
@@ -148,8 +124,6 @@
         <child>
           <object class="GtkButton" id="back-button">
             <property name="visible">1</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
             <property name="action-name">app.recent-files</property>
             <child>
               <object class="GtkImage">
