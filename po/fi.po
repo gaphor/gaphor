@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-14 18:15+0100\n"
-"PO-Revision-Date: 2022-01-16 13:30+0000\n"
+"PO-Revision-Date: 2022-01-19 07:53+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
 ">\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -1046,9 +1046,8 @@ msgstr "Tietovirta"
 
 #: gaphor/UML/components/propertypages.glade:80
 #: gaphor/UML/components/propertypages.ui:59
-#, fuzzy
 msgid "Information Item (Class)"
-msgstr "Tietovirta"
+msgstr "Informaatiotietue (luokka)"
 
 #: gaphor/UML/interactions/interactionsconnect.py:82
 msgid "call()"
@@ -1079,7 +1078,7 @@ msgstr "Viesti"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:98
 msgid "Reflexive message"
-msgstr ""
+msgstr "Refleksiivinen viesti"
 
 #: gaphor/UML/interactions/propertypages.glade:25
 #: gaphor/UML/interactions/propertypages.ui:21
@@ -1549,7 +1548,7 @@ msgstr "Hasardin määritelmä"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Life or Injury of People"
-msgstr "Henkilön elämän menetys tai henkilön loukkaantuminen"
+msgstr "Kuolema tai henkilön loukkaantuminen"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Mission"
@@ -1585,17 +1584,18 @@ msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situational Context"
-msgstr ""
+msgstr "Tilannekohtainen konteksti"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situation Hierarchy"
-msgstr ""
+msgstr "Tilannehierarkia"
 
 #: gaphor/templates/raaml.gaphor
 msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
+"Vikapuuanalyysi näyttää, mitkä järjestelmävirheiden syitä on tunnistettu."
 
 #: gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
@@ -1627,7 +1627,7 @@ msgstr "Rakenne"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Context"
-msgstr ""
+msgstr "Ominaisuuskonteksti"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Operator"
@@ -1713,21 +1713,19 @@ msgstr "Aktuaattori"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case Function #1"
-msgstr ""
+msgstr "Käyttötapauksen funktio #1"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "First Action"
-msgstr "Tilanne"
+msgstr "Ensimmäinen toiminto"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Second Action"
-msgstr "Lähetä signaali -toiminto"
+msgstr "Toinen toiminto"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example System Requirement"
-msgstr ""
+msgstr "Esimerkinomainen järjestelmävaatimus"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensed Data"
@@ -1755,11 +1753,11 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example Technolgy Requirement"
-msgstr ""
+msgstr "Esimerkinomainen teknologiavaatimus"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
-msgstr ""
+msgstr "Järjestelmä"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ECU"
@@ -1809,54 +1807,52 @@ msgid "Detection Event"
 msgstr "Ehdollinen tapahtuma"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "1. Use Cases"
-msgstr "Käyttötapaus"
+msgstr "1. Käyttötapaukset"
 
 #: gaphor/templates/uml.gaphor
 msgid "2. Domain Analysis"
-msgstr ""
+msgstr "2. Alueanalyysi"
 
 #: gaphor/templates/uml.gaphor
 msgid "3. Architectural Design"
-msgstr ""
+msgstr "3. Arkkitehtuurinen suunnittelu"
 
 #: gaphor/templates/uml.gaphor
 msgid "4. Detailed Design"
-msgstr ""
+msgstr "4. Yksityiskohtainen suunnittelu"
 
 #: gaphor/templates/uml.gaphor
 msgid "Main Actor"
-msgstr ""
+msgstr "Ensisijainen toimija"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Main Use Case"
-msgstr "Käyttötapaus"
+msgstr "Ensisijainen käyttötapaus"
 
 #: gaphor/templates/uml.gaphor
 msgid "Included Use Case"
-msgstr ""
+msgstr "Sisällytetty käyttötapaus"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Actor"
-msgstr ""
+msgstr "Toissijainen toimija"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Use Case"
-msgstr ""
+msgstr "Toissijainen käyttötapaus"
 
 #: gaphor/templates/uml.gaphor
 msgid "Use Case Scenarios"
-msgstr ""
+msgstr "Käyttötapausskenaariot"
 
 #: gaphor/templates/uml.gaphor
 msgid "Scenario 1"
-msgstr ""
+msgstr "Skenaario 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Scenario 2"
-msgstr ""
+msgstr "Skenaario 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "Domain Entities"
@@ -1873,36 +1869,31 @@ msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Package Dependencies"
-msgstr ""
+msgstr "Paketin riippuvuudet"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 1"
-msgstr "Uusi komponentti"
+msgstr "Ohjelmistokomponentti 1"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 4"
-msgstr "Uusi komponentti"
+msgstr "Ohjelmistokomponentti 4"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 3"
-msgstr "Uusi komponentti"
+msgstr "Ohjelmistokomponentti 3"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 2"
-msgstr "Uusi komponentti"
+msgstr "Ohjelmistokomponentti 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "Primary Actor"
-msgstr ""
+msgstr "Ensisijainen toimija"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Actor Profile"
-msgstr "profiili"
+msgstr "Toimijan profiili"
 
 #: gaphor/templates/uml.gaphor
 msgid "login"
@@ -1913,25 +1904,24 @@ msgid "Detailed Class Design"
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "First Class"
-msgstr "metaluokka"
+msgstr "Ensimmäinen luokka"
 
 #: gaphor/templates/uml.gaphor
 msgid "firstName"
-msgstr ""
+msgstr "etuNimi"
 
 #: gaphor/templates/uml.gaphor
 msgid "lastName"
-msgstr ""
+msgstr "sukuNimi"
 
 #: gaphor/templates/uml.gaphor
 msgid "Login"
-msgstr ""
+msgstr "Kirjautuminen"
 
 #: gaphor/templates/uml.gaphor
 msgid "lastLogin"
-msgstr ""
+msgstr "viimeisinKirjautuminen"
 
 #: gaphor/templates/uml.gaphor
 msgid "Second Class"
@@ -2330,7 +2320,7 @@ msgstr "{} ei voi olla osana {}."
 
 #: gaphor/ui/namespaceview.py:141
 msgid "<Relationships>"
-msgstr "<Suhteet>"
+msgstr "&lt;Suhteet&gt;"
 
 #~ msgid ""
 #~ "To create a fresh model: create a window, create the\n"
