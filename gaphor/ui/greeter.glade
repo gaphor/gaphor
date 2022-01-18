@@ -32,19 +32,6 @@
                         <property name="margin-top">18</property>
                         <property name="margin-bottom">12</property>
                         <child>
-                          <object class="GtkLabel">
-                            <property name="visible">1</property>
-                            <property name="label" translatable="yes">Recently opened models</property>
-                            <property name="xalign">0</property>
-                            <attributes>
-                              <attribute name="weight" value="bold"/>
-                            </attributes>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
-                          </object>
-                        </child>
-                        <child>
                           <object class="GtkFrame">
                             <property name="visible">1</property>
                             <property name="shadow-type">in</property>
@@ -54,9 +41,6 @@
                               </object>
                             </child>
                           </object>
-                          <packing>
-                            <property name="position">1</property>
-                          </packing>
                         </child>
                       </object>
                     </child>
@@ -85,31 +69,12 @@
                         <property name="margin-top">18</property>
                         <property name="margin-bottom">12</property>
                         <child>
-                          <object class="GtkLabel">
-                            <property name="visible">1</property>
-                            <property name="label" translatable="yes">Create a new model from a template</property>
-                            <property name="xalign">0</property>
-                            <attributes>
-                              <attribute name="weight" value="bold"/>
-                            </attributes>
-                            <style>
-                              <class name="dim-label"/>
-                            </style>
-                          </object>
-                          <packing>
-                            <property name="fill">0</property>
-                          </packing>
-                        </child>
-                        <child>
                           <object class="GtkFlowBox" id="templates">
                             <property name="visible">1</property>
                             <property name="homogeneous">1</property>
                             <property name="width-request">400</property>
                             <property name="max_children_per_line">3</property>
                           </object>
-                          <packing>
-                            <property name="fill">0</property>
-                          </packing>
                         </child>
                       </object>
                     </child>
@@ -123,7 +88,7 @@
           </object>
         </child>
         <child>
-          <object class="GtkActionBar">
+          <object class="GtkActionBar" id="action-bar">
             <property name="visible">1</property>
             <child type="center">
               <object class="GtkBox">
@@ -133,26 +98,16 @@
                 <property name="spacing">10</property>
                 <property name="homogeneous">1</property>
                 <child>
-                  <object class="GtkButton" id="greeter-recent-files-button">
-                    <property name="label" translatable="yes">Recent Model…</property>
-                    <property name="visible">1</property>
-                    <property name="receives-default">1</property>
-                    <property name="action-name">app.recent-files</property>
-                  </object>
-                </child>
-                <child>
                   <object class="GtkButton">
                     <property name="label" translatable="yes">Create New Model…</property>
                     <property name="visible">1</property>
-                    <property name="receives-default">1</property>
                     <property name="action-name">app.new-model</property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkButton">
-                    <property name="label" translatable="yes">Open Existing Model…</property>
+                    <property name="label" translatable="yes">Open Other Model…</property>
                     <property name="visible">1</property>
-                    <property name="receives-default">1</property>
                     <property name="action-name">app.file-open</property>
                   </object>
                 </child>
@@ -163,16 +118,19 @@
       </object>
     </child>
     <child type="titlebar">
-      <object class="GtkHeaderBar" id="header">
+      <object class="GtkHeaderBar">
         <property name="visible">1</property>
         <property name="show-close-button">1</property>
-        <child type="title">
-          <object class="GtkLabel">
+        <child>
+          <object class="GtkButton" id="back-button">
             <property name="visible">1</property>
-            <property name="label" translatable="yes">Open a Gaphor Model</property>
-            <style>
-              <class name="title"/>
-            </style>
+            <property name="action-name">app.recent-files</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">1</property>
+                <property name="icon-name">go-previous-symbolic</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>

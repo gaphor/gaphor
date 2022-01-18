@@ -36,7 +36,7 @@ class AppFileManager(Service, ActionProvider):
     def action_open(self):
         """This menu action opens the standard model open dialog."""
         filenames = open_file_dialog(
-            gettext("Open Gaphor Model"),
+            gettext("Gaphor - Open Model"),
             parent=self.parent_window,
             dirname=self.last_dir,
             filters=FILTERS,

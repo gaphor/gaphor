@@ -27,18 +27,6 @@
                             <property name="margin-top">18</property>
                             <property name="margin-bottom">12</property>
                             <child>
-                              <object class="GtkLabel">
-                                <property name="label" translatable="yes">Recently opened models</property>
-                                <property name="xalign">0</property>
-                                <attributes>
-                                  <attribute name="weight" value="bold"></attribute>
-                                </attributes>
-                                <style>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
                               <object class="GtkFrame">
                                 <property name="child">
                                   <object class="GtkListBox" id="greeter-recent-files"/>
@@ -70,19 +58,6 @@
                             <property name="margin-top">18</property>
                             <property name="margin-bottom">12</property>
                             <child>
-                              <object class="GtkLabel">
-                                <property name="valign">center</property>
-                                <property name="label" translatable="yes">Create a new model from a template</property>
-                                <property name="xalign">0</property>
-                                <attributes>
-                                  <attribute name="weight" value="bold"></attribute>
-                                </attributes>
-                                <style>
-                                  <class name="dim-label"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
                               <object class="GtkFlowBox" id="templates">
                                 <property name="valign">center</property>
                                 <property name="homogeneous">1</property>
@@ -101,7 +76,7 @@
           </object>
         </child>
         <child>
-          <object class="GtkActionBar">
+          <object class="GtkActionBar" id="action-bar">
             <child type="center">
               <object class="GtkBox">
                 <property name="margin-top">6</property>
@@ -136,13 +111,19 @@
       </object>
     </property>
     <child type="titlebar">
-      <object class="GtkHeaderBar" id="header">
-        <child type="title">
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Open a Gaphor Model</property>
-            <style>
-              <class name="title"/>
-            </style>
+      <object class="GtkHeaderBar">
+        <child>
+          <object class="GtkButton" id="back-button">
+            <property name="visible">1</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="action-name">app.recent-files</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">1</property>
+                <property name="icon-name">go-previous-symbolic</property>
+              </object>
+            </child>
           </object>
         </child>
       </object>
