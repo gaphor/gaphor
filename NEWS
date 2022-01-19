@@ -1,3 +1,9 @@
+2.8.1
+-----
+- Fix Gaphor fails to load when launched in German
+- Simplify the greeter dialogs
+- Update Hungarian, Finnish, and Chinese (Simplified) translations
+
 2.8.0
 -----
 - Add diagram type support
