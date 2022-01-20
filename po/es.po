@@ -3,17 +3,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-14 18:15+0100\n"
+"POT-Creation-Date: 2022-01-19 20:35-0500\n"
 "PO-Revision-Date: 2022-01-20 01:07+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
-">\n"
 "Language: es\n"
+"Language-Team: Spanish "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -1361,7 +1360,7 @@ msgstr "Exportar modelo como archivo XMI"
 msgid "All XMI Files"
 msgstr "Todos los archivos XMI"
 
-#: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:58
+#: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
 msgstr "Acerca de Gaphor"
 
@@ -1444,7 +1443,7 @@ msgstr "Ventana nueva"
 msgid "Open"
 msgstr "Abrir"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:47
+#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:48
 msgid "Save"
 msgstr "Guardar"
 
@@ -1523,7 +1522,7 @@ msgid "Actual Size"
 msgstr "Tamaño real"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:55
-#: gaphor/ui/mainwindow.py:230 gaphor/ui/mainwindow.ui:29
+#: gaphor/ui/mainwindow.py:231 gaphor/ui/mainwindow.ui:29
 #: gaphor/ui/namespace.py:325
 msgid "New model"
 msgstr "Modelo nuevo"
@@ -1645,8 +1644,8 @@ msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
-"El análisis del árbol de fallos muestra qué causas de fallo de un sistema se "
-"han tenido en cuenta."
+"El análisis del árbol de fallos muestra qué causas de fallo de un sistema"
+" se han tenido en cuenta."
 
 #: gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
@@ -2015,9 +2014,9 @@ msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
-"Modelar la implementación de casos de uso abstractos mediante la creación de "
-"diagramas de actividad que visualicen los flujos de actividad para los "
-"escenarios de casos de uso primarios y secundarios."
+"Modelar la implementación de casos de uso abstractos mediante la creación"
+" de diagramas de actividad que visualicen los flujos de actividad para "
+"los escenarios de casos de uso primarios y secundarios."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2026,9 +2025,9 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
-"Realizar el análisis del dominio modelando las entidades del dominio y sus "
-"relaciones mediante un diagrama de clases simplificado. Este diagrama "
-"servirá como diccionario visual de conceptos. También será un punto de "
+"Realizar el análisis del dominio modelando las entidades del dominio y "
+"sus relaciones mediante un diagrama de clases simplificado. Este diagrama"
+" servirá como diccionario visual de conceptos. También será un punto de "
 "partida para su modelo de datos a nivel de diseño."
 
 #: gaphor/templates/uml.gaphor
@@ -2038,10 +2037,10 @@ msgid ""
 " and avoid design flaws such as cyclic dependencies or dependencies on "
 "unstable parts"
 msgstr ""
-"Prepare el diagrama de dependencias del paquete para agrupar sus clases de "
-"implementación de forma adecuada. Esto le ayudará a mantener el código bien "
-"estructurado y a evitar fallos de diseño como dependencias cíclicas o "
-"dependencias de partes inestables"
+"Prepare el diagrama de dependencias del paquete para agrupar sus clases "
+"de implementación de forma adecuada. Esto le ayudará a mantener el código"
+" bien estructurado y a evitar fallos de diseño como dependencias cíclicas"
+" o dependencias de partes inestables"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2049,9 +2048,10 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
-"Modelar las interacciones de los componentes para los escenarios de casos de "
-"uso con el fin de encontrar métodos nuevos en\n"
-"clases existentes o incluso clases nuevas con responsabilidades específicas."
+"Modelar las interacciones de los componentes para los escenarios de casos"
+" de uso con el fin de encontrar métodos nuevos en\n"
+"clases existentes o incluso clases nuevas con responsabilidades "
+"específicas."
 
 #: gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
@@ -2065,17 +2065,18 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
-"Defina los principales artefactos que manifiestan la implementación de sus "
-"componentes. Indique cómo se despliegan en los nodos de hardware, sus "
-"interdependencias y los protocolos de comunicación."
+"Defina los principales artefactos que manifiestan la implementación de "
+"sus componentes. Indique cómo se despliegan en los nodos de hardware, sus"
+" interdependencias y los protocolos de comunicación."
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
 msgstr "Todos los modelos Gaphor"
 
 #: gaphor/ui/appfilemanager.py:39
-msgid "Open Gaphor Model"
-msgstr "Abrir modelo Gaphor"
+#, fuzzy
+msgid "Gaphor - Open Model"
+msgstr "Consola de Gaphor"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2279,33 +2280,34 @@ msgstr "El cierre hará que se descarten los cambios no guardados."
 msgid "Close _without saving changes"
 msgstr "Cerrar _sin guardar los cambios"
 
-#: gaphor/ui/greeter.glade:37 gaphor/ui/greeter.ui:31
-msgid "Recently opened models"
-msgstr "Modelos abiertos recientemente"
-
-#: gaphor/ui/greeter.glade:90 gaphor/ui/greeter.ui:75
-msgid "Create a new model from a template"
-msgstr "Crear un modelo nuevo a partir de una plantilla"
-
-#: gaphor/ui/greeter.glade:137 gaphor/ui/greeter.ui:113
-msgid "Recent Model…"
-msgstr "Modelo reciente…"
-
-#: gaphor/ui/greeter.glade:145 gaphor/ui/greeter.ui:120
+#: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:95
 msgid "Create New Model…"
 msgstr "Crear un modelo nuevo…"
 
-#: gaphor/ui/greeter.glade:153 gaphor/ui/greeter.ui:127
-msgid "Open Existing Model…"
-msgstr "Abrir modelo existente…"
-
-#: gaphor/ui/greeter.glade:172 gaphor/ui/greeter.ui:142
-msgid "Open a Gaphor Model"
-msgstr "Abrir un modelo Gaphor"
+#: gaphor/ui/greeter.glade:109
+#, fuzzy
+msgid "Open Other Model…"
+msgstr "Abrir un modelo…"
 
 #: gaphor/ui/greeter.py:25
 msgid "Generic"
 msgstr "Genérico"
+
+#: gaphor/ui/greeter.py:163
+msgid "Gaphor - Create a New Model"
+msgstr ""
+
+#: gaphor/ui/greeter.py:167
+msgid "Gaphor - Open a Recent Model"
+msgstr ""
+
+#: gaphor/ui/greeter.ui:88
+msgid "Recent Model…"
+msgstr "Modelo reciente…"
+
+#: gaphor/ui/greeter.ui:102
+msgid "Open Existing Model…"
+msgstr "Abrir modelo existente…"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
@@ -2324,34 +2326,39 @@ msgid "Open a Model…"
 msgstr "Abrir un modelo…"
 
 #: gaphor/ui/mainwindow.py:43
+#, fuzzy
+msgid "Recent Models…"
+msgstr "Modelo reciente…"
+
+#: gaphor/ui/mainwindow.py:44
 msgid "New Model…"
 msgstr "Modelo nuevo…"
 
-#: gaphor/ui/mainwindow.py:48
+#: gaphor/ui/mainwindow.py:49
 msgid "Save As…"
 msgstr "Guardar como…"
 
-#: gaphor/ui/mainwindow.py:49
+#: gaphor/ui/mainwindow.py:50
 msgid "Export"
 msgstr "Exportar"
 
-#: gaphor/ui/mainwindow.py:53
+#: gaphor/ui/mainwindow.py:54
 msgid "Tools"
 msgstr "Herramientas"
 
-#: gaphor/ui/mainwindow.py:57
+#: gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
 msgstr "Atajos de teclado"
 
-#: gaphor/ui/mainwindow.py:84
+#: gaphor/ui/mainwindow.py:85
 msgid "New Generic Diagram"
 msgstr "Diagrama genérico nuevo"
 
-#: gaphor/ui/mainwindow.py:232
+#: gaphor/ui/mainwindow.py:233
 msgid "edited"
 msgstr "editaado"
 
-#: gaphor/ui/mainwindow.py:268
+#: gaphor/ui/mainwindow.py:269
 msgid "Profile: {}"
 msgstr "Perfil: {}"
 
@@ -2647,3 +2654,16 @@ msgstr "<Relationships>"
 
 #~ msgid "Concept diagram"
 #~ msgstr "Diagrama conceptual"
+
+#~ msgid "Open Gaphor Model"
+#~ msgstr "Abrir modelo Gaphor"
+
+#~ msgid "Recently opened models"
+#~ msgstr "Modelos abiertos recientemente"
+
+#~ msgid "Create a new model from a template"
+#~ msgstr "Crear un modelo nuevo a partir de una plantilla"
+
+#~ msgid "Open a Gaphor Model"
+#~ msgstr "Abrir un modelo Gaphor"
+

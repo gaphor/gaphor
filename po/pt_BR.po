@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-14 18:15+0100\n"
+"POT-Creation-Date: 2022-01-19 20:35-0500\n"
 "PO-Revision-Date: 2022-01-07 16:56+0000\n"
 "Last-Translator: Gabriel Gian <gabrielgian@live.com>\n"
 "Language: pt_BR\n"
@@ -1344,7 +1344,7 @@ msgstr "Exportar modelo para arquivo XMI"
 msgid "All XMI Files"
 msgstr "Todos os arquivos XMI"
 
-#: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:58
+#: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
 msgstr "Sobre Gaphor"
 
@@ -1408,7 +1408,7 @@ msgstr "Nova Janela"
 msgid "Open"
 msgstr "Abrir"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:47
+#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:48
 msgid "Save"
 msgstr "Salvar"
 
@@ -1487,7 +1487,7 @@ msgid "Actual Size"
 msgstr ""
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:55
-#: gaphor/ui/mainwindow.py:230 gaphor/ui/mainwindow.ui:29
+#: gaphor/ui/mainwindow.py:231 gaphor/ui/mainwindow.ui:29
 #: gaphor/ui/namespace.py:325
 msgid "New model"
 msgstr "Novo modelo"
@@ -2060,8 +2060,8 @@ msgid "All Gaphor Models"
 msgstr "Todos os modelos Gaphor"
 
 #: gaphor/ui/appfilemanager.py:39
-msgid "Open Gaphor Model"
-msgstr "Abrir Modelo Gaphor"
+msgid "Gaphor - Open Model"
+msgstr ""
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2259,36 +2259,35 @@ msgstr "Se você fechar sem salvar, suas modifcações serão descartadas."
 msgid "Close _without saving changes"
 msgstr "Se você fechar sem salvar, suas modifcações serão descartadas."
 
-#: gaphor/ui/greeter.glade:37 gaphor/ui/greeter.ui:31
-#, fuzzy
-msgid "Recently opened models"
-msgstr "Nenhum modelo aberto recentemente"
-
-#: gaphor/ui/greeter.glade:90 gaphor/ui/greeter.ui:75
-msgid "Create a new model from a template"
-msgstr ""
-
-#: gaphor/ui/greeter.glade:137 gaphor/ui/greeter.ui:113
-#, fuzzy
-msgid "Recent Model…"
-msgstr "Novo modelo"
-
-#: gaphor/ui/greeter.glade:145 gaphor/ui/greeter.ui:120
+#: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:95
 #, fuzzy
 msgid "Create New Model…"
 msgstr "Novo modelo"
 
-#: gaphor/ui/greeter.glade:153 gaphor/ui/greeter.ui:127
-msgid "Open Existing Model…"
-msgstr ""
-
-#: gaphor/ui/greeter.glade:172 gaphor/ui/greeter.ui:142
+#: gaphor/ui/greeter.glade:109
 #, fuzzy
-msgid "Open a Gaphor Model"
+msgid "Open Other Model…"
 msgstr "Abrir Modelo Gaphor"
 
 #: gaphor/ui/greeter.py:25
 msgid "Generic"
+msgstr ""
+
+#: gaphor/ui/greeter.py:163
+msgid "Gaphor - Create a New Model"
+msgstr ""
+
+#: gaphor/ui/greeter.py:167
+msgid "Gaphor - Open a Recent Model"
+msgstr ""
+
+#: gaphor/ui/greeter.ui:88
+#, fuzzy
+msgid "Recent Model…"
+msgstr "Novo modelo"
+
+#: gaphor/ui/greeter.ui:102
+msgid "Open Existing Model…"
 msgstr ""
 
 #: gaphor/ui/mainwindow.glade:84
@@ -2312,35 +2311,40 @@ msgstr "Abrir Modelo Gaphor"
 
 #: gaphor/ui/mainwindow.py:43
 #, fuzzy
+msgid "Recent Models…"
+msgstr "Novo modelo"
+
+#: gaphor/ui/mainwindow.py:44
+#, fuzzy
 msgid "New Model…"
 msgstr "Novo modelo"
 
-#: gaphor/ui/mainwindow.py:48
+#: gaphor/ui/mainwindow.py:49
 msgid "Save As…"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:49
+#: gaphor/ui/mainwindow.py:50
 msgid "Export"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:53
+#: gaphor/ui/mainwindow.py:54
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: gaphor/ui/mainwindow.py:57
+#: gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
 msgstr "Atalhos do teclado"
 
-#: gaphor/ui/mainwindow.py:84
+#: gaphor/ui/mainwindow.py:85
 #, fuzzy
 msgid "New Generic Diagram"
 msgstr "Novo _Diagrama"
 
-#: gaphor/ui/mainwindow.py:232
+#: gaphor/ui/mainwindow.py:233
 msgid "edited"
 msgstr "editado"
 
-#: gaphor/ui/mainwindow.py:268
+#: gaphor/ui/mainwindow.py:269
 msgid "Profile: {}"
 msgstr "Perfil: {}"
 
@@ -2843,4 +2847,16 @@ msgstr "<Relacionamentos>"
 
 #~ msgid "Concept diagram"
 #~ msgstr "Novo _Diagrama"
+
+#~ msgid "Open Gaphor Model"
+#~ msgstr "Abrir Modelo Gaphor"
+
+#~ msgid "Recently opened models"
+#~ msgstr "Nenhum modelo aberto recentemente"
+
+#~ msgid "Create a new model from a template"
+#~ msgstr ""
+
+#~ msgid "Open a Gaphor Model"
+#~ msgstr "Abrir Modelo Gaphor"
 

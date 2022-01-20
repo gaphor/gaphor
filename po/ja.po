@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-14 18:15+0100\n"
+"POT-Creation-Date: 2022-01-19 20:35-0500\n"
 "PO-Revision-Date: 2021-10-21 12:41+0000\n"
 "Last-Translator: Tomo Dote <fu7mu4@gmail.com>\n"
 "Language: ja\n"
@@ -1345,7 +1345,7 @@ msgstr ""
 msgid "All XMI Files"
 msgstr "全てのXMIファイル"
 
-#: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:58
+#: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
 msgstr "Gaphor について"
 
@@ -1408,7 +1408,7 @@ msgstr "新ウィンドウ"
 msgid "Open"
 msgstr "開く"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:47
+#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:48
 msgid "Save"
 msgstr "保存"
 
@@ -1487,7 +1487,7 @@ msgid "Actual Size"
 msgstr ""
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:55
-#: gaphor/ui/mainwindow.py:230 gaphor/ui/mainwindow.ui:29
+#: gaphor/ui/mainwindow.py:231 gaphor/ui/mainwindow.ui:29
 #: gaphor/ui/namespace.py:325
 msgid "New model"
 msgstr "新モデル"
@@ -2057,8 +2057,9 @@ msgid "All Gaphor Models"
 msgstr "全Gaphorモデル"
 
 #: gaphor/ui/appfilemanager.py:39
-msgid "Open Gaphor Model"
-msgstr "Gaphorモデルを開く"
+#, fuzzy
+msgid "Gaphor - Open Model"
+msgstr "Gaphorコンソール"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2238,36 +2239,35 @@ msgstr "保存せずに閉じた場合、変更は破棄されます。"
 msgid "Close _without saving changes"
 msgstr "保存せずに閉じる(_w)"
 
-#: gaphor/ui/greeter.glade:37 gaphor/ui/greeter.ui:31
-#, fuzzy
-msgid "Recently opened models"
-msgstr "最近開いたモデルはありません"
-
-#: gaphor/ui/greeter.glade:90 gaphor/ui/greeter.ui:75
-msgid "Create a new model from a template"
-msgstr ""
-
-#: gaphor/ui/greeter.glade:137 gaphor/ui/greeter.ui:113
-#, fuzzy
-msgid "Recent Model…"
-msgstr "新モデル"
-
-#: gaphor/ui/greeter.glade:145 gaphor/ui/greeter.ui:120
+#: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:95
 #, fuzzy
 msgid "Create New Model…"
 msgstr "新モデル"
 
-#: gaphor/ui/greeter.glade:153 gaphor/ui/greeter.ui:127
-msgid "Open Existing Model…"
-msgstr ""
-
-#: gaphor/ui/greeter.glade:172 gaphor/ui/greeter.ui:142
+#: gaphor/ui/greeter.glade:109
 #, fuzzy
-msgid "Open a Gaphor Model"
+msgid "Open Other Model…"
 msgstr "Gaphorモデルを開く"
 
 #: gaphor/ui/greeter.py:25
 msgid "Generic"
+msgstr ""
+
+#: gaphor/ui/greeter.py:163
+msgid "Gaphor - Create a New Model"
+msgstr ""
+
+#: gaphor/ui/greeter.py:167
+msgid "Gaphor - Open a Recent Model"
+msgstr ""
+
+#: gaphor/ui/greeter.ui:88
+#, fuzzy
+msgid "Recent Model…"
+msgstr "新モデル"
+
+#: gaphor/ui/greeter.ui:102
+msgid "Open Existing Model…"
 msgstr ""
 
 #: gaphor/ui/mainwindow.glade:84
@@ -2289,35 +2289,40 @@ msgstr "Gaphorモデルを開く"
 
 #: gaphor/ui/mainwindow.py:43
 #, fuzzy
+msgid "Recent Models…"
+msgstr "新モデル"
+
+#: gaphor/ui/mainwindow.py:44
+#, fuzzy
 msgid "New Model…"
 msgstr "新モデル"
 
-#: gaphor/ui/mainwindow.py:48
+#: gaphor/ui/mainwindow.py:49
 msgid "Save As…"
 msgstr "別名で保存…"
 
-#: gaphor/ui/mainwindow.py:49
+#: gaphor/ui/mainwindow.py:50
 msgid "Export"
 msgstr "エクスポート"
 
-#: gaphor/ui/mainwindow.py:53
+#: gaphor/ui/mainwindow.py:54
 msgid "Tools"
 msgstr "ツール"
 
-#: gaphor/ui/mainwindow.py:57
+#: gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
 msgstr "キーボードショートカット"
 
-#: gaphor/ui/mainwindow.py:84
+#: gaphor/ui/mainwindow.py:85
 #, fuzzy
 msgid "New Generic Diagram"
 msgstr "新ダイアグラム(_D)"
 
-#: gaphor/ui/mainwindow.py:232
+#: gaphor/ui/mainwindow.py:233
 msgid "edited"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:268
+#: gaphor/ui/mainwindow.py:269
 msgid "Profile: {}"
 msgstr "プロファイル: {}"
 
@@ -2641,4 +2646,16 @@ msgstr ""
 
 #~ msgid "Concept diagram"
 #~ msgstr "新ダイアグラム(_D)"
+
+#~ msgid "Open Gaphor Model"
+#~ msgstr "Gaphorモデルを開く"
+
+#~ msgid "Recently opened models"
+#~ msgstr "最近開いたモデルはありません"
+
+#~ msgid "Create a new model from a template"
+#~ msgstr ""
+
+#~ msgid "Open a Gaphor Model"
+#~ msgstr "Gaphorモデルを開く"
 

@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-14 18:15+0100\n"
+"POT-Creation-Date: 2022-01-19 20:35-0500\n"
 "PO-Revision-Date: 2022-01-16 13:30+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hu/>\n"
 "Language: hu\n"
+"Language-Team: Hungarian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -1372,7 +1371,7 @@ msgstr "Modell exportálása XMI-fájlként"
 msgid "All XMI Files"
 msgstr "Minden XMI-fájl"
 
-#: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:58
+#: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
 msgstr "A Gaphor névjegye"
 
@@ -1453,7 +1452,7 @@ msgstr "Új ablak"
 msgid "Open"
 msgstr "Megnyitás"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:47
+#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:48
 msgid "Save"
 msgstr "Mentés"
 
@@ -1532,7 +1531,7 @@ msgid "Actual Size"
 msgstr "Tényleges méret"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:55
-#: gaphor/ui/mainwindow.py:230 gaphor/ui/mainwindow.ui:29
+#: gaphor/ui/mainwindow.py:231 gaphor/ui/mainwindow.ui:29
 #: gaphor/ui/namespace.py:325
 msgid "New model"
 msgstr "Új modell"
@@ -1654,8 +1653,8 @@ msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
-"A hibafa elemzés megmutatja, hogy a rendszer meghibásodásának mely okokat "
-"vették figyelembe."
+"A hibafa elemzés megmutatja, hogy a rendszer meghibásodásának mely okokat"
+" vették figyelembe."
 
 #: gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
@@ -2023,9 +2022,9 @@ msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
-"Modellezze az absztrakt használati eset megvalósítását tevékenységi ábrák "
-"létrehozásával, amely tevékenységfolyamatokat vizualizál az elsődleges és "
-"másodlagos használati esetek forgatókönyveihez."
+"Modellezze az absztrakt használati eset megvalósítását tevékenységi ábrák"
+" létrehozásával, amely tevékenységfolyamatokat vizualizál az elsődleges "
+"és másodlagos használati esetek forgatókönyveihez."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2034,10 +2033,10 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
-"Végezzen tartományelemzést a tartományegyedek és kapcsolataik modellezésével "
-"egyszerűsített osztályábrák segítségével. Ez a ábra a fogalmak vizuális "
-"szótáraként fog szolgálni. Ez egyben a tervezési szintű adatmodell "
-"kiindulópontja is lesz."
+"Végezzen tartományelemzést a tartományegyedek és kapcsolataik "
+"modellezésével egyszerűsített osztályábrák segítségével. Ez a ábra a "
+"fogalmak vizuális szótáraként fog szolgálni. Ez egyben a tervezési szintű"
+" adatmodell kiindulópontja is lesz."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2047,9 +2046,9 @@ msgid ""
 "unstable parts"
 msgstr ""
 "Készítsen csomagfüggőségi ábrát a megvalósítási osztályok megfelelő "
-"csoportosításához. Ez segít a kód jól strukturált megőrzésében, és elkerüli "
-"a tervezési hibákat, például a körkörös függőséget vagy a bizonytalan "
-"részektől való függőséget."
+"csoportosításához. Ez segít a kód jól strukturált megőrzésében, és "
+"elkerüli a tervezési hibákat, például a körkörös függőséget vagy a "
+"bizonytalan részektől való függőséget."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2057,8 +2056,8 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
-"Összetevő interakciók modellezése használati eseti forgatókönyvekhez, hogy "
-"új metódusokat\n"
+"Összetevő interakciók modellezése használati eseti forgatókönyvekhez, "
+"hogy új metódusokat\n"
 "találjon a meglévő osztályokban, vagy akár új, különleges felelősséggel "
 "rendelkező osztályokat."
 
@@ -2083,8 +2082,9 @@ msgid "All Gaphor Models"
 msgstr "Minden Gaphor-modell"
 
 #: gaphor/ui/appfilemanager.py:39
-msgid "Open Gaphor Model"
-msgstr "Gaphor-modell megnyitása"
+#, fuzzy
+msgid "Gaphor - Open Model"
+msgstr "Gaphor-kezelőpult"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2281,33 +2281,34 @@ msgstr "A bezárás következtében a nem mentett módosítások elvesznek majd.
 msgid "Close _without saving changes"
 msgstr "Bezárás a módosítások mentése _nélkül"
 
-#: gaphor/ui/greeter.glade:37 gaphor/ui/greeter.ui:31
-msgid "Recently opened models"
-msgstr "Legutóbb megnyitott modellek"
-
-#: gaphor/ui/greeter.glade:90 gaphor/ui/greeter.ui:75
-msgid "Create a new model from a template"
-msgstr "Új modell létrehozása sablonból"
-
-#: gaphor/ui/greeter.glade:137 gaphor/ui/greeter.ui:113
-msgid "Recent Model…"
-msgstr "Legutóbbi modell…"
-
-#: gaphor/ui/greeter.glade:145 gaphor/ui/greeter.ui:120
+#: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:95
 msgid "Create New Model…"
 msgstr "Új modell létrehozása…"
 
-#: gaphor/ui/greeter.glade:153 gaphor/ui/greeter.ui:127
-msgid "Open Existing Model…"
-msgstr "Meglévő modell megnyitása…"
-
-#: gaphor/ui/greeter.glade:172 gaphor/ui/greeter.ui:142
-msgid "Open a Gaphor Model"
-msgstr "Gaphor-modell megnyitása"
+#: gaphor/ui/greeter.glade:109
+#, fuzzy
+msgid "Open Other Model…"
+msgstr "Modell megnyitása…"
 
 #: gaphor/ui/greeter.py:25
 msgid "Generic"
 msgstr "Általános"
+
+#: gaphor/ui/greeter.py:163
+msgid "Gaphor - Create a New Model"
+msgstr ""
+
+#: gaphor/ui/greeter.py:167
+msgid "Gaphor - Open a Recent Model"
+msgstr ""
+
+#: gaphor/ui/greeter.ui:88
+msgid "Recent Model…"
+msgstr "Legutóbbi modell…"
+
+#: gaphor/ui/greeter.ui:102
+msgid "Open Existing Model…"
+msgstr "Meglévő modell megnyitása…"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
@@ -2326,34 +2327,39 @@ msgid "Open a Model…"
 msgstr "Modell megnyitása…"
 
 #: gaphor/ui/mainwindow.py:43
+#, fuzzy
+msgid "Recent Models…"
+msgstr "Legutóbbi modell…"
+
+#: gaphor/ui/mainwindow.py:44
 msgid "New Model…"
 msgstr "Új modell…"
 
-#: gaphor/ui/mainwindow.py:48
+#: gaphor/ui/mainwindow.py:49
 msgid "Save As…"
 msgstr "Mentés másként…"
 
-#: gaphor/ui/mainwindow.py:49
+#: gaphor/ui/mainwindow.py:50
 msgid "Export"
 msgstr "Exportálás"
 
-#: gaphor/ui/mainwindow.py:53
+#: gaphor/ui/mainwindow.py:54
 msgid "Tools"
 msgstr "Eszközök"
 
-#: gaphor/ui/mainwindow.py:57
+#: gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
 msgstr "Billentyűparancsok"
 
-#: gaphor/ui/mainwindow.py:84
+#: gaphor/ui/mainwindow.py:85
 msgid "New Generic Diagram"
 msgstr "Új általános-ábra"
 
-#: gaphor/ui/mainwindow.py:232
+#: gaphor/ui/mainwindow.py:233
 msgid "edited"
 msgstr "szerkesztett"
 
-#: gaphor/ui/mainwindow.py:268
+#: gaphor/ui/mainwindow.py:269
 msgid "Profile: {}"
 msgstr "Profil: {}"
 
@@ -2723,3 +2729,16 @@ msgstr "<Kapcsolatok>"
 
 #~ msgid "Concept diagram"
 #~ msgstr "Fogalmi ábra"
+
+#~ msgid "Open Gaphor Model"
+#~ msgstr "Gaphor-modell megnyitása"
+
+#~ msgid "Recently opened models"
+#~ msgstr "Legutóbb megnyitott modellek"
+
+#~ msgid "Create a new model from a template"
+#~ msgstr "Új modell létrehozása sablonból"
+
+#~ msgid "Open a Gaphor Model"
+#~ msgstr "Gaphor-modell megnyitása"
+
