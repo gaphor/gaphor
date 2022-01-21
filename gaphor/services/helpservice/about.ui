@@ -6,8 +6,8 @@
     <property name="modal">true</property>
     <property name="program_name">Gaphor</property>
     <property name="title" translatable="yes">About Gaphor</property>
-    <property name="version">1.1.0</property>
-    <property name="copyright" translatable="yes">Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw</property>
+    <property name="version">2.8.1</property>
+    <property name="copyright" translatable="yes">Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw</property>
     <property name="comments" translatable="yes">Gaphor is the simple modeling tool written in Python</property>
     <property name="website">https://github.com/gaphor/gaphor</property>
     <property name="website_label" translatable="yes">Fork me on GitHub</property>
@@ -29,21 +29,22 @@ UML, SysML, and RAAML are either registered trademarks or
 trademarks of Object Management Group, Inc. in the United States
 and/or other countries.
 </property>
-    <property name="authors">Arjan Molenaar, Artur Wroblewski,
-Jeroen Vloothuis, Dan Yeaw,
-Enno Groeper, Adam Boduch,
-Alexis Howells, Melis Doğan,
-Christian Hoff, Ikko Ashimine,
-Mark Kennedy, Tiemen Schuijbroek,
-Óscar Fernández Díaz
+    <property name="authors">
+Adam Boduch, Alexis Howells, Arjan Molenaar,
+Artur Wroblewski, Christian Hoff, Dan Yeaw,
+Enno Groeper, Ikko Ashimine, Jeroen Vloothuis,
+Mark Kennedy, Melis Doğan, Tiemen Schuijbroek,
+Zsolt Sandor, mathiascode, Óscar Fernández Díaz
     </property>
-    <property name="translator_credits">Jordi Mallach (ca),
-Óscar Fernández Díaz (es),
-Jiri Grönroos (fi), Antonin Delpeuch (fr),
-Fran Diéguez (gl), milotype (hr), ovari (hu),
-albanobattistella (it), Seong-ho Cho (ko),
-Arjan Molenaar (nl), Ygor Mutti (pt_BR),
-Евгений Лежнин (ru), Daniel Nylander (sv)
+    <property name="translator_credits">
+Antonin Delpeuch (fr), Arjan Molenaar (nl),
+Bill ZHANG (zh_Hans), Daniel Nylander (sv),
+Fran Diéguez (gl), Jiri Grönroos (fi),
+Jordi Mallach (ca), Seong-ho Cho (ko),
+Ygor Mutti (pt_BR), albanobattistella (it),
+fu7mu4 (ja), jischebeck (de), lizhuoqi (zh_Hans),
+milotype (hr), ovari (hu), Óscar Fernández Díaz (es),
+Евгений Лежнин (ru)
     </property>
     <property name="logo-icon-name">org.gaphor.Gaphor</property>
   </object>
