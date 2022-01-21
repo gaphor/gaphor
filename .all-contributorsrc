@@ -692,9 +692,16 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/373597?v=4",
       "profile": "http://www.gunibert.de",
       "contributions": [
-        "bug",
-        "translation",
-        "code"
+        "bug"
+      ]
+    },
+    {
+      "login": "greedyj4ck",
+      "name": "greedyj4ck",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33233389?v=4",
+      "profile": "https://github.com/greedyj4ck",
+      "contributions": [
+        "bug"
       ]
     }
   ],
