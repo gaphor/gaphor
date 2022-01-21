@@ -2,6 +2,8 @@ Although we strive to make releases as automated as possible, there are a few st
 
 - [ ] Ensure all of the PRs since the last release are labeled with chore, fix, feature, translation, or skip-changelog.
 All of the items in the draft release should be under the Features, Bug Fixes, Maintenance, or Translation headings.
+- [ ] Update gaphor/services/helpservice/about.ui with any additional contributors since the last release,
+update the version number, and check the copyright year.
 - [ ] Test the previous build packages in Windows and macOS to ensure they launch successfully.
 - [ ] Bump the version by updating it in the `pyproject.toml` file or by running `poetry version X.X.X`.
 - [ ] Bump the AppImage version by running `cd _packaging/appimage`, `make update VERSION=a.b.c`
