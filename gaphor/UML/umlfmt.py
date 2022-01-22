@@ -66,9 +66,7 @@ def format_property(
         s.append(f" = {el.defaultValue}")
 
     if tags and (
-        slots := [
-            format(slot) for slot in el.appliedStereotype[:].slot if slot
-        ]
+        slots := [format(slot) for slot in el.appliedStereotype[:].slot if slot]
     ):
         s.append(" { %s }" % ", ".join(slots))
 
@@ -92,9 +90,7 @@ def format_association_end(el) -> Tuple[str, str]:
         name = "".join(n)
 
     m = [format_multiplicity(el, bare=True)]
-    if slots := [
-        format(slot) for slot in el.appliedStereotype[:].slot if slot
-    ]:
+    if slots := [format(slot) for slot in el.appliedStereotype[:].slot if slot]:
         m.append(" { %s }" % ",\n".join(slots))
     mult = "".join(m)
 
@@ -146,9 +142,7 @@ def format_operation(
     )
     s.append(")")
 
-    if rr := next(
-        (p for p in el.ownedParameter if p.direction == "return"), None
-    ):
+    if rr := next((p for p in el.ownedParameter if p.direction == "return"), None):
         s.append(format(rr, type=type, multiplicity=multiplicity, default=default))
 
     if note and el.note:
