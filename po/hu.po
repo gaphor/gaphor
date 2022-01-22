@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-19 20:35-0500\n"
-"PO-Revision-Date: 2022-01-16 13:30+0000\n"
+"PO-Revision-Date: 2022-01-21 06:55+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -2082,9 +2083,8 @@ msgid "All Gaphor Models"
 msgstr "Minden Gaphor-modell"
 
 #: gaphor/ui/appfilemanager.py:39
-#, fuzzy
 msgid "Gaphor - Open Model"
-msgstr "Gaphor-kezelőpult"
+msgstr "Modell megnyitása - Gaphor"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2286,9 +2286,8 @@ msgid "Create New Model…"
 msgstr "Új modell létrehozása…"
 
 #: gaphor/ui/greeter.glade:109
-#, fuzzy
 msgid "Open Other Model…"
-msgstr "Modell megnyitása…"
+msgstr "Más modell megnyitása…"
 
 #: gaphor/ui/greeter.py:25
 msgid "Generic"
@@ -2296,11 +2295,11 @@ msgstr "Általános"
 
 #: gaphor/ui/greeter.py:163
 msgid "Gaphor - Create a New Model"
-msgstr ""
+msgstr "Új modell létrehozása - Gaphor"
 
 #: gaphor/ui/greeter.py:167
 msgid "Gaphor - Open a Recent Model"
-msgstr ""
+msgstr "Legutóbbi modell megnyitása - Gaphor"
 
 #: gaphor/ui/greeter.ui:88
 msgid "Recent Model…"
@@ -2327,9 +2326,8 @@ msgid "Open a Model…"
 msgstr "Modell megnyitása…"
 
 #: gaphor/ui/mainwindow.py:43
-#, fuzzy
 msgid "Recent Models…"
-msgstr "Legutóbbi modell…"
+msgstr "Legutóbbi modellek…"
 
 #: gaphor/ui/mainwindow.py:44
 msgid "New Model…"
@@ -2741,4 +2739,3 @@ msgstr "<Kapcsolatok>"
 
 #~ msgid "Open a Gaphor Model"
 #~ msgstr "Gaphor-modell megnyitása"
-
