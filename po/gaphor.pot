@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-22 14:42-0500\n"
+"POT-Creation-Date: 2022-01-22 15:09-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -548,6 +548,22 @@ msgstr ""
 
 #: gaphor/UML/toolbox.py:39
 msgid "New Profile Diagram"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:202
+msgid "general: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:207
+msgid "supplier: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:212
+msgid "extend: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:217
+msgid "include: {}"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:16

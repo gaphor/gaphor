@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-22 14:42-0500\n"
+"POT-Creation-Date: 2022-01-22 15:09-0500\n"
 "PO-Revision-Date: 2011-08-22 22:15+0000\n"
 "Last-Translator: Евгений Лежнин <z_lezhnin@mail2000.ru>\n"
 "Language: ru\n"
@@ -581,6 +581,24 @@ msgstr ""
 #, fuzzy
 msgid "New Profile Diagram"
 msgstr "_Новая диаграмма"
+
+#: gaphor/UML/umlfmt.py:202
+msgid "general: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:207
+msgid "supplier: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:212
+#, fuzzy
+msgid "extend: {}"
+msgstr "расширение: {}"
+
+#: gaphor/UML/umlfmt.py:217
+#, fuzzy
+msgid "include: {}"
+msgstr "включение: {}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20

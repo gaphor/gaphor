@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-22 14:42-0500\n"
+"POT-Creation-Date: 2022-01-22 15:09-0500\n"
 "PO-Revision-Date: 2022-01-09 06:56+0000\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
 "Language: nl\n"
@@ -551,6 +551,25 @@ msgstr "Nieuw Communicatie Diagram"
 #: gaphor/UML/toolbox.py:39
 msgid "New Profile Diagram"
 msgstr "Nieuw Profiel Diagram"
+
+#: gaphor/UML/umlfmt.py:202
+#, fuzzy
+msgid "general: {}"
+msgstr "algemeen: {}"
+
+#: gaphor/UML/umlfmt.py:207
+msgid "supplier: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:212
+#, fuzzy
+msgid "extend: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:217
+#, fuzzy
+msgid "include: {}"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20

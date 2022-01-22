@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-22 14:42-0500\n"
+"POT-Creation-Date: 2022-01-22 15:09-0500\n"
 "PO-Revision-Date: 2021-12-19 14:52+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language: hr\n"
@@ -568,6 +568,25 @@ msgstr ""
 #, fuzzy
 msgid "New Profile Diagram"
 msgstr "Novi dijagram"
+
+#: gaphor/UML/umlfmt.py:202
+#, fuzzy
+msgid "general: {}"
+msgstr "opće: {}"
+
+#: gaphor/UML/umlfmt.py:207
+msgid "supplier: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:212
+#, fuzzy
+msgid "extend: {}"
+msgstr "proširi: {}"
+
+#: gaphor/UML/umlfmt.py:217
+#, fuzzy
+msgid "include: {}"
+msgstr "uključi: {}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20

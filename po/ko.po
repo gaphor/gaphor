@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
-"POT-Creation-Date: 2022-01-22 14:42-0500\n"
+"POT-Creation-Date: 2022-01-22 15:09-0500\n"
 "PO-Revision-Date: 2021-08-31 14:20+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language: ko\n"
@@ -582,6 +582,25 @@ msgstr ""
 #, fuzzy
 msgid "New Profile Diagram"
 msgstr "새 다이어그램(_D)"
+
+#: gaphor/UML/umlfmt.py:202
+#, fuzzy
+msgid "general: {}"
+msgstr "일반: {}"
+
+#: gaphor/UML/umlfmt.py:207
+msgid "supplier: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:212
+#, fuzzy
+msgid "extend: {}"
+msgstr "확장: {}"
+
+#: gaphor/UML/umlfmt.py:217
+#, fuzzy
+msgid "include: {}"
+msgstr "포함: {}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
