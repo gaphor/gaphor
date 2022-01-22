@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-19 20:35-0500\n"
+"POT-Creation-Date: 2022-01-22 14:42-0500\n"
 "PO-Revision-Date: 2022-01-17 18:34+0000\n"
 "Last-Translator: ZHUOQI LI <zhuoqi06@gmail.com>\n"
 "Language: zh_Hans\n"
@@ -1324,7 +1324,7 @@ msgid "About Gaphor"
 msgstr "关于 Gaphor"
 
 #: gaphor/services/helpservice/about.ui:10
-msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
 msgstr ""
 
 #: gaphor/services/helpservice/about.ui:11
@@ -1991,8 +1991,8 @@ msgstr ""
 
 #: gaphor/ui/appfilemanager.py:39
 #, fuzzy
-msgid "Gaphor - Open Model"
-msgstr "Gaphor 控制台"
+msgid "Open a Model"
+msgstr "打开模型 …"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2168,12 +2168,14 @@ msgid "Generic"
 msgstr ""
 
 #: gaphor/ui/greeter.py:163
-msgid "Gaphor - Create a New Model"
-msgstr ""
+#, fuzzy
+msgid "Create a New Model"
+msgstr "创建新模型 …"
 
 #: gaphor/ui/greeter.py:167
-msgid "Gaphor - Open a Recent Model"
-msgstr ""
+#, fuzzy
+msgid "Open a Recent Model"
+msgstr "最近打开的模型…"
 
 #: gaphor/ui/greeter.ui:88
 msgid "Recent Model…"
@@ -2429,4 +2431,16 @@ msgstr ""
 
 #~ msgid "Open a Gaphor Model"
 #~ msgstr "打开 Gaphor 模型"
+
+#~ msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+#~ msgstr ""
+
+#~ msgid "Gaphor - Open Model"
+#~ msgstr "Gaphor 控制台"
+
+#~ msgid "Gaphor - Create a New Model"
+#~ msgstr ""
+
+#~ msgid "Gaphor - Open a Recent Model"
+#~ msgstr ""
 

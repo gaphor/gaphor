@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-19 20:35-0500\n"
+"POT-Creation-Date: 2022-01-22 14:42-0500\n"
 "PO-Revision-Date: 2006-05-11 16:34+0000\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language: sv\n"
@@ -1368,7 +1368,7 @@ msgid "About Gaphor"
 msgstr ""
 
 #: gaphor/services/helpservice/about.ui:10
-msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
 msgstr ""
 
 #: gaphor/services/helpservice/about.ui:11
@@ -2068,8 +2068,9 @@ msgid "All Gaphor Models"
 msgstr "Spara Gaphor-modell som"
 
 #: gaphor/ui/appfilemanager.py:39
-msgid "Gaphor - Open Model"
-msgstr ""
+#, fuzzy
+msgid "Open a Model"
+msgstr "Spara Gaphor-modell som"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2249,12 +2250,14 @@ msgid "Generic"
 msgstr ""
 
 #: gaphor/ui/greeter.py:163
-msgid "Gaphor - Create a New Model"
-msgstr ""
+#, fuzzy
+msgid "Create a New Model"
+msgstr "Ny modell"
 
 #: gaphor/ui/greeter.py:167
-msgid "Gaphor - Open a Recent Model"
-msgstr ""
+#, fuzzy
+msgid "Open a Recent Model"
+msgstr "Ny modell"
 
 #: gaphor/ui/greeter.ui:88
 #, fuzzy
@@ -2845,4 +2848,16 @@ msgstr ""
 
 #~ msgid "Open a Gaphor Model"
 #~ msgstr "Spara Gaphor-modell som"
+
+#~ msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+#~ msgstr ""
+
+#~ msgid "Gaphor - Open Model"
+#~ msgstr ""
+
+#~ msgid "Gaphor - Create a New Model"
+#~ msgstr ""
+
+#~ msgid "Gaphor - Open a Recent Model"
+#~ msgstr ""
 

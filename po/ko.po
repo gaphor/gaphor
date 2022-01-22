@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
-"POT-Creation-Date: 2022-01-19 20:35-0500\n"
+"POT-Creation-Date: 2022-01-22 14:42-0500\n"
 "PO-Revision-Date: 2021-08-31 14:20+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language: ko\n"
@@ -1381,7 +1381,8 @@ msgid "About Gaphor"
 msgstr "가포 정보"
 
 #: gaphor/services/helpservice/about.ui:10
-msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+#, fuzzy
+msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
 msgstr "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
 
 #: gaphor/services/helpservice/about.ui:11
@@ -2092,8 +2093,9 @@ msgid "All Gaphor Models"
 msgstr "모든 가포 모델"
 
 #: gaphor/ui/appfilemanager.py:39
-msgid "Gaphor - Open Model"
-msgstr ""
+#, fuzzy
+msgid "Open a Model"
+msgstr "가포 모델 열기"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2299,12 +2301,14 @@ msgid "Generic"
 msgstr ""
 
 #: gaphor/ui/greeter.py:163
-msgid "Gaphor - Create a New Model"
-msgstr ""
+#, fuzzy
+msgid "Create a New Model"
+msgstr "새 모델"
 
 #: gaphor/ui/greeter.py:167
-msgid "Gaphor - Open a Recent Model"
-msgstr ""
+#, fuzzy
+msgid "Open a Recent Model"
+msgstr "새 모델"
 
 #: gaphor/ui/greeter.ui:88
 #, fuzzy
@@ -2728,4 +2732,13 @@ msgstr "<Relationships>"
 
 #~ msgid "Open a Gaphor Model"
 #~ msgstr "가포 모델 열기"
+
+#~ msgid "Gaphor - Open Model"
+#~ msgstr ""
+
+#~ msgid "Gaphor - Create a New Model"
+#~ msgstr ""
+
+#~ msgid "Gaphor - Open a Recent Model"
+#~ msgstr ""
 

@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-19 20:35-0500\n"
+"POT-Creation-Date: 2022-01-22 14:42-0500\n"
 "PO-Revision-Date: 2022-01-21 06:55+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hu/>\n"
 "Language: hu\n"
+"Language-Team: Hungarian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -1377,7 +1376,8 @@ msgid "About Gaphor"
 msgstr "A Gaphor névjegye"
 
 #: gaphor/services/helpservice/about.ui:10
-msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+#, fuzzy
+msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
 msgstr "Szerzői jog © 2001-2021 Molenaar Arjan J. és Yeaw Dan"
 
 #: gaphor/services/helpservice/about.ui:11
@@ -2083,8 +2083,9 @@ msgid "All Gaphor Models"
 msgstr "Minden Gaphor-modell"
 
 #: gaphor/ui/appfilemanager.py:39
-msgid "Gaphor - Open Model"
-msgstr "Modell megnyitása - Gaphor"
+#, fuzzy
+msgid "Open a Model"
+msgstr "Modell megnyitása…"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2294,11 +2295,13 @@ msgid "Generic"
 msgstr "Általános"
 
 #: gaphor/ui/greeter.py:163
-msgid "Gaphor - Create a New Model"
-msgstr "Új modell létrehozása - Gaphor"
+#, fuzzy
+msgid "Create a New Model"
+msgstr "Új modell létrehozása…"
 
 #: gaphor/ui/greeter.py:167
-msgid "Gaphor - Open a Recent Model"
+#, fuzzy
+msgid "Open a Recent Model"
 msgstr "Legutóbbi modell megnyitása - Gaphor"
 
 #: gaphor/ui/greeter.ui:88
@@ -2739,3 +2742,10 @@ msgstr "<Kapcsolatok>"
 
 #~ msgid "Open a Gaphor Model"
 #~ msgstr "Gaphor-modell megnyitása"
+
+#~ msgid "Gaphor - Open Model"
+#~ msgstr "Modell megnyitása - Gaphor"
+
+#~ msgid "Gaphor - Create a New Model"
+#~ msgstr "Új modell létrehozása - Gaphor"
+
