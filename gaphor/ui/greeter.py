@@ -160,11 +160,11 @@ class Greeter(Service, ActionProvider):
                 self.back_button.set_visible(True)
             else:
                 self.back_button.set_visible(False)
-            self.greeter.set_title(gettext("Gaphor - Create a New Model"))
+            self.greeter.set_title(gettext("Create a New Model"))
         else:
             self.action_bar.set_visible(True)
             self.back_button.set_visible(False)
-            self.greeter.set_title(gettext("Gaphor - Open a Recent Model"))
+            self.greeter.set_title(gettext("Open a Recent Model"))
 
     def _on_recent_file_activated(self, _listbox, row):
         filename = row.filename

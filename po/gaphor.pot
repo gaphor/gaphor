@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-19 20:35-0500\n"
+"POT-Creation-Date: 2022-01-22 15:09-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -548,6 +548,22 @@ msgstr ""
 
 #: gaphor/UML/toolbox.py:39
 msgid "New Profile Diagram"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:202
+msgid "general: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:207
+msgid "supplier: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:212
+msgid "extend: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:217
+msgid "include: {}"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:16
@@ -1322,7 +1338,7 @@ msgid "About Gaphor"
 msgstr ""
 
 #: gaphor/services/helpservice/about.ui:10
-msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
 msgstr ""
 
 #: gaphor/services/helpservice/about.ui:11
@@ -1986,7 +2002,7 @@ msgid "All Gaphor Models"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:39
-msgid "Gaphor - Open Model"
+msgid "Open a Model"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:49
@@ -2162,11 +2178,11 @@ msgid "Generic"
 msgstr ""
 
 #: gaphor/ui/greeter.py:163
-msgid "Gaphor - Create a New Model"
+msgid "Create a New Model"
 msgstr ""
 
 #: gaphor/ui/greeter.py:167
-msgid "Gaphor - Open a Recent Model"
+msgid "Open a Recent Model"
 msgstr ""
 
 #: gaphor/ui/greeter.ui:88

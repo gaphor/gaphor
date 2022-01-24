@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-19 20:35-0500\n"
+"POT-Creation-Date: 2022-01-22 15:09-0500\n"
 "PO-Revision-Date: 2022-01-20 01:21+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language: fi\n"
@@ -556,6 +556,25 @@ msgstr "Uusi kommunikaatiokaavio"
 #: gaphor/UML/toolbox.py:39
 msgid "New Profile Diagram"
 msgstr "Uusi profiilikaavio"
+
+#: gaphor/UML/umlfmt.py:202
+#, fuzzy
+msgid "general: {}"
+msgstr "yleiset: {}"
+
+#: gaphor/UML/umlfmt.py:207
+msgid "supplier: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:212
+#, fuzzy
+msgid "extend: {}"
+msgstr "laajenna: {}"
+
+#: gaphor/UML/umlfmt.py:217
+#, fuzzy
+msgid "include: {}"
+msgstr "sisällytä: {}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
@@ -1335,7 +1354,8 @@ msgid "About Gaphor"
 msgstr "Tietoja - Gaphor"
 
 #: gaphor/services/helpservice/about.ui:10
-msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+#, fuzzy
+msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
 msgstr "Tekijänoikeus © 2001-2021 Arjan J. Molenaar ja Dan Yeaw"
 
 #: gaphor/services/helpservice/about.ui:11
@@ -2006,8 +2026,8 @@ msgstr "Kaikki Gaphor-mallit"
 
 #: gaphor/ui/appfilemanager.py:39
 #, fuzzy
-msgid "Gaphor - Open Model"
-msgstr "Gaphorin konsoli"
+msgid "Open a Model"
+msgstr "Avaa malli…"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2219,12 +2239,14 @@ msgid "Generic"
 msgstr "Yleinen"
 
 #: gaphor/ui/greeter.py:163
-msgid "Gaphor - Create a New Model"
-msgstr ""
+#, fuzzy
+msgid "Create a New Model"
+msgstr "Luo uusi malli…"
 
 #: gaphor/ui/greeter.py:167
-msgid "Gaphor - Open a Recent Model"
-msgstr ""
+#, fuzzy
+msgid "Open a Recent Model"
+msgstr "Äskettäinen malli…"
 
 #: gaphor/ui/greeter.ui:88
 msgid "Recent Model…"
@@ -2638,4 +2660,13 @@ msgstr "<Suhteet>"
 
 #~ msgid "Open a Gaphor Model"
 #~ msgstr "Avaa Gaphor-malli"
+
+#~ msgid "Gaphor - Open Model"
+#~ msgstr "Gaphorin konsoli"
+
+#~ msgid "Gaphor - Create a New Model"
+#~ msgstr ""
+
+#~ msgid "Gaphor - Open a Recent Model"
+#~ msgstr ""
 
