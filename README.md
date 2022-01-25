@@ -61,11 +61,17 @@ If you want to start developing on Gaphor, have a look at the [Installation sect
 ## 🔦 Usage
 ### Creating models
 
-Once Gaphor is started a new empty model is automatically created. The main
-diagram is already open in the Diagram section.
+If using Gaphor for the first time you will be presented with a greeter dialog at startup in which you can select one of 5 models available to you to work in:
+**Generic:** (or blank) template
+**UML** *Unified Modeling Language* template
+**SysML** *Systems Modeling Language* template
+**RAAML** *Risk Analysis and Assessment Modeling language* template
+**C4 Model** *a lean graphical notation technique for modelling the architecture of software systems* template
 
-Select an element you want to place, for example a Class, by clicking on the icon in
-the Toolbox and click on the diagram. This will place a new
+After you select a model the main diagram will automatically open in a diagram tab at the top of your workspace. Gaphor will automatically select the correct diagram based on your model. You can then open other diagrams based on the Model you are working in by clicking on the button next to the Profile dropdown menu at the top of your window.
+
+To select an element you want to place, for example a Class, click on the icon in
+the Toolbox and then again on the diagram. This will place a new
 Class item instance on the diagram and add a new Class to the model (it shows
 up in the Navigation). The selected tool will reset itself to
 the Pointer tool if the option ''Diagram -> Reset tool'' is selected.
@@ -73,8 +79,7 @@ the Pointer tool if the option ''Diagram -> Reset tool'' is selected.
 Some elements are not directly visible. The section in the toolbox is collapsed
 and needs to be clicked first to reveal its contents.
 
-Gaphor only has one diagram type, and it does not enforce which elements should
-be placed on a diagram.
+
 
 ### Create a New Diagram
 
