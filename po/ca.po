@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.15\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-22 15:09-0500\n"
+"POT-Creation-Date: 2022-01-25 22:03+0100\n"
 "PO-Revision-Date: 2011-03-05 20:26+0100\n"
 "Last-Translator: Jordi Vilalta Prat <jvprat@gmail.com>\n"
 "Language: ca\n"
@@ -581,21 +581,21 @@ msgstr ""
 msgid "New Profile Diagram"
 msgstr "_Diagrama"
 
-#: gaphor/UML/umlfmt.py:202
+#: gaphor/UML/umlfmt.py:201
 #, fuzzy
 msgid "general: {}"
 msgstr "generalització: {}"
 
-#: gaphor/UML/umlfmt.py:207
+#: gaphor/UML/umlfmt.py:206
 msgid "supplier: {}"
 msgstr ""
 
-#: gaphor/UML/umlfmt.py:212
+#: gaphor/UML/umlfmt.py:211
 #, fuzzy
 msgid "extend: {}"
 msgstr "extèn: {}"
 
-#: gaphor/UML/umlfmt.py:217
+#: gaphor/UML/umlfmt.py:216
 #, fuzzy
 msgid "include: {}"
 msgstr "inclou: {}"
@@ -2091,6 +2091,15 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
+
+#: gaphor/templates/uml.gaphor
+msgid "String"
+msgstr ""
+
+#: gaphor/templates/uml.gaphor
+#, fuzzy
+msgid "date"
+msgstr "Estat"
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 #, fuzzy

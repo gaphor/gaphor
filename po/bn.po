@@ -1,4 +1,4 @@
-# Translations template for PROJECT.
+# Bangla translations for PROJECT.
 # Copyright (C) 2022 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
@@ -7,11 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-19 20:35-0500\n"
+"POT-Creation-Date: 2022-01-25 22:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
 "Language: bn\n"
+"Language-Team: none\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -548,6 +549,22 @@ msgstr ""
 
 #: gaphor/UML/toolbox.py:39
 msgid "New Profile Diagram"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:201
+msgid "general: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:206
+msgid "supplier: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:211
+msgid "extend: {}"
+msgstr ""
+
+#: gaphor/UML/umlfmt.py:216
+msgid "include: {}"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:16
@@ -1322,7 +1339,7 @@ msgid "About Gaphor"
 msgstr ""
 
 #: gaphor/services/helpservice/about.ui:10
-msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
 msgstr ""
 
 #: gaphor/services/helpservice/about.ui:11
@@ -1981,12 +1998,20 @@ msgid ""
 "inter-dependencies and communication protocols."
 msgstr ""
 
+#: gaphor/templates/uml.gaphor
+msgid "String"
+msgstr ""
+
+#: gaphor/templates/uml.gaphor
+msgid "date"
+msgstr ""
+
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:39
-msgid "Gaphor - Open Model"
+msgid "Open a Model"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:49
@@ -2162,11 +2187,11 @@ msgid "Generic"
 msgstr ""
 
 #: gaphor/ui/greeter.py:163
-msgid "Gaphor - Create a New Model"
+msgid "Create a New Model"
 msgstr ""
 
 #: gaphor/ui/greeter.py:167
-msgid "Gaphor - Open a Recent Model"
+msgid "Open a Recent Model"
 msgstr ""
 
 #: gaphor/ui/greeter.ui:88
@@ -2268,3 +2293,16 @@ msgstr ""
 #: gaphor/ui/namespaceview.py:141
 msgid "<Relationships>"
 msgstr ""
+
+#~ msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+#~ msgstr ""
+
+#~ msgid "Gaphor - Open Model"
+#~ msgstr ""
+
+#~ msgid "Gaphor - Create a New Model"
+#~ msgstr ""
+
+#~ msgid "Gaphor - Open a Recent Model"
+#~ msgstr ""
+

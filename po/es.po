@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-22 15:09-0500\n"
+"POT-Creation-Date: 2022-01-25 22:03+0100\n"
 "PO-Revision-Date: 2022-01-20 01:07+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
 "Language: es\n"
@@ -550,21 +550,21 @@ msgstr "Diagrama de comunicación nuevo"
 msgid "New Profile Diagram"
 msgstr "Diagrama de perfil nuevo"
 
-#: gaphor/UML/umlfmt.py:202
+#: gaphor/UML/umlfmt.py:201
 #, fuzzy
 msgid "general: {}"
 msgstr ""
 
-#: gaphor/UML/umlfmt.py:207
+#: gaphor/UML/umlfmt.py:206
 msgid "supplier: {}"
 msgstr ""
 
-#: gaphor/UML/umlfmt.py:212
+#: gaphor/UML/umlfmt.py:211
 #, fuzzy
 msgid "extend: {}"
 msgstr "extender: {}"
 
-#: gaphor/UML/umlfmt.py:217
+#: gaphor/UML/umlfmt.py:216
 #, fuzzy
 msgid "include: {}"
 msgstr "incluir: {}"
@@ -2088,6 +2088,15 @@ msgstr ""
 "Defina los principales artefactos que manifiestan la implementación de "
 "sus componentes. Indique cómo se despliegan en los nodos de hardware, sus"
 " interdependencias y los protocolos de comunicación."
+
+#: gaphor/templates/uml.gaphor
+msgid "String"
+msgstr ""
+
+#: gaphor/templates/uml.gaphor
+#, fuzzy
+msgid "date"
+msgstr "tipoDato"
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
