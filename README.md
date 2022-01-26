@@ -42,53 +42,75 @@ Gaphor is designed around the following principles:
 - Consistency: UML is a graphical modeling language, so all modeling is done in a diagram.
 - Workability: The application should not bother the user every time they do something non-UML-ish.
 
-Gaphor is a GUI application that is built on
-[GTK](https://gtk.org) and [Cairo](https://www.cairographics.org/). [PyGObject](https://pygobject.readthedocs.io/) and [PyCairo](https://pycairo.readthedocs.io/) provide Python bindings for those libraries.
-[Gaphas](https://github.com/gaphor/gaphas) provides
-the foundational diagramming functionality.
+Gaphor is a GUI application that is built on [GTK](https://gtk.org) and
+[Cairo](https://www.cairographics.org/).
+[PyGObject](https://pygobject.readthedocs.io/) and
+[PyCairo](https://pycairo.readthedocs.io/) provide Python bindings for those
+libraries. [Gaphas](https://github.com/gaphor/gaphas) provides the foundational
+diagramming functionality.
 
 ## 💾 Install
 
-You can find [the latest version](https://gaphor.org/download) on the [gaphor.org website](https://gaphor.org/download).
-Gaphor ships installers for macOS and Windows. Those can be found there.
-The Python package is also [available on PyPI](https://pypi.org/project/gaphor/).
+You can find [the latest version](https://gaphor.org/download) on the
+[gaphor.org website](https://gaphor.org/download). Gaphor ships installers for
+macOS and Windows. Those can be found there. The Python package is also
+[available on PyPI](https://pypi.org/project/gaphor/).
 
 All releases are available on
 [GitHub](https://github.com/gaphor/gaphor/releases/).
 
-If you want to start developing on Gaphor, have a look at the [Installation section of our Tech docs](https://gaphor.readthedocs.io/en/latest/).
+If you want to start developing on Gaphor, have a look at the [Installation
+section of our Tech docs](https://gaphor.readthedocs.io/en/latest/).
 
 ## 🔦 Usage
 ### Creating models
 
-Once Gaphor is started a new empty model is automatically created. The main
-diagram is already open in the Diagram section.
+If using Gaphor for the first time you will be presented with a greeter dialog
+at startup in which you can select one of 5 models available to you to work in:
+- **Generic:** (or blank) template
+- **UML:** *Unified Modeling Language* template
+- **SysML:** *Systems Modeling Language* template
+- **RAAML:** *Risk Analysis and Assessment Modeling language* template
+- **C4 Model:** *a lean graphical notation technique for modelling the architecture of software systems* template
 
-Select an element you want to place, for example a Class, by clicking on the icon in
-the Toolbox and click on the diagram. This will place a new
-Class item instance on the diagram and add a new Class to the model (it shows
-up in the Navigation). The selected tool will reset itself to
-the Pointer tool if the option ''Diagram -> Reset tool'' is selected.
+After you select a template, the main Gaphor Window will load, and you will be
+ready to start modeling. Gaphor will automatically select the correct profile
+based on the template that you selected, but you can also select other modeling
+profiles if needed by clicking on the button next to the Profile dropdown menu
+at the top of your window.
 
-Some elements are not directly visible. The section in the toolbox is collapsed
-and needs to be clicked first to reveal its contents.
+To select an element you want to place, for example a Class, click on the icon
+in the Toolbox and then again on the diagram. This will place a new Class item
+on the diagram and add a new Class to the model (it shows up in the Navigation).
+The selected tool will reset itself to the Pointer tool if the option ''Diagram
+-> Reset tool'' is selected.
 
-Gaphor only has one diagram type, and it does not enforce which elements should
-be placed on a diagram.
+Portions of the toolbox may also be collapsed depending on the type of diagram
+you are modeling with. You can expand the collapsed portions of the toolbox if
+needed.
 
 ### Create a New Diagram
 
 1. Use the Navigation to select an element that can contain a diagram (a
 Package or Profile)
-1. Select Diagram, and New diagram. A new diagram is created.
+2. Select the New diagram button in the upper left and select the type of
+diagram you would like to create from the dropdown.
+
+It is also possible to create a new diagram by right clicking on a Package or
+Profile in the Navigation and selecting New Diagram.
 
 ### Copy and Paste
 
 Items in a diagram can be copied and pasted in the same diagram or other
-diagrams. Pasting places an existing item in the diagram, but the item itself
-is not duplicated. In other words, if you paste a Class object in a diagram,
-the Class will be added to the diagram, but there will be no new Class in the
-Navigation.
+diagrams.
+
+Ctrl+V: The default way to paste uses a link defining elements mode. This places
+an existing item in the diagram, but the item itself is not duplicated. In other
+words, if you paste a Class object in a diagram, the Class will be added to the
+diagram, but there will be no new Class in the Navigation.
+
+Shift+Ctrl+V: Copy defining elements. This places a new item in the model by
+fully duplicating the item that was copied.
 
 ### Drag and Drop
 
@@ -98,7 +120,6 @@ Class show up in the Navigation but can not be added to a diagram.
 
 Elements can also be dragged within the Navigation in order to rearrange them
 in to different packages.
-
 
 ## ♥ Contributing
 
