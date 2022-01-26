@@ -712,6 +712,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "Texopolis",
+      "name": "Douglas B",
+      "avatar_url": "https://avatars.githubusercontent.com/u/88953534?v=4",
+      "profile": "https://github.com/Texopolis",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
