@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-22 15:09-0500\n"
+"POT-Creation-Date: 2022-01-25 22:03+0100\n"
 "PO-Revision-Date: 2022-01-21 06:55+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language: hu\n"
@@ -554,21 +554,21 @@ msgstr "Új kommunikációs ábra"
 msgid "New Profile Diagram"
 msgstr "Új profilábra"
 
-#: gaphor/UML/umlfmt.py:202
+#: gaphor/UML/umlfmt.py:201
 #, fuzzy
 msgid "general: {}"
 msgstr "általános: {}"
 
-#: gaphor/UML/umlfmt.py:207
+#: gaphor/UML/umlfmt.py:206
 msgid "supplier: {}"
 msgstr ""
 
-#: gaphor/UML/umlfmt.py:212
+#: gaphor/UML/umlfmt.py:211
 #, fuzzy
 msgid "extend: {}"
 msgstr "kiterjesztés: {}"
 
-#: gaphor/UML/umlfmt.py:217
+#: gaphor/UML/umlfmt.py:216
 #, fuzzy
 msgid "include: {}"
 msgstr "belefoglalás: {}"
@@ -2096,6 +2096,15 @@ msgstr ""
 "Határozza meg a fő műtermékeket, amelyek az összetevők megvalósítását "
 "jelzik. Mutassa be, hogyan vannak telepítve a hardver csomópontokon, "
 "kölcsönös függőségeiket és kommunikációs protokolljaikat."
+
+#: gaphor/templates/uml.gaphor
+msgid "String"
+msgstr ""
+
+#: gaphor/templates/uml.gaphor
+#, fuzzy
+msgid "date"
+msgstr "adattípus"
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"

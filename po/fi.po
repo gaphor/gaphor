@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-22 15:09-0500\n"
+"POT-Creation-Date: 2022-01-25 22:03+0100\n"
 "PO-Revision-Date: 2022-01-20 01:21+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language: fi\n"
@@ -557,21 +557,21 @@ msgstr "Uusi kommunikaatiokaavio"
 msgid "New Profile Diagram"
 msgstr "Uusi profiilikaavio"
 
-#: gaphor/UML/umlfmt.py:202
+#: gaphor/UML/umlfmt.py:201
 #, fuzzy
 msgid "general: {}"
 msgstr "yleiset: {}"
 
-#: gaphor/UML/umlfmt.py:207
+#: gaphor/UML/umlfmt.py:206
 msgid "supplier: {}"
 msgstr ""
 
-#: gaphor/UML/umlfmt.py:212
+#: gaphor/UML/umlfmt.py:211
 #, fuzzy
 msgid "extend: {}"
 msgstr "laajenna: {}"
 
-#: gaphor/UML/umlfmt.py:217
+#: gaphor/UML/umlfmt.py:216
 #, fuzzy
 msgid "include: {}"
 msgstr "sisällytä: {}"
@@ -2019,6 +2019,15 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
+
+#: gaphor/templates/uml.gaphor
+msgid "String"
+msgstr ""
+
+#: gaphor/templates/uml.gaphor
+#, fuzzy
+msgid "date"
+msgstr "dataTyyppi"
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"

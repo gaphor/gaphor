@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-22 15:09-0500\n"
+"POT-Creation-Date: 2022-01-25 22:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -550,19 +550,19 @@ msgstr ""
 msgid "New Profile Diagram"
 msgstr ""
 
-#: gaphor/UML/umlfmt.py:202
+#: gaphor/UML/umlfmt.py:201
 msgid "general: {}"
 msgstr ""
 
-#: gaphor/UML/umlfmt.py:207
+#: gaphor/UML/umlfmt.py:206
 msgid "supplier: {}"
 msgstr ""
 
-#: gaphor/UML/umlfmt.py:212
+#: gaphor/UML/umlfmt.py:211
 msgid "extend: {}"
 msgstr ""
 
-#: gaphor/UML/umlfmt.py:217
+#: gaphor/UML/umlfmt.py:216
 msgid "include: {}"
 msgstr ""
 
@@ -1995,6 +1995,14 @@ msgid ""
 "Define the major artifacts that manifest implementation of your "
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
+msgstr ""
+
+#: gaphor/templates/uml.gaphor
+msgid "String"
+msgstr ""
+
+#: gaphor/templates/uml.gaphor
+msgid "date"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
