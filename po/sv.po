@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-25 22:03+0100\n"
+"POT-Creation-Date: 2022-01-26 21:10-0500\n"
 "PO-Revision-Date: 2006-05-11 16:34+0000\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language: sv\n"
@@ -2084,7 +2084,7 @@ msgid "String"
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
-msgid "date"
+msgid "Date"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
@@ -2884,5 +2884,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Gaphor - Open a Recent Model"
+#~ msgstr ""
+
+#~ msgid "date"
 #~ msgstr ""
 

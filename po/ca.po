@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.15\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-25 22:03+0100\n"
+"POT-Creation-Date: 2022-01-26 21:10-0500\n"
 "PO-Revision-Date: 2011-03-05 20:26+0100\n"
 "Last-Translator: Jordi Vilalta Prat <jvprat@gmail.com>\n"
 "Language: ca\n"
@@ -2098,7 +2098,7 @@ msgstr ""
 
 #: gaphor/templates/uml.gaphor
 #, fuzzy
-msgid "date"
+msgid "Date"
 msgstr "Estat"
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12

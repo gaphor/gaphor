@@ -1799,7 +1799,7 @@ existing classes or even new classes with specific responsibilities.</val>
 <val>lastLogin</val>
 </name>
 <typeValue>
-<val>date</val>
+<val>Date</val>
 </typeValue>
 </Property>
 <AssociationItem id="be633a10-71b6-11ec-a409-f47b099bf663">
@@ -1990,7 +1990,7 @@ existing classes or even new classes with specific responsibilities.</val>
 <val>released</val>
 </name>
 <typeValue>
-<val>date</val>
+<val>Date</val>
 </typeValue>
 </Property>
 <Diagram id="0b5ba60e-71b7-11ec-a409-f47b099bf663">
