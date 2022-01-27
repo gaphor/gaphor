@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-21 06:55+0000\n"
+"PO-Revision-Date: 2022-01-27 12:05+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -555,21 +556,18 @@ msgid "New Profile Diagram"
 msgstr "Új profilábra"
 
 #: gaphor/UML/umlfmt.py:201
-#, fuzzy
 msgid "general: {}"
 msgstr "általános: {}"
 
 #: gaphor/UML/umlfmt.py:206
 msgid "supplier: {}"
-msgstr ""
+msgstr "szállító: {}"
 
 #: gaphor/UML/umlfmt.py:211
-#, fuzzy
 msgid "extend: {}"
 msgstr "kiterjesztés: {}"
 
 #: gaphor/UML/umlfmt.py:216
-#, fuzzy
 msgid "include: {}"
 msgstr "belefoglalás: {}"
 
@@ -1395,9 +1393,8 @@ msgid "About Gaphor"
 msgstr "A Gaphor névjegye"
 
 #: gaphor/services/helpservice/about.ui:10
-#, fuzzy
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
-msgstr "Szerzői jog © 2001-2021 Molenaar Arjan J. és Yeaw Dan"
+msgstr "Szerzői jog © 2001-2022 Molenaar Arjan J. és Yeaw Dan"
 
 #: gaphor/services/helpservice/about.ui:11
 msgid "Gaphor is the simple modeling tool written in Python"
@@ -2099,21 +2096,19 @@ msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "String"
-msgstr ""
+msgstr "Karakterlánc"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Date"
-msgstr "adattípus"
+msgstr "Dátum"
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
 msgstr "Minden Gaphor-modell"
 
 #: gaphor/ui/appfilemanager.py:39
-#, fuzzy
 msgid "Open a Model"
-msgstr "Modell megnyitása…"
+msgstr "Modell megnyitása"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2323,14 +2318,12 @@ msgid "Generic"
 msgstr "Általános"
 
 #: gaphor/ui/greeter.py:163
-#, fuzzy
 msgid "Create a New Model"
-msgstr "Új modell létrehozása…"
+msgstr "Új modell létrehozása"
 
 #: gaphor/ui/greeter.py:167
-#, fuzzy
 msgid "Open a Recent Model"
-msgstr "Legutóbbi modell megnyitása - Gaphor"
+msgstr "Legutóbbi modell megnyitása"
 
 #: gaphor/ui/greeter.ui:88
 msgid "Recent Model…"
@@ -2776,4 +2769,3 @@ msgstr "<Kapcsolatok>"
 
 #~ msgid "Gaphor - Create a New Model"
 #~ msgstr "Új modell létrehozása - Gaphor"
-
