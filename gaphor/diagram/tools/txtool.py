@@ -15,8 +15,7 @@ class TxData:
         self.txs.append(Transaction(self.event_manager))
 
     def commit(self):
-        if not self.txs:
-            return
+        assert self.txs
         tx = self.txs.pop()
         tx.commit()
 
@@ -26,14 +25,13 @@ def transactional_tool(
 ) -> Iterable[Gtk.Gesture]:
     tx_data = TxData(event_manager)
     for tool in tools:
-        tool.connect("sequence-state-changed", on_sequence_claimed, tx_data)
+        tool.connect("begin", on_begin, tx_data)
         tool.connect_after("end", on_end, tx_data)
     return tools
 
 
-def on_sequence_claimed(gesture, _sequence, state, tx_data):
-    if state == Gtk.EventSequenceState.CLAIMED:
-        tx_data.begin()
+def on_begin(gesture, _sequence, tx_data):
+    tx_data.begin()
 
 
 def on_end(gesture, _sequence, tx_data):

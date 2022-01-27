@@ -1,12 +1,7 @@
 import pytest
 from gi.repository import Gtk
 
-from gaphor.diagram.tools.txtool import (
-    TxData,
-    on_end,
-    on_sequence_claimed,
-    transactional_tool,
-)
+from gaphor.diagram.tools.txtool import TxData, on_begin, on_end, transactional_tool
 from gaphor.transaction import TransactionBegin
 
 
@@ -32,7 +27,7 @@ class MockEventManager:
         self.events.append(event)
 
 
-def test_start_tx_on_sequence_claimed(view):
+def test_start_tx_on_begin(view):
     event_manager = MockEventManager()
     tx_data = TxData(event_manager)
     if Gtk.get_major_version() == 3:
@@ -40,7 +35,7 @@ def test_start_tx_on_sequence_claimed(view):
     else:
         (tool,) = transactional_tool(Gtk.GestureDrag.new(), event_manager=event_manager)  # type: ignore[arg-type]
 
-    on_sequence_claimed(tool, None, Gtk.EventSequenceState.CLAIMED, tx_data)
+    on_begin(tool, None, tx_data)
     assert tx_data.txs
 
     on_end(tool, None, tx_data)
