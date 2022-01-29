@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 17:46+0000\n"
+"PO-Revision-Date: 2022-01-29 18:21+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/gaphor/gaphor/it/"
 ">\n"
@@ -575,7 +575,7 @@ msgstr "include: {}"
 #: gaphor/UML/interactions/interactionstoolbox.py:20
 #: gaphor/UML/states/statestoolbox.py:29 gaphor/diagram/diagramtoolbox.py:38
 msgid "New {name}"
-msgstr "Nuovo {nome}"
+msgstr "Nuovo {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:34 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
@@ -1328,7 +1328,7 @@ msgid ""
 "Type \"help\" for more information.\n"
 msgstr ""
 "Gaphor Console Python interattiva\n"
-"{versione}\n"
+"{version}\n"
 "Digita \"aiuto\" per ulteriori informazioni.\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
@@ -2113,7 +2113,7 @@ msgstr "Aprire un modello"
 msgid ""
 "{filename} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr "{nomefile} è già aperto. Vuoi invece passare alla finestra aperta?"
+msgstr "{filename} è già aperto. Vuoi invece passare alla finestra aperta?"
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 msgid "<None>"
@@ -2269,7 +2269,7 @@ msgstr "Caricamento modello da {filename}"
 
 #: gaphor/ui/filemanager.py:147
 msgid "Unable to open model “{filename}”."
-msgstr "Impossibile aprire il modello \"{nomefile}\"."
+msgstr "Impossibile aprire il modello \"{filename}\"."
 
 #: gaphor/ui/filemanager.py:150
 msgid "This file does not contain a valid Gaphor model."
@@ -2285,7 +2285,7 @@ msgstr "Salvataggio del modello in {filename}"
 
 #: gaphor/ui/filemanager.py:199
 msgid "Unable to save model “{filename}”."
-msgstr "Impossibile salvare il modello \"{nomefile}\"."
+msgstr "Impossibile salvare il modello \"{filename}\"."
 
 #: gaphor/ui/filemanager.py:237
 msgid "Save Gaphor Model As"
