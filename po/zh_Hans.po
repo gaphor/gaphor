@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 17:47+0000\n"
+"PO-Revision-Date: 2022-01-29 18:21+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gaphor/gaphor/zh_Hans/>\n"
@@ -573,7 +573,7 @@ msgstr "包括： {}"
 #: gaphor/UML/interactions/interactionstoolbox.py:20
 #: gaphor/UML/states/statestoolbox.py:29 gaphor/diagram/diagramtoolbox.py:38
 msgid "New {name}"
-msgstr "新 {名称}"
+msgstr "新 {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:34 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
@@ -1281,7 +1281,7 @@ msgstr "注释行"
 
 #: gaphor/diagram/presentation.py:49
 msgid "(from {namespace})"
-msgstr "（来自 {命名空间}）"
+msgstr "（来自 {namespace}）"
 
 #: gaphor/diagram/propertypages.glade:68 gaphor/diagram/propertypages.ui:54
 msgid "Rectilinear"
@@ -1313,9 +1313,9 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
-"Gaphor Interactive Python Console\n"
-"{版本}\n"
-"键入\"帮助\"以获取更多信息。\n"
+"Gaphor 交互式 Python 控制台\n"
+"{version}\n"
+"键入“帮助”以获取更多信息。\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
 msgid "Gaphor Console"
@@ -2078,7 +2078,7 @@ msgstr "打开模型"
 msgid ""
 "{filename} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr "{文件名} 已打开。是否要切换到打开的窗口？"
+msgstr "{filename} 已打开。是否要切换到打开的窗口？"
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 msgid "<None>"
@@ -2216,11 +2216,11 @@ msgstr "加载中…"
 
 #: gaphor/ui/filemanager.py:116
 msgid "Loading model from {filename}"
-msgstr "从 {文件名} 加载模型"
+msgstr "从 {filename} 加载模型"
 
 #: gaphor/ui/filemanager.py:147
 msgid "Unable to open model “{filename}”."
-msgstr "无法打开模型\"{文件名}\"。"
+msgstr "无法打开模型“{filename}”。"
 
 #: gaphor/ui/filemanager.py:150
 msgid "This file does not contain a valid Gaphor model."
@@ -2232,11 +2232,11 @@ msgstr "保存中…"
 
 #: gaphor/ui/filemanager.py:180
 msgid "Saving model to {filename}"
-msgstr "将模型保存到 {文件名}"
+msgstr "将模型保存到 {filename}"
 
 #: gaphor/ui/filemanager.py:199
 msgid "Unable to save model “{filename}”."
-msgstr "无法保存模型\"{文件名}\"。"
+msgstr "无法保存模型“{filename}”。"
 
 #: gaphor/ui/filemanager.py:237
 msgid "Save Gaphor Model As"
@@ -2356,11 +2356,11 @@ msgstr "De_lete"
 
 #: gaphor/ui/namespace.py:68
 msgid "Show in “{diagram}”"
-msgstr "在\"{图}\"中显示"
+msgstr "在\"{diagram}\"中显示"
 
 #: gaphor/ui/namespace.py:323
 msgid "{name} package"
-msgstr "{名称} 包"
+msgstr "{name} 包"
 
 #: gaphor/ui/namespace.py:342
 msgid "New diagram"
