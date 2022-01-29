@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 17:47+0000\n"
+"PO-Revision-Date: 2022-01-29 18:21+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Bengali <https://hosted.weblate.org/projects/gaphor/gaphor/bn/"
 ">\n"
@@ -575,7 +575,7 @@ msgstr "অন্তর্ভুক্ত: {}"
 #: gaphor/UML/interactions/interactionstoolbox.py:20
 #: gaphor/UML/states/statestoolbox.py:29 gaphor/diagram/diagramtoolbox.py:38
 msgid "New {name}"
-msgstr "নতুন {নাম}"
+msgstr "নতুন {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:34 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
@@ -1320,7 +1320,7 @@ msgid ""
 "Type \"help\" for more information.\n"
 msgstr ""
 "গ্যাফর ইন্টারেক্টিভ পাইথন কনসোল\n"
-"{সংস্করণ}\n"
+"{version}\n"
 "আরও তথ্যের জন্য \"সহায়তা\" টাইপ করুন।\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
