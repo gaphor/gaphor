@@ -4,46 +4,42 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2021-08-29 19:09+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2022-01-29 16:54+0000\n"
+"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
+"\n"
 "Language: fr\n"
-"Language-Team: French "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fr/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
 #: gaphor/ui/greeter.py:29
-#, fuzzy
 msgid "C4 Model"
-msgstr "Nouveau modèle"
+msgstr "Modèle C4"
 
 #: gaphor/C4Model/propertypages.glade:28 gaphor/C4Model/propertypages.ui:25
-#, fuzzy
 msgid "Description"
-msgstr "Association"
+msgstr "Description"
 
 #: gaphor/C4Model/propertypages.glade:75 gaphor/C4Model/propertypages.ui:55
 msgid "Technology"
 msgstr "Technologie"
 
 #: gaphor/C4Model/toolbox.py:30
-#, fuzzy
 msgid "New Software System"
-msgstr "Système logiciel"
+msgstr "Nouveau Système Logiciel"
 
 #: gaphor/C4Model/toolbox.py:37
-#, fuzzy
 msgid "New Container"
-msgstr "Pointeur"
+msgstr "Nouveau Conteneur"
 
 #: gaphor/C4Model/toolbox.py:44
-#, fuzzy
 msgid "Database"
-msgstr "Conteneur : base de données"
+msgstr "Base de données"
 
 #: gaphor/C4Model/toolbox.py:45
 #, fuzzy
@@ -2909,4 +2905,3 @@ msgstr ""
 
 #~ msgid "Gaphor - Open a Recent Model"
 #~ msgstr ""
-
