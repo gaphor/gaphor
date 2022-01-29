@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 17:46+0000\n"
+"PO-Revision-Date: 2022-01-29 18:21+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/gaphor/gaphor/sv/"
 ">\n"
@@ -2106,7 +2106,7 @@ msgid ""
 "{filename} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr ""
-"{filnamn} har redan öppnats. Vill du byta till det öppnade fönstret i "
+"{filename} har redan öppnats. Vill du byta till det öppnade fönstret i "
 "stället?"
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
@@ -2271,11 +2271,11 @@ msgstr "Besparing…"
 
 #: gaphor/ui/filemanager.py:180
 msgid "Saving model to {filename}"
-msgstr "Spara modell till {filnamn}"
+msgstr "Spara modell till {filename}"
 
 #: gaphor/ui/filemanager.py:199
 msgid "Unable to save model “{filename}”."
-msgstr "Det gick inte att spara modellen {filnamn}."
+msgstr "Det går inte att spara modellen \"{filename}\"."
 
 #: gaphor/ui/filemanager.py:237
 msgid "Save Gaphor Model As"
