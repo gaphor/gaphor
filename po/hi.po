@@ -8,290 +8,293 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-01-29 18:50+0000\n"
+"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
+"Language-Team: Hindi <https://hosted.weblate.org/projects/gaphor/gaphor/hi/>"
+"\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
 #: gaphor/ui/greeter.py:29
 msgid "C4 Model"
-msgstr ""
+msgstr "C4 मॉडल"
 
 #: gaphor/C4Model/propertypages.glade:28 gaphor/C4Model/propertypages.ui:25
 msgid "Description"
-msgstr ""
+msgstr "विवरण"
 
 #: gaphor/C4Model/propertypages.glade:75 gaphor/C4Model/propertypages.ui:55
 msgid "Technology"
-msgstr ""
+msgstr "प्रौद्योगिकी"
 
 #: gaphor/C4Model/toolbox.py:30
 msgid "New Software System"
-msgstr ""
+msgstr "नई सॉफ्टवेयर प्रणाली"
 
 #: gaphor/C4Model/toolbox.py:37
 msgid "New Container"
-msgstr ""
+msgstr "नया कंटेनर"
 
 #: gaphor/C4Model/toolbox.py:44
 msgid "Database"
-msgstr ""
+msgstr "डेटाबेस"
 
 #: gaphor/C4Model/toolbox.py:45
 msgid "New Database"
-msgstr ""
+msgstr "नया डेटाबेस"
 
 #: gaphor/C4Model/toolbox.py:52
 msgid "New Component"
-msgstr ""
+msgstr "नया घटक"
 
 #: gaphor/C4Model/toolbox.py:60 gaphor/C4Model/toolbox.py:66
 msgid "Person"
-msgstr ""
+msgstr "आदमी"
 
 #: gaphor/C4Model/toolbox.py:72
 msgid "Software System"
-msgstr ""
+msgstr "सॉफ्टवेयर सिस्टम"
 
 #: gaphor/C4Model/toolbox.py:84
 msgid "Container"
-msgstr ""
+msgstr "पात्र"
 
 #: gaphor/C4Model/toolbox.py:96
 msgid "Container: Database"
-msgstr ""
+msgstr "कंटेनर: डेटाबेस"
 
 #: gaphor/C4Model/toolbox.py:108 gaphor/UML/components/componentstoolbox.py:20
 msgid "Component"
-msgstr ""
+msgstr "अवयव"
 
 #: gaphor/C4Model/toolbox.py:120 gaphor/RAAML/fta/ftatoolbox.py:20
 #: gaphor/UML/classes/classestoolbox.py:123
 #: gaphor/UML/classes/dependencypropertypages.py:16
 msgid "Dependency"
-msgstr ""
+msgstr "निर्भरता"
 
 #: gaphor/C4Model/toolbox.py:140
 msgid "New C4 Diagram"
-msgstr ""
+msgstr "नया C4 आरेख"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/UML/toolbox.py:30
 msgid "New Class Diagram"
-msgstr ""
+msgstr "नई कक्षा आरेख"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
 msgid "New Activity Diagram"
-msgstr ""
+msgstr "नई गतिविधि आरेख"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
 msgid "New Sequence Diagram"
-msgstr ""
+msgstr "नया अनुक्रम आरेख"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
 msgid "New State Machine Diagram"
-msgstr ""
+msgstr "नई राज्य मशीन आरेख"
 
 #: gaphor/RAAML/modelinglanguage.py:17 gaphor/ui/greeter.py:28
 msgid "RAAML"
-msgstr ""
+msgstr "रामल"
 
 #: gaphor/RAAML/toolbox.py:19
 msgid "New FTA Diagram"
-msgstr ""
+msgstr "नया एफटीए आरेख"
 
 #: gaphor/RAAML/toolbox.py:20
 msgid "New STPA Diagram"
-msgstr ""
+msgstr "नया एसटीपीए आरेख"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:28
 msgid "AND Gate"
-msgstr ""
+msgstr "और गेट"
 
 #: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:129
 #: gaphor/RAAML/fta/ftatoolbox.py:135
 msgid "Basic Event"
-msgstr ""
+msgstr "मूल घटना"
 
 #: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:140
 #: gaphor/RAAML/fta/ftatoolbox.py:147
 msgid "Conditional Event"
-msgstr ""
+msgstr "सशर्त घटना"
 
 #: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:166
 #: gaphor/RAAML/fta/ftatoolbox.py:172
 msgid "Dormant Event"
-msgstr ""
+msgstr "निष्क्रिय घटना"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:16 gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
-msgstr ""
+msgstr "त्रुटि रहित विश्लेषण"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:34
 msgid "AND"
-msgstr ""
+msgstr "तथा"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:39 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
-msgstr ""
+msgstr "या गेट"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:45 gaphor/templates/raaml.gaphor
 msgid "OR"
-msgstr ""
+msgstr "या"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:50 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
-msgstr ""
+msgstr "गेट नहीं"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:56
 msgid "NOT"
-msgstr ""
+msgstr "नहीं"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:61
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr ""
+msgstr "अनुक्रम लागू करना (एसईक्यू) गेट"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:67
 msgid "SEQ"
-msgstr ""
+msgstr "स्व-परीक्षा प्रश्न"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:72
 msgid "Exclusive OR Gate"
-msgstr ""
+msgstr "एक्सक्लूसिव या गेट"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:78
 msgid "XOR"
-msgstr ""
+msgstr "एक्सओआर"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:83 gaphor/RAAML/fta/ftatoolbox.py:90
 #: gaphor/RAAML/fta/majorityvotegate.py:41
 msgid "Majority Vote Gate"
-msgstr ""
+msgstr "बहुमत वोट गेट"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:96 gaphor/RAAML/fta/ftatoolbox.py:102
 #: gaphor/RAAML/fta/inhibitgate.py:35
 msgid "Inhibit Gate"
-msgstr ""
+msgstr "इनहिबिट गेट"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:107 gaphor/RAAML/fta/ftatoolbox.py:113
 #: gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
-msgstr ""
+msgstr "में स्थानांतरण"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:118 gaphor/RAAML/fta/ftatoolbox.py:124
 #: gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
-msgstr ""
+msgstr "बाहर स्थानांतरण"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:153 gaphor/RAAML/fta/ftatoolbox.py:160
 #: gaphor/RAAML/fta/undevelopedevent.py:36
 msgid "Undeveloped Event"
-msgstr ""
+msgstr "अविकसित घटना"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:177 gaphor/RAAML/fta/ftatoolbox.py:183
 #: gaphor/RAAML/fta/houseevent.py:35
 msgid "House Event"
-msgstr ""
+msgstr "हाउस इवेंट"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:188 gaphor/RAAML/fta/ftatoolbox.py:194
 #: gaphor/RAAML/fta/zeroevent.py:36
 msgid "Zero Event"
-msgstr ""
+msgstr "शून्य घटना"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:199 gaphor/RAAML/fta/ftatoolbox.py:205
 #: gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
-msgstr ""
+msgstr "शीर्ष घटना"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:210 gaphor/RAAML/fta/ftatoolbox.py:217
 #: gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
-msgstr ""
+msgstr "इंटरमीडिएट घटना"
 
 #: gaphor/RAAML/fta/seqgate.py:37
 msgid "Sequence Enforcing Gate"
-msgstr ""
+msgstr "अनुक्रम लागू करने वाला गेट"
 
 #: gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr ""
+msgstr "एक्सओआर गेट"
 
 #: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:156
 msgid "Control Action"
-msgstr ""
+msgstr "नियंत्रण क्रिया"
 
 #: gaphor/RAAML/stpa/operationalsituation.py:34
 #: gaphor/RAAML/stpa/stpatoolbox.py:124
 msgid "Operational Situation"
-msgstr ""
+msgstr "परिचालन स्थिति"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:18 gaphor/RAAML/stpa/stpatoolbox.py:44
 #: gaphor/templates/raaml.gaphor
 msgid "Loss"
-msgstr ""
+msgstr "नुकसान"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:23 gaphor/RAAML/stpa/stpatoolbox.py:53
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard"
-msgstr ""
+msgstr "जोखिम"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:28 gaphor/RAAML/stpa/stpatoolbox.py:113
 #: gaphor/templates/raaml.gaphor
 msgid "Abstract Operational Situation"
-msgstr ""
+msgstr "सार परिचालन स्थिति"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:77
 #: gaphor/UML/classes/classestoolbox.py:131
 msgid "Generalization"
-msgstr ""
+msgstr "सामान्यकरण"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:62 gaphor/SysML/blocks/block.py:64
 msgid "Situation"
-msgstr ""
+msgstr "परिस्थिति"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:73
 msgid "Control Structure"
-msgstr ""
+msgstr "नियंत्रण संरचना"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:84 gaphor/templates/sysml.gaphor
 msgid "Controller"
-msgstr ""
+msgstr "नियंत्रक"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:93 gaphor/templates/sysml.gaphor
 msgid "Actuator"
-msgstr ""
+msgstr "गति देनेवाला"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:102
 msgid "Controlled Process"
-msgstr ""
+msgstr "नियंत्रित प्रक्रिया"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:135
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "Unsafe Control Action"
-msgstr ""
+msgstr "असुरक्षित नियंत्रण कार्रवाई"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:146
 msgid "Relevant To"
-msgstr ""
+msgstr "के लिए प्रासंगिक"
 
 #: gaphor/SysML/modelinglanguage.py:17 gaphor/ui/greeter.py:27
 msgid "SysML"
-msgstr ""
+msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:28 gaphor/SysML/propertypages.ui:23
 msgid "Item Flow"
-msgstr ""
+msgstr "मद प्रवाह"
 
 #: gaphor/SysML/propertypages.glade:51 gaphor/SysML/propertypages.ui:38
 msgid "Item Property"
-msgstr ""
+msgstr "आइटम संपत्ति"
 
 #: gaphor/SysML/propertypages.glade:71 gaphor/SysML/propertypages.ui:52
 #: gaphor/UML/classes/propertypages.glade:48
@@ -299,33 +302,33 @@ msgstr ""
 #: gaphor/UML/components/propertypages.glade:107
 #: gaphor/UML/components/propertypages.ui:73
 msgid "Invert direction"
-msgstr ""
+msgstr "उलटी दिशा"
 
 #: gaphor/SysML/propertypages.glade:94 gaphor/SysML/propertypages.ui:68
 #: gaphor/UML/actions/propertypages.glade:264
 #: gaphor/UML/actions/propertypages.ui:195
 msgid "Allocated Type"
-msgstr ""
+msgstr "आवंटित प्रकार"
 
 #: gaphor/SysML/propertypages.glade:123 gaphor/SysML/propertypages.ui:89
 msgid "Show Parts"
-msgstr ""
+msgstr "भाग दिखाएँ"
 
 #: gaphor/SysML/propertypages.glade:146 gaphor/SysML/propertypages.ui:104
 msgid "Show References"
-msgstr ""
+msgstr "संदर्भ दिखाएं"
 
 #: gaphor/SysML/propertypages.glade:172 gaphor/SysML/propertypages.ui:119
 msgid "Show Values"
-msgstr ""
+msgstr "मान दिखाएं"
 
 #: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:134
 msgid "Compartments"
-msgstr ""
+msgstr "डिब्बों"
 
 #: gaphor/SysML/propertypages.glade:212 gaphor/SysML/propertypages.ui:148
 msgid "Aggregation"
-msgstr ""
+msgstr "एकत्रीकरण"
 
 #: gaphor/SysML/propertypages.glade:226 gaphor/SysML/propertypages.ui:158
 #: gaphor/UML/classes/propertypages.glade:119
@@ -333,7 +336,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:93
 #: gaphor/UML/classes/propertypages.ui:202
 msgid "No aggregation"
-msgstr ""
+msgstr "कोई एकत्रीकरण नहीं"
 
 #: gaphor/SysML/propertypages.glade:227 gaphor/SysML/propertypages.ui:159
 #: gaphor/UML/classes/propertypages.glade:120
@@ -341,7 +344,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:94
 #: gaphor/UML/classes/propertypages.ui:203
 msgid "Shared"
-msgstr ""
+msgstr "साझा"
 
 #: gaphor/SysML/propertypages.glade:228 gaphor/SysML/propertypages.ui:160
 #: gaphor/UML/classes/propertypages.glade:121
@@ -349,388 +352,390 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:95
 #: gaphor/UML/classes/propertypages.ui:204
 msgid "Composite"
-msgstr ""
+msgstr "कम्पोजिट"
 
 #: gaphor/SysML/propertypages.glade:248 gaphor/SysML/propertypages.ui:176
 msgid "Id"
-msgstr ""
+msgstr "पहचान"
 
 #: gaphor/SysML/propertypages.glade:272 gaphor/SysML/propertypages.ui:192
 msgid "Text"
-msgstr ""
+msgstr "मूलपाठ"
 
 #: gaphor/SysML/toolbox.py:25
 msgid "Internal Blocks"
-msgstr ""
+msgstr "आंतरिक ब्लॉक"
 
 #: gaphor/SysML/toolbox.py:29
 msgid "Connector"
-msgstr ""
+msgstr "योजक"
 
 #: gaphor/SysML/toolbox.py:36
 msgid "Property"
-msgstr ""
+msgstr "संपत्ति"
 
 #: gaphor/SysML/toolbox.py:45
 msgid "Proxy Port"
-msgstr ""
+msgstr "प्रॉक्सी पोर्ट"
 
 #: gaphor/SysML/toolbox.py:68
 msgid "New Block Definition Diagram"
-msgstr ""
+msgstr "नई ब्लॉक परिभाषा आरेख"
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr ""
+msgstr "नया आंतरिक ब्लॉक आरेख"
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
 msgid "New Package Diagram"
-msgstr ""
+msgstr "नया पैकेज आरेख"
 
 #: gaphor/SysML/toolbox.py:71
 msgid "New Requirement Diagram"
-msgstr ""
+msgstr "नई आवश्यकता आरेख"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
 msgid "New Use Case Diagram"
-msgstr ""
+msgstr "नया उपयोग केस आरेख"
 
 #: gaphor/SysML/blocks/block.py:66
 msgid "ControlStructure"
-msgstr ""
+msgstr "नियंत्रण संरचना"
 
 #: gaphor/SysML/blocks/block.py:68
 msgid "block"
-msgstr ""
+msgstr "खंड मैथा"
 
 #: gaphor/SysML/blocks/block.py:101
 msgid "parts"
-msgstr ""
+msgstr "पार्ट्स"
 
 #: gaphor/SysML/blocks/block.py:112
 msgid "references"
-msgstr ""
+msgstr "संदर्भ"
 
 #: gaphor/SysML/blocks/block.py:123
 msgid "values"
-msgstr ""
+msgstr "मूल्यों"
 
 #: gaphor/SysML/blocks/block.py:140
 msgid "unnamed"
-msgstr ""
+msgstr "अज्ञात"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:22
 msgid "Blocks"
-msgstr ""
+msgstr "ब्लाकों"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:26
 msgid "Block"
-msgstr ""
+msgstr "खंड"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:36
 #: gaphor/UML/classes/classestoolbox.py:75
 msgid "Package"
-msgstr ""
+msgstr "पैकेज"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:48
 #: gaphor/UML/classes/classestoolbox.py:94
 msgid "Composite Association"
-msgstr ""
+msgstr "समग्र संघ"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:59
 #: gaphor/UML/classes/classestoolbox.py:105
 msgid "Shared Association"
-msgstr ""
+msgstr "साझा संघ"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:70
 #: gaphor/UML/classes/classestoolbox.py:116
 #: gaphor/UML/usecases/usecasetoolbox.py:44
 msgid "Association"
-msgstr ""
+msgstr "संगठन"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:84
 msgid "ValueType"
-msgstr ""
+msgstr "मान प्रकार"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:95
 #: gaphor/UML/classes/classestoolbox.py:158
 msgid "Enumeration"
-msgstr ""
+msgstr "गणना"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 #: gaphor/UML/classes/classestoolbox.py:170
 msgid "Primitive"
-msgstr ""
+msgstr "प्राचीन"
 
 #: gaphor/SysML/blocks/proxyport.py:67
 msgid "proxy"
-msgstr ""
+msgstr "प्रतिनिधि"
 
 #: gaphor/SysML/requirements/relationships.py:32
 msgid "satisfy"
-msgstr ""
+msgstr "बदला देना"
 
 #: gaphor/SysML/requirements/relationships.py:38
 msgid "deriveReqt"
-msgstr ""
+msgstr "व्युत्पन्नReqt"
 
 #: gaphor/SysML/requirements/relationships.py:44
 msgid "trace"
-msgstr ""
+msgstr "निशान"
 
 #: gaphor/SysML/requirements/relationships.py:50
 msgid "verify"
-msgstr ""
+msgstr "सत्यापित करें"
 
 #: gaphor/SysML/requirements/relationships.py:56
 msgid "refine"
-msgstr ""
+msgstr "परिशोधित"
 
 #: gaphor/SysML/requirements/requirement.py:63
 msgid "requirement"
-msgstr ""
+msgstr "मांग"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 #: gaphor/templates/sysml.gaphor
 msgid "Requirements"
-msgstr ""
+msgstr "आवश्यकताएं"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:21
 msgid "Requirement"
-msgstr ""
+msgstr "मांग"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:33
 msgid "Satisfy"
-msgstr ""
+msgstr "बदला देना"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:40
 msgid "Derive Requirement"
-msgstr ""
+msgstr "व्युत्पन्न आवश्यकता"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:47
 msgid "Trace"
-msgstr ""
+msgstr "निशान"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:54
 msgid "Refine"
-msgstr ""
+msgstr "परिष्कृत"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:61
 msgid "Verify"
-msgstr ""
+msgstr "सत्यापित करें"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:68
 #: gaphor/UML/classes/classestoolbox.py:87
 msgid "Containment"
-msgstr ""
+msgstr "रोकथाम"
 
 #: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:26
 msgid "UML"
-msgstr ""
+msgstr "यूएमएल"
 
 #: gaphor/UML/sanitizerservice.py:73
 msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
+"मॉडल से अप्रयुक्त तत्वों को हटा दिया: उनका उपयोग किसी अन्य आरेख में नहीं किया"
+" जाता है।"
 
 #: gaphor/UML/toolbox.py:32
 msgid "New Component Diagram"
-msgstr ""
+msgstr "नया घटक आरेख"
 
 #: gaphor/UML/toolbox.py:33
 msgid "New Deployment Diagram"
-msgstr ""
+msgstr "नया परिनियोजन आरेख"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr ""
+msgstr "नया संचार आरेख"
 
 #: gaphor/UML/toolbox.py:39
 msgid "New Profile Diagram"
-msgstr ""
+msgstr "नया प्रोफ़ाइल आरेख"
 
 #: gaphor/UML/umlfmt.py:201
 msgid "general: {}"
-msgstr ""
+msgstr "आम: {}"
 
 #: gaphor/UML/umlfmt.py:206
 msgid "supplier: {}"
-msgstr ""
+msgstr "देने वाला: {}"
 
 #: gaphor/UML/umlfmt.py:211
 msgid "extend: {}"
-msgstr ""
+msgstr "विस्तार: {}"
 
 #: gaphor/UML/umlfmt.py:216
 msgid "include: {}"
-msgstr ""
+msgstr "शामिल: {}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
 #: gaphor/UML/states/statestoolbox.py:29 gaphor/diagram/diagramtoolbox.py:38
 msgid "New {name}"
-msgstr ""
+msgstr "नया {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:34 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Activity"
-msgstr ""
+msgstr "गतिविधि"
 
 #: gaphor/UML/actions/actionstoolbox.py:42
 msgid "Swimlane One"
-msgstr ""
+msgstr "स्विमलेन वन"
 
 #: gaphor/UML/actions/actionstoolbox.py:46
 msgid "Swimlane Two"
-msgstr ""
+msgstr "स्विमलेन टू"
 
 #: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Actions"
-msgstr ""
+msgstr "कार्रवाई"
 
 #: gaphor/UML/actions/actionstoolbox.py:56
 #: gaphor/UML/actions/actionstoolbox.py:62
 msgid "Action"
-msgstr ""
+msgstr "कार्य"
 
 #: gaphor/UML/actions/actionstoolbox.py:68
 msgid "Initial node"
-msgstr ""
+msgstr "प्रारंभिक नोड"
 
 #: gaphor/UML/actions/actionstoolbox.py:80
 msgid "Activity final node"
-msgstr ""
+msgstr "गतिविधि अंतिम नोड"
 
 #: gaphor/UML/actions/actionstoolbox.py:92
 msgid "Flow final node"
-msgstr ""
+msgstr "प्रवाह अंतिम नोड"
 
 #: gaphor/UML/actions/actionstoolbox.py:104
 msgid "Decision/merge node"
-msgstr ""
+msgstr "निर्णय/विलय नोड"
 
 #: gaphor/UML/actions/actionstoolbox.py:116
 msgid "Fork/join node"
-msgstr ""
+msgstr "कांटा/नोड में शामिल हों"
 
 #: gaphor/UML/actions/actionstoolbox.py:128
 #: gaphor/UML/actions/actionstoolbox.py:134
 msgid "Object node"
-msgstr ""
+msgstr "वस्तु नोड"
 
 #: gaphor/UML/actions/actionstoolbox.py:140
 msgid "Swimlane"
-msgstr ""
+msgstr "तैरने के लिए लेन"
 
 #: gaphor/UML/actions/actionstoolbox.py:152
 msgid "Control/object flow"
-msgstr ""
+msgstr "नियंत्रण/वस्तु प्रवाह"
 
 #: gaphor/UML/actions/actionstoolbox.py:159
 msgid "Send signal action"
-msgstr ""
+msgstr "सिग्नल कार्रवाई भेजें"
 
 #: gaphor/UML/actions/actionstoolbox.py:165
 msgid "Send signal"
-msgstr ""
+msgstr "संकेत भेजें"
 
 #: gaphor/UML/actions/actionstoolbox.py:171
 msgid "Accept event action"
-msgstr ""
+msgstr "घटना कार्रवाई स्वीकार करें"
 
 #: gaphor/UML/actions/actionstoolbox.py:177
 msgid "Accept event"
-msgstr ""
+msgstr "घटना स्वीकार करें"
 
 #: gaphor/UML/actions/activitynodes.py:191
 msgid "merge/decision"
-msgstr ""
+msgstr "विलय/निर्णय"
 
 #: gaphor/UML/actions/activitynodes.py:193
 msgid "merge"
-msgstr ""
+msgstr "मर्ज"
 
 #: gaphor/UML/actions/activitynodes.py:195
 msgid "decision"
-msgstr ""
+msgstr "फैसले को"
 
 #: gaphor/UML/actions/objectnode.py:14
 #: gaphor/UML/actions/propertypages.glade:217
 #: gaphor/UML/actions/propertypages.ui:160
 msgid "unordered"
-msgstr ""
+msgstr "अक्रमित"
 
 #: gaphor/UML/actions/objectnode.py:15
 #: gaphor/UML/actions/propertypages.glade:218
 #: gaphor/UML/actions/propertypages.ui:161
 msgid "ordered"
-msgstr ""
+msgstr "आदेश दिया"
 
 #: gaphor/UML/actions/objectnode.py:16
 msgid "LIFO"
-msgstr ""
+msgstr "जीवन"
 
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
-msgstr ""
+msgstr "फीफो"
 
 #: gaphor/UML/actions/objectnode.py:48
 msgid "upperBound"
-msgstr ""
+msgstr "ऊपरी सीमा"
 
 #: gaphor/UML/actions/objectnode.py:56
 msgid "ordering"
-msgstr ""
+msgstr "आदेश"
 
 #: gaphor/UML/actions/partitionpage.py:111
 msgid "New Swimlane"
-msgstr ""
+msgstr "नई स्विमलेन"
 
 #: gaphor/UML/actions/propertypages.glade:28
 #: gaphor/UML/actions/propertypages.ui:23
 msgid "Show type"
-msgstr ""
+msgstr "शो प्रकार"
 
 #: gaphor/UML/actions/propertypages.glade:57
 #: gaphor/UML/actions/propertypages.ui:44
 msgid "Horizontal"
-msgstr ""
+msgstr "क्षैतिज"
 
 #: gaphor/UML/actions/propertypages.glade:83
 #: gaphor/UML/actions/propertypages.ui:63
 msgid "Join Specification"
-msgstr ""
+msgstr "विशिष्टता में शामिल हों"
 
 #: gaphor/UML/actions/propertypages.glade:116
 #: gaphor/UML/actions/propertypages.ui:90
 msgid "Swimlanes"
-msgstr ""
+msgstr "स्विमलेन्स"
 
 #: gaphor/UML/actions/propertypages.glade:129
 #: gaphor/UML/actions/propertypages.ui:101
 msgid "Partitions"
-msgstr ""
+msgstr "विभाजन"
 
 #: gaphor/UML/actions/propertypages.glade:170
 #: gaphor/UML/actions/propertypages.ui:128
 msgid "Upper Bound"
-msgstr ""
+msgstr "ऊपरी सीमा"
 
 #: gaphor/UML/actions/propertypages.glade:193
 #: gaphor/UML/actions/propertypages.ui:145
 msgid "Show Ordering"
-msgstr ""
+msgstr "आदेश दिखाओ"
 
 #: gaphor/UML/actions/propertypages.glade:219
 #: gaphor/UML/actions/propertypages.ui:162
 msgid "Last In First Out (LIFO)"
-msgstr ""
+msgstr "लास्ट इन फर्स्ट आउट (LIFO)"
 
 #: gaphor/UML/actions/propertypages.glade:220
 #: gaphor/UML/actions/propertypages.ui:163
 msgid "First In First Out (FIFO)"
-msgstr ""
+msgstr "फर्स्ट इन फर्स्ट आउट (फीफो)"
 
 #: gaphor/UML/actions/propertypages.glade:247
 #: gaphor/UML/actions/propertypages.ui:183
@@ -739,107 +744,107 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:25
 #: gaphor/UML/profiles/propertypages.ui:21
 msgid "Name"
-msgstr ""
+msgstr "नाम"
 
 #: gaphor/UML/actions/propertypages.glade:296
 #: gaphor/UML/actions/propertypages.ui:215
 #: gaphor/UML/states/propertypages.glade:106
 #: gaphor/UML/states/propertypages.ui:74
 msgid "Guard"
-msgstr ""
+msgstr "रक्षक"
 
 #: gaphor/UML/classes/classespropertypages.py:330
 #: gaphor/UML/classes/classespropertypages.py:414
 msgid "Static"
-msgstr ""
+msgstr "स्थिर"
 
 #: gaphor/UML/classes/classespropertypages.py:414
 #: gaphor/UML/classes/propertypages.glade:495
 #: gaphor/UML/classes/propertypages.ui:422
 msgid "Abstract"
-msgstr ""
+msgstr "सार"
 
 #: gaphor/UML/classes/classestoolbox.py:49
 msgid "Classes"
-msgstr ""
+msgstr "कक्षाओं"
 
 #: gaphor/UML/classes/classestoolbox.py:53
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Class"
-msgstr ""
+msgstr "कक्षा"
 
 #: gaphor/UML/classes/classestoolbox.py:63
 msgid "Interface"
-msgstr ""
+msgstr "इंटरफेस"
 
 #: gaphor/UML/classes/classestoolbox.py:139
 msgid "Interface Realization"
-msgstr ""
+msgstr "इंटरफ़ेस अहसास"
 
 #: gaphor/UML/classes/classestoolbox.py:146
 msgid "DataType"
-msgstr ""
+msgstr "डाटा प्रकार"
 
 #: gaphor/UML/classes/datatype.py:58
 msgid "primitive"
-msgstr ""
+msgstr "प्राचीन"
 
 #: gaphor/UML/classes/datatype.py:60
 msgid "valueType"
-msgstr ""
+msgstr "मान प्रकार"
 
 #: gaphor/UML/classes/datatype.py:62
 msgid "dataType"
-msgstr ""
+msgstr "डाटा प्रकार"
 
 #: gaphor/UML/classes/dependency.py:52
 msgid "use"
-msgstr ""
+msgstr "उपयोग"
 
 #: gaphor/UML/classes/dependency.py:53
 msgid "realize"
-msgstr ""
+msgstr "एहसास"
 
 #: gaphor/UML/classes/dependency.py:54
 msgid "implements"
-msgstr ""
+msgstr "औजार"
 
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
-msgstr ""
+msgstr "प्रयोग"
 
 #: gaphor/UML/classes/dependencypropertypages.py:18
 msgid "Realization"
-msgstr ""
+msgstr "वसूली"
 
 #: gaphor/UML/classes/dependencypropertypages.py:19
 msgid "Implementation"
-msgstr ""
+msgstr "कार्यान्वयन"
 
 #: gaphor/UML/classes/enumeration.py:69
 msgid "enumeration"
-msgstr ""
+msgstr "गणना"
 
 #: gaphor/UML/classes/interface.py:290
 msgid "interface"
-msgstr ""
+msgstr "इंटरफेस"
 
 #: gaphor/UML/classes/klass.py:59
 msgid "stereotype"
-msgstr ""
+msgstr "टकसाली"
 
 #: gaphor/UML/classes/klass.py:61
 msgid "metaclass"
-msgstr ""
+msgstr "मेटाक्लास"
 
 #: gaphor/UML/classes/package.py:23
 msgid "profile"
-msgstr ""
+msgstr "प्रोफ़ाइल"
 
 #: gaphor/UML/classes/propertypages.glade:29
 #: gaphor/UML/classes/propertypages.ui:24
 msgid "Show Direction"
-msgstr ""
+msgstr "दिशा दिखाएं"
 
 #: gaphor/UML/classes/propertypages.glade:94
 #: gaphor/UML/classes/propertypages.glade:221
@@ -852,28 +857,28 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:614
 #: gaphor/UML/classes/propertypages.ui:720
 msgid "🛈 Help"
-msgstr ""
+msgstr "🛈 मदद"
 
 #: gaphor/UML/classes/propertypages.glade:107
 #: gaphor/UML/classes/propertypages.glade:234
 #: gaphor/UML/classes/propertypages.ui:82
 #: gaphor/UML/classes/propertypages.ui:191
 msgid "Unknown navigation"
-msgstr ""
+msgstr "अज्ञात नेविगेशन"
 
 #: gaphor/UML/classes/propertypages.glade:108
 #: gaphor/UML/classes/propertypages.glade:235
 #: gaphor/UML/classes/propertypages.ui:83
 #: gaphor/UML/classes/propertypages.ui:192
 msgid "Not navigable"
-msgstr ""
+msgstr "नौगम्य नहीं"
 
 #: gaphor/UML/classes/propertypages.glade:109
 #: gaphor/UML/classes/propertypages.glade:236
 #: gaphor/UML/classes/propertypages.ui:84
 #: gaphor/UML/classes/propertypages.ui:193
 msgid "Navigable"
-msgstr ""
+msgstr "जहाज़-रानी का"
 
 #: gaphor/UML/classes/propertypages.glade:140
 #: gaphor/UML/classes/propertypages.glade:267
@@ -886,7 +891,7 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:94
 #: gaphor/UML/profiles/propertypages.ui:68
 msgid "Attributes"
-msgstr ""
+msgstr "गुण"
 
 #: gaphor/UML/classes/propertypages.glade:160
 #: gaphor/UML/classes/propertypages.glade:287
@@ -895,17 +900,17 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:114
 #: gaphor/UML/profiles/propertypages.ui:88
 msgid "Value"
-msgstr ""
+msgstr "मूल्य"
 
 #: gaphor/UML/classes/propertypages.glade:181
 #: gaphor/UML/classes/propertypages.ui:151
 msgid "Head:"
-msgstr ""
+msgstr "सिर:"
 
 #: gaphor/UML/classes/propertypages.glade:309
 #: gaphor/UML/classes/propertypages.ui:261
 msgid "Tail:"
-msgstr ""
+msgstr "पूंछ:"
 
 #: gaphor/UML/classes/propertypages.glade:339
 #: gaphor/UML/classes/propertypages.ui:288
@@ -922,18 +927,29 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"संघ जोड़ें और संपादित करें UML सिंटैक्स के अनुसार समाप्त होता है।\n"
+"\n"
+"  • <tt>+ नाम </tt>\n"
+"  • <tt>+ नाम[1]</tt>\n"
+"  • <tt> - नाम [1..2] </tt>\n"
+"  • <tt>1..2</tt>\n"
+"  • <tt>- [1..2]</tt>\n"
+"\n"
+"संपादित करने के लिए <b> दर्ज करें </b> दबाएं, <b> बैकस्पेस </b>/<b> हटाएं </"
+"b> आइटम निकालने के लिए।\n"
+"आइटम को ऊपर या नीचे ले जाने के लिए <b>-</b>/<b>=</b> का उपयोग करें।"
 
 #: gaphor/UML/classes/propertypages.glade:361
 #: gaphor/UML/classes/propertypages.ui:306
 msgid "Show Attributes"
-msgstr ""
+msgstr "गुण दिखाएं"
 
 #: gaphor/UML/classes/propertypages.glade:415
 #: gaphor/UML/classes/propertypages.glade:713
 #: gaphor/UML/classes/propertypages.ui:353
 #: gaphor/UML/classes/propertypages.ui:592
 msgid "S"
-msgstr ""
+msgstr "एस"
 
 #: gaphor/UML/classes/propertypages.glade:479
 #: gaphor/UML/classes/propertypages.ui:409
@@ -949,38 +965,48 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"यूएमएल सिंटैक्स के अनुसार वर्ग विशेषताओं को जोड़ें और संपादित करें।\n"
+"\n"
+"  • <tt>attr</tt> (नाम, सार्वजनिक दृश्यता के लिए डिफ़ॉल्ट)\n"
+"  • <tt>+ attr: int</tt> (प्रकार के साथ सार्वजनिक)\n"
+"  • <tt>+ attr: int[0..1]</tt> (सार्वजनिक, प्रकार और बहुलता)\n"
+"  • <tt># /attr: int # a Note</tt> (संरक्षित, व्युत्पन्न, टिप्पणी के साथ)\n"
+"\n"
+"संपादित करने के लिए <b> दर्ज करें </b> दबाएं, <b> बैकस्पेस </b>/<b> हटाएं </"
+"b> आइटम निकालने के लिए।\n"
+"आइटम को ऊपर या नीचे ले जाने के लिए <b>-</b>/<b>=</b> का उपयोग करें।"
 
 #: gaphor/UML/classes/propertypages.glade:521
 #: gaphor/UML/classes/propertypages.ui:441
 msgid "Dependency type"
-msgstr ""
+msgstr "निर्भरता प्रकार"
 
 #: gaphor/UML/classes/propertypages.glade:534
 #: gaphor/UML/classes/propertypages.ui:452
 msgid "Automatic"
-msgstr ""
+msgstr "स्वचालित"
 
 #: gaphor/UML/classes/propertypages.glade:581
 #: gaphor/UML/classes/propertypages.ui:484
 msgid "Folded"
-msgstr ""
+msgstr "मुड़ा हुआ"
 
 #: gaphor/UML/classes/propertypages.glade:646
 #: gaphor/UML/classes/propertypages.ui:532
 msgid "Show Operations"
-msgstr ""
+msgstr "संचालन दिखाएं"
 
 #: gaphor/UML/classes/propertypages.glade:682
 #: gaphor/UML/classes/propertypages.glade:752
 #: gaphor/UML/classes/propertypages.ui:561
 #: gaphor/UML/classes/propertypages.ui:624
 msgid "Operations"
-msgstr ""
+msgstr "संचालन"
 
 #: gaphor/UML/classes/propertypages.glade:700
 #: gaphor/UML/classes/propertypages.ui:579
 msgid "A"
-msgstr ""
+msgstr "ए"
 
 #: gaphor/UML/classes/propertypages.glade:776
 #: gaphor/UML/classes/propertypages.ui:647
@@ -995,18 +1021,27 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"यूएमएल सिंटैक्स के अनुसार क्लास ऑपरेशंस को जोड़ें और संपादित करें।\n"
+"\n"
+"  • <tt> कॉल ()</tt>\n"
+"  • <tt>+ कॉल (a: int[*], b: str): बूल</tt> (सार्वजनिक, पैरामीटर)\n"
+"  • <tt># कॉल (a: int, b: str) # एक नोट</tt> (संरक्षित, टिप्पणी के साथ)\n"
+"\n"
+"संपादित करने के लिए <b> दर्ज करें </b> दबाएं, <b> बैकस्पेस </b>/<b> हटाएं </"
+"b> आइटम हटाने के लिए।\n"
+"आइटम को ऊपर या नीचे ले जाने के लिए <b>-</b>/<b>=</b> का उपयोग करें।"
 
 #: gaphor/UML/classes/propertypages.glade:798
 #: gaphor/UML/classes/propertypages.ui:665
 msgid "Show Enumeration Literals"
-msgstr ""
+msgstr "एन्यूमरेशन लिटरल्स दिखाएँ"
 
 #: gaphor/UML/classes/propertypages.glade:835
 #: gaphor/UML/classes/propertypages.glade:878
 #: gaphor/UML/classes/propertypages.ui:694
 #: gaphor/UML/classes/propertypages.ui:730
 msgid "Enumeration Literals"
-msgstr ""
+msgstr "एन्यूमरेशन लिटरल्स"
 
 #: gaphor/UML/classes/propertypages.glade:900
 #: gaphor/UML/classes/propertypages.ui:751
@@ -1019,257 +1054,264 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"यूएमएल सिंटैक्स के अनुसार एन्यूमरेशन लिटरल जोड़ें और संपादित करें।\n"
+"\n"
+"  • <tt> एनम </tt>\n"
+"\n"
+"संपादित करने के लिए <b> दर्ज करें </b> दबाएं, <b> बैकस्पेस </b>/<b> हटाएं </"
+"b> आइटम निकालने के लिए।\n"
+"आइटम को ऊपर या नीचे ले जाने के लिए <b>-</b>/<b>=</b> का उपयोग करें।"
 
 #: gaphor/UML/components/componentstoolbox.py:16
 msgid "Components"
-msgstr ""
+msgstr "अवयव"
 
 #: gaphor/UML/components/componentstoolbox.py:32
 msgid "Artifact"
-msgstr ""
+msgstr "विरूपण साक्ष्य"
 
 #: gaphor/UML/components/componentstoolbox.py:44
 msgid "Node"
-msgstr ""
+msgstr "नोड"
 
 #: gaphor/UML/components/componentstoolbox.py:56
 msgid "Device"
-msgstr ""
+msgstr "युक्ति"
 
 #: gaphor/UML/components/node.py:54
 msgid "device"
-msgstr ""
+msgstr "युक्ति"
 
 #: gaphor/UML/components/propertypages.glade:28
 #: gaphor/UML/components/propertypages.ui:23
 msgid "Indirectly Instantiated"
-msgstr ""
+msgstr "परोक्ष रूप से त्वरित"
 
 #: gaphor/UML/components/propertypages.glade:57
 #: gaphor/UML/components/propertypages.ui:43
 msgid "Information Flow"
-msgstr ""
+msgstr "सूचना प्रवाह"
 
 #: gaphor/UML/components/propertypages.glade:80
 #: gaphor/UML/components/propertypages.ui:59
 msgid "Information Item (Class)"
-msgstr ""
+msgstr "सूचना मद (वर्ग)"
 
 #: gaphor/UML/interactions/interactionsconnect.py:82
 msgid "call()"
-msgstr ""
+msgstr "बुलाना()"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:38
 #: gaphor/UML/interactions/interactionstoolbox.py:59
 #: gaphor/templates/sysml.gaphor gaphor/templates/uml.gaphor
 msgid "Interaction"
-msgstr ""
+msgstr "परस्पर क्रिया"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:55
 #: gaphor/templates/uml.gaphor
 msgid "Interactions"
-msgstr ""
+msgstr "बातचीत"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:71
 msgid "Lifeline"
-msgstr ""
+msgstr "लाइफलाइन"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:83
 msgid "Execution Specification"
-msgstr ""
+msgstr "निष्पादन विशिष्टता"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:91
 msgid "Message"
-msgstr ""
+msgstr "संदेश"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:98
 msgid "Reflexive message"
-msgstr ""
+msgstr "रिफ्लेक्सिव संदेश"
 
 #: gaphor/UML/interactions/propertypages.glade:25
 #: gaphor/UML/interactions/propertypages.ui:21
 msgid "Message Sort"
-msgstr ""
+msgstr "संदेश क्रमबद्ध करें"
 
 #: gaphor/UML/profiles/packageimport.py:22
 msgid "import"
-msgstr ""
+msgstr "आयात"
 
 #: gaphor/UML/profiles/profilestoolbox.py:22
 msgid "Profiles"
-msgstr ""
+msgstr "प्रोफाइल"
 
 #: gaphor/UML/profiles/profilestoolbox.py:26
 msgid "Profile"
-msgstr ""
+msgstr "प्रोफ़ाइल"
 
 #: gaphor/UML/profiles/profilestoolbox.py:38
 msgid "Metaclass"
-msgstr ""
+msgstr "मेटाक्लास"
 
 #: gaphor/UML/profiles/profilestoolbox.py:48
 msgid "Stereotype"
-msgstr ""
+msgstr "टकसाली"
 
 #: gaphor/UML/profiles/profilestoolbox.py:60
 msgid "Extension"
-msgstr ""
+msgstr "विस्तार"
 
 #: gaphor/UML/profiles/profilestoolbox.py:67
 msgid "Import"
-msgstr ""
+msgstr "आयात"
 
 #: gaphor/UML/profiles/propertypages.glade:62
 #: gaphor/UML/profiles/propertypages.ui:49
 msgid "Show Stereotypes"
-msgstr ""
+msgstr "स्टीरियोटाइप दिखाएं"
 
 #: gaphor/UML/profiles/propertypages.glade:138
 #: gaphor/UML/profiles/propertypages.ui:108
 msgid "Stereotypes"
-msgstr ""
+msgstr "लकीर के फकीर"
 
 #: gaphor/UML/states/propertypages.glade:31
 #: gaphor/UML/states/propertypages.ui:25
 msgid "Entry"
-msgstr ""
+msgstr "प्रवेश"
 
 #: gaphor/UML/states/propertypages.glade:48
 #: gaphor/UML/states/propertypages.ui:36
 msgid "Exit"
-msgstr ""
+msgstr "बाहर जाएं"
 
 #: gaphor/UML/states/propertypages.glade:68
 #: gaphor/UML/states/propertypages.ui:47
 msgid "Do Activity"
-msgstr ""
+msgstr "गतिविधि करें"
 
 #: gaphor/UML/states/propertypages.glade:90
 #: gaphor/UML/states/propertypages.ui:60
 msgid "Activities"
-msgstr ""
+msgstr "गतिविधियां"
 
 #: gaphor/UML/states/statestoolbox.py:13 gaphor/UML/states/statestoolbox.py:66
 msgid "State"
-msgstr ""
+msgstr "राज्य"
 
 #: gaphor/UML/states/statestoolbox.py:48 gaphor/templates/sysml.gaphor
 msgid "State Machine"
-msgstr ""
+msgstr "राज्य मशीन"
 
 #: gaphor/UML/states/statestoolbox.py:55 gaphor/templates/sysml.gaphor
 msgid "Default Region"
-msgstr ""
+msgstr "डिफ़ॉल्ट क्षेत्र"
 
 #: gaphor/UML/states/statestoolbox.py:62
 msgid "States"
-msgstr ""
+msgstr "राज्य अमेरिका"
 
 #: gaphor/UML/states/statestoolbox.py:78
 msgid "Initial Pseudostate"
-msgstr ""
+msgstr "प्रारंभिक स्यूडोस्टेट"
 
 #: gaphor/UML/states/statestoolbox.py:90
 msgid "Final State"
-msgstr ""
+msgstr "अंतिम राज्य"
 
 #: gaphor/UML/states/statestoolbox.py:102
 msgid "History Pseudostate"
-msgstr ""
+msgstr "इतिहास छद्म राज्य"
 
 #: gaphor/UML/states/statestoolbox.py:114
 msgid "Transition"
-msgstr ""
+msgstr "संक्रमण"
 
 #: gaphor/UML/usecases/extend.py:22
 msgid "extend"
-msgstr ""
+msgstr "विस्तार"
 
 #: gaphor/UML/usecases/include.py:22
 msgid "include"
-msgstr ""
+msgstr "शामिल"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:16 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Use Cases"
-msgstr ""
+msgstr "बक्सों का इस्तेमाल करें"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:20
 msgid "Use case"
-msgstr ""
+msgstr "उदाहरण"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:32 gaphor/templates/uml.gaphor
 msgid "Actor"
-msgstr ""
+msgstr "अभिनेता"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:51
 msgid "Include"
-msgstr ""
+msgstr "शामिल"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:59
 msgid "Extend"
-msgstr ""
+msgstr "विस्तार"
 
 #: gaphor/diagram/diagramtoolbox.py:112
 msgid "General"
-msgstr ""
+msgstr "आम"
 
 #: gaphor/diagram/diagramtoolbox.py:116
 msgid "Pointer"
-msgstr ""
+msgstr "सूचक"
 
 #: gaphor/diagram/diagramtoolbox.py:123
 msgid "Magnet"
-msgstr ""
+msgstr "चुंबक"
 
 #: gaphor/diagram/diagramtoolbox.py:130
 msgid "Line"
-msgstr ""
+msgstr "रेखा"
 
 #: gaphor/diagram/diagramtoolbox.py:137
 msgid "Box"
-msgstr ""
+msgstr "डिब्बा"
 
 #: gaphor/diagram/diagramtoolbox.py:145
 msgid "Ellipse"
-msgstr ""
+msgstr "अंडाकार"
 
 #: gaphor/diagram/diagramtoolbox.py:153 gaphor/diagram/propertypages.glade:25
 #: gaphor/diagram/propertypages.ui:21
 msgid "Comment"
-msgstr ""
+msgstr "टिप्पणी"
 
 #: gaphor/diagram/diagramtoolbox.py:161
 msgid "Comment line"
-msgstr ""
+msgstr "टिप्पणी पंक्ति"
 
 #: gaphor/diagram/presentation.py:49
 msgid "(from {namespace})"
-msgstr ""
+msgstr "({namespace} से)"
 
 #: gaphor/diagram/propertypages.glade:68 gaphor/diagram/propertypages.ui:54
 msgid "Rectilinear"
-msgstr ""
+msgstr "सीधा"
 
 #: gaphor/diagram/propertypages.glade:77 gaphor/diagram/propertypages.ui:60
 msgid "Flip orientation"
-msgstr ""
+msgstr "फ्लिप ओरिएंटेशन"
 
 #: gaphor/diagram/propertypages.glade:92 gaphor/diagram/propertypages.ui:68
 msgid "Style"
-msgstr ""
+msgstr "अंदाज"
 
 #: gaphor/diagram/propertypages.glade:126 gaphor/diagram/propertypages.ui:80
 msgid "Note or Remark"
-msgstr ""
+msgstr "नोट या टिप्पणी"
 
 #: gaphor/extensions/sphinx.py:65
 msgid "No model file configured for model '{model_name}'."
-msgstr ""
+msgstr "मॉडल '{model_name}' के लिए कोई मॉडल फ़ाइल कॉन्फ़िगर नहीं की गई है।"
 
 #: gaphor/extensions/sphinx.py:94
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
-msgstr ""
+msgstr "मॉडल '{model_name}' ({model_file}) में कोई आरेख '{name}' नहीं है।"
 
 #: gaphor/plugins/console/console.py:23
 msgid ""
@@ -1277,77 +1319,80 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
+"गैफोर इंटरएक्टिव पायथन कंसोल\n"
+"{version}\n"
+"अधिक जानकारी के लिए \"सहायता\" टाइप करें।\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
 msgid "Gaphor Console"
-msgstr ""
+msgstr "गैफोर कंसोल"
 
 #: gaphor/plugins/console/consolewindow.py:43
 msgid "Console"
-msgstr ""
+msgstr "सांत्वना देना"
 
 #: gaphor/plugins/diagramexport/__init__.py:28
 msgid "All {ext} Files"
-msgstr ""
+msgstr "सभी {ext} फ़ाइलें"
 
 #: gaphor/plugins/diagramexport/__init__.py:34
 msgid "Export as SVG"
-msgstr ""
+msgstr "एसवीजी के रूप में निर्यात करें"
 
 #: gaphor/plugins/diagramexport/__init__.py:35
 #: gaphor/plugins/diagramexport/__init__.py:40
 msgid "Export diagram as SVG"
-msgstr ""
+msgstr "एसवीजी के रूप में निर्यात आरेख"
 
 #: gaphor/plugins/diagramexport/__init__.py:47
 msgid "Export as PNG"
-msgstr ""
+msgstr "पीएनजी के रूप में निर्यात करें"
 
 #: gaphor/plugins/diagramexport/__init__.py:48
 #: gaphor/plugins/diagramexport/__init__.py:53
 msgid "Export diagram as PNG"
-msgstr ""
+msgstr "पीएनजी के रूप में निर्यात आरेख"
 
 #: gaphor/plugins/diagramexport/__init__.py:60
 msgid "Export as PDF"
-msgstr ""
+msgstr "पीडीएफ के रूप में निर्यात करें"
 
 #: gaphor/plugins/diagramexport/__init__.py:61
 #: gaphor/plugins/diagramexport/__init__.py:66
 msgid "Export diagram as PDF"
-msgstr ""
+msgstr "पीडीएफ के रूप में निर्यात आरेख"
 
 #: gaphor/plugins/xmiexport/__init__.py:24
 msgid "Export as XMI"
-msgstr ""
+msgstr "एक्सएमआई के रूप में निर्यात करें"
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export model as XMI (XML Model Interchange) format"
-msgstr ""
+msgstr "एक्सएमआई (एक्सएमएल मॉडल इंटरचेंज) प्रारूप के रूप में निर्यात मॉडल"
 
 #: gaphor/plugins/xmiexport/__init__.py:31
 msgid "Export model as XMI file"
-msgstr ""
+msgstr "एक्सएमआई फ़ाइल के रूप में निर्यात मॉडल"
 
 #: gaphor/plugins/xmiexport/__init__.py:34
 msgid "All XMI Files"
-msgstr ""
+msgstr "सभी एक्सएमआई फ़ाइलें"
 
 #: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
-msgstr ""
+msgstr "Gaphor . के बारे में"
 
 #: gaphor/services/helpservice/about.ui:10
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
-msgstr ""
+msgstr "कॉपीराइट © 2001-2022 अर्जन जे. मोलेनार और डैन येव"
 
 #: gaphor/services/helpservice/about.ui:11
 msgid "Gaphor is the simple modeling tool written in Python"
-msgstr ""
+msgstr "गैफोर पायथन में लिखा गया सरल मॉडलिंग टूल है"
 
 #: gaphor/services/helpservice/about.ui:13
 msgid "Fork me on GitHub"
-msgstr ""
+msgstr "GitHub पर मेरे कांटा"
 
 #: gaphor/services/helpservice/about.ui:31
 msgid ""
@@ -1369,586 +1414,605 @@ msgid ""
 "trademarks of Object Management Group, Inc. in the United States\n"
 "and/or other countries.\n"
 msgstr ""
+"अपाचे लाइसेंस, संस्करण 2.0 (\"लाइसेंस\") के तहत लाइसेंस प्राप्त;\n"
+"आप इस एप्लिकेशन का उपयोग इसके अनुपालन के अलावा नहीं कर सकते हैं\n"
+"लाइसेंस। आप लाइसेंस की एक प्रति प्राप्त कर सकते हैं\n"
+"\n"
+"http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"जब तक लागू कानून द्वारा आवश्यक न हो या लिखित रूप में सहमत न हो, सॉफ़्टवेयर\n"
+"लाइसेंस के तहत वितरित \"AS IS\" आधार पर वितरित किया जाता है,\n"
+"वारंटी या किसी भी प्रकार की शर्तों के बिना, या तो\n"
+"एक्सप्रेस या निहित। विशिष्ट भाषा के लिए लाइसेंस देखें\n"
+"लाइसेंस के तहत अनुमतियों और सीमाओं को नियंत्रित करना।\n"
+"\n"
+"---\n"
+"\n"
+"UML, SysML, और RAAML या तो पंजीकृत ट्रेडमार्क हैं या\n"
+"संयुक्त राज्य अमेरिका में ऑब्जेक्ट मैनेजमेंट ग्रुप, इंक. के ट्रेडमार्क\n"
+"और/या अन्य देश।\n"
 
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
-msgstr ""
+msgstr "आवेदन"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
 #: gaphor/ui/elementeditor.ui:205
 msgid "Preferences"
-msgstr ""
+msgstr "पसंद"
 
 #: gaphor/services/helpservice/shortcuts.ui:32
 msgid "Quit Gaphor"
-msgstr ""
+msgstr "गैफोर छोड़ो"
 
 #: gaphor/services/helpservice/shortcuts.ui:43
 msgid "Files"
-msgstr ""
+msgstr "फ़ाइलें"
 
 #: gaphor/services/helpservice/shortcuts.ui:49
 msgid "New Window"
-msgstr ""
+msgstr "नई विंडो"
 
 #: gaphor/services/helpservice/shortcuts.ui:57
 msgid "Open"
-msgstr ""
+msgstr "खुला हुआ"
 
 #: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/mainwindow.py:48
 msgid "Save"
-msgstr ""
+msgstr "सहेजें"
 
 #: gaphor/services/helpservice/shortcuts.ui:73
 msgid "Save As"
-msgstr ""
+msgstr "के रूप रक्षित करें"
 
 #: gaphor/services/helpservice/shortcuts.ui:84
 #: gaphor/services/helpservice/shortcuts.ui:90 gaphor/ui/elementeditor.glade:99
 #: gaphor/ui/elementeditor.ui:74
 msgid "Undo"
-msgstr ""
+msgstr "पूर्ववत"
 
 #: gaphor/services/helpservice/shortcuts.ui:98
 #: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:89
 msgid "Redo"
-msgstr ""
+msgstr "फिर से करें"
 
 #: gaphor/services/helpservice/shortcuts.ui:109
 msgid "Diagrams"
-msgstr ""
+msgstr "चित्र"
 
 #: gaphor/services/helpservice/shortcuts.ui:115
 msgid "Edit"
-msgstr ""
+msgstr "संपादित करें"
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
 msgid "Editor"
-msgstr ""
+msgstr "संपादक"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
 msgid "Select All"
-msgstr ""
+msgstr "सबका चयन करें"
 
 #: gaphor/services/helpservice/shortcuts.ui:139
 msgid "Deselect All"
-msgstr ""
+msgstr "सभी को अचिन्हिंत करें"
 
 #: gaphor/services/helpservice/shortcuts.ui:147
 msgid "Copy"
-msgstr ""
+msgstr "प्रतिलिपि"
 
 #: gaphor/services/helpservice/shortcuts.ui:155
 msgid "Paste (link defining elements)"
-msgstr ""
+msgstr "चिपकाएँ (लिंक परिभाषित करने वाले तत्व)"
 
 #: gaphor/services/helpservice/shortcuts.ui:163
 msgid "Paste (copy defining elements)"
-msgstr ""
+msgstr "चिपकाएँ (प्रतिलिपि परिभाषित करने वाले तत्व)"
 
 #: gaphor/services/helpservice/shortcuts.ui:171
 msgid "Delete"
-msgstr ""
+msgstr "हटाएं"
 
 #: gaphor/services/helpservice/shortcuts.ui:179
 msgid "Close Diagram"
-msgstr ""
+msgstr "आरेख बंद करें"
 
 #: gaphor/services/helpservice/shortcuts.ui:190
 msgid "Zoom"
-msgstr ""
+msgstr "ज़ूम"
 
 #: gaphor/services/helpservice/shortcuts.ui:196
 #: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:105
 msgid "Zoom In"
-msgstr ""
+msgstr "ज़ूम इन"
 
 #: gaphor/services/helpservice/shortcuts.ui:204
 #: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:129
 msgid "Zoom Out"
-msgstr ""
+msgstr "ज़ूम आउट"
 
 #: gaphor/services/helpservice/shortcuts.ui:212
 #: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:117
 msgid "Actual Size"
-msgstr ""
+msgstr "वास्तविक आकार"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:55
 #: gaphor/ui/mainwindow.py:231 gaphor/ui/mainwindow.ui:29
 #: gaphor/ui/namespace.py:325
 msgid "New model"
-msgstr ""
+msgstr "नए मॉडल"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:58
 msgid "main"
-msgstr ""
+msgstr "मुख्य"
 
 #: gaphor/templates/c4model.gaphor
 msgid "1. Context diagrams"
-msgstr ""
+msgstr "1. प्रसंग आरेख"
 
 #: gaphor/templates/c4model.gaphor
 msgid "2. Container diagrams"
-msgstr ""
+msgstr "2. कंटेनर आरेख"
 
 #: gaphor/templates/c4model.gaphor
 msgid "4. Code diagrams"
-msgstr ""
+msgstr "4. कोड आरेख"
 
 #: gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
-msgstr ""
+msgstr "3. घटक आरेख"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Context diagram"
-msgstr ""
+msgstr "प्रासंगिक चित्र"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Container diagram"
-msgstr ""
+msgstr "कंटेनर आरेख"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Component diagram"
-msgstr ""
+msgstr "घटक आरेख"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Code diagram"
-msgstr ""
+msgstr "कोड आरेख"
 
 #: gaphor/templates/raaml.gaphor gaphor/templates/uml.gaphor
 msgid "Model Name Here"
-msgstr ""
+msgstr "मॉडल का नाम यहाँ"
 
 #: gaphor/templates/raaml.gaphor
 msgid "STPA"
-msgstr ""
+msgstr "एसटीपीए"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss Definition"
-msgstr ""
+msgstr "हानि परिभाषा"
 
 #: gaphor/templates/raaml.gaphor
 msgid "FTA"
-msgstr ""
+msgstr "एफटीए"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of System"
-msgstr ""
+msgstr "सिस्टम का नुकसान"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Subsystem 1"
-msgstr ""
+msgstr "सबसिस्टम का नुकसान 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Subsystem 2"
-msgstr ""
+msgstr "सबसिस्टम का नुकसान 2"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard Definition"
-msgstr ""
+msgstr "खतरे की परिभाषा"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Life or Injury of People"
-msgstr ""
+msgstr "जीवन की हानि या लोगों की चोट"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Mission"
-msgstr ""
+msgstr "मिशन की हानि"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Customer Satisfaction"
-msgstr ""
+msgstr "ग्राहक संतुष्टि का नुकसान"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard 2"
-msgstr ""
+msgstr "खतरा 2"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard 1"
-msgstr ""
+msgstr "खतरा 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Mapping of Losses and Hazards"
-msgstr ""
+msgstr "हानियों और खतरों का मानचित्रण"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Operational Situations"
-msgstr ""
+msgstr "परिचालन स्थिति"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Operational Situation 1"
-msgstr ""
+msgstr "परिचालन स्थिति 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Context of UCAs"
-msgstr ""
+msgstr "यूसीए का संदर्भ"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situational Context"
-msgstr ""
+msgstr "परिस्थितिजन्य प्रसंग"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situation Hierarchy"
-msgstr ""
+msgstr "स्थिति पदानुक्रम"
 
 #: gaphor/templates/raaml.gaphor
 msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
+"फॉल्ट ट्री विश्लेषण से पता चलता है कि सिस्टम की विफलता के किन कारणों पर विचा"
+"र किया गया है।"
 
 #: gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
-msgstr ""
+msgstr "1. अवधारणा स्तर"
 
 #: gaphor/templates/sysml.gaphor
 msgid "2. Logical Level"
-msgstr ""
+msgstr "2. तार्किक स्तर"
 
 #: gaphor/templates/sysml.gaphor
 msgid "3. Technology Level"
-msgstr ""
+msgstr "3. प्रौद्योगिकी स्तर"
 
 #: gaphor/templates/sysml.gaphor
 msgid "User"
-msgstr ""
+msgstr "उपयोगकर्ता"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case #1"
-msgstr ""
+msgstr "केस # 1 . का प्रयोग करें"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Behavior"
-msgstr ""
+msgstr "व्यवहार"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Structure"
-msgstr ""
+msgstr "संरचना"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Context"
-msgstr ""
+msgstr "फ़ीचर प्रसंग"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Operator"
-msgstr ""
+msgstr "ऑपरेटर"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature"
-msgstr ""
+msgstr "विशेषता"
 
 #: gaphor/templates/sysml.gaphor
 msgid "External Element"
-msgstr ""
+msgstr "बाहरी तत्व"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Stakeholder Requirements"
-msgstr ""
+msgstr "हितधारक आवश्यकताएँ"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
-msgstr ""
+msgstr "फ़ीचर उपयोगकर्ता की आवश्यकता"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Structure"
-msgstr ""
+msgstr "तार्किक संरचना"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensor"
-msgstr ""
+msgstr "सेंसर"
 
 #: gaphor/templates/sysml.gaphor
 msgid "sensor"
-msgstr ""
+msgstr "सेंसर"
 
 #: gaphor/templates/sysml.gaphor
 msgid "controller"
-msgstr ""
+msgstr "नियंत्रक"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Boundary"
-msgstr ""
+msgstr "तार्किक सीमा"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Structure"
-msgstr ""
+msgstr "प्रौद्योगिकी संरचना"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Boundary"
-msgstr ""
+msgstr "प्रौद्योगिकी सीमा"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Requirements"
-msgstr ""
+msgstr "प्रौद्योगिकी आवश्यकताएँ"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detailed Behavior"
-msgstr ""
+msgstr "विस्तृत व्यवहार"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System Requirements"
-msgstr ""
+msgstr "सिस्टम आवश्यकताएं"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
-msgstr ""
+msgstr "तार्किक राज्य"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Event Flow"
-msgstr ""
+msgstr "फ़ीचर इवेंट फ़्लो"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Off"
-msgstr ""
+msgstr "बंद"
 
 #: gaphor/templates/sysml.gaphor
 msgid "On"
-msgstr ""
+msgstr "पर"
 
 #: gaphor/templates/sysml.gaphor
 msgid "actuator"
-msgstr ""
+msgstr "गति देनेवाला"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case Function #1"
-msgstr ""
+msgstr "केस फंक्शन #1 . का प्रयोग करें"
 
 #: gaphor/templates/sysml.gaphor
 msgid "First Action"
-msgstr ""
+msgstr "पहली क्रिया"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Second Action"
-msgstr ""
+msgstr "दूसरी क्रिया"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example System Requirement"
-msgstr ""
+msgstr "उदाहरण सिस्टम आवश्यकता"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensed Data"
-msgstr ""
+msgstr "सेंस्ड डेटा"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Command"
-msgstr ""
+msgstr "आदेश"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Functional Boundary Behavior"
-msgstr ""
+msgstr "कार्यात्मक सीमा व्यवहार"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Determine Actuator Command"
-msgstr ""
+msgstr "एक्चुएटर कमांड निर्धारित करें"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Actuate Actuator"
-msgstr ""
+msgstr "एक्चुएटर एक्चुएटर"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Actuator Command"
-msgstr ""
+msgstr "एक्चुएटर कमांड"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example Technolgy Requirement"
-msgstr ""
+msgstr "उदाहरण प्रौद्योगिकी आवश्यकता"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
-msgstr ""
+msgstr "प्रणाली"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ECU"
-msgstr ""
+msgstr "ईसीयू"
 
 #: gaphor/templates/sysml.gaphor
 msgid "DC Motor"
-msgstr ""
+msgstr "डीसी यंत्र"
 
 #: gaphor/templates/sysml.gaphor
 msgid "IR Transceiver"
-msgstr ""
+msgstr "आईआर ट्रांसीवर"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ecu"
-msgstr ""
+msgstr "ईसीयू"
 
 #: gaphor/templates/sysml.gaphor
 msgid "dc Motor"
-msgstr ""
+msgstr "डीसी यंत्र"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ir Transceiver"
-msgstr ""
+msgstr "आईआर ट्रांसीवर"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detect Obstacle"
-msgstr ""
+msgstr "बाधा का पता लगाएं"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Command Reverse"
-msgstr ""
+msgstr "कमांड रिवर्स"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Reverse Motor"
-msgstr ""
+msgstr "रिवर्स मोटर"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detect Object"
-msgstr ""
+msgstr "वस्तु का पता लगाएं"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detection Event"
-msgstr ""
+msgstr "पता लगाने की घटना"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
-msgstr ""
+msgstr "1. मामलों का प्रयोग करें"
 
 #: gaphor/templates/uml.gaphor
 msgid "2. Domain Analysis"
-msgstr ""
+msgstr "2. डोमेन विश्लेषण"
 
 #: gaphor/templates/uml.gaphor
 msgid "3. Architectural Design"
-msgstr ""
+msgstr "3. वास्तुकला डिजाइन"
 
 #: gaphor/templates/uml.gaphor
 msgid "4. Detailed Design"
-msgstr ""
+msgstr "4. विस्तृत डिजाइन"
 
 #: gaphor/templates/uml.gaphor
 msgid "Main Actor"
-msgstr ""
+msgstr "मुख्य अभिनेता"
 
 #: gaphor/templates/uml.gaphor
 msgid "Main Use Case"
-msgstr ""
+msgstr "मुख्य उपयोग मामला"
 
 #: gaphor/templates/uml.gaphor
 msgid "Included Use Case"
-msgstr ""
+msgstr "शामिल उपयोग केस"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Actor"
-msgstr ""
+msgstr "माध्यमिक अभिनेता"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Use Case"
-msgstr ""
+msgstr "माध्यमिक उपयोग का मामला"
 
 #: gaphor/templates/uml.gaphor
 msgid "Use Case Scenarios"
-msgstr ""
+msgstr "केस परिदृश्य का प्रयोग करें"
 
 #: gaphor/templates/uml.gaphor
 msgid "Scenario 1"
-msgstr ""
+msgstr "परिद्रश्य 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Scenario 2"
-msgstr ""
+msgstr "परिदृश्य 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "Domain Entities"
-msgstr ""
+msgstr "डोमेन इकाइयां"
 
 #: gaphor/templates/uml.gaphor
 msgid "Software Task"
-msgstr ""
+msgstr "सॉफ्टवेयर कार्य"
 
 #: gaphor/templates/uml.gaphor
 msgid "performs"
-msgstr ""
+msgstr "प्रदर्शन"
 
 #: gaphor/templates/uml.gaphor
 msgid "Package Dependencies"
-msgstr ""
+msgstr "पैकेज निर्भरता"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 1"
-msgstr ""
+msgstr "दप घटक 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 4"
-msgstr ""
+msgstr "एसडब्ल्यू घटक 4"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 3"
-msgstr ""
+msgstr "एसडब्ल्यू घटक 3"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 2"
-msgstr ""
+msgstr "एसडब्ल्यू घटक 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "Primary Actor"
-msgstr ""
+msgstr "प्राथमिक अभिनेता"
 
 #: gaphor/templates/uml.gaphor
 msgid "Actor Profile"
-msgstr ""
+msgstr "अभिनेता प्रोफाइल"
 
 #: gaphor/templates/uml.gaphor
 msgid "login"
-msgstr ""
+msgstr "लॉग इन करें"
 
 #: gaphor/templates/uml.gaphor
 msgid "Detailed Class Design"
-msgstr ""
+msgstr "विस्तृत कक्षा डिजाइन"
 
 #: gaphor/templates/uml.gaphor
 msgid "First Class"
-msgstr ""
+msgstr "प्रथम श्रेणी"
 
 #: gaphor/templates/uml.gaphor
 msgid "firstName"
-msgstr ""
+msgstr "पहला नाम"
 
 #: gaphor/templates/uml.gaphor
 msgid "lastName"
-msgstr ""
+msgstr "अंतिम नाम"
 
 #: gaphor/templates/uml.gaphor
 msgid "Login"
-msgstr ""
+msgstr "लॉग इन करें"
 
 #: gaphor/templates/uml.gaphor
 msgid "lastLogin"
-msgstr ""
+msgstr "आखरी लॉगइन"
 
 #: gaphor/templates/uml.gaphor
 msgid "Second Class"
-msgstr ""
+msgstr "द्रितीय श्रेणी"
 
 #: gaphor/templates/uml.gaphor
 msgid "released"
-msgstr ""
+msgstr "रिहा"
 
 #: gaphor/templates/uml.gaphor
 msgid "Implementation Architecture"
-msgstr ""
+msgstr "कार्यान्वयन वास्तुकला"
 
 #: gaphor/templates/uml.gaphor
 msgid "Node 1"
-msgstr ""
+msgstr "नोड 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Artifact 1"
-msgstr ""
+msgstr "कलाकृति 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Node 2"
-msgstr ""
+msgstr "नोड 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "protocol"
-msgstr ""
+msgstr "मसविदा बनाना"
 
 #: gaphor/templates/uml.gaphor
 msgid "Artifact 2"
-msgstr ""
+msgstr "विरूपण साक्ष्य 2"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -1956,12 +2020,17 @@ msgid ""
 "identifying user roles – actors – and\n"
 "associating them to their use cases."
 msgstr ""
+"द्वारा कार्यात्मक आवश्यकताओं का विश्लेषण करें\n"
+"उपयोगकर्ता भूमिकाओं की पहचान करना - अभिनेता - और\n"
+"उन्हें उनके उपयोग के मामलों से जोड़ना।"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
+"प्राथमिक और द्वितीयक उपयोग केस परिदृश्यों के लिए गतिविधि प्रवाह की कल्पना "
+"करते हुए गतिविधि आरेख बनाकर मॉडल अमूर्त उपयोग केस कार्यान्वयन।"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -1970,6 +2039,10 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
+"सरलीकृत वर्ग आरेख का उपयोग करके डोमेन संस्थाओं और उनके संबंधों को मॉडलिंग "
+"करके डोमेन विश्लेषण करें। यह आरेख अवधारणाओं के एक दृश्य शब्दकोश के रूप में "
+"कार्य करेगा। यह आपके डिज़ाइन-स्तरीय डेटा मॉडल के लिए एक प्रारंभिक बिंदु भी "
+"होगा।"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -1978,6 +2051,10 @@ msgid ""
 " and avoid design flaws such as cyclic dependencies or dependencies on "
 "unstable parts"
 msgstr ""
+"अपने कार्यान्वयन वर्गों को उचित तरीके से समूहित करने के लिए पैकेज निर्भरता "
+"आरेख तैयार करें। यह आपको कोड को अच्छी तरह से संरचित बनाए रखने में मदद करेगा "
+"और डिजाइन की खामियों जैसे चक्रीय निर्भरता या अस्थिर भागों पर निर्भरता से बचने"
+" में मदद करेगा"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -1985,10 +2062,15 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
+"नई विधियों का पता लगाने के लिए उपयोग के मामले परिदृश्यों के लिए मॉडल घटक "
+"इंटरैक्शन\n"
+"मौजूदा वर्ग या विशिष्ट जिम्मेदारियों वाले नए वर्ग भी।"
 
 #: gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
+"अपने ऑब्जेक्ट-ओरिएंटेड डेटा मॉडल को कैप्चर करने के लिए विस्तृत क्लास डायग्रा"
+"म बनाएं।"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -1996,46 +2078,53 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
+"उन प्रमुख कलाकृतियों को परिभाषित करें जो आपके घटकों के कार्यान्वयन को प्रकट "
+"करती हैं। संकेत दें कि उन्हें हार्डवेयर नोड्स, उनकी अंतर-निर्भरता और संचार "
+"प्रोटोकॉल पर कैसे तैनात किया जाता है।"
 
 #: gaphor/templates/uml.gaphor
 msgid "String"
-msgstr ""
+msgstr "डोरी"
 
 #: gaphor/templates/uml.gaphor
 msgid "Date"
-msgstr ""
+msgstr "दिनांक"
 
 #: gaphor/ui/appfilemanager.py:13 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
-msgstr ""
+msgstr "सभी गैफोर मॉडल"
 
 #: gaphor/ui/appfilemanager.py:39
 msgid "Open a Model"
-msgstr ""
+msgstr "एक मॉडल खोलें"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
 "{filename} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr ""
+"{filename} पहले से ही खुला है। क्या आप इसके बजाय खुली हुई विंडो पर स्विच करना"
+" चाहते हैं?"
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 msgid "<None>"
-msgstr ""
+msgstr "<कोई नहीं>"
 
 #: gaphor/ui/diagrampage.py:348
 msgid ""
 "Drag to diagram is (temporarily) limited to Classifiers, Packages, and "
 "Properties, not {type}."
 msgstr ""
+"ड्रैग टू डायग्राम (अस्थायी रूप से) क्लासिफायर, पैकेज और प्रॉपर्टीज तक सीमित "
+"है, न कि {टाइप}।"
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:10
 msgid "No item selected"
-msgstr ""
+msgstr "कोई आइटम नहीं चुना गया"
 
 #: gaphor/ui/elementeditor.glade:28 gaphor/ui/elementeditor.ui:22
 msgid "Show Tips"
-msgstr ""
+msgstr "सुझाव दिखाएं"
 
 #: gaphor/ui/elementeditor.glade:63 gaphor/ui/elementeditor.ui:48
 msgid ""
@@ -2054,27 +2143,42 @@ msgid ""
 "in the tree view and start typing. A search box will automatically "
 "appear.\n"
 msgstr ""
+"टूल बॉक्स से आरेख में एक मॉडल तत्व जोड़ें। यहां आप देखेंगे कि इसके गुण दिखाई "
+"देते हैं।\n"
+"\n"
+"हेडर में पेन आइकन पर क्लिक करके इस फलक को छिपाया जा सकता है।\n"
+"\n"
+"<b> युक्ति: </b> टूलबॉक्स के अधिकांश तत्वों में एक कीबोर्ड शॉर्टकट होता है "
+"(उदा. कक्षा के लिए \"c\")।\n"
+"टूल चयन केवल आरेख से काम करता है। यदि कोई उपकरण चयनित नहीं होता है, तो एक बा"
+"र आरेख पर क्लिक करें (ताकि यह केंद्रित हो) और फिर शॉर्टकट कुंजी दबाएं।\n"
+"\n"
+"<b> युक्ति: </b> ट्री व्यू में किसी तत्व को खोजने के लिए, ट्री व्यू में एक "
+"तत्व का चयन करें और टाइप करना शुरू करें। एक खोज बॉक्स स्वचालित रूप से दिखाई "
+"देगा।\n"
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:170
 msgid "Editors"
-msgstr ""
+msgstr "संपादक"
 
 #: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:218
 msgid "Reset Tool Automatically"
-msgstr ""
+msgstr "उपकरण को स्वचालित रूप से रीसेट करें"
 
 #: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:236
 msgid "Remove Unused Elements"
-msgstr ""
+msgstr "अप्रयुक्त तत्वों को हटा दें"
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
 #: gaphor/ui/elementeditor.ui:238 gaphor/ui/elementeditor.ui:245
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
+"किसी भी आरेख में अब उपयोग में नहीं आने वाले तत्वों को स्वचालित रूप से हटा "
+"दें।"
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:253
 msgid "Style Sheet"
-msgstr ""
+msgstr "शैली पत्रक"
 
 #: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:273
 msgid ""
@@ -2082,24 +2186,28 @@ msgid ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
+"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\"> गैफो"
+"र में स्टाइल शीट </a>"
 
 #: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:194
 msgid "Settings"
-msgstr ""
+msgstr "समायोजन"
 
 #: gaphor/ui/errorhandler.py:27
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
+"ऐसा लगता है कि कमांड लाइन से गैफोर शुरू किया गया है। क्या आप डीबग सत्र खोलना "
+"चाहते हैं?"
 
 #: gaphor/ui/errorhandler.py:30
 msgid "Start debug session"
-msgstr ""
+msgstr "डीबग सत्र प्रारंभ करें"
 
 #: gaphor/ui/filedialog.py:32
 msgid "All Files"
-msgstr ""
+msgstr "सारे दस्तावेज"
 
 #: gaphor/ui/filemanager.py:34
 msgid ""
@@ -2108,12 +2216,17 @@ msgid ""
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
+"गैफोर मॉडल को स्टोर करने में सक्षम नहीं था, शायद एक आंतरिक त्रुटि के कारण:\n"
+"{एक्ससी}\n"
+"अगर आपको लगता है कि यह एक बग है, तो कृपया डेवलपर्स से संपर्क करें।"
 
 #: gaphor/ui/filemanager.py:38
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"आपके पास मॉडल को सहेजने के लिए आवश्यक अनुमतियां नहीं हैं।\n"
+"कृपया जांचें कि आपने स्थान सही टाइप किया है और पुनः प्रयास करें।"
 
 #: gaphor/ui/filemanager.py:42
 msgid ""
@@ -2121,6 +2234,9 @@ msgid ""
 "Please free up some disk space and try again or save it in a different "
 "location."
 msgstr ""
+"मॉडल को सहेजने के लिए आपके पास डिवाइस पर पर्याप्त खाली स्थान नहीं है।\n"
+"कृपया कुछ डिस्क स्थान खाली करें और पुन: प्रयास करें या इसे किसी भिन्न स्थान "
+"पर सहेजें।"
 
 #: gaphor/ui/filemanager.py:45
 msgid ""
@@ -2128,167 +2244,170 @@ msgid ""
 "{exc}\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"मॉडल को इस स्थान पर संग्रहीत नहीं किया जा सकता है:\n"
+"{एक्ससी}\n"
+"कृपया जांचें कि आपने स्थान सही टाइप किया है और पुनः प्रयास करें।"
 
 #: gaphor/ui/filemanager.py:115
 msgid "Loading…"
-msgstr ""
+msgstr "लोड हो रहा है…"
 
 #: gaphor/ui/filemanager.py:116
 msgid "Loading model from {filename}"
-msgstr ""
+msgstr "{filename} से मॉडल लोड हो रहा है"
 
 #: gaphor/ui/filemanager.py:147
 msgid "Unable to open model “{filename}”."
-msgstr ""
+msgstr "मॉडल “{filename}” को खोलने में असमर्थ।"
 
 #: gaphor/ui/filemanager.py:150
 msgid "This file does not contain a valid Gaphor model."
-msgstr ""
+msgstr "इस फ़ाइल में एक मान्य गैफोर मॉडल नहीं है।"
 
 #: gaphor/ui/filemanager.py:179
 msgid "Saving…"
-msgstr ""
+msgstr "सहेजा जा रहा है…"
 
 #: gaphor/ui/filemanager.py:180
 msgid "Saving model to {filename}"
-msgstr ""
+msgstr "मॉडल को {filename} में सहेजा जा रहा है"
 
 #: gaphor/ui/filemanager.py:199
 msgid "Unable to save model “{filename}”."
-msgstr ""
+msgstr "मॉडल “{filename}” सहेजने में असमर्थ।"
 
 #: gaphor/ui/filemanager.py:237
 msgid "Save Gaphor Model As"
-msgstr ""
+msgstr "गैफोर मॉडल को इस रूप में सहेजें"
 
 #: gaphor/ui/filemanager.py:288
 msgid "Save changes before closing?"
-msgstr ""
+msgstr "बंद करने से पहले परिवर्तन सहेजें?"
 
 #: gaphor/ui/filemanager.py:289
 msgid "Closing will cause any unsaved changes to be discarded."
-msgstr ""
+msgstr "बंद करने से सभी न सहेजे गए परिवर्तन छोड़ दिए जाएंगे।"
 
 #: gaphor/ui/filemanager.py:294
 msgid "Close _without saving changes"
-msgstr ""
+msgstr "बंद करें _परिवर्तन सहेजे बिना"
 
 #: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:95
 msgid "Create New Model…"
-msgstr ""
+msgstr "नया मॉडल बनाएं…"
 
 #: gaphor/ui/greeter.glade:109
 msgid "Open Other Model…"
-msgstr ""
+msgstr "अन्य मॉडल खोलें…"
 
 #: gaphor/ui/greeter.py:25
 msgid "Generic"
-msgstr ""
+msgstr "सामान्य"
 
 #: gaphor/ui/greeter.py:163
 msgid "Create a New Model"
-msgstr ""
+msgstr "एक नया मॉडल बनाएं"
 
 #: gaphor/ui/greeter.py:167
 msgid "Open a Recent Model"
-msgstr ""
+msgstr "हाल का मॉडल खोलें"
 
 #: gaphor/ui/greeter.ui:88
 msgid "Recent Model…"
-msgstr ""
+msgstr "हालिया मॉडल…"
 
 #: gaphor/ui/greeter.ui:102
 msgid "Open Existing Model…"
-msgstr ""
+msgstr "मौजूदा मॉडल खोलें…"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
-msgstr ""
+msgstr "गैफोर"
 
 #: gaphor/ui/mainwindow.glade:148
 msgid "Create New diagram"
-msgstr ""
+msgstr "नया आरेख बनाएं"
 
 #: gaphor/ui/mainwindow.glade:169
 msgid "Open Application Menu"
-msgstr ""
+msgstr "एप्लिकेशन मेनू खोलें"
 
 #: gaphor/ui/mainwindow.py:42
 msgid "Open a Model…"
-msgstr ""
+msgstr "एक मॉडल खोलें…"
 
 #: gaphor/ui/mainwindow.py:43
 msgid "Recent Models…"
-msgstr ""
+msgstr "हाल के मॉडल…"
 
 #: gaphor/ui/mainwindow.py:44
 msgid "New Model…"
-msgstr ""
+msgstr "नए मॉडल…"
 
 #: gaphor/ui/mainwindow.py:49
 msgid "Save As…"
-msgstr ""
+msgstr "के रूप रक्षित करें…"
 
 #: gaphor/ui/mainwindow.py:50
 msgid "Export"
-msgstr ""
+msgstr "निर्यात"
 
 #: gaphor/ui/mainwindow.py:54
 msgid "Tools"
-msgstr ""
+msgstr "उपकरण"
 
 #: gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "कुंजीपटल अल्प मार्ग"
 
 #: gaphor/ui/mainwindow.py:85
 msgid "New Generic Diagram"
-msgstr ""
+msgstr "नया सामान्य आरेख"
 
 #: gaphor/ui/mainwindow.py:233
 msgid "edited"
-msgstr ""
+msgstr "संपादित"
 
 #: gaphor/ui/mainwindow.py:269
 msgid "Profile: {}"
-msgstr ""
+msgstr "प्रोफाइल: {}"
 
 #: gaphor/ui/namespace.py:45
 msgid "_Open"
-msgstr ""
+msgstr "_खुला हुआ"
 
 #: gaphor/ui/namespace.py:46
 msgid "_Rename"
-msgstr ""
+msgstr "_नाम बदलें"
 
 #: gaphor/ui/namespace.py:51
 msgid "New _Diagram"
-msgstr ""
+msgstr "नया _आरेख"
 
 #: gaphor/ui/namespace.py:53
 msgid "New _Package"
-msgstr ""
+msgstr "नया _पैकेज"
 
 #: gaphor/ui/namespace.py:57
 msgid "De_lete"
-msgstr ""
+msgstr "De_lete"
 
 #: gaphor/ui/namespace.py:68
 msgid "Show in “{diagram}”"
-msgstr ""
+msgstr "\"{आरेख}\" में दिखाएं"
 
 #: gaphor/ui/namespace.py:323
 msgid "{name} package"
-msgstr ""
+msgstr "{name} पैकेज"
 
 #: gaphor/ui/namespace.py:342
 msgid "New diagram"
-msgstr ""
+msgstr "नया आरेख"
 
 #: gaphor/ui/namespacemodel.py:312
 msgid "A {} can’t be part of a {}."
-msgstr ""
+msgstr "A {}, {} का भाग नहीं हो सकता।"
 
 #: gaphor/ui/namespaceview.py:141
 msgid "<Relationships>"
-msgstr ""
+msgstr "<रिश्ते>"
