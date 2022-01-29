@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 17:46+0000\n"
+"PO-Revision-Date: 2022-01-29 18:21+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "ja/>\n"
@@ -567,13 +567,13 @@ msgstr "拡張: {}"
 
 #: gaphor/UML/umlfmt.py:216
 msgid "include: {}"
-msgstr "次の内容を含みます。"
+msgstr "を含むことができます。{}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
 #: gaphor/UML/states/statestoolbox.py:29 gaphor/diagram/diagramtoolbox.py:38
 msgid "New {name}"
-msgstr "新しい {名前}"
+msgstr "新しい {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:34 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
@@ -1313,9 +1313,9 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
-"ガプホルインタラクティブPythonコンソール\n"
-"{バージョン}\n"
-"詳細については「ヘルプ」と入力してください。\n"
+"Gaphor インタラクティブ Pythonコンソール\n"
+"{version}\n"
+"詳細はヘルプを入力してください。\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
 msgid "Gaphor Console"
@@ -2085,7 +2085,7 @@ msgstr "モデルを開く"
 msgid ""
 "{filename} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr "{ファイル名} は既に開かれています。代わりに、開いているウィンドウに切り替えますか?"
+msgstr "{filename} は既に開いています。 代わりに開いたウィンドウに切り替えたいですか?"
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 msgid "<None>"
@@ -2224,11 +2224,11 @@ msgstr "積載。。。"
 
 #: gaphor/ui/filemanager.py:116
 msgid "Loading model from {filename}"
-msgstr "{ファイル名} からモデルを読み込んでいます"
+msgstr "{filename} からモデルを読み込む"
 
 #: gaphor/ui/filemanager.py:147
 msgid "Unable to open model “{filename}”."
-msgstr "モデル \"{ファイル名}\" を開くことができません。"
+msgstr "モデル \"{filename}\" を開くことができません。"
 
 #: gaphor/ui/filemanager.py:150
 msgid "This file does not contain a valid Gaphor model."
@@ -2240,11 +2240,11 @@ msgstr "節約。。。"
 
 #: gaphor/ui/filemanager.py:180
 msgid "Saving model to {filename}"
-msgstr "{ファイル名} にモデルを保存します。"
+msgstr "モデルを {filename} に保存する"
 
 #: gaphor/ui/filemanager.py:199
 msgid "Unable to save model “{filename}”."
-msgstr "モデル \"{ファイル名}\" を保存できません。"
+msgstr "モデル\"{filename}\"を保存できませんでした。"
 
 #: gaphor/ui/filemanager.py:237
 msgid "Save Gaphor Model As"
@@ -2364,11 +2364,11 @@ msgstr "De_lete"
 
 #: gaphor/ui/namespace.py:68
 msgid "Show in “{diagram}”"
-msgstr "\"{図表}で表示する"
+msgstr "\"{diagram}\" で表示する"
 
 #: gaphor/ui/namespace.py:323
 msgid "{name} package"
-msgstr "{名前} パッケージ"
+msgstr "{name} パッケージ"
 
 #: gaphor/ui/namespace.py:342
 msgid "New diagram"
