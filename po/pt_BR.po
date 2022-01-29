@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 17:46+0000\n"
+"PO-Revision-Date: 2022-01-29 18:21+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gaphor/gaphor/pt_BR/>\n"
@@ -1316,7 +1316,7 @@ msgid ""
 "Type \"help\" for more information.\n"
 msgstr ""
 "Console Python Interativo Gaphor\n"
-"{versão}\n"
+"{version}\n"
 "Digite \"ajuda\" para obter mais informações.\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
@@ -2268,7 +2268,7 @@ msgstr "Poupança…"
 
 #: gaphor/ui/filemanager.py:180
 msgid "Saving model to {filename}"
-msgstr "Salvar o modelo para {nome de arquivo}"
+msgstr "Salvar o modelo para {filename}"
 
 #: gaphor/ui/filemanager.py:199
 msgid "Unable to save model “{filename}”."
