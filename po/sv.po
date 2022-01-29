@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 18:21+0000\n"
+"PO-Revision-Date: 2022-01-29 18:30+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/gaphor/gaphor/sv/"
 ">\n"
@@ -571,7 +571,7 @@ msgstr "inkludera: {}"
 #: gaphor/UML/interactions/interactionstoolbox.py:20
 #: gaphor/UML/states/statestoolbox.py:29 gaphor/diagram/diagramtoolbox.py:38
 msgid "New {name}"
-msgstr "Nytt {namn}"
+msgstr "Nytt {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:34 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
