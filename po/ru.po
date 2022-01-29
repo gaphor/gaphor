@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 17:46+0000\n"
+"PO-Revision-Date: 2022-01-29 18:21+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
@@ -572,7 +572,7 @@ msgstr "включает: {}"
 #: gaphor/UML/interactions/interactionstoolbox.py:20
 #: gaphor/UML/states/statestoolbox.py:29 gaphor/diagram/diagramtoolbox.py:38
 msgid "New {name}"
-msgstr "Новый {имя}"
+msgstr "Новый {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:34 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
@@ -2105,7 +2105,7 @@ msgstr "Открытие модели"
 msgid ""
 "{filename} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr "{имя_файла} уже открыт. Вы хотите переключиться на открытое окно?"
+msgstr "{filename} уже открыто. Вы хотите переключиться на открытое окно?"
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 msgid "<None>"
@@ -2260,7 +2260,7 @@ msgstr "Загрузка модели из {filename}"
 
 #: gaphor/ui/filemanager.py:147
 msgid "Unable to open model “{filename}”."
-msgstr "Не удается открыть модель \"{имя_файла}\"."
+msgstr "Невозможно открыть модель \"{filename}\"."
 
 #: gaphor/ui/filemanager.py:150
 msgid "This file does not contain a valid Gaphor model."
@@ -2272,11 +2272,11 @@ msgstr "Спасительный…"
 
 #: gaphor/ui/filemanager.py:180
 msgid "Saving model to {filename}"
-msgstr "Сохранение модели в {имя_файла}"
+msgstr "Сохранение модели в {filename}"
 
 #: gaphor/ui/filemanager.py:199
 msgid "Unable to save model “{filename}”."
-msgstr "Не удается сохранить модель \"{имя_файла}\"."
+msgstr "Не удается сохранить модель \"{filename}\"."
 
 #: gaphor/ui/filemanager.py:237
 msgid "Save Gaphor Model As"
@@ -2396,11 +2396,11 @@ msgstr "Удалить"
 
 #: gaphor/ui/namespace.py:68
 msgid "Show in “{diagram}”"
-msgstr "Показать в \"{диаграмма}\""
+msgstr "Показать в \"{diagram}\""
 
 #: gaphor/ui/namespace.py:323
 msgid "{name} package"
-msgstr "Пакет {имя}"
+msgstr "Пакет {name}"
 
 #: gaphor/ui/namespace.py:342
 msgid "New diagram"
