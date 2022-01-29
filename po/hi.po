@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 18:50+0000\n"
+"PO-Revision-Date: 2022-01-29 18:55+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Hindi <https://hosted.weblate.org/projects/gaphor/gaphor/hi/>"
 "\n"
@@ -2217,7 +2217,7 @@ msgid ""
 "If you think this is a bug, please contact the developers."
 msgstr ""
 "गैफोर मॉडल को स्टोर करने में सक्षम नहीं था, शायद एक आंतरिक त्रुटि के कारण:\n"
-"{एक्ससी}\n"
+"{exc}\n"
 "अगर आपको लगता है कि यह एक बग है, तो कृपया डेवलपर्स से संपर्क करें।"
 
 #: gaphor/ui/filemanager.py:38
@@ -2245,7 +2245,7 @@ msgid ""
 "Please check that you typed the location correctly and try again."
 msgstr ""
 "मॉडल को इस स्थान पर संग्रहीत नहीं किया जा सकता है:\n"
-"{एक्ससी}\n"
+"{exc}\n"
 "कृपया जांचें कि आपने स्थान सही टाइप किया है और पुनः प्रयास करें।"
 
 #: gaphor/ui/filemanager.py:115
@@ -2394,7 +2394,7 @@ msgstr "De_lete"
 
 #: gaphor/ui/namespace.py:68
 msgid "Show in “{diagram}”"
-msgstr "\"{आरेख}\" में दिखाएं"
+msgstr "\"{diagram}\" में दिखाएं"
 
 #: gaphor/ui/namespace.py:323
 msgid "{name} package"
