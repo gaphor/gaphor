@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 18:21+0000\n"
+"PO-Revision-Date: 2022-01-29 18:30+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/gaphor/gaphor/ko/>"
 "\n"
@@ -1280,7 +1280,7 @@ msgstr "설명줄"
 
 #: gaphor/diagram/presentation.py:49
 msgid "(from {namespace})"
-msgstr "({네임스페이스}에서)"
+msgstr "({namespace}에서)"
 
 #: gaphor/diagram/propertypages.glade:68 gaphor/diagram/propertypages.ui:54
 msgid "Rectilinear"
@@ -1312,9 +1312,9 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
-"가포 인터랙티브 파이썬 콘솔\n"
-"{버전}\n"
-"자세한 내용은 \"도움말\"을 입력합니다.\n"
+"Gaphor 대화형 Python 콘솔\n"
+"{version}\n"
+"자세한 내용을 보려면 \"도움말\"을 입력하십시오.\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
 msgid "Gaphor Console"
