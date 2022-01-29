@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 18:50+0000\n"
+"PO-Revision-Date: 2022-01-29 18:55+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/gaphor/gaphor/ar/>"
 "\n"
@@ -576,7 +576,7 @@ msgstr "تضمن: {}"
 #: gaphor/UML/interactions/interactionstoolbox.py:20
 #: gaphor/UML/states/statestoolbox.py:29 gaphor/diagram/diagramtoolbox.py:38
 msgid "New {name}"
-msgstr "اسم جديد}"
+msgstr "جديد {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:34 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
@@ -1321,7 +1321,7 @@ msgid ""
 "Type \"help\" for more information.\n"
 msgstr ""
 "وحدة تحكم Gaphor التفاعلية بايثون\n"
-"{الإصدار}\n"
+"{version}\n"
 "اكتب \"تعليمات\" لمزيد من المعلومات.\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
@@ -2204,7 +2204,7 @@ msgid ""
 "If you think this is a bug, please contact the developers."
 msgstr ""
 "لم يكن Gaphor قادرًا على تخزين النموذج ، ربما بسبب خطأ داخلي:\n"
-"{غير}\n"
+"{exc}\n"
 "إذا كنت تعتقد أن هذا خطأ ، فيرجى الاتصال بالمطورين."
 
 #: gaphor/ui/filemanager.py:38
@@ -2231,7 +2231,7 @@ msgid ""
 "Please check that you typed the location correctly and try again."
 msgstr ""
 "لا يمكن تخزين النموذج في هذا الموقع:\n"
-"{غير}\n"
+"{exc}\n"
 "يرجى التحقق من كتابة الموقع بشكل صحيح والمحاولة مرة أخرى."
 
 #: gaphor/ui/filemanager.py:115
