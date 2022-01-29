@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 18:21+0000\n"
+"PO-Revision-Date: 2022-01-29 18:50+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
 "\n"
@@ -1585,7 +1585,7 @@ msgstr "Nom du modèle ici"
 
 #: gaphor/templates/raaml.gaphor
 msgid "STPA"
-msgstr "StPA (en anglais seulement)"
+msgstr "STPA"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss Definition"
