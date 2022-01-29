@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.15\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 17:45+0000\n"
+"PO-Revision-Date: 2022-01-29 18:21+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/gaphor/gaphor/ca/"
 ">\n"
@@ -1283,7 +1283,7 @@ msgstr "Línia de comentari"
 
 #: gaphor/diagram/presentation.py:49
 msgid "(from {namespace})"
-msgstr "(des de {espai de noms})"
+msgstr "(de {namespace})"
 
 #: gaphor/diagram/propertypages.glade:68 gaphor/diagram/propertypages.ui:54
 msgid "Rectilinear"
