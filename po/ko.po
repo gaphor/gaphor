@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-29 17:46+0000\n"
+"PO-Revision-Date: 2022-01-29 18:21+0000\n"
 "Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/gaphor/gaphor/ko/>"
 "\n"
@@ -572,7 +572,7 @@ msgstr "포함: {}"
 #: gaphor/UML/interactions/interactionstoolbox.py:20
 #: gaphor/UML/states/statestoolbox.py:29 gaphor/diagram/diagramtoolbox.py:38
 msgid "New {name}"
-msgstr "새 {이름}"
+msgstr "새 {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:34 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
@@ -2368,7 +2368,7 @@ msgstr "\"{diagram}\"에 표시"
 
 #: gaphor/ui/namespace.py:323
 msgid "{name} package"
-msgstr "{이름} 패키지"
+msgstr "{name} 패키지"
 
 #: gaphor/ui/namespace.py:342
 msgid "New diagram"
