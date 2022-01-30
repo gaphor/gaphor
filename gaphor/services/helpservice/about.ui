@@ -6,7 +6,7 @@
     <property name="modal">true</property>
     <property name="program_name">Gaphor</property>
     <property name="title" translatable="yes">About Gaphor</property>
-    <property name="version">2.8.1</property>
+    <property name="version">2.8.2</property>
     <property name="copyright" translatable="yes">Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw</property>
     <property name="comments" translatable="yes">Gaphor is the simple modeling tool written in Python</property>
     <property name="website">https://github.com/gaphor/gaphor</property>
