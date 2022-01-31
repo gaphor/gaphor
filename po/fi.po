@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-26 21:10-0500\n"
-"PO-Revision-Date: 2022-01-20 01:21+0000\n"
-"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
+"PO-Revision-Date: 2022-02-01 02:08+0000\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -1354,9 +1355,8 @@ msgid "About Gaphor"
 msgstr "Tietoja - Gaphor"
 
 #: gaphor/services/helpservice/about.ui:10
-#, fuzzy
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
-msgstr "Tekijänoikeus © 2001-2021 Arjan J. Molenaar ja Dan Yeaw"
+msgstr "Tekijänoikeus © 2001-2022 Arjan J. Molenaar ja Dan Yeaw"
 
 #: gaphor/services/helpservice/about.ui:11
 msgid "Gaphor is the simple modeling tool written in Python"
@@ -1979,6 +1979,9 @@ msgid ""
 "identifying user roles – actors – and\n"
 "associating them to their use cases."
 msgstr ""
+"Analysoi toiminnallisia vaatimuksia\n"
+"tunnistamalla käyttäjäroolit – toimijat – ja\n"
+"liittämällä roolit käyttötapauksiin."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -1993,6 +1996,10 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
+"Suorita toimialueanalyysejä mallintamalla toimialueen entiteetit ja niiden "
+"suhteet käyttäen yksinkertaistettua luokkakaaviota. Tämä kaavio toimii "
+"konseptien visuaalisena sanastona. Se toimii myös aloituspisteenä "
+"suunnittelutason tietomallille."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2001,6 +2008,10 @@ msgid ""
 " and avoid design flaws such as cyclic dependencies or dependencies on "
 "unstable parts"
 msgstr ""
+"Valmistele paketin riippuvuuskaavio ryhmittääksesi toteutusluokat "
+"soveltuvalla tavalla. Tämä auttaa ylläpitämään koodia rakenteellisesti ja "
+"auttaa välttämään suunnitteluvirheitä kuten syklisiä riippuvuuksia tai "
+"riippuvuuksia epävakaisiin osiin"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2008,10 +2019,15 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
+"Mallinna komponenttien vuorovaikutukset käyttötapausskenaarioihin "
+"löytääksesi uudet metodit\n"
+"olemassa olevissa luokissa tai jopa uudet luokat tietyin vastuin."
 
 #: gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
+"Luo yksityiskohtaisia luokkakaavioita saadaksesi yhteenvedon "
+"oliosuuntautuneisuudesta tietomallista."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2019,10 +2035,13 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
+"Määritä tärkeimmät artefaktit, jotka osoittavat komponenttien toteutuksen. "
+"Ilmoita, kuinka ne otetaan käyttöön laitteistosolmuissa, niiden keskinäiset "
+"riippuvuudet ja viestintäprotokollat.\""
 
 #: gaphor/templates/uml.gaphor
 msgid "String"
-msgstr ""
+msgstr "Merkkijono"
 
 #: gaphor/templates/uml.gaphor
 #, fuzzy
@@ -2034,9 +2053,8 @@ msgid "All Gaphor Models"
 msgstr "Kaikki Gaphor-mallit"
 
 #: gaphor/ui/appfilemanager.py:39
-#, fuzzy
 msgid "Open a Model"
-msgstr "Avaa malli…"
+msgstr "Avaa malli"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid ""
@@ -2239,23 +2257,20 @@ msgid "Create New Model…"
 msgstr "Luo uusi malli…"
 
 #: gaphor/ui/greeter.glade:109
-#, fuzzy
 msgid "Open Other Model…"
-msgstr "Avaa malli…"
+msgstr "Avaa muu malli…"
 
 #: gaphor/ui/greeter.py:25
 msgid "Generic"
 msgstr "Yleinen"
 
 #: gaphor/ui/greeter.py:163
-#, fuzzy
 msgid "Create a New Model"
-msgstr "Luo uusi malli…"
+msgstr "Luo uusi malli"
 
 #: gaphor/ui/greeter.py:167
-#, fuzzy
 msgid "Open a Recent Model"
-msgstr "Äskettäinen malli…"
+msgstr "Avaa äskettäinen malli"
 
 #: gaphor/ui/greeter.ui:88
 msgid "Recent Model…"
@@ -2282,9 +2297,8 @@ msgid "Open a Model…"
 msgstr "Avaa malli…"
 
 #: gaphor/ui/mainwindow.py:43
-#, fuzzy
 msgid "Recent Models…"
-msgstr "Äskettäinen malli…"
+msgstr "Äskettäiset mallit…"
 
 #: gaphor/ui/mainwindow.py:44
 msgid "New Model…"
@@ -2678,4 +2692,3 @@ msgstr "<Suhteet>"
 
 #~ msgid "Gaphor - Open a Recent Model"
 #~ msgstr ""
-
