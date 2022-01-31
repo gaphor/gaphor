@@ -61,7 +61,7 @@ class ElementEditor(UIComponent, ActionProvider):
         """
         self.properties = properties
         self.editors = EditorStack(event_manager, diagrams, properties)
-        self.settings = SettingsStack(event_manager, element_factory)
+        self.preferences = PreferencesStack(event_manager, element_factory)
 
     def open(self):
         """Display the ElementEditor pane."""
@@ -72,7 +72,7 @@ class ElementEditor(UIComponent, ActionProvider):
         self.editor_stack = builder.get_object("editor-stack")
 
         self.editors.open(builder)
-        self.settings.open(builder)
+        self.preferences.open(builder)
 
         return self.revealer
 
@@ -84,7 +84,7 @@ class ElementEditor(UIComponent, ActionProvider):
         """
 
         self.editors.close()
-        self.settings.close()
+        self.preferences.close()
 
         return True
 
@@ -97,9 +97,17 @@ class ElementEditor(UIComponent, ActionProvider):
         self.revealer.set_reveal_child(active)
         self.properties.set("show-editors", active)
 
-    @action(name="show-settings", state=False)
-    def toggle_editor_settings(self, active):
-        self.editor_stack.set_visible_child_name("settings" if active else "editors")
+    @action(name="show-preferences", shortcut="<Primary>comma", state=False)
+    def toggle_editor_preferences(self, active):
+        if not self.revealer.get_child_revealed():
+            if Gtk.get_major_version() == 3:
+                self.revealer.get_action_group("win").lookup_action(
+                    "show-editors"
+                ).activate()
+            else:
+                self.revealer.activate_action("win.show-editors", None)
+
+        self.editor_stack.set_visible_child_name("preferences" if active else "editors")
 
     @action(
         name="reset-tool-after-create",
@@ -252,8 +260,8 @@ class EditorStack:
                 self.create_pages(self._current_item)
 
 
-class SettingsStack:
-    """Support code for the Settings (cog) pane."""
+class PreferencesStack:
+    """Support code for the Preferences (cog) pane."""
 
     def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager

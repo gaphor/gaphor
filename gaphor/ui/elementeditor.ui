@@ -143,7 +143,7 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
             <child>
               <object class="GtkToggleButton">
                 <property name="receives_default">1</property>
-                <property name="action_name">win.show-settings</property>
+                <property name="action_name">win.show-preferences</property>
                 <child>
                   <object class="GtkImage">
                     <property name="icon_name">document-properties-symbolic</property>
@@ -190,8 +190,8 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
             </child>
             <child>
               <object class="GtkStackPage">
-                <property name="name">settings</property>
-                <property name="title" translatable="yes">Settings</property>
+                <property name="name">preferences</property>
+                <property name="title" translatable="yes">Preferences</property>
                 <property name="child">
                   <object class="GtkBox">
                     <property name="margin_start">6</property>

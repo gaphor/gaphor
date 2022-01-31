@@ -197,7 +197,7 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                 <property name="can-focus">1</property>
                 <property name="receives-default">1</property>
                 <property name="tooltip-text" translatable="yes">Preferences</property>
-                <property name="action-name">win.show-settings</property>
+                <property name="action-name">win.show-preferences</property>
                 <child>
                   <object class="GtkImage">
                     <property name="visible">1</property>
@@ -386,8 +386,8 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                 </child>
               </object>
               <packing>
-                <property name="name">settings</property>
-                <property name="title" translatable="yes">Settings</property>
+                <property name="name">preferences</property>
+                <property name="title" translatable="yes">Preferences</property>
                 <property name="position">1</property>
               </packing>
             </child>
