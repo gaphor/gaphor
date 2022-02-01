@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-26 21:10-0500\n"
+"POT-Creation-Date: 2022-01-31 21:14-0500\n"
 "PO-Revision-Date: 2006-05-11 16:34+0000\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language: sv\n"
@@ -1424,6 +1424,7 @@ msgstr "Interaktioner"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
+#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:194
 #: gaphor/ui/elementeditor.ui:205
 msgid "Preferences"
 msgstr ""
@@ -2167,10 +2168,6 @@ msgid ""
 "sheets in Gaphor</a>"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:194
-msgid "Settings"
-msgstr ""
-
 #: gaphor/ui/errorhandler.py:27
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
@@ -2887,5 +2884,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "date"
+#~ msgstr ""
+
+#~ msgid "Settings"
 #~ msgstr ""
 

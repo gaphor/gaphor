@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-26 21:10-0500\n"
+"POT-Creation-Date: 2022-01-31 21:14-0500\n"
 "PO-Revision-Date: 2022-01-17 18:34+0000\n"
 "Last-Translator: ZHUOQI LI <zhuoqi06@gmail.com>\n"
 "Language: zh_Hans\n"
@@ -1381,6 +1381,7 @@ msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:24
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
+#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:194
 #: gaphor/ui/elementeditor.ui:205
 msgid "Preferences"
 msgstr "偏好设置"
@@ -2092,10 +2093,6 @@ msgid ""
 "sheets in Gaphor</a>"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:194
-msgid "Settings"
-msgstr ""
-
 #: gaphor/ui/errorhandler.py:27
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
@@ -2470,5 +2467,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Gaphor - Open a Recent Model"
+#~ msgstr ""
+
+#~ msgid "Settings"
 #~ msgstr ""
 
