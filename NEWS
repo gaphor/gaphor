@@ -1,3 +1,10 @@
+2.8.2
+-----
+- Fix splitting of lines
+- Update README to reflect new functionality
+- Add additional strings to translations
+- Update Hungarian, Spanish, and Finnish translations
+
 2.8.1
 -----
 - Fix Gaphor fails to load when launched in German

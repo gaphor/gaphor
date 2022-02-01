@@ -721,6 +721,24 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "lukman83",
+      "name": "lukman83",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69509634?v=4",
+      "profile": "https://github.com/lukman83",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "Viicos",
+      "name": "Viicos",
+      "avatar_url": "https://avatars.githubusercontent.com/u/65306057?v=4",
+      "profile": "https://github.com/Viicos",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,

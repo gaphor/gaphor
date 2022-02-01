@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "2.8.1"
+version = "2.8.2"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
@@ -54,10 +54,10 @@ jedi = "^0.18.1"
 tomli = "^1.2"
 pytest = "^6.2"
 pytest-cov = "^3.0"
-pytest-mock = "^3.6.1"
+pytest-mock = "^3.7.0"
 pytest-runner = "^5.3"
 xdoctest = "^0.15.10"
-black = "^21.12b0"
+black = "^22.1"
 mypy = "0.931"
 pre-commit = "^2.17"
 sphinx = "^4.3"
