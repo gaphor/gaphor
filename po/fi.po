@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-01-26 21:10-0500\n"
+"POT-Creation-Date: 2022-01-31 21:14-0500\n"
 "PO-Revision-Date: 2022-02-01 02:08+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
-"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
-">\n"
 "Language: fi\n"
+"Language-Team: Finnish "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -1393,6 +1392,7 @@ msgstr "Sovellus"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
+#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:194
 #: gaphor/ui/elementeditor.ui:205
 msgid "Preferences"
 msgstr "Asetukset"
@@ -1996,9 +1996,9 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
-"Suorita toimialueanalyysejä mallintamalla toimialueen entiteetit ja niiden "
-"suhteet käyttäen yksinkertaistettua luokkakaaviota. Tämä kaavio toimii "
-"konseptien visuaalisena sanastona. Se toimii myös aloituspisteenä "
+"Suorita toimialueanalyysejä mallintamalla toimialueen entiteetit ja "
+"niiden suhteet käyttäen yksinkertaistettua luokkakaaviota. Tämä kaavio "
+"toimii konseptien visuaalisena sanastona. Se toimii myös aloituspisteenä "
 "suunnittelutason tietomallille."
 
 #: gaphor/templates/uml.gaphor
@@ -2009,8 +2009,8 @@ msgid ""
 "unstable parts"
 msgstr ""
 "Valmistele paketin riippuvuuskaavio ryhmittääksesi toteutusluokat "
-"soveltuvalla tavalla. Tämä auttaa ylläpitämään koodia rakenteellisesti ja "
-"auttaa välttämään suunnitteluvirheitä kuten syklisiä riippuvuuksia tai "
+"soveltuvalla tavalla. Tämä auttaa ylläpitämään koodia rakenteellisesti ja"
+" auttaa välttämään suunnitteluvirheitä kuten syklisiä riippuvuuksia tai "
 "riippuvuuksia epävakaisiin osiin"
 
 #: gaphor/templates/uml.gaphor
@@ -2035,9 +2035,9 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
-"Määritä tärkeimmät artefaktit, jotka osoittavat komponenttien toteutuksen. "
-"Ilmoita, kuinka ne otetaan käyttöön laitteistosolmuissa, niiden keskinäiset "
-"riippuvuudet ja viestintäprotokollat.\""
+"Määritä tärkeimmät artefaktit, jotka osoittavat komponenttien "
+"toteutuksen. Ilmoita, kuinka ne otetaan käyttöön laitteistosolmuissa, "
+"niiden keskinäiset riippuvuudet ja viestintäprotokollat.\""
 
 #: gaphor/templates/uml.gaphor
 msgid "String"
@@ -2149,10 +2149,6 @@ msgstr ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Tyylisivut"
 " Gaphorissa</a>"
-
-#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:194
-msgid "Settings"
-msgstr "Asetukset"
 
 #: gaphor/ui/errorhandler.py:27
 msgid ""
@@ -2692,3 +2688,7 @@ msgstr "<Suhteet>"
 
 #~ msgid "Gaphor - Open a Recent Model"
 #~ msgstr ""
+
+#~ msgid "Settings"
+#~ msgstr "Asetukset"
+
