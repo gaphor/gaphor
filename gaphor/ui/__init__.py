@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 from typing import Optional
 
+import darkdetect
 import gi
 
 if os.getenv("GAPHOR_USE_GTK") != "NONE":
@@ -67,6 +68,12 @@ def main(argv=sys.argv):
         logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
     else:
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
+
+    # Set dark mode for non-FreeDesktop platforms only:
+    if sys.platform in ("darwin", "win32"):
+        Gtk.Settings.get_default().set_property(
+            "gtk-application-prefer-dark-theme", darkdetect.isDark()
+        )
 
     if has_option("-p", "--profiler"):
 
