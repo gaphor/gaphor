@@ -66,7 +66,7 @@ class BaseConnector:
     ) -> None:
         assert (
             element.diagram and element.diagram is line.diagram
-        ), f"Connector without diagram ({element}: {element.diagram}, {line}: {line.diagram})"
+        ), f"Cannot connect with different diagrams ({element}: {element.diagram}, {line}: {line.diagram})"
         self.element = element
         self.line = line
         self.diagram: Diagram = element.diagram
@@ -131,9 +131,9 @@ class UnaryRelationshipConnect(BaseConnector):
     """Base class for relationship connections, such as associations,
     dependencies and implementations.
 
-    Unary relationships are allowed to connect both ends to the same element
+    Unary relationships are allowed to connect both ends to the same element.
 
-    This class introduces a new method: relationship() which is used to
+    This class introduces a new method: `relationship()`, which is used to
     find an existing relationship in the model that does not yet exist
     on the diagram.
     """
