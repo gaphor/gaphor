@@ -42,7 +42,7 @@ class TestExtendItem:
         # reconnect: uc1 -> uc2
         case.connect(extend, extend.tail, uc3)
 
-        assert e is extend.subject
+        assert e is not extend.subject
         assert extend.subject.extendedCase is uc1.subject
         assert extend.subject.extension is uc3.subject
 

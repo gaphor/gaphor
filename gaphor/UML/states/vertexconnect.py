@@ -15,11 +15,6 @@ from gaphor.UML.states.transition import TransitionItem
 class VertexConnect(RelationshipConnect):
     """Abstract relationship between two state vertices."""
 
-    def reconnect(self, handle, port):
-        self.reconnect_relationship(
-            handle, UML.Transition.source, UML.Transition.target
-        )
-
     def connect_subject(self, handle):
         relation = self.relationship_or_new(
             UML.Transition, UML.Transition.source, UML.Transition.target

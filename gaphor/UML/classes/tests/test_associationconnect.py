@@ -54,6 +54,7 @@ def test_association_item_connect(connected_association, element_factory):
     assert asc.tail_subject is not None
 
 
+@pytest.mark.xfail
 def test_association_item_reconnect(connected_association, create):
     asc, c1, c2 = connected_association
     c3 = create(ClassItem, UML.Class)

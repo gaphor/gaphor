@@ -49,28 +49,17 @@ class PresentationConnector(ItemConnector):
 
         adapter = Connector(sink.item, item)
         if cinfo:
-            # first disconnect but disable disconnection handle as
-            # reconnection is going to happen
-            try:
-                connect = adapter.reconnect
-            except AttributeError:
-                connect = adapter.connect
-            else:
-                cinfo.callback.disable = True
             self.disconnect()
-        else:
-            # new connection
-            connect = adapter.connect
 
         self.glue(sink)
         if not sink.port:
-            print("No port found", item, sink.item)
+            log.warning("No port found", item, sink.item)
             return
 
         self.connect_handle(sink)
 
         # adapter requires both ends to be connected.
-        connect(handle, sink.port)
+        adapter.connect(handle, sink.port)
         item.handle(ItemConnected(item, handle, sink.item, sink.port))
 
     def connect_handle(self, sink):
