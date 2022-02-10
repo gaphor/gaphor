@@ -48,7 +48,7 @@ class TestTransitionConnector:
         # reconnect: v1 -> v3
         case.connect(t, t.tail, v3)
 
-        assert s is t.subject
+        assert s is not t.subject
         assert len(case.kindof(UML.Transition)) == 1
 
         assert t.subject == v1.subject.outgoing[0]

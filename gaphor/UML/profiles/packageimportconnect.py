@@ -24,16 +24,6 @@ class PackageImportConnect(RelationshipConnect):
 
         return super().allow(handle, port)
 
-    def reconnect(self, handle, port):
-        line = self.line
-        impl = line.subject
-        assert isinstance(impl, UML.Package)
-        self.reconnect_relationship(
-            handle,
-            UML.PackageImport.importedPackage,
-            UML.PackageImport.importingNamespace,
-        )
-
     def connect_subject(self, handle):
         """Perform import package relationship connection."""
         relation = self.relationship_or_new(

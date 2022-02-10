@@ -69,7 +69,7 @@ def test_reconnection(case):
     # reconnect: iface -> c2
     case.connect(impl, impl.tail, c2)
 
-    assert s is impl.subject
+    assert s is not impl.subject
     assert iface.subject is impl.subject.contract
     assert c2.subject is impl.subject.implementatingClassifier
     assert c1.subject is not impl.subject.implementatingClassifier

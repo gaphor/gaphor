@@ -54,7 +54,6 @@ class BaseConnector:
       disconnects, if required (e.g. 1:1 relationships)
     - ``disconnect()``: Break connection, called when dropping a handle on a
       point where it can not connect.
-    - ``reconnect()`` (*Optional*): Connect to another item (only used if present)
 
     By convention the adapters are registered by (element, line) -- in that order.
     """
@@ -216,31 +215,6 @@ class UnaryRelationshipConnect(BaseConnector):
             setattr(relation, tail.name, line_tail.subject)
         assert isinstance(relation, type)
         return relation
-
-    def reconnect_relationship(
-        self, handle: Handle, head: relation, tail: relation
-    ) -> None:
-        """Reconnect relationship for given handle.
-
-        :Parameters:
-         handle
-            Handle at which reconnection happens.
-         head
-            Relationship head attribute name.
-         tail
-            Relationship tail attribute name.
-        """
-        line = self.line
-        c1 = self.get_connected(line.head)
-        c2 = self.get_connected(line.tail)
-        assert c1
-        assert c2
-        if line.head is handle:
-            setattr(line.subject, head.name, c1.subject)
-        elif line.tail is handle:
-            setattr(line.subject, tail.name, c2.subject)
-        else:
-            raise ValueError("Incorrect handle passed to adapter")
 
     def connect_connected_items(self, connections: None = None) -> None:
         """Cause items connected to ``line`` to reconnect, allowing them to

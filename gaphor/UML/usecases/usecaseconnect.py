@@ -19,11 +19,6 @@ class IncludeConnect(RelationshipConnect):
 
         return super().allow(handle, port)
 
-    def reconnect(self, handle, port):
-        self.reconnect_relationship(
-            handle, UML.Include.addition, UML.Include.includingCase
-        )
-
     def connect_subject(self, handle):
         relation = self.relationship_or_new(
             UML.Include, UML.Include.addition, UML.Include.includingCase
@@ -42,11 +37,6 @@ class ExtendConnect(RelationshipConnect):
             return None
 
         return super().allow(handle, port)
-
-    def reconnect(self, handle, port):
-        self.reconnect_relationship(
-            handle, UML.Extend.extendedCase, UML.Extend.extension
-        )
 
     def connect_subject(self, handle):
         relation = self.relationship_or_new(

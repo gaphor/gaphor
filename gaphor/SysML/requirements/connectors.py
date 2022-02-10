@@ -25,11 +25,6 @@ class DirectedRelationshipPropertyPathConnect(RelationshipConnect):
 
     relation_type: Type[DirectedRelationshipPropertyPath]
 
-    def reconnect(self, handle, port):
-        self.reconnect_relationship(
-            handle, self.relation_type.sourceContext, self.relation_type.targetContext
-        )
-
     def connect_subject(self, handle):
         relation = self.relationship_or_new(
             self.relation_type,
