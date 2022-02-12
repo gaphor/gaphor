@@ -1,5 +1,13 @@
 # Gaphor on Linux
 
+Gaphor can be installed as Flatpak and AppImage on Linux, some distributions provide
+packages. Check out the [Gaphor download page](https://gaphor.org/download.html#linux)
+for details.
+
+Older releases are available from [GitHub](https://github.com/gaphor/gaphor/releases).
+
+[CI builds](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml) are also available.
+
 ## Development Environment
 
 To set up a development environment with Linux, you first need a fairly new

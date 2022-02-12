@@ -1,5 +1,12 @@
 # Gaphor on macOS
 
+The latest release of Gaphor can be downloaded from the [Gaphor download page](https://gaphor.org/download.html#macos).
+
+Older releases are available from [GitHub](https://github.com/gaphor/gaphor/releases).
+
+[CI builds](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml) are also available.
+
+
 ## Development Environment
 
 To setup a development environment with macOS:
@@ -23,13 +30,12 @@ $ poetry run gaphor
 
 ## Packaging for macOS
 
-In order to create a dmg package for macOS, we utilize a custom bash script
-that picks up the required files, drops them in a bundle, and changes the
-link references.
+In order to create an exe installation package for macOS, we utilize
+[PyInstaller](https://pyinstaller.org) which analyzes Gaphor to find all the
+dependencies and bundle them in to a single folder.
 
 1. Follow the instructions for settings up a development environment above
 1. Open a terminal and execute the following from the repository directory:
 ```bash
-$ cd macos-dmg
-$ source package-local.sh
+$ poetry run poe package
 ```

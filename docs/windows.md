@@ -1,5 +1,13 @@
 # Gaphor on Windows
 
+Gaphor can be installed as with our our installer.
+Check out the [Gaphor download page](https://gaphor.org/download.html#windows)
+for details.
+
+Older releases are available from [GitHub](https://github.com/gaphor/gaphor/releases).
+
+[CI builds](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml) are also available.
+
 ## Development Environment
 
 ### Choco
