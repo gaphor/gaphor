@@ -77,8 +77,7 @@ class BaseConnector:
 
     def get_connected(self, handle: Handle) -> Presentation[Element] | None:
         """Get item connected to a handle."""
-        cinfo = self.diagram.connections.get_connection(handle)
-        if cinfo:
+        if cinfo := self.diagram.connections.get_connection(handle):
             return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
         return None
 
@@ -298,8 +297,7 @@ class UnaryRelationshipConnect(BaseConnector):
         if not super().connect(handle, port):
             return False
         opposite = self.line.opposite(handle)
-        oct = self.get_connected(opposite)
-        if oct:
+        if oct := self.get_connected(opposite):
             self.connect_subject(handle)
             line = self.line
             if line.subject:
