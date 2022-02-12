@@ -14,6 +14,7 @@ from generic.multidispatch import FunctionDispatcher, multidispatch
 
 from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.core.modeling.properties import association, redefine, relation
+from gaphor.diagram.copypaste import copy, paste
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
 T = TypeVar("T", bound=Element)
@@ -140,6 +141,12 @@ class UnaryRelationshipConnect(BaseConnector):
     element: Presentation
     line: LinePresentation[Element]
 
+    def __init__(
+        self, element: Presentation[Element], line: Presentation[Element]
+    ) -> None:
+        super().__init__(element, line)
+        self.copy_buffer = list(copy(line.subject)) if line.subject else []
+
     def relationship(
         self, required_type: type[Element], head: relation, tail: relation
     ) -> Element | None:
@@ -201,12 +208,27 @@ class UnaryRelationshipConnect(BaseConnector):
                 return gen
         return None
 
+    def new_from_copy(self, type: type[T]) -> T:
+        if not self.copy_buffer:
+            return self.line.model.create(type)
+
+        new_elements: list[Element] = []
+        for _id, copy_data in self.copy_buffer:
+            new_elements.extend(paste(copy_data, self.diagram, lambda _id: None))
+
+        for e in new_elements:
+            if isinstance(e, type):
+                return e
+        raise AssertionError(f"Copied elements, but no {type} found ({new_elements})")
+
     def relationship_or_new(self, type: type[T], head: relation, tail: relation) -> T:
         """Like relation(), but create a new instance if none was found."""
         relation = self.relationship(type, head, tail)
         if not relation:
             line = self.line
-            relation = line.model.create(type)
+            relation = self.new_from_copy(type)
+            assert isinstance(relation, type)
+
             line_head = self.get_connected(line.head)
             line_tail = self.get_connected(line.tail)
             assert line_head
