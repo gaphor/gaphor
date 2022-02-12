@@ -91,6 +91,18 @@ By default this works for any named element. You can register your own inline ed
 ```
 
 
+## Automated model cleanup
+
+Gaphor wants to keep the model in sync with the diagrams.
+
+A little dispatch function is used to determine if a model element can be removed.
+
+```{eval-rst}
+.. function:: gaphor.diagram.deletable.deletable(element: Element) -> bool
+
+   Determine if a model element can safely be removed.
+```
+
 ## Copy and paste
 
 Copy and paste works out of the box for simple items: one diagram item with one model element (the `subject`).
@@ -102,17 +114,26 @@ In those specific cases you need to implement your own copy and paste functions.
 two functions: one for copying and one for pasting.
 
 ```{eval-rst}
-.. function:: gaphor.diagram.copypaste.copy(obj: Element) -> T
+.. function:: gaphor.diagram.copypaste.copy(obj: Element) -> Iterator[tuple[Id, Opaque]]
 
    Create a copy of an element (or list of elements).
    The returned type should be distinct, so the `paste()`
    function can properly dispatch.
 
-.. function:: gaphor.diagram.copypaste.paste(copy_data: T, diagram: Diagram, lookup: Callable[[str], Element]) -> object
+.. function:: gaphor.diagram.copypaste.paste(copy_data: T, diagram: Diagram, lookup: Callable[[str], Element | None]) -> Iterator[Element]
 
    Paste previously copied data. Based on the data type created in the
    ``copy()`` function, try to duplicate the copied elements.
    Returns the newly created item or element
+
+.. function:: gaphor.diagram.copypaste.paste_link(copy_data: CopyData, diagram: Diagram, lookup: Callable[[str], Element | None]) -> set[Presentation]:
+
+   Create a copy of the Presentation element, but try to link the underlaying model element.
+   A shallow copy.
+
+.. function:: gaphor.diagram.copypaste.paste_full(copy_data: CopyData, diagram: Diagram, lookup: Callable[[str], Element | None]) -> set[Presentation]:
+
+   Create a copy of both Presentation and model element. A deep copy.
 ```
 
 To serialize the copied elements and deserialize them again, there are two functions available:

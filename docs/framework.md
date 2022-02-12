@@ -8,7 +8,7 @@ services are loaded based on entry points defined in the `pyproject.toml` file.
 To learn more about the architecture, please see the description about the
 [Service Oriented Architecture](service_oriented.md).
 
-## Events
+## Event driven
 
 Parts of Gaphor communicate with each other through events. Whenever something
 important happens, for example, an attribute of a model element changes, an
@@ -51,7 +51,7 @@ Loading and saving a model is done through this service.
 
 ### element_factory
 
-The [data model](datamodel.md) itself is maintained in the element factory
+The [data model](models/core.md) itself is maintained in the element factory
 (`gaphor.UML.elementfactory`). This service is used to create model elements,
 as well as to lookup elements or query for a set of elements.
 
@@ -64,4 +64,4 @@ The undo manager is transactional. Actions performed by a user are only stored
 if a transaction is active. If a transaction is completed (committed) a new
 undo action is stored. Transactions can also be rolled back, in which case all
 changes are played back directly. For more information see the full description
-of the [undo manager](undo.md)
+of the [undo manager](undo.md).

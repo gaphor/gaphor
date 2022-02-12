@@ -51,17 +51,15 @@ plug-in.
    service_oriented
    event_system
    modeling_language
-   transaction
 
 .. toctree::
    :caption: Internals
    :maxdepth: 1
 
-   model
-   datamodel
    connect
    storage
    undo
+   transaction
 
 
 External links
