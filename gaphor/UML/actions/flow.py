@@ -13,7 +13,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.ControlFlow)
-class FlowItem(LinePresentation, Named):
+class ControlFlowItem(LinePresentation, Named):
     """Representation of control flow and object flow.
 
     Flow item has name and guard. It can be split into two flows with
@@ -21,7 +21,7 @@ class FlowItem(LinePresentation, Named):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(diagram, id, style={"dash-style": (7.0, 5.0)})
 
         self.shape_tail = Box(
             Text(

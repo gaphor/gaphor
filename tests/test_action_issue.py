@@ -1,7 +1,7 @@
 from gaphor import UML
 from gaphor.core.modeling import Diagram
 from gaphor.storage import storage
-from gaphor.UML.actions import ActionItem, FlowItem
+from gaphor.UML.actions import ActionItem, ControlFlowItem
 
 
 class TestActionIssue:
@@ -32,7 +32,7 @@ class TestActionIssue:
 
         for e in actions + flows:
             assert 1 == len(e.presentation), e
-        for i in diagram.select(lambda e: isinstance(e, (FlowItem, ActionItem))):
+        for i in diagram.select(lambda e: isinstance(e, (ControlFlowItem, ActionItem))):
             assert i.subject, i
 
         # Loaded as:

@@ -152,7 +152,7 @@ actions = ToolSection(
             gettext("Control/object flow"),
             "gaphor-control-flow-symbolic",
             "<Shift>F",
-            new_item_factory(diagramitems.FlowItem),
+            new_item_factory(diagramitems.ControlFlowItem),
         ),
         ToolDef(
             "toolbox-send-signal-action",

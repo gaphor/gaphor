@@ -14,14 +14,14 @@ from gaphor.UML.actions.activitynodes import (
     DecisionNodeItem,
     ForkNodeItem,
 )
-from gaphor.UML.actions.flow import FlowItem
+from gaphor.UML.actions.flow import ControlFlowItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
 
 class FlowConnect(UnaryRelationshipConnect):
     """Connect FlowItem and Action/ObjectNode, initial/final nodes."""
 
-    line: FlowItem
+    line: ControlFlowItem
 
     def allow(self, handle, port):
         line = self.line
@@ -89,11 +89,11 @@ class FlowConnect(UnaryRelationshipConnect):
             adapter.decombine_nodes()
 
 
-Connector.register(ActionItem, FlowItem)(FlowConnect)
-Connector.register(ActivityNodeItem, FlowItem)(FlowConnect)
-Connector.register(ObjectNodeItem, FlowItem)(FlowConnect)
-Connector.register(SendSignalActionItem, FlowItem)(FlowConnect)
-Connector.register(AcceptEventActionItem, FlowItem)(FlowConnect)
+Connector.register(ActionItem, ControlFlowItem)(FlowConnect)
+Connector.register(ActivityNodeItem, ControlFlowItem)(FlowConnect)
+Connector.register(ObjectNodeItem, ControlFlowItem)(FlowConnect)
+Connector.register(SendSignalActionItem, ControlFlowItem)(FlowConnect)
+Connector.register(AcceptEventActionItem, ControlFlowItem)(FlowConnect)
 
 
 class FlowForkDecisionNodeConnect(FlowConnect):
@@ -203,7 +203,7 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             self.decombine_nodes()
 
 
-@Connector.register(ForkNodeItem, FlowItem)
+@Connector.register(ForkNodeItem, ControlFlowItem)
 class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     """Connect Flow to a ForkNode."""
 
@@ -211,7 +211,7 @@ class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
     join_node_cls = UML.JoinNode
 
 
-@Connector.register(DecisionNodeItem, FlowItem)
+@Connector.register(DecisionNodeItem, ControlFlowItem)
 class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
     """Connect Flow to a DecisionNode."""
 

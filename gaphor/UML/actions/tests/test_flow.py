@@ -3,16 +3,16 @@ from gaphas.canvas import instant_cairo_context
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
 from gaphor.core.modeling.diagram import FALLBACK_STYLE
-from gaphor.UML.actions.flow import FlowItem
+from gaphor.UML.actions.flow import ControlFlowItem
 
 
 def test_flow(case):
-    case.create(FlowItem, UML.ControlFlow)
+    case.create(ControlFlowItem, UML.ControlFlow)
 
 
 def test_name(case):
     """Test updating of flow name text."""
-    flow = case.create(FlowItem, UML.ControlFlow)
+    flow = case.create(ControlFlowItem, UML.ControlFlow)
     name = flow.shape_tail.children[1]
 
     flow.subject.name = "Blah"
@@ -25,7 +25,7 @@ def test_name(case):
 
 
 def test_guard_text_update(case):
-    flow = case.create(FlowItem, UML.ControlFlow)
+    flow = case.create(ControlFlowItem, UML.ControlFlow)
     guard = flow.shape_middle
 
     assert "" == guard.text()
@@ -38,7 +38,7 @@ def test_guard_text_update(case):
 
 
 def test_draw(case):
-    flow = case.create(FlowItem, UML.ControlFlow)
+    flow = case.create(ControlFlowItem, UML.ControlFlow)
     context = DrawContext(
         cairo=instant_cairo_context(),
         style=FALLBACK_STYLE,
