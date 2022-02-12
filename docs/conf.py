@@ -79,6 +79,8 @@ pygments_style = None
 
 images_config = {"default_image_width": "", "default_image_height": ""}
 
+myst_heading_anchors = 2
+
 gaphor_models = {
     "connect": "connect.gaphor",
     "stereotypes": "stereotypes.gaphor",
