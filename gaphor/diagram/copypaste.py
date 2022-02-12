@@ -47,7 +47,7 @@ def paste_full(copy_data, diagram, lookup) -> set[Presentation]:
 
 
 @singledispatch
-def paste(copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element]):
+def paste(copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element | None]):
     """Paste previously copied data.
 
     Based on the data type created in the `copy()` function, try to

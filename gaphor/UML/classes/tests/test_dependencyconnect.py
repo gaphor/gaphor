@@ -68,6 +68,25 @@ def test_dependency_reconnect(create):
     assert a2.subject is not dep.subject.client, dep.subject.client
 
 
+def test_dependency_reconnect_should_keep_attributes(create):
+    """Test dependency reconnection."""
+    a1 = create(ActorItem, UML.Actor)
+    a2 = create(ActorItem, UML.Actor)
+    a3 = create(ActorItem, UML.Actor)
+    dep = create(DependencyItem)
+
+    # connect: a1 -> a2
+    connect(dep, dep.head, a1)
+    connect(dep, dep.tail, a2)
+
+    dep.subject.name = "Name"
+
+    # reconnect: a1 -> a3
+    connect(dep, dep.tail, a3)
+
+    assert dep.subject.name == "Name"
+
+
 def test_dependency_disconnect(create, element_factory):
     actor1 = create(ActorItem, UML.Actor)
     actor2 = create(ActorItem, UML.Actor)
