@@ -38,16 +38,22 @@ def copy(obj: Element | Iterable) -> Iterator[tuple[Id, Opaque]]:
     raise ValueError(f"No copier for {obj}")
 
 
-def paste_link(copy_data, diagram, lookup) -> set[Presentation]:
+def paste_link(
+    copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element | None]
+) -> set[Presentation]:
     return _paste(copy_data, diagram, lookup, full=False)
 
 
-def paste_full(copy_data, diagram, lookup) -> set[Presentation]:
+def paste_full(
+    copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element | None]
+) -> set[Presentation]:
     return _paste(copy_data, diagram, lookup, full=True)
 
 
 @singledispatch
-def paste(copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element]):
+def paste(
+    copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element | None]
+) -> Iterator[Element]:
     """Paste previously copied data.
 
     Based on the data type created in the `copy()` function, try to
@@ -206,7 +212,7 @@ def _copy_all(items: Iterable) -> CopyData:
 def _paste(copy_data, diagram, lookup, full) -> set[Presentation]:
     assert isinstance(copy_data, CopyData)
 
-    new_elements: dict[str, Presentation | None] = {}
+    new_elements: dict[str, Element | None] = {}
 
     def element_lookup(ref: str):
         if ref in new_elements:
