@@ -84,7 +84,8 @@ def test_pointer(tab):
         "toolbox-flow-final-node",
         "toolbox-decision-node",
         "toolbox-fork-node",
-        "toolbox-flow",
+        "toolbox-control-flow",
+        "toolbox-object-flow",
         # Use cases:
         "toolbox-use-case",
         "toolbox-actor",

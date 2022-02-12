@@ -14,7 +14,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 @represents(UML.ControlFlow)
 class ControlFlowItem(LinePresentation, Named):
-    """Representation of control flow and object flow.
+    """Representation of control flow.
 
     Flow item has name and guard. It can be split into two flows with
     activity edge connectors.
@@ -41,6 +41,38 @@ class ControlFlowItem(LinePresentation, Named):
         )
 
         self.watch("subject[ControlFlow].guard")
+
+        self.draw_tail = draw_arrow_tail
+
+
+@represents(UML.ObjectFlow)
+class ObjectFlowItem(LinePresentation, Named):
+    """Representation of object flow.
+
+    Flow item has name and guard. It can be split into two flows with
+    activity edge connectors.
+    """
+
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
+
+        self.shape_tail = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
+            Text(text=lambda: self.subject.name or ""),
+        )
+
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
+
+        self.shape_middle = Text(
+            text=lambda: self.subject
+            and self.subject.guard
+            and f"[{self.subject.guard}]"
+            or ""
+        )
+
         self.watch("subject[ObjectFlow].guard")
 
         self.draw_tail = draw_arrow_tail

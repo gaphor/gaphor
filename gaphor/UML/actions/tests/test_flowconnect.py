@@ -12,7 +12,7 @@ from gaphor.UML.actions.activitynodes import (
     ForkNodeItem,
     InitialNodeItem,
 )
-from gaphor.UML.actions.flow import ControlFlowItem
+from gaphor.UML.actions.flow import ControlFlowItem, ObjectFlowItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
 
@@ -58,14 +58,14 @@ def test_activity_final_node_glue(case):
 
 
 def test_glue_to_object_node(case):
-    flow = case.create(ControlFlowItem)
+    flow = case.create(ObjectFlowItem)
     onode = case.create(ObjectNodeItem, UML.ObjectNode)
     glued = case.allow(flow, flow.head, onode)
     assert glued
 
 
 def test_connect_to_object_node(case):
-    flow = case.create(ControlFlowItem)
+    flow = case.create(ObjectFlowItem)
     anode = case.create(ActionItem, UML.Action)
     onode = case.create(ObjectNodeItem, UML.ObjectNode)
 
@@ -85,7 +85,7 @@ def test_connect_to_object_node(case):
 
 
 def test_object_flow_reconnect(case):
-    flow = case.create(ControlFlowItem)
+    flow = case.create(ObjectFlowItem)
     a1 = case.create(ActionItem, UML.Action)
     o1 = case.create(ObjectNodeItem, UML.ObjectNode)
     o2 = case.create(ObjectNodeItem, UML.ObjectNode)
@@ -121,7 +121,7 @@ def test_control_flow_reconnection(case):
     flow = case.create(ControlFlowItem)
     a1 = case.create(ActionItem, UML.Action)
     a2 = case.create(ActionItem, UML.Action)
-    o1 = case.create(ObjectNodeItem, UML.ObjectNode)
+    a3 = case.create(ActionItem, UML.Action)
 
     # connect with control flow: a1 -> a2
     case.connect(flow, flow.head, a1)
@@ -132,7 +132,7 @@ def test_control_flow_reconnection(case):
     f.guard = "tguard"
 
     # reconnect with object flow: a1 -> o1
-    case.connect(flow, flow.tail, o1)
+    case.connect(flow, flow.tail, a3)
 
     assert len(a1.subject.incoming) == 0
     assert len(a1.subject.outgoing) == 1
@@ -140,11 +140,9 @@ def test_control_flow_reconnection(case):
     assert len(a2.subject.incoming) == 0
     assert len(a2.subject.outgoing) == 0
     # connections to o1 instead
-    assert len(o1.subject.incoming) == 1
-    assert len(o1.subject.outgoing) == 0
+    assert len(a3.subject.incoming) == 1
+    assert len(a3.subject.outgoing) == 0
 
-    assert len(case.kindof(UML.ControlFlow)) == 0
-    assert len(case.kindof(UML.ObjectFlow)) == 1
     # one guard, not changed
     assert flow.subject.name == "tname"
     assert flow.subject.guard == "tguard"
@@ -238,10 +236,10 @@ def test_reconnect(case):
 
 def test_object_flow_reconnection(case):
     """Test object flow becoming control flow due to reconnection."""
-    flow = case.create(ControlFlowItem)
+    flow = case.create(ObjectFlowItem)
     a1 = case.create(ActionItem, UML.Action)
-    a2 = case.create(ActionItem, UML.Action)
     o1 = case.create(ObjectNodeItem, UML.ObjectNode)
+    o2 = case.create(ObjectNodeItem, UML.ObjectNode)
 
     # connect with control flow: a1 -> o1
     case.connect(flow, flow.head, a1)
@@ -252,7 +250,7 @@ def test_object_flow_reconnection(case):
     f.guard = "tguard"
 
     # reconnect with object flow: a1 -> a2
-    case.connect(flow, flow.tail, a2)
+    case.connect(flow, flow.tail, o2)
 
     assert len(a1.subject.incoming) == 0
     assert len(a1.subject.outgoing) == 1
@@ -260,11 +258,9 @@ def test_object_flow_reconnection(case):
     assert len(o1.subject.incoming) == 0
     assert len(o1.subject.outgoing) == 0
     # connections to a2 instead
-    assert len(a2.subject.incoming) == 1
-    assert len(a2.subject.outgoing) == 0
+    assert len(o2.subject.incoming) == 1
+    assert len(o2.subject.outgoing) == 0
 
-    assert len(case.kindof(UML.ControlFlow)) == 1
-    assert len(case.kindof(UML.ObjectFlow)) == 0
     # one guard, not changed
     assert flow.subject.name == "tname"
     assert flow.subject.guard == "tguard"
