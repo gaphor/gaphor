@@ -76,8 +76,7 @@ def serialize(value):
 def deserialize(ser, lookup):
     vtype, value = ser
     if vtype == "r":
-        e = lookup(value)
-        if e:
+        if e := lookup(value):
             yield e
     elif vtype == "c":
         for v in value:
@@ -189,8 +188,7 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
     item = diagram.create(cls)
     yield item
     if parent:
-        p = lookup(parent)
-        if p:
+        if p := lookup(parent):
             item.parent = p
 
     for name, ser in data.items():
@@ -231,8 +229,7 @@ def _paste(copy_data, diagram, lookup, full) -> set[Presentation]:
         if full and looked_up and not isinstance(looked_up, Presentation):
             return looked_up
 
-        looked_up = diagram.lookup(ref)
-        if looked_up:
+        if looked_up := diagram.lookup(ref):
             return looked_up
 
     for old_id in copy_data.elements.keys():

@@ -126,8 +126,7 @@ class ItemConnected(RevertibeEvent):
         connections = target.diagram.connections
         handle = target.handles()[self.handle_index]
         connector = ConnectorAspect(target, handle, connections)
-        cinfo = connections.get_connection(handle)
-        if cinfo:
+        if cinfo := connections.get_connection(handle):
             cinfo.callback.disable = True
         connector.disconnect()
 
