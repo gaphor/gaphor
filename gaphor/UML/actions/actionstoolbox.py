@@ -157,7 +157,7 @@ actions = ToolSection(
         ToolDef(
             "toolbox-object-flow",
             gettext("Object flow"),
-            "gaphor-control-flow-symbolic",
+            "gaphor-object-flow-symbolic",
             "<Shift>Y",
             new_item_factory(diagramitems.ObjectFlowItem),
         ),
