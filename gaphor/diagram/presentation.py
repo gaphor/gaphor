@@ -277,8 +277,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
     def save(self, save_func):
         def save_connection(name, handle):
-            c = self._connections.get_connection(handle)
-            if c:
+            if c := self._connections.get_connection(handle):
                 save_func(name, c.connected)
 
         super().save(save_func)
