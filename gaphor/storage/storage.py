@@ -175,7 +175,8 @@ def _load_elements_and_canvasitems(
         if version_lower_than(gaphor_version, (2, 6, 0)):
             elem = upgrade_generalization_arrow_direction(elem)
         if version_lower_than(gaphor_version, (2, 9, 0)):
-            elem = upgrade_flow_item_to_control_flow_item(elem)
+            elem = upgrade_flow_item_to_control_flow_item(elem, elements)
+
         cls = modeling_language.lookup_element(elem.type)
         assert cls, f"Type {elem.type} can not be loaded: no such element"
         if issubclass(cls, Presentation):
@@ -380,7 +381,12 @@ def upgrade_generalization_arrow_direction(elem):
 
 
 # since 2.9.0
-def upgrade_flow_item_to_control_flow_item(elem):
+def upgrade_flow_item_to_control_flow_item(elem, elements):
     if elem.type == "FlowItem":
-        elem.type = "ControlFlowItem"
+        if subject_id := elem.references.get("subject"):
+            subject_type = elements[subject_id].type
+        else:
+            subject_type = "ControlFlow"
+
+        elem.type = f"{subject_type}Item"
     return elem
