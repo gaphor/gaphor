@@ -17,7 +17,7 @@ from gaphor.UML.classes.classestoolbox import composite_association_config
 def test_connect_composite_association(create, diagram):
     c1 = create(ClassItem, UML.Class)
     c2 = create(ClassItem, UML.Class)
-    a = create(AssociationItem, UML.Association)
+    a = create(AssociationItem)
     composite_association_config(a)
 
     property_page = AssociationPropertyPage(a)
