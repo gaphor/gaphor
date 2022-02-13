@@ -82,15 +82,15 @@ class AssociationConnect(UnaryRelationshipConnect):
 
     def allow(self, handle, port):
         element = self.element
+        line = self.line
 
         # Element should be a Classifier
         if not isinstance(element.subject, UML.Classifier):
             return None
 
-        if not self.line.subject:
+        if not line.subject:
             return True
 
-        line = self.line
         subject = line.subject
         is_head = handle is line.head
 
@@ -110,25 +110,29 @@ class AssociationConnect(UnaryRelationshipConnect):
 
         assert element.diagram
 
-        c1 = self.get_connected(line.head)
-        c2 = self.get_connected(line.tail)
-        if c1 and c2:
+        head_end = self.get_connected(line.head)
+        tail_end = self.get_connected(line.tail)
 
-            if not line.subject:
-                relation = UML.recipes.create_association(c1.subject, c2.subject)
-                relation.package = owner_package(element.diagram.owner)
-                line.head_subject = relation.memberEnd[0]
-                line.tail_subject = relation.memberEnd[1]
-                UML.recipes.set_navigability(relation, line.head_subject, None)
-                if line.preferred_aggregation in ("shared", "composite"):
-                    UML.recipes.set_navigability(relation, line.tail_subject, True)
-                line.tail_subject.aggregation = line.preferred_aggregation
+        assert head_end
+        assert tail_end
 
-                # Set subject last so that event handlers can trigger
-                line.subject = relation
+        if not line.subject:
+            relation = UML.recipes.create_association(
+                head_end.subject, tail_end.subject
+            )
+            relation.package = owner_package(element.diagram.owner)
+            line.head_subject = relation.memberEnd[0]
+            line.tail_subject = relation.memberEnd[1]
+            UML.recipes.set_navigability(relation, line.head_subject, None)
+            if line.preferred_aggregation in ("shared", "composite"):
+                UML.recipes.set_navigability(relation, line.tail_subject, True)
+            line.tail_subject.aggregation = line.preferred_aggregation
 
-            line.head_subject.type = c1.subject
-            line.tail_subject.type = c2.subject
+            # Set subject last so that event handlers can trigger
+            line.subject = relation
+
+            line.head_subject.type = head_end.subject
+            line.tail_subject.type = tail_end.subject
 
     def disconnect_subject(self, handle: Handle) -> None:
         """Disconnect the type of each member end.

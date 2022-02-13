@@ -157,6 +157,9 @@ class UnaryRelationshipConnect(BaseConnector):
         head - tuple (association name on line, association name on element)
         tail - tuple (association name on line, association name on element)
         """
+        assert isinstance(head, (association, redefine)), f"head is {head}"
+        assert isinstance(tail, (association, redefine)), f"tail is {tail}"
+
         line = self.line
 
         line_head = self.get_connected(line.head)
@@ -173,9 +176,6 @@ class UnaryRelationshipConnect(BaseConnector):
             and getattr(line.subject, tail.name) is tail_subject
         ):
             return line.subject
-
-        assert isinstance(head, (association, redefine)), f"head is {head}"
-        assert isinstance(tail, (association, redefine)), f"tail is {tail}"
 
         # Try to find a relationship, that is already created, but not
         # yet displayed in the diagram on the tail side, since tail should
