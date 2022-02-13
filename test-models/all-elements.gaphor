@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.7.1">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.8.2">
 <Package id="a80225e6-8a24-11e9-94a9-784f435640ba">
 <name>
 <val>New model</val>
@@ -96,7 +96,6 @@
 <ref refid="3c3e0f27-dcdf-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="55de9488-8a25-11e9-94a9-784f435640ba"/>
 <ref refid="6ad9c93f-dce0-11ea-b7ab-f5b4c130f24e"/>
-<ref refid="1a9d20bd-dce1-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="c892e296-8a24-11e9-94a9-784f435640ba"/>
 <ref refid="caf6d3c6-8a24-11e9-94a9-784f435640ba"/>
 <ref refid="cd5d43b6-8a24-11e9-94a9-784f435640ba"/>
@@ -113,6 +112,8 @@
 <ref refid="4230e9a8-8a26-11e9-bbea-784f435640ba"/>
 <ref refid="4649b7d6-8a26-11e9-bbea-784f435640ba"/>
 <ref refid="d93b0395-dd42-11ea-b7ab-f5b4c130f24e"/>
+<ref refid="5f9e926a-8ce9-11ec-ad28-0456e5e540ed"/>
+<ref refid="706b4e1c-8ce9-11ec-ad28-0456e5e540ed"/>
 </reflist>
 </ownedPresentation>
 </Diagram>
@@ -436,7 +437,7 @@
 </ConnectorItem>
 <Box id="fd30ea2a-8a24-11e9-94a9-784f435640ba">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 73.0, 500.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 73.0, 503.0)</val>
 </matrix>
 <width>
 <val>725.0</val>
@@ -482,7 +483,7 @@
 <ref refid="02313228-8a25-11e9-94a9-784f435640ba"/>
 </subject>
 </InitialNodeItem>
-<FlowItem id="03e0cb38-8a25-11e9-94a9-784f435640ba">
+<ControlFlowItem id="03e0cb38-8a25-11e9-94a9-784f435640ba">
 <diagram>
 <ref refid="a8022870-8a24-11e9-94a9-784f435640ba"/>
 </diagram>
@@ -507,10 +508,10 @@
 <tail-connection>
 <ref refid="007a1a30-8a25-11e9-94a9-784f435640ba"/>
 </tail-connection>
-</FlowItem>
+</ControlFlowItem>
 <ActivityFinalNodeItem id="0a5bbe64-8a25-11e9-94a9-784f435640ba">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 355.0, 531.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 373.0, 531.5)</val>
 </matrix>
 <width>
 <val>30.0</val>
@@ -525,7 +526,7 @@
 <ref refid="0a5bbb9e-8a25-11e9-94a9-784f435640ba"/>
 </subject>
 </ActivityFinalNodeItem>
-<FlowItem id="0bfe92d2-8a25-11e9-94a9-784f435640ba">
+<ControlFlowItem id="0bfe92d2-8a25-11e9-94a9-784f435640ba">
 <diagram>
 <ref refid="a8022870-8a24-11e9-94a9-784f435640ba"/>
 </diagram>
@@ -542,7 +543,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 327.0, 544.5)</val>
 </matrix>
 <points>
-<val>[(4.0, 0.0), (28.0, -1.0)]</val>
+<val>[(4.0, 0.0), (46.0, -1.0)]</val>
 </points>
 <head-connection>
 <ref refid="007a1a30-8a25-11e9-94a9-784f435640ba"/>
@@ -550,7 +551,7 @@
 <tail-connection>
 <ref refid="0a5bbe64-8a25-11e9-94a9-784f435640ba"/>
 </tail-connection>
-</FlowItem>
+</ControlFlowItem>
 <FlowFinalNodeItem id="18562bd0-8a25-11e9-94a9-784f435640ba">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 135.0, 584.5)</val>
@@ -601,7 +602,7 @@
 </ForkNodeItem>
 <ObjectNodeItem id="1d309140-8a25-11e9-94a9-784f435640ba">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 428.0, 531.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 440.4522705078125, 531.5)</val>
 </matrix>
 <width>
 <val>139.0</val>
@@ -619,7 +620,7 @@
 <ref refid="1d308ec0-8a25-11e9-94a9-784f435640ba"/>
 </subject>
 </ObjectNodeItem>
-<FlowItem id="215aa382-8a25-11e9-94a9-784f435640ba">
+<ControlFlowItem id="215aa382-8a25-11e9-94a9-784f435640ba">
 <diagram>
 <ref refid="a8022870-8a24-11e9-94a9-784f435640ba"/>
 </diagram>
@@ -630,12 +631,12 @@
 <val>0</val>
 </orthogonal>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 569.0, 580.5)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 596.5, 575.5)</val>
 </matrix>
 <points>
 <val>[(0.0, 0.0), (41.0, -39.0)]</val>
 </points>
-</FlowItem>
+</ControlFlowItem>
 <SendSignalActionItem id="23fba4c4-8a25-11e9-94a9-784f435640ba">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 255.0, 599.5)</val>
@@ -690,7 +691,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 192.5, 758.4112644821939)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (62.5, 0.0)]</val>
+<val>[(-73.0, -696.955632241097), (-10.5, -696.955632241097)]</val>
 </points>
 <head-connection>
 <ref refid="545ff0de-8a25-11e9-94a9-784f435640ba"/>
@@ -717,7 +718,6 @@
 <ref refid="5cc961d4-dce0-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="55de9488-8a25-11e9-94a9-784f435640ba"/>
 <ref refid="6ad9c93f-dce0-11ea-b7ab-f5b4c130f24e"/>
-<ref refid="1a9d20bd-dce1-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </children>
 <diagram>
@@ -798,7 +798,7 @@
 <ref refid="57b28a3f-dce0-11ea-b7ab-f5b4c130f24e"/>
 </subject>
 <lifetime-length>
-<val>35.41126448219387</val>
+<val>42.0</val>
 </lifetime-length>
 </LifelineItem>
 <ExecutionSpecificationItem id="6f896e19-dce0-11ea-b7ab-f5b4c130f24e">
@@ -1401,7 +1401,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 519.0, 775.4112644821939)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (161.5, 0.0)]</val>
+<val>[(-73.0, -694.955632241097), (88.5, -694.955632241097)]</val>
 </points>
 <head-connection>
 <ref refid="6f896e19-dce0-11ea-b7ab-f5b4c130f24e"/>
@@ -1409,32 +1409,6 @@
 <tail-connection>
 <ref refid="5cc961d4-dce0-11ea-b7ab-f5b4c130f24e"/>
 </tail-connection>
-</MessageItem>
-<MessageItem id="1a9d20bd-dce1-11ea-b7ab-f5b4c130f24e">
-<diagram>
-<ref refid="a8022870-8a24-11e9-94a9-784f435640ba"/>
-</diagram>
-<horizontal>
-<val>0</val>
-</horizontal>
-<orthogonal>
-<val>0</val>
-</orthogonal>
-<parent>
-<ref refid="588dd09a-8a25-11e9-94a9-784f435640ba"/>
-</parent>
-<subject>
-<ref refid="1a9d20be-dce1-11ea-b7ab-f5b4c130f24e"/>
-</subject>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 355.0, 757.6292070427069)</val>
-</matrix>
-<points>
-<val>[(0.0, 0.0), (59.0, 0.37079295729313344)]</val>
-</points>
-<head-connection>
-<ref refid="2e456ff6-dce0-11ea-b7ab-f5b4c130f24e"/>
-</head-connection>
 </MessageItem>
 <TransitionItem id="d93b0395-dd42-11ea-b7ab-f5b4c130f24e">
 <diagram>
@@ -1618,6 +1592,7 @@
 <incoming>
 <reflist>
 <ref refid="0c9b68e6-8a25-11e9-94a9-784f435640ba"/>
+<ref refid="6b0176f4-8ce9-11ec-ad28-0456e5e540ed"/>
 </reflist>
 </incoming>
 <name>
@@ -1679,6 +1654,11 @@
 <name>
 <val>NewObjectNode</val>
 </name>
+<outgoing>
+<reflist>
+<ref refid="6b0176f4-8ce9-11ec-ad28-0456e5e540ed"/>
+</reflist>
+</outgoing>
 <presentation>
 <reflist>
 <ref refid="1d309140-8a25-11e9-94a9-784f435640ba"/>
@@ -1741,7 +1721,6 @@
 <reflist>
 <ref refid="3199a004-dce0-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="6d331820-dce0-11ea-b7ab-f5b4c130f24e"/>
-<ref refid="1a9d20be-dce1-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </message>
 <name>
@@ -2226,7 +2205,6 @@
 <Lifeline id="2e456ff5-dce0-11ea-b7ab-f5b4c130f24e">
 <coveredBy>
 <reflist>
-<ref refid="1a9d20bf-dce1-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="341fbc00-dce0-11ea-b7ab-f5b4c130f24e"/>
 </reflist>
 </coveredBy>
@@ -2429,30 +2407,6 @@
 <ref refid="102882e0-8a26-11e9-bbea-784f435640ba"/>
 </type>
 </Property>
-<Message id="1a9d20be-dce1-11ea-b7ab-f5b4c130f24e">
-<interaction>
-<ref refid="588dc1b8-8a25-11e9-94a9-784f435640ba"/>
-</interaction>
-<name>
-<val>call()</val>
-</name>
-<presentation>
-<reflist>
-<ref refid="1a9d20bd-dce1-11ea-b7ab-f5b4c130f24e"/>
-</reflist>
-</presentation>
-<sendEvent>
-<ref refid="1a9d20bf-dce1-11ea-b7ab-f5b4c130f24e"/>
-</sendEvent>
-</Message>
-<MessageOccurrenceSpecification id="1a9d20bf-dce1-11ea-b7ab-f5b4c130f24e">
-<covered>
-<ref refid="2e456ff5-dce0-11ea-b7ab-f5b4c130f24e"/>
-</covered>
-<sendMessage>
-<ref refid="1a9d20be-dce1-11ea-b7ab-f5b4c130f24e"/>
-</sendMessage>
-</MessageOccurrenceSpecification>
 <Transition id="c8a75e0c-dd42-11ea-b7ab-f5b4c130f24e">
 <guard>
 <ref refid="c8a75e0d-dd42-11ea-b7ab-f5b4c130f24e"/>
@@ -2528,4 +2482,54 @@
 <ref refid="99fb9418-6961-11ec-a267-0456e5e540ed"/>
 </subject>
 </EnumerationItem>
+<ObjectFlowItem id="5f9e926a-8ce9-11ec-ad28-0456e5e540ed">
+<diagram>
+<ref refid="a8022870-8a24-11e9-94a9-784f435640ba"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="6b0176f4-8ce9-11ec-ad28-0456e5e540ed"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 627.0, 570.0)</val>
+</matrix>
+<points>
+<val>[(-186.5477294921875, -22.5), (-224.0, -22.5)]</val>
+</points>
+<head-connection>
+<ref refid="1d309140-8a25-11e9-94a9-784f435640ba"/>
+</head-connection>
+<tail-connection>
+<ref refid="0a5bbe64-8a25-11e9-94a9-784f435640ba"/>
+</tail-connection>
+</ObjectFlowItem>
+<ObjectFlow id="6b0176f4-8ce9-11ec-ad28-0456e5e540ed">
+<presentation>
+<reflist>
+<ref refid="5f9e926a-8ce9-11ec-ad28-0456e5e540ed"/>
+</reflist>
+</presentation>
+<source>
+<ref refid="1d308ec0-8a25-11e9-94a9-784f435640ba"/>
+</source>
+<target>
+<ref refid="0a5bbb9e-8a25-11e9-94a9-784f435640ba"/>
+</target>
+</ObjectFlow>
+<ObjectFlowItem id="706b4e1c-8ce9-11ec-ad28-0456e5e540ed">
+<diagram>
+<ref refid="a8022870-8a24-11e9-94a9-784f435640ba"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 647.0, 580.0)</val>
+</matrix>
+<points>
+<val>[(4.0, -4.5), (41.39999999999998, -43.5)]</val>
+</points>
+</ObjectFlowItem>
 </gaphor>
