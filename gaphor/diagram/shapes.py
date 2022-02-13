@@ -33,11 +33,9 @@ def stroke(context: DrawContext, fill=True, dash=True):
             cr.fill_preserve()
 
     with cairo_state(cr):
-        stroke = style.get("color")
-        if stroke:
+        if stroke := style.get("color"):
             cr.set_source_rgba(*stroke)
-        line_width = style.get("line-width")
-        if line_width:
+        if line_width := style.get("line-width"):
             cr.set_line_width(line_width)
         if dash:
             cr.set_dash(style.get("dash-style", ()), 0)
@@ -281,8 +279,7 @@ class Text:
         text_box = self.text_box(style, bounding_box)
 
         with cairo_state(context.cairo) as cr:
-            text_color = style.get("text-color")
-            if text_color:
+            if text_color := style.get("text-color"):
                 cr.set_source_rgba(*text_color)
 
             layout = self._layout
