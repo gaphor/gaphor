@@ -119,6 +119,10 @@ class AssociationConnect(UnaryRelationshipConnect):
                 relation.package = owner_package(element.diagram.owner)
                 line.head_subject = relation.memberEnd[0]
                 line.tail_subject = relation.memberEnd[1]
+                UML.recipes.set_navigability(relation, line.head_subject, None)
+                if line.preferred_aggregation in ("shared", "composite"):
+                    UML.recipes.set_navigability(relation, line.tail_subject, True)
+                line.tail_subject.aggregation = line.preferred_aggregation
 
                 # Set subject last so that event handlers can trigger
                 line.subject = relation
