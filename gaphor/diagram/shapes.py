@@ -316,6 +316,7 @@ def draw_arrow_head(context: DrawContext):
 def draw_arrow_tail(context: DrawContext):
     cr = context.cairo
     cr.line_to(0, 0)
+    stroke(context)
     cr.save()
     cr.set_dash((), 0)
     cr.move_to(15, -6)

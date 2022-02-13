@@ -21,7 +21,7 @@ class ControlFlowItem(LinePresentation, Named):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id, style={"dash-style": (7.0, 5.0)})
+        super().__init__(diagram, id, style={"dash-style": (9.0, 3.0)})
 
         self.shape_tail = Box(
             Text(
