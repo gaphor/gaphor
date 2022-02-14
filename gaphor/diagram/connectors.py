@@ -6,7 +6,7 @@ gaphor.adapter package.
 
 from __future__ import annotations
 
-from typing import Protocol, TypeVar
+from typing import Iterator, Protocol, TypeVar
 
 from gaphas.connections import Connection
 from gaphas.connector import Handle, Port
@@ -23,8 +23,8 @@ T = TypeVar("T", bound=Element)
 class ConnectorProtocol(Protocol):
     def __init__(
         self,
-        element: object,
-        line: object,
+        element: Presentation,
+        line: Presentation,
     ) -> None:
         ...
 
@@ -140,11 +140,11 @@ class UnaryRelationshipConnect(BaseConnector):
         self, element: Presentation[Element], line: Presentation[Element]
     ) -> None:
         super().__init__(element, line)
-        self.copy_buffer = list(copy(line.subject)) if line.subject else []
+        self.copy_buffer = dict(copy(line.subject)) if line.subject else {}
 
     def relationship(
-        self, required_type: type[Element], head: relation, tail: relation
-    ) -> Element | None:
+        self, required_type: type[T], head: relation, tail: relation
+    ) -> T | None:
         """Find an existing relationship in the model that meets the required
         type and is connected to the same model element the head and tail of
         the line are connected to.
@@ -171,7 +171,7 @@ class UnaryRelationshipConnect(BaseConnector):
             and getattr(line.subject, head.name) is head_subject
             and getattr(line.subject, tail.name) is tail_subject
         ):
-            return line.subject
+            return line.subject  # type: ignore[return-value]
 
         # Try to find a relationship, that is already created, but not
         # yet displayed in the diagram on the tail side, since tail should
@@ -203,33 +203,41 @@ class UnaryRelationshipConnect(BaseConnector):
                 return gen
         return None
 
-    def new_from_copy(self, type: type[T]) -> T:
+    def new_relation(self, type: type[T]) -> T:
+        return self.line.model.create(type)
+
+    def new_relation_from_copy(self, type: type[T]) -> T | None:
         if not self.copy_buffer:
-            return self.line.model.create(type)
+            return None
 
-        new_elements: list[Element] = []
-        for _id, copy_data in self.copy_buffer:
-            new_elements.extend(paste(copy_data, self.diagram, lambda _id: None))
-
-        for e in new_elements:
+        for e in paste_model(self.copy_buffer, self.diagram):
             if isinstance(e, type):
                 return e
-        raise AssertionError(f"Copied elements, but no {type} found ({new_elements})")
+
+        raise AssertionError(
+            f"Copied elements, but no {type} found ({self.copy_buffer})"
+        )
 
     def relationship_or_new(self, type: type[T], head: relation, tail: relation) -> T:
         """Like relation(), but create a new instance if none was found."""
         relation = self.relationship(type, head, tail)
-        if not relation:
-            line = self.line
-            relation = self.new_from_copy(type)
-            assert isinstance(relation, type)
+        if relation:
+            return relation
 
-            line_head = self.get_connected(line.head)
-            line_tail = self.get_connected(line.tail)
-            assert line_head
-            assert line_tail
-            setattr(relation, head.name, line_head.subject)
-            setattr(relation, tail.name, line_tail.subject)
+        line = self.line
+        relation = self.new_relation_from_copy(type)
+        if not relation:
+            relation = self.new_relation(type)
+
+        assert isinstance(relation, type)
+        line_head = self.get_connected(line.head)
+        line_tail = self.get_connected(line.tail)
+
+        assert line_head
+        assert line_tail
+        setattr(relation, head.name, line_head.subject)
+        setattr(relation, tail.name, line_tail.subject)
+
         assert isinstance(relation, type)
         return relation
 
@@ -342,3 +350,29 @@ class RelationshipConnect(UnaryRelationshipConnect):
             return False
 
         return super().allow(handle, port)
+
+
+def paste_model(copy_data, diagram) -> Iterator[Element]:
+
+    new_elements: dict[str, Element] = {}
+
+    def create(ref: str):
+        if ref in new_elements:
+            return new_elements[ref]
+
+        if ref in copy_data:
+            paster = paste(copy_data[ref], diagram, create)
+            new_elements[ref] = next(paster)
+            next(paster, None)
+            return new_elements[ref]
+
+    for old_id in copy_data:
+        if old_id in new_elements:
+            continue
+        create(old_id)
+
+    for element in new_elements.values():
+        assert element
+        element.postload()
+
+    return iter(new_elements.values())
