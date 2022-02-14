@@ -1,6 +1,7 @@
 import pytest
 
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect, get_connected
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.klass import ClassItem
@@ -54,26 +55,45 @@ def test_association_item_connect(connected_association, element_factory):
     assert asc.tail_subject is not None
 
 
-@pytest.mark.xfail
-def test_association_item_reconnect(connected_association, create):
+def test_association_item_reconnect_copies_properties(connected_association, create):
     asc, c1, c2 = connected_association
     c3 = create(ClassItem, UML.Class)
 
-    UML.recipes.set_navigability(asc.subject, asc.tail_subject, True)
+    asc.subject.name = "Name"
 
     a = asc.subject
 
     connect(asc, asc.tail, c3)
 
-    assert a is asc.subject
+    assert a is not asc.subject
     ends = [p.type for p in asc.subject.memberEnd]
     assert c1.subject in ends
     assert c3.subject in ends
     assert c2.subject not in ends
+    assert asc.subject.name == "Name"
+
+
+def test_association_item_reconnect_with_navigability(connected_association, create):
+    asc, c1, c2 = connected_association
+    c3 = create(ClassItem, UML.Class)
+
+    UML.recipes.set_navigability(asc.subject, asc.tail_subject, True)
+    connect(asc, asc.tail, c3)
+
     assert asc.tail_subject.navigability is True
 
 
-def test_disconnect_should_disconnect_model(connected_association):
+def test_association_item_reconnect_with_aggregation(connected_association, create):
+    asc, c1, c2 = connected_association
+    c3 = create(ClassItem, UML.Class)
+
+    asc.tail_subject.aggregation = "composite"
+    connect(asc, asc.tail, c3)
+
+    assert asc.tail_subject.aggregation == "composite"
+
+
+def test_disconnect_should_disconnect_model(connected_association, element_factory):
     asc, c1, c2 = connected_association
 
     disconnect(asc, asc.head)
@@ -81,10 +101,10 @@ def test_disconnect_should_disconnect_model(connected_association):
     assert c1 is not get_connected(asc, asc.head)
     assert c2 is not get_connected(asc, asc.tail)
 
-    assert asc.subject
-    assert len(asc.subject.memberEnd) == 2
-    assert asc.subject.memberEnd[0].type is None
-    assert asc.subject.memberEnd[1].type is None
+    assert not asc.subject
+    assert not asc.head_subject
+    assert not asc.tail_subject
+    assert not element_factory.lselect(UML.Property)
 
 
 def test_disconnect_of_second_association_should_leave_model_in_tact(
@@ -100,7 +120,7 @@ def test_disconnect_of_second_association_should_leave_model_in_tact(
 
 
 def test_disconnect_of_navigable_end_should_remove_owner_relationship(
-    connected_association,
+    connected_association, element_factory
 ):
     asc, c1, c2 = connected_association
 
@@ -110,13 +130,10 @@ def test_disconnect_of_navigable_end_should_remove_owner_relationship(
 
     disconnect(asc, asc.head)
 
-    assert asc.subject
-    assert len(asc.subject.memberEnd) == 2
-    assert asc.subject.memberEnd[0].type is None
-    assert asc.head_subject not in c2.subject.ownedAttribute
-    assert asc.tail_subject not in c1.subject.ownedAttribute
-    assert asc.head_subject.type is None
-    assert asc.tail_subject.type is None
+    assert not asc.subject
+    assert not asc.head_subject
+    assert not asc.tail_subject
+    assert not element_factory.lselect(UML.Property)
 
 
 def test_allow_reconnect_for_single_presentation(connected_association, create):
@@ -147,38 +164,56 @@ def test_allow_reconnect_if_only_one_connected_presentations(
     assert allow(asc, asc.head, c3)
 
 
-def test_disallow_connect_if_already_connected_with_presentations(
-    connected_association, clone, create
+def test_create_association_in_new_diagram_should_reuse_existing(
+    connected_association, element_factory
 ):
     asc, c1, c2 = connected_association
-    new = clone(asc)
 
-    c3 = create(ClassItem, UML.Class)
+    diagram2 = element_factory.create(Diagram)
+    c3 = diagram2.create(ClassItem, subject=c1.subject)
+    c4 = diagram2.create(ClassItem, subject=c2.subject)
+    asc2 = diagram2.create(AssociationItem)
 
-    assert not allow(new, new.head, c3)
+    connect(asc2, asc2.head, c3)
+    connect(asc2, asc2.tail, c4)
+
+    assert asc.subject is asc2.subject
+    assert asc.head_subject is asc2.head_subject
+    assert asc.tail_subject is asc2.tail_subject
 
 
-def test_disallow_reconnect_if_multiple_connected_presentations(
-    connected_association, clone, create
+def test_create_association_in_new_diagram_reversed_should_reuse_existing(
+    connected_association, element_factory
 ):
     asc, c1, c2 = connected_association
-    new = clone(asc)
-    connect(new, new.head, c1)
 
-    c3 = create(ClassItem, UML.Class)
+    diagram2 = element_factory.create(Diagram)
+    c3 = diagram2.create(ClassItem, subject=c1.subject)
+    c4 = diagram2.create(ClassItem, subject=c2.subject)
+    asc2 = diagram2.create(AssociationItem)
 
-    assert not allow(asc, asc.head, c3)
+    connect(asc2, asc2.tail, c3)
+    connect(asc2, asc2.head, c4)
+
+    assert asc.subject is asc2.subject
+    assert asc.head_subject is asc2.tail_subject
+    assert asc.tail_subject is asc2.head_subject
 
 
-def test_allow_both_ends_connected_to_the_same_class(create, clone):
-    asc = create(AssociationItem)
-    c1 = create(ClassItem, UML.Class)
-    connect(asc, asc.head, c1)
-    connect(asc, asc.tail, c1)
+def test_disconnect_association_in_new_diagram_should_clear_ends(
+    connected_association, element_factory
+):
+    asc, c1, c2 = connected_association
 
-    new = clone(asc)
-    c2 = create(ClassItem, UML.Class)
-    assert allow(new, new.head, c1)
-    assert allow(new, new.tail, c1)
-    assert not allow(new, new.head, c2)
-    assert not allow(new, new.tail, c2)
+    diagram2 = element_factory.create(Diagram)
+    c3 = diagram2.create(ClassItem, subject=c1.subject)
+    c4 = diagram2.create(ClassItem, subject=c2.subject)
+    asc2 = diagram2.create(AssociationItem)
+
+    connect(asc2, asc2.tail, c3)
+    connect(asc2, asc2.head, c4)
+    disconnect(asc, asc.head)
+
+    assert not asc.subject
+    assert not asc.head_subject
+    assert not asc.tail_subject
