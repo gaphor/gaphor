@@ -71,10 +71,6 @@ class BaseConnector:
         self.line = line
         self.diagram: Diagram = element.diagram
 
-    def get_connection(self, handle: Handle) -> Connection | None:
-        """Get connection information."""
-        return self.diagram.connections.get_connection(handle)
-
     def get_connected(self, handle: Handle) -> Presentation[Element] | None:
         """Get item connected to a handle."""
         if cinfo := self.diagram.connections.get_connection(handle):
