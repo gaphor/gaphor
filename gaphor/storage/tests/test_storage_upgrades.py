@@ -80,3 +80,31 @@ def test_upgrade_generalization_arrow_direction(loader):
 
     assert gen_item.diagram.connections.get_connection(gen_item.head).connected is cls2
     assert gen_item.diagram.connections.get_connection(gen_item.tail).connected is cls1
+
+
+def test_upgrade_flow_item_to_control_flow_item(element_factory, modeling_language):
+    diagram = element(id="1", type="Diagram")
+    objnode = element(id="2", type="ControlFlow")
+    item = element(id="3", type="FlowItem")
+    item.references["diagram"] = diagram.id
+    item.references["subject"] = objnode.id
+
+    load_elements(
+        {p.id: p for p in (diagram, objnode, item)}, element_factory, modeling_language
+    )
+
+    assert element_factory.lselect(diagramitems.ControlFlowItem)
+
+
+def test_upgrade_flow_item_to_object_flow_item(element_factory, modeling_language):
+    diagram = element(id="1", type="Diagram")
+    objnode = element(id="2", type="ObjectFlow")
+    item = element(id="3", type="FlowItem")
+    item.references["diagram"] = diagram.id
+    item.references["subject"] = objnode.id
+
+    load_elements(
+        {p.id: p for p in (diagram, objnode, item)}, element_factory, modeling_language
+    )
+
+    assert element_factory.lselect(diagramitems.ObjectFlowItem)

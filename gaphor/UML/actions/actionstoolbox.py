@@ -148,11 +148,18 @@ actions = ToolSection(
             handle_index=SE,
         ),
         ToolDef(
-            "toolbox-flow",
-            gettext("Control/object flow"),
+            "toolbox-control-flow",
+            gettext("Control flow"),
             "gaphor-control-flow-symbolic",
             "<Shift>F",
-            new_item_factory(diagramitems.FlowItem),
+            new_item_factory(diagramitems.ControlFlowItem),
+        ),
+        ToolDef(
+            "toolbox-object-flow",
+            gettext("Object flow"),
+            "gaphor-object-flow-symbolic",
+            "<Shift>Y",
+            new_item_factory(diagramitems.ObjectFlowItem),
         ),
         ToolDef(
             "toolbox-send-signal-action",

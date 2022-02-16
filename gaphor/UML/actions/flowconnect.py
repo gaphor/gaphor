@@ -14,14 +14,14 @@ from gaphor.UML.actions.activitynodes import (
     DecisionNodeItem,
     ForkNodeItem,
 )
-from gaphor.UML.actions.flow import FlowItem
+from gaphor.UML.actions.flow import ControlFlowItem, ObjectFlowItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
 
 class FlowConnect(UnaryRelationshipConnect):
-    """Connect FlowItem and Action/ObjectNode, initial/final nodes."""
+    """Connect FlowItem and Action, initial/final nodes."""
 
-    line: FlowItem
+    line: Union[ControlFlowItem, ObjectFlowItem]
 
     def allow(self, handle, port):
         line = self.line
@@ -33,7 +33,20 @@ class FlowConnect(UnaryRelationshipConnect):
             or handle is line.tail
             and isinstance(subject, UML.InitialNode)
         ):
-            return None
+            return False
+
+        # Flow type specific constraints:
+        if isinstance(line, ControlFlowItem) and isinstance(subject, UML.ObjectNode):
+            return False
+
+        if isinstance(line, ObjectFlowItem):
+            opposite_handle = line.opposite(handle)
+            opposite_item = self.get_connected(opposite_handle)
+            opposite_subject = opposite_item.subject if opposite_item else None
+            if isinstance(subject, UML.ExecutableNode) and isinstance(
+                opposite_subject, UML.ExecutableNode
+            ):
+                return False
 
         return super().allow(handle, port)
 
@@ -54,23 +67,23 @@ class FlowConnect(UnaryRelationshipConnect):
         line = self.line
         assert line
 
-        # TODO: connect opposite side again (in case it's a join/fork or
-        #       decision/merge node)
         c1 = self.get_connected(line.head)
         c2 = self.get_connected(line.tail)
         assert c1 and c2
         assert isinstance(c1.subject, UML.ActivityNode)
 
-        if isinstance(c1.subject, UML.ObjectNode) or isinstance(
-            c2.subject, UML.ObjectNode
-        ):
-            relation: UML.ActivityEdge = self.relationship_or_new(
-                UML.ObjectFlow, UML.ObjectFlow.source, UML.ObjectFlow.target
-            )
-        else:
+        relation: Union[UML.ControlFlow, UML.ObjectFlow]
+        if isinstance(line, ControlFlowItem):
             relation = self.relationship_or_new(
                 UML.ControlFlow, UML.ControlFlow.source, UML.ControlFlow.target
             )
+        elif isinstance(line, ObjectFlowItem):
+            relation = self.relationship_or_new(
+                UML.ObjectFlow, UML.ObjectFlow.source, UML.ObjectFlow.target
+            )
+        else:
+            raise ValueError("Expected a ControlFlowItem or ObjectFlowItem")
+
         line.subject = relation
         relation.activity = c1.subject.activity
         opposite = line.opposite(handle)
@@ -89,14 +102,18 @@ class FlowConnect(UnaryRelationshipConnect):
             adapter.decombine_nodes()
 
 
-Connector.register(ActionItem, FlowItem)(FlowConnect)
-Connector.register(ActivityNodeItem, FlowItem)(FlowConnect)
-Connector.register(ObjectNodeItem, FlowItem)(FlowConnect)
-Connector.register(SendSignalActionItem, FlowItem)(FlowConnect)
-Connector.register(AcceptEventActionItem, FlowItem)(FlowConnect)
+Connector.register(ActionItem, ControlFlowItem)(FlowConnect)
+Connector.register(ActivityNodeItem, ControlFlowItem)(FlowConnect)
+Connector.register(SendSignalActionItem, ControlFlowItem)(FlowConnect)
+Connector.register(AcceptEventActionItem, ControlFlowItem)(FlowConnect)
+
+Connector.register(ActionItem, ObjectFlowItem)(FlowConnect)
+Connector.register(ActivityNodeItem, ObjectFlowItem)(FlowConnect)
+Connector.register(ObjectNodeItem, ObjectFlowItem)(FlowConnect)
+Connector.register(SendSignalActionItem, ObjectFlowItem)(FlowConnect)
 
 
-class FlowForkDecisionNodeConnect(FlowConnect):
+class FlowForkDecisionNodeControlFlowConnect(FlowConnect):
     """Abstract class with common behaviour for Fork/Join node and
     Decision/Merge node."""
 
@@ -203,16 +220,16 @@ class FlowForkDecisionNodeConnect(FlowConnect):
             self.decombine_nodes()
 
 
-@Connector.register(ForkNodeItem, FlowItem)
-class FlowForkNodeConnect(FlowForkDecisionNodeConnect):
+@Connector.register(ForkNodeItem, ControlFlowItem)
+class FlowForkNodeControlFlowConnect(FlowForkDecisionNodeControlFlowConnect):
     """Connect Flow to a ForkNode."""
 
     fork_node_cls = UML.ForkNode
     join_node_cls = UML.JoinNode
 
 
-@Connector.register(DecisionNodeItem, FlowItem)
-class FlowDecisionNodeConnect(FlowForkDecisionNodeConnect):
+@Connector.register(DecisionNodeItem, ControlFlowItem)
+class FlowDecisionNodeControlFlowConnect(FlowForkDecisionNodeControlFlowConnect):
     """Connect Flow to a DecisionNode."""
 
     fork_node_cls = UML.DecisionNode

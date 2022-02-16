@@ -48,6 +48,7 @@ ICONS=diagram \
 	object-node \
 	activity-partition \
 	control-flow \
+	object-flow \
 	send-signal-action \
 	accept-event-action \
 	lifeline \

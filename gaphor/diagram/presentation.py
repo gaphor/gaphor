@@ -251,17 +251,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         return min(d0, *ds) if ds else d0
 
     def draw(self, context):
-        def draw_line_end(end_handle, second_handle, draw):
-            pos, p1 = end_handle.pos, second_handle.pos
-            angle = atan2(p1.y - pos.y, p1.x - pos.x)
-            cr.save()
-            try:
-                cr.translate(*pos)
-                cr.rotate(angle)
-                draw(context)
-            finally:
-                cr.restore()
-
         style = merge_styles(context.style, self.style)
         context = replace(context, style=style)
 
@@ -269,12 +258,12 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         cr = context.cairo
 
         handles = self._handles
-        draw_line_end(handles[0], handles[1], self.draw_head)
+        draw_line_end(context, handles[0], handles[1], self.draw_head)
 
         for h in self._handles[1:-1]:
             cr.line_to(*h.pos)
 
-        draw_line_end(handles[-1], handles[-2], self.draw_tail)
+        draw_line_end(context, handles[-1], handles[-2], self.draw_tail)
 
         stroke(context)
 
@@ -288,8 +277,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
     def save(self, save_func):
         def save_connection(name, handle):
-            c = self._connections.get_connection(handle)
-            if c:
+            if c := self._connections.get_connection(handle):
                 save_func(name, c.connected)
 
         super().save(save_func)
@@ -340,3 +328,16 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
     def _on_horizontal(self, _event):
         self.update_orthogonal_constraints(self.orthogonal)
+
+
+def draw_line_end(context, end_handle, second_handle, draw):
+    cr = context.cairo
+    pos, p1 = end_handle.pos, second_handle.pos
+    angle = atan2(p1.y - pos.y, p1.x - pos.x)
+    cr.save()
+    try:
+        cr.translate(*pos)
+        cr.rotate(angle)
+        draw(context)
+    finally:
+        cr.restore()

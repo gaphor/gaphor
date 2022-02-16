@@ -19,7 +19,7 @@ from gaphor.UML.actions.activitynodes import (
     ForkNodeItem,
     InitialNodeItem,
 )
-from gaphor.UML.actions.flow import FlowItem
+from gaphor.UML.actions.flow import ControlFlowItem, ObjectFlowItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 from gaphor.UML.actions.partition import PartitionItem
 
@@ -33,7 +33,8 @@ __all__ = [
     "FlowFinalNodeItem",
     "ForkNodeItem",
     "InitialNodeItem",
-    "FlowItem",
+    "ControlFlowItem",
+    "ObjectFlowItem",
     "ObjectNodeItem",
     "PartitionItem",
 ]
