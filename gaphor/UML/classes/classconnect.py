@@ -113,16 +113,24 @@ class AssociationConnect(UnaryRelationshipConnect):
         diagram = self.diagram
 
         a: UML.Association
-        return next((a for a in line.model.select(UML.Association) if (
-                (
-                    head_subject is a.memberEnd[0].type
-                    and tail_subject is a.memberEnd[1].type
+        return next(
+            (
+                a
+                for a in line.model.select(UML.Association)
+                if (
+                    (
+                        head_subject is a.memberEnd[0].type
+                        and tail_subject is a.memberEnd[1].type
+                    )
+                    or (
+                        head_subject is a.memberEnd[1].type
+                        and tail_subject is a.memberEnd[0].type
+                    )
                 )
-                or (
-                    head_subject is a.memberEnd[1].type
-                    and tail_subject is a.memberEnd[0].type
-                )
-            ) and diagram not in a.presentation[:].diagram), None)
+                and diagram not in a.presentation[:].diagram
+            ),
+            None,
+        )
 
     def new_relation(self, head_subject, tail_subject) -> UML.Association:  # type: ignore[override]
         return UML.recipes.create_association(head_subject, tail_subject)  # type: ignore[no-any-return]
