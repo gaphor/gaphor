@@ -2,8 +2,6 @@
 
 from typing import Type
 
-import pytest
-
 from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.UML.actions.action import ActionItem
@@ -118,7 +116,6 @@ def test_object_flow_reconnect(case):
     assert flow.subject.guard == "tguard"
 
 
-@pytest.mark.xfail
 def test_control_flow_reconnection(case):
     """Test control flow becoming object flow due to reconnection."""
     flow = case.create(ControlFlowItem)
@@ -237,7 +234,6 @@ def test_reconnect(case):
     assert flow.subject.guard == "tguard"
 
 
-@pytest.mark.xfail
 def test_object_flow_reconnection(case):
     """Test object flow becoming control flow due to reconnection."""
     flow = case.create(ObjectFlowItem)
