@@ -89,10 +89,7 @@ class AssociationConnect(UnaryRelationshipConnect):
 
     def allow(self, handle, port):
         # Element should be a Classifier
-        if not isinstance(self.element.subject, UML.Classifier):
-            return False
-
-        return True
+        return isinstance(self.element.subject, UML.Classifier)
 
     def relationship(  # type:ignore[override]
         self, head_subject, tail_subject
@@ -116,8 +113,7 @@ class AssociationConnect(UnaryRelationshipConnect):
         diagram = self.diagram
 
         a: UML.Association
-        for a in line.model.select(UML.Association):
-            if (
+        return next((a for a in line.model.select(UML.Association) if (
                 (
                     head_subject is a.memberEnd[0].type
                     and tail_subject is a.memberEnd[1].type
@@ -126,10 +122,7 @@ class AssociationConnect(UnaryRelationshipConnect):
                     head_subject is a.memberEnd[1].type
                     and tail_subject is a.memberEnd[0].type
                 )
-            ) and diagram not in a.presentation[:].diagram:
-                return a
-
-        return None
+            ) and diagram not in a.presentation[:].diagram), None)
 
     def new_relation(self, head_subject, tail_subject) -> UML.Association:  # type: ignore[override]
         return UML.recipes.create_association(head_subject, tail_subject)  # type: ignore[no-any-return]

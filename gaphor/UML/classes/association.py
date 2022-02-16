@@ -481,8 +481,7 @@ class AssociationEnd:
             return
 
         cr = context.cairo
-        text_color = context.style.get("text-color")
-        if text_color:
+        if text_color := context.style.get("text-color"):
             cr.set_source_rgba(*text_color)
 
         cr.move_to(self._name_bounds.x, self._name_bounds.y)
