@@ -9,14 +9,14 @@ from typing import Union
 
 from gaphor import UML
 from gaphor.diagram.connectors import BaseConnector, Connector
+from gaphor.UML.classes.component import ComponentItem
 from gaphor.UML.classes.interface import InterfaceItem
-from gaphor.UML.deployments.component import ComponentItem
 from gaphor.UML.deployments.connector import ConnectorItem
 
 
 @Connector.register(ComponentItem, ConnectorItem)
 @Connector.register(InterfaceItem, ConnectorItem)
-class ConnectorConnectBase(BaseConnector):
+class LegacyConnectorConnectBase(BaseConnector):
     """This connector is left as is, mainly for backwards compatibility.
 
     The Connector item has been removed from the Components tool

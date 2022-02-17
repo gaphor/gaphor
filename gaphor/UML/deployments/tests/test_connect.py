@@ -8,7 +8,7 @@ from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem, Side
 from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
 from gaphor.UML.deployments import ComponentItem, ConnectorItem
-from gaphor.UML.deployments.connectorconnect import ConnectorConnectBase
+from gaphor.UML.deployments.connectorconnect import LegacyConnectorConnectBase
 
 
 class TestComponentConnect:
@@ -191,8 +191,8 @@ class TestAssemblyConnector:
         case.connect(conn1, conn1.tail, c1)
         case.connect(conn2, conn2.head, c2)
 
-        assert c1 is ConnectorConnectBase.get_component(conn1)
-        assert c2 is ConnectorConnectBase.get_component(conn2)
+        assert c1 is LegacyConnectorConnectBase.get_component(conn1)
+        assert c2 is LegacyConnectorConnectBase.get_component(conn2)
 
     def test_connection(self, case):
         """Test basic assembly connection."""
