@@ -1,7 +1,7 @@
 """Test connector item."""
 
 from gaphor import UML
-from gaphor.UML.components.connector import ConnectorItem
+from gaphor.UML.deployments.connector import ConnectorItem
 
 
 class TestConnectorItem:

@@ -3,7 +3,7 @@ import pytest
 from gaphor import UML
 from gaphor.diagram.propertypages import PropertyPages
 from gaphor.diagram.tests.fixtures import find
-from gaphor.UML.components.componentspropertypage import InformationFlowPropertyPage
+from gaphor.UML.deployments.componentspropertypage import InformationFlowPropertyPage
 
 
 # The Property page only works for Connectors with InformationFlow!

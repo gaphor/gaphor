@@ -7,8 +7,8 @@ from gaphor.conftest import Case
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem, Side
 from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
-from gaphor.UML.components import ComponentItem, ConnectorItem
-from gaphor.UML.components.connectorconnect import ConnectorConnectBase
+from gaphor.UML.deployments import ComponentItem, ConnectorItem
+from gaphor.UML.deployments.connectorconnect import ConnectorConnectBase
 
 
 class TestComponentConnect:

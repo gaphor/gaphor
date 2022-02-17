@@ -9,7 +9,7 @@ from gaphor.diagram.diagramtoolbox import (
 from gaphor.i18n import gettext
 from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.classes.classestoolbox import classes
-from gaphor.UML.components.componentstoolbox import components
+from gaphor.UML.deployments.componentstoolbox import components
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.profiles.profilestoolbox import profiles
 from gaphor.UML.states.statestoolbox import states

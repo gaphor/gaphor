@@ -9,7 +9,7 @@ from gaphor.diagram.propertypages import (
     new_resource_builder,
 )
 
-new_builder = new_resource_builder("gaphor.UML.components")
+new_builder = new_resource_builder("gaphor.UML.deployments")
 
 
 @PropertyPages.register(UML.Component)

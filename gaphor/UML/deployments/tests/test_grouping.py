@@ -1,5 +1,5 @@
 from gaphor import UML
-from gaphor.UML.components import ArtifactItem, ComponentItem, NodeItem
+from gaphor.UML.deployments import ArtifactItem, ComponentItem, NodeItem
 from gaphor.UML.usecases import UseCaseItem
 
 

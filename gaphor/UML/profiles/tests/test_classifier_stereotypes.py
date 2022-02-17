@@ -4,7 +4,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.conftest import Case
-from gaphor.UML.components.component import ComponentItem
+from gaphor.UML.deployments.component import ComponentItem
 
 
 def compartments(item):

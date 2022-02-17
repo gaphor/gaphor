@@ -10,8 +10,8 @@ from typing import Union
 from gaphor import UML
 from gaphor.diagram.connectors import BaseConnector, Connector
 from gaphor.UML.classes.interface import InterfaceItem
-from gaphor.UML.components.component import ComponentItem
-from gaphor.UML.components.connector import ConnectorItem
+from gaphor.UML.deployments.component import ComponentItem
+from gaphor.UML.deployments.connector import ConnectorItem
 
 
 @Connector.register(ComponentItem, ConnectorItem)

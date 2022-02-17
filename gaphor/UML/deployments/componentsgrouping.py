@@ -1,8 +1,8 @@
 from gaphor import UML
 from gaphor.diagram.grouping import AbstractGroup, Group
-from gaphor.UML.components.artifact import ArtifactItem
-from gaphor.UML.components.component import ComponentItem
-from gaphor.UML.components.node import NodeItem
+from gaphor.UML.deployments.artifact import ArtifactItem
+from gaphor.UML.deployments.component import ComponentItem
+from gaphor.UML.deployments.node import NodeItem
 from gaphor.UML.usecases import UseCaseItem
 
 

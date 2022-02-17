@@ -17,7 +17,7 @@ from gaphor.diagram.propertypages import (
 from gaphor.UML.classes.datatype import DataTypeItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
-from gaphor.UML.components.connector import ConnectorItem
+from gaphor.UML.deployments.connector import ConnectorItem
 
 log = logging.getLogger(__name__)
 

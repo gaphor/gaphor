@@ -1,5 +1,5 @@
 from gaphor.UML.classes import DependencyItem
-from gaphor.UML.components import NodeItem
+from gaphor.UML.deployments import NodeItem
 
 PARENT_X = 189
 PARENT_Y = 207

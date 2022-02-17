@@ -4,7 +4,7 @@ from gaphor import UML
 from gaphor.diagram.copypaste import copy, paste_link
 from gaphor.diagram.grouping import Group
 from gaphor.diagram.tests.fixtures import copy_clear_and_paste_link
-from gaphor.UML.components import ComponentItem, NodeItem
+from gaphor.UML.deployments import ComponentItem, NodeItem
 
 
 @pytest.fixture
