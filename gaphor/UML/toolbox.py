@@ -9,7 +9,7 @@ from gaphor.diagram.diagramtoolbox import (
 from gaphor.i18n import gettext
 from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.classes.classestoolbox import classes
-from gaphor.UML.deployments.componentstoolbox import components
+from gaphor.UML.deployments.deploymentstoolbox import deployments
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.profiles.profilestoolbox import profiles
 from gaphor.UML.states.statestoolbox import states
@@ -18,7 +18,7 @@ from gaphor.UML.usecases.usecasetoolbox import use_cases
 uml_toolbox_actions: ToolboxDefinition = (
     general_tools,
     classes,
-    components,
+    deployments,
     actions,
     interactions,
     states,
@@ -29,8 +29,8 @@ uml_toolbox_actions: ToolboxDefinition = (
 uml_diagram_types: DiagramTypes = (
     DiagramType("cls", gettext("New Class Diagram"), (classes,)),
     DiagramType("pkg", gettext("New Package Diagram"), (classes,)),
-    DiagramType("cmp", gettext("New Component Diagram"), (components,)),
-    DiagramType("dep", gettext("New Deployment Diagram"), (components,)),
+    DiagramType("cmp", gettext("New Component Diagram"), (classes,)),
+    DiagramType("dep", gettext("New Deployment Diagram"), (deployments,)),
     DiagramType("act", gettext("New Activity Diagram"), (actions,)),
     DiagramType("sd", gettext("New Sequence Diagram"), (interactions,)),
     DiagramType("com", gettext("New Communication Diagram"), (interactions,)),

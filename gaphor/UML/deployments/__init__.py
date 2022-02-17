@@ -1,8 +1,8 @@
 from gaphor.UML.deployments import (
-    componentsgrouping,
-    componentspropertypage,
     connectorconnect,
     copypaste,
+    deploymentpropertypage,
+    deploymentsgrouping,
 )
 from gaphor.UML.deployments.artifact import ArtifactItem
 from gaphor.UML.deployments.component import ComponentItem

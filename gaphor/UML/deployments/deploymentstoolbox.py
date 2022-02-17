@@ -12,8 +12,8 @@ from gaphor.diagram.diagramtoolbox import (
 )
 from gaphor.UML import diagramitems
 
-components: ToolSection = ToolSection(
-    gettext("Components"),
+deployments: ToolSection = ToolSection(
+    gettext("Deployments"),
     (
         ToolDef(
             "toolbox-component",
