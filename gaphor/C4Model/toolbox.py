@@ -83,7 +83,7 @@ c4 = ToolSection(
             "c4-container",
             gettext("Container"),
             "gaphor-c4-container-symbolic",
-            "o",
+            "u",
             new_item_factory(
                 diagramitems.C4ContainerItem,
                 c4model.C4Container,

@@ -16,18 +16,6 @@ deployments: ToolSection = ToolSection(
     gettext("Deployments"),
     (
         ToolDef(
-            "toolbox-component",
-            gettext("Component"),
-            "gaphor-component-symbolic",
-            "o",
-            new_item_factory(
-                diagramitems.ComponentItem,
-                UML.Component,
-                config_func=namespace_config,
-            ),
-            handle_index=SE,
-        ),
-        ToolDef(
             "toolbox-artifact",
             gettext("Artifact"),
             "gaphor-artifact-symbolic",

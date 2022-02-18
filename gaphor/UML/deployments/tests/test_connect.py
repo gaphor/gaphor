@@ -4,10 +4,11 @@ import pytest
 
 from gaphor import UML
 from gaphor.conftest import Case
+from gaphor.UML.classes.component import ComponentItem
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem, Side
 from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
-from gaphor.UML.deployments import ComponentItem, ConnectorItem
+from gaphor.UML.deployments import ConnectorItem
 from gaphor.UML.deployments.connectorconnect import LegacyConnectorConnectBase
 
 

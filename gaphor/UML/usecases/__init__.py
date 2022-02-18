@@ -1,4 +1,5 @@
 from gaphor.UML.usecases import usecaseconnect
+from gaphor.UML.usecases import usecasegrouping
 from gaphor.UML.usecases.actor import ActorItem
 from gaphor.UML.usecases.extend import ExtendItem
 from gaphor.UML.usecases.include import IncludeItem
