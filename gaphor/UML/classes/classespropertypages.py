@@ -17,7 +17,7 @@ from gaphor.diagram.propertypages import (
 from gaphor.UML.classes.datatype import DataTypeItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
-from gaphor.UML.components.connector import ConnectorItem
+from gaphor.UML.deployments.connector import ConnectorItem
 
 log = logging.getLogger(__name__)
 
@@ -160,8 +160,7 @@ def tree_view_column_tooltips(tree_view, tooltips):
     assert tree_view.get_n_columns() == len(tooltips)
 
     def on_query_tooltip(widget, x, y, keyboard_mode, tooltip):
-        path_and_more = widget.get_path_at_pos(x, y)
-        if path_and_more:
+        if path_and_more := widget.get_path_at_pos(x, y):
             path, column, cx, cy = path_and_more
             n = widget.get_columns().index(column)
             if tooltips[n]:
@@ -452,3 +451,36 @@ class OperationsPage(PropertyPageBase):
 
     def on_operations_info_clicked(self, image, event):
         self.info.show()
+
+
+@PropertyPages.register(UML.Component)
+class ComponentPropertyPage(PropertyPageBase):
+
+    order = 15
+
+    subject: UML.Component
+
+    def __init__(self, subject):
+        self.subject = subject
+
+    def construct(self):
+        subject = self.subject
+
+        if not subject:
+            return
+
+        builder = new_builder(
+            "component-editor",
+            signals={"indirectly-instantiated-changed": (self._on_ii_change,)},
+        )
+
+        ii = builder.get_object("indirectly-instantiated")
+        ii.set_active(subject.isIndirectlyInstantiated)
+
+        return builder.get_object("component-editor")
+
+    @transactional
+    def _on_ii_change(self, button, gparam):
+        """Called when user clicks "Indirectly instantiated" check button."""
+        if subject := self.subject:
+            subject.isIndirectlyInstantiated = button.get_active()

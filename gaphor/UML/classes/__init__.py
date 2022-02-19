@@ -19,9 +19,11 @@ from gaphor.UML.classes.package import PackageItem
 from gaphor.UML.classes.enumeration import EnumerationItem
 from gaphor.UML.classes.containment import ContainmentItem
 from gaphor.UML.classes.datatype import DataTypeItem
+from gaphor.UML.classes.component import ComponentItem
 
 __all__ = [
     "AssociationItem",
+    "ComponentItem",
     "ContainmentItem",
     "DataTypeItem",
     "DependencyItem",

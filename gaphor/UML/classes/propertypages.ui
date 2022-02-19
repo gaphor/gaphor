@@ -753,4 +753,24 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
       </object>
     </property>
   </object>
+  <object class="GtkBox" id="component-editor">
+    <property name="margin-top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Indirectly Instantiated</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="indirectly-instantiated">
+            <property name="halign">center</property>
+            <signal name="notify::active" handler="indirectly-instantiated-changed" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
 </interface>

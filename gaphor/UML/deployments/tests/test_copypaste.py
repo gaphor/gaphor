@@ -7,8 +7,8 @@ from gaphor.core.modeling.modelinglanguage import (
 )
 from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste_link
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
-from gaphor.UML.classes import InterfaceItem
-from gaphor.UML.components import ComponentItem, ConnectorItem
+from gaphor.UML.classes import ComponentItem, InterfaceItem
+from gaphor.UML.deployments import ConnectorItem
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
