@@ -160,8 +160,7 @@ def tree_view_column_tooltips(tree_view, tooltips):
     assert tree_view.get_n_columns() == len(tooltips)
 
     def on_query_tooltip(widget, x, y, keyboard_mode, tooltip):
-        path_and_more = widget.get_path_at_pos(x, y)
-        if path_and_more:
+        if path_and_more := widget.get_path_at_pos(x, y):
             path, column, cx, cy = path_and_more
             n = widget.get_columns().index(column)
             if tooltips[n]:
@@ -483,6 +482,5 @@ class ComponentPropertyPage(PropertyPageBase):
     @transactional
     def _on_ii_change(self, button, gparam):
         """Called when user clicks "Indirectly instantiated" check button."""
-        subject = self.subject
-        if subject:
+        if subject := self.subject:
             subject.isIndirectlyInstantiated = button.get_active()
