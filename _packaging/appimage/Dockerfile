@@ -114,8 +114,9 @@ RUN wget -q https://www.freedesktop.org/software/fontconfig/release/fontconfig-$
 ENV CHECKOUT=/root/jhbuild/checkout \
     LD_LIBRARY_PATH="/root/jhbuild/install/lib" \
     PKG_CONFIG_PATH="/root/jhbuild/install/lib/pkgconfig" \
-    PATH="/root/jhbuild/install/bin:/root/.local/bin:$PATH" \
-    JHBUILD_RUN_AS_ROOT=""
+    PATH="/root/jhbuild/install/bin:/root/.local/bin:/root/.cargo/bin:$PATH" \
+    JHBUILD_RUN_AS_ROOT="" \
+    GSETTINGS_SCHEMA_DIR="/root/jhbuild/install/share/glib-2.0/schemas"
 
 # Install jhbuild
 RUN mkdir -p $CHECKOUT \
