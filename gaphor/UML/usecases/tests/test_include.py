@@ -42,7 +42,7 @@ class TestIncludeItem:
         # reconnect: uc1 -> uc2
         case.connect(include, include.tail, uc3)
 
-        assert e is include.subject
+        assert e is not include.subject
         assert include.subject.addition is uc1.subject
         assert include.subject.includingCase is uc3.subject
 

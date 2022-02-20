@@ -50,19 +50,6 @@ class FlowConnect(UnaryRelationshipConnect):
 
         return super().allow(handle, port)
 
-    def reconnect(self, handle, port):
-        line = self.line
-        old_flow = line.subject
-        # Secure properties before old_flow is removed:
-        name = old_flow.name
-        guard_value = old_flow.guard
-        self.connect_subject(handle)
-        relation = line.subject
-        if old_flow:
-            relation.name = name
-            if guard_value:
-                relation.guard = guard_value
-
     def connect_subject(self, handle):
         line = self.line
         assert line

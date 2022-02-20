@@ -14,6 +14,7 @@ from generic.multidispatch import FunctionDispatcher, multidispatch
 
 from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.core.modeling.properties import association, redefine, relation
+from gaphor.diagram.copypaste import copy, paste
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
 T = TypeVar("T", bound=Element)
@@ -54,7 +55,6 @@ class BaseConnector:
       disconnects, if required (e.g. 1:1 relationships)
     - ``disconnect()``: Break connection, called when dropping a handle on a
       point where it can not connect.
-    - ``reconnect()`` (*Optional*): Connect to another item (only used if present)
 
     By convention the adapters are registered by (element, line) -- in that order.
     """
@@ -66,7 +66,7 @@ class BaseConnector:
     ) -> None:
         assert (
             element.diagram and element.diagram is line.diagram
-        ), f"Connector without diagram ({element}: {element.diagram}, {line}: {line.diagram})"
+        ), f"Cannot connect with different diagrams ({element}: {element.diagram}, {line}: {line.diagram})"
         self.element = element
         self.line = line
         self.diagram: Diagram = element.diagram
@@ -77,8 +77,7 @@ class BaseConnector:
 
     def get_connected(self, handle: Handle) -> Presentation[Element] | None:
         """Get item connected to a handle."""
-        cinfo = self.diagram.connections.get_connection(handle)
-        if cinfo:
+        if cinfo := self.diagram.connections.get_connection(handle):
             return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
         return None
 
@@ -131,15 +130,21 @@ class UnaryRelationshipConnect(BaseConnector):
     """Base class for relationship connections, such as associations,
     dependencies and implementations.
 
-    Unary relationships are allowed to connect both ends to the same element
+    Unary relationships are allowed to connect both ends to the same element.
 
-    This class introduces a new method: relationship() which is used to
+    This class introduces a new method: `relationship()`, which is used to
     find an existing relationship in the model that does not yet exist
     on the diagram.
     """
 
     element: Presentation
     line: LinePresentation[Element]
+
+    def __init__(
+        self, element: Presentation[Element], line: Presentation[Element]
+    ) -> None:
+        super().__init__(element, line)
+        self.copy_buffer = list(copy(line.subject)) if line.subject else []
 
     def relationship(
         self, required_type: type[Element], head: relation, tail: relation
@@ -202,12 +207,27 @@ class UnaryRelationshipConnect(BaseConnector):
                 return gen
         return None
 
+    def new_from_copy(self, type: type[T]) -> T:
+        if not self.copy_buffer:
+            return self.line.model.create(type)
+
+        new_elements: list[Element] = []
+        for _id, copy_data in self.copy_buffer:
+            new_elements.extend(paste(copy_data, self.diagram, lambda _id: None))
+
+        for e in new_elements:
+            if isinstance(e, type):
+                return e
+        raise AssertionError(f"Copied elements, but no {type} found ({new_elements})")
+
     def relationship_or_new(self, type: type[T], head: relation, tail: relation) -> T:
         """Like relation(), but create a new instance if none was found."""
         relation = self.relationship(type, head, tail)
         if not relation:
             line = self.line
-            relation = line.model.create(type)
+            relation = self.new_from_copy(type)
+            assert isinstance(relation, type)
+
             line_head = self.get_connected(line.head)
             line_tail = self.get_connected(line.tail)
             assert line_head
@@ -216,31 +236,6 @@ class UnaryRelationshipConnect(BaseConnector):
             setattr(relation, tail.name, line_tail.subject)
         assert isinstance(relation, type)
         return relation
-
-    def reconnect_relationship(
-        self, handle: Handle, head: relation, tail: relation
-    ) -> None:
-        """Reconnect relationship for given handle.
-
-        :Parameters:
-         handle
-            Handle at which reconnection happens.
-         head
-            Relationship head attribute name.
-         tail
-            Relationship tail attribute name.
-        """
-        line = self.line
-        c1 = self.get_connected(line.head)
-        c2 = self.get_connected(line.tail)
-        assert c1
-        assert c2
-        if line.head is handle:
-            setattr(line.subject, head.name, c1.subject)
-        elif line.tail is handle:
-            setattr(line.subject, tail.name, c2.subject)
-        else:
-            raise ValueError("Incorrect handle passed to adapter")
 
     def connect_connected_items(self, connections: None = None) -> None:
         """Cause items connected to ``line`` to reconnect, allowing them to
@@ -302,8 +297,7 @@ class UnaryRelationshipConnect(BaseConnector):
         if not super().connect(handle, port):
             return False
         opposite = self.line.opposite(handle)
-        oct = self.get_connected(opposite)
-        if oct:
+        if self.get_connected(opposite):
             self.connect_subject(handle)
             line = self.line
             if line.subject:

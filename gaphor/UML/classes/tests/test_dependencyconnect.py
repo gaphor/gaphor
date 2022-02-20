@@ -46,7 +46,7 @@ def test_dependency_connect(create, element_factory):
     assert actor2.subject is dep.subject.client
 
 
-def test_dependency_reconnection(create):
+def test_dependency_reconnect(create):
     """Test dependency reconnection."""
     a1 = create(ActorItem, UML.Actor)
     a2 = create(ActorItem, UML.Actor)
@@ -62,10 +62,29 @@ def test_dependency_reconnection(create):
     # reconnect: a1 -> a3
     connect(dep, dep.tail, a3)
 
-    assert d is dep.subject
+    assert d is not dep.subject
     assert a1.subject is dep.subject.supplier
     assert a3.subject is dep.subject.client
     assert a2.subject is not dep.subject.client, dep.subject.client
+
+
+def test_dependency_reconnect_should_keep_attributes(create):
+    """Test dependency reconnection."""
+    a1 = create(ActorItem, UML.Actor)
+    a2 = create(ActorItem, UML.Actor)
+    a3 = create(ActorItem, UML.Actor)
+    dep = create(DependencyItem)
+
+    # connect: a1 -> a2
+    connect(dep, dep.head, a1)
+    connect(dep, dep.tail, a2)
+
+    dep.subject.name = "Name"
+
+    # reconnect: a1 -> a3
+    connect(dep, dep.tail, a3)
+
+    assert dep.subject.name == "Name"
 
 
 def test_dependency_disconnect(create, element_factory):
@@ -86,7 +105,7 @@ def test_dependency_disconnect(create, element_factory):
     assert dep_subj not in actor2.subject.clientDependency
 
 
-def test_dependency_reconnect(create):
+def test_dependency_reconnect_on_same(create):
     """Test dependency reconnection using two actor items."""
     actor1 = create(ActorItem, UML.Actor)
     actor2 = create(ActorItem, UML.Actor)
@@ -165,3 +184,58 @@ def test_dependency_type_auto(create, element_factory):
     assert dep.subject is not None
     assert isinstance(dep.subject, UML.Usage), dep.subject
     assert dep.subject in element_factory.select()
+
+
+def test_dependency_reconnect_in_new_diagram(create, element_factory):
+    dep = create(DependencyItem)
+    c1 = create(ClassItem, UML.Class)
+    c2 = create(ClassItem, UML.Class)
+
+    connect(dep, dep.head, c1)
+    connect(dep, dep.tail, c2)
+
+    # Now do the same on a new diagram:
+    diagram2 = element_factory.create(Diagram)
+    c3 = diagram2.create(ClassItem, subject=c1.subject)
+    c4 = diagram2.create(ClassItem, subject=c2.subject)
+    dep2 = diagram2.create(DependencyItem)
+
+    connect(dep2, dep2.head, c3)
+    connect(dep2, dep2.tail, c4)
+    assert dep.subject is dep2.subject
+
+    c5 = diagram2.create(ClassItem, subject=c2.subject)
+    connect(dep2, dep2.head, c5)
+
+    assert dep.subject is not dep2.subject
+    assert dep.subject.supplier is c1.subject
+    assert dep.subject.client is c2.subject
+    assert dep2.subject.supplier is c5.subject
+    assert dep2.subject.client is c4.subject
+
+
+def test_dependency_reconnect_twice_in_new_diagram(create, element_factory):
+    dep = create(DependencyItem)
+    c1 = create(ClassItem, UML.Class)
+    c2 = create(ClassItem, UML.Class)
+
+    connect(dep, dep.head, c1)
+    connect(dep, dep.tail, c2)
+
+    # Now do the same on a new diagram:
+    diagram2 = element_factory.create(Diagram)
+    c3 = diagram2.create(ClassItem, subject=c1.subject)
+    c4 = diagram2.create(ClassItem, subject=c2.subject)
+    dep2 = diagram2.create(DependencyItem)
+
+    connect(dep2, dep2.head, c3)
+    connect(dep2, dep2.tail, c4)
+    assert dep.subject is dep2.subject
+
+    c5 = diagram2.create(ClassItem, subject=c2.subject)
+    connect(dep2, dep2.head, c5)
+    connect(dep2, dep2.head, c3)
+
+    assert dep.subject is dep2.subject
+    assert dep.subject.supplier is c3.subject
+    assert dep.subject.client is c4.subject

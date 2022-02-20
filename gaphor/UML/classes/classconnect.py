@@ -20,6 +20,8 @@ from gaphor.UML.recipes import owner_package
 class DependencyConnect(RelationshipConnect):
     """Connect two Named elements using a Dependency."""
 
+    line: DependencyItem
+
     def allow(self, handle, port):
         element = self.element
 
@@ -29,24 +31,17 @@ class DependencyConnect(RelationshipConnect):
 
         return super().allow(handle, port)
 
-    def reconnect(self, handle, port):
-        line = self.line
-        dep = line.subject
-        assert isinstance(dep, UML.Dependency)
-        if dep:
-            if handle is line.head:
-                del dep.supplier
-            elif handle is line.tail:
-                del dep.client
-        self.reconnect_relationship(
-            handle, line.dependency_type.supplier, line.dependency_type.client
-        )
-
     def connect_subject(self, handle):
-        """
-        TODO: check for existing relationships (use self.relation())
-        """
+        dependency_type = self.update_dependency_type(handle)
 
+        relation = self.relationship_or_new(
+            dependency_type,
+            dependency_type.supplier,
+            dependency_type.client,
+        )
+        self.line.subject = relation
+
+    def update_dependency_type(self, handle):
         line = self.line
 
         if line.auto_dependency:
@@ -61,29 +56,17 @@ class DependencyConnect(RelationshipConnect):
                 client = self.element.subject
                 supplier = other.subject
             line.dependency_type = UML.recipes.dependency_type(client, supplier)
-
-        relation = self.relationship_or_new(
-            line.dependency_type,
-            line.dependency_type.supplier,
-            line.dependency_type.client,
-        )
-        line.subject = relation
+        return line.dependency_type
 
 
 @Connector.register(Classified, GeneralizationItem)
 class GeneralizationConnect(RelationshipConnect):
     """Connect Classifiers with a Generalization relationship."""
 
-    def reconnect(self, handle, port):
-        self.reconnect_relationship(
-            handle, UML.Generalization.specific, UML.Generalization.general
-        )
-
     def connect_subject(self, handle):
-        relation = self.relationship_or_new(
+        self.line.subject = self.relationship_or_new(
             UML.Generalization, UML.Generalization.specific, UML.Generalization.general
         )
-        self.line.subject = relation
 
 
 @Connector.register(Classified, AssociationItem)
@@ -138,26 +121,6 @@ class AssociationConnect(UnaryRelationshipConnect):
             line.head_subject.type = c1.subject
             line.tail_subject.type = c2.subject
 
-    def reconnect(self, handle, port):
-        line = self.line
-        c = self.get_connected(handle)
-        assert c
-        if handle is line.head:
-            end = line.tail_end
-            oend = line.head_end
-        elif handle is line.tail:
-            end = line.head_end
-            oend = line.tail_end
-        else:
-            raise ValueError("Incorrect handle passed to adapter")
-
-        nav = oend.subject.navigability
-
-        UML.recipes.set_navigability(line.subject, end.subject, None)  # clear old data
-
-        oend.subject.type = c.subject
-        UML.recipes.set_navigability(line.subject, oend.subject, nav)
-
     def disconnect_subject(self, handle: Handle) -> None:
         """Disconnect the type of each member end.
 
@@ -192,21 +155,6 @@ class InterfaceRealizationConnect(RelationshipConnect):
             return None
 
         return super().allow(handle, port)
-
-    def reconnect(self, handle, port):
-        line = self.line
-        impl = line.subject
-        assert isinstance(impl, UML.InterfaceRealization)
-        if handle is line.head:
-            for s in impl.contract:
-                del impl.contract[s]
-        elif handle is line.tail:
-            del impl.implementatingClassifier
-        self.reconnect_relationship(
-            handle,
-            UML.InterfaceRealization.contract,
-            UML.InterfaceRealization.implementatingClassifier,
-        )
 
     def connect_subject(self, handle):
         """Perform implementation relationship connection."""
