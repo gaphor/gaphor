@@ -1,7 +1,5 @@
 """The definition for the classes section of the toolbox."""
 
-from enum import Enum
-
 from gaphas.item import SE
 
 from gaphor import UML
@@ -9,40 +7,18 @@ from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import (
     ToolDef,
     ToolSection,
-    default_namespace,
     namespace_config,
     new_item_factory,
 )
 from gaphor.UML import diagramitems
 
 
-class AssociationType(Enum):
-    COMPOSITE = "composite"
-    SHARED = "shared"
-
-
-def create_association(
-    assoc_item: diagramitems.AssociationItem, association_type: AssociationType
-) -> None:
-    default_namespace(assoc_item)
-    assoc = assoc_item.subject
-    assoc.memberEnd.append(assoc_item.model.create(UML.Property))
-    assoc.memberEnd.append(assoc_item.model.create(UML.Property))
-
-    assoc_item.head_subject = assoc.memberEnd[0]
-    assoc_item.tail_subject = assoc.memberEnd[1]
-
-    UML.recipes.set_navigability(assoc, assoc_item.head_subject, None)
-    UML.recipes.set_navigability(assoc, assoc_item.tail_subject, True)
-    assoc_item.tail_subject.aggregation = association_type.value
-
-
 def composite_association_config(assoc_item: diagramitems.AssociationItem) -> None:
-    create_association(assoc_item, AssociationType.COMPOSITE)
+    assoc_item.preferred_aggregation = "composite"
 
 
 def shared_association_config(assoc_item: diagramitems.AssociationItem) -> None:
-    create_association(assoc_item, AssociationType.SHARED)
+    assoc_item.preferred_aggregation = "shared"
 
 
 classes = ToolSection(
@@ -108,7 +84,6 @@ classes = ToolSection(
             "<Shift>Z",
             new_item_factory(
                 diagramitems.AssociationItem,
-                UML.Association,
                 config_func=composite_association_config,
             ),
         ),
@@ -119,7 +94,6 @@ classes = ToolSection(
             "<Shift>Q",
             new_item_factory(
                 diagramitems.AssociationItem,
-                UML.Association,
                 config_func=shared_association_config,
             ),
         ),

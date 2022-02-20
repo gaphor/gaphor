@@ -19,7 +19,7 @@ from gaphas.connector import Handle
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor import UML
-from gaphor.core.modeling.properties import association, attribute
+from gaphor.core.modeling.properties import association, attribute, enumeration
 from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import (
@@ -95,9 +95,14 @@ class AssociationItem(LinePresentation[UML.Association], Named):
             "subject[Association].navigableOwnedEnd"
         ).watch(
             "show_direction"
+        ).watch(
+            "preferred_aggregation", self.on_association_end_value
         )
 
     show_direction: attribute[int] = attribute("show_direction", int, default=False)
+    preferred_aggregation = enumeration(
+        "preferred_aggregation", ("none", "shared", "composite"), "none"
+    )
 
     def load(self, name, value):
         # end_head and end_tail were used in an older Gaphor version
@@ -165,7 +170,12 @@ class AssociationItem(LinePresentation[UML.Association], Named):
             else:
                 self.draw_tail = draw_default_tail
         else:
-            self.draw_head = draw_default_head
+            if self.preferred_aggregation == "composite":
+                self.draw_head = draw_head_composite
+            elif self.preferred_aggregation == "shared":
+                self.draw_head = draw_head_shared
+            else:
+                self.draw_head = draw_default_head
             self.draw_tail = draw_default_tail
 
         self.request_update()
@@ -471,8 +481,7 @@ class AssociationEnd:
             return
 
         cr = context.cairo
-        text_color = context.style.get("text-color")
-        if text_color:
+        if text_color := context.style.get("text-color"):
             cr.set_source_rgba(*text_color)
 
         cr.move_to(self._name_bounds.x, self._name_bounds.y)
