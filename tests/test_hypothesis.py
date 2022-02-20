@@ -9,7 +9,7 @@ from hypothesis.strategies import data, sampled_from, sets
 from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
+from gaphor.core.modeling import Diagram, ElementFactory, Presentation, StyleSheet
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
@@ -39,7 +39,7 @@ class ModelConsistency(RuleBasedStateMachine):
             if isinstance(p, diagramitems.DependencyItem)
         ]
         assume(relations)
-        return relations
+        return sampled_from(relations)
 
     def targets(self, relation, handle):
         targets = self.model.lselect(
@@ -48,7 +48,7 @@ class ModelConsistency(RuleBasedStateMachine):
             and allow(relation, handle, e)
         )
         assume(targets)
-        return targets
+        return sampled_from(targets)
 
     def create_diagram(self):
         with self.transaction:
@@ -84,12 +84,12 @@ class ModelConsistency(RuleBasedStateMachine):
     @rule(data=data())
     def connect_relation(self, data):
         diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
-        relation = data.draw(sampled_from(self.relations(diagram)))
+        relation = data.draw(self.relations(diagram))
         handle = data.draw(sampled_from([relation.head, relation.tail]))
         self._connect_relation(data, relation, handle)
 
     def _connect_relation(self, data, relation, handle):
-        target = data.draw(sampled_from(self.targets(relation, handle)))
+        target = data.draw(self.targets(relation, handle))
         with self.transaction:
             connect(relation, handle, target)
         if get_connected(relation.diagram, relation.head) and get_connected(
@@ -100,7 +100,7 @@ class ModelConsistency(RuleBasedStateMachine):
     @rule(data=data())
     def disconnect_relation(self, data):
         diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
-        relation = data.draw(sampled_from(self.relations(diagram)))
+        relation = data.draw(self.relations(diagram))
         handle = data.draw(sampled_from([relation.head, relation.tail]))
         with self.transaction:
             disconnect(relation, handle)
@@ -122,8 +122,16 @@ class ModelConsistency(RuleBasedStateMachine):
         diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
         assume(diagram.ownedPresentation)
         copy_service = self.session.get_service("copy")
+        # Take from model, to ensure order.
         items = data.draw(
-            sets(sampled_from(list(diagram.ownedPresentation)), min_size=1)
+            sets(
+                sampled_from(
+                    self.model.lselect(
+                        lambda e: isinstance(e, Presentation) and e.diagram is diagram
+                    )
+                ),
+                min_size=1,
+            )
         )
         copy_service.copy(items)
 
