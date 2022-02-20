@@ -32,20 +32,14 @@ class DependencyConnect(RelationshipConnect):
         return super().allow(handle, port)
 
     def connect_subject(self, handle):
-        """
-        TODO: check for existing relationships (use self.relation())
-        """
-
-        line = self.line
-
-        self.update_dependency_type(handle)
+        dependency_type = self.update_dependency_type(handle)
 
         relation = self.relationship_or_new(
-            line.dependency_type,
-            line.dependency_type.supplier,
-            line.dependency_type.client,
+            dependency_type,
+            dependency_type.supplier,
+            dependency_type.client,
         )
-        line.subject = relation
+        self.line.subject = relation
 
     def update_dependency_type(self, handle):
         line = self.line
@@ -62,6 +56,7 @@ class DependencyConnect(RelationshipConnect):
                 client = self.element.subject
                 supplier = other.subject
             line.dependency_type = UML.recipes.dependency_type(client, supplier)
+        return line.dependency_type
 
 
 @Connector.register(Classified, GeneralizationItem)
