@@ -1,5 +1,7 @@
 """A Property-based test."""
 
+from io import StringIO
+
 import pytest
 from hypothesis import assume
 from hypothesis.stateful import RuleBasedStateMachine, invariant, rule
@@ -8,9 +10,13 @@ from hypothesis.strategies import data, sampled_from
 from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
+from gaphor.storage import storage
+from gaphor.storage.xmlwriter import XMLWriter
+from gaphor.ui.filemanager import load_default_model
 from gaphor.UML import diagramitems
+from gaphor.UML.classes.dependency import DependencyItem
 
 N_DIAGRAMS = 5
 
@@ -19,15 +25,16 @@ class ModelConsistency(RuleBasedStateMachine):
     def __init__(self):
         super().__init__()
         self.session = Session()
+        load_default_model(self.model)
         for _ in range(N_DIAGRAMS):
             self.create_diagram()
 
     @property
-    def model(self):
-        return self.session.get_service("element_factory")
+    def model(self) -> ElementFactory:
+        return self.session.get_service("element_factory")  # type: ignore[no-any-return]
 
     @property
-    def transaction(self):
+    def transaction(self) -> Transaction:
         return Transaction(self.session.get_service("event_manager"))
 
     def relations(self, diagram):
@@ -71,7 +78,9 @@ class ModelConsistency(RuleBasedStateMachine):
 
     @rule(data=data())
     def delete_element(self, data):
-        elements = self.model.lselect(lambda e: not isinstance(e, Diagram))
+        elements = self.model.lselect(
+            lambda e: not isinstance(e, (Diagram, StyleSheet))
+        )
         assume(elements)
         element = data.draw(sampled_from(elements))
         with self.transaction:
@@ -100,9 +109,22 @@ class ModelConsistency(RuleBasedStateMachine):
         with self.transaction:
             disconnect(relation, handle)
 
+    @rule()
+    def undo(self):
+        undo_manager = self.session.get_service("undo_manager")
+        assume(undo_manager.can_undo())
+        undo_manager.undo_transaction()
+
+    @rule()
+    def redo(self):
+        undo_manager = self.session.get_service("undo_manager")
+        assume(undo_manager.can_redo())
+        undo_manager.redo_transaction()
+
     @invariant()
     def check_relations(self):
-        for relation in self.model.select(diagramitems.DependencyItem):
+        relation: DependencyItem
+        for relation in self.model.select(diagramitems.DependencyItem):  # type: ignore[assignment]
             subject = relation.subject
             diagram = relation.diagram
             head = get_connected(diagram, relation.head)
@@ -115,6 +137,22 @@ class ModelConsistency(RuleBasedStateMachine):
                 and subject.supplier is head.subject
                 and subject.client is tail.subject
             )
+
+    @invariant()
+    def can_save_and_load(self):
+        new_model = ElementFactory()
+        with StringIO() as buffer:
+            storage.save(XMLWriter(buffer), self.model)
+            buffer.seek(0)
+            storage.load(
+                buffer,
+                factory=new_model,
+                modeling_language=self.session.get_service("modeling_language"),
+            )
+
+        assert (
+            new_model.size() == self.model.size()
+        ), f"{new_model.lselect()} != {self.model.lselect()}"
 
     # TODO: do copy/paste, undo/redo
 
