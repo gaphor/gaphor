@@ -2,7 +2,6 @@
 
 from io import StringIO
 
-import pytest
 from hypothesis import assume
 from hypothesis.stateful import RuleBasedStateMachine, invariant, rule
 from hypothesis.strategies import data, sampled_from, sets
@@ -18,16 +17,12 @@ from gaphor.ui.filemanager import load_default_model
 from gaphor.UML import diagramitems
 from gaphor.UML.classes.dependency import DependencyItem
 
-N_DIAGRAMS = 5
-
 
 class ModelConsistency(RuleBasedStateMachine):
     def __init__(self):
         super().__init__()
         self.session = Session()
         load_default_model(self.model)
-        for _ in range(N_DIAGRAMS):
-            self.create_diagram()
 
     @property
     def model(self) -> ElementFactory:
@@ -191,57 +186,3 @@ def get_connected(diagram, handle):
     if cinfo:
         return cinfo.connected
     return None
-
-
-@pytest.fixture
-def interactions():
-    return ModelConsistency()
-
-
-class DataStub:
-    def draw(self, data):
-        return data.get_element(0)
-
-
-def test_create_class(interactions: ModelConsistency, data=DataStub()):
-    klass = interactions.create_class(data)
-    assert klass
-    assert klass in interactions.model
-
-
-def test_create_dependency(interactions: ModelConsistency, data=DataStub()):
-    for _ in range(10):
-        interactions.create_class(data)
-
-    relation = interactions.create_dependency(data)
-
-    assert relation
-    assert relation in interactions.model
-    assert relation.subject
-
-
-@pytest.mark.skip
-def test_reconnect_dependency(interactions: ModelConsistency, data=DataStub()):
-    classes = [interactions.create_class(data) for _ in range(10)]
-
-    relation = interactions.create_dependency(data)
-    connect(relation, relation.head, classes[0])
-    connect(relation, relation.tail, classes[1])
-    interactions.connect_relation(data)
-
-    assert relation.subject.supplier
-    assert relation.subject.client
-
-
-@pytest.mark.skip
-def test_disconnect_dependency(interactions: ModelConsistency, data=DataStub()):
-    for _ in range(10):
-        interactions.create_class(data)
-
-    relation = interactions.create_dependency(data)
-    interactions.disconnect_relation(data)
-
-    assert not relation.subject
-    assert bool(get_connected(relation.diagram, relation.head)) != bool(
-        get_connected(relation.diagram, relation.tail)
-    )
