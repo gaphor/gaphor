@@ -27,6 +27,7 @@ pip-wheel-metadata
 
 # PyTest
 .pytest_cache
+.hypothesis
 
 # MyPy
 .mypy_cache/
