@@ -59,6 +59,9 @@ class CopyService(Service, ActionProvider):
         if items:
             copy_buffer = copy(items)
 
+    def can_paste(self):
+        return bool(copy_buffer)
+
     def paste_link(self, diagram):
         """Paste items in the copy-buffer to the diagram."""
         with Transaction(self.event_manager):

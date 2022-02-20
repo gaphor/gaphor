@@ -5,7 +5,7 @@ from io import StringIO
 import pytest
 from hypothesis import assume
 from hypothesis.stateful import RuleBasedStateMachine, invariant, rule
-from hypothesis.strategies import data, sampled_from
+from hypothesis.strategies import data, sampled_from, sets
 
 from gaphor import UML
 from gaphor.application import Session
@@ -72,14 +72,14 @@ class ModelConsistency(RuleBasedStateMachine):
         diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
         with self.transaction:
             relation = diagram.create(diagramitems.DependencyItem)
-        self.connect_relation(data, relation, relation.head)
-        self.connect_relation(data, relation, relation.tail)
+        self._connect_relation(data, relation, relation.head)
+        self._connect_relation(data, relation, relation.tail)
         return relation
 
     @rule(data=data())
     def delete_element(self, data):
         elements = self.model.lselect(
-            lambda e: not isinstance(e, (Diagram, StyleSheet))
+            lambda e: not isinstance(e, (Diagram, StyleSheet, UML.Package))
         )
         assume(elements)
         element = data.draw(sampled_from(elements))
@@ -87,17 +87,18 @@ class ModelConsistency(RuleBasedStateMachine):
             element.unlink()
 
     @rule(data=data())
-    def connect_relation(self, data, relation=None, handle=None):
-        diagram = (relation and relation.diagram) or data.draw(
-            sampled_from(self.model.lselect(Diagram))
-        )
-        relation = relation or data.draw(sampled_from(self.relations(diagram)))
-        handle = handle or data.draw(sampled_from([relation.head, relation.tail]))
+    def connect_relation(self, data):
+        diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
+        relation = data.draw(sampled_from(self.relations(diagram)))
+        handle = data.draw(sampled_from([relation.head, relation.tail]))
+        self._connect_relation(data, relation, handle)
+
+    def _connect_relation(self, data, relation, handle):
         target = data.draw(sampled_from(self.targets(relation, handle)))
         with self.transaction:
             connect(relation, handle, target)
-        if get_connected(diagram, relation.head) and get_connected(
-            diagram, relation.tail
+        if get_connected(relation.diagram, relation.head) and get_connected(
+            relation.diagram, relation.tail
         ):
             assert relation.subject
 
@@ -120,6 +121,30 @@ class ModelConsistency(RuleBasedStateMachine):
         undo_manager = self.session.get_service("undo_manager")
         assume(undo_manager.can_redo())
         undo_manager.redo_transaction()
+
+    @rule(data=data())
+    def copy(self, data):
+        diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
+        assume(diagram.ownedPresentation)
+        copy_service = self.session.get_service("copy")
+        items = data.draw(
+            sets(sampled_from(list(diagram.ownedPresentation)), min_size=1)
+        )
+        copy_service.copy(items)
+
+    @rule(data=data())
+    def paste_link(self, data):
+        copy_service = self.session.get_service("copy")
+        assume(copy_service.can_paste())
+        diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
+        copy_service.paste_link(diagram)
+
+    @rule(data=data())
+    def paste_full(self, data):
+        copy_service = self.session.get_service("copy")
+        assume(copy_service.can_paste())
+        diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
+        copy_service.paste_full(diagram)
 
     @invariant()
     def check_relations(self):
@@ -154,7 +179,7 @@ class ModelConsistency(RuleBasedStateMachine):
             new_model.size() == self.model.size()
         ), f"{new_model.lselect()} != {self.model.lselect()}"
 
-    # TODO: do copy/paste, undo/redo
+    # TODO: do copy/paste
 
 
 ModelConsistencyTestCase = ModelConsistency.TestCase
