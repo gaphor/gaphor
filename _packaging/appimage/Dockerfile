@@ -127,8 +127,7 @@ ENV CHECKOUT=/root/jhbuild/checkout \
     LD_LIBRARY_PATH="/root/jhbuild/install/lib" \
     PKG_CONFIG_PATH="/root/jhbuild/install/lib/pkgconfig" \
     PATH="/root/jhbuild/install/bin:/root/.local/bin:/root/.cargo/bin:$PATH" \
-    JHBUILD_RUN_AS_ROOT="" \
-    GSETTINGS_SCHEMA_DIR="/root/jhbuild/install/share/glib-2.0/schemas"
+    JHBUILD_RUN_AS_ROOT=""
 
 # Install jhbuild
 RUN mkdir -p $CHECKOUT \
@@ -149,3 +148,5 @@ RUN jhbuild build \
  && rm -r /root/.config \
  && rm -r /root/.cache
 
+# Environmental variable needed to run GTK for gsettings schema
+ENV XDG_DATA_DIRS="/root/jhbuild/install/share"
