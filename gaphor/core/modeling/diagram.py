@@ -87,9 +87,7 @@ def removesuffix(self: str, suffix: str) -> str:
 def attrname(obj, lower_name):
     """Look up a real attribute name based on a lower case (normalized)
     name."""
-    return next(
-        (name for name in dir(obj) if name.lower() == lower_name), lower_name
-    )
+    return next((name for name in dir(obj) if name.lower() == lower_name), lower_name)
 
 
 def rgetattr(obj, names):
