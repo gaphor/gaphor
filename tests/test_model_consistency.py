@@ -1,10 +1,9 @@
 """A Property-based test."""
 
 import itertools
-import os
 from io import StringIO
 
-from hypothesis import assume, settings
+from hypothesis import assume
 from hypothesis.stateful import RuleBasedStateMachine, initialize, invariant, rule
 from hypothesis.strategies import data, lists, sampled_from
 
@@ -183,6 +182,10 @@ class ModelConsistency(RuleBasedStateMachine):
                 modeling_language=self.session.get_service("modeling_language"),
             )
 
+        if new_model.size() != self.model.size():
+            with open("falsifying_model.gaphor", "w") as out:
+                storage.save(XMLWriter(out), self.model)
+
         assert (
             new_model.size() == self.model.size()
         ), f"{new_model.lselect()} != {self.model.lselect()}"
@@ -200,8 +203,3 @@ def get_connected(diagram, handle):
 
 def ordered(elements):
     return sorted(elements, key=lambda e: e.id)  # type: ignore[no-any-return]
-
-
-settings.register_profile("test", derandomize=True, max_examples=50)
-settings.register_profile("ci", max_examples=500)
-settings.load_profile("ci" if "CI" in os.environ else "test")
