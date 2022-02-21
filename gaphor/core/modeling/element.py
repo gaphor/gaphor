@@ -36,6 +36,21 @@ class UnlinkEvent:
 Id = str
 
 
+def uuid_generator():
+    while True:
+        yield str(uuid.uuid1())
+
+
+_generator: Iterator[str] = uuid_generator()
+
+
+def generate_id(generator=None):
+    global _generator
+    if generator:
+        _generator = generator
+    return next(_generator)
+
+
 class Element:
     """Base class for all model data classes."""
 
@@ -59,7 +74,7 @@ class Element:
 
         A model can be provided to refer to the model this element belongs to.
         """
-        self._id: Id = id or str(uuid.uuid1())
+        self._id: Id = id or generate_id()
         # The model this element belongs to.
         self._model = model
         self._unlink_lock = 0

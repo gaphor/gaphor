@@ -5,7 +5,6 @@ Diagrams can be visualized and edited.
 from __future__ import annotations
 
 import logging
-import uuid
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import (
@@ -23,7 +22,7 @@ import gaphas
 from cairo import Context as CairoContext
 
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import Element, Id, RepositoryProtocol
+from gaphor.core.modeling.element import Element, Id, RepositoryProtocol, generate_id
 from gaphor.core.modeling.event import AssociationAdded, AssociationDeleted
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import (
@@ -299,7 +298,7 @@ class Diagram(Element):
         subject.
         """
 
-        return self.create_as(type, str(uuid.uuid1()), parent, subject)
+        return self.create_as(type, generate_id(), parent, subject)
 
     def create_as(self, type, id, parent=None, subject=None):
         assert isinstance(self.model, PresentationRepositoryProtocol)
