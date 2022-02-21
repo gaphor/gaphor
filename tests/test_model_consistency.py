@@ -193,8 +193,7 @@ ModelConsistencyTestCase = ModelConsistency.TestCase
 
 def get_connected(diagram, handle):
     """Get item connected to a handle."""
-    cinfo = diagram.connections.get_connection(handle)
-    if cinfo:
+    if cinfo := diagram.connections.get_connection(handle):
         return cinfo.connected
     return None
 
