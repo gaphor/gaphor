@@ -51,8 +51,7 @@ class CopyService(Service, ActionProvider):
         def on_clipboard_owner_change(self, clipboard, event):
             view = self.diagrams.get_current_view()
             if view and not view.is_focus():
-                global copy_buffer
-                copy_buffer = set()
+                self.clear()
 
     def copy(self, items):
         global copy_buffer
@@ -61,6 +60,10 @@ class CopyService(Service, ActionProvider):
 
     def can_paste(self):
         return bool(copy_buffer)
+
+    def clear(self):
+        global copy_buffer
+        copy_buffer = set()
 
     def paste_link(self, diagram):
         """Paste items in the copy-buffer to the diagram."""

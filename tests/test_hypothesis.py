@@ -50,6 +50,9 @@ class ModelConsistency(RuleBasedStateMachine):
         assume(targets)
         return sampled_from(targets)
 
+        copy_service = self.session.get_service("copy")
+        copy_service.clear()
+
     def create_diagram(self):
         with self.transaction:
             return self.model.create(Diagram)
@@ -58,9 +61,7 @@ class ModelConsistency(RuleBasedStateMachine):
     def create_class(self, data):
         diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
         with self.transaction:
-            return diagram.create(
-                diagramitems.ClassItem, subject=self.model.create(UML.Class)
-            )
+            diagram.create(diagramitems.ClassItem, subject=self.model.create(UML.Class))
 
     @rule(data=data())
     def create_dependency(self, data):
@@ -69,7 +70,6 @@ class ModelConsistency(RuleBasedStateMachine):
             relation = diagram.create(diagramitems.DependencyItem)
         self._connect_relation(data, relation, relation.head)
         self._connect_relation(data, relation, relation.tail)
-        return relation
 
     @rule(data=data())
     def delete_element(self, data):
@@ -181,8 +181,6 @@ class ModelConsistency(RuleBasedStateMachine):
         assert (
             new_model.size() == self.model.size()
         ), f"{new_model.lselect()} != {self.model.lselect()}"
-
-    # TODO: do copy/paste
 
 
 ModelConsistencyTestCase = ModelConsistency.TestCase
