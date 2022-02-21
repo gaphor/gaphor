@@ -143,10 +143,5 @@ COPY jhbuildrc /root/.config/jhbuildrc
 
 # Build GTK, GtkSourceView, and gobject-introspection
 RUN jhbuild build \
- && rm -r /root/jhbuild/checkout \
- && rm -r /root/.local \
  && rm -r /root/.config \
  && rm -r /root/.cache
-
-# Environmental variable needed to run GTK for gsettings schema
-ENV XDG_DATA_DIRS="/root/jhbuild/install/share"
