@@ -75,9 +75,12 @@ class ElementFactory(Service):
     def shutdown(self) -> None:
         self.flush()
 
+    def generate_id(self):
+        return str(uuid.uuid1())
+
     def create(self, type: type[T]) -> T:
         """Create a new model element of type ``type``."""
-        return self.create_as(type, str(uuid.uuid1()))
+        return self.create_as(type, self.generate_id())
 
     def create_as(self, type: type[T], id: str, diagram: Diagram = None) -> T:
         """Create a new model element of type 'type' with 'id' as its ID.

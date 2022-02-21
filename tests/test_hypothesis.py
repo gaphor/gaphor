@@ -1,15 +1,16 @@
 """A Property-based test."""
 
+import itertools
 from io import StringIO
 
 from hypothesis import assume
-from hypothesis.stateful import RuleBasedStateMachine, invariant, rule
+from hypothesis.stateful import RuleBasedStateMachine, initialize, invariant, rule
 from hypothesis.strategies import data, sampled_from, sets
 
 from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram, ElementFactory, Presentation, StyleSheet
+from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
@@ -19,11 +20,6 @@ from gaphor.UML.classes.dependency import DependencyItem
 
 
 class ModelConsistency(RuleBasedStateMachine):
-    def __init__(self):
-        super().__init__()
-        self.session = Session()
-        load_default_model(self.model)
-
     @property
     def model(self) -> ElementFactory:
         return self.session.get_service("element_factory")  # type: ignore[no-any-return]
@@ -32,6 +28,14 @@ class ModelConsistency(RuleBasedStateMachine):
     def transaction(self) -> Transaction:
         return Transaction(self.session.get_service("event_manager"))
 
+    def select(self, predicate):
+        elements = ordered(self.model.select(predicate))
+        assume(elements)
+        return sampled_from(elements)
+
+    def diagrams(self):
+        return self.select(lambda e: isinstance(e, Diagram))
+
     def relations(self, diagram):
         relations = [
             p
@@ -39,16 +43,25 @@ class ModelConsistency(RuleBasedStateMachine):
             if isinstance(p, diagramitems.DependencyItem)
         ]
         assume(relations)
-        return sampled_from(relations)
+        return sampled_from(ordered(relations))
 
     def targets(self, relation, handle):
-        targets = self.model.lselect(
+        return self.select(
             lambda e: isinstance(e, diagramitems.ClassItem)
             and e.diagram is relation.diagram
             and allow(relation, handle, e)
         )
-        assume(targets)
-        return sampled_from(targets)
+
+    @initialize()
+    def new_session(self):
+        self.session = Session()
+
+        # Fix element_factory to have create id's in a predicable order
+        def generate_id(counter=itertools.count()):
+            return str(next(counter))
+
+        self.model.generate_id = generate_id  # type: ignore[assignment]
+        load_default_model(self.model)
 
     def create_diagram(self):
         with self.transaction:
@@ -56,7 +69,7 @@ class ModelConsistency(RuleBasedStateMachine):
 
     @rule(data=data())
     def create_class(self, data):
-        diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
+        diagram = data.draw(self.diagrams())
         with self.transaction:
             return diagram.create(
                 diagramitems.ClassItem, subject=self.model.create(UML.Class)
@@ -64,7 +77,7 @@ class ModelConsistency(RuleBasedStateMachine):
 
     @rule(data=data())
     def create_dependency(self, data):
-        diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
+        diagram = data.draw(self.diagrams())
         with self.transaction:
             relation = diagram.create(diagramitems.DependencyItem)
         self._connect_relation(data, relation, relation.head)
@@ -73,17 +86,16 @@ class ModelConsistency(RuleBasedStateMachine):
 
     @rule(data=data())
     def delete_element(self, data):
-        elements = self.model.lselect(
+        elements = self.select(
             lambda e: not isinstance(e, (Diagram, StyleSheet, UML.Package))
         )
-        assume(elements)
-        element = data.draw(sampled_from(elements))
+        element = data.draw(elements)
         with self.transaction:
             element.unlink()
 
     @rule(data=data())
     def connect_relation(self, data):
-        diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
+        diagram = data.draw(self.diagrams())
         relation = data.draw(self.relations(diagram))
         handle = data.draw(sampled_from([relation.head, relation.tail]))
         self._connect_relation(data, relation, handle)
@@ -92,14 +104,10 @@ class ModelConsistency(RuleBasedStateMachine):
         target = data.draw(self.targets(relation, handle))
         with self.transaction:
             connect(relation, handle, target)
-        if get_connected(relation.diagram, relation.head) and get_connected(
-            relation.diagram, relation.tail
-        ):
-            assert relation.subject
 
     @rule(data=data())
     def disconnect_relation(self, data):
-        diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
+        diagram = data.draw(self.diagrams())
         relation = data.draw(self.relations(diagram))
         handle = data.draw(sampled_from([relation.head, relation.tail]))
         with self.transaction:
@@ -119,17 +127,13 @@ class ModelConsistency(RuleBasedStateMachine):
 
     @rule(data=data())
     def copy(self, data):
-        diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
+        diagram = data.draw(self.diagrams())
         assume(diagram.ownedPresentation)
         copy_service = self.session.get_service("copy")
         # Take from model, to ensure order.
         items = data.draw(
             sets(
-                sampled_from(
-                    self.model.lselect(
-                        lambda e: isinstance(e, Presentation) and e.diagram is diagram
-                    )
-                ),
+                sampled_from(ordered(diagram.ownedPresentation)),
                 min_size=1,
             )
         )
@@ -139,14 +143,14 @@ class ModelConsistency(RuleBasedStateMachine):
     def paste_link(self, data):
         copy_service = self.session.get_service("copy")
         assume(copy_service.can_paste())
-        diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
+        diagram = data.draw(self.diagrams())
         copy_service.paste_link(diagram)
 
     @rule(data=data())
     def paste_full(self, data):
         copy_service = self.session.get_service("copy")
         assume(copy_service.can_paste())
-        diagram = data.draw(sampled_from(self.model.lselect(Diagram)))
+        diagram = data.draw(self.diagrams())
         copy_service.paste_full(diagram)
 
     @invariant()
@@ -164,7 +168,7 @@ class ModelConsistency(RuleBasedStateMachine):
                 is_connected
                 and subject.supplier is head.subject
                 and subject.client is tail.subject
-            )
+            ), f"{is_not_connected}/{is_connected}/{subject}/{head}/{tail}"
 
     @invariant()
     def can_save_and_load(self):
@@ -194,3 +198,7 @@ def get_connected(diagram, handle):
     if cinfo:
         return cinfo.connected
     return None
+
+
+def ordered(elements):
+    return sorted(elements, key=lambda e: e.id)  # type: ignore[no-any-return]
