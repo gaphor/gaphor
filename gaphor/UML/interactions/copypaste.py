@@ -1,5 +1,6 @@
-from gaphor.diagram.copypaste import copy, copy_named_element
+from gaphor.diagram.copypaste import copy
 from gaphor.UML import ExecutionSpecification, Message
+from gaphor.UML.copypaste import copy_named_element
 
 
 @copy.register
