@@ -22,8 +22,6 @@ from typing import Callable, Iterator, NamedTuple
 from gaphor.core.modeling import Diagram, Presentation
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element, Id
-from gaphor.UML import NamedElement
-from gaphor.UML.recipes import owner_package
 
 Opaque = object
 
@@ -120,37 +118,6 @@ def paste_element(copy_data: ElementCopy, diagram, lookup):
 
 
 paste.register(ElementCopy, paste_element)
-
-
-class NamedElementCopy(NamedTuple):
-    element_copy: ElementCopy
-    with_namespace: bool
-
-
-def copy_named_element(
-    element: NamedElement, blacklist: list[str] | None = None
-) -> NamedElementCopy:
-    return NamedElementCopy(
-        element_copy=copy_element(element, blacklist),
-        with_namespace=bool(element.namespace),
-    )
-
-
-@copy.register
-def _copy_named_element(element: NamedElement) -> Iterator[tuple[Id, NamedElementCopy]]:
-    yield element.id, copy_named_element(element)
-
-
-def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
-    paster = paste_element(copy_data.element_copy, diagram, lookup)
-    element = next(paster)
-    yield element
-    next(paster, None)
-    if copy_data.with_namespace and not element.namespace:
-        element.package = owner_package(diagram.owner)
-
-
-paste.register(NamedElementCopy, paste_named_element)
 
 
 @copy.register
