@@ -11,7 +11,7 @@ from gaphor.diagram.copypaste import (
     paste_element,
 )
 from gaphor.UML.recipes import owner_package
-from gaphor.UML.uml import NamedElement
+from gaphor.UML.uml import NamedElement, Relationship
 
 
 class NamedElementCopy(NamedTuple):
@@ -34,7 +34,12 @@ def _copy_named_element(element: NamedElement) -> Iterator[tuple[Id, NamedElemen
 
 
 def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
-    paster = paste_element(copy_data.element_copy, diagram, lookup)
+    paster = paste_element(
+        copy_data.element_copy,
+        diagram,
+        lookup,
+        filter=lambda n, v: not isinstance(v, Relationship),
+    )
     element = next(paster)
     yield element
     next(paster, None)
