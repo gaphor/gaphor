@@ -1,7 +1,8 @@
 import itertools
 
-from gaphor.diagram.copypaste import copy, copy_named_element
+from gaphor.diagram.copypaste import copy
 from gaphor.UML import Association, Class, DataType, Enumeration, Interface, Operation
+from gaphor.UML.copypaste import copy_named_element
 
 
 @copy.register(Class)
