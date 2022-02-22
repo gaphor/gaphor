@@ -1,4 +1,4 @@
-from typing import Iterator, NamedTuple
+from typing import Iterator, NamedTuple, Union
 
 from gaphor.core.modeling.element import Id
 from gaphor.diagram.copypaste import (
@@ -18,7 +18,7 @@ class NamedElementCopy(NamedTuple):
 
 
 def copy_named_element(
-    element: NamedElement, blacklist: list[str] | None = None
+    element: NamedElement, blacklist: Union[list[str], None] = None
 ) -> NamedElementCopy:
     return NamedElementCopy(
         element_copy=copy_element(element, blacklist),
@@ -32,11 +32,19 @@ def _copy_named_element(element: NamedElement) -> Iterator[tuple[Id, NamedElemen
 
 
 def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
+    def _is_not_relationship(name, value):
+        if isinstance(value, Relationship):
+            prop = getattr(type(element), name)
+            assert prop.opposite
+            assert getattr(prop.type, prop.opposite).opposite
+
+        return not isinstance(value, Relationship)
+
     paster = paste_element(
         copy_data.element_copy,
         diagram,
         lookup,
-        filter=lambda n, v: not isinstance(v, Relationship),
+        filter=_is_not_relationship,
     )
     element = next(paster)
     yield element
