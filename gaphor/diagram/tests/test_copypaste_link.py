@@ -67,8 +67,8 @@ def two_classes_and_a_generalization(diagram, element_factory):
     gen_cls_item = diagram.create(ClassItem, subject=gen_cls)
     spc_cls_item = diagram.create(ClassItem, subject=spc_cls)
     gen_item = diagram.create(GeneralizationItem)
-    connect(gen_item, gen_item.handles()[0], gen_cls_item)
-    connect(gen_item, gen_item.handles()[1], spc_cls_item)
+    connect(gen_item, gen_item.head, gen_cls_item)
+    connect(gen_item, gen_item.tail, spc_cls_item)
 
     return gen_cls_item, spc_cls_item, gen_item
 
@@ -115,7 +115,7 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
     cls.unlink()  # normally handled by the sanitizer service
 
     assert set(diagram.ownedPresentation) == set(diagram.get_all_items())
-    assert len(list(diagram.get_all_items())) == 0
+    assert not list(diagram.get_all_items())
     assert cls not in element_factory.select()
     assert not element_factory.lookup(orig_cls_id)
 

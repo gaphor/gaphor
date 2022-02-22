@@ -39,7 +39,7 @@ def test_copy_multiple_items(diagram, element_factory):
 
 
 def test_copy_items_with_connections(diagram, element_factory):
-    gen_cls_item, spc_cls_item, gen_item = two_classes_and_a_generalization(
+    spc_cls_item, gen_cls_item, gen_item = two_classes_and_a_generalization(
         diagram, element_factory
     )
 
