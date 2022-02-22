@@ -3,7 +3,8 @@
 import itertools
 from io import StringIO
 
-from hypothesis import assume
+from hypothesis.control import assume, cleanup
+from hypothesis.errors import UnsatisfiedAssumption
 from hypothesis.stateful import (
     RuleBasedStateMachine,
     initialize,
@@ -11,7 +12,7 @@ from hypothesis.stateful import (
     rule,
     run_state_machine_as_test,
 )
-from hypothesis.strategies import data, lists, sampled_from
+from hypothesis.strategies import data, integers, lists, sampled_from
 
 from gaphor import UML
 from gaphor.application import Session
@@ -65,33 +66,51 @@ class ModelConsistency(RuleBasedStateMachine):
     @initialize()
     def new_session(self):
         generate_id(map(str, itertools.count()))
+        cleanup(lambda: generate_id(uuid_generator()))
+
         self.session = Session()
-
-        load_default_model(self.model)
-
         copy_service = self.session.get_service("copy")
         copy_service.clear()
 
-    def teardown(self):
-        generate_id(uuid_generator())
+        load_default_model(self.model)
 
     def create_diagram(self):
         with self.transaction:
             return self.model.create(Diagram)
 
-    @rule(data=data())
-    def create_class(self, data):
+    @rule(
+        data=data(),
+        x=integers(min_value=0, max_value=1000),
+        y=integers(min_value=0, max_value=1000),
+    )
+    def create_class(self, data, x, y):
         diagram = data.draw(self.diagrams())
         with self.transaction:
-            diagram.create(diagramitems.ClassItem, subject=self.model.create(UML.Class))
+            item = diagram.create(
+                diagramitems.ClassItem, subject=self.model.create(UML.Class)
+            )
+            item.matrix.translate(x, y)
 
-    @rule(data=data())
-    def create_dependency(self, data):
+    @rule(
+        data=data(),
+        x=integers(min_value=0, max_value=1000),
+        y=integers(min_value=0, max_value=1000),
+    )
+    def create_dependency(self, data, x, y):
         diagram = data.draw(self.diagrams())
         with self.transaction:
-            relation = diagram.create(diagramitems.DependencyItem)
-        self._connect_relation(data, relation, relation.head)
-        self._connect_relation(data, relation, relation.tail)
+            item = diagram.create(diagramitems.DependencyItem)
+            item.matrix.translate(x, y)
+
+        # Do best effort to connect, no problem if it fails
+        self.try_connect_relation(data, item, item.head)
+        self.try_connect_relation(data, item, item.tail)
+
+    def try_connect_relation(self, data, item, handle):
+        try:
+            self._connect_relation(data, item, handle)
+        except UnsatisfiedAssumption:
+            pass
 
     @rule(data=data())
     def delete_element(self, data):
@@ -180,7 +199,7 @@ class ModelConsistency(RuleBasedStateMachine):
                 assert not subject
 
     @invariant()
-    def can_save_and_load(self):
+    def check_save_and_load(self):
         new_model = ElementFactory()
         with StringIO() as buffer:
             storage.save(XMLWriter(buffer), self.model)
@@ -196,8 +215,8 @@ class ModelConsistency(RuleBasedStateMachine):
                 storage.save(XMLWriter(out), self.model)
 
         assert (
-            new_model.size() == self.model.size()
-        ), f"{new_model.lselect()} != {self.model.lselect()}"
+            self.model.size() == new_model.size()
+        ), f"{self.model.lselect()} != {new_model.lselect()}"
 
 
 def get_connected(diagram, handle):
