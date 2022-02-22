@@ -107,13 +107,19 @@ def _copy_element(element: Element) -> Iterator[tuple[Id, ElementCopy]]:
     yield element.id, copy_element(element)
 
 
-def paste_element(copy_data: ElementCopy, diagram, lookup):
+def paste_element(
+    copy_data: ElementCopy,
+    diagram,
+    lookup,
+    filter: Callable[[str, str | int | Element], bool] | None = None,
+):
     cls, _id, data = copy_data
     element = diagram.model.create(cls)
     yield element
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
-            element.load(name, value)
+            if not filter or filter(name, value):
+                element.load(name, value)
     element.postload()
 
 
