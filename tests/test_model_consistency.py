@@ -4,7 +4,13 @@ import itertools
 from io import StringIO
 
 from hypothesis import assume
-from hypothesis.stateful import RuleBasedStateMachine, initialize, invariant, rule
+from hypothesis.stateful import (
+    RuleBasedStateMachine,
+    initialize,
+    invariant,
+    rule,
+    run_state_machine_as_test,
+)
 from hypothesis.strategies import data, lists, sampled_from
 
 from gaphor import UML
@@ -17,7 +23,10 @@ from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.filemanager import load_default_model
 from gaphor.UML import diagramitems
-from gaphor.UML.classes.dependency import DependencyItem
+
+
+def test_model_consistency():
+    run_state_machine_as_test(ModelConsistency)
 
 
 class ModelConsistency(RuleBasedStateMachine):
@@ -156,7 +165,7 @@ class ModelConsistency(RuleBasedStateMachine):
 
     @invariant()
     def check_relations(self):
-        relation: DependencyItem
+        relation: diagramitems.DependencyItem
         for relation in self.model.select(diagramitems.DependencyItem):  # type: ignore[assignment]
             subject = relation.subject
             diagram = relation.diagram
@@ -189,9 +198,6 @@ class ModelConsistency(RuleBasedStateMachine):
         assert (
             new_model.size() == self.model.size()
         ), f"{new_model.lselect()} != {self.model.lselect()}"
-
-
-ModelConsistencyTestCase = ModelConsistency.TestCase
 
 
 def get_connected(diagram, handle):
