@@ -151,13 +151,11 @@ class Element:
 
     def handle(self, event):
         """Propagate incoming events."""
-        model = self._model
-        if model:
+        if model := self._model:
             model.handle(event)
 
     def watcher(self, default_handler: Handler | None = None) -> EventWatcherProtocol:
-        model = self._model
-        if model:
+        if model := self._model:
             return model.watcher(self, default_handler)
         else:
             return DummyEventWatcher()
