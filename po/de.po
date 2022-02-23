@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-31 21:14-0500\n"
-"PO-Revision-Date: 2022-01-16 13:30+0000\n"
-"Last-Translator: Dan Yeaw <dan@yeaw.me>\n"
+"PO-Revision-Date: 2022-02-24 10:00+0000\n"
+"Last-Translator: Mark-Daniel Lüthje <mark.luethje@mail.de>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/gaphor/gaphor/de/>"
+"\n"
 "Language: de\n"
-"Language-Team: German "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/de/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -79,32 +80,27 @@ msgid "Dependency"
 msgstr "Abhängigkeit"
 
 #: gaphor/C4Model/toolbox.py:140
-#, fuzzy
 msgid "New C4 Diagram"
-msgstr "Neues Diagramm"
+msgstr "Neues C4 model"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/UML/toolbox.py:30
-#, fuzzy
 msgid "New Class Diagram"
-msgstr "Neues Diagramm"
+msgstr "Neues Klassendiagramm"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
-#, fuzzy
 msgid "New Activity Diagram"
-msgstr "Neues Diagramm"
+msgstr "Neues Aktivitätsdiagramm"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
-#, fuzzy
 msgid "New Sequence Diagram"
-msgstr "Neues Diagramm"
+msgstr "Neues Sequenzdiagramm"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
-#, fuzzy
 msgid "New State Machine Diagram"
-msgstr "Neues Diagramm erstellen"
+msgstr "Neues Zustandsdiagramm"
 
 #: gaphor/RAAML/modelinglanguage.py:17 gaphor/ui/greeter.py:28
 msgid "RAAML"
@@ -118,7 +114,7 @@ msgstr "Neues Diagramm"
 #: gaphor/RAAML/toolbox.py:20
 #, fuzzy
 msgid "New STPA Diagram"
-msgstr "Neues Diagramm"
+msgstr "Neues STPA-Diagramm"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:28
 msgid "AND Gate"
@@ -164,9 +160,8 @@ msgid "NOT"
 msgstr "NICHT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:61
-#, fuzzy
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr "Erzwungene Reihenfolge Gatter (SEQ)"
+msgstr "Sequenzerzwingendes (SEQ) Gatter"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:67
 msgid "SEQ"
@@ -228,9 +223,8 @@ msgid "Intermediate Event"
 msgstr "Zwischenereignis"
 
 #: gaphor/RAAML/fta/seqgate.py:37
-#, fuzzy
 msgid "Sequence Enforcing Gate"
-msgstr "Erzwungene Reihenfolge Gatter"
+msgstr "Sequenzerzwingendes Gatter"
 
 #: gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
@@ -299,13 +293,13 @@ msgid "SysML"
 msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:28 gaphor/SysML/propertypages.ui:23
+#, fuzzy
 msgid "Item Flow"
-msgstr ""
+msgstr "Elementfluss"
 
 #: gaphor/SysML/propertypages.glade:51 gaphor/SysML/propertypages.ui:38
-#, fuzzy
 msgid "Item Property"
-msgstr "Eigenschaft"
+msgstr "Elementeigenschaft"
 
 #: gaphor/SysML/propertypages.glade:71 gaphor/SysML/propertypages.ui:52
 #: gaphor/UML/classes/propertypages.glade:48
@@ -319,25 +313,23 @@ msgstr "Richtung umkehren"
 #: gaphor/UML/actions/propertypages.glade:264
 #: gaphor/UML/actions/propertypages.ui:195
 msgid "Allocated Type"
-msgstr ""
+msgstr "Zugeordneter Typ"
 
 #: gaphor/SysML/propertypages.glade:123 gaphor/SysML/propertypages.ui:89
 msgid "Show Parts"
 msgstr "Zeige Bestandteile"
 
 #: gaphor/SysML/propertypages.glade:146 gaphor/SysML/propertypages.ui:104
-#, fuzzy
 msgid "Show References"
 msgstr "Zeige Verweise"
 
 #: gaphor/SysML/propertypages.glade:172 gaphor/SysML/propertypages.ui:119
 msgid "Show Values"
-msgstr ""
+msgstr "Werte anzeigen"
 
 #: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:134
-#, fuzzy
 msgid "Compartments"
-msgstr "Implementiert"
+msgstr "Abteilungen"
 
 #: gaphor/SysML/propertypages.glade:212 gaphor/SysML/propertypages.ui:148
 msgid "Aggregation"
@@ -2637,4 +2629,3 @@ msgstr "<Beziehung>"
 
 #~ msgid "Settings"
 #~ msgstr "Einstellungen"
-
