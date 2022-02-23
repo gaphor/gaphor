@@ -1,7 +1,7 @@
 """Containment connection adapters."""
 
 from gaphor import UML
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Diagram, self_and_owners
 from gaphor.diagram.connectors import BaseConnector, Connector
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.UML.classes.containment import ContainmentItem
@@ -20,23 +20,22 @@ class ContainmentConnect(BaseConnector):
     def allow(self, handle, port):
         """In addition to the normal check, both line ends may not be connected
         to the same element."""
-        opposite = self.line.opposite(handle)
-        connected_to = self.get_connected(opposite)
-        element = self.element
+        container, contained = self.container_and_contained_element(handle)
 
-        if connected_to is element:
-            return None
+        if not container or not contained:
+            return True
 
-        # Same goes for subjects:
-        if (
-            connected_to
-            and not connected_to.subject
-            and not element.subject
-            and connected_to.subject is element.subject
-        ):
-            return None
+        if contained in self_and_owners(container):
+            return False
 
-        return super().allow(handle, port)
+        return (
+            isinstance(container, UML.Package)
+            and isinstance(contained, (UML.Type, UML.Package))
+            or isinstance(container, UML.Package)
+            and isinstance(contained, (Diagram))
+            or isinstance(container, UML.Class)
+            and isinstance(contained, UML.Classifier)
+        )
 
     def container_and_contained_element(self, handle):
         line = self.line
