@@ -19,6 +19,7 @@ from gaphor.application import Session
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
 from gaphor.core.modeling.element import generate_id, uuid_generator
+from gaphor.diagram.deletable import deletable
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.storage import storage
@@ -112,6 +113,7 @@ class ModelConsistency(RuleBasedStateMachine):
     def delete_element(self, data):
         elements = self.select(
             lambda e: not isinstance(e, (Diagram, StyleSheet, UML.Package))
+            and deletable(e)
         )
         element = data.draw(elements)
         with self.transaction:
