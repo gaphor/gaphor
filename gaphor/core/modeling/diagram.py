@@ -22,7 +22,13 @@ import gaphas
 from cairo import Context as CairoContext
 
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import Element, Id, RepositoryProtocol, generate_id
+from gaphor.core.modeling.element import (
+    Element,
+    Id,
+    RepositoryProtocol,
+    generate_id,
+    self_and_owners,
+)
 from gaphor.core.modeling.event import AssociationAdded, AssociationDeleted
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import (
@@ -122,8 +128,9 @@ def attrstr(obj):
 
 def qualifiedName(element: Element) -> list[str]:
     """Returns the qualified name of the element as a tuple."""
-    name: str = getattr(element, "name", "??")
-    return qualifiedName(element.owner) + [name] if element.owner else [name]
+    qname = [getattr(e, "name", "??") for e in self_and_owners(element)]
+    qname.reverse()
+    return qname
 
 
 class StyledDiagram:

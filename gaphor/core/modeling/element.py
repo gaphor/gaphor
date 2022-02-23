@@ -51,6 +51,18 @@ def generate_id(generator=None):
     return next(_generator)
 
 
+def self_and_owners(element: Element | None) -> Iterator[Element]:
+    """Return the element and the ancestors (Element.owner)."""
+    seen = set()
+    e = element
+    while e:
+        if e in seen:
+            return
+        yield e
+        seen.add(e)
+        e = e.owner
+
+
 class Element:
     """Base class for all model data classes."""
 
