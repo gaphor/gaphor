@@ -21,12 +21,14 @@ But let's not get ahead of ourselves. What is the functionality a modeling
 language implementation can offer?
 
 * A data model (elements)
+* Diagram types
 * Diagram items
 * A toolbox definition
 * [Connectors](#connectors), allow diagram items to connect
 * [Grouping](#grouping)
 * [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
 * [Inline (diagram) editor popups](#inline-diagram-editor-popups)
+* [Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent
 * [Copy/paste](#copy-and-paste) behavior when element copying is not trivial, for example with
   more than one element is involved
 
