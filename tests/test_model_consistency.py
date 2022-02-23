@@ -73,6 +73,7 @@ class ModelConsistency(RuleBasedStateMachine):
         copy_service.clear()
 
         load_default_model(self.model)
+        self.fully_pasted_items = set()
 
     def create_diagram(self):
         with self.transaction:
@@ -180,7 +181,8 @@ class ModelConsistency(RuleBasedStateMachine):
         copy_service = self.session.get_service("copy")
         assume(copy_service.can_paste())
         diagram = data.draw(self.diagrams())
-        copy_service.paste_full(diagram)
+        new_items = copy_service.paste_full(diagram)
+        self.fully_pasted_items.update(new_items)
 
     @invariant()
     def check_relations(self):
@@ -195,7 +197,7 @@ class ModelConsistency(RuleBasedStateMachine):
                 assert subject
                 assert subject.supplier is head.subject
                 assert subject.client is tail.subject
-            else:
+            elif relation not in self.fully_pasted_items:
                 assert not subject
 
     @invariant()
