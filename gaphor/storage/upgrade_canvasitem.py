@@ -1,4 +1,4 @@
-import uuid
+from gaphor.core.modeling.element import generate_id
 
 
 def upgrade_canvasitem(item, gaphor_version):
@@ -63,7 +63,7 @@ def upgrade_presentation_item_to_1_1_0(item):
 
 def clone_canvasitem(item, subject_id):
     assert isinstance(item.references["subject"], str)
-    new_item = type(item)(str(uuid.uuid1()), item.type)
+    new_item = type(item)(generate_id(), item.type)
     new_item.values = dict(item.values)
     new_item.references = dict(item.references)
     new_item.references["subject"] = subject_id

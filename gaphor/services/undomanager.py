@@ -182,6 +182,7 @@ class UndoManager(Service, ActionProvider):
                     erroneous_tx.execute()
                 except Exception:
                     logger.error("Could not rollback transaction", exc_info=True)
+                    raise
         finally:
             # Discard all data collected in the rollback "transaction"
             self._undo_stack = undo_stack

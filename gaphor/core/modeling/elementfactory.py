@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import uuid
 from collections import OrderedDict
 from contextlib import contextmanager
 from typing import TYPE_CHECKING, Callable, Iterator, TypeVar, overload
@@ -15,6 +14,7 @@ from gaphor.core.modeling.element import (
     Handler,
     RepositoryProtocol,
     UnlinkEvent,
+    generate_id,
 )
 from gaphor.core.modeling.elementdispatcher import ElementDispatcher, EventWatcher
 from gaphor.core.modeling.event import (
@@ -77,7 +77,7 @@ class ElementFactory(Service):
 
     def create(self, type: type[T]) -> T:
         """Create a new model element of type ``type``."""
-        return self.create_as(type, str(uuid.uuid1()))
+        return self.create_as(type, generate_id())
 
     def create_as(self, type: type[T], id: str, diagram: Diagram = None) -> T:
         """Create a new model element of type 'type' with 'id' as its ID.

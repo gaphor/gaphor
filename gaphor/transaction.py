@@ -125,6 +125,7 @@ class Transaction:
                 self.rollback()
             except Exception:
                 log.error("Rollback failed", exc_info=True)
+                raise
         else:
             self.commit()
 

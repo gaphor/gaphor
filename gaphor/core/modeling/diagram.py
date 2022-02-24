@@ -5,7 +5,6 @@ Diagrams can be visualized and edited.
 from __future__ import annotations
 
 import logging
-import uuid
 from dataclasses import dataclass
 from functools import lru_cache
 from typing import (
@@ -23,7 +22,7 @@ import gaphas
 from cairo import Context as CairoContext
 
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import Element, Id, RepositoryProtocol
+from gaphor.core.modeling.element import Element, Id, RepositoryProtocol, generate_id
 from gaphor.core.modeling.event import AssociationAdded, AssociationDeleted
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.properties import (
@@ -88,10 +87,7 @@ def removesuffix(self: str, suffix: str) -> str:
 def attrname(obj, lower_name):
     """Look up a real attribute name based on a lower case (normalized)
     name."""
-    for name in dir(obj):
-        if name.lower() == lower_name:
-            return name
-    return lower_name
+    return next((name for name in dir(obj) if name.lower() == lower_name), lower_name)
 
 
 def rgetattr(obj, names):
@@ -127,10 +123,7 @@ def attrstr(obj):
 def qualifiedName(element: Element) -> list[str]:
     """Returns the qualified name of the element as a tuple."""
     name: str = getattr(element, "name", "??")
-    if element.owner:
-        return qualifiedName(element.owner) + [name]
-    else:
-        return [name]
+    return qualifiedName(element.owner) + [name] if element.owner else [name]
 
 
 class StyledDiagram:
@@ -299,7 +292,7 @@ class Diagram(Element):
         subject.
         """
 
-        return self.create_as(type, str(uuid.uuid1()), parent, subject)
+        return self.create_as(type, generate_id(), parent, subject)
 
     def create_as(self, type, id, parent=None, subject=None):
         assert isinstance(self.model, PresentationRepositoryProtocol)
@@ -396,8 +389,7 @@ class Diagram(Element):
 
     def _update_items(self, items):
         for item in items:
-            update = getattr(item, "update", None)
-            if update:
+            if update := getattr(item, "update", None):
                 update(UpdateContext(style=self.style(StyledItem(item))))
 
     def _on_constraint_solved(self, cinfo: gaphas.connections.Connection) -> None:

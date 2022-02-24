@@ -1,0 +1,43 @@
+name: Test
+on:
+  schedule:
+    # min hour dom month dow
+    - cron:  '0 6 * * *'
+env:
+  python_version: '3.10'
+
+jobs:
+
+  hypothesis:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        python_version: ["3.10"]
+    steps:
+      - uses: actions/checkout@v2.4.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Install Linux Dependencies
+        uses: ./.github/actions/linux_dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v2.3.2
+        with:
+          python-version: ${{ matrix.python_version }}
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v2.1.7
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
+      - name: Use Hypothesis Cache
+        uses: actions/cache@v2.1.7
+        with:
+          path: ~/.hypothesis
+          key: ${{ runner.os }}-hypothesis
+      - name: Install Dependencies and Test
+        uses: ./.github/actions/setup_and_test
+        with:
+          xvfb_command: 'xvfb-run'
+      - name: Test with Hypothesis
+        run: ${{ inputs.xvfb_command }} poetry run pytest --hypothesis-profile=ci tests
+        shell: bash
