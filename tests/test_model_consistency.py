@@ -1,6 +1,7 @@
 """A Property-based test."""
 
 import itertools
+from functools import singledispatch
 from io import StringIO
 
 from hypothesis.control import assume, cleanup
@@ -38,6 +39,8 @@ def tooldef():
 
 
 class ModelConsistency(RuleBasedStateMachine):
+
+    #
     @property
     def model(self) -> ElementFactory:
         return self.session.get_service("element_factory")  # type: ignore[no-any-return]
@@ -97,6 +100,7 @@ class ModelConsistency(RuleBasedStateMachine):
         with self.transaction:
             item = tooldef.item_factory(diagram)
             item.matrix.translate(x, y)
+            diagram.update_now({item})
 
         # Do best effort to connect a line, no problem if it fails
         if isinstance(item, LinePresentation):
@@ -183,17 +187,14 @@ class ModelConsistency(RuleBasedStateMachine):
 
     @invariant()
     def check_relations(self):
-        relation: diagramitems.DependencyItem
-        for relation in self.model.select(diagramitems.DependencyItem):  # type: ignore[assignment]
+        for relation in self.model.select(LinePresentation):
             subject = relation.subject
             diagram = relation.diagram
             head = get_connected(diagram, relation.head)
             tail = get_connected(diagram, relation.tail)
 
             if head and tail:
-                assert subject
-                assert subject.supplier is head.subject
-                assert subject.client is tail.subject
+                check_relation(relation, head, tail)
             elif relation not in self.fully_pasted_items:
                 assert not subject
 
@@ -228,3 +229,46 @@ def get_connected(diagram, handle):
 
 def ordered(elements):
     return sorted(elements, key=lambda e: e.id)  # type: ignore[no-any-return]
+
+
+@singledispatch
+def check_relation(relation: object, head, tail):
+    assert False, f"No comparison function for {relation}"
+
+
+@check_relation.register
+def _(relation: diagramitems.DependencyItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert subject.supplier is head.subject
+    assert subject.client is tail.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.GeneralizationItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert subject.specific is head.subject
+    assert subject.general is tail.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.InterfaceRealizationItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert subject.contract is head.subject
+    assert subject.implementatingClassifier is tail.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.ContainmentItem, head, tail):
+    assert not relation.subject
+    assert tail.subject.owner is head.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.AssociationItem, head, tail):
+    subject = relation.subject
+    targets = [m.type for m in subject.memberEnd]
+    assert head.subject in targets
+    assert tail.subject in targets
