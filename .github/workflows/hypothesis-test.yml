@@ -1,4 +1,4 @@
-name: Test
+name: Hypothesis Tests
 on:
   schedule:
     # min hour dom month dow
