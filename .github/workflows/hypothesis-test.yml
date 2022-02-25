@@ -39,5 +39,5 @@ jobs:
         with:
           xvfb_command: 'xvfb-run'
       - name: Test with Hypothesis
-        run: ${{ inputs.xvfb_command }} poetry run pytest --hypothesis-profile=ci tests
+        run: xvfb-run poetry run pytest --hypothesis-profile=ci tests
         shell: bash
