@@ -79,7 +79,7 @@ gaphor = "gaphor.ui:main"
 gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 
 [tool.poe.tasks]
-test = "pytest -m 'not slow'"
+test = "pytest"
 test-all = "pytest --cov=gaphor/"
 dist = "poetry build"
 install = "poetry install"
