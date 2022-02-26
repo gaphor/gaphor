@@ -5,15 +5,15 @@ allows for development of separate modeling languages separate from the Gaphor
 core application.
 
 The main language was, and will be UML. Gaphor now also supports a subset of
-SysML.
+SysML, RAAML and the C4 model.
 
-A ModelingLanguage in Gaphor is defined by a class implementing the
+A modeling language in Gaphor is defined by a class implementing the
 `gaphor.abc.ModelingLanguage` abstract base class. The modeling language should
 be registered as a `gaphor.modelinglanguage` entry point.
 
-The ModelingLanguage interface is fairly minimal. It allows other services to
-look up elements and diagram items, as well as a toolbox. However, the
-responsibilities of a ModelingLanguage do not stop there. Parts of
+The `ModelingLanguage` interface is fairly minimal. It allows other services to
+look up elements and diagram items, as well as a toolbox, and diagram types.
+However, the responsibilities of a modeling language do not stop there. Parts of
 functionality will be implemented by registering handlers to a set of generic
 functions.
 
@@ -32,7 +32,7 @@ language implementation can offer?
 * [Copy/paste](#copy-and-paste) behavior when element copying is not trivial, for example with
   more than one element is involved
 
-We expose the first three by methods defined on the ModelingLanguage class. We
+We expose the first four by methods defined on the `ModelingLanguage` class. We
 then expose the others by adding handlers to the respective generic functions.
 
 
