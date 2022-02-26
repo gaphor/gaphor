@@ -17,6 +17,7 @@ from gaphor.core.modeling import (
     ElementDeleted,
     ModelFlushed,
     ModelReady,
+    self_and_owners,
 )
 from gaphor.event import Notification
 
@@ -116,6 +117,24 @@ class NamespaceModel(Gtk.TreeStore):
                 return child_iter
             child_iter = self.iter_next(child_iter)
         return None
+
+    def element_for_path(self, path):
+        path.up()
+        if not path:
+            return None
+
+        try:
+            iter = self.get_iter(path)
+        except ValueError:
+            log.debug(f"Invalid path: '{path}'")
+            return False
+
+        element = self.get_value(iter, 0)
+
+        if element is RELATIONSHIPS:
+            iter = relationship_iter_parent(self, iter)
+            element = self.get_value(iter, 0)
+        return element
 
     def _visible(self, element):
         return isinstance(
@@ -245,7 +264,7 @@ class NamespaceModel(Gtk.TreeStore):
         src_row = self[src_path]
         element = src_row[0]
 
-        return isinstance(element, (Diagram, UML.Package, UML.Type))
+        return can_change_owner(element)
 
     def do_drag_data_received(self, dest_path, selection_data):
         if str(selection_data.get_target()) != "GTK_TREE_MODEL_ROW":
@@ -259,47 +278,18 @@ class NamespaceModel(Gtk.TreeStore):
 
         src_row = self[src_path]
         element = src_row[0]
-
-        dest_path.up()
-        if not dest_path:
-            dest_element = None
-        else:
-            try:
-                iter = self.get_iter(dest_path)
-            except ValueError:
-                log.debug(f"Invalid path: '{dest_path}'")
-                return False
-
-            dest_element = self.get_value(iter, 0)
-
-            if dest_element is RELATIONSHIPS:
-                iter = relationship_iter_parent(self, iter)
-                dest_element = self.get_value(iter, 0)
-
-            if element.owner is dest_element:
-                return False
-
-            # Check if element is part of the namespace of dest_element:
-            ns = dest_element
-            while ns:
-                if ns is element:
-                    log.info("Can not create a cycle")
-                    return False
-                ns = ns.owner
+        dest_element = self.element_for_path(dest_path)
 
         try:
             # Set package. This only works for classifiers, packages and
             # diagrams. Properties and operations should not be moved.
             with Transaction(self.event_manager):
-                if dest_element is None and isinstance(element, Diagram):
-                    del element.element
-                elif dest_element is None:
-                    del element.package
-                elif isinstance(element, Diagram):
-                    element.element = dest_element
+                if change_owner(element, dest_element):
+                    self.event_manager.handle(
+                        NamespaceModelElementDropped(self, element)
+                    )
                 else:
-                    element.package = dest_element
-                self.event_manager.handle(NamespaceModelElementDropped(self, element))
+                    return False
             return True
         except (AttributeError, TypeError) as e:
             self.namespace_exception(dest_element, e, element)
@@ -314,6 +304,34 @@ class NamespaceModel(Gtk.TreeStore):
                 )
             )
         )
+
+
+def can_change_owner(element):
+    return isinstance(element, (Diagram, UML.Package, UML.Type))
+
+
+# TODO: Use Group function instead, needs changing its interface
+def change_owner(element, new_parent):
+    if not can_change_owner(element):
+        return False
+
+    # TODO Should be in can_change_owner()?
+    if element.owner is new_parent:
+        return False
+
+    if element in self_and_owners(new_parent):
+        log.info("Can not create a cycle")
+        return False
+
+    if new_parent is None and isinstance(element, Diagram):
+        del element.element
+    elif new_parent is None:
+        del element.package
+    elif isinstance(element, Diagram):
+        element.element = new_parent
+    else:
+        element.package = new_parent
+    return True
 
 
 def sort_func(model, iter_a, iter_b, userdata):

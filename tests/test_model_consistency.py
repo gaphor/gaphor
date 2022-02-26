@@ -25,7 +25,8 @@ from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.filemanager import load_default_model
-from gaphor.UML import diagramitems
+from gaphor.ui.namespacemodel import can_change_owner, change_owner
+from gaphor.UML import Package, diagramitems
 from gaphor.UML.classes.classestoolbox import classes
 
 
@@ -82,7 +83,7 @@ class ModelConsistency(RuleBasedStateMachine):
         load_default_model(self.model)
         self.fully_pasted_items = set()
 
-    @rule(data=data())
+    @rule()
     def create_diagram(self):
         with self.transaction:
             self.model.create(Diagram)
@@ -140,6 +141,15 @@ class ModelConsistency(RuleBasedStateMachine):
         handle = data.draw(sampled_from([relation.head, relation.tail]))
         with self.transaction:
             disconnect(relation, handle)
+
+    @rule(data=data())
+    def change_owner(self, data):
+        element = data.draw(self.select(lambda e: can_change_owner(e)))
+        # parent can be a package or None
+        parent = data.draw(self.select(lambda e: isinstance(e, Package)))
+        with self.transaction:
+            changed = change_owner(element, parent)
+            assume(changed)
 
     @rule()
     def undo(self):
