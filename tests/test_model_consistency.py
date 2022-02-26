@@ -15,7 +15,6 @@ from hypothesis.stateful import (
 )
 from hypothesis.strategies import data, integers, lists, sampled_from
 
-from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
@@ -39,8 +38,6 @@ def tooldef():
 
 
 class ModelConsistency(RuleBasedStateMachine):
-
-    #
     @property
     def model(self) -> ElementFactory:
         return self.session.get_service("element_factory")  # type: ignore[no-any-return]
@@ -85,9 +82,10 @@ class ModelConsistency(RuleBasedStateMachine):
         load_default_model(self.model)
         self.fully_pasted_items = set()
 
+    @rule(data=data())
     def create_diagram(self):
         with self.transaction:
-            return self.model.create(Diagram)
+            self.model.create(Diagram)
 
     @rule(
         tooldef=tooldef(),
@@ -115,10 +113,10 @@ class ModelConsistency(RuleBasedStateMachine):
 
     @rule(data=data())
     def delete_element(self, data):
-        elements = self.select(
-            lambda e: not isinstance(e, (Diagram, StyleSheet, UML.Package))
-            and deletable(e)
-        )
+        # Do not delete StyleSheet: it will be re-created on load,
+        # causing test errors. It can't be created dynamically,
+        # because such changes require a transaction.
+        elements = self.select(lambda e: not isinstance(e, StyleSheet) and deletable(e))
         element = data.draw(elements)
         with self.transaction:
             element.unlink()
