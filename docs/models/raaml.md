@@ -1,6 +1,6 @@
 # Risk Analysis and Assessment Modeling Language
 
-RAAML 1.0.
+Gaphor implements parts of the [RAAML 1.0 specification](https://www.omg.org/spec/RAAML).
 
 
 ```{diagram} RAAML diagram

@@ -4,9 +4,9 @@ The UML model is the most extensive model in Gaphor.
 It is used as a base language for [SysML](sysml.md),
 [RAAML](raaml.md), and [C4](c4model.md).
 
-Gaphor tries to follow the official UML 2.5.1 data model. Where changes
-have been made a comment has been added to the model. In particular when
-m:n relationships subset 1:n relationships.
+Gaphor follows the [official UML 2.5.1 data model](https://www.omg.org/spec/UML/).
+Where changes have been made a comment has been added to the model.
+In particular where _m:n_ relationships subset _1:n_ relationships.
 
 ```{diagram} 00. Overview
 :model: uml

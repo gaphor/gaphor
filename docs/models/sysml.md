@@ -1,6 +1,6 @@
 # Systems Modeling Language
 
-Gaphor implements part of the [SysML 1.6](https://www.omg.org/spec/SysML/1.6/About-SysML/) specification.
+Gaphor implements part of the [SysML 1.6](https://www.omg.org/spec/SysML) specification.
 
 ```{diagram} SysML
 :model: sysml
