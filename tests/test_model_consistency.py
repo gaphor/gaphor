@@ -1,4 +1,22 @@
-"""A Property-based test."""
+"""A Property-based test.
+
+This is a property based/model based/monkey test.
+
+It starts a user session and performs all sorts of user
+actions:
+- create/delete elements
+- create/delete diagrams
+- connect, disconnect
+- change owner element
+- undo, redo
+- copy, paste
+
+Some tips:
+- the model is leading. Just draw from the model with the proper filters
+- do not perform `assume()` calls in a transaction
+"""
+
+from __future__ import annotations
 
 import itertools
 from functools import singledispatch
@@ -27,7 +45,7 @@ from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.filemanager import load_default_model
 from gaphor.ui.namespacemodel import can_change_owner, change_owner
 from gaphor.UML import Package, diagramitems
-from gaphor.UML.classes.classestoolbox import classes
+from gaphor.UML.toolbox import classes, deployments, profiles, use_cases
 
 
 def test_model_consistency():
@@ -35,7 +53,13 @@ def test_model_consistency():
 
 
 def tooldef():
-    return sampled_from(classes.tools)
+    return sampled_from(
+        list(
+            itertools.chain(
+                classes.tools, deployments.tools, use_cases.tools, profiles.tools
+            )
+        )
+    )
 
 
 class ModelConsistency(RuleBasedStateMachine):
@@ -115,8 +139,8 @@ class ModelConsistency(RuleBasedStateMachine):
     @rule(data=data())
     def delete_element(self, data):
         # Do not delete StyleSheet: it will be re-created on load,
-        # causing test errors. It can't be created dynamically,
-        # because such changes require a transaction.
+        # causing test invariants to fail. It can't be created
+        # dynamically, because such changes require a transaction.
         elements = self.select(lambda e: not isinstance(e, StyleSheet) and deletable(e))
         element = data.draw(elements)
         with self.transaction:
@@ -149,7 +173,7 @@ class ModelConsistency(RuleBasedStateMachine):
         parent = data.draw(self.select(lambda e: isinstance(e, Package)))
         with self.transaction:
             changed = change_owner(element, parent)
-            assume(changed)
+        assume(changed)
 
     @rule()
     def undo(self):
@@ -276,6 +300,14 @@ def _(relation: diagramitems.ContainmentItem, head, tail):
 
 @check_relation.register
 def _(relation: diagramitems.AssociationItem, head, tail):
+    subject = relation.subject
+    targets = [m.type for m in subject.memberEnd]
+    assert head.subject in targets
+    assert tail.subject in targets
+
+
+@check_relation.register
+def _(relation: diagramitems.ExtensionItem, head, tail):
     subject = relation.subject
     targets = [m.type for m in subject.memberEnd]
     assert head.subject in targets
