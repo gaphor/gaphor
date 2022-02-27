@@ -222,8 +222,7 @@ class NamespaceModel(Gtk.TreeStore):
         ):
             element = event.element
 
-            iter = self.iter_for_element(element)
-            if iter:
+            if iter := self.iter_for_element(element):
                 path = self.get_path(iter)
                 self.row_changed(path, iter)
                 self.sort()
