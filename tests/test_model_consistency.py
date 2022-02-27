@@ -14,6 +14,10 @@ actions:
 Some tips:
 - the model is leading. Just draw from the model with the proper filters
 - do not perform `assume()` calls in a transaction
+
+To do:
+- Create tests for actions, interactions, states
+- Create tests for SysML tools (combined with UML?)
 """
 
 from __future__ import annotations
@@ -45,7 +49,7 @@ from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.filemanager import load_default_model
 from gaphor.ui.namespacemodel import can_change_owner, change_owner
 from gaphor.UML import Package, diagramitems
-from gaphor.UML.toolbox import classes, deployments, profiles, use_cases
+from gaphor.UML.toolbox import actions, classes, deployments, profiles, use_cases
 
 
 def test_model_consistency():
@@ -56,7 +60,11 @@ def tooldef():
     return sampled_from(
         list(
             itertools.chain(
-                classes.tools, deployments.tools, use_cases.tools, profiles.tools
+                classes.tools,
+                deployments.tools,
+                use_cases.tools,
+                profiles.tools,
+                actions.tools,
             )
         )
     )
@@ -312,3 +320,19 @@ def _(relation: diagramitems.ExtensionItem, head, tail):
     targets = [m.type for m in subject.memberEnd]
     assert head.subject in targets
     assert tail.subject in targets
+
+
+@check_relation.register
+def _(relation: diagramitems.ControlFlowItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert subject.source is head.subject
+    assert subject.target is tail.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.ObjectFlowItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert subject.source is head.subject
+    assert subject.target is tail.subject
