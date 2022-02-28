@@ -21,7 +21,7 @@ jobs:
       - name: Install Linux Dependencies
         uses: ./.github/actions/linux_dependencies
       - name: Set up Python
-        uses: actions/setup-python@v2.3.2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python_version }}
       - name: Use Python Dependency Cache
