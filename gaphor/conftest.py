@@ -118,8 +118,7 @@ class Case:
 
     def get_connected(self, handle):
         """Get item connected to line via handle."""
-        cinfo = self.diagram.connections.get_connection(handle)
-        if cinfo:
+        if cinfo := self.diagram.connections.get_connection(handle):
             return cinfo.connected
         return None
 
