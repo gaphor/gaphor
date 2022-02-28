@@ -18,8 +18,7 @@ from gaphor.UML.interactions.message import MessageItem
 
 def get_connected(item, handle) -> Optional[Presentation[Element]]:
     """Get item connected to a handle."""
-    cinfo = item.diagram.connections.get_connection(handle)
-    if cinfo:
+    if cinfo := item.diagram.connections.get_connection(handle):
         return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
     return None
 
@@ -113,13 +112,11 @@ def disconnect_lifelines(line, send, received):
         return
 
     if send:
-        event = line.subject.receiveEvent
-        if event:
+        if event := line.subject.receiveEvent:
             event.unlink()
 
     if received:
-        event = line.subject.sendEvent
-        if event:
+        if event := line.subject.sendEvent:
             event.unlink()
 
     # one is disconnected and one is about to be disconnected,
