@@ -8,7 +8,7 @@ from gaphas.types import Pos, SupportsFloatPos
 from gaphor import UML
 from gaphor.core.modeling import Element, Presentation
 from gaphor.diagram.connectors import BaseConnector, Connector
-from gaphor.diagram.grouping import Group
+from gaphor.diagram.group import group
 from gaphor.i18n import gettext
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
 from gaphor.UML.interactions.interaction import InteractionItem
@@ -69,7 +69,7 @@ def owner_for_message(line, lifeline):
         return
     elif isinstance(maybe_interaction, InteractionItem):
         line.parent = maybe_interaction
-        Group(maybe_interaction, line).group()
+        group(maybe_interaction, line)
     elif lifeline.subject and lifeline.subject.interaction:
         line.subject.interaction = lifeline.subject.interaction
 

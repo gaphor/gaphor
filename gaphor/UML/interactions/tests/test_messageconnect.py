@@ -3,7 +3,7 @@
 import pytest
 
 from gaphor import UML
-from gaphor.diagram.grouping import Group
+from gaphor.diagram.group import group
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
 from gaphor.UML.interactions.interaction import InteractionItem
@@ -158,7 +158,7 @@ def test_message_is_owned_by_interaction_item_connecting_to_one_end(
         InteractionItem, subject=element_factory.create(UML.Interaction)
     )
     ll = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
-    Group(interaction, ll).group()
+    assert group(interaction.subject, ll.subject)
 
     msg = diagram.create(MessageItem)
     connect(msg, getattr(msg, end_name), ll)

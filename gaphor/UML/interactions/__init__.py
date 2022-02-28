@@ -1,6 +1,7 @@
 from gaphor.UML.interactions import (
     copypaste,
     interactionsconnect,
+    interactionsgroup,
     interactionsgrouping,
     interactionspropertypages,
 )
