@@ -766,6 +766,16 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "yantaozhao",
+      "name": "YantaoZhao",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9587405?v=4",
+      "profile": "https://github.com/yantaozhao",
+      "contributions": [
+        "bug",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
