@@ -15,7 +15,7 @@ jobs:
       matrix:
         python_version: ["3.10"]
     steps:
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
