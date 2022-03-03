@@ -1,11 +1,17 @@
 from gaphor import UML
-from gaphor.diagram.group import group
+from gaphor.diagram.group import group, ungroup
 from gaphor.UML.uml import Artifact, Node
 
 
 @group.register(Node, Node)
 def node_group(parent, element):
     parent.nestedNode = element
+    return True
+
+
+@ungroup.register(Node, Node)
+def node_ungroup(parent, element):
+    del element.node
     return True
 
 
@@ -20,7 +26,9 @@ def node_artifact_group(node, artifact):
     return True
 
 
-def ungroup(node, artifact):
+@ungroup.register(Node, Artifact)
+def node_artifact_ungroup(node, artifact):
     for deployment in node.deployment:
         if deployment.deployedArtifact[0] is artifact:
             deployment.unlink()
+    return True

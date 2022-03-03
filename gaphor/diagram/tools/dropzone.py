@@ -12,7 +12,7 @@ from gaphas.view import GtkView
 from gi.repository import Gtk
 
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.group import group
+from gaphor.diagram.group import group, ungroup
 from gaphor.diagram.presentation import (
     ElementPresentation,
     LinePresentation,
@@ -113,17 +113,20 @@ class DropZoneMove(GuidedItemMove):
                     old_parent.request_update()
                 return
 
-            if new_parent and group(new_parent.subject, item.subject):
+            if old_parent:
+                item.change_parent(None)
+
+                ungroup(old_parent.subject, item.subject)
+                old_parent.request_update()
+
+            if new_parent and item.subject and group(new_parent.subject, item.subject):
                 grow_parent(new_parent, item)
                 item.change_parent(new_parent)
                 new_parent.request_update()
-            else:
+            elif item.subject:
                 diagram_parent = owner_package(item.diagram)
                 group(diagram_parent, item.subject)
-                item.change_parent(None)
 
-            if old_parent:
-                old_parent.request_update()
         finally:
             view.selection.dropzone_item = None
 

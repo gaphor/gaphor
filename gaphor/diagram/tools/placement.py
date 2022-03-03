@@ -76,7 +76,7 @@ def create_item(view, factory, x, y):
 
 
 def maybe_group(parent, item):
-    if parent and group(parent.subject, item.subject):
+    if parent and item.subject and group(parent.subject, item.subject):
         grow_parent(parent, item)
         item.change_parent(parent)
 

@@ -28,7 +28,6 @@ from gaphor import UML
 from gaphor.core.modeling import Diagram
 from gaphor.application import Session
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.grouping import Group
 from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
 
@@ -125,18 +124,6 @@ class Case:
     def get_connection(self, handle):
         """Get connection information."""
         return self.diagram.connections.get_connection(handle)
-
-    def group(self, parent, item):
-        """Group item within a parent."""
-        item.parent = parent
-        adapter = Group(parent, item)
-        adapter.group()
-
-    def ungroup(self, parent, item):
-        """Remove item from a parent."""
-        adapter = Group(parent, item)
-        adapter.ungroup()
-        item.parent = None
 
     def kindof(self, cls):
         """Find UML metaclass instances using element factory."""

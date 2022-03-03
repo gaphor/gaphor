@@ -3,7 +3,6 @@ from gaphor.UML.deployments import (
     copypaste,
     deploymentpropertypage,
     deploymentsgroup,
-    deploymentsgrouping,
 )
 from gaphor.UML.deployments.artifact import ArtifactItem
 from gaphor.UML.deployments.connector import ConnectorItem

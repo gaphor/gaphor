@@ -94,7 +94,7 @@ def new_item_factory(
 
         item = diagram.create(item_class, subject=subject)
 
-        if parent and group(parent.subject, item.subject):
+        if parent and subject and group(parent.subject, item.subject):
             item.change_parent(parent)
 
         if config_func:

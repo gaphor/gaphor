@@ -22,7 +22,7 @@ def test_message_persistence(diagram, element_factory, saver, loader):
     assert item
 
 
-@pytest.mark.xfail()
+@pytest.mark.xfail
 def test_group_message_item_without_subject(diagram, element_factory):
     interaction = diagram.create(
         InteractionItem, subject=element_factory.create(UML.Interaction)

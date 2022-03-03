@@ -2,7 +2,6 @@
 
 from typing import Iterable
 
-import gaphor.C4Model.grouping  # noqa
 import gaphor.C4Model.iconname  # noqa
 import gaphor.C4Model.propertypages  # noqa
 from gaphor.abc import ModelingLanguage
