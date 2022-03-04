@@ -8,11 +8,31 @@
 
 from __future__ import annotations
 
-from generic.multidispatch import multidispatch
+import functools
+import itertools
+from typing import Callable
+
+from generic.multidispatch import FunctionDispatcher, multidispatch
+
+from gaphor.core.modeling import Element
 
 
-@multidispatch(object, object)
-def group(parent, element) -> bool:
+def no_group(parent, element) -> bool:
+    return False
+
+
+group: FunctionDispatcher[Callable[[Element, Element], bool]] = multidispatch(
+    object, object
+)(no_group)
+
+
+@functools.lru_cache()
+def can_group(parent: Element, element_type: type[Element]) -> bool:
+    parent_type = type(parent)
+    get_registration = group.registry.get_registration
+    for t1, t2 in itertools.product(parent_type.__mro__, element_type.__mro__):
+        if r := get_registration(t1, t2):
+            return r is not no_group
     return False
 
 

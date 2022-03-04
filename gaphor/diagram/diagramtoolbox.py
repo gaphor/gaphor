@@ -103,6 +103,7 @@ def new_item_factory(
         return item
 
     item_factory.item_class = item_class  # type: ignore[attr-defined]
+    item_factory.subject_class = subject_class  # type: ignore[attr-defined]
     return item_factory
 
 

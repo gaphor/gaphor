@@ -6,6 +6,8 @@ gaphor.adapter package.
 
 from __future__ import annotations
 
+import functools
+import itertools
 from typing import Iterator, Protocol, TypeVar
 
 from gaphas.connections import Connection
@@ -120,6 +122,16 @@ class NoConnector:
 Connector: FunctionDispatcher[type[ConnectorProtocol]] = multidispatch(object, object)(
     NoConnector
 )
+
+
+@functools.lru_cache()
+def can_connect(parent, element_type) -> bool:
+    parent_type = type(parent)
+    get_registration = Connector.registry.get_registration
+    for t1, t2 in itertools.product(parent_type.__mro__, element_type.__mro__):
+        if r := get_registration(t1, t2):
+            return r is not NoConnector
+    return False
 
 
 class UnaryRelationshipConnect(BaseConnector):

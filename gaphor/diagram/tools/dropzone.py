@@ -1,5 +1,3 @@
-import functools
-import itertools
 import logging
 from typing import Type
 
@@ -11,8 +9,9 @@ from gaphas.tool.itemtool import item_at_point
 from gaphas.view import GtkView
 from gi.repository import Gtk
 
-from gaphor.diagram.connectors import Connector
-from gaphor.diagram.group import group, ungroup
+from gaphor.core.modeling import Element
+from gaphor.diagram.connectors import can_connect
+from gaphor.diagram.group import can_group, group, ungroup
 from gaphor.diagram.presentation import (
     ElementPresentation,
     LinePresentation,
@@ -24,26 +23,20 @@ log = logging.getLogger(__name__)
 
 
 def drop_zone_tool(
-    view: GtkView, item_class: Type[Presentation]
+    view: GtkView, item_class: Type[Presentation], subject_class: Type[Element]
 ) -> Gtk.EventController:
     ctrl = (
         Gtk.EventControllerMotion.new(view)
         if Gtk.get_major_version() == 3
         else Gtk.EventControllerMotion.new()
     )
-    ctrl.connect("motion", on_motion, item_class)
+    ctrl.connect("motion", on_motion, item_class, subject_class)
     return ctrl
 
 
-@functools.lru_cache()
-def has_registration(generic_type, parent_type, child_type):
-    get_registration = generic_type.registry.get_registration
-    for t1, t2 in itertools.product(parent_type.__mro__, child_type.__mro__):
-        if get_registration(t1, t2):
-            return True
-
-
-def on_motion(controller, x, y, item_class: Type[Presentation]):
+def on_motion(
+    controller, x, y, item_class: Type[Presentation], subject_class: Type[Element]
+):
     view: GtkView = controller.get_widget()
     model = view.model
 
@@ -53,11 +46,12 @@ def on_motion(controller, x, y, item_class: Type[Presentation]):
         parent = None
 
     if parent:
-        parent_type = type(parent)
-        can_group = has_registration(group, parent_type, item_class)  # type: ignore[arg-type]
-        can_connect = has_registration(Connector, parent_type, item_class)  # type: ignore[arg-type]
-
-        view.selection.dropzone_item = parent if can_group or can_connect else None
+        view.selection.dropzone_item = (
+            parent
+            if can_group(parent.subject, subject_class)  # type: ignore[arg-type]
+            or can_connect(parent, item_class)  # type: ignore[arg-type]
+            else None
+        )
         model.request_update(parent)
     else:
         if view.selection.dropzone_item:
@@ -92,10 +86,7 @@ class DropZoneMove(GuidedItemMove):
             view.selection.dropzone_item = None
             return
 
-        # are we going to add to parent?
-        can_group = has_registration(group, type(over_item), type(item))  # type: ignore[arg-type]
-
-        if can_group:
+        if can_group(over_item.subject, type(item.subject)):  # type: ignore[arg-type]
             view.selection.dropzone_item = over_item
             over_item.request_update()
 
