@@ -10,16 +10,33 @@ from gaphor.UML.classes.containment import ContainmentItem
 def test_containment_package_glue(create):
     """Test containment glue to two package items."""
     pkg1 = create(PackageItem, UML.Package)
+    containment = create(ContainmentItem)
+
+    assert allow(containment, containment.head, pkg1)
+
+
+def test_containment_package_glue_connected_on_one_end(create):
+    """Test containment glue to two package items."""
+    pkg1 = create(PackageItem, UML.Package)
     pkg2 = create(PackageItem, UML.Package)
     containment = create(ContainmentItem)
 
-    glued = allow(containment, containment.head, pkg1)
-    assert glued
-
     connect(containment, containment.head, pkg1)
 
-    glued = allow(containment, containment.tail, pkg2)
-    assert glued
+    assert allow(containment, containment.tail, pkg2)
+    assert not allow(containment, containment.tail, pkg1)
+
+
+def test_containment_can_not_create_cycles(create, diagram, element_factory):
+    """Test containment connecting to a package and a class."""
+    package = create(PackageItem, UML.Package)
+    klass = create(ClassItem, UML.Class)
+    klass.subject.package = package.subject
+    line = create(ContainmentItem)
+
+    connect(line, line.head, klass)
+
+    assert not allow(line, line.tail, package)
 
 
 def test_containment_package_class(create, diagram):
@@ -30,6 +47,7 @@ def test_containment_package_class(create, diagram):
 
     connect(line, line.head, package)
     connect(line, line.tail, klass)
+
     assert diagram.connections.get_connection(line.tail).connected is klass
     assert len(package.subject.ownedElement) == 1
     assert klass.subject in package.subject.ownedElement
@@ -62,6 +80,7 @@ def test_containment_class_class(create, diagram, element_factory):
 
     connect(line, line.head, container)
     connect(line, line.tail, klass)
+
     assert diagram.connections.get_connection(line.tail).connected is klass
     assert len(container.subject.ownedElement) == 1
     assert klass.subject.owner is container.subject

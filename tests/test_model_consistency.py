@@ -1,6 +1,29 @@
-"""A Property-based test."""
+"""A Property-based test.
+
+This is a property based/model based/monkey test.
+
+It starts a user session and performs all sorts of user
+actions:
+- create/delete elements
+- create/delete diagrams
+- connect, disconnect
+- change owner element
+- undo, redo
+- copy, paste
+
+Some tips:
+- the model is leading. Just draw from the model with the proper filters
+- do not perform `assume()` calls in a transaction
+
+To do:
+- Create tests for actions, interactions, states
+- Create tests for SysML tools (combined with UML?)
+"""
+
+from __future__ import annotations
 
 import itertools
+from functools import singledispatch
 from io import StringIO
 
 from hypothesis.control import assume, cleanup
@@ -14,20 +37,37 @@ from hypothesis.stateful import (
 )
 from hypothesis.strategies import data, integers, lists, sampled_from
 
-from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
 from gaphor.core.modeling.element import generate_id, uuid_generator
+from gaphor.diagram.deletable import deletable
+from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.filemanager import load_default_model
-from gaphor.UML import diagramitems
+from gaphor.ui.namespacemodel import can_change_owner, change_owner
+from gaphor.UML import Package, diagramitems
+from gaphor.UML.toolbox import actions, classes, deployments, profiles, use_cases
 
 
 def test_model_consistency():
     run_state_machine_as_test(ModelConsistency)
+
+
+def tooldef():
+    return sampled_from(
+        list(
+            itertools.chain(
+                classes.tools,
+                deployments.tools,
+                use_cases.tools,
+                profiles.tools,
+                actions.tools,
+            )
+        )
+    )
 
 
 class ModelConsistency(RuleBasedStateMachine):
@@ -75,37 +115,28 @@ class ModelConsistency(RuleBasedStateMachine):
         load_default_model(self.model)
         self.fully_pasted_items = set()
 
+    @rule()
     def create_diagram(self):
         with self.transaction:
-            return self.model.create(Diagram)
+            self.model.create(Diagram)
 
     @rule(
+        tooldef=tooldef(),
         data=data(),
-        x=integers(min_value=0, max_value=1000),
-        y=integers(min_value=0, max_value=1000),
+        x=integers(min_value=0, max_value=2000),
+        y=integers(min_value=0, max_value=2000),
     )
-    def create_class(self, data, x, y):
+    def add_item_to_diagram(self, tooldef, data, x, y):
         diagram = data.draw(self.diagrams())
         with self.transaction:
-            item = diagram.create(
-                diagramitems.ClassItem, subject=self.model.create(UML.Class)
-            )
+            item = tooldef.item_factory(diagram)
             item.matrix.translate(x, y)
+            diagram.update_now({item})
 
-    @rule(
-        data=data(),
-        x=integers(min_value=0, max_value=1000),
-        y=integers(min_value=0, max_value=1000),
-    )
-    def create_dependency(self, data, x, y):
-        diagram = data.draw(self.diagrams())
-        with self.transaction:
-            item = diagram.create(diagramitems.DependencyItem)
-            item.matrix.translate(x, y)
-
-        # Do best effort to connect, no problem if it fails
-        self.try_connect_relation(data, item, item.head)
-        self.try_connect_relation(data, item, item.tail)
+        # Do best effort to connect a line, no problem if it fails
+        if isinstance(item, LinePresentation):
+            self.try_connect_relation(data, item, item.head)
+            self.try_connect_relation(data, item, item.tail)
 
     def try_connect_relation(self, data, item, handle):
         try:
@@ -115,9 +146,10 @@ class ModelConsistency(RuleBasedStateMachine):
 
     @rule(data=data())
     def delete_element(self, data):
-        elements = self.select(
-            lambda e: not isinstance(e, (Diagram, StyleSheet, UML.Package))
-        )
+        # Do not delete StyleSheet: it will be re-created on load,
+        # causing test invariants to fail. It can't be created
+        # dynamically, because such changes require a transaction.
+        elements = self.select(lambda e: not isinstance(e, StyleSheet) and deletable(e))
         element = data.draw(elements)
         with self.transaction:
             element.unlink()
@@ -141,6 +173,15 @@ class ModelConsistency(RuleBasedStateMachine):
         handle = data.draw(sampled_from([relation.head, relation.tail]))
         with self.transaction:
             disconnect(relation, handle)
+
+    @rule(data=data())
+    def change_owner(self, data):
+        element = data.draw(self.select(lambda e: can_change_owner(e)))
+        # parent can be a package or None
+        parent = data.draw(self.select(lambda e: isinstance(e, Package)))
+        with self.transaction:
+            changed = change_owner(element, parent)
+        assume(changed)
 
     @rule()
     def undo(self):
@@ -186,39 +227,37 @@ class ModelConsistency(RuleBasedStateMachine):
 
     @invariant()
     def check_relations(self):
-        relation: diagramitems.DependencyItem
-        for relation in self.model.select(diagramitems.DependencyItem):  # type: ignore[assignment]
+        for relation in self.model.select(LinePresentation):
             subject = relation.subject
             diagram = relation.diagram
             head = get_connected(diagram, relation.head)
             tail = get_connected(diagram, relation.tail)
 
             if head and tail:
-                assert subject
-                assert subject.supplier is head.subject
-                assert subject.client is tail.subject
+                check_relation(relation, head, tail)
             elif relation not in self.fully_pasted_items:
                 assert not subject
 
     @invariant()
     def check_save_and_load(self):
         new_model = ElementFactory()
-        with StringIO() as buffer:
-            storage.save(XMLWriter(buffer), self.model)
-            buffer.seek(0)
-            storage.load(
-                buffer,
-                factory=new_model,
-                modeling_language=self.session.get_service("modeling_language"),
-            )
+        try:
+            with StringIO() as buffer:
+                storage.save(XMLWriter(buffer), self.model)
+                buffer.seek(0)
+                storage.load(
+                    buffer,
+                    factory=new_model,
+                    modeling_language=self.session.get_service("modeling_language"),
+                )
 
-        if new_model.size() != self.model.size():
+            assert (
+                self.model.size() == new_model.size()
+            ), f"{self.model.lselect()} != {new_model.lselect()}"
+        except Exception:
             with open("falsifying_model.gaphor", "w") as out:
                 storage.save(XMLWriter(out), self.model)
-
-        assert (
-            self.model.size() == new_model.size()
-        ), f"{self.model.lselect()} != {new_model.lselect()}"
+            raise
 
 
 def get_connected(diagram, handle):
@@ -230,3 +269,70 @@ def get_connected(diagram, handle):
 
 def ordered(elements):
     return sorted(elements, key=lambda e: e.id)  # type: ignore[no-any-return]
+
+
+@singledispatch
+def check_relation(relation: object, head, tail):
+    assert False, f"No comparison function for {relation}"
+
+
+@check_relation.register
+def _(relation: diagramitems.DependencyItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert subject.supplier is head.subject
+    assert subject.client is tail.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.GeneralizationItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert subject.specific is head.subject
+    assert subject.general is tail.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.InterfaceRealizationItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert subject.contract is head.subject
+    assert subject.implementatingClassifier is tail.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.ContainmentItem, head, tail):
+    assert not relation.subject
+    assert tail.subject.owner is head.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.AssociationItem, head, tail):
+    subject = relation.subject
+    targets = [m.type for m in subject.memberEnd]
+    assert head.subject in targets
+    assert tail.subject in targets
+
+
+@check_relation.register
+def _(relation: diagramitems.ExtensionItem, head, tail):
+    subject = relation.subject
+    targets = [m.type for m in subject.memberEnd]
+    assert head.subject in targets
+    assert tail.subject in targets
+
+
+@check_relation.register
+def _(relation: diagramitems.ControlFlowItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert subject.source is head.subject
+    assert subject.target is tail.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.ObjectFlowItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert subject.source is head.subject
+    assert subject.target is tail.subject
