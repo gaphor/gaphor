@@ -14,7 +14,7 @@ from typing import Callable
 
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Element
+from gaphor.core.modeling import Diagram, Element
 
 
 def no_group(parent, element) -> bool:
@@ -27,7 +27,12 @@ group: FunctionDispatcher[Callable[[Element, Element], bool]] = multidispatch(
 
 
 @functools.lru_cache()
-def can_group(parent: Element, element_type: type[Element]) -> bool:
+def can_group(parent: Element, element_or_type: Element | type[Element]) -> bool:
+    element_type = (
+        type(element_or_type)
+        if isinstance(element_or_type, Element)
+        else element_or_type
+    )
     parent_type = type(parent)
     get_registration = group.registry.get_registration
     for t1, t2 in itertools.product(parent_type.__mro__, element_type.__mro__):
@@ -39,3 +44,15 @@ def can_group(parent: Element, element_type: type[Element]) -> bool:
 @multidispatch(object, object)
 def ungroup(parent, element) -> bool:
     return False
+
+
+@group.register(Element, Diagram)
+def diagram_group(element, diagram):
+    diagram.element = element
+    return True
+
+
+@ungroup.register(Element, Diagram)
+def diagram_ungroup(element, diagram):
+    del diagram.element
+    return True
