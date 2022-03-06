@@ -8,7 +8,6 @@
 
 from __future__ import annotations
 
-import functools
 import itertools
 from typing import Callable
 
@@ -26,7 +25,6 @@ group: FunctionDispatcher[Callable[[Element, Element], bool]] = multidispatch(
 )(no_group)
 
 
-@functools.lru_cache()
 def can_group(parent: Element, element_or_type: Element | type[Element]) -> bool:
     element_type = (
         type(element_or_type)

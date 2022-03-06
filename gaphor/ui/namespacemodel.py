@@ -19,6 +19,7 @@ from gaphor.core.modeling import (
     ModelReady,
     self_and_owners,
 )
+from gaphor.diagram.group import can_group, group
 from gaphor.event import Notification
 
 if TYPE_CHECKING:
@@ -262,8 +263,9 @@ class NamespaceModel(Gtk.TreeStore):
 
         src_row = self[src_path]
         element = src_row[0]
+        dest_element = self.element_for_path(dest_path)
 
-        return can_change_owner(element)
+        return can_group(dest_element, element)
 
     def do_drag_data_received(self, dest_path, selection_data):
         if str(selection_data.get_target()) != "GTK_TREE_MODEL_ROW":
@@ -283,7 +285,7 @@ class NamespaceModel(Gtk.TreeStore):
             # Set package. This only works for classifiers, packages and
             # diagrams. Properties and operations should not be moved.
             with Transaction(self.event_manager):
-                if change_owner(element, dest_element):
+                if change_owner(dest_element, element):
                     self.event_manager.handle(
                         NamespaceModelElementDropped(self, element)
                     )
@@ -305,32 +307,18 @@ class NamespaceModel(Gtk.TreeStore):
         )
 
 
-def can_change_owner(element):
-    return isinstance(element, (Diagram, UML.Package, UML.Type))
-
-
-# TODO: Use Group function instead, needs changing its interface
-def change_owner(element, new_parent):
-    if not can_change_owner(element):
-        return False
-
-    # TODO Should be in can_change_owner()?
+def change_owner(new_parent, element):
     if element.owner is new_parent:
         return False
 
-    if element in self_and_owners(new_parent):
-        log.info("Can not create a cycle")
+    if not can_group(new_parent, element):
         return False
 
-    if new_parent is None and isinstance(element, Diagram):
-        del element.element
-    elif new_parent is None:
-        del element.package
-    elif isinstance(element, Diagram):
-        element.element = new_parent
-    else:
-        element.package = new_parent
-    return True
+    if element in self_and_owners(new_parent):
+        log.debug("Can not create a cycle")
+        return False
+
+    return group(new_parent, element)
 
 
 def sort_func(model, iter_a, iter_b, userdata):

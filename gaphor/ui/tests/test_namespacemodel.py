@@ -186,12 +186,15 @@ class MockSelectionData:
 
 
 def test_droppable(namespace, element_factory, mocker):
-    element_factory.create(UML.Class)
+    element_factory.create(UML.Class).name = "0"
+    element_factory.create(UML.Package).name = "1"
     selection_data = MockSelectionData()
     tree_get_row_drag_data = mocker.patch.object(Gtk, "tree_get_row_drag_data")
     tree_get_row_drag_data.return_value = (True, namespace, (0,))
 
-    assert namespace.do_row_drop_possible((1,), selection_data)
+    assert namespace.do_row_drop_possible(
+        Gtk.TreePath.new_from_indices((1, 0)), selection_data
+    )
 
 
 @pytest.mark.skipif(Gtk.get_major_version() != 3, reason="Works only for GTK+ 3")
