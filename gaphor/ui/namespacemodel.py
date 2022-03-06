@@ -17,7 +17,6 @@ from gaphor.core.modeling import (
     ElementDeleted,
     ModelFlushed,
     ModelReady,
-    self_and_owners,
 )
 from gaphor.diagram.group import can_group, group
 from gaphor.event import Notification
@@ -312,10 +311,6 @@ def change_owner(new_parent, element):
         return False
 
     if not can_group(new_parent, element):
-        return False
-
-    if element in self_and_owners(new_parent):
-        log.debug("Can not create a cycle")
         return False
 
     return group(new_parent, element)

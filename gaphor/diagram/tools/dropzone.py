@@ -10,7 +10,6 @@ from gaphas.view import GtkView
 from gi.repository import Gtk
 
 from gaphor.core.modeling import Element
-from gaphor.core.modeling.element import self_and_owners
 from gaphor.diagram.connectors import can_connect
 from gaphor.diagram.group import can_group, group, ungroup
 from gaphor.diagram.presentation import (
@@ -49,7 +48,7 @@ def on_motion(
     if parent:
         view.selection.dropzone_item = (
             parent
-            if can_group(parent.subject, subject_class)  # type: ignore[arg-type]
+            if can_group(parent.subject, subject_class)
             or can_connect(parent, item_class)  # type: ignore[arg-type]
             else None
         )
@@ -111,17 +110,13 @@ class DropZoneMove(GuidedItemMove):
                 ungroup(old_parent.subject, item.subject)
                 old_parent.request_update()
 
-            if item.subject in self_and_owners(new_parent.subject):
-                return
-
             if new_parent and item.subject and group(new_parent.subject, item.subject):
                 grow_parent(new_parent, item)
                 item.change_parent(new_parent)
                 new_parent.request_update()
             elif item.subject:
                 diagram_parent = owner_package(item.diagram)
-                if item.subject not in self_and_owners(diagram_parent):
-                    group(diagram_parent, item.subject)
+                group(diagram_parent, item.subject)
 
         finally:
             view.selection.dropzone_item = None

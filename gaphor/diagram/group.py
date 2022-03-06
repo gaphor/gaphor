@@ -13,16 +13,30 @@ from typing import Callable
 
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
-from gaphor.core.modeling import Diagram, Element
+from gaphor.core.modeling import Diagram, Element, self_and_owners
 
 
 def no_group(parent, element) -> bool:
     return False
 
 
-group: FunctionDispatcher[Callable[[Element, Element], bool]] = multidispatch(
-    object, object
-)(no_group)
+class GroupPreconditions:
+    def __init__(self, func):
+        self.__func = func
+
+    def __getattr__(self, key):
+        return getattr(self.__func, key)
+
+    def __call__(self, parent, element) -> bool:
+        if element in self_and_owners(parent):
+            return False
+
+        return self.__func(parent, element)  # type: ignore[no-any-return]
+
+
+group: FunctionDispatcher[Callable[[Element, Element], bool]] = GroupPreconditions(
+    multidispatch(object, object)(no_group)
+)
 
 
 def can_group(parent: Element, element_or_type: Element | type[Element]) -> bool:
