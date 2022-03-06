@@ -18,7 +18,7 @@ from gaphor.core.modeling import (
     ModelFlushed,
     ModelReady,
 )
-from gaphor.diagram.group import can_group, group
+from gaphor.diagram.group import can_group, group, ungroup
 from gaphor.event import Notification
 
 if TYPE_CHECKING:
@@ -119,7 +119,6 @@ class NamespaceModel(Gtk.TreeStore):
         return None
 
     def element_for_path(self, path):
-        path.up()
         if not path:
             return None
 
@@ -127,7 +126,7 @@ class NamespaceModel(Gtk.TreeStore):
             iter = self.get_iter(path)
         except ValueError:
             log.debug(f"Invalid path: '{path}'")
-            return False
+            return None
 
         element = self.get_value(iter, 0)
 
@@ -262,9 +261,10 @@ class NamespaceModel(Gtk.TreeStore):
 
         src_row = self[src_path]
         element = src_row[0]
+        dest_path.up()
         dest_element = self.element_for_path(dest_path)
 
-        return can_group(dest_element, element)
+        return dest_element is None or can_group(dest_element, element)
 
     def do_drag_data_received(self, dest_path, selection_data):
         if str(selection_data.get_target()) != "GTK_TREE_MODEL_ROW":
@@ -276,14 +276,20 @@ class NamespaceModel(Gtk.TreeStore):
             log.debug("Can't DnD from different tree model")
             return False
 
-        src_row = self[src_path]
-        element = src_row[0]
+        element = self[src_path][0]
+        if src_path.up() and src_path:
+            old_parent = self[src_path][0]
+        else:
+            old_parent = None
+
         dest_element = self.element_for_path(dest_path)
 
         try:
             # Set package. This only works for classifiers, packages and
             # diagrams. Properties and operations should not be moved.
             with Transaction(self.event_manager):
+                if old_parent:
+                    ungroup(old_parent, element)
                 if change_owner(dest_element, element):
                     self.event_manager.handle(
                         NamespaceModelElementDropped(self, element)
