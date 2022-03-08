@@ -30,7 +30,9 @@ def node_artifact_group(node, artifact):
 
 @ungroup.register(Node, Artifact)
 def node_artifact_ungroup(node, artifact):
-    for deployment in node.deployment:
-        if deployment.deployedArtifact[0] is artifact:
+    deployments = set(node.deployment) & set(artifact.deployment)
+    if deployments:
+        for deployment in deployments:
             deployment.unlink()
-    return True
+        return True
+    return False

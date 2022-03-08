@@ -20,17 +20,16 @@ functions.
 But let's not get ahead of ourselves. What is the functionality a modeling
 language implementation can offer?
 
-* A data model (elements)
+* A data model (elements) and diagram items
 * Diagram types
-* Diagram items
 * A toolbox definition
 * [Connectors](#connectors), allow diagram items to connect
-* [Grouping](#grouping)
+* [Grouping](#grouping), allow elements to be nested in one another
 * [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
 * [Inline (diagram) editor popups](#inline-diagram-editor-popups)
 * [Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent
-* [Copy/paste](#copy-and-paste) behavior when element copying is not trivial, for example with
-  more than one element is involved
+* [Copy/paste](#copy-and-paste) behavior when element copying is not trivial,
+  for example with more than one element is involved
 
 We expose the first four by methods defined on the `ModelingLanguage` class. We
 then expose the others by adding handlers to the respective generic functions.
