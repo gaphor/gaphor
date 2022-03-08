@@ -55,13 +55,24 @@ Normally you would inherit from `BaseConnector`.
 
 ## Grouping
 
-Grouping is done by dragging one item on top of another.
-
-Grouping dispatch objects are normally inheriting from `AbstractGroup`.
+Grouping is done by dragging one item on top of another, in a diagram or in the tree view.
 
 ```{eval-rst}
-.. autoclass:: gaphor.diagram.grouping.AbstractGroup
-   :members:
+.. function:: gaphor.diagram.group.group(parent: Element, element: Element) -> bool
+
+   Group an element in a parent element. The grouping can be based on ownership,
+   but other types of grouping are also possible.
+
+.. function:: gaphor.diagram.group.ungroup(parent: Element, element: Element) -> bool
+
+   Remove the grouping from an element.
+   The function needs to check if the provided `parent` node is the right one.
+
+.. function:: gaphor.diagram.group.can_group(parent_type: Type[Element], element_or_type: Type[Element] | Element) -> bool
+
+   This function tries to determine if grouping is possible,
+   without actually performing a group operation.
+   This is not 100% accurate.
 ```
 
 ## Editor property pages
