@@ -14,5 +14,7 @@ def container_group(parent, element) -> bool:
 @ungroup.register(UML.Package, UML.Package)
 def container_ungroup(parent, element) -> bool:
     """Add Property to a Block."""
-    del element.package
-    return True
+    if element.package is parent:
+        del element.package
+        return True
+    return False

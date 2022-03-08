@@ -66,5 +66,7 @@ def diagram_group(element, diagram):
 
 @ungroup.register(Element, Diagram)
 def diagram_ungroup(element, diagram):
-    del diagram.element
-    return True
+    if diagram.element is element:
+        del diagram.element
+        return True
+    return False

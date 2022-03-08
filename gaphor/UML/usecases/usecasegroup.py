@@ -12,5 +12,7 @@ def subsystem_use_case_group(component, usecase):
 @ungroup.register(Classifier, UseCase)
 def use_case_ungroup(component, usecase):
     """Make subsystem a subject of an use case."""
-    usecase.subject.remove(component)
-    return True
+    if component in usecase.subject:
+        usecase.subject.remove(component)
+        return True
+    return False

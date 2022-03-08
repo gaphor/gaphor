@@ -13,6 +13,7 @@ def activity_node_partition_group(partition, node):
 
 @ungroup.register(ActivityPartition, ActivityNode)
 def activity_node_group(partition, node):
-    print("remove node")
-    partition.node.remove(node)
-    return True
+    if node in partition.node:
+        partition.node.remove(node)
+        return True
+    return False

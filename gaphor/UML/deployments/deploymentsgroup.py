@@ -11,8 +11,10 @@ def node_group(parent, element):
 
 @ungroup.register(Node, Node)
 def node_ungroup(parent, element):
-    del element.node
-    return True
+    if element.node is parent:
+        del element.node
+        return True
+    return False
 
 
 @group.register(Node, Artifact)
