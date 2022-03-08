@@ -113,7 +113,7 @@ class DropZoneMove(GuidedItemMove):
             if new_parent and item.subject and group(new_parent.subject, item.subject):
                 grow_parent(new_parent, item)
                 item.change_parent(new_parent)
-                new_parent.request_update()
+                new_parent.update_shapes()
             elif item.subject:
                 diagram_parent = owner_package(item.diagram)
                 group(diagram_parent, item.subject)

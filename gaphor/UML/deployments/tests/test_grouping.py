@@ -47,6 +47,21 @@ def test_artifact_group(element_factory):
 
     assert n.deployment
     assert n.deployment[0].deployedArtifact[0] is a
+    assert len(element_factory.lselect(UML.Deployment)) == 1
+
+
+def test_artifact_group_is_idempotent(element_factory):
+    """Test artifact within node deployment."""
+    n = element_factory.create(UML.Node)
+    a = element_factory.create(UML.Artifact)
+
+    assert group(n, a)
+    assert group(n, a)
+    assert group(n, a)
+
+    assert n.deployment
+    assert n.deployment[0].deployedArtifact[0] is a
+    assert len(element_factory.lselect(UML.Deployment)) == 1
 
 
 def test_artifact_ungroup(element_factory):

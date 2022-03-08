@@ -19,12 +19,11 @@ def node_ungroup(parent, element):
 
 @group.register(Node, Artifact)
 def node_artifact_group(node, artifact):
-    """Deploy artifact on node."""
-    # deploy artifact on node
-    # TODO: remove existing deployment, if any
-    deployment = node.model.create(UML.Deployment)
-    node.deployment = deployment
-    deployment.deployedArtifact = artifact
+    deployments = set(node.deployment) & set(artifact.deployment)
+    if not deployments:
+        deployment = node.model.create(UML.Deployment)
+        node.deployment = deployment
+        deployment.deployedArtifact = artifact
     return True
 
 
