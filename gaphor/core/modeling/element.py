@@ -67,14 +67,16 @@ class Element:
     """Base class for all model data classes."""
 
     note: attribute[str] = attribute("note", str)
-    appliedStereotype: relation_many[Element]
     comment: relation_many[Comment]
-    directedRelationship: relation_many[Presentation]
+    ownedDiagram: relation_many[Diagram]
     ownedElement: relation_many[Element]
     owner: relation_one[Element]
     presentation: relation_many[Presentation]
-    relationship: relation_many[Presentation]
-    ownedDiagram: relation_many[Diagram]
+
+    # From UML:
+    directedRelationship: relation_many[Element]
+    relationship: relation_many[Element]
+    appliedStereotype: relation_many[Element]
 
     def __init__(self, id: Id | None = None, model: RepositoryProtocol | None = None):
         """Create an element. As optional parameters an id and model can be
