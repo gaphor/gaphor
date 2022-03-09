@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 import logging
-from typing import Type
 
 from gaphas.geometry import Rectangle
 from gaphas.guide import GuidedItemMove
@@ -23,7 +24,7 @@ log = logging.getLogger(__name__)
 
 
 def drop_zone_tool(
-    view: GtkView, item_class: Type[Presentation], subject_class: Type[Element] | None
+    view: GtkView, item_class: type[Presentation], subject_class: type[Element] | None
 ) -> Gtk.EventController:
     ctrl = (
         Gtk.EventControllerMotion.new(view)
@@ -38,8 +39,8 @@ def on_motion(
     controller,
     x,
     y,
-    item_class: Type[Presentation],
-    subject_class: Type[Element] | None,
+    item_class: type[Presentation],
+    subject_class: type[Element] | None,
 ):
     view: GtkView = controller.get_widget()
     model = view.model
@@ -117,7 +118,6 @@ class DropZoneMove(GuidedItemMove):
             if new_parent and item.subject and group(new_parent.subject, item.subject):
                 grow_parent(new_parent, item)
                 item.change_parent(new_parent)
-                new_parent.update_shapes()
             elif item.subject:
                 diagram_parent = owner_package(item.diagram)
                 group(diagram_parent, item.subject)
