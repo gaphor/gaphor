@@ -7,7 +7,7 @@ from gaphas.decorators import g_async
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import Transaction, event_handler, gettext
+from gaphor.core import Transaction, event_handler
 from gaphor.core.format import format
 from gaphor.core.modeling import (
     AttributeUpdated,
@@ -19,7 +19,6 @@ from gaphor.core.modeling import (
     ModelReady,
 )
 from gaphor.diagram.group import can_group, group, ungroup
-from gaphor.event import Notification
 
 if TYPE_CHECKING:
     from gaphor.core.eventmanager import EventManager
@@ -277,39 +276,22 @@ class NamespaceModel(Gtk.TreeStore):
             return False
 
         element = self[src_path][0]
-        if src_path.up() and src_path:
-            old_parent = self[src_path][0]
-        else:
-            old_parent = None
-
         dest_element = self.element_for_path(dest_path)
 
         try:
-            # Set package. This only works for classifiers, packages and
-            # diagrams. Properties and operations should not be moved.
-            with Transaction(self.event_manager):
-                if old_parent:
-                    ungroup(old_parent, element)
-                if change_owner(dest_element, element):
-                    self.event_manager.handle(
-                        NamespaceModelElementDropped(self, element)
-                    )
-                else:
-                    return False
-            return True
-        except (AttributeError, TypeError) as e:
-            self.namespace_exception(dest_element, e, element)
-        return False
+            with Transaction(self.event_manager) as tx:
 
-    def namespace_exception(self, dest_element, e, element):
-        log.info(f"Unable to drop data {e}")
-        self.event_manager.handle(
-            Notification(
-                gettext("A {} can’t be part of a {}.").format(
-                    type(element).__name__, type(dest_element).__name__
-                )
-            )
-        )
+                # This view is concerned with owner relationships.
+                # Let's check if the owner relation has actually changed,
+                # Otherwise roll back, to not confuse the user.
+                if not change_owner(dest_element, element):
+                    tx.rollback()
+                else:
+                    return True
+        finally:
+            self.event_manager.handle(NamespaceModelElementDropped(self, element))
+
+        return False
 
 
 def change_owner(new_parent, element):
@@ -319,7 +301,12 @@ def change_owner(new_parent, element):
     if not can_group(new_parent, element):
         return False
 
-    return group(new_parent, element)
+    if element.owner:
+        ungroup(element.owner, element)
+
+    group(new_parent, element)
+
+    return element.owner is new_parent
 
 
 def sort_func(model, iter_a, iter_b, userdata):

@@ -181,8 +181,10 @@ class ModelConsistency(RuleBasedStateMachine):
         element = data.draw(
             self.select(lambda e: e is not parent and can_group(parent, e))
         )
-        with self.transaction:
+        with self.transaction as tx:
             changed = change_owner(parent, element)
+            if not changed:
+                tx.rollback()
         assume(changed)
 
     @rule()
