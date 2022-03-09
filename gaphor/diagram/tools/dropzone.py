@@ -23,7 +23,7 @@ log = logging.getLogger(__name__)
 
 
 def drop_zone_tool(
-    view: GtkView, item_class: Type[Presentation], subject_class: Type[Element]
+    view: GtkView, item_class: Type[Presentation], subject_class: Type[Element] | None
 ) -> Gtk.EventController:
     ctrl = (
         Gtk.EventControllerMotion.new(view)
@@ -35,7 +35,11 @@ def drop_zone_tool(
 
 
 def on_motion(
-    controller, x, y, item_class: Type[Presentation], subject_class: Type[Element]
+    controller,
+    x,
+    y,
+    item_class: Type[Presentation],
+    subject_class: Type[Element] | None,
 ):
     view: GtkView = controller.get_widget()
     model = view.model
@@ -45,7 +49,7 @@ def on_motion(
     except KeyError:
         parent = None
 
-    if parent:
+    if parent and subject_class:
         view.selection.dropzone_item = (
             parent
             if can_group(parent.subject, subject_class)

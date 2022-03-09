@@ -45,9 +45,9 @@ def can_group(parent: Element, element_or_type: Element | type[Element]) -> bool
         if isinstance(element_or_type, Element)
         else element_or_type
     )
-    parent_type = type(parent)
+    parent_mro = type(parent).__mro__ if parent else [None]
     get_registration = group.registry.get_registration
-    for t1, t2 in itertools.product(parent_type.__mro__, element_type.__mro__):
+    for t1, t2 in itertools.product(parent_mro, element_type.__mro__):
         if r := get_registration(t1, t2):
             return r is not no_group
     return False
