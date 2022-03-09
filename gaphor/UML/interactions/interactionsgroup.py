@@ -1,4 +1,4 @@
-from gaphor.diagram.group import group
+from gaphor.diagram.group import group, no_group
 from gaphor.UML.uml import Interaction, Lifeline, Message, Type
 
 
@@ -16,6 +16,4 @@ def interaction_message_group(parent, element):
     return True
 
 
-@group.register(Interaction, Type)
-def not_any_type(parent, element):
-    return False
+group.register(Interaction, Type)(no_group)
