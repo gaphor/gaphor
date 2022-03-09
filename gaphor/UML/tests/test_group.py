@@ -37,3 +37,33 @@ def test_do_not_ungroup_wrong_parent(element_factory):
     assert not ungroup(wrong_package, klass)
 
     assert klass.package is package
+
+
+def test_group_package_and_package(element_factory):
+    package = element_factory.create(Package)
+    parent = element_factory.create(Package)
+
+    assert group(parent, package)
+
+    assert package.owner is parent
+
+
+def test_ungroup_package(element_factory):
+    package = element_factory.create(Package)
+    parent = element_factory.create(Package)
+    group(parent, package)
+
+    assert ungroup(parent, package)
+
+    assert package.package is None
+
+
+def test_do_not_ungroup_package_wrong_parent(element_factory):
+    package = element_factory.create(Package)
+    parent = element_factory.create(Package)
+    wrong_parent = element_factory.create(Package)
+    group(parent, package)
+
+    assert not ungroup(wrong_parent, package)
+
+    assert package.package is parent
