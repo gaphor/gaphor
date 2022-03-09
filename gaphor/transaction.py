@@ -1,7 +1,9 @@
 """Transaction support for Gaphor."""
 
+from __future__ import annotations
+
 import logging
-from typing import Callable, List, Set
+from typing import Callable
 
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
 
@@ -38,7 +40,7 @@ class Transaction:
     ...     pass
     """
 
-    _stack: List = []
+    _stack: list = []
 
     def __init__(self, event_manager):
         """Initialize the transaction.
@@ -80,8 +82,11 @@ class Transaction:
         if not self._stack:
             self._handle(TransactionRollback())
         else:
-            for tx in self._stack:
-                tx._need_rollback = True
+            self.mark_rollback()
+
+    def mark_rollback(self):
+        for tx in self._stack:
+            tx._need_rollback = True
 
     def _close(self):
         """Close the transaction.
@@ -104,9 +109,9 @@ class Transaction:
     def _handle(self, event):
         self.event_manager.handle(event)
 
-    def __enter__(self):
+    def __enter__(self) -> TransactionContext:
         """Provide with-statement transaction support."""
-        return self
+        return TransactionContext(self)
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Provide with-statement transaction support.
@@ -130,8 +135,21 @@ class Transaction:
             self.commit()
 
 
+class TransactionContext:
+    """A simple context for a transaction.
+
+    Can only perform a rollback.
+    """
+
+    def __init__(self, tx: Transaction) -> None:
+        self._tx = tx
+
+    def rollback(self) -> None:
+        self._tx.mark_rollback()
+
+
 # Add a `handler(event) -> None` to receive events emitted via @transactional
-subscribers: Set[Callable[[object], None]] = set()
+subscribers: set[Callable[[object], None]] = set()
 
 
 def transactional(func):

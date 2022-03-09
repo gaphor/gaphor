@@ -4,7 +4,7 @@ import pytest
 from gaphor.core import event_handler
 from gaphor.core.eventmanager import EventManager
 from gaphor.event import TransactionBegin, TransactionCommit, TransactionRollback
-from gaphor.transaction import Transaction, TransactionError
+from gaphor.transaction import Transaction, TransactionContext, TransactionError
 
 begins = []
 commits = []
@@ -136,7 +136,9 @@ def test_transaction_context(event_manager):
 
     with Transaction(event_manager) as tx:
 
-        assert isinstance(tx, Transaction), "Context is not a Transaction instance"
+        assert isinstance(
+            tx, TransactionContext
+        ), "Context is not a TransactionContext instance"
         assert Transaction._stack, "Transaction instance has no stack inside a context"
 
     assert not Transaction._stack, "Transaction stack should be empty"
@@ -148,3 +150,13 @@ def test_transaction_context_error(event_manager):
     with pytest.raises(TypeError, match="transaction error"):
         with Transaction(event_manager):
             raise TypeError("transaction error")
+
+
+def test_rollback_in_context(event_manager):
+
+    with Transaction(event_manager) as tx:
+        tx.rollback()
+
+    assert len(begins) == 1, "Incorrect number of TrasactionBegin events"
+    assert len(commits) == 0, "Incorrect number of TransactionCommit events"
+    assert len(rollbacks) == 1, "Incorrect number of TransactionRollback events"
