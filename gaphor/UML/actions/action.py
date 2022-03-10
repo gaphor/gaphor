@@ -12,11 +12,15 @@ class ActionItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=30)
 
+        self.width = 100
         self.shape = Box(
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            Text(text=lambda: self.subject.name or ""),
+            Text(
+                text=lambda: self.subject.name or "",
+                width=lambda: self.width - 4,
+            ),
             style={
                 "padding": (4, 12, 4, 12),
                 "border-radius": 15,
