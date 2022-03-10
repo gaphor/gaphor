@@ -307,7 +307,8 @@ def _(relation: diagramitems.InterfaceRealizationItem, head, tail):
 @check_relation.register
 def _(relation: diagramitems.ContainmentItem, head, tail):
     assert not relation.subject
-    assert tail.subject.owner is head.subject
+    # subject ownership can not be checked, since
+    # it can be changed by the group functionality.
 
 
 @check_relation.register
