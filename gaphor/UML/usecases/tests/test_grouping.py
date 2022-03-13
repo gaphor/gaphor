@@ -1,4 +1,5 @@
 from gaphor import UML
+from gaphor.diagram.group import group, ungroup
 from gaphor.UML.classes import ComponentItem
 from gaphor.UML.usecases import UseCaseItem
 
@@ -10,9 +11,9 @@ class TestSubsystemUseCaseGroup:
         uc1 = case.create(UseCaseItem, UML.UseCase)
         uc2 = case.create(UseCaseItem, UML.UseCase)
 
-        case.group(s, uc1)
+        group(s.subject, uc1.subject)
         assert len(uc1.subject.subject) == 1
-        case.group(s, uc2)
+        group(s.subject, uc2.subject)
         assert len(uc2.subject.subject) == 1
 
         assert len(s.subject.useCase) == 2
@@ -22,7 +23,7 @@ class TestSubsystemUseCaseGroup:
         s = case.create(ComponentItem, UML.Component)
         uc = case.create(UseCaseItem, UML.UseCase)
 
-        case.group(s, uc)
+        group(s.subject, uc.subject)
         assert len(uc.subject.subject) == 1
         assert s.subject in uc.subject.subject
 
@@ -32,13 +33,13 @@ class TestSubsystemUseCaseGroup:
         uc1 = case.create(UseCaseItem, UML.UseCase)
         uc2 = case.create(UseCaseItem, UML.UseCase)
 
-        case.group(s, uc1)
-        case.group(s, uc2)
+        assert group(s.subject, uc1.subject)
+        assert group(s.subject, uc2.subject)
 
-        case.ungroup(s, uc1)
+        ungroup(s.subject, uc1.subject)
         assert len(uc1.subject.subject) == 0
         assert len(s.subject.useCase) == 1
 
-        case.ungroup(s, uc2)
+        ungroup(s.subject, uc2.subject)
         assert len(uc2.subject.subject) == 0
         assert len(s.subject.useCase) == 0

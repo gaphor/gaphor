@@ -1,50 +1,89 @@
 from gaphor import UML
-from gaphor.UML.deployments import ArtifactItem, NodeItem
+from gaphor.diagram.group import group, ungroup
 
 
-class TestNodesGroup:
-    """Nodes grouping tests."""
+def test_node_group(element_factory):
+    """Test node within another node composition."""
+    n1 = element_factory.create(UML.Node)
+    n2 = element_factory.create(UML.Node)
 
-    def test_grouping(self, case):
-        """Test node within another node composition."""
-        n1 = case.create(NodeItem, UML.Node)
-        n2 = case.create(NodeItem, UML.Node)
+    assert group(n1, n2)
 
-        case.group(n1, n2)
-
-        assert n2.subject in n1.subject.nestedNode
-        assert n1.subject not in n2.subject.nestedNode
-
-    def test_ungrouping(self, case):
-        """Test decomposition of component from node."""
-        n1 = case.create(NodeItem, UML.Node)
-        n2 = case.create(NodeItem, UML.Node)
-
-        case.group(n1, n2)
-        case.ungroup(n1, n2)
-
-        assert n2.subject not in n1.subject.nestedNode
-        assert n1.subject not in n2.subject.nestedNode
+    assert n2 in n1.nestedNode
+    assert n1 not in n2.nestedNode
 
 
-class TestNodeArtifactGroup:
-    def test_grouping(self, case):
-        """Test artifact within node deployment."""
-        n = case.create(NodeItem, UML.Node)
-        a = case.create(ArtifactItem, UML.Artifact)
+def test_node_ungroup(element_factory):
+    """Test decomposition of component from node."""
+    n1 = element_factory.create(UML.Node)
+    n2 = element_factory.create(UML.Node)
 
-        case.group(n, a)
+    assert group(n1, n2)
+    assert ungroup(n1, n2)
 
-        assert len(n.subject.deployment) == 1
-        assert n.subject.deployment[0].deployedArtifact[0] is a.subject
+    assert n2 not in n1.nestedNode
+    assert n1 not in n2.nestedNode
 
-    def test_ungrouping(self, case):
-        """Test removal of artifact from node."""
-        n = case.create(NodeItem, UML.Node)
-        a = case.create(ArtifactItem, UML.Artifact)
 
-        case.group(n, a)
-        case.ungroup(n, a)
+def test_node_ungroup_wrong_parent(element_factory):
+    """Test decomposition of component from node."""
+    n1 = element_factory.create(UML.Node)
+    n2 = element_factory.create(UML.Node)
+    wrong = element_factory.create(UML.Node)
 
-        assert len(n.subject.deployment) == 0
-        assert len(case.kindof(UML.Deployment)) == 0
+    assert group(n1, n2)
+    assert not ungroup(wrong, n2)
+
+    assert n2 in n1.nestedNode
+    assert n1 not in n2.nestedNode
+
+
+def test_artifact_group(element_factory):
+    """Test artifact within node deployment."""
+    n = element_factory.create(UML.Node)
+    a = element_factory.create(UML.Artifact)
+
+    assert group(n, a)
+
+    assert n.deployment
+    assert n.deployment[0].deployedArtifact[0] is a
+    assert len(element_factory.lselect(UML.Deployment)) == 1
+
+
+def test_artifact_group_is_idempotent(element_factory):
+    """Test artifact within node deployment."""
+    n = element_factory.create(UML.Node)
+    a = element_factory.create(UML.Artifact)
+
+    assert group(n, a)
+    assert group(n, a)
+    assert group(n, a)
+
+    assert n.deployment
+    assert n.deployment[0].deployedArtifact[0] is a
+    assert len(element_factory.lselect(UML.Deployment)) == 1
+
+
+def test_artifact_ungroup(element_factory):
+    """Test removal of artifact from node."""
+    n = element_factory.create(UML.Node)
+    a = element_factory.create(UML.Artifact)
+
+    assert group(n, a)
+    assert ungroup(n, a)
+
+    assert not n.deployment
+    assert not element_factory.lselect(UML.Deployment)
+
+
+def test_artifact_ungroup_wrong_parent(element_factory):
+    """Test removal of artifact from node."""
+    n = element_factory.create(UML.Node)
+    a = element_factory.create(UML.Artifact)
+    wrong = element_factory.create(UML.Node)
+
+    assert group(n, a)
+    assert not ungroup(wrong, a)
+
+    assert n.deployment
+    assert element_factory.lselect(UML.Deployment)

@@ -38,7 +38,7 @@ class PackageableElement(NamedElement):
 
 
 class DeployedArtifact(NamedElement):
-    pass
+    deployment: relation_many[Deployment]
 
 
 class DeploymentTarget(NamedElement):
@@ -239,8 +239,9 @@ class Class(BehavioredClassifier, EncapsulatedClassifier):
     superClass: derived[Classifier]
 
 
-class Node(Class, DeployedArtifact, DeploymentTarget):
+class Node(Class, DeploymentTarget):
     nestedNode: relation_many[Node]
+    node: relation_one[Node]
 
 
 class Device(Node):
@@ -794,6 +795,7 @@ PackageableElement.owningPackage = derivedunion("owningPackage", Package, upper=
 PackageableElement.component = association("component", Component, upper=1, opposite="packagedElement")
 NamedElement.namespace.add(PackageableElement.owningPackage)  # type: ignore[attr-defined]
 NamedElement.namespace.add(PackageableElement.component)  # type: ignore[attr-defined]
+DeployedArtifact.deployment = association("deployment", Deployment, opposite="deployedArtifact")
 DeploymentTarget.deployment = association("deployment", Deployment, composite=True, opposite="location")
 Element.ownedElement.add(DeploymentTarget.deployment)  # type: ignore[attr-defined]
 InstanceSpecification.slot = association("slot", Slot, composite=True, opposite="owningInstance")
@@ -946,8 +948,10 @@ Namespace.ownedMember.add(Class.ownedAttribute)  # type: ignore[attr-defined]
 Classifier.feature.add(Class.ownedOperation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Class.ownedOperation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Class.nestedClassifier)  # type: ignore[attr-defined]
-Node.nestedNode = association("nestedNode", Node, composite=True)
+Node.nestedNode = association("nestedNode", Node, composite=True, opposite="node")
+Node.node = association("node", Node, upper=1, opposite="nestedNode")
 Namespace.ownedMember.add(Node.nestedNode)  # type: ignore[attr-defined]
+NamedElement.namespace.add(Node.node)  # type: ignore[attr-defined]
 StructuralFeature.slot = association("slot", Slot, composite=True, opposite="definingFeature")
 UseCase.extensionPoint = association("extensionPoint", ExtensionPoint, composite=True, opposite="useCase")
 UseCase.extend = association("extend", Extend, composite=True, opposite="extension")
@@ -1241,7 +1245,7 @@ Element.ownedElement.add(State.statevariant)  # type: ignore[attr-defined]
 Port.encapsulatedClassifier = association("encapsulatedClassifier", EncapsulatedClassifier, upper=1, opposite="ownedPort")
 NamedElement.namespace.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
 Deployment.location = association("location", DeploymentTarget, upper=1, opposite="deployment")
-Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact)
+Deployment.deployedArtifact = association("deployedArtifact", DeployedArtifact, opposite="deployment")
 Element.owner.add(Deployment.location)  # type: ignore[attr-defined]
 ActivityPartition.node = association("node", ActivityNode, opposite="inPartition")
 ActivityPartition.subpartition = association("subpartition", ActivityPartition)

@@ -1,10 +1,10 @@
 """Test messages."""
-
+import pytest
 from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.grouping import Group
+from gaphor.diagram.group import group
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.interactions.interaction import InteractionItem
 from gaphor.UML.interactions.lifeline import LifelineItem
@@ -28,7 +28,8 @@ def test_group_message_item_without_subject(diagram, element_factory):
     )
     message = diagram.create(MessageItem)
 
-    Group(interaction, message).group()
+    with pytest.raises(TypeError):
+        group(interaction.subject, message.subject)
 
     assert message.subject is None
 
@@ -39,7 +40,7 @@ def test_group_message_item_with_subject(diagram, element_factory):
     )
     message = diagram.create(MessageItem, subject=element_factory.create(UML.Message))
 
-    Group(interaction, message).group()
+    group(interaction.subject, message.subject)
 
     assert message.subject
     assert message.subject.interaction is interaction.subject

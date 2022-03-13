@@ -7,7 +7,7 @@ from gaphas.decorators import g_async
 from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.core import Transaction, event_handler, gettext
+from gaphor.core import Transaction, event_handler
 from gaphor.core.format import format
 from gaphor.core.modeling import (
     AttributeUpdated,
@@ -17,9 +17,8 @@ from gaphor.core.modeling import (
     ElementDeleted,
     ModelFlushed,
     ModelReady,
-    self_and_owners,
 )
-from gaphor.event import Notification
+from gaphor.diagram.group import can_group, group, ungroup
 
 if TYPE_CHECKING:
     from gaphor.core.eventmanager import EventManager
@@ -119,7 +118,6 @@ class NamespaceModel(Gtk.TreeStore):
         return None
 
     def element_for_path(self, path):
-        path.up()
         if not path:
             return None
 
@@ -127,7 +125,7 @@ class NamespaceModel(Gtk.TreeStore):
             iter = self.get_iter(path)
         except ValueError:
             log.debug(f"Invalid path: '{path}'")
-            return False
+            return None
 
         element = self.get_value(iter, 0)
 
@@ -262,8 +260,10 @@ class NamespaceModel(Gtk.TreeStore):
 
         src_row = self[src_path]
         element = src_row[0]
+        dest_path.up()
+        dest_element = self.element_for_path(dest_path)
 
-        return can_change_owner(element)
+        return dest_element is None or can_group(dest_element, element)
 
     def do_drag_data_received(self, dest_path, selection_data):
         if str(selection_data.get_target()) != "GTK_TREE_MODEL_ROW":
@@ -275,62 +275,38 @@ class NamespaceModel(Gtk.TreeStore):
             log.debug("Can't DnD from different tree model")
             return False
 
-        src_row = self[src_path]
-        element = src_row[0]
+        element = self[src_path][0]
         dest_element = self.element_for_path(dest_path)
 
         try:
-            # Set package. This only works for classifiers, packages and
-            # diagrams. Properties and operations should not be moved.
-            with Transaction(self.event_manager):
-                if change_owner(element, dest_element):
-                    self.event_manager.handle(
-                        NamespaceModelElementDropped(self, element)
-                    )
+            with Transaction(self.event_manager) as tx:
+
+                # This view is concerned with owner relationships.
+                # Let's check if the owner relation has actually changed,
+                # Otherwise roll back, to not confuse the user.
+                if not change_owner(dest_element, element):
+                    tx.rollback()
                 else:
-                    return False
-            return True
-        except (AttributeError, TypeError) as e:
-            self.namespace_exception(dest_element, e, element)
+                    return True
+        finally:
+            self.event_manager.handle(NamespaceModelElementDropped(self, element))
+
         return False
 
-    def namespace_exception(self, dest_element, e, element):
-        log.info(f"Unable to drop data {e}")
-        self.event_manager.handle(
-            Notification(
-                gettext("A {} can’t be part of a {}.").format(
-                    type(element).__name__, type(dest_element).__name__
-                )
-            )
-        )
 
-
-def can_change_owner(element):
-    return isinstance(element, (Diagram, UML.Package, UML.Type))
-
-
-# TODO: Use Group function instead, needs changing its interface
-def change_owner(element, new_parent):
-    if not can_change_owner(element):
-        return False
-
-    # TODO Should be in can_change_owner()?
+def change_owner(new_parent, element):
     if element.owner is new_parent:
         return False
 
-    if element in self_and_owners(new_parent):
-        log.info("Can not create a cycle")
+    if not can_group(new_parent, element):
         return False
 
-    if new_parent is None and isinstance(element, Diagram):
-        del element.element
-    elif new_parent is None:
-        del element.package
-    elif isinstance(element, Diagram):
-        element.element = new_parent
-    else:
-        element.package = new_parent
-    return True
+    if element.owner:
+        ungroup(element.owner, element)
+
+    group(new_parent, element)
+
+    return element.owner is new_parent
 
 
 def sort_func(model, iter_a, iter_b, userdata):

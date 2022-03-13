@@ -3,7 +3,7 @@
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.diagram.presentation import ElementPresentation, Named, from_package_str
-from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
+from gaphor.diagram.shapes import Box, Text, VerticalAlign, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.recipes import stereotypes_str
@@ -15,6 +15,12 @@ class PackageItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=70, height=70)
 
+        self.watch("children", self.update_shapes)
+        self.watch("subject[NamedElement].name")
+        self.watch("subject[NamedElement].namespace.name")
+        self.watch("subject.appliedStereotype.classifier.name")
+
+    def update_shapes(self, event=None):
         self.shape = Box(
             Text(
                 text=lambda: stereotypes_str(
@@ -32,13 +38,14 @@ class PackageItem(ElementPresentation, Named):
                 text=lambda: from_package_str(self),
                 style={"font-size": "x-small"},
             ),
-            style={"padding": (24, 12, 4, 12)},
+            style={
+                "padding": (24, 12, 4, 12),
+                "vertical-align": VerticalAlign.TOP
+                if self.diagram and self.children
+                else VerticalAlign.MIDDLE,
+            },
             draw=draw_package,
         )
-
-        self.watch("subject[NamedElement].name")
-        self.watch("subject[NamedElement].namespace.name")
-        self.watch("subject.appliedStereotype.classifier.name")
 
 
 def draw_package(box, context, bounding_box):

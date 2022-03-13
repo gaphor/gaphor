@@ -55,7 +55,9 @@ def apply_placement_tool_set(
             event_manager=event_manager,
         )
     )
-    view.add_controller(drop_zone_tool(view, item_factory.item_class))
+    view.add_controller(
+        drop_zone_tool(view, item_factory.item_class, item_factory.subject_class)
+    )
     add_basic_tools(view, modeling_language, event_manager)
 
 

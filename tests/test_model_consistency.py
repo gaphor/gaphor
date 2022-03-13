@@ -42,13 +42,14 @@ from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
 from gaphor.core.modeling.element import generate_id, uuid_generator
 from gaphor.diagram.deletable import deletable
+from gaphor.diagram.group import can_group
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.filemanager import load_default_model
-from gaphor.ui.namespacemodel import can_change_owner, change_owner
-from gaphor.UML import Package, diagramitems
+from gaphor.ui.namespacemodel import change_owner
+from gaphor.UML import diagramitems
 from gaphor.UML.toolbox import actions, classes, deployments, profiles, use_cases
 
 
@@ -79,8 +80,8 @@ class ModelConsistency(RuleBasedStateMachine):
     def transaction(self) -> Transaction:
         return Transaction(self.session.get_service("event_manager"))
 
-    def select(self, predicate):
-        elements = ordered(self.model.select(predicate))
+    def select(self, expression=None):
+        elements = ordered(self.model.select(expression))
         assume(elements)
         return sampled_from(elements)
 
@@ -176,11 +177,14 @@ class ModelConsistency(RuleBasedStateMachine):
 
     @rule(data=data())
     def change_owner(self, data):
-        element = data.draw(self.select(lambda e: can_change_owner(e)))
-        # parent can be a package or None
-        parent = data.draw(self.select(lambda e: isinstance(e, Package)))
-        with self.transaction:
-            changed = change_owner(element, parent)
+        parent = data.draw(self.select())
+        element = data.draw(
+            self.select(lambda e: e is not parent and can_group(parent, e))
+        )
+        with self.transaction as tx:
+            changed = change_owner(parent, element)
+            if not changed:
+                tx.rollback()
         assume(changed)
 
     @rule()
@@ -303,7 +307,8 @@ def _(relation: diagramitems.InterfaceRealizationItem, head, tail):
 @check_relation.register
 def _(relation: diagramitems.ContainmentItem, head, tail):
     assert not relation.subject
-    assert tail.subject.owner is head.subject
+    # subject ownership can not be checked, since
+    # it can be changed by the group functionality.
 
 
 @check_relation.register

@@ -21,7 +21,7 @@ from gaphas.item import SE
 from gaphor.core import gettext
 from gaphor.core.modeling import Comment, Diagram, Element, Presentation
 from gaphor.diagram import general
-from gaphor.diagram.grouping import Group
+from gaphor.diagram.group import group
 from gaphor.UML.recipes import owner_package
 
 ItemFactory = Callable[[Diagram, Optional[Presentation]], Presentation]
@@ -94,10 +94,8 @@ def new_item_factory(
 
         item = diagram.create(item_class, subject=subject)
 
-        adapter = Group(parent, item)
-        if parent and adapter.can_contain():
+        if parent and subject and group(parent.subject, item.subject):
             item.change_parent(parent)
-            adapter.group()
 
         if config_func:
             config_func(item)
@@ -105,6 +103,7 @@ def new_item_factory(
         return item
 
     item_factory.item_class = item_class  # type: ignore[attr-defined]
+    item_factory.subject_class = subject_class  # type: ignore[attr-defined]
     return item_factory
 
 

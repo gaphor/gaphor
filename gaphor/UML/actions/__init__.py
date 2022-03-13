@@ -1,6 +1,6 @@
 from gaphor.UML.actions import (
     actionseditors,
-    actionsgrouping,
+    actionsgroup,
     actionspropertypages,
     copypaste,
     flowconnect,

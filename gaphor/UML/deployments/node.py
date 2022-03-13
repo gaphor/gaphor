@@ -32,6 +32,7 @@ class NodeItem(ElementPresentation, Classified):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
+        self.watch("children", self.update_shapes)
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype", self.update_shapes)
@@ -40,7 +41,6 @@ class NodeItem(ElementPresentation, Classified):
         self.watch("subject.appliedStereotype.slot.definingFeature.name")
         self.watch("subject.appliedStereotype.slot.value", self.update_shapes)
         self.watch("subject[Node].ownedConnector", self.update_shapes)
-        self.watch("subject[Node].deployment", self.update_shapes)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
@@ -69,10 +69,6 @@ class NodeItem(ElementPresentation, Classified):
             },
             draw=draw_node
         )
-
-    def postload(self):
-        self.update_shapes()
-        super().postload()
 
 
 def draw_node(box, context, bounding_box):
