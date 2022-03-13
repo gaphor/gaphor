@@ -36,5 +36,5 @@ jobs:
           python -m venv .venv
           source .venv/bin/activate
           python -m pip install poethepoet
-          poe appimage-docker-build
+          poe appimage-docker-build-clean
           poe appimage-docker-push

@@ -70,6 +70,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-gi-dev \
     python3 \
     python3-dbus \
+    python3-docutils \
     python3-dev \
     python3-flake8 \
     python3-pytest \
@@ -111,10 +112,21 @@ RUN wget -q https://www.freedesktop.org/software/fontconfig/release/fontconfig-$
 `# Make Deadsnakes Python the default python3` \
  && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python$PY_VERSION 1
 
+# Newer rust is needed by librsvg
+RUN apt-get update \
+  && apt-get remove -y rustc cargo \
+  && apt-get install -y --no-install-recommends curl \
+  && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+  && apt-get remove -y curl \
+  && rm -rf /var/lib/apt/lists/*
+
+# librsvg needs gi-docgen
+RUN pip install gi-docgen
+
 ENV CHECKOUT=/root/jhbuild/checkout \
     LD_LIBRARY_PATH="/root/jhbuild/install/lib" \
     PKG_CONFIG_PATH="/root/jhbuild/install/lib/pkgconfig" \
-    PATH="/root/jhbuild/install/bin:/root/.local/bin:$PATH" \
+    PATH="/root/jhbuild/install/bin:/root/.local/bin:/root/.cargo/bin:$PATH" \
     JHBUILD_RUN_AS_ROOT=""
 
 # Install jhbuild
@@ -131,8 +143,8 @@ COPY jhbuildrc /root/.config/jhbuildrc
 
 # Build GTK, GtkSourceView, and gobject-introspection
 RUN jhbuild build \
- && rm -r /root/jhbuild/checkout \
- && rm -r /root/.local \
  && rm -r /root/.config \
  && rm -r /root/.cache
 
+# Environmental variable needed to run GTK for gsettings schema
+ENV XDG_DATA_DIRS="/root/jhbuild/install/share:/usr/share"
