@@ -53,7 +53,7 @@ darkdetect = "^0.5.1"
 
 [tool.poetry.dev-dependencies]
 tomli = ">=1.2,<3.0"
-pytest = "^7.0"
+pytest = "^7.1"
 pytest-cov = "^3.0"
 pytest-mock = "^3.7.0"
 pytest-runner = "^6.0"
