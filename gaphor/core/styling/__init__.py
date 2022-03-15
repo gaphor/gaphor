@@ -63,7 +63,7 @@ def merge_styles(*styles: Style) -> Style:
         for color_prop in ("color", "background-color", "text-color"):
             color: Color | None = style.get(color_prop)  # type: ignore[assignment]
             if color and color[3] > 0.0:
-                style[color_prop] = color[:3] + (color[3] * opacity,)  # type: ignore[misc]
+                style[color_prop] = color[:3] + (color[3] * opacity,)  # type: ignore[literal-required]
 
     return style
 
