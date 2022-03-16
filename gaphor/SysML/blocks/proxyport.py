@@ -97,8 +97,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
 
-        c = self._connections.get_connection(self._handle)
-        if c:
+        if c := self._connections.get_connection(self._handle):
             save_func("connection", c.connected)
 
         super().save(save_func)
