@@ -63,8 +63,7 @@ def popup_model(element, modeling_language):
 
     part = Gio.Menu.new()
     for presentation in element.presentation:
-        diagram = presentation.diagram
-        if diagram:
+        if diagram := presentation.diagram:
             menu_item = Gio.MenuItem.new(
                 gettext("Show in “{diagram}”").format(diagram=diagram.name),
                 "tree-view.show-in-diagram",
@@ -328,8 +327,7 @@ class Namespace(UIComponent, ActionProvider):
 
     @action(name="tree-view.delete")
     def tree_view_delete(self):
-        element = self.get_selected_element()
-        if element:
+        if element := self.get_selected_element():
             with Transaction(self.event_manager):
                 element.unlink()
 
