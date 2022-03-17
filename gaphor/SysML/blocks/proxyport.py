@@ -1,6 +1,7 @@
 from typing import Optional
 
 from gaphas.connector import Handle, LinePort, Position
+from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
 
 from gaphor.core import gettext
@@ -36,14 +37,24 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
         super().__init__(diagram, id)
         self._connections = diagram.connections
 
-        self._handle = Handle(connectable=True)
-        self.watch_handle(self._handle)
+        handle = self._handle = Handle(connectable=True)
+        self.watch_handle(handle)
 
         d = self.dimensions()
         top_left = Position(d.x, d.y)
         top_right = Position(d.x1, d.y)
         bottom_right = Position(d.x1, d.y1)
         bottom_left = Position(d.x, d.y1)
+
+        add = diagram.connections.add_constraint
+        add(self, constraint(horizontal=(handle.pos, top_left), delta=-8))
+        add(self, constraint(horizontal=(handle.pos, top_right), delta=-8))
+        add(self, constraint(horizontal=(handle.pos, bottom_right), delta=8))
+        add(self, constraint(horizontal=(handle.pos, bottom_left), delta=8))
+        add(self, constraint(vertical=(handle.pos, top_left), delta=-8))
+        add(self, constraint(vertical=(handle.pos, top_right), delta=8))
+        add(self, constraint(vertical=(handle.pos, bottom_right), delta=8))
+        add(self, constraint(vertical=(handle.pos, bottom_left), delta=-8))
         self._ports = [
             LinePort(top_left, top_right),
             LinePort(top_right, bottom_right),
@@ -77,6 +88,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
 
     def dimensions(self):
         x, y = self._handle.pos
+        # TODO: This is wrong: it returns variables that do not get updated
         return Rectangle(x - 8, y - 8, 16, 16)
 
     def point(self, x, y):
@@ -85,8 +97,7 @@ class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
 
-        c = self._connections.get_connection(self._handle)
-        if c:
+        if c := self._connections.get_connection(self._handle):
             save_func("connection", c.connected)
 
         super().save(save_func)
