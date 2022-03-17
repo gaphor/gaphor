@@ -218,7 +218,6 @@ class attribute(umlproperty, Generic[T]):
                 or self.type
             )
 
-
         if value == self._get(obj):
             return
 
@@ -346,7 +345,7 @@ class association(umlproperty):
             s = f"<association {self.name}: {self.type.__name__}[{self.lower}..{self.upper}]"
         if self.opposite:
             s += f" {self.composite and '<>' or ''}-> {self.opposite}"
-        return f'{s}>'
+        return f"{s}>"
 
     def _get(self, obj):
         return self._get_one(obj) if self.upper == 1 else self._get_many(obj)

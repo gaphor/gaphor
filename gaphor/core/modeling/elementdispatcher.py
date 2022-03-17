@@ -238,9 +238,7 @@ class ElementDispatcher(Service):
             ):
                 for handler, remainders in handlers.items():
                     for remainder in remainders:
-                        self._remove_handlers(
-                            event.old_value, remainder[0], handler
-                        )
+                        self._remove_handlers(event.old_value, remainder[0], handler)
 
             if (
                 isinstance(event, (AssociationSet, AssociationAdded))
