@@ -10,6 +10,7 @@ from __future__ import annotations
 import logging
 from typing import TYPE_CHECKING
 
+from gaphas.decorators import g_async
 from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor import UML
@@ -62,8 +63,7 @@ def popup_model(element, modeling_language):
 
     part = Gio.Menu.new()
     for presentation in element.presentation:
-        diagram = presentation.diagram
-        if diagram:
+        if diagram := presentation.diagram:
             menu_item = Gio.MenuItem.new(
                 gettext("Show in “{diagram}”").format(diagram=diagram.name),
                 "tree-view.show-in-diagram",
@@ -254,18 +254,18 @@ class Namespace(UIComponent, ActionProvider):
             parent_path = Gtk.TreePath.new_from_indices(path_indices[:-1])
             self.view.expand_row(path=parent_path, open_all=False)
 
-        selection = self.view.get_selection()
-        selection.select_path(path)
+        self.view.set_cursor(path, self.view.get_column(0), False)
         self.view.scroll_to_cell(path, None, False, 0, 0)
         self._on_view_cursor_changed(self.view)
 
     def get_selected_element(self) -> Element | None:
         assert self.view
-        selection = self.view.get_selection()
-        model, iter = selection.get_selected()
-        if not iter:
+        assert self.model
+        path, _column = self.view.get_cursor()
+        if not path:
             return None
-        return model.get_value(iter, 0)  # type: ignore[no-any-return]
+        model = self.model
+        return model.get_value(model.get_iter(path), 0)  # type: ignore[no-any-return]
 
     @action(name="tree-view.open")
     def tree_view_open_selected(self):
@@ -281,15 +281,13 @@ class Namespace(UIComponent, ActionProvider):
         self.event_manager.handle(DiagramOpened(element))
 
     @action(name="tree-view.rename", shortcut="F2")
+    @g_async(single=True)
     def tree_view_rename_selected(self):
         assert self.view
         view = self.view
         element = self.get_selected_element()
-        if element not in (None, RELATIONSHIPS):
-            selection = view.get_selection()
-            model, iter = selection.get_selected()
-            path = model.get_path(iter)
-            column = view.get_column(0)
+        path, column = view.get_cursor()
+        if path and column and element not in (None, RELATIONSHIPS):
             cell = column.get_cells()[1]
             cell.set_property("editable", 1)
             view.set_cursor(path, column, True)
@@ -329,8 +327,7 @@ class Namespace(UIComponent, ActionProvider):
 
     @action(name="tree-view.delete")
     def tree_view_delete(self):
-        element = self.get_selected_element()
-        if element:
+        if element := self.get_selected_element():
             with Transaction(self.event_manager):
                 element.unlink()
 
