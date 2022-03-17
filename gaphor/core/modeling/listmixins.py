@@ -151,15 +151,15 @@ class recurseproxy(Generic[T]):
         """Create a new proxy for the attribute."""
 
         def mygetattr():
+            sentinel = object()
             for e in self.__sequence:
-                try:
-                    obj = getattr(e, key)
-                    if issafeiterable(obj):
-                        yield from obj
-                    else:
-                        yield obj
-                except AttributeError:
+                obj = getattr(e, key, sentinel)
+                if obj is sentinel:
                     pass
+                elif issafeiterable(obj):
+                    yield from obj  # type: ignore[misc]
+                else:
+                    yield obj
 
         # Create a copy of the proxy type, including a copy of the sequence type
         return type(self)(type(self.__sequence)(mygetattr()))  # type: ignore[call-arg]

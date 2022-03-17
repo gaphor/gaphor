@@ -30,6 +30,7 @@ from typing import (
     Any,
     Callable,
     Generic,
+    Iterable,
     Literal,
     Protocol,
     Sequence,
@@ -757,12 +758,11 @@ class derivedunion(derived[T]):
                 continue
 
             tmp = s.__get__(obj)
-            if tmp:
-                try:
-                    u.update(tmp)
-                except TypeError:
-                    # [0..1] property
-                    u.add(tmp)
+            if isinstance(tmp, Iterable):
+                u.update(tmp)
+            elif tmp:
+                # [0..1] property
+                u.add(tmp)
         return collectionlist(u)
 
     def propagate(self, event):

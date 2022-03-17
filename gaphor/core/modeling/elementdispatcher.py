@@ -126,15 +126,9 @@ class ElementDispatcher(Service):
             return
 
         for key in reverse:
-            try:
-                handlers = self._handlers[key]
-            except KeyError:
-                pass
-            else:
-                try:
-                    del handlers[handler]
-                except KeyError:
-                    pass
+            handlers = self._handlers.get(key)
+            if handlers:
+                handlers.pop(handler, None)
                 if not handlers:
                     del self._handlers[key]
         del self._reverse[handler]
@@ -261,7 +255,8 @@ class ElementDispatcher(Service):
 
     @event_handler(ModelReady)
     def on_model_loaded(self, event):
-        for key, value in list(self._handlers.items()):
+        for (elem, prop), value in list(self._handlers.items()):
+            prefix = (prop,)
             for h, remainders in list(value.items()):
                 for remainder in remainders:
-                    self._add_handlers(key[0], (key[1],) + remainder, h)
+                    self._add_handlers(elem, prefix + remainder, h)
