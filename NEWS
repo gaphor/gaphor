@@ -1,3 +1,18 @@
+2.9.0
+-----
+- Separate Control and Object Flow
+- Automatically select dark mode for macOS and Windows
+- Automatically Enable Rename Prompt for Newly Created Diagrams
+- New group function for element grouping
+- Simulate user behavior with Hypothesis and fix uncovered bugs
+- Proxyport: update ports when proxyport is moved
+- Fix AppImage Crashes on Save Command
+- Improve reconnect for relationships
+- Update connection behavior for Association
+- Enable preferences shortcut
+- Rename Component Toolbox to Deployment
+- Update Finnish, Spanish, Croation, and German translatio
+
 2.8.2
 -----
 - Fix splitting of lines
