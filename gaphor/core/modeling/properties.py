@@ -30,6 +30,7 @@ from typing import (
     Any,
     Callable,
     Generic,
+    Iterable,
     Literal,
     Protocol,
     Sequence,
@@ -127,12 +128,10 @@ class umlproperty:
     def __init__(self, name: str):
         self._dependent_properties: set[derived | redefine] = set()
         self.name = name
-        self._name = "_" + name
+        self._name = f"_{name}"
 
     def __get__(self, obj, class_=None):
-        if obj:
-            return self._get(obj)
-        return self
+        return self._get(obj) if obj else self
 
     def __set__(self, obj, value) -> None:
         self._set(obj, value)
@@ -194,9 +193,8 @@ class attribute(umlproperty, Generic[T]):
         try:
             setattr(obj, self._name, self.type(value))
         except ValueError:
-            error_msg = "Failed to load attribute {} of type {} with value {}".format(
-                self._name, self.type, value
-            )
+            error_msg = f"Failed to load attribute {self._name} of type {self.type} with value {value}"
+
             raise TypeError(error_msg)
 
     def unlink(self, obj):
@@ -215,7 +213,7 @@ class attribute(umlproperty, Generic[T]):
             and not isinstance(value, str)
         ):
             raise TypeError(
-                "Value should be of type %s" % hasattr(self.type, "__name__")
+                f'Value should be of type {hasattr(self.type, "__name__")}'
                 and self.type.__name__
                 or self.type
             )
@@ -265,7 +263,7 @@ class enumeration(umlproperty):
 
     def load(self, obj, value):
         if value not in self.values:
-            raise TypeError("Value should be one of %s" % str(self.values))
+            raise TypeError(f"Value should be one of {str(self.values)}")
         setattr(obj, self._name, value)
 
     def unlink(self, obj):
@@ -273,7 +271,7 @@ class enumeration(umlproperty):
 
     def _set(self, obj, value):
         if value not in self.values:
-            raise TypeError("Value should be one of %s" % str(self.values))
+            raise TypeError(f"Value should be one of {str(self.values)}")
         old = self._get(obj)
         if value == old:
             return
@@ -326,16 +324,15 @@ class association(umlproperty):
 
     def save(self, obj, save_func: Callable[[str, object], None]):
         if hasattr(obj, self._name):
-            v = self._get(obj)
-            if v:
+            if v := self._get(obj):
                 save_func(self.name, v)
 
     def load(self, obj, value):
         if not isinstance(value, self.type):
             raise TypeError(
-                "Value for %s should be of type %s (%s)"
-                % (self.name, self.type.__name__, type(value).__name__)
+                f"Value for {self.name} should be of type {self.type.__name__} ({type(value).__name__})"
             )
+
         if self.upper == 1:
             self._set_one(obj, value)
         else:
@@ -348,17 +345,13 @@ class association(umlproperty):
             s = f"<association {self.name}: {self.type.__name__}[{self.lower}..{self.upper}]"
         if self.opposite:
             s += f" {self.composite and '<>' or ''}-> {self.opposite}"
-        return s + ">"
+        return f"{s}>"
 
     def _get(self, obj):
-        if self.upper == 1:
-            return self._get_one(obj)
-        else:
-            return self._get_many(obj)
+        return self._get_one(obj) if self.upper == 1 else self._get_many(obj)
 
     def _get_one(self, obj) -> T | None:
-        v: T | None = getattr(obj, self._name, None)
-        return v
+        return getattr(obj, self._name, None)
 
     def _get_many(self, obj) -> collection[T]:
         v: collection[T] | None = getattr(obj, self._name, None)
@@ -617,8 +610,7 @@ class derived(umlproperty, Generic[T]):
 
     def load(self, obj, value):
         raise ValueError(
-            "Derivedunion: Properties should not be loaded in a derived union %s: %s"
-            % (self.name, value)
+            f"Derivedunion: Properties should not be loaded in a derived union {self.name}: {value}"
         )
 
     def postload(self, obj):
@@ -757,12 +749,11 @@ class derivedunion(derived[T]):
                 continue
 
             tmp = s.__get__(obj)
-            if tmp:
-                try:
-                    u.update(tmp)
-                except TypeError:
-                    # [0..1] property
-                    u.add(tmp)
+            if isinstance(tmp, Iterable):
+                u.update(tmp)
+            elif tmp:
+                # [0..1] property
+                u.add(tmp)
         return collectionlist(u)
 
     def propagate(self, event):

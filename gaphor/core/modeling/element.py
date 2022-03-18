@@ -4,8 +4,8 @@
 from __future__ import annotations
 
 import logging
-import uuid
 from typing import TYPE_CHECKING, Callable, Iterator, Protocol, TypeVar, overload
+from uuid import uuid1
 
 from gaphor.core.modeling.event import ElementUpdated
 from gaphor.core.modeling.properties import (
@@ -38,7 +38,7 @@ Id = str
 
 def uuid_generator():
     while True:
-        yield str(uuid.uuid1())
+        yield str(uuid1())
 
 
 _generator: Iterator[str] = uuid_generator()

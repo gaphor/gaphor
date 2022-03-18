@@ -311,9 +311,6 @@ def test_association_unlink_2():
     class B(Element):
         two: relation_many[A]
 
-    class C(Element):
-        pass
-
     A.one = association("one", B, 0, "*", opposite="two")
     B.two = association("two", A, 0, "*")
 

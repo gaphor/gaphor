@@ -31,7 +31,7 @@ class EventWatcher:
         self.element = element
         self.element_dispatcher = element_dispatcher
         self.default_handler: Handler | None = default_handler
-        self._watched_paths: dict[str, Handler] = dict()
+        self._watched_paths: dict[str, Handler] = {}
 
     def watch(self, path: str, handler: Handler | None = None) -> EventWatcher:
         """Watch a certain path of elements starting with the DiagramItem. The
@@ -48,10 +48,9 @@ class EventWatcher:
         elif self.default_handler:
             self._watched_paths[path] = self.default_handler
         else:
-            raise ValueError("No handler provided for path " + path)
+            raise ValueError(f"No handler provided for path {path}")
 
-        dispatcher = self.element_dispatcher
-        if dispatcher:
+        if dispatcher := self.element_dispatcher:
             dispatcher.subscribe(self._watched_paths[path], self.element, path)
         return self
 
@@ -101,11 +100,11 @@ class ElementDispatcher(Service):
 
         # Table used to fire events:
         # (event.element, event.property): { handler: set(path, ..), ..}
-        self._handlers: dict[tuple[Element, umlproperty], dict[Handler, set]] = dict()
+        self._handlers: dict[tuple[Element, umlproperty], dict[Handler, set]] = {}
 
         # Fast resolution when handlers are disconnected
         # handler: [(element, property), ..]
-        self._reverse: dict[Handler, list[tuple[Element, umlproperty]]] = dict()
+        self._reverse: dict[Handler, list[tuple[Element, umlproperty]]] = {}
 
         self.event_manager.subscribe(self.on_model_loaded)
         self.event_manager.subscribe(self.on_element_change_event)
@@ -126,15 +125,8 @@ class ElementDispatcher(Service):
             return
 
         for key in reverse:
-            try:
-                handlers = self._handlers[key]
-            except KeyError:
-                pass
-            else:
-                try:
-                    del handlers[handler]
-                except KeyError:
-                    pass
+            if handlers := self._handlers.get(key):
+                handlers.pop(handler, None)
                 if not handlers:
                     del self._handlers[key]
         del self._reverse[handler]
@@ -156,7 +148,7 @@ class ElementDispatcher(Service):
                 c = self.modeling_language.lookup_element(cname)
                 assert c and issubclass(
                     c, prop.type
-                ), "{} should be a subclass of {}".format(c, prop.type)
+                ), f"{c} should be a subclass of {prop.type}"
             else:
                 c = prop.type
         return tuple(tpath)
@@ -214,8 +206,7 @@ class ElementDispatcher(Service):
                     self._remove_handlers(e, remainder[0], handler)
         else:
             for remainder in handlers.get(handler, ()):
-                e = property._get(element)
-                if e:
+                if e := property._get(element):
                     self._remove_handlers(e, remainder[0], handler)
         try:
             del handlers[handler]
@@ -233,35 +224,34 @@ class ElementDispatcher(Service):
 
     @event_handler(ElementUpdated)
     def on_element_change_event(self, event):
-        handlers = self._handlers.get((event.element, event.property))
-        if handlers:
-            try:
-                for handler in set(handlers.keys()):
-                    handler(event)
-            finally:
-                # Handle add/removal of handlers based on the kind of event
-                # Filter out handlers that have no remaining properties
-                if (
-                    isinstance(event, (AssociationSet, AssociationDeleted))
-                    and event.old_value
-                ):
-                    for handler, remainders in handlers.items():
-                        for remainder in remainders:
-                            self._remove_handlers(
-                                event.old_value, remainder[0], handler
-                            )
+        if not (handlers := self._handlers.get((event.element, event.property))):
+            return
+        try:
+            for handler in set(handlers.keys()):
+                handler(event)
+        finally:
+            # Handle add/removal of handlers based on the kind of event
+            # Filter out handlers that have no remaining properties
+            if (
+                isinstance(event, (AssociationSet, AssociationDeleted))
+                and event.old_value
+            ):
+                for handler, remainders in handlers.items():
+                    for remainder in remainders:
+                        self._remove_handlers(event.old_value, remainder[0], handler)
 
-                if (
-                    isinstance(event, (AssociationSet, AssociationAdded))
-                    and event.new_value
-                ):
-                    for handler, remainders in handlers.items():
-                        for remainder in remainders:
-                            self._add_handlers(event.new_value, remainder, handler)
+            if (
+                isinstance(event, (AssociationSet, AssociationAdded))
+                and event.new_value
+            ):
+                for handler, remainders in handlers.items():
+                    for remainder in remainders:
+                        self._add_handlers(event.new_value, remainder, handler)
 
     @event_handler(ModelReady)
     def on_model_loaded(self, event):
-        for key, value in list(self._handlers.items()):
+        for (elem, prop), value in list(self._handlers.items()):
+            prefix = (prop,)
             for h, remainders in list(value.items()):
                 for remainder in remainders:
-                    self._add_handlers(key[0], (key[1],) + remainder, h)
+                    self._add_handlers(elem, prefix + remainder, h)
