@@ -1,3 +1,8 @@
+2.9.1
+-----
+- Fix bad release of version 2.9.0
+- Cleanup try except blocks and add more f-strings
+
 2.9.0
 -----
 - Separate Control and Object Flow
