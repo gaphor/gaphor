@@ -199,6 +199,7 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Install visual studio tools
+        if: steps.cache.outputs.cache-hit != 'true'
         run: choco install visualstudio2019-workload-vctools
       - name: GTK binaries move git binary
         if: steps.cache.outputs.cache-hit != 'true'
