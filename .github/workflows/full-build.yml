@@ -198,6 +198,8 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ env.python_version }}
+      - name: Install visual studio tools
+        run: choco install visualstudio2019-workload-vctools
       - name: GTK binaries move git binary
         if: steps.cache.outputs.cache-hit != 'true'
         run: move "C:\Program Files\Git\usr\bin" "C:\Program Files\Git\usr\notbin"
@@ -207,7 +209,7 @@ jobs:
         run: >
           python .\build.py build -p=x64 --vs-ver=16 --python-ver=${{ env.python_version }} --msys-dir=C:\msys64
           --enable-gi --py-wheel --gtk3-ver=3.24 gobject-introspection gtk3 pycairo pygobject
-          gtksourceview adwaita-icon-theme hicolor-icon-theme
+          gtksourceview4 adwaita-icon-theme hicolor-icon-theme
       - name: Copy wheels to cached directory
         if: steps.cache.outputs.cache-hit != 'true'
         run: Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl | ForEach-Object -process { cp $_ C:\gtk-build\gtk\x64\release\ }
