@@ -10,7 +10,6 @@ from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
 from gi.repository import Gdk, GdkPixbuf, Gtk
 
-from gaphor import UML
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import Diagram, StyledDiagram
@@ -340,36 +339,33 @@ class DiagramPage:
                 element = self.element_factory.lookup(element_id)
                 assert element
 
-                if not isinstance(
-                    element, (UML.Classifier, UML.Package, UML.Property)
-                ) or isinstance(element, UML.Association):
-                    self.event_manager.handle(
-                        Notification(
-                            gettext(
-                                "Drag to diagram is (temporarily) limited to Classifiers, Packages, and Properties, not {type}."
-                            ).format(type=type(element).__name__)
+                x, y = view.matrix.inverse().transform_point(x, y)
+                with Transaction(self.event_manager):
+                    if item := drop(element, self.diagram, x, y):
+                        view.selection.unselect_all()
+                        view.selection.focused_item = item
+
+                        context.finish(True, False, time)
+                    else:
+                        self.event_manager.handle(
+                            Notification(
+                                gettext("Element can’t be represented on a diagram.")
+                            )
                         )
-                    )
-                    context.finish(True, False, time)
-                    return
+                        context.finish(False, False, time)
 
-                item_class = get_diagram_item(type(element))
-                if item_class:
-                    with Transaction(self.event_manager):
-                        item = self.diagram.create(item_class)
-                        assert item
-
-                        x, y = view.get_matrix_v2i(item).transform_point(x, y)
-                        item.matrix.translate(x, y)
-                        item.subject = element
-
-                    view.selection.unselect_all()
-                    view.selection.focused_item = item
-
-                else:
-                    log.warning(
-                        f"No graphical representation for element {type(element).__name__}"
-                    )
-                context.finish(True, False, time)
             else:
                 context.finish(False, False, time)
+
+
+def drop(element, diagram, x, y):
+    item_class = get_diagram_item(type(element))
+    if item_class:
+        item = diagram.create(item_class)
+        assert item
+
+        item.matrix.translate(x, y)
+        item.subject = element
+
+        return item
+    return None

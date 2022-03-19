@@ -5,11 +5,11 @@ from typing import Dict
 from gaphor.core.modeling import Element, Presentation
 
 
-def represents(uml_element):
+def represents(element):
     """A decorator to assign a default Element type to a diagram item."""
 
     def wrapper(presentation):
-        set_diagram_item(uml_element, presentation)
+        set_diagram_item(element, presentation)
         return presentation
 
     return wrapper
