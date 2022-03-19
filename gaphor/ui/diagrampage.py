@@ -355,8 +355,7 @@ class DiagramPage:
 
 
 def drop(element, diagram, x, y):
-    item_class = get_diagram_item(type(element))
-    if item_class:
+    if item_class := get_diagram_item(type(element)):
         item = diagram.create(item_class)
         assert item
 
