@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable, get_type_hints
+from typing import Any, Callable, Iterator, get_type_hints
 
 
 class action:
@@ -48,6 +48,14 @@ class action:
     @property
     def detailed_name(self) -> str:
         return f"{self.scope}.{self.name}"
+
+    @property
+    def shortcuts(self) -> Iterator[str]:
+        s = self.shortcut
+        if isinstance(s, str):
+            yield s
+        elif s:
+            yield from s
 
     def __call__(self, func):
         type_hints = get_type_hints(func)

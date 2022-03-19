@@ -52,8 +52,8 @@ if Gtk.get_major_version() == 3:
         for attrname, act in iter_actions(provider, scope):
             a = create_gio_action(act, provider, attrname)
             action_group.add_action(a)
-            if act.shortcut:
-                key, mod = Gtk.accelerator_parse(act.shortcut)
+            for shortcut in act.shortcuts:
+                key, mod = Gtk.accelerator_parse(shortcut)
                 accel_group.connect(
                     key, mod, Gtk.AccelFlags.VISIBLE, _accel_handler(scope, act.name)
                 )
@@ -73,8 +73,8 @@ else:
             for attrname, act in iter_actions(provider, scope):
                 a = create_gio_action(act, provider, attrname)
                 action_group.add_action(a)
-                if act.shortcut:
-                    store.append(_new_shortcut(act))
+                for shortcut in act.shortcuts:
+                    store.append(_new_shortcut(shortcut, act.detailed_name))
         return ActionGroup(actions=action_group, shortcuts=store)
 
     def create_action_group(provider, scope) -> ActionGroup:  # type: ignore[misc]
@@ -83,14 +83,14 @@ else:
         for attrname, act in iter_actions(provider, scope):
             a = create_gio_action(act, provider, attrname)
             action_group.add_action(a)
-            if act.shortcut:
-                store.append(_new_shortcut(act))
+            for shortcut in act.shortcuts:
+                store.append(_new_shortcut(shortcut, act.detailed_name))
         return ActionGroup(actions=action_group, shortcuts=store)
 
-    def _new_shortcut(act):
+    def _new_shortcut(shortcut, detailed_name):
         return Gtk.Shortcut.new(
-            trigger=Gtk.ShortcutTrigger.parse_string(act.shortcut),
-            action=Gtk.NamedAction.new(act.detailed_name),
+            trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
+            action=Gtk.NamedAction.new(detailed_name),
         )
 
 
