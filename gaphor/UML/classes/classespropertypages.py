@@ -28,6 +28,9 @@ new_builder = new_resource_builder("gaphor.UML.classes")
 @transactional
 def on_keypress_event(ctrl, keyval, keycode, state, tree):
     k = Gdk.keyval_name(keyval).lower()
+    if state & Gdk.ModifierType.CONTROL_MASK:
+        return False
+
     if k in ("backspace", "delete"):
         model, iter = tree.get_selection().get_selected()
         if iter:
@@ -40,6 +43,7 @@ def on_keypress_event(ctrl, keyval, keycode, state, tree):
         model, iter = tree.get_selection().get_selected()
         model.swap(iter, model.iter_previous(iter))
         return True
+    return False
 
 
 class ClassAttributes(EditableTreeModel):
