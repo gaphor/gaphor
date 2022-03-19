@@ -91,7 +91,7 @@ class ElementEditor(UIComponent, ActionProvider):
     @action(
         name="show-editors",
         shortcut="<Primary>e",
-        state=lambda self: self.properties.get("show-editors", True),
+        state=lambda self: self.properties.get("show-editors", True),  # type: ignore[no-any-return]
     )
     def toggle_editor_visibility(self, active):
         self.revealer.set_reveal_child(active)
@@ -111,14 +111,14 @@ class ElementEditor(UIComponent, ActionProvider):
 
     @action(
         name="reset-tool-after-create",
-        state=lambda self: self.properties.get("reset-tool-after-create", True),
+        state=lambda self: self.properties.get("reset-tool-after-create", True),  # type: ignore[no-any-return]
     )
     def reset_tool_after_create(self, active):
         self.properties.set("reset-tool-after-create", active)
 
     @action(
         name="remove-unused-elements",
-        state=lambda self: self.properties.get("remove-unused-elements", True),
+        state=lambda self: self.properties.get("remove-unused-elements", True),  # type: ignore[no-any-return]
     )
     def remove_unused_elements(self, active):
         self.properties.set("remove-unused-elements", active)

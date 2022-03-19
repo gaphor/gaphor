@@ -1,6 +1,8 @@
 """Support for actions in generic files."""
 
-from typing import get_type_hints
+from __future__ import annotations
+
+from typing import Any, Callable, get_type_hints
 
 
 class action:
@@ -26,8 +28,14 @@ class action:
     'my action'
     """
 
-    def __init__(
-        self, name, label=None, tooltip=None, icon_name=None, shortcut=None, state=None
+    def __init__(  # type: ignore[misc]
+        self,
+        name,
+        label: str | None = None,
+        tooltip: str | None = None,
+        icon_name: str | None = None,
+        shortcut: str | tuple[str, ...] | None = None,
+        state: bool | Callable[[Any], bool | str] | None = None,
     ):
         self.scope, self.name = name.split(".", 2) if "." in name else ("win", name)
         self.label = label
@@ -38,7 +46,7 @@ class action:
         self.arg_type = None
 
     @property
-    def detailed_name(self):
+    def detailed_name(self) -> str:
         return f"{self.scope}.{self.name}"
 
     def __call__(self, func):
