@@ -17,7 +17,6 @@ from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.selection import Selection
-from gaphor.diagram.support import get_diagram_item
 from gaphor.diagram.tools import (
     apply_default_tool_set,
     apply_magnet_tool_set,
@@ -27,6 +26,7 @@ from gaphor.diagram.tools.magnet import MagnetPainter
 from gaphor.diagram.tools.placement import create_item, open_editor
 from gaphor.event import Notification
 from gaphor.transaction import Transaction
+from gaphor.ui.drop import drop
 from gaphor.ui.event import DiagramSelectionChanged, ToolSelected
 
 log = logging.getLogger(__name__)
@@ -353,15 +353,3 @@ class DiagramPage:
 
             else:
                 context.finish(False, False, time)
-
-
-def drop(element, diagram, x, y):
-    if item_class := get_diagram_item(type(element)):
-        item = diagram.create(item_class)
-        assert item
-
-        item.matrix.translate(x, y)
-        item.subject = element
-
-        return item
-    return None
