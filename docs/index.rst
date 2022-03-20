@@ -47,6 +47,7 @@ plug-in.
    :caption: Concepts
    :maxdepth: 1
 
+   design_principles
    framework
    service_oriented
    event_system
