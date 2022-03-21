@@ -89,3 +89,12 @@ User interface components are not generated. We found that UI generation (like
 many enterprise modeling tools) provides an awful user experience. We want users
 to want to use Gaphor on a regular basis, so we aim for it to be a tool that's
 pleasant to look at and easy to work with.
+
+
+## What else?
+
+* **Idempotency** Allow the same operation to be applied multiple times. This should
+  not affect the result.
+* **Event Driven** Gaphor is a user application. It acts to user events. The application
+  uses an internal event dispatches (event bus) to distribute events to interested parties.
+  Everyone should be able to listen to events.
