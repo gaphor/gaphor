@@ -392,7 +392,6 @@ class MetadataRelationConnect(DirectionalRelationshipConnect):
             )
 
     def connect_subject(self, handle):
-        print("MetadataRelationConnect", self.element, self.line)
         subject_type = get_model_element(type(self.line))
         metadata = get_diagram_item_metadata(type(self.line))
         if not metadata:

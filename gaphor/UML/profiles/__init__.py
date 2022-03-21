@@ -1,7 +1,6 @@
 from gaphor.UML.profiles import (
     extensionconnect,
     metaclasspropertypage,
-    packageimportconnect,
     stereotypepropertypages,
 )
 from gaphor.UML.profiles.extension import ExtensionItem

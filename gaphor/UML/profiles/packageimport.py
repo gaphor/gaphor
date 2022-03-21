@@ -8,7 +8,11 @@ from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
 
 
-@represents(UML.PackageImport)
+@represents(
+    UML.PackageImport,
+    head=UML.PackageImport.importedPackage,
+    tail=UML.PackageImport.importingNamespace,
+)
 class PackageImportItem(LinePresentation):
     """Profile Import dependency relationship."""
 

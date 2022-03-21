@@ -12,7 +12,6 @@ from gaphor.diagram.connectors import (
 from gaphor.diagram.presentation import Classified, Named
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.dependency import DependencyItem
-from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
 from gaphor.UML.recipes import owner_package
 
 
@@ -158,34 +157,3 @@ class AssociationConnect(RelationshipConnect):
         del self.line.head_subject
         del self.line.tail_subject
         super().disconnect_subject(handle)
-
-
-@Connector.register(Named, InterfaceRealizationItem)
-class InterfaceRealizationConnect(DirectionalRelationshipConnect):
-    """Connect Interface and a BehavioredClassifier using an
-    InterfaceRealization."""
-
-    def allow(self, handle, port):
-        line = self.line
-        element = self.element
-
-        # Element at the head should be an Interface
-        if handle is line.head and not isinstance(element.subject, UML.Interface):
-            return None
-
-        # Element at the tail should be a BehavioredClassifier
-        if handle is line.tail and not isinstance(
-            element.subject, UML.BehavioredClassifier
-        ):
-            return None
-
-        return super().allow(handle, port)
-
-    def connect_subject(self, handle):
-        """Perform implementation relationship connection."""
-        relation = self.relationship_or_new(
-            UML.InterfaceRealization,
-            UML.InterfaceRealization.contract,
-            UML.InterfaceRealization.implementatingClassifier,
-        )
-        self.line.subject = relation
