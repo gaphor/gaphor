@@ -42,7 +42,7 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
@@ -76,7 +76,7 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/Library/Caches/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -104,7 +104,7 @@ jobs:
       - name: Install macOS Dependencies
         uses: ./.github/actions/macos_dependencies
       - name: Use Python Dependency Cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/Library/Caches/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -129,7 +129,7 @@ jobs:
       - name: GTK binaries create dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: GTK binaries get from cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
@@ -178,7 +178,7 @@ jobs:
       - name: Create GTK binaries dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: Get GTK binaries from cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
@@ -197,7 +197,7 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~\AppData\Local\pip\Cache
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
