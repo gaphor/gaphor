@@ -109,7 +109,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Connector)
-class ConnectorItem(LinePresentation[UML.Connector], Named):
+class ConnectorItem(Named, LinePresentation[UML.Connector]):
     """Connector item line.
 
     Represents Connector UML metaclass. If connected to interface item in

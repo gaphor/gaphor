@@ -31,7 +31,7 @@ from gaphor.UML.umlfmt import format_property
 @represents(raaml.Loss)
 @represents(raaml.Hazard)
 @represents(raaml.ControlStructure)
-class BlockItem(ElementPresentation[Block], Classified):
+class BlockItem(Classified, ElementPresentation[Block]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 

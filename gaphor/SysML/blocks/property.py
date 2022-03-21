@@ -13,7 +13,7 @@ from gaphor.UML.umlfmt import format_property
 
 
 @represents(UML.Property)
-class PropertyItem(ElementPresentation[UML.Property], Named):
+class PropertyItem(Named, ElementPresentation[UML.Property]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 

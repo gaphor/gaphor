@@ -19,7 +19,7 @@ ORDERING_TEXT = {
 
 
 @represents(UML.ObjectNode)
-class ObjectNodeItem(ElementPresentation, Named):
+class ObjectNodeItem(Named, ElementPresentation):
     """Representation of object node. Object node is ordered and has upper
     bound specification.
 

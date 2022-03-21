@@ -13,7 +13,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.ControlFlow)
-class ControlFlowItem(LinePresentation, Named):
+class ControlFlowItem(Named, LinePresentation):
     """Representation of control flow.
 
     Flow item has name and guard. It can be split into two flows with
@@ -46,7 +46,7 @@ class ControlFlowItem(LinePresentation, Named):
 
 
 @represents(UML.ObjectFlow)
-class ObjectFlowItem(LinePresentation, Named):
+class ObjectFlowItem(Named, LinePresentation):
     """Representation of object flow.
 
     Flow item has name and guard. It can be split into two flows with

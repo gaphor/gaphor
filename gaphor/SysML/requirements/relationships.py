@@ -6,7 +6,7 @@ from gaphor.SysML import sysml
 from gaphor.UML.recipes import stereotypes_str
 
 
-class DirectedRelationshipPropertyPathItem(LinePresentation, Named):
+class DirectedRelationshipPropertyPathItem(Named, LinePresentation):
 
     relation_type = ""
 

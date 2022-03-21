@@ -15,7 +15,7 @@ from gaphor.UML.states.state import VertexItem
 
 
 @represents(UML.Pseudostate)
-class PseudostateItem(ElementPresentation, VertexItem):
+class PseudostateItem(VertexItem, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=20, height=20)
         for h in self.handles():

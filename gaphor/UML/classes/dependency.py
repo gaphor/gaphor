@@ -26,7 +26,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Dependency)
-class DependencyItem(LinePresentation, Named):
+class DependencyItem(Named, LinePresentation):
     """Dependency item represents several types of dependencies, i.e. normal
     dependency or usage.
 

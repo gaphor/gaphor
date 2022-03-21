@@ -34,7 +34,7 @@ class ActivityNodeItem(Named):
 
 
 @represents(UML.InitialNode)
-class InitialNodeItem(ElementPresentation, ActivityNodeItem):
+class InitialNodeItem(ActivityNodeItem, ElementPresentation):
     """Representation of initial node.
 
     Initial node has name which is put near top-left side of node.
@@ -71,7 +71,7 @@ def draw_initial_node(_box, context, _bounding_box):
 
 
 @represents(UML.ActivityFinalNode)
-class ActivityFinalNodeItem(ElementPresentation, ActivityNodeItem):
+class ActivityFinalNodeItem(ActivityNodeItem, ElementPresentation):
     """Representation of activity final node.
 
     Activity final node has name which is put near right-bottom side of
@@ -118,7 +118,7 @@ def draw_activity_final_node(_box, context, _bounding_box):
 
 
 @represents(UML.FlowFinalNode)
-class FlowFinalNodeItem(ElementPresentation, ActivityNodeItem):
+class FlowFinalNodeItem(ActivityNodeItem, ElementPresentation):
     """Representation of flow final node.
 
     Flow final node has name which is put near right-bottom side of
@@ -158,7 +158,7 @@ def draw_flow_final_node(_box, context, _bounding_box):
 
 
 @represents(UML.DecisionNode)
-class DecisionNodeItem(ElementPresentation, ActivityNodeItem):
+class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
     """Representation of decision or merge node."""
 
     def __init__(self, diagram, id=None):
@@ -211,7 +211,7 @@ def draw_decision_node(_box, context, _bounding_box):
 
 
 @represents(UML.ForkNode)
-class ForkNodeItem(Presentation[UML.ForkNode], HandlePositionUpdate, Named):
+class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
     """Representation of fork and join node."""
 
     def __init__(self, diagram, id=None):

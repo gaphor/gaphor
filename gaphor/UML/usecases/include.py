@@ -9,7 +9,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Include)
-class IncludeItem(LinePresentation, Named):
+class IncludeItem(Named, LinePresentation):
     """Use case inclusion relationship."""
 
     def __init__(self, diagram, id=None):

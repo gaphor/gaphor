@@ -148,7 +148,7 @@ class InterfacePort(LinePort):
 
 
 @represents(UML.Interface)
-class InterfaceItem(ElementPresentation, Classified):
+class InterfaceItem(Classified, ElementPresentation):
     """Interface item supporting class box, folded notations and assembly
     connector icon mode.
 

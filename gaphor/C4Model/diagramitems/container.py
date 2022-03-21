@@ -7,7 +7,7 @@ from gaphor.diagram.support import represents
 
 
 @represents(c4model.C4Container)
-class C4ContainerItem(ElementPresentation, Named):
+class C4ContainerItem(Named, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 

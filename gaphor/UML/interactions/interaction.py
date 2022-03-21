@@ -9,7 +9,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Interaction)
-class InteractionItem(ElementPresentation, Named):
+class InteractionItem(Named, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=150, height=100)
 

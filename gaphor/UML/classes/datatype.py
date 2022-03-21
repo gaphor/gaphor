@@ -27,7 +27,7 @@ log = logging.getLogger(__name__)
 @represents(UML.DataType)
 @represents(UML.PrimitiveType)
 @represents(sysml.ValueType)
-class DataTypeItem(ElementPresentation[UML.DataType], Classified):
+class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
     """This item visualizes a Data Type instance.
 
     A DataTypeItem contains two compartments:

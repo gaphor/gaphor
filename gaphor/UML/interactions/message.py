@@ -59,7 +59,7 @@ PI_2 = pi / 2
 
 
 @represents(UML.Message)
-class MessageItem(LinePresentation[UML.Message], Named):
+class MessageItem(Named, LinePresentation[UML.Message]):
     """Message item is drawn on sequence and communication diagrams.
 
     On communication diagram, message item is decorated with an arrow in

@@ -9,7 +9,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Extend)
-class ExtendItem(LinePresentation, Named):
+class ExtendItem(Named, LinePresentation):
     """Use case extension relationship."""
 
     def __init__(self, diagram, id=None):

@@ -11,7 +11,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.UseCase)
-class UseCaseItem(ElementPresentation, Classified):
+class UseCaseItem(Classified, ElementPresentation):
     """Presentation of gaphor.UML.UseCase."""
 
     def __init__(self, diagram, id=None):
