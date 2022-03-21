@@ -1,4 +1,4 @@
-<h1 align="center"><img src="https://github.com/gaphor/gaphor/blob/master/logos/gaphor-logo-full.svg?raw=true" alt="Gaphor - UML/SysML Modeling" height="96"/></h1>
+<h1 align="center"><img src="https://github.com/gaphor/gaphor/blob/main/logos/gaphor-logo-full.svg?raw=true" alt="Gaphor - UML/SysML Modeling" height="96"/></h1>
 
 [![Build](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml/badge.svg)](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml)
 [![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)](https://gaphor.readthedocs.io)
@@ -18,7 +18,7 @@
 Gaphor is a UML and SysML modeling application written in Python.
 It is designed to be easy to use, while still being powerful. Gaphor implements a fully-compliant UML 2 data model, so it is much more than a picture drawing tool. You can use Gaphor to quickly visualize different aspects of a system as well as create complete, highly complex models.
 
-<img alt="Gaphor Demo" src="https://raw.githubusercontent.com/gaphor/gaphor/master/docs/images/gaphor-demo.gif" style="width: 68%; display: block; margin: 2em auto">
+<img alt="Gaphor Demo" src="https://raw.githubusercontent.com/gaphor/gaphor/main/docs/images/gaphor-demo.gif" style="width: 68%; display: block; margin: 2em auto">
 
 ## 📑 Table of Contents
 
@@ -252,7 +252,7 @@ specification. Contributions of any kind are welcome!
     tag for issues that should be ideal for people who are not very
     familiar with the codebase yet.
 2.  Fork [the repository](https://github.com/gaphor/gaphor) on
-    GitHub to start making your changes to the **master** branch (or
+    GitHub to start making your changes to the **main** branch (or
     branch off of it).
 3.  Write a test which shows that the bug was fixed or that the feature
     works as expected.

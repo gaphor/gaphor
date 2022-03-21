@@ -3,7 +3,7 @@ name: Full Build
 on:
   push:
     branches:
-      - master
+      - main
       - 'packaging/**'
   release:
     types: [published, prereleased]
