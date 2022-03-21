@@ -6,8 +6,8 @@ from gaphor import UML
 from gaphor.core.modeling import Element, Presentation
 from gaphor.diagram.connectors import (
     Connector,
+    DirectionalRelationshipConnect,
     RelationshipConnect,
-    UnaryRelationshipConnect,
 )
 from gaphor.diagram.presentation import Classified, Named
 from gaphor.UML.classes.association import AssociationItem
@@ -18,7 +18,7 @@ from gaphor.UML.recipes import owner_package
 
 
 @Connector.register(Named, DependencyItem)
-class DependencyConnect(RelationshipConnect):
+class DependencyConnect(DirectionalRelationshipConnect):
     """Connect two Named elements using a Dependency."""
 
     line: DependencyItem
@@ -61,7 +61,7 @@ class DependencyConnect(RelationshipConnect):
 
 
 @Connector.register(Classified, GeneralizationItem)
-class GeneralizationConnect(RelationshipConnect):
+class GeneralizationConnect(DirectionalRelationshipConnect):
     """Connect Classifiers with a Generalization relationship."""
 
     def connect_subject(self, handle):
@@ -71,7 +71,7 @@ class GeneralizationConnect(RelationshipConnect):
 
 
 @Connector.register(Classified, AssociationItem)
-class AssociationConnect(UnaryRelationshipConnect):
+class AssociationConnect(RelationshipConnect):
     """Connect association to classifier."""
 
     line: AssociationItem
@@ -172,7 +172,7 @@ class AssociationConnect(UnaryRelationshipConnect):
 
 
 @Connector.register(Named, InterfaceRealizationItem)
-class InterfaceRealizationConnect(RelationshipConnect):
+class InterfaceRealizationConnect(DirectionalRelationshipConnect):
     """Connect Interface and a BehavioredClassifier using an
     InterfaceRealization."""
 

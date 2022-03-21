@@ -134,7 +134,7 @@ def can_connect(parent, element_type) -> bool:
     return False
 
 
-class UnaryRelationshipConnect(BaseConnector):
+class RelationshipConnect(BaseConnector):
     """Base class for relationship connections, such as associations,
     dependencies and implementations.
 
@@ -335,7 +335,7 @@ class UnaryRelationshipConnect(BaseConnector):
         super().disconnect(handle)
 
 
-class RelationshipConnect(UnaryRelationshipConnect):
+class DirectionalRelationshipConnect(RelationshipConnect):
     """Base for relationship connections between unique elements."""
 
     def allow(self, handle: Handle, port: Port) -> bool:
