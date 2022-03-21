@@ -266,9 +266,7 @@ class RelationshipConnect(BaseConnector):
             if line is cinfo.connected:
                 continue
             adapter = Connector(line, cinfo.connected)
-            assert adapter, "No element to connect {} and {}".format(
-                line, cinfo.connected
-            )
+            assert adapter, f"No element to connect {line} and {cinfo.connected}"
             adapter.connect(cinfo.handle, cinfo.port)
 
     def disconnect_connected_items(self) -> list[Connection]:

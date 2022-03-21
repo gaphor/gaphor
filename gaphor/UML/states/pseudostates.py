@@ -45,8 +45,7 @@ class PseudostateItem(VertexItem, ElementPresentation):
 def draw_initial_pseudostate(box, context, bounding_box):
     """Draw initial pseudostate symbol."""
     cr = context.cairo
-    stroke = context.style["color"]
-    if stroke:
+    if stroke := context.style["color"]:
         cr.set_source_rgba(*stroke)
     r = 10
     d = r * 2

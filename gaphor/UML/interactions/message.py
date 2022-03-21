@@ -181,13 +181,7 @@ class MessageItem(Named, LinePresentation[UML.Message]):
         with cairo_state(cr):
             angle: float = self._arrow_angle
 
-            hint = -1
-
-            # rotation hint, keep arrow on the same side as message text
-            # elements
-            if abs(angle) >= PI_2 and angle != -PI_2:
-                hint = 1
-
+            hint = 1 if abs(angle) >= PI_2 and angle != -PI_2 else -1
             if inverted:
                 angle += hint * pi
 
