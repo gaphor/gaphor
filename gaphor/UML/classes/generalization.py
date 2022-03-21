@@ -9,7 +9,11 @@ from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
 
 
-@represents(UML.Generalization)
+@represents(
+    UML.Generalization,
+    head=UML.Generalization.specific,
+    tail=UML.Generalization.general,
+)
 class GeneralizationItem(LinePresentation):
     def __init__(self, diagram: Diagram, id: str = None):
         super().__init__(diagram, id, style={"dash-style": ()})

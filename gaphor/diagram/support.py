@@ -5,11 +5,11 @@ from typing import Dict
 from gaphor.core.modeling import Element, Presentation
 
 
-def represents(uml_element):
+def represents(uml_element, **metadata):
     """A decorator to assign a default Element type to a diagram item."""
 
     def wrapper(presentation):
-        set_diagram_item(uml_element, presentation)
+        set_diagram_item(uml_element, presentation, metadata)
         return presentation
 
     return wrapper
@@ -17,11 +17,17 @@ def represents(uml_element):
 
 # Map elements to their (default) representation.
 _element_to_item_map: Dict[Element, Presentation] = {}
+_item_to_metadata_map: Dict[Presentation, dict[str, object]] = {}
 
 
 def get_diagram_item(element_cls):
     global _element_to_item_map
     return _element_to_item_map.get(element_cls)
+
+
+def get_diagram_item_metadata(item_cls):
+    global _item_to_metadata_map
+    return _item_to_metadata_map.get(item_cls, {})
 
 
 def get_model_element(item_cls):
@@ -34,6 +40,7 @@ def get_model_element(item_cls):
     return elements[0] if elements else None
 
 
-def set_diagram_item(element, item):
-    global _element_to_item_map
+def set_diagram_item(element, item, metadata):
+    assert element not in _element_to_item_map
     _element_to_item_map[element] = item
+    _item_to_metadata_map[item] = metadata

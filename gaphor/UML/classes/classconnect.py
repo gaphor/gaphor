@@ -12,7 +12,6 @@ from gaphor.diagram.connectors import (
 from gaphor.diagram.presentation import Classified, Named
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.dependency import DependencyItem
-from gaphor.UML.classes.generalization import GeneralizationItem
 from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
 from gaphor.UML.recipes import owner_package
 
@@ -58,16 +57,6 @@ class DependencyConnect(DirectionalRelationshipConnect):
                 supplier = other.subject
             line.dependency_type = UML.recipes.dependency_type(client, supplier)
         return line.dependency_type
-
-
-@Connector.register(Classified, GeneralizationItem)
-class GeneralizationConnect(DirectionalRelationshipConnect):
-    """Connect Classifiers with a Generalization relationship."""
-
-    def connect_subject(self, handle):
-        self.line.subject = self.relationship_or_new(
-            UML.Generalization, UML.Generalization.specific, UML.Generalization.general
-        )
 
 
 @Connector.register(Classified, AssociationItem)
