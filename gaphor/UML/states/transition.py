@@ -7,7 +7,7 @@ from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
 
 
-@represents(UML.Transition)
+@represents(UML.Transition, head=UML.Transition.source, tail=UML.Transition.target)
 class TransitionItem(Named, LinePresentation[UML.Transition]):
     """Representation of state transition."""
 
