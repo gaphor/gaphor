@@ -25,12 +25,12 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
       - name: Use Hypothesis Cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         with:
           path: ~/.hypothesis
           key: ${{ runner.os }}-hypothesis
