@@ -44,23 +44,20 @@ class ObjectNodeItem(Named, ElementPresentation):
                 Text(
                     text=lambda: self.subject.upperBound
                     not in (None, "", DEFAULT_UPPER_BOUND)
-                    and "{{ {} = {} }}".format(
-                        gettext("upperBound"), self.subject.upperBound
-                    )
-                    or "",
+                    and f'{{ {gettext("upperBound")} = {self.subject.upperBound} }}'
+                    or ""
                 ),
                 Text(
                     text=lambda: self.show_ordering
                     and self.subject.ordering
-                    and "{{ {} = {} }}".format(
-                        gettext("ordering"), ORDERING_TEXT.get(self.subject.ordering)
-                    )
-                    or "",
+                    and f'{{ {gettext("ordering")} = {ORDERING_TEXT.get(self.subject.ordering)} }}'
+                    or ""
                 ),
             ),
             width=50,
             height=30,
         )
+
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")

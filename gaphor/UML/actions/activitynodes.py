@@ -59,8 +59,7 @@ class InitialNodeItem(ActivityNodeItem, ElementPresentation):
 
 def draw_initial_node(_box, context, _bounding_box):
     cr = context.cairo
-    stroke = context.style["color"]
-    if stroke:
+    if stroke := context.style["color"]:
         cr.set_source_rgba(*stroke)
 
     r = 10
@@ -97,8 +96,7 @@ class ActivityFinalNodeItem(ActivityNodeItem, ElementPresentation):
 
 def draw_activity_final_node(_box, context, _bounding_box):
     cr = context.cairo
-    stroke_color = context.style["color"]
-    if stroke_color:
+    if stroke_color := context.style["color"]:
         cr.set_source_rgba(*stroke_color)
 
     inner_radius = 10
@@ -282,8 +280,7 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
         cr = context.cairo
 
         cr.set_line_width(6)
-        stroke = context.style.get("color")
-        if stroke:
+        if stroke := context.style.get("color"):
             cr.set_source_rgba(*stroke)
         h1, h2 = self._handles
         cr.move_to(h1.pos.x, h1.pos.y)
