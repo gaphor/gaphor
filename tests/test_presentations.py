@@ -26,14 +26,18 @@ diagramitems = [
 ]
 
 blacklist = [
+    # These lines have no subject of ther own
     uml_diagramitems.Line,
     uml_diagramitems.CommentLineItem,
     uml_diagramitems.ContainmentItem,
+    # These lines have extra objects at the line ends
     uml_diagramitems.AssociationItem,
+    uml_diagramitems.ConnectorItem,
+    uml_diagramitems.ExtensionItem,
+    uml_diagramitems.MessageItem,
 ]
 
 
-@pytest.mark.xfail
 @pytest.mark.parametrize(
     "diagram_item",
     [p for p in diagramitems if issubclass(p, LinePresentation) and p not in blacklist],
