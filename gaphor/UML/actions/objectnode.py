@@ -19,7 +19,7 @@ ORDERING_TEXT = {
 
 
 @represents(UML.ObjectNode)
-class ObjectNodeItem(ElementPresentation, Named):
+class ObjectNodeItem(Named, ElementPresentation):
     """Representation of object node. Object node is ordered and has upper
     bound specification.
 
@@ -44,18 +44,14 @@ class ObjectNodeItem(ElementPresentation, Named):
                 Text(
                     text=lambda: self.subject.upperBound
                     not in (None, "", DEFAULT_UPPER_BOUND)
-                    and "{{ {} = {} }}".format(
-                        gettext("upperBound"), self.subject.upperBound
-                    )
-                    or "",
+                    and f'{{ {gettext("upperBound")} = {self.subject.upperBound} }}'
+                    or ""
                 ),
                 Text(
                     text=lambda: self.show_ordering
                     and self.subject.ordering
-                    and "{{ {} = {} }}".format(
-                        gettext("ordering"), ORDERING_TEXT.get(self.subject.ordering)
-                    )
-                    or "",
+                    and f'{{ {gettext("ordering")} = {ORDERING_TEXT.get(self.subject.ordering)} }}'
+                    or ""
                 ),
             ),
             width=50,

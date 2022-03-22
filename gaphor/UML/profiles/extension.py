@@ -10,7 +10,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Extension)
-class ExtensionItem(LinePresentation, Named):
+class ExtensionItem(Named, LinePresentation):
     """ExtensionItem represents associations.
 
     An ExtensionItem has two ExtensionEnd items. Each ExtensionEnd item

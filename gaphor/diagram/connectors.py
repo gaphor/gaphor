@@ -18,6 +18,7 @@ from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.core.modeling.properties import association, redefine, relation
 from gaphor.diagram.copypaste import copy, paste
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
+from gaphor.diagram.support import get_diagram_item_metadata, get_model_element
 
 T = TypeVar("T", bound=Element)
 
@@ -360,6 +361,44 @@ class DirectionalRelationshipConnect(RelationshipConnect):
             return False
 
         return super().allow(handle, port)
+
+
+@Connector.register(ElementPresentation, LinePresentation)
+class MetadataRelationConnect(DirectionalRelationshipConnect):
+    """A generic relationship connector."""
+
+    def allow(self, handle, port):
+        if not super().allow(handle, port):
+            return False
+
+        element = self.element
+        opposite_element = self.get_connected(self.line.opposite(handle))
+        metadata = get_diagram_item_metadata(type(self.line))
+
+        if not metadata:
+            return False
+
+        if handle is self.line.head:
+            return isinstance(element.subject, metadata["head"].type) and (
+                not opposite_element
+                or isinstance(opposite_element.subject, metadata["tail"].type)
+            )
+        else:
+            return isinstance(element.subject, metadata["tail"].type) and (
+                not opposite_element
+                or isinstance(opposite_element.subject, metadata["head"].type)
+            )
+
+    def connect_subject(self, handle):
+        subject_type = get_model_element(type(self.line))
+        metadata = get_diagram_item_metadata(type(self.line))
+        if not metadata:
+            return False
+
+        self.line.subject = self.relationship_or_new(
+            subject_type, metadata["head"], metadata["tail"]
+        )
+        return True
 
 
 def paste_model(copy_data, diagram) -> Iterator[Element]:

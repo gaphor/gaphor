@@ -16,7 +16,7 @@ BODY = 20
 
 
 @represents(UML.Actor)
-class ActorItem(ElementPresentation, Classified):
+class ActorItem(Classified, ElementPresentation):
     """Actor item is a classifier in icon mode.
 
     Maybe it should be possible to switch to compartment mode in the

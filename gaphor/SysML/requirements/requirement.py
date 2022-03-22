@@ -28,7 +28,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(Requirement)
-class RequirementItem(ElementPresentation[Requirement], Classified):
+class RequirementItem(Classified, ElementPresentation[Requirement]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 

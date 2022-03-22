@@ -10,8 +10,12 @@ from gaphor.UML.classes.interface import Folded, InterfacePort
 from gaphor.UML.recipes import stereotypes_str
 
 
-@represents(UML.InterfaceRealization)
-class InterfaceRealizationItem(LinePresentation, Named):
+@represents(
+    UML.InterfaceRealization,
+    head=UML.InterfaceRealization.contract,
+    tail=UML.InterfaceRealization.implementatingClassifier,
+)
+class InterfaceRealizationItem(Named, LinePresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 

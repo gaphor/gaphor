@@ -6,7 +6,7 @@ from gaphor.SysML import sysml
 from gaphor.UML.recipes import stereotypes_str
 
 
-class DirectedRelationshipPropertyPathItem(LinePresentation, Named):
+class DirectedRelationshipPropertyPathItem(Named, LinePresentation):
 
     relation_type = ""
 
@@ -26,31 +26,41 @@ class DirectedRelationshipPropertyPathItem(LinePresentation, Named):
         )
 
 
-@represents(sysml.Satisfy)
+@represents(
+    sysml.Satisfy, head=sysml.Satisfy.sourceContext, tail=sysml.Satisfy.targetContext
+)
 class SatisfyItem(DirectedRelationshipPropertyPathItem):
 
     relation_type = gettext("satisfy")
 
 
-@represents(sysml.DeriveReqt)
+@represents(
+    sysml.DeriveReqt,
+    head=sysml.DeriveReqt.sourceContext,
+    tail=sysml.DeriveReqt.targetContext,
+)
 class DeriveReqtItem(DirectedRelationshipPropertyPathItem):
 
     relation_type = gettext("deriveReqt")
 
 
-@represents(sysml.Trace)
+@represents(sysml.Trace, head=sysml.Trace.sourceContext, tail=sysml.Trace.targetContext)
 class TraceItem(DirectedRelationshipPropertyPathItem):
 
     relation_type = gettext("trace")
 
 
-@represents(sysml.Verify)
+@represents(
+    sysml.Verify, head=sysml.Verify.sourceContext, tail=sysml.Verify.targetContext
+)
 class VerifyItem(DirectedRelationshipPropertyPathItem):
 
     relation_type = gettext("verify")
 
 
-@represents(sysml.Refine)
+@represents(
+    sysml.Refine, head=sysml.Refine.sourceContext, tail=sysml.Refine.targetContext
+)
 class RefineItem(DirectedRelationshipPropertyPathItem):
 
     relation_type = gettext("refine")

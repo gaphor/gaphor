@@ -8,7 +8,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Action)
-class ActionItem(ElementPresentation, Named):
+class ActionItem(Named, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=30)
 
@@ -33,7 +33,7 @@ class ActionItem(ElementPresentation, Named):
 
 
 @represents(UML.SendSignalAction)
-class SendSignalActionItem(ElementPresentation, Named):
+class SendSignalActionItem(Named, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=30)
 
@@ -64,7 +64,7 @@ class SendSignalActionItem(ElementPresentation, Named):
 
 
 @represents(UML.AcceptEventAction)
-class AcceptEventActionItem(ElementPresentation, Named):
+class AcceptEventActionItem(Named, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=30)
 

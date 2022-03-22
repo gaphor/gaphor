@@ -25,7 +25,7 @@ log = logging.getLogger(__name__)
 
 @represents(UML.Class)
 @represents(UML.Stereotype)
-class ClassItem(ElementPresentation[UML.Class], Classified):
+class ClassItem(Classified, ElementPresentation[UML.Class]):
     """This item visualizes a Class instance.
 
     A ClassItem contains two compartments: one for attributes and one

@@ -9,7 +9,7 @@ from gaphor.diagram.support import represents
 
 
 @represents(c4model.C4Person)
-class C4PersonItem(ElementPresentation, Named):
+class C4PersonItem(Named, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=48, height=48)
 

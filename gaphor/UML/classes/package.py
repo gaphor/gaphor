@@ -11,7 +11,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 @represents(UML.Package)
 @represents(UML.Profile)
-class PackageItem(ElementPresentation, Named):
+class PackageItem(Named, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=70, height=70)
 

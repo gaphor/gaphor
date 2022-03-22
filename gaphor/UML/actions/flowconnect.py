@@ -4,6 +4,7 @@ from typing import Type, Union
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector, RelationshipConnect
+from gaphor.diagram.support import get_diagram_item_metadata, get_model_element
 from gaphor.UML.actions.action import (
     AcceptEventActionItem,
     ActionItem,
@@ -59,17 +60,11 @@ class FlowConnect(RelationshipConnect):
         assert c1 and c2
         assert isinstance(c1.subject, UML.ActivityNode)
 
-        relation: Union[UML.ControlFlow, UML.ObjectFlow]
-        if isinstance(line, ControlFlowItem):
-            relation = self.relationship_or_new(
-                UML.ControlFlow, UML.ControlFlow.source, UML.ControlFlow.target
-            )
-        elif isinstance(line, ObjectFlowItem):
-            relation = self.relationship_or_new(
-                UML.ObjectFlow, UML.ObjectFlow.source, UML.ObjectFlow.target
-            )
-        else:
-            raise ValueError("Expected a ControlFlowItem or ObjectFlowItem")
+        element_type = get_model_element(type(line))
+        metadata = get_diagram_item_metadata(type(line))
+        relation: Union[UML.ControlFlow, UML.ObjectFlow] = self.relationship_or_new(
+            element_type, metadata["head"], metadata["tail"]
+        )
 
         line.subject = relation
         relation.activity = c1.subject.activity

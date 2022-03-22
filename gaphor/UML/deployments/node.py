@@ -26,7 +26,7 @@ from gaphor.UML.classes.stereotype import stereotype_compartments
 
 @represents(UML.Node)
 @represents(UML.Device)
-class NodeItem(ElementPresentation, Classified):
+class NodeItem(Classified, ElementPresentation):
     """Representation of node or device from UML Deployment package."""
 
     def __init__(self, diagram, id=None):

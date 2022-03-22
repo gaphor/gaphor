@@ -37,7 +37,7 @@ from gaphor.UML.umlfmt import format_association_end
 
 
 @represents(UML.Association)
-class AssociationItem(LinePresentation[UML.Association], Named):
+class AssociationItem(Named, LinePresentation[UML.Association]):
     """AssociationItem represents associations.
 
     An AssociationItem has two AssociationEnd items. Each AssociationEnd

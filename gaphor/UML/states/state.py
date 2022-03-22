@@ -18,7 +18,7 @@ class VertexItem(Named):
 
 
 @represents(UML.State)
-class StateItem(ElementPresentation[UML.State], VertexItem):
+class StateItem(VertexItem, ElementPresentation[UML.State]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=30)
 

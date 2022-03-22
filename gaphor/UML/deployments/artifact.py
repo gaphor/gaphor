@@ -10,7 +10,7 @@ from gaphor.UML.classes.stereotype import stereotype_compartments
 
 
 @represents(UML.Artifact)
-class ArtifactItem(ElementPresentation, Classified):
+class ArtifactItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 

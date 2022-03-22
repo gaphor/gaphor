@@ -19,7 +19,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(raaml.XOR)
-class XORItem(ElementPresentation, Classified):
+class XORItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=DEFAULT_FTA_MINOR, height=DEFAULT_FTA_MAJOR)
 

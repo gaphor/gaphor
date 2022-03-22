@@ -1,4 +1,3 @@
-import gaphor.SysML.requirements.connectors
 from gaphor.SysML.requirements.relationships import (
     DeriveReqtItem,
     RefineItem,

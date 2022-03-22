@@ -23,7 +23,7 @@ DEFAULT_WIDTH = 40
 
 
 @represents(raaml.MAJORITY_VOTE)
-class MajorityVoteItem(ElementPresentation, Classified):
+class MajorityVoteItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=DEFAULT_WIDTH, height=DEFAULT_FTA_MAJOR)
 

@@ -17,7 +17,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(raaml.TopEvent)
-class TopEventItem(ElementPresentation, Classified):
+class TopEventItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 

@@ -150,7 +150,7 @@ class LifetimeItem:
 
 
 @represents(UML.Lifeline)
-class LifelineItem(ElementPresentation[UML.Lifeline], Named):
+class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
     """Lifeline item.
 
     The item represents the head of the lifeline. We represent the lifeline's

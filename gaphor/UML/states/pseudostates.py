@@ -15,7 +15,7 @@ from gaphor.UML.states.state import VertexItem
 
 
 @represents(UML.Pseudostate)
-class PseudostateItem(ElementPresentation, VertexItem):
+class PseudostateItem(VertexItem, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=20, height=20)
         for h in self.handles():
@@ -45,8 +45,7 @@ class PseudostateItem(ElementPresentation, VertexItem):
 def draw_initial_pseudostate(box, context, bounding_box):
     """Draw initial pseudostate symbol."""
     cr = context.cairo
-    stroke = context.style["color"]
-    if stroke:
+    if stroke := context.style["color"]:
         cr.set_source_rgba(*stroke)
     r = 10
     d = r * 2

@@ -15,7 +15,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(raaml.ConditionalEvent)
-class ConditionalEventItem(ElementPresentation, Classified):
+class ConditionalEventItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=70, height=35)
 

@@ -18,7 +18,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(raaml.Undeveloped)
-class UndevelopedEventItem(ElementPresentation, Classified):
+class UndevelopedEventItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=WIDE_FTA_WIDTH, height=WIDE_FTA_HEIGHT)
 

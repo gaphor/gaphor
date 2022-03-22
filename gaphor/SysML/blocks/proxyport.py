@@ -32,7 +32,7 @@ def text_position(position):
 
 
 @represents(sysml.ProxyPort)
-class ProxyPortItem(Presentation[sysml.ProxyPort], HandlePositionUpdate, Named):
+class ProxyPortItem(Named, Presentation[sysml.ProxyPort], HandlePositionUpdate):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
         self._connections = diagram.connections

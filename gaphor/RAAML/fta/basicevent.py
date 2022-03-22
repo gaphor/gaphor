@@ -19,7 +19,7 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(raaml.BasicEvent)
-class BasicEventItem(ElementPresentation, Classified):
+class BasicEventItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=DEFAULT_FTA_MAJOR, height=DEFAULT_FTA_MAJOR)
 
