@@ -25,7 +25,7 @@ from gaphor.UML.classes.interface import Folded, InterfacePort
 from gaphor.UML.recipes import stereotypes_str
 
 
-@represents(UML.Dependency)
+@represents(UML.Dependency, head=UML.Dependency.supplier, tail=UML.Dependency.client)
 class DependencyItem(Named, LinePresentation):
     """Dependency item represents several types of dependencies, i.e. normal
     dependency or usage.
