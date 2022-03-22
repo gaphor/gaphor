@@ -1,6 +1,6 @@
 from typing import Type
 
-from gaphor.diagram.connectors import Connector, RelationshipConnect
+from gaphor.diagram.connectors import Connector, DirectionalRelationshipConnect
 from gaphor.diagram.presentation import Classified
 from gaphor.SysML.requirements.relationships import (
     DeriveReqtItem,
@@ -19,7 +19,7 @@ from gaphor.SysML.sysml import (
 )
 
 
-class DirectedRelationshipPropertyPathConnect(RelationshipConnect):
+class DirectedRelationshipPropertyPathConnect(DirectionalRelationshipConnect):
     """Connect Classifiers with a DirectedRelationshipPropertyPath
     relationship."""
 

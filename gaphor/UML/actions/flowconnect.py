@@ -3,7 +3,7 @@
 from typing import Type, Union
 
 from gaphor import UML
-from gaphor.diagram.connectors import Connector, UnaryRelationshipConnect
+from gaphor.diagram.connectors import Connector, RelationshipConnect
 from gaphor.UML.actions.action import (
     AcceptEventActionItem,
     ActionItem,
@@ -18,7 +18,7 @@ from gaphor.UML.actions.flow import ControlFlowItem, ObjectFlowItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
 
-class FlowConnect(UnaryRelationshipConnect):
+class FlowConnect(RelationshipConnect):
     """Connect FlowItem and Action, initial/final nodes."""
 
     line: Union[ControlFlowItem, ObjectFlowItem]

@@ -6,13 +6,13 @@ gaphor.adapter package.
 """
 
 from gaphor import UML
-from gaphor.diagram.connectors import Connector, RelationshipConnect
+from gaphor.diagram.connectors import Connector, DirectionalRelationshipConnect
 from gaphor.UML.states.pseudostates import PseudostateItem
 from gaphor.UML.states.state import VertexItem
 from gaphor.UML.states.transition import TransitionItem
 
 
-class VertexConnect(RelationshipConnect):
+class VertexConnect(DirectionalRelationshipConnect):
     """Abstract relationship between two state vertices."""
 
     def connect_subject(self, handle):

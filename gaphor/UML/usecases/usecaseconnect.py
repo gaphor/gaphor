@@ -1,14 +1,14 @@
 """Use cases related connection adapters."""
 
 from gaphor import UML
-from gaphor.diagram.connectors import Connector, RelationshipConnect
+from gaphor.diagram.connectors import Connector, DirectionalRelationshipConnect
 from gaphor.UML.usecases.extend import ExtendItem
 from gaphor.UML.usecases.include import IncludeItem
 from gaphor.UML.usecases.usecase import UseCaseItem
 
 
 @Connector.register(UseCaseItem, IncludeItem)
-class IncludeConnect(RelationshipConnect):
+class IncludeConnect(DirectionalRelationshipConnect):
     """Connect use cases with an include item relationship."""
 
     def allow(self, handle, port):
@@ -27,7 +27,7 @@ class IncludeConnect(RelationshipConnect):
 
 
 @Connector.register(UseCaseItem, ExtendItem)
-class ExtendConnect(RelationshipConnect):
+class ExtendConnect(DirectionalRelationshipConnect):
     """Connect use cases with an extend item relationship."""
 
     def allow(self, handle, port):

@@ -134,7 +134,7 @@ def can_connect(parent, element_type) -> bool:
     return False
 
 
-class UnaryRelationshipConnect(BaseConnector):
+class RelationshipConnect(BaseConnector):
     """Base class for relationship connections, such as associations,
     dependencies and implementations.
 
@@ -265,9 +265,7 @@ class UnaryRelationshipConnect(BaseConnector):
             if line is cinfo.connected:
                 continue
             adapter = Connector(line, cinfo.connected)
-            assert adapter, "No element to connect {} and {}".format(
-                line, cinfo.connected
-            )
+            assert adapter, f"No element to connect {line} and {cinfo.connected}"
             adapter.connect(cinfo.handle, cinfo.port)
 
     def disconnect_connected_items(self) -> list[Connection]:
@@ -335,7 +333,7 @@ class UnaryRelationshipConnect(BaseConnector):
         super().disconnect(handle)
 
 
-class RelationshipConnect(UnaryRelationshipConnect):
+class DirectionalRelationshipConnect(RelationshipConnect):
     """Base for relationship connections between unique elements."""
 
     def allow(self, handle: Handle, port: Port) -> bool:

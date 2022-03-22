@@ -1,13 +1,13 @@
 """Package Import connection adapters."""
 
 from gaphor import UML
-from gaphor.diagram.connectors import Connector, RelationshipConnect
+from gaphor.diagram.connectors import Connector, DirectionalRelationshipConnect
 from gaphor.diagram.presentation import Named
 from gaphor.UML.profiles.packageimport import PackageImportItem
 
 
 @Connector.register(Named, PackageImportItem)
-class PackageImportConnect(RelationshipConnect):
+class PackageImportConnect(DirectionalRelationshipConnect):
     """Connect an external model to a Package using an Import."""
 
     def allow(self, handle, port):

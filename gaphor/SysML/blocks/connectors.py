@@ -3,7 +3,7 @@ from typing import Union
 from gaphas.connector import Handle, Port
 
 from gaphor import UML
-from gaphor.diagram.connectors import Connector, UnaryRelationshipConnect
+from gaphor.diagram.connectors import Connector, RelationshipConnect
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
 from gaphor.SysML.blocks.property import PropertyItem
@@ -54,7 +54,7 @@ class BlockProperyProxyPortConnector:
 
 @Connector.register(ProxyPortItem, ConnectorItem)
 @Connector.register(PropertyItem, ConnectorItem)
-class PropertyConnectorConnector(UnaryRelationshipConnect):
+class PropertyConnectorConnector(RelationshipConnect):
     """Connect a Connector to a Port or Property."""
 
     line: ConnectorItem
