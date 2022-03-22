@@ -3,8 +3,9 @@ import itertools
 import pytest
 
 from gaphor.C4Model import diagramitems as c4_diagramitems
+from gaphor.core.modeling.element import Element
 from gaphor.diagram.presentation import LinePresentation
-from gaphor.diagram.support import get_diagram_item_metadata
+from gaphor.diagram.support import get_diagram_item_metadata, get_model_element
 from gaphor.RAAML import diagramitems as raaml_diagramitems
 from gaphor.SysML import diagramitems as sysml_diagramitems
 from gaphor.UML import diagramitems as uml_diagramitems
@@ -44,7 +45,11 @@ blacklist = [
 )
 def test_line_presentations_have_metadata(diagram_item):
     metadata = get_diagram_item_metadata(diagram_item)
+    element_class = get_model_element(diagram_item)
 
     assert metadata
     assert "head" in metadata
     assert "tail" in metadata
+    assert issubclass(element_class, Element)
+    assert metadata["head"] in element_class.umlproperties()
+    assert metadata["tail"] in element_class.umlproperties()
