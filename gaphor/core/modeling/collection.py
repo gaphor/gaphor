@@ -119,16 +119,10 @@ class collection(Generic[T]):
         return self.items.count(o)
 
     def includesAll(self, c):
-        for o in c:
-            if o not in self.items:
-                return 0
-        return 1
+        return next((0 for o in c if o not in self.items), 1)
 
     def excludesAll(self, c):
-        for o in c:
-            if o in self.items:
-                return 0
-        return 1
+        return next((0 for o in c if o in self.items), 1)
 
     def select(self, f):
         return [v for v in self.items if f(v)]
