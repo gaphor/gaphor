@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-31 21:14-0500\n"
-"PO-Revision-Date: 2022-01-17 18:34+0000\n"
-"Last-Translator: ZHUOQI LI <zhuoqi06@gmail.com>\n"
+"PO-Revision-Date: 2022-03-23 23:06+0000\n"
+"Last-Translator: Bill ZHANG <zhangbo163126@outlook.com>\n"
+"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
+"gaphor/gaphor/zh_Hans/>\n"
 "Language: zh_Hans\n"
-"Language-Team: Chinese (Simplified) "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/zh_Hans/>\n"
-"Plural-Forms: nplurals=1; plural=0\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.12-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
@@ -2257,7 +2258,7 @@ msgstr "新建通用图形"
 
 #: gaphor/ui/mainwindow.py:233
 msgid "edited"
-msgstr ""
+msgstr "已编辑"
 
 #: gaphor/ui/mainwindow.py:269
 msgid "Profile: {}"
@@ -2293,7 +2294,7 @@ msgstr ""
 
 #: gaphor/ui/namespace.py:342
 msgid "New diagram"
-msgstr ""
+msgstr "新图"
 
 #: gaphor/ui/namespacemodel.py:312
 msgid "A {} can’t be part of a {}."
@@ -2471,4 +2472,3 @@ msgstr ""
 
 #~ msgid "Settings"
 #~ msgstr ""
-
