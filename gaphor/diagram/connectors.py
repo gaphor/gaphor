@@ -181,8 +181,8 @@ class RelationshipConnect(BaseConnector):
         # First check if the right subject is already connected:
         if (
             line.subject
-            and getattr(line.subject, head.name) is head_subject
-            and getattr(line.subject, tail.name) is tail_subject
+            and head.get(line.subject) is head_subject
+            and tail.get(line.subject) is tail_subject
         ):
             return line.subject  # type: ignore[return-value]
 
@@ -197,7 +197,7 @@ class RelationshipConnect(BaseConnector):
             if not isinstance(gen, required_type):
                 continue
 
-            gen_head = getattr(gen, head.name)
+            gen_head = head.get(gen)
             try:
                 if head_subject not in gen_head:
                     continue
@@ -248,8 +248,8 @@ class RelationshipConnect(BaseConnector):
 
         assert line_head
         assert line_tail
-        setattr(relation, head.name, line_head.subject)
-        setattr(relation, tail.name, line_tail.subject)
+        head.set(relation, line_head.subject)
+        tail.set(relation, line_tail.subject)
 
         assert isinstance(relation, type)
         return relation
