@@ -91,13 +91,13 @@ class collection(Generic[T]):
 
     def append(self, value: T) -> None:
         if isinstance(value, self.type):
-            self.property._set(self.object, value)
+            self.property.set(self.object, value)
         else:
             raise TypeError(f"Object is not of type {self.type.__name__}")
 
     def remove(self, value: T) -> None:
         if value in self.items:
-            self.property._del(self.object, value)
+            self.property.delete(self.object, value)
 
     def index(self, key: T) -> int:
         """Given an object, return the position of that object in the

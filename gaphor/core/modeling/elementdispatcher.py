@@ -186,10 +186,10 @@ class ElementDispatcher(Service):
         # Apply remaining path
         if remainder:
             if property.upper == "*" or property.upper > 1:
-                for e in property._get(element):
+                for e in property.get(element):
                     self._add_handlers(e, remainder, handler)
             else:
-                e = property._get(element)
+                e = property.get(element)
                 if e and remainder:
                     self._add_handlers(e, remainder, handler)
 
@@ -202,11 +202,11 @@ class ElementDispatcher(Service):
 
         if property.upper == "*" or property.upper > 1:
             for remainder in handlers.get(handler, ()):
-                for e in property._get(element):
+                for e in property.get(element):
                     self._remove_handlers(e, remainder[0], handler)
         else:
             for remainder in handlers.get(handler, ()):
-                if e := property._get(element):
+                if e := property.get(element):
                     self._remove_handlers(e, remainder[0], handler)
         try:
             del handlers[handler]
