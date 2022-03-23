@@ -17,7 +17,7 @@ class MockProperty:
     def __init__(self):
         self.values = []
 
-    def _set(self, object, value):
+    def set(self, object, value):
         self.values.append((object, value))
 
 
