@@ -3,6 +3,7 @@ assets."""
 
 from typing import Iterable
 
+import gaphor.SysML.drop  # noqa
 import gaphor.SysML.propertypages  # noqa
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
