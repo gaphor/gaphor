@@ -15,6 +15,7 @@ from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import Diagram, StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
+from gaphor.diagram.drop import drop
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.selection import Selection
 from gaphor.diagram.tools import (
@@ -26,7 +27,6 @@ from gaphor.diagram.tools.magnet import MagnetPainter
 from gaphor.diagram.tools.placement import create_item, open_editor
 from gaphor.event import Notification
 from gaphor.transaction import Transaction
-from gaphor.ui.drop import drop
 from gaphor.ui.event import DiagramSelectionChanged, ToolSelected
 
 log = logging.getLogger(__name__)
