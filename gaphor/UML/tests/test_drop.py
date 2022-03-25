@@ -1,5 +1,8 @@
 from gaphor import UML
 from gaphor.diagram.drop import drop
+from gaphor.UML.interactions import MessageItem
+from gaphor.UML.interactions.interactionsconnect import connect_lifelines
+from gaphor.UML.recipes import create_association, create_extension
 
 
 def test_drop_class(diagram, element_factory):
@@ -20,12 +23,8 @@ def test_drop_dependency(diagram, element_factory):
 
     drop(client, diagram, 0, 0)
     drop(supplier, diagram, 0, 0)
-    drop(dependency, diagram, 0, 0)
-    print(element_factory.lselect())
-    dep_item = dependency.presentation[0]
+    dep_item = drop(dependency, diagram, 0, 0)
 
-    assert client.presentation
-    assert supplier.presentation
     assert dep_item
     assert (
         diagram.connections.get_connection(dep_item.head).connected
@@ -35,3 +34,54 @@ def test_drop_dependency(diagram, element_factory):
         diagram.connections.get_connection(dep_item.tail).connected
         is client.presentation[0]
     )
+
+
+def test_drop_association(diagram, element_factory):
+    a = element_factory.create(UML.Class)
+    b = element_factory.create(UML.Class)
+    association = create_association(a, b)
+
+    drop(a, diagram, 0, 0)
+    drop(b, diagram, 0, 0)
+    item = drop(association, diagram, 0, 0)
+
+    assert item
+    assert diagram.connections.get_connection(item.head).connected is a.presentation[0]
+    assert diagram.connections.get_connection(item.tail).connected is b.presentation[0]
+
+
+def test_drop_extension(diagram, element_factory):
+    metaclass = element_factory.create(UML.Class)
+    stereotype = element_factory.create(UML.Stereotype)
+    extension = create_extension(metaclass, stereotype)
+
+    drop(metaclass, diagram, 0, 0)
+    drop(stereotype, diagram, 0, 0)
+    item = drop(extension, diagram, 0, 0)
+
+    assert item
+    assert (
+        diagram.connections.get_connection(item.head).connected
+        is metaclass.presentation[0]
+    )
+    assert (
+        diagram.connections.get_connection(item.tail).connected
+        is stereotype.presentation[0]
+    )
+
+
+def test_drop_message(diagram, element_factory):
+    a = element_factory.create(UML.Lifeline)
+    b = element_factory.create(UML.Lifeline)
+
+    a_item = drop(a, diagram, 0, 0)
+    b_item = drop(b, diagram, 0, 0)
+    msg_item = diagram.create(MessageItem)
+    connect_lifelines(msg_item, a_item, b_item)
+    message = msg_item.subject
+
+    item = drop(message, diagram, 0, 0)
+
+    assert item
+    assert diagram.connections.get_connection(item.head).connected is a.presentation[0]
+    assert diagram.connections.get_connection(item.tail).connected is b.presentation[0]

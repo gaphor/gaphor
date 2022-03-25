@@ -33,6 +33,7 @@ from gaphor.UML.uml import (
     Realization,
     Slot,
     Stereotype,
+    Type,
     Usage,
 )
 
@@ -225,7 +226,7 @@ def create_generalization(general, specific):
     return gen
 
 
-def create_association(type_a, type_b):
+def create_association(type_a: Type, type_b: Type):
     """Create an association between two items."""
     assert type_a.model is type_b.model, "Head and Tail end are from different models"
     model = type_a.model
