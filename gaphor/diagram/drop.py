@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from functools import singledispatch
 
-from gaphor.core.modeling import Diagram, Element
+from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.diagram.support import get_diagram_item
 
 
@@ -16,4 +16,9 @@ def drop(element: Element, diagram: Diagram, x: float, y: float):
         item.subject = element
 
         return item
+    return None
+
+
+@drop.register
+def drop_presentation(element: Presentation, diagram: Diagram, x: float, y: float):
     return None
