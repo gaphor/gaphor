@@ -50,7 +50,6 @@ blocks = ToolSection(
             "<Shift>Z",
             new_item_factory(
                 uml_items.AssociationItem,
-                UML.Association,
                 config_func=composite_association_config,
             ),
         ),
@@ -61,7 +60,6 @@ blocks = ToolSection(
             "<Shift>Q",
             new_item_factory(
                 uml_items.AssociationItem,
-                UML.Association,
                 config_func=shared_association_config,
             ),
         ),
