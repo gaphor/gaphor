@@ -55,8 +55,7 @@ def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
         )
     else:
         applied = ()
-    s = ", ".join(itertools.chain(stereotypes, applied))
-    if s:
+    if s := ", ".join(itertools.chain(stereotypes, applied)):
         return f"«{s}»"
     else:
         return ""
