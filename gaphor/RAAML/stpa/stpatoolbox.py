@@ -148,7 +148,6 @@ stpa = ToolSection(
             "r",
             new_item_factory(
                 diagramitems.RelevantToItem,
-                raaml.RelevantTo,
             ),
         ),
         ToolDef(

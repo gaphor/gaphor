@@ -37,7 +37,9 @@ from hypothesis.stateful import (
 )
 from hypothesis.strategies import data, integers, lists, sampled_from
 
+from gaphor import UML
 from gaphor.application import Session
+from gaphor.C4Model.toolbox import c4
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
 from gaphor.core.modeling.element import generate_id, uuid_generator
@@ -45,12 +47,22 @@ from gaphor.diagram.deletable import deletable
 from gaphor.diagram.group import can_group
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
+from gaphor.RAAML.toolbox import fta, stpa
 from gaphor.storage import storage
 from gaphor.storage.xmlwriter import XMLWriter
+from gaphor.SysML.toolbox import blocks, internal_blocks, requirements
 from gaphor.ui.filemanager import load_default_model
 from gaphor.ui.namespacemodel import change_owner
 from gaphor.UML import diagramitems
-from gaphor.UML.toolbox import actions, classes, deployments, profiles, use_cases
+from gaphor.UML.toolbox import (
+    actions,
+    classes,
+    deployments,
+    interactions,
+    profiles,
+    states,
+    use_cases,
+)
 
 
 def test_model_consistency():
@@ -61,11 +73,23 @@ def tooldef():
     return sampled_from(
         list(
             itertools.chain(
+                # UML
                 classes.tools,
                 deployments.tools,
                 use_cases.tools,
                 profiles.tools,
                 actions.tools,
+                interactions.tools,
+                states.tools,
+                # C4
+                c4.tools,
+                # SysML
+                blocks.tools,
+                internal_blocks.tools,
+                requirements.tools,
+                # RAAML
+                stpa.tools,
+                fta.tools,
             )
         )
     )
@@ -337,6 +361,24 @@ def _(relation: diagramitems.ControlFlowItem, head, tail):
 
 @check_relation.register
 def _(relation: diagramitems.ObjectFlowItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert subject.source is head.subject
+    assert subject.target is tail.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.MessageItem, head, tail):
+    subject = relation.subject
+    assert subject
+    assert isinstance(subject.sendEvent, UML.MessageOccurrenceSpecification)
+    assert isinstance(subject.receiveEvent, UML.MessageOccurrenceSpecification)
+    assert subject.sendEvent.covered is head.subject
+    assert subject.receiveEvent.covered is tail.subject
+
+
+@check_relation.register
+def _(relation: diagramitems.TransitionItem, head, tail):
     subject = relation.subject
     assert subject
     assert subject.source is head.subject
