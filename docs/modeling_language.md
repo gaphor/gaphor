@@ -25,6 +25,7 @@ language implementation can offer?
 * A toolbox definition
 * [Connectors](#connectors), allow diagram items to connect
 * [Grouping](#grouping), allow elements to be nested in one another
+* [Dropping](#dropping), allow elements to be dragged from the tree view onto a diagram
 * [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
 * [Inline (diagram) editor popups](#inline-diagram-editor-popups)
 * [Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent
@@ -73,6 +74,23 @@ Grouping is done by dragging one item on top of another, in a diagram or in the 
    without actually performing a group operation.
    This is not 100% accurate.
 ```
+
+## Dropping
+
+Dropping is performed by dragging an element from the tree view and drop it on a diagram.
+This is an easy way to extend a diagram with already existing model elements.
+
+```{eval-rst}
+.. function:: gaphor.diagram.drop.drop(element: Element, diagram: Diagram, x: float, y: float) -> Presentation | None
+
+   The drop function creates a new presentation for an element on the diagram.
+   For relationships, a drop only works if both connected elements are present in the
+   same diagram.
+
+   The big difference with dragging an element from the toolbox, is that dragging from the toolbox
+   will actually place a new ``Presentation`` element on the diagram. ``drop`` works the other way
+   around: it starts with a model element and creates an accompanying ``Presentation``.
+```   
 
 ## Editor property pages
 
