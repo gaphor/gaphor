@@ -89,8 +89,7 @@ class PartitionPropertyPage(PropertyPageBase):
     @transactional
     def _on_partition_type_changed(self, combo, partition):
         """Event handler for editing partition names."""
-        id = combo.get_active_id()
-        if id:
+        if id := combo.get_active_id():
             element = self.item.model.lookup(id)
             partition.represents = element
         else:

@@ -241,10 +241,8 @@ class DiagramPage:
         assert self.widget
         if Gtk.get_major_version() == 3:
             self.widget.destroy()
-        else:
-            parent = self.widget.get_parent()
-            if parent:
-                parent.remove(self.widget)
+        elif parent := self.widget.get_parent():
+            parent.remove(self.widget)
 
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_attribute_updated)

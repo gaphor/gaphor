@@ -208,8 +208,7 @@ class Diagrams(UIComponent, ActionProvider):
         shortcut="<Primary>0",
     )
     def zoom_100(self):
-        view = self.get_current_view()
-        if view:
+        if view := self.get_current_view():
             zx = view.matrix[0]
             view.zoom(1 / zx)
 

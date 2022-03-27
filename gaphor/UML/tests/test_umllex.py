@@ -14,8 +14,7 @@ def dump_prop(prop):
 
 
 def dump_oper(oper):
-    m = operation_pat.match(oper)
-    if m:
+    if m := operation_pat.match(oper):
         g = m.group
     else:
         # set name to oper
