@@ -35,8 +35,8 @@ class StatusWindow:
     def init_window(self):
         """Create the window GUI component.
 
-        This will set the window and progress bar attributes so they can
-        be referenced later.
+        This will set the window and progress bar attributes, so they
+        can be referenced later.
         """
 
         frame = Gtk.Frame.new(None)
@@ -48,14 +48,7 @@ class StatusWindow:
         self.progress_bar.set_size_request(400, -1)
 
         if Gtk.get_major_version() == 3:
-            self.window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
-            self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
-            self.window.set_keep_above(True)
-            self.window.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN)
-            self.window.add(frame)
-            frame.add(vbox)
-            vbox.pack_start(label, True, True, 0)
-            vbox.pack_start(self.progress_bar, expand=False, fill=False, padding=0)
+            self.create_gtk3_window_with_progress_bar(frame, vbox, label)
         else:
             self.window = Gtk.Window.new()
             self.window.set_child(frame)
@@ -70,6 +63,16 @@ class StatusWindow:
         self.window.set_modal(True)
         self.window.set_resizable(False)
         self.window.set_decorated(False)
+
+    def create_gtk3_window_with_progress_bar(self, frame, vbox, label):
+        self.window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
+        self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
+        self.window.set_keep_above(True)
+        self.window.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN)
+        self.window.add(frame)
+        frame.add(vbox)
+        vbox.pack_start(label, True, True, 0)
+        vbox.pack_start(self.progress_bar, expand=False, fill=False, padding=0)
 
     def display(self):
         """Display the status window.
