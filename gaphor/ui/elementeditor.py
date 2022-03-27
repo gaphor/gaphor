@@ -193,10 +193,8 @@ class EditorStack:
             for page in self.vbox.get_children():
                 page.destroy()
         else:
-            page = self.vbox.get_first_child()
-            while page:
+            while page := self.vbox.get_first_child():
                 self.vbox.remove(page)
-                page = self.vbox.get_first_child()
 
     def on_expand(self, widget, name):
         self._expanded_pages[name] = widget.get_expanded()

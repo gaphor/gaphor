@@ -285,8 +285,7 @@ class DiagramPage:
 
         item_painter = ItemPainter(view.selection)
 
-        sloppiness = style.get("line-style", 0.0)
-        if sloppiness:
+        if sloppiness := style.get("line-style", 0.0):
             item_painter = FreeHandPainter(item_painter, sloppiness=sloppiness)
 
         view.bounding_box_painter = item_painter
@@ -351,8 +350,7 @@ class DiagramPage:
                     context.finish(True, False, time)
                     return
 
-                item_class = get_diagram_item(type(element))
-                if item_class:
+                if item_class := get_diagram_item(type(element)):
                     with Transaction(self.event_manager):
                         item = self.diagram.create(item_class)
                         assert item
