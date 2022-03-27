@@ -3,6 +3,7 @@ assets."""
 
 from typing import Iterable
 
+import gaphor.SysML.drop  # noqa
 import gaphor.SysML.propertypages  # noqa
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
@@ -25,7 +26,4 @@ class SysMLModelingLanguage(ModelingLanguage):
         yield from sysml_diagram_types
 
     def lookup_element(self, name):
-        element_type = getattr(sysml, name, None)
-        if not element_type:
-            element_type = getattr(diagramitems, name, None)
-        return element_type
+        return getattr(sysml, name, None) or getattr(diagramitems, name, None)

@@ -42,6 +42,7 @@ from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
 from gaphor.core.modeling.element import generate_id, uuid_generator
 from gaphor.diagram.deletable import deletable
+from gaphor.diagram.drop import drop
 from gaphor.diagram.group import can_group
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
@@ -186,6 +187,16 @@ class ModelConsistency(RuleBasedStateMachine):
             if not changed:
                 tx.rollback()
         assume(changed)
+
+    @rule(data=data())
+    def drop(self, data):
+        diagram = data.draw(self.diagrams())
+        element = data.draw(self.select())
+        with self.transaction as tx:
+            item = drop(element, diagram, 0, 0)
+            if not item:
+                tx.rollback()
+        assume(item)
 
     @rule()
     def undo(self):

@@ -372,7 +372,7 @@ class UndoManager(Service, ActionProvider):
 
         def c_undo_attribute_change_event():
             element = self.lookup(element_id)
-            attribute._set(element, value)
+            attribute.set(element, value)
 
         c_undo_attribute_change_event.__doc__ = (
             f"Revert {event.element}.{attribute.name} to {value}."
@@ -392,7 +392,7 @@ class UndoManager(Service, ActionProvider):
         def c_undo_association_set_event():
             element = self.lookup(element_id)
             value = value_id and self.lookup(value_id)
-            association._set(element, value, from_opposite=True)
+            association.set(element, value, from_opposite=True)
 
         c_undo_association_set_event.__doc__ = (
             f"Revert {event.element}.{association.name} to {event.old_value}."
@@ -412,7 +412,7 @@ class UndoManager(Service, ActionProvider):
         def c_undo_association_add_event():
             element = self.lookup(element_id)
             value = self.lookup(value_id)
-            association._del(element, value, from_opposite=True)
+            association.delete(element, value, from_opposite=True)
 
         c_undo_association_add_event.__doc__ = (
             f"{event.element}.{association.name} delete {event.new_value}."
@@ -432,7 +432,7 @@ class UndoManager(Service, ActionProvider):
         def c_undo_association_delete_event():
             element = self.lookup(element_id)
             value = self.lookup(value_id)
-            association._set(element, value, from_opposite=True)
+            association.set(element, value, from_opposite=True)
 
         c_undo_association_delete_event.__doc__ = (
             f"{event.element}.{association.name} add {event.old_value}."

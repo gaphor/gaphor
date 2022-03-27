@@ -17,5 +17,4 @@ def on_drop(target, tool_name, x, y, modeling_language, event_manager):
     tool_def = get_tool_def(modeling_language, tool_name)
     with Transaction(event_manager):
         create_item(view, tool_def.item_factory, x, y)
-
     return True
