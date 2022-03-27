@@ -52,8 +52,7 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 
     def get_connected(handle):
         """Get item connected to line via handle."""
-        cinfo = diagram.connections.get_connection(handle)
-        if cinfo:
+        if cinfo := diagram.connections.get_connection(handle):
             return cinfo.connected
         return None
 
