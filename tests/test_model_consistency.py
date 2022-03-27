@@ -25,7 +25,9 @@ from __future__ import annotations
 import itertools
 from functools import singledispatch
 from io import StringIO
+from typing import Iterable
 
+from gaphas.connector import Handle
 from hypothesis.control import assume, cleanup
 from hypothesis.errors import UnsatisfiedAssumption
 from hypothesis.stateful import (
@@ -41,11 +43,12 @@ from gaphor import UML
 from gaphor.application import Session
 from gaphor.C4Model.toolbox import c4
 from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
-from gaphor.core.modeling.element import generate_id, uuid_generator
+from gaphor.core.modeling import Diagram, ElementFactory, Presentation, StyleSheet
+from gaphor.core.modeling.element import Element, generate_id, uuid_generator
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.group import can_group
 from gaphor.diagram.presentation import LinePresentation
+from gaphor.diagram.support import get_diagram_item_metadata
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.RAAML.toolbox import fta, stpa
 from gaphor.storage import storage
@@ -288,44 +291,26 @@ class ModelConsistency(RuleBasedStateMachine):
             raise
 
 
-def get_connected(diagram, handle):
+def get_connected(diagram: Diagram, handle: Handle) -> Presentation | None:
     """Get item connected to a handle."""
     if cinfo := diagram.connections.get_connection(handle):
-        return cinfo.connected
+        return cinfo.connected  # type: ignore[no-any-return]
     return None
 
 
-def ordered(elements):
-    return sorted(elements, key=lambda e: e.id)  # type: ignore[no-any-return]
+def ordered(elements: Iterable[Element]) -> list[Element]:
+    return sorted(elements, key=lambda e: e.id)
 
 
 @singledispatch
-def check_relation(relation: object, head, tail):
-    assert False, f"No comparison function for {relation}"
-
-
-@check_relation.register
-def _(relation: diagramitems.DependencyItem, head, tail):
+def check_relation(relation: Presentation, head: Presentation, tail: Presentation):
     subject = relation.subject
     assert subject
-    assert subject.supplier is head.subject
-    assert subject.client is tail.subject
 
-
-@check_relation.register
-def _(relation: diagramitems.GeneralizationItem, head, tail):
-    subject = relation.subject
-    assert subject
-    assert subject.specific is head.subject
-    assert subject.general is tail.subject
-
-
-@check_relation.register
-def _(relation: diagramitems.InterfaceRealizationItem, head, tail):
-    subject = relation.subject
-    assert subject
-    assert subject.contract is head.subject
-    assert subject.implementatingClassifier is tail.subject
+    metadata = get_diagram_item_metadata(type(relation))
+    assert metadata, f"No comparison function for {relation}"
+    assert metadata["head"]._get(subject) is head.subject
+    assert metadata["tail"]._get(subject) is tail.subject
 
 
 @check_relation.register
@@ -352,22 +337,6 @@ def _(relation: diagramitems.ExtensionItem, head, tail):
 
 
 @check_relation.register
-def _(relation: diagramitems.ControlFlowItem, head, tail):
-    subject = relation.subject
-    assert subject
-    assert subject.source is head.subject
-    assert subject.target is tail.subject
-
-
-@check_relation.register
-def _(relation: diagramitems.ObjectFlowItem, head, tail):
-    subject = relation.subject
-    assert subject
-    assert subject.source is head.subject
-    assert subject.target is tail.subject
-
-
-@check_relation.register
 def _(relation: diagramitems.MessageItem, head, tail):
     subject = relation.subject
     assert subject
@@ -375,11 +344,3 @@ def _(relation: diagramitems.MessageItem, head, tail):
     assert isinstance(subject.receiveEvent, UML.MessageOccurrenceSpecification)
     assert subject.sendEvent.covered is head.subject
     assert subject.receiveEvent.covered is tail.subject
-
-
-@check_relation.register
-def _(relation: diagramitems.TransitionItem, head, tail):
-    subject = relation.subject
-    assert subject
-    assert subject.source is head.subject
-    assert subject.target is tail.subject
