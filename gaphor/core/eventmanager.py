@@ -23,6 +23,8 @@ class EventManager(Service):
 
     def __init__(self) -> None:
         self._events = _Manager()
+        self._queue: list[Event] = []
+        self._handling = False
 
     def shutdown(self) -> None:
         pass
@@ -51,5 +53,13 @@ class EventManager(Service):
 
     def handle(self, *events: Event) -> None:
         """Send event notifications to registered handlers."""
-        for e in events:
-            self._events.handle(e)
+        queue = self._queue
+        queue.extend(events)
+
+        if not self._handling:
+            self._handling = True
+            try:
+                while queue:
+                    self._events.handle(queue.pop(0))
+            finally:
+                self._handling = False
