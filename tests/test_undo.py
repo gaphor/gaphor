@@ -8,6 +8,8 @@ from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import AssociationItem, ClassItem, GeneralizationItem
+from gaphor.UML.interactions import MessageItem
+from gaphor.UML.interactions.interactionstoolbox import reflexive_message_config
 
 
 @pytest.fixture
@@ -295,3 +297,14 @@ def test_can_undo_diagram_with_content(event_manager, element_factory, undo_mana
 
     assert new_diagram
     assert new_diagram.ownedPresentation
+
+
+def test_reflexive_message_undo(event_manager, element_factory, undo_manager):
+    with Transaction(event_manager):
+        diagram: Diagram = element_factory.create(Diagram)
+
+    with Transaction(event_manager):
+        message = diagram.create(MessageItem)
+        reflexive_message_config(message)
+
+    undo_manager.undo_transaction()
