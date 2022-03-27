@@ -120,29 +120,34 @@ class Namespace(UIComponent, ActionProvider):
         scrolled_window.insert_action_group("tree-view", action_group)
 
         if Gtk.get_major_version() == 3:
-            ctrl = Gtk.GestureMultiPress.new(view)
-            ctrl.set_button(Gdk.BUTTON_SECONDARY)
-            ctrl.connect("pressed", self._on_show_popup)
-            self.ctrl.add(ctrl)
-
-            ctrl = Gtk.EventControllerKey.new(view)
-            ctrl.connect("key-pressed", self._on_edit_pressed)
-            self.ctrl.add(ctrl)
+            self.create_gtk3_popup_controller(view)
         else:
-            ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
-            ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
-            view.add_controller(ctrl)
-
-            ctrl = Gtk.GestureClick.new()
-            ctrl.set_button(Gdk.BUTTON_SECONDARY)
-            ctrl.connect("pressed", self._on_show_popup)
-            view.add_controller(ctrl)
-
+            self.create_gtk4_popup_controller(shortcuts, view)
         self.view = view
         self.scrolled_window = scrolled_window
         self.model.refresh()
 
         return scrolled_window
+
+    def create_gtk4_popup_controller(self, shortcuts, view):
+        ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
+        ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
+        view.add_controller(ctrl)
+
+        ctrl = Gtk.GestureClick.new()
+        ctrl.set_button(Gdk.BUTTON_SECONDARY)
+        ctrl.connect("pressed", self._on_show_popup)
+        view.add_controller(ctrl)
+
+    def create_gtk3_popup_controller(self, view):
+        ctrl = Gtk.GestureMultiPress.new(view)
+        ctrl.set_button(Gdk.BUTTON_SECONDARY)
+        ctrl.connect("pressed", self._on_show_popup)
+        self.ctrl.add(ctrl)
+
+        ctrl = Gtk.EventControllerKey.new(view)
+        ctrl.connect("key-pressed", self._on_edit_pressed)
+        self.ctrl.add(ctrl)
 
     def close(self):
         self.ctrl.clear()
