@@ -366,6 +366,13 @@ class DiagramPage:
                     log.warning(
                         f"No graphical representation for element {type(element).__name__}"
                     )
+                    self.event_manager.handle(
+                        Notification(
+                            gettext(
+                                "The element you dragged has no graphical representation"
+                            )
+                        )
+                    )
                 context.finish(True, False, time)
             else:
                 context.finish(False, False, time)
