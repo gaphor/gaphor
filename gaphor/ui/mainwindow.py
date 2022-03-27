@@ -38,28 +38,34 @@ def new_builder():
 def create_hamburger_model(export_menu, tools_menu):
     model = Gio.Menu.new()
 
-    part = Gio.Menu.new()
-    part.append(gettext("Open a Model…"), "app.file-open")
-    part.append(gettext("Recent Models…"), "app.recent-files")
-    part.append(gettext("New Model…"), "app.new-model")
-    model.append_section(None, part)
+    menu_items = {
+        "Open a Model…": "app.file-open",
+        "Recent Models…": "app.recent-files",
+        "New Model…": "app.new-model",
+    }
+    model.append_section(None, create_menu_with_items(menu_items))
 
-    part = Gio.Menu.new()
-    part.append(gettext("Save"), "win.file-save")
-    part.append(gettext("Save As…"), "win.file-save-as")
-    part.append_submenu(gettext("Export"), export_menu)
-    model.append_section(None, part)
+    menu_items = {
+        "Save": "win.file-save",
+        "Save As…": "win.file-save-as",
+        "Export": "export_menu",
+    }
+    model.append_section(None, create_menu_with_items(menu_items))
 
-    part = Gio.Menu.new()
-    part.append_submenu(gettext("Tools"), tools_menu)
-    model.append_section(None, part)
+    menu_items = {"Tools": "tools_menu"}
+    model.append_section(None, create_menu_with_items(menu_items))
 
-    part = Gio.Menu.new()
-    part.append(gettext("Keyboard Shortcuts"), "win.shortcuts")
-    part.append(gettext("About Gaphor"), "win.about")
-    model.append_section(None, part)
+    menu_items = {"Keyboard Shortcuts": "win.shortcuts", "About Gaphor": "win.about"}
+    model.append_section(None, create_menu_with_items(menu_items))
 
     return model
+
+
+def create_menu_with_items(items: dict[str, str]) -> Gio.Menu:
+    menu = Gio.Menu.new()
+    for label, detailed_action in items.items():
+        menu.append(gettext(label), detailed_action)
+    return menu
 
 
 def create_modeling_language_model(modeling_language):

@@ -233,15 +233,13 @@ class FileManager(Service, ActionProvider):
         Returns True if the saving actually happened.
         """
 
-        filename = save_file_dialog(
+        if filename := save_file_dialog(
             gettext("Save Gaphor Model As"),
             parent=self.main_window.window,
             filename=self.filename,
             extension=".gaphor",
             filters=GAPHOR_FILTER,
-        )
-
-        if filename:
+        ):
             self.save(filename)
             return True
 

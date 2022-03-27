@@ -241,10 +241,8 @@ class DiagramPage:
         assert self.widget
         if Gtk.get_major_version() == 3:
             self.widget.destroy()
-        else:
-            parent = self.widget.get_parent()
-            if parent:
-                parent.remove(self.widget)
+        elif parent := self.widget.get_parent():
+            parent.remove(self.widget)
 
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_attribute_updated)
@@ -287,8 +285,7 @@ class DiagramPage:
 
         item_painter = ItemPainter(view.selection)
 
-        sloppiness = style.get("line-style", 0.0)
-        if sloppiness:
+        if sloppiness := style.get("line-style", 0.0):
             item_painter = FreeHandPainter(item_painter, sloppiness=sloppiness)
 
         view.bounding_box_painter = item_painter
@@ -353,8 +350,7 @@ class DiagramPage:
                     context.finish(True, False, time)
                     return
 
-                item_class = get_diagram_item(type(element))
-                if item_class:
+                if item_class := get_diagram_item(type(element)):
                     with Transaction(self.event_manager):
                         item = self.diagram.create(item_class)
                         assert item

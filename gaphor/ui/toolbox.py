@@ -87,8 +87,7 @@ class Toolbox(UIComponent):
     @property
     def active_tool_name(self):
         for flowbox in self.flowboxes():
-            children = flowbox.get_selected_children()
-            if children:
+            if children := flowbox.get_selected_children():
                 return children[0].action_name
         return "toolbox-pointer"
 

@@ -33,7 +33,9 @@ def _file_dialog_with_filters(title, parent, action, filters):
     return dialog
 
 
-def open_file_dialog(title, parent=None, dirname=None, filters=[]) -> Sequence[str]:
+def open_file_dialog(title, parent=None, dirname=None, filters=None) -> Sequence[str]:
+    if filters is None:
+        filters = []
     dialog = _file_dialog_with_filters(
         title, parent, Gtk.FileChooserAction.OPEN, filters
     )
@@ -48,8 +50,10 @@ def open_file_dialog(title, parent=None, dirname=None, filters=[]) -> Sequence[s
 
 
 def save_file_dialog(
-    title, parent=None, filename=None, extension=None, filters=[]
+    title, parent=None, filename=None, extension=None, filters=None
 ) -> Optional[str]:
+    if filters is None:
+        filters = []
     dialog = _file_dialog_with_filters(
         title, parent, Gtk.FileChooserAction.SAVE, filters
     )

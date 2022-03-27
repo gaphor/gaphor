@@ -73,10 +73,8 @@ class Diagrams(UIComponent, ActionProvider):
         if self._notebook:
             if Gtk.get_major_version() == 3:
                 self._notebook.destroy()
-            else:
-                parent = self._notebook.get_parent()
-                if parent:
-                    parent.remove(self._notebook)
+            elif parent := self._notebook.get_parent():
+                parent.remove(self._notebook)
             self._notebook = None
 
     def get_current_diagram(self) -> Diagram | None:
@@ -167,10 +165,8 @@ class Diagrams(UIComponent, ActionProvider):
             if not notebook:
                 return
             for page_num in range(notebook.get_n_pages()):
-                page = notebook.get_nth_page(page_num)
-                if page:
-                    diagram = page.diagram_page.get_diagram()
-                    if diagram:
+                if page := notebook.get_nth_page(page_num):
+                    if diagram := page.diagram_page.get_diagram():
                         yield diagram.id
 
         self.properties.set("opened-diagrams", list(diagram_ids()))
@@ -190,8 +186,7 @@ class Diagrams(UIComponent, ActionProvider):
         shortcut=("<Primary>equal", "<Primary>plus"),
     )
     def zoom_in(self):
-        view = self.get_current_view()
-        if view:
+        if view := self.get_current_view():
             view.zoom(1.2)
 
     @action(
@@ -199,8 +194,7 @@ class Diagrams(UIComponent, ActionProvider):
         shortcut="<Primary>minus",
     )
     def zoom_out(self):
-        view = self.get_current_view()
-        if view:
+        if view := self.get_current_view():
             view.zoom(1 / 1.2)
 
     @action(
@@ -208,8 +202,7 @@ class Diagrams(UIComponent, ActionProvider):
         shortcut="<Primary>0",
     )
     def zoom_100(self):
-        view = self.get_current_view()
-        if view:
+        if view := self.get_current_view():
             zx = view.matrix[0]
             view.zoom(1 / zx)
 
