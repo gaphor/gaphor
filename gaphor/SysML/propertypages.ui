@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.0" />
   <object class="GtkLabel" id="00-instructions">
     <property name="label">To create a fresh model: create a window, create the
 desired element, in the tree view pop upmenu, select
@@ -21,14 +21,16 @@ renderers and such.</property>
         <child>
           <object class="GtkLabel">
             <property name="label" translatable="yes">Item Flow</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
             <attributes>
-              <attribute name="weight" value="bold"/>
+              <attribute name="weight" value="bold" />
             </attributes>
           </object>
         </child>
         <child>
           <object class="GtkSwitch" id="use-item-flow">
-            <signal name="notify::active" handler="item-flow-active" swapped="no"/>
+            <signal name="notify::active" handler="item-flow-active" swapped="no" />
           </object>
         </child>
       </object>
@@ -44,20 +46,20 @@ renderers and such.</property>
         <property name="spacing">6</property>
         <child>
           <object class="GtkEntry" id="item-flow-name">
-            <signal name="changed" handler="item-flow-name-changed" swapped="no"/>
+            <signal name="changed" handler="item-flow-name-changed" swapped="no" />
           </object>
         </child>
         <child>
           <object class="GtkButton" id="item-flow-invert">
             <property name="tooltip-text" translatable="yes">Invert direction</property>
-            <signal name="clicked" handler="invert-direction-changed" swapped="no"/>
+            <signal name="clicked" handler="invert-direction-changed" swapped="no" />
             <child>
               <object class="GtkImage">
                 <property name="icon-name">object-flip-horizontal-symbolic</property>
               </object>
             </child>
             <style>
-              <class name="flat"/>
+              <class name="flat" />
             </style>
           </object>
         </child>
@@ -72,7 +74,7 @@ renderers and such.</property>
     <child>
       <object class="GtkComboBoxText" id="item-flow-type">
         <property name="has-entry">1</property>
-        <signal name="changed" handler="item-flow-type-changed" swapped="no"/>
+        <signal name="changed" handler="item-flow-type-changed" swapped="no" />
       </object>
     </child>
   </object>
@@ -82,16 +84,18 @@ renderers and such.</property>
     <child>
       <object class="GtkBox">
         <property name="spacing">6</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkBox">
             <child>
               <object class="GtkLabel">
                 <property name="label" translatable="yes">Show Parts</property>
+                <property name="halign">start</property>
+                <property name="hexpand">yes</property>
               </object>
             </child>
             <child>
               <object class="GtkSwitch" id="show-parts">
-                <property name="halign">center</property>
                 <signal name="notify::active" handler="show-parts-changed" swapped="no"/>
               </object>
             </child>
@@ -102,12 +106,14 @@ renderers and such.</property>
             <child>
               <object class="GtkLabel">
                 <property name="label" translatable="yes">Show References</property>
+                <property name="halign">start</property>
+                <property name="hexpand">yes</property>
               </object>
             </child>
             <child>
               <object class="GtkSwitch" id="show-references">
                 <property name="halign">center</property>
-                <signal name="notify::active" handler="show-references-changed" swapped="no"/>
+                <signal name="notify::active" handler="show-references-changed" swapped="no" />
               </object>
             </child>
           </object>
@@ -117,12 +123,14 @@ renderers and such.</property>
             <child>
               <object class="GtkLabel">
                 <property name="label" translatable="yes">Show Values</property>
+                <property name="halign">start</property>
+                <property name="hexpand">yes</property>
               </object>
             </child>
             <child>
               <object class="GtkSwitch" id="show-values">
                 <property name="halign">center</property>
-                <signal name="notify::active" handler="show-values-changed" swapped="no"/>
+                <signal name="notify::active" handler="show-values-changed" swapped="no" />
               </object>
             </child>
           </object>
@@ -159,17 +167,17 @@ renderers and such.</property>
           <item id="1" translatable="yes">Shared</item>
           <item id="2" translatable="yes">Composite</item>
         </items>
-        <signal name="changed" handler="aggregation-changed" swapped="no"/>
+        <signal name="changed" handler="aggregation-changed" swapped="no" />
       </object>
     </child>
   </object>
-  <object class="GtkTextBuffer" id="requirement-text-buffer"/>
+  <object class="GtkTextBuffer" id="requirement-text-buffer" />
   <object class="GtkBox" id="requirement-editor">
     <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <property name="baseline_position">top</property>
-    <signal name="destroy" handler="requirement-destroyed" swapped="no"/>
+    <signal name="destroy" handler="requirement-destroyed" swapped="no" />
     <child>
       <object class="GtkLabel" id="label1">
         <property name="valign">center</property>
@@ -182,7 +190,7 @@ renderers and such.</property>
     </child>
     <child>
       <object class="GtkEntry" id="requirement-id">
-        <signal name="changed" handler="requirement-id-changed" swapped="no"/>
+        <signal name="changed" handler="requirement-id-changed" swapped="no" />
       </object>
     </child>
     <child>
