@@ -11,6 +11,8 @@ import xml.etree.ElementTree as etree
 
 from gi.repository import Gio, GLib, Gtk
 
+from gaphor.ui.styling import Styling
+
 
 def load_components(ui_filename):
     with open(ui_filename) as ui_file:
@@ -40,12 +42,14 @@ def in_window(app, name, component):
     window = Gtk.Window.new()
     window.set_child(component)
     window.set_title(name)
+    window.set_default_size(226, -1)
     window.show()
     app.add_window(window)
     return window
 
 
 def app_open(app, files, n_files, hint):
+    Styling()
     file = files[0].get_path()
     last_modified = 0.0
     components: dict[str, Gtk.Window] = {}
