@@ -9,7 +9,7 @@
         <property name="label" translatable="yes">Comment</property>
         <property name="xalign">0</property>
         <style>
-          <class name="propertypage-title"/>
+          <class name="title"/>
         </style>
       </object>
     </child>
@@ -34,7 +34,7 @@
       <object class="GtkLabel">
         <property name="label" translatable="yes">Style</property>
         <style>
-          <class name="propertypage-title"/>
+          <class name="title"/>
         </style>
       </object>
     </child>
@@ -67,18 +67,26 @@
         <property name="label" translatable="yes">Note or Remark</property>
         <property name="xalign">0</property>
         <style>
-          <class name="propertypage-title"/>
+          <class name="title"/>
         </style>
       </object>
     </child>
     <child>
-      <object class="GtkFrame">
-        <property name="child">
-          <object class="GtkTextView" id="note">
-            <property name="wrap-mode">word</property>
-            <property name="height-request">96</property>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkFrame">
+            <property name="child">
+              <object class="GtkTextView" id="note">
+                <property name="wrap-mode">word</property>
+                <property name="height-request">96</property>
+              </object>
+            </property>
           </object>
-        </property>
+        </child>
+        <style>
+          <class name="propertypage"/>
+        </style>
       </object>
     </child>
     <style>

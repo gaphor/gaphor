@@ -4,24 +4,30 @@
   -gtk-icon-filter: brightness(1.2);
 }
 
-
-.propertypage {
+box.propertypage > * {
   margin-top: 6px;
-  border-spacing: 6px;
 }
 
 expander-widget.propertypage {
   margin-top: 12px;
 }
 
-expander-widget.propertypage > box > *:last-child {
-  margin-top: 6px;
+.propertypage box.horizontal:not(.linked) {
+  border-spacing: 6px;
 }
 
-.propertypage-title {
+.propertypage .title {
   font-weight: bold;
+}
+
+.propertypage .info {
+  margin: 3px 2px 0 2px;
 }
 
 .propertypage frame > textview {
   padding: 6px;
+}
+
+.info-popover {
+  margin: 6px;
 }
