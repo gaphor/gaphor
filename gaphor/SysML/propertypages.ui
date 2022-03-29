@@ -173,9 +173,9 @@ renderers and such.</property>
   </object>
   <object class="GtkTextBuffer" id="requirement-text-buffer" />
   <object class="GtkBox" id="requirement-editor">
-    <property name="margin_top">6</property>
     <property name="orientation">vertical</property>
-    <property name="spacing">6</property>
+    <!-- <property name="margin_top">6</property>
+    <property name="spacing">6</property> -->
     <property name="baseline_position">top</property>
     <signal name="destroy" handler="requirement-destroyed" swapped="no" />
     <child>
@@ -218,5 +218,8 @@ renderers and such.</property>
         </child>
       </object>
     </child>
+    <style>
+      <class name="property-page"/>
+    </style>
   </object>
 </interface>

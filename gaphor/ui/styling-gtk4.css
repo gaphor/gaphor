@@ -3,3 +3,25 @@
 .greeter flowboxchild:hover {
   -gtk-icon-filter: brightness(1.2);
 }
+
+
+.propertypage {
+  margin-top: 6px;
+  border-spacing: 6px;
+}
+
+expander-widget.propertypage {
+  margin-top: 12px;
+}
+
+expander-widget.propertypage > box > *:last-child {
+  margin-top: 6px;
+}
+
+.propertypage-title {
+  font-weight: bold;
+}
+
+.propertypage frame > textview {
+  padding: 6px;
+}
