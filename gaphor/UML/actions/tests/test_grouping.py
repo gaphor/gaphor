@@ -5,12 +5,31 @@ from gaphor.diagram.group import group, ungroup
 from gaphor.UML.actions import ActionItem, PartitionItem
 
 
-def test_no_subpartition_when_nodes_in(case):
+def test_add_node_to_activity(element_factory):
+    node = element_factory.create(UML.Action)
+    activity = element_factory.create(UML.Activity)
+
+    assert group(activity, node)
+    assert node in activity.node
+    assert node.owner is activity
+
+
+def test_ungroup_node_to_activity(element_factory):
+    node = element_factory.create(UML.Action)
+    activity = element_factory.create(UML.Activity)
+
+    assert group(activity, node)
+    assert ungroup(activity, node)
+    assert node not in activity.node
+    assert not node.owner
+
+
+def test_no_subpartition_when_nodes_in(element_factory):
     """Test adding subpartition when nodes added."""
-    p = case.create(PartitionItem, subject_cls=UML.ActivityPartition)
-    a1 = case.create(ActionItem, UML.Action)
-    p1 = case.create(PartitionItem, subject_cls=UML.ActivityPartition)
-    p2 = case.create(PartitionItem, subject_cls=UML.ActivityPartition)
+    p = element_factory.create(UML.ActivityPartition)
+    a1 = element_factory.create(UML.Action)
+    p1 = element_factory.create(UML.ActivityPartition)
+    p2 = element_factory.create(UML.ActivityPartition)
 
     group(p, p1)
     group(p1, a1)
