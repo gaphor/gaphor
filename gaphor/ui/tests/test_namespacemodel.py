@@ -229,5 +229,5 @@ def test_drag_data_received(namespace, element_factory, mocker):
     )
 
     assert namespace.do_drag_data_received(
-        Gtk.TreePath.new_from_indices((1,)), selection_data
+        Gtk.TreePath.new_from_indices((1, 0)), selection_data
     )

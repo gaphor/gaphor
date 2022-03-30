@@ -260,8 +260,9 @@ class NamespaceModel(Gtk.TreeStore):
 
         src_row = self[src_path]
         element = src_row[0]
-        dest_path.up()
-        dest_element = self.element_for_path(dest_path)
+        parent_path = Gtk.TreePath.copy(dest_path)
+        parent_path.up()
+        dest_element = self.element_for_path(parent_path)
 
         return dest_element is None or can_group(dest_element, element)
 
@@ -276,7 +277,9 @@ class NamespaceModel(Gtk.TreeStore):
             return False
 
         element = self[src_path][0]
-        dest_element = self.element_for_path(dest_path)
+        parent_path = Gtk.TreePath.copy(dest_path)
+        parent_path.up()
+        dest_element = self.element_for_path(parent_path)
 
         try:
             with Transaction(self.event_manager) as tx:
@@ -297,6 +300,9 @@ class NamespaceModel(Gtk.TreeStore):
 def change_owner(new_parent, element):
     if element.owner is new_parent:
         return False
+
+    if new_parent is None and element.owner:
+        return ungroup(element.owner, element)
 
     if not can_group(new_parent, element):
         return False
