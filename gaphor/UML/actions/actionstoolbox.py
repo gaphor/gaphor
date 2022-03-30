@@ -5,7 +5,12 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    namespace_config,
+    new_item_factory,
+)
 from gaphor.UML import diagramitems
 from gaphor.UML.recipes import owner_package
 
@@ -51,6 +56,18 @@ def partition_config(new_item):
 actions = ToolSection(
     gettext("Actions"),
     (
+        ToolDef(
+            "toolbox-activity",
+            gettext("Activity"),
+            "gaphor-activity-symbolic",
+            None,
+            new_item_factory(
+                diagramitems.ActivityItem,
+                UML.Activity,
+                config_func=namespace_config,
+            ),
+            handle_index=SE,
+        ),
         ToolDef(
             "toolbox-action",
             gettext("Action"),
