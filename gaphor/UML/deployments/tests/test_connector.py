@@ -1,28 +1,38 @@
-"""Test connector item."""
+import pytest
 
 from gaphor import UML
+from gaphor.core.modeling import Diagram
+from gaphor.core.modeling.modelinglanguage import CoreModelingLanguage
+from gaphor.diagram.tests.fixtures import MockModelingLanguage
+from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.deployments.connector import ConnectorItem
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
-class TestConnectorItem:
-    """Connector item basic tests."""
+@pytest.fixture
+def modeling_language():
+    return MockModelingLanguage(
+        CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()
+    )
 
-    def test_create(self, case):
-        """Test creation of connector item."""
-        conn = case.create(ConnectorItem, UML.Connector)
-        assert conn.subject is not None
 
-    def test_persistence(self, case):
-        """Test connector item saving/loading."""
-        conn = case.create(ConnectorItem, UML.Connector)
+def test_create(create):
+    """Test creation of connector item."""
+    conn = create(ConnectorItem, UML.Connector)
+    assert conn.subject is not None
 
-        end = case.element_factory.create(UML.ConnectorEnd)
-        conn.end = end
 
-        data = case.save()
-        assert end.id in data
+def test_persistence(create, element_factory, saver, loader):
+    """Test connector item saving/loading."""
+    conn = create(ConnectorItem, UML.Connector)
 
-        case.load(data)
+    end = element_factory.create(UML.ConnectorEnd)
+    conn.end = end
 
-        assert case.diagram.select(ConnectorItem)
-        assert case.kindof(UML.ConnectorEnd)
+    data = saver()
+    assert end.id in data
+
+    loader(data)
+    diagram = next(element_factory.select(Diagram))
+    assert diagram.select(ConnectorItem)
+    assert element_factory.lselect(UML.ConnectorEnd)
