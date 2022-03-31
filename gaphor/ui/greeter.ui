@@ -59,7 +59,6 @@
                             <property name="margin-bottom">12</property>
                             <child>
                               <object class="GtkFlowBox" id="templates">
-                                <property name="valign">center</property>
                                 <property name="homogeneous">1</property>
                                 <property name="width-request">400</property>
                                 <property name="max_children_per_line">3</property>
@@ -84,23 +83,14 @@
                 <property name="spacing">10</property>
                 <property name="homogeneous">1</property>
                 <child>
-                  <object class="GtkButton" id="greeter-recent-files-button">
-                    <property name="label" translatable="yes">Recent Model…</property>
-                    <property name="receives-default">1</property>
-                    <property name="action-name">app.recent-files</property>
-                  </object>
-                </child>
-                <child>
                   <object class="GtkButton">
                     <property name="label" translatable="yes">Create New Model…</property>
-                    <property name="receives-default">1</property>
                     <property name="action-name">app.new-model</property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkButton">
-                    <property name="label" translatable="yes">Open Existing Model…</property>
-                    <property name="receives-default">1</property>
+                    <property name="label" translatable="yes">Open Other Model…</property>
                     <property name="action-name">app.file-open</property>
                   </object>
                 </child>
@@ -114,13 +104,9 @@
       <object class="GtkHeaderBar">
         <child>
           <object class="GtkButton" id="back-button">
-            <property name="visible">1</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
             <property name="action-name">app.recent-files</property>
             <child>
               <object class="GtkImage">
-                <property name="visible">1</property>
                 <property name="icon-name">go-previous-symbolic</property>
               </object>
             </child>
