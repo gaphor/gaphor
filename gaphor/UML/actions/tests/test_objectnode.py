@@ -2,12 +2,14 @@ from gaphor import UML
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
 
-def test_object_node(create):
-    create(ObjectNodeItem, UML.ObjectNode)
+def test_object_node(diagram, element_factory):
+    node = element_factory.create(UML.ObjectNode)
+    item = diagram.create(ObjectNodeItem, subject=node)
+
+    assert item.subject is node
 
 
 def test_name(create):
-    """Test updating of object node name."""
     node = create(ObjectNodeItem, UML.ObjectNode)
     name = node.shape.icon.children[1]
 
