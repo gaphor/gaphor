@@ -1,38 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <object class="GtkLabel" id="00-instructions">
-    <property name="label">To create a fresh model: create a window, create the
-desired element, in the tree view pop upmenu, select
-Remove Parent.
 
-Padding between elements is 6px.
-Top margin is 6 px, 12px for expanders.
-Edit, from the popup menu, will allow you to add cell 
-renderers and such.</property>
-    <property name="xalign">0</property>
-  </object>
   <object class="GtkBox" id="decision-node-editor">
-    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
-    <property name="spacing">6</property>
     <child>
       <object class="GtkBox">
         <child>
           <object class="GtkLabel">
             <property name="label" translatable="yes">Show type</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
           </object>
         </child>
         <child>
           <object class="GtkSwitch" id="show-type">
-            <property name="halign">center</property>
             <property name="focusable">1</property>
             <signal name="notify::active" handler="show-type-changed" swapped="no"/>
           </object>
         </child>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
   </object>
+
   <object class="GtkBox" id="fork-node-editor">
     <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
@@ -42,29 +35,32 @@ renderers and such.</property>
         <child>
           <object class="GtkLabel">
             <property name="label" translatable="yes">Horizontal</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
           </object>
         </child>
         <child>
           <object class="GtkSwitch" id="horizontal">
-            <property name="halign">center</property>
             <property name="focusable">1</property>
             <signal name="notify::active" handler="horizontal-changed" swapped="no"/>
           </object>
         </child>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
   </object>
+
   <object class="GtkBox" id="join-node-editor">
-    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
-    <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Join Specification</property>
         <property name="xalign">0</property>
-        <attributes>
-          <attribute name="weight" value="bold"></attribute>
-        </attributes>
+        <style>
+          <class name="title"/>
+        </style>
       </object>
     </child>
     <child>
@@ -73,7 +69,11 @@ renderers and such.</property>
         <signal name="changed" handler="join-spec-changed" swapped="no"/>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
   </object>
+
   <object class="GtkAdjustment" id="num-partitions-adjustment">
     <property name="lower">1</property>
     <property name="upper">10</property>
@@ -81,17 +81,16 @@ renderers and such.</property>
     <property name="step-increment">1</property>
     <property name="page-increment">5</property>
   </object>
+
   <object class="GtkBox" id="partition-editor">
-    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
-    <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Swimlanes</property>
         <property name="xalign">0</property>
-        <attributes>
-          <attribute name="weight" value="bold"></attribute>
-        </attributes>
+        <style>
+          <class name="title"/>
+        </style>
       </object>
     </child>
     <child>
@@ -99,11 +98,12 @@ renderers and such.</property>
         <child>
           <object class="GtkLabel">
             <property name="label" translatable="yes">Partitions</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
           </object>
         </child>
         <child>
           <object class="GtkSpinButton" id="num-partitions">
-            <property name="halign">center</property>
             <property name="focusable">1</property>
             <property name="adjustment">num-partitions-adjustment</property>
             <property name="numeric">1</property>
@@ -118,18 +118,20 @@ renderers and such.</property>
         <property name="spacing">12</property>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
   </object>
+
   <object class="GtkBox" id="object-node-editor">
-    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
-    <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Upper Bound</property>
         <property name="xalign">0</property>
-        <attributes>
-          <attribute name="weight" value="bold"></attribute>
-        </attributes>
+        <style>
+          <class name="title"/>
+        </style>
       </object>
     </child>
     <child>
@@ -143,11 +145,12 @@ renderers and such.</property>
         <child>
           <object class="GtkLabel">
             <property name="label" translatable="yes">Show Ordering</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
           </object>
         </child>
         <child>
           <object class="GtkSwitch" id="show-ordering">
-            <property name="halign">center</property>
             <property name="focusable">1</property>
             <signal name="notify::active" handler="show-ordering-changed" swapped="no"/>
           </object>
@@ -165,7 +168,11 @@ renderers and such.</property>
         <signal name="changed" handler="ordering-changed" swapped="no"/>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
   </object>
+
   <object class="GtkBox" id="partition">
     <property name="margin-start">6</property>
     <property name="spacing">6</property>
@@ -177,7 +184,6 @@ renderers and such.</property>
     <child>
       <object class="GtkBox">
         <property name="orientation">vertical</property>
-        <property name="spacing">6</property>
         <child>
           <object class="GtkLabel">
             <property name="label" translatable="yes">Name</property>
@@ -202,21 +208,23 @@ renderers and such.</property>
             <signal name="changed" handler="partition-type-changed" swapped="no"/>
           </object>
         </child>
+        <style>
+          <class name="propertypage"/>
+        </style>
       </object>
     </child>
   </object>
+
   <object class="GtkBox" id="transition-editor">
-    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
-    <property name="spacing">6</property>
     <signal name="destroy" handler="transition-destroy" swapped="no"/>
     <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Guard</property>
         <property name="xalign">0</property>
-        <attributes>
-          <attribute name="weight" value="bold"></attribute>
-        </attributes>
+        <style>
+          <class name="title"/>
+        </style>
       </object>
     </child>
     <child>
@@ -225,5 +233,9 @@ renderers and such.</property>
         <signal name="changed" handler="guard-changed" swapped="no"/>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
   </object>
+
 </interface>

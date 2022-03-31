@@ -1,28 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
-  <object class="GtkLabel" id="00-instructions">
-    <property name="label">To create a fresh model: create a window, create the
-desired element, in the tree view pop upmenu, select
-Remove Parent.
 
-Padding between elements is 6px.
-Top margin is 6 px, 12px for expanders.
-Edit, from the popup menu, will allow you to add cell
-renderers and such.</property>
-    <property name="xalign">0</property>
-  </object>
   <object class="GtkBox" id="comment-editor">
-    <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
-    <property name="spacing">6</property>
     <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Comment</property>
         <property name="xalign">0</property>
-        <attributes>
-          <attribute name="weight" value="bold"></attribute>
-        </attributes>
+        <style>
+          <class name="title"/>
+        </style>
       </object>
     </child>
     <child>
@@ -30,25 +18,29 @@ renderers and such.</property>
         <property name="child">
           <object class="GtkTextView" id="comment">
             <property name="wrap-mode">word</property>
-            <property name="left-margin">6</property>
-            <property name="right-margin">6</property>
-            <property name="top-margin">6</property>
-            <property name="bottom-margin">6</property>
             <property name="height-request">96</property>
           </object>
         </property>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
   </object>
+
   <object class="GtkExpander" id="line-editor">
-    <property name="margin-top">12</property>
     <property name="expanded">1</property>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Style</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
     <child>
       <object class="GtkBox">
-        <property name="margin-top">6</property>
-        <property name="margin-bottom">12</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">6</property>
         <child>
           <object class="GtkCheckButton" id="line-rectilinear">
             <property name="label" translatable="yes">Rectilinear</property>
@@ -63,41 +55,43 @@ renderers and such.</property>
         </child>
       </object>
     </child>
-    <child type="label">
-      <object class="GtkLabel">
-        <property name="label" translatable="yes">Style</property>
-        <attributes>
-          <attribute name="weight" value="bold"></attribute>
-        </attributes>
-      </object>
-    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
   </object>
+
   <object class="GtkExpander" id="note-editor">
-    <property name="margin-top">12</property>
     <property name="expanded">1</property>
     <child type="label">
       <object class="GtkLabel">
         <property name="label" translatable="yes">Note or Remark</property>
         <property name="xalign">0</property>
-        <attributes>
-          <attribute name="weight" value="bold"></attribute>
-        </attributes>
+        <style>
+          <class name="title"/>
+        </style>
       </object>
     </child>
     <child>
-      <object class="GtkFrame">
-        <property name="margin-top">6</property>
-        <property name="child">
-          <object class="GtkTextView" id="note">
-            <property name="wrap-mode">word</property>
-            <property name="left-margin">6</property>
-            <property name="right-margin">6</property>
-            <property name="top-margin">6</property>
-            <property name="bottom-margin">6</property>
-            <property name="height-request">96</property>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkFrame">
+            <property name="child">
+              <object class="GtkTextView" id="note">
+                <property name="wrap-mode">word</property>
+                <property name="height-request">96</property>
+              </object>
+            </property>
           </object>
-        </property>
+        </child>
+        <style>
+          <class name="propertypage"/>
+        </style>
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
   </object>
+  
 </interface>
