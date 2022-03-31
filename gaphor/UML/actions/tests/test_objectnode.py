@@ -2,13 +2,18 @@ from gaphor import UML
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
 
-def test_object_node(case):
-    case.create(ObjectNodeItem, UML.ObjectNode)
+def test_object_node(diagram, element_factory):
+    node = element_factory.create(UML.ObjectNode)
+    item = diagram.create(ObjectNodeItem, subject=node)
+
+    assert item.subject is node
 
 
-def test_name(case):
+def test_name(diagram, element_factory):
     """Test updating of object node name."""
-    node = case.create(ObjectNodeItem, UML.ObjectNode)
+    node = diagram.create(
+        ObjectNodeItem, subject=element_factory.create(UML.ObjectNode)
+    )
     name = node.shape.icon.children[1]
 
     node.subject.name = "Blah"
@@ -16,9 +21,11 @@ def test_name(case):
     assert "Blah" == name.text()
 
 
-def test_ordering(case):
+def test_ordering(diagram, element_factory):
     """Test updating of ObjectNodeItem.ordering."""
-    node = case.create(ObjectNodeItem, UML.ObjectNode)
+    node = diagram.create(
+        ObjectNodeItem, subject=element_factory.create(UML.ObjectNode)
+    )
     ordering = node.shape.children[1]
 
     node.subject.ordering = "unordered"
