@@ -33,7 +33,6 @@ renderers and such.</property>
       <object class="GtkComboBoxText" id="metaclass-combo">
         <property name="visible">1</property>
         <property name="has-entry">1</property>
-        <signal name="changed" handler="metaclass-combo-changed" swapped="no"/>
         <signal name="destroy" handler="metaclass-combo-destroy" swapped="no"/>
       </object>
       <packing>

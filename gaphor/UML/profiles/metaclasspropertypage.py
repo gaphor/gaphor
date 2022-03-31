@@ -57,11 +57,14 @@ class MetaclassPropertyPage(PropertyPageBase):
             combo, self.CLASSES, self.subject and self.subject.name or ""
         )
 
+        changed_id = combo.connect("changed", self._on_name_changed)
         entry = combo.get_child()
 
         def handler(event):
             if event.element is self.subject and entry.get_text() != event.new_value:
+                combo.handler_block(changed_id)
                 entry.set_text(event.new_value or "")
+                combo.handler_unblock(changed_id)
 
         self.watcher.watch("name", handler)
 
