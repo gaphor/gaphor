@@ -14,9 +14,8 @@ def context():
     return UpdateContext(style=FALLBACK_STYLE)
 
 
-def test_compartments(case):
+def test_compartments(element_factory):
     """Test creation of classes and working of compartments."""
-    element_factory = case.element_factory
     diagram = element_factory.create(Diagram)
     klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
@@ -51,9 +50,7 @@ def test_compartments(case):
     assert compartments(klass)[1].size(context()) > (63.0, 34.0)
 
 
-def test_attribute_removal(case):
-
-    element_factory = case.element_factory
+def test_attribute_removal(element_factory):
     diagram = element_factory.create(Diagram)
     klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
     diagram.update_now((klass,))
@@ -77,8 +74,7 @@ def test_attribute_removal(case):
     assert len(compartments(klass)[0]) == 2
 
 
-def test_compartment_resizing(case):
-    element_factory = case.element_factory
+def test_compartment_resizing(element_factory):
     diagram = element_factory.create(Diagram)
     klass = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
     klass.subject.name = "Class1"

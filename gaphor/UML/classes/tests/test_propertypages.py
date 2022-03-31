@@ -8,8 +8,8 @@ from gaphor.UML.classes.classespropertypages import (
 )
 
 
-def test_attribute_editing(case):
-    class_item = case.create(ClassItem, UML.Class)
+def test_attribute_editing(create):
+    class_item = create(ClassItem, UML.Class)
     model = ClassAttributes(class_item)
     model.append([None, False, None])
     path = Gtk.TreePath.new_first()
@@ -19,8 +19,8 @@ def test_attribute_editing(case):
     assert model[iter][-1] is class_item.subject.ownedAttribute[0]
 
 
-def test_enumeration_editing(case):
-    enum_item = case.create(EnumerationItem, UML.Enumeration)
+def test_enumeration_editing(create):
+    enum_item = create(EnumerationItem, UML.Enumeration)
     model = ClassEnumerationLiterals(enum_item)
     model.append([None, None])
     path = Gtk.TreePath.new_first()
