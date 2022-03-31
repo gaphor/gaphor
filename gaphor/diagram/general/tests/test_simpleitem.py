@@ -3,13 +3,13 @@
 from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
 
 
-def test_line(case):
-    case.diagram.create(Line)
+def test_line(diagram):
+    assert diagram.create(Line)
 
 
-def test_box(case):
-    case.diagram.create(Box)
+def test_box(diagram):
+    assert diagram.create(Box)
 
 
-def test_ellipse(case):
-    case.diagram.create(Ellipse)
+def test_ellipse(diagram):
+    assert diagram.create(Ellipse)

@@ -1,55 +1,71 @@
-import logging
-
 import pytest
 from gi.repository import Gdk, Gtk
 
 from gaphor import UML
-from gaphor.conftest import Case
+from gaphor.application import Session
+from gaphor.core.modeling import Diagram
+from gaphor.diagram.tests.fixtures import connect
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramOpened
 from gaphor.UML.classes import AssociationItem, ClassItem
 
-logging.basicConfig(level=logging.DEBUG)
+
+@pytest.fixture
+def session():
+    session = Session(
+        services=[
+            "event_manager",
+            "component_registry",
+            "element_factory",
+            "element_dispatcher",
+            "modeling_language",
+            "sanitizer",
+            "main_window",
+            "properties",
+            "namespace",
+            "diagrams",
+            "toolbox",
+            "export_menu",
+            "tools_menu",
+            "elementeditor",
+        ]
+    )
+    session.get_service("main_window").open()
+    yield session
+    session.shutdown()
 
 
-class DiagramItemConnectorCase(Case):
-    services = Case.services + [
-        "main_window",
-        "properties",
-        "namespace",
-        "diagrams",
-        "toolbox",
-        "export_menu",
-        "tools_menu",
-        "elementeditor",
-    ]
-
-    def __init__(self):
-        super().__init__()
-        self.component_registry = self.get_service("component_registry")
-        self.event_manager = self.get_service("event_manager")
-        mw = self.get_service("main_window")
-        mw.open()
-        self.main_window = mw
-        self.event_manager.handle(DiagramOpened(self.diagram))
+@pytest.fixture
+def event_manager(session):
+    return session.get_service("event_manager")
 
 
-@pytest.fixture(scope="module")
-def case():
-    case = DiagramItemConnectorCase()
-    yield case
-    case.shutdown()
+@pytest.fixture
+def component_registry(session):
+    return session.get_service("component_registry")
+
+
+@pytest.fixture
+def element_factory(session):
+    return session.get_service("element_factory")
+
+
+@pytest.fixture
+def diagram(event_manager, element_factory):
+    diagram = element_factory.create(Diagram)
+    event_manager.handle(DiagramOpened(diagram))
+    return diagram
 
 
 @pytest.mark.skipif(Gtk.get_major_version() != 3, reason="Works only for GTK+ 3")
-def test_item_reconnect(case):
+def test_item_reconnect(diagram, component_registry, element_factory):
     # Setting the stage:
-    ci1 = case.create(ClassItem, UML.Class)
-    ci2 = case.create(ClassItem, UML.Class)
-    a = case.create(AssociationItem)
+    ci1 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    ci2 = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+    a = diagram.create(AssociationItem)
 
-    case.connect(a, a.head, ci1)
-    case.connect(a, a.tail, ci2)
+    connect(a, a.head, ci1)
+    connect(a, a.tail, ci2)
 
     assert a.subject
     assert a.head_subject
@@ -58,9 +74,9 @@ def test_item_reconnect(case):
     the_association = a.subject
 
     # The act: perform button press event and button release
-    view = case.component_registry.get(UIComponent, "diagrams").get_current_view()
+    view = component_registry.get(UIComponent, "diagrams").get_current_view()
 
-    assert case.diagram is view.model
+    assert diagram is view.model
 
     p = view.get_matrix_i2v(a).transform_point(*a.head.pos)
 
