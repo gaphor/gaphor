@@ -16,6 +16,18 @@ class Event:
         self.events.append(event)
 
 
+class A(Element):
+    one: association
+    two: association
+
+    def __init__(self, id=None, model=None):
+        super().__init__(id, model)
+
+
+A.one = association("one", A, lower=0, upper=1, composite=True)
+A.two = association("two", A, lower=0, upper=2, composite=True)
+
+
 @pytest.fixture
 def event_manager():
     return EventManager()
@@ -32,8 +44,8 @@ def dispatcher(event_manager, modeling_language):
 
 
 @pytest.fixture
-def element_factory(event_manager):
-    return ElementFactory(event_manager)
+def element_factory(event_manager, dispatcher):
+    return ElementFactory(event_manager, dispatcher)
 
 
 @pytest.fixture
@@ -64,6 +76,17 @@ def uml_constraint(element_factory):
 @pytest.fixture
 def event():
     return Event()
+
+
+@pytest.fixture
+def handler():
+    events = []
+
+    def handler(event):
+        events.append(event)
+
+    handler.events = events
+    return handler
 
 
 def test_register_handler(dispatcher, uml_class, uml_parameter, uml_operation, event):
@@ -235,199 +258,164 @@ def test_notification_with_incompatible_elements(
     assert len(event.events) == 2, event.events
 
 
-class A(Element):
-    one: association
-    two: association
+def test_notification_with_class(element_factory, dispatcher, handler):
+    """Test notifications with Class object."""
+    element = element_factory.create(UML.Class)
+    o = element.ownedOperation = element_factory.create(UML.Operation)
+    p = element.ownedOperation[0].ownedParameter = element_factory.create(UML.Parameter)
+    p.name = "func"
+    dispatcher.subscribe(handler, element, "ownedOperation.ownedParameter.name")
+    assert len(dispatcher._handlers) == 3
+    assert not handler.events
 
-    def __init__(self, id=None, model=None):
-        super().__init__(id, model)
+    element.ownedOperation = element_factory.create(UML.Operation)
+    assert len(handler.events) == 1, handler.events
+    assert len(dispatcher._handlers) == 4
+
+    p.name = "othername"
+    assert len(handler.events) == 2, handler.events
+
+    del element.ownedOperation[o]
+    assert len(dispatcher._handlers) == 2
 
 
-A.one = association("one", A, lower=0, upper=1, composite=True)
-A.two = association("two", A, lower=0, upper=2, composite=True)
+def test_association_notification(element_factory, dispatcher, handler):
+    """Test notifications with Class object.
+
+    Tricky case where no events are fired.
+    """
+    element = element_factory.create(UML.Association)
+    p1 = element.memberEnd = element_factory.create(UML.Property)
+    element.memberEnd = element_factory.create(UML.Property)
+
+    assert len(element.memberEnd) == 2
+    dispatcher.subscribe(handler, element, "memberEnd.name")
+    assert len(dispatcher._handlers) == 3, len(dispatcher._handlers)
+    assert not handler.events
+
+    p1.name = "foo"
+    assert len(handler.events) == 1, (handler.events, dispatcher._handlers)
+    assert len(dispatcher._handlers) == 3
+
+    p1.name = "othername"
+    assert len(handler.events) == 2, handler.events
+
+    p1.name = "othername"
+    assert len(handler.events) == 2, handler.events
 
 
-class TestElementDispatcherAsService:
-    @pytest.fixture
-    def case(self, case):
-        case.events = []
-        case.dispatcher = case.element_factory.element_dispatcher
+def test_association_notification_complex(element_factory, dispatcher, handler):
+    """Test notifications with Class object.
 
-        def handler(event):
-            case.events.append(event)
+    Tricky case where no events are fired.
+    """
+    element = element_factory.create(UML.Association)
+    p1 = element.memberEnd = element_factory.create(UML.Property)
+    p2 = element.memberEnd = element_factory.create(UML.Property)
+    p1.lowerValue = "0"
+    p1.upperValue = "1"
+    p2.lowerValue = "1"
+    p2.upperValue = "*"
 
-        case._handler = handler
+    assert len(element.memberEnd) == 2
 
-        def getA():
-            return case.element_factory.create(A)
+    base = "memberEnd[Property]."
+    dispatcher.subscribe(handler, element, base + "name")
+    dispatcher.subscribe(handler, element, base + "aggregation")
+    dispatcher.subscribe(handler, element, base + "classifier")
+    dispatcher.subscribe(handler, element, base + "lowerValue")
+    dispatcher.subscribe(handler, element, base + "upperValue")
 
-        case.A = getA
+    assert len(dispatcher._handlers) == 11, len(dispatcher._handlers)
+    assert not handler.events
 
-        return case
+    p1.name = "foo"
+    assert len(handler.events) == 1, (handler.events, dispatcher._handlers)
+    assert len(dispatcher._handlers) == 11
 
-    def test_notification(self, case):
-        """Test notifications with Class object."""
-        dispatcher = case.dispatcher
-        element = case.element_factory.create(UML.Class)
-        o = element.ownedOperation = case.element_factory.create(UML.Operation)
-        p = element.ownedOperation[0].ownedParameter = case.element_factory.create(
-            UML.Parameter
-        )
-        p.name = "func"
-        dispatcher.subscribe(
-            case._handler, element, "ownedOperation.ownedParameter.name"
-        )
-        assert len(dispatcher._handlers) == 4
-        assert not case.events
+    p1.name = "othername"
+    assert len(handler.events) == 2, handler.events
 
-        element.ownedOperation = case.element_factory.create(UML.Operation)
-        assert len(case.events) == 1, case.events
-        assert len(dispatcher._handlers) == 5
 
-        p.name = "othername"
-        assert len(case.events) == 2, case.events
+def test_diamond(element_factory, dispatcher, handler):
+    """Test diamond shaped dependencies a -> b -> c, a -> b' -> c."""
+    a = element_factory.create(A)
+    watcher = EventWatcher(a, dispatcher, handler)
+    watcher.watch("one.two.one.two")
 
-        del element.ownedOperation[o]
-        assert len(dispatcher._handlers) == 3
+    a.one = element_factory.create(A)
+    a.one.two = element_factory.create(A)
+    a.one.two = element_factory.create(A)
+    a.one.two[0].one = element_factory.create(A)
+    a.one.two[1].one = a.one.two[0].one
+    a.one.two[0].one.two = element_factory.create(A)
 
-    def test_association_notification(self, case):
-        """Test notifications with Class object.
+    assert len(handler.events) == 6
 
-        Tricky case where no events are fired.
-        """
-        dispatcher = case.dispatcher
-        element = case.element_factory.create(UML.Association)
-        p1 = element.memberEnd = case.element_factory.create(UML.Property)
-        element.memberEnd = case.element_factory.create(UML.Property)
+    a.unlink()
+    watcher.unsubscribe_all()
+    watcher.unsubscribe_all()
 
-        assert len(element.memberEnd) == 2
-        dispatcher.subscribe(case._handler, element, "memberEnd.name")
-        assert len(dispatcher._handlers) == 4, len(dispatcher._handlers)
-        assert not case.events
 
-        p1.name = "foo"
-        assert len(case.events) == 1, (case.events, dispatcher._handlers)
-        assert len(dispatcher._handlers) == 4
+def test_big_diamond(element_factory, dispatcher, handler):
+    """Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' ->
+    d."""
+    a = element_factory.create(A)
+    watcher = EventWatcher(a, dispatcher, handler)
+    watcher.watch("one.two.one.two")
 
-        p1.name = "othername"
-        assert len(case.events) == 2, case.events
+    a.one = element_factory.create(A)
+    a.one.two = element_factory.create(A)
+    a.one.two = element_factory.create(A)
+    a.one.two[0].one = element_factory.create(A)
+    a.one.two[1].one = element_factory.create(A)
+    a.one.two[0].one.two = element_factory.create(A)
+    a.one.two[1].one.two = a.one.two[0].one.two[0]
 
-        p1.name = "othername"
-        assert len(case.events) == 2, case.events
+    assert len(handler.events) == 7
 
-    def test_association_notification_complex(self, case):
-        """Test notifications with Class object.
+    a.unlink()
+    watcher.unsubscribe_all()
+    watcher.unsubscribe_all()
+    assert len(dispatcher._handlers) == 0
 
-        Tricky case where no events are fired.
-        """
-        dispatcher = case.dispatcher
-        element = case.element_factory.create(UML.Association)
-        p1 = element.memberEnd = case.element_factory.create(UML.Property)
-        p2 = element.memberEnd = case.element_factory.create(UML.Property)
-        p1.lowerValue = "0"
-        p1.upperValue = "1"
-        p2.lowerValue = "1"
-        p2.upperValue = "*"
 
-        assert len(element.memberEnd) == 2
+def test_braking_big_diamond(element_factory, dispatcher, handler):
+    """Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' ->
+    d."""
+    a = element_factory.create(A)
+    watcher = EventWatcher(a, dispatcher, handler)
+    watcher.watch("one.two.one.two")
 
-        base = "memberEnd[Property]."
-        dispatcher.subscribe(case._handler, element, base + "name")
-        dispatcher.subscribe(case._handler, element, base + "aggregation")
-        dispatcher.subscribe(case._handler, element, base + "classifier")
-        dispatcher.subscribe(case._handler, element, base + "lowerValue")
-        dispatcher.subscribe(case._handler, element, base + "upperValue")
+    a.one = element_factory.create(A)
+    a.one.two = element_factory.create(A)
+    a.one.two = element_factory.create(A)
+    a.one.two[0].one = element_factory.create(A)
+    a.one.two[1].one = element_factory.create(A)
+    a.one.two[0].one.two = element_factory.create(A)
+    a.one.two[1].one.two = a.one.two[0].one.two[0]
 
-        assert len(dispatcher._handlers) == 12, len(dispatcher._handlers)
-        assert not case.events
+    assert len(handler.events) == 7
+    assert len(dispatcher._handlers) == 6
 
-        p1.name = "foo"
-        assert len(case.events) == 1, (case.events, dispatcher._handlers)
-        assert len(dispatcher._handlers) == 12
+    del a.one.two[0].one
+    watcher.unsubscribe_all()
+    watcher.unsubscribe_all()
+    assert len(dispatcher._handlers) == 0
 
-        p1.name = "othername"
-        assert len(case.events) == 2, case.events
 
-    def test_diamond(self, case):
-        """Test diamond shaped dependencies a -> b -> c, a -> b' -> c."""
-        A = case.A
-        a = A()
-        watcher = EventWatcher(a, case.dispatcher, case._handler)
-        watcher.watch("one.two.one.two")
+def test_cyclic(element_factory, dispatcher, handler):
+    """Test cyclic dependency a -> b -> c -> a."""
+    a = element_factory.create(A)
+    watcher = EventWatcher(a, dispatcher, handler)
+    watcher.watch("one.two.one.two")
 
-        a.one = A()
-        a.one.two = A()
-        a.one.two = A()
-        a.one.two[0].one = A()
-        a.one.two[1].one = a.one.two[0].one
-        a.one.two[0].one.two = A()
+    a.one = element_factory.create(A)
+    a.one.two = element_factory.create(A)
+    a.one.two = element_factory.create(A)
+    a.one.two[0].one = a
 
-        assert len(case.events) == 6
+    assert 4 == len(handler.events)
 
-        a.unlink()
-        watcher.unsubscribe_all()
-        watcher.unsubscribe_all()
-
-    def test_big_diamond(self, case):
-        """Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' ->
-        d."""
-        A = case.A
-        a = A()
-        watcher = EventWatcher(a, case.dispatcher, case._handler)
-        watcher.watch("one.two.one.two")
-
-        a.one = A()
-        a.one.two = A()
-        a.one.two = A()
-        a.one.two[0].one = A()
-        a.one.two[1].one = A()
-        a.one.two[0].one.two = A()
-        a.one.two[1].one.two = a.one.two[0].one.two[0]
-
-        assert len(case.events) == 7
-
-        a.unlink()
-        watcher.unsubscribe_all()
-        watcher.unsubscribe_all()
-        assert len(case.dispatcher._handlers) == 1
-
-    def test_braking_big_diamond(self, case):
-        """Test diamond shaped dependencies a -> b -> c -> d, a -> b' -> c' ->
-        d."""
-        A = case.A
-        a = A()
-        watcher = EventWatcher(a, case.dispatcher, case._handler)
-        watcher.watch("one.two.one.two")
-
-        a.one = A()
-        a.one.two = A()
-        a.one.two = A()
-        a.one.two[0].one = A()
-        a.one.two[1].one = A()
-        a.one.two[0].one.two = A()
-        a.one.two[1].one.two = a.one.two[0].one.two[0]
-
-        assert len(case.events) == 7
-        assert len(case.dispatcher._handlers) == 7
-
-        del a.one.two[0].one
-        watcher.unsubscribe_all()
-        watcher.unsubscribe_all()
-        assert len(case.dispatcher._handlers) == 1
-
-    def test_cyclic(self, case):
-        """Test cyclic dependency a -> b -> c -> a."""
-        A = case.A
-        a = A()
-        watcher = EventWatcher(a, case.dispatcher, case._handler)
-        watcher.watch("one.two.one.two")
-
-        a.one = A()
-        a.one.two = A()
-        a.one.two = A()
-        a.one.two[0].one = a
-
-        assert 4 == len(case.events)
-
-        a.unlink()
-        assert 2 == len(case.dispatcher._handlers)
+    a.unlink()
+    assert 1 == len(dispatcher._handlers)
