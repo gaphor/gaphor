@@ -6,7 +6,7 @@ from gaphor import UML
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.format import parse
 from gaphor.core.modeling import ElementFactory
-from gaphor.UML.umllex import attribute_pat, operation_pat, parameter_pat
+from gaphor.UML.umllex import attribute_pat, operation_pat, parameters_pat
 
 
 def dump_prop(prop):
@@ -22,7 +22,7 @@ def dump_oper(oper):
     if g("params"):
         params = g("params")
         while params:
-            m = parameter_pat.match(params)
+            m = parameters_pat.match(params)
             g = m.group
             params = g("rest")
 

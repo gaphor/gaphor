@@ -113,6 +113,17 @@ parameter_pat = compile(
     + type_subpat
     + mult_subpat
     + default_subpat
+    + note_subpat
+    + garbage_subpat
+)
+
+parameters_pat = compile(
+    r"^"
+    + dir_subpat
+    + name_subpat
+    + type_subpat
+    + mult_subpat
+    + default_subpat
     + tags_subpat
     + rest_subpat
 )
@@ -268,7 +279,7 @@ def parse_operation(el: uml.Operation, s: str) -> None:
         pindex = 0
         params = g("params")
         while params:
-            m = parameter_pat.match(params)
+            m = parameters_pat.match(params)
             if not m:
                 break
             g = m.group
@@ -295,6 +306,25 @@ def parse_operation(el: uml.Operation, s: str) -> None:
         for op in list(el.ownedParameter):
             if op not in defined_params:
                 op.unlink()
+
+
+@parse.register(uml.Parameter)
+def parse_parameter(el: uml.Parameter, s: str) -> None:
+    m = parameter_pat.match(s)
+    if not m or m.group("garbage"):
+        el.name = s
+        del el.direction
+        del el.typeValue
+    else:
+        g = m.group
+        el.direction = g("dir") or "in"
+        el.name = g("name")
+        el.typeValue = g("type")
+        el.lowerValue = g("mult_l")
+        el.upperValue = g("mult_u")
+        if g("has_mult") and not g("mult_u"):
+            el.upperValue = "*"
+        el.defaultValue = g("default")
 
 
 def parse_lifeline(el: uml.Lifeline, s: str) -> None:

@@ -123,6 +123,23 @@ def test_operation(factory, text, formatted_text):
     assert formatted_text == format(o, note=True)
 
 
+@pytest.mark.parametrize(
+    "text,formatted_text",
+    [
+        ("", ""),
+        ("param", "in param"),
+        ("in param: str", "in param: str"),
+        ("param = val", "in param = val"),
+    ],
+)
+def test_parameter(factory, text, formatted_text):
+    """Test simple operation formatting."""
+    p = factory.create(UML.Parameter)
+    parse(p, text)
+
+    assert formatted_text == format(p)
+
+
 def test_slot(factory):
     a = factory.create(UML.Property)
     parse(a, "myattr: int")
