@@ -88,7 +88,10 @@ association_end_name_pat = compile(
 
 # Association end multiplicity:
 #   [mult] [{ tagged values }]
-association_end_mult_pat = compile(r"^" + multa_subpat + tags_subpat + garbage_subpat)
+association_end_mult_pat = compile(
+    f"^{multa_subpat}{tags_subpat}{garbage_subpat}"
+)
+
 
 # Operation:
 #   [+|-|#] name ([parameters]) [: type[\[mult\]]] [{ tagged values }]
@@ -130,7 +133,9 @@ parameters_pat = compile(
 
 # Lifeline:
 #  [name] [: type]  # noqa: E800
-lifeline_pat = compile("^" + name_subpat + type_subpat + mult_subpat + garbage_subpat)
+lifeline_pat = compile(
+    f"^{name_subpat}{type_subpat}{mult_subpat}{garbage_subpat}"
+)
 
 
 def _set_visibility(el: uml.Feature, vis: str):
@@ -262,8 +267,9 @@ def parse_operation(el: uml.Operation, s: str) -> None:
 
         defined_params = set()
         if g("type"):
-            returnParameters = [p for p in el.ownedParameter if p.direction == "return"]
-            if returnParameters:
+            if returnParameters := [
+                p for p in el.ownedParameter if p.direction == "return"
+            ]:
                 p = returnParameters[0]
             else:
                 p = create(uml.Parameter)
@@ -339,9 +345,8 @@ def parse_lifeline(el: uml.Lifeline, s: str) -> None:
         el.name = s
     else:
         el.name = g("name") + ": "
-        t = g("type")
-        if t:
-            el.name += ": " + t
+        if t := g("type"):
+            el.name += f": {t}"
         # In the near future the data model should be extended with
         # Lifeline.represents: ConnectableElement  # noqa: E800
 
