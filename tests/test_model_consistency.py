@@ -320,8 +320,8 @@ def check_relation(relation: Presentation, head: Presentation, tail: Presentatio
 
     metadata = get_diagram_item_metadata(type(relation))
     assert metadata, f"No comparison function for {relation}"
-    assert metadata["head"]._get(subject) is head.subject
-    assert metadata["tail"]._get(subject) is tail.subject
+    assert metadata["head"].get(subject) is head.subject
+    assert metadata["tail"].get(subject) is tail.subject
 
 
 @check_relation.register
