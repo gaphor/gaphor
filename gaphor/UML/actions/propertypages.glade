@@ -311,4 +311,105 @@ renderers and such.</property>
       </packing>
     </child>
   </object>
+
+  <object class="GtkBox" id="activity-editor">
+    <property name="visible">1</property>
+    <property name="margin-top">6</property>
+    <property name="orientation">vertical</property>
+    <property name="spacing">6</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="visible">1</property>
+        <property name="label" translatable="yes">Parameter Nodes</property>
+        <property name="xalign">0</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
+    </child>
+    <child>
+      <object class="GtkFrame">
+        <property name="visible">1</property>
+        <property name="shadow-type">in</property>
+        <property name="margin-top">6</property>
+        <child>
+          <object class="GtkTreeView" id="parameter-list">
+            <property name="height-request">112</property>
+            <property name="visible">1</property>
+            <property name="can-focus">1</property>
+            <property name="headers-clickable">0</property>
+            <property name="enable-search">0</property>
+            <property name="show-expanders">0</property>
+            <property name="enable-grid-lines">horizontal</property>
+            <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
+            <child internal-child="selection">
+              <object class="GtkTreeSelection"/>
+            </child>
+            <child>
+              <object class="GtkTreeViewColumn">
+                <property name="resizable">1</property>
+                <property name="title" translatable="yes">Parameters</property>
+                <property name="expand">1</property>
+                <child>
+                  <object class="GtkCellRendererText">
+                    <property name="xpad">2</property>
+                    <property name="ypad">2</property>
+                    <property name="xalign">0</property>
+                    <property name="editable">1</property>
+                    <signal name="edited" handler="parameter-edited" swapped="no"/>
+                  </object>
+                  <attributes>
+                    <attribute name="text">0</attribute>
+                  </attributes>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEventBox" id="parameters-info-icon">
+        <property name="visible">1</property>
+        <property name="margin-top">3</property>
+        <property name="halign">end</property>
+        <signal name="button-release-event" handler="parameters-info-clicked" swapped="no"/>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">1</property>
+            <property name="margin-left">2</property>
+            <property name="margin-right">2</property>
+            <property name="label" translatable="yes">🛈 Help</property>
+          </object>
+        </child>
+        <style>
+          <class name="info"/>
+        </style>
+      </object>
+    </child>
+  </object>
+
+  <object class="GtkPopover" id="parameters-info">
+    <property name="relative-to">parameters-info-icon</property>
+    <property name="position">top</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="visible">1</property>
+        <property name="margin-start">6</property>
+        <property name="margin-end">6</property>
+        <property name="margin-top">6</property>
+        <property name="margin-bottom">6</property>
+        <property name="label" translatable="yes">Add and edit activity parameter nodes according to UML syntax.
+
+  • &lt;tt&gt;parameter&lt;/tt&gt; (input, name)
+  • &lt;tt&gt;out attr: int&lt;/tt&gt; (output with type)
+  • &lt;tt&gt;in attr: int[0..1]&lt;/tt&gt; (input, type, and multiplicity)
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+        <property name="use-markup">1</property>
+      </object>
+    </child>
+  </object>
+
 </interface>
