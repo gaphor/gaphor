@@ -88,9 +88,7 @@ association_end_name_pat = compile(
 
 # Association end multiplicity:
 #   [mult] [{ tagged values }]
-association_end_mult_pat = compile(
-    f"^{multa_subpat}{tags_subpat}{garbage_subpat}"
-)
+association_end_mult_pat = compile(f"^{multa_subpat}{tags_subpat}{garbage_subpat}")
 
 
 # Operation:
@@ -133,9 +131,7 @@ parameters_pat = compile(
 
 # Lifeline:
 #  [name] [: type]  # noqa: E800
-lifeline_pat = compile(
-    f"^{name_subpat}{type_subpat}{mult_subpat}{garbage_subpat}"
-)
+lifeline_pat = compile(f"^{name_subpat}{type_subpat}{mult_subpat}{garbage_subpat}")
 
 
 def _set_visibility(el: uml.Feature, vis: str):
