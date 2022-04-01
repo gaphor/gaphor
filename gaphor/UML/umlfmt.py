@@ -155,11 +155,15 @@ def format_operation(
 def format_parameter(
     el, direction=False, type=False, multiplicity=False, default=False
 ):
+    if not (direction or type or multiplicity or default):
+        direction = type = multiplicity = default = True
+
     s = []
-    if direction:
+    name = el.name
+    if name and direction:
         s.append(f"{el.direction} ")
 
-    s.append(el.name or "")
+    s.append(name or "")
 
     if type and el.typeValue:
         s.append(f": {el.typeValue}")
