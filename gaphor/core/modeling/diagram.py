@@ -80,15 +80,6 @@ class DrawContext:
     dropzone: bool
 
 
-# From https://www.python.org/dev/peps/pep-0616/
-def removesuffix(self: str, suffix: str) -> str:
-    # suffix='' should not call self[:-0].
-    if suffix and self.endswith(suffix):
-        return self[: -len(suffix)]
-    else:
-        return self[:]
-
-
 @lru_cache()
 def attrname(obj, lower_name):
     """Look up a real attribute name based on a lower case (normalized)
@@ -177,7 +168,7 @@ class StyledItem:
         self.selection = selection
 
     def name(self) -> str:
-        return removesuffix(type(self.item).__name__, "Item").lower()
+        return type(self.item).__name__.removesuffix("Item").lower()
 
     def parent(self) -> StyledItem | StyledDiagram:
         parent = self.item.parent
