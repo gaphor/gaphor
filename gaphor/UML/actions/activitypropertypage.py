@@ -26,7 +26,7 @@ class ActivityParameters(EditableTreeModel):
     def get_rows(self):
         for node in self._item.subject.node:
             if isinstance(node, UML.ActivityParameterNode):
-                yield [format(node), node]
+                yield [format(node.parameter), node]
 
     def create_object(self):
         model = self._item.model
