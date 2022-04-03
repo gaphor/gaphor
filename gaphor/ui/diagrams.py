@@ -20,6 +20,7 @@ from gaphor.ui.event import (
     DiagramSelectionChanged,
     ElementOpened,
 )
+from gaphor.ui.tablepage import TablePage
 
 log = logging.getLogger(__name__)
 
@@ -98,7 +99,8 @@ class Diagrams(UIComponent, ActionProvider):
         for page, widget in get_widgets_on_pages(self._notebook):
             if widget.diagram_page.get_diagram() is diagram:
                 self._notebook.set_current_page(page)
-                self.get_current_view().grab_focus()
+                if self.get_current_view():
+                    self.get_current_view().grab_focus()
                 return True
         return False
 
@@ -131,6 +133,24 @@ class Diagrams(UIComponent, ActionProvider):
         self._update_action_state()
         return page
 
+    def create_table_page(self, diagram: Diagram) -> TablePage:
+        page = TablePage(
+            diagram,
+            self.event_manager,
+            self.element_factory,
+            self.properties,
+            self.modeling_language,
+        )
+        widget = page.construct()
+        widget.diagram_page = page
+
+        apply_tool_select_controller(widget, self.toolbox)
+        self._create_tab(diagram.name, widget)
+        if self.get_current_view():
+            self.get_current_view().grab_focus()
+        self._update_action_state()
+        return page
+
     def _create_tab(self, title, widget):
         """Creates a new Notebook tab with a label and close button.
 
@@ -145,24 +165,25 @@ class Diagrams(UIComponent, ActionProvider):
         self._notebook.set_current_page(page_num)
         self._notebook.set_tab_reorderable(widget, True)
 
-        view = widget.diagram_page.view
-        self.event_manager.handle(
-            DiagramSelectionChanged(
-                view, view.selection.focused_item, view.selection.selected_items
+        if widget.diagram_page.view:
+            view = widget.diagram_page.view
+            self.event_manager.handle(
+                DiagramSelectionChanged(
+                    view, view.selection.focused_item, view.selection.selected_items
+                )
             )
-        )
 
     def _on_notebook_destroy(self, notebook):
         for id in self._page_handler_ids:
             notebook.disconnect(id)
 
     def _on_switch_page(self, notebook, page, new_page_num):
-        view = page.diagram_page.view
-        self.event_manager.handle(
-            DiagramSelectionChanged(
-                view, view.selection.focused_item, view.selection.selected_items
+        if view := page.diagram_page.view:
+            self.event_manager.handle(
+                DiagramSelectionChanged(
+                    view, view.selection.focused_item, view.selection.selected_items
+                )
             )
-        )
 
     def _on_page_changed(self, notebook, _page, _page_num):
         def diagram_ids():
@@ -250,7 +271,10 @@ class Diagrams(UIComponent, ActionProvider):
         """
         diagram = event.diagram
         if not self.set_current_diagram(diagram):
-            self.create_diagram_page(diagram)
+            if diagram.diagramType == "hara":
+                self.create_table_page(diagram)
+            else:
+                self.create_diagram_page(diagram)
 
     @event_handler(DiagramClosed)
     def _on_close_diagram(self, event: Event) -> None:

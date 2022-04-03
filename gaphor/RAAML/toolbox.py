@@ -16,6 +16,7 @@ raaml_toolbox_actions: ToolboxDefinition = (
 )
 
 raaml_diagram_types: DiagramTypes = (
+    DiagramType("hara", gettext("New HARA Diagram"), (general_tools,)),
     DiagramType("fta", gettext("New FTA Diagram"), (fta,)),
     DiagramType("stpa", gettext("New STPA Diagram"), (stpa,)),
 )
