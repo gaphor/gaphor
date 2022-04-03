@@ -421,6 +421,7 @@ class Parameter(ConnectableElement, MultiplicityElement):
     direction = _enumeration("direction", ("inout", "in", "out", "return"), "inout")
     operation: relation_one[Operation]
     ownerFormalParam: relation_one[BehavioralFeature]
+    owningNode: relation_one[ActivityParameterNode]
     parameterSet: relation_many[ParameterSet]
 
 
@@ -1052,7 +1053,8 @@ Classifier.attribute.add(Artifact.ownedAttribute)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Artifact.ownedAttribute)  # type: ignore[attr-defined]
 Classifier.feature.add(Artifact.ownedOperation)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Artifact.ownedOperation)  # type: ignore[attr-defined]
-ActivityParameterNode.parameter = association("parameter", Parameter, upper=1)
+ActivityParameterNode.parameter = association("parameter", Parameter, upper=1, composite=True, opposite="owningNode")
+Element.ownedElement.add(ActivityParameterNode.parameter)  # type: ignore[attr-defined]
 DecisionNode.decisionInput = association("decisionInput", Behavior, upper=1)
 Package.packagedElement = derivedunion("packagedElement", PackageableElement)
 Package.ownedType = association("ownedType", Type, composite=True, opposite="package")
@@ -1082,8 +1084,10 @@ InterfaceRealization.contract = redefine(InterfaceRealization, "contract", Inter
 InterfaceRealization.implementatingClassifier = redefine(InterfaceRealization, "implementatingClassifier", BehavioredClassifier, Dependency.client)
 Parameter.parameterSet = association("parameterSet", ParameterSet, opposite="parameter")
 Parameter.ownerFormalParam = association("ownerFormalParam", BehavioralFeature, upper=1, opposite="ownedParameter")
+Parameter.owningNode = association("owningNode", ActivityParameterNode, upper=1, opposite="parameter")
 Parameter.operation = redefine(Parameter, "operation", Operation, Parameter.ownerFormalParam)
 NamedElement.namespace.add(Parameter.ownerFormalParam)  # type: ignore[attr-defined]
+Element.owner.add(Parameter.owningNode)  # type: ignore[attr-defined]
 BehavioralFeature.raisedException = association("raisedException", Type)
 BehavioralFeature.method = association("method", Behavior)
 BehavioralFeature.ownedParameter = association("ownedParameter", Parameter, composite=True, opposite="ownerFormalParam")
