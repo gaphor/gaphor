@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-31 21:14-0500\n"
-"PO-Revision-Date: 2022-04-01 10:50+0000\n"
+"PO-Revision-Date: 2022-04-05 17:10+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -108,11 +108,11 @@ msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
 msgid "New FTA Diagram"
-msgstr "Novi FTA dijagram"
+msgstr "Novi dijagram analize stabla kvarova (FTA)"
 
 #: gaphor/RAAML/toolbox.py:20
 msgid "New STPA Diagram"
-msgstr "Novi STPA dijagram"
+msgstr "Novi dijagram sustavno-teoretske analize procesa (STPA)"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:28
 msgid "AND Gate"
@@ -541,7 +541,7 @@ msgstr ""
 
 #: gaphor/UML/toolbox.py:32
 msgid "New Component Diagram"
-msgstr "Dijagram nove komponente"
+msgstr "Novi dijagram komponenti"
 
 #: gaphor/UML/toolbox.py:33
 msgid "New Deployment Diagram"
@@ -553,7 +553,7 @@ msgstr "Novi dijagram komunikacije"
 
 #: gaphor/UML/toolbox.py:39
 msgid "New Profile Diagram"
-msgstr "Dijagram novog profila"
+msgstr "Novi dijagram profila"
 
 #: gaphor/UML/umlfmt.py:201
 msgid "general: {}"
@@ -1351,7 +1351,7 @@ msgstr "Izvezi kao PNG"
 #: gaphor/plugins/diagramexport/__init__.py:48
 #: gaphor/plugins/diagramexport/__init__.py:53
 msgid "Export diagram as PNG"
-msgstr "Izvezi dijagram kao SVG"
+msgstr "Izvezi dijagram kao PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:60
 msgid "Export as PDF"
@@ -1553,7 +1553,7 @@ msgstr "1. Dijagrami sadržaja"
 
 #: gaphor/templates/c4model.gaphor
 msgid "2. Container diagrams"
-msgstr "2. Dijagrami spremnika"
+msgstr "2. Dijagrami kontejnera"
 
 #: gaphor/templates/c4model.gaphor
 msgid "4. Code diagrams"
@@ -1569,7 +1569,7 @@ msgstr "Dijagram sadržaja"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Container diagram"
-msgstr "Dijagram spremnika"
+msgstr "Dijagram kontejnera"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Component diagram"
