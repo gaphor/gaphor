@@ -398,6 +398,19 @@ class MalfunctioningBehavior(Class, FailureMode):
     pass
 
 
+class ASILAssignment(Element):
+    pass
+
+
+from gaphor.SysML.sysml import Rationale
+class ASILOverrideRationale(Rationale):
+    pass
+
+
+class Confirmed(Class):
+    result: _attribute[str] = _attribute("result", str)
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
