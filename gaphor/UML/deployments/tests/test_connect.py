@@ -3,352 +3,349 @@
 import pytest
 
 from gaphor import UML
-from gaphor.conftest import Case
+from gaphor.core.modeling.modelinglanguage import CoreModelingLanguage
+from gaphor.diagram.tests.fixtures import (
+    MockModelingLanguage,
+    allow,
+    connect,
+    disconnect,
+)
+from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.classes.component import ComponentItem
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem, Side
 from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
 from gaphor.UML.deployments import ConnectorItem
 from gaphor.UML.deployments.connectorconnect import LegacyConnectorConnectBase
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
-class TestComponentConnect:
-    """Test connection of connector item to a component."""
+@pytest.fixture
+def modeling_language():
+    return MockModelingLanguage(
+        CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()
+    )
 
-    def test_glue(self, case):
-        """Test gluing connector to component."""
 
-        component = case.create(ComponentItem, UML.Component)
-        line = case.create(ConnectorItem)
+def provide(component, interface):
+    """Change component's data so it implements interfaces."""
+    impl = component.model.create(UML.InterfaceRealization)
+    component.interfaceRealization = impl
+    impl.contract = interface
 
-        glued = case.allow(line, line.head, component)
-        assert glued
 
-    def test_connection(self, case):
-        """Test connecting connector to a component."""
-        component = case.create(ComponentItem, UML.Component)
-        line = case.create(ConnectorItem)
+def require(component, interface):
+    """Change component's data so it requires interface."""
+    usage = component.model.create(UML.Usage)
+    component.clientDependency = usage
+    usage.supplier = interface
 
-        case.connect(line, line.head, component)
-        assert line.subject is None
 
-    def test_glue_both(self, case):
-        """Test gluing connector to component when one is connected."""
+def test_glue(create):
+    """Test gluing connector to component."""
 
-        c1 = case.create(ComponentItem, UML.Component)
-        c2 = case.create(ComponentItem, UML.Component)
-        line = case.create(ConnectorItem)
+    component = create(ComponentItem, UML.Component)
+    line = create(ConnectorItem)
 
-        case.connect(line, line.head, c1)
-        glued = case.allow(line, line.tail, c2)
-        assert not glued
+    glued = allow(line, line.head, component)
+    assert glued
 
 
-class TestInterfaceConnect:
-    """Test connection with interface acting as assembly connector."""
+def test_component_connection(create):
+    """Test connecting connector to a component."""
+    component = create(ComponentItem, UML.Component)
+    line = create(ConnectorItem)
 
-    def test_non_folded_glue(self, case):
-        """Test non-folded interface gluing."""
+    connect(line, line.head, component)
+    assert line.subject is None
 
-        iface = case.create(InterfaceItem, UML.Component)
-        line = case.create(ConnectorItem)
 
-        glued = case.allow(line, line.head, iface)
-        assert glued
+def test_glue_both(create):
+    """Test gluing connector to component when one is connected."""
 
-    def test_folded_glue(self, case):
-        """Test folded interface gluing."""
+    c1 = create(ComponentItem, UML.Component)
+    c2 = create(ComponentItem, UML.Component)
+    line = create(ConnectorItem)
 
-        iface = case.create(InterfaceItem, UML.Component)
-        line = case.create(ConnectorItem)
+    connect(line, line.head, c1)
+    glued = allow(line, line.tail, c2)
+    assert not glued
 
-        iface.folded = Folded.REQUIRED
-        glued = case.allow(line, line.head, iface)
-        assert glued
 
-    def test_glue_when_dependency_connected(self, case):
-        """Test interface gluing, when dependency connected."""
+def test_non_folded_glue(create):
+    """Test non-folded interface gluing."""
 
-        iface = case.create(InterfaceItem, UML.Component)
-        dep = case.create(DependencyItem)
-        line = case.create(ConnectorItem)
+    iface = create(InterfaceItem, UML.Component)
+    line = create(ConnectorItem)
 
-        case.connect(dep, dep.head, iface)
+    glued = allow(line, line.head, iface)
+    assert glued
 
-        iface.folded = Folded.REQUIRED
-        glued = case.allow(line, line.head, iface)
-        assert glued
 
-    def test_glue_when_implementation_connected(self, case):
-        """Test interface gluing, when implementation connected."""
+def test_folded_glue(create):
+    """Test folded interface gluing."""
 
-        iface = case.create(InterfaceItem, UML.Component)
-        impl = case.create(InterfaceRealizationItem)
-        line = case.create(ConnectorItem)
+    iface = create(InterfaceItem, UML.Component)
+    line = create(ConnectorItem)
 
-        case.connect(impl, impl.head, iface)
+    iface.folded = Folded.REQUIRED
+    glued = allow(line, line.head, iface)
+    assert glued
 
-        iface.folded = Folded.REQUIRED
-        glued = case.allow(line, line.head, iface)
-        assert glued
 
-    def test_glue_when_connector_connected(self, case):
-        """Test interface gluing, when connector connected."""
+def test_glue_when_dependency_connected(create):
+    """Test interface gluing, when dependency connected."""
 
-        iface = case.create(InterfaceItem, UML.Interface)
-        comp = case.create(ComponentItem, UML.Component)
-        iface.folded = Folded.REQUIRED
+    iface = create(InterfaceItem, UML.Component)
+    dep = create(DependencyItem)
+    line = create(ConnectorItem)
 
-        line1 = case.create(ConnectorItem)
-        line2 = case.create(ConnectorItem)
+    connect(dep, dep.head, iface)
 
-        case.connect(line1, line1.tail, comp)
-        case.connect(line1, line1.head, iface)
-        assert Folded.PROVIDED == iface.folded
+    iface.folded = Folded.REQUIRED
+    glued = allow(line, line.head, iface)
+    assert glued
 
-        glued = case.allow(line2, line2.head, iface)
-        assert glued
 
-    def test_simple_connection(self, case):
-        """Test simple connection to an interface."""
-        iface = case.create(InterfaceItem, UML.Interface)
-        comp = case.create(ComponentItem, UML.Component)
-        line = case.create(ConnectorItem)
-
-        case.connect(line, line.head, iface)
-        case.connect(line, line.tail, comp)
-        iface.update_shapes()
-        case.diagram.update_now((iface, comp, line))
-
-        # interface goes into assembly mode
-        assert iface.folded == Folded.PROVIDED
-        # no UML metamodel yet
-        assert line.subject
-
-    def test_simple_disconnection(self, case):
-        """Test disconnection of simple connection to an interface."""
-        iface = case.create(InterfaceItem, UML.Component)
-        line = case.create(ConnectorItem)
-
-        iface.folded = Folded.PROVIDED
-
-        case.connect(line, line.head, iface)
-
-        case.disconnect(line, line.head)
-        assert Folded.PROVIDED == iface.folded
-        assert iface.side == Side.N
+def test_glue_when_implementation_connected(create):
+    """Test interface gluing, when implementation connected."""
 
-        assert all(p.connectable for p in iface.ports())
-
-
-class AssemblyConnectorCase(Case):
-    def create_interfaces(self, *args):
-        """Generate interfaces with names specified by arguments.
+    iface = create(InterfaceItem, UML.Component)
+    impl = create(InterfaceRealizationItem)
+    line = create(ConnectorItem)
 
-        :Parameters:
-         args
-            List of interface names.
-        """
-        for name in args:
-            interface = self.element_factory.create(UML.Interface)
-            interface.name = name
-            yield interface
+    connect(impl, impl.head, iface)
 
-    def provide(self, component, interface):
-        """Change component's data so it implements interfaces."""
-        impl = self.element_factory.create(UML.InterfaceRealization)
-        component.interfaceRealization = impl
-        impl.contract = interface
-
-    def require(self, component, interface):
-        """Change component's data so it requires interface."""
-        usage = self.element_factory.create(UML.Usage)
-        component.clientDependency = usage
-        usage.supplier = interface
+    iface.folded = Folded.REQUIRED
+    glued = allow(line, line.head, iface)
+    assert glued
 
 
-class TestAssemblyConnector:
-    """Test assembly connector.
+def test_glue_when_connector_connected(create):
+    """Test interface gluing, when connector connected."""
 
-    It is assumed that interface and component connection tests defined
-    above are working correctly.
-    """
+    iface = create(InterfaceItem, UML.Interface)
+    comp = create(ComponentItem, UML.Component)
+    iface.folded = Folded.REQUIRED
 
-    @pytest.fixture
-    def case(self):
-        case = AssemblyConnectorCase()
-        yield case
-        case.shutdown()
-
-    def test_getting_component(self, case):
-        """Test getting component."""
-        conn1 = case.create(ConnectorItem)
-        conn2 = case.create(ConnectorItem)
-
-        c1 = case.create(ComponentItem, UML.Component)
-        c2 = case.create(ComponentItem, UML.Component)
-
-        # connect component
-        case.connect(conn1, conn1.tail, c1)
-        case.connect(conn2, conn2.head, c2)
-
-        assert c1 is LegacyConnectorConnectBase.get_component(conn1)
-        assert c2 is LegacyConnectorConnectBase.get_component(conn2)
-
-    def test_connection(self, case):
-        """Test basic assembly connection."""
-        conn1 = case.create(ConnectorItem)
-        conn2 = case.create(ConnectorItem)
-
-        c1 = case.create(ComponentItem, UML.Component)
-        c2 = case.create(ComponentItem, UML.Component)
-
-        iface = case.create(InterfaceItem, UML.Interface)
-        iface.folded = Folded.ASSEMBLY
-
-        # first component provides interface
-        # and the second one requires it
-        case.provide(c1.subject, iface.subject)
-        case.require(c2.subject, iface.subject)
+    line1 = create(ConnectorItem)
+    line2 = create(ConnectorItem)
 
-        # connect component
-        case.connect(conn1, conn1.head, c1)
-        case.connect(conn2, conn2.head, c2)
+    connect(line1, line1.tail, comp)
+    connect(line1, line1.head, iface)
+    assert Folded.PROVIDED == iface.folded
 
-        # make an assembly
-        case.connect(conn1, conn1.tail, iface)
-        case.connect(conn2, conn2.tail, iface)
+    glued = allow(line2, line2.head, iface)
+    assert glued
 
-        # test UML data model
-        assert conn1.subject is conn2.subject, f"{conn1.subject} is not {conn2.subject}"
-        assembly = conn1.subject
-        assert isinstance(assembly, UML.Connector)
-        assert "assembly" == assembly.kind
 
-        # there should be two connector ends
-        assert len(assembly.end) == 2
+def test_simple_connection(create, diagram):
+    """Test simple connection to an interface."""
+    iface = create(InterfaceItem, UML.Interface)
+    comp = create(ComponentItem, UML.Component)
+    line = create(ConnectorItem)
 
-    def test_required_port_glue(self, case):
-        """Test if required port gluing works."""
+    connect(line, line.head, iface)
+    connect(line, line.tail, comp)
+    iface.update_shapes()
+    diagram.update_now((iface, comp, line))
 
-        conn1 = case.create(ConnectorItem)
-        conn2 = case.create(ConnectorItem)
+    # interface goes into assembly mode
+    assert iface.folded == Folded.PROVIDED
+    # no UML metamodel yet
+    assert line.subject
 
-        c1 = case.create(ComponentItem, UML.Component)
-        c2 = case.create(ComponentItem, UML.Component)
 
-        iface = case.create(InterfaceItem, UML.Interface)
-        iface.folded = Folded.ASSEMBLY
-        rport = iface.ports()[2]
+def test_simple_disconnection(create):
+    """Test disconnection of simple connection to an interface."""
+    iface = create(InterfaceItem, UML.Component)
+    line = create(ConnectorItem)
 
-        case.provide(c1.subject, iface.subject)
-        case.require(c2.subject, iface.subject)
+    iface.folded = Folded.PROVIDED
 
-        # connect components
-        case.connect(conn1, conn1.head, c1)
-        case.connect(conn2, conn2.head, c2)
+    connect(line, line.head, iface)
 
-        case.connect(conn1, conn1.tail, iface)
-        glued = case.allow(conn2, conn2.tail, iface, rport)
-        assert glued
+    disconnect(line, line.head)
+    assert Folded.PROVIDED == iface.folded
+    assert iface.side == Side.N
 
-    def test_connection_order(self, case):
-        """Test connection order of assembly connection."""
-        conn1 = case.create(ConnectorItem)
-        conn2 = case.create(ConnectorItem)
+    assert all(p.connectable for p in iface.ports())
 
-        c1 = case.create(ComponentItem, UML.Component)
-        c2 = case.create(ComponentItem, UML.Component)
 
-        iface = case.create(InterfaceItem, UML.Interface)
+def test_getting_component(create):
+    """Test getting component."""
+    conn1 = create(ConnectorItem)
+    conn2 = create(ConnectorItem)
 
-        # both components provide interface only
-        case.provide(c1.subject, iface.subject)
-        case.provide(c2.subject, iface.subject)
+    c1 = create(ComponentItem, UML.Component)
+    c2 = create(ComponentItem, UML.Component)
 
-        # connect components
-        case.connect(conn1, conn1.head, c1)
-        case.connect(conn2, conn2.head, c2)
+    # connect component
+    connect(conn1, conn1.tail, c1)
+    connect(conn2, conn2.head, c2)
 
-        # connect to provided port
-        case.connect(conn1, conn1.tail, iface)
-        case.connect(conn2, conn2.tail, iface)
-        # no UML data model yet (no connection on required port)
-        assert conn1.subject
-        assert conn2.subject
+    assert c1 is LegacyConnectorConnectBase.get_component(conn1)
+    assert c2 is LegacyConnectorConnectBase.get_component(conn2)
 
-    def test_addtional_connections(self, case):
-        """Test additional connections to assembly connection."""
-        conn1 = case.create(ConnectorItem)
-        conn2 = case.create(ConnectorItem)
-        conn3 = case.create(ConnectorItem)
 
-        c1 = case.create(ComponentItem, UML.Component)
-        c2 = case.create(ComponentItem, UML.Component)
-        c3 = case.create(ComponentItem, UML.Component)
+def test_connection(create):
+    """Test basic assembly connection."""
+    conn1 = create(ConnectorItem)
+    conn2 = create(ConnectorItem)
 
-        iface = case.create(InterfaceItem, UML.Interface)
-        iface.folded = Folded.ASSEMBLY
+    c1 = create(ComponentItem, UML.Component)
+    c2 = create(ComponentItem, UML.Component)
 
-        # provide and require interface by components
-        case.provide(c1.subject, iface.subject)
-        case.require(c2.subject, iface.subject)
-        case.require(c3.subject, iface.subject)
+    iface = create(InterfaceItem, UML.Interface)
+    iface.folded = Folded.ASSEMBLY
 
-        # connect components
-        case.connect(conn1, conn1.head, c1)
-        case.connect(conn2, conn2.head, c2)
-        case.connect(conn3, conn3.head, c3)
+    # first component provides interface
+    # and the second one requires it
+    provide(c1.subject, iface.subject)
+    require(c2.subject, iface.subject)
 
-        # create assembly
-        case.connect(conn1, conn1.tail, iface)
-        case.connect(conn2, conn2.tail, iface)
+    # connect component
+    connect(conn1, conn1.head, c1)
+    connect(conn2, conn2.head, c2)
 
-        # test precondition
-        assert conn1.subject and conn2.subject
+    # make an assembly
+    connect(conn1, conn1.tail, iface)
+    connect(conn2, conn2.tail, iface)
 
-        #  additional connection
-        case.connect(conn3, conn3.tail, iface)
+    # test UML data model
+    assert conn1.subject is conn2.subject, f"{conn1.subject} is not {conn2.subject}"
+    assembly = conn1.subject
+    assert isinstance(assembly, UML.Connector)
+    assert "assembly" == assembly.kind
 
-        # test UML data model
-        assert conn3.subject is conn1.subject
+    # there should be two connector ends
+    assert len(assembly.end) == 2
 
-        assembly = conn1.subject
 
-        assert 3 == len(assembly.end)
+def test_required_port_glue(create):
+    """Test if required port gluing works."""
 
-    def test_disconnection(self, case):
-        """Test assembly connector disconnection."""
-        conn1 = case.create(ConnectorItem)
-        conn2 = case.create(ConnectorItem)
+    conn1 = create(ConnectorItem)
+    conn2 = create(ConnectorItem)
 
-        c1 = case.create(ComponentItem, UML.Component)
-        c2 = case.create(ComponentItem, UML.Component)
+    c1 = create(ComponentItem, UML.Component)
+    c2 = create(ComponentItem, UML.Component)
 
-        iface = case.create(InterfaceItem, UML.Interface)
-        iface.folded = Folded.ASSEMBLY
+    iface = create(InterfaceItem, UML.Interface)
+    iface.folded = Folded.ASSEMBLY
+    rport = iface.ports()[2]
 
-        # first component provides interface
-        # and the second one requires it
-        case.provide(c1.subject, iface.subject)
-        case.require(c2.subject, iface.subject)
+    provide(c1.subject, iface.subject)
+    require(c2.subject, iface.subject)
 
-        # connect component
-        case.connect(conn1, conn1.head, c1)
-        case.connect(conn2, conn2.head, c2)
+    # connect components
+    connect(conn1, conn1.head, c1)
+    connect(conn2, conn2.head, c2)
 
-        # make an assembly
-        case.connect(conn1, conn1.tail, iface)
-        case.connect(conn2, conn2.tail, iface)
+    connect(conn1, conn1.tail, iface)
+    glued = allow(conn2, conn2.tail, iface, rport)
+    assert glued
 
-        # test precondition
-        assert conn1.subject is conn2.subject
 
-        case.disconnect(conn1, conn1.head)
+def test_connection_order(create):
+    """Test connection order of assembly connection."""
+    conn1 = create(ConnectorItem)
+    conn2 = create(ConnectorItem)
 
-        assert conn1.subject is None
-        assert conn2.subject is None
+    c1 = create(ComponentItem, UML.Component)
+    c2 = create(ComponentItem, UML.Component)
 
-        assert len(case.kindof(UML.Connector)) == 0
-        assert len(case.kindof(UML.ConnectorEnd)) == 0
-        assert len(case.kindof(UML.Port)) == 0
+    iface = create(InterfaceItem, UML.Interface)
+
+    # both components provide interface only
+    provide(c1.subject, iface.subject)
+    provide(c2.subject, iface.subject)
+
+    # connect components
+    connect(conn1, conn1.head, c1)
+    connect(conn2, conn2.head, c2)
+
+    # connect to provided port
+    connect(conn1, conn1.tail, iface)
+    connect(conn2, conn2.tail, iface)
+    # no UML data model yet (no connection on required port)
+    assert conn1.subject
+    assert conn2.subject
+
+
+def test_addtional_connections(create):
+    """Test additional connections to assembly connection."""
+    conn1 = create(ConnectorItem)
+    conn2 = create(ConnectorItem)
+    conn3 = create(ConnectorItem)
+
+    c1 = create(ComponentItem, UML.Component)
+    c2 = create(ComponentItem, UML.Component)
+    c3 = create(ComponentItem, UML.Component)
+
+    iface = create(InterfaceItem, UML.Interface)
+    iface.folded = Folded.ASSEMBLY
+
+    # provide and require interface by components
+    provide(c1.subject, iface.subject)
+    require(c2.subject, iface.subject)
+    require(c3.subject, iface.subject)
+
+    # connect components
+    connect(conn1, conn1.head, c1)
+    connect(conn2, conn2.head, c2)
+    connect(conn3, conn3.head, c3)
+
+    # create assembly
+    connect(conn1, conn1.tail, iface)
+    connect(conn2, conn2.tail, iface)
+
+    # test precondition
+    assert conn1.subject and conn2.subject
+
+    #  additional connection
+    connect(conn3, conn3.tail, iface)
+
+    # test UML data model
+    assert conn3.subject is conn1.subject
+
+    assembly = conn1.subject
+
+    assert 3 == len(assembly.end)
+
+
+def test_disconnection(create, element_factory):
+    """Test assembly connector disconnection."""
+    conn1 = create(ConnectorItem)
+    conn2 = create(ConnectorItem)
+
+    c1 = create(ComponentItem, UML.Component)
+    c2 = create(ComponentItem, UML.Component)
+
+    iface = create(InterfaceItem, UML.Interface)
+    iface.folded = Folded.ASSEMBLY
+
+    # first component provides interface
+    # and the second one requires it
+    provide(c1.subject, iface.subject)
+    require(c2.subject, iface.subject)
+
+    # connect component
+    connect(conn1, conn1.head, c1)
+    connect(conn2, conn2.head, c2)
+
+    # make an assembly
+    connect(conn1, conn1.tail, iface)
+    connect(conn2, conn2.tail, iface)
+
+    # test precondition
+    assert conn1.subject is conn2.subject
+
+    disconnect(conn1, conn1.head)
+
+    assert conn1.subject is None
+    assert conn2.subject is None
+
+    assert len(element_factory.lselect(UML.Connector)) == 0
+    assert len(element_factory.lselect(UML.ConnectorEnd)) == 0
+    assert len(element_factory.lselect(UML.Port)) == 0
