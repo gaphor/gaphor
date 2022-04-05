@@ -60,6 +60,14 @@ def create(diagram, element_factory):
 
 
 @pytest.fixture
+def kindof(element_factory):
+    def _kindof(type):
+        return element_factory.lselect(type)
+
+    return _kindof
+
+
+@pytest.fixture
 def saver(element_factory):
     def save():
         """Save diagram into string."""
@@ -122,6 +130,7 @@ def disconnect(line, handle):
 
 
 def get_connected(item, handle):
+    assert handle in item.handles()
     cinfo = item.diagram.connections.get_connection(handle)
     if cinfo:
         return cinfo.connected  # type: ignore[no-any-return] # noqa: F723

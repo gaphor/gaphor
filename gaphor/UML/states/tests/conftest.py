@@ -3,6 +3,7 @@ from gaphor.diagram.tests.fixtures import (
     diagram,
     element_factory,
     event_manager,
+    kindof,
     loader,
     modeling_language,
     saver,
