@@ -1,29 +1,33 @@
+# flake8: noqa F401,F811
 from gaphor import UML
 from gaphor.core.modeling import Diagram
+from gaphor.diagram.tests.fixtures import (
+    element_factory,
+    event_manager,
+    modeling_language,
+)
 from gaphor.storage import storage
 from gaphor.UML.actions import ActionItem, ControlFlowItem
 
 
 class TestActionIssue:
-    def test_it(self, case, test_models):
+    def test_it(self, element_factory, modeling_language, test_models):
         """Test an issue when loading a freshly created action diagram."""
-        ef = case.element_factory
-        modeling_language = case.modeling_language
         path = test_models / "action-issue.gaphor"
-        storage.load(path, ef, modeling_language)
+        storage.load(path, element_factory, modeling_language)
 
-        actions = ef.lselect(UML.Action)
-        flows = ef.lselect(UML.ControlFlow)
+        actions = element_factory.lselect(UML.Action)
+        flows = element_factory.lselect(UML.ControlFlow)
         assert 3 == len(actions)
         assert 3 == len(flows)
 
         # Actions live in partitions:
-        partitions = ef.lselect(UML.ActivityPartition)
+        partitions = element_factory.lselect(UML.ActivityPartition)
         assert 2 == len(partitions)
 
         # Okay, so far the data model is saved correctly. Now, how do the
         # handles behave?
-        diagrams = ef.lselect(Diagram)
+        diagrams = element_factory.lselect(Diagram)
         assert 1 == len(diagrams)
 
         diagram = diagrams[0]

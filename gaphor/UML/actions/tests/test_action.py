@@ -4,6 +4,6 @@ from gaphor import UML
 from gaphor.UML.actions.action import ActionItem
 
 
-def test_action(case):
+def test_action(create):
     """Test creation of actions."""
-    case.create(ActionItem, UML.Action)
+    assert create(ActionItem, UML.Action)

@@ -5,24 +5,24 @@ from gaphor.diagram.group import group, ungroup
 from gaphor.UML.actions import ActionItem, PartitionItem
 
 
-def test_no_subpartition_when_nodes_in(case):
+def test_no_subpartition_when_nodes_in(create):
     """Test adding subpartition when nodes added."""
-    p = case.create(PartitionItem, subject_cls=UML.ActivityPartition)
-    a1 = case.create(ActionItem, UML.Action)
-    p1 = case.create(PartitionItem, subject_cls=UML.ActivityPartition)
-    p2 = case.create(PartitionItem, subject_cls=UML.ActivityPartition)
+    p = create(PartitionItem, UML.ActivityPartition)
+    a1 = create(ActionItem, UML.Action)
+    p1 = create(PartitionItem, UML.ActivityPartition)
+    p2 = create(PartitionItem, UML.ActivityPartition)
 
     group(p, p1)
     group(p1, a1)
     assert not group(p1, p2)
 
 
-def test_action_grouping(case):
+def test_action_grouping(create):
     """Test adding action to partition."""
-    p1 = case.create(PartitionItem, subject_cls=UML.ActivityPartition)
-    p2 = case.create(PartitionItem, subject_cls=UML.ActivityPartition)
-    a1 = case.create(ActionItem, UML.Action)
-    a2 = case.create(ActionItem, UML.Action)
+    p1 = create(PartitionItem, UML.ActivityPartition)
+    p2 = create(PartitionItem, UML.ActivityPartition)
+    a1 = create(ActionItem, UML.Action)
+    a2 = create(ActionItem, UML.Action)
 
     group(p1.subject, a1.subject)
     assert len(p1.subject.node) == 1
@@ -35,11 +35,11 @@ def test_action_grouping(case):
     assert len(p2.subject.node) == 2
 
 
-def test_ungrouping(case):
+def test_ungrouping(create):
     """Test action and partition removal."""
-    p = case.create(PartitionItem, subject_cls=UML.ActivityPartition)
-    a1 = case.create(ActionItem, UML.Action)
-    a2 = case.create(ActionItem, UML.Action)
+    p = create(PartitionItem, UML.ActivityPartition)
+    a1 = create(ActionItem, UML.Action)
+    a2 = create(ActionItem, UML.Action)
 
     group(p.subject, a1.subject)
     group(p.subject, a2.subject)
@@ -50,11 +50,11 @@ def test_ungrouping(case):
     assert len(p.subject.node) == 0
 
 
-def test_ungrouping_with_actions(case):
+def test_ungrouping_with_actions(create):
     """Test partition with actions removal."""
-    p = case.create(PartitionItem, subject_cls=UML.ActivityPartition)
-    a1 = case.create(ActionItem, UML.Action)
-    a2 = case.create(ActionItem, UML.Action)
+    p = create(PartitionItem, UML.ActivityPartition)
+    a1 = create(ActionItem, UML.Action)
+    a2 = create(ActionItem, UML.Action)
     partition = p.subject
 
     group(partition, a1.subject)
