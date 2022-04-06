@@ -4,11 +4,11 @@ from gaphor.UML.classes import ComponentItem
 from gaphor.UML.usecases import UseCaseItem
 
 
-def test_grouping(case):
+def test_grouping(create):
     """Test adding an use case to a subsystem."""
-    s = case.create(ComponentItem, UML.Component)
-    uc1 = case.create(UseCaseItem, UML.UseCase)
-    uc2 = case.create(UseCaseItem, UML.UseCase)
+    s = create(ComponentItem, UML.Component)
+    uc1 = create(UseCaseItem, UML.UseCase)
+    uc2 = create(UseCaseItem, UML.UseCase)
 
     group(s.subject, uc1.subject)
     assert len(uc1.subject.subject) == 1
@@ -18,21 +18,21 @@ def test_grouping(case):
     assert len(s.subject.useCase) == 2
 
 
-def test_grouping_with_namespace(case):
+def test_grouping_with_namespace(create):
     """Test adding an use case to a subsystem (with namespace)"""
-    s = case.create(ComponentItem, UML.Component)
-    uc = case.create(UseCaseItem, UML.UseCase)
+    s = create(ComponentItem, UML.Component)
+    uc = create(UseCaseItem, UML.UseCase)
 
     group(s.subject, uc.subject)
     assert len(uc.subject.subject) == 1
     assert s.subject in uc.subject.subject
 
 
-def test_ungrouping(case):
+def test_ungrouping(create):
     """Test removal of use case from subsystem."""
-    s = case.create(ComponentItem, UML.Component)
-    uc1 = case.create(UseCaseItem, UML.UseCase)
-    uc2 = case.create(UseCaseItem, UML.UseCase)
+    s = create(ComponentItem, UML.Component)
+    uc1 = create(UseCaseItem, UML.UseCase)
+    uc2 = create(UseCaseItem, UML.UseCase)
 
     assert group(s.subject, uc1.subject)
     assert group(s.subject, uc2.subject)
