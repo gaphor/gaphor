@@ -1,11 +1,5 @@
 import pytest
 
-from gaphor.diagram.tests.fixtures import (
-    diagram,
-    element_factory,
-    event_manager,
-    modeling_language,
-)
 from gaphor.ui.styling import Styling
 
 

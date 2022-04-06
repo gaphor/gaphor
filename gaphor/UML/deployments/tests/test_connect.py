@@ -3,13 +3,11 @@
 import pytest
 
 from gaphor import UML
-from gaphor.core.modeling.modelinglanguage import CoreModelingLanguage
-from gaphor.diagram.tests.fixtures import (
+from gaphor.core.modeling.modelinglanguage import (
+    CoreModelingLanguage,
     MockModelingLanguage,
-    allow,
-    connect,
-    disconnect,
 )
+from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.classes.component import ComponentItem
 from gaphor.UML.classes.dependency import DependencyItem

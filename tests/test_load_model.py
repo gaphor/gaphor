@@ -5,11 +5,7 @@ diagram items)."""
 from gi.repository import GLib, Gtk
 
 from gaphor import UML
-from gaphor.diagram.tests.fixtures import (
-    element_factory,
-    event_manager,
-    modeling_language,
-)
+from gaphor.conftest import element_factory, event_manager, modeling_language
 from gaphor.storage.storage import load
 from gaphor.UML.classes.association import (
     draw_head_navigable,

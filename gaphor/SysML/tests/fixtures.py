@@ -1,7 +1,9 @@
 import pytest
 
-from gaphor.core.modeling.modelinglanguage import CoreModelingLanguage
-from gaphor.diagram.tests.fixtures import MockModelingLanguage
+from gaphor.core.modeling.modelinglanguage import (
+    CoreModelingLanguage,
+    MockModelingLanguage,
+)
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 

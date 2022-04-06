@@ -2,15 +2,15 @@
 import pytest
 
 from gaphor import UML
-from gaphor.core import Transaction
-from gaphor.diagram.tests.fixtures import (
-    connect,
+from gaphor.conftest import (
     create,
     diagram,
     element_factory,
     event_manager,
     modeling_language,
 )
+from gaphor.core import Transaction
+from gaphor.diagram.tests.fixtures import connect
 from gaphor.services.undomanager import UndoManager
 from gaphor.UML.classes import AssociationItem, ClassItem
 from gaphor.UML.sanitizerservice import SanitizerService

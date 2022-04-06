@@ -2,8 +2,10 @@ import pytest
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.core.modeling.modelinglanguage import CoreModelingLanguage
-from gaphor.diagram.tests.fixtures import MockModelingLanguage
+from gaphor.core.modeling.modelinglanguage import (
+    CoreModelingLanguage,
+    MockModelingLanguage,
+)
 from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.deployments.connector import ConnectorItem
 from gaphor.UML.modelinglanguage import UMLModelingLanguage

@@ -1,14 +1,14 @@
 # flake8: noqa F401,F811
 from gaphor import UML
-from gaphor.core.modeling import Diagram
-from gaphor.diagram.tests.fixtures import (
-    connect,
+from gaphor.conftest import (
     create,
     diagram,
     element_factory,
     event_manager,
     modeling_language,
 )
+from gaphor.core.modeling import Diagram
+from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import AssociationItem, ClassItem
 from gaphor.UML.classes.associationpropertypages import AssociationPropertyPage
 from gaphor.UML.classes.classestoolbox import composite_association_config
