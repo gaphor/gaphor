@@ -55,12 +55,12 @@ jobs:
       - name: Create Source Dist and Wheel
         run: poetry run poe dist
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
           path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
@@ -71,7 +71,7 @@ jobs:
           cd _packaging/appimage
           make dist
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-x86_64.AppImage
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Gaphor-${{ steps.setup_and_test.outputs.version }}-x86_64.AppImage
           path: _packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}-x86_64.AppImage
@@ -155,7 +155,7 @@ jobs:
         with:
           product-path: "_packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg"
       - name: Upload Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg
           path: _packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg
@@ -265,12 +265,12 @@ jobs:
           cert_password: ${{ secrets.CERTPASSWORD }}
           base64_encoded_pfx: ${{ secrets.BASE64_ENCODED_PFX }}
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
           path: _packaging/dist/gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-portable.exe
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}-portable.exe
           path: _packaging/dist/gaphor-${{ steps.setup_and_test.outputs.version }}-portable.exe
