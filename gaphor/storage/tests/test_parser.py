@@ -1,3 +1,5 @@
+from io import StringIO
+
 from gaphor.storage.parser import parse
 
 
@@ -19,3 +21,41 @@ def test_parsing_of_open_file(test_models):
         elements = parse(model)
 
     assert elements
+
+
+def test_parsing_of_xml_entities(test_models):
+    model = StringIO(
+        """<?xml version="1.0" encoding="utf-8"?>
+        <!DOCTYPE gaphor [
+        <!ENTITY ent "okay" >]>
+        <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.9.2">
+         <Package id="0">
+          <name>
+           <val>&ent;</val>
+          </name>
+         </Package>
+        </gaphor>"""
+    )
+    elements = parse(model)
+
+    assert elements
+    assert elements["0"].values["name"] == "okay"
+
+
+def test_parsing_of_xml_external_entities_should_fail(test_models):
+    model = StringIO(
+        """<?xml version="1.0" encoding="utf-8"?>
+        <!DOCTYPE gaphor [
+        <!ENTITY xxe SYSTEM "https://gaphor.org/latest.txt" >]>
+        <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.9.2">
+         <Package id="0">
+          <name>
+           <val>&xxe;</val>
+          </name>
+         </Package>
+        </gaphor>"""
+    )
+    elements = parse(model)
+
+    assert elements
+    assert elements["0"].values["name"] == ""
