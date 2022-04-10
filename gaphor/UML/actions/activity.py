@@ -1,5 +1,9 @@
 from gaphor import UML
-from gaphor.diagram.presentation import Classified, ElementPresentation
+from gaphor.diagram.presentation import (
+    AttachedPresentation,
+    Classified,
+    ElementPresentation,
+)
 from gaphor.diagram.shapes import Box, Text, TextAlign, VerticalAlign, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
@@ -63,11 +67,10 @@ class ActivityItem(Classified, ElementPresentation):
                 del self.children[parameter_items[node]]
 
 
-class ActivityParameterNodeItem(ElementPresentation):
+class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode]):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id, width=50, height=30)
+        super().__init__(diagram, id, width=100, height=30)
 
-        self.width = 100
         self.shape = Box(
             Text(
                 text=lambda: self.subject.parameter.name or "",
