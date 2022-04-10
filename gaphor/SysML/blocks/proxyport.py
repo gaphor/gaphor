@@ -41,8 +41,8 @@ class AttachedPresentation(Presentation[S], HandlePositionUpdate, Generic[S]):
     def __init__(self, diagram, id=None, width=16, height=16):
         super().__init__(diagram, id)
         self._connections = diagram.connections
-        self._width = width
-        self._height = height
+        self._width_constraints = []
+        self._height_constraints = []
 
         handle = self._handle = Handle(connectable=True)
         self.watch_handle(handle)
@@ -55,14 +55,13 @@ class AttachedPresentation(Presentation[S], HandlePositionUpdate, Generic[S]):
         bottom_left = Position(-rh, rv)
 
         add = diagram.connections.add_constraint
-        add(self, constraint(horizontal=(top_left, handle.pos), delta=rh))
-        add(self, constraint(horizontal=(handle.pos, top_right), delta=-rh))
-        add(self, constraint(horizontal=(handle.pos, bottom_right), delta=rh))
-        add(self, constraint(horizontal=(bottom_left, handle.pos), delta=-rh))
-        add(self, constraint(vertical=(top_left, handle.pos), delta=rv))
-        add(self, constraint(vertical=(top_right, handle.pos), delta=-rv))
-        add(self, constraint(vertical=(handle.pos, bottom_right), delta=rv))
-        add(self, constraint(vertical=(handle.pos, bottom_left), delta=-rv))
+        add(self, constraint(horizontal=(top_left, top_right)))
+        add(self, constraint(horizontal=(bottom_left, bottom_right)))
+        add(self, constraint(vertical=(top_left, bottom_left)))
+        add(self, constraint(vertical=(top_right, bottom_right)))
+
+        self._corners = [top_left, top_right, bottom_right, bottom_left]
+
         self._ports = [
             LinePort(top_left, top_right),
             LinePort(top_right, bottom_right),
@@ -70,14 +69,66 @@ class AttachedPresentation(Presentation[S], HandlePositionUpdate, Generic[S]):
             LinePort(bottom_left, top_left),
         ]
 
+        self.width = width
+        self.height = height
+
         self._shape = None
         self._last_connected_side = None
 
-    def _set_shape(self, shape):
-        self._shape = shape
+    @property
+    def width(self) -> float:
+        c = self._corners
+        return float(c[2].x) - float(c[0].x)
+
+    @width.setter
+    def width(self, width):
+        rh = width / 2
+        top_left, _, bottom_right, _ = self._corners
+        handle_pos = self._handle.pos
+        connections = self._connections
+        for c in self._width_constraints:
+            connections.remove_constraint(self, c)
+
+        self._width_constraints = [
+            constraint(horizontal=(top_left, handle_pos), delta=rh),
+            constraint(horizontal=(handle_pos, bottom_right), delta=rh),
+        ]
+
+        for c in self._width_constraints:
+            connections.add_constraint(self, c)
         self.request_update()
 
-    shape = property(lambda s: s._shape, _set_shape)
+    @property
+    def height(self) -> float:
+        c = self._corners
+        return float(c[2].y) - float(c[0].y)
+
+    @height.setter
+    def height(self, height):
+        rv = height / 2
+        top_left, _, bottom_right, _ = self._corners
+        handle_pos = self._handle.pos
+        connections = self._connections
+        for c in self._height_constraints:
+            connections.remove_constraint(self, c)
+
+        self._height_constraints = [
+            constraint(vertical=(top_left, handle_pos), delta=rv),
+            constraint(vertical=(handle_pos, bottom_right), delta=rv),
+        ]
+
+        for c in self._height_constraints:
+            connections.add_constraint(self, c)
+        self.request_update()
+
+    @property
+    def shape(self):
+        return self._shape
+
+    @shape.setter
+    def shape(self, shape) -> None:
+        self._shape = shape
+        self.request_update()
 
     def handles(self):
         return [self._handle]
@@ -97,22 +148,19 @@ class AttachedPresentation(Presentation[S], HandlePositionUpdate, Generic[S]):
 
         self.shape.size(context)
 
+    def connected_side(self) -> Optional[str]:
+        cinfo = self._connections.get_connection(self._handle)
+        return cinfo.connected.port_side(cinfo.port) if cinfo else None
+
     def point(self, x, y):
         return distance_rectangle_point(self.dimensions(), (x, y))
 
     def draw(self, context):
         self.shape.draw(context, self.dimensions())
 
-    def connected_side(self) -> Optional[str]:
-        cinfo = self._connections.get_connection(self._handle)
-
-        return cinfo.connected.port_side(cinfo.port) if cinfo else None
-
     def dimensions(self):
-        w = self._width
-        h = self._height
-        x, y = self._handle.pos
-        return Rectangle(x - w / 2, y - h / 2, w, h)
+        top_left, _, bottom_right, _ = self._corners
+        return Rectangle(top_left.x, top_left.y, x1=bottom_right.x, y1=bottom_right.y)
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
