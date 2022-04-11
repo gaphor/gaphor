@@ -43,3 +43,17 @@ def test_deep_copy_activity_with_parameter(diagram, element_factory):
     assert new_activity_item.children
     assert new_activity_item.children[0].subject is not node
     assert new_activity_item.children[0].subject.parameter.name == node.parameter.name
+
+
+def test_do_not_copy_activity_parameter_node(diagram, element_factory):
+    activity_item = diagram.create(
+        ActivityItem, subject=element_factory.create(Activity)
+    )
+    node = element_factory.create(ActivityParameterNode)
+    activity_item.subject.node = node
+    node.parameter = element_factory.create(Parameter)
+
+    copy_data = copy(activity_item.children)
+
+    assert activity_item.children
+    assert not copy_data.elements
