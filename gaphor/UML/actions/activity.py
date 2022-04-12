@@ -22,15 +22,15 @@ class ActivityItem(Classified, ElementPresentation):
             "subject.appliedStereotype.classifier.name"
         ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
             "subject[Activity].node[ActivityParameterNode].parameter.name",
-            self.on_parameter_update,
+            self.update_parameters,
         ).watch(
             "subject[Activity].node[ActivityParameterNode].parameter.typeValue",
-            self.on_parameter_update,
+            self.update_parameters,
         )
 
     def postload(self):
         super().postload()
-        self.on_parameter_update()
+        self.update_parameters()
 
     def update_shapes(self, event=None):
         self.shape = Box(
@@ -55,7 +55,7 @@ class ActivityItem(Classified, ElementPresentation):
             draw=draw_border,
         )
 
-    def on_parameter_update(self, event=None):
+    def update_parameters(self, event=None):
         diagram = self.diagram
         parameter_nodes = [
             p for p in self.subject.node if isinstance(p, UML.ActivityParameterNode)
