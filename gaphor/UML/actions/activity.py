@@ -7,6 +7,7 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import Box, Text, TextAlign, VerticalAlign, draw_border
 from gaphor.diagram.support import represents
+from gaphor.diagram.text import FontStyle
 from gaphor.UML.recipes import stereotypes_str
 
 
@@ -16,6 +17,22 @@ class ActivityItem(Classified, ElementPresentation):
         super().__init__(diagram, id, width=50, height=30)
 
         self.width = 100
+
+        self.watch("subject[NamedElement].name").watch(
+            "subject.appliedStereotype.classifier.name"
+        ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
+            "subject[Activity].node[ActivityParameterNode].parameter.name",
+            self.on_parameter_update,
+        ).watch(
+            "subject[Activity].node[ActivityParameterNode].parameter.typeValue",
+            self.on_parameter_update,
+        )
+
+    def postload(self):
+        super().postload()
+        self.on_parameter_update()
+
+    def update_shapes(self, event=None):
         self.shape = Box(
             Text(
                 text=lambda: stereotypes_str(self.subject),
@@ -23,7 +40,12 @@ class ActivityItem(Classified, ElementPresentation):
             ),
             Text(
                 text=lambda: self.subject.name or "",
-                style={"text-align": TextAlign.LEFT},
+                style={
+                    "text-align": TextAlign.LEFT,
+                    "font-style": FontStyle.ITALIC
+                    if self.subject and self.subject.isAbstract
+                    else FontStyle.NORMAL,
+                },
             ),
             style={
                 "padding": (4, 12, 4, 12),
@@ -32,21 +54,6 @@ class ActivityItem(Classified, ElementPresentation):
             },
             draw=draw_border,
         )
-
-        self.watch("subject[NamedElement].name")
-        self.watch("subject.appliedStereotype.classifier.name")
-        self.watch(
-            "subject[Activity].node[ActivityParameterNode].parameter.name",
-            self.on_parameter_update,
-        )
-        self.watch(
-            "subject[Activity].node[ActivityParameterNode].parameter.typeValue",
-            self.on_parameter_update,
-        )
-
-    def postload(self):
-        super().postload()
-        self.on_parameter_update()
 
     def on_parameter_update(self, event=None):
         diagram = self.diagram
