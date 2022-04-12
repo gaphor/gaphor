@@ -307,3 +307,19 @@ def test_reflexive_message_undo(event_manager, element_factory, undo_manager):
         reflexive_message_config(message)
 
     undo_manager.undo_transaction()
+
+
+@pytest.mark.xfail
+def test_delete_item_with_subject_owning_diagram(
+    event_manager, element_factory, undo_manager
+):
+    with Transaction(event_manager):
+        diagram: Diagram = element_factory.create(Diagram)
+        klass = element_factory.create(UML.Class)
+        class_item = diagram.create(ClassItem, subject=klass)
+        diagram.element = klass
+
+    with Transaction(event_manager):
+        class_item.unlink()
+
+    undo_manager.undo_transaction()
