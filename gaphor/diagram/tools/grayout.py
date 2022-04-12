@@ -4,10 +4,12 @@ from gaphas.connector import Handle
 from gaphas.guide import GuidedItemHandleMoveMixin
 from gaphas.handlemove import ConnectionSinkType, HandleMove, ItemHandleMove
 from gaphas.item import Item, Line
+from gaphas.move import Move
 from gaphas.types import Pos
 from gaphas.view import GtkView
 
 from gaphor.diagram.connectors import Connector
+from gaphor.diagram.presentation import AttachedPresentation
 
 
 def connectable(line, handle, element):
@@ -61,3 +63,8 @@ class GrayOutLineHandleMove(
     GrayOutLineHandleMoveMixin, GuidedItemHandleMoveMixin, ItemHandleMove
 ):
     pass
+
+
+@Move.register(AttachedPresentation)
+def gray_out_attached_presentation_move(item, view):
+    return GrayOutLineHandleMove(item, item.handles()[0], view)
