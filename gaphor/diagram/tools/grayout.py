@@ -14,11 +14,7 @@ from gaphor.diagram.presentation import AttachedPresentation
 
 def connectable(line, handle, element):
     connector = Connector(element, line)
-    for port in element.ports():
-        allow = connector.allow(handle, port)
-        if allow:
-            return True
-    return False
+    return any(connector.allow(handle, port) for port in element.ports())
 
 
 class GrayOutLineHandleMoveMixin:
