@@ -309,7 +309,6 @@ def test_reflexive_message_undo(event_manager, element_factory, undo_manager):
     undo_manager.undo_transaction()
 
 
-@pytest.mark.xfail
 def test_delete_item_with_subject_owning_diagram(
     event_manager, element_factory, undo_manager
 ):
