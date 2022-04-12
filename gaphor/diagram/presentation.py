@@ -61,7 +61,7 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     the handle to.
     """
     connector = ConnectorAspect(item, handle, item.diagram.connections)
-    sink = ConnectionSink(target, distance=1e4)
+    sink = ConnectionSink(target, distance=1e40)
     connector.connect(sink)
 
 
