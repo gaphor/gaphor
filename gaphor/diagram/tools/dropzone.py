@@ -3,8 +3,9 @@ from __future__ import annotations
 import logging
 
 from gaphas.geometry import Rectangle
-from gaphas.guide import GuidedItemMove
-from gaphas.item import NW, SE
+from gaphas.guide import GuidedItemMoveMixin
+from gaphas.item import NW, SE, Item
+from gaphas.move import ItemMove
 from gaphas.move import Move as MoveAspect
 from gaphas.tool.itemtool import item_at_point
 from gaphas.view import GtkView
@@ -64,12 +65,13 @@ def on_motion(
         view.selection.dropzone_item = None
 
 
-@MoveAspect.register(ElementPresentation)
-@MoveAspect.register(LinePresentation)
-@MoveAspect.register(Presentation)
-class DropZoneMove(GuidedItemMove):
+class DropZoneMoveMixin:
+
+    view: GtkView
+    item: Item
+
     def start_move(self, pos):
-        super().start_move(pos)
+        super().start_move(pos)  # type: ignore[misc]
         if self.item.parent:
             self.view.selection.dropzone_item = self.item.parent
 
@@ -78,7 +80,7 @@ class DropZoneMove(GuidedItemMove):
 
         x and y are in view coordinates.
         """
-        super().move(pos)
+        super().move(pos)  # type: ignore[misc]
         item = self.item
         view = self.view
         x, y = pos
@@ -97,7 +99,7 @@ class DropZoneMove(GuidedItemMove):
 
     def stop_move(self, pos):
         """Motion stops: drop!"""
-        super().stop_move(pos)
+        super().stop_move(pos)  # type: ignore[misc]
         item = self.item
         view = self.view
         old_parent = item.parent
@@ -124,6 +126,13 @@ class DropZoneMove(GuidedItemMove):
 
         finally:
             view.selection.dropzone_item = None
+
+
+@MoveAspect.register(ElementPresentation)
+@MoveAspect.register(LinePresentation)
+@MoveAspect.register(Presentation)
+class DropZoneMove(DropZoneMoveMixin, GuidedItemMoveMixin, ItemMove):
+    pass
 
 
 def grow_parent(parent, item):
