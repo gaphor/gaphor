@@ -125,8 +125,7 @@ def element_factory():
     event_manager = EventManager()
     event_manager.subscribe(handler)
     clear_events()
-    factory = ElementFactory(event_manager)
-    yield factory
+    yield ElementFactory(event_manager)
     clear_events()
 
 
