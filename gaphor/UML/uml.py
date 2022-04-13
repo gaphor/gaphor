@@ -261,7 +261,7 @@ class UseCase(BehavioredClassifier):
 
 
 class InputPin(Pin):
-    pass
+    opaqueAction: relation_many[OpaqueAction]
 
 
 class Manifestation(Abstraction):
@@ -758,6 +758,12 @@ class InformationFlow(DirectedRelationship, PackageableElement):
     realizingMessage: relation_many[Message]
 
 
+class OpaqueAction(Action):
+    body: _attribute[str] = _attribute("body", str)
+    inputValue: relation_many[InputPin]
+    outputValue: relation_many[OutputPin]
+
+
 # 86: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
 
@@ -963,6 +969,7 @@ Element.directedRelationship.add(UseCase.extend)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(UseCase.extend)  # type: ignore[attr-defined]
 Element.directedRelationship.add(UseCase.include)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(UseCase.include)  # type: ignore[attr-defined]
+InputPin.opaqueAction = association("opaqueAction", OpaqueAction, opposite="inputValue")
 Manifestation.artifact = association("artifact", Artifact, upper=1, opposite="manifestation")
 Element.owner.add(Manifestation.artifact)  # type: ignore[attr-defined]
 Component.packagedElement = association("packagedElement", PackageableElement, composite=True, opposite="component")
@@ -1122,13 +1129,13 @@ NamedElement.namespace.add(Operation.artifact)  # type: ignore[attr-defined]
 RedefinableElement.redefinitionContext.add(Operation.artifact)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Operation.interface_)  # type: ignore[attr-defined]
 Feature.featuringClassifier.add(Operation.interface_)  # type: ignore[attr-defined]
-Action.input = derivedunion("input", InputPin)
-Action.output = derivedunion("output", OutputPin)
 Action.interaction = association("interaction", Interaction, upper=1, opposite="action")
 Action.context_ = derivedunion("context_", Classifier, upper=1)
+Action.input = derivedunion("input", InputPin)
+Action.output = derivedunion("output", OutputPin)
+Element.owner.add(Action.interaction)  # type: ignore[attr-defined]
 Element.ownedElement.add(Action.input)  # type: ignore[attr-defined]
 Element.ownedElement.add(Action.output)  # type: ignore[attr-defined]
-Element.owner.add(Action.interaction)  # type: ignore[attr-defined]
 Extend.extension = association("extension", UseCase, upper=1, opposite="extend")
 Extend.extensionLocation = association("extensionLocation", ExtensionPoint, lower=1)
 Extend.constraint = association("constraint", Constraint, upper=1, composite=True)
@@ -1297,3 +1304,7 @@ InformationFlow.informationTarget = association("informationTarget", NamedElemen
 Element.owner.add(InformationFlow.realizingConnector)  # type: ignore[attr-defined]
 DirectedRelationship.source.add(InformationFlow.informationSource)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(InformationFlow.informationTarget)  # type: ignore[attr-defined]
+OpaqueAction.outputValue = association("outputValue", OutputPin, composite=True)
+OpaqueAction.inputValue = association("inputValue", InputPin, composite=True, opposite="opaqueAction")
+Action.output.add(OpaqueAction.outputValue)  # type: ignore[attr-defined]
+Action.input.add(OpaqueAction.inputValue)  # type: ignore[attr-defined]
