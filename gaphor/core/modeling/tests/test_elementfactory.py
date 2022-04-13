@@ -14,7 +14,7 @@ from gaphor.core.modeling.event import (
     ServiceEvent,
 )
 from gaphor.core.modeling.presentation import Presentation
-from gaphor.UML import Parameter
+from gaphor.UML import Operation, Parameter
 
 
 @pytest.fixture
@@ -34,6 +34,18 @@ def test_element_factory_is_a_container(factory):
 def test_create(factory):
     factory.create(Parameter)
     assert len(list(factory.values())) == 1
+
+
+def test_create_is_idempotent(factory):
+    param = factory.create(Parameter)
+    new_param = factory.create_as(Parameter, param.id)
+    assert param is new_param
+
+
+def test_create_is_idempotent_but_validates_type(factory):
+    param = factory.create(Parameter)
+    with pytest.raises(TypeError):
+        factory.create_as(Operation, param.id)
 
 
 def test_should_not_create_presentation_elements(factory):
@@ -113,8 +125,7 @@ def element_factory():
     event_manager = EventManager()
     event_manager.subscribe(handler)
     clear_events()
-    factory = ElementFactory(event_manager)
-    yield factory
+    yield ElementFactory(event_manager)
     clear_events()
 
 

@@ -85,6 +85,14 @@ class ElementFactory(Service):
         This method should only be used when loading models, since it
         does not emit an ElementCreated event.
         """
+        if id in self._elements:
+            element = self._elements[id]
+            if not isinstance(element, type):
+                raise TypeError(
+                    "Element {element} already exists but has a different type  {type}"
+                )
+            return element
+
         type_args: dict[str, Diagram | RepositoryProtocol]
         if issubclass(type, Presentation):
             if not diagram:

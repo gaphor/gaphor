@@ -344,7 +344,13 @@ class UndoManager(Service, ActionProvider):
             event.element.save(save_func)
 
             def undo_delete_event():
-                diagram: Diagram = self.lookup(diagram_id)  # type: ignore[assignment]
+                # If diagram is not there, for some reason, recreate it.
+                # It's probably removed in the same transaction.
+                try:
+                    diagram: Diagram = self.lookup(diagram_id)  # type: ignore[assignment]
+                except ValueError:
+                    diagram = self.element_factory.create_as(Diagram, diagram_id)
+
                 element = diagram.create_as(element_type, element_id)
                 for name, ser in data.items():
                     for value in deserialize(ser, lambda ref: None):
