@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-31 21:14-0500\n"
-"PO-Revision-Date: 2022-04-05 17:10+0000\n"
+"PO-Revision-Date: 2022-04-14 15:06+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -575,7 +575,7 @@ msgstr "uključi: {}"
 #: gaphor/UML/interactions/interactionstoolbox.py:20
 #: gaphor/UML/states/statestoolbox.py:29 gaphor/diagram/diagramtoolbox.py:38
 msgid "New {name}"
-msgstr "Novo ime {name}"
+msgstr "Nova klasa {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:34 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
