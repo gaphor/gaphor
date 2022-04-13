@@ -10,6 +10,7 @@ from gaphor.UML.actions.action import (
     ActionItem,
     SendSignalActionItem,
 )
+from gaphor.UML.actions.activity import ActivityParameterNodeItem
 from gaphor.UML.actions.activitynodes import (
     ActivityNodeItem,
     DecisionNodeItem,
@@ -93,6 +94,7 @@ Connector.register(ActionItem, ObjectFlowItem)(FlowConnect)
 Connector.register(ActivityNodeItem, ObjectFlowItem)(FlowConnect)
 Connector.register(ObjectNodeItem, ObjectFlowItem)(FlowConnect)
 Connector.register(SendSignalActionItem, ObjectFlowItem)(FlowConnect)
+Connector.register(ActivityParameterNodeItem, ObjectFlowItem)(FlowConnect)
 
 
 class FlowForkDecisionNodeControlFlowConnect(FlowConnect):

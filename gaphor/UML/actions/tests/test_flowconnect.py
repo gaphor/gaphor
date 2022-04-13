@@ -6,6 +6,7 @@ from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect, get_connected
 from gaphor.UML.actions.action import ActionItem
+from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
 from gaphor.UML.actions.activitynodes import (
     ActivityFinalNodeItem,
     DecisionNodeItem,
@@ -65,6 +66,15 @@ def test_glue_to_object_node(create):
     assert glued
 
 
+def test_glue_to_activity_parameter_node(create, element_factory):
+    flow = create(ObjectFlowItem)
+    anode = create(ActivityParameterNodeItem, UML.ActivityParameterNode)
+
+    glued = allow(flow, flow.head, anode)
+
+    assert glued
+
+
 def test_connect_to_object_node(create):
     flow = create(ObjectFlowItem)
     anode = create(ActionItem, UML.Action)
@@ -81,6 +91,21 @@ def test_connect_to_object_node(create):
     # opposite connection
     connect(flow, flow.head, onode)
     connect(flow, flow.tail, anode)
+    assert flow.subject
+    assert isinstance(flow.subject, UML.ObjectFlow)
+
+
+def test_connect_to_activity_parameter_node(create, element_factory):
+    flow = create(ObjectFlowItem)
+    activity = create(ActivityItem, UML.Activity)
+    param_node = element_factory.create(UML.ActivityParameterNode)
+    param_node.parameter = element_factory.create(UML.Parameter)
+    activity.subject.node = param_node
+    anode = param_node.presentation[0]
+    onode = create(ObjectNodeItem, UML.ObjectNode)
+
+    connect(flow, flow.head, anode)
+    connect(flow, flow.tail, onode)
     assert flow.subject
     assert isinstance(flow.subject, UML.ObjectFlow)
 
