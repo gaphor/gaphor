@@ -205,14 +205,14 @@ actions = ToolSection(
         ToolDef(
             "toolbox-input-pin",
             gettext("Input pin"),
-            "gaphor-action-symbolic",
+            "gaphor-input-pin-symbolic",
             None,
             new_item_factory(diagramitems.InputPinItem),
         ),
         ToolDef(
             "toolbox-output-pin",
             gettext("Output pin"),
-            "gaphor-action-symbolic",
+            "gaphor-output-pin-symbolic",
             None,
             new_item_factory(diagramitems.OutputPinItem),
         ),
