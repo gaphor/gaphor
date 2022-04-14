@@ -27,7 +27,7 @@ language implementation can offer?
 * [Grouping](#grouping), allow elements to be nested in one another
 * [Dropping](#dropping), allow elements to be dragged from the tree view onto a diagram
 * [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
-* [Inline (diagram) editor popups](#inline-diagram-editor-popups)
+* [InlInstantine (diagram) editor popups](#instant-diagram-editor-popups)
 * [Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent
 * [Copy/paste](#copy-and-paste) behavior when element copying is not trivial,
   for example with more than one element is involved
