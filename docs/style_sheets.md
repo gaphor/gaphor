@@ -214,20 +214,23 @@ on their names. For example: `Component` inherits from `Class` in the UML model,
 but changing a color for `Class` does not change it for `Component`.
 
 If you hover over a button the toolbox (bottom-left section), a popup will appear
-with the item's name and a shortcut. As a general rule, ou can use the component
+with the item's name and a shortcut. As a general rule, you can use the component
 name, glued together as the name in the stylesheet.
 A *Component* can be addressed as `component`, *Use Case* as 
 `usecase`. The name matching is case insensitive.
 CSS names are written in lower case by default.
 
-However, since the CSS element names are derived from names used within Gaphor, there are a few exceptions:
+However, since the CSS element names are derived from names used within Gaphor, there are a few exceptions.
 
 ```{eval-rst}
 ========  ============  ===================  =============================
 Profile   Group         Element              CSS element
 ========  ============  ===================  =============================
+\*        \*            *element name*       element name without spaces
+
+                                             E.g. ``class``, ``usecase``.
 UML       Classes       all Association's    ``association``
-UML       Compoments    Device               ``node`` (like *Node Item*)
+UML       Compoments    Device/Node          ``node``
 UML       Actions       Decision/Merge Node  ``decisionnode``
 UML       Actions       Fork/Join Node       ``forknode``
 UML       Actions       Swimlane             ``partition``
