@@ -28,7 +28,7 @@ class ModelingLanguage(metaclass=ABCMeta):
     @property
     @abstractmethod
     def name(self) -> str:
-        """Human readable name of the model."""
+        """Human readable name of the modeling language."""
 
     @property
     @abstractmethod
@@ -42,4 +42,4 @@ class ModelingLanguage(metaclass=ABCMeta):
 
     @abstractmethod
     def lookup_element(self, name: str) -> type[Element] | None:
-        """Look up a model element type (class) by name."""
+        """Look up a model element type by (class) name."""

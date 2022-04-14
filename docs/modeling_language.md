@@ -32,8 +32,9 @@ language implementation can offer?
 * [Copy/paste](#copy-and-paste) behavior when element copying is not trivial,
   for example with more than one element is involved
 
-We expose the first four by methods defined on the `ModelingLanguage` class. We
-then expose the others by adding handlers to the respective generic functions.
+The first three by functionalities are exposed by the `ModelingLanguage` class.
+The other functionalities can be extended by adding handlers to the respective
+generic functions.
 
 
 ```{eval-rst}
@@ -104,7 +105,7 @@ Each property page (snippet) should inherit from `PropertyPageBase`.
    :members:
 ```
 
-## Inline (diagram) editor popups
+## Instant (diagram) editor popups
 
 When you double click on an item in a diagram, a popup can show up so you can easily change the name.
 
