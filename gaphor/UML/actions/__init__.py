@@ -7,6 +7,7 @@ from gaphor.UML.actions import (
     copypaste,
     flowconnect,
     partitionpage,
+    pinconnect,
 )
 from gaphor.UML.actions.action import (
     AcceptEventActionItem,
