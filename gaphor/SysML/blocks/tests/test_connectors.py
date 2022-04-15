@@ -50,14 +50,14 @@ def connector_item(diagram):
     return diagram.create(ConnectorItem)
 
 
-def test_connection_is_allowed(diagram, block_item, proxy_port_item):
+def test_connection_is_allowed(block_item, proxy_port_item):
     connector = Connector(block_item, proxy_port_item)
 
     assert isinstance(connector, BlockProperyProxyPortConnector)
     assert connector.allow(proxy_port_item.handles()[0], block_item.ports()[0])
 
 
-def test_connect_proxy_port_to_block(diagram, block_item, proxy_port_item):
+def test_connect_proxy_port_to_block(block_item, proxy_port_item):
     connector = Connector(block_item, proxy_port_item)
 
     connected = connector.connect(proxy_port_item.handles()[0], block_item.ports()[0])
@@ -68,7 +68,7 @@ def test_connect_proxy_port_to_block(diagram, block_item, proxy_port_item):
     assert proxy_port_item.subject in block_item.subject.ownedPort
 
 
-def test_disconnect_proxy_port_to_block(diagram, block_item, proxy_port_item):
+def test_disconnect_proxy_port_to_block(block_item, proxy_port_item):
     connector = Connector(block_item, proxy_port_item)
     connector.connect(proxy_port_item.handles()[0], block_item.ports()[0])
 
@@ -79,13 +79,13 @@ def test_disconnect_proxy_port_to_block(diagram, block_item, proxy_port_item):
 
 
 def test_allow_connector_to_proxy_port(
-    diagram, connector_item: ConnectorItem, head_proxy_port_item: ProxyPortItem
+    connector_item: ConnectorItem, head_proxy_port_item: ProxyPortItem
 ):
     assert allow(connector_item, connector_item.handles()[0], head_proxy_port_item)
 
 
 def test_connect_connector_on_one_end_to_proxy_port(
-    diagram, connector_item: ConnectorItem, head_proxy_port_item: ProxyPortItem
+    connector_item: ConnectorItem, head_proxy_port_item: ProxyPortItem
 ):
     connect(connector_item, connector_item.handles()[0], head_proxy_port_item)
 
