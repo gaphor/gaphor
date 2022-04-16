@@ -1,4 +1,5 @@
 from gaphor import UML
+from gaphor.core import gettext
 from gaphor.diagram.presentation import AttachedPresentation, Named
 from gaphor.diagram.shapes import (
     Box,
@@ -28,10 +29,17 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
         super().__init__(diagram, id, width=16, height=16)
         self.watch("subject[NamedElement].name")
 
+    def pin_type(self):
+        return ""
+
     def update_shapes(self):
         self.shape = IconBox(
             Box(style={"background-color": (1, 1, 1, 1)}, draw=draw_border),
-            Text(text=lambda: stereotypes_str(self.subject)),
+            Text(
+                text=lambda: stereotypes_str(
+                    self.subject, [] if self.subject else [self.pin_type()]
+                )
+            ),
             Text(text=lambda: self.subject and self.subject.name or ""),
             style=text_position(self.connected_side()),
         )
@@ -39,9 +47,11 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
 
 @represents(UML.InputPin)
 class InputPinItem(PinItem):
-    pass
+    def pin_type(self):
+        return gettext("input pin")
 
 
 @represents(UML.OutputPin)
 class OutputPinItem(PinItem):
-    pass
+    def pin_type(self):
+        return gettext("output pin")
