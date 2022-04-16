@@ -14,7 +14,7 @@ from gaphor.UML.recipes import stereotypes_str
 @represents(UML.Activity)
 class ActivityItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id, width=50, height=30)
+        super().__init__(diagram, id, width=50, height=50)
 
         self.width = 100
 
