@@ -16,6 +16,7 @@ from gaphor.UML.actions.activitynodes import (
 )
 from gaphor.UML.actions.flow import ControlFlowItem, ObjectFlowItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
+from gaphor.UML.actions.pin import InputPinItem, OutputPinItem
 
 
 def test_initial_node_glue(create):
@@ -106,6 +107,46 @@ def test_connect_to_activity_parameter_node(create, element_factory):
 
     connect(flow, flow.head, anode)
     connect(flow, flow.tail, onode)
+    assert flow.subject
+    assert isinstance(flow.subject, UML.ObjectFlow)
+
+
+def test_do_not_allow_head_to_input_pin(create):
+    flow = create(ObjectFlowItem)
+    pin = create(InputPinItem, UML.InputPin)
+
+    assert not allow(flow, flow.head, pin)
+    assert allow(flow, flow.tail, pin)
+
+
+def test_connect_tail_to_input_pin(create):
+    flow = create(ObjectFlowItem)
+    pin = create(InputPinItem, UML.InputPin)
+    onode = create(ObjectNodeItem, UML.ObjectNode)
+
+    connect(flow, flow.head, onode)
+    connect(flow, flow.tail, pin)
+
+    assert flow.subject
+    assert isinstance(flow.subject, UML.ObjectFlow)
+
+
+def test_do_not_allow_tail_to_output_pin(create):
+    flow = create(ObjectFlowItem)
+    pin = create(OutputPinItem, UML.OutputPin)
+
+    assert allow(flow, flow.head, pin)
+    assert not allow(flow, flow.tail, pin)
+
+
+def test_connect_head_to_output_pin(create):
+    flow = create(ObjectFlowItem)
+    pin = create(OutputPinItem, UML.OutputPin)
+    onode = create(ObjectNodeItem, UML.ObjectNode)
+
+    connect(flow, flow.head, pin)
+    connect(flow, flow.tail, onode)
+
     assert flow.subject
     assert isinstance(flow.subject, UML.ObjectFlow)
 
