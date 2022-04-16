@@ -15,12 +15,10 @@ from gaphor.UML.recipes import stereotypes_str
 
 def text_position(position):
     return {
-        "text-align": TextAlign.LEFT
-        if position == "left"
-        else (TextAlign.RIGHT if position == "right" else TextAlign.CENTER),
-        "vertical-align": VerticalAlign.TOP
-        if position == "top"
-        else (VerticalAlign.BOTTOM if position == "bottom" else VerticalAlign.MIDDLE),
+        "text-align": TextAlign.LEFT if position == "left" else TextAlign.RIGHT,
+        "vertical-align": VerticalAlign.BOTTOM
+        if position == "bottom"
+        else VerticalAlign.TOP,
     }
 
 
