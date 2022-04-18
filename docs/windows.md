@@ -50,14 +50,14 @@ use a standard Python development environment in Windows.
 Note: gvsbuild says it requires msys2, but does it for our needs?
 
 First we will install the gvsbuild dependencies:
-1. Visual C++ build tools workload for Visual Studio 2019 Build Tools
+1. Visual C++ build tools workload for Visual Studio 2022 Build Tools
 1. Python
 
-#### Install Visual Studio 2019
+#### Install Visual Studio 2022
 With your admin PowerShell terminal:
 
 ```PowerShell
-choco install visualstudio2019-workload-vctools
+choco install visualstudio2022-workload-vctools
 ```
 
 #### Install the Latest Python
@@ -84,7 +84,7 @@ In the same PowerShell terminal, execute:
 
 ```PowerShell
 cd C:\gtk-build\github\gvsbuild
-python .\build.py build -p=x64 --vs-ver=16 --msys-dir=C:\tools\msys64 --enable-gi --py-wheel --gtk3-ver=3.24 gobject-introspection gtk3 pycairo pygobject gtksourceview adwaita-icon-theme hicolor-icon-theme
+python .\build.py build --msys-dir=C:\tools\msys64 --enable-gi --py-wheel gobject-introspection gtk3 pycairo pygobject gtksourceview adwaita-icon-theme hicolor-icon-theme
 ```
 Grab a coffee, the build will take a few minutes to complete.
 
