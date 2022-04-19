@@ -109,7 +109,7 @@ def _set_pixbuf(column, cell, model, iter, data):
     if element is RELATIONSHIPS:
         cell.set_property("icon-name", None)
         cell.set_property("visible", False)
-    elif isinstance(element, (UML.Property, UML.Operation)):
+    elif isinstance(element, (UML.Parameter, UML.Property, UML.Operation)):
         cell.set_property("icon-name", None)
         cell.set_property("visible", False)
     else:

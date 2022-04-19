@@ -6,7 +6,7 @@
    version="1.1"
    id="svg4268"
    sodipodi:docname="stensil.svg"
-   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -59,11 +59,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="22.627416"
-     inkscape:cx="5.6347574"
+     inkscape:zoom="5.656854"
+     inkscape:cx="95.194255"
      inkscape:cy="179.25158"
      inkscape:document-units="px"
-     inkscape:current-layer="control-flow"
+     inkscape:current-layer="activity-parameter-node"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
@@ -3683,6 +3683,15 @@
          d="m 5.2910156,44.322266 a 0.2645835,0.2645835 0 0 0 -0.1855469,0.07813 l -3.4414062,3.439453 a 0.2645835,0.2645835 0 0 0 0,0.375 0.2645835,0.2645835 0 0 0 0.375,0 l 3.4394531,-3.439453 a 0.2645835,0.2645835 0 0 0 0,-0.375 0.2645835,0.2645835 0 0 0 -0.1875,-0.07813 z"
          id="path2589" />
     </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="activity-parameter-node"
+     inkscape:label="activity-parameter-node">
+    <path
+       id="path2847-3"
+       style="color:#000000;fill:#000000;stroke-linecap:round;-inkscape-stroke:none"
+       d="m 19.314453,54.240234 a 0.2645835,0.2645835 0 0 0 -0.263672,0.263672 V 55.5625 a 0.2645835,0.2645835 0 0 0 0.263672,0.263672 0.2645835,0.2645835 0 0 0 0.265625,-0.263672 v -1.058594 a 0.2645835,0.2645835 0 0 0 -0.265625,-0.263672 z m 0,-2.646484 a 0.2645835,0.2645835 0 0 0 -0.263672,0.263672 v 1.058594 a 0.2645835,0.2645835 0 0 0 0.263672,0.265625 0.2645835,0.2645835 0 0 0 0.265625,-0.265625 V 51.857422 A 0.2645835,0.2645835 0 0 0 19.314453,51.59375 Z m -1.587891,1.058594 a 0.26460996,0.26460996 0 0 0 -0.263671,0.263672 v 1.58789 a 0.26460996,0.26460996 0 0 0 0.263671,0.265625 h 3.175782 a 0.26460996,0.26460996 0 0 0 0.263672,-0.265625 v -1.58789 a 0.26460996,0.26460996 0 0 0 -0.263672,-0.263672 z m 0.265625,0.529297 h 2.644532 v 1.058593 h -2.644532 z" />
   </g>
   <g
      inkscape:groupmode="layer"

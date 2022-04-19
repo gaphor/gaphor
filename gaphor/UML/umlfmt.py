@@ -41,16 +41,14 @@ def format_property(
     if not (visibility or is_derived or type or multiplicity or default):
         visibility = is_derived = type = multiplicity = default = True
 
-    s = []
-
-    if name and visibility:
-        s.append(vis_map[el.visibility])
-        s.append(" ")
-
-    if name and is_derived and el.isDerived:
-        s.append("/")
+    s: list[str] = []
 
     if name:
+        if visibility:
+            s.extend((vis_map[el.visibility], " "))
+        if is_derived and el.isDerived:
+            s.append("/")
+
         s.append(name)
 
     if type:
@@ -79,10 +77,8 @@ def format_property(
 def format_association_end(el) -> Tuple[str, str]:
     """Format association end."""
     name = ""
-    n = []
     if el.name:
-        n.append(vis_map[el.visibility])
-        n.append(" ")
+        n = [vis_map[el.visibility], " "]
         if el.isDerived:
             n.append("/")
         n.append(el.name)
@@ -125,22 +121,24 @@ def format_operation(
     if visibility:
         s.append(f"{vis_map[el.visibility]} ")
 
-    s.append(name)
-    s.append("(")
-    s.append(
-        ", ".join(
-            format(
-                p,
-                direction=direction,
-                type=type,
-                multiplicity=multiplicity,
-                default=default,
-            )
-            for p in el.ownedParameter
-            if p.direction != "return"
+    s.extend(
+        (
+            name,
+            "(",
+            ", ".join(
+                format(
+                    p,
+                    direction=direction,
+                    type=type,
+                    multiplicity=multiplicity,
+                    default=default,
+                )
+                for p in el.ownedParameter
+                if p.direction != "return"
+            ),
+            ")",
         )
     )
-    s.append(")")
 
     if rr := next((p for p in el.ownedParameter if p.direction == "return"), None):
         s.append(format(rr, type=type, multiplicity=multiplicity, default=default))
@@ -155,11 +153,15 @@ def format_operation(
 def format_parameter(
     el, direction=False, type=False, multiplicity=False, default=False
 ):
+    if not (direction or type or multiplicity or default):
+        direction = type = multiplicity = default = True
+
     s = []
-    if direction:
+    name = el.name
+    if name and direction:
         s.append(f"{el.direction} ")
 
-    s.append(el.name or "")
+    s.append(name or "")
 
     if type and el.typeValue:
         s.append(f": {el.typeValue}")

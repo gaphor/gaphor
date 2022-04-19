@@ -38,6 +38,7 @@ ICONS=diagram \
 	action \
 	initial-node \
 	activity-final-node \
+	activity-parameter-node \
 	flow-final-node \
 	decision-node \
 	fork-node \

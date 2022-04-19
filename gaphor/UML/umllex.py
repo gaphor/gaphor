@@ -88,7 +88,8 @@ association_end_name_pat = compile(
 
 # Association end multiplicity:
 #   [mult] [{ tagged values }]
-association_end_mult_pat = compile(r"^" + multa_subpat + tags_subpat + garbage_subpat)
+association_end_mult_pat = compile(f"^{multa_subpat}{tags_subpat}{garbage_subpat}")
+
 
 # Operation:
 #   [+|-|#] name ([parameters]) [: type[\[mult\]]] [{ tagged values }]
@@ -113,13 +114,24 @@ parameter_pat = compile(
     + type_subpat
     + mult_subpat
     + default_subpat
+    + note_subpat
+    + garbage_subpat
+)
+
+parameters_pat = compile(
+    r"^"
+    + dir_subpat
+    + name_subpat
+    + type_subpat
+    + mult_subpat
+    + default_subpat
     + tags_subpat
     + rest_subpat
 )
 
 # Lifeline:
 #  [name] [: type]  # noqa: E800
-lifeline_pat = compile("^" + name_subpat + type_subpat + mult_subpat + garbage_subpat)
+lifeline_pat = compile(f"^{name_subpat}{type_subpat}{mult_subpat}{garbage_subpat}")
 
 
 def _set_visibility(el: uml.Feature, vis: str):
@@ -251,8 +263,9 @@ def parse_operation(el: uml.Operation, s: str) -> None:
 
         defined_params = set()
         if g("type"):
-            returnParameters = [p for p in el.ownedParameter if p.direction == "return"]
-            if returnParameters:
+            if returnParameters := [
+                p for p in el.ownedParameter if p.direction == "return"
+            ]:
                 p = returnParameters[0]
             else:
                 p = create(uml.Parameter)
@@ -268,7 +281,7 @@ def parse_operation(el: uml.Operation, s: str) -> None:
         pindex = 0
         params = g("params")
         while params:
-            m = parameter_pat.match(params)
+            m = parameters_pat.match(params)
             if not m:
                 break
             g = m.group
@@ -297,6 +310,25 @@ def parse_operation(el: uml.Operation, s: str) -> None:
                 op.unlink()
 
 
+@parse.register(uml.Parameter)
+def parse_parameter(el: uml.Parameter, s: str) -> None:
+    m = parameter_pat.match(s)
+    if not m or m.group("garbage"):
+        el.name = s
+        del el.direction
+        del el.typeValue
+    else:
+        g = m.group
+        el.direction = g("dir") or "in"
+        el.name = g("name")
+        el.typeValue = g("type")
+        el.lowerValue = g("mult_l")
+        el.upperValue = g("mult_u")
+        if g("has_mult") and not g("mult_u"):
+            el.upperValue = "*"
+        el.defaultValue = g("default")
+
+
 def parse_lifeline(el: uml.Lifeline, s: str) -> None:
     """Parse string s in a lifeline.
 
@@ -309,9 +341,8 @@ def parse_lifeline(el: uml.Lifeline, s: str) -> None:
         el.name = s
     else:
         el.name = g("name") + ": "
-        t = g("type")
-        if t:
-            el.name += ": " + t
+        if t := g("type"):
+            el.name += f": {t}"
         # In the near future the data model should be extended with
         # Lifeline.represents: ConnectableElement  # noqa: E800
 

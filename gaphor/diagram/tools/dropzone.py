@@ -111,10 +111,8 @@ class DropZoneMoveMixin:
                     old_parent.request_update()
                 return
 
-            if old_parent:
+            if old_parent and ungroup(old_parent.subject, item.subject):
                 item.change_parent(None)
-
-                ungroup(old_parent.subject, item.subject)
                 old_parent.request_update()
 
             if new_parent and item.subject and group(new_parent.subject, item.subject):

@@ -6,8 +6,11 @@ from gaphor.core.modeling.diagram import FALLBACK_STYLE
 from gaphor.UML.actions.flow import ControlFlowItem
 
 
-def test_flow(create):
-    create(ControlFlowItem, UML.ControlFlow)
+def test_flow(diagram, element_factory):
+    flow = element_factory.create(UML.ControlFlow)
+    item = diagram.create(ControlFlowItem, subject=flow)
+
+    assert item.subject is flow
 
 
 def test_name(create):

@@ -1,12 +1,5 @@
-from typing import Optional
-
-from gaphas.connector import Handle, LinePort, Position
-from gaphas.constraint import constraint
-from gaphas.geometry import Rectangle, distance_rectangle_point
-
 from gaphor.core import gettext
-from gaphor.core.modeling import Presentation
-from gaphor.diagram.presentation import HandlePositionUpdate, Named, postload_connect
+from gaphor.diagram.presentation import AttachedPresentation, Named
 from gaphor.diagram.shapes import (
     Box,
     IconBox,
@@ -32,45 +25,10 @@ def text_position(position):
 
 
 @represents(sysml.ProxyPort)
-class ProxyPortItem(Named, Presentation[sysml.ProxyPort], HandlePositionUpdate):
+class ProxyPortItem(Named, AttachedPresentation[sysml.ProxyPort]):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
-        self._connections = diagram.connections
-
-        handle = self._handle = Handle(connectable=True)
-        self.watch_handle(handle)
-
-        d = self.dimensions()
-        top_left = Position(d.x, d.y)
-        top_right = Position(d.x1, d.y)
-        bottom_right = Position(d.x1, d.y1)
-        bottom_left = Position(d.x, d.y1)
-
-        add = diagram.connections.add_constraint
-        add(self, constraint(horizontal=(handle.pos, top_left), delta=-8))
-        add(self, constraint(horizontal=(handle.pos, top_right), delta=-8))
-        add(self, constraint(horizontal=(handle.pos, bottom_right), delta=8))
-        add(self, constraint(horizontal=(handle.pos, bottom_left), delta=8))
-        add(self, constraint(vertical=(handle.pos, top_left), delta=-8))
-        add(self, constraint(vertical=(handle.pos, top_right), delta=8))
-        add(self, constraint(vertical=(handle.pos, bottom_right), delta=8))
-        add(self, constraint(vertical=(handle.pos, bottom_left), delta=-8))
-        self._ports = [
-            LinePort(top_left, top_right),
-            LinePort(top_right, bottom_right),
-            LinePort(bottom_right, bottom_left),
-            LinePort(bottom_left, top_left),
-        ]
-
-        self._last_connected_side = None
+        super().__init__(diagram, id, width=16, height=16)
         self.watch("subject[NamedElement].name")
-        self.update_shapes()
-
-    def handles(self):
-        return [self._handle]
-
-    def ports(self):
-        return self._ports
 
     def update_shapes(self):
         self.shape = IconBox(
@@ -79,50 +37,3 @@ class ProxyPortItem(Named, Presentation[sysml.ProxyPort], HandlePositionUpdate):
             Text(text=lambda: self.subject and self.subject.name or ""),
             style=text_position(self.connected_side()),
         )
-        self.request_update()
-
-    def connected_side(self) -> Optional[str]:
-        cinfo = self._connections.get_connection(self._handle)
-
-        return cinfo.connected.port_side(cinfo.port) if cinfo else None
-
-    def dimensions(self):
-        x, y = self._handle.pos
-        # TODO: This is wrong: it returns variables that do not get updated
-        return Rectangle(x - 8, y - 8, 16, 16)
-
-    def point(self, x, y):
-        return distance_rectangle_point(self.dimensions(), (x, y))
-
-    def save(self, save_func):
-        save_func("matrix", tuple(self.matrix))
-
-        if c := self._connections.get_connection(self._handle):
-            save_func("connection", c.connected)
-
-        super().save(save_func)
-
-    def load(self, name, value):
-        if name == "connection":
-            self._load_connection = value
-        else:
-            super().load(name, value)
-
-    def postload(self):
-        super().postload()
-        if hasattr(self, "_load_connection"):
-            postload_connect(self, self._handle, self._load_connection)
-            del self._load_connection
-
-        self.update_shapes()
-
-    def update(self, context):
-        side = self.connected_side()
-        if self._last_connected_side != side:
-            self._last_connected_side = side
-            self.update_shapes()
-
-        self.shape.size(context)
-
-    def draw(self, context):
-        self.shape.draw(context, self.dimensions())

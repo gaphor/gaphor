@@ -238,4 +238,93 @@
     </style>
   </object>
 
+  <object class="GtkExpander" id="activity-editor">
+    <property name="focusable">1</property>
+    <property name="expanded">1</property>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Parameter Nodes</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkFrame">
+            <property name="child">
+              <object class="GtkTreeView" id="parameter-list">
+                <property name="height-request">112</property>
+                <property name="focusable">1</property>
+                <property name="headers-clickable">0</property>
+                <property name="enable-search">0</property>
+                <property name="show-expanders">0</property>
+                <property name="enable-grid-lines">horizontal</property>
+                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
+                <child internal-child="selection">
+                  <object class="GtkTreeSelection"/>
+                </child>
+                <child>
+                  <object class="GtkTreeViewColumn">
+                    <property name="resizable">1</property>
+                    <property name="title" translatable="yes">Parameters</property>
+                    <property name="expand">1</property>
+                    <child>
+                      <object class="GtkCellRendererText">
+                        <property name="xpad">2</property>
+                        <property name="ypad">2</property>
+                        <property name="xalign">0</property>
+                        <property name="editable">1</property>
+                        <signal name="edited" handler="parameter-edited" swapped="no"/>
+                      </object>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel" id="activity-info-icon">
+            <property name="visible">1</property>
+            <property name="halign">end</property>
+            <property name="label" translatable="yes">🛈 Help</property>
+            <style>
+              <class name="info"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkPopover" id="activity-info">
+    <property name="position">top</property>
+    <property name="child">
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Add and edit class activity according to UML syntax.
+
+  • &lt;tt&gt;attr&lt;/tt&gt; (name, defaults to public visibility)
+  • &lt;tt&gt;+ attr: int&lt;/tt&gt; (public with type)
+  • &lt;tt&gt;+ attr: int[0..1]&lt;/tt&gt; (public, type, and multiplicity)
+  • &lt;tt&gt;# /attr: int # a note&lt;/tt&gt; (protected, derived, with remark)
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+        <property name="use-markup">1</property>
+        <style>
+          <class name="info-popover"/>
+        </style>
+      </object>
+    </property>
+  </object>
+
 </interface>

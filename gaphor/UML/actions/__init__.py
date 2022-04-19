@@ -2,6 +2,8 @@ from gaphor.UML.actions import (
     actionseditors,
     actionsgroup,
     actionspropertypages,
+    activityconnect,
+    activitypropertypage,
     copypaste,
     flowconnect,
     partitionpage,
@@ -11,6 +13,7 @@ from gaphor.UML.actions.action import (
     ActionItem,
     SendSignalActionItem,
 )
+from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
 from gaphor.UML.actions.activitynodes import (
     ActivityFinalNodeItem,
     ActivityNodeItem,
@@ -26,6 +29,8 @@ from gaphor.UML.actions.partition import PartitionItem
 __all__ = [
     "AcceptEventActionItem",
     "ActionItem",
+    "ActivityItem",
+    "ActivityParameterNodeItem",
     "SendSignalActionItem",
     "ActivityFinalNodeItem",
     "ActivityNodeItem",
