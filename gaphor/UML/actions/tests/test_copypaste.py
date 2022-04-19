@@ -33,7 +33,6 @@ def test_deep_copy_activity_with_parameter(diagram, element_factory):
     node.parameter.name = "Name"
 
     copy_data = copy({activity_item})
-    print(copy_data)
     new_elements = paste_full(copy_data, diagram, element_factory.lookup)
     new_activity_item = next(
         (e for e in new_elements if isinstance(e, ActivityItem)), None
