@@ -405,7 +405,10 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
 
     @width.setter
     def width(self, width):
-        rv = width / 2
+        self.update_width(width)
+
+    def update_width(self, width, factor=0.5):
+        rv = width * factor
         top_left, _, bottom_right, _ = self._corners
         handle_pos = self._handle.pos
         connections = self._connections
@@ -413,7 +416,7 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
             connections.remove_constraint(self, c)
 
         self._width_constraints = [
-            constraint(vertical=(top_left, handle_pos), delta=rv),
+            constraint(vertical=(top_left, handle_pos), delta=width - rv),
             constraint(vertical=(handle_pos, bottom_right), delta=rv),
         ]
 
@@ -428,7 +431,10 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
 
     @height.setter
     def height(self, height):
-        rh = height / 2
+        self.update_height(height)
+
+    def update_height(self, height, factor=0.5):
+        rh = height * factor
         top_left, _, bottom_right, _ = self._corners
         handle_pos = self._handle.pos
         connections = self._connections
@@ -436,7 +442,7 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
             connections.remove_constraint(self, c)
 
         self._height_constraints = [
-            constraint(horizontal=(top_left, handle_pos), delta=rh),
+            constraint(horizontal=(top_left, handle_pos), delta=height - rh),
             constraint(horizontal=(handle_pos, bottom_right), delta=rh),
         ]
 

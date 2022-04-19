@@ -31,6 +31,16 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
         return ""
 
     def update_shapes(self):
+        position = self.connected_side()
+        self.update_width(
+            self.width,
+            factor=0 if position == "left" else 1 if position == "right" else 0.5,
+        )
+        self.update_height(
+            self.width,
+            factor=0 if position == "top" else 1 if position == "bottom" else 0.5,
+        )
+
         self.shape = IconBox(
             Box(style={"background-color": (1, 1, 1, 1)}, draw=draw_border),
             Text(
