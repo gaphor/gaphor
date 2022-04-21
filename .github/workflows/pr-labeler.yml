@@ -5,6 +5,7 @@ on:
 
 permissions:
   pull-requests: write
+  issues: write
 
 jobs:
   pr-labeler:
