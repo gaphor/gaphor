@@ -1,5 +1,6 @@
 name: PR Labeler
 on:
+  push:
   pull_request_target:
     types: [opened]
 
