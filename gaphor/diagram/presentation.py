@@ -497,10 +497,15 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
         if c := self._connections.get_connection(self._handle):
             save_func("connection", c.connected)
 
+        point = tuple(map(float, self._handle.pos))
+        save_func("point", point)
+
         super().save(save_func)
 
     def load(self, name, value):
-        if name == "connection":
+        if name == "point":
+            self._handle.pos = ast.literal_eval(value)
+        elif name == "connection":
             self._load_connection = value
         else:
             super().load(name, value)
