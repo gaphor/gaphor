@@ -3,6 +3,8 @@ on:
   pull_request_target:
     types: [opened]
 
+permissions: write-all
+
 jobs:
   pr-labeler:
     runs-on: ubuntu-latest
