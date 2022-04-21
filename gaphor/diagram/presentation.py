@@ -151,12 +151,19 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
+        save_func("top-left", tuple(map(float, self._handles[0].pos)))
         save_func("width", self.width)
         save_func("height", self.height)
         super().save(save_func)
 
     def load(self, name, value):
-        if name == "width":
+        if name == "top-left":
+            pos = ast.literal_eval(value)
+            self._handles[0].pos = pos
+            # Also adjust bottom-right handle to keep width and height intact
+            self._handles[2].pos.x += pos[0]
+            self._handles[2].pos.y += pos[1]
+        elif name == "width":
             self.width = ast.literal_eval(value)
         elif name == "height":
             self.height = ast.literal_eval(value)

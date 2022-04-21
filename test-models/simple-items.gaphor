@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.5.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.9.2">
 <Package id="DCE:658E43CC-3A1D-11DC-8B61-000D93868322">
 <name>
 <val>New model</val>
@@ -44,8 +44,11 @@
 </Line>
 <Box id="DCE:680E2142-3A1D-11DC-8B61-000D93868322">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 215.0, 121.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 214.0, 119.0)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>100.0</val>
 </width>
@@ -60,6 +63,9 @@
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 332.0, 137.0)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>100.0</val>
 </width>
