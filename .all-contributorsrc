@@ -794,6 +794,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "Seppli11",
+      "name": "Sebi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9285506?v=4",
+      "profile": "https://github.com/Seppli11",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
