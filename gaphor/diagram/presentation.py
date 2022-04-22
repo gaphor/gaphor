@@ -372,7 +372,7 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
         self._width_constraints = []
         self._height_constraints = []
 
-        handle = self._handle = Handle(connectable=True)
+        handle = self._handle = Handle(strength=gaphas.solver.STRONG, connectable=True)
         self.watch_handle(handle)
 
         rh = width / 2
@@ -498,12 +498,10 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
+        save_func("point", tuple(map(float, self._handle.pos)))
 
         if c := self._connections.get_connection(self._handle):
             save_func("connection", c.connected)
-
-        point = tuple(map(float, self._handle.pos))
-        save_func("point", point)
 
         super().save(save_func)
 
@@ -522,3 +520,4 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
             del self._load_connection
 
         self.update_shapes()
+        self._connections.solve()
