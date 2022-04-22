@@ -1,9 +1,8 @@
-from gaphas.connector import ConnectionSink
-from gaphas.connector import Connector as ConnectorAspect
 from gi.repository import Gtk
 
 from gaphor.diagram.connectors import Connector
 from gaphor.diagram.copypaste import copy, paste_link
+from gaphor.diagram.presentation import connect as _connect
 
 
 def allow(line, handle, item, port=None) -> bool:
@@ -19,14 +18,9 @@ def connect(line, handle, item, port=None):
 
     If port is not provided, then first port is used.
     """
-    diagram = line.diagram
+    _connect(line, handle, item)
 
-    connector = ConnectorAspect(line, handle, diagram.connections)
-    sink = ConnectionSink(item, distance=1e4)
-
-    connector.connect(sink)
-
-    cinfo = diagram.connections.get_connection(handle)
+    cinfo = line.diagram.connections.get_connection(handle)
     assert cinfo.connected is item
     assert cinfo.port
 

@@ -1,5 +1,5 @@
 from gaphor.diagram.drop import drop
-from gaphor.diagram.presentation import postload_connect
+from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item
 from gaphor.SysML.sysml import ProxyPort
 from gaphor.UML.drop import diagram_has_presentation
@@ -21,6 +21,6 @@ def drop_proxy_port(element: ProxyPort, diagram, x, y):
     item.matrix.translate(x, y)
     item.subject = element
 
-    postload_connect(item, item.handles()[0], head_item)
+    connect(item, item.handles()[0], head_item)
 
     return item
