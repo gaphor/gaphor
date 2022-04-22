@@ -35,8 +35,7 @@ def disconnect(line, handle):
 
 def get_connected(item, handle):
     assert handle in item.handles()
-    cinfo = item.diagram.connections.get_connection(handle)
-    if cinfo:
+    if cinfo := item.diagram.connections.get_connection(handle):
         return cinfo.connected  # type: ignore[no-any-return] # noqa: F723
     return None
 
@@ -69,8 +68,7 @@ if Gtk.get_major_version() == 3:
             return widget
         if isinstance(widget, Gtk.Container):
             for child in widget.get_children():
-                found = find(child, name)
-                if found:
+                if found := find(child, name):
                     return found
         return None
 
@@ -79,15 +77,11 @@ else:
     def find(widget, name):
         if widget.get_buildable_id() == name:
             return widget
-        sibling = widget.get_next_sibling()
-        if sibling:
-            found = find(sibling, name)
-            if found:
+        if sibling := widget.get_next_sibling():
+            if found := find(sibling, name):
                 return found
-        child = widget.get_first_child()
-        if child:
-            found = find(child, name)
-            if found:
+        if child := widget.get_first_child():
+            if found := find(child, name):
                 return found
 
         return None
