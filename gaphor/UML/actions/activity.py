@@ -57,9 +57,11 @@ class ActivityItem(Classified, ElementPresentation):
 
     def update_parameters(self, event=None):
         diagram = self.diagram
-        parameter_nodes = [
-            p for p in self.subject.node if isinstance(p, UML.ActivityParameterNode)
-        ]
+        parameter_nodes = (
+            [p for p in self.subject.node if isinstance(p, UML.ActivityParameterNode)]
+            if self.subject
+            else []
+        )
         parameter_items = {
             i.subject: i
             for i in self.children
