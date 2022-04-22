@@ -39,6 +39,8 @@ ICONS=diagram \
 	initial-node \
 	activity-final-node \
 	activity-parameter-node \
+	input-pin \
+	output-pin \
 	flow-final-node \
 	decision-node \
 	fork-node \

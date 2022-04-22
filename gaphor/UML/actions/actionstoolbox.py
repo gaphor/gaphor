@@ -202,5 +202,19 @@ actions = ToolSection(
             ),
             handle_index=SE,
         ),
+        ToolDef(
+            "toolbox-input-pin",
+            gettext("Input pin"),
+            "gaphor-input-pin-symbolic",
+            None,
+            new_item_factory(diagramitems.InputPinItem),
+        ),
+        ToolDef(
+            "toolbox-output-pin",
+            gettext("Output pin"),
+            "gaphor-output-pin-symbolic",
+            None,
+            new_item_factory(diagramitems.OutputPinItem),
+        ),
     ),
 )

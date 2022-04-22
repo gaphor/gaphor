@@ -1,0 +1,48 @@
+from gaphas.connector import Handle, Port
+
+from gaphor import UML
+from gaphor.diagram.connectors import Connector
+from gaphor.UML.actions.action import ActionItem
+from gaphor.UML.actions.pin import InputPinItem, PinItem
+
+
+@Connector.register(ActionItem, PinItem)
+class ActionPinConnector:
+    def __init__(
+        self,
+        action: ActionItem,
+        pin: PinItem,
+    ) -> None:
+        assert action.diagram is pin.diagram
+        self.action = action
+        self.pin = pin
+
+    def allow(self, handle: Handle, port: Port) -> bool:
+        return True
+
+    def connect(self, handle: Handle, port: Port) -> bool:
+        """Connect and reconnect at model level.
+
+        Returns `True` if a connection is established.
+        """
+        pin = self.pin
+        if not pin.subject:
+            pin.subject = pin.model.create(
+                UML.InputPin if isinstance(pin, InputPinItem) else UML.OutputPin
+            )
+
+        assert isinstance(pin.subject, (UML.InputPin, UML.OutputPin))
+        pin.subject.opaqueAction = self.action.subject
+
+        # This raises the item in the item hierarchy
+        pin.change_parent(self.action)
+
+        return True
+
+    def disconnect(self, handle: Handle) -> None:
+        pin = self.pin
+        if pin.subject and pin.diagram:
+            subject = pin.subject
+            del pin.subject
+            pin.change_parent(None)
+            subject.unlink()

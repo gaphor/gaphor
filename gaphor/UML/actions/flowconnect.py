@@ -18,6 +18,7 @@ from gaphor.UML.actions.activitynodes import (
 )
 from gaphor.UML.actions.flow import ControlFlowItem, ObjectFlowItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
+from gaphor.UML.actions.pin import InputPinItem, OutputPinItem
 
 
 class FlowConnect(RelationshipConnect):
@@ -31,9 +32,9 @@ class FlowConnect(RelationshipConnect):
 
         if (
             handle is line.head
-            and isinstance(subject, UML.FinalNode)
+            and isinstance(subject, (UML.FinalNode, UML.InputPin))
             or handle is line.tail
-            and isinstance(subject, UML.InitialNode)
+            and isinstance(subject, (UML.InitialNode, UML.OutputPin))
         ):
             return False
 
@@ -95,6 +96,8 @@ Connector.register(ActivityNodeItem, ObjectFlowItem)(FlowConnect)
 Connector.register(ObjectNodeItem, ObjectFlowItem)(FlowConnect)
 Connector.register(SendSignalActionItem, ObjectFlowItem)(FlowConnect)
 Connector.register(ActivityParameterNodeItem, ObjectFlowItem)(FlowConnect)
+Connector.register(InputPinItem, ObjectFlowItem)(FlowConnect)
+Connector.register(OutputPinItem, ObjectFlowItem)(FlowConnect)
 
 
 class FlowForkDecisionNodeControlFlowConnect(FlowConnect):
