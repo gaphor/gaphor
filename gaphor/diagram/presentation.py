@@ -53,6 +53,12 @@ def from_package_str(item):
     )
 
 
+def connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.Item):
+    connector = ConnectorAspect(item, handle, item.diagram.connections)
+    sink = ConnectionSink(target, distance=1e40)
+    connector.connect(sink)
+
+
 def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.Item):
     """Helper function: when loading a model, handles should be connected as
     part of the `postload` step.
@@ -60,9 +66,8 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     This function finds a suitable spot on the `target` item to connect
     the handle to.
     """
-    connector = ConnectorAspect(item, handle, item.diagram.connections)
-    sink = ConnectionSink(target, distance=1e40)
-    connector.connect(sink)
+    target.postload()
+    connect(item, handle, target)
 
 
 class HandlePositionEvent(RevertibeEvent):
@@ -367,7 +372,7 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
         self._width_constraints = []
         self._height_constraints = []
 
-        handle = self._handle = Handle(connectable=True)
+        handle = self._handle = Handle(strength=gaphas.solver.STRONG, connectable=True)
         self.watch_handle(handle)
 
         rh = width / 2
@@ -493,12 +498,10 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
+        save_func("point", tuple(map(float, self._handle.pos)))
 
         if c := self._connections.get_connection(self._handle):
             save_func("connection", c.connected)
-
-        point = tuple(map(float, self._handle.pos))
-        save_func("point", point)
 
         super().save(save_func)
 
@@ -517,3 +520,4 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
             del self._load_connection
 
         self.update_shapes()
+        self._connections.solve()

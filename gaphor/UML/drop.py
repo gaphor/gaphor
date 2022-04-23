@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from gaphor import UML
 from gaphor.diagram.drop import drop
-from gaphor.diagram.presentation import postload_connect
+from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
 
 
@@ -67,7 +67,7 @@ def _drop(element, head_element, tail_element, diagram, x, y):
     item.matrix.translate(x, y)
     item.subject = element
 
-    postload_connect(item, item.head, head_item)
-    postload_connect(item, item.tail, tail_item)
+    connect(item, item.head, head_item)
+    connect(item, item.tail, tail_item)
 
     return item

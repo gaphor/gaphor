@@ -5,7 +5,7 @@ from gaphas.move import Move
 from gaphas.types import Pos
 
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.presentation import postload_connect
+from gaphor.diagram.presentation import connect
 from gaphor.diagram.tools.grayout import GrayOutLineHandleMoveMixin
 from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
 
@@ -42,7 +42,7 @@ class ActivityParameterNodeItemHandleMove(
 
     def connect(self, pos: Pos) -> None:
         item = self.item
-        postload_connect(item, self.handle, item.parent)
+        connect(item, self.handle, item.parent)
         self.view.model.request_update(item)
 
 

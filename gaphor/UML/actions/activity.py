@@ -3,7 +3,7 @@ from gaphor.diagram.presentation import (
     AttachedPresentation,
     Classified,
     ElementPresentation,
-    postload_connect,
+    connect,
 )
 from gaphor.diagram.shapes import Box, Text, TextAlign, VerticalAlign, draw_border
 from gaphor.diagram.support import represents
@@ -74,7 +74,7 @@ class ActivityItem(Classified, ElementPresentation):
                     ActivityParameterNodeItem, parent=self, subject=node
                 )
                 item.matrix.translate(0, 10)
-                postload_connect(item, item.handles()[0], self)
+                connect(item, item.handles()[0], self)
 
         for node in parameter_items:
             if node not in parameter_nodes:
