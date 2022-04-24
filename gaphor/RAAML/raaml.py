@@ -241,10 +241,6 @@ class UndesiredState(DysfunctionalEvent):
     pass
 
 
-class Cause(AbstractCause):
-    pass
-
-
 class MAJORITY_VOTE_Def(GateDef):
     pass
 
@@ -409,6 +405,10 @@ class ASILOverrideRationale(Rationale):
 
 class Confirmed(Class):
     result: _attribute[str] = _attribute("result", str)
+
+
+class Cause(AbstractCause):
+    pass
 
 
 
