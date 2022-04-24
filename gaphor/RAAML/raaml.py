@@ -324,7 +324,7 @@ class OperationalSituation(Class):
     pass
 
 
-class OperationalCondition(Situation):
+class OperationalCondition(AbstractEvent):
     pass
 
 
@@ -411,6 +411,34 @@ class Cause(AbstractCause):
     pass
 
 
+class TypicalAutomotiveSituation(AbstractOperationalSituation):
+    environmentalCondition: relation_many[EnvironmentalCondition]
+    location: relation_many[Location]
+    roadCondition: relation_many[RoadCondition]
+    trafficAndPeople: relation_many[TrafficAndPeople]
+    vehicleUsage: relation_many[VehicleUsage]
+
+
+class TrafficAndPeople():
+    pass
+
+
+class VehicleUsage():
+    pass
+
+
+class RoadCondition():
+    pass
+
+
+class Location():
+    pass
+
+
+class EnvironmentalCondition():
+    pass
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
@@ -433,3 +461,8 @@ AbstractOperationalSituation.conditions = association("conditions", OperationalC
 LossScenario.unsafeControlAction = association("unsafeControlAction", UnsafeControlAction_Def)
 LossScenario.processModel = association("processModel", ProcessModel, composite=True)
 LossScenario.Factor = association("Factor", Factor, composite=True)
+TypicalAutomotiveSituation.trafficAndPeople = association("trafficAndPeople", TrafficAndPeople, composite=True)
+TypicalAutomotiveSituation.vehicleUsage = association("vehicleUsage", VehicleUsage, composite=True)
+TypicalAutomotiveSituation.roadCondition = association("roadCondition", RoadCondition, composite=True)
+TypicalAutomotiveSituation.location = association("location", Location, composite=True)
+TypicalAutomotiveSituation.environmentalCondition = association("environmentalCondition", EnvironmentalCondition, composite=True)
