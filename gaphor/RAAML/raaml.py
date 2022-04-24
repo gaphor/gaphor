@@ -419,7 +419,7 @@ class TypicalAutomotiveSituation(AbstractOperationalSituation):
     vehicleUsage: relation_many[VehicleUsage]
 
 
-class TrafficAndPeople():
+class TrafficAndPeople(OperationalSituation):
     pass
 
 
@@ -461,8 +461,8 @@ AbstractOperationalSituation.conditions = association("conditions", OperationalC
 LossScenario.unsafeControlAction = association("unsafeControlAction", UnsafeControlAction_Def)
 LossScenario.processModel = association("processModel", ProcessModel, composite=True)
 LossScenario.Factor = association("Factor", Factor, composite=True)
-TypicalAutomotiveSituation.trafficAndPeople = association("trafficAndPeople", TrafficAndPeople, composite=True)
 TypicalAutomotiveSituation.vehicleUsage = association("vehicleUsage", VehicleUsage, composite=True)
 TypicalAutomotiveSituation.roadCondition = association("roadCondition", RoadCondition, composite=True)
 TypicalAutomotiveSituation.location = association("location", Location, composite=True)
 TypicalAutomotiveSituation.environmentalCondition = association("environmentalCondition", EnvironmentalCondition, composite=True)
+TypicalAutomotiveSituation.trafficAndPeople = association("trafficAndPeople", TrafficAndPeople, composite=True)
