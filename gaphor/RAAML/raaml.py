@@ -439,6 +439,15 @@ class EnvironmentalCondition(OperationalCondition):
     pass
 
 
+class AnyMalfunction():
+    pass
+
+
+class AccidentScenario(DysfunctionalEvent, Scenario):
+    malfunctioningBehavior: relation_one[AnyMalfunction]
+    situation: relation_many[AbstractOperationalSituation]
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
@@ -466,3 +475,5 @@ TypicalAutomotiveSituation.vehicleUsage = association("vehicleUsage", VehicleUsa
 TypicalAutomotiveSituation.roadCondition = association("roadCondition", RoadCondition, composite=True)
 TypicalAutomotiveSituation.location = association("location", Location, composite=True)
 TypicalAutomotiveSituation.environmentalCondition = association("environmentalCondition", EnvironmentalCondition, composite=True)
+AccidentScenario.situation = association("situation", AbstractOperationalSituation, lower=1, composite=True)
+AccidentScenario.malfunctioningBehavior = association("malfunctioningBehavior", AnyMalfunction, upper=1, composite=True)
