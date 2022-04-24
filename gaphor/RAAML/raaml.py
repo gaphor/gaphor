@@ -452,6 +452,10 @@ class Less(AnyMalfunction):
     pass
 
 
+class More(AnyMalfunction):
+    pass
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
