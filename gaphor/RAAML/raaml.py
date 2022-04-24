@@ -308,7 +308,7 @@ class Sensor(Property):
     pass
 
 
-class Early(UnsafeControlAction_Def):
+class EarlyUCA(UnsafeControlAction_Def):
     pass
 
 
@@ -356,7 +356,7 @@ class InadequateProcessBehavior(ProcessModel):
     pass
 
 
-class Late(UnsafeControlAction_Def):
+class LateUCA(UnsafeControlAction_Def):
     pass
 
 
@@ -453,6 +453,26 @@ class Less(AnyMalfunction):
 
 
 class More(AnyMalfunction):
+    pass
+
+
+class Intermittent(AnyMalfunction):
+    pass
+
+
+class Unintended(AnyMalfunction):
+    pass
+
+
+class Early(AnyMalfunction):
+    pass
+
+
+class Late(AnyMalfunction):
+    pass
+
+
+class Inverted(AnyMalfunction):
     pass
 
 
