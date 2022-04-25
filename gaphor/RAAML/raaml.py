@@ -478,6 +478,7 @@ class Inverted(AnyMalfunction):
 
 class HazardousEvent(AbstractRisk):
     systemLevelEffect: relation_many[SystemLevelEffect]
+    vehicleLevelEffect: relation_many[VehicleLevelEffect]
 
 
 class AutomotiveEffect(AbstractEffect):
@@ -522,3 +523,4 @@ TypicalAutomotiveSituation.environmentalCondition = association("environmentalCo
 AccidentScenario.situation = association("situation", AbstractOperationalSituation, lower=1, composite=True)
 AccidentScenario.malfunctioningBehavior = association("malfunctioningBehavior", AnyMalfunction, upper=1, composite=True)
 HazardousEvent.systemLevelEffect = association("systemLevelEffect", SystemLevelEffect, composite=True)
+HazardousEvent.vehicleLevelEffect = association("vehicleLevelEffect", VehicleLevelEffect, composite=True)
