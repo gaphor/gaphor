@@ -513,6 +513,11 @@ class AnyEnvironmentalCondition(EnvironmentalCondition):
     pass
 
 
+from gaphor.UML.uml import Package
+class HazardAndRiskAssessment(Package):
+    pass
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
