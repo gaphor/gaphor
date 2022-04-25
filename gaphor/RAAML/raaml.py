@@ -493,6 +493,10 @@ class VehicleLevelEffect(AutomotiveEffect):
     pass
 
 
+class AnyTrafficAndPeople(TrafficAndPeople):
+    pass
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
