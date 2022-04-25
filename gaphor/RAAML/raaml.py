@@ -497,6 +497,22 @@ class AnyTrafficAndPeople(TrafficAndPeople):
     pass
 
 
+class AnyVehicleUse(VehicleUsage):
+    pass
+
+
+class AnyRoadCondition(RoadCondition):
+    pass
+
+
+class AnyLocation(Location):
+    pass
+
+
+class AnyEnvironmentalCondition(EnvironmentalCondition):
+    pass
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
