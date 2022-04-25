@@ -629,7 +629,7 @@ pycairo = ">=1.16,<2.0"
 
 [[package]]
 name = "pyinstaller"
-version = "5.0"
+version = "5.0.1"
 description = "PyInstaller bundles a Python application and all its dependencies into a single package."
 category = "main"
 optional = true
@@ -1386,17 +1386,17 @@ pygobject = [
     {file = "PyGObject-3.42.1.tar.gz", hash = "sha256:80d6a3ad1630e9d1edf31b9e9fad9a894c57e18545a3c95ef0044ac4042b8620"},
 ]
 pyinstaller = [
-    {file = "pyinstaller-5.0-py3-none-macosx_10_13_universal2.whl", hash = "sha256:478a205a13c1c9fa0ef1fe55bdfff5ffc8946d612a6a6d093b2e599d69a26e55"},
-    {file = "pyinstaller-5.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:050f91ddf78a6b25c578c9d206740fd2401ddc5123665d4633c06e0825de8738"},
-    {file = "pyinstaller-5.0-py3-none-manylinux2014_i686.whl", hash = "sha256:a4259e924e8ca0a2b73f9b602f056548be3547dff2869fc7329a21831e493f7e"},
-    {file = "pyinstaller-5.0-py3-none-manylinux2014_ppc64le.whl", hash = "sha256:00a982387c69d101fb1ae680689ec88301466eda96928fdc3ba087f7e58ced70"},
-    {file = "pyinstaller-5.0-py3-none-manylinux2014_s390x.whl", hash = "sha256:16c6d5ee6cbba2835572e2b33b300775e597ad7ece60647e8b5b0de90fff27a5"},
-    {file = "pyinstaller-5.0-py3-none-manylinux2014_x86_64.whl", hash = "sha256:5d9bf534b9d24c32549bd0b36a4b15d80adf57773addc065e5c68d9bd5144450"},
-    {file = "pyinstaller-5.0-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:c71d94fa7b1feeeca8d41f638560b1165202c594f7f79c70e38f8034a8318888"},
-    {file = "pyinstaller-5.0-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:0e58b86e126a076ab912cefa57aa057baa8ad51ffdfcb8decab30712c0f0c698"},
-    {file = "pyinstaller-5.0-py3-none-win32.whl", hash = "sha256:c72128088b8670fa2b16264395d3fe6546cd3679f43e53f8077deda58c06cfc0"},
-    {file = "pyinstaller-5.0-py3-none-win_amd64.whl", hash = "sha256:bc9430b04e0e38a29b08fac10f45fc3a1c71f0f5de9ca5d9996f7cfe6a4cc5bf"},
-    {file = "pyinstaller-5.0.tar.gz", hash = "sha256:0b7f1a09e1ae617867d4e9b56285dd670bcf0b1362b272c96a933b0195fce226"},
+    {file = "pyinstaller-5.0.1-py3-none-macosx_10_13_universal2.whl", hash = "sha256:0dc19ccf97584fff1766dcaf9c0425e4cd714ccc41c9f4d1222cab8c756624e4"},
+    {file = "pyinstaller-5.0.1-py3-none-manylinux2014_aarch64.whl", hash = "sha256:100ba42f5885e1044e45a9a1d6fa9bb17be49d8731a34ebde39519a49095d509"},
+    {file = "pyinstaller-5.0.1-py3-none-manylinux2014_i686.whl", hash = "sha256:943d22969ad7487ff430810e733f06e6efddc1af1cbe6453ec44dffc39f3a1f5"},
+    {file = "pyinstaller-5.0.1-py3-none-manylinux2014_ppc64le.whl", hash = "sha256:7b4fa281373676728e503447e5eb2a101208d0d41be62b540dcfbe073e26e60f"},
+    {file = "pyinstaller-5.0.1-py3-none-manylinux2014_s390x.whl", hash = "sha256:a7698ca54b1afc5ff0ef0a881fa68a878e3f12e7f1a3bade9bf198af34d15222"},
+    {file = "pyinstaller-5.0.1-py3-none-manylinux2014_x86_64.whl", hash = "sha256:d8384871a2e6605b49ef3293aa8b365bbdfe9aac6ff80e3743e5fe4cbd46fa62"},
+    {file = "pyinstaller-5.0.1-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:d3a587f5adb28e299781d99d6e781e3d240f6f5ecaad5b5f484ea196801476f6"},
+    {file = "pyinstaller-5.0.1-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:219e249c2bbd2ec77ba008adbc46832ddd761554167bf5f9c86e861f8ddd4589"},
+    {file = "pyinstaller-5.0.1-py3-none-win32.whl", hash = "sha256:3ac6f8bfe65666650bf37671d6661775692b33711a7c5e664ac5bb577100f120"},
+    {file = "pyinstaller-5.0.1-py3-none-win_amd64.whl", hash = "sha256:bf6148a6eb005e1106d57271681cd7799b56f7b41efa6c78ce4d375fc1cd829e"},
+    {file = "pyinstaller-5.0.1.tar.gz", hash = "sha256:25f5f758b005c66471af0d452c90ec328179116afe9d5bd82f5fb06d9416267b"},
 ]
 pyinstaller-hooks-contrib = [
     {file = "pyinstaller-hooks-contrib-2022.4.tar.gz", hash = "sha256:b7f7da20e5b83c22219a21b8f849525e5f735197975313208f4e07ff9549cdaf"},
