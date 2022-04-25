@@ -476,6 +476,22 @@ class Inverted(AnyMalfunction):
     pass
 
 
+class HazardousEvent(AbstractRisk):
+    systemLevelEffect: relation_many[SystemLevelEffect]
+
+
+class AutomotiveEffect(AbstractEffect):
+    pass
+
+
+class SystemLevelEffect(AutomotiveEffect):
+    pass
+
+
+class VehicleLevelEffect(AutomotiveEffect):
+    pass
+
+
 
 ControllingMeasure.affects = association("affects", Property, composite=True)
 AnySituation.to = association("to", AnySituation, opposite="from_")
@@ -505,3 +521,4 @@ TypicalAutomotiveSituation.location = association("location", Location, composit
 TypicalAutomotiveSituation.environmentalCondition = association("environmentalCondition", EnvironmentalCondition, composite=True)
 AccidentScenario.situation = association("situation", AbstractOperationalSituation, lower=1, composite=True)
 AccidentScenario.malfunctioningBehavior = association("malfunctioningBehavior", AnyMalfunction, upper=1, composite=True)
+HazardousEvent.systemLevelEffect = association("systemLevelEffect", SystemLevelEffect, composite=True)
