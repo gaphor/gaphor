@@ -18,12 +18,19 @@ from gaphor.codegen.coder import (
 )
 from gaphor.core.format import parse
 from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling.modelinglanguage import (
+    CoreModelingLanguage,
+    MockModelingLanguage,
+)
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture(scope="session")
 def uml_metamodel():
-    return load_model("models/UML.gaphor")
+    return load_model(
+        "models/UML.gaphor",
+        MockModelingLanguage(CoreModelingLanguage(), UMLModelingLanguage()),
+    )
 
 
 def test_load_modeling_language():

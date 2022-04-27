@@ -74,9 +74,15 @@ def main(
 ):
     logging.basicConfig()
 
-    model = load_model(modelfile)
+    modeling_language = MockModelingLanguage(
+        CoreModelingLanguage(), UMLModelingLanguage()
+    )
+    model = load_model(modelfile, modeling_language)
     super_models = (
-        [(load_modeling_language(lang), load_model(f)) for lang, f in supermodelfiles]
+        [
+            (load_modeling_language(lang), load_model(f, modeling_language))
+            for lang, f in supermodelfiles
+        ]
         if supermodelfiles
         else []
     )
@@ -408,15 +414,12 @@ def in_super_model(
     return None, None
 
 
-def load_model(modelfile: str) -> ElementFactory:
+def load_model(modelfile: str, modeling_language: ModelingLanguage) -> ElementFactory:
     element_factory = ElementFactory()
-    uml_modeling_language = MockModelingLanguage(
-        CoreModelingLanguage(), UMLModelingLanguage()
-    )
     storage.load(
         modelfile,
         element_factory,
-        uml_modeling_language,
+        modeling_language,
     )
 
     resolve_attribute_type_values(element_factory)
