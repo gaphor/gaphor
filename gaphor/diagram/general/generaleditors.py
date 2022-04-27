@@ -27,7 +27,7 @@ def CommentItemInlineEditor(item, view, event_manager, pos=None) -> bool:
     buffer.move_mark_by_name("insert", enditer)
 
     text_view = Gtk.TextView.new_with_buffer(buffer)
-    box = view.get_item_bounding_box(view.selection.hovered_item)
+    box = view.get_item_bounding_box(item)
 
     frame = Gtk.Frame()
     frame.add(text_view)
