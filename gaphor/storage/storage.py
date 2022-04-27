@@ -178,7 +178,7 @@ def _load_elements_and_canvasitems(
             elem = upgrade_flow_item_to_control_flow_item(elem, elements)
 
         cls = modeling_language.lookup_element(elem.type)
-        assert cls, f"Type {elem.type} can not be loaded: no such element"
+        assert cls, f"Type {elem.type} cannot be loaded: no such element"
         if issubclass(cls, Presentation):
             diagram_id = elem.references["diagram"]
             diagram_elem = elements[diagram_id]
