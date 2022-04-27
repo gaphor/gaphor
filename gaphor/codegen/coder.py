@@ -28,11 +28,13 @@ from typing import Iterable
 
 from gaphor import UML
 from gaphor.codegen.override import Overrides
-from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling import Element, ElementFactory
 from gaphor.core.modeling.modelinglanguage import (
     CoreModelingLanguage,
     MockModelingLanguage,
+    ModelingLanguage,
 )
+from gaphor.entrypoint import initialize
 from gaphor.storage import storage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
@@ -74,7 +76,9 @@ def main(
 
     model = load_model(modelfile)
     super_models = (
-        [(pkg, load_model(f)) for pkg, f in supermodelfiles] if supermodelfiles else []
+        [(load_modeling_language(lang), load_model(f)) for lang, f in supermodelfiles]
+        if supermodelfiles
+        else []
     )
     overrides = Overrides(overridesfile) if overridesfile else None
 
@@ -85,7 +89,7 @@ def main(
 
 def coder(
     model: ElementFactory,
-    super_models: list[tuple[str, ElementFactory]],
+    super_models: list[tuple[ModelingLanguage, ElementFactory]],
     overrides: Overrides | None,
 ) -> Iterable[str]:
 
@@ -113,9 +117,9 @@ def coder(
             yield overrides.get_override(c.name)
             continue
 
-        pkg, cls = in_super_model(c.name, super_models)
-        if pkg and cls:
-            line = f"from {pkg} import {cls.name}"
+        element_type, cls = in_super_model(c.name, super_models)
+        if element_type and cls:
+            line = f"from {element_type.__module__} import {element_type.__name__}"
             yield line
             already_imported.add(line)
             continue
@@ -218,7 +222,7 @@ def associations(
 
 def subsets(
     c: UML.Class,
-    super_models: list[tuple[str, ElementFactory]],
+    super_models: list[tuple[ModelingLanguage, ElementFactory]],
 ):
     for a in c.ownedAttribute:
         if (
@@ -234,10 +238,10 @@ def subsets(
 
             full_name = f"{c.name}.{a.name}"
             for value in slot.value.split(","):
-                pkg, d = attribute(c, value.strip(), super_models)
+                element_type, d = attribute(c, value.strip(), super_models)
                 if d and d.isDerived:
-                    if pkg:
-                        yield f"from {pkg} import {d.owner.name}"  # type: ignore[attr-defined]
+                    if element_type:
+                        yield f"from {element_type.__module__} import {d.owner.name}"  # type: ignore[attr-defined]
                     yield f"{d.owner.name}.{d.name}.add({full_name})  # type: ignore[attr-defined]"  # type: ignore[attr-defined]
                 elif not d:
                     log.warning(
@@ -369,34 +373,38 @@ def redefines(a: UML.Property) -> str | None:
 
 
 def attribute(
-    c: UML.Class, name: str, super_models: list[tuple[str, ElementFactory]]
-) -> tuple[str | None, UML.Property | None]:
+    c: UML.Class, name: str, super_models: list[tuple[ModelingLanguage, ElementFactory]]
+) -> tuple[type[Element] | None, UML.Property | None]:
     for a in c.ownedAttribute:
         if a.name == name:
             return None, a
 
     for base in bases(c):
-        pkg, a = attribute(base, name, super_models)
+        element_type, a = attribute(base, name, super_models)
         if a:
-            return pkg, a
+            return element_type, a
 
-    pkg, super_class = in_super_model(c.name, super_models)
+    element_type, super_class = in_super_model(c.name, super_models)
     if super_class and c is not super_class:
-        return pkg, attribute(super_class, name, super_models)[1]
+        return element_type, attribute(super_class, name, super_models)[1]
 
     return None, None
 
 
 def in_super_model(
-    name: str, super_models: list[tuple[str, ElementFactory]]
-) -> tuple[str, UML.Class] | tuple[None, None]:
-    for pkg, factory in super_models:
+    name: str, super_models: list[tuple[ModelingLanguage, ElementFactory]]
+) -> tuple[type[Element], UML.Class] | tuple[None, None]:
+    for modeling_language, factory in super_models:
         cls: UML.Class
         for cls in factory.select(  # type: ignore[assignment]
             lambda e: isinstance(e, UML.Class) and e.name == name
         ):
             if not (is_in_profile(cls) or is_enumeration(cls)):
-                return pkg, cls
+                element_type = modeling_language.lookup_element(cls.name)
+                assert (
+                    element_type
+                ), f"Type {cls.name} found in model, but not in generated model"
+                return element_type, cls
     return None, None
 
 
@@ -414,6 +422,10 @@ def load_model(modelfile: str) -> ElementFactory:
     resolve_attribute_type_values(element_factory)
 
     return element_factory
+
+
+def load_modeling_language(lang):
+    return initialize("gaphor.modelinglanguages", [lang])[lang]
 
 
 def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
