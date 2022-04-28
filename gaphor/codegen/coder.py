@@ -74,9 +74,19 @@ def main(
 ):
     logging.basicConfig()
 
-    modeling_language = MockModelingLanguage(
-        CoreModelingLanguage(), UMLModelingLanguage()
+    extra_langs = (
+        [
+            load_modeling_language(lang)
+            for lang, _ in supermodelfiles
+            if lang not in ("Core", "UML")
+        ]
+        if supermodelfiles
+        else []
     )
+    modeling_language = MockModelingLanguage(
+        *([CoreModelingLanguage(), UMLModelingLanguage()] + extra_langs)
+    )
+
     model = load_model(modelfile, modeling_language)
     super_models = (
         [
@@ -392,7 +402,8 @@ def attribute(
 
     element_type, super_class = in_super_model(c.name, super_models)
     if super_class and c is not super_class:
-        return element_type, attribute(super_class, name, super_models)[1]
+        _, a = attribute(super_class, name, super_models)
+        return element_type, a
 
     return None, None
 
@@ -427,7 +438,7 @@ def load_model(modelfile: str, modeling_language: ModelingLanguage) -> ElementFa
     return element_factory
 
 
-def load_modeling_language(lang):
+def load_modeling_language(lang) -> ModelingLanguage:
     return initialize("gaphor.modelinglanguages", [lang])[lang]
 
 
