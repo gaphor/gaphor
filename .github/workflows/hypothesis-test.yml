@@ -15,22 +15,22 @@ jobs:
       matrix:
         python_version: ["3.10"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
         uses: ./.github/actions/linux_dependencies
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v3.1.2
         with:
           python-version: ${{ matrix.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v3.0.2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
       - name: Use Hypothesis Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v3.0.2
         with:
           path: ~/.hypothesis
           key: ${{ runner.os }}-hypothesis

@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3.0.2
       with:
         fetch-depth: 2
     - run: git checkout HEAD^2

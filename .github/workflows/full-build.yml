@@ -17,11 +17,11 @@ jobs:
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v3.1.2
         with:
           python-version: ${{ env.python_version }}
       - name: Lint with Pre-commit
@@ -37,11 +37,11 @@ jobs:
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v3.0.2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-container
@@ -94,17 +94,17 @@ jobs:
       LDFLAGS: -L/usr/local/opt/python@3.10/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
         uses: ./.github/actions/macos_dependencies
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v3.1.2
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v3.0.2
         with:
           path: ~/Library/Caches/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -181,21 +181,21 @@ jobs:
       - name: GTK binaries create dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: GTK binaries get from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v3.0.2
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
           key: gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}
       - name: GTK binaries checkout gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.0.2
         with:
           repository: wingtk/gvsbuild
           ref: ${{ env.gvsbuildref }}
           path: gvsbuild
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v3.1.2
         with:
           python-version: ${{ env.python_version }}
       - name: GTK binaries move git binary
@@ -226,7 +226,7 @@ jobs:
       - name: Create GTK binaries dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: Get GTK binaries from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v3.0.2
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
@@ -236,15 +236,15 @@ jobs:
           echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
           echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
         shell: bash
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v3.1.2
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v3.0.2
         with:
           path: ~\AppData\Local\pip\Cache
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
