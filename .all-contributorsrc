@@ -803,6 +803,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "JacobCrabill",
+      "name": "Jacob Crabill",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5885545?v=4",
+      "profile": "http://jcrabill.weebly.com/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
