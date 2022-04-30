@@ -20,7 +20,7 @@ from gaphor.core.modeling.properties import (
 from typing import Callable
 
 
-from gaphor.core.modeling.coremodel import Element
+from gaphor.core.modeling.element import Element
 class NamedElement(Element):
     clientDependency: relation_many[Dependency]
     informationFlow: relation_many[InformationFlow]

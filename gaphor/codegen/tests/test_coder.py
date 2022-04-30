@@ -11,17 +11,32 @@ from gaphor.codegen.coder import (
     is_in_toplevel_package,
     is_simple_type,
     load_model,
+    load_modeling_language,
     order_classes,
     resolve_attribute_type_values,
     variables,
 )
 from gaphor.core.format import parse
 from gaphor.core.modeling import ElementFactory
+from gaphor.core.modeling.modelinglanguage import (
+    CoreModelingLanguage,
+    MockModelingLanguage,
+)
+from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
 @pytest.fixture(scope="session")
 def uml_metamodel():
-    return load_model("models/UML.gaphor")
+    return load_model(
+        "models/UML.gaphor",
+        MockModelingLanguage(CoreModelingLanguage(), UMLModelingLanguage()),
+    )
+
+
+def test_load_modeling_language():
+    ml = load_modeling_language("Core")
+
+    assert ml.__class__.__name__ == "CoreModelingLanguage"
 
 
 def test_coder_write_class():
@@ -253,9 +268,11 @@ def test_attribute_from_super_model(uml_metamodel: ElementFactory):
     class_ = UML.Class()
     class_.name = "Package"
 
-    pkg, base = attribute(class_, "relationship", [("pkg", uml_metamodel)])
+    element_type, base = attribute(
+        class_, "relationship", [(UMLModelingLanguage(), uml_metamodel)]
+    )
 
-    assert pkg == "pkg"
+    assert element_type is UML.Package
     assert base.owner.name == "Element"
 
 

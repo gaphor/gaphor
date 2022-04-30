@@ -93,7 +93,7 @@ class ValueType(DataType):
 
 
 from gaphor.UML.uml import InstanceSpecification
-from gaphor.core.modeling.coremodel import Element
+from gaphor.core.modeling.element import Element
 class ElementPropertyPath(Element):
     propertyPath: relation_many[Property]
 

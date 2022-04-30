@@ -39,7 +39,7 @@ def test_uml_model(tmp_path):
     main(
         modelfile="models/UML.gaphor",
         overridesfile="models/UML.override",
-        supermodelfiles=[("gaphor.core.modeling.coremodel", "models/Core.gaphor")],
+        supermodelfiles=[("Core", "models/Core.gaphor")],
         outfile=outfile,
     )
 
@@ -53,7 +53,7 @@ def test_c4model_model(tmp_path):
     outfile = tmp_path / "c4model.py"
     main(
         modelfile="models/C4Model.gaphor",
-        supermodelfiles=[("gaphor.UML.uml", "models/UML.gaphor")],
+        supermodelfiles=[("UML", "models/UML.gaphor")],
         outfile=outfile,
     )
 
@@ -68,8 +68,8 @@ def test_sysml_model(tmp_path):
     main(
         modelfile="models/SysML.gaphor",
         supermodelfiles=[
-            ("gaphor.core.modeling.coremodel", "models/Core.gaphor"),
-            ("gaphor.UML.uml", "models/UML.gaphor"),
+            ("Core", "models/Core.gaphor"),
+            ("UML", "models/UML.gaphor"),
         ],
         outfile=outfile,
     )
@@ -85,9 +85,9 @@ def test_raaml_model(tmp_path):
     main(
         modelfile="models/RAAML.gaphor",
         supermodelfiles=[
-            ("gaphor.core.modeling.coremodel", "models/Core.gaphor"),
-            ("gaphor.UML.uml", "models/UML.gaphor"),
-            ("gaphor.SysML.sysml", "models/SysML.gaphor"),
+            ("Core", "models/Core.gaphor"),
+            ("UML", "models/UML.gaphor"),
+            ("SysML", "models/SysML.gaphor"),
         ],
         outfile=outfile,
     )
