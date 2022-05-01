@@ -487,7 +487,7 @@ if __name__ == "__main__":
         dest="supermodelfiles",
         type=str,
         action="append",
-        help="Reference to dependent model file (e.g. gaphor.UML.uml:models/UML.gaphor)",
+        help="Reference to dependent model file (e.g. UML:models/UML.gaphor)",
     )
 
     args = parser.parse_args()
