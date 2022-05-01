@@ -5,8 +5,18 @@ env:
   python_version: '3.10'
 
 jobs:
-
+  skip-check:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v3.4.1
+        with:
+          concurrent_skipping: 'same_content'
+          do_not_skip: '["release", "workflow_dispatch", "schedule"]'
   lint:
+    needs: skip-check
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
