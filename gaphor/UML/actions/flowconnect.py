@@ -72,7 +72,11 @@ class FlowConnect(RelationshipConnect):
         relation.activity = c1.subject.activity
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)
-        if opposite and isinstance(otc, (ForkNodeItem, DecisionNodeItem)):
+        if (
+            opposite
+            and isinstance(line, ControlFlowItem)
+            and isinstance(otc, (ForkNodeItem, DecisionNodeItem))
+        ):
             adapter = Connector(otc, line)
             adapter.combine_nodes()
 
@@ -81,7 +85,11 @@ class FlowConnect(RelationshipConnect):
         line = self.line
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)
-        if opposite and isinstance(otc, (ForkNodeItem, DecisionNodeItem)):
+        if (
+            opposite
+            and isinstance(line, ControlFlowItem)
+            and isinstance(otc, (ForkNodeItem, DecisionNodeItem))
+        ):
             adapter = Connector(otc, line)
             adapter.decombine_nodes()
 
