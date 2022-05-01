@@ -124,13 +124,13 @@ jobs:
       - name: Create Signed macOS Application
         run: poetry run poe package
       - name: Notarize app
-        uses: devbotsxyz/xcode-notarize@v1
+        uses: devbotsxyz/xcode-notarize@v1.0.0
         with:
           product-path: "_packaging/dist/Gaphor.app"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
           appstore-connect-password: ${{ secrets.AC_PASSWORD }}
       - name: Staple app
-        uses: devbotsxyz/xcode-staple@v1
+        uses: devbotsxyz/xcode-staple@v1.0.0
         with:
           product-path: "_packaging/dist/Gaphor.app"
       - name: Create dmg
@@ -151,7 +151,7 @@ jobs:
           appstore-connect-password: ${{ secrets.AC_PASSWORD }}
           primary-bundle-id: org.gaphor.gaphor
       - name: Staple .dmg
-        uses: devbotsxyz/xcode-staple@v1
+        uses: devbotsxyz/xcode-staple@v1.0.0
         with:
           product-path: "_packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg"
       - name: Upload Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg
