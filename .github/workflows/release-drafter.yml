@@ -4,11 +4,14 @@ on:
   push:
     branches: main
 
+permissions:
+  contents: read
+
 jobs:
   update-release-draft:
     permissions:
-      contents: write
-      pull-requests: read
+      contents: write  # for release-drafter/release-drafter to create a github release
+      pull-requests: write  # for release-drafter/release-drafter to add label to PR
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
