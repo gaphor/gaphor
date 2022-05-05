@@ -28,7 +28,7 @@ class Presentation(Matrices, Element, Generic[S]):
     def __init__(self, diagram: Diagram, id: Id | None = None) -> None:
         super().__init__(id=id, model=diagram.model)
         self.diagram = diagram
-        self._original_diagram = diagram
+        self._original_diagram: Diagram | None = diagram
 
         def update(event):
             if self.diagram:
@@ -89,11 +89,7 @@ class Presentation(Matrices, Element, Generic[S]):
         else:
             super().load(name, value)
 
-    def unlink(self):
-        """Remove the item from the diagram and set subject to None."""
-        self.inner_unlink(UnlinkEvent(self, diagram=self._original_diagram))
-
-    def inner_unlink(self, unlink_event: UnlinkEvent) -> None:
+    def inner_unlink(self, _unlink_event: UnlinkEvent) -> None:
         self._watcher.unsubscribe_all()
         self.matrix.remove_handler(self._on_matrix_changed)
 
@@ -101,16 +97,17 @@ class Presentation(Matrices, Element, Generic[S]):
         if parent:
             self.parent.matrix_i2c.remove_handler(self._on_matrix_changed)
 
-        diagram = unlink_event.diagram
+        diagram = self._original_diagram
         if diagram:
             diagram.connections.remove_connections_to_item(self)
-        super().inner_unlink(unlink_event)
+            self._original_diagram = None
+            super().inner_unlink(UnlinkEvent(self, diagram=diagram))
 
     def _on_diagram_changed(self, event):
         new_value = event.new_value
         if new_value and new_value is not self._original_diagram:
             self.diagram = self._original_diagram
-            raise ValueError("Can not change diagram for a presentation")
+            raise ValueError("Can't change diagram of a presentation")
 
     def _on_parent_changed(self, event):
         old_parent = event.old_value
