@@ -53,7 +53,6 @@ from gaphor.diagram.support import get_diagram_item_metadata
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.RAAML.toolbox import fta, stpa
 from gaphor.storage import storage
-from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.SysML.toolbox import blocks, internal_blocks, requirements
 from gaphor.ui.filemanager import load_default_model
 from gaphor.ui.namespacemodel import change_owner
@@ -285,7 +284,7 @@ class ModelConsistency(RuleBasedStateMachine):
         new_model = ElementFactory()
         try:
             with StringIO() as buffer:
-                storage.save(XMLWriter(buffer), self.model)
+                storage.save(buffer, self.model)
                 buffer.seek(0)
                 storage.load(
                     buffer,
@@ -298,7 +297,7 @@ class ModelConsistency(RuleBasedStateMachine):
             ), f"{self.model.lselect()} != {new_model.lselect()}"
         except Exception:
             with open("falsifying_model.gaphor", "w") as out:
-                storage.save(XMLWriter(out), self.model)
+                storage.save(out, self.model)
             raise
 
 

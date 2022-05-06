@@ -24,7 +24,6 @@ from gaphor.core.modeling.modelinglanguage import (
     MockModelingLanguage,
 )
 from gaphor.storage import storage
-from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
@@ -81,7 +80,7 @@ def saver(element_factory):
         """Save diagram into string."""
 
         f = StringIO()
-        storage.save(XMLWriter(f), element_factory)
+        storage.save(f, element_factory)
         data = f.getvalue()
         f.close()
 
