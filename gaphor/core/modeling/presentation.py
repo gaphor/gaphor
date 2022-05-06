@@ -93,12 +93,10 @@ class Presentation(Matrices, Element, Generic[S]):
         self._watcher.unsubscribe_all()
         self.matrix.remove_handler(self._on_matrix_changed)
 
-        parent = self.parent
-        if parent:
+        if parent := self.parent:
             self.parent.matrix_i2c.remove_handler(self._on_matrix_changed)
 
-        diagram = self._original_diagram
-        if diagram:
+        if diagram := self._original_diagram:
             diagram.connections.remove_connections_to_item(self)
             self._original_diagram = None
             super().inner_unlink(UnlinkEvent(self, diagram=diagram))
@@ -110,12 +108,10 @@ class Presentation(Matrices, Element, Generic[S]):
             raise ValueError("Can't change diagram of a presentation")
 
     def _on_parent_changed(self, event):
-        old_parent = event.old_value
-        if old_parent:
+        if old_parent := event.old_value:
             old_parent.matrix_i2c.remove_handler(self._on_matrix_changed)
 
-        new_parent = event.new_value
-        if new_parent:
+        if new_parent := event.new_value:
             new_parent.matrix_i2c.add_handler(self._on_matrix_changed)
 
         self._on_matrix_changed(None, ())

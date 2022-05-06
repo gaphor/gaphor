@@ -107,12 +107,12 @@ class Element:
         return self._model
 
     @classmethod
-    def umlproperties(class_) -> Iterator[umlproperty]:
+    def umlproperties(cls) -> Iterator[umlproperty]:
         """Iterate over all properties."""
         umlprop = umlproperty
-        for propname in dir(class_):
+        for propname in dir(cls):
             if not propname.startswith("_"):
-                prop = getattr(class_, propname)
+                prop = getattr(cls, propname)
                 if isinstance(prop, umlprop):
                     yield prop
 

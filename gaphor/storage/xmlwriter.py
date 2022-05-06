@@ -69,11 +69,9 @@ class XMLWriter(xml.sax.handler.ContentHandler):
     def _qname(self, name):
         """Builds a qualified name from a (ns_url, localname) pair."""
         if name[0]:
-            # The name is in a non-empty namespace
-            prefix = self._current_context[name[0]]
-            if prefix:
+            if prefix := self._current_context[name[0]]:
                 # If it is not the default namespace, prepend the prefix
-                return prefix + ":" + name[1]
+                return f"{prefix}:{name[1]}"
         # Return the unqualified name
         return name[1]
 
@@ -113,7 +111,7 @@ class XMLWriter(xml.sax.handler.ContentHandler):
             self._out.write(f" {self._qname(name)}={quoteattr(value)}")
 
     def endElementNS(self, name, qname):
-        self._write("%s" % self._qname(name), end_tag=True)
+        self._write(f"{self._qname(name)}", end_tag=True)
 
     def characters(self, content):
         if self._in_cdata:
