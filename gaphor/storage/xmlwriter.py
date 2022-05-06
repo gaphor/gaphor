@@ -1,4 +1,3 @@
-import sys
 import xml.sax.handler
 from typing import Dict, List, Tuple
 from xml.sax.saxutils import escape, quoteattr
@@ -15,15 +14,13 @@ except ImportError:
 
 
 class XMLWriter(xml.sax.handler.ContentHandler):
-    def __init__(self, out=None, encoding=None):
-        if out is None:
-            out = sys.stdout
-        xml.sax.handler.ContentHandler.__init__(self)
+    def __init__(self, out, encoding="utf-8"):
+        super().__init__()
         self._out = out
+        self._encoding = encoding
         self._ns_contexts: List[Dict[str, str]] = [{}]  # contains uri -> prefix dicts
         self._current_context = self._ns_contexts[-1]
         self._undeclared_ns_maps: List[Tuple[str, str]] = []
-        self._encoding = encoding or sys.getdefaultencoding()
 
         self._in_cdata = False
         self._in_start_tag = False
