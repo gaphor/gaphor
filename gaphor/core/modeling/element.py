@@ -107,12 +107,12 @@ class Element:
         return self._model
 
     @classmethod
-    def umlproperties(class_) -> Iterator[umlproperty]:
+    def umlproperties(cls) -> Iterator[umlproperty]:
         """Iterate over all properties."""
         umlprop = umlproperty
-        for propname in dir(class_):
+        for propname in dir(cls):
             if not propname.startswith("_"):
-                prop = getattr(class_, propname)
+                prop = getattr(cls, propname)
                 if isinstance(prop, umlprop):
                     yield prop
 
@@ -145,23 +145,23 @@ class Element:
         The unlink lock is acquired while unlinking this elements
         properties to avoid recursion problems.
         """
-        self.inner_unlink(UnlinkEvent(self))
-
-    def inner_unlink(self, unlink_event):
         if self._unlink_lock:
             return
 
+        self._unlink_lock += 1
+
         try:
-            self._unlink_lock += 1
-
-            for prop in self.umlproperties():
-                prop.unlink(self)
-
-            log.debug("unlinking %s", self)
-            self.handle(unlink_event)
-            self._model = None
+            self.inner_unlink(UnlinkEvent(self))
         finally:
             self._unlink_lock -= 1
+
+    def inner_unlink(self, unlink_event: UnlinkEvent):
+        for prop in self.umlproperties():
+            prop.unlink(self)
+
+        log.debug("unlinking %s", self)
+        self.handle(unlink_event or UnlinkEvent(self))
+        self._model = None
 
     def handle(self, event):
         """Propagate incoming events."""

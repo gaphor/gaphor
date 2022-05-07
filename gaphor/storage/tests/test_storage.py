@@ -10,7 +10,6 @@ from gaphor.core.modeling import Comment, Diagram, StyleSheet
 from gaphor.diagram.general import CommentItem
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.storage import storage
-from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.UML.classes import AssociationItem, ClassItem, InterfaceItem
 
 
@@ -50,7 +49,7 @@ def test_save_uml(element_factory):
     element_factory.create(UML.Class)
 
     out = PseudoFile()
-    storage.save(XMLWriter(out), factory=element_factory)
+    storage.save(out, factory=element_factory)
     out.close()
 
     assert "<Package " in out.data
@@ -65,7 +64,7 @@ def test_save_item(diagram, element_factory):
     diagram.create(CommentItem, subject=element_factory.create(Comment))
 
     out = PseudoFile()
-    storage.save(XMLWriter(out), factory=element_factory)
+    storage.save(out, factory=element_factory)
     out.close()
 
     assert "<Diagram " in out.data
@@ -199,7 +198,7 @@ def test_save_and_load_of_association_with_two_connected_classes(
     assert a.subject
 
     fd = StringIO()
-    storage.save(XMLWriter(fd), factory=element_factory)
+    storage.save(fd, factory=element_factory)
     data = fd.getvalue()
     fd.close()
 
@@ -236,7 +235,7 @@ def test_load_and_save_of_a_model(element_factory, modeling_language, test_model
 
     pf = PseudoFile()
 
-    storage.save(XMLWriter(pf), factory=element_factory)
+    storage.save(pf, factory=element_factory)
 
     with open(path, "r") as ifile:
 

@@ -18,7 +18,6 @@ from gaphor.event import (
     SessionShutdownRequested,
 )
 from gaphor.storage import storage
-from gaphor.storage.xmlwriter import XMLWriter
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -178,7 +177,7 @@ class FileManager(Service, ActionProvider):
         status_window = StatusWindow(
             gettext("Saving…"),
             gettext("Saving model to {filename}").format(filename=filename),
-            parent=main_window.window,
+            parent=main_window.window if main_window else None,
             queue=queue,
         )
 
@@ -186,9 +185,7 @@ class FileManager(Service, ActionProvider):
         def async_saver():
             try:
                 with open(filename, "w") as out:
-                    for percentage in storage.save_generator(
-                        XMLWriter(out), self.element_factory
-                    ):
+                    for percentage in storage.save_generator(out, self.element_factory):
                         queue.put(percentage)
                         yield
 
@@ -200,7 +197,7 @@ class FileManager(Service, ActionProvider):
                         filename=filename
                     ),
                     secondary_message=error_message(e),
-                    window=self.main_window.window,
+                    window=main_window.window if main_window else None,
                 )
                 raise
             finally:

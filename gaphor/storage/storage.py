@@ -17,6 +17,7 @@ from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.storage import parser
+from gaphor.storage.xmlwriter import XMLWriter
 
 FILE_FORMAT_VERSION = "3.0"
 NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"
@@ -24,16 +25,17 @@ NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"
 log = logging.getLogger(__name__)
 
 
-def save(writer=None, factory=None, status_queue=None):
-    for status in save_generator(writer, factory):
+def save(out=None, factory=None, status_queue=None):
+    for status in save_generator(out, factory):
         if status_queue:
             status_queue(status)
 
 
-def save_generator(writer, factory):
+def save_generator(out, factory):
     """Save the current model using @writer, which is a
     gaphor.storage.xmlwriter.XMLWriter instance."""
 
+    writer = XMLWriter(out)
     writer.startDocument()
     writer.startPrefixMapping("", NAMESPACE_MODEL)
     writer.startElementNS(
