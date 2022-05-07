@@ -93,7 +93,7 @@ class Presentation(Matrices, Element, Generic[S]):
         self._watcher.unsubscribe_all()
         self.matrix.remove_handler(self._on_matrix_changed)
 
-        if parent := self.parent:
+        if self.parent:
             self.parent.matrix_i2c.remove_handler(self._on_matrix_changed)
 
         if diagram := self._original_diagram:
