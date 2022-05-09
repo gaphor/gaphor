@@ -165,6 +165,17 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "exceptiongroup"
+version = "1.0.0rc5"
+description = "Backport of PEP 654 (exception groups)"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+test = ["pytest (>=6)"]
+
+[[package]]
 name = "filelock"
 version = "3.6.0"
 description = "A platform independent file lock."
@@ -214,11 +225,14 @@ docs = ["sphinx (>=4.3,<5.0)", "sphinx-rtd-theme (>=1.0,<2.0)", "gaphor (>=2.7,<
 
 [[package]]
 name = "generic"
-version = "1.0.1"
+version = "1.1.0"
 description = "Generic programming library for Python"
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
+
+[package.dependencies]
+exceptiongroup = ">=1.0.0-rc.5,<2.0.0"
 
 [[package]]
 name = "hypothesis"
@@ -1166,6 +1180,10 @@ docutils = [
     {file = "docutils-0.17.1-py2.py3-none-any.whl", hash = "sha256:cf316c8370a737a022b72b56874f6602acf974a37a9fba42ec2876387549fc61"},
     {file = "docutils-0.17.1.tar.gz", hash = "sha256:686577d2e4c32380bb50cbb22f575ed742d58168cee37e99117a854bcd88f125"},
 ]
+exceptiongroup = [
+    {file = "exceptiongroup-1.0.0rc5-py3-none-any.whl", hash = "sha256:295a9d7847f9ad08267f47c701a676ec70a64200a360dd49eb513f72209b09f4"},
+    {file = "exceptiongroup-1.0.0rc5.tar.gz", hash = "sha256:665422550b9653acd46e9cd35d933f28c5158ca4c058c53619cfa112915cd69e"},
+]
 filelock = [
     {file = "filelock-3.6.0-py3-none-any.whl", hash = "sha256:f8314284bfffbdcfa0ff3d7992b023d4c628ced6feb957351d4c48d059f56bc0"},
     {file = "filelock-3.6.0.tar.gz", hash = "sha256:9cd540a9352e432c7246a48fe4e8712b10acb1df2ad1f30e8c070b82ae1fed85"},
@@ -1182,8 +1200,8 @@ gaphas = [
     {file = "gaphas-3.6.0.tar.gz", hash = "sha256:ca57986c025d0d5cd9acc4378b38bd517dc98b5bc8b900dcf912b9fb0ceb322e"},
 ]
 generic = [
-    {file = "generic-1.0.1-py3-none-any.whl", hash = "sha256:e6be6d8490a2458c9f8e28e151c4f4a0687f40ac364da35578f7147b0220f264"},
-    {file = "generic-1.0.1.tar.gz", hash = "sha256:7b1f7723ea1fa3994feaaa28959c338f14aca5ea898a6637be9077d912c9d349"},
+    {file = "generic-1.1.0-py3-none-any.whl", hash = "sha256:4bf903541a808a958fd282809ae4e4687e0b7e99f9d31edd203ad10b386875e7"},
+    {file = "generic-1.1.0.tar.gz", hash = "sha256:ffde3ba04bd9483e668d10fda9cbb328015ab62bd399a79e8d7c50df6d940fe0"},
 ]
 hypothesis = [
     {file = "hypothesis-6.46.2-py3-none-any.whl", hash = "sha256:37ca37f61939d0a92c18b5e17ab8088dccc5fc077c913d6619bbe1d233dfca1e"},
