@@ -6,6 +6,7 @@ from gaphor.core.modeling import Element
 from gaphor.core.modeling.event import AssociationUpdated
 from gaphor.core.modeling.properties import association, attribute, derivedunion
 from gaphor.services.undomanager import NotInTransactionException
+from gaphor.tests.raises import raises_exception_group
 from gaphor.transaction import Transaction
 
 
@@ -109,7 +110,7 @@ def test_no_value_change_if_not_in_transaction(
     with Transaction(event_manager):
         a = element_factory.create(A)
 
-    with pytest.raises(NotInTransactionException):
+    with raises_exception_group(NotInTransactionException):
         a.attr = "foo"
 
     assert a.attr == "default"
@@ -307,7 +308,7 @@ def test_set_association_outside_transaction(
         a = element_factory.create(A)
         b = element_factory.create(A)
 
-    with pytest.raises(NotInTransactionException):
+    with raises_exception_group(NotInTransactionException):
         a.a = b
 
     assert not a.b
@@ -327,7 +328,7 @@ def test_set_multi_association_outside_transaction(
         a = element_factory.create(A)
         b = element_factory.create(A)
 
-    with pytest.raises(NotInTransactionException):
+    with raises_exception_group(NotInTransactionException):
         a.b = b
 
     assert not a.b
@@ -349,7 +350,7 @@ def test_update_association_outside_transaction(
         a.a = b
         other = element_factory.create(A)
 
-    with pytest.raises(NotInTransactionException):
+    with raises_exception_group(NotInTransactionException):
         a.a = other
 
     assert a in b.b
@@ -371,10 +372,10 @@ def test_set_derived_union_outside_transaction(
         a = element_factory.create(A)
         b = element_factory.create(A)
 
-    with pytest.raises(NotInTransactionException):
+    with raises_exception_group(NotInTransactionException):
         a.a = b
 
-    with pytest.raises(NotInTransactionException):
+    with raises_exception_group(NotInTransactionException):
         a.b = b
 
     assert not a.b

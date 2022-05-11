@@ -1,10 +1,10 @@
-import pytest
 from gaphas.item import Item
 
 from gaphor.core.eventmanager import event_handler
 from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.event import ElementDeleted
 from gaphor.core.modeling.presentation import Presentation
+from gaphor.tests.raises import raises_exception_group
 
 
 class Example(Presentation, Item):
@@ -44,7 +44,7 @@ def test_presentation_can_not_set_new_diagram(diagram, element_factory):
     presentation = diagram.create(Example)
     new_diagram = element_factory.create(Diagram)
 
-    with pytest.raises(ValueError):
+    with raises_exception_group(ValueError):
         presentation.diagram = new_diagram
 
     assert presentation.diagram is diagram

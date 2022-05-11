@@ -4,6 +4,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import connect, get_connected
+from gaphor.tests.raises import raises_exception_group
 from gaphor.UML.classes.association import (
     AssociationItem,
     draw_default_head,
@@ -104,7 +105,7 @@ def test_association_orthogonal(items, create):
     c = get_connected(a, a.tail)
     assert c is c2
 
-    with pytest.raises(ValueError):
+    with raises_exception_group(ValueError):
         a.orthogonal = True
 
 
