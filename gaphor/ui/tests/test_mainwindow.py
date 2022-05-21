@@ -17,6 +17,7 @@ def session():
             "properties",
             "main_window",
             "namespace",
+            "tree_component",
             "diagrams",
             "toolbox",
             "elementeditor",

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<layout>
+  <paned name="ui.namespace-width" orientation="horizontal" position="220">
+    <paned name="ui.namespace-height" orientation="vertical" position="300">
+      <component name="tree_component" resize="true" />
+      <component name="toolbox" />
+    </paned>
+    <box orientation="horizontal" resize="true">
+      <component name="diagrams" resize="true" />
+      <component name="elementeditor" />
+    </box>
+  </paned>
+</layout>
