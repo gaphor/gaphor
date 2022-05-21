@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkTreeExpander" id="expander">
+        <property name="indent-for-icon">yes</property>
+        <binding name="list-row">
+          <lookup name="item">GtkListItem</lookup>
+        </binding>
+        <property name="child">
+          <object class="GtkLabel">
+            <property name="xalign">0</property>
+            <binding name="label">
+              <lookup name="text" type="gaphor+ui+treemodel+TreeItem">
+                <lookup name="item">expander</lookup>
+              </lookup>
+            </binding>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+</interface>
