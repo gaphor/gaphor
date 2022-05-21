@@ -4,27 +4,28 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-31 21:14-0500\n"
-"PO-Revision-Date: 2021-08-29 19:09+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2022-05-22 09:15+0000\n"
+"Last-Translator: rene-coty <irenee.thirion@e.email>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
+"\n"
 "Language: fr\n"
-"Language-Team: French "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fr/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13-dev\n"
 "Generated-By: Babel 2.9.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:18 gaphor/C4Model/toolbox.py:56
 #: gaphor/ui/greeter.py:29
 #, fuzzy
 msgid "C4 Model"
-msgstr "Nouveau modèle"
+msgstr "Modèle C4"
 
 #: gaphor/C4Model/propertypages.glade:28 gaphor/C4Model/propertypages.ui:25
 #, fuzzy
 msgid "Description"
-msgstr "Association"
+msgstr "Description"
 
 #: gaphor/C4Model/propertypages.glade:75 gaphor/C4Model/propertypages.ui:55
 msgid "Technology"
@@ -33,32 +34,32 @@ msgstr "Technologie"
 #: gaphor/C4Model/toolbox.py:30
 #, fuzzy
 msgid "New Software System"
-msgstr "Système logiciel"
+msgstr "Nouveau Système Logiciel"
 
 #: gaphor/C4Model/toolbox.py:37
 #, fuzzy
 msgid "New Container"
-msgstr "Pointeur"
+msgstr "Nouveau Conteneur"
 
 #: gaphor/C4Model/toolbox.py:44
 #, fuzzy
 msgid "Database"
-msgstr "Conteneur : base de données"
+msgstr "Base de données"
 
 #: gaphor/C4Model/toolbox.py:45
 #, fuzzy
 msgid "New Database"
-msgstr "Conteneur : base de données"
+msgstr "Nouvelle base de données"
 
 #: gaphor/C4Model/toolbox.py:52
 #, fuzzy
 msgid "New Component"
-msgstr "Composant"
+msgstr "Nouveau composant"
 
 #: gaphor/C4Model/toolbox.py:60 gaphor/C4Model/toolbox.py:66
 #, fuzzy
 msgid "Person"
-msgstr "Charger"
+msgstr "Personne"
 
 #: gaphor/C4Model/toolbox.py:72
 msgid "Software System"
@@ -67,7 +68,7 @@ msgstr "Système logiciel"
 #: gaphor/C4Model/toolbox.py:84
 #, fuzzy
 msgid "Container"
-msgstr "Pointeur"
+msgstr "Conteneur"
 
 #: gaphor/C4Model/toolbox.py:96
 msgid "Container: Database"
@@ -86,44 +87,44 @@ msgstr "Dépendance"
 #: gaphor/C4Model/toolbox.py:140
 #, fuzzy
 msgid "New C4 Diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Nouveau diagramme C4"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/UML/toolbox.py:30
 #, fuzzy
 msgid "New Class Diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Nouveau diagramme de classes"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
 #, fuzzy
 msgid "New Activity Diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Nouveau diagramme d’activité"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
 #, fuzzy
 msgid "New Sequence Diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Nouveau diagramme de séquence"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
 #, fuzzy
 msgid "New State Machine Diagram"
-msgstr "Nouveau diagramme"
+msgstr "Diagramme de la nouvelle machine à états"
 
 #: gaphor/RAAML/modelinglanguage.py:17 gaphor/ui/greeter.py:28
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
 #, fuzzy
 msgid "New FTA Diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Nouveau diagramme FTA"
 
 #: gaphor/RAAML/toolbox.py:20
 #, fuzzy
 msgid "New STPA Diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Nouveau diagramme STPA"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:28
 msgid "AND Gate"
@@ -132,21 +133,21 @@ msgstr ""
 #: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:129
 #: gaphor/RAAML/fta/ftatoolbox.py:135
 msgid "Basic Event"
-msgstr ""
+msgstr "Événement basique"
 
 #: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:140
 #: gaphor/RAAML/fta/ftatoolbox.py:147
 msgid "Conditional Event"
-msgstr ""
+msgstr "Événement conditionnel"
 
 #: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:166
 #: gaphor/RAAML/fta/ftatoolbox.py:172
 msgid "Dormant Event"
-msgstr ""
+msgstr "Événement dormant"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:16 gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
-msgstr ""
+msgstr "Analyse de l'arbre de défaillance"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:34
 msgid "AND"
@@ -2909,4 +2910,3 @@ msgstr ""
 
 #~ msgid "Settings"
 #~ msgstr "Paramètres"
-
