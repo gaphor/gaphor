@@ -1,3 +1,20 @@
+2.10.0
+------
+- Pin support for activity diagram
+- Add Activity item to diagram
+- Allow to drag and drop all elements from tree view to diagram
+- Codegen use all defined modeling languages
+- Fix diagram dependency cycle
+- Add Skip Duplicate Action and Release-Drafter Permissions
+- Update permissions for CodeQL GitHub Action
+- Include all diagram items in test model
+- Fix GTK4 property page layouts
+- Use official RAAML logo in greeter
+- Relation metadata to allow better reuse
+- Rename relationship connector base classes
+- Add design principles to docs
+- French, Finnish, Croatian translation update
+
 2.9.2
 -----
 - Fix Windows build
