@@ -78,10 +78,21 @@ def test_tree_component_add_nested_element(tree_component, element_factory):
     assert child_model.tree_item_for_element(class_)
 
 
-# Test: delete element in tree component
-# Test: create nested element in tree component
+@pytest.mark.skipif(GTK3, reason="GTK 4+ only")
+def test_element_changed(tree_component, element_factory):
+    tree_model = tree_component.model
+    class_ = element_factory.create(UML.Class)
+    items_changed = ItemChangedHandler()
+    tree_model.connect("items-changed", items_changed)
+
+    class_.name = "foo"
+
+    assert items_changed.positions == [0]
+    assert items_changed.added == 0
+    assert items_changed.removed == 0
+
+
 # Test: delete nested element in tree component
-# Test: ownership changes
 # Formatting: diagrams bold, abstract elements italic
 # Test: name change in (nested) element
 # Test: relationships in separate subtree

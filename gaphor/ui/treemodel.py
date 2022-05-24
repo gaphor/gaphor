@@ -12,6 +12,7 @@ from gaphor.core.modeling import (
     ElementCreated,
     ElementDeleted,
 )
+from gaphor.core.modeling.event import AttributeUpdated
 from gaphor.diagram.iconname import get_icon_name
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui.abc import UIComponent
@@ -62,6 +63,10 @@ class TreeModel(GObject.Object, Gio.ListModel):
         del self.items[index]
         self.items_changed(index, 1, 0)
 
+    def change(self, element: Element):
+        index = next(i for i, ti in enumerate(self.items) if ti.element is element)
+        self.items_changed(index, 0, 0)
+
     def tree_item_for_element(self, element) -> TreeItem:
         return next(ti for ti in self.items if ti.element is element)
 
@@ -90,9 +95,10 @@ class TreeComponent(UIComponent, ActionProvider):
         self.model = TreeModel(owner=None)
 
     def open(self):
-        self.event_manager.subscribe(self.on_element_create)
-        self.event_manager.subscribe(self.on_element_delete)
+        self.event_manager.subscribe(self.on_element_created)
+        self.event_manager.subscribe(self.on_element_deleted)
         self.event_manager.subscribe(self.on_association_set)
+        self.event_manager.subscribe(self.on_attribute_changed)
 
         def child_model(item, user_data):
             return item.child_model
@@ -114,9 +120,10 @@ class TreeComponent(UIComponent, ActionProvider):
         return scrolled_window
 
     def close(self):
-        self.event_manager.unsubscribe(self.on_element_create)
-        self.event_manager.unsubscribe(self.on_element_delete)
-        self.event_manager.subscribe(self.on_association_set)
+        self.event_manager.unsubscribe(self.on_element_created)
+        self.event_manager.unsubscribe(self.on_element_deleted)
+        self.event_manager.unsubscribe(self.on_association_set)
+        self.event_manager.unsubscribe(self.on_attribute_changed)
 
     def _visible(self, element):
         return isinstance(
@@ -134,21 +141,21 @@ class TreeComponent(UIComponent, ActionProvider):
         return tree_item.child_model
 
     @event_handler(ElementCreated)
-    def on_element_create(self, event):
+    def on_element_created(self, event: ElementCreated):
         element = event.element
         if self._visible(element):
             model = self.tree_model_for_element(element.owner)
             model.add_element(element)
 
     @event_handler(ElementDeleted)
-    def on_element_delete(self, event):
+    def on_element_deleted(self, event: ElementDeleted):
         element = event.element
         if self._visible(element):
             model = self.tree_model_for_element(element.owner)
             model.remove_element(element)
 
     @event_handler(DerivedSet)
-    def on_association_set(self, event):
+    def on_association_set(self, event: DerivedSet):
         if event.property is not Element.owner:
             return
 
@@ -161,3 +168,16 @@ class TreeComponent(UIComponent, ActionProvider):
         if self._visible(element):
             new_tree_model = self.tree_model_for_element(new_value)
             new_tree_model.add_element(element)
+
+    @event_handler(AttributeUpdated)
+    def on_attribute_changed(self, event: AttributeUpdated):
+        if (
+            event.property is UML.Classifier.isAbstract
+            or event.property is UML.BehavioralFeature.isAbstract
+            or event.property is Diagram.name
+            or event.property is UML.NamedElement.name
+        ):
+            element = event.element
+
+            if tree_model := self.tree_model_for_element(element.owner):
+                tree_model.change(element)
