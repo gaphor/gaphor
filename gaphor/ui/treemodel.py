@@ -11,6 +11,8 @@ from gaphor.core.modeling import (
     Element,
     ElementCreated,
     ElementDeleted,
+    ModelFlushed,
+    ModelReady,
 )
 from gaphor.core.modeling.event import AttributeUpdated
 from gaphor.diagram.iconname import get_icon_name
@@ -63,11 +65,16 @@ class TreeModel(GObject.Object, Gio.ListModel):
         del self.items[index]
         self.items_changed(index, 1, 0)
 
-    def change(self, element: Element):
+    def change(self, element: Element) -> None:
         index = next(i for i, ti in enumerate(self.items) if ti.element is element)
         self.items_changed(index, 0, 0)
 
-    def tree_item_for_element(self, element) -> TreeItem:
+    def clear(self) -> None:
+        n = len(self.items)
+        del self.items[:]
+        self.items_changed(0, n, 0)
+
+    def tree_item_for_element(self, element: Element) -> TreeItem:
         return next(ti for ti in self.items if ti.element is element)
 
     def do_get_item_type(self) -> GObject.GType:
@@ -99,6 +106,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.subscribe(self.on_element_deleted)
         self.event_manager.subscribe(self.on_association_set)
         self.event_manager.subscribe(self.on_attribute_changed)
+        self.event_manager.subscribe(self.on_model_ready)
 
         def child_model(item, user_data):
             return item.child_model
@@ -124,6 +132,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_element_deleted)
         self.event_manager.unsubscribe(self.on_association_set)
         self.event_manager.unsubscribe(self.on_attribute_changed)
+        self.event_manager.unsubscribe(self.on_model_ready)
 
     def _visible(self, element):
         return isinstance(
@@ -181,3 +190,14 @@ class TreeComponent(UIComponent, ActionProvider):
 
             if tree_model := self.tree_model_for_element(element.owner):
                 tree_model.change(element)
+
+    @event_handler(ModelReady, ModelFlushed)
+    def on_model_ready(self, event: ModelReady | ModelFlushed):
+        self.model.clear()
+
+        toplevel = self.element_factory.select(
+            lambda e: self._visible(e) and not e.owner
+        )
+
+        for element in toplevel:
+            self.model.add_element(element)

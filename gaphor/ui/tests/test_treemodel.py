@@ -92,6 +92,25 @@ def test_element_changed(tree_component, element_factory):
     assert items_changed.removed == 0
 
 
+@pytest.mark.skipif(GTK3, reason="GTK 4+ only")
+def test_tree_component_model_ready(event_manager, element_factory):
+    class_ = element_factory.create(UML.Class)
+    package = element_factory.create(UML.Package)
+    tree_component = TreeComponent(event_manager, element_factory)
+    tree_component.open()
+
+    element_factory.model_ready()
+
+    tree_model = tree_component.model
+    class_.package = package
+    child_model = tree_component.tree_model_for_element(package)
+
+    assert tree_model.tree_item_for_element(package)
+    assert child_model.tree_item_for_element(class_)
+
+    tree_component.close()
+
+
 # Test: delete nested element in tree component
 # Formatting: diagrams bold, abstract elements italic
 # Test: name change in (nested) element
