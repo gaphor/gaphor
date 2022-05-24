@@ -5,6 +5,7 @@ from gi.repository import Gio, GLib, GObject, Gtk
 from gaphor import UML
 from gaphor.abc import ActionProvider
 from gaphor.core import event_handler
+from gaphor.core.format import format
 from gaphor.core.modeling import (
     DerivedSet,
     Diagram,
@@ -44,14 +45,14 @@ class TreeItem(GObject.GObject):
 
     @GObject.Property(type=str)
     def icon(self):
-        return self._name
+        return self._icon
 
 
 class TreeModel(GObject.Object, Gio.ListModel):
     def __init__(self, owner):
         super().__init__()
         self.items = (
-            [TreeItem(e) for e in owner.ownedElement if e.owner is owner]
+            [TreeItem(e) for e in owner.ownedElement if e.owner is owner and visible(e)]
             if owner
             else []
         )
@@ -111,7 +112,7 @@ class TreeComponent(UIComponent, ActionProvider):
         def child_model(item, user_data):
             return item.child_model
 
-        tree = Gtk.TreeListModel.new(
+        tree_model = Gtk.TreeListModel.new(
             self.model,
             passthrough=False,
             autoexpand=False,
@@ -119,12 +120,18 @@ class TreeComponent(UIComponent, ActionProvider):
             user_data=None,
         )
 
-        selection = Gtk.SingleSelection.new(tree)
+        # noqa: sorter = Gtk.StringSorter(Gtk.PropertyExpression.new(TreeItem.__gtype__, None, "text"))
+        # noqa: tree_sorter = Gtk.TreeListRowSorter.new(sorter)
+        # noqa: sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
+        selection = Gtk.SingleSelection.new(tree_model)  # sort_model
         factory = Gtk.BuilderListItemFactory.new_from_bytes(None, new_list_item_ui())
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_child(Gtk.ListView.new(selection, factory))
+
+        self.on_model_ready()
+
         return scrolled_window
 
     def close(self):
@@ -133,13 +140,6 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_association_set)
         self.event_manager.unsubscribe(self.on_attribute_changed)
         self.event_manager.unsubscribe(self.on_model_ready)
-
-    def _visible(self, element):
-        return isinstance(
-            element, (UML.Relationship, UML.NamedElement, Diagram)
-        ) and not isinstance(
-            element, (UML.InstanceSpecification, UML.OccurrenceSpecification)
-        )
 
     def tree_model_for_element(self, element: Element | None) -> TreeModel:
         if element is None:
@@ -152,20 +152,20 @@ class TreeComponent(UIComponent, ActionProvider):
     @event_handler(ElementCreated)
     def on_element_created(self, event: ElementCreated):
         element = event.element
-        if self._visible(element):
+        if visible(element):
             model = self.tree_model_for_element(element.owner)
             model.add_element(element)
 
     @event_handler(ElementDeleted)
     def on_element_deleted(self, event: ElementDeleted):
         element = event.element
-        if self._visible(element):
+        if visible(element):
             model = self.tree_model_for_element(element.owner)
             model.remove_element(element)
 
     @event_handler(DerivedSet)
     def on_association_set(self, event: DerivedSet):
-        if event.property is not Element.owner:
+        if event.property is not Element.owner or not visible(event.element):
             return
 
         old_value, new_value = event.old_value, event.new_value
@@ -174,9 +174,8 @@ class TreeComponent(UIComponent, ActionProvider):
         old_tree_model = self.tree_model_for_element(old_value)
         old_tree_model.remove_element(element)
 
-        if self._visible(element):
-            new_tree_model = self.tree_model_for_element(new_value)
-            new_tree_model.add_element(element)
+        new_tree_model = self.tree_model_for_element(new_value)
+        new_tree_model.add_element(element)
 
     @event_handler(AttributeUpdated)
     def on_attribute_changed(self, event: AttributeUpdated):
@@ -192,12 +191,17 @@ class TreeComponent(UIComponent, ActionProvider):
                 tree_model.change(element)
 
     @event_handler(ModelReady, ModelFlushed)
-    def on_model_ready(self, event: ModelReady | ModelFlushed):
+    def on_model_ready(self, event=None):
         self.model.clear()
 
-        toplevel = self.element_factory.select(
-            lambda e: self._visible(e) and not e.owner
-        )
-
+        toplevel = self.element_factory.select(lambda e: not e.owner and visible(e))
         for element in toplevel:
             self.model.add_element(element)
+
+
+def visible(element):
+    return isinstance(
+        element, (UML.Relationship, UML.NamedElement, Diagram)
+    ) and not isinstance(
+        element, (UML.InstanceSpecification, UML.OccurrenceSpecification)
+    )
