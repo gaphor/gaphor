@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from gi.repository import Gio, GLib, GObject, Gtk
+from gi.repository import Gio, GLib, GObject, Gtk, Pango
 
 from gaphor import UML
 from gaphor.abc import ActionProvider
@@ -25,9 +25,18 @@ class TreeItem(GObject.GObject):
     def __init__(self, element: Element):
         super().__init__()
         self.element = element
-        self._text = format(element) or gettext("<None>")
-        self._icon = get_icon_name(element)
         self._child_model: TreeModel | None = None
+        self.sync()
+
+    def sync(self):
+        element = self.element
+        self.text = format(element) or gettext("<None>")
+        self.icon = get_icon_name(element)
+        self.attributes = pango_attributes(element)
+
+    text = GObject.Property(type=str)
+    icon = GObject.Property(type=str)
+    attributes = GObject.Property(type=Pango.AttrList)
 
     @property
     def child_model(self) -> TreeModel:
@@ -35,17 +44,23 @@ class TreeItem(GObject.GObject):
             self._child_model = TreeModel(owner=self.element)
         return self._child_model
 
-    @GObject.Property(type=str)
-    def text(self):
-        return self._text
 
-    @text.setter  # type: ignore[no-redef]
-    def text(self, text):
-        self._text = text
-
-    @GObject.Property(type=str)
-    def icon(self):
-        return self._icon
+def pango_attributes(element):
+    attrs = Pango.AttrList.new()
+    attrs.insert(
+        Pango.attr_weight_new(
+            Pango.Weight.BOLD if isinstance(element, Diagram) else Pango.Weight.NORMAL
+        )
+    )
+    attrs.insert(
+        Pango.attr_style_new(
+            Pango.Style.ITALIC
+            if isinstance(element, (UML.Classifier, UML.BehavioralFeature))
+            and element.isAbstract
+            else Pango.Style.NORMAL
+        )
+    )
+    return attrs
 
 
 class TreeModel(GObject.Object, Gio.ListModel):
@@ -58,25 +73,31 @@ class TreeModel(GObject.Object, Gio.ListModel):
         )
 
     def add_element(self, element: Element) -> None:
+        if element in (ti.element for ti in self.items):
+            return
         self.items.append(TreeItem(element))
         self.items_changed(len(self.items), 0, 1)
 
     def remove_element(self, element: Element) -> None:
-        index = next(i for i, ti in enumerate(self.items) if ti.element is element)
+        index = next(
+            (i for i, ti in enumerate(self.items) if ti.element is element), None
+        )
+        if index is None:
+            return
         del self.items[index]
         self.items_changed(index, 1, 0)
 
     def change(self, element: Element) -> None:
-        index = next(i for i, ti in enumerate(self.items) if ti.element is element)
-        self.items_changed(index, 0, 0)
+        if item := self.tree_item_for_element(element):
+            item.sync()
 
     def clear(self) -> None:
         n = len(self.items)
         del self.items[:]
         self.items_changed(0, n, 0)
 
-    def tree_item_for_element(self, element: Element) -> TreeItem:
-        return next(ti for ti in self.items if ti.element is element)
+    def tree_item_for_element(self, element: Element) -> TreeItem | None:
+        return next((ti for ti in self.items if ti.element is element), None)
 
     def do_get_item_type(self) -> GObject.GType:
         return TreeItem.__gtype__
@@ -105,7 +126,7 @@ class TreeComponent(UIComponent, ActionProvider):
     def open(self):
         self.event_manager.subscribe(self.on_element_created)
         self.event_manager.subscribe(self.on_element_deleted)
-        self.event_manager.subscribe(self.on_association_set)
+        self.event_manager.subscribe(self.on_owner_changed)
         self.event_manager.subscribe(self.on_attribute_changed)
         self.event_manager.subscribe(self.on_model_ready)
 
@@ -137,7 +158,7 @@ class TreeComponent(UIComponent, ActionProvider):
     def close(self):
         self.event_manager.unsubscribe(self.on_element_created)
         self.event_manager.unsubscribe(self.on_element_deleted)
-        self.event_manager.unsubscribe(self.on_association_set)
+        self.event_manager.unsubscribe(self.on_owner_changed)
         self.event_manager.unsubscribe(self.on_attribute_changed)
         self.event_manager.unsubscribe(self.on_model_ready)
 
@@ -147,6 +168,7 @@ class TreeComponent(UIComponent, ActionProvider):
         owner = element.owner
         owner_model = self.tree_model_for_element(owner)
         tree_item = owner_model.tree_item_for_element(element)
+        assert tree_item
         return tree_item.child_model
 
     @event_handler(ElementCreated)
@@ -164,7 +186,7 @@ class TreeComponent(UIComponent, ActionProvider):
             model.remove_element(element)
 
     @event_handler(DerivedSet)
-    def on_association_set(self, event: DerivedSet):
+    def on_owner_changed(self, event: DerivedSet):
         if event.property is not Element.owner or not visible(event.element):
             return
 
@@ -179,16 +201,16 @@ class TreeComponent(UIComponent, ActionProvider):
 
     @event_handler(AttributeUpdated)
     def on_attribute_changed(self, event: AttributeUpdated):
-        if (
-            event.property is UML.Classifier.isAbstract
-            or event.property is UML.BehavioralFeature.isAbstract
-            or event.property is Diagram.name
-            or event.property is UML.NamedElement.name
-        ):
-            element = event.element
+        # if (
+        #     event.property is UML.Classifier.isAbstract
+        #     or event.property is UML.BehavioralFeature.isAbstract
+        #     or event.property is Diagram.name
+        #     or event.property is UML.NamedElement.name
+        # ):
+        element = event.element
 
-            if tree_model := self.tree_model_for_element(element.owner):
-                tree_model.change(element)
+        tree_model = self.tree_model_for_element(element.owner)
+        tree_model.change(element)
 
     @event_handler(ModelReady, ModelFlushed)
     def on_model_ready(self, event=None):

@@ -22,6 +22,11 @@
             <child>
               <object class="GtkLabel">
                 <property name="xalign">0</property>
+                <binding name="attributes">
+                  <lookup name="attributes" type="gaphor+ui+treemodel+TreeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
                 <binding name="label">
                   <lookup name="text" type="gaphor+ui+treemodel+TreeItem">
                     <lookup name="item">expander</lookup>

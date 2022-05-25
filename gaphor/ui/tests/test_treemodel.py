@@ -2,6 +2,7 @@ import pytest
 from gi.repository import Gtk
 
 from gaphor import UML
+from gaphor.core.modeling import Diagram
 from gaphor.ui.treemodel import TreeComponent, TreeItem, TreeModel
 
 GTK3 = Gtk.get_major_version() == 3
@@ -79,17 +80,71 @@ def test_tree_component_add_nested_element(tree_component, element_factory):
 
 
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")
-def test_element_changed(tree_component, element_factory):
+def test_tree_component_unset_nested_element(tree_component, element_factory):
     tree_model = tree_component.model
     class_ = element_factory.create(UML.Class)
+    package = element_factory.create(UML.Package)
     items_changed = ItemChangedHandler()
     tree_model.connect("items-changed", items_changed)
 
-    class_.name = "foo"
+    class_.package = package
+    del class_.package
 
-    assert items_changed.positions == [0]
-    assert items_changed.added == 0
-    assert items_changed.removed == 0
+    child_model = tree_component.tree_model_for_element(package)
+    assert tree_model.tree_item_for_element(package)
+    assert tree_model.tree_item_for_element(class_)
+    assert not child_model.tree_item_for_element(class_)
+
+
+@pytest.mark.skipif(GTK3, reason="GTK 4+ only")
+def test_tree_component_remove_nested_element(tree_component, element_factory):
+    tree_model = tree_component.model
+    class_ = element_factory.create(UML.Class)
+    package = element_factory.create(UML.Package)
+    items_changed = ItemChangedHandler()
+    tree_model.connect("items-changed", items_changed)
+
+    class_.package = package
+    class_.unlink()
+
+    child_model = tree_component.tree_model_for_element(package)
+    assert tree_model.tree_item_for_element(package)
+    assert child_model.get_n_items() == 0, [i.element for i in child_model.items]
+
+
+@pytest.mark.skipif(GTK3, reason="GTK 4+ only")
+def test_element_name_changed(tree_component, element_factory):
+    class_ = element_factory.create(UML.Class)
+    tree_item = tree_component.model.tree_item_for_element(class_)
+
+    class_.name = "foo"
+    weight, style = tree_item.attributes.get_attributes()
+
+    assert tree_item.text == "foo"
+    assert weight.as_int().value == 400
+    assert style.as_int().value == 0
+
+
+@pytest.mark.skipif(GTK3, reason="GTK 4+ only")
+def test_element_weight_changed(tree_component, element_factory):
+    diagram = element_factory.create(Diagram)
+    tree_item = tree_component.model.tree_item_for_element(diagram)
+    weight, style = tree_item.attributes.get_attributes()
+
+    assert weight.as_int().value == 700
+    assert style.as_int().value == 0
+
+
+@pytest.mark.skipif(GTK3, reason="GTK 4+ only")
+def test_element_style_changed(tree_component, element_factory):
+    class_ = element_factory.create(UML.Class)
+    tree_item = tree_component.model.tree_item_for_element(class_)
+
+    class_.isAbstract = True
+    weight, style = tree_item.attributes.get_attributes()
+
+    assert weight.as_int().value == 400
+    assert style.as_int().value == 2
 
 
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")
