@@ -21,22 +21,70 @@ from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui.abc import UIComponent
 
 
-class TreeItem(GObject.GObject):
-    def __init__(self, element: Element):
+class TreeModel(GObject.Object, Gio.ListModel):
+    def __init__(self, element):
         super().__init__()
         self.element = element
-        self.child_model: TreeModel | None = None
-        self.sync()
-
-    def sync(self):
-        element = self.element
-        self.text = format(element) or gettext("<None>")
-        self.icon = get_icon_name(element)
-        self.attributes = pango_attributes(element)
+        self.items = (
+            [
+                TreeModel(e)
+                for e in element.ownedElement
+                if e.owner is element and visible(e)
+            ]
+            if element
+            else []
+        )
+        if element:
+            self.sync()
 
     text = GObject.Property(type=str)
     icon = GObject.Property(type=str)
     attributes = GObject.Property(type=Pango.AttrList)
+
+    def add_element(self, element: Element) -> TreeModel:
+        if existing := next((ti for ti in self.items if ti.element is element), None):
+            return existing
+
+        tree_item = TreeModel(element)
+        self.items.append(tree_item)
+        self.items_changed(len(self.items), 0, 1)
+        return tree_item
+
+    def remove_element(self, element: Element) -> None:
+        index = next(
+            (i for i, ti in enumerate(self.items) if ti.element is element), None
+        )
+        if index is None:
+            return
+        del self.items[index]
+        self.items_changed(index, 1, 0)
+
+    def sync(self) -> None:
+        element = self.element
+        assert element
+        self.text = format(element) or gettext("<None>")
+        self.icon = get_icon_name(element)
+        self.attributes = pango_attributes(element)
+
+    def clear(self) -> None:
+        n = len(self.items)
+        del self.items[:]
+        self.items_changed(0, n, 0)
+
+    def tree_model_for_element(self, element: Element | None) -> TreeModel | None:
+        return next((m for m in self.items if m.element is element), None)
+
+    def do_get_item_type(self) -> GObject.GType:
+        return TreeModel.__gtype__
+
+    def do_get_n_items(self) -> int:
+        return len(self.items)
+
+    def do_get_item(self, position) -> GObject.Object | None:
+        try:
+            return self.items[position]
+        except IndexError:
+            return None
 
 
 def pango_attributes(element):
@@ -57,68 +105,11 @@ def pango_attributes(element):
     return attrs
 
 
-class TreeModel(GObject.Object, Gio.ListModel):
-    def __init__(self, owner):
-        super().__init__()
-        self.items = (
-            [TreeItem(e) for e in owner.ownedElement if e.owner is owner and visible(e)]
-            if owner
-            else []
-        )
-
-    def add_element(self, element: Element) -> TreeItem:
-        if existing := next((ti for ti in self.items if ti.element is element), None):
-            return existing
-
-        tree_item = TreeItem(element)
-        self.items.append(tree_item)
-        self.items_changed(len(self.items), 0, 1)
-        return tree_item
-
-    def remove_element(self, element: Element) -> None:
-        index = next(
-            (i for i, ti in enumerate(self.items) if ti.element is element), None
-        )
-        if index is None:
-            return
-        del self.items[index]
-        self.items_changed(index, 1, 0)
-
-    def sync(self, element: Element) -> None:
-        if item := self.tree_item_for_element(element):
-            item.sync()
-
-    def clear(self) -> None:
-        n = len(self.items)
-        del self.items[:]
-        self.items_changed(0, n, 0)
-
-    def tree_item_for_element(self, element: Element) -> TreeItem | None:
-        return next((ti for ti in self.items if ti.element is element), None)
-
-    def do_get_item_type(self) -> GObject.GType:
-        return TreeItem.__gtype__
-
-    def do_get_n_items(self) -> int:
-        return len(self.items)
-
-    def do_get_item(self, position) -> GObject.Object | None:
-        try:
-            return self.items[position]
-        except IndexError:
-            return None
-
-
-def new_list_item_ui():
-    b = translated_ui_string("gaphor.ui", "treeitem.ui")
-    return GLib.Bytes.new(b.encode("utf-8"))
-
-
 class TreeComponent(UIComponent, ActionProvider):
     def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager
         self.element_factory = element_factory
-        self.model = TreeModel(owner=None)
+        self.model = TreeModel(element=None)
 
     def open(self):
         self.event_manager.subscribe(self.on_element_created)
@@ -127,8 +118,8 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.subscribe(self.on_attribute_changed)
         self.event_manager.subscribe(self.on_model_ready)
 
-        def child_model(item, user_data):
-            return item.child_model
+        def child_model(model, _user_data):
+            return model if model.items else None
 
         tree_model = Gtk.TreeListModel.new(
             self.model,
@@ -159,24 +150,21 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_attribute_changed)
         self.event_manager.unsubscribe(self.on_model_ready)
 
-    def tree_model_for_element(self, element: Element | None) -> TreeModel | None:
+    def tree_model_for_element(self, element: Element | None) -> TreeModel:
         """Get the tree model for an element.
 
         Creates tree models and items if they do not exist.
         """
         if element is None:
             return self.model
-        owner = element.owner
-        owner_model = self.tree_model_for_element(owner)
-        assert owner_model
-        if not (tree_item := owner_model.tree_item_for_element(element)):
-            tree_item = owner_model.add_element(element)
 
-        if (not tree_item.child_model) and element.ownedElement:
-            tree_item.child_model = TreeModel(owner=element)
-            owner_model.items_changed(owner_model.items.index(tree_item), 1, 1)
+        owner_model = self.tree_model_for_element(element.owner)
 
-        return tree_item.child_model
+        if (model := owner_model.tree_model_for_element(element)) is None:
+            model = owner_model.add_element(element)
+            owner_model.items_changed(owner_model.items.index(model), 1, 1)
+
+        return model
 
     @event_handler(ElementCreated)
     def on_element_created(self, event: ElementCreated):
@@ -203,27 +191,30 @@ class TreeComponent(UIComponent, ActionProvider):
         old_value, new_value = event.old_value, event.new_value
         element = event.element
 
-        if old_tree_model := self.tree_model_for_element(old_value):
-            old_tree_model.remove_element(element)
+        old_tree_model = self.tree_model_for_element(old_value)
+        old_tree_model.remove_element(element)
 
-        if new_tree_model := self.tree_model_for_element(new_value):
-            new_tree_model.add_element(element)
+        new_tree_model = self.tree_model_for_element(new_value)
+        new_tree_model.add_element(element)
 
     @event_handler(AttributeUpdated)
     def on_attribute_changed(self, event: AttributeUpdated):
         element = event.element
 
-        if tree_model := self.tree_model_for_element(element.owner):
-            tree_model.sync(element)
+        tree_model = self.tree_model_for_element(element)
+        tree_model.sync()
 
     @event_handler(ModelReady, ModelFlushed)
     def on_model_ready(self, event=None):
         self.model.clear()
 
         for element in self.element_factory.select(visible):
-            model = self.tree_model_for_element(element.owner)
-            assert model is not None
-            model.add_element(element)
+            self.tree_model_for_element(element)
+
+
+def new_list_item_ui():
+    b = translated_ui_string("gaphor.ui", "treeitem.ui")
+    return GLib.Bytes.new(b.encode("utf-8"))
 
 
 def visible(element):

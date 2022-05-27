@@ -13,7 +13,7 @@
             <child>
               <object class="GtkImage">
                 <binding name="icon-name">
-                  <lookup name="icon" type="gaphor+ui+treemodel+TreeItem">
+                  <lookup name="icon" type="gaphor+ui+treemodel+TreeModel">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
@@ -23,12 +23,12 @@
               <object class="GtkLabel">
                 <property name="xalign">0</property>
                 <binding name="attributes">
-                  <lookup name="attributes" type="gaphor+ui+treemodel+TreeItem">
+                  <lookup name="attributes" type="gaphor+ui+treemodel+TreeModel">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
                 <binding name="label">
-                  <lookup name="text" type="gaphor+ui+treemodel+TreeItem">
+                  <lookup name="text" type="gaphor+ui+treemodel+TreeModel">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>

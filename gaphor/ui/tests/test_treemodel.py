@@ -3,7 +3,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.ui.treemodel import TreeComponent, TreeItem, TreeModel
+from gaphor.ui.treemodel import TreeComponent, TreeModel
 
 GTK3 = Gtk.get_major_version() == 3
 
@@ -28,15 +28,18 @@ class ItemChangedHandler:
         self.added += added
 
 
-def test_tree_item_gtype():
-    assert TreeItem.__gtype__.name == "gaphor+ui+treemodel+TreeItem"
+def test_tree_model_gtype():
+    assert TreeModel.__gtype__.name == "gaphor+ui+treemodel+TreeModel"
 
 
 def test_tree_model():
-    tree_model = TreeModel(owner=None)
+    tree_model = TreeModel(element=None)
 
     assert tree_model.get_n_items() == 0
     assert tree_model.get_item(0) is None
+    assert tree_model.get_property("text") == ""
+    assert tree_model.get_property("icon") == ""
+    assert tree_model.get_property("attributes") is None
 
 
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")
@@ -76,8 +79,8 @@ def test_tree_subtree_changed(tree_component, element_factory):
     class_.package = package
 
     assert tree_model.get_n_items() == 1
-    assert items_changed.added == 1
-    assert items_changed.removed == 2
+    assert items_changed.added == 0
+    assert items_changed.removed == 1
 
 
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")
@@ -89,9 +92,9 @@ def test_tree_component_add_nested_element(tree_component, element_factory):
     class_.package = package
     child_model = tree_component.tree_model_for_element(package)
 
-    assert tree_model.tree_item_for_element(package)
-    assert tree_model.tree_item_for_element(package).child_model
-    assert child_model.tree_item_for_element(class_)
+    assert tree_model.tree_model_for_element(package) is not None
+    assert tree_model.tree_model_for_element(package).items
+    assert child_model.tree_model_for_element(class_) is not None
 
 
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")
@@ -104,9 +107,9 @@ def test_tree_component_unset_nested_element(tree_component, element_factory):
     del class_.package
 
     child_model = tree_component.tree_model_for_element(package)
-    assert tree_model.tree_item_for_element(package)
-    assert tree_model.tree_item_for_element(class_)
-    assert not child_model.tree_item_for_element(class_)
+    assert tree_model.tree_model_for_element(package) is not None
+    assert tree_model.tree_model_for_element(class_) is not None
+    assert not child_model.tree_model_for_element(class_)
 
 
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")
@@ -119,16 +122,18 @@ def test_tree_component_remove_nested_element(tree_component, element_factory):
     class_.unlink()
 
     child_model = tree_component.tree_model_for_element(package)
-    assert tree_model.tree_item_for_element(package)
+    assert tree_model.tree_model_for_element(package) is not None
     assert child_model.get_n_items() == 0, [i.element for i in child_model.items]
 
 
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")
 def test_element_name_changed(tree_component, element_factory):
     class_ = element_factory.create(UML.Class)
-    tree_item = tree_component.model.tree_item_for_element(class_)
+    tree_item = tree_component.model.tree_model_for_element(class_)
 
     class_.name = "foo"
+
+    print("start tests")
     weight, style = tree_item.attributes.get_attributes()
 
     assert tree_item.text == "foo"
@@ -139,7 +144,7 @@ def test_element_name_changed(tree_component, element_factory):
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")
 def test_element_weight_changed(tree_component, element_factory):
     diagram = element_factory.create(Diagram)
-    tree_item = tree_component.model.tree_item_for_element(diagram)
+    tree_item = tree_component.tree_model_for_element(diagram)
     weight, style = tree_item.attributes.get_attributes()
 
     assert weight.as_int().value == 700
@@ -149,7 +154,7 @@ def test_element_weight_changed(tree_component, element_factory):
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")
 def test_element_style_changed(tree_component, element_factory):
     class_ = element_factory.create(UML.Class)
-    tree_item = tree_component.model.tree_item_for_element(class_)
+    tree_item = tree_component.tree_model_for_element(class_)
 
     class_.isAbstract = True
     weight, style = tree_item.attributes.get_attributes()
@@ -171,13 +176,7 @@ def test_tree_component_model_ready(event_manager, element_factory):
     class_.package = package
     child_model = tree_component.tree_model_for_element(package)
 
-    assert tree_model.tree_item_for_element(package)
-    assert child_model.tree_item_for_element(class_)
+    assert tree_model.tree_model_for_element(package) is not None
+    assert child_model.tree_model_for_element(class_) is not None
 
     tree_component.close()
-
-
-# Test: delete nested element in tree component
-# Formatting: diagrams bold, abstract elements italic
-# Test: name change in (nested) element
-# Test: relationships in separate subtree
