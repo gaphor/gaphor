@@ -25,7 +25,7 @@ class TreeItem(GObject.GObject):
     def __init__(self, element: Element):
         super().__init__()
         self.element = element
-        self._child_model: TreeModel | None = None
+        self.child_model: TreeModel | None = None
         self.sync()
 
     def sync(self):
@@ -37,12 +37,6 @@ class TreeItem(GObject.GObject):
     text = GObject.Property(type=str)
     icon = GObject.Property(type=str)
     attributes = GObject.Property(type=Pango.AttrList)
-
-    @property
-    def child_model(self) -> TreeModel:
-        if not self._child_model:
-            self._child_model = TreeModel(owner=self.element)
-        return self._child_model
 
 
 def pango_attributes(element):
@@ -72,11 +66,14 @@ class TreeModel(GObject.Object, Gio.ListModel):
             else []
         )
 
-    def add_element(self, element: Element) -> None:
-        if element in (ti.element for ti in self.items):
-            return
-        self.items.append(TreeItem(element))
+    def add_element(self, element: Element) -> TreeItem:
+        if existing := next((ti for ti in self.items if ti.element is element), None):
+            return existing
+
+        tree_item = TreeItem(element)
+        self.items.append(tree_item)
         self.items_changed(len(self.items), 0, 1)
+        return tree_item
 
     def remove_element(self, element: Element) -> None:
         index = next(
@@ -87,7 +84,7 @@ class TreeModel(GObject.Object, Gio.ListModel):
         del self.items[index]
         self.items_changed(index, 1, 0)
 
-    def change(self, element: Element) -> None:
+    def sync(self, element: Element) -> None:
         if item := self.tree_item_for_element(element):
             item.sync()
 
@@ -162,13 +159,23 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_attribute_changed)
         self.event_manager.unsubscribe(self.on_model_ready)
 
-    def tree_model_for_element(self, element: Element | None) -> TreeModel:
+    def tree_model_for_element(self, element: Element | None) -> TreeModel | None:
+        """Get the tree model for an element.
+
+        Creates tree models and items if they do not exist.
+        """
         if element is None:
             return self.model
         owner = element.owner
         owner_model = self.tree_model_for_element(owner)
-        tree_item = owner_model.tree_item_for_element(element)
-        assert tree_item
+        assert owner_model
+        if not (tree_item := owner_model.tree_item_for_element(element)):
+            tree_item = owner_model.add_element(element)
+
+        if (not tree_item.child_model) and element.ownedElement:
+            tree_item.child_model = TreeModel(owner=element)
+            owner_model.items_changed(owner_model.items.index(tree_item), 1, 1)
+
         return tree_item.child_model
 
     @event_handler(ElementCreated)
@@ -176,6 +183,7 @@ class TreeComponent(UIComponent, ActionProvider):
         element = event.element
         if visible(element):
             model = self.tree_model_for_element(element.owner)
+            assert model is not None
             model.add_element(element)
 
     @event_handler(ElementDeleted)
@@ -183,7 +191,9 @@ class TreeComponent(UIComponent, ActionProvider):
         element = event.element
         if visible(element):
             model = self.tree_model_for_element(element.owner)
+            assert model is not None
             model.remove_element(element)
+            # TODO: if not model.items and model is not self.model: remove child model
 
     @event_handler(DerivedSet)
     def on_owner_changed(self, event: DerivedSet):
@@ -193,32 +203,27 @@ class TreeComponent(UIComponent, ActionProvider):
         old_value, new_value = event.old_value, event.new_value
         element = event.element
 
-        old_tree_model = self.tree_model_for_element(old_value)
-        old_tree_model.remove_element(element)
+        if old_tree_model := self.tree_model_for_element(old_value):
+            old_tree_model.remove_element(element)
 
-        new_tree_model = self.tree_model_for_element(new_value)
-        new_tree_model.add_element(element)
+        if new_tree_model := self.tree_model_for_element(new_value):
+            new_tree_model.add_element(element)
 
     @event_handler(AttributeUpdated)
     def on_attribute_changed(self, event: AttributeUpdated):
-        # if (
-        #     event.property is UML.Classifier.isAbstract
-        #     or event.property is UML.BehavioralFeature.isAbstract
-        #     or event.property is Diagram.name
-        #     or event.property is UML.NamedElement.name
-        # ):
         element = event.element
 
-        tree_model = self.tree_model_for_element(element.owner)
-        tree_model.change(element)
+        if tree_model := self.tree_model_for_element(element.owner):
+            tree_model.sync(element)
 
     @event_handler(ModelReady, ModelFlushed)
     def on_model_ready(self, event=None):
         self.model.clear()
 
-        toplevel = self.element_factory.select(lambda e: not e.owner and visible(e))
-        for element in toplevel:
-            self.model.add_element(element)
+        for element in self.element_factory.select(visible):
+            model = self.tree_model_for_element(element.owner)
+            assert model is not None
+            model.add_element(element)
 
 
 def visible(element):

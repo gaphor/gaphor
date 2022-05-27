@@ -66,7 +66,7 @@ def test_tree_component_remove_element(tree_component, element_factory):
 
 
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")
-def test_tree_component_add_nested_element(tree_component, element_factory):
+def test_tree_subtree_changed(tree_component, element_factory):
     tree_model = tree_component.model
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
@@ -74,8 +74,23 @@ def test_tree_component_add_nested_element(tree_component, element_factory):
     tree_model.connect("items-changed", items_changed)
 
     class_.package = package
+
+    assert tree_model.get_n_items() == 1
+    assert items_changed.added == 1
+    assert items_changed.removed == 2
+
+
+@pytest.mark.skipif(GTK3, reason="GTK 4+ only")
+def test_tree_component_add_nested_element(tree_component, element_factory):
+    tree_model = tree_component.model
+    class_ = element_factory.create(UML.Class)
+    package = element_factory.create(UML.Package)
+
+    class_.package = package
     child_model = tree_component.tree_model_for_element(package)
+
     assert tree_model.tree_item_for_element(package)
+    assert tree_model.tree_item_for_element(package).child_model
     assert child_model.tree_item_for_element(class_)
 
 
@@ -84,8 +99,6 @@ def test_tree_component_unset_nested_element(tree_component, element_factory):
     tree_model = tree_component.model
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
-    items_changed = ItemChangedHandler()
-    tree_model.connect("items-changed", items_changed)
 
     class_.package = package
     del class_.package
@@ -101,8 +114,6 @@ def test_tree_component_remove_nested_element(tree_component, element_factory):
     tree_model = tree_component.model
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
-    items_changed = ItemChangedHandler()
-    tree_model.connect("items-changed", items_changed)
 
     class_.package = package
     class_.unlink()
