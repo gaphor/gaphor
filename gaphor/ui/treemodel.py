@@ -35,12 +35,16 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.subscribe(self.on_model_ready)
 
         def child_model(model, _user_data):
-            return model if model.items else None
+            if hasattr(model, "child_model"):
+                return model.child_model
+            if model and isinstance(model, Gio.ListModel):
+                return RelationshipsModel(model)
+            return None
 
         tree_model = Gtk.TreeListModel.new(
             self.model,
             passthrough=False,
-            autoexpand=False,
+            autoexpand=True,
             create_func=child_model,
             user_data=None,
         )
@@ -170,7 +174,6 @@ class TreeModel(GObject.Object, Gio.ListModel):
             if element
             else []
         )
-        self.relations = ...
         if element:
             self.sync()
 
@@ -217,8 +220,11 @@ class TreeModel(GObject.Object, Gio.ListModel):
     def do_get_n_items(self) -> int:
         return len(self.items)
 
-    def do_get_item(self, position) -> TreeModel:
-        return self.items[position]  # type: ignore[no-any-return]
+    def do_get_item(self, position) -> TreeModel | None:
+        try:
+            return self.items[position]  # type: ignore[no-any-return]
+        except IndexError:
+            return None
 
 
 def pango_attributes(element):
@@ -237,3 +243,53 @@ def pango_attributes(element):
         )
     )
     return attrs
+
+
+class RelationshipsModel(GObject.Object, Gio.ListModel):
+    """Filter relationships from the model and show them in a child model."""
+
+    def __init__(self, model):
+        super().__init__()
+        self.model = model
+        self.has_relationships = 0
+        self.relationships = Gtk.FilterListModel.new(
+            model, Gtk.CustomFilter.new(uml_relationship_matcher)
+        )
+        self.relationships_item = TreeModel(None)
+        self.relationships_item.text = gettext("<Relationships>")
+        self.relationships_item.child_model = self.relationships
+        self.others = Gtk.FilterListModel.new(
+            model, Gtk.CustomFilter.new(negating_matcher(uml_relationship_matcher))
+        )
+        self.relationships.connect("items-changed", self.on_relationships_changed)
+        self.others.connect("items-changed", self.on_others_changed)
+
+    def on_others_changed(self, _model, position, removed, added):
+        self.items_changed(position + self.has_relationships, removed, added)
+
+    def on_relationships_changed(self, _model, position, removed, added):
+        if self.has_relationships and not self.relationships.get_n_items():
+            self.has_relationships = 0
+            self.items_changed(0, 1, 0)
+        elif (not self.has_relationships) and self.relationships.get_n_items():
+            self.has_relationships = 1
+            self.items_changed(0, 0, 1)
+
+    def do_get_item_type(self) -> GObject.GType:
+        return self.others.get_item_type()
+
+    def do_get_n_items(self) -> int:
+        return self.others.get_n_items() + self.has_relationships  # type: ignore[no-any-return]
+
+    def do_get_item(self, position) -> TreeModel:
+        if self.others.get_n_items() > 0 and position == 0 and self.has_relationships:
+            return self.relationships_item
+        return self.others.get_item(position - self.has_relationships)  # type: ignore[no-any-return]
+
+
+def uml_relationship_matcher(item):
+    return isinstance(item, TreeModel) and isinstance(item.element, UML.Relationship)
+
+
+def negating_matcher(matcher):
+    return lambda item: not matcher(item)

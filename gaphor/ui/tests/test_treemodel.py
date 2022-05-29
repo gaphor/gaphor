@@ -3,7 +3,13 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.ui.treemodel import TreeComponent, TreeModel
+from gaphor.ui.treemodel import (
+    RelationshipsModel,
+    TreeComponent,
+    TreeItem,
+    TreeModel,
+    uml_relationship_matcher,
+)
 
 skip_if_gtk3 = pytest.mark.skipif(
     Gtk.get_major_version() == 3, reason="Gtk.ListView is not supported by GTK 3"
@@ -189,3 +195,32 @@ def test_tree_component_model_ready(event_manager, element_factory):
     assert child_model.tree_model_for_element(class_) is not None
 
     tree_component.close()
+
+
+@skip_if_gtk3
+def test_filter_relationships(element_factory):
+    filter = Gtk.CustomFilter.new(uml_relationship_matcher)
+
+    assert filter.match(TreeModel(element_factory.create(UML.Relationship)))
+    assert filter.match(TreeModel(element_factory.create(UML.Association)))
+    assert not filter.match(TreeModel(element_factory.create(UML.Class)))
+
+
+@skip_if_gtk3
+def test_relationships_model(element_factory):
+    tree_model = TreeModel(None)
+    class_ = element_factory.create(UML.Class)
+    class_.name = "Foo"
+    association = element_factory.create(UML.Association)
+    association.name = "Bar"
+    tree_model.add_element(class_)
+    tree_model.add_element(association)
+
+    relationships_model = RelationshipsModel(tree_model)
+
+    assert relationships_model.get_item_type() == TreeItem.__gtype__
+    assert relationships_model.get_n_items() == 1
+    assert relationships_model.get_item(0).text == "<Relationships>"
+    assert relationships_model.get_item(1).text == "Foo"
+    assert relationships_model.get_item(0).subtree.get_n_items() == 1
+    assert relationships_model.get_item(0).subtree.get_item(0).text == "Bar"
