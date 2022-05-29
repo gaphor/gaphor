@@ -21,88 +21,6 @@ from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui.abc import UIComponent
 
 
-class TreeModel(GObject.Object, Gio.ListModel):
-    def __init__(self, element):
-        super().__init__()
-        self.element = element
-        self.items: list[TreeModel] = (
-            [
-                TreeModel(e)
-                for e in element.ownedElement
-                if e.owner is element and visible(e)
-            ]
-            if element
-            else []
-        )
-        self.relations = ...
-        if element:
-            self.sync()
-
-    text = GObject.Property(type=str)
-    icon = GObject.Property(type=str)
-    attributes = GObject.Property(type=Pango.AttrList)
-
-    def add_element(self, element: Element) -> TreeModel:
-        if existing := next((ti for ti in self.items if ti.element is element), None):
-            return existing
-
-        tree_item = TreeModel(element)
-        self.items.append(tree_item)
-        self.items_changed(len(self.items), 0, 1)
-        return tree_item
-
-    def remove_element(self, element: Element) -> None:
-        index = next(
-            (i for i, ti in enumerate(self.items) if ti.element is element), None
-        )
-        if index is None:
-            return
-        del self.items[index]
-        self.items_changed(index, 1, 0)
-
-    def sync(self) -> None:
-        element = self.element
-        assert element
-        self.text = format(element) or gettext("<None>")
-        self.icon = get_icon_name(element)
-        self.attributes = pango_attributes(element)
-
-    def clear(self) -> None:
-        n = len(self.items)
-        del self.items[:]
-        self.items_changed(0, n, 0)
-
-    def tree_model_for_element(self, element: Element | None) -> TreeModel | None:
-        return next((m for m in self.items if m.element is element), None)
-
-    def do_get_item_type(self) -> GObject.GType:
-        return TreeModel.__gtype__
-
-    def do_get_n_items(self) -> int:
-        return len(self.items)
-
-    def do_get_item(self, position) -> TreeModel:
-        return self.items[position]  # type: ignore[no-any-return]
-
-
-def pango_attributes(element):
-    attrs = Pango.AttrList.new()
-    attrs.insert(
-        Pango.attr_weight_new(
-            Pango.Weight.BOLD if isinstance(element, Diagram) else Pango.Weight.NORMAL
-        )
-    )
-    attrs.insert(
-        Pango.attr_style_new(
-            Pango.Style.ITALIC
-            if isinstance(element, (UML.Classifier, UML.BehavioralFeature))
-            and element.isAbstract
-            else Pango.Style.NORMAL
-        )
-    )
-    return attrs
-
-
 class TreeComponent(UIComponent, ActionProvider):
     def __init__(self, event_manager, element_factory):
         self.event_manager = event_manager
@@ -237,3 +155,85 @@ def visible(element):
     ) and not isinstance(
         element, (UML.InstanceSpecification, UML.OccurrenceSpecification)
     )
+
+
+class TreeModel(GObject.Object, Gio.ListModel):
+    def __init__(self, element):
+        super().__init__()
+        self.element = element
+        self.items: list[TreeModel] = (
+            [
+                TreeModel(e)
+                for e in element.ownedElement
+                if e.owner is element and visible(e)
+            ]
+            if element
+            else []
+        )
+        self.relations = ...
+        if element:
+            self.sync()
+
+    text = GObject.Property(type=str)
+    icon = GObject.Property(type=str)
+    attributes = GObject.Property(type=Pango.AttrList)
+
+    def add_element(self, element: Element) -> TreeModel:
+        if existing := next((ti for ti in self.items if ti.element is element), None):
+            return existing
+
+        tree_item = TreeModel(element)
+        self.items.append(tree_item)
+        self.items_changed(len(self.items), 0, 1)
+        return tree_item
+
+    def remove_element(self, element: Element) -> None:
+        index = next(
+            (i for i, ti in enumerate(self.items) if ti.element is element), None
+        )
+        if index is None:
+            return
+        del self.items[index]
+        self.items_changed(index, 1, 0)
+
+    def sync(self) -> None:
+        element = self.element
+        assert element
+        self.text = format(element) or gettext("<None>")
+        self.icon = get_icon_name(element)
+        self.attributes = pango_attributes(element)
+
+    def clear(self) -> None:
+        n = len(self.items)
+        del self.items[:]
+        self.items_changed(0, n, 0)
+
+    def tree_model_for_element(self, element: Element | None) -> TreeModel | None:
+        return next((m for m in self.items if m.element is element), None)
+
+    def do_get_item_type(self) -> GObject.GType:
+        return TreeModel.__gtype__
+
+    def do_get_n_items(self) -> int:
+        return len(self.items)
+
+    def do_get_item(self, position) -> TreeModel:
+        return self.items[position]  # type: ignore[no-any-return]
+
+
+def pango_attributes(element):
+    attrs = Pango.AttrList.new()
+    attrs.insert(
+        Pango.attr_weight_new(
+            Pango.Weight.BOLD if isinstance(element, Diagram) else Pango.Weight.NORMAL
+        )
+    )
+    attrs.insert(
+        Pango.attr_style_new(
+            Pango.Style.ITALIC
+            if isinstance(element, (UML.Classifier, UML.BehavioralFeature))
+            and element.isAbstract
+            else Pango.Style.NORMAL
+        )
+    )
+    return attrs
