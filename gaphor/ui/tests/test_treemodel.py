@@ -70,17 +70,24 @@ def test_tree_component_remove_element(tree_component, element_factory):
 
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")
 def test_tree_subtree_changed(tree_component, element_factory):
-    tree_model = tree_component.model
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
-    items_changed = ItemChangedHandler()
-    tree_model.connect("items-changed", items_changed)
+
+    root_model = tree_component.model
+    root_model_changed = ItemChangedHandler()
+    root_model.connect("items-changed", root_model_changed)
+    package_model = root_model.tree_model_for_element(package)
+    package_model_changed = ItemChangedHandler()
+    package_model.connect("items-changed", package_model_changed)
 
     class_.package = package
 
-    assert tree_model.get_n_items() == 1
-    assert items_changed.added == 0
-    assert items_changed.removed == 1
+    assert root_model.get_n_items() == 1
+    assert root_model_changed.added == 1  # add + node changed
+    assert root_model_changed.removed == 2
+    assert package_model.get_n_items() == 1
+    assert package_model_changed.added == 1
+    assert package_model_changed.removed == 0
 
 
 @pytest.mark.skipif(GTK3, reason="GTK 4+ only")

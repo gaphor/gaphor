@@ -25,7 +25,7 @@ class TreeModel(GObject.Object, Gio.ListModel):
     def __init__(self, element):
         super().__init__()
         self.element = element
-        self.items = (
+        self.items: list[TreeModel] = (
             [
                 TreeModel(e)
                 for e in element.ownedElement
@@ -34,6 +34,7 @@ class TreeModel(GObject.Object, Gio.ListModel):
             if element
             else []
         )
+        self.relations = ...
         if element:
             self.sync()
 
@@ -80,11 +81,8 @@ class TreeModel(GObject.Object, Gio.ListModel):
     def do_get_n_items(self) -> int:
         return len(self.items)
 
-    def do_get_item(self, position) -> GObject.Object | None:
-        try:
-            return self.items[position]
-        except IndexError:
-            return None
+    def do_get_item(self, position) -> TreeModel:
+        return self.items[position]  # type: ignore[no-any-return]
 
 
 def pango_attributes(element):
@@ -162,7 +160,14 @@ class TreeComponent(UIComponent, ActionProvider):
 
         if (model := owner_model.tree_model_for_element(element)) is None:
             model = owner_model.add_element(element)
-            owner_model.items_changed(owner_model.items.index(model), 1, 1)
+            # should change the owner of owner, since new elements may have been added
+            if owner_model.element:
+                owner_owner_model = self.tree_model_for_element(
+                    owner_model.element.owner
+                )
+                owner_owner_model.items_changed(
+                    owner_owner_model.items.index(owner_model), 1, 1
+                )
 
         return model
 
@@ -185,7 +190,7 @@ class TreeComponent(UIComponent, ActionProvider):
 
     @event_handler(DerivedSet)
     def on_owner_changed(self, event: DerivedSet):
-        if event.property is not Element.owner or not visible(event.element):
+        if (event.property is not Element.owner) or not visible(event.element):
             return
 
         old_value, new_value = event.old_value, event.new_value
@@ -196,13 +201,22 @@ class TreeComponent(UIComponent, ActionProvider):
 
         new_tree_model = self.tree_model_for_element(new_value)
         new_tree_model.add_element(element)
+        # should change the owner of owner, since new elements may have been added
+        if new_tree_model.element:
+            owner_owner_model = self.tree_model_for_element(
+                new_tree_model.element.owner
+            )
+            owner_owner_model.items_changed(
+                owner_owner_model.items.index(new_tree_model), 1, 1
+            )
 
     @event_handler(AttributeUpdated)
     def on_attribute_changed(self, event: AttributeUpdated):
         element = event.element
 
-        tree_model = self.tree_model_for_element(element)
-        tree_model.sync()
+        if visible(element):
+            tree_model = self.tree_model_for_element(element)
+            tree_model.sync()
 
     @event_handler(ModelReady, ModelFlushed)
     def on_model_ready(self, event=None):
