@@ -6,7 +6,6 @@ from gaphor.core.modeling import Diagram
 from gaphor.ui.treemodel import (
     RelationshipsModel,
     TreeComponent,
-    TreeItem,
     TreeModel,
     uml_relationship_matcher,
 )
@@ -211,6 +210,19 @@ def test_relationships_model(element_factory):
     tree_model = TreeModel(None)
     class_ = element_factory.create(UML.Class)
     class_.name = "Foo"
+    tree_model.add_element(class_)
+
+    relationships_model = RelationshipsModel(tree_model)
+
+    assert relationships_model.get_n_items() == 1
+    assert relationships_model.get_item(0).text == "Foo"
+
+
+@skip_if_gtk3
+def test_relationships_model_with_relationships(element_factory):
+    tree_model = TreeModel(None)
+    class_ = element_factory.create(UML.Class)
+    class_.name = "Foo"
     association = element_factory.create(UML.Association)
     association.name = "Bar"
     tree_model.add_element(class_)
@@ -218,9 +230,8 @@ def test_relationships_model(element_factory):
 
     relationships_model = RelationshipsModel(tree_model)
 
-    assert relationships_model.get_item_type() == TreeItem.__gtype__
-    assert relationships_model.get_n_items() == 1
+    assert relationships_model.get_n_items() == 2
     assert relationships_model.get_item(0).text == "<Relationships>"
     assert relationships_model.get_item(1).text == "Foo"
-    assert relationships_model.get_item(0).subtree.get_n_items() == 1
-    assert relationships_model.get_item(0).subtree.get_item(0).text == "Bar"
+    assert relationships_model.get_item(0).child_model.get_n_items() == 1
+    assert relationships_model.get_item(0).child_model.get_item(0).text == "Bar"

@@ -20,6 +20,8 @@ from gaphor.diagram.iconname import get_icon_name
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui.abc import UIComponent
 
+no_owner = object()
+
 
 class TreeComponent(UIComponent, ActionProvider):
     def __init__(self, event_manager, element_factory):
@@ -38,7 +40,11 @@ class TreeComponent(UIComponent, ActionProvider):
             if hasattr(model, "child_model"):
                 return model.child_model
             if model and isinstance(model, Gio.ListModel):
-                return RelationshipsModel(model)
+                return (
+                    RelationshipsModel(model)
+                    if isinstance(model.element, UML.Package)
+                    else model
+                )
             return None
 
         tree_model = Gtk.TreeListModel.new(
@@ -70,7 +76,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_attribute_changed)
         self.event_manager.unsubscribe(self.on_model_ready)
 
-    def tree_model_for_element(self, element: Element | None) -> TreeModel:
+    def tree_model_for_element(self, element: Element | None) -> TreeModel | None:
         """Get the tree model for an element.
 
         Creates tree models and items if they do not exist.
@@ -78,37 +84,56 @@ class TreeComponent(UIComponent, ActionProvider):
         if element is None:
             return self.model
 
-        owner_model = self.tree_model_for_element(element.owner)
+        if (owner_model := self.tree_model_for_element(element.owner)) is not None:
+            return owner_model.tree_model_for_element(element)
+        return None
 
-        if (model := owner_model.tree_model_for_element(element)) is None:
-            model = owner_model.add_element(element)
-            # should change the owner of owner, since new elements may have been added
-            if owner_model.element:
-                owner_owner_model = self.tree_model_for_element(
-                    owner_model.element.owner
+    def add_element(self, element, owner=no_owner):
+        if (
+            visible(element)
+            and (
+                model := self.tree_model_for_element(
+                    element.owner if owner is no_owner else owner
                 )
-                owner_owner_model.items_changed(
-                    owner_owner_model.items.index(owner_model), 1, 1
-                )
+            )
+            is not None
+        ):
+            first_element = not bool(model)
+            model.add_element(element)
+            if (
+                first_element
+                and model.element
+                and (owner_model := self.tree_model_for_element(model.element.owner))
+                is not None
+            ):
+                owner_model.items_changed(owner_model.items.index(model), 1, 1)
 
-        return model
+    def remove_element(self, element, owner=no_owner):
+        if (
+            visible(element)
+            and (
+                model := self.tree_model_for_element(
+                    element.owner if owner is no_owner else owner
+                )
+            )
+            is not None
+        ):
+            model.remove_element(element)
+            last_element = not bool(model)
+            if (
+                last_element
+                and model.element
+                and (owner_model := self.tree_model_for_element(model.element.owner))
+            ):
+                owner_model.items_changed(owner_model.items.index(model), 1, 1)
 
     @event_handler(ElementCreated)
     def on_element_created(self, event: ElementCreated):
-        element = event.element
-        if visible(element):
-            model = self.tree_model_for_element(element.owner)
-            assert model is not None
-            model.add_element(element)
+        self.add_element(event.element)
 
     @event_handler(ElementDeleted)
     def on_element_deleted(self, event: ElementDeleted):
-        element = event.element
-        if visible(element):
-            model = self.tree_model_for_element(element.owner)
-            assert model is not None
-            model.remove_element(element)
-            # TODO: if not model.items and model is not self.model: remove child model
+        self.remove_element(event.element)
 
     @event_handler(DerivedSet)
     def on_owner_changed(self, event: DerivedSet):
@@ -118,34 +143,28 @@ class TreeComponent(UIComponent, ActionProvider):
         old_value, new_value = event.old_value, event.new_value
         element = event.element
 
-        old_tree_model = self.tree_model_for_element(old_value)
-        old_tree_model.remove_element(element)
-
-        new_tree_model = self.tree_model_for_element(new_value)
-        new_tree_model.add_element(element)
-        # should change the owner of owner, since new elements may have been added
-        if new_tree_model.element:
-            owner_owner_model = self.tree_model_for_element(
-                new_tree_model.element.owner
-            )
-            owner_owner_model.items_changed(
-                owner_owner_model.items.index(new_tree_model), 1, 1
-            )
+        self.remove_element(element, owner=old_value)
+        self.add_element(element, owner=new_value)
 
     @event_handler(AttributeUpdated)
     def on_attribute_changed(self, event: AttributeUpdated):
         element = event.element
 
-        if visible(element):
-            tree_model = self.tree_model_for_element(element)
-            tree_model.sync()
+        if (
+            visible(element)
+            and (model := self.tree_model_for_element(element)) is not None
+        ):
+            model.sync()
 
     @event_handler(ModelReady, ModelFlushed)
     def on_model_ready(self, event=None):
-        self.model.clear()
+        model = self.model
+        model.clear()
 
-        for element in self.element_factory.select(visible):
-            self.tree_model_for_element(element)
+        for element in self.element_factory.select(
+            lambda e: (e.owner is None) and visible(e)
+        ):
+            model.add_element(element)
 
 
 def new_list_item_ui():
@@ -250,19 +269,19 @@ class RelationshipsModel(GObject.Object, Gio.ListModel):
 
     def __init__(self, model):
         super().__init__()
-        self.model = model
-        self.has_relationships = 0
         self.relationships = Gtk.FilterListModel.new(
             model, Gtk.CustomFilter.new(uml_relationship_matcher)
         )
-        self.relationships_item = TreeModel(None)
-        self.relationships_item.text = gettext("<Relationships>")
-        self.relationships_item.child_model = self.relationships
         self.others = Gtk.FilterListModel.new(
             model, Gtk.CustomFilter.new(negating_matcher(uml_relationship_matcher))
         )
         self.relationships.connect("items-changed", self.on_relationships_changed)
         self.others.connect("items-changed", self.on_others_changed)
+
+        self.has_relationships = 1 if self.relationships else 0
+        self.relationships_item = TreeModel(None)
+        self.relationships_item.text = gettext("<Relationships>")
+        self.relationships_item.child_model = self.relationships
 
     def on_others_changed(self, _model, position, removed, added):
         self.items_changed(position + self.has_relationships, removed, added)
@@ -282,7 +301,7 @@ class RelationshipsModel(GObject.Object, Gio.ListModel):
         return self.others.get_n_items() + self.has_relationships  # type: ignore[no-any-return]
 
     def do_get_item(self, position) -> TreeModel:
-        if self.others.get_n_items() > 0 and position == 0 and self.has_relationships:
+        if position == 0 and self.has_relationships:
             return self.relationships_item
         return self.others.get_item(position - self.has_relationships)  # type: ignore[no-any-return]
 
