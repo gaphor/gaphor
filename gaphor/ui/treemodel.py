@@ -40,11 +40,7 @@ class TreeComponent(UIComponent, ActionProvider):
             if hasattr(model, "child_model"):
                 return model.child_model
             if model and isinstance(model, Gio.ListModel):
-                return (
-                    RelationshipsModel(model)
-                    if isinstance(model.element, UML.Package)
-                    else model
-                )
+                return model
             return None
 
         tree_model = Gtk.TreeListModel.new(
@@ -106,7 +102,7 @@ class TreeComponent(UIComponent, ActionProvider):
                 and (owner_model := self.tree_model_for_element(model.element.owner))
                 is not None
             ):
-                owner_model.items_changed(owner_model.items.index(model), 1, 1)
+                owner_model.update_expander(model)
 
     def remove_element(self, element, owner=no_owner):
         if (
@@ -125,7 +121,7 @@ class TreeComponent(UIComponent, ActionProvider):
                 and model.element
                 and (owner_model := self.tree_model_for_element(model.element.owner))
             ):
-                owner_model.items_changed(owner_model.items.index(model), 1, 1)
+                owner_model.update_expander(model)
 
     @event_handler(ElementCreated)
     def on_element_created(self, event: ElementCreated):
@@ -164,7 +160,7 @@ class TreeComponent(UIComponent, ActionProvider):
         for element in self.element_factory.select(
             lambda e: (e.owner is None) and visible(e)
         ):
-            model.add_element(element)
+            self.add_element(element)
 
 
 def new_list_item_ui():
@@ -198,10 +194,13 @@ class TreeModel(GObject.Object, Gio.ListModel):
 
     text = GObject.Property(type=str)
     icon = GObject.Property(type=str)
+    icon_visible = GObject.Property(type=bool, default=False)
     attributes = GObject.Property(type=Pango.AttrList)
 
     def add_element(self, element: Element) -> TreeModel:
-        if existing := next((ti for ti in self.items if ti.element is element), None):
+        if (
+            existing := next((ti for ti in self.items if ti.element is element), None)
+        ) is not None:
             return existing
 
         tree_item = TreeModel(element)
@@ -218,11 +217,21 @@ class TreeModel(GObject.Object, Gio.ListModel):
         del self.items[index]
         self.items_changed(index, 1, 0)
 
+    def update_expander(self, tree_item):
+        self.items_changed(self.index(tree_item), 1, 1)
+
+    def index(self, tree_item):
+        return self.items.index(tree_item)
+
     def sync(self) -> None:
         element = self.element
         assert element
         self.text = format(element) or gettext("<None>")
         self.icon = get_icon_name(element)
+        self.icon_visible = bool(
+            self.icon
+            and not isinstance(element, (UML.Parameter, UML.Property, UML.Operation))
+        )
         self.attributes = pango_attributes(element)
 
     def clear(self) -> None:

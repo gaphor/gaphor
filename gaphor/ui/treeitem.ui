@@ -17,6 +17,11 @@
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
+                <binding name="visible">
+                  <lookup name="icon_visible" type="gaphor+ui+treemodel+TreeModel">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
               </object>
             </child>
             <child>
