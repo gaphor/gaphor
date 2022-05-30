@@ -100,10 +100,11 @@ class Element:
 
     @property
     def model(self) -> RepositoryProtocol:
-        """The owning model, raises AssertionError when model is not set."""
-        assert (
-            self._model
-        ), "You can not retrieve the model since it's not set on construction"
+        """The owning model, raises TypeError when model is not set."""
+        if not self._model:
+            raise TypeError(
+                "Can't retrieve the model since it's not set on construction"
+            )
         return self._model
 
     @classmethod
