@@ -42,8 +42,10 @@ class StereotypePage(PropertyPageBase):
 
         if hasattr(self.item, "show_stereotypes"):
             show_stereotypes.set_active(self.item.show_stereotypes)
-        else:
+        elif Gtk.get_major_version() == 3:
             show_stereotypes.destroy()
+        else:
+            show_stereotypes.unparent()
 
         stereotype_list = builder.get_object("stereotype-list")
         stereotype_list.set_model(model)
