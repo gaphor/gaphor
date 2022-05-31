@@ -40,7 +40,11 @@ class TreeComponent(UIComponent, ActionProvider):
             if hasattr(model, "child_model"):
                 return model.child_model
             if model and isinstance(model, Gio.ListModel):
-                return model
+                return (
+                    RelationshipsModel(model)
+                    if isinstance(model.element, UML.Package)
+                    else model
+                )
             return None
 
         tree_model = Gtk.TreeListModel.new(
@@ -163,6 +167,32 @@ class TreeComponent(UIComponent, ActionProvider):
             self.add_element(element)
 
 
+class TreeItem(GObject.Object):
+    def __init__(self, element):
+        super().__init__()
+        self.element = element
+        if element:
+            self.sync()
+
+    text = GObject.Property(type=str)
+    icon = GObject.Property(type=str)
+    icon_visible = GObject.Property(type=bool, default=False)
+    attributes = GObject.Property(type=Pango.AttrList)
+
+    def sync(self) -> None:
+        element = self.element
+        if element:
+            self.text = format(element) or gettext("<None>")
+            self.icon = get_icon_name(element)
+            self.icon_visible = bool(
+                self.icon
+                and not isinstance(
+                    element, (UML.Parameter, UML.Property, UML.Operation)
+                )
+            )
+            self.attributes = pango_attributes(element)
+
+
 def new_list_item_ui():
     b = translated_ui_string("gaphor.ui", "treeitem.ui")
     return GLib.Bytes.new(b.encode("utf-8"))
@@ -176,10 +206,9 @@ def visible(element):
     )
 
 
-class TreeModel(GObject.Object, Gio.ListModel):
+class TreeModel(TreeItem, Gio.ListModel):
     def __init__(self, element):
-        super().__init__()
-        self.element = element
+        super().__init__(element)
         self.items: list[TreeModel] = (
             [
                 TreeModel(e)
@@ -189,13 +218,6 @@ class TreeModel(GObject.Object, Gio.ListModel):
             if element
             else []
         )
-        if element:
-            self.sync()
-
-    text = GObject.Property(type=str)
-    icon = GObject.Property(type=str)
-    icon_visible = GObject.Property(type=bool, default=False)
-    attributes = GObject.Property(type=Pango.AttrList)
 
     def add_element(self, element: Element) -> TreeModel:
         if (
@@ -223,17 +245,6 @@ class TreeModel(GObject.Object, Gio.ListModel):
     def index(self, tree_item):
         return self.items.index(tree_item)
 
-    def sync(self) -> None:
-        element = self.element
-        assert element
-        self.text = format(element) or gettext("<None>")
-        self.icon = get_icon_name(element)
-        self.icon_visible = bool(
-            self.icon
-            and not isinstance(element, (UML.Parameter, UML.Property, UML.Operation))
-        )
-        self.attributes = pango_attributes(element)
-
     def clear(self) -> None:
         n = len(self.items)
         del self.items[:]
@@ -243,12 +254,12 @@ class TreeModel(GObject.Object, Gio.ListModel):
         return next((m for m in self.items if m.element is element), None)
 
     def do_get_item_type(self) -> GObject.GType:
-        return TreeModel.__gtype__
+        return TreeItem.__gtype__
 
     def do_get_n_items(self) -> int:
         return len(self.items)
 
-    def do_get_item(self, position) -> TreeModel | None:
+    def do_get_item(self, position) -> TreeItem | None:
         try:
             return self.items[position]  # type: ignore[no-any-return]
         except IndexError:
@@ -309,14 +320,14 @@ class RelationshipsModel(GObject.Object, Gio.ListModel):
     def do_get_n_items(self) -> int:
         return self.others.get_n_items() + self.has_relationships  # type: ignore[no-any-return]
 
-    def do_get_item(self, position) -> TreeModel:
+    def do_get_item(self, position) -> TreeItem:
         if position == 0 and self.has_relationships:
             return self.relationships_item
         return self.others.get_item(position - self.has_relationships)  # type: ignore[no-any-return]
 
 
 def uml_relationship_matcher(item):
-    return isinstance(item, TreeModel) and isinstance(item.element, UML.Relationship)
+    return isinstance(item, TreeItem) and isinstance(item.element, UML.Relationship)
 
 
 def negating_matcher(matcher):
