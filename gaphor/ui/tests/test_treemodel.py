@@ -78,6 +78,84 @@ def test_tree_model_add_nested_element_in_reverse_order(element_factory):
     assert tree_model.list_model_for_element(class_) is None
 
 
+def test_tree_model_remove_element(element_factory):
+    tree_model = TreeModel()
+    element = element_factory.create(UML.Class)
+    tree_model.add_element(element)
+
+    tree_model.remove_element(element)
+    tree_item = tree_model.tree_item_for_element(element)
+
+    assert tree_item is None
+
+
+def test_tree_model_remove_nested_element(element_factory):
+    tree_model = TreeModel()
+    class_ = element_factory.create(UML.Class)
+    package = element_factory.create(UML.Package)
+
+    class_.package = package
+    tree_model.add_element(package)
+    tree_model.add_element(class_)
+    tree_model.remove_element(class_)
+
+    assert tree_model.list_model_for_element(package) is None
+    assert tree_model.list_model_for_element(class_) is None
+    assert tree_model.tree_item_for_element(package) is not None
+    assert tree_model.tree_item_for_element(class_) is None
+
+
+def test_tree_model_remove_package_with_nested_element(element_factory):
+    tree_model = TreeModel()
+    class_ = element_factory.create(UML.Class)
+    package = element_factory.create(UML.Package)
+
+    class_.package = package
+    tree_model.add_element(package)
+    tree_model.add_element(class_)
+    tree_model.remove_element(package)
+
+    assert tree_model.tree_item_for_element(package) is None
+    assert tree_model.list_model_for_element(package) is None
+    assert tree_model.list_model_for_element(class_) is None
+    assert tree_model.tree_item_for_element(package) is None
+    assert tree_model.tree_item_for_element(class_) is None
+
+
+def test_tree_model_remove_from_different_owner(element_factory):
+    tree_model = TreeModel()
+    class_ = element_factory.create(UML.Class)
+    package = element_factory.create(UML.Package)
+
+    tree_model.add_element(package)
+    tree_model.add_element(class_)
+    class_.package = package
+    tree_model.remove_element(class_, owner=None)
+
+    assert tree_model.tree_item_for_element(package) is not None
+    assert tree_model.root.get_n_items() == 1
+
+
+def test_tree_model_change_owner(element_factory):
+    tree_model = TreeModel()
+    class_ = element_factory.create(UML.Class)
+    package = element_factory.create(UML.Package)
+
+    tree_model.add_element(package)
+    tree_model.add_element(class_)
+    class_.package = package
+    tree_model.remove_element(class_, owner=None)
+    tree_model.add_element(class_)
+
+    package_item = tree_model.tree_item_for_element(package)
+    class_item = tree_model.tree_item_for_element(class_)
+    package_model = tree_model.list_model_for_element(package)
+
+    assert package_item in tree_model.root
+    assert class_item not in tree_model.root
+    assert class_item in package_model
+
+
 @skip_if_gtk3
 def xtest_tree_component_remove_element(tree_component, element_factory):
     tree_model = tree_component.model

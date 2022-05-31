@@ -101,11 +101,9 @@ class TreeComponent(UIComponent, ActionProvider):
         if (event.property is not Element.owner) or not visible(event.element):
             return
 
-        old_value, new_value = event.old_value, event.new_value
         element = event.element
-
-        self.model.remove_element(element, owner=old_value)
-        self.model.add_element(element, owner=new_value)
+        self.model.remove_element(element, owner=event.old_value)
+        self.model.add_element(element)
 
     @event_handler(AttributeUpdated)
     def on_attribute_changed(self, event: AttributeUpdated):
@@ -147,7 +145,7 @@ class TreeModel:
         return self.branches[None]
 
     def sync(self, element):
-        if tree_item := self.tree_item_for_element(element):
+        if visible(element) and (tree_item := self.tree_item_for_element(element)):
             tree_item.sync()
 
     def child_model(self, item: TreeItem, _user_data=None):
@@ -165,7 +163,7 @@ class TreeModel:
 
     def list_model_for_element(self, element: Element | None) -> Gio.ListStore | None:
         if element is None:
-            return self.branches[None]
+            return self.root
         return next(
             (m for ti, m in self.branches.items() if ti and ti.element is element), None
         )
@@ -200,8 +198,25 @@ class TreeModel:
                     owner_model.items_changed(index, 1, 1)
         return new
 
-    def add_element(self, element: Element, owner=0) -> None:
-        if self.tree_item_for_element(element):
+    def remove_branch(self, branch: Gio.ListStore) -> None:
+        tree_item = next(ti for ti, b in self.branches.items() if b is branch)
+        if tree_item is None:
+            # Do not remove the root branch
+            return
+
+        del self.branches[tree_item]
+        if tree_item.element and (
+            owner_tree_item := self.tree_item_for_element(tree_item.element.owner)
+        ):
+            if (
+                owner_model := self.list_model_for_element(owner_tree_item)
+            ) is not None:
+                found, index = owner_model.find(tree_item)
+                if found:
+                    owner_model.items_changed(index, 1, 1)
+
+    def add_element(self, element: Element) -> None:
+        if (not visible(element)) or self.tree_item_for_element(element):
             return
 
         if element.owner is None:
@@ -215,8 +230,22 @@ class TreeModel:
 
         owner_model.append(TreeItem(element))
 
-    def remove_element(self, element: Element, owner=0) -> None:
-        pass
+    def remove_element(self, element: Element, owner=no_owner) -> None:
+        for child in element.ownedElement:
+            self.remove_element(child)
+
+        if (
+            owner_model := self.list_model_for_element(
+                element.owner if owner is no_owner else owner
+            )
+        ) is not None:
+            index = next(
+                (i for i, ti in enumerate(owner_model) if ti.element is element), None
+            )
+            if index is not None:
+                owner_model.remove(index)
+            if not len(owner_model):
+                self.remove_branch(owner_model)
 
     def clear(self) -> None:
         root = self.root
