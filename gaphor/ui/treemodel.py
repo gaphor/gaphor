@@ -149,16 +149,20 @@ class TreeModel:
             tree_item.sync()
 
     def child_model(self, item: TreeItem, _user_data=None):
+        """This method will create branches on demand (lazy)."""
         branches = self.branches
         if item in branches:
             return branches[item]
-        elif item.element.ownedElement:
-            element = item.element
-            new = self.add_branch(item)
-            for e in item.element.ownedElement:
-                if e.owner is element and visible(e):
-                    new.append(TreeItem(e))
-            return new
+        elif owned_elements := [
+            e
+            for e in item.element.ownedElement
+            if e.owner is item.element and visible(e)
+        ]:
+            new_branch = Gio.ListStore.new(TreeItem.__gtype__)
+            self.branches[item] = new_branch
+            for e in owned_elements:
+                new_branch.append(TreeItem(e))
+            return new_branch
         return None
 
     def list_model_for_element(self, element: Element | None) -> Gio.ListStore | None:
@@ -184,22 +188,10 @@ class TreeModel:
             return next((ti for ti in owner_model if ti.element is element), None)
         return None
 
-    def add_branch(self, tree_item: TreeItem) -> Gio.ListStore:
-        if tree_item in self.branches:
-            return self.branches[tree_item]
-        new = Gio.ListStore.new(TreeItem.__gtype__)
-        self.branches[tree_item] = new
-        if owner_tree_item := self.tree_item_for_element(tree_item.element.owner):
-            if (owner_model := self.branches.get(owner_tree_item)) is not None:
-                found, index = owner_model.find(tree_item)
-                if found:
-                    owner_model.items_changed(index, 1, 1)
-        return new
-
     def remove_branch(self, branch: Gio.ListStore) -> None:
         tree_item = next(ti for ti, b in self.branches.items() if b is branch)
         if tree_item is None:
-            # Do not remove the root branch
+            # Do never remove the root branch
             return
 
         del self.branches[tree_item]
@@ -213,21 +205,25 @@ class TreeModel:
                 if found:
                     owner_model.items_changed(index, 1, 1)
 
+    def notify_child_model(self, tree_item):
+        if owner_tree_item := self.tree_item_for_element(tree_item.element.owner):
+            if (owner_model := self.branches.get(owner_tree_item)) is not None:
+                found, index = owner_model.find(tree_item)
+                if found:
+                    owner_model.items_changed(index, 1, 1)
+
     def add_element(self, element: Element) -> None:
         if (not visible(element)) or self.tree_item_for_element(element):
             return
 
         if element.owner is None:
             self.root.append(TreeItem(element))
-            return
-
-        owner_model = self.list_model_for_element(element.owner)
-        if owner_model is None:
-            if owner_tree_item := self.tree_item_for_element(element.owner):
-                owner_model = self.add_branch(owner_tree_item)
-
-        if owner_model is not None:
+        elif (owner_model := self.list_model_for_element(element.owner)) is not None:
             owner_model.append(TreeItem(element))
+        else:
+            # Branch is created by child_model() on demand
+            if owner_tree_item := self.tree_item_for_element(element.owner):
+                self.notify_child_model(owner_tree_item)
 
     def remove_element(self, element: Element, owner=no_owner) -> None:
         for child in element.ownedElement:
