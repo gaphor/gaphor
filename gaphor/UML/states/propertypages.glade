@@ -114,7 +114,6 @@ renderers and such.</property>
       <object class="GtkEntry" id="guard">
         <property name="visible">1</property>
         <property name="can-focus">1</property>
-        <signal name="changed" handler="guard-changed" swapped="no"/>
       </object>
       <packing>
         <property name="position">1</property>

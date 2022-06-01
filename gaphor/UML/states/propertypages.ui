@@ -72,7 +72,6 @@
     </child>
     <child>
       <object class="GtkEntry" id="guard">
-        <signal name="changed" handler="guard-changed"/>
       </object>
     </child>
     <style>

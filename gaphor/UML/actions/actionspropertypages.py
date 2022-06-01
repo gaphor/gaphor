@@ -5,6 +5,7 @@ from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
+    handler_blocking,
     new_resource_builder,
 )
 from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
@@ -178,7 +179,6 @@ class FlowPropertyPageAbstract(PropertyPageBase):
         builder = new_builder(
             "transition-editor",
             signals={
-                "guard-changed": (self._on_guard_change,),
                 "transition-destroy": (self.watcher.unsubscribe_all,),
             },
         )
@@ -186,6 +186,7 @@ class FlowPropertyPageAbstract(PropertyPageBase):
         guard = builder.get_object("guard")
         guard.set_text(subject.guard or "")
 
+        @handler_blocking(guard, "changed", self._on_guard_change)
         def handler(event):
             v = event.new_value
             if v != guard.get_text():

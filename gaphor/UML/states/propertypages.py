@@ -8,6 +8,7 @@ from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
+    handler_blocking,
     new_resource_builder,
 )
 
@@ -34,7 +35,6 @@ class TransitionPropertyPage(PropertyPageBase):
         builder = new_builder(
             "transition-editor",
             signals={
-                "guard-changed": (self._on_guard_change,),
                 "transition-destroy": (self.watcher.unsubscribe_all,),
             },
         )
@@ -43,6 +43,7 @@ class TransitionPropertyPage(PropertyPageBase):
         if subject.guard:
             guard.set_text(subject.guard.specification or "")
 
+        @handler_blocking(guard, "changed", self._on_guard_change)
         def handler(event):
             if event.element is subject.guard and guard.get_text() != event.new_value:
                 guard.set_text(event.new_value or "")

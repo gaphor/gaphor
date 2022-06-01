@@ -230,7 +230,6 @@
     <child>
       <object class="GtkEntry" id="guard">
         <property name="focusable">1</property>
-        <signal name="changed" handler="guard-changed" swapped="no"/>
       </object>
     </child>
     <style>

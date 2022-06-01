@@ -10,6 +10,7 @@ from gaphor.diagram.propertypages import (
     EditableTreeModel,
     PropertyPageBase,
     PropertyPages,
+    handler_blocking,
     new_resource_builder,
     on_bool_cell_edited,
     on_text_cell_edited,
@@ -204,7 +205,6 @@ class NamedElementPropertyPage(PropertyPageBase):
         builder = new_builder(
             "named-element-editor",
             signals={
-                "name-changed": (self._on_name_changed,),
                 "name-entry-destroyed": (self.watcher.unsubscribe_all,),
             },
         )
@@ -214,6 +214,7 @@ class NamedElementPropertyPage(PropertyPageBase):
         entry = builder.get_object("name-entry")
         entry.set_text(subject and subject.name or "")
 
+        @handler_blocking(entry, "changed", self._on_name_changed)
         def handler(event):
             if event.element is subject and event.new_value != entry.get_text():
                 entry.set_text(event.new_value or "")

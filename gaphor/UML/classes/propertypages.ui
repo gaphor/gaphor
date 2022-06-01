@@ -506,7 +506,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
     <child>
       <object class="GtkEntry" id="name-entry">
         <property name="focusable">1</property>
-        <signal name="changed" handler="name-changed" swapped="no"/>
         <signal name="destroy" handler="name-entry-destroyed" swapped="no"/>
       </object>
     </child>
