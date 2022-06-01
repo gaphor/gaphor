@@ -4,6 +4,7 @@ from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
     combo_box_text_auto_complete,
+    handler_blocking,
     new_resource_builder,
 )
 
@@ -57,14 +58,12 @@ class MetaclassPropertyPage(PropertyPageBase):
             combo, self.CLASSES, self.subject and self.subject.name or ""
         )
 
-        changed_id = combo.connect("changed", self._on_name_changed)
         entry = combo.get_child()
 
+        @handler_blocking(combo, "changed", self._on_name_changed)
         def handler(event):
             if event.element is self.subject and entry.get_text() != event.new_value:
-                combo.handler_block(changed_id)
                 entry.set_text(event.new_value or "")
-                combo.handler_unblock(changed_id)
 
         self.watcher.watch("name", handler)
 

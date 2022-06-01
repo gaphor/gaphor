@@ -4,6 +4,7 @@ from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
     combo_box_text_auto_complete,
+    handler_blocking,
     new_resource_builder,
 )
 from gaphor.SysML import sysml
@@ -45,13 +46,10 @@ class RequirementPropertyPage(PropertyPageBase):
         if subject.text:
             buffer.set_text(subject.text)
 
-        changed_id = buffer.connect("changed", self._on_text_changed)
-
+        @handler_blocking(buffer, "changed", self._on_text_changed)
         def text_handler(event):
             if not text_view.props.has_focus:
-                buffer.handler_block(changed_id)
                 buffer.set_text(event.new_value)
-                buffer.handler_unblock(changed_id)
 
         self.watcher.watch("text", text_handler)
 

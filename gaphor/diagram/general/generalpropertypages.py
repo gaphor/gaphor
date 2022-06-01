@@ -2,7 +2,12 @@ from gi.repository import Gtk
 
 from gaphor.core import transactional
 from gaphor.core.modeling import Comment
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, new_builder
+from gaphor.diagram.propertypages import (
+    PropertyPageBase,
+    PropertyPages,
+    handler_blocking,
+    new_builder,
+)
 
 
 @PropertyPages.register(Comment)
@@ -27,13 +32,10 @@ class CommentPropertyPage(PropertyPageBase):
             buffer.set_text(subject.body)
         text_view.set_buffer(buffer)
 
-        changed_id = buffer.connect("changed", self._on_body_change)
-
+        @handler_blocking(buffer, "changed", self._on_body_change)
         def handler(event):
             if not text_view.props.has_focus:
-                buffer.handler_block(changed_id)
                 buffer.set_text(event.new_value or "")
-                buffer.handler_unblock(changed_id)
 
         self.watcher.watch("body", handler)
         text_view.connect("destroy", self.watcher.unsubscribe_all)

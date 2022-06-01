@@ -268,6 +268,20 @@ def combo_box_text_auto_complete(
         entry.set_text(text)
 
 
+def handler_blocking(widget, event_name, widget_handler):
+    changed_id = widget.connect(event_name, widget_handler)
+
+    def handler_wrapper(func):
+        def _handler(event):
+            widget.handler_block(changed_id)
+            func(event)
+            widget.handler_unblock(changed_id)
+
+        return _handler
+
+    return handler_wrapper
+
+
 @PropertyPages.register(gaphas.item.Line)
 class LineStylePage(PropertyPageBase):
     """Basic line style properties: color, orthogonal, etc."""
@@ -339,13 +353,10 @@ class NotePropertyPage(PropertyPageBase):
             buffer.set_text(subject.note)
         text_view.set_buffer(buffer)
 
-        changed_id = buffer.connect("changed", self._on_body_change)
-
+        @handler_blocking(buffer, "changed", self._on_body_change)
         def handler(event):
             if not text_view.props.has_focus:
-                buffer.handler_block(changed_id)
                 buffer.set_text(event.new_value or "")
-                buffer.handler_unblock(changed_id)
 
         self.watcher.watch("note", handler)
         text_view.connect("destroy", self.watcher.unsubscribe_all)

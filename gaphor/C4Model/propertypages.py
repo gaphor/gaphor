@@ -5,6 +5,7 @@ from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
+    handler_blocking,
     new_resource_builder,
 )
 
@@ -39,13 +40,10 @@ class DescriptionPropertyPage(PropertyPageBase):
         if subject.description:
             buffer.set_text(subject.description)
 
-        changed_id = buffer.connect("changed", self._on_description_changed)
-
+        @handler_blocking(buffer, "changed", self._on_description_changed)
         def text_handler(event):
             if not description.props.has_focus:
-                buffer.handler_block(changed_id)
                 buffer.set_text(event.new_value)
-                buffer.handler_unblock(changed_id)
 
         self.watcher.watch("description", text_handler)
 
