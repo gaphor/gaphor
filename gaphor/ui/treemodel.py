@@ -133,6 +133,12 @@ def visible(element):
     )
 
 
+def tree_item_sort(a, b, _user_data=None):
+    na = GLib.utf8_collate_key(a.text, -1)
+    nb = GLib.utf8_collate_key(b.text, -1)
+    return (na > nb) - (na < nb)
+
+
 class TreeModel:
     def __init__(self):
         super().__init__()
@@ -147,6 +153,8 @@ class TreeModel:
     def sync(self, element):
         if visible(element) and (tree_item := self.tree_item_for_element(element)):
             tree_item.sync()
+            if owner_model := self.list_model_for_element(element.owner):
+                owner_model.sort(tree_item_sort)
 
     def child_model(self, item: TreeItem, _user_data=None):
         """This method will create branches on demand (lazy)."""
@@ -161,7 +169,7 @@ class TreeModel:
             new_branch = Gio.ListStore.new(TreeItem.__gtype__)
             self.branches[item] = new_branch
             for e in owned_elements:
-                new_branch.append(TreeItem(e))
+                new_branch.insert_sorted(TreeItem(e), tree_item_sort)
             return new_branch
         return None
 
@@ -186,7 +194,7 @@ class TreeModel:
             return
 
         if (owner_model := self.list_model_for_element(element.owner)) is not None:
-            owner_model.append(TreeItem(element))
+            owner_model.insert_sorted(TreeItem(element), tree_item_sort)
         else:
             # Branch is created by child_model() on demand
             if owner_tree_item := self.tree_item_for_element(element.owner):
