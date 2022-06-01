@@ -225,7 +225,8 @@ class NamedElementPropertyPage(PropertyPageBase):
 
     @transactional
     def _on_name_changed(self, entry):
-        self.subject.name = entry.get_text()
+        if self.subject.name != entry.get_text():
+            self.subject.name = entry.get_text()
 
 
 @PropertyPages.register(UML.Classifier)
