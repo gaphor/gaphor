@@ -72,6 +72,7 @@ def test_tree_model_add_nested_element_in_reverse_order(element_factory):
     class_.package = package
     tree_model.add_element(class_)
     tree_model.add_element(package)
+    tree_model.child_model(tree_model.tree_item_for_element(package))
 
     assert tree_model.list_model_for_element(package) is not None
     assert tree_model.list_model_for_element(package).get_item(0).element is class_
@@ -157,8 +158,8 @@ def test_tree_model_change_owner(element_factory):
 
 
 @skip_if_gtk3
-def xtest_tree_component_remove_element(tree_component, element_factory):
-    tree_model = tree_component.model
+def test_tree_component_remove_element(tree_component, element_factory):
+    tree_model = tree_component.model.root
     element = element_factory.create(UML.Class)
     items_changed = ItemChangedHandler()
     tree_model.connect("items-changed", items_changed)
@@ -241,7 +242,6 @@ def xtest_element_name_changed(tree_component, element_factory):
 
     class_.name = "foo"
 
-    print("start tests")
     weight, style = tree_item.attributes.get_attributes()
 
     assert tree_item.text == "foo"

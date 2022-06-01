@@ -190,9 +190,7 @@ class TreeModel:
         new = Gio.ListStore.new(TreeItem.__gtype__)
         self.branches[tree_item] = new
         if owner_tree_item := self.tree_item_for_element(tree_item.element.owner):
-            if (
-                owner_model := self.list_model_for_element(owner_tree_item)
-            ) is not None:
+            if (owner_model := self.branches.get(owner_tree_item)) is not None:
                 found, index = owner_model.find(tree_item)
                 if found:
                     owner_model.items_changed(index, 1, 1)
@@ -225,10 +223,11 @@ class TreeModel:
 
         owner_model = self.list_model_for_element(element.owner)
         if owner_model is None:
-            owner_tree_item = TreeItem(element.owner)
-            owner_model = self.add_branch(owner_tree_item)
+            if owner_tree_item := self.tree_item_for_element(element.owner):
+                owner_model = self.add_branch(owner_tree_item)
 
-        owner_model.append(TreeItem(element))
+        if owner_model is not None:
+            owner_model.append(TreeItem(element))
 
     def remove_element(self, element: Element, owner=no_owner) -> None:
         for child in element.ownedElement:
