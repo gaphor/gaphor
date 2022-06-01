@@ -176,40 +176,10 @@ class TreeModel:
         if element is None:
             return None
         owner = element.owner
-        owner_model = (
-            next(
-                (m for ti, m in self.branches.items() if ti and ti.element is owner),
-                None,
-            )
-            if owner
-            else self.root
-        )
+        owner_model = self.list_model_for_element(owner)
         if owner_model:
             return next((ti for ti in owner_model if ti.element is element), None)
         return None
-
-    def remove_branch(self, branch: Gio.ListStore) -> None:
-        tree_item = next(ti for ti, b in self.branches.items() if b is branch)
-        if tree_item is None:
-            # Do never remove the root branch
-            return
-
-        del self.branches[tree_item]
-
-        if tree_item.element:
-            owner_tree_item = self.tree_item_for_element(tree_item.element.owner)
-            if (owner_model := self.branches.get(owner_tree_item)) is not None:
-                found, index = owner_model.find(tree_item)
-                if found:
-                    owner_model.items_changed(index, 1, 1)
-
-    def notify_child_model(self, tree_item):
-        # Only notify the change, the branch is created in child_model()
-        if owner_tree_item := self.tree_item_for_element(tree_item.element.owner):
-            if (owner_model := self.branches.get(owner_tree_item)) is not None:
-                found, index = owner_model.find(tree_item)
-                if found:
-                    owner_model.items_changed(index, 1, 1)
 
     def add_element(self, element: Element) -> None:
         if (not visible(element)) or self.tree_item_for_element(element):
@@ -238,6 +208,23 @@ class TreeModel:
                 owner_model.remove(index)
             if not len(owner_model):
                 self.remove_branch(owner_model)
+
+    def remove_branch(self, branch: Gio.ListStore) -> None:
+        tree_item = next(ti for ti, b in self.branches.items() if b is branch)
+        if tree_item is None:
+            # Do never remove the root branch
+            return
+
+        del self.branches[tree_item]
+        self.notify_child_model(tree_item)
+
+    def notify_child_model(self, tree_item):
+        # Only notify the change, the branch is created in child_model()
+        owner_tree_item = self.tree_item_for_element(tree_item.element.owner)
+        if (owner_model := self.branches.get(owner_tree_item)) is not None:
+            found, index = owner_model.find(tree_item)
+            if found:
+                owner_model.items_changed(index, 1, 1)
 
     def clear(self) -> None:
         root = self.root
