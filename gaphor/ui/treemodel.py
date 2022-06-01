@@ -195,17 +195,16 @@ class TreeModel:
             return
 
         del self.branches[tree_item]
-        if tree_item.element and (
-            owner_tree_item := self.tree_item_for_element(tree_item.element.owner)
-        ):
-            if (
-                owner_model := self.list_model_for_element(owner_tree_item)
-            ) is not None:
+
+        if tree_item.element:
+            owner_tree_item = self.tree_item_for_element(tree_item.element.owner)
+            if (owner_model := self.branches.get(owner_tree_item)) is not None:
                 found, index = owner_model.find(tree_item)
                 if found:
                     owner_model.items_changed(index, 1, 1)
 
     def notify_child_model(self, tree_item):
+        # Only notify the change, the branch is created in child_model()
         if owner_tree_item := self.tree_item_for_element(tree_item.element.owner):
             if (owner_model := self.branches.get(owner_tree_item)) is not None:
                 found, index = owner_model.find(tree_item)
@@ -216,9 +215,7 @@ class TreeModel:
         if (not visible(element)) or self.tree_item_for_element(element):
             return
 
-        if element.owner is None:
-            self.root.append(TreeItem(element))
-        elif (owner_model := self.list_model_for_element(element.owner)) is not None:
+        if (owner_model := self.list_model_for_element(element.owner)) is not None:
             owner_model.append(TreeItem(element))
         else:
             # Branch is created by child_model() on demand
