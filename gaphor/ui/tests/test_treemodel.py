@@ -58,6 +58,7 @@ def test_tree_model_add_nested_element(element_factory):
     class_.package = package
     tree_model.add_element(package)
     tree_model.add_element(class_)
+    tree_model.child_model(tree_model.tree_item_for_element(package))
 
     assert tree_model.list_model_for_element(package) is not None
     assert tree_model.list_model_for_element(package).get_item(0).element is class_
@@ -147,8 +148,8 @@ def test_tree_model_change_owner(element_factory):
     class_.package = package
     tree_model.remove_element(class_, owner=None)
     tree_model.add_element(class_)
-
     package_item = tree_model.tree_item_for_element(package)
+    tree_model.child_model(package_item)
     class_item = tree_model.tree_item_for_element(class_)
     package_model = tree_model.list_model_for_element(package)
 
