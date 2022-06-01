@@ -53,6 +53,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.model = TreeModel()
+        self.sorter = Gtk.CustomSorter.new(tree_item_sort)
 
     def open(self):
         self.event_manager.subscribe(self.on_element_created)
@@ -69,7 +70,9 @@ class TreeComponent(UIComponent, ActionProvider):
             user_data=None,
         )
 
-        selection = Gtk.SingleSelection.new(tree_model)  # sort_model
+        tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
+        sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
+        selection = Gtk.SingleSelection.new(sort_model)
         factory = Gtk.BuilderListItemFactory.new_from_bytes(None, new_list_item_ui())
 
         scrolled_window = Gtk.ScrolledWindow()
@@ -107,6 +110,7 @@ class TreeComponent(UIComponent, ActionProvider):
     @event_handler(AttributeUpdated)
     def on_attribute_changed(self, event: AttributeUpdated):
         self.model.sync(event.element)
+        self.sorter.changed(Gtk.SorterChange.DIFFERENT)
 
     @event_handler(ModelReady, ModelFlushed)
     def on_model_ready(self, event=None):
@@ -133,8 +137,8 @@ def visible(element):
 
 
 def tree_item_sort(a, b, _user_data=None):
-    na = GLib.utf8_collate_key(a.text, -1)
-    nb = GLib.utf8_collate_key(b.text, -1)
+    na = GLib.utf8_collate_key(a.text, -1).lower()
+    nb = GLib.utf8_collate_key(b.text, -1).lower()
     return (na > nb) - (na < nb)
 
 
@@ -152,8 +156,6 @@ class TreeModel:
     def sync(self, element):
         if visible(element) and (tree_item := self.tree_item_for_element(element)):
             tree_item.sync()
-            if owner_model := self.list_model_for_element(element.owner):
-                owner_model.sort(tree_item_sort)
 
     def child_model(self, item: TreeItem, _user_data=None):
         """This method will create branches on demand (lazy)."""
@@ -168,7 +170,7 @@ class TreeModel:
             new_branch = Gio.ListStore.new(TreeItem.__gtype__)
             self.branches[item] = new_branch
             for e in owned_elements:
-                new_branch.insert_sorted(TreeItem(e), tree_item_sort)
+                new_branch.append(TreeItem(e))
             return new_branch
         return None
 
@@ -192,7 +194,7 @@ class TreeModel:
             return
 
         if (owner_model := self.list_model_for_element(element.owner)) is not None:
-            owner_model.insert_sorted(TreeItem(element), tree_item_sort)
+            owner_model.append(TreeItem(element))
         elif owner_tree_item := self.tree_item_for_element(element.owner):
             self.notify_child_model(owner_tree_item)
 
