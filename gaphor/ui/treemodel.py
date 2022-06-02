@@ -36,8 +36,7 @@ class TreeItem(GObject.Object):
     attributes = GObject.Property(type=Pango.AttrList)
 
     def sync(self) -> None:
-        element = self.element
-        if element:
+        if element := self.element:
             self.text = format(element) or gettext("<None>")
             self.icon = get_icon_name(element)
             self.icon_visible = bool(
@@ -184,8 +183,7 @@ class TreeModel:
         if element is None:
             return None
         owner = element.owner
-        owner_model = self.list_model_for_element(owner)
-        if owner_model:
+        if owner_model := self.list_model_for_element(owner):
             return next((ti for ti in owner_model if ti.element is element), None)
         return None
 
@@ -195,10 +193,8 @@ class TreeModel:
 
         if (owner_model := self.list_model_for_element(element.owner)) is not None:
             owner_model.insert_sorted(TreeItem(element), tree_item_sort)
-        else:
-            # Branch is created by child_model() on demand
-            if owner_tree_item := self.tree_item_for_element(element.owner):
-                self.notify_child_model(owner_tree_item)
+        elif owner_tree_item := self.tree_item_for_element(element.owner):
+            self.notify_child_model(owner_tree_item)
 
     def remove_element(self, element: Element, owner=no_owner) -> None:
         for child in element.ownedElement:
