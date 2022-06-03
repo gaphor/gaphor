@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from gaphas.decorators import g_async
 from gi.repository import Gio, GLib, GObject, Gtk, Pango
 
 from gaphor import UML
@@ -19,6 +20,7 @@ from gaphor.core.modeling.event import AttributeUpdated
 from gaphor.diagram.iconname import get_icon_name
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui.abc import UIComponent
+from gaphor.ui.event import DiagramSelectionChanged
 
 no_owner = object()
 
@@ -53,7 +55,6 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.model = TreeModel()
-        self.sorter = Gtk.CustomSorter.new(tree_item_sort)
 
     def open(self):
         self.event_manager.subscribe(self.on_element_created)
@@ -61,23 +62,25 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.subscribe(self.on_owner_changed)
         self.event_manager.subscribe(self.on_attribute_changed)
         self.event_manager.subscribe(self.on_model_ready)
+        self.event_manager.subscribe(self.on_diagram_selection_changed)
 
         tree_model = Gtk.TreeListModel.new(
             self.model.root,
             passthrough=False,
-            autoexpand=True,
+            autoexpand=False,
             create_func=self.model.child_model,
             user_data=None,
         )
 
+        self.sorter = Gtk.CustomSorter.new(tree_item_sort)
         tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
-        sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
-        selection = Gtk.SingleSelection.new(sort_model)
+        self.sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
+        self.selection = Gtk.SingleSelection.new(self.sort_model)
         factory = Gtk.BuilderListItemFactory.new_from_bytes(None, new_list_item_ui())
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_child(Gtk.ListView.new(selection, factory))
+        scrolled_window.set_child(Gtk.ListView.new(self.selection, factory))
 
         self.on_model_ready()
 
@@ -89,6 +92,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_owner_changed)
         self.event_manager.unsubscribe(self.on_attribute_changed)
         self.event_manager.unsubscribe(self.on_model_ready)
+        self.event_manager.unsubscribe(self.on_diagram_selection_changed)
 
     @event_handler(ElementCreated)
     def on_element_created(self, event: ElementCreated):
@@ -106,6 +110,7 @@ class TreeComponent(UIComponent, ActionProvider):
         element = event.element
         self.model.remove_element(element, owner=event.old_value)
         self.model.add_element(element)
+        self.focus_element(element)
 
     @event_handler(AttributeUpdated)
     def on_attribute_changed(self, event: AttributeUpdated):
@@ -121,6 +126,34 @@ class TreeComponent(UIComponent, ActionProvider):
             lambda e: (e.owner is None) and visible(e)
         ):
             model.add_element(element)
+
+    @event_handler(DiagramSelectionChanged)
+    def on_diagram_selection_changed(self, event):
+        if not event.focused_item:
+            return
+        element = event.focused_item.subject
+        if not element:
+            return
+
+        self.focus_element(element)
+
+    @g_async(single=True)
+    def focus_element(self, element):
+        def expand_up_to_element(element, expand=False):
+            if not element:
+                return 0
+            n = expand_up_to_element(element.owner, expand=True)
+            while row := self.sort_model.get_item(n):
+                if row.get_item().element is element:
+                    if expand:
+                        row.set_expanded(True)
+                    return n
+                n += 1
+
+        pos = expand_up_to_element(element)
+        if pos is not None:
+            self.selection.set_selected(pos)
+        return pos
 
 
 def new_list_item_ui():
