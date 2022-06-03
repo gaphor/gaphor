@@ -21,7 +21,7 @@ from gaphor.diagram.deletable import deletable
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged
+from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged, ElementOpened
 from gaphor.ui.mainwindow import create_diagram_types_model
 from gaphor.ui.namespacemodel import (
     RELATIONSHIPS,
@@ -43,7 +43,11 @@ def popup_model(element, modeling_language):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    part.append(gettext("_Open"), "tree-view.open")
+
+    part.append(
+        gettext("_Open") if isinstance(element, Diagram) else gettext("Add to diagram"),
+        "tree-view.open",
+    )
     part.append(gettext("_Rename"), "tree-view.rename")
     model.append_section(None, part)
 
@@ -219,7 +223,6 @@ class Namespace(UIComponent, ActionProvider):
         if Gtk.get_major_version() == 3:
             action_group = view.get_action_group("tree-view")
 
-            action_group.lookup_action("open").set_enabled(isinstance(element, Diagram))
             action_group.lookup_action("create-package").set_enabled(
                 isinstance(element, UML.Package)
             )
@@ -278,7 +281,7 @@ class Namespace(UIComponent, ActionProvider):
         if isinstance(element, Diagram):
             self.event_manager.handle(DiagramOpened(element))
         else:
-            log.debug(f"No action defined for element {type(element).__name__}")
+            self.event_manager.handle(ElementOpened(element))
 
     @action(name="tree-view.show-in-diagram")
     def tree_view_show_in_diagram(self, diagram_id: str) -> None:
