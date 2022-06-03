@@ -142,15 +142,14 @@ class TreeComponent(UIComponent, ActionProvider):
         def expand_up_to_element(element, expand=False):
             if not element:
                 return 0
-            else:
-                n = expand_up_to_element(element.owner, expand=True)
-                while row := self.sort_model.get_item(n):
-                    print(row)
-                    if row.get_item().element is element:
-                        if expand:
-                            row.set_expanded(True)
-                        return n
-                    n += 1
+            n = expand_up_to_element(element.owner, expand=True)
+            while row := self.sort_model.get_item(n):
+                print(row)
+                if row.get_item().element is element:
+                    if expand:
+                        row.set_expanded(True)
+                    return n
+                n += 1
 
         pos = expand_up_to_element(element)
         if pos is not None:
