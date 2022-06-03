@@ -160,6 +160,21 @@ def test_tree_model_change_owner(element_factory):
 
 
 @skip_if_gtk3
+def test_show_item_in_tree_list_model(tree_component, element_factory):
+    class_ = element_factory.create(UML.Class)
+    package = element_factory.create(UML.Package)
+
+    class_.package = package
+
+    pos = tree_component.focus_element(class_)
+    tree_model = tree_component.sort_model
+
+    assert pos == 1
+    assert tree_model.get_item(0).get_item().element is package
+    assert tree_model.get_item(1).get_item().element is class_
+
+
+@skip_if_gtk3
 def test_tree_component_remove_element(tree_component, element_factory):
     tree_model = tree_component.model.root
     element = element_factory.create(UML.Class)
@@ -285,9 +300,7 @@ def test_tree_component_model_ready(event_manager, element_factory):
     element_factory.model_ready()
 
     assert tree_model.tree_item_for_element(package) is not None
-    assert (
-        tree_model.tree_item_for_element(class_) is None
-    )  # child_model not yet traversed
+    assert tree_model.tree_item_for_element(class_) is None
 
     tree_component.close()
 
