@@ -6,17 +6,14 @@ from gaphor.plugins.errorreports.errorreports import ErrorReports
 
 
 class ApplicationStub:
-    pass
-
-
-class ToolsMenuStub:
-    def add_actions(self, provider):
-        pass
+    @property
+    def active_session(self):
+        return None
 
 
 @pytest.fixture
 def error_reporter(event_manager):
-    svc = ErrorReports(event_manager, ApplicationStub(), ToolsMenuStub())
+    svc = ErrorReports(ApplicationStub(), event_manager)
     yield svc
     svc.shutdown()
 

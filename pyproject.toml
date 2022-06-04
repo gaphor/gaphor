@@ -143,6 +143,7 @@ type = "virtualenv"
 "app_file_manager" = "gaphor.ui.appfilemanager:AppFileManager"
 "styling" = "gaphor.ui.styling:Styling"
 "greeter" = "gaphor.ui.greeter:Greeter"
+"error_reports" = "gaphor.plugins.errorreports:ErrorReports"
 
 [tool.poetry.plugins."gaphor.services"]
 "component_registry" = "gaphor.services.componentregistry:ComponentRegistry"
@@ -167,7 +168,6 @@ type = "virtualenv"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
 "help" = "gaphor.services.helpservice:HelpService"
-"error_reports" = "gaphor.plugins.errorreports:ErrorReports"
 
 [tool.poetry.plugins."gaphor.modelinglanguages"]
 "Core" = "gaphor.core.modeling.modelinglanguage:CoreModelingLanguage"

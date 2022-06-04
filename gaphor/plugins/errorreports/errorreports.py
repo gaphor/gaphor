@@ -10,7 +10,8 @@ from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.action import action
-from gaphor.event import Notification
+from gaphor.core.eventmanager import event_handler
+from gaphor.event import Notification, SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui.abc import UIComponent
 
@@ -33,25 +34,33 @@ def new_builder():
 
 
 class ErrorReports(UIComponent, ActionProvider):
-    def __init__(self, event_manager, main_window, tools_menu):
+    def __init__(self, application, event_manager):
+        self.application = application
         self.event_manager = event_manager
-        self.main_window = main_window
-        tools_menu.add_actions(self)
         self.window = None
         self.buffer = None
         self.exceptions: list[
             tuple[float, type[BaseException], BaseException, TracebackType | None]
         ] = []
         sys.excepthook = self.excepthook
+        event_manager.subscribe(self.on_session_created)
 
     def shutdown(self):
         super().shutdown()
         sys.excepthook = _EXCEPTHOOK
+        self.event_manager.unsubscribe(self.on_session_created)
 
-    @action(name="error-reports-open", label=gettext("Error Reports"))
+    @event_handler(SessionCreated)
+    def on_session_created(self, event):
+        print("on_session_created")
+        session = event.session
+        tools_menu = session.get_service("tools_menu")
+        tools_menu.add_actions(self, scope="app")
+
+    @action(name="app.error-reports-open", label=gettext("Error Reports"))
     def open(self):
         if self.window:
-            self.window.set_property("has-focus", True)
+            self.window.present()
             return
 
         builder = new_builder()
@@ -59,7 +68,6 @@ class ErrorReports(UIComponent, ActionProvider):
         self.window = builder.get_object("error-reports")
         self.buffer = builder.get_object("buffer")
 
-        self.window.set_transient_for(self.main_window.window)
         self.window.show_all()
         self.window.connect("destroy", self.close)
 
@@ -105,10 +113,11 @@ class ErrorReports(UIComponent, ActionProvider):
             "Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback)
         )
         self.update_text()
-        self.event_manager.handle(
-            Notification(
-                gettext(
-                    "An unexpected error occurred.\nPlease file an issue on GitHub and include information from Tools → Error Reports."
+        if session := self.application.active_session:
+            session.get_service("event_manager").handle(
+                Notification(
+                    gettext(
+                        "An unexpected error occurred.\nPlease file an issue on GitHub and include information from Tools → Error Reports."
+                    )
                 )
             )
-        )
