@@ -35,14 +35,12 @@
           <object class="GtkScrolledWindow">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="hscrollbar-policy">never</property>
             <property name="shadow-type">in</property>
             <child>
               <object class="GtkTextView">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="editable">False</property>
-                <property name="wrap-mode">word-char</property>
                 <property name="buffer">buffer</property>
                 <property name="monospace">True</property>
               </object>

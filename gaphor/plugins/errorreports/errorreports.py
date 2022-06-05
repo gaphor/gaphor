@@ -1,21 +1,24 @@
 from __future__ import annotations
 
+import datetime
 import logging
+import platform
 import sys
+import textwrap
 import time
 from types import TracebackType
 
-import stackprinter
+from better_exceptions import format_exception
+from exceptiongroup import BaseExceptionGroup
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.action import action
+from gaphor.application import distribution
 from gaphor.core.eventmanager import event_handler
 from gaphor.event import Notification, SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui.abc import UIComponent
-
-_EXCEPTHOOK = sys.excepthook
 
 log = logging.getLogger(__name__)
 
@@ -42,12 +45,13 @@ class ErrorReports(UIComponent, ActionProvider):
         self.exceptions: list[
             tuple[float, type[BaseException], BaseException, TracebackType | None]
         ] = []
+        self._orig_excepthook = sys.excepthook
         sys.excepthook = self.excepthook
         event_manager.subscribe(self.on_session_created)
 
     def shutdown(self):
         super().shutdown()
-        sys.excepthook = _EXCEPTHOOK
+        sys.excepthook = self._orig_excepthook
         self.event_manager.unsubscribe(self.on_session_created)
 
     @event_handler(SessionCreated)
@@ -86,21 +90,49 @@ class ErrorReports(UIComponent, ActionProvider):
 
         buffer.delete(buffer.get_start_iter(), buffer.get_end_iter())
 
+        buffer.insert(buffer.get_end_iter(), os_information())
+
         if not self.exceptions:
             buffer.insert(
                 buffer.get_end_iter(),
-                "No errors have been intercepted. We’re good.",
+                gettext("No errors have been intercepted. We’re good."),
             )
             return
 
+        buffer.insert(buffer.get_end_iter(), gettext("Errors:"))
+        buffer.insert(buffer.get_end_iter(), "\n\n")
+
+        def print_exception(tp, v, tb, depth=0):
+            assert buffer
+            for line in format_exception(tp, v, tb):
+                buffer.insert(
+                    buffer.get_end_iter(), textwrap.indent(line, "  " * depth + "|")
+                )
+            if issubclass(tp, BaseExceptionGroup):
+                for i, sub_exc in enumerate(v.exceptions):
+                    buffer.insert(
+                        buffer.get_end_iter(),
+                        f"{'  ' * depth}{'└─┬──' if i == 0 else '  ├──'}────────────────────────────╌┄┈\n",
+                    )
+                    print_exception(
+                        type(sub_exc), sub_exc, sub_exc.__traceback__, depth=depth + 1
+                    )
+                buffer.insert(
+                    buffer.get_end_iter(),
+                    f"{'  ' * (depth + 1)}└─────────────────────────────╌┄┈\n",
+                )
+            elif depth == 0:
+                buffer.insert(
+                    buffer.get_end_iter(),
+                    "└─────────────────────────────╌┄┈\n",
+                )
+
         for ts, tp, v, tb in self.exceptions:
             buffer.insert(
-                buffer.get_end_iter(), f"At time delta {ts - START_TIME:.2f}:\n"
+                buffer.get_end_iter(),
+                f"Time since application startup: {datetime.timedelta(seconds=int(ts - START_TIME))}\n",
             )
-            buffer.insert(
-                buffer.get_end_iter(), stackprinter.format((tp, v, tb), line_wrap=0)
-            )
-            buffer.insert(buffer.get_end_iter(), "\n===\n")
+            print_exception(tp, v, tb)
 
     def excepthook(
         self,
@@ -121,3 +153,14 @@ class ErrorReports(UIComponent, ActionProvider):
                     )
                 )
             )
+
+
+def os_information():
+    return textwrap.dedent(
+        f"""\
+    OS: {platform.system()} ({platform.release()})
+    Python version: {platform.python_version()}
+    Gaphor version: {distribution().version}
+
+    """
+    )

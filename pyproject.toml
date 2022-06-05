@@ -50,7 +50,7 @@ sphinx-rtd-theme = { version = "^1.0", optional = true }
 myst-parser = { version = ">=0.15,<0.18", optional = true }
 jedi = "^0.18.1"
 darkdetect = ">=0.5.1,<0.7.0"
-stackprinter = "^0.2.6"
+better-exceptions = "^0.3.3"
 
 [tool.poetry.dev-dependencies]
 tomli = ">=1.2,<3.0"
