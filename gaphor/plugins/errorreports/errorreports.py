@@ -8,7 +8,7 @@ import textwrap
 import time
 from types import TracebackType
 
-from better_exceptions import format_exception
+import better_exceptions
 from exceptiongroup import BaseExceptionGroup
 from gi.repository import Gtk
 
@@ -19,6 +19,8 @@ from gaphor.core.eventmanager import event_handler
 from gaphor.event import Notification, SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui.abc import UIComponent
+
+better_exceptions.SUPPORTS_COLOR = False
 
 log = logging.getLogger(__name__)
 
@@ -104,7 +106,7 @@ class ErrorReports(UIComponent, ActionProvider):
 
         def print_exception(tp, v, tb, depth=0):
             assert buffer
-            for line in format_exception(tp, v, tb):
+            for line in better_exceptions.format_exception(tp, v, tb):
                 buffer.insert(
                     buffer.get_end_iter(), textwrap.indent(line, "  " * depth + "|")
                 )
