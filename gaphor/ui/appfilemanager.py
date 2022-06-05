@@ -44,7 +44,6 @@ class AppFileManager(Service, ActionProvider):
         )
 
         for filename in filenames:
-            force_new_session = False
             if self.application.has_session(filename):
                 dialog = Gtk.MessageDialog(
                     self.parent_window,
@@ -56,10 +55,20 @@ class AppFileManager(Service, ActionProvider):
                     ).format(filename=filename),
                 )
 
-                answer = dialog.run()
+                def response(dialog, answer):
+                    force_new_session = answer != Gtk.ResponseType.YES
+                    dialog.destroy()
+                    self.application.new_session(
+                        filename=filename, force=force_new_session
+                    )
 
-                force_new_session = answer != Gtk.ResponseType.YES
-                dialog.destroy()
+                dialog.connect("response", response)
+                if Gtk.get_major_version() == 3:
+                    dialog.run()
+                else:
+                    dialog.set_modal(True)
+                    dialog.show()
+            else:
+                self.application.new_session(filename=filename)
 
-            self.application.new_session(filename=filename, force=force_new_session)
             self.last_dir = os.path.dirname(filename)
