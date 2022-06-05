@@ -1,10 +1,11 @@
 import logging
 import os.path
 
+from gi.repository import Gtk
+
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
 from gaphor.ui.filedialog import open_file_dialog
-from gaphor.ui.questiondialog import QuestionDialog
 
 log = logging.getLogger(__name__)
 
@@ -45,14 +46,19 @@ class AppFileManager(Service, ActionProvider):
         for filename in filenames:
             force_new_session = False
             if self.application.has_session(filename):
-                dialog = QuestionDialog(
+                dialog = Gtk.MessageDialog(
+                    self.parent_window,
+                    Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                    Gtk.MessageType.QUESTION,
+                    Gtk.ButtonsType.YES_NO,
                     gettext(
                         "{filename} is already opened. Do you want to switch to the opened window instead?"
                     ).format(filename=filename),
-                    parent=self.parent_window,
                 )
 
-                force_new_session = not dialog.answer
+                answer = dialog.run()
+
+                force_new_session = answer != Gtk.ResponseType.YES
                 dialog.destroy()
 
             self.application.new_session(filename=filename, force=force_new_session)

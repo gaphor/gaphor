@@ -41,4 +41,5 @@ def error_handler(message, secondary_message="", window=None):
     if Gtk.get_major_version() == 3:
         dialog.run()
     else:
+        dialog.set_modal(True)
         dialog.show()
