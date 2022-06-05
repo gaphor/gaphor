@@ -16,9 +16,7 @@ from gaphor.i18n import gettext
 def error_handler(message, secondary_message="", window=None):
     exc_type, exc_value, exc_traceback = sys.exc_info()
 
-    dialog = Gtk.MessageDialog()
-    dialog.props.text = message
-    dialog.props.message_type = Gtk.MessageType.ERROR
+    dialog = Gtk.MessageDialog(message_type=Gtk.MessageType.ERROR, text=message)
     dialog.set_transient_for(window)
 
     if __debug__ and exc_traceback and sys.stdin.isatty():

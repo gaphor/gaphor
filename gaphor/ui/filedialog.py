@@ -2,10 +2,11 @@
 """This module has a generic file dialog functions that are used to open or
 save files."""
 
-import pathlib
-from typing import Optional, Sequence
+from __future__ import annotations
 
-from gi.repository import Gtk
+import pathlib
+
+from gi.repository import Gio, Gtk
 
 from gaphor.i18n import gettext
 
@@ -33,25 +34,43 @@ def _file_dialog_with_filters(title, parent, action, filters):
     return dialog
 
 
-def open_file_dialog(title, parent=None, dirname=None, filters=None) -> Sequence[str]:
+def open_file_dialog(title, handler, parent=None, dirname=None, filters=None) -> None:
     if filters is None:
         filters = []
     dialog = _file_dialog_with_filters(
         title, parent, Gtk.FileChooserAction.OPEN, filters
     )
     dialog.set_select_multiple(True)
-    if dirname:
-        dialog.set_current_folder(dirname)
 
-    response = dialog.run()
-    dialog.destroy()
+    def response(_dialog, answer):
+        if Gtk.get_major_version() == 3:
+            filenames = (
+                dialog.get_filenames() if answer == Gtk.ResponseType.ACCEPT else []
+            )
+        else:
+            filenames = (
+                [f.get_path() for f in dialog.get_files()]
+                if answer == Gtk.ResponseType.ACCEPT
+                else []
+            )
+            dialog.destroy()
+        handler(filenames)
 
-    return dialog.get_filenames() if response == Gtk.ResponseType.ACCEPT else []  # type: ignore[no-any-return]
+    dialog.connect("response", response)
+    if Gtk.get_major_version() == 3:
+        if dirname:
+            dialog.set_current_folder(dirname)
+        dialog.run()
+        dialog.destroy()
+    else:
+        if dirname:
+            dialog.set_current_folder(Gio.File.new_for_path(dirname))
+        dialog.show()
 
 
 def save_file_dialog(
     title, parent=None, filename=None, extension=None, filters=None
-) -> Optional[str]:
+) -> str | None:
     if filters is None:
         filters = []
     dialog = _file_dialog_with_filters(
