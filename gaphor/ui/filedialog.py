@@ -69,41 +69,48 @@ def open_file_dialog(title, handler, parent=None, dirname=None, filters=None) ->
 
 
 def save_file_dialog(
-    title, parent=None, filename=None, extension=None, filters=None
-) -> str | None:
+    title, handler, parent=None, filename=None, extension=None, filters=None
+) -> None:
     if filters is None:
         filters = []
     dialog = _file_dialog_with_filters(
         title, parent, Gtk.FileChooserAction.SAVE, filters
     )
-    dialog.set_do_overwrite_confirmation(True)
+
+    def get_filename():
+        if Gtk.get_major_version() == 3:
+            return dialog.get_filename()
+        else:
+            return dialog.get_file().get_path()
+
+    def set_filename(filename):
+        if Gtk.get_major_version() == 3:
+            dialog.set_filename(filename)
+        else:
+            dialog.set_file(Gio.File.new_for_path(filename))
+
+    def will_overwrite():
+        filename = get_filename()
+        if extension and not filename.endswith(extension):
+            filename += extension
+            set_filename(filename)
+            return pathlib.Path(filename).exists()
+        return False
+
+    def response(_dialog, answer):
+        if answer == Gtk.ResponseType.ACCEPT:
+            if not will_overwrite():
+                handler(get_filename())
+                dialog.destroy()
+            else:
+                dialog.show()
+        else:
+            dialog.destroy()
+
+    dialog.connect("response", response)
     if filename:
-        dialog.set_filename(filename)
-
-    try:
-        while dialog.run() == Gtk.ResponseType.ACCEPT:
-            filename = dialog.get_filename()
-
-            if extension and not filename.endswith(extension):
-                filename += extension
-                if pathlib.Path(filename).exists():
-                    dialog.set_filename(filename)
-                    continue
-            return filename  # type: ignore[no-any-return]
-    finally:
-        dialog.destroy()
-    return None
-
-
-if __name__ == "__main__":
-    import sys
-
-    action = sys.argv[1]
-
-    files = save_file_dialog(
-        f"dialog test (action={action})",
-        extension=".gaphor",
-        filters=GAPHOR_FILTER,
-    )
-
-    print(f"Selected file: {files}")
+        set_filename(filename)
+    if Gtk.get_major_version() == 3:
+        dialog.set_do_overwrite_confirmation(True)
+    dialog.set_modal(True)
+    dialog.show()

@@ -230,17 +230,14 @@ class FileManager(Service, ActionProvider):
         Returns True if the saving actually happened.
         """
 
-        if filename := save_file_dialog(
+        save_file_dialog(
             gettext("Save Gaphor Model As"),
+            self.save,
             parent=self.main_window.window,
             filename=self.filename,
             extension=".gaphor",
             filters=GAPHOR_FILTER,
-        ):
-            self.save(filename)
-            return True
-
-        return False
+        )
 
     @event_handler(SessionCreated)
     def _on_session_created(self, event: SessionCreated) -> None:
@@ -276,15 +273,13 @@ class FileManager(Service, ActionProvider):
 
 def save_changes_before_closing_dialog(window: Gtk.Window) -> Gtk.ResponseType:
     dialog = Gtk.MessageDialog(
-        window,
-        Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-        Gtk.MessageType.WARNING,
+        message_type=Gtk.MessageType.WARNING,
+        text=gettext("Save changes before closing?"),
+        secondary_text=gettext(
+            "Closing will cause any unsaved changes to be discarded."
+        ),
     )
-    dialog.props.text = gettext("Save changes before closing?")
-    dialog.props.secondary_text = gettext(
-        "Closing will cause any unsaved changes to be discarded."
-    )
-
+    dialog.set_transient_for(window)
     dialog.add_buttons(
         gettext("Close _without saving changes"),
         Gtk.ResponseType.REJECT,
