@@ -51,19 +51,14 @@ class AppFileManager(Service, ActionProvider):
 
                     def response(dialog, answer):
                         force_new_session = answer != Gtk.ResponseType.YES
-                        if Gtk.get_major_version() != 3:
-                            dialog.destroy()
+                        dialog.destroy()
                         self.application.new_session(
                             filename=filename, force=force_new_session
                         )
 
                     dialog.connect("response", response)
-                    if Gtk.get_major_version() == 3:
-                        dialog.run()
-                        dialog.destroy()
-                    else:
-                        dialog.set_modal(True)
-                        dialog.show()
+                    dialog.set_modal(True)
+                    dialog.show()
                 else:
                     self.application.new_session(filename=filename)
 
