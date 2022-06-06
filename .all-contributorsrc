@@ -812,6 +812,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "CoderThomasB",
+      "name": "Thomas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/47554072?v=4",
+      "profile": "http://www.slide.nz",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
