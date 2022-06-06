@@ -53,19 +53,18 @@ def open_file_dialog(title, handler, parent=None, dirname=None, filters=None) ->
                 if answer == Gtk.ResponseType.ACCEPT
                 else []
             )
-            dialog.destroy()
+        dialog.destroy()
         handler(filenames)
 
     dialog.connect("response", response)
+    dialog.set_modal(True)
     if Gtk.get_major_version() == 3:
         if dirname:
             dialog.set_current_folder(dirname)
-        dialog.run()
-        dialog.destroy()
     else:
         if dirname:
             dialog.set_current_folder(Gio.File.new_for_path(dirname))
-        dialog.show()
+    dialog.show()
 
 
 def save_file_dialog(
@@ -100,8 +99,8 @@ def save_file_dialog(
     def response(_dialog, answer):
         if answer == Gtk.ResponseType.ACCEPT:
             if not will_overwrite():
-                handler(get_filename())
                 dialog.destroy()
+                handler(get_filename())
             else:
                 dialog.show()
         else:
