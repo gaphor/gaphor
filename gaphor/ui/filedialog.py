@@ -88,19 +88,19 @@ def save_file_dialog(
         else:
             dialog.set_file(Gio.File.new_for_path(filename))
 
-    def will_overwrite():
+    def overwrite_check():
         filename = get_filename()
         if extension and not filename.endswith(extension):
             filename += extension
             set_filename(filename)
-            return pathlib.Path(filename).exists()
-        return False
+            return "" if pathlib.Path(filename).exists() else filename
+        return filename
 
     def response(_dialog, answer):
         if answer == Gtk.ResponseType.ACCEPT:
-            if not will_overwrite():
+            if filename := overwrite_check():
                 dialog.destroy()
-                handler(get_filename())
+                handler(filename)
             else:
                 dialog.show()
         else:
