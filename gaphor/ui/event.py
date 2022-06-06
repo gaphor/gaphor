@@ -1,6 +1,11 @@
 """UI related events."""
 
 
+class ElementOpened:
+    def __init__(self, element):
+        self.element = element
+
+
 class DiagramOpened:
     def __init__(self, diagram):
         self.diagram = diagram

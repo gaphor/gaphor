@@ -8,7 +8,9 @@ from gi.repository import Gtk
 from gaphor.abc import ActionProvider
 from gaphor.core import action, event_handler
 from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed, ModelReady
+from gaphor.diagram.drop import drop
 from gaphor.event import ActionEnabled
+from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.diagrampage import DiagramPage, GtkView
 from gaphor.ui.event import (
@@ -16,6 +18,7 @@ from gaphor.ui.event import (
     DiagramClosed,
     DiagramOpened,
     DiagramSelectionChanged,
+    ElementOpened,
 )
 
 log = logging.getLogger(__name__)
@@ -54,6 +57,7 @@ class Diagrams(UIComponent, ActionProvider):
         ]
 
         self.event_manager.subscribe(self._on_show_diagram)
+        self.event_manager.subscribe(self._on_show_element)
         self.event_manager.subscribe(self._on_close_diagram)
         self.event_manager.subscribe(self._on_name_change)
         self.event_manager.subscribe(self._on_flush_model)
@@ -69,6 +73,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self._on_flush_model)
         self.event_manager.unsubscribe(self._on_name_change)
         self.event_manager.unsubscribe(self._on_close_diagram)
+        self.event_manager.unsubscribe(self._on_show_element)
         self.event_manager.unsubscribe(self._on_show_diagram)
         if self._notebook:
             if Gtk.get_major_version() == 3:
@@ -220,6 +225,18 @@ class Diagrams(UIComponent, ActionProvider):
         view = self.get_current_view()
         if view and view.has_focus():
             view.selection.unselect_all()
+
+    @event_handler(ElementOpened)
+    def _on_show_element(self, event: ElementOpened):
+        view = self.get_current_view()
+        diagram = self.get_current_diagram()
+        if not (view and diagram):
+            return
+        x, y = view.matrix.inverse().transform_point(100, 100)
+        with Transaction(self.event_manager):
+            if item := drop(event.element, diagram, x, y):
+                view.selection.unselect_all()
+                view.selection.focused_item = item
 
     @event_handler(DiagramOpened)
     def _on_show_diagram(self, event: DiagramOpened):
