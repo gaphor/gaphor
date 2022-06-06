@@ -269,19 +269,21 @@ class FileManager(Service, ActionProvider):
         def confirm_shutdown():
             self.event_manager.handle(SessionShutdown(self))
 
-        if self.main_window.model_changed:
-            response = save_changes_before_closing_dialog(self.main_window.window)
-            if response == Gtk.ResponseType.YES:
+        def response(answer):
+            if answer == Gtk.ResponseType.YES:
                 saved = self.action_save()
                 if saved:
                     confirm_shutdown()
-            if response == Gtk.ResponseType.REJECT:
+            if answer == Gtk.ResponseType.REJECT:
                 confirm_shutdown()
+
+        if self.main_window.model_changed:
+            save_changes_before_closing_dialog(self.main_window.window, response)
         else:
             confirm_shutdown()
 
 
-def save_changes_before_closing_dialog(window: Gtk.Window) -> Gtk.ResponseType:
+def save_changes_before_closing_dialog(window: Gtk.Window, handler) -> None:
     dialog = Gtk.MessageDialog(
         message_type=Gtk.MessageType.WARNING,
         text=gettext("Save changes before closing?"),
@@ -291,15 +293,18 @@ def save_changes_before_closing_dialog(window: Gtk.Window) -> Gtk.ResponseType:
     )
     dialog.set_transient_for(window)
     dialog.add_buttons(
-        gettext("Close _without saving changes"),
+        gettext("Close without saving changes"),
         Gtk.ResponseType.REJECT,
-        Gtk.STOCK_CANCEL,
+        gettext("Cancel"),
         Gtk.ResponseType.CANCEL,
-        Gtk.STOCK_SAVE,
+        gettext("Save"),
         Gtk.ResponseType.YES,
     )
     dialog.set_default_response(Gtk.ResponseType.YES)
-    response = dialog.run()
-    dialog.destroy()
 
-    return response
+    def response(_dialog, answer):
+        dialog.destroy()
+        handler(answer)
+
+    dialog.connect("response", response)
+    dialog.show()
