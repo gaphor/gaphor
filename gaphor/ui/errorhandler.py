@@ -36,8 +36,5 @@ def error_handler(message, secondary_message="", window=None):
             pdb.post_mortem(exc_traceback)
 
     dialog.connect("response", response)
-    if Gtk.get_major_version() == 3:
-        dialog.run()
-    else:
-        dialog.set_modal(True)
-        dialog.show()
+    dialog.set_modal(True)
+    dialog.show()
