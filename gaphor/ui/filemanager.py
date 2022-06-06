@@ -270,9 +270,8 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(SessionShutdown(self))
 
         def response(answer):
-            if answer == Gtk.ResponseType.YES:
-                if self.action_save():
-                    confirm_shutdown()
+            if answer == Gtk.ResponseType.YES and self.action_save():
+                confirm_shutdown()
             if answer == Gtk.ResponseType.REJECT:
                 confirm_shutdown()
 
