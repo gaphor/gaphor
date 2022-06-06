@@ -110,19 +110,29 @@ class FileManager(Service, ActionProvider):
         # First claim file name, so any other files will be opened in a different session
         self.filename = filename
         queue: Queue[int] = Queue(0)
-        status_window = StatusWindow(
-            gettext("Loading…"),
-            gettext("Loading model from {filename}").format(filename=filename),
-            parent=self.main_window.window,
-            queue=queue,
-        )
+        status_window = None
 
-        self._load(filename, ModelLoaded(self, filename), queue, status_window)
+        @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
+        def create_status_window():
+            nonlocal status_window
+            status_window = StatusWindow(
+                gettext("Loading…"),
+                gettext("Loading model from {filename}").format(filename=filename),
+                parent=self.main_window.window,
+                queue=queue,
+            )
+
+        def done():
+            if status_window:
+                status_window.destroy()
+
+        create_status_window()
+        self._load(filename, ModelLoaded(self, filename), queue, done)
 
     def load_template(self, template):
         self._load(template, ModelLoaded(self))
 
-    def _load(self, filename, model_loaded_event, queue=None, status_window=None):
+    def _load(self, filename, model_loaded_event, queue=None, done=None):
         # Use low prio, so screen updates do happen
         @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
         def async_loader():
@@ -139,8 +149,8 @@ class FileManager(Service, ActionProvider):
                 self.event_manager.handle(model_loaded_event)
             except Exception:
                 self.filename = None
-                if status_window:
-                    status_window.destroy()
+                if done:
+                    done()
                 log.exception(f"Unable to open model “{filename}”.", stack_info=True)
                 error_handler(
                     message=gettext("Unable to open model “{filename}”.").format(
@@ -154,8 +164,8 @@ class FileManager(Service, ActionProvider):
                 load_default_model(self.element_factory)
                 raise
             finally:
-                if status_window:
-                    status_window.destroy()
+                if done:
+                    done()
 
         for _ in async_loader():
             pass
