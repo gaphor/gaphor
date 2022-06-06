@@ -271,8 +271,7 @@ class FileManager(Service, ActionProvider):
 
         def response(answer):
             if answer == Gtk.ResponseType.YES:
-                saved = self.action_save()
-                if saved:
+                if saved := self.action_save():
                     confirm_shutdown()
             if answer == Gtk.ResponseType.REJECT:
                 confirm_shutdown()
