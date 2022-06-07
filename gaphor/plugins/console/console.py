@@ -100,7 +100,7 @@ class TextViewWriter:
     """A Multiplexing output stream.
 
     It can replace another stream, and tee output to the original stream
-    and too a GTK textview.
+    and to a GTK textview.
     """
 
     def __init__(self, name, view):
