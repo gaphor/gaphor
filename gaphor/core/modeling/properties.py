@@ -402,7 +402,7 @@ class association(umlproperty):
             return
 
         if old:
-            self.delete(obj, old, from_opposite=from_opposite, do_notify=False)
+            self.delete(obj, old, do_notify=False)
 
         if value is not None:
             setattr(obj, self._name, value)
@@ -430,7 +430,8 @@ class association(umlproperty):
         try:
             self._set_opposite(obj, value, from_opposite)
         except Exception:
-            c.items.pop()
+            if value in c.items:
+                c.items.remove(value)
             raise
 
         self.handle(AssociationAdded(obj, self, value))

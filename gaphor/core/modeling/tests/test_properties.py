@@ -68,6 +68,26 @@ def test_association_n_x():
     assert b.two is a
 
 
+def test_reassign_association_n_1():
+    class A(Element):
+        many: relation_many[B]
+
+    class B(Element):
+        one: relation_one[A]
+
+    A.many = association("many", B, 0, "*", opposite="one")
+    B.one = association("one", A, 0, 1, opposite="many")
+
+    a = A()
+    aa = A()
+    b = B()
+    a.many = b
+    aa.many = b
+    assert b in aa.many
+    assert not a.many
+    assert b.one is aa
+
+
 def test_association_1_1():
     #
     # 1:1
