@@ -58,7 +58,6 @@ class ErrorReports(UIComponent, ActionProvider):
 
     @event_handler(SessionCreated)
     def on_session_created(self, event):
-        print("on_session_created")
         session = event.session
         tools_menu = session.get_service("tools_menu")
         tools_menu.add_actions(self, scope="app")
