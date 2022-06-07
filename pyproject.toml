@@ -50,6 +50,7 @@ sphinx-rtd-theme = { version = "^1.0", optional = true }
 myst-parser = { version = ">=0.15,<0.18", optional = true }
 jedi = "^0.18.1"
 darkdetect = ">=0.5.1,<0.7.0"
+better-exceptions = "^0.3.3"
 
 [tool.poetry.dev-dependencies]
 tomli = ">=1.2,<3.0"
@@ -142,6 +143,7 @@ type = "virtualenv"
 "app_file_manager" = "gaphor.ui.appfilemanager:AppFileManager"
 "styling" = "gaphor.ui.styling:Styling"
 "greeter" = "gaphor.ui.greeter:Greeter"
+"error_reports" = "gaphor.plugins.errorreports:ErrorReports"
 
 [tool.poetry.plugins."gaphor.services"]
 "component_registry" = "gaphor.services.componentregistry:ComponentRegistry"

@@ -13,6 +13,7 @@
 import code
 import sys
 import textwrap
+import traceback
 from typing import Dict, List
 
 import jedi
@@ -99,7 +100,7 @@ class TextViewWriter:
     """A Multiplexing output stream.
 
     It can replace another stream, and tee output to the original stream
-    and too a GTK textview.
+    and to a GTK textview.
     """
 
     def __init__(self, name, view):
@@ -118,6 +119,27 @@ class TextViewWriter:
 
     def __exit__(self, exception_type, exception_value, traceback):
         setattr(sys, self.name, self.out)
+
+
+class ExceptionWriter:
+    """A Multiplexing output stream.
+
+    It can replace another stream, and tee output to the original stream
+    and too a GTK textview.
+    """
+
+    def excepthook(self, exc_type, exc_value, exc_traceback):
+        traceback.print_exception(
+            exc_type, value=exc_value, tb=exc_traceback, file=sys.stderr
+        )
+
+    def __enter__(self):
+        self.orig_excepthook = sys.excepthook
+        sys.excepthook = self.excepthook
+        return self
+
+    def __exit__(self, exception_type, exception_value, traceback):
+        sys.excepthook = self.orig_excepthook
 
 
 class GTKInterpreterConsole(Gtk.ScrolledWindow):
@@ -162,6 +184,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         self.stdout = TextViewWriter("stdout", self.text)
         self.stderr = TextViewWriter("stderr", self.text)
+        self.excepthook = ExceptionWriter()
 
         self.current_prompt = "ps1"
         locals["help"] = Help(self.stdout, locals)
@@ -211,7 +234,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
         source = "\n".join(self.buffer)
 
-        with self.stdout, self.stderr:
+        with self.stdout, self.stderr, self.excepthook:
             more = self.interpreter.runsource(source, "<<console>>")
 
         if not more:
