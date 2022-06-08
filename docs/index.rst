@@ -8,9 +8,12 @@ so it is much more than a picture drawing tool.
 You can use Gaphor to quickly visualize different aspects of a system
 as well as create complete, highly complex models.
 
+Gaphor is 100% Open source. Source code and issue tracker can be found on
+`GitHub <https://github.org/gaphor/gaphor>`.
+
 This documentation is aimed at those who would be interested in making
-contributions to Gaphor. For download instructions, tutorials and how-to's, please visit the
-`Gaphor Website <https://gaphor.org>`_.
+contributions to Gaphor. For download instructions, tutorials and how-to's,
+please visit the `Gaphor Website <https://gaphor.org>`_.
 
 If you're into writing plug-ins for Gaphor you should have a look at our
 fabulous `Hello world <https://github.com/gaphor/gaphor.plugins.helloworld>`_
