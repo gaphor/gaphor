@@ -45,7 +45,7 @@ pyinstaller = { version = ">=4.6,<6.0", python = "^3.9, <3.11", optional = true 
 pyinstaller-versionfile = { version = "^2.0.0", optional = true }
 poethepoet = { version = ">=0.10,<0.14", optional = true }
 tomli = { version = ">=1.2,<3.0", optional = true }
-sphinx = { version = "^4.3", optional = true }
+sphinx = { version = ">=4.3,<6.0", optional = true }
 sphinx-rtd-theme = { version = "^1.0", optional = true }
 myst-parser = { version = ">=0.15,<0.19", optional = true }
 jedi = "^0.18.1"
@@ -62,7 +62,7 @@ xdoctest = "^1.0.0"
 black = "^22.3"
 mypy = "0.961"
 pre-commit = "^2.19"
-sphinx = "^4.3"
+sphinx = ">=4.3,<6.0"
 babel = "^2.10.1"
 babelgladeextractor = "^0.7"
 flake8 = "^4.0"
