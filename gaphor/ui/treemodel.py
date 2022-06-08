@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from gaphas.decorators import g_async
-from gi.repository import Gio, GLib, GObject, Gtk, Pango
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
 
 from gaphor import UML
 from gaphor.abc import ActionProvider
@@ -76,11 +76,13 @@ class TreeComponent(UIComponent, ActionProvider):
         tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
         self.sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
         self.selection = Gtk.SingleSelection.new(self.sort_model)
-        factory = Gtk.BuilderListItemFactory.new_from_bytes(None, new_list_item_ui())
+        factory = Gtk.SignalListItemFactory.new()
+        factory.connect("setup", list_item_factory_setup)
+        tree_view = Gtk.ListView.new(self.selection, factory)
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_child(Gtk.ListView.new(self.selection, factory))
+        scrolled_window.set_child(tree_view)
 
         self.on_model_ready()
 
@@ -167,6 +169,40 @@ def visible(element):
     ) and not isinstance(
         element, (UML.InstanceSpecification, UML.OccurrenceSpecification)
     )
+
+
+def list_item_factory_setup(_factory, list_item):
+    builder = Gtk.Builder()
+    builder.set_current_object(list_item)
+    builder.extend_with_template(
+        list_item,
+        type(list_item).__gtype__,
+        translated_ui_string("gaphor.ui", "treeitem.ui"),
+        -1,
+    )
+    row = builder.get_object("draggable")
+    drag_source = Gtk.DragSource.new()
+    drag_source.connect("prepare", list_item_drag_prepare, list_item)
+    row.add_controller(drag_source)
+
+
+def list_item_drag_prepare(source: Gtk.DragSource, x: int, y: int, list_item):
+    tree_item = list_item.get_item().get_item()
+    print("drag prepare", tree_item.element)
+    display = Gdk.Display.get_default()
+    theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
+        tree_item.icon,
+        None,
+        24,
+        1,
+        Gtk.TextDirection.NONE,
+        Gtk.IconLookupFlags.FORCE_SYMBOLIC,
+    )
+    source.set_icon(theme_icon, 0, 0)
+
+    v = GObject.Value(GObject.TYPE_STRING)
+    v.set_string(f"element:{tree_item.element.id}")
+    return Gdk.ContentProvider.new_for_value(v)
 
 
 def tree_item_sort(a, b, _user_data=None):

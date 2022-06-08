@@ -307,7 +307,7 @@ else:
         source.set_icon(theme_icon, 0, 0)
 
         v = GObject.Value(GObject.TYPE_STRING)
-        v.set_string(child.action_name)
+        v.set_string(f"tool:{child.action_name}")
         return Gdk.ContentProvider.new_for_value(v)
 
 
