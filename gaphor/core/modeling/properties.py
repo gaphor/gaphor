@@ -340,15 +340,14 @@ class association(umlproperty):
                 save_func(self.name, v)
 
     def load(self, obj, value):
-        if not isinstance(value, self.type):
-            raise TypeError(
-                f"Value for {self.name} should be of type {self.type.__name__} ({type(value).__name__})"
-            )
+        if self.opposite:
+            # Loading should not steal references from other elements
+            opposite = getattr(type(value), self.opposite)
+            if opposite.upper == 1 and opposite.get(value):
+                log.debug(f"Can not steal reference from {value}")
+                return
 
-        if self.upper == 1:
-            self._set_one(obj, value)
-        else:
-            self._set_many(obj, value, from_load=True)
+        self.set(obj, value)
 
     def __str__(self):
         if self.lower == self.upper:
@@ -368,7 +367,7 @@ class association(umlproperty):
     def _get_many(self, obj) -> collection[T]:
         v: collection[T] | None = getattr(obj, self._name, None)
         if v is None:
-            # Create the empty collection here since it might
+            # Create the empty collection here since it may
             # be used to add.
             v = collection(self, obj, self.type)
             setattr(obj, self._name, v)
@@ -402,7 +401,7 @@ class association(umlproperty):
             return
 
         if old:
-            self.delete(obj, old, from_opposite=from_opposite, do_notify=False)
+            self.delete(obj, old, do_notify=False)
 
         if value is not None:
             setattr(obj, self._name, value)
@@ -430,7 +429,8 @@ class association(umlproperty):
         try:
             self._set_opposite(obj, value, from_opposite)
         except Exception:
-            c.items.pop()
+            if value in c.items:
+                c.items.remove(value)
             raise
 
         self.handle(AssociationAdded(obj, self, value))

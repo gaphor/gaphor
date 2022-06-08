@@ -150,7 +150,7 @@ def test_undo_association_1_x(event_manager, element_factory, undo_manager):
     assert b.two is None
     assert undo_manager.can_redo()
     assert len(undo_manager._redo_stack) == 1
-    assert len(undo_manager._redo_stack[0]._actions) == 2, undo_manager._redo_stack[
+    assert len(undo_manager._redo_stack[0]._actions) == 3, undo_manager._redo_stack[
         0
     ]._actions
 
