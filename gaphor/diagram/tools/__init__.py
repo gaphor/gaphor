@@ -3,10 +3,10 @@ from gaphas.tool import (
     hover_tool,
     item_tool,
     rubberband_tool,
-    scroll_tools,
     view_focus_tool,
     zoom_tool,
 )
+from gaphas.tool.scroll import pan_tool
 from gi.repository import Gtk
 
 import gaphor.diagram.tools.connector
@@ -62,7 +62,7 @@ def apply_placement_tool_set(
 
 
 def add_basic_tools(view, modeling_language, event_manager):
-    view.add_controller(*scroll_tools(view))
+    view.add_controller(pan_tool(view))
     view.add_controller(zoom_tool(view))
     view.add_controller(view_focus_tool(view))
     view.add_controller(shortcut_tool(view, modeling_language, event_manager))

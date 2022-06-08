@@ -142,6 +142,7 @@ class DiagramPage:
 
         view = GtkView(selection=Selection())
         if Gtk.get_major_version() == 3:
+            view.add_events(Gdk.EventMask.SMOOTH_SCROLL_MASK)
             view.drag_dest_set(
                 Gtk.DestDefaults.ALL,
                 DiagramPage.VIEW_DND_TARGETS,
