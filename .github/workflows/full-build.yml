@@ -32,7 +32,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v3.1.2
+        uses: actions/setup-python@v4.0.0
         with:
           python-version: ${{ env.python_version }}
       - name: Lint with Pre-commit
@@ -115,7 +115,7 @@ jobs:
       - name: Install macOS Dependencies
         uses: ./.github/actions/macos_dependencies
       - name: Set up Python
-        uses: actions/setup-python@v3.1.2
+        uses: actions/setup-python@v4.0.0
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
@@ -210,7 +210,7 @@ jobs:
           path: gvsbuild
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/setup-python@v3.1.2
+        uses: actions/setup-python@v4.0.0
         with:
           python-version: ${{ env.python_version }}
       - name: GTK binaries move git binary
@@ -257,7 +257,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v3.1.2
+        uses: actions/setup-python@v4.0.0
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
