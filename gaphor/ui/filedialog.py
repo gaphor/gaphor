@@ -2,10 +2,11 @@
 """This module has a generic file dialog functions that are used to open or
 save files."""
 
-import pathlib
-from typing import Optional, Sequence
+from __future__ import annotations
 
-from gi.repository import Gtk
+import pathlib
+
+from gi.repository import Gio, Gtk
 
 from gaphor.i18n import gettext
 
@@ -33,58 +34,82 @@ def _file_dialog_with_filters(title, parent, action, filters):
     return dialog
 
 
-def open_file_dialog(title, parent=None, dirname=None, filters=None) -> Sequence[str]:
+def open_file_dialog(title, handler, parent=None, dirname=None, filters=None) -> None:
     if filters is None:
         filters = []
     dialog = _file_dialog_with_filters(
         title, parent, Gtk.FileChooserAction.OPEN, filters
     )
     dialog.set_select_multiple(True)
-    if dirname:
-        dialog.set_current_folder(dirname)
 
-    response = dialog.run()
-    dialog.destroy()
+    def response(_dialog, answer):
+        if Gtk.get_major_version() == 3:
+            filenames = (
+                dialog.get_filenames() if answer == Gtk.ResponseType.ACCEPT else []
+            )
+        else:
+            filenames = (
+                [f.get_path() for f in dialog.get_files()]
+                if answer == Gtk.ResponseType.ACCEPT
+                else []
+            )
+        dialog.destroy()
+        handler(filenames)
 
-    return dialog.get_filenames() if response == Gtk.ResponseType.ACCEPT else []  # type: ignore[no-any-return]
+    dialog.connect("response", response)
+    dialog.set_modal(True)
+    if Gtk.get_major_version() == 3:
+        if dirname:
+            dialog.set_current_folder(dirname)
+    else:
+        if dirname:
+            dialog.set_current_folder(Gio.File.new_for_path(dirname))
+    dialog.show()
 
 
 def save_file_dialog(
-    title, parent=None, filename=None, extension=None, filters=None
-) -> Optional[str]:
+    title, handler, parent=None, filename=None, extension=None, filters=None
+) -> None:
     if filters is None:
         filters = []
     dialog = _file_dialog_with_filters(
         title, parent, Gtk.FileChooserAction.SAVE, filters
     )
-    dialog.set_do_overwrite_confirmation(True)
+
+    def get_filename():
+        if Gtk.get_major_version() == 3:
+            return dialog.get_filename()
+        else:
+            return dialog.get_file().get_path()
+
+    def set_filename(filename):
+        if Gtk.get_major_version() == 3:
+            dialog.set_filename(filename)
+        else:
+            dialog.set_file(Gio.File.new_for_path(filename))
+
+    def overwrite_check():
+        filename = get_filename()
+        if extension and not filename.endswith(extension):
+            filename += extension
+            set_filename(filename)
+            return "" if pathlib.Path(filename).exists() else filename
+        return filename
+
+    def response(_dialog, answer):
+        if answer == Gtk.ResponseType.ACCEPT:
+            if filename := overwrite_check():
+                dialog.destroy()
+                handler(filename)
+            else:
+                dialog.show()
+        else:
+            dialog.destroy()
+
+    dialog.connect("response", response)
     if filename:
-        dialog.set_filename(filename)
-
-    try:
-        while dialog.run() == Gtk.ResponseType.ACCEPT:
-            filename = dialog.get_filename()
-
-            if extension and not filename.endswith(extension):
-                filename += extension
-                if pathlib.Path(filename).exists():
-                    dialog.set_filename(filename)
-                    continue
-            return filename  # type: ignore[no-any-return]
-    finally:
-        dialog.destroy()
-    return None
-
-
-if __name__ == "__main__":
-    import sys
-
-    action = sys.argv[1]
-
-    files = save_file_dialog(
-        f"dialog test (action={action})",
-        extension=".gaphor",
-        filters=GAPHOR_FILTER,
-    )
-
-    print(f"Selected file: {files}")
+        set_filename(filename)
+    if Gtk.get_major_version() == 3:
+        dialog.set_do_overwrite_confirmation(True)
+    dialog.set_modal(True)
+    dialog.show()

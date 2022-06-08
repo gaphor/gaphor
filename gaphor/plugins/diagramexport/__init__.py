@@ -17,11 +17,12 @@ class DiagramExport(Service, ActionProvider):
         if self.export_menu:
             self.export_menu.remove_actions(self)
 
-    def save_dialog(self, diagram, title, ext, mime_type):
+    def save_dialog(self, diagram, title, ext, mime_type, handler):
         dot_ext = f".{ext}"
         filename = (diagram.name or "export") + dot_ext
-        return save_file_dialog(
+        save_file_dialog(
             title,
+            lambda f: handler(f, diagram),
             filename=filename,
             extension=dot_ext,
             filters=[
@@ -36,11 +37,9 @@ class DiagramExport(Service, ActionProvider):
     )
     def save_svg_action(self):
         diagram = self.diagrams.get_current_diagram()
-        filename = self.save_dialog(
-            diagram, gettext("Export diagram as SVG"), "svg", "image/svg+xml"
+        self.save_dialog(
+            diagram, gettext("Export diagram as SVG"), "svg", "image/svg+xml", save_svg
         )
-        if filename:
-            save_svg(filename, diagram)
 
     @action(
         name="file-export-png",
@@ -49,11 +48,9 @@ class DiagramExport(Service, ActionProvider):
     )
     def save_png_action(self):
         diagram = self.diagrams.get_current_diagram()
-        filename = self.save_dialog(
-            diagram, gettext("Export diagram as PNG"), "png", "image/png"
+        self.save_dialog(
+            diagram, gettext("Export diagram as PNG"), "png", "image/png", save_png
         )
-        if filename:
-            save_png(filename, diagram)
 
     @action(
         name="file-export-pdf",
@@ -62,8 +59,10 @@ class DiagramExport(Service, ActionProvider):
     )
     def save_pdf_action(self):
         diagram = self.diagrams.get_current_diagram()
-        filename = self.save_dialog(
-            diagram, gettext("Export diagram as PDF"), "pdf", "application/pdf"
+        self.save_dialog(
+            diagram,
+            gettext("Export diagram as PDF"),
+            "pdf",
+            "application/pdf",
+            save_pdf,
         )
-        if filename:
-            save_pdf(filename, diagram)

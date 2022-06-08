@@ -25,19 +25,20 @@ class XMIExport(Service, ActionProvider):
         tooltip=gettext("Export model as XMI (XML Model Interchange) format"),
     )
     def execute(self):
-        filename = self.file_manager.filename
-        filename = filename.replace(".gaphor", ".xmi") if filename else "model.xmi"
-        filename = save_file_dialog(
-            gettext("Export model as XMI file"),
-            filename=filename,
-            extension=".xmi",
-            filters=[(gettext("All XMI Files"), ".xmi", "text/xml")],
-        )
-
-        if filename and len(filename) > 0:
+        def handler(filename):
             logger.debug(f"Exporting XMI model to: {filename}")
             export = exportmodel.XMIExport(self.element_factory)
             try:
                 export.export(filename)
             except Exception as e:
                 logger.error(f"Error while saving model to file {filename}: {e}")
+
+        filename = self.file_manager.filename
+        filename = filename.replace(".gaphor", ".xmi") if filename else "model.xmi"
+        save_file_dialog(
+            gettext("Export model as XMI file"),
+            handler,
+            filename=filename,
+            extension=".xmi",
+            filters=[(gettext("All XMI Files"), ".xmi", "text/xml")],
+        )

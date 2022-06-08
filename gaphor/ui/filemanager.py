@@ -110,19 +110,29 @@ class FileManager(Service, ActionProvider):
         # First claim file name, so any other files will be opened in a different session
         self.filename = filename
         queue: Queue[int] = Queue(0)
-        status_window = StatusWindow(
-            gettext("Loading…"),
-            gettext("Loading model from {filename}").format(filename=filename),
-            parent=self.main_window.window,
-            queue=queue,
-        )
+        status_window = None
 
-        self._load(filename, ModelLoaded(self, filename), queue, status_window)
+        @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
+        def create_status_window():
+            nonlocal status_window
+            status_window = StatusWindow(
+                gettext("Loading…"),
+                gettext("Loading model from {filename}").format(filename=filename),
+                parent=self.main_window.window,
+                queue=queue,
+            )
+
+        def done():
+            if status_window:
+                status_window.destroy()
+
+        create_status_window()
+        self._load(filename, ModelLoaded(self, filename), queue, done)
 
     def load_template(self, template):
         self._load(template, ModelLoaded(self))
 
-    def _load(self, filename, model_loaded_event, queue=None, status_window=None):
+    def _load(self, filename, model_loaded_event, queue=None, done=None):
         # Use low prio, so screen updates do happen
         @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
         def async_loader():
@@ -139,8 +149,8 @@ class FileManager(Service, ActionProvider):
                 self.event_manager.handle(model_loaded_event)
             except Exception:
                 self.filename = None
-                if status_window:
-                    status_window.destroy()
+                if done:
+                    done()
                 log.exception(f"Unable to open model “{filename}”.", stack_info=True)
                 error_handler(
                     message=gettext("Unable to open model “{filename}”.").format(
@@ -154,8 +164,8 @@ class FileManager(Service, ActionProvider):
                 load_default_model(self.element_factory)
                 raise
             finally:
-                if status_window:
-                    status_window.destroy()
+                if done:
+                    done()
 
         for _ in async_loader():
             pass
@@ -230,17 +240,14 @@ class FileManager(Service, ActionProvider):
         Returns True if the saving actually happened.
         """
 
-        if filename := save_file_dialog(
+        save_file_dialog(
             gettext("Save Gaphor Model As"),
+            self.save,
             parent=self.main_window.window,
             filename=self.filename,
             extension=".gaphor",
             filters=GAPHOR_FILTER,
-        ):
-            self.save(filename)
-            return True
-
-        return False
+        )
 
     @event_handler(SessionCreated)
     def _on_session_created(self, event: SessionCreated) -> None:
@@ -262,39 +269,40 @@ class FileManager(Service, ActionProvider):
         def confirm_shutdown():
             self.event_manager.handle(SessionShutdown(self))
 
-        if self.main_window.model_changed:
-            response = save_changes_before_closing_dialog(self.main_window.window)
-            if response == Gtk.ResponseType.YES:
-                saved = self.action_save()
-                if saved:
-                    confirm_shutdown()
-            if response == Gtk.ResponseType.REJECT:
+        def response(answer):
+            if answer == Gtk.ResponseType.YES and self.action_save():
                 confirm_shutdown()
+            if answer == Gtk.ResponseType.REJECT:
+                confirm_shutdown()
+
+        if self.main_window.model_changed:
+            save_changes_before_closing_dialog(self.main_window.window, response)
         else:
             confirm_shutdown()
 
 
-def save_changes_before_closing_dialog(window: Gtk.Window) -> Gtk.ResponseType:
+def save_changes_before_closing_dialog(window: Gtk.Window, handler) -> None:
     dialog = Gtk.MessageDialog(
-        window,
-        Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
-        Gtk.MessageType.WARNING,
+        message_type=Gtk.MessageType.WARNING,
+        text=gettext("Save changes before closing?"),
+        secondary_text=gettext(
+            "Closing will cause any unsaved changes to be discarded."
+        ),
     )
-    dialog.props.text = gettext("Save changes before closing?")
-    dialog.props.secondary_text = gettext(
-        "Closing will cause any unsaved changes to be discarded."
-    )
-
+    dialog.set_transient_for(window)
     dialog.add_buttons(
-        gettext("Close _without saving changes"),
+        gettext("Close without saving changes"),
         Gtk.ResponseType.REJECT,
-        Gtk.STOCK_CANCEL,
+        gettext("Cancel"),
         Gtk.ResponseType.CANCEL,
-        Gtk.STOCK_SAVE,
+        gettext("Save"),
         Gtk.ResponseType.YES,
     )
     dialog.set_default_response(Gtk.ResponseType.YES)
-    response = dialog.run()
-    dialog.destroy()
 
-    return response
+    def response(_dialog, answer):
+        dialog.destroy()
+        handler(answer)
+
+    dialog.connect("response", response)
+    dialog.show()
