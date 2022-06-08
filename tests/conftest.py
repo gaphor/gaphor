@@ -1,5 +1,3 @@
-import os
-
 from hypothesis import settings
 
 from gaphor.conftest import test_models
