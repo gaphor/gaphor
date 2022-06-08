@@ -340,10 +340,12 @@ class association(umlproperty):
                 save_func(self.name, v)
 
     def load(self, obj, value):
-        if not isinstance(value, self.type):
-            raise TypeError(
-                f"Value for {self.name} should be of type {self.type.__name__} ({type(value).__name__})"
-            )
+        if self.opposite:
+            # Loading should not steal references from other elements
+            opposite = getattr(type(value), self.opposite)
+            if opposite.upper == 1 and opposite.get(value):
+                log.debug(f"Can not steal reference from {value}")
+                return
 
         if self.upper == 1:
             self._set_one(obj, value)
