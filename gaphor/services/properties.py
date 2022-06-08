@@ -6,6 +6,7 @@ These are things like preferences.
 
 import ast
 import hashlib
+import logging
 import os
 import pprint
 from typing import Dict
@@ -16,6 +17,8 @@ from gaphor.abc import Service
 from gaphor.core import event_handler
 from gaphor.core.modeling.event import ModelFlushed
 from gaphor.event import ModelLoaded, ModelSaved, SessionCreated
+
+log = logging.getLogger(__name__)
 
 
 def get_config_dir() -> str:
@@ -127,7 +130,11 @@ class Properties(Service):
             with open(filename) as ifile:
                 data = ifile.read()
 
-            self._properties = ast.literal_eval(data)
+            try:
+                self._properties = ast.literal_eval(data)
+            except SyntaxError:
+                log.error("Invalid syntax in property file %s", filename)
+
             for key, value in list(self._properties.items()):
                 self.event_manager.handle(PropertyChanged(key, None, value))
 

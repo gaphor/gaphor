@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 
 import gaphor.services.properties
@@ -28,6 +30,18 @@ def test_load_properties(properties, event_manager):
     new_properties.on_model_loaded(ModelLoaded(None, "test_load_properties"))
 
     assert new_properties.get("test") == 1
+
+
+def test_load_of_corrupted_properties(properties, event_manager, caplog):
+    properties.set("test", 1)
+    properties.on_model_saved(ModelSaved(None, "test_load_properties"))
+    Path(properties.filename).write_text("{ invalid content }")
+
+    new_properties = gaphor.services.properties.Properties(event_manager)
+    new_properties.on_model_loaded(ModelLoaded(None, "test_load_properties"))
+
+    assert new_properties.get("test", "not set") == "not set"
+    assert "Invalid syntax in property file" in caplog.text
 
 
 def test_config_dir():
