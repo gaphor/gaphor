@@ -31,3 +31,7 @@ expander-widget.propertypage {
 .info-popover {
   margin: 6px;
 }
+
+.move-element-above {
+  border-top: 12px solid lighter(@insensitive_fg_color);
+}

@@ -18,9 +18,12 @@ from gaphor.core.modeling import (
 )
 from gaphor.core.modeling.event import AttributeUpdated
 from gaphor.diagram.iconname import get_icon_name
+from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.i18n import gettext, translated_ui_string
+from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.event import DiagramSelectionChanged
+from gaphor.ui.namespacemodel import change_owner
 
 no_owner = object()
 
@@ -77,7 +80,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
         self.selection = Gtk.SingleSelection.new(self.sort_model)
         factory = Gtk.SignalListItemFactory.new()
-        factory.connect("setup", list_item_factory_setup)
+        factory.connect("setup", list_item_factory_setup, self.event_manager)
         tree_view = Gtk.ListView.new(self.selection, factory)
 
         scrolled_window = Gtk.ScrolledWindow()
@@ -171,7 +174,7 @@ def visible(element):
     )
 
 
-def list_item_factory_setup(_factory, list_item):
+def list_item_factory_setup(_factory, list_item, event_manager):
     builder = Gtk.Builder()
     builder.set_current_object(list_item)
     builder.extend_with_template(
@@ -181,14 +184,25 @@ def list_item_factory_setup(_factory, list_item):
         -1,
     )
     row = builder.get_object("draggable")
+
     drag_source = Gtk.DragSource.new()
+    drag_source.set_actions(Gdk.DragAction.MOVE | Gdk.DragAction.COPY)
     drag_source.connect("prepare", list_item_drag_prepare, list_item)
     row.add_controller(drag_source)
 
+    drop_target = Gtk.DropTarget.new(ElementDragData.__gtype__, Gdk.DragAction.COPY)
+    drop_target.set_preload(True)
+    drop_target.connect("accept", list_item_drop_accept, list_item)
+    drop_target.connect("motion", list_item_drop_motion, list_item)
+    drop_target.connect("leave", list_item_drop_leave, list_item)
+    drop_target.connect("drop", list_item_drop_drop, list_item, event_manager)
+    row.add_controller(drop_target)
 
-def list_item_drag_prepare(source: Gtk.DragSource, x: int, y: int, list_item):
+
+def list_item_drag_prepare(
+    source: Gtk.DragSource, x: int, y: int, list_item: Gtk.ListItem
+) -> Gdk.ContentProvider:
     tree_item = list_item.get_item().get_item()
-    print("drag prepare", tree_item.element)
     display = Gdk.Display.get_default()
     theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
         tree_item.icon,
@@ -200,9 +214,66 @@ def list_item_drag_prepare(source: Gtk.DragSource, x: int, y: int, list_item):
     )
     source.set_icon(theme_icon, 0, 0)
 
-    v = GObject.Value(GObject.TYPE_STRING)
-    v.set_string(f"element:{tree_item.element.id}")
+    v = GObject.Value(
+        ElementDragData.__gtype__, ElementDragData(element=tree_item.element)
+    )
     return Gdk.ContentProvider.new_for_value(v)
+
+
+def list_item_drop_accept(
+    target: Gtk.DropTarget, drop: Gdk.Drop, list_item: Gtk.ListItem
+) -> bool:
+    return drop.get_formats().contain_gtype(ElementDragData.__gtype__)  # type: ignore[no-any-return]
+    # Should check if grouping is possible: return dest_element is None or can_group(dest_element, element)
+
+
+def list_item_drop_motion(
+    target: Gtk.DropTarget, x: int, y: int, list_item: Gtk.ListItem
+) -> Gdk.DragAction:
+    widget = target.get_widget()
+    style_context = widget.get_style_context()
+    if y < 4:
+        style_context.add_class("move-element-above")
+    else:
+        style_context.remove_class("move-element-above")
+
+    return Gdk.DragAction.COPY
+
+
+def list_item_drop_leave(
+    target: Gtk.DropTarget, list_item: Gtk.ListItem
+) -> Gdk.DragAction:
+    widget = target.get_widget()
+    style_context = widget.get_style_context()
+    style_context.remove_class("move-element-above")
+
+
+def list_item_drop_drop(
+    target: Gtk.DropTarget,
+    value: ElementDragData,
+    x: int,
+    y: int,
+    list_item: Gtk.ListItem,
+    event_manager,
+) -> Gdk.DragAction:
+    list_item_drop_leave(target, list_item)
+
+    element = value.element
+    tree_item = list_item.get_item().get_item()
+    dest_element = tree_item.element
+    if y < 4:
+        dest_element = dest_element.owner
+
+    with Transaction(event_manager) as tx:
+        # This view is concerned with owner relationships.
+        # Let's check if the owner relation has actually changed,
+        # Otherwise roll back, to not confuse the user.
+        if not change_owner(dest_element, element):
+            tx.rollback()
+        else:
+            return True
+
+    return False
 
 
 def tree_item_sort(a, b, _user_data=None):
