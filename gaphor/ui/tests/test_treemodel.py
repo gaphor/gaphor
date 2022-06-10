@@ -17,8 +17,8 @@ skip_if_gtk3 = pytest.mark.skipif(
 
 
 @pytest.fixture
-def tree_component(event_manager, element_factory):
-    tree_component = TreeComponent(event_manager, element_factory)
+def tree_component(event_manager, element_factory, modeling_language):
+    tree_component = TreeComponent(event_manager, element_factory, modeling_language)
     tree_component.open()
     yield tree_component
     tree_component.close()
@@ -289,11 +289,11 @@ def test_element_style_changed(tree_component, element_factory):
 
 
 @skip_if_gtk3
-def test_tree_component_model_ready(event_manager, element_factory):
+def test_tree_component_model_ready(event_manager, element_factory, modeling_language):
     class_ = element_factory.create(UML.Class)
     package = element_factory.create(UML.Package)
     class_.package = package
-    tree_component = TreeComponent(event_manager, element_factory)
+    tree_component = TreeComponent(event_manager, element_factory, modeling_language)
     tree_component.open()
     tree_model = tree_component.model
 

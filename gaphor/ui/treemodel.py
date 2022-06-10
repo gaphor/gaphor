@@ -5,6 +5,7 @@ from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango
 
 from gaphor import UML
 from gaphor.abc import ActionProvider
+from gaphor.action import action
 from gaphor.core import event_handler
 from gaphor.core.format import format
 from gaphor.core.modeling import (
@@ -22,7 +23,9 @@ from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.event import DiagramSelectionChanged
+from gaphor.ui.actiongroup import create_action_group
+from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged, ElementOpened
+from gaphor.ui.namespace import diagram_name_for_type, popup_model
 from gaphor.ui.namespacemodel import change_owner
 
 no_owner = object()
@@ -54,9 +57,10 @@ class TreeItem(GObject.Object):
 
 
 class TreeComponent(UIComponent, ActionProvider):
-    def __init__(self, event_manager, element_factory):
+    def __init__(self, event_manager, element_factory, modeling_language):
         self.event_manager = event_manager
         self.element_factory = element_factory
+        self.modeling_language = modeling_language
         self.model = TreeModel()
 
     def open(self):
@@ -80,12 +84,18 @@ class TreeComponent(UIComponent, ActionProvider):
         self.sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
         self.selection = Gtk.SingleSelection.new(self.sort_model)
         factory = Gtk.SignalListItemFactory.new()
-        factory.connect("setup", list_item_factory_setup, self.event_manager)
-        tree_view = Gtk.ListView.new(self.selection, factory)
+        factory.connect(
+            "setup", list_item_factory_setup, self.event_manager, self.modeling_language
+        )
+        self.tree_view = Gtk.ListView.new(self.selection, factory)
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_child(tree_view)
+        scrolled_window.set_child(self.tree_view)
+
+        action_group, shortcuts = create_action_group(self, "tree-view")
+        scrolled_window.insert_action_group("tree-view", action_group)
+        self.create_gtk4_popup_controller(shortcuts)
 
         self.on_model_ready()
 
@@ -98,6 +108,76 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_attribute_changed)
         self.event_manager.unsubscribe(self.on_model_ready)
         self.event_manager.unsubscribe(self.on_diagram_selection_changed)
+
+    def create_gtk4_popup_controller(self, shortcuts):
+        ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
+        ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
+        self.tree_view.add_controller(ctrl)
+
+    def select_element(self, element: Element) -> None:
+        pass  # TODO: Implement
+
+    def get_selected_element(self) -> Element | None:
+        assert self.model
+        if tree_item := self.selection.get_selected_item():
+            return tree_item.get_item().element  # type: ignore[no-any-return]
+        return None
+
+    @action(name="tree-view.open")
+    def tree_view_open_selected(self):
+        element = self.get_selected_element()
+        if isinstance(element, Diagram):
+            self.event_manager.handle(DiagramOpened(element))
+        else:
+            self.event_manager.handle(ElementOpened(element))
+
+    @action(name="tree-view.show-in-diagram")
+    def tree_view_show_in_diagram(self, diagram_id: str) -> None:
+        element = self.element_factory.lookup(diagram_id)
+        self.event_manager.handle(DiagramOpened(element))
+
+    @action(name="tree-view.rename", shortcut="F2")
+    @g_async(single=True)
+    def tree_view_rename_selected(self):
+        element = self.get_selected_element()
+        print("TODO: rename element", element)
+
+    @action(name="win.create-diagram")
+    def tree_view_create_diagram(self, diagram_type: str):
+        element = self.get_selected_element()
+        while element and not isinstance(element, UML.NamedElement):
+            element = element.owner
+
+        with Transaction(self.event_manager):
+            diagram = self.element_factory.create(Diagram)
+            if isinstance(element, UML.NamedElement):
+                diagram.element = element
+            diagram.name = diagram_name_for_type(self.modeling_language, diagram_type)
+            diagram.diagramType = diagram_type
+        self.select_element(diagram)
+        self.event_manager.handle(DiagramOpened(diagram))
+        self.tree_view_rename_selected()
+
+    @action(name="tree-view.create-package")
+    def tree_view_create_package(self):
+        element = self.get_selected_element()
+        assert isinstance(element, UML.Package)
+        with Transaction(self.event_manager):
+            package = self.element_factory.create(UML.Package)
+            package.package = element
+            package.name = (
+                gettext("{name} package").format(name=element.name)
+                if element
+                else gettext("New model")
+            )
+        self.select_element(package)
+        self.tree_view_rename_selected()
+
+    @action(name="tree-view.delete")
+    def tree_view_delete(self):
+        if element := self.get_selected_element():
+            with Transaction(self.event_manager):
+                element.unlink()
 
     @event_handler(ElementCreated)
     def on_element_created(self, event: ElementCreated):
@@ -174,7 +254,7 @@ def visible(element):
     )
 
 
-def list_item_factory_setup(_factory, list_item, event_manager):
+def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):
     builder = Gtk.Builder()
     builder.set_current_object(list_item)
     builder.extend_with_template(
@@ -184,6 +264,17 @@ def list_item_factory_setup(_factory, list_item, event_manager):
         -1,
     )
     row = builder.get_object("draggable")
+
+    def on_show_popup(ctrl, n_press, x, y):
+        element = list_item.get_item().get_item().element
+        menu = Gtk.PopoverMenu.new_from_model(popup_model(element, modeling_language))
+        menu.set_parent(row)
+        menu.popup()
+
+    ctrl = Gtk.GestureClick.new()
+    ctrl.set_button(Gdk.BUTTON_SECONDARY)
+    ctrl.connect("pressed", on_show_popup)
+    row.add_controller(ctrl)
 
     drag_source = Gtk.DragSource.new()
     drag_source.set_actions(Gdk.DragAction.MOVE | Gdk.DragAction.COPY)
