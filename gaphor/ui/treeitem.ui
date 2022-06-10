@@ -8,7 +8,7 @@
           <lookup name="item">GtkListItem</lookup>
         </binding>
         <property name="child">
-          <object class="GtkBox" id="draggable">
+          <object class="GtkBox" id="row">
             <property name="spacing">6</property>
             <child>
               <object class="GtkImage">

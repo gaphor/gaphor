@@ -89,6 +89,11 @@ class TreeComponent(UIComponent, ActionProvider):
         )
         self.tree_view = Gtk.ListView.new(self.selection, factory)
 
+        def list_view_activate(list_view, position):
+            list_view.activate_action("tree-view.open", None)
+
+        self.tree_view.connect("activate", list_view_activate)
+
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_child(self.tree_view)
@@ -263,7 +268,7 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
         translated_ui_string("gaphor.ui", "treeitem.ui"),
         -1,
     )
-    row = builder.get_object("draggable")
+    row = builder.get_object("row")
 
     def on_show_popup(ctrl, n_press, x, y):
         element = list_item.get_item().get_item().element
