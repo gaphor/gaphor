@@ -42,6 +42,15 @@ class TreeItem(GObject.Object):
     icon = GObject.Property(type=str)
     icon_visible = GObject.Property(type=bool, default=False)
     attributes = GObject.Property(type=Pango.AttrList)
+    visible_child_name = GObject.Property(type=str, default="default")
+
+    @GObject.Property(type=str)
+    def edit_text(self):
+        return self.element.name or ""
+
+    @edit_text.setter  # type: ignore[no-redef]
+    def edit_text(self, text):
+        self.element.name = text or ""
 
     def sync(self) -> None:
         if element := self.element:
@@ -54,6 +63,10 @@ class TreeItem(GObject.Object):
                 )
             )
             self.attributes = pango_attributes(element)
+            self.edit_text = self.element.name or ""  # type: ignore[assignment]
+
+    def start_editing(self):
+        self.visible_child_name = "editing"
 
 
 class TreeComponent(UIComponent, ActionProvider):
@@ -144,8 +157,9 @@ class TreeComponent(UIComponent, ActionProvider):
     @action(name="tree-view.rename", shortcut="F2")
     @g_async(single=True)
     def tree_view_rename_selected(self):
-        element = self.get_selected_element()
-        print("TODO: rename element", element)
+        if row_item := self.selection.get_selected_item():
+            tree_item: TreeItem = row_item.get_item()
+            tree_item.start_editing()
 
     @action(name="win.create-diagram")
     def tree_view_create_diagram(self, diagram_type: str):
@@ -293,6 +307,39 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
     drop_target.connect("leave", list_item_drop_leave, list_item)
     drop_target.connect("drop", list_item_drop_drop, list_item, event_manager)
     row.add_controller(drop_target)
+
+    def end_editing():
+        list_item.get_item().get_item().visible_child_name = "default"
+        row.get_parent().grab_focus()
+
+    def text_activate(widget):
+        text = widget.get_buffer().get_text()
+        tree_item = list_item.get_item().get_item()
+        with Transaction(event_manager):
+            tree_item.edit_text = text
+        end_editing()
+
+    def text_focus_out(widget, pspec):
+        if not widget.has_focus():
+            text_activate(text)
+
+    def text_escape(widget, keyval, keycode, state):
+        if keyval == Gdk.KEY_Escape:
+            list_item.get_item().get_item().sync()
+            end_editing()
+
+    text = builder.get_object("text")
+    text.connect("notify::has-focus", text_focus_out)
+    text.connect("activate", text_activate)
+    controller = Gtk.EventControllerKey.new()
+    controller.connect("key-pressed", text_escape)
+    text.add_controller(controller)
+
+    def stack_changed(stack, pspec):
+        if stack.get_visible_child_name() == "editing":
+            text.grab_focus()
+
+    builder.get_object("stack").connect("notify::visible-child-name", stack_changed)
 
 
 def list_item_drag_prepare(
