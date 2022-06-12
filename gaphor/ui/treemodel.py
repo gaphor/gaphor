@@ -17,7 +17,7 @@ from gaphor.core.modeling import (
     ModelFlushed,
     ModelReady,
 )
-from gaphor.core.modeling.event import AttributeUpdated
+from gaphor.core.modeling.event import AttributeUpdated, DerivedAdded, DerivedDeleted
 from gaphor.diagram.iconname import get_icon_name
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.i18n import gettext, translated_ui_string
@@ -80,6 +80,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.subscribe(self.on_element_created)
         self.event_manager.subscribe(self.on_element_deleted)
         self.event_manager.subscribe(self.on_owner_changed)
+        self.event_manager.subscribe(self.on_owned_element_changed)
         self.event_manager.subscribe(self.on_attribute_changed)
         self.event_manager.subscribe(self.on_model_ready)
         self.event_manager.subscribe(self.on_diagram_selection_changed)
@@ -123,6 +124,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_element_created)
         self.event_manager.unsubscribe(self.on_element_deleted)
         self.event_manager.unsubscribe(self.on_owner_changed)
+        self.event_manager.unsubscribe(self.on_owned_element_changed)
         self.event_manager.unsubscribe(self.on_attribute_changed)
         self.event_manager.unsubscribe(self.on_model_ready)
         self.event_manager.unsubscribe(self.on_diagram_selection_changed)
@@ -206,11 +208,18 @@ class TreeComponent(UIComponent, ActionProvider):
     def on_element_deleted(self, event: ElementDeleted):
         self.model.remove_element(event.element)
 
+    @event_handler(DerivedAdded, DerivedDeleted)
+    def on_owned_element_changed(self, event):
+        """Ensure we update the node once owned elements change."""
+        if event.property is Element.ownedElement:
+            self.model.notify_element(event.element)
+
     @event_handler(DerivedSet)
     def on_owner_changed(self, event: DerivedSet):
+        # Should check on ownedElement as well, since it may not have been updated
+        # before this thing triggers
         if (event.property is not Element.owner) or not visible(event.element):
             return
-
         element = event.element
         self.model.remove_element(element, owner=event.old_value)
         self.model.add_element(element)
@@ -507,8 +516,14 @@ class TreeModel:
         del self.branches[tree_item]
         self.notify_child_model(tree_item)
 
+    def notify_element(self, element):
+        tree_item = self.tree_item_for_element(element)
+        self.notify_child_model(tree_item)
+
     def notify_child_model(self, tree_item):
         # Only notify the change, the branch is created in child_model()
+        if self.branches.get(tree_item):
+            return
         owner_tree_item = self.tree_item_for_element(tree_item.element.owner)
         if (owner_model := self.branches.get(owner_tree_item)) is not None:
             found, index = owner_model.find(tree_item)

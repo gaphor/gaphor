@@ -200,8 +200,8 @@ def test_tree_subtree_changed(tree_component, element_factory):
     class_.package = package
 
     assert root_model.get_n_items() == 1
-    assert root_model_changed.added == 1
-    assert root_model_changed.removed == 2  # remove + node changed
+    assert root_model_changed.added == 2
+    assert root_model_changed.removed == 3  # remove + node changed
 
 
 @skip_if_gtk3
