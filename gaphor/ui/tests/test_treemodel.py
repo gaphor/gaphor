@@ -3,7 +3,8 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.ui.treemodel import TreeComponent, TreeItem, TreeModel
+from gaphor.i18n import gettext
+from gaphor.ui.treemodel import RelationshipItem, TreeComponent, TreeItem, TreeModel
 
 skip_if_gtk3 = pytest.mark.skipif(
     Gtk.get_major_version() == 3, reason="Gtk.ListView is not supported by GTK 3"
@@ -151,6 +152,74 @@ def test_tree_model_change_owner(element_factory):
     assert package_item in tree_model.root
     assert class_item not in tree_model.root
     assert class_item in package_model
+
+
+def test_tree_model_relationship_subtree(element_factory):
+    tree_model = TreeModel()
+    package = element_factory.create(UML.Package)
+    association = element_factory.create(UML.Association)
+    association.package = package
+
+    tree_model.add_element(package)
+    tree_model.add_element(association)
+    package_item = tree_model.tree_item_for_element(package)
+    tree_model.child_model(package_item)
+    association_item = tree_model.tree_item_for_element(association)
+    package_model = tree_model.list_model_for_element(package)
+    relationship_item = package_model.get_item(0)
+    relationship_model = tree_model.branches[relationship_item]
+
+    assert package_model
+    assert isinstance(relationship_item, RelationshipItem)
+    assert relationship_item.text == gettext("<Relationships>")
+    assert association_item is relationship_model.get_item(0)
+
+
+def test_tree_model_second_relationship(element_factory):
+    tree_model = TreeModel()
+    package = element_factory.create(UML.Package)
+    association = element_factory.create(UML.Association)
+    association.package = package
+
+    tree_model.add_element(package)
+    tree_model.add_element(association)
+    package_item = tree_model.tree_item_for_element(package)
+    tree_model.child_model(package_item)
+    package_model = tree_model.list_model_for_element(package)
+    relationship_item = package_model.get_item(0)
+    relationship_model = tree_model.branches[relationship_item]
+
+    new_association = element_factory.create(UML.Association)
+    new_association.package = package
+    tree_model.add_element(new_association)
+
+    association_item = tree_model.tree_item_for_element(association)
+    new_association_item = tree_model.tree_item_for_element(new_association)
+
+    assert association_item
+    assert new_association_item
+    assert association_item is relationship_model.get_item(0)
+    assert new_association_item is relationship_model.get_item(1)
+
+
+@pytest.mark.xfail()
+def test_tree_model_remove_relationship(element_factory):
+    raise NotImplementedError()
+
+
+@pytest.mark.xfail()
+def test_tree_model_remove_empty_relationship(element_factory):
+    raise NotImplementedError()
+
+
+@pytest.mark.xfail()
+def test_tree_model_expand_to_relationship(element_factory):
+    raise NotImplementedError()
+
+
+@pytest.mark.xfail()
+def test_tree_model_sort_relationship_item_first(element_factory):
+    raise NotImplementedError()
 
 
 @skip_if_gtk3

@@ -45,12 +45,17 @@ class TreeItem(GObject.Object):
     visible_child_name = GObject.Property(type=str, default="default")
 
     @GObject.Property(type=str)
+    def read_only(self):
+        return not self.element or not hasattr(self.element, "name")
+
+    @GObject.Property(type=str)
     def edit_text(self):
-        return self.element.name or ""
+        return "" if self.read_only else self.element.name
 
     @edit_text.setter  # type: ignore[no-redef]
     def edit_text(self, text):
-        self.element.name = text or ""
+        if not self.read_only:
+            self.element.name = text or ""
 
     def sync(self) -> None:
         if element := self.element:
@@ -63,7 +68,7 @@ class TreeItem(GObject.Object):
                 )
             )
             self.attributes = pango_attributes(element)
-            self.edit_text = self.element.name or ""  # type: ignore[assignment]
+            self.edit_text = "" if self.read_only else self.element.name  # type: ignore[assignment]
 
     def start_editing(self):
         self.visible_child_name = "editing"
@@ -434,6 +439,12 @@ def tree_item_sort(a, b, _user_data=None):
     return (na > nb) - (na < nb)
 
 
+class RelationshipItem(TreeItem):
+    def __init__(self):
+        super().__init__(None)
+        self.text = gettext("<Relationships>")
+
+
 class TreeModel:
     def __init__(self):
         super().__init__()
@@ -454,6 +465,8 @@ class TreeModel:
         branches = self.branches
         if item in branches:
             return branches[item]
+        elif not item.element:
+            return None
         elif owned_elements := [
             e
             for e in item.element.ownedElement
@@ -462,7 +475,7 @@ class TreeModel:
             new_branch = Gio.ListStore.new(TreeItem.__gtype__)
             self.branches[item] = new_branch
             for e in owned_elements:
-                new_branch.append(TreeItem(e))
+                self.maybe_relationships_model(e, new_branch).append(TreeItem(e))
             return new_branch
         return None
 
@@ -478,6 +491,10 @@ class TreeModel:
             return None
         owner = element.owner
         if owner_model := self.list_model_for_element(owner):
+            if isinstance(element, UML.Relationship) and isinstance(
+                owner_model.get_item(0), RelationshipItem
+            ):
+                owner_model = self.branches[owner_model.get_item(0)]
             return next((ti for ti in owner_model if ti.element is element), None)
         return None
 
@@ -486,7 +503,9 @@ class TreeModel:
             return
 
         if (owner_model := self.list_model_for_element(element.owner)) is not None:
-            owner_model.append(TreeItem(element))
+            self.maybe_relationships_model(element, owner_model).append(
+                TreeItem(element)
+            )
         elif owner_tree_item := self.tree_item_for_element(element.owner):
             self.notify_child_model(owner_tree_item)
 
@@ -499,6 +518,7 @@ class TreeModel:
                 element.owner if owner is no_owner else owner
             )
         ) is not None:
+            # TODO: if relationship, remove Relationships node if empty
             index = next(
                 (i for i, ti in enumerate(owner_model) if ti.element is element), None
             )
@@ -529,6 +549,20 @@ class TreeModel:
             found, index = owner_model.find(tree_item)
             if found:
                 owner_model.items_changed(index, 1, 1)
+
+    def maybe_relationships_model(
+        self, element: Element, owner_model: Gio.ListStore
+    ) -> Gio.ListStore:
+        """Return `owner_model`, or the model to hold relationships."""
+        if not isinstance(element, UML.Relationship):
+            return owner_model
+
+        if not isinstance(owner_model.get_item(0), RelationshipItem):
+            relationship_item = RelationshipItem()
+            owner_model.insert(0, relationship_item)
+            relationship_branch = Gio.ListStore.new(TreeItem.__gtype__)
+            self.branches[relationship_item] = relationship_branch
+        return self.branches[owner_model.get_item(0)]
 
     def clear(self) -> None:
         root = self.root
