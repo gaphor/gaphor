@@ -177,7 +177,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "exceptiongroup"
-version = "1.0.0rc7"
+version = "1.0.0rc8"
 description = "Backport of PEP 654 (exception groups)"
 category = "main"
 optional = false
@@ -247,7 +247,7 @@ exceptiongroup = ">=1.0.0-rc.5,<2.0.0"
 
 [[package]]
 name = "hypothesis"
-version = "6.47.1"
+version = "6.47.2"
 description = "A library for property-based testing"
 category = "dev"
 optional = false
@@ -255,6 +255,7 @@ python-versions = ">=3.7"
 
 [package.dependencies]
 attrs = ">=19.2.0"
+exceptiongroup = {version = ">=1.0.0rc8", markers = "python_version < \"3.11.0b1\""}
 sortedcontainers = ">=2.1.0,<3.0.0"
 
 [package.extras]
@@ -1065,7 +1066,7 @@ pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "4f26dc856d612f64ceda371c111f96911f5b538fff055d951ceb26daaed311ec"
+content-hash = "ecf6c0ee2d300b262f51589659990ec0e9277a4e8d6e337c1f15fc50e9076e84"
 
 [metadata.files]
 alabaster = [
@@ -1197,8 +1198,8 @@ docutils = [
     {file = "docutils-0.17.1.tar.gz", hash = "sha256:686577d2e4c32380bb50cbb22f575ed742d58168cee37e99117a854bcd88f125"},
 ]
 exceptiongroup = [
-    {file = "exceptiongroup-1.0.0rc7-py3-none-any.whl", hash = "sha256:82dc1cfc21bb5f921a25925e80ec696c71b7d108c6c63bd8a786abe2b73c3263"},
-    {file = "exceptiongroup-1.0.0rc7.tar.gz", hash = "sha256:2019e6e9d6ef84ff65c5c7c451b75802c662d53bcb124abf47ad118d39f9a1ca"},
+    {file = "exceptiongroup-1.0.0rc8-py3-none-any.whl", hash = "sha256:ab0a968e1ef769e55d9a596f4a89f7be9ffedbc9fdefdb77cc68cf5c33ce1035"},
+    {file = "exceptiongroup-1.0.0rc8.tar.gz", hash = "sha256:6990c24f06b8d33c8065cfe43e5e8a4bfa384e0358be036af9cc60b6321bd11a"},
 ]
 filelock = [
     {file = "filelock-3.7.1-py3-none-any.whl", hash = "sha256:37def7b658813cda163b56fc564cdc75e86d338246458c4c28ae84cabefa2404"},
@@ -1220,8 +1221,8 @@ generic = [
     {file = "generic-1.1.0.tar.gz", hash = "sha256:ffde3ba04bd9483e668d10fda9cbb328015ab62bd399a79e8d7c50df6d940fe0"},
 ]
 hypothesis = [
-    {file = "hypothesis-6.47.1-py3-none-any.whl", hash = "sha256:69978811f1d9c19710c7d2bf8233dc43c80efa964251b72efbe8274044e073b4"},
-    {file = "hypothesis-6.47.1.tar.gz", hash = "sha256:4ad26c5d434171ffc02aba569dd52255573d615554c062bc30734dbe6f318c61"},
+    {file = "hypothesis-6.47.2-py3-none-any.whl", hash = "sha256:d6a7bb1b695edc57388b86960138d23aeddcb95192cff49755e280e3296558c9"},
+    {file = "hypothesis-6.47.2.tar.gz", hash = "sha256:9c01a225eada7d74d38430e3e91e659e3a892fbc2b15f7b051779ded6ab73ee7"},
 ]
 identify = [
     {file = "identify-2.5.1-py2.py3-none-any.whl", hash = "sha256:0dca2ea3e4381c435ef9c33ba100a78a9b40c0bab11189c7cf121f75815efeaa"},
