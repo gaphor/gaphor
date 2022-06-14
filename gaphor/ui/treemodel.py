@@ -30,7 +30,7 @@ class TreeItem(GObject.Object):
 
     @GObject.Property(type=str)
     def edit_text(self):
-        return "" if self.read_only else self.element.name
+        return "" if self.read_only else (self.element.name or "")
 
     @edit_text.setter  # type: ignore[no-redef]
     def edit_text(self, text):
@@ -48,7 +48,6 @@ class TreeItem(GObject.Object):
                 )
             )
             self.attributes = pango_attributes(element)
-            self.edit_text = "" if self.read_only else self.element.name  # type: ignore[assignment]
 
     def start_editing(self):
         self.visible_child_name = "editing"
