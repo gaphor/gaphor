@@ -54,10 +54,12 @@ def test_tree_model_add_nested_element(element_factory):
     tree_model.add_element(package)
     tree_model.add_element(class_)
     tree_model.child_model(tree_model.tree_item_for_element(package))
+    class_item = tree_model.tree_item_for_element(class_)
+    package_item = tree_model.tree_item_for_element(package)
 
-    assert tree_model.list_model_for_element(package) is not None
-    assert tree_model.list_model_for_element(package).get_item(0).element is class_
-    assert tree_model.list_model_for_element(class_) is None
+    assert tree_model.branches.get(package_item) is not None
+    assert tree_model.branches.get(package_item).get_item(0) is class_item
+    assert tree_model.branches.get(class_item) is None
 
 
 def test_tree_model_add_nested_element_in_reverse_order(element_factory):
@@ -69,10 +71,12 @@ def test_tree_model_add_nested_element_in_reverse_order(element_factory):
     tree_model.add_element(class_)
     tree_model.add_element(package)
     tree_model.child_model(tree_model.tree_item_for_element(package))
+    class_item = tree_model.tree_item_for_element(class_)
+    package_item = tree_model.tree_item_for_element(package)
 
-    assert tree_model.list_model_for_element(package) is not None
-    assert tree_model.list_model_for_element(package).get_item(0).element is class_
-    assert tree_model.list_model_for_element(class_) is None
+    assert tree_model.branches.get(package_item) is not None
+    assert tree_model.branches.get(package_item).get_item(0) is class_item
+    assert tree_model.branches.get(class_item) is None
 
 
 def test_tree_model_remove_element(element_factory):
@@ -97,8 +101,8 @@ def test_tree_model_remove_nested_element(element_factory):
     tree_model.child_model(tree_model.tree_item_for_element(package))
     tree_model.remove_element(class_)
 
-    assert tree_model.list_model_for_element(package) is None
-    assert tree_model.list_model_for_element(class_) is None
+    assert len(tree_model.branches) == 1
+    assert None in tree_model.branches
     assert tree_model.tree_item_for_element(package) is not None
     assert tree_model.tree_item_for_element(class_) is None
 
@@ -114,8 +118,8 @@ def test_tree_model_remove_package_with_nested_element(element_factory):
     tree_model.remove_element(package)
 
     assert tree_model.tree_item_for_element(package) is None
-    assert tree_model.list_model_for_element(package) is None
-    assert tree_model.list_model_for_element(class_) is None
+    assert len(tree_model.branches) == 1
+    assert None in tree_model.branches
     assert tree_model.tree_item_for_element(package) is None
     assert tree_model.tree_item_for_element(class_) is None
 
@@ -147,7 +151,7 @@ def test_tree_model_change_owner(element_factory):
     package_item = tree_model.tree_item_for_element(package)
     tree_model.child_model(package_item)
     class_item = tree_model.tree_item_for_element(class_)
-    package_model = tree_model.list_model_for_element(package)
+    package_model = tree_model.branches[package_item]
 
     assert package_item in tree_model.root
     assert class_item not in tree_model.root
@@ -165,9 +169,9 @@ def test_tree_model_relationship_subtree(element_factory):
     package_item = tree_model.tree_item_for_element(package)
     tree_model.child_model(package_item)
     association_item = tree_model.tree_item_for_element(association)
-    package_model = tree_model.list_model_for_element(package)
+    package_model = tree_model.branches[tree_model.root.get_item(0)]
     relationship_item = package_model.get_item(0)
-    relationship_model = tree_model.branches[relationship_item]
+    relationship_model = tree_model.list_model_with_element(association)
 
     assert package_model
     assert isinstance(relationship_item, RelationshipItem)
@@ -185,9 +189,7 @@ def test_tree_model_second_relationship(element_factory):
     tree_model.add_element(association)
     package_item = tree_model.tree_item_for_element(package)
     tree_model.child_model(package_item)
-    package_model = tree_model.list_model_for_element(package)
-    relationship_item = package_model.get_item(0)
-    relationship_model = tree_model.branches[relationship_item]
+    relationship_model = tree_model.list_model_with_element(association)
 
     new_association = element_factory.create(UML.Association)
     new_association.package = package
