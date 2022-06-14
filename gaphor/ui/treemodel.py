@@ -475,19 +475,14 @@ class TreeModel:
             new_branch = Gio.ListStore.new(TreeItem.__gtype__)
             self.branches[item] = new_branch
             for e in owned_elements:
-                self.maybe_relationships_model(e, new_branch).append(TreeItem(e))
+                self._maybe_relationships_model(e, new_branch, create=True).append(
+                    TreeItem(e)
+                )
             return new_branch
         return None
 
-    def list_model_for_element(self, element: Element | None) -> Gio.ListStore | None:
-        if element is None:
-            return self.root
-        return next(
-            (m for ti, m in self.branches.items() if ti and ti.element is element), None
-        )
-
-    def maybe_relationships_model(
-        self, element: Element, owner_model: Gio.ListStore, create=True
+    def _maybe_relationships_model(
+        self, element: Element, owner_model: Gio.ListStore, create: bool
     ) -> Gio.ListStore:
         """Return `owner_model`, or the model to hold relationships."""
         if not isinstance(element, UML.Relationship):
@@ -504,23 +499,26 @@ class TreeModel:
             return relationship_branch
         return owner_model
 
-    def list_model_with_element(
-        self, element: Element | None, owner=no_owner, create=False
+    def list_model_for_element(
+        self, element: Element, owner=no_owner, create=False
     ) -> Gio.ListStore | None:
-        if element is None:
+        if (owner := element.owner if owner is no_owner else owner) is None:
             return self.root
+
         if (
-            owner_model := self.list_model_for_element(
-                element.owner if owner is no_owner else owner
+            owner_model := next(
+                (m for ti, m in self.branches.items() if ti and ti.element is owner),
+                None,
             )
         ) is not None:
-            return self.maybe_relationships_model(element, owner_model, create)
+            return self._maybe_relationships_model(element, owner_model, create)
+
         return None
 
     def tree_item_for_element(self, element: Element | None) -> TreeItem | None:
         if element is None:
             return None
-        if owner_model := self.list_model_with_element(element):
+        if owner_model := self.list_model_for_element(element):
             return next((ti for ti in owner_model if ti.element is element), None)
         return None
 
@@ -529,7 +527,7 @@ class TreeModel:
             return
 
         if (
-            owner_model := self.list_model_with_element(element, create=True)
+            owner_model := self.list_model_for_element(element, create=True)
         ) is not None:
             owner_model.append(TreeItem(element))
         elif owner_tree_item := self.tree_item_for_element(element.owner):
@@ -540,7 +538,7 @@ class TreeModel:
             self.remove_element(child)
 
         if (
-            owner_model := self.list_model_with_element(element, owner=owner)
+            owner_model := self.list_model_for_element(element, owner=owner)
         ) is not None:
             index = next(
                 (i for i, ti in enumerate(owner_model) if ti.element is element), None
