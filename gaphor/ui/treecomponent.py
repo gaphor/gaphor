@@ -171,7 +171,7 @@ class TreeComponent(UIComponent, ActionProvider):
     def on_owned_element_changed(self, event):
         """Ensure we update the node once owned elements change."""
         if event.property is Element.ownedElement:
-            self.model.notify_element(event.element)
+            self.model.notify_child_model(event.element)
 
     @event_handler(DerivedSet)
     def on_owner_changed(self, event: DerivedSet):

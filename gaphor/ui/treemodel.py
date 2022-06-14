@@ -154,8 +154,8 @@ class TreeModel:
             owner_model := self.list_model_for_element(element, create=True)
         ) is not None:
             owner_model.append(TreeItem(element))
-        elif owner_tree_item := self.tree_item_for_element(element.owner):
-            self.notify_child_model(owner_tree_item)
+        elif element.owner:
+            self.notify_child_model(element.owner)
 
     def remove_element(self, element: Element, owner=_no_value) -> None:
         for child in element.ownedElement:
@@ -180,14 +180,14 @@ class TreeModel:
             return
 
         del self.branches[tree_item]
-        self.notify_child_model(tree_item)
+        if tree_item.element:
+            self.notify_child_model(tree_item.element)
 
-    def notify_element(self, element):
-        tree_item = self.tree_item_for_element(element)
-        self.notify_child_model(tree_item)
-
-    def notify_child_model(self, tree_item):
+    def notify_child_model(self, element):
         # Only notify the change, the branch is created in child_model()
+        if not (tree_item := self.tree_item_for_element(element)):
+            return
+
         if self.branches.get(tree_item):
             return
         owner_tree_item = self.tree_item_for_element(tree_item.element.owner)
