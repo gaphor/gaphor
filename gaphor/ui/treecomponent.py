@@ -25,7 +25,13 @@ from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged, ElementOpened
 from gaphor.ui.namespace import diagram_name_for_type, popup_model
 from gaphor.ui.namespacemodel import change_owner
-from gaphor.ui.treemodel import TreeItem, TreeModel, visible
+from gaphor.ui.treemodel import (
+    RelationshipItem,
+    TreeItem,
+    TreeModel,
+    tree_item_sort,
+    visible,
+)
 
 
 class TreeComponent(UIComponent, ActionProvider):
@@ -306,8 +312,11 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
 
 def list_item_drag_prepare(
     source: Gtk.DragSource, x: int, y: int, list_item: Gtk.ListItem
-) -> Gdk.ContentProvider:
+) -> Gdk.ContentProvider | None:
     tree_item = list_item.get_item().get_item()
+    if isinstance(tree_item, RelationshipItem):
+        return None
+
     display = Gdk.Display.get_default()
     theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
         tree_item.icon,
@@ -379,9 +388,3 @@ def list_item_drop_drop(
             return True
 
     return False
-
-
-def tree_item_sort(a, b, _user_data=None):
-    na = GLib.utf8_collate_key(a.text, -1).lower()
-    nb = GLib.utf8_collate_key(b.text, -1).lower()
-    return (na > nb) - (na < nb)

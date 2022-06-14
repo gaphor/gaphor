@@ -2,7 +2,7 @@ import pytest
 
 from gaphor import UML
 from gaphor.i18n import gettext
-from gaphor.ui.treemodel import RelationshipItem, TreeItem, TreeModel
+from gaphor.ui.treemodel import RelationshipItem, TreeItem, TreeModel, tree_item_sort
 
 
 class ItemChangedHandler:
@@ -207,15 +207,18 @@ def test_tree_model_remove_relationship(element_factory):
 
 
 @pytest.mark.xfail()
-def test_tree_model_remove_empty_relationship(element_factory):
-    raise NotImplementedError()
-
-
-@pytest.mark.xfail()
 def test_tree_model_expand_to_relationship(element_factory):
     raise NotImplementedError()
 
 
-@pytest.mark.xfail()
 def test_tree_model_sort_relationship_item_first(element_factory):
-    raise NotImplementedError()
+    a = TreeItem(UML.Package())
+    a.text = "a"
+    b = TreeItem(UML.Package())
+    b.text = "b"
+    r = RelationshipItem()
+
+    assert tree_item_sort(r, b) == -1
+    assert tree_item_sort(a, r) == 1
+    assert tree_item_sort(a, b) == -1
+    assert tree_item_sort(b, a) == 1

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from gi.repository import Gio, GObject, Pango
+from gi.repository import Gio, GLib, GObject, Pango
 
 from gaphor import UML
 from gaphor.core.format import format
@@ -58,6 +58,9 @@ class RelationshipItem(TreeItem):
         super().__init__(None)
         self.text = gettext("<Relationships>")
 
+    def start_editing(self):
+        pass
+
 
 def visible(element):
     return isinstance(
@@ -65,6 +68,16 @@ def visible(element):
     ) and not isinstance(
         element, (UML.InstanceSpecification, UML.OccurrenceSpecification)
     )
+
+
+def tree_item_sort(a, b, _user_data=None):
+    if isinstance(a, RelationshipItem):
+        return -1
+    if isinstance(b, RelationshipItem):
+        return 1
+    na = GLib.utf8_collate_key(a.text, -1).lower()
+    nb = GLib.utf8_collate_key(b.text, -1).lower()
+    return (na > nb) - (na < nb)
 
 
 class TreeModel:
