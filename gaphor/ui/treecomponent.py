@@ -99,8 +99,30 @@ class TreeComponent(UIComponent, ActionProvider):
         ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
         self.tree_view.add_controller(ctrl)
 
-    def select_element(self, element: Element) -> None:
-        pass  # TODO: Implement
+    def select_element(self, element: Element) -> int | None:
+        def expand_up_to_element(element, expand=False) -> int | None:
+            if not element:
+                return 0
+            if (n := expand_up_to_element(element.owner, expand=True)) is None:
+                return None
+            is_relationship = isinstance(element, UML.Relationship)
+            while row := self.sort_model.get_item(n):
+                if is_relationship and isinstance(row.get_item(), RelationshipItem):
+                    row.set_expanded(True)
+                elif row.get_item().element is element:
+                    if expand:
+                        row.set_expanded(True)
+                    return n
+                n += 1
+            return None
+
+        pos = expand_up_to_element(element)
+        if pos is not None:
+            self.selection.set_selected(pos)
+            self.tree_view.activate_action(
+                "list.scroll-to-item", GLib.Variant.new_uint32(pos)
+            )
+        return pos
 
     def get_selected_element(self) -> Element | None:
         assert self.model
@@ -188,7 +210,7 @@ class TreeComponent(UIComponent, ActionProvider):
         element = event.element
         self.model.remove_element(element, former_owner=event.old_value)
         self.model.add_element(element)
-        self.focus_element(element)
+        self.select_element(element)
 
     @event_handler(AttributeUpdated)
     def on_attribute_changed(self, event: AttributeUpdated):
@@ -213,27 +235,7 @@ class TreeComponent(UIComponent, ActionProvider):
         if not element:
             return
 
-        self.focus_element(element)
-
-    @g_async(single=True)
-    def focus_element(self, element):
-        return
-
-        def expand_up_to_element(element, expand=False):
-            if not element:
-                return 0
-            n = expand_up_to_element(element.owner, expand=True)
-            while row := self.sort_model.get_item(n):
-                if row.get_item().element is element:
-                    if expand:
-                        row.set_expanded(True)
-                    return n
-                n += 1
-
-        pos = expand_up_to_element(element)
-        if pos is not None:
-            self.selection.set_selected(pos)
-        return pos
+        self.select_element(element)
 
 
 def new_list_item_ui():

@@ -37,7 +37,7 @@ def test_show_item_in_tree_list_model(tree_component, element_factory):
 
     class_.package = package
 
-    pos = tree_component.focus_element(class_)
+    pos = tree_component.select_element(class_)
     tree_model = tree_component.sort_model
 
     assert pos == 1
@@ -174,3 +174,18 @@ def test_tree_component_model_ready(event_manager, element_factory, modeling_lan
     assert tree_model.tree_item_for_element(class_) is None
 
     tree_component.close()
+
+
+@skip_if_gtk3
+def test_tree_model_expand_to_relationship(tree_component, element_factory):
+    association = element_factory.create(UML.Association)
+    package = element_factory.create(UML.Package)
+    association.package = package
+
+    pos = tree_component.select_element(association)
+
+    selected = tree_component.selection.get_selected_item()
+
+    assert pos == 2
+    assert selected
+    assert selected.get_item().element is association
