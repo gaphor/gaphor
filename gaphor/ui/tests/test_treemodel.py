@@ -118,7 +118,7 @@ def test_tree_model_remove_from_different_owner(element_factory):
     tree_model.add_element(package)
     tree_model.add_element(class_)
     class_.package = package
-    tree_model.remove_element(class_, owner=None)
+    tree_model.remove_element(class_, former_owner=None)
 
     assert tree_model.tree_item_for_element(package) is not None
     assert tree_model.root.get_n_items() == 1
@@ -132,7 +132,7 @@ def test_tree_model_change_owner(element_factory):
     tree_model.add_element(package)
     tree_model.add_element(class_)
     class_.package = package
-    tree_model.remove_element(class_, owner=None)
+    tree_model.remove_element(class_, former_owner=None)
     tree_model.add_element(class_)
     package_item = tree_model.tree_item_for_element(package)
     tree_model.child_model(package_item)
@@ -155,7 +155,7 @@ def test_tree_model_relationship_subtree(element_factory):
     package_item = tree_model.tree_item_for_element(package)
     tree_model.child_model(package_item)
     association_item = tree_model.tree_item_for_element(association)
-    package_model = tree_model.branches[tree_model.root.get_item(0)]
+    package_model = tree_model.branches[package_item]
     relationship_item = package_model.get_item(0)
     relationship_model = tree_model.list_model_for_element(association)
 
@@ -190,9 +190,20 @@ def test_tree_model_second_relationship(element_factory):
     assert new_association_item is relationship_model.get_item(1)
 
 
-@pytest.mark.xfail()
 def test_tree_model_remove_relationship(element_factory):
-    raise NotImplementedError()
+    tree_model = TreeModel()
+    package = element_factory.create(UML.Package)
+    association = element_factory.create(UML.Association)
+    association.package = package
+    tree_model.add_element(package)
+    tree_model.add_element(association)
+    package_item = tree_model.tree_item_for_element(package)
+    tree_model.child_model(package_item)
+
+    tree_model.remove_element(association)
+    package_model = tree_model.branches.get(package_item)
+
+    assert not package_model
 
 
 @pytest.mark.xfail()

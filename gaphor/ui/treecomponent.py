@@ -180,7 +180,7 @@ class TreeComponent(UIComponent, ActionProvider):
         if (event.property is not Element.owner) or not visible(event.element):
             return
         element = event.element
-        self.model.remove_element(element, owner=event.old_value)
+        self.model.remove_element(element, former_owner=event.old_value)
         self.model.add_element(element)
         self.focus_element(element)
 
@@ -211,6 +211,8 @@ class TreeComponent(UIComponent, ActionProvider):
 
     @g_async(single=True)
     def focus_element(self, element):
+        return
+
         def expand_up_to_element(element, expand=False):
             if not element:
                 return 0
