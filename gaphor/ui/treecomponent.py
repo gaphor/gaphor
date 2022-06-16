@@ -50,6 +50,8 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.subscribe(self.on_model_ready)
         self.event_manager.subscribe(self.on_diagram_selection_changed)
 
+        self.search_bar, self.search_filter = create_search_bar()
+
         tree_model = Gtk.TreeListModel.new(
             self.model.root,
             passthrough=False,
@@ -61,12 +63,15 @@ class TreeComponent(UIComponent, ActionProvider):
         self.sorter = Gtk.CustomSorter.new(tree_item_sort)
         tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
         self.sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
-        self.selection = Gtk.SingleSelection.new(self.sort_model)
+        self.selection = Gtk.SingleSelection.new(
+            Gtk.FilterListModel.new(self.sort_model, self.search_filter)
+        )
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
             "setup", list_item_factory_setup, self.event_manager, self.modeling_language
         )
         self.tree_view = Gtk.ListView.new(self.selection, factory)
+        self.tree_view.set_vexpand(True)
 
         def list_view_activate(list_view, position):
             list_view.activate_action("tree-view.open", None)
@@ -81,9 +86,15 @@ class TreeComponent(UIComponent, ActionProvider):
         scrolled_window.insert_action_group("tree-view", action_group)
         self.create_gtk4_popup_controller(shortcuts)
 
+        self.search_bar.set_key_capture_widget(self.tree_view)
+
+        box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
+        box.append(self.search_bar)
+        box.append(scrolled_window)
+
         self.on_model_ready()
 
-        return scrolled_window
+        return box
 
     def close(self):
         self.event_manager.unsubscribe(self.on_element_created)
@@ -187,6 +198,10 @@ class TreeComponent(UIComponent, ActionProvider):
             with Transaction(self.event_manager):
                 element.unlink()
 
+    @action(name="win.search", shortcut="<Primary>f")
+    def tree_view_search(self):
+        self.search_bar.set_search_mode(True)
+
     @event_handler(ElementCreated)
     def on_element_created(self, event: ElementCreated):
         self.model.add_element(event.element)
@@ -241,6 +256,42 @@ class TreeComponent(UIComponent, ActionProvider):
 def new_list_item_ui():
     b = translated_ui_string("gaphor.ui", "treeitem.ui")
     return GLib.Bytes.new(b.encode("utf-8"))
+
+
+def create_search_bar():
+    search_text: str = ""
+
+    def on_search_changed(entry):
+        nonlocal search_text
+        filter_change = (
+            Gtk.FilterChange.MORE_STRICT
+            if search_text in entry.get_text()
+            else Gtk.FilterChange.MORE_STRICT
+            if entry.get_text() in search_text
+            else Gtk.FilterChange.DIFFERENT
+        )
+        search_text = entry.get_text()
+        search_filter.changed(filter_change)
+
+    def on_stop_search(_entry):
+        nonlocal search_text
+        search_text = ""
+        search_filter.changed(Gtk.FilterChange.LESS_STRICT)
+
+    def name_filter(item):
+        item = item.get_item()
+        return isinstance(item, TreeItem) and search_text.lower() in item.text.lower()
+
+    search_filter = Gtk.CustomFilter.new(name_filter)
+    search_entry = Gtk.SearchEntry.new()
+    search_entry.connect("search-changed", on_search_changed)
+    search_entry.connect("stop-search", on_stop_search)
+    search_bar = Gtk.SearchBar.new()
+    search_bar.set_child(search_entry)
+    search_bar.connect_entry(search_entry)
+    search_bar.set_show_close_button(True)
+
+    return search_bar, search_filter
 
 
 def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):
