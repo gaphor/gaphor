@@ -73,8 +73,11 @@ class ErrorReports(UIComponent, ActionProvider):
         self.window = builder.get_object("error-reports")
         self.buffer = builder.get_object("buffer")
 
-        self.window.show_all()
         self.window.connect("destroy", self.close)
+        if Gtk.get_major_version() == 3:
+            self.window.show_all()
+        else:
+            self.window.show()
 
         self.update_text()
 
