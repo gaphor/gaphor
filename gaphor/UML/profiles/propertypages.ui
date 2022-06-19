@@ -31,7 +31,7 @@
         <property name="label" translatable="yes">Stereotypes</property>
         <style>
           <class name="title"/>
-        </style>    
+        </style>
       </object>
     </child>
     <child>

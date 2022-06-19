@@ -9,7 +9,7 @@ config.vm.synced_folder '../..', '/home/vagrant/gaphor'
 config.vm.provision "shell", inline: <<-SHELL
   pacman -Syu --noconfirm
   pacman -Sy --noconfirm xorg-server xf86-video-vmware xorg-xinit
-  pacman -Sy --noconfirm lxde-gtk3 lxdm-gtk3 
+  pacman -Sy --noconfirm lxde-gtk3 lxdm-gtk3
   systemctl enable lxdm.service
   pacman -S --noconfirm virtualbox-guest-utils virtualbox-guest-dkms
   pacman -S --noconfirm cairo pkgconf gobject-introspection git base-devel

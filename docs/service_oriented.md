@@ -109,7 +109,7 @@ can advertise actions by implementing the `gaphor.abc.ActionProvider`
 interface:
 
 ```{eval-rst}
-.. autoclass:: gaphor.abc.ActionProvider 
+.. autoclass:: gaphor.abc.ActionProvider
    :members:
 ```
 

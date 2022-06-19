@@ -6,7 +6,7 @@ new domains. For example: SysML started as a profile for UML.
 Gaphor supports stereotypes too. They're *the* way for you to adapt your models
 to your specific needs.
 
-The UML, SysML, RAAML and other models used in Gaphor – the code is 
+The UML, SysML, RAAML and other models used in Gaphor – the code is
 generated from Gaphor model files – make use of stereotypes to provide
 specific information used when generating the data model code.
 
