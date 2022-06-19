@@ -243,4 +243,3 @@ FTA/FTA
 
 .. diagram:: Methods
    :model: raaml
-

@@ -2768,4 +2768,3 @@ msgstr "<Kapcsolatok>"
 
 #~ msgid "Settings"
 #~ msgstr "Beállítások"
-

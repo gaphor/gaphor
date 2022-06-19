@@ -36,4 +36,3 @@
 
 .. diagram:: 6. Collaborations
    :model: uml
-

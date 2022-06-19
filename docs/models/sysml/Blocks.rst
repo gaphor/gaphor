@@ -51,4 +51,3 @@ Value Types
 
 .. diagram:: Value Types
    :model: sysml
-

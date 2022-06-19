@@ -133,4 +133,3 @@ showing any activity.
 
 # Community
 You can chat with the Gaphor community on gitter: https://gitter.im/Gaphor/Lobby.
-

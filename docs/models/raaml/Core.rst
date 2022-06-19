@@ -33,4 +33,3 @@ Core Profile/Violates
 
 .. diagram:: Core
    :model: raaml
-

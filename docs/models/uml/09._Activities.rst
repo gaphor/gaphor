@@ -30,4 +30,3 @@
 
 .. diagram:: 5. Activity Groups
    :model: uml
-

@@ -12,4 +12,3 @@
 
 .. diagram:: 2. Profiles
    :model: uml
-

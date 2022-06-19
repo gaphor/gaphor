@@ -6,4 +6,3 @@ A. Gaphor Specific Constructs
 
 .. diagram:: 1. Stereotype Applications
    :model: uml
-

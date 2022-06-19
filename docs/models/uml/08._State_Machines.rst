@@ -6,4 +6,3 @@
 
 .. diagram:: 1. Behavior State Machines
    :model: uml
-

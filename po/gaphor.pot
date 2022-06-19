@@ -2289,4 +2289,3 @@ msgstr ""
 #: gaphor/ui/namespaceview.py:141
 msgid "<Relationships>"
 msgstr ""
-
