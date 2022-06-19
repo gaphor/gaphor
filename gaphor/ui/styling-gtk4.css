@@ -31,3 +31,16 @@ expander-widget.propertypage {
 .info-popover {
   margin: 6px;
 }
+
+#tree_component .editing {
+  background-color: @theme_bg_color;
+  color: @theme_fg_color;
+}
+
+#tree_component .editing selection {
+  background-color: alpha(@theme_selected_bg_color, 0.3);
+}
+
+#tree_component .move-element-above {
+  border-top: 12px solid lighter(@insensitive_fg_color);
+}

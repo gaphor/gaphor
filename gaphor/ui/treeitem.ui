@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkTreeExpander" id="expander">
+        <property name="indent-for-icon">true</property>
+        <binding name="list-row">
+          <lookup name="item">GtkListItem</lookup>
+        </binding>
+        <property name="child">
+          <object class="GtkBox" id="row">
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkImage">
+                <binding name="icon-name">
+                  <lookup name="icon" type="gaphor+ui+treemodel+TreeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+                <binding name="visible">
+                  <lookup name="icon_visible" type="gaphor+ui+treemodel+TreeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+              </object>
+            </child>
+            <child>
+              <object class="GtkStack" id="stack">
+                <binding name="visible-child-name">
+                  <lookup name="visible_child_name" type="gaphor+ui+treemodel+TreeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">default</property>
+                    <property name="child">
+                      <object class="GtkLabel" id="label">
+                        <property name="xalign">0</property>
+                        <property name="hexpand">yes</property>
+                        <binding name="attributes">
+                          <lookup name="attributes" type="gaphor+ui+treemodel+TreeItem">
+                            <lookup name="item">expander</lookup>
+                          </lookup>
+                        </binding>
+                        <binding name="label">
+                          <lookup name="text" type="gaphor+ui+treemodel+TreeItem">
+                            <lookup name="item">expander</lookup>
+                          </lookup>
+                        </binding>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkStackPage">
+                    <property name="name">editing</property>
+                    <property name="child">
+                      <object class="GtkText" id="text">
+                        <property name="propagate-text-width">yes</property>
+                        <property name="buffer">buffer</property>
+                        <style>
+                          <class name="editing"/>
+                        </style>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+  <object class="GtkEntryBuffer" id="buffer">
+    <binding name="text">
+      <lookup name="edit_text" type="gaphor+ui+treemodel+TreeItem">
+        <lookup name="item">expander</lookup>
+      </lookup>
+    </binding>
+  </object>
+</interface>

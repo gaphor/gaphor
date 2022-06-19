@@ -13,6 +13,7 @@ from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 from gaphor.diagram.event import ToolCompleted
 from gaphor.diagram.hoversupport import flowbox_add_hover_support
+from gaphor.diagram.tools.dnd import ToolboxActionDragData
 from gaphor.event import TransactionCommit
 from gaphor.services.modelinglanguage import (
     ModelingLanguageChanged,
@@ -306,8 +307,10 @@ else:
         )
         source.set_icon(theme_icon, 0, 0)
 
-        v = GObject.Value(GObject.TYPE_STRING)
-        v.set_string(child.action_name)
+        v = GObject.Value(
+            ToolboxActionDragData.__gtype__,
+            ToolboxActionDragData(action=child.action_name),
+        )
         return Gdk.ContentProvider.new_for_value(v)
 
 
