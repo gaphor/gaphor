@@ -30,4 +30,3 @@
 
 .. diagram:: 7. Instances
    :model: uml
-

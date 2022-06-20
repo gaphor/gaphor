@@ -1,6 +1,6 @@
 # Contributing
 
-### We :heart: our Contributors! 
+### We :heart: our Contributors!
 
 First off, thank you for considering contributing to Gaphor. It's people like
 you that make Gaphor such a great modeling tool.
@@ -12,7 +12,7 @@ the developers managing and developing this open source project. In return,
 they should reciprocate that respect in addressing your issue, assessing
 changes, and helping you finalize your pull requests.
 
-### What we are Looking For 
+### What we are Looking For
 
 Gaphor is an open source project and we love to receive contributions from our
 community — you! There are many ways to contribute, from writing tutorials or
@@ -26,7 +26,7 @@ your question can be answered on the
 [Gaphor Gitter Channel](https://gitter.im/gaphor/Lobby).
 
 # Ground Rules
-### Responsibilities 
+### Responsibilities
 
  * Ensure cross-platform compatibility for every change that's accepted.
  Windows, Mac, Debian & Ubuntu Linux.
@@ -104,7 +104,7 @@ If you find a security vulnerability, do NOT open an issue. Email dan@yeaw.me in
 
 When filing an issue, make sure to answer the questions in the issue template.
 
-1. What version are you using? 
+1. What version are you using?
 2. What operating system are you using?
 3. What did you do?
 4. What did you expect to see?
@@ -133,4 +133,3 @@ showing any activity.
 
 # Community
 You can chat with the Gaphor community on gitter: https://gitter.im/Gaphor/Lobby.
-

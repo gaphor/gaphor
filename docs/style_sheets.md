@@ -133,9 +133,9 @@ family, size, weight.
 ``background-color``    Examples:
 
                         ``background-color: azure;``
-                        
+
                         ``background-color: rgb(255, 255, 255);``
-                        
+
                         ``background-color: hsl(130, 95%, 10%);``
 ``color``               Color used for lines
 ``text-color``          Color for text
@@ -216,7 +216,7 @@ but changing a color for `Class` does not change it for `Component`.
 If you hover over a button the toolbox (bottom-left section), a popup will appear
 with the item's name and a shortcut. As a general rule, you can use the component
 name, glued together as the name in the stylesheet.
-A *Component* can be addressed as `component`, *Use Case* as 
+A *Component* can be addressed as `component`, *Use Case* as
 `usecase`. The name matching is case insensitive.
 CSS names are written in lower case by default.
 

@@ -30,7 +30,7 @@ work during a transaction.
 1. A `Transaction` object is created.
 2. `TransactionBegin` event is emitted.
 3. The `UndoManager` instantiates a new `ActionStack` which is the transaction
-   object, and adds the undo action to the stack. 
+   object, and adds the undo action to the stack.
 
 Nested transactions are supported to allow a transaction to be added
 inside of another transaction that is already in progress.

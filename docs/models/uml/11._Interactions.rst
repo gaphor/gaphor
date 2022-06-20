@@ -24,4 +24,3 @@
 
 .. diagram:: 4. Occurences
    :model: uml
-

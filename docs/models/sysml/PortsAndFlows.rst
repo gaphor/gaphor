@@ -30,4 +30,3 @@ Item Flow
 
 .. diagram:: Item Flow
    :model: sysml
-

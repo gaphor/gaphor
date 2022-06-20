@@ -7,4 +7,3 @@ the Gaphor model has been extended with stereotypes.
 
 .. diagram:: Gaphor Profile
    :model: uml
-

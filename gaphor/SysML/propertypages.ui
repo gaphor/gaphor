@@ -167,7 +167,7 @@
       <class name="propertypage"/>
     </style>
   </object>
-  
+
   <object class="GtkTextBuffer" id="requirement-text-buffer" />
 
   <object class="GtkBox" id="requirement-editor">

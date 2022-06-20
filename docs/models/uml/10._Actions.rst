@@ -24,4 +24,3 @@
 
 .. diagram:: 9. Accept Event Actions
    :model: uml
-

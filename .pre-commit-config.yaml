@@ -20,6 +20,9 @@ repos:
   hooks:
   - id: check-toml
   - id: check-yaml
+  - id: end-of-file-fixer
+    exclude: '.\.gaphor'
+  - id: trailing-whitespace
 - repo: https://github.com/PyCQA/isort
   rev: 5.10.1
   hooks:

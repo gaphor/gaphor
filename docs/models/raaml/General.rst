@@ -135,4 +135,3 @@ General Concepts Profile/Undeveloped
 
 .. diagram:: General
    :model: raaml
-

@@ -91,7 +91,7 @@ This is an easy way to extend a diagram with already existing model elements.
    The big difference with dragging an element from the toolbox, is that dragging from the toolbox
    will actually place a new ``Presentation`` element on the diagram. ``drop`` works the other way
    around: it starts with a model element and creates an accompanying ``Presentation``.
-```   
+```
 
 ## Editor property pages
 

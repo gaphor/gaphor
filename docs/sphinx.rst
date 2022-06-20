@@ -7,7 +7,7 @@ Whether you write your docs in `reStructured Text`_ or `Markdown`_, we've got yo
 .. tip::
 
    Here we cover the reStructured Text syntax. If you prefer markdown, we suggest you
-   have a look at the `MyST-parser <https://myst-parser.readthedocs.io/>`_, as it 
+   have a look at the `MyST-parser <https://myst-parser.readthedocs.io/>`_, as it
    `supports Sphinx directives <https://myst-parser.readthedocs.io/en/latest/syntax/syntax.html>`_.
 
 It requires `minimal effort to set up <#configuration>`_. Adding a diagram is as simple as:
@@ -57,7 +57,7 @@ To add Gaphor diagram support to Sphinx, make sure Gaphor is listed as a depende
 .. important::
 
    Gaphor requires at least Python 3.9.
-   
+
 Secondly, add the following to your ``conf.py`` file:
 
 Step 1: Add gaphor as extension.
@@ -77,7 +77,7 @@ Step 2: Add references to models
 
    # Or multiple models
    gaphor_models = {
-       "connect": "connect.gaphor", 
+       "connect": "connect.gaphor",
        "example": "../examples/sequence-diagram.gaphor"
    }
 
@@ -115,7 +115,7 @@ An error will appear in the documentation. Something like this:
 .. error::
 
    No diagram ‘Wrong name’ in model ‘example’ (../examples/sequence-diagram.gaphor).
-   
+
 
 .. _Sphinx: https://sphinx-doc.org
 .. _reStructured Text: https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html

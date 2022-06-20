@@ -98,15 +98,15 @@ uml.script = """gaphor.codegen.coder:main(
     supermodelfiles=[('Core', 'models/Core.gaphor')]
     )"""
 sysml.script = """gaphor.codegen.coder:main(
-    modelfile='models/SysML.gaphor', 
-    outfile='gaphor/SysML/sysml.py', 
+    modelfile='models/SysML.gaphor',
+    outfile='gaphor/SysML/sysml.py',
     supermodelfiles=[
         ('Core', 'models/Core.gaphor'),
         ('UML', 'models/UML.gaphor')]
     )"""
 raaml.script = """gaphor.codegen.coder:main(
-    modelfile='models/RAAML.gaphor', 
-    outfile='gaphor/RAAML/raaml.py', 
+    modelfile='models/RAAML.gaphor',
+    outfile='gaphor/RAAML/raaml.py',
     supermodelfiles=[
         ('Core', 'models/Core.gaphor'),
         ('UML', 'models/UML.gaphor'),

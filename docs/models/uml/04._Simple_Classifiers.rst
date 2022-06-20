@@ -12,4 +12,3 @@
 
 .. diagram:: 3. Interfaces
    :model: uml
-

@@ -6,4 +6,3 @@ UseCases
 
 .. diagram:: UseCases
    :model: uml
-
