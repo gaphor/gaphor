@@ -27,13 +27,16 @@ def CommentItemInlineEditor(item, view, event_manager, pos=None) -> bool:
     buffer.move_mark_by_name("insert", enditer)
 
     text_view = Gtk.TextView.new_with_buffer(buffer)
+    text_view.set_size_request(100, 50)
     box = view.get_item_bounding_box(item)
 
     frame = Gtk.Frame()
-    frame.add(text_view)
-
-    text_view.show()
-    frame.show()
+    if Gtk.get_major_version() == 3:
+        frame.add(text_view)
+        text_view.show()
+        frame.show()
+    else:
+        frame.set_child(text_view)
 
     show_popover(frame, view, box, update_text)
 
