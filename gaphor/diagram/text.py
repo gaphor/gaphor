@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from gaphas.canvas import instant_cairo_context
 from gaphas.painter.freehand import FreeHandCairoContext
-from gi.repository import GLib, Pango, PangoCairo
+from gi.repository import Pango, PangoCairo
 
 from gaphor.core.styling import FontStyle, FontWeight, Style, TextAlign, TextDecoration
 
@@ -18,7 +18,6 @@ class Layout:
         default_size: tuple[int, int] = (0, 0),
     ):
         self.layout = PangoCairo.create_layout(instant_cairo_context())
-        self.underline = False
         self.font_id: tuple[
             str, float | str, FontWeight | None, FontStyle | None
         ] | None = None
@@ -76,9 +75,13 @@ class Layout:
             font.get("text-decoration", TextDecoration.NONE) == TextDecoration.UNDERLINE
         )
 
-        if self.underline != underline:
-            self.underline = underline
-            self.update_text()
+        attrs = Pango.AttrList.new()
+        attrs.insert(
+            Pango.attr_underline_new(
+                Pango.Underline.SINGLE if underline else Pango.Underline.NONE
+            )
+        )
+        self.layout.set_attributes(attrs)
 
     def set_text(self, text: str) -> None:
         if text != self.text:
@@ -86,13 +89,7 @@ class Layout:
             self.update_text()
 
     def update_text(self) -> None:
-        if self.underline:
-            # TODO: can this be done via Pango attributes instead?
-            self.layout.set_markup(
-                f"<u>{GLib.markup_escape_text(self.text)}</u>", length=-1
-            )
-        else:
-            self.layout.set_text(self.text, length=-1)
+        self.layout.set_text(self.text, length=-1)
 
     def set_width(self, width: int) -> None:
         self.width = width
