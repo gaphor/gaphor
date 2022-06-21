@@ -90,8 +90,7 @@ def connect_opposite_handle(view, new_item, x, y, handle_index):
         if opposite.connectable:
             vpos = (x, y)
             handle_move = HandleMove(new_item, opposite, view)
-            sink = handle_move.glue(vpos)
-            if sink:
+            if sink := handle_move.glue(vpos):
                 handle_move.connect(vpos)
 
 
