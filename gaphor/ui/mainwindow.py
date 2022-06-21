@@ -209,8 +209,9 @@ class MainWindow(Service, ActionProvider):
             self.window.connect("size-allocate", self._on_window_size_allocate)
         else:
             self.window.connect("close-request", self._on_window_close_request)
+            self.window.connect("notify::default-height", self._on_window_size_changed)
+            self.window.connect("notify::default-width", self._on_window_size_changed)
             self.window.show()
-            # TODO: GTK4 - handle size allocation
 
         self.window.connect("notify::is-active", self._on_window_active)
 
@@ -284,8 +285,16 @@ class MainWindow(Service, ActionProvider):
         self.event_manager.handle(SessionShutdownRequested(self))
         return True
 
-    def _on_window_size_allocate(self, window, allocation):
-        """Store the window size in a property."""
-        if not is_maximized(window):
-            width, height = window.get_size()
-            self.properties.set("ui.window-size", (width, height))
+    if Gtk.get_major_version() == 3:
+
+        def _on_window_size_allocate(self, window, allocation):
+            if not is_maximized(window):
+                width, height = window.get_size()
+                self.properties.set("ui.window-size", (width, height))
+
+    else:
+
+        def _on_window_size_changed(self, window, gspec):
+            if not is_maximized(window):
+                width, height = window.get_default_size()
+                self.properties.set("ui.window-size", (width, height))
