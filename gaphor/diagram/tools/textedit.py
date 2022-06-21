@@ -1,6 +1,6 @@
 from gi.repository import Gdk, Gtk
 
-from gaphor.diagram.inlineeditors import InlineEditor
+from gaphor.diagram.instanteditors import InstantEditor
 
 
 def text_edit_tools(view, event_manager):
@@ -20,7 +20,7 @@ def on_key_pressed(controller, keyval, keycode, state, event_manager):
     view = controller.get_widget()
     item = view.selection.hovered_item
     if item and keyval == Gdk.KEY_F2:
-        return InlineEditor(item, view, event_manager)
+        return InstantEditor(item, view, event_manager)
 
 
 def on_double_click(gesture, n_press, x, y, event_manager):
@@ -28,4 +28,4 @@ def on_double_click(gesture, n_press, x, y, event_manager):
     item = view.selection.hovered_item
     if item and n_press == 2:
         ix, iy = view.get_matrix_v2i(item).transform_point(x, y)
-        return InlineEditor(item, view, event_manager, (ix, iy))
+        return InstantEditor(item, view, event_manager, (ix, iy))

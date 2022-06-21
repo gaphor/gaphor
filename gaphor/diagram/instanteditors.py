@@ -11,7 +11,7 @@ from gaphor.transaction import Transaction
 
 
 @singledispatch
-def InlineEditor(
+def InstantEditor(
     item: Item, view, event_manager, pos: tuple[int, int] | None = None
 ) -> bool:
     """Show a small editor popup in the diagram. Makes for easy editing without
@@ -23,8 +23,8 @@ def InlineEditor(
     return False
 
 
-@InlineEditor.register(Named)
-def named_item_inline_editor(item, view, event_manager, pos=None) -> bool:
+@InstantEditor.register(Named)
+def named_item_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
 
     subject = item.subject
