@@ -24,10 +24,10 @@ def apply_default_tool_set(view, modeling_language, event_manager, rubberband_st
     """The default tool set."""
     view.remove_all_controllers()
     view.add_controller(hover_tool(view))
+    view.add_controller(*text_edit_tools(view, event_manager))
     view.add_controller(
         *transactional_tool(item_tool(view), event_manager=event_manager)
     )
-    view.add_controller(*text_edit_tools(view, event_manager))
     view.add_controller(rubberband_tool(view, rubberband_state))
     add_basic_tools(view, modeling_language, event_manager)
 
