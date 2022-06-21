@@ -95,9 +95,9 @@ class Greeter(Service, ActionProvider):
         self.greeter = builder.get_object("greeter")
         self.greeter.set_application(self.gtk_app)
         if Gtk.get_major_version() == 3:
-            self.greeter.connect("delete-event", self._on_window_delete)
+            self.greeter.connect("delete-event", self._on_window_close_request)
         else:
-            ...  # TODO: Handle window close in GTK4
+            self.greeter.connect("close-request", self._on_window_close_request)
 
         self.set_widgets_visible()
         self.greeter.show()
@@ -180,5 +180,6 @@ class Greeter(Service, ActionProvider):
         session.get_service("properties").set("modeling-language", child.lang)
         self.close()
 
-    def _on_window_delete(self, window, event):
+    def _on_window_close_request(self, window, event=None):
         self.close()
+        return False
