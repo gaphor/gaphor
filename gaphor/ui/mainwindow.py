@@ -205,11 +205,12 @@ class MainWindow(Service, ActionProvider):
         self.window.set_resizable(True)
         if Gtk.get_major_version() == 3:
             self.window.show_all()
-            self.window.connect("delete-event", self._on_window_delete)
+            self.window.connect("delete-event", self._on_window_close_request)
             self.window.connect("size-allocate", self._on_window_size_allocate)
         else:
+            self.window.connect("close-request", self._on_window_close_request)
             self.window.show()
-            # TODO: GTK4 - handle window delete and size allocation
+            # TODO: GTK4 - handle size allocation
 
         self.window.connect("notify::is-active", self._on_window_active)
 
@@ -279,7 +280,7 @@ class MainWindow(Service, ActionProvider):
     def _on_window_active(self, window, prop):
         self.event_manager.handle(ActiveSessionChanged(self))
 
-    def _on_window_delete(self, window, event):
+    def _on_window_close_request(self, window, event=None):
         self.event_manager.handle(SessionShutdownRequested(self))
         return True
 

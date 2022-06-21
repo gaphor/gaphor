@@ -170,7 +170,7 @@ class FileManager(Service, ActionProvider):
         for _ in async_loader():
             pass
 
-    def save(self, filename):
+    def save(self, filename, on_save_done=None):
         """Save the current UML model to the specified file name.
 
         Before writing the model file, this will verify that there are
@@ -212,6 +212,8 @@ class FileManager(Service, ActionProvider):
                 raise
             finally:
                 status_window.destroy()
+            if on_save_done:
+                on_save_done()
 
         for _ in async_saver():
             pass
@@ -227,10 +229,9 @@ class FileManager(Service, ActionProvider):
         filename = self.filename
 
         if not filename:
-            return self.action_save_as()
-
-        self.save(filename)
-        return True
+            self.action_save_as()
+        else:
+            self.save(filename)
 
     @action(name="file-save-as", shortcut="<Primary><Shift>s")
     def action_save_as(self):
@@ -270,9 +271,24 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(SessionShutdown(self))
 
         def response(answer):
-            if answer == Gtk.ResponseType.YES and self.action_save():
-                confirm_shutdown()
-            if answer == Gtk.ResponseType.REJECT:
+            if answer == Gtk.ResponseType.YES:
+                filename = self.filename
+
+                if not filename:
+                    save_file_dialog(
+                        gettext("Save Gaphor Model As"),
+                        lambda filename: self.save(
+                            filename, on_save_done=confirm_shutdown
+                        ),
+                        parent=self.main_window.window,
+                        filename=self.filename,
+                        extension=".gaphor",
+                        filters=GAPHOR_FILTER,
+                    )
+                else:
+                    self.save(filename, on_save_done=confirm_shutdown)
+
+            elif answer == Gtk.ResponseType.REJECT:
                 confirm_shutdown()
 
         if self.main_window.model_changed:
