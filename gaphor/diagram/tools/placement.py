@@ -11,7 +11,7 @@ from gaphor.core.eventmanager import EventManager
 from gaphor.diagram.diagramtoolbox import ItemFactory
 from gaphor.diagram.event import DiagramItemPlaced
 from gaphor.diagram.group import group
-from gaphor.diagram.inlineeditors import InlineEditor
+from gaphor.diagram.instanteditors import InstantEditor
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.tools.dropzone import grow_parent
 
@@ -115,4 +115,4 @@ def on_drag_end(gesture, offset_x, offset_y, placement_state):
 @g_async(priority=GLib.PRIORITY_LOW)
 def open_editor(item, view, event_manager):
     if isinstance(item, ElementPresentation):
-        InlineEditor(item, view, event_manager)
+        InstantEditor(item, view, event_manager)

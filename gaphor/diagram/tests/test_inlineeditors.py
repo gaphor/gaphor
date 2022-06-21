@@ -3,7 +3,7 @@ from gaphas.painter import BoundingBoxPainter
 from gaphas.view import GtkView
 
 from gaphor import UML
-from gaphor.diagram.inlineeditors import named_item_inline_editor
+from gaphor.diagram.instanteditors import named_item_editor
 from gaphor.diagram.painter import ItemPainter
 from gaphor.diagram.selection import Selection
 
@@ -18,34 +18,28 @@ def view(diagram):
     return view
 
 
-def test_named_item_inline_editor_with_element(
-    diagram, element_factory, view, event_manager
-):
+def test_named_item_editor_with_element(diagram, element_factory, view, event_manager):
     item = diagram.create(
         UML.classes.ClassItem, subject=element_factory.create(UML.Class)
     )
     view.selection.hovered_item = item
-    result = named_item_inline_editor(item, view, event_manager)
+    result = named_item_editor(item, view, event_manager)
 
     assert result is True
 
 
-def test_named_item_inline_editor_with_line(
-    diagram, element_factory, view, event_manager
-):
+def test_named_item_editor_with_line(diagram, element_factory, view, event_manager):
     item = diagram.create(
         UML.classes.DependencyItem, subject=element_factory.create(UML.Dependency)
     )
     view.selection.hovered_item = item
-    result = named_item_inline_editor(item, view, event_manager)
+    result = named_item_editor(item, view, event_manager)
 
     assert result is True
 
 
-def test_named_item_inline_editor_without_item(
-    diagram, element_factory, view, event_manager
-):
+def test_named_item_editor_without_item(diagram, element_factory, view, event_manager):
     item = diagram.create(UML.classes.DependencyItem)
-    result = named_item_inline_editor(item, view, event_manager)
+    result = named_item_editor(item, view, event_manager)
 
     assert result is False

@@ -1,12 +1,12 @@
 from gi.repository import Gtk
 
 from gaphor.diagram.general.comment import CommentItem
-from gaphor.diagram.inlineeditors import InlineEditor, show_popover
+from gaphor.diagram.instanteditors import InstantEditor, show_popover
 from gaphor.transaction import Transaction
 
 
-@InlineEditor.register(CommentItem)
-def CommentItemInlineEditor(item, view, event_manager, pos=None) -> bool:
+@InstantEditor.register(CommentItem)
+def CommentItemEditor(item, view, event_manager, pos=None) -> bool:
     def update_text():
         text = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), include_hidden_chars=True
