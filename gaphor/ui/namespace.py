@@ -232,9 +232,6 @@ class Namespace(UIComponent, ActionProvider):
             action_group.lookup_action("rename").set_enabled(
                 isinstance(element, (Diagram, UML.NamedElement))
             )
-        else:
-            # TODO: GTK4 - enable/disable actions based on view state
-            ...
 
     def _on_view_destroyed(self, widget):
         self.close()

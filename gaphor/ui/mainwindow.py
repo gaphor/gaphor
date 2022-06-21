@@ -122,6 +122,7 @@ class MainWindow(Service, ActionProvider):
         self.tools_menu = tools_menu
 
         self.window: Gtk.Window = None
+        self.action_group: Gio.ActionGroup = None
         self.title: Gtk.Label = None
         self.subtitle: Gtk.Label = None
         self.filename = None
@@ -192,8 +193,8 @@ class MainWindow(Service, ActionProvider):
             main_content = builder.get_object("main-content")
             self.layout = deserialize(main_content, f.read(), _factory, self.properties)
 
-        action_group, shortcuts = window_action_group(self.component_registry)
-        self.window.insert_action_group("win", action_group)
+        self.action_group, shortcuts = window_action_group(self.component_registry)
+        self.window.insert_action_group("win", self.action_group)
 
         if Gtk.get_major_version() == 3:
             self.window.add_accel_group(shortcuts)
@@ -259,13 +260,9 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(ActionEnabled)
     def _on_action_enabled(self, event):
-        if Gtk.get_major_version() == 3:
-            ag = self.window.get_action_group(event.scope)
-            a = ag.lookup_action(event.name)
+        if self.action_group and event.scope == "win":
+            a = self.action_group.lookup_action(event.name)
             a.set_enabled(event.enabled)
-        else:
-            # TODO: GTK4 - enable an action (shortcut?)
-            ...
 
     @event_handler(ModelingLanguageChanged)
     def _on_modeling_language_selection_changed(self, event=None):
