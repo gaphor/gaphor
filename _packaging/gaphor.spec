@@ -26,7 +26,7 @@ a = Analysis(
     pathex=["../"],
     binaries=[],
     datas=[
-        ("../gaphor/ui/layout.xml", "gaphor/ui"),
+        ("../gaphor/ui/layout-gtk*.xml", "gaphor/ui"),
         ("../gaphor/ui/styling*.css", "gaphor/ui"),
         ("../gaphor/ui/*.png", "gaphor/ui"),
         (
