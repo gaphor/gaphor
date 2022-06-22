@@ -1,11 +1,11 @@
-from gaphor.diagram.inlineeditors import InlineEditor, popup_entry, show_popover
+from gaphor.diagram.instanteditors import InstantEditor, popup_entry, show_popover
 from gaphor.transaction import Transaction
 from gaphor.UML.actions.activity import ActivityParameterNodeItem
 from gaphor.UML.actions.activitynodes import ForkNodeItem
 
 
-@InlineEditor.register(ForkNodeItem)
-def fork_node_item_inline_editor(item, view, event_manager, pos=None) -> bool:
+@InstantEditor.register(ForkNodeItem)
+def fork_node_item_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
 
     subject = item.subject
@@ -24,8 +24,8 @@ def fork_node_item_inline_editor(item, view, event_manager, pos=None) -> bool:
     return True
 
 
-@InlineEditor.register(ActivityParameterNodeItem)
-def activity_parameter_node_item_inline_editor(
+@InstantEditor.register(ActivityParameterNodeItem)
+def activity_parameter_node_item_editor(
     item: ActivityParameterNodeItem, view, event_manager, pos=None
 ) -> bool:
     subject = item.subject

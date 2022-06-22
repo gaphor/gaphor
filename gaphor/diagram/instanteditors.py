@@ -11,7 +11,7 @@ from gaphor.transaction import Transaction
 
 
 @singledispatch
-def InlineEditor(
+def InstantEditor(
     item: Item, view, event_manager, pos: tuple[int, int] | None = None
 ) -> bool:
     """Show a small editor popup in the diagram. Makes for easy editing without
@@ -23,8 +23,8 @@ def InlineEditor(
     return False
 
 
-@InlineEditor.register(Named)
-def named_item_inline_editor(item, view, event_manager, pos=None) -> bool:
+@InstantEditor.register(Named)
+def named_item_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
 
     subject = item.subject
@@ -66,12 +66,15 @@ def show_popover(widget, view, box, commit):
         popover.set_relative_to(view)
     else:
         popover.set_child(widget)
+        popover.set_parent(view)
+
     gdk_rect = Gdk.Rectangle()
     gdk_rect.x = box.x
     gdk_rect.y = box.y
     gdk_rect.width = box.width
     gdk_rect.height = box.height
     popover.set_pointing_to(gdk_rect)
+    popover.set_position(Gtk.PositionType.TOP)
 
     should_commit = True
 
@@ -102,6 +105,6 @@ def show_popover(widget, view, box, commit):
         controller = Gtk.EventControllerKey.new()
         popover.add_controller(controller)
         controller.connect("key-pressed", on_escape)
-        popover.present()
+        popover.show()
 
     return popover
