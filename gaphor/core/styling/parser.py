@@ -2,7 +2,7 @@
 
 Original module: cssselect2.parser
 :copyright: (c) 2012 by Simon Sapin, 2017 by Guillaume Ayoub.
-:license: BSD, see LICENSE for more details.
+:license: BSD, see https://github.com/Kozea/cssselect2/blob/master/LICENSE for more details.
 """
 
 from tinycss2 import parse_component_value_list

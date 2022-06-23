@@ -1,5 +1,8 @@
-"""Compiler for CSS selectors, based on cssselect2.compiler, written by Simon
-Sapin and Guillaume Ayoub."""
+"""Compiler for CSS selectors.
+
+Based on cssselect2.compiler, written by Simon Sapin and Guillaume
+Ayoub.
+"""
 
 import re
 from functools import singledispatch
