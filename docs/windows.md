@@ -84,7 +84,10 @@ In the same PowerShell terminal, execute:
 
 ```PowerShell
 cd C:\gtk-build\github\gvsbuild
-python .\build.py build --enable-gi --py-wheel gobject-introspection gtk3 pycairo pygobject gtksourceview adwaita-icon-theme hicolor-icon-theme
+python -m venv .venv
+.\.venv\Scripts\activate.ps1
+pip install .
+gvsbuild build --enable-gi --py-wheel gobject-introspection gtk3 pycairo pygobject gtksourceview4 adwaita-icon-theme hicolor-icon-theme
 ```
 Grab a coffee, the build will take a few minutes to complete.
 
