@@ -20,6 +20,7 @@ It is designed to be easy to use, while still being powerful. Gaphor implements 
 
 <img alt="Gaphor Demo" src="https://raw.githubusercontent.com/gaphor/gaphor/main/docs/images/gaphor-demo.gif" style="width: 68%; display: block; margin: 2em auto">
 
+
 ## 📑 Table of Contents
 
 - [Background](#background)
