@@ -1,4 +1,5 @@
 import pytest
+from gi.repository import Gtk
 
 from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general import CommentItem
@@ -16,7 +17,31 @@ def diagrams():
 
 
 @pytest.fixture
-def copy_service(event_manager, element_factory, diagrams):
+def copy_service(event_manager, element_factory, diagrams, monkeypatch):
+    if Gtk.get_major_version() != 3:
+        copy_buffer = None
+
+        def set_content(self, content_provider):
+            nonlocal copy_buffer
+            copy_buffer = content_provider.get_value()
+
+        def read_value_async(self, gtype, io_priority, cancellable, callback):
+            callback(None, None)
+
+        def read_value_finish(self, res):
+            return copy_buffer
+
+        monkeypatch.setattr(
+            "gi.repository.Gdk.ContentProvider.new_for_value", lambda v: v
+        )
+        monkeypatch.setattr("gi.repository.Gdk.Clipboard.set_content", set_content)
+        monkeypatch.setattr(
+            "gi.repository.Gdk.Clipboard.read_value_async", read_value_async
+        )
+        monkeypatch.setattr(
+            "gi.repository.Gdk.Clipboard.read_value_finish", read_value_finish
+        )
+
     return CopyService(event_manager, element_factory, diagrams)
 
 

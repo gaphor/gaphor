@@ -263,8 +263,7 @@ class ModelConsistency(RuleBasedStateMachine):
         copy_service = self.session.get_service("copy")
         assume(copy_service.can_paste())
         diagram = data.draw(self.diagrams())
-        new_items = copy_service.paste_full(diagram)
-        self.fully_pasted_items.update(new_items)
+        copy_service.paste_full(diagram, callback=self.fully_pasted_items.update)
 
     @invariant()
     def check_relations(self):
