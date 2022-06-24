@@ -45,6 +45,7 @@ from gaphor.C4Model.toolbox import c4
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram, ElementFactory, Presentation, StyleSheet
 from gaphor.core.modeling.element import Element, generate_id, uuid_generator
+from gaphor.diagram.copypaste import copy, paste_full, paste_link
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.drop import drop
 from gaphor.diagram.group import can_group
@@ -137,8 +138,7 @@ class ModelConsistency(RuleBasedStateMachine):
         cleanup(lambda: generate_id(uuid_generator()))
 
         self.session = Session()
-        copy_service = self.session.get_service("copy")
-        copy_service.clear()
+        self.copy_buffer: object = None
 
         load_default_model(self.model)
         self.fully_pasted_items = set()
@@ -240,7 +240,6 @@ class ModelConsistency(RuleBasedStateMachine):
     def copy(self, data):
         diagram = data.draw(self.diagrams())
         assume(diagram.ownedPresentation)
-        copy_service = self.session.get_service("copy")
         # Take from model, to ensure order.
         items = data.draw(
             lists(
@@ -249,21 +248,22 @@ class ModelConsistency(RuleBasedStateMachine):
                 unique=True,
             )
         )
-        copy_service.copy(items)
+        self.copy_buffer = copy(items)
 
     @rule(data=data())
     def paste_link(self, data):
-        copy_service = self.session.get_service("copy")
-        assume(copy_service.can_paste())
+        assume(self.copy_buffer)
         diagram = data.draw(self.diagrams())
-        copy_service.paste_link(diagram)
+        with self.transaction:
+            paste_link(self.copy_buffer, diagram, self.model.lookup)
 
     @rule(data=data())
     def paste_full(self, data):
-        copy_service = self.session.get_service("copy")
-        assume(copy_service.can_paste())
+        assume(self.copy_buffer)
         diagram = data.draw(self.diagrams())
-        copy_service.paste_full(diagram, callback=self.fully_pasted_items.update)
+        with self.transaction:
+            new_items = paste_full(self.copy_buffer, diagram, self.model.lookup)
+        self.fully_pasted_items.update(new_items)
 
     @invariant()
     def check_relations(self):

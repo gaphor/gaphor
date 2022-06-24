@@ -51,7 +51,7 @@ class CopyService(Service, ActionProvider):
         else:
             self.clipboard = Gdk.Display.get_default().get_primary_clipboard()
 
-    if Gtk.get_major_version() == 3:  # noqa C901
+    if Gtk.get_major_version() == 3:
 
         def shutdown(self):
             self.clipboard.disconnect(self._owner_change_id)
@@ -59,19 +59,13 @@ class CopyService(Service, ActionProvider):
         def on_clipboard_owner_change(self, clipboard, event=None):
             view = self.diagrams.get_current_view()
             if view and not view.is_focus():
-                self.clear()
-
-        def clear(self):
-            global copy_buffer
-            copy_buffer = set()
+                global copy_buffer
+                copy_buffer = set()
 
         def copy(self, items):
             global copy_buffer
             if items:
                 copy_buffer = copy(items)
-
-        def can_paste(self):
-            return bool(copy_buffer)
 
         def _paste(self, diagram, paster, callback):
             global copy_buffer
@@ -92,12 +86,6 @@ class CopyService(Service, ActionProvider):
                 copy_buffer = copy(items)
                 v = GObject.Value(CopyBuffer.__gtype__, CopyBuffer(buffer=copy_buffer))
                 self.clipboard.set_content(Gdk.ContentProvider.new_for_value(v))
-
-        def clear(self):
-            pass
-
-        def can_paste(self):
-            return self.clipboard.get_formats().contain_gtype(CopyBuffer.__gtype__)
 
         def _paste(self, diagram, paster, callback):
             def on_paste(_source_object, result):
