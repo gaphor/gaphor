@@ -124,7 +124,6 @@ class Transaction:
             if not self._need_rollback:
                 log.error(
                     "Transaction terminated due to an exception, performing a rollback",
-                    exc_info=True,
                 )
             try:
                 self.rollback()
