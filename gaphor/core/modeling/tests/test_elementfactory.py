@@ -4,8 +4,6 @@ from collections.abc import Container, Iterable
 import pytest
 
 from gaphor.core import event_handler
-from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory
 from gaphor.core.modeling.event import (
     ElementCreated,
     ElementDeleted,
@@ -114,12 +112,11 @@ def clear_events():
     last_event = None
 
 
-@pytest.fixture
-def element_factory():
-    event_manager = EventManager()
+@pytest.fixture(autouse=True)
+def subscribe_handlers(event_manager):
     event_manager.subscribe(handler)
     clear_events()
-    yield ElementFactory(event_manager)
+    yield None
     clear_events()
 
 
@@ -165,7 +162,6 @@ class CheckModel:
         self.element = element
 
 
-@pytest.mark.xfail()
 def test_indirect_delete_of_element(event_manager, element_factory):
     @event_handler(CheckModel)
     def on_check_model(event):
