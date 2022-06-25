@@ -17,85 +17,79 @@ from gaphor.core.modeling.presentation import Presentation
 from gaphor.UML import Operation, Parameter
 
 
-@pytest.fixture
-def factory():
-    event_manager = EventManager()
-    return ElementFactory(event_manager)
+def test_element_factory_is_an_iterable(element_factory):
+    assert isinstance(element_factory, Iterable)
 
 
-def test_element_factory_is_an_iterable(factory):
-    assert isinstance(factory, Iterable)
+def test_element_factory_is_a_container(element_factory):
+    assert isinstance(element_factory, Container)
 
 
-def test_element_factory_is_a_container(factory):
-    assert isinstance(factory, Container)
+def test_create(element_factory):
+    element_factory.create(Parameter)
+    assert len(list(element_factory.values())) == 1
 
 
-def test_create(factory):
-    factory.create(Parameter)
-    assert len(list(factory.values())) == 1
-
-
-def test_create_is_idempotent(factory):
-    param = factory.create(Parameter)
-    new_param = factory.create_as(Parameter, param.id)
+def test_create_is_idempotent(element_factory):
+    param = element_factory.create(Parameter)
+    new_param = element_factory.create_as(Parameter, param.id)
     assert param is new_param
 
 
-def test_create_is_idempotent_but_validates_type(factory):
-    param = factory.create(Parameter)
+def test_create_is_idempotent_but_validates_type(element_factory):
+    param = element_factory.create(Parameter)
     with pytest.raises(TypeError):
-        factory.create_as(Operation, param.id)
+        element_factory.create_as(Operation, param.id)
 
 
-def test_should_not_create_presentation_elements(factory):
+def test_should_not_create_presentation_elements(element_factory):
     with pytest.raises(TypeError):
-        factory.create(Presentation)
+        element_factory.create(Presentation)
 
 
-def test_flush(factory):
-    p = factory.create(Parameter)
-    assert len(list(factory.values())) == 1
-    factory.flush()
+def test_flush(element_factory):
+    p = element_factory.create(Parameter)
+    assert len(list(element_factory.values())) == 1
+    element_factory.flush()
     del p
 
     gc.collect()
 
-    assert not list(factory.values()), list(factory.values())
+    assert not list(element_factory.values()), list(element_factory.values())
 
 
-def test_without_application(factory):
-    factory.create(Parameter)
-    assert factory.size() == 1, factory.size()
+def test_without_application(element_factory):
+    element_factory.create(Parameter)
+    assert element_factory.size() == 1, element_factory.size()
 
-    factory.flush()
-    assert factory.size() == 0, factory.size()
+    element_factory.flush()
+    assert element_factory.size() == 0, element_factory.size()
 
-    p = factory.create(Parameter)
-    assert factory.size() == 1, factory.size()
-
-    p.unlink()
-    assert factory.size() == 0, factory.size()
-
-
-def test_unlink(factory):
-    p = factory.create(Parameter)
-
-    assert len(list(factory.values())) == 1
+    p = element_factory.create(Parameter)
+    assert element_factory.size() == 1, element_factory.size()
 
     p.unlink()
+    assert element_factory.size() == 0, element_factory.size()
 
-    assert not list(factory.values()), list(factory.values())
 
-    p = factory.create(Parameter)
+def test_unlink(element_factory):
+    p = element_factory.create(Parameter)
+
+    assert len(list(element_factory.values())) == 1
+
+    p.unlink()
+
+    assert not list(element_factory.values()), list(element_factory.values())
+
+    p = element_factory.create(Parameter)
     p.defaultValue = "l"
 
-    assert len(list(factory.values())) == 1
+    assert len(list(element_factory.values())) == 1
 
     p.unlink()
     del p
 
-    assert not list(factory.values()), list(factory.values())
+    assert not list(element_factory.values()), list(element_factory.values())
 
 
 # Event handlers are registered as persisting top level handlers, since no
