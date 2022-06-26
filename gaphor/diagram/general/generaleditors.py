@@ -1,4 +1,4 @@
-from gi.repository import Gtk
+from gi.repository import Gdk, Gtk
 
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.instanteditors import InstantEditor, show_popover
@@ -38,6 +38,19 @@ def CommentItemEditor(item, view, event_manager, pos=None) -> bool:
     else:
         frame.set_child(text_view)
 
-    show_popover(frame, view, box, update_text)
+    popover = show_popover(frame, view, box, update_text)
+
+    if Gtk.get_major_version != 3:
+
+        def on_enter(text_view, keyval, keycode, state):
+            if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter) and not state & (
+                Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
+            ):
+                popover.popdown()
+                return True
+
+        controller = Gtk.EventControllerKey.new()
+        text_view.add_controller(controller)
+        controller.connect("key-pressed", on_enter)
 
     return True

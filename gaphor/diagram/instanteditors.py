@@ -105,6 +105,10 @@ def show_popover(widget, view, box, commit):
         controller = Gtk.EventControllerKey.new()
         popover.add_controller(controller)
         controller.connect("key-pressed", on_escape)
+
+        if isinstance(widget, Gtk.Entry):
+            widget.connect("activate", lambda w: popover.popdown())
+
         popover.show()
 
     return popover
