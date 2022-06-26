@@ -109,6 +109,8 @@ def show_popover(widget, view, box, commit):
         if isinstance(widget, Gtk.Entry):
             widget.connect("activate", lambda w: popover.popdown())
 
-        popover.show()
+        if popover.get_root():
+            # Test for root window to avoid segfaults in unit test
+            popover.show()
 
     return popover
