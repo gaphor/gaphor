@@ -35,21 +35,6 @@ class EventHandler(Protocol):
         ...
 
 
-class UnlinkOnlyEventManager:
-    """Block all events.
-
-    The one exception is `UnlinkEvent`, which is handled internally.
-    """
-
-    def __init__(self, on_unlink):
-        self.on_unlink = on_unlink
-
-    def handle(self, *events):
-        for event in events:
-            if isinstance(event, UnlinkEvent):
-                self.on_unlink(event)
-
-
 class RecordingEventManager:
     def __init__(self, event_manager):
         self.event_manager = event_manager
@@ -227,9 +212,7 @@ class ElementFactory(Service):
         defaults to a blocking event manager.
         """
         current_event_manager = self.event_manager
-        self.event_manager = new_event_manager or UnlinkOnlyEventManager(
-            self._on_unlink_event
-        )
+        self.event_manager = new_event_manager
         try:
             yield self
         finally:
