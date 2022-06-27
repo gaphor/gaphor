@@ -171,17 +171,19 @@ class ConnectorItem(Named, LinePresentation[UML.Connector]):
         subject = self.subject
         if subject and subject.informationFlow:
 
-            inverted = (
-                subject.end[0].role in subject.informationFlow[:].informationTarget
+            inv = (
+                1
+                if (subject.end[0].role in subject.informationFlow[:].informationTarget)
+                else -1
             )
             handles = self.handles()
-            pos, angle = get_center_pos(handles, inverted)
+            pos, angle = get_center_pos(handles)
             with cairo_state(context.cairo) as cr:
                 cr.translate(*pos)
                 cr.rotate(angle)
                 cr.move_to(0, 0)
-                cr.line_to(-12, 8)
-                cr.line_to(-12, -8)
+                cr.line_to(12 * inv, 8)
+                cr.line_to(12 * inv, -8)
                 cr.fill()
 
     def draw_tail(self, context):
