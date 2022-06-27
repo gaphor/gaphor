@@ -386,7 +386,7 @@ class AssociationEnd:
         p1 is the line end and p2 is the last but one point of the line.
         """
         style = merge_styles(context.style, self._inline_style)
-        ofs = 5
+        ofs = 4.0
 
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
@@ -418,9 +418,9 @@ class AssociationEnd:
             # horizontal line
             if h:
                 name_dx = ofs
-                name_dy = -ofs - name_h
+                name_dy = -ofs * 2 - name_h
                 mult_dx = ofs
-                mult_dy = ofs
+                mult_dy = ofs * 2
             else:
                 name_dx = -ofs - name_w
                 name_dy = -ofs - name_h
@@ -429,9 +429,9 @@ class AssociationEnd:
         elif 0 <= abs_rc <= 0.2:
             # vertical line
             if v:
-                name_dx = -ofs - name_w
+                name_dx = -ofs * 2.5 - name_w
                 name_dy = ofs
-                mult_dx = ofs
+                mult_dx = ofs * 2.5
                 mult_dy = ofs
             else:
                 name_dx = -ofs - name_w
