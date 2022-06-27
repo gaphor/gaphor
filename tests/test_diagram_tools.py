@@ -22,7 +22,7 @@ def session():
             "sanitizer",
             "main_window",
             "properties",
-            "namespace",
+            "tree_component",
             "diagrams",
             "toolbox",
             "export_menu",
