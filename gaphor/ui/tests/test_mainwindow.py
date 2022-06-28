@@ -16,7 +16,6 @@ def session():
             "modeling_language",
             "properties",
             "main_window",
-            "namespace",
             "tree_component",
             "diagrams",
             "toolbox",

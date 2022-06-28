@@ -186,10 +186,7 @@ class MainWindow(Service, ActionProvider):
             comp = self.get_ui_component(name)
             return comp.open()
 
-        with importlib.resources.open_text(
-            "gaphor.ui",
-            "layout-gtk3.xml" if Gtk.get_major_version() == 3 else "layout-gtk4.xml",
-        ) as f:
+        with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
             main_content = builder.get_object("main-content")
             self.layout = deserialize(main_content, f.read(), _factory, self.properties)
 
