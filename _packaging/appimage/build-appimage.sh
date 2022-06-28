@@ -9,7 +9,8 @@ cd "${DIR}"
 DIST_LOCATION="${DIR}/dist/gaphor"
 VERSION="$(poetry version --no-ansi | cut -d' ' -f2)"
 APP_DIR="${DIR}"/dist/AppRun
-APP_ID="org.gaphor.Gaphor"
+APP_NAME="Gaphor"
+APP_ID="org.gaphor.${APP_NAME}"
 
 function remove_excluded_files {
     # Remove excludelist files known as having bad side effects
@@ -26,8 +27,7 @@ function remove_excluded_files {
 function create_package {
     # Inspired by https://github.com/nuxeo/nuxeo-drive
     # Create the final AppImage
-    local app_name="Gaphor"
-    local output="${DIR}/dist/${app_name}-x86_64.AppImage"
+    local output="${DIR}/dist/${APP_NAME}-${VERSION}-x86_64.AppImage"
 
     echo "Adjusting file names to fit in the AppImage"
     # PyInstaller + AppImage inspired by https://gitlab.com/scottywz/ezpyi/
@@ -60,8 +60,6 @@ function create_package {
 
     echo "Clean-up"
     rm -rf squashfs-root
-
-    mv "${DIR}/dist/Gaphor-x86_64.AppImage" "${DIR}/dist/Gaphor-${VERSION}-x86_64.AppImage"
 }
 
 function main {
