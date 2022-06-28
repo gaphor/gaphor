@@ -755,18 +755,6 @@ pytest = ">=5.0"
 dev = ["pre-commit", "tox", "pytest-asyncio"]
 
 [[package]]
-name = "pytest-runner"
-version = "6.0.0"
-description = "Invoke py.test as distutils command with dependency resolution"
-category = "dev"
-optional = false
-python-versions = ">=3.7"
-
-[package.extras]
-docs = ["sphinx", "jaraco.packaging (>=9)", "rst.linker (>=1.9)", "jaraco.tidelift (>=1.4)"]
-testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "pytest-virtualenv", "types-setuptools", "pytest-black (>=0.3.7)", "pytest-mypy (>=0.9.1)"]
-
-[[package]]
 name = "pytz"
 version = "2022.1"
 description = "World timezone definitions, modern and historical"
@@ -1066,7 +1054,7 @@ pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "4c54c95ba6481008b4cc59834211ede847500d0d2eee3944805aa4ce7ae9ec3b"
+content-hash = "f71ee6001a9599515829ccbc6d132f0546d3796cf4063930c7c8caed1c4012d4"
 
 [metadata.files]
 alabaster = [
@@ -1456,10 +1444,6 @@ pytest-cov = [
 pytest-mock = [
     {file = "pytest-mock-3.8.1.tar.gz", hash = "sha256:2c6d756d5d3bf98e2e80797a959ca7f81f479e7d1f5f571611b0fdd6d1745240"},
     {file = "pytest_mock-3.8.1-py3-none-any.whl", hash = "sha256:d989f11ca4a84479e288b0cd1e6769d6ad0d3d7743dcc75e460d1416a5f2135a"},
-]
-pytest-runner = [
-    {file = "pytest-runner-6.0.0.tar.gz", hash = "sha256:b4d85362ed29b4c348678de797df438f0f0509497ddb8c647096c02a6d87b685"},
-    {file = "pytest_runner-6.0.0-py3-none-any.whl", hash = "sha256:4c059cf11cf4306e369c0f8f703d1eaf8f32fad370f41deb5f007044656aca6b"},
 ]
 pytz = [
     {file = "pytz-2022.1-py2.py3-none-any.whl", hash = "sha256:e68985985296d9a66a881eb3193b0906246245294a881e7c8afe623866ac6a5c"},
