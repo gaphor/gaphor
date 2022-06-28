@@ -2,7 +2,7 @@
 
 from typing import Set
 
-from gi.repository import Gdk, Gtk
+from gi.repository import Gdk, GLib, GObject, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import Transaction, action
@@ -10,7 +10,17 @@ from gaphor.core.modeling import Presentation
 from gaphor.diagram.copypaste import copy, paste_full, paste_link
 from gaphor.ui.event import DiagramSelectionChanged
 
-copy_buffer: object = None
+if Gtk.get_major_version() == 3:
+    copy_buffer: object = None
+
+else:
+
+    class CopyBuffer(GObject.Object):
+        def __init__(self, buffer):
+            super().__init__()
+            self.buffer = buffer
+
+        buffer = GObject.Property(type=object)
 
 
 class CopyService(Service, ActionProvider):
@@ -39,51 +49,68 @@ class CopyService(Service, ActionProvider):
                 "owner-change", self.on_clipboard_owner_change
             )
         else:
-            # TODO: GTK4 - implement Gdk.Clipboard
-            ...
-
-    def shutdown(self):
-        if Gtk.get_major_version() == 3:
-            self.clipboard.disconnect(self._owner_change_id)
+            self.clipboard = Gdk.Display.get_default().get_primary_clipboard()
 
     if Gtk.get_major_version() == 3:
 
-        def on_clipboard_owner_change(self, clipboard, event):
+        def shutdown(self):
+            self.clipboard.disconnect(self._owner_change_id)
+
+        def on_clipboard_owner_change(self, clipboard, event=None):
             view = self.diagrams.get_current_view()
             if view and not view.is_focus():
-                self.clear()
+                global copy_buffer
+                copy_buffer = set()
 
-    def copy(self, items):
-        global copy_buffer
-        if items:
-            copy_buffer = copy(items)
+        def copy(self, items):
+            global copy_buffer
+            if items:
+                copy_buffer = copy(items)
 
-    def can_paste(self):
-        return bool(copy_buffer)
+        def _paste(self, diagram, paster, callback):
+            global copy_buffer
+            if not copy_buffer:
+                return
 
-    def clear(self):
-        global copy_buffer
-        copy_buffer = set()
+            items = self._paste_internal(diagram, copy_buffer, paster)
+            if callback:
+                callback(items)
 
-    def paste_link(self, diagram):
-        """Paste items in the copy-buffer to the diagram."""
-        with Transaction(self.event_manager):
-            # Create new id's that have to be used to create the items:
-            new_items: Set[Presentation] = paste_link(
-                copy_buffer, diagram, self.element_factory.lookup
+    else:
+
+        def shutdown(self):
+            pass
+
+        def copy(self, items):
+            if items:
+                copy_buffer = copy(items)
+                v = GObject.Value(CopyBuffer.__gtype__, CopyBuffer(buffer=copy_buffer))
+                self.clipboard.set_content(Gdk.ContentProvider.new_for_value(v))
+
+        def _paste(self, diagram, paster, callback):
+            def on_paste(_source_object, result):
+                copy_buffer = self.clipboard.read_value_finish(result)
+                items = self._paste_internal(diagram, copy_buffer.buffer, paster)
+                if callback:
+                    callback(items)
+
+            self.clipboard.read_value_async(
+                CopyBuffer.__gtype__,
+                io_priority=GLib.PRIORITY_DEFAULT,
+                cancellable=None,
+                callback=on_paste,
             )
 
-            # move pasted items a bit, so user can see result of his action :)
-            for item in new_items:
-                if item.parent not in new_items:
-                    item.matrix.translate(10, 10)
+    def paste_link(self, diagram, callback=None):
+        self._paste(diagram, paste_link, callback)
 
-        return new_items
+    def paste_full(self, diagram, callback=None):
+        self._paste(diagram, paste_full, callback)
 
-    def paste_full(self, diagram):
+    def _paste_internal(self, diagram, copy_buffer, paster):
         with Transaction(self.event_manager):
             # Create new id's that have to be used to create the items:
-            new_items: Set[Presentation] = paste_full(
+            new_items: Set[Presentation] = paster(
                 copy_buffer, diagram, self.element_factory.lookup
             )
 
@@ -101,28 +128,39 @@ class CopyService(Service, ActionProvider):
     def copy_action(self):
         view = self.diagrams.get_current_view()
         if view.is_focus():
-            self.clipboard.set_text("", -1)
             items = view.selection.selected_items
+            if not items:
+                return
+
+            if Gtk.get_major_version() == 3:
+                self.clipboard.set_text("", -1)
+
             self.copy(items)
 
     @action(name="edit-cut", shortcut="<Primary>x")
     def cut_action(self):
         view = self.diagrams.get_current_view()
         if view.is_focus():
-            self.clipboard.set_text("", -1)
             items = view.selection.selected_items
+            if not items:
+                return
+
+            if Gtk.get_major_version() == 3:
+                self.clipboard.set_text("", -1)
+
             self.copy(items)
+
             with Transaction(self.event_manager):
                 for i in list(items):
                     i.unlink()
 
     @action(name="edit-paste-link", shortcut="<Primary>v")
     def paste_link_action(self):
-        self._paste_action(self.paste_link)
+        self._paste_action(paste_link)
 
     @action(name="edit-paste-full", shortcut="<Primary><Shift>v")
     def paste_full_action(self):
-        self._paste_action(self.paste_full)
+        self._paste_action(paste_full)
 
     def _paste_action(self, paster):
         view = self.diagrams.get_current_view()
@@ -130,13 +168,11 @@ class CopyService(Service, ActionProvider):
         if not (view and view.is_focus()):
             return
 
-        if not copy_buffer:
-            return
+        def select_items(new_items):
+            selection = view.selection
+            selection.unselect_all()
+            selection.select_items(*new_items)
 
-        new_items = paster(diagram)
+            self.event_manager.handle(DiagramSelectionChanged(view, None, new_items))
 
-        selection = view.selection
-        selection.unselect_all()
-        selection.select_items(*new_items)
-
-        self.event_manager.handle(DiagramSelectionChanged(view, None, new_items))
+        self._paste(diagram, paster, select_items)
