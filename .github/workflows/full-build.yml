@@ -66,7 +66,7 @@ jobs:
       - name: Install Build Dependencies
         run: poetry install --no-dev --extras poethepoet
       - name: Create Source Dist and Wheel
-        run: poetry run poe dist
+        run: poetry build
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
         uses: actions/upload-artifact@v3
         with:
@@ -130,7 +130,7 @@ jobs:
       - name: Install Build Dependencies
         run: poetry install --no-dev --extras poethepoet
       - name: Build Wheel
-        run: poetry run poe dist
+        run: poetry build
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1.0.4
         with:

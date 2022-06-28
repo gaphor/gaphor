@@ -81,8 +81,6 @@ gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 [tool.poe.tasks]
 test = "pytest"
 test-all = "pytest --cov=gaphor/"
-dist = "poetry build"
-install = "poetry install"
 install-nodev = "poetry install --no-dev"
 install-pyinstall = "poetry install --no-dev --extras pyinstall"
 coremodel.script = """gaphor.codegen.coder:main(
