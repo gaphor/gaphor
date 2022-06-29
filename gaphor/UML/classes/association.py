@@ -35,6 +35,8 @@ from gaphor.diagram.text import Layout, middle_segment
 from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_association_end
 
+half_pi = pi / 2
+
 
 @represents(UML.Association)
 class AssociationItem(Named, LinePresentation[UML.Association]):
@@ -159,6 +161,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
                 self.draw_head = draw_head_none
             else:
                 self.draw_head = draw_default_head
+
             if head_subject.aggregation == "composite":
                 self.draw_tail = draw_tail_composite
             elif head_subject.aggregation == "shared":
@@ -200,20 +203,27 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
         self._head_end.draw(context)
         self._tail_end.draw(context)
         if self.show_direction:
-            inverted = (
-                self.tail_subject and self.tail_subject is self.subject.memberEnd[0]
+            pos, angle = get_center_pos(handles)
+            inv = (
+                -1
+                if (
+                    self.tail_subject and self.tail_subject is self.subject.memberEnd[0]
+                )
+                else 1
             )
-            pos, angle = get_center_pos(handles, inverted)
             with cairo_state(context.cairo) as cr:
                 cr.translate(*pos)
+                if -half_pi <= angle < half_pi:
+                    angle += pi
+                    inv *= -1
                 cr.rotate(angle)
-                cr.move_to(0, 0)
-                cr.line_to(6, 5)
-                cr.line_to(0, 10)
+                cr.move_to(0, 2)
+                cr.line_to(6 * inv, 7)
+                cr.line_to(0, 12)
                 cr.fill()
 
 
-def get_center_pos(points, inverted=False):
+def get_center_pos(points):
     """Return position in the centre of middle segment of a line.
 
     Angle of the middle segment is also returned.
@@ -221,8 +231,6 @@ def get_center_pos(points, inverted=False):
     h0, h1 = middle_segment(points)
     pos = (h0.pos.x + h1.pos.x) / 2, (h0.pos.y + h1.pos.y) / 2
     angle = atan2(h1.pos.y - h0.pos.y, h1.pos.x - h0.pos.x)
-    if inverted:
-        angle += pi
     return pos, angle
 
 
@@ -386,7 +394,7 @@ class AssociationEnd:
         p1 is the line end and p2 is the last but one point of the line.
         """
         style = merge_styles(context.style, self._inline_style)
-        ofs = 5
+        ofs = 4.0
 
         dx = float(p2[0]) - float(p1[0])
         dy = float(p2[1]) - float(p1[1])
@@ -418,9 +426,9 @@ class AssociationEnd:
             # horizontal line
             if h:
                 name_dx = ofs
-                name_dy = -ofs - name_h
+                name_dy = -ofs * 2 - name_h
                 mult_dx = ofs
-                mult_dy = ofs
+                mult_dy = ofs * 2
             else:
                 name_dx = -ofs - name_w
                 name_dy = -ofs - name_h
@@ -429,9 +437,9 @@ class AssociationEnd:
         elif 0 <= abs_rc <= 0.2:
             # vertical line
             if v:
-                name_dx = -ofs - name_w
+                name_dx = -ofs * 2.5 - name_w
                 name_dy = ofs
-                mult_dx = ofs
+                mult_dx = ofs * 2.5
                 mult_dy = ofs
             else:
                 name_dx = -ofs - name_w
