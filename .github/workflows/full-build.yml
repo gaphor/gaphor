@@ -42,37 +42,56 @@ jobs:
 
   linux:
     needs: lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     permissions:
       contents: write
-    container:
-      image: ghcr.io/gaphor/gaphor-appimage:stable
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
+    strategy:
+      matrix:
+        python_version: ["3.9", "3.10"]
     steps:
       - uses: actions/checkout@v3.0.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+      - name: Install Linux Dependencies
+        uses: ./.github/actions/linux_dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v4.0.0
+        with:
+          python-version: ${{ matrix.python_version }}
       - name: Use Python Dependency Cache
         uses: actions/cache@v3.0.4
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-container
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install Dependencies and Test
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
         with:
           xvfb_command: 'xvfb-run'
+      - name: Upload Code Coverage to Code Climate
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
+        with:
+          coverageCommand: poetry run coverage xml
       - name: Install Build Dependencies
-        run: poetry install --no-dev --extras poethepoet
-      - name: Create Source Dist and Wheel
-        run: poetry build
+        if: "${{ matrix.python_version == env.python_version }}"
+        run: poetry install --extras poethepoet
+      - name: Create Source Tar and Wheel
+        if: "${{ matrix.python_version == env.python_version }}"
+        run: |
+          poetry run poe gettext-mo
+          poetry build
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
+        if: "${{ matrix.python_version == env.python_version }}"
         uses: actions/upload-artifact@v3
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
           path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
+        if: "${{ matrix.python_version == env.python_version }}"
         uses: actions/upload-artifact@v3
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
@@ -87,7 +106,6 @@ jobs:
     container:
       image: ghcr.io/gaphor/gaphor-appimage:stable
     timeout-minutes: 30
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v3.0.2
         with:
@@ -132,8 +150,6 @@ jobs:
   macos:
     needs: lint
     runs-on: macos-latest
-    permissions:
-      contents: write
     timeout-minutes: 45
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
@@ -160,8 +176,46 @@ jobs:
         uses: ./.github/actions/setup_and_test
       - name: Install Build Dependencies
         run: poetry install --no-dev --extras poethepoet
-      - name: Build Wheel
-        run: poetry build
+
+  macos-dmg:
+    needs: ["macos", "linux"]
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    timeout-minutes: 45
+    env:
+      LDFLAGS: -L/usr/local/opt/python@3.10/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+    steps:
+      - uses: actions/checkout@v3.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Install macOS Dependencies
+        uses: ./.github/actions/macos_dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v4.0.0
+        with:
+          python-version: ${{ env.python_version }}
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v3.0.4
+        with:
+          path: ~/Library/Caches/pip
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: ${{ runner.os }}-poetry-
+      - name: Install Poetry
+        run: pip install poetry==1.1.13
+        shell: bash
+      - name: Configure Poetry
+        run: poetry config virtualenvs.in-project true
+        shell: bash
+      - name: Collect Project Data
+        id: meta
+        run: .github/scripts/metadata.sh
+        shell: bash
+      - uses: actions/download-artifact@v3
+        with:
+          name: gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
+          path: dist/
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1.0.4
         with:
@@ -183,33 +237,33 @@ jobs:
         run: >
           cd _packaging
 
-          create-dmg --volname "Gaphor ${{ steps.setup_and_test.outputs.version }}"
+          create-dmg --volname "Gaphor ${{ steps.meta.outputs.version }}"
           --background "macos/background.png"
           --window-pos 200 120 --window-size 700 400 --icon-size 100
           --icon "Gaphor.app" 200 240 --hide-extension "Gaphor.app"
-          --app-drop-link 500 240 "dist/Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg"
+          --app-drop-link 500 240 "dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
           "dist/Gaphor.app"
       - name: Notarize dmg
         uses: devbotsxyz/xcode-notarize@v1
         with:
-          product-path: "_packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg"
+          product-path: "_packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
           appstore-connect-username: ${{ secrets.AC_USERNAME }}
           appstore-connect-password: ${{ secrets.AC_PASSWORD }}
           primary-bundle-id: org.gaphor.gaphor
       - name: Staple .dmg
         uses: devbotsxyz/xcode-staple@v1.0.0
         with:
-          product-path: "_packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg"
-      - name: Upload Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg
+          product-path: "_packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
+      - name: Upload Gaphor-${{ steps.meta.outputs.version }}.dmg
         uses: actions/upload-artifact@v3
         with:
-          name: Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg
-          path: _packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg
+          name: Gaphor-${{ steps.meta.outputs.version }}.dmg
+          path: _packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg
       - name: Upload Assets (release only)
         uses: AButler/upload-release-assets@v2.0
         if: github.event_name == 'release'
         with:
-          files: "_packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg"
+          files: "_packaging/dist/Gaphor-${{ steps.meta.outputs.version }}.dmg"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   gtk-for-windows:
@@ -266,11 +320,12 @@ jobs:
   windows:
     needs: [lint, gtk-for-windows]
     runs-on: windows-latest
-    permissions:
-      contents: write
-    timeout-minutes: 45
+    timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
+      - uses: actions/checkout@v3.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Create GTK binaries dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: Get GTK binaries from cache
@@ -284,9 +339,6 @@ jobs:
           echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
           echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
         shell: bash
-      - uses: actions/checkout@v3.0.2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
         uses: actions/setup-python@v4.0.0
         with:
@@ -302,12 +354,63 @@ jobs:
         uses: ./.github/actions/setup_and_test
         with:
           install_others: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
+
+  windows-installer:
+    needs: [windows, linux, gtk-for-windows]
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - uses: actions/checkout@v3.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Create GTK binaries dir
+        run: mkdir C:\gtk-build\gtk\x64\release
+      - name: Get GTK binaries from cache
+        uses: actions/cache@v3.0.4
+        id: cache
+        with:
+          path: C:\gtk-build\gtk\x64\release\**
+          key: ${{ needs.gtk-for-windows.outputs.cachekey }}
+      - name: Set up env
+        run: |
+          echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
+          echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
+        shell: bash
+      - name: Set up Python
+        uses: actions/setup-python@v4.0.0
+        with:
+          python-version: ${{ env.python_version }}
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v3.0.4
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: ${{ runner.os }}-poetry-
+      - name: Install Poetry
+        run: pip install poetry==1.1.13
+        shell: bash
+      - name: Configure Poetry
+        run: poetry config virtualenvs.in-project true
+        shell: bash
+      - name: Collect Project Data
+        id: meta
+        run: .github/scripts/metadata.sh
+        shell: bash
+      - uses: actions/download-artifact@v3
+        with:
+          name: gaphor-${{ steps.meta.outputs.version }}-py3-none-any.whl
+          path: dist/
+      - name: Install Others
+        run: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
+        shell: pwsh
       - name: Install Build Dependencies
         run: poetry install --no-dev --extras poethepoet
         shell: bash
       - name: Create Windows Installers
         run: |
-          poetry build
           poetry run poe package
           poetry run poe win-installer
         shell: bash

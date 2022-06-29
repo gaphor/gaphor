@@ -32,9 +32,6 @@ runs:
     - name: Install Python Dependencies
       run: poetry install
       shell: bash
-    - name: Compile translations
-      run: poetry run poe gettext-mo
-      shell: bash
     - name: Test with Pytest
       run: ${{ inputs.xvfb_command }} poetry run poe test-all
       shell: bash
