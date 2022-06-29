@@ -212,8 +212,8 @@ jobs:
           files: "_packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-  windows-build-gtk:
-    needs: lint
+  gtk-for-windows:
+    needs: skip-check
     runs-on: windows-latest
     timeout-minutes: 60
     env:
@@ -264,7 +264,7 @@ jobs:
         run: echo "::set-output name=cachekey::gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}"
 
   windows:
-    needs: [lint, windows-build-gtk]
+    needs: [lint, gtk-for-windows]
     runs-on: windows-latest
     permissions:
       contents: write
@@ -278,7 +278,7 @@ jobs:
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
-          key: ${{ needs.windows-build-gtk.outputs.cachekey }}
+          key: ${{ needs.gtk-for-windows.outputs.cachekey }}
       - name: Set up env
         run: |
           echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
