@@ -302,12 +302,29 @@ jobs:
         uses: ./.github/actions/setup_and_test
         with:
           install_others: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
-      - name: Windows Executables
-        uses: ./.github/actions/windows_executables
-        with:
-          version: ${{ steps.setup_and_test.outputs.version }}
-          cert_password: ${{ secrets.CERTPASSWORD }}
-          base64_encoded_pfx: ${{ secrets.BASE64_ENCODED_PFX }}
+      - name: Install Build Dependencies
+        run: poetry install --no-dev --extras poethepoet
+        shell: bash
+      - name: Create Windows Installers
+        run: |
+          poetry build
+          poetry run poe package
+          poetry run poe win-installer
+        shell: bash
+      - name: Sign Executables
+        env:
+          timestampUrl: http://timestamp.digicert.com
+          installer: "_packaging/dist/gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe"
+          portable: "_packaging/dist/gaphor-${{ steps.setup_and_test.outputs.version }}-portable.exe"
+          password: "${{ secrets.CERTPASSWORD }}"
+        run: |
+          $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.BASE64_ENCODED_PFX }}")
+          $currentDirectory = Get-Location
+          $certificatePath = Join-Path -Path $currentDirectory -ChildPath 'certificate.pfx'
+          [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
+          & 'C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86\signtool.exe' sign /f 'certificate.pfx' /tr $env:timestampUrl /td sha256 /fd sha256 /p $env:password $env:installer $env:portable
+          Remove-Item 'certificate.pfx'
+        shell: PowerShell
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v3
         with:
