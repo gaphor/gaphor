@@ -81,8 +81,6 @@ gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 [tool.poe.tasks]
 test = "pytest"
 test-all = "pytest --cov=gaphor/"
-install-nodev = "poetry install --no-dev"
-install-pyinstall = "poetry install --no-dev --extras pyinstall"
 coremodel.script = """gaphor.codegen.coder:main(
     modelfile='models/Core.gaphor',
     overridesfile='models/Core.override',
@@ -119,6 +117,7 @@ docs = "sphinx-build docs docs/_build/html"
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt _packaging/gaphor-script.py docs/_build" }
 gaphor-script = { "script" = "_packaging.make-script:make_gaphor_script" }
 version-file = { "script" = "_packaging.make-script:make_file_version_info" }
+install-pyinstall = "poetry install --no-dev --extras pyinstall"
 pyinstall = { "script" = "_packaging.make-script:make_pyinstaller" }
 package = ["install-pyinstall", "gaphor-script", "version-file", "pyinstall"]
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
