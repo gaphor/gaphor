@@ -174,8 +174,6 @@ jobs:
       - name: Install Dependencies and Test
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
-      - name: Install Build Dependencies
-        run: poetry install --no-dev --extras poethepoet
 
   macos-dmg:
     needs: ["macos", "linux"]
@@ -208,6 +206,8 @@ jobs:
       - name: Configure Poetry
         run: poetry config virtualenvs.in-project true
         shell: bash
+      - name: Install Package Dependencies
+        run: poetry install --no-dev --extras poethepoet
       - name: Collect Project Data
         id: meta
         run: .github/scripts/metadata.sh
@@ -417,8 +417,8 @@ jobs:
       - name: Sign Executables
         env:
           timestampUrl: http://timestamp.digicert.com
-          installer: "_packaging/dist/gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe"
-          portable: "_packaging/dist/gaphor-${{ steps.setup_and_test.outputs.version }}-portable.exe"
+          installer: "_packaging/dist/gaphor-${{ steps.meta.outputs.version }}-installer.exe"
+          portable: "_packaging/dist/gaphor-${{ steps.meta.outputs.version }}-portable.exe"
           password: "${{ secrets.CERTPASSWORD }}"
         run: |
           $pfx_cert_byte = [System.Convert]::FromBase64String("${{ secrets.BASE64_ENCODED_PFX }}")
@@ -428,16 +428,16 @@ jobs:
           & 'C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86\signtool.exe' sign /f 'certificate.pfx' /tr $env:timestampUrl /td sha256 /fd sha256 /p $env:password $env:installer $env:portable
           Remove-Item 'certificate.pfx'
         shell: PowerShell
-      - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
+      - name: Upload gaphor-${{ steps.meta.outputs.version }}-installer.exe
         uses: actions/upload-artifact@v3
         with:
-          name: gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
-          path: _packaging/dist/gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
-      - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-portable.exe
+          name: gaphor-${{ steps.meta.outputs.version }}-installer.exe
+          path: _packaging/dist/gaphor-${{ steps.meta.outputs.version }}-installer.exe
+      - name: Upload gaphor-${{ steps.meta.outputs.version }}-portable.exe
         uses: actions/upload-artifact@v3
         with:
-          name: gaphor-${{ steps.setup_and_test.outputs.version }}-portable.exe
-          path: _packaging/dist/gaphor-${{ steps.setup_and_test.outputs.version }}-portable.exe
+          name: gaphor-${{ steps.meta.outputs.version }}-portable.exe
+          path: _packaging/dist/gaphor-${{ steps.meta.outputs.version }}-portable.exe
       - name: Upload Assets (release only)
         uses: AButler/upload-release-assets@v2.0
         if: github.event_name == 'release'
