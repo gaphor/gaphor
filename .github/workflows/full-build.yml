@@ -42,7 +42,7 @@ jobs:
 
   linux:
     needs: lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     container:
@@ -77,6 +77,37 @@ jobs:
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
+
+
+  linux-appimage:
+    needs: linux
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    container:
+      image: ghcr.io/gaphor/gaphor-appimage:stable
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - uses: actions/checkout@v3.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Install Poetry
+        run: pip install poetry==1.1.13
+        shell: bash
+      - name: Configure Poetry
+        run: poetry config virtualenvs.in-project true
+        shell: bash
+      - name: Collect Project Data
+        id: meta
+        run: .github/scripts/metadata.sh
+        shell: bash
+      - uses: actions/download-artifact@v3
+        with:
+          name: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
+          path: dist/
+      - name: Install Build Dependencies
+        run: poetry install --no-dev --extras poethepoet
       - name: Build AppImage
         run: |
           jhbuild shell
