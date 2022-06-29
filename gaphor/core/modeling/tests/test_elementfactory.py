@@ -4,8 +4,6 @@ from collections.abc import Container, Iterable
 import pytest
 
 from gaphor.core import event_handler
-from gaphor.core.eventmanager import EventManager
-from gaphor.core.modeling import ElementFactory
 from gaphor.core.modeling.event import (
     ElementCreated,
     ElementDeleted,
@@ -114,12 +112,11 @@ def clear_events():
     last_event = None
 
 
-@pytest.fixture
-def element_factory():
-    event_manager = EventManager()
+@pytest.fixture(autouse=True)
+def subscribe_handlers(event_manager):
     event_manager.subscribe(handler)
     clear_events()
-    yield ElementFactory(event_manager)
+    yield None
     clear_events()
 
 
@@ -153,3 +150,34 @@ def test_no_create_events_when_blocked(element_factory):
     with element_factory.block_events():
         element_factory.create(Parameter)
     assert events == [], events
+
+
+class TriggerUnlink:
+    def __init__(self, element):
+        self.element = element
+
+
+class CheckModel:
+    def __init__(self, element):
+        self.element = element
+
+
+def test_indirect_delete_of_element(event_manager, element_factory):
+    @event_handler(CheckModel)
+    def on_check_model(event):
+        assert event.element.model
+        assert event.element in element_factory
+
+    @event_handler(TriggerUnlink)
+    def on_trigger_unlink(event):
+        event_manager.handle(CheckModel(event.element))
+        event.element.unlink()
+
+    event_manager.subscribe(on_check_model)
+    event_manager.subscribe(on_trigger_unlink)
+
+    operation = element_factory.create(Operation)
+    event_manager.handle(TriggerUnlink(operation))
+
+    assert operation._model is None
+    assert operation not in element_factory

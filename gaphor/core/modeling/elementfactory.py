@@ -4,9 +4,10 @@ from __future__ import annotations
 
 from collections import OrderedDict
 from contextlib import contextmanager
-from typing import TYPE_CHECKING, Callable, Iterator, TypeVar, overload
+from typing import Callable, Iterator, Protocol, TypeVar, overload
 
 from gaphor.abc import Service
+from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.element import (
     Element,
@@ -25,17 +26,13 @@ from gaphor.core.modeling.event import (
 )
 from gaphor.core.modeling.presentation import Presentation
 
-if TYPE_CHECKING:
-    from gaphor.core.eventmanager import EventManager  # noqa
-
-
 T = TypeVar("T", bound=Element)
 P = TypeVar("P", bound=Presentation)
 
 
-class BlockingEventManager:
+class EventHandler(Protocol):
     def handle(self, *events):
-        pass
+        ...
 
 
 class RecordingEventManager:
@@ -68,12 +65,16 @@ class ElementFactory(Service):
         event_manager: EventManager | None = None,
         element_dispatcher: ElementDispatcher | None = None,
     ):
-        self.event_manager = event_manager
+        self.event_manager: EventHandler | None = event_manager
         self.element_dispatcher = element_dispatcher
         self._elements: dict[str, Element] = OrderedDict()
+        if event_manager:
+            event_manager.subscribe(self._on_unlink_event)
 
     def shutdown(self) -> None:
         self.flush()
+        if isinstance(self.event_manager, EventManager):
+            self.event_manager.unsubscribe(self._on_unlink_event)
 
     def create(self, type: type[T]) -> T:
         """Create a new model element of type ``type``."""
@@ -204,7 +205,7 @@ class ElementFactory(Service):
         self.handle(ModelReady(self))
 
     @contextmanager
-    def block_events(self, new_event_manager=BlockingEventManager()):
+    def block_events(self, new_event_manager: EventHandler | None = None):
         """Block events from being emitted.
 
         Instead, events are directed to `new_event_manager`, which
@@ -219,13 +220,21 @@ class ElementFactory(Service):
 
     def handle(self, event: object) -> None:
         """Handle events coming from elements."""
-        if isinstance(event, UnlinkEvent):
-            element = event.element
-            assert isinstance(element.id, str)
-            try:
-                del self._elements[element.id]
-            except KeyError:
-                return
-            event = ElementDeleted(self, event.element, event.diagram)
         if self.event_manager:
             self.event_manager.handle(event)
+        elif isinstance(event, UnlinkEvent):
+            self._on_unlink_event(event)
+
+    @event_handler(UnlinkEvent)
+    def _on_unlink_event(self, event):
+        element = event.element
+        element._model = None
+        assert isinstance(element.id, str)
+        try:
+            del self._elements[element.id]
+        except KeyError:
+            return
+        if self.event_manager:
+            self.event_manager.handle(
+                ElementDeleted(self, event.element, event.diagram)
+            )

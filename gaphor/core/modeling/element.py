@@ -26,7 +26,11 @@ log = logging.getLogger(__name__)
 
 
 class UnlinkEvent:
-    """Used to tell event handlers this element should be unlinked."""
+    """Used to tell event handlers this element should be unlinked.
+
+    This event is used internally and should not be handled outside
+    `gaphor.core.modeling`.
+    """
 
     def __init__(self, element: Element, diagram: Diagram | None = None):
         self.element = element
@@ -90,6 +94,7 @@ class Element:
         """
         self._id: Id = id or generate_id()
         # The model this element belongs to.
+        # NOTE: Will be unset by ElementFactory once it's `unlink()`ed.
         self._model = model
         self._unlink_lock = 0
 
@@ -161,8 +166,7 @@ class Element:
             prop.unlink(self)
 
         log.debug("unlinking %s", self)
-        self.handle(unlink_event or UnlinkEvent(self))
-        self._model = None
+        self.handle(unlink_event)
 
     def handle(self, event):
         """Propagate incoming events."""
