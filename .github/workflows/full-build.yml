@@ -86,6 +86,30 @@ jobs:
           name: gaphor-${{ steps.setup.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.setup.outputs.version }}-py3-none-any.whl
 
+  linux-gtk4:
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    container:
+      image: fedora:latest
+    env:
+      GAPHOR_USE_GTK: 4
+    steps:
+      - run: >
+          dnf install -y util-linux poetry gcc gtk4 cairo-devel cairo-gobject-devel
+          gobject-introspection-devel python3-devel python3-pip xorg-x11-server-Xvfb
+      - uses: actions/checkout@v3.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: ./.github/actions/setup
+        with:
+          python_version: ${{ env.python_version }}
+          linux_install: false
+      - name: Install Dependencies and Test
+        uses: ./.github/actions/test
+        with:
+          xvfb_command: 'xvfb-run'
 
   linux-appimage:
     needs: linux
@@ -140,6 +164,25 @@ jobs:
     env:
       LDFLAGS: -L/usr/local/opt/python@3.10/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+    steps:
+      - uses: actions/checkout@v3.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: ./.github/actions/setup
+        with:
+          python_version: ${{ env.python_version }}
+      - name: Install Dependencies and Test
+        uses: ./.github/actions/test
+
+  macos-gtk4:
+    needs: lint
+    runs-on: macos-latest
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    env:
+      LDFLAGS: -L/usr/local/opt/python@3.10/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      GAPHOR_USE_GTK: 4
     steps:
       - uses: actions/checkout@v3.0.2
         with:
