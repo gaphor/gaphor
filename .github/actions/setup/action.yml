@@ -54,6 +54,7 @@ runs:
       shell: bash
 
     - name: Set up Python
+      if: inputs.linux_install == 'true'
       uses: actions/setup-python@v4.0.0
       with:
         python-version: ${{ inputs.python_version }}
