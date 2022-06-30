@@ -128,16 +128,16 @@ jobs:
         id: setup
         with:
           python_version: ${{ env.python_version }}
+          python_cache_suffix: "-container"
           linux_install: false
       - uses: actions/download-artifact@v3
         with:
           name: gaphor-${{ steps.setup.outputs.version }}-py3-none-any.whl
           path: dist/
-      - name: Install Build Dependencies
-        run: poetry install --no-dev --extras poethepoet
       - name: Build AppImage
         run: |
           jhbuild shell
+          poetry install --no-dev --extras poethepoet
           poetry run poe package
           cd _packaging/appimage
           make dist
