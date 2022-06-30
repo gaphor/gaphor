@@ -3,6 +3,9 @@ inputs:
   python_version:
     required: true
     default: ''
+  linux_install:
+    required: false
+    default: true
   gtk_for_windows_cache_key:
     required: false
     default: 'gtk_for_windows_cache_key not set'
@@ -45,10 +48,6 @@ runs:
         echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
         echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
       shell: bash
-    - name: Install Binary Wheels
-      if: runner.os == 'Windows'
-      run: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
-      shell: pwsh
 
     - name: Set up Python
       uses: actions/setup-python@v4.0.0
@@ -71,3 +70,8 @@ runs:
       id: meta
       run: .github/scripts/metadata.sh
       shell: bash
+
+    - name: Install Binary Wheels
+      if: runner.os == 'Windows'
+      run: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
+      shell: pwsh

@@ -104,6 +104,7 @@ jobs:
         id: setup
         with:
           python_version: ${{ env.python_version }}
+          linux_install: false
       - uses: actions/download-artifact@v3
         with:
           name: gaphor-${{ steps.setup.outputs.version }}-py3-none-any.whl
