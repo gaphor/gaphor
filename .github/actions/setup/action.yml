@@ -1,0 +1,73 @@
+name: 'Set up the build environment'
+inputs:
+  python_version:
+    required: true
+    default: ''
+  gtk_for_windows_cache_key:
+    required: false
+    default: 'gtk_for_windows_cache_key not set'
+outputs:
+  version:
+    description: 'Build version with added dev reference for non-releases'
+    value: ${{ steps.meta.outputs.version }}
+runs:
+  using: composite
+  steps:
+
+    - name: Install Linux Dependencies
+      if: runner.os == 'Linux'
+      run: >
+        sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
+        gir1.2-gtk-3.0 libgirepository1.0-dev libgtksourceview-4-dev upx
+      shell: bash
+
+    - name: Install macOS Dependencies
+      if: runner.os == 'macOS'
+      run: >
+        brew install gobject-introspection gtk+3 gtk4 gtksourceview4 gtksourceview5
+        adwaita-icon-theme gtk-mac-integration create-dmg upx
+      shell: bash
+
+    - name: Create GTK binaries dir
+      if: runner.os == 'Windows'
+      run: mkdir C:\gtk-build\gtk\x64\release
+      shell: pwsh
+    - name: Get GTK binaries from cache
+      if: runner.os == 'Windows'
+      uses: actions/cache@v3.0.4
+      id: cache
+      with:
+        path: C:\gtk-build\gtk\x64\release\**
+        key: ${{ inputs.gtk_for_windows_cache_key }}
+    - name: Set up env
+      if: runner.os == 'Windows'
+      run: |
+        echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
+        echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
+      shell: bash
+    - name: Install Binary Wheels
+      if: runner.os == 'Windows'
+      run: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
+      shell: pwsh
+
+    - name: Set up Python
+      uses: actions/setup-python@v4.0.0
+      with:
+        python-version: ${{ inputs.python_version }}
+    - name: Use Python Dependency Cache
+      uses: actions/cache@v3.0.4
+      with:
+        path: ~/Library/Caches/pip
+        key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+        restore-keys: ${{ runner.os }}-poetry-
+
+    - name: Install Poetry
+      run: pip install poetry==1.1.13
+      shell: bash
+    - name: Configure Poetry
+      run: poetry config virtualenvs.in-project true
+      shell: bash
+    - name: Collect Project Data
+      id: meta
+      run: .github/scripts/metadata.sh
+      shell: bash

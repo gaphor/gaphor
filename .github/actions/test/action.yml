@@ -1,0 +1,15 @@
+name: 'Test Gaphor'
+inputs:
+  xvfb_command:
+    description: 'Command to run for xvfb in order to run tests headless in Linux'
+    required: false
+    default: ''
+runs:
+  using: composite
+  steps:
+    - name: Install Python Dependencies
+      run: poetry install
+      shell: bash
+    - name: Test with Pytest
+      run: ${{ inputs.xvfb_command }} poetry run poe test-all
+      shell: bash
