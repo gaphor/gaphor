@@ -34,6 +34,12 @@ runs:
         brew install gobject-introspection gtk+3 gtk4 gtksourceview4 gtksourceview5
         adwaita-icon-theme gtk-mac-integration create-dmg upx
       shell: bash
+    - name: Set up env
+      if: runner.os == 'macOS'
+      run: |
+        echo "LDFLAGS=-L/usr/local/opt/python@3.10/lib" >> $GITHUB_ENV
+        echo "PKG_CONFIG_PATH=/usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}" >> $GITHUB_ENV
+      shell: bash
 
     - name: Create GTK binaries dir
       if: runner.os == 'Windows'

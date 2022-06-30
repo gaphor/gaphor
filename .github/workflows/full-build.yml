@@ -161,9 +161,6 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 45
     if: "!contains(github.event.head_commit.message, 'skip ci')"
-    env:
-      LDFLAGS: -L/usr/local/opt/python@3.10/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
       - uses: actions/checkout@v3.0.2
         with:
@@ -180,8 +177,6 @@ jobs:
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
-      LDFLAGS: -L/usr/local/opt/python@3.10/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
       GAPHOR_USE_GTK: 4
     steps:
       - uses: actions/checkout@v3.0.2
