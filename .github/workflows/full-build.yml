@@ -280,6 +280,8 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
+    outputs:
+      cachekey: ${{ needs.gtk-for-windows.outputs.cachekey }}
     steps:
       - uses: actions/checkout@v3.0.2
         with:
@@ -292,7 +294,7 @@ jobs:
         uses: ./.github/actions/test
 
   windows-installer:
-    needs: [windows, linux, gtk-for-windows]
+    needs: [windows, linux]
     runs-on: windows-latest
     if: "(github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/packaging/')) && !contains(github.event.head_commit.message, 'skip ci')"
     permissions:
@@ -306,7 +308,7 @@ jobs:
         id: setup
         with:
           python_version: ${{ env.python_version }}
-          gtk_for_windows_cache_key: ${{ needs.gtk-for-windows.outputs.cachekey }}
+          gtk_for_windows_cache_key: ${{ needs.windows.outputs.cachekey }}
       - uses: actions/download-artifact@v3
         with:
           name: gaphor-${{ steps.setup.outputs.version }}-py3-none-any.whl

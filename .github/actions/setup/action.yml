@@ -1,12 +1,16 @@
 name: 'Set up the build environment'
+description: 'Environment setup'
 inputs:
   python_version:
+    description: Python version
     required: true
     default: ''
   linux_install:
+    description: Perform apt install on the host
     required: false
-    default: true
+    default: 'true'
   gtk_for_windows_cache_key:
+    description: Key for gtk-for-windows installation
     required: false
     default: 'gtk_for_windows_cache_key not set'
 outputs:
@@ -18,7 +22,7 @@ runs:
   steps:
 
     - name: Install Linux Dependencies
-      if: runner.os == 'Linux'
+      if: runner.os == 'Linux' && inputs.linux_install == 'true'
       run: >
         sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
         gir1.2-gtk-3.0 libgirepository1.0-dev libgtksourceview-4-dev upx

@@ -1,4 +1,5 @@
 name: 'Test Gaphor'
+description: 'Run unit tests'
 inputs:
   xvfb_command:
     description: 'Command to run for xvfb in order to run tests headless in Linux'
