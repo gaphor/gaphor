@@ -1,7 +1,12 @@
 name: "CodeQL"
 
 on:
+  push:
+    branches: [main]
   pull_request:
+    branches: [main]
+env:
+  python_version: '3.10'
 
 permissions:
   contents: read
@@ -15,15 +20,33 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3.0.2
+    - name: Set up Python
+      uses: actions/setup-python@v4.0.0
       with:
-        fetch-depth: 2
-    - run: git checkout HEAD^2
-      if: ${{ github.event_name == 'pull_request' }}
+        python-version: ${{ env.python_version }}
+    - name: Install Linux Dependencies
+      uses: ./.github/actions/linux_dependencies
+    - name: Use Python Dependency Cache
+      uses: actions/cache@v3.0.4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+    - name: Install Poetry
+      run: pip install poetry==1.1.13
+    - name: Configure Poetry
+      run: poetry config virtualenvs.in-project true
+    - name: Install Python Dependencies
+      run: |
+        poetry install
+        # Set the `CODEQL-PYTHON` environment variable to the Python executable
+        # that includes the dependencies
+        echo "CODEQL_PYTHON=$(which python)" >> $GITHUB_ENV
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
         languages: python
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+        # Override the default behavior so that the action doesn't attempt
+        # to auto-install Python dependencies
+        setup-python-dependencies: false
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
