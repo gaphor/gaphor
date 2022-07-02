@@ -164,6 +164,7 @@ def os_information():
         f"""\
     OS: {platform.system()} ({platform.release()})
     Python version: {platform.python_version()}
+    GTK version: {Gtk.get_major_version()}.{Gtk.get_minor_version()}.{Gtk.get_micro_version()}
     Gaphor version: {distribution().version}
 
     """
