@@ -1,7 +1,10 @@
 name: "CodeQL"
 
 on:
+  push:
+    branches: [main]
   pull_request:
+    branches: [main]
 
 permissions:
   contents: read
@@ -15,15 +18,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3.0.2
-      with:
-        fetch-depth: 2
-    - run: git checkout HEAD^2
-      if: ${{ github.event_name == 'pull_request' }}
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
         languages: python
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
