@@ -69,9 +69,12 @@ runs:
       with:
         python-version: ${{ inputs.python_version }}
 
-    - run: echo "pip_cache_dir=$(pip cache dir)" >> $GITHUB_ENV
+    # Cache doesn't work with containers due to ownership mismatch
+    - if: runner.os != 'Linux' || inputs.linux_install == 'true'
+      run: echo "pip_cache_dir=$(pip cache dir)" >> $GITHUB_ENV
       shell: bash
     - name: Use Python Dependency Cache (Linux)
+      if: runner.os != 'Linux' || inputs.linux_install == 'true'
       uses: actions/cache@v3.0.4
       with:
         path: ${{ env.pip_cache_dir }}
