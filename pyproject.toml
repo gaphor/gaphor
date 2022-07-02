@@ -142,6 +142,7 @@ type = "virtualenv"
 "app_file_manager" = "gaphor.ui.appfilemanager:AppFileManager"
 "styling" = "gaphor.ui.styling:Styling"
 "greeter" = "gaphor.ui.greeter:Greeter"
+"self_test" = "gaphor.ui.selftest:SelfTest"
 "error_reports" = "gaphor.plugins.errorreports:ErrorReports"
 
 [tool.poetry.plugins."gaphor.services"]

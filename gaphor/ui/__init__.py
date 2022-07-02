@@ -112,7 +112,9 @@ def run(args):
             event_manager = application.get_service("event_manager")
             event_manager.subscribe(on_session_created)
             event_manager.subscribe(on_quit)
-            application.get_service("greeter").init(gtk_app)
+            application.get_service(
+                "self_test" if "--self-test" in args else "greeter"
+            ).init(gtk_app)
         except Exception:
             gtk_app.quit()
             raise
@@ -176,5 +178,13 @@ def add_main_options(gtk_app):
         GLib.OptionFlags.NONE,
         GLib.OptionArg.NONE,
         "Run in profiler",
+        None,
+    )
+    gtk_app.add_main_option(
+        "self-test",
+        0,
+        GLib.OptionFlags.NONE,
+        GLib.OptionArg.NONE,
+        "Run self test and exit",
         None,
     )
