@@ -5,6 +5,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+env:
+  python_version: '3.10'
 
 permissions:
   contents: read
@@ -18,6 +20,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3.0.2
+    - name: Set up Python
+      uses: actions/setup-python@v4.0.0
+      with:
+        python-version: ${{ env.python_version }}
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
