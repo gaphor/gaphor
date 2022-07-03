@@ -211,7 +211,7 @@ jobs:
           Gaphor*/Contents/MacOS/gaphor-exe --self-test
 
   windows-build-gtk:
-    needs: lint
+    needs: skip-check
     runs-on: windows-latest
     timeout-minutes: 60
     env:
