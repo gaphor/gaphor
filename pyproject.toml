@@ -41,6 +41,8 @@ PyGObject = "^3.30"
 gaphas = "^3.1.0"
 generic = "^1.0.0"
 tinycss2 = "^1.0.2"
+babel = { version = "^2.10.3", optional = true }
+babelgladeextractor = { version = "^0.7", optional = true }
 pyinstaller = { version = ">=4.6,<6.0", python = "^3.9, <3.11", optional = true }
 pyinstaller-versionfile = { version = "^2.0.0", optional = true }
 poethepoet = { version = ">=0.10,<0.15", optional = true }
@@ -70,7 +72,8 @@ poethepoet = ">=0.10,<0.15"
 hypothesis = "^6.48.1"
 
 [tool.poetry.extras]
-pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli", "babel", "babelgladeextractor"]
+babel = ["babel", "babelgladeextractor"]
+pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 docs = [ "sphinx", "sphinx-rtd-theme", "myst-parser"]
 
 [tool.poetry.scripts]

@@ -131,7 +131,7 @@ jobs:
           linux_install: false
       - name: Build AppImage
         run: |
-          jhbuild run poetry install --no-dev --extras pyinstall
+          jhbuild run poetry install --no-dev --extras pyinstall --extras babel
           poetry run poe gettext-mo
           cp /usr/share/glib-2.0/schemas/gschemas.compiled /root/jhbuild/install/share/glib-2.0/schemas/gschemas.compiled
           jhbuild run poetry run poe package
@@ -203,7 +203,7 @@ jobs:
         with:
           python_version: ${{ env.python_version }}
       - name: Install Build Dependencies
-        run: poetry install --no-dev --extras pyinstall
+        run: poetry install --no-dev --extras pyinstall --extras babel
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1.0.4
         with:
@@ -342,7 +342,7 @@ jobs:
           python_version: ${{ env.python_version }}
           gtk_for_windows_cache_key: ${{ needs.windows.outputs.cachekey }}
       - name: Install Build Dependencies
-        run: poetry install --no-dev --extras pyinstall
+        run: poetry install --no-dev --extras pyinstall --extras babel
         shell: bash
       - name: Create Windows Installers
         run: |
