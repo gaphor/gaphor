@@ -267,6 +267,8 @@ jobs:
     permissions:
       contents: write
     timeout-minutes: 45
+    outputs:
+      installer: gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: Create GTK binaries dir
@@ -322,3 +324,17 @@ jobs:
         with:
           files: "_packaging/dist/*.exe"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  check-windows-installer:
+    needs: windows
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.windows.outputs.installer }}
+          path: .
+      - run: |
+          start "" /WAIT "${{ needs.windows.outputs.installer }}" /S
+          start "" /WAIT "C:\Program Files (x86)\Gaphor\gaphor-exe.exe" --self-test
+        shell: cmd
