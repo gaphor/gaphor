@@ -119,6 +119,8 @@ jobs:
       contents: write
     timeout-minutes: 45
     if: "!contains(github.event.head_commit.message, 'skip ci')"
+    outputs:
+      dmg: Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg
     env:
       LDFLAGS: -L/usr/local/opt/python@3.10/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
@@ -194,6 +196,19 @@ jobs:
         with:
           files: "_packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  check-macos-dmg:
+    needs: macos
+    runs-on: macos-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.macos.outputs.dmg }}
+          path: .
+      - run: |
+          hdiutil attach ${{ needs.macos.outputs.dmg }}
+          cd /Volumes/Gaphor*
+          Gaphor*/Contents/MacOS/gaphor-exe --self-test
 
   windows-build-gtk:
     needs: lint
