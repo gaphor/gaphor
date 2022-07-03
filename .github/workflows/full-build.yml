@@ -65,9 +65,6 @@ jobs:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
           coverageCommand: poetry run coverage xml
-      - name: Install Build Dependencies
-        if: "${{ matrix.python_version == env.python_version }}"
-        run: poetry install --extras poethepoet
       - name: Create Source Tar and Wheel
         if: "${{ matrix.python_version == env.python_version }}"
         run: |
