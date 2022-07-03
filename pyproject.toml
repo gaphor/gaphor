@@ -70,8 +70,7 @@ poethepoet = ">=0.10,<0.15"
 hypothesis = "^6.48.1"
 
 [tool.poetry.extras]
-pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
-poethepoet = ["poethepoet"]
+pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli", "babel", "babelgladeextractor"]
 docs = [ "sphinx", "sphinx-rtd-theme", "myst-parser"]
 
 [tool.poetry.scripts]
@@ -117,9 +116,8 @@ docs = "sphinx-build docs docs/_build/html"
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt _packaging/gaphor-script.py docs/_build" }
 gaphor-script = { "script" = "_packaging.make-script:make_gaphor_script" }
 version-file = { "script" = "_packaging.make-script:make_file_version_info" }
-install-pyinstall = "poetry install --no-dev --extras pyinstall"
 pyinstall = { "script" = "_packaging.make-script:make_pyinstaller" }
-package = ["install-pyinstall", "gaphor-script", "version-file", "pyinstall"]
+package = ["gaphor-script", "version-file", "pyinstall"]
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
 appimage-docker-build = "docker build -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"
 appimage-docker-build-clean = "docker build --no-cache -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"

@@ -129,13 +129,10 @@ jobs:
         with:
           python_version: ${{ env.python_version }}
           linux_install: false
-      - uses: actions/download-artifact@v3
-        with:
-          name: gaphor-${{ steps.setup.outputs.version }}-py3-none-any.whl
-          path: dist/
       - name: Build AppImage
         run: |
-          jhbuild run poetry install --no-dev --extras poethepoet
+          jhbuild run poetry install --no-dev --extras pyinstall
+          poetry run poe gettext-mo
           cp /usr/share/glib-2.0/schemas/gschemas.compiled /root/jhbuild/install/share/glib-2.0/schemas/gschemas.compiled
           jhbuild run poetry run poe package
           cd _packaging/appimage
@@ -188,7 +185,7 @@ jobs:
         uses: ./.github/actions/test
 
   macos-dmg:
-    needs: ["macos", "linux"]
+    needs: ["macos"]
     runs-on: macos-latest
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/packaging/')
     permissions:
@@ -205,19 +202,17 @@ jobs:
         id: setup
         with:
           python_version: ${{ env.python_version }}
-      - uses: actions/download-artifact@v3
-        with:
-          name: gaphor-${{ steps.setup.outputs.version }}-py3-none-any.whl
-          path: dist/
       - name: Install Build Dependencies
-        run: poetry install --no-dev --extras poethepoet
+        run: poetry install --no-dev --extras pyinstall
       - name: Import codesign certificate
         uses: apple-actions/import-codesign-certs@v1.0.4
         with:
           p12-file-base64: ${{ secrets.BASE64_ENCODED_P12 }}
           p12-password: ${{ secrets.CERTPASSWORD_P12 }}
       - name: Create Signed macOS Application
-        run: poetry run poe package
+        run: |
+          poetry run poe gettext-mo
+          poetry run poe package
       - name: Notarize app
         uses: devbotsxyz/xcode-notarize@v1.0.0
         with:
@@ -331,7 +326,7 @@ jobs:
         uses: ./.github/actions/test
 
   windows-installer:
-    needs: [windows, linux]
+    needs: [windows]
     runs-on: windows-latest
     if: "(github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/packaging/')) && !contains(github.event.head_commit.message, 'skip ci')"
     permissions:
@@ -346,15 +341,12 @@ jobs:
         with:
           python_version: ${{ env.python_version }}
           gtk_for_windows_cache_key: ${{ needs.windows.outputs.cachekey }}
-      - uses: actions/download-artifact@v3
-        with:
-          name: gaphor-${{ steps.setup.outputs.version }}-py3-none-any.whl
-          path: dist/
       - name: Install Build Dependencies
-        run: poetry install --no-dev --extras poethepoet
+        run: poetry install --no-dev --extras pyinstall
         shell: bash
       - name: Create Windows Installers
         run: |
+          poetry run poe gettext-mo
           poetry run poe package
           poetry run poe win-installer
         shell: bash
