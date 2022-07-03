@@ -857,6 +857,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "nomisge",
+      "name": "nomisge",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16142147?v=4",
+      "profile": "https://github.com/nomisge",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
