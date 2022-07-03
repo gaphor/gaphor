@@ -40,7 +40,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     flex \
     gettext \
     git \
-    libcanberra-gtk3-dev \
     libcups2-dev \
     libdbus-1-dev \
     libegl1-mesa-dev \

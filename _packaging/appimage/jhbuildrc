@@ -6,7 +6,6 @@ modules = [
     'gobject-introspection',
     'adwaita-icon-theme',
     'hicolor-icon-theme',
-    'libcanberra-gtk3'
 ]
 
 # Disable Vala

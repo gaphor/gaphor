@@ -135,11 +135,11 @@ jobs:
           path: dist/
       - name: Build AppImage
         run: |
-          jhbuild shell
-          poetry install --no-dev --extras poethepoet
-          poetry run poe package
+          jhbuild run poetry install --no-dev --extras poethepoet
+          cp /usr/share/glib-2.0/schemas/gschemas.compiled /root/jhbuild/install/share/glib-2.0/schemas/gschemas.compiled
+          jhbuild run poetry run poe package
           cd _packaging/appimage
-          make dist
+          jhbuild run make dist
       - name: Upload gaphor-${{ steps.setup.outputs.version }}-x86_64.AppImage
         uses: actions/upload-artifact@v3
         with:
