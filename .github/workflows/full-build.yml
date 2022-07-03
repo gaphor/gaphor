@@ -103,12 +103,14 @@ jobs:
   check-linux-appimage:
     needs: linux
     runs-on: ubuntu-20.04
+    timeout-minutes: 10
     steps:
       - uses: actions/download-artifact@v3
         with:
           name: ${{ needs.linux.outputs.appimage }}
           path: .
-      - run: |
+      - name: Perform self-test
+        run: |
           chmod +x ${{ needs.linux.outputs.appimage }}
           xvfb-run ./${{ needs.linux.outputs.appimage }} --self-test
 
@@ -200,12 +202,14 @@ jobs:
   check-macos-dmg:
     needs: macos
     runs-on: macos-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/download-artifact@v3
         with:
           name: ${{ needs.macos.outputs.dmg }}
           path: .
-      - run: |
+      - name: Perform self-test
+        run: |
           hdiutil attach ${{ needs.macos.outputs.dmg }}
           cd /Volumes/Gaphor*
           Gaphor*/Contents/MacOS/gaphor-exe --self-test
@@ -334,7 +338,8 @@ jobs:
         with:
           name: ${{ needs.windows.outputs.installer }}
           path: .
-      - run: |
+      - name: Perform self-test
+        run: |
           start "" /WAIT "${{ needs.windows.outputs.installer }}" /S
           start "" /WAIT "C:\Program Files (x86)\Gaphor\gaphor-exe.exe" --self-test
         shell: cmd
