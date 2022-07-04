@@ -555,20 +555,20 @@ msgid "New Profile Diagram"
 msgstr "Új profilábra"
 
 #: gaphor/UML/umlfmt.py:201
-msgid "general: {}"
-msgstr "általános: {}"
+msgid "general: {name}"
+msgstr "általános: {name}"
 
 #: gaphor/UML/umlfmt.py:206
-msgid "supplier: {}"
-msgstr "szállító: {}"
+msgid "supplier: {name}"
+msgstr "szállító: {name}"
 
 #: gaphor/UML/umlfmt.py:211
-msgid "extend: {}"
-msgstr "kiterjesztés: {}"
+msgid "extend: {name}"
+msgstr "kiterjesztés: {name}"
 
 #: gaphor/UML/umlfmt.py:216
-msgid "include: {}"
-msgstr "belefoglalás: {}"
+msgid "include: {name}"
+msgstr "belefoglalás: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
@@ -2378,8 +2378,8 @@ msgid "edited"
 msgstr "szerkesztett"
 
 #: gaphor/ui/mainwindow.py:269
-msgid "Profile: {}"
-msgstr "Profil: {}"
+msgid "Profile: {name}"
+msgstr "Profil: {name}"
 
 #: gaphor/ui/namespace.py:45
 msgid "_Open"

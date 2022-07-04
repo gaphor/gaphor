@@ -577,19 +577,19 @@ msgstr "Nytt _Diagram"
 
 #: gaphor/UML/umlfmt.py:201
 #, fuzzy
-msgid "general: {}"
-msgstr "interaktioner: {}"
+msgid "general: {name}"
+msgstr "interaktioner: {name}"
 
 #: gaphor/UML/umlfmt.py:206
-msgid "supplier: {}"
+msgid "supplier: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:211
-msgid "extend: {}"
+msgid "extend: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:216
-msgid "include: {}"
+msgid "include: {name}"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:16
@@ -2345,7 +2345,7 @@ msgid "edited"
 msgstr ""
 
 #: gaphor/ui/mainwindow.py:269
-msgid "Profile: {}"
+msgid "Profile: {name}"
 msgstr ""
 
 #: gaphor/ui/namespace.py:45

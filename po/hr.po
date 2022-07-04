@@ -556,20 +556,20 @@ msgid "New Profile Diagram"
 msgstr "Novi dijagram profila"
 
 #: gaphor/UML/umlfmt.py:201
-msgid "general: {}"
-msgstr "opće: {}"
+msgid "general: {name}"
+msgstr "opće: {name}"
 
 #: gaphor/UML/umlfmt.py:206
-msgid "supplier: {}"
-msgstr "dobavljač: {}"
+msgid "supplier: {name}"
+msgstr "dobavljač: {name}"
 
 #: gaphor/UML/umlfmt.py:211
-msgid "extend: {}"
-msgstr "proširi: {}"
+msgid "extend: {name}"
+msgstr "proširi: {name}"
 
 #: gaphor/UML/umlfmt.py:216
-msgid "include: {}"
-msgstr "uključi: {}"
+msgid "include: {name}"
+msgstr "uključi: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
@@ -2365,8 +2365,8 @@ msgid "edited"
 msgstr "promijenjeno"
 
 #: gaphor/ui/mainwindow.py:269
-msgid "Profile: {}"
-msgstr "Profil: {}"
+msgid "Profile: {name}"
+msgstr "Profil: {name}"
 
 #: gaphor/ui/namespace.py:45
 msgid "_Open"

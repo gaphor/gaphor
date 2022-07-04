@@ -583,22 +583,22 @@ msgstr "_Diagrama"
 
 #: gaphor/UML/umlfmt.py:201
 #, fuzzy
-msgid "general: {}"
-msgstr "generalització: {}"
+msgid "general: {name}"
+msgstr "generalització: {name}"
 
 #: gaphor/UML/umlfmt.py:206
-msgid "supplier: {}"
+msgid "supplier: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:211
 #, fuzzy
-msgid "extend: {}"
-msgstr "extèn: {}"
+msgid "extend: {name}"
+msgstr "extèn: {name}"
 
 #: gaphor/UML/umlfmt.py:216
 #, fuzzy
-msgid "include: {}"
-msgstr "inclou: {}"
+msgid "include: {name}"
+msgstr "inclou: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
@@ -2363,7 +2363,7 @@ msgid "edited"
 msgstr ""
 
 #: gaphor/ui/mainwindow.py:269
-msgid "Profile: {}"
+msgid "Profile: {name}"
 msgstr ""
 
 #: gaphor/ui/namespace.py:45

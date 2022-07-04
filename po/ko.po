@@ -585,22 +585,22 @@ msgstr "새 다이어그램(_D)"
 
 #: gaphor/UML/umlfmt.py:201
 #, fuzzy
-msgid "general: {}"
-msgstr "일반: {}"
+msgid "general: {name}"
+msgstr "일반: {name}"
 
 #: gaphor/UML/umlfmt.py:206
-msgid "supplier: {}"
+msgid "supplier: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:211
 #, fuzzy
-msgid "extend: {}"
-msgstr "확장: {}"
+msgid "extend: {name}"
+msgstr "확장: {name}"
 
 #: gaphor/UML/umlfmt.py:216
 #, fuzzy
-msgid "include: {}"
-msgstr "포함: {}"
+msgid "include: {name}"
+msgstr "포함: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
@@ -2399,8 +2399,8 @@ msgid "edited"
 msgstr "편집함"
 
 #: gaphor/ui/mainwindow.py:269
-msgid "Profile: {}"
-msgstr "프로파일: {}"
+msgid "Profile: {name}"
+msgstr "프로파일: {name}"
 
 #: gaphor/ui/namespace.py:45
 msgid "_Open"

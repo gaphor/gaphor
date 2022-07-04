@@ -583,22 +583,22 @@ msgid "New Profile Diagram"
 msgstr "_Новая диаграмма"
 
 #: gaphor/UML/umlfmt.py:201
-msgid "general: {}"
+msgid "general: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:206
-msgid "supplier: {}"
+msgid "supplier: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:211
 #, fuzzy
-msgid "extend: {}"
-msgstr "расширение: {}"
+msgid "extend: {name}"
+msgstr "расширение: {name}"
 
 #: gaphor/UML/umlfmt.py:216
 #, fuzzy
-msgid "include: {}"
-msgstr "включение: {}"
+msgid "include: {name}"
+msgstr "включение: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
@@ -2356,7 +2356,7 @@ msgid "edited"
 msgstr ""
 
 #: gaphor/ui/mainwindow.py:269
-msgid "Profile: {}"
+msgid "Profile: {name}"
 msgstr ""
 
 #: gaphor/ui/namespace.py:45

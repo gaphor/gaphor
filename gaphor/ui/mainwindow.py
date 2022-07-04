@@ -265,7 +265,7 @@ class MainWindow(Service, ActionProvider):
     def _on_modeling_language_selection_changed(self, event=None):
         if self.modeling_language_name:
             self.modeling_language_name.set_label(
-                gettext("Profile: {}").format(self.modeling_language.name)
+                gettext("Profile: {name}").format(name=self.modeling_language.name)
             )
         if self.diagram_types:
             popup_set_model(

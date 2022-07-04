@@ -19,6 +19,9 @@ def invalid(messages):
         id_formats = placeholders.findall(message.id)
         str_formats = placeholders.findall(message.string)
 
+        if "{}" in id_formats:
+            yield message, f"Empty placeholder for '{message.id}': '{message.string}'"
+
         if set(id_formats) != set(str_formats):
             yield message, f"Invalid placeholders for '{message.id}': '{message.string}'"
 

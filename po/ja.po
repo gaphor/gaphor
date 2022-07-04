@@ -573,21 +573,21 @@ msgid "New Profile Diagram"
 msgstr "新ダイアグラム(_D)"
 
 #: gaphor/UML/umlfmt.py:201
-msgid "general: {}"
+msgid "general: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:206
-msgid "supplier: {}"
+msgid "supplier: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:211
-msgid "extend: {}"
+msgid "extend: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:216
 #, fuzzy
-msgid "include: {}"
-msgstr "プロファイル: {}"
+msgid "include: {name}"
+msgstr "プロファイル: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
@@ -2349,8 +2349,8 @@ msgid "edited"
 msgstr ""
 
 #: gaphor/ui/mainwindow.py:269
-msgid "Profile: {}"
-msgstr "プロファイル: {}"
+msgid "Profile: {name}"
+msgstr "プロファイル: {name}"
 
 #: gaphor/ui/namespace.py:45
 msgid "_Open"

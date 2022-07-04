@@ -601,22 +601,22 @@ msgstr "Nuovo_Diagrama"
 
 #: gaphor/UML/umlfmt.py:201
 #, fuzzy
-msgid "general: {}"
-msgstr "generale: {}"
+msgid "general: {name}"
+msgstr "generale: {name}"
 
 #: gaphor/UML/umlfmt.py:206
-msgid "supplier: {}"
+msgid "supplier: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:211
 #, fuzzy
-msgid "extend: {}"
-msgstr "estendi: {}"
+msgid "extend: {name}"
+msgstr "estendi: {name}"
 
 #: gaphor/UML/umlfmt.py:216
 #, fuzzy
-msgid "include: {}"
-msgstr "includi: {}"
+msgid "include: {name}"
+msgstr "includi: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
@@ -2395,8 +2395,8 @@ msgid "edited"
 msgstr "Modificati"
 
 #: gaphor/ui/mainwindow.py:269
-msgid "Profile: {}"
-msgstr "Profilo: {}"
+msgid "Profile: {name}"
+msgstr "Profilo: {name}"
 
 #: gaphor/ui/namespace.py:45
 msgid "_Open"

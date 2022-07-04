@@ -554,21 +554,21 @@ msgstr "Nieuw Profiel Diagram"
 
 #: gaphor/UML/umlfmt.py:201
 #, fuzzy
-msgid "general: {}"
-msgstr "algemeen: {}"
+msgid "general: {name}"
+msgstr "algemeen: {name}"
 
 #: gaphor/UML/umlfmt.py:206
-msgid "supplier: {}"
+msgid "supplier: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:211
 #, fuzzy
-msgid "extend: {}"
+msgid "extend: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:216
 #, fuzzy
-msgid "include: {}"
+msgid "include: {name}"
 msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:16
@@ -2366,8 +2366,8 @@ msgid "edited"
 msgstr "gewijzigd"
 
 #: gaphor/ui/mainwindow.py:269
-msgid "Profile: {}"
-msgstr "Profiel: {}"
+msgid "Profile: {name}"
+msgstr "Profiel: {name}"
 
 #: gaphor/ui/namespace.py:45
 msgid "_Open"

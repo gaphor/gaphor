@@ -560,20 +560,20 @@ msgstr "Uusi profiilikaavio"
 
 #: gaphor/UML/umlfmt.py:201
 #, fuzzy
-msgid "general: {}"
-msgstr "yleiset: {}"
+msgid "general: {name}"
+msgstr "yleiset: {name}"
 
 #: gaphor/UML/umlfmt.py:206
-msgid "supplier: {}"
+msgid "supplier: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:211
-msgid "extend: {}"
-msgstr "laajenna: {}"
+msgid "extend: {name}"
+msgstr "laajenna: {name}"
 
 #: gaphor/UML/umlfmt.py:216
-msgid "include: {}"
-msgstr "sisällytä: {}"
+msgid "include: {name}"
+msgstr "sisällytä: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
@@ -2322,8 +2322,8 @@ msgid "edited"
 msgstr "muokattu"
 
 #: gaphor/ui/mainwindow.py:269
-msgid "Profile: {}"
-msgstr "Profiili: {}"
+msgid "Profile: {name}"
+msgstr "Profiili: {name}"
 
 #: gaphor/ui/namespace.py:45
 msgid "_Open"

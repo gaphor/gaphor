@@ -554,22 +554,22 @@ msgstr "新建配置图"
 
 #: gaphor/UML/umlfmt.py:201
 #, fuzzy
-msgid "general: {}"
-msgstr "通用: {}"
+msgid "general: {name}"
+msgstr "通用: {name}"
 
 #: gaphor/UML/umlfmt.py:206
-msgid "supplier: {}"
+msgid "supplier: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:211
 #, fuzzy
-msgid "extend: {}"
-msgstr "扩展: {}"
+msgid "extend: {name}"
+msgstr "扩展: {name}"
 
 #: gaphor/UML/umlfmt.py:216
 #, fuzzy
-msgid "include: {}"
-msgstr "包含: {}"
+msgid "include: {name}"
+msgstr "包含: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:16
 #: gaphor/UML/interactions/interactionstoolbox.py:20
@@ -2260,7 +2260,7 @@ msgid "edited"
 msgstr ""
 
 #: gaphor/ui/mainwindow.py:269
-msgid "Profile: {}"
+msgid "Profile: {name}"
 msgstr ""
 
 #: gaphor/ui/namespace.py:45

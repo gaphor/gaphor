@@ -200,19 +200,25 @@ def format_relationship(el):
 
 @format.register(UML.Generalization)
 def format_generalization(el):
-    return gettext("general: {}").format(el.general and el.general.name or "")
+    return gettext("general: {name}").format(name=el.general and el.general.name or "")
 
 
 @format.register(UML.Dependency)
 def format_dependency(el):
-    return gettext("supplier: {}").format(el.supplier and el.supplier.name or "")
+    return gettext("supplier: {name}").format(
+        name=el.supplier and el.supplier.name or ""
+    )
 
 
 @format.register(UML.Extend)
 def format_extend(el):
-    return gettext("extend: {}").format(el.extendedCase and el.extendedCase.name or "")
+    return gettext("extend: {name}").format(
+        name=el.extendedCase and el.extendedCase.name or ""
+    )
 
 
 @format.register(UML.Include)
 def format_include(el):
-    return gettext("include: {}").format(el.addition and el.addition.name or "")
+    return gettext("include: {name}").format(
+        name=el.addition and el.addition.name or ""
+    )
