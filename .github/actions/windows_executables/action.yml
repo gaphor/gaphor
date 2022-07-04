@@ -15,8 +15,7 @@ inputs:
     required: true
   mainline_build:
     description: 'Build is performed on the main line'
-    required: false
-    default: "true"
+    required: true
 runs:
   using: composite
   steps:
@@ -30,7 +29,7 @@ runs:
         poetry run poe win-installer
       shell: bash
     - name: Sign Executables
-      if: inputs.main_line_build
+      if: inputs.mainline_build == 'true'
       env:
         timestampUrl: http://timestamp.digicert.com
         installer: "_packaging/dist/gaphor-${{ inputs.version }}-installer.exe"
@@ -56,7 +55,7 @@ runs:
         path: _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
     - name: Upload Assets (release only)
       uses: AButler/upload-release-assets@v2.0
-      if: inputs.main_line_build && github.event_name == 'release'
+      if: inputs.mainline_build == 'true' && github.event_name == 'release'
       with:
         files: "_packaging/dist/*.exe"
         repo-token: ${{ inputs.github_token }}
