@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-07-04 10:17+0200\n"
-"PO-Revision-Date: 2022-01-27 12:05+0000\n"
+"PO-Revision-Date: 2022-07-05 23:18+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:56
@@ -629,14 +630,12 @@ msgid "Swimlane"
 msgstr "Sáv"
 
 #: gaphor/UML/actions/actionstoolbox.py:169
-#, fuzzy
 msgid "Control flow"
-msgstr "vezérlő"
+msgstr "Vezérlésfolyam"
 
 #: gaphor/UML/actions/actionstoolbox.py:176
-#, fuzzy
 msgid "Object flow"
-msgstr "Vezérlés/objektum folyamata"
+msgstr "Objektumfolyam"
 
 #: gaphor/UML/actions/actionstoolbox.py:183
 msgid "Send signal action"
@@ -656,11 +655,11 @@ msgstr "Eseményművelet elfogadása"
 
 #: gaphor/UML/actions/actionstoolbox.py:207
 msgid "Input pin"
-msgstr ""
+msgstr "Bemeneti tű"
 
 #: gaphor/UML/actions/actionstoolbox.py:214
 msgid "Output pin"
-msgstr ""
+msgstr "Kimeneti tű"
 
 #: gaphor/UML/actions/activitynodes.py:189
 msgid "merge/decision"
@@ -700,11 +699,11 @@ msgstr "Új sáv"
 
 #: gaphor/UML/actions/pin.py:59
 msgid "input pin"
-msgstr ""
+msgstr "bemeneti tű"
 
 #: gaphor/UML/actions/pin.py:65
 msgid "output pin"
-msgstr ""
+msgstr "kimeneti tű"
 
 #: gaphor/UML/actions/propertypages.glade:28
 #: gaphor/UML/actions/propertypages.ui:11
@@ -770,13 +769,12 @@ msgstr "Védő"
 #: gaphor/UML/actions/propertypages.glade:322
 #: gaphor/UML/actions/propertypages.ui:245
 msgid "Parameter Nodes"
-msgstr ""
+msgstr "Paraméter csomópontok"
 
 #: gaphor/UML/actions/propertypages.glade:350
 #: gaphor/UML/actions/propertypages.ui:271
-#, fuzzy
 msgid "Parameters"
-msgstr "alkatrészek"
+msgstr "Paraméterek"
 
 #: gaphor/UML/actions/propertypages.glade:381
 #: gaphor/UML/actions/propertypages.ui:295
@@ -805,9 +803,18 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Tevékenységparaméter-csomópontok hozzáadása és szerkesztése az UML-szintaxis "
+"szerint.\n"
+"\n"
+"  • <tt>parameter</tt> (bemenet, név)\n"
+"  • <tt>out attr: int</tt> (kimenet típussal)\n"
+"  • <tt>in attr: int[0..1]</tt> (bevitel, típus és többszörösség)\n"
+"\n"
+"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés "
+"(Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához.\n"
+"A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/actions/propertypages.ui:320
-#, fuzzy
 msgid ""
 "Add and edit class activity according to UML syntax.\n"
 "\n"
@@ -820,19 +827,16 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Osztályattribútumok hozzáadása és szerkesztése az UML-szintaxis szerint.\n"
+"Osztálytevékenység hozzáadása és szerkesztése az UML-szintaxis szerint.\n"
 "\n"
-"  • <tt>attr</tt> (attribútum neve, alapértelmezés szerint a nyilvános "
-"láthatóság)\n"
-"  • <tt>+ attr: int</tt> (nyilvános attribútum típussal)\n"
-"  • <tt>+ attr: int[0..1]</tt> (nyilvános attribútum típussal és "
-"többszörösséggel)\n"
-"  • <tt># /attr: int # egy megjegyzés</tt> (védett és származtatott "
-"attribútum megjegyzéssel)\n"
+"  • <tt>attr</tt> (név, alapértelmezés szerint nyilvános láthatóság)\n"
+"  • <tt>+ attr: int</tt> (nyilvános típussal)\n"
+"  • <tt>+ attr: int[0..1]</tt> (nyilvános, típus és többszörösség)\n"
+"  • <tt># /attr: int # egy megjegyzés</tt> (védett, származtatott, "
+"megjegyzéssel)\n"
 "\n"
-"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés"
-" (Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához."
-"\n"
+"Nyomja meg az <b>Enter</b> billentyűt a szerkesztéshez, a <b>Visszatörlés "
+"(Backspace)</b>/<b>Törlés (Delete)</b> gombot az elemek eltávolításához.\n"
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
 #: gaphor/UML/classes/classespropertypages.py:335
@@ -1147,9 +1151,8 @@ msgid "Indirectly Instantiated"
 msgstr "Közvetetten példányosítva"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16
-#, fuzzy
 msgid "Deployments"
-msgstr "megvalósítás"
+msgstr "Telepítések"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:20
 msgid "Artifact"
@@ -1387,7 +1390,7 @@ msgstr "Megjegyzés"
 
 #: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
 msgid "Element can’t be represented on a diagram."
-msgstr ""
+msgstr "Az elem nem ábrázolható egy ábrán."
 
 #: gaphor/extensions/sphinx.py:65
 msgid "No model file configured for model '{model_name}'."
@@ -1450,7 +1453,7 @@ msgstr "Ábra exportálása PDF-fájlként"
 #: gaphor/plugins/errorreports/errorreports.py:65
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
-msgstr ""
+msgstr "Hibajelentések"
 
 #: gaphor/plugins/errorreports/errorreports.glade:21
 #: gaphor/plugins/errorreports/errorreports.ui:18
@@ -1458,15 +1461,16 @@ msgid ""
 "Any unhandled errors are shown here. You can use these to provide extra "
 "information when you create an issue on GitHub."
 msgstr ""
+"Ezeket felhasználhatja további adatok biztosítására, amikor problémát hoz "
+"létre a GitHubon."
 
 #: gaphor/plugins/errorreports/errorreports.py:102
 msgid "No errors have been intercepted. We’re good."
-msgstr ""
+msgstr "Hibát nem észleltek. Jók vagyunk."
 
 #: gaphor/plugins/errorreports/errorreports.py:106
-#, fuzzy
 msgid "Errors:"
-msgstr "művelet"
+msgstr "Hibák:"
 
 #: gaphor/plugins/errorreports/errorreports.py:155
 msgid ""
@@ -1474,6 +1478,9 @@ msgid ""
 "Please file an issue on GitHub and include information from Tools → Error"
 " Reports."
 msgstr ""
+"Váratlan hiba történt.\n"
+"Kérjük, jelentse be a problémát a GitHubon, és adja meg az Eszközök → "
+"Hibajelentések adatait."
 
 #: gaphor/plugins/xmiexport/__init__.py:24
 msgid "Export as XMI"
@@ -2310,7 +2317,7 @@ msgstr ""
 
 #: gaphor/ui/errorhandler.py:28 gaphor/ui/errorhandler.py:31
 msgid "Close"
-msgstr ""
+msgstr "Bezárás"
 
 #: gaphor/ui/errorhandler.py:28
 msgid "Start debug session"
@@ -2400,13 +2407,12 @@ msgid "Closing will cause any unsaved changes to be discarded."
 msgstr "A bezárás következtében a nem mentett módosítások elvesznek majd."
 
 #: gaphor/ui/filemanager.py:310
-#, fuzzy
 msgid "Close without saving changes"
-msgstr "Bezárás a módosítások mentése _nélkül"
+msgstr "Bezárás a módosítások mentése nélkül"
 
 #: gaphor/ui/filemanager.py:312
 msgid "Cancel"
-msgstr ""
+msgstr "Mégse"
 
 #: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:87
 msgid "Create New Model…"
@@ -2485,9 +2491,8 @@ msgid "_Open"
 msgstr "_Megnyitás"
 
 #: gaphor/ui/namespace.py:48
-#, fuzzy
 msgid "Add to diagram"
-msgstr "Kódábra"
+msgstr "Ábra hozzáadása"
 
 #: gaphor/ui/namespace.py:51
 msgid "_Rename"
