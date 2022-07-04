@@ -10,6 +10,9 @@ inputs:
   base64_encoded_pfx:
     description: 'The base 64 encoded Windows signing certificate'
     required: true
+  github_token:
+    description: 'GitHub token for uploading releases'
+    required: true
 runs:
   using: composite
   steps:
@@ -36,3 +39,19 @@ runs:
         & 'C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86\signtool.exe' sign /f 'certificate.pfx' /tr $env:timestampUrl /td sha256 /fd sha256 /p $env:password $env:installer $env:portable
         Remove-Item 'certificate.pfx'
       shell: PowerShell
+    - name: Upload gaphor-${{ inputs.version }}-installer.exe
+      uses: actions/upload-artifact@v3
+      with:
+        name: gaphor-${{ inputs.version }}-installer.exe
+        path: _packaging/dist/gaphor-${{ inputs.version }}-installer.exe
+    - name: Upload gaphor-${{ inputs.version }}-portable.exe
+      uses: actions/upload-artifact@v3
+      with:
+        name: gaphor-${{ inputs.version }}-portable.exe
+        path: _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
+    - name: Upload Assets (release only)
+      uses: AButler/upload-release-assets@v2.0
+      if: github.event_name == 'release'
+      with:
+        files: "_packaging/dist/*.exe"
+        repo-token: ${{ inputs.github_token }}

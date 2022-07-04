@@ -357,27 +357,13 @@ jobs:
         with:
           install_others: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
       - name: Windows Executables
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/packaging/')
         uses: ./.github/actions/windows_executables
         with:
           version: ${{ steps.setup_and_test.outputs.version }}
           cert_password: ${{ secrets.CERTPASSWORD }}
           base64_encoded_pfx: ${{ secrets.BASE64_ENCODED_PFX }}
-      - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
-        uses: actions/upload-artifact@v3
-        with:
-          name: gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
-          path: _packaging/dist/gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
-      - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-portable.exe
-        uses: actions/upload-artifact@v3
-        with:
-          name: gaphor-${{ steps.setup_and_test.outputs.version }}-portable.exe
-          path: _packaging/dist/gaphor-${{ steps.setup_and_test.outputs.version }}-portable.exe
-      - name: Upload Assets (release only)
-        uses: AButler/upload-release-assets@v2.0
-        if: github.event_name == 'release'
-        with:
-          files: "_packaging/dist/*.exe"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   check-windows-installer:
     needs: windows
