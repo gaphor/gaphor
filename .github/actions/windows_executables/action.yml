@@ -21,7 +21,7 @@ runs:
   using: composite
   steps:
     - name: Install Build Dependencies
-      run: poetry install --no-dev --extras poethepoet
+      run: poetry install --no-dev --extras pyinstall
       shell: bash
     - name: Create Windows Installers
       run: |

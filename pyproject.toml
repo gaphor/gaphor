@@ -71,7 +71,6 @@ hypothesis = "^6.49.1"
 
 [tool.poetry.extras]
 pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
-poethepoet = ["poethepoet"]
 docs = [ "sphinx", "sphinx-rtd-theme", "myst-parser"]
 
 [tool.poetry.scripts]
@@ -81,9 +80,6 @@ gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 [tool.poe.tasks]
 test = "pytest"
 test-all = "pytest --cov=gaphor/"
-install = "poetry install"
-install-nodev = "poetry install --no-dev"
-install-pyinstall = "poetry install --no-dev --extras pyinstall"
 coremodel.script = """gaphor.codegen.coder:main(
     modelfile='models/Core.gaphor',
     overridesfile='models/Core.override',
@@ -121,7 +117,7 @@ clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packagi
 gaphor-script = { "script" = "_packaging.make-script:make_gaphor_script" }
 version-file = { "script" = "_packaging.make-script:make_file_version_info" }
 pyinstall = { "script" = "_packaging.make-script:make_pyinstaller" }
-package = ["install-pyinstall", "gaphor-script", "version-file", "pyinstall"]
+package = ["gaphor-script", "version-file", "pyinstall"]
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
 appimage-docker-build = "docker build -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"
 appimage-docker-build-clean = "docker build --no-cache -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"

@@ -64,7 +64,7 @@ jobs:
         with:
           xvfb_command: 'xvfb-run'
       - name: Install Build Dependencies
-        run: poetry install --no-dev --extras poethepoet
+        run: poetry install --no-dev --extras pyinstall
       - name: Create Source Dist and Wheel
         run: poetry build
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
