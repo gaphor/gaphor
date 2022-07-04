@@ -2,13 +2,11 @@ name: Full Build
 
 on:
   push:
-    branches:
-      - main
-      - 'packaging/**'
   release:
     types: [published, prereleased]
 env:
   python_version: '3.10'
+  mainline_build: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/packaging/') }}
 
 jobs:
   skip-check:
@@ -356,10 +354,10 @@ jobs:
         uses: ./.github/actions/setup_and_test
         with:
           install_others: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
-      - name: Windows Executables
-        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/packaging/')
+      - name: Create Windows Executables
         uses: ./.github/actions/windows_executables
         with:
+          mainline_build: ${{ env.mainline_build }}
           version: ${{ steps.setup_and_test.outputs.version }}
           cert_password: ${{ secrets.CERTPASSWORD }}
           base64_encoded_pfx: ${{ secrets.BASE64_ENCODED_PFX }}
