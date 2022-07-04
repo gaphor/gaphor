@@ -34,7 +34,7 @@ HOME = str(Path.home())
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
 
-def main(argv=sys.argv):
+def main(argv=sys.argv) -> int:
     """Start Gaphor from the command line.  This function creates an option
     parser for retrieving arguments and options from the command line.  This
     includes a Gaphor model to load.
@@ -49,7 +49,7 @@ def main(argv=sys.argv):
 
     if has_option("-v", "--version"):
         print(f"Gaphor {distribution().version}")
-        return
+        return 0
 
     if has_option("-d", "--debug"):
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
@@ -71,16 +71,17 @@ def main(argv=sys.argv):
         import pstats
 
         with cProfile.Profile() as profile:
-            profile.runcall(run, argv)
+            exit_code = profile.runcall(run, argv)
 
         profile_stats = pstats.Stats(profile)
         profile_stats.strip_dirs().sort_stats("time").print_stats(50)
+        return exit_code
 
     else:
-        run(argv)
+        return run(argv)
 
 
-def run(args):
+def run(args: list[str]) -> int:
     application: Optional[Application] = None
 
     def app_startup(gtk_app):
@@ -112,8 +113,11 @@ def run(args):
             event_manager = application.get_service("event_manager")
             event_manager.subscribe(on_session_created)
             event_manager.subscribe(on_quit)
-            application.get_service("greeter").init(gtk_app)
+            application.get_service(
+                "self_test" if "--self-test" in args else "greeter"
+            ).init(gtk_app)
         except Exception:
+            gtk_app.exit_code = 1
             gtk_app.quit()
             raise
 
@@ -134,11 +138,13 @@ def run(args):
     gtk_app = Gtk.Application(
         application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
     )
+    gtk_app.exit_code = 0
     add_main_options(gtk_app)
     gtk_app.connect("startup", app_startup)
     gtk_app.connect("activate", app_activate)
     gtk_app.connect("open", app_open)
     gtk_app.run(args)
+    return gtk_app.exit_code
 
 
 def add_main_options(gtk_app):
@@ -176,5 +182,13 @@ def add_main_options(gtk_app):
         GLib.OptionFlags.NONE,
         GLib.OptionArg.NONE,
         "Run in profiler",
+        None,
+    )
+    gtk_app.add_main_option(
+        "self-test",
+        0,
+        GLib.OptionFlags.NONE,
+        GLib.OptionArg.NONE,
+        "Run self test and exit",
         None,
     )

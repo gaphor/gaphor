@@ -49,6 +49,8 @@ jobs:
       image: ghcr.io/gaphor/gaphor-appimage:stable
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
+    outputs:
+      appimage: Gaphor-${{ steps.setup_and_test.outputs.version }}-x86_64.AppImage
     steps:
       - uses: actions/checkout@v3.0.2
         with:
@@ -98,6 +100,20 @@ jobs:
         if: github.event_name == 'release'
         run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
+  check-linux-appimage:
+    needs: linux
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.linux.outputs.appimage }}
+          path: .
+      - name: Perform self-test
+        run: |
+          chmod +x ${{ needs.linux.outputs.appimage }}
+          xvfb-run ./${{ needs.linux.outputs.appimage }} --self-test
+
   macos:
     needs: lint
     runs-on: macos-latest
@@ -105,6 +121,8 @@ jobs:
       contents: write
     timeout-minutes: 45
     if: "!contains(github.event.head_commit.message, 'skip ci')"
+    outputs:
+      dmg: Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg
     env:
       LDFLAGS: -L/usr/local/opt/python@3.10/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
@@ -181,8 +199,23 @@ jobs:
           files: "_packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
+  check-macos-dmg:
+    needs: macos
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.macos.outputs.dmg }}
+          path: .
+      - name: Perform self-test
+        run: |
+          hdiutil attach ${{ needs.macos.outputs.dmg }}
+          cd /Volumes/Gaphor*
+          Gaphor*/Contents/MacOS/gaphor-exe --self-test
+
   windows-build-gtk:
-    needs: lint
+    needs: skip-check
     runs-on: windows-latest
     timeout-minutes: 60
     env:
@@ -238,6 +271,8 @@ jobs:
     permissions:
       contents: write
     timeout-minutes: 45
+    outputs:
+      installer: gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: Create GTK binaries dir
@@ -293,3 +328,18 @@ jobs:
         with:
           files: "_packaging/dist/*.exe"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  check-windows-installer:
+    needs: windows
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.windows.outputs.installer }}
+          path: .
+      - name: Perform self-test
+        run: |
+          start "" /WAIT "${{ needs.windows.outputs.installer }}" /S
+          start "" /WAIT "C:\Program Files (x86)\Gaphor\gaphor-exe.exe" --self-test
+        shell: cmd
