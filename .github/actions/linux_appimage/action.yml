@@ -1,0 +1,37 @@
+name: 'Create macOS Application'
+description: 'Create and Sign macOS Application Using PyInstaller'
+inputs:
+  version:
+    description: 'Gaphor version number'
+    required: true
+  github_token:
+    description: 'GitHub token for uploading releases'
+    required: true
+  mainline_build:
+    description: 'Build is performed on the main line'
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Install Build Dependencies
+      run: poetry install --no-dev --extras pyinstall
+      shell: bash
+    - name: Build AppImage
+      run: |
+        jhbuild shell
+        poetry run poe package
+        cd _packaging/appimage
+        make dist
+      shell: bash
+    - name: Upload gaphor-${{ inputs.version }}-x86_64.AppImage
+      if: inputs.mainline_build == 'true'
+      uses: actions/upload-artifact@v3
+      with:
+        name: Gaphor-${{ inputs.version }}-x86_64.AppImage
+        path: _packaging/dist/Gaphor-${{ inputs.version }}-x86_64.AppImage
+    - name: Upload Assets (release only)
+      uses: AButler/upload-release-assets@v2.0
+      if: inputs.mainline_build == 'true' && github.event_name == 'release'
+      with:
+        files: "_packaging/dist/*"
+        repo-token: ${{ inputs.github_token }}

@@ -63,8 +63,6 @@ jobs:
         uses: ./.github/actions/setup_and_test
         with:
           xvfb_command: 'xvfb-run'
-      - name: Install Build Dependencies
-        run: poetry install --no-dev --extras pyinstall
       - name: Create Source Dist and Wheel
         run: poetry build
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
@@ -77,22 +75,17 @@ jobs:
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
-      - name: Build AppImage
-        run: |
-          jhbuild shell
-          poetry run poe package
-          cd _packaging/appimage
-          make dist
-      - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-x86_64.AppImage
-        uses: actions/upload-artifact@v3
+      - name: Create Linux Appimage
+        uses: ./.github/actions/linux_appimage
         with:
-          name: Gaphor-${{ steps.setup_and_test.outputs.version }}-x86_64.AppImage
-          path: _packaging/dist/Gaphor-${{ steps.setup_and_test.outputs.version }}-x86_64.AppImage
+          mainline_build: ${{ env.mainline_build }}
+          version: ${{ steps.setup_and_test.outputs.version }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload Assets (release only)
         uses: AButler/upload-release-assets@v2.0
         if: github.event_name == 'release'
         with:
-          files: "_packaging/dist/*; dist/*"
+          files: "dist/*"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to PyPI (release only)
         if: github.event_name == 'release'
