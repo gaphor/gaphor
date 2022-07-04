@@ -30,7 +30,7 @@ runs:
         poetry run poe win-installer
       shell: bash
     - name: Sign Executables
-      if: inputs.main_line_build == 'true'
+      if: inputs.main_line_build
       env:
         timestampUrl: http://timestamp.digicert.com
         installer: "_packaging/dist/gaphor-${{ inputs.version }}-installer.exe"
@@ -56,7 +56,7 @@ runs:
         path: _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
     - name: Upload Assets (release only)
       uses: AButler/upload-release-assets@v2.0
-      if: inputs.main_line_build == 'true' && github.event_name == 'release'
+      if: inputs.main_line_build && github.event_name == 'release'
       with:
         files: "_packaging/dist/*.exe"
         repo-token: ${{ inputs.github_token }}
