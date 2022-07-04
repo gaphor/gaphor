@@ -114,6 +114,28 @@ jobs:
           chmod +x ${{ needs.linux.outputs.appimage }}
           xvfb-run ./${{ needs.linux.outputs.appimage }} --self-test
 
+  linux-gtk4:
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    container:
+      image: fedora:latest
+    env:
+      GAPHOR_USE_GTK: 4
+    steps:
+      - run: >
+          dnf install -y util-linux poetry gcc gtk4 cairo-devel cairo-gobject-devel
+          gobject-introspection-devel python3-devel python3-pip xorg-x11-server-Xvfb
+      - uses: actions/checkout@v3.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Install Dependencies and Test
+        id: setup_and_test
+        uses: ./.github/actions/setup_and_test
+        with:
+          xvfb_command: 'xvfb-run'
+
   macos:
     needs: lint
     runs-on: macos-latest
@@ -213,6 +235,34 @@ jobs:
           hdiutil attach ${{ needs.macos.outputs.dmg }}
           cd /Volumes/Gaphor*
           Gaphor*/Contents/MacOS/gaphor-exe --self-test
+
+  macos-gtk4:
+    needs: lint
+    runs-on: macos-latest
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    env:
+      LDFLAGS: -L/usr/local/opt/python@3.10/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      GAPHOR_USE_GTK: 4
+    steps:
+      - uses: actions/checkout@v3.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Set up Python
+        uses: actions/setup-python@v4.0.0
+        with:
+          python-version: ${{ env.python_version }}
+      - name: Install macOS Dependencies
+        uses: ./.github/actions/macos_dependencies
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v3.0.4
+        with:
+          path: ~/Library/Caches/pip
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: ${{ runner.os }}-poetry-
+      - name: Install Dependencies and Test
+        uses: ./.github/actions/setup_and_test
 
   windows-build-gtk:
     needs: skip-check

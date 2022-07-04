@@ -8,7 +8,7 @@ inputs:
   install_others:
     description: 'Command to install wheels in Windows prior to install other Python dependencies'
     required: false
-    default: 'echo "No extra dependencies to install"'
+    default: ''
 outputs:
   version:
     description: 'Build version with added dev reference for non-releases'
@@ -27,6 +27,7 @@ runs:
       run: .github/scripts/metadata.sh
       shell: bash
     - name: Install Others
+      if: inputs.install_others
       run: ${{ inputs.install_others }}
       shell: pwsh
     - name: Install Python Dependencies
