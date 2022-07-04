@@ -21,8 +21,7 @@ inputs:
     required: true
   mainline_build:
     description: 'Build is performed on the main line'
-    required: false
-    default: "true"
+    required: true
 runs:
   using: composite
   steps:
@@ -41,19 +40,19 @@ runs:
       run: poetry run poe package
       shell: bash
     - name: Notarize app
-      if: inputs.main_line_build
+      if: inputs.mainline_build == 'true'
       uses: devbotsxyz/xcode-notarize@v1.0.0
       with:
         product-path: "_packaging/dist/Gaphor.app"
         appstore-connect-username: ${{ inputs.ac_username }}
         appstore-connect-password: ${{ inputs.ac_password }}
     - name: Staple app
-      if: inputs.main_line_build
+      if: inputs.mainline_build == 'true'
       uses: devbotsxyz/xcode-staple@v1.0.0
       with:
         product-path: "_packaging/dist/Gaphor.app"
     - name: Create dmg
-      if: inputs.main_line_build
+      if: inputs.mainline_build == 'true'
       run: >
         cd _packaging
 
@@ -65,7 +64,7 @@ runs:
         "dist/Gaphor.app"
       shell: bash
     - name: Notarize dmg
-      if: inputs.main_line_build
+      if: inputs.mainline_build == 'true'
       uses: devbotsxyz/xcode-notarize@v1
       with:
         product-path: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
@@ -73,22 +72,26 @@ runs:
         appstore-connect-password: ${{ inputs.ac_password }}
         primary-bundle-id: org.gaphor.gaphor
     - name: Staple .dmg
-      if: inputs.main_line_build
+      if: inputs.mainline_build == 'true'
       uses: devbotsxyz/xcode-staple@v1.0.0
       with:
         product-path: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
     - name: Upload Gaphor-${{ inputs.version }}.dmg
-      if: inputs.main_line_build
+      if: inputs.mainline_build == 'true'
       uses: actions/upload-artifact@v3
       with:
         name: Gaphor-${{ inputs.version }}.dmg
         path: _packaging/dist/Gaphor-${{ inputs.version }}.dmg
+    - name: Zip app
+      if: inputs.mainline_build != 'true'
+      run: cd _packaging/dist/ && zip -rq Gaphor.zip Gaphor.app
+      shell: bash
     - name: Upload Gaphor-${{ inputs.version }}-macos.zip
-      if: inputs.main_line_build != 'true'
+      if: inputs.mainline_build != 'true'
       uses: actions/upload-artifact@v3
       with:
-        name: Gaphor-${{ inputs.version }}.app
-        path: _packaging/dist/Gaphor.app
+        name: Gaphor-${{ inputs.version }}.app.zip
+        path: _packaging/dist/Gaphor.zip
     - name: Upload Assets (release only)
       uses: AButler/upload-release-assets@v2.0
       if: github.event_name == 'release'
