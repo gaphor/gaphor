@@ -1048,13 +1048,12 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 
 [extras]
 docs = ["sphinx", "sphinx-rtd-theme", "myst-parser"]
-poethepoet = ["poethepoet"]
 pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "a7657042ab0bebdfa0cf91526df7afc1c0a040ac447fcebfb80c14b41ba880a5"
+content-hash = "26aa620bec54a2df586649a3785c9485395e1f5ae0a72dd36dc9183c79f8ccdc"
 
 [metadata.files]
 alabaster = [
