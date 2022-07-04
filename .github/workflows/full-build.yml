@@ -63,6 +63,13 @@ jobs:
         uses: ./.github/actions/setup_and_test
         with:
           xvfb_command: 'xvfb-run'
+      - name: Upload Code Coverage to Code Climate
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
+        with:
+          coverageCommand: poetry run coverage xml
+
       - name: Create Source Dist and Wheel
         run: poetry build
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
