@@ -14,9 +14,11 @@ runs:
   using: composite
   steps:
     - name: Install Build Dependencies
+      if: inputs.mainline_build == 'true'
       run: poetry install --no-dev --extras pyinstall
       shell: bash
     - name: Build AppImage
+      if: inputs.mainline_build == 'true'
       run: |
         jhbuild shell
         poetry run poe package
