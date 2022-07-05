@@ -68,6 +68,27 @@ jobs:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
           coverageCommand: poetry run coverage xml
+      - name: Create Source Dist and Wheel
+        run: poetry build
+      - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
+        uses: actions/upload-artifact@v3
+        with:
+          name: gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
+          path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
+      - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
+        uses: actions/upload-artifact@v3
+        with:
+          name: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
+          path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
+      - name: Upload Assets (release only)
+        uses: AButler/upload-release-assets@v2.0
+        if: github.event_name == 'release'
+        with:
+          files: "dist/*"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to PyPI (release only)
+        if: github.event_name == 'release'
+        run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
   linux-appimage:
     needs: lint
@@ -94,33 +115,12 @@ jobs:
         uses: ./.github/actions/setup_and_test
         with:
           xvfb_command: 'xvfb-run'
-      - name: Create Source Dist and Wheel
-        run: poetry build
-      - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
-        uses: actions/upload-artifact@v3
-        with:
-          name: gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
-          path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
-      - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
-        uses: actions/upload-artifact@v3
-        with:
-          name: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
-          path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
       - name: Create Linux Appimage
         uses: ./.github/actions/linux_appimage
         with:
           mainline_build: ${{ env.mainline_build }}
           version: ${{ steps.setup_and_test.outputs.version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload Assets (release only)
-        uses: AButler/upload-release-assets@v2.0
-        if: github.event_name == 'release'
-        with:
-          files: "dist/*"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish to PyPI (release only)
-        if: github.event_name == 'release'
-        run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
   check-linux-appimage:
     needs: linux-appimage
