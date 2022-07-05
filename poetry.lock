@@ -247,7 +247,7 @@ exceptiongroup = ">=1.0.0-rc.5,<2.0.0"
 
 [[package]]
 name = "hypothesis"
-version = "6.48.3"
+version = "6.49.1"
 description = "A library for property-based testing"
 category = "dev"
 optional = false
@@ -1054,7 +1054,7 @@ pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "78ad5e8a4370ad6842d2564801721f75016da886ed37b38c99e7424202c733b3"
+content-hash = "a7657042ab0bebdfa0cf91526df7afc1c0a040ac447fcebfb80c14b41ba880a5"
 
 [metadata.files]
 alabaster = [
@@ -1209,8 +1209,8 @@ generic = [
     {file = "generic-1.1.0.tar.gz", hash = "sha256:ffde3ba04bd9483e668d10fda9cbb328015ab62bd399a79e8d7c50df6d940fe0"},
 ]
 hypothesis = [
-    {file = "hypothesis-6.48.3-py3-none-any.whl", hash = "sha256:5e08711eb2c746c6d47d33f7b101fe0e7aee889e767f7195dbdde5273d2b04c3"},
-    {file = "hypothesis-6.48.3.tar.gz", hash = "sha256:6992c9f13f211b8972f0bae0e28c3b403e888e37efe2e6c9679e0bc4bd5e7b68"},
+    {file = "hypothesis-6.49.1-py3-none-any.whl", hash = "sha256:a28a74e700960065f9fc972983c56f7c0821989c6c06a6fbcc42abe3a47e9986"},
+    {file = "hypothesis-6.49.1.tar.gz", hash = "sha256:0310d446fb87415e31798e8267288acc22f0be4a0530128a3a694190fcc43e5b"},
 ]
 identify = [
     {file = "identify-2.5.1-py2.py3-none-any.whl", hash = "sha256:0dca2ea3e4381c435ef9c33ba100a78a9b40c0bab11189c7cf121f75815efeaa"},
