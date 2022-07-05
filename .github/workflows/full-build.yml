@@ -41,6 +41,37 @@ jobs:
   linux:
     needs: lint
     runs-on: ubuntu-20.04
+    timeout-minutes: 30
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - uses: actions/checkout@v3.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Install Linux Dependencies
+        uses: ./.github/actions/linux_dependencies
+      - name: Set up Python
+        uses: actions/setup-python@v4.0.0
+        with:
+          python-version: ${{ env.python_version }}
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v3.0.4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
+      - name: Install Dependencies and Test
+        uses: ./.github/actions/setup_and_test
+        with:
+          xvfb_command: 'xvfb-run'
+      - name: Upload Code Coverage to Code Climate
+        uses: paambaati/codeclimate-action@v3.0.0
+        env:
+          CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
+        with:
+          coverageCommand: poetry run coverage xml
+
+  linux-appimage:
+    needs: lint
+    runs-on: ubuntu-20.04
     permissions:
       contents: write
     container:
@@ -63,13 +94,6 @@ jobs:
         uses: ./.github/actions/setup_and_test
         with:
           xvfb_command: 'xvfb-run'
-      - name: Upload Code Coverage to Code Climate
-        uses: paambaati/codeclimate-action@v3.0.0
-        env:
-          CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
-        with:
-          coverageCommand: poetry run coverage xml
-
       - name: Create Source Dist and Wheel
         run: poetry build
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
@@ -99,19 +123,19 @@ jobs:
         run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
   check-linux-appimage:
-    needs: linux
+    needs: linux-appimage
     runs-on: ubuntu-20.04
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/packaging/')
     timeout-minutes: 10
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ needs.linux.outputs.appimage }}
+          name: ${{ needs.linux-appimage.outputs.appimage }}
           path: .
       - name: Perform self-test
         run: |
-          chmod +x ${{ needs.linux.outputs.appimage }}
-          xvfb-run ./${{ needs.linux.outputs.appimage }} --self-test
+          chmod +x ${{ needs.linux-appimage.outputs.appimage }}
+          xvfb-run ./${{ needs.linux-appimage.outputs.appimage }} --self-test
 
   linux-gtk4:
     needs: lint
