@@ -125,7 +125,6 @@ jobs:
   check-linux-appimage:
     needs: linux-appimage
     runs-on: ubuntu-20.04
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/packaging/')
     timeout-minutes: 10
     steps:
       - uses: actions/download-artifact@v3

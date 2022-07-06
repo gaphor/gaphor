@@ -14,11 +14,9 @@ runs:
   using: composite
   steps:
     - name: Install Build Dependencies
-      if: inputs.mainline_build == 'true'
       run: poetry install --no-dev --extras pyinstall
       shell: bash
     - name: Build AppImage
-      if: inputs.mainline_build == 'true'
       run: |
         jhbuild shell
         poetry run poe package
@@ -26,7 +24,6 @@ runs:
         make dist
       shell: bash
     - name: Upload gaphor-${{ inputs.version }}-x86_64.AppImage
-      if: inputs.mainline_build == 'true'
       uses: actions/upload-artifact@v3
       with:
         name: Gaphor-${{ inputs.version }}-x86_64.AppImage
