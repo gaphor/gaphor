@@ -118,7 +118,7 @@ class FileManager(Service, ActionProvider):
             status_window = StatusWindow(
                 gettext("Loading…"),
                 gettext("Loading model from {filename}").format(filename=filename),
-                parent=self.main_window.window,
+                parent=self.main_window.window if self.main_window else None,
                 queue=queue,
             )
 

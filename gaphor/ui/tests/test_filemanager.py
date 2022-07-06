@@ -32,3 +32,27 @@ def test_model_is_saved_with_utf8_encoding(
 
     with open(model_file, encoding="utf-8") as f:
         f.read()  # raises exception if characters can't be decoded
+
+
+def test_model_is_loaded_with_utf8_encoding(
+    element_factory, file_manager: FileManager, tmp_path
+):
+    class_name = "üëïèàòù"
+    package_name = "안녕하세요 세계"
+
+    class_ = element_factory.create(UML.Class)
+    class_.name = class_name
+    package = element_factory.create(UML.Package)
+    package.name = package_name
+
+    model_file = tmp_path / "model.gaphor"
+    file_manager.save(str(model_file))
+
+    element_factory.flush()
+
+    file_manager.load(str(model_file))
+    new_class = next(element_factory.select(UML.Class))
+    new_package = next(element_factory.select(UML.Package))
+
+    assert new_class.name == class_name
+    assert new_package.name == package_name
