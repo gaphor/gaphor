@@ -61,12 +61,21 @@ class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
         "show_enumerations", int, default=True
     )
 
+    as_sysml_value_type: attribute[int] = attribute(
+        "as_sysml_value_type", int, default=False
+    )
+
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
                 Text(
                     text=lambda: UML.recipes.stereotypes_str(
-                        self.subject, [gettext("enumeration")]
+                        self.subject,
+                        [
+                            gettext("valueType")
+                            if self.as_sysml_value_type
+                            else gettext("enumeration")
+                        ],
                     ),
                 ),
                 Text(
