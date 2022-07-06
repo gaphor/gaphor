@@ -40,6 +40,7 @@ def add_tag_is_foo_metadata_field(e, factory):
         ("myattr:int=3", "+ myattr: int = 3"),
         ("myattr: int#some note", "+ myattr: int # some note"),
         ("# myattr:int=3 #some note", "# myattr: int = 3 # some note"),
+        ("+ myattr: int | str", "+ myattr: int | str"),
     ],
 )
 def test_attribute(factory, text, formatted_text):

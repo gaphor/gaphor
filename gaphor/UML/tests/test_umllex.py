@@ -98,6 +98,23 @@ def test_parse_property_with_square_brackets(factory):
     assert None is a.lowerValue
 
 
+@pytest.mark.parametrize(
+    "text,type_value",
+    [
+        ("attr: int | str", "int | str"),
+        ("attr: int | str | bool | other", "int | str | bool | other"),
+        ("attr: int|str|bool", "int|str|bool"),
+        ("attr: my int|with space|some bool", "my int|with space|some bool"),
+    ],
+)
+def test_parse_property_with_union_type(factory, text, type_value):
+    a = factory.create(UML.Property)
+    parse(a, text)
+
+    assert "attr" == a.name
+    assert type_value == a.typeValue
+
+
 def test_parse_property_invalid(factory):
     """Test parsing property with invalid syntax."""
     a = factory.create(UML.Property)
@@ -254,6 +271,15 @@ def test_parse_operation_with_spaces(factory):
     assert "return value" == o.ownedParameter[0].typeValue
     assert "param with space" == o.ownedParameter[1].name
     assert "some node" == o.ownedParameter[1].typeValue
+
+
+def test_parse_operation_with_union_types(factory):
+    o = factory.create(UML.Operation)
+    parse(o, "- oper(param with space: int | str ): bool | None")
+    assert "oper" == o.name
+    assert "bool | None" == o.ownedParameter[0].typeValue
+    assert "int | str" == o.ownedParameter[1].typeValue
+    assert "param with space" == o.ownedParameter[1].name
 
 
 def test_parse_operation_invalid_syntax(factory):
