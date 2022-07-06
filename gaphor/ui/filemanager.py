@@ -194,7 +194,7 @@ class FileManager(Service, ActionProvider):
         @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
         def async_saver():
             try:
-                with open(filename, "w") as out:
+                with open(filename, "w", encoding="utf-8") as out:
                     for percentage in storage.save_generator(out, self.element_factory):
                         queue.put(percentage)
                         yield

@@ -145,7 +145,7 @@ class Properties(Service):
         if not self.filename:
             return
 
-        with open(self.filename, "w") as ofile:
+        with open(self.filename, "w", encoding="utf-8") as ofile:
             pprint.pprint(self._properties, ofile)
 
     def get(self, key: str, default=_no_default):

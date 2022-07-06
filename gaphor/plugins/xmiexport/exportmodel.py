@@ -222,30 +222,31 @@ class XMIExport:
         pass
 
     def export(self, filename):
-        out = open(filename, "w")
+        with open(filename, "w", encoding="utf-8") as out:
+            xmi = XMLWriter(out)
 
-        xmi = XMLWriter(out)
+            attributes = {
+                "xmi.version": self.XMI_VERSION,
+                "xmlns:xmi": self.XMI_NAMESPACE,
+                "xmlns:UML": self.UML_NAMESPACE,
+            }
 
-        attributes = {
-            "xmi.version": self.XMI_VERSION,
-            "xmlns:xmi": self.XMI_NAMESPACE,
-            "xmlns:UML": self.UML_NAMESPACE,
-        }
+            xmi.startElement("XMI", attrs=attributes)
 
-        xmi.startElement("XMI", attrs=attributes)
+            for package in self.element_factory.select(self.select_package):
+                self.handle(xmi, package)
 
-        for package in self.element_factory.select(self.select_package):
-            self.handle(xmi, package)
+            for generalization in self.element_factory.select(
+                self.select_generalization
+            ):
+                self.handle(xmi, generalization)
 
-        for generalization in self.element_factory.select(self.select_generalization):
-            self.handle(xmi, generalization)
+            for realization in self.element_factory.select(self.select_realization):
+                self.handle(xmi, realization)
 
-        for realization in self.element_factory.select(self.select_realization):
-            self.handle(xmi, realization)
+            xmi.endElement("XMI")
 
-        xmi.endElement("XMI")
-
-        logger.debug(self.handled_ids)
+            logger.debug(self.handled_ids)
 
     def select_package(self, element):
         return element.__class__.__name__ == "Package"
