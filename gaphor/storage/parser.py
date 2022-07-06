@@ -374,7 +374,7 @@ def parse_file(filename, parser):
         file_obj: IO | io.IOBase = filename
     else:
         is_fd = False
-        file_obj = open(filename, "r")
+        file_obj = open(filename, "r", encoding="utf-8")
 
     try:
         yield from ProgressGenerator(file_obj, parser)
