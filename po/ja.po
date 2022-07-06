@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-07-04 10:17+0200\n"
+"POT-Creation-Date: 2022-07-06 17:00+0200\n"
 "PO-Revision-Date: 2021-10-21 12:41+0000\n"
 "Last-Translator: Tomo Dote <fu7mu4@gmail.com>\n"
 "Language: ja\n"
@@ -774,8 +774,8 @@ msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:247
 #: gaphor/UML/actions/propertypages.ui:189
-#: gaphor/UML/classes/propertypages.glade:609
-#: gaphor/UML/classes/propertypages.ui:499
+#: gaphor/UML/classes/propertypages.glade:610
+#: gaphor/UML/classes/propertypages.ui:500
 #: gaphor/UML/profiles/propertypages.glade:25
 #: gaphor/UML/profiles/propertypages.ui:9
 msgid "Name"
@@ -804,13 +804,13 @@ msgstr "部品"
 #: gaphor/UML/classes/propertypages.glade:94
 #: gaphor/UML/classes/propertypages.glade:221
 #: gaphor/UML/classes/propertypages.glade:441
-#: gaphor/UML/classes/propertypages.glade:738
-#: gaphor/UML/classes/propertypages.glade:864
+#: gaphor/UML/classes/propertypages.glade:739
+#: gaphor/UML/classes/propertypages.glade:865
 #: gaphor/UML/classes/propertypages.ui:68
 #: gaphor/UML/classes/propertypages.ui:171
 #: gaphor/UML/classes/propertypages.ui:364
-#: gaphor/UML/classes/propertypages.ui:615
-#: gaphor/UML/classes/propertypages.ui:723
+#: gaphor/UML/classes/propertypages.ui:616
+#: gaphor/UML/classes/propertypages.ui:724
 msgid "🛈 Help"
 msgstr ""
 
@@ -827,13 +827,14 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/actions/propertypages.ui:320
+#: gaphor/UML/actions/propertypages.ui:321
 msgid ""
 "Add and edit class activity according to UML syntax.\n"
 "\n"
 "  • <tt>attr</tt> (name, defaults to public visibility)\n"
 "  • <tt>+ attr: int</tt> (public with type)\n"
 "  • <tt>+ attr: int[0..1]</tt> (public, type, and multiplicity)\n"
+"  • <tt>+ attr: int | bool</tt> (public, union type)\n"
 "  • <tt># /attr: int # a note</tt> (protected, derived, with remark)\n"
 "\n"
 "Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
@@ -847,8 +848,8 @@ msgid "Static"
 msgstr "静的"
 
 #: gaphor/UML/classes/classespropertypages.py:419
-#: gaphor/UML/classes/propertypages.glade:495
-#: gaphor/UML/classes/propertypages.ui:407
+#: gaphor/UML/classes/propertypages.glade:496
+#: gaphor/UML/classes/propertypages.ui:408
 msgid "Abstract"
 msgstr "抽象"
 
@@ -1009,20 +1010,21 @@ msgid "Show Attributes"
 msgstr "属性を表示"
 
 #: gaphor/UML/classes/propertypages.glade:415
-#: gaphor/UML/classes/propertypages.glade:712
+#: gaphor/UML/classes/propertypages.glade:713
 #: gaphor/UML/classes/propertypages.ui:345
-#: gaphor/UML/classes/propertypages.ui:596
+#: gaphor/UML/classes/propertypages.ui:597
 msgid "S"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:479
-#: gaphor/UML/classes/propertypages.ui:392
+#: gaphor/UML/classes/propertypages.glade:480
+#: gaphor/UML/classes/propertypages.ui:393
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "\n"
 "  • <tt>attr</tt> (name, defaults to public visibility)\n"
 "  • <tt>+ attr: int</tt> (public with type)\n"
 "  • <tt>+ attr: int[0..1]</tt> (public, type, and multiplicity)\n"
+"  • <tt>+ attr: int | bool</tt> (public, union type)\n"
 "  • <tt># /attr: int # a note</tt> (protected, derived, with remark)\n"
 "\n"
 "Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
@@ -1030,40 +1032,40 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:521
-#: gaphor/UML/classes/propertypages.ui:429
+#: gaphor/UML/classes/propertypages.glade:522
+#: gaphor/UML/classes/propertypages.ui:430
 msgid "Dependency type"
 msgstr "依存関係の種類"
 
-#: gaphor/UML/classes/propertypages.glade:534
-#: gaphor/UML/classes/propertypages.ui:440
+#: gaphor/UML/classes/propertypages.glade:535
+#: gaphor/UML/classes/propertypages.ui:441
 msgid "Automatic"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:581
-#: gaphor/UML/classes/propertypages.ui:476
+#: gaphor/UML/classes/propertypages.glade:582
+#: gaphor/UML/classes/propertypages.ui:477
 msgid "Folded"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:645
-#: gaphor/UML/classes/propertypages.ui:535
+#: gaphor/UML/classes/propertypages.glade:646
+#: gaphor/UML/classes/propertypages.ui:536
 msgid "Show Operations"
 msgstr "操作の表示"
 
-#: gaphor/UML/classes/propertypages.glade:681
-#: gaphor/UML/classes/propertypages.glade:751
-#: gaphor/UML/classes/propertypages.ui:522
-#: gaphor/UML/classes/propertypages.ui:565
+#: gaphor/UML/classes/propertypages.glade:682
+#: gaphor/UML/classes/propertypages.glade:752
+#: gaphor/UML/classes/propertypages.ui:523
+#: gaphor/UML/classes/propertypages.ui:566
 msgid "Operations"
 msgstr "操作"
 
-#: gaphor/UML/classes/propertypages.glade:699
-#: gaphor/UML/classes/propertypages.ui:583
+#: gaphor/UML/classes/propertypages.glade:700
+#: gaphor/UML/classes/propertypages.ui:584
 msgid "A"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:775
-#: gaphor/UML/classes/propertypages.ui:643
+#: gaphor/UML/classes/propertypages.glade:776
+#: gaphor/UML/classes/propertypages.ui:644
 msgid ""
 "Add and edit class operations according to UML syntax.\n"
 "\n"
@@ -1076,20 +1078,20 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:797
-#: gaphor/UML/classes/propertypages.ui:670
+#: gaphor/UML/classes/propertypages.glade:798
+#: gaphor/UML/classes/propertypages.ui:671
 msgid "Show Enumeration Literals"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:834
-#: gaphor/UML/classes/propertypages.glade:877
-#: gaphor/UML/classes/propertypages.ui:657
-#: gaphor/UML/classes/propertypages.ui:700
+#: gaphor/UML/classes/propertypages.glade:835
+#: gaphor/UML/classes/propertypages.glade:878
+#: gaphor/UML/classes/propertypages.ui:658
+#: gaphor/UML/classes/propertypages.ui:701
 msgid "Enumeration Literals"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:899
-#: gaphor/UML/classes/propertypages.ui:748
+#: gaphor/UML/classes/propertypages.glade:900
+#: gaphor/UML/classes/propertypages.ui:749
 msgid ""
 "Add and edit enumeration literals according to UML syntax.\n"
 "\n"
@@ -1100,8 +1102,8 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.glade:915
-#: gaphor/UML/classes/propertypages.ui:763
+#: gaphor/UML/classes/propertypages.glade:916
+#: gaphor/UML/classes/propertypages.ui:764
 msgid "Indirectly Instantiated"
 msgstr ""
 
