@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.10.0.dev786+d53a15d0">
+<StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+<Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+<name>
+<val>New model</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</reflist>
+</ownedDiagram>
+<ownedType>
+<reflist>
+<ref refid="9cd5fc72-fd53-11ec-bf98-525400c3ab86"/>
+<ref refid="a8894891-fd53-11ec-baca-525400c3ab86"/>
+<ref refid="b6cc6a89-fd53-11ec-83b7-525400c3ab86"/>
+</reflist>
+</ownedType>
+</Package>
+<Diagram id="58d6c536-66f8-11ec-b4c8-0456e5e540ed">
+<element>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</element>
+<name>
+<val>main</val>
+</name>
+<ownedPresentation>
+<reflist>
+<ref refid="9cd88c33-fd53-11ec-922f-525400c3ab86"/>
+<ref refid="a8897003-fd53-11ec-82f6-525400c3ab86"/>
+<ref refid="b6cc6a8a-fd53-11ec-8e54-525400c3ab86"/>
+</reflist>
+</ownedPresentation>
+</Diagram>
+<Class id="9cd5fc72-fd53-11ec-bf98-525400c3ab86">
+<name>
+<val>Über-class</val>
+</name>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="9cd88c33-fd53-11ec-922f-525400c3ab86"/>
+</reflist>
+</presentation>
+</Class>
+<ClassItem id="9cd88c33-fd53-11ec-922f-525400c3ab86">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 69.0, 88.0)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>58.0</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="9cd5fc72-fd53-11ec-bf98-525400c3ab86"/>
+</subject>
+</ClassItem>
+<Class id="a8894891-fd53-11ec-baca-525400c3ab86">
+<name>
+<val>ça va bien</val>
+</name>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="a8897003-fd53-11ec-82f6-525400c3ab86"/>
+</reflist>
+</presentation>
+</Class>
+<ClassItem id="a8897003-fd53-11ec-82f6-525400c3ab86">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 69.0, 185.0)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>58.0</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="a8894891-fd53-11ec-baca-525400c3ab86"/>
+</subject>
+</ClassItem>
+<Class id="b6cc6a89-fd53-11ec-83b7-525400c3ab86">
+<name>
+<val>üëïèàòù</val>
+</name>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="b6cc6a8a-fd53-11ec-8e54-525400c3ab86"/>
+</reflist>
+</presentation>
+</Class>
+<ClassItem id="b6cc6a8a-fd53-11ec-8e54-525400c3ab86">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 85.0, 338.0)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>58.0</val>
+</height>
+<diagram>
+<ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="b6cc6a89-fd53-11ec-83b7-525400c3ab86"/>
+</subject>
+</ClassItem>
+</gaphor>

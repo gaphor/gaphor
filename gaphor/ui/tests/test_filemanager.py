@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 
 from gaphor import UML
@@ -56,3 +58,13 @@ def test_model_is_loaded_with_utf8_encoding(
 
     assert new_class.name == class_name
     assert new_package.name == package_name
+
+
+@pytest.mark.skipif(
+    sys.platform != "win32", reason="Standard encoding on Windows is not UTF-8"
+)
+def test_old_model_is_loaded_without_utf8_encoding(
+    file_manager: FileManager, test_models
+):
+    model_file = test_models / "wrong-encoding.gaphor"
+    file_manager.load(str(model_file))
