@@ -226,12 +226,10 @@ class FileManager(Service, ActionProvider):
         Returns True if the saving actually succeeded.
         """
 
-        filename = self.filename
-
-        if not filename:
-            self.action_save_as()
-        else:
+        if filename := self.filename:
             self.save(filename)
+        else:
+            self.action_save_as()
 
     @action(name="file-save-as", shortcut="<Primary><Shift>s")
     def action_save_as(self):
@@ -272,9 +270,10 @@ class FileManager(Service, ActionProvider):
 
         def response(answer):
             if answer == Gtk.ResponseType.YES:
-                filename = self.filename
+                if filename := self.filename:
+                    self.save(filename, on_save_done=confirm_shutdown)
 
-                if not filename:
+                else:
                     save_file_dialog(
                         gettext("Save Gaphor Model As"),
                         lambda filename: self.save(
@@ -285,9 +284,6 @@ class FileManager(Service, ActionProvider):
                         extension=".gaphor",
                         filters=GAPHOR_FILTER,
                     )
-                else:
-                    self.save(filename, on_save_done=confirm_shutdown)
-
             elif answer == Gtk.ResponseType.REJECT:
                 confirm_shutdown()
 
