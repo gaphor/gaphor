@@ -317,3 +317,20 @@ association:not([memberEnd.navigability*=true]) {
 :model: style-sheets
 :alt: navigable association
 ```
+
+### Todo note highlight
+
+All comments beginning with the phrase "todo" can be highlighted in
+a different user-specific colour. This can be used to make yourself aware
+that you have to do some additional work to finalize the diagram.
+
+```css
+comment[body^="TODO"] {
+  background-color: skyblue;
+}
+```
+
+```{diagram} todo
+:model: style-sheets
+:alt: highlighted todo note
+```
