@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ast
 import logging
+import re
 from typing import TYPE_CHECKING, Generic, TypeVar
 
 from gaphas.item import Matrices
@@ -21,8 +22,8 @@ S = TypeVar("S", bound=Element)
 log = logging.getLogger(__name__)
 
 
-def literal_eval(value):
-    return ast.literal_eval(value)
+def literal_eval(value: str):
+    return ast.literal_eval(re.sub("\r|\n", "", value))
 
 
 class Presentation(Matrices, Element, Generic[S]):
