@@ -19,14 +19,14 @@ class CommentItem(ElementPresentation):
         self.height = 50
         self.width = 100
 
-        self.body = Text(
+        self._body = Text(
             text=lambda: self.subject.body or "",
             width=lambda: self.width - ear - 2 * offset,
             style={"text-align": TextAlign.LEFT, "vertical-align": VerticalAlign.TOP},
         )
 
         self.shape = Box(
-            self.body,
+            self._body,
             style={"padding": (offset, ear + offset, offset, offset)},
             draw=partial(draw_border, ear=ear),
         )
