@@ -29,7 +29,7 @@ jobs:
       - name: Use Hypothesis Cache
         uses: actions/cache@v3.0.4
         with:
-          path: ~/.hypothesis
+          path: .hypothesis
           key: ${{ runner.os }}-hypothesis
       - name: Install Dependencies and Test
         uses: ./.github/actions/setup_and_test
