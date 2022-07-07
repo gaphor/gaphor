@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import ast
 from dataclasses import replace
 from math import atan2
 
@@ -14,7 +13,7 @@ from gaphas.solver.constraint import BaseConstraint
 
 from gaphor.core.modeling.diagram import Diagram
 from gaphor.core.modeling.event import RevertibeEvent
-from gaphor.core.modeling.presentation import Presentation, S
+from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.shapes import stroke
@@ -163,15 +162,15 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
 
     def load(self, name, value):
         if name == "top-left":
-            pos = ast.literal_eval(value)
+            pos = literal_eval(value)
             self._handles[0].pos = pos
             # Also adjust bottom-right handle to keep width and height intact
             self._handles[2].pos.x += pos[0]
             self._handles[2].pos.y += pos[1]
         elif name == "width":
-            self.width = ast.literal_eval(value)
+            self.width = literal_eval(value)
         elif name == "height":
-            self.height = ast.literal_eval(value)
+            self.height = literal_eval(value)
         else:
             super().load(name, value)
 
@@ -303,7 +302,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
     def load(self, name, value):
         if name == "points":
-            points = ast.literal_eval(value)
+            points = literal_eval(value)
             for _ in range(len(points) - 2):
                 h = Handle((0, 0))
                 self._handles.insert(1, h)
@@ -507,7 +506,7 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
 
     def load(self, name, value):
         if name == "point":
-            self._handle.pos = ast.literal_eval(value)
+            self._handle.pos = literal_eval(value)
         elif name == "connection":
             self._load_connection = value
         else:

@@ -1,6 +1,5 @@
 """Activity control nodes."""
 
-import ast
 import math
 
 from gaphas.constraint import constraint
@@ -12,7 +11,12 @@ from gaphas.util import path_ellipse
 from gaphor import UML
 from gaphor.core.modeling import Presentation
 from gaphor.core.modeling.properties import association, attribute, relation_one
-from gaphor.diagram.presentation import ElementPresentation, HandlePositionUpdate, Named
+from gaphor.diagram.presentation import (
+    ElementPresentation,
+    HandlePositionUpdate,
+    Named,
+    literal_eval,
+)
 from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.i18n import gettext
@@ -263,7 +267,7 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
 
     def load(self, name, value):
         if name == "height":
-            self._handles[1].pos.y = ast.literal_eval(value)
+            self._handles[1].pos.y = literal_eval(value)
         else:
             super().load(name, value)
 

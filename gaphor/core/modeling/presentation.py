@@ -21,6 +21,10 @@ S = TypeVar("S", bound=Element)
 log = logging.getLogger(__name__)
 
 
+def literal_eval(value):
+    return ast.literal_eval(value)
+
+
 class Presentation(Matrices, Element, Generic[S]):
     """This presentation is used to link the behaviors of
     `gaphor.core.modeling` and `gaphas.Item`."""
@@ -79,7 +83,7 @@ class Presentation(Matrices, Element, Generic[S]):
 
     def load(self, name, value):
         if name == "matrix":
-            self.matrix.set(*ast.literal_eval(value))
+            self.matrix.set(*literal_eval(value))
         elif name == "parent":
             if self.parent and self.parent is not value:
                 raise ValueError(f"Parent can not be set twice on {self}")

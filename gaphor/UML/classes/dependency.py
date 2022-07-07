@@ -14,10 +14,9 @@ Function dependency_type in model factory should be used to determine
 type of a dependency in automatic way.
 """
 
-import ast
-
 from gaphor import UML
 from gaphor.core import gettext
+from gaphor.core.modeling.presentation import literal_eval
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
@@ -71,7 +70,7 @@ class DependencyItem(Named, LinePresentation):
 
     def load(self, name, value):
         if name == "auto_dependency":
-            self.auto_dependency = ast.literal_eval(value)
+            self.auto_dependency = literal_eval(value)
         else:
             super().load(name, value)
 

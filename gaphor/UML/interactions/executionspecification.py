@@ -20,8 +20,6 @@ What's the difference?
 Stick with BehaviorExecutionSpecification, since it has a [0..1] relation to
 behavior, whereas ActionExecutionSpecification has a [1] relation to action.
 """
-import ast
-
 from gaphas import Handle
 from gaphas.connector import Position
 from gaphas.constraint import constraint
@@ -30,7 +28,11 @@ from gaphas.solver import STRONG
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
-from gaphor.diagram.presentation import HandlePositionUpdate, postload_connect
+from gaphor.diagram.presentation import (
+    HandlePositionUpdate,
+    literal_eval,
+    postload_connect,
+)
 from gaphor.diagram.shapes import Box, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.interactions.lifeline import BetweenPort
@@ -122,7 +124,7 @@ class ExecutionSpecificationItem(
 
     def load(self, name, value):
         if name == "points":
-            points = ast.literal_eval(value)
+            points = literal_eval(value)
             for h, p in zip(self._handles, points):
                 h.pos = p
         elif name == "head-connection":

@@ -67,7 +67,6 @@ follows
 Folding and unfolding is performed by `InterfacePropertyPage` class.
 """
 
-import ast
 from enum import Enum
 from math import pi
 
@@ -77,6 +76,7 @@ from gaphas.item import NE, NW, SE, SW
 
 from gaphor import UML
 from gaphor.core import gettext
+from gaphor.core.modeling.presentation import literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import FontWeight, VerticalAlign
 from gaphor.diagram.presentation import (
@@ -212,7 +212,7 @@ class InterfaceItem(Classified, ElementPresentation):
 
     def load(self, name, value):
         if name == "folded":
-            self._folded = Folded(ast.literal_eval(value))
+            self._folded = Folded(literal_eval(value))
         else:
             super().load(name, value)
 
