@@ -3,15 +3,14 @@
 from gaphas.util import path_ellipse
 
 from gaphor import UML
-from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
-from gaphor.UML.states.state import VertexItem
 
 
 @represents(UML.FinalState)
-class FinalStateItem(VertexItem, ElementPresentation):
+class FinalStateItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=30, height=30)
         for h in self.handles():
