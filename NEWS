@@ -1,3 +1,24 @@
+2.11.0
+------
+- Add Copy/Paste for GTK4
+- Make dialogs work with GTK4
+- Fix instant editors for GTK4
+- Update list view for GTK4
+- Make SysML Enumerations also ValueTypes
+- Add union types
+- Let Gaphor check for its own health
+- Add error reports window
+- Add element to diagram by double click
+- Ensure all models are saved with UTF-8 encoding
+- Fix unlinking elements from the model
+- Fix issue with fully pasting a diagram
+- Fix scroll speed for touch screens
+- Fix codeql warnings and error
+- Improve text placement for Associations
+- Enable additional pre-commit hooks
+- Add example in docs of color for comments using CSS
+- Hungarian translation updates
+
 2.10.0
 ------
 - Pin support for activity diagram
