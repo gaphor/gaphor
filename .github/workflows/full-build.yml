@@ -6,7 +6,7 @@ on:
     types: [published, prereleased]
 env:
   python_version: '3.10'
-  mainline_build: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/packaging/') }}
+  mainline_build: ${{ github.ref == 'refs/heads/main' }} || ${{ github.event.label.name == 'translation' }}
 
 jobs:
   skip-check:
@@ -217,6 +217,7 @@ jobs:
   check-macos-app:
     needs: macos
     runs-on: macos-latest
+    if: ${{ github.ref == 'refs/heads/main' }} || ${{ github.event.label.name == 'translation' }}
     timeout-minutes: 10
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
