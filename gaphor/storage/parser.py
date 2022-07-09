@@ -311,7 +311,12 @@ def parse_generator(filename, loader):
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    yield from parse_file(filename, parser)
+    try:
+        # returns only a progress percentage
+        yield from parse_file(filename, parser)
+    except UnicodeDecodeError:
+        # Fall back on default encoding
+        yield from parse_file(filename, parser, encoding=None)
 
 
 class ProgressGenerator:
@@ -360,7 +365,7 @@ class ProgressGenerator:
             yield (read_size * 100) / self.file_size
 
 
-def parse_file(filename, parser):
+def parse_file(filename, parser, encoding: str | None = "utf-8"):
     """Parse the supplied file using the supplied parser.
 
     The parser parameter should be a GaphorLoader instance.  The
@@ -374,7 +379,7 @@ def parse_file(filename, parser):
         file_obj: IO | io.IOBase = filename
     else:
         is_fd = False
-        file_obj = open(filename, "r")
+        file_obj = open(filename, "r", encoding=encoding)
 
     try:
         yield from ProgressGenerator(file_obj, parser)
