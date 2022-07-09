@@ -9,16 +9,8 @@ from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
 
 
-class VertexItem(Named):
-    """Abstract class for all vertices.
-
-    All state, pseudostate items derive from VertexItem, which
-    simplifies transition connection adapters.
-    """
-
-
 @represents(UML.State)
-class StateItem(VertexItem, ElementPresentation[UML.State]):
+class StateItem(ElementPresentation[UML.State], Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=30)
 

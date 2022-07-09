@@ -6,16 +6,21 @@ gaphor.adapter package.
 """
 
 from gaphor import UML
-from gaphor.diagram.connectors import Connector, DirectionalRelationshipConnect
+from gaphor.diagram.connectors import (
+    Connector,
+    DirectionalRelationshipConnect,
+    RelationshipConnect,
+)
+from gaphor.UML.states.finalstate import FinalStateItem
 from gaphor.UML.states.pseudostates import PseudostateItem
-from gaphor.UML.states.state import VertexItem
+from gaphor.UML.states.state import StateItem
 from gaphor.UML.states.transition import TransitionItem
 
 
-class VertexConnect(DirectionalRelationshipConnect):
+class TransactionConnectMixin:
     """Abstract relationship between two state vertices."""
 
-    def connect_subject(self, handle):
+    def connect_subject(self: RelationshipConnect, handle):  # type: ignore[misc]
         relation = self.relationship_or_new(
             UML.Transition, UML.Transition.source, UML.Transition.target
         )
@@ -26,9 +31,14 @@ class VertexConnect(DirectionalRelationshipConnect):
             relation.guard = self.line.model.create(UML.Constraint)
 
 
-@Connector.register(VertexItem, TransitionItem)
-class TransitionConnect(VertexConnect):
+@Connector.register(StateItem, TransitionItem)
+class StateTransitionConnect(TransactionConnectMixin, RelationshipConnect):
     """Connect two state vertices using transition item."""
+
+
+@Connector.register(FinalStateItem, TransitionItem)
+class VertexTransitionConnect(TransactionConnectMixin, DirectionalRelationshipConnect):
+    """Connect two vertices using transition item."""
 
     def allow(self, handle, port):
         """Glue transition handle and vertex item.
@@ -38,20 +48,16 @@ class TransitionConnect(VertexConnect):
         line = self.line
         subject = self.element.subject
 
-        is_final = isinstance(subject, UML.FinalState)
-        if (
-            isinstance(subject, UML.State)
-            and not is_final
-            or handle is line.tail
-            and is_final
-        ):
+        if isinstance(subject, UML.FinalState) and handle is line.tail:
             return super().allow(handle, port)
         else:
             return None
 
 
 @Connector.register(PseudostateItem, TransitionItem)
-class PseudostateTransitionConnect(VertexConnect):
+class PseudostateTransitionConnect(
+    TransactionConnectMixin, DirectionalRelationshipConnect
+):
     """Connect pseudostate using transition item."""
 
     def allow(self, handle, port):

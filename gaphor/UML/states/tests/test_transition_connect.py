@@ -9,12 +9,10 @@ from gaphor.UML.states.transition import TransitionItem
 
 
 def test_vertex_connect(create, kindof):
-    """Test transition to state vertex connection."""
     v1 = create(StateItem, UML.State)
     v2 = create(StateItem, UML.State)
 
     t = create(TransitionItem)
-    assert t.subject is None
 
     # connect vertices with transition
     connect(t, t.head, v1)
@@ -31,7 +29,6 @@ def test_vertex_connect(create, kindof):
 
 
 def test_vertex_reconnect(create, kindof):
-    """Test transition to state vertex reconnection."""
     v1 = create(StateItem, UML.State)
     v2 = create(StateItem, UML.State)
     v3 = create(StateItem, UML.State)
@@ -62,7 +59,6 @@ def test_vertex_reconnect(create, kindof):
 
 
 def test_vertex_disconnect(create, kindof):
-    """Test transition and state vertices disconnection."""
     t = create(TransitionItem)
     v1 = create(StateItem, UML.State)
     v2 = create(StateItem, UML.State)
@@ -84,13 +80,21 @@ def test_vertex_disconnect(create, kindof):
     assert t.subject is None
 
 
+def test_state_connect_to_same_item(create, kindof):
+    """Test transition to state vertex connection."""
+    v1 = create(StateItem, UML.State)
+    t = create(TransitionItem)
+
+    connect(t, t.head, v1)
+
+    assert allow(t, t.tail, v1)
+
+
 def test_initial_pseudostate_connect(create, kindof):
-    """Test transition and initial pseudostate connection."""
     v1 = create(PseudostateItem, UML.Pseudostate)
     v2 = create(StateItem, UML.State)
 
     t = create(TransitionItem)
-    assert t.subject is None
 
     # connect head of transition to an initial pseudostate
     connect(t, t.head, v1)
