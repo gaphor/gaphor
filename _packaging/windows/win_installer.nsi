@@ -25,7 +25,7 @@ Name "${NAME} (${VERSION})"
 OutFile "gaphor-LATEST.exe"
 SetCompressor /SOLID /FINAL lzma
 SetCompressorDictSize 32
-InstallDir "$PROGRAMFILES\${NAME}"
+InstallDir "$PROGRAMFILES64\${NAME}"
 RequestExecutionLevel admin
 
 Var INST_BIN
@@ -50,13 +50,8 @@ Var UNINST_BIN
 !insertmacro MUI_LANGUAGE "Spanish"
 !insertmacro MUI_LANGUAGE "Swedish"
 
-
 Section "Install"
     SetShellVarContext all
-
-    ; Use this to make things faster for testing installer changes
-    ;~ SetOutPath "$INSTDIR\bin"
-    ;~ File /r "mingw32\bin\*.exe"
 
     SetOutPath "$INSTDIR"
     File /r "*.*"
