@@ -386,6 +386,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
   • &lt;tt&gt;attr&lt;/tt&gt; (name, defaults to public visibility)
   • &lt;tt&gt;+ attr: int&lt;/tt&gt; (public with type)
   • &lt;tt&gt;+ attr: int[0..1]&lt;/tt&gt; (public, type, and multiplicity)
+  • &lt;tt&gt;+ attr: int | bool&lt;/tt&gt; (public, union type)
   • &lt;tt&gt;# /attr: int # a note&lt;/tt&gt; (protected, derived, with remark)
 
 Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
