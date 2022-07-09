@@ -866,6 +866,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "qsodev",
+      "name": "qsodev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11365470?v=4",
+      "profile": "https://github.com/qsodev",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
