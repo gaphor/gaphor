@@ -18,6 +18,12 @@ from gaphor.UML.classes.classestoolbox import (
     shared_association_config,
 )
 
+
+def sysml_enumeration_config(new_item: uml_items.EnumerationItem, name=None):
+    namespace_config(new_item, name)
+    new_item.as_sysml_value_type = True
+
+
 blocks = ToolSection(
     gettext("Blocks"),
     (
@@ -96,7 +102,7 @@ blocks = ToolSection(
             new_item_factory(
                 uml_items.EnumerationItem,
                 UML.Enumeration,
-                config_func=namespace_config,
+                config_func=sysml_enumeration_config,
             ),
             handle_index=SE,
         ),
