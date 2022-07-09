@@ -1,5 +1,5 @@
-name: 'Create macOS Application'
-description: 'Create and Sign macOS Application Using PyInstaller'
+name: 'Create a Linux AppImage'
+description: 'Freeze the app using PyInstaller and create an AppImage'
 inputs:
   version:
     description: 'Gaphor version number'
