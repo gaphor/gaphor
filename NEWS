@@ -10,6 +10,7 @@
 - Add error reports window
 - Add element to diagram by double click
 - Ensure all models are saved with UTF-8 encoding
+- Fix states can't transition to themselves
 - Fix unlinking elements from the model
 - Fix issue with fully pasting a diagram
 - Fix scroll speed for touch screens
