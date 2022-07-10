@@ -1,15 +1,13 @@
 """Show GTK 4 UI Components.
 
 Usage:
-
-  GAPHOR_USE_GTK=4 \\
   python -m  gaphor.ui.uipreview <ui file>
 """
 import os
 import sys
 import xml.etree.ElementTree as etree
 
-from gi.repository import Gio, GLib, Gtk
+from gi.repository import Adw, Gio, GLib, Gtk
 
 from gaphor.ui.styling import Styling
 
@@ -80,7 +78,7 @@ if __name__ == "__main__":
         print("UI Preview works with GTK 4 only.")
         sys.exit(1)
 
-    app = Gtk.Application(
+    app = Adw.Application(
         application_id="org.gaphor.UIPreview", flags=Gio.ApplicationFlags.HANDLES_OPEN
     )
     app.connect("open", app_open)

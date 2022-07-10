@@ -19,6 +19,9 @@ from typing import Dict, List
 import jedi
 from gi.repository import Gdk, GLib, Gtk, Pango
 
+if Gtk.get_major_version() == 4:
+    from gi.repository import Adw
+
 from gaphor.i18n import gettext
 
 banner = gettext(
@@ -341,8 +344,12 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
 
 
 def main(main_loop=True):
-    w = Gtk.ApplicationWindow()
-    w.set_default_size(640, 480)
+    if Gtk.get_major_version() == 3:
+        window = Gtk.ApplicationWindow()
+    else:
+        window = Adw.ApplicationWindow()
+
+    window.set_default_size(640, 480)
     console = GTKInterpreterConsole(locals())
 
     def key_event(widget, keyval, keycode, state):
@@ -350,20 +357,20 @@ def main(main_loop=True):
             app.quit()
         return False
 
-    w.connect("destroy", lambda w: app.quit())
+    window.connect("destroy", lambda w: app.quit())
     console.text_controller.connect("key-pressed", key_event)
 
     if Gtk.get_major_version() == 3:
-        w.add(console)
-        w.show_all()
+        window.add(console)
+        window.show_all()
     else:
-        w.set_child(console)
-        w.show()
+        window.set_child(console)
+        window.show()
 
     if main_loop:
 
         def on_activate(app):
-            app.add_window(w)
+            app.add_window(window)
 
         app = Gtk.Application.new("org.gaphor.Console", 0)
         app.connect("activate", on_activate)

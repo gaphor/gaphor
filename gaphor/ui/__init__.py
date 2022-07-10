@@ -18,6 +18,9 @@ if os.getenv("GAPHOR_USE_GTK") != "NONE":
     gi.require_version("Gtk", gtk_version)
     gi.require_version("Gdk", gtk_version)
     gi.require_version("GtkSource", gtk_source_version)
+    if gtk_version == "4.0":
+        gi.require_version("Adw", "1")
+        from gi.repository import Adw
 
 
 from gi.repository import Gdk, Gio, GLib, Gtk
@@ -134,9 +137,14 @@ def run(args: list[str]) -> int:
             for file in files:
                 application.new_session(filename=file.get_path())
 
-    gtk_app = Gtk.Application(
-        application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
-    )
+    if gtk_version == "3":
+        gtk_app = Gtk.Application(
+            application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
+        )
+    else:
+        gtk_app = Adw.Application(
+            application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
+        )
     gtk_app.exit_code = 0
     add_main_options(gtk_app)
     gtk_app.connect("startup", app_startup)
