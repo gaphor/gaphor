@@ -137,7 +137,7 @@ def run(args: list[str]) -> int:
             for file in files:
                 application.new_session(filename=file.get_path())
 
-    if gtk_version == "3":
+    if gtk_version == "3.0":
         gtk_app = Gtk.Application(
             application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
         )
