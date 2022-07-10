@@ -1,4 +1,4 @@
-name: 'Windows Executables'
+name: 'Create Windows Executables'
 description: 'Create and Sign Windows Executables Using PyInstaller'
 inputs:
   version:
@@ -10,19 +10,26 @@ inputs:
   base64_encoded_pfx:
     description: 'The base 64 encoded Windows signing certificate'
     required: true
+  github_token:
+    description: 'GitHub token for uploading releases'
+    required: true
+  mainline_build:
+    description: 'Build is performed on the main line'
+    required: true
 runs:
   using: composite
   steps:
     - name: Install Build Dependencies
-      run: poetry install --no-dev --extras poethepoet
+      run: poetry install --no-dev --extras pyinstall
       shell: bash
     - name: Create Windows Installers
       run: |
-        poetry run poe dist
+        poetry build
         poetry run poe package
         poetry run poe win-installer
       shell: bash
     - name: Sign Executables
+      if: inputs.mainline_build == 'true'
       env:
         timestampUrl: http://timestamp.digicert.com
         installer: "_packaging/dist/gaphor-${{ inputs.version }}-installer.exe"
@@ -36,3 +43,19 @@ runs:
         & 'C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86\signtool.exe' sign /f 'certificate.pfx' /tr $env:timestampUrl /td sha256 /fd sha256 /p $env:password $env:installer $env:portable
         Remove-Item 'certificate.pfx'
       shell: PowerShell
+    - name: Upload gaphor-${{ inputs.version }}-installer.exe
+      uses: actions/upload-artifact@v3
+      with:
+        name: gaphor-${{ inputs.version }}-installer.exe
+        path: _packaging/dist/gaphor-${{ inputs.version }}-installer.exe
+    - name: Upload gaphor-${{ inputs.version }}-portable.exe
+      uses: actions/upload-artifact@v3
+      with:
+        name: gaphor-${{ inputs.version }}-portable.exe
+        path: _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
+    - name: Upload Assets (release only)
+      uses: AButler/upload-release-assets@v2.0
+      if: inputs.mainline_build == 'true' && github.event_name == 'release'
+      with:
+        files: "_packaging/dist/*.exe"
+        repo-token: ${{ inputs.github_token }}
