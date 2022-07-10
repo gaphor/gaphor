@@ -17,8 +17,7 @@ if os.getenv("GAPHOR_USE_GTK") != "NONE":
 
     gi.require_version("Gtk", gtk_version)
     gi.require_version("Gdk", gtk_version)
-    if gtk_version == "3.0":
-        gi.require_version("GtkSource", gtk_source_version)
+    gi.require_version("GtkSource", gtk_source_version)
 
 
 from gi.repository import Gdk, Gio, GLib, Gtk
