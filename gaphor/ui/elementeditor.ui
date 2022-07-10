@@ -26,7 +26,7 @@
             <property name="hexpand-set">1</property>
           </object>
         </child>
-        <child type="end">
+        <child>
           <object class="GtkSwitch" id="show-tips">
             <property name="halign">end</property>
           </object>
