@@ -284,7 +284,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         working-directory: gvsbuild
         run: >
-          python .\build.py build --enable-gi --py-wheel gobject-introspection gtk3 pycairo pygobject gtksourceview4
+          python .\build.py build --enable-gi --py-wheel gobject-introspection gtk4 pycairo pygobject gtksourceview5 libadwaita
           adwaita-icon-theme hicolor-icon-theme
       - name: Copy wheels to cached directory
         if: steps.cache.outputs.cache-hit != 'true'

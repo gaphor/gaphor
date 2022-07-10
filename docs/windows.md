@@ -87,7 +87,7 @@ cd C:\gtk-build\github\gvsbuild
 python -m venv .venv
 .\.venv\Scripts\activate.ps1
 pip install .
-gvsbuild build --enable-gi --py-wheel gobject-introspection gtk3 pycairo pygobject gtksourceview4 adwaita-icon-theme hicolor-icon-theme
+gvsbuild build --enable-gi --py-wheel gobject-introspection gtk4 pycairo pygobject gtksourceview5 libadwaita adwaita-icon-theme hicolor-icon-theme
 ```
 Grab a coffee, the build will take a few minutes to complete.
 
@@ -125,52 +125,6 @@ Launch Gaphor!
 PS > poetry run gaphor
 ```
 
-### GTK and Python with MSYS2 (alternative method)
-MSYS2 provides a bash terminal, with Python and GTK compiled against GCC. This
-is an alternative method to using gvsbuild above. The advantage is that you get
-a full bash environment in Windows, the disadvantage is that Python is very
-heavily patched to be built this way and often breaks.
-
-1) Run `C:\tools\msys64\mingw64.exe` - the MINGW64 terminal window should pop up
-
-```bash
-$ pacman -Suy
-$ pacman -S mingw-w64-x86_64-gcc \
-    mingw-w64-x86_64-gtk3 \
-    mingw-w64-x86_64-gtksourceview4 \
-    mingw-w64-x86_64-pkgconf \
-    mingw-w64-x86_64-cairo \
-    mingw-w64-x86_64-gobject-introspection \
-    mingw-w64-x86_64-python \
-    mingw-w64-x86_64-python-pip \
-    mingw-w64-x86_64-python-setuptools
-$ echo 'export PATH="/c/Program Files/Git/bin:$PATH"' >> ~/.bash_profile
-```
-
-Restart the MINGW64 terminal.
-
-[Clone the
-repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
-
-Create and activate a virtual environment in which Gaphor can be installed:
-```bash
-$ cd gaphor
-$ python3.9 -m venv .venv
-$ source .venv/bin/activate
-```
-
-Install and configure Poetry:
-```bash
-$ pip install poetry wheel
-$ poetry config virtualenvs.create false
-```
-
-Install Gaphor and give it a try:
-```bash
-$ poetry install
-$ poetry run gaphor
-```
-
 ### Debugging using Visual Studio Code
 
 Start a new PowerShell terminal, and set current directory to the project folder:
@@ -204,15 +158,18 @@ In order to create an exe installation package for Windows, we utilize
 dependencies and bundle them in to a single folder. We then use a custom bash
 script that creates a Windows installer using
 [NSIS](https://nsis.sourceforge.io/Main_Page) and a portable installer using
-[7-Zip](https://www.7-zip.org).
+[7-Zip](https://www.7-zip.org). To install them, open PowerShell as an
+administrator, then execute:
 
-1. Follow the instructions for settings up a development environment above
-1. Run ``C:\tools\msys64\mingw64.exe`` - a terminal window should pop up
-```bash
-$ source .venv/bin/activate
-$ mingw32-make dist
-$ cd _packaging
-$ mingw32-make all
-$ cd windows
-$ mingw32-make all
+```PowerShell
+choco install nsis 7zip
+```
+
+Then build your installer using:
+
+```PowerShell
+PS > poetry install --no-dev --extras poethepoet
+PS > poetry build
+PS > poetry run poe package
+PS > poetry run poe win-installer
 ```
