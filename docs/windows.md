@@ -33,7 +33,8 @@ choco install git
 ```
 
 ### MSYS2
-Both of the development environments in the next steps need MSYS2 installed.
+The development environment in the next step needs MSYS2 installed to provide
+some Linux command line tools in Windows.
 
 Install [MSYS2](http://www.msys2.org/):
 
@@ -42,12 +43,10 @@ Keep PowerShell open as administrator and execute:
 choco install msys2
 ```
 
-### GTK and Python with gvsbuild (recommended)
+### GTK and Python with gvsbuild
 gvsbuild provides a Python script helps you build the GTK library stack for
 Windows using Visual Studio. By compiling GTK with Visual Studio, we can then
 use a standard Python development environment in Windows.
-
-Note: gvsbuild says it requires msys2, but does it for our needs?
 
 First we will install the gvsbuild dependencies:
 1. Visual C++ build tools workload for Visual Studio 2022 Build Tools
