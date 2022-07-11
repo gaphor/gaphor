@@ -259,10 +259,22 @@ def test_message_glue_sd(diagram):
     # connect lifetime of message to lifeline's lifetime
     connect(msg, msg.head, ll1, ll1.lifetime.port)
 
-    glued = allow(msg, msg.tail, ll2)
-    # no connection possible as 2nd lifeline is in communication
-    # diagram mode
-    assert not glued
+    assert not allow(msg, msg.tail, ll2)
+
+
+def test_message_glue_from_lifetimee_to_head(diagram):
+    """Test gluing message on communication diagram."""
+
+    lifeline1 = diagram.create(LifelineItem)
+    lifeline2 = diagram.create(LifelineItem)
+    message = diagram.create(MessageItem)
+
+    lifeline1.lifetime.visible = True
+
+    # connect head of message to lifeline's head
+    connect(message, message.head, lifeline1)
+
+    assert allow(message, message.tail, lifeline2, lifeline2.lifetime.port)
 
 
 def test_messages_disconnect_cd(diagram, element_factory):
