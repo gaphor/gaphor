@@ -124,6 +124,10 @@ class PartitionPropertyPage(PropertyPageBase):
             partition = self.item.partition[-1]
             partition.unlink()
 
-            last_child = self.partitions.get_children()[-1]
-            self.partitions.remove(last_child)
-            last_child.destroy()
+            if Gtk.get_major_version() == 3:
+                last_child = self.partitions.get_children()[-1]
+                self.partitions.remove(last_child)
+                last_child.destroy()
+            else:
+                last_child = self.partitions.get_last_child()
+                self.partitions.remove(last_child)
