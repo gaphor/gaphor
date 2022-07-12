@@ -1,5 +1,7 @@
-from pathlib import Path
+import os
 import time
+from pathlib import Path
+
 import tomli
 from PyInstaller.utils.hooks import copy_metadata
 
@@ -78,7 +80,7 @@ exe = EXE(
     icon="windows/gaphor.ico",
     version="windows/file_version_info.txt",
     console=False,
-    codesign_identity="Developer ID Application: Daniel Yeaw (Z7V37BLNR9)",
+    codesign_identity=os.getenv("CODESIGN_IDENTITY"),
     entitlements_file="macos/entitlements.plist",
 )
 coll = COLLECT(

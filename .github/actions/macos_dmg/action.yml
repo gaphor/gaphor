@@ -36,7 +36,14 @@ runs:
       with:
         p12-file-base64: ${{ inputs.base64_encoded_p12 }}
         p12-password: ${{ inputs.certpassword_p12 }}
+    - name: Create Unsigned macOS Application
+      if: inputs.mainline_build != 'true'
+      run: poetry run poe package
+      shell: bash
     - name: Create Signed macOS Application
+      if: inputs.mainline_build == 'true'
+      env:
+        CODESIGN_IDENTITY: "Developer ID Application: Daniel Yeaw (Z7V37BLNR9)"
       run: poetry run poe package
       shell: bash
     - name: Notarize app
