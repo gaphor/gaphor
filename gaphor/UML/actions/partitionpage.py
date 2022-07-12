@@ -24,6 +24,7 @@ class PartitionPropertyPage(PropertyPageBase):
     def __init__(self, item: PartitionItem):
         super().__init__()
         self.item = item
+        self.partitions = None
 
     def construct(self):
         """Creates the Partition Property Page."""
@@ -37,16 +38,17 @@ class PartitionPropertyPage(PropertyPageBase):
         num_partitions.set_value(len(self.item.partition))
 
         self.partitions = builder.get_object("partitions")
-        for partition in self.item.partition:
-            if Gtk.get_major_version() == 3:
-                self.partitions.pack_start(
-                    self.construct_partition(partition),
-                    expand=False,
-                    fill=False,
-                    padding=0,
-                )
-            else:
-                self.partitions.append(self.construct_partition(partition))
+        if self.partitions:
+            for partition in self.item.partition:
+                if Gtk.get_major_version() == 3:
+                    self.partitions.pack_start(
+                        self.construct_partition(partition),
+                        expand=False,
+                        fill=False,
+                        padding=0,
+                    )
+                else:
+                    self.partitions.append(self.construct_partition(partition))
 
         return builder.get_object("partition-editor")
 
@@ -102,7 +104,7 @@ class PartitionPropertyPage(PropertyPageBase):
         to account for updates in the number of partitions, and finally
         rebuild the list store.
         """
-        if not self.item.subject:
+        if not self.item.subject or not self.partitions:
             return
 
         while num_partitions > len(self.item.partition):
