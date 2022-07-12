@@ -32,6 +32,9 @@ def make_gaphor_script():
         # Check for and remove two semicolons in path
         file.write("os.environ['PATH'] = os.environ['PATH'].replace(';;', ';')\n")
 
+        # Load gaphor with GTK3, the frozen gaphor-exe is segfaulting with GTK4
+        file.write("os.environ['GAPHOR_USE_GTK'] = '3'\n")
+
         plugins = toml["tool"]["poetry"]["plugins"]
         for cat in plugins.values():
             for entrypoint in cat.values():
