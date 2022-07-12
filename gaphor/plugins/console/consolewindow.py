@@ -5,6 +5,9 @@ import os
 
 from gi.repository import Gdk, Gtk
 
+if Gtk.get_major_version() == 4:
+    from gi.repository import Adw
+
 from gaphor.abc import ActionProvider
 from gaphor.action import action
 from gaphor.i18n import gettext
@@ -60,7 +63,7 @@ class ConsoleWindow(UIComponent, ActionProvider):
         window = (
             Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
             if Gtk.get_major_version() == 3
-            else Gtk.Window.new()
+            else Adw.Window()
         )
         window.set_transient_for(self.main_window.window)
         window.set_title(self.title)
@@ -76,10 +79,14 @@ class ConsoleWindow(UIComponent, ActionProvider):
         if Gtk.get_major_version() == 3:
             console.show()
             window.add(console)
+            window.connect("destroy", self.close)
         else:
-            window.set_child(console)
+            box = Gtk.Box(orientation="vertical")
+            header_bar = Gtk.HeaderBar()
+            box.append(header_bar)
+            box.append(console)
+            window.set_content(box)
         window.show()
-
         self.window = window
 
         def key_event(widget, keyval, keycode, state):
@@ -88,7 +95,5 @@ class ConsoleWindow(UIComponent, ActionProvider):
             return False
 
         console.text_controller.connect("key-pressed", key_event)
-
-        window.connect("destroy", self.close)
 
         return console
