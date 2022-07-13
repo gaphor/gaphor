@@ -136,13 +136,23 @@ def convert_create_message(line, convert_back=False):
     def communication_element(elem):
         return isinstance(elem, LifelineItem) and not elem.lifetime.visible
 
-    if tail and communication_element(tail) and head and not communication_element(head):
-        if convert_back and line.subject and line.subject.messageSort == "createMessage":
+    if (
+        tail
+        and communication_element(tail)
+        and head
+        and not communication_element(head)
+    ):
+        if (
+            convert_back
+            and line.subject
+            and line.subject.messageSort == "createMessage"
+        ):
             line.subject.messageSort = "synchCall"
         else:
             line.subject.messageSort = "createMessage"
         return True
     return False
+
 
 @Connector.register(LifelineItem, MessageItem)
 class MessageLifelineConnect(BaseConnector):
@@ -170,11 +180,17 @@ class MessageLifelineConnect(BaseConnector):
         connected = self.get_connected(opposite)
 
         if not connected:
-            return handle is line.tail or not (lifetime.visible ^ (port is lifetime.port))
+            return handle is line.tail or not (
+                lifetime.visible ^ (port is lifetime.port)
+            )
         if isinstance(connected, LifelineItem):
             if handle is line.head:
-                return connected.lifetime.visible and port is lifetime.port \
-                       or (not lifetime.visible and not connected.lifetime.visible) or port is lifetime.port
+                return (
+                    connected.lifetime.visible
+                    and port is lifetime.port
+                    or (not lifetime.visible and not connected.lifetime.visible)
+                    or port is lifetime.port
+                )
             if handle is line.tail:
                 return connected.lifetime.visible or not lifetime.visible
         return True
@@ -335,7 +351,7 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
 @ConnectionSink.register(LifelineItem)
 class LifelineConnectionSink(ItemConnectionSink):
     def glue(
-            self, pos: SupportsFloatPos, secondary_pos: Optional[SupportsFloatPos] = None
+        self, pos: SupportsFloatPos, secondary_pos: Optional[SupportsFloatPos] = None
     ) -> Optional[Pos]:
         """Glue a line to the lifeline item, have a preference for the lifetime
         line."""
