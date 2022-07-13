@@ -311,6 +311,8 @@ jobs:
   windows:
     needs: [lint, windows-build-gtk]
     runs-on: windows-latest
+    env:
+      GAPHOR_USE_GTK: 3
     permissions:
       contents: write
     timeout-minutes: 45
