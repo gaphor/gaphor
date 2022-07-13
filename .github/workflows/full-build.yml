@@ -261,7 +261,7 @@ jobs:
       # Git revision of gvsbuild we use for to build GTK and the other dependencies
       gvsbuildref: 442f4d2847ed09a6c6e0d7e8a4830962286387d9
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuildupdate: 1
+      gvsbuildupdate: 2
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
@@ -296,7 +296,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         working-directory: gvsbuild
         run: >
-          gvsbuild build --enable-gi --py-wheel gobject-introspection gtk4 pycairo pygobject gtksourceview5 libadwaita
+          gvsbuild build --enable-gi --py-wheel gobject-introspection gtk3 pycairo pygobject gtksourceview4
           adwaita-icon-theme hicolor-icon-theme
       - name: Copy wheels to cached directory
         if: steps.cache.outputs.cache-hit != 'true'
