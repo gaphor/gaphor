@@ -224,6 +224,11 @@ class MessageItem(Named, LinePresentation[UML.Message]):
         diagram."""
         c1 = self._connections.get_connection(self.head)
         c2 = self._connections.get_connection(self.tail)
+
+        """createMessages can't be a communicationMessage
+        """
+        if self.subject and self.subject.messageSort == "createMessage":
+            return False
         return (
             c1
             and isinstance(c1.connected, LifelineItem)
