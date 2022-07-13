@@ -153,7 +153,7 @@ toml = ["tomli"]
 
 [[package]]
 name = "darkdetect"
-version = "0.6.0"
+version = "0.7.0"
 description = "Detect OS Dark Mode from Python"
 category = "main"
 optional = false
@@ -1057,7 +1057,7 @@ pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "22072bd411f01e55bc2cde28abd877a2dd111e5f4dfc4b9dfb65ecc5e491270f"
+content-hash = "58d051520e31e5b71cdb02924d15f3d7d50f9e262d437a7176d26c80ffe5c89f"
 
 [metadata.files]
 alabaster = [
@@ -1176,8 +1176,8 @@ coverage = [
     {file = "coverage-6.4.2.tar.gz", hash = "sha256:6c3ccfe89c36f3e5b9837b9ee507472310164f352c9fe332120b764c9d60adbe"},
 ]
 darkdetect = [
-    {file = "darkdetect-0.6.0-py3-none-any.whl", hash = "sha256:9984327f5f0deeb4f02de01a18976825bc079befe7496b60c8d1fb0a06904d8e"},
-    {file = "darkdetect-0.6.0.tar.gz", hash = "sha256:7993275b537b4579ba2eee7673b0b95783f99c7ddb82a9f90dc077a379b427f1"},
+    {file = "darkdetect-0.7.0-py3-none-any.whl", hash = "sha256:5f80a4e25ce289d6c808ae1c312e4b96fe9b975c315d94b3afe6244e186f7b22"},
+    {file = "darkdetect-0.7.0.tar.gz", hash = "sha256:13a15decfc828334a5e4041fd08d3a1f5b9717d5fce268b3dc614c10a06e43ce"},
 ]
 distlib = [
     {file = "distlib-0.3.4-py2.py3-none-any.whl", hash = "sha256:6564fe0a8f51e734df6333d08b8b94d4ea8ee6b99b5ed50613f731fd4089f34b"},
