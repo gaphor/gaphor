@@ -11,6 +11,7 @@ from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
     handler_blocking,
+    help_link,
     new_resource_builder,
     on_bool_cell_edited,
     on_text_cell_edited,
@@ -323,9 +324,11 @@ class AttributesPage(PropertyPageBase):
                 "attributes-info-clicked": (self.on_attributes_info_clicked),
             },
         )
-        page = builder.get_object("attributes-editor")
         self.info = builder.get_object("attributes-info")
-        widget_add_hover_support(builder.get_object("attributes-info-icon"))
+        if Gtk.get_major_version() == 3:
+            widget_add_hover_support(builder.get_object("attributes-info-icon"))
+        else:
+            help_link(builder, "attributes-info-icon", "attributes-info")
 
         show_attributes = builder.get_object("show-attributes")
         show_attributes.set_active(self.item.show_attributes)
@@ -364,7 +367,7 @@ class AttributesPage(PropertyPageBase):
             "ownedAttribute.typeValue", handler
         )
 
-        return page
+        return builder.get_object("attributes-editor")
 
     @transactional
     def _on_show_attributes_change(self, button, gparam):
@@ -408,7 +411,10 @@ class OperationsPage(PropertyPageBase):
         )
 
         self.info = builder.get_object("operations-info")
-        widget_add_hover_support(builder.get_object("operations-info-icon"))
+        if Gtk.get_major_version() == 3:
+            widget_add_hover_support(builder.get_object("operations-info-icon"))
+        else:
+            help_link(builder, "operations-info-icon", "operations-info")
 
         show_operations = builder.get_object("show-operations")
         show_operations.set_active(self.item.show_operations)

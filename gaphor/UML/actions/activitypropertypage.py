@@ -8,6 +8,7 @@ from gaphor.diagram.propertypages import (
     EditableTreeModel,
     PropertyPageBase,
     PropertyPages,
+    help_link,
     new_resource_builder,
     on_text_cell_edited,
 )
@@ -82,7 +83,10 @@ class ActivityItemPage(PropertyPageBase):
         )
 
         self.info = builder.get_object("parameters-info")
-        widget_add_hover_support(builder.get_object("parameters-info-icon"))
+        if Gtk.get_major_version() == 3:
+            widget_add_hover_support(builder.get_object("parameters-info-icon"))
+        else:
+            help_link(builder, "parameters-info-icon", "parameters-info")
 
         tree_view: Gtk.TreeView = builder.get_object("parameter-list")
         tree_view.set_model(self.model)

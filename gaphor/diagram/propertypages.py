@@ -268,6 +268,22 @@ def combo_box_text_auto_complete(
         entry.set_text(text)
 
 
+def help_link(builder, help_widget, popover):
+    """Show the help popover for a `Help` link in the property page.
+
+    GTK4 only.
+    """
+
+    def on_activate(*_args):
+        builder.get_object(popover).show()
+
+    help = builder.get_object(help_widget)
+    help.set_accessible_role(Gtk.AccessibleRole.BUTTON)
+    click_handler = Gtk.GestureClick.new()
+    click_handler.connect("released", on_activate)
+    help.add_controller(click_handler)
+
+
 def handler_blocking(widget, event_name, widget_handler):
     changed_id = widget.connect(event_name, widget_handler)
 

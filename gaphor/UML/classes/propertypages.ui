@@ -66,6 +66,30 @@
               <object class="GtkLabel" id="head-info-icon">
                 <property name="halign">end</property>
                 <property name="label" translatable="yes">🛈 Help</property>
+                <child>
+                  <object class="GtkPopover" id="head-info">
+                    <property name="visible">0</property>
+                    <property name="position">top</property>
+                    <property name="child">
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Add and edit association ends according to UML syntax.
+
+  • &lt;tt&gt;+ name&lt;/tt&gt;
+  • &lt;tt&gt;+ name[1]&lt;/tt&gt;
+  • &lt;tt&gt;- name[1..2]&lt;/tt&gt;
+  • &lt;tt&gt;1..2&lt;/tt&gt;
+  • &lt;tt&gt;- [1..2]&lt;/tt&gt;
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+                        <property name="use-markup">1</property>
+                        <style>
+                          <class name="info-popover"/>
+                        </style>
+                      </object>
+                    </property>
+                  </object>
+                </child>
                 <style>
                   <class name="info"/>
                 </style>
@@ -169,6 +193,30 @@
               <object class="GtkLabel" id="tail-info-icon">
                 <property name="halign">end</property>
                 <property name="label" translatable="yes">🛈 Help</property>
+                <child>
+                  <object class="GtkPopover" id="tail-info">
+                    <property name="visible">0</property>
+                    <property name="position">top</property>
+                    <property name="child">
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Add and edit association ends according to UML syntax.
+
+  • &lt;tt&gt;+ name&lt;/tt&gt;
+  • &lt;tt&gt;+ name[1]&lt;/tt&gt;
+  • &lt;tt&gt;- name[1..2]&lt;/tt&gt;
+  • &lt;tt&gt;1..2&lt;/tt&gt;
+  • &lt;tt&gt;- [1..2]&lt;/tt&gt;
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+                        <property name="use-markup">1</property>
+                        <style>
+                          <class name="info-popover"/>
+                        </style>
+                      </object>
+                    </property>
+                  </object>
+                </child>
                 <style>
                   <class name="info"/>
                 </style>
@@ -251,29 +299,6 @@
     <style>
       <class name="propertypage"/>
     </style>
-  </object>
-
-  <object class="GtkPopover" id="association-info">
-    <!-- <property name="relative-to">attributes-info-icon</property> -->
-    <property name="position">top</property>
-    <property name="child">
-      <object class="GtkLabel">
-        <property name="label" translatable="yes">Add and edit association ends according to UML syntax.
-
-  • &lt;tt&gt;+ name&lt;/tt&gt;
-  • &lt;tt&gt;+ name[1]&lt;/tt&gt;
-  • &lt;tt&gt;- name[1..2]&lt;/tt&gt;
-  • &lt;tt&gt;1..2&lt;/tt&gt;
-  • &lt;tt&gt;- [1..2]&lt;/tt&gt;
-
-Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
-Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
-        <property name="use-markup">1</property>
-        <style>
-          <class name="info-popover"/>
-        </style>
-      </object>
-    </property>
   </object>
 
   <object class="GtkExpander" id="attributes-editor">
@@ -359,9 +384,33 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         </child>
         <child>
           <object class="GtkLabel" id="attributes-info-icon">
-            <property name="visible">1</property>
             <property name="halign">end</property>
             <property name="label" translatable="yes">🛈 Help</property>
+
+            <child>
+              <object class="GtkPopover" id="attributes-info">
+                <property name="visible">0</property>
+                <property name="position">top</property>
+                <property name="child">
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Add and edit class attributes according to UML syntax.
+
+  • &lt;tt&gt;attr&lt;/tt&gt; (name, defaults to public visibility)
+  • &lt;tt&gt;+ attr: int&lt;/tt&gt; (public with type)
+  • &lt;tt&gt;+ attr: int[0..1]&lt;/tt&gt; (public, type, and multiplicity)
+  • &lt;tt&gt;+ attr: int | bool&lt;/tt&gt; (public, union type)
+  • &lt;tt&gt;# /attr: int # a note&lt;/tt&gt; (protected, derived, with remark)
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+                    <property name="use-markup">1</property>
+                    <style>
+                      <class name="info-popover"/>
+                    </style>
+                  </object>
+                </property>
+              </object>
+            </child>
             <style>
               <class name="info"/>
             </style>
@@ -375,28 +424,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
     <style>
       <class name="propertypage"/>
     </style>
-  </object>
-
-  <object class="GtkPopover" id="attributes-info">
-    <property name="position">top</property>
-    <property name="child">
-      <object class="GtkLabel">
-        <property name="label" translatable="yes">Add and edit class attributes according to UML syntax.
-
-  • &lt;tt&gt;attr&lt;/tt&gt; (name, defaults to public visibility)
-  • &lt;tt&gt;+ attr: int&lt;/tt&gt; (public with type)
-  • &lt;tt&gt;+ attr: int[0..1]&lt;/tt&gt; (public, type, and multiplicity)
-  • &lt;tt&gt;+ attr: int | bool&lt;/tt&gt; (public, union type)
-  • &lt;tt&gt;# /attr: int # a note&lt;/tt&gt; (protected, derived, with remark)
-
-Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
-Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
-        <property name="use-markup">1</property>
-        <style>
-          <class name="info-popover"/>
-        </style>
-      </object>
-    </property>
   </object>
 
   <object class="GtkBox" id="classifier-editor">
@@ -614,6 +641,28 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <property name="visible">1</property>
             <property name="halign">end</property>
             <property name="label" translatable="yes">🛈 Help</property>
+            <child>
+              <object class="GtkPopover" id="operations-info">
+                <property name="visible">0</property>
+                <property name="position">top</property>
+                <property name="child">
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Add and edit class operations according to UML syntax.
+
+  • &lt;tt&gt;call()&lt;/tt&gt;
+  • &lt;tt&gt;+ call(a: int[*], b: str): bool&lt;/tt&gt; (public, parameters)
+  • &lt;tt&gt;# call(a: int, b: str) # a note&lt;/tt&gt; (protected, with remark)
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+                    <property name="use-markup">1</property>
+                    <style>
+                      <class name="info-popover"/>
+                    </style>
+                  </object>
+                </property>
+              </object>
+            </child>
             <style>
               <class name="info"/>
             </style>
@@ -627,27 +676,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
     <style>
       <class name="propertypage"/>
     </style>
-  </object>
-
-  <object class="GtkPopover" id="operations-info">
-    <!-- <property name="relative-to">operations-info-icon</property> -->
-    <property name="position">top</property>
-    <property name="child">
-      <object class="GtkLabel">
-        <property name="label" translatable="yes">Add and edit class operations according to UML syntax.
-
-  • &lt;tt&gt;call()&lt;/tt&gt;
-  • &lt;tt&gt;+ call(a: int[*], b: str): bool&lt;/tt&gt; (public, parameters)
-  • &lt;tt&gt;# call(a: int, b: str) # a note&lt;/tt&gt; (protected, with remark)
-
-Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
-Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
-        <property name="use-markup">1</property>
-        <style>
-          <class name="info-popover"/>
-        </style>
-      </object>
-    </property>
   </object>
 
   <object class="GtkExpander" id="enumerations-editor">
@@ -722,6 +750,27 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <property name="visible">1</property>
             <property name="halign">end</property>
             <property name="label" translatable="yes">🛈 Help</property>
+
+            <child>
+              <object class="GtkPopover" id="enumerations-info">
+                <property name="position">top</property>
+                <property name="child">
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">Add and edit enumeration literals according to UML syntax.
+
+  • &lt;tt&gt;enum&lt;/tt&gt;
+
+Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
+Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
+                    <property name="use-markup">1</property>
+                    <style>
+                      <class name="info-popover"/>
+                    </style>
+                  </object>
+                </property>
+              </object>
+            </child>
+
             <style>
               <class name="info"/>
             </style>
@@ -735,24 +784,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
     <style>
       <class name="propertypage"/>
     </style>
-  </object>
-
-  <object class="GtkPopover" id="enumerations-info">
-    <property name="position">top</property>
-    <property name="child">
-      <object class="GtkLabel">
-        <property name="label" translatable="yes">Add and edit enumeration literals according to UML syntax.
-
-  • &lt;tt&gt;enum&lt;/tt&gt;
-
-Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;Delete&lt;/b&gt; to remove items.
-Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
-        <property name="use-markup">1</property>
-        <style>
-          <class name="info-popover"/>
-        </style>
-      </object>
-    </property>
   </object>
 
   <object class="GtkBox" id="component-editor">

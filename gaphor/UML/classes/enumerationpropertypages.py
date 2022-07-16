@@ -6,6 +6,7 @@ from gaphor.diagram.hoversupport import widget_add_hover_support
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
+    help_link,
     on_text_cell_edited,
 )
 from gaphor.transaction import transactional
@@ -50,7 +51,10 @@ class EnumerationPage(PropertyPageBase):
         )
 
         self.info = builder.get_object("enumerations-info")
-        widget_add_hover_support(builder.get_object("enumerations-info-icon"))
+        if Gtk.get_major_version() == 3:
+            widget_add_hover_support(builder.get_object("enumerations-info-icon"))
+        else:
+            help_link(builder, "enumerations-info-icon", "enumerations-info")
 
         show_enumerations = builder.get_object("show-enumerations")
         show_enumerations.set_active(self.item.show_enumerations)
@@ -63,6 +67,7 @@ class EnumerationPage(PropertyPageBase):
         else:
             controller = Gtk.EventControllerKey.new()
             tree_view.add_controller(controller)
+
         controller.connect("key-pressed", on_keypress_event, tree_view)
 
         def handler(event):
