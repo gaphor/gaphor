@@ -167,7 +167,7 @@ jobs:
     timeout-minutes: 45
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     outputs:
-      dmg: Gaphor-${{ steps.setup_and_test.outputs.version }}.dmg
+      artifact: ${{ steps.create.outputs.artifact }}
     env:
       LDFLAGS: -L/usr/local/opt/python@3.10/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
@@ -191,6 +191,7 @@ jobs:
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
       - name: Create macOS Application
+        id: create
         uses: ./.github/actions/macos_dmg
         with:
           mainline_build: ${{ env.mainline_build }}
@@ -201,21 +202,27 @@ jobs:
           ac_password: ${{ secrets.AC_PASSWORD }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
-  check-macos-dmg:
+  check-macos-app:
     needs: macos
     runs-on: macos-latest
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/packaging/')
     timeout-minutes: 10
     steps:
       - uses: actions/download-artifact@v3
+        id: download
         with:
-          name: ${{ needs.macos.outputs.dmg }}
+          name: ${{ needs.macos.outputs.artifact }}
           path: .
-      - name: Perform self-test
+      - name: Perform self-test (dmg)
+        if: "endsWith(needs.macos.outputs.artifact, '.dmg')"
         run: |
-          hdiutil attach ${{ needs.macos.outputs.dmg }}
+          hdiutil attach ${{ needs.macos.outputs.artifact }}
           cd /Volumes/Gaphor*
-          Gaphor*/Contents/MacOS/gaphor-exe --self-test
+          Gaphor.app/Contents/MacOS/gaphor-exe --self-test
+      - name: Perform self-test (zip)
+        if: "endsWith(needs.macos.outputs.artifact, '.zip')"
+        run: |
+          unzip ${{ needs.macos.outputs.artifact }}
+          Gaphor.app/Contents/MacOS/gaphor-exe --self-test
 
   macos-gtk4:
     needs: lint
