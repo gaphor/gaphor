@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-07-06 17:00+0200\n"
-"PO-Revision-Date: 2022-07-16 11:16+0000\n"
+"PO-Revision-Date: 2022-07-16 18:51+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
 "\n"
@@ -1214,183 +1214,183 @@ msgstr "import"
 
 #: gaphor/UML/profiles/profilestoolbox.py:22
 msgid "Profiles"
-msgstr ""
+msgstr "Profily"
 
 #: gaphor/UML/profiles/profilestoolbox.py:26
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: gaphor/UML/profiles/profilestoolbox.py:38
 msgid "Metaclass"
-msgstr ""
+msgstr "Metatřída"
 
 #: gaphor/UML/profiles/profilestoolbox.py:48
 msgid "Stereotype"
-msgstr ""
+msgstr "Stereotyp"
 
 #: gaphor/UML/profiles/profilestoolbox.py:60
 msgid "Extension"
-msgstr ""
+msgstr "Rozšíření"
 
 #: gaphor/UML/profiles/profilestoolbox.py:67
 msgid "Import"
-msgstr ""
+msgstr "Importovat"
 
 #: gaphor/UML/profiles/propertypages.glade:61
 #: gaphor/UML/profiles/propertypages.ui:44
 msgid "Show Stereotypes"
-msgstr ""
+msgstr "Zobrazit stereotypy"
 
 #: gaphor/UML/profiles/propertypages.glade:137
 #: gaphor/UML/profiles/propertypages.ui:31
 msgid "Stereotypes"
-msgstr ""
+msgstr "Stereotypy"
 
 #: gaphor/UML/states/propertypages.glade:31
 #: gaphor/UML/states/propertypages.ui:20
 msgid "Entry"
-msgstr ""
+msgstr "Položka"
 
 #: gaphor/UML/states/propertypages.glade:48
 #: gaphor/UML/states/propertypages.ui:31
 msgid "Exit"
-msgstr ""
+msgstr "Odejít"
 
 #: gaphor/UML/states/propertypages.glade:68
 #: gaphor/UML/states/propertypages.ui:42
 msgid "Do Activity"
-msgstr ""
+msgstr "Provést činnost"
 
 #: gaphor/UML/states/propertypages.glade:90
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
-msgstr ""
+msgstr "Činnosti"
 
 #: gaphor/UML/states/statestoolbox.py:13 gaphor/UML/states/statestoolbox.py:66
 msgid "State"
-msgstr ""
+msgstr "Stát"
 
 #: gaphor/UML/states/statestoolbox.py:48 gaphor/templates/sysml.gaphor
 msgid "State Machine"
-msgstr ""
+msgstr "Státní stroj"
 
 #: gaphor/UML/states/statestoolbox.py:55 gaphor/templates/sysml.gaphor
 msgid "Default Region"
-msgstr ""
+msgstr "Výchozí oblast"
 
 #: gaphor/UML/states/statestoolbox.py:62
 msgid "States"
-msgstr ""
+msgstr "Státy"
 
 #: gaphor/UML/states/statestoolbox.py:78
 msgid "Initial Pseudostate"
-msgstr ""
+msgstr "Počáteční pseudostav"
 
 #: gaphor/UML/states/statestoolbox.py:90
 msgid "Final State"
-msgstr ""
+msgstr "Konečný stav"
 
 #: gaphor/UML/states/statestoolbox.py:102
 msgid "History Pseudostate"
-msgstr ""
+msgstr "Historie Pseudostate"
 
 #: gaphor/UML/states/statestoolbox.py:114
 msgid "Transition"
-msgstr ""
+msgstr "Přechod"
 
 #: gaphor/UML/usecases/extend.py:22
 msgid "extend"
-msgstr ""
+msgstr "rozšířit"
 
 #: gaphor/UML/usecases/include.py:22
 msgid "include"
-msgstr ""
+msgstr "zahrnout"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:16 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Use Cases"
-msgstr ""
+msgstr "Případy použití"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:20
 msgid "Use case"
-msgstr ""
+msgstr "Případ použití"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:32 gaphor/templates/uml.gaphor
 msgid "Actor"
-msgstr ""
+msgstr "Herec"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:51
 msgid "Include"
-msgstr ""
+msgstr "Zahrnout"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:59
 msgid "Extend"
-msgstr ""
+msgstr "Rozšířit"
 
 #: gaphor/diagram/diagramtoolbox.py:111
 msgid "General"
-msgstr ""
+msgstr "Obecné"
 
 #: gaphor/diagram/diagramtoolbox.py:115
 msgid "Pointer"
-msgstr ""
+msgstr "Ukazatel"
 
 #: gaphor/diagram/diagramtoolbox.py:122
 msgid "Magnet"
-msgstr ""
+msgstr "Magnet"
 
 #: gaphor/diagram/diagramtoolbox.py:129
 msgid "Line"
-msgstr ""
+msgstr "Řádek"
 
 #: gaphor/diagram/diagramtoolbox.py:136
 msgid "Box"
-msgstr ""
+msgstr "Box"
 
 #: gaphor/diagram/diagramtoolbox.py:144
 msgid "Ellipse"
-msgstr ""
+msgstr "Elips"
 
 #: gaphor/diagram/diagramtoolbox.py:152 gaphor/diagram/propertypages.glade:25
 #: gaphor/diagram/propertypages.ui:9
 msgid "Comment"
-msgstr ""
+msgstr "Komentář"
 
 #: gaphor/diagram/diagramtoolbox.py:160
 msgid "Comment line"
-msgstr ""
+msgstr "Řádek komentáře"
 
 #: gaphor/diagram/presentation.py:50
 msgid "(from {namespace})"
-msgstr ""
+msgstr "(od {namespace})"
 
 #: gaphor/diagram/propertypages.glade:68 gaphor/diagram/propertypages.ui:46
 msgid "Rectilinear"
-msgstr ""
+msgstr "Přímočarý"
 
 #: gaphor/diagram/propertypages.glade:77 gaphor/diagram/propertypages.ui:52
 msgid "Flip orientation"
-msgstr ""
+msgstr "Orientace převrácení"
 
 #: gaphor/diagram/propertypages.glade:92 gaphor/diagram/propertypages.ui:35
 msgid "Style"
-msgstr ""
+msgstr "Styl"
 
 #: gaphor/diagram/propertypages.glade:126 gaphor/diagram/propertypages.ui:67
 msgid "Note or Remark"
-msgstr ""
+msgstr "Poznámka"
 
 #: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
 msgid "Element can’t be represented on a diagram."
-msgstr ""
+msgstr "Prvek nelze znázornit na diagramu."
 
 #: gaphor/extensions/sphinx.py:65
 msgid "No model file configured for model '{model_name}'."
-msgstr ""
+msgstr "Pro model '{model_name}' není nakonfigurován žádný soubor modelu."
 
 #: gaphor/extensions/sphinx.py:94
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
-msgstr ""
+msgstr "V modelu '{model_name}' ({model_file}) není žádný diagram '{name}'."
 
 #: gaphor/plugins/console/console.py:24
 msgid ""
@@ -1398,51 +1398,54 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
+"Interaktivní konzole Gaphor Python\n"
+"{version}\n"
+"Pro více informací zadejte \"help\".\n"
 
 #: gaphor/plugins/console/consolewindow.py:20
 msgid "Gaphor Console"
-msgstr ""
+msgstr "Konzole Gaphor"
 
 #: gaphor/plugins/console/consolewindow.py:43
 msgid "Console"
-msgstr ""
+msgstr "Konzole"
 
 #: gaphor/plugins/diagramexport/__init__.py:29
 msgid "All {ext} Files"
-msgstr ""
+msgstr "Všechny soubory {ext}"
 
 #: gaphor/plugins/diagramexport/__init__.py:35
 msgid "Export as SVG"
-msgstr ""
+msgstr "Exportovat jako SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:36
 #: gaphor/plugins/diagramexport/__init__.py:41
 msgid "Export diagram as SVG"
-msgstr ""
+msgstr "Exportovat diagram jako SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:46
 msgid "Export as PNG"
-msgstr ""
+msgstr "Exportovat jako PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:47
 #: gaphor/plugins/diagramexport/__init__.py:52
 msgid "Export diagram as PNG"
-msgstr ""
+msgstr "Exportovat diagram jako PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:57
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exportovat jako PDF"
 
 #: gaphor/plugins/diagramexport/__init__.py:58
 #: gaphor/plugins/diagramexport/__init__.py:64
 msgid "Export diagram as PDF"
-msgstr ""
+msgstr "Exportovat diagram jako PDF"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
 #: gaphor/plugins/errorreports/errorreports.py:65
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
-msgstr ""
+msgstr "Chybové hlášení"
 
 #: gaphor/plugins/errorreports/errorreports.glade:21
 #: gaphor/plugins/errorreports/errorreports.ui:18
@@ -1450,14 +1453,16 @@ msgid ""
 "Any unhandled errors are shown here. You can use these to provide extra "
 "information when you create an issue on GitHub."
 msgstr ""
+"Zde se zobrazí všechny neošetřené chyby. Můžete je použít k poskytnutí "
+"dalších informací při vytváření problému na GitHubu."
 
 #: gaphor/plugins/errorreports/errorreports.py:102
 msgid "No errors have been intercepted. We’re good."
-msgstr ""
+msgstr "Nebyly zachyceny žádné chyby. Jsme v pořádku."
 
 #: gaphor/plugins/errorreports/errorreports.py:106
 msgid "Errors:"
-msgstr ""
+msgstr "Chyby:"
 
 #: gaphor/plugins/errorreports/errorreports.py:155
 msgid ""
@@ -1465,38 +1470,41 @@ msgid ""
 "Please file an issue on GitHub and include information from Tools → Error"
 " Reports."
 msgstr ""
+"Došlo k neočekávané chybě.\n"
+"Vyplňte prosím problém na GitHubu a uveďte informace z Nástroje → Chybové "
+"hlášení."
 
 #: gaphor/plugins/xmiexport/__init__.py:24
 msgid "Export as XMI"
-msgstr ""
+msgstr "Exportovat jako XMI"
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export model as XMI (XML Model Interchange) format"
-msgstr ""
+msgstr "Export modelu ve formátu XMI (XML Model Interchange)"
 
 #: gaphor/plugins/xmiexport/__init__.py:39
 msgid "Export model as XMI file"
-msgstr ""
+msgstr "Exportujte model jako soubor XMI"
 
 #: gaphor/plugins/xmiexport/__init__.py:43
 msgid "All XMI Files"
-msgstr ""
+msgstr "Všechny soubory XMI"
 
 #: gaphor/services/helpservice/about.ui:8 gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
-msgstr ""
+msgstr "O programu Gaphor"
 
 #: gaphor/services/helpservice/about.ui:10
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
-msgstr ""
+msgstr "Copyright © 2001-2022 Arjan J. Molenaar a Dan Yeaw"
 
 #: gaphor/services/helpservice/about.ui:11
 msgid "Gaphor is the simple modeling tool written in Python"
-msgstr ""
+msgstr "Gaphor je jednoduchý modelovací nástroj napsaný v jazyce Python"
 
 #: gaphor/services/helpservice/about.ui:13
 msgid "Fork me on GitHub"
-msgstr ""
+msgstr "Forkněte mě na GitHubu"
 
 #: gaphor/services/helpservice/about.ui:31
 msgid ""
@@ -1518,226 +1526,245 @@ msgid ""
 "trademarks of Object Management Group, Inc. in the United States\n"
 "and/or other countries.\n"
 msgstr ""
+"Licencováno pod licencí Apache, verze 2.0 (dále jen \"licence\");\n"
+"tuto aplikaci smíte používat pouze v souladu s touto licencí.\n"
+"Licence. Kopii Licence můžete získat na adrese\n"
+"\n"
+"http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Pokud to nevyžadují platné právní předpisy nebo to není písemně dohodnuto, "
+"software\n"
+"distribuován \"TAK, JAK JE\",\n"
+"BEZ ZÁRUK A PODMÍNEK JAKÉHOKOLI DRUHU, ať už se jedná o\n"
+"výslovné nebo předpokládané. Konkrétní znění naleznete v licenci\n"
+"upravující oprávnění a omezení v rámci Licence.\n"
+"\n"
+"---\n"
+"\n"
+"UML, SysML a RAAML jsou\n"
+"ochranné známky společnosti Object Management Group, Inc. ve Spojených "
+"státech,\n"
+"a/nebo v jiných zemích.\n"
 
 #: gaphor/services/helpservice/shortcuts.ui:18
 msgid "Application"
-msgstr ""
+msgstr "Aplikace"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
 #: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:194
 #: gaphor/ui/elementeditor.ui:205
 msgid "Preferences"
-msgstr ""
+msgstr "Předvolby"
 
 #: gaphor/services/helpservice/shortcuts.ui:32
 msgid "Quit Gaphor"
-msgstr ""
+msgstr "Ukončit Gaphor"
 
 #: gaphor/services/helpservice/shortcuts.ui:43
 msgid "Files"
-msgstr ""
+msgstr "Soubory"
 
 #: gaphor/services/helpservice/shortcuts.ui:49
 msgid "New Window"
-msgstr ""
+msgstr "Nové okno"
 
 #: gaphor/services/helpservice/shortcuts.ui:57
 msgid "Open"
-msgstr ""
+msgstr "Otevřít"
 
 #: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/filemanager.py:314
 #: gaphor/ui/mainwindow.py:48
 msgid "Save"
-msgstr ""
+msgstr "Uložit"
 
 #: gaphor/services/helpservice/shortcuts.ui:73
 msgid "Save As"
-msgstr ""
+msgstr "Uložit jako"
 
 #: gaphor/services/helpservice/shortcuts.ui:84
 #: gaphor/services/helpservice/shortcuts.ui:90 gaphor/ui/elementeditor.glade:99
 #: gaphor/ui/elementeditor.ui:74
 msgid "Undo"
-msgstr ""
+msgstr "Zpět"
 
 #: gaphor/services/helpservice/shortcuts.ui:98
 #: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:89
 msgid "Redo"
-msgstr ""
+msgstr "Znovu"
 
 #: gaphor/services/helpservice/shortcuts.ui:109
 msgid "Diagrams"
-msgstr ""
+msgstr "Diagramy"
 
 #: gaphor/services/helpservice/shortcuts.ui:115
 msgid "Edit"
-msgstr ""
+msgstr "Upravit"
 
 #: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
 msgid "Editor"
-msgstr ""
+msgstr "Editor"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
 msgid "Select All"
-msgstr ""
+msgstr "Vybrat vše"
 
 #: gaphor/services/helpservice/shortcuts.ui:139
 msgid "Deselect All"
-msgstr ""
+msgstr "Zrušit výběr všeho"
 
 #: gaphor/services/helpservice/shortcuts.ui:147
 msgid "Copy"
-msgstr ""
+msgstr "Kopírovat"
 
 #: gaphor/services/helpservice/shortcuts.ui:155
 msgid "Paste (link defining elements)"
-msgstr ""
+msgstr "Vložit (prvky definující odkaz)"
 
 #: gaphor/services/helpservice/shortcuts.ui:163
 msgid "Paste (copy defining elements)"
-msgstr ""
+msgstr "Vložit (kopírování definujících prvků)"
 
 #: gaphor/services/helpservice/shortcuts.ui:171
 msgid "Delete"
-msgstr ""
+msgstr "Odstranit"
 
 #: gaphor/services/helpservice/shortcuts.ui:179
 msgid "Close Diagram"
-msgstr ""
+msgstr "Zavřít Diagram"
 
 #: gaphor/services/helpservice/shortcuts.ui:190
 msgid "Zoom"
-msgstr ""
+msgstr "Zvětšení"
 
 #: gaphor/services/helpservice/shortcuts.ui:196
 #: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:105
 msgid "Zoom In"
-msgstr ""
+msgstr "Přiblížit"
 
 #: gaphor/services/helpservice/shortcuts.ui:204
 #: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:129
 msgid "Zoom Out"
-msgstr ""
+msgstr "Oddálit"
 
 #: gaphor/services/helpservice/shortcuts.ui:212
 #: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:117
 msgid "Actual Size"
-msgstr ""
+msgstr "Aktuální velikost"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:54
 #: gaphor/ui/mainwindow.py:234 gaphor/ui/mainwindow.ui:29
 #: gaphor/ui/namespace.py:328 gaphor/ui/treecomponent.py:190
 msgid "New model"
-msgstr ""
+msgstr "Nový model"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:57
 msgid "main"
-msgstr ""
+msgstr "hlavní"
 
 #: gaphor/templates/c4model.gaphor
 msgid "1. Context diagrams"
-msgstr ""
+msgstr "1. Kontextové diagramy"
 
 #: gaphor/templates/c4model.gaphor
 msgid "2. Container diagrams"
-msgstr ""
+msgstr "2. Diagramy kontejnerů"
 
 #: gaphor/templates/c4model.gaphor
 msgid "4. Code diagrams"
-msgstr ""
+msgstr "4. Kódové diagramy"
 
 #: gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
-msgstr ""
+msgstr "3. Součásti diagramů"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Context diagram"
-msgstr ""
+msgstr "Kontext diagramu"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Container diagram"
-msgstr ""
+msgstr "Kontejnerový diagram"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Component diagram"
-msgstr ""
+msgstr "Diagram komponent"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Code diagram"
-msgstr ""
+msgstr "Diagram kódu"
 
 #: gaphor/templates/raaml.gaphor gaphor/templates/uml.gaphor
 msgid "Model Name Here"
-msgstr ""
+msgstr "Název modelu zde"
 
 #: gaphor/templates/raaml.gaphor
 msgid "STPA"
-msgstr ""
+msgstr "STPA"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss Definition"
-msgstr ""
+msgstr "Definice ztráty"
 
 #: gaphor/templates/raaml.gaphor
 msgid "FTA"
-msgstr ""
+msgstr "FTA"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of System"
-msgstr ""
+msgstr "Ztráta systému"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Subsystem 1"
-msgstr ""
+msgstr "Ztráta subsystému 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Subsystem 2"
-msgstr ""
+msgstr "Ztráta subsystému 2"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard Definition"
-msgstr ""
+msgstr "Definice nebezpečí"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Life or Injury of People"
-msgstr ""
+msgstr "Ztráta života nebo zranění osob"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Mission"
-msgstr ""
+msgstr "Ztráta poslání"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Customer Satisfaction"
-msgstr ""
+msgstr "Ztráta spokojenosti zákazníků"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard 2"
-msgstr ""
+msgstr "Nebezpečí 2"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard 1"
-msgstr ""
+msgstr "Nebezpečí 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Mapping of Losses and Hazards"
-msgstr ""
+msgstr "Mapování ztrát a nebezpečí"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Operational Situations"
-msgstr ""
+msgstr "Provozní situace"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Operational Situation 1"
-msgstr ""
+msgstr "Provozní situace 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Context of UCAs"
-msgstr ""
+msgstr "Kontext UCA"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situational Context"
-msgstr ""
+msgstr "Situační kontext"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situation Hierarchy"
