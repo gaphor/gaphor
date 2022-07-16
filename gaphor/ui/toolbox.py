@@ -107,7 +107,8 @@ class Toolbox(UIComponent):
             flowbox = Gtk.FlowBox.new()
             flowbox.set_homogeneous(True)
             flowbox.set_max_children_per_line(12)
-            flowbox_add_hover_support(flowbox)
+            if Gtk.get_major_version() == 3:
+                flowbox_add_hover_support(flowbox)
             flowbox.connect("child-activated", self._on_tool_activated)
 
             if Gtk.get_major_version() == 3:

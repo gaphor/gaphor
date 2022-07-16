@@ -85,7 +85,8 @@ class Greeter(Service, ActionProvider):
         for widget in self.create_templates():
             templates.insert(widget, -1)
 
-        flowbox_add_hover_support(templates)
+        if Gtk.get_major_version() == 3:
+            flowbox_add_hover_support(templates)
         self.templates = templates
 
         self.stack = builder.get_object("stack")
