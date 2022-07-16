@@ -6,19 +6,9 @@ from gaphor.ui.event import CurrentDiagramChanged
 from gaphor.ui.toolbox import Toolbox
 
 
-class MockProperties(dict):
-    def set(self, key, value):
-        self[key] = value
-
-
 @pytest.fixture
 def modeling_language(event_manager):
     return ModelingLanguageService(event_manager)
-
-
-@pytest.fixture
-def properties():
-    return MockProperties()
 
 
 @pytest.fixture

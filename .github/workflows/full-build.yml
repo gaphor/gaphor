@@ -40,7 +40,7 @@ jobs:
 
   linux:
     needs: lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
@@ -57,7 +57,7 @@ jobs:
         uses: actions/cache@v3.0.5
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
       - name: Install Dependencies and Test
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
@@ -94,6 +94,8 @@ jobs:
   linux-appimage:
     needs: lint
     runs-on: ubuntu-20.04
+    env:
+      GAPHOR_USE_GTK: 3
     permissions:
       contents: write
     container:
@@ -137,22 +139,28 @@ jobs:
           chmod +x ${{ needs.linux-appimage.outputs.appimage }}
           xvfb-run ./${{ needs.linux-appimage.outputs.appimage }} --self-test
 
-  linux-gtk4:
+  linux-gtk3:
     needs: lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
-    container:
-      image: fedora:latest
     env:
-      GAPHOR_USE_GTK: 4
+      GAPHOR_USE_GTK: 3
     steps:
       - run: >
-          dnf install -y util-linux poetry gcc gtk4 cairo-devel cairo-gobject-devel
-          gobject-introspection-devel python3-devel python3-pip xorg-x11-server-Xvfb
+          sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
+          gir1.2-gtk-3.0 libgirepository1.0-dev libgtksourceview-4-dev upx
       - uses: actions/checkout@v3.0.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-python@v4.0.0
+        with:
+          python-version: ${{ env.python_version }}
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v3.0.4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
       - name: Install Dependencies and Test
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
@@ -171,6 +179,7 @@ jobs:
     env:
       LDFLAGS: -L/usr/local/opt/python@3.10/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      GAPHOR_USE_GTK: 3
     steps:
       - uses: actions/checkout@v3.0.2
         with:
@@ -232,7 +241,6 @@ jobs:
     env:
       LDFLAGS: -L/usr/local/opt/python@3.10/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
-      GAPHOR_USE_GTK: 4
     steps:
       - uses: actions/checkout@v3.0.2
         with:
@@ -258,9 +266,9 @@ jobs:
     timeout-minutes: 60
     env:
       # Git revision of gvsbuild we use for to build GTK and the other dependencies
-      gvsbuildref: 0ccd3f4e8d21f2748034eb56c0b5348d18f71454
+      gvsbuildref: 442f4d2847ed09a6c6e0d7e8a4830962286387d9
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuildupdate: 1
+      gvsbuildupdate: 2
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
@@ -287,11 +295,15 @@ jobs:
       - name: GTK binaries move git binary
         if: steps.cache.outputs.cache-hit != 'true'
         run: move "C:\Program Files\Git\usr\bin" "C:\Program Files\Git\usr\notbin"
+      - name: Install gvsbuild
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: gvsbuild
+        run: python -m pip install .
       - name: GTK binaries run gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
         working-directory: gvsbuild
         run: >
-          python .\build.py build --enable-gi --py-wheel gobject-introspection gtk3 pycairo pygobject gtksourceview4
+          gvsbuild build --enable-gi --py-wheel gobject-introspection gtk3 pycairo pygobject gtksourceview4
           adwaita-icon-theme hicolor-icon-theme
       - name: Copy wheels to cached directory
         if: steps.cache.outputs.cache-hit != 'true'
@@ -306,6 +318,8 @@ jobs:
   windows:
     needs: [lint, windows-build-gtk]
     runs-on: windows-latest
+    env:
+      GAPHOR_USE_GTK: 3
     permissions:
       contents: write
     timeout-minutes: 45

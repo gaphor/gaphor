@@ -16,7 +16,7 @@ jobs:
     permissions:
       security-events: write  # for github/codeql-action/autobuild to send a status report
     name: Analyze
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3.0.2
@@ -30,7 +30,7 @@ jobs:
       uses: actions/cache@v3.0.5
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+        key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
     - name: Install Poetry
       run: pip install poetry==1.1.14
     - name: Configure Poetry

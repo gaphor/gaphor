@@ -37,12 +37,12 @@ execute:
 
 ```bash
 $ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
-gir1.2-gtk-3.0 libgirepository1.0-dev libcairo2-dev libgtksourceview-4-dev
+gir1.2-gtk-4.0 libgirepository1.0-dev libcairo2-dev libgtksourceview-5-dev
 ```
 
-Install Poetry (you may want to consider [alternative methods](https://python-poetry.org/docs/#alternative-installation-methods-not-recommended)):
+Install Poetry using [pipx](https://pypa.github.io/pipx/):
 ```bash
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
+pipx install poetry
 ```
 
 [Clone the
@@ -77,11 +77,11 @@ repository](https://github.com/flathub/org.gaphor.Gaphor).
 
 1. Install the GNOME SDK
 
-       $ flatpak install flathub org.gnome.Sdk 3.38
+       $ flatpak install flathub org.gnome.Sdk 42
 
 1. Clone the Flathub repository and install the necessary SDK:
 
-       git clone https://github.com/flathub/org.gaphor.Gaphor.git
+       $ git clone https://github.com/flathub/org.gaphor.Gaphor.git
        $ cd org.gaphor.Gaphor
        $ make setup
 
@@ -98,22 +98,20 @@ repository](https://github.com/flathub/org.gaphor.Gaphor).
 [AppImage](https://appimage.org/) is a format for distributing portable software
 on Linux without needing superuser permissions to install the application. The
 AppImage file is one executable which contains both Gaphor and Python. It allows
-Gaphor to be run on any AppImage supported Linux distribution without
-installation or root access.
+Gaphor to be run on any AppImage supported platform without installation or root
+access.
 
 We build our AppImage by first bundling Gaphor with PyInstaller and then
 converting it in to an AppImage.
 
-1. Activate your virtualenv, `poetry shell`
+In order for the built AppImage to be compatible with older versions of Linux,
+we build the release versions using Docker with an older LTS version of Ubuntu.
 
-1. `cd appimage`
-
-1. `make update VERSION=x.x.x`
-
-1. Build the AppImage by running `make all`
-
-1. Test that Gaphor-x86_64.AppImage works by running `make run`
-
+```Bash
+$ poetry run poe package
+$ cd _packaging/appimage
+$ make dist
+```
 ## Linux Distribution Packages
 
 Examples of Gaphor and Gaphas RPM spec files can be found in [PLD
@@ -122,6 +120,10 @@ Linux](https://www.pld-linux.org/)
 
 - https://github.com/pld-linux/python-gaphas
 - https://github.com/pld-linux/gaphor
+
+There is also an [Arch User Repository (AUR) for
+Gaphor](https://aur.archlinux.org/packages/python-gaphor) available for Arch
+users.
 
 Please, do not hesitate to contact us if you need help to create a Linux
 package for Gaphor or Gaphas.

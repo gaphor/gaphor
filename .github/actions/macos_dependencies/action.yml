@@ -3,5 +3,7 @@ description: 'Installs macOS GTK and Python Dependencies'
 runs:
   using: composite
   steps:
-    - run: brew install gobject-introspection gtk+3 gtk4 gtksourceview4 gtksourceview5 adwaita-icon-theme gtk-mac-integration create-dmg upx
+    - run: >
+        brew install gobject-introspection gtk+3 gtk4 gtksourceview4 gtksourceview5 adwaita-icon-theme
+        gtk-mac-integration create-dmg upx libadwaita
       shell: bash

@@ -15,10 +15,11 @@ To setup a development environment with macOS:
 ```bash
 $ brew install python3 gobject-introspection gtk+3 gtksourceview4 adwaita-icon-theme gtk-mac-integration
 ```
-Install Poetry (you may want to consider installing poetry via [pipx](https://pypi.org/project/pipx/), instead of pip):
+Install Poetry using [pipx](https://pypa.github.io/pipx/):
 ```bash
-pip install --user poetry
+pipx install poetry
 ```
+
 [Clone the
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 ```

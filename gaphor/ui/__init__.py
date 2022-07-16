@@ -12,13 +12,15 @@ import gi
 
 if os.getenv("GAPHOR_USE_GTK") != "NONE":
     # Allow to explicitly *not* initialize GTK (for docs, mainly)
-    gtk_version = "4.0" if os.getenv("GAPHOR_USE_GTK") == "4" else "3.0"
-    gtk_source_version = "5" if os.getenv("GAPHOR_USE_GTK") == "4" else "4"
+    gtk_version = "3.0" if os.getenv("GAPHOR_USE_GTK") == "3" else "4.0"
+    gtk_source_version = "4" if os.getenv("GAPHOR_USE_GTK") == "3" else "5"
 
     gi.require_version("Gtk", gtk_version)
     gi.require_version("Gdk", gtk_version)
-    if gtk_version == "3.0":
-        gi.require_version("GtkSource", gtk_source_version)
+    gi.require_version("GtkSource", gtk_source_version)
+    if gtk_version == "4.0":
+        gi.require_version("Adw", "1")
+        from gi.repository import Adw
 
 
 from gi.repository import Gdk, Gio, GLib, Gtk
@@ -135,9 +137,14 @@ def run(args: list[str]) -> int:
             for file in files:
                 application.new_session(filename=file.get_path())
 
-    gtk_app = Gtk.Application(
-        application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
-    )
+    if gtk_version == "3.0":
+        gtk_app = Gtk.Application(
+            application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
+        )
+    else:
+        gtk_app = Adw.Application(
+            application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
+        )
     gtk_app.exit_code = 0
     add_main_options(gtk_app)
     gtk_app.connect("startup", app_startup)
