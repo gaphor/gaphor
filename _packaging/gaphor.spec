@@ -59,7 +59,7 @@ a = Analysis(
     },
     hookspath=["hooks"],
     runtime_hooks=[],
-    excludes=["lib2to3", "tcl", "tk", "_tkinter", "tkinter", "Tkinter"],
+    excludes=[],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     cipher=block_cipher,
