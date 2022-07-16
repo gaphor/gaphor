@@ -302,6 +302,7 @@ def save_changes_before_closing_dialog(window: Gtk.Window, handler) -> None:
         ),
     )
     dialog.set_transient_for(window)
+    dialog.set_modal(True)
     dialog.add_buttons(
         gettext("Close without saving changes"),
         Gtk.ResponseType.REJECT,
