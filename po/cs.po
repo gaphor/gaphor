@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-07-06 17:00+0200\n"
-"PO-Revision-Date: 2022-07-16 11:16+0000\n"
+"PO-Revision-Date: 2022-07-16 16:18+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
 "\n"
@@ -1214,42 +1214,42 @@ msgstr "import"
 
 #: gaphor/UML/profiles/profilestoolbox.py:22
 msgid "Profiles"
-msgstr ""
+msgstr "Profily"
 
 #: gaphor/UML/profiles/profilestoolbox.py:26
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: gaphor/UML/profiles/profilestoolbox.py:38
 msgid "Metaclass"
-msgstr ""
+msgstr "Metatřída"
 
 #: gaphor/UML/profiles/profilestoolbox.py:48
 msgid "Stereotype"
-msgstr ""
+msgstr "Stereotyp"
 
 #: gaphor/UML/profiles/profilestoolbox.py:60
 msgid "Extension"
-msgstr ""
+msgstr "Rozšíření"
 
 #: gaphor/UML/profiles/profilestoolbox.py:67
 msgid "Import"
-msgstr ""
+msgstr "Importovat"
 
 #: gaphor/UML/profiles/propertypages.glade:61
 #: gaphor/UML/profiles/propertypages.ui:44
 msgid "Show Stereotypes"
-msgstr ""
+msgstr "Zobrazit stereotypy"
 
 #: gaphor/UML/profiles/propertypages.glade:137
 #: gaphor/UML/profiles/propertypages.ui:31
 msgid "Stereotypes"
-msgstr ""
+msgstr "Stereotypy"
 
 #: gaphor/UML/states/propertypages.glade:31
 #: gaphor/UML/states/propertypages.ui:20
 msgid "Entry"
-msgstr ""
+msgstr "Položka"
 
 #: gaphor/UML/states/propertypages.glade:48
 #: gaphor/UML/states/propertypages.ui:31
