@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-07-06 17:00+0200\n"
-"PO-Revision-Date: 2022-07-16 18:51+0000\n"
+"PO-Revision-Date: 2022-07-18 14:21+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
 "\n"
@@ -1768,365 +1768,366 @@ msgstr "Situační kontext"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situation Hierarchy"
-msgstr ""
+msgstr "Hierarchie situací"
 
 #: gaphor/templates/raaml.gaphor
 msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
+"Analýza stromu poruch ukazuje, které příčiny selhání systému byly zváženy."
 
 #: gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
-msgstr ""
+msgstr "1. Koncepční úroveň"
 
 #: gaphor/templates/sysml.gaphor
 msgid "2. Logical Level"
-msgstr ""
+msgstr "2. Logická úroveň"
 
 #: gaphor/templates/sysml.gaphor
 msgid "3. Technology Level"
-msgstr ""
+msgstr "3. Technologická úroveň"
 
 #: gaphor/templates/sysml.gaphor
 msgid "User"
-msgstr ""
+msgstr "Uživatel"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case #1"
-msgstr ""
+msgstr "Případ použití č. 1"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Behavior"
-msgstr ""
+msgstr "Chování"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Structure"
-msgstr ""
+msgstr "Struktura"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Context"
-msgstr ""
+msgstr "Kontext funkce"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Operator"
-msgstr ""
+msgstr "Operátor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature"
-msgstr ""
+msgstr "Funkce"
 
 #: gaphor/templates/sysml.gaphor
 msgid "External Element"
-msgstr ""
+msgstr "Externí prvek"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Stakeholder Requirements"
-msgstr ""
+msgstr "Požadavky zúčastněných stran"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
-msgstr ""
+msgstr "Funkce Potřeba uživatele"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Structure"
-msgstr ""
+msgstr "Logická struktura"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensor"
-msgstr ""
+msgstr "Senzor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "sensor"
-msgstr ""
+msgstr "senzor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "controller"
-msgstr ""
+msgstr "řadič"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Boundary"
-msgstr ""
+msgstr "Logická hranice"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Structure"
-msgstr ""
+msgstr "Technologická struktura"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Boundary"
-msgstr ""
+msgstr "Technologická hranice"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Requirements"
-msgstr ""
+msgstr "Technologické požadavky"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detailed Behavior"
-msgstr ""
+msgstr "Detailní chování"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System Requirements"
-msgstr ""
+msgstr "Systémové požadavky"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
-msgstr ""
+msgstr "Logické stavy"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Event Flow"
-msgstr ""
+msgstr "Průběh funkční události"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Off"
-msgstr ""
+msgstr "Vypnout"
 
 #: gaphor/templates/sysml.gaphor
 msgid "On"
-msgstr ""
+msgstr "Zapnout"
 
 #: gaphor/templates/sysml.gaphor
 msgid "actuator"
-msgstr ""
+msgstr "aktuátor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case Function #1"
-msgstr ""
+msgstr "Případ použití Funkce #1"
 
 #: gaphor/templates/sysml.gaphor
 msgid "First Action"
-msgstr ""
+msgstr "První akce"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Second Action"
-msgstr ""
+msgstr "Druhá akce"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example System Requirement"
-msgstr ""
+msgstr "Příklad systémových požadavků"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensed Data"
-msgstr ""
+msgstr "Snímaná data"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Command"
-msgstr ""
+msgstr "Příkaz"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Functional Boundary Behavior"
-msgstr ""
+msgstr "Funkční hraniční chování"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Determine Actuator Command"
-msgstr ""
+msgstr "Určete příkaz aktuátoru"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Actuate Actuator"
-msgstr ""
+msgstr "Aktivační aktuátor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Actuator Command"
-msgstr ""
+msgstr "Příkaz Aktuátoru"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example Technolgy Requirement"
-msgstr ""
+msgstr "Příklad technolgického požadavku"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
-msgstr ""
+msgstr "Systém"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ECU"
-msgstr ""
+msgstr "ECU"
 
 #: gaphor/templates/sysml.gaphor
 msgid "DC Motor"
-msgstr ""
+msgstr "Stejnosměrný motor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "IR Transceiver"
-msgstr ""
+msgstr "IR vysílač"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ecu"
-msgstr ""
+msgstr "ecu"
 
 #: gaphor/templates/sysml.gaphor
 msgid "dc Motor"
-msgstr ""
+msgstr "stejnosměrný motor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ir Transceiver"
-msgstr ""
+msgstr "ir transceiver"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detect Obstacle"
-msgstr ""
+msgstr "Detekce překážky"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Command Reverse"
-msgstr ""
+msgstr "Příkaz Rezervnosti"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Reverse Motor"
-msgstr ""
+msgstr "Reverzní motor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detect Object"
-msgstr ""
+msgstr "Detekce objektu"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detection Event"
-msgstr ""
+msgstr "Detekční událost"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
-msgstr ""
+msgstr "1. Případy použití"
 
 #: gaphor/templates/uml.gaphor
 msgid "2. Domain Analysis"
-msgstr ""
+msgstr "2. Analýza domény"
 
 #: gaphor/templates/uml.gaphor
 msgid "3. Architectural Design"
-msgstr ""
+msgstr "3. Architektonický návrh"
 
 #: gaphor/templates/uml.gaphor
 msgid "4. Detailed Design"
-msgstr ""
+msgstr "4. Podrobný návrh"
 
 #: gaphor/templates/uml.gaphor
 msgid "Main Actor"
-msgstr ""
+msgstr "Hlavní herec"
 
 #: gaphor/templates/uml.gaphor
 msgid "Main Use Case"
-msgstr ""
+msgstr "Hlavní případ použití"
 
 #: gaphor/templates/uml.gaphor
 msgid "Included Use Case"
-msgstr ""
+msgstr "Zahrnutý případ použití"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Actor"
-msgstr ""
+msgstr "Vedlejší herec"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Use Case"
-msgstr ""
+msgstr "Sekundární případ použití"
 
 #: gaphor/templates/uml.gaphor
 msgid "Use Case Scenarios"
-msgstr ""
+msgstr "Scénáře případů použití"
 
 #: gaphor/templates/uml.gaphor
 msgid "Scenario 1"
-msgstr ""
+msgstr "Scénář 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Scenario 2"
-msgstr ""
+msgstr "Scénář 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "Domain Entities"
-msgstr ""
+msgstr "Subjekty domény"
 
 #: gaphor/templates/uml.gaphor
 msgid "Software Task"
-msgstr ""
+msgstr "Softwarová úloha"
 
 #: gaphor/templates/uml.gaphor
 msgid "performs"
-msgstr ""
+msgstr "provádí"
 
 #: gaphor/templates/uml.gaphor
 msgid "Package Dependencies"
-msgstr ""
+msgstr "Závislosti balíčků"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 1"
-msgstr ""
+msgstr "SW komponenta 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 4"
-msgstr ""
+msgstr "SW komponenta 4"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 3"
-msgstr ""
+msgstr "SW komponenta 3"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 2"
-msgstr ""
+msgstr "SW komponenta 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "Primary Actor"
-msgstr ""
+msgstr "Primární aktér"
 
 #: gaphor/templates/uml.gaphor
 msgid "Actor Profile"
-msgstr ""
+msgstr "Profil aktéra"
 
 #: gaphor/templates/uml.gaphor
 msgid "login"
-msgstr ""
+msgstr "přihlásit se"
 
 #: gaphor/templates/uml.gaphor
 msgid "Detailed Class Design"
-msgstr ""
+msgstr "Podrobný návrh třídy"
 
 #: gaphor/templates/uml.gaphor
 msgid "First Class"
-msgstr ""
+msgstr "První třída"
 
 #: gaphor/templates/uml.gaphor
 msgid "firstName"
-msgstr ""
+msgstr "jméno"
 
 #: gaphor/templates/uml.gaphor
 msgid "lastName"
-msgstr ""
+msgstr "příjmení"
 
 #: gaphor/templates/uml.gaphor
 msgid "Login"
-msgstr ""
+msgstr "Přihlásit se"
 
 #: gaphor/templates/uml.gaphor
 msgid "lastLogin"
-msgstr ""
+msgstr "poslední přihlášení"
 
 #: gaphor/templates/uml.gaphor
 msgid "Second Class"
-msgstr ""
+msgstr "Druhá třída"
 
 #: gaphor/templates/uml.gaphor
 msgid "released"
-msgstr ""
+msgstr "vydáno"
 
 #: gaphor/templates/uml.gaphor
 msgid "Implementation Architecture"
-msgstr ""
+msgstr "Implementační architektura"
 
 #: gaphor/templates/uml.gaphor
 msgid "Node 1"
-msgstr ""
+msgstr "Uzel 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Artifact 1"
-msgstr ""
+msgstr "Artefakt 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Node 2"
-msgstr ""
+msgstr "Uzel 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "protocol"
-msgstr ""
+msgstr "protokol"
 
 #: gaphor/templates/uml.gaphor
 msgid "Artifact 2"
-msgstr ""
+msgstr "Artefakt 2"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2134,12 +2135,17 @@ msgid ""
 "identifying user roles – actors – and\n"
 "associating them to their use cases."
 msgstr ""
+"Analyzujte funkční požadavky pomocí\n"
+"identifikace uživatelských rolí - aktérů - a\n"
+"jejich přiřazení k případům užití."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
+"Modelování abstraktní implementace případů užití vytvořením diagramů aktivit "
+"vizualizujících toky aktivit pro primární a sekundární scénáře případů užití."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2148,6 +2154,10 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
+"Proveďte analýzu domény modelováním entit domény a jejich vztahů pomocí "
+"zjednodušeného diagramu tříd. Tento diagram bude sloužit jako vizuální "
+"slovník pojmů. Bude také výchozím bodem pro váš datový model na úrovni "
+"návrhu."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2156,6 +2166,10 @@ msgid ""
 " and avoid design flaws such as cyclic dependencies or dependencies on "
 "unstable parts"
 msgstr ""
+"Připravte si diagram závislostí balíčků, abyste mohli vhodným způsobem "
+"seskupit implementační třídy. To vám pomůže udržet kód dobře strukturovaný a "
+"vyhnout se chybám v návrhu, jako jsou cyklické závislosti nebo závislosti na "
+"nestabilních částech."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2163,10 +2177,15 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
+"Modelování interakcí komponent pro scénáře případů použití s cílem nalézt "
+"nové metody ve\n"
+"existujících tříd nebo dokonce nových tříd se specifickými povinnostmi."
 
 #: gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
+"Vytvářejte podrobné diagramy tříd pro zachycení objektově orientovaného "
+"datového modelu."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2174,37 +2193,41 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
+"Definujte hlavní artefakty, které jsou projevem implementace vašich "
+"komponent. Uveďte, jak jsou nasazeny na hardwarových uzlech, jejich vzájemné "
+"závislosti a komunikační protokoly."
 
 #: gaphor/templates/uml.gaphor
 msgid "String"
-msgstr ""
+msgstr "Řetězec"
 
 #: gaphor/templates/uml.gaphor
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:13
 msgid "All Gaphor Models"
-msgstr ""
+msgstr "Všechny modely Gaphor"
 
 #: gaphor/ui/appfilemanager.py:46
 msgid ""
 "{filename} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr ""
+"{filename} je již otevřeno. Chcete se místo toho přepnout do otevřeného okna?"
 
 #: gaphor/ui/appfilemanager.py:68
 msgid "Open a Model"
-msgstr ""
+msgstr "Otevřete model"
 
 #: gaphor/ui/diagrampage.py:128 gaphor/ui/namespaceview.py:143
 #: gaphor/ui/treemodel.py:42
 msgid "<None>"
-msgstr ""
+msgstr "<None>"
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:10
 msgid "No item selected"
-msgstr ""
+msgstr "Není vybrána žádná položka"
 
 #: gaphor/ui/elementeditor.glade:28 gaphor/ui/elementeditor.ui:22
 msgid "Show Tips"
