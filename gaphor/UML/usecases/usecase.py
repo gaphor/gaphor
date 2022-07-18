@@ -22,6 +22,7 @@ class UseCaseItem(Classified, ElementPresentation):
             ),
             Text(
                 text=lambda: self.subject.name or "",
+                width=lambda: self.width - 24,
                 style={"font-weight": FontWeight.BOLD},
             ),
             draw=draw_usecase,
