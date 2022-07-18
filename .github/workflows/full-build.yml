@@ -120,6 +120,7 @@ jobs:
           xvfb_command: 'xvfb-run'
       - name: Create Linux Appimage
         uses: ./.github/actions/linux_appimage
+        if: ${{ github.actor != 'dependabot[bot]' }}
         with:
           mainline_build: ${{ env.mainline_build }}
           version: ${{ steps.setup_and_test.outputs.version }}
@@ -201,6 +202,7 @@ jobs:
         uses: ./.github/actions/setup_and_test
       - name: Create macOS Application
         id: create
+        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: ./.github/actions/macos_dmg
         with:
           mainline_build: ${{ env.mainline_build }}
@@ -215,6 +217,7 @@ jobs:
     needs: macos
     runs-on: macos-latest
     timeout-minutes: 10
+    if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - uses: actions/download-artifact@v3
         id: download
@@ -360,6 +363,7 @@ jobs:
           install_others: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
       - name: Create Windows Executables
         uses: ./.github/actions/windows_executables
+        if: ${{ github.actor != 'dependabot[bot]' }}
         with:
           mainline_build: ${{ env.mainline_build }}
           version: ${{ steps.setup_and_test.outputs.version }}
@@ -371,6 +375,7 @@ jobs:
     needs: windows
     runs-on: windows-latest
     timeout-minutes: 10
+    if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - uses: actions/download-artifact@v3
         with:
