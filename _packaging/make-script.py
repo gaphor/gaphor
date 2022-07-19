@@ -1,5 +1,3 @@
-import os
-import subprocess
 from pathlib import Path
 
 import pyinstaller_versionfile
@@ -62,8 +60,3 @@ def make_file_version_info():
         input_file=metadata,
         version=version,
     )
-
-
-def make_pyinstaller(spec_file: str = "gaphor.spec"):
-    os.chdir(packaging_path)
-    subprocess.run(["pyinstaller", "-y", spec_file])

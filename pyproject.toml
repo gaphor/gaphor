@@ -117,8 +117,8 @@ clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packagi
 gaphor-script = { "script" = "_packaging.make-script:make_gaphor_script" }
 gaphor-script-gtk3 = { "script" = "_packaging.make-script:make_gaphor_script('3')" }
 version-file = { "script" = "_packaging.make-script:make_file_version_info" }
-pyinstall = { "script" = "_packaging.make-script:make_pyinstaller" }
-pyinstall-gtk3 = { "script" = "_packaging.make-script:make_pyinstaller('gaphor_gtk3.spec')" }
+pyinstall = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec", env = { "GAPHOR_PKG_GTK" = "4" }}
+pyinstall-gtk3 = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec", env = { "GAPHOR_PKG_GTK" = "3" } }
 package = ["gaphor-script", "version-file", "pyinstall"]
 package-gtk3 = ["gaphor-script-gtk3", "version-file", "pyinstall-gtk3"]
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }

@@ -11,6 +11,7 @@ from PyInstaller.utils.hooks import copy_metadata
 
 block_cipher = None
 
+print("Target GTK version:", os.getenv("GAPHOR_PKG_GTK", "4"))
 
 glade_files = [
     (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.glade")
@@ -59,8 +60,8 @@ a = Analysis(
     hooksconfig={
         "gi": {
             "module-versions": {
-                "Gtk": "4.0",
-                "GtkSource": "5",
+                "Gtk": "3.0" if os.getenv("GAPHOR_PKG_GTK") == "3" else "4.0",
+                "GtkSource": "4" if os.getenv("GAPHOR_PKG_GTK") == "3" else "5",
             },
         },
     },
