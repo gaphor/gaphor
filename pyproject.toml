@@ -114,13 +114,10 @@ c4model.script = """gaphor.codegen.coder:main(
 lint = "pre-commit run --all-files"
 docs = "sphinx-build docs docs/_build/html"
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt _packaging/gaphor-script.py docs/_build" }
-gaphor-script = { "script" = "_packaging.make-script:make_gaphor_script" }
-gaphor-script-gtk3 = { "script" = "_packaging.make-script:make_gaphor_script('3')" }
-version-file = { "script" = "_packaging.make-script:make_file_version_info" }
-pyinstall = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec", env = { "GAPHOR_PKG_GTK" = "4" }}
-pyinstall-gtk3 = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec", env = { "GAPHOR_PKG_GTK" = "3" } }
-package = ["gaphor-script", "version-file", "pyinstall"]
-package-gtk3 = ["gaphor-script-gtk3", "version-file", "pyinstall-gtk3"]
+_gaphor-script = { "script" = "_packaging.make-script:make_gaphor_script" }
+_version-file = { "script" = "_packaging.make-script:make_file_version_info" }
+_pyinstaller = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
+package = ["_gaphor-script", "_version-file", "_pyinstaller"]
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
 appimage-docker-build = "docker build -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"
 appimage-docker-build-clean = "docker build --no-cache -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"

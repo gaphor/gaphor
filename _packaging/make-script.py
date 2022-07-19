@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 import pyinstaller_versionfile
@@ -16,7 +17,7 @@ def get_version() -> str:
     return str(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
 
 
-def make_gaphor_script(gtk_version: str = "4"):
+def make_gaphor_script(gtk_version: str = os.getenv("GAPHOR_PKG_GTK", "4")):
     pyproject_toml = packaging_path.parent / "pyproject.toml"
     with open(pyproject_toml, "rb") as f:
         toml = tomllib.load(f)
