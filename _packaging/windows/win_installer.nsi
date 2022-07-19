@@ -1,4 +1,4 @@
-; Copyright 2016 Christoph Reiter, 2019 Dan Yeaw
+; Copyright 2016 Christoph Reiter, 2019-2022 Dan Yeaw
 ;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ Name "${NAME} (${VERSION})"
 OutFile "gaphor-LATEST.exe"
 SetCompressor /SOLID /FINAL lzma
 SetCompressorDictSize 32
-InstallDir "$PROGRAMFILES\${NAME}"
+InstallDir "$PROGRAMFILES64\${NAME}"
 RequestExecutionLevel admin
 
 Var INST_BIN
@@ -41,22 +41,26 @@ Var UNINST_BIN
 !insertmacro MUI_UNPAGE_CONFIRM
 !insertmacro MUI_UNPAGE_INSTFILES
 
-!insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "Catalan"
+!insertmacro MUI_LANGUAGE "Croatian"
+!insertmacro MUI_LANGUAGE "Czech"
 !insertmacro MUI_LANGUAGE "Dutch"
+!insertmacro MUI_LANGUAGE "English"
 !insertmacro MUI_LANGUAGE "French"
+!insertmacro MUI_LANGUAGE "Galician"
+!insertmacro MUI_LANGUAGE "German"
+!insertmacro MUI_LANGUAGE "Hungarian"
+!insertmacro MUI_LANGUAGE "Italian"
+!insertmacro MUI_LANGUAGE "Japanese"
+!insertmacro MUI_LANGUAGE "Korean"
 !insertmacro MUI_LANGUAGE "PortugueseBR"
 !insertmacro MUI_LANGUAGE "Russian"
+!insertmacro MUI_LANGUAGE "SimpChinese"
 !insertmacro MUI_LANGUAGE "Spanish"
 !insertmacro MUI_LANGUAGE "Swedish"
 
-
 Section "Install"
     SetShellVarContext all
-
-    ; Use this to make things faster for testing installer changes
-    ;~ SetOutPath "$INSTDIR\bin"
-    ;~ File /r "mingw32\bin\*.exe"
 
     SetOutPath "$INSTDIR"
     File /r "*.*"

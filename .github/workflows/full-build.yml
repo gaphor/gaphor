@@ -385,5 +385,5 @@ jobs:
       - name: Perform self-test
         run: |
           start "" /WAIT "${{ needs.windows.outputs.installer }}" /S
-          start "" /WAIT "C:\Program Files (x86)\Gaphor\gaphor-exe.exe" --self-test
+          start "" /WAIT "C:\Program Files\Gaphor\gaphor-exe.exe" --self-test
         shell: cmd
