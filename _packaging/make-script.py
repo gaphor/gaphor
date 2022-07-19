@@ -36,7 +36,7 @@ def make_gaphor_script(gtk_version: str = "4"):
         # Check for and remove two semicolons in path
         file.write("os.environ['PATH'] = os.environ['PATH'].replace(';;', ';')\n")
 
-        file.write(f"os.environ['GAPHOR_USE_GTK'] = {gtk_version}\n")
+        file.write(f"os.environ['GAPHOR_USE_GTK'] = '{gtk_version}'\n")
 
         plugins = toml["tool"]["poetry"]["plugins"]
         for cat in plugins.values():
