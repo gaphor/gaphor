@@ -130,6 +130,7 @@ jobs:
     needs: linux-appimage
     runs-on: ubuntu-20.04
     timeout-minutes: 10
+    if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - uses: actions/download-artifact@v3
         with:
