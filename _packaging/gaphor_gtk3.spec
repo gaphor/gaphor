@@ -2,11 +2,7 @@ import os
 import time
 from pathlib import Path
 
-try:
-    import tomllib
-except ModuleNotFoundError:
-    import tomli as tomllib
-
+import tomli
 from PyInstaller.utils.hooks import copy_metadata
 
 block_cipher = None
@@ -24,7 +20,7 @@ def get_version() -> str:
     project_dir = Path.cwd().parent
     print(project_dir.resolve())
     f = project_dir / "pyproject.toml"
-    return str(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
+    return str(tomli.loads(f.read_text())["tool"]["poetry"]["version"])
 
 
 a = Analysis(
@@ -59,8 +55,7 @@ a = Analysis(
     hooksconfig={
         "gi": {
             "module-versions": {
-                "Gtk": "4.0",
-                "GtkSource": "5",
+                "GtkSource": "4",
             },
         },
     },

@@ -42,7 +42,7 @@ runs:
         p12-password: ${{ inputs.certpassword_p12 }}
     - name: Create Unsigned macOS Application
       if: inputs.mainline_build != 'true'
-      run: poetry run poe package
+      run: poetry run poe package-gtk3
       shell: bash
     - name: Create Signed macOS Application
       if: inputs.mainline_build == 'true'

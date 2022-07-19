@@ -115,9 +115,12 @@ lint = "pre-commit run --all-files"
 docs = "sphinx-build docs docs/_build/html"
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt _packaging/gaphor-script.py docs/_build" }
 gaphor-script = { "script" = "_packaging.make-script:make_gaphor_script" }
+gaphor-script-gtk3 = { "script" = "_packaging.make-script:make_gaphor_script('3')" }
 version-file = { "script" = "_packaging.make-script:make_file_version_info" }
 pyinstall = { "script" = "_packaging.make-script:make_pyinstaller" }
+pyinstall-gtk3 = { "script" = "_packaging.make-script:make_pyinstaller('gaphor_gtk3.spec')" }
 package = ["gaphor-script", "version-file", "pyinstall"]
+package-gtk3 = ["gaphor-script-gtk3", "version-file", "pyinstall-gtk3"]
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
 appimage-docker-build = "docker build -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"
 appimage-docker-build-clean = "docker build --no-cache -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"

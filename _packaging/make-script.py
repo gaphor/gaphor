@@ -18,7 +18,7 @@ def get_version() -> str:
     return str(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
 
 
-def make_gaphor_script():
+def make_gaphor_script(gtk_version: str = "4"):
     pyproject_toml = packaging_path.parent / "pyproject.toml"
     with open(pyproject_toml, "rb") as f:
         toml = tomllib.load(f)
@@ -36,8 +36,7 @@ def make_gaphor_script():
         # Check for and remove two semicolons in path
         file.write("os.environ['PATH'] = os.environ['PATH'].replace(';;', ';')\n")
 
-        # Load gaphor with GTK3, the frozen gaphor-exe is segfaulting with GTK4
-        file.write("os.environ['GAPHOR_USE_GTK'] = '3'\n")
+        file.write(f"os.environ['GAPHOR_USE_GTK'] = {gtk_version}\n")
 
         plugins = toml["tool"]["poetry"]["plugins"]
         for cat in plugins.values():
@@ -65,6 +64,6 @@ def make_file_version_info():
     )
 
 
-def make_pyinstaller():
+def make_pyinstaller(spec_file: str = "gaphor.spec"):
     os.chdir(packaging_path)
-    subprocess.run(["pyinstaller", "-y", "gaphor.spec"])
+    subprocess.run(["pyinstaller", "-y", spec_file])

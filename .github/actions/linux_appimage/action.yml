@@ -19,7 +19,7 @@ runs:
     - name: Build AppImage
       run: |
         jhbuild shell
-        poetry run poe package
+        poetry run poe package-gtk3
         cd _packaging/appimage
         make dist
       shell: bash
