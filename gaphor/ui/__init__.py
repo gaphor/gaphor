@@ -63,9 +63,16 @@ def main(argv=sys.argv) -> int:
 
     # Set dark mode for non-FreeDesktop platforms only:
     if sys.platform in ("darwin", "win32"):
-        Gtk.Settings.get_default().set_property(
-            "gtk-application-prefer-dark-theme", darkdetect.isDark()
-        )
+        if Gtk.get_major_version() == 3:
+            Gtk.Settings.get_default().set_property(
+                "gtk-application-prefer-dark-theme", darkdetect.isDark()
+            )
+        else:
+            if darkdetect.isDark():
+                color_scheme = Adw.ColorScheme.PREFER_DARK
+            else:
+                color_scheme = Adw.ColorScheme.PREFER_LIGHT
+            Adw.StyleManager.get_default().set_color_scheme(color_scheme)
 
     if has_option("-p", "--profiler"):
 
