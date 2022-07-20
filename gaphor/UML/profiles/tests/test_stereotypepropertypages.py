@@ -7,51 +7,45 @@ from gaphor.UML.profiles.stereotypepropertypages import (
 )
 
 
-def test_stereotype_property_page_without_stereotype(diagram, element_factory):
+def create_property_page(diagram, element_factory) -> StereotypePage:
     item = diagram.create(
         UML.classes.ClassItem, subject=element_factory.create(UML.Class)
     )
-    property_page = StereotypePage(item)
+    return StereotypePage(item)
 
+
+def get_model(property_page: StereotypePage):
     widget = property_page.construct()
+    show_stereotypes = find(widget, "stereotype-list")
+    return show_stereotypes.get_model()
 
-    assert widget is None
 
-
-def test_stereotype_property_page_with_stereotype(diagram, element_factory):
+def metaclass_and_stereotype(element_factory):
     metaclass = element_factory.create(UML.Class)
     metaclass.name = "Class"
     stereotype = element_factory.create(UML.Stereotype)
     stereotype.name = "Stereotype"
     UML.recipes.create_extension(metaclass, stereotype)
+    return metaclass, stereotype
 
-    item = diagram.create(
-        UML.classes.ClassItem, subject=element_factory.create(UML.Class)
-    )
-    property_page = StereotypePage(item)
+
+def test_stereotype_property_page_with_stereotype(diagram, element_factory):
+    metaclass, stereotype = metaclass_and_stereotype(element_factory)
+    property_page = create_property_page(diagram, element_factory)
 
     widget = property_page.construct()
     show_stereotypes = find(widget, "show-stereotypes")
     show_stereotypes.set_active(True)
 
-    assert item.show_stereotypes
+    assert property_page.item.show_stereotypes
 
 
 def test_stereotype_property_page_apply_stereotype(diagram, element_factory):
-    metaclass = element_factory.create(UML.Class)
-    metaclass.name = "Class"
-    stereotype = element_factory.create(UML.Stereotype)
-    stereotype.name = "Stereotype"
-    UML.recipes.create_extension(metaclass, stereotype)
+    _metaclass, stereotype = metaclass_and_stereotype(element_factory)
 
-    item = diagram.create(
-        UML.classes.ClassItem, subject=element_factory.create(UML.Class)
-    )
-    property_page = StereotypePage(item)
-
-    widget = property_page.construct()
-    show_stereotypes = find(widget, "stereotype-list")
-    model = show_stereotypes.get_model()
+    property_page = create_property_page(diagram, element_factory)
+    item = property_page.item
+    model = get_model(property_page)
     toggle_stereotype(None, (0,), item.subject, model)
 
     assert stereotype in item.subject.appliedStereotype[0].classifier
@@ -65,14 +59,9 @@ def test_stereotype_property_page_slot_value(diagram, element_factory):
     stereotype.ownedAttribute = element_factory.create(UML.Property)
     UML.recipes.create_extension(metaclass, stereotype)
 
-    item = diagram.create(
-        UML.classes.ClassItem, subject=element_factory.create(UML.Class)
-    )
-    property_page = StereotypePage(item)
-
-    widget = property_page.construct()
-    show_stereotypes = find(widget, "stereotype-list")
-    model = show_stereotypes.get_model()
+    property_page = create_property_page(diagram, element_factory)
+    item = property_page.item
+    model = get_model(property_page)
     toggle_stereotype(None, (0,), item.subject, model)
     set_value(None, (0, 0), "test", model)
     slot = item.subject.appliedStereotype[0].slot[0]
