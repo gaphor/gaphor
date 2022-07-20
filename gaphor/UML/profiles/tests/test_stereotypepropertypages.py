@@ -68,3 +68,20 @@ def test_stereotype_property_page_slot_value(diagram, element_factory):
 
     assert stereotype.ownedAttribute[0] is slot.definingFeature
     assert "test" == slot.value
+
+
+def test_inherited_stereotype(diagram, element_factory):
+    metaclass, stereotype = metaclass_and_stereotype(element_factory)
+    substereotype = element_factory.create(UML.Stereotype)
+    substereotype.name = "SubStereotype"
+    generalization: UML.Generalization = element_factory.create(UML.Generalization)
+    generalization.general = stereotype
+    generalization.specific = substereotype
+
+    property_page = create_property_page(diagram, element_factory)
+    model = get_model(property_page)
+
+    assert model[(0,)]
+    assert model[(0,)][0] == "Stereotype"
+    assert model[(1,)]
+    assert model[(1,)][0] == "SubStereotype"

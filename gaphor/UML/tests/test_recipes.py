@@ -110,7 +110,7 @@ def test_getting_stereotypes_unique(element_factory):
     assert ("st1", "st2") == result
 
 
-def test_finding_stereotype_instances(element_factory):
+def test_find_stereotype_instances(element_factory):
     """Test finding stereotype instances."""
     s1 = element_factory.create(UML.Stereotype)
     s2 = element_factory.create(UML.Stereotype)
@@ -127,6 +127,26 @@ def test_finding_stereotype_instances(element_factory):
     assert len(result) == 2
     assert "s1" in result, result
     assert "s2" not in result, result
+
+
+def test_inherited_stereotype(element_factory):
+    metaclass = element_factory.create(UML.Class)
+    metaclass.name = "Class"
+    stereotype = element_factory.create(UML.Stereotype)
+    stereotype.name = "Stereotype"
+    UML.recipes.create_extension(metaclass, stereotype)
+    substereotype = element_factory.create(UML.Stereotype)
+    substereotype.name = "SubStereotype"
+    generalization: UML.Generalization = element_factory.create(UML.Generalization)
+    generalization.general = stereotype
+    generalization.specific = substereotype
+
+    c = element_factory.create(UML.Class)
+
+    stereotypes = UML.recipes.get_stereotypes(c)
+
+    assert stereotype in stereotypes
+    assert substereotype in stereotypes
 
 
 # Association tests
