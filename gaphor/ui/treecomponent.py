@@ -319,6 +319,7 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
     drag_source = Gtk.DragSource.new()
     drag_source.set_actions(Gdk.DragAction.MOVE | Gdk.DragAction.COPY)
     drag_source.connect("prepare", list_item_drag_prepare, list_item)
+    drag_source.connect("drag-begin", list_item_drag_begin, list_item)
     row.add_controller(drag_source)
 
     drop_target = Gtk.DropTarget.new(ElementDragData.__gtype__, Gdk.DragAction.COPY)
@@ -370,6 +371,16 @@ def list_item_drag_prepare(
     if isinstance(tree_item, RelationshipItem):
         return None
 
+    v = GObject.Value(
+        ElementDragData.__gtype__, ElementDragData(element=tree_item.element)
+    )
+    return Gdk.ContentProvider.new_for_value(v)
+
+
+def list_item_drag_begin(
+    source: Gtk.DragSource, drag: Gdk.Drag, list_item: Gtk.ListItem
+) -> None:
+    tree_item = list_item.get_item().get_item()
     display = Gdk.Display.get_default()
     theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
         tree_item.icon,
@@ -380,11 +391,6 @@ def list_item_drag_prepare(
         Gtk.IconLookupFlags.FORCE_SYMBOLIC,
     )
     source.set_icon(theme_icon, 0, 0)
-
-    v = GObject.Value(
-        ElementDragData.__gtype__, ElementDragData(element=tree_item.element)
-    )
-    return Gdk.ContentProvider.new_for_value(v)
 
 
 def list_item_drop_accept(
