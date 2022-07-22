@@ -23067,6 +23067,8 @@ Figure 9.152</val>
 <ownedAttribute>
 <reflist>
 <ref refid="f876b1de-b386-11ec-9f85-f47b099bf663"/>
+<ref refid="7ec87036-0893-11ed-ac8b-f47b099bf663"/>
+<ref refid="cd544198-095c-11ed-beb8-f47b099bf663"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -23080,13 +23082,13 @@ Figure 9.152</val>
 </Stereotype>
 <ClassItem id="ee041e58-b386-11ec-9f85-f47b099bf663">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 115.0, 308.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 113.82391640866871, 307.0)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>162.0</val>
+<val>166.0</val>
 </width>
 <height>
 <val>100.0</val>
@@ -23141,7 +23143,7 @@ Figure 9.152</val>
 <val>(1.0, 0.0, 0.0, 1.0, 195.0, 209.0)</val>
 </matrix>
 <points>
-<val>[(0.8472964943553336, 28.0), (1.3239164086687083, 99.0)]</val>
+<val>[(0.8472964943553336, 28.0), (2.155830753353939, 98.0)]</val>
 </points>
 <head-connection>
 <ref refid="f41551ea-b386-11ec-9f85-f47b099bf663"/>
@@ -23200,7 +23202,7 @@ Figure 9.152</val>
 <Comment id="fe5d7b32-b386-11ec-9f85-f47b099bf663">
 <body>
 <val>RAAML 1.0
-Figure 9.168</val>
+Figure 9.169</val>
 </body>
 <presentation>
 <reflist>
@@ -23210,7 +23212,7 @@ Figure 9.168</val>
 </Comment>
 <CommentItem id="fe5d86cc-b386-11ec-9f85-f47b099bf663">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 326.0, 151.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 322.0, 150.0)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -23283,7 +23285,7 @@ Figure 9.129</val>
 </reflist>
 </annotatedElement>
 <body>
-<val>Need to add attributes once a valueType is added to ASIL</val>
+<val>ASIL should be an Derived Property once supported by Gaphor with a - /ASIL: ASIL [1]</val>
 </body>
 <presentation>
 <reflist>
@@ -23293,16 +23295,16 @@ Figure 9.129</val>
 </Comment>
 <CommentItem id="7fd410b4-b3ae-11ec-9f85-f47b099bf663">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 331.0, 380.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 331.0, 379.0)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>100.0</val>
+<val>179.02414610698617</val>
 </width>
 <height>
-<val>112.0</val>
+<val>78.53903198242188</val>
 </height>
 <diagram>
 <ref refid="d94715ce-b386-11ec-9f85-f47b099bf663"/>
@@ -23322,7 +23324,7 @@ Figure 9.129</val>
 <val>(1.0, 0.0, 0.0, 1.0, 339.0, 407.0)</val>
 </matrix>
 <points>
-<val>[(-8.0, 0.0), (-62.0, -27.0)]</val>
+<val>[(-8.0, -9.066483361380449), (-59.17608359133129, -28.0)]</val>
 </points>
 <head-connection>
 <ref refid="7fd410b4-b3ae-11ec-9f85-f47b099bf663"/>
@@ -24081,6 +24083,7 @@ Figure 9.164</val>
 <ref refid="96f9f188-c3fc-11ec-bfcb-f47b099bf663"/>
 <ref refid="9e9a1cba-c3fc-11ec-bfcb-f47b099bf663"/>
 <ref refid="32e9d27a-c3fd-11ec-bfcb-f47b099bf663"/>
+<ref refid="38797b70-0893-11ed-ac8b-f47b099bf663"/>
 <ref refid="6c910012-c3fc-11ec-bfcb-f47b099bf663"/>
 <ref refid="b9f3707e-c3fc-11ec-bfcb-f47b099bf663"/>
 <ref refid="bd014886-c3fc-11ec-bfcb-f47b099bf663"/>
@@ -24124,6 +24127,7 @@ Figure 9.164</val>
 <ref refid="b3c13976-c400-11ec-bfcb-f47b099bf663"/>
 <ref refid="416bac3e-c401-11ec-bfcb-f47b099bf663"/>
 <ref refid="c7e21352-c401-11ec-bfcb-f47b099bf663"/>
+<ref refid="38797b70-0893-11ed-ac8b-f47b099bf663"/>
 </reflist>
 </presentation>
 </Class>
@@ -24989,7 +24993,7 @@ Figure 9.126</val>
 </CommentItem>
 <ClassItem id="1084f916-c3fe-11ec-bfcb-f47b099bf663">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 265.2307692307693, 120.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 263.8461538461539, 120.0)</val>
 </matrix>
 <top-left>
 <val>(0.0, 16.0)</val>
@@ -25094,7 +25098,7 @@ Figure 9.126</val>
 <val>(1.0, 0.0, 0.0, 1.0, 344.0, 254.0)</val>
 </matrix>
 <points>
-<val>[(14.038461538461604, -60.0), (14.038461538461604, 28.0)]</val>
+<val>[(12.653846153846246, -60.0), (14.038461538461604, 28.0)]</val>
 </points>
 <head-connection>
 <ref refid="1084f916-c3fe-11ec-bfcb-f47b099bf663"/>
@@ -26051,7 +26055,7 @@ Figure 9.122</val>
 <val>(1.0, 0.0, 0.0, 1.0, 165.0, 272.0)</val>
 </matrix>
 <points>
-<val>[(0.10007324221071201, 99.0), (0.0, 3.0)]</val>
+<val>[(0.04434796324214574, 99.0), (0.0, 3.0)]</val>
 </points>
 <head-connection>
 <ref refid="d0658d92-c401-11ec-bfcb-f47b099bf663"/>
@@ -26570,7 +26574,7 @@ Figure 9.130</val>
 <val>(1.0, 0.0, 0.0, 1.0, 196.0, 254.85332020762507)</val>
 </matrix>
 <points>
-<val>[(5.642736061880555, -17.0), (7.0, -83.85332020762507)]</val>
+<val>[(4.969268142545673, -17.0), (7.0, -83.85332020762507)]</val>
 </points>
 <head-connection>
 <ref refid="babb9fd6-c410-11ec-bfcb-f47b099bf663"/>
@@ -30898,4 +30902,70 @@ Figure 9.167</val>
 <val>S3</val>
 </name>
 </EnumerationLiteral>
+<ClassItem id="38797b70-0893-11ed-ac8b-f47b099bf663">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 100.0, 100.0)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>187.0</val>
+</width>
+<height>
+<val>74.0</val>
+</height>
+<diagram>
+<ref refid="41cb2c9a-c3fc-11ec-bfcb-f47b099bf663"/>
+</diagram>
+<subject>
+<ref refid="54b99846-c3fc-11ec-bfcb-f47b099bf663"/>
+</subject>
+</ClassItem>
+<Property id="7ec87036-0893-11ed-ac8b-f47b099bf663">
+<class_>
+<ref refid="ee03ef8c-b386-11ec-9f85-f47b099bf663"/>
+</class_>
+<name>
+<val>ASIL</val>
+</name>
+<typeValue>
+<val>ASIL</val>
+</typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
+<visibility>
+<val>private</val>
+</visibility>
+</Property>
+<Property id="cd544198-095c-11ed-beb8-f47b099bf663">
+<class_>
+<ref refid="ee03ef8c-b386-11ec-9f85-f47b099bf663"/>
+</class_>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<lowerValue>
+<val>0</val>
+</lowerValue>
+<name>
+<val>ASILOverride</val>
+</name>
+<typeValue>
+<val>ASIL</val>
+</typeValue>
+<upperValue>
+<val>1</val>
+</upperValue>
+<upperValue>
+<val>1</val>
+</upperValue>
+<visibility>
+<val>private</val>
+</visibility>
+</Property>
 </gaphor>
