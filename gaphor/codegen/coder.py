@@ -141,8 +141,7 @@ def coder(
             continue
 
         yield class_declaration(c)
-        properties = list(variables(c, overrides))
-        if properties:
+        if properties := list(variables(c, overrides)):
             yield from (f"    {p}" for p in properties)
         else:
             yield "    pass"
@@ -332,8 +331,7 @@ def bases(c: UML.Class) -> Iterable[UML.Class]:
 
     for a in c.ownedAttribute:
         if a.association and a.name == "baseClass":
-            meta_cls = a.association.ownedEnd.class_
-            yield meta_cls
+            yield a.association.ownedEnd.class_
 
 
 def is_enumeration(c: UML.Class) -> bool:
@@ -382,10 +380,14 @@ def is_in_toplevel_package(c: UML.Class, package_name: str) -> bool:
 
 def redefines(a: UML.Property) -> str | None:
     slot: UML.Slot
-    for slot in a.appliedStereotype[:].slot:
-        if slot.definingFeature.name == "redefines":
-            return slot.value  # type: ignore[no-any-return]
-    return None
+    return next(
+        (
+            slot.value
+            for slot in a.appliedStereotype[:].slot
+            if slot.definingFeature.name == "redefines"
+        ),
+        None,
+    )
 
 
 def attribute(

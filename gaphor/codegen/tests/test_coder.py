@@ -53,7 +53,7 @@ def test_coder_write_class_no_attributes():
 
     attr_def = list(variables(class_))
 
-    assert attr_def == []
+    assert not attr_def
 
 
 def create_attribute(s: str, element_factory=None):
@@ -249,7 +249,7 @@ def test_coder_write_association_not_navigable(navigable_association: UML.Associ
 
     a = list(associations(navigable_association.memberEnd[0].type))
 
-    assert a == []
+    assert not a
 
 
 def test_coder_write_association_opposite_not_navigable(
