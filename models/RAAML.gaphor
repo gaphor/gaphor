@@ -18757,6 +18757,7 @@ Figure 9.97</val>
 <ref refid="b7daa336-c431-11ec-adaa-f47b099bf663"/>
 <ref refid="c38fd6c4-c431-11ec-adaa-f47b099bf663"/>
 <ref refid="e5144f46-c431-11ec-adaa-f47b099bf663"/>
+<ref refid="2689ca00-096a-11ed-9312-f47b099bf663"/>
 </reflist>
 </ownedType>
 <package>
@@ -23088,7 +23089,7 @@ Figure 9.152</val>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>166.0</val>
+<val>190.0</val>
 </width>
 <height>
 <val>100.0</val>
@@ -23143,7 +23144,7 @@ Figure 9.152</val>
 <val>(1.0, 0.0, 0.0, 1.0, 195.0, 209.0)</val>
 </matrix>
 <points>
-<val>[(0.8472964943553336, 28.0), (2.155830753353939, 98.0)]</val>
+<val>[(0.8472964943553336, 28.0), (14.203818369453018, 98.0)]</val>
 </points>
 <head-connection>
 <ref refid="f41551ea-b386-11ec-9f85-f47b099bf663"/>
@@ -23324,7 +23325,7 @@ Figure 9.129</val>
 <val>(1.0, 0.0, 0.0, 1.0, 339.0, 407.0)</val>
 </matrix>
 <points>
-<val>[(-8.0, -9.066483361380449), (-59.17608359133129, -28.0)]</val>
+<val>[(-8.0, -9.066483361380449), (-35.17608359133129, -28.0)]</val>
 </points>
 <head-connection>
 <ref refid="7fd410b4-b3ae-11ec-9f85-f47b099bf663"/>
@@ -23348,7 +23349,9 @@ Figure 9.129</val>
 <ref refid="2ab53d6e-b3af-11ec-9f85-f47b099bf663"/>
 <ref refid="394dbe46-b3af-11ec-9f85-f47b099bf663"/>
 <ref refid="6ee4df9e-b3af-11ec-9f85-f47b099bf663"/>
+<ref refid="268a902a-096a-11ed-9312-f47b099bf663"/>
 <ref refid="6074aba6-b3af-11ec-9f85-f47b099bf663"/>
+<ref refid="2cccbf4e-096a-11ed-9312-f47b099bf663"/>
 </reflist>
 </ownedPresentation>
 </Diagram>
@@ -23372,7 +23375,7 @@ Figure 9.129</val>
 </Stereotype>
 <ClassItem id="2ab53d6e-b3af-11ec-9f85-f47b099bf663">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 154.0, 100.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 222.26564025878906, 95.7578125)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -23454,7 +23457,7 @@ Figure 9.129</val>
 <val>(1.0, 0.0, 0.0, 1.0, 281.0, 155.46875)</val>
 </matrix>
 <points>
-<val>[(-72.00000000000003, 82.0), (-72.0, 18.53125)]</val>
+<val>[(-3.7343597412109375, 82.0), (-3.7343597412109375, 14.2890625)]</val>
 </points>
 <head-connection>
 <ref refid="394dbe46-b3af-11ec-9f85-f47b099bf663"/>
@@ -23479,7 +23482,7 @@ Figure 9.129</val>
 <Comment id="6ee4d36e-b3af-11ec-9f85-f47b099bf663">
 <body>
 <val>RAAML 1.0
-Figure 9.169</val>
+Figure 9.170</val>
 </body>
 <presentation>
 <reflist>
@@ -26055,7 +26058,7 @@ Figure 9.122</val>
 <val>(1.0, 0.0, 0.0, 1.0, 165.0, 272.0)</val>
 </matrix>
 <points>
-<val>[(0.04434796324214574, 99.0), (0.0, 3.0)]</val>
+<val>[(-0.011338547887760342, 99.0), (0.0, 3.0)]</val>
 </points>
 <head-connection>
 <ref refid="d0658d92-c401-11ec-bfcb-f47b099bf663"/>
@@ -26574,7 +26577,7 @@ Figure 9.130</val>
 <val>(1.0, 0.0, 0.0, 1.0, 196.0, 254.85332020762507)</val>
 </matrix>
 <points>
-<val>[(4.969268142545673, -17.0), (7.0, -83.85332020762507)]</val>
+<val>[(4.299219626729126, -17.0), (7.0, -83.85332020762507)]</val>
 </points>
 <head-connection>
 <ref refid="babb9fd6-c410-11ec-bfcb-f47b099bf663"/>
@@ -30968,4 +30971,60 @@ Figure 9.167</val>
 <val>private</val>
 </visibility>
 </Property>
+<Class id="2689ca00-096a-11ed-9312-f47b099bf663">
+<name>
+<val>Comment</val>
+</name>
+<package>
+<ref refid="642ac744-b027-11eb-a838-18cf5efc6bb9"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="268a902a-096a-11ed-9312-f47b099bf663"/>
+</reflist>
+</presentation>
+</Class>
+<ClassItem id="268a902a-096a-11ed-9312-f47b099bf663">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 91.0, 104.2578125)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>57.0</val>
+</height>
+<diagram>
+<ref refid="14177d2e-b3af-11ec-9f85-f47b099bf663"/>
+</diagram>
+<show_attributes>
+<val>0</val>
+</show_attributes>
+<show_operations>
+<val>0</val>
+</show_operations>
+<subject>
+<ref refid="2689ca00-096a-11ed-9312-f47b099bf663"/>
+</subject>
+</ClassItem>
+<ExtensionItem id="2cccbf4e-096a-11ed-9312-f47b099bf663">
+<diagram>
+<ref refid="14177d2e-b3af-11ec-9f85-f47b099bf663"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 161.89064025878906, 159.01954650878906)</val>
+</matrix>
+<points>
+<val>[(-6.51171875, 23.539031982421875), (-6.51171875, 78.44920349121094)]</val>
+</points>
+<tail-connection>
+<ref refid="394dbe46-b3af-11ec-9f85-f47b099bf663"/>
+</tail-connection>
+</ExtensionItem>
 </gaphor>
