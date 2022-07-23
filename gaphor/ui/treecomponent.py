@@ -244,11 +244,10 @@ class TreeComponent(UIComponent, ActionProvider):
     def on_diagram_selection_changed(self, event):
         if not event.focused_item:
             return
-        element = event.focused_item.subject
-        if not element:
+        if element := event.focused_item.subject:
+            self.select_element(element)
+        else:
             return
-
-        self.select_element(element)
 
 
 def new_list_item_ui():
