@@ -4,19 +4,20 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  Gaphor\n"
+"Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-07-06 17:00+0200\n"
-"PO-Revision-Date: 2022-04-14 15:06+0000\n"
+"PO-Revision-Date: 2022-07-24 09:18+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hr/>\n"
 "Language: hr\n"
-"Language-Team: Croatian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hr/>\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.14-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:56
@@ -609,7 +610,7 @@ msgstr "Krajnji čvor aktivnosti"
 
 #: gaphor/UML/actions/actionstoolbox.py:109
 msgid "Flow final node"
-msgstr "Krajnji čvor tijeka"
+msgstr "Krajnji čvor toka"
 
 #: gaphor/UML/actions/actionstoolbox.py:121
 msgid "Decision/merge node"
@@ -629,14 +630,12 @@ msgid "Swimlane"
 msgstr "Traka"
 
 #: gaphor/UML/actions/actionstoolbox.py:169
-#, fuzzy
 msgid "Control flow"
-msgstr "kontrolor"
+msgstr "Tok kontrola"
 
 #: gaphor/UML/actions/actionstoolbox.py:176
-#, fuzzy
 msgid "Object flow"
-msgstr "Tijek kontrola/objekata"
+msgstr "Tok objekata"
 
 #: gaphor/UML/actions/actionstoolbox.py:183
 msgid "Send signal action"
@@ -656,11 +655,11 @@ msgstr "Prihvati događaj"
 
 #: gaphor/UML/actions/actionstoolbox.py:207
 msgid "Input pin"
-msgstr ""
+msgstr "Pribadača unosa"
 
 #: gaphor/UML/actions/actionstoolbox.py:214
 msgid "Output pin"
-msgstr ""
+msgstr "Pribadača rezultata"
 
 #: gaphor/UML/actions/activitynodes.py:189
 msgid "merge/decision"
@@ -700,11 +699,11 @@ msgstr "Nova traka"
 
 #: gaphor/UML/actions/pin.py:59
 msgid "input pin"
-msgstr ""
+msgstr "pribadača unosa"
 
 #: gaphor/UML/actions/pin.py:65
 msgid "output pin"
-msgstr ""
+msgstr "pribadača rezultata"
 
 #: gaphor/UML/actions/propertypages.glade:28
 #: gaphor/UML/actions/propertypages.ui:11
@@ -770,13 +769,12 @@ msgstr "Provjera"
 #: gaphor/UML/actions/propertypages.glade:322
 #: gaphor/UML/actions/propertypages.ui:245
 msgid "Parameter Nodes"
-msgstr ""
+msgstr "Čvorovi parametara"
 
 #: gaphor/UML/actions/propertypages.glade:350
 #: gaphor/UML/actions/propertypages.ui:271
-#, fuzzy
 msgid "Parameters"
-msgstr "dijelovi"
+msgstr "Parametri"
 
 #: gaphor/UML/actions/propertypages.glade:381
 #: gaphor/UML/actions/propertypages.ui:295
@@ -805,6 +803,15 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Dodaj i uredi čvorove parametara aktivnosti prema UML sintaksi.\n"
+"\n"
+"  • <tt>parameter</tt> (unos, ime)\n"
+"  • <tt>out attr: int</tt> (rezultat s vrstom)\n"
+"  • <tt>in attr: int[0..1]</tt> (unos, vrsta i višestrukost)\n"
+"\n"
+"Pritisni <b>Enter</b> za uređivanje, <b>Backspace</b>/<b>Delete</b> za "
+"uklanjanje elemenata.\n"
+"Koristi <b>-</b>/<b>=</b> za premještanje elemenata prema gore ili dolje."
 
 #: gaphor/UML/actions/propertypages.ui:321
 msgid ""
@@ -1136,9 +1143,8 @@ msgid "Indirectly Instantiated"
 msgstr "Indirektno izrađeno"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16
-#, fuzzy
 msgid "Deployments"
-msgstr "implementacije"
+msgstr "Implementacije"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:20
 msgid "Artifact"
@@ -1376,7 +1382,7 @@ msgstr "Napomena ili opaska"
 
 #: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
 msgid "Element can’t be represented on a diagram."
-msgstr ""
+msgstr "Element se ne može prikazati u dijagramu."
 
 #: gaphor/extensions/sphinx.py:65
 msgid "No model file configured for model '{model_name}'."
@@ -1439,7 +1445,7 @@ msgstr "Izvezi dijagram kao PDF"
 #: gaphor/plugins/errorreports/errorreports.py:65
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
-msgstr ""
+msgstr "Izvještaji o greškama"
 
 #: gaphor/plugins/errorreports/errorreports.glade:21
 #: gaphor/plugins/errorreports/errorreports.ui:18
@@ -1447,15 +1453,16 @@ msgid ""
 "Any unhandled errors are shown here. You can use these to provide extra "
 "information when you create an issue on GitHub."
 msgstr ""
+"Sve neobrađene greške prikazuju se ovdje. Možeš ih koristiti kao dodatne "
+"informacije kada prijaviš problem na GitHubu."
 
 #: gaphor/plugins/errorreports/errorreports.py:102
 msgid "No errors have been intercepted. We’re good."
-msgstr ""
+msgstr "Nema grešaka. Sve je u redu."
 
 #: gaphor/plugins/errorreports/errorreports.py:106
-#, fuzzy
 msgid "Errors:"
-msgstr "izvršava"
+msgstr "Greške:"
 
 #: gaphor/plugins/errorreports/errorreports.py:155
 msgid ""
@@ -1463,6 +1470,9 @@ msgid ""
 "Please file an issue on GitHub and include information from Tools → Error"
 " Reports."
 msgstr ""
+"Došlo je do neočekivane greške.\n"
+"Prijavi problem na GitHubu i uključi informacije iz Alati → Izvješjtaji o "
+"greškama."
 
 #: gaphor/plugins/xmiexport/__init__.py:24
 msgid "Export as XMI"
@@ -1864,7 +1874,7 @@ msgstr "Logička stanja"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Event Flow"
-msgstr "Značajka toka događaja"
+msgstr "Tok događaja"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Off"
@@ -2295,7 +2305,7 @@ msgstr ""
 
 #: gaphor/ui/errorhandler.py:28 gaphor/ui/errorhandler.py:31
 msgid "Close"
-msgstr ""
+msgstr "Zatvori"
 
 #: gaphor/ui/errorhandler.py:28
 msgid "Start debug session"
@@ -2385,13 +2395,12 @@ msgid "Closing will cause any unsaved changes to be discarded."
 msgstr "Zatvaranjem se odbacuju sve nespremljene promjene."
 
 #: gaphor/ui/filemanager.py:310
-#, fuzzy
 msgid "Close without saving changes"
-msgstr "Zatvori be_z spremanja promjena"
+msgstr "Zatvori bez spremanja promjena"
 
 #: gaphor/ui/filemanager.py:312
 msgid "Cancel"
-msgstr ""
+msgstr "Odustani"
 
 #: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:87
 msgid "Create New Model…"
@@ -2470,9 +2479,8 @@ msgid "_Open"
 msgstr "_Otvori"
 
 #: gaphor/ui/namespace.py:48
-#, fuzzy
 msgid "Add to diagram"
-msgstr "Dijagram koda"
+msgstr "Dodaj u dijagram"
 
 #: gaphor/ui/namespace.py:51
 msgid "_Rename"
