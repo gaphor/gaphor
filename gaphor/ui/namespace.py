@@ -48,7 +48,6 @@ def popup_model(element, modeling_language):
         gettext("_Open") if isinstance(element, Diagram) else gettext("Add to diagram"),
         "tree-view.open",
     )
-    part.append(gettext("_Rename"), "tree-view.rename")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
