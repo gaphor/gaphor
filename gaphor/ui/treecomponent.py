@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from gaphas.decorators import g_async
 from gi.repository import Gdk, GLib, GObject, Gtk
 
 from gaphor import UML
@@ -155,7 +154,6 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.handle(DiagramOpened(element))
 
     @action(name="tree-view.rename", shortcut="F2")
-    @g_async(single=True)
     def tree_view_rename_selected(self):
         if row_item := self.selection.get_selected_item():
             tree_item: TreeItem = row_item.get_item()
@@ -330,6 +328,8 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
     drop_target.connect("drop", list_item_drop_drop, list_item, event_manager)
     row.add_controller(drop_target)
 
+    text = builder.get_object("text")
+
     def end_editing():
         list_item.get_item().get_item().visible_child_name = "default"
         row.get_parent().grab_focus()
@@ -341,21 +341,23 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
             tree_item.edit_text = text
         end_editing()
 
-    def text_focus_out(widget, pspec):
-        if not widget.has_focus():
-            text_activate(text)
+    def text_focus_out(ctrl):
+        text_activate(text)
 
-    def text_escape(widget, keyval, keycode, state):
-        if keyval == Gdk.KEY_Escape:
+    focus_ctrl = Gtk.EventControllerFocus.new()
+    focus_ctrl.connect("leave", text_focus_out)
+    text.add_controller(focus_ctrl)
+
+    def text_key_pressed(widget, keyval, keycode, state):
+        if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
+            text_activate(text)
+        elif keyval == Gdk.KEY_Escape:
             list_item.get_item().get_item().sync()
             end_editing()
 
-    text = builder.get_object("text")
-    text.connect("notify::has-focus", text_focus_out)
-    text.connect("activate", text_activate)
-    controller = Gtk.EventControllerKey.new()
-    controller.connect("key-pressed", text_escape)
-    text.add_controller(controller)
+    key_ctrl = Gtk.EventControllerKey.new()
+    key_ctrl.connect("key-pressed", text_key_pressed)
+    text.add_controller(key_ctrl)
 
     def stack_changed(stack, pspec):
         if stack.get_visible_child_name() == "editing":
