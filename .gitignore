@@ -2,7 +2,6 @@ build
 dist
 gaphor/locale/*/LC_MESSAGES
 html
-htmlcov
 *.pyc
 *.pyo
 *.swp
@@ -11,16 +10,17 @@ htmlcov
 \#*\#
 .eggs/
 gaphor.egg-info/
-tmp.gaphor
 gaphor.prof
 .gpg
 pip-wheel-metadata
+_packaging/gaphor-script.py
 
 # Gaphor test models in project root
 /*.gaphor
 
-# Virtual env stuff
+# (Virtual) env stuff
 .env/
+.idea
 .venv/
 .vscode/
 .python-version
@@ -34,9 +34,7 @@ pip-wheel-metadata
 
 # Coverage
 .coverage
-
-# Editors
-.idea
+htmlcov
 
 # Windows Install
 _packaging/windows/gaphor-script.py
