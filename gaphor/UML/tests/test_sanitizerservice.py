@@ -20,23 +20,12 @@ def sanitizer(event_manager):
     sanitizer.shutdown()
 
 
-@pytest.fixture
-def create_item(element_factory, diagram):
-    def create(item_cls, subject_cls=None, subject=None):
-        """Create an item with specified subject."""
-        if subject_cls is not None:
-            subject = element_factory.create(subject_cls)
-        return diagram.create(item_cls, subject=subject)
-
-    return create
-
-
-def test_connect_element_with_comments(create_item, diagram):
-    comment = create_item(CommentItem, Comment)
-    line = create_item(CommentLineItem)
-    gi = create_item(GeneralizationItem)
-    clazz1 = create_item(ClassItem, UML.Class)
-    clazz2 = create_item(ClassItem, UML.Class)
+def test_connect_element_with_comments(create, diagram):
+    comment = create(CommentItem, Comment)
+    line = create(CommentLineItem)
+    gi = create(GeneralizationItem)
+    clazz1 = create(ClassItem, UML.Class)
+    clazz2 = create(ClassItem, UML.Class)
 
     connect(line, line.head, comment)
     connect(line, line.tail, gi)
@@ -50,9 +39,9 @@ def test_connect_element_with_comments(create_item, diagram):
     assert gi.subject in comment.subject.annotatedElement
 
 
-def test_presentation_delete(create_item, element_factory):
+def test_presentation_delete(create, element_factory):
     """Remove element if the last instance of an item is deleted."""
-    klassitem = create_item(ClassItem, UML.Class)
+    klassitem = create(ClassItem, UML.Class)
     klass = klassitem.subject
 
     assert klassitem.subject.presentation[0] is klassitem
@@ -127,9 +116,10 @@ def test_extension_deletion(element_factory):
 
     assert stereotype in klass.appliedStereotype[:].classifier
 
+    # instead, disconnect
     ext.unlink()
 
-    assert [] == list(klass.appliedStereotype)
+    assert not klass.appliedStereotype
 
 
 def test_extension_deletion_with_2_metaclasses(element_factory):
