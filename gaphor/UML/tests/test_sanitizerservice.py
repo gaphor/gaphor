@@ -5,7 +5,6 @@ from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general import CommentItem, CommentLineItem
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import ClassItem, GeneralizationItem
-from gaphor.UML.profiles import ExtensionItem
 from gaphor.UML.sanitizerservice import SanitizerService
 
 
@@ -99,58 +98,6 @@ def test_extension_disconnect(element_factory):
     del ext.ownedEnd.type
 
     assert klass.appliedStereotype
-
-
-@pytest.mark.xfail()
-def test_extension_deletion(element_factory, diagram):
-    create = element_factory.create
-    metaklass = create(UML.Class)
-    metaklass.name = "Class"
-    klass = create(UML.Class)
-    stereotype = create(UML.Stereotype)
-    st_attr = create(UML.Property)
-    stereotype.ownedAttribute = st_attr
-    ext = UML.recipes.create_extension(metaklass, stereotype)
-    ext_item = diagram.create(ExtensionItem, subject=ext)
-    # Apply stereotype to class and create slot
-    instspec = UML.recipes.apply_stereotype(klass, stereotype)
-    UML.recipes.add_slot(instspec, st_attr)
-
-    assert stereotype in klass.appliedStereotype[:].classifier
-
-    # disconnect indirectly, by deleting the item
-    ext_item.unlink()
-
-    assert not klass.appliedStereotype
-
-
-def test_extension_deletion_with_2_metaclasses(element_factory):
-    create = element_factory.create
-    metaklass = create(UML.Class)
-    metaklass.name = "Class"
-    metaiface = create(UML.Class)
-    metaiface.name = "Interface"
-    klass = create(UML.Class)
-    iface = create(UML.Interface)
-    stereotype = create(UML.Stereotype)
-    st_attr = create(UML.Property)
-    stereotype.ownedAttribute = st_attr
-    ext1 = UML.recipes.create_extension(metaklass, stereotype)
-    UML.recipes.create_extension(metaiface, stereotype)
-
-    # Apply stereotype to class and create slot
-    instspec1 = UML.recipes.apply_stereotype(klass, stereotype)
-    instspec2 = UML.recipes.apply_stereotype(iface, stereotype)
-    UML.recipes.add_slot(instspec1, st_attr)
-
-    assert stereotype in klass.appliedStereotype[:].classifier
-    assert klass in element_factory
-
-    ext1.unlink()
-
-    assert not klass.appliedStereotype
-    assert klass in element_factory
-    assert [instspec2] == list(iface.appliedStereotype)
 
 
 def test_stereotype_deletion(element_factory):

@@ -42,8 +42,6 @@ class SanitizerService(Service):
         event_manager.subscribe(self._unlink_on_subject_delete)
         event_manager.subscribe(self.update_annotated_element_link)
         event_manager.subscribe(self._unlink_on_stereotype_delete)
-        event_manager.subscribe(self._unlink_on_extension_delete)
-        event_manager.subscribe(self._disconnect_extension_end)
         event_manager.subscribe(self._redraw_diagram_on_move)
 
     def shutdown(self):
@@ -51,8 +49,6 @@ class SanitizerService(Service):
         event_manager.unsubscribe(self._unlink_on_subject_delete)
         event_manager.unsubscribe(self.update_annotated_element_link)
         event_manager.unsubscribe(self._unlink_on_stereotype_delete)
-        event_manager.unsubscribe(self._unlink_on_extension_delete)
-        event_manager.unsubscribe(self._disconnect_extension_end)
         event_manager.unsubscribe(self._redraw_diagram_on_move)
 
     @event_handler(AssociationSet)
@@ -103,45 +99,6 @@ class SanitizerService(Service):
             comment_item = opposite_cinfo.connected
             comment = comment_item.subject
             comment.annotatedElement = subject
-
-    def perform_unlink_for_instances(self, st, meta):
-        inst = UML.recipes.find_instances(st)
-
-        for i in list(inst):
-            for e in i.extended:
-                if not meta or isinstance(e, meta):
-                    i.unlink()
-
-    @event_handler(AssociationDeleted)
-    @undo_guard
-    def _unlink_on_extension_delete(self, event):
-        """Remove applied stereotypes when extension is deleted."""
-        if (
-            isinstance(event.element, UML.Extension)
-            and event.property is UML.Association.memberEnd
-            and event.element.memberEnd
-        ):
-            p = event.element.memberEnd[0]
-            ext = event.old_value
-            if isinstance(p, UML.ExtensionEnd):
-                p, ext = ext, p
-            st = ext.type
-            meta = p.type and getattr(UML, p.type.name, None)
-            if st:
-                self.perform_unlink_for_instances(st, meta)
-
-    @event_handler(AssociationSet)
-    @undo_guard
-    def _disconnect_extension_end(self, event):
-        if (
-            isinstance(event.element, UML.ExtensionEnd)
-            and event.property is UML.Property.type
-            and event.old_value
-            and event.new_value
-        ):
-            log.warning(
-                "Reassigning UML.ExtensionEnd.type can cause inconsistency in the model"
-            )
 
     @event_handler(AssociationDeleted)
     @undo_guard

@@ -75,5 +75,6 @@ class ExtensionConnect(DirectionalRelationshipConnect):
 
     def disconnect_subject(self, handle) -> None:
         extension = self.line.subject
-        UML.recipes.unapply_stereotype_by_extension(extension)
+        if extension:
+            UML.recipes.unapply_stereotype_by_extension(extension)
         return super().disconnect_subject(handle)
