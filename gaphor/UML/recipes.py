@@ -185,8 +185,7 @@ def unapply_stereotype_by_extension(extension: Extension):
     if isinstance(property, ExtensionEnd):
         property, extension_end = extension_end, property
     metaclass = property.type
-    stereotype = extension_end.type
-    if stereotype:
+    if stereotype := extension_end.type:
         meta_type = (
             getattr(gaphor.UML.uml, metaclass.name, None)
             if metaclass and metaclass.name
