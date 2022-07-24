@@ -79,25 +79,6 @@ def test_removing_last_slot(case, create):
     assert not compartments(c)
 
 
-def test_deleting_extension(case, create):
-    """Test if stereotype is removed when extension is deleted."""
-    c = create(ComponentItem, UML.Component)
-
-    c.show_stereotypes = True
-
-    instance_spec = UML.recipes.apply_stereotype(c.subject, case.st1)
-    slot = UML.recipes.add_slot(instance_spec, case.st1.ownedAttribute[0])
-    slot.value = "foo"
-
-    # test precondition
-    assert len(compartments(c)) == 1
-    assert len(c.subject.appliedStereotype) == 1
-
-    case.ext1.unlink()
-    assert len(c.subject.appliedStereotype) == 0
-    assert len(compartments(c)) == 0
-
-
 def test_deleting_stereotype(case, create):
     """Test if stereotype is removed when stereotype is deleted."""
     c = create(ComponentItem, UML.Component)
