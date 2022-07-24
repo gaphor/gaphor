@@ -760,7 +760,7 @@ class derivedunion(derived[T]):
             if s is exclude or not object_has_property(obj, s):
                 continue
 
-            tmp = s.__get__(obj)
+            tmp: Iterable[T] | T | None = s.get(obj)
             if isinstance(tmp, Iterable):
                 u.update(tmp)
             elif tmp:
