@@ -82,7 +82,9 @@ class ClassAttributes(EditableTreeModel):
         return self._item.subject.ownedAttribute.swap(o1, o2)
 
     def sync_model(self, new_order):
-        self._item.subject.ownedAttribute.order(new_order.index)
+        self._item.subject.ownedAttribute.order(
+            lambda e: new_order.index(e) if e in new_order else len(new_order)
+        )
 
 
 class ClassOperations(EditableTreeModel):

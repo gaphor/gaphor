@@ -8,7 +8,6 @@ import abc
 from typing import Callable, Dict, Iterable, List, Tuple, Type
 
 import gaphas.item
-from gaphas.decorators import g_async
 from gaphas.segment import Segment
 from gi.repository import Gtk
 
@@ -112,12 +111,6 @@ class EditableTreeModel(Gtk.ListStore):
     def on_row_inserted(self, model, path, iter):
         """This method is called when new elements are added and when a row is
         moved via DnD."""
-        self._sync_model()
-
-    @g_async(single=True)
-    def _sync_model(self):
-        """Align the order of elements in the model with the order in the list
-        store."""
         new_order = [row[-1] for row in self if row[-1]]
         self.sync_model(new_order)
 
