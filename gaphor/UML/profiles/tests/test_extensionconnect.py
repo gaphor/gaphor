@@ -2,7 +2,7 @@
 
 from gaphor import UML
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.diagram.tests.fixtures import allow, connect
+from gaphor.diagram.tests.fixtures import allow, connect, disconnect
 from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.profiles.extension import ExtensionItem
 
@@ -52,6 +52,9 @@ def test_connection(element_factory, diagram):
     connect(ext, ext.head, cls)
 
     assert ext.subject
+    assert ext.subject.memberEnd[0].type is cls.subject
+    assert ext.subject.memberEnd[1].type is st.subject
+    assert ext.subject.memberEnd[1] is ext.subject.ownedEnd
 
 
 def test_connection_namespace(element_factory, diagram):
@@ -84,3 +87,20 @@ def test_reuse_extension_in_new_diagram(element_factory, diagram):
     connect(ext2, ext2.head, cls2)
 
     assert ext.subject is ext2.subject
+
+
+def test_disconnect(element_factory, diagram):
+    ext = diagram.create(ExtensionItem)
+    st = diagram.create(ClassItem, subject=element_factory.create(UML.Stereotype))
+    cls = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
+
+    connect(ext, ext.tail, st)
+    connect(ext, ext.head, cls)
+    subject = ext.subject
+    member_end = list(subject.memberEnd)
+
+    disconnect(ext, ext.head)
+
+    assert member_end[0] not in element_factory
+    assert member_end[1] not in element_factory
+    assert subject not in element_factory

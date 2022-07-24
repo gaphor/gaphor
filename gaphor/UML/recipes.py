@@ -9,6 +9,7 @@ Functions collected in this module allow to
 import itertools
 from typing import Iterable, Optional, Sequence
 
+import gaphor.UML.uml
 from gaphor.UML.uml import (
     Association,
     Class,
@@ -170,6 +171,33 @@ def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:
     metaclass.ownedAttribute = ext_end
 
     return ext
+
+
+def unapply_stereotype_by_extension(extension: Extension):
+    """Remove stereotype application for all types associated with the
+    stereotype base type."""
+
+    try:
+        property, extension_end = extension.memberEnd
+    except ValueError:
+        return False
+
+    if isinstance(property, ExtensionEnd):
+        property, extension_end = extension_end, property
+    metaclass = property.type
+    stereotype = extension_end.type
+    if stereotype:
+        meta_type = (
+            getattr(gaphor.UML.uml, metaclass.name, None)
+            if metaclass and metaclass.name
+            else None
+        )
+        instances = find_instances(stereotype)
+
+        for i in list(instances):
+            for e in i.extended:
+                if not meta_type or isinstance(e, meta_type):
+                    i.unlink()
 
 
 def is_metaclass(element):

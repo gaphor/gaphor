@@ -73,19 +73,7 @@ class ExtensionConnect(DirectionalRelationshipConnect):
             relation.package = owner_package(element.diagram.owner)
             line.subject = relation
 
-    def disconnect_subject(self, handle):
-        """Disconnect model element.
-
-        Disconnect property (memberEnd) too, in case of end of life for
-        Extension.
-        """
-        opposite = self.line.opposite(handle)
-        hct = self.get_connected(handle)
-        oct = self.get_connected(opposite)
-        if hct and oct:
-            old = self.line.subject
-            del self.line.subject
-            if old and len(old.presentation) == 0:
-                for e in old.memberEnd:
-                    e.unlink()
-                old.unlink()
+    def disconnect_subject(self, handle) -> None:
+        extension = self.line.subject
+        UML.recipes.unapply_stereotype_by_extension(extension)
+        return super().disconnect_subject(handle)
