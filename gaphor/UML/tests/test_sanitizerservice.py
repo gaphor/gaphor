@@ -5,6 +5,7 @@ from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general import CommentItem, CommentLineItem
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import ClassItem, GeneralizationItem
+from gaphor.UML.profiles import ExtensionItem
 from gaphor.UML.sanitizerservice import SanitizerService
 
 
@@ -74,8 +75,8 @@ def test_stereotype_attribute_delete(element_factory):
 
     st_attr.unlink()
 
-    assert [] == list(stereotype.ownedMember)
-    assert [] == list(instspec.slot)
+    assert not stereotype.ownedMember
+    assert not instspec.slot
 
 
 def test_extension_disconnect(element_factory):
@@ -97,10 +98,11 @@ def test_extension_disconnect(element_factory):
     # Causes set event
     del ext.ownedEnd.type
 
-    assert [] == list(klass.appliedStereotype)
+    assert klass.appliedStereotype
 
 
-def test_extension_deletion(element_factory):
+@pytest.mark.xfail()
+def test_extension_deletion(element_factory, diagram):
     create = element_factory.create
     metaklass = create(UML.Class)
     metaklass.name = "Class"
@@ -109,15 +111,15 @@ def test_extension_deletion(element_factory):
     st_attr = create(UML.Property)
     stereotype.ownedAttribute = st_attr
     ext = UML.recipes.create_extension(metaklass, stereotype)
-
+    ext_item = diagram.create(ExtensionItem, subject=ext)
     # Apply stereotype to class and create slot
     instspec = UML.recipes.apply_stereotype(klass, stereotype)
     UML.recipes.add_slot(instspec, st_attr)
 
     assert stereotype in klass.appliedStereotype[:].classifier
 
-    # instead, disconnect
-    ext.unlink()
+    # disconnect indirectly, by deleting the item
+    ext_item.unlink()
 
     assert not klass.appliedStereotype
 
@@ -146,7 +148,7 @@ def test_extension_deletion_with_2_metaclasses(element_factory):
 
     ext1.unlink()
 
-    assert [] == list(klass.appliedStereotype)
+    assert not klass.appliedStereotype
     assert klass in element_factory
     assert [instspec2] == list(iface.appliedStereotype)
 
@@ -169,7 +171,7 @@ def test_stereotype_deletion(element_factory):
 
     stereotype.unlink()
 
-    assert [] == list(klass.appliedStereotype)
+    assert not klass.appliedStereotype
 
 
 def test_diagram_move(element_factory, mocker):

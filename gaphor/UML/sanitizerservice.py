@@ -1,6 +1,7 @@
 """The Sanitize module is dedicated to adapters (stuff) that keeps the model
 clean and in sync with diagrams."""
 
+import logging
 
 from gaphor import UML
 from gaphor.abc import Service
@@ -11,6 +12,8 @@ from gaphor.diagram.deletable import deletable
 from gaphor.diagram.general import CommentLineItem
 from gaphor.event import Notification
 from gaphor.i18n import gettext
+
+log = logging.getLogger(__name__)
 
 
 def undo_guard(func):
@@ -130,15 +133,15 @@ class SanitizerService(Service):
     @event_handler(AssociationSet)
     @undo_guard
     def _disconnect_extension_end(self, event):
-        if event.property is UML.ExtensionEnd.type and event.old_value:
-            ext = event.element
-            p = ext.opposite
-            if not p:
-                return
-            st = event.old_value
-            if st:
-                meta = p.type and getattr(UML, p.type.name, None)
-                self.perform_unlink_for_instances(st, meta)
+        if (
+            isinstance(event.element, UML.ExtensionEnd)
+            and event.property is UML.Property.type
+            and event.old_value
+            and event.new_value
+        ):
+            log.warning(
+                "Reassigning UML.ExtensionEnd.type can cause inconsistency in the model"
+            )
 
     @event_handler(AssociationDeleted)
     @undo_guard
