@@ -153,6 +153,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
     def __init__(self, locals: Dict[str, object], banner=banner):
         Gtk.ScrolledWindow.__init__(self)
 
+        self.set_vexpand(True)
         self.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
 
         self.text = Gtk.TextView()
