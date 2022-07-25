@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from gi.repository import Gio, GLib, GObject, Pango
+from unicodedata import normalize
+
+from gi.repository import Gio, GObject, Pango
 
 from gaphor import UML
 from gaphor.core.format import format
@@ -75,8 +77,8 @@ def tree_item_sort(a, b, _user_data=None):
         return -1
     if isinstance(b, RelationshipItem):
         return 1
-    na = GLib.utf8_collate_key(a.text, -1).lower()
-    nb = GLib.utf8_collate_key(b.text, -1).lower()
+    na = normalize("NFC", a).casefold()
+    nb = normalize("NFC", b).casefold()
     return (na > nb) - (na < nb)
 
 

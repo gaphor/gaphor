@@ -113,6 +113,7 @@ In the same PowerShell terminal, clone the repository:
 ```PowerShell
 cd (to the location you want to put Gaphor)
 git clone https://github.com/gaphor/gaphor.git
+cd gaphor
 ```
 
 Install Poetry (you may want to consider installing poetry via [pipx](https://pypi.org/project/pipx/), instead of pip):
