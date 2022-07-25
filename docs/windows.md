@@ -11,6 +11,7 @@ Older releases are available from [GitHub](https://github.com/gaphor/gaphor/rele
 ## Development Environment
 
 ### Choco
+
 We recommend using [Chocolately](https://chocolatey.org/) as a package manager
 in Windows.
 
@@ -21,10 +22,16 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 ```
 
 To run local scripts in follow-on steps, also execute
-`Set-ExecutionPolicy RemoteSigned`. This allows for local PowerShell scripts
+
+```PowerShell
+Set-ExecutionPolicy RemoteSigned
+```
+
+This allows for local PowerShell scripts
 to run without signing, but still requires signing for remote scripts.
 
 ### Git
+
 To setup a development environment in Windows first install
 [Git](https://gitforwindows.org) by executing as an adminstrator:
 
@@ -33,17 +40,18 @@ choco install git
 ```
 
 ### MSYS2
+
 The development environment in the next step needs MSYS2 installed to provide
 some Linux command line tools in Windows.
 
-Install [MSYS2](http://www.msys2.org/):
+Keep PowerShell open as administrator and install [MSYS2](http://www.msys2.org/):
 
-Keep PowerShell open as administrator and execute:
 ```PowerShell
 choco install msys2
 ```
 
 ### GTK and Python with gvsbuild
+
 gvsbuild provides a Python script helps you build the GTK library stack for
 Windows using Visual Studio. By compiling GTK with Visual Studio, we can then
 use a standard Python development environment in Windows.
@@ -53,6 +61,7 @@ First we will install the gvsbuild dependencies:
 1. Python
 
 #### Install Visual Studio 2022
+
 With your admin PowerShell terminal:
 
 ```PowerShell
@@ -63,8 +72,17 @@ choco install visualstudio2022-workload-vctools
 
 Download and install the latest version of Python:
 
-1. Install from Chocolately with `choco install python` with admin PowerShell
-1. Restart your PowerShell terminal as a normal user and check that `python --version` is correct.
+1. Install from Chocolately with administrator PowerShell:
+
+   ```PowerShell
+   choco install python
+   ```
+
+2. Restart your PowerShell terminal as a normal user and check  the python version:
+
+   ```PowerShell
+   python --version
+   ```
 
 #### Install gvsbuild
 
@@ -74,7 +92,6 @@ Open a new regular user PowerShell terminal and execute:
 mkdir C:\gtk-build\github
 cd C:\gtk-build\github
 git clone https://github.com/wingtk/gvsbuild.git
-
 ```
 
 #### Build GTK
@@ -90,7 +107,7 @@ gvsbuild build --enable-gi --py-wheel gobject-introspection gtk4 pycairo pygobje
 ```
 Grab a coffee, the build will take a few minutes to complete.
 
-#### Setup Gaphor
+### Setup Gaphor
 
 In the same PowerShell terminal, clone the repository:
 ```PowerShell
@@ -100,18 +117,18 @@ git clone https://github.com/gaphor/gaphor.git
 
 Install Poetry (you may want to consider installing poetry via [pipx](https://pypi.org/project/pipx/), instead of pip):
 ```bash
-PS > pip install --user poetry
-PS > poetry config virtualenvs.in-project true
+pip install --user poetry
+poetry config virtualenvs.in-project true
 ```
 
 Install PyGObject and pycairo from gvsbuild
 ```PowerShell
-PS > Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl | ForEach-Object -process { poetry run pip install $_ }
+Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl | ForEach-Object -process { poetry run pip install $_ }
 ```
 
 Install Gaphor's other dependencies
 ```PowerShell
-PS > poetry install
+poetry install
 ```
 
 Add GTK to your path:
@@ -121,24 +138,24 @@ $env:Path = "C:\gtk-build\gtk\x64\release\bin;" + $env:Path
 
 Launch Gaphor!
 ```PowerShell
-PS > poetry run gaphor
+poetry run gaphor
 ```
 
 ### Debugging using Visual Studio Code
 
 Start a new PowerShell terminal, and set current directory to the project folder:
 ```PowerShell
-PS > cd (to the location you put gaphor)
+cd (to the location you put gaphor)
 ```
 
 Ensure that path environment variable is set:
 ```PowerShell
-PS > $env:Path = "C:\gtk-build\gtk\x64\release\bin;" + $env:Path
+$env:Path = "C:\gtk-build\gtk\x64\release\bin;" + $env:Path
 ```
 
 Start Visual Studio Code:
 ```PowerShell
-PS > code .
+code .
 ```
 
 To start the debugger, execute the following steps:
@@ -167,8 +184,8 @@ choco install nsis 7zip
 Then build your installer using:
 
 ```PowerShell
-PS > poetry install --no-dev --extras poethepoet
-PS > poetry build
-PS > poetry run poe package
-PS > poetry run poe win-installer
+poetry install --no-dev --extras poethepoet
+poetry build
+poetry run poe package
+poetry run poe win-installer
 ```
