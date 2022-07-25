@@ -77,8 +77,8 @@ def tree_item_sort(a, b, _user_data=None):
         return -1
     if isinstance(b, RelationshipItem):
         return 1
-    na = normalize("NFC", a).casefold()
-    nb = normalize("NFC", b).casefold()
+    na = normalize("NFC", a.text).casefold()
+    nb = normalize("NFC", b.text).casefold()
     return (na > nb) - (na < nb)
 
 
