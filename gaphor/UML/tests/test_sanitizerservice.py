@@ -5,6 +5,7 @@ from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general import CommentItem, CommentLineItem
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import ClassItem, GeneralizationItem
+from gaphor.UML.profiles import ExtensionItem
 from gaphor.UML.sanitizerservice import SanitizerService
 
 
@@ -111,7 +112,8 @@ def test_extension_disconnect(element_factory):
     assert [] == list(klass.appliedStereotype)
 
 
-def test_extension_deletion(element_factory):
+@pytest.mark.xfail()
+def test_extension_deletion(element_factory, diagram):
     create = element_factory.create
     metaklass = create(UML.Class)
     metaklass.name = "Class"
@@ -120,6 +122,7 @@ def test_extension_deletion(element_factory):
     st_attr = create(UML.Property)
     stereotype.ownedAttribute = st_attr
     ext = UML.recipes.create_extension(metaklass, stereotype)
+    ext_item = diagram.create(ExtensionItem, subject=ext)
 
     # Apply stereotype to class and create slot
     instspec = UML.recipes.apply_stereotype(klass, stereotype)
@@ -127,7 +130,8 @@ def test_extension_deletion(element_factory):
 
     assert stereotype in klass.appliedStereotype[:].classifier
 
-    ext.unlink()
+    # disconnect indirectly, by deleting the item
+    ext_item.unlink()
 
     assert [] == list(klass.appliedStereotype)
 
