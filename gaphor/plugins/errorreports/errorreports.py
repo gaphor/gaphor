@@ -10,7 +10,7 @@ from types import TracebackType
 
 import better_exceptions
 from exceptiongroup import BaseExceptionGroup
-from gi.repository import Gtk
+from gi.repository import Gdk, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.action import action
@@ -160,11 +160,14 @@ class ErrorReports(UIComponent, ActionProvider):
 
 
 def os_information():
+    dm = Gdk.DisplayManager.get()
+    display = dm.get_default_display()
     return textwrap.dedent(
         f"""\
     OS: {platform.system()} ({platform.release()})
     Python version: {platform.python_version()}
     GTK version: {Gtk.get_major_version()}.{Gtk.get_minor_version()}.{Gtk.get_micro_version()}
+    Display: {display.__class__.__name__ if display else "n.a."}
     Gaphor version: {distribution().version}
 
     """
