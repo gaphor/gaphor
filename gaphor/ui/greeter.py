@@ -11,7 +11,7 @@ from gaphor.core import event_handler
 from gaphor.diagram.hoversupport import flowbox_add_hover_support
 from gaphor.event import ActiveSessionChanged, SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
-from gaphor.ui import APPLICATION_ID, HOME
+from gaphor.ui import APPLICATION_ID
 
 
 class ModelTemplate(NamedTuple):
@@ -125,7 +125,7 @@ class Greeter(Service, ActionProvider):
                 filename, _host = GLib.filename_from_uri(item.get_uri())
                 builder.get_object("name").set_text(str(Path(filename).stem))
                 builder.get_object("filename").set_text(
-                    item.get_uri_display().replace(HOME, "~")
+                    item.get_uri_display().replace(str(Path.home()), "~")
                 )
                 row = builder.get_object("greeter-recent-file")
                 row.filename = filename

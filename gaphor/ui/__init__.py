@@ -4,7 +4,6 @@ and diagram windows."""
 import logging
 import os
 import sys
-from pathlib import Path
 from typing import Optional
 
 import darkdetect
@@ -32,7 +31,6 @@ from gaphor.ui.actiongroup import apply_application_actions
 from gaphor.ui.macosshim import macos_init
 
 APPLICATION_ID = "org.gaphor.Gaphor"
-HOME = str(Path.home())
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
 

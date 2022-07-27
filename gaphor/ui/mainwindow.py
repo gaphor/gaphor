@@ -19,7 +19,6 @@ from gaphor.event import (
 from gaphor.i18n import translated_ui_string
 from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
-from gaphor.ui import HOME
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.layout import deserialize, is_maximized
@@ -228,7 +227,7 @@ class MainWindow(Service, ActionProvider):
         if self.filename:
             p = Path(self.filename)
             title = p.stem
-            subtitle = str(p).replace(HOME, "~")
+            subtitle = str(p).replace(str(Path.home()), "~")
         else:
             title = "Gaphor"
             subtitle = gettext("New model")
