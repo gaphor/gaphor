@@ -97,6 +97,7 @@ class Classifier(Namespace, RedefinableElement, Type):
     general: derived[Classifier]
     generalization: relation_many[Generalization]
     inheritedMember: derivedunion[NamedElement]
+    instanceSpecification: relation_many[InstanceSpecification]
     isAbstract: _attribute[int] = _attribute("isAbstract", int, default=False)
     nestingClass: relation_one[Class]
     ownedUseCase: relation_many[UseCase]
@@ -805,7 +806,7 @@ DeployedArtifact.deployment = association("deployment", Deployment, opposite="de
 DeploymentTarget.deployment = association("deployment", Deployment, composite=True, opposite="location")
 Element.ownedElement.add(DeploymentTarget.deployment)  # type: ignore[attr-defined]
 InstanceSpecification.slot = association("slot", Slot, composite=True, opposite="owningInstance")
-InstanceSpecification.classifier = association("classifier", Classifier)
+InstanceSpecification.classifier = association("classifier", Classifier, opposite="instanceSpecification")
 InstanceSpecification.extended = association("extended", Element, opposite="appliedStereotype")
 Element.ownedElement.add(InstanceSpecification.slot)  # type: ignore[attr-defined]
 EnumerationLiteral.enumeration = association("enumeration", Enumeration, upper=1, opposite="ownedLiteral")
@@ -838,6 +839,7 @@ Namespace.ownedMember.add(Namespace.ownedRule)  # type: ignore[attr-defined]
 Type.package = association("package", Package, upper=1, opposite="ownedType")
 PackageableElement.owningPackage.add(Type.package)  # type: ignore[attr-defined]
 Classifier.generalization = association("generalization", Generalization, composite=True, opposite="specific")
+Classifier.instanceSpecification = association("instanceSpecification", InstanceSpecification, composite=True, opposite="classifier")
 Classifier.ownedUseCase = association("ownedUseCase", UseCase, composite=True)
 Classifier.specialization = association("specialization", Generalization, opposite="general")
 Classifier.redefinedClassifier = association("redefinedClassifier", Classifier)
