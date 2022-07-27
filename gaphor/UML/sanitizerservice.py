@@ -38,7 +38,6 @@ class SanitizerService(Service):
 
         event_manager.subscribe(self._unlink_on_subject_delete)
         event_manager.subscribe(self.update_annotated_element_link)
-        event_manager.subscribe(self._unlink_on_stereotype_delete)
         event_manager.subscribe(self._unlink_on_extension_delete)
         event_manager.subscribe(self._disconnect_extension_end)
         event_manager.subscribe(self._redraw_diagram_on_move)
@@ -47,7 +46,6 @@ class SanitizerService(Service):
         event_manager = self.event_manager
         event_manager.unsubscribe(self._unlink_on_subject_delete)
         event_manager.unsubscribe(self.update_annotated_element_link)
-        event_manager.unsubscribe(self._unlink_on_stereotype_delete)
         event_manager.unsubscribe(self._unlink_on_extension_delete)
         event_manager.unsubscribe(self._disconnect_extension_end)
         event_manager.unsubscribe(self._redraw_diagram_on_move)
@@ -139,15 +137,6 @@ class SanitizerService(Service):
             if st:
                 meta = p.type and getattr(UML, p.type.name, None)
                 self.perform_unlink_for_instances(st, meta)
-
-    @event_handler(AssociationDeleted)
-    @undo_guard
-    def _unlink_on_stereotype_delete(self, event):
-        """Remove applied stereotypes when stereotype is deleted."""
-        if event.property is UML.InstanceSpecification.classifier and isinstance(
-            event.old_value, UML.Stereotype
-        ):
-            event.element.unlink()
 
     @event_handler(DerivedSet)
     @undo_guard
