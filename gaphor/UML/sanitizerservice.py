@@ -97,14 +97,6 @@ class SanitizerService(Service):
             comment = comment_item.subject
             comment.annotatedElement = subject
 
-    def perform_unlink_for_instances(self, st, meta):
-        inst = UML.recipes.find_instances(st)
-
-        for i in list(inst):
-            for e in i.extended:
-                if not meta or isinstance(e, meta):
-                    i.unlink()
-
     @event_handler(AssociationDeleted)
     @undo_guard
     def _unlink_on_extension_delete(self, event):
