@@ -106,13 +106,11 @@ def test_extension_disconnect(element_factory):
 
     assert stereotype in klass.appliedStereotype[:].classifier
 
-    # Causes set event
-    del ext.ownedEnd.type
+    del stereotype.ownedAttribute[ext.memberEnd[0]]
 
     assert [] == list(klass.appliedStereotype)
 
 
-@pytest.mark.xfail()
 def test_extension_deletion(element_factory, diagram):
     create = element_factory.create
     metaklass = create(UML.Class)
