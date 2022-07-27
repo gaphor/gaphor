@@ -86,8 +86,8 @@ def test_stereotype_attribute_delete(element_factory):
 
     st_attr.unlink()
 
-    assert [] == list(stereotype.ownedMember)
-    assert [] == list(instspec.slot)
+    assert not stereotype.ownedMember
+    assert not instspec.slot
 
 
 def test_extension_disconnect(element_factory):
@@ -108,7 +108,7 @@ def test_extension_disconnect(element_factory):
 
     del stereotype.ownedAttribute[ext.memberEnd[0]]
 
-    assert [] == list(klass.appliedStereotype)
+    assert not klass.appliedStereotype
 
 
 def test_extension_deletion(element_factory, diagram):
@@ -131,7 +131,7 @@ def test_extension_deletion(element_factory, diagram):
     # disconnect indirectly, by deleting the item
     ext_item.unlink()
 
-    assert [] == list(klass.appliedStereotype)
+    assert not klass.appliedStereotype
 
 
 def test_extension_deletion_with_2_metaclasses(element_factory):
@@ -158,9 +158,9 @@ def test_extension_deletion_with_2_metaclasses(element_factory):
 
     ext1.unlink()
 
-    assert [] == list(klass.appliedStereotype)
+    assert not klass.appliedStereotype
     assert klass in element_factory
-    assert [instspec2] == list(iface.appliedStereotype)
+    assert instspec2 in iface.appliedStereotype
 
 
 def test_stereotype_deletion(element_factory):
@@ -181,7 +181,7 @@ def test_stereotype_deletion(element_factory):
 
     stereotype.unlink()
 
-    assert [] == list(klass.appliedStereotype)
+    assert not klass.appliedStereotype
 
 
 def test_diagram_move(element_factory, mocker):
