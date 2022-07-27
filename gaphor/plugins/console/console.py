@@ -367,7 +367,7 @@ def main(main_loop=True):
         def on_activate(app):
             app.add_window(window)
 
-        app = Gtk.Application.new(application_id="org.gaphor.Console")
+        app = Gtk.Application(application_id="org.gaphor.Console")
         app.connect("activate", on_activate)
         app.run()
 

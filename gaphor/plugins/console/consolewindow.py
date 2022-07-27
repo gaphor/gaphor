@@ -63,7 +63,7 @@ class ConsoleWindow(UIComponent, ActionProvider):
         window = (
             Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
             if Gtk.get_major_version() == 3
-            else Adw.Window()
+            else Adw.Window.new()
         )
         window.set_transient_for(self.main_window.window)
         window.set_title(self.title)

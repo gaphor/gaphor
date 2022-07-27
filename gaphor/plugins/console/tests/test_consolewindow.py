@@ -1,4 +1,5 @@
 import pytest
+from gi.repository import GLib, Gtk
 
 import gaphor.services.componentregistry
 import gaphor.ui.menufragment
@@ -29,9 +30,21 @@ def tools_menu():
 
 
 def test_open_close(component_registry, main_window, tools_menu):
-    window = ConsoleWindow(component_registry, main_window, tools_menu)
+    def on_activate(app):
+        def auto_close():
+            window.close()
+            app.quit()
 
-    window.open()
-    window.close()
+        window = ConsoleWindow(component_registry, main_window, tools_menu)
+        window.open()
+        app.add_window(window)
+
+        idle = GLib.Idle(GLib.PRIORITY_LOW)
+        idle.set_callback(auto_close)
+        idle.attach()
+
+    app = Gtk.Application(application_id="org.gaphor.tests.Console")
+    app.connect("activate", on_activate)
+    app.run()
 
     assert tools_menu.menu.get_n_items() == 1
