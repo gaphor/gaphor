@@ -118,9 +118,7 @@ def test_inherited_stereotype(element_factory):
     UML.recipes.create_extension(metaclass, stereotype)
     substereotype = element_factory.create(UML.Stereotype)
     substereotype.name = "SubStereotype"
-    generalization: UML.Generalization = element_factory.create(UML.Generalization)
-    generalization.general = stereotype
-    generalization.specific = substereotype
+    UML.recipes.create_generalization(stereotype, substereotype)
 
     c = element_factory.create(UML.Class)
 
