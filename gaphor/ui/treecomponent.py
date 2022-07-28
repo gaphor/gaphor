@@ -303,6 +303,14 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
     row = builder.get_object("row")
 
     def on_show_popup(ctrl, n_press, x, y):
+        list_item.get_child().activate_action(
+            "list.select-item",
+            GLib.Variant.new_tuple(
+                GLib.Variant.new_uint32(list_item.get_position()),
+                GLib.Variant.new_boolean(False),
+                GLib.Variant.new_boolean(False),
+            ),
+        )
         element = list_item.get_item().get_item().element
         menu = Gtk.PopoverMenu.new_from_model(popup_model(element, modeling_language))
         menu.set_parent(row)
