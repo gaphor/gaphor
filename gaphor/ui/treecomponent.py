@@ -157,7 +157,7 @@ class TreeComponent(UIComponent, ActionProvider):
     def tree_view_rename_selected(self):
         if row_item := self.selection.get_selected_item():
             tree_item: TreeItem = row_item.get_item()
-            tree_item.start_editing()
+            GLib.timeout_add(200, tree_item.start_editing)
 
     @action(name="win.create-diagram")
     def tree_view_create_diagram(self, diagram_type: str):
