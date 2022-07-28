@@ -110,25 +110,6 @@ def test_getting_stereotypes_unique(element_factory):
     assert ("st1", "st2") == result
 
 
-def test_finding_stereotype_instances(element_factory):
-    """Test finding stereotype instances."""
-    s1 = element_factory.create(UML.Stereotype)
-    s2 = element_factory.create(UML.Stereotype)
-    s1.name = "s1"
-    s2.name = "s2"
-
-    c1 = element_factory.create(UML.Class)
-    c2 = element_factory.create(UML.Class)
-    UML.recipes.apply_stereotype(c1, s1)
-    UML.recipes.apply_stereotype(c1, s2)
-    UML.recipes.apply_stereotype(c2, s1)
-
-    result = [e.classifier[0].name for e in UML.recipes.find_instances(s1)]
-    assert len(result) == 2
-    assert "s1" in result, result
-    assert "s2" not in result, result
-
-
 # Association tests
 
 

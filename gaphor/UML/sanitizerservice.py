@@ -38,18 +38,14 @@ class SanitizerService(Service):
 
         event_manager.subscribe(self._unlink_on_subject_delete)
         event_manager.subscribe(self.update_annotated_element_link)
-        event_manager.subscribe(self._unlink_on_stereotype_delete)
         event_manager.subscribe(self._unlink_on_extension_delete)
-        event_manager.subscribe(self._disconnect_extension_end)
         event_manager.subscribe(self._redraw_diagram_on_move)
 
     def shutdown(self):
         event_manager = self.event_manager
         event_manager.unsubscribe(self._unlink_on_subject_delete)
         event_manager.unsubscribe(self.update_annotated_element_link)
-        event_manager.unsubscribe(self._unlink_on_stereotype_delete)
         event_manager.unsubscribe(self._unlink_on_extension_delete)
-        event_manager.unsubscribe(self._disconnect_extension_end)
         event_manager.unsubscribe(self._redraw_diagram_on_move)
 
     @event_handler(AssociationSet)
@@ -101,53 +97,31 @@ class SanitizerService(Service):
             comment = comment_item.subject
             comment.annotatedElement = subject
 
-    def perform_unlink_for_instances(self, st, meta):
-        inst = UML.recipes.find_instances(st)
-
-        for i in list(inst):
-            for e in i.extended:
-                if not meta or isinstance(e, meta):
-                    i.unlink()
-
     @event_handler(AssociationDeleted)
     @undo_guard
     def _unlink_on_extension_delete(self, event):
         """Remove applied stereotypes when extension is deleted."""
         if (
-            isinstance(event.element, UML.Extension)
-            and event.property is UML.Association.memberEnd
-            and event.element.memberEnd
+            isinstance(event.element, UML.Stereotype)
+            and event.property is UML.Stereotype.ownedAttribute
         ):
-            p = event.element.memberEnd[0]
-            ext = event.old_value
-            if isinstance(p, UML.ExtensionEnd):
-                p, ext = ext, p
-            st = ext.type
-            meta = p.type and getattr(UML, p.type.name, None)
-            if st:
-                self.perform_unlink_for_instances(st, meta)
+            stereotype = event.element
+            extensions = (
+                e
+                for e in stereotype.ownedAttribute[:].association
+                if isinstance(e, UML.Extension)
+            )
+            metaclass_names = {e.metaclass.name for e in extensions if e.metaclass}
 
-    @event_handler(AssociationSet)
-    @undo_guard
-    def _disconnect_extension_end(self, event):
-        if event.property is UML.ExtensionEnd.type and event.old_value:
-            ext = event.element
-            p = ext.opposite
-            if not p:
-                return
-            st = event.old_value
-            if st:
-                meta = p.type and getattr(UML, p.type.name, None)
-                self.perform_unlink_for_instances(st, meta)
-
-    @event_handler(AssociationDeleted)
-    @undo_guard
-    def _unlink_on_stereotype_delete(self, event):
-        """Remove applied stereotypes when stereotype is deleted."""
-        if event.property is UML.InstanceSpecification.classifier and isinstance(
-            event.old_value, UML.Stereotype
-        ):
-            event.element.unlink()
+            for instance_spec in list(stereotype.instanceSpecification):
+                for e in list(instance_spec.extended):
+                    names = {
+                        c.__name__ for c in type(e).__mro__ if issubclass(c, Element)
+                    }
+                    if names.isdisjoint(metaclass_names):
+                        del instance_spec.extended[e]
+                if not instance_spec.extended:
+                    instance_spec.unlink()
 
     @event_handler(DerivedSet)
     @undo_guard
