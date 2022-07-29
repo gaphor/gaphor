@@ -69,7 +69,6 @@ def test_class(factory):
         property1 in element.ownedMember
     ), f"Namespace.ownedMember does not contain ownedAttribute - {element.ownedMember}"
 
-
     assert (
         operation1 in element.feature
     ), f"Classifier.feature does not contain ownedOperation - {element.feature}"
