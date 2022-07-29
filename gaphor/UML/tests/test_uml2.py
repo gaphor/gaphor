@@ -294,14 +294,13 @@ def test_metaclass_extension(factory):
     s = factory.create(UML.Stereotype)
     s.name = "Stereotype"
 
-    assert [] == c.extension
-    assert [] == s.extension
+    assert not c.extension
+    assert not s.extension
 
     e = UML.recipes.create_extension(c, s)
 
-    print(e.memberEnd)
-    assert [e] == c.extension
-    assert [] == s.extension
+    assert e in c.extension
+    assert not s.extension
     assert e.ownedEnd.type is s
 
 
