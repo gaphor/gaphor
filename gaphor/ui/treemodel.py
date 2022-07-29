@@ -40,6 +40,7 @@ class TreeItem(GObject.Object):
     def sync(self) -> None:
         if element := self.element:
             self.text = format(element) or gettext("<None>")
+            self.notify("edit-text")
             self.icon = get_icon_name(element)
             self.icon_visible = bool(
                 self.icon

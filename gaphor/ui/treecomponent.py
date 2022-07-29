@@ -32,6 +32,8 @@ from gaphor.ui.treemodel import (
     visible,
 )
 
+START_EDIT_DELAY = 100  # ms
+
 
 class TreeComponent(UIComponent, ActionProvider):
     def __init__(self, event_manager, element_factory, modeling_language):
@@ -157,7 +159,7 @@ class TreeComponent(UIComponent, ActionProvider):
     def tree_view_rename_selected(self):
         if row_item := self.selection.get_selected_item():
             tree_item: TreeItem = row_item.get_item()
-            GLib.timeout_add(200, tree_item.start_editing)
+            GLib.timeout_add(START_EDIT_DELAY, tree_item.start_editing)
 
     @action(name="win.create-diagram")
     def tree_view_create_diagram(self, diagram_type: str):
@@ -337,40 +339,47 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
 
     text = builder.get_object("text")
 
+    should_commit = True
+
     def end_editing():
         list_item.get_item().get_item().visible_child_name = "default"
         row.get_parent().grab_focus()
 
-    def text_activate(widget):
-        text = widget.get_buffer().get_text()
-        tree_item = list_item.get_item().get_item()
-        with Transaction(event_manager):
-            tree_item.edit_text = text
+    def text_focus_out(ctrl):
+        if should_commit:
+            edit_text = text.get_buffer().get_text()
+            tree_item = list_item.get_item().get_item()
+            with Transaction(event_manager):
+                tree_item.edit_text = edit_text
         end_editing()
 
-    def text_focus_out(ctrl):
-        text_activate(text)
+    def text_key_pressed(ctrl, keyval, keycode, state):
+        if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
+            end_editing()
+            return True
+        elif keyval == Gdk.KEY_Escape:
+            nonlocal should_commit
+            should_commit = False
+            list_item.get_item().get_item().sync()
+            end_editing()
+            return True
+        return False
 
     focus_ctrl = Gtk.EventControllerFocus.new()
     focus_ctrl.connect("leave", text_focus_out)
     text.add_controller(focus_ctrl)
 
-    def text_key_pressed(widget, keyval, keycode, state):
-        if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
-            text_activate(text)
-        elif keyval == Gdk.KEY_Escape:
-            list_item.get_item().get_item().sync()
-            end_editing()
-
     key_ctrl = Gtk.EventControllerKey.new()
     key_ctrl.connect("key-pressed", text_key_pressed)
     text.add_controller(key_ctrl)
 
-    def stack_changed(stack, pspec):
+    def start_editing(stack, pspec):
+        nonlocal should_commit
         if stack.get_visible_child_name() == "editing":
+            should_commit = True
             text.grab_focus()
 
-    builder.get_object("stack").connect("notify::visible-child-name", stack_changed)
+    builder.get_object("stack").connect("notify::visible-child-name", start_editing)
 
 
 def list_item_drag_prepare(
