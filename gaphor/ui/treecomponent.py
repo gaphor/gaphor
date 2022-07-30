@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from gaphas.decorators import g_async
 from gi.repository import Gdk, GLib, GObject, Gtk
 
 from gaphor import UML
@@ -32,6 +31,8 @@ from gaphor.ui.treemodel import (
     tree_item_sort,
     visible,
 )
+
+START_EDIT_DELAY = 100  # ms
 
 
 class TreeComponent(UIComponent, ActionProvider):
@@ -155,11 +156,10 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.handle(DiagramOpened(element))
 
     @action(name="tree-view.rename", shortcut="F2")
-    @g_async(single=True)
     def tree_view_rename_selected(self):
         if row_item := self.selection.get_selected_item():
             tree_item: TreeItem = row_item.get_item()
-            tree_item.start_editing()
+            GLib.timeout_add(START_EDIT_DELAY, tree_item.start_editing)
 
     @action(name="win.create-diagram")
     def tree_view_create_diagram(self, diagram_type: str):
@@ -246,11 +246,10 @@ class TreeComponent(UIComponent, ActionProvider):
     def on_diagram_selection_changed(self, event):
         if not event.focused_item:
             return
-        element = event.focused_item.subject
-        if not element:
+        if element := event.focused_item.subject:
+            self.select_element(element)
+        else:
             return
-
-        self.select_element(element)
 
 
 def new_list_item_ui():
@@ -306,6 +305,14 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
     row = builder.get_object("row")
 
     def on_show_popup(ctrl, n_press, x, y):
+        list_item.get_child().activate_action(
+            "list.select-item",
+            GLib.Variant.new_tuple(
+                GLib.Variant.new_uint32(list_item.get_position()),
+                GLib.Variant.new_boolean(False),
+                GLib.Variant.new_boolean(False),
+            ),
+        )
         element = list_item.get_item().get_item().element
         menu = Gtk.PopoverMenu.new_from_model(popup_model(element, modeling_language))
         menu.set_parent(row)
@@ -330,38 +337,49 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
     drop_target.connect("drop", list_item_drop_drop, list_item, event_manager)
     row.add_controller(drop_target)
 
+    text = builder.get_object("text")
+
+    should_commit = True
+
     def end_editing():
         list_item.get_item().get_item().visible_child_name = "default"
         row.get_parent().grab_focus()
 
-    def text_activate(widget):
-        text = widget.get_buffer().get_text()
-        tree_item = list_item.get_item().get_item()
-        with Transaction(event_manager):
-            tree_item.edit_text = text
+    def text_focus_out(ctrl):
+        if should_commit:
+            edit_text = text.get_buffer().get_text()
+            tree_item = list_item.get_item().get_item()
+            with Transaction(event_manager):
+                tree_item.edit_text = edit_text
         end_editing()
 
-    def text_focus_out(widget, pspec):
-        if not widget.has_focus():
-            text_activate(text)
-
-    def text_escape(widget, keyval, keycode, state):
-        if keyval == Gdk.KEY_Escape:
+    def text_key_pressed(ctrl, keyval, keycode, state):
+        if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
+            end_editing()
+            return True
+        elif keyval == Gdk.KEY_Escape:
+            nonlocal should_commit
+            should_commit = False
             list_item.get_item().get_item().sync()
             end_editing()
+            return True
+        return False
 
-    text = builder.get_object("text")
-    text.connect("notify::has-focus", text_focus_out)
-    text.connect("activate", text_activate)
-    controller = Gtk.EventControllerKey.new()
-    controller.connect("key-pressed", text_escape)
-    text.add_controller(controller)
+    focus_ctrl = Gtk.EventControllerFocus.new()
+    focus_ctrl.connect("leave", text_focus_out)
+    text.add_controller(focus_ctrl)
 
-    def stack_changed(stack, pspec):
+    key_ctrl = Gtk.EventControllerKey.new()
+    key_ctrl.connect("key-pressed", text_key_pressed)
+    text.add_controller(key_ctrl)
+
+    def start_editing(stack, pspec):
+        nonlocal should_commit
         if stack.get_visible_child_name() == "editing":
+            should_commit = True
             text.grab_focus()
 
-    builder.get_object("stack").connect("notify::visible-child-name", stack_changed)
+    builder.get_object("stack").connect("notify::visible-child-name", start_editing)
 
 
 def list_item_drag_prepare(
