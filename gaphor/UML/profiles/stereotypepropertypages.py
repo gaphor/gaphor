@@ -107,9 +107,7 @@ def refresh(subject, model):
             None,
             (st.name, "", bool(applied), True, False, st, None, None),
         )
-        for attr_index, attr in enumerate(
-            attr for attr in st.ownedAttribute if not attr.association
-        ):
+        for attr_index, attr in enumerate(attr for attr in all_attributes(st)):
             slot = slots.get(attr)
             value = slot.value if slot else ""
             upsert(
@@ -126,6 +124,17 @@ def refresh(subject, model):
                     slot,
                 ),
             )
+
+
+def all_attributes(stereotype, seen=None):
+    if seen is None:
+        seen = {stereotype}
+
+    for super_type in stereotype.generalization[:].general[:]:
+        if super_type not in seen:
+            seen.add(super_type)
+            yield from all_attributes(super_type)
+    yield from (attr for attr in stereotype.ownedAttribute if not attr.association)
 
 
 @transactional
