@@ -1,3 +1,4 @@
+import logging
 import os
 import time
 from pathlib import Path
@@ -9,8 +10,12 @@ except ModuleNotFoundError:
 
 from PyInstaller.utils.hooks import copy_metadata
 
-block_cipher = None
+logging.getLogger(__name__).info(
+    f"Target GTK version: {os.getenv('GAPHOR_PKG_GTK', '4')}"
+)
 
+
+block_cipher = None
 
 glade_files = [
     (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.glade")
@@ -59,7 +64,8 @@ a = Analysis(
     hooksconfig={
         "gi": {
             "module-versions": {
-                "GtkSource": "4",
+                "Gtk": "3.0" if os.getenv("GAPHOR_PKG_GTK") == "3" else "4.0",
+                "GtkSource": "4" if os.getenv("GAPHOR_PKG_GTK") == "3" else "5",
             },
         },
     },

@@ -17,6 +17,8 @@ runs:
       run: poetry install --no-dev --extras pyinstall
       shell: bash
     - name: Build AppImage
+      env:
+        GAPHOR_PKG_GTK: "3"
       run: |
         jhbuild shell
         poetry run poe package
