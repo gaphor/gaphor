@@ -122,7 +122,7 @@ def get_stereotypes(element):
     model = element.model
     # UML specs does not allow to extend stereotypes with stereotypes
     if isinstance(element, Stereotype):
-        return ()
+        return []
 
     cls = type(element)
 

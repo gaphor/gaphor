@@ -3,6 +3,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
+from gaphor.core.modeling.element import Element
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.UML.profiles.metaclasspropertypage import new_builder
 
@@ -75,7 +76,7 @@ def stereotype_model(subject):
     return model, (toggle_stereotype, subject, model), (set_value, model)
 
 
-def refresh(subject, model):
+def refresh(subject: Element, model: Gtk.TreeStore):
     stereotypes = UML.recipes.get_stereotypes(subject)
     instances = subject.appliedStereotype
 
