@@ -140,7 +140,7 @@ def all_attributes(stereotype, seen=None):
 @transactional
 def toggle_stereotype(renderer, path, subject, model):
     row = model[path]
-    name, old_value, is_applied, _, _, stereotype, _, _ = row
+    _, _, is_applied, _, _, stereotype, _, _ = row
     value = not is_applied
 
     if value:
@@ -157,7 +157,7 @@ def toggle_stereotype(renderer, path, subject, model):
 def set_value(renderer, path, value, model):
     """Set value of stereotype property applied to an UML element."""
     row = model[path]
-    name, old_value, is_applied, _, _, attr, applied, slot = row
+    _, _, _, _, _, attr, applied, slot = row
     if isinstance(attr, UML.Stereotype):
         return  # don't edit stereotype rows
 
