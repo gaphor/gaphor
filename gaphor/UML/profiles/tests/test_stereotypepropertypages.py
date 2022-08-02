@@ -74,9 +74,7 @@ def test_inherited_stereotype(diagram, element_factory):
     metaclass, stereotype = metaclass_and_stereotype(element_factory)
     substereotype = element_factory.create(UML.Stereotype)
     substereotype.name = "SubStereotype"
-    generalization: UML.Generalization = element_factory.create(UML.Generalization)
-    generalization.general = stereotype
-    generalization.specific = substereotype
+    UML.recipes.create_generalization(stereotype, substereotype)
 
     property_page = create_property_page(diagram, element_factory)
     model = get_model(property_page)
@@ -94,9 +92,7 @@ def test_inherited_stereotype_with_attributes(diagram, element_factory):
     stereotype.ownedAttribute = attr
     substereotype = element_factory.create(UML.Stereotype)
     substereotype.name = "SubStereotype"
-    generalization: UML.Generalization = element_factory.create(UML.Generalization)
-    generalization.general = stereotype
-    generalization.specific = substereotype
+    UML.recipes.create_generalization(stereotype, substereotype)
 
     property_page = create_property_page(diagram, element_factory)
     model = get_model(property_page)
