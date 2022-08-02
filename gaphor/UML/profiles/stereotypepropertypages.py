@@ -62,12 +62,12 @@ def stereotype_model(subject):
         [
             str,  # stereotype/attribute
             str,  # value
-            bool,  # is applied stereotype
-            bool,  # show checkbox (is stereotype)
+            bool,  # active / is applied stereotype
+            bool,  # visible  checkbox (is stereotype)
             bool,  # value editable
             object,  # stereotype / attribute
-            object,  # value editable
-            object,  # slot element
+            object,  # instance specification
+            object,  # slot
         ]
     )
     refresh(subject, model)
@@ -89,18 +89,10 @@ def refresh(subject, model):
             row[:] = row_data
         return new_row
 
-    # shortcut map stereotype -> slot (InstanceSpecification)
-    slots = {}
-    for applied in instances:
-        for slot in applied.slot:
-            slots[slot.definingFeature] = slot
-
     for st_index, st in enumerate(stereotypes):
-        for applied in instances:
-            if st in applied.classifier:
-                break
-        else:
-            applied = None
+        applied = next(
+            (applied for applied in instances if st in applied.classifier), None
+        )
 
         parent = upsert(
             f"{st_index}",
@@ -108,7 +100,14 @@ def refresh(subject, model):
             (st.name, "", bool(applied), True, False, st, None, None),
         )
         for attr_index, attr in enumerate(attr for attr in all_attributes(st)):
-            slot = slots.get(attr)
+            slot = (
+                next(
+                    (slot for slot in applied.slot if slot.definingFeature is attr),
+                    None,
+                )
+                if applied
+                else None
+            )
             value = slot.value if slot else ""
             upsert(
                 f"{st_index}:{attr_index}",
