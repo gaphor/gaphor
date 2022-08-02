@@ -178,4 +178,4 @@ def set_value(renderer, path, value, model):
         value = ""
 
     row[1] = value
-    row[5] = slot
+    row[7] = slot
