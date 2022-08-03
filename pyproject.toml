@@ -52,6 +52,7 @@ myst-parser = { version = ">=0.15,<0.19", optional = true }
 jedi = "^0.18.1"
 darkdetect = ">=0.5.1,<0.8.0"
 better-exceptions = "^0.3.3"
+pydot = "^1.4.2"
 
 [tool.poetry.dev-dependencies]
 tomli = ">=1.2,<3.0"
@@ -163,6 +164,7 @@ type = "virtualenv"
 "elementeditor" = "gaphor.ui.elementeditor:ElementEditor"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
+"auto_layout" = "gaphor.plugins.autolayout:AutoLayout"
 "help" = "gaphor.services.helpservice:HelpService"
 
 [tool.poetry.plugins."gaphor.modelinglanguages"]
