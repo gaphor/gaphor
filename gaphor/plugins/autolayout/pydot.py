@@ -62,10 +62,13 @@ class AutoLayout(Service, ActionProvider):
                 )
                 if presentation:
                     pos = parse_point(node.get_pos())
-                    presentation.matrix.set(
-                        x0=pos[0] - presentation.width / 2 + offset,
-                        y0=height - pos[1] - presentation.height / 2 + offset,
+                    w, h = presentation.matrix_i2c.transform_distance(
+                        presentation.width, presentation.height
                     )
+                    x, y = presentation.matrix_i2c.inverse().transform_point(
+                        pos[0] - w / 2 + offset, height - pos[1] - h / 2 + offset
+                    )
+                    presentation.matrix.set(x0=x, y0=y)
                     presentation.request_update()
 
             for edge in rendered_graph.get_edges():
