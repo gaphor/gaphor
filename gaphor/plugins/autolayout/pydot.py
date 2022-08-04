@@ -15,11 +15,12 @@ DPI = 72.0
 
 
 class AutoLayout(Service, ActionProvider):
-    def __init__(self, event_manager, diagrams, tools_menu=None):
+    def __init__(self, event_manager, diagrams, tools_menu=None, dump_gv=True):
         self.event_manager = event_manager
         self.diagrams = diagrams
         if tools_menu:
             tools_menu.add_actions(self)
+        self.dump_gv = dump_gv
 
     def shutdown(self):
         pass
@@ -42,11 +43,10 @@ class AutoLayout(Service, ActionProvider):
             elif isinstance(edge_or_node, pydot.Node):
                 graph.add_node(edge_or_node)
 
-        graph.write("test_pydot.svg", format="svg")
-
         rendered_string = graph.create(format="dot").decode("utf-8")
-        with open("test_pydot.gv", "w") as f:
-            f.write(rendered_string)
+        if self.dump_gv:
+            with open("auto_layout.gv", "w") as f:
+                f.write(rendered_string)
 
         rendered_graphs = pydot.graph_from_dot_data(rendered_string)
         rendered_graph = rendered_graphs[0]
