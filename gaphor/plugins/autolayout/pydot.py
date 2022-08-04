@@ -2,6 +2,7 @@ from functools import singledispatch
 
 import pydot
 from gaphas.connector import ConnectionSink, Connector
+from gaphas.segment import Segment
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
@@ -73,11 +74,16 @@ class AutoLayout(Service, ActionProvider):
                     (p for p in diagram.ownedPresentation if p.id == id), None
                 ):
                     points = parse_edge_pos(edge.get_pos())
-                    assert len(points) == 2
-                    assert len(presentation.handles()) == 2
 
                     if isinstance(presentation, GeneralizationItem):
                         points.reverse()
+
+                    presentation.orthogonal = False
+                    segment = Segment(presentation, diagram)
+                    while len(points) > len(presentation.handles()):
+                        segment.split_segment(0)
+                    while 2 < len(points) < len(presentation.handles()):
+                        segment.merge_segment(0)
 
                     matrix = presentation.matrix_i2c.inverse()
                     for handle, point in zip(presentation.handles(), points):
