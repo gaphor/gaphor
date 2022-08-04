@@ -1,6 +1,7 @@
 from functools import singledispatch
 
 import pydot
+from gaphas.connector import ConnectionSink, Connector
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
@@ -14,11 +15,12 @@ DPI = 72.0
 
 
 class AutoLayout(Service, ActionProvider):
-    def __init__(self, event_manager, diagrams, tools_menu=None):
+    def __init__(self, event_manager, diagrams, tools_menu=None, dump_gv=True):
         self.event_manager = event_manager
         self.diagrams = diagrams
         if tools_menu:
             tools_menu.add_actions(self)
+        self.dump_gv = dump_gv
 
     def shutdown(self):
         pass
@@ -41,11 +43,10 @@ class AutoLayout(Service, ActionProvider):
             elif isinstance(edge_or_node, pydot.Node):
                 graph.add_node(edge_or_node)
 
-        graph.write("test_pydot.svg", format="svg")
-
         rendered_string = graph.create(format="dot").decode("utf-8")
-        with open("test_pydot.gv", "w") as f:
-            f.write(rendered_string)
+        if self.dump_gv:
+            with open("auto_layout.gv", "w") as f:
+                f.write(rendered_string)
 
         rendered_graphs = pydot.graph_from_dot_data(rendered_string)
         rendered_graph = rendered_graphs[0]
@@ -56,11 +57,9 @@ class AutoLayout(Service, ActionProvider):
         with Transaction(self.event_manager):
             for node in rendered_graph.get_nodes():
                 name = node.get_name().replace('"', "")
-                presentation = next(
+                if presentation := next(
                     (p for p in diagram.ownedPresentation if p.id == name), None
-                )
-                print("Node", name, presentation)
-                if presentation:
+                ):
                     pos = parse_point(node.get_pos())
                     presentation.matrix.set(
                         x0=pos[0] - presentation.width / 2 + offset,
@@ -69,7 +68,36 @@ class AutoLayout(Service, ActionProvider):
                     presentation.request_update()
 
             for edge in rendered_graph.get_edges():
-                print("Edge", strip_quotes(edge.get("id")))
+                id = strip_quotes(edge.get("id"))
+                if presentation := next(
+                    (p for p in diagram.ownedPresentation if p.id == id), None
+                ):
+                    points = parse_edge_pos(edge.get_pos())
+                    assert len(points) == 2
+                    assert len(presentation.handles()) == 2
+
+                    if isinstance(presentation, GeneralizationItem):
+                        points.reverse()
+
+                    matrix = presentation.matrix_i2c.inverse()
+                    for handle, point in zip(presentation.handles(), points):
+                        p = matrix.transform_point(
+                            point[0] + offset, height - point[1] + offset
+                        )
+                        handle.pos = p
+
+                    for handle in (presentation.head, presentation.tail):
+                        reconnect(presentation, handle, diagram.connections)
+
+
+def reconnect(presentation, handle, connections):
+    if not (connected := connections.get_connection(handle)):
+        return
+
+    connector = Connector(presentation, handle, connections)
+    sink = ConnectionSink(connected.connected, distance=float("inf"))
+    connector.glue(sink)
+    connector.connect(sink)
 
 
 @singledispatch
