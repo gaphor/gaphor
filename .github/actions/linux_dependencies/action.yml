@@ -6,4 +6,5 @@ runs:
     - run: >
         sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends upx
         gir1.2-gtk-4.0 libgirepository1.0-dev libgtksourceview-5-dev libadwaita-1-dev
+        graphviz
       shell: bash
