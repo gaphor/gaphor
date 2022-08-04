@@ -1,6 +1,7 @@
 from functools import singledispatch
 
 import pydot
+from gaphas.connector import ConnectionSink, Connector
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
@@ -59,7 +60,6 @@ class AutoLayout(Service, ActionProvider):
                 presentation = next(
                     (p for p in diagram.ownedPresentation if p.id == name), None
                 )
-                print("Node", name, presentation)
                 if presentation:
                     pos = parse_point(node.get_pos())
                     presentation.matrix.set(
@@ -69,7 +69,37 @@ class AutoLayout(Service, ActionProvider):
                     presentation.request_update()
 
             for edge in rendered_graph.get_edges():
-                print("Edge", strip_quotes(edge.get("id")))
+                id = strip_quotes(edge.get("id"))
+                presentation = next(
+                    (p for p in diagram.ownedPresentation if p.id == id), None
+                )
+                if presentation:
+                    points = parse_edge_pos(edge.get_pos())
+                    assert len(points) == 2
+                    assert len(presentation.handles()) == 2
+
+                    if isinstance(presentation, GeneralizationItem):
+                        points.reverse()
+
+                    matrix = presentation.matrix_i2c.inverse()
+                    for handle, point in zip(presentation.handles(), points):
+                        p = matrix.transform_point(
+                            point[0] + offset, height - point[1] + offset
+                        )
+                        handle.pos = p
+
+                    for handle in (presentation.head, presentation.tail):
+                        reconnect(presentation, handle, diagram.connections)
+
+
+def reconnect(presentation, handle, connections):
+    if not (connected := connections.get_connection(handle)):
+        return
+
+    connector = Connector(presentation, handle, connections)
+    sink = ConnectionSink(connected.connected, distance=float("inf"))
+    connector.glue(sink)
+    connector.connect(sink)
 
 
 @singledispatch
