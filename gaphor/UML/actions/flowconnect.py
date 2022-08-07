@@ -69,7 +69,13 @@ class FlowConnect(RelationshipConnect):
         )
 
         line.subject = relation
-        relation.activity = c1.subject.activity
+        if c1.subject.activity:
+            relation.activity = c1.subject.activity
+        elif isinstance(c1.subject, UML.OutputPin) and c1.subject.owner:
+            relation.activity = c1.subject.owner.activity  # type: ignore[attr-defined]
+        elif isinstance(c2.subject, UML.InputPin) and c2.subject.owner:
+            relation.activity = c2.subject.owner.activity  # type: ignore[attr-defined]
+
         opposite = line.opposite(handle)
         otc = self.get_connected(opposite)
         if (

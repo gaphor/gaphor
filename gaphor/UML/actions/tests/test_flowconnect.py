@@ -151,6 +151,38 @@ def test_connect_head_to_output_pin(create):
     assert isinstance(flow.subject, UML.ObjectFlow)
 
 
+def test_object_flow_activity_is_set_on_output_pin(create):
+    activity = create(ActivityItem, UML.Activity)
+    action = create(ActionItem, UML.Action)
+    action.subject.activity = activity.subject
+
+    out_pin = create(OutputPinItem, UML.OutputPin)
+    connect(out_pin, out_pin.handles()[0], action)
+
+    in_pin = create(InputPinItem, UML.InputPin)
+    flow = create(ObjectFlowItem)
+    connect(flow, flow.head, out_pin)
+    connect(flow, flow.tail, in_pin)
+
+    assert flow.subject.owner is activity.subject
+
+
+def test_object_flow_activity_is_set_on_input_pin(create):
+    activity = create(ActivityItem, UML.Activity)
+    action = create(ActionItem, UML.Action)
+    action.subject.activity = activity.subject
+
+    in_pin = create(InputPinItem, UML.InputPin)
+    connect(in_pin, in_pin.handles()[0], action)
+
+    out_pin = create(OutputPinItem, UML.OutputPin)
+    flow = create(ObjectFlowItem)
+    connect(flow, flow.head, out_pin)
+    connect(flow, flow.tail, in_pin)
+
+    assert flow.subject.owner is activity.subject
+
+
 def test_object_flow_reconnect(create, element_factory):
     flow = create(ObjectFlowItem)
     a1 = create(ActionItem, UML.Action)
