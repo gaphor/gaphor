@@ -2,6 +2,8 @@
 clean and in sync with diagrams."""
 
 
+from typing import Iterable
+
 from gaphor import UML
 from gaphor.abc import Service
 from gaphor.core import event_handler
@@ -101,27 +103,11 @@ class SanitizerService(Service):
     @undo_guard
     def _unlink_on_extension_delete(self, event):
         """Remove applied stereotypes when extension is deleted."""
-        if (
-            isinstance(event.element, UML.Stereotype)
-            and event.property is UML.Stereotype.ownedAttribute
+        if isinstance(event.element, UML.Stereotype) and event.property in (
+            UML.Stereotype.ownedAttribute,
+            UML.Stereotype.generalization,
         ):
-            stereotype = event.element
-            extensions = (
-                e
-                for e in stereotype.ownedAttribute[:].association
-                if isinstance(e, UML.Extension)
-            )
-            metaclass_names = {e.metaclass.name for e in extensions if e.metaclass}
-
-            for instance_spec in list(stereotype.instanceSpecification):
-                for e in list(instance_spec.extended):
-                    names = {
-                        c.__name__ for c in type(e).__mro__ if issubclass(c, Element)
-                    }
-                    if names.isdisjoint(metaclass_names):
-                        del instance_spec.extended[e]
-                if not instance_spec.extended:
-                    instance_spec.unlink()
+            update_stereotype_application(event.element)
 
     @event_handler(DerivedSet)
     @undo_guard
@@ -130,3 +116,43 @@ class SanitizerService(Service):
             diagram = event.element
             for item in diagram.get_all_items():
                 diagram.request_update(item)
+
+
+def update_stereotype_application(stereotype: UML.Stereotype, seen=None):
+    # Seen is a (mutable) list to avoid infinite loops
+    if seen is None:
+        seen = {stereotype}
+
+    metaclass_names = {m.name for m in metaclasses(stereotype)}
+
+    for instance_spec in list(stereotype.instanceSpecification):
+        for e in list(instance_spec.extended):
+            names = {c.__name__ for c in type(e).__mro__ if issubclass(c, Element)}
+            if names.isdisjoint(metaclass_names):
+                del instance_spec.extended[e]
+        if not instance_spec.extended:
+            instance_spec.unlink()
+
+    for sub_stereotype in stereotype.specialization[:].specific:
+        if sub_stereotype not in seen:
+            seen.add(sub_stereotype)
+            update_stereotype_application(sub_stereotype, seen)
+
+
+def metaclasses(stereotype: UML.Stereotype, seen=None) -> Iterable[UML.Class]:
+    # Seen is a (mutable) list to avoid infinite loops
+    if seen is None:
+        seen = {stereotype}
+
+    extensions = (
+        e
+        for e in stereotype.ownedAttribute[:].association
+        if isinstance(e, UML.Extension)
+    )
+
+    yield from (e.metaclass for e in extensions if e.metaclass)
+
+    for super_stereotype in stereotype.generalization[:].general:
+        if super_stereotype not in seen:
+            seen.add(super_stereotype)
+            yield from metaclasses(super_stereotype, seen)

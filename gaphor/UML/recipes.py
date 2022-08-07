@@ -128,7 +128,13 @@ def get_stereotypes(element):
     # find stereotypes that extend element class
     classes = model.select(lambda e: e.isKindOf(Class) and e.name in names)
 
-    stereotypes = {ext.ownedEnd.type for cls in classes for ext in cls.extension}
+    stereotypes = list({ext.ownedEnd.type for cls in classes for ext in cls.extension})
+
+    for s in stereotypes:
+        for sub in s.specialization[:].specific:
+            if isinstance(sub, Stereotype) and sub not in stereotypes:
+                stereotypes.append(sub)
+
     # Lambda key sort issue in mypy: https://github.com/python/mypy/issues/9656
     return sorted(stereotypes, key=lambda st: st.name)  # type: ignore
 

@@ -134,6 +134,56 @@ def test_extension_deletion(element_factory, diagram):
     assert not klass.appliedStereotype
 
 
+def test_extension_with_generalization_delete_extension(element_factory):
+    create = element_factory.create
+    metaklass = create(UML.Class)
+    metaklass.name = "Class"
+    klass = create(UML.Class)
+    stereotype = create(UML.Stereotype)
+    ext = UML.recipes.create_extension(metaklass, stereotype)
+    substereotype = create(UML.Stereotype)
+    UML.recipes.create_generalization(stereotype, substereotype)
+    UML.recipes.apply_stereotype(klass, substereotype)
+
+    ext.unlink()
+
+    assert not klass.appliedStereotype
+
+
+def test_extension_with_generalization_retain_specific_sterotype(element_factory):
+    create = element_factory.create
+    metaklass = create(UML.Class)
+    metaklass.name = "Class"
+    klass = create(UML.Class)
+    stereotype = create(UML.Stereotype)
+    UML.recipes.create_extension(metaklass, stereotype)
+    ext = UML.recipes.create_extension(metaklass, stereotype)
+    substereotype = create(UML.Stereotype)
+    UML.recipes.create_generalization(stereotype, substereotype)
+    UML.recipes.create_generalization(substereotype, stereotype)
+    UML.recipes.apply_stereotype(klass, substereotype)
+
+    ext.unlink()
+
+    assert substereotype in klass.appliedStereotype[:].classifier
+
+
+def test_extension_with_generalization_delete_generalization(element_factory):
+    create = element_factory.create
+    metaklass = create(UML.Class)
+    metaklass.name = "Class"
+    klass = create(UML.Class)
+    stereotype = create(UML.Stereotype)
+    UML.recipes.create_extension(metaklass, stereotype)
+    substereotype = create(UML.Stereotype)
+    gen = UML.recipes.create_generalization(stereotype, substereotype)
+    UML.recipes.apply_stereotype(klass, substereotype)
+
+    gen.unlink()
+
+    assert not klass.appliedStereotype
+
+
 def test_extension_deletion_with_2_metaclasses(element_factory):
     create = element_factory.create
     metaklass = create(UML.Class)

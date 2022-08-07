@@ -65,10 +65,9 @@ def test_class(factory):
     assert (
         property1 in element.attribute
     ), f"Classifier.attribute does not contain ownedAttribute - {element.attribute}"
-    assert property1 in element.ownedMember, (
-        "Namespace.ownedMember does not contain ownedAttribute - %s"
-        % element.ownedMember
-    )
+    assert (
+        property1 in element.ownedMember
+    ), f"Namespace.ownedMember does not contain ownedAttribute - {element.ownedMember}"
 
     assert (
         operation1 in element.feature
@@ -100,10 +99,10 @@ def test_constraint(factory):
     element.constrainedElement = constrainedElement
     element.specification = "Constraint specification"
 
-    assert constrainedElement in element.constrainedElement, (
-        "Constraint.constrainedElement does not contain the correct element - %s"
-        % element.constrainedElement
-    )
+    assert (
+        constrainedElement in element.constrainedElement
+    ), f"Constraint.constrainedElement does not contain the correct element - {element.constrainedElement}"
+
     assert (
         element.specification == "Constraint specification"
     ), f"Constraint.specification is incorrect - {element.specification}"
@@ -294,14 +293,13 @@ def test_metaclass_extension(factory):
     s = factory.create(UML.Stereotype)
     s.name = "Stereotype"
 
-    assert [] == c.extension
-    assert [] == s.extension
+    assert not c.extension
+    assert not s.extension
 
     e = UML.recipes.create_extension(c, s)
 
-    print(e.memberEnd)
-    assert [e] == c.extension
-    assert [] == s.extension
+    assert e in c.extension
+    assert not s.extension
     assert e.ownedEnd.type is s
 
 
