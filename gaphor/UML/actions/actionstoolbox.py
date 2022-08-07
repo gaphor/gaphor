@@ -23,6 +23,11 @@ def activity_config(new_item, name=None):
         return
 
     diagram = new_item.diagram
+
+    if owner_activity := UML.recipes.owner_of_type(diagram, UML.Activity):
+        subject.activity = owner_activity
+        return
+
     package = owner_package(diagram.owner)
 
     activities = (

@@ -6,8 +6,10 @@ Functions collected in this module allow to
 - perform specific searches and manipulations
 """
 
+from __future__ import annotations
+
 import itertools
-from typing import Iterable, Optional, Sequence
+from typing import Iterable, Sequence, TypeVar
 
 from gaphor.UML.uml import (
     Association,
@@ -36,6 +38,8 @@ from gaphor.UML.uml import (
     Type,
     Usage,
 )
+
+T = TypeVar("T", bound=Element)
 
 
 def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
@@ -381,10 +385,14 @@ def clone_message(msg, inverted=False):
     return message
 
 
-def owner_package(element: Optional[Element]) -> Optional[Package]:
-    if element is None or isinstance(element, Package):
+def owner_of_type(element: Element | None, owner_type: type[T]) -> T | None:
+    if element is None or isinstance(element, owner_type):
         return element
-    return owner_package(element.owner)
+    return owner_of_type(element.owner, owner_type)
+
+
+def owner_package(element: Element | None) -> Package | None:
+    return owner_of_type(element, Package)
 
 
 def swap_element(element, new_class):
