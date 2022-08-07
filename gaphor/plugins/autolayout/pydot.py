@@ -26,7 +26,9 @@ class AutoLayout(Service, ActionProvider):
     def shutdown(self):
         pass
 
-    @action(name="auto-layout", label=gettext("Auto Layout"))
+    @action(
+        name="auto-layout", label=gettext("Auto Layout"), shortcut="<Primary><Shift>L"
+    )
     def layout_current_diagram(self):
         if current_diagram := self.diagrams.get_current_diagram():
             self.layout(current_diagram)
@@ -127,7 +129,9 @@ def _(presentation: LinePresentation):
     connections = presentation.diagram.connections
     head_element = connections.get_connection(presentation.head)
     tail_element = connections.get_connection(presentation.tail)
-    if head_element and tail_element:
+    if isinstance(head_element, ElementPresentation) and isinstance(
+        tail_element, ElementPresentation
+    ):
         return pydot.Edge(
             head_element.connected.id, tail_element.connected.id, id=presentation.id
         )
