@@ -69,7 +69,7 @@ class PseudostateTransitionConnect(
         if element.subject.kind != "initial":
             return super().allow(handle, port)
 
-        # Check if no other items are connected
+        # Allow only one outgoing transition in "initial" pseudostate objects
         connections = self.diagram.connections.get_connections(connected=element)
         line = self.line
         connected_items = [
@@ -80,4 +80,4 @@ class PseudostateTransitionConnect(
         if handle is line.head and not any(connected_items):
             return super().allow(handle, port)
         else:
-            return None
+            return False
