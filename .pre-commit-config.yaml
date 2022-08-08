@@ -11,7 +11,7 @@ repos:
     additional_dependencies:
     - types-docutils
 - repo: https://github.com/PyCQA/flake8
-  rev: 4.0.1
+  rev: 5.0.4
   hooks:
   - id: flake8
     additional_dependencies: [flake8-eradicate==1.2.0]
@@ -39,6 +39,6 @@ repos:
   - id: shellcheck
     args: [--exclude, SC1017]
 - repo: https://github.com/asottile/pyupgrade
-  rev: v2.37.2
+  rev: v2.37.3
   hooks:
   - id: pyupgrade
