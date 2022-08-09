@@ -58,26 +58,20 @@ class VertexTransitionConnect(TransactionConnectMixin, DirectionalRelationshipCo
 class PseudostateTransitionConnect(
     TransactionConnectMixin, DirectionalRelationshipConnect
 ):
-    """Connect pseudostate using transition item."""
-
     def allow(self, handle, port):
-        """Glue to initial pseudostate with transition's head and when there
-        are no transitions connected."""
         element = self.element
         assert isinstance(element.subject, UML.Pseudostate)
 
-        if element.subject.kind != "initial":
-            return super().allow(handle, port)
+        if element.subject.kind in "initial":
+            # Allow only one outgoing transition from "initial" pseudostate
+            connections = self.diagram.connections.get_connections(connected=element)
+            line = self.line
+            connected_items = [
+                c
+                for c in connections
+                if isinstance(c.item, TransitionItem) and c.item is not line
+            ]
+            if handle is line.tail or any(connected_items):
+                return False
 
-        # Allow only one outgoing transition in "initial" pseudostate objects
-        connections = self.diagram.connections.get_connections(connected=element)
-        line = self.line
-        connected_items = [
-            c
-            for c in connections
-            if isinstance(c.item, TransitionItem) and c.item is not line
-        ]
-        if handle is line.head and not any(connected_items):
-            return super().allow(handle, port)
-        else:
-            return False
+        return super().allow(handle, port)
