@@ -27,6 +27,7 @@ plug-in.
    linux
    macos
    windows
+   container
 
 .. toctree::
    :caption: Features
