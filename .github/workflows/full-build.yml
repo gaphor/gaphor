@@ -296,7 +296,6 @@ jobs:
         run: python -m pip install gvsbuild==${{ env.gvsbuild_version }}
       - name: GTK binaries run gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
-        working-directory: gvsbuild
         run: >
           gvsbuild build --enable-gi --py-wheel gobject-introspection gtk3 pycairo pygobject gtksourceview4
           adwaita-icon-theme hicolor-icon-theme
