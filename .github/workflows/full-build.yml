@@ -269,10 +269,9 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 60
     env:
-      # Git revision of gvsbuild we use for to build GTK and the other dependencies
-      gvsbuildref: fd7a2ac7a2fdd34cabaeb4fc638ea7faa22e5a3c
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
       gvsbuildupdate: 1
+      gvsbuild_version: 2022.2.0
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
@@ -284,13 +283,6 @@ jobs:
         with:
           path: C:\gtk-build\gtk\x64\release\**
           key: gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}
-      - name: GTK binaries checkout gvsbuild
-        if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/checkout@v3.0.2
-        with:
-          repository: wingtk/gvsbuild
-          ref: ${{ env.gvsbuildref }}
-          path: gvsbuild
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/setup-python@v4.2.0
@@ -301,8 +293,7 @@ jobs:
         run: move "C:\Program Files\Git\usr\bin" "C:\Program Files\Git\usr\notbin"
       - name: Install gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
-        working-directory: gvsbuild
-        run: python -m pip install .
+        run: python -m pip install gvsbuild==${{ env.gvsbuild_version }}
       - name: GTK binaries run gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
         working-directory: gvsbuild
@@ -317,7 +308,7 @@ jobs:
         run: move "C:\Program Files\Git\usr\notbin" "C:\Program Files\Git\usr\bin"
       - name: GTK binaries output cache key
         id: output
-        run: echo "::set-output name=cachekey::gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuildref }}"
+        run: echo "::set-output name=cachekey::gvsbuild-${{ env.gvsbuildupdate }}-${{ env.gvsbuild_version }}"
 
   windows:
     needs: [lint, windows-build-gtk]
