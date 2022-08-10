@@ -1,4 +1,4 @@
-MAKEFLAGS += -j4
+# MAKEFLAGS += -j4
 
 STENSIL=stensil.svg
 
@@ -48,6 +48,14 @@ ICONS=diagram \
 	activity \
 	state-machine \
 	region \
+	initial-junction-pseudostate \
+	shallow-history-pseudostate \
+	deep-history-pseudostate \
+	join-fork-pseudostate \
+	choice-pseudostate \
+	entry-point-pseudostate \
+	exit-point-pseudostate \
+	terminate-pseudostate \
 	object-node \
 	activity-partition \
 	control-flow \
@@ -61,8 +69,6 @@ ICONS=diagram \
 	reflexive-message \
 	interaction \
 	state \
-	initial-pseudostate \
-	pseudostate \
 	final-state \
 	transition \
 	use-case \
