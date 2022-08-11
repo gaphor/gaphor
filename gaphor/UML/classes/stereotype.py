@@ -5,6 +5,16 @@ from gaphor.core.styling import TextAlign, VerticalAlign
 from gaphor.diagram.shapes import Box, Text, draw_top_separator
 
 
+def stereotype_watches(presentation):
+    presentation.watch("subject.appliedStereotype", presentation.update_shapes).watch(
+        "subject.appliedStereotype.classifier.name"
+    ).watch("subject.appliedStereotype.slot", presentation.update_shapes).watch(
+        "subject.appliedStereotype.slot.definingFeature.name"
+    ).watch(
+        "subject.appliedStereotype.slot.value", presentation.update_shapes
+    )
+
+
 def stereotype_compartments(subject):
     return filter(
         None,
