@@ -67,14 +67,6 @@ def create(diagram, element_factory):
 
 
 @pytest.fixture
-def kindof(element_factory):
-    def _kindof(type):
-        return element_factory.lselect(type)
-
-    return _kindof
-
-
-@pytest.fixture
 def saver(element_factory):
     def save():
         """Save diagram into string."""
