@@ -310,9 +310,7 @@ def change_owner(new_parent, element):
     if element.owner:
         ungroup(element.owner, element)
 
-    group(new_parent, element)
-
-    return element.owner is new_parent
+    return group(new_parent, element)
 
 
 def sort_func(model, iter_a, iter_b, userdata):
