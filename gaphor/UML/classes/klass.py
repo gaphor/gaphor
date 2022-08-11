@@ -18,7 +18,7 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import Box, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
-from gaphor.UML.classes.stereotype import stereotype_compartments
+from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 
 log = logging.getLogger(__name__)
 
@@ -148,16 +148,6 @@ def operation_watches(presentation, cast):
         f"subject[{cast}].ownedOperation.ownedParameter.typeValue"
     ).watch(
         f"subject[{cast}].ownedOperation.ownedParameter.defaultValue"
-    )
-
-
-def stereotype_watches(presentation):
-    presentation.watch("subject.appliedStereotype", presentation.update_shapes).watch(
-        "subject.appliedStereotype.classifier.name"
-    ).watch("subject.appliedStereotype.slot", presentation.update_shapes).watch(
-        "subject.appliedStereotype.slot.definingFeature.name"
-    ).watch(
-        "subject.appliedStereotype.slot.value", presentation.update_shapes
     )
 
 

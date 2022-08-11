@@ -17,11 +17,8 @@ from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
 from gaphor.SysML.sysml import Block, ValueType
-from gaphor.UML.classes.klass import (
-    attribute_watches,
-    stereotype_compartments,
-    stereotype_watches,
-)
+from gaphor.UML.classes.klass import attribute_watches
+from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_property
 
