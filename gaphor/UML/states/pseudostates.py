@@ -77,12 +77,16 @@ def draw_deep_history_pseudostate(box, context, bounding_box):
     _circle(context)
 
     cr = context.cairo
-    cr.move_to(12, 10)
-    cr.line_to(12, 20)
-    cr.move_to(18, 10)
-    cr.line_to(18, 20)
-    cr.move_to(12, 15)
-    cr.line_to(18, 15)
+    cr.move_to(9, 10)
+    cr.line_to(9, 20)
+    cr.move_to(15, 10)
+    cr.line_to(15, 20)
+    cr.move_to(9, 15)
+    cr.line_to(15, 15)
+
+    for p in [(21, 9), (25, 12), (18.5, 17), (23.5, 17), (17, 12)]:
+        cr.move_to(21, 13)
+        cr.line_to(*p)
     stroke(context, fill=False)
 
 
