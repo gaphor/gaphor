@@ -327,6 +327,4 @@ def sort_func(model, iter_a, iter_b, userdata):
     b = (format(vb) or "").lower()
     if a == b:
         return 0
-    if a > b:
-        return 1
-    return -1
+    return 1 if a > b else -1
