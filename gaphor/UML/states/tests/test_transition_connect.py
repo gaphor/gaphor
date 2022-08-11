@@ -80,7 +80,7 @@ def test_vertex_disconnect(create, kindof):
     assert t.subject is None
 
 
-def test_state_connect_to_same_item(create, kindof):
+def test_state_connect_to_same_item(create):
     """Test transition to state vertex connection."""
     v1 = create(StateItem, UML.State)
     t = create(TransitionItem)
@@ -105,19 +105,8 @@ def test_initial_pseudostate_connect(create, kindof):
     assert t.subject is not None
 
     assert len(kindof(UML.Transition)) == 1
-
-    # test preconditions
     assert t.subject == v1.subject.outgoing[0]
     assert t.subject == v2.subject.incoming[0]
-
-    # we should not be able to connect two transitions to initial
-    # pseudostate
-    t2 = create(TransitionItem)
-    # connection to `t2` should not be possible as v1 is already connected
-    # to `t`
-    glued = allow(t2, t2.head, v1)
-    assert not glued
-    assert get_connected(t2, t2.head) is None
 
 
 def test_initial_pseudostate_disconnect(create):
@@ -135,18 +124,6 @@ def test_initial_pseudostate_disconnect(create):
     # perform the test
     disconnect(t, t.head)
     assert not get_connected(t, t.head)
-
-
-def test_initial_pseudostate_tail_glue(create):
-    """Test transition tail and initial pseudostate gluing."""
-
-    v1 = create(PseudostateItem, UML.Pseudostate)
-    t = create(TransitionItem)
-    assert t.subject is None
-
-    # no tail connection should be possible
-    glued = allow(t, t.tail, v1)
-    assert not glued
 
 
 def test_final_state_connect(create, kindof):
