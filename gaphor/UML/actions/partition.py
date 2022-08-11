@@ -1,6 +1,7 @@
 """Activity Partition item."""
 
 from gaphas.geometry import Rectangle
+from gaphas.item import NW, SE
 
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
@@ -19,7 +20,7 @@ class PartitionItem(ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
         self.min_height = 300
-
+        self._loading = False
         self.shape = Box(
             style={
                 "line-width": 2.4,
@@ -33,15 +34,46 @@ class PartitionItem(ElementPresentation):
         self.watch("partition", self.update_partition)
         self.watch("partition.name")
         self.watch("partition[ActivityPartition].represents[NamedElement].name")
+        self.handles()[NW].pos.add_handler(self.update_width)
+        self.handles()[SE].pos.add_handler(self.update_width)
+
+    def update_width(self, pos, oldpos) -> None:
+        if self._loading:
+            return
+
+        if pos is self.handles()[SE].pos:
+            x_w = self.handles()[NW].pos.x
+            old_width = oldpos[0] - x_w
+            new_width = pos.x - x_w
+            left = x_w
+            offset = 0
+        else:
+            x_e = self.handles()[SE].pos.x
+            old_width = x_e - oldpos[0]
+            new_width = x_e - pos.x
+            left = oldpos[0]
+            offset = pos.x - oldpos[0]
+
+        if new_width < 1e-6:
+            return
+        factor = 1 - old_width / new_width
+        for child in self.children:
+            x = child.matrix[4]
+            child.matrix.set(x0=x + offset + (x - left) * factor)
 
     partition = association("partition", UML.ActivityPartition, composite=True)
+
+    def load(self, name, value):
+        self._loading = True
+        return super().load(name, value)
 
     def postload(self):
         super().postload()
         if self.subject and self.subject not in self.partition:
             self.partition = self.subject
+        self._loading = False
 
-    def update_partition(self, context: DrawContext) -> None:
+    def update_partition(self, event) -> None:
         """Set the min width of all the swimlanes."""
         self.min_width = 150 * len(self.partition)
         self.request_update()
