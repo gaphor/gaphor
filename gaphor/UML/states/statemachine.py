@@ -15,6 +15,7 @@ class StateMachineItem(Classified, ElementPresentation):
 
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("subject[NamedElement].name")
+        self.watch("children", self.update_shapes)
         stereotype_watches(self)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
