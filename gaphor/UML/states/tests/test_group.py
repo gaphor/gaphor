@@ -29,6 +29,15 @@ def test_state_in_region(element_factory):
     assert s.container is region
 
 
+def test_state_in_state(element_factory):
+    s = element_factory.create(UML.State)
+    parent = element_factory.create(UML.State)
+
+    group(parent, s)
+
+    assert s.container in parent.region
+
+
 def test_ungroup_state_in_state_machine(element_factory):
     s = element_factory.create(UML.State)
     sm = element_factory.create(UML.StateMachine)
@@ -59,3 +68,14 @@ def test_ungroup_state_in_region(element_factory):
     ungroup(region, s)
 
     assert not s.container
+
+
+def test_ungroup_state_in_state(element_factory):
+    s = element_factory.create(UML.State)
+    parent = element_factory.create(UML.State)
+
+    group(parent, s)
+    ungroup(parent, s)
+
+    assert not s.container
+    assert parent.region
