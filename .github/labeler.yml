@@ -1,0 +1,16 @@
+packaging:
+  - _packaging/**/*
+translation:
+  - po/*
+dependencies:
+  - poetry.lock
+documentation:
+  - docs/**/*
+  - '*.md'
+chore:
+  - .github/**/*
+  - .flake8
+  - mypy.ini
+  - pyproject.toml
+python:
+  - '*.py'
