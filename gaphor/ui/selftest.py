@@ -47,7 +47,7 @@ class SelfTest(Service):
         pass
 
     def init(self, gtk_app):
-        self.init_timer(gtk_app, timeout=10)
+        self.init_timer(gtk_app, timeout=20)
         self.test_library_versions()
         self.test_new_session()
 
