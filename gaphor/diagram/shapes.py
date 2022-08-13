@@ -154,6 +154,29 @@ class Box:
             y += h
 
 
+class BoundedBox(Box):
+    """A Box.
+
+    It keeps track of the latest bounding box used for drawing.
+    """
+
+    def __init__(
+        self,
+        *children,
+        style: Style = {},
+        draw: Callable[[Box, DrawContext, Rectangle], None] | None = None,
+    ):
+        super().__init__(*children, style=style, draw=draw)
+        self.bounding_box = Rectangle()
+
+    def draw(self, context: DrawContext, bounding_box: Rectangle):
+        self.bounding_box = bounding_box
+        return super().draw(context, bounding_box)
+
+    def __contains__(self, pos_or_rect):
+        return pos_or_rect in self.bounding_box
+
+
 class IconBox:
     """A special type of box: the icon element is given the full width/height
     and all other shapes are drawn below the main icon shape.
