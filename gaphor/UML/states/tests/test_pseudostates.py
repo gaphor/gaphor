@@ -1,5 +1,7 @@
+import pytest
+
 from gaphor import UML
-from gaphor.UML.states.pseudostates import PseudostateItem
+from gaphor.UML.states.pseudostates import PSEUDOSTATE_SHAPE, PseudostateItem
 
 
 def test_initial_pseudostate(create):
@@ -13,3 +15,8 @@ def test_history_pseudostate(create):
     # history setting is done in the DiagramToolbox factory:
     item.subject.kind = "shallowHistory"
     assert "shallowHistory" == item.subject.kind
+
+
+@pytest.mark.parametrize("kind", UML.Pseudostate.kind.values)
+def test_all_pseudostates_are_supported(kind):
+    assert kind in PSEUDOSTATE_SHAPE

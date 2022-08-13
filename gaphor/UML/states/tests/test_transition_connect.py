@@ -1,4 +1,5 @@
 """Test transition item and state vertices connections."""
+import pytest
 
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect, get_connected
@@ -8,7 +9,12 @@ from gaphor.UML.states.state import StateItem
 from gaphor.UML.states.transition import TransitionItem
 
 
-def test_vertex_connect(create, kindof):
+@pytest.fixture
+def select(element_factory):
+    return element_factory.lselect
+
+
+def test_vertex_connect(create, select):
     v1 = create(StateItem, UML.State)
     v2 = create(StateItem, UML.State)
 
@@ -20,7 +26,7 @@ def test_vertex_connect(create, kindof):
 
     assert t.subject is not None
 
-    assert len(kindof(UML.Transition)) == 1
+    assert len(select(UML.Transition)) == 1
 
     assert t.subject == v1.subject.outgoing[0]
     assert t.subject == v2.subject.incoming[0]
@@ -28,7 +34,7 @@ def test_vertex_connect(create, kindof):
     assert t.subject.target == v2.subject
 
 
-def test_vertex_reconnect(create, kindof):
+def test_vertex_reconnect(create, select):
     v1 = create(StateItem, UML.State)
     v2 = create(StateItem, UML.State)
     v3 = create(StateItem, UML.State)
@@ -47,7 +53,7 @@ def test_vertex_reconnect(create, kindof):
     connect(t, t.tail, v3)
 
     assert s is not t.subject
-    assert len(kindof(UML.Transition)) == 1
+    assert len(select(UML.Transition)) == 1
 
     assert t.subject == v1.subject.outgoing[0]
     assert t.subject == v3.subject.incoming[0]
@@ -58,7 +64,7 @@ def test_vertex_reconnect(create, kindof):
     assert len(v2.subject.outgoing) == 0
 
 
-def test_vertex_disconnect(create, kindof):
+def test_vertex_disconnect(create, select):
     t = create(TransitionItem)
     v1 = create(StateItem, UML.State)
     v2 = create(StateItem, UML.State)
@@ -67,7 +73,7 @@ def test_vertex_disconnect(create, kindof):
     connect(t, t.tail, v2)
     assert t.subject is not None
 
-    assert len(kindof(UML.Transition)) == 1
+    assert len(select(UML.Transition)) == 1
 
     # test preconditions
     assert t.subject == v1.subject.outgoing[0]
@@ -80,7 +86,7 @@ def test_vertex_disconnect(create, kindof):
     assert t.subject is None
 
 
-def test_state_connect_to_same_item(create, kindof):
+def test_state_connect_to_same_item(create):
     """Test transition to state vertex connection."""
     v1 = create(StateItem, UML.State)
     t = create(TransitionItem)
@@ -90,7 +96,7 @@ def test_state_connect_to_same_item(create, kindof):
     assert allow(t, t.tail, v1)
 
 
-def test_initial_pseudostate_connect(create, kindof):
+def test_initial_pseudostate_connect(create, select):
     v1 = create(PseudostateItem, UML.Pseudostate)
     v2 = create(StateItem, UML.State)
 
@@ -104,20 +110,9 @@ def test_initial_pseudostate_connect(create, kindof):
     connect(t, t.tail, v2)
     assert t.subject is not None
 
-    assert len(kindof(UML.Transition)) == 1
-
-    # test preconditions
+    assert len(select(UML.Transition)) == 1
     assert t.subject == v1.subject.outgoing[0]
     assert t.subject == v2.subject.incoming[0]
-
-    # we should not be able to connect two transitions to initial
-    # pseudostate
-    t2 = create(TransitionItem)
-    # connection to `t2` should not be possible as v1 is already connected
-    # to `t`
-    glued = allow(t2, t2.head, v1)
-    assert not glued
-    assert get_connected(t2, t2.head) is None
 
 
 def test_initial_pseudostate_disconnect(create):
@@ -137,19 +132,7 @@ def test_initial_pseudostate_disconnect(create):
     assert not get_connected(t, t.head)
 
 
-def test_initial_pseudostate_tail_glue(create):
-    """Test transition tail and initial pseudostate gluing."""
-
-    v1 = create(PseudostateItem, UML.Pseudostate)
-    t = create(TransitionItem)
-    assert t.subject is None
-
-    # no tail connection should be possible
-    glued = allow(t, t.tail, v1)
-    assert not glued
-
-
-def test_final_state_connect(create, kindof):
+def test_final_state_connect(create, select):
     """Test transition to final state connection."""
     v1 = create(StateItem, UML.State)
     v2 = create(FinalStateItem, UML.FinalState)
@@ -165,7 +148,7 @@ def test_final_state_connect(create, kindof):
     connect(t, t.tail, v2)
     assert t.subject is not None
 
-    assert len(kindof(UML.Transition)) == 1
+    assert len(select(UML.Transition)) == 1
 
     assert t.subject == v1.subject.outgoing[0]
     assert t.subject == v2.subject.incoming[0]

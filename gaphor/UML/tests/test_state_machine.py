@@ -6,9 +6,17 @@ from gaphor.UML.toolbox import uml_toolbox_actions
 
 state_node_names = [
     "state",
-    "initial-pseudostate",
     "final-state",
-    "history-pseudostate",
+    "initial-pseudostate",
+    "shallow-history-pseudostate",
+    "deep-history-pseudostate",
+    "join-pseudostate",
+    "fork-pseudostate",
+    "junction-pseudostate",
+    "choice-pseudostate",
+    "entry-point-pseudostate",
+    "exit-point-pseudostate",
+    "terminate-pseudostate",
 ]
 
 
