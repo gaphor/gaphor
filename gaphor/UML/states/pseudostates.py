@@ -43,7 +43,7 @@ class PseudostateItem(ElementPresentation, Named):
 
     def update_shapes(self, event=None):
         kind = self.subject.kind if self.subject and self.subject.kind else "initial"
-        draw, width, height = PSEUSOSTATE_SHAPE[kind]
+        draw, width, height = PSEUDOSTATE_SHAPE[kind]
         self.handles()[SE].pos = (width, height)
 
         self.shape = IconBox(
@@ -147,7 +147,7 @@ def draw_terminate_pseudostate(box, context, bounding_box):
     stroke(context, fill=False)
 
 
-PSEUSOSTATE_SHAPE = {
+PSEUDOSTATE_SHAPE = {
     "initial": (draw_initial_or_junction_pseudostate, 20, 20),
     "deepHistory": (draw_deep_history_pseudostate, 30, 30),
     "shallowHistory": (draw_shallow_history_pseudostate, 30, 30),

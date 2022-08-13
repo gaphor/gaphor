@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor import UML
-from gaphor.UML.states.pseudostates import PSEUSOSTATE_SHAPE, PseudostateItem
+from gaphor.UML.states.pseudostates import PSEUDOSTATE_SHAPE, PseudostateItem
 
 
 def test_initial_pseudostate(create):
@@ -19,4 +19,4 @@ def test_history_pseudostate(create):
 
 @pytest.mark.parametrize("kind", UML.Pseudostate.kind.values)
 def test_all_pseudostates_are_supported(kind):
-    assert kind in PSEUSOSTATE_SHAPE
+    assert kind in PSEUDOSTATE_SHAPE
