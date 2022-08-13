@@ -277,9 +277,6 @@ class UndoManager(Service, ActionProvider):
     #
 
     def _register_undo_handlers(self):
-
-        logger.debug("Registering undo handlers")
-
         self.event_manager.subscribe(self.undo_reversible_event)
         self.event_manager.subscribe(self.undo_create_element_event)
         self.event_manager.subscribe(self.undo_delete_element_event)
@@ -289,9 +286,6 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.subscribe(self.undo_association_delete_event)
 
     def _unregister_undo_handlers(self):
-
-        logger.debug("Unregistering undo handlers")
-
         self.event_manager.unsubscribe(self.undo_reversible_event)
         self.event_manager.unsubscribe(self.undo_create_element_event)
         self.event_manager.unsubscribe(self.undo_delete_element_event)

@@ -193,7 +193,7 @@ class Session(Service):
         )
 
         for name, srv in services_by_name.items():
-            logger.info(f"Initializing service {name}")
+            logger.debug("Initializing service %s", name)
             self.component_registry.register(name, srv)
             self.event_manager.handle(ServiceInitializedEvent(name, srv))
 

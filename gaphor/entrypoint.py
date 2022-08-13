@@ -52,17 +52,19 @@ def init_entry_points(
 
     def init(name, cls):
         kwargs = {}
-        for dep in inspect.signature(cls).parameters:
-            if dep not in ready:
-                depcls = pop(dep)
+        for param_name, param in inspect.signature(cls).parameters.items():
+            if param_name not in ready:
+                depcls = pop(param_name)
                 if depcls:
-                    kwargs[dep] = init(dep, depcls)
-                else:
-                    logger.debug(
-                        f"Entrypont {name} parameter {dep} does not reference a resolved dependency"
+                    kwargs[param_name] = init(param_name, depcls)
+                elif param.default is inspect.Parameter.empty:
+                    logger.warn(
+                        "Entrypoint %s parameter %s does not reference a resolved dependency",
+                        name,
+                        param_name,
                     )
             else:
-                kwargs[dep] = ready[dep]
+                kwargs[param_name] = ready[param_name]
         srv = cls(**kwargs)
         ready[name] = srv
         return srv
