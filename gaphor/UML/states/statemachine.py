@@ -1,9 +1,13 @@
+from typing import Iterable
+
+from gaphas.geometry import Rectangle
+
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import FontWeight, TextAlign, VerticalAlign
 from gaphor.diagram.presentation import Classified, ElementPresentation
-from gaphor.diagram.shapes import Box, Text, draw_border, draw_top_separator
+from gaphor.diagram.shapes import BoundedBox, Box, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 
@@ -12,19 +16,26 @@ from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_wa
 class StateMachineItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
-
+        self._region_boxes = []
         self.watch("show_stereotypes", self.update_shapes)
         self.watch("show_regions", self.update_shapes)
         self.watch("subject[NamedElement].name")
         self.watch("subject[StateMachine].region.name")
         self.watch("subject[StateMachine].region", self.update_shapes)
-        self.watch("children", self.update_shapes)
         stereotype_watches(self)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
     show_regions: attribute[int] = attribute("show_regions", int, default=True)
 
+    @property
+    def regions(self) -> Iterable[tuple[UML.Region, Rectangle]]:
+        if self.subject:
+            yield from zip(self.subject.region, self._region_boxes)
+
     def update_shapes(self, event=None):
+        self._region_boxes = (
+            list(region_compartment(self.subject)) if self.show_regions else []
+        )
         self.shape = Box(
             Box(
                 Text(
@@ -39,7 +50,7 @@ class StateMachineItem(Classified, ElementPresentation):
                 style={"padding": (4, 4, 4, 4)},
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
-            *(self.show_regions and region_compartment(self.subject) or []),
+            *(self._region_boxes),
             style={
                 "vertical-align": VerticalAlign.TOP
                 if (self.diagram and self.children) or self.show_regions
@@ -58,7 +69,7 @@ def region_compartment(subject):
 
 
 def _create_region_compartment(region, index):
-    return Box(
+    return BoundedBox(
         Text(
             text=lambda: region.name or "",
             style={"text-align": TextAlign.LEFT},

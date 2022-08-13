@@ -27,6 +27,7 @@ def test_state_in_region(element_factory):
     group(region, s)
 
     assert s.container is region
+    assert s in region.subvertex
 
 
 def test_state_in_state(element_factory):
