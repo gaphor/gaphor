@@ -1,7 +1,7 @@
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontWeight, VerticalAlign
+from gaphor.core.styling import FontWeight, TextAlign, VerticalAlign
 from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
@@ -14,7 +14,10 @@ class StateMachineItem(Classified, ElementPresentation):
         super().__init__(diagram, id)
 
         self.watch("show_stereotypes", self.update_shapes)
+        self.watch("show_regions", self.update_shapes)
         self.watch("subject[NamedElement].name")
+        self.watch("subject[StateMachine].region.name")
+        self.watch("subject[StateMachine].region", self.update_shapes)
         self.watch("children", self.update_shapes)
         stereotype_watches(self)
 
@@ -51,7 +54,20 @@ def region_compartment(subject):
         return
 
     for index, region in enumerate(subject.region):
-        yield Box(
-            style={"min-height": 100, "dash-style": (7, 3)},
-            draw=draw_top_separator if index > 0 else None,
-        )
+        yield _create_region_compartment(region, index)
+
+
+def _create_region_compartment(region, index):
+    return Box(
+        Text(
+            text=lambda: region.name or "",
+            style={"text-align": TextAlign.LEFT},
+        ),
+        style={
+            "padding": (4, 4, 4, 4),
+            "min-height": 100,
+            "vertical-align": VerticalAlign.TOP,
+            "dash-style": (7, 3) if index > 0 else (),
+        },
+        draw=draw_top_separator,
+    )
