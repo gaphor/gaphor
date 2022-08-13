@@ -2,11 +2,12 @@ import logging
 import sys
 import time
 
+import cairo
 import gi
-from gi.repository import GLib, Gtk
+from gi.repository import GLib, Gtk, Pango
 
 from gaphor.abc import Service
-from gaphor.application import Application
+from gaphor.application import Application, distribution
 
 log = logging.getLogger(__name__)
 
@@ -74,6 +75,7 @@ class SelfTest(Service):
 
     @test
     def test_library_versions(self, status):
+        log.info("Gaphor version:    %s", distribution().version)
         log.info("Python version:    %s", sys.version)
         log.info(
             "GTK version:       %d.%d.%d",
@@ -82,6 +84,9 @@ class SelfTest(Service):
             Gtk.get_micro_version(),
         )
         log.info("PyGObject version: %d.%d.%d", *gi.version_info)
+        log.info("Pycairo version:   %s", cairo.version)
+        log.info("Cairo version:     %s", cairo.cairo_version_string())
+        log.info("Pango version:     %s", Pango.version_string())
         status.complete()
 
     @test
