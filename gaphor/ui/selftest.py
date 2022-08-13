@@ -56,7 +56,11 @@ class SelfTest(Service):
 
         def callback():
             if all(status.completed for status in self.statuses):
-                log.info("All tests have been completed: %s", self.statuses)
+                log.info(
+                    "All tests have been completed in %.1fs %s",
+                    time.time() - start,
+                    self.statuses,
+                )
                 gtk_app.quit()
                 return GLib.SOURCE_REMOVE
             elif time.time() > start + timeout:
