@@ -135,14 +135,13 @@ class Box:
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         sizes = self.sizes
 
-        stretch_content = (
-            style.get("justify-content", JustifyContent.START) == JustifyContent.STRETCH
-        )
-        if stretch_content:
+        justify_content = style.get("justify-content", JustifyContent.START)
+        if justify_content is JustifyContent.STRETCH:
             height = bounding_box.height
             avg_height = height / len(sizes)
             oversized = [h for _w, h in sizes if h > avg_height]
-            avg_height = (height - sum(oversized)) / (len(sizes) - len(oversized))
+            d = len(sizes) - len(oversized)
+            avg_height = (height - sum(oversized)) / d if d > 0 else 0
         else:
             height = sum(h for _w, h in sizes)
             avg_height = 0
@@ -164,11 +163,15 @@ class Box:
 
         x = bounding_box.x + padding_left
         w = bounding_box.width - padding_right - padding_left
-        for c, (_w, h) in zip(self.children, sizes):
-            if h < avg_height:
-                h = avg_height
-            c.draw(context, Rectangle(x, y, w, h))
-            y += h
+        if self.children:
+            last_child = self.children[-1]
+            for c, (_w, h) in zip(self.children, sizes):
+                if c is last_child and valign is VerticalAlign.TOP:
+                    h = bounding_box.height - y
+                elif h < avg_height:
+                    h = avg_height
+                c.draw(context, Rectangle(x, y, w, h))
+                y += h
 
 
 class BoundedBox(Box):
