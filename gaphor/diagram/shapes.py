@@ -8,6 +8,7 @@ from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling import DrawContext, UpdateContext
 from gaphor.core.styling import Style, TextAlign, VerticalAlign, merge_styles
+from gaphor.core.styling.properties import JustifyContent
 from gaphor.diagram.text import Layout
 
 
@@ -132,12 +133,21 @@ class Box:
         style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        valign = style.get("vertical-align", VerticalAlign.MIDDLE)
-        height = sum(h for _w, h in self.sizes)
+        sizes = self.sizes
 
-        if self._draw_border:
-            self._draw_border(self, new_context, bounding_box)
-        x = bounding_box.x + padding_left
+        stretch_content = (
+            style.get("justify-content", JustifyContent.START) == JustifyContent.STRETCH
+        )
+        if stretch_content:
+            height = bounding_box.height
+            avg_height = height / len(sizes)
+            oversized = [h for _w, h in sizes if h > avg_height]
+            avg_height = (height - sum(oversized)) / (len(sizes) - len(oversized))
+        else:
+            height = sum(h for _w, h in sizes)
+            avg_height = 0
+
+        valign = style.get("vertical-align", VerticalAlign.MIDDLE)
         if valign is VerticalAlign.MIDDLE:
             y = (
                 bounding_box.y
@@ -148,8 +158,15 @@ class Box:
             y = bounding_box.y + bounding_box.height - height - padding_bottom
         else:
             y = bounding_box.y + padding_top
+
+        if self._draw_border:
+            self._draw_border(self, new_context, bounding_box)
+
+        x = bounding_box.x + padding_left
         w = bounding_box.width - padding_right - padding_left
-        for c, (_w, h) in zip(self.children, self.sizes):
+        for c, (_w, h) in zip(self.children, sizes):
+            if h < avg_height:
+                h = avg_height
             c.draw(context, Rectangle(x, y, w, h))
             y += h
 
