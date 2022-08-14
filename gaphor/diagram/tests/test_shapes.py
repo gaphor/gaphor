@@ -65,6 +65,25 @@ def test_draw_box_with_custom_draw_function(context):
     assert called
 
 
+def test_draw_last_box_with_all_remaining_space(context):
+    bounding_boxes = []
+
+    def draw(_box, _context, bounding_box):
+        bounding_boxes.append(bounding_box)
+
+    box = Box(
+        Box(style={"min-height": 80}, draw=draw),
+        Box(draw=draw),
+        style={"vertical-align": VerticalAlign.TOP},
+    )
+
+    box.size(context=context)
+    box.draw(context=context, bounding_box=Rectangle(0, 0, 100, 120))
+
+    assert bounding_boxes[0].height == 80
+    assert bounding_boxes[1].height == 40
+
+
 def test_draw_box_with_stretched_content(context):
     bounding_boxes = []
 
