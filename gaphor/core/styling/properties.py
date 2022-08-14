@@ -19,6 +19,11 @@ class VerticalAlign(Enum):
     BOTTOM = "bottom"
 
 
+class JustifyContent(Enum):
+    START = "start"
+    STRETCH = "stretch"
+
+
 class FontStyle(Enum):
     NORMAL = "normal"
     ITALIC = "italic"
@@ -48,6 +53,7 @@ Style = TypedDict(
         "font-size": Union[int, float, str],
         "font-style": FontStyle,
         "font-weight": FontWeight,
+        "justify-content": JustifyContent,
         "line-style": Number,
         "line-width": Number,
         "min-width": Number,
