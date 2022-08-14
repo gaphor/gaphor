@@ -1,9 +1,10 @@
-from typing import Iterable
+from __future__ import annotations
 
-from gaphas.geometry import Rectangle
+from gaphas.types import Pos
 
 from gaphor import UML
 from gaphor.core import gettext
+from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import FontWeight, TextAlign, VerticalAlign
 from gaphor.core.styling.properties import JustifyContent
@@ -14,7 +15,7 @@ from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_wa
 
 
 @represents(UML.StateMachine)
-class StateMachineItem(Classified, ElementPresentation):
+class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
         self._region_boxes = []
@@ -27,11 +28,6 @@ class StateMachineItem(Classified, ElementPresentation):
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
     show_regions: attribute[int] = attribute("show_regions", int, default=True)
-
-    @property
-    def regions(self) -> Iterable[tuple[UML.Region, Rectangle]]:
-        if self.subject:
-            yield from zip(self.subject.region, self._region_boxes)
 
     def update_shapes(self, event=None):
         self._region_boxes = (
@@ -62,6 +58,13 @@ class StateMachineItem(Classified, ElementPresentation):
             },
             draw=draw_border,
         )
+
+    def subject_at_point(self, pos: Pos) -> Element | None:
+        region: UML.Region
+        for region, bounds in zip(self.subject.region, self._region_boxes):
+            if pos in bounds:
+                return region
+        return self.subject
 
 
 def region_compartment(subject):
