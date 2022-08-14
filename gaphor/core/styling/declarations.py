@@ -6,6 +6,7 @@ from tinycss2.parser import parse_declaration_list
 from gaphor.core.styling.properties import (
     FontStyle,
     FontWeight,
+    JustifyContent,
     Number,
     Padding,
     TextAlign,
@@ -174,6 +175,7 @@ def parse_sequence_numbers(
 enum_styles: Dict[str, Dict[str, object]] = {
     "font-style": {e.value: e for e in FontStyle},
     "font-weight": {e.value: e for e in FontWeight},
+    "justify-content": {e.value: e for e in JustifyContent},
     "text-decoration": {e.value: e for e in TextDecoration},
     "text-align": {e.value: e for e in TextAlign},
     "vertical-align": {e.value: e for e in VerticalAlign},
