@@ -26,24 +26,24 @@ class RegionDropZoneMoveMixin(DropZoneMoveMixin):
         old_parent = item.parent
 
         try:
+            if not item.subject:
+                return
+
+            item_pos = view.get_matrix_v2i(new_parent).transform_point(*pos)
+            target_subject = new_parent.subject_at_point(item_pos)
+
+            if target_subject is item.subject.container:
+                return
 
             if old_parent and ungroup(old_parent.subject, item.subject):
                 item.change_parent(None)
                 old_parent.request_update()
 
-            if new_parent and item.subject:
-                item_pos = view.get_matrix_v2i(new_parent).transform_point(*pos)
-                for region, bounds in new_parent.regions:
-                    if item_pos in bounds:
-                        break
-                if region:
-                    target_subject = region
-                else:
-                    target_subject = new_parent.subject
-
-                if group(target_subject, item.subject):
-                    grow_parent(new_parent, item)
-                    item.change_parent(new_parent)
+            item_pos = view.get_matrix_v2i(new_parent).transform_point(*pos)
+            target_subject = new_parent.subject_at_point(item_pos)
+            if group(target_subject, item.subject):
+                grow_parent(new_parent, item)
+                item.change_parent(new_parent)
         finally:
             view.selection.dropzone_item = None
 
