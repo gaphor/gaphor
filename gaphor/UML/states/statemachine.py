@@ -61,10 +61,14 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
 
     def subject_at_point(self, pos: Pos) -> Element | None:
         region: UML.Region
-        for region, bounds in zip(self.subject.region, self._region_boxes):
-            if pos in bounds:
-                return region
-        return self.subject
+        return next(
+            (
+                region
+                for region, bounds in zip(self.subject.region, self._region_boxes)
+                if pos in bounds
+            ),
+            self.subject,
+        )
 
 
 def region_compartment(subject):
