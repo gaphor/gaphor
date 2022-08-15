@@ -104,26 +104,22 @@ class DropZoneMoveMixin:
         view = self.view
         old_parent = item.parent
         new_parent = view.selection.dropzone_item
-        try:
 
-            if new_parent is old_parent:
-                if old_parent is not None:
-                    old_parent.request_update()
-                return
-
-            if old_parent and ungroup(old_parent.subject, item.subject):
-                item.change_parent(None)
+        if new_parent is old_parent:
+            if old_parent is not None:
                 old_parent.request_update()
+            return
 
-            if new_parent and item.subject and group(new_parent.subject, item.subject):
-                grow_parent(new_parent, item)
-                item.change_parent(new_parent)
-            elif item.subject:
-                diagram_parent = owner_package(item.diagram)
-                group(diagram_parent, item.subject)
+        if old_parent and ungroup(old_parent.subject, item.subject):
+            item.change_parent(None)
+            old_parent.request_update()
 
-        finally:
-            view.selection.dropzone_item = None
+        if new_parent and item.subject and group(new_parent.subject, item.subject):
+            grow_parent(new_parent, item)
+            item.change_parent(new_parent)
+        elif item.subject:
+            diagram_parent = owner_package(item.diagram)
+            group(diagram_parent, item.subject)
 
 
 @MoveAspect.register(ElementPresentation)

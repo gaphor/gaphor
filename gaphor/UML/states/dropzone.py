@@ -26,27 +26,24 @@ class RegionDropZoneMoveMixin(DropZoneMoveMixin):
         item = self.item
         old_parent = item.parent
 
-        try:
-            if not item.subject:
-                return
+        if not item.subject:
+            return
 
-            item_pos = view.get_matrix_v2i(new_parent).transform_point(*pos)
-            target_subject = new_parent.subject_at_point(item_pos)
+        item_pos = view.get_matrix_v2i(new_parent).transform_point(*pos)
+        target_subject = new_parent.subject_at_point(item_pos)
 
-            if target_subject is item.subject.container:
-                return
+        if target_subject is item.subject.container:
+            return
 
-            if old_parent and ungroup(old_parent.subject, item.subject):
-                item.change_parent(None)
-                old_parent.request_update()
+        if old_parent and ungroup(old_parent.subject, item.subject):
+            item.change_parent(None)
+            old_parent.request_update()
 
-            item_pos = view.get_matrix_v2i(new_parent).transform_point(*pos)
-            target_subject = new_parent.subject_at_point(item_pos)
-            if group(target_subject, item.subject):
-                grow_parent(new_parent, item)
-                item.change_parent(new_parent)
-        finally:
-            view.selection.dropzone_item = None
+        item_pos = view.get_matrix_v2i(new_parent).transform_point(*pos)
+        target_subject = new_parent.subject_at_point(item_pos)
+        if group(target_subject, item.subject):
+            grow_parent(new_parent, item)
+            item.change_parent(new_parent)
 
 
 @MoveAspect.register(StateItem)
