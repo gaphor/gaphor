@@ -1,11 +1,5 @@
 """Tools for handling items on a diagram."""
-from gaphas.tool import (
-    hover_tool,
-    item_tool,
-    rubberband_tool,
-    view_focus_tool,
-    zoom_tool,
-)
+from gaphas.tool import hover_tool, rubberband_tool, view_focus_tool, zoom_tool
 from gi.repository import Gtk
 
 import gaphor.diagram.tools.connector
@@ -13,6 +7,7 @@ import gaphor.diagram.tools.grayout
 import gaphor.diagram.tools.segment
 from gaphor.diagram.tools.dnd import drop_target_tool
 from gaphor.diagram.tools.dropzone import drop_zone_tool
+from gaphor.diagram.tools.itemtool import item_tool
 from gaphor.diagram.tools.magnet import magnet_tool
 from gaphor.diagram.tools.placement import placement_tool
 from gaphor.diagram.tools.shortcut import shortcut_tool
