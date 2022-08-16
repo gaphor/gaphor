@@ -136,7 +136,7 @@ class Box:
         sizes = self.sizes
 
         justify_content = style.get("justify-content", JustifyContent.START)
-        if justify_content is JustifyContent.STRETCH:
+        if justify_content is JustifyContent.STRETCH and sizes:
             height = bounding_box.height
             avg_height = height / len(sizes)
             oversized = [h for _w, h in sizes if h > avg_height]

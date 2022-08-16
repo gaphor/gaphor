@@ -17,7 +17,7 @@ class RegionDropZoneMoveMixin(DropZoneMoveMixin):
         view = self.view
         new_parent = view.selection.dropzone_item
         if (
-            not isinstance(new_parent, StateMachineItem)
+            not isinstance(new_parent, (StateItem, StateMachineItem))
             or not new_parent.subject
             or not new_parent.subject.region
         ):

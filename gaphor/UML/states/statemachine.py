@@ -6,12 +6,13 @@ from gaphor import UML
 from gaphor.core import gettext
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontWeight, TextAlign, VerticalAlign
+from gaphor.core.styling import FontWeight, VerticalAlign
 from gaphor.core.styling.properties import JustifyContent
 from gaphor.diagram.presentation import Classified, ElementPresentation
-from gaphor.diagram.shapes import BoundedBox, Box, Text, draw_border, draw_top_separator
+from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
+from gaphor.UML.states.region import region_compartment
 
 
 @represents(UML.StateMachine)
@@ -60,7 +61,6 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
         )
 
     def subject_at_point(self, pos: Pos) -> Element | None:
-        region: UML.Region
         return next(
             (
                 region
@@ -69,27 +69,3 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
             ),
             self.subject,
         )
-
-
-def region_compartment(subject):
-    if not subject:
-        return
-
-    for index, region in enumerate(subject.region):
-        yield _create_region_compartment(region, index)
-
-
-def _create_region_compartment(region, index):
-    return BoundedBox(
-        Text(
-            text=lambda: region.name or "",
-            style={"text-align": TextAlign.LEFT},
-        ),
-        style={
-            "padding": (4, 4, 4, 4),
-            "min-height": 100,
-            "vertical-align": VerticalAlign.TOP,
-            "dash-style": (7, 3) if index > 0 else (),
-        },
-        draw=draw_top_separator,
-    )
