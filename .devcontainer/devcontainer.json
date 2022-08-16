@@ -8,7 +8,10 @@
 		"args": { "VARIANT": "jammy" }
 	},
 	"workspaceMount": "",
-	"runArgs": ["--volume=${localWorkspaceFolder}:/workspaces/${localWorkspaceFolderBasename}:Z"],
+	"runArgs": [
+		"--init",
+		"--volume=${localWorkspaceFolder}:/workspaces/${localWorkspaceFolderBasename}:Z"
+	],
 
 	// Configure tool-specific properties.
 	"customizations": {
