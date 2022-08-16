@@ -28,6 +28,7 @@ class StateItem(ElementPresentation[UML.State], Named):
         self.watch("subject[State].doActivity.name", self.update_shapes)
         self.watch("subject[State].region.name")
         self.watch("subject[State].region", self.update_shapes)
+        self.watch("show_regions", self.update_shapes)
 
     show_regions: attribute[int] = attribute("show_regions", int, default=True)
 

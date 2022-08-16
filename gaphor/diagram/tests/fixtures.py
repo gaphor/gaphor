@@ -77,6 +77,9 @@ else:
     def find(widget, name):
         if widget.get_buildable_id() == name:
             return widget
+        if isinstance(widget, Gtk.Expander):
+            # Iterating children will only iterate the label section
+            return find(widget.get_child(), name)
         if sibling := widget.get_next_sibling():
             if found := find(sibling, name):
                 return found

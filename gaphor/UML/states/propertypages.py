@@ -3,6 +3,9 @@
 To register property pages implemented in this module, it is imported in
 gaphor.adapter package.
 """
+
+from __future__ import annotations
+
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
@@ -11,6 +14,9 @@ from gaphor.diagram.propertypages import (
     handler_blocking,
     new_resource_builder,
 )
+from gaphor.UML.states.state import StateItem
+
+from .statemachine import StateMachineItem
 
 new_builder = new_resource_builder("gaphor.UML.states")
 
@@ -117,3 +123,53 @@ class StatePropertyPage(PropertyPageBase):
         if not self.subject.doActivity:
             self.subject.doActivity = self.subject.model.create(UML.Activity)
         self.subject.doActivity.name = text
+
+
+@PropertyPages.register(StateItem)
+@PropertyPages.register(StateMachineItem)
+class RegionPropertyPage(PropertyPageBase):
+
+    order = 15
+
+    def __init__(self, item: StateItem | StateMachineItem):
+        super().__init__()
+        self.item = item
+
+    def construct(self):
+        builder = new_builder(
+            "region-editor",
+            "num-regions-adjustment",
+            signals={
+                "show-regions-changed": (self._on_show_regions_changed,),
+                "regions-changed": (self._on_num_regions_changed,),
+            },
+        )
+
+        num_regions = builder.get_object("num-regions")
+        num_regions.set_value(len(self.item.subject.region))
+
+        show_regions = builder.get_object("show-regions")
+        show_regions.set_active(self.item.show_regions)
+
+        return builder.get_object("region-editor")
+
+    @transactional
+    def _on_num_regions_changed(self, spin_button):
+        num_regions = spin_button.get_value_as_int()
+        self.update_regions(num_regions)
+
+    @transactional
+    def _on_show_regions_changed(self, button, gparam):
+        self.item.show_regions = button.get_active()
+
+    def update_regions(self, num_regions) -> None:
+        if not self.item.subject:
+            return
+
+        while num_regions > len(self.item.subject.region):
+            region = self.item.subject.model.create(UML.Region)
+            self.item.subject.region = region
+
+        while num_regions < len(self.item.subject.region):
+            region = self.item.subject.region[-1]
+            region.unlink()
