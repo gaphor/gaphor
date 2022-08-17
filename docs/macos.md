@@ -13,7 +13,7 @@ To setup a development environment with macOS:
 1. Install [homebrew](https://brew.sh)
 1. Open a terminal and execute:
 ```bash
-$ brew install python3 gobject-introspection gtk+3 gtksourceview4 adwaita-icon-theme gtk-mac-integration
+brew install python3 gobject-introspection gtk+3 gtksourceview4 adwaita-icon-theme gtk-mac-integration
 ```
 Install Poetry using [pipx](https://pypa.github.io/pipx/):
 ```bash
@@ -22,11 +22,11 @@ pipx install poetry
 
 [Clone the
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
-```
-$ cd gaphor
-$ poetry config virtualenvs.in-project true
-$ poetry install
-$ poetry run gaphor
+```bash
+cd gaphor
+poetry config virtualenvs.in-project true
+poetry install
+poetry run gaphor
 ```
 
 ## Packaging for macOS
@@ -38,5 +38,5 @@ dependencies and bundle them in to a single folder.
 1. Follow the instructions for settings up a development environment above
 1. Open a terminal and execute the following from the repository directory:
 ```bash
-$ poetry run poe package
+poetry run poe package
 ```
