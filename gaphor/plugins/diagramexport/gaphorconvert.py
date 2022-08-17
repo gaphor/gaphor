@@ -22,7 +22,6 @@ def pkg2dir(package):
 
 
 def parse_options(argv):
-
     usage = "usage: %prog [options] file1 file2..."
 
     parser = optparse.OptionParser(usage=usage)
@@ -67,7 +66,6 @@ def parse_options(argv):
 
 
 def main(argv=sys.argv[1:]):
-
     options, args = parse_options(argv)
 
     def message(msg):

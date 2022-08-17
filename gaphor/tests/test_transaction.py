@@ -153,7 +153,6 @@ def test_transaction_context_error(event_manager):
 
 
 def test_rollback_in_context(event_manager):
-
     with Transaction(event_manager) as tx:
         tx.rollback()
 

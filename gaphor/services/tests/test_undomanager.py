@@ -240,7 +240,6 @@ def test_element_factory_undo(element_factory, undo_manager):
 
 
 def test_element_factory_rollback(element_factory, undo_manager):
-
     undo_manager.begin_transaction()
     element_factory.create(Element)
 

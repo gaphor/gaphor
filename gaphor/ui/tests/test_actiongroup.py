@@ -67,7 +67,6 @@ def test_application_actions(component_registry):
 
 
 def test_activate_application_action(component_registry, dummy_action_provider):
-
     action_group = apply_application_actions(
         component_registry, Gio.SimpleActionGroup.new()
     )

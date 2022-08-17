@@ -209,7 +209,6 @@ def test_order_classes(uml_metamodel):
 
 
 def test_coder_write_association(navigable_association: UML.Association):
-
     a = list(associations(navigable_association.memberEnd[0].type))
 
     assert a == ['A.b = association("b", B, opposite="a")']

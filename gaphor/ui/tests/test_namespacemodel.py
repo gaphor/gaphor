@@ -125,7 +125,6 @@ def test_move_element_with_children(namespace, element_factory):
 
 
 def test_element_model_ready(namespace, element_factory):
-
     with element_factory.block_events():
         p1 = element_factory.create(UML.Package)
         p2 = UML.Package(model=element_factory)

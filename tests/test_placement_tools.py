@@ -134,7 +134,6 @@ def test_placement_partition(tab, element_factory, event_manager):
     ],
 )
 def test_uml_toolbox_actions_shortcut_unique(toolbox_actions):
-
     shortcuts: Dict[str, List[str]] = {}
 
     for category, items in toolbox_actions:

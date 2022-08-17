@@ -22,7 +22,6 @@ def partition_item(partition_item_factory, diagram):
 
 
 def test_partition_placement_adds_two_partitions(partition_item: PartitionItem):
-
     assert partition_item.subject in partition_item.partition
     assert len(partition_item.partition) == 2
 
