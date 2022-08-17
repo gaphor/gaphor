@@ -74,7 +74,6 @@ def class_and_association_with_copy(diagram, event_manager, element_factory):
 
 
 def test_delete_copied_associations(class_and_association_with_copy, event_manager):
-
     c, a, aa = class_and_association_with_copy
 
     assert a.subject.memberEnd[0].type
@@ -100,7 +99,6 @@ def test_delete_copied_associations(class_and_association_with_copy, event_manag
 
 
 def test_delete_original_association(class_and_association_with_copy, event_manager):
-
     c, a, aa = class_and_association_with_copy
 
     assert aa.subject.memberEnd[0].type

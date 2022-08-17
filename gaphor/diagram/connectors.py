@@ -402,7 +402,6 @@ class MetadataRelationConnect(DirectionalRelationshipConnect):
 
 
 def paste_model(copy_data, diagram) -> Iterator[Element]:
-
     new_elements: dict[str, Element] = {}
 
     def create(ref: str):

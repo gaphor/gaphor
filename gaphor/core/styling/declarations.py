@@ -48,7 +48,6 @@ declarations = _Declarations()
 
 
 def parse_declarations(declaration_list):
-
     for decl in parse_declaration_list(
         declaration_list, skip_comments=True, skip_whitespace=True
     ):

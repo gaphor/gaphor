@@ -97,7 +97,6 @@ def test_line_horizontal_property(diagram, undo_manager, event_manager):
     ],
 )
 def test_matrix_operation(action, diagram, undo_manager, event_manager):
-
     with Transaction(event_manager):
         line = diagram.create(LinePresentation)
         line.matrix.translate(10, 0)

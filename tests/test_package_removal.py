@@ -55,7 +55,6 @@ def test_package_removal(session, event_manager, element_factory):
 
 
 def test_package_removal_by_removing_the_diagram(event_manager, element_factory):
-
     diagram = element_factory.lselect(
         lambda e: e.isKindOf(Diagram) and e.name == "Stereotypes diagram"
     )[0]

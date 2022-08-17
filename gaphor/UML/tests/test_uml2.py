@@ -109,7 +109,6 @@ def test_constraint(factory):
 
 
 def test_dependency(factory):
-
     """Testing Dependency elements in the meta-model."""
 
     element = factory.create(UML.Dependency)

@@ -211,7 +211,6 @@ def test_empty_pseudo_selector_with_name():
     ["root", "hover", "focus", "active", "drop", "disabled"],
 )
 def test_hovered_pseudo_selector(state):
-
     css = f":{state} {{}}"
 
     (selector, specificity), payload = next(parse_style_sheet(css))

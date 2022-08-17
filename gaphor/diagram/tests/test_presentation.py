@@ -117,7 +117,6 @@ def test_line_saving_without_subject(diagram):
 
 
 def test_line_loading(element_factory, diagram):
-
     with element_factory.block_events():
         subject = element_factory.create(UML.Dependency)
         p = diagram.create(StubLine)

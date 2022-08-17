@@ -35,7 +35,6 @@ def extract_gaphor(fileobj, keywords, comment_tags, options):
 
 
 def translate_model(fileobj):
-
     tree = etree.parse(fileobj)
 
     for node in translatable_nodes(tree):
