@@ -239,8 +239,9 @@ UML       States        Initial Pseudostate  ``pseudostate``
 UML       States        History Pseudostate  ``pseudostate``
 UML       Profiles      Metaclass            ``class``
 C4 Model  C4 Model      Person               ``c4person``
-C4 Model  C4 Model      Software System      ``c4container``
-C4 Model  C4 Model      Container            ``c4container``
+C4 Model  C4 Model      Software System      ``c4container[type="Software System"]``
+C4 Model  C4 Model      Component            ``c4container[type="Component"]``
+C4 Model  C4 Model      Container            ``c4container[type="Container"]``
 C4 Model  C4 Model      Container: Database  ``c4database``
 SysML     Blocks        ValueType            ``datatype``
 SysML     Blocks        Primitive            ``datatype``
