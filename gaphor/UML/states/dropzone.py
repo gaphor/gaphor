@@ -7,6 +7,7 @@ from gaphor.diagram.tools.dropzone import DropZoneMoveMixin, grow_parent
 from gaphor.UML.states.pseudostates import PseudostateItem
 from gaphor.UML.states.state import StateItem
 from gaphor.UML.states.statemachine import StateMachineItem
+from gaphor.UML.states.transition import TransitionItem
 
 
 class RegionDropZoneMoveMixin(DropZoneMoveMixin):
@@ -48,5 +49,6 @@ class RegionDropZoneMoveMixin(DropZoneMoveMixin):
 
 @MoveAspect.register(StateItem)
 @MoveAspect.register(PseudostateItem)
+@MoveAspect.register(TransitionItem)
 class DropZoneMove(RegionDropZoneMoveMixin, GuidedItemMoveMixin, ItemMove):
     pass
