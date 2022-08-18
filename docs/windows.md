@@ -84,14 +84,20 @@ Download and install the latest version of Python:
    python --version
    ```
 
+#### Install pipx
+
+From the regular user PowerShell terminal execute:
+```PowerShell
+python -m pip install --user pipx
+python -m pipx ensurepath
+```
+
 #### Install gvsbuild
 
-Open a new regular user PowerShell terminal and execute:
+From the regular user PowerShell terminal execute:
 
 ```PowerShell
-mkdir C:\gtk-build\github
-cd C:\gtk-build\github
-git clone https://github.com/wingtk/gvsbuild.git
+pipx install gvsbuild
 ```
 
 #### Build GTK
@@ -99,10 +105,6 @@ git clone https://github.com/wingtk/gvsbuild.git
 In the same PowerShell terminal, execute:
 
 ```PowerShell
-cd C:\gtk-build\github\gvsbuild
-python -m venv .venv
-.\.venv\Scripts\activate.ps1
-pip install .
 gvsbuild build --enable-gi --py-wheel gobject-introspection gtk4 pycairo pygobject gtksourceview5 libadwaita adwaita-icon-theme hicolor-icon-theme
 ```
 Grab a coffee, the build will take a few minutes to complete.
@@ -116,9 +118,9 @@ git clone https://github.com/gaphor/gaphor.git
 cd gaphor
 ```
 
-Install Poetry (you may want to consider installing poetry via [pipx](https://pypi.org/project/pipx/), instead of pip):
+Install Poetry
 ```bash
-pip install --user poetry
+pipx install poetry
 poetry config virtualenvs.in-project true
 ```
 
