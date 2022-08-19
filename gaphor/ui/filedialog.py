@@ -63,12 +63,18 @@ def open_file_dialog(title, handler, parent=None, dirname=None, filters=None) ->
             dialog.set_current_folder(dirname)
     else:
         if dirname:
-            dialog.set_current_folder(Gio.File.new_for_path(dirname))
+            dialog.set_current_folder(Gio.File.parse_name(dirname))
     dialog.show()
 
 
 def save_file_dialog(
-    title, handler, parent=None, filename=None, extension=None, filters=None
+    title,
+    handler,
+    parent=None,
+    filename=None,
+    extension=None,
+    dirname=None,
+    filters=None,
 ) -> None:
     if filters is None:
         filters = []
@@ -86,7 +92,7 @@ def save_file_dialog(
         if Gtk.get_major_version() == 3:
             dialog.set_filename(filename)
         else:
-            dialog.set_file(Gio.File.new_for_path(filename))
+            dialog.set_current_name(filename)
 
     def overwrite_check():
         filename = get_filename()
@@ -111,5 +117,10 @@ def save_file_dialog(
         set_filename(filename)
     if Gtk.get_major_version() == 3:
         dialog.set_do_overwrite_confirmation(True)
+        if dirname:
+            dialog.set_current_folder(dirname)
+    else:
+        if dirname:
+            dialog.set_current_folder(Gio.File.parse_name(dirname))
     dialog.set_modal(True)
     dialog.show()

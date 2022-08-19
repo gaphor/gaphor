@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+import os
+
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
 from gaphor.diagram.export import save_pdf, save_png, save_svg
@@ -8,10 +12,12 @@ class DiagramExport(Service, ActionProvider):
     """Service for exporting diagrams as images (SVG, PNG, PDF)."""
 
     def __init__(self, diagrams=None, export_menu=None):
+
         self.diagrams = diagrams
         self.export_menu = export_menu
         if export_menu:
             export_menu.add_actions(self)
+        self.dirname: str | None = None
 
     def shutdown(self):
         if self.export_menu:
@@ -20,11 +26,17 @@ class DiagramExport(Service, ActionProvider):
     def save_dialog(self, diagram, title, ext, mime_type, handler):
         dot_ext = f".{ext}"
         filename = (diagram.name or "export") + dot_ext
+
+        def save_handler(filename):
+            self.dirname = os.path.dirname(filename)
+            handler(filename, diagram)
+
         save_file_dialog(
             title,
-            lambda f: handler(f, diagram),
+            save_handler,
             filename=filename,
             extension=dot_ext,
+            dirname=self.dirname,
             filters=[
                 (gettext("All {ext} Files").format(ext=ext.upper()), dot_ext, mime_type)
             ],
