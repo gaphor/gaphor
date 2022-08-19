@@ -1334,9 +1334,6 @@
 </region>
 </StateMachine>
 <Region id="390e5a58-716a-11ec-999a-f47b099bf663">
-<name>
-<val>Default Region</val>
-</name>
 <stateMachine>
 <ref refid="390dcd04-716a-11ec-999a-f47b099bf663"/>
 </stateMachine>

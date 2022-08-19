@@ -54,7 +54,6 @@ def state_machine_config(new_item, name=None):
         region = state_machine.region[0]
     else:
         region = subject.model.create(UML.Region)
-        region.name = gettext("Default Region")
         region.stateMachine = state_machine
 
     subject.container = region

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from gaphor.core import gettext
 from gaphor.diagram.group import group, ungroup
 from gaphor.UML.uml import Region, State, StateMachine, Transition, Vertex
 
@@ -13,7 +12,6 @@ def state_machine_vertex_group(state_machine: State | StateMachine, vertex: Vert
         region = state_machine.region[0]
     else:
         region = state_machine.model.create(Region)
-        region.name = gettext("Default Region")
         state_machine.region = region
 
     vertex.container = region
