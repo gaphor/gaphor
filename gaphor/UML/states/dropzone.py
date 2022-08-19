@@ -28,12 +28,14 @@ class RegionDropZoneMoveMixin(DropZoneMoveMixin):
         old_parent = item.parent
 
         if not item.subject:
+            GuidedItemMoveMixin.stop_move(self, pos)
             return
 
         item_pos = view.get_matrix_v2i(new_parent).transform_point(*pos)
         target_subject = new_parent.subject_at_point(item_pos)
 
         if target_subject is item.subject.container:
+            GuidedItemMoveMixin.stop_move(self, pos)
             return
 
         if old_parent and ungroup(old_parent.subject, item.subject):
@@ -45,6 +47,8 @@ class RegionDropZoneMoveMixin(DropZoneMoveMixin):
         if group(target_subject, item.subject):
             grow_parent(new_parent, item)
             item.change_parent(new_parent)
+
+        GuidedItemMoveMixin.stop_move(self, pos)
 
 
 @MoveAspect.register(StateItem)
