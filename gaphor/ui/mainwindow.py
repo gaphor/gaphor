@@ -1,5 +1,7 @@
 """The main application window."""
 
+from __future__ import annotations
+
 import importlib.resources
 import logging
 from pathlib import Path
@@ -124,7 +126,7 @@ class MainWindow(Service, ActionProvider):
         self.action_group: Gio.ActionGroup = None
         self.title: Gtk.Label = None
         self.subtitle: Gtk.Label = None
-        self.filename = None
+        self.filename: Path | None = None
         self.model_changed = False
         self.layout = None
         self.modeling_language_name = None
@@ -225,7 +227,7 @@ class MainWindow(Service, ActionProvider):
             return
 
         if self.filename:
-            p = Path(self.filename)
+            p = self.filename
             title = p.stem
             subtitle = str(p).replace(str(Path.home()), "~")
         else:
@@ -240,9 +242,11 @@ class MainWindow(Service, ActionProvider):
     # Signal callbacks:
 
     @event_handler(SessionCreated, ModelLoaded, ModelSaved)
-    def _on_file_manager_state_changed(self, event):
+    def _on_file_manager_state_changed(
+        self, event: SessionCreated | ModelLoaded | ModelSaved
+    ):
         self.model_changed = False
-        self.filename = event.filename
+        self.filename = Path(event.filename) if event.filename else None
         self.set_title()
         if self.window:
             self.window.present()
