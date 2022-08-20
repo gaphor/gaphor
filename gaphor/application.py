@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import importlib.metadata
 import logging
+from pathlib import Path
 from typing import Iterator, TypeVar, cast
 
 from gaphor import transaction
@@ -84,6 +85,7 @@ class Application(Service, ActionProvider):
         if filename is None and template is None:
             return self._new_session(services=services)
 
+        filename = Path(filename)
         if filename and not force:
             for session in self._sessions:
                 if session.filename == filename:
@@ -125,6 +127,7 @@ class Application(Service, ActionProvider):
         return bool(self._active_session)
 
     def has_session(self, filename):
+        filename = Path(filename)
         return any(
             session for session in self._sessions if session.filename == filename
         )
