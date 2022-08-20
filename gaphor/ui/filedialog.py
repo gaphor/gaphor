@@ -4,7 +4,7 @@ save files."""
 
 from __future__ import annotations
 
-import pathlib
+from pathlib import Path
 
 from gi.repository import Gio, Gtk
 
@@ -73,7 +73,6 @@ def save_file_dialog(
     parent=None,
     filename=None,
     extension=None,
-    dirname=None,
     filters=None,
 ) -> None:
     if filters is None:
@@ -82,24 +81,24 @@ def save_file_dialog(
         title, parent, Gtk.FileChooserAction.SAVE, filters
     )
 
-    def get_filename():
+    def get_filename() -> Path:
         if Gtk.get_major_version() == 3:
-            return dialog.get_filename()
+            return Path(dialog.get_filename())
         else:
-            return dialog.get_file().get_path()
+            return Path(dialog.get_file().get_path())
 
-    def set_filename(filename):
+    def set_filename(filename: Path):
         if Gtk.get_major_version() == 3:
-            dialog.set_filename(filename)
+            dialog.set_filename(str(filename.name))
         else:
-            dialog.set_current_name(filename)
+            dialog.set_current_name(str(filename.name))
 
-    def overwrite_check():
+    def overwrite_check() -> Path | None:
         filename = get_filename()
-        if extension and not filename.endswith(extension):
-            filename += extension
+        if extension and not filename.suffix == extension:
+            filename.with_suffix(extension)
             set_filename(filename)
-            return "" if pathlib.Path(filename).exists() else filename
+            return None if filename.exists() else filename
         return filename
 
     def response(_dialog, answer):
@@ -117,10 +116,10 @@ def save_file_dialog(
         set_filename(filename)
     if Gtk.get_major_version() == 3:
         dialog.set_do_overwrite_confirmation(True)
-        if dirname:
-            dialog.set_current_folder(dirname)
+        if filename:
+            dialog.set_current_folder(str(filename.parent))
     else:
-        if dirname:
-            dialog.set_current_folder(Gio.File.parse_name(dirname))
+        if filename:
+            dialog.set_current_folder(Gio.File.parse_name(str(filename.parent)))
     dialog.set_modal(True)
     dialog.show()

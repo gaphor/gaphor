@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 
 from gaphor.application import Application
@@ -34,7 +36,7 @@ def test_model_loaded(application):
 
 def test_model_saved(application):
     session = application.new_session()
-    session.event_manager.handle(ModelSaved(None, "some_file_name"))
+    session.event_manager.handle(ModelSaved(None, Path("some_file_name")))
 
     assert session.filename == "some_file_name"
 
