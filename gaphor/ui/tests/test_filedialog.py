@@ -1,3 +1,4 @@
+import os.path
 from pathlib import Path
 
 import pytest
@@ -98,7 +99,7 @@ def test_save_dialog(file_chooser):
 
     file_chooser.stub_select_file("/test/path", "model.gaphor")
 
-    assert selected_file.parts == ("/", "test", "path", "model.gaphor")
+    assert selected_file.parts == (os.path.sep, "test", "path", "model.gaphor")
 
 
 def test_save_dialog_with_full_file_name(file_chooser):
@@ -108,16 +109,17 @@ def test_save_dialog_with_full_file_name(file_chooser):
         nonlocal selected_file
         selected_file = f
 
+    filename = Path("/test/path/model.gaphor")
     save_file_dialog(
         "title",
         save_handler,
-        filename=Path("/test/path/model.gaphor"),
+        filename=filename,
         extension=".gaphor",
         filters=[],
     )
 
-    assert file_chooser.stub_current_folder == "/test/path"
-    assert file_chooser.stub_current_name == "model.gaphor"
+    assert file_chooser.stub_current_folder == str(filename.parent)
+    assert file_chooser.stub_current_name == filename.name
 
 
 def test_save_dialog_with_only_file_name(file_chooser):
@@ -127,13 +129,18 @@ def test_save_dialog_with_only_file_name(file_chooser):
         nonlocal selected_file
         selected_file = f
 
+    filename = Path("model.gaphor")
     save_file_dialog(
         "title",
         save_handler,
-        filename=Path("model.gaphor"),
+        filename=filename,
         extension=".gaphor",
         filters=[],
     )
 
-    assert file_chooser.stub_current_folder == "."
-    assert file_chooser.stub_current_name == "model.gaphor"
+    # On GitHub CI, the path is returning the absolute path, both are fine
+    assert file_chooser.stub_current_folder in (
+        str(filename.parent),
+        str(filename.parent.absolute()),
+    )
+    assert file_chooser.stub_current_name == filename.name
