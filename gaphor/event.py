@@ -106,7 +106,7 @@ class ActionEnabled:
         self.scope, self.name = (
             action_name.split(".", 2) if "." in action_name else ("win", action_name)
         )
-        self.enabled = bool(enabled)
+        self.enabled = enabled
 
 
 class Notification:
