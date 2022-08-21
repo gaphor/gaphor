@@ -1,6 +1,8 @@
 """Application lifecycle events are managed here."""
 
-from typing import Optional
+from __future__ import annotations
+
+from pathlib import Path
 
 from gaphor.abc import Service
 
@@ -40,13 +42,13 @@ class SessionCreated(ServiceEvent):
         self,
         applicaton: Service,
         session: Service,
-        filename: Optional[str],
-        template: Optional[str],
+        filename: str | Path | None,
+        template: str | None,
     ):
         super().__init__(applicaton)
         self.application = applicaton
         self.session = session
-        self.filename = filename
+        self.filename = Path(filename) if filename else None
         self.template = template
 
 
@@ -66,13 +68,13 @@ class SessionShutdown(ServiceEvent):
 
 
 class ModelLoaded:
-    def __init__(self, service, filename=None):
+    def __init__(self, service, filename: Path | None = None):
         self.service = service
         self.filename = filename
 
 
 class ModelSaved:
-    def __init__(self, service, filename=None):
+    def __init__(self, service, filename: Path | None = None):
         self.service = service
         self.filename = filename
 
@@ -104,7 +106,7 @@ class ActionEnabled:
         self.scope, self.name = (
             action_name.split(".", 2) if "." in action_name else ("win", action_name)
         )
-        self.enabled = bool(enabled)
+        self.enabled = enabled
 
 
 class Notification:

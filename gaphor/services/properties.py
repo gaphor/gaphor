@@ -45,8 +45,8 @@ def get_cache_dir() -> str:
     return cache_dir
 
 
-def file_hash(filename: str) -> str:
-    return hashlib.blake2b(filename.encode("utf-8"), digest_size=24).hexdigest()
+def file_hash(filename) -> str:
+    return hashlib.blake2b(str(filename).encode("utf-8"), digest_size=24).hexdigest()
 
 
 class PropertyChanged:

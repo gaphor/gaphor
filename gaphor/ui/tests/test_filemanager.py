@@ -16,7 +16,7 @@ def test_save(element_factory, file_manager: FileManager, tmp_path):
     element_factory.create(UML.Class)
     out_file = tmp_path / "out.gaphor"
 
-    file_manager.save(filename=str(out_file))
+    file_manager.save(filename=out_file)
 
     assert out_file.exists()
 
@@ -30,7 +30,7 @@ def test_model_is_saved_with_utf8_encoding(
     package.name = "안녕하세요 세계"
 
     model_file = tmp_path / "model.gaphor"
-    file_manager.save(str(model_file))
+    file_manager.save(model_file)
 
     with open(model_file, encoding="utf-8") as f:
         f.read()  # raises exception if characters can't be decoded
@@ -48,7 +48,7 @@ def test_model_is_loaded_with_utf8_encoding(
     package.name = package_name
 
     model_file = tmp_path / "model.gaphor"
-    file_manager.save(str(model_file))
+    file_manager.save(model_file)
 
     element_factory.flush()
 
