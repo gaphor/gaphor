@@ -1,6 +1,9 @@
 """The file service is responsible for loading and saving the user data."""
 
+from __future__ import annotations
+
 import logging
+from pathlib import Path
 from queue import Queue
 
 from gaphas.decorators import g_async
@@ -97,7 +100,7 @@ class FileManager(Service, ActionProvider):
         """
 
         if filename != self._filename:
-            self._filename = filename
+            self._filename = Path(filename)
 
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.
@@ -108,7 +111,7 @@ class FileManager(Service, ActionProvider):
         successful, the filename is set.
         """
         # First claim file name, so any other files will be opened in a different session
-        self.filename = filename
+        self.filename = Path(filename)
         queue: Queue[int] = Queue(0)
         status_window = None
 
@@ -179,7 +182,7 @@ class FileManager(Service, ActionProvider):
         GIdleThread is executed.  This thread actually saves the model.
         """
 
-        if not (filename and len(filename)):
+        if not filename or (filename.exists() and not filename.is_file()):
             return
 
         main_window = self.main_window
@@ -194,7 +197,7 @@ class FileManager(Service, ActionProvider):
         @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
         def async_saver():
             try:
-                with open(filename, "w", encoding="utf-8") as out:
+                with filename.open("w", encoding="utf-8") as out:
                     for percentage in storage.save_generator(out, self.element_factory):
                         queue.put(percentage)
                         yield

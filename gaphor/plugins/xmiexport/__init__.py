@@ -1,6 +1,7 @@
 """This plugin extends Gaphor with XMI export functionality."""
 
 import logging
+from pathlib import Path
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
@@ -33,8 +34,11 @@ class XMIExport(Service, ActionProvider):
             except Exception as e:
                 logger.error(f"Error while saving model to file {filename}: {e}")
 
-        filename = self.file_manager.filename
-        filename = filename.replace(".gaphor", ".xmi") if filename else "model.xmi"
+        filename = (
+            self.file_manager.filename.with_suffix(".xmi")
+            if self.file_manager.filename
+            else Path("model.xmi")
+        )
         save_file_dialog(
             gettext("Export model as XMI file"),
             handler,
