@@ -109,7 +109,7 @@ python-versions = ">=3.6.1"
 
 [[package]]
 name = "charset-normalizer"
-version = "2.1.0"
+version = "2.1.1"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 category = "main"
 optional = false
@@ -188,15 +188,15 @@ test = ["pytest (>=6)"]
 
 [[package]]
 name = "filelock"
-version = "3.7.1"
+version = "3.8.0"
 description = "A platform independent file lock."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 
 [package.extras]
-testing = ["pytest-timeout (>=1.4.2)", "pytest-cov", "pytest (>=4)", "coverage (>=4)", "covdefaults (>=1.2.0)"]
-docs = ["sphinx-autodoc-typehints (>=1.12)", "sphinx (>=4.1)", "furo (>=2021.8.17b43)"]
+testing = ["pytest-timeout (>=2.1)", "pytest-cov (>=3)", "pytest (>=7.1.2)", "coverage (>=6.4.2)", "covdefaults (>=2.2)"]
+docs = ["sphinx-autodoc-typehints (>=1.19.1)", "sphinx (>=5.1.1)", "furo (>=2022.6.21)"]
 
 [[package]]
 name = "flake8"
@@ -247,7 +247,7 @@ exceptiongroup = ">=1.0.0-rc.5,<2.0.0"
 
 [[package]]
 name = "hypothesis"
-version = "6.54.3"
+version = "6.54.4"
 description = "A library for property-based testing"
 category = "dev"
 optional = false
@@ -276,7 +276,7 @@ all = ["tzdata (>=2022.1)", "backports.zoneinfo (>=0.2.1)", "importlib-metadata 
 
 [[package]]
 name = "identify"
-version = "2.5.2"
+version = "2.5.3"
 description = "File identification library for Python"
 category = "dev"
 optional = false
@@ -351,8 +351,8 @@ python-versions = ">=3.6"
 parso = ">=0.8.0,<0.9.0"
 
 [package.extras]
-testing = ["pytest (<7.0.0)", "docopt", "colorama", "Django (<3.1)"]
-qa = ["mypy (==0.782)", "flake8 (==3.8.3)"]
+qa = ["flake8 (==3.8.3)", "mypy (==0.782)"]
+testing = ["Django (<3.1)", "colorama", "docopt", "pytest (<7.0.0)"]
 
 [[package]]
 name = "jinja2"
@@ -434,7 +434,7 @@ code_style = ["pre-commit (==2.6)"]
 
 [[package]]
 name = "mdurl"
-version = "0.1.1"
+version = "0.1.2"
 description = "Markdown URL utilities"
 category = "main"
 optional = true
@@ -620,7 +620,7 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "pycodestyle"
-version = "2.9.0"
+version = "2.9.1"
 description = "Python style guide checker"
 category = "dev"
 optional = false
@@ -636,11 +636,14 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "pygments"
-version = "2.12.0"
+version = "2.13.0"
 description = "Pygments is a syntax highlighting package written in Python."
 category = "main"
 optional = false
 python-versions = ">=3.6"
+
+[package.extras]
+plugins = ["importlib-metadata"]
 
 [[package]]
 name = "pygobject"
@@ -756,7 +759,7 @@ dev = ["pytest-asyncio", "tox", "pre-commit"]
 
 [[package]]
 name = "pytz"
-version = "2022.1"
+version = "2022.2.1"
 description = "World timezone definitions, modern and historical"
 category = "main"
 optional = false
@@ -848,9 +851,24 @@ sphinxcontrib-qthelp = "*"
 sphinxcontrib-serializinghtml = ">=1.1.5"
 
 [package.extras]
-test = ["typed-ast", "cython", "html5lib", "pytest (>=4.6)"]
-lint = ["types-requests", "types-typed-ast", "docutils-stubs", "sphinx-lint", "mypy (>=0.971)", "isort", "flake8-bugbear", "flake8-comprehensions", "flake8 (>=3.5.0)"]
 docs = ["sphinxcontrib-websupport"]
+lint = ["flake8 (>=3.5.0)", "flake8-comprehensions", "flake8-bugbear", "isort", "mypy (>=0.971)", "sphinx-lint", "docutils-stubs", "types-typed-ast", "types-requests"]
+test = ["pytest (>=4.6)", "html5lib", "cython", "typed-ast"]
+
+[[package]]
+name = "sphinx-copybutton"
+version = "0.5.0"
+description = "Add a copy button to each of your code cells."
+category = "main"
+optional = true
+python-versions = ">=3.6"
+
+[package.dependencies]
+sphinx = ">=1.8"
+
+[package.extras]
+rtd = ["sphinx-book-theme", "myst-nb", "ipython", "sphinx"]
+code_style = ["pre-commit (==2.12.1)"]
 
 [[package]]
 name = "sphinx-rtd-theme"
@@ -992,20 +1010,20 @@ brotli = ["brotlipy (>=0.6.0)", "brotli (>=1.0.9)", "brotlicffi (>=0.8.0)"]
 
 [[package]]
 name = "virtualenv"
-version = "20.16.2"
+version = "20.16.3"
 description = "Virtual Python Environment builder"
 category = "dev"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-distlib = ">=0.3.1,<1"
-filelock = ">=3.2,<4"
-platformdirs = ">=2,<3"
+distlib = ">=0.3.5,<1"
+filelock = ">=3.4.1,<4"
+platformdirs = ">=2.4,<3"
 
 [package.extras]
-testing = ["pytest-timeout (>=1)", "pytest-randomly (>=1)", "pytest-mock (>=2)", "pytest-freezegun (>=0.4.1)", "pytest-env (>=0.6.2)", "pytest (>=4)", "packaging (>=20.0)", "flaky (>=3)", "coverage-enable-subprocess (>=1)", "coverage (>=4)"]
-docs = ["towncrier (>=21.3)", "sphinx-rtd-theme (>=0.4.3)", "sphinx-argparse (>=0.2.5)", "sphinx (>=3)", "proselint (>=0.10.2)"]
+testing = ["pytest-timeout (>=2.1)", "pytest-randomly (>=3.10.3)", "pytest-mock (>=3.6.1)", "pytest-freezegun (>=0.4.2)", "pytest-env (>=0.6.2)", "pytest (>=7.0.1)", "packaging (>=21.3)", "flaky (>=3.7)", "coverage-enable-subprocess (>=1)", "coverage (>=6.2)"]
+docs = ["towncrier (>=21.9)", "sphinx-rtd-theme (>=1)", "sphinx-argparse (>=0.3.1)", "sphinx (>=5.1.1)", "proselint (>=0.13)"]
 
 [[package]]
 name = "webencodings"
@@ -1050,13 +1068,13 @@ testing = ["pytest-mypy (>=0.9.1)", "pytest-black (>=0.3.7)", "func-timeout", "j
 docs = ["jaraco.tidelift (>=1.4)", "rst.linker (>=1.9)", "jaraco.packaging (>=9)", "sphinx"]
 
 [extras]
-docs = ["sphinx", "sphinx-rtd-theme", "myst-parser"]
+docs = ["sphinx", "sphinx-rtd-theme", "sphinx-copybutton", "myst-parser"]
 pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "b12e27b1e98db80de486a336680f7c476a29dd4d51b0da8c563b0f7274d30322"
+content-hash = "81b23057f6b0ff81c7c7e97072d2dca84d3bce33282e7b9d87dfa621f47f0596"
 
 [metadata.files]
 alabaster = [
@@ -1120,8 +1138,8 @@ cfgv = [
     {file = "cfgv-3.3.1.tar.gz", hash = "sha256:f5a830efb9ce7a445376bb66ec94c638a9787422f96264c98edc6bdeed8ab736"},
 ]
 charset-normalizer = [
-    {file = "charset-normalizer-2.1.0.tar.gz", hash = "sha256:575e708016ff3a5e3681541cb9d79312c416835686d054a23accb873b254f413"},
-    {file = "charset_normalizer-2.1.0-py3-none-any.whl", hash = "sha256:5189b6f22b01957427f35b6a08d9a0bc45b46d3788ef5a92e978433c7a35f8a5"},
+    {file = "charset-normalizer-2.1.1.tar.gz", hash = "sha256:5a3d016c7c547f69d6f81fb0db9449ce888b418b5b9952cc5e6e66843e9dd845"},
+    {file = "charset_normalizer-2.1.1-py3-none-any.whl", hash = "sha256:83e9a75d1911279afd89352c68b45348559d1fc0506b054b346651b5e7fee29f"},
 ]
 click = [
     {file = "click-8.1.3-py3-none-any.whl", hash = "sha256:bb4d8133cb15a609f44e8213d9b391b0809795062913b383c62be0ee95b1db48"},
@@ -1200,8 +1218,8 @@ exceptiongroup = [
     {file = "exceptiongroup-1.0.0rc8.tar.gz", hash = "sha256:6990c24f06b8d33c8065cfe43e5e8a4bfa384e0358be036af9cc60b6321bd11a"},
 ]
 filelock = [
-    {file = "filelock-3.7.1-py3-none-any.whl", hash = "sha256:37def7b658813cda163b56fc564cdc75e86d338246458c4c28ae84cabefa2404"},
-    {file = "filelock-3.7.1.tar.gz", hash = "sha256:3a0fd85166ad9dbab54c9aec96737b744106dc5f15c0b09a6744a445299fcf04"},
+    {file = "filelock-3.8.0-py3-none-any.whl", hash = "sha256:617eb4e5eedc82fc5f47b6d61e4d11cb837c56cb4544e39081099fa17ad109d4"},
+    {file = "filelock-3.8.0.tar.gz", hash = "sha256:55447caa666f2198c5b6b13a26d2084d26fa5b115c00d065664b2124680c4edc"},
 ]
 flake8 = [
     {file = "flake8-5.0.4-py2.py3-none-any.whl", hash = "sha256:7a1cf6b73744f5806ab95e526f6f0d8c01c66d7bbe349562d22dfca20610b248"},
@@ -1219,12 +1237,12 @@ generic = [
     {file = "generic-1.1.0.tar.gz", hash = "sha256:ffde3ba04bd9483e668d10fda9cbb328015ab62bd399a79e8d7c50df6d940fe0"},
 ]
 hypothesis = [
-    {file = "hypothesis-6.54.3-py3-none-any.whl", hash = "sha256:f1a2f0031ec2c3ff17c1d97bb363ce74bf3e9e5d6c6f0f5a6474702e6ca1ee81"},
-    {file = "hypothesis-6.54.3.tar.gz", hash = "sha256:03749f5e2cb982e54e2a11abcb367b9a260ef8e279387d437145354c080a6bdc"},
+    {file = "hypothesis-6.54.4-py3-none-any.whl", hash = "sha256:469125235b4fdd6b6a4b6a6fa13e528d3e8de4dbd3bd9236b03323fefa3a9b32"},
+    {file = "hypothesis-6.54.4.tar.gz", hash = "sha256:ee42fe4d2ff96c49910085780d6b8f34cbcf4c44427616e22833869d451116bb"},
 ]
 identify = [
-    {file = "identify-2.5.2-py2.py3-none-any.whl", hash = "sha256:feaa9db2dc0ce333b453ce171c0cf1247bbfde2c55fc6bb785022d411a1b78b5"},
-    {file = "identify-2.5.2.tar.gz", hash = "sha256:a3d4c096b384d50d5e6dc5bc8b9bc44f1f61cefebd750a7b3e9f939b53fb214d"},
+    {file = "identify-2.5.3-py2.py3-none-any.whl", hash = "sha256:25851c8c1370effb22aaa3c987b30449e9ff0cece408f810ae6ce408fdd20893"},
+    {file = "identify-2.5.3.tar.gz", hash = "sha256:887e7b91a1be152b0d46bbf072130235a8117392b9f1828446079a816a05ef44"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
@@ -1313,8 +1331,8 @@ mdit-py-plugins = [
     {file = "mdit_py_plugins-0.3.0-py3-none-any.whl", hash = "sha256:b1279701cee2dbf50e188d3da5f51fee8d78d038cdf99be57c6b9d1aa93b4073"},
 ]
 mdurl = [
-    {file = "mdurl-0.1.1-py3-none-any.whl", hash = "sha256:6a8f6804087b7128040b2fb2ebe242bdc2affaeaa034d5fc9feeed30b443651b"},
-    {file = "mdurl-0.1.1.tar.gz", hash = "sha256:f79c9709944df218a4cdb0fcc0b0c7ead2f44594e3e84dc566606f04ad749c20"},
+    {file = "mdurl-0.1.2-py3-none-any.whl", hash = "sha256:84008a41e51615a49fc9966191ff91509e3c40b939176e643fd50a5c2196b8f8"},
+    {file = "mdurl-0.1.2.tar.gz", hash = "sha256:bb413d29f5eea38f31dd4754dd7377d4465116fb207585f97bf925588687c1ba"},
 ]
 mypy = [
     {file = "mypy-0.971-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:f2899a3cbd394da157194f913a931edfd4be5f274a88041c9dc2d9cdcb1c315c"},
@@ -1404,16 +1422,16 @@ pycairo = [
     {file = "pycairo-1.21.0.tar.gz", hash = "sha256:251907f18a552df938aa3386657ff4b5a4937dde70e11aa042bc297957f4b74b"},
 ]
 pycodestyle = [
-    {file = "pycodestyle-2.9.0-py2.py3-none-any.whl", hash = "sha256:289cdc0969d589d90752582bef6dff57c5fbc6949ee8b013ad6d6449a8ae9437"},
-    {file = "pycodestyle-2.9.0.tar.gz", hash = "sha256:beaba44501f89d785be791c9462553f06958a221d166c64e1f107320f839acc2"},
+    {file = "pycodestyle-2.9.1-py2.py3-none-any.whl", hash = "sha256:d1735fc58b418fd7c5f658d28d943854f8a849b01a5d0a1e6f3f3fdd0166804b"},
+    {file = "pycodestyle-2.9.1.tar.gz", hash = "sha256:2c9607871d58c76354b697b42f5d57e1ada7d261c261efac224b664affdc5785"},
 ]
 pyflakes = [
     {file = "pyflakes-2.5.0-py2.py3-none-any.whl", hash = "sha256:4579f67d887f804e67edb544428f264b7b24f435b263c4614f384135cea553d2"},
     {file = "pyflakes-2.5.0.tar.gz", hash = "sha256:491feb020dca48ccc562a8c0cbe8df07ee13078df59813b83959cbdada312ea3"},
 ]
 pygments = [
-    {file = "Pygments-2.12.0-py3-none-any.whl", hash = "sha256:dc9c10fb40944260f6ed4c688ece0cd2048414940f1cea51b8b226318411c519"},
-    {file = "Pygments-2.12.0.tar.gz", hash = "sha256:5eb116118f9612ff1ee89ac96437bb6b49e8f04d8a13b514ba26f620208e26eb"},
+    {file = "Pygments-2.13.0-py3-none-any.whl", hash = "sha256:f643f331ab57ba3c9d89212ee4a2dabc6e94f117cf4eefde99a0574720d14c42"},
+    {file = "Pygments-2.13.0.tar.gz", hash = "sha256:56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1"},
 ]
 pygobject = [
     {file = "PyGObject-3.42.2.tar.gz", hash = "sha256:21524cef33100c8fd59dc135948b703d79d303e368ce71fa60521cc971cd8aa7"},
@@ -1456,8 +1474,8 @@ pytest-mock = [
     {file = "pytest_mock-3.8.2-py3-none-any.whl", hash = "sha256:8a9e226d6c0ef09fcf20c94eb3405c388af438a90f3e39687f84166da82d5948"},
 ]
 pytz = [
-    {file = "pytz-2022.1-py2.py3-none-any.whl", hash = "sha256:e68985985296d9a66a881eb3193b0906246245294a881e7c8afe623866ac6a5c"},
-    {file = "pytz-2022.1.tar.gz", hash = "sha256:1e760e2fe6a8163bc0b3d9a19c4f84342afa0a2affebfaa84b01b978a02ecaa7"},
+    {file = "pytz-2022.2.1-py2.py3-none-any.whl", hash = "sha256:220f481bdafa09c3955dfbdddb7b57780e9a94f5127e35456a48589b9e0c0197"},
+    {file = "pytz-2022.2.1.tar.gz", hash = "sha256:cea221417204f2d1a2aa03ddae3e867921971d0d76f14d87abb4414415bbdcf5"},
 ]
 pywin32-ctypes = [
     {file = "pywin32-ctypes-0.2.0.tar.gz", hash = "sha256:24ffc3b341d457d48e8922352130cf2644024a4ff09762a2261fd34c36ee5942"},
@@ -1518,6 +1536,10 @@ sphinx = [
     {file = "Sphinx-5.1.1-py3-none-any.whl", hash = "sha256:309a8da80cb6da9f4713438e5b55861877d5d7976b69d87e336733637ea12693"},
     {file = "Sphinx-5.1.1.tar.gz", hash = "sha256:ba3224a4e206e1fbdecf98a4fae4992ef9b24b85ebf7b584bb340156eaf08d89"},
 ]
+sphinx-copybutton = [
+    {file = "sphinx-copybutton-0.5.0.tar.gz", hash = "sha256:a0c059daadd03c27ba750da534a92a63e7a36a7736dcf684f26ee346199787f6"},
+    {file = "sphinx_copybutton-0.5.0-py3-none-any.whl", hash = "sha256:9684dec7434bd73f0eea58dda93f9bb879d24bff2d8b187b1f2ec08dfe7b5f48"},
+]
 sphinx-rtd-theme = [
     {file = "sphinx_rtd_theme-1.0.0-py2.py3-none-any.whl", hash = "sha256:4d35a56f4508cfee4c4fb604373ede6feae2a306731d533f409ef5c3496fdbd8"},
     {file = "sphinx_rtd_theme-1.0.0.tar.gz", hash = "sha256:eec6d497e4c2195fa0e8b2016b337532b8a699a68bcb22a512870e16925c6a5c"},
@@ -1567,8 +1589,8 @@ urllib3 = [
     {file = "urllib3-1.26.11.tar.gz", hash = "sha256:ea6e8fb210b19d950fab93b60c9009226c63a28808bc8386e05301e25883ac0a"},
 ]
 virtualenv = [
-    {file = "virtualenv-20.16.2-py2.py3-none-any.whl", hash = "sha256:635b272a8e2f77cb051946f46c60a54ace3cb5e25568228bd6b57fc70eca9ff3"},
-    {file = "virtualenv-20.16.2.tar.gz", hash = "sha256:0ef5be6d07181946891f5abc8047fda8bc2f0b4b9bf222c64e6e8963baee76db"},
+    {file = "virtualenv-20.16.3-py2.py3-none-any.whl", hash = "sha256:4193b7bc8a6cd23e4eb251ac64f29b4398ab2c233531e66e40b19a6b7b0d30c1"},
+    {file = "virtualenv-20.16.3.tar.gz", hash = "sha256:d86ea0bb50e06252d79e6c241507cb904fcd66090c3271381372d6221a3970f9"},
 ]
 webencodings = [
     {file = "webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"},

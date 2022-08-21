@@ -21,13 +21,17 @@ interfering with your system-wide Python version, we recommend that you install
 Install the pyenv [prerequisites](https://github.com/pyenv/pyenv/wiki/Common-build-problems)
 first, and then install pyenv:
 
-    $ curl https://pyenv.run | bash
+```bash
+curl https://pyenv.run | bash
+```
 
 Make sure you follow the instruction at the end of the installation
 script to install the commands in your shell's rc file. Next install
 the latest version of Python by executing:
 
-    $ pyenv install 3.x.x
+```bash
+pyenv install 3.x.x
+```
 
 Where 3.x.x is replaced by the latest stable version of Python (pyenv should let you tab-complete available versions).
 
@@ -36,7 +40,7 @@ introspection and cairo build dependencies, for example, in Ubuntu
 execute:
 
 ```bash
-$ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
+sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
 gir1.2-gtk-4.0 libgirepository1.0-dev libcairo2-dev libgtksourceview-5-dev
 ```
 
@@ -49,13 +53,13 @@ pipx install poetry
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 
 ```bash
-$ cd gaphor
+cd gaphor
 # activate latest python for this project
-$ pyenv local 3.x.x # 3.x.x is the version you installed earlier
-$ poetry env use 3.x # ensures poetry /consistently/ uses latest major release
-$ poetry config virtualenvs.in-project true
-$ poetry install
-$ poetry run gaphor
+pyenv local 3.x.x # 3.x.x is the version you installed earlier
+poetry env use 3.x # ensures poetry /consistently/ uses latest major release
+poetry config virtualenvs.in-project true
+poetry install
+poetry run gaphor
 ```
 
 ## Create a Flatpak Package
@@ -73,25 +77,25 @@ repository](https://github.com/flathub/org.gaphor.Gaphor).
 
 1. Install flatpak-builder
 
-       $ sudo apt-get install flatpak-builder
+       sudo apt-get install flatpak-builder
 
 1. Install the GNOME SDK
 
-       $ flatpak install flathub org.gnome.Sdk 42
+       flatpak install flathub org.gnome.Sdk 42
 
 1. Clone the Flathub repository and install the necessary SDK:
 
-       $ git clone https://github.com/flathub/org.gaphor.Gaphor.git
-       $ cd org.gaphor.Gaphor
-       $ make setup
+       git clone https://github.com/flathub/org.gaphor.Gaphor.git
+       cd org.gaphor.Gaphor
+       make setup
 
 1. Build Gaphor Flatpak
 
-       $ make
+       make
 
 1. Install the Flatpak
 
-       $ make install
+       make install
 
 ## Create an AppImage Package
 
@@ -108,9 +112,9 @@ In order for the built AppImage to be compatible with older versions of Linux,
 we build the release versions using Docker with an older LTS version of Ubuntu.
 
 ```Bash
-$ poetry run poe package
-$ cd _packaging/appimage
-$ make dist
+poetry run poe package
+cd _packaging/appimage
+make dist
 ```
 ## Linux Distribution Packages
 
