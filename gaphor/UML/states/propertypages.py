@@ -15,8 +15,7 @@ from gaphor.diagram.propertypages import (
     new_resource_builder,
 )
 from gaphor.UML.states.state import StateItem
-
-from .statemachine import StateMachineItem
+from gaphor.UML.states.statemachine import StateMachineItem
 
 new_builder = new_resource_builder("gaphor.UML.states")
 
