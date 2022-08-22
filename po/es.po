@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-07-06 17:00+0200\n"
-"PO-Revision-Date: 2022-02-11 22:57+0000\n"
+"PO-Revision-Date: 2022-08-23 03:44+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:56
@@ -625,14 +626,12 @@ msgid "Swimlane"
 msgstr "Swimlane"
 
 #: gaphor/UML/actions/actionstoolbox.py:169
-#, fuzzy
 msgid "Control flow"
-msgstr "controlador"
+msgstr "Flujo de control"
 
 #: gaphor/UML/actions/actionstoolbox.py:176
-#, fuzzy
 msgid "Object flow"
-msgstr "Flujo de control/objeto"
+msgstr "Flujo de objetos"
 
 #: gaphor/UML/actions/actionstoolbox.py:183
 msgid "Send signal action"
@@ -652,11 +651,11 @@ msgstr "Aceptar evento"
 
 #: gaphor/UML/actions/actionstoolbox.py:207
 msgid "Input pin"
-msgstr ""
+msgstr "Pin de entrada"
 
 #: gaphor/UML/actions/actionstoolbox.py:214
 msgid "Output pin"
-msgstr ""
+msgstr "Pin de salida"
 
 #: gaphor/UML/actions/activitynodes.py:189
 msgid "merge/decision"
@@ -696,11 +695,11 @@ msgstr "Swimlane nuevo"
 
 #: gaphor/UML/actions/pin.py:59
 msgid "input pin"
-msgstr ""
+msgstr "pin de entrada"
 
 #: gaphor/UML/actions/pin.py:65
 msgid "output pin"
-msgstr ""
+msgstr "pin de salida"
 
 #: gaphor/UML/actions/propertypages.glade:28
 #: gaphor/UML/actions/propertypages.ui:11
@@ -766,13 +765,12 @@ msgstr "Guardia"
 #: gaphor/UML/actions/propertypages.glade:322
 #: gaphor/UML/actions/propertypages.ui:245
 msgid "Parameter Nodes"
-msgstr ""
+msgstr "Nodos de parámetros"
 
 #: gaphor/UML/actions/propertypages.glade:350
 #: gaphor/UML/actions/propertypages.ui:271
-#, fuzzy
 msgid "Parameters"
-msgstr "partes"
+msgstr "Parámetros"
 
 #: gaphor/UML/actions/propertypages.glade:381
 #: gaphor/UML/actions/propertypages.ui:295
@@ -801,6 +799,15 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Añadir y editar nodos de parámetros de actividad según la sintaxis UML.\n"
+"\n"
+"  • <tt>parámetro</tt> (entrada, nombre)\n"
+"  • <tt>atrib. salida: int</tt> (salida con tipo)\n"
+"  • <tt>en atrib.: int[0..1]</tt> (entrada, tipo y multiplicidad)\n"
+"\n"
+"Pulse <b>Intro</b> para editar, <b>Retroceso</b>/<b>Suprimir</b> para "
+"eliminar elementos.\n"
+"Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
 #: gaphor/UML/actions/propertypages.ui:321
 msgid ""
@@ -1136,9 +1143,8 @@ msgid "Indirectly Instantiated"
 msgstr "Instanciada indirectamente"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16
-#, fuzzy
 msgid "Deployments"
-msgstr "implementa"
+msgstr "Despliegues"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:20
 msgid "Artifact"
@@ -1376,7 +1382,7 @@ msgstr "Nota o comentario"
 
 #: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
 msgid "Element can’t be represented on a diagram."
-msgstr ""
+msgstr "El elemento no se puede representar en un diagrama."
 
 #: gaphor/extensions/sphinx.py:65
 msgid "No model file configured for model '{model_name}'."
@@ -1439,7 +1445,7 @@ msgstr "Exportar diagrama como PDF"
 #: gaphor/plugins/errorreports/errorreports.py:65
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
-msgstr ""
+msgstr "Informes de errores"
 
 #: gaphor/plugins/errorreports/errorreports.glade:21
 #: gaphor/plugins/errorreports/errorreports.ui:18
@@ -1447,15 +1453,16 @@ msgid ""
 "Any unhandled errors are shown here. You can use these to provide extra "
 "information when you create an issue on GitHub."
 msgstr ""
+"Cualquier error no manejado se muestra aquí. Puede usarlos para proporcionar "
+"información adicional cuando cree una incidencia en GitHub."
 
 #: gaphor/plugins/errorreports/errorreports.py:102
 msgid "No errors have been intercepted. We’re good."
-msgstr ""
+msgstr "No se ha interceptado ningún error. Estamos bien."
 
 #: gaphor/plugins/errorreports/errorreports.py:106
-#, fuzzy
 msgid "Errors:"
-msgstr "realiza"
+msgstr "Errores:"
 
 #: gaphor/plugins/errorreports/errorreports.py:155
 msgid ""
@@ -1463,6 +1470,9 @@ msgid ""
 "Please file an issue on GitHub and include information from Tools → Error"
 " Reports."
 msgstr ""
+"Se ha producido un error inesperado.\n"
+"Presente una incidencia en GitHub e incluya la información de Herramientas → "
+"Informes de error."
 
 #: gaphor/plugins/xmiexport/__init__.py:24
 msgid "Export as XMI"
@@ -2304,7 +2314,7 @@ msgstr ""
 
 #: gaphor/ui/errorhandler.py:28 gaphor/ui/errorhandler.py:31
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #: gaphor/ui/errorhandler.py:28
 msgid "Start debug session"
@@ -2399,13 +2409,12 @@ msgid "Closing will cause any unsaved changes to be discarded."
 msgstr "El cierre hará que se descarten los cambios no guardados."
 
 #: gaphor/ui/filemanager.py:310
-#, fuzzy
 msgid "Close without saving changes"
-msgstr "Cerrar _sin guardar los cambios"
+msgstr "Cerrar sin guardar los cambios"
 
 #: gaphor/ui/filemanager.py:312
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:87
 msgid "Create New Model…"
@@ -2484,9 +2493,8 @@ msgid "_Open"
 msgstr "_Abrir"
 
 #: gaphor/ui/namespace.py:48
-#, fuzzy
 msgid "Add to diagram"
-msgstr "Diagrama de códigos"
+msgstr "Añadir al diagrama"
 
 #: gaphor/ui/namespace.py:51
 msgid "_Rename"
