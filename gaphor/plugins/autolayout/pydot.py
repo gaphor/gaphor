@@ -58,10 +58,9 @@ class AutoLayout(Service, ActionProvider):
         with Transaction(self.event_manager):
             for node in rendered_graph.get_nodes():
                 name = node.get_name().replace('"', "")
-                presentation = next(
+                if presentation := next(
                     (p for p in diagram.ownedPresentation if p.id == name), None
-                )
-                if presentation:
+                ):
                     pos = parse_point(node.get_pos())
                     presentation.matrix.set(
                         x0=pos[0] - presentation.width / 2 + offset,
@@ -71,10 +70,9 @@ class AutoLayout(Service, ActionProvider):
 
             for edge in rendered_graph.get_edges():
                 id = strip_quotes(edge.get("id"))
-                presentation = next(
+                if presentation := next(
                     (p for p in diagram.ownedPresentation if p.id == id), None
-                )
-                if presentation:
+                ):
                     points = parse_edge_pos(edge.get_pos())
 
                     if isinstance(presentation, GeneralizationItem):
