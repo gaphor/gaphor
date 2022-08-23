@@ -3,7 +3,7 @@ import logging
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontStyle, FontWeight, VerticalAlign
+from gaphor.core.styling import FontStyle, FontWeight, JustifyContent
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
@@ -99,7 +99,7 @@ class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={
-                "vertical-align": VerticalAlign.TOP,
+                "justify-content": JustifyContent.START,
             },
             draw=draw_border,
         )

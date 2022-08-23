@@ -7,9 +7,9 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import (
     Box,
+    JustifyContent,
     Text,
     TextAlign,
-    VerticalAlign,
     draw_border,
     draw_top_separator,
 )
@@ -126,7 +126,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={
-                "vertical-align": VerticalAlign.TOP,
+                "justify-content": JustifyContent.START,
             },
             draw=draw_border,
         )

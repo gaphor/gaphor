@@ -7,9 +7,9 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import (
     Box,
+    JustifyContent,
     Text,
     TextAlign,
-    VerticalAlign,
     draw_border,
     draw_top_separator,
 )
@@ -93,7 +93,7 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             self.id_and_text_compartment(),
             style={
-                "vertical-align": VerticalAlign.TOP,
+                "justify-content": JustifyContent.START,
             },
             draw=draw_border,
         )
