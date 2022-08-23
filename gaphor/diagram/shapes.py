@@ -7,8 +7,13 @@ from typing import Callable
 from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling import DrawContext, UpdateContext
-from gaphor.core.styling import Style, TextAlign, VerticalAlign, merge_styles
-from gaphor.core.styling.properties import JustifyContent
+from gaphor.core.styling import (
+    JustifyContent,
+    Style,
+    TextAlign,
+    VerticalAlign,
+    merge_styles,
+)
 from gaphor.diagram.text import Layout
 
 

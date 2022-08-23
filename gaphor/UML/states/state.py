@@ -7,8 +7,7 @@ from gaphas.types import Pos
 from gaphor import UML
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import TextAlign, VerticalAlign
-from gaphor.core.styling.properties import JustifyContent
+from gaphor.core.styling import JustifyContent, TextAlign, VerticalAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents

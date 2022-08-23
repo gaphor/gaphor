@@ -15,6 +15,7 @@ from gaphor.core.styling.properties import (
     Color,
     FontStyle,
     FontWeight,
+    JustifyContent,
     Style,
     TextAlign,
     TextDecoration,

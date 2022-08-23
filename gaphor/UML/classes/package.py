@@ -3,7 +3,7 @@
 from gaphor import UML
 from gaphor.core import gettext
 from gaphor.diagram.presentation import ElementPresentation, Named, from_package_str
-from gaphor.diagram.shapes import Box, Text, VerticalAlign, cairo_state, stroke
+from gaphor.diagram.shapes import Box, JustifyContent, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.recipes import stereotypes_str
@@ -40,9 +40,9 @@ class PackageItem(Named, ElementPresentation):
             ),
             style={
                 "padding": (24, 12, 4, 12),
-                "vertical-align": VerticalAlign.TOP
+                "justify-content": JustifyContent.START
                 if self.diagram and self.children
-                else VerticalAlign.MIDDLE,
+                else JustifyContent.CENTER,
             },
             draw=draw_package,
         )

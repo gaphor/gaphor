@@ -6,8 +6,7 @@ from gaphor import UML
 from gaphor.core import gettext
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontWeight, VerticalAlign
-from gaphor.core.styling.properties import JustifyContent
+from gaphor.core.styling import FontWeight, JustifyContent, VerticalAlign
 from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
