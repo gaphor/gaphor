@@ -3,18 +3,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  0.6.0\n"
+"Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-08-23 17:08+0200\n"
-"PO-Revision-Date: 2022-01-09 06:56+0000\n"
+"PO-Revision-Date: 2022-08-24 15:18+0000\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
+"\n"
 "Language: nl\n"
-"Language-Team: Dutch "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/nl/>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 4.14-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:56
@@ -630,14 +631,12 @@ msgid "Swimlane"
 msgstr "Zwembaan"
 
 #: gaphor/UML/actions/actionstoolbox.py:174
-#, fuzzy
 msgid "Control flow"
-msgstr "Controller"
+msgstr "Control flow"
 
 #: gaphor/UML/actions/actionstoolbox.py:181
-#, fuzzy
 msgid "Object flow"
-msgstr "Control/object flow"
+msgstr "Object flow"
 
 #: gaphor/UML/actions/actionstoolbox.py:188
 msgid "Send signal action"
@@ -657,11 +656,11 @@ msgstr "Accept event"
 
 #: gaphor/UML/actions/actionstoolbox.py:212
 msgid "Input pin"
-msgstr ""
+msgstr "Invoer pin"
 
 #: gaphor/UML/actions/actionstoolbox.py:219
 msgid "Output pin"
-msgstr ""
+msgstr "Uitvoer pin"
 
 #: gaphor/UML/actions/activitynodes.py:193
 msgid "merge/decision"
@@ -701,11 +700,11 @@ msgstr "Nieuwe Zwembaan"
 
 #: gaphor/UML/actions/pin.py:59
 msgid "input pin"
-msgstr ""
+msgstr "invoer pin"
 
 #: gaphor/UML/actions/pin.py:65
 msgid "output pin"
-msgstr ""
+msgstr "uitvoer pin"
 
 #: gaphor/UML/actions/propertypages.glade:28
 #: gaphor/UML/actions/propertypages.ui:11
@@ -771,13 +770,12 @@ msgstr "Guard"
 #: gaphor/UML/actions/propertypages.glade:322
 #: gaphor/UML/actions/propertypages.ui:245
 msgid "Parameter Nodes"
-msgstr ""
+msgstr "Parameter Nodes"
 
 #: gaphor/UML/actions/propertypages.glade:350
 #: gaphor/UML/actions/propertypages.ui:271
-#, fuzzy
 msgid "Parameters"
-msgstr "onderdelen"
+msgstr "Parameters"
 
 #: gaphor/UML/actions/propertypages.glade:381
 #: gaphor/UML/actions/propertypages.ui:294
@@ -1244,16 +1242,14 @@ msgstr "Stereotypen"
 
 #: gaphor/UML/states/propertypages.glade:39
 #: gaphor/UML/states/propertypages.ui:104
-#, fuzzy
 msgid "Show Regions"
-msgstr "Toon Richting"
+msgstr "Toon Regionen"
 
 #: gaphor/UML/states/propertypages.glade:62
 #: gaphor/UML/states/propertypages.glade:84
 #: gaphor/UML/states/propertypages.ui:91 gaphor/UML/states/propertypages.ui:120
-#, fuzzy
 msgid "Regions"
-msgstr "Aggregatie"
+msgstr "Regionen"
 
 #: gaphor/UML/states/propertypages.glade:105
 #: gaphor/UML/states/propertypages.ui:20
@@ -1276,9 +1272,8 @@ msgid "Activities"
 msgstr "Activities"
 
 #: gaphor/UML/states/statemachine.py:41
-#, fuzzy
 msgid "statemachine"
-msgstr "State Machine"
+msgstr "statemachine"
 
 #: gaphor/UML/states/statestoolbox.py:20 gaphor/UML/states/statestoolbox.py:79
 msgid "State"
