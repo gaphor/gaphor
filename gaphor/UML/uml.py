@@ -399,7 +399,7 @@ class Profile(Package):
 
 
 class Behavior(Class):
-    context2: relation_one[BehavioredClassifier]
+    behavioredClassifier: relation_one[BehavioredClassifier]
     isReentrant: _attribute[int] = _attribute("isReentrant", int)
     redefinedBehavior: relation_many[Behavior]
 
@@ -881,7 +881,7 @@ Namespace.member.add(Association.memberEnd)  # type: ignore[attr-defined]
 # defined in umloverrides.py
 
 Extension.ownedEnd = association("ownedEnd", ExtensionEnd, upper=1, composite=True)
-BehavioredClassifier.ownedBehavior = association("ownedBehavior", Behavior, composite=True, opposite="context2")
+BehavioredClassifier.ownedBehavior = association("ownedBehavior", Behavior, composite=True, opposite="behavioredClassifier")
 BehavioredClassifier.interfaceRealization = redefine(BehavioredClassifier, "interfaceRealization", InterfaceRealization, NamedElement.clientDependency)
 Namespace.ownedMember.add(BehavioredClassifier.ownedBehavior)  # type: ignore[attr-defined]
 ActivityNode.incoming = association("incoming", ActivityEdge, opposite="target")
@@ -1082,8 +1082,9 @@ Package.packagedElement.add(Package.nestedPackage)  # type: ignore[attr-defined]
 Profile.metamodelReference = association("metamodelReference", PackageImport, composite=True)
 Profile.metaclassReference = association("metaclassReference", ElementImport, composite=True)
 Behavior.redefinedBehavior = association("redefinedBehavior", Behavior)
-Behavior.context2 = association("context2", BehavioredClassifier, upper=1, opposite="ownedBehavior")
+Behavior.behavioredClassifier = association("behavioredClassifier", BehavioredClassifier, upper=1, opposite="ownedBehavior")
 RedefinableElement.redefinedElement.add(Behavior.redefinedBehavior)  # type: ignore[attr-defined]
+NamedElement.namespace.add(Behavior.behavioredClassifier)  # type: ignore[attr-defined]
 Activity.group = association("group", ActivityGroup, composite=True, opposite="activity")
 Activity.edge = association("edge", ActivityEdge, composite=True, opposite="activity")
 Activity.node = association("node", ActivityNode, composite=True, opposite="activity")
