@@ -6,7 +6,7 @@ from gaphor import UML
 from gaphor.core import gettext
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontWeight, JustifyContent, VerticalAlign
+from gaphor.core.styling import FontWeight, JustifyContent
 from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
@@ -52,9 +52,9 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
                 style={"justify-content": JustifyContent.STRETCH},
             ),
             style={
-                "vertical-align": VerticalAlign.TOP
+                "justify-content": JustifyContent.START
                 if (self.diagram and self.children) or self.show_regions
-                else VerticalAlign.MIDDLE,
+                else JustifyContent.CENTER,
             },
             draw=draw_border,
         )
