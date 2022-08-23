@@ -6,7 +6,12 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    namespace_config,
+    new_item_factory,
+)
 from gaphor.UML import diagramitems
 from gaphor.UML.recipes import owner_package
 
@@ -49,7 +54,6 @@ def state_machine_config(new_item, name=None):
         region = state_machine.region[0]
     else:
         region = subject.model.create(UML.Region)
-        region.name = gettext("Default Region")
         region.stateMachine = state_machine
 
     subject.container = region
@@ -58,6 +62,18 @@ def state_machine_config(new_item, name=None):
 states = ToolSection(
     gettext("States"),
     (
+        ToolDef(
+            "toolbox-state-machine",
+            gettext("State Machine"),
+            "gaphor-state-machine-symbolic",
+            None,
+            new_item_factory(
+                diagramitems.StateMachineItem,
+                UML.StateMachine,
+                config_func=namespace_config,
+            ),
+            handle_index=SE,
+        ),
         ToolDef(
             "toolbox-state",
             gettext("State"),

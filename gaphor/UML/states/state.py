@@ -1,26 +1,41 @@
 """State diagram item."""
 
+from __future__ import annotations
+
+from gaphas.types import Pos
 
 from gaphor import UML
+from gaphor.core.modeling.element import Element
+from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import TextAlign, VerticalAlign
+from gaphor.core.styling.properties import JustifyContent
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.states.region import region_compartment
 
 
 @represents(UML.State)
 class StateItem(ElementPresentation[UML.State], Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=50, height=30)
-
+        self._region_boxes = []
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.watch("subject[State].entry.name", self.update_shapes)
         self.watch("subject[State].exit.name", self.update_shapes)
         self.watch("subject[State].doActivity.name", self.update_shapes)
+        self.watch("subject[State].region.name")
+        self.watch("subject[State].region", self.update_shapes)
+        self.watch("show_regions", self.update_shapes)
+
+    show_regions: attribute[int] = attribute("show_regions", int, default=True)
 
     def update_shapes(self, event=None):
+        self._region_boxes = (
+            list(region_compartment(self.subject)) if self.show_regions else []
+        )
         compartment = Box(
             Text(
                 text=lambda: self.subject.entry.name
@@ -55,10 +70,24 @@ class StateItem(ElementPresentation[UML.State], Named):
                 style={"padding": (4, 4, 4, 4)},
             ),
             compartment,
+            Box(
+                *(self._region_boxes),
+                style={"justify-content": JustifyContent.STRETCH},
+            ),
             style={
                 "vertical-align": VerticalAlign.TOP,
             },
             draw=draw_state,
+        )
+
+    def subject_at_point(self, pos: Pos) -> Element | None:
+        return next(
+            (
+                region
+                for region, bounds in zip(self.subject.region, self._region_boxes)
+                if pos in bounds
+            ),
+            self.subject,
         )
 
 

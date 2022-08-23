@@ -71,11 +71,69 @@
       </object>
     </child>
     <child>
-      <object class="GtkEntry" id="guard">
-      </object>
+      <object class="GtkEntry" id="guard"/>
     </child>
     <style>
       <class name="propertypage"/>
     </style>
+  </object>
+
+  <object class="GtkAdjustment" id="num-regions-adjustment">
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+
+  <object class="GtkExpander" id="region-editor">
+    <property name="margin-top">12</property>
+    <child type="label">
+      <object class="GtkLabel" id="titlelabel">
+        <property name="label" translatable="1">Regions</property>
+        <attributes>
+          <attribute name="weight" value="bold"></attribute>
+        </attributes>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox" id="childbox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox">
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Show Regions</property>
+                <property name="halign">start</property>
+                <property name="hexpand">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="show-regions">
+                <signal name="notify::active" handler="show-regions-changed" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="1">Regions</property>
+                <property name="halign">start</property>
+                <property name="hexpand">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="num-regions">
+                <property name="adjustment">num-regions-adjustment</property>
+                <signal name="value-changed" handler="regions-changed" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
+        <style>
+          <class name="propertypage"/>
+        </style>
+      </object>
+    </child>
   </object>
 </interface>

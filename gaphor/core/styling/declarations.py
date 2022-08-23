@@ -6,6 +6,7 @@ from tinycss2.parser import parse_declaration_list
 from gaphor.core.styling.properties import (
     FontStyle,
     FontWeight,
+    JustifyContent,
     Number,
     Padding,
     TextAlign,
@@ -72,7 +73,7 @@ def parse_value(tokens):
         elif token.type in ("dimension", "number"):
             value.append(token.int_value if token.is_integer else token.value)
         elif token.type == "hash":
-            value.append("#" + token.value)
+            value.append(f"#{token.value}")
         elif token.type == "function":
             value.append(token)
         else:
@@ -85,11 +86,7 @@ number = (int, float)
 
 
 def _clip_color(c):
-    if c < 0:
-        return 0
-    if c > 1:
-        return 1
-    return c
+    return 0 if c < 0 else min(c, 1)
 
 
 @declarations.register("background-color", "color", "text-color")
@@ -109,18 +106,14 @@ def parse_color(prop, value):
     "border-radius",
 )
 def parse_positive_number(prop, value) -> Optional[Number]:
-    if isinstance(value, number) and value >= 0:
-        return value
-    return None
+    return value if isinstance(value, number) and value >= 0 else None
 
 
 @declarations.register(
     "opacity",
 )
 def parse_factor(prop, value) -> Optional[Number]:
-    if isinstance(value, number) and 0 <= value <= 1:
-        return value
-    return None
+    return value if isinstance(value, number) and 0 <= value <= 1 else None
 
 
 @declarations.register("font-family")
@@ -136,9 +129,7 @@ def parse_string(prop, value) -> Optional[str]:
 def parse_font_size(prop, value) -> Union[None, int, float, str]:
     if isinstance(value, number) and value > 0:
         return value
-    if isinstance(value, str) and value in FONT_SIZE_VALUES:
-        return value
-    return None
+    return value if isinstance(value, str) and value in FONT_SIZE_VALUES else None
 
 
 @declarations.register("padding")
@@ -173,6 +164,7 @@ def parse_sequence_numbers(
 enum_styles: Dict[str, Dict[str, object]] = {
     "font-style": {e.value: e for e in FontStyle},
     "font-weight": {e.value: e for e in FontWeight},
+    "justify-content": {e.value: e for e in JustifyContent},
     "text-decoration": {e.value: e for e in TextDecoration},
     "text-align": {e.value: e for e in TextAlign},
     "vertical-align": {e.value: e for e in VerticalAlign},

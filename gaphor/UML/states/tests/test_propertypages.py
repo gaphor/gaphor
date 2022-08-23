@@ -1,6 +1,11 @@
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
-from gaphor.UML.states.propertypages import StatePropertyPage, TransitionPropertyPage
+from gaphor.UML.states.propertypages import (
+    RegionPropertyPage,
+    StatePropertyPage,
+    TransitionPropertyPage,
+)
+from gaphor.UML.states.state import StateItem
 
 
 def test_state_property_page_entry(element_factory):
@@ -45,3 +50,14 @@ def test_transition_property_page(element_factory):
     guard.set_text("test")
 
     assert subject.guard.specification == "test"
+
+
+def test_region_property_page(create):
+    item = create(StateItem, UML.State)
+    property_page = RegionPropertyPage(item)
+
+    widget = property_page.construct()
+    num_regions = find(widget, "num-regions")
+    num_regions.set_value(4)
+
+    assert len(item.subject.region) == 4

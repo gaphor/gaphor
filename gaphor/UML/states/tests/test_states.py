@@ -1,11 +1,15 @@
 from gaphor import UML
 from gaphor.core.modeling import Diagram
 from gaphor.UML.states.state import StateItem
+from gaphor.UML.states.statemachine import StateMachineItem
 
 
 def test_state(create):
-    """Test creation of states."""
     assert create(StateItem, UML.State)
+
+
+def test_statemachine(create):
+    assert create(StateMachineItem, UML.StateMachine)
 
 
 def test_activities_persistence(create, element_factory, saver, loader):

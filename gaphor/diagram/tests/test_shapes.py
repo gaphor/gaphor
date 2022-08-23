@@ -3,6 +3,7 @@ import pytest
 from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling.diagram import FALLBACK_STYLE
+from gaphor.core.styling.properties import JustifyContent
 from gaphor.diagram.shapes import (
     Box,
     DrawContext,
@@ -62,6 +63,65 @@ def test_draw_box_with_custom_draw_function(context):
     box.draw(context=context, bounding_box=Rectangle())
 
     assert called
+
+
+def test_draw_last_box_with_all_remaining_space(context):
+    bounding_boxes = []
+
+    def draw(_box, _context, bounding_box):
+        bounding_boxes.append(bounding_box)
+
+    box = Box(
+        Box(style={"min-height": 80}, draw=draw),
+        Box(draw=draw),
+        style={"vertical-align": VerticalAlign.TOP},
+    )
+
+    box.size(context=context)
+    box.draw(context=context, bounding_box=Rectangle(0, 0, 100, 120))
+
+    assert bounding_boxes[0].height == 80
+    assert bounding_boxes[1].height == 40
+
+
+def test_draw_box_with_stretched_content(context):
+    bounding_boxes = []
+
+    def draw(_box, _context, bounding_box):
+        bounding_boxes.append(bounding_box)
+
+    box = Box(
+        Box(draw=draw),
+        Box(draw=draw),
+        style={"justify-content": JustifyContent.STRETCH},
+    )
+
+    box.size(context=context)
+    box.draw(context=context, bounding_box=Rectangle(0, 0, 100, 120))
+
+    assert bounding_boxes[0].height == 60
+    assert bounding_boxes[1].height == 60
+
+
+def test_draw_box_with_stretched_oversized_content(context):
+    bounding_boxes = []
+
+    def draw(_box, _context, bounding_box):
+        bounding_boxes.append(bounding_box)
+
+    box = Box(
+        Box(draw=draw),
+        Box(style={"min-height": 80}, draw=draw),
+        style={"justify-content": JustifyContent.STRETCH},
+    )
+
+    box.size(context=context)
+    box.draw(context=context, bounding_box=Rectangle(0, 0, 100, 120))
+
+    assert bounding_boxes[0].y == 0
+    assert bounding_boxes[0].height == 40
+    assert bounding_boxes[1].y == 40
+    assert bounding_boxes[1].height == 80
 
 
 def test_draw_icon_box(context):

@@ -624,6 +624,7 @@ class State(Namespace, Vertex):
     doActivity: relation_one[Behavior]
     entry: relation_one[Behavior]
     exit: relation_one[Behavior]
+    region: relation_many[Region]
     statevariant: relation_one[Constraint]
     submachine: relation_one[StateMachine]
 
@@ -1224,7 +1225,7 @@ StateMachine.region = association("region", Region, lower=1, composite=True, opp
 Namespace.ownedMember.add(StateMachine.region)  # type: ignore[attr-defined]
 Region.stateMachine = association("stateMachine", StateMachine, upper=1, opposite="region")
 Region.subvertex = association("subvertex", Vertex, composite=True, opposite="container")
-Region.state = association("state", State, upper=1)
+Region.state = association("state", State, upper=1, opposite="region")
 NamedElement.namespace.add(Region.stateMachine)  # type: ignore[attr-defined]
 Namespace.ownedMember.add(Region.subvertex)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Region.state)  # type: ignore[attr-defined]
@@ -1240,23 +1241,25 @@ Vertex.container = association("container", Region, upper=1, opposite="subvertex
 Vertex.outgoing = association("outgoing", Transition, opposite="source")
 Vertex.incoming = association("incoming", Transition, opposite="target")
 NamedElement.namespace.add(Vertex.container)  # type: ignore[attr-defined]
-Pseudostate.stateMachine = association("stateMachine", StateMachine, upper=1)
 Pseudostate.state = association("state", State, upper=1)
-NamedElement.namespace.add(Pseudostate.stateMachine)  # type: ignore[attr-defined]
+Pseudostate.stateMachine = association("stateMachine", StateMachine, upper=1)
 Element.owner.add(Pseudostate.state)  # type: ignore[attr-defined]
+NamedElement.namespace.add(Pseudostate.stateMachine)  # type: ignore[attr-defined]
+ConnectionPointReference.state = association("state", State, upper=1)
 ConnectionPointReference.exit = association("exit", Pseudostate)
 ConnectionPointReference.entry = association("entry", Pseudostate)
-ConnectionPointReference.state = association("state", State, upper=1)
 NamedElement.namespace.add(ConnectionPointReference.state)  # type: ignore[attr-defined]
 State.entry = association("entry", Behavior, upper=1, composite=True)
 State.exit = association("exit", Behavior, upper=1, composite=True)
 State.doActivity = association("doActivity", Behavior, upper=1, composite=True)
 State.statevariant = association("statevariant", Constraint, upper=1, composite=True, opposite="owningState")
 State.submachine = association("submachine", StateMachine, upper=1)
+State.region = association("region", Region, composite=True, opposite="state")
 Element.ownedElement.add(State.entry)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.exit)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.doActivity)  # type: ignore[attr-defined]
 Element.ownedElement.add(State.statevariant)  # type: ignore[attr-defined]
+Namespace.ownedMember.add(State.region)  # type: ignore[attr-defined]
 Port.encapsulatedClassifier = association("encapsulatedClassifier", EncapsulatedClassifier, upper=1, opposite="ownedPort")
 NamedElement.namespace.add(Port.encapsulatedClassifier)  # type: ignore[attr-defined]
 Deployment.location = association("location", DeploymentTarget, upper=1, opposite="deployment")

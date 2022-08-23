@@ -8,6 +8,7 @@ from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling import DrawContext, UpdateContext
 from gaphor.core.styling import Style, TextAlign, VerticalAlign, merge_styles
+from gaphor.core.styling.properties import JustifyContent
 from gaphor.diagram.text import Layout
 
 
@@ -132,12 +133,20 @@ class Box:
         style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        valign = style.get("vertical-align", VerticalAlign.MIDDLE)
-        height = sum(h for _w, h in self.sizes)
+        sizes = self.sizes
 
-        if self._draw_border:
-            self._draw_border(self, new_context, bounding_box)
-        x = bounding_box.x + padding_left
+        justify_content = style.get("justify-content", JustifyContent.START)
+        if justify_content is JustifyContent.STRETCH and sizes:
+            height = bounding_box.height
+            avg_height = height / len(sizes)
+            oversized = [h for _w, h in sizes if h > avg_height]
+            d = len(sizes) - len(oversized)
+            avg_height = (height - sum(oversized)) / d if d > 0 else 0
+        else:
+            height = sum(h for _w, h in sizes)
+            avg_height = 0
+
+        valign = style.get("vertical-align", VerticalAlign.MIDDLE)
         if valign is VerticalAlign.MIDDLE:
             y = (
                 bounding_box.y
@@ -148,10 +157,44 @@ class Box:
             y = bounding_box.y + bounding_box.height - height - padding_bottom
         else:
             y = bounding_box.y + padding_top
+
+        if self._draw_border:
+            self._draw_border(self, new_context, bounding_box)
+
+        x = bounding_box.x + padding_left
         w = bounding_box.width - padding_right - padding_left
-        for c, (_w, h) in zip(self.children, self.sizes):
-            c.draw(context, Rectangle(x, y, w, h))
-            y += h
+        if self.children:
+            last_child = self.children[-1]
+            for c, (_w, h) in zip(self.children, sizes):
+                if c is last_child and valign is VerticalAlign.TOP:
+                    h = bounding_box.height - y
+                elif h < avg_height:
+                    h = avg_height
+                c.draw(context, Rectangle(x, y, w, h))
+                y += h
+
+
+class BoundedBox(Box):
+    """A Box.
+
+    It keeps track of the latest bounding box used for drawing.
+    """
+
+    def __init__(
+        self,
+        *children,
+        style: Style = {},
+        draw: Callable[[Box, DrawContext, Rectangle], None] | None = None,
+    ):
+        super().__init__(*children, style=style, draw=draw)
+        self.bounding_box = Rectangle()
+
+    def draw(self, context: DrawContext, bounding_box: Rectangle):
+        self.bounding_box = bounding_box
+        return super().draw(context, bounding_box)
+
+    def __contains__(self, pos_or_rect):
+        return pos_or_rect in self.bounding_box
 
 
 class IconBox:
