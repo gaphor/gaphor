@@ -221,7 +221,7 @@ class Session(Service):
                 self.shutdown_service(name, srv)
 
     def shutdown_service(self, name, srv):
-        logger.info(f"Shutting down service {name}")
+        logger.debug("Shutting down service %s", name)
 
         self.event_manager.handle(ServiceShutdownEvent(name, srv))
         self.component_registry.unregister(srv)
