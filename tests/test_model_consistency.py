@@ -28,6 +28,7 @@ from io import StringIO
 from typing import Iterable
 
 from gaphas.connector import Handle
+from hypothesis import reproduce_failure  # noqa
 from hypothesis.control import assume, cleanup
 from hypothesis.errors import UnsatisfiedAssumption
 from hypothesis.stateful import (
