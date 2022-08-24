@@ -226,7 +226,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         buffer = self.text.get_buffer()
         input_mark = buffer.get_mark("input")
         self.text.scroll_to_mark(input_mark, 0, True, 1, 1)
-        return False
+        return GLib.SOURCE_REMOVE
 
     def push(self, line):
         self.buffer.append(line)
