@@ -7,14 +7,13 @@ import functools
 import logging
 from typing import Optional, Tuple
 
-from gi.repository import Gdk, GObject, Gtk
+from gi.repository import Gdk, GLib, GObject, Gtk
 
 from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 from gaphor.diagram.event import ToolCompleted
 from gaphor.diagram.hoversupport import flowbox_add_hover_support
 from gaphor.diagram.tools.dnd import ToolboxActionDragData
-from gaphor.event import TransactionCommit
 from gaphor.services.modelinglanguage import (
     ModelingLanguageChanged,
     ModelingLanguageService,
@@ -187,9 +186,10 @@ class Toolbox(UIComponent):
                     return
 
     @event_handler(ToolCompleted)
-    def _on_diagram_item_placed(self, event: TransactionCommit) -> None:
+    def _on_diagram_item_placed(self, event) -> None:
         if self.properties.get("reset-tool-after-create", True):
-            self.select_tool("toolbox-pointer")
+            # Select tool from an idle handler, so the original tool can complete propertly.
+            GLib.idle_add(self.select_tool, "toolbox-pointer")
 
     @event_handler(ModelingLanguageChanged)
     def _on_modeling_language_changed(self, event: ModelingLanguageChanged) -> None:

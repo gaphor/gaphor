@@ -124,7 +124,7 @@ def progress_idle_handler(progress_bar, queue):
         pass
     if percentage:
         progress_bar.set_fraction(min(percentage, 100.0) / 100.0)
-    return True
+    return GLib.SOURCE_CONTINUE
 
 
 def remove_idle_handler(window, idle_id):
