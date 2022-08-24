@@ -228,8 +228,7 @@ class ZeroEventDef(EventDef):
     pass
 
 
-from gaphor.core.modeling.element import Element
-class Undeveloped(Element):
+class Undeveloped(Class):
     pass
 
 
