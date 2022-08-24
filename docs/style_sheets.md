@@ -178,6 +178,9 @@ family, size, weight.
 ======================= =======================================
 ``border-radius``       Radius for rectangles: ``border-radius: 4``
 ``dash-style``          Style for dashed lines: ``dash-style: 7 5``
+``justify-content``     Content alignment for boxes.
+
+                        Either ``start``, ``end``, ``center`` or ``stretch``.
 ``line-style``          Either ``normal`` or ``sloppy [factor]``
 ``line-width``          Set the width for lines: ``line-width: 2``
 ``min-height``          Set minimal height for an item: ``min-height: 50``
