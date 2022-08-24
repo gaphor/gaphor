@@ -137,10 +137,10 @@ family, size, weight.
                         ``background-color: rgb(255, 255, 255);``
 
                         ``background-color: hsl(130, 95%, 10%);``
-``color``               Color used for lines
-``text-color``          Color for text
+``color``               Color used for lines.
+``text-color``          Color for text.
 ``opacity``             Color opacity factor (``0.0`` - ``1.0``),
-                        applied to all colors
+                        applied to all colors.
 ======================= =======================================
 ```
 
@@ -152,18 +152,18 @@ family, size, weight.
 
 ```{eval-rst}
 ======================= =======================================
-``font-family``         A single font name (e.g. ``sans``, ``serif``, ``courier``)
-``font-size``           An absolute size (e.g. ``14``) or a size value (e.g. ``small``)
-``font-style``          Either ``normal`` or ``italic``
-``font-weight``         Either ``normal`` or ``bold``
-``text-align``          Either ``left``, ``center``, ``right``
-``text-decoration``     Either ``none`` or ``underline``
-``vertical-align``      Vertical alignment for text
+``font-family``         A single font name (e.g. ``sans``, ``serif``, ``courier``).
+``font-size``           An absolute size (e.g. ``14``) or a size value (e.g. ``small``).
+``font-style``          Either ``normal`` or ``italic``.
+``font-weight``         Either ``normal`` or ``bold``.
+``text-align``          Either ``left``, ``center``, ``right``.
+``text-decoration``     Either ``none`` or ``underline``.
+``vertical-align``      Vertical alignment for text.
 
-                        Either ``top``, ``middle`` or ``bottom``
-``vertical-spacing``    Set vertical spacing for icon-like items (actors, start state)
+                        Either ``top``, ``middle`` or ``bottom``.
+``vertical-spacing``    Set vertical spacing for icon-like items (actors, start state).
 
-                        Example: ``vertical-spacing: 4``
+                        Example: ``vertical-spacing: 4``.
 ======================= =======================================
 ```
 
@@ -176,18 +176,18 @@ family, size, weight.
 
 ```{eval-rst}
 ======================= =======================================
-``border-radius``       Radius for rectangles: ``border-radius: 4``
-``dash-style``          Style for dashed lines: ``dash-style: 7 5``
+``border-radius``       Radius for rectangles: ``border-radius: 4``.
+``dash-style``          Style for dashed lines: ``dash-style: 7 5``.
 ``justify-content``     Content alignment for boxes.
 
                         Either ``start``, ``end``, ``center`` or ``stretch``.
-``line-style``          Either ``normal`` or ``sloppy [factor]``
-``line-width``          Set the width for lines: ``line-width: 2``
-``min-height``          Set minimal height for an item: ``min-height: 50``
-``min-width``           Set minimal width for an item: ``min-width: 100``
-``padding``             CSS style padding (top, right, bottom, left)
+``line-style``          Either ``normal`` or ``sloppy [factor]``.
+``line-width``          Set the width for lines: ``line-width: 2``.
+``min-height``          Set minimal height for an item: ``min-height: 50``.
+``min-width``           Set minimal width for an item: ``min-width: 100``.
+``padding``             CSS style padding (top, right, bottom, left).
 
-                        Example: ``padding: 3 4``
+                        Example: ``padding: 3 4``.
 ======================= =======================================
 ```
 
