@@ -29,7 +29,7 @@ def test_persistence(create, element_factory, saver, loader):
     conn = create(ConnectorItem, UML.Connector)
 
     end = element_factory.create(UML.ConnectorEnd)
-    conn.end = end
+    conn.subject.end = end
 
     data = saver()
     assert end.id in data
