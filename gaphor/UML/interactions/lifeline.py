@@ -29,6 +29,7 @@ from gaphas.solver.constraint import BaseConstraint
 from gaphas.types import Pos, SupportsFloatPos
 
 from gaphor import UML
+from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
@@ -165,7 +166,6 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         super().__init__(diagram, id)
 
         self._connections = diagram.connections
-        self.is_destroyed = False
 
         self.lifetime = LifetimeItem()
 
@@ -192,6 +192,8 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
         self.setup_constraints()
+
+    is_destroyed: attribute[int] = attribute("is_destroyed", int, default=False)
 
     def setup_constraints(self):
         top = self.lifetime.top
