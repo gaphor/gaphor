@@ -451,6 +451,7 @@ def test_derived_single_properties():
         pass
 
     class E(Element):
+        notified = attribute("notified", int)
         a: relation_one[A]
         u: relation_one[A]
 
@@ -473,6 +474,7 @@ def test_derived_multi_properties():
         pass
 
     class E(Element):
+        notified = attribute("notified", int)
         a: relation_one[A]
         b: relation_many[A]
         u: relation_many[A]
@@ -623,7 +625,7 @@ def test_derivedunion_listmixins():
 def test_composite():
     class A(Element):
         is_unlinked = False
-        name: str
+        name = attribute("name", str)
         comp: relation_many[A]
         other: relation_many[A]
 

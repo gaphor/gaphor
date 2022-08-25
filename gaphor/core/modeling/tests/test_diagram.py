@@ -7,18 +7,28 @@ from gaphor.core.modeling import Diagram, Presentation, StyleSheet
 class Example(gaphas.Element, Presentation):
     def __init__(self, diagram, id):
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)
+        self._test_unlinked = False
+
+    @property
+    def test_unlinked(self):
+        return self._test_unlinked
 
     def unlink(self):
-        self.test_unlinked = True
+        self._test_unlinked = True
         super().unlink()
 
 
 class ExampleLine(gaphas.Line, Presentation):
     def __init__(self, diagram, id):
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)
+        self._test_unlinked = False
+
+    @property
+    def test_unlinked(self):
+        return self._test_unlinked
 
     def unlink(self):
-        self.test_unlinked = True
+        self._test_unlinked = True
         super().unlink()
 
 
