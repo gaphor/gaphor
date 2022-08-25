@@ -163,7 +163,7 @@ class InterfaceItem(Classified, ElementPresentation):
             diagram, id, width=self.RADIUS_PROVIDED * 2, height=self.RADIUS_PROVIDED * 2
         )
         self._folded = Folded.NONE
-        self.side = Side.N
+        self._side = Side.N
 
         handles = self.handles()
         h_nw = handles[NW]
@@ -209,6 +209,14 @@ class InterfaceItem(Classified, ElementPresentation):
     show_attributes: attribute[int] = attribute("show_attributes", int, default=True)
 
     show_operations: attribute[int] = attribute("show_operations", int, default=True)
+
+    @property
+    def side(self):
+        return self._side
+
+    @side.setter
+    def side(self, side):
+        self._side = side
 
     def load(self, name, value):
         if name == "folded":
@@ -351,18 +359,18 @@ class InterfaceItem(Classified, ElementPresentation):
 
         if self._folded in (Folded.REQUIRED, Folded.ASSEMBLY):
             r = self.RADIUS_REQUIRED
-            if self.side == Side.N:
+            if self._side == Side.N:
                 x, y = r * 2, r
-            elif self.side == Side.E:
+            elif self._side == Side.E:
                 x, y = r, r * 2
-            elif self.side == Side.S:
+            elif self._side == Side.S:
                 x, y = 0, r
-            elif self.side == Side.W:
+            elif self._side == Side.W:
                 x, y = r, 0
 
             cr.move_to(x, y)
             cr.arc_negative(
-                cx, cy, self.RADIUS_REQUIRED, self.side.value, pi + self.side.value
+                cx, cy, self.RADIUS_REQUIRED, self._side.value, pi + self._side.value
             )
 
         if self._folded in (Folded.PROVIDED, Folded.ASSEMBLY):
