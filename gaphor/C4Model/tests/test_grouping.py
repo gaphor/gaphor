@@ -30,7 +30,7 @@ def test_group_container_group_from_package_to_container(diagram, element_factor
     parent = container(diagram, element_factory)
     child = container(diagram, element_factory)
 
-    child.package = package
+    child.subject.package = package
     group(parent.subject, child.subject)
 
     assert child.subject.namespace is parent.subject
