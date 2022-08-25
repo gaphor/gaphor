@@ -128,11 +128,14 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
     def port_side(self, port):
         return self._port_sides[self._ports.index(port)]
 
-    def _set_shape(self, shape):
+    @property
+    def shape(self):
+        return self._shape
+
+    @shape.setter
+    def shape(self, shape):
         self._shape = shape
         self.request_update()
-
-    shape = property(lambda s: s._shape, _set_shape)
 
     def update_shapes(self, event=None):
         """Updating the shape configuration, e.g. when extra elements have to
@@ -203,7 +206,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     ):
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
 
-        self.style = style
+        self._style = style
         self.shape_head = shape_head
         self.shape_middle = shape_middle
         self.shape_tail = shape_tail
@@ -223,6 +226,10 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
     orthogonal: attribute[int] = attribute("orthogonal", int, 0)
     horizontal: attribute[int] = attribute("horizontal", int, 0)
+
+    @property
+    def style(self):
+        return self._style
 
     @property
     def middle_shape_size(self) -> Rectangle:
