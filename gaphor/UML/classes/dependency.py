@@ -38,12 +38,6 @@ class DependencyItem(Named, LinePresentation):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
-
-        self._handles[0].pos = (30, 20)
-        self._handles[1].pos = (0, 0)
-
-        self._dependency_type = UML.Dependency
 
         additional_stereotype = {
             UML.Usage: (gettext("use"),),
@@ -51,14 +45,25 @@ class DependencyItem(Named, LinePresentation):
             UML.InterfaceRealization: (gettext("implements"),),
         }
 
-        self.shape_middle = Box(
-            Text(
-                text=lambda: stereotypes_str(
-                    self.subject, additional_stereotype.get(self._dependency_type, ())
+        self._dependency_type = UML.Dependency
+
+        super().__init__(
+            diagram,
+            id,
+            shape_middle=Box(
+                Text(
+                    text=lambda: stereotypes_str(
+                        self.subject,
+                        additional_stereotype.get(self._dependency_type, ()),
+                    ),
                 ),
+                Text(text=lambda: self.subject.name or ""),
             ),
-            Text(text=lambda: self.subject.name or ""),
         )
+
+        self._handles[0].pos = (30, 20)
+        self._handles[1].pos = (0, 0)
+
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
