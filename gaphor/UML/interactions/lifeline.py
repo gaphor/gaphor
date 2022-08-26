@@ -167,16 +167,16 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
 
         self._connections = diagram.connections
 
-        self.lifetime = LifetimeItem()
+        self._lifetime = LifetimeItem()
 
-        top = self.lifetime.top
-        bottom = self.lifetime.bottom
+        top = self._lifetime.top
+        bottom = self._lifetime.bottom
 
         self._handles.append(top)
         self._handles.append(bottom)
         self.watch_handle(top)
         self.watch_handle(bottom)
-        self._ports.append(self.lifetime.port)
+        self._ports.append(self._lifetime.port)
 
         self.shape = Box(
             Text(
@@ -195,9 +195,13 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
 
     is_destroyed: attribute[int] = attribute("is_destroyed", int, default=False)
 
+    @property
+    def lifetime(self):
+        return self._lifetime
+
     def setup_constraints(self):
-        top = self.lifetime.top
-        bottom = self.lifetime.bottom
+        top = self._lifetime.top
+        bottom = self._lifetime.bottom
 
         # create constraints to:
         # - keep bottom handle below top handle
@@ -209,20 +213,20 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         c2 = EqualsConstraint(top.pos.x, bottom.pos.x, delta=0.0)
 
         c3 = EqualsConstraint(self._handles[SW].pos.y, top.pos.y, delta=0.0)
-        self.lifetime._c_min_length = LessThanConstraint(
+        self._lifetime._c_min_length = LessThanConstraint(
             top.pos.y, bottom.pos.y, delta=LifetimeItem.MIN_LENGTH
         )
 
-        for c in [c1, c2, c3, self.lifetime._c_min_length]:
+        for c in [c1, c2, c3, self._lifetime._c_min_length]:
             self._connections.add_constraint(self, c)
 
     def save(self, save_func):
         super().save(save_func)
-        save_func("lifetime-length", self.lifetime.length)
+        save_func("lifetime-length", self._lifetime.length)
 
     def load(self, name, value):
         if name == "lifetime-length":
-            self.lifetime.bottom.pos.y = self.height + float(value)
+            self._lifetime.bottom.pos.y = self.height + float(value)
         else:
             super().load(name, value)
 
@@ -240,13 +244,13 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
             context.hovered
             or context.focused
             or context.dropzone
-            or self.lifetime.visible
+            or self._lifetime.visible
         ):
-            bottom = self.lifetime.bottom
+            bottom = self._lifetime.bottom
             cr = context.cairo
             with cairo_state(cr):
                 cr.set_dash((7.0, 5.0), 0)
-                top = self.lifetime.top
+                top = self._lifetime.top
                 cr.move_to(top.pos.x, top.pos.y)
                 cr.line_to(bottom.pos.x, bottom.pos.y)
                 stroke(context, dash=False)
@@ -268,7 +272,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         calculate the lifetime. We return the minimum.
         """
         d1 = super().point(x, y)
-        top = self.lifetime.top
-        bottom = self.lifetime.bottom
+        top = self._lifetime.top
+        bottom = self._lifetime.bottom
         d2 = distance_line_point(top.pos, bottom.pos, (x, y))[0]
         return min(d1, d2)
