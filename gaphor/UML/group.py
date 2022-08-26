@@ -21,6 +21,22 @@ def container_ungroup(parent, element) -> bool:
     return False
 
 
+@group.register(UML.Class, UML.Class)
+def class_group(parent, element) -> bool:
+    if element.owner:
+        ungroup(element.owner, element)
+    element.nestingClass = parent
+    return True
+
+
+@ungroup.register(UML.Class, UML.Class)
+def class_ungroup(parent, element) -> bool:
+    if element.nestingClass is parent:
+        del element.nestingClass
+        return True
+    return False
+
+
 @group.register(UML.BehavioredClassifier, UML.Behavior)
 def behavior_group(parent, element) -> bool:
     if element.owner:
