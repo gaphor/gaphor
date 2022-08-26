@@ -2,16 +2,11 @@
 
 from functools import partial
 
-from gaphor.diagram.diagramtoolbox import (
-    ToolDef,
-    ToolSection,
-    named_element_config,
-    namespace_config,
-    new_item_factory,
-)
+from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
 from gaphor.i18n import gettext
 from gaphor.RAAML import diagramitems, raaml
 from gaphor.UML import diagramitems as uml_items
+from gaphor.UML.toolboxconfig import named_element_config, namespace_config
 
 fta = ToolSection(
     gettext("Fault Tree Analysis"),
