@@ -207,9 +207,9 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
 
         self._style = style
-        self.shape_head = shape_head
-        self.shape_middle = shape_middle
-        self.shape_tail = shape_tail
+        self._shape_head = shape_head
+        self._shape_middle = shape_middle
+        self._shape_tail = shape_tail
 
         self.fuzziness = 2
         self._shape_head_rect = None
@@ -226,6 +226,18 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
     orthogonal: attribute[int] = attribute("orthogonal", int, 0)
     horizontal: attribute[int] = attribute("horizontal", int, 0)
+
+    @property
+    def shape_head(self):
+        return self._shape_head
+
+    @property
+    def shape_middle(self):
+        return self._shape_middle
+
+    @property
+    def shape_tail(self):
+        return self._shape_tail
 
     @property
     def style(self):
@@ -251,9 +263,9 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
                 return Rectangle(x, y, *size)
 
         points = [h.pos for h in self.handles()]
-        self._shape_head_rect = shape_bounds(self.shape_head, TextAlign.LEFT)
-        self._shape_middle_rect = shape_bounds(self.shape_middle, TextAlign.CENTER)
-        self._shape_tail_rect = shape_bounds(self.shape_tail, TextAlign.RIGHT)
+        self._shape_head_rect = shape_bounds(self._shape_head, TextAlign.LEFT)
+        self._shape_middle_rect = shape_bounds(self._shape_middle, TextAlign.CENTER)
+        self._shape_tail_rect = shape_bounds(self._shape_tail, TextAlign.RIGHT)
 
     def point(self, x, y):
         """Given a point (x, y) return the distance to the diagram item."""
@@ -287,9 +299,9 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         stroke(context)
 
         for shape, rect in (
-            (self.shape_head, self._shape_head_rect),
-            (self.shape_middle, self._shape_middle_rect),
-            (self.shape_tail, self._shape_tail_rect),
+            (self._shape_head, self._shape_head_rect),
+            (self._shape_middle, self._shape_middle_rect),
+            (self._shape_tail, self._shape_tail_rect),
         ):
             if shape:
                 shape.draw(context, rect)
