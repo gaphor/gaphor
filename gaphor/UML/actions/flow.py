@@ -21,13 +21,16 @@ class ControlFlowItem(Named, LinePresentation):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id, style={"dash-style": (9.0, 3.0)})
-
-        self.shape_tail = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
+        super().__init__(
+            diagram,
+            id,
+            shape_tail=Box(
+                Text(
+                    text=lambda: stereotypes_str(self.subject),
+                ),
+                Text(text=lambda: self.subject.name or ""),
             ),
-            Text(text=lambda: self.subject.name or ""),
+            style={"dash-style": (9.0, 3.0)},
         )
 
         self.watch("subject[NamedElement].name")
@@ -54,13 +57,15 @@ class ObjectFlowItem(Named, LinePresentation):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
-
-        self.shape_tail = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
+        super().__init__(
+            diagram,
+            id,
+            shape_tail=Box(
+                Text(
+                    text=lambda: stereotypes_str(self.subject),
+                ),
+                Text(text=lambda: self.subject.name or ""),
             ),
-            Text(text=lambda: self.subject.name or ""),
         )
 
         self.watch("subject[NamedElement].name")
