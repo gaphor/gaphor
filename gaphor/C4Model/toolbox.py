@@ -11,9 +11,7 @@ from gaphor.diagram.diagramtoolbox import (
     ToolboxDefinition,
     ToolDef,
     ToolSection,
-    default_namespace,
     general_tools,
-    namespace_config,
     new_item_factory,
 )
 from gaphor.UML import diagramitems as uml_items
@@ -21,6 +19,7 @@ from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.classes.classestoolbox import classes
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
+from gaphor.UML.toolboxconfig import default_namespace, namespace_config
 
 
 def software_system_config(new_item):
