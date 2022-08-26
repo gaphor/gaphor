@@ -18,6 +18,7 @@ from typing import (
 
 from gaphas.item import SE
 
+from gaphor import UML
 from gaphor.core import gettext
 from gaphor.core.modeling import Comment, Diagram, Element, Presentation
 from gaphor.diagram import general
