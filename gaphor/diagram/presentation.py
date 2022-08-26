@@ -370,6 +370,7 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
         self._connections = diagram.connections
         self._width_constraints = []
         self._height_constraints = []
+        self._shape = None
 
         handle = self._handle = Handle(strength=gaphas.solver.STRONG, connectable=True)
         self.watch_handle(handle)
@@ -489,7 +490,8 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
         return distance_rectangle_point(self.dimensions(), (x, y))
 
     def draw(self, context):
-        self.shape.draw(context, self.dimensions())
+        if self.shape:
+            self.shape.draw(context, self.dimensions())
 
     def dimensions(self):
         top_left, _, bottom_right, _ = self._corners

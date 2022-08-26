@@ -60,52 +60,33 @@ def test_pointer(tab):
     assert tab.view._controllers
 
 
+def flatten(list):
+    return [item for sublist in list for item in sublist]
+
+
 @pytest.mark.parametrize(
-    "tool_name",
-    [
-        "toolbox-comment",
-        "toolbox-comment-line",
-        # Classes:
-        "toolbox-class",
-        "toolbox-interface",
-        "toolbox-package",
-        "toolbox-association",
-        "toolbox-dependency",
-        "toolbox-generalization",
-        "toolbox-interface-realization",
-        # Components:
-        "toolbox-component",
-        "toolbox-node",
-        "toolbox-artifact",
-        # Actions:
-        "toolbox-action",
-        "toolbox-initial-node",
-        "toolbox-activity-final-node",
-        "toolbox-flow-final-node",
-        "toolbox-decision-node",
-        "toolbox-fork-node",
-        "toolbox-control-flow",
-        "toolbox-object-flow",
-        # Use cases:
-        "toolbox-use-case",
-        "toolbox-actor",
-        "toolbox-use-case-association",
-        "toolbox-include",
-        "toolbox-extend",
-        # Profiles:
-        "toolbox-profile",
-        "toolbox-metaclass",
-        "toolbox-stereotype",
-        "toolbox-extension",
-    ],
+    "tool_def",
+    set(
+        flatten(
+            [
+                flatten(section.tools for section in uml_toolbox_actions),
+                flatten(section.tools for section in sysml_toolbox_actions),
+                flatten(section.tools for section in raaml_toolbox_actions),
+                flatten(section.tools for section in c4model_toolbox_actions),
+            ]
+        )
+    ),
 )
-def test_placement_action(tab, tool_name, event_manager):
-    tool_def = get_tool_def(tab.modeling_language, tool_name)
+def test_placement_action(tool_def, tab, event_manager):
+    if not tool_def.item_factory:
+        return
+
     if Gtk.get_major_version() == 3:
         tool = Gtk.GestureDrag.new(tab.view)
     else:
         tool = Gtk.GestureDrag.new()
         tab.view.add_controller(tool)
+
     placement_state = PlacementState(
         tool_def.item_factory, event_manager, tool_def.handle_index
     )
@@ -114,12 +95,16 @@ def test_placement_action(tab, tool_name, event_manager):
 
 
 def test_placement_object_node(tab, element_factory, event_manager):
-    test_placement_action(tab, "toolbox-object-node", event_manager)
+    test_placement_action(
+        get_tool_def(UMLModelingLanguage(), "toolbox-object-node"), tab, event_manager
+    )
     assert len(element_factory.lselect(UML.ObjectNode)) == 1
 
 
 def test_placement_partition(tab, element_factory, event_manager):
-    test_placement_action(tab, "toolbox-partition", event_manager)
+    test_placement_action(
+        get_tool_def(UMLModelingLanguage(), "toolbox-partition"), tab, event_manager
+    )
 
     assert len(element_factory.lselect(UML.ActivityPartition)) == 2
 
