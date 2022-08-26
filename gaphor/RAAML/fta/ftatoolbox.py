@@ -5,6 +5,7 @@ from functools import partial
 from gaphor.diagram.diagramtoolbox import (
     ToolDef,
     ToolSection,
+    named_element_config,
     namespace_config,
     new_item_factory,
 )
@@ -110,7 +111,7 @@ fta = ToolSection(
             new_item_factory(
                 diagramitems.TransferInItem,
                 raaml.TransferIn,
-                config_func=partial(namespace_config, name=gettext("Transfer In")),
+                config_func=partial(named_element_config, name=gettext("Transfer In")),
             ),
         ),
         ToolDef(
@@ -157,7 +158,7 @@ fta = ToolSection(
                 diagramitems.UndevelopedEventItem,
                 raaml.Undeveloped,
                 config_func=partial(
-                    namespace_config, name=gettext("Undeveloped Event")
+                    named_element_config, name=gettext("Undeveloped Event")
                 ),
             ),
         ),

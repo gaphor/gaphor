@@ -9,7 +9,7 @@ from gaphor.diagram.diagramtoolbox import (
     ToolDef,
     ToolSection,
     general_tools,
-    namespace_config,
+    named_element_config,
     new_item_factory,
 )
 from gaphor.SysML import diagramitems as sysml_items
@@ -37,7 +37,7 @@ internal_blocks = ToolSection(
             "gaphor-property-symbolic",
             "o",
             new_item_factory(
-                sysml_items.PropertyItem, UML.Property, config_func=namespace_config
+                sysml_items.PropertyItem, UML.Property, config_func=named_element_config
             ),
         ),
         ToolDef(

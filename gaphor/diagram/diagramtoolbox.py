@@ -30,6 +30,12 @@ P = TypeVar("P", bound=Presentation, covariant=True)
 ConfigFuncType = Callable[[P], None]
 
 
+def named_element_config(new_item, name=None):
+    new_item.subject.name = gettext("New {name}").format(
+        name=name or gettext(type(new_item.subject).__name__)
+    )
+
+
 def default_namespace(new_item):
     assert isinstance(
         new_item.subject, (UML.Type, UML.Package)
@@ -38,10 +44,8 @@ def default_namespace(new_item):
 
 
 def namespace_config(new_item, name=None):
+    named_element_config(new_item, name)
     default_namespace(new_item)
-    new_item.subject.name = gettext("New {name}").format(
-        name=name or gettext(type(new_item.subject).__name__)
-    )
 
 
 class ToolDef(NamedTuple):
