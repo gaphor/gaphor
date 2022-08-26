@@ -24,6 +24,12 @@ class ControlFlowItem(Named, LinePresentation):
         super().__init__(
             diagram,
             id,
+            shape_middle=Text(
+                text=lambda: self.subject
+                and self.subject.guard
+                and f"[{self.subject.guard}]"
+                or ""
+            ),
             shape_tail=Box(
                 Text(
                     text=lambda: stereotypes_str(self.subject),
@@ -35,13 +41,6 @@ class ControlFlowItem(Named, LinePresentation):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-
-        self.shape_middle = Text(
-            text=lambda: self.subject
-            and self.subject.guard
-            and f"[{self.subject.guard}]"
-            or ""
-        )
 
         self.watch("subject[ControlFlow].guard")
 
@@ -60,6 +59,12 @@ class ObjectFlowItem(Named, LinePresentation):
         super().__init__(
             diagram,
             id,
+            shape_middle=Text(
+                text=lambda: self.subject
+                and self.subject.guard
+                and f"[{self.subject.guard}]"
+                or ""
+            ),
             shape_tail=Box(
                 Text(
                     text=lambda: stereotypes_str(self.subject),
@@ -70,13 +75,6 @@ class ObjectFlowItem(Named, LinePresentation):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-
-        self.shape_middle = Text(
-            text=lambda: self.subject
-            and self.subject.guard
-            and f"[{self.subject.guard}]"
-            or ""
-        )
 
         self.watch("subject[ObjectFlow].guard")
 

@@ -15,6 +15,13 @@ class TransitionItem(Named, LinePresentation[UML.Transition]):
         super().__init__(
             diagram,
             id,
+            shape_middle=Text(
+                text=lambda: self.subject
+                and self.subject.guard
+                and self.subject.guard.specification
+                and f"[{self.subject.guard.specification}]"
+                or ""
+            ),
             shape_tail=Box(
                 Text(
                     text=lambda: stereotypes_str(self.subject),
@@ -25,14 +32,6 @@ class TransitionItem(Named, LinePresentation[UML.Transition]):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-
-        self.shape_middle = Text(
-            text=lambda: self.subject
-            and self.subject.guard
-            and self.subject.guard.specification
-            and f"[{self.subject.guard.specification}]"
-            or ""
-        )
 
         self.watch("subject[Transition].guard[Constraint].specification")
 
