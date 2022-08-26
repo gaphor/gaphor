@@ -18,6 +18,7 @@ from typing import (
 
 from gaphas.item import SE
 
+from gaphor import UML
 from gaphor.core import gettext
 from gaphor.core.modeling import Comment, Diagram, Element, Presentation
 from gaphor.diagram import general
@@ -30,6 +31,9 @@ ConfigFuncType = Callable[[P], None]
 
 
 def default_namespace(new_item):
+    assert isinstance(
+        new_item.subject, (UML.Type, UML.Package)
+    ), f"{new_item.subject} is not a Type or Package"
     new_item.subject.package = owner_package(new_item.diagram)
 
 
