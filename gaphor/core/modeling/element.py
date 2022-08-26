@@ -187,6 +187,14 @@ class Element:
         """Returns true if the object is of the same type as other."""
         return isinstance(self, type(other))
 
+    def __setattr__(self, key, value):
+        if key.startswith("_") or hasattr(self.__class__, key):
+            super().__setattr__(key, value)
+        else:
+            raise AttributeError(
+                f"Property {self.__class__.__name__}.{key} does not exist"
+            )
+
 
 class DummyEventWatcher:
     def watch(self, path: str, handler: Handler | None = None) -> DummyEventWatcher:
