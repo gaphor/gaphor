@@ -12,7 +12,7 @@ from gaphor.UML.profiles.stereotypepropertypages import StereotypePage
 @pytest.fixture
 def class_(diagram, element_factory):
     class_ = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
-    class_.name = "Class"
+    class_.subject.name = "Class"
     yield class_
     del class_
 
