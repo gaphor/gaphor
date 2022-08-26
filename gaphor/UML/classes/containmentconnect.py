@@ -51,9 +51,7 @@ class ContainmentConnect(BaseConnector):
 
     def connect(self, handle, port) -> bool:
         container, contained = self.container_and_contained_element(handle)
-        if container and contained:
-            return group(container, contained)  # type: ignore[no-any-return]
-        return False
+        return group(container, contained) if container and contained else False
 
     def disconnect(self, handle):
         opposite = self.line.opposite(handle)
