@@ -4,6 +4,7 @@ from gaphor.diagram.diagramtoolbox import (
     ToolDef,
     ToolSection,
     default_namespace,
+    named_element_config,
     namespace_config,
     new_item_factory,
 )
@@ -85,7 +86,9 @@ stpa = ToolSection(
             "gaphor-controller-symbolic",
             "w",
             new_item_factory(
-                sysml_items.PropertyItem, raaml.Controller, config_func=namespace_config
+                sysml_items.PropertyItem,
+                raaml.Controller,
+                config_func=named_element_config,
             ),
         ),
         ToolDef(
@@ -94,7 +97,9 @@ stpa = ToolSection(
             "gaphor-actuator-symbolic",
             "q",
             new_item_factory(
-                sysml_items.PropertyItem, raaml.Actuator, config_func=namespace_config
+                sysml_items.PropertyItem,
+                raaml.Actuator,
+                config_func=named_element_config,
             ),
         ),
         ToolDef(
@@ -105,7 +110,7 @@ stpa = ToolSection(
             new_item_factory(
                 sysml_items.PropertyItem,
                 raaml.ControlledProcess,
-                config_func=namespace_config,
+                config_func=named_element_config,
             ),
         ),
         ToolDef(
