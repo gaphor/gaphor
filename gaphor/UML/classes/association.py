@@ -416,10 +416,7 @@ class AssociationEnd:
         mult_layout.set_font(style)
         mult_w, mult_h = max_text_size(mult_layout.size(), (10, 10))
 
-        if dy == 0:
-            rc = 1000.0  # quite a lot...
-        else:
-            rc = dx / dy
+        rc = 1000.0 if dy == 0 else dx / dy
         abs_rc = abs(rc)
         h = dx > 0  # right side of the box
         v = dy > 0  # bottom side
