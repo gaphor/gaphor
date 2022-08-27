@@ -48,7 +48,7 @@ class ConsoleWindow(UIComponent, ActionProvider):
         if not self.window:
             self.open()
         else:
-            self.window.set_property("has-focus", True)
+            self.window.present()
 
     def open(self):
         console = self.construct()
@@ -86,12 +86,13 @@ class ConsoleWindow(UIComponent, ActionProvider):
             box.append(header_bar)
             box.append(console)
             window.set_content(box)
+            window.connect("close-request", self.close)
         window.show()
         self.window = window
 
         def key_event(widget, keyval, keycode, state):
             if keyval == Gdk.KEY_d and state & Gdk.ModifierType.CONTROL_MASK:
-                window.destroy()
+                self.close()
             return False
 
         console.text_controller.connect("key-pressed", key_event)
