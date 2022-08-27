@@ -4,7 +4,6 @@ Implemented using interface item in assembly connector mode, see
 `gaphor.diagram.connector` module for details.
 """
 
-import operator
 from typing import Union
 
 from gaphor import UML
@@ -25,22 +24,6 @@ class LegacyConnectorConnectBase(BaseConnector):
 
     element: Union[ComponentItem, InterfaceItem]
     line: ConnectorItem
-
-    def _get_interfaces(self, c1, c2):
-        """Return list of common interfaces provided by first component and
-        required by second component.
-
-        :Parameters:
-         c1
-            Component providing interfaces.
-         c2
-            Component requiring interfaces.
-        """
-        provided = set(c1.subject.provided)
-        required = set(c2.subject.required)
-        interfaces = list(provided.intersection(required))
-        interfaces.sort(key=operator.attrgetter("name"))
-        return interfaces
 
     def get_connecting(self, iface, both=False):
         """Get items connecting to interface.
