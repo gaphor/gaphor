@@ -1,11 +1,11 @@
 from gi.repository import Gdk, Gtk
 
 from gaphor.diagram.general.comment import CommentItem
-from gaphor.diagram.instanteditors import InstantEditor, show_popover
+from gaphor.diagram.instanteditors import instant_editor, show_popover
 from gaphor.transaction import Transaction
 
 
-@InstantEditor.register(CommentItem)
+@instant_editor.register(CommentItem)
 def CommentItemEditor(item, view, event_manager, pos=None) -> bool:
     def update_text():
         text = buffer.get_text(

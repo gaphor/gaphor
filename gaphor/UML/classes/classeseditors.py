@@ -1,12 +1,12 @@
 from gaphas.geometry import Rectangle, distance_point_point_fast
 
 from gaphor.core.format import format, parse
-from gaphor.diagram.instanteditors import InstantEditor, popup_entry, show_popover
+from gaphor.diagram.instanteditors import instant_editor, popup_entry, show_popover
 from gaphor.transaction import Transaction
 from gaphor.UML.classes.association import AssociationItem
 
 
-@InstantEditor.register(AssociationItem)
+@instant_editor.register(AssociationItem)
 def association_item_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
 
