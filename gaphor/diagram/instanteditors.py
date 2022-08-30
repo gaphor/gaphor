@@ -11,7 +11,7 @@ from gaphor.transaction import Transaction
 
 
 @singledispatch
-def InstantEditor(
+def instant_editor(
     item: Item, view, event_manager, pos: tuple[int, int] | None = None
 ) -> bool:
     """Show a small editor popup in the diagram. Makes for easy editing without
@@ -23,7 +23,7 @@ def InstantEditor(
     return False
 
 
-@InstantEditor.register(Named)
+@instant_editor.register(Named)
 def named_item_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
 
@@ -81,6 +81,7 @@ def show_popover(widget, view, box, commit):
     def on_closed(popover):
         if should_commit:
             commit()
+        view.grab_focus()
 
     popover.connect("closed", on_closed)
 
