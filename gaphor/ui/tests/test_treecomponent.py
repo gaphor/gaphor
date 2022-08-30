@@ -38,7 +38,7 @@ def test_show_item_in_tree_list_model(tree_component, element_factory):
     class_.package = package
 
     pos = tree_component.select_element(class_)
-    tree_model = tree_component.sort_model
+    tree_model = tree_component.selection
 
     assert pos == 1
     assert tree_model.get_item(0).get_item().element is package

@@ -51,8 +51,6 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.subscribe(self.on_model_ready)
         self.event_manager.subscribe(self.on_diagram_selection_changed)
 
-        self.search_bar, self.search_filter = create_search_bar()
-
         tree_model = Gtk.TreeListModel.new(
             self.model.root,
             passthrough=False,
@@ -63,10 +61,11 @@ class TreeComponent(UIComponent, ActionProvider):
 
         self.sorter = Gtk.CustomSorter.new(tree_item_sort)
         tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
-        self.sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
-        self.selection = Gtk.SingleSelection.new(
-            Gtk.FilterListModel.new(self.sort_model, self.search_filter)
-        )
+        sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
+        self.selection = Gtk.SingleSelection.new(sort_model)
+
+        self.search_bar = create_search_bar(self.selection)
+
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
             "setup", list_item_factory_setup, self.event_manager, self.modeling_language
@@ -118,7 +117,7 @@ class TreeComponent(UIComponent, ActionProvider):
             if (n := expand_up_to_element(element.owner, expand=True)) is None:
                 return None
             is_relationship = isinstance(element, UML.Relationship)
-            while row := self.sort_model.get_item(n):
+            while row := self.selection.get_item(n):
                 if is_relationship and isinstance(row.get_item(), RelationshipItem):
                     row.set_expanded(True)
                 elif row.get_item().element is element:
@@ -257,7 +256,7 @@ def new_list_item_ui():
     return GLib.Bytes.new(b.encode("utf-8"))
 
 
-def create_search_bar():
+def create_search_bar(tree_model):
     search_text: str = ""
 
     def on_search_changed(entry):
@@ -265,7 +264,7 @@ def create_search_bar():
         filter_change = (
             Gtk.FilterChange.MORE_STRICT
             if search_text in entry.get_text()
-            else Gtk.FilterChange.MORE_STRICT
+            else Gtk.FilterChange.LESS_STRICT
             if entry.get_text() in search_text
             else Gtk.FilterChange.DIFFERENT
         )
@@ -290,7 +289,7 @@ def create_search_bar():
     search_bar.connect_entry(search_entry)
     search_bar.set_show_close_button(True)
 
-    return search_bar, search_filter
+    return search_bar
 
 
 def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):
