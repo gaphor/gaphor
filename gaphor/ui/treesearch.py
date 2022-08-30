@@ -33,18 +33,21 @@ def flatten_tree_model(model, start_tree_item):
             if children := model.child_model(tree_item):
                 yield from _flatten(children)
 
-    cache = []
-
     iterator = _flatten(model.root)
+
     if start_tree_item:
         for tree_item in iterator:
             if tree_item is start_tree_item:
-                # yield start_tree_item
                 break
-            cache.append(tree_item)
 
     yield from iterator
-    yield from cache
+
+    # Do not cache, to avoid stale data
+    if start_tree_item:
+        for tree_item in _flatten(model.root):
+            yield tree_item
+            if tree_item is start_tree_item:
+                break
 
 
 def sorted_tree_items(list_store):
