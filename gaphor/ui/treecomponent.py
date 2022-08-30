@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from functools import partial
+
 from gi.repository import Gdk, GLib, GObject, Gtk
 
 from gaphor import UML
@@ -64,7 +66,7 @@ class TreeComponent(UIComponent, ActionProvider):
         sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
         self.selection = Gtk.SingleSelection.new(sort_model)
 
-        self.search_bar = create_search_bar(self.selection)
+        self.search_bar = create_search_bar(partial(search_next, self.selection))
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
@@ -251,12 +253,7 @@ class TreeComponent(UIComponent, ActionProvider):
             return
 
 
-def new_list_item_ui():
-    b = translated_ui_string("gaphor.ui", "treeitem.ui")
-    return GLib.Bytes.new(b.encode("utf-8"))
-
-
-def create_search_bar(tree_model):
+def create_search_bar(search_next, text_changed=None):
     search_text: str = ""
 
     def on_search_changed(entry):
@@ -276,20 +273,33 @@ def create_search_bar(tree_model):
         search_text = ""
         search_filter.changed(Gtk.FilterChange.LESS_STRICT)
 
+    def on_filter_changed(_filter, change):
+        if text_changed:
+            text_changed(search_text, change)
+
+    def on_search_next(_entry):
+        search_next(search_text)
+
     def name_filter(item):
         item = item.get_item()
         return isinstance(item, TreeItem) and search_text.lower() in item.text.lower()
 
     search_filter = Gtk.CustomFilter.new(name_filter)
+    search_filter.connect("changed", on_filter_changed)
     search_entry = Gtk.SearchEntry.new()
     search_entry.connect("search-changed", on_search_changed)
     search_entry.connect("stop-search", on_stop_search)
+    search_entry.connect("activate", on_search_next)
     search_bar = Gtk.SearchBar.new()
     search_bar.set_child(search_entry)
     search_bar.connect_entry(search_entry)
     search_bar.set_show_close_button(True)
 
     return search_bar
+
+
+def search_next(selection, search_text):
+    print("search", search_text)
 
 
 def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):
