@@ -271,8 +271,7 @@ class SearchState:
                 search_text,
                 start_tree_item=self.selected_item and self.selected_item.get_item(),
             )
-            next_item = next(self.search)
-            if next_item:
+            if next_item := next(self.search):
                 self.tree_component.select_element(next_item.element)
         except StopIteration:
             self.search = None
