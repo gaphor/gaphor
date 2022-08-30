@@ -42,7 +42,6 @@ class TreeComponent(UIComponent, ActionProvider):
         self.element_factory = element_factory
         self.modeling_language = modeling_language
         self.model = TreeModel()
-        self.search = None
 
     def open(self):
         self.event_manager.subscribe(self.on_element_created)
@@ -66,19 +65,7 @@ class TreeComponent(UIComponent, ActionProvider):
         sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
         self.selection = Gtk.SingleSelection.new(sort_model)
 
-        def search_next(search_text):
-            try:
-                if not self.search:
-                    self.search = search(self.model, search_text)
-                    next_item = next(self.search)
-                else:
-                    next_item = self.search.send(search_text)
-                if next_item:
-                    self.select_element(next_item.element)
-            except StopIteration:
-                self.search = None
-
-        self.search_bar = create_search_bar(search_next)
+        self.search_bar = create_search_bar(*search_event_handlers(self))
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
@@ -98,7 +85,7 @@ class TreeComponent(UIComponent, ActionProvider):
 
         action_group, shortcuts = create_action_group(self, "tree-view")
         scrolled_window.insert_action_group("tree-view", action_group)
-        self.create_gtk4_popup_controller(shortcuts)
+        self.tree_view.add_controller(create_popup_controller(shortcuts))
 
         self.search_bar.set_key_capture_widget(self.tree_view)
 
@@ -118,11 +105,6 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_attribute_changed)
         self.event_manager.unsubscribe(self.on_model_ready)
         self.event_manager.unsubscribe(self.on_diagram_selection_changed)
-
-    def create_gtk4_popup_controller(self, shortcuts):
-        ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
-        ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
-        self.tree_view.add_controller(ctrl)
 
     def select_element(self, element: Element) -> int | None:
         def expand_up_to_element(element, expand=False) -> int | None:
@@ -265,7 +247,13 @@ class TreeComponent(UIComponent, ActionProvider):
             return
 
 
-def create_search_bar(search_next, text_changed=None):
+def create_popup_controller(shortcuts):
+    ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
+    ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
+    return ctrl
+
+
+def create_search_bar(search_next, text_changed=None, stop_search=None):
     search_text: str = ""
 
     def on_search_changed(entry):
@@ -285,6 +273,8 @@ def create_search_bar(search_next, text_changed=None):
     def on_stop_search(_entry):
         nonlocal search_text
         search_text = ""
+        if stop_search:
+            stop_search()
 
     def on_search_next(_entry):
         search_next(search_text)
@@ -299,6 +289,48 @@ def create_search_bar(search_next, text_changed=None):
     search_bar.set_show_close_button(True)
 
     return search_bar
+
+
+def search_event_handlers(self):
+    state = None
+    selected_item = None
+
+    def text_changed(search_text, filter_change):
+        nonlocal state, selected_item
+        if not selected_item:
+            selected_item = self.selection.get_selected_item()
+        try:
+            state = search(
+                self.model,
+                search_text,
+                start_tree_item=selected_item and selected_item.get_item(),
+            )
+            next_item = next(state)
+            if next_item:
+                self.select_element(next_item.element)
+        except StopIteration:
+            state = None
+
+    def search_next(search_text):
+        nonlocal state, selected_item
+        selected_item = None
+        try:
+            if not state:
+                selected_item = self.selection.get_selected_item()
+                state = search(
+                    self.model,
+                    search_text,
+                    start_tree_item=selected_item and selected_item.get_item(),
+                )
+                next_item = next(state)
+            else:
+                next_item = state.send(search_text)
+            if next_item:
+                self.select_element(next_item.element)
+        except StopIteration:
+            state = None
+
+    return search_next, text_changed
 
 
 def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):
