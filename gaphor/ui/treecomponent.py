@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from functools import partial
-
 from gi.repository import Gdk, GLib, GObject, Gtk
 
 from gaphor import UML
@@ -33,6 +31,7 @@ from gaphor.ui.treemodel import (
     tree_item_sort,
     visible,
 )
+from gaphor.ui.treesearch import search
 
 START_EDIT_DELAY = 100  # ms
 
@@ -43,6 +42,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.element_factory = element_factory
         self.modeling_language = modeling_language
         self.model = TreeModel()
+        self.search = None
 
     def open(self):
         self.event_manager.subscribe(self.on_element_created)
@@ -66,7 +66,19 @@ class TreeComponent(UIComponent, ActionProvider):
         sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
         self.selection = Gtk.SingleSelection.new(sort_model)
 
-        self.search_bar = create_search_bar(partial(search_next, self.selection))
+        def search_next(search_text):
+            try:
+                if not self.search:
+                    self.search = search(self.model, search_text)
+                    next_item = next(self.search)
+                else:
+                    next_item = self.search.send(search_text)
+                if next_item:
+                    self.select_element(next_item.element)
+            except StopIteration:
+                self.search = None
+
+        self.search_bar = create_search_bar(search_next)
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
@@ -258,34 +270,25 @@ def create_search_bar(search_next, text_changed=None):
 
     def on_search_changed(entry):
         nonlocal search_text
+        new_text = entry.get_text()
         filter_change = (
             Gtk.FilterChange.MORE_STRICT
-            if search_text in entry.get_text()
+            if search_text in new_text
             else Gtk.FilterChange.LESS_STRICT
-            if entry.get_text() in search_text
+            if new_text in search_text
             else Gtk.FilterChange.DIFFERENT
         )
-        search_text = entry.get_text()
-        search_filter.changed(filter_change)
+        search_text = new_text
+        if text_changed:
+            text_changed(search_text, filter_change)
 
     def on_stop_search(_entry):
         nonlocal search_text
         search_text = ""
-        search_filter.changed(Gtk.FilterChange.LESS_STRICT)
-
-    def on_filter_changed(_filter, change):
-        if text_changed:
-            text_changed(search_text, change)
 
     def on_search_next(_entry):
         search_next(search_text)
 
-    def name_filter(item):
-        item = item.get_item()
-        return isinstance(item, TreeItem) and search_text.lower() in item.text.lower()
-
-    search_filter = Gtk.CustomFilter.new(name_filter)
-    search_filter.connect("changed", on_filter_changed)
     search_entry = Gtk.SearchEntry.new()
     search_entry.connect("search-changed", on_search_changed)
     search_entry.connect("stop-search", on_stop_search)
@@ -296,10 +299,6 @@ def create_search_bar(search_next, text_changed=None):
     search_bar.set_show_close_button(True)
 
     return search_bar
-
-
-def search_next(selection, search_text):
-    print("search", search_text)
 
 
 def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):
