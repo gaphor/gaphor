@@ -20,6 +20,8 @@ class VerticalAlign(Enum):
 
 
 class JustifyContent(Enum):
+    CENTER = "center"
+    END = "end"
     START = "start"
     STRETCH = "stretch"
 

@@ -30,7 +30,8 @@ ConfigFuncType = Callable[[P], None]
 
 
 def default_namespace(new_item):
-    new_item.subject.package = owner_package(new_item.diagram)
+    if not new_item.subject.namespace:
+        new_item.subject.package = owner_package(new_item.diagram)
 
 
 def namespace_config(new_item, name=None):

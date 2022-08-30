@@ -3,7 +3,7 @@ import pytest
 from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling.diagram import FALLBACK_STYLE
-from gaphor.core.styling.properties import JustifyContent
+from gaphor.core.styling import JustifyContent
 from gaphor.diagram.shapes import (
     Box,
     DrawContext,

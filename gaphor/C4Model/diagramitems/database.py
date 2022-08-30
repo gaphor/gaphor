@@ -2,7 +2,7 @@ from gaphas.util import path_ellipse
 
 from gaphor.C4Model import c4model
 from gaphor.core import gettext
-from gaphor.core.styling import FontWeight, TextAlign, VerticalAlign
+from gaphor.core.styling import FontWeight, JustifyContent, TextAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
@@ -42,9 +42,9 @@ class C4DatabaseItem(Named, ElementPresentation):
                 "text-align": TextAlign.LEFT
                 if self.diagram and self.children
                 else TextAlign.CENTER,
-                "vertical-align": VerticalAlign.BOTTOM
+                "justify-content": JustifyContent.END
                 if self.diagram and self.children
-                else VerticalAlign.MIDDLE,
+                else JustifyContent.CENTER,
             },
             draw=draw_database,
         )

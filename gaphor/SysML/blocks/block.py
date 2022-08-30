@@ -7,9 +7,9 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import (
     Box,
+    JustifyContent,
     Text,
     TextAlign,
-    VerticalAlign,
     draw_border,
     draw_top_separator,
 )
@@ -88,7 +88,10 @@ class BlockItem(Classified, ElementPresentation[Block]):
                     text=lambda: from_package_str(self),
                     style={"font-size": "x-small"},
                 ),
-                style={"padding": (12, 4, 12, 4)},
+                style={
+                    "padding": (12, 4, 12, 4),
+                    "justify-content": JustifyContent.START,
+                },
             ),
             *(
                 self.show_parts
@@ -126,7 +129,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={
-                "vertical-align": VerticalAlign.TOP,
+                "justify-content": JustifyContent.START,
             },
             draw=draw_border,
         )
@@ -150,6 +153,10 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 for attribute in self.subject.ownedAttribute
                 if predicate(attribute)
             ),
-            style={"padding": (4, 4, 4, 4), "min-height": 8},
+            style={
+                "padding": (4, 4, 4, 4),
+                "min-height": 8,
+                "justify-content": JustifyContent.START,
+            },
             draw=draw_top_separator,
         )

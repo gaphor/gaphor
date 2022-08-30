@@ -5,7 +5,7 @@ from gaphor.diagram.presentation import (
     ElementPresentation,
     connect,
 )
-from gaphor.diagram.shapes import Box, Text, TextAlign, VerticalAlign, draw_border
+from gaphor.diagram.shapes import Box, JustifyContent, Text, TextAlign, draw_border
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle
 from gaphor.UML.recipes import stereotypes_str
@@ -50,7 +50,7 @@ class ActivityItem(Classified, ElementPresentation):
             style={
                 "padding": (4, 12, 4, 12),
                 "border-radius": 20,
-                "vertical-align": VerticalAlign.TOP,
+                "justify-content": JustifyContent.START,
             },
             draw=draw_border,
         )

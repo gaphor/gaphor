@@ -4,7 +4,7 @@ from typing import Sequence, Union
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontWeight, VerticalAlign
+from gaphor.core.styling import FontWeight, JustifyContent
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
@@ -31,11 +31,11 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
 
-    def alignment(self) -> VerticalAlign:
+    def justify(self) -> JustifyContent:
         if self.diagram and self.children:
-            return VerticalAlign.TOP
+            return JustifyContent.START
         else:
-            return VerticalAlign.MIDDLE
+            return JustifyContent.CENTER
 
     def dash(self) -> Sequence[Union[int, float]]:
         if self.subject and self.subject.aggregation != "composite":
@@ -60,7 +60,7 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={
-                "vertical-align": self.alignment(),
+                "justify-content": self.justify(),
                 "dash-style": self.dash(),
             },
             draw=draw_border

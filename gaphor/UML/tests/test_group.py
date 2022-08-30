@@ -1,5 +1,5 @@
 from gaphor.diagram.group import can_group, group, ungroup
-from gaphor.UML.uml import Class, Package
+from gaphor.UML.uml import Activity, Class, Package
 
 
 def test_can_group_package_and_class(element_factory):
@@ -67,3 +67,32 @@ def test_do_not_ungroup_package_wrong_parent(element_factory):
     assert not ungroup(wrong_parent, package)
 
     assert package.package is parent
+
+
+def test_group_class_and_activity(element_factory):
+    klass = element_factory.create(Class)
+    activity = element_factory.create(Activity)
+
+    assert group(klass, activity)
+
+    assert activity.owner is klass
+
+
+def test_group_class_and_activity_from_package(element_factory):
+    klass = element_factory.create(Class)
+    activity = element_factory.create(Activity)
+
+    assert group(klass, activity)
+
+    assert activity.owner is klass
+
+
+def test_ungroup_class_and_activity(element_factory):
+    package = element_factory.create(Package)
+    klass = element_factory.create(Class)
+    activity = element_factory.create(Activity)
+
+    group(package, activity)
+    group(klass, activity)
+
+    assert activity.owner is klass

@@ -1,6 +1,6 @@
 from gaphor.C4Model import c4model
 from gaphor.core import gettext
-from gaphor.core.styling import FontWeight, TextAlign, VerticalAlign
+from gaphor.core.styling import FontWeight, JustifyContent, TextAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
@@ -45,9 +45,9 @@ class C4ContainerItem(Named, ElementPresentation):
             ),
             style={
                 "padding": (4, 4, 4, 4),
-                "vertical-align": VerticalAlign.BOTTOM
+                "justify-content": JustifyContent.END
                 if self.diagram and self.children
-                else VerticalAlign.MIDDLE,
+                else JustifyContent.CENTER,
             },
             draw=draw_border,
         )

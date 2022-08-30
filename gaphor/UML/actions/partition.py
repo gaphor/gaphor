@@ -6,7 +6,7 @@ from gaphas.item import NW, SE
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
 from gaphor.core.modeling.properties import association
-from gaphor.core.styling import VerticalAlign
+from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, stroke
 from gaphor.diagram.support import represents
@@ -25,7 +25,7 @@ class PartitionItem(ElementPresentation):
             style={
                 "line-width": 2.4,
                 "padding": (4, 12, 4, 12),
-                "vertical-align": VerticalAlign.TOP,
+                "justify-content": JustifyContent.START,
             },
             draw=self.draw_swimlanes,
         )

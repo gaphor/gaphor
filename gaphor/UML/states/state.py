@@ -7,8 +7,7 @@ from gaphas.types import Pos
 from gaphor import UML
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import TextAlign, VerticalAlign
-from gaphor.core.styling.properties import JustifyContent
+from gaphor.core.styling import JustifyContent, TextAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_top_separator, stroke
 from gaphor.diagram.support import represents
@@ -55,7 +54,7 @@ class StateItem(ElementPresentation[UML.State], Named):
                 or "",
                 style={"text-align": TextAlign.LEFT},
             ),
-            style={"padding": (4, 4, 4, 4), "vertical-align": VerticalAlign.TOP},
+            style={"padding": (4, 4, 4, 4), "justify-content": JustifyContent.START},
             draw=draw_top_separator,
         )
         if not any(t.text() for t in compartment.children):
@@ -75,7 +74,7 @@ class StateItem(ElementPresentation[UML.State], Named):
                 style={"justify-content": JustifyContent.STRETCH},
             ),
             style={
-                "vertical-align": VerticalAlign.TOP,
+                "justify-content": JustifyContent.START,
             },
             draw=draw_state,
         )

@@ -78,7 +78,7 @@ from gaphor import UML
 from gaphor.core import gettext
 from gaphor.core.modeling.presentation import literal_eval
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontWeight, VerticalAlign
+from gaphor.core.styling import FontWeight, JustifyContent
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
@@ -314,7 +314,7 @@ class InterfaceItem(Classified, ElementPresentation):
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={
-                "vertical-align": VerticalAlign.TOP,
+                "justify-content": JustifyContent.START,
             },
             draw=draw_border,
         )

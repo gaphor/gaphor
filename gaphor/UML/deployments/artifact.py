@@ -2,7 +2,7 @@
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontWeight, VerticalAlign
+from gaphor.core.styling import FontWeight, JustifyContent
 from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, Text, cairo_state, draw_border
 from gaphor.diagram.support import represents
@@ -39,9 +39,9 @@ class ArtifactItem(Classified, ElementPresentation):
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             style={
-                "vertical-align": VerticalAlign.TOP
+                "justify-content": JustifyContent.START
                 if self.diagram and self.children
-                else VerticalAlign.MIDDLE,
+                else JustifyContent.CENTER,
             },
             draw=draw_border
         )
