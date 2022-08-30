@@ -184,8 +184,36 @@ def test_tree_model_expand_to_relationship(tree_component, element_factory):
 
     pos = tree_component.select_element(association)
 
-    selected = tree_component.selection.get_selected_item()
-
     assert pos == 2
-    assert selected
-    assert selected.get_item().element is association
+    assert tree_component.get_selected_element() is association
+
+
+@skip_if_gtk3
+def test_search_next(tree_component, element_factory):
+    class_a = element_factory.create(UML.Class)
+    class_a.name = "a"
+    class_b = element_factory.create(UML.Class)
+    class_b.name = "b"
+
+    search_state = tree_component.search_state
+
+    assert tree_component.get_selected_element() is class_a
+
+    search_state.search_next("b")
+    assert tree_component.get_selected_element() is class_b
+
+
+@skip_if_gtk3
+def test_search_text_changed(tree_component, element_factory):
+    class_a = element_factory.create(UML.Class)
+    class_a.name = "a"
+    class_b = element_factory.create(UML.Class)
+    class_b.name = "b"
+
+    search_state = tree_component.search_state
+
+    assert tree_component.get_selected_element() is class_a
+
+    search_state.text_changed("b")
+
+    assert tree_component.get_selected_element() is class_b

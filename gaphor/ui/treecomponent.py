@@ -42,6 +42,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.element_factory = element_factory
         self.modeling_language = modeling_language
         self.model = TreeModel()
+        self.search_state = SearchState(self)
 
     def open(self):
         self.event_manager.subscribe(self.on_element_created)
@@ -65,7 +66,11 @@ class TreeComponent(UIComponent, ActionProvider):
         sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
         self.selection = Gtk.SingleSelection.new(sort_model)
 
-        self.search_bar = create_search_bar(*search_event_handlers(self))
+        self.search_bar = create_search_bar(
+            self.search_state.search_next,
+            self.search_state.text_changed,
+            self.search_state.reset,
+        )
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
@@ -247,37 +252,65 @@ class TreeComponent(UIComponent, ActionProvider):
             return
 
 
+class SearchState:
+    def __init__(self, tree_component):
+        self.tree_component = tree_component
+        self.search = None
+        self.selected_item = None
+
+    def reset(self):
+        self.search = None
+        self.selected_item = None
+
+    def text_changed(self, search_text):
+        if not self.selected_item:
+            self.selected_item = self.tree_component.selection.get_selected_item()
+        try:
+            self.search = search(
+                self.tree_component.model,
+                search_text,
+                start_tree_item=self.selected_item and self.selected_item.get_item(),
+            )
+            if next_item := next(self.search):
+                self.tree_component.select_element(next_item.element)
+        except StopIteration:
+            self.search = None
+
+    def search_next(self, search_text):
+        self.selected_item = None
+        try:
+            if not self.search:
+                self.selected_item = self.tree_component.selection.get_selected_item()
+                self.search = search(
+                    self.tree_component.model,
+                    search_text,
+                    start_tree_item=self.selected_item
+                    and self.selected_item.get_item(),
+                )
+                next_item = next(self.search)
+            else:
+                next_item = self.search.send(search_text)
+            if next_item:
+                self.tree_component.select_element(next_item.element)
+        except StopIteration:
+            self.search = None
+
+
 def create_popup_controller(shortcuts):
     ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
     ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
     return ctrl
 
 
-def create_search_bar(search_next, text_changed=None, stop_search=None):
-    search_text: str = ""
-
+def create_search_bar(search_next, text_changed, stop_search):
     def on_search_changed(entry):
-        nonlocal search_text
-        new_text = entry.get_text()
-        filter_change = (
-            Gtk.FilterChange.MORE_STRICT
-            if search_text in new_text
-            else Gtk.FilterChange.LESS_STRICT
-            if new_text in search_text
-            else Gtk.FilterChange.DIFFERENT
-        )
-        search_text = new_text
-        if text_changed:
-            text_changed(search_text, filter_change)
+        text_changed(entry.get_text())
 
     def on_stop_search(_entry):
-        nonlocal search_text
-        search_text = ""
-        if stop_search:
-            stop_search()
+        stop_search()
 
-    def on_search_next(_entry):
-        search_next(search_text)
+    def on_search_next(entry):
+        search_next(entry.get_text())
 
     search_entry = Gtk.SearchEntry.new()
     search_entry.connect("search-changed", on_search_changed)
@@ -289,48 +322,6 @@ def create_search_bar(search_next, text_changed=None, stop_search=None):
     search_bar.set_show_close_button(True)
 
     return search_bar
-
-
-def search_event_handlers(self):
-    state = None
-    selected_item = None
-
-    def text_changed(search_text, filter_change):
-        nonlocal state, selected_item
-        if not selected_item:
-            selected_item = self.selection.get_selected_item()
-        try:
-            state = search(
-                self.model,
-                search_text,
-                start_tree_item=selected_item and selected_item.get_item(),
-            )
-            next_item = next(state)
-            if next_item:
-                self.select_element(next_item.element)
-        except StopIteration:
-            state = None
-
-    def search_next(search_text):
-        nonlocal state, selected_item
-        selected_item = None
-        try:
-            if not state:
-                selected_item = self.selection.get_selected_item()
-                state = search(
-                    self.model,
-                    search_text,
-                    start_tree_item=selected_item and selected_item.get_item(),
-                )
-                next_item = next(state)
-            else:
-                next_item = state.send(search_text)
-            if next_item:
-                self.select_element(next_item.element)
-        except StopIteration:
-            state = None
-
-    return search_next, text_changed
 
 
 def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):
