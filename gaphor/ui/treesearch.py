@@ -14,7 +14,7 @@ def search(model, search_text, start_tree_item=None):
 
         for tree_item in model_iterator:
             text = normalize("NFC", tree_item.text).casefold()
-            if search_text in text:
+            if tree_item.element and search_text in text:
                 have_match = True
                 cmd = yield tree_item
                 if isinstance(cmd, str):
