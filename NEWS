@@ -1,3 +1,14 @@
+2.12.0
+------
+
+- GTK4 is now the default for Flatpak; Windows, macOS, and AppImage still use GTK3
+- Save folder is remembered across save actions
+- State machine functionality has been expanded, including support for regions
+- Resize of partition keeps actions in the same swimlane
+- Activities (behaviors) can be assigned to classifiers
+- Stereotypes can be inherited from other stereotypes
+- Many GTK4 fixes: rename, search, instant editors
+
 2.11.0
 ------
 - Add Copy/Paste for GTK4
