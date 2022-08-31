@@ -189,6 +189,37 @@ def test_tree_model_expand_to_relationship(tree_component, element_factory):
 
 
 @skip_if_gtk3
+def test_create_diagram(tree_component, element_factory):
+    tree_component.tree_view_create_diagram("my type")
+
+    diagram = next(element_factory.select(Diagram))
+
+    assert diagram.diagramType == "my type"
+
+
+@skip_if_gtk3
+def test_create_package(tree_component, element_factory):
+    parent = element_factory.create(UML.Package)
+    parent.name = "root"
+    tree_component.tree_view_create_package()
+
+    package = next(p for p in element_factory.select(UML.Package) if p.name != "root")
+
+    assert package
+    assert package.owner is parent
+
+
+@skip_if_gtk3
+def test_delete_element(tree_component, element_factory):
+    klass = element_factory.create(UML.Class)
+    assert tree_component.get_selected_element() is klass
+
+    tree_component.tree_view_delete()
+
+    assert not element_factory.lselect()
+
+
+@skip_if_gtk3
 def test_search_next(tree_component, element_factory):
     class_a = element_factory.create(UML.Class)
     class_a.name = "a"
