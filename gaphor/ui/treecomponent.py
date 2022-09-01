@@ -31,7 +31,7 @@ from gaphor.ui.treemodel import (
     tree_item_sort,
     visible,
 )
-from gaphor.ui.treesearch import search
+from gaphor.ui.treesearch import search, sorted_tree_walker
 
 START_EDIT_DELAY = 100  # ms
 
@@ -275,19 +275,23 @@ class SearchState:
         if not self.selected_item:
             self.selected_item = self.tree_component.selection.get_selected_item()
         if next_item := search(
-            self.tree_component.model,
             search_text,
-            start_tree_item=self.selected_item and self.selected_item.get_item(),
-            from_current=True,
+            sorted_tree_walker(
+                self.tree_component.model,
+                start_tree_item=self.selected_item and self.selected_item.get_item(),
+                from_current=True,
+            ),
         ):
             self.tree_component.select_element(next_item.element)
 
     def search_next(self, search_text):
         self.selected_item = self.tree_component.selection.get_selected_item()
         if next_item := search(
-            self.tree_component.model,
             search_text,
-            start_tree_item=self.selected_item and self.selected_item.get_item(),
+            sorted_tree_walker(
+                self.tree_component.model,
+                start_tree_item=self.selected_item and self.selected_item.get_item(),
+            ),
         ):
             self.tree_component.select_element(next_item.element)
 

@@ -1,7 +1,8 @@
 import functools
+from typing import Iterable
 from unicodedata import normalize
 
-from gaphor.ui.treemodel import tree_item_sort
+from gaphor.ui.treemodel import TreeItem, tree_item_sort
 
 """
 Inputs:
@@ -20,16 +21,18 @@ Inputs:
 """
 
 
-def search(model, search_text, start_tree_item=None, from_current=False):
+def search(search_text, tree_walker: Iterable[TreeItem]):
     search_text = normalize("NFC", search_text).casefold()
 
-    for tree_item in flatten_tree_model(model, start_tree_item, from_current):
+    for tree_item in tree_walker:
         text = normalize("NFC", tree_item.text).casefold()
         if tree_item.element and search_text in text:
             return tree_item
 
 
-def flatten_tree_model(model, start_tree_item=None, from_current=False):
+def sorted_tree_walker(
+    model, start_tree_item=None, from_current=False
+) -> Iterable[TreeItem]:
     """The tree model as one steam, sorted."""
 
     def _flatten(list_store):
