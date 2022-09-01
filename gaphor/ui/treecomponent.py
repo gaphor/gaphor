@@ -69,14 +69,15 @@ class TreeComponent(UIComponent, ActionProvider):
         def on_selection_changed(selection, position, n_items):
             self.search_state.reset()
 
+        selected_changed_id = self.selection.connect(
+            "selection-changed", on_selection_changed
+        )
+
         def on_selection_text_changed(search_text):
             self.selection.handler_block(selected_changed_id)
             self.search_state.text_changed(search_text)
             self.selection.handler_unblock(selected_changed_id)
 
-        selected_changed_id = self.selection.connect(
-            "selection-changed", on_selection_changed
-        )
         self.search_bar = create_search_bar(
             self.search_state.search_next,
             on_selection_text_changed,
@@ -285,12 +286,12 @@ class SearchState:
             self.tree_component.select_element(next_item.element)
 
     def search_next(self, search_text):
-        self.selected_item = self.tree_component.selection.get_selected_item()
         if next_item := search(
             search_text,
             sorted_tree_walker(
                 self.tree_component.model,
-                start_tree_item=self.selected_item and self.selected_item.get_item(),
+                start_tree_item=self.tree_component.selection.get_selected_item().get_item(),
+                from_current=False,
             ),
         ):
             self.tree_component.select_element(next_item.element)
