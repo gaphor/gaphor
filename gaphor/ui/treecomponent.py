@@ -66,9 +66,20 @@ class TreeComponent(UIComponent, ActionProvider):
         sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
         self.selection = Gtk.SingleSelection.new(sort_model)
 
+        def on_selection_changed(selection, position, n_items):
+            self.search_state.reset()
+
+        def on_selection_text_changed(search_text):
+            self.selection.handler_block(selected_changed_id)
+            self.search_state.text_changed(search_text)
+            self.selection.handler_unblock(selected_changed_id)
+
+        selected_changed_id = self.selection.connect(
+            "selection-changed", on_selection_changed
+        )
         self.search_bar = create_search_bar(
             self.search_state.search_next,
-            self.search_state.text_changed,
+            on_selection_text_changed,
             self.search_state.reset,
         )
 
