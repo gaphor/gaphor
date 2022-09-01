@@ -1,30 +1,35 @@
 import functools
 from unicodedata import normalize
 
-from gaphor.ui.treemodel import TreeItem, tree_item_sort
+from gaphor.ui.treemodel import tree_item_sort
+
+"""
+Inputs:
+
+1. Text changing
+   -> return first match from start_tree_item
+2. "next"
+   -> return first match from start_tree_item
+      update start_tree_item
+
+3. selected item changed
+ - change not due to 1. or 2.
+ - start search from this element in case of 1 and 2
+4. model changed (elements added/removed)
+ - only important in case 1 and 2
+"""
 
 
-def search(model, search_text, start_tree_item=None):
+def search(model, search_text, start_tree_item=None, from_current=False):
     search_text = normalize("NFC", search_text).casefold()
 
-    have_match = True
-    while have_match:
-        have_match = False
-        model_iterator = flatten_tree_model(model, start_tree_item)
-
-        for tree_item in model_iterator:
-            text = normalize("NFC", tree_item.text).casefold()
-            if tree_item.element and search_text in text:
-                have_match = True
-                cmd = yield tree_item
-                if isinstance(cmd, str):
-                    search_text = normalize("NFC", cmd).casefold()
-                elif isinstance(cmd, TreeItem):
-                    start_tree_item = cmd
-                    break
+    for tree_item in flatten_tree_model(model, start_tree_item, from_current):
+        text = normalize("NFC", tree_item.text).casefold()
+        if tree_item.element and search_text in text:
+            return tree_item
 
 
-def flatten_tree_model(model, start_tree_item):
+def flatten_tree_model(model, start_tree_item=None, from_current=False):
     """The tree model as one steam, sorted."""
 
     def _flatten(list_store):
@@ -38,6 +43,8 @@ def flatten_tree_model(model, start_tree_item):
     if start_tree_item:
         for tree_item in iterator:
             if tree_item is start_tree_item:
+                if from_current:
+                    yield tree_item
                 break
 
     yield from iterator

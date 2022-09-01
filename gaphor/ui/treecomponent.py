@@ -255,45 +255,30 @@ class TreeComponent(UIComponent, ActionProvider):
 class SearchState:
     def __init__(self, tree_component):
         self.tree_component = tree_component
-        self.search = None
         self.selected_item = None
 
     def reset(self):
-        self.search = None
         self.selected_item = None
 
     def text_changed(self, search_text):
         if not self.selected_item:
             self.selected_item = self.tree_component.selection.get_selected_item()
-        try:
-            self.search = search(
-                self.tree_component.model,
-                search_text,
-                start_tree_item=self.selected_item and self.selected_item.get_item(),
-            )
-            if next_item := next(self.search):
-                self.tree_component.select_element(next_item.element)
-        except StopIteration:
-            self.search = None
+        if next_item := search(
+            self.tree_component.model,
+            search_text,
+            start_tree_item=self.selected_item and self.selected_item.get_item(),
+            from_current=True,
+        ):
+            self.tree_component.select_element(next_item.element)
 
     def search_next(self, search_text):
-        self.selected_item = None
-        try:
-            if not self.search:
-                self.selected_item = self.tree_component.selection.get_selected_item()
-                self.search = search(
-                    self.tree_component.model,
-                    search_text,
-                    start_tree_item=self.selected_item
-                    and self.selected_item.get_item(),
-                )
-                next_item = next(self.search)
-            else:
-                next_item = self.search.send(search_text)
-            if next_item:
-                self.tree_component.select_element(next_item.element)
-        except StopIteration:
-            self.search = None
+        self.selected_item = self.tree_component.selection.get_selected_item()
+        if next_item := search(
+            self.tree_component.model,
+            search_text,
+            start_tree_item=self.selected_item and self.selected_item.get_item(),
+        ):
+            self.tree_component.select_element(next_item.element)
 
 
 def create_popup_controller(shortcuts):
