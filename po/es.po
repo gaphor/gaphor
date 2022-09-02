@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-08-23 17:08+0200\n"
-"PO-Revision-Date: 2022-08-23 03:44+0000\n"
+"PO-Revision-Date: 2022-09-03 00:43+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:56
@@ -1248,16 +1249,14 @@ msgstr "Estereotipos"
 
 #: gaphor/UML/states/propertypages.glade:39
 #: gaphor/UML/states/propertypages.ui:104
-#, fuzzy
 msgid "Show Regions"
-msgstr "Mostrar dirección"
+msgstr "Mostrar regiones"
 
 #: gaphor/UML/states/propertypages.glade:62
 #: gaphor/UML/states/propertypages.glade:84
 #: gaphor/UML/states/propertypages.ui:91 gaphor/UML/states/propertypages.ui:120
-#, fuzzy
 msgid "Regions"
-msgstr "Agregación"
+msgstr "Regiones"
 
 #: gaphor/UML/states/propertypages.glade:105
 #: gaphor/UML/states/propertypages.ui:20
@@ -1280,9 +1279,8 @@ msgid "Activities"
 msgstr "Actividades"
 
 #: gaphor/UML/states/statemachine.py:41
-#, fuzzy
 msgid "statemachine"
-msgstr "Máquina de estados"
+msgstr "máquinaestados"
 
 #: gaphor/UML/states/statestoolbox.py:20 gaphor/UML/states/statestoolbox.py:79
 msgid "State"
@@ -1310,49 +1308,40 @@ msgid "Transition"
 msgstr "Transición"
 
 #: gaphor/UML/states/statestoolbox.py:122
-#, fuzzy
 msgid "Shallow History Pseudostate"
-msgstr "Historia pseudoestado"
+msgstr "Pseudoestado de historia superficial"
 
 #: gaphor/UML/states/statestoolbox.py:134
-#, fuzzy
 msgid "Deep History Pseudostate"
-msgstr "Historia pseudoestado"
+msgstr "Pseudoestado de historia profunda"
 
 #: gaphor/UML/states/statestoolbox.py:146
-#, fuzzy
 msgid "Join Pseudostate"
-msgstr "Pseudoestado inicial"
+msgstr "Unir pseudoestado"
 
 #: gaphor/UML/states/statestoolbox.py:158
-#, fuzzy
 msgid "Fork Pseudostate"
-msgstr "Historia pseudoestado"
+msgstr "Bifurcar pseudoestado"
 
 #: gaphor/UML/states/statestoolbox.py:170
-#, fuzzy
 msgid "Junction Pseudostate"
-msgstr "Pseudoestado inicial"
+msgstr "Enlazar pseudoestado"
 
 #: gaphor/UML/states/statestoolbox.py:182
-#, fuzzy
 msgid "Choice Pseudostate"
-msgstr "Pseudoestado inicial"
+msgstr "Elección de pseudoestado"
 
 #: gaphor/UML/states/statestoolbox.py:194
-#, fuzzy
 msgid "Entry Point Pseudostate"
-msgstr "Pseudoestado inicial"
+msgstr "Punto de entrada pseudoestado"
 
 #: gaphor/UML/states/statestoolbox.py:206
-#, fuzzy
 msgid "Exit Point Pseudostate"
-msgstr "Pseudoestado inicial"
+msgstr "Punto de salida pseudoestado"
 
 #: gaphor/UML/states/statestoolbox.py:218
-#, fuzzy
 msgid "Terminate Pseudostate"
-msgstr "Pseudoestado inicial"
+msgstr "Terminar pseudoestado"
 
 #: gaphor/UML/usecases/extend.py:22
 msgid "extend"
