@@ -72,7 +72,9 @@ class AssociationConnect(RelationshipConnect):
 
     def allow(self, handle, port):
         # Element should be a Classifier
-        return isinstance(self.element.subject, UML.Classifier)
+        return super().allow(handle, port) and isinstance(
+            self.element.subject, UML.Classifier
+        )
 
     def relationship(  # type:ignore[override]
         self, head_subject, tail_subject

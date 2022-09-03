@@ -149,7 +149,9 @@ class UndoManager(Service, ActionProvider):
                 self._redo_stack = redo_stack
                 self._undo_stack = undo_stack
 
-            raise NotInTransactionException("Updating state outside of a transaction.")
+            raise NotInTransactionException(
+                f"Updating state outside of a transaction: {action.__doc__}."
+            )
 
     @event_handler(TransactionCommit)
     def commit_transaction(self, event=None):

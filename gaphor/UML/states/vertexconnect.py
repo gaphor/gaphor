@@ -48,10 +48,11 @@ class VertexTransitionConnect(TransactionConnectMixin, DirectionalRelationshipCo
         line = self.line
         subject = self.element.subject
 
-        if isinstance(subject, UML.FinalState) and handle is line.tail:
-            return super().allow(handle, port)
-        else:
-            return None
+        return (
+            super().allow(handle, port)
+            and isinstance(subject, UML.FinalState)
+            and handle is line.tail
+        )
 
 
 @Connector.register(PseudostateItem, TransitionItem)

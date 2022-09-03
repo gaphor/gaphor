@@ -148,6 +148,9 @@ class MessageLifelineConnect(BaseConnector):
         If lifeline's lifetime is visible then disallow connection to
         lifeline's head.
         """
+        if not super().allow(handle, port):
+            return False
+
         element = self.element
         lifetime = element.lifetime
         line = self.line
@@ -228,7 +231,7 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 
     def allow(self, handle, port):
         lifetime = self.element.lifetime
-        return lifetime.visible
+        return super().allow(handle, port) and lifetime.visible
 
     def connect(self, handle, port):
         lifeline = self.element.subject
