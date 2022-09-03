@@ -66,10 +66,9 @@ class PropertyConnectorConnector(RelationshipConnect):
         element = self.element
 
         # Element should be connected -> have a subject
-        if not isinstance(element.subject, (UML.Port, UML.Property)):
-            return None
-
-        return super().allow(handle, port)
+        return super().allow(handle, port) and isinstance(
+            element.subject, (UML.Port, UML.Property)
+        )
 
     def connect_subject(self, handle):
         line = self.line
