@@ -377,9 +377,7 @@ class MetadataRelationConnect(DirectionalRelationshipConnect):
                     and isinstance(element.subject, metadata["head"].type)
                     and (
                         not opposite_element
-                        or isinstance(
-                            opposite_element.subject, metadata["tail"].type
-                        )
+                        or isinstance(opposite_element.subject, metadata["tail"].type)
                     )
                 )
                 if handle is self.line.head
@@ -388,9 +386,7 @@ class MetadataRelationConnect(DirectionalRelationshipConnect):
                     and isinstance(element.subject, metadata["tail"].type)
                     and (
                         not opposite_element
-                        or isinstance(
-                            opposite_element.subject, metadata["head"].type
-                        )
+                        or isinstance(opposite_element.subject, metadata["head"].type)
                     )
                 )
             )
