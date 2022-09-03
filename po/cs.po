@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-08-23 17:08+0200\n"
-"PO-Revision-Date: 2022-07-18 14:21+0000\n"
+"PO-Revision-Date: 2022-09-01 19:16+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
+"\n"
 "Language: cs\n"
-"Language-Team: Czech "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/cs/>\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:56
@@ -1248,9 +1249,8 @@ msgstr "Stereotypy"
 
 #: gaphor/UML/states/propertypages.glade:39
 #: gaphor/UML/states/propertypages.ui:104
-#, fuzzy
 msgid "Show Regions"
-msgstr "Zobrazit směr"
+msgstr "Zobrazit regiony"
 
 #: gaphor/UML/states/propertypages.glade:62
 #: gaphor/UML/states/propertypages.glade:84
@@ -1280,9 +1280,8 @@ msgid "Activities"
 msgstr "Činnosti"
 
 #: gaphor/UML/states/statemachine.py:41
-#, fuzzy
 msgid "statemachine"
-msgstr "Státní stroj"
+msgstr "státní stroj"
 
 #: gaphor/UML/states/statestoolbox.py:20 gaphor/UML/states/statestoolbox.py:79
 msgid "State"
@@ -1310,9 +1309,8 @@ msgid "Transition"
 msgstr "Přechod"
 
 #: gaphor/UML/states/statestoolbox.py:122
-#, fuzzy
 msgid "Shallow History Pseudostate"
-msgstr "Historie Pseudostate"
+msgstr "Pseudostatní mělká historie"
 
 #: gaphor/UML/states/statestoolbox.py:134
 #, fuzzy
@@ -1325,9 +1323,8 @@ msgid "Join Pseudostate"
 msgstr "Počáteční pseudostav"
 
 #: gaphor/UML/states/statestoolbox.py:158
-#, fuzzy
 msgid "Fork Pseudostate"
-msgstr "Historie Pseudostate"
+msgstr "Pseudostát vidlice"
 
 #: gaphor/UML/states/statestoolbox.py:170
 #, fuzzy
@@ -1335,14 +1332,12 @@ msgid "Junction Pseudostate"
 msgstr "Počáteční pseudostav"
 
 #: gaphor/UML/states/statestoolbox.py:182
-#, fuzzy
 msgid "Choice Pseudostate"
-msgstr "Počáteční pseudostav"
+msgstr "Volba pseudostátu"
 
 #: gaphor/UML/states/statestoolbox.py:194
-#, fuzzy
 msgid "Entry Point Pseudostate"
-msgstr "Počáteční pseudostav"
+msgstr "Vstupní bod Pseudostát"
 
 #: gaphor/UML/states/statestoolbox.py:206
 #, fuzzy
@@ -2288,7 +2283,7 @@ msgstr "Není vybrána žádná položka"
 
 #: gaphor/ui/elementeditor.glade:28 gaphor/ui/elementeditor.ui:23
 msgid "Show Tips"
-msgstr ""
+msgstr "Zobrazit tipy"
 
 #: gaphor/ui/elementeditor.glade:63 gaphor/ui/elementeditor.ui:49
 msgid ""
@@ -2307,10 +2302,23 @@ msgid ""
 "in the tree view and start typing. A search box will automatically "
 "appear.\n"
 msgstr ""
+"Přidejte do diagramu prvek modelu ze schránky nástrojů. Zde se zobrazí jeho "
+"vlastnosti.\n"
+"\n"
+"Tento panel lze skrýt kliknutím na ikonu panelu v záhlaví.\n"
+"\n"
+"<b>Tip:</b> Většina prvků v panelu nástrojů má klávesovou zkratku (např. \"c"
+"\" pro Class).\n"
+"Výběr nástroje funguje pouze z diagramu. Pokud se nástroj nevybere, klikněte "
+"jednou na diagram (aby byl zaostřený) a pak stiskněte klávesovou zkratku.\n"
+"\n"
+"<b>Tip:</b> Chcete-li vyhledat prvek ve stromovém zobrazení, vyberte prvek "
+"ve stromovém zobrazení a začněte psát. Automaticky se zobrazí vyhledávací "
+"pole.\n"
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:171
 msgid "Editors"
-msgstr ""
+msgstr "Editoři"
 
 #: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:219
 msgid "Reset Tool Automatically"
@@ -2318,7 +2326,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:237
 msgid "Remove Unused Elements"
-msgstr ""
+msgstr "Odstranit nepoužívané prvky"
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
 #: gaphor/ui/elementeditor.ui:239 gaphor/ui/elementeditor.ui:246
@@ -2327,7 +2335,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:254
 msgid "Style Sheet"
-msgstr ""
+msgstr "Předloha stylů"
 
 #: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:279
 msgid ""
@@ -2335,24 +2343,28 @@ msgid ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
+"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\""
+">Styly v Gaphoru</a>"
 
 #: gaphor/ui/errorhandler.py:25
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
+"Vypadá to, že se Gaphor spouští z příkazového řádku. Chcete otevřít relaci "
+"ladění?"
 
 #: gaphor/ui/errorhandler.py:28 gaphor/ui/errorhandler.py:31
 msgid "Close"
-msgstr ""
+msgstr "Zavřít"
 
 #: gaphor/ui/errorhandler.py:28
 msgid "Start debug session"
-msgstr ""
+msgstr "Spustit relaci ladění"
 
 #: gaphor/ui/filedialog.py:33
 msgid "All Files"
-msgstr ""
+msgstr "Všechny soubory"
 
 #: gaphor/ui/filemanager.py:36
 msgid ""
@@ -2367,6 +2379,8 @@ msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"Nemáte potřebná oprávnění k uložení modelu.\n"
+"Zkontrolujte, zda jste správně zadali umístění, a zkuste to znovu."
 
 #: gaphor/ui/filemanager.py:44
 msgid ""
@@ -2388,7 +2402,7 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:123
 msgid "Loading model from {filename}"
-msgstr ""
+msgstr "Načítání modelu z {filename}"
 
 #: gaphor/ui/filemanager.py:159
 msgid "Unable to open model “{filename}”."

@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-08-23 17:08+0200\n"
-"PO-Revision-Date: 2022-02-24 10:00+0000\n"
-"Last-Translator: Mark-Daniel Lüthje <mark.luethje@mail.de>\n"
+"PO-Revision-Date: 2022-09-03 19:28+0000\n"
+"Last-Translator: Anonynonymouse <tom.spaine60388@gmail.com>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/gaphor/gaphor/de/>"
+"\n"
 "Language: de\n"
-"Language-Team: German "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/de/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14.1-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:56
@@ -106,12 +107,10 @@ msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
-#, fuzzy
 msgid "New FTA Diagram"
-msgstr "Neues Diagramm"
+msgstr "Neues FTA Diagramm"
 
 #: gaphor/RAAML/toolbox.py:20
-#, fuzzy
 msgid "New STPA Diagram"
 msgstr "Neues STPA-Diagramm"
 
@@ -202,9 +201,8 @@ msgstr "Unentwickeltes Ereignis"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:177 gaphor/RAAML/fta/ftatoolbox.py:183
 #: gaphor/RAAML/fta/houseevent.py:35
-#, fuzzy
 msgid "House Event"
-msgstr "Haus Ergeignis"
+msgstr "Haus Ereignis"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:188 gaphor/RAAML/fta/ftatoolbox.py:194
 #: gaphor/RAAML/fta/zeroevent.py:36
@@ -292,7 +290,6 @@ msgid "SysML"
 msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:28 gaphor/SysML/propertypages.ui:11
-#, fuzzy
 msgid "Item Flow"
 msgstr "Elementfluss"
 
@@ -384,21 +381,19 @@ msgstr "Proxy-Anschluss"
 
 #: gaphor/SysML/toolbox.py:68
 msgid "New Block Definition Diagram"
-msgstr ""
+msgstr "Neues Blockdefinitionsdiagramm"
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr ""
+msgstr "Neues internes Blockdiagramm"
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
-#, fuzzy
 msgid "New Package Diagram"
-msgstr "{name} Diagramm"
+msgstr "Neues Paketdiagramm"
 
 #: gaphor/SysML/toolbox.py:71
-#, fuzzy
 msgid "New Requirement Diagram"
-msgstr "Anforderung"
+msgstr "Neues Anforderungsdiagram"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
 #, fuzzy
@@ -422,9 +417,8 @@ msgid "references"
 msgstr "Verweise"
 
 #: gaphor/SysML/blocks/block.py:120
-#, fuzzy
 msgid "values"
-msgstr "Wert"
+msgstr "Werte"
 
 #: gaphor/SysML/blocks/block.py:137
 msgid "unnamed"
@@ -544,11 +538,12 @@ msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
+"Nicht verwendete Elemente wurden aus dem Modell entfernt: Sie werden in "
+"keinem anderen Diagramm verwendet."
 
 #: gaphor/UML/toolbox.py:32
-#, fuzzy
 msgid "New Component Diagram"
-msgstr "Neue Komponente"
+msgstr "Neues Komponentendiagramm"
 
 #: gaphor/UML/toolbox.py:33
 #, fuzzy
