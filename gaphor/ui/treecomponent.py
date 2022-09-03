@@ -124,29 +124,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_diagram_selection_changed)
 
     def select_element(self, element: Element) -> int | None:
-        def expand_up_to_element(element, expand=False) -> int | None:
-            if not element:
-                return 0
-            if (n := expand_up_to_element(element.owner, expand=True)) is None:
-                return None
-            is_relationship = isinstance(element, UML.Relationship)
-            while row := self.selection.get_item(n):
-                if is_relationship and isinstance(row.get_item(), RelationshipItem):
-                    row.set_expanded(True)
-                elif row.get_item().element is element:
-                    if expand:
-                        row.set_expanded(True)
-                    return n
-                n += 1
-            return None
-
-        pos = expand_up_to_element(element)
-        if pos is not None:
-            self.selection.set_selected(pos)
-            self.tree_view.activate_action(
-                "list.scroll-to-item", GLib.Variant.new_uint32(pos)
-            )
-        return pos
+        return select_element(self.tree_view, element)
 
     def get_selected_element(self) -> Element | None:
         assert self.model
@@ -280,7 +258,6 @@ class SearchState:
             sorted_tree_walker(
                 self.tree_component.model,
                 start_tree_item=self.selected_item and self.selected_item.get_item(),
-                from_current=True,
             ),
         ):
             self.tree_component.select_element(next_item.element)
@@ -295,6 +272,31 @@ class SearchState:
             ),
         ):
             self.tree_component.select_element(next_item.element)
+
+
+def select_element(tree_view: Gtk.ListView, element: Element) -> int | None:
+    def expand_up_to_element(element, expand=False) -> int | None:
+        if not element:
+            return 0
+        if (n := expand_up_to_element(element.owner, expand=True)) is None:
+            return None
+        is_relationship = isinstance(element, UML.Relationship)
+        while row := selection.get_item(n):
+            if is_relationship and isinstance(row.get_item(), RelationshipItem):
+                row.set_expanded(True)
+            elif row.get_item().element is element:
+                if expand:
+                    row.set_expanded(True)
+                return n
+            n += 1
+        return None
+
+    selection = tree_view.get_model()
+    pos = expand_up_to_element(element)
+    if pos is not None:
+        selection.set_selected(pos)
+        tree_view.activate_action("list.scroll-to-item", GLib.Variant.new_uint32(pos))
+    return pos
 
 
 def create_popup_controller(shortcuts):
