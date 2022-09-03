@@ -42,7 +42,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.element_factory = element_factory
         self.modeling_language = modeling_language
         self.model = TreeModel()
-        self.search_state = SearchState(self)
+        self.search_bar = None
 
     def open(self):
         self.event_manager.subscribe(self.on_element_created)
@@ -66,24 +66,6 @@ class TreeComponent(UIComponent, ActionProvider):
         sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
         self.selection = Gtk.SingleSelection.new(sort_model)
 
-        def on_selection_changed(selection, position, n_items):
-            self.search_state.reset()
-
-        selected_changed_id = self.selection.connect(
-            "selection-changed", on_selection_changed
-        )
-
-        def on_selection_text_changed(search_text):
-            self.selection.handler_block(selected_changed_id)
-            self.search_state.text_changed(search_text)
-            self.selection.handler_unblock(selected_changed_id)
-
-        self.search_bar = create_search_bar(
-            self.search_state.search_next,
-            on_selection_text_changed,
-            self.search_state.reset,
-        )
-
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
             "setup", list_item_factory_setup, self.event_manager, self.modeling_language
@@ -103,6 +85,8 @@ class TreeComponent(UIComponent, ActionProvider):
         action_group, shortcuts = create_action_group(self, "tree-view")
         scrolled_window.insert_action_group("tree-view", action_group)
         self.tree_view.add_controller(create_popup_controller(shortcuts))
+
+        self.search_bar = create_search_bar(SearchEngine(self.model, self.tree_view))
 
         self.search_bar.set_key_capture_widget(self.tree_view)
 
@@ -190,7 +174,8 @@ class TreeComponent(UIComponent, ActionProvider):
 
     @action(name="win.search", shortcut="<Primary>f")
     def tree_view_search(self):
-        self.search_bar.set_search_mode(True)
+        if self.search_bar:
+            self.search_bar.set_search_mode(True)
 
     @event_handler(ElementCreated)
     def on_element_created(self, event: ElementCreated):
@@ -242,36 +227,47 @@ class TreeComponent(UIComponent, ActionProvider):
             return
 
 
-class SearchState:
-    def __init__(self, tree_component):
-        self.tree_component = tree_component
+class SearchEngine:
+    def __init__(self, model, tree_view):
+        self.model = model
+        self.tree_view = tree_view
+        self.selection = self.tree_view.get_model()
+        self.selected_changed_id = self.selection.connect(
+            "selection-changed", self.on_selection_changed
+        )
         self.selected_item = None
+
+    def on_selection_changed(self, selection, position, n_items):
+        self.reset()
 
     def reset(self):
         self.selected_item = None
 
     def text_changed(self, search_text):
         if not self.selected_item:
-            self.selected_item = self.tree_component.selection.get_selected_item()
+            self.selected_item = self.selection.get_selected_item()
         if next_item := search(
             search_text,
             sorted_tree_walker(
-                self.tree_component.model,
+                self.model,
                 start_tree_item=self.selected_item and self.selected_item.get_item(),
+                from_current=True,
             ),
         ):
-            self.tree_component.select_element(next_item.element)
+            self.selection.handler_block(self.selected_changed_id)
+            select_element(self.tree_view, next_item.element)
+            self.selection.handler_unblock(self.selected_changed_id)
 
     def search_next(self, search_text):
         if next_item := search(
             search_text,
             sorted_tree_walker(
-                self.tree_component.model,
-                start_tree_item=self.tree_component.selection.get_selected_item().get_item(),
+                self.model,
+                start_tree_item=self.selection.get_selected_item().get_item(),
                 from_current=False,
             ),
         ):
-            self.tree_component.select_element(next_item.element)
+            select_element(self.tree_view, next_item.element)
 
 
 def select_element(tree_view: Gtk.ListView, element: Element) -> int | None:
@@ -299,32 +295,33 @@ def select_element(tree_view: Gtk.ListView, element: Element) -> int | None:
     return pos
 
 
-def create_popup_controller(shortcuts):
-    ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
-    ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
-    return ctrl
-
-
-def create_search_bar(search_next, text_changed, stop_search):
+def create_search_bar(search_engine: SearchEngine):
     def on_search_changed(entry):
-        text_changed(entry.get_text())
+        search_engine.text_changed(entry.get_text())
 
     def on_stop_search(_entry):
-        stop_search()
+        search_engine.reset()
 
     def on_search_next(entry):
-        search_next(entry.get_text())
+        search_engine.search_next(entry.get_text())
 
     search_entry = Gtk.SearchEntry.new()
     search_entry.connect("search-changed", on_search_changed)
     search_entry.connect("stop-search", on_stop_search)
     search_entry.connect("activate", on_search_next)
+    search_entry.connect("next-match", on_search_next)
     search_bar = Gtk.SearchBar.new()
     search_bar.set_child(search_entry)
     search_bar.connect_entry(search_entry)
     search_bar.set_show_close_button(True)
 
     return search_bar
+
+
+def create_popup_controller(shortcuts):
+    ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
+    ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
+    return ctrl
 
 
 def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):

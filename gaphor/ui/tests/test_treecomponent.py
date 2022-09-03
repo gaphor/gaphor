@@ -3,7 +3,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.ui.treecomponent import TreeComponent
+from gaphor.ui.treecomponent import SearchEngine, TreeComponent
 
 skip_if_gtk3 = pytest.mark.skipif(
     Gtk.get_major_version() == 3, reason="Gtk.ListView is not supported by GTK 3"
@@ -226,11 +226,11 @@ def test_search_next(tree_component, element_factory):
     class_b = element_factory.create(UML.Class)
     class_b.name = "b"
 
-    search_state = tree_component.search_state
-
+    search_engine = SearchEngine(tree_component.model, tree_component.tree_view)
     assert tree_component.get_selected_element() is class_a
 
-    search_state.search_next("b")
+    search_engine.search_next("b")
+
     assert tree_component.get_selected_element() is class_b
 
 
@@ -241,10 +241,9 @@ def test_search_text_changed(tree_component, element_factory):
     class_b = element_factory.create(UML.Class)
     class_b.name = "b"
 
-    search_state = tree_component.search_state
-
+    search_engine = SearchEngine(tree_component.model, tree_component.tree_view)
     assert tree_component.get_selected_element() is class_a
 
-    search_state.text_changed("b")
+    search_engine.text_changed("b")
 
     assert tree_component.get_selected_element() is class_b
