@@ -38,3 +38,12 @@ jobs:
       - name: Test with Hypothesis
         run: xvfb-run poetry run pytest --hypothesis-profile=ci tests
         shell: bash
+      - uses: nashmaniac/create-issue-action@v1.1
+        name: Create Issue on Failure
+        with:
+          title: Hypothesis tests failed
+          token: ${{secrets.GITHUB_TOKEN}}
+          labels: bug,hypothesis
+          body: |
+            Test run failed for commit ${{github.sha}}.
+            See https://github.com/gaphor/gaphor/actions/workflows/hypothesis-test.yml.
