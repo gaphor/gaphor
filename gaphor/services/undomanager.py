@@ -11,7 +11,7 @@ NOTE: it would be nice to use actions in conjunction with functools.partial.
 """
 
 import logging
-from typing import Callable, List, Optional
+from typing import Callable, List
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
@@ -267,10 +267,10 @@ class UndoManager(Service, ActionProvider):
         self.event_manager.handle(UndoManagerStateChanged(self))
 
     def lookup(self, id: str) -> Element:
-        element: Optional[Element] = self.element_factory.lookup(id)
-        if not element:
+        if element := self.element_factory.lookup(id):
+            return element
+        else:
             raise ValueError(f"Element with id {id} not found in model")
-        return element
 
     #
     # Undo Handlers
