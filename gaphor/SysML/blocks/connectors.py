@@ -24,7 +24,9 @@ class BlockProperyProxyPortConnector:
         self.proxy_port = proxy_port
 
     def allow(self, handle: Handle, port: Port) -> bool:
-        return True
+        return (
+            bool(self.block.diagram) and self.block.diagram is self.proxy_port.diagram
+        )
 
     def connect(self, handle: Handle, port: Port) -> bool:
         """Connect and reconnect at model level.

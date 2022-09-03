@@ -18,7 +18,7 @@ class ActionPinConnector:
         self.pin = pin
 
     def allow(self, handle: Handle, port: Port) -> bool:
-        return True
+        return bool(self.action.diagram) and self.action.diagram is self.pin.diagram
 
     def connect(self, handle: Handle, port: Port) -> bool:
         """Connect and reconnect at model level.
