@@ -281,7 +281,7 @@ TYPES_WITH_OWNED_ATTRIBUTE = (
 )
 
 
-def set_navigability(assoc, end, nav):
+def set_navigability(assoc: Association, end: Property, nav: bool | None) -> None:
     """Set navigability of an association end (property).
 
     There are three possible values for ``nav`` parameter:
@@ -322,8 +322,9 @@ def set_navigability(assoc, end, nav):
 
     When an end is non-navigable, then it is just member of an association.
     """
-    # remove "navigable" and "unspecified" navigation indicators first
+    assert end.opposite
     owner = end.opposite.type
+    # remove "navigable" and "unspecified" navigation indicators first
     if isinstance(owner, TYPES_WITH_OWNED_ATTRIBUTE) and end in owner.ownedAttribute:
         owner.ownedAttribute.remove(end)
     if end in assoc.ownedEnd:
