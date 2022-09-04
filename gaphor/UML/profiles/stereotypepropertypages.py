@@ -100,7 +100,7 @@ def refresh(subject: Element, model: Gtk.TreeStore):
             None,
             (st.name, "", bool(applied), True, False, st, None, None),
         )
-        for attr_index, attr in enumerate(attr for attr in all_attributes(st)):
+        for attr_index, attr in enumerate(all_attributes(st)):
             slot = (
                 next(
                     (slot for slot in applied.slot if slot.definingFeature is attr),
@@ -161,10 +161,10 @@ def set_value(renderer, path, value, model):
     if isinstance(attr, UML.Stereotype):
         return  # don't edit stereotype rows
 
-    if slot is None and not value:
-        return  # nothing to do and don't create slot without value
-
     if slot is None:
+        if not value:
+            return  # nothing to do and don't create slot without value
+
         slot = UML.recipes.add_slot(applied, attr)
 
     assert slot
