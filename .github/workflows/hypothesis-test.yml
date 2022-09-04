@@ -6,6 +6,9 @@ on:
 env:
   python_version: '3.10'
 
+permissions:
+  issues: write
+
 jobs:
 
   hypothesis:
@@ -39,6 +42,7 @@ jobs:
         run: xvfb-run poetry run pytest --hypothesis-profile=ci tests
         shell: bash
       - uses: nashmaniac/create-issue-action@v1.1
+        if: failure()
         name: Create Issue on Failure
         with:
           title: Hypothesis tests failed
