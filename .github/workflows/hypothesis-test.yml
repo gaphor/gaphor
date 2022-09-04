@@ -1,5 +1,6 @@
 name: Hypothesis Tests
 on:
+  workflow_dispatch:
   schedule:
     # min hour dom month dow
     - cron:  '0 6 * * *'
