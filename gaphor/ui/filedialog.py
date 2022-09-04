@@ -96,7 +96,7 @@ def save_file_dialog(
     def overwrite_check() -> Path | None:
         filename = get_filename()
         if extension and filename.suffix != extension:
-            filename.with_suffix(extension)
+            filename = filename.with_suffix(extension)
             set_filename(filename)
             return None if filename.exists() else filename
         return filename

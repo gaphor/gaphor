@@ -144,3 +144,23 @@ def test_save_dialog_with_only_file_name(file_chooser):
         str(filename.parent.absolute()),
     )
     assert file_chooser.stub_current_name == filename.name
+
+
+def test_save_dialog_filename_without_extension(file_chooser):
+    selected_file = None
+
+    def save_handler(f):
+        nonlocal selected_file
+        selected_file = f
+
+    save_file_dialog(
+        "title",
+        save_handler,
+        filename=None,
+        extension=".gaphor",
+        filters=[],
+    )
+
+    file_chooser.stub_select_file("/test/path", "model")
+
+    assert selected_file.parts == (os.path.sep, "test", "path", "model.gaphor")
