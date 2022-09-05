@@ -187,7 +187,7 @@ choco install nsis 7zip
 Then build your installer using:
 
 ```PowerShell
-poetry install --only main,packaging,automation 
+poetry install --only main,packaging,automation
 poetry build
 poetry run poe package
 poetry run poe win-installer
