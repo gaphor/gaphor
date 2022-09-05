@@ -131,12 +131,6 @@ class LifetimeItem:
 
     min_length = property(lambda s: s._c_min_length.delta, _set_min_length)
 
-    def _set_connectable(self, connectable):
-        self.port.connectable = connectable
-        self.bottom.movable = connectable
-
-    connectable = property(lambda s: s.port.connectable, _set_connectable)
-
     def _is_visible(self):
         return self.length > self.MIN_LENGTH
 

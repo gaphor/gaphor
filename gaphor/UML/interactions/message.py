@@ -228,7 +228,7 @@ class MessageItem(Named, LinePresentation[UML.Message]):
             c1
             and isinstance(c1.connected, LifelineItem)
             and not c1.connected.lifetime.visible
-            or c2
+            and c2
             and isinstance(c2.connected, LifelineItem)
             and not c2.connected.lifetime.visible
         )

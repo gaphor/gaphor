@@ -143,49 +143,17 @@ class MessageLifelineConnect(BaseConnector):
     element: LifelineItem
     line: MessageItem
 
-    def allow(self, handle, port):
-        """Glue to lifeline's head or lifetime.
-
-        If lifeline's lifetime is visible then disallow connection to
-        lifeline's head.
-        """
-        if not super().allow(handle, port):
-            return False
-
-        element = self.element
-        lifetime = element.lifetime
-        line = self.line
-        opposite = line.opposite(handle)
-
-        ol = self.get_connected(opposite)
-        if isinstance(ol, LifelineItem):
-            opposite_is_visible = ol.lifetime.visible
-            # connect lifetimes if both are visible or both invisible
-            return not (lifetime.visible ^ opposite_is_visible)
-
-        return not (lifetime.visible ^ (port is element.lifetime.port))
-
     def connect(self, handle, port):
         line = self.line
         send = self.get_connected(line.head)
         received = self.get_connected(line.tail)
         connect_lifelines(line, send, received)
-
-        lifetime = self.element.lifetime
-        # if connected to head, then make lifetime invisible
-        if port is lifetime.port:
-            lifetime.min_length = lifetime.MIN_LENGTH_VISIBLE
-        else:
-            lifetime.visible = False
-            lifetime.connectable = False
         return True
 
     def disconnect(self, handle):
         line = self.line
         send: Optional[Presentation[Element]] = get_connected(line, line.head)
         received = self.get_connected(line.tail)
-        lifeline = self.element
-        lifetime = lifeline.lifetime
 
         # if a message is delete message, then disconnection causes
         # lifeline to be no longer destroyed (note that there can be
@@ -200,12 +168,6 @@ class MessageLifelineConnect(BaseConnector):
             send and handle is line.head,
             received and handle is line.tail,
         )
-
-        if len(list(self.diagram.connections.get_connections(connected=lifeline))) == 1:
-            # after disconnection count of connected items will be
-            # zero, so allow connections to lifeline's lifetime
-            lifetime.connectable = True
-            lifetime.min_length = lifetime.MIN_LENGTH
 
 
 @Connector.register(ExecutionSpecificationItem, MessageItem)

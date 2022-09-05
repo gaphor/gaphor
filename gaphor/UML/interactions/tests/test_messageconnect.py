@@ -22,17 +22,6 @@ def test_head_glue(diagram):
     assert glued
 
 
-def test_invisible_lifetime_glue(diagram):
-    """Test message to invisible lifetime glue."""
-    ll = diagram.create(LifelineItem)
-    msg = diagram.create(MessageItem)
-
-    glued = allow(msg, msg.head, ll, ll.lifetime.port)
-
-    assert not ll.lifetime.visible
-    assert not glued
-
-
 def test_visible_lifetime_glue(diagram):
     """Test message to visible lifetime glue."""
     ll = diagram.create(LifelineItem)
@@ -205,81 +194,26 @@ def test_disconnection(diagram):
     assert msg.subject is None, f"{msg.subject}"
 
 
-def test_lifetime_connectivity_on_head(diagram, element_factory):
-    """Test lifeline's lifetime connectivity change on head connection."""
-    ll = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
-    msg = diagram.create(MessageItem)
+def test_communication_diagram_message_head_glue(diagram):
+    communication = diagram.create(LifelineItem)
+    sequence = diagram.create(LifelineItem)
+    sequence.lifetime.visible = True
+    message = diagram.create(MessageItem)
 
-    # connect message to lifeline's head, lifeline's lifetime
-    # visibility and connectivity should change
-    connect(msg, msg.head, ll)
-    assert not ll.lifetime.visible
-    assert not ll.lifetime.connectable
-    assert ll.lifetime.MIN_LENGTH == ll.lifetime.min_length
+    connect(message, message.tail, sequence)
 
-    # ... and disconnection
-    disconnect(msg, msg.head)
-    assert ll.lifetime.connectable
-    assert ll.lifetime.MIN_LENGTH == ll.lifetime.min_length
+    assert allow(message, message.head, communication, communication.lifetime.port)
 
 
-def test_lifetime_connectivity_on_lifetime(diagram, element_factory):
-    """Test lifeline's lifetime connectivity change on lifetime connection."""
-    ll = diagram.create(LifelineItem, subject=element_factory.create(UML.Lifeline))
-    ll.lifetime.visible = True
-    ll.handles()[-1].pos.y = 500
-    msg = diagram.create(MessageItem)
-    msg.head.pos.y = 400
-
-    # connect message to lifeline's lifetime, lifeline's lifetime
-    # visibility and connectivity should be unchanged
-    connect(msg, msg.head, ll)
-
-    assert diagram.connections.get_connection(msg.head).port is ll.ports()[-1]
-    assert ll.lifetime.connectable
-    assert ll.lifetime.MIN_LENGTH_VISIBLE == ll.lifetime.min_length
-
-    # ... and disconnection
-    disconnect(msg, msg.head)
-    assert ll.lifetime.connectable
-    assert ll.lifetime.visible
-    assert ll.lifetime.MIN_LENGTH == ll.lifetime.min_length
-
-
-def test_message_glue_cd(diagram):
-    """Test gluing message on communication diagram."""
-
+def test_communication_diagram_message_tail_glue(diagram):
     lifeline1 = diagram.create(LifelineItem)
     lifeline2 = diagram.create(LifelineItem)
     message = diagram.create(MessageItem)
 
-    # make second lifeline to be in sequence diagram mode
     lifeline2.lifetime.visible = True
-
-    # connect head of message to lifeline's head
     connect(message, message.head, lifeline1)
 
-    glued = allow(message, message.tail, lifeline2, lifeline2.lifetime.port)
-    # no connection possible as 2nd lifeline is in sequence diagram
-    # mode
-    assert not glued
-
-
-def test_message_glue_sd(diagram):
-    """Test gluing message on sequence diagram."""
-
-    msg = diagram.create(MessageItem)
-    ll1 = diagram.create(LifelineItem)
-    ll2 = diagram.create(LifelineItem)
-
-    # 1st lifeline - communication diagram
-    # 2nd lifeline - sequence diagram
-    ll2.lifetime.visible = True
-
-    # connect lifetime of message to lifeline's lifetime
-    connect(msg, msg.head, ll1, ll1.lifetime.port)
-
-    assert not allow(msg, msg.tail, ll2)
+    assert allow(message, message.tail, lifeline2, lifeline2.lifetime.port)
 
 
 def test_message_glue_from_lifetimee_to_head(diagram):
