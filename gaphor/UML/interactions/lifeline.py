@@ -22,7 +22,7 @@ lifeline.
 from gaphas.connector import Handle, Port
 from gaphas.constraint import CenterConstraint, EqualsConstraint, LessThanConstraint
 from gaphas.geometry import distance_line_point
-from gaphas.item import SE, SW
+from gaphas.item import NW, SE, SW
 from gaphas.position import MatrixProjection, Position
 from gaphas.solver import VERY_STRONG, MultiConstraint
 from gaphas.solver.constraint import BaseConstraint
@@ -170,7 +170,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         self._handles.append(bottom)
         self.watch_handle(top)
         self.watch_handle(bottom)
-        self._ports.append(self._lifetime.port)
+        self._ports.insert(0, self._lifetime.port)
 
         self.shape = Box(
             Text(
@@ -223,6 +223,13 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
             self._lifetime.bottom.pos.y = self.height + float(value)
         else:
             super().load(name, value)
+
+        # Force update the lifetime position,
+        # so message items can connect properly.
+        if name in ("top-left", "width"):
+            self.lifetime.top.pos.x = self.lifetime.bottom.pos.x = (
+                self._handles[NW].pos.x + self.width / 2
+            )
 
     def draw_lifeline(self, box, context, bounding_box):
         """Draw lifeline.

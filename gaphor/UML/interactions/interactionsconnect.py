@@ -2,9 +2,6 @@
 
 from typing import Optional
 
-from gaphas.connector import ConnectionSink, ItemConnectionSink
-from gaphas.types import Pos, SupportsFloatPos
-
 from gaphor import UML
 from gaphor.core.modeling import Element, Presentation
 from gaphor.diagram.connectors import BaseConnector, Connector
@@ -281,25 +278,3 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
 
         for cinfo in self.diagram.connections.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).disconnect(cinfo.handle)
-
-
-@ConnectionSink.register(LifelineItem)
-class LifelineConnectionSink(ItemConnectionSink):
-    def glue(
-        self, pos: SupportsFloatPos, secondary_pos: Optional[SupportsFloatPos] = None
-    ) -> Optional[Pos]:
-        """Glue a line to the lifeline item, have a preference for the lifetime
-        line."""
-        assert isinstance(self.item, LifelineItem)
-        glue_pos = super().glue(pos, secondary_pos)
-
-        lifetime = self.item.lifetime
-        if lifetime.visible and self.port is not lifetime.port:  # type: ignore[has-type]
-            g, d = lifetime.port.glue(pos)
-            if d < self.distance:
-                self.port = lifetime.port
-                glue_pos = g
-
-            return glue_pos
-
-        return glue_pos
