@@ -216,10 +216,13 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
 
     def save(self, save_func):
         super().save(save_func)
-        save_func("lifetime-length", self._lifetime.length)
+        save_func("lifetime-y", float(self._lifetime.bottom.pos.y))
 
     def load(self, name, value):
-        if name == "lifetime-length":
+        if name == "lifetime-y":
+            self._lifetime.bottom.pos.y = float(value)
+        elif name == "lifetime-length":
+            # For gaphor < 2.12
             self._lifetime.bottom.pos.y = self.height + float(value)
         else:
             super().load(name, value)
@@ -227,7 +230,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         # Force update the lifetime position,
         # so message items can connect properly.
         if name in ("top-left", "width"):
-            self.lifetime.top.pos.x = self.lifetime.bottom.pos.x = (
+            self._lifetime.top.pos.x = self._lifetime.bottom.pos.x = (
                 self._handles[NW].pos.x + self.width / 2
             )
 
