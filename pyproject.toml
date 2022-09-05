@@ -80,6 +80,10 @@ pyinstaller = ">=4.6,<6.0"
 pyinstaller-versionfile = "^2.0.0"
 tomli = ">=1.2,<3.0"
 
+[tool.poetry.extras]
+pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
+docs = [ "sphinx", "sphinx-rtd-theme", "sphinx-copybutton", "myst-parser"]
+
 [tool.poetry.scripts]
 gaphor = "gaphor.ui:main"
 gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
