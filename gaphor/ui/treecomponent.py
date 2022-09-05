@@ -31,6 +31,7 @@ from gaphor.ui.treemodel import (
     tree_item_sort,
     visible,
 )
+from gaphor.ui.treesearch import search, sorted_tree_walker
 
 START_EDIT_DELAY = 100  # ms
 
@@ -41,6 +42,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.element_factory = element_factory
         self.modeling_language = modeling_language
         self.model = TreeModel()
+        self.search_bar = None
 
     def open(self):
         self.event_manager.subscribe(self.on_element_created)
@@ -50,8 +52,6 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.subscribe(self.on_attribute_changed)
         self.event_manager.subscribe(self.on_model_ready)
         self.event_manager.subscribe(self.on_diagram_selection_changed)
-
-        self.search_bar, self.search_filter = create_search_bar()
 
         tree_model = Gtk.TreeListModel.new(
             self.model.root,
@@ -63,10 +63,9 @@ class TreeComponent(UIComponent, ActionProvider):
 
         self.sorter = Gtk.CustomSorter.new(tree_item_sort)
         tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
-        self.sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
-        self.selection = Gtk.SingleSelection.new(
-            Gtk.FilterListModel.new(self.sort_model, self.search_filter)
-        )
+        sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
+        self.selection = Gtk.SingleSelection.new(sort_model)
+
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
             "setup", list_item_factory_setup, self.event_manager, self.modeling_language
@@ -85,7 +84,9 @@ class TreeComponent(UIComponent, ActionProvider):
 
         action_group, shortcuts = create_action_group(self, "tree-view")
         scrolled_window.insert_action_group("tree-view", action_group)
-        self.create_gtk4_popup_controller(shortcuts)
+        self.tree_view.add_controller(create_popup_controller(shortcuts))
+
+        self.search_bar = create_search_bar(SearchEngine(self.model, self.tree_view))
 
         self.search_bar.set_key_capture_widget(self.tree_view)
 
@@ -106,35 +107,8 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self.on_model_ready)
         self.event_manager.unsubscribe(self.on_diagram_selection_changed)
 
-    def create_gtk4_popup_controller(self, shortcuts):
-        ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
-        ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
-        self.tree_view.add_controller(ctrl)
-
     def select_element(self, element: Element) -> int | None:
-        def expand_up_to_element(element, expand=False) -> int | None:
-            if not element:
-                return 0
-            if (n := expand_up_to_element(element.owner, expand=True)) is None:
-                return None
-            is_relationship = isinstance(element, UML.Relationship)
-            while row := self.sort_model.get_item(n):
-                if is_relationship and isinstance(row.get_item(), RelationshipItem):
-                    row.set_expanded(True)
-                elif row.get_item().element is element:
-                    if expand:
-                        row.set_expanded(True)
-                    return n
-                n += 1
-            return None
-
-        pos = expand_up_to_element(element)
-        if pos is not None:
-            self.selection.set_selected(pos)
-            self.tree_view.activate_action(
-                "list.scroll-to-item", GLib.Variant.new_uint32(pos)
-            )
-        return pos
+        return select_element(self.tree_view, element)
 
     def get_selected_element(self) -> Element | None:
         assert self.model
@@ -200,7 +174,8 @@ class TreeComponent(UIComponent, ActionProvider):
 
     @action(name="win.search", shortcut="<Primary>f")
     def tree_view_search(self):
-        self.search_bar.set_search_mode(True)
+        if self.search_bar:
+            self.search_bar.set_search_mode(True)
 
     @event_handler(ElementCreated)
     def on_element_created(self, event: ElementCreated):
@@ -252,45 +227,101 @@ class TreeComponent(UIComponent, ActionProvider):
             return
 
 
-def new_list_item_ui():
-    b = translated_ui_string("gaphor.ui", "treeitem.ui")
-    return GLib.Bytes.new(b.encode("utf-8"))
-
-
-def create_search_bar():
-    search_text: str = ""
-
-    def on_search_changed(entry):
-        nonlocal search_text
-        filter_change = (
-            Gtk.FilterChange.MORE_STRICT
-            if search_text in entry.get_text()
-            else Gtk.FilterChange.MORE_STRICT
-            if entry.get_text() in search_text
-            else Gtk.FilterChange.DIFFERENT
+class SearchEngine:
+    def __init__(self, model, tree_view):
+        self.model = model
+        self.tree_view = tree_view
+        self.selection = self.tree_view.get_model()
+        self.selected_changed_id = self.selection.connect(
+            "selection-changed", self.on_selection_changed
         )
-        search_text = entry.get_text()
-        search_filter.changed(filter_change)
+        self.selected_item = None
+
+    def on_selection_changed(self, selection, position, n_items):
+        self.reset()
+
+    def reset(self):
+        self.selected_item = None
+
+    def text_changed(self, search_text):
+        if not self.selected_item:
+            self.selected_item = self.selection.get_selected_item()
+        if next_item := search(
+            search_text,
+            sorted_tree_walker(
+                self.model,
+                start_tree_item=self.selected_item and self.selected_item.get_item(),
+                from_current=True,
+            ),
+        ):
+            self.selection.handler_block(self.selected_changed_id)
+            select_element(self.tree_view, next_item.element)
+            self.selection.handler_unblock(self.selected_changed_id)
+
+    def search_next(self, search_text):
+        if next_item := search(
+            search_text,
+            sorted_tree_walker(
+                self.model,
+                start_tree_item=self.selection.get_selected_item().get_item(),
+                from_current=False,
+            ),
+        ):
+            select_element(self.tree_view, next_item.element)
+
+
+def select_element(tree_view: Gtk.ListView, element: Element) -> int | None:
+    def expand_up_to_element(element, expand=False) -> int | None:
+        if not element:
+            return 0
+        if (n := expand_up_to_element(element.owner, expand=True)) is None:
+            return None
+        is_relationship = isinstance(element, UML.Relationship)
+        while row := selection.get_item(n):
+            if is_relationship and isinstance(row.get_item(), RelationshipItem):
+                row.set_expanded(True)
+            elif row.get_item().element is element:
+                if expand:
+                    row.set_expanded(True)
+                return n
+            n += 1
+        return None
+
+    selection = tree_view.get_model()
+    pos = expand_up_to_element(element)
+    if pos is not None:
+        selection.set_selected(pos)
+        tree_view.activate_action("list.scroll-to-item", GLib.Variant.new_uint32(pos))
+    return pos
+
+
+def create_search_bar(search_engine: SearchEngine):
+    def on_search_changed(entry):
+        search_engine.text_changed(entry.get_text())
 
     def on_stop_search(_entry):
-        nonlocal search_text
-        search_text = ""
-        search_filter.changed(Gtk.FilterChange.LESS_STRICT)
+        search_engine.reset()
 
-    def name_filter(item):
-        item = item.get_item()
-        return isinstance(item, TreeItem) and search_text.lower() in item.text.lower()
+    def on_search_next(entry):
+        search_engine.search_next(entry.get_text())
 
-    search_filter = Gtk.CustomFilter.new(name_filter)
     search_entry = Gtk.SearchEntry.new()
     search_entry.connect("search-changed", on_search_changed)
     search_entry.connect("stop-search", on_stop_search)
+    search_entry.connect("activate", on_search_next)
+    search_entry.connect("next-match", on_search_next)
     search_bar = Gtk.SearchBar.new()
     search_bar.set_child(search_entry)
     search_bar.connect_entry(search_entry)
     search_bar.set_show_close_button(True)
 
-    return search_bar, search_filter
+    return search_bar
+
+
+def create_popup_controller(shortcuts):
+    ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
+    ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
+    return ctrl
 
 
 def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):

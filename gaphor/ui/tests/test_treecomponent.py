@@ -3,7 +3,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.ui.treecomponent import TreeComponent
+from gaphor.ui.treecomponent import SearchEngine, TreeComponent
 
 skip_if_gtk3 = pytest.mark.skipif(
     Gtk.get_major_version() == 3, reason="Gtk.ListView is not supported by GTK 3"
@@ -38,7 +38,7 @@ def test_show_item_in_tree_list_model(tree_component, element_factory):
     class_.package = package
 
     pos = tree_component.select_element(class_)
-    tree_model = tree_component.sort_model
+    tree_model = tree_component.selection
 
     assert pos == 1
     assert tree_model.get_item(0).get_item().element is package
@@ -184,8 +184,66 @@ def test_tree_model_expand_to_relationship(tree_component, element_factory):
 
     pos = tree_component.select_element(association)
 
-    selected = tree_component.selection.get_selected_item()
-
     assert pos == 2
-    assert selected
-    assert selected.get_item().element is association
+    assert tree_component.get_selected_element() is association
+
+
+@skip_if_gtk3
+def test_create_diagram(tree_component, element_factory):
+    tree_component.tree_view_create_diagram("my type")
+
+    diagram = next(element_factory.select(Diagram))
+
+    assert diagram.diagramType == "my type"
+
+
+@skip_if_gtk3
+def test_create_package(tree_component, element_factory):
+    parent = element_factory.create(UML.Package)
+    parent.name = "root"
+    tree_component.tree_view_create_package()
+
+    package = next(p for p in element_factory.select(UML.Package) if p.name != "root")
+
+    assert package
+    assert package.owner is parent
+
+
+@skip_if_gtk3
+def test_delete_element(tree_component, element_factory):
+    klass = element_factory.create(UML.Class)
+    assert tree_component.get_selected_element() is klass
+
+    tree_component.tree_view_delete()
+
+    assert not element_factory.lselect()
+
+
+@skip_if_gtk3
+def test_search_next(tree_component, element_factory):
+    class_a = element_factory.create(UML.Class)
+    class_a.name = "a"
+    class_b = element_factory.create(UML.Class)
+    class_b.name = "b"
+
+    search_engine = SearchEngine(tree_component.model, tree_component.tree_view)
+    assert tree_component.get_selected_element() is class_a
+
+    search_engine.search_next("b")
+
+    assert tree_component.get_selected_element() is class_b
+
+
+@skip_if_gtk3
+def test_search_text_changed(tree_component, element_factory):
+    class_a = element_factory.create(UML.Class)
+    class_a.name = "a"
+    class_b = element_factory.create(UML.Class)
+    class_b.name = "b"
+
+    search_engine = SearchEngine(tree_component.model, tree_component.tree_view)
+    assert tree_component.get_selected_element() is class_a
+
+    search_engine.text_changed("b")
+
+    assert tree_component.get_selected_element() is class_b
