@@ -190,8 +190,6 @@ def test_extension_deletion_with_2_metaclasses(element_factory):
     metaklass.name = "Class"
     metaiface = create(UML.Class)
     metaiface.name = "Interface"
-    klass = create(UML.Class)
-    iface = create(UML.Interface)
     stereotype = create(UML.Stereotype)
     st_attr = create(UML.Property)
     stereotype.ownedAttribute = st_attr
@@ -199,6 +197,8 @@ def test_extension_deletion_with_2_metaclasses(element_factory):
     UML.recipes.create_extension(metaiface, stereotype)
 
     # Apply stereotype to class and create slot
+    klass = create(UML.Class)
+    iface = create(UML.Interface)
     instspec1 = UML.recipes.apply_stereotype(klass, stereotype)
     instspec2 = UML.recipes.apply_stereotype(iface, stereotype)
     UML.recipes.add_slot(instspec1, st_attr)
@@ -217,13 +217,13 @@ def test_stereotype_deletion(element_factory):
     create = element_factory.create
     metaklass = create(UML.Class)
     metaklass.name = "Class"
-    klass = create(UML.Class)
     stereotype = create(UML.Stereotype)
     st_attr = create(UML.Property)
     stereotype.ownedAttribute = st_attr
     UML.recipes.create_extension(metaklass, stereotype)
 
     # Apply stereotype to class and create slot
+    klass = create(UML.Class)
     instspec = UML.recipes.apply_stereotype(klass, stereotype)
     UML.recipes.add_slot(instspec, st_attr)
 
@@ -232,6 +232,30 @@ def test_stereotype_deletion(element_factory):
     stereotype.unlink()
 
     assert not klass.appliedStereotype
+
+
+def test_extension_generalization_with_attribute_from_super_type(element_factory):
+    create = element_factory.create
+    metaklass = create(UML.Class)
+    metaklass.name = "Class"
+    stereotype = create(UML.Stereotype)
+    UML.recipes.create_extension(metaklass, stereotype)
+    substereotype = create(UML.Stereotype)
+    UML.recipes.create_generalization(stereotype, substereotype)
+
+    # Add attribute to super-stereotype
+    st_attr = create(UML.Property)
+    stereotype.ownedAttribute = st_attr
+
+    # Apply sub-stereotype and assign parent attribute
+    klass = create(UML.Class)
+    instspec = UML.recipes.apply_stereotype(klass, substereotype)
+    UML.recipes.add_slot(instspec, st_attr)
+
+    st_attr.unlink()
+
+    assert substereotype in klass.appliedStereotype[:].classifier
+    assert not klass.appliedStereotype[0].slot
 
 
 def test_diagram_move(element_factory, mocker):

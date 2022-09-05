@@ -3,6 +3,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
+from gaphor.core.modeling.element import Element
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.UML.profiles.metaclasspropertypage import new_builder
 
@@ -62,12 +63,12 @@ def stereotype_model(subject):
         [
             str,  # stereotype/attribute
             str,  # value
-            bool,  # is applied stereotype
-            bool,  # show checkbox (is stereotype)
+            bool,  # active / is applied stereotype
+            bool,  # visible  checkbox (is stereotype)
             bool,  # value editable
             object,  # stereotype / attribute
-            object,  # value editable
-            object,  # slot element
+            object,  # instance specification
+            object,  # slot
         ]
     )
     refresh(subject, model)
@@ -75,7 +76,7 @@ def stereotype_model(subject):
     return model, (toggle_stereotype, subject, model), (set_value, model)
 
 
-def refresh(subject, model):
+def refresh(subject: Element, model: Gtk.TreeStore):
     stereotypes = UML.recipes.get_stereotypes(subject)
     instances = subject.appliedStereotype
 
@@ -89,28 +90,25 @@ def refresh(subject, model):
             row[:] = row_data
         return new_row
 
-    # shortcut map stereotype -> slot (InstanceSpecification)
-    slots = {}
-    for applied in instances:
-        for slot in applied.slot:
-            slots[slot.definingFeature] = slot
-
     for st_index, st in enumerate(stereotypes):
-        for applied in instances:
-            if st in applied.classifier:
-                break
-        else:
-            applied = None
+        applied = next(
+            (applied for applied in instances if st in applied.classifier), None
+        )
 
         parent = upsert(
             f"{st_index}",
             None,
             (st.name, "", bool(applied), True, False, st, None, None),
         )
-        for attr_index, attr in enumerate(
-            attr for attr in st.ownedAttribute if not attr.association
-        ):
-            slot = slots.get(attr)
+        for attr_index, attr in enumerate(all_attributes(st)):
+            slot = (
+                next(
+                    (slot for slot in applied.slot if slot.definingFeature is attr),
+                    None,
+                )
+                if applied
+                else None
+            )
             value = slot.value if slot else ""
             upsert(
                 f"{st_index}:{attr_index}",
@@ -128,10 +126,21 @@ def refresh(subject, model):
             )
 
 
+def all_attributes(stereotype, seen=None):
+    if seen is None:
+        seen = {stereotype}
+
+    for super_type in stereotype.generalization[:].general[:]:
+        if super_type not in seen:
+            seen.add(super_type)
+            yield from all_attributes(super_type)
+    yield from (attr for attr in stereotype.ownedAttribute if not attr.association)
+
+
 @transactional
 def toggle_stereotype(renderer, path, subject, model):
     row = model[path]
-    name, old_value, is_applied, _, _, stereotype, _, _ = row
+    _, _, is_applied, _, _, stereotype, _, _ = row
     value = not is_applied
 
     if value:
@@ -148,14 +157,14 @@ def toggle_stereotype(renderer, path, subject, model):
 def set_value(renderer, path, value, model):
     """Set value of stereotype property applied to an UML element."""
     row = model[path]
-    name, old_value, is_applied, _, _, attr, applied, slot = row
+    _, _, _, _, _, attr, applied, slot = row
     if isinstance(attr, UML.Stereotype):
         return  # don't edit stereotype rows
 
-    if slot is None and not value:
-        return  # nothing to do and don't create slot without value
-
     if slot is None:
+        if not value:
+            return  # nothing to do and don't create slot without value
+
         slot = UML.recipes.add_slot(applied, attr)
 
     assert slot
@@ -169,4 +178,4 @@ def set_value(renderer, path, value, model):
         value = ""
 
     row[1] = value
-    row[5] = slot
+    row[7] = slot
