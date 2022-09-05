@@ -48,19 +48,21 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
+        super().__init__(
+            diagram,
+            id,
+            shape_middle=Box(
+                Text(
+                    text=lambda: stereotypes_str(self.subject),
+                ),
+                Text(text=lambda: self.subject.name or ""),
+            ),
+        )
 
         # AssociationEnds are really inseparable from the AssociationItem.
         # We give them the same id as the association item.
         self._head_end = AssociationEnd(owner=self, end="head")
         self._tail_end = AssociationEnd(owner=self, end="tail")
-
-        self.shape_middle = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
-            Text(text=lambda: self.subject.name or ""),
-        )
 
         # For the association ends:
         base = "subject[Association].memberEnd[Property]"
@@ -414,10 +416,7 @@ class AssociationEnd:
         mult_layout.set_font(style)
         mult_w, mult_h = max_text_size(mult_layout.size(), (10, 10))
 
-        if dy == 0:
-            rc = 1000.0  # quite a lot...
-        else:
-            rc = dx / dy
+        rc = 1000.0 if dy == 0 else dx / dy
         abs_rc = abs(rc)
         h = dx > 0  # right side of the box
         v = dy > 0  # bottom side

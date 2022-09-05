@@ -1,16 +1,15 @@
 """The definition for the STPA section of the RAAML toolbox."""
 
-from gaphor.diagram.diagramtoolbox import (
-    ToolDef,
-    ToolSection,
-    default_namespace,
-    namespace_config,
-    new_item_factory,
-)
+from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
 from gaphor.i18n import gettext
 from gaphor.RAAML import diagramitems, raaml
 from gaphor.SysML import diagramitems as sysml_items
 from gaphor.UML import diagramitems as uml_items
+from gaphor.UML.toolboxconfig import (
+    default_namespace,
+    named_element_config,
+    namespace_config,
+)
 
 
 def loss_config(new_item):
@@ -85,7 +84,9 @@ stpa = ToolSection(
             "gaphor-controller-symbolic",
             "w",
             new_item_factory(
-                sysml_items.PropertyItem, raaml.Controller, config_func=namespace_config
+                sysml_items.PropertyItem,
+                raaml.Controller,
+                config_func=named_element_config,
             ),
         ),
         ToolDef(
@@ -94,7 +95,9 @@ stpa = ToolSection(
             "gaphor-actuator-symbolic",
             "q",
             new_item_factory(
-                sysml_items.PropertyItem, raaml.Actuator, config_func=namespace_config
+                sysml_items.PropertyItem,
+                raaml.Actuator,
+                config_func=named_element_config,
             ),
         ),
         ToolDef(
@@ -105,7 +108,7 @@ stpa = ToolSection(
             new_item_factory(
                 sysml_items.PropertyItem,
                 raaml.ControlledProcess,
-                config_func=namespace_config,
+                config_func=named_element_config,
             ),
         ),
         ToolDef(

@@ -16,7 +16,7 @@ type of a dependency in automatic way.
 
 from gaphor import UML
 from gaphor.core import gettext
-from gaphor.core.modeling.presentation import literal_eval
+from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
@@ -38,14 +38,6 @@ class DependencyItem(Named, LinePresentation):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
-
-        self._handles[0].pos = (30, 20)
-        self._handles[1].pos = (0, 0)
-
-        self._dependency_type = UML.Dependency
-        # auto_dependency is used by connection logic, not in this class itself
-        self.auto_dependency = True
 
         additional_stereotype = {
             UML.Usage: (gettext("use"),),
@@ -53,26 +45,29 @@ class DependencyItem(Named, LinePresentation):
             UML.InterfaceRealization: (gettext("implements"),),
         }
 
-        self.shape_middle = Box(
-            Text(
-                text=lambda: stereotypes_str(
-                    self.subject, additional_stereotype.get(self._dependency_type, ())
+        self._dependency_type = UML.Dependency
+
+        super().__init__(
+            diagram,
+            id,
+            shape_middle=Box(
+                Text(
+                    text=lambda: stereotypes_str(
+                        self.subject,
+                        additional_stereotype.get(self._dependency_type, ()),
+                    ),
                 ),
+                Text(text=lambda: self.subject.name or ""),
             ),
-            Text(text=lambda: self.subject.name or ""),
         )
+
+        self._handles[0].pos = (30, 20)
+        self._handles[1].pos = (0, 0)
+
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-    def save(self, save_func):
-        super().save(save_func)
-        save_func("auto_dependency", self.auto_dependency)
-
-    def load(self, name, value):
-        if name == "auto_dependency":
-            self.auto_dependency = literal_eval(value)
-        else:
-            super().load(name, value)
+    auto_dependency: attribute[int] = attribute("auto_dependency", int, default=True)
 
     def postload(self):
         if self.subject:

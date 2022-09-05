@@ -225,7 +225,7 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
         self.watch_handle(h1)
         self.watch_handle(h2)
 
-        self.shape = IconBox(
+        self._shape = IconBox(
             Box(draw=self.draw_fork_node),
             Text(
                 text=lambda: stereotypes_str(self.subject),
@@ -274,7 +274,7 @@ class ForkNodeItem(Named, Presentation[UML.ForkNode], HandlePositionUpdate):
     def draw(self, context):
         h1, h2 = self._handles
         height = h2.pos.y - h1.pos.y
-        self.shape.draw(context, Rectangle(0, 0, 1, height))
+        self._shape.draw(context, Rectangle(0, 0, 1, height))
 
     def draw_fork_node(self, _box, context, _bounding_box):
         """

@@ -11,13 +11,16 @@ class DirectedRelationshipPropertyPathItem(Named, LinePresentation):
     relation_type = ""
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id, style={"dash-style": (7.0, 5.0)})
-
-        self.shape_middle = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject, (self.relation_type,)),
+        super().__init__(
+            diagram,
+            id,
+            shape_middle=Box(
+                Text(
+                    text=lambda: stereotypes_str(self.subject, (self.relation_type,)),
+                ),
+                Text(text=lambda: self.subject.name or ""),
             ),
-            Text(text=lambda: self.subject.name or ""),
+            style={"dash-style": (7.0, 5.0)},
         )
 
         self.draw_head = draw_arrow_head

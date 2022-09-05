@@ -41,18 +41,18 @@ def test_should_read_attribute_of_subject(diagram, element_factory):
 # test attributes that can be any of a list
 def test_nested_attribute_of_subject(diagram, element_factory):
     class_ = element_factory.create(UML.Class)
-    attr = element_factory.create(UML.Property)
+    attr: UML.Property = element_factory.create(UML.Property)
     class_.ownedAttribute = attr
     classitem = diagram.create(ClassItem, subject=class_)
 
     attr.name = "myname"
-    attr.isService = 1
+    attr.isStatic = 1
     node = StyledItem(classitem)
 
     assert node.attribute("attribute") == "property"
     assert node.attribute("attribute.name") == "myname"
     assert node.attribute("attribute.isBehavior") == ""
-    assert node.attribute("attribute.isService") == "true"
+    assert node.attribute("attribute.isStatic") == "true"
     assert node.attribute("attribute.notAnAttribute") == ""
 
 

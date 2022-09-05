@@ -4,12 +4,7 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import (
-    ToolDef,
-    ToolSection,
-    namespace_config,
-    new_item_factory,
-)
+from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
 from gaphor.SysML import diagramitems as sysml_items
 from gaphor.SysML import sysml
 from gaphor.UML import diagramitems as uml_items
@@ -17,6 +12,7 @@ from gaphor.UML.classes.classestoolbox import (
     composite_association_config,
     shared_association_config,
 )
+from gaphor.UML.toolboxconfig import namespace_config
 
 
 def sysml_enumeration_config(new_item: uml_items.EnumerationItem, name=None):

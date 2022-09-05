@@ -29,9 +29,9 @@ def undo_manager(event_manager, element_factory):
 def test_remove_class_with_association(create, diagram, element_factory, event_manager):
     with Transaction(event_manager):
         c1 = create(ClassItem, UML.Class)
-        c1.name = "klassitem1"
+        c1.subject.name = "klassitem1"
         c2 = create(ClassItem, UML.Class)
-        c2.name = "klassitem2"
+        c2.subject.name = "klassitem2"
 
         a = create(AssociationItem)
 

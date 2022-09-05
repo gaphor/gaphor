@@ -124,33 +124,37 @@ class ConnectorItem(Named, LinePresentation[UML.Connector]):
     """
 
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id)
-
-        self.shape_middle = Box(
-            Text(
-                text=lambda: stereotypes_str(self.subject),
-            ),
-            Text(text=lambda: self.subject.name or ""),
-            Text(
-                text=lambda: ", ".join(self.subject.informationFlow[:].conveyed[:].name)
-            ),
-            # Also support SysML ItemFlow:
-            Text(
-                text=lambda: stereotypes_str(
-                    self.subject.informationFlow[0].itemProperty.type,  # type: ignore[attr-defined]
-                    raaml_stereotype_workaround(
-                        self.subject.informationFlow[0].itemProperty.type  # type: ignore[attr-defined]
-                    ),
-                )
-                if self.subject.informationFlow
-                else ""
-            ),
-            Text(
-                text=lambda: format(
-                    self.subject.informationFlow[0].itemProperty, type=True  # type: ignore[attr-defined]
-                )
-                if self.subject.informationFlow
-                else ""
+        super().__init__(
+            diagram,
+            id,
+            shape_middle=Box(
+                Text(
+                    text=lambda: stereotypes_str(self.subject),
+                ),
+                Text(text=lambda: self.subject.name or ""),
+                Text(
+                    text=lambda: ", ".join(
+                        self.subject.informationFlow[:].conveyed[:].name
+                    )
+                ),
+                # Also support SysML ItemFlow:
+                Text(
+                    text=lambda: stereotypes_str(
+                        self.subject.informationFlow[0].itemProperty.type,  # type: ignore[attr-defined]
+                        raaml_stereotype_workaround(
+                            self.subject.informationFlow[0].itemProperty.type  # type: ignore[attr-defined]
+                        ),
+                    )
+                    if self.subject.informationFlow
+                    else ""
+                ),
+                Text(
+                    text=lambda: format(
+                        self.subject.informationFlow[0].itemProperty, type=True  # type: ignore[attr-defined]
+                    )
+                    if self.subject.informationFlow
+                    else ""
+                ),
             ),
         )
 

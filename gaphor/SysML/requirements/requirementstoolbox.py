@@ -3,15 +3,11 @@
 from gaphas.item import SE
 
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import (
-    ToolDef,
-    ToolSection,
-    namespace_config,
-    new_item_factory,
-)
+from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
 from gaphor.SysML import diagramitems as sysml_items
 from gaphor.SysML import sysml
 from gaphor.UML.classes import ContainmentItem
+from gaphor.UML.toolboxconfig import namespace_config
 
 requirements = ToolSection(
     gettext("Requirements"),

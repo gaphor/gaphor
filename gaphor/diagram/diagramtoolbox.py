@@ -22,23 +22,10 @@ from gaphor.core import gettext
 from gaphor.core.modeling import Comment, Diagram, Element, Presentation
 from gaphor.diagram import general
 from gaphor.diagram.group import group
-from gaphor.UML.recipes import owner_package
 
 ItemFactory = Callable[[Diagram, Optional[Presentation]], Presentation]
 P = TypeVar("P", bound=Presentation, covariant=True)
 ConfigFuncType = Callable[[P], None]
-
-
-def default_namespace(new_item):
-    if not new_item.subject.namespace:
-        new_item.subject.package = owner_package(new_item.diagram)
-
-
-def namespace_config(new_item, name=None):
-    default_namespace(new_item)
-    new_item.subject.name = gettext("New {name}").format(
-        name=name or gettext(type(new_item.subject).__name__)
-    )
 
 
 class ToolDef(NamedTuple):

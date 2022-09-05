@@ -49,7 +49,7 @@ class ExecutionSpecificationItem(
         super().__init__(diagram, id=id)
         self._connections = diagram.connections
 
-        self.bar_width = 12
+        self._bar_width = 12
 
         ht, hb = Handle(strength=STRONG), Handle(strength=STRONG)
         ht.connectable = True
@@ -60,7 +60,7 @@ class ExecutionSpecificationItem(
 
         self._connections.add_constraint(self, constraint(vertical=(ht.pos, hb.pos)))
 
-        r = self.bar_width / 2
+        r = self._bar_width / 2
         nw = Position(-r, 0, strength=STRONG)
         ne = Position(r, 0, strength=STRONG)
         se = Position(r, 0, strength=STRONG)
@@ -80,7 +80,7 @@ class ExecutionSpecificationItem(
 
         self._ports = [BetweenPort(nw, sw), BetweenPort(ne, se)]
 
-        self.shape = Box(
+        self._shape = Box(
             style={"background-color": (1.0, 1.0, 1.0, 1.0)}, draw=draw_border
         )
 
@@ -99,12 +99,12 @@ class ExecutionSpecificationItem(
         return self._handles[1]
 
     def dimensions(self):
-        d = self.bar_width
+        d = self._bar_width
         pt, pb = (h.pos for h in self._handles)
         return Rectangle(pt.x - d / 2, pt.y, d, y1=pb.y)
 
     def draw(self, context):
-        self.shape.draw(context, self.dimensions())
+        self._shape.draw(context, self.dimensions())
 
     def point(self, x, y):
         return distance_rectangle_point(self.dimensions(), (x, y))
@@ -135,7 +135,7 @@ class ExecutionSpecificationItem(
             # Fix ports, so connections are made properly
             pl, pr = self._ports
             ht, hb = self._handles
-            r = self.bar_width / 2
+            r = self._bar_width / 2
             pl.start.y = pr.start.y = ht.pos.y
             pl.end.y = pr.end.y = hb.pos.y
             pl.start.x = pl.end.x = ht.pos.x - r

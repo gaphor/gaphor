@@ -11,12 +11,11 @@ from gaphor.diagram.copypaste import (
     paste_element,
 )
 from gaphor.UML.recipes import owner_package
-from gaphor.UML.uml import NamedElement, Relationship
+from gaphor.UML.uml import NamedElement, Package, Relationship, Type
 
 
 class NamedElementCopy(NamedTuple):
     element_copy: ElementCopy
-    with_namespace: bool
 
 
 def copy_named_element(
@@ -24,7 +23,6 @@ def copy_named_element(
 ) -> NamedElementCopy:
     return NamedElementCopy(
         element_copy=copy_element(element, blacklist),
-        with_namespace=bool(element.namespace),
     )
 
 
@@ -43,7 +41,7 @@ def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
     element = next(paster)
     yield element
     next(paster, None)
-    if copy_data.with_namespace and not element.namespace:
+    if not element.namespace and isinstance(element, (Type, Package)):
         element.package = owner_package(diagram.owner)
 
 

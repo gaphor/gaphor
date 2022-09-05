@@ -9,7 +9,6 @@ from gaphor.diagram.diagramtoolbox import (
     ToolDef,
     ToolSection,
     general_tools,
-    namespace_config,
     new_item_factory,
 )
 from gaphor.SysML import diagramitems as sysml_items
@@ -19,6 +18,7 @@ from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
+from gaphor.UML.toolboxconfig import named_element_config
 from gaphor.UML.usecases.usecasetoolbox import use_cases
 
 internal_blocks = ToolSection(
@@ -37,7 +37,7 @@ internal_blocks = ToolSection(
             "gaphor-property-symbolic",
             "o",
             new_item_factory(
-                sysml_items.PropertyItem, UML.Property, config_func=namespace_config
+                sysml_items.PropertyItem, UML.Property, config_func=named_element_config
             ),
         ),
         ToolDef(
