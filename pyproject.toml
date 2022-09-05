@@ -35,44 +35,50 @@ include = ["gaphor/locale/*/LC_MESSAGES/*"]
 exclude = ["**/tests", "gaphor/conftest.py" ]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.9, <3.11"
 pycairo = "^1.18"
 PyGObject = "^3.30"
 gaphas = "^3.1.0"
 generic = "^1.0.0"
 tinycss2 = "^1.0.2"
-pyinstaller = { version = ">=4.6,<6.0", python = "^3.9, <3.11", optional = true }
-pyinstaller-versionfile = { version = "^2.0.0", optional = true }
-poethepoet = { version = ">=0.10,<0.17", optional = true }
-tomli = { version = ">=1.1.0", python = "<3.11", optional = true }
-sphinx = { version = ">=4.3,<6.0", optional = true }
-sphinx-rtd-theme = { version = "^1.0", optional = true }
-sphinx-copybutton = { version= "^0.5.0", optional = true }
-myst-parser = { version = ">=0.15,<0.19", optional = true }
 jedi = "^0.18.1"
 darkdetect = ">=0.5.1,<0.8.0"
 better-exceptions = "^0.3.3"
 
-[tool.poetry.dev-dependencies]
-tomli = ">=1.2,<3.0"
+[tool.poetry.group.test.dependencies]
 pytest = "^7.1"
 pytest-cov = "^3.0"
 pytest-mock = "^3.8.2"
 xdoctest = "^1.1.0"
+hypothesis = "^6.54.5"
+
+[tool.poetry.group.lint.dependencies]
 black = "^22.8"
 mypy = "0.971"
 pre-commit = "^2.20"
-sphinx = ">=4.3,<6.0"
-babel = "^2.10.3"
-babelgladeextractor = "^0.7"
 flake8 = "^5.0"
 isort = "^5.10"
-poethepoet = ">=0.10,<0.17"
-hypothesis = "^6.54.3"
 
-[tool.poetry.extras]
-pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
-docs = [ "sphinx", "sphinx-rtd-theme", "sphinx-copybutton", "myst-parser"]
+[tool.poetry.group.translation.dependencies]
+babel = "^2.10.3"
+babelgladeextractor = "^0.7"
+
+[tool.poetry.group.automation.dependencies]
+poethepoet = ">=0.10,<0.17"
+
+[tool.poetry.group.docs.dependencies]
+sphinx = ">=4.3,<6.0"
+sphinx-rtd-theme = "^1.0"
+sphinx-copybutton = "^0.5.0"
+myst-parser = ">=0.15,<0.19"
+
+[tool.poetry.group.packaging]
+optional=true
+
+[tool.poetry.group.packaging.dependencies]
+pyinstaller = ">=4.6,<6.0"
+pyinstaller-versionfile = "^2.0.0"
+tomli = ">=1.2,<3.0"
 
 [tool.poetry.scripts]
 gaphor = "gaphor.ui:main"
