@@ -20,7 +20,7 @@ runs:
   using: composite
   steps:
     - name: Install Build Dependencies
-      run: poetry install --no-dev --extras pyinstall
+      run: poetry install --only main,packaging --no-interaction
       shell: bash
     - name: Create Windows Installers
       env:
