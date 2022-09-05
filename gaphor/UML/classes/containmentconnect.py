@@ -29,7 +29,7 @@ class ContainmentConnect(BaseConnector):
         if contained in self_and_owners(container):
             return False
 
-        return (
+        return super().allow(handle, port) and (
             isinstance(container, UML.Package)
             and isinstance(contained, (UML.Type, UML.Package))
             or isinstance(container, UML.Package)

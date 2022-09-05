@@ -12,6 +12,7 @@ import itertools
 from typing import Iterable, Sequence, TypeVar
 
 from gaphor.UML.uml import (
+    Artifact,
     Association,
     Class,
     Classifier,
@@ -35,6 +36,7 @@ from gaphor.UML.uml import (
     Realization,
     Slot,
     Stereotype,
+    StructuredClassifier,
     Type,
     Usage,
 )
@@ -270,7 +272,16 @@ def create_connector(type_a: ConnectableElement, type_b: ConnectableElement):
     return conn
 
 
-def set_navigability(assoc, end, nav):
+TYPES_WITH_OWNED_ATTRIBUTE = (
+    Artifact,
+    Class,
+    DataType,
+    Interface,
+    StructuredClassifier,
+)
+
+
+def set_navigability(assoc: Association, end: Property, nav: bool | None) -> None:
     """Set navigability of an association end (property).
 
     There are three possible values for ``nav`` parameter:
@@ -311,11 +322,11 @@ def set_navigability(assoc, end, nav):
 
     When an end is non-navigable, then it is just member of an association.
     """
+    assert end.opposite
+    owner = end.opposite.type
     # remove "navigable" and "unspecified" navigation indicators first
-    if isinstance(end.type, (Class, DataType, Interface)):
-        owner = end.opposite.type
-        if owner and end in owner.ownedAttribute:
-            owner.ownedAttribute.remove(end)
+    if isinstance(owner, TYPES_WITH_OWNED_ATTRIBUTE) and end in owner.ownedAttribute:
+        owner.ownedAttribute.remove(end)
     if end in assoc.ownedEnd:
         assoc.ownedEnd.remove(end)
     if end in assoc.navigableOwnedEnd:
@@ -325,8 +336,7 @@ def set_navigability(assoc, end, nav):
     assert end not in assoc.navigableOwnedEnd
 
     if nav is True:
-        if isinstance(end.type, (Class, DataType, Interface)):
-            owner = end.opposite.type
+        if isinstance(owner, TYPES_WITH_OWNED_ATTRIBUTE):
             owner.ownedAttribute = end
         else:
             assoc.navigableOwnedEnd = end

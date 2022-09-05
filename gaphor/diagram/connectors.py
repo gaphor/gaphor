@@ -67,9 +67,6 @@ class BaseConnector:
         element: Presentation[Element],
         line: Presentation[Element],
     ) -> None:
-        assert (
-            element.diagram and element.diagram is line.diagram
-        ), f"Cannot connect with different diagrams ({element}: {element.diagram}, {line}: {line.diagram})"
         self.element = element
         self.line = line
         self.diagram: Diagram = element.diagram
@@ -85,7 +82,7 @@ class BaseConnector:
 
         Returns `True` if connection is allowed.
         """
-        return True
+        return bool(self.element.diagram) and self.element.diagram is self.line.diagram
 
     def connect(self, handle: Handle, port: Port) -> bool:
         """Connect to an element. Note that at this point the line may be
@@ -373,21 +370,29 @@ class MetadataRelationConnect(DirectionalRelationshipConnect):
 
         element = self.element
         opposite_element = self.get_connected(self.line.opposite(handle))
-        metadata = get_diagram_item_metadata(type(self.line))
-
-        if not metadata:
-            return False
-
-        if handle is self.line.head:
-            return isinstance(element.subject, metadata["head"].type) and (
-                not opposite_element
-                or isinstance(opposite_element.subject, metadata["tail"].type)
+        if metadata := get_diagram_item_metadata(type(self.line)):
+            return (
+                (
+                    super().allow(handle, port)
+                    and isinstance(element.subject, metadata["head"].type)
+                    and (
+                        not opposite_element
+                        or isinstance(opposite_element.subject, metadata["tail"].type)
+                    )
+                )
+                if handle is self.line.head
+                else (
+                    super().allow(handle, port)
+                    and isinstance(element.subject, metadata["tail"].type)
+                    and (
+                        not opposite_element
+                        or isinstance(opposite_element.subject, metadata["head"].type)
+                    )
+                )
             )
+
         else:
-            return isinstance(element.subject, metadata["tail"].type) and (
-                not opposite_element
-                or isinstance(opposite_element.subject, metadata["head"].type)
-            )
+            return False
 
     def connect_subject(self, handle):
         subject_type = get_model_element(type(self.line))

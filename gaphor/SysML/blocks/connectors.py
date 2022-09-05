@@ -24,7 +24,9 @@ class BlockProperyProxyPortConnector:
         self.proxy_port = proxy_port
 
     def allow(self, handle: Handle, port: Port) -> bool:
-        return True
+        return (
+            bool(self.block.diagram) and self.block.diagram is self.proxy_port.diagram
+        )
 
     def connect(self, handle: Handle, port: Port) -> bool:
         """Connect and reconnect at model level.
@@ -64,10 +66,9 @@ class PropertyConnectorConnector(RelationshipConnect):
         element = self.element
 
         # Element should be connected -> have a subject
-        if not isinstance(element.subject, (UML.Port, UML.Property)):
-            return None
-
-        return super().allow(handle, port)
+        return super().allow(handle, port) and isinstance(
+            element.subject, (UML.Port, UML.Property)
+        )
 
     def connect_subject(self, handle):
         line = self.line

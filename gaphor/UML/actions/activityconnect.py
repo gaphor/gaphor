@@ -22,7 +22,11 @@ class ActivityParameterNodeConnector:
         self.parameter_node = parameter_node
 
     def allow(self, handle: Handle, port: Port) -> bool:
-        return self.parameter_node in self.activity.children
+        return (
+            bool(self.activity.diagram)
+            and self.activity.diagram is self.parameter_node.diagram
+            and self.parameter_node in self.activity.children
+        )
 
     def connect(self, handle: Handle, port: Port) -> bool:
         return True

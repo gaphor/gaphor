@@ -107,7 +107,7 @@ class LegacyConnectorConnectBase(BaseConnector):
             not iface or isinstance(iface, InterfaceItem)
         )
 
-        return glue_ok
+        return glue_ok and super().allow(handle, port)
 
     def connect(self, handle, port):
         super().connect(handle, port)
