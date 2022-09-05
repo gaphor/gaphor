@@ -112,7 +112,7 @@ class Layout:
         if not self.text:
             return default_size or self.default_size
         if width is not None:
-            layout.set_width(int(width * Pango.SCALE))
+            layout.set_width(min(int(width * Pango.SCALE), 2147483647))
 
         if isinstance(cr, FreeHandCairoContext):
             PangoCairo.show_layout(cr.cr, layout)
