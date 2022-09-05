@@ -132,6 +132,26 @@ def test_lifetime_connection(diagram):
     assert msg.subject.messageKind == "complete"
 
 
+def test_lifetime_connect_disconnect(diagram):
+    """Test messages' lifetimes connection."""
+    msg = diagram.create(MessageItem)
+    ll1 = diagram.create(LifelineItem)
+    ll2 = diagram.create(LifelineItem)
+
+    # make lifelines to be in sequence diagram mode
+    ll1.lifetime.visible = True
+    ll2.lifetime.visible = True
+    assert ll1.lifetime.visible and ll2.lifetime.visible
+
+    # connect lifetimes with messages message to lifeline's head
+    connect(msg, msg.head, ll1, ll1.lifetime.port)
+    connect(msg, msg.tail, ll2, ll2.lifetime.port)
+    disconnect(msg, msg.tail)
+
+    assert msg.subject is not None
+    assert msg.subject.messageKind == "lost"
+
+
 @pytest.mark.parametrize("end_name", ["head", "tail"])
 def test_message_is_owned_by_implicit_interaction_connecting_to_head(
     diagram, element_factory, end_name

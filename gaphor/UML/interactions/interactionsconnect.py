@@ -108,20 +108,18 @@ def disconnect_lifelines(line, send, received):
     If there are no lifelines connected on both ends, then remove the
     message from the data model.
     """
-    if not line.subject:
+    if not (subject := line.subject):
         return
 
-    if send:
-        if event := line.subject.receiveEvent:
-            event.unlink()
+    if send and (event := subject.sendEvent):
+        event.unlink()
 
-    if received:
-        if event := line.subject.sendEvent:
-            event.unlink()
+    if received and (event := subject.receiveEvent):
+        event.unlink()
 
     # one is disconnected and one is about to be disconnected,
     # so destroy the message
-    if not (send and received):
+    if not (subject.sendEvent or subject.receiveEvent):
         # Both ends are disconnected:
         message = line.subject
         del line.subject
@@ -137,6 +135,9 @@ class MessageLifelineConnect(BaseConnector):
     the lifetime line. In case it's added to the head, the message is
     considered to be part of a communication diagram. If the message is
     added to a lifetime line, it's considered a sequence diagram.
+
+    Message.head has no arrow (sendEvent)
+    Message.tail has the arrow (receiveEvent)
     """
 
     element: LifelineItem
@@ -194,7 +195,11 @@ class MessageLifelineConnect(BaseConnector):
             received.is_destroyed = False
             received.request_update()
 
-        disconnect_lifelines(line, send, received)
+        disconnect_lifelines(
+            line,
+            send and handle is line.head,
+            received and handle is line.tail,
+        )
 
         if len(list(self.diagram.connections.get_connections(connected=lifeline))) == 1:
             # after disconnection count of connected items will be
@@ -220,7 +225,11 @@ class ExecutionSpecificationMessageConnect(BaseConnector):
         line = self.line
         send = get_lifeline(line, line.head)
         received = get_lifeline(line, line.tail)
-        disconnect_lifelines(line, send, received)
+        disconnect_lifelines(
+            line,
+            send and handle is line.head,
+            received and handle is line.tail,
+        )
 
 
 @Connector.register(LifelineItem, ExecutionSpecificationItem)
