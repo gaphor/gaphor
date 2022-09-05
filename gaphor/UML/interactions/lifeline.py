@@ -254,9 +254,10 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
             cr = context.cairo
             with cairo_state(cr):
                 cr.set_dash((7.0, 5.0), 0)
+                x = self._handles[SW].pos.x
                 top = self._lifetime.top
-                cr.move_to(top.pos.x, top.pos.y)
-                cr.line_to(bottom.pos.x, bottom.pos.y)
+                cr.move_to(top.pos.x - x, top.pos.y)
+                cr.line_to(bottom.pos.x - x, bottom.pos.y)
                 stroke(context, dash=False)
 
             # draw destruction event
