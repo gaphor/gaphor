@@ -33,7 +33,7 @@ def search(search_text, tree_walker: Iterable[TreeItem]):
 def sorted_tree_walker(
     model, start_tree_item=None, from_current=False
 ) -> Iterable[TreeItem]:
-    """The tree model as one steam, sorted."""
+    """The tree model as one stream, sorted."""
 
     def _flatten(list_store):
         for tree_item in sorted_tree_items(list_store):
