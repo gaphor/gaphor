@@ -68,7 +68,7 @@ babelgladeextractor = "^0.7"
 flake8 = "^5.0"
 isort = "^5.10"
 poethepoet = ">=0.10,<0.17"
-hypothesis = "^6.54.5"
+hypothesis = "^6.54.3"
 
 [tool.poetry.extras]
 pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
