@@ -239,7 +239,7 @@ exceptiongroup = ">=1.0.0-rc.5,<2.0.0"
 
 [[package]]
 name = "hypothesis"
-version = "6.54.4"
+version = "6.54.5"
 description = "A library for property-based testing"
 category = "dev"
 optional = false
@@ -251,7 +251,7 @@ exceptiongroup = {version = ">=1.0.0rc8", markers = "python_version < \"3.11\""}
 sortedcontainers = ">=2.1.0,<3.0.0"
 
 [package.extras]
-all = ["backports.zoneinfo (>=0.2.1)", "black (>=19.10b0)", "click (>=7.0)", "django (>=3.2)", "dpcontracts (>=0.4)", "importlib-metadata (>=3.6)", "lark-parser (>=0.6.5)", "libcst (>=0.3.16)", "numpy (>=1.9.0)", "pandas (>=1.0)", "pytest (>=4.6)", "python-dateutil (>=1.4)", "pytz (>=2014.1)", "redis (>=3.0.0)", "rich (>=9.0.0)", "tzdata (>=2022.1)"]
+all = ["backports.zoneinfo (>=0.2.1)", "black (>=19.10b0)", "click (>=7.0)", "django (>=3.2)", "dpcontracts (>=0.4)", "importlib-metadata (>=3.6)", "lark-parser (>=0.6.5)", "libcst (>=0.3.16)", "numpy (>=1.9.0)", "pandas (>=1.0)", "pytest (>=4.6)", "python-dateutil (>=1.4)", "pytz (>=2014.1)", "redis (>=3.0.0)", "rich (>=9.0.0)", "tzdata (>=2022.2)"]
 cli = ["black (>=19.10b0)", "click (>=7.0)", "rich (>=9.0.0)"]
 codemods = ["libcst (>=0.3.16)"]
 dateutil = ["python-dateutil (>=1.4)"]
@@ -264,7 +264,7 @@ pandas = ["pandas (>=1.0)"]
 pytest = ["pytest (>=4.6)"]
 pytz = ["pytz (>=2014.1)"]
 redis = ["redis (>=3.0.0)"]
-zoneinfo = ["backports.zoneinfo (>=0.2.1)", "tzdata (>=2022.1)"]
+zoneinfo = ["backports.zoneinfo (>=0.2.1)", "tzdata (>=2022.2)"]
 
 [[package]]
 name = "identify"
@@ -1082,7 +1082,7 @@ pyinstall = ["poethepoet", "pyinstaller", "pyinstaller-versionfile", "tomli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "5c57f9bdbe02058d636e0379f48dfa4b607983da90b7ec5395df7e95266c682d"
+content-hash = "e3916ef0ff110b24845695d3ca3adf181021857c428a25122cb855e08b46a387"
 
 [metadata.files]
 alabaster = [
@@ -1242,8 +1242,8 @@ generic = [
     {file = "generic-1.1.0.tar.gz", hash = "sha256:ffde3ba04bd9483e668d10fda9cbb328015ab62bd399a79e8d7c50df6d940fe0"},
 ]
 hypothesis = [
-    {file = "hypothesis-6.54.4-py3-none-any.whl", hash = "sha256:469125235b4fdd6b6a4b6a6fa13e528d3e8de4dbd3bd9236b03323fefa3a9b32"},
-    {file = "hypothesis-6.54.4.tar.gz", hash = "sha256:ee42fe4d2ff96c49910085780d6b8f34cbcf4c44427616e22833869d451116bb"},
+    {file = "hypothesis-6.54.5-py3-none-any.whl", hash = "sha256:d8d2e18139be18e5c95593f1e2d87dbcd21534a32022a1db6e8ac2d458ee1d1a"},
+    {file = "hypothesis-6.54.5.tar.gz", hash = "sha256:8a9056825695f415bfad4e808ae719fc01383a9ab659775319724365afcc7ec7"},
 ]
 identify = [
     {file = "identify-2.5.3-py2.py3-none-any.whl", hash = "sha256:25851c8c1370effb22aaa3c987b30449e9ff0cece408f810ae6ce408fdd20893"},
