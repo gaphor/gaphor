@@ -19,14 +19,14 @@ bottom of the lifeline's lifetime when delete message is connected to a
 lifeline.
 """
 
-from gaphas.connector import Handle, Port
+from gaphas.connector import Handle
 from gaphas.constraint import CenterConstraint, EqualsConstraint, LessThanConstraint
 from gaphas.geometry import distance_line_point
 from gaphas.item import NW, SE, SW
-from gaphas.position import MatrixProjection, Position
+from gaphas.port import LinePort
+from gaphas.position import MatrixProjection
 from gaphas.solver import VERY_STRONG, MultiConstraint
 from gaphas.solver.constraint import BaseConstraint
-from gaphas.types import Pos, SupportsFloatPos
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
@@ -63,20 +63,8 @@ class BetweenConstraint(BaseConstraint):
             self.v.value = upper
 
 
-class BetweenPort(Port):
+class BetweenPort(LinePort):
     """Port defined as a line between two handles."""
-
-    def __init__(self, start: Position, end: Position) -> None:
-        super().__init__()
-
-        self.start = start
-        self.end = end
-
-    def glue(self, pos: SupportsFloatPos) -> tuple[Pos, float]:
-        d, pl = distance_line_point(
-            self.start.tuple(), self.end.tuple(), (float(pos[0]), float(pos[1]))
-        )
-        return pl, d
 
     def constraint(self, item, handle, glue_item):
         """Create connection line constraint between item's handle and the
