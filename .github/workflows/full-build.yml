@@ -314,6 +314,8 @@ jobs:
     runs-on: windows-latest
     env:
       GAPHOR_USE_GTK: 3
+      INCLUDE: C:\gtk-build\gtk\x64\release\lib\glib-2.0\include;C:\gtk-build\gtk\x64\release\include;C:\gtk-build\gtk\x64\release\include\gobject-introspection-1.0;C:\gtk-build\gtk\x64\release\include\cairo;C:\gtk-build\gtk\x64\release\include\glib-2.0
+      LIB: C:\gtk-build\gtk\x64\release\lib
     permissions:
       contents: write
     timeout-minutes: 45
@@ -350,8 +352,6 @@ jobs:
       - name: Install Dependencies and Test
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
-        with:
-          install_others: Get-ChildItem C:\gtk-build\gtk\x64\release\*.whl | ForEach-Object -process { poetry run pip install $_ }
       - name: Create Windows Executables
         uses: ./.github/actions/windows_executables
         if: ${{ github.actor != 'dependabot[bot]' }}
