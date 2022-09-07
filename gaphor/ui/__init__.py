@@ -11,7 +11,7 @@ from typing import Optional
 import darkdetect
 
 # Work around GTK error in Windows with DLL missing
-if os.name == "nt" and hasattr(os, "add_dll_directory"):
+if sys.platform == "win32" and sys.version_info >= (3, 8):
     env_path = os.environ.get("PATH", "").split(os.pathsep)
     if first_gtk_path := next(
         filter(
