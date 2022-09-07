@@ -1,7 +1,6 @@
 """This module contains user interface related code, such as the main screen
 and diagram windows."""
 
-
 import logging
 import os
 import sys
@@ -12,20 +11,21 @@ import darkdetect
 
 # Work around GTK error in Windows with DLL missing
 if os.name == "nt" and hasattr(os, "add_dll_directory"):
-    added_dirs: list = []
-    path = os.environ.get("PATH", "")
-    added_dirs.extend(
-        os.add_dll_directory(p)
-        for p in path.split(os.pathsep)
-        if p != "" and Path.is_file(Path(p) / "girepository-1.0-1.dll")
+    env_path = os.environ.get("PATH", "").split(os.pathsep)
+    first_gtk_path = next(
+        filter(
+            lambda path: path is not None
+            and Path.is_file(Path(path) / "girepository-1.0-1.dll"),
+            env_path,
+        ),
+        None,
     )
+    if first_gtk_path:
+        with os.add_dll_directory(first_gtk_path):
+            import gi
+
+else:
     import gi
-
-    for d in added_dirs:
-        d.close()
-    del added_dirs
-
-import gi
 
 if os.getenv("GAPHOR_USE_GTK") != "NONE":
     # Allow to explicitly *not* initialize GTK (for docs, mainly)
