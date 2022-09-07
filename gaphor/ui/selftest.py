@@ -1,13 +1,32 @@
 import logging
+import os
 import sys
 import time
+from pathlib import Path
 
 import cairo
-import gi
-from gi.repository import GLib, Gtk, Pango
 
 from gaphor.abc import Service
 from gaphor.application import Application, distribution
+
+# Workaround for https://gitlab.gnome.org/GNOME/pygobject/-/issues/545
+if sys.platform == "win32" and sys.version_info >= (3, 8):
+    env_path = os.environ.get("PATH", "").split(os.pathsep)
+    if first_gtk_path := next(
+        filter(
+            lambda path: path is not None
+            and Path.is_file(Path(path) / "girepository-1.0-1.dll"),
+            env_path,
+        ),
+        None,
+    ):
+        with os.add_dll_directory(first_gtk_path):
+            import gi
+
+else:
+    import gi
+
+from gi.repository import GLib, Gtk, Pango
 
 log = logging.getLogger(__name__)
 

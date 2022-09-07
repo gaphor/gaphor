@@ -10,7 +10,7 @@ from typing import Optional
 
 import darkdetect
 
-# Work around GTK error in Windows with DLL missing
+# Workaround for https://gitlab.gnome.org/GNOME/pygobject/-/issues/545
 if sys.platform == "win32" and sys.version_info >= (3, 8):
     env_path = os.environ.get("PATH", "").split(os.pathsep)
     if first_gtk_path := next(
