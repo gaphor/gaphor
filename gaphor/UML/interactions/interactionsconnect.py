@@ -2,9 +2,6 @@
 
 from typing import Optional
 
-from gaphas.connector import ConnectionSink, ItemConnectionSink
-from gaphas.types import Pos, SupportsFloatPos
-
 from gaphor import UML
 from gaphor.core.modeling import Element, Presentation
 from gaphor.diagram.connectors import BaseConnector, Connector
@@ -108,20 +105,18 @@ def disconnect_lifelines(line, send, received):
     If there are no lifelines connected on both ends, then remove the
     message from the data model.
     """
-    if not line.subject:
+    if not (subject := line.subject):
         return
 
-    if send:
-        if event := line.subject.receiveEvent:
-            event.unlink()
+    if send and (event := subject.sendEvent):
+        event.unlink()
 
-    if received:
-        if event := line.subject.sendEvent:
-            event.unlink()
+    if received and (event := subject.receiveEvent):
+        event.unlink()
 
     # one is disconnected and one is about to be disconnected,
     # so destroy the message
-    if not (send and received):
+    if not (subject.sendEvent or subject.receiveEvent):
         # Both ends are disconnected:
         message = line.subject
         del line.subject
@@ -137,54 +132,25 @@ class MessageLifelineConnect(BaseConnector):
     the lifetime line. In case it's added to the head, the message is
     considered to be part of a communication diagram. If the message is
     added to a lifetime line, it's considered a sequence diagram.
+
+    Message.head has no arrow (sendEvent)
+    Message.tail has the arrow (receiveEvent)
     """
 
     element: LifelineItem
     line: MessageItem
-
-    def allow(self, handle, port):
-        """Glue to lifeline's head or lifetime.
-
-        If lifeline's lifetime is visible then disallow connection to
-        lifeline's head.
-        """
-        if not super().allow(handle, port):
-            return False
-
-        element = self.element
-        lifetime = element.lifetime
-        line = self.line
-        opposite = line.opposite(handle)
-
-        ol = self.get_connected(opposite)
-        if isinstance(ol, LifelineItem):
-            opposite_is_visible = ol.lifetime.visible
-            # connect lifetimes if both are visible or both invisible
-            return not (lifetime.visible ^ opposite_is_visible)
-
-        return not (lifetime.visible ^ (port is element.lifetime.port))
 
     def connect(self, handle, port):
         line = self.line
         send = self.get_connected(line.head)
         received = self.get_connected(line.tail)
         connect_lifelines(line, send, received)
-
-        lifetime = self.element.lifetime
-        # if connected to head, then make lifetime invisible
-        if port is lifetime.port:
-            lifetime.min_length = lifetime.MIN_LENGTH_VISIBLE
-        else:
-            lifetime.visible = False
-            lifetime.connectable = False
         return True
 
     def disconnect(self, handle):
         line = self.line
         send: Optional[Presentation[Element]] = get_connected(line, line.head)
         received = self.get_connected(line.tail)
-        lifeline = self.element
-        lifetime = lifeline.lifetime
 
         # if a message is delete message, then disconnection causes
         # lifeline to be no longer destroyed (note that there can be
@@ -194,13 +160,11 @@ class MessageLifelineConnect(BaseConnector):
             received.is_destroyed = False
             received.request_update()
 
-        disconnect_lifelines(line, send, received)
-
-        if len(list(self.diagram.connections.get_connections(connected=lifeline))) == 1:
-            # after disconnection count of connected items will be
-            # zero, so allow connections to lifeline's lifetime
-            lifetime.connectable = True
-            lifetime.min_length = lifetime.MIN_LENGTH
+        disconnect_lifelines(
+            line,
+            send and handle is line.head,
+            received and handle is line.tail,
+        )
 
 
 @Connector.register(ExecutionSpecificationItem, MessageItem)
@@ -220,7 +184,11 @@ class ExecutionSpecificationMessageConnect(BaseConnector):
         line = self.line
         send = get_lifeline(line, line.head)
         received = get_lifeline(line, line.tail)
-        disconnect_lifelines(line, send, received)
+        disconnect_lifelines(
+            line,
+            send and handle is line.head,
+            received and handle is line.tail,
+        )
 
 
 @Connector.register(LifelineItem, ExecutionSpecificationItem)
@@ -310,25 +278,3 @@ class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
 
         for cinfo in self.diagram.connections.get_connections(connected=self.line):
             Connector(self.line, cinfo.item).disconnect(cinfo.handle)
-
-
-@ConnectionSink.register(LifelineItem)
-class LifelineConnectionSink(ItemConnectionSink):
-    def glue(
-        self, pos: SupportsFloatPos, secondary_pos: Optional[SupportsFloatPos] = None
-    ) -> Optional[Pos]:
-        """Glue a line to the lifeline item, have a preference for the lifetime
-        line."""
-        assert isinstance(self.item, LifelineItem)
-        glue_pos = super().glue(pos, secondary_pos)
-
-        lifetime = self.item.lifetime
-        if lifetime.visible and self.port is not lifetime.port:  # type: ignore[has-type]
-            g, d = lifetime.port.glue(pos)
-            if d < self.distance:
-                self.port = lifetime.port
-                glue_pos = g
-
-            return glue_pos
-
-        return glue_pos

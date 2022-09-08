@@ -19,14 +19,14 @@ bottom of the lifeline's lifetime when delete message is connected to a
 lifeline.
 """
 
-from gaphas.connector import Handle, Port
+from gaphas.connector import Handle
 from gaphas.constraint import CenterConstraint, EqualsConstraint, LessThanConstraint
 from gaphas.geometry import distance_line_point
-from gaphas.item import SE, SW
-from gaphas.position import MatrixProjection, Position
+from gaphas.item import NW, SE, SW
+from gaphas.port import LinePort
+from gaphas.position import MatrixProjection
 from gaphas.solver import VERY_STRONG, MultiConstraint
 from gaphas.solver.constraint import BaseConstraint
-from gaphas.types import Pos, SupportsFloatPos
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
@@ -63,20 +63,8 @@ class BetweenConstraint(BaseConstraint):
             self.v.value = upper
 
 
-class BetweenPort(Port):
+class BetweenPort(LinePort):
     """Port defined as a line between two handles."""
-
-    def __init__(self, start: Position, end: Position) -> None:
-        super().__init__()
-
-        self.start = start
-        self.end = end
-
-    def glue(self, pos: SupportsFloatPos) -> tuple[Pos, float]:
-        d, pl = distance_line_point(
-            self.start.tuple(), self.end.tuple(), (float(pos[0]), float(pos[1]))
-        )
-        return pl, d
 
     def constraint(self, item, handle, glue_item):
         """Create connection line constraint between item's handle and the
@@ -131,12 +119,6 @@ class LifetimeItem:
 
     min_length = property(lambda s: s._c_min_length.delta, _set_min_length)
 
-    def _set_connectable(self, connectable):
-        self.port.connectable = connectable
-        self.bottom.movable = connectable
-
-    connectable = property(lambda s: s.port.connectable, _set_connectable)
-
     def _is_visible(self):
         return self.length > self.MIN_LENGTH
 
@@ -176,7 +158,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
         self._handles.append(bottom)
         self.watch_handle(top)
         self.watch_handle(bottom)
-        self._ports.append(self._lifetime.port)
+        self._ports.insert(0, self._lifetime.port)
 
         self.shape = Box(
             Text(
@@ -222,13 +204,23 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
 
     def save(self, save_func):
         super().save(save_func)
-        save_func("lifetime-length", self._lifetime.length)
+        save_func("lifetime-y", float(self._lifetime.bottom.pos.y))
 
     def load(self, name, value):
-        if name == "lifetime-length":
+        if name == "lifetime-y":
+            self._lifetime.bottom.pos.y = float(value)
+        elif name == "lifetime-length":
+            # For gaphor < 2.12
             self._lifetime.bottom.pos.y = self.height + float(value)
         else:
             super().load(name, value)
+
+        # Force update the lifetime position,
+        # so message items can connect properly.
+        if name in ("top-left", "width"):
+            self._lifetime.top.pos.x = self._lifetime.bottom.pos.x = (
+                self._handles[NW].pos.x + self.width / 2
+            )
 
     def draw_lifeline(self, box, context, bounding_box):
         """Draw lifeline.
@@ -250,9 +242,10 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
             cr = context.cairo
             with cairo_state(cr):
                 cr.set_dash((7.0, 5.0), 0)
+                x = self._handles[SW].pos.x
                 top = self._lifetime.top
-                cr.move_to(top.pos.x, top.pos.y)
-                cr.line_to(bottom.pos.x, bottom.pos.y)
+                cr.move_to(top.pos.x - x, top.pos.y)
+                cr.line_to(bottom.pos.x - x, bottom.pos.y)
                 stroke(context, dash=False)
 
             # draw destruction event
