@@ -27,7 +27,7 @@ mult_subpat = r"\s*(?P<has_mult>\[\s*((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>(
 multa_subpat = r"\s*(\[?((?P<mult_l>[0-9]+)\s*\.\.)?\s*(?P<mult_u>([0-9]+|\*))\]?)?"
 
 # Type and multiplicity (optional) ::= ':' type
-type_subpat = r"\s*(:\s*(?P<type>[a-zA-Z_]\w*( +\w+| *\| *\w+)*))?"
+type_subpat = r"\s*(:\s*(?P<type>[a-zA-Z_]\w*( +\w+| *\| *\w+| *<[\w\| ]*>)*))?"
 
 # default value (optional) ::= '=' default
 default_subpat = r"\s*(=\s*(?P<default>\S+))?"
