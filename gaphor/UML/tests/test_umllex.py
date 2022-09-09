@@ -105,6 +105,9 @@ def test_parse_property_with_square_brackets(factory):
         ("attr: int | str | bool | other", "int | str | bool | other"),
         ("attr: int|str|bool", "int|str|bool"),
         ("attr: my int|with space|some bool", "my int|with space|some bool"),
+        ("attr: Generic type<Type>", "Generic type<Type>"),
+        ("attr: Generic<Type> with extras", "Generic<Type> with extras"),
+        ("attr: Generic<Type|Other>", "Generic<Type|Other>"),
     ],
 )
 def test_parse_property_with_union_type(factory, text, type_value):
@@ -315,3 +318,26 @@ def test_parse_operation_return_with_square_brackets(factory):
     assert "string" == p.typeValue
     assert "*" == p.upperValue
     assert None is p.lowerValue
+
+
+@pytest.mark.parametrize(
+    "operation,type_value",
+    [
+        ["+ test(param: Generic<Type>)", "Generic<Type>"],
+        ["+ test(param: Generic with space <Type>)", "Generic with space <Type>"],
+        [
+            "+ test(param: Generic with space <Type> | Other<Type|Other>)",
+            "Generic with space <Type> | Other<Type|Other>",
+        ],
+        [
+            "+ test(param: Generic <Type> | Other<Type> | Third<Type>)",
+            "Generic <Type> | Other<Type> | Third<Type>",
+        ],
+    ],
+)
+def test_parse_operation_with_template_attribute(operation, type_value, factory):
+    o: UML.Operation = factory.create(UML.Operation)
+    parse(o, operation)
+    p = o.ownedParameter[0]
+    assert "param" == p.name
+    assert type_value == p.typeValue
