@@ -42,6 +42,12 @@ def undo_manager(session):
 def test_class_association_undo_redo(event_manager, element_factory, undo_manager):
     diagram, ci1, ci2, a = set_up_class_and_association(event_manager, element_factory)
 
+    def get_connected(handle):
+        """Get item connected to line via handle."""
+        if cinfo := diagram.connections.get_connection(handle):
+            return cinfo.connected
+        return None
+
     undo_manager.clear_undo_stack()
     assert not undo_manager.can_undo()
 
@@ -50,22 +56,14 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 
     assert undo_manager.can_undo()
 
-    def get_connected(handle):
-        """Get item connected to line via handle."""
-        if cinfo := diagram.connections.get_connection(handle):
-            return cinfo.connected
-        return None
-
-    assert ci1 == get_connected(a.head)
-    assert None is get_connected(a.tail)
-
     for i in range(3):
-        assert 9 == len(diagram.connections.solver.constraints)
+        assert 8 == len(diagram.connections.solver.constraints)
 
         undo_manager.undo_transaction()
 
         assert 18 == len(diagram.connections.solver.constraints)
 
+        a = next(element_factory.select(AssociationItem))
         assert ci1 == get_connected(a.head)
         assert ci2.id == get_connected(a.tail).id
 
