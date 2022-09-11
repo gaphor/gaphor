@@ -5,27 +5,16 @@ and diagram windows."""
 import logging
 import os
 import sys
-from pathlib import Path
 from typing import Optional
 
 import darkdetect
 
-# Workaround for https://gitlab.gnome.org/GNOME/pygobject/-/issues/545
 if sys.platform == "win32" and sys.version_info >= (3, 8):
-    env_path = os.environ.get("PATH", "").split(os.pathsep)
-    if first_gtk_path := next(
-        filter(
-            lambda path: path is not None
-            and Path.is_file(Path(path) / "girepository-1.0-1.dll"),
-            env_path,
-        ),
-        None,
-    ):
-        with os.add_dll_directory(first_gtk_path):
-            import gi
+    from gaphor.ui.windowsshim import windows_init
 
-else:
-    import gi
+    windows_init()
+
+import gi
 
 if os.getenv("GAPHOR_USE_GTK") != "NONE":
     # Allow to explicitly *not* initialize GTK (for docs, mainly)
