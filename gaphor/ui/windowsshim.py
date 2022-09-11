@@ -1,9 +1,14 @@
 import os
+import sys
 from pathlib import Path
 
 
-def windows_init():
+def gi_init():
     """Workaround for https://gitlab.gnome.org/GNOME/pygobject/-/issues/545."""
+    if sys.platform != "win32" or sys.version_info < (3, 8):
+        import gi  # noqa F401
+
+        return gi
     env_path = os.environ.get("PATH", "").split(os.pathsep)
     if first_gtk_path := next(
         filter(
@@ -15,3 +20,5 @@ def windows_init():
     ):
         with os.add_dll_directory(first_gtk_path):
             import gi  # noqa F401
+
+            return gi

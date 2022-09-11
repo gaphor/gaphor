@@ -9,12 +9,10 @@ from typing import Optional
 
 import darkdetect
 
-if sys.platform == "win32" and sys.version_info >= (3, 8):
-    from gaphor.ui.windowsshim import windows_init
+from gaphor.ui.windowsshim import gi_init
 
-    windows_init()
+gi = gi_init()
 
-import gi
 
 if os.getenv("GAPHOR_USE_GTK") != "NONE":
     # Allow to explicitly *not* initialize GTK (for docs, mainly)
