@@ -301,7 +301,7 @@ jobs:
           adwaita-icon-theme hicolor-icon-theme
       - name: Copy wheels to cached directory
         if: steps.cache.outputs.cache-hit != 'true'
-        run: Get-ChildItem C:\gtk-build\build\x64\release\*\dist\*.whl | ForEach-Object -process { cp $_ C:\gtk-build\gtk\x64\release\ }
+        run: cp C:\gtk-build\build\x64\release\pygobject\dist\*.whl C:\gtk-build\gtk\x64\release\
       - name: GTK binaries restore git binary
         if: steps.cache.outputs.cache-hit != 'true'
         run: move "C:\Program Files\Git\usr\notbin" "C:\Program Files\Git\usr\bin"
