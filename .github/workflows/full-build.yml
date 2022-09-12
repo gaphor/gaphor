@@ -365,15 +365,22 @@ jobs:
   check-windows-installer:
     needs: windows
     runs-on: windows-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - uses: actions/download-artifact@v3
         with:
           name: ${{ needs.windows.outputs.installer }}
           path: .
+      - name: Install Gaphor
+        timeout-minutes: 5
+        run: start "" /WAIT "${{ needs.windows.outputs.installer }}" /S
+        shell: cmd
       - name: Perform self-test
-        run: |
-          start "" /WAIT "${{ needs.windows.outputs.installer }}" /S
-          start "" /WAIT "C:\Program Files\Gaphor\gaphor-exe.exe" --self-test
+        timeout-minutes: 5
+        run: start "" /WAIT "C:\Program Files\Gaphor\gaphor-exe.exe" --self-test
+        shell: cmd
+      - name: Test output
+        if: always()
+        run: type gaphor-self-test.txt
         shell: cmd

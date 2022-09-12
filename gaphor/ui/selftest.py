@@ -48,6 +48,7 @@ class SelfTest(Service):
         pass
 
     def init(self, gtk_app):
+        windows_console_output_workaround()
         self.init_timer(gtk_app, timeout=20)
         self.test_library_versions()
         self.test_new_session()
@@ -103,3 +104,16 @@ class SelfTest(Service):
                 return GLib.SOURCE_CONTINUE
 
         GLib.idle_add(check_new_session, session, priority=GLib.PRIORITY_LOW)
+
+
+def windows_console_output_workaround():
+    if sys.platform == "win32":
+        from gaphor.ui import LOG_FORMAT
+
+        logging.basicConfig(
+            level=logging.INFO,
+            format=LOG_FORMAT,
+            filename="gaphor-self-test.txt",
+            filemode="w",
+            force=True,
+        )
