@@ -16,3 +16,10 @@
 # otherwise.
 
 """Gaphor is the simple modeling tool written in Python."""
+
+import sys
+
+if sys.platform == "win32":
+    from gaphor.windowsshim import gi_init
+
+    gi_init()

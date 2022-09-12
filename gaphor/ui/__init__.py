@@ -1,18 +1,13 @@
 """This module contains user interface related code, such as the main screen
 and diagram windows."""
 
-
 import logging
 import os
 import sys
 from typing import Optional
 
 import darkdetect
-
-from gaphor.ui.windowsshim import gi_init
-
-gi = gi_init()
-
+import gi
 
 if os.getenv("GAPHOR_USE_GTK") != "NONE":
     # Allow to explicitly *not* initialize GTK (for docs, mainly)
@@ -25,6 +20,7 @@ if os.getenv("GAPHOR_USE_GTK") != "NONE":
     if gtk_version == "4.0":
         gi.require_version("Adw", "1")
         from gi.repository import Adw
+
 
 from gi.repository import Gdk, Gio, GLib, Gtk
 
