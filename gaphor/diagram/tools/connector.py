@@ -63,7 +63,7 @@ class PresentationConnector(ItemConnector):
         item.handle(ItemConnected(item, handle, sink.item, sink.port))
 
     def connect_handle(self, sink):
-        callback = DisconnectHandle(self.item, self.handle, self.connections)
+        callback = DisconnectHandle(self.item, self.handle, sink.item, sink.port)
         super().connect_handle(sink, callback=callback)
 
     @transactional
@@ -89,28 +89,25 @@ class DisconnectHandle:
       connections (Connections): Connections object containing connection constraints.
     """
 
-    def __init__(self, item, handle, connections):
+    def __init__(self, item, handle, connected, port):
         self.item = item
         self.handle = handle
-        self.connections = connections
+        self.connected = connected
+        self.port = port
         self.disable = False
 
     def __call__(self):
         handle = self.handle
         item = self.item
-        connections = self.connections
-        cinfo = connections.get_connection(handle)
+        connected = self.connected
 
         if self.disable:
             log.debug(f"Disconnect callback disabled for {item}.{handle} (disabled)")
         else:
             log.debug(f"Disconnect callback {item}.{handle}")
-            if cinfo:
-                adapter = Connector(cinfo.connected, item)
-                adapter.disconnect(handle)
-        self.item.handle(
-            ItemDisconnected(self.item, self.handle, cinfo.connected, cinfo.port)
-        )
+            adapter = Connector(connected, item)
+            adapter.disconnect(handle)
+        self.item.handle(ItemDisconnected(item, handle, connected, self.port))
 
 
 class ItemConnected(RevertibeEvent):
