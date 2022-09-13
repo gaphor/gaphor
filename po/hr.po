@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-08-23 17:08+0200\n"
-"PO-Revision-Date: 2022-09-09 23:21+0000\n"
+"PO-Revision-Date: 2022-09-12 11:16+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -95,7 +95,7 @@ msgstr "Novi dijagram aktivnosti"
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
 msgid "New Sequence Diagram"
-msgstr "Novi dijagram sekvenca"
+msgstr "Novi dijagram slijeda"
 
 #: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
@@ -211,7 +211,7 @@ msgstr "Nula događaj"
 #: gaphor/RAAML/fta/ftatoolbox.py:199 gaphor/RAAML/fta/ftatoolbox.py:205
 #: gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
-msgstr "Neželjeni događaj"
+msgstr "Top događaj"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:210 gaphor/RAAML/fta/ftatoolbox.py:217
 #: gaphor/RAAML/fta/intermediateevent.py:33
@@ -312,15 +312,15 @@ msgstr "Dodijeljena vrsta"
 
 #: gaphor/SysML/propertypages.glade:123 gaphor/SysML/propertypages.ui:91
 msgid "Show Parts"
-msgstr "Pokaži dijelove"
+msgstr "Prikaži dijelove"
 
 #: gaphor/SysML/propertypages.glade:146 gaphor/SysML/propertypages.ui:107
 msgid "Show References"
-msgstr "Pokaži reference"
+msgstr "Prikaži reference"
 
 #: gaphor/SysML/propertypages.glade:172 gaphor/SysML/propertypages.ui:123
 msgid "Show Values"
-msgstr "Pokaži vrijednosti"
+msgstr "Prikaži vrijednosti"
 
 #: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:78
 msgid "Compartments"
@@ -606,11 +606,11 @@ msgstr "Početni čvor"
 
 #: gaphor/UML/actions/actionstoolbox.py:102
 msgid "Activity final node"
-msgstr "Krajnji čvor aktivnosti"
+msgstr "Završni čvor aktivnosti"
 
 #: gaphor/UML/actions/actionstoolbox.py:114
 msgid "Flow final node"
-msgstr "Krajnji čvor toka"
+msgstr "Završni čvor toka"
 
 #: gaphor/UML/actions/actionstoolbox.py:126
 msgid "Decision/merge node"
@@ -1279,9 +1279,8 @@ msgid "Activities"
 msgstr "Aktivnosti"
 
 #: gaphor/UML/states/statemachine.py:41
-#, fuzzy
 msgid "statemachine"
-msgstr "Uređaj stanja"
+msgstr "automat konačnih stanja"
 
 #: gaphor/UML/states/statestoolbox.py:20 gaphor/UML/states/statestoolbox.py:79
 msgid "State"
@@ -1290,7 +1289,7 @@ msgstr "Stanje"
 #: gaphor/UML/states/statestoolbox.py:50 gaphor/UML/states/statestoolbox.py:67
 #: gaphor/templates/sysml.gaphor
 msgid "State Machine"
-msgstr "Uređaj stanja"
+msgstr "Automat konačnih stanja"
 
 #: gaphor/UML/states/statestoolbox.py:63
 msgid "States"
@@ -1302,56 +1301,47 @@ msgstr "Početno pseudostanje"
 
 #: gaphor/UML/states/statestoolbox.py:103
 msgid "Final State"
-msgstr "Krajnje stanje"
+msgstr "Završno stanje"
 
 #: gaphor/UML/states/statestoolbox.py:115
 msgid "Transition"
 msgstr "Prijelaz"
 
 #: gaphor/UML/states/statestoolbox.py:122
-#, fuzzy
 msgid "Shallow History Pseudostate"
-msgstr "Povijest pseudostanja"
+msgstr "Plitka povijest"
 
 #: gaphor/UML/states/statestoolbox.py:134
-#, fuzzy
 msgid "Deep History Pseudostate"
-msgstr "Povijest pseudostanja"
+msgstr "Duboka povijest"
 
 #: gaphor/UML/states/statestoolbox.py:146
-#, fuzzy
 msgid "Join Pseudostate"
-msgstr "Početno pseudostanje"
+msgstr "Sjedinjavanje"
 
 #: gaphor/UML/states/statestoolbox.py:158
-#, fuzzy
 msgid "Fork Pseudostate"
-msgstr "Povijest pseudostanja"
+msgstr "Račvanje"
 
 #: gaphor/UML/states/statestoolbox.py:170
-#, fuzzy
 msgid "Junction Pseudostate"
-msgstr "Početno pseudostanje"
+msgstr "Razdvajanje"
 
 #: gaphor/UML/states/statestoolbox.py:182
-#, fuzzy
 msgid "Choice Pseudostate"
-msgstr "Početno pseudostanje"
+msgstr "Izbor"
 
 #: gaphor/UML/states/statestoolbox.py:194
-#, fuzzy
 msgid "Entry Point Pseudostate"
-msgstr "Početno pseudostanje"
+msgstr "Točka ulaza"
 
 #: gaphor/UML/states/statestoolbox.py:206
-#, fuzzy
 msgid "Exit Point Pseudostate"
-msgstr "Početno pseudostanje"
+msgstr "Točka izlaza"
 
 #: gaphor/UML/states/statestoolbox.py:218
-#, fuzzy
 msgid "Terminate Pseudostate"
-msgstr "Početno pseudostanje"
+msgstr "Prekid"
 
 #: gaphor/UML/usecases/extend.py:22
 msgid "extend"
@@ -1828,8 +1818,7 @@ msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
-"Analiza stabla kvarova pokazuje koji su uzroci kvara sustava uzeti u "
-"obzir."
+"Analiza stabla kvarova prikazuje koji su uzroci kvara sustava uzeti u obzir."
 
 #: gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
