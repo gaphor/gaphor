@@ -5,10 +5,6 @@ inputs:
     description: 'Command to run for xvfb in order to run tests headless in Linux'
     required: false
     default: ''
-  install_others:
-    description: 'Command to install wheels in Windows prior to install other Python dependencies'
-    required: false
-    default: ''
 outputs:
   version:
     description: 'Build version with added dev reference for non-releases'
@@ -17,7 +13,7 @@ runs:
   using: composite
   steps:
     - name: Install Poetry
-      run: pip install poetry==1.1.15
+      run: pip install poetry==1.2.0
       shell: bash
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
@@ -26,12 +22,8 @@ runs:
       id: meta
       run: .github/scripts/metadata.sh
       shell: bash
-    - name: Install Others
-      if: inputs.install_others
-      run: ${{ inputs.install_others }}
-      shell: pwsh
     - name: Install Python Dependencies
-      run: poetry install
+      run: poetry install --no-interaction
       shell: bash
     - name: Compile translations
       run: poetry run poe gettext-mo
