@@ -1,10 +1,5 @@
 name: 'Install Dependencies and Test'
 description: 'Collects project metadata, installs Python and Poetry, runs pytest'
-inputs:
-  xvfb_command:
-    description: 'Command to run for xvfb in order to run tests headless in Linux'
-    required: false
-    default: ''
 outputs:
   version:
     description: 'Build version with added dev reference for non-releases'
@@ -29,5 +24,5 @@ runs:
       run: poetry run poe gettext-mo
       shell: bash
     - name: Test with Pytest
-      run: ${{ inputs.xvfb_command }} poetry run poe test-all
+      run: ${{ runner.os == 'Linux' && 'xvfb-run' || '' }} poetry run poe test-all
       shell: bash

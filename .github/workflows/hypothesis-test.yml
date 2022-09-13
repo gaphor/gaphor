@@ -37,8 +37,6 @@ jobs:
           key: ${{ runner.os }}-hypothesis
       - name: Install Dependencies and Test
         uses: ./.github/actions/setup_and_test
-        with:
-          xvfb_command: 'xvfb-run'
       - name: Test with Hypothesis
         run: xvfb-run poetry run pytest --hypothesis-profile=ci tests
         shell: bash

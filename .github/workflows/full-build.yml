@@ -61,8 +61,6 @@ jobs:
       - name: Install Dependencies and Test
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
-        with:
-          xvfb_command: 'xvfb-run'
       - name: Upload Code Coverage to Code Climate
         uses: paambaati/codeclimate-action@v3.0.0
         env:
@@ -116,8 +114,6 @@ jobs:
       - name: Install Dependencies and Test
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
-        with:
-          xvfb_command: 'xvfb-run'
       - name: Create Linux Appimage
         uses: ./.github/actions/linux_appimage
         if: ${{ github.actor != 'dependabot[bot]' }}
@@ -166,8 +162,6 @@ jobs:
       - name: Install Dependencies and Test
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
-        with:
-          xvfb_command: 'xvfb-run'
 
   macos:
     needs: lint
