@@ -38,7 +38,7 @@ jobs:
       - name: Install Dependencies and Test
         uses: ./.github/actions/setup_and_test
       - name: Test with Hypothesis
-        run: xvfb-run poetry run pytest --hypothesis-profile=ci tests
+        run: xvfb-run poetry run pytest -m hypothesis --hypothesis-profile=ci
         shell: bash
       - uses: nashmaniac/create-issue-action@v1.1
         if: failure()

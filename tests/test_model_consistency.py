@@ -27,6 +27,7 @@ from functools import singledispatch
 from io import StringIO
 from typing import Iterable
 
+import pytest
 from gaphas.connector import Handle
 from hypothesis import reproduce_failure  # noqa
 from hypothesis.control import assume, cleanup
@@ -70,6 +71,7 @@ from gaphor.UML.toolbox import (
 )
 
 
+@pytest.mark.hypothesis
 def test_model_consistency():
     run_state_machine_as_test(ModelConsistency)
 
