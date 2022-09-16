@@ -92,10 +92,10 @@ class TransactionCommit:
 
 
 class TransactionRollback:
-    """If a set of operations fail (e.i.
+    """This event is emitted to tell the operation has failed.
 
-    due to an exception) the transaction should be marked for rollback.
-    This event is emitted to tell the operation has failed.
+    If a set of operations fail (e.i. due to an exception) the
+    transaction should be marked for rollback.
     """
 
 
