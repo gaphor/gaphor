@@ -7,20 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-23 17:08+0200\n"
+"POT-Creation-Date: 2022-09-16 16:33+0200\n"
 "PO-Revision-Date: 2022-09-01 19:16+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
-"Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
-"\n"
 "Language: cs\n"
+"Language-Team: Czech "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/cs/>\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
-#: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:56
+#: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:55
 #: gaphor/ui/greeter.py:29
 msgid "C4 Model"
 msgstr "Model C4"
@@ -33,71 +32,71 @@ msgstr "Popis"
 msgid "Technology"
 msgstr "Technologie"
 
-#: gaphor/C4Model/toolbox.py:30
+#: gaphor/C4Model/toolbox.py:29
 msgid "New Software System"
 msgstr "Nový softwarový systém"
 
-#: gaphor/C4Model/toolbox.py:37
+#: gaphor/C4Model/toolbox.py:36
 msgid "New Container"
 msgstr "Nový kontejner"
 
-#: gaphor/C4Model/toolbox.py:44
+#: gaphor/C4Model/toolbox.py:43
 msgid "Database"
 msgstr "Databáze"
 
-#: gaphor/C4Model/toolbox.py:45
+#: gaphor/C4Model/toolbox.py:44
 msgid "New Database"
 msgstr "Nová databáze"
 
-#: gaphor/C4Model/toolbox.py:52
+#: gaphor/C4Model/toolbox.py:51
 msgid "New Component"
 msgstr "Nová komponenta"
 
-#: gaphor/C4Model/toolbox.py:60 gaphor/C4Model/toolbox.py:66
+#: gaphor/C4Model/toolbox.py:59 gaphor/C4Model/toolbox.py:65
 msgid "Person"
 msgstr "Osoba"
 
-#: gaphor/C4Model/toolbox.py:72
+#: gaphor/C4Model/toolbox.py:71
 msgid "Software System"
 msgstr "Softwarový systém"
 
-#: gaphor/C4Model/toolbox.py:84
+#: gaphor/C4Model/toolbox.py:83
 msgid "Container"
 msgstr "Kontejner"
 
-#: gaphor/C4Model/toolbox.py:96
+#: gaphor/C4Model/toolbox.py:95
 msgid "Container: Database"
 msgstr "Kontejner: databáze"
 
-#: gaphor/C4Model/toolbox.py:108 gaphor/UML/classes/classestoolbox.py:63
+#: gaphor/C4Model/toolbox.py:107 gaphor/UML/classes/classestoolbox.py:59
 msgid "Component"
 msgstr "Komponenta"
 
-#: gaphor/C4Model/toolbox.py:120 gaphor/RAAML/fta/ftatoolbox.py:20
-#: gaphor/UML/classes/classestoolbox.py:109
+#: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
+#: gaphor/UML/classes/classestoolbox.py:105
 #: gaphor/UML/classes/dependencypropertypages.py:16
 msgid "Dependency"
 msgstr "Závislost"
 
-#: gaphor/C4Model/toolbox.py:140
+#: gaphor/C4Model/toolbox.py:139
 msgid "New C4 Diagram"
 msgstr "Nové schéma C4"
 
-#: gaphor/C4Model/toolbox.py:141 gaphor/UML/toolbox.py:30
+#: gaphor/C4Model/toolbox.py:140 gaphor/UML/toolbox.py:30
 msgid "New Class Diagram"
 msgstr "Diagram nové třídy"
 
-#: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:72
+#: gaphor/C4Model/toolbox.py:141 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
 msgid "New Activity Diagram"
 msgstr "Nový diagram aktivit"
 
-#: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:73
+#: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
 msgid "New Sequence Diagram"
 msgstr "Nový sekvenční program"
 
-#: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:74
+#: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
 msgid "New State Machine Diagram"
 msgstr "Nové schéma stavového stroje"
@@ -114,106 +113,106 @@ msgstr "Nové schéma FTA"
 msgid "New STPA Diagram"
 msgstr "Nové schéma STPA"
 
-#: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:28
+#: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
 msgstr "Brána AND"
 
-#: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:129
-#: gaphor/RAAML/fta/ftatoolbox.py:135
+#: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr "Základní událost"
 
-#: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:140
-#: gaphor/RAAML/fta/ftatoolbox.py:147
+#: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr "Podmíněná událost"
 
-#: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:166
-#: gaphor/RAAML/fta/ftatoolbox.py:172
+#: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
+#: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
 msgstr "Spící událost"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:16 gaphor/templates/raaml.gaphor
+#: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
 msgstr "Analýza stromu poruch"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:34
+#: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
 msgstr "AND"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:39 gaphor/RAAML/fta/orgate.py:37
+#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
 msgstr "Brána OR"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:45 gaphor/templates/raaml.gaphor
+#: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml.gaphor
 msgid "OR"
 msgstr "NEBO"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:50 gaphor/RAAML/fta/notgate.py:35
+#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
 msgstr "NE Brána"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:56
+#: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
 msgstr "NE"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:61
+#: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
 msgstr "Brána vynucení sekvence (SEQ)"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:67
+#: gaphor/RAAML/fta/ftatoolbox.py:63
 msgid "SEQ"
 msgstr "SEQ"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:72
+#: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
 msgstr "Exkluzivní brána OR"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:78
+#: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
 msgstr "XOR"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:83 gaphor/RAAML/fta/ftatoolbox.py:90
+#: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:41
 msgid "Majority Vote Gate"
 msgstr "Brána majoritního hlasování"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:96 gaphor/RAAML/fta/ftatoolbox.py:102
+#: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:35
 msgid "Inhibit Gate"
 msgstr "Inhibiční brána"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:107 gaphor/RAAML/fta/ftatoolbox.py:113
+#: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
 msgstr "Přenést dovnitř"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:118 gaphor/RAAML/fta/ftatoolbox.py:124
+#: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
 #: gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
 msgstr "Přenést ven"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:153 gaphor/RAAML/fta/ftatoolbox.py:160
+#: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:36
 msgid "Undeveloped Event"
 msgstr "Nerozvinutá událost"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:177 gaphor/RAAML/fta/ftatoolbox.py:183
+#: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
 #: gaphor/RAAML/fta/houseevent.py:35
 msgid "House Event"
 msgstr "Domácí událost"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:188 gaphor/RAAML/fta/ftatoolbox.py:194
+#: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
 #: gaphor/RAAML/fta/zeroevent.py:36
 msgid "Zero Event"
 msgstr "Žádná událost"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:199 gaphor/RAAML/fta/ftatoolbox.py:205
+#: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
 msgstr "Top událost"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:210 gaphor/RAAML/fta/ftatoolbox.py:217
+#: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
 msgstr "Přechodná událost"
@@ -226,61 +225,61 @@ msgstr "Brána vynucující sekvenci"
 msgid "XOR Gate"
 msgstr "Brána XOR"
 
-#: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:155
+#: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
 msgstr "Ovládací akce"
 
 #: gaphor/RAAML/stpa/operationalsituation.py:34
-#: gaphor/RAAML/stpa/stpatoolbox.py:124
+#: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
 msgstr "Provozní situace"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:18 gaphor/RAAML/stpa/stpatoolbox.py:44
+#: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
 #: gaphor/templates/raaml.gaphor
 msgid "Loss"
 msgstr "Ztráta"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:23 gaphor/RAAML/stpa/stpatoolbox.py:53
+#: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard"
 msgstr "Nebezpečí"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:28 gaphor/RAAML/stpa/stpatoolbox.py:113
+#: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml.gaphor
 msgid "Abstract Operational Situation"
 msgstr "Abstraktní provozní situace"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:81
-#: gaphor/UML/classes/classestoolbox.py:117
+#: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:77
+#: gaphor/UML/classes/classestoolbox.py:113
 msgid "Generalization"
 msgstr "Zobecnění"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:62 gaphor/SysML/blocks/block.py:61
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:61
 msgid "Situation"
 msgstr "Situace"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:73
+#: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
 msgstr "Struktura řízení"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:84 gaphor/templates/sysml.gaphor
+#: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml.gaphor
 msgid "Controller"
 msgstr "Ovladač"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:93 gaphor/templates/sysml.gaphor
+#: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
 msgid "Actuator"
 msgstr "Pohon"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:102
+#: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
 msgstr "Řízený proces"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:135
+#: gaphor/RAAML/stpa/stpatoolbox.py:138
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "Unsafe Control Action"
 msgstr "Nebezpečná kontrolní akce"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:146
+#: gaphor/RAAML/stpa/stpatoolbox.py:149
 msgid "Relevant To"
 msgstr "Relevantní pro"
 
@@ -406,62 +405,62 @@ msgstr "KontrolníStruktura"
 msgid "block"
 msgstr "blokovat"
 
-#: gaphor/SysML/blocks/block.py:98
+#: gaphor/SysML/blocks/block.py:101
 msgid "parts"
 msgstr "části"
 
-#: gaphor/SysML/blocks/block.py:109
+#: gaphor/SysML/blocks/block.py:112
 msgid "references"
 msgstr "Reference"
 
-#: gaphor/SysML/blocks/block.py:120
+#: gaphor/SysML/blocks/block.py:123
 msgid "values"
 msgstr "hodnoty"
 
-#: gaphor/SysML/blocks/block.py:137
+#: gaphor/SysML/blocks/block.py:140
 msgid "unnamed"
 msgstr "nejmenovaný"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:28
+#: gaphor/SysML/blocks/blockstoolbox.py:24
 msgid "Blocks"
 msgstr "Bloky"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:32
+#: gaphor/SysML/blocks/blockstoolbox.py:28
 msgid "Block"
 msgstr "Blok"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:42
-#: gaphor/UML/classes/classestoolbox.py:51
+#: gaphor/SysML/blocks/blockstoolbox.py:38
+#: gaphor/UML/classes/classestoolbox.py:47
 msgid "Package"
 msgstr "Balíček"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:54
-#: gaphor/UML/classes/classestoolbox.py:82
+#: gaphor/SysML/blocks/blockstoolbox.py:50
+#: gaphor/UML/classes/classestoolbox.py:78
 msgid "Composite Association"
 msgstr "Kompozitní asociace"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:64
-#: gaphor/UML/classes/classestoolbox.py:92
+#: gaphor/SysML/blocks/blockstoolbox.py:60
+#: gaphor/UML/classes/classestoolbox.py:88
 msgid "Shared Association"
 msgstr "Sdílené sdružení"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:74
-#: gaphor/UML/classes/classestoolbox.py:102
-#: gaphor/UML/usecases/usecasetoolbox.py:44
+#: gaphor/SysML/blocks/blockstoolbox.py:70
+#: gaphor/UML/classes/classestoolbox.py:98
+#: gaphor/UML/usecases/usecasetoolbox.py:40
 msgid "Association"
 msgstr "Asociace"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:88
+#: gaphor/SysML/blocks/blockstoolbox.py:84
 msgid "ValueType"
 msgstr "Typ hodnoty"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:99
-#: gaphor/UML/classes/classestoolbox.py:144
+#: gaphor/SysML/blocks/blockstoolbox.py:95
+#: gaphor/UML/classes/classestoolbox.py:140
 msgid "Enumeration"
 msgstr "Výčet"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:111
-#: gaphor/UML/classes/classestoolbox.py:156
+#: gaphor/SysML/blocks/blockstoolbox.py:107
+#: gaphor/UML/classes/classestoolbox.py:152
 msgid "Primitive"
 msgstr "Primitivní"
 
@@ -469,23 +468,23 @@ msgstr "Primitivní"
 msgid "proxy"
 msgstr "proxy"
 
-#: gaphor/SysML/requirements/relationships.py:34
+#: gaphor/SysML/requirements/relationships.py:37
 msgid "satisfy"
 msgstr "uspokojit"
 
-#: gaphor/SysML/requirements/relationships.py:44
+#: gaphor/SysML/requirements/relationships.py:47
 msgid "deriveReqt"
 msgstr "deriveReqt"
 
-#: gaphor/SysML/requirements/relationships.py:50
+#: gaphor/SysML/requirements/relationships.py:53
 msgid "trace"
 msgstr "stopa"
 
-#: gaphor/SysML/requirements/relationships.py:58
+#: gaphor/SysML/requirements/relationships.py:61
 msgid "verify"
 msgstr "ověřit"
 
-#: gaphor/SysML/requirements/relationships.py:66
+#: gaphor/SysML/requirements/relationships.py:69
 msgid "refine"
 msgstr "upřesnit"
 
@@ -493,37 +492,37 @@ msgstr "upřesnit"
 msgid "requirement"
 msgstr "požadavek"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:17
+#: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml.gaphor
 msgid "Requirements"
 msgstr "Požadavky"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:21
+#: gaphor/SysML/requirements/requirementstoolbox.py:17
 msgid "Requirement"
 msgstr "Požadavek"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:33
+#: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
 msgstr "Uspokojit"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:40
+#: gaphor/SysML/requirements/requirementstoolbox.py:36
 msgid "Derive Requirement"
 msgstr "Odvození požadavku"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:47
+#: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
 msgstr "Stopa"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:54
+#: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
 msgstr "Upřesnit"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:61
+#: gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
 msgstr "Ověřit"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:68
-#: gaphor/UML/classes/classestoolbox.py:75
+#: gaphor/SysML/requirements/requirementstoolbox.py:64
+#: gaphor/UML/classes/classestoolbox.py:71
 msgid "Containment"
 msgstr "Omezení"
 
@@ -555,6 +554,12 @@ msgstr "Nový komunikační diagram"
 msgid "New Profile Diagram"
 msgstr "Nové schéma profilu"
 
+#: gaphor/UML/actions/actionstoolbox.py:17
+#: gaphor/UML/interactions/interactionstoolbox.py:16
+#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
+msgid "New {name}"
+msgstr "Nové {name}"
+
 #: gaphor/UML/umlfmt.py:203
 msgid "general: {name}"
 msgstr "obecné: {name}"
@@ -571,93 +576,87 @@ msgstr "rozšířit: {name}"
 msgid "include: {name}"
 msgstr "zahrnout: {name}"
 
-#: gaphor/UML/actions/actionstoolbox.py:21
-#: gaphor/UML/interactions/interactionstoolbox.py:20
-#: gaphor/UML/states/statestoolbox.py:31 gaphor/diagram/diagramtoolbox.py:38
-msgid "New {name}"
-msgstr "Nové {name}"
-
-#: gaphor/UML/actions/actionstoolbox.py:44
-#: gaphor/UML/actions/actionstoolbox.py:66 gaphor/templates/sysml.gaphor
+#: gaphor/UML/actions/actionstoolbox.py:40
+#: gaphor/UML/actions/actionstoolbox.py:62 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Activity"
 msgstr "Aktivita"
 
-#: gaphor/UML/actions/actionstoolbox.py:52
+#: gaphor/UML/actions/actionstoolbox.py:48
 msgid "Swimlane One"
 msgstr "Swimlane One"
 
-#: gaphor/UML/actions/actionstoolbox.py:56
+#: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Swimlane Two"
 msgstr "Swimlane Two"
 
-#: gaphor/UML/actions/actionstoolbox.py:62
+#: gaphor/UML/actions/actionstoolbox.py:58
 msgid "Actions"
 msgstr "Akce"
 
-#: gaphor/UML/actions/actionstoolbox.py:78
-#: gaphor/UML/actions/actionstoolbox.py:84
+#: gaphor/UML/actions/actionstoolbox.py:74
+#: gaphor/UML/actions/actionstoolbox.py:80
 msgid "Action"
 msgstr "Akce"
 
-#: gaphor/UML/actions/actionstoolbox.py:90
+#: gaphor/UML/actions/actionstoolbox.py:86
 msgid "Initial node"
 msgstr "Počáteční uzel"
 
-#: gaphor/UML/actions/actionstoolbox.py:102
+#: gaphor/UML/actions/actionstoolbox.py:98
 msgid "Activity final node"
 msgstr "Konečný uzel aktivity"
 
-#: gaphor/UML/actions/actionstoolbox.py:114
+#: gaphor/UML/actions/actionstoolbox.py:110
 msgid "Flow final node"
 msgstr "Konečný uzel toku"
 
-#: gaphor/UML/actions/actionstoolbox.py:126
+#: gaphor/UML/actions/actionstoolbox.py:122
 msgid "Decision/merge node"
 msgstr "Rozhodovací/slučovací uzel"
 
-#: gaphor/UML/actions/actionstoolbox.py:138
+#: gaphor/UML/actions/actionstoolbox.py:134
 msgid "Fork/join node"
 msgstr "Režim Fork/připojit"
 
-#: gaphor/UML/actions/actionstoolbox.py:150
-#: gaphor/UML/actions/actionstoolbox.py:156
+#: gaphor/UML/actions/actionstoolbox.py:146
+#: gaphor/UML/actions/actionstoolbox.py:152
 msgid "Object node"
 msgstr "Objektový uzel"
 
-#: gaphor/UML/actions/actionstoolbox.py:162
+#: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Swimlane"
 msgstr "Swimlane"
 
-#: gaphor/UML/actions/actionstoolbox.py:174
+#: gaphor/UML/actions/actionstoolbox.py:170
 msgid "Control flow"
 msgstr "Řídicí tok"
 
-#: gaphor/UML/actions/actionstoolbox.py:181
+#: gaphor/UML/actions/actionstoolbox.py:177
 msgid "Object flow"
 msgstr "Tok objektů"
 
-#: gaphor/UML/actions/actionstoolbox.py:188
+#: gaphor/UML/actions/actionstoolbox.py:184
 msgid "Send signal action"
 msgstr "Akce odeslání signálu"
 
-#: gaphor/UML/actions/actionstoolbox.py:194
+#: gaphor/UML/actions/actionstoolbox.py:190
 msgid "Send signal"
 msgstr "Odeslat signál"
 
-#: gaphor/UML/actions/actionstoolbox.py:200
+#: gaphor/UML/actions/actionstoolbox.py:196
 msgid "Accept event action"
 msgstr "Akceptovat akci události"
 
-#: gaphor/UML/actions/actionstoolbox.py:206
+#: gaphor/UML/actions/actionstoolbox.py:202
 msgid "Accept event"
 msgstr "Přijmout událost"
 
-#: gaphor/UML/actions/actionstoolbox.py:212
+#: gaphor/UML/actions/actionstoolbox.py:208
 msgid "Input pin"
 msgstr "Vstupní pin"
 
-#: gaphor/UML/actions/actionstoolbox.py:219
+#: gaphor/UML/actions/actionstoolbox.py:215
 msgid "Output pin"
 msgstr "Výstupní pin"
 
@@ -850,24 +849,24 @@ msgstr "Statické"
 msgid "Abstract"
 msgstr "Abstraktní"
 
-#: gaphor/UML/classes/classestoolbox.py:25
+#: gaphor/UML/classes/classestoolbox.py:21
 msgid "Classes"
 msgstr "Třídy"
 
-#: gaphor/UML/classes/classestoolbox.py:29
-#: gaphor/UML/profiles/profilestoolbox.py:18
+#: gaphor/UML/classes/classestoolbox.py:25
+#: gaphor/UML/profiles/profilestoolbox.py:14
 msgid "Class"
 msgstr "Třída"
 
-#: gaphor/UML/classes/classestoolbox.py:39
+#: gaphor/UML/classes/classestoolbox.py:35
 msgid "Interface"
 msgstr "Rozhraní"
 
-#: gaphor/UML/classes/classestoolbox.py:125
+#: gaphor/UML/classes/classestoolbox.py:121
 msgid "Interface Realization"
 msgstr "Realizace rozhraní"
 
-#: gaphor/UML/classes/classestoolbox.py:132
+#: gaphor/UML/classes/classestoolbox.py:128
 msgid "DataType"
 msgstr "Datový typ"
 
@@ -883,15 +882,15 @@ msgstr "typ hodnoty"
 msgid "dataType"
 msgstr "datový typ"
 
-#: gaphor/UML/classes/dependency.py:51
+#: gaphor/UML/classes/dependency.py:43
 msgid "use"
 msgstr "použít"
 
-#: gaphor/UML/classes/dependency.py:52
+#: gaphor/UML/classes/dependency.py:44
 msgid "realize"
 msgstr "realizovat"
 
-#: gaphor/UML/classes/dependency.py:53
+#: gaphor/UML/classes/dependency.py:45
 msgid "implements"
 msgstr "implementace"
 
@@ -911,7 +910,7 @@ msgstr "Implementace"
 msgid "enumeration"
 msgstr "výčet"
 
-#: gaphor/UML/classes/interface.py:290
+#: gaphor/UML/classes/interface.py:298
 msgid "interface"
 msgstr "rozhraní"
 
@@ -1143,23 +1142,23 @@ msgstr ""
 msgid "Indirectly Instantiated"
 msgstr "Nepřímo instanční"
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:16
+#: gaphor/UML/deployments/deploymentstoolbox.py:12
 msgid "Deployments"
 msgstr "Nasazení"
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:20
+#: gaphor/UML/deployments/deploymentstoolbox.py:16
 msgid "Artifact"
 msgstr "Artefakt"
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:32
+#: gaphor/UML/deployments/deploymentstoolbox.py:28
 msgid "Node"
 msgstr "Node"
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:44
+#: gaphor/UML/deployments/deploymentstoolbox.py:40
 msgid "Device"
 msgstr "Zařízení"
 
-#: gaphor/UML/deployments/node.py:54
+#: gaphor/UML/deployments/node.py:55
 msgid "device"
 msgstr "zařízení"
 
@@ -1173,34 +1172,34 @@ msgstr "Tok informací"
 msgid "Information Item (Class)"
 msgstr "Informační položka (třída)"
 
-#: gaphor/UML/interactions/interactionsconnect.py:82
+#: gaphor/UML/interactions/interactionsconnect.py:79
 msgid "call()"
 msgstr "call()"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:38
-#: gaphor/UML/interactions/interactionstoolbox.py:59
+#: gaphor/UML/interactions/interactionstoolbox.py:34
+#: gaphor/UML/interactions/interactionstoolbox.py:55
 #: gaphor/templates/sysml.gaphor gaphor/templates/uml.gaphor
 msgid "Interaction"
 msgstr "Interakce"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:55
+#: gaphor/UML/interactions/interactionstoolbox.py:51
 #: gaphor/templates/uml.gaphor
 msgid "Interactions"
 msgstr "Interakce"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:71
+#: gaphor/UML/interactions/interactionstoolbox.py:67
 msgid "Lifeline"
 msgstr "_Lifeline"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:83
+#: gaphor/UML/interactions/interactionstoolbox.py:79
 msgid "Execution Specification"
 msgstr "Specifikace provedení"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:91
+#: gaphor/UML/interactions/interactionstoolbox.py:87
 msgid "Message"
 msgstr "Zpráva"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:98
+#: gaphor/UML/interactions/interactionstoolbox.py:94
 msgid "Reflexive message"
 msgstr "Reflexivní zpráva"
 
@@ -1209,31 +1208,31 @@ msgstr "Reflexivní zpráva"
 msgid "Message Sort"
 msgstr "Třídění zpráv"
 
-#: gaphor/UML/profiles/packageimport.py:26
+#: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
 msgstr "import"
 
-#: gaphor/UML/profiles/profilestoolbox.py:22
+#: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
 msgstr "Profily"
 
-#: gaphor/UML/profiles/profilestoolbox.py:26
+#: gaphor/UML/profiles/profilestoolbox.py:22
 msgid "Profile"
 msgstr "Profil"
 
-#: gaphor/UML/profiles/profilestoolbox.py:38
+#: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
 msgstr "Metatřída"
 
-#: gaphor/UML/profiles/profilestoolbox.py:48
+#: gaphor/UML/profiles/profilestoolbox.py:44
 msgid "Stereotype"
 msgstr "Stereotyp"
 
-#: gaphor/UML/profiles/profilestoolbox.py:60
+#: gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
 msgstr "Rozšíření"
 
-#: gaphor/UML/profiles/profilestoolbox.py:67
+#: gaphor/UML/profiles/profilestoolbox.py:63
 msgid "Import"
 msgstr "Importovat"
 
@@ -1279,135 +1278,135 @@ msgstr "Provést činnost"
 msgid "Activities"
 msgstr "Činnosti"
 
-#: gaphor/UML/states/statemachine.py:41
+#: gaphor/UML/states/statemachine.py:40
 msgid "statemachine"
 msgstr "státní stroj"
 
-#: gaphor/UML/states/statestoolbox.py:20 gaphor/UML/states/statestoolbox.py:79
+#: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
 msgstr "Stát"
 
-#: gaphor/UML/states/statestoolbox.py:50 gaphor/UML/states/statestoolbox.py:67
+#: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
 #: gaphor/templates/sysml.gaphor
 msgid "State Machine"
 msgstr "Státní stroj"
 
-#: gaphor/UML/states/statestoolbox.py:63
+#: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
 msgstr "Státy"
 
-#: gaphor/UML/states/statestoolbox.py:91
+#: gaphor/UML/states/statestoolbox.py:87
 msgid "Initial Pseudostate"
 msgstr "Počáteční pseudostav"
 
-#: gaphor/UML/states/statestoolbox.py:103
+#: gaphor/UML/states/statestoolbox.py:99
 msgid "Final State"
 msgstr "Konečný stav"
 
-#: gaphor/UML/states/statestoolbox.py:115
+#: gaphor/UML/states/statestoolbox.py:111
 msgid "Transition"
 msgstr "Přechod"
 
-#: gaphor/UML/states/statestoolbox.py:122
+#: gaphor/UML/states/statestoolbox.py:118
 msgid "Shallow History Pseudostate"
 msgstr "Pseudostatní mělká historie"
 
-#: gaphor/UML/states/statestoolbox.py:134
+#: gaphor/UML/states/statestoolbox.py:130
 #, fuzzy
 msgid "Deep History Pseudostate"
 msgstr "Historie Pseudostate"
 
-#: gaphor/UML/states/statestoolbox.py:146
+#: gaphor/UML/states/statestoolbox.py:142
 #, fuzzy
 msgid "Join Pseudostate"
 msgstr "Počáteční pseudostav"
 
-#: gaphor/UML/states/statestoolbox.py:158
+#: gaphor/UML/states/statestoolbox.py:154
 msgid "Fork Pseudostate"
 msgstr "Pseudostát vidlice"
 
-#: gaphor/UML/states/statestoolbox.py:170
+#: gaphor/UML/states/statestoolbox.py:166
 #, fuzzy
 msgid "Junction Pseudostate"
 msgstr "Počáteční pseudostav"
 
-#: gaphor/UML/states/statestoolbox.py:182
+#: gaphor/UML/states/statestoolbox.py:178
 msgid "Choice Pseudostate"
 msgstr "Volba pseudostátu"
 
-#: gaphor/UML/states/statestoolbox.py:194
+#: gaphor/UML/states/statestoolbox.py:190
 msgid "Entry Point Pseudostate"
 msgstr "Vstupní bod Pseudostát"
 
-#: gaphor/UML/states/statestoolbox.py:206
+#: gaphor/UML/states/statestoolbox.py:202
 #, fuzzy
 msgid "Exit Point Pseudostate"
 msgstr "Počáteční pseudostav"
 
-#: gaphor/UML/states/statestoolbox.py:218
+#: gaphor/UML/states/statestoolbox.py:214
 #, fuzzy
 msgid "Terminate Pseudostate"
 msgstr "Počáteční pseudostav"
 
-#: gaphor/UML/usecases/extend.py:22
+#: gaphor/UML/usecases/extend.py:20
 msgid "extend"
 msgstr "rozšířit"
 
-#: gaphor/UML/usecases/include.py:22
+#: gaphor/UML/usecases/include.py:20
 msgid "include"
 msgstr "zahrnout"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:16 gaphor/templates/sysml.gaphor
+#: gaphor/UML/usecases/usecasetoolbox.py:12 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Use Cases"
 msgstr "Případy použití"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:20
+#: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
 msgstr "Případ použití"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:32 gaphor/templates/uml.gaphor
+#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml.gaphor
 msgid "Actor"
 msgstr "Herec"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:51
+#: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
 msgstr "Zahrnout"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:59
+#: gaphor/UML/usecases/usecasetoolbox.py:55
 msgid "Extend"
 msgstr "Rozšířit"
 
-#: gaphor/diagram/diagramtoolbox.py:111
+#: gaphor/diagram/diagramtoolbox.py:99
 msgid "General"
 msgstr "Obecné"
 
-#: gaphor/diagram/diagramtoolbox.py:115
+#: gaphor/diagram/diagramtoolbox.py:103
 msgid "Pointer"
 msgstr "Ukazatel"
 
-#: gaphor/diagram/diagramtoolbox.py:122
+#: gaphor/diagram/diagramtoolbox.py:110
 msgid "Magnet"
 msgstr "Magnet"
 
-#: gaphor/diagram/diagramtoolbox.py:129
+#: gaphor/diagram/diagramtoolbox.py:117
 msgid "Line"
 msgstr "Řádek"
 
-#: gaphor/diagram/diagramtoolbox.py:136
+#: gaphor/diagram/diagramtoolbox.py:124
 msgid "Box"
 msgstr "Box"
 
-#: gaphor/diagram/diagramtoolbox.py:144
+#: gaphor/diagram/diagramtoolbox.py:132
 msgid "Ellipse"
 msgstr "Elips"
 
-#: gaphor/diagram/diagramtoolbox.py:152 gaphor/diagram/propertypages.glade:25
+#: gaphor/diagram/diagramtoolbox.py:140 gaphor/diagram/propertypages.glade:25
 #: gaphor/diagram/propertypages.ui:9
 msgid "Comment"
 msgstr "Komentář"
 
-#: gaphor/diagram/diagramtoolbox.py:160
+#: gaphor/diagram/diagramtoolbox.py:148
 msgid "Comment line"
 msgstr "Řádek komentáře"
 
@@ -1705,7 +1704,7 @@ msgstr "Aktuální velikost"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:57
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:29
-#: gaphor/ui/namespace.py:328 gaphor/ui/treecomponent.py:190
+#: gaphor/ui/namespace.py:328 gaphor/ui/treecomponent.py:164
 msgid "New model"
 msgstr "Nový model"
 
@@ -2302,19 +2301,20 @@ msgid ""
 "in the tree view and start typing. A search box will automatically "
 "appear.\n"
 msgstr ""
-"Přidejte do diagramu prvek modelu ze schránky nástrojů. Zde se zobrazí jeho "
-"vlastnosti.\n"
+"Přidejte do diagramu prvek modelu ze schránky nástrojů. Zde se zobrazí "
+"jeho vlastnosti.\n"
 "\n"
 "Tento panel lze skrýt kliknutím na ikonu panelu v záhlaví.\n"
 "\n"
-"<b>Tip:</b> Většina prvků v panelu nástrojů má klávesovou zkratku (např. \"c"
-"\" pro Class).\n"
-"Výběr nástroje funguje pouze z diagramu. Pokud se nástroj nevybere, klikněte "
-"jednou na diagram (aby byl zaostřený) a pak stiskněte klávesovou zkratku.\n"
+"<b>Tip:</b> Většina prvků v panelu nástrojů má klávesovou zkratku (např. "
+"\"c\" pro Class).\n"
+"Výběr nástroje funguje pouze z diagramu. Pokud se nástroj nevybere, "
+"klikněte jednou na diagram (aby byl zaostřený) a pak stiskněte klávesovou"
+" zkratku.\n"
 "\n"
-"<b>Tip:</b> Chcete-li vyhledat prvek ve stromovém zobrazení, vyberte prvek "
-"ve stromovém zobrazení a začněte psát. Automaticky se zobrazí vyhledávací "
-"pole.\n"
+"<b>Tip:</b> Chcete-li vyhledat prvek ve stromovém zobrazení, vyberte "
+"prvek ve stromovém zobrazení a začněte psát. Automaticky se zobrazí "
+"vyhledávací pole.\n"
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:171
 msgid "Editors"
@@ -2343,16 +2343,17 @@ msgid ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
-"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\""
-">Styly v Gaphoru</a>"
+"🔗 <a "
+"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Styly "
+"v Gaphoru</a>"
 
 #: gaphor/ui/errorhandler.py:25
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
-"Vypadá to, že se Gaphor spouští z příkazového řádku. Chcete otevřít relaci "
-"ladění?"
+"Vypadá to, že se Gaphor spouští z příkazového řádku. Chcete otevřít "
+"relaci ladění?"
 
 #: gaphor/ui/errorhandler.py:28 gaphor/ui/errorhandler.py:31
 msgid "Close"
@@ -2544,7 +2545,7 @@ msgstr ""
 msgid "Show in “{diagram}”"
 msgstr ""
 
-#: gaphor/ui/namespace.py:326 gaphor/ui/treecomponent.py:188
+#: gaphor/ui/namespace.py:326 gaphor/ui/treecomponent.py:162
 msgid "{name} package"
 msgstr ""
 

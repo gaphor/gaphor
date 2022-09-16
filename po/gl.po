@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-08-23 17:08+0200\n"
+"POT-Creation-Date: 2022-09-16 16:33+0200\n"
 "PO-Revision-Date: 2022-01-03 00:54+0000\n"
 "Last-Translator: Fran Diéguez <fran.dieguez@mabishu.com>\n"
 "Language: gl\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.3\n"
 
-#: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:56
+#: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:55
 #: gaphor/ui/greeter.py:29
 msgid "C4 Model"
 msgstr "Modelo C4"
@@ -32,71 +32,71 @@ msgstr "Descrición"
 msgid "Technology"
 msgstr "Tecnoloxía"
 
-#: gaphor/C4Model/toolbox.py:30
+#: gaphor/C4Model/toolbox.py:29
 msgid "New Software System"
 msgstr "Sistema de software novo"
 
-#: gaphor/C4Model/toolbox.py:37
+#: gaphor/C4Model/toolbox.py:36
 msgid "New Container"
 msgstr "Contenedor novo"
 
-#: gaphor/C4Model/toolbox.py:44
+#: gaphor/C4Model/toolbox.py:43
 msgid "Database"
 msgstr "Base de datos"
 
-#: gaphor/C4Model/toolbox.py:45
+#: gaphor/C4Model/toolbox.py:44
 msgid "New Database"
 msgstr "Base de datos nova"
 
-#: gaphor/C4Model/toolbox.py:52
+#: gaphor/C4Model/toolbox.py:51
 msgid "New Component"
 msgstr "Compoñente novo"
 
-#: gaphor/C4Model/toolbox.py:60 gaphor/C4Model/toolbox.py:66
+#: gaphor/C4Model/toolbox.py:59 gaphor/C4Model/toolbox.py:65
 msgid "Person"
 msgstr "Persona"
 
-#: gaphor/C4Model/toolbox.py:72
+#: gaphor/C4Model/toolbox.py:71
 msgid "Software System"
 msgstr "Sistema de software"
 
-#: gaphor/C4Model/toolbox.py:84
+#: gaphor/C4Model/toolbox.py:83
 msgid "Container"
 msgstr "Contenedor"
 
-#: gaphor/C4Model/toolbox.py:96
+#: gaphor/C4Model/toolbox.py:95
 msgid "Container: Database"
 msgstr "Contenedor: Base de datos"
 
-#: gaphor/C4Model/toolbox.py:108 gaphor/UML/classes/classestoolbox.py:63
+#: gaphor/C4Model/toolbox.py:107 gaphor/UML/classes/classestoolbox.py:59
 msgid "Component"
 msgstr "Compoñente"
 
-#: gaphor/C4Model/toolbox.py:120 gaphor/RAAML/fta/ftatoolbox.py:20
-#: gaphor/UML/classes/classestoolbox.py:109
+#: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
+#: gaphor/UML/classes/classestoolbox.py:105
 #: gaphor/UML/classes/dependencypropertypages.py:16
 msgid "Dependency"
 msgstr "Dependencia"
 
-#: gaphor/C4Model/toolbox.py:140
+#: gaphor/C4Model/toolbox.py:139
 msgid "New C4 Diagram"
 msgstr "Diagrama C4 novo"
 
-#: gaphor/C4Model/toolbox.py:141 gaphor/UML/toolbox.py:30
+#: gaphor/C4Model/toolbox.py:140 gaphor/UML/toolbox.py:30
 msgid "New Class Diagram"
 msgstr "Novo diagrama de clase"
 
-#: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:72
+#: gaphor/C4Model/toolbox.py:141 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
 msgid "New Activity Diagram"
 msgstr "Novo diagrama de actividade"
 
-#: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:73
+#: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
 msgid "New Sequence Diagram"
 msgstr "Novo diagrama de secuencia"
 
-#: gaphor/C4Model/toolbox.py:144 gaphor/SysML/toolbox.py:74
+#: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
 msgid "New State Machine Diagram"
 msgstr "Novo diagrama de máquina de estado"
@@ -113,106 +113,106 @@ msgstr "Novo diagrama FTA"
 msgid "New STPA Diagram"
 msgstr "Novo diagrama STPA"
 
-#: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:28
+#: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
 msgstr "Porta AND"
 
-#: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:129
-#: gaphor/RAAML/fta/ftatoolbox.py:135
+#: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr "Evento básico"
 
-#: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:140
-#: gaphor/RAAML/fta/ftatoolbox.py:147
+#: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr "Evento condicional"
 
-#: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:166
-#: gaphor/RAAML/fta/ftatoolbox.py:172
+#: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
+#: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
 msgstr "Evento inactivo"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:16 gaphor/templates/raaml.gaphor
+#: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
 msgstr "Análise da árbore de fallos"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:34
+#: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
 msgstr "AND"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:39 gaphor/RAAML/fta/orgate.py:37
+#: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
 msgstr "Porta OR"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:45 gaphor/templates/raaml.gaphor
+#: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml.gaphor
 msgid "OR"
 msgstr "OR"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:50 gaphor/RAAML/fta/notgate.py:35
+#: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
 msgstr "Porta NOT"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:56
+#: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
 msgstr "NOT"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:61
+#: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
 msgstr "Porta da aplicación da secuencia (SEQ)"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:67
+#: gaphor/RAAML/fta/ftatoolbox.py:63
 msgid "SEQ"
 msgstr "SEQ"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:72
+#: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
 msgstr "Porta OR exclusiva"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:78
+#: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
 msgstr "XOR"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:83 gaphor/RAAML/fta/ftatoolbox.py:90
+#: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:41
 msgid "Majority Vote Gate"
 msgstr "Porta do voto maioritario"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:96 gaphor/RAAML/fta/ftatoolbox.py:102
+#: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:35
 msgid "Inhibit Gate"
 msgstr "Porta inhibida"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:107 gaphor/RAAML/fta/ftatoolbox.py:113
+#: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
 msgstr "Transferir a"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:118 gaphor/RAAML/fta/ftatoolbox.py:124
+#: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
 #: gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
 msgstr "Transferir desde"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:153 gaphor/RAAML/fta/ftatoolbox.py:160
+#: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:36
 msgid "Undeveloped Event"
 msgstr "Evento sen desenvolver"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:177 gaphor/RAAML/fta/ftatoolbox.py:183
+#: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
 #: gaphor/RAAML/fta/houseevent.py:35
 msgid "House Event"
 msgstr "Evento en casa"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:188 gaphor/RAAML/fta/ftatoolbox.py:194
+#: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
 #: gaphor/RAAML/fta/zeroevent.py:36
 msgid "Zero Event"
 msgstr "Evento cero"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:199 gaphor/RAAML/fta/ftatoolbox.py:205
+#: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
 msgstr "Evento superior"
 
-#: gaphor/RAAML/fta/ftatoolbox.py:210 gaphor/RAAML/fta/ftatoolbox.py:217
+#: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
 msgstr "Evento inmediato"
@@ -225,61 +225,61 @@ msgstr "Porta da aplicación da secuencia"
 msgid "XOR Gate"
 msgstr "Porta XOR"
 
-#: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:155
+#: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
 msgstr "Acción de control"
 
 #: gaphor/RAAML/stpa/operationalsituation.py:34
-#: gaphor/RAAML/stpa/stpatoolbox.py:124
+#: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
 msgstr "Situación operativa"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:18 gaphor/RAAML/stpa/stpatoolbox.py:44
+#: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
 #: gaphor/templates/raaml.gaphor
 msgid "Loss"
 msgstr "Perda"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:23 gaphor/RAAML/stpa/stpatoolbox.py:53
+#: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard"
 msgstr "Risco"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:28 gaphor/RAAML/stpa/stpatoolbox.py:113
+#: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml.gaphor
 msgid "Abstract Operational Situation"
 msgstr "Situación operativa abstracta"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:36 gaphor/SysML/blocks/blockstoolbox.py:81
-#: gaphor/UML/classes/classestoolbox.py:117
+#: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:77
+#: gaphor/UML/classes/classestoolbox.py:113
 msgid "Generalization"
 msgstr "Xeneralización"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:62 gaphor/SysML/blocks/block.py:61
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:61
 msgid "Situation"
 msgstr "Situación"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:73
+#: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
 msgstr "Estrutura de control"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:84 gaphor/templates/sysml.gaphor
+#: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml.gaphor
 msgid "Controller"
 msgstr "Controlador"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:93 gaphor/templates/sysml.gaphor
+#: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
 msgid "Actuator"
 msgstr "Actuador"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:102
+#: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
 msgstr "Proceso controlado"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:135
+#: gaphor/RAAML/stpa/stpatoolbox.py:138
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "Unsafe Control Action"
 msgstr "Acción de control non segura"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:146
+#: gaphor/RAAML/stpa/stpatoolbox.py:149
 msgid "Relevant To"
 msgstr "Relevante para"
 
@@ -405,62 +405,62 @@ msgstr "ControlStructure"
 msgid "block"
 msgstr "bloque"
 
-#: gaphor/SysML/blocks/block.py:98
+#: gaphor/SysML/blocks/block.py:101
 msgid "parts"
 msgstr "partes"
 
-#: gaphor/SysML/blocks/block.py:109
+#: gaphor/SysML/blocks/block.py:112
 msgid "references"
 msgstr "referencias"
 
-#: gaphor/SysML/blocks/block.py:120
+#: gaphor/SysML/blocks/block.py:123
 msgid "values"
 msgstr "valores"
 
-#: gaphor/SysML/blocks/block.py:137
+#: gaphor/SysML/blocks/block.py:140
 msgid "unnamed"
 msgstr "sen nome"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:28
+#: gaphor/SysML/blocks/blockstoolbox.py:24
 msgid "Blocks"
 msgstr "Bloques"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:32
+#: gaphor/SysML/blocks/blockstoolbox.py:28
 msgid "Block"
 msgstr "Bloque"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:42
-#: gaphor/UML/classes/classestoolbox.py:51
+#: gaphor/SysML/blocks/blockstoolbox.py:38
+#: gaphor/UML/classes/classestoolbox.py:47
 msgid "Package"
 msgstr "Paquete"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:54
-#: gaphor/UML/classes/classestoolbox.py:82
+#: gaphor/SysML/blocks/blockstoolbox.py:50
+#: gaphor/UML/classes/classestoolbox.py:78
 msgid "Composite Association"
 msgstr "Asociación de compostos"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:64
-#: gaphor/UML/classes/classestoolbox.py:92
+#: gaphor/SysML/blocks/blockstoolbox.py:60
+#: gaphor/UML/classes/classestoolbox.py:88
 msgid "Shared Association"
 msgstr "Asociación compartida"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:74
-#: gaphor/UML/classes/classestoolbox.py:102
-#: gaphor/UML/usecases/usecasetoolbox.py:44
+#: gaphor/SysML/blocks/blockstoolbox.py:70
+#: gaphor/UML/classes/classestoolbox.py:98
+#: gaphor/UML/usecases/usecasetoolbox.py:40
 msgid "Association"
 msgstr "Asociación"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:88
+#: gaphor/SysML/blocks/blockstoolbox.py:84
 msgid "ValueType"
 msgstr "ValueType"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:99
-#: gaphor/UML/classes/classestoolbox.py:144
+#: gaphor/SysML/blocks/blockstoolbox.py:95
+#: gaphor/UML/classes/classestoolbox.py:140
 msgid "Enumeration"
 msgstr "Enumeración"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:111
-#: gaphor/UML/classes/classestoolbox.py:156
+#: gaphor/SysML/blocks/blockstoolbox.py:107
+#: gaphor/UML/classes/classestoolbox.py:152
 msgid "Primitive"
 msgstr "Primitivo"
 
@@ -468,23 +468,23 @@ msgstr "Primitivo"
 msgid "proxy"
 msgstr "proxi"
 
-#: gaphor/SysML/requirements/relationships.py:34
+#: gaphor/SysML/requirements/relationships.py:37
 msgid "satisfy"
 msgstr "satisfacer"
 
-#: gaphor/SysML/requirements/relationships.py:44
+#: gaphor/SysML/requirements/relationships.py:47
 msgid "deriveReqt"
 msgstr "deriveReqt"
 
-#: gaphor/SysML/requirements/relationships.py:50
+#: gaphor/SysML/requirements/relationships.py:53
 msgid "trace"
 msgstr "trazar"
 
-#: gaphor/SysML/requirements/relationships.py:58
+#: gaphor/SysML/requirements/relationships.py:61
 msgid "verify"
 msgstr "verificar"
 
-#: gaphor/SysML/requirements/relationships.py:66
+#: gaphor/SysML/requirements/relationships.py:69
 msgid "refine"
 msgstr "refinar"
 
@@ -492,37 +492,37 @@ msgstr "refinar"
 msgid "requirement"
 msgstr "requisito"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:17
+#: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml.gaphor
 msgid "Requirements"
 msgstr "Requisitos"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:21
+#: gaphor/SysML/requirements/requirementstoolbox.py:17
 msgid "Requirement"
 msgstr "Requisito"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:33
+#: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
 msgstr "Satisfacer"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:40
+#: gaphor/SysML/requirements/requirementstoolbox.py:36
 msgid "Derive Requirement"
 msgstr "Derivación de requisitos"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:47
+#: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
 msgstr "Trazar"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:54
+#: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
 msgstr "Refinar"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:61
+#: gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
 msgstr "Verificar"
 
-#: gaphor/SysML/requirements/requirementstoolbox.py:68
-#: gaphor/UML/classes/classestoolbox.py:75
+#: gaphor/SysML/requirements/requirementstoolbox.py:64
+#: gaphor/UML/classes/classestoolbox.py:71
 msgid "Containment"
 msgstr "Contención"
 
@@ -552,6 +552,12 @@ msgstr "Novo diagrama de comunicación"
 msgid "New Profile Diagram"
 msgstr "Novo diagrama de perfíl"
 
+#: gaphor/UML/actions/actionstoolbox.py:17
+#: gaphor/UML/interactions/interactionstoolbox.py:16
+#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
+msgid "New {name}"
+msgstr "{name} novo"
+
 #: gaphor/UML/umlfmt.py:203
 #, fuzzy
 msgid "general: {name}"
@@ -571,95 +577,89 @@ msgstr "estender: {name}"
 msgid "include: {name}"
 msgstr "incluír: {name}"
 
-#: gaphor/UML/actions/actionstoolbox.py:21
-#: gaphor/UML/interactions/interactionstoolbox.py:20
-#: gaphor/UML/states/statestoolbox.py:31 gaphor/diagram/diagramtoolbox.py:38
-msgid "New {name}"
-msgstr "{name} novo"
-
-#: gaphor/UML/actions/actionstoolbox.py:44
-#: gaphor/UML/actions/actionstoolbox.py:66 gaphor/templates/sysml.gaphor
+#: gaphor/UML/actions/actionstoolbox.py:40
+#: gaphor/UML/actions/actionstoolbox.py:62 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Activity"
 msgstr "Actividade"
 
-#: gaphor/UML/actions/actionstoolbox.py:52
+#: gaphor/UML/actions/actionstoolbox.py:48
 msgid "Swimlane One"
 msgstr "Swimlane un"
 
-#: gaphor/UML/actions/actionstoolbox.py:56
+#: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Swimlane Two"
 msgstr "Swimlane dous"
 
-#: gaphor/UML/actions/actionstoolbox.py:62
+#: gaphor/UML/actions/actionstoolbox.py:58
 msgid "Actions"
 msgstr "Accións"
 
-#: gaphor/UML/actions/actionstoolbox.py:78
-#: gaphor/UML/actions/actionstoolbox.py:84
+#: gaphor/UML/actions/actionstoolbox.py:74
+#: gaphor/UML/actions/actionstoolbox.py:80
 msgid "Action"
 msgstr "Acción"
 
-#: gaphor/UML/actions/actionstoolbox.py:90
+#: gaphor/UML/actions/actionstoolbox.py:86
 msgid "Initial node"
 msgstr "Nodo inicial"
 
-#: gaphor/UML/actions/actionstoolbox.py:102
+#: gaphor/UML/actions/actionstoolbox.py:98
 msgid "Activity final node"
 msgstr "Nodo final da actividade"
 
-#: gaphor/UML/actions/actionstoolbox.py:114
+#: gaphor/UML/actions/actionstoolbox.py:110
 msgid "Flow final node"
 msgstr "Nodo final do fluxo"
 
-#: gaphor/UML/actions/actionstoolbox.py:126
+#: gaphor/UML/actions/actionstoolbox.py:122
 msgid "Decision/merge node"
 msgstr "Nodo de decisión/fusión"
 
-#: gaphor/UML/actions/actionstoolbox.py:138
+#: gaphor/UML/actions/actionstoolbox.py:134
 msgid "Fork/join node"
 msgstr "Nodo de bifurcación/unión"
 
-#: gaphor/UML/actions/actionstoolbox.py:150
-#: gaphor/UML/actions/actionstoolbox.py:156
+#: gaphor/UML/actions/actionstoolbox.py:146
+#: gaphor/UML/actions/actionstoolbox.py:152
 msgid "Object node"
 msgstr "Nodo obxecto"
 
-#: gaphor/UML/actions/actionstoolbox.py:162
+#: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Swimlane"
 msgstr "Swimlane"
 
-#: gaphor/UML/actions/actionstoolbox.py:174
+#: gaphor/UML/actions/actionstoolbox.py:170
 #, fuzzy
 msgid "Control flow"
 msgstr "Controlador"
 
-#: gaphor/UML/actions/actionstoolbox.py:181
+#: gaphor/UML/actions/actionstoolbox.py:177
 #, fuzzy
 msgid "Object flow"
 msgstr "Fluxo de control/obxecto"
 
-#: gaphor/UML/actions/actionstoolbox.py:188
+#: gaphor/UML/actions/actionstoolbox.py:184
 msgid "Send signal action"
 msgstr "Enviar a acción do sinal"
 
-#: gaphor/UML/actions/actionstoolbox.py:194
+#: gaphor/UML/actions/actionstoolbox.py:190
 msgid "Send signal"
 msgstr "Enviar sinal"
 
-#: gaphor/UML/actions/actionstoolbox.py:200
+#: gaphor/UML/actions/actionstoolbox.py:196
 msgid "Accept event action"
 msgstr "Aceptar a acción do evento"
 
-#: gaphor/UML/actions/actionstoolbox.py:206
+#: gaphor/UML/actions/actionstoolbox.py:202
 msgid "Accept event"
 msgstr "Aceptar evento"
 
-#: gaphor/UML/actions/actionstoolbox.py:212
+#: gaphor/UML/actions/actionstoolbox.py:208
 msgid "Input pin"
 msgstr ""
 
-#: gaphor/UML/actions/actionstoolbox.py:219
+#: gaphor/UML/actions/actionstoolbox.py:215
 msgid "Output pin"
 msgstr ""
 
@@ -833,24 +833,24 @@ msgstr "Estática"
 msgid "Abstract"
 msgstr "Abstracta"
 
-#: gaphor/UML/classes/classestoolbox.py:25
+#: gaphor/UML/classes/classestoolbox.py:21
 msgid "Classes"
 msgstr "Clases"
 
-#: gaphor/UML/classes/classestoolbox.py:29
-#: gaphor/UML/profiles/profilestoolbox.py:18
+#: gaphor/UML/classes/classestoolbox.py:25
+#: gaphor/UML/profiles/profilestoolbox.py:14
 msgid "Class"
 msgstr "Clase"
 
-#: gaphor/UML/classes/classestoolbox.py:39
+#: gaphor/UML/classes/classestoolbox.py:35
 msgid "Interface"
 msgstr "Interface"
 
-#: gaphor/UML/classes/classestoolbox.py:125
+#: gaphor/UML/classes/classestoolbox.py:121
 msgid "Interface Realization"
 msgstr "Realización da interface"
 
-#: gaphor/UML/classes/classestoolbox.py:132
+#: gaphor/UML/classes/classestoolbox.py:128
 msgid "DataType"
 msgstr "DataType"
 
@@ -866,15 +866,15 @@ msgstr "valueType"
 msgid "dataType"
 msgstr "dataType"
 
-#: gaphor/UML/classes/dependency.py:51
+#: gaphor/UML/classes/dependency.py:43
 msgid "use"
 msgstr "usar"
 
-#: gaphor/UML/classes/dependency.py:52
+#: gaphor/UML/classes/dependency.py:44
 msgid "realize"
 msgstr "realizar"
 
-#: gaphor/UML/classes/dependency.py:53
+#: gaphor/UML/classes/dependency.py:45
 msgid "implements"
 msgstr "implementa"
 
@@ -894,7 +894,7 @@ msgstr "Implementación"
 msgid "enumeration"
 msgstr "enumeración"
 
-#: gaphor/UML/classes/interface.py:290
+#: gaphor/UML/classes/interface.py:298
 msgid "interface"
 msgstr "interface"
 
@@ -1088,24 +1088,24 @@ msgstr ""
 msgid "Indirectly Instantiated"
 msgstr "Instanciada indirectamente"
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:16
+#: gaphor/UML/deployments/deploymentstoolbox.py:12
 #, fuzzy
 msgid "Deployments"
 msgstr "implementa"
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:20
+#: gaphor/UML/deployments/deploymentstoolbox.py:16
 msgid "Artifact"
 msgstr "Artefacto"
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:32
+#: gaphor/UML/deployments/deploymentstoolbox.py:28
 msgid "Node"
 msgstr "Nodo"
 
-#: gaphor/UML/deployments/deploymentstoolbox.py:44
+#: gaphor/UML/deployments/deploymentstoolbox.py:40
 msgid "Device"
 msgstr "Dispositivo"
 
-#: gaphor/UML/deployments/node.py:54
+#: gaphor/UML/deployments/node.py:55
 msgid "device"
 msgstr "dispositivo"
 
@@ -1119,34 +1119,34 @@ msgstr "Fluxo de información"
 msgid "Information Item (Class)"
 msgstr "Elemento de información (Clase)"
 
-#: gaphor/UML/interactions/interactionsconnect.py:82
+#: gaphor/UML/interactions/interactionsconnect.py:79
 msgid "call()"
 msgstr "call()"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:38
-#: gaphor/UML/interactions/interactionstoolbox.py:59
+#: gaphor/UML/interactions/interactionstoolbox.py:34
+#: gaphor/UML/interactions/interactionstoolbox.py:55
 #: gaphor/templates/sysml.gaphor gaphor/templates/uml.gaphor
 msgid "Interaction"
 msgstr "Interacción"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:55
+#: gaphor/UML/interactions/interactionstoolbox.py:51
 #: gaphor/templates/uml.gaphor
 msgid "Interactions"
 msgstr "Interaccións"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:71
+#: gaphor/UML/interactions/interactionstoolbox.py:67
 msgid "Lifeline"
 msgstr "Líña de vida"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:83
+#: gaphor/UML/interactions/interactionstoolbox.py:79
 msgid "Execution Specification"
 msgstr "Especificación da execución"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:91
+#: gaphor/UML/interactions/interactionstoolbox.py:87
 msgid "Message"
 msgstr "Mensaxe"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:98
+#: gaphor/UML/interactions/interactionstoolbox.py:94
 msgid "Reflexive message"
 msgstr "Mensaxe reflexivo"
 
@@ -1155,31 +1155,31 @@ msgstr "Mensaxe reflexivo"
 msgid "Message Sort"
 msgstr "Orde dos mensaxes"
 
-#: gaphor/UML/profiles/packageimport.py:26
+#: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
 msgstr "importar"
 
-#: gaphor/UML/profiles/profilestoolbox.py:22
+#: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
 msgstr "Perfiles"
 
-#: gaphor/UML/profiles/profilestoolbox.py:26
+#: gaphor/UML/profiles/profilestoolbox.py:22
 msgid "Profile"
 msgstr "Perfíl"
 
-#: gaphor/UML/profiles/profilestoolbox.py:38
+#: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
 msgstr "Metaclase"
 
-#: gaphor/UML/profiles/profilestoolbox.py:48
+#: gaphor/UML/profiles/profilestoolbox.py:44
 msgid "Stereotype"
 msgstr "Estereotipo"
 
-#: gaphor/UML/profiles/profilestoolbox.py:60
+#: gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
 msgstr "Extensión"
 
-#: gaphor/UML/profiles/profilestoolbox.py:67
+#: gaphor/UML/profiles/profilestoolbox.py:63
 msgid "Import"
 msgstr "Importar"
 
@@ -1226,140 +1226,140 @@ msgstr "Facer actividade"
 msgid "Activities"
 msgstr "Actividades"
 
-#: gaphor/UML/states/statemachine.py:41
+#: gaphor/UML/states/statemachine.py:40
 #, fuzzy
 msgid "statemachine"
 msgstr "Máquina de estados"
 
-#: gaphor/UML/states/statestoolbox.py:20 gaphor/UML/states/statestoolbox.py:79
+#: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
 msgstr "Estado"
 
-#: gaphor/UML/states/statestoolbox.py:50 gaphor/UML/states/statestoolbox.py:67
+#: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
 #: gaphor/templates/sysml.gaphor
 msgid "State Machine"
 msgstr "Máquina de estados"
 
-#: gaphor/UML/states/statestoolbox.py:63
+#: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
 msgstr "Estados"
 
-#: gaphor/UML/states/statestoolbox.py:91
+#: gaphor/UML/states/statestoolbox.py:87
 msgid "Initial Pseudostate"
 msgstr "Pseudoestado inicial"
 
-#: gaphor/UML/states/statestoolbox.py:103
+#: gaphor/UML/states/statestoolbox.py:99
 msgid "Final State"
 msgstr "Estado final"
 
-#: gaphor/UML/states/statestoolbox.py:115
+#: gaphor/UML/states/statestoolbox.py:111
 msgid "Transition"
 msgstr "Transición"
 
-#: gaphor/UML/states/statestoolbox.py:122
+#: gaphor/UML/states/statestoolbox.py:118
 #, fuzzy
 msgid "Shallow History Pseudostate"
 msgstr "Historia pseudoestado"
 
-#: gaphor/UML/states/statestoolbox.py:134
+#: gaphor/UML/states/statestoolbox.py:130
 #, fuzzy
 msgid "Deep History Pseudostate"
 msgstr "Historia pseudoestado"
 
-#: gaphor/UML/states/statestoolbox.py:146
+#: gaphor/UML/states/statestoolbox.py:142
 #, fuzzy
 msgid "Join Pseudostate"
 msgstr "Pseudoestado inicial"
 
-#: gaphor/UML/states/statestoolbox.py:158
+#: gaphor/UML/states/statestoolbox.py:154
 #, fuzzy
 msgid "Fork Pseudostate"
 msgstr "Historia pseudoestado"
 
-#: gaphor/UML/states/statestoolbox.py:170
+#: gaphor/UML/states/statestoolbox.py:166
 #, fuzzy
 msgid "Junction Pseudostate"
 msgstr "Pseudoestado inicial"
 
-#: gaphor/UML/states/statestoolbox.py:182
+#: gaphor/UML/states/statestoolbox.py:178
 #, fuzzy
 msgid "Choice Pseudostate"
 msgstr "Pseudoestado inicial"
 
-#: gaphor/UML/states/statestoolbox.py:194
+#: gaphor/UML/states/statestoolbox.py:190
 #, fuzzy
 msgid "Entry Point Pseudostate"
 msgstr "Pseudoestado inicial"
 
-#: gaphor/UML/states/statestoolbox.py:206
+#: gaphor/UML/states/statestoolbox.py:202
 #, fuzzy
 msgid "Exit Point Pseudostate"
 msgstr "Pseudoestado inicial"
 
-#: gaphor/UML/states/statestoolbox.py:218
+#: gaphor/UML/states/statestoolbox.py:214
 #, fuzzy
 msgid "Terminate Pseudostate"
 msgstr "Pseudoestado inicial"
 
-#: gaphor/UML/usecases/extend.py:22
+#: gaphor/UML/usecases/extend.py:20
 msgid "extend"
 msgstr "estender"
 
-#: gaphor/UML/usecases/include.py:22
+#: gaphor/UML/usecases/include.py:20
 msgid "include"
 msgstr "incluír"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:16 gaphor/templates/sysml.gaphor
+#: gaphor/UML/usecases/usecasetoolbox.py:12 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Use Cases"
 msgstr "Casos de uso"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:20
+#: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
 msgstr "Caso de uso"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:32 gaphor/templates/uml.gaphor
+#: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml.gaphor
 msgid "Actor"
 msgstr "Actor"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:51
+#: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
 msgstr "Incluír"
 
-#: gaphor/UML/usecases/usecasetoolbox.py:59
+#: gaphor/UML/usecases/usecasetoolbox.py:55
 msgid "Extend"
 msgstr "Estender"
 
-#: gaphor/diagram/diagramtoolbox.py:111
+#: gaphor/diagram/diagramtoolbox.py:99
 msgid "General"
 msgstr "Xeral"
 
-#: gaphor/diagram/diagramtoolbox.py:115
+#: gaphor/diagram/diagramtoolbox.py:103
 msgid "Pointer"
 msgstr "Punteiro"
 
-#: gaphor/diagram/diagramtoolbox.py:122
+#: gaphor/diagram/diagramtoolbox.py:110
 msgid "Magnet"
 msgstr "Imán"
 
-#: gaphor/diagram/diagramtoolbox.py:129
+#: gaphor/diagram/diagramtoolbox.py:117
 msgid "Line"
 msgstr "Liña"
 
-#: gaphor/diagram/diagramtoolbox.py:136
+#: gaphor/diagram/diagramtoolbox.py:124
 msgid "Box"
 msgstr "Caixa"
 
-#: gaphor/diagram/diagramtoolbox.py:144
+#: gaphor/diagram/diagramtoolbox.py:132
 msgid "Ellipse"
 msgstr "Elipse"
 
-#: gaphor/diagram/diagramtoolbox.py:152 gaphor/diagram/propertypages.glade:25
+#: gaphor/diagram/diagramtoolbox.py:140 gaphor/diagram/propertypages.glade:25
 #: gaphor/diagram/propertypages.ui:9
 msgid "Comment"
 msgstr "Comentario"
 
-#: gaphor/diagram/diagramtoolbox.py:160
+#: gaphor/diagram/diagramtoolbox.py:148
 msgid "Comment line"
 msgstr "Liña de comentario"
 
@@ -1646,7 +1646,7 @@ msgstr "Tamaño real"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:57
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:29
-#: gaphor/ui/namespace.py:328 gaphor/ui/treecomponent.py:190
+#: gaphor/ui/namespace.py:328 gaphor/ui/treecomponent.py:164
 msgid "New model"
 msgstr "Modelo novo"
 
@@ -2505,7 +2505,7 @@ msgstr "_Borrar"
 msgid "Show in “{diagram}”"
 msgstr "Mostrar en «{diagram}»"
 
-#: gaphor/ui/namespace.py:326 gaphor/ui/treecomponent.py:188
+#: gaphor/ui/namespace.py:326 gaphor/ui/treecomponent.py:162
 msgid "{name} package"
 msgstr "Paquete {name}"
 
