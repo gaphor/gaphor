@@ -87,8 +87,6 @@ gaphor = "gaphor.ui:main"
 gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 
 [tool.poe.tasks]
-test = "pytest"
-test-all = "pytest --cov=gaphor/"
 coremodel.script = """gaphor.codegen.coder:main(
     modelfile='models/Core.gaphor',
     overridesfile='models/Core.override',
