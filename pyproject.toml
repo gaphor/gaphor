@@ -18,6 +18,8 @@ keywords = ["gtk+", "diagram", "UML", "MBSE", "gaphor", "modeling"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: X11 Applications :: GTK",
+    "Environment :: MacOS X",
+    "Environment :: Win32 (MS Windows)",
     "Intended Audience :: Developers",
     "Intended Audience :: End Users/Desktop",
     "Intended Audience :: Information Technology",
@@ -27,6 +29,7 @@ classifiers = [
     "Operating System :: POSIX",
     "Operating System :: Unix",
     "Programming Language :: Python",
+    "Topic :: Desktop Environment :: Gnome",
     "Topic :: Multimedia :: Graphics :: Editors :: Vector-Based",
     "Topic :: Software Development :: Documentation",
 ]
