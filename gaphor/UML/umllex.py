@@ -6,6 +6,9 @@ operations. The regular expressions are constructed based on a series of
 attribute/operation.
 """
 
+
+import contextlib
+
 __all__ = ["parse_property", "parse_operation"]
 
 import re
@@ -135,19 +138,17 @@ lifeline_pat = compile(f"^{name_subpat}{type_subpat}{mult_subpat}{garbage_subpat
 
 
 def _set_visibility(el: uml.Feature, vis: str):
-    if vis == "+":
-        el.visibility = "public"
-    elif vis == "#":
+    if vis == "#":
         el.visibility = "protected"
-    elif vis == "~":
-        el.visibility = "package"
+    elif vis == "+":
+        el.visibility = "public"
     elif vis == "-":
         el.visibility = "private"
+    elif vis == "~":
+        el.visibility = "package"
     else:
-        try:
+        with contextlib.suppress(AttributeError):
             del el.visibility
-        except AttributeError:
-            pass
 
 
 def parse_attribute(el: uml.Property, s: str) -> None:

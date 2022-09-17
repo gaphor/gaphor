@@ -19,7 +19,7 @@ def test_elements_1():
     xml_w.endElement("foo")
 
     xml = """<?xml version="1.0" encoding="%s"?>\n<foo/>""" % sys.getdefaultencoding()
-    assert w.s == xml, w.s + " != " + xml
+    assert w.s == xml, f"{w.s} != {xml}"
 
 
 def test_elements_2():

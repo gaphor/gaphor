@@ -25,7 +25,4 @@ class UMLModelingLanguage(ModelingLanguage):
         yield from uml_diagram_types
 
     def lookup_element(self, name):
-        element_type = getattr(uml, name, None)
-        if not element_type:
-            element_type = getattr(diagramitems, name, None)
-        return element_type
+        return getattr(uml, name, None) or getattr(diagramitems, name, None)

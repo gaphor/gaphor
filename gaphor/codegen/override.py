@@ -37,7 +37,7 @@ class Overrides:
         line = fp.readline()
         linenum = 1
         while line:
-            if line == "%%\n" or line == "%%":
+            if line in ["%%\n", "%%"]:
                 if lines:
                     bufs.append((list(lines), line_number))
                 line_number = linenum + 1
@@ -76,9 +76,7 @@ class Overrides:
             elif words[0] == "header":
                 assert not self.header
                 self.header = "".join(rest)
-            elif words[0] == "comment":
-                pass  # ignore comments
-            else:
+            elif words[0] != "comment":
                 print(f"Unknown word: '{words[0]}', line {line_number:d}")
                 raise SystemExit
 
@@ -88,10 +86,7 @@ class Overrides:
     def get_override(self, key):
         """Write override data for 'key' to a file referred to by 'fp'."""
         _deps, _type_hint, data, line = self.overrides.get(key, ((), None, None, None))
-        if not data:
-            return None
-
-        return f"# {line}{data}"
+        return f"# {line}{data}" if data else None
 
     def get_type(self, key):
         return self.overrides.get(key, (None, "Any"))[1]

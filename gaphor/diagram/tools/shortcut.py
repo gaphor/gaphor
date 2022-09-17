@@ -35,6 +35,5 @@ def delete_selected_items(view: GtkView, event_manager):
         for i in list(items):
             if isinstance(i, Presentation):
                 i.unlink()
-            else:
-                if i.diagram:
-                    i.diagram.remove(i)
+            elif i.diagram:
+                i.diagram.remove(i)

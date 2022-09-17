@@ -55,7 +55,9 @@ def copy_and_paste_link(items, diagram, element_factory, retain=[]):
     return paste_link(buffer, diagram, element_factory.lookup)
 
 
-def copy_clear_and_paste_link(items, diagram, element_factory, retain=[]):
+def copy_clear_and_paste_link(items, diagram, element_factory, retain=None):
+    if retain is None:
+        retain = []
     buffer = copy(items)
     clear_model(diagram, element_factory, retain)
     return paste_link(buffer, diagram, element_factory.lookup)

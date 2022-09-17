@@ -1,5 +1,7 @@
 """Defines a status window class for displaying the progress of a queue."""
 
+
+import contextlib
 from queue import Empty
 
 from gi.repository import Gdk, GLib, Gtk, Pango
@@ -118,10 +120,8 @@ def progress_idle_handler(progress_bar, queue):
     """
 
     percentage = 0
-    try:
+    with contextlib.suppress(Empty):
         percentage = queue.get(block=False)
-    except Empty:
-        pass
     if percentage:
         progress_bar.set_fraction(min(percentage, 100.0) / 100.0)
     return GLib.SOURCE_CONTINUE

@@ -161,20 +161,21 @@ class FlowForkDecisionNodeControlFlowConnect(FlowConnect):
             join_node = subject
 
             # determine flow class:
-            if any(f for f in join_node.incoming if isinstance(f, UML.ObjectFlow)):
-                flow_class: Type[UML.ActivityEdge] = UML.ObjectFlow
-            else:
-                flow_class = UML.ControlFlow
+        flow_class = (
+            UML.ObjectFlow
+            if any(f for f in join_node.incoming if isinstance(f, UML.ObjectFlow))
+            else UML.ControlFlow
+        )
 
-            UML.recipes.swap_element(join_node, join_node_cls)
-            fork_node: UML.ControlNode = element.model.create(fork_node_cls)
-            for flow in list(join_node.outgoing):
-                flow.source = fork_node
-            flow = element.model.create(flow_class)
-            flow.source = join_node
-            flow.target = fork_node
+        UML.recipes.swap_element(join_node, join_node_cls)
+        fork_node: UML.ControlNode = element.model.create(fork_node_cls)
+        for flow in list(join_node.outgoing):
+            flow.source = fork_node
+        flow = element.model.create(flow_class)
+        flow.source = join_node
+        flow.target = fork_node
 
-            element.combined = fork_node
+        element.combined = fork_node
 
     def decombine_nodes(self):
         """Decombine join/fork or decision/merge nodes."""

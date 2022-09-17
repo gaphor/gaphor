@@ -102,7 +102,7 @@ def compile_attribute_selector(selector: parser.AttributeSelector):
 
         def pipe_equal_matcher(el):
             v = el.attribute(name)
-            return v == value or (v and v.startswith(value + "-"))
+            return v == value or v and v.startswith(f"{value}-")
 
         return pipe_equal_matcher
     else:

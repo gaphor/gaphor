@@ -85,8 +85,7 @@ class InformationFlowPropertyPage(PropertyPageBase):
         if self.subject.informationFlow:
             model = self.subject.model
             iflow = self.subject.informationFlow[0]
-            id = combo.get_active_id()
-            if id:
+            if id := combo.get_active_id():
                 iitem = model.lookup(id)
                 assert isinstance(iitem, UML.Classifier)
                 iflow.conveyed = iitem

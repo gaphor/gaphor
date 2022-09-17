@@ -126,10 +126,7 @@ class CommentLineLineConnect(BaseConnector):
         # One end should be connected to a CommentItem:
         cls = CommentItem
         glue_ok = isinstance(connected_to, cls) ^ isinstance(self.element, cls)
-        if connected_to and not glue_ok:
-            return None
-
-        return super().allow(handle, port)
+        return None if connected_to and not glue_ok else super().allow(handle, port)
 
     def connect(self, handle, port):
         if super().connect(handle, port):

@@ -16,7 +16,7 @@ class ComponentRegistry(Service):
     components."""
 
     def __init__(self) -> None:
-        self._comp: List[Tuple[str, object]] = list()
+        self._comp: List[Tuple[str, object]] = []
 
     def shutdown(self) -> None:
         pass

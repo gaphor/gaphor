@@ -16,13 +16,15 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
 
     DEFAULT_LANGUAGE = "UML"
 
-    def __init__(self, event_manager, properties={}):
+    def __init__(self, event_manager, properties=None):
         """Create a new Model Provider. It will provide all models defined as
         entrypoints under `[gaphor.modelinglanguages]`.
 
         The `properties` argument is optional, in which case the service
         will default to UML.
         """
+        if properties is None:
+            properties = {}
         self.event_manager = event_manager
         self.properties = properties
 

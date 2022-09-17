@@ -320,11 +320,11 @@ def test_association_notification_complex(element_factory, dispatcher, handler):
     assert len(element.memberEnd) == 2
 
     base = "memberEnd[Property]."
-    dispatcher.subscribe(handler, element, base + "name")
-    dispatcher.subscribe(handler, element, base + "aggregation")
-    dispatcher.subscribe(handler, element, base + "classifier")
-    dispatcher.subscribe(handler, element, base + "lowerValue")
-    dispatcher.subscribe(handler, element, base + "upperValue")
+    dispatcher.subscribe(handler, element, f"{base}name")
+    dispatcher.subscribe(handler, element, f"{base}aggregation")
+    dispatcher.subscribe(handler, element, f"{base}classifier")
+    dispatcher.subscribe(handler, element, f"{base}lowerValue")
+    dispatcher.subscribe(handler, element, f"{base}upperValue")
 
     assert len(dispatcher._handlers) == 11, len(dispatcher._handlers)
     assert not handler.events

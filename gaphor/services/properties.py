@@ -158,9 +158,9 @@ class Properties(Service):
 
         try:
             return self._properties[key]
-        except KeyError:
+        except KeyError as e:
             if default is _no_default:
-                raise KeyError(f'No resource with name "{key}"')
+                raise KeyError(f'No resource with name "{key}"') from e
 
             self.set(key, default)
             return default

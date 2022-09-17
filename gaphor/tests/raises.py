@@ -17,9 +17,8 @@ class raises_exception_group:
         exc_val,
         exc_tb,
     ) -> bool:
-        if not issubclass(exc_type, ExceptionGroup):
-            return False
-
-        return any(
-            isinstance(exc, self.expected_exception) for exc in exc_val.exceptions
+        return (
+            any(isinstance(exc, self.expected_exception) for exc in exc_val.exceptions)
+            if issubclass(exc_type, ExceptionGroup)
+            else False
         )

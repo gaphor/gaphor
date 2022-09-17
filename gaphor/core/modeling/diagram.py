@@ -83,10 +83,7 @@ class DrawContext:
 # From https://www.python.org/dev/peps/pep-0616/
 def removesuffix(self: str, suffix: str) -> str:
     # suffix='' should not call self[:-0].
-    if suffix and self.endswith(suffix):
-        return self[: -len(suffix)]
-    else:
-        return self[:]
+    return self[: -len(suffix)] if suffix and self.endswith(suffix) else self[:]
 
 
 @lru_cache()

@@ -471,7 +471,7 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             prop.typeValue = "str"
             del prop.type
 
-        if not (prop.type or prop.typeValue in ("str", "int", None)):
+        if not prop.type and prop.typeValue not in ("str", "int", None):
             raise ValueError(f"Property value type {prop.typeValue} can not be found")
 
 
