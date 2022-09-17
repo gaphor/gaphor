@@ -10,7 +10,7 @@ import re
 from typing import List
 
 OVERRIDE_RE = re.compile(
-    r"^override\s+(?P<name>[\w.]+)(?:\((?P<derived>[^)]+)\))?\s*(?::\s*(?P<type_hint>[\w\s\[\],\"\| ]+))?$"
+    r"^override\s+(?P<name>[\w.]+)(?:\((?P<derived>[^)]+)\))?\s*(?::\s*(?P<type_hint>[\w\s\[\],\"| ]+))?$"
 )
 
 
