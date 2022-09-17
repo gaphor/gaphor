@@ -32,7 +32,7 @@ jobs:
         path: ~/.cache/pip
         key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
     - name: Install Poetry
-      run: pip install poetry==1.2.0
+      run: pip install poetry==1.2.1
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
     - name: Install Python Dependencies
