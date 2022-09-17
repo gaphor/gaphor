@@ -1,5 +1,7 @@
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
+from gaphor.diagram.tests.fixtures import connect
+from gaphor.UML import diagramitems
 
 
 class DummyVisualComponent:
@@ -133,3 +135,18 @@ def test_line_loading(element_factory, diagram):
     assert tuple(p.handles()[0].pos) == (1.0, 2.0)
     assert tuple(p.handles()[1].pos) == (3.0, 4.0)
     assert p.subject is subject
+
+
+def test_remove_connected_items_on_unlink(create, diagram):
+    class_a_item = create(diagramitems.ClassItem, UML.Class)
+    class_b_item = create(diagramitems.ClassItem, UML.Class)
+    association_item = create(diagramitems.AssociationItem)
+
+    connect(association_item, association_item.head, class_a_item)
+    connect(association_item, association_item.tail, class_b_item)
+
+    class_a_item.subject.unlink()
+
+    assert class_a_item not in diagram.ownedPresentation
+    assert association_item not in diagram.ownedPresentation
+    assert class_b_item in diagram.ownedPresentation

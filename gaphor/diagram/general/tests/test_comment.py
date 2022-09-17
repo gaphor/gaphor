@@ -182,7 +182,8 @@ def test_commentline_element_unlink(create, diagram):
 
     assert clazz not in diagram.ownedPresentation
     assert not clazz.diagram
-    assert line.diagram
+    assert line not in diagram.ownedPresentation
+    assert not line.diagram
     assert not comment.subject.annotatedElement
     assert len(clazz_subject.comment) == 0
 
