@@ -58,7 +58,7 @@ def test_layout_with_comment(diagram, create, event_manager):
 def test_layout_with_nested(diagram, create, event_manager):
     p = create(PackageItem, UML.Package)
     c1 = create(ClassItem, UML.Class)
-    c1.subject.package = p.subject
+    p.children = c1
     c2 = create(ClassItem, UML.Class)
     a = create(AssociationItem)
     connect(a, a.head, c1)
@@ -66,6 +66,9 @@ def test_layout_with_nested(diagram, create, event_manager):
 
     auto_layout = AutoLayout(event_manager, None)
     auto_layout.layout(diagram)
+
+    assert c1.matrix[4] < p.width
+    assert c1.matrix[5] < p.height
 
 
 def test_parse_pos():
@@ -77,3 +80,8 @@ def test_parse_pos():
 def test_parse_pos_invalid_number_of_points():
     with pytest.raises(IndexError):
         parse_edge_pos('"1.0,2.0 3.0,4 5.0,6.0"')
+
+
+# TODO: test with pin/port
+# TODO: test with sequence diagrams -> do nothing
+# TODO: directed or not?
