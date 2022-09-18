@@ -34,6 +34,10 @@ class AutoLayout(Service, ActionProvider):
             self.layout(current_diagram)
 
     def layout(self, diagram: Diagram):
+        rendered_graph = self.render(diagram)
+        self.apply_layout(diagram, rendered_graph)
+
+    def render(self, diagram: Diagram):
         graph = pydot.Dot(
             "gaphor", graph_type="graph", prog="neato", splines="polyline"
         )
@@ -52,8 +56,9 @@ class AutoLayout(Service, ActionProvider):
                 f.write(rendered_string)
 
         rendered_graphs = pydot.graph_from_dot_data(rendered_string)
-        rendered_graph = rendered_graphs[0]
+        return rendered_graphs[0]
 
+    def apply_layout(self, diagram, rendered_graph):
         _, _, _, height = parse_bb(rendered_graph.get_node("graph")[0].get("bb"))
         offset = 10
 
