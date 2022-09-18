@@ -10,6 +10,7 @@ from gaphor.UML.diagramitems import (
     CommentItem,
     CommentLineItem,
     GeneralizationItem,
+    PackageItem,
 )
 
 
@@ -49,6 +50,19 @@ def test_layout_with_comment(diagram, create, event_manager):
     comment_line = create(CommentLineItem)
     connect(comment_line, comment_line.head, comment)
     connect(comment_line, comment_line.tail, a)
+
+    auto_layout = AutoLayout(event_manager, None)
+    auto_layout.layout(diagram)
+
+
+def test_layout_with_nested(diagram, create, event_manager):
+    p = create(PackageItem, UML.Package)
+    c1 = create(ClassItem, UML.Class)
+    c1.subject.package = p.subject
+    c2 = create(ClassItem, UML.Class)
+    a = create(AssociationItem)
+    connect(a, a.head, c1)
+    connect(a, a.tail, c2)
 
     auto_layout = AutoLayout(event_manager, None)
     auto_layout.layout(diagram)

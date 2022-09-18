@@ -43,6 +43,9 @@ class AutoLayout(Service, ActionProvider):
         )
 
         for presentation in diagram.ownedPresentation:
+            if presentation.parent:
+                continue
+
             edge_or_node = as_pydot(presentation)
 
             if isinstance(edge_or_node, pydot.Edge):
