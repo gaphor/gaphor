@@ -248,7 +248,7 @@ def test_coder_write_association_not_navigable(navigable_association: UML.Associ
 
     a = list(associations(navigable_association.memberEnd[0].type))
 
-    assert a == []
+    assert not a
 
 
 def test_coder_write_association_opposite_not_navigable(

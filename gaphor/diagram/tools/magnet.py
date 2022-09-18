@@ -1,6 +1,9 @@
 """Magnet tool pulls or pushes the right or bottom side depending on mouse
 movement."""
 
+
+import contextlib
+
 from gaphas.canvas import ancestors
 from gaphas.move import Move
 from gaphas.view import GtkView
@@ -95,10 +98,8 @@ def on_drag_end(gesture, offset_x, offset_y, drag_state):
     drag_state.reset()
     view.update_back_buffer()
     drag_state.event_manager.handle(ToolCompleted())
-    try:
+    with contextlib.suppress(AttributeError):
         del view.magnet
-    except AttributeError:
-        pass
 
 
 class MagnetPainter:

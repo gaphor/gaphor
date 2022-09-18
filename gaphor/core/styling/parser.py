@@ -375,7 +375,7 @@ class PseudoElementSelector:
         self.name = name
 
     def __repr__(self):
-        return "::" + self.name
+        return f"::{self.name}"
 
 
 class FunctionalPseudoClassSelector(object):

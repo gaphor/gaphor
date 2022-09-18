@@ -478,9 +478,9 @@ class association(umlproperty):
 
         self._del_opposite(obj, value, from_opposite)
 
-        c: collection = self._get_many(obj)
-        if c:
-            items = c.items
+        c: collection
+        if c := self._get_many(obj):
+            items: collectionlist = c.items
             try:
                 items.remove(value)
             except ValueError:
@@ -501,12 +501,11 @@ class association(umlproperty):
                 self.stub.delete(value, obj, from_opposite=True)
 
     def unlink(self, obj):
-        values = self.get(obj)
-        composite = self.composite
-        if values:
+        if values := self.get(obj):
             if self.upper == 1:
                 values = [values]
 
+            composite = self.composite
             for value in list(values):
                 # TODO: make normal unlinking work through this method.
                 self.delete(obj, value)

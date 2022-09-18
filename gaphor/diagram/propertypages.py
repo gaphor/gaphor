@@ -180,8 +180,7 @@ class EditableTreeModel(Gtk.ListStore):
 
     def remove(self, iter):
         """Remove object from GTK model and destroy it."""
-        obj = self._get_object(iter)
-        if obj:
+        if obj := self._get_object(iter):
             obj.unlink()
             return super().remove(iter)
         else:

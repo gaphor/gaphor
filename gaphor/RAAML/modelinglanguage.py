@@ -25,7 +25,4 @@ class RAAMLModelingLanguage(ModelingLanguage):
         yield from raaml_diagram_types
 
     def lookup_element(self, name):
-        element_type = getattr(raaml, name, None)
-        if not element_type:
-            element_type = getattr(diagramitems, name, None)
-        return element_type
+        return getattr(raaml, name, None) or getattr(diagramitems, name, None)

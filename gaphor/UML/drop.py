@@ -13,16 +13,17 @@ def drop_relationship(element: UML.Relationship, diagram, x, y):
         return None
 
     metadata = get_diagram_item_metadata(item_class)
-    if not metadata:
-        return None
-
-    return _drop(
-        element,
-        metadata["head"].get(element),
-        metadata["tail"].get(element),
-        diagram,
-        x,
-        y,
+    return (
+        _drop(
+            element,
+            metadata["head"].get(element),
+            metadata["tail"].get(element),
+            diagram,
+            x,
+            y,
+        )
+        if metadata
+        else None
     )
 
 

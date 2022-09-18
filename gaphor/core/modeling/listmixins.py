@@ -8,8 +8,10 @@ Two mixin classes are provided:
 See the documentation on the mixins.
 """
 
+
 from __future__ import annotations
 
+import contextlib
 from typing import Callable, Generic, Sequence, TypeVar, overload
 
 __all__ = ["querymixin", "recursemixin"]
@@ -117,10 +119,8 @@ def issafeiterable(obj):
     >>> issafeiterable("text")
     False
     """
-    try:
+    with contextlib.suppress(TypeError):
         return iter(obj) and not isinstance(obj, str)
-    except TypeError:
-        pass
     return False
 
 

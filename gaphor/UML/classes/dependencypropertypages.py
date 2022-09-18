@@ -65,8 +65,7 @@ class DependencyPropertyPage(PropertyPageBase):
     def _on_dependency_type_change(self, combo):
         cls = combo.get_model().get_value(combo.get_active())
         self.item.dependency_type = cls
-        subject = self.item.subject
-        if subject:
+        if subject := self.item.subject:
             UML.recipes.swap_element(subject, cls)
             self.item.request_update()
 

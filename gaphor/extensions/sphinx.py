@@ -106,10 +106,8 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
 
         return [
             nodes.image(
-                rawsource=self.block_text,
-                uri=str(outfile) + ".*",
-                **self.options,
-            ),
+                rawsource=self.block_text, uri=f"{str(outfile)}.*", **self.options
+            )
         ]
 
     def logging_error_node(self, text: str) -> list[nodes.Node]:

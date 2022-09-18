@@ -235,8 +235,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
 
         iflow = self.subject.informationFlow[0]
         assert isinstance(iflow, sysml.ItemFlow)
-        id = combo.get_active_id()
-        if id:
+        if id := combo.get_active_id():
             element = self.subject.model.lookup(id)
             assert isinstance(element, UML.Type)
             iflow.itemProperty.type = element

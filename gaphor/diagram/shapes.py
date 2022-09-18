@@ -286,7 +286,9 @@ class IconBox:
 
 
 class Text:
-    def __init__(self, text=lambda: "", width=lambda: -1, style: Style = {}):
+    def __init__(self, text=lambda: "", width=lambda: -1, style: Style = None):
+        if style is None:
+            style = {}
         self._text = text if callable(text) else lambda: text
         self.width = width if callable(width) else lambda: width
         self._inline_style = style

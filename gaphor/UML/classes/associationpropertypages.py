@@ -31,8 +31,7 @@ class AssociationPropertyPage(PropertyPageBase):
     def handlers_end(self, end_name, end):
         subject = end.subject
 
-        stereotypes = UML.recipes.get_stereotypes(subject)
-        if stereotypes:
+        if UML.recipes.get_stereotypes(subject):
             model, toggle_handler, set_value_handler = stereotype_model(subject)
             return model, {
                 f"{end_name}-toggle-stereotype": toggle_handler,

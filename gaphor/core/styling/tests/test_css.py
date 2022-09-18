@@ -13,7 +13,7 @@ def test_empty_css():
     css = ""
     rules = list(parse_style_sheet(css))
 
-    assert rules == []
+    assert not rules
 
 
 def test_css_content_for_integer():

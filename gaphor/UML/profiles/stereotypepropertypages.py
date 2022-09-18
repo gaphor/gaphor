@@ -162,10 +162,11 @@ def set_value(renderer, path, value, model):
         return  # don't edit stereotype rows
 
     if slot is None:
-        if not value:
-            return  # nothing to do and don't create slot without value
+        if value:
+            slot = UML.recipes.add_slot(applied, attr)
 
-        slot = UML.recipes.add_slot(applied, attr)
+        else:
+            return  # nothing to do and don't create slot without value
 
     assert slot
 
