@@ -130,6 +130,7 @@ def as_pydot(element: Element) -> pydot.Common:
 @as_pydot.register
 def _(diagram: Diagram):
     graph = pydot.Dot("gaphor", graph_type="graph", prog="neato", splines="polyline")
+    graph.set_pad(8 / DPI)  # inch
     for presentation in diagram.ownedPresentation:
         if presentation.parent:
             continue
@@ -154,6 +155,7 @@ def _(presentation: ElementPresentation):
             if isinstance(presentation.subject, NamedElement)
             else ""
         )
+        graph.set_margin(20)  # points
         for child in presentation.children:
             edge_or_node = as_pydot(child)
 
