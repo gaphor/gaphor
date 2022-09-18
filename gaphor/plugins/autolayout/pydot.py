@@ -10,6 +10,7 @@ from gaphor.core.modeling import Diagram, Element
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
+from gaphor.UML import NamedElement
 from gaphor.UML.classes.generalization import GeneralizationItem
 
 DPI = 72.0
@@ -39,6 +40,7 @@ class AutoLayout(Service, ActionProvider):
 
     def render(self, diagram: Diagram):
         graph = as_pydot(diagram)
+        graph.write("before.gv")
         rendered_string = graph.create(format="dot").decode("utf-8")
         if self.dump_gv:
             with open("auto_layout.gv", "w") as f:
@@ -48,10 +50,28 @@ class AutoLayout(Service, ActionProvider):
         return rendered_graphs[0]
 
     def apply_layout(self, diagram, rendered_graph):
+        # NB. BB is (llx,lly,urx,ury)! (0, 0) is bottom-left!
         _, _, _, height = parse_bb(rendered_graph.get_node("graph")[0].get("bb"))
-        offset = 10
+        offset = 0
 
         with Transaction(self.event_manager):
+            for subgraph in rendered_graph.get_subgraphs():
+                name = subgraph.get_name().replace('"', "").split("_", 1)[1]
+                if presentation := next(
+                    (p for p in diagram.ownedPresentation if p.id == name), None
+                ):
+                    llx, lly, urx, ury = parse_bb(
+                        subgraph.get_node("graph")[0].get("bb")
+                    )
+                    presentation.matrix.set(
+                        x0=llx,
+                        y0=height - ury,
+                    )
+                    presentation.width = urx - llx
+                    presentation.height = ury - lly
+                    presentation.request_update()
+                    self.apply_layout(diagram, subgraph)
+
             for node in rendered_graph.get_nodes():
                 name = node.get_name().replace('"', "")
                 if presentation := next(
@@ -127,25 +147,48 @@ def _(diagram: Diagram):
 
 @as_pydot.register
 def _(presentation: ElementPresentation):
-    return pydot.Node(
-        presentation.id,
-        label="",
-        shape="rect",
-        width=presentation.width / DPI,
-        height=presentation.height / DPI,
-    )
+    if presentation.children:
+        graph = pydot.Cluster(presentation.id)
+        graph.set_label(
+            presentation.subject.name
+            if isinstance(presentation.subject, NamedElement)
+            else ""
+        )
+        for child in presentation.children:
+            edge_or_node = as_pydot(child)
+
+            if isinstance(edge_or_node, pydot.Edge):
+                graph.add_edge(edge_or_node)
+            elif isinstance(edge_or_node, pydot.Node):
+                graph.add_node(edge_or_node)
+            elif isinstance(edge_or_node, pydot.Graph):
+                graph.add_subgraph(edge_or_node)
+        return graph
+    else:
+        return pydot.Node(
+            presentation.id,
+            label="",
+            shape="rect",
+            width=presentation.width / DPI,
+            height=presentation.height / DPI,
+        )
 
 
 @as_pydot.register
 def _(presentation: LinePresentation):
     connections = presentation.diagram.connections
-    head_element = connections.get_connection(presentation.head)
-    tail_element = connections.get_connection(presentation.tail)
-    if isinstance(head_element, ElementPresentation) and isinstance(
-        tail_element, ElementPresentation
+    head_connection = connections.get_connection(presentation.head)
+    tail_connection = connections.get_connection(presentation.tail)
+    if (
+        head_connection
+        and isinstance(head_connection.connected, ElementPresentation)
+        and tail_connection
+        and isinstance(tail_connection.connected, ElementPresentation)
     ):
         return pydot.Edge(
-            head_element.connected.id, tail_element.connected.id, id=presentation.id
+            head_connection.connected.id,
+            tail_connection.connected.id,
+            id=presentation.id,
         )
     return None
 
@@ -154,11 +197,13 @@ def _(presentation: LinePresentation):
 def _(presentation: GeneralizationItem):
     # Tail and head are reverse
     connections = presentation.diagram.connections
-    head_element = connections.get_connection(presentation.head)
-    tail_element = connections.get_connection(presentation.tail)
-    if head_element and tail_element:
+    head_connection = connections.get_connection(presentation.head)
+    tail_connection = connections.get_connection(presentation.tail)
+    if head_connection and tail_connection:
         return pydot.Edge(
-            tail_element.connected.id, head_element.connected.id, id=presentation.id
+            tail_connection.connected.id,
+            head_connection.connected.id,
+            id=presentation.id,
         )
     return None
 
