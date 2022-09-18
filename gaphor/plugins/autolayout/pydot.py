@@ -6,7 +6,7 @@ from gaphas.segment import Segment
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
-from gaphor.core.modeling import Diagram, Presentation
+from gaphor.core.modeling import Diagram, Element
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
@@ -38,21 +38,7 @@ class AutoLayout(Service, ActionProvider):
         self.apply_layout(diagram, rendered_graph)
 
     def render(self, diagram: Diagram):
-        graph = pydot.Dot(
-            "gaphor", graph_type="graph", prog="neato", splines="polyline"
-        )
-
-        for presentation in diagram.ownedPresentation:
-            if presentation.parent:
-                continue
-
-            edge_or_node = as_pydot(presentation)
-
-            if isinstance(edge_or_node, pydot.Edge):
-                graph.add_edge(edge_or_node)
-            elif isinstance(edge_or_node, pydot.Node):
-                graph.add_node(edge_or_node)
-
+        graph = as_pydot(diagram)
         rendered_string = graph.create(format="dot").decode("utf-8")
         if self.dump_gv:
             with open("auto_layout.gv", "w") as f:
@@ -117,8 +103,26 @@ def reconnect(presentation, handle, connections):
 
 
 @singledispatch
-def as_pydot(presentation: Presentation):
+def as_pydot(element: Element) -> pydot.Common:
     return None
+
+
+@as_pydot.register
+def _(diagram: Diagram):
+    graph = pydot.Dot("gaphor", graph_type="graph", prog="neato", splines="polyline")
+    for presentation in diagram.ownedPresentation:
+        if presentation.parent:
+            continue
+
+        edge_or_node = as_pydot(presentation)
+
+        if isinstance(edge_or_node, pydot.Edge):
+            graph.add_edge(edge_or_node)
+        elif isinstance(edge_or_node, pydot.Node):
+            graph.add_node(edge_or_node)
+        elif isinstance(edge_or_node, pydot.Graph):
+            graph.add_subgraph(edge_or_node)
+    return graph
 
 
 @as_pydot.register
