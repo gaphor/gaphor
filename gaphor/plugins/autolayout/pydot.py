@@ -49,10 +49,9 @@ class AutoLayout(Service, ActionProvider):
         rendered_graphs = pydot.graph_from_dot_data(rendered_string)
         return rendered_graphs[0]
 
-    def apply_layout(self, diagram, rendered_graph):
+    def apply_layout(self, diagram, rendered_graph, offset=(0, 0)):
         # NB. BB is (llx,lly,urx,ury)! (0, 0) is bottom-left!
         _, _, _, height = parse_bb(rendered_graph.get_node("graph")[0].get("bb"))
-        offset = 0
 
         with Transaction(self.event_manager):
             for subgraph in rendered_graph.get_subgraphs():
@@ -70,7 +69,7 @@ class AutoLayout(Service, ActionProvider):
                     presentation.width = urx - llx
                     presentation.height = ury - lly
                     presentation.request_update()
-                    self.apply_layout(diagram, subgraph)
+                    self.apply_layout(diagram, subgraph, offset=(llx, height - ury))
 
             for node in rendered_graph.get_nodes():
                 name = node.get_name().replace('"', "")
@@ -79,8 +78,8 @@ class AutoLayout(Service, ActionProvider):
                 ):
                     pos = parse_point(node.get_pos())
                     presentation.matrix.set(
-                        x0=pos[0] - presentation.width / 2 + offset,
-                        y0=height - pos[1] - presentation.height / 2 + offset,
+                        x0=pos[0] - presentation.width / 2 - offset[0],
+                        y0=height - pos[1] - presentation.height / 2 - offset[1],
                     )
                     presentation.request_update()
 
@@ -104,7 +103,7 @@ class AutoLayout(Service, ActionProvider):
                     matrix = presentation.matrix_i2c.inverse()
                     for handle, point in zip(presentation.handles(), points):
                         p = matrix.transform_point(
-                            point[0] + offset, height - point[1] + offset
+                            point[0] - offset[0], height - point[1] - offset[1]
                         )
                         handle.pos = p
 
@@ -191,6 +190,7 @@ def _(presentation: LinePresentation):
             head_connection.connected.id,
             tail_connection.connected.id,
             id=presentation.id,
+            minlen=3,
         )
     return None
 
