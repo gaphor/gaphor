@@ -147,25 +147,7 @@ def _(diagram: Diagram):
 
 @as_pydot.register
 def _(presentation: ElementPresentation):
-    if presentation.children:
-        graph = pydot.Cluster(presentation.id)
-        graph.set_label(
-            presentation.subject.name
-            if isinstance(presentation.subject, NamedElement)
-            else ""
-        )
-        graph.set_margin(20)  # points
-        for child in presentation.children:
-            edge_or_node = as_pydot(child)
-
-            if isinstance(edge_or_node, pydot.Edge):
-                graph.add_edge(edge_or_node)
-            elif isinstance(edge_or_node, pydot.Node):
-                graph.add_node(edge_or_node)
-            elif isinstance(edge_or_node, pydot.Graph):
-                graph.add_subgraph(edge_or_node)
-        return graph
-    else:
+    if not presentation.children:
         return pydot.Node(
             presentation.id,
             label="",
@@ -173,6 +155,23 @@ def _(presentation: ElementPresentation):
             width=presentation.width / DPI,
             height=presentation.height / DPI,
         )
+    graph = pydot.Cluster(presentation.id)
+    graph.set_label(
+        presentation.subject.name
+        if isinstance(presentation.subject, NamedElement)
+        else ""
+    )
+    graph.set_margin(20)  # points
+    for child in presentation.children:
+        edge_or_node = as_pydot(child)
+
+        if isinstance(edge_or_node, pydot.Edge):
+            graph.add_edge(edge_or_node)
+        elif isinstance(edge_or_node, pydot.Node):
+            graph.add_node(edge_or_node)
+        elif isinstance(edge_or_node, pydot.Graph):
+            graph.add_subgraph(edge_or_node)
+    return graph
 
 
 @as_pydot.register
