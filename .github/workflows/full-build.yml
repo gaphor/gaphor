@@ -323,6 +323,7 @@ jobs:
         run: |
           echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
           echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
+          choco install graphviz -y
         shell: bash
       - uses: actions/checkout@v3.0.2
         with:
