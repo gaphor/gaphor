@@ -12,7 +12,7 @@ modules = [
 # Disable Vala
 skip = ['vala']
 module_mesonargs['gtksourceview-4'] = '-Dvapi=false'
-module_autogenargs['librsvg'] = '--enable-vala=no'
+module_autogenargs['librsvg'] = '--enable-vala=no --disable-gtk-doc'
 
 module_mesonargs['gobject-introspection'] = '-Dcairo=enabled'
 

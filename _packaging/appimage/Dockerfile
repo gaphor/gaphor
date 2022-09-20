@@ -120,9 +120,6 @@ RUN apt-get update \
   && apt-get remove -y curl \
   && rm -rf /var/lib/apt/lists/*
 
-# librsvg needs gi-docgen
-RUN pip install gi-docgen
-
 ENV CHECKOUT=/root/jhbuild/checkout \
     LD_LIBRARY_PATH="/root/jhbuild/install/lib" \
     PKG_CONFIG_PATH="/root/jhbuild/install/lib/pkgconfig" \
