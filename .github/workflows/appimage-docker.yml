@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - 'docker/**'
+      - 'fix-appimage-docker'
 env:
   python_version: '3.10'
   registry: ghcr.io
