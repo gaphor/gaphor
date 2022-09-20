@@ -123,7 +123,7 @@ RUN apt-get update \
 ENV CHECKOUT=/root/jhbuild/checkout \
     LD_LIBRARY_PATH="/root/jhbuild/install/lib" \
     PKG_CONFIG_PATH="/root/jhbuild/install/lib/pkgconfig" \
-    PATH="/root/jhbuild/install/bin:/root/.local/bin:/root/.cargo/bin:$PATH" \
+    PATH="/root/jhbuild/install/local/bin:/root/.local/bin:/root/.cargo/bin:$PATH" \
     JHBUILD_RUN_AS_ROOT=""
 
 # Install jhbuild

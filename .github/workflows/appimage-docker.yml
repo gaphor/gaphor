@@ -1,4 +1,4 @@
-name: AppImage Docker Image Build and Push
+name: AppImage Docker Image
 on:
   schedule:
     - cron: '15 1 * * 1' # Weekly at 01:15 UTC
