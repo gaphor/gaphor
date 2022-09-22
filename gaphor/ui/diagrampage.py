@@ -27,7 +27,7 @@ from gaphor.diagram.tools.magnet import MagnetPainter
 from gaphor.diagram.tools.placement import create_item, open_editor
 from gaphor.event import Notification
 from gaphor.transaction import Transaction
-from gaphor.ui.event import DiagramSelectionChanged, ToolSelected
+from gaphor.ui.event import DiagramClosed, DiagramSelectionChanged, ToolSelected
 
 log = logging.getLogger(__name__)
 
@@ -220,7 +220,7 @@ class DiagramPage:
     @event_handler(ElementDeleted)
     def _on_element_delete(self, event: ElementDeleted):
         if event.element is self.diagram:
-            self.close()
+            self.event_manager.handle(DiagramClosed(self.diagram))
 
     @event_handler(AttributeUpdated)
     def _on_attribute_updated(self, event: AttributeUpdated):
@@ -241,8 +241,6 @@ class DiagramPage:
         assert self.widget
         if Gtk.get_major_version() == 3:
             self.widget.destroy()
-        elif parent := self.widget.get_parent():
-            parent.remove(self.widget)
 
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_attribute_updated)
