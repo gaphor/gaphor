@@ -5,11 +5,14 @@ from gaphor.core.modeling import Comment
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.plugins.autolayout.pydot import AutoLayout, parse_edge_pos
 from gaphor.UML.diagramitems import (
+    ActionItem,
     AssociationItem,
     ClassItem,
     CommentItem,
     CommentLineItem,
     GeneralizationItem,
+    InputPinItem,
+    ObjectFlowItem,
     PackageItem,
 )
 
@@ -69,6 +72,20 @@ def test_layout_with_nested(diagram, create, event_manager):
 
     assert c1.matrix[4] < p.width
     assert c1.matrix[5] < p.height
+
+
+def test_layout_with_attached_item(diagram, create, event_manager):
+    action = create(ActionItem, UML.Action)
+    pin = create(InputPinItem, UML.InputPin)
+    connect(pin, pin.handles()[0], action)
+
+    action2 = create(ActionItem, UML.Action)
+    object_flow = create(ObjectFlowItem, UML.ObjectFlow)
+    connect(object_flow, object_flow.head, pin)
+    connect(object_flow, object_flow.tail, action2)
+
+    auto_layout = AutoLayout(event_manager, None)
+    auto_layout.layout(diagram)
 
 
 def test_parse_pos():
