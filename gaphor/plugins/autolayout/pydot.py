@@ -7,7 +7,11 @@ from gaphas.segment import Segment
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core.modeling import Diagram, Element
-from gaphor.diagram.presentation import ElementPresentation, LinePresentation
+from gaphor.diagram.presentation import (
+    AttachedPresentation,
+    ElementPresentation,
+    LinePresentation,
+)
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
 from gaphor.UML import NamedElement
@@ -55,9 +59,9 @@ class AutoLayout(Service, ActionProvider):
 
         with Transaction(self.event_manager):
             for subgraph in rendered_graph.get_subgraphs():
-                name = subgraph.get_name().replace('"', "").split("_", 1)[1]
+                id = subgraph.get_node("graph")[0].get_id().replace('"', "")
                 if presentation := next(
-                    (p for p in diagram.ownedPresentation if p.id == name), None
+                    (p for p in diagram.ownedPresentation if p.id == id), None
                 ):
                     llx, lly, urx, ury = parse_bb(
                         subgraph.get_node("graph")[0].get("bb")
@@ -72,9 +76,9 @@ class AutoLayout(Service, ActionProvider):
                     self.apply_layout(diagram, subgraph, offset=(llx, height - ury))
 
             for node in rendered_graph.get_nodes():
-                name = node.get_name().replace('"', "")
+                id = node.get_id().replace('"', "")
                 if presentation := next(
-                    (p for p in diagram.ownedPresentation if p.id == name), None
+                    (p for p in diagram.ownedPresentation if p.id == id), None
                 ):
                     pos = parse_point(node.get_pos())
                     presentation.matrix.set(
@@ -147,21 +151,26 @@ def _(diagram: Diagram):
 
 @as_pydot.register
 def _(presentation: ElementPresentation):
-    if not presentation.children:
+    if not any(
+        c for c in presentation.children if not isinstance(c, AttachedPresentation)
+    ):
         return pydot.Node(
             presentation.id,
+            id=presentation.id,
             label="",
             shape="rect",
             width=presentation.width / DPI,
             height=presentation.height / DPI,
         )
-    graph = pydot.Cluster(presentation.id)
-    graph.set_label(
-        presentation.subject.name
+
+    graph = pydot.Cluster(
+        presentation.id,
+        id=presentation.id,
+        label=presentation.subject.name
         if isinstance(presentation.subject, NamedElement)
-        else ""
+        else "",
+        margin=20,
     )
-    graph.set_margin(20)  # points
     for child in presentation.children:
         edge_or_node = as_pydot(child)
 
