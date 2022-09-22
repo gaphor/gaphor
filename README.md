@@ -154,7 +154,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
       <td align="center"><a href="http://encolpe.wordpress.com"><img src="https://avatars1.githubusercontent.com/u/124361?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Encolpe DEGOUTE</b></sub></a><br /><a href="#translation-encolpe" title="Translation">🌍</a></td>
       <td align="center"><a href="https://github.com/egroeper"><img src="https://avatars3.githubusercontent.com/u/535113?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Enno Gröper</b></sub></a><br /><a href="https://github.com/gaphor/gaphor/commits?author=egroeper" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/ezickler"><img src="https://avatars3.githubusercontent.com/u/3604310?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Enno Zickler</b></sub></a><br /><a href="https://github.com/gaphor/gaphor/issues?q=author%3Aezickler" title="Bug reports">🐛</a></td>
-      <td align="center"><a href="https://bousse-e.univ-nantes.io"><img src="https://avatars.githubusercontent.com/u/5868014?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Erwan Bousse</b></sub></a><br /><a href="#ideas-ebousse" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center"><a href="https://bousse-e.univ-nantes.io"><img src="https://avatars.githubusercontent.com/u/5868014?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Erwan Bousse</b></sub></a><br /><a href="#ideas-ebousse" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/gaphor/gaphor/issues?q=author%3Aebousse" title="Bug reports">🐛</a></td>
       <td align="center"><a href="http://www.frandieguez.dev"><img src="https://avatars.githubusercontent.com/u/4584?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Fran Diéguez</b></sub></a><br /><a href="#translation-frandieguez" title="Translation">🌍</a></td>
       <td align="center"><a href="https://github.com/gbrlgian"><img src="https://avatars.githubusercontent.com/u/47647695?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gabriel Gian</b></sub></a><br /><a href="#translation-gbrlgian" title="Translation">🌍</a></td>
     </tr>
@@ -254,7 +254,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
       <td align="center"><a href="https://github.com/oscfdezdz"><img src="https://avatars.githubusercontent.com/u/42654671?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Óscar Fernández Díaz</b></sub></a><br /><a href="#translation-oscfdezdz" title="Translation">🌍</a> <a href="https://github.com/gaphor/gaphor/commits?author=oscfdezdz" title="Code">💻</a></td>
       <td align="center"><a href="https://github.com/zlv"><img src="https://avatars.githubusercontent.com/u/602210?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Евгений Лежнин</b></sub></a><br /><a href="#translation-zlv" title="Translation">🌍</a></td>
     </tr>
-  </tobdy>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->
