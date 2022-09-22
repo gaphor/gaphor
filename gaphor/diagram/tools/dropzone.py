@@ -93,7 +93,7 @@ class DropZoneMoveMixin:
             view.selection.dropzone_item = None
             return
 
-        if can_group(over_item.subject, item.subject):
+        if item.subject and can_group(over_item.subject, item.subject):
             view.selection.dropzone_item = over_item
             over_item.request_update()
 
