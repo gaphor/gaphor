@@ -5,7 +5,7 @@ from gaphor.core import Transaction
 from gaphor.core.modeling import Presentation
 
 
-def shortcut_tool(view, modeling_language, event_manager):
+def shortcut_tool(view, event_manager):
     if Gtk.get_major_version() == 3:
         ctrl = Gtk.EventControllerKey.new(view)
     else:
