@@ -373,8 +373,7 @@ class MetadataRelationConnect(DirectionalRelationshipConnect):
         if metadata := get_diagram_item_metadata(type(self.line)):
             return (
                 (
-                    super().allow(handle, port)
-                    and isinstance(element.subject, metadata["head"].type)
+                    isinstance(element.subject, metadata["head"].type)
                     and (
                         not opposite_element
                         or isinstance(opposite_element.subject, metadata["tail"].type)
@@ -382,8 +381,7 @@ class MetadataRelationConnect(DirectionalRelationshipConnect):
                 )
                 if handle is self.line.head
                 else (
-                    super().allow(handle, port)
-                    and isinstance(element.subject, metadata["tail"].type)
+                    isinstance(element.subject, metadata["tail"].type)
                     and (
                         not opposite_element
                         or isinstance(opposite_element.subject, metadata["head"].type)
