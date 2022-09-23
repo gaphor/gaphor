@@ -177,14 +177,11 @@ class Toolbox(UIComponent):
 
     def select_tool(self, tool_name: str) -> None:
         for flowbox in self.flowboxes():
+            flowbox.unselect_all()
             for child in iter_children(flowbox):
                 if child.action_name == tool_name:
                     flowbox.select_child(child)
-                    for fb in self.flowboxes():
-                        if fb is not flowbox:
-                            fb.unselect_all()
                     self.event_manager.handle(ToolSelected(tool_name))
-                    return
 
     @event_handler(ToolCompleted)
     def _on_diagram_item_placed(self, event) -> None:
