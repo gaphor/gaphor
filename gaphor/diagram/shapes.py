@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from dataclasses import replace
 from math import pi
 from typing import Callable
@@ -80,6 +81,30 @@ def draw_top_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
     cr.line_to(x + w, y)
 
     stroke(context, fill=False)
+
+
+def draw_ellipse(box: Box, context: DrawContext, bounding_box: Rectangle):
+    ellipse(context.cairo, *bounding_box)
+
+    stroke(context)
+
+
+def ellipse(cr, x, y, w, h, dc=(4 / 3) * math.tan(math.pi / 8)):
+    rx = x + w / 2.0
+    ry = y + h / 2.0
+    x1 = x + w
+    y1 = y + h
+    tw = w * dc / 2
+    th = h * dc / 2
+
+    # curve: control_a, control_b, end
+    cr.move_to(x, ry)
+    cr.curve_to(x, ry - th, rx - tw, y, rx, y)
+    cr.curve_to(rx + tw, y, x1, ry - th, x1, ry)
+    cr.curve_to(x1, ry + th, rx + tw, y1, rx, y1)
+    cr.curve_to(rx - tw, y1, x, ry + th, x, ry)
+
+    cr.close_path()
 
 
 class Box:

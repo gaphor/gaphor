@@ -1,10 +1,8 @@
-from gaphas.util import path_ellipse
-
 from gaphor.C4Model import c4model
 from gaphor.core import gettext
 from gaphor.core.styling import FontWeight, JustifyContent, TextAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, Text, stroke
+from gaphor.diagram.shapes import Box, Text, ellipse, stroke
 from gaphor.diagram.support import represents
 
 
@@ -57,8 +55,8 @@ def draw_database(box, context, bounding_box):
 
     x1 = width + x
     y1 = height + y
+    ellipse(cr, x, y - height * d / 2, width, height * d)
     cr.move_to(x1, y)
-    path_ellipse(cr, width / 2, y, width, height * d)
     cr.line_to(x1, y1)
     cr.curve_to(x1, y1, width / 2, y1 + height * d, x, y1)
     cr.line_to(x, y)
