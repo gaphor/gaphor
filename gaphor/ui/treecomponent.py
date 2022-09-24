@@ -347,9 +347,12 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
             ),
         )
         element = list_item.get_item().get_item().element
-        menu = Gtk.PopoverMenu.new_from_model(popup_model(element, modeling_language))
-        menu.set_parent(row)
-        menu.popup()
+        if element:
+            menu = Gtk.PopoverMenu.new_from_model(
+                popup_model(element, modeling_language)
+            )
+            menu.set_parent(row)
+            menu.popup()
 
     ctrl = Gtk.GestureClick.new()
     ctrl.set_button(Gdk.BUTTON_SECONDARY)
