@@ -6,7 +6,7 @@ from gaphor.transaction import Transaction
 
 
 @instant_editor.register(CommentItem)
-def CommentItemEditor(item, view, event_manager, pos=None) -> bool:
+def comment_item_editor(item, view, event_manager, pos=None) -> bool:
     def update_text():
         text = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), include_hidden_chars=True
