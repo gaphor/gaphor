@@ -188,15 +188,19 @@ class Namespace(UIComponent, ActionProvider):
             self.select_element(focused_item.subject)
 
     def _on_show_popup(self, ctrl, n_press, x, y):
+        selected_element = self.get_selected_element()
+        if selected_element in (None, RELATIONSHIPS):
+            return
+
         if Gtk.get_major_version() == 3:
             menu = Gtk.Menu.new_from_model(
-                popup_model(self.get_selected_element(), self.modeling_language)
+                popup_model(selected_element, self.modeling_language)
             )
             menu.attach_to_widget(self.view, None)
             menu.popup_at_pointer(None)
         else:
             menu = Gtk.PopoverMenu.new_from_model(
-                popup_model(self.get_selected_element(), self.modeling_language)
+                popup_model(selected_element, self.modeling_language)
             )
             menu.set_pointing_to(Gdk.Rectangle(x, y, 1, 1))
             menu.set_offset(x, y)
