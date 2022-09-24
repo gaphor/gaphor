@@ -82,6 +82,23 @@ def draw_top_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
     stroke(context, fill=False)
 
 
+def draw_ellipse(box: Box, context: DrawContext, bounding_box: Rectangle):
+    ellipse(context.cairo, *bounding_box)
+
+    stroke(context)
+
+
+def ellipse(cr, x, y, w, h):
+    rx = w / 2.0
+    ry = h / 2.0
+    cr.move_to(0, ry)
+    cr.curve_to(0, ry / 2, rx / 2, 0, rx, 0)
+    cr.curve_to(rx * 1.5, 0, w, ry / 2, w, ry)
+    cr.curve_to(w, ry * 1.5, rx * 1.5, h, rx, h)
+    cr.curve_to(rx / 2, h, 0, ry * 1.5, 0, ry)
+    cr.close_path()
+
+
 class Box:
     """A box like shape.
 
