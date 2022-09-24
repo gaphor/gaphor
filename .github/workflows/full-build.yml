@@ -38,7 +38,7 @@ jobs:
       - name: Check translations
         run: pip install babel && python po/check-babel.py
 
-  linux:
+  linux-gtk4:
     needs: lint
     runs-on: ubuntu-22.04
     timeout-minutes: 30
