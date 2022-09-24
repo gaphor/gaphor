@@ -40,7 +40,7 @@ def comment_item_editor(item, view, event_manager, pos=None) -> bool:
 
     popover = show_popover(frame, view, box, update_text)
 
-    if Gtk.get_major_version != 3:
+    if Gtk.get_major_version() != 3:
 
         def on_enter(text_view, keyval, keycode, state):
             if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter) and not state & (
