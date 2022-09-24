@@ -1,10 +1,8 @@
 """Final state diagram item."""
 
-from gaphas.util import path_ellipse
-
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, IconBox, Text, stroke
+from gaphor.diagram.shapes import Box, IconBox, Text, ellipse, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
 
@@ -33,7 +31,7 @@ def draw_final_state(box, context, bounding_box):
     r = 15
 
     d = r * 2
-    path_ellipse(cr, r, r, d, d)
+    ellipse(cr, *bounding_box)
     cr.set_line_width(0.01)
     cr.set_line_width(2)
     stroke(context)
@@ -42,6 +40,6 @@ def draw_final_state(box, context, bounding_box):
         cr.set_source_rgba(*stroke_color)
 
     d = 20
-    path_ellipse(cr, r, r, d, d)
+    ellipse(cr, 5, 5, d, d)
     cr.set_line_width(0.01)
     cr.fill()

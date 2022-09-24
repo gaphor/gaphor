@@ -4,12 +4,11 @@ See also gaphor.UML.states package description.
 """
 
 from gaphas.item import SE
-from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.core.modeling.properties import relation_one
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, IconBox, Text, stroke
+from gaphor.diagram.shapes import Box, IconBox, Text, ellipse, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
 
@@ -60,23 +59,14 @@ def draw_initial_or_junction_pseudostate(box, context, bounding_box):
     cr = context.cairo
     if stroke := context.style["color"]:
         cr.set_source_rgba(*stroke)
-    r = 10
-    d = r * 2
-    path_ellipse(cr, r, r, d, d)
+    ellipse(cr, *bounding_box)
     cr.set_line_width(0.01)
     cr.fill()
 
 
-def _circle(context, r=15):
-    d = r * 2
-    path_ellipse(context.cairo, r, r, d, d)
-    stroke(context)
-
-
 def draw_deep_history_pseudostate(box, context, bounding_box):
-    _circle(context)
-
     cr = context.cairo
+    ellipse(cr, *bounding_box)
     cr.move_to(9, 10)
     cr.line_to(9, 20)
     cr.move_to(15, 10)
@@ -91,9 +81,8 @@ def draw_deep_history_pseudostate(box, context, bounding_box):
 
 
 def draw_shallow_history_pseudostate(box, context, bounding_box):
-    _circle(context)
-
     cr = context.cairo
+    ellipse(cr, *bounding_box)
     cr.move_to(12, 10)
     cr.line_to(12, 20)
     cr.move_to(18, 10)
@@ -125,12 +114,12 @@ def draw_choice_pseudostate(box, context, bounding_box):
 
 
 def draw_entry_point_pseudostate(box, context, bounding_box):
-    _circle(context)
+    ellipse(context.cairo, *bounding_box)
 
 
 def draw_exit_point_pseudostate(box, context, bounding_box):
-    _circle(context)
     cr = context.cairo
+    ellipse(cr, *bounding_box)
     cr.move_to(5, 5)
     cr.line_to(25, 25)
     cr.move_to(5, 25)

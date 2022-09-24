@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from dataclasses import replace
 from math import pi
 from typing import Callable
@@ -88,14 +89,21 @@ def draw_ellipse(box: Box, context: DrawContext, bounding_box: Rectangle):
     stroke(context)
 
 
-def ellipse(cr, x, y, w, h):
-    rx = w / 2.0
-    ry = h / 2.0
-    cr.move_to(0, ry)
-    cr.curve_to(0, ry / 2, rx / 2, 0, rx, 0)
-    cr.curve_to(rx * 1.5, 0, w, ry / 2, w, ry)
-    cr.curve_to(w, ry * 1.5, rx * 1.5, h, rx, h)
-    cr.curve_to(rx / 2, h, 0, ry * 1.5, 0, ry)
+def ellipse(cr, x, y, w, h, dc=(4 / 3) * math.tan(math.pi / 8)):
+    rx = x + w / 2.0
+    ry = y + h / 2.0
+    x1 = x + w
+    y1 = y + h
+    tw = w * dc / 2
+    th = h * dc / 2
+
+    # curve: control_a, control_b, end
+    cr.move_to(x, ry)
+    cr.curve_to(x, ry - th, rx - tw, y, rx, y)
+    cr.curve_to(rx + tw, y, x1, ry - th, x1, ry)
+    cr.curve_to(x1, ry + th, rx + tw, y1, rx, y1)
+    cr.curve_to(rx - tw, y1, x, ry + th, x, ry)
+
     cr.close_path()
 
 

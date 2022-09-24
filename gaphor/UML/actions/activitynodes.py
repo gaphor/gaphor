@@ -6,7 +6,6 @@ from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_line_point
 from gaphas.item import Handle, LinePort
 from gaphas.matrix import Matrix
-from gaphas.util import path_ellipse
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
@@ -17,7 +16,7 @@ from gaphor.diagram.presentation import (
     Named,
     literal_eval,
 )
-from gaphor.diagram.shapes import Box, IconBox, Text, stroke
+from gaphor.diagram.shapes import Box, IconBox, Text, ellipse, stroke
 from gaphor.diagram.support import represents
 from gaphor.i18n import gettext
 from gaphor.UML.recipes import stereotypes_str
@@ -61,14 +60,12 @@ class InitialNodeItem(ActivityNodeItem, ElementPresentation):
         self.watch("subject.appliedStereotype.classifier.name")
 
 
-def draw_initial_node(_box, context, _bounding_box):
+def draw_initial_node(_box, context, bounding_box):
     cr = context.cairo
     if stroke := context.style["color"]:
         cr.set_source_rgba(*stroke)
 
-    r = 10
-    d = r * 2
-    path_ellipse(cr, r, r, d, d)
+    ellipse(cr, *bounding_box)
     cr.set_line_width(0.01)
     cr.fill()
 
@@ -108,13 +105,13 @@ def draw_activity_final_node(_box, context, _bounding_box):
     r = outer_radius
 
     d = r * 2
-    path_ellipse(cr, r, r, d, d)
+    ellipse(cr, 0, 0, d, d)
     cr.set_line_width(0.01)
     cr.set_line_width(2)
     stroke(context)
 
     d = inner_radius * 2
-    path_ellipse(cr, r, r, d, d)
+    ellipse(cr, 5, 5, d, d)
     cr.set_line_width(0.01)
     cr.fill()
 
@@ -144,11 +141,11 @@ class FlowFinalNodeItem(ActivityNodeItem, ElementPresentation):
         self.watch("subject.appliedStereotype.classifier.name")
 
 
-def draw_flow_final_node(_box, context, _bounding_box):
+def draw_flow_final_node(_box, context, bounding_box):
     cr = context.cairo
     r = 10
     d = r * 2
-    path_ellipse(cr, r, r, d, d)
+    ellipse(cr, *bounding_box)
     stroke(context)
 
     dr = (1 - math.sin(math.pi / 4)) * r

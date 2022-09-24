@@ -1,7 +1,6 @@
 """Basic Event item definition."""
 
 from gaphas.geometry import Rectangle
-from gaphas.util import path_ellipse
 
 from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
@@ -10,7 +9,7 @@ from gaphor.diagram.presentation import (
     ElementPresentation,
     from_package_str,
 )
-from gaphor.diagram.shapes import Box, IconBox, Text, stroke
+from gaphor.diagram.shapes import Box, IconBox, Text, ellipse, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
@@ -53,11 +52,5 @@ class BasicEventItem(Classified, ElementPresentation):
 def draw_basic_event(box, context: DrawContext, bounding_box: Rectangle):
     cr = context.cairo
     cr.move_to(bounding_box.width, bounding_box.height)
-    path_ellipse(
-        cr,
-        bounding_box.width / 2.0,
-        bounding_box.height / 2.0,
-        bounding_box.width,
-        bounding_box.height,
-    )
+    ellipse(cr, *bounding_box)
     stroke(context)
