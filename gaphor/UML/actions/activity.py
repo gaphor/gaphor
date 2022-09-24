@@ -83,13 +83,18 @@ class ActivityItem(Classified, ElementPresentation):
 
 class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode]):
     def __init__(self, diagram, id=None):
-        super().__init__(diagram, id, width=100, height=30)
-
-        self.shape = Box(
-            Text(
-                text=lambda: self.subject.parameter.name or "",
+        super().__init__(
+            diagram,
+            id,
+            shape=Box(
+                Text(
+                    text=lambda: self.subject.parameter.name or "",
+                ),
+                style={"padding": (4, 12, 4, 12), "background-color": (1, 1, 1, 1)},
+                draw=draw_border,
             ),
-            style={"padding": (4, 12, 4, 12), "background-color": (1, 1, 1, 1)},
-            draw=draw_border,
+            width=100,
+            height=30,
         )
+
         self.watch("subject[ActivityParameterNode].parameter.name")

@@ -384,12 +384,13 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
     E.g. ports, pins and parameter nodes.
     """
 
-    def __init__(self, diagram, id=None, width=16, height=16):
+    def __init__(self, diagram, id=None, shape=None, width=16, height=16):
         super().__init__(diagram, id)
         self._connections = diagram.connections
         self._width_constraints = []
         self._height_constraints = []
-        self._shape = None
+        self._last_connected_side = None
+        self._shape = shape
 
         handle = self._handle = Handle(strength=gaphas.solver.STRONG, connectable=True)
         self.watch_handle(handle)
@@ -418,9 +419,6 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
 
         self.width = width
         self.height = height
-
-        self._shape = None
-        self._last_connected_side = None
 
     @property
     def width(self) -> float:

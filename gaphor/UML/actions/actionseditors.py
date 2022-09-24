@@ -1,3 +1,4 @@
+from gaphor import UML
 from gaphor.diagram.instanteditors import instant_editor, popup_entry, show_popover
 from gaphor.transaction import Transaction
 from gaphor.UML.actions.activity import ActivityParameterNodeItem
@@ -9,7 +10,7 @@ def fork_node_item_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
 
     subject = item.subject
-    if not subject:
+    if not isinstance(subject, UML.JoinNode):
         return False
 
     join_spec = subject.joinSpec or ""
