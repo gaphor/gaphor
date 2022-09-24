@@ -100,7 +100,7 @@ class FileManager(Service, ActionProvider):
         """
 
         if filename != self._filename:
-            self._filename = Path(filename)
+            self._filename = Path(filename) if filename else None
 
     def load(self, filename):
         """Load the Gaphor model from the supplied file name.
@@ -152,8 +152,6 @@ class FileManager(Service, ActionProvider):
                 self.event_manager.handle(model_loaded_event)
             except Exception:
                 self.filename = None
-                if done:
-                    done()
                 log.exception(f"Unable to open model “{filename}”.", stack_info=True)
                 error_handler(
                     message=gettext("Unable to open model “{filename}”.").format(
