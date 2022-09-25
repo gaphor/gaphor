@@ -58,9 +58,9 @@ runs:
       with:
         name: gaphor-${{ inputs.version }}-portable.exe
         path: _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
-    - name: Upload Release Assets
+    - name: Upload Assets (release only)
+      uses: AButler/upload-release-assets@v2.0
       if: inputs.mainline_build == 'true' && github.event_name == 'release'
-      run: gh release upload ${{ github.event.release.tag_name }} _packaging/dist/*.exe --clobber
-      env:
-        GITHUB_TOKEN: ${{ inputs.github_token }}
-      shell: bash
+      with:
+        files: "_packaging/dist/*.exe"
+        repo-token: ${{ inputs.github_token }}
