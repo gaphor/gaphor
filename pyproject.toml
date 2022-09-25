@@ -122,7 +122,7 @@ c4model.script = """gaphor.codegen.coder:main(
     supermodelfiles=[('UML', 'models/UML.gaphor')]
     )"""
 lint = "pre-commit run --all-files"
-docs = "sphinx-build docs docs/_build/html"
+docs = { "cwd" = "docs", "shell" = "sphinx-build -b html . _build/html" }
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt _packaging/gaphor-script.py docs/_build" }
 _gaphor-script = { "script" = "_packaging.make-script:make_gaphor_script" }
 _version-file = { "script" = "_packaging.make-script:make_file_version_info" }
