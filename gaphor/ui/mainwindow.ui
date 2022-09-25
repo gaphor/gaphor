@@ -54,7 +54,7 @@
           </object>
         </child>
         <child type="end">
-          <object class="GtkToggleButton">
+          <object class="GtkButton">
             <property name="action_name">win.show-editors</property>
             <child>
               <object class="GtkImage">
