@@ -97,6 +97,12 @@ runs:
       with:
         name: Gaphor-${{ inputs.version }}.dmg
         path: _packaging/dist/Gaphor-${{ inputs.version }}.dmg
+    - name: Upload Assets (release only)
+      uses: AButler/upload-release-assets@v2.0
+      if: github.event_name == 'release'
+      with:
+        files: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
+        repo-token: ${{ inputs.github_token }}
     - name: Zip app
       id: zip
       if: inputs.mainline_build != 'true'
@@ -111,9 +117,3 @@ runs:
       with:
         name: Gaphor-${{ inputs.version }}.app.zip
         path: _packaging/dist/Gaphor-${{ inputs.version }}.app.zip
-    - name: Upload Assets (release only)
-      uses: AButler/upload-release-assets@v2.0
-      if: github.event_name == 'release'
-      with:
-        files: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
-        repo-token: ${{ inputs.github_token }}
