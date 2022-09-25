@@ -38,10 +38,6 @@ When modeling, you should be busy with your problem or solution domain, not with
 the tool. Gaphor tries to stay out of your way as much as possible. It does not
 try to nag you with error messages, because the model is not "correct".
 
-Although Gaphor implements quite a bit of the UML 2 model, it's not complete.
-The extra complexity of fully implementing all of UML would make it harder for
-novice users to get started.
-
 ### Avoid dialogs
 
 In doing the right thing, and staying out of the way of users, Gaphor avoids the
@@ -56,6 +52,12 @@ When Gaphor is doing something that is not directly visible, you'll see a
 notification, for example, an element that's indirectly removed from the model.
 It will not interrupt you with dialogs, but only provide a small in-app
 notification. If the change is undesired, hit `undo`.
+
+### Balanced
+
+Although Gaphor implements quite a bit of the UML 2 model, it's not complete.
+We try to find the right balance in features to suite both expert and novice
+modellers.
 
 ## Continuity
 
