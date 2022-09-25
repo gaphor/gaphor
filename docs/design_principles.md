@@ -88,8 +88,8 @@ also a multi-platform application. We try to stay close to the GNOME HIG, but
 try not to introduce concepts that are not available on Windows and macOS.
 
 User interface components are not generated. We found that UI generation (like
-many enterprise modeling tools) provides an awful user experience. We want users
-to want to use Gaphor on a regular basis, so we aim for it to be a tool that's
+many enterprise modeling tools do) provides an awful user experience. We want users
+to use Gaphor on a regular basis, so we aim for it to be a tool that's
 pleasant to look at and easy to work with.
 
 
