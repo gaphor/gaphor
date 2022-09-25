@@ -54,13 +54,16 @@
           </object>
         </child>
         <child type="end">
-          <object class="GtkButton">
+          <object class="GtkToggleButton">
             <property name="action_name">win.show-editors</property>
             <child>
               <object class="GtkImage">
                 <property name="icon_name">gaphor-view-editor-symbolic</property>
               </object>
             </child>
+            <style>
+              <class name="flat"/>
+            </style>
           </object>
         </child>
       </object>
