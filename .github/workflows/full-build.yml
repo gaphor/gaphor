@@ -79,12 +79,11 @@ jobs:
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
-      - name: Upload Assets (release only)
-        uses: AButler/upload-release-assets@v2.0
+      - name: Upload Release Assets
         if: github.event_name == 'release'
-        with:
-          files: "dist/*"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release upload ${{ github.event.release.tag_name }} dist/* --clobber
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish to PyPI (release only)
         if: github.event_name == 'release'
         run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
