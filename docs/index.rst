@@ -9,7 +9,7 @@ You can use Gaphor to quickly visualize different aspects of a system
 as well as create complete, highly complex models.
 
 Gaphor is 100% Open source. Source code and issue tracker can be found on
-`GitHub <https://github.org/gaphor/gaphor>`.
+`GitHub <https://github.org/gaphor/gaphor>`_.
 
 This documentation is aimed at those who would be interested in making
 contributions to Gaphor. For download instructions, tutorials and how-to's,
