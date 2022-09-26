@@ -39,6 +39,6 @@ repos:
   - id: shellcheck
     args: [--exclude, SC1017]
 - repo: https://github.com/asottile/pyupgrade
-  rev: v2.38.0
+  rev: v2.38.2
   hooks:
   - id: pyupgrade
