@@ -60,7 +60,7 @@ runs:
         path: _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
     - name: Upload Assets (release only)
       uses: AButler/upload-release-assets@v2.0
-      if: inputs.mainline_build == 'true' && github.event_name == 'release'
+      if: github.event_name == 'release'
       with:
         files: "_packaging/dist/*.exe"
         repo-token: ${{ inputs.github_token }}
