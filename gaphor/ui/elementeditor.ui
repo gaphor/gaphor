@@ -64,9 +64,9 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkBox">
-            <property name="margin_start">2</property>
-            <property name="margin_end">2</property>
-            <property name="spacing">6</property>
+            <style>
+              <class name="toolbar"/>
+            </style>
             <child>
               <object class="GtkBox">
                 <child>
@@ -152,14 +152,6 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                 </child>
               </object>
             </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSeparator">
-            <property name="margin_start">2</property>
-            <property name="margin_end">2</property>
-            <property name="margin_top">2</property>
-            <property name="margin_bottom">2</property>
           </object>
         </child>
         <child>
