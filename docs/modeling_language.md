@@ -29,8 +29,8 @@ language implementation can offer?
 * [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
 * [Grouping](#grouping), allow elements to be nested in one another
 * [Dropping](#dropping), allow elements to be dragged from the tree view onto a diagram
-* [Instant (diagram) editor popups](#instant-diagram-editor-popups)
 * [Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent
+* [Instant (diagram) editor popups](#instant-diagram-editor-popups)
 
 The first three by functionalities are exposed by the `ModelingLanguage` class.
 The other functionalities can be extended by adding handlers to the respective
@@ -52,86 +52,6 @@ Normally you would inherit from `BaseConnector`.
 ```{eval-rst}
 .. autoclass:: gaphor.diagram.connectors.BaseConnector
    :members:
-```
-
-## Grouping
-
-Grouping is done by dragging one item on top of another, in a diagram or in the tree view.
-
-```{eval-rst}
-.. function:: gaphor.diagram.group.group(parent: Element, element: Element) -> bool
-
-   Group an element in a parent element. The grouping can be based on ownership,
-   but other types of grouping are also possible.
-
-.. function:: gaphor.diagram.group.ungroup(parent: Element, element: Element) -> bool
-
-   Remove the grouping from an element.
-   The function needs to check if the provided `parent` node is the right one.
-
-.. function:: gaphor.diagram.group.can_group(parent_type: Type[Element], element_or_type: Type[Element] | Element) -> bool
-
-   This function tries to determine if grouping is possible,
-   without actually performing a group operation.
-   This is not 100% accurate.
-```
-
-## Dropping
-
-Dropping is performed by dragging an element from the tree view and drop it on a diagram.
-This is an easy way to extend a diagram with already existing model elements.
-
-```{eval-rst}
-.. function:: gaphor.diagram.drop.drop(element: Element, diagram: Diagram, x: float, y: float) -> Presentation | None
-
-   The drop function creates a new presentation for an element on the diagram.
-   For relationships, a drop only works if both connected elements are present in the
-   same diagram.
-
-   The big difference with dragging an element from the toolbox, is that dragging from the toolbox
-   will actually place a new ``Presentation`` element on the diagram. ``drop`` works the other way
-   around: it starts with a model element and creates an accompanying ``Presentation``.
-```
-
-## Editor property pages
-
-The editor page is constructed from snippets. For example: almost each element has a name,
-so there is a UI snippet that allows you to edit a name.
-
-Each property page (snippet) should inherit from `PropertyPageBase`.
-
-```{eval-rst}
-.. autoclass:: gaphor.diagram.propertypages.PropertyPageBase
-   :members:
-```
-
-## Instant (diagram) editor popups
-
-When you double click on an item in a diagram, a popup can show up so you can easily change the name.
-
-By default this works for any named element. You can register your own inline editor function if you need to.
-
-```{eval-rst}
-.. function:: gaphor.diagram.instanteditors.instant_editor(item: Item, view, event_manager, pos: Optional[Tuple[int, int]] = None) -> bool
-
-   Show a small editor popup in the diagram. Makes for
-   easy editing without resorting to the Element editor.
-
-   In case of a mouse press event, the mouse position
-   (relative to the element) are also provided.
-```
-
-
-## Automated model cleanup
-
-Gaphor wants to keep the model in sync with the diagrams.
-
-A little dispatch function is used to determine if a model element can be removed.
-
-```{eval-rst}
-.. function:: gaphor.diagram.deletable.deletable(element: Element) -> bool
-
-   Determine if a model element can safely be removed.
 ```
 
 ## Copy and paste
@@ -179,4 +99,83 @@ To serialize the copied elements and deserialize them again, there are two funct
 
    Deserialize a value previously serialized with ``serialize()``. The
    ``lookup`` function is used to resolve references to other elements.
+```
+
+## Editor property pages
+
+The editor page is constructed from snippets. For example: almost each element has a name,
+so there is a UI snippet that allows you to edit a name.
+
+Each property page (snippet) should inherit from `PropertyPageBase`.
+
+```{eval-rst}
+.. autoclass:: gaphor.diagram.propertypages.PropertyPageBase
+   :members:
+```
+
+## Grouping
+
+Grouping is done by dragging one item on top of another, in a diagram or in the tree view.
+
+```{eval-rst}
+.. function:: gaphor.diagram.group.group(parent: Element, element: Element) -> bool
+
+   Group an element in a parent element. The grouping can be based on ownership,
+   but other types of grouping are also possible.
+
+.. function:: gaphor.diagram.group.ungroup(parent: Element, element: Element) -> bool
+
+   Remove the grouping from an element.
+   The function needs to check if the provided `parent` node is the right one.
+
+.. function:: gaphor.diagram.group.can_group(parent_type: Type[Element], element_or_type: Type[Element] | Element) -> bool
+
+   This function tries to determine if grouping is possible,
+   without actually performing a group operation.
+   This is not 100% accurate.
+```
+
+## Dropping
+
+Dropping is performed by dragging an element from the tree view and drop it on a diagram.
+This is an easy way to extend a diagram with already existing model elements.
+
+```{eval-rst}
+.. function:: gaphor.diagram.drop.drop(element: Element, diagram: Diagram, x: float, y: float) -> Presentation | None
+
+   The drop function creates a new presentation for an element on the diagram.
+   For relationships, a drop only works if both connected elements are present in the
+   same diagram.
+
+   The big difference with dragging an element from the toolbox, is that dragging from the toolbox
+   will actually place a new ``Presentation`` element on the diagram. ``drop`` works the other way
+   around: it starts with a model element and creates an accompanying ``Presentation``.
+```
+
+## Automated model cleanup
+
+Gaphor wants to keep the model in sync with the diagrams.
+
+A little dispatch function is used to determine if a model element can be removed.
+
+```{eval-rst}
+.. function:: gaphor.diagram.deletable.deletable(element: Element) -> bool
+
+   Determine if a model element can safely be removed.
+```
+
+## Instant (diagram) editor popups
+
+When you double click on an item in a diagram, a popup can show up so you can easily change the name.
+
+By default this works for any named element. You can register your own inline editor function if you need to.
+
+```{eval-rst}
+.. function:: gaphor.diagram.instanteditors.instant_editor(item: Item, view, event_manager, pos: Optional[Tuple[int, int]] = None) -> bool
+
+   Show a small editor popup in the diagram. Makes for
+   easy editing without resorting to the Element editor.
+
+   In case of a mouse press event, the mouse position
+   (relative to the element) are also provided.
 ```
