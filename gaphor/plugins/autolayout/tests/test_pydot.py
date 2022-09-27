@@ -87,6 +87,8 @@ def test_layout_with_attached_item(diagram, create, event_manager):
     auto_layout = AutoLayout(event_manager, None)
     auto_layout.layout(diagram)
 
+    assert pin.parent is action
+
 
 def test_parse_pos():
     points = parse_edge_pos('"1.0,2.0 3.0,4 5.0,6.0 7,8.0"')
@@ -99,6 +101,5 @@ def test_parse_pos_invalid_number_of_points():
         parse_edge_pos('"1.0,2.0 3.0,4 5.0,6.0"')
 
 
-# TODO: test with pin/port
 # TODO: test with sequence diagrams -> do nothing
 # TODO: directed or not?
