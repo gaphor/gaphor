@@ -65,8 +65,7 @@ class AutoLayout(Service, ActionProvider):
                 if presentation := next(
                     (p for p in diagram.ownedPresentation if p.id == id), None
                 ):
-                    bb = subgraph.get_node("graph")[0].get("bb")
-                    if bb:
+                    if bb := subgraph.get_node("graph")[0].get("bb"):
                         llx, lly, urx, ury = parse_bb(bb)
                         presentation.matrix.set(
                             x0=llx,
@@ -225,8 +224,7 @@ def _(presentation: AttachedPresentation):
         height=0.1,
     )
     handle = presentation.handles()[0]
-    connection = presentation.diagram.connections.get_connection(handle)
-    if connection:
+    if connection := presentation.diagram.connections.get_connection(handle):
         yield pydot.Edge(
             connection.connected.id,
             presentation.id,
