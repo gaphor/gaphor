@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.7.1">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.11.0">
 <Package id="3867dda4-7a95-11ea-a112-7f953848cf85">
 <name>
 <val>Core</val>
@@ -63,6 +63,9 @@
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 495.59873557593505, 36.538360595703125)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>163.99951171875</val>
 </width>
@@ -83,11 +86,14 @@
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 560.8694152832031, 521.4187622070312)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>184.0</val>
 </width>
 <height>
-<val>100.0</val>
+<val>112.0</val>
 </height>
 <diagram>
 <ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
@@ -103,6 +109,9 @@
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 221.6815955120582, 389.32879638671875)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>188.0</val>
 </width>
@@ -168,10 +177,10 @@
 <ref refid="419c2424-4bbe-11ec-aa3d-0456e5e540ed"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 578.927734375, 121.22430419921875)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 578.427734375, 121.22430419921875)</val>
 </matrix>
 <points>
-<val>[(73.94168090820312, 400.1944580078125), (73.94168090820312, 74.77569580078125), (-0.8292429396899479, 74.77569580078125), (-0.8292429396899479, 0.0)]</val>
+<val>[(74.44168090820312, 400.1944580078125), (74.44168090820312, 74.77569580078125), (-0.3292429396899479, 74.77569580078125), (-0.3292429396899479, 0.0)]</val>
 </points>
 <head-connection>
 <ref refid="5cdae47f-7a95-11ea-a112-7f953848cf85"/>
@@ -236,11 +245,14 @@
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 894.1235656738281, 241.19900512695312)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>109.0</val>
 </width>
 <height>
-<val>66.0</val>
+<val>72.0</val>
 </height>
 <diagram>
 <ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
@@ -256,11 +268,14 @@
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 772.714640616123, 521.4187622070312)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>149.0</val>
 </width>
 <height>
-<val>66.0</val>
+<val>72.0</val>
 </height>
 <diagram>
 <ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
@@ -282,6 +297,9 @@
 <orthogonal>
 <val>1</val>
 </orthogonal>
+<subject>
+<ref refid="53513194-3e9a-11ed-812d-0456e5e540ed"/>
+</subject>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 578.8867180749799, 121.22430419921875)</val>
 </matrix>
@@ -291,11 +309,17 @@
 <head-connection>
 <ref refid="15e4b0b3-9f17-11ea-b537-dfaaecc5bf61"/>
 </head-connection>
+<tail-connection>
+<ref refid="4cda498f-7a95-11ea-a112-7f953848cf85"/>
+</tail-connection>
 </GeneralizationItem>
 <CommentItem id="9bdd3fed-9f17-11ea-b537-dfaaecc5bf61">
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 879.1386901855469, 418.12652587890625)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>122.6197509765625</val>
 </width>
@@ -358,7 +382,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 659.598247294685, 88.0)</val>
 </matrix>
 <points>
-<val>[(0.0, 14.59765625), (423.85332130883063, 14.59765625), (423.85332130883063, 186.19900512695312), (343.5253183791431, 186.19900512695312)]</val>
+<val>[(0.0, 14.59765625), (423.85332130883063, 14.59765625), (423.85332130883063, 189.19900512695312), (343.5253183791431, 189.19900512695312)]</val>
 </points>
 <head-connection>
 <ref refid="4cda498f-7a95-11ea-a112-7f953848cf85"/>
@@ -393,7 +417,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 451.0, 554.0)</val>
 </matrix>
 <points>
-<val>[(-41.31840448794179, -133.0899658203125), (36.234375, -133.0899658203125), (36.234375, -8.316949369996792), (109.86941528320312, -8.316949369996792)]</val>
+<val>[(-41.31840448794179, -133.0899658203125), (36.234375, -133.0899658203125), (36.234375, -5.405234759240102), (109.86941528320312, -5.405234759240102)]</val>
 </points>
 <head-connection>
 <ref refid="639b48d1-7a95-11ea-a112-7f953848cf85"/>
@@ -441,11 +465,14 @@
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 449.234375, 311.32879638671875)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>153.0</val>
 </width>
 <height>
-<val>78.0</val>
+<val>90.0</val>
 </height>
 <diagram>
 <ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
@@ -468,7 +495,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 505.0, 557.0)</val>
 </matrix>
 <points>
-<val>[(-17.765625, -82.90272534861606), (67.234375, -167.67120361328125)]</val>
+<val>[(-17.765625, -81.66154300332158), (67.234375, -155.67120361328125)]</val>
 </points>
 <head-connection>
 <ref refid="216581ca-4465-11eb-8946-9bdfa28f7a50"/>
@@ -500,7 +527,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 493.234375, 60.59765625)</val>
 </matrix>
 <points>
-<val>[(2.364360575935052, 0.0), (-393.0, 0.0), (-393.0, 536.9592758904489), (67.63504028320312, 536.9592758904489)]</val>
+<val>[(2.364360575935052, 0.0), (-393.0, 0.0), (-393.0, 546.0958562824591), (67.63504028320312, 546.0958562824591)]</val>
 </points>
 <head-connection>
 <ref refid="4cda498f-7a95-11ea-a112-7f953848cf85"/>
@@ -539,6 +566,7 @@
 <ref refid="17b8b56e-4bbe-11ec-aa3d-0456e5e540ed"/>
 <ref refid="419c2424-4bbe-11ec-aa3d-0456e5e540ed"/>
 <ref refid="58d8be2c-4bbe-11ec-aa3d-0456e5e540ed"/>
+<ref refid="53513194-3e9a-11ed-812d-0456e5e540ed"/>
 </reflist>
 </specialization>
 </Class>
@@ -704,6 +732,11 @@
 <ref refid="9bdd3fec-9f17-11ea-b537-dfaaecc5bf61"/>
 </reflist>
 </comment>
+<generalization>
+<reflist>
+<ref refid="53513194-3e9a-11ed-812d-0456e5e540ed"/>
+</reflist>
+</generalization>
 <name>
 <val>StyleSheet</val>
 </name>
@@ -1163,6 +1196,9 @@ diagram {
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 300.0, 105.0)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>138.0</val>
 </width>
@@ -1213,11 +1249,14 @@ diagram {
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 158.0, 101.0)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>100.0</val>
 </width>
 <height>
-<val>58.0</val>
+<val>80.0</val>
 </height>
 <diagram>
 <ref refid="a7e1614c-529c-11ec-b0e5-0456e5e540ed"/>
@@ -1227,6 +1266,14 @@ diagram {
 </subject>
 </ClassItem>
 <Stereotype id="d632222a-529c-11ec-b0e5-0456e5e540ed">
+<instanceSpecification>
+<reflist>
+<ref refid="4763605c-529e-11ec-b0e5-0456e5e540ed"/>
+<ref refid="4f18283c-529e-11ec-b0e5-0456e5e540ed"/>
+<ref refid="602d80b8-529e-11ec-b0e5-0456e5e540ed"/>
+<ref refid="6530f82e-529e-11ec-b0e5-0456e5e540ed"/>
+</reflist>
+</instanceSpecification>
 <name>
 <val>Tagged</val>
 </name>
@@ -1250,11 +1297,14 @@ diagram {
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 139.0, 282.0)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>138.0</val>
 </width>
 <height>
-<val>100.0</val>
+<val>120.0</val>
 </height>
 <diagram>
 <ref refid="a7e1614c-529c-11ec-b0e5-0456e5e540ed"/>
@@ -1277,7 +1327,7 @@ diagram {
 <val>(1.0, 0.0, 0.0, 1.0, 203.0, 127.0)</val>
 </matrix>
 <points>
-<val>[(5.0, 32.0), (5.0, 155.0)]</val>
+<val>[(5.0, 54.0), (5.0, 155.0)]</val>
 </points>
 <head-connection>
 <ref refid="d2214cba-529c-11ec-b0e5-0456e5e540ed"/>
@@ -1367,6 +1417,9 @@ diagram {
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 91.0, 105.0)</val>
 </matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
 <width>
 <val>138.0</val>
 </width>
@@ -1606,4 +1659,17 @@ diagram {
 <val>String</val>
 </typeValue>
 </Property>
+<Generalization id="53513194-3e9a-11ed-812d-0456e5e540ed">
+<general>
+<ref refid="4cda498e-7a95-11ea-a112-7f953848cf85"/>
+</general>
+<presentation>
+<reflist>
+<ref refid="29de062c-9f17-11ea-b537-dfaaecc5bf61"/>
+</reflist>
+</presentation>
+<specific>
+<ref refid="15e4b0b2-9f17-11ea-b537-dfaaecc5bf61"/>
+</specific>
+</Generalization>
 </gaphor>
