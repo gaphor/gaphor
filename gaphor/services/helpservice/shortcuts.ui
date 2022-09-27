@@ -197,7 +197,7 @@
           <object class="GtkShortcutsGroup">
             <property name="visible">1</property>
             <property name="title" translatable="yes">Copy and Paste</property>
-        
+
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
