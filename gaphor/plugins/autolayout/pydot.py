@@ -18,7 +18,6 @@ from gaphor.diagram.presentation import (
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
 from gaphor.UML import NamedElement
-from gaphor.UML.classes.generalization import GeneralizationItem
 
 DPI = 72.0
 
@@ -104,17 +103,16 @@ class AutoLayout(Service, ActionProvider):
                 if presentation := next(
                     (p for p in diagram.ownedPresentation if p.id == id), None
                 ):
-                    points = parse_edge_pos(edge.get_pos())
-
-                    if isinstance(presentation, GeneralizationItem):
-                        points.reverse()
-
                     presentation.orthogonal = False
+
+                    points = parse_edge_pos(edge.get_pos())
                     segment = Segment(presentation, diagram)
                     while len(points) > len(presentation.handles()):
                         segment.split_segment(0)
-                    while 2 < len(points) < len(presentation.handles()):
+                    while len(points) < len(presentation.handles()):
                         segment.merge_segment(0)
+
+                    assert len(points) == len(presentation.handles())
 
                     matrix = presentation.matrix_i2c.inverse()
                     for handle, point in zip(presentation.handles(), points):
