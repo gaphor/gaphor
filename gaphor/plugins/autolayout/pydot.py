@@ -144,7 +144,7 @@ def as_pydot(element: Element) -> pydot.Common | Iterable[pydot.Common] | None:
 
 @as_pydot.register
 def _(diagram: Diagram):
-    graph = pydot.Dot("gaphor", graph_type="graph", prog="fdp", splines="polyline")
+    graph = pydot.Dot("gaphor", graph_type="graph", prog="fdp", splines="ortho")
     graph.set_pad(8 / DPI)
     for presentation in diagram.ownedPresentation:
         if presentation.parent:
@@ -273,4 +273,4 @@ def parse_bb(bb):
 
 
 def strip_quotes(s):
-    return s.replace('"', "")
+    return s.replace('"', "").replace("\\\n", "")
