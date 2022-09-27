@@ -45,7 +45,7 @@ class AutoLayout(Service, ActionProvider):
         self.apply_layout(diagram, rendered_graph)
 
     def render(self, diagram: Diagram):
-        graph: pydot.Graph = as_pydot(diagram)
+        graph = diagram_as_pydot(diagram)
         graph.write("before.gv")
         rendered_string = graph.create(format="dot").decode("utf-8")
         if self.dump_gv:
@@ -140,9 +140,8 @@ def as_pydot(element: Element) -> pydot.Common | Iterable[pydot.Common] | None:
     return None
 
 
-@as_pydot.register
-def _(diagram: Diagram):
-    graph = pydot.Dot("gaphor", graph_type="graph", prog="fdp", splines="ortho")
+def diagram_as_pydot(diagram: Diagram) -> pydot.Dot:
+    graph = pydot.Dot("gaphor", graph_type="graph", prog="fdp", splines="polyline")
     graph.set_pad(8 / DPI)
     for presentation in diagram.ownedPresentation:
         if presentation.parent:
