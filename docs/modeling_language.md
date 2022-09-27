@@ -24,13 +24,13 @@ language implementation can offer?
 * Diagram types
 * A toolbox definition
 * [Connectors](#connectors), allow diagram items to connect
-* [Grouping](#grouping), allow elements to be nested in one another
-* [Dropping](#dropping), allow elements to be dragged from the tree view onto a diagram
-* [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
-* [InlInstantine (diagram) editor popups](#instant-diagram-editor-popups)
-* [Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent
 * [Copy/paste](#copy-and-paste) behavior when element copying is not trivial,
   for example with more than one element is involved
+* [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
+* [Grouping](#grouping), allow elements to be nested in one another
+* [Dropping](#dropping), allow elements to be dragged from the tree view onto a diagram
+* [Instant (diagram) editor popups](#instant-diagram-editor-popups)
+* [Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent
 
 The first three by functionalities are exposed by the `ModelingLanguage` class.
 The other functionalities can be extended by adding handlers to the respective
