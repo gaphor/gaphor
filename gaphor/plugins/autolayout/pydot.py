@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 from functools import singledispatch
+from typing import Iterable
 
 import pydot
 from gaphas.connector import ConnectionSink, Connector
@@ -43,7 +46,7 @@ class AutoLayout(Service, ActionProvider):
         self.apply_layout(diagram, rendered_graph)
 
     def render(self, diagram: Diagram):
-        graph = as_pydot(diagram)
+        graph: pydot.Graph = as_pydot(diagram)
         graph.write("before.gv")
         rendered_string = graph.create(format="dot").decode("utf-8")
         if self.dump_gv:
@@ -63,19 +66,22 @@ class AutoLayout(Service, ActionProvider):
                 if presentation := next(
                     (p for p in diagram.ownedPresentation if p.id == id), None
                 ):
-                    llx, lly, urx, ury = parse_bb(
-                        subgraph.get_node("graph")[0].get("bb")
-                    )
-                    presentation.matrix.set(
-                        x0=llx,
-                        y0=height - ury,
-                    )
-                    presentation.width = urx - llx
-                    presentation.height = ury - lly
-                    presentation.request_update()
-                    self.apply_layout(diagram, subgraph, offset=(llx, height - ury))
+                    bb = subgraph.get_node("graph")[0].get("bb")
+                    if bb:
+                        llx, lly, urx, ury = parse_bb(bb)
+                        presentation.matrix.set(
+                            x0=llx,
+                            y0=height - ury,
+                        )
+                        presentation.width = urx - llx
+                        presentation.height = ury - lly
+                        presentation.request_update()
+                        self.apply_layout(diagram, subgraph, offset=(llx, height - ury))
 
             for node in rendered_graph.get_nodes():
+                if not (node.get_id() and node.get_pos()):
+                    continue
+
                 id = node.get_id().replace('"', "")
                 if presentation := next(
                     (p for p in diagram.ownedPresentation if p.id == id), None
@@ -86,8 +92,14 @@ class AutoLayout(Service, ActionProvider):
                         y0=height - pos[1] - presentation.height / 2 - offset[1],
                     )
                     presentation.request_update()
-
+                    if isinstance(presentation, AttachedPresentation):
+                        reconnect(
+                            presentation, presentation.handles()[0], diagram.connections
+                        )
             for edge in rendered_graph.get_edges():
+                if not edge.get("id"):
+                    continue
+
                 id = strip_quotes(edge.get("id"))
                 if presentation := next(
                     (p for p in diagram.ownedPresentation if p.id == id), None
@@ -126,26 +138,20 @@ def reconnect(presentation, handle, connections):
 
 
 @singledispatch
-def as_pydot(element: Element) -> pydot.Common:
+def as_pydot(element: Element) -> pydot.Common | Iterable[pydot.Common] | None:
     return None
 
 
 @as_pydot.register
 def _(diagram: Diagram):
-    graph = pydot.Dot("gaphor", graph_type="graph", prog="neato", splines="polyline")
-    graph.set_pad(8 / DPI)  # inch
+    graph = pydot.Dot("gaphor", graph_type="graph", prog="fdp", splines="polyline")
+    graph.set_pad(8 / DPI)
     for presentation in diagram.ownedPresentation:
         if presentation.parent:
             continue
 
-        edge_or_node = as_pydot(presentation)
+        add_to_graph(graph, as_pydot(presentation))
 
-        if isinstance(edge_or_node, pydot.Edge):
-            graph.add_edge(edge_or_node)
-        elif isinstance(edge_or_node, pydot.Node):
-            graph.add_node(edge_or_node)
-        elif isinstance(edge_or_node, pydot.Graph):
-            graph.add_subgraph(edge_or_node)
     return graph
 
 
@@ -154,7 +160,11 @@ def _(presentation: ElementPresentation):
     if not any(
         c for c in presentation.children if not isinstance(c, AttachedPresentation)
     ):
-        return pydot.Node(
+        for attached in presentation.children:
+            if isinstance(attached, AttachedPresentation):
+                yield as_pydot(attached)
+
+        yield pydot.Node(
             presentation.id,
             id=presentation.id,
             label="",
@@ -162,25 +172,24 @@ def _(presentation: ElementPresentation):
             width=presentation.width / DPI,
             height=presentation.height / DPI,
         )
+    else:
+        graph = pydot.Cluster(
+            presentation.id,
+            id=presentation.id,
+            label=presentation.subject.name
+            if isinstance(presentation.subject, NamedElement)
+            else "",
+            margin=20,
+        )
 
-    graph = pydot.Cluster(
-        presentation.id,
-        id=presentation.id,
-        label=presentation.subject.name
-        if isinstance(presentation.subject, NamedElement)
-        else "",
-        margin=20,
-    )
-    for child in presentation.children:
-        edge_or_node = as_pydot(child)
+        for attached in presentation.children:
+            if isinstance(attached, AttachedPresentation):
+                add_to_graph(graph, as_pydot(attached))
 
-        if isinstance(edge_or_node, pydot.Edge):
-            graph.add_edge(edge_or_node)
-        elif isinstance(edge_or_node, pydot.Node):
-            graph.add_node(edge_or_node)
-        elif isinstance(edge_or_node, pydot.Graph):
-            graph.add_subgraph(edge_or_node)
-    return graph
+        for child in presentation.children:
+            add_to_graph(graph, as_pydot(child))
+
+        yield graph
 
 
 @as_pydot.register
@@ -190,9 +199,13 @@ def _(presentation: LinePresentation):
     tail_connection = connections.get_connection(presentation.tail)
     if (
         head_connection
-        and isinstance(head_connection.connected, ElementPresentation)
+        and isinstance(
+            head_connection.connected, (ElementPresentation, AttachedPresentation)
+        )
         and tail_connection
-        and isinstance(tail_connection.connected, ElementPresentation)
+        and isinstance(
+            tail_connection.connected, (ElementPresentation, AttachedPresentation)
+        )
     ):
         return pydot.Edge(
             head_connection.connected.id,
@@ -204,18 +217,37 @@ def _(presentation: LinePresentation):
 
 
 @as_pydot.register
-def _(presentation: GeneralizationItem):
-    # Tail and head are reverse
-    connections = presentation.diagram.connections
-    head_connection = connections.get_connection(presentation.head)
-    tail_connection = connections.get_connection(presentation.tail)
-    if head_connection and tail_connection:
-        return pydot.Edge(
-            tail_connection.connected.id,
-            head_connection.connected.id,
-            id=presentation.id,
+def _(presentation: AttachedPresentation):
+    yield pydot.Node(
+        presentation.id,
+        id=presentation.id,
+        label="",
+        shape="rect",
+        width=0.1,
+        height=0.1,
+    )
+    handle = presentation.handles()[0]
+    connection = presentation.diagram.connections.get_connection(handle)
+    if connection:
+        yield pydot.Edge(
+            connection.connected.id,
+            presentation.id,
+            len=0.01,
         )
-    return None
+
+
+def add_to_graph(graph, edge_or_node) -> None:
+    if isinstance(edge_or_node, pydot.Edge):
+        graph.add_edge(edge_or_node)
+    elif isinstance(edge_or_node, pydot.Node):
+        graph.add_node(edge_or_node)
+    elif isinstance(edge_or_node, pydot.Graph):
+        graph.add_subgraph(edge_or_node)
+    elif isinstance(edge_or_node, Iterable):
+        for obj in edge_or_node:
+            add_to_graph(graph, obj)
+    elif edge_or_node:
+        raise ValueError(f"Can't transform {edge_or_node} to something DOT'ish?")
 
 
 def parse_edge_pos(pos_str: str) -> list[tuple[float, float]]:
