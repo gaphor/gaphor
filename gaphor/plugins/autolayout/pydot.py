@@ -18,6 +18,7 @@ from gaphor.diagram.presentation import (
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
 from gaphor.UML import NamedElement
+from gaphor.UML.actions.activitynodes import ForkNodeItem
 
 DPI = 72.0
 
@@ -231,6 +232,19 @@ def _(presentation: AttachedPresentation):
             presentation.id,
             len=0.01,
         )
+
+
+@as_pydot.register
+def _(presentation: ForkNodeItem):
+    h1, h2 = presentation.handles()
+    return pydot.Node(
+        presentation.id,
+        id=presentation.id,
+        label="",
+        shape="rect",
+        width=(h2.pos.x - h1.pos.x) / DPI,
+        height=(h2.pos.y - h1.pos.y) / DPI,
+    )
 
 
 def add_to_graph(graph, edge_or_node) -> None:
