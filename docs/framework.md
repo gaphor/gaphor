@@ -52,7 +52,7 @@ Loading and saving a model is done through this service.
 ### element_factory
 
 The [data model](models/core.md) itself is maintained in the element factory
-(`gaphor.UML.elementfactory`). This service is used to create model elements,
+(`gaphor.core.modeling.elementfactory`). This service is used to create model elements,
 as well as to lookup elements or query for a set of elements.
 
 ### undo_manager
