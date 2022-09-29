@@ -10,6 +10,7 @@ from gaphor.UML.diagramitems import (
     ClassItem,
     CommentItem,
     CommentLineItem,
+    ForkNodeItem,
     GeneralizationItem,
     InputPinItem,
     ObjectFlowItem,
@@ -88,6 +89,13 @@ def test_layout_with_attached_item(diagram, create, event_manager):
     auto_layout.layout(diagram)
 
     assert pin.parent is action
+
+
+def test_layout_fork_node_item(diagram, create, event_manager):
+    create(ForkNodeItem, UML.ForkNode)
+
+    auto_layout = AutoLayout(event_manager, None)
+    auto_layout.layout(diagram)
 
 
 def test_parse_pos():

@@ -18,6 +18,7 @@ from gaphor.diagram.presentation import (
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
 from gaphor.UML import NamedElement
+from gaphor.UML.actions.activitynodes import ForkNodeItem
 
 DPI = 72.0
 
@@ -86,10 +87,17 @@ class AutoLayout(Service, ActionProvider):
                     (p for p in diagram.ownedPresentation if p.id == id), None
                 ):
                     pos = parse_point(node.get_pos())
-                    presentation.matrix.set(
-                        x0=pos[0] - presentation.width / 2 - offset[0],
-                        y0=height - pos[1] - presentation.height / 2 - offset[1],
-                    )
+                    if isinstance(presentation, ElementPresentation):
+                        presentation.matrix.set(
+                            x0=pos[0] - presentation.width / 2 - offset[0],
+                            y0=height - pos[1] - presentation.height / 2 - offset[1],
+                        )
+                    else:
+                        presentation.matrix.set(
+                            x0=pos[0] - offset[0],
+                            y0=pos[1] - offset[1],
+                        )
+
                     presentation.request_update()
                     if isinstance(presentation, AttachedPresentation):
                         reconnect(
@@ -231,6 +239,19 @@ def _(presentation: AttachedPresentation):
             presentation.id,
             len=0.01,
         )
+
+
+@as_pydot.register
+def _(presentation: ForkNodeItem):
+    h1, h2 = presentation.handles()
+    return pydot.Node(
+        presentation.id,
+        id=presentation.id,
+        label="",
+        shape="rect",
+        width=(h2.pos.x - h1.pos.x) / DPI,
+        height=(h2.pos.y - h1.pos.y) / DPI,
+    )
 
 
 def add_to_graph(graph, edge_or_node) -> None:
