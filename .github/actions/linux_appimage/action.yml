@@ -13,6 +13,10 @@ inputs:
 runs:
   using: composite
   steps:
+    - run: >
+        sudo apt-get update -qq &&
+        sudo apt-get install -qq --no-install-recommends graphviz
+      shell: bash
     - name: Install Build Dependencies
       run: poetry install --only main,packaging --no-interaction
       shell: bash
