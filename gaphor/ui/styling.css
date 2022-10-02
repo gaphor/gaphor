@@ -2,16 +2,16 @@
 #toolbox > expander {
   border-top: 1px solid @unfocused_borders;
   margin-top: 6px;
-  padding: 6px 3px 0px 3px;
+  padding: 6px 3px 0 3px;
 }
 
 #toolbox > expander:first-child {
   border-top: none;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 #diagrams {
-  border-top-width: 0px;
+  border-top-width: 0;
 }
 
 diagramview {
