@@ -199,11 +199,13 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self,
         diagram: Diagram,
         id=None,
-        style: Style = {},
+        style: Style = None,
         shape_head=None,
         shape_middle=None,
         shape_tail=None,
     ):
+        if style is None:
+            style = {}
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
 
         self._style = style

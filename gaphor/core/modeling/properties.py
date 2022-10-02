@@ -204,10 +204,10 @@ class attribute(umlproperty, Generic[T]):
         """Load the attribute value."""
         try:
             setattr(obj, self._name, self.type(value))
-        except ValueError:
+        except ValueError as e:
             error_msg = f"Failed to load attribute {self._name} of type {self.type} with value {value}"
 
-            raise TypeError(error_msg)
+            raise TypeError(error_msg) from e
 
     def unlink(self, obj):
         self.set(obj, self.default)

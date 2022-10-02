@@ -50,7 +50,9 @@ def clear_model(diagram, element_factory, retain=[]):
         item.unlink()
 
 
-def copy_and_paste_link(items, diagram, element_factory, retain=[]):
+def copy_and_paste_link(items, diagram, element_factory, retain=None):
+    if retain is None:
+        retain = []
     buffer = copy(items)
     return paste_link(buffer, diagram, element_factory.lookup)
 

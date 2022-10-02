@@ -46,7 +46,7 @@ class base:
         try:
             return self.__getitem__(key)
         except KeyError as e:
-            raise AttributeError(e)
+            raise AttributeError(e) from e
 
     def __getitem__(self, key):
         try:

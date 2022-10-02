@@ -63,8 +63,7 @@ def parse_compound_selector(tokens, namespaces):
         return CompoundSelector(simple_selectors)
     peek = tokens.peek()
     raise SelectorError(
-        peek,
-        "expected a compound selector, got %s" % (peek.type if peek else "EOF"),
+        peek, f'expected a compound selector, got {peek.type if peek else "EOF"}'
     )
 
 
@@ -189,8 +188,9 @@ def parse_qualified_name(tokens, namespaces, is_attribute=False):
         namespace = namespaces.get(first_ident.value)
         if namespace is None:
             raise SelectorError(
-                first_ident, "undefined namespace prefix: " + first_ident.value
+                first_ident, f"undefined namespace prefix: {first_ident.value}"
             )
+
     elif peek == "*":
         next = tokens.next()
         peek = tokens.peek()

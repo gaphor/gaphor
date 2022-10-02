@@ -4,11 +4,13 @@ system.
 These are things like preferences.
 """
 
+
 import ast
 import hashlib
 import logging
 import os
 import pprint
+from pathlib import Path
 from typing import Dict
 
 from gi.repository import GLib
@@ -127,9 +129,7 @@ class Properties(Service):
 
         if os.path.exists(filename) and os.path.isfile(filename):
 
-            with open(filename) as ifile:
-                data = ifile.read()
-
+            data = Path(filename).read_text()
             try:
                 self._properties = ast.literal_eval(data)
             except SyntaxError:

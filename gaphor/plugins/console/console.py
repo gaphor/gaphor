@@ -65,7 +65,9 @@ def docstring_dedent(docstr: str) -> str:
 
 
 class Help:
-    def __init__(self, writer, locals={}):
+    def __init__(self, writer, locals=None):
+        if locals is None:
+            locals = {}
         self._writer = writer
         self._locals = locals
 

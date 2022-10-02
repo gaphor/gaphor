@@ -4,7 +4,9 @@ from gaphor.core.styling import parse_style_sheet
 
 
 class Node:
-    def __init__(self, name, parent=None, children=None, attributes={}, state=()):
+    def __init__(self, name, parent=None, children=None, attributes=None, state=()):
+        if attributes is None:
+            attributes = {}
         self._name = name
         self._parent = parent
         self._children = children or []

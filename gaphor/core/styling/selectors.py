@@ -47,8 +47,7 @@ def compile_name_selector(selector: parser.LocalNameSelector):
 
 
 def ancestors(el):
-    p = el.parent()
-    if p:
+    if p := el.parent():
         yield p
         yield from ancestors(p)
 
