@@ -113,7 +113,7 @@ def test_lifetime_connection(diagram):
     ll2.lifetime.visible = True
     assert ll1.lifetime.visible and ll2.lifetime.visible
 
-    # connect lifetimes with messages message to lifeline's head
+    # connect lifetimes with a message to the lifeline's head
     connect(msg, msg.head, ll1, ll1.lifetime.port)
     connect(msg, msg.tail, ll2, ll2.lifetime.port)
 
@@ -132,7 +132,7 @@ def test_lifetime_connect_disconnect(diagram):
     ll2.lifetime.visible = True
     assert ll1.lifetime.visible and ll2.lifetime.visible
 
-    # connect lifetimes with messages message to lifeline's head
+    # connect lifetimes with a message to the lifeline's head
     connect(msg, msg.head, ll1, ll1.lifetime.port)
     connect(msg, msg.tail, ll2, ll2.lifetime.port)
     disconnect(msg, msg.tail)

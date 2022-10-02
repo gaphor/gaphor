@@ -86,7 +86,7 @@ class ElementDispatcher(Service):
               'guard.specification[LiteralSpecification].value', self._handler)
 
     Note the '[' and ']'. This is because guard references ValueSpecification,
-    which does not have a value attribute. Therefore the default reference type
+    which does not have a value attribute. Therefore, the default reference type
     is overruled in favour of the LiteralSpecification.
 
     This dispatcher keeps track of the kind of events that are dispatched. The

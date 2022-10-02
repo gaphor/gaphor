@@ -82,7 +82,7 @@ class StyleSheet(Element):
         self.compile_style_sheet()
 
     def handle(self, event):
-        # Ensure compiled style sheet is always up to date:
+        # Ensure compiled style sheet is always up-to-date:
         if (
             isinstance(event, AttributeUpdated)
             and event.property is StyleSheet.styleSheet

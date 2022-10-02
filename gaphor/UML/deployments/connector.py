@@ -9,7 +9,7 @@ Assembly Connector
 To connect two components with assembly connector connect folded interface
 and component items using connector item.
 
-If component provides or requires connected interface, then assembly
+If component provides or requires a connected interface, then assembly
 connection in UML data model will be created and connector item will
 display name of the interface. Otherwise, UML data model is not updated
 and connector item does not display interface name.
@@ -50,7 +50,7 @@ a component, disadvantages
 For Gaphor 0.14 and later, two other ideas were considered.
 
 First one required assembly connector item as well. Connector item could
-visualize ConnectorEnd and Connector UML metaclasses and it would be
+visualize ConnectorEnd and Connector UML metaclasses, and it would be
 used to connect assembly connector item and items of components. It is very
 consistent with the rest of Gaphor application but
 

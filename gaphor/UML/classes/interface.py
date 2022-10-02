@@ -47,8 +47,8 @@ There is no need for additional dependency
   represent the same interface, which is easily identifiable with its name
 
 Even more, adding a dependency between folded interfaces provides
-information, on UML data model level, that an interface depenends on itself
-but it is not the intention of this (*unsupported*) notation.
+information, on UML data model level, that an interface depends on itself
+but, it is not the intention of this (*unsupported*) notation.
 
 For more examples of non-supported by Gaphor notation, see
 http://martinfowler.com/bliki/BallAndSocket.html.
@@ -60,8 +60,8 @@ Current approach to folding and connecting lines to an interface is as
 follows
 
 - allow folding/unfolding of an interface only when there is only one
-  implementation or depenedency usage connected
-- when interface is folded, allow only one implementation or depenedency
+  implementation or dependency usage connected
+- when interface is folded, allow only one implementation or dependency
   usage to be connected
 
 Folding and unfolding is performed by `InterfacePropertyPage` class.

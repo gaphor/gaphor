@@ -30,7 +30,7 @@ def get_lifeline(item, handle):
 def order_lifeline_covered_by(lifeline):
     diagram = lifeline.diagram
 
-    def y_and_occurence(connected):
+    def y_and_occurrence(connected):
         for conn in diagram.connections.get_connections(connected=connected):
             m = conn.item.matrix_i2c
             if not conn.item.subject:
@@ -45,7 +45,7 @@ def order_lifeline_covered_by(lifeline):
                     m.transform_point(*conn.item.bottom.pos)[1],
                     conn.item.subject.finish,
                 )
-                yield from y_and_occurence(conn.item)
+                yield from y_and_occurrence(conn.item)
             elif isinstance(conn.item, MessageItem):
                 yield (
                     m.transform_point(*conn.handle.pos)[1],
@@ -55,7 +55,7 @@ def order_lifeline_covered_by(lifeline):
                 )
 
     if lifeline.subject:
-        keys = {o: y for y, o in y_and_occurence(lifeline)}
+        keys = {o: y for y, o in y_and_occurrence(lifeline)}
         lifeline.subject.coveredBy.order(lambda key: keys.get(key, 0.0))
 
 
@@ -152,8 +152,8 @@ class MessageLifelineConnect(BaseConnector):
         send: Optional[Presentation[Element]] = get_connected(line, line.head)
         received = self.get_connected(line.tail)
 
-        # if a message is delete message, then disconnection causes
-        # lifeline to be no longer destroyed (note that there can be
+        # if a message is a deleted message, then the disconnection causes
+        # the lifeline to be no longer destroyed (note that there can be
         # only one delete message connected to lifeline)
         if received and line.subject and line.subject.messageSort == "deleteMessage":
             assert isinstance(received, LifelineItem)
@@ -209,17 +209,17 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
             exec_spec = model.create(UML.BehaviorExecutionSpecification)
             self.line.subject = exec_spec
 
-            start_occurence: UML.ExecutionOccurrenceSpecification = model.create(
+            start_occurrence: UML.ExecutionOccurrenceSpecification = model.create(
                 UML.ExecutionOccurrenceSpecification
             )
-            start_occurence.covered = lifeline
-            start_occurence.execution = exec_spec
+            start_occurrence.covered = lifeline
+            start_occurrence.execution = exec_spec
 
-            finish_occurence: UML.ExecutionOccurrenceSpecification = model.create(
+            finish_occurrence: UML.ExecutionOccurrenceSpecification = model.create(
                 UML.ExecutionOccurrenceSpecification
             )
-            finish_occurence.covered = lifeline
-            finish_occurence.execution = exec_spec
+            finish_occurrence.covered = lifeline
+            finish_occurrence.execution = exec_spec
 
         if lifeline.interaction:
             exec_spec.enclosingInteraction = lifeline.interaction

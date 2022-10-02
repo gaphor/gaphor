@@ -30,7 +30,7 @@ def compile_selector_list(input):
 def compile_node(selector):
     """Dynamic dispatch selector nodes.
 
-    Default behavior is a deny (no match).
+    Default behavior is to deny (no match).
     """
     raise parser.SelectorError("Unknown selector", selector)
 

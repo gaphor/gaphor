@@ -13,7 +13,7 @@ def factory():
 
 
 def test_association(factory):
-    """Testing Association elements in the meta-model."""
+    """Testing Association elements in the metamodel."""
     element = factory.create(UML.Association)
 
     property1 = factory.create(UML.Property)
@@ -55,7 +55,7 @@ def test_association_class(factory):
 
 
 def test_class(factory):
-    """Testing Class elements in the meta-model."""
+    """Testing Class elements in the metamodel."""
     element = factory.create(UML.Class)
     property1 = factory.create(UML.Property)
     operation1 = factory.create(UML.Operation)
@@ -91,7 +91,7 @@ def test_comment(factory):
 
 
 def test_constraint(factory):
-    """Testing Constraint elements in the meta-model."""
+    """Testing Constraint elements in the metamodel."""
     element = factory.create(UML.Constraint)
 
     constrainedElement = factory.create(UML.Class)

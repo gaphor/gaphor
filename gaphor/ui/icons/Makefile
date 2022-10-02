@@ -1,4 +1,4 @@
-STENSIL=stensil.svg
+STENCIL=stencil.svg
 
 ICONS=diagram \
 	new-diagram \
@@ -133,10 +133,10 @@ INKSCAPE=flatpak run org.inkscape.Inkscape
 
 all: verify $(ICON_FILES)
 
-verify: stensil.svg
+verify: stencil.svg
 	@for icon in $(ICONS); do grep -q "id=\"$$icon\"" $< || { echo "ERROR: No layer named $$icon"; exit 1; }; done
 
-$(ICON_THEME)/gaphor-%-symbolic.svg: stensil.svg
+$(ICON_THEME)/gaphor-%-symbolic.svg: stencil.svg
 	$(INKSCAPE) --export-id=$* --export-id-only --export-text-to-path \
 		--export-plain-svg --export-overwrite --export-filename=$@ $<
 

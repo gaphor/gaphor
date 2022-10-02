@@ -28,7 +28,7 @@ class ModelingLanguage(metaclass=ABCMeta):
     @property
     @abstractmethod
     def name(self) -> str:
-        """Human readable name of the modeling language."""
+        """Human-readable name of the modeling language."""
 
     @property
     @abstractmethod

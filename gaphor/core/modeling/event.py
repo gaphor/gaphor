@@ -33,7 +33,7 @@ class ElementUpdated:
 
 
 class AttributeUpdated(ElementUpdated):
-    """A attribute has changed value."""
+    """An attribute has changed value."""
 
     def __init__(self, element, attribute, old_value, new_value):
         """Constructor.

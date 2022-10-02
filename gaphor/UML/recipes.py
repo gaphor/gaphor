@@ -45,7 +45,7 @@ T = TypeVar("T", bound=Element)
 
 
 def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
-    """Identify stereotypes of an UML metamodel instance and return coma
+    """Identify stereotypes of a UML metamodel instance and return coma
     separated stereotypes as string.
 
     :Parameters:
@@ -385,8 +385,7 @@ def clone_message(msg, inverted=False):
         receive.covered = msg.receiveEvent.covered
 
     if inverted:
-        # inverted message goes in different direction, than original
-        # message
+        # inverted message goes in different direction, then the original message
         message.sendEvent = receive
         message.receiveEvent = send
     else:

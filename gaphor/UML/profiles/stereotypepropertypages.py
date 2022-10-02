@@ -155,7 +155,7 @@ def toggle_stereotype(renderer, path, subject, model):
 
 @transactional
 def set_value(renderer, path, value, model):
-    """Set value of stereotype property applied to an UML element."""
+    """Set value of stereotype property applied to a UML element."""
     row = model[path]
     _, _, _, _, _, attr, applied, slot = row
     if isinstance(attr, UML.Stereotype):

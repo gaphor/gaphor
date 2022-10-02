@@ -11,7 +11,7 @@ connected, then dependency type cannot be changed to realization as this
 dependency type can only exist between a component and a classifier.
 
 Function dependency_type in model factory should be used to determine
-type of a dependency in automatic way.
+the type of dependency in an automatic way.
 """
 
 from gaphor import UML

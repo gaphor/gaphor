@@ -43,7 +43,7 @@ class VertexTransitionConnect(TransactionConnectMixin, DirectionalRelationshipCo
     def allow(self, handle, port):
         """Glue transition handle and vertex item.
 
-        Guard from connecting transition's head with final state.
+        Guard against connecting transition's head with final state.
         """
         line = self.line
         subject = self.element.subject

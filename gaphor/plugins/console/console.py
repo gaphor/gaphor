@@ -127,7 +127,7 @@ class ExceptionWriter:
     """A Multiplexing output stream.
 
     It can replace another stream, and tee output to the original stream
-    and too a GTK textview.
+    and to a GTK textview.
     """
 
     def excepthook(self, exc_type, exc_value, exc_traceback):

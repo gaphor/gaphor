@@ -284,7 +284,7 @@ class Diagram(Element):
     def create(self, type, parent=None, subject=None):
         """Create a new diagram item on the diagram.
 
-        It is created with a unique ID and it is attached to the
+        It is created with a unique ID, and it is attached to the
         diagram's root item.  The type parameter is the element class to
         create.  The new element also has an optional parent and
         subject.
@@ -331,7 +331,7 @@ class Diagram(Element):
         ...
 
     def select(self, expression=None):
-        """Return a iterator of all canvas items that match expression."""
+        """Return an iterator of all canvas items that match expression."""
         if expression is None:
             yield from self.get_all_items()
         elif isinstance(expression, type):

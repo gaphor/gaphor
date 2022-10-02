@@ -76,7 +76,7 @@ class UndoManagerStateChanged(ServiceEvent):
 
 
 class NotInTransactionException(Exception):
-    """Raised when changes occur outside of a transaction."""
+    """Raised when changes occur outside a transaction."""
 
 
 class UndoManager(Service, ActionProvider):
