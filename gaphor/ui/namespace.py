@@ -202,8 +202,12 @@ class Namespace(UIComponent, ActionProvider):
             menu = Gtk.PopoverMenu.new_from_model(
                 popup_model(selected_element, self.modeling_language)
             )
-            menu.set_pointing_to(Gdk.Rectangle(x, y, 1, 1))
-            menu.set_offset(x, y)
+            gdk_rect = Gdk.Rectangle()
+            gdk_rect.x = x
+            gdk_rect.y = y
+            gdk_rect.width = gdk_rect.height = 1
+
+            menu.set_pointing_to(gdk_rect)
             menu.set_has_arrow(False)
             menu.set_parent(self.view)
             menu.popup()
