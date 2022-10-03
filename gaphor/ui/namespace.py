@@ -219,7 +219,7 @@ class Namespace(UIComponent, ActionProvider):
         return False
 
     def _on_view_row_activated(self, view, path, column):
-        """Double click on an element in the tree view."""
+        """Double-click on an element in the tree view."""
         if Gtk.get_major_version() == 3:
             view.get_action_group("tree-view").lookup_action("open").activate()
         else:

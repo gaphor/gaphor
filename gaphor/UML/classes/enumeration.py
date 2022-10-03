@@ -24,7 +24,7 @@ log = logging.getLogger(__name__)
 
 @represents(UML.Enumeration)
 class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
-    """This item visualizes a Enumeration instance.
+    """This item visualizes an Enumeration instance.
 
     An EnumerationItem contains three compartments:
     1. Enumeration Literals

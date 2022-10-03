@@ -53,7 +53,7 @@ def test_coder_write_class_no_attributes():
 
     attr_def = list(variables(class_))
 
-    assert attr_def == []
+    assert not attr_def
 
 
 def create_attribute(s: str, element_factory=None):

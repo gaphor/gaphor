@@ -30,7 +30,7 @@ def compile_selector_list(input):
 def compile_node(selector):
     """Dynamic dispatch selector nodes.
 
-    Default behavior is a deny (no match).
+    Default behavior is to deny (no match).
     """
     raise parser.SelectorError("Unknown selector", selector)
 
@@ -47,8 +47,7 @@ def compile_name_selector(selector: parser.LocalNameSelector):
 
 
 def ancestors(el):
-    p = el.parent()
-    if p:
+    if p := el.parent():
         yield p
         yield from ancestors(p)
 

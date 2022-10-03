@@ -36,6 +36,7 @@ from gaphor.core.modeling.modelinglanguage import (
 )
 from gaphor.entrypoint import initialize
 from gaphor.storage import storage
+from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 log = logging.getLogger(__name__)
@@ -78,13 +79,16 @@ def main(
         [
             load_modeling_language(lang)
             for lang, _ in supermodelfiles
-            if lang not in ("Core", "UML")
+            if lang not in ("Core", "UML", "SysML")
         ]
         if supermodelfiles
         else []
     )
     modeling_language = MockModelingLanguage(
-        *([CoreModelingLanguage(), UMLModelingLanguage()] + extra_langs)
+        *(
+            [CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()]
+            + extra_langs
+        )
     )
 
     model = load_model(modelfile, modeling_language)
@@ -109,18 +113,14 @@ def coder(
     overrides: Overrides | None,
 ) -> Iterable[str]:
 
-    already_imported = set()
-
     classes = list(
         order_classes(
             c
             for c in model.select(UML.Class)
-            if not (
-                is_enumeration(c)
-                or is_simple_type(c)
-                or is_in_profile(c)
-                or is_tilde_type(c)
-            )
+            if not is_enumeration(c)
+            and not is_simple_type(c)
+            and not is_in_profile(c)
+            and not is_tilde_type(c)
         )
     )
 
@@ -128,6 +128,7 @@ def coder(
     if overrides and overrides.header:
         yield overrides.header
 
+    already_imported = set()
     for c in classes:
         if overrides and overrides.has_override(c.name):
             yield overrides.get_override(c.name)
@@ -141,8 +142,7 @@ def coder(
             continue
 
         yield class_declaration(c)
-        properties = list(variables(c, overrides))
-        if properties:
+        if properties := list(variables(c, overrides)):
             yield from (f"    {p}" for p in properties)
         else:
             yield "    pass"
@@ -332,8 +332,7 @@ def bases(c: UML.Class) -> Iterable[UML.Class]:
 
     for a in c.ownedAttribute:
         if a.association and a.name == "baseClass":
-            meta_cls = a.association.ownedEnd.class_
-            yield meta_cls
+            yield a.association.ownedEnd.class_
 
 
 def is_enumeration(c: UML.Class) -> bool:
@@ -382,10 +381,14 @@ def is_in_toplevel_package(c: UML.Class, package_name: str) -> bool:
 
 def redefines(a: UML.Property) -> str | None:
     slot: UML.Slot
-    for slot in a.appliedStereotype[:].slot:
-        if slot.definingFeature.name == "redefines":
-            return slot.value  # type: ignore[no-any-return]
-    return None
+    return next(
+        (
+            slot.value
+            for slot in a.appliedStereotype[:].slot
+            if slot.definingFeature.name == "redefines"
+        ),
+        None,
+    )
 
 
 def attribute(
@@ -455,17 +458,15 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             "UnlimitedNatural",
         ):
             prop.typeValue = "int"
-        else:
-            c: UML.Class | None = next(
-                element_factory.select(
-                    lambda e: isinstance(e, UML.Class) and e.name == prop.typeValue
-                ),  # type: ignore[arg-type]
-                None,
-            )
-            if c:
-                prop.type = c
-                del prop.typeValue
-                prop.aggregation = "composite"
+        elif c := next(
+            element_factory.select(
+                lambda e: isinstance(e, UML.Class) and e.name == prop.typeValue
+            ),
+            None,
+        ):
+            prop.type = c  # type: ignore[assignment]
+            del prop.typeValue
+            prop.aggregation = "composite"
 
         if prop.type and is_simple_type(prop.type):  # type: ignore[arg-type]
             prop.typeValue = "str"

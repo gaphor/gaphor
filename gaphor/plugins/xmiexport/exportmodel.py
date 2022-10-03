@@ -42,7 +42,7 @@ class XMIExport:
         xmi.startElement(f"{self.UML_PREFIX}:Package", attrs=attributes)
 
         for ownedMember in element.ownedMember:
-            xmi.startElement("ownedMember", attrs=dict())
+            xmi.startElement("ownedMember", attrs={})
             self.handle(xmi, ownedMember)
             xmi.endElement("ownedMember")
 
@@ -64,12 +64,12 @@ class XMIExport:
         if not idref:
 
             for ownedAttribute in element.ownedAttribute:
-                xmi.startElement("ownedAttribute", attrs=dict())
+                xmi.startElement("ownedAttribute", attrs={})
                 self.handle(xmi, ownedAttribute)
                 xmi.endElement("ownedAttribute")
 
             for ownedOperation in element.ownedOperation:
-                xmi.startElement("ownedOperation", attrs=dict())
+                xmi.startElement("ownedOperation", attrs={})
                 self.handle(xmi, ownedOperation)
                 xmi.endElement("ownedOperation")
 
@@ -94,7 +94,7 @@ class XMIExport:
 
         # TODO: This should be type, not typeValue.
         if element.typeValue is not None:
-            xmi.startElement("type", attrs=dict())
+            xmi.startElement("type", attrs={})
             self.handle(xmi, element.typeValue)
             xmi.endElement("type")
 
@@ -112,7 +112,7 @@ class XMIExport:
         xmi.startElement(f"{self.XMI_PREFIX}:Operation", attrs=attributes)
 
         for ownedParameter in element.ownedParameter:
-            xmi.startElement("ownedElement", attrs=dict())
+            xmi.startElement("ownedElement", attrs={})
             self.handle(xmi, ownedParameter)
             xmi.endElement("ownedElement")
 
@@ -149,12 +149,12 @@ class XMIExport:
         xmi.startElement(f"{self.UML_PREFIX}:Association", attrs=attributes)
 
         for memberEnd in element.memberEnd:
-            xmi.startElement("memberEnd", attrs=dict())
+            xmi.startElement("memberEnd", attrs={})
             self.handle(xmi, memberEnd)
             xmi.endElement("memberEnd")
 
         for ownedEnd in element.ownedEnd:
-            xmi.startElement("ownedEnd", attrs=dict())
+            xmi.startElement("ownedEnd", attrs={})
             self.handle(xmi, ownedEnd)
             xmi.endElement("ownedEnd")
 
@@ -166,12 +166,12 @@ class XMIExport:
         xmi.startElement(f"{self.UML_PREFIX}:{name}", attrs=attributes)
 
         for client in element.client:
-            xmi.startElement("client", attrs=dict())
+            xmi.startElement("client", attrs={})
             self.handle(xmi, client)
             xmi.endElement("client")
 
         for supplier in element.supplier:
-            xmi.startElement("supplier", attrs=dict())
+            xmi.startElement("supplier", attrs={})
             self.handle(xmi, supplier)
             xmi.endElement("supplier")
 
@@ -187,12 +187,12 @@ class XMIExport:
         xmi.startElement(f"{self.UML_PREFIX}:Generalization", attrs=attributes)
 
         if element.general:
-            xmi.startElement("general", attrs=dict())
+            xmi.startElement("general", attrs={})
             self.handle(xmi, element.general)
             xmi.endElement("general")
 
         if element.specific:
-            xmi.startElement("specific", attrs=dict())
+            xmi.startElement("specific", attrs={})
             self.handle(xmi, element.specific)
             xmi.endElement("specific")
 
@@ -207,12 +207,12 @@ class XMIExport:
         xmi.startElement(f"{self.UML_PREFIX}:Interface", attrs=attributes)
 
         for ownedAttribute in element.ownedAttribute:
-            xmi.startElement("ownedAttribute", attrs=dict())
+            xmi.startElement("ownedAttribute", attrs={})
             self.handle(xmi, ownedAttribute)
             xmi.endElement("ownedAttribute")
 
         for ownedOperation in element.ownedOperation:
-            xmi.startElement("ownedOperation", attrs=dict())
+            xmi.startElement("ownedOperation", attrs={})
             self.handle(xmi, ownedOperation)
             xmi.endElement("ownedOperation")
 

@@ -86,8 +86,8 @@ class BaseConnector:
 
     def connect(self, handle: Handle, port: Port) -> bool:
         """Connect to an element. Note that at this point the line may be
-        connected to some other, or the same element. Also the connection at
-        model level still exists.
+        connected to some other, or the same element. The connection at model
+        level also still exists.
 
         Returns `True` if a connection is established.
         """
@@ -116,7 +116,7 @@ class NoConnector:
 
 
 # Work around issue https://github.com/python/mypy/issues/3135 (Class decorators are not type checked)
-# This definition, along with the the ignore below, seems to fix the behaviour for mypy at least.
+# This definition, along with the ignore below, seems to fix the behaviour for mypy at least.
 Connector: FunctionDispatcher[type[ConnectorProtocol]] = multidispatch(object, object)(
     NoConnector
 )
@@ -160,8 +160,8 @@ class RelationshipConnect(BaseConnector):
         the line are connected to.
 
         type - the type of relationship we're looking for
-        head - tuple (association name on line, association name on element)
-        tail - tuple (association name on line, association name on element)
+        head - tuple (association name on the line, association name on the element)
+        tail - tuple (association name on the line, association name on the element)
         """
         assert isinstance(head, (association, redefine)), f"head is {head}"
         assert isinstance(tail, (association, redefine)), f"tail is {tail}"

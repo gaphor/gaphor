@@ -22,7 +22,7 @@ class PresentationConnector(ItemConnector):
     """Handle Tool (acts on item handles) that uses the Connector protocol to
     connect items to one-another.
 
-    It also adds handles to lines when a line is grabbed on the middle
+    It also adds handles to lines when a line is grabbed in the middle
     of a line segment (points are drawn by the LineSegmentPainter).
     """
 

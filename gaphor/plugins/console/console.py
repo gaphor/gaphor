@@ -65,7 +65,9 @@ def docstring_dedent(docstr: str) -> str:
 
 
 class Help:
-    def __init__(self, writer, locals={}):
+    def __init__(self, writer, locals=None):
+        if locals is None:
+            locals = {}
         self._writer = writer
         self._locals = locals
 
@@ -125,7 +127,7 @@ class ExceptionWriter:
     """A Multiplexing output stream.
 
     It can replace another stream, and tee output to the original stream
-    and too a GTK textview.
+    and to a GTK textview.
     """
 
     def excepthook(self, exc_type, exc_value, exc_traceback):

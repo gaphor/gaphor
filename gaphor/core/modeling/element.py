@@ -148,7 +148,7 @@ class Element:
     def unlink(self):
         """Unlink the element. All the elements references are destroyed.
 
-        The unlink lock is acquired while unlinking this elements
+        The unlink lock is acquired while unlinking this element's
         properties to avoid recursion problems.
         """
         if self._unlink_lock:
@@ -184,7 +184,7 @@ class Element:
         return isinstance(self, class_)
 
     def isTypeOf(self, other: Element) -> bool:
-        """Returns true if the object is of the same type as other."""
+        """Returns true if the object is of the same type as the other."""
         return isinstance(self, type(other))
 
     def __setattr__(self, key, value):

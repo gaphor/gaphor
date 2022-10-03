@@ -40,13 +40,13 @@ class SessionCreated(ServiceEvent):
 
     def __init__(
         self,
-        applicaton: Service,
+        application: Service,
         session: Service,
         filename: str | Path | None,
         template: str | None,
     ):
-        super().__init__(applicaton)
-        self.application = applicaton
+        super().__init__(application)
+        self.application = application
         self.session = session
         self.filename = Path(filename) if filename else None
         self.template = template

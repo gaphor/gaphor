@@ -80,12 +80,6 @@ class DrawContext:
     dropzone: bool
 
 
-# From https://www.python.org/dev/peps/pep-0616/
-def removesuffix(self: str, suffix: str) -> str:
-    # suffix='' should not call self[:-0].
-    return self[: -len(suffix)] if suffix and self.endswith(suffix) else self[:]
-
-
 @lru_cache()
 def attrname(obj, lower_name):
     """Look up a real attribute name based on a lower case (normalized)
@@ -174,7 +168,7 @@ class StyledItem:
         self.selection = selection
 
     def name(self) -> str:
-        return removesuffix(type(self.item).__name__, "Item").lower()
+        return type(self.item).__name__.removesuffix("Item").lower()
 
     def parent(self) -> StyledItem | StyledDiagram:
         parent = self.item.parent
@@ -290,7 +284,7 @@ class Diagram(Element):
     def create(self, type, parent=None, subject=None):
         """Create a new diagram item on the diagram.
 
-        It is created with a unique ID and it is attached to the
+        It is created with a unique ID, and it is attached to the
         diagram's root item.  The type parameter is the element class to
         create.  The new element also has an optional parent and
         subject.
@@ -337,7 +331,7 @@ class Diagram(Element):
         ...
 
     def select(self, expression=None):
-        """Return a iterator of all canvas items that match expression."""
+        """Return an iterator of all canvas items that match expression."""
         if expression is None:
             yield from self.get_all_items()
         elif isinstance(expression, type):

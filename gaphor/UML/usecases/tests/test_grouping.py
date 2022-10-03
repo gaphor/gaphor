@@ -5,7 +5,7 @@ from gaphor.UML.usecases import UseCaseItem
 
 
 def test_grouping(create):
-    """Test adding an use case to a subsystem."""
+    """Test adding a use case to a subsystem."""
     s = create(ComponentItem, UML.Component)
     uc1 = create(UseCaseItem, UML.UseCase)
     uc2 = create(UseCaseItem, UML.UseCase)
@@ -19,7 +19,7 @@ def test_grouping(create):
 
 
 def test_grouping_with_namespace(create):
-    """Test adding an use case to a subsystem (with namespace)"""
+    """Test adding a use case to a subsystem (with namespace)"""
     s = create(ComponentItem, UML.Component)
     uc = create(UseCaseItem, UML.UseCase)
 

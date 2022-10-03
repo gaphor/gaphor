@@ -121,9 +121,11 @@ class Box:
     def __init__(
         self,
         *children,
-        style: Style = {},
+        style: Style = None,
         draw: Callable[[Box, DrawContext, Rectangle], None] | None = None,
     ):
+        if style is None:
+            style = {}
         self.children = children
         self.sizes: list[tuple[int, int]] = []
         self._inline_style = style

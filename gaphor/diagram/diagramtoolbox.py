@@ -1,5 +1,5 @@
 """This module contains the actions used in the Toolbox (lower left section of
-the main window.
+the main window).
 
 We bind the Toolbox to a diagram. When a diagram page (tab) is switched,
 the actions bound to the toolbuttons should change as well.

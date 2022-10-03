@@ -23,8 +23,8 @@ def format_property(
     tags=False,
     note=False,
 ):
-    """Create a OCL representation of the attribute, Returns the attribute as a
-    string. If one or more of the parameters (visibility, is_derived, type,
+    """Create an OCL representation of the attribute, Returns the attribute as
+    a string. If one or more of the parameters (visibility, is_derived, type,
     multiplicity, default and/or tags) is set, only that field is rendered.
     Note that the name of the attribute is always rendered, so a parseable
     string is returned.
@@ -105,8 +105,8 @@ def format_operation(
     direction=False,
     note=False,
 ):
-    """Create a OCL representation of the operation, Returns the operation as a
-    string."""
+    """Create an OCL representation of the operation, Returns the operation as
+    a string."""
     name = el.name
     if not name:
         return ""

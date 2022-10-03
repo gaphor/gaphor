@@ -82,7 +82,7 @@ def save_element(name, value, factory, writer):
     def save_reference(name, value):
         """Save a value as a reference to another element in the model.
 
-        This applies to both UML as well as canvas items.
+        This applies to both UML and canvas items.
         """
         if resolvable(value):
             writer.startElement(name, {})

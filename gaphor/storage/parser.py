@@ -8,7 +8,7 @@ which returns a dictionary of ID -> <parsed_object> pairs.
 
 A parsed_object contains values and references. values is a dictionary of
 name -> value pairs. A value contains a string with the value read from the
-model file. references contains a list of name -> reference_list pairs, where
+model file. The references contain a list of name -> reference_list pairs, where
 reference_list is a list of ID's.
 
 Each element has a type, which corresponds to a class name in one of the
@@ -46,7 +46,7 @@ class base:
         try:
             return self.__getitem__(key)
         except KeyError as e:
-            raise AttributeError(e)
+            raise AttributeError(e) from e
 
     def __getitem__(self, key):
         try:

@@ -21,8 +21,7 @@ def extension_metaclass(self):
     the ownedEnd.
     """
     ownedEnd = self.ownedEnd
-    metaend = [e for e in self.memberEnd if e is not ownedEnd]
-    if metaend:
+    if metaend := [e for e in self.memberEnd if e is not ownedEnd]:
         return metaend[0].type
 
 

@@ -204,10 +204,10 @@ class attribute(umlproperty, Generic[T]):
         """Load the attribute value."""
         try:
             setattr(obj, self._name, self.type(value))
-        except ValueError:
+        except ValueError as e:
             error_msg = f"Failed to load attribute {self._name} of type {self.type} with value {value}"
 
-            raise TypeError(error_msg)
+            raise TypeError(error_msg) from e
 
     def unlink(self, obj):
         self.set(obj, self.default)
@@ -445,7 +445,7 @@ class association(umlproperty):
             if not self.stub:
                 self.stub = associationstub(self)
                 # Do not let property start with underscore, or it will not be found
-                # as a umlproperty.
+                # as an umlproperty.
                 setattr(self.type, "GAPHOR__associationstub__%x" % id(self), self.stub)
             self.stub.set(value, obj)
 
@@ -519,7 +519,7 @@ class AssociationStubError(Exception):
 
 class associationstub(umlproperty):
     """An association stub is an internal thingy that ensures all associations
-    are always bi-directional.
+    are always bidirectional.
 
     This helps the application when one end of the association is
     unlinked. On unlink() of an element all `umlproperty`'s are iterated
@@ -641,7 +641,7 @@ class derived(umlproperty, Generic[T]):
     def _update(self, obj):
         """Update the list of items.
 
-        Returns a unioncache instance.
+        Returns an unioncache instance.
         """
         u = self.filter(obj)
         if self.upper == 1:
