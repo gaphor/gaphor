@@ -27,7 +27,7 @@ jobs:
     - name: Install Linux Dependencies
       uses: ./.github/actions/linux_dependencies
     - name: Use Python Dependency Cache
-      uses: actions/cache@v3.0.9
+      uses: actions/cache@v3.0.10
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
