@@ -26,7 +26,7 @@ jobs:
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.1.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
@@ -44,7 +44,7 @@ jobs:
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.1.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
@@ -97,7 +97,7 @@ jobs:
     outputs:
       appimage: Gaphor-${{ steps.setup_and_test.outputs.version }}-x86_64.AppImage
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.1.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Use Python Dependency Cache
@@ -142,7 +142,7 @@ jobs:
       - run: >
           sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
           gir1.2-gtk-3.0 libgirepository1.0-dev libgtksourceview-4-dev upx
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.1.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-python@v4.2.0
@@ -171,7 +171,7 @@ jobs:
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
       GAPHOR_USE_GTK: 3
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.1.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
@@ -234,7 +234,7 @@ jobs:
       LDFLAGS: -L/usr/local/opt/python@3.10/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.1.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
@@ -324,7 +324,7 @@ jobs:
           echo "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $GITHUB_ENV
           echo "C:\gtk-build\gtk\x64\release\bin" >> $GITHUB_PATH
         shell: bash
-      - uses: actions/checkout@v3.0.2
+      - uses: actions/checkout@v3.1.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
