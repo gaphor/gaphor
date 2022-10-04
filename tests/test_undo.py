@@ -320,3 +320,29 @@ def test_delete_item_with_subject_owning_diagram(
         class_item.unlink()
 
     undo_manager.undo_transaction()
+
+
+def copy_pos(pos):
+    return tuple(map(float, pos))
+
+
+def test_reconnect_on_same_element(event_manager, element_factory, undo_manager):
+    with Transaction(event_manager):
+        diagram: Diagram = element_factory.create(Diagram)
+        klass = element_factory.create(UML.Class)
+        class_item = diagram.create(ClassItem, subject=klass)
+        association = diagram.create(AssociationItem)
+        connect(association, association.head, class_item)
+        original_handle_pos = copy_pos(association.head.pos)
+
+    with Transaction(event_manager):
+        association.head.pos = (class_item.width, class_item.height)
+        connect(association, association.head, class_item)
+        new_handle_pos = copy_pos(association.head.pos)
+
+    assert original_handle_pos != new_handle_pos
+
+    undo_manager.undo_transaction()
+    diagram.update_now(diagram.ownedPresentation)
+
+    assert original_handle_pos == copy_pos(association.head.pos)

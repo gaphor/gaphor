@@ -3,15 +3,14 @@ import logging
 from gaphas.connector import ConnectionSink
 from gaphas.connector import Connector as ConnectorAspect
 from gaphas.connector import ItemConnector, LineConnector
+from gaphas.handlemove import HandleMove, ItemHandleMove
+from gaphas.types import Pos
 
 from gaphor.core import transactional
+from gaphor.core.modeling import Presentation
 from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.diagram.connectors import Connector
-from gaphor.diagram.presentation import (
-    ElementPresentation,
-    LinePresentation,
-    Presentation,
-)
+from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
 log = logging.getLogger(__name__)
 
@@ -45,6 +44,8 @@ class PresentationConnector(ItemConnector):
             self.connections.reconnect_item(
                 item, handle, sink.port, constraint=constraint
             )
+            item.handle(ItemReconnected(item, handle, sink.item, sink.port))
+
             return
 
         adapter = Connector(sink.item, item)
@@ -76,6 +77,21 @@ class LinePresentationConnector(PresentationConnector, LineConnector):
     pass
 
 
+@HandleMove.register(Presentation)
+@HandleMove.register(LinePresentation)
+class PresentationHandleMove(ItemHandleMove):
+    def start_move(self, pos: Pos) -> None:
+        super().start_move(pos)
+        model = self.view.model
+        assert model
+        if cinfo := model.connections.get_connection(self.handle):
+            self.item.handle(
+                ItemTemporaryDisconnected(
+                    cinfo.item, cinfo.handle, cinfo.connected, cinfo.port
+                )
+            )
+
+
 class DisconnectHandle:
     """Callback for items disconnection using the adapters.
 
@@ -103,9 +119,8 @@ class DisconnectHandle:
 
 class ItemConnected(RevertibeEvent):
     def __init__(self, element, handle, connected, port):
-        self.element = element
+        super().__init__(element)
         self.handle_index = element.handles().index(handle)
-        self.connected = connected
         self.port_index = connected.ports().index(port)
 
     def revert(self, target):
@@ -113,6 +128,7 @@ class ItemConnected(RevertibeEvent):
         # Associations have their own handlers
         connections = target.diagram.connections
         handle = target.handles()[self.handle_index]
+
         connector = ConnectorAspect(target, handle, connections)
         if cinfo := connections.get_connection(handle):
             cinfo.callback.disable = True
@@ -121,22 +137,57 @@ class ItemConnected(RevertibeEvent):
 
 class ItemDisconnected(RevertibeEvent):
     def __init__(self, element, handle, connected, port):
-        self.element = element
+        super().__init__(element)
         self.handle_index = element.handles().index(handle)
-        self.connected = connected
+        self.connected_id = connected.id
         self.port_index = connected.ports().index(port)
 
     def revert(self, target):
         # Reverse only the diagram level connection.
         # Associations have their own handlers
         connections = target.diagram.connections
-        assert connections
-
-        connected = target.diagram.lookup(self.connected.id)
+        connected = target.diagram.lookup(self.connected_id)
         sink = ConnectionSink(connected)
         sink.port = connected.ports()[self.port_index]
-
         handle = target.handles()[self.handle_index]
+
         connector = ConnectorAspect(target, handle, connections)
         connector.connect_handle(sink)
         target.handle(ItemConnected(target, handle, sink.item, sink.port))
+
+
+class ItemTemporaryDisconnected(RevertibeEvent):
+    def __init__(self, element, handle, connected, port):
+        super().__init__(element)
+        self.handle_index = element.handles().index(handle)
+        self.connected_id = connected.id
+        self.port_index = connected.ports().index(port)
+
+    def revert(self, target):
+        connections = target.diagram.connections
+        connected = target.diagram.lookup(self.connected_id)
+        sink = ConnectionSink(connected)
+        sink.port = connected.ports()[self.port_index]
+        handle = target.handles()[self.handle_index]
+
+        connections.reconnect_item(
+            target, handle, sink.port, sink.constraint(target, handle)
+        )
+        target.handle(ItemReconnected(target, handle, connected, sink.port))
+
+
+class ItemReconnected(RevertibeEvent):
+    def __init__(self, element, handle, connected, port):
+        super().__init__(element)
+        self.handle_index = element.handles().index(handle)
+        self.port_index = connected.ports().index(port)
+
+    def revert(self, target):
+        connections = target.diagram.connections
+        handle = target.handles()[self.handle_index]
+        cinfo = connections.get_connection(handle)
+
+        connections.solver.remove_constraint(cinfo.constraint)
+        target.handle(
+            ItemTemporaryDisconnected(target, handle, cinfo.connected, cinfo.port)
+        )
