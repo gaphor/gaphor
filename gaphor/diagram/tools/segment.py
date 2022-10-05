@@ -1,22 +1,50 @@
+from gaphas.connector import ConnectionSink, Connector
 from gaphas.segment import LineSegment, Segment
 
 from gaphor.core.modeling.event import RevertibeEvent
 from gaphor.diagram.presentation import LinePresentation
+from gaphor.diagram.tools.connector import ItemTemporaryDisconnected
 
 
 @Segment.register(LinePresentation)
 class PresentationSegment(LineSegment):
     def split_segment(self, segment, count=2):
+        self.temporary_disconnect()
         handles, ports = super().split_segment(segment, count)
         line = self.item
         line.handle(LineSplitSegmentEvent(line, segment, count))
         return handles, ports
 
     def merge_segment(self, segment, count=2):
+        self.temporary_disconnect()
         deleted_handles, deleted_ports = super().merge_segment(segment, count)
         line = self.item
         line.handle(LineMergeSegmentEvent(line, segment, count))
         return deleted_handles, deleted_ports
+
+    def temporary_disconnect(self):
+        # Send an event to cause a "temporary disconnect". This is the contra-signal
+        # of `ItemReconnected`, which is sent from the Connector in recreate_constraints().
+        connected = self.item
+        model = self.model
+
+        for cinfo in list(model.connections.get_connections(connected=connected)):
+            model.handle(
+                ItemTemporaryDisconnected(
+                    cinfo.item, cinfo.handle, connected, cinfo.port
+                )
+            )
+
+    def recreate_constraints(self):
+        connected = self.item
+        model = self.model
+
+        for cinfo in list(model.connections.get_connections(connected=connected)):
+            item = cinfo.item
+            handle = cinfo.handle
+            connector = Connector(item, handle, model.connections)
+            sink = ConnectionSink(connected, distance=float("inf"))
+            connector.connect(sink)
 
 
 class LineSplitSegmentEvent(RevertibeEvent):
