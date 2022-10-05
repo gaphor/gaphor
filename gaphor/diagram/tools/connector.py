@@ -44,7 +44,7 @@ class PresentationConnector(ItemConnector):
             self.connections.reconnect_item(
                 item, handle, sink.port, constraint=constraint
             )
-            item.handle(ItemReconnected(item, handle, sink.item, sink.port))
+            item.handle(ItemReconnected(item, handle))
 
             return
 
@@ -173,14 +173,13 @@ class ItemTemporaryDisconnected(RevertibeEvent):
         connections.reconnect_item(
             target, handle, sink.port, sink.constraint(target, handle)
         )
-        target.handle(ItemReconnected(target, handle, connected, sink.port))
+        target.handle(ItemReconnected(target, handle))
 
 
 class ItemReconnected(RevertibeEvent):
-    def __init__(self, element, handle, connected, port):
+    def __init__(self, element, handle):
         super().__init__(element)
         self.handle_index = element.handles().index(handle)
-        self.port_index = connected.ports().index(port)
 
     def revert(self, target):
         connections = target.diagram.connections
