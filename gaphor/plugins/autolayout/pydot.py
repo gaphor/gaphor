@@ -13,8 +13,10 @@ from gaphor.core.modeling import Diagram, Element
 from gaphor.diagram.presentation import (
     AttachedPresentation,
     ElementPresentation,
+    HandlePositionEvent,
     LinePresentation,
 )
+from gaphor.diagram.tools.connector import ItemTemporaryDisconnected
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
 from gaphor.UML import NamedElement
@@ -56,13 +58,35 @@ class AutoLayout(Service, ActionProvider):
         rendered_graphs = pydot.graph_from_dot_data(rendered_string)
         return rendered_graphs[0]
 
-    def apply_layout(self, diagram, rendered_graph, offset=(0, 0)):
+    def apply_layout(self, diagram, rendered_graph, offset=(0, 0)):  # noqa: C901
         # NB. BB is (llx,lly,urx,ury)! (0, 0) is bottom-left!
         _, _, _, height = parse_bb(rendered_graph.get_node("graph")[0].get("bb"))
 
         with Transaction(self.event_manager):
+            # First record original positions for involved lines
+            for edge in rendered_graph.get_edges():
+                if not edge.get("id"):
+                    continue
+
+                id = strip_quotes(edge.get("id"))
+                if presentation := next(
+                    (p for p in diagram.ownedPresentation if p.id == id), None
+                ):
+                    for handle in (presentation.head, presentation.tail):
+                        if cinfo := diagram.connections.get_connection(handle):
+                            self.event_manager.handle(
+                                ItemTemporaryDisconnected(
+                                    presentation, handle, cinfo.connected, cinfo.port
+                                )
+                            )
+
+                    for i, handle in enumerate(presentation.handles()):
+                        self.event_manager.handle(
+                            HandlePositionEvent(presentation, i, handle.pos.tuple())
+                        )
+
             for subgraph in rendered_graph.get_subgraphs():
-                id = subgraph.get_node("graph")[0].get_id().replace('"', "")
+                id = strip_quotes(subgraph.get_node("graph")[0].get_id())
                 if presentation := next(
                     (p for p in diagram.ownedPresentation if p.id == id), None
                 ):
@@ -81,7 +105,7 @@ class AutoLayout(Service, ActionProvider):
                 if not (node.get_id() and node.get_pos()):
                     continue
 
-                id = node.get_id().replace('"', "")
+                id = strip_quotes(node.get_id())
                 if presentation := next(
                     (p for p in diagram.ownedPresentation if p.id == id), None
                 ):
@@ -102,6 +126,7 @@ class AutoLayout(Service, ActionProvider):
                         reconnect(
                             presentation, presentation.handles()[0], diagram.connections
                         )
+
             for edge in rendered_graph.get_edges():
                 if not edge.get("id"):
                     continue
@@ -138,7 +163,6 @@ def reconnect(presentation, handle, connections):
 
     connector = Connector(presentation, handle, connections)
     sink = ConnectionSink(connected.connected, distance=float("inf"))
-    connector.glue(sink)
     connector.connect(sink)
 
 
