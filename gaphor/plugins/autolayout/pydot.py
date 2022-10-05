@@ -75,9 +75,11 @@ class AutoLayout(Service, ActionProvider):
                                 )
                             )
 
-                    for i, handle in enumerate(presentation.handles()):
+                    for handle in presentation.handles():
                         self.event_manager.handle(
-                            HandlePositionEvent(presentation, i, handle.pos.tuple())
+                            HandlePositionEvent(
+                                presentation, handle, handle.pos.tuple()
+                            )
                         )
 
             for subgraph in rendered_graph.get_subgraphs():
