@@ -9,7 +9,7 @@ from gaphas.segment import Segment
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
-from gaphor.core.modeling import Diagram, Element
+from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.diagram.presentation import (
     AttachedPresentation,
     ElementPresentation,
@@ -63,15 +63,10 @@ class AutoLayout(Service, ActionProvider):
         _, _, _, height = parse_bb(rendered_graph.get_node("graph")[0].get("bb"))
 
         with Transaction(self.event_manager):
+
             # First record original positions for involved lines
             for edge in rendered_graph.get_edges():
-                if not edge.get("id"):
-                    continue
-
-                id = strip_quotes(edge.get("id"))
-                if presentation := next(
-                    (p for p in diagram.ownedPresentation if p.id == id), None
-                ):
+                if presentation := presentation_for_object(diagram, edge):
                     for handle in (presentation.head, presentation.tail):
                         if cinfo := diagram.connections.get_connection(handle):
                             self.event_manager.handle(
@@ -86,9 +81,8 @@ class AutoLayout(Service, ActionProvider):
                         )
 
             for subgraph in rendered_graph.get_subgraphs():
-                id = strip_quotes(subgraph.get_node("graph")[0].get_id())
-                if presentation := next(
-                    (p for p in diagram.ownedPresentation if p.id == id), None
+                if presentation := presentation_for_object(
+                    diagram, subgraph.get_node("graph")[0]
                 ):
                     if bb := subgraph.get_node("graph")[0].get("bb"):
                         llx, lly, urx, ury = parse_bb(bb)
@@ -102,13 +96,10 @@ class AutoLayout(Service, ActionProvider):
                         self.apply_layout(diagram, subgraph, offset=(llx, height - ury))
 
             for node in rendered_graph.get_nodes():
-                if not (node.get_id() and node.get_pos()):
+                if not node.get_pos():
                     continue
 
-                id = strip_quotes(node.get_id())
-                if presentation := next(
-                    (p for p in diagram.ownedPresentation if p.id == id), None
-                ):
+                if presentation := presentation_for_object(diagram, node):
                     pos = parse_point(node.get_pos())
                     if isinstance(presentation, ElementPresentation):
                         presentation.matrix.set(
@@ -128,13 +119,7 @@ class AutoLayout(Service, ActionProvider):
                         )
 
             for edge in rendered_graph.get_edges():
-                if not edge.get("id"):
-                    continue
-
-                id = strip_quotes(edge.get("id"))
-                if presentation := next(
-                    (p for p in diagram.ownedPresentation if p.id == id), None
-                ):
+                if presentation := presentation_for_object(diagram, edge):
                     presentation.orthogonal = False
 
                     points = parse_edge_pos(edge.get_pos())
@@ -157,7 +142,15 @@ class AutoLayout(Service, ActionProvider):
                         reconnect(presentation, handle, diagram.connections)
 
 
-def reconnect(presentation, handle, connections):
+def presentation_for_object(diagram, obj) -> Presentation | None:
+    if not obj.get("id"):
+        return None
+
+    id = strip_quotes(obj.get("id"))
+    return next((p for p in diagram.ownedPresentation if p.id == id), None)
+
+
+def reconnect(presentation, handle, connections) -> None:
     if not (connected := connections.get_connection(handle)):
         return
 
