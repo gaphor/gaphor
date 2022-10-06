@@ -46,7 +46,13 @@ runs:
         $certificatePath = Join-Path -Path $currentDirectory -ChildPath 'certificate.pfx'
         [IO.File]::WriteAllBytes("$certificatePath", $pfx_cert_byte)
         & 'C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x86\signtool.exe' sign /f 'certificate.pfx' /tr $env:timestampUrl /td sha256 /fd sha256 /p $env:password $env:installer $env:portable
-        Remove-Item 'certificate.pfx'
+        if (0 -eq $LASTEXITCODE) {
+          Remove-Item 'certificate.pfx'
+        } else {
+          Remove-Item 'certificate.pfx'
+          "Signing failed"
+          Exit 1
+        }
       shell: PowerShell
     - name: Upload gaphor-${{ inputs.version }}-installer.exe
       uses: actions/upload-artifact@v3
