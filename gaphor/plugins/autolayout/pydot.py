@@ -26,7 +26,7 @@ DPI = 72.0
 
 
 class AutoLayout(Service, ActionProvider):
-    def __init__(self, event_manager, diagrams, tools_menu=None, dump_gv=True):
+    def __init__(self, event_manager, diagrams, tools_menu=None, dump_gv=False):
         self.event_manager = event_manager
         self.diagrams = diagrams
         if tools_menu:
@@ -49,10 +49,11 @@ class AutoLayout(Service, ActionProvider):
 
     def render(self, diagram: Diagram):
         graph = diagram_as_pydot(diagram)
-        graph.write("before.gv")
         rendered_string = graph.create(format="dot").decode("utf-8")
+
         if self.dump_gv:
-            with open("auto_layout.gv", "w") as f:
+            graph.write("auto_layout_before.gv")
+            with open("auto_layout_after.gv", "w") as f:
                 f.write(rendered_string)
 
         rendered_graphs = pydot.graph_from_dot_data(rendered_string)
