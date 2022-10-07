@@ -1,3 +1,11 @@
+2.12.1
+------
+- Fix/move connected handle
+- Fix error when disconnecting line with multiple segments
+- Fail CI build if Windows certificate signing fails
+- namespace.py: Actually set properties for rectangle
+- Update Shortcuts window
+
 2.12.0
 ------
 - GTK4 is now the default for Flatpak; Windows, macOS, and AppImage still use GTK3
