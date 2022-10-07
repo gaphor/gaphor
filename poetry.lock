@@ -213,7 +213,7 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
 name = "gaphas"
-version = "3.8.0"
+version = "3.8.1"
 description = "Gaphas is a GTK+ based diagramming widget"
 category = "main"
 optional = false
@@ -1232,8 +1232,8 @@ future = [
     {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
 ]
 gaphas = [
-    {file = "gaphas-3.8.0-py3-none-any.whl", hash = "sha256:71714c638850681463fd326c8fbacf852d543723f6977b0700ac2f5d6072f3f5"},
-    {file = "gaphas-3.8.0.tar.gz", hash = "sha256:b33112de82c96b26e808030218ab50a9c94e71ba58b449f7ae0f7938fb4e6695"},
+    {file = "gaphas-3.8.1-py3-none-any.whl", hash = "sha256:29062f92ae24c9abdad6f78fa9f1df436c99f3926a2bf4241f57d30b9c4a3e62"},
+    {file = "gaphas-3.8.1.tar.gz", hash = "sha256:993f68fea57e4a4247575303c2efdb2b91c0887339604bf7e784741e23204dbf"},
 ]
 generic = [
     {file = "generic-1.1.0-py3-none-any.whl", hash = "sha256:4bf903541a808a958fd282809ae4e4687e0b7e99f9d31edd203ad10b386875e7"},
