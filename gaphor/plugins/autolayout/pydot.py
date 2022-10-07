@@ -49,7 +49,9 @@ class AutoLayout(Service, ActionProvider):
 
     def render(self, diagram: Diagram):
         graph = diagram_as_pydot(diagram)
-        rendered_string = graph.create(format="dot").decode("utf-8")
+        rendered_string = graph.create(
+            prog="dot", format="dot", encoding="utf-8"
+        ).decode("utf-8")
 
         if self.dump_gv:
             graph.write("auto_layout_before.gv")
@@ -168,7 +170,7 @@ def as_pydot(element: Element) -> pydot.Common | Iterable[pydot.Common] | None:
 
 
 def diagram_as_pydot(diagram: Diagram) -> pydot.Dot:
-    graph = pydot.Dot("gaphor", graph_type="graph", prog="fdp", splines="polyline")
+    graph = pydot.Dot("gaphor", graph_type="digraph", splines="polyline")
     graph.set_pad(8 / DPI)
     for presentation in diagram.ownedPresentation:
         if presentation.parent:
@@ -236,6 +238,7 @@ def _(presentation: LinePresentation):
             tail_connection.connected.id,
             id=presentation.id,
             minlen=3,
+            arrowhead="none",
         )
     return None
 
@@ -292,6 +295,7 @@ def parse_edge_pos(pos_str: str) -> list[tuple[float, float]]:
     points = [parse_point(raw_points.pop(0))]
 
     while raw_points:
+        # Drop bezier curve support points
         raw_points.pop(0)
         raw_points.pop(0)
         points.append(parse_point(raw_points.pop(0)))
