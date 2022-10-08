@@ -43,12 +43,21 @@ class AutoLayout(Service, ActionProvider):
         if current_diagram := self.diagrams.get_current_diagram():
             self.layout(current_diagram)
 
-    def layout(self, diagram: Diagram):
-        rendered_graph = self.render(diagram)
+    @action(
+        name="auto-layout-ortho",
+        label=gettext("Auto Layout (orthogonal)"),
+        shortcut="<Primary><Shift>K",
+    )
+    def layout_current_diagram_orthogonal(self):
+        if current_diagram := self.diagrams.get_current_diagram():
+            self.layout(current_diagram, splines="ortho")
+
+    def layout(self, diagram: Diagram, splines="polyline"):
+        graph = diagram_as_pydot(diagram, splines=splines)
+        rendered_graph = self.render(graph)
         self.apply_layout(diagram, rendered_graph)
 
-    def render(self, diagram: Diagram):
-        graph = diagram_as_pydot(diagram)
+    def render(self, graph: pydot.Dot):
         rendered_string = graph.create(
             prog="dot", format="dot", encoding="utf-8"
         ).decode("utf-8")
@@ -169,8 +178,8 @@ def as_pydot(element: Element) -> pydot.Common | Iterable[pydot.Common] | None:
     return None
 
 
-def diagram_as_pydot(diagram: Diagram) -> pydot.Dot:
-    graph = pydot.Dot("gaphor", graph_type="digraph", splines="polyline")
+def diagram_as_pydot(diagram: Diagram, splines: str) -> pydot.Dot:
+    graph = pydot.Dot("gaphor", graph_type="digraph", splines=splines)
     graph.set_pad(8 / DPI)
     for presentation in diagram.ownedPresentation:
         if presentation.parent:
