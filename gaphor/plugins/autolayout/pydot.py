@@ -192,15 +192,13 @@ def diagram_as_pydot(diagram: Diagram, splines: str) -> pydot.Dot:
 
 @as_pydot.register
 def _(presentation: ElementPresentation):
-    if not any(
-        c for c in presentation.children if not isinstance(c, AttachedPresentation)
-    ):
+    if all(isinstance(c, AttachedPresentation) for c in presentation.children):
         for attached in presentation.children:
             if isinstance(attached, AttachedPresentation):
                 yield as_pydot(attached)
 
         yield pydot.Node(
-            presentation.id,
+            f'"{presentation.id}"',
             id=presentation.id,
             label="",
             shape="rect",
