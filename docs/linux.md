@@ -44,7 +44,7 @@ sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
 gir1.2-gtk-4.0 libgirepository1.0-dev libcairo2-dev libgtksourceview-5-dev
 ```
 
-Install Poetry using [pipx](https://pypa.github.io/pipx/):
+Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/pipx/):
 ```bash
 pipx install poetry
 ```
@@ -60,6 +60,14 @@ poetry env use 3.x # ensures poetry /consistently/ uses latest major release
 poetry config virtualenvs.in-project true
 poetry install
 poetry run gaphor
+```
+
+NOTE: Gaphor starts with a GTK 4 UI by default. It works best with GTK >=4.8 and libadwaita >=1.2.
+
+To start with a GTK+3 UI, run:
+
+```bash
+GAPHOR_USE_GTK=3 poetry run gaphor
 ```
 
 ## Create a Flatpak Package
@@ -81,7 +89,7 @@ repository](https://github.com/flathub/org.gaphor.Gaphor).
 
 1. Install the GNOME SDK
 
-       flatpak install flathub org.gnome.Sdk 42
+       flatpak install flathub org.gnome.Sdk 43
 
 1. Clone the Flathub repository and install the necessary SDK:
 
