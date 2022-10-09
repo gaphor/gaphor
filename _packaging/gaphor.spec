@@ -60,7 +60,7 @@ a = Analysis(
     + ui_files
     + copy_metadata("gaphor")
     + copy_metadata("gaphas"),
-    hiddenimports=[],
+    hiddenimports=["/usr/bin/dot"],
     hooksconfig={
         "gi": {
             "module-versions": {
