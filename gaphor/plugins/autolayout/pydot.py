@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import os.path
+import sys
 from functools import singledispatch
 from typing import Iterable, Iterator
 
@@ -24,6 +26,12 @@ from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
 from gaphor.UML import NamedElement
 from gaphor.UML.actions.activitynodes import ForkNodeItem
+
+try:
+    # Use packaged `dot` (pyinstaller)
+    DOT = os.path.join(sys._MEIPASS, "dot")  # type: ignore[attr-defined]
+except AttributeError:
+    DOT = "dot"
 
 DPI = 72.0
 
@@ -64,9 +72,9 @@ class AutoLayout(Service, ActionProvider):
         if self.dump_gv:
             graph.write("auto_layout.gv")
 
-        rendered_string = graph.create(
-            prog="dot", format="dot", encoding="utf-8"
-        ).decode("utf-8")
+        rendered_string = graph.create(prog=DOT, format="dot", encoding="utf-8").decode(
+            "utf-8"
+        )
 
         rendered_graphs = pydot.graph_from_dot_data(rendered_string)
         return rendered_graphs[0]
