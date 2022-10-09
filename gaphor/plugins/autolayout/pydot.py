@@ -7,6 +7,7 @@ import pydot
 from gaphas.connector import ConnectionSink, Connector
 from gaphas.geometry import Point, Rect
 from gaphas.item import NW
+from gaphas.matrix import Matrix
 from gaphas.segment import Segment
 
 from gaphor.abc import ActionProvider, Service
@@ -76,10 +77,10 @@ class AutoLayout(Service, ActionProvider):
         if height is None:
             _, _, _, height = parse_bb(rendered_graph.get_node("graph")[0].get("bb"))
 
-        offset = (
-            (parent_presentation.matrix_i2c[4], parent_presentation.matrix_i2c[5])
+        matrix_c2i = (
+            parent_presentation.matrix_i2c.inverse()
             if parent_presentation
-            else (0.0, 0.0)
+            else Matrix()
         )
 
         with Transaction(self.event_manager):
@@ -112,9 +113,10 @@ class AutoLayout(Service, ActionProvider):
                         presentation.width = w
                         presentation.height = h
 
+                        new_pos = matrix_c2i.transform_point(x, y)
                         presentation.matrix.set(
-                            x0=x - offset[0],
-                            y0=y - offset[1],
+                            x0=new_pos[0],
+                            y0=new_pos[1],
                         )
                         self.apply_layout(
                             diagram,
@@ -137,14 +139,18 @@ class AutoLayout(Service, ActionProvider):
                         presentation.width = w
                         presentation.height = h
 
+                        new_pos = matrix_c2i.transform_point(
+                            center[0] - w / 2, center[1] - h / 2
+                        )
                         presentation.matrix.set(
-                            x0=center[0] - offset[0] - w / 2,
-                            y0=center[1] - offset[1] - h / 2,
+                            x0=new_pos[0],
+                            y0=new_pos[1],
                         )
                     else:
+                        new_pos = matrix_c2i.transform_point(center[0], center[1])
                         presentation.matrix.set(
-                            x0=center[0] - offset[0],
-                            y0=center[1] - offset[1],
+                            x0=new_pos[0],
+                            y0=new_pos[1],
                         )
 
                     if isinstance(presentation, AttachedPresentation):
@@ -165,21 +171,9 @@ class AutoLayout(Service, ActionProvider):
 
                     assert len(points) == len(presentation.handles())
 
-                    # An edge on top level may have been moved inside a subgraph
-                    edge_offset = (
-                        (
-                            presentation.parent.matrix_i2c[4],
-                            presentation.parent.matrix_i2c[5],
-                        )
-                        if presentation.parent
-                        else (0.0, 0.0)
-                    )
-
                     matrix = presentation.matrix_i2c.inverse()
                     for handle, point in zip(presentation.handles(), points):
-                        handle.pos = matrix.transform_point(
-                            point[0] - edge_offset[0], point[1] - edge_offset[1]
-                        )
+                        handle.pos = matrix.transform_point(*point)
 
                     for handle in (presentation.head, presentation.tail):
                         reconnect(presentation, handle, diagram.connections)
