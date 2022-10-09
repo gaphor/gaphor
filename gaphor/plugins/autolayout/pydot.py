@@ -58,14 +58,12 @@ class AutoLayout(Service, ActionProvider):
         self.apply_layout(diagram, rendered_graph)
 
     def render(self, graph: pydot.Dot):
+        if self.dump_gv:
+            graph.write("auto_layout.gv")
+
         rendered_string = graph.create(
             prog="dot", format="dot", encoding="utf-8"
         ).decode("utf-8")
-
-        if self.dump_gv:
-            graph.write("auto_layout_before.gv")
-            with open("auto_layout_after.gv", "w") as f:
-                f.write(rendered_string)
 
         rendered_graphs = pydot.graph_from_dot_data(rendered_string)
         return rendered_graphs[0]
@@ -173,14 +171,11 @@ def reconnect(presentation, handle, connections) -> None:
     connector.connect(sink)
 
 
-@singledispatch
-def as_pydot(element: Element) -> pydot.Common | Iterable[pydot.Common] | None:
-    return None
-
-
 def diagram_as_pydot(diagram: Diagram, splines: str) -> pydot.Dot:
-    graph = pydot.Dot("gaphor", graph_type="digraph", splines=splines)
-    graph.set_pad(8 / DPI)
+    graph = pydot.Dot(
+        "gaphor", graph_type="digraph", compound="true", pad=8 / DPI, splines=splines
+    )
+
     for presentation in diagram.ownedPresentation:
         if presentation.parent:
             continue
@@ -190,9 +185,40 @@ def diagram_as_pydot(diagram: Diagram, splines: str) -> pydot.Dot:
     return graph
 
 
+@singledispatch
+def as_pydot(element: Element):
+    return ()
+
+
 @as_pydot.register
 def _(presentation: ElementPresentation):
-    if all(isinstance(c, AttachedPresentation) for c in presentation.children):
+    if as_cluster(presentation):
+        graph = pydot.Cluster(
+            presentation.id,
+            id=presentation.id,
+            label=presentation.subject.name
+            if isinstance(presentation.subject, NamedElement)
+            else "",
+            margin=20,
+        )
+
+        # Add a placeholder, so we can connect to the cluster
+        graph.add_node(
+            pydot.Node(
+                f'"{presentation.id}"',
+                label="",
+                shape="point",
+            )
+        )
+
+        for child in presentation.children:
+            if isinstance(child, AttachedPresentation):
+                yield as_pydot(child)
+            else:
+                add_to_graph(graph, as_pydot(child))
+
+        yield graph
+    else:
         for attached in presentation.children:
             if isinstance(attached, AttachedPresentation):
                 yield as_pydot(attached)
@@ -205,24 +231,6 @@ def _(presentation: ElementPresentation):
             width=presentation.width / DPI,
             height=presentation.height / DPI,
         )
-    else:
-        graph = pydot.Cluster(
-            presentation.id,
-            id=presentation.id,
-            label=presentation.subject.name
-            if isinstance(presentation.subject, NamedElement)
-            else "",
-            margin=20,
-        )
-
-        for attached in presentation.children:
-            if isinstance(attached, AttachedPresentation):
-                add_to_graph(graph, as_pydot(attached))
-
-        for child in presentation.children:
-            add_to_graph(graph, as_pydot(child))
-
-        yield graph
 
 
 @as_pydot.register
@@ -232,22 +240,24 @@ def _(presentation: LinePresentation):
     tail_connection = connections.get_connection(presentation.tail)
     if (
         head_connection
-        and isinstance(
-            head_connection.connected, (ElementPresentation, AttachedPresentation)
-        )
+        and next(as_pydot(head_connection.connected), None)
         and tail_connection
-        and isinstance(
-            tail_connection.connected, (ElementPresentation, AttachedPresentation)
-        )
+        and next(as_pydot(tail_connection.connected), None)
     ):
-        return pydot.Edge(
-            head_connection.connected.id,
+        extra_args = {}
+        if as_cluster(head_connection.connected):
+            extra_args["lhead"] = f"cluster_{head_connection.connected.id}"
+        if as_cluster(tail_connection.connected):
+            extra_args["ltail"] = f"cluster_{tail_connection.connected.id}"
+
+        yield pydot.Edge(
             tail_connection.connected.id,
+            head_connection.connected.id,
             id=presentation.id,
             minlen=3,
             arrowhead="none",
+            **extra_args,
         )
-    return None
 
 
 @as_pydot.register
@@ -256,9 +266,7 @@ def _(presentation: AttachedPresentation):
         presentation.id,
         id=presentation.id,
         label="",
-        shape="rect",
-        width=0.1,
-        height=0.1,
+        shape="point",
     )
     handle = presentation.handles()[0]
     if connection := presentation.diagram.connections.get_connection(handle):
@@ -272,13 +280,19 @@ def _(presentation: AttachedPresentation):
 @as_pydot.register
 def _(presentation: ForkNodeItem):
     h1, h2 = presentation.handles()
-    return pydot.Node(
+    yield pydot.Node(
         presentation.id,
         id=presentation.id,
         label="",
         shape="rect",
         width=(h2.pos.x - h1.pos.x) / DPI,
         height=(h2.pos.y - h1.pos.y) / DPI,
+    )
+
+
+def as_cluster(presentation: Presentation):
+    return presentation.children and not all(
+        isinstance(c, AttachedPresentation) for c in presentation.children
     )
 
 
@@ -306,6 +320,7 @@ def parse_edge_pos(pos_str: str) -> list[tuple[float, float]]:
         raw_points.pop(0)
         raw_points.pop(0)
         points.append(parse_point(raw_points.pop(0)))
+    points.reverse()
     return points
 
 

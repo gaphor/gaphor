@@ -101,7 +101,7 @@ def test_layout_fork_node_item(diagram, create, event_manager):
 def test_parse_pos():
     points = parse_edge_pos('"1.0,2.0 3.0,4 5.0,6.0 7,8.0"')
 
-    assert points == [(1.0, 2.0), (7.0, 8.0)]
+    assert points == [(7.0, 8.0), (1.0, 2.0)]
 
 
 def test_parse_pos_invalid_number_of_points():
