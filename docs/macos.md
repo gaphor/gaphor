@@ -29,6 +29,12 @@ poetry install
 poetry run gaphor
 ```
 
+If PyGObject does not compile and complains about a missing `ffi.h` file, set the following
+environment variable and run `poetry install` again:
+```bash
+export PKG_CONFIG_PATH=/usr/local/opt/libffi/lib/pkgconfig
+```
+
 ## Packaging for macOS
 
 In order to create an exe installation package for macOS, we utilize
