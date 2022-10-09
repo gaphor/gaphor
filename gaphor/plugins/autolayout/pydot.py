@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from functools import singledispatch
-from typing import Iterable
+from typing import Iterable, Iterator
 
 import pydot
 from gaphas.connector import ConnectionSink, Connector
+from gaphas.geometry import Point, Rect
+from gaphas.item import NW
 from gaphas.segment import Segment
 
 from gaphor.abc import ActionProvider, Service
@@ -68,9 +70,17 @@ class AutoLayout(Service, ActionProvider):
         rendered_graphs = pydot.graph_from_dot_data(rendered_string)
         return rendered_graphs[0]
 
-    def apply_layout(self, diagram, rendered_graph, offset=(0, 0)):  # noqa: C901
-        # NB. BB is (llx,lly,urx,ury)! (0, 0) is bottom-left!
-        _, _, _, height = parse_bb(rendered_graph.get_node("graph")[0].get("bb"))
+    def apply_layout(  # noqa: C901
+        self, diagram, rendered_graph, parent_presentation=None, height=None
+    ):
+        if height is None:
+            _, _, _, height = parse_bb(rendered_graph.get_node("graph")[0].get("bb"))
+
+        offset = (
+            (parent_presentation.matrix_i2c[4], parent_presentation.matrix_i2c[5])
+            if parent_presentation
+            else (0.0, 0.0)
+        )
 
         with Transaction(self.event_manager):
 
@@ -97,34 +107,46 @@ class AutoLayout(Service, ActionProvider):
                     diagram, subgraph.get_node("graph")[0]
                 ):
                     if bb := subgraph.get_node("graph")[0].get("bb"):
-                        llx, lly, urx, ury = parse_bb(bb)
+                        x, y, w, h = parse_bb(bb, height)
+                        presentation.handles()[NW].pos = (0.0, 0.0)
+                        presentation.width = w
+                        presentation.height = h
+
                         presentation.matrix.set(
-                            x0=llx,
-                            y0=height - ury,
+                            x0=x - offset[0],
+                            y0=y - offset[1],
                         )
-                        presentation.width = urx - llx
-                        presentation.height = ury - lly
-                        presentation.request_update()
-                        self.apply_layout(diagram, subgraph, offset=(llx, height - ury))
+                        self.apply_layout(
+                            diagram,
+                            subgraph,
+                            parent_presentation=presentation,
+                            height=height,
+                        )
 
             for node in rendered_graph.get_nodes():
                 if not node.get_pos():
                     continue
 
                 if presentation := presentation_for_object(diagram, node):
-                    pos = parse_point(node.get_pos())
+                    center = parse_point(node.get_pos(), height)
                     if isinstance(presentation, ElementPresentation):
+                        # Normalize handle placement
+                        w = presentation.width
+                        h = presentation.height
+                        presentation.handles()[NW].pos = (0.0, 0.0)
+                        presentation.width = w
+                        presentation.height = h
+
                         presentation.matrix.set(
-                            x0=pos[0] - presentation.width / 2 - offset[0],
-                            y0=height - pos[1] - presentation.height / 2 - offset[1],
+                            x0=center[0] - offset[0] - w / 2,
+                            y0=center[1] - offset[1] - h / 2,
                         )
                     else:
                         presentation.matrix.set(
-                            x0=pos[0] - offset[0],
-                            y0=pos[1] - offset[1],
+                            x0=center[0] - offset[0],
+                            y0=center[1] - offset[1],
                         )
 
-                    presentation.request_update()
                     if isinstance(presentation, AttachedPresentation):
                         reconnect(
                             presentation, presentation.handles()[0], diagram.connections
@@ -134,7 +156,7 @@ class AutoLayout(Service, ActionProvider):
                 if presentation := presentation_for_object(diagram, edge):
                     presentation.orthogonal = False
 
-                    points = parse_edge_pos(edge.get_pos())
+                    points = parse_edge_pos(edge.get_pos(), height)
                     segment = Segment(presentation, diagram)
                     while len(points) > len(presentation.handles()):
                         segment.split_segment(0)
@@ -143,12 +165,21 @@ class AutoLayout(Service, ActionProvider):
 
                     assert len(points) == len(presentation.handles())
 
+                    # An edge on top level may have been moved inside a subgraph
+                    edge_offset = (
+                        (
+                            presentation.parent.matrix_i2c[4],
+                            presentation.parent.matrix_i2c[5],
+                        )
+                        if presentation.parent
+                        else (0.0, 0.0)
+                    )
+
                     matrix = presentation.matrix_i2c.inverse()
                     for handle, point in zip(presentation.handles(), points):
-                        p = matrix.transform_point(
-                            point[0] - offset[0], height - point[1] - offset[1]
+                        handle.pos = matrix.transform_point(
+                            point[0] - edge_offset[0], point[1] - edge_offset[1]
                         )
-                        handle.pos = p
 
                     for handle in (presentation.head, presentation.tail):
                         reconnect(presentation, handle, diagram.connections)
@@ -186,8 +217,8 @@ def diagram_as_pydot(diagram: Diagram, splines: str) -> pydot.Dot:
 
 
 @singledispatch
-def as_pydot(element: Element):
-    return ()
+def as_pydot(element: Element) -> Iterator[pydot.Common]:
+    return iter(())
 
 
 @as_pydot.register
@@ -196,9 +227,9 @@ def _(presentation: ElementPresentation):
         graph = pydot.Cluster(
             presentation.id,
             id=presentation.id,
-            label=presentation.subject.name
+            label=f"{presentation.subject.name}\n\n\n"
             if isinstance(presentation.subject, NamedElement)
-            else "",
+            else "\n\n",
             margin=20,
         )
 
@@ -310,28 +341,28 @@ def add_to_graph(graph, edge_or_node) -> None:
         raise ValueError(f"Can't transform {edge_or_node} to something DOT'ish?")
 
 
-def parse_edge_pos(pos_str: str) -> list[tuple[float, float]]:
+def parse_edge_pos(pos_str: str, height: float) -> list[Point]:
     raw_points = strip_quotes(pos_str).split(" ")
 
-    points = [parse_point(raw_points.pop(0))]
+    points = [parse_point(raw_points.pop(0), height)]
 
     while raw_points:
         # Drop bezier curve support points
         raw_points.pop(0)
         raw_points.pop(0)
-        points.append(parse_point(raw_points.pop(0)))
+        points.append(parse_point(raw_points.pop(0), height))
     points.reverse()
     return points
 
 
-def parse_point(point):
+def parse_point(point, height) -> Point:
     x, y = strip_quotes(point).split(",")
-    return (float(x), float(y))
+    return (float(x), height - float(y))
 
 
-def parse_bb(bb):
-    x, y, w, h = strip_quotes(bb).split(",")
-    return (float(x), float(y), float(w), float(h))
+def parse_bb(bb, height: float | None = None) -> Rect:
+    llx, lly, urx, ury = map(float, strip_quotes(bb).split(","))
+    return (llx, lly if height is None else height - ury, urx - llx, ury - lly)
 
 
 def strip_quotes(s):
