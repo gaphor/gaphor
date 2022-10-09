@@ -142,17 +142,12 @@ class AutoLayout(Service, ActionProvider):
                         new_pos = matrix_c2i.transform_point(
                             center[0] - w / 2, center[1] - h / 2
                         )
-                        presentation.matrix.set(
-                            x0=new_pos[0],
-                            y0=new_pos[1],
-                        )
                     else:
                         new_pos = matrix_c2i.transform_point(center[0], center[1])
-                        presentation.matrix.set(
-                            x0=new_pos[0],
-                            y0=new_pos[1],
-                        )
-
+                    presentation.matrix.set(
+                        x0=new_pos[0],
+                        y0=new_pos[1],
+                    )
                     if isinstance(presentation, AttachedPresentation):
                         reconnect(
                             presentation, presentation.handles()[0], diagram.connections
