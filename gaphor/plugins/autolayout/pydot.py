@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import os.path
 import sys
 from functools import singledispatch
@@ -27,6 +28,9 @@ from gaphor.transaction import Transaction
 from gaphor.UML import NamedElement
 from gaphor.UML.actions.activitynodes import ForkNodeItem
 
+log = logging.getLogger(__name__)
+
+
 try:
     # Use packaged `dot` (pyinstaller)
     DOT = os.path.join(sys._MEIPASS, "dot")  # type: ignore[attr-defined]
@@ -40,7 +44,7 @@ class AutoLayout(Service, ActionProvider):
     def __init__(self, event_manager, diagrams, tools_menu=None, dump_gv=False):
         self.event_manager = event_manager
         self.diagrams = diagrams
-        if tools_menu:
+        if tools_menu and have_dot():
             tools_menu.add_actions(self)
         self.dump_gv = dump_gv
 
@@ -180,6 +184,15 @@ class AutoLayout(Service, ActionProvider):
 
                     for handle in (presentation.head, presentation.tail):
                         reconnect(presentation, handle, diagram.connections)
+
+
+def have_dot():
+    if os.system(f'"{DOT}" -V') == 0:
+        log.debug("`dot` found (%s)", DOT)
+        return True
+    else:
+        log.info("Auto-layout disabled: `dot` not found (%s)", DOT)
+        return False
 
 
 def presentation_for_object(diagram, obj) -> Presentation | None:
