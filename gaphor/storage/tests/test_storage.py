@@ -226,7 +226,7 @@ def test_save_and_load_of_association_with_two_connected_classes(
 def test_load_and_save_of_a_model(element_factory, modeling_language, test_models):
     path = test_models / "simple-items.gaphor"
 
-    with open(path, "r") as ifile:
+    with open(path) as ifile:
         storage.load(
             ifile,
             factory=element_factory,
@@ -237,7 +237,7 @@ def test_load_and_save_of_a_model(element_factory, modeling_language, test_model
 
     storage.save(pf, factory=element_factory)
 
-    with open(path, "r") as ifile:
+    with open(path) as ifile:
 
         orig = ifile.read()
 
@@ -257,7 +257,7 @@ def test_can_not_load_models_older_that_0_17_0(
     path = test_models / "old-gaphor-version.gaphor"
 
     def load_old_model():
-        with open(path, "r") as ifile:
+        with open(path) as ifile:
             storage.load(
                 ifile,
                 factory=element_factory,

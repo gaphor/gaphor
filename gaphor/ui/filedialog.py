@@ -1,4 +1,3 @@
-# coding=utf-8
 """This module has a generic file dialog functions that are used to open or
 save files."""
 
