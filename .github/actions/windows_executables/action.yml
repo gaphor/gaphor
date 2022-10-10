@@ -27,7 +27,7 @@ runs:
       shell: pwsh
     - name: Create Windows Installers
       env:
-        GAPHOR_PKG_GTK: "3"
+        GAPHOR_PKG_GTK: "4"
       run: |
         poetry build
         poetry run poe package
