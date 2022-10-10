@@ -218,7 +218,7 @@ class SelectorError(ValueError):
     """A specialized ``ValueError`` for invalid selectors."""
 
 
-class TokenStream(object):
+class TokenStream:
     def __init__(self, tokens):
         self.tokens = iter(tokens)
         self.peeked = []  # In reversed order
@@ -251,7 +251,7 @@ class TokenStream(object):
         return self.skip(["comment", "whitespace"])
 
 
-class CombinedSelector(object):
+class CombinedSelector:
     def __init__(self, left, combinator, right):
         #: Combined or compound selector
         self.left = left
@@ -270,7 +270,7 @@ class CombinedSelector(object):
         return "{!r}{}{!r}".format(self.left, self.combinator, self.right)
 
 
-class CompoundSelector(object):
+class CompoundSelector:
     """Aka.
 
     sequence of simple selectors, in Level 3.
@@ -292,7 +292,7 @@ class CompoundSelector(object):
         return "".join(map(repr, self.simple_selectors))
 
 
-class LocalNameSelector(object):
+class LocalNameSelector:
     specificity = 0, 0, 1
 
     def __init__(self, local_name):
@@ -302,7 +302,7 @@ class LocalNameSelector(object):
         return self.local_name
 
 
-class NamespaceSelector(object):
+class NamespaceSelector:
     specificity = 0, 0, 0
 
     def __init__(self, namespace):
@@ -314,7 +314,7 @@ class NamespaceSelector(object):
         return "|" if self.namespace == "" else "{%s}|" % self.namespace
 
 
-class IDSelector(object):
+class IDSelector:
     specificity = 1, 0, 0
 
     def __init__(self, ident):
@@ -324,7 +324,7 @@ class IDSelector(object):
         return f"#{self.ident}"
 
 
-class ClassSelector(object):
+class ClassSelector:
     specificity = 0, 1, 0
 
     def __init__(self, class_name):
@@ -334,7 +334,7 @@ class ClassSelector(object):
         return f".{self.class_name}"
 
 
-class AttributeSelector(object):
+class AttributeSelector:
     specificity = 0, 1, 0
 
     def __init__(self, namespace, name, operator, value):
@@ -370,7 +370,7 @@ class PseudoElementSelector:
         return f"::{self.name}"
 
 
-class FunctionalPseudoClassSelector(object):
+class FunctionalPseudoClassSelector:
     specificity = 0, 1, 0
 
     def __init__(self, name, arguments):

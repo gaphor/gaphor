@@ -45,8 +45,8 @@ def test_copy_items_with_connections(diagram, element_factory):
 
     buffer = copy({gen_cls_item, gen_item, spc_cls_item})
     new_items = paste_full(buffer, diagram, element_factory.lookup)
-    (new_cls1, new_cls2) = [ci.subject for ci in new_items if isinstance(ci, ClassItem)]
-    (new_gen,) = [gi.subject for gi in new_items if isinstance(gi, GeneralizationItem)]
+    (new_cls1, new_cls2) = (ci.subject for ci in new_items if isinstance(ci, ClassItem))
+    (new_gen,) = (gi.subject for gi in new_items if isinstance(gi, GeneralizationItem))
 
     assert new_gen.general in {new_cls1, new_cls2}
     assert new_gen.specific in {new_cls1, new_cls2}
