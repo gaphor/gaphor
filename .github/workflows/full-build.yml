@@ -30,7 +30,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v4.2.0
+        uses: actions/setup-python@v4.3.0
         with:
           python-version: ${{ env.python_version }}
       - name: Lint with Pre-commit
@@ -50,7 +50,7 @@ jobs:
       - name: Install Linux Dependencies
         uses: ./.github/actions/linux_dependencies
       - name: Set up Python
-        uses: actions/setup-python@v4.2.0
+        uses: actions/setup-python@v4.3.0
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
@@ -145,7 +145,7 @@ jobs:
       - uses: actions/checkout@v3.1.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - uses: actions/setup-python@v4.2.0
+      - uses: actions/setup-python@v4.3.0
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
@@ -177,7 +177,7 @@ jobs:
       - name: Install macOS Dependencies
         uses: ./.github/actions/macos_dependencies
       - name: Set up Python
-        uses: actions/setup-python@v4.2.0
+        uses: actions/setup-python@v4.3.0
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
@@ -238,7 +238,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v4.2.0
+        uses: actions/setup-python@v4.3.0
         with:
           python-version: ${{ env.python_version }}
       - name: Install macOS Dependencies
@@ -273,7 +273,7 @@ jobs:
           key: gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/setup-python@v4.2.0
+        uses: actions/setup-python@v4.3.0
         with:
           python-version: ${{ env.python_version }}
       - name: GTK binaries move git binary
@@ -328,7 +328,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v4.2.0
+        uses: actions/setup-python@v4.3.0
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
