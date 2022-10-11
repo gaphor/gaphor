@@ -21,9 +21,7 @@ def on_delete(ctrl, keyval, keycode, state, event_manager):
     otherwise this key will confuse the text edit stuff.
     """
     view: GtkView = ctrl.get_widget()
-    if keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace) and (
-        state == 0 or state & Gdk.ModifierType.MOD2_MASK
-    ):
+    if keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace):
         delete_selected_items(view, event_manager)
         return True
     return False
