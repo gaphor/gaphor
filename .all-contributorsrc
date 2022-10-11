@@ -912,8 +912,18 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "DKX47",
+      "name": "DKX47",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12964384?v=4",
+      "profile": "https://github.com/DKX47",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }
