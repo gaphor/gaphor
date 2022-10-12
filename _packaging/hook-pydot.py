@@ -41,18 +41,28 @@ progs = [
 
 if is_win:
     for prog in progs:
-        for binary in glob.glob("c:/Program Files/Graphviz*/bin/" + prog + ".exe"):
-            binaries.append((binary, "."))
-    for binary in glob.glob("c:/Program Files/Graphviz*/bin/*.dll"):
-        binaries.append((binary, "."))
-    for data in glob.glob("c:/Program Files/Graphviz*/bin/config*"):
-        datas.append((data, "."))
+        binaries.extend(
+            (binary, ".")
+            for binary in glob.glob(
+                f"c:/Program Files/Graphviz*/bin/{prog}.exe"
+            )
+        )
+
+    binaries.extend(
+        (binary, ".")
+        for binary in glob.glob("c:/Program Files/Graphviz*/bin/*.dll")
+    )
+
+    datas.extend(
+        (data, ".")
+        for data in glob.glob("c:/Program Files/Graphviz*/bin/config*")
+    )
+
 else:
     # The dot binary in PATH is typically a symlink, handle that.
     # graphviz_bindir is e.g. /usr/local/Cellar/graphviz/2.46.0/bin
     graphviz_bindir = os.path.dirname(os.path.realpath(shutil.which("dot")))  # type: ignore[type-var]
-    for binary in progs:
-        binaries.append((f"{graphviz_bindir}/{binary}", "."))
+    binaries.extend((f"{graphviz_bindir}/{binary}", ".") for binary in progs)
     if is_darwin:
         suffix = "dylib"
         # graphviz_libdir is e.g. /usr/local/Cellar/graphviz/2.46.0/lib/graphviz
@@ -63,7 +73,11 @@ else:
         graphviz_libdir = os.path.join(
             os.path.dirname(findLibrary("libcdt")), "graphviz"
         )
-    for binary in glob.glob(graphviz_libdir + "/*." + suffix):
-        binaries.append((binary, "graphviz"))
-    for data in glob.glob(graphviz_libdir + "/config*"):
-        datas.append((data, "graphviz"))
+    binaries.extend(
+        (binary, "graphviz")
+        for binary in glob.glob(f"{graphviz_libdir}/*.{suffix}")
+    )
+
+    datas.extend(
+        (data, "graphviz") for data in glob.glob(f"{graphviz_libdir}/config*")
+    )
