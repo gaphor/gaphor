@@ -43,19 +43,15 @@ if is_win:
     for prog in progs:
         binaries.extend(
             (binary, ".")
-            for binary in glob.glob(
-                f"c:/Program Files/Graphviz*/bin/{prog}.exe"
-            )
+            for binary in glob.glob(f"c:/Program Files/Graphviz*/bin/{prog}.exe")
         )
 
     binaries.extend(
-        (binary, ".")
-        for binary in glob.glob("c:/Program Files/Graphviz*/bin/*.dll")
+        (binary, ".") for binary in glob.glob("c:/Program Files/Graphviz*/bin/*.dll")
     )
 
     datas.extend(
-        (data, ".")
-        for data in glob.glob("c:/Program Files/Graphviz*/bin/config*")
+        (data, ".") for data in glob.glob("c:/Program Files/Graphviz*/bin/config*")
     )
 
 else:
@@ -74,10 +70,7 @@ else:
             os.path.dirname(findLibrary("libcdt")), "graphviz"
         )
     binaries.extend(
-        (binary, "graphviz")
-        for binary in glob.glob(f"{graphviz_libdir}/*.{suffix}")
+        (binary, "graphviz") for binary in glob.glob(f"{graphviz_libdir}/*.{suffix}")
     )
 
-    datas.extend(
-        (data, "graphviz") for data in glob.glob(f"{graphviz_libdir}/config*")
-    )
+    datas.extend((data, "graphviz") for data in glob.glob(f"{graphviz_libdir}/config*"))
