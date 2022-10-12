@@ -23,20 +23,7 @@ datas: list[tuple[str, str]] = []
 
 # List of binaries agraph.py may invoke.
 progs = [
-    "neato",
     "dot",
-    "twopi",
-    "circo",
-    "fdp",
-    "nop",
-    "acyclic",
-    "gvpr",
-    "gvcolor",
-    "ccomps",
-    "sccmap",
-    "tred",
-    "sfdp",
-    "unflatten",
 ]
 
 if is_win:
