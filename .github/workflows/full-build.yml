@@ -259,7 +259,7 @@ jobs:
     env:
       gvsbuild_version: 2022.4.0
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuild_update: 2
+      gvsbuild_update: 3
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
@@ -285,7 +285,7 @@ jobs:
       - name: GTK binaries run gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
         run: >
-          gvsbuild build --enable-gi --py-wheel gobject-introspection gtk4 pycairo pygobject gtksourceview5
+          gvsbuild build --enable-gi --py-wheel gobject-introspection gtk4 libadwaita pycairo pygobject gtksourceview5
           adwaita-icon-theme hicolor-icon-theme
       - name: Copy wheels to cached directory
         if: steps.cache.outputs.cache-hit != 'true'
