@@ -42,20 +42,26 @@ if is_win:
     )
 
 else:
-    # The dot binary in PATH is typically a symlink, handle that.
-    # graphviz_bindir is e.g. /usr/local/Cellar/graphviz/2.46.0/bin
-    graphviz_bindir = os.path.dirname(os.path.realpath(shutil.which("dot")))  # type: ignore[type-var]
-    binaries.extend((f"{graphviz_bindir}/{binary}", ".") for binary in progs)
     if is_darwin:
+        # The dot binary in PATH is typically a symlink, handle that.
+        # graphviz_bindir is e.g. /usr/local/Cellar/graphviz/2.46.0/bin
+        graphviz_bindir = os.path.dirname(os.path.realpath(shutil.which("dot")))  # type: ignore[type-var]
+
         suffix = "dylib"
         # graphviz_libdir is e.g. /usr/local/Cellar/graphviz/2.46.0/lib/graphviz
         graphviz_libdir = os.path.realpath(f"{graphviz_bindir}/../lib/graphviz")
     else:
+        # Do not resolve symlinks: on Ubuntu Bionic, the symlink is
+        # /usr/bin/dot -> ../sbin/libgvc6-config-update
+        graphviz_bindir = os.path.dirname(shutil.which("dot"))  # type: ignore[type-var]
+
         suffix = "so"
         # graphviz_libdir is e.g. /usr/lib64/graphviz
         graphviz_libdir = os.path.join(
             os.path.dirname(findLibrary("libcdt")), "graphviz"
         )
+
+    binaries.extend((f"{graphviz_bindir}/{binary}", ".") for binary in progs)
     binaries.extend(
         (binary, "graphviz") for binary in glob.glob(f"{graphviz_libdir}/*.{suffix}")
     )
