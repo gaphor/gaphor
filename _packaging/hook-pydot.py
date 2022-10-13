@@ -33,8 +33,14 @@ if is_win:
             for binary in glob.glob(f"c:/Program Files/Graphviz*/bin/{prog}.exe")
         )
 
+    # Do not include all plugins: some have dependencys on Pango and Cairo, different version from what we need
     binaries.extend(
-        (binary, ".") for binary in glob.glob("c:/Program Files/Graphviz*/bin/*.dll")
+        (binary, ".")
+        for binary in glob.glob("c:/Program Files/Graphviz*/bin/*.dll")
+        if "gvplugin_" not in binary
+        or "gvplugin_core" in binary
+        or "gvplugin_dot_layout" in binary
+        or "gvplugin_neato_layout" in binary
     )
 
     datas.extend(
