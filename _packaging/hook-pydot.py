@@ -37,6 +37,8 @@ def required_plugin(binary):
 
 
 if is_win:
+    # For Windows, we move all graphviz stuff in a separate folder.
+    # This way the GV binaries do not interfere with Gaphor.
     for prog in progs:
         binaries.extend(
             (binary, "graphviz")
