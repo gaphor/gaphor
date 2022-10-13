@@ -29,7 +29,7 @@ def exc_info():
 
 def exc_group_info():
     def nested():
-        raise ValueError("Interal Error")
+        raise ValueError("Internal Error")
 
     try:
         nested()
@@ -64,4 +64,4 @@ def test_format_exception_group(error_reporter):
 
     text = get_text(error_reporter.buffer)
 
-    assert 'ValueError("Interal Error")' in text
+    assert 'ValueError("Internal Error")' in text

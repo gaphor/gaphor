@@ -114,7 +114,7 @@ def test_invalid_selector():
     assert selector == "error"
 
 
-def test_css_declaration_without_semicolumn():
+def test_css_declaration_without_semicolon():
     css = """
     * {
         font-family: 'sans'
@@ -125,7 +125,7 @@ def test_css_declaration_without_semicolumn():
     assert props.get("font-family") == "sans"
 
 
-def test_css_multiple_declarations_without_semicolumns():
+def test_css_multiple_declarations_without_semicolons():
     css = """
     * {
         font-family: sans;

@@ -271,7 +271,7 @@ def test_connection_order(create):
     assert conn2.subject
 
 
-def test_addtional_connections(create):
+def test_additional_connections(create):
     """Test additional connections to assembly connection."""
     conn1 = create(ConnectorItem)
     conn2 = create(ConnectorItem)

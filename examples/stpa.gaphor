@@ -7070,7 +7070,7 @@ Figure 2.10</val>
 </annotatedElement>
 <body>
 <val>Context = The BSCU is armed and the aircraft begins landing roll.
-UCA = The BSCU does not provie the Brake control action
+UCA = The BSCU does not provide the Brake control action
 ProcessFlaw = the BSCU incorrectly believes the aircraft is in the air and has not touched down.
 CausalFactor = This flawed process model will occur if the touchdown indication is not received upon touchdown.</val>
 </body>
@@ -7088,7 +7088,7 @@ CausalFactor = This flawed process model will occur if the touchdown indication 
 </annotatedElement>
 <body>
 <val>Context = The BSCU is armed and the aircraft begins landing roll
-UCA = The BSCU does not provie the Brake control action
+UCA = The BSCU does not provide the Brake control action
 ProcessFlaw = The BSCU incorrectly believes the aircraft has already come to a stop
 CausalFactor = This flawed process modl will occur if the received feedback momentarily indicates zero speed during landing roll. The received feedback may momentarily indicate zero speed during anti-skid operation, even though the aircraft is not stopped.</val>
 </body>
