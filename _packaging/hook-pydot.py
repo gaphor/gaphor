@@ -70,7 +70,7 @@ else:
         # /usr/bin/dot -> ../sbin/libgvc6-config-update
         graphviz_bindir = os.path.dirname(shutil.which("dot"))  # type: ignore[type-var]
 
-        suffix = "so"
+        suffix = "so.?"
         # graphviz_libdir is e.g. /usr/lib64/graphviz
         graphviz_libdir = os.path.join(
             os.path.dirname(findLibrary("libcdt")), "graphviz"
@@ -78,7 +78,9 @@ else:
 
     binaries.extend((f"{graphviz_bindir}/{binary}", ".") for binary in progs)
     binaries.extend(
-        (binary, "graphviz") for binary in glob.glob(f"{graphviz_libdir}/*.{suffix}")
+        (binary, "graphviz")
+        for binary in glob.glob(f"{graphviz_libdir}/*.{suffix}")
+        if required_plugin(binary)
     )
 
     datas.extend((data, "graphviz") for data in glob.glob(f"{graphviz_libdir}/config*"))
