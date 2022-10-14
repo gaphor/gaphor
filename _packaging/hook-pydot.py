@@ -29,30 +29,38 @@ progs = [
 
 def required_plugin(binary):
     return (
-        "gvplugin_" not in binary
-        or "gvplugin_core" in binary
+        "gvplugin_core" in binary
         or "gvplugin_dot_layout" in binary
         or "gvplugin_neato_layout" in binary
     )
 
 
 if is_win:
-    # For Windows, we move all graphviz stuff in a separate folder.
+    # For Windows, we move the minimal number of graphviz binaries to a separate folder.
     # This way the GV binaries do not interfere with Gaphor.
-    for prog in progs:
-        binaries.extend(
-            (binary, "graphviz")
-            for binary in glob.glob(f"c:/Program Files/Graphviz*/bin/{prog}.exe")
-        )
+    files = [
+        "dot.exe",
+        "cdt.dll",
+        "cgraph++.dll",
+        "cgraph.dll",
+        "expat.dll",
+        "getopt.dll",
+        "gvc++.dll",
+        "gvc.dll",
+        "gvplugin_core.dll",
+        "gvplugin_dot_layout.dll",
+        "gvplugin_neato_layout.dll",
+        "pathplan.dll",
+        "vcruntime140.dll",
+        "vcruntime140_1.dll",
+    ]
 
-    # Do not include all plugins: some have dependencys on Pango and Cairo, different version from what we need
     binaries.extend(
-        (binary, "graphviz")
-        for binary in glob.glob("c:/Program Files/Graphviz*/bin/*.dll")
-        if required_plugin(binary)
+        (glob.glob(f"c:/Program Files/Graphviz*/bin/{f}")[0], "graphviz") for f in files
     )
 
-    # Instead of opying the config file, what we should really do is call `dot -c` on our new plugins folder.
+    # Instead of copying the config file, what we should really do
+    # is call `dot -c` on our new plugins folder.
     datas.extend(
         (data, "graphviz")
         for data in glob.glob("c:/Program Files/Graphviz*/bin/config*")
