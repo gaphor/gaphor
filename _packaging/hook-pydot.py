@@ -39,6 +39,23 @@ def required_plugin(binary):
 if is_win:
     # For Windows, we move all graphviz stuff in a separate folder.
     # This way the GV binaries do not interfere with Gaphor.
+
+    # 13-10-2022  12:56            24.576 cdt.dll
+    # 13-10-2022  12:56            11.264 cgraph++.dll
+    # 13-10-2022  12:56            74.240 cgraph.dll
+    # 11-10-2022  11:36             3.057 config6
+    # 13-10-2022  12:56            10.752 dot.exe
+    # 13-10-2022  12:56           184.832 expat.dll
+    # 13-10-2022  12:56            19.968 getopt.dll
+    # 13-10-2022  12:56            18.432 gvc++.dll
+    # 13-10-2022  12:56           552.960 gvc.dll
+    # 13-10-2022  12:56           123.904 gvplugin_core.dll
+    # 13-10-2022  12:56           158.208 gvplugin_dot_layout.dll
+    # 13-10-2022  12:56           368.128 gvplugin_neato_layout.dll
+    # 13-10-2022  12:56            39.936 pathplan.dll
+    # 13-10-2022  12:56           101.664 vcruntime140.dll
+    # 13-10-2022  12:56            44.328 vcruntime140_1.dll
+
     for prog in progs:
         binaries.extend(
             (binary, "graphviz")
