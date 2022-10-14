@@ -30,18 +30,13 @@ def graphviz_plugin_path():
 
 
 def have_graphviz(program):
-    path = graphviz_path()
-    if path:
+    if path := graphviz_path():
         program = os.path.join(path, program + pydot.get_executable_extension())
     return os.system(f'"{program}" -V') == 0
 
 
 def call_graphviz(program, arguments, working_dir, **kwargs):
-    # explicitly inherit `$PATH`, on Windows too,
-    # with `shell=False`
-
-    path = graphviz_path()
-    if path:
+    if path := graphviz_path():
         program = os.path.join(path, program + pydot.get_executable_extension())
 
     if arguments is None:
