@@ -259,7 +259,7 @@ jobs:
     env:
       gvsbuild_version: 2022.4.0
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuild_update: 1
+      gvsbuild_update: 3
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
@@ -285,7 +285,7 @@ jobs:
       - name: GTK binaries run gvsbuild
         if: steps.cache.outputs.cache-hit != 'true'
         run: >
-          gvsbuild build --enable-gi --py-wheel gobject-introspection gtk3 pycairo pygobject gtksourceview4
+          gvsbuild build --enable-gi --py-wheel gobject-introspection gtk4 libadwaita pycairo pygobject gtksourceview5
           adwaita-icon-theme hicolor-icon-theme
       - name: Copy wheels to cached directory
         if: steps.cache.outputs.cache-hit != 'true'
@@ -301,7 +301,7 @@ jobs:
     needs: [lint, windows-build-gtk]
     runs-on: windows-latest
     env:
-      GAPHOR_USE_GTK: 3
+      GAPHOR_USE_GTK: 4
       INCLUDE: C:\gtk-build\gtk\x64\release\lib\glib-2.0\include;C:\gtk-build\gtk\x64\release\include;C:\gtk-build\gtk\x64\release\include\gobject-introspection-1.0;C:\gtk-build\gtk\x64\release\include\cairo;C:\gtk-build\gtk\x64\release\include\glib-2.0
       LIB: C:\gtk-build\gtk\x64\release\lib
     permissions:
