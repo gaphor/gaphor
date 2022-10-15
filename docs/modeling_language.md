@@ -79,7 +79,7 @@ two functions: one for copying and one for pasting.
 
 .. function:: gaphor.diagram.copypaste.paste_link(copy_data: CopyData, diagram: Diagram, lookup: Callable[[str], Element | None]) -> set[Presentation]:
 
-   Create a copy of the Presentation element, but try to link the underlaying model element.
+   Create a copy of the Presentation element, but try to link the underlying model element.
    A shallow copy.
 
 .. function:: gaphor.diagram.copypaste.paste_full(copy_data: CopyData, diagram: Diagram, lookup: Callable[[str], Element | None]) -> set[Presentation]:

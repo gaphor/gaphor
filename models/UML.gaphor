@@ -30924,7 +30924,7 @@ directly in a model.</val>
 <ref refid="639ff018-e18a-11ea-b7ab-f5b4c130f24e"/>
 </element>
 <name>
-<val>1. Structured Classifers</val>
+<val>1. Structured Classifiers</val>
 </name>
 <ownedPresentation>
 <reflist>
@@ -49330,7 +49330,7 @@ to accommodate simpleAttribute</val>
 <ref refid="DCE:2AF6FCEA-3B13-11D9-83CE-A0BAF22E8A12"/>
 </element>
 <name>
-<val>4. Occurences</val>
+<val>4. Occurrences</val>
 </name>
 <ownedPresentation>
 <reflist>

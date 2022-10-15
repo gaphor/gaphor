@@ -147,7 +147,7 @@ _____
 - Allow auto-generated elements (Activity, State Machine, Interaction, Region) to be removed
 - Fix Windows build by updating to Python 3.9.9
 - Emit events for Diagram.ownedPresentation and Presentation.diagram after element creation
-- Show underlaying DecisionNode type
+- Show underlying DecisionNode type
 - Add documentation dependencies to pyproject.toml
 - Move enumeration layout to UML.classes
 - Rename packaging to _packaging
@@ -156,7 +156,7 @@ _____
 - Update to PyInstaller 4.6
 - Add gtksourceview to Windows docs
 - Fix Python 3.10 warnings
-- Fix indention in Style Sheet docs
+- Fix indentation in Style Sheet docs
 - Expand the number of strings translated
 - Hungarian, Spanish, Japanese, Finnish, and Croatian translation updates
 
@@ -188,7 +188,7 @@ _____
 -----
  - Fix localization of UI files
  - Fix icons in dark mode
- - Update Spanish, Finnish, Hugarian, and Portugues (Br) translations
+ - Update Spanish, Finnish, Hugarian, and Portuguese (Br) translations
 
 2.6.1
 -----

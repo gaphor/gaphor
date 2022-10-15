@@ -33,7 +33,7 @@ to run without signing, but still requires signing for remote scripts.
 ### Git
 
 To setup a development environment in Windows first install
-[Git](https://gitforwindows.org) by executing as an adminstrator:
+[Git](https://gitforwindows.org) by executing as an administrator:
 
 ```PowerShell
 choco install git

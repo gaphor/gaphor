@@ -68,7 +68,7 @@ class Presentation(Matrices, Element, Generic[S]):
         return self
 
     def change_parent(self, new_parent):
-        """Change the parent and update the item's matrix so the item visualy
+        """Change the parent and update the item's matrix so the item visually
         remains in the same place."""
         old_parent = self.parent
         if new_parent is old_parent:
