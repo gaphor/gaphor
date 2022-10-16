@@ -9,6 +9,9 @@ from queue import Queue
 from gaphas.decorators import g_async
 from gi.repository import GLib, Gtk
 
+if Gtk.get_major_version() == 4:
+    from gi.repository import Adw
+
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
@@ -270,7 +273,8 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(SessionShutdown(self))
 
         def response(answer):
-            if answer == Gtk.ResponseType.YES:
+            # Gtk.ResponseType.YES is GTK3, save is GTK4
+            if answer in [Gtk.ResponseType.YES, "save"]:
                 if filename := self.filename:
                     self.save(filename, on_save_done=confirm_shutdown)
 
@@ -285,7 +289,9 @@ class FileManager(Service, ActionProvider):
                         extension=".gaphor",
                         filters=GAPHOR_FILTER,
                     )
-            elif answer == Gtk.ResponseType.REJECT:
+            # Gtk.ResponseType.REJECT is GTK3, discard is GTK4
+            elif answer in [Gtk.ResponseType.REJECT, "discard"]:
+                confirm_shutdown()
                 confirm_shutdown()
 
         if self.main_window.model_changed:
@@ -295,26 +301,42 @@ class FileManager(Service, ActionProvider):
 
 
 def save_changes_before_closing_dialog(window: Gtk.Window, handler) -> None:
-    dialog = Gtk.MessageDialog(
-        message_type=Gtk.MessageType.WARNING,
-        text=gettext("Save changes before closing?"),
-        secondary_text=gettext(
-            "Closing will cause any unsaved changes to be discarded."
-        ),
+    title = gettext("Save Changes?")
+    body = gettext(
+        "The open model contains unsaved changes. Changes which are not saved will be permanently lost."
     )
-    dialog.set_transient_for(window)
-    dialog.set_modal(True)
-    dialog.add_buttons(
-        gettext("Close without saving changes"),
-        Gtk.ResponseType.REJECT,
-        gettext("Cancel"),
-        Gtk.ResponseType.CANCEL,
-        gettext("Save"),
-        Gtk.ResponseType.YES,
-    )
-    dialog.set_default_response(Gtk.ResponseType.YES)
+    if Gtk.get_major_version() == 3:
+        dialog = Gtk.MessageDialog(
+            message_type=Gtk.MessageType.WARNING,
+            text=title,
+            secondary_text=body,
+        )
+        dialog.set_transient_for(window)
+        dialog.set_modal(True)
+        dialog.add_buttons(
+            gettext("Cancel"),
+            Gtk.ResponseType.CANCEL,
+            gettext("Discard"),
+            Gtk.ResponseType.REJECT,
+            gettext("Save"),
+            Gtk.ResponseType.YES,
+        )
+        dialog.set_default_response(Gtk.ResponseType.YES)
+    else:
+        dialog = Adw.MessageDialog.new(
+            window,
+            title,
+        )
+        dialog.set_body(body)
+        dialog.add_response("cancel", gettext("Cancel"))
+        dialog.add_response("discard", gettext("Discard"))
+        dialog.add_response("save", gettext("Save"))
+        dialog.set_response_appearance("discard", Adw.ResponseAppearance.DESTRUCTIVE)
+        dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED)
+        dialog.set_default_response("save")
+        dialog.set_close_response("cancel")
 
-    def response(_dialog, answer):
+    def response(dialog, answer):
         dialog.destroy()
         handler(answer)
 
