@@ -257,9 +257,9 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 60
     env:
-      gvsbuild_version: 2022.4.0
+      gvsbuild_version: 2022.4.1
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuild_update: 3
+      gvsbuild_update: 1
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
