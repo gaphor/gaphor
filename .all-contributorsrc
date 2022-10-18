@@ -930,6 +930,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "perovsek",
+      "name": "perovsek",
+      "avatar_url": "https://avatars.githubusercontent.com/u/115713273?v=4",
+      "profile": "https://github.com/perovsek",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
