@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-10-18 21:01-0400\n"
-"PO-Revision-Date: 2022-09-01 19:16+0000\n"
+"PO-Revision-Date: 2022-10-20 22:48+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:55
@@ -1196,16 +1197,14 @@ msgstr "Stereotyypit"
 
 #: gaphor/UML/states/propertypages.glade:39
 #: gaphor/UML/states/propertypages.ui:104
-#, fuzzy
 msgid "Show Regions"
-msgstr "Näytä suunta"
+msgstr "Näytä alueet"
 
 #: gaphor/UML/states/propertypages.glade:62
 #: gaphor/UML/states/propertypages.glade:84
 #: gaphor/UML/states/propertypages.ui:91 gaphor/UML/states/propertypages.ui:120
-#, fuzzy
 msgid "Regions"
-msgstr "Yhdistäminen"
+msgstr "Alueet"
 
 #: gaphor/UML/states/propertypages.glade:105
 #: gaphor/UML/states/propertypages.ui:20
@@ -1533,18 +1532,16 @@ msgid ""
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:24
-#, fuzzy
 msgid "Rename"
-msgstr "_Nimeä uudelleen"
+msgstr "Nimeä uudelleen"
 
 #: gaphor/services/helpservice/shortcuts.ui:32
-#, fuzzy
 msgid "Search"
-msgstr "Käyttäjä"
+msgstr "Etsi"
 
 #: gaphor/services/helpservice/shortcuts.ui:40
 msgid "Toggle property editor"
-msgstr ""
+msgstr "Ominaisuusmuokkain päälle/pois"
 
 #: gaphor/services/helpservice/shortcuts.ui:48
 msgid "Close Diagram"
@@ -1583,9 +1580,8 @@ msgid "Save As…"
 msgstr "Tallenna nimellä…"
 
 #: gaphor/services/helpservice/shortcuts.ui:117
-#, fuzzy
 msgid "Undo and Redo"
-msgstr "järjestämätön"
+msgstr "Kumoa ja tee uudelleen"
 
 #: gaphor/services/helpservice/shortcuts.ui:123
 #: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
@@ -1617,9 +1613,8 @@ msgid "Actual Size"
 msgstr "Todellinen koko"
 
 #: gaphor/services/helpservice/shortcuts.ui:174
-#, fuzzy
 msgid "Selections"
-msgstr "Toiminnot"
+msgstr "Valinnat"
 
 #: gaphor/services/helpservice/shortcuts.ui:180
 msgid "Select All"
@@ -1631,7 +1626,7 @@ msgstr "Älä valitse mitään"
 
 #: gaphor/services/helpservice/shortcuts.ui:199
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopioi ja liitä"
 
 #: gaphor/services/helpservice/shortcuts.ui:205
 msgid "Copy"
@@ -1639,7 +1634,7 @@ msgstr "Kopioi"
 
 #: gaphor/services/helpservice/shortcuts.ui:213
 msgid "Cut"
-msgstr ""
+msgstr "Leikkaa"
 
 #: gaphor/services/helpservice/shortcuts.ui:221
 msgid "Paste (link defining elements)"
@@ -1876,11 +1871,11 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Off"
-msgstr ""
+msgstr "Pois"
 
 #: gaphor/templates/sysml.gaphor
 msgid "On"
-msgstr ""
+msgstr "Päällä"
 
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
@@ -1976,12 +1971,11 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detect Object"
-msgstr ""
+msgstr "Havaitse objekti"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Detection Event"
-msgstr "Ehdollinen tapahtuma"
+msgstr "Havainnointitapahtuma"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
