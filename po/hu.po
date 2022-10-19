@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-09-16 16:33+0200\n"
+"POT-Creation-Date: 2022-10-18 21:01-0400\n"
 "PO-Revision-Date: 2022-09-15 10:22+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language: hu\n"
@@ -117,7 +117,7 @@ msgstr "Új STPA-ábra"
 msgid "AND Gate"
 msgstr "ÉS kapu"
 
-#: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr "Elemi esemény"
@@ -660,15 +660,15 @@ msgstr "Bemeneti tű"
 msgid "Output pin"
 msgstr "Kimeneti tű"
 
-#: gaphor/UML/actions/activitynodes.py:193
+#: gaphor/UML/actions/activitynodes.py:190
 msgid "merge/decision"
 msgstr "döntő/egyesítő"
 
-#: gaphor/UML/actions/activitynodes.py:195
+#: gaphor/UML/actions/activitynodes.py:192
 msgid "merge"
 msgstr "egyesítő"
 
-#: gaphor/UML/actions/activitynodes.py:197
+#: gaphor/UML/actions/activitynodes.py:194
 msgid "decision"
 msgstr "döntő"
 
@@ -1386,6 +1386,7 @@ msgid "Extend"
 msgstr "Kiterjesztés"
 
 #: gaphor/diagram/diagramtoolbox.py:99
+#: gaphor/services/helpservice/shortcuts.ui:18
 msgid "General"
 msgstr "Általános"
 
@@ -1438,7 +1439,7 @@ msgstr "Stílus"
 msgid "Note or Remark"
 msgstr "Megjegyzés"
 
-#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
+#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:348
 msgid "Element can’t be represented on a diagram."
 msgstr "Az elem nem ábrázolható egy ábrán."
 
@@ -1603,115 +1604,127 @@ msgstr ""
 "bejegyzett védjegyei vagy védjegyei az Egyesült Államokban\n"
 "és/vagy más országokban.\n"
 
-#: gaphor/services/helpservice/shortcuts.ui:18
-msgid "Application"
-msgstr "Alkalmazás"
-
 #: gaphor/services/helpservice/shortcuts.ui:24
+#, fuzzy
+msgid "Rename"
+msgstr "Átne_vezés"
+
+#: gaphor/services/helpservice/shortcuts.ui:32
+#, fuzzy
+msgid "Search"
+msgstr "Felhasználó"
+
+#: gaphor/services/helpservice/shortcuts.ui:40
+msgid "Toggle property editor"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:48
+msgid "Close Diagram"
+msgstr "Ábra bezárása"
+
+#: gaphor/services/helpservice/shortcuts.ui:56
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
-#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:195
-#: gaphor/ui/elementeditor.ui:206
+#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:187
+#: gaphor/ui/elementeditor.ui:198
 msgid "Preferences"
 msgstr "Beállítások"
 
-#: gaphor/services/helpservice/shortcuts.ui:32
+#: gaphor/services/helpservice/shortcuts.ui:64
 msgid "Quit Gaphor"
 msgstr "A Gaphor bezárása"
 
-#: gaphor/services/helpservice/shortcuts.ui:43
+#: gaphor/services/helpservice/shortcuts.ui:75
 msgid "Files"
 msgstr "Fájlok"
 
-#: gaphor/services/helpservice/shortcuts.ui:49
-msgid "New Window"
-msgstr "Új ablak"
+#: gaphor/services/helpservice/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
+msgid "New Model…"
+msgstr "Új modell…"
 
-#: gaphor/services/helpservice/shortcuts.ui:57
-msgid "Open"
-msgstr "Megnyitás"
+#: gaphor/services/helpservice/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
+msgid "Open a Model…"
+msgstr "Modell megnyitása…"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/filemanager.py:314
+#: gaphor/services/helpservice/shortcuts.ui:97 gaphor/ui/filemanager.py:312
 #: gaphor/ui/mainwindow.py:49
 msgid "Save"
 msgstr "Mentés"
 
-#: gaphor/services/helpservice/shortcuts.ui:73
-msgid "Save As"
-msgstr "Mentés másként"
+#: gaphor/services/helpservice/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
+msgid "Save As…"
+msgstr "Mentés másként…"
 
-#: gaphor/services/helpservice/shortcuts.ui:84
-#: gaphor/services/helpservice/shortcuts.ui:90 gaphor/ui/elementeditor.glade:99
-#: gaphor/ui/elementeditor.ui:75
+#: gaphor/services/helpservice/shortcuts.ui:117
+#, fuzzy
+msgid "Undo and Redo"
+msgstr "rendezetlen"
+
+#: gaphor/services/helpservice/shortcuts.ui:123
+#: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
 msgid "Undo"
 msgstr "Visszavonás"
 
-#: gaphor/services/helpservice/shortcuts.ui:98
+#: gaphor/services/helpservice/shortcuts.ui:131
 #: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:90
 msgid "Redo"
 msgstr "Ismét"
 
-#: gaphor/services/helpservice/shortcuts.ui:109
-msgid "Diagrams"
-msgstr "Ábrák"
-
-#: gaphor/services/helpservice/shortcuts.ui:115
-msgid "Edit"
-msgstr "Szerkesztés"
-
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
-msgid "Editor"
-msgstr "Szerkesztő megjelenítése/elrejtése"
-
-#: gaphor/services/helpservice/shortcuts.ui:131
-msgid "Select All"
-msgstr "Összes kijelölése"
-
-#: gaphor/services/helpservice/shortcuts.ui:139
-msgid "Deselect All"
-msgstr "Minden kijelölés megszüntetése"
-
-#: gaphor/services/helpservice/shortcuts.ui:147
-msgid "Copy"
-msgstr "Másolás"
-
-#: gaphor/services/helpservice/shortcuts.ui:155
-msgid "Paste (link defining elements)"
-msgstr "Beillesztés (meghatározó elemek összekapcsolása)"
-
-#: gaphor/services/helpservice/shortcuts.ui:163
-msgid "Paste (copy defining elements)"
-msgstr "Beillesztés (meghatározó elemek másolása)"
-
-#: gaphor/services/helpservice/shortcuts.ui:171
-msgid "Delete"
-msgstr "Törlés"
-
-#: gaphor/services/helpservice/shortcuts.ui:179
-msgid "Close Diagram"
-msgstr "Ábra bezárása"
-
-#: gaphor/services/helpservice/shortcuts.ui:190
+#: gaphor/services/helpservice/shortcuts.ui:142
 msgid "Zoom"
 msgstr "Nagyítás"
 
-#: gaphor/services/helpservice/shortcuts.ui:196
+#: gaphor/services/helpservice/shortcuts.ui:148
 #: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:106
 msgid "Zoom In"
 msgstr "Nagyítás"
 
-#: gaphor/services/helpservice/shortcuts.ui:204
+#: gaphor/services/helpservice/shortcuts.ui:156
 #: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:130
 msgid "Zoom Out"
 msgstr "Kicsinyítés"
 
-#: gaphor/services/helpservice/shortcuts.ui:212
+#: gaphor/services/helpservice/shortcuts.ui:164
 #: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:118
 msgid "Actual Size"
 msgstr "Tényleges méret"
 
+#: gaphor/services/helpservice/shortcuts.ui:174
+#, fuzzy
+msgid "Selections"
+msgstr "Műveletek"
+
+#: gaphor/services/helpservice/shortcuts.ui:180
+msgid "Select All"
+msgstr "Összes kijelölése"
+
+#: gaphor/services/helpservice/shortcuts.ui:188
+msgid "Deselect All"
+msgstr "Minden kijelölés megszüntetése"
+
+#: gaphor/services/helpservice/shortcuts.ui:199
+msgid "Copy and Paste"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:205
+msgid "Copy"
+msgstr "Másolás"
+
+#: gaphor/services/helpservice/shortcuts.ui:213
+#, fuzzy
+msgid "Cut"
+msgstr "elektronikus vezérlőegység (ecu)"
+
+#: gaphor/services/helpservice/shortcuts.ui:221
+msgid "Paste (link defining elements)"
+msgstr "Beillesztés (meghatározó elemek összekapcsolása)"
+
+#: gaphor/services/helpservice/shortcuts.ui:229
+msgid "Paste (copy defining elements)"
+msgstr "Beillesztés (meghatározó elemek másolása)"
+
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:57
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:29
-#: gaphor/ui/namespace.py:328 gaphor/ui/treecomponent.py:164
+#: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
 msgid "New model"
 msgstr "Új modell"
 
@@ -1988,7 +2001,8 @@ msgid "Actuator Command"
 msgstr "Indítószerkezet parancs"
 
 #: gaphor/templates/sysml.gaphor
-msgid "Example Technolgy Requirement"
+#, fuzzy
+msgid "Example Technology Requirement"
 msgstr "Példa technológiai követelmény"
 
 #: gaphor/templates/sysml.gaphor
@@ -2264,7 +2278,7 @@ msgstr "Karakterlánc"
 msgid "Date"
 msgstr "Dátum"
 
-#: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:13
+#: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
 msgstr "Minden Gaphor-modell"
 
@@ -2325,30 +2339,30 @@ msgstr ""
 "elemet a faszerkezetes nézetben, és kezdjen el gépelni. Egy keresőmező "
 "önműködően megjelenik.\n"
 
-#: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:171
+#: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:163
 msgid "Editors"
 msgstr "Szerkesztők"
 
-#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:219
+#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:211
 msgid "Reset Tool Automatically"
 msgstr "Az eszköz önműködő visszaállítása"
 
-#: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:237
+#: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:229
 msgid "Remove Unused Elements"
 msgstr "Nem használt elemek eltávolítása"
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
-#: gaphor/ui/elementeditor.ui:239 gaphor/ui/elementeditor.ui:246
+#: gaphor/ui/elementeditor.ui:231 gaphor/ui/elementeditor.ui:238
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 "Önműködően távolítsa el azokat az elemeket, amelyeket már nem használnak "
 "az ábrákban."
 
-#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:254
+#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:246
 msgid "Style Sheet"
 msgstr "Stíluslap"
 
-#: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:279
+#: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:275
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
@@ -2373,7 +2387,7 @@ msgstr "Bezárás"
 msgid "Start debug session"
 msgstr "Hibakeresési munkamenet kezdete"
 
-#: gaphor/ui/filedialog.py:33
+#: gaphor/ui/filedialog.py:32
 msgid "All Files"
 msgstr "Minden fájl"
 
@@ -2424,43 +2438,43 @@ msgstr "Betöltés folyamatban van…"
 msgid "Loading model from {filename}"
 msgstr "Modell betöltése innen: {filename}"
 
-#: gaphor/ui/filemanager.py:159
+#: gaphor/ui/filemanager.py:157
 msgid "Unable to open model “{filename}”."
 msgstr "Nem sikerült megnyitni a(z) „{filename}”-modellfájlt."
 
-#: gaphor/ui/filemanager.py:162
+#: gaphor/ui/filemanager.py:160
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Ez a fájl nem tartalmaz érvényes Gaphor-modellt."
 
-#: gaphor/ui/filemanager.py:191
+#: gaphor/ui/filemanager.py:189
 msgid "Saving…"
 msgstr "Mentés folyamatban van…"
 
-#: gaphor/ui/filemanager.py:192
+#: gaphor/ui/filemanager.py:190
 msgid "Saving model to {filename}"
 msgstr "Modell mentése ide: {filename}"
 
-#: gaphor/ui/filemanager.py:209
+#: gaphor/ui/filemanager.py:207
 msgid "Unable to save model “{filename}”."
 msgstr "Nem sikerült menteni a(z) „{filename}”-modellfájlt."
 
-#: gaphor/ui/filemanager.py:246 gaphor/ui/filemanager.py:281
+#: gaphor/ui/filemanager.py:244 gaphor/ui/filemanager.py:279
 msgid "Save Gaphor Model As"
 msgstr "A Gaphor-modell mentése másként"
 
-#: gaphor/ui/filemanager.py:302
+#: gaphor/ui/filemanager.py:300
 msgid "Save changes before closing?"
 msgstr "Menti a módosításokat a bezárás előtt?"
 
-#: gaphor/ui/filemanager.py:303
+#: gaphor/ui/filemanager.py:301
 msgid "Closing will cause any unsaved changes to be discarded."
 msgstr "A bezárás következtében a nem mentett módosítások elvesznek majd."
 
-#: gaphor/ui/filemanager.py:310
+#: gaphor/ui/filemanager.py:308
 msgid "Close without saving changes"
 msgstr "Bezárás a módosítások mentése nélkül"
 
-#: gaphor/ui/filemanager.py:312
+#: gaphor/ui/filemanager.py:310
 msgid "Cancel"
 msgstr "Mégse"
 
@@ -2496,21 +2510,13 @@ msgstr "Új ábra létrehozása"
 msgid "Open Application Menu"
 msgstr "Alkalmazásmenü megnyitása"
 
-#: gaphor/ui/mainwindow.py:43
-msgid "Open a Model…"
-msgstr "Modell megnyitása…"
+#: gaphor/ui/mainwindow.glade:191
+msgid "Editor"
+msgstr "Szerkesztő megjelenítése/elrejtése"
 
 #: gaphor/ui/mainwindow.py:44
 msgid "Recent Models…"
 msgstr "Legutóbbi modellek…"
-
-#: gaphor/ui/mainwindow.py:45
-msgid "New Model…"
-msgstr "Új modell…"
-
-#: gaphor/ui/mainwindow.py:50
-msgid "Save As…"
-msgstr "Mentés másként…"
 
 #: gaphor/ui/mainwindow.py:51
 msgid "Export"
@@ -2564,11 +2570,11 @@ msgstr "_Törlés"
 msgid "Show in “{diagram}”"
 msgstr "Megjelenítés a(z) „{diagram}”-ábrán"
 
-#: gaphor/ui/namespace.py:326 gaphor/ui/treecomponent.py:162
+#: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
 msgid "{name} package"
 msgstr "{name}-csomag"
 
-#: gaphor/ui/namespace.py:344
+#: gaphor/ui/namespace.py:352
 msgid "New diagram"
 msgstr "Új ábra"
 
@@ -2954,3 +2960,24 @@ msgstr "<Kapcsolatok>"
 
 #~ msgid "Default Region"
 #~ msgstr "Alapértelmezett régió"
+
+#~ msgid "Application"
+#~ msgstr "Alkalmazás"
+
+#~ msgid "New Window"
+#~ msgstr "Új ablak"
+
+#~ msgid "Open"
+#~ msgstr "Megnyitás"
+
+#~ msgid "Save As"
+#~ msgstr "Mentés másként"
+
+#~ msgid "Diagrams"
+#~ msgstr "Ábrák"
+
+#~ msgid "Edit"
+#~ msgstr "Szerkesztés"
+
+#~ msgid "Delete"
+#~ msgstr "Törlés"
