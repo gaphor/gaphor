@@ -4,19 +4,20 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  Gaphor\n"
+"Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-10-18 21:01-0400\n"
-"PO-Revision-Date: 2022-09-12 11:16+0000\n"
+"PO-Revision-Date: 2022-10-20 22:48+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hr/>\n"
 "Language: hr\n"
-"Language-Team: Croatian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hr/>\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:55
@@ -1590,18 +1591,16 @@ msgstr ""
 "SAD-u i/ili drugim zemljama.\n"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
-#, fuzzy
 msgid "Rename"
-msgstr "Pre_imenuj"
+msgstr "Preimenuj"
 
 #: gaphor/services/helpservice/shortcuts.ui:32
-#, fuzzy
 msgid "Search"
-msgstr "Korisnik"
+msgstr "Traži"
 
 #: gaphor/services/helpservice/shortcuts.ui:40
 msgid "Toggle property editor"
-msgstr ""
+msgstr "Uklj./Isklj. uređivač svojstava"
 
 #: gaphor/services/helpservice/shortcuts.ui:48
 msgid "Close Diagram"
@@ -1640,9 +1639,8 @@ msgid "Save As…"
 msgstr "Spremi kao …"
 
 #: gaphor/services/helpservice/shortcuts.ui:117
-#, fuzzy
 msgid "Undo and Redo"
-msgstr "nerazvrstano"
+msgstr "Poništi i ponovi"
 
 #: gaphor/services/helpservice/shortcuts.ui:123
 #: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
@@ -1674,9 +1672,8 @@ msgid "Actual Size"
 msgstr "Stvarna veličina"
 
 #: gaphor/services/helpservice/shortcuts.ui:174
-#, fuzzy
 msgid "Selections"
-msgstr "Radnje"
+msgstr "Odabiri"
 
 #: gaphor/services/helpservice/shortcuts.ui:180
 msgid "Select All"
@@ -1688,16 +1685,15 @@ msgstr "Odznači sve"
 
 #: gaphor/services/helpservice/shortcuts.ui:199
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopiraj i umetni"
 
 #: gaphor/services/helpservice/shortcuts.ui:205
 msgid "Copy"
 msgstr "Kopiraj"
 
 #: gaphor/services/helpservice/shortcuts.ui:213
-#, fuzzy
 msgid "Cut"
-msgstr "ecu (elektronička upravljačka jedinica)"
+msgstr "Izreži"
 
 #: gaphor/services/helpservice/shortcuts.ui:221
 msgid "Paste (link defining elements)"
@@ -1986,7 +1982,6 @@ msgid "Actuator Command"
 msgstr "Naredba aktuatora"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Example Technology Requirement"
 msgstr "Primjer preduvjeta za tehnologiju"
 
