@@ -62,7 +62,7 @@ jobs:
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
       - name: Upload Code Coverage to Code Climate
-        uses: paambaati/codeclimate-action@v3.1.0
+        uses: paambaati/codeclimate-action@v3.1.1
         env:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
