@@ -14,6 +14,10 @@ After that, associations are filled in, including derived unions and redefines.
 
 Notes:
 * Enumerations are classes ending with "Kind" or "Sort".
+
+The code generator works by reading a model and the models it depends on.
+It defines classes, attributes, enumerations and associations. Class names
+are considered unique.
 """
 
 from __future__ import annotations
@@ -105,6 +109,23 @@ def main(
     with (open(outfile, "w") if outfile else contextlib.nullcontext(sys.stdout)) as out:  # type: ignore[attr-defined]
         for line in coder(model, super_models, overrides):
             print(line, file=out)
+
+
+def load_model(modelfile: str, modeling_language: ModelingLanguage) -> ElementFactory:
+    element_factory = ElementFactory()
+    storage.load(
+        modelfile,
+        element_factory,
+        modeling_language,
+    )
+
+    resolve_attribute_type_values(element_factory)
+
+    return element_factory
+
+
+def load_modeling_language(lang) -> ModelingLanguage:
+    return initialize("gaphor.modelinglanguages", [lang])[lang]
 
 
 def coder(
@@ -426,23 +447,6 @@ def in_super_model(
                 ), f"Type {cls.name} found in model, but not in generated model"
                 return element_type, cls
     return None, None
-
-
-def load_model(modelfile: str, modeling_language: ModelingLanguage) -> ElementFactory:
-    element_factory = ElementFactory()
-    storage.load(
-        modelfile,
-        element_factory,
-        modeling_language,
-    )
-
-    resolve_attribute_type_values(element_factory)
-
-    return element_factory
-
-
-def load_modeling_language(lang) -> ModelingLanguage:
-    return initialize("gaphor.modelinglanguages", [lang])[lang]
 
 
 def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
