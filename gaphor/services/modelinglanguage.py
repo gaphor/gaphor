@@ -16,7 +16,7 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
 
     DEFAULT_LANGUAGE = "UML"
 
-    def __init__(self, event_manager, properties=None):
+    def __init__(self, event_manager=None, properties=None):
         """Create a new Model Provider. It will provide all models defined as
         entrypoints under `[gaphor.modelinglanguages]`.
 
@@ -31,10 +31,12 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
         self._modeling_languages: Dict[str, ModelingLanguage] = initialize(
             "gaphor.modelinglanguages"
         )
-        self.event_manager.subscribe(self.on_property_changed)
+        if event_manager:
+            self.event_manager.subscribe(self.on_property_changed)
 
     def shutdown(self):
-        self.event_manager.unsubscribe(self.on_property_changed)
+        if self.event_manager:
+            self.event_manager.unsubscribe(self.on_property_changed)
 
     @property
     def modeling_languages(self) -> Iterable[tuple[str, str]]:
@@ -81,12 +83,13 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
     @action(name="select-modeling-language")
     def select_modeling_language(self, modeling_language: str):
         self.properties.set("modeling-language", modeling_language)
-        self.event_manager.handle(ModelingLanguageChanged(modeling_language))
+        if self.event_manager:
+            self.event_manager.handle(ModelingLanguageChanged(modeling_language))
 
     def _modeling_language(self) -> ModelingLanguage:
         return self._modeling_languages[self.active_modeling_language]
 
     @event_handler(PropertyChanged)
     def on_property_changed(self, event: PropertyChanged):
-        if event.key == "modeling-language":
+        if event.key == "modeling-language" and self.event_manager:
             self.event_manager.handle(ModelingLanguageChanged(event.new_value))
