@@ -318,6 +318,7 @@ class AttributesPage(PropertyPageBase):
         builder = new_builder(
             "attributes-editor",
             "attributes-info",
+            "static-label",
             signals={
                 "show-attributes-changed": (self._on_show_attributes_change,),
                 "attributes-name-edited": (on_text_cell_edited, self.model, 0),
@@ -402,6 +403,8 @@ class OperationsPage(PropertyPageBase):
         builder = new_builder(
             "operations-editor",
             "operations-info",
+            "static-label",
+            "abstract-label",
             signals={
                 "show-operations-changed": (self._on_show_operations_change,),
                 "operations-name-edited": (on_text_cell_edited, self.model, 0),
