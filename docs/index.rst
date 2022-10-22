@@ -35,6 +35,7 @@ plug-in.
 
    style_sheets
    stereotypes
+   scripting
    sphinx
 
 .. toctree::

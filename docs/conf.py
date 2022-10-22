@@ -40,7 +40,7 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx.ext.viewcode",
     "sphinx.ext.autosectionlabel",
-    "myst_parser",
+    "myst_nb",
     "sphinx_copybutton",
     "gaphor.extensions.sphinx",
 ]
