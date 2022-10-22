@@ -21,13 +21,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3.1.0
     - name: Set up Python
-      uses: actions/setup-python@v4.2.0
+      uses: actions/setup-python@v4.3.0
       with:
         python-version: ${{ env.python_version }}
     - name: Install Linux Dependencies
       uses: ./.github/actions/linux_dependencies
     - name: Use Python Dependency Cache
-      uses: actions/cache@v3.0.10
+      uses: actions/cache@v3.0.11
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04

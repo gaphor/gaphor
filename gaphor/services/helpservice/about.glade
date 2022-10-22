@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkAboutDialog" id="about">
+    <property name="modal">true</property>
+    <property name="program_name">Gaphor</property>
+    <property name="title" translatable="yes">About Gaphor</property>
+    <property name="version">2.9.2</property>
+    <property name="copyright" translatable="yes">Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw</property>
+    <property name="comments" translatable="yes">Gaphor is the simple modeling tool written in Python</property>
+    <property name="website">https://github.com/gaphor/gaphor</property>
+    <property name="website_label" translatable="yes">Fork me on GitHub</property>
+    <property name="license" translatable="yes">Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this application except in compliance with the
+License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+express or implied. See the License for the specific language
+governing permissions and limitations under the License.
+
+---
+
+UML, SysML, and RAAML are either registered trademarks or
+trademarks of Object Management Group, Inc. in the United States
+and/or other countries.
+</property>
+    <property name="authors">
+Adam Boduch, Alexis Howells, Arjan Molenaar,
+Artur Wroblewski, Christian Hoff, Dan Yeaw,
+Enno Groeper, Ikko Ashimine, Jeroen Vloothuis,
+Julius Rüberg, Mark Kennedy, Melis Doğan,
+Tiemen Schuijbroek, Zsolt Sandor, mathiascode,
+Óscar Fernández Díaz
+    </property>
+    <property name="translator_credits">
+Antonin Delpeuch (fr), Arjan Molenaar (nl),
+Bill ZHANG (zh_Hans), Daniel Nylander (sv),
+Fran Diéguez (gl), Jiri Grönroos (fi),
+Jordi Mallach (ca), Seong-ho Cho (ko),
+Ygor Mutti (pt_BR), albanobattistella (it),
+fu7mu4 (ja), jischebeck (de), lizhuoqi (zh_Hans),
+milotype (hr), ovari (hu), Óscar Fernández Díaz (es),
+Евгений Лежнин (ru), vikdevelop (cs)
+    </property>
+    <property name="logo-icon-name">org.gaphor.Gaphor</property>
+  </object>
+</interface>

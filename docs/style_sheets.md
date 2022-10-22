@@ -233,7 +233,7 @@ Profile   Group         Element              CSS element
 
                                              E.g. ``class``, ``usecase``.
 UML       Classes       all Association's    ``association``
-UML       Compoments    Device/Node          ``node``
+UML       Components    Device/Node          ``node``
 UML       Actions       Decision/Merge Node  ``decisionnode``
 UML       Actions       Fork/Join Node       ``forknode``
 UML       Actions       Swimlane             ``partition``

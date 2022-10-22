@@ -1,10 +1,10 @@
 05. Structured Classifiers
 ==================================================
 
-1. Structured Classifers
+1. Structured Classifiers
 --------------------------------------------------
 
-.. diagram:: 1. Structured Classifers
+.. diagram:: 1. Structured Classifiers
    :model: uml
 
 2. Encapsulated Classifiers

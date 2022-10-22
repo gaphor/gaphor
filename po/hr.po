@@ -4,19 +4,20 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  Gaphor\n"
+"Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-09-16 16:33+0200\n"
-"PO-Revision-Date: 2022-09-12 11:16+0000\n"
+"POT-Creation-Date: 2022-10-18 21:01-0400\n"
+"PO-Revision-Date: 2022-10-20 22:48+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hr/>\n"
 "Language: hr\n"
-"Language-Team: Croatian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hr/>\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:55
@@ -117,7 +118,7 @@ msgstr "Novi dijagram sustavno-teoretske analize procesa (STPA)"
 msgid "AND Gate"
 msgstr "Sklop I"
 
-#: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr "Osnovni događaj"
@@ -660,15 +661,15 @@ msgstr "Pribadača unosa"
 msgid "Output pin"
 msgstr "Pribadača rezultata"
 
-#: gaphor/UML/actions/activitynodes.py:193
+#: gaphor/UML/actions/activitynodes.py:190
 msgid "merge/decision"
 msgstr "sjedini/odluka"
 
-#: gaphor/UML/actions/activitynodes.py:195
+#: gaphor/UML/actions/activitynodes.py:192
 msgid "merge"
 msgstr "sjedini"
 
-#: gaphor/UML/actions/activitynodes.py:197
+#: gaphor/UML/actions/activitynodes.py:194
 msgid "decision"
 msgstr "odluka"
 
@@ -1372,6 +1373,7 @@ msgid "Extend"
 msgstr "Proširi"
 
 #: gaphor/diagram/diagramtoolbox.py:99
+#: gaphor/services/helpservice/shortcuts.ui:18
 msgid "General"
 msgstr "Opće"
 
@@ -1424,7 +1426,7 @@ msgstr "Stil"
 msgid "Note or Remark"
 msgstr "Napomena ili opaska"
 
-#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
+#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:348
 msgid "Element can’t be represented on a diagram."
 msgstr "Element se ne može prikazati u dijagramu."
 
@@ -1588,115 +1590,122 @@ msgstr ""
 "zaštitni znakovi organizacije Object Management Group, Inc. u\n"
 "SAD-u i/ili drugim zemljama.\n"
 
-#: gaphor/services/helpservice/shortcuts.ui:18
-msgid "Application"
-msgstr "Program"
-
 #: gaphor/services/helpservice/shortcuts.ui:24
+msgid "Rename"
+msgstr "Preimenuj"
+
+#: gaphor/services/helpservice/shortcuts.ui:32
+msgid "Search"
+msgstr "Traži"
+
+#: gaphor/services/helpservice/shortcuts.ui:40
+msgid "Toggle property editor"
+msgstr "Uklj./Isklj. uređivač svojstava"
+
+#: gaphor/services/helpservice/shortcuts.ui:48
+msgid "Close Diagram"
+msgstr "Zatvori dijagram"
+
+#: gaphor/services/helpservice/shortcuts.ui:56
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
-#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:195
-#: gaphor/ui/elementeditor.ui:206
+#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:187
+#: gaphor/ui/elementeditor.ui:198
 msgid "Preferences"
 msgstr "Postavke"
 
-#: gaphor/services/helpservice/shortcuts.ui:32
+#: gaphor/services/helpservice/shortcuts.ui:64
 msgid "Quit Gaphor"
 msgstr "Zatvori Gaphor"
 
-#: gaphor/services/helpservice/shortcuts.ui:43
+#: gaphor/services/helpservice/shortcuts.ui:75
 msgid "Files"
 msgstr "Datoteke"
 
-#: gaphor/services/helpservice/shortcuts.ui:49
-msgid "New Window"
-msgstr "Novi prozor"
+#: gaphor/services/helpservice/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
+msgid "New Model…"
+msgstr "Novi model …"
 
-#: gaphor/services/helpservice/shortcuts.ui:57
-msgid "Open"
-msgstr "Otvori"
+#: gaphor/services/helpservice/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
+msgid "Open a Model…"
+msgstr "Otvori jedan model …"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/filemanager.py:314
+#: gaphor/services/helpservice/shortcuts.ui:97 gaphor/ui/filemanager.py:312
 #: gaphor/ui/mainwindow.py:49
 msgid "Save"
 msgstr "Spremi"
 
-#: gaphor/services/helpservice/shortcuts.ui:73
-msgid "Save As"
-msgstr "Spremi kao"
+#: gaphor/services/helpservice/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
+msgid "Save As…"
+msgstr "Spremi kao …"
 
-#: gaphor/services/helpservice/shortcuts.ui:84
-#: gaphor/services/helpservice/shortcuts.ui:90 gaphor/ui/elementeditor.glade:99
-#: gaphor/ui/elementeditor.ui:75
+#: gaphor/services/helpservice/shortcuts.ui:117
+msgid "Undo and Redo"
+msgstr "Poništi i ponovi"
+
+#: gaphor/services/helpservice/shortcuts.ui:123
+#: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
 msgid "Undo"
 msgstr "Poništi"
 
-#: gaphor/services/helpservice/shortcuts.ui:98
+#: gaphor/services/helpservice/shortcuts.ui:131
 #: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:90
 msgid "Redo"
 msgstr "Ponovi"
 
-#: gaphor/services/helpservice/shortcuts.ui:109
-msgid "Diagrams"
-msgstr "Dijagrami"
-
-#: gaphor/services/helpservice/shortcuts.ui:115
-msgid "Edit"
-msgstr "Uredi"
-
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
-msgid "Editor"
-msgstr "Uređivač"
-
-#: gaphor/services/helpservice/shortcuts.ui:131
-msgid "Select All"
-msgstr "Označi sve"
-
-#: gaphor/services/helpservice/shortcuts.ui:139
-msgid "Deselect All"
-msgstr "Odznači sve"
-
-#: gaphor/services/helpservice/shortcuts.ui:147
-msgid "Copy"
-msgstr "Kopiraj"
-
-#: gaphor/services/helpservice/shortcuts.ui:155
-msgid "Paste (link defining elements)"
-msgstr "Umetni (poveži definirajuće elemente)"
-
-#: gaphor/services/helpservice/shortcuts.ui:163
-msgid "Paste (copy defining elements)"
-msgstr "Umetni (kopiraj definirajuće elemente)"
-
-#: gaphor/services/helpservice/shortcuts.ui:171
-msgid "Delete"
-msgstr "Izbriši"
-
-#: gaphor/services/helpservice/shortcuts.ui:179
-msgid "Close Diagram"
-msgstr "Zatvori dijagram"
-
-#: gaphor/services/helpservice/shortcuts.ui:190
+#: gaphor/services/helpservice/shortcuts.ui:142
 msgid "Zoom"
 msgstr "Uvećanje"
 
-#: gaphor/services/helpservice/shortcuts.ui:196
+#: gaphor/services/helpservice/shortcuts.ui:148
 #: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:106
 msgid "Zoom In"
 msgstr "Uvećaj"
 
-#: gaphor/services/helpservice/shortcuts.ui:204
+#: gaphor/services/helpservice/shortcuts.ui:156
 #: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:130
 msgid "Zoom Out"
 msgstr "Umanji"
 
-#: gaphor/services/helpservice/shortcuts.ui:212
+#: gaphor/services/helpservice/shortcuts.ui:164
 #: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:118
 msgid "Actual Size"
 msgstr "Stvarna veličina"
 
+#: gaphor/services/helpservice/shortcuts.ui:174
+msgid "Selections"
+msgstr "Odabiri"
+
+#: gaphor/services/helpservice/shortcuts.ui:180
+msgid "Select All"
+msgstr "Označi sve"
+
+#: gaphor/services/helpservice/shortcuts.ui:188
+msgid "Deselect All"
+msgstr "Odznači sve"
+
+#: gaphor/services/helpservice/shortcuts.ui:199
+msgid "Copy and Paste"
+msgstr "Kopiraj i umetni"
+
+#: gaphor/services/helpservice/shortcuts.ui:205
+msgid "Copy"
+msgstr "Kopiraj"
+
+#: gaphor/services/helpservice/shortcuts.ui:213
+msgid "Cut"
+msgstr "Izreži"
+
+#: gaphor/services/helpservice/shortcuts.ui:221
+msgid "Paste (link defining elements)"
+msgstr "Umetni (poveži definirajuće elemente)"
+
+#: gaphor/services/helpservice/shortcuts.ui:229
+msgid "Paste (copy defining elements)"
+msgstr "Umetni (kopiraj definirajuće elemente)"
+
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:57
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:29
-#: gaphor/ui/namespace.py:328 gaphor/ui/treecomponent.py:164
+#: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
 msgid "New model"
 msgstr "Novi model"
 
@@ -1973,7 +1982,7 @@ msgid "Actuator Command"
 msgstr "Naredba aktuatora"
 
 #: gaphor/templates/sysml.gaphor
-msgid "Example Technolgy Requirement"
+msgid "Example Technology Requirement"
 msgstr "Primjer preduvjeta za tehnologiju"
 
 #: gaphor/templates/sysml.gaphor
@@ -2247,7 +2256,7 @@ msgstr "Znakovni niz"
 msgid "Date"
 msgstr "Datum"
 
-#: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:13
+#: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
 msgstr "Svi Gaphor modeli"
 
@@ -2308,28 +2317,28 @@ msgstr ""
 " u stablastom prikazu i počni tipkati. Automatski će se pojaviti okvir "
 "pretrage.\n"
 
-#: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:171
+#: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:163
 msgid "Editors"
 msgstr "Uređivači"
 
-#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:219
+#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:211
 msgid "Reset Tool Automatically"
 msgstr "Automatski resetiraj alat"
 
-#: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:237
+#: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:229
 msgid "Remove Unused Elements"
 msgstr "Ukloni nekorištene elemente"
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
-#: gaphor/ui/elementeditor.ui:239 gaphor/ui/elementeditor.ui:246
+#: gaphor/ui/elementeditor.ui:231 gaphor/ui/elementeditor.ui:238
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr "Automatski ukloni elemente koji se više ne koriste u nijednom dijagramu."
 
-#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:254
+#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:246
 msgid "Style Sheet"
 msgstr "Stilski predložak"
 
-#: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:279
+#: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:275
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
@@ -2355,7 +2364,7 @@ msgstr "Zatvori"
 msgid "Start debug session"
 msgstr "Pokreni sesiju otklanjanja grešaka"
 
-#: gaphor/ui/filedialog.py:33
+#: gaphor/ui/filedialog.py:32
 msgid "All Files"
 msgstr "Sve datoteke"
 
@@ -2406,43 +2415,43 @@ msgstr "Učitavanje …"
 msgid "Loading model from {filename}"
 msgstr "Učitavanje modela iz {filename}"
 
-#: gaphor/ui/filemanager.py:159
+#: gaphor/ui/filemanager.py:157
 msgid "Unable to open model “{filename}”."
 msgstr "Nije moguće otvoriti model „{filename}”."
 
-#: gaphor/ui/filemanager.py:162
+#: gaphor/ui/filemanager.py:160
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Ova datoteka ne sadrži valjan Gaphor model."
 
-#: gaphor/ui/filemanager.py:191
+#: gaphor/ui/filemanager.py:189
 msgid "Saving…"
 msgstr "Spremanje …"
 
-#: gaphor/ui/filemanager.py:192
+#: gaphor/ui/filemanager.py:190
 msgid "Saving model to {filename}"
 msgstr "Spremanje modela u {filename}"
 
-#: gaphor/ui/filemanager.py:209
+#: gaphor/ui/filemanager.py:207
 msgid "Unable to save model “{filename}”."
 msgstr "Nije moguće spremiti model „{filename}”."
 
-#: gaphor/ui/filemanager.py:246 gaphor/ui/filemanager.py:281
+#: gaphor/ui/filemanager.py:244 gaphor/ui/filemanager.py:279
 msgid "Save Gaphor Model As"
 msgstr "Spremi Gaphor model kao"
 
-#: gaphor/ui/filemanager.py:302
+#: gaphor/ui/filemanager.py:300
 msgid "Save changes before closing?"
 msgstr "Spremiti promjene prije zatvaranja?"
 
-#: gaphor/ui/filemanager.py:303
+#: gaphor/ui/filemanager.py:301
 msgid "Closing will cause any unsaved changes to be discarded."
 msgstr "Zatvaranjem se odbacuju sve nespremljene promjene."
 
-#: gaphor/ui/filemanager.py:310
+#: gaphor/ui/filemanager.py:308
 msgid "Close without saving changes"
 msgstr "Zatvori bez spremanja promjena"
 
-#: gaphor/ui/filemanager.py:312
+#: gaphor/ui/filemanager.py:310
 msgid "Cancel"
 msgstr "Odustani"
 
@@ -2478,21 +2487,13 @@ msgstr "Stvori novi dijagram"
 msgid "Open Application Menu"
 msgstr "Otvori izbornik programa"
 
-#: gaphor/ui/mainwindow.py:43
-msgid "Open a Model…"
-msgstr "Otvori jedan model …"
+#: gaphor/ui/mainwindow.glade:191
+msgid "Editor"
+msgstr "Uređivač"
 
 #: gaphor/ui/mainwindow.py:44
 msgid "Recent Models…"
 msgstr "Nedavni modeli …"
-
-#: gaphor/ui/mainwindow.py:45
-msgid "New Model…"
-msgstr "Novi model …"
-
-#: gaphor/ui/mainwindow.py:50
-msgid "Save As…"
-msgstr "Spremi kao …"
 
 #: gaphor/ui/mainwindow.py:51
 msgid "Export"
@@ -2546,11 +2547,11 @@ msgstr "Iz_briši"
 msgid "Show in “{diagram}”"
 msgstr "Prikaži u „{diagram}”"
 
-#: gaphor/ui/namespace.py:326 gaphor/ui/treecomponent.py:162
+#: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
 msgid "{name} package"
 msgstr "Paket {name}"
 
-#: gaphor/ui/namespace.py:344
+#: gaphor/ui/namespace.py:352
 msgid "New diagram"
 msgstr "Novi dijagram"
 
@@ -3014,3 +3015,9 @@ msgstr "<Odnosi>"
 
 #~ msgid "Default Region"
 #~ msgstr "Standardno područje"
+
+#~ msgid "New Window"
+#~ msgstr "Novi prozor"
+
+#~ msgid "Open"
+#~ msgstr "Otvori"

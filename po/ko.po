@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
-"POT-Creation-Date: 2022-09-16 16:33+0200\n"
+"POT-Creation-Date: 2022-10-18 21:01-0400\n"
 "PO-Revision-Date: 2021-08-31 14:20+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language: ko\n"
@@ -127,7 +127,7 @@ msgstr "새 다이어그램(_D)"
 msgid "AND Gate"
 msgstr "AND 게이트"
 
-#: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr "기본 이벤트"
@@ -697,15 +697,15 @@ msgstr ""
 msgid "Output pin"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:193
+#: gaphor/UML/actions/activitynodes.py:190
 msgid "merge/decision"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:195
+#: gaphor/UML/actions/activitynodes.py:192
 msgid "merge"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:197
+#: gaphor/UML/actions/activitynodes.py:194
 msgid "decision"
 msgstr ""
 
@@ -1378,6 +1378,7 @@ msgid "Extend"
 msgstr "확장"
 
 #: gaphor/diagram/diagramtoolbox.py:99
+#: gaphor/services/helpservice/shortcuts.ui:18
 msgid "General"
 msgstr "일반"
 
@@ -1432,7 +1433,7 @@ msgstr "모양새"
 msgid "Note or Remark"
 msgstr "참고 / 비고"
 
-#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
+#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:348
 msgid "Element can’t be represented on a diagram."
 msgstr ""
 
@@ -1577,116 +1578,128 @@ msgid ""
 "and/or other countries.\n"
 msgstr ""
 
-#: gaphor/services/helpservice/shortcuts.ui:18
-msgid "Application"
-msgstr "프로그램"
-
 #: gaphor/services/helpservice/shortcuts.ui:24
+#, fuzzy
+msgid "Rename"
+msgstr "이름 바꾸기(_R)"
+
+#: gaphor/services/helpservice/shortcuts.ui:32
+msgid "Search"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:40
+msgid "Toggle property editor"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:48
+msgid "Close Diagram"
+msgstr "다이어그램 닫기"
+
+#: gaphor/services/helpservice/shortcuts.ui:56
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
-#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:195
-#: gaphor/ui/elementeditor.ui:206
+#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:187
+#: gaphor/ui/elementeditor.ui:198
 #, fuzzy
 msgid "Preferences"
 msgstr "기본 설정"
 
-#: gaphor/services/helpservice/shortcuts.ui:32
+#: gaphor/services/helpservice/shortcuts.ui:64
 msgid "Quit Gaphor"
 msgstr "가포 끝내기"
 
-#: gaphor/services/helpservice/shortcuts.ui:43
+#: gaphor/services/helpservice/shortcuts.ui:75
 msgid "Files"
 msgstr "파일"
 
-#: gaphor/services/helpservice/shortcuts.ui:49
-msgid "New Window"
-msgstr "새 창"
+#: gaphor/services/helpservice/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
+#, fuzzy
+msgid "New Model…"
+msgstr "새 모델"
 
-#: gaphor/services/helpservice/shortcuts.ui:57
-msgid "Open"
-msgstr "열기"
+#: gaphor/services/helpservice/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
+#, fuzzy
+msgid "Open a Model…"
+msgstr "가포 모델 열기"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/filemanager.py:314
+#: gaphor/services/helpservice/shortcuts.ui:97 gaphor/ui/filemanager.py:312
 #: gaphor/ui/mainwindow.py:49
 msgid "Save"
 msgstr "저장"
 
-#: gaphor/services/helpservice/shortcuts.ui:73
-msgid "Save As"
-msgstr "다른 이름으로 저장"
+#: gaphor/services/helpservice/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
+msgid "Save As…"
+msgstr "다른 이름으로 저장…"
 
-#: gaphor/services/helpservice/shortcuts.ui:84
-#: gaphor/services/helpservice/shortcuts.ui:90 gaphor/ui/elementeditor.glade:99
-#: gaphor/ui/elementeditor.ui:75
+#: gaphor/services/helpservice/shortcuts.ui:117
+#, fuzzy
+msgid "Undo and Redo"
+msgstr "정렬안함"
+
+#: gaphor/services/helpservice/shortcuts.ui:123
+#: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
 msgid "Undo"
 msgstr "실행 취소"
 
-#: gaphor/services/helpservice/shortcuts.ui:98
+#: gaphor/services/helpservice/shortcuts.ui:131
 #: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:90
 msgid "Redo"
 msgstr "다시 실행"
 
-#: gaphor/services/helpservice/shortcuts.ui:109
-msgid "Diagrams"
-msgstr "다이어그램"
-
-#: gaphor/services/helpservice/shortcuts.ui:115
-msgid "Edit"
-msgstr "편집"
-
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
-msgid "Editor"
-msgstr "편집기 표시/숨김"
-
-#: gaphor/services/helpservice/shortcuts.ui:131
-msgid "Select All"
-msgstr "모두 선택"
-
-#: gaphor/services/helpservice/shortcuts.ui:139
-msgid "Deselect All"
-msgstr "모두 선택 취소"
-
-#: gaphor/services/helpservice/shortcuts.ui:147
-msgid "Copy"
-msgstr "복사"
-
-#: gaphor/services/helpservice/shortcuts.ui:155
-msgid "Paste (link defining elements)"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:163
-msgid "Paste (copy defining elements)"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:171
-msgid "Delete"
-msgstr "삭제"
-
-#: gaphor/services/helpservice/shortcuts.ui:179
-msgid "Close Diagram"
-msgstr "다이어그램 닫기"
-
-#: gaphor/services/helpservice/shortcuts.ui:190
+#: gaphor/services/helpservice/shortcuts.ui:142
 msgid "Zoom"
 msgstr "확대/축소"
 
-#: gaphor/services/helpservice/shortcuts.ui:196
+#: gaphor/services/helpservice/shortcuts.ui:148
 #: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:106
 msgid "Zoom In"
 msgstr "확대"
 
-#: gaphor/services/helpservice/shortcuts.ui:204
+#: gaphor/services/helpservice/shortcuts.ui:156
 #: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:130
 msgid "Zoom Out"
 msgstr "축소"
 
-#: gaphor/services/helpservice/shortcuts.ui:212
+#: gaphor/services/helpservice/shortcuts.ui:164
 #: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:118
 msgid "Actual Size"
 msgstr ""
 
+#: gaphor/services/helpservice/shortcuts.ui:174
+#, fuzzy
+msgid "Selections"
+msgstr "동작(복수)"
+
+#: gaphor/services/helpservice/shortcuts.ui:180
+msgid "Select All"
+msgstr "모두 선택"
+
+#: gaphor/services/helpservice/shortcuts.ui:188
+msgid "Deselect All"
+msgstr "모두 선택 취소"
+
+#: gaphor/services/helpservice/shortcuts.ui:199
+msgid "Copy and Paste"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:205
+msgid "Copy"
+msgstr "복사"
+
+#: gaphor/services/helpservice/shortcuts.ui:213
+msgid "Cut"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:221
+msgid "Paste (link defining elements)"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:229
+msgid "Paste (copy defining elements)"
+msgstr ""
+
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:57
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:29
-#: gaphor/ui/namespace.py:328 gaphor/ui/treecomponent.py:164
+#: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
 msgid "New model"
 msgstr "새 모델"
 
@@ -1989,8 +2002,9 @@ msgid "Actuator Command"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-msgid "Example Technolgy Requirement"
-msgstr ""
+#, fuzzy
+msgid "Example Technology Requirement"
+msgstr "요구"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
@@ -2262,7 +2276,7 @@ msgstr ""
 msgid "Date"
 msgstr "데이터형식"
 
-#: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:13
+#: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
 msgstr "모든 가포 모델"
 
@@ -2317,30 +2331,30 @@ msgstr ""
 "\n"
 "<b>팁:</b> 트리뷰의 항목을 검색하려면, 트리뷰의 항목을 선택한 후 입력을 시작하십시오. 검색 상자가 자동으로 나타납니다.\n"
 
-#: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:171
+#: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:163
 msgid "Editors"
 msgstr "편집기"
 
-#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:219
+#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:211
 #, fuzzy
 msgid "Reset Tool Automatically"
 msgstr "자동으로 도구 초기화"
 
-#: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:237
+#: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:229
 msgid "Remove Unused Elements"
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
-#: gaphor/ui/elementeditor.ui:239 gaphor/ui/elementeditor.ui:246
+#: gaphor/ui/elementeditor.ui:231 gaphor/ui/elementeditor.ui:238
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:254
+#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:246
 #, fuzzy
 msgid "Style Sheet"
 msgstr "스타일시트"
 
-#: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:279
+#: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:275
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
@@ -2364,7 +2378,7 @@ msgstr ""
 msgid "Start debug session"
 msgstr "디버깅 세션 시작"
 
-#: gaphor/ui/filedialog.py:33
+#: gaphor/ui/filedialog.py:32
 msgid "All Files"
 msgstr "모든 파일"
 
@@ -2414,46 +2428,46 @@ msgstr "불러오는 중..."
 msgid "Loading model from {filename}"
 msgstr "{filename}에서 모델 불러오는 중"
 
-#: gaphor/ui/filemanager.py:159
+#: gaphor/ui/filemanager.py:157
 msgid "Unable to open model “{filename}”."
 msgstr "“{filename}” 모델을 열 수 없습니다."
 
-#: gaphor/ui/filemanager.py:162
+#: gaphor/ui/filemanager.py:160
 msgid "This file does not contain a valid Gaphor model."
 msgstr "이 파일에 적절한 가포 모델이 없습니다."
 
-#: gaphor/ui/filemanager.py:191
+#: gaphor/ui/filemanager.py:189
 msgid "Saving…"
 msgstr "저장중..."
 
-#: gaphor/ui/filemanager.py:192
+#: gaphor/ui/filemanager.py:190
 msgid "Saving model to {filename}"
 msgstr "{filename}으로 모델 저장하는 중"
 
-#: gaphor/ui/filemanager.py:209
+#: gaphor/ui/filemanager.py:207
 msgid "Unable to save model “{filename}”."
 msgstr "“{filename}” 모델을 저장할 수 없습니다."
 
-#: gaphor/ui/filemanager.py:246 gaphor/ui/filemanager.py:281
+#: gaphor/ui/filemanager.py:244 gaphor/ui/filemanager.py:279
 msgid "Save Gaphor Model As"
 msgstr "다른 이름으로 가포 모델 저장"
 
-#: gaphor/ui/filemanager.py:302
+#: gaphor/ui/filemanager.py:300
 #, fuzzy
 msgid "Save changes before closing?"
 msgstr "닫기 전 바뀐 모델을 저장하시겠습니까?"
 
-#: gaphor/ui/filemanager.py:303
+#: gaphor/ui/filemanager.py:301
 #, fuzzy
 msgid "Closing will cause any unsaved changes to be discarded."
 msgstr "저장하지 않고 닫으면, 내용 바꾸기를 취소합니다."
 
-#: gaphor/ui/filemanager.py:310
+#: gaphor/ui/filemanager.py:308
 #, fuzzy
 msgid "Close without saving changes"
 msgstr "저장하지 않고 닫기(_W)"
 
-#: gaphor/ui/filemanager.py:312
+#: gaphor/ui/filemanager.py:310
 msgid "Cancel"
 msgstr ""
 
@@ -2495,24 +2509,14 @@ msgstr "새 다이어그램"
 msgid "Open Application Menu"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:43
-#, fuzzy
-msgid "Open a Model…"
-msgstr "가포 모델 열기"
+#: gaphor/ui/mainwindow.glade:191
+msgid "Editor"
+msgstr "편집기 표시/숨김"
 
 #: gaphor/ui/mainwindow.py:44
 #, fuzzy
 msgid "Recent Models…"
 msgstr "새 모델"
-
-#: gaphor/ui/mainwindow.py:45
-#, fuzzy
-msgid "New Model…"
-msgstr "새 모델"
-
-#: gaphor/ui/mainwindow.py:50
-msgid "Save As…"
-msgstr "다른 이름으로 저장…"
 
 #: gaphor/ui/mainwindow.py:51
 msgid "Export"
@@ -2568,12 +2572,12 @@ msgstr "삭제(_L)"
 msgid "Show in “{diagram}”"
 msgstr "\"{diagram}\"에 표시"
 
-#: gaphor/ui/namespace.py:326 gaphor/ui/treecomponent.py:162
+#: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
 #, fuzzy
 msgid "{name} package"
 msgstr "새 패키지(_P)"
 
-#: gaphor/ui/namespace.py:344
+#: gaphor/ui/namespace.py:352
 #, fuzzy
 msgid "New diagram"
 msgstr "새 다이어그램(_D)"
@@ -2937,4 +2941,28 @@ msgstr "<Relationships>"
 #~ msgstr "{}은(는) {}의 일부일 수 없습니다."
 
 #~ msgid "Default Region"
+#~ msgstr ""
+
+#~ msgid "Application"
+#~ msgstr "프로그램"
+
+#~ msgid "New Window"
+#~ msgstr "새 창"
+
+#~ msgid "Open"
+#~ msgstr "열기"
+
+#~ msgid "Save As"
+#~ msgstr "다른 이름으로 저장"
+
+#~ msgid "Diagrams"
+#~ msgstr "다이어그램"
+
+#~ msgid "Edit"
+#~ msgstr "편집"
+
+#~ msgid "Delete"
+#~ msgstr "삭제"
+
+#~ msgid "Example Technolgy Requirement"
 #~ msgstr ""

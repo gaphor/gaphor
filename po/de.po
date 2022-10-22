@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-09-16 16:33+0200\n"
+"POT-Creation-Date: 2022-10-18 21:01-0400\n"
 "PO-Revision-Date: 2022-09-03 19:28+0000\n"
 "Last-Translator: Anonynonymouse <tom.spaine60388@gmail.com>\n"
 "Language: de\n"
@@ -117,7 +117,7 @@ msgstr "Neues STPA-Diagramm"
 msgid "AND Gate"
 msgstr "UND-Gatter"
 
-#: gaphor/RAAML/fta/basicevent.py:36 gaphor/RAAML/fta/ftatoolbox.py:125
+#: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
 msgstr "Ereignis"
@@ -670,15 +670,15 @@ msgstr ""
 msgid "Output pin"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:193
+#: gaphor/UML/actions/activitynodes.py:190
 msgid "merge/decision"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:195
+#: gaphor/UML/actions/activitynodes.py:192
 msgid "merge"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:197
+#: gaphor/UML/actions/activitynodes.py:194
 msgid "decision"
 msgstr ""
 
@@ -1340,6 +1340,7 @@ msgid "Extend"
 msgstr "Extend-Beziehung"
 
 #: gaphor/diagram/diagramtoolbox.py:99
+#: gaphor/services/helpservice/shortcuts.ui:18
 msgid "General"
 msgstr "Generalisierung"
 
@@ -1393,7 +1394,7 @@ msgstr "Stil"
 msgid "Note or Remark"
 msgstr "Hinweis oder Anmerkung"
 
-#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
+#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:348
 msgid "Element can’t be represented on a diagram."
 msgstr ""
 
@@ -1536,115 +1537,128 @@ msgid ""
 "and/or other countries.\n"
 msgstr ""
 
-#: gaphor/services/helpservice/shortcuts.ui:18
-msgid "Application"
-msgstr "Anwendung"
-
 #: gaphor/services/helpservice/shortcuts.ui:24
+#, fuzzy
+msgid "Rename"
+msgstr "_Umbenennen"
+
+#: gaphor/services/helpservice/shortcuts.ui:32
+#, fuzzy
+msgid "Search"
+msgstr "verwendet"
+
+#: gaphor/services/helpservice/shortcuts.ui:40
+msgid "Toggle property editor"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:48
+msgid "Close Diagram"
+msgstr "Diagramm schließen"
+
+#: gaphor/services/helpservice/shortcuts.ui:56
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
-#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:195
-#: gaphor/ui/elementeditor.ui:206
+#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:187
+#: gaphor/ui/elementeditor.ui:198
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: gaphor/services/helpservice/shortcuts.ui:32
+#: gaphor/services/helpservice/shortcuts.ui:64
 msgid "Quit Gaphor"
 msgstr "Gaphor beenden"
 
-#: gaphor/services/helpservice/shortcuts.ui:43
+#: gaphor/services/helpservice/shortcuts.ui:75
 msgid "Files"
 msgstr "Dateien"
 
-#: gaphor/services/helpservice/shortcuts.ui:49
-msgid "New Window"
-msgstr "Neues Fenster"
+#: gaphor/services/helpservice/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
+#, fuzzy
+msgid "New Model…"
+msgstr "Neues Modell"
 
-#: gaphor/services/helpservice/shortcuts.ui:57
-msgid "Open"
-msgstr "Öffnen"
+#: gaphor/services/helpservice/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
+#, fuzzy
+msgid "Open a Model…"
+msgstr "Öffne Gaphor-Modell"
 
-#: gaphor/services/helpservice/shortcuts.ui:65 gaphor/ui/filemanager.py:314
+#: gaphor/services/helpservice/shortcuts.ui:97 gaphor/ui/filemanager.py:312
 #: gaphor/ui/mainwindow.py:49
 msgid "Save"
 msgstr "Speichern"
 
-#: gaphor/services/helpservice/shortcuts.ui:73
-msgid "Save As"
-msgstr "Speichern als"
+#: gaphor/services/helpservice/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
+msgid "Save As…"
+msgstr "Speichern unter…"
 
-#: gaphor/services/helpservice/shortcuts.ui:84
-#: gaphor/services/helpservice/shortcuts.ui:90 gaphor/ui/elementeditor.glade:99
-#: gaphor/ui/elementeditor.ui:75
+#: gaphor/services/helpservice/shortcuts.ui:117
+#, fuzzy
+msgid "Undo and Redo"
+msgstr "ungeordnet"
+
+#: gaphor/services/helpservice/shortcuts.ui:123
+#: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
 msgid "Undo"
 msgstr "Rückgängig machen"
 
-#: gaphor/services/helpservice/shortcuts.ui:98
+#: gaphor/services/helpservice/shortcuts.ui:131
 #: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:90
 msgid "Redo"
 msgstr "Wiederholen"
 
-#: gaphor/services/helpservice/shortcuts.ui:109
-msgid "Diagrams"
-msgstr "Diagramme"
-
-#: gaphor/services/helpservice/shortcuts.ui:115
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: gaphor/services/helpservice/shortcuts.ui:123 gaphor/ui/mainwindow.glade:191
-msgid "Editor"
-msgstr "Editor ein-/ausblenden"
-
-#: gaphor/services/helpservice/shortcuts.ui:131
-msgid "Select All"
-msgstr "Alles auswählen"
-
-#: gaphor/services/helpservice/shortcuts.ui:139
-msgid "Deselect All"
-msgstr "Alles abwählen"
-
-#: gaphor/services/helpservice/shortcuts.ui:147
-msgid "Copy"
-msgstr "Kopieren"
-
-#: gaphor/services/helpservice/shortcuts.ui:155
-msgid "Paste (link defining elements)"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:163
-msgid "Paste (copy defining elements)"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:171
-msgid "Delete"
-msgstr "Löschen"
-
-#: gaphor/services/helpservice/shortcuts.ui:179
-msgid "Close Diagram"
-msgstr "Diagramm schließen"
-
-#: gaphor/services/helpservice/shortcuts.ui:190
+#: gaphor/services/helpservice/shortcuts.ui:142
 msgid "Zoom"
 msgstr "Zoom"
 
-#: gaphor/services/helpservice/shortcuts.ui:196
+#: gaphor/services/helpservice/shortcuts.ui:148
 #: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:106
 msgid "Zoom In"
 msgstr "Vergrößern"
 
-#: gaphor/services/helpservice/shortcuts.ui:204
+#: gaphor/services/helpservice/shortcuts.ui:156
 #: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:130
 msgid "Zoom Out"
 msgstr "Verkleinern"
 
-#: gaphor/services/helpservice/shortcuts.ui:212
+#: gaphor/services/helpservice/shortcuts.ui:164
 #: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:118
 msgid "Actual Size"
 msgstr "Tatsächliche Größe"
 
+#: gaphor/services/helpservice/shortcuts.ui:174
+#, fuzzy
+msgid "Selections"
+msgstr "Aktionen"
+
+#: gaphor/services/helpservice/shortcuts.ui:180
+msgid "Select All"
+msgstr "Alles auswählen"
+
+#: gaphor/services/helpservice/shortcuts.ui:188
+msgid "Deselect All"
+msgstr "Alles abwählen"
+
+#: gaphor/services/helpservice/shortcuts.ui:199
+msgid "Copy and Paste"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:205
+msgid "Copy"
+msgstr "Kopieren"
+
+#: gaphor/services/helpservice/shortcuts.ui:213
+msgid "Cut"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:221
+msgid "Paste (link defining elements)"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:229
+msgid "Paste (copy defining elements)"
+msgstr ""
+
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:57
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:29
-#: gaphor/ui/namespace.py:328 gaphor/ui/treecomponent.py:164
+#: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
 msgid "New model"
 msgstr "Neues Modell"
 
@@ -1948,8 +1962,9 @@ msgid "Actuator Command"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-msgid "Example Technolgy Requirement"
-msgstr ""
+#, fuzzy
+msgid "Example Technology Requirement"
+msgstr "Anforderung"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
@@ -2221,7 +2236,7 @@ msgstr ""
 msgid "Date"
 msgstr "Datentyp"
 
-#: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:13
+#: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:12
 msgid "All Gaphor Models"
 msgstr "Alle Gaphor-Modelle"
 
@@ -2284,30 +2299,30 @@ msgstr ""
 "wählen Sie ein Element in der Strukturansicht aus und beginnen Sie zu "
 "tippen. Es wird automatisch ein Suchfeld eingeblendet.\n"
 
-#: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:171
+#: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:163
 msgid "Editors"
 msgstr "Editor"
 
-#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:219
+#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:211
 #, fuzzy
 msgid "Reset Tool Automatically"
 msgstr "Werkzeug automatisch zurücksetzen"
 
-#: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:237
+#: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:229
 msgid "Remove Unused Elements"
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
-#: gaphor/ui/elementeditor.ui:239 gaphor/ui/elementeditor.ui:246
+#: gaphor/ui/elementeditor.ui:231 gaphor/ui/elementeditor.ui:238
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:254
+#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:246
 #, fuzzy
 msgid "Style Sheet"
 msgstr "Formatvorlage"
 
-#: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:279
+#: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:275
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
@@ -2333,7 +2348,7 @@ msgstr ""
 msgid "Start debug session"
 msgstr "Debug-Sitzung starten"
 
-#: gaphor/ui/filedialog.py:33
+#: gaphor/ui/filedialog.py:32
 msgid "All Files"
 msgstr "Alle Dateien"
 
@@ -2390,44 +2405,44 @@ msgstr "Laden…"
 msgid "Loading model from {filename}"
 msgstr "Modell wird von {filename} geladen"
 
-#: gaphor/ui/filemanager.py:159
+#: gaphor/ui/filemanager.py:157
 msgid "Unable to open model “{filename}”."
 msgstr "Das Modell \"{filename}\" kann nicht geöffnet werden."
 
-#: gaphor/ui/filemanager.py:162
+#: gaphor/ui/filemanager.py:160
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Diese Datei enthält kein gültiges Gaphor-Modell."
 
-#: gaphor/ui/filemanager.py:191
+#: gaphor/ui/filemanager.py:189
 msgid "Saving…"
 msgstr "Speichern…"
 
-#: gaphor/ui/filemanager.py:192
+#: gaphor/ui/filemanager.py:190
 msgid "Saving model to {filename}"
 msgstr "Speichern des Modells unter {filename}"
 
-#: gaphor/ui/filemanager.py:209
+#: gaphor/ui/filemanager.py:207
 msgid "Unable to save model “{filename}”."
 msgstr "Das Modell \"{filename}\" kann nicht gespeichert werden."
 
-#: gaphor/ui/filemanager.py:246 gaphor/ui/filemanager.py:281
+#: gaphor/ui/filemanager.py:244 gaphor/ui/filemanager.py:279
 msgid "Save Gaphor Model As"
 msgstr "Speichere Gaphor-Modell als"
 
-#: gaphor/ui/filemanager.py:302
+#: gaphor/ui/filemanager.py:300
 msgid "Save changes before closing?"
 msgstr "Sollen die Änderungen vor dem Schließen gespeichert werden?"
 
-#: gaphor/ui/filemanager.py:303
+#: gaphor/ui/filemanager.py:301
 msgid "Closing will cause any unsaved changes to be discarded."
 msgstr "Beim Schließen werden alle nicht gespeicherten Änderungen verworfen."
 
-#: gaphor/ui/filemanager.py:310
+#: gaphor/ui/filemanager.py:308
 #, fuzzy
 msgid "Close without saving changes"
 msgstr "Schließen _ohne Speichern der Änderungen"
 
-#: gaphor/ui/filemanager.py:312
+#: gaphor/ui/filemanager.py:310
 msgid "Cancel"
 msgstr ""
 
@@ -2467,24 +2482,14 @@ msgstr "Neues Diagramm erstellen"
 msgid "Open Application Menu"
 msgstr "Anwendungsmenü öffnen"
 
-#: gaphor/ui/mainwindow.py:43
-#, fuzzy
-msgid "Open a Model…"
-msgstr "Öffne Gaphor-Modell"
+#: gaphor/ui/mainwindow.glade:191
+msgid "Editor"
+msgstr "Editor ein-/ausblenden"
 
 #: gaphor/ui/mainwindow.py:44
 #, fuzzy
 msgid "Recent Models…"
 msgstr "Neues Modell"
-
-#: gaphor/ui/mainwindow.py:45
-#, fuzzy
-msgid "New Model…"
-msgstr "Neues Modell"
-
-#: gaphor/ui/mainwindow.py:50
-msgid "Save As…"
-msgstr "Speichern unter…"
 
 #: gaphor/ui/mainwindow.py:51
 msgid "Export"
@@ -2540,11 +2545,11 @@ msgstr "_Löschen"
 msgid "Show in “{diagram}”"
 msgstr "In \"{diagram}\" anzeigen"
 
-#: gaphor/ui/namespace.py:326 gaphor/ui/treecomponent.py:162
+#: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
 msgid "{name} package"
 msgstr "{name}-Paket"
 
-#: gaphor/ui/namespace.py:344
+#: gaphor/ui/namespace.py:352
 msgid "New diagram"
 msgstr "Neues Diagramm"
 
@@ -2796,3 +2801,27 @@ msgstr "<Beziehung>"
 
 #~ msgid "Default Region"
 #~ msgstr "Standard Region"
+
+#~ msgid "Application"
+#~ msgstr "Anwendung"
+
+#~ msgid "New Window"
+#~ msgstr "Neues Fenster"
+
+#~ msgid "Open"
+#~ msgstr "Öffnen"
+
+#~ msgid "Save As"
+#~ msgstr "Speichern als"
+
+#~ msgid "Diagrams"
+#~ msgstr "Diagramme"
+
+#~ msgid "Edit"
+#~ msgstr "Bearbeiten"
+
+#~ msgid "Delete"
+#~ msgstr "Löschen"
+
+#~ msgid "Example Technolgy Requirement"
+#~ msgstr ""

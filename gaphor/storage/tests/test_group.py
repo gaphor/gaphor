@@ -17,7 +17,7 @@ def test_load_grouped_connected_items(element_factory, loader):
     loader(NODE_EXAMPLE_XML)
 
     diagram = element_factory.lselect()[0]
-    node_item, dep_item = [e for e in diagram.get_all_items() if not e.parent]
+    node_item, dep_item = (e for e in diagram.get_all_items() if not e.parent)
 
     child_one, child_two = node_item.children
 

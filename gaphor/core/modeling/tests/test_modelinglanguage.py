@@ -17,7 +17,7 @@ def test_lookup_element():
     assert modeling_language.lookup_element("Comment")
     assert modeling_language.lookup_element("Presentation")
     assert modeling_language.lookup_element("StyleSheet")
-    assert not modeling_language.lookup_element("NonExistant")
+    assert not modeling_language.lookup_element("NonExistent")
 
 
 def test_toolbox():

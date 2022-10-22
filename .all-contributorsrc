@@ -903,8 +903,45 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Lazerbeak12345",
+      "name": "Lazerbeak12345",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22641188?v=4",
+      "profile": "https://github.com/Lazerbeak12345",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "DKX47",
+      "name": "DKX47",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12964384?v=4",
+      "profile": "https://github.com/DKX47",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "kianmeng",
+      "name": "Kian-Meng Ang",
+      "avatar_url": "https://avatars.githubusercontent.com/u/134518?v=4",
+      "profile": "https://www.kianmeng.org",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "perovsek",
+      "name": "perovsek",
+      "avatar_url": "https://avatars.githubusercontent.com/u/115713273?v=4",
+      "profile": "https://github.com/perovsek",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": true,
+  "commitConvention": "angular"
 }

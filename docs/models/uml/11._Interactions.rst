@@ -19,8 +19,8 @@
 .. diagram:: 3. Messages
    :model: uml
 
-4. Occurences
+4. Occurrences
 --------------------------------------------------
 
-.. diagram:: 4. Occurences
+.. diagram:: 4. Occurrences
    :model: uml

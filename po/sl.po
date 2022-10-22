@@ -1,17 +1,20 @@
-# Translations template for PROJECT.
+# Slovenian translations for PROJECT.
 # Copyright (C) 2022 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-10-18 21:01-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2022-10-17 00:00+0000\n"
+"Last-Translator: perovsek <jaka@kompot.si>\n"
+"Language: sl\n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"sl/>\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -20,39 +23,39 @@ msgstr ""
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:55
 #: gaphor/ui/greeter.py:29
 msgid "C4 Model"
-msgstr ""
+msgstr "C4 model"
 
 #: gaphor/C4Model/propertypages.glade:28 gaphor/C4Model/propertypages.ui:12
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #: gaphor/C4Model/propertypages.glade:75 gaphor/C4Model/propertypages.ui:39
 msgid "Technology"
-msgstr ""
+msgstr "Tehnologija"
 
 #: gaphor/C4Model/toolbox.py:29
 msgid "New Software System"
-msgstr ""
+msgstr "Nov programski sistem"
 
 #: gaphor/C4Model/toolbox.py:36
 msgid "New Container"
-msgstr ""
+msgstr "Nova posoda"
 
 #: gaphor/C4Model/toolbox.py:43
 msgid "Database"
-msgstr ""
+msgstr "Podatkovna baza"
 
 #: gaphor/C4Model/toolbox.py:44
 msgid "New Database"
-msgstr ""
+msgstr "Nova podatkovna baza"
 
 #: gaphor/C4Model/toolbox.py:51
 msgid "New Component"
-msgstr ""
+msgstr "Nova komponenta"
 
 #: gaphor/C4Model/toolbox.py:59 gaphor/C4Model/toolbox.py:65
 msgid "Person"
-msgstr ""
+msgstr "Oseba"
 
 #: gaphor/C4Model/toolbox.py:71
 msgid "Software System"
@@ -68,17 +71,17 @@ msgstr ""
 
 #: gaphor/C4Model/toolbox.py:107 gaphor/UML/classes/classestoolbox.py:59
 msgid "Component"
-msgstr ""
+msgstr "Komponenta"
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:105
 #: gaphor/UML/classes/dependencypropertypages.py:16
 msgid "Dependency"
-msgstr ""
+msgstr "Odvisnost"
 
 #: gaphor/C4Model/toolbox.py:139
 msgid "New C4 Diagram"
-msgstr ""
+msgstr "Nov C4 diagram"
 
 #: gaphor/C4Model/toolbox.py:140 gaphor/UML/toolbox.py:30
 msgid "New Class Diagram"
@@ -101,22 +104,22 @@ msgstr ""
 
 #: gaphor/RAAML/modelinglanguage.py:17 gaphor/ui/greeter.py:28
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
 msgid "New FTA Diagram"
-msgstr ""
+msgstr "Nov FTA diagram"
 
 #: gaphor/RAAML/toolbox.py:20
 msgid "New STPA Diagram"
-msgstr ""
+msgstr "Nov STPA diagram"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
-msgstr ""
+msgstr "Vrata IN"
 
 #: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
-#: gaphor/RAAML/fta/ftatoolbox.py:131
+#: gaphor/RAAML/fta/ftatoolbox.py:131 gaphor/RAAML/fta/basicevent.py:36
 msgid "Basic Event"
 msgstr ""
 
@@ -136,23 +139,23 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
-msgstr ""
+msgstr "IN"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
-msgstr ""
+msgstr "Vrata ALI"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml.gaphor
 msgid "OR"
-msgstr ""
+msgstr "ALI"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
-msgstr ""
+msgstr "Vrata NE"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
-msgstr ""
+msgstr "NE"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
@@ -164,11 +167,11 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
-msgstr ""
+msgstr "Vrata izključujoči ALI"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
-msgstr ""
+msgstr "Izključujoči ALI"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:41
@@ -221,7 +224,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr ""
+msgstr "Vrata izključujoči ALI"
 
 #: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
@@ -235,12 +238,12 @@ msgstr ""
 #: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
 #: gaphor/templates/raaml.gaphor
 msgid "Loss"
-msgstr ""
+msgstr "Izguba"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard"
-msgstr ""
+msgstr "Nevarnost"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml.gaphor
@@ -250,36 +253,36 @@ msgstr ""
 #: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:77
 #: gaphor/UML/classes/classestoolbox.py:113
 msgid "Generalization"
-msgstr ""
+msgstr "Posplošitev"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:61
 msgid "Situation"
-msgstr ""
+msgstr "Situacija"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
-msgstr ""
+msgstr "Nadzorna struktura"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml.gaphor
 msgid "Controller"
-msgstr ""
+msgstr "Krmilnik"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
 msgid "Actuator"
-msgstr ""
+msgstr "Aktuator"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
-msgstr ""
+msgstr "Krmiljen proces"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "Unsafe Control Action"
-msgstr ""
+msgstr "Nevarno vodeno delovanje"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:149
 msgid "Relevant To"
-msgstr ""
+msgstr "Ustrezno za"
 
 #: gaphor/SysML/modelinglanguage.py:18 gaphor/ui/greeter.py:27
 msgid "SysML"
@@ -309,23 +312,23 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.glade:123 gaphor/SysML/propertypages.ui:91
 msgid "Show Parts"
-msgstr ""
+msgstr "Pokaži dele"
 
 #: gaphor/SysML/propertypages.glade:146 gaphor/SysML/propertypages.ui:107
 msgid "Show References"
-msgstr ""
+msgstr "Pokaži reference"
 
 #: gaphor/SysML/propertypages.glade:172 gaphor/SysML/propertypages.ui:123
 msgid "Show Values"
-msgstr ""
+msgstr "Pokaži vrednosti"
 
 #: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:78
 msgid "Compartments"
-msgstr ""
+msgstr "Predeli"
 
 #: gaphor/SysML/propertypages.glade:212 gaphor/SysML/propertypages.ui:149
 msgid "Aggregation"
-msgstr ""
+msgstr "Združevanje"
 
 #: gaphor/SysML/propertypages.glade:226 gaphor/SysML/propertypages.ui:159
 #: gaphor/UML/classes/propertypages.glade:119
@@ -333,7 +336,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:111
 #: gaphor/UML/classes/propertypages.ui:238
 msgid "No aggregation"
-msgstr ""
+msgstr "Brez združevanja"
 
 #: gaphor/SysML/propertypages.glade:227 gaphor/SysML/propertypages.ui:160
 #: gaphor/UML/classes/propertypages.glade:120
@@ -341,7 +344,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:112
 #: gaphor/UML/classes/propertypages.ui:239
 msgid "Shared"
-msgstr ""
+msgstr "V skupni rabi"
 
 #: gaphor/SysML/propertypages.glade:228 gaphor/SysML/propertypages.ui:161
 #: gaphor/UML/classes/propertypages.glade:121
@@ -349,15 +352,15 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:113
 #: gaphor/UML/classes/propertypages.ui:240
 msgid "Composite"
-msgstr ""
+msgstr "Sestavljeno"
 
 #: gaphor/SysML/propertypages.glade:248 gaphor/SysML/propertypages.ui:178
 msgid "Id"
-msgstr ""
+msgstr "ID"
 
 #: gaphor/SysML/propertypages.glade:272 gaphor/SysML/propertypages.ui:192
 msgid "Text"
-msgstr ""
+msgstr "Besedilo"
 
 #: gaphor/SysML/toolbox.py:25
 msgid "Internal Blocks"
@@ -657,14 +660,17 @@ msgid "Output pin"
 msgstr ""
 
 #: gaphor/UML/actions/activitynodes.py:190
+#: gaphor/UML/actions/activitynodes.py:193
 msgid "merge/decision"
 msgstr ""
 
 #: gaphor/UML/actions/activitynodes.py:192
+#: gaphor/UML/actions/activitynodes.py:195
 msgid "merge"
 msgstr ""
 
 #: gaphor/UML/actions/activitynodes.py:194
+#: gaphor/UML/actions/activitynodes.py:197
 msgid "decision"
 msgstr ""
 
@@ -794,8 +800,7 @@ msgid ""
 "  • <tt>out attr: int</tt> (output with type)\n"
 "  • <tt>in attr: int[0..1]</tt> (input, type, and multiplicity)\n"
 "\n"
-"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
-"items.\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
@@ -809,8 +814,7 @@ msgid ""
 "  • <tt>+ attr: int | bool</tt> (public, union type)\n"
 "  • <tt># /attr: int # a note</tt> (protected, derived, with remark)\n"
 "\n"
-"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
-"items.\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
@@ -972,8 +976,7 @@ msgid ""
 "  • <tt>1..2</tt>\n"
 "  • <tt>- [1..2]</tt>\n"
 "\n"
-"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
-"items.\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
@@ -1000,8 +1003,7 @@ msgid ""
 "  • <tt>+ attr: int | bool</tt> (public, union type)\n"
 "  • <tt># /attr: int # a note</tt> (protected, derived, with remark)\n"
 "\n"
-"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
-"items.\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
@@ -1046,8 +1048,7 @@ msgid ""
 "  • <tt>+ call(a: int[*], b: str): bool</tt> (public, parameters)\n"
 "  • <tt># call(a: int, b: str) # a note</tt> (protected, with remark)\n"
 "\n"
-"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
-"items.\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
@@ -1070,8 +1071,7 @@ msgid ""
 "\n"
 "  • <tt>enum</tt>\n"
 "\n"
-"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove "
-"items.\n"
+"Press <b>Enter</b> to edit, <b>Backspace</b>/<b>Delete</b> to remove items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
@@ -1364,6 +1364,7 @@ msgid "Note or Remark"
 msgstr ""
 
 #: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:348
+#: gaphor/ui/diagrampage.py:350
 msgid "Element can’t be represented on a diagram."
 msgstr ""
 
@@ -1445,8 +1446,8 @@ msgstr ""
 #: gaphor/plugins/errorreports/errorreports.py:155
 msgid ""
 "An unexpected error occurred.\n"
-"Please file an issue on GitHub and include information from Tools → Error"
-" Reports."
+"Please file an issue on GitHub and include information from Tools → Error "
+"Reports."
 msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:25
@@ -1515,40 +1516,45 @@ msgid "Toggle property editor"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:48
+#: gaphor/services/helpservice/shortcuts.ui:179
 msgid "Close Diagram"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:56
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
 #: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:187
-#: gaphor/ui/elementeditor.ui:198
+#: gaphor/ui/elementeditor.ui:198 gaphor/services/helpservice/shortcuts.ui:24
+#: gaphor/ui/elementeditor.ui:195 gaphor/ui/elementeditor.ui:206
 msgid "Preferences"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:64
+#: gaphor/services/helpservice/shortcuts.ui:32
 msgid "Quit Gaphor"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:75
+#: gaphor/services/helpservice/shortcuts.ui:43
 msgid "Files"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
 msgid "New Model…"
-msgstr ""
+msgstr "Nov model…"
 
 #: gaphor/services/helpservice/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
 msgid "Open a Model…"
-msgstr ""
+msgstr "Odpri model…"
 
 #: gaphor/services/helpservice/shortcuts.ui:97 gaphor/ui/filemanager.py:312
-#: gaphor/ui/mainwindow.py:49
+#: gaphor/ui/mainwindow.py:49 gaphor/services/helpservice/shortcuts.ui:65
+#: gaphor/ui/filemanager.py:314
 msgid "Save"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
 msgid "Save As…"
-msgstr ""
+msgstr "Shrani kot…"
 
 #: gaphor/services/helpservice/shortcuts.ui:117
 msgid "Undo and Redo"
@@ -1556,30 +1562,37 @@ msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:123
 #: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
+#: gaphor/services/helpservice/shortcuts.ui:84
+#: gaphor/services/helpservice/shortcuts.ui:90
 msgid "Undo"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:131
 #: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:90
+#: gaphor/services/helpservice/shortcuts.ui:98
 msgid "Redo"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:142
+#: gaphor/services/helpservice/shortcuts.ui:190
 msgid "Zoom"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:148
 #: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:106
+#: gaphor/services/helpservice/shortcuts.ui:196
 msgid "Zoom In"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:156
 #: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:130
+#: gaphor/services/helpservice/shortcuts.ui:204
 msgid "Zoom Out"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:164
 #: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:118
+#: gaphor/services/helpservice/shortcuts.ui:212
 msgid "Actual Size"
 msgstr ""
 
@@ -1588,10 +1601,12 @@ msgid "Selections"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:180
+#: gaphor/services/helpservice/shortcuts.ui:131
 msgid "Select All"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:188
+#: gaphor/services/helpservice/shortcuts.ui:139
 msgid "Deselect All"
 msgstr ""
 
@@ -1600,6 +1615,7 @@ msgid "Copy and Paste"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:205
+#: gaphor/services/helpservice/shortcuts.ui:147
 msgid "Copy"
 msgstr ""
 
@@ -1608,16 +1624,19 @@ msgid "Cut"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:221
+#: gaphor/services/helpservice/shortcuts.ui:155
 msgid "Paste (link defining elements)"
 msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:229
+#: gaphor/services/helpservice/shortcuts.ui:163
 msgid "Paste (copy defining elements)"
 msgstr ""
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:57
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:29
 #: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
+#: gaphor/ui/namespace.py:328 gaphor/ui/treecomponent.py:164
 msgid "New model"
 msgstr ""
 
@@ -1735,8 +1754,8 @@ msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid ""
-"The fault tree analysis shows which causes for the failure of a system "
-"have been considered."
+"The fault tree analysis shows which causes for the failure of a system have "
+"been considered."
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
@@ -1785,7 +1804,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Stakeholder Requirements"
-msgstr ""
+msgstr "Zahteve deležnikov"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
@@ -1797,15 +1816,15 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensor"
-msgstr ""
+msgstr "Zaznavalo"
 
 #: gaphor/templates/sysml.gaphor
 msgid "sensor"
-msgstr ""
+msgstr "zaznavalo"
 
 #: gaphor/templates/sysml.gaphor
 msgid "controller"
-msgstr ""
+msgstr "krmilnik"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Boundary"
@@ -1829,7 +1848,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "System Requirements"
-msgstr ""
+msgstr "Sistemske zahteve"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
@@ -1849,7 +1868,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "actuator"
-msgstr ""
+msgstr "aktuator"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case Function #1"
@@ -1897,7 +1916,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
-msgstr ""
+msgstr "Sistem"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ECU"
@@ -1905,7 +1924,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "DC Motor"
-msgstr ""
+msgstr "Motor na enosmerni tok"
 
 #: gaphor/templates/sysml.gaphor
 msgid "IR Transceiver"
@@ -1917,7 +1936,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "dc Motor"
-msgstr ""
+msgstr "motor na enosmerni tok"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ir Transceiver"
@@ -2106,36 +2125,37 @@ msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid ""
-"Perform domain analysis by modeling domain entities and their "
-"relationships using simplified class diagram. This diagram will serve as "
-"a visual dictionary of concepts. It will also be a starting point for "
-"your design-level data model."
+"Perform domain analysis by modeling domain entities and their relationships "
+"using simplified class diagram. This diagram will serve as a visual "
+"dictionary of concepts. It will also be a starting point for your design-"
+"level data model."
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid ""
-"Prepare package dependencies diagram to group your implementation classes"
-" in appropriate way. This will help you maintain the code well structured"
-" and avoid design flaws such as cyclic dependencies or dependencies on "
-"unstable parts"
+"Prepare package dependencies diagram to group your implementation classes in "
+"appropriate way. This will help you maintain the code well structured and "
+"avoid design flaws such as cyclic dependencies or dependencies on unstable "
+"parts"
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid ""
-"Model component interactions for use case scenarios in order to find out "
-"new methods in\n"
+"Model component interactions for use case scenarios in order to find out new "
+"methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
-msgid "Create detailed class diagrams to capture your object-oriented data model."
+msgid ""
+"Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid ""
-"Define the major artifacts that manifest implementation of your "
-"components. Indicate how they are deployed on hardware nodes, their "
-"inter-dependencies and communication protocols."
+"Define the major artifacts that manifest implementation of your components. "
+"Indicate how they are deployed on hardware nodes, their inter-dependencies "
+"and communication protocols."
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
@@ -2147,6 +2167,7 @@ msgid "Date"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:12
+#: gaphor/ui/filedialog.py:13
 msgid "All Gaphor Models"
 msgstr ""
 
@@ -2175,54 +2196,57 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:63 gaphor/ui/elementeditor.ui:49
 msgid ""
-"Add a model element from the tool box to the diagram. Here you will see "
-"it's properties appear.\n"
+"Add a model element from the tool box to the diagram. Here you will see it's "
+"properties appear.\n"
 "\n"
 "This pane can be hidden by clicking the pane icon in the header.\n"
 "\n"
-"<b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. "
-"\"c\" for Class).\n"
-"Tool selection only works from the diagram. If a tool does not get "
-"selected, click on the diagram once (so it's focused) and then hit the "
-"shortcut key.\n"
+"<b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. \"c"
+"\" for Class).\n"
+"Tool selection only works from the diagram. If a tool does not get selected, "
+"click on the diagram once (so it's focused) and then hit the shortcut key.\n"
 "\n"
-"<b>Tip:</b> To search for an element in the tree view, select an element "
-"in the tree view and start typing. A search box will automatically "
-"appear.\n"
+"<b>Tip:</b> To search for an element in the tree view, select an element in "
+"the tree view and start typing. A search box will automatically appear.\n"
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:163
+#: gaphor/ui/elementeditor.ui:171
 msgid "Editors"
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:211
+#: gaphor/ui/elementeditor.ui:219
 msgid "Reset Tool Automatically"
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:229
+#: gaphor/ui/elementeditor.ui:237
 msgid "Remove Unused Elements"
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
 #: gaphor/ui/elementeditor.ui:231 gaphor/ui/elementeditor.ui:238
+#: gaphor/ui/elementeditor.ui:239 gaphor/ui/elementeditor.ui:246
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:246
+#: gaphor/ui/elementeditor.ui:254
 msgid "Style Sheet"
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:275
+#: gaphor/ui/elementeditor.ui:279
 msgid ""
-"🔗 <a "
-"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
-"sheets in Gaphor</a>"
+"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html"
+"\">Style sheets in Gaphor</a>"
 msgstr ""
 
 #: gaphor/ui/errorhandler.py:25
 msgid ""
-"It looks like Gaphor is started from the command line. Do you want to "
-"open a debug session?"
+"It looks like Gaphor is started from the command line. Do you want to open a "
+"debug session?"
 msgstr ""
 
 #: gaphor/ui/errorhandler.py:28 gaphor/ui/errorhandler.py:31
@@ -2233,14 +2257,13 @@ msgstr ""
 msgid "Start debug session"
 msgstr ""
 
-#: gaphor/ui/filedialog.py:32
+#: gaphor/ui/filedialog.py:32 gaphor/ui/filedialog.py:33
 msgid "All Files"
 msgstr ""
 
 #: gaphor/ui/filemanager.py:36
 msgid ""
-"Gaphor was not able to store the model, probably due to an internal "
-"error:\n"
+"Gaphor was not able to store the model, probably due to an internal error:\n"
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
@@ -2273,53 +2296,54 @@ msgstr ""
 msgid "Loading model from {filename}"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:157
+#: gaphor/ui/filemanager.py:157 gaphor/ui/filemanager.py:159
 msgid "Unable to open model “{filename}”."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:160
+#: gaphor/ui/filemanager.py:160 gaphor/ui/filemanager.py:162
 msgid "This file does not contain a valid Gaphor model."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:189
+#: gaphor/ui/filemanager.py:189 gaphor/ui/filemanager.py:191
 msgid "Saving…"
-msgstr ""
+msgstr "Shranjevanje…"
 
-#: gaphor/ui/filemanager.py:190
+#: gaphor/ui/filemanager.py:190 gaphor/ui/filemanager.py:192
 msgid "Saving model to {filename}"
-msgstr ""
+msgstr "Shranjevanje modela v {filename}"
 
-#: gaphor/ui/filemanager.py:207
+#: gaphor/ui/filemanager.py:207 gaphor/ui/filemanager.py:209
 msgid "Unable to save model “{filename}”."
-msgstr ""
+msgstr "Modela ni možno shraniti v „{filename}“."
 
 #: gaphor/ui/filemanager.py:244 gaphor/ui/filemanager.py:279
+#: gaphor/ui/filemanager.py:246 gaphor/ui/filemanager.py:281
 msgid "Save Gaphor Model As"
-msgstr ""
+msgstr "Shrani Gaphor model kot"
 
-#: gaphor/ui/filemanager.py:300
+#: gaphor/ui/filemanager.py:300 gaphor/ui/filemanager.py:302
 msgid "Save changes before closing?"
-msgstr ""
+msgstr "Shrani spremembe pred zaprtjem?"
 
-#: gaphor/ui/filemanager.py:301
+#: gaphor/ui/filemanager.py:301 gaphor/ui/filemanager.py:303
 msgid "Closing will cause any unsaved changes to be discarded."
-msgstr ""
+msgstr "Če zaprete, bodo vse neshranjene spremembe zavržene."
 
-#: gaphor/ui/filemanager.py:308
+#: gaphor/ui/filemanager.py:308 gaphor/ui/filemanager.py:310
 msgid "Close without saving changes"
-msgstr ""
+msgstr "Zapri, ne da bi shranil spremembe"
 
-#: gaphor/ui/filemanager.py:310
+#: gaphor/ui/filemanager.py:310 gaphor/ui/filemanager.py:312
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:87
 msgid "Create New Model…"
-msgstr ""
+msgstr "Ustvari nov model…"
 
 #: gaphor/ui/greeter.glade:109 gaphor/ui/greeter.ui:93
 msgid "Open Other Model…"
-msgstr ""
+msgstr "Odpri drug model…"
 
 #: gaphor/ui/greeter.py:25
 msgid "Generic"
@@ -2327,43 +2351,43 @@ msgstr ""
 
 #: gaphor/ui/greeter.py:164
 msgid "Create a New Model"
-msgstr ""
+msgstr "Ustvari nov model"
 
 #: gaphor/ui/greeter.py:168
 msgid "Open a Recent Model"
-msgstr ""
+msgstr "Odpri nedavno odprt model"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
-msgstr ""
+msgstr "Gaphor"
 
 #: gaphor/ui/mainwindow.glade:148
 msgid "Create New diagram"
-msgstr ""
+msgstr "Ustvari nov diagram"
 
 #: gaphor/ui/mainwindow.glade:169
 msgid "Open Application Menu"
 msgstr ""
 
-#: gaphor/ui/mainwindow.glade:191
+#: gaphor/ui/mainwindow.glade:191 gaphor/services/helpservice/shortcuts.ui:123
 msgid "Editor"
 msgstr ""
 
 #: gaphor/ui/mainwindow.py:44
 msgid "Recent Models…"
-msgstr ""
+msgstr "Nedavno odprti modeli…"
 
 #: gaphor/ui/mainwindow.py:51
 msgid "Export"
-msgstr ""
+msgstr "Izvozi"
 
 #: gaphor/ui/mainwindow.py:55
 msgid "Tools"
-msgstr ""
+msgstr "Orodja"
 
 #: gaphor/ui/mainwindow.py:59
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Bližnjice"
 
 #: gaphor/ui/mainwindow.py:86
 msgid "New Generic Diagram"
@@ -2406,14 +2430,47 @@ msgid "Show in “{diagram}”"
 msgstr ""
 
 #: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
+#: gaphor/ui/namespace.py:326 gaphor/ui/treecomponent.py:162
 msgid "{name} package"
 msgstr ""
 
-#: gaphor/ui/namespace.py:352
+#: gaphor/ui/namespace.py:352 gaphor/ui/namespace.py:344
 msgid "New diagram"
 msgstr ""
 
 #: gaphor/ui/namespaceview.py:141 gaphor/ui/tests/test_treemodel.py:162
 #: gaphor/ui/treemodel.py:62
 msgid "<Relationships>"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:18
+msgid "Application"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:49
+msgid "New Window"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:57
+msgid "Open"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:73
+msgid "Save As"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:109
+msgid "Diagrams"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:115
+msgid "Edit"
+msgstr ""
+
+#: gaphor/services/helpservice/shortcuts.ui:171
+msgid "Delete"
+msgstr ""
+
+#: gaphor/templates/sysml.gaphor
+msgid "Example Technolgy Requirement"
 msgstr ""

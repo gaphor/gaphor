@@ -8,7 +8,7 @@ runs:
   using: composite
   steps:
     - name: Install Poetry
-      run: pip install poetry==1.2.1
+      run: pip install poetry==1.2.2
       shell: bash
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true

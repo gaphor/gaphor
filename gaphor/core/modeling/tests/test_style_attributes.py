@@ -11,7 +11,7 @@ def test_attribute_of_item(diagram):
     assert node.attribute("show_attributes") == "true"
 
 
-def test_nonexistant_attribute_of_item(diagram):
+def test_nonexistent_attribute_of_item(diagram):
     classitem = diagram.create(ClassItem)
 
     node = StyledItem(classitem)

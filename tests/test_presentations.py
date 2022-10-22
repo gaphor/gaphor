@@ -27,7 +27,7 @@ diagramitems = [
 ]
 
 blacklist = [
-    # These lines have no subject of ther own
+    # These lines have no subject of their own
     uml_diagramitems.Line,
     uml_diagramitems.CommentLineItem,
     uml_diagramitems.ContainmentItem,
