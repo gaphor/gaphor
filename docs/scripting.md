@@ -117,6 +117,14 @@ for attribute in diagram.attribute:
 To find out which relations can be queried, have a look at the Modeling Language documentation.
 Gaphor’s data models have been built using the [UML](models/uml) language.
 
+You can find out more about a model property by printing it.
+
+```{code-cell} ipython3
+print(UML.Class.ownedAttribute)
+```
+
+In this case it tells us that the type of `UML.Class.ownedAttribute` is `UML.Property`. `UML.Property.class_` is set to the owner class when `ownedAttribute` is set. It is a bidirectional relation.
+
 ## Update a model
 
 Updating a model always starts with the element factory: that’s where elements are created.
@@ -143,3 +151,13 @@ If you save the model, your changes are persisted:
 with open("../my-model.gaphor", "w") as out:
     storage.save(out, element_factory)
 ```
+
+## What else
+
+What else is there to know…
+
+* Gaphor supports derived associations. E.g. `element.owner` points to the owner element. For an attribute that would be it’s containing class.
+* All data models are described in the `Modeling Languages` section of the docs.
+* If you use Gaphor’s Console, you’ll need to apply all changes in a transaction, or they will result in an error.
+* If you want a comprehensive example of a code generator, have a look at [Gaphor’s `coder` module](https://github.com/gaphor/gaphor/blob/main/gaphor/codegen/coder.py). This module is used to generate the code for the data models used by Gaphor.
+* This page is rendered with [MyST-NB](https://myst-nb.readthedocs.io/). It’s actually a Jupyter Notebook!
