@@ -120,6 +120,7 @@ gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 "elementeditor" = "gaphor.ui.elementeditor:ElementEditor"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
+"auto_layout" = "gaphor.plugins.autolayout:AutoLayout"
 "help" = "gaphor.services.helpservice:HelpService"
 
 [tool.poetry.plugins."gaphor.modelinglanguages"]
