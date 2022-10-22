@@ -73,13 +73,13 @@ class HandlePositionEvent(RevertibeEvent):
 
     requires_transaction = False
 
-    def __init__(self, element, index, old_value):
+    def __init__(self, element, handle, old_value):
         super().__init__(element)
-        self.index = index
+        self.handle_index = element.handles().index(handle)
         self.old_value = old_value
 
     def revert(self, target):
-        target.handles()[self.index].pos = self.old_value
+        target.handles()[self.handle_index].pos = self.old_value
         target.request_update()
 
 
@@ -91,12 +91,10 @@ class HandlePositionUpdate:
         handle.pos.remove_handler(self._on_handle_position_update)
 
     def _on_handle_position_update(self, position, old):
-        for index, handle in enumerate(self.handles()):  # type: ignore[attr-defined]
+        for handle in self.handles():  # type: ignore[attr-defined]
             if handle.pos is position:
+                self.handle(HandlePositionEvent(self, handle, old))  # type: ignore[attr-defined]
                 break
-        else:
-            return
-        self.handle(HandlePositionEvent(self, index, old))  # type: ignore[attr-defined]
 
 
 # Note: the official documentation is using the terms "Shape" and "Edge" for element and line.
