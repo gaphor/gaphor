@@ -22,5 +22,5 @@ else
     poetry version "${VERSION}""${REV}"
 fi
 
-echo "::set-output name=version::${VERSION}${REV}"
-echo "::set-output name=release::${RELEASE}"
+echo "version=${VERSION}${REV}" >> "$GITHUB_OUTPUT"
+echo "release=${RELEASE}" >> "$GITHUB_OUTPUT"
