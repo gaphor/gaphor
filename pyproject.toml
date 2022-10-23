@@ -168,9 +168,7 @@ c4model.script = """gaphor.codegen.coder:main(
 lint = "pre-commit run --all-files"
 docs = { "cwd" = "docs", "shell" = "sphinx-build -b html . _build/html" }
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt docs/_build" }
-_version-file = { "script" = "_packaging.make-script:make_file_version_info" }
-_pyinstaller = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
-package = ["_version-file", "_pyinstaller"]
+package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
 appimage-docker-build = "docker build -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"
 appimage-docker-build-clean = "docker build --no-cache -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"

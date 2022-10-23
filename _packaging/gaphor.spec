@@ -2,6 +2,8 @@ import logging
 import os
 import time
 from pathlib import Path
+
+import pyinstaller_versionfile
 from PyInstaller.utils.hooks import copy_metadata, collect_entry_point
 
 try:
@@ -87,7 +89,20 @@ a = Analysis(
     cipher=block_cipher,
     noarchive=False,
 )
+
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+
+pyinstaller_versionfile.create_versionfile(
+    output_file="windows/file_version_info.txt",
+    version=get_version(),
+    company_name="Gaphor",
+    file_description="Gaphor",
+    internal_name="Gaphor",
+    legal_copyright="Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw.",
+    original_filename="gaphor-exe.exe",
+    product_name="Gaphor"
+)
+
 exe = EXE(
     pyz,
     a.scripts,
