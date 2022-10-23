@@ -1092,7 +1092,7 @@ docs = ["sphinx", "sphinx-rtd-theme", "sphinx-copybutton", "myst-parser"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9, <3.11"
-content-hash = "4ad252fab3f2568b228eb47f307467f211eef01d9df7118651964e9c99348801"
+content-hash = "f2ff170138e4aaed341b84cb7fcc7514d7f7b8f2d2e2b880478fd1413a8b4872"
 
 [metadata.files]
 alabaster = [
@@ -1116,6 +1116,7 @@ BabelGladeExtractor = [
 ]
 better-exceptions = [
     {file = "better_exceptions-0.3.3-py3-none-any.whl", hash = "sha256:9c70b1c61d5a179b84cd2c9d62c3324b667d74286207343645ed4306fdaad976"},
+    {file = "better_exceptions-0.3.3-py3.8.egg", hash = "sha256:bf111d0c9994ac1123f29c24907362bed2320a86809c85f0d858396000667ce2"},
     {file = "better_exceptions-0.3.3.tar.gz", hash = "sha256:e4e6bc18444d5f04e6e894b10381e5e921d3d544240418162c7db57e9eb3453b"},
 ]
 black = [

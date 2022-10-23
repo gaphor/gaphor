@@ -53,7 +53,7 @@ sphinx-rtd-theme = { version = "^1.0", optional = true }
 sphinx-copybutton = { version = "^0.5.0", optional = true }
 myst-parser = { version = ">=0.15,<0.19", optional = true }
 
-[tool.poetry.group.test.dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.1"
 pytest-cov = "^3.0"
 pytest-mock = "^3.8.2"
