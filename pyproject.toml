@@ -62,11 +62,7 @@ hypothesis = "^6.54.5"
 sphinx = ">=4.3,<6.0"
 
 [tool.poetry.group.lint.dependencies]
-black = "^22.8"
-mypy = "0.971"
 pre-commit = "^2.20"
-flake8 = "^5.0"
-isort = "^5.10"
 
 [tool.poetry.group.translation.dependencies]
 babel = "^2.10.3"
