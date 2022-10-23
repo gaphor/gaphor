@@ -3,12 +3,14 @@ import os
 import time
 from pathlib import Path
 
+import pyinstaller_versionfile
+from PyInstaller.utils.hooks import copy_metadata, collect_entry_point
+
 try:
     import tomllib
 except ModuleNotFoundError:
     import tomli as tomllib
 
-from PyInstaller.utils.hooks import copy_metadata
 
 logging.getLogger(__name__).info(
     f"Target GTK version: {os.getenv('GAPHOR_PKG_GTK', '4')}"
@@ -16,6 +18,8 @@ logging.getLogger(__name__).info(
 
 
 block_cipher = None
+
+COPYRIGHT = f"Copyright © 2001-{time.strftime('%Y')} Arjan J. Molenaar and Dan Yeaw."
 
 glade_files = [
     (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.glade")
@@ -30,6 +34,19 @@ def get_version() -> str:
     print(project_dir.resolve())
     f = project_dir / "pyproject.toml"
     return str(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
+
+
+def get_semver_version() -> str:
+    version = get_version()
+    return version[: version.rfind(".dev")] if "dev" in version else version
+
+
+def collect_entry_points(*names):
+    hidden_imports = []
+    for entry_point in names:
+        _datas, imports = collect_entry_point(entry_point)
+        hidden_imports.extend(imports)
+    return hidden_imports
 
 
 a = Analysis(
@@ -60,7 +77,9 @@ a = Analysis(
     + ui_files
     + copy_metadata("gaphor")
     + copy_metadata("gaphas"),
-    hiddenimports=[],
+    hiddenimports=collect_entry_points(
+        "gaphor.services", "gaphor.appservices", "gaphor.modelinglanguages"
+    ),
     hooksconfig={
         "gi": {
             "module-versions": {
@@ -70,14 +89,27 @@ a = Analysis(
         },
     },
     hookspath=["."],
-    runtime_hooks=[],
+    runtime_hooks=[f"use_gtk_{os.getenv('GAPHOR_PKG_GTK', '4')}.py"],
     excludes=[],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     cipher=block_cipher,
     noarchive=False,
 )
+
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+
+pyinstaller_versionfile.create_versionfile(
+    output_file="windows/file_version_info.txt",
+    version=get_semver_version(),
+    company_name="Gaphor",
+    file_description="Gaphor",
+    internal_name="Gaphor",
+    legal_copyright=COPYRIGHT,
+    original_filename="gaphor-exe.exe",
+    product_name="Gaphor",
+)
+
 exe = EXE(
     pyz,
     a.scripts,
@@ -105,7 +137,7 @@ app = BUNDLE(
     version=get_version(),
     info_plist={
         "CFBundleVersion": get_version(),
-        "NSHumanReadableCopyright": f"Copyright 2001-{time.strftime('%Y')} Gaphor Developers, Apache 2 License.",
+        "NSHumanReadableCopyright": COPYRIGHT,
         "LSMinimumSystemVersion": "10.13",
         "NSHighResolutionCapable": True,
         "LSApplicationCategoryType": "public.app-category.developer-tools",

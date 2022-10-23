@@ -13,7 +13,6 @@ gaphor.egg-info/
 gaphor.prof
 .gpg
 pip-wheel-metadata
-_packaging/gaphor-script.py
 
 # Gaphor test models in project root
 /*.gaphor
