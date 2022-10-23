@@ -4,7 +4,9 @@ file_format: mystnb
 
 # Scripting
 
-One way to work with models is through the GUI. At the poit you’re reading this, you’re may also be interested in getting more out of your models. You like to interact with models through scripts.
+One way to work with models is through the GUI. However, you may also be
+interested in getting more out of your models by interacting with them through
+Python scripts.
 
 You can use scripts to:
 
@@ -13,16 +15,18 @@ You can use scripts to:
 
 Since Gaphor is written in Python, it also functions as a library.
 
-
 ## Getting started
 
-To get started, you’ll need a python console. You can use the interactive console in Gaphor,
-or install on your host. For the latter, you’ll need a development environment.
+To get started, you’ll need a Python console. You can use the interactive
+console in Gaphor, or install one yourself by setting up a Python development
+environment.
 
 
 ## Query a model
 
-A first step is probably to load a model. For this you’ll need an `ElementFactory`. The `ElementFactory` is responsible to creating and maintaining the model. It’s a repository for the model while you’re working on it.
+The first step is to load a model. For this you’ll need an `ElementFactory`. The
+`ElementFactory` is responsible to creating and maintaining the model. It acts
+as a repository for the model while you’re working on it.
 
 ```{code-cell} ipython3
 from gaphor.core.modeling import ElementFactory
@@ -30,13 +34,13 @@ from gaphor.core.modeling import ElementFactory
 element_factory = ElementFactory()
 ```
 
-The module `gaphor.storage` contains everything to load and save models.
-Gaphor supports multiple [modeling languages](modeling_language). The `ModelingLanguageService`
-consolidates those languages and makes it easy for the loader logic to find
-the appropriate classes.
+The module `gaphor.storage` contains everything to load and save models. Gaphor
+supports multiple [modeling languages](modeling_language). The
+`ModelingLanguageService` consolidates those languages and makes it easy for the
+loader logic to find the appropriate classes.
 
 ```{note}
-In version 2.12 and before an `EventManager` is required. As of Gaphor 2.13, the
+In versions before 2.13, an `EventManager` is required. In later versions, the
 `ModelingLanguageService` can be initialized without event manager.
 ```
 
@@ -49,7 +53,7 @@ from gaphor.storage import storage
 
 event_manager = EventManager()
 
-# Avoid loading of GTK, by using Sphinx’s mock function
+# Avoid loading GTK by using Sphinx’s mock function
 with mock(["gi.repository.Gtk", "gi.repository.Gdk"]):
     modeling_language = ModelingLanguageService(event_manager=event_manager)
 
@@ -63,15 +67,20 @@ storage.load(
 At this point the model is loaded in the `element_factory` and can be queried.
 
 ```{note}
-A modeling language consists of the model elements, diagram items and graphical components
-required to interact with the elements through the GUI. As a rule of thumb, you’ll need
-to have GTK (the GUI toolkit we use) installed to load a full featured modeling language.
+A modeling language consists of the model elements, diagram items, and graphical
+components required to interact with the elements through the GUI. As a rule of
+thumb, you’ll need to have GTK (the GUI toolkit we use) installed to load a full
+featured modeling language.
 
-One trick to avoid this (when generating Sphinx docs at least) is to use autodoc’s mock function to
-mock out the GTK and GDK libraries. Pango needs to be installed for text rendering.
+One trick to avoid this (when generating Sphinx docs at least) is to use
+autodoc’s mock function to mock out the GTK and GDK libraries. However, Pango
+needs to be installed for text rendering.
 ```
 
-A simple query only tells you what elements are in the model. The method `ElementFactory.select()` returns an iterator. Sometimes it’s easier to obtain a list directly. For those cases you can use `ElementFatory.lselect()`.
+A simple query only tells you what elements are in the model. The method
+`ElementFactory.select()` returns an iterator. Sometimes it’s easier to obtain a
+list directly. For those cases you can use `ElementFatory.lselect()`. Here we
+select the last five elements:
 
 ```{code-cell} ipython3
 for element in element_factory.lselect()[:5]:
@@ -93,8 +102,8 @@ for diagram in element_factory.select(
     print(diagram)
 ```
 
-Now, let’s say we want to do some simple (pseudo-)code generation. We can iterate a class’ attributes
-and write some output.
+Now, let’s say we want to do some simple (pseudo-)code generation. We can
+iterate class attributes and write some output.
 
 ```{code-cell} ipython3
 diagram: UML.Class
@@ -114,8 +123,9 @@ for attribute in diagram.attribute:
         print(f"    {attribute.name}: {qname(attribute.type)}")
 ```
 
-To find out which relations can be queried, have a look at the Modeling Language documentation.
-Gaphor’s data models have been built using the [UML](models/uml) language.
+To find out which relations can be queried, have a look at the [modeling
+language](modeling_language) documentation. Gaphor’s data models have been built
+using the [UML](models/uml) language.
 
 You can find out more about a model property by printing it.
 
@@ -123,12 +133,14 @@ You can find out more about a model property by printing it.
 print(UML.Class.ownedAttribute)
 ```
 
-In this case it tells us that the type of `UML.Class.ownedAttribute` is `UML.Property`. `UML.Property.class_` is set to the owner class when `ownedAttribute` is set. It is a bidirectional relation.
+In this case it tells us that the type of `UML.Class.ownedAttribute` is
+`UML.Property`. `UML.Property.class_` is set to the owner class when
+`ownedAttribute` is set. It is a bidirectional relation.
 
 ### Drawing diagrams
 
-Another nice feature is drawing the diagrams. At this moment this requires a function.
-This behavior is similar to the [`diagram` directive](sphinx).
+Another nice feature is drawing the diagrams. At this moment this requires a
+function. This behavior is similar to the [`diagram` directive](sphinx).
 
 ```{code-cell} ipython3
 from io import BytesIO
@@ -151,7 +163,8 @@ svg(d)
 
 ## Update a model
 
-Updating a model always starts with the element factory: that’s where elements are created.
+Updating a model always starts with the element factory: that’s where elements
+are created.
 
 To create a UML Class instance, you can:
 
@@ -160,7 +173,8 @@ my_class = element_factory.create(UML.Class)
 my_class.name = "MyClass"
 ```
 
-To give it an attribute, create an attribute type (`UML.Property`) and provide it some values.
+To give it an attribute, create an attribute type (`UML.Property`) and then
+assign the attribute values.
 
 ```{code-cell} ipython3
 my_attr = element_factory.create(UML.Property)
@@ -180,7 +194,7 @@ with open("../my-model.gaphor", "w") as out:
 
 What else is there to know…
 
-* Gaphor supports derived associations. E.g. `element.owner` points to the owner element. For an attribute that would be it’s containing class.
+* Gaphor supports derived associations. For example, `element.owner` points to the owner element. For an attribute that would be its containing class.
 * All data models are described in the `Modeling Languages` section of the docs.
 * If you use Gaphor’s Console, you’ll need to apply all changes in a transaction, or they will result in an error.
 * If you want a comprehensive example of a code generator, have a look at [Gaphor’s `coder` module](https://github.com/gaphor/gaphor/blob/main/gaphor/codegen/coder.py). This module is used to generate the code for the data models used by Gaphor.
