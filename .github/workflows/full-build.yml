@@ -224,7 +224,7 @@ jobs:
       - name: Perform self-test (zip)
         if: "endsWith(needs.macos.outputs.artifact, '.zip')"
         run: |
-          unzip ${{ needs.macos.outputs.artifact }}
+          unzip -q ${{ needs.macos.outputs.artifact }}
           Gaphor.app/Contents/MacOS/gaphor-exe --self-test
 
   macos-gtk4:
