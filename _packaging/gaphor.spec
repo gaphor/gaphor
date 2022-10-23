@@ -34,6 +34,11 @@ def get_version() -> str:
     return str(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
 
 
+def get_semver_version() -> str:
+    version = get_version()
+    return version[: version.rfind(".dev")] if "dev" in version else version
+
+
 def collect_entry_points(*names):
     hidden_imports = []
     for entry_point in names:
@@ -94,13 +99,13 @@ pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
 pyinstaller_versionfile.create_versionfile(
     output_file="windows/file_version_info.txt",
-    version=get_version(),
+    version=get_semver_version(),
     company_name="Gaphor",
     file_description="Gaphor",
     internal_name="Gaphor",
     legal_copyright="Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw.",
     original_filename="gaphor-exe.exe",
-    product_name="Gaphor"
+    product_name="Gaphor",
 )
 
 exe = EXE(
