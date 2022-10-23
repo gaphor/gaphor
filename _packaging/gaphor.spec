@@ -2,13 +2,13 @@ import logging
 import os
 import time
 from pathlib import Path
+from PyInstaller.utils.hooks import copy_metadata, collect_entry_point
 
 try:
     import tomllib
 except ModuleNotFoundError:
     import tomli as tomllib
 
-from PyInstaller.utils.hooks import copy_metadata
 
 logging.getLogger(__name__).info(
     f"Target GTK version: {os.getenv('GAPHOR_PKG_GTK', '4')}"
@@ -30,6 +30,14 @@ def get_version() -> str:
     print(project_dir.resolve())
     f = project_dir / "pyproject.toml"
     return str(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
+
+
+def collect_entry_points(*names):
+    hidden_imports = []
+    for entry_point in names:
+        _datas, imports = collect_entry_point(entry_point)
+        hidden_imports.extend(imports)
+    return hidden_imports
 
 
 a = Analysis(
@@ -60,7 +68,9 @@ a = Analysis(
     + ui_files
     + copy_metadata("gaphor")
     + copy_metadata("gaphas"),
-    hiddenimports=[],
+    hiddenimports=collect_entry_points(
+        "gaphor.services", "gaphor.appservices", "gaphor.modelinglanguages"
+    ),
     hooksconfig={
         "gi": {
             "module-versions": {

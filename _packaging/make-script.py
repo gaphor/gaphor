@@ -18,10 +18,6 @@ def get_version() -> str:
 
 
 def make_gaphor_script(gtk_version: str = os.getenv("GAPHOR_PKG_GTK", "4")):
-    pyproject_toml = packaging_path.parent / "pyproject.toml"
-    with open(pyproject_toml, "rb") as f:
-        toml = tomllib.load(f)
-
     gaphor_script = packaging_path / "gaphor-script.py"
     with open(gaphor_script, "w") as file:
 
@@ -36,11 +32,6 @@ def make_gaphor_script(gtk_version: str = os.getenv("GAPHOR_PKG_GTK", "4")):
         file.write("os.environ['PATH'] = os.environ['PATH'].replace(';;', ';')\n")
 
         file.write(f"os.environ['GAPHOR_USE_GTK'] = '{gtk_version}'\n")
-
-        plugins = toml["tool"]["poetry"]["plugins"]
-        for cat in plugins.values():
-            for entrypoint in cat.values():
-                file.write(f"import {entrypoint.split(':')[0]}\n")
 
         file.write("from gaphor.ui import main\n")
         file.write("import sys\n")
