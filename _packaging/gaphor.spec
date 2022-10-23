@@ -19,7 +19,7 @@ logging.getLogger(__name__).info(
 
 block_cipher = None
 
-COPYRIGHT = "Copyright © 2001-{time.strftime('%Y')} Arjan J. Molenaar and Dan Yeaw."
+COPYRIGHT = f"Copyright © 2001-{time.strftime('%Y')} Arjan J. Molenaar and Dan Yeaw."
 
 glade_files = [
     (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.glade")
