@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-10-18 21:01-0400\n"
-"PO-Revision-Date: 2022-09-01 19:16+0000\n"
+"PO-Revision-Date: 2022-10-23 16:06+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
+"\n"
 "Language: cs\n"
-"Language-Team: Czech "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/cs/>\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.14.2-dev\n"
 "Generated-By: Babel 2.10.3\n"
 
 #: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:55
@@ -1254,9 +1255,8 @@ msgstr "Zobrazit regiony"
 #: gaphor/UML/states/propertypages.glade:62
 #: gaphor/UML/states/propertypages.glade:84
 #: gaphor/UML/states/propertypages.ui:91 gaphor/UML/states/propertypages.ui:120
-#, fuzzy
 msgid "Regions"
-msgstr "Agregace"
+msgstr "Regiony"
 
 #: gaphor/UML/states/propertypages.glade:105
 #: gaphor/UML/states/propertypages.ui:20
@@ -1312,23 +1312,20 @@ msgid "Shallow History Pseudostate"
 msgstr "Pseudostatní mělká historie"
 
 #: gaphor/UML/states/statestoolbox.py:130
-#, fuzzy
 msgid "Deep History Pseudostate"
-msgstr "Historie Pseudostate"
+msgstr "Pseudostát s hlubokou historií"
 
 #: gaphor/UML/states/statestoolbox.py:142
-#, fuzzy
 msgid "Join Pseudostate"
-msgstr "Počáteční pseudostav"
+msgstr "Připojit se k pseudostátu"
 
 #: gaphor/UML/states/statestoolbox.py:154
 msgid "Fork Pseudostate"
 msgstr "Pseudostát vidlice"
 
 #: gaphor/UML/states/statestoolbox.py:166
-#, fuzzy
 msgid "Junction Pseudostate"
-msgstr "Počáteční pseudostav"
+msgstr "Pseudostát Junction"
 
 #: gaphor/UML/states/statestoolbox.py:178
 msgid "Choice Pseudostate"
@@ -1339,14 +1336,12 @@ msgid "Entry Point Pseudostate"
 msgstr "Vstupní bod Pseudostát"
 
 #: gaphor/UML/states/statestoolbox.py:202
-#, fuzzy
 msgid "Exit Point Pseudostate"
-msgstr "Počáteční pseudostav"
+msgstr "Výstupní bod Pseudostát"
 
 #: gaphor/UML/states/statestoolbox.py:214
-#, fuzzy
 msgid "Terminate Pseudostate"
-msgstr "Počáteční pseudostav"
+msgstr "Ukončit pseudostát"
 
 #: gaphor/UML/usecases/extend.py:20
 msgid "extend"
@@ -1598,18 +1593,16 @@ msgstr ""
 "a/nebo v jiných zemích.\n"
 
 #: gaphor/services/helpservice/shortcuts.ui:24
-#, fuzzy
 msgid "Rename"
-msgstr "upřesnit"
+msgstr "Přejmenovat"
 
 #: gaphor/services/helpservice/shortcuts.ui:32
-#, fuzzy
 msgid "Search"
-msgstr "Uživatel"
+msgstr "Hledat"
 
 #: gaphor/services/helpservice/shortcuts.ui:40
 msgid "Toggle property editor"
-msgstr ""
+msgstr "Přepnout editor vlastností"
 
 #: gaphor/services/helpservice/shortcuts.ui:48
 msgid "Close Diagram"
@@ -1632,11 +1625,11 @@ msgstr "Soubory"
 
 #: gaphor/services/helpservice/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
 msgid "New Model…"
-msgstr ""
+msgstr "Nový model…"
 
 #: gaphor/services/helpservice/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
 msgid "Open a Model…"
-msgstr ""
+msgstr "Otevřít model…"
 
 #: gaphor/services/helpservice/shortcuts.ui:97 gaphor/ui/filemanager.py:312
 #: gaphor/ui/mainwindow.py:49
@@ -1645,12 +1638,11 @@ msgstr "Uložit"
 
 #: gaphor/services/helpservice/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
 msgid "Save As…"
-msgstr ""
+msgstr "Uložit jako…"
 
 #: gaphor/services/helpservice/shortcuts.ui:117
-#, fuzzy
 msgid "Undo and Redo"
-msgstr "neuspořádané"
+msgstr "Zpět a Znovu"
 
 #: gaphor/services/helpservice/shortcuts.ui:123
 #: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
@@ -1682,9 +1674,8 @@ msgid "Actual Size"
 msgstr "Aktuální velikost"
 
 #: gaphor/services/helpservice/shortcuts.ui:174
-#, fuzzy
 msgid "Selections"
-msgstr "Akce"
+msgstr "Výběry"
 
 #: gaphor/services/helpservice/shortcuts.ui:180
 msgid "Select All"
@@ -1696,16 +1687,15 @@ msgstr "Zrušit výběr všeho"
 
 #: gaphor/services/helpservice/shortcuts.ui:199
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopírovat a vložit"
 
 #: gaphor/services/helpservice/shortcuts.ui:205
 msgid "Copy"
 msgstr "Kopírovat"
 
 #: gaphor/services/helpservice/shortcuts.ui:213
-#, fuzzy
 msgid "Cut"
-msgstr "ecu"
+msgstr "Střih"
 
 #: gaphor/services/helpservice/shortcuts.ui:221
 msgid "Paste (link defining elements)"
@@ -1992,9 +1982,8 @@ msgid "Actuator Command"
 msgstr "Příkaz Aktuátoru"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Example Technology Requirement"
-msgstr "Příklad technolgického požadavku"
+msgstr "Příklad požadavku na technologii"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
@@ -2336,7 +2325,7 @@ msgstr "Editoři"
 
 #: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:211
 msgid "Reset Tool Automatically"
-msgstr ""
+msgstr "Automaticky resetovat nástroj"
 
 #: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:229
 msgid "Remove Unused Elements"
@@ -2346,6 +2335,7 @@ msgstr "Odstranit nepoužívané prvky"
 #: gaphor/ui/elementeditor.ui:231 gaphor/ui/elementeditor.ui:238
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
+"Automaticky odstranit prvky, které se již nepoužívají v žádném diagramu."
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:246
 msgid "Style Sheet"
@@ -2388,6 +2378,9 @@ msgid ""
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
+"Gaphor nebyl schopen model uložit, pravděpodobně kvůli vnitřní chybě:\n"
+"{exc}\n"
+"Pokud si myslíte, že se jedná o chybu, kontaktujte prosím vývojáře."
 
 #: gaphor/ui/filemanager.py:40
 msgid ""
