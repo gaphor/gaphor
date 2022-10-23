@@ -12,6 +12,6 @@ os.environ["PATH"] = os.environ["PATH"].replace(";;", ";")
 
 os.environ["GAPHOR_USE_GTK"] = "4"
 
-from gaphor.ui import main
+from gaphor.ui import main  # noqa: E402
 
 sys.exit(main(sys.argv))
