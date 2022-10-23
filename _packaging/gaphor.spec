@@ -19,6 +19,8 @@ logging.getLogger(__name__).info(
 
 block_cipher = None
 
+COPYRIGHT = "Copyright © 2001-{time.strftime('%Y')} Arjan J. Molenaar and Dan Yeaw."
+
 glade_files = [
     (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.glade")
 ]
@@ -103,7 +105,7 @@ pyinstaller_versionfile.create_versionfile(
     company_name="Gaphor",
     file_description="Gaphor",
     internal_name="Gaphor",
-    legal_copyright="Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw.",
+    legal_copyright=COPYRIGHT,
     original_filename="gaphor-exe.exe",
     product_name="Gaphor",
 )
@@ -135,7 +137,7 @@ app = BUNDLE(
     version=get_version(),
     info_plist={
         "CFBundleVersion": get_version(),
-        "NSHumanReadableCopyright": f"Copyright 2001-{time.strftime('%Y')} Gaphor Developers, Apache 2 License.",
+        "NSHumanReadableCopyright": COPYRIGHT,
         "LSMinimumSystemVersion": "10.13",
         "NSHighResolutionCapable": True,
         "LSApplicationCategoryType": "public.app-category.developer-tools",
