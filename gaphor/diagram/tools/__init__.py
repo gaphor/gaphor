@@ -1,5 +1,5 @@
 """Tools for handling items on a diagram."""
-from gaphas.tool import hover_tool, rubberband_tool, view_focus_tool, zoom_tool
+from gaphas.tool import hover_tool, rubberband_tool, view_focus_tool, zoom_tools
 from gi.repository import Gtk
 
 import gaphor.diagram.tools.connector
@@ -56,7 +56,8 @@ def apply_placement_tool_set(
 
 
 def add_basic_tools(view, modeling_language, event_manager):
-    view.add_controller(zoom_tool(view))
+    for tool in zoom_tools(view):
+        view.add_controller(tool)
     view.add_controller(view_focus_tool(view))
     view.add_controller(shortcut_tool(view, event_manager))
     if Gtk.get_major_version() != 3:

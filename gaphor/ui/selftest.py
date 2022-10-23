@@ -8,6 +8,8 @@ from gi.repository import GLib, Gtk, Pango
 
 from gaphor.abc import Service
 from gaphor.application import Application, distribution
+from gaphor.core import Transaction
+from gaphor.core.modeling import Diagram
 
 log = logging.getLogger(__name__)
 
@@ -52,6 +54,7 @@ class SelfTest(Service):
         self.init_timer(gtk_app, timeout=20)
         self.test_library_versions()
         self.test_new_session()
+        self.test_auto_layout()
 
     def init_timer(self, gtk_app, timeout):
         start = time.time()
@@ -104,6 +107,19 @@ class SelfTest(Service):
                 return GLib.SOURCE_CONTINUE
 
         GLib.idle_add(check_new_session, session, priority=GLib.PRIORITY_LOW)
+
+    @test
+    def test_auto_layout(self, status):
+        session = self.application.new_session()
+        event_manager = session.get_service("event_manager")
+        element_factory = session.get_service("element_factory")
+        auto_layout = session.get_service("auto_layout")
+
+        with Transaction(event_manager):
+            diagram = element_factory.create(Diagram)
+
+        auto_layout.layout(diagram)
+        status.complete()
 
 
 def windows_console_output_workaround():
