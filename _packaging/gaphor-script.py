@@ -10,8 +10,6 @@ if os.environ["PATH"][-1] == ";":
 # Check for and remove two semicolons in path
 os.environ["PATH"] = os.environ["PATH"].replace(";;", ";")
 
-os.environ["GAPHOR_USE_GTK"] = "4"
-
 from gaphor.ui import main  # noqa: E402
 
 sys.exit(main(sys.argv))
