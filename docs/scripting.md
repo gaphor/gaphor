@@ -137,28 +137,17 @@ In this case it tells us that the type of `UML.Class.ownedAttribute` is
 `UML.Property`. `UML.Property.class_` is set to the owner class when
 `ownedAttribute` is set. It is a bidirectional relation.
 
-### Drawing diagrams
+## Draw a diagram
 
 Another nice feature is drawing the diagrams. At this moment this requires a
 function. This behavior is similar to the [`diagram` directive](sphinx).
 
 ```{code-cell} ipython3
-from io import BytesIO
-from IPython.display import SVG
-import cairo
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.export import render
-
-
-def svg(diagram):
-    buffer = BytesIO()
-    surface = render(diagram, lambda w, h: cairo.SVGSurface(buffer, w, h))
-    surface.flush()
-    surface.finish()
-    return SVG(buffer.getvalue())
+from gaphor.extensions.ipython import draw
 
 d = next(element_factory.select(Diagram))
-svg(d)
+draw(d)
 ```
 
 ## Update a model

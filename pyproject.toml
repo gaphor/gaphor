@@ -60,6 +60,7 @@ pytest-mock = "^3.8.2"
 xdoctest = "^1.1.0"
 hypothesis = "^6.54.5"
 sphinx = ">=4.3,<6.0"
+ipython = "^8.5.0"
 
 [tool.poetry.group.lint.dependencies]
 pre-commit = "^2.20"
