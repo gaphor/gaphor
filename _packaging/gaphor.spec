@@ -89,7 +89,9 @@ a = Analysis(
         },
     },
     hookspath=["."],
-    runtime_hooks=[f"use_gtk_{os.getenv('GAPHOR_PKG_GTK', '4')}.py"],
+    runtime_hooks=[
+        f"use_gtk_{os.getenv('GAPHOR_PKG_GTK', '4')}.py",
+        "pydot_patch.py"],
     excludes=[],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
