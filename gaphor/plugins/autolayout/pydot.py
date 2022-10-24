@@ -30,7 +30,7 @@ DOT = "dot"
 DPI = 72.0
 
 
-class AutoLayout(Service, ActionProvider):
+class AutoLayoutService(Service, ActionProvider):
     def __init__(self, event_manager, diagrams, tools_menu=None, dump_gv=False):
         self.event_manager = event_manager
         self.diagrams = diagrams
@@ -58,6 +58,19 @@ class AutoLayout(Service, ActionProvider):
             self.layout(current_diagram, splines="ortho")
 
     def layout(self, diagram: Diagram, splines="polyline"):
+        auto_layout = AutoLayout(self.event_manager, self.dump_gv)
+
+        with Transaction(self.event_manager):
+            auto_layout.layout(diagram, splines)
+
+
+class AutoLayout:
+    def __init__(self, event_manager=None, dump_gv=False) -> None:
+        self.event_manager = event_manager
+        self.dump_gv = dump_gv
+
+    def layout(self, diagram: Diagram, splines="polyline") -> None:
+        diagram.update_now(diagram.get_all_items())
         graph = diagram_as_pydot(diagram, splines=splines)
         rendered_graph = self.render(graph)
         self.apply_layout(diagram, rendered_graph)
@@ -85,95 +98,95 @@ class AutoLayout(Service, ActionProvider):
             else Matrix()
         )
 
-        with Transaction(self.event_manager):
-
-            # First record original positions for involved lines
-            for edge in rendered_graph.get_edges():
-                if presentation := presentation_for_object(diagram, edge):
-                    for handle in (presentation.head, presentation.tail):
-                        if cinfo := diagram.connections.get_connection(handle):
-                            self.event_manager.handle(
-                                ItemTemporaryDisconnected(
-                                    presentation, handle, cinfo.connected, cinfo.port
-                                )
-                            )
-
-                    for handle in presentation.handles():
-                        self.event_manager.handle(
-                            HandlePositionEvent(
-                                presentation, handle, handle.pos.tuple()
+        # First record original positions for involved lines
+        for edge in rendered_graph.get_edges():
+            if presentation := presentation_for_object(diagram, edge):
+                for handle in (presentation.head, presentation.tail):
+                    if cinfo := diagram.connections.get_connection(handle):
+                        self.handle(
+                            ItemTemporaryDisconnected(
+                                presentation, handle, cinfo.connected, cinfo.port
                             )
                         )
 
-            for subgraph in rendered_graph.get_subgraphs():
-                if presentation := presentation_for_object(
-                    diagram, subgraph.get_node("graph")[0]
-                ):
-                    if bb := subgraph.get_node("graph")[0].get("bb"):
-                        x, y, w, h = parse_bb(bb, height)
-                        presentation.handles()[NW].pos = (0.0, 0.0)
-                        presentation.width = w
-                        presentation.height = h
+                for handle in presentation.handles():
+                    self.handle(
+                        HandlePositionEvent(presentation, handle, handle.pos.tuple())
+                    )
 
-                        new_pos = matrix_c2i.transform_point(x, y)
-                        presentation.matrix.set(
-                            x0=new_pos[0],
-                            y0=new_pos[1],
-                        )
-                        self.apply_layout(
-                            diagram,
-                            subgraph,
-                            parent_presentation=presentation,
-                            height=height,
-                        )
+        for subgraph in rendered_graph.get_subgraphs():
+            if presentation := presentation_for_object(
+                diagram, subgraph.get_node("graph")[0]
+            ):
+                if bb := subgraph.get_node("graph")[0].get("bb"):
+                    x, y, w, h = parse_bb(bb, height)
+                    presentation.handles()[NW].pos = (0.0, 0.0)
+                    presentation.width = w
+                    presentation.height = h
 
-            for node in rendered_graph.get_nodes():
-                if not node.get_pos():
-                    continue
-
-                if presentation := presentation_for_object(diagram, node):
-                    center = parse_point(node.get_pos(), height)
-                    if isinstance(presentation, ElementPresentation):
-                        # Normalize handle placement
-                        w = presentation.width
-                        h = presentation.height
-                        presentation.handles()[NW].pos = (0.0, 0.0)
-                        presentation.width = w
-                        presentation.height = h
-
-                        new_pos = matrix_c2i.transform_point(
-                            center[0] - w / 2, center[1] - h / 2
-                        )
-                    else:
-                        new_pos = matrix_c2i.transform_point(center[0], center[1])
+                    new_pos = matrix_c2i.transform_point(x, y)
                     presentation.matrix.set(
                         x0=new_pos[0],
                         y0=new_pos[1],
                     )
-                    if isinstance(presentation, AttachedPresentation):
-                        reconnect(
-                            presentation, presentation.handles()[0], diagram.connections
-                        )
+                    self.apply_layout(
+                        diagram,
+                        subgraph,
+                        parent_presentation=presentation,
+                        height=height,
+                    )
 
-            for edge in rendered_graph.get_edges():
-                if presentation := presentation_for_object(diagram, edge):
-                    presentation.orthogonal = False
+        for node in rendered_graph.get_nodes():
+            if not node.get_pos():
+                continue
 
-                    points = parse_edge_pos(edge.get_pos(), height)
-                    segment = Segment(presentation, diagram)
-                    while len(points) > len(presentation.handles()):
-                        segment.split_segment(0)
-                    while len(points) < len(presentation.handles()):
-                        segment.merge_segment(0)
+            if presentation := presentation_for_object(diagram, node):
+                center = parse_point(node.get_pos(), height)
+                if isinstance(presentation, ElementPresentation):
+                    # Normalize handle placement
+                    w = presentation.width
+                    h = presentation.height
+                    presentation.handles()[NW].pos = (0.0, 0.0)
+                    presentation.width = w
+                    presentation.height = h
 
-                    assert len(points) == len(presentation.handles())
+                    new_pos = matrix_c2i.transform_point(
+                        center[0] - w / 2, center[1] - h / 2
+                    )
+                else:
+                    new_pos = matrix_c2i.transform_point(center[0], center[1])
+                presentation.matrix.set(
+                    x0=new_pos[0],
+                    y0=new_pos[1],
+                )
+                if isinstance(presentation, AttachedPresentation):
+                    reconnect(
+                        presentation, presentation.handles()[0], diagram.connections
+                    )
 
-                    matrix = presentation.matrix_i2c.inverse()
-                    for handle, point in zip(presentation.handles(), points):
-                        handle.pos = matrix.transform_point(*point)
+        for edge in rendered_graph.get_edges():
+            if presentation := presentation_for_object(diagram, edge):
+                presentation.orthogonal = False
 
-                    for handle in (presentation.head, presentation.tail):
-                        reconnect(presentation, handle, diagram.connections)
+                points = parse_edge_pos(edge.get_pos(), height)
+                segment = Segment(presentation, diagram)
+                while len(points) > len(presentation.handles()):
+                    segment.split_segment(0)
+                while len(points) < len(presentation.handles()):
+                    segment.merge_segment(0)
+
+                assert len(points) == len(presentation.handles())
+
+                matrix = presentation.matrix_i2c.inverse()
+                for handle, point in zip(presentation.handles(), points):
+                    handle.pos = matrix.transform_point(*point)
+
+                for handle in (presentation.head, presentation.tail):
+                    reconnect(presentation, handle, diagram.connections)
+
+    def handle(self, event):
+        if self.event_manager:
+            self.event_manager.handle(event)
 
 
 def presentation_for_object(diagram, obj) -> Presentation | None:

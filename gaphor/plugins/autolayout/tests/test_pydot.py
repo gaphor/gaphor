@@ -18,14 +18,14 @@ from gaphor.UML.diagramitems import (
 )
 
 
-def test_layout_diagram(diagram, create, event_manager):
+def test_layout_diagram(diagram, create):
     superclass = create(ClassItem, UML.Class)
     subclass = create(ClassItem, UML.Class)
     gen = create(GeneralizationItem, UML.Generalization)
     connect(gen, gen.tail, superclass)
     connect(gen, gen.head, subclass)
 
-    auto_layout = AutoLayout(event_manager, None)
+    auto_layout = AutoLayout()
     auto_layout.layout(diagram)
 
     assert gen.head.pos != (0, 0)
@@ -39,7 +39,7 @@ def test_layout_with_association(diagram, create, event_manager):
     connect(a, a.head, c1)
     connect(a, a.tail, c2)
 
-    auto_layout = AutoLayout(event_manager, None)
+    auto_layout = AutoLayout(event_manager)
     auto_layout.layout(diagram)
 
 
@@ -55,7 +55,7 @@ def test_layout_with_comment(diagram, create, event_manager):
     connect(comment_line, comment_line.head, comment)
     connect(comment_line, comment_line.tail, a)
 
-    auto_layout = AutoLayout(event_manager, None)
+    auto_layout = AutoLayout(event_manager)
     auto_layout.layout(diagram)
 
 
@@ -68,7 +68,7 @@ def test_layout_with_nested(diagram, create, event_manager):
     connect(a, a.head, c1)
     connect(a, a.tail, c2)
 
-    auto_layout = AutoLayout(event_manager, None)
+    auto_layout = AutoLayout(event_manager)
     auto_layout.layout(diagram)
 
     assert c1.matrix[4] < p.width
@@ -85,7 +85,7 @@ def test_layout_with_attached_item(diagram, create, event_manager):
     connect(object_flow, object_flow.head, pin)
     connect(object_flow, object_flow.tail, action2)
 
-    auto_layout = AutoLayout(event_manager, None)
+    auto_layout = AutoLayout(event_manager)
     auto_layout.layout(diagram)
 
     assert pin.parent is action
@@ -94,7 +94,7 @@ def test_layout_with_attached_item(diagram, create, event_manager):
 def test_layout_fork_node_item(diagram, create, event_manager):
     create(ForkNodeItem, UML.ForkNode)
 
-    auto_layout = AutoLayout(event_manager, None)
+    auto_layout = AutoLayout(event_manager)
     auto_layout.layout(diagram)
 
 
