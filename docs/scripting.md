@@ -209,6 +209,14 @@ my_attr.typeValue = "string"
 my_class.ownedAttribute = my_attr
 ```
 
+If you would add it to a diagram, it would come out like this
+
+```{code-cell} ipython3
+my_diagram = element_factory.create(Diagram)
+drop(my_class, my_diagram, x=0, y=0)
+draw(my_diagram)
+```
+
 If you save the model, your changes are persisted:
 
 ```{code-cell} ipython3
