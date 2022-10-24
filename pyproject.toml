@@ -186,7 +186,10 @@ testpaths = [
     "docs",
 ]
 python_files = "test_*.py"
-addopts = "--xdoctest"
+addopts = [
+    "--xdoctest",
+    "--import-mode=importlib",
+]
 junit_family = "xunit1"
 
 [tool.coverage.run]
