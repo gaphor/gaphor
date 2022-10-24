@@ -185,6 +185,9 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
 
         self.request_update()
 
+    def update(self, context):
+        self.update_ends()
+
     def point(self, x, y):
         """Returns the distance from the Association to the (mouse) cursor."""
         return min(
