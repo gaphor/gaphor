@@ -31,7 +31,7 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
       - name: Use Hypothesis Cache
-        uses: pat-s/always-upload-cache@v3.0.1
+        uses: pat-s/always-upload-cache@v3.0.11
         with:
           path: .hypothesis
           key: ${{ runner.os }}-hypothesis
