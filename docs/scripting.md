@@ -150,6 +150,43 @@ d = next(element_factory.select(Diagram))
 draw(d)
 ```
 
+## Create a diagram
+
+(Requires Gaphor 2.13)
+
+Now let's make something a little more fancy. We still have the core model
+loaded in the element factory. From this model we can create a custom diagram.
+With a little help of the auto-layout service, we can make it a readable
+diagram.
+
+To create the diagram, we [`drop`](modeling_language:dropping) elements on the diagram. Items on a diagram
+represent an element in the model. We'll also drop all associations on the
+model. Only if both ends can connect, the association will be added.
+
+```{code-cell} ipython3
+from gaphor.diagram.drop import drop
+from gaphor.plugins.autolayout import AutoLayout
+
+temp_diagram = element_factory.create(Diagram)
+
+for name in ["Presentation", "Diagram", "Element"]:
+    element = next(element_factory.select(
+        lambda e: isinstance(e, UML.Class) and e.name == name
+    ))
+    drop(element, temp_diagram, x=0, y=0)
+
+# Drop all assocations, see what sticks
+for association in element_factory.lselect(UML.Association):
+    drop(association, temp_diagram, x=0, y=0)
+
+auto_layout = AutoLayout()
+auto_layout.layout(temp_diagram)
+
+draw(temp_diagram)
+```
+
+The diagram is not perfect, but you get the picture.
+
 ## Update a model
 
 Updating a model always starts with the element factory: that’s where elements
