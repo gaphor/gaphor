@@ -159,9 +159,10 @@ loaded in the element factory. From this model we can create a custom diagram.
 With a little help of the auto-layout service, we can make it a readable
 diagram.
 
-To create the diagram, we [`drop`](modeling_language:dropping) elements on the diagram. Items on a diagram
-represent an element in the model. We'll also drop all associations on the
-model. Only if both ends can connect, the association will be added.
+To create the diagram, we [`drop` elements](modeling_language:dropping) on the
+diagram. Items on a diagram represent an element in the model. We'll also drop
+all associations on the model. Only if both ends can connect, the association
+will be added.
 
 ```{code-cell} ipython3
 from gaphor.diagram.drop import drop
