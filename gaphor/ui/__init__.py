@@ -84,8 +84,7 @@ def main(argv=sys.argv) -> int:
         profile_stats.strip_dirs().sort_stats("time").print_stats(50)
         return exit_code
 
-    else:
-        return run(argv)
+    return run(argv)
 
 
 def run(args: list[str]) -> int:

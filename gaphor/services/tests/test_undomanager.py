@@ -170,8 +170,8 @@ def test_undo_association_1_n(event_manager, element_factory, undo_manager):
     class B(Element):
         pass
 
-    A.one = association("one", B, lower=0, upper=1, opposite="two")
-    B.two = association("two", A, lower=0, upper="*", opposite="one")
+    A.one = association("one", B, upper=1, opposite="two")
+    B.two = association("two", A, upper="*", opposite="one")
 
     with Transaction(event_manager):
         a1 = element_factory.create(A)

@@ -54,7 +54,7 @@ class MessagePropertyPage(PropertyPageBase):
             and lifeline.is_destroyed
             and subject.messageSort != "deleteMessage"
         ):
-            sort_data = list(sort_data)
+            sort_data = sort_data.copy()
             assert sort_data[4][1] == "deleteMessage"
             del sort_data[4]
 

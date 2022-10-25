@@ -237,10 +237,7 @@ def test_load_and_save_of_a_model(element_factory, modeling_language, test_model
 
     storage.save(pf, factory=element_factory)
 
-    with open(path) as ifile:
-
-        orig = ifile.read()
-
+    orig = path.read_text()
     copy = pf.data
 
     expr = re.compile('gaphor-version="[^"]*"')

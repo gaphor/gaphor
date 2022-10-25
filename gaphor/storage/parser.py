@@ -222,14 +222,14 @@ class GaphorLoader(handler.ContentHandler):
 
         # Reference with multiplicity 1:
         elif state == ATTR and name == "ref":
-            n = self.peek(1)
+            n = self.peek()
             self.peek(2).references[n] = attrs["refid"]
             self.push(None, REF)
             return True
 
         # Reference with multiplicity *:
         elif state == REFLIST and name == "ref":
-            n = self.peek(1)
+            n = self.peek()
             # Fetch the element instance from the stack
             r = self.peek(3).references
             refid = attrs["refid"]

@@ -225,8 +225,6 @@ class TreeComponent(UIComponent, ActionProvider):
             return
         if element := event.focused_item.subject:
             self.select_element(element)
-        else:
-            return
 
 
 class SearchEngine:

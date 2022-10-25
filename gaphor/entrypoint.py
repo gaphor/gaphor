@@ -42,7 +42,7 @@ def init_entry_points(
     Given a dictionary `{name: service-class}`, return a map `{name:
     service-instance}`.
     """
-    ready: Dict[str, T] = dict(known_services)
+    ready: Dict[str, T] = known_services.copy()
 
     def pop(name):
         try:
