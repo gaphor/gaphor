@@ -234,3 +234,11 @@ What else is there to know…
 * If you use Gaphor’s Console, you’ll need to apply all changes in a transaction, or they will result in an error.
 * If you want a comprehensive example of a code generator, have a look at [Gaphor’s `coder` module](https://github.com/gaphor/gaphor/blob/main/gaphor/codegen/coder.py). This module is used to generate the code for the data models used by Gaphor.
 * This page is rendered with [MyST-NB](https://myst-nb.readthedocs.io/). It’s actually a Jupyter Notebook!
+
+## Examples
+
+Here is another example:
+
+```{toctree}
+gaphor-services
+```
