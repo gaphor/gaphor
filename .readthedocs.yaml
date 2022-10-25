@@ -7,6 +7,7 @@ build:
   apt_packages:
   - libgirepository1.0-dev
   - gir1.2-pango-1.0
+  - graphviz
 sphinx:
   configuration: docs/conf.py
   fail_on_warning: true
