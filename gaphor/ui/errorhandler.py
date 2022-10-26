@@ -19,7 +19,7 @@ from gaphor.i18n import gettext
 def error_handler(message, secondary_message="", window=None):
     exc_type, exc_value, exc_traceback = sys.exc_info()
 
-    debug_message = (f"{secondary_message}\n\n" if secondary_message else "") + gettext(
+    body = (f"{secondary_message}\n\n" if secondary_message else "") + gettext(
         "It looks like Gaphor is started from the command line. Do you want to open a debug session?"
     )
     if Gtk.get_major_version() == 3:
@@ -27,7 +27,7 @@ def error_handler(message, secondary_message="", window=None):
         dialog.set_transient_for(window)
 
         if __debug__ and exc_traceback and sys.stdin.isatty():
-            dialog.props.secondary_text = debug_message
+            dialog.props.secondary_text = body
             dialog.add_buttons(gettext("Close"), 0, gettext("Start Debug Session"), 100)
         else:
             dialog.props.secondary_text = secondary_message
@@ -38,7 +38,7 @@ def error_handler(message, secondary_message="", window=None):
             window,
             message,
         )
-        dialog.set_body(debug_message)
+        dialog.set_body(body)
         if __debug__ and exc_traceback and sys.stdin.isatty():
             dialog.add_response("close", gettext("Close"))
             dialog.add_response("debug", gettext("Start Debug Session"))
