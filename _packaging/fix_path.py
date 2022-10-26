@@ -1,5 +1,4 @@
 import os
-import sys
 
 # https://github.com/pyinstaller/pyinstaller/issues/6100
 # On one Windows computer, PyInstaller was adding a ; to
@@ -9,7 +8,3 @@ if os.environ["PATH"][-1] == ";":
 
 # Check for and remove two semicolons in path
 os.environ["PATH"] = os.environ["PATH"].replace(";;", ";")
-
-from gaphor.ui import main  # noqa: E402
-
-sys.exit(main(sys.argv))
