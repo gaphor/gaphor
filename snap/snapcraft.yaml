@@ -1,0 +1,38 @@
+name: gaphor
+base: core22
+version: '0.1'
+summary: Simple modeling tool
+description: |
+  Gaphor is a simple modeling tool written in Python. It is Free and Open Source software
+  for creating software and system architecture and designs. It is aimed at beginning modelers.
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: strict
+
+
+slots:
+  gaphor:
+    interface: dbus
+    bus: session
+    name: org.gnome.Gaphor
+
+apps:
+  gaphor:
+    extensions: [gnome]
+    command: /bin/python3 gaphor
+    plugs: [home, network]
+
+parts:
+  gaphor:
+    plugin: python
+    python-packages: [poetry]
+    # source: .
+    source: git@github.com:gaphor/gaphor.git
+    source-type: git
+    source-tag: '2.9.2'
+    source-depth: 1
+    # override-build: poetry install
+
+  cleanup:
+    after: [ gaphor ]
+    plugin: nil
+    build-snaps: [core22, gtk-common-themes, gnome-42-2204]
