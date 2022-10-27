@@ -89,11 +89,9 @@ for element in element_factory.lselect():
 Last step is to layout and draw the diagram.
 
 ```{code-cell} ipython3
-from gaphor.extensions.ipython import draw
-from gaphor.plugins.autolayout import AutoLayout
+from gaphor.extensions.ipython import auto_layout, draw
 
-auto_layout = AutoLayout()
-auto_layout.layout(diagram)
+auto_layout(diagram)
 
 draw(diagram)
 ```

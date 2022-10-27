@@ -166,7 +166,7 @@ will be added.
 
 ```{code-cell} ipython3
 from gaphor.diagram.drop import drop
-from gaphor.plugins.autolayout import AutoLayout
+from gaphor.extensions.ipython import auto_layout
 
 temp_diagram = element_factory.create(Diagram)
 
@@ -180,8 +180,7 @@ for name in ["Presentation", "Diagram", "Element"]:
 for association in element_factory.lselect(UML.Association):
     drop(association, temp_diagram, x=0, y=0)
 
-auto_layout = AutoLayout()
-auto_layout.layout(temp_diagram)
+auto_layout(temp_diagram)
 
 draw(temp_diagram)
 ```
