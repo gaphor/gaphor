@@ -64,7 +64,7 @@ for name, cls in entry_points.items():
         if param_name not in components:
             continue
 
-        dep = element_factory.create(UML.Dependency)
+        dep = element_factory.create(UML.Usage)
         dep.client = components[name]
         dep.supplier = components[param_name]
 ```
