@@ -58,7 +58,7 @@
             <property name="action_name">win.show-editors</property>
             <child>
               <object class="GtkImage">
-                <property name="icon_name">gaphor-view-editor-symbolic</property>
+                <property name="icon_name">sidebar-show-right-symbolic</property>
               </object>
             </child>
             <style>
