@@ -261,7 +261,7 @@ jobs:
     env:
       gvsbuild_version: 2022.4.1
       # Bump this number if you want to force a rebuild of gvsbuild with the same revision
-      gvsbuild_update: 2
+      gvsbuild_update: 3
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
