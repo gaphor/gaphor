@@ -5,7 +5,7 @@ on:
   release:
     types: [published, prereleased]
 env:
-  python_version: '3.10'
+  python_version: '3.11'
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
 
 jobs:
@@ -169,8 +169,8 @@ jobs:
     outputs:
       artifact: ${{ steps.create.outputs.artifact }}
     env:
-      LDFLAGS: -L/usr/local/opt/python@3.10/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      LDFLAGS: -L/usr/local/opt/python@3.11/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.11/lib/pkgconfig:${PKG_CONFIG_PATH:-}
       GAPHOR_USE_GTK: 3
     steps:
       - uses: actions/checkout@v3.1.0
@@ -233,8 +233,8 @@ jobs:
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
-      LDFLAGS: -L/usr/local/opt/python@3.10/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.10/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      LDFLAGS: -L/usr/local/opt/python@3.11/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@3.11/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
       - uses: actions/checkout@v3.1.0
         with:
