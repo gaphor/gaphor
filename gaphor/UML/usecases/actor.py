@@ -6,7 +6,7 @@ from gaphor import UML
 from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontWeight
+from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.UML.recipes import stereotypes_str
 
 HEAD = 11
@@ -26,6 +26,11 @@ class ActorItem(Classified, ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=ARM * 2, height=HEAD + NECK + BODY + ARM)
 
+        self.watch("subject[NamedElement].name")
+        self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Classifier].isAbstract", self.update_shapes)
+
+    def update_shapes(self, event=None):
         self.shape = IconBox(
             Box(
                 draw=draw_actor,
@@ -35,12 +40,14 @@ class ActorItem(Classified, ElementPresentation):
             ),
             Text(
                 text=lambda: self.subject.name or "",
-                style={"font-weight": FontWeight.BOLD},
+                style={
+                    "font-weight": FontWeight.BOLD,
+                    "font-style": FontStyle.ITALIC
+                    if self.subject and self.subject.isAbstract
+                    else FontStyle.NORMAL,
+                },
             ),
         )
-
-        self.watch("subject[NamedElement].name")
-        self.watch("subject.appliedStereotype.classifier.name")
 
 
 def draw_actor(box, context, bounding_box):
