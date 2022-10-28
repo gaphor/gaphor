@@ -940,6 +940,15 @@
         "translation",
         "bug"
       ]
+    },
+    {
+      "login": "anreji",
+      "name": "Andrew",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69592284?v=4",
+      "profile": "https://anreji.de",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
