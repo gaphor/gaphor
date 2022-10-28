@@ -21,7 +21,6 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.tools.connector import ItemTemporaryDisconnected
 from gaphor.i18n import gettext
-from gaphor.plugins.autolayout.pydot_patch import have_graphviz
 from gaphor.transaction import Transaction
 from gaphor.UML import NamedElement
 from gaphor.UML.actions.activitynodes import ForkNodeItem
@@ -34,7 +33,7 @@ class AutoLayout(Service, ActionProvider):
     def __init__(self, event_manager, diagrams, tools_menu=None, dump_gv=False):
         self.event_manager = event_manager
         self.diagrams = diagrams
-        if tools_menu and have_graphviz(DOT):
+        if tools_menu:
             tools_menu.add_actions(self)
         self.dump_gv = dump_gv
 
