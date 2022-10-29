@@ -77,6 +77,15 @@ def save_pdf(filename, diagram):
     render(diagram, lambda w, h: cairo.PDFSurface(filename, w, h))
 
 
+def save_eps(filename, diagram):
+    def new_surface(w, h):
+        surface = cairo.PSSurface(filename, w, h)
+        surface.set_eps(True)
+        return surface
+
+    render(diagram, new_surface)
+
+
 def new_painter(diagram):
     style = diagram.style(StyledDiagram(diagram))
     sloppiness = style.get("line-style", 0.0)

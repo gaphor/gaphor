@@ -5,7 +5,7 @@ from pathlib import Path
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
-from gaphor.diagram.export import save_pdf, save_png, save_svg
+from gaphor.diagram.export import save_eps, save_pdf, save_png, save_svg
 from gaphor.ui.filedialog import save_file_dialog
 
 
@@ -81,4 +81,19 @@ class DiagramExport(Service, ActionProvider):
             "pdf",
             "application/pdf",
             save_pdf,
+        )
+
+    @action(
+        name="file-export-eps",
+        label=gettext("Export as EPS"),
+        tooltip=gettext("Export diagram as Encapsulated PostScript"),
+    )
+    def save_eps_action(self):
+        diagram = self.diagrams.get_current_diagram()
+        self.save_dialog(
+            diagram,
+            gettext("Export diagram as EPS"),
+            "eps",
+            "application/postscript",
+            save_eps,
         )
