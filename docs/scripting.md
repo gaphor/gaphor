@@ -2,7 +2,7 @@
 file_format: mystnb
 ---
 
-# Scripting
+# Jupyter and Scripting
 
 One way to work with models is through the GUI. However, you may also be
 interested in getting more out of your models by interacting with them through
@@ -147,7 +147,7 @@ from gaphor.core.modeling import Diagram
 from gaphor.extensions.ipython import draw
 
 d = next(element_factory.select(Diagram))
-draw(d)
+draw(d, format="svg")
 ```
 
 ## Create a diagram
@@ -182,7 +182,7 @@ for association in element_factory.lselect(UML.Association):
 
 auto_layout(temp_diagram)
 
-draw(temp_diagram)
+draw(temp_diagram, format="svg")
 ```
 
 The diagram is not perfect, but you get the picture.
@@ -214,7 +214,7 @@ If you would add it to a diagram, it would come out like this
 ```{code-cell} ipython3
 my_diagram = element_factory.create(Diagram)
 drop(my_class, my_diagram, x=0, y=0)
-draw(my_diagram)
+draw(my_diagram, format="svg")
 ```
 
 If you save the model, your changes are persisted:
