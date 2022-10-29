@@ -302,7 +302,8 @@ class DiagramPage:
 
     def _on_view_selection_changed(self, item):
         view = self.view
-        assert view
+        if not view:
+            return
         selection = view.selection
         self.event_manager.handle(
             DiagramSelectionChanged(
