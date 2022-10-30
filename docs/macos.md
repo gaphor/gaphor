@@ -33,6 +33,7 @@ If PyGObject does not compile and complains about a missing `ffi.h` file, set th
 environment variable and run `poetry install` again:
 ```bash
 export PKG_CONFIG_PATH=/usr/local/opt/libffi/lib/pkgconfig
+poetry install
 ```
 
 ## Packaging for macOS
@@ -44,5 +45,6 @@ dependencies and bundle them in to a single folder.
 1. Follow the instructions for settings up a development environment above
 1. Open a terminal and execute the following from the repository directory:
 ```bash
+poetry install --with packaging
 poetry run poe package
 ```
