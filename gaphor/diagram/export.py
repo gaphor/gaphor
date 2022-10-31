@@ -7,7 +7,7 @@ from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 
 
-def render(diagram, new_surface, padding=8):
+def render(diagram, new_surface, padding=8, write_to_png=None) -> None:
     diagram.update_now(diagram.get_all_items())
 
     painter = new_painter(diagram)
@@ -21,19 +21,24 @@ def render(diagram, new_surface, padding=8):
         bounding_box.width + 2 * padding,
         bounding_box.height + 2 * padding + type_padding,
     )
-    surface = new_surface(w, h)
-    cr = cairo.Context(surface)
 
-    bg_color = diagram.style(StyledDiagram(diagram)).get("background-color")
-    if bg_color and bg_color[3]:
-        cr.rectangle(0, 0, w, h)
-        cr.set_source_rgba(*bg_color)
-        cr.fill()
+    with new_surface(w, h) as surface:
+        cr = cairo.Context(surface)
 
-    cr.translate(-bounding_box.x + padding, -bounding_box.y + padding + type_padding)
-    painter.paint(diagram.get_all_items(), cr)
-    cr.show_page()
-    return surface
+        bg_color = diagram.style(StyledDiagram(diagram)).get("background-color")
+        if bg_color and bg_color[3]:
+            cr.rectangle(0, 0, w, h)
+            cr.set_source_rgba(*bg_color)
+            cr.fill()
+
+        cr.translate(
+            -bounding_box.x + padding, -bounding_box.y + padding + type_padding
+        )
+        painter.paint(diagram.get_all_items(), cr)
+        cr.show_page()
+
+        if write_to_png:
+            surface.write_to_png(write_to_png)
 
 
 def diagram_type_height(diagram):
@@ -46,34 +51,39 @@ def diagram_type_height(diagram):
 
 
 def calc_bounding_box(diagram, painter):
-    tmpsurface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0)
-    tmpcr = cairo.Context(tmpsurface)
-    bounding_box = BoundingBoxPainter(painter).bounding_box(
-        diagram.get_all_items(), tmpcr
-    )
-    tmpcr.show_page()
-    tmpsurface.flush()
+    with cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0) as tmpsurface:
+        tmpcr = cairo.Context(tmpsurface)
+        bounding_box = BoundingBoxPainter(painter).bounding_box(
+            diagram.get_all_items(), tmpcr
+        )
+        tmpcr.show_page()
+        tmpsurface.flush()
     return bounding_box
 
 
 def save_svg(filename, diagram):
-    surface = render(diagram, lambda w, h: cairo.SVGSurface(filename, w, h))
-    surface.flush()
-    surface.finish()
+    render(diagram, lambda w, h: cairo.SVGSurface(filename, w, h))
 
 
 def save_png(filename, diagram):
-    surface = render(
+    render(
         diagram,
         lambda w, h: cairo.ImageSurface(cairo.FORMAT_ARGB32, int(w + 1), int(h + 1)),
+        write_to_png=filename,
     )
-    surface.write_to_png(filename)
 
 
 def save_pdf(filename, diagram):
-    surface = render(diagram, lambda w, h: cairo.PDFSurface(filename, w, h))
-    surface.flush()
-    surface.finish()
+    render(diagram, lambda w, h: cairo.PDFSurface(filename, w, h))
+
+
+def save_eps(filename, diagram):
+    def new_surface(w, h):
+        surface = cairo.PSSurface(filename, w, h)
+        surface.set_eps(True)
+        return surface
+
+    render(diagram, new_surface)
 
 
 def new_painter(diagram):

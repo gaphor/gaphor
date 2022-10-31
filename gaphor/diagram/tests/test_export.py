@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.diagram.export import save_pdf, save_png, save_svg
+from gaphor.diagram.export import save_eps, save_pdf, save_png, save_svg
 from gaphor.diagram.general import Box
 
 
@@ -35,3 +35,12 @@ def test_export_to_pdf(diagram_with_box, tmp_path):
     content = f.read_bytes()
 
     assert b"%PDF" in content
+
+
+def test_export_to_eps(diagram_with_box, tmp_path):
+    f = tmp_path / "test.eps"
+
+    save_eps(f, diagram_with_box)
+    content = f.read_bytes()
+
+    assert b"%!PS-Adobe-3.0 EPSF-3.0" in content

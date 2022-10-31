@@ -38,7 +38,8 @@ def placement_icon_base():
         return GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
 
 
-GtkView.set_css_name("diagramview")
+if hasattr(GtkView, "set_css_name"):
+    GtkView.set_css_name("diagramview")
 
 
 if Gtk.get_major_version() == 3:

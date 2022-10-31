@@ -10,7 +10,6 @@ from docutils.parsers.rst.directives import images
 from sphinx.ext.autodoc.mock import mock
 from sphinx.util import logging
 
-from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import Diagram, ElementFactory
 from gaphor.diagram.export import save_pdf, save_svg
 from gaphor.i18n import gettext
@@ -121,7 +120,7 @@ def load_model(model_file: str) -> ElementFactory:
     element_factory = ElementFactory()
 
     with mock(["gi.repository.Gtk", "gi.repository.Gdk"]):
-        modeling_language = ModelingLanguageService(EventManager())
+        modeling_language = ModelingLanguageService()
 
     storage.load(
         model_file,

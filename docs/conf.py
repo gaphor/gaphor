@@ -40,7 +40,7 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx.ext.viewcode",
     "sphinx.ext.autosectionlabel",
-    "myst_parser",
+    "myst_nb",
     "sphinx_copybutton",
     "gaphor.extensions.sphinx",
 ]
@@ -77,7 +77,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
 
-images_config = {"default_image_width": "", "default_image_height": ""}
+nb_render_markdown_format = "myst"
 
 myst_heading_anchors = 2
 
@@ -115,7 +115,13 @@ html_theme_options = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path: list[str] = []
+html_static_path = [
+    "_static",
+]
+
+html_css_files = [
+    "css/custom.css",
+]
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
