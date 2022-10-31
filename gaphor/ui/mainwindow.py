@@ -126,11 +126,11 @@ class MainWindow(Service, ActionProvider):
         self.title: Gtk.Label = None
         self.modified: Gtk.Label = None
         self.subtitle: Gtk.Label = None
-        self.filename: Path | None = None
-        self.model_changed = False
         self.modeling_language_name = None
         self.diagram_types = None
         self.in_app_notifier = None
+        self._filename: Path | None = None
+        self._model_changed = False
 
         event_manager.subscribe(self._on_file_manager_state_changed)
 
@@ -147,6 +147,24 @@ class MainWindow(Service, ActionProvider):
         if self.in_app_notifier:
             em.unsubscribe(self.in_app_notifier.handle)
             self.in_app_notifier = None
+
+    @property
+    def filename(self) -> Path | None:
+        return self._filename
+
+    @filename.setter
+    def filename(self, filename: Path):
+        self._filename = filename
+        self.set_title()
+
+    @property
+    def model_changed(self) -> bool:
+        return self._model_changed
+
+    @model_changed.setter
+    def model_changed(self, model_changed: bool):
+        self._model_changed = model_changed
+        self.set_title()
 
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
@@ -254,7 +272,6 @@ class MainWindow(Service, ActionProvider):
     ):
         self.model_changed = False
         self.filename = Path(event.filename) if event.filename else None
-        self.set_title()
         if self.window:
             self.window.present()
 
@@ -263,7 +280,6 @@ class MainWindow(Service, ActionProvider):
         undo_manager = event.service
         if self.model_changed != undo_manager.can_undo():
             self.model_changed = undo_manager.can_undo()
-            self.set_title()
 
     @event_handler(ActionEnabled)
     def _on_action_enabled(self, event):

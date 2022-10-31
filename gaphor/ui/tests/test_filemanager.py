@@ -68,3 +68,21 @@ def test_old_model_is_loaded_without_utf8_encoding(
 ):
     model_file = test_models / "wrong-encoding.gaphor"
     file_manager.load(model_file)
+
+
+@pytest.mark.parametrize("resolution", ["current", "incoming"])
+def test_load_model_with_merge_conflict(
+    file_manager: FileManager, test_models, resolution
+):
+    model_file = test_models / "merge-conflict.gaphor"
+
+    file_manager.resolve_merge_conflict(model_file, resolution)
+
+
+def test_load_model_with_merge_conflict_and_unknown_resolution(
+    file_manager: FileManager, test_models
+):
+    model_file = test_models / "merge-conflict.gaphor"
+
+    with pytest.raises(RuntimeError):
+        file_manager.resolve_merge_conflict(model_file, "nonsense")

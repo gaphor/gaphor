@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import logging
+import tempfile
 from pathlib import Path
 from queue import Queue
+from typing import Callable
 
 from gaphas.decorators import g_async
 from gi.repository import Gtk
@@ -24,6 +26,7 @@ from gaphor.event import (
     SessionShutdownRequested,
 )
 from gaphor.storage import storage
+from gaphor.storage.mergeconflict import split
 from gaphor.storage.parser import MergeConflictDetected
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
@@ -77,7 +80,7 @@ class FileManager(Service, ActionProvider):
         self.element_factory = element_factory
         self.modeling_language = modeling_language
         self.main_window = main_window
-        self._filename = None
+        self._filename: Path | None = None
 
         event_manager.subscribe(self._on_session_shutdown_request)
         event_manager.subscribe(self._on_session_created)
@@ -88,7 +91,7 @@ class FileManager(Service, ActionProvider):
         self.event_manager.unsubscribe(self._on_session_created)
 
     @property
-    def filename(self):
+    def filename(self) -> Path | None:
         """Return the current file name.
 
         This method is used by the filename property.
@@ -96,26 +99,25 @@ class FileManager(Service, ActionProvider):
         return self._filename
 
     @filename.setter
-    def filename(self, filename):
+    def filename(self, filename: Path | str | None):
         """Sets the current file name.
 
-        This method is used by the filename property. Setting the
-        current filename will update the recent file list.
+        This method is used by the filename property.
         """
 
         if filename != self._filename:
             self._filename = Path(filename) if filename else None
 
-    def load(self, filename):
+    def load(self, filename: Path, on_load_done: Callable[[], None] | None = None):
         """Load the Gaphor model from the supplied file name.
 
-        A status window displays the loading progress.  The load
+        A status window displays the loading progress. The load
         generator updates the progress queue.  The loader is passed to a
-        GIdleThread which executes the load generator.  If loading is
+        GIdleThread which executes the load generator. If loading is
         successful, the filename is set.
         """
         # First claim file name, so any other files will be opened in a different session
-        self.filename = Path(filename)
+        self.filename = filename
         queue: Queue[int] = Queue(0)
         status_window = None
 
@@ -132,6 +134,8 @@ class FileManager(Service, ActionProvider):
         def done():
             if status_window:
                 status_window.destroy()
+            if on_load_done:
+                on_load_done()
 
         create_status_window()
         self._load_async(filename, queue, done)
@@ -142,6 +146,17 @@ class FileManager(Service, ActionProvider):
 
     def _load_async(self, filename: Path, queue=None, done=None):
         assert isinstance(filename, Path)
+
+        def open_model(encoding):
+            with open(filename, encoding=encoding) as file_obj:
+                for percentage in storage.load_generator(
+                    file_obj,
+                    self.element_factory,
+                    self.modeling_language,
+                ):
+                    if queue:
+                        queue.put(percentage)
+                    yield percentage
 
         # Use low prio, so screen updates do happen
         @g_async()
@@ -156,23 +171,35 @@ class FileManager(Service, ActionProvider):
                 self.event_manager.handle(ModelLoaded(self, filename))
             except MergeConflictDetected:
                 self.filename = None
-                error_handler(
-                    message=gettext("Merge conflict in model “{filename}”.").format(
-                        filename=filename
-                    ),
-                    secondary_message=gettext(
-                        "It looks like this model file contains a merge conflict."
-                    ),
-                    window=self.parent_window,
-                    close=lambda: self.event_manager.handle(SessionShutdown(self)),
-                )
-                # For now load the default model until we allow users to resolve the merge conflict.
-                load_default_model(self.element_factory)
+                if Gtk.get_major_version() == 3:
+                    error_handler(
+                        message=gettext("Merge conflict in model “{filename}”.").format(
+                            filename=filename.name
+                        ),
+                        secondary_message=gettext(
+                            "It looks like this model file contains a merge conflict."
+                        ),
+                        window=self.parent_window,
+                        close=lambda: self.event_manager.handle(SessionShutdown(self)),
+                    )
+                    # For now load the default model until we allow users to resolve the merge conflict.
+                    load_default_model(self.element_factory)
+                else:
+
+                    def handle_merge_conflict(answer):
+                        if answer == "cancel":
+                            self.event_manager.handle(SessionShutdown(self))
+                        else:
+                            self.resolve_merge_conflict(filename, resolution=answer)
+
+                    merge_conflict_dialog(
+                        self.parent_window, filename, handle_merge_conflict
+                    )
             except Exception:
                 self.filename = None
                 error_handler(
                     message=gettext("Unable to open model “{filename}”.").format(
-                        filename=filename
+                        filename=filename.name
                     ),
                     secondary_message=gettext(
                         "This file does not contain a valid Gaphor model."
@@ -184,19 +211,34 @@ class FileManager(Service, ActionProvider):
                 if done:
                     done()
 
-        def open_model(encoding):
-            with open(filename, encoding=encoding) as file_obj:
-                for percentage in storage.load_generator(
-                    file_obj,
-                    self.element_factory,
-                    self.modeling_language,
-                ):
-                    if queue:
-                        queue.put(percentage)
-                    yield percentage
-
         for _ in async_loader():
             pass
+
+    def resolve_merge_conflict(self, filename: Path, resolution: str):
+        temp_dir = tempfile.TemporaryDirectory()
+        current_filename = Path(temp_dir.name) / f"current-{filename.name}"
+        incoming_filename = Path(temp_dir.name) / f"incoming-{filename.name}"
+        with (
+            filename.open(encoding="utf-8") as f,
+            current_filename.open("w+", encoding="utf-8") as current_file,
+            incoming_filename.open("w+", encoding="utf-8") as incoming_file,
+        ):
+            split(f, current_file, incoming_file)
+
+        def done():
+            nonlocal temp_dir
+            temp_dir.cleanup()
+            self.filename = filename
+            if self.main_window:
+                self.main_window.filename = filename
+                self.main_window.model_changed = True
+
+        if resolution == "current":
+            self.load(current_filename, on_load_done=done)
+        elif resolution == "incoming":
+            self.load(incoming_filename, on_load_done=done)
+        else:
+            raise RuntimeError(f"Unknown resolution for merge conflict: {resolution}")
 
     def save(self, filename, on_save_done=None):
         """Save the current UML model to the specified file name.
@@ -324,6 +366,31 @@ class FileManager(Service, ActionProvider):
             save_changes_before_closing_dialog(self.parent_window, response)
         else:
             confirm_shutdown()
+
+
+def merge_conflict_dialog(window: Gtk.Window, filename, handler) -> None:
+    dialog = Adw.MessageDialog.new(
+        window,
+        gettext("Resolve merge conflict in model “{filename}”.").format(
+            filename=filename.name
+        ),
+    )
+    dialog.set_body(
+        gettext(
+            "It looks like the model contains a merge conflict. Do you want to resolve it?"
+        )
+    )
+    dialog.add_response("cancel", gettext("Cancel"))
+    dialog.add_response("current", gettext("Use current model"))
+    dialog.add_response("incoming", gettext("Use incoming model"))
+    dialog.set_close_response("cancel")
+
+    def response(dialog, answer):
+        dialog.destroy()
+        handler(answer)
+
+    dialog.connect("response", response)
+    dialog.show()
 
 
 def save_changes_before_closing_dialog(window: Gtk.Window, handler) -> None:
