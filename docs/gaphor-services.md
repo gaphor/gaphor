@@ -30,7 +30,7 @@ from sphinx.ext.autodoc.mock import mock
 from gaphor.entrypoint import load_entry_points
 
 
-with mock(["gi.repository.Gtk", "gi.repository.Gdk", "gi.repository.GdkPixbuf", "gi.repository.GtkSource", "gi.repository.Adw]):
+with mock(["gi.repository.Gtk", "gi.repository.Gdk", "gi.repository.GdkPixbuf", "gi.repository.GtkSource", "gi.repository.Adw"]):
     entry_points = load_entry_points("gaphor.services")
 
 entry_points
