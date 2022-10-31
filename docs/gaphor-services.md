@@ -4,10 +4,10 @@ file_format: mystnb
 
 # Example: Gaphor services
 
-In this example we're doing something a little less trivial.
-In Gaphor, services are defined as entry points. Each service
-is a class, and takes parameters with names that match other
-services. This allows services to depend on other services.
+In this example we're doing something a little less trivial. In Gaphor, services
+are defined as entry points. Each service is a class, and takes parameters with
+names that match other services. This allows services to depend on other
+services.
 
 It looks something like this:
 
@@ -55,8 +55,8 @@ components = {name: create_component(name) for name in entry_points}
 components
 ```
 
-With all components mapped, we can create dependencies between those
-components, based on the constructor parameter names.
+With all components mapped, we can create dependencies between those components,
+based on the constructor parameter names.
 
 ```{code-cell} ipython3
 for name, cls in entry_points.items():
@@ -69,8 +69,8 @@ for name, cls in entry_points.items():
         dep.supplier = components[param_name]
 ```
 
-With all elements in the model, we can create a diagram. Let's drop the components
-and dependencies on the diagram and let auto-layouting do it's magic.
+With all elements in the model, we can create a diagram. Let's drop the
+components and dependencies on the diagram and let auto-layout do its magic.
 
 To make the dependency look good, we have to add a style sheet. If you create a
 new diagram via the GUI, this element is automatically added.
@@ -96,4 +96,5 @@ auto_layout(diagram)
 draw(diagram)
 ```
 
-That's all. As you can see from the diagram, a lot of services rely on `EventManager`.
+That's all. As you can see from the diagram, a lot of services rely on
+`EventManager`.

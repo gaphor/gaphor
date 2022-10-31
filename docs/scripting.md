@@ -209,7 +209,7 @@ my_attr.typeValue = "string"
 my_class.ownedAttribute = my_attr
 ```
 
-If you would add it to a diagram, it would come out like this
+Adding it to the diagram looks like this:
 
 ```{code-cell} ipython3
 my_diagram = element_factory.create(Diagram)
