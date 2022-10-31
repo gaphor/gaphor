@@ -168,7 +168,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.select_element(package)
         self.tree_view_rename_selected()
 
-    @action(name="tree-view.delete")
+    @action(name="tree-view.delete", shortcut="Delete")
     def tree_view_delete(self):
         if element := self.get_selected_element():
             with Transaction(self.event_manager):
