@@ -77,6 +77,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
 
+nb_execution_show_tb = True
 nb_render_markdown_format = "myst"
 
 myst_heading_anchors = 2
