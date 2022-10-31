@@ -6,10 +6,11 @@ file_format: mystnb
 
 One way to work with models is through the GUI. However, you may also be
 interested in getting more out of your models by interacting with them through
-Python scripts.
+Python scripts and [Jupyter notebooks](https://jupyter.org/).
 
 You can use scripts to:
 
+* Explore the model, check for (in)valid conditions.
 * Generate code, as is done for Gaphor’s data model.
 * Update a model from another source, like a CSV file.
 
@@ -18,9 +19,8 @@ Since Gaphor is written in Python, it also functions as a library.
 ## Getting started
 
 To get started, you’ll need a Python console. You can use the interactive
-console in Gaphor, or install one yourself by setting up a Python development
-environment.
-
+console in Gaphor, use a Jupyter notebook, although that will require setting
+up a Python development environment.
 
 ## Query a model
 
