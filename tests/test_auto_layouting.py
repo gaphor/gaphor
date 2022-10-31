@@ -8,7 +8,6 @@ from __future__ import annotations
 import itertools
 from typing import Iterable
 
-import pytest
 from hypothesis.control import assume, cleanup
 from hypothesis.errors import UnsatisfiedAssumption
 from hypothesis.stateful import (
@@ -45,7 +44,6 @@ from gaphor.UML.toolbox import (
 )
 
 
-@pytest.mark.hypothesis
 def test_auto_layouting():
     run_state_machine_as_test(AutoLayouting)
 
