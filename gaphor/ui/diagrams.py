@@ -217,7 +217,7 @@ class Diagrams(UIComponent, ActionProvider):
                 return
             for page_num in range(notebook.get_n_pages()):
                 if page := notebook.get_nth_page(page_num):
-                    if Gtk.get_major_version != 3:
+                    if Gtk.get_major_version() != 3:
                         page = page.get_child()
                     if diagram := page.diagram_page.get_diagram():
                         yield diagram.id
