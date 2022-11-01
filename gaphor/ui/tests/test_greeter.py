@@ -47,4 +47,4 @@ def test_greeter_with_no_recent_files(event_manager):
     widget = greeter.greeter
     stack = find(widget, "stack")
 
-    assert stack.get_visible_child_name() == "new-model"
+    assert stack.get_visible_child_name() == "recent-files"

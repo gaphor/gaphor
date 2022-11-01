@@ -49,12 +49,21 @@ class Greeter(Service, ActionProvider):
         self.back_button: Gtk.Button = None
         self.gtk_app: Gtk.Application = None
         event_manager.subscribe(self.on_session_created)
+        self._on_recent_files_changed_id = 0
 
     def init(self, gtk_app):
         self.gtk_app = gtk_app
+        self._on_recent_files_changed_id = self.recent_manager.connect(
+            "changed", self._on_recent_files_changed
+        )
+        self._on_recent_files_changed()
 
     def shutdown(self):
         self.event_manager.unsubscribe(self.on_session_created)
+        if self._on_recent_files_changed_id:
+            self.recent_manager.disconnect(self._on_recent_files_changed_id)
+            self._on_recent_files_changed_id = 0
+
         if self.greeter:
             self.greeter.destroy()
         self.gtk_app = None
@@ -112,7 +121,7 @@ class Greeter(Service, ActionProvider):
 
     @action(name="app.recent-files", shortcut="<Primary>o")
     def recent_files(self):
-        self.open("recent-files" if any(self.create_recent_files()) else "new-model")
+        self.open("recent-files")
 
     @action(name="app.new-model", shortcut="<Primary>n")
     def new_model(self):
@@ -166,6 +175,11 @@ class Greeter(Service, ActionProvider):
             self.action_bar.set_visible(True)
             self.back_button.set_visible(False)
             self.greeter.set_title(gettext("Open a Recent Model"))
+
+    def _on_recent_files_changed(self, recent_manager=None):
+        self.gtk_app.lookup_action("recent-files").set_enabled(
+            any(self.create_recent_files())
+        )
 
     def _on_recent_file_activated(self, _listbox, row):
         filename = row.filename
