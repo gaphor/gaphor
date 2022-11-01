@@ -124,7 +124,8 @@ class ElementFactory(Service):
         """Find element with a specific id."""
         return self._elements.get(id)
 
-    __getitem__ = lookup
+    def __getitem__(self, id: Id) -> Element:
+        return self._elements[id]
 
     def __iter__(self):
         return iter(self._elements.values())

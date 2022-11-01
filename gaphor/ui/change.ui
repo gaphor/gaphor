@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <requires lib="gtk" version="4.6"/>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkTreeExpander" id="expander">
+        <property name="indent-for-icon">true</property>
+        <binding name="list-row">
+          <lookup name="item">GtkListItem</lookup>
+        </binding>
+        <property name="child">
+          <object class="GtkBox">
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkCheckButton" id="apply">
+                <binding name="active">
+                  <lookup name="applied" type="gaphor+ui+changeset+ChangeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="hexpand">1</property>
+                <property name="xalign">0</property>
+                <binding name="label">
+                  <lookup name="label" type="gaphor+ui+changeset+ChangeItem">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+</interface>
