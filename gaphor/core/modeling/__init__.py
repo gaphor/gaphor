@@ -1,6 +1,7 @@
 from gaphor.core.modeling.coremodel import (
     Comment,
     ElementChange,
+    PendingChange,
     RefChange,
     ValueChange,
 )
