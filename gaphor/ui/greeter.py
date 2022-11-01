@@ -76,7 +76,7 @@ class Greeter(Service, ActionProvider):
 
         if not stack_name:
             stack_name = (
-                "recent-files" if any(self.create_recent_files()) else "new-model"
+                "recent-files" if any(self.query_recent_files()) else "new-model"
             )
 
         builder = new_builder("greeter")
@@ -127,18 +127,22 @@ class Greeter(Service, ActionProvider):
     def new_model(self):
         self.open("new-model")
 
-    def create_recent_files(self):
+    def query_recent_files(self):
         for item in self.recent_manager.get_items():
             if APPLICATION_ID in item.get_applications() and item.exists():
-                builder = new_builder("greeter-recent-file")
-                filename, _host = GLib.filename_from_uri(item.get_uri())
-                builder.get_object("name").set_text(str(Path(filename).stem))
-                builder.get_object("filename").set_text(
-                    item.get_uri_display().replace(str(Path.home()), "~")
-                )
-                row = builder.get_object("greeter-recent-file")
-                row.filename = filename
-                yield row
+                yield item
+
+    def create_recent_files(self):
+        for item in self.query_recent_files():
+            builder = new_builder("greeter-recent-file")
+            filename, _host = GLib.filename_from_uri(item.get_uri())
+            builder.get_object("name").set_text(str(Path(filename).stem))
+            builder.get_object("filename").set_text(
+                item.get_uri_display().replace(str(Path.home()), "~")
+            )
+            row = builder.get_object("greeter-recent-file")
+            row.filename = filename
+            yield row
 
     def create_templates(self):
         for template in TEMPLATES:
@@ -166,7 +170,7 @@ class Greeter(Service, ActionProvider):
         visible = self.stack.get_visible_child_name()
         if visible == "new-model":
             self.action_bar.set_visible(False)
-            if any(self.create_recent_files()):
+            if any(self.query_recent_files()):
                 self.back_button.set_visible(True)
             else:
                 self.back_button.set_visible(False)
@@ -178,7 +182,7 @@ class Greeter(Service, ActionProvider):
 
     def _on_recent_files_changed(self, recent_manager=None):
         self.gtk_app.lookup_action("recent-files").set_enabled(
-            any(self.create_recent_files())
+            any(self.query_recent_files())
         )
 
     def _on_recent_file_activated(self, _listbox, row):
