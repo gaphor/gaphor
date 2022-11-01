@@ -13,6 +13,7 @@ from gaphor.core.modeling.element import (
     Element,
     EventWatcherProtocol,
     Handler,
+    Id,
     RepositoryProtocol,
     UnlinkEvent,
     generate_id,
@@ -67,7 +68,7 @@ class ElementFactory(Service):
     ):
         self.event_manager: EventHandler | None = event_manager
         self.element_dispatcher = element_dispatcher
-        self._elements: dict[str, Element] = OrderedDict()
+        self._elements: dict[Id, Element] = OrderedDict()
         if event_manager:
             event_manager.subscribe(self._on_unlink_event)
 
@@ -80,7 +81,7 @@ class ElementFactory(Service):
         """Create a new model element of type ``type``."""
         return self.create_as(type, generate_id())
 
-    def create_as(self, type: type[T], id: str, diagram: Diagram = None) -> T:
+    def create_as(self, type: type[T], id: Id, diagram: Diagram = None) -> T:
         """Create a new model element of type 'type' with 'id' as its ID.
 
         This method should only be used when loading models, since it
@@ -119,7 +120,7 @@ class ElementFactory(Service):
         """Return the amount of elements currently in the factory."""
         return len(self._elements)
 
-    def lookup(self, id: str) -> Element | None:
+    def lookup(self, id: Id) -> Element | None:
         """Find element with a specific id."""
         return self._elements.get(id)
 
@@ -129,7 +130,7 @@ class ElementFactory(Service):
         return iter(self._elements.values())
 
     def __contains__(self, element: Element) -> bool:
-        assert isinstance(element.id, str)
+        assert isinstance(element.id, Id)
         return self.lookup(element.id) is element
 
     @overload
@@ -165,7 +166,7 @@ class ElementFactory(Service):
         """
         return list(self.select(expression))
 
-    def keys(self) -> Iterator[str]:
+    def keys(self) -> Iterator[Id]:
         """Return a list with all id's in the factory."""
         return iter(self._elements.keys())
 
@@ -229,7 +230,7 @@ class ElementFactory(Service):
     def _on_unlink_event(self, event):
         element = event.element
         element._model = None
-        assert isinstance(element.id, str)
+        assert isinstance(element.id, Id)
         try:
             del self._elements[element.id]
         except KeyError:
