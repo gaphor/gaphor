@@ -36,6 +36,9 @@ pip-wheel-metadata
 .coverage
 htmlcov
 
+# Flatpak
+.flatpak-builder
+
 # Windows Install
 _packaging/windows/gaphor-script.py
 _packaging/windows/_build_root

@@ -1,0 +1,25 @@
+app-id: org.gaphor.Gaphor.Devel
+runtime: org.gnome.Platform
+runtime-version: '43'
+tags:
+  - devel
+  - development
+  - nightly
+sdk: org.gnome.Sdk
+command: gaphor
+build-options:
+  build-args:
+    - --share=network
+finish-args:
+  - --socket=fallback-x11
+  - --share=ipc
+  - --socket=wayland
+  - --filesystem=host
+modules:
+  - name: gaphor
+    buildsystem: simple
+    build-commands:
+      - pip3 install --prefix=${FLATPAK_DEST} .
+    sources:
+      - type: dir
+        path: .
