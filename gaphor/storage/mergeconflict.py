@@ -28,6 +28,5 @@ def split(fd: io.IOBase, file_type=tempfile.TemporaryFile):
     incoming.seek(0)
     if found_merge_conflict:
         return current, incoming
-    else:
-        incoming.close()
-        return current, None
+    incoming.close()
+    return current, None
