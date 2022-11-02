@@ -25,8 +25,7 @@ import io
 import logging
 import os
 from collections import OrderedDict
-from typing import IO
-from xml.sax import handler
+from xml.sax import handler, xmlreader
 
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 
@@ -307,6 +306,7 @@ def parse_generator(filename, loader):
     from xml.sax import make_parser
 
     parser = make_parser()
+    assert isinstance(parser, xmlreader.IncrementalParser)
 
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
@@ -317,6 +317,8 @@ def parse_generator(filename, loader):
     except UnicodeDecodeError:
         # Fall back on default encoding
         yield from parse_file(filename, parser, encoding=None)
+    finally:
+        parser.close()
 
 
 class ProgressGenerator:
@@ -373,18 +375,7 @@ def parse_file(filename, parser, encoding: str | None = "utf-8"):
     name of a file.  The progress percentage of the parser is yielded.
     """
 
-    is_fd = True
-
-    if isinstance(filename, io.IOBase):
-        file_obj: IO | io.IOBase = filename
-    else:
-        is_fd = False
-        file_obj = open(filename, encoding=encoding)
-
-    try:
+    with filename if isinstance(filename, io.IOBase) else open(
+        filename, encoding=encoding
+    ) as file_obj:
         yield from ProgressGenerator(file_obj, parser)
-    finally:
-        parser.close()
-
-        if not is_fd:
-            file_obj.close()
