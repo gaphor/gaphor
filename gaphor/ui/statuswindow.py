@@ -118,7 +118,7 @@ def progress_idle_handler(progress_bar, queue):
     The percentage is retrieved from the queue until it is empty.  The
     progress bar is then updated with the current percentage.
     """
-
+    percentage = 0
     with contextlib.suppress(Empty):
         percentage = queue.get(block=False)
     if percentage:
