@@ -249,20 +249,27 @@ def load_generator(filename, factory, modeling_language):
     else:
         log.info(f"Loading file {os.fsdecode(os.path.basename(filename))}")
 
+    # Use the incremental parser and yield the percentage of the file.
     try:
-        # Use the incremental parser and yield the percentage of the file.
         loader = parser.GaphorLoader()
-        for percentage in parser.parse_generator(filename, loader):
-            if percentage:
-                yield percentage / 2
-            else:
-                yield percentage
-        elements = loader.elements
-        gaphor_version = loader.gaphor_version
+        with open(filename, encoding="utf-8") as file_obj:
+            for percentage in parser.parse_generator(file_obj, loader):
+                if percentage:
+                    yield percentage / 2
+                else:
+                    yield percentage
+    except UnicodeDecodeError:
+        # Fall back on default encoding
+        loader = parser.GaphorLoader()
+        with open(filename, encoding=None) as file_obj:
+            for percentage in parser.parse_generator(file_obj, loader):
+                if percentage:
+                    yield percentage / 2
+                else:
+                    yield percentage
 
-    except OSError:
-        log.exception("File could no be parsed")
-        raise
+    elements = loader.elements
+    gaphor_version = loader.gaphor_version
 
     if version_lower_than(gaphor_version, (0, 17, 0)):
         raise ValueError(

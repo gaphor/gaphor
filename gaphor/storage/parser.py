@@ -25,7 +25,7 @@ import io
 import logging
 import os
 from collections import OrderedDict
-from xml.sax import handler, xmlreader
+from xml.sax import handler, make_parser, xmlreader
 
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 
@@ -297,13 +297,12 @@ def parse(filename) -> dict[str, element]:
     return loader.elements
 
 
-def parse_generator(filename, loader):
+def parse_generator(file_obj, loader):
     """The generator based version of parse().
 
-    parses the file filename and load it with ContentHandler loader.
+    parses the file and load it with ContentHandler loader.
     """
     assert isinstance(loader, GaphorLoader), "loader should be a GaphorLoader"
-    from xml.sax import make_parser
 
     parser = make_parser()
     assert isinstance(parser, xmlreader.IncrementalParser)
@@ -313,10 +312,7 @@ def parse_generator(filename, loader):
 
     try:
         # returns only a progress percentage
-        yield from parse_file(filename, parser)
-    except UnicodeDecodeError:
-        # Fall back on default encoding
-        yield from parse_file(filename, parser, encoding=None)
+        yield from ProgressGenerator(file_obj, parser)
     finally:
         parser.close()
 
@@ -365,17 +361,3 @@ class ProgressGenerator:
             block = self.input.read(self.block_size)
             read_size += len(block)
             yield (read_size * 100) / self.file_size
-
-
-def parse_file(filename, parser, encoding: str | None = "utf-8"):
-    """Parse the supplied file using the supplied parser.
-
-    The parser parameter should be a GaphorLoader instance.  The
-    filename parameter can be an open file descriptor instance or the
-    name of a file.  The progress percentage of the parser is yielded.
-    """
-
-    with filename if isinstance(filename, io.IOBase) else open(
-        filename, encoding=encoding
-    ) as file_obj:
-        yield from ProgressGenerator(file_obj, parser)
