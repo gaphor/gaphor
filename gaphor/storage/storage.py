@@ -179,8 +179,11 @@ def _load_elements_and_canvasitems(
         if version_lower_than(gaphor_version, (2, 9, 0)):
             elem = upgrade_flow_item_to_control_flow_item(elem, elements)
 
-        cls = modeling_language.lookup_element(elem.type)
-        assert cls, f"Type {elem.type} cannot be loaded: no such element"
+        if not (cls := modeling_language.lookup_element(elem.type)):
+            raise UnknownModelElementError(
+                f"Type {elem.type} cannot be loaded: no such element"
+            )
+
         if issubclass(cls, Presentation):
             diagram_id = elem.references["diagram"]
             diagram_elem = elements[diagram_id]
@@ -245,6 +248,7 @@ def load_generator(filename, factory, modeling_language):
         log.info("Loading file from file descriptor")
     else:
         log.info(f"Loading file {os.fsdecode(os.path.basename(filename))}")
+
     try:
         # Use the incremental parser and yield the percentage of the file.
         loader = parser.GaphorLoader()
@@ -293,6 +297,14 @@ def version_lower_than(gaphor_version, version):
     parts = gaphor_version.split(".")
 
     return tuple(map(int, parts[:2])) < version[:2]
+
+
+class UnknownModelElementError(Exception):
+    pass
+
+
+class MergeConflictError(Exception):
+    pass
 
 
 # since 2.2.0
