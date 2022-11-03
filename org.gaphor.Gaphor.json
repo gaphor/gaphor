@@ -18,7 +18,8 @@
     "--socket=fallback-x11",
     "--share=ipc",
     "--socket=wayland",
-    "--filesystem=host"
+    "--filesystem=host",
+    "--socket=session-bus"
   ],
   "modules": [
     {
