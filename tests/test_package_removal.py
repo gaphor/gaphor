@@ -23,8 +23,8 @@ def event_manager(session):
 def element_factory(session, test_models):
     element_factory = session.get_service("element_factory")
     modeling_language = session.get_service("modeling_language")
-    path = test_models / "issue_53.gaphor"
-    load(path, element_factory, modeling_language)
+    with (test_models / "issue_53.gaphor").open() as f:
+        load(f, element_factory, modeling_language)
     yield element_factory
     element_factory.shutdown()
 

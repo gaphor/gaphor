@@ -8,7 +8,6 @@ __all__ = ["load", "save"]
 
 import io
 import logging
-import os.path
 from functools import partial
 
 from gaphor import application
@@ -238,35 +237,21 @@ def load(filename, factory, modeling_language, status_queue=None):
             status_queue(status)
 
 
-def load_generator(filename, factory, modeling_language):
+def load_generator(file_obj, factory, modeling_language):
     """Load a file and create a model if possible.
 
     This function is a generator. It will yield values from 0 to 100 (%)
     to indicate its progression.
     """
-    if isinstance(filename, io.IOBase):
-        log.info("Loading file from file descriptor")
-    else:
-        log.info(f"Loading file {os.fsdecode(os.path.basename(filename))}")
+    assert isinstance(file_obj, io.IOBase)
 
     # Use the incremental parser and yield the percentage of the file.
-    try:
-        loader = parser.GaphorLoader()
-        with open(filename, encoding="utf-8") as file_obj:
-            for percentage in parser.parse_generator(file_obj, loader):
-                if percentage:
-                    yield percentage / 2
-                else:
-                    yield percentage
-    except UnicodeDecodeError:
-        # Fall back on default encoding
-        loader = parser.GaphorLoader()
-        with open(filename, encoding=None) as file_obj:
-            for percentage in parser.parse_generator(file_obj, loader):
-                if percentage:
-                    yield percentage / 2
-                else:
-                    yield percentage
+    loader = parser.GaphorLoader()
+    for percentage in parser.parse_generator(file_obj, loader):
+        if percentage:
+            yield percentage / 2
+        else:
+            yield percentage
 
     elements = loader.elements
     gaphor_version = loader.gaphor_version
@@ -280,18 +265,15 @@ def load_generator(filename, factory, modeling_language):
 
     factory.flush()
     with factory.block_events():
-        try:
-            for percentage in load_elements_generator(
-                elements, factory, modeling_language, gaphor_version
-            ):
-                if percentage:
-                    yield percentage / 2 + 50
-                else:
-                    yield percentage
-            yield 100
-        except Exception as e:
-            log.warning(f"file {filename} could not be loaded ({e})")
-            raise
+        for percentage in load_elements_generator(
+            elements, factory, modeling_language, gaphor_version
+        ):
+            if percentage:
+                yield percentage / 2 + 50
+            else:
+                yield percentage
+
+    yield 100
     factory.model_ready()
 
 

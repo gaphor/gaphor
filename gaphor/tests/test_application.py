@@ -42,7 +42,7 @@ def test_model_saved(application):
 
 
 def test_new_session_from_template(application, test_models):
-    with (test_models / "test-model.gaphor").open() as model:
-        session = application.new_session(template=model)
+    model = test_models / "test-model.gaphor"
+    session = application.new_session(template=model)
 
     assert any(session.get_service("element_factory").select())

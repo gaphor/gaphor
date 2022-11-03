@@ -143,14 +143,10 @@ class FileManager(Service, ActionProvider):
         @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
         def async_loader():
             try:
-                for percentage in storage.load_generator(
-                    filename,
-                    self.element_factory,
-                    self.modeling_language,
-                ):
-                    if queue:
-                        queue.put(percentage)
-                    yield percentage
+                try:
+                    yield from open_model(encoding="utf-8")
+                except UnicodeDecodeError:
+                    yield from open_model(encoding=None)
 
                 self.event_manager.handle(model_loaded_event)
             except Exception:
@@ -170,6 +166,17 @@ class FileManager(Service, ActionProvider):
             finally:
                 if done:
                     done()
+
+        def open_model(encoding):
+            with open(filename, encoding=encoding) as file_obj:
+                for percentage in storage.load_generator(
+                    file_obj,
+                    self.element_factory,
+                    self.modeling_language,
+                ):
+                    if queue:
+                        queue.put(percentage)
+                    yield percentage
 
         for _ in async_loader():
             pass

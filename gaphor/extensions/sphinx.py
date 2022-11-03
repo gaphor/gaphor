@@ -122,9 +122,10 @@ def load_model(model_file: str) -> ElementFactory:
     with mock(["gi.repository.Gtk", "gi.repository.Gdk"]):
         modeling_language = ModelingLanguageService()
 
-    storage.load(
-        model_file,
-        element_factory,
-        modeling_language,
-    )
+    with open(model_file) as file_obj:
+        storage.load(
+            file_obj,
+            element_factory,
+            modeling_language,
+        )
     return element_factory

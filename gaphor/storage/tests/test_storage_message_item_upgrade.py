@@ -5,9 +5,8 @@ from gaphor.UML import diagramitems
 
 
 def test_message_item_upgrade(element_factory, modeling_language, test_models):
-    path = test_models / "multiple-messages.gaphor"
-
-    load(path, element_factory, modeling_language)
+    with (test_models / "multiple-messages.gaphor").open() as f:
+        load(f, element_factory, modeling_language)
 
     diagram = element_factory.lselect(Diagram)[0]
     items = [e for e in diagram.get_all_items() if not e.parent]

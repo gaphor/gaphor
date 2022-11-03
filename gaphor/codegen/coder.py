@@ -113,11 +113,12 @@ def main(
 
 def load_model(modelfile: str, modeling_language: ModelingLanguage) -> ElementFactory:
     element_factory = ElementFactory()
-    storage.load(
-        modelfile,
-        element_factory,
-        modeling_language,
-    )
+    with open(modelfile) as file_obj:
+        storage.load(
+            file_obj,
+            element_factory,
+            modeling_language,
+        )
 
     resolve_attribute_type_values(element_factory)
 
