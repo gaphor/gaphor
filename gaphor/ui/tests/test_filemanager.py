@@ -52,7 +52,7 @@ def test_model_is_loaded_with_utf8_encoding(
 
     element_factory.flush()
 
-    file_manager.load(str(model_file))
+    file_manager.load(model_file)
     new_class = next(element_factory.select(UML.Class))
     new_package = next(element_factory.select(UML.Package))
 
@@ -67,4 +67,4 @@ def test_old_model_is_loaded_without_utf8_encoding(
     file_manager: FileManager, test_models
 ):
     model_file = test_models / "wrong-encoding.gaphor"
-    file_manager.load(str(model_file))
+    file_manager.load(model_file)
