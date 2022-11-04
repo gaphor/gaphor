@@ -11,7 +11,6 @@ from gaphor.lazygi import Gtk
 from gaphor.transaction import transactional
 from gaphor.UML.classes.classespropertypages import (
     AttributesPage,
-    ClassEnumerationLiterals,
     OperationsPage,
     new_resource_builder,
     on_keypress_event,
@@ -33,6 +32,8 @@ class EnumerationPage(PropertyPageBase):
         self.watcher = item.subject and item.subject.watcher()
 
     def construct(self):
+        from gaphor.UML.classes.gtkmodels import ClassEnumerationLiterals
+
         if not isinstance(self.item.subject, UML.Enumeration):
             return
 

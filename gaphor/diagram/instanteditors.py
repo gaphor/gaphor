@@ -4,9 +4,9 @@ from functools import singledispatch
 
 from gaphas import Item
 from gaphas.geometry import Rectangle
-from gi.repository import Gdk, Gtk
 
 from gaphor.diagram.presentation import LinePresentation, Named
+from gaphor.lazygi import Gdk, Gtk
 from gaphor.transaction import Transaction
 
 

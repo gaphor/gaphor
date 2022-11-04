@@ -1,7 +1,6 @@
-from gi.repository import Gdk, Gtk
-
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.instanteditors import instant_editor, show_popover
+from gaphor.lazygi import Gdk, Gtk
 from gaphor.transaction import Transaction
 
 

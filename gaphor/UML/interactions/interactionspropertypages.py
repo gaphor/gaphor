@@ -1,6 +1,5 @@
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
-    ComboModel,
     PropertyPageBase,
     PropertyPages,
     new_resource_builder,
@@ -34,6 +33,8 @@ class MessagePropertyPage(PropertyPageBase):
         self.item = item
 
     def construct(self):
+        from gaphor.diagram.gtkmodels import ComboModel
+
         item = self.item
         subject = item.subject
 

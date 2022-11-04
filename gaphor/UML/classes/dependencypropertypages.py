@@ -1,5 +1,5 @@
 from gaphor import UML
-from gaphor.diagram.propertypages import ComboModel, PropertyPageBase, PropertyPages
+from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.i18n import gettext
 from gaphor.transaction import transactional
 from gaphor.UML.classes.classespropertypages import new_builder
@@ -33,6 +33,8 @@ class DependencyPropertyPage(PropertyPageBase):
         )
 
     def construct(self):
+        from gaphor.diagram.gtkmodels import ComboModel
+
         dependency_combo = self.builder.get_object("dependency-combo")
         model = ComboModel(self.DEPENDENCY_TYPES)
         dependency_combo.set_model(model)

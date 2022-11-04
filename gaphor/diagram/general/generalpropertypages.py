@@ -1,5 +1,3 @@
-from gi.repository import Gtk
-
 from gaphor.core import transactional
 from gaphor.core.modeling import Comment
 from gaphor.diagram.propertypages import (
@@ -8,6 +6,7 @@ from gaphor.diagram.propertypages import (
     handler_blocking,
     new_builder,
 )
+from gaphor.lazygi import Gtk
 
 
 @PropertyPages.register(Comment)

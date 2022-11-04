@@ -2,10 +2,7 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.UML.classes import ClassItem, EnumerationItem
-from gaphor.UML.classes.classespropertypages import (
-    ClassAttributes,
-    ClassEnumerationLiterals,
-)
+from gaphor.UML.classes.gtkmodels import ClassAttributes, ClassEnumerationLiterals
 
 
 def test_attribute_editing(create):

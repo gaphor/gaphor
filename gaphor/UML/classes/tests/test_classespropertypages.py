@@ -4,13 +4,13 @@ from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.classes.classespropertypages import (
     AttributesPage,
-    ClassAttributes,
     ClassifierPropertyPage,
     Folded,
     InterfacePropertyPage,
     NamedElementPropertyPage,
     OperationsPage,
 )
+from gaphor.UML.classes.gtkmodels import ClassAttributes
 
 
 @pytest.fixture
