@@ -1,5 +1,3 @@
-from gi.repository import Gtk
-
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
@@ -17,8 +15,6 @@ class InformationFlowPropertyPage(PropertyPageBase):
     """Information Flow on Connectors."""
 
     order = 30
-
-    name_entry: Gtk.Entry
 
     def __init__(self, subject: UML.Connector):
         super().__init__()
@@ -46,7 +42,7 @@ class InformationFlowPropertyPage(PropertyPageBase):
         )
 
         self.combo = combo = builder.get_object("information-flow-combo")
-        use_flow: Gtk.Switch = builder.get_object("use-information-flow")
+        use_flow = builder.get_object("use-information-flow")
 
         combo_box_text_auto_complete(
             combo, ((c.id, c.name) for c in model.select(UML.Class))
