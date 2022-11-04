@@ -78,6 +78,10 @@ class ParserException(Exception):
     pass
 
 
+class MergeConflictDetected(Exception):
+    pass
+
+
 # Loader state:
 [
     ROOT,  # Expect 'gaphor' element
@@ -310,27 +314,22 @@ def parse_generator(file_obj, loader):
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
 
-    try:
-        # returns only a progress percentage
-        yield from progress_feeder(file_obj, parser)
-    finally:
-        parser.close()
+    # returns only a progress percentage
+    yield from progress_feeder(file_obj, parser)
 
 
 def progress_feeder(input, parser, block_size=512):
     file_size = get_file_size(input)
+    count = 0
 
-    block = input.read(block_size)
-    count = len(block)
-
-    while block:
+    for line in input:
         try:
-            parser.feed(block)
+            parser.feed(line)
         except SAXParseException as e:
-            print(e)
+            if line.startswith(b"<<<<<"):
+                raise MergeConflictDetected from e
             raise
-        block = input.read(block_size)
-        count += len(block)
+        count += len(line)
         yield (count * 100) / file_size
 
 

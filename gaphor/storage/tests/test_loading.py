@@ -5,6 +5,7 @@ from xml.sax import SAXParseException
 import pytest
 
 from gaphor.storage import storage
+from gaphor.storage.parser import MergeConflictDetected, ParserException
 
 
 def buffer(text):
@@ -74,7 +75,7 @@ def test_wrong_tag(element_factory, modeling_language):
         """
     )
 
-    with pytest.raises(SAXParseException):
+    with pytest.raises(ParserException):
         storage.load(file, element_factory, modeling_language)
 
     assert not element_factory.lselect()
@@ -90,13 +91,12 @@ def test_xml_not_gaphor(element_factory, modeling_language):
         """
     )
 
-    with pytest.raises(SAXParseException):
+    with pytest.raises(ParserException):
         storage.load(file, element_factory, modeling_language)
 
     assert not element_factory.lselect()
 
 
-@pytest.mark.xfail
 def test_detect_merge_conflict(element_factory, modeling_language):
     file = buffer(
         """\
@@ -117,7 +117,7 @@ def test_detect_merge_conflict(element_factory, modeling_language):
         """
     )
 
-    with pytest.raises(storage.MergeConflictError):
+    with pytest.raises(MergeConflictDetected):
         storage.load(file, element_factory, modeling_language)
 
     assert not element_factory.lselect()

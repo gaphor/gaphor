@@ -15,7 +15,7 @@ from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.storage import parser
+from gaphor.storage.parser import GaphorLoader, parse_generator
 from gaphor.storage.xmlwriter import XMLWriter
 
 FILE_FORMAT_VERSION = "3.0"
@@ -246,8 +246,8 @@ def load_generator(file_obj, factory, modeling_language):
     assert isinstance(file_obj, io.IOBase)
 
     # Use the incremental parser and yield the percentage of the file.
-    loader = parser.GaphorLoader()
-    for percentage in parser.parse_generator(file_obj, loader):
+    loader = GaphorLoader()
+    for percentage in parse_generator(file_obj, loader):
         if percentage:
             yield percentage / 2
         else:
@@ -289,10 +289,6 @@ def version_lower_than(gaphor_version, version):
 
 
 class UnknownModelElementError(Exception):
-    pass
-
-
-class MergeConflictError(Exception):
     pass
 
 
