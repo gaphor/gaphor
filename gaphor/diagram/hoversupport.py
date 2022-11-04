@@ -1,4 +1,4 @@
-from gi.repository import Gdk, Gtk
+from gaphor.lazygi import Gdk, Gtk
 
 
 def widget_add_hover_support(widget):
