@@ -21,11 +21,10 @@ takes a long time. The yielded values are the percentage of the file read.
 
 from __future__ import annotations
 
-import io
 import logging
 import os
 from collections import OrderedDict
-from xml.sax import handler, make_parser, xmlreader
+from xml.sax import SAXParseException, handler, make_parser, xmlreader
 
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 
@@ -302,6 +301,7 @@ def parse_generator(file_obj, loader):
 
     parses the file and load it with ContentHandler loader.
     """
+    assert file_obj.seekable()
     assert isinstance(loader, GaphorLoader), "loader should be a GaphorLoader"
 
     parser = make_parser()
@@ -312,52 +312,30 @@ def parse_generator(file_obj, loader):
 
     try:
         # returns only a progress percentage
-        yield from ProgressGenerator(file_obj, parser)
+        yield from progress_feeder(file_obj, parser)
     finally:
         parser.close()
 
 
-class ProgressGenerator:
-    """A generator that yields the progress of taking from a file input object
-    and feeding it into an output object.
+def progress_feeder(input, parser, block_size=512):
+    file_size = get_file_size(input)
 
-    The supplied file object is neither opened not closed by this
-    generator.  The file object is assumed to already be opened for
-    reading and that it will be closed elsewhere.
-    """
+    block = input.read(block_size)
+    count = len(block)
 
-    def __init__(self, input, output, block_size=512):
-        """Initialize the progress generator.
+    while block:
+        try:
+            parser.feed(block)
+        except SAXParseException as e:
+            print(e)
+            raise
+        block = input.read(block_size)
+        count += len(block)
+        yield (count * 100) / file_size
 
-        The input parameter is a file object.  The output parameter is
-        usually a SAX parser but can be anything that implements a
-        feed() method.  The block size is the size of each block that is
-        read from the input.
-        """
 
-        self.input = input
-        self.output = output
-        self.block_size = block_size
-        if isinstance(self.input, io.IOBase):
-            orig_pos = self.input.tell()
-            self.file_size = self.input.seek(0, 2)
-            self.input.seek(orig_pos, os.SEEK_SET)
-        elif isinstance(self.input, str):
-            self.file_size = len(self.input)
-
-    def __iter__(self):
-        """Return a generator that yields the progress of reading data from the
-        input and feeding it into the output.
-
-        The progress yielded in each iteration is the percentage of data
-        read, relative to the to input file size.
-        """
-
-        block = self.input.read(self.block_size)
-        read_size = len(block)
-
-        while block:
-            self.output.feed(block)
-            block = self.input.read(self.block_size)
-            read_size += len(block)
-            yield (read_size * 100) / self.file_size
+def get_file_size(file_obj):
+    orig_pos = file_obj.tell()
+    file_size = file_obj.seek(0, os.SEEK_END)
+    file_obj.seek(orig_pos)
+    return file_size
