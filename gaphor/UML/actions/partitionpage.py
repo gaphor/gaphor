@@ -1,7 +1,3 @@
-"""Activity partition property page."""
-
-from gi.repository import Gtk
-
 from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.diagram.propertypages import (
@@ -10,6 +6,7 @@ from gaphor.diagram.propertypages import (
     combo_box_text_auto_complete,
     new_resource_builder,
 )
+from gaphor.lazygi import Gtk
 from gaphor.UML.actions.partition import PartitionItem
 
 new_builder = new_resource_builder("gaphor.UML.actions")

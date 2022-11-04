@@ -1,5 +1,3 @@
-from gi.repository import Gtk
-
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.core.format import format, parse
@@ -12,6 +10,7 @@ from gaphor.diagram.propertypages import (
     new_resource_builder,
     on_text_cell_edited,
 )
+from gaphor.lazygi import Gtk
 from gaphor.UML.actions.activity import ActivityItem
 from gaphor.UML.classes.classespropertypages import on_keypress_event
 

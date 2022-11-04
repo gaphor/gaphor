@@ -1,7 +1,5 @@
 import logging
 
-from gi.repository import Gdk, Gtk
-
 from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.core.format import format, parse
@@ -16,6 +14,7 @@ from gaphor.diagram.propertypages import (
     on_bool_cell_edited,
     on_text_cell_edited,
 )
+from gaphor.lazygi import Gdk, Gtk
 from gaphor.UML.classes.datatype import DataTypeItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
 from gaphor.UML.classes.klass import ClassItem

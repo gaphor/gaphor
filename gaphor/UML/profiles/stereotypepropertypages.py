@@ -1,10 +1,8 @@
-"""Stereotype property page."""
-from gi.repository import Gtk
-
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.core.modeling.element import Element
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
+from gaphor.lazygi import Gtk
 from gaphor.UML.profiles.metaclasspropertypage import new_builder
 
 

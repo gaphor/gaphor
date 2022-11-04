@@ -1,9 +1,8 @@
-from gi.repository import Gtk
-
 from gaphor import UML
 from gaphor.core.format import format, parse
 from gaphor.diagram.hoversupport import widget_add_hover_support
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, help_link
+from gaphor.lazygi import Gtk
 from gaphor.transaction import transactional
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.classespropertypages import new_builder

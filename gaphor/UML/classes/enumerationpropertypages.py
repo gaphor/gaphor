@@ -1,5 +1,3 @@
-from gi.repository import Gtk
-
 from gaphor import UML
 from gaphor.core.format import format
 from gaphor.diagram.hoversupport import widget_add_hover_support
@@ -9,6 +7,7 @@ from gaphor.diagram.propertypages import (
     help_link,
     on_text_cell_edited,
 )
+from gaphor.lazygi import Gtk
 from gaphor.transaction import transactional
 from gaphor.UML.classes.classespropertypages import (
     AttributesPage,
