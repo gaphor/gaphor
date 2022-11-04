@@ -46,7 +46,6 @@ In versions before 2.13, an `EventManager` is required. In later versions, the
 
 
 ```{code-cell} ipython3
-from sphinx.ext.autodoc.mock import mock
 from gaphor.core.eventmanager import EventManager
 from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.storage import storage
@@ -54,8 +53,7 @@ from gaphor.storage import storage
 event_manager = EventManager()
 
 # Avoid loading GTK by using Sphinx’s mock function
-with mock(["gi.repository.Gtk", "gi.repository.Gdk"]):
-    modeling_language = ModelingLanguageService(event_manager=event_manager)
+modeling_language = ModelingLanguageService(event_manager=event_manager)
 
 storage.load(
     "../models/Core.gaphor",

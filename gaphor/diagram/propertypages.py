@@ -9,11 +9,11 @@ from typing import Callable, Dict, Iterable, List, Tuple, Type
 
 import gaphas.item
 from gaphas.segment import Segment
-from gi.repository import Gtk
 
 from gaphor.core import transactional
 from gaphor.core.modeling import Element
 from gaphor.i18n import translated_ui_string
+from gaphor.lazygi import Gtk
 
 
 def new_resource_builder(package, property_pages="propertypages"):
