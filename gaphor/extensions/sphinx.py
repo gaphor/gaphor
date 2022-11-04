@@ -7,7 +7,6 @@ import sphinx.util.docutils
 from docutils import nodes
 from docutils.parsers.rst import directives
 from docutils.parsers.rst.directives import images
-from sphinx.ext.autodoc.mock import mock
 from sphinx.util import logging
 
 from gaphor.core.modeling import Diagram, ElementFactory
@@ -119,8 +118,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
 def load_model(model_file: str) -> ElementFactory:
     element_factory = ElementFactory()
 
-    with mock(["gi.repository.Gtk", "gi.repository.Gdk"]):
-        modeling_language = ModelingLanguageService()
+    modeling_language = ModelingLanguageService()
 
     storage.load(
         model_file,
