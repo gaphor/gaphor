@@ -2,7 +2,7 @@ from gaphor.UML.actions import (
     actionseditors,
     actionsgroup,
     actionspropertypages,
-    activityconnect,
+    # activityconnect,
     activitypropertypage,
     copypaste,
     flowconnect,
