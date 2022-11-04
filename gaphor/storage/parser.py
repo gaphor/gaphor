@@ -326,7 +326,7 @@ def progress_feeder(input, parser, block_size=512):
         try:
             parser.feed(line)
         except SAXParseException as e:
-            if line.startswith(b"<<<<<"):
+            if line.startswith("<<<<<"):
                 raise MergeConflictDetected from e
             raise
         count += len(line)

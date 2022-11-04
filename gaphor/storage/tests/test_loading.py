@@ -9,8 +9,8 @@ from gaphor.storage.parser import MergeConflictDetected, ParserException
 
 
 def buffer(text):
-    file = io.BytesIO()
-    file.write(textwrap.dedent(text).encode("utf-8"))
+    file = io.StringIO()
+    file.write(textwrap.dedent(text))
     file.seek(0)
     return file
 
