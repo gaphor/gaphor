@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.core.modeling.element import Element
