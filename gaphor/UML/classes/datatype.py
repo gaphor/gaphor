@@ -11,7 +11,6 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
-from gaphor.SysML import sysml
 from gaphor.UML.classes.klass import (
     attribute_watches,
     attributes_compartment,
@@ -25,7 +24,6 @@ log = logging.getLogger(__name__)
 
 @represents(UML.DataType)
 @represents(UML.PrimitiveType)
-@represents(sysml.ValueType)
 class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
     """This item visualizes a Data Type instance.
 
@@ -53,6 +51,8 @@ class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
     show_operations: attribute[int] = attribute("show_operations", int, default=True)
 
     def additional_stereotypes(self):
+        from gaphor.SysML import sysml
+
         if isinstance(self.subject, UML.PrimitiveType):
             return [gettext("primitive")]
         elif isinstance(self.subject, sysml.ValueType):
