@@ -39,10 +39,11 @@ entry_points
 Now let's create a class in our model for every service.
 
 ```{code-cell} ipython3
-import inspect
-
-from gaphor.core.modeling import ElementFactory
 from gaphor import UML
+from gaphor.core.modeling import ElementFactory
+from gaphor.services.modelinglanguage import ModelingLanguageService
+
+modeling_language = ModelingLanguageService()
 
 element_factory = ElementFactory()
 
@@ -59,6 +60,8 @@ With all components mapped, we can create dependencies between those components,
 based on the constructor parameter names.
 
 ```{code-cell} ipython3
+import inspect
+
 for name, cls in entry_points.items():
     for param_name in inspect.signature(cls).parameters:
         if param_name not in components:
@@ -93,7 +96,7 @@ from gaphor.extensions.ipython import auto_layout, draw
 
 auto_layout(diagram)
 
-draw(diagram)
+draw(diagram, format="svg")
 ```
 
 That's all. As you can see from the diagram, a lot of services rely on
