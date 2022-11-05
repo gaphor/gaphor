@@ -15,7 +15,6 @@ from gaphor.diagram.shapes import (
 )
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
-from gaphor.RAAML import raaml
 from gaphor.SysML.sysml import Block, ValueType
 from gaphor.UML.classes.klass import attribute_watches
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
@@ -24,10 +23,6 @@ from gaphor.UML.umlfmt import format_property
 
 
 @represents(Block)
-@represents(raaml.Situation)
-@represents(raaml.Loss)
-@represents(raaml.Hazard)
-@represents(raaml.ControlStructure)
 class BlockItem(Classified, ElementPresentation[Block]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
@@ -57,6 +52,8 @@ class BlockItem(Classified, ElementPresentation[Block]):
     show_values: attribute[int] = attribute("show_values", int, default=False)
 
     def additional_stereotypes(self):
+        from gaphor.RAAML import raaml
+
         if isinstance(self.subject, raaml.Situation):
             return [gettext("Situation")]
         elif isinstance(self.subject, raaml.ControlStructure):
