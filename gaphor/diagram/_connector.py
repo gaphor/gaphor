@@ -8,8 +8,6 @@ import logging
 
 from gaphas.connector import Connector as ConnectorAspect
 from gaphas.connector import ItemConnector, LineConnector
-from gaphas.handlemove import HandleMove, ItemHandleMove
-from gaphas.types import Pos
 
 from gaphor.core import transactional
 from gaphor.core.modeling import Presentation
@@ -18,7 +16,6 @@ from gaphor.diagram.connectors import (
     ItemConnected,
     ItemDisconnected,
     ItemReconnected,
-    ItemTemporaryDisconnected,
 )
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 
@@ -85,21 +82,6 @@ class PresentationConnector(ItemConnector):
 @ConnectorAspect.register(LinePresentation)
 class LinePresentationConnector(PresentationConnector, LineConnector):
     pass
-
-
-@HandleMove.register(Presentation)
-@HandleMove.register(LinePresentation)
-class PresentationHandleMove(ItemHandleMove):
-    def start_move(self, pos: Pos) -> None:
-        super().start_move(pos)
-        model = self.view.model
-        assert model
-        if cinfo := model.connections.get_connection(self.handle):
-            self.item.handle(
-                ItemTemporaryDisconnected(
-                    cinfo.item, cinfo.handle, cinfo.connected, cinfo.port
-                )
-            )
 
 
 class DisconnectHandle:
