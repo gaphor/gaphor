@@ -9,6 +9,11 @@ from gaphor.diagram.propertypages import (
     new_resource_builder,
 )
 
+
+def init():
+    pass
+
+
 new_builder = new_resource_builder("gaphor.C4Model")
 
 

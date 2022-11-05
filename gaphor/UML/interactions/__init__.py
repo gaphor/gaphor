@@ -2,7 +2,6 @@ from gaphor.UML.interactions import (
     copypaste,
     interactionsconnect,
     interactionsgroup,
-    interactionspropertypages,
 )
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
 from gaphor.UML.interactions.interaction import InteractionItem

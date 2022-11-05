@@ -1,12 +1,8 @@
 from gaphor.UML.actions import (
-    actionseditors,
     actionsgroup,
-    actionspropertypages,
     activityconnect,
-    activitypropertypage,
     copypaste,
     flowconnect,
-    partitionpage,
     pinconnect,
 )
 from gaphor.UML.actions.action import (

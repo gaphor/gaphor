@@ -1,7 +1,6 @@
 from gaphor.UML.deployments import (
     connectorconnect,
     copypaste,
-    deploymentpropertypage,
     deploymentsgroup,
 )
 from gaphor.UML.deployments.artifact import ArtifactItem

@@ -1,4 +1,4 @@
-from gaphor.diagram.general import connectors, generaleditors, generalpropertypages
+from gaphor.diagram.general import connectors
 from gaphor.diagram.general.comment import CommentItem
 from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
