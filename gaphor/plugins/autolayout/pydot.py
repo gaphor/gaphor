@@ -13,13 +13,13 @@ from gaphas.segment import Segment
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core.modeling import Diagram, Element, Presentation
+from gaphor.diagram.connectors import ItemTemporaryDisconnected
 from gaphor.diagram.presentation import (
     AttachedPresentation,
     ElementPresentation,
     HandlePositionEvent,
     LinePresentation,
 )
-from gaphor.diagram.tools.connector import ItemTemporaryDisconnected
 from gaphor.i18n import gettext
 from gaphor.transaction import Transaction
 from gaphor.UML import NamedElement

@@ -2,8 +2,8 @@ from gaphas.connector import ConnectionSink, Connector
 from gaphas.segment import LineSegment, Segment
 
 from gaphor.core.modeling.event import RevertibeEvent
+from gaphor.diagram.connectors import ItemTemporaryDisconnected
 from gaphor.diagram.presentation import LinePresentation
-from gaphor.diagram.tools.connector import ItemTemporaryDisconnected
 
 
 @Segment.register(LinePresentation)
