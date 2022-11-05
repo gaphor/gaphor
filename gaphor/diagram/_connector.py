@@ -1,3 +1,9 @@
+"""Gaphas connectors.
+
+This module ties connectors in Gaphas -- on presentation -- to model
+level connectors (gaphor.connectors).
+"""
+
 import logging
 
 from gaphas.connector import Connector as ConnectorAspect
