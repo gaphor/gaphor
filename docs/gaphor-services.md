@@ -41,9 +41,6 @@ Now let's create a class in our model for every service.
 ```{code-cell} ipython3
 from gaphor import UML
 from gaphor.core.modeling import ElementFactory
-from gaphor.services.modelinglanguage import ModelingLanguageService
-
-modeling_language = ModelingLanguageService()
 
 element_factory = ElementFactory()
 
