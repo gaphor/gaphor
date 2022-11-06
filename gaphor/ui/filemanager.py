@@ -7,7 +7,7 @@ from pathlib import Path
 from queue import Queue
 
 from gaphas.decorators import g_async
-from gi.repository import GLib, Gtk
+from gi.repository import Gtk
 
 if Gtk.get_major_version() == 4:
     from gi.repository import Adw
@@ -119,7 +119,7 @@ class FileManager(Service, ActionProvider):
         queue: Queue[int] = Queue(0)
         status_window = None
 
-        @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
+        @g_async()
         def create_status_window():
             nonlocal status_window
             status_window = StatusWindow(
@@ -144,7 +144,7 @@ class FileManager(Service, ActionProvider):
         assert isinstance(filename, Path)
 
         # Use low prio, so screen updates do happen
-        @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
+        @g_async()
         def async_loader():
             try:
                 try:
@@ -218,7 +218,7 @@ class FileManager(Service, ActionProvider):
             queue=queue,
         )
 
-        @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
+        @g_async()
         def async_saver():
             try:
                 with filename.open("w", encoding="utf-8") as out:
