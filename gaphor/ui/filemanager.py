@@ -163,7 +163,7 @@ class FileManager(Service, ActionProvider):
                     secondary_message=gettext(
                         "It looks like this model file contains a merge conflict."
                     ),
-                    window=self.main_window.window,
+                    close=lambda: self.event_manager.handle(SessionShutdown(self)),
                 )
                 # For now load the default model until we allow users to resolve the merge conflict.
                 load_default_model(self.element_factory)
@@ -177,8 +177,8 @@ class FileManager(Service, ActionProvider):
                         "This file does not contain a valid Gaphor model."
                     ),
                     window=self.main_window.window,
+                    close=lambda: self.event_manager.handle(SessionShutdown(self)),
                 )
-                load_default_model(self.element_factory)
             finally:
                 if done:
                     done()
@@ -314,7 +314,6 @@ class FileManager(Service, ActionProvider):
                     )
             # Gtk.ResponseType.REJECT is GTK3, discard is GTK4
             elif answer in [Gtk.ResponseType.REJECT, "discard"]:
-                confirm_shutdown()
                 confirm_shutdown()
 
         if self.main_window.model_changed:
