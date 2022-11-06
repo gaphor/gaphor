@@ -32,6 +32,7 @@ class DependencyInterfaceConnect(DependencyConnect):
             self.element.side = port.side
             self.element.request_update()
             self.line.request_update()
+            self.element.update_shapes()
 
     def disconnect(self, handle):
         """If dependency item is no longer connected to an interface, then draw
