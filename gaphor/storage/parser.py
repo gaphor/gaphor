@@ -300,6 +300,17 @@ def parse(filename) -> dict[str, element]:
     return loader.elements
 
 
+class ErrorHandler:
+    def error(self, exception):
+        raise exception from None
+
+    def fatalError(self, exception):
+        raise exception from None
+
+    def warning(self, exception):
+        log.warning(exception)
+
+
 def parse_generator(file_obj, loader):
     """The generator based version of parse().
 
@@ -313,6 +324,7 @@ def parse_generator(file_obj, loader):
 
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
+    parser.setErrorHandler(ErrorHandler())
 
     # returns only a progress percentage
     yield from progress_feeder(file_obj, parser)
