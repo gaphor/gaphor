@@ -314,27 +314,17 @@ class ErrorHandler:
 def parse_generator(file_obj, loader):
     """The generator based version of parse().
 
-    parses the file and load it with ContentHandler loader.
+    parses the file and load it with ContentHandler loader. Returns a
+    progress percentage.
     """
     assert file_obj.seekable()
     assert isinstance(loader, GaphorLoader), "loader should be a GaphorLoader"
 
-    parser = make_parser()
-    assert isinstance(parser, xmlreader.IncrementalParser)
-
-    parser.setFeature(handler.feature_namespaces, 1)
-    parser.setContentHandler(loader)
-    parser.setErrorHandler(ErrorHandler())
-
-    # returns only a progress percentage
-    yield from progress_feeder(file_obj, parser)
-
-
-def progress_feeder(input, parser, block_size=512):
-    file_size = get_file_size(input)
+    parser = new_parser(loader)
+    file_size = get_file_size(file_obj)
     count = 0
 
-    for line in input:
+    for line in file_obj:
         try:
             parser.feed(line)
         except SAXParseException as e:
@@ -343,6 +333,16 @@ def progress_feeder(input, parser, block_size=512):
             raise
         count += len(line)
         yield (count * 100) / file_size
+
+
+def new_parser(loader):
+    parser = make_parser()
+    assert isinstance(parser, xmlreader.IncrementalParser)
+
+    parser.setFeature(handler.feature_namespaces, 1)
+    parser.setContentHandler(loader)
+    parser.setErrorHandler(ErrorHandler())
+    return parser
 
 
 def get_file_size(file_obj):
