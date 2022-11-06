@@ -24,6 +24,7 @@ from gaphor.event import (
     SessionShutdownRequested,
 )
 from gaphor.storage import storage
+from gaphor.storage.parser import MergeConflictDetected
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -133,13 +134,13 @@ class FileManager(Service, ActionProvider):
                 status_window.destroy()
 
         create_status_window()
-        self._load(filename, queue, done)
+        self._load_async(filename, queue, done)
 
     def load_template(self, template):
         storage.load(template, self.element_factory, self.modeling_language)
         self.event_manager.handle(ModelLoaded(self))
 
-    def _load(self, filename: Path, queue=None, done=None):
+    def _load_async(self, filename: Path, queue=None, done=None):
         assert isinstance(filename, Path)
 
         # Use low prio, so screen updates do happen
@@ -153,6 +154,19 @@ class FileManager(Service, ActionProvider):
                     yield from open_model(encoding=None)
 
                 self.event_manager.handle(ModelLoaded(self, filename))
+            except MergeConflictDetected:
+                self.filename = None
+                error_handler(
+                    message=gettext("Merge conflict in model “{filename}”.").format(
+                        filename=filename
+                    ),
+                    secondary_message=gettext(
+                        "It looks like this model file contains a merge conflict."
+                    ),
+                    window=self.main_window.window,
+                )
+                # For now load the default model until we allow users to resolve the merge conflict.
+                load_default_model(self.element_factory)
             except Exception:
                 self.filename = None
                 error_handler(
@@ -165,7 +179,6 @@ class FileManager(Service, ActionProvider):
                     window=self.main_window.window,
                 )
                 load_default_model(self.element_factory)
-                raise
             finally:
                 if done:
                     done()
