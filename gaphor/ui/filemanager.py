@@ -133,12 +133,15 @@ class FileManager(Service, ActionProvider):
                 status_window.destroy()
 
         create_status_window()
-        self._load(filename, ModelLoaded(self, filename), queue, done)
+        self._load(filename, queue, done)
 
     def load_template(self, template):
-        self._load(template, ModelLoaded(self))
+        storage.load(template, self.element_factory, self.modeling_language)
+        self.event_manager.handle(ModelLoaded(self))
 
-    def _load(self, filename, model_loaded_event, queue=None, done=None):
+    def _load(self, filename: Path, queue=None, done=None):
+        assert isinstance(filename, Path)
+
         # Use low prio, so screen updates do happen
         @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
         def async_loader():
@@ -146,12 +149,12 @@ class FileManager(Service, ActionProvider):
                 try:
                     yield from open_model(encoding="utf-8")
                 except UnicodeDecodeError:
+                    # try to load without encoding, for older models saved on windows
                     yield from open_model(encoding=None)
 
-                self.event_manager.handle(model_loaded_event)
+                self.event_manager.handle(ModelLoaded(self, filename))
             except Exception:
                 self.filename = None
-                log.exception(f"Unable to open model “{filename}”.", stack_info=True)
                 error_handler(
                     message=gettext("Unable to open model “{filename}”.").format(
                         filename=filename
