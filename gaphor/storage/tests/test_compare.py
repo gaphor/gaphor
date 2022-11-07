@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.core.modeling import Diagram, Element, ElementFactory
+from gaphor.core.modeling import Diagram, Element, ElementFactory, PendingChange
 from gaphor.storage.compare import ADD, REMOVE, UPDATE, UnmatchableModel, compare
 
 
@@ -37,7 +37,6 @@ def test_added_element(current, incoming):
     assert change.op is ADD
     assert change.element_id == diagram.id
     assert change.element_name == "Diagram"
-    assert change.element_type == Diagram
 
 
 def test_added_element_with_attribute(current, incoming):
@@ -49,7 +48,6 @@ def test_added_element_with_attribute(current, incoming):
     assert elem_change.op is ADD
     assert elem_change.element_id == diagram.id
     assert elem_change.element_name == "Diagram"
-    assert elem_change.element_type == Diagram
 
     assert attr_change.op is ADD
     assert attr_change.element_id == diagram.id
@@ -68,7 +66,6 @@ def test_added_element_with_reference(current, incoming):
     assert change.op is ADD
     assert change.element_id == diagram.id
     assert change.element_name == "Diagram"
-    assert change.element_type == Diagram
 
     assert ref_change.op is ADD
     assert ref_change.element_id == diagram.id
@@ -90,7 +87,6 @@ def test_removed_element(current, incoming):
     assert change.op is REMOVE
     assert change.element_id == diagram.id
     assert change.element_name == "Diagram"
-    assert change.element_type == Diagram
 
 
 def test_changed_value(current, incoming):
@@ -125,6 +121,17 @@ def test_changed_reference(current, incoming):
     assert update_ref.element_id == current_diagram.id
     assert update_ref.property_name == "element"
     assert update_ref.property_ref == incoming_element.id
+
+
+def test_pending_changes_end_up_in_current_model(current, incoming):
+    diagram = incoming.create(Diagram)
+    element = incoming.create(Element)
+    current.create_as(Element, element.id)
+    diagram.element = element
+
+    changes = set(compare(current, incoming))
+
+    assert changes == set(current.select(PendingChange))
 
 
 def test_types_should_match(current, incoming):

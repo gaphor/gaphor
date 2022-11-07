@@ -1,38 +1,19 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import Iterable
 
-from gaphor.core.modeling import Element, ElementFactory
+from gaphor.core.modeling import (
+    Element,
+    ElementChange,
+    ElementFactory,
+    RefChange,
+    ValueChange,
+)
 from gaphor.core.modeling.collection import collection
 
 ADD = 1
 REMOVE = 2
 UPDATE = 3
-
-
-@dataclass
-class ElementChange:
-    op: int
-    element_id: str
-    element_name: str
-    element_type: type[Element] | None
-
-
-@dataclass
-class ValueChange:
-    op: int
-    element_id: str
-    property_name: str
-    property_value: str | int
-
-
-@dataclass
-class RefChange:
-    op: int
-    element_id: str
-    property_name: str
-    property_ref: str
 
 
 class UnmatchableModel(Exception):
@@ -45,37 +26,49 @@ class UnmatchableModel(Exception):
 def compare(
     current: ElementFactory, incoming: ElementFactory
 ) -> Iterable[ElementChange | ValueChange | RefChange]:
+    """Compare two models.
+
+    Changes are recorded in the current model as `PendingChange` objects
+    (`ElementChange`, `ValueChange`, `RefChange`). Returns an iterable
+    of the added change objects
+    """
     current_keys = set(current.keys())
     incoming_keys = set(incoming.keys())
 
+    def create(type, **kwargs):
+        e = current.create(type)
+        for name, value in kwargs.items():
+            setattr(e, name, value)
+        return e
+
     for key in current_keys.difference(incoming_keys):
         e = current[key]
-        yield ElementChange(
+        yield create(
+            ElementChange,
             op=REMOVE,
             element_name=type(e).__name__,
-            element_type=type(e),
             element_id=key,
         )
 
     for key in incoming_keys.difference(current_keys):
         e = incoming[key]
-        yield ElementChange(
+        yield create(
+            ElementChange,
             op=ADD,
             element_name=type(e).__name__,
-            element_type=type(e),
             element_id=key,
         )
-        yield from updated_properties(None, e)
+        yield from updated_properties(None, e, create)
 
     for key in current_keys.intersection(incoming_keys):
         c = current[key]
         i = incoming[key]
         if type(c) is not type(i):
             raise UnmatchableModel(c, i)
-        yield from updated_properties(c, i)
+        yield from updated_properties(c, i, create)
 
 
-def updated_properties(current, incoming):
+def updated_properties(current, incoming, create):
     changes: list[ValueChange | RefChange] = []
 
     def save_func(name, value):
@@ -84,7 +77,8 @@ def updated_properties(current, incoming):
             # Allow values to be None
             if (value and value.id) != (other and other.id):
                 changes.append(
-                    RefChange(
+                    create(
+                        RefChange,
                         op=UPDATE if current else ADD,
                         element_id=incoming.id,
                         property_name=name,
@@ -95,7 +89,8 @@ def updated_properties(current, incoming):
             value_ids = {v.id for v in value}
             other_ids = {o.id for o in other} if other else set()
             changes.extend(
-                RefChange(
+                create(
+                    RefChange,
                     op=ADD,
                     element_id=incoming.id,
                     property_name=name,
@@ -105,7 +100,8 @@ def updated_properties(current, incoming):
                 if v.id not in other_ids
             )
             changes.extend(
-                RefChange(
+                create(
+                    RefChange,
                     op=REMOVE,
                     element_id=incoming.id,
                     property_name=name,
@@ -117,7 +113,8 @@ def updated_properties(current, incoming):
         else:
             if value != other:
                 changes.append(
-                    ValueChange(
+                    create(
+                        ValueChange,
                         op=UPDATE if current else ADD,
                         element_id=incoming.id,
                         property_name=name,
