@@ -187,7 +187,7 @@ class FileManager(Service, ActionProvider):
             return
 
         main_window = self.main_window
-        queue: Queue[int] = Queue(0)
+        queue: Queue[int] = Queue()
         status_window = StatusWindow(
             gettext("Saving…"),
             gettext("Saving model to {filename}").format(filename=filename),
