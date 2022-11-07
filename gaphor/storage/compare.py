@@ -35,11 +35,6 @@ class RefChange:
     property_ref: str
 
 
-@dataclass
-class ChangeSet:
-    changes: list[ElementChange | ValueChange | RefChange]
-
-
 class UnmatchableModel(Exception):
     def __init__(self, current, incoming):
         super().__init__(f"Incompatible types {current} != {incoming}")
