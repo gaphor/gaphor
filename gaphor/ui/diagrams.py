@@ -377,7 +377,7 @@ class Diagrams(UIComponent, ActionProvider):
                     )
                     return
                 elif event.element is widget.get_child().diagram_page.diagram:
-                    widget.set_title(event.new_value)
+                    widget.set_title(event.new_value or "")
                     return
 
 
