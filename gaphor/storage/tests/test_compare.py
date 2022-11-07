@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor.core.modeling import Diagram, Element, ElementFactory
-from gaphor.storage.compare import ADD, REMOVE, compare
+from gaphor.storage.compare import ADD, REMOVE, UPDATE, UnmatchableModel, compare
 
 
 @pytest.fixture
@@ -34,7 +34,7 @@ def test_added_element(current, incoming):
 
     change = next(compare(current, incoming))
 
-    assert change.type is ADD
+    assert change.op is ADD
     assert change.element_id == diagram.id
     assert change.element_name == "Diagram"
     assert change.element_type == Diagram
@@ -46,12 +46,12 @@ def test_added_element_with_attribute(current, incoming):
 
     elem_change, attr_change = list(compare(current, incoming))
 
-    assert elem_change.type is ADD
+    assert elem_change.op is ADD
     assert elem_change.element_id == diagram.id
     assert elem_change.element_name == "Diagram"
     assert elem_change.element_type == Diagram
 
-    assert attr_change.type is ADD
+    assert attr_change.op is ADD
     assert attr_change.element_id == diagram.id
     assert attr_change.property_name == "name"
     assert attr_change.property_value == "Foo"
@@ -63,17 +63,22 @@ def test_added_element_with_reference(current, incoming):
     current.create_as(Element, element.id)
     diagram.element = element
 
-    change, ref_change = list(compare(current, incoming))
+    change, ref_change, other_ref = list(compare(current, incoming))
 
-    assert change.type is ADD
+    assert change.op is ADD
     assert change.element_id == diagram.id
     assert change.element_name == "Diagram"
     assert change.element_type == Diagram
 
-    assert ref_change.type is ADD
+    assert ref_change.op is ADD
     assert ref_change.element_id == diagram.id
     assert ref_change.property_name == "element"
     assert ref_change.property_ref == element.id
+
+    assert other_ref.op is ADD
+    assert other_ref.element_id == element.id
+    assert other_ref.property_name == "ownedDiagram"
+    assert other_ref.property_ref == diagram.id
 
 
 def test_removed_element(current, incoming):
@@ -82,7 +87,49 @@ def test_removed_element(current, incoming):
 
     change = next(compare(current, incoming))
 
-    assert change.type is REMOVE
+    assert change.op is REMOVE
     assert change.element_id == diagram.id
     assert change.element_name == "Diagram"
     assert change.element_type == Diagram
+
+
+def test_changed_value(current, incoming):
+    current_diagram = current.create(Diagram)
+    current_diagram.name = "Old"
+    incoming_diagram = incoming.create_as(Diagram, current_diagram.id)
+    incoming_diagram.name = "New"
+
+    change = next(compare(current, incoming))
+
+    assert change.op is UPDATE
+    assert change.element_id == current_diagram.id
+    assert change.property_name == "name"
+    assert change.property_value == "New"
+
+
+def test_changed_reference(current, incoming):
+    current_diagram = current.create(Diagram)
+    current_element = current.create(Element)
+    incoming_diagram = incoming.create_as(Diagram, current_diagram.id)
+    incoming_element = incoming.create_as(Element, current_element.id)
+    incoming_diagram.element = incoming_element
+
+    add_ref, update_ref = sorted(compare(current, incoming), key=lambda c: c.op)
+
+    assert add_ref.op is ADD
+    assert add_ref.element_id == incoming_element.id
+    assert add_ref.property_name == "ownedDiagram"
+    assert add_ref.property_ref == current_diagram.id
+
+    assert update_ref.op is UPDATE
+    assert update_ref.element_id == current_diagram.id
+    assert update_ref.property_name == "element"
+    assert update_ref.property_ref == incoming_element.id
+
+
+def test_types_should_match(current, incoming):
+    current_diagram = current.create(Diagram)
+    incoming.create_as(Element, current_diagram.id)
+
+    with pytest.raises(UnmatchableModel):
+        next(compare(current, incoming))
