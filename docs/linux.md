@@ -10,6 +10,20 @@ Older releases are available from [GitHub](https://github.com/gaphor/gaphor/rele
 
 ## Development Environment
 
+There are two ways to set up a development environment:
+
+1. [GNOME Builder](#gnome-builder), ideal for “drive by” contributions.
+2. [A local environment](#a-local-environment).
+
+### GNOME Builder
+
+Open [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) 43 or newer, [clone the
+repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
+Check if the _Build Profile_ is set to `org.gaphor.Gaphor.json`. If so, hit the _Run_ button to start the application.
+
+
+### A Local Environment
+
 To set up a development environment with Linux, you first need a fairly new
 Linux distribution version. For example, the latest Ubuntu LTS or newer, Arch,
 Debian Testing, SUSE Tumbleweed, or similar. Gaphor depends on newer versions of

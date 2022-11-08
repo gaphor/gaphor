@@ -81,7 +81,7 @@ nb_execution_show_tb = True
 nb_execution_raise_on_error = True
 nb_render_markdown_format = "myst"
 
-myst_heading_anchors = 2
+myst_heading_anchors = 3
 
 gaphor_models = {
     "connect": "connect.gaphor",
