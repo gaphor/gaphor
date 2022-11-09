@@ -5,8 +5,8 @@ from gaphor.storage.changeset import ADD, REMOVE, UPDATE, UnmatchableModel, comp
 
 
 @pytest.fixture
-def current():
-    return ElementFactory()
+def current(element_factory):
+    return element_factory
 
 
 @pytest.fixture
@@ -29,7 +29,7 @@ def test_similar_element_factories(current, incoming):
     assert not change_set
 
 
-def test_added_element(current, incoming):
+def test_added_element(current, incoming, saver):
     diagram = incoming.create(Diagram)
 
     change = next(compare(current, incoming))
@@ -37,6 +37,9 @@ def test_added_element(current, incoming):
     assert change.op is ADD
     assert change.element_id == diagram.id
     assert change.element_name == "Diagram"
+
+    with open("conflict.gaphor", "w") as f:
+        f.write(saver())
 
 
 def test_added_element_with_attribute(current, incoming):
