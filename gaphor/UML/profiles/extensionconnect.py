@@ -48,7 +48,6 @@ class ExtensionConnect(DirectionalRelationshipConnect):
                 ):
                     return
 
-            # TODO: make element at head end update!
             c1.request_update()
 
             # Find all associations and determine if the properties on

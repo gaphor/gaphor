@@ -189,7 +189,6 @@ class attribute(umlproperty, Generic[T]):
     Element.attr = attribute('attr', types.StringType, '')
     """
 
-    # TODO: check if lower and upper are actually needed for attributes
     def __init__(
         self,
         name: str,
@@ -507,7 +506,6 @@ class association(umlproperty):
 
             composite = self.composite
             for value in list(values):
-                # TODO: make normal unlinking work through this method.
                 self.delete(obj, value)
                 if composite:
                     value.unlink()
@@ -676,14 +674,9 @@ class derived(umlproperty, Generic[T]):
     def propagate(self, event):
         """Re-emit state change for the derived properties as Derived*Event's.
 
-        TODO: We should fetch the old and new state of the namespace item in
-        stead of the old and new values of the item that changed.
-
-        If multiplicity is [0..1]:
-          send DerivedSet if len(union) < 2
-        if multiplicity is [*]:
-          send DerivedAdded and DerivedDeleted
-            if value not in derived union and
+        If multiplicity is [0..1]:   send DerivedSet if len(union) < 2
+        if multiplicity is [*]:   send DerivedAdded and DerivedDeleted
+        if value not in derived union and
         """
         if event.property not in self.subsets:
             return
@@ -692,11 +685,6 @@ class derived(umlproperty, Generic[T]):
 
         # mimic the events for Set/Add/Delete
         if self.upper == 1:
-            # This is a [0..1] event
-            # TODO: This is an error: [0..*] associations may be used for updating [0..1] associations
-            # assert isinstance(
-            #     event, AssociationSet
-            # ), f"Can only handle [0..1] set-events, not {event} for {event.element}"
             old_value = hasattr(event.element, self._name) and self.get(event.element)
             # Make sure unions are created again
             self.version += 1
@@ -770,14 +758,9 @@ class derivedunion(derived[T]):
     def propagate(self, event):
         """Re-emit state change for the derived union (as Derived*Event's).
 
-        TODO: We should fetch the old and new state of the namespace item in
-        stead of the old and new values of the item that changed.
-
-        If multiplicity is [0..1]:
-          send DerivedSet if len(union) < 2
-        if multiplicity is [*]:
-          send DerivedAdded and DerivedDeleted
-            if value not in derived union and
+        If multiplicity is [0..1]:   send DerivedSet if len(union) < 2
+        if multiplicity is [*]:   send DerivedAdded and DerivedDeleted
+        if value not in derived union and
         """
         if event.property not in self.subsets:
             return

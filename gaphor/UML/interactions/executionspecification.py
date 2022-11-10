@@ -13,7 +13,7 @@ lifeline.
     ExecutionOccurrenceSpecification.covered <--> Lifeline.coveredBy
     ExecutionOccurrenceSpecification.execution <--> ExecutionSpecification.execution
 
-TODO:ExecutionSpecification is abstract. Should use either
+NB. ExecutionSpecification is abstract. Should use either
 ActionExecutionSpecification or BehaviorExecutionSpecification.
 What's the difference?
 

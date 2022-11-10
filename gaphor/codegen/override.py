@@ -58,7 +58,6 @@ class Overrides:
             rest = lines[1:]
             words = line.split()
 
-            # TODO: Create a mech to define dependencies
             if words[0] == "override":
                 m = OVERRIDE_RE.match(line.strip())
                 if not m:

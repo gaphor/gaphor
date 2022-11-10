@@ -7,11 +7,6 @@ Plan:
    for line ends.
 """
 
-# TODO: for Association.postload(): in some cases where the association ends
-#   are connected to the same Class, the head_end property is connected to the
-#   tail end and visa versa.
-
-
 from math import atan2, pi
 from typing import Optional
 
