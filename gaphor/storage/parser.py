@@ -21,12 +21,10 @@ takes a long time. The yielded values are the percentage of the file read.
 
 from __future__ import annotations
 
-import io
 import logging
 import os
 from collections import OrderedDict
-from typing import IO
-from xml.sax import handler
+from xml.sax import SAXParseException, handler, make_parser, xmlreader
 
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 
@@ -77,6 +75,10 @@ XMLNS = "http://gaphor.sourceforge.net/model"
 
 
 class ParserException(Exception):
+    pass
+
+
+class MergeConflictDetected(Exception):
     pass
 
 
@@ -298,93 +300,53 @@ def parse(filename) -> dict[str, element]:
     return loader.elements
 
 
-def parse_generator(filename, loader):
+class ErrorHandler:
+    def error(self, exception):
+        raise exception from None
+
+    def fatalError(self, exception):
+        raise exception from None
+
+    def warning(self, exception):
+        log.warning(exception)
+
+
+def parse_generator(file_obj, loader):
     """The generator based version of parse().
 
-    parses the file filename and load it with ContentHandler loader.
+    parses the file and load it with ContentHandler loader. Returns a
+    progress percentage.
     """
+    assert file_obj.seekable()
     assert isinstance(loader, GaphorLoader), "loader should be a GaphorLoader"
-    from xml.sax import make_parser
 
+    parser = new_parser(loader)
+    file_size = get_file_size(file_obj)
+    count = 0
+
+    for line in file_obj:
+        try:
+            parser.feed(line)
+        except SAXParseException as e:
+            if line.startswith("<<<<<"):
+                raise MergeConflictDetected from e
+            raise
+        count += len(line)
+        yield (count * 100) / file_size
+
+
+def new_parser(loader):
     parser = make_parser()
+    assert isinstance(parser, xmlreader.IncrementalParser)
 
     parser.setFeature(handler.feature_namespaces, 1)
     parser.setContentHandler(loader)
-
-    try:
-        # returns only a progress percentage
-        yield from parse_file(filename, parser)
-    except UnicodeDecodeError:
-        # Fall back on default encoding
-        yield from parse_file(filename, parser, encoding=None)
+    parser.setErrorHandler(ErrorHandler())
+    return parser
 
 
-class ProgressGenerator:
-    """A generator that yields the progress of taking from a file input object
-    and feeding it into an output object.
-
-    The supplied file object is neither opened not closed by this
-    generator.  The file object is assumed to already be opened for
-    reading and that it will be closed elsewhere.
-    """
-
-    def __init__(self, input, output, block_size=512):
-        """Initialize the progress generator.
-
-        The input parameter is a file object.  The output parameter is
-        usually a SAX parser but can be anything that implements a
-        feed() method.  The block size is the size of each block that is
-        read from the input.
-        """
-
-        self.input = input
-        self.output = output
-        self.block_size = block_size
-        if isinstance(self.input, io.IOBase):
-            orig_pos = self.input.tell()
-            self.file_size = self.input.seek(0, 2)
-            self.input.seek(orig_pos, os.SEEK_SET)
-        elif isinstance(self.input, str):
-            self.file_size = len(self.input)
-
-    def __iter__(self):
-        """Return a generator that yields the progress of reading data from the
-        input and feeding it into the output.
-
-        The progress yielded in each iteration is the percentage of data
-        read, relative to the to input file size.
-        """
-
-        block = self.input.read(self.block_size)
-        read_size = len(block)
-
-        while block:
-            self.output.feed(block)
-            block = self.input.read(self.block_size)
-            read_size += len(block)
-            yield (read_size * 100) / self.file_size
-
-
-def parse_file(filename, parser, encoding: str | None = "utf-8"):
-    """Parse the supplied file using the supplied parser.
-
-    The parser parameter should be a GaphorLoader instance.  The
-    filename parameter can be an open file descriptor instance or the
-    name of a file.  The progress percentage of the parser is yielded.
-    """
-
-    is_fd = True
-
-    if isinstance(filename, io.IOBase):
-        file_obj: IO | io.IOBase = filename
-    else:
-        is_fd = False
-        file_obj = open(filename, encoding=encoding)
-
-    try:
-        yield from ProgressGenerator(file_obj, parser)
-    finally:
-        parser.close()
-
-        if not is_fd:
-            file_obj.close()
+def get_file_size(file_obj):
+    orig_pos = file_obj.tell()
+    file_size = file_obj.seek(0, os.SEEK_END)
+    file_obj.seek(orig_pos)
+    return file_size

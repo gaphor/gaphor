@@ -21,7 +21,8 @@ def test_cyclic_diagram_bug(element_factory, modeling_language, test_models):
     loaded from within the mainloop (which will delay all updates).
     """
     path = test_models / "dbus.gaphor"
-    load(path, element_factory, modeling_language)
+    with path.open() as file_obj:
+        load(file_obj, element_factory, modeling_language)
 
 
 def test_cyclic_diagram_bug_idle(element_factory, modeling_language, test_models):
@@ -34,7 +35,8 @@ def test_cyclic_diagram_bug_idle(element_factory, modeling_language, test_models
     def handler():
         try:
             path = test_models / "dbus.gaphor"
-            load(path, element_factory, modeling_language)
+            with path.open() as file_obj:
+                load(file_obj, element_factory, modeling_language)
         finally:
             Gtk.main_quit()
 
@@ -46,7 +48,8 @@ def test_cyclic_diagram_bug_idle(element_factory, modeling_language, test_models
 
 
 def test_association_ends_are_set(element_factory, modeling_language, test_models):
-    load(test_models / "association-ends.gaphor", element_factory, modeling_language)
+    with (test_models / "association-ends.gaphor").open() as file_obj:
+        load(file_obj, element_factory, modeling_language)
     composite = next(
         element_factory.select(
             lambda e: isinstance(e, UML.Association) and e.name == "composite"

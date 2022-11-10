@@ -9,8 +9,8 @@ from gaphor.UML.actions import ActionItem, ControlFlowItem
 class TestActionIssue:
     def test_it(self, element_factory, modeling_language, test_models):
         """Test an issue when loading a freshly created action diagram."""
-        path = test_models / "action-issue.gaphor"
-        storage.load(path, element_factory, modeling_language)
+        with (test_models / "action-issue.gaphor").open() as f:
+            storage.load(f, element_factory, modeling_language)
 
         actions = element_factory.lselect(UML.Action)
         flows = element_factory.lselect(UML.ControlFlow)

@@ -7,7 +7,7 @@ from pathlib import Path
 from queue import Queue
 
 from gaphas.decorators import g_async
-from gi.repository import GLib, Gtk
+from gi.repository import Gtk
 
 if Gtk.get_major_version() == 4:
     from gi.repository import Adw
@@ -24,6 +24,7 @@ from gaphor.event import (
     SessionShutdownRequested,
 )
 from gaphor.storage import storage
+from gaphor.storage.parser import MergeConflictDetected
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
 from gaphor.ui.statuswindow import StatusWindow
@@ -118,7 +119,7 @@ class FileManager(Service, ActionProvider):
         queue: Queue[int] = Queue(0)
         status_window = None
 
-        @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
+        @g_async()
         def create_status_window():
             nonlocal status_window
             status_window = StatusWindow(
@@ -133,29 +134,41 @@ class FileManager(Service, ActionProvider):
                 status_window.destroy()
 
         create_status_window()
-        self._load(filename, ModelLoaded(self, filename), queue, done)
+        self._load_async(filename, queue, done)
 
     def load_template(self, template):
-        self._load(template, ModelLoaded(self))
+        storage.load(template, self.element_factory, self.modeling_language)
+        self.event_manager.handle(ModelLoaded(self))
 
-    def _load(self, filename, model_loaded_event, queue=None, done=None):
+    def _load_async(self, filename: Path, queue=None, done=None):
+        assert isinstance(filename, Path)
+
         # Use low prio, so screen updates do happen
-        @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
+        @g_async()
         def async_loader():
             try:
-                for percentage in storage.load_generator(
-                    filename,
-                    self.element_factory,
-                    self.modeling_language,
-                ):
-                    if queue:
-                        queue.put(percentage)
-                    yield percentage
+                try:
+                    yield from open_model(encoding="utf-8")
+                except UnicodeDecodeError:
+                    # try to load without encoding, for older models saved on windows
+                    yield from open_model(encoding=None)
 
-                self.event_manager.handle(model_loaded_event)
+                self.event_manager.handle(ModelLoaded(self, filename))
+            except MergeConflictDetected:
+                self.filename = None
+                error_handler(
+                    message=gettext("Merge conflict in model “{filename}”.").format(
+                        filename=filename
+                    ),
+                    secondary_message=gettext(
+                        "It looks like this model file contains a merge conflict."
+                    ),
+                    close=lambda: self.event_manager.handle(SessionShutdown(self)),
+                )
+                # For now load the default model until we allow users to resolve the merge conflict.
+                load_default_model(self.element_factory)
             except Exception:
                 self.filename = None
-                log.exception(f"Unable to open model “{filename}”.", stack_info=True)
                 error_handler(
                     message=gettext("Unable to open model “{filename}”.").format(
                         filename=filename
@@ -164,12 +177,22 @@ class FileManager(Service, ActionProvider):
                         "This file does not contain a valid Gaphor model."
                     ),
                     window=self.main_window.window,
+                    close=lambda: self.event_manager.handle(SessionShutdown(self)),
                 )
-                load_default_model(self.element_factory)
-                raise
             finally:
                 if done:
                     done()
+
+        def open_model(encoding):
+            with open(filename, encoding=encoding) as file_obj:
+                for percentage in storage.load_generator(
+                    file_obj,
+                    self.element_factory,
+                    self.modeling_language,
+                ):
+                    if queue:
+                        queue.put(percentage)
+                    yield percentage
 
         for _ in async_loader():
             pass
@@ -195,7 +218,7 @@ class FileManager(Service, ActionProvider):
             queue=queue,
         )
 
-        @g_async(priority=GLib.PRIORITY_DEFAULT_IDLE)
+        @g_async()
         def async_saver():
             try:
                 with filename.open("w", encoding="utf-8") as out:
@@ -291,7 +314,6 @@ class FileManager(Service, ActionProvider):
                     )
             # Gtk.ResponseType.REJECT is GTK3, discard is GTK4
             elif answer in [Gtk.ResponseType.REJECT, "discard"]:
-                confirm_shutdown()
                 confirm_shutdown()
 
         if self.main_window.model_changed:

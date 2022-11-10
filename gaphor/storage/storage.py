@@ -8,7 +8,6 @@ __all__ = ["load", "save"]
 
 import io
 import logging
-import os.path
 from functools import partial
 
 from gaphor import application
@@ -16,7 +15,7 @@ from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.presentation import Presentation
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.storage import parser
+from gaphor.storage.parser import GaphorLoader, parse_generator
 from gaphor.storage.xmlwriter import XMLWriter
 
 FILE_FORMAT_VERSION = "3.0"
@@ -179,8 +178,11 @@ def _load_elements_and_canvasitems(
         if version_lower_than(gaphor_version, (2, 9, 0)):
             elem = upgrade_flow_item_to_control_flow_item(elem, elements)
 
-        cls = modeling_language.lookup_element(elem.type)
-        assert cls, f"Type {elem.type} cannot be loaded: no such element"
+        if not (cls := modeling_language.lookup_element(elem.type)):
+            raise UnknownModelElementError(
+                f"Type {elem.type} cannot be loaded: no such element"
+            )
+
         if issubclass(cls, Presentation):
             diagram_id = elem.references["diagram"]
             diagram_elem = elements[diagram_id]
@@ -235,30 +237,24 @@ def load(filename, factory, modeling_language, status_queue=None):
             status_queue(status)
 
 
-def load_generator(filename, factory, modeling_language):
+def load_generator(file_obj, factory, modeling_language):
     """Load a file and create a model if possible.
 
     This function is a generator. It will yield values from 0 to 100 (%)
     to indicate its progression.
     """
-    if isinstance(filename, io.IOBase):
-        log.info("Loading file from file descriptor")
-    else:
-        log.info(f"Loading file {os.fsdecode(os.path.basename(filename))}")
-    try:
-        # Use the incremental parser and yield the percentage of the file.
-        loader = parser.GaphorLoader()
-        for percentage in parser.parse_generator(filename, loader):
-            if percentage:
-                yield percentage / 2
-            else:
-                yield percentage
-        elements = loader.elements
-        gaphor_version = loader.gaphor_version
+    assert isinstance(file_obj, io.IOBase)
 
-    except OSError:
-        log.exception("File could no be parsed")
-        raise
+    # Use the incremental parser and yield the percentage of the file.
+    loader = GaphorLoader()
+    for percentage in parse_generator(file_obj, loader):
+        if percentage:
+            yield percentage / 2
+        else:
+            yield percentage
+
+    elements = loader.elements
+    gaphor_version = loader.gaphor_version
 
     if version_lower_than(gaphor_version, (0, 17, 0)):
         raise ValueError(
@@ -269,18 +265,15 @@ def load_generator(filename, factory, modeling_language):
 
     factory.flush()
     with factory.block_events():
-        try:
-            for percentage in load_elements_generator(
-                elements, factory, modeling_language, gaphor_version
-            ):
-                if percentage:
-                    yield percentage / 2 + 50
-                else:
-                    yield percentage
-            yield 100
-        except Exception as e:
-            log.warning(f"file {filename} could not be loaded ({e})")
-            raise
+        for percentage in load_elements_generator(
+            elements, factory, modeling_language, gaphor_version
+        ):
+            if percentage:
+                yield percentage / 2 + 50
+            else:
+                yield percentage
+
+    yield 100
     factory.model_ready()
 
 
@@ -293,6 +286,10 @@ def version_lower_than(gaphor_version, version):
     parts = gaphor_version.split(".")
 
     return tuple(map(int, parts[:2])) < version[:2]
+
+
+class UnknownModelElementError(Exception):
+    pass
 
 
 # since 2.2.0

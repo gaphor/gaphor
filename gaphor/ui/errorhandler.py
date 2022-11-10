@@ -16,7 +16,7 @@ if Gtk.get_major_version() == 4:
 from gaphor.i18n import gettext
 
 
-def error_handler(message, secondary_message="", window=None):
+def error_handler(message, secondary_message="", window=None, close=None):
     _exc_type, _exc_value, exc_traceback = sys.exc_info()
 
     debug_body = (f"{secondary_message}\n\n" if secondary_message else "") + gettext(
@@ -53,6 +53,8 @@ def error_handler(message, secondary_message="", window=None):
         dialog.destroy()
         if exc_traceback and answer in [100, "debug"]:
             pdb.post_mortem(exc_traceback)
+        elif close:
+            close()
 
     dialog.connect("response", response)
     dialog.show()

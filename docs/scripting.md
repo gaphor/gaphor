@@ -57,11 +57,12 @@ event_manager = EventManager()
 with mock(["gi.repository.Gtk", "gi.repository.Gdk"]):
     modeling_language = ModelingLanguageService(event_manager=event_manager)
 
-storage.load(
-    "../models/Core.gaphor",
-    element_factory,
-    modeling_language,
-)
+with open("../models/Core.gaphor") as file_obj:
+    storage.load(
+        file_obj,
+        element_factory,
+        modeling_language,
+    )
 ```
 
 At this point the model is loaded in the `element_factory` and can be queried.

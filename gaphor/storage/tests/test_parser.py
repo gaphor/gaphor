@@ -4,7 +4,8 @@ from gaphor.storage.parser import parse
 
 
 def test_parsing_v2_1_model_with_grouped_item(test_models):
-    elements = parse(test_models / "node-component-v2.1.gaphor")
+    with open(test_models / "node-component-v2.1.gaphor") as f:
+        elements = parse(f)
 
     diagram = next(e for e in elements.values() if e.type == "Diagram")
     component_item = next(e for e in elements.values() if e.type == "ComponentItem")
