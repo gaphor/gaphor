@@ -19,7 +19,7 @@
 Gaphor is a UML and SysML modeling application written in Python.
 It is designed to be easy to use, while still being powerful. Gaphor implements a fully-compliant UML 2 data model, so it is much more than a picture drawing tool. You can use Gaphor to quickly visualize different aspects of a system as well as create complete, highly complex models.
 
-<img alt="Gaphor Demo" src="https://raw.githubusercontent.com/gaphor/gaphor/main/docs/images/gaphor-demo.gif" style="width: 68%; display: block; margin: 2em auto">
+<img alt="Gaphor Demo" src="https://raw.githubusercontent.com/gaphor/gaphor/main/docs/images/gaphor-demo.gif" style="width: 50%; display: block; margin: 2em auto">
 
 ## 📑 Table of Contents
 
