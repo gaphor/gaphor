@@ -17,7 +17,7 @@ from gaphas.connector import Handle, Port
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
 from gaphor.core.modeling import Diagram, Element, Presentation
-from gaphor.core.modeling.event import RevertibeEvent
+from gaphor.core.modeling.event import RevertibleEvent
 from gaphor.core.modeling.properties import association, redefine, relation
 from gaphor.diagram.copypaste import copy, paste
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
@@ -432,7 +432,7 @@ def paste_model(copy_data, diagram) -> Iterator[Element]:
     return iter(new_elements.values())
 
 
-class ItemConnected(RevertibeEvent):
+class ItemConnected(RevertibleEvent):
     def __init__(self, element, handle, connected, port):
         super().__init__(element)
         self.handle_index = element.handles().index(handle)
@@ -450,7 +450,7 @@ class ItemConnected(RevertibeEvent):
         connector.disconnect()
 
 
-class ItemDisconnected(RevertibeEvent):
+class ItemDisconnected(RevertibleEvent):
     def __init__(self, element, handle, connected, port):
         super().__init__(element)
         self.handle_index = element.handles().index(handle)
@@ -471,7 +471,7 @@ class ItemDisconnected(RevertibeEvent):
         target.handle(ItemConnected(target, handle, sink.item, sink.port))
 
 
-class ItemTemporaryDisconnected(RevertibeEvent):
+class ItemTemporaryDisconnected(RevertibleEvent):
     def __init__(self, element, handle, connected, port):
         super().__init__(element)
         self.handle_index = element.handles().index(handle)
@@ -491,7 +491,7 @@ class ItemTemporaryDisconnected(RevertibeEvent):
         target.handle(ItemReconnected(target, handle))
 
 
-class ItemReconnected(RevertibeEvent):
+class ItemReconnected(RevertibleEvent):
     def __init__(self, element, handle):
         super().__init__(element)
         self.handle_index = element.handles().index(handle)

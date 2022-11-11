@@ -12,7 +12,7 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver.constraint import BaseConstraint
 
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.event import RevertibeEvent
+from gaphor.core.modeling.event import RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
@@ -69,7 +69,7 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     connect(item, handle, target)
 
 
-class HandlePositionEvent(RevertibeEvent):
+class HandlePositionEvent(RevertibleEvent):
 
     requires_transaction = False
 

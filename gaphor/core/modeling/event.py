@@ -2,7 +2,7 @@
 from gaphor.event import ServiceEvent
 
 
-class RevertibeEvent:
+class RevertibleEvent:
     """Base type for all events that can be reversed.
 
     This event can be used as "low level" event for anything that should

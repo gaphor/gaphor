@@ -1,7 +1,7 @@
 from gaphas.connector import ConnectionSink, Connector
 from gaphas.segment import LineSegment, Segment
 
-from gaphor.core.modeling.event import RevertibeEvent
+from gaphor.core.modeling.event import RevertibleEvent
 from gaphor.diagram.connectors import ItemTemporaryDisconnected
 from gaphor.diagram.presentation import LinePresentation
 
@@ -47,7 +47,7 @@ class PresentationSegment(LineSegment):
             connector.connect(sink)
 
 
-class LineSplitSegmentEvent(RevertibeEvent):
+class LineSplitSegmentEvent(RevertibleEvent):
     def __init__(self, element, segment, count):
         super().__init__(element)
         self.segment = segment
@@ -58,7 +58,7 @@ class LineSplitSegmentEvent(RevertibeEvent):
         segment.merge_segment(self.segment, self.count)
 
 
-class LineMergeSegmentEvent(RevertibeEvent):
+class LineMergeSegmentEvent(RevertibleEvent):
     def __init__(self, element, segment, count):
         super().__init__(element)
         self.segment = segment
