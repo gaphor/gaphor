@@ -1,20 +1,15 @@
-try:
+import logging
+import sys
+
+from gi.repository import Gtk
+
+log = logging.getLogger(__name__)
+
+
+if sys.platform != "darwin" and Gtk.get_major_version() == 3:
     import gi
-    from gi.repository import GLib, Gtk
 
-    if Gtk.get_major_version() == 3:
-        gi.require_version("GtkosxApplication", "1.0")
-    else:
-        raise ValueError()
-except ValueError:
-
-    def macos_init(application):
-        pass
-
-else:
-    from gi.repository import GtkosxApplication
-
-    macos_app = GtkosxApplication.Application.get()
+    macos_app = None
 
     def open_file(macos_app, path, application):
         if path == __file__:
@@ -29,13 +24,28 @@ else:
         return not quit
 
     def macos_init(application):
+        try:
+            gi.require_version("GtkosxApplication", "1.0")
+        except ValueError:
+            log.warning("GtkosxApplication not found")
+            return
+
+        from gi.repository import GtkosxApplication
+
+        global macos_app
+        if macos_app:
+            return
+
+        macos_app = GtkosxApplication.Application.get()
+
         macos_app.connect("NSApplicationOpenFile", open_file, application)
         macos_app.connect(
             "NSApplicationBlockTermination", block_termination, application
         )
 
+elif sys.platform == "darwin" and Gtk.get_major_version == 4:
 
-if Gtk.get_major_version == 4:
+    from gi.repository import GLib
 
     def new_shortcut_with_args(shortcut, name, *args):
         shortcut = Gtk.Shortcut.new(
@@ -58,6 +68,30 @@ if Gtk.get_major_version == 4:
 
     # Control-H: Delete the character to the left of the insertion point. Or use Delete.
     # Control-D: Delete the character to the right of the insertion point. Or use Fn-Delete.
+
+    for cls in (Gtk.Text, Gtk.TextView):
+        for shortcut, signal in [
+            ("<Meta>x", "cut-clipboard"),
+            ("<Meta>c", "copy-clipboard"),
+            ("<Meta>v", "paste-clipboard"),
+        ]:
+            cls.add_shortcut(
+                Gtk.Shortcut.new(
+                    trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
+                    action=Gtk.SignalAction.new(signal),
+                )
+            )
+
+        for shortcut, action in [
+            ("<Meta>z", "text.undo"),
+            ("<Meta><Shift>z", "text.redo"),
+        ]:
+            cls.add_shortcut(
+                Gtk.Shortcut.new(
+                    trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
+                    action=Gtk.NamedAction.new(action),
+                )
+            )
 
     # Gtk.Text
 
@@ -107,26 +141,10 @@ if Gtk.get_major_version == 4:
         )
     )
 
-    for cls in (Gtk.Text, Gtk.TextView):
-        for shortcut, signal in [
-            ("<Meta>x", "cut-clipboard"),
-            ("<Meta>c", "copy-clipboard"),
-            ("<Meta>v", "paste-clipboard"),
-        ]:
-            cls.add_shortcut(
-                Gtk.Shortcut.new(
-                    trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
-                    action=Gtk.SignalAction.new(signal),
-                )
-            )
+    def macos_init(application):
+        pass
 
-        for shortcut, action in [
-            ("<Meta>z", "text.undo"),
-            ("<Meta><Shift>z", "text.redo"),
-        ]:
-            cls.add_shortcut(
-                Gtk.Shortcut.new(
-                    trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
-                    action=Gtk.NamedAction.new(action),
-                )
-            )
+else:
+
+    def macos_init(application):
+        pass
