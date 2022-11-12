@@ -3,6 +3,7 @@ save files."""
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 from gi.repository import Gio, Gtk
@@ -27,9 +28,10 @@ def _file_dialog_with_filters(title, parent, action, filters):
     if parent:
         dialog.set_transient_for(parent)
 
-    for name, pattern, mime_type in filters:
-        dialog.add_filter(new_filter(name, pattern, mime_type))
-    dialog.add_filter(new_filter(gettext("All Files"), "*"))
+    if sys.platform != "darwin":
+        for name, pattern, mime_type in filters:
+            dialog.add_filter(new_filter(name, pattern, mime_type))
+        dialog.add_filter(new_filter(gettext("All Files"), "*"))
     return dialog
 
 
