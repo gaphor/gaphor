@@ -94,6 +94,13 @@ gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 "greeter" = "gaphor.ui.greeter:Greeter"
 "self_test" = "gaphor.ui.selftest:SelfTest"
 "error_reports" = "gaphor.plugins.errorreports:ErrorReports"
+"module_loader" = "gaphor.services.moduleloader:ModuleLoader"
+
+[tool.poetry.plugins."gaphor.modules"]
+"general_ui_components" = "gaphor.diagram.general.uicomponents:init"
+"uml_ui_components" = "gaphor.UML.uicomponents:init"
+"sysml_property_pages" = "gaphor.SysML.propertypages:init"
+"c4model_property_pages" = "gaphor.C4Model.propertypages:init"
 
 [tool.poetry.plugins."gaphor.services"]
 "component_registry" = "gaphor.services.componentregistry:ComponentRegistry"

@@ -1,10 +1,5 @@
 from gaphor.UML.classes import (
     classconnect,
-    classeseditors,
-    classespropertypages,
-    associationpropertypages,
-    dependencypropertypages,
-    enumerationpropertypages,
     containmentconnect,
     copypaste,
     interfaceconnect,

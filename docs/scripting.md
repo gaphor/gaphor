@@ -46,16 +46,13 @@ In versions before 2.13, an `EventManager` is required. In later versions, the
 
 
 ```{code-cell} ipython3
-from sphinx.ext.autodoc.mock import mock
 from gaphor.core.eventmanager import EventManager
 from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.storage import storage
 
 event_manager = EventManager()
 
-# Avoid loading GTK by using Sphinx’s mock function
-with mock(["gi.repository.Gtk", "gi.repository.Gdk"]):
-    modeling_language = ModelingLanguageService(event_manager=event_manager)
+modeling_language = ModelingLanguageService(event_manager=event_manager)
 
 with open("../models/Core.gaphor") as file_obj:
     storage.load(
@@ -68,10 +65,10 @@ with open("../models/Core.gaphor") as file_obj:
 At this point the model is loaded in the `element_factory` and can be queried.
 
 ```{note}
-A modeling language consists of the model elements, diagram items, and graphical
-components required to interact with the elements through the GUI. As a rule of
-thumb, you’ll need to have GTK (the GUI toolkit we use) installed to load a full
-featured modeling language.
+A modeling language consists of the model elements, and diagram items.
+Graphical components are loaded separately.
+For the most basic manupilations, GTK (the GUI toolkit we use) is not required,
+but you may run into situations where Gaphor tries to load the GTK library.
 
 One trick to avoid this (when generating Sphinx docs at least) is to use
 autodoc’s mock function to mock out the GTK and GDK libraries. However, Pango

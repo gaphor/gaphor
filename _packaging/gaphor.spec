@@ -78,7 +78,10 @@ a = Analysis(
     + copy_metadata("gaphor")
     + copy_metadata("gaphas"),
     hiddenimports=collect_entry_points(
-        "gaphor.services", "gaphor.appservices", "gaphor.modelinglanguages"
+        "gaphor.services",
+        "gaphor.appservices",
+        "gaphor.modelinglanguages",
+        "gaphor.modules",
     ),
     hooksconfig={
         "gi": {

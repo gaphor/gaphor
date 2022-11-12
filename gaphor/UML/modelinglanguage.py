@@ -6,7 +6,7 @@ from typing import Iterable
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import DiagramType, ToolboxDefinition
-from gaphor.UML import copypaste, diagramitems, uml  # noqa F401
+from gaphor.UML import diagramitems, uml
 from gaphor.UML.toolbox import uml_diagram_types, uml_toolbox_actions
 
 

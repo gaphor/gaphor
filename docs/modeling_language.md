@@ -26,15 +26,21 @@ language implementation can offer?
 * [Connectors](#connectors), allow diagram items to connect
 * [Copy/paste](#copy-and-paste) behavior when element copying is not trivial,
   for example with more than one element is involved
-* [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
 * [Grouping](#grouping), allow elements to be nested in one another
 * [Dropping](#dropping), allow elements to be dragged from the tree view onto a diagram
 * [Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent
-* [Instant (diagram) editor popups](#instant-diagram-editor-popups)
 
 The first three by functionalities are exposed by the `ModelingLanguage` class.
 The other functionalities can be extended by adding handlers to the respective
 generic functions.
+
+Modeling languages can also provide new UI components. Those components are not loaded
+directly when you import a modeling language package. Instead they should be imported via
+the `gaphor.modules` entrypoint.
+
+* [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
+* [Instant (diagram) editor popups](#instant-diagram-editor-popups)
+* Special diagram interactions
 
 
 ```{eval-rst}
@@ -101,18 +107,6 @@ To serialize the copied elements and deserialize them again, there are two funct
    ``lookup`` function is used to resolve references to other elements.
 ```
 
-## Editor property pages
-
-The editor page is constructed from snippets. For example: almost each element has a name,
-so there is a UI snippet that allows you to edit a name.
-
-Each property page (snippet) should inherit from `PropertyPageBase`.
-
-```{eval-rst}
-.. autoclass:: gaphor.diagram.propertypages.PropertyPageBase
-   :members:
-```
-
 ## Grouping
 
 Grouping is done by dragging one item on top of another, in a diagram or in the tree view.
@@ -162,6 +156,18 @@ A little dispatch function is used to determine if a model element can be remove
 .. function:: gaphor.diagram.deletable.deletable(element: Element) -> bool
 
    Determine if a model element can safely be removed.
+```
+
+## Editor property pages
+
+The editor page is constructed from snippets. For example: almost each element has a name,
+so there is a UI snippet that allows you to edit a name.
+
+Each property page (snippet) should inherit from `PropertyPageBase`.
+
+```{eval-rst}
+.. autoclass:: gaphor.diagram.propertypages.PropertyPageBase
+   :members:
 ```
 
 ## Instant (diagram) editor popups

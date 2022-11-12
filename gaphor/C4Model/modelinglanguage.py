@@ -2,8 +2,6 @@
 
 from typing import Iterable
 
-import gaphor.C4Model.iconname  # noqa
-import gaphor.C4Model.propertypages  # noqa
 from gaphor.abc import ModelingLanguage
 from gaphor.C4Model import c4model, diagramitems
 from gaphor.C4Model.toolbox import c4model_diagram_types, c4model_toolbox_actions
