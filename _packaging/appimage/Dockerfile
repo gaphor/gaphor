@@ -7,8 +7,8 @@ LABEL org.opencontainers.image.source=https://github.com/gaphor/gaphor
 
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
-    PY_VERSION="3.10" \
-    FONTCONFIG_VERSION="2.13.1" \
+    PY_VERSION="3.11" \
+    FONTCONFIG_VERSION="2.14.1" \
     DEBIAN_FRONTEND=noninteractive
 
 # Enable source lists for build-dep
@@ -70,15 +70,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-gi-dev \
     python3 \
     python3-dbus \
-    python3-docutils \
     python3-dev \
     python3-flake8 \
     python3-pytest \
+    python3-lxml \
+    python3-wheel \
     ragel \
     shared-mime-info \
     trang \
     xmlto \
     yelp-tools \
+    libarchive-dev \
+    libsqlite3-dev \
+    libyaml-dev \
+    cmake \
 `# Dependency missed by jhbuild sysdeps` \
     libxrandr-dev \
 `# Dependency for building a deb package` \
@@ -126,7 +131,8 @@ RUN pip install gi-docgen
 ENV CHECKOUT=/root/jhbuild/checkout \
     LD_LIBRARY_PATH="/root/jhbuild/install/lib" \
     PKG_CONFIG_PATH="/root/jhbuild/install/lib/pkgconfig" \
-    PATH="/root/jhbuild/install/bin:/root/.local/bin:/root/.cargo/bin:$PATH" \
+    PATH="/root/jhbuild/install/bin:/root/jhbuild/install/local/bin:/root/.local/bin:/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/jhbuild/install/local/lib/python3.11/dist-packages" \
+    PYTHONPATH="/root/jhbuild/install/local/lib/python3.11/dist-packages" \
     JHBUILD_RUN_AS_ROOT=""
 
 # Install jhbuild
@@ -140,6 +146,7 @@ RUN mkdir -p $CHECKOUT \
 
 # Configure jhbuild
 COPY jhbuildrc /root/.config/jhbuildrc
+COPY gnome-suites-core-deps-latest.modules $CHECKOUT/jhbuild/modulesets/
 
 # Build GTK, GtkSourceView, and gobject-introspection
 RUN jhbuild build \
