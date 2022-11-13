@@ -5,7 +5,7 @@ on:
   release:
     types: [published, prereleased]
 env:
-  python_version: '3.10'
+  python_version: '3.11'
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
 
 jobs:
@@ -133,32 +133,6 @@ jobs:
           chmod +x ${{ needs.linux-appimage.outputs.appimage }}
           xvfb-run ./${{ needs.linux-appimage.outputs.appimage }} --self-test
 
-  linux-gtk3:
-    needs: lint
-    runs-on: ubuntu-20.04
-    timeout-minutes: 30
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
-    env:
-      GAPHOR_USE_GTK: 3
-    steps:
-      - run: >
-          sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
-          gir1.2-gtk-3.0 libgirepository1.0-dev libgtksourceview-4-dev upx graphviz
-      - uses: actions/checkout@v3.1.0
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - uses: actions/setup-python@v4.3.0
-        with:
-          python-version: ${{ env.python_version }}
-      - name: Use Python Dependency Cache
-        uses: actions/cache@v3.0.11
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
-      - name: Install Dependencies and Test
-        id: setup_and_test
-        uses: ./.github/actions/setup_and_test
-
   macos:
     needs: lint
     runs-on: macos-latest
@@ -279,7 +253,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/setup-python@v4.3.0
         with:
-          python-version: "3.11"
+          python-version: ${{ env.python_version }}
       - name: GTK binaries move git binary
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
@@ -338,7 +312,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4.3.0
         with:
-          python-version: "3.11"
+          python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
         uses: actions/cache@v3.0.11
         with:
