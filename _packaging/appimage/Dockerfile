@@ -146,7 +146,11 @@ RUN mkdir -p $CHECKOUT \
 
 # Configure jhbuild
 COPY jhbuildrc /root/.config/jhbuildrc
-COPY gnome-suites-core-deps-latest.modules $CHECKOUT/jhbuild/modulesets/
+
+# Fix newer version of python3-lxml is needed for Python 3.11, this can be removed once upstream update merged:
+# https://gitlab.gnome.org/GNOME/jhbuild/-/merge_requests/205
+RUN sed -i -- 's/version="4.6.2"/version="4.9.1"/g' $CHECKOUT/jhbuild/modulesets/gnome-suites-core-deps-latest.modules
+RUN sed -i -- 's/cd11c7e8d21af997ee8079037fff88f16fda188a9776eb4b81c7e4c9c0a7d7fc/fe749b052bb7233fe5d072fcb549221a8cb1a16725c47c37e42b0b9cb3ff2c3f/g' $CHECKOUT/jhbuild/modulesets/gnome-suites-core-deps-latest.modules
 
 # Build GTK, GtkSourceView, and gobject-introspection
 RUN jhbuild build \
