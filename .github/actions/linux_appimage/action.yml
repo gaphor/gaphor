@@ -18,7 +18,7 @@ runs:
       shell: bash
     - name: Build AppImage
       env:
-        GAPHOR_PKG_GTK: "3"
+        GAPHOR_PKG_GTK: "4"
       run: |
         jhbuild shell
         poetry run poe package
