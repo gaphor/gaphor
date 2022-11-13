@@ -22,8 +22,7 @@ def apply_element_change(
             element_type, change.element_id, diagram=diagram
         )
     elif change.op == REMOVE:
-        element = element_factory.lookup(change.element_id)
-        if element:
+        if element := element_factory.lookup(change.element_id):
             element.unlink()
 
 
