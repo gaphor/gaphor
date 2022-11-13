@@ -9,11 +9,8 @@ from gaphor.core.modeling import (
     RefChange,
     ValueChange,
 )
+from gaphor.core.modeling.changeset import ADD, REMOVE, UPDATE
 from gaphor.core.modeling.collection import collection
-
-ADD = 1
-REMOVE = 2
-UPDATE = 3
 
 
 class UnmatchableModel(Exception):
