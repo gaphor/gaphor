@@ -21,7 +21,7 @@ module_autogenargs['librsvg'] = '--enable-vala=no'
 
 mesonargs = '--buildtype=release'
 module_mesonargs['gtksourceview'] = '-Dvapi=false --buildtype=release'
-module_mesonargs['libadwaita'] = '-Dvapi=false -Dexamples=false -Dtests=false  --buildtype=release'
+module_mesonargs['libadwaita'] = '-Dintrospection=enabled -Dvapi=false -Dexamples=false -Dtests=false  --buildtype=release'
 module_mesonargs['gtk4'] = '-Dmedia-gstreamer=disabled -Dprint-cups=disabled --buildtype=release'
 module_mesonargs['gdk-pixbuf'] = '-Dman=false --buildtype=release'
 module_mesonargs['gobject-introspection'] = '-Dcairo=enabled --buildtype=release'
