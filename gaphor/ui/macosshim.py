@@ -7,7 +7,10 @@ try:
     else:
         raise ValueError()
 except ValueError:
-    macos_init = None
+
+    def macos_init(application):
+        pass
+
 else:
     from gi.repository import GtkosxApplication
 

@@ -121,7 +121,7 @@ class Box:
     def __init__(
         self,
         *children,
-        style: Style = None,
+        style: Style | None = None,
         draw: Callable[[Box, DrawContext, Rectangle], None] | None = None,
     ):
         if style is None:
@@ -313,7 +313,7 @@ class IconBox:
 
 
 class Text:
-    def __init__(self, text=lambda: "", width=lambda: -1, style: Style = None):
+    def __init__(self, text=lambda: "", width=lambda: -1, style: Style | None = None):
         if style is None:
             style = {}
         self._text = text if callable(text) else lambda: text

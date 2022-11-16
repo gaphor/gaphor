@@ -57,7 +57,7 @@ def merge_styles(*styles: Style) -> Style:
         style.update(s)
 
     if abs_font_size and style["font-size"] in FONT_SIZE_VALUES:
-        style["font-size"] = abs_font_size * FONT_SIZE_VALUES[style["font-size"]]  # type: ignore[index]
+        style["font-size"] = abs_font_size * FONT_SIZE_VALUES[style["font-size"]]  # type: ignore[index,operator]
 
     if "opacity" in style:
         opacity = style["opacity"]

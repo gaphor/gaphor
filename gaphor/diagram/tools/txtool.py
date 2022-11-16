@@ -1,4 +1,6 @@
-from typing import Iterable, List
+from __future__ import annotations
+
+from typing import Iterable
 
 from gi.repository import Gtk
 
@@ -9,7 +11,7 @@ from gaphor.transaction import Transaction
 class TxData:
     def __init__(self, event_manager):
         self.event_manager = event_manager
-        self.txs: List[Transaction] = []
+        self.txs: list[Transaction] = []
 
     def begin(self):
         self.txs.append(Transaction(self.event_manager))
@@ -21,7 +23,7 @@ class TxData:
 
 
 def transactional_tool(
-    *tools: Gtk.Gesture, event_manager: EventManager = None
+    *tools: Gtk.Gesture, event_manager: EventManager | None = None
 ) -> Iterable[Gtk.Gesture]:
     tx_data = TxData(event_manager)
     for tool in tools:

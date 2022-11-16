@@ -114,8 +114,7 @@ def run(args: list[str]) -> int:
         try:
             application = Application()
             apply_application_actions(application, gtk_app)
-            if macos_init:
-                macos_init(application)
+            macos_init(application)
             event_manager = application.get_service("event_manager")
             event_manager.subscribe(on_session_created)
             event_manager.subscribe(on_quit)
