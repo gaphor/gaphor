@@ -197,7 +197,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self,
         diagram: Diagram,
         id=None,
-        style: Style = None,
+        style: Style | None = None,
         shape_head=None,
         shape_middle=None,
         shape_tail=None,

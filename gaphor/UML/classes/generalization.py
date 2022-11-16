@@ -1,5 +1,7 @@
 """Generalization --"""
 
+from __future__ import annotations
+
 from gaphor import UML
 from gaphor.core.modeling import DrawContext
 from gaphor.core.modeling.diagram import Diagram
@@ -15,7 +17,7 @@ from gaphor.UML.recipes import stereotypes_str
     tail=UML.Generalization.general,
 )
 class GeneralizationItem(LinePresentation):
-    def __init__(self, diagram: Diagram, id: str = None):
+    def __init__(self, diagram: Diagram, id: str | None = None):
         super().__init__(
             diagram,
             id,

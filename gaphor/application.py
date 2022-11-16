@@ -217,7 +217,7 @@ class Session(Service):
 
     def shutdown(self):
         if self.component_registry:
-            for name, srv in reversed(list(self.component_registry.all(Service))):  # type: ignore[misc]
+            for name, srv in reversed(list(self.component_registry.all(Service))):  # type: ignore[type-abstract]
                 self.shutdown_service(name, srv)
 
     def shutdown_service(self, name, srv):

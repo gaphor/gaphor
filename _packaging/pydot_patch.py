@@ -19,13 +19,13 @@ def graphviz_path():
         if sys.platform == "win32":
             return os.path.join(sys._MEIPASS, "graphviz")
         else:
-            return sys._MEIPASS  # type: ignore[attr-defined]
+            return sys._MEIPASS
     return None
 
 
 def graphviz_plugin_path():
     if hasattr(sys, "_MEIPASS"):
-        return os.path.join(sys._MEIPASS, "graphviz")  # type: ignore[attr-defined]
+        return os.path.join(sys._MEIPASS, "graphviz")
     return None
 
 

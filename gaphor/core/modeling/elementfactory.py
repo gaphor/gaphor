@@ -81,7 +81,7 @@ class ElementFactory(Service):
         """Create a new model element of type ``type``."""
         return self.create_as(type, generate_id())
 
-    def create_as(self, type: type[T], id: Id, diagram: Diagram = None) -> T:
+    def create_as(self, type: type[T], id: Id, diagram: Diagram | None = None) -> T:
         """Create a new model element of type 'type' with 'id' as its ID.
 
         This method should only be used when loading models, since it

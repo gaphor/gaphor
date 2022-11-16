@@ -26,7 +26,7 @@ class ComponentRegistry(Service):
 
         E.g. service("element_factory")
         """
-        return self.get(Service, name)  # type: ignore[misc] # noqa: F821
+        return self.get(Service, name)  # type: ignore[type-abstract] # noqa: F821
 
     def register(self, name: str, component: object) -> None:
         self._comp.append((name, component))
