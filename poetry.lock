@@ -1492,8 +1492,8 @@ docs = ["sphinx", "sphinx-rtd-theme", "sphinx-copybutton", "myst-nb"]
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.9, <3.11"
-content-hash = "628b642a98aa7866986bb2325b97af5099c5818e40fbff3b7b0397770c6681bd"
+python-versions = "^3.9, <3.12"
+content-hash = "c5b44f4ad4bd93aeb457a51482cb2f7f38d0089e57516ab11684a831cec60ce2"
 
 [metadata.files]
 alabaster = [
@@ -1529,6 +1529,7 @@ backcall = [
 ]
 better-exceptions = [
     {file = "better_exceptions-0.3.3-py3-none-any.whl", hash = "sha256:9c70b1c61d5a179b84cd2c9d62c3324b667d74286207343645ed4306fdaad976"},
+    {file = "better_exceptions-0.3.3-py3.8.egg", hash = "sha256:bf111d0c9994ac1123f29c24907362bed2320a86809c85f0d858396000667ce2"},
     {file = "better_exceptions-0.3.3.tar.gz", hash = "sha256:e4e6bc18444d5f04e6e894b10381e5e921d3d544240418162c7db57e9eb3453b"},
 ]
 certifi = [
