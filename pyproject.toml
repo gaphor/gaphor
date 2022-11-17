@@ -216,6 +216,32 @@ known_third_party = ["cairo", "gaphas", "generic", "gi", "pytest", "tinycss2", "
 skip = "flatpak,.venv,build,dist"
 skip_glob = "gaphor/diagram/general/__init__.py,gaphor/UML/__init__.py,gaphor/UML/*/__init__.py,gaphor/RAAML/stpa/__init__.py"
 
+[tool.mypy]
+python_version = 3.9
+warn_return_any = true
+warn_unused_configs = true
+warn_redundant_casts = true
+check_untyped_defs = true
+strict_optional = true
+disallow_any_explicit = true
+show_error_codes = true
+ignore_missing_imports=true
+warn_unused_ignores = true
+namespace_packages = true
+
+[[tool.mypy.overrides]]
+module = [
+    "gaphor.core.modeling.coremodel",
+    "gaphor.UML.uml",
+    "gaphor.SysML.sysml",
+]
+warn_unused_ignores = false
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = "*.tests.*"
+ignore_errors = true
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
