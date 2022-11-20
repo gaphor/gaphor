@@ -129,7 +129,7 @@ RUN apt-get update \
 RUN pip install gi-docgen
 
 ENV CHECKOUT=/root/jhbuild/checkout \
-    LD_LIBRARY_PATH="/root/jhbuild/install/lib" \
+    LD_LIBRARY_PATH="/root/jhbuild/install/lib:/root/jhbuild/install/local/lib" \
     PKG_CONFIG_PATH="/root/jhbuild/install/lib/pkgconfig" \
     PATH="/root/jhbuild/install/bin:/root/jhbuild/install/local/bin:/root/.local/bin:/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/jhbuild/install/local/lib/python3.11/dist-packages" \
     PYTHONPATH="/root/jhbuild/install/local/lib/python3.11/dist-packages" \
