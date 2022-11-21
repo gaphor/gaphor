@@ -178,6 +178,8 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
         uses: ./.github/actions/macos_dependencies
+        with:
+          gtk_version: ${{ env.GAPHOR_USE_GTK }}
       - name: Set up Python
         uses: actions/setup-python@v4.3.0
         with:
