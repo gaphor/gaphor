@@ -169,8 +169,8 @@ jobs:
     outputs:
       artifact: ${{ steps.create.outputs.artifact }}
     env:
-      LDFLAGS: -L/usr/local/opt/python@${{ env.python_version }}/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${{ env.python_version }}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      LDFLAGS: -L/usr/local/opt/python@${python_version}/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
       GAPHOR_USE_GTK: 3
     steps:
       - uses: actions/checkout@v3.1.0
@@ -233,8 +233,8 @@ jobs:
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     env:
-      LDFLAGS: -L/usr/local/opt/python@${{ env.python_version }}/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${{ env.python_version }}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
+      LDFLAGS: -L/usr/local/opt/python@${python_version}/lib
+      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
       - uses: actions/checkout@v3.1.0
         with:
