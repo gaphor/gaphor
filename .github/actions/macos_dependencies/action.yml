@@ -1,9 +1,17 @@
 name: 'Install macOS Dependencies'
 description: 'Installs macOS GTK and Python Dependencies'
+inputs:
+  gtk_version:
+    description: 'GTK version'
+    default: '4'
 runs:
   using: composite
   steps:
-    - run: >
-        brew install gobject-introspection gtk+3 gtk4 gtksourceview4 gtksourceview5 adwaita-icon-theme
-        gtk-mac-integration create-dmg upx libadwaita graphviz
+    - if: inputs.gtk_version == '3'
+      run: brew install gtk+3 gtksourceview4 gtk-mac-integration
+      shell: bash
+    - if: inputs.gtk_version == '4'
+      run:  brew install gtk4 gtksourceview5 libadwaita adwaita-icon-theme
+      shell: bash
+    - run:  brew install gobject-introspection graphviz create-dmg upx
       shell: bash
