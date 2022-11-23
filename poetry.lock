@@ -1027,6 +1027,33 @@ tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
+name = "pytest-archon"
+version = "0.0.1"
+description = "Rule your architecture like a real developer"
+category = "dev"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+pytest = ">=7.2"
+pytest-check = "*"
+
+[package.extras]
+dev = ["black", "coverage", "flake8", "mypy"]
+
+[[package]]
+name = "pytest-check"
+version = "1.2.0"
+description = "A pytest plugin that allows multiple failures per test."
+category = "dev"
+optional = false
+python-versions = ">3.7"
+
+[package.dependencies]
+colorama = ">=0.4.6"
+pytest = "*"
+
+[[package]]
 name = "pytest-cov"
 version = "3.0.0"
 description = "Pytest plugin for measuring coverage."
@@ -1502,7 +1529,7 @@ docs = ["sphinx", "sphinx-rtd-theme", "sphinx-copybutton", "myst-nb"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.9,<3.12"
-content-hash = "a6510ad7e800d17dcbf3de540914d4e8fd10c22c8e2eba96c9f8b66e93d39978"
+content-hash = "f71c0863f54d7cd65a04092ffddf082627abe20344f20a777d7c412e9fcd9df1"
 
 [metadata.files]
 alabaster = [
@@ -2090,6 +2117,14 @@ pytest = [
     {file = "pytest-7.2.0-py3-none-any.whl", hash = "sha256:892f933d339f068883b6fd5a459f03d85bfcb355e4981e146d2c7616c21fef71"},
     {file = "pytest-7.2.0.tar.gz", hash = "sha256:c4014eb40e10f11f355ad4e3c2fb2c6c6d1919c73f3b5a433de4708202cade59"},
 ]
+pytest-archon = [
+    {file = "pytest-archon-0.0.1.tar.gz", hash = "sha256:82d8304af77bf08ca982dccd4dc25c0ce8a2271a77a1f4a66e615f1b6e50dc9e"},
+    {file = "pytest_archon-0.0.1-py3-none-any.whl", hash = "sha256:384f2d0c736524e8730501e6a8e4b244e81b2496858602f85ce561c3b43de55f"},
+]
+pytest-check = [
+    {file = "pytest-check-1.2.0.tar.gz", hash = "sha256:b0d6bbf152c7d3adb0a181bf11928bde9acfaf0e97e582018d6d68593a71d021"},
+    {file = "pytest_check-1.2.0-py3-none-any.whl", hash = "sha256:23d51214f87c8e0e17859b0611b2127cc7045b92e1c5144514dd961ac5aa866b"},
+]
 pytest-cov = [
     {file = "pytest-cov-3.0.0.tar.gz", hash = "sha256:e7f0f5b1617d2210a2cabc266dfe2f4c75a8d32fb89eafb7ad9d06f6d076d470"},
     {file = "pytest_cov-3.0.0-py3-none-any.whl", hash = "sha256:578d5d15ac4a25e5f961c938b85a05b09fdaae9deef3bb6de9a6e766622ca7a6"},
@@ -2134,6 +2169,13 @@ pyyaml = [
     {file = "PyYAML-6.0-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:f84fbc98b019fef2ee9a1cb3ce93e3187a6df0b2538a651bfb890254ba9f90b5"},
     {file = "PyYAML-6.0-cp310-cp310-win32.whl", hash = "sha256:2cd5df3de48857ed0544b34e2d40e9fac445930039f3cfe4bcc592a1f836d513"},
     {file = "PyYAML-6.0-cp310-cp310-win_amd64.whl", hash = "sha256:daf496c58a8c52083df09b80c860005194014c3698698d1a57cbcfa182142a3a"},
+    {file = "PyYAML-6.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:d4b0ba9512519522b118090257be113b9468d804b19d63c71dbcf4a48fa32358"},
+    {file = "PyYAML-6.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:81957921f441d50af23654aa6c5e5eaf9b06aba7f0a19c18a538dc7ef291c5a1"},
+    {file = "PyYAML-6.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:afa17f5bc4d1b10afd4466fd3a44dc0e245382deca5b3c353d8b757f9e3ecb8d"},
+    {file = "PyYAML-6.0-cp311-cp311-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:dbad0e9d368bb989f4515da330b88a057617d16b6a8245084f1b05400f24609f"},
+    {file = "PyYAML-6.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:432557aa2c09802be39460360ddffd48156e30721f5e8d917f01d31694216782"},
+    {file = "PyYAML-6.0-cp311-cp311-win32.whl", hash = "sha256:bfaef573a63ba8923503d27530362590ff4f576c626d86a9fed95822a8255fd7"},
+    {file = "PyYAML-6.0-cp311-cp311-win_amd64.whl", hash = "sha256:01b45c0191e6d66c470b6cf1b9531a771a83c1c4208272ead47a3ae4f2f603bf"},
     {file = "PyYAML-6.0-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:897b80890765f037df3403d22bab41627ca8811ae55e9a722fd0392850ec4d86"},
     {file = "PyYAML-6.0-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:50602afada6d6cbfad699b0c7bb50d5ccffa7e46a3d738092afddc1f9758427f"},
     {file = "PyYAML-6.0-cp36-cp36m-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:48c346915c114f5fdb3ead70312bd042a953a8ce5c7106d5bfb1a5254e47da92"},
