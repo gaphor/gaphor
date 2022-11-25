@@ -11,6 +11,9 @@ modules = [
 skip = [
     'appstream-glib',
     'vala',
+    'gtk+3',
+    'gi-docgen',
+    'gtk-doc',
 ]
 
 branches['gtk4'] = (None, 'gtk-4-8')
