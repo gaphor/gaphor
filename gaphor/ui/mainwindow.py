@@ -187,9 +187,13 @@ class MainWindow(Service, ActionProvider):
             comp = self.get_ui_component(name)
             return comp.open()
 
-        with importlib.resources.open_text("gaphor.ui", "layout.xml") as f:
-            main_content = builder.get_object("main-content")
-            self.layout = deserialize(main_content, f.read(), _factory, self.properties)
+        main_content = builder.get_object("main-content")
+        self.layout = deserialize(
+            main_content,
+            (importlib.resources.files("gaphor.ui") / "layout.xml").read_text(),
+            _factory,
+            self.properties,
+        )
 
         self.action_group, shortcuts = window_action_group(self.component_registry)
         self.window.insert_action_group("win", self.action_group)

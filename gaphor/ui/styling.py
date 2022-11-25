@@ -8,10 +8,11 @@ from gaphor.abc import Service
 class Styling(Service):
     def __init__(self):
         self.style_provider = Gtk.CssProvider()
-        with importlib.resources.path(
-            "gaphor.ui", f"styling-gtk{Gtk.get_major_version()}.css"
-        ) as css_file:
-            self.style_provider.load_from_path(str(css_file))
+        css_file = (
+            importlib.resources.files("gaphor.ui")
+            / f"styling-gtk{Gtk.get_major_version()}.css"
+        )
+        self.style_provider.load_from_path(str(css_file))
 
         self.init_styling()
         self.init_icon_theme()
@@ -36,7 +37,7 @@ class Styling(Service):
             if Gtk.get_major_version() == 3
             else Gtk.IconTheme.get_for_display(Gdk.Display.get_default())
         )
-        path = importlib.resources.files("gaphor") / "ui" / "icons"
+        path = importlib.resources.files("gaphor.ui") / "icons"
         if icon_theme:
             if Gtk.get_major_version() == 3:
                 icon_theme.append_search_path(str(path))

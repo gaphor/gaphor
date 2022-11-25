@@ -13,10 +13,9 @@ import xml.etree.ElementTree as etree
 log = logging.getLogger(__name__)
 
 try:
-    with importlib.resources.path("gaphor", "__init__.py") as path:
-        localedir = path.parent / "locale"
-        translate = _gettext.translation("gaphor", localedir=localedir, fallback=True)
-        gettext = translate.gettext
+    localedir = importlib.resources.files("gaphor") / "locale"
+    translate = _gettext.translation("gaphor", localedir=str(localedir), fallback=True)
+    gettext = translate.gettext
 
 except OSError as e:
     log.warning(f"No translations were found: {e}")
@@ -27,8 +26,8 @@ except OSError as e:
 
 @functools.lru_cache(maxsize=None)
 def translated_ui_string(package: str, ui_filename: str) -> str:
-    with importlib.resources.path(package, ui_filename) as ui_path:
-        ui_xml = etree.parse(ui_path)
+    with (importlib.resources.files(package) / ui_filename).open() as ui_file:
+        ui_xml = etree.parse(ui_file)
     for node in ui_xml.findall(".//*[@translatable='yes']"):
         node.text = gettext(node.text) if node.text else ""
         del node.attrib["translatable"]

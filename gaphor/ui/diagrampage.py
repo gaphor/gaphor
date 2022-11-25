@@ -34,8 +34,8 @@ log = logging.getLogger(__name__)
 
 @functools.lru_cache(maxsize=1)
 def placement_icon_base():
-    with importlib.resources.path("gaphor.ui", "placement-icon-base.png") as f:
-        return GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
+    f = importlib.resources.files("gaphor") / "ui" / "placement-icon-base.png"
+    return GdkPixbuf.Pixbuf.new_from_file_at_scale(str(f), 64, 64, True)
 
 
 if hasattr(GtkView, "set_css_name"):
