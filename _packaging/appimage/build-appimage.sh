@@ -17,10 +17,14 @@ function remove_excluded_files {
     while IFS= read -r line; do
         file="$(echo "${line}" | cut -d' ' -f1)"
         if [ ! "${file}" = "" ] && [ ! "${file}" = "#" ]; then
-            [ -f "${DIST_LOCATION}/{file}" ] && rm -fv "${DIST_LOCATION}/{file}"
-            echo "${file}"
+            if [ ! -f "${DIST_LOCATION}/${file}" ]; then
+              echo "${file} not found"
+            else
+              rm -fv "${DIST_LOCATION}/${file}"
+            fi
         fi
     done < "${DIR}/appimage/excludelist"
+    echo "Finished removing excluded files"
 }
 
 function create_package {
