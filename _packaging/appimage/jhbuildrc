@@ -18,6 +18,7 @@ skip = [
 
 branches['gtk4'] = (None, 'gtk-4-8')
 branches['glib'] = (None, 'glib-2-74')
+branches['librsvg'] = (None, 'librsvg-2.54')
 branches['libadwaita'] = (None, 'libadwaita-1-2')
 
 module_autogenargs['librsvg'] = '--enable-vala=no'
