@@ -21,7 +21,7 @@ branches['glib'] = (None, 'glib-2-74')
 branches['librsvg'] = (None, 'librsvg-2.54')
 branches['libadwaita'] = (None, 'libadwaita-1-2')
 
-module_autogenargs['librsvg'] = '--enable-vala=no'
+module_autogenargs['librsvg'] = '--enable-vala=no --enable-gtk-doc=no'
 
 mesonargs = '--buildtype=release'
 module_mesonargs['gtksourceview'] = '-Dvapi=false --buildtype=release'

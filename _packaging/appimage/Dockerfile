@@ -88,6 +88,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxrandr-dev \
 `# Dependency for building a deb package` \
     devscripts \
+`# Other Gaphor dependencies` \
+    graphviz \
 `# Python deadsnakes` \
     python$PY_VERSION \
     python$PY_VERSION-dev \
@@ -99,7 +101,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 `# fontconfig dependencies` \
  && apt-get build-dep -y fontconfig \
  && apt-get install -y --no-install-recommends uuid-dev \
- && rm -rf /var/lib/apt/lists/*
+ && apt-get autoremove -y \
+ && rm -rf /var/lib/apt/lists/* \
+ && rm packages-microsoft-prod.deb
 
 # Build updated fontconfig deb files
 RUN wget -q https://www.freedesktop.org/software/fontconfig/release/fontconfig-$FONTCONFIG_VERSION.tar.gz \
@@ -123,10 +127,8 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends curl \
   && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
   && apt-get remove -y curl \
+  && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/*
-
-# librsvg needs gi-docgen
-RUN pip install gi-docgen
 
 ENV CHECKOUT=/root/jhbuild/checkout \
     LD_LIBRARY_PATH="/root/jhbuild/install/lib:/root/jhbuild/install/local/lib" \
