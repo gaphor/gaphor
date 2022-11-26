@@ -7,8 +7,8 @@ LABEL org.opencontainers.image.source=https://github.com/gaphor/gaphor
 
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
-    PY_VERSION="3.10" \
-    FONTCONFIG_VERSION="2.13.1" \
+    PY_VERSION="3.11" \
+    FONTCONFIG_VERSION="2.14.1" \
     DEBIAN_FRONTEND=noninteractive
 
 # Enable source lists for build-dep
@@ -70,19 +70,26 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python-gi-dev \
     python3 \
     python3-dbus \
-    python3-docutils \
     python3-dev \
     python3-flake8 \
     python3-pytest \
+    python3-lxml \
+    python3-wheel \
     ragel \
     shared-mime-info \
     trang \
     xmlto \
     yelp-tools \
+    libarchive-dev \
+    libsqlite3-dev \
+    libyaml-dev \
+    cmake \
 `# Dependency missed by jhbuild sysdeps` \
     libxrandr-dev \
 `# Dependency for building a deb package` \
     devscripts \
+`# Other Gaphor dependencies` \
+    graphviz \
 `# Python deadsnakes` \
     python$PY_VERSION \
     python$PY_VERSION-dev \
@@ -94,7 +101,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 `# fontconfig dependencies` \
  && apt-get build-dep -y fontconfig \
  && apt-get install -y --no-install-recommends uuid-dev \
- && rm -rf /var/lib/apt/lists/*
+ && apt-get autoremove -y \
+ && rm -rf /var/lib/apt/lists/* \
+ && rm packages-microsoft-prod.deb
 
 # Build updated fontconfig deb files
 RUN wget -q https://www.freedesktop.org/software/fontconfig/release/fontconfig-$FONTCONFIG_VERSION.tar.gz \
@@ -118,15 +127,14 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends curl \
   && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
   && apt-get remove -y curl \
+  && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/*
 
-# librsvg needs gi-docgen
-RUN pip install gi-docgen
-
 ENV CHECKOUT=/root/jhbuild/checkout \
-    LD_LIBRARY_PATH="/root/jhbuild/install/lib" \
+    LD_LIBRARY_PATH="/root/jhbuild/install/lib:/root/jhbuild/install/local/lib" \
     PKG_CONFIG_PATH="/root/jhbuild/install/lib/pkgconfig" \
-    PATH="/root/jhbuild/install/bin:/root/.local/bin:/root/.cargo/bin:$PATH" \
+    PATH="/root/jhbuild/install/bin:/root/jhbuild/install/local/bin:/root/.local/bin:/root/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root/jhbuild/install/local/lib/python3.11/dist-packages" \
+    PYTHONPATH="/root/jhbuild/install/local/lib/python3.11/dist-packages" \
     JHBUILD_RUN_AS_ROOT=""
 
 # Install jhbuild
@@ -140,6 +148,11 @@ RUN mkdir -p $CHECKOUT \
 
 # Configure jhbuild
 COPY jhbuildrc /root/.config/jhbuildrc
+
+# Fix newer version of python3-lxml is needed for Python 3.11, this can be removed once upstream update merged:
+# https://gitlab.gnome.org/GNOME/jhbuild/-/merge_requests/205
+RUN sed -i -- 's/version="4.6.2"/version="4.9.1"/g' $CHECKOUT/jhbuild/modulesets/gnome-suites-core-deps-latest.modules
+RUN sed -i -- 's/cd11c7e8d21af997ee8079037fff88f16fda188a9776eb4b81c7e4c9c0a7d7fc/fe749b052bb7233fe5d072fcb549221a8cb1a16725c47c37e42b0b9cb3ff2c3f/g' $CHECKOUT/jhbuild/modulesets/gnome-suites-core-deps-latest.modules
 
 # Build GTK, GtkSourceView, and gobject-introspection
 RUN jhbuild build \

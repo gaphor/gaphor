@@ -1,21 +1,35 @@
 modules = [
     'pycairo',
     'pygobject',
-    'gtk+-3',
-    'gtksourceview-4',
-    'gobject-introspection',
+    'gtk4',
+    'gtksourceview',
     'adwaita-icon-theme',
     'hicolor-icon-theme',
-    'libcanberra-gtk3'
+    'libadwaita',
 ]
 
-# Disable Vala
-skip = ['vala']
-module_mesonargs['gtksourceview-4'] = '-Dvapi=false'
-module_autogenargs['librsvg'] = '--enable-vala=no'
+skip = [
+    'appstream-glib',
+    'vala',
+    'gtk+3',
+    'gi-docgen',
+    'gtk-doc',
+]
 
-module_mesonargs['gobject-introspection'] = '-Dcairo=enabled'
+branches['gtk4'] = (None, 'gtk-4-8')
+branches['glib'] = (None, 'glib-2-74')
+branches['librsvg'] = (None, 'librsvg-2.54')
+branches['libadwaita'] = (None, 'libadwaita-1-2')
 
-# Minimize and optimize what is downloaded and built
+module_autogenargs['librsvg'] = '--enable-vala=no --enable-gtk-doc=no'
+
 mesonargs = '--buildtype=release'
+module_mesonargs['gtksourceview'] = '-Dvapi=false --buildtype=release'
+module_mesonargs['libadwaita'] = '-Dintrospection=enabled -Dvapi=false -Dexamples=false -Dtests=false  --buildtype=release'
+module_mesonargs['gtk4'] = '-Dmedia-gstreamer=disabled -Dprint-cups=disabled --buildtype=release'
+module_mesonargs['gdk-pixbuf'] = '-Dman=false --buildtype=release'
+module_mesonargs['gobject-introspection'] = '-Dcairo=enabled --buildtype=release'
+
 shallow_clone = True
+ignore_suggests = True
+use_local_modulesets = True
