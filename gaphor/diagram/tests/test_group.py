@@ -21,6 +21,12 @@ def test_ungroup_diagram(element_factory):
     assert diagram.element is None
 
 
+def test_ungroup_no_parent(element_factory):
+    element = element_factory.create(Element)
+
+    assert ungroup(None, element)
+
+
 def test_do_not_ungroup_diagram_from_wrong_parent(element_factory):
     diagram = element_factory.create(Diagram)
     parent = element_factory.create(Element)

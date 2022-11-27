@@ -58,6 +58,13 @@ def ungroup(parent, element) -> bool:
     return False
 
 
+@ungroup.register(None, Element)
+def none_ungroup(none, element):
+    """In the rare (error?) case a model element has no parent, but is grouped
+    in a diagram, allow it to ungroup."""
+    return True
+
+
 @group.register(Element, Diagram)
 def diagram_group(element, diagram):
     diagram.element = element
