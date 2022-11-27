@@ -53,6 +53,20 @@ def test_services_package():
     )
 
 
+def test_storage_package():
+    (
+        archrule("Storage only depends on core functionality")
+        .match("gaphor.storage*")
+        .exclude("*.tests.*")
+        .may_import(*GAHOR_CORE)
+        .may_import("gaphor.diagram*")
+        .may_import("gaphor.storage*")
+        .may_import("gaphor.application", "gaphor.services.componentregistry")
+        .should_not_import("gaphor*")
+        .check(gaphor)
+    )
+
+
 def test_modeling_languages_do_not_depend_on_ui_package():
     (
         archrule("Modeling languages should not depend on the UI package")
