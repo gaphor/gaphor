@@ -1,12 +1,16 @@
 2.13.0
 ------
-- Windows and AppImage are built with GTK4
-- Many GTK4 improvements: About window, diagram tabs, message dialogs
-- Auto-layouting for diagrams
+- Auto-layout for diagrams
 - Relations to actors can connect below actor name
 - Export to EPS
 - Zoom with Ctrl+scroll wheel works again
-- Translation updates and bug fixes
+- Recent files is disabled if none are present
+- Windows and AppImage are upgraded to GTK4
+- Update packaging to use Python 3.11
+- Many GTK4 improvements: About window, diagram tabs, message dialogs
+- Ensure toolbox is always visible
+- Add additional tests around architectural rules
+- Many translation updates and bug fixes
 
 2.12.1
 ------

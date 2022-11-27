@@ -8,7 +8,7 @@
     <property name="application-icon">org.gaphor.Gaphor</property>
     <property name="developer-name">Arjan J. Molenaar and Dan Yeaw</property>
     <property name="title" translatable="yes">About Gaphor</property>
-    <property name="version">2.9.2</property>
+    <property name="version">2.13.0</property>
     <property name="copyright" translatable="yes">Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw.
 
 UML, SysML, and RAAML are either registered trademarks or trademarks of Object Management Group, Inc. in the United States and/or other countries.</property>
@@ -23,6 +23,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
     <property name="developers">Adam Boduch
       Arjan Molenaar
       Artur Wroblewski
+      Can Lehmann
       Christian Hoff
       Dan Yeaw
       Enno Groeper
@@ -52,7 +53,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
       ovari (hu)
       Óscar Fernández Díaz (es)
       Евгений Лежнин (ru)
-      vikdevelop (cs)</property>
+      vikdevelop (cs)
+      vanillajonathan (sv)</property>
     <property name="designers">Arjan Molenaar
       Dan Yeaw
       Tobias Bernard</property>
