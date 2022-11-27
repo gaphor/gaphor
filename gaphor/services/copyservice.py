@@ -8,7 +8,6 @@ from gaphor.abc import ActionProvider, Service
 from gaphor.core import Transaction, action
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.copypaste import copy, paste_full, paste_link
-from gaphor.ui.event import DiagramSelectionChanged
 
 if Gtk.get_major_version() == 3:
     copy_buffer: object = None
@@ -172,7 +171,5 @@ class CopyService(Service, ActionProvider):
             selection = view.selection
             selection.unselect_all()
             selection.select_items(*new_items)
-
-            self.event_manager.handle(DiagramSelectionChanged(view, None, new_items))
 
         self._paste(diagram, paster, select_items)
