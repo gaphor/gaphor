@@ -14,9 +14,7 @@ from gaphor.i18n import translated_ui_string
 def new_builder(ui_file):
     builder = Gtk.Builder()
     ui_file = f"{ui_file}.glade" if Gtk.get_major_version() == 3 else f"{ui_file}.ui"
-    builder.add_from_string(
-        translated_ui_string("gaphor.services.helpservice", ui_file)
-    )
+    builder.add_from_string(translated_ui_string("gaphor.ui.help", ui_file))
     return builder
 
 
@@ -49,9 +47,7 @@ class HelpService(Service, ActionProvider):
     @action(name="win.shortcuts")
     def shortcuts(self):
         builder = Gtk.Builder()
-        builder.add_from_string(
-            translated_ui_string("gaphor.services.helpservice", "shortcuts.ui")
-        )
+        builder.add_from_string(translated_ui_string("gaphor.ui.help", "shortcuts.ui"))
 
         shortcuts = builder.get_object("shortcuts-gaphor")
         shortcuts.set_modal(True)
