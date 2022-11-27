@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
-"POT-Creation-Date: 2022-10-18 21:01-0400\n"
+"POT-Creation-Date: 2022-11-27 16:18-0500\n"
 "PO-Revision-Date: 2021-08-31 14:20+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language: ko\n"
@@ -15,9 +15,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.3\n"
+"Generated-By: Babel 2.11.0\n"
 
-#: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:55
+#: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
 #: gaphor/ui/greeter.py:29
 msgid "C4 Model"
 msgstr "C4 모델"
@@ -109,7 +109,7 @@ msgstr "새 다이어그램(_D)"
 msgid "New State Machine Diagram"
 msgstr "새 다이어그램"
 
-#: gaphor/RAAML/modelinglanguage.py:17 gaphor/ui/greeter.py:28
+#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:28
 msgid "RAAML"
 msgstr "RAAML"
 
@@ -266,7 +266,7 @@ msgstr "추상 처리 상황"
 msgid "Generalization"
 msgstr "일반화"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:61
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:58
 msgid "Situation"
 msgstr "상황"
 
@@ -295,7 +295,7 @@ msgstr "안전하지 않은 제어 동작"
 msgid "Relevant To"
 msgstr "관련 대상"
 
-#: gaphor/SysML/modelinglanguage.py:18 gaphor/ui/greeter.py:27
+#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:27
 msgid "SysML"
 msgstr "SysML"
 
@@ -415,30 +415,30 @@ msgstr "요구"
 msgid "New Use Case Diagram"
 msgstr "새 다이어그램(_D)"
 
-#: gaphor/SysML/blocks/block.py:63
+#: gaphor/SysML/blocks/block.py:60
 #, fuzzy
 msgid "ControlStructure"
 msgstr "제어 구조"
 
-#: gaphor/SysML/blocks/block.py:65
+#: gaphor/SysML/blocks/block.py:62
 #, fuzzy
 msgid "block"
 msgstr "블록"
 
-#: gaphor/SysML/blocks/block.py:101
+#: gaphor/SysML/blocks/block.py:98
 msgid "parts"
 msgstr "부분"
 
-#: gaphor/SysML/blocks/block.py:112
+#: gaphor/SysML/blocks/block.py:109
 msgid "references"
 msgstr "참조"
 
-#: gaphor/SysML/blocks/block.py:123
+#: gaphor/SysML/blocks/block.py:120
 #, fuzzy
 msgid "values"
 msgstr "값"
 
-#: gaphor/SysML/blocks/block.py:140
+#: gaphor/SysML/blocks/block.py:137
 msgid "unnamed"
 msgstr "이름없음"
 
@@ -857,14 +857,18 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/classespropertypages.py:340
-#: gaphor/UML/classes/classespropertypages.py:427
+#: gaphor/UML/classes/classespropertypages.py:341
+#: gaphor/UML/classes/classespropertypages.py:430
+#: gaphor/UML/classes/propertypages.glade:944
+#: gaphor/UML/classes/propertypages.ui:817
 msgid "Static"
 msgstr "정적"
 
-#: gaphor/UML/classes/classespropertypages.py:427
+#: gaphor/UML/classes/classespropertypages.py:430
 #: gaphor/UML/classes/propertypages.glade:496
+#: gaphor/UML/classes/propertypages.glade:938
 #: gaphor/UML/classes/propertypages.ui:435
+#: gaphor/UML/classes/propertypages.ui:813
 msgid "Abstract"
 msgstr "추상"
 
@@ -904,15 +908,15 @@ msgstr "값 형식"
 msgid "dataType"
 msgstr "데이터형식"
 
-#: gaphor/UML/classes/dependency.py:43
+#: gaphor/UML/classes/dependency.py:44
 msgid "use"
 msgstr ""
 
-#: gaphor/UML/classes/dependency.py:44
+#: gaphor/UML/classes/dependency.py:45
 msgid "realize"
 msgstr ""
 
-#: gaphor/UML/classes/dependency.py:45
+#: gaphor/UML/classes/dependency.py:46
 #, fuzzy
 msgid "implements"
 msgstr "구현"
@@ -1034,13 +1038,6 @@ msgstr ""
 msgid "Show Attributes"
 msgstr "속성 표시"
 
-#: gaphor/UML/classes/propertypages.glade:415
-#: gaphor/UML/classes/propertypages.glade:713
-#: gaphor/UML/classes/propertypages.ui:370
-#: gaphor/UML/classes/propertypages.ui:624
-msgid "S"
-msgstr "S"
-
 #: gaphor/UML/classes/propertypages.glade:480
 #: gaphor/UML/classes/propertypages.ui:405
 msgid ""
@@ -1084,11 +1081,6 @@ msgstr "동작 표시"
 msgid "Operations"
 msgstr "동작"
 
-#: gaphor/UML/classes/propertypages.glade:700
-#: gaphor/UML/classes/propertypages.ui:611
-msgid "A"
-msgstr "A"
-
 #: gaphor/UML/classes/propertypages.glade:776
 #: gaphor/UML/classes/propertypages.ui:657
 msgid ""
@@ -1131,6 +1123,16 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:795
 msgid "Indirectly Instantiated"
 msgstr "간접 초기화"
+
+#: gaphor/UML/classes/propertypages.glade:937
+#: gaphor/UML/classes/propertypages.ui:812
+msgid "A."
+msgstr ""
+
+#: gaphor/UML/classes/propertypages.glade:943
+#: gaphor/UML/classes/propertypages.ui:816
+msgid "S."
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
 #, fuzzy
@@ -1377,8 +1379,7 @@ msgstr "포함"
 msgid "Extend"
 msgstr "확장"
 
-#: gaphor/diagram/diagramtoolbox.py:99
-#: gaphor/services/helpservice/shortcuts.ui:18
+#: gaphor/diagram/diagramtoolbox.py:99 gaphor/ui/help/shortcuts.ui:18
 msgid "General"
 msgstr "일반"
 
@@ -1433,16 +1434,24 @@ msgstr "모양새"
 msgid "Note or Remark"
 msgstr "참고 / 비고"
 
-#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:348
+#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
 msgid "Element can’t be represented on a diagram."
 msgstr ""
 
-#: gaphor/extensions/sphinx.py:65
+#: gaphor/extensions/sphinx.py:63
 msgid "No model file configured for model '{model_name}'."
 msgstr ""
 
-#: gaphor/extensions/sphinx.py:94
+#: gaphor/extensions/sphinx.py:92
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
+msgstr ""
+
+#: gaphor/plugins/autolayout/pydot.py:44
+msgid "Auto Layout"
+msgstr ""
+
+#: gaphor/plugins/autolayout/pydot.py:52
+msgid "Auto Layout (orthogonal)"
 msgstr ""
 
 #: gaphor/plugins/console/console.py:24
@@ -1494,6 +1503,19 @@ msgstr ""
 msgid "Export diagram as PDF"
 msgstr "다이어그램을 SVG로 내보내기"
 
+#: gaphor/plugins/diagramexport/__init__.py:88
+msgid "Export as EPS"
+msgstr ""
+
+#: gaphor/plugins/diagramexport/__init__.py:89
+msgid "Export diagram as Encapsulated PostScript"
+msgstr ""
+
+#: gaphor/plugins/diagramexport/__init__.py:95
+#, fuzzy
+msgid "Export diagram as EPS"
+msgstr "다이어그램을 SVG로 내보내기"
+
 #: gaphor/plugins/errorreports/errorreports.glade:7
 #: gaphor/plugins/errorreports/errorreports.py:65
 #: gaphor/plugins/errorreports/errorreports.ui:6
@@ -1540,170 +1562,13 @@ msgstr "XMI 파일로 모델 내보내기"
 msgid "All XMI Files"
 msgstr "모든 XMI 파일"
 
-#: gaphor/services/helpservice/about.ui:7 gaphor/ui/mainwindow.py:60
-msgid "About Gaphor"
-msgstr "가포 정보"
-
-#: gaphor/services/helpservice/about.ui:9
-#, fuzzy
-msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
-msgstr "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
-
-#: gaphor/services/helpservice/about.ui:10
-msgid "Gaphor is the simple modeling tool written in Python"
-msgstr "가포는 파이썬으로 작성한 간단한 모델링 도구입니다"
-
-#: gaphor/services/helpservice/about.ui:12
-msgid "Fork me on GitHub"
-msgstr "Fork me on GitHub"
-
-#: gaphor/services/helpservice/about.ui:30
-msgid ""
-"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-"you may not use this application except in compliance with the\n"
-"License. You may obtain a copy of the License at\n"
-"\n"
-"http://www.apache.org/licenses/LICENSE-2.0\n"
-"\n"
-"Unless required by applicable law or agreed to in writing, software\n"
-"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
-"express or implied. See the License for the specific language\n"
-"governing permissions and limitations under the License.\n"
-"\n"
-"---\n"
-"\n"
-"UML, SysML, and RAAML are either registered trademarks or\n"
-"trademarks of Object Management Group, Inc. in the United States\n"
-"and/or other countries.\n"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:24
-#, fuzzy
-msgid "Rename"
-msgstr "이름 바꾸기(_R)"
-
-#: gaphor/services/helpservice/shortcuts.ui:32
-msgid "Search"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:40
-msgid "Toggle property editor"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:48
-msgid "Close Diagram"
-msgstr "다이어그램 닫기"
-
-#: gaphor/services/helpservice/shortcuts.ui:56
-#: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
-#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:187
-#: gaphor/ui/elementeditor.ui:198
-#, fuzzy
-msgid "Preferences"
-msgstr "기본 설정"
-
-#: gaphor/services/helpservice/shortcuts.ui:64
-msgid "Quit Gaphor"
-msgstr "가포 끝내기"
-
-#: gaphor/services/helpservice/shortcuts.ui:75
-msgid "Files"
-msgstr "파일"
-
-#: gaphor/services/helpservice/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
-#, fuzzy
-msgid "New Model…"
-msgstr "새 모델"
-
-#: gaphor/services/helpservice/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
-#, fuzzy
-msgid "Open a Model…"
-msgstr "가포 모델 열기"
-
-#: gaphor/services/helpservice/shortcuts.ui:97 gaphor/ui/filemanager.py:312
-#: gaphor/ui/mainwindow.py:49
-msgid "Save"
-msgstr "저장"
-
-#: gaphor/services/helpservice/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
-msgid "Save As…"
-msgstr "다른 이름으로 저장…"
-
-#: gaphor/services/helpservice/shortcuts.ui:117
-#, fuzzy
-msgid "Undo and Redo"
-msgstr "정렬안함"
-
-#: gaphor/services/helpservice/shortcuts.ui:123
-#: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
-msgid "Undo"
-msgstr "실행 취소"
-
-#: gaphor/services/helpservice/shortcuts.ui:131
-#: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:90
-msgid "Redo"
-msgstr "다시 실행"
-
-#: gaphor/services/helpservice/shortcuts.ui:142
-msgid "Zoom"
-msgstr "확대/축소"
-
-#: gaphor/services/helpservice/shortcuts.ui:148
-#: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:106
-msgid "Zoom In"
-msgstr "확대"
-
-#: gaphor/services/helpservice/shortcuts.ui:156
-#: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:130
-msgid "Zoom Out"
-msgstr "축소"
-
-#: gaphor/services/helpservice/shortcuts.ui:164
-#: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:118
-msgid "Actual Size"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:174
-#, fuzzy
-msgid "Selections"
-msgstr "동작(복수)"
-
-#: gaphor/services/helpservice/shortcuts.ui:180
-msgid "Select All"
-msgstr "모두 선택"
-
-#: gaphor/services/helpservice/shortcuts.ui:188
-msgid "Deselect All"
-msgstr "모두 선택 취소"
-
-#: gaphor/services/helpservice/shortcuts.ui:199
-msgid "Copy and Paste"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:205
-msgid "Copy"
-msgstr "복사"
-
-#: gaphor/services/helpservice/shortcuts.ui:213
-msgid "Cut"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:221
-msgid "Paste (link defining elements)"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:229
-msgid "Paste (copy defining elements)"
-msgstr ""
-
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:57
-#: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:29
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
+#: gaphor/ui/mainwindow.py:239 gaphor/ui/mainwindow.ui:29
 #: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
 msgid "New model"
 msgstr "새 모델"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:60
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:64
 msgid "main"
 msgstr "메인"
 
@@ -2276,22 +2141,35 @@ msgstr ""
 msgid "Date"
 msgstr "데이터형식"
 
-#: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:12
+#: gaphor/ui/appfilemanager.py:19 gaphor/ui/filedialog.py:13
 msgid "All Gaphor Models"
 msgstr "모든 가포 모델"
 
-#: gaphor/ui/appfilemanager.py:46
+#: gaphor/ui/appfilemanager.py:49
+msgid "Switch to {name}?"
+msgstr ""
+
+#: gaphor/ui/appfilemanager.py:50
+#, fuzzy
 msgid ""
-"{filename} is already opened. Do you want to switch to the opened window "
+"{name} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr "{filename}을(를) 이미 열었습니다. 이미 열어둔 창으로 대신 전환하시겠습니까?"
 
-#: gaphor/ui/appfilemanager.py:68
+#: gaphor/ui/appfilemanager.py:69
+msgid "Open Again"
+msgstr ""
+
+#: gaphor/ui/appfilemanager.py:70
+msgid "Switch"
+msgstr ""
+
+#: gaphor/ui/appfilemanager.py:93
 #, fuzzy
 msgid "Open a Model"
 msgstr "가포 모델 열기"
 
-#: gaphor/ui/diagrampage.py:128 gaphor/ui/namespaceview.py:143
+#: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 #: gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<없음>"
@@ -2331,6 +2209,38 @@ msgstr ""
 "\n"
 "<b>팁:</b> 트리뷰의 항목을 검색하려면, 트리뷰의 항목을 선택한 후 입력을 시작하십시오. 검색 상자가 자동으로 나타납니다.\n"
 
+#: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
+#: gaphor/ui/help/shortcuts.ui:123
+msgid "Undo"
+msgstr "실행 취소"
+
+#: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:90
+#: gaphor/ui/help/shortcuts.ui:131
+msgid "Redo"
+msgstr "다시 실행"
+
+#: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:106
+#: gaphor/ui/help/shortcuts.ui:148
+msgid "Zoom In"
+msgstr "확대"
+
+#: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:118
+#: gaphor/ui/help/shortcuts.ui:164
+msgid "Actual Size"
+msgstr ""
+
+#: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:130
+#: gaphor/ui/help/shortcuts.ui:156
+msgid "Zoom Out"
+msgstr "축소"
+
+#: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
+#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:187
+#: gaphor/ui/elementeditor.ui:198 gaphor/ui/help/shortcuts.ui:56
+#, fuzzy
+msgid "Preferences"
+msgstr "기본 설정"
+
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:163
 msgid "Editors"
 msgstr "편집기"
@@ -2364,25 +2274,27 @@ msgstr ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">가포 스타일"
 " 시트</a>"
 
-#: gaphor/ui/errorhandler.py:25
+#: gaphor/ui/errorhandler.py:22
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr "가포를 명령행에서 실행한 것 같습니다. 디버깅 세션을 여시겠습니까?"
 
-#: gaphor/ui/errorhandler.py:28 gaphor/ui/errorhandler.py:31
+#: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:34
+#: gaphor/ui/errorhandler.py:43 gaphor/ui/errorhandler.py:48
 msgid "Close"
 msgstr ""
 
-#: gaphor/ui/errorhandler.py:28
-msgid "Start debug session"
+#: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:44
+#, fuzzy
+msgid "Start Debug Session"
 msgstr "디버깅 세션 시작"
 
-#: gaphor/ui/filedialog.py:32
+#: gaphor/ui/filedialog.py:34
 msgid "All Files"
 msgstr "모든 파일"
 
-#: gaphor/ui/filemanager.py:36
+#: gaphor/ui/filemanager.py:40
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2393,7 +2305,7 @@ msgstr ""
 "{exc}\n"
 "버그라 생각하신다면, 개발자에게 연락하십시오."
 
-#: gaphor/ui/filemanager.py:40
+#: gaphor/ui/filemanager.py:44
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2401,7 +2313,7 @@ msgstr ""
 "모델 저장에 필요한 권한이 없습니다.\n"
 "위치를 올바르게 입력했는지 확인하고 다시 시도하십시오."
 
-#: gaphor/ui/filemanager.py:44
+#: gaphor/ui/filemanager.py:48
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2410,7 +2322,7 @@ msgstr ""
 "모델을 저장할 장치에 충분한 공간이 없습니다.\n"
 "디스크 일부 공간을 비운 후 다시 시도하시거나 다른 위치에 저장하십시오."
 
-#: gaphor/ui/filemanager.py:47
+#: gaphor/ui/filemanager.py:51
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2420,56 +2332,69 @@ msgstr ""
 "{exc}\n"
 "위치를 올바르게 입력했는지 확인하고 다시 시도하십시오."
 
-#: gaphor/ui/filemanager.py:122
+#: gaphor/ui/filemanager.py:126
 msgid "Loading…"
 msgstr "불러오는 중..."
 
-#: gaphor/ui/filemanager.py:123
+#: gaphor/ui/filemanager.py:127
 msgid "Loading model from {filename}"
 msgstr "{filename}에서 모델 불러오는 중"
 
-#: gaphor/ui/filemanager.py:157
+#: gaphor/ui/filemanager.py:160
+#, fuzzy
+msgid "Merge conflict in model “{filename}”."
+msgstr "“{filename}” 모델을 열 수 없습니다."
+
+#: gaphor/ui/filemanager.py:163
+msgid "It looks like this model file contains a merge conflict."
+msgstr ""
+
+#: gaphor/ui/filemanager.py:173
 msgid "Unable to open model “{filename}”."
 msgstr "“{filename}” 모델을 열 수 없습니다."
 
-#: gaphor/ui/filemanager.py:160
+#: gaphor/ui/filemanager.py:176
 msgid "This file does not contain a valid Gaphor model."
 msgstr "이 파일에 적절한 가포 모델이 없습니다."
 
-#: gaphor/ui/filemanager.py:189
+#: gaphor/ui/filemanager.py:215
 msgid "Saving…"
 msgstr "저장중..."
 
-#: gaphor/ui/filemanager.py:190
+#: gaphor/ui/filemanager.py:216
 msgid "Saving model to {filename}"
 msgstr "{filename}으로 모델 저장하는 중"
 
-#: gaphor/ui/filemanager.py:207
+#: gaphor/ui/filemanager.py:233
 msgid "Unable to save model “{filename}”."
 msgstr "“{filename}” 모델을 저장할 수 없습니다."
 
-#: gaphor/ui/filemanager.py:244 gaphor/ui/filemanager.py:279
+#: gaphor/ui/filemanager.py:270 gaphor/ui/filemanager.py:306
 msgid "Save Gaphor Model As"
 msgstr "다른 이름으로 가포 모델 저장"
 
-#: gaphor/ui/filemanager.py:300
-#, fuzzy
-msgid "Save changes before closing?"
-msgstr "닫기 전 바뀐 모델을 저장하시겠습니까?"
+#: gaphor/ui/filemanager.py:326
+msgid "Save Changes?"
+msgstr ""
 
-#: gaphor/ui/filemanager.py:301
-#, fuzzy
-msgid "Closing will cause any unsaved changes to be discarded."
-msgstr "저장하지 않고 닫으면, 내용 바꾸기를 취소합니다."
+#: gaphor/ui/filemanager.py:327
+msgid ""
+"The open model contains unsaved changes. Changes which are not saved will"
+" be permanently lost."
+msgstr ""
 
-#: gaphor/ui/filemanager.py:308
-#, fuzzy
-msgid "Close without saving changes"
-msgstr "저장하지 않고 닫기(_W)"
-
-#: gaphor/ui/filemanager.py:310
+#: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
 msgid "Cancel"
 msgstr ""
+
+#: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
+msgid "Discard"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
+#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:49
+msgid "Save"
+msgstr "저장"
 
 #: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:87
 #, fuzzy
@@ -2485,12 +2410,12 @@ msgstr "가포 모델 열기"
 msgid "Generic"
 msgstr ""
 
-#: gaphor/ui/greeter.py:164
+#: gaphor/ui/greeter.py:177
 #, fuzzy
 msgid "Create a New Model"
 msgstr "새 모델"
 
-#: gaphor/ui/greeter.py:168
+#: gaphor/ui/greeter.py:181
 #, fuzzy
 msgid "Open a Recent Model"
 msgstr "새 모델"
@@ -2513,10 +2438,24 @@ msgstr ""
 msgid "Editor"
 msgstr "편집기 표시/숨김"
 
+#: gaphor/ui/help/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
+#, fuzzy
+msgid "Open a Model…"
+msgstr "가포 모델 열기"
+
 #: gaphor/ui/mainwindow.py:44
 #, fuzzy
 msgid "Recent Models…"
 msgstr "새 모델"
+
+#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
+#, fuzzy
+msgid "New Model…"
+msgstr "새 모델"
+
+#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
+msgid "Save As…"
+msgstr "다른 이름으로 저장…"
 
 #: gaphor/ui/mainwindow.py:51
 msgid "Export"
@@ -2530,16 +2469,21 @@ msgstr "도구"
 msgid "Keyboard Shortcuts"
 msgstr "키보드 바로 가기 키"
 
+#: gaphor/ui/help/about.glade:7 gaphor/ui/help/about.ui:10
+#: gaphor/ui/mainwindow.py:60
+msgid "About Gaphor"
+msgstr "가포 정보"
+
 #: gaphor/ui/mainwindow.py:86
 #, fuzzy
 msgid "New Generic Diagram"
 msgstr "새 다이어그램(_D)"
 
-#: gaphor/ui/mainwindow.py:237
+#: gaphor/ui/mainwindow.py:241
 msgid "edited"
 msgstr "편집함"
 
-#: gaphor/ui/mainwindow.py:271
+#: gaphor/ui/mainwindow.py:275
 msgid "Profile: {name}"
 msgstr "프로파일: {name}"
 
@@ -2586,6 +2530,131 @@ msgstr "새 다이어그램(_D)"
 #: gaphor/ui/treemodel.py:62
 msgid "<Relationships>"
 msgstr "<Relationships>"
+
+#: gaphor/ui/help/about.glade:9
+#, fuzzy
+msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
+msgstr "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+
+#: gaphor/ui/help/about.glade:10
+msgid "Gaphor is the simple modeling tool written in Python"
+msgstr "가포는 파이썬으로 작성한 간단한 모델링 도구입니다"
+
+#: gaphor/ui/help/about.glade:12
+msgid "Fork me on GitHub"
+msgstr "Fork me on GitHub"
+
+#: gaphor/ui/help/about.glade:30
+msgid ""
+"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
+"you may not use this application except in compliance with the\n"
+"License. You may obtain a copy of the License at\n"
+"\n"
+"http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Unless required by applicable law or agreed to in writing, software\n"
+"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
+"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
+"express or implied. See the License for the specific language\n"
+"governing permissions and limitations under the License.\n"
+"\n"
+"---\n"
+"\n"
+"UML, SysML, and RAAML are either registered trademarks or\n"
+"trademarks of Object Management Group, Inc. in the United States\n"
+"and/or other countries.\n"
+msgstr ""
+
+#: gaphor/ui/help/about.ui:14
+msgid ""
+"Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw.\n"
+"\n"
+"UML, SysML, and RAAML are either registered trademarks or trademarks of "
+"Object Management Group, Inc. in the United States and/or other "
+"countries."
+msgstr ""
+
+#: gaphor/ui/help/about.ui:22
+msgid ""
+"Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
+" not use this application except in compliance with the License. You may "
+"obtain a copy of the License at\n"
+"\n"
+"    http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Unless required by applicable law or agreed to in writing, software "
+"distributed under the License is distributed on an \"AS IS\" BASIS, "
+"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. "
+"See the License for the specific language governing permissions and "
+"limitations under the License."
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:24
+#, fuzzy
+msgid "Rename"
+msgstr "이름 바꾸기(_R)"
+
+#: gaphor/ui/help/shortcuts.ui:32
+msgid "Search"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:40
+msgid "Toggle property editor"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:48
+msgid "Close Diagram"
+msgstr "다이어그램 닫기"
+
+#: gaphor/ui/help/shortcuts.ui:64
+msgid "Quit Gaphor"
+msgstr "가포 끝내기"
+
+#: gaphor/ui/help/shortcuts.ui:75
+msgid "Files"
+msgstr "파일"
+
+#: gaphor/ui/help/shortcuts.ui:117
+#, fuzzy
+msgid "Undo and Redo"
+msgstr "정렬안함"
+
+#: gaphor/ui/help/shortcuts.ui:142
+msgid "Zoom"
+msgstr "확대/축소"
+
+#: gaphor/ui/help/shortcuts.ui:174
+#, fuzzy
+msgid "Selections"
+msgstr "동작(복수)"
+
+#: gaphor/ui/help/shortcuts.ui:180
+msgid "Select All"
+msgstr "모두 선택"
+
+#: gaphor/ui/help/shortcuts.ui:188
+msgid "Deselect All"
+msgstr "모두 선택 취소"
+
+#: gaphor/ui/help/shortcuts.ui:199
+msgid "Copy and Paste"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:205
+msgid "Copy"
+msgstr "복사"
+
+#: gaphor/ui/help/shortcuts.ui:213
+msgid "Cut"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:221
+msgid "Paste (link defining elements)"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:229
+msgid "Paste (copy defining elements)"
+msgstr ""
 
 #~ msgid ""
 #~ "To create a fresh model: create a window, create the\n"
@@ -2966,3 +3035,18 @@ msgstr "<Relationships>"
 
 #~ msgid "Example Technolgy Requirement"
 #~ msgstr ""
+
+#~ msgid "S"
+#~ msgstr "S"
+
+#~ msgid "A"
+#~ msgstr "A"
+
+#~ msgid "Save changes before closing?"
+#~ msgstr "닫기 전 바뀐 모델을 저장하시겠습니까?"
+
+#~ msgid "Closing will cause any unsaved changes to be discarded."
+#~ msgstr "저장하지 않고 닫으면, 내용 바꾸기를 취소합니다."
+
+#~ msgid "Close without saving changes"
+#~ msgstr "저장하지 않고 닫기(_W)"

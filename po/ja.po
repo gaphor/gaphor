@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-10-18 21:01-0400\n"
+"POT-Creation-Date: 2022-11-27 16:18-0500\n"
 "PO-Revision-Date: 2021-10-21 12:41+0000\n"
 "Last-Translator: Tomo Dote <fu7mu4@gmail.com>\n"
 "Language: ja\n"
@@ -17,9 +17,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.10.3\n"
+"Generated-By: Babel 2.11.0\n"
 
-#: gaphor/C4Model/modelinglanguage.py:17 gaphor/C4Model/toolbox.py:55
+#: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
 #: gaphor/ui/greeter.py:29
 msgid "C4 Model"
 msgstr "C4 モデル"
@@ -107,7 +107,7 @@ msgstr "新ダイアグラム(_D)"
 msgid "New State Machine Diagram"
 msgstr "新ダイアグラムを作成"
 
-#: gaphor/RAAML/modelinglanguage.py:17 gaphor/ui/greeter.py:28
+#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:28
 msgid "RAAML"
 msgstr "RAAML"
 
@@ -263,7 +263,7 @@ msgstr "抽象操作場面"
 msgid "Generalization"
 msgstr "汎化"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:61
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:58
 msgid "Situation"
 msgstr "場面"
 
@@ -292,7 +292,7 @@ msgstr "安全ではない制御アクション"
 msgid "Relevant To"
 msgstr "関連する"
 
-#: gaphor/SysML/modelinglanguage.py:18 gaphor/ui/greeter.py:27
+#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:27
 msgid "SysML"
 msgstr "SysML"
 
@@ -412,28 +412,28 @@ msgstr "要求"
 msgid "New Use Case Diagram"
 msgstr "新ダイアグラム(_D)"
 
-#: gaphor/SysML/blocks/block.py:63
+#: gaphor/SysML/blocks/block.py:60
 msgid "ControlStructure"
 msgstr ""
 
-#: gaphor/SysML/blocks/block.py:65
+#: gaphor/SysML/blocks/block.py:62
 msgid "block"
 msgstr "ブロック"
 
-#: gaphor/SysML/blocks/block.py:101
+#: gaphor/SysML/blocks/block.py:98
 msgid "parts"
 msgstr "部品"
 
-#: gaphor/SysML/blocks/block.py:112
+#: gaphor/SysML/blocks/block.py:109
 msgid "references"
 msgstr "参照"
 
-#: gaphor/SysML/blocks/block.py:123
+#: gaphor/SysML/blocks/block.py:120
 #, fuzzy
 msgid "values"
 msgstr "値"
 
-#: gaphor/SysML/blocks/block.py:140
+#: gaphor/SysML/blocks/block.py:137
 msgid "unnamed"
 msgstr "無名の"
 
@@ -842,14 +842,18 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/classespropertypages.py:340
-#: gaphor/UML/classes/classespropertypages.py:427
+#: gaphor/UML/classes/classespropertypages.py:341
+#: gaphor/UML/classes/classespropertypages.py:430
+#: gaphor/UML/classes/propertypages.glade:944
+#: gaphor/UML/classes/propertypages.ui:817
 msgid "Static"
 msgstr "静的"
 
-#: gaphor/UML/classes/classespropertypages.py:427
+#: gaphor/UML/classes/classespropertypages.py:430
 #: gaphor/UML/classes/propertypages.glade:496
+#: gaphor/UML/classes/propertypages.glade:938
 #: gaphor/UML/classes/propertypages.ui:435
+#: gaphor/UML/classes/propertypages.ui:813
 msgid "Abstract"
 msgstr "抽象"
 
@@ -886,15 +890,15 @@ msgstr ""
 msgid "dataType"
 msgstr ""
 
-#: gaphor/UML/classes/dependency.py:43
+#: gaphor/UML/classes/dependency.py:44
 msgid "use"
 msgstr ""
 
-#: gaphor/UML/classes/dependency.py:44
+#: gaphor/UML/classes/dependency.py:45
 msgid "realize"
 msgstr ""
 
-#: gaphor/UML/classes/dependency.py:45
+#: gaphor/UML/classes/dependency.py:46
 msgid "implements"
 msgstr ""
 
@@ -1010,13 +1014,6 @@ msgstr ""
 msgid "Show Attributes"
 msgstr "属性を表示"
 
-#: gaphor/UML/classes/propertypages.glade:415
-#: gaphor/UML/classes/propertypages.glade:713
-#: gaphor/UML/classes/propertypages.ui:370
-#: gaphor/UML/classes/propertypages.ui:624
-msgid "S"
-msgstr ""
-
 #: gaphor/UML/classes/propertypages.glade:480
 #: gaphor/UML/classes/propertypages.ui:405
 msgid ""
@@ -1060,11 +1057,6 @@ msgstr "操作の表示"
 msgid "Operations"
 msgstr "操作"
 
-#: gaphor/UML/classes/propertypages.glade:700
-#: gaphor/UML/classes/propertypages.ui:611
-msgid "A"
-msgstr ""
-
 #: gaphor/UML/classes/propertypages.glade:776
 #: gaphor/UML/classes/propertypages.ui:657
 msgid ""
@@ -1106,6 +1098,16 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.glade:916
 #: gaphor/UML/classes/propertypages.ui:795
 msgid "Indirectly Instantiated"
+msgstr ""
+
+#: gaphor/UML/classes/propertypages.glade:937
+#: gaphor/UML/classes/propertypages.ui:812
+msgid "A."
+msgstr ""
+
+#: gaphor/UML/classes/propertypages.glade:943
+#: gaphor/UML/classes/propertypages.ui:816
+msgid "S."
 msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
@@ -1348,8 +1350,7 @@ msgstr ""
 msgid "Extend"
 msgstr ""
 
-#: gaphor/diagram/diagramtoolbox.py:99
-#: gaphor/services/helpservice/shortcuts.ui:18
+#: gaphor/diagram/diagramtoolbox.py:99 gaphor/ui/help/shortcuts.ui:18
 msgid "General"
 msgstr ""
 
@@ -1402,16 +1403,24 @@ msgstr "スタイル"
 msgid "Note or Remark"
 msgstr ""
 
-#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:348
+#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
 msgid "Element can’t be represented on a diagram."
 msgstr ""
 
-#: gaphor/extensions/sphinx.py:65
+#: gaphor/extensions/sphinx.py:63
 msgid "No model file configured for model '{model_name}'."
 msgstr ""
 
-#: gaphor/extensions/sphinx.py:94
+#: gaphor/extensions/sphinx.py:92
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
+msgstr ""
+
+#: gaphor/plugins/autolayout/pydot.py:44
+msgid "Auto Layout"
+msgstr ""
+
+#: gaphor/plugins/autolayout/pydot.py:52
+msgid "Auto Layout (orthogonal)"
 msgstr ""
 
 #: gaphor/plugins/console/console.py:24
@@ -1463,6 +1472,19 @@ msgstr ""
 msgid "Export diagram as PDF"
 msgstr ""
 
+#: gaphor/plugins/diagramexport/__init__.py:88
+msgid "Export as EPS"
+msgstr ""
+
+#: gaphor/plugins/diagramexport/__init__.py:89
+msgid "Export diagram as Encapsulated PostScript"
+msgstr ""
+
+#: gaphor/plugins/diagramexport/__init__.py:95
+#, fuzzy
+msgid "Export diagram as EPS"
+msgstr "新ダイアグラム(_D)"
+
 #: gaphor/plugins/errorreports/errorreports.glade:7
 #: gaphor/plugins/errorreports/errorreports.py:65
 #: gaphor/plugins/errorreports/errorreports.ui:6
@@ -1507,169 +1529,13 @@ msgstr ""
 msgid "All XMI Files"
 msgstr "全てのXMIファイル"
 
-#: gaphor/services/helpservice/about.ui:7 gaphor/ui/mainwindow.py:60
-msgid "About Gaphor"
-msgstr "Gaphor について"
-
-#: gaphor/services/helpservice/about.ui:9
-#, fuzzy
-msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
-msgstr "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
-
-#: gaphor/services/helpservice/about.ui:10
-msgid "Gaphor is the simple modeling tool written in Python"
-msgstr "Gaphor はPython製のシンプルなモデリングツールです"
-
-#: gaphor/services/helpservice/about.ui:12
-msgid "Fork me on GitHub"
-msgstr "GitHubでフォークする"
-
-#: gaphor/services/helpservice/about.ui:30
-msgid ""
-"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-"you may not use this application except in compliance with the\n"
-"License. You may obtain a copy of the License at\n"
-"\n"
-"http://www.apache.org/licenses/LICENSE-2.0\n"
-"\n"
-"Unless required by applicable law or agreed to in writing, software\n"
-"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
-"express or implied. See the License for the specific language\n"
-"governing permissions and limitations under the License.\n"
-"\n"
-"---\n"
-"\n"
-"UML, SysML, and RAAML are either registered trademarks or\n"
-"trademarks of Object Management Group, Inc. in the United States\n"
-"and/or other countries.\n"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:24
-#, fuzzy
-msgid "Rename"
-msgstr "別名(_R)"
-
-#: gaphor/services/helpservice/shortcuts.ui:32
-msgid "Search"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:40
-msgid "Toggle property editor"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:48
-msgid "Close Diagram"
-msgstr "ダイアグラムを閉じる"
-
-#: gaphor/services/helpservice/shortcuts.ui:56
-#: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
-#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:187
-#: gaphor/ui/elementeditor.ui:198
-msgid "Preferences"
-msgstr "設定"
-
-#: gaphor/services/helpservice/shortcuts.ui:64
-msgid "Quit Gaphor"
-msgstr "Gaphor終了"
-
-#: gaphor/services/helpservice/shortcuts.ui:75
-msgid "Files"
-msgstr "ファイル"
-
-#: gaphor/services/helpservice/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
-#, fuzzy
-msgid "New Model…"
-msgstr "新モデル"
-
-#: gaphor/services/helpservice/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
-#, fuzzy
-msgid "Open a Model…"
-msgstr "Gaphorモデルを開く"
-
-#: gaphor/services/helpservice/shortcuts.ui:97 gaphor/ui/filemanager.py:312
-#: gaphor/ui/mainwindow.py:49
-msgid "Save"
-msgstr "保存"
-
-#: gaphor/services/helpservice/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
-msgid "Save As…"
-msgstr "別名で保存…"
-
-#: gaphor/services/helpservice/shortcuts.ui:117
-#, fuzzy
-msgid "Undo and Redo"
-msgstr "順序なし"
-
-#: gaphor/services/helpservice/shortcuts.ui:123
-#: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
-msgid "Undo"
-msgstr "取消"
-
-#: gaphor/services/helpservice/shortcuts.ui:131
-#: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:90
-msgid "Redo"
-msgstr "再実行"
-
-#: gaphor/services/helpservice/shortcuts.ui:142
-msgid "Zoom"
-msgstr "ズーム"
-
-#: gaphor/services/helpservice/shortcuts.ui:148
-#: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:106
-msgid "Zoom In"
-msgstr "ズームイン"
-
-#: gaphor/services/helpservice/shortcuts.ui:156
-#: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:130
-msgid "Zoom Out"
-msgstr "ズームアウト"
-
-#: gaphor/services/helpservice/shortcuts.ui:164
-#: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:118
-msgid "Actual Size"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:174
-#, fuzzy
-msgid "Selections"
-msgstr "アクション"
-
-#: gaphor/services/helpservice/shortcuts.ui:180
-msgid "Select All"
-msgstr "全て選択"
-
-#: gaphor/services/helpservice/shortcuts.ui:188
-msgid "Deselect All"
-msgstr "全ての選択を解除"
-
-#: gaphor/services/helpservice/shortcuts.ui:199
-msgid "Copy and Paste"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:205
-msgid "Copy"
-msgstr "コピー"
-
-#: gaphor/services/helpservice/shortcuts.ui:213
-msgid "Cut"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:221
-msgid "Paste (link defining elements)"
-msgstr ""
-
-#: gaphor/services/helpservice/shortcuts.ui:229
-msgid "Paste (copy defining elements)"
-msgstr ""
-
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:57
-#: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:29
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
+#: gaphor/ui/mainwindow.py:239 gaphor/ui/mainwindow.ui:29
 #: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
 msgid "New model"
 msgstr "新モデル"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:60
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:64
 msgid "main"
 msgstr ""
 
@@ -2239,22 +2105,35 @@ msgstr ""
 msgid "Date"
 msgstr "状態"
 
-#: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:12
+#: gaphor/ui/appfilemanager.py:19 gaphor/ui/filedialog.py:13
 msgid "All Gaphor Models"
 msgstr "全Gaphorモデル"
 
-#: gaphor/ui/appfilemanager.py:46
+#: gaphor/ui/appfilemanager.py:49
+msgid "Switch to {name}?"
+msgstr ""
+
+#: gaphor/ui/appfilemanager.py:50
+#, fuzzy
 msgid ""
-"{filename} is already opened. Do you want to switch to the opened window "
+"{name} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr "{filename} はすでに開いています。開いているウィンドウに切り替えますか?"
 
-#: gaphor/ui/appfilemanager.py:68
+#: gaphor/ui/appfilemanager.py:69
+msgid "Open Again"
+msgstr ""
+
+#: gaphor/ui/appfilemanager.py:70
+msgid "Switch"
+msgstr ""
+
+#: gaphor/ui/appfilemanager.py:93
 #, fuzzy
 msgid "Open a Model"
 msgstr "Gaphorモデルを開く"
 
-#: gaphor/ui/diagrampage.py:128 gaphor/ui/namespaceview.py:143
+#: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 #: gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr ""
@@ -2284,6 +2163,37 @@ msgid ""
 "in the tree view and start typing. A search box will automatically "
 "appear.\n"
 msgstr ""
+
+#: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
+#: gaphor/ui/help/shortcuts.ui:123
+msgid "Undo"
+msgstr "取消"
+
+#: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:90
+#: gaphor/ui/help/shortcuts.ui:131
+msgid "Redo"
+msgstr "再実行"
+
+#: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:106
+#: gaphor/ui/help/shortcuts.ui:148
+msgid "Zoom In"
+msgstr "ズームイン"
+
+#: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:118
+#: gaphor/ui/help/shortcuts.ui:164
+msgid "Actual Size"
+msgstr ""
+
+#: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:130
+#: gaphor/ui/help/shortcuts.ui:156
+msgid "Zoom Out"
+msgstr "ズームアウト"
+
+#: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
+#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:187
+#: gaphor/ui/elementeditor.ui:198 gaphor/ui/help/shortcuts.ui:56
+msgid "Preferences"
+msgstr "設定"
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:163
 msgid "Editors"
@@ -2318,25 +2228,27 @@ msgstr ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Gaphor"
 " のスタイルシート</a>"
 
-#: gaphor/ui/errorhandler.py:25
+#: gaphor/ui/errorhandler.py:22
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr "Gaphor をコマンドラインから起動したものに似ています。デバッグセッションを開始しますか?"
 
-#: gaphor/ui/errorhandler.py:28 gaphor/ui/errorhandler.py:31
+#: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:34
+#: gaphor/ui/errorhandler.py:43 gaphor/ui/errorhandler.py:48
 msgid "Close"
 msgstr ""
 
-#: gaphor/ui/errorhandler.py:28
-msgid "Start debug session"
+#: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:44
+#, fuzzy
+msgid "Start Debug Session"
 msgstr "デバッグセッションの開始"
 
-#: gaphor/ui/filedialog.py:32
+#: gaphor/ui/filedialog.py:34
 msgid "All Files"
 msgstr "全ファイル"
 
-#: gaphor/ui/filemanager.py:36
+#: gaphor/ui/filemanager.py:40
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2347,7 +2259,7 @@ msgstr ""
 "{exc}\n"
 "これがバグだと考えるなら開発者に連絡してください。"
 
-#: gaphor/ui/filemanager.py:40
+#: gaphor/ui/filemanager.py:44
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2355,7 +2267,7 @@ msgstr ""
 "あなたはこのモデルを保存するために必要な権限を持っていません。\n"
 "入力した場所を確認してからお試しください。"
 
-#: gaphor/ui/filemanager.py:44
+#: gaphor/ui/filemanager.py:48
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2364,7 +2276,7 @@ msgstr ""
 "このモデルを保存するのに十分な容量がこのデバイスにありません。\n"
 "ディスクの空き容量を確認してもう一度試すか別の場所に保存してください。"
 
-#: gaphor/ui/filemanager.py:47
+#: gaphor/ui/filemanager.py:51
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2374,56 +2286,69 @@ msgstr ""
 "{exc}\n"
 "あなたが指定した場所を確認して、もう一度試してください。"
 
-#: gaphor/ui/filemanager.py:122
+#: gaphor/ui/filemanager.py:126
 msgid "Loading…"
 msgstr "読み込み…"
 
-#: gaphor/ui/filemanager.py:123
+#: gaphor/ui/filemanager.py:127
 msgid "Loading model from {filename}"
 msgstr "{filename} からモデルを読み込み"
 
-#: gaphor/ui/filemanager.py:157
+#: gaphor/ui/filemanager.py:160
+#, fuzzy
+msgid "Merge conflict in model “{filename}”."
+msgstr "モデルを “{filename}” から読み込めません。"
+
+#: gaphor/ui/filemanager.py:163
+msgid "It looks like this model file contains a merge conflict."
+msgstr ""
+
+#: gaphor/ui/filemanager.py:173
 msgid "Unable to open model “{filename}”."
 msgstr "モデルを “{filename}” から読み込めません。"
 
-#: gaphor/ui/filemanager.py:160
+#: gaphor/ui/filemanager.py:176
 msgid "This file does not contain a valid Gaphor model."
 msgstr "このファイルには妥当な Gaphor モデルがありません。"
 
-#: gaphor/ui/filemanager.py:189
+#: gaphor/ui/filemanager.py:215
 msgid "Saving…"
 msgstr "保存…"
 
-#: gaphor/ui/filemanager.py:190
+#: gaphor/ui/filemanager.py:216
 msgid "Saving model to {filename}"
 msgstr "モデルを{filename}に保存"
 
-#: gaphor/ui/filemanager.py:207
+#: gaphor/ui/filemanager.py:233
 msgid "Unable to save model “{filename}”."
 msgstr "モデルを {filename} に保存できません。"
 
-#: gaphor/ui/filemanager.py:244 gaphor/ui/filemanager.py:279
+#: gaphor/ui/filemanager.py:270 gaphor/ui/filemanager.py:306
 msgid "Save Gaphor Model As"
 msgstr "Gaphor モデルを別形式で保存する"
 
-#: gaphor/ui/filemanager.py:300
-#, fuzzy
-msgid "Save changes before closing?"
-msgstr "閉じる前に変更をモデルに保存しますか?"
+#: gaphor/ui/filemanager.py:326
+msgid "Save Changes?"
+msgstr ""
 
-#: gaphor/ui/filemanager.py:301
-#, fuzzy
-msgid "Closing will cause any unsaved changes to be discarded."
-msgstr "保存せずに閉じた場合、変更は破棄されます。"
+#: gaphor/ui/filemanager.py:327
+msgid ""
+"The open model contains unsaved changes. Changes which are not saved will"
+" be permanently lost."
+msgstr ""
 
-#: gaphor/ui/filemanager.py:308
-#, fuzzy
-msgid "Close without saving changes"
-msgstr "保存せずに閉じる(_w)"
-
-#: gaphor/ui/filemanager.py:310
+#: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
 msgid "Cancel"
 msgstr ""
+
+#: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
+msgid "Discard"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
+#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:49
+msgid "Save"
+msgstr "保存"
 
 #: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:87
 #, fuzzy
@@ -2439,12 +2364,12 @@ msgstr "Gaphorモデルを開く"
 msgid "Generic"
 msgstr ""
 
-#: gaphor/ui/greeter.py:164
+#: gaphor/ui/greeter.py:177
 #, fuzzy
 msgid "Create a New Model"
 msgstr "新モデル"
 
-#: gaphor/ui/greeter.py:168
+#: gaphor/ui/greeter.py:181
 #, fuzzy
 msgid "Open a Recent Model"
 msgstr "新モデル"
@@ -2465,10 +2390,24 @@ msgstr "アプリケーションメニューを開く"
 msgid "Editor"
 msgstr "エディタの表示/非表示"
 
+#: gaphor/ui/help/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
+#, fuzzy
+msgid "Open a Model…"
+msgstr "Gaphorモデルを開く"
+
 #: gaphor/ui/mainwindow.py:44
 #, fuzzy
 msgid "Recent Models…"
 msgstr "新モデル"
+
+#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
+#, fuzzy
+msgid "New Model…"
+msgstr "新モデル"
+
+#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
+msgid "Save As…"
+msgstr "別名で保存…"
 
 #: gaphor/ui/mainwindow.py:51
 msgid "Export"
@@ -2482,16 +2421,21 @@ msgstr "ツール"
 msgid "Keyboard Shortcuts"
 msgstr "キーボードショートカット"
 
+#: gaphor/ui/help/about.glade:7 gaphor/ui/help/about.ui:10
+#: gaphor/ui/mainwindow.py:60
+msgid "About Gaphor"
+msgstr "Gaphor について"
+
 #: gaphor/ui/mainwindow.py:86
 #, fuzzy
 msgid "New Generic Diagram"
 msgstr "新ダイアグラム(_D)"
 
-#: gaphor/ui/mainwindow.py:237
+#: gaphor/ui/mainwindow.py:241
 msgid "edited"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:271
+#: gaphor/ui/mainwindow.py:275
 msgid "Profile: {name}"
 msgstr "プロファイル: {name}"
 
@@ -2537,6 +2481,131 @@ msgstr "新ダイアグラム(_D)"
 #: gaphor/ui/namespaceview.py:141 gaphor/ui/tests/test_treemodel.py:162
 #: gaphor/ui/treemodel.py:62
 msgid "<Relationships>"
+msgstr ""
+
+#: gaphor/ui/help/about.glade:9
+#, fuzzy
+msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
+msgstr "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
+
+#: gaphor/ui/help/about.glade:10
+msgid "Gaphor is the simple modeling tool written in Python"
+msgstr "Gaphor はPython製のシンプルなモデリングツールです"
+
+#: gaphor/ui/help/about.glade:12
+msgid "Fork me on GitHub"
+msgstr "GitHubでフォークする"
+
+#: gaphor/ui/help/about.glade:30
+msgid ""
+"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
+"you may not use this application except in compliance with the\n"
+"License. You may obtain a copy of the License at\n"
+"\n"
+"http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Unless required by applicable law or agreed to in writing, software\n"
+"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
+"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
+"express or implied. See the License for the specific language\n"
+"governing permissions and limitations under the License.\n"
+"\n"
+"---\n"
+"\n"
+"UML, SysML, and RAAML are either registered trademarks or\n"
+"trademarks of Object Management Group, Inc. in the United States\n"
+"and/or other countries.\n"
+msgstr ""
+
+#: gaphor/ui/help/about.ui:14
+msgid ""
+"Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw.\n"
+"\n"
+"UML, SysML, and RAAML are either registered trademarks or trademarks of "
+"Object Management Group, Inc. in the United States and/or other "
+"countries."
+msgstr ""
+
+#: gaphor/ui/help/about.ui:22
+msgid ""
+"Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
+" not use this application except in compliance with the License. You may "
+"obtain a copy of the License at\n"
+"\n"
+"    http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Unless required by applicable law or agreed to in writing, software "
+"distributed under the License is distributed on an \"AS IS\" BASIS, "
+"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. "
+"See the License for the specific language governing permissions and "
+"limitations under the License."
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:24
+#, fuzzy
+msgid "Rename"
+msgstr "別名(_R)"
+
+#: gaphor/ui/help/shortcuts.ui:32
+msgid "Search"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:40
+msgid "Toggle property editor"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:48
+msgid "Close Diagram"
+msgstr "ダイアグラムを閉じる"
+
+#: gaphor/ui/help/shortcuts.ui:64
+msgid "Quit Gaphor"
+msgstr "Gaphor終了"
+
+#: gaphor/ui/help/shortcuts.ui:75
+msgid "Files"
+msgstr "ファイル"
+
+#: gaphor/ui/help/shortcuts.ui:117
+#, fuzzy
+msgid "Undo and Redo"
+msgstr "順序なし"
+
+#: gaphor/ui/help/shortcuts.ui:142
+msgid "Zoom"
+msgstr "ズーム"
+
+#: gaphor/ui/help/shortcuts.ui:174
+#, fuzzy
+msgid "Selections"
+msgstr "アクション"
+
+#: gaphor/ui/help/shortcuts.ui:180
+msgid "Select All"
+msgstr "全て選択"
+
+#: gaphor/ui/help/shortcuts.ui:188
+msgid "Deselect All"
+msgstr "全ての選択を解除"
+
+#: gaphor/ui/help/shortcuts.ui:199
+msgid "Copy and Paste"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:205
+msgid "Copy"
+msgstr "コピー"
+
+#: gaphor/ui/help/shortcuts.ui:213
+msgid "Cut"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:221
+msgid "Paste (link defining elements)"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:229
+msgid "Paste (copy defining elements)"
 msgstr ""
 
 #~ msgid "BasicEvent"
@@ -2895,3 +2964,18 @@ msgstr ""
 
 #~ msgid "Example Technolgy Requirement"
 #~ msgstr ""
+
+#~ msgid "S"
+#~ msgstr ""
+
+#~ msgid "A"
+#~ msgstr ""
+
+#~ msgid "Save changes before closing?"
+#~ msgstr "閉じる前に変更をモデルに保存しますか?"
+
+#~ msgid "Closing will cause any unsaved changes to be discarded."
+#~ msgstr "保存せずに閉じた場合、変更は破棄されます。"
+
+#~ msgid "Close without saving changes"
+#~ msgstr "保存せずに閉じる(_w)"
