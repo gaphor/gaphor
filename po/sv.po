@@ -27,23 +27,23 @@ msgstr "Åtgärder"
 
 #: gaphor/C4Model/propertypages.glade:75 gaphor/C4Model/propertypages.ui:39
 msgid "Technology"
-msgstr ""
+msgstr "Teknologi"
 
 #: gaphor/C4Model/toolbox.py:29
 msgid "New Software System"
-msgstr ""
+msgstr "Nytt Mjukvarusystem"
 
 #: gaphor/C4Model/toolbox.py:36
 msgid "New Container"
-msgstr ""
+msgstr "Ny Container"
 
 #: gaphor/C4Model/toolbox.py:43
 msgid "Database"
-msgstr ""
+msgstr "Databas"
 
 #: gaphor/C4Model/toolbox.py:44
 msgid "New Database"
-msgstr ""
+msgstr "Ny Databas"
 
 #: gaphor/C4Model/toolbox.py:51
 #, fuzzy
@@ -56,7 +56,7 @@ msgstr ""
 
 #: gaphor/C4Model/toolbox.py:71
 msgid "Software System"
-msgstr ""
+msgstr "Mjukvarusystem"
 
 #: gaphor/C4Model/toolbox.py:83
 msgid "Container"
@@ -75,7 +75,7 @@ msgstr "Komponenter"
 #: gaphor/UML/classes/classestoolbox.py:105
 #: gaphor/UML/classes/dependencypropertypages.py:16
 msgid "Dependency"
-msgstr ""
+msgstr "Beroende"
 
 #: gaphor/C4Model/toolbox.py:139
 #, fuzzy
@@ -274,7 +274,7 @@ msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml.gaphor
 msgid "Controller"
-msgstr ""
+msgstr "Kontroller"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
 #, fuzzy
@@ -283,7 +283,7 @@ msgstr "Åtgärder"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
-msgstr ""
+msgstr "Kontrollerad Process"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
@@ -318,7 +318,7 @@ msgstr ""
 #: gaphor/UML/actions/propertypages.glade:264
 #: gaphor/UML/actions/propertypages.ui:201
 msgid "Allocated Type"
-msgstr ""
+msgstr "Allokerad Typ"
 
 #: gaphor/SysML/propertypages.glade:123 gaphor/SysML/propertypages.ui:91
 msgid "Show Parts"
@@ -330,7 +330,7 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.glade:172 gaphor/SysML/propertypages.ui:123
 msgid "Show Values"
-msgstr ""
+msgstr "Visa Värden"
 
 #: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:78
 #, fuzzy
@@ -425,11 +425,11 @@ msgstr ""
 
 #: gaphor/SysML/blocks/block.py:112
 msgid "references"
-msgstr ""
+msgstr "referenser"
 
 #: gaphor/SysML/blocks/block.py:123
 msgid "values"
-msgstr ""
+msgstr "värden"
 
 #: gaphor/SysML/blocks/block.py:140
 msgid "unnamed"
@@ -446,7 +446,7 @@ msgstr ""
 #: gaphor/SysML/blocks/blockstoolbox.py:38
 #: gaphor/UML/classes/classestoolbox.py:47
 msgid "Package"
-msgstr ""
+msgstr "Paket"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:50
 #: gaphor/UML/classes/classestoolbox.py:78
@@ -501,7 +501,7 @@ msgstr "Interaktioner"
 
 #: gaphor/SysML/requirements/relationships.py:61
 msgid "verify"
-msgstr ""
+msgstr "verifiera"
 
 #: gaphor/SysML/requirements/relationships.py:69
 #, fuzzy
@@ -568,7 +568,7 @@ msgstr "Nytt _Diagram"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr ""
+msgstr Nytt Kommunikationsdiagram"
 
 #: gaphor/UML/toolbox.py:39
 #, fuzzy
@@ -579,7 +579,7 @@ msgstr "Nytt _Diagram"
 #: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
 msgid "New {name}"
-msgstr ""
+msgstr "Ny {name}"
 
 #: gaphor/UML/umlfmt.py:203
 #, fuzzy
@@ -596,13 +596,13 @@ msgstr ""
 
 #: gaphor/UML/umlfmt.py:222
 msgid "include: {name}"
-msgstr ""
+msgstr "inkludera: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:40
 #: gaphor/UML/actions/actionstoolbox.py:62 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Activity"
-msgstr ""
+msgstr "Aktivitet"
 
 #: gaphor/UML/actions/actionstoolbox.py:48
 msgid "Swimlane One"
@@ -658,7 +658,7 @@ msgstr "Interaktioner"
 
 #: gaphor/UML/actions/actionstoolbox.py:177
 msgid "Object flow"
-msgstr ""
+msgstr "Objektflöde"
 
 #: gaphor/UML/actions/actionstoolbox.py:184
 msgid "Send signal action"
@@ -733,12 +733,12 @@ msgstr ""
 #: gaphor/UML/actions/propertypages.glade:28
 #: gaphor/UML/actions/propertypages.ui:11
 msgid "Show type"
-msgstr ""
+msgstr "Visa typ"
 
 #: gaphor/UML/actions/propertypages.glade:57
 #: gaphor/UML/actions/propertypages.ui:37
 msgid "Horizontal"
-msgstr ""
+msgstr "Horisontell"
 
 #: gaphor/UML/actions/propertypages.glade:83
 #: gaphor/UML/actions/propertypages.ui:59
@@ -782,7 +782,7 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:25
 #: gaphor/UML/profiles/propertypages.ui:9
 msgid "Name"
-msgstr ""
+msgstr "Namn"
 
 #: gaphor/UML/actions/propertypages.glade:296
 #: gaphor/UML/actions/propertypages.ui:223
@@ -815,7 +815,7 @@ msgstr "Interaktioner"
 #: gaphor/UML/classes/propertypages.ui:643
 #: gaphor/UML/classes/propertypages.ui:752
 msgid "🛈 Help"
-msgstr ""
+msgstr "🛈 Hjälp"
 
 #: gaphor/UML/actions/propertypages.glade:408
 msgid ""
@@ -848,13 +848,13 @@ msgstr ""
 #: gaphor/UML/classes/classespropertypages.py:340
 #: gaphor/UML/classes/classespropertypages.py:427
 msgid "Static"
-msgstr ""
+msgstr "Statisk"
 
 #: gaphor/UML/classes/classespropertypages.py:427
 #: gaphor/UML/classes/propertypages.glade:496
 #: gaphor/UML/classes/propertypages.ui:435
 msgid "Abstract"
-msgstr ""
+msgstr "Abstrakt"
 
 #: gaphor/UML/classes/classestoolbox.py:21
 msgid "Classes"
@@ -930,11 +930,11 @@ msgstr "Interaktioner"
 
 #: gaphor/UML/classes/klass.py:59
 msgid "stereotype"
-msgstr ""
+msgstr "stereotyp"
 
 #: gaphor/UML/classes/klass.py:61
 msgid "metaclass"
-msgstr ""
+msgstr "metaklass"
 
 #: gaphor/UML/classes/package.py:29
 #, fuzzy
@@ -978,7 +978,7 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:93
 #: gaphor/UML/profiles/propertypages.ui:65
 msgid "Attributes"
-msgstr ""
+msgstr "Attribut"
 
 #: gaphor/UML/classes/propertypages.glade:160
 #: gaphor/UML/classes/propertypages.glade:287
@@ -987,17 +987,17 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:113
 #: gaphor/UML/profiles/propertypages.ui:85
 msgid "Value"
-msgstr ""
+msgstr "Värde"
 
 #: gaphor/UML/classes/propertypages.glade:181
 #: gaphor/UML/classes/propertypages.ui:50
 msgid "Head:"
-msgstr ""
+msgstr "Huvud:"
 
 #: gaphor/UML/classes/propertypages.glade:309
 #: gaphor/UML/classes/propertypages.ui:177
 msgid "Tail:"
-msgstr ""
+msgstr "Svans:"
 
 #: gaphor/UML/classes/propertypages.glade:339
 #: gaphor/UML/classes/propertypages.ui:84
@@ -1019,7 +1019,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.glade:361
 #: gaphor/UML/classes/propertypages.ui:322
 msgid "Show Attributes"
-msgstr ""
+msgstr "Visa Attribut"
 
 #: gaphor/UML/classes/propertypages.glade:415
 #: gaphor/UML/classes/propertypages.glade:713
@@ -1052,7 +1052,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.glade:535
 #: gaphor/UML/classes/propertypages.ui:468
 msgid "Automatic"
-msgstr ""
+msgstr "Automatisk"
 
 #: gaphor/UML/classes/propertypages.glade:582
 #: gaphor/UML/classes/propertypages.ui:504
@@ -1062,14 +1062,14 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.glade:646
 #: gaphor/UML/classes/propertypages.ui:563
 msgid "Show Operations"
-msgstr ""
+msgstr "Visa Operationer"
 
 #: gaphor/UML/classes/propertypages.glade:682
 #: gaphor/UML/classes/propertypages.glade:752
 #: gaphor/UML/classes/propertypages.ui:550
 #: gaphor/UML/classes/propertypages.ui:593
 msgid "Operations"
-msgstr ""
+msgstr "Operationer"
 
 #: gaphor/UML/classes/propertypages.glade:700
 #: gaphor/UML/classes/propertypages.ui:611
@@ -1126,7 +1126,7 @@ msgstr "Interaktioner"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16
 msgid "Artifact"
-msgstr ""
+msgstr "Artifakt"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:28
 msgid "Node"
@@ -1143,7 +1143,7 @@ msgstr ""
 #: gaphor/UML/deployments/propertypages.glade:28
 #: gaphor/UML/deployments/propertypages.ui:11
 msgid "Information Flow"
-msgstr ""
+msgstr "Informationsflöde"
 
 #: gaphor/UML/deployments/propertypages.glade:51
 #: gaphor/UML/deployments/propertypages.ui:29
@@ -1168,7 +1168,7 @@ msgstr "Interaktioner"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:67
 msgid "Lifeline"
-msgstr ""
+msgstr "Livslina"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:79
 msgid "Execution Specification"
@@ -1176,7 +1176,7 @@ msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:87
 msgid "Message"
-msgstr ""
+msgstr "Meddelande"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:94
 msgid "Reflexive message"
@@ -1202,11 +1202,11 @@ msgstr "Profiler"
 
 #: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
-msgstr ""
+msgstr "Metaklass"
 
 #: gaphor/UML/profiles/profilestoolbox.py:44
 msgid "Stereotype"
-msgstr ""
+msgstr "Stereotyp"
 
 #: gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
@@ -1224,12 +1224,12 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:137
 #: gaphor/UML/profiles/propertypages.ui:31
 msgid "Stereotypes"
-msgstr ""
+msgstr "Stereotyper"
 
 #: gaphor/UML/states/propertypages.glade:39
 #: gaphor/UML/states/propertypages.ui:104
 msgid "Show Regions"
-msgstr ""
+msgstr "Visa Regioner"
 
 #: gaphor/UML/states/propertypages.glade:62
 #: gaphor/UML/states/propertypages.glade:84
@@ -1257,7 +1257,7 @@ msgstr ""
 #: gaphor/UML/states/propertypages.glade:164
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
-msgstr ""
+msgstr "Aktiviteter"
 
 #: gaphor/UML/states/statemachine.py:40
 msgid "statemachine"
@@ -1351,7 +1351,7 @@ msgstr "Åtgärder"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
-msgstr ""
+msgstr "Inkludera"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:55
 msgid "Extend"
@@ -1407,7 +1407,7 @@ msgstr ""
 
 #: gaphor/diagram/propertypages.glade:92 gaphor/diagram/propertypages.ui:35
 msgid "Style"
-msgstr ""
+msgstr "Stil"
 
 #: gaphor/diagram/propertypages.glade:126 gaphor/diagram/propertypages.ui:67
 msgid "Note or Remark"
@@ -1442,7 +1442,7 @@ msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:45
 msgid "All {ext} Files"
-msgstr ""
+msgstr "Alla {ext} Filer"
 
 #: gaphor/plugins/diagramexport/__init__.py:51
 msgid "Export as SVG"
@@ -1451,31 +1451,31 @@ msgstr ""
 #: gaphor/plugins/diagramexport/__init__.py:52
 #: gaphor/plugins/diagramexport/__init__.py:57
 msgid "Export diagram as SVG"
-msgstr ""
+msgstr "Exportera diagram som SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:62
 msgid "Export as PNG"
-msgstr ""
+msgstr "Exportera som PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:63
 #: gaphor/plugins/diagramexport/__init__.py:68
 msgid "Export diagram as PNG"
-msgstr ""
+msgstr "Exportera diagram som PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:73
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exportera som PDF"
 
 #: gaphor/plugins/diagramexport/__init__.py:74
 #: gaphor/plugins/diagramexport/__init__.py:80
 msgid "Export diagram as PDF"
-msgstr ""
+msgstr "Exportera diagram som PDF"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
 #: gaphor/plugins/errorreports/errorreports.py:65
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
-msgstr ""
+msgstr "Felrapporter"
 
 #: gaphor/plugins/errorreports/errorreports.glade:21
 #: gaphor/plugins/errorreports/errorreports.ui:18
@@ -1490,7 +1490,7 @@ msgstr ""
 
 #: gaphor/plugins/errorreports/errorreports.py:106
 msgid "Errors:"
-msgstr ""
+msgstr "Fel:"
 
 #: gaphor/plugins/errorreports/errorreports.py:155
 msgid ""
@@ -1501,7 +1501,7 @@ msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export as XMI"
-msgstr ""
+msgstr "Exportera som XMI"
 
 #: gaphor/plugins/xmiexport/__init__.py:26
 msgid "Export model as XMI (XML Model Interchange) format"
@@ -1514,11 +1514,11 @@ msgstr "_Exportera"
 
 #: gaphor/plugins/xmiexport/__init__.py:47
 msgid "All XMI Files"
-msgstr ""
+msgstr "Alla XMI Filer"
 
 #: gaphor/services/helpservice/about.ui:7 gaphor/ui/mainwindow.py:60
 msgid "About Gaphor"
-msgstr ""
+msgstr "Om Gaphor"
 
 #: gaphor/services/helpservice/about.ui:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
@@ -1560,7 +1560,7 @@ msgstr "_Byt namn"
 
 #: gaphor/services/helpservice/shortcuts.ui:32
 msgid "Search"
-msgstr ""
+msgstr "Sök"
 
 #: gaphor/services/helpservice/shortcuts.ui:40
 msgid "Toggle property editor"
@@ -1585,7 +1585,7 @@ msgstr ""
 #: gaphor/services/helpservice/shortcuts.ui:75
 #, fuzzy
 msgid "Files"
-msgstr "Profiler"
+msgstr "Filer"
 
 #: gaphor/services/helpservice/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
 #, fuzzy
@@ -1600,11 +1600,11 @@ msgstr "Spara Gaphor-modell som"
 #: gaphor/services/helpservice/shortcuts.ui:97 gaphor/ui/filemanager.py:312
 #: gaphor/ui/mainwindow.py:49
 msgid "Save"
-msgstr ""
+msgstr "Spara"
 
 #: gaphor/services/helpservice/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
 msgid "Save As…"
-msgstr ""
+msgstr "Spara Som…"
 
 #: gaphor/services/helpservice/shortcuts.ui:117
 msgid "Undo and Redo"
@@ -1613,7 +1613,7 @@ msgstr ""
 #: gaphor/services/helpservice/shortcuts.ui:123
 #: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
 msgid "Undo"
-msgstr ""
+msgstr "Ångra"
 
 #: gaphor/services/helpservice/shortcuts.ui:131
 #: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:90
@@ -1637,7 +1637,7 @@ msgstr ""
 #: gaphor/services/helpservice/shortcuts.ui:164
 #: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:118
 msgid "Actual Size"
-msgstr ""
+msgstr "Aktuell Storlek"
 
 #: gaphor/services/helpservice/shortcuts.ui:174
 #, fuzzy
@@ -1654,11 +1654,11 @@ msgstr ""
 
 #: gaphor/services/helpservice/shortcuts.ui:199
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopiera och Klistra"
 
 #: gaphor/services/helpservice/shortcuts.ui:205
 msgid "Copy"
-msgstr ""
+msgstr "Kopiera"
 
 #: gaphor/services/helpservice/shortcuts.ui:213
 msgid "Cut"
@@ -1818,7 +1818,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "User"
-msgstr ""
+msgstr "Användare"
 
 # Osäker på denna
 #: gaphor/templates/sysml.gaphor
@@ -1832,7 +1832,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Structure"
-msgstr ""
+msgstr "Struktur"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Context"
@@ -1872,7 +1872,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "controller"
-msgstr ""
+msgstr "kontroller"
 
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
@@ -1911,11 +1911,11 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Off"
-msgstr ""
+msgstr "Av"
 
 #: gaphor/templates/sysml.gaphor
 msgid "On"
-msgstr ""
+msgstr "På"
 
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
@@ -2026,7 +2026,7 @@ msgstr "Använd lådor"
 
 #: gaphor/templates/uml.gaphor
 msgid "2. Domain Analysis"
-msgstr ""
+msgstr "2. Domänanalys"
 
 #: gaphor/templates/uml.gaphor
 msgid "3. Architectural Design"
@@ -2034,7 +2034,7 @@ msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "4. Detailed Design"
-msgstr ""
+msgstr "4. Detaljerad Design"
 
 #: gaphor/templates/uml.gaphor
 msgid "Main Actor"
@@ -2164,7 +2164,7 @@ msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Artifact 1"
-msgstr ""
+msgstr "Artifakt 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Node 2"
@@ -2176,7 +2176,7 @@ msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Artifact 2"
-msgstr ""
+msgstr "Artifakt 2"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2227,11 +2227,11 @@ msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "String"
-msgstr ""
+msgstr "Sträng"
 
 #: gaphor/templates/uml.gaphor
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: gaphor/ui/appfilemanager.py:14 gaphor/ui/filedialog.py:12
 #, fuzzy
@@ -2260,7 +2260,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:28 gaphor/ui/elementeditor.ui:23
 msgid "Show Tips"
-msgstr ""
+msgstr "Visa Tips"
 
 #: gaphor/ui/elementeditor.glade:63 gaphor/ui/elementeditor.ui:49
 msgid ""
@@ -2316,15 +2316,15 @@ msgstr ""
 
 #: gaphor/ui/errorhandler.py:28 gaphor/ui/errorhandler.py:31
 msgid "Close"
-msgstr ""
+msgstr "Stäng"
 
 #: gaphor/ui/errorhandler.py:28
 msgid "Start debug session"
-msgstr ""
+msgstr "Stara debugsession"
 
 #: gaphor/ui/filedialog.py:32
 msgid "All Files"
-msgstr ""
+msgstr "Alla Filer"
 
 #: gaphor/ui/filemanager.py:36
 msgid ""
@@ -2373,11 +2373,11 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:189
 msgid "Saving…"
-msgstr ""
+msgstr "Sparar…"
 
 #: gaphor/ui/filemanager.py:190
 msgid "Saving model to {filename}"
-msgstr ""
+msgstr "Sparar modell till {filename}"
 
 #: gaphor/ui/filemanager.py:207
 #, fuzzy
@@ -2403,7 +2403,7 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:310
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:87
 #, fuzzy
@@ -2458,7 +2458,7 @@ msgstr ""
 
 #: gaphor/ui/mainwindow.py:55
 msgid "Tools"
-msgstr ""
+msgstr "Verktyg"
 
 #: gaphor/ui/mainwindow.py:59
 msgid "Keyboard Shortcuts"
@@ -2475,7 +2475,7 @@ msgstr ""
 
 #: gaphor/ui/mainwindow.py:271
 msgid "Profile: {name}"
-msgstr ""
+msgstr "Profil: {name}"
 
 #: gaphor/ui/namespace.py:48
 msgid "_Open"
@@ -2545,25 +2545,25 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Show attributes"
-#~ msgstr ""
+#~ msgstr "Visa attribut"
 
 #~ msgid "Show operations"
-#~ msgstr ""
+#~ msgstr "Visa operationer"
 
 #~ msgid "Operation"
 #~ msgstr "Interaktioner"
 
 #~ msgid "Head"
-#~ msgstr ""
+#~ msgstr "Huvud"
 
 #~ msgid "Tail"
-#~ msgstr ""
+#~ msgstr "Svans"
 
 #~ msgid "Message sort"
 #~ msgstr ""
 
 #~ msgid "Attribute"
-#~ msgstr ""
+#~ msgstr "Attribut"
 
 #~ msgid "Show stereotypes attributes"
 #~ msgstr ""
@@ -2575,10 +2575,10 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Show direction"
-#~ msgstr ""
+#~ msgstr "Visa riktning"
 
 #~ msgid "title"
-#~ msgstr ""
+#~ msgstr "titel"
 
 #~ msgid ""
 #~ "Add and edit class attributes according to UML syntax.\n"
@@ -2634,13 +2634,13 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Application"
-#~ msgstr "Interaktioner"
+#~ msgstr "Applikation"
 
 #~ msgid "Quit Gaphor"
 #~ msgstr ""
 
 #~ msgid "Files"
-#~ msgstr ""
+#~ msgstr "Filer"
 
 # Osäker på denna
 #~ msgid "Save As"
@@ -2650,7 +2650,7 @@ msgstr ""
 #~ msgstr "Nytt _Diagram"
 
 #~ msgid "Edit"
-#~ msgstr ""
+#~ msgstr "Redigera"
 
 #~ msgid "Select All"
 #~ msgstr ""
@@ -2659,7 +2659,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Copy"
-#~ msgstr ""
+#~ msgstr "Kopiera"
 
 #~ msgid "Paste"
 #~ msgstr ""
@@ -2846,19 +2846,19 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Export diagram to SVG"
-#~ msgstr ""
+#~ msgstr "Exportera diragram till SVG"
 
 #~ msgid "Export to PNG"
-#~ msgstr ""
+#~ msgstr "Exportera till PNG"
 
 #~ msgid "Export diagram to PNG"
-#~ msgstr ""
+#~ msgstr "Exportera diagram till PNG"
 
 #~ msgid "Export to PDF"
-#~ msgstr ""
+#~ msgstr "Exportera till PDF"
 
 #~ msgid "Export diagram to PDF"
-#~ msgstr ""
+#~ msgstr "Exportera diagram till PDF"
 
 #~ msgid "Export to XMI"
 #~ msgstr "_Exportera"
@@ -2882,7 +2882,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Show references"
-#~ msgstr ""
+#~ msgstr "Visa referenser"
 
 #~ msgid "Parts and References"
 #~ msgstr ""
@@ -2894,7 +2894,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Style sheet"
-#~ msgstr ""
+#~ msgstr "Stilmall"
 
 #~ msgid ""
 #~ "The model contains some references to"
@@ -3058,10 +3058,10 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "New Window"
-#~ msgstr ""
+#~ msgstr "Nytt Fönster"
 
 #~ msgid "Open"
-#~ msgstr ""
+#~ msgstr "Öppna"
 
 #~ msgid "Example Technolgy Requirement"
 #~ msgstr ""
