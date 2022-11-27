@@ -100,6 +100,13 @@ def _position_changed(paned, _gparam, properties):
         properties.set(paned.get_name(), paned.props.position)
 
 
+def _ensure_pane_visible(paned, _gparam):
+    if paned.props.position < paned.props.min_position + 12:
+        paned.props.position = paned.props.min_position + 12
+    elif paned.props.position > paned.props.max_position - 12:
+        paned.props.position = paned.props.max_position - 12
+
+
 @factory("paned")
 def paned(parent, index, properties, name, orientation, position=None):
     paned = Gtk.Paned.new(
@@ -108,6 +115,10 @@ def paned(parent, index, properties, name, orientation, position=None):
         else Gtk.Orientation.VERTICAL
     )
     paned.set_name(name)
+    paned.connect("notify::position", _ensure_pane_visible)
+    paned.connect("notify::min-position", _ensure_pane_visible)
+    paned.connect("notify::max-position", _ensure_pane_visible)
+
     add(paned, index, parent)
     paned.set_position(properties.get(name, int(position)))
     paned.connect("notify::position", _position_changed, properties)
