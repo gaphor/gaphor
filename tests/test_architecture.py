@@ -14,6 +14,7 @@ GAPHOR_CORE = [
 ]
 
 UI_LIBRARIES = [
+    "gi.repository.Adw",
     "gi.repository.Gdk",
     "gi.repository.Gtk",
 ]
