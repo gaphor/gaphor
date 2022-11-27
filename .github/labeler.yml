@@ -13,3 +13,6 @@ chore:
   - pyproject.toml
 python:
   - '*.py'
+skip-changelog:
+  - .pre-commit-config.yaml
+  - .all-contributorsrc
