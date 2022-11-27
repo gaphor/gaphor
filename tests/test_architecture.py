@@ -6,6 +6,7 @@ GAHOR_CORE = [
     "gaphor.core*",
     "gaphor.abc",
     "gaphor.action",
+    "gaphor.entrypoint",
     "gaphor.i18n",
     "gaphor.transaction",
     "gaphor.event",
@@ -34,6 +35,19 @@ def test_diagram_package():
         .may_import("gaphor.diagram*")
         .may_import("gaphor.UML.recipes")
         .may_import("gaphor.UML.uml")
+        .should_not_import("gaphor*")
+        .check(gaphor)
+    )
+
+
+def test_services_package():
+    (
+        archrule("Services only depend on core functionality")
+        .match("gaphor.services*")
+        .exclude("*.tests.*")
+        .may_import(*GAHOR_CORE)
+        .may_import("gaphor.diagram*")
+        .may_import("gaphor.services*")
         .should_not_import("gaphor*")
         .check(gaphor)
     )
