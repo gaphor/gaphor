@@ -44,3 +44,7 @@ frame > textview {
 #tree_component .move-element-above {
   border-top: 12px solid lighter(@insensitive_fg_color);
 }
+
+#elementeditor {
+  border-left: 1px solid @unfocused_borders;
+}
