@@ -12,7 +12,7 @@ chore:
   - .flake8
   - pyproject.toml
 python:
-  - '*.py'
+  - gaphor/**/*.py
 skip-changelog:
   - .pre-commit-config.yaml
   - .all-contributorsrc
