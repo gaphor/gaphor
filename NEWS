@@ -1,3 +1,13 @@
+2.13.0
+------
+- Windows and AppImage are built with GTK4
+- Many GTK4 improvements: About window, diagram tabs, message dialogs
+- Auto-layouting for diagrams
+- Relations to actors can connect below actor name
+- Export to EPS
+- Zoom with Ctrl+scroll wheel works again
+- Translation updates and bug fixes
+
 2.12.1
 ------
 - Fix/move connected handle
