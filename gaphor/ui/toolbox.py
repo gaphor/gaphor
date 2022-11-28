@@ -96,13 +96,18 @@ class Toolbox(UIComponent):
         toolbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
         expanded = self.expanded_sections()
 
-        def on_expanded(widget, _prop, index):
-            self.expanded_sections(index, widget.get_property("expanded"))
+        def on_expanded(widget, _prop, index, revealer):
+            expanded = widget.get_property("expanded")
+            self.expanded_sections(index, expanded)
+            revealer.set_reveal_child(expanded)
 
         for index, (title, items) in enumerate(toolbox_actions):
+            revealer = Gtk.Revealer.new()
+            revealer.set_transition_type(Gtk.RevealerTransitionType.SLIDE_UP)
+            revealer.set_reveal_child(expanded[index])
             expander = Gtk.Expander.new(title)
             expander.set_property("expanded", expanded[index])
-            expander.connect("notify::expanded", on_expanded, index)
+            expander.connect("notify::expanded", on_expanded, index, revealer)
             flowbox = Gtk.FlowBox.new()
             flowbox.set_homogeneous(True)
             flowbox.set_row_spacing(1)
@@ -126,18 +131,18 @@ class Toolbox(UIComponent):
                 drag_source.connect("prepare", _flowbox_drag_prepare)
                 flowbox.add_controller(drag_source)
 
-            if Gtk.get_major_version() == 3:
-                expander.add(flowbox)
-            else:
-                expander.set_child(flowbox)
             for action_name, label, icon_name, shortcut, *rest in items:
                 button = create_toolbox_button(action_name, icon_name, label, shortcut)
                 flowbox.insert(button, -1)
 
             if Gtk.get_major_version() == 3:
+                revealer.add(flowbox)
                 toolbox.add(expander)
+                toolbox.add(revealer)
             else:
+                revealer.set_child(flowbox)
                 toolbox.append(expander)
+                toolbox.append(revealer)
 
         if Gtk.get_major_version() == 3:
             toolbox.show_all()
@@ -174,7 +179,8 @@ class Toolbox(UIComponent):
     def flowboxes(self):
         if self._toolbox:
             for expander in iter_children(self._toolbox):
-                yield expander.get_child()
+                if isinstance(expander, Gtk.Revealer):
+                    yield expander.get_child()
 
     def select_tool(self, tool_name: str) -> None:
         for flowbox in self.flowboxes():
@@ -211,7 +217,9 @@ class Toolbox(UIComponent):
         self._current_diagram_type = event.diagram and event.diagram.diagramType or ""
 
         expanded = self.expanded_sections()
-        for index, expander in enumerate(iter_children(self._toolbox)):
+        for index, expander in enumerate(
+            c for c in iter_children(self._toolbox) if isinstance(c, Gtk.Expander)
+        ):
             expander.set_property("expanded", expanded[index])
 
     def _on_tool_activated(self, flowbox, child):

@@ -49,6 +49,10 @@ frame > textview {
   border-left: 1px solid @unfocused_borders;
 }
 
+#toolbox > viewport {
+  margin-top: 6px;
+}
+
 /* For toolbox and greeter */
 flowboxchild:hover {
   background-color: @shade_color;
