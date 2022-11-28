@@ -1,13 +1,17 @@
 
-#toolbox > expander {
+#toolbox expander {
   border-top: 1px solid @unfocused_borders;
   margin-top: 6px;
   padding: 6px 3px 0 3px;
 }
 
-#toolbox > expander:first-child {
+#toolbox expander:first-child {
   border-top: none;
   margin-top: 0;
+}
+
+#toolbox label {
+  font-weight: bold;
 }
 
 #diagrams {

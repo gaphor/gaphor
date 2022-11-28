@@ -94,7 +94,6 @@ class Toolbox(UIComponent):
 
     def create_toolbox(self, toolbox_actions: ToolboxDefinition) -> Gtk.Box:
         toolbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
-        toolbox.set_name("toolbox")
         expanded = self.expanded_sections()
 
         def on_expanded(widget, _prop, index):
