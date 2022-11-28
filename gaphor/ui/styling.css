@@ -2,7 +2,8 @@
 #toolbox expander {
   border-top: 1px solid @unfocused_borders;
   margin-top: 6px;
-  padding: 6px 3px 0 3px;
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 #toolbox expander:first-child {
@@ -34,14 +35,6 @@ diagramview {
 flowboxchild {
   padding: 8px;
   border-radius: 8px;
-}
-
-flowboxchild:hover {
-  background-color: @theme_selected_bg_color;
-}
-
-flowboxchild:hover * {
-  color: @theme_selected_fg_color;
 }
 
 .greeter list row {

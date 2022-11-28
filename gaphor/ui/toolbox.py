@@ -105,6 +105,8 @@ class Toolbox(UIComponent):
             expander.connect("notify::expanded", on_expanded, index)
             flowbox = Gtk.FlowBox.new()
             flowbox.set_homogeneous(True)
+            flowbox.set_row_spacing(1)
+            flowbox.set_column_spacing(1)
             flowbox.set_max_children_per_line(12)
             if Gtk.get_major_version() == 3:
                 flowbox_add_hover_support(flowbox)
