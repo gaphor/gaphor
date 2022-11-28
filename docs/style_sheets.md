@@ -20,7 +20,10 @@ Since we're dealing with a diagram, and not a HTML document, some CSS features
 have been left out.
 
 The style is part of the model, so everyone working on a model will have the
-same style.
+same style. To edit the style press the tools page button at the top right corner
+in gaphor:
+
+![Button to access style code](images/css-button.png)
 
 Here is a simple example of how to change the background color of a class:
 
