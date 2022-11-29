@@ -7,83 +7,90 @@
     <property name="height-request">600</property>
     <!-- <property name="modal">True</property> -->
     <property name="window-position">center</property>
+    <child type="titlebar">
+      <object class="GtkHeaderBar">
+        <property name="visible">1</property>
+        <property name="show-close-button">1</property>
+        <child type="title">
+          <object class="GtkBox">
+            <property name="visible">1</property>
+            <property name="orientation">vertical</property>
+            <property name="valign">center</property>
+            <child>
+              <object class="GtkLabel" id="title">
+                <property name="visible">1</property>
+                <property name="label">Gaphor</property>
+                <style>
+                  <class name="title"/>
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
     <child>
       <object class="GtkBox">
         <property name="visible">1</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkStack" id="stack">
+          <object class="GtkScrolledWindow">
             <property name="visible">1</property>
-            <property name="transition-type">crossfade</property>
+            <property name="hscrollbar-policy">never</property>
             <child>
-              <object class="GtkScrolledWindow">
+              <object class="GtkViewport">
                 <property name="visible">1</property>
-                <property name="hscrollbar-policy">never</property>
                 <child>
-                  <object class="GtkViewport">
+                  <object class="GtkBox">
                     <property name="visible">1</property>
+                    <property name="halign">center</property>
+                    <property name="vexpand">1</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">6</property>
+                    <property name="margin-top">18</property>
+                    <property name="margin-bottom">12</property>
                     <child>
-                      <object class="GtkBox">
+                      <object class="GtkLabel">
                         <property name="visible">1</property>
-                        <property name="halign">center</property>
-                        <property name="vexpand">1</property>
-                        <property name="orientation">vertical</property>
-                        <property name="spacing">6</property>
-                        <property name="margin-top">18</property>
-                        <property name="margin-bottom">12</property>
+                        <property name="label" translatable="yes">Recently opened models</property>
+                        <property name="xalign">0</property>
+                        <style>
+                          <class name="greeter-title"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkFrame">
+                        <property name="visible">1</property>
+                        <property name="shadow-type">in</property>
                         <child>
-                          <object class="GtkFrame">
+                          <object class="GtkListBox" id="greeter-recent-files">
                             <property name="visible">1</property>
-                            <property name="shadow-type">in</property>
-                            <child>
-                              <object class="GtkListBox" id="greeter-recent-files">
-                                <property name="visible">1</property>
-                              </object>
-                            </child>
                           </object>
                         </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">1</property>
+                        <property name="label" translatable="yes">Create a new model</property>
+                        <property name="xalign">0</property>
+                        <style>
+                          <class name="greeter-title"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkFlowBox" id="templates">
+                        <property name="visible">1</property>
+                        <property name="homogeneous">1</property>
+                        <property name="width-request">400</property>
+                        <property name="max_children_per_line">3</property>
                       </object>
                     </child>
                   </object>
                 </child>
               </object>
-              <packing>
-                <property name="name">recent-files</property>
-              </packing>
-            </child>
-            <!-- new stack -->
-            <child>
-              <object class="GtkScrolledWindow">
-                <property name="visible">1</property>
-                <property name="hscrollbar-policy">never</property>
-                <child>
-                  <object class="GtkViewport">
-                    <property name="visible">1</property>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">1</property>
-                        <property name="halign">center</property>
-                        <property name="valign">start</property>
-                        <property name="orientation">vertical</property>
-                        <property name="spacing">6</property>
-                        <property name="margin-top">18</property>
-                        <property name="margin-bottom">12</property>
-                        <child>
-                          <object class="GtkFlowBox" id="templates">
-                            <property name="visible">1</property>
-                            <property name="homogeneous">1</property>
-                            <property name="width-request">400</property>
-                            <property name="max_children_per_line">3</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="name">new-model</property>
-              </packing>
             </child>
           </object>
         </child>
@@ -99,36 +106,11 @@
                 <property name="homogeneous">1</property>
                 <child>
                   <object class="GtkButton">
-                    <property name="label" translatable="yes">Create New Model…</property>
-                    <property name="visible">1</property>
-                    <property name="action-name">app.new-model</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton">
                     <property name="label" translatable="yes">Open Other Model…</property>
                     <property name="visible">1</property>
                     <property name="action-name">app.file-open</property>
                   </object>
                 </child>
-              </object>
-            </child>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child type="titlebar">
-      <object class="GtkHeaderBar">
-        <property name="visible">1</property>
-        <property name="show-close-button">1</property>
-        <child>
-          <object class="GtkButton" id="back-button">
-            <property name="visible">1</property>
-            <property name="action-name">app.recent-files</property>
-            <child>
-              <object class="GtkImage">
-                <property name="visible">1</property>
-                <property name="icon-name">go-previous-symbolic</property>
               </object>
             </child>
           </object>

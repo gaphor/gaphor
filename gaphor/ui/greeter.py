@@ -44,40 +44,24 @@ class Greeter(Service, ActionProvider):
         self.event_manager = event_manager
         self.recent_manager = recent_manager or Gtk.RecentManager.get_default()
         self.greeter: Gtk.Window = None
-        self.stack: Gtk.Stack = None
         self.action_bar: Gtk.ActionBar = None
-        self.back_button: Gtk.Button = None
         self.gtk_app: Gtk.Application = None
         event_manager.subscribe(self.on_session_created)
-        self._on_recent_files_changed_id = 0
 
     def init(self, gtk_app):
         self.gtk_app = gtk_app
-        self._on_recent_files_changed_id = self.recent_manager.connect(
-            "changed", self._on_recent_files_changed
-        )
-        self._on_recent_files_changed()
 
     def shutdown(self):
         self.event_manager.unsubscribe(self.on_session_created)
-        if self._on_recent_files_changed_id:
-            self.recent_manager.disconnect(self._on_recent_files_changed_id)
-            self._on_recent_files_changed_id = 0
 
         if self.greeter:
             self.greeter.destroy()
         self.gtk_app = None
 
-    def open(self, stack_name=None) -> None:
-        if self.greeter and self.stack:
-            self.stack.set_visible_child_name(stack_name)
+    def open(self) -> None:
+        if self.greeter:
             self.greeter.present()
             return
-
-        if not stack_name:
-            stack_name = (
-                "recent-files" if any(self.query_recent_files()) else "new-model"
-            )
 
         builder = new_builder("greeter")
 
@@ -87,7 +71,6 @@ class Greeter(Service, ActionProvider):
             listbox.insert(widget, -1)
 
         self.action_bar = builder.get_object("action-bar")
-        self.back_button = builder.get_object("back-button")
 
         templates = builder.get_object("templates")
         templates.connect("child-activated", self._on_template_activated)
@@ -98,10 +81,6 @@ class Greeter(Service, ActionProvider):
             flowbox_add_hover_support(templates)
         self.templates = templates
 
-        self.stack = builder.get_object("stack")
-        self.stack.set_visible_child_name(stack_name)
-        self.stack.connect("notify::visible-child", self._on_stack_changed)
-
         self.greeter = builder.get_object("greeter")
         self.greeter.set_application(self.gtk_app)
         if Gtk.get_major_version() == 3:
@@ -109,7 +88,6 @@ class Greeter(Service, ActionProvider):
         else:
             self.greeter.connect("close-request", self._on_window_close_request)
 
-        self.set_widgets_visible()
         self.greeter.show()
         templates.unselect_all()
 
@@ -117,15 +95,10 @@ class Greeter(Service, ActionProvider):
         if self.greeter:
             self.greeter.destroy()
             self.greeter = None
-            self.stack = None
-
-    @action(name="app.recent-files", shortcut="<Primary>o")
-    def recent_files(self):
-        self.open("recent-files")
 
     @action(name="app.new-model", shortcut="<Primary>n")
     def new_model(self):
-        self.open("new-model")
+        self.open()
 
     def query_recent_files(self):
         for item in self.recent_manager.get_items():
@@ -162,28 +135,6 @@ class Greeter(Service, ActionProvider):
     @event_handler(SessionCreated, ActiveSessionChanged)
     def on_session_created(self, _event=None):
         self.close()
-
-    def _on_stack_changed(self, stack: Gtk.Stack, gparam_object):
-        self.set_widgets_visible()
-
-    def set_widgets_visible(self):
-        visible = self.stack.get_visible_child_name()
-        if visible == "new-model":
-            self.action_bar.set_visible(False)
-            if any(self.query_recent_files()):
-                self.back_button.set_visible(True)
-            else:
-                self.back_button.set_visible(False)
-            self.greeter.set_title(gettext("Create a New Model"))
-        else:
-            self.action_bar.set_visible(True)
-            self.back_button.set_visible(False)
-            self.greeter.set_title(gettext("Open a Recent Model"))
-
-    def _on_recent_files_changed(self, recent_manager=None):
-        self.gtk_app.lookup_action("recent-files").set_enabled(
-            any(self.query_recent_files())
-        )
 
     def _on_recent_file_activated(self, _listbox, row):
         filename = row.filename
