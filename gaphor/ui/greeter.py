@@ -69,7 +69,6 @@ def new_builder(ui_file):
 
 class Greeter(Service, ActionProvider):
     def __init__(self, application, event_manager, recent_manager=None):
-        self.templates = None
         self.application = application
         self.event_manager = event_manager
         self.recent_manager = recent_manager or Gtk.RecentManager.get_default()
@@ -95,17 +94,21 @@ class Greeter(Service, ActionProvider):
 
         builder = new_builder("greeter")
 
-        listbox = builder.get_object("greeter-recent-files")
-        listbox.connect("row-activated", self._on_recent_file_activated)
-        for widget in self.create_recent_files():
-            listbox.insert(widget, -1)
+        if any(self.query_recent_files()):
+            listbox = builder.get_object("greeter-recent-files")
+            listbox.connect("row-activated", self._on_recent_file_activated)
+            for widget in self.create_recent_files():
+                listbox.insert(widget, -1)
+        else:
+            builder.get_object("greeter-recent-files-frame").hide()
+            builder.get_object("greeter-recent-files-label").hide()
 
         self.action_bar = builder.get_object("action-bar")
 
-        self.templates = builder.get_object("templates")
-        self.templates.connect("row-activated", self._on_template_activated)
+        templates = builder.get_object("templates")
+        templates.connect("row-activated", self._on_template_activated)
         for widget in self.create_templates():
-            self.templates.insert(widget, -1)
+            templates.insert(widget, -1)
 
         self.greeter = builder.get_object("greeter")
         self.greeter.set_application(self.gtk_app)

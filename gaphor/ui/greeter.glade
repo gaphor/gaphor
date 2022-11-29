@@ -60,7 +60,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkFrame">
+                      <object class="GtkFrame" id="greeter-recent-files-frame">
                         <property name="visible">1</property>
                         <property name="shadow-type">in</property>
                         <child>
