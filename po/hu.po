@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-11-27 16:18-0500\n"
-"PO-Revision-Date: 2022-11-28 08:48+0000\n"
+"PO-Revision-Date: 2022-11-29 00:40+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hu/>\n"
@@ -1152,12 +1152,12 @@ msgstr "Közvetetten példányosítva"
 #: gaphor/UML/classes/propertypages.glade:937
 #: gaphor/UML/classes/propertypages.ui:812
 msgid "A."
-msgstr ""
+msgstr "A."
 
 #: gaphor/UML/classes/propertypages.glade:943
 #: gaphor/UML/classes/propertypages.ui:816
 msgid "S."
-msgstr ""
+msgstr "S."
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
 msgid "Deployments"
@@ -1455,11 +1455,11 @@ msgstr "Nincs ábra „{name}” a(z) „{model_name}”-modellben ({model_file}
 
 #: gaphor/plugins/autolayout/pydot.py:44
 msgid "Auto Layout"
-msgstr ""
+msgstr "Önműködő elrendezés"
 
 #: gaphor/plugins/autolayout/pydot.py:52
 msgid "Auto Layout (orthogonal)"
-msgstr ""
+msgstr "Önműködő elrendezés (merőleges)"
 
 #: gaphor/plugins/console/console.py:24
 msgid ""
@@ -1516,12 +1516,11 @@ msgstr "Exportálás EPS-fájlként"
 
 #: gaphor/plugins/diagramexport/__init__.py:89
 msgid "Export diagram as Encapsulated PostScript"
-msgstr ""
+msgstr "Ábra exportálása beágyazott PostScript-fájlként"
 
 #: gaphor/plugins/diagramexport/__init__.py:95
-#, fuzzy
 msgid "Export diagram as EPS"
-msgstr "Ábra exportálása SVG-fájlként"
+msgstr "Ábra exportálása EPS-fájlként"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
 #: gaphor/plugins/errorreports/errorreports.py:65
@@ -2133,24 +2132,23 @@ msgstr "Minden Gaphor-modell"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid "Switch to {name}?"
-msgstr ""
+msgstr "Átvált a következőre: {name}?"
 
 #: gaphor/ui/appfilemanager.py:50
-#, fuzzy
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr ""
-"A(z) „{filename}”-fájl már meg van nyitva. Ehelyett a megnyitott ablakra "
+"A(z) „{name}”-fájl már meg van nyitva. Ehelyett a megnyitott ablakra "
 "szeretne váltani?"
 
 #: gaphor/ui/appfilemanager.py:69
 msgid "Open Again"
-msgstr ""
+msgstr "Újra megnyitása"
 
 #: gaphor/ui/appfilemanager.py:70
 msgid "Switch"
-msgstr ""
+msgstr "Váltás"
 
 #: gaphor/ui/appfilemanager.py:93
 msgid "Open a Model"
@@ -2278,9 +2276,8 @@ msgid "Close"
 msgstr "Bezárás"
 
 #: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:44
-#, fuzzy
 msgid "Start Debug Session"
-msgstr "Hibakeresési munkamenet kezdete"
+msgstr "Hibakeresési munkamenet elindítsa"
 
 #: gaphor/ui/filedialog.py:34
 msgid "All Files"
@@ -2334,13 +2331,12 @@ msgid "Loading model from {filename}"
 msgstr "Modell betöltése innen: {filename}"
 
 #: gaphor/ui/filemanager.py:160
-#, fuzzy
 msgid "Merge conflict in model “{filename}”."
-msgstr "Nem sikerült megnyitni a(z) „{filename}”-modellfájlt."
+msgstr "„{filename}”-modellfájl egyesítési ütközés."
 
 #: gaphor/ui/filemanager.py:163
 msgid "It looks like this model file contains a merge conflict."
-msgstr ""
+msgstr "Úgy tűnik, hogy ez a modellfájl egyesítési ütközést tartalmaz."
 
 #: gaphor/ui/filemanager.py:173
 msgid "Unable to open model “{filename}”."
@@ -2368,13 +2364,15 @@ msgstr "A Gaphor-modell mentése másként"
 
 #: gaphor/ui/filemanager.py:326
 msgid "Save Changes?"
-msgstr ""
+msgstr "Változtatások mentése?"
 
 #: gaphor/ui/filemanager.py:327
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
+"A megnyitott modell nem mentett változtatásokat tartalmaz. A nem mentett "
+"változtatások véglegesen elvesznek."
 
 #: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
 msgid "Cancel"
@@ -2382,7 +2380,7 @@ msgstr "Mégse"
 
 #: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
 msgid "Discard"
-msgstr ""
+msgstr "Elvetés"
 
 #: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
 #: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:49
@@ -2570,9 +2568,12 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
+"Szerzői jog © 2001-2022 Molenaar Arjan J. és Yeaw Dan.\n"
+"\n"
+"Az UML, SysML és RAAML az Object Management Group, Inc. bejegyzett védjegyei "
+"vagy védjegyei az Egyesült Államokban és/vagy más országokban."
 
 #: gaphor/ui/help/about.ui:22
-#, fuzzy
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
 " not use this application except in compliance with the License. You may "
@@ -2586,24 +2587,17 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
-"Licenc az Apache Licenc 2.0-s verziója alatt (a „Licenc”);\n"
-"ezt az alkalmazást csak a Licencnek megfelelően használhatja.\n"
-"A Licenc másolatát a következő címen szerezheti be:\n"
+"Licenc az Apache Licenc 2.0-s verziója alatt (a „Licenc”); ezt az "
+"alkalmazást csak a Licencnek megfelelően használhatja. A Licenc másolatát a "
+"következő címen szerezheti be:\n"
 "\n"
-"http://www.apache.org/licenses/LICENSE-2.0\n"
+"    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"Hacsak a vonatkozó jogszabályok nem írják elő, vagy írásos\n"
-"megállapodást nem írnak elő, a Licenc alapján terjesztett\n"
-"szoftvereket „AHOGY VAN” ALAPJÁN terjesztik, BÁRMILYEN, akár\n"
-"kifejezett, akár hallgatólagos GARANCIA VAGY FELTÉTEL NÉLKÜL.\n"
-"Tekintse meg a Licencben az adott nyelvi engedélyeket és\n"
-"korlátozásokat a Licenc alatt.\n"
-"\n"
-"---\n"
-"\n"
-"Az UML, SysML és RAAML az Object Management Group, Inc.\n"
-"bejegyzett védjegyei vagy védjegyei az Egyesült Államokban\n"
-"és/vagy más országokban.\n"
+"Hacsak a vonatkozó jogszabályok nem írják elő, vagy írásos megállapodást nem "
+"írnak elő, a Licenc alapján terjesztett szoftvereket „AHOGY VAN” ALAPJÁN "
+"terjesztik, BÁRMILYEN, akár kifejezett, akár hallgatólagos GARANCIA VAGY "
+"FELTÉTEL NÉLKÜL. Tekintse meg a Licencben az adott nyelvi engedélyeket és "
+"korlátozásokat a Licenc alatt."
 
 #: gaphor/ui/help/shortcuts.ui:24
 msgid "Rename"
