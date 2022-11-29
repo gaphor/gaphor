@@ -1,27 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.38.2 -->
 <interface>
-  <object class="GtkFlowBoxChild" id="model-template">
+  <requires lib="gtk+" version="3.24"/>
+  <object class="GtkListBoxRow" id="model-template">
     <property name="visible">1</property>
     <property name="can-focus">1</property>
+    <property name="width-request">400</property>
+    <property name="selectable">0</property>
     <child>
       <object class="GtkBox">
-        <property name="border-width">12</property>
-        <property name="orientation">vertical</property>
-        <property name="expand">1</property>
-        <property name="spacing">6</property>
         <property name="visible">1</property>
+        <property name="margin-top">12</property>
+        <property name="margin-bottom">12</property>
+        <property name="margin-start">18</property>
+        <property name="margin-end">18</property>
+        <property name="spacing">12</property>
         <child>
-          <object class="GtkImage" id="template-icon">
-            <property name="expand">1</property>
-            <property name="pixel-size">98</property>
+          <object class="GtkImage" id="icon">
             <property name="visible">1</property>
+            <property name="pixel-size">48</property>
           </object>
         </child>
         <child>
-          <object class="GtkLabel" id="template-name">
-            <property name="expand">1</property>
+          <object class="GtkBox">
             <property name="visible">1</property>
+            <property name="margin-start">6</property>
+            <property name="margin-end">6</property>
+            <property name="margin-top">6</property>
+            <property name="margin-bottom">6</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">12</property>
+            <child>
+              <object class="GtkLabel" id="name">
+                <property name="visible">1</property>
+                <property name="label">Model</property>
+                <property name="xalign">0</property>
+                <attributes>
+                  <attribute name="weight" value="bold"/>
+                </attributes>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="description">
+                <property name="visible">1</property>
+                <property name="label">Some description</property>
+                <property name="xalign">0</property>
+                <style>
+                  <class name="dim-label"/>
+                </style>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
           </object>
+          <packing>
+            <property name="expand">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">1</property>
+            <property name="icon-name">go-next-symbolic</property>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
         </child>
       </object>
     </child>

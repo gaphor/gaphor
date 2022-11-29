@@ -5,7 +5,7 @@
     <property name="focusable">1</property>
     <property name="width-request">400</property>
     <property name="selectable">0</property>
-    <property name="child">
+    <child>
       <object class="GtkBox">
         <property name="margin-top">12</property>
         <property name="margin-bottom">12</property>
@@ -46,6 +46,6 @@
           </object>
         </child>
       </object>
-    </property>
+    </child>
   </object>
 </interface>

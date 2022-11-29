@@ -39,7 +39,7 @@
                     <property name="margin-top">18</property>
                     <property name="margin-bottom">12</property>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="greeter-recent-files-label">
                         <property name="label" translatable="yes">Recently opened models</property>
                         <property name="xalign">0</property>
                         <style>
@@ -64,10 +64,10 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkFlowBox" id="templates">
-                        <property name="homogeneous">1</property>
-                        <property name="width-request">400</property>
-                        <property name="max_children_per_line">3</property>
+                      <object class="GtkFrame">
+                        <child>
+                          <object class="GtkListBox" id="templates"/>
+                        </child>
                       </object>
                     </child>
                   </object>
