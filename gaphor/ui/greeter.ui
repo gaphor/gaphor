@@ -39,7 +39,7 @@
                     <property name="margin-top">18</property>
                     <property name="margin-bottom">12</property>
                     <child>
-                      <object class="GtkLabel" id="greeter-recent-files-label">
+                      <object class="GtkLabel" id="recent-files-label">
                         <property name="label" translatable="yes">Recently opened models</property>
                         <property name="xalign">0</property>
                         <style>
@@ -48,9 +48,9 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkFrame" id="greeter-recent-files-frame">
+                      <object class="GtkFrame" id="recent-files-frame">
                         <child>
-                          <object class="GtkListBox" id="greeter-recent-files"/>
+                          <object class="GtkListBox" id="recent-files"/>
                         </child>
                       </object>
                     </child>
