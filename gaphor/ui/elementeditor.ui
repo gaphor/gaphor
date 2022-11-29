@@ -79,6 +79,9 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                         <property name="icon_name">edit-undo-symbolic</property>
                       </object>
                     </child>
+                    <style>
+                      <class name="flat"/>
+                    </style>
                   </object>
                 </child>
                 <child>
@@ -91,6 +94,9 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                         <property name="icon_name">edit-redo-symbolic</property>
                       </object>
                     </child>
+                    <style>
+                      <class name="flat"/>
+                    </style>
                   </object>
                 </child>
                 <style>
@@ -110,6 +116,9 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                         <property name="icon_name">zoom-in-symbolic</property>
                       </object>
                     </child>
+                    <style>
+                      <class name="flat"/>
+                    </style>
                   </object>
                 </child>
                 <child>
@@ -122,6 +131,9 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                         <property name="icon_name">zoom-original-symbolic</property>
                       </object>
                     </child>
+                    <style>
+                      <class name="flat"/>
+                    </style>
                   </object>
                 </child>
                 <child>
@@ -134,6 +146,9 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                         <property name="icon_name">zoom-out-symbolic</property>
                       </object>
                     </child>
+                    <style>
+                      <class name="flat"/>
+                    </style>
                   </object>
                 </child>
                 <style>
@@ -150,6 +165,9 @@ Tool selection only works from the diagram. If a tool does not get selected, cli
                     <property name="icon_name">document-properties-symbolic</property>
                   </object>
                 </child>
+                <style>
+                  <class name="flat"/>
+                </style>
               </object>
             </child>
           </object>
