@@ -50,7 +50,7 @@
                     <property name="margin-top">18</property>
                     <property name="margin-bottom">12</property>
                     <child>
-                      <object class="GtkLabel" id="greeter-recent-files-label">
+                      <object class="GtkLabel" id="recent-files-label">
                         <property name="visible">1</property>
                         <property name="label" translatable="yes">Recently opened models</property>
                         <property name="xalign">0</property>
@@ -60,11 +60,11 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkFrame" id="greeter-recent-files-frame">
+                      <object class="GtkFrame" id="recent-files-frame">
                         <property name="visible">1</property>
                         <property name="shadow-type">in</property>
                         <child>
-                          <object class="GtkListBox" id="greeter-recent-files">
+                          <object class="GtkListBox" id="recent-files">
                             <property name="visible">1</property>
                           </object>
                         </child>
