@@ -32,19 +32,20 @@ def test_greeter_with_recent_files(event_manager):
     recent_manager = RecentManagerStub(RecentInfoStub("file://path/to/foo.gaphor"))
     greeter = Greeter(None, event_manager, recent_manager)
 
-    greeter.recent_files()
+    greeter.open()
     widget = greeter.greeter
-    stack = find(widget, "stack")
 
-    assert stack.get_visible_child_name() == "recent-files"
+    frame = find(widget, "recent-files-frame")
+
+    assert frame.get_visible()
 
 
 def test_greeter_with_no_recent_files(event_manager):
     recent_manager = RecentManagerStub()
     greeter = Greeter(None, event_manager, recent_manager)
 
-    greeter.recent_files()
+    greeter.open()
     widget = greeter.greeter
-    stack = find(widget, "stack")
+    frame = find(widget, "recent-files-frame")
 
-    assert stack.get_visible_child_name() == "recent-files"
+    assert not frame.get_visible()
