@@ -18,12 +18,12 @@ msgstr ""
 #: gaphor/ui/greeter.py:29
 #, fuzzy
 msgid "C4 Model"
-msgstr "Ny modell"
+msgstr "C4 Modell"
 
 #: gaphor/C4Model/propertypages.glade:28 gaphor/C4Model/propertypages.ui:12
 #, fuzzy
 msgid "Description"
-msgstr "Åtgärder"
+msgstr "Beskrivning"
 
 #: gaphor/C4Model/propertypages.glade:75 gaphor/C4Model/propertypages.ui:39
 msgid "Technology"
@@ -48,7 +48,7 @@ msgstr "Ny Databas"
 #: gaphor/C4Model/toolbox.py:51
 #, fuzzy
 msgid "New Component"
-msgstr "Komponenter"
+msgstr "Ny Komponent"
 
 #: gaphor/C4Model/toolbox.py:59 gaphor/C4Model/toolbox.py:65
 msgid "Person"
@@ -64,12 +64,12 @@ msgstr ""
 
 #: gaphor/C4Model/toolbox.py:95
 msgid "Container: Database"
-msgstr ""
+msgstr "Container: Databas"
 
 #: gaphor/C4Model/toolbox.py:107 gaphor/UML/classes/classestoolbox.py:59
 #, fuzzy
 msgid "Component"
-msgstr "Komponenter"
+msgstr "Komponent"
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:105
@@ -80,24 +80,24 @@ msgstr "Beroende"
 #: gaphor/C4Model/toolbox.py:139
 #, fuzzy
 msgid "New C4 Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt C4 Diagram"
 
 #: gaphor/C4Model/toolbox.py:140 gaphor/UML/toolbox.py:30
 #, fuzzy
 msgid "New Class Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt Klassdiagram"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
 #, fuzzy
 msgid "New Activity Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt Aktivitetsdiagram"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
 #, fuzzy
 msgid "New Sequence Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt Sekvensdiagram"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
@@ -112,12 +112,12 @@ msgstr ""
 #: gaphor/RAAML/toolbox.py:19
 #, fuzzy
 msgid "New FTA Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt FTA Diagram"
 
 #: gaphor/RAAML/toolbox.py:20
 #, fuzzy
 msgid "New STPA Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt STPA Diagram"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -234,7 +234,7 @@ msgstr ""
 #: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:158
 #, fuzzy
 msgid "Control Action"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/RAAML/stpa/operationalsituation.py:34
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
@@ -245,7 +245,7 @@ msgstr ""
 #: gaphor/templates/raaml.gaphor
 #, fuzzy
 msgid "Loss"
-msgstr "Klasser"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
 #: gaphor/templates/raaml.gaphor
@@ -261,12 +261,12 @@ msgstr ""
 #: gaphor/UML/classes/classestoolbox.py:113
 #, fuzzy
 msgid "Generalization"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:58
 #, fuzzy
 msgid "Situation"
-msgstr "Åtgärder"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
@@ -279,7 +279,7 @@ msgstr "Kontroller"
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "Actuator"
-msgstr "Åtgärder"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
@@ -322,11 +322,11 @@ msgstr "Allokerad Typ"
 
 #: gaphor/SysML/propertypages.glade:123 gaphor/SysML/propertypages.ui:91
 msgid "Show Parts"
-msgstr ""
+msgstr "Visa Delar"
 
 #: gaphor/SysML/propertypages.glade:146 gaphor/SysML/propertypages.ui:107
 msgid "Show References"
-msgstr ""
+msgstr "Visa Referenser"
 
 #: gaphor/SysML/propertypages.glade:172 gaphor/SysML/propertypages.ui:123
 msgid "Show Values"
@@ -335,7 +335,7 @@ msgstr "Visa Värden"
 #: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:78
 #, fuzzy
 msgid "Compartments"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:212 gaphor/SysML/propertypages.ui:149
 msgid "Aggregation"
@@ -391,25 +391,25 @@ msgstr ""
 
 #: gaphor/SysML/toolbox.py:68
 msgid "New Block Definition Diagram"
-msgstr ""
+msgstr "Nytt Blockdefinitionsdiagram"
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr ""
+msgstr "Nytt Internt Blockdiagram"
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
 #, fuzzy
 msgid "New Package Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt Paketdiagram"
 
 #: gaphor/SysML/toolbox.py:71
 msgid "New Requirement Diagram"
-msgstr ""
+msgstr "Nytt Kravdiagram"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
 #, fuzzy
 msgid "New Use Case Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt Use Case _Diagram"
 
 #: gaphor/SysML/blocks/block.py:60
 msgid "ControlStructure"
@@ -452,20 +452,20 @@ msgstr "Paket"
 #: gaphor/UML/classes/classestoolbox.py:78
 #, fuzzy
 msgid "Composite Association"
-msgstr "Åtgärder"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:60
 #: gaphor/UML/classes/classestoolbox.py:88
 #, fuzzy
 msgid "Shared Association"
-msgstr "Åtgärder"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:70
 #: gaphor/UML/classes/classestoolbox.py:98
 #: gaphor/UML/usecases/usecasetoolbox.py:40
 #, fuzzy
 msgid "Association"
-msgstr "Åtgärder"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:84
 msgid "ValueType"
@@ -475,7 +475,7 @@ msgstr ""
 #: gaphor/UML/classes/classestoolbox.py:140
 #, fuzzy
 msgid "Enumeration"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 #: gaphor/UML/classes/classestoolbox.py:152
@@ -497,7 +497,7 @@ msgstr ""
 #: gaphor/SysML/requirements/relationships.py:53
 #, fuzzy
 msgid "trace"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:61
 msgid "verify"
@@ -506,7 +506,7 @@ msgstr "verifiera"
 #: gaphor/SysML/requirements/relationships.py:69
 #, fuzzy
 msgid "refine"
-msgstr "Profiler"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirement.py:62
 msgid "requirement"
@@ -559,21 +559,21 @@ msgstr ""
 #: gaphor/UML/toolbox.py:32
 #, fuzzy
 msgid "New Component Diagram"
-msgstr "Komponenter"
+msgstr "Nytt Komponentdiagram"
 
 #: gaphor/UML/toolbox.py:33
 #, fuzzy
 msgid "New Deployment Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt Deploydiagram"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr "ytt Kommunikationsdiagram"
+msgstr "Nytt Kommunikationsdiagram"
 
 #: gaphor/UML/toolbox.py:39
 #, fuzzy
 msgid "New Profile Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt Profildiagram"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -584,7 +584,7 @@ msgstr "Ny {name}"
 #: gaphor/UML/umlfmt.py:203
 #, fuzzy
 msgid "general: {name}"
-msgstr "interaktioner: {name}"
+msgstr "allmänt: {name}"
 
 #: gaphor/UML/umlfmt.py:208
 msgid "supplier: {name}"
@@ -620,7 +620,7 @@ msgstr "Åtgärder"
 #: gaphor/UML/actions/actionstoolbox.py:80
 #, fuzzy
 msgid "Action"
-msgstr "Åtgärder"
+msgstr "Åtgärd"
 
 #: gaphor/UML/actions/actionstoolbox.py:86
 msgid "Initial node"
@@ -645,7 +645,7 @@ msgstr ""
 #: gaphor/UML/actions/actionstoolbox.py:146
 #: gaphor/UML/actions/actionstoolbox.py:152
 msgid "Object node"
-msgstr ""
+msgstr "Objektnod"
 
 #: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Swimlane"
@@ -671,12 +671,12 @@ msgstr ""
 #: gaphor/UML/actions/actionstoolbox.py:196
 #, fuzzy
 msgid "Accept event action"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:202
 #, fuzzy
 msgid "Accept event"
-msgstr "Interaktioner"
+msgstr "
 
 #: gaphor/UML/actions/actionstoolbox.py:208
 msgid "Input pin"
@@ -800,7 +800,7 @@ msgstr ""
 #: gaphor/UML/actions/propertypages.ui:271
 #, fuzzy
 msgid "Parameters"
-msgstr "Interaktioner"
+msgstr "Parametrar"
 
 #: gaphor/UML/actions/propertypages.glade:381
 #: gaphor/UML/actions/propertypages.ui:294
@@ -868,17 +868,17 @@ msgstr "Klasser"
 #: gaphor/UML/profiles/profilestoolbox.py:14
 #, fuzzy
 msgid "Class"
-msgstr "Klasser"
+msgstr "Klass"
 
 #: gaphor/UML/classes/classestoolbox.py:35
 #, fuzzy
 msgid "Interface"
-msgstr "Interaktioner"
+msgstr "Gränssnitt"
 
 #: gaphor/UML/classes/classestoolbox.py:121
 #, fuzzy
 msgid "Interface Realization"
-msgstr "Interaktioner"
+msgstr "Gränssnitt Realisation"
 
 #: gaphor/UML/classes/classestoolbox.py:128
 msgid "DataType"
@@ -907,7 +907,7 @@ msgstr ""
 #: gaphor/UML/classes/dependency.py:46
 #, fuzzy
 msgid "implements"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
@@ -920,17 +920,17 @@ msgstr ""
 #: gaphor/UML/classes/dependencypropertypages.py:19
 #, fuzzy
 msgid "Implementation"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/UML/classes/enumeration.py:76
 #, fuzzy
 msgid "enumeration"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/UML/classes/interface.py:298
 #, fuzzy
 msgid "interface"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/UML/classes/klass.py:59
 msgid "stereotype"
@@ -943,7 +943,7 @@ msgstr "metaklass"
 #: gaphor/UML/classes/package.py:29
 #, fuzzy
 msgid "profile"
-msgstr "Profiler"
+msgstr "profil"
 
 #: gaphor/UML/classes/propertypages.glade:29
 #: gaphor/UML/classes/propertypages.ui:12
@@ -1124,7 +1124,7 @@ msgstr ""
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
 #, fuzzy
 msgid "Deployments"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16
 msgid "Artifact"
@@ -1132,7 +1132,7 @@ msgstr "Artifakt"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:28
 msgid "Node"
-msgstr ""
+msgstr "Nod"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:40
 msgid "Device"
@@ -1161,7 +1161,7 @@ msgstr ""
 #: gaphor/templates/sysml.gaphor gaphor/templates/uml.gaphor
 #, fuzzy
 msgid "Interaction"
-msgstr "Interaktioner"
+msgstr "Interaktion"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:51
 #: gaphor/templates/uml.gaphor
@@ -1200,7 +1200,7 @@ msgstr "Profiler"
 #: gaphor/UML/profiles/profilestoolbox.py:22
 #, fuzzy
 msgid "Profile"
-msgstr "Profiler"
+msgstr "Profil"
 
 #: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
@@ -1221,7 +1221,7 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:61
 #: gaphor/UML/profiles/propertypages.ui:44
 msgid "Show Stereotypes"
-msgstr ""
+msgstr "Visa Stereotyper"
 
 #: gaphor/UML/profiles/propertypages.glade:137
 #: gaphor/UML/profiles/propertypages.ui:31
@@ -1238,7 +1238,7 @@ msgstr "Visa Regioner"
 #: gaphor/UML/states/propertypages.ui:91 gaphor/UML/states/propertypages.ui:120
 #, fuzzy
 msgid "Regions"
-msgstr "Profiler"
+msgstr "Regioner"
 
 #: gaphor/UML/states/propertypages.glade:105
 #: gaphor/UML/states/propertypages.ui:20
@@ -1249,7 +1249,7 @@ msgstr ""
 #: gaphor/UML/states/propertypages.ui:31
 #, fuzzy
 msgid "Exit"
-msgstr "R_edigera"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.glade:142
 #: gaphor/UML/states/propertypages.ui:42
@@ -1338,18 +1338,18 @@ msgstr ""
 #: gaphor/UML/usecases/usecasetoolbox.py:12 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Use Cases"
-msgstr "Använd lådor"
+msgstr ""
 
 # Osäker på denna
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 #, fuzzy
 msgid "Use case"
-msgstr "Använd lådor"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml.gaphor
 #, fuzzy
 msgid "Actor"
-msgstr "Åtgärder"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
@@ -1362,11 +1362,11 @@ msgstr ""
 #: gaphor/diagram/diagramtoolbox.py:99 gaphor/ui/help/shortcuts.ui:18
 #, fuzzy
 msgid "General"
-msgstr "Interaktioner"
+msgstr "Allmänt"
 
 #: gaphor/diagram/diagramtoolbox.py:103
 msgid "Pointer"
-msgstr ""
+msgstr "Pekare"
 
 #: gaphor/diagram/diagramtoolbox.py:110
 msgid "Magnet"
@@ -1374,7 +1374,7 @@ msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:117
 msgid "Line"
-msgstr ""
+msgstr "Linje"
 
 #: gaphor/diagram/diagramtoolbox.py:124
 msgid "Box"
@@ -1382,21 +1382,21 @@ msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:132
 msgid "Ellipse"
-msgstr ""
+msgstr "Ellips"
 
 #: gaphor/diagram/diagramtoolbox.py:140 gaphor/diagram/propertypages.glade:25
 #: gaphor/diagram/propertypages.ui:9
 #, fuzzy
 msgid "Comment"
-msgstr "Komponenter"
+msgstr "Kommentar"
 
 #: gaphor/diagram/diagramtoolbox.py:148
 msgid "Comment line"
-msgstr ""
+msgstr "Kommentarsrad"
 
 #: gaphor/diagram/presentation.py:49
 msgid "(from {namespace})"
-msgstr ""
+msgstr "(från {namespace})"
 
 #: gaphor/diagram/propertypages.glade:68 gaphor/diagram/propertypages.ui:46
 msgid "Rectilinear"
@@ -1412,7 +1412,7 @@ msgstr "Stil"
 
 #: gaphor/diagram/propertypages.glade:126 gaphor/diagram/propertypages.ui:67
 msgid "Note or Remark"
-msgstr ""
+msgstr "Notering eller Anmärkning"
 
 #: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
 msgid "Element can’t be represented on a diagram."
@@ -1428,11 +1428,11 @@ msgstr ""
 
 #: gaphor/plugins/autolayout/pydot.py:44
 msgid "Auto Layout"
-msgstr ""
+msgstr "Automatisk layout"
 
 #: gaphor/plugins/autolayout/pydot.py:52
 msgid "Auto Layout (orthogonal)"
-msgstr ""
+msgstr "Automatisk layout (ortogonal)"
 
 #: gaphor/plugins/console/console.py:24
 msgid ""
@@ -1443,11 +1443,11 @@ msgstr ""
 
 #: gaphor/plugins/console/consolewindow.py:23
 msgid "Gaphor Console"
-msgstr ""
+msgstr "Gaphor Konsol"
 
 #: gaphor/plugins/console/consolewindow.py:46
 msgid "Console"
-msgstr ""
+msgstr "Konsol"
 
 #: gaphor/plugins/diagramexport/__init__.py:45
 msgid "All {ext} Files"
@@ -1455,7 +1455,7 @@ msgstr "Alla {ext} Filer"
 
 #: gaphor/plugins/diagramexport/__init__.py:51
 msgid "Export as SVG"
-msgstr ""
+msgstr "Exportera som SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:52
 #: gaphor/plugins/diagramexport/__init__.py:57
@@ -1487,12 +1487,12 @@ msgstr "Exportera som XMI"
 
 #: gaphor/plugins/diagramexport/__init__.py:89
 msgid "Export diagram as Encapsulated PostScript"
-msgstr ""
+msgstr "Exportera diagram som Encapsulated PostScript"
 
 #: gaphor/plugins/diagramexport/__init__.py:95
 #, fuzzy
 msgid "Export diagram as EPS"
-msgstr "Exportera diagram som SVG"
+msgstr "Exportera diagram som EPS"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
 #: gaphor/plugins/errorreports/errorreports.py:65
@@ -1552,45 +1552,45 @@ msgstr ""
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "1. Context diagrams"
-msgstr "Nytt _Diagram"
+msgstr "1. Kontextdiagram"
 
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "2. Container diagrams"
-msgstr "Nytt _Diagram"
+msgstr "2. Containerdiagram"
 
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "4. Code diagrams"
-msgstr "Nytt _Diagram"
+msgstr "4. Koddiagram"
 
 #: gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
-msgstr ""
+msgstr "3. Komponentdiagram"
 
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "Context diagram"
-msgstr "Nytt _Diagram"
+msgstr "Kontextdiagram"
 
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "Container diagram"
-msgstr "Nytt _Diagram"
+msgstr "Containerdiagram"
 
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "Component diagram"
-msgstr "Nytt _Diagram"
+msgstr "Komponentdiagram"
 
 #: gaphor/templates/c4model.gaphor
 #, fuzzy
 msgid "Code diagram"
-msgstr "Nytt _Diagram"
+msgstr "Koddiagram"
 
 #: gaphor/templates/raaml.gaphor gaphor/templates/uml.gaphor
 msgid "Model Name Here"
-msgstr ""
+msgstr "Modellnamn Här"
 
 #: gaphor/templates/raaml.gaphor
 msgid "STPA"
@@ -1673,7 +1673,7 @@ msgstr ""
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "1. Concept Level"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "2. Logical Level"
@@ -1691,11 +1691,11 @@ msgstr "Användare"
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "Use Case #1"
-msgstr "Använd lådor"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Behavior"
-msgstr ""
+msgstr "Beteende"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Structure"
@@ -1744,7 +1744,7 @@ msgstr "kontroller"
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "Logical Boundary"
-msgstr "Nytt _Diagram"
+msgstr "Logisk Gräns"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Structure"
@@ -1753,12 +1753,12 @@ msgstr ""
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "Technology Boundary"
-msgstr "Nytt _Diagram"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "Technology Requirements"
-msgstr "Nytt _Diagram"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detailed Behavior"
@@ -1787,7 +1787,7 @@ msgstr "På"
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "actuator"
-msgstr "Åtgärder"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case Function #1"
@@ -1796,7 +1796,7 @@ msgstr ""
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "First Action"
-msgstr "Åtgärder"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Second Action"
@@ -1833,7 +1833,7 @@ msgstr ""
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "Example Technology Requirement"
-msgstr "Nytt _Diagram"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
@@ -1846,7 +1846,7 @@ msgstr ""
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "DC Motor"
-msgstr "Åtgärder"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "IR Transceiver"
@@ -1859,7 +1859,7 @@ msgstr ""
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "dc Motor"
-msgstr "Åtgärder"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "ir Transceiver"
@@ -1889,7 +1889,7 @@ msgstr ""
 #: gaphor/templates/uml.gaphor
 #, fuzzy
 msgid "1. Use Cases"
-msgstr "Använd lådor"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "2. Domain Analysis"
@@ -1911,7 +1911,7 @@ msgstr ""
 #: gaphor/templates/uml.gaphor
 #, fuzzy
 msgid "Main Use Case"
-msgstr "Använd lådor"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Included Use Case"
@@ -1956,22 +1956,22 @@ msgstr ""
 #: gaphor/templates/uml.gaphor
 #, fuzzy
 msgid "SW Component 1"
-msgstr "Komponenter"
+msgstr "SW Komponent 1"
 
 #: gaphor/templates/uml.gaphor
 #, fuzzy
 msgid "SW Component 4"
-msgstr "Komponenter"
+msgstr "SW Komponent 4"
 
 #: gaphor/templates/uml.gaphor
 #, fuzzy
 msgid "SW Component 3"
-msgstr "Komponenter"
+msgstr "SW Komponent 3"
 
 #: gaphor/templates/uml.gaphor
 #, fuzzy
 msgid "SW Component 2"
-msgstr "Komponenter"
+msgstr "SW Komponent 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "Primary Actor"
@@ -2014,7 +2014,7 @@ msgstr ""
 #: gaphor/templates/uml.gaphor
 #, fuzzy
 msgid "Second Class"
-msgstr "Använd lådor"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "released"
@@ -2023,11 +2023,11 @@ msgstr ""
 #: gaphor/templates/uml.gaphor
 #, fuzzy
 msgid "Implementation Architecture"
-msgstr "Interaktioner"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Node 1"
-msgstr ""
+msgstr "Nod 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Artifact 1"
@@ -2035,11 +2035,11 @@ msgstr "Artifakt 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Node 2"
-msgstr ""
+msgstr "Nod 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "protocol"
-msgstr ""
+msgstr "protokoll"
 
 #: gaphor/templates/uml.gaphor
 msgid "Artifact 2"
@@ -2103,11 +2103,11 @@ msgstr "Datum"
 #: gaphor/ui/appfilemanager.py:19 gaphor/ui/filedialog.py:13
 #, fuzzy
 msgid "All Gaphor Models"
-msgstr "Spara Gaphor-modell som"
+msgstr "Alla Gaphormodeller"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid "Switch to {name}?"
-msgstr ""
+msgstr "Byt till {name}?"
 
 #: gaphor/ui/appfilemanager.py:50
 msgid ""
@@ -2117,16 +2117,16 @@ msgstr ""
 
 #: gaphor/ui/appfilemanager.py:69
 msgid "Open Again"
-msgstr ""
+msgstr "Öppna Igen"
 
 #: gaphor/ui/appfilemanager.py:70
 msgid "Switch"
-msgstr ""
+msgstr "Byt"
 
 #: gaphor/ui/appfilemanager.py:93
 #, fuzzy
 msgid "Open a Model"
-msgstr "Spara Gaphor-modell som"
+msgstr "Öppna en Modell"
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 #: gaphor/ui/treemodel.py:44
@@ -2182,13 +2182,13 @@ msgstr "Aktuell Storlek"
 #: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:130
 #: gaphor/ui/help/shortcuts.ui:156
 msgid "Zoom Out"
-msgstr ""
+msgstr "Zooma Ut"
 
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
 #: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:187
 #: gaphor/ui/elementeditor.ui:198 gaphor/ui/help/shortcuts.ui:56
 msgid "Preferences"
-msgstr ""
+msgstr "Inställningar"
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:163
 msgid "Editors"
@@ -2209,7 +2209,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:246
 msgid "Style Sheet"
-msgstr ""
+msgstr "Stilmall"
 
 #: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:275
 msgid ""
@@ -2232,7 +2232,7 @@ msgstr "Stäng"
 #: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:44
 #, fuzzy
 msgid "Start Debug Session"
-msgstr "Stara debugsession"
+msgstr "Starta Debugsession"
 
 #: gaphor/ui/filedialog.py:34
 msgid "All Files"
@@ -2277,7 +2277,7 @@ msgstr "Läser in modell från {filename}"
 #: gaphor/ui/filemanager.py:160
 #, fuzzy
 msgid "Merge conflict in model “{filename}”."
-msgstr "Läser in modell från {filename}"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:163
 msgid "It looks like this model file contains a merge conflict."
@@ -2286,11 +2286,11 @@ msgstr ""
 #: gaphor/ui/filemanager.py:173
 #, fuzzy
 msgid "Unable to open model “{filename}”."
-msgstr "Läser in modell från {filename}"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:176
 msgid "This file does not contain a valid Gaphor model."
-msgstr ""
+msgstr "Den här filen innehåller inte en giltig Gaphor-modell."
 
 #: gaphor/ui/filemanager.py:215
 msgid "Saving…"
@@ -2303,16 +2303,16 @@ msgstr "Sparar modell till {filename}"
 #: gaphor/ui/filemanager.py:233
 #, fuzzy
 msgid "Unable to save model “{filename}”."
-msgstr "Läser in modell från {filename}"
+msgstr "Kunde inte spara till “{filename}”."
 
 #: gaphor/ui/filemanager.py:270 gaphor/ui/filemanager.py:306
 #, fuzzy
 msgid "Save Gaphor Model As"
-msgstr "Spara Gaphor-modell som"
+msgstr "Spara Gaphor-modell Som"
 
 #: gaphor/ui/filemanager.py:326
 msgid "Save Changes?"
-msgstr ""
+msgstr "Spara Ändringar?"
 
 #: gaphor/ui/filemanager.py:327
 msgid ""
@@ -2336,12 +2336,12 @@ msgstr "Spara"
 #: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:87
 #, fuzzy
 msgid "Create New Model…"
-msgstr "Ny modell"
+msgstr "Skapa Ny Modell…"
 
 #: gaphor/ui/greeter.glade:109 gaphor/ui/greeter.ui:93
 #, fuzzy
 msgid "Open Other Model…"
-msgstr "Spara Gaphor-modell som"
+msgstr "Öppna Gaphor-modell…"
 
 #: gaphor/ui/greeter.py:25
 msgid "Generic"
@@ -2350,12 +2350,12 @@ msgstr ""
 #: gaphor/ui/greeter.py:177
 #, fuzzy
 msgid "Create a New Model"
-msgstr "Ny modell"
+msgstr "Skapa en Ny Modell"
 
 #: gaphor/ui/greeter.py:181
 #, fuzzy
 msgid "Open a Recent Model"
-msgstr "Ny modell"
+msgstr ""
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
@@ -2364,12 +2364,12 @@ msgstr ""
 #: gaphor/ui/mainwindow.glade:148
 #, fuzzy
 msgid "Create New diagram"
-msgstr "Nytt _Diagram"
+msgstr "Skapa Nytt diagram"
 
 #: gaphor/ui/mainwindow.glade:169
 #, fuzzy
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Öppna Applikationsmeny"
 
 #: gaphor/ui/mainwindow.glade:191
 msgid "Editor"
@@ -2378,17 +2378,17 @@ msgstr ""
 #: gaphor/ui/help/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
 #, fuzzy
 msgid "Open a Model…"
-msgstr "Spara Gaphor-modell som"
+msgstr "Öppna en Modell…"
 
 #: gaphor/ui/mainwindow.py:44
 #, fuzzy
 msgid "Recent Models…"
-msgstr "Ny modell"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
 #, fuzzy
 msgid "New Model…"
-msgstr "Ny modell"
+msgstr "Ny Modell…"
 
 #: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
 msgid "Save As…"
@@ -2414,11 +2414,11 @@ msgstr "Om Gaphor"
 #: gaphor/ui/mainwindow.py:86
 #, fuzzy
 msgid "New Generic Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt Generiskt Diagram"
 
 #: gaphor/ui/mainwindow.py:241
 msgid "edited"
-msgstr ""
+msgstr "redigerad"
 
 #: gaphor/ui/mainwindow.py:275
 msgid "Profile: {name}"
@@ -2431,7 +2431,7 @@ msgstr ""
 #: gaphor/ui/namespace.py:48
 #, fuzzy
 msgid "Add to diagram"
-msgstr "Nytt _Diagram"
+msgstr ""
 
 #: gaphor/ui/namespace.py:51
 msgid "_Rename"
@@ -2456,12 +2456,12 @@ msgstr "Visa i \"{diagram}\""
 #: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
 #, fuzzy
 msgid "{name} package"
-msgstr "Nytt _Paket"
+msgstr "{name} paket"
 
 #: gaphor/ui/namespace.py:352
 #, fuzzy
 msgid "New diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt diagram"
 
 #: gaphor/ui/namespaceview.py:141 gaphor/ui/tests/test_treemodel.py:162
 #: gaphor/ui/treemodel.py:62
@@ -2470,7 +2470,7 @@ msgstr ""
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
-msgstr ""
+msgstr "Copyright © 2001-2022 Arjan J. Molenaar och Dan Yeaw"
 
 #: gaphor/ui/help/about.glade:10
 msgid "Gaphor is the simple modeling tool written in Python"
@@ -2541,11 +2541,11 @@ msgstr ""
 #: gaphor/ui/help/shortcuts.ui:48
 #, fuzzy
 msgid "Close Diagram"
-msgstr "Nytt _Diagram"
+msgstr "Nytt Diagram"
 
 #: gaphor/ui/help/shortcuts.ui:64
 msgid "Quit Gaphor"
-msgstr ""
+msgstr "Avsluta Gaphor"
 
 #: gaphor/ui/help/shortcuts.ui:75
 #, fuzzy
@@ -2563,7 +2563,7 @@ msgstr ""
 #: gaphor/ui/help/shortcuts.ui:174
 #, fuzzy
 msgid "Selections"
-msgstr "Åtgärder"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:180
 msgid "Select All"
@@ -2605,7 +2605,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Orthogonal"
-#~ msgstr ""
+#~ msgstr "Ortogonal"
 
 #~ msgid "Upper bound"
 #~ msgstr ""
@@ -2623,7 +2623,7 @@ msgstr ""
 #~ msgstr "Visa operationer"
 
 #~ msgid "Operation"
-#~ msgstr "Interaktioner"
+#~ msgstr ""
 
 #~ msgid "Head"
 #~ msgstr "Huvud"
@@ -2641,10 +2641,10 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Zoom in"
-#~ msgstr ""
+#~ msgstr "Zooma in"
 
 #~ msgid "Zoom out"
-#~ msgstr ""
+#~ msgstr "Zooma ut"
 
 #~ msgid "Show direction"
 #~ msgstr "Visa riktning"
@@ -2679,7 +2679,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "External"
-#~ msgstr ""
+#~ msgstr "Extern"
 
 #~ msgid "Show stereotype attributes"
 #~ msgstr ""
@@ -2688,7 +2688,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Copyright © 2001-2020 Arjan J. Molenaar and Dan Yeaw"
-#~ msgstr ""
+#~ msgstr "Copyright © 2001-2020 Arjan J. Molenaar och Dan Yeaw"
 
 #~ msgid "Gaphor is the simple modeling tool written in Python"
 #~ msgstr ""
@@ -2709,17 +2709,16 @@ msgstr ""
 #~ msgstr "Applikation"
 
 #~ msgid "Quit Gaphor"
-#~ msgstr ""
+#~ msgstr "Avsluta Gaphor"
 
 #~ msgid "Files"
 #~ msgstr "Filer"
 
-# Osäker på denna
 #~ msgid "Save As"
-#~ msgstr "Använd lådor"
+#~ msgstr "Spara Som"
 
 #~ msgid "Diagrams"
-#~ msgstr "Nytt _Diagram"
+#~ msgstr "Diagram"
 
 #~ msgid "Edit"
 #~ msgstr "Redigera"
@@ -2740,7 +2739,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Close Diagram"
-#~ msgstr ""
+#~ msgstr "Stäng Diagram"
 
 #~ msgid "Zoom"
 #~ msgstr ""
@@ -2758,7 +2757,7 @@ msgstr ""
 #~ msgstr "Ett fel har inträffat."
 
 #~ msgid "Technical details:"
-#~ msgstr ""
+#~ msgstr "Tekniska detaljer:"
 
 #~ msgid ""
 #~ "Do you want to debug?\n"
@@ -2774,10 +2773,10 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "New from Template"
-#~ msgstr ""
+#~ msgstr "Ny från Mall"
 
 #~ msgid "Sloppy lines"
-#~ msgstr ""
+#~ msgstr "Slarviga linjer"
 
 #~ msgid "Reset to pointer tool after placing an item on a diagram"
 #~ msgstr ""
@@ -2817,7 +2816,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "C4 model"
-#~ msgstr "Ny modell"
+#~ msgstr "C4 modell"
 
 #~ msgid "AND"
 #~ msgstr ""
@@ -2859,7 +2858,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "ControlAction"
-#~ msgstr "Interaktioner"
+#~ msgstr ""
 
 #~ msgid "OperationalSituation"
 #~ msgstr ""
@@ -2868,7 +2867,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "UnsafeControlAction"
-#~ msgstr "Interaktioner"
+#~ msgstr ""
 
 #~ msgid "Derive Reqt"
 #~ msgstr ""
@@ -2933,10 +2932,10 @@ msgstr ""
 #~ msgstr "Exportera diagram till PDF"
 
 #~ msgid "Export to XMI"
-#~ msgstr "_Exportera"
+#~ msgstr "_Exportera till XMI"
 
 #~ msgid "Export model to XMI (XML Model Interchange) format"
-#~ msgstr ""
+#~ msgstr "Export modell till XMI (XML Model Interchange) format"
 
 #~ msgid "Zoom 100%"
 #~ msgstr ""
@@ -2976,7 +2975,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Recently opened files"
-#~ msgstr ""
+#~ msgstr "Nyligen öppnade filer"
 
 #~ msgid "Here goes a short informative message."
 #~ msgstr ""
@@ -2989,7 +2988,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "No recently opened models"
-#~ msgstr ""
+#~ msgstr "Inga nyligen öppnade modeller"
 
 #~ msgid ""
 #~ "Add and edit class attributes according to UML syntax.\n"
@@ -3014,7 +3013,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "{name} diagram"
-#~ msgstr "Nytt _Diagram"
+#~ msgstr ""
 
 #~ msgid "Partition Names"
 #~ msgstr ""
@@ -3052,37 +3051,37 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Named Element"
-#~ msgstr "Interaktioner"
+#~ msgstr ""
 
 #~ msgid "Paste (link)"
 #~ msgstr ""
 
 #~ msgid "4. Implementation Level"
-#~ msgstr "Interaktioner"
+#~ msgstr ""
 
 #~ msgid "Concept diagram"
-#~ msgstr "Nytt _Diagram"
+#~ msgstr "Konceptdiagram"
 
 #~ msgid "Open Gaphor Model"
-#~ msgstr "Spara Gaphor-modell som"
+#~ msgstr "Öppna Gaphor-modell"
 
 #~ msgid "Recently opened models"
-#~ msgstr ""
+#~ msgstr "Nyligen öppnade modeller"
 
 #~ msgid "Create a new model from a template"
-#~ msgstr ""
+#~ msgstr "Skapa en ny modell från en mall"
 
 #~ msgid "Open a Gaphor Model"
-#~ msgstr "Spara Gaphor-modell som"
+#~ msgstr "Öppna en Gaphor-modell"
 
 #~ msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
-#~ msgstr ""
+#~ msgstr "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
 
 #~ msgid "Gaphor - Open Model"
-#~ msgstr ""
+#~ msgstr "Gaphor - Öppna Modell"
 
 #~ msgid "Gaphor - Create a New Model"
-#~ msgstr ""
+#~ msgstr "Gaphor - Skapa en Ny Modell"
 
 #~ msgid "Gaphor - Open a Recent Model"
 #~ msgstr ""
@@ -3091,7 +3090,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Settings"
-#~ msgstr ""
+#~ msgstr "Inställningar"
 
 #~ msgid "Control/object flow"
 #~ msgstr ""
@@ -3115,7 +3114,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Recent Model…"
-#~ msgstr "Ny modell"
+#~ msgstr ""
 
 #~ msgid "Open Existing Model…"
 #~ msgstr ""
