@@ -11,7 +11,7 @@ services.
 
 It looks something like this:
 
-```{code-cell} ipython3
+```{code-cell} ipython
 
 # entry point name: my_service
 class MyService:
@@ -25,7 +25,7 @@ class MyOtherService:
 
 Let's first load the entry points.
 
-```{code-cell} ipython3
+```{code-cell} ipython
 from sphinx.ext.autodoc.mock import mock
 from gaphor.entrypoint import load_entry_points
 
@@ -38,7 +38,7 @@ entry_points
 
 Now let's create a class in our model for every service.
 
-```{code-cell} ipython3
+```{code-cell} ipython
 from gaphor import UML
 from gaphor.core.modeling import ElementFactory
 
@@ -56,7 +56,7 @@ components
 With all components mapped, we can create dependencies between those components,
 based on the constructor parameter names.
 
-```{code-cell} ipython3
+```{code-cell} ipython
 import inspect
 
 for name, cls in entry_points.items():
@@ -75,7 +75,7 @@ components and dependencies on the diagram and let auto-layout do its magic.
 To make the dependency look good, we have to add a style sheet. If you create a
 new diagram via the GUI, this element is automatically added.
 
-```{code-cell} ipython3
+```{code-cell} ipython
 from gaphor.core.modeling import Diagram, StyleSheet
 from gaphor.diagram.drop import drop
 
@@ -88,7 +88,7 @@ for element in element_factory.lselect():
 
 Last step is to layout and draw the diagram.
 
-```{code-cell} ipython3
+```{code-cell} ipython
 from gaphor.extensions.ipython import auto_layout, draw
 
 auto_layout(diagram)

@@ -28,7 +28,7 @@ The first step is to load a model. For this you’ll need an `ElementFactory`. T
 `ElementFactory` is responsible to creating and maintaining the model. It acts
 as a repository for the model while you’re working on it.
 
-```{code-cell} ipython3
+```{code-cell} ipython
 from gaphor.core.modeling import ElementFactory
 
 element_factory = ElementFactory()
@@ -45,7 +45,7 @@ In versions before 2.13, an `EventManager` is required. In later versions, the
 ```
 
 
-```{code-cell} ipython3
+```{code-cell} ipython
 from gaphor.core.eventmanager import EventManager
 from gaphor.services.modelinglanguage import ModelingLanguageService
 from gaphor.storage import storage
@@ -80,20 +80,20 @@ A simple query only tells you what elements are in the model. The method
 list directly. For those cases you can use `ElementFatory.lselect()`. Here we
 select the last five elements:
 
-```{code-cell} ipython3
+```{code-cell} ipython
 for element in element_factory.lselect()[:5]:
     print(element)
 ```
 
 Elements can also be queried by type and with a predicate function:
 
-```{code-cell} ipython3
+```{code-cell} ipython
 from gaphor import UML
 for element in element_factory.select(UML.Class):
     print(element.name)
 ```
 
-```{code-cell} ipython3
+```{code-cell} ipython
 for diagram in element_factory.select(
     lambda e: isinstance(e, UML.Class) and e.name == "Diagram"
 ):
@@ -103,7 +103,7 @@ for diagram in element_factory.select(
 Now, let’s say we want to do some simple (pseudo-)code generation. We can
 iterate class attributes and write some output.
 
-```{code-cell} ipython3
+```{code-cell} ipython
 diagram: UML.Class
 
 def qname(element):
@@ -127,7 +127,7 @@ using the [UML](models/uml) language.
 
 You can find out more about a model property by printing it.
 
-```{code-cell} ipython3
+```{code-cell} ipython
 print(UML.Class.ownedAttribute)
 ```
 
@@ -140,7 +140,7 @@ In this case it tells us that the type of `UML.Class.ownedAttribute` is
 Another nice feature is drawing the diagrams. At this moment this requires a
 function. This behavior is similar to the [`diagram` directive](sphinx).
 
-```{code-cell} ipython3
+```{code-cell} ipython
 from gaphor.core.modeling import Diagram
 from gaphor.extensions.ipython import draw
 
@@ -162,7 +162,7 @@ diagram. Items on a diagram represent an element in the model. We'll also drop
 all associations on the model. Only if both ends can connect, the association
 will be added.
 
-```{code-cell} ipython3
+```{code-cell} ipython
 from gaphor.diagram.drop import drop
 from gaphor.extensions.ipython import auto_layout
 
@@ -200,7 +200,7 @@ my_class.name = "MyClass"
 To give it an attribute, create an attribute type (`UML.Property`) and then
 assign the attribute values.
 
-```{code-cell} ipython3
+```{code-cell} ipython
 my_attr = element_factory.create(UML.Property)
 my_attr.name = "my_attr"
 my_attr.typeValue = "string"
@@ -209,7 +209,7 @@ my_class.ownedAttribute = my_attr
 
 Adding it to the diagram looks like this:
 
-```{code-cell} ipython3
+```{code-cell} ipython
 my_diagram = element_factory.create(Diagram)
 drop(my_class, my_diagram, x=0, y=0)
 draw(my_diagram, format="svg")
@@ -217,7 +217,7 @@ draw(my_diagram, format="svg")
 
 If you save the model, your changes are persisted:
 
-```{code-cell} ipython3
+```{code-cell} ipython
 with open("../my-model.gaphor", "w") as out:
     storage.save(out, element_factory)
 ```
