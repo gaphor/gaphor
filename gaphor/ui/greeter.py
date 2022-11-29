@@ -8,7 +8,6 @@ from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.babel import translate_model
 from gaphor.core import event_handler
-from gaphor.diagram.hoversupport import flowbox_add_hover_support
 from gaphor.event import ActiveSessionChanged, SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui import APPLICATION_ID
@@ -16,17 +15,48 @@ from gaphor.ui import APPLICATION_ID
 
 class ModelTemplate(NamedTuple):
     name: str
+    description: str
     icon: str
     lang: str
     filename: str
 
 
 TEMPLATES = [
-    ModelTemplate(gettext("Generic"), "org.gaphor.Gaphor", "UML", "blank.gaphor"),
-    ModelTemplate(gettext("UML"), "UML", "UML", "uml.gaphor"),
-    ModelTemplate(gettext("SysML"), "SysML", "SysML", "sysml.gaphor"),
-    ModelTemplate(gettext("RAAML"), "RAAML", "RAAML", "raaml.gaphor"),
-    ModelTemplate(gettext("C4 Model"), "C4Model", "C4Model", "c4model.gaphor"),
+    ModelTemplate(
+        gettext("Generic"),
+        gettext("An empty model."),
+        "org.gaphor.Gaphor",
+        "UML",
+        "blank.gaphor",
+    ),
+    ModelTemplate(
+        gettext("UML"),
+        gettext("A Unified Modeling Language template/example."),
+        "UML",
+        "UML",
+        "uml.gaphor",
+    ),
+    ModelTemplate(
+        gettext("SysML"),
+        gettext("Systems Modeling template"),
+        "SysML",
+        "SysML",
+        "sysml.gaphor",
+    ),
+    ModelTemplate(
+        gettext("RAAML"),
+        gettext("Risk Analysis Assessment template."),
+        "RAAML",
+        "RAAML",
+        "raaml.gaphor",
+    ),
+    ModelTemplate(
+        gettext("C4 Model"),
+        gettext("Layered C4 Model template."),
+        "C4Model",
+        "C4Model",
+        "c4model.gaphor",
+    ),
 ]
 
 
@@ -72,14 +102,10 @@ class Greeter(Service, ActionProvider):
 
         self.action_bar = builder.get_object("action-bar")
 
-        templates = builder.get_object("templates")
-        templates.connect("child-activated", self._on_template_activated)
+        self.templates = builder.get_object("templates")
+        self.templates.connect("row-activated", self._on_template_activated)
         for widget in self.create_templates():
-            templates.insert(widget, -1)
-
-        if Gtk.get_major_version() == 3:
-            flowbox_add_hover_support(templates)
-        self.templates = templates
+            self.templates.insert(widget, -1)
 
         self.greeter = builder.get_object("greeter")
         self.greeter.set_application(self.gtk_app)
@@ -89,7 +115,6 @@ class Greeter(Service, ActionProvider):
             self.greeter.connect("close-request", self._on_window_close_request)
 
         self.greeter.show()
-        templates.unselect_all()
 
     def close(self):
         if self.greeter:
@@ -120,13 +145,14 @@ class Greeter(Service, ActionProvider):
     def create_templates(self):
         for template in TEMPLATES:
             builder = new_builder("greeter-model-template")
-            builder.get_object("template-name").set_text(template.name)
+            builder.get_object("name").set_text(template.name)
+            builder.get_object("description").set_text(template.description)
             if Gtk.get_major_version() == 3:
-                builder.get_object("template-icon").set_from_icon_name(
+                builder.get_object("icon").set_from_icon_name(
                     template.icon, Gtk.IconSize.DIALOG
                 )
             else:
-                builder.get_object("template-icon").set_from_icon_name(template.icon)
+                builder.get_object("icon").set_from_icon_name(template.icon)
             child = builder.get_object("model-template")
             child.filename = template.filename
             child.lang = template.lang
@@ -141,7 +167,7 @@ class Greeter(Service, ActionProvider):
         self.application.new_session(filename=filename)
         self.close()
 
-    def _on_template_activated(self, _flowbox, child):
+    def _on_template_activated(self, _listbox, child):
         filename: Path = (
             importlib.resources.files("gaphor") / "templates" / child.filename
         )
