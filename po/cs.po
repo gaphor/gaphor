@@ -2116,14 +2116,14 @@ msgstr "Všechny modely Gaphor"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid "Switch to {name}?"
-msgstr "Přepnout na {jméno}?"
+msgstr "Přepnout na {name}?"
 
 #: gaphor/ui/appfilemanager.py:50
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr ""
-"{filename} je již otevřeno. Chcete se místo toho přepnout do otevřeného okna?"
+"{name} je již otevřeno. Chcete se místo toho přepnout do otevřeného okna?"
 
 #: gaphor/ui/appfilemanager.py:69
 msgid "Open Again"
@@ -2321,7 +2321,7 @@ msgstr "Vypadá to, že tento modelový soubor obsahuje konflikt sloučení."
 
 #: gaphor/ui/filemanager.py:173
 msgid "Unable to open model “{filename}”."
-msgstr "Nelze otevřít model \"{jméno souboru}\"."
+msgstr "Nelze otevřít model \"{filename}\"."
 
 #: gaphor/ui/filemanager.py:176
 msgid "This file does not contain a valid Gaphor model."
