@@ -55,6 +55,11 @@ flowboxchild {
   outline-offset: -3px;
 }
 
+.greeter-title {
+  font-weight: bold;
+  padding: 24px 0 6px;
+}
+
 .info {
   border-radius: 4px;
   font-size: small;
