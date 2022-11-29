@@ -43,6 +43,7 @@ extensions = [
     "myst_nb",
     "sphinx_copybutton",
     "gaphor.extensions.sphinx",
+    "IPython.sphinxext.ipython_console_highlighting",
 ]
 
 autodoc_mock_imports = ["gi.repository.Gdk", "gi.repository.Gtk"]
