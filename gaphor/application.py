@@ -55,7 +55,8 @@ class Application(Service, ActionProvider):
     are registered in the "component_registry" service.
     """
 
-    def __init__(self):
+    def __init__(self, gtk_app=None):
+        self._gtk_app = gtk_app
         self._active_session: Session | None = None
         self._sessions: set[Session] = set()
 
@@ -72,6 +73,10 @@ class Application(Service, ActionProvider):
             raise NotInitializedError("Session is no longer alive")
 
         return self._services_by_name[name]
+
+    @property
+    def active_window(self):
+        return self._gtk_app.get_active_window() if self._gtk_app else None
 
     @property
     def sessions(self):

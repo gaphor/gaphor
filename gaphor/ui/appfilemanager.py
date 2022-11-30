@@ -31,12 +31,8 @@ class AppFileManager(Service, ActionProvider):
         pass
 
     @property
-    def parent_window(self):
-        return (
-            self.application.active_session.get_service("main_window").window
-            if self.application.active_session
-            else None
-        )
+    def window(self):
+        return self.application.active_window
 
     @action(name="app.file-open")
     def action_open(self):
@@ -57,12 +53,12 @@ class AppFileManager(Service, ActionProvider):
                             text=title,
                             secondary_text=body,
                         )
-                        dialog.set_transient_for(self.parent_window)
+                        dialog.set_transient_for(self.window)
 
                         dialog.set_modal(True)
                     else:
                         dialog = Adw.MessageDialog.new(
-                            self.parent_window,
+                            self.window,
                             title,
                         )
                         dialog.set_body(body)
@@ -92,7 +88,7 @@ class AppFileManager(Service, ActionProvider):
         open_file_dialog(
             gettext("Open a Model"),
             open_files,
-            parent=self.parent_window,
+            parent=self.window,
             dirname=self.last_dir,
             filters=FILTERS,
         )
