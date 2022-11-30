@@ -42,7 +42,7 @@
                     <property name="halign">center</property>
                     <property name="vexpand">1</property>
                     <property name="orientation">vertical</property>
-                    <property name="spacing">6</property>
+                    <property name="spacing">18</property>
                     <property name="margin-top">18</property>
                     <property name="margin-bottom">12</property>
                     <child>
