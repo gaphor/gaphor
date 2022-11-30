@@ -1,7 +1,17 @@
 @import url("styling.css");
 
-.greeter flowboxchild:hover {
-  -gtk-icon-filter: brightness(1.2);
+.greeter preferencesgroup .title {
+  font-weight: bold;
+}
+
+.greeter preferencesgroup .subtitle {
+  font-weight: normal;
+}
+
+.greeter preferencesgroup row {
+  padding: 6px;
+  padding-right: 0px;
+  min-width: 400px;
 }
 
 box.propertypage > * {

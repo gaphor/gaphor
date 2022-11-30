@@ -12,6 +12,9 @@ from gaphor.event import ActiveSessionChanged, SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui import APPLICATION_ID
 
+if Gtk.get_major_version() != 3:
+    from gi.repository import Adw
+
 
 class ModelTemplate(NamedTuple):
     name: str
@@ -24,14 +27,14 @@ class ModelTemplate(NamedTuple):
 TEMPLATES = [
     ModelTemplate(
         gettext("Generic"),
-        gettext("An empty model."),
+        gettext("An empty model"),
         "org.gaphor.Gaphor",
         "UML",
         "blank.gaphor",
     ),
     ModelTemplate(
         gettext("UML"),
-        gettext("A Unified Modeling Language template/example."),
+        gettext("A Unified Modeling Language template/example"),
         "UML",
         "UML",
         "uml.gaphor",
@@ -45,14 +48,14 @@ TEMPLATES = [
     ),
     ModelTemplate(
         gettext("RAAML"),
-        gettext("Risk Analysis Assessment template."),
+        gettext("Risk Analysis Assessment template"),
         "RAAML",
         "RAAML",
         "raaml.gaphor",
     ),
     ModelTemplate(
         gettext("C4 Model"),
-        gettext("Layered C4 Model template."),
+        gettext("Layered C4 Model template"),
         "C4Model",
         "C4Model",
         "c4model.gaphor",
@@ -94,21 +97,37 @@ class Greeter(Service, ActionProvider):
 
         builder = new_builder("greeter")
 
-        if any(self.query_recent_files()):
-            listbox = builder.get_object("recent-files")
-            listbox.connect("row-activated", self._on_recent_file_activated)
-            for widget in self.create_recent_files():
-                listbox.insert(widget, -1)
+        if Gtk.get_major_version() == 3:
+            if any(self.query_recent_files()):
+                listbox = builder.get_object("recent-files")
+                listbox.connect(
+                    "row-activated", lambda _, row: self._on_recent_file_activated(row)
+                )
+                for widget in self.create_recent_files():
+                    listbox.insert(widget, -1)
+            else:
+                builder.get_object("recent-files-frame").hide()
+                builder.get_object("recent-files-label").hide()
         else:
-            builder.get_object("recent-files-frame").hide()
-            builder.get_object("recent-files-label").hide()
+            if any(self.query_recent_files()):
+                listbox = builder.get_object("recent-files")
+                for widget in self.create_recent_files():
+                    listbox.add(widget)
+            else:
+                builder.get_object("recent-files").hide()
 
         self.action_bar = builder.get_object("action-bar")
 
         templates = builder.get_object("templates")
-        templates.connect("row-activated", self._on_template_activated)
-        for widget in self.create_templates():
-            templates.insert(widget, -1)
+        if Gtk.get_major_version() == 3:
+            templates.connect(
+                "row-activated", lambda _, row: self._on_template_activated(row)
+            )
+            for widget in self.create_templates():
+                templates.insert(widget, -1)
+        else:
+            for widget in self.create_templates():
+                templates.add(widget)
 
         self.greeter = builder.get_object("greeter")
         self.greeter.set_application(self.gtk_app)
@@ -133,44 +152,76 @@ class Greeter(Service, ActionProvider):
             if APPLICATION_ID in item.get_applications() and item.exists():
                 yield item
 
-    def create_recent_files(self):
-        for item in self.query_recent_files():
-            builder = new_builder("greeter-recent-file")
-            filename, _host = GLib.filename_from_uri(item.get_uri())
-            builder.get_object("name").set_text(str(Path(filename).stem))
-            builder.get_object("filename").set_text(
-                item.get_uri_display().replace(str(Path.home()), "~")
-            )
-            row = builder.get_object("greeter-recent-file")
-            row.filename = filename
-            yield row
+    if Gtk.get_major_version() == 3:
 
-    def create_templates(self):
-        for template in TEMPLATES:
-            builder = new_builder("greeter-model-template")
-            builder.get_object("name").set_text(template.name)
-            builder.get_object("description").set_text(template.description)
-            if Gtk.get_major_version() == 3:
-                builder.get_object("icon").set_from_icon_name(
-                    template.icon, Gtk.IconSize.DIALOG
+        def create_recent_files(self):
+            for item in self.query_recent_files():
+                builder = new_builder("greeter-recent-file")
+                filename, _host = GLib.filename_from_uri(item.get_uri())
+                builder.get_object("name").set_text(str(Path(filename).stem))
+                builder.get_object("filename").set_text(
+                    item.get_uri_display().replace(str(Path.home()), "~")
                 )
-            else:
-                builder.get_object("icon").set_from_icon_name(template.icon)
-            child = builder.get_object("model-template")
-            child.filename = template.filename
-            child.lang = template.lang
-            yield child
+                row = builder.get_object("greeter-recent-file")
+                row.filename = filename
+                yield row
+
+        def create_templates(self):
+            for template in TEMPLATES:
+                builder = new_builder("greeter-model-template")
+                builder.get_object("name").set_text(template.name)
+                builder.get_object("description").set_text(template.description)
+                if Gtk.get_major_version() == 3:
+                    builder.get_object("icon").set_from_icon_name(
+                        template.icon, Gtk.IconSize.DIALOG
+                    )
+                else:
+                    builder.get_object("icon").set_from_icon_name(template.icon)
+                child = builder.get_object("model-template")
+                child.filename = template.filename
+                child.lang = template.lang
+                yield child
+
+    else:
+
+        def create_recent_files(self):
+            for item in self.query_recent_files():
+                filename, _host = GLib.filename_from_uri(item.get_uri())
+                row = Adw.ActionRow.new()
+                row.set_activatable(True)
+                row.set_title(str(Path(filename).stem))
+                row.set_subtitle(item.get_uri_display().replace(str(Path.home()), "~"))
+                row.add_suffix(Gtk.Image.new_from_icon_name("go-next-symbolic"))
+                row.connect("activated", self._on_recent_file_activated)
+                row.filename = filename
+                yield row
+
+        def create_templates(self):
+            for template in TEMPLATES:
+                row = Adw.ActionRow.new()
+                row.set_activatable(True)
+                row.set_title(template.name)
+                row.set_subtitle(template.description)
+                image = Gtk.Image.new_from_icon_name(template.icon)
+                image.set_pixel_size(36)
+                row.add_prefix(image)
+                row.add_suffix(Gtk.Image.new_from_icon_name("go-next-symbolic"))
+                row.connect("activated", self._on_template_activated)
+
+                row.filename = template.filename
+                row.lang = template.lang
+                yield row
 
     @event_handler(SessionCreated, ActiveSessionChanged)
     def on_session_created(self, _event=None):
         self.close()
 
-    def _on_recent_file_activated(self, _listbox, row):
+    def _on_recent_file_activated(self, row):
         filename = row.filename
         self.application.new_session(filename=filename)
         self.close()
 
-    def _on_template_activated(self, _listbox, child):
+    def _on_template_activated(self, child):
         filename: Path = (
             importlib.resources.files("gaphor") / "templates" / child.filename
         )
