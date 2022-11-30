@@ -21,9 +21,9 @@
             </child>
           </object>
         </child>
-        <child type="end">
+        <child>
           <object class="GtkButton">
-            <property name="label" translatable="yes">Open a Model</property>
+            <property name="label" translatable="yes">Open Model…</property>
             <property name="action-name">app.file-open</property>
           </object>
         </child>
@@ -47,12 +47,12 @@
                     <property name="margin-bottom">12</property>
                     <child>
                       <object class="AdwPreferencesGroup" id="recent-files">
-                        <property name="title" translatable="yes">Recently opened models</property>
+                        <property name="title" translatable="yes">Recently Opened</property>
                       </object>
                     </child>
                     <child>
                       <object class="AdwPreferencesGroup" id="templates">
-                        <property name="title" translatable="yes">Create a new model</property>
+                        <property name="title" translatable="yes">Create New Model</property>
                       </object>
                     </child>
                   </object>
