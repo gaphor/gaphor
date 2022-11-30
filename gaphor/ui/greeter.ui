@@ -23,7 +23,7 @@
         </child>
         <child type="end">
           <object class="GtkButton">
-            <property name="label" translatable="yes">Open Other Model</property>
+            <property name="label" translatable="yes">Open a Model</property>
             <property name="action-name">app.file-open</property>
           </object>
         </child>
