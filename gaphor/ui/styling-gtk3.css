@@ -7,3 +7,11 @@
 .greeter flowboxchild:hover {
   -gtk-icon-effect: highlight;
 }
+
+flowboxchild:hover {
+  background-color: @theme_selected_bg_color;
+}
+
+flowboxchild:hover * {
+  color: @theme_selected_fg_color;
+}
