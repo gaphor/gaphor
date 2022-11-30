@@ -41,7 +41,7 @@ def create_hamburger_model(export_menu, tools_menu):
 
     part = Gio.Menu.new()
     part.append(gettext("New Model…"), "app.new-model")
-    part.append(gettext("Open a Model…"), "app.file-open")
+    part.append(gettext("Open Model…"), "app.file-open")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
