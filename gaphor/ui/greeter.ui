@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
+  <requires lib="adw" version="1.2"/>
   <object class="GtkWindow" id="greeter">
     <property name="width-request">800</property>
     <property name="height-request">600</property>
@@ -18,6 +19,12 @@
                 </style>
               </object>
             </child>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkButton">
+            <property name="label" translatable="yes">Open Other Model</property>
+            <property name="action-name">app.file-open</property>
           </object>
         </child>
       </object>
@@ -39,55 +46,15 @@
                     <property name="margin-top">18</property>
                     <property name="margin-bottom">12</property>
                     <child>
-                      <object class="GtkLabel" id="recent-files-label">
-                        <property name="label" translatable="yes">Recently opened models</property>
-                        <property name="xalign">0</property>
-                        <style>
-                          <class name="greeter-title"/>
-                        </style>
+                      <object class="AdwPreferencesGroup" id="recent-files">
+                        <property name="title" translatable="yes">Recently opened models</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkFrame" id="recent-files-frame">
-                        <child>
-                          <object class="GtkListBox" id="recent-files"/>
-                        </child>
+                      <object class="AdwPreferencesGroup" id="templates">
+                        <property name="title" translatable="yes">Create a new model</property>
                       </object>
                     </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">Create a new model</property>
-                        <property name="xalign">0</property>
-                        <style>
-                          <class name="greeter-title"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkFrame">
-                        <child>
-                          <object class="GtkListBox" id="templates"/>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkActionBar" id="action-bar">
-            <child type="center">
-              <object class="GtkBox">
-                <property name="margin-top">6</property>
-                <property name="margin-bottom">6</property>
-                <property name="spacing">10</property>
-                <property name="homogeneous">1</property>
-                <child>
-                  <object class="GtkButton">
-                    <property name="label" translatable="yes">Open Other Model…</property>
-                    <property name="action-name">app.file-open</property>
                   </object>
                 </child>
               </object>
