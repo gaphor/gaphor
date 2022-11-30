@@ -128,7 +128,6 @@ class MainWindow(Service, ActionProvider):
         self.subtitle: Gtk.Label = None
         self.filename: Path | None = None
         self.model_changed = False
-        self.layout = None
         self.modeling_language_name = None
         self.diagram_types = None
         self.in_app_notifier = None
@@ -188,7 +187,7 @@ class MainWindow(Service, ActionProvider):
             return comp.open()
 
         main_content = builder.get_object("main-content")
-        self.layout = deserialize(
+        deserialize(
             main_content,
             (importlib.resources.files("gaphor.ui") / "layout.xml").read_text(),
             _factory,
@@ -198,19 +197,16 @@ class MainWindow(Service, ActionProvider):
         self.action_group, shortcuts = window_action_group(self.component_registry)
         self.window.insert_action_group("win", self.action_group)
 
-        if Gtk.get_major_version() == 3:
-            self.window.add_accel_group(shortcuts)
-        else:
-            self.window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
-
         self._on_modeling_language_selection_changed()
 
         self.window.set_resizable(True)
         if Gtk.get_major_version() == 3:
             self.window.show_all()
+            self.window.add_accel_group(shortcuts)
             self.window.connect("delete-event", self._on_window_close_request)
             self.window.connect("size-allocate", self._on_window_size_allocate)
         else:
+            self.window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
             self.window.connect("close-request", self._on_window_close_request)
             self.window.connect("notify::default-height", self._on_window_size_changed)
             self.window.connect("notify::default-width", self._on_window_size_changed)
