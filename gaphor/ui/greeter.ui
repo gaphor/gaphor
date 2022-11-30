@@ -2,6 +2,19 @@
 <interface>
   <requires lib="gtk" version="4.0"/>
   <requires lib="adw" version="1.2"/>
+  <menu id='hamburger-menu'>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>About Gaphor</attribute>
+        <attribute name='action'>app.about</attribute>
+      </item>
+    </section>
+  </menu>
+
+  <object class="GtkPopoverMenu" id="hamburger">
+    <property name="menu-model">hamburger-menu</property>
+  </object>
+
   <object class="GtkWindow" id="greeter">
     <property name="width-request">800</property>
     <property name="height-request">600</property>
@@ -25,6 +38,12 @@
           <object class="GtkButton">
             <property name="label" translatable="yes">Open Model…</property>
             <property name="action-name">app.file-open</property>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkMenuButton">
+            <property name="popover">hamburger</property>
+            <property name="icon_name">open-menu-symbolic</property>
           </object>
         </child>
       </object>

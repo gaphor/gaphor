@@ -19,17 +19,21 @@ def new_builder(ui_file):
 
 
 class HelpService(Service, ActionProvider):
-    def __init__(self, main_window):
-        self.main_window = main_window
+    def __init__(self, application):
+        self.application = application
 
     def shutdown(self):
         pass
 
     @property
     def window(self):
-        return self.main_window.window
+        return (
+            self.application.active_session.get_service("main_window").window
+            if self.application.active_session
+            else None
+        )
 
-    @action(name="about")
+    @action(name="app.about")
     def about(self):
         builder = new_builder("about")
         about = builder.get_object("about")
@@ -44,7 +48,7 @@ class HelpService(Service, ActionProvider):
             about.set_modal(True)
             about.show()
 
-    @action(name="win.shortcuts")
+    @action(name="app.shortcuts")
     def shortcuts(self):
         builder = Gtk.Builder()
         builder.add_from_string(translated_ui_string("gaphor.ui.help", "shortcuts.ui"))
