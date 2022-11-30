@@ -76,7 +76,6 @@ class Greeter(Service, ActionProvider):
         self.event_manager = event_manager
         self.recent_manager = recent_manager or Gtk.RecentManager.get_default()
         self.greeter: Gtk.Window = None
-        self.action_bar: Gtk.ActionBar = None
         self.gtk_app: Gtk.Application = None
         event_manager.subscribe(self.on_session_created)
 
@@ -97,9 +96,14 @@ class Greeter(Service, ActionProvider):
 
         builder = new_builder("greeter")
 
+        self.greeter = builder.get_object("greeter")
+        self.greeter.set_application(self.gtk_app)
+
+        listbox = builder.get_object("recent-files")
+        templates = builder.get_object("templates")
+
         if Gtk.get_major_version() == 3:
             if any(self.query_recent_files()):
-                listbox = builder.get_object("recent-files")
                 listbox.connect(
                     "row-activated", lambda _, row: self._on_recent_file_activated(row)
                 )
@@ -108,31 +112,24 @@ class Greeter(Service, ActionProvider):
             else:
                 builder.get_object("recent-files-frame").hide()
                 builder.get_object("recent-files-label").hide()
-        elif any(self.query_recent_files()):
-            listbox = builder.get_object("recent-files")
-            for widget in self.create_recent_files():
-                listbox.add(widget)
-        else:
-            builder.get_object("recent-files").hide()
 
-        self.action_bar = builder.get_object("action-bar")
-
-        templates = builder.get_object("templates")
-        if Gtk.get_major_version() == 3:
             templates.connect(
                 "row-activated", lambda _, row: self._on_template_activated(row)
             )
             for widget in self.create_templates():
                 templates.insert(widget, -1)
+
+            self.greeter.connect("delete-event", self._on_window_close_request)
         else:
+            if any(self.query_recent_files()):
+                for widget in self.create_recent_files():
+                    listbox.add(widget)
+            else:
+                builder.get_object("recent-files").hide()
+
             for widget in self.create_templates():
                 templates.add(widget)
 
-        self.greeter = builder.get_object("greeter")
-        self.greeter.set_application(self.gtk_app)
-        if Gtk.get_major_version() == 3:
-            self.greeter.connect("delete-event", self._on_window_close_request)
-        else:
             self.greeter.connect("close-request", self._on_window_close_request)
 
         self.greeter.show()
@@ -221,9 +218,7 @@ class Greeter(Service, ActionProvider):
         self.close()
 
     def _on_template_activated(self, child):
-        filename: Path = (
-            importlib.resources.files("gaphor") / "templates" / child.filename
-        )
+        filename = importlib.resources.files("gaphor") / "templates" / child.filename
         translated_model = translate_model(filename)
         session = self.application.new_session(template=translated_model)
         session.get_service("properties").set("modeling-language", child.lang)
