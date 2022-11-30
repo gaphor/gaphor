@@ -5,6 +5,18 @@
   <menu id='hamburger-menu'>
     <section>
       <item>
+        <attribute name='label' translatable='yes'>Open Model…</attribute>
+        <attribute name='action'>app.file-open</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name='label' translatable='yes'>Close</attribute>
+        <attribute name='action'>app.close-greeter</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
         <attribute name='label' translatable='yes'>About Gaphor</attribute>
         <attribute name='action'>app.about</attribute>
       </item>

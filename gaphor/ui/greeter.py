@@ -138,6 +138,7 @@ class Greeter(Service, ActionProvider):
 
         self.greeter.show()
 
+    @action(name="app.close-greeter")
     def close(self):
         if self.greeter:
             self.greeter.destroy()
