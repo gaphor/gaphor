@@ -108,13 +108,12 @@ class Greeter(Service, ActionProvider):
             else:
                 builder.get_object("recent-files-frame").hide()
                 builder.get_object("recent-files-label").hide()
+        elif any(self.query_recent_files()):
+            listbox = builder.get_object("recent-files")
+            for widget in self.create_recent_files():
+                listbox.add(widget)
         else:
-            if any(self.query_recent_files()):
-                listbox = builder.get_object("recent-files")
-                for widget in self.create_recent_files():
-                    listbox.add(widget)
-            else:
-                builder.get_object("recent-files").hide()
+            builder.get_object("recent-files").hide()
 
         self.action_bar = builder.get_object("action-bar")
 
