@@ -27,11 +27,7 @@ class HelpService(Service, ActionProvider):
 
     @property
     def window(self):
-        return (
-            self.application.active_session.get_service("main_window").window
-            if self.application.active_session
-            else None
-        )
+        return self.application.active_window
 
     @action(name="app.about")
     def about(self):

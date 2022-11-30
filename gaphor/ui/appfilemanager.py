@@ -23,8 +23,9 @@ FILTERS = [
 class AppFileManager(Service, ActionProvider):
     """Handle application level file loading."""
 
-    def __init__(self, application):
+    def __init__(self, application, greeter):
         self.application = application
+        self.greeter = greeter
         self.last_dir = None
 
     def shutdown(self):
@@ -32,11 +33,7 @@ class AppFileManager(Service, ActionProvider):
 
     @property
     def parent_window(self):
-        return (
-            self.application.active_session.get_service("main_window").window
-            if self.application.active_session
-            else None
-        )
+        return self.application.active_window
 
     @action(name="app.file-open")
     def action_open(self):
