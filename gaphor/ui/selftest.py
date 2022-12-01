@@ -1,3 +1,4 @@
+import importlib.resources
 import logging
 import sys
 import time
@@ -95,7 +96,10 @@ class SelfTest(Service):
 
     @test
     def test_new_session(self, status):
-        session = self.application.new_session()
+        with (
+            importlib.resources.files("gaphor") / "templates" / "uml.gaphor"
+        ).open() as f:
+            session = self.application.new_session(template=f)
 
         def check_new_session(session):
             main_window = session.get_service("main_window")
