@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-11-27 16:18-0500\n"
-"PO-Revision-Date: 2022-10-22 06:53+0000\n"
+"PO-Revision-Date: 2022-12-03 21:21+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -1137,12 +1138,12 @@ msgstr "Instanciada indirectamente"
 #: gaphor/UML/classes/propertypages.glade:937
 #: gaphor/UML/classes/propertypages.ui:812
 msgid "A."
-msgstr ""
+msgstr "A."
 
 #: gaphor/UML/classes/propertypages.glade:943
 #: gaphor/UML/classes/propertypages.ui:816
 msgid "S."
-msgstr ""
+msgstr "S."
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
 msgid "Deployments"
@@ -1440,11 +1441,11 @@ msgstr "No hay diagrama '{name}' en el modelo '{model_name}' ({model_file})."
 
 #: gaphor/plugins/autolayout/pydot.py:44
 msgid "Auto Layout"
-msgstr ""
+msgstr "Disposición automática"
 
 #: gaphor/plugins/autolayout/pydot.py:52
 msgid "Auto Layout (orthogonal)"
-msgstr ""
+msgstr "Disposición automática (ortogonal)"
 
 #: gaphor/plugins/console/console.py:24
 msgid ""
@@ -1496,18 +1497,16 @@ msgid "Export diagram as PDF"
 msgstr "Exportar diagrama como PDF"
 
 #: gaphor/plugins/diagramexport/__init__.py:88
-#, fuzzy
 msgid "Export as EPS"
-msgstr "Exportar como XMI"
+msgstr "Exportar como EPS"
 
 #: gaphor/plugins/diagramexport/__init__.py:89
 msgid "Export diagram as Encapsulated PostScript"
-msgstr ""
+msgstr "Exportar diagrama como PostScript encapsulado"
 
 #: gaphor/plugins/diagramexport/__init__.py:95
-#, fuzzy
 msgid "Export diagram as EPS"
-msgstr "Exportar diagrama como SVG"
+msgstr "Exportar diagrama como EPS"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
 #: gaphor/plugins/errorreports/errorreports.py:65
@@ -2120,24 +2119,22 @@ msgstr "Todos los modelos Gaphor"
 
 #: gaphor/ui/appfilemanager.py:49
 msgid "Switch to {name}?"
-msgstr ""
+msgstr "¿Cambiar a {name}?"
 
 #: gaphor/ui/appfilemanager.py:50
-#, fuzzy
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr ""
-"{filename} ya está abierto. ¿Quiere cambiar a la ventana abierta en su "
-"lugar?"
+"{name} ya está abierto. ¿Quiere cambiar a la ventana abierta en su lugar?"
 
 #: gaphor/ui/appfilemanager.py:69
 msgid "Open Again"
-msgstr ""
+msgstr "Abrir de nuevo"
 
 #: gaphor/ui/appfilemanager.py:70
 msgid "Switch"
-msgstr ""
+msgstr "Cambiar"
 
 #: gaphor/ui/appfilemanager.py:93
 msgid "Open a Model"
@@ -2267,7 +2264,6 @@ msgid "Close"
 msgstr "Cerrar"
 
 #: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:44
-#, fuzzy
 msgid "Start Debug Session"
 msgstr "Iniciar sesión de depuración"
 
@@ -2328,13 +2324,12 @@ msgid "Loading model from {filename}"
 msgstr "Cargando modelo desde {filename}"
 
 #: gaphor/ui/filemanager.py:160
-#, fuzzy
 msgid "Merge conflict in model “{filename}”."
-msgstr "No se ha podido abrir el modelo \"{filename}\"."
+msgstr "Conflicto de fusión en el modelo “{filename}”."
 
 #: gaphor/ui/filemanager.py:163
 msgid "It looks like this model file contains a merge conflict."
-msgstr ""
+msgstr "Parece que este archivo modelo contiene un conflicto de fusión."
 
 #: gaphor/ui/filemanager.py:173
 msgid "Unable to open model “{filename}”."
@@ -2362,13 +2357,15 @@ msgstr "Guardar el modelo Gaphor como"
 
 #: gaphor/ui/filemanager.py:326
 msgid "Save Changes?"
-msgstr ""
+msgstr "¿Guardar cambios?"
 
 #: gaphor/ui/filemanager.py:327
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
+"El modelo abierto contiene cambios no guardados. Los cambios que no se "
+"guarden se perderán permanentemente."
 
 #: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
 msgid "Cancel"
@@ -2376,7 +2373,7 @@ msgstr "Cancelar"
 
 #: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
 #: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:49
@@ -2566,9 +2563,12 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
+"Copyright © 2001-2022 Arjan J. Molenaar y Dan Yeaw.\n"
+"\n"
+"UML, SysML y RAAML son marcas registradas o marcas comerciales de Object "
+"Management Group, Inc. en Estados Unidos y/o en otros países."
 
 #: gaphor/ui/help/about.ui:22
-#, fuzzy
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
 " not use this application except in compliance with the License. You may "
@@ -2582,26 +2582,17 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
-"Licenciado bajo la Licencia Apache, Versión 2.0 (la \"Licencia\");\n"
-"no puede usar esta aplicación si no es en cumplimiento de la\n"
-"Licencia. Puede obtener una copia de la Licencia en\n"
+"Licencia bajo la Apache License, Versión 2.0 (la \"Licencia\"); no puede "
+"usar esta aplicación si no es de conformidad con la Licencia. Puede obtener "
+"una copia de la Licencia en\n"
 "\n"
-"http://www.apache.org/licenses/LICENSE-2.0\n"
+"    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"A menos que lo exija la legislación aplicable o se acuerde por escrito, "
-"el software\n"
-"distribuido bajo la Licencia se distribuye \"TAL CUAL\",\n"
-"SIN GARANTÍAS NI CONDICIONES DE NINGÚN TIPO, ni expresas ni implícitas.\n"
-"expresas o implícitas. Consulte la Licencia para conocer el lenguaje "
-"específico\n"
-"que rige los permisos y limitaciones bajo la Licencia.\n"
-"\n"
-"---\n"
-"\n"
-"UML, SysML y RAAML son marcas comerciales registradas o\n"
-"marcas comerciales de Object Management Group, Inc. en los Estados Unidos"
-"\n"
-"y/o en otros países.\n"
+"A menos que lo exija la ley aplicable o se acuerde por escrito, el software "
+"distribuido bajo la Licencia se distribuye \"TAL CUAL\", SIN GARANTÍAS NI "
+"CONDICIONES DE NINGÚN TIPO, ni expresas ni implícitas. Consulte la Licencia "
+"para conocer el lenguaje específico que rige los permisos y limitaciones "
+"bajo la Licencia."
 
 #: gaphor/ui/help/shortcuts.ui:24
 msgid "Rename"
