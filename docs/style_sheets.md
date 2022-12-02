@@ -98,6 +98,7 @@ of CSS. Below you'll find a summary of all CSS features supported by Gaphor.
                               - ``:active`` selected items
                               - ``:hover`` for the item under the mouse
                               - ``:drop`` if an item is dragged and can be dropped on this item
+                              - ``:disabled`` if an element is grayed out during handle movement
 ``node:empty``                A node containing no child nodes in the diagram.
 ``:root``                     An item is at the top level of the diagram.
 
