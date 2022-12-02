@@ -69,6 +69,7 @@ a = Analysis(
             "../gaphor/ui/icons/hicolor/scalable/emblems/*.svg",
             "gaphor/ui/icons/hicolor/scalable/emblems",
         ),
+        ("../gaphor/ui/language-specs/*.lang", "gaphor/ui/language-specs"),
         ("../LICENSE.txt", "gaphor"),
         ("../gaphor/locale/*", "gaphor/locale"),
         ("../gaphor/templates/*.gaphor", "gaphor/templates"),
