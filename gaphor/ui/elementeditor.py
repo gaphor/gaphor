@@ -1,5 +1,6 @@
 """The element editor is a utility window used for editing elements."""
 
+import importlib.resources
 import logging
 from typing import Optional
 
@@ -261,6 +262,10 @@ class PreferencesStack:
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.lang_manager = GtkSource.LanguageManager.get_default()
+        if Gtk.get_major_version() != 3:
+            self.lang_manager.append_search_path(
+                str(importlib.resources.files("gaphor") / "ui" / "language-specs")
+            )
 
         def tx_update_style_sheet(style_sheet, text):
             self._in_update = 1
@@ -275,7 +280,11 @@ class PreferencesStack:
         self.style_sheet_buffer = builder.get_object("style-sheet-buffer")
         self.style_sheet_view = builder.get_object("style-sheet-view")
 
-        self.style_sheet_buffer.set_language(self.lang_manager.get_language("css"))
+        self.style_sheet_buffer.set_language(
+            self.lang_manager.get_language(
+                "css" if Gtk.get_major_version() == 3 else "gaphorcss"
+            )
+        )
 
         self.event_manager.subscribe(self._model_ready)
         self.event_manager.subscribe(self._style_sheet_created)
