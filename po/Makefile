@@ -1,4 +1,4 @@
-LANGS=ca es fr hr it nl pt_BR ru sv hu fi
+LANGS=ca cs de es fi fr gl hr hu it ja ko nl pt_BR ru sl sv zh_Hans
 
 SRCS=$(shell find ../gaphor -path ../gaphor/locale -prune -o -print)
 MO_FILES=$(patsubst %,../gaphor/locale/%/LC_MESSAGES/gaphor.mo,$(LANGS))
