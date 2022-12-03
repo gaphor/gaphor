@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-11-27 16:18-0500\n"
-"PO-Revision-Date: 2022-09-03 19:28+0000\n"
-"Last-Translator: Anonynonymouse <tom.spaine60388@gmail.com>\n"
+"PO-Revision-Date: 2022-12-03 21:21+0000\n"
+"Last-Translator: Hannes Fritz <hztirf@gmail.com>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/gaphor/gaphor/de/>"
+"\n"
 "Language: de\n"
-"Language-Team: German "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/de/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -80,7 +81,7 @@ msgstr "Abhängigkeit"
 
 #: gaphor/C4Model/toolbox.py:139
 msgid "New C4 Diagram"
-msgstr "Neues C4 model"
+msgstr "Neues C4 Diagramm"
 
 #: gaphor/C4Model/toolbox.py:140 gaphor/UML/toolbox.py:30
 msgid "New Class Diagram"
@@ -392,7 +393,7 @@ msgstr "Neues Paketdiagramm"
 
 #: gaphor/SysML/toolbox.py:71
 msgid "New Requirement Diagram"
-msgstr "Neues Anforderungsdiagram"
+msgstr "Neues Anforderungsdiagramm"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
 #, fuzzy
@@ -551,7 +552,7 @@ msgstr "{name} Diagramm"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr ""
+msgstr "Neues Kommunikationsdiagramm"
 
 #: gaphor/UML/toolbox.py:39
 #, fuzzy
@@ -800,7 +801,7 @@ msgstr "Teile"
 #: gaphor/UML/classes/propertypages.ui:643
 #: gaphor/UML/classes/propertypages.ui:752
 msgid "🛈 Help"
-msgstr ""
+msgstr "🛈 Hilfe"
 
 #: gaphor/UML/actions/propertypages.glade:408
 msgid ""
@@ -2612,7 +2613,7 @@ msgstr "Alles abwählen"
 
 #: gaphor/ui/help/shortcuts.ui:199
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopieren und Einfügen"
 
 #: gaphor/ui/help/shortcuts.ui:205
 msgid "Copy"
@@ -2620,7 +2621,7 @@ msgstr "Kopieren"
 
 #: gaphor/ui/help/shortcuts.ui:213
 msgid "Cut"
-msgstr ""
+msgstr "Ausschneiden"
 
 #: gaphor/ui/help/shortcuts.ui:221
 msgid "Paste (link defining elements)"
