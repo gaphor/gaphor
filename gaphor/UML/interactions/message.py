@@ -47,6 +47,9 @@ See also ``lifeline`` module documentation.
 
 from math import atan2, pi
 
+from gaphas.connector import Handle
+from gaphas.constraint import constraint
+
 from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
@@ -87,12 +90,35 @@ class MessageItem(Named, LinePresentation[UML.Message]):
         )
         self.handles()[1].pos = (40, 0)
 
+        self._horizontal_line = constraint(horizontal=[h.pos for h in self.handles()])
+        self.diagram.connections.add_constraint(self, self._horizontal_line)
+
         self._is_communication = False
         self._arrow_pos = 0, 0
         self._arrow_angle = 0
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+
+    def load(self, name, value):
+        if name == "points":
+            self.diagram.connections.remove_constraint(self, self._horizontal_line)
+        return super().load(name, value)
+
+    def postload(self):
+        super().postload()
+        if len(self.handles()) == 2:
+            self.diagram.connections.add_constraint(self, self._horizontal_line)
+
+    def insert_handle(self, index: int, handle: Handle) -> None:
+        if len(self.handles()) == 2:
+            self.diagram.connections.remove_constraint(self, self._horizontal_line)
+        super().insert_handle(index, handle)
+
+    def remove_handle(self, handle: Handle) -> None:
+        super().remove_handle(handle)
+        if len(self.handles()) == 2:
+            self.diagram.connections.add_constraint(self, self._horizontal_line)
 
     def _get_center_pos(self):
         """Return position in the centre of middle segment of a line.
