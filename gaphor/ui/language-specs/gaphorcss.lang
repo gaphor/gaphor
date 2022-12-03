@@ -1,0 +1,881 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ This file is part of Gaphor, the file is based on the CSS
+ langauage file of GtkSourceView.
+
+ Author: Scott Martin <scott@coffeeblack.org>
+ Copyright (C) 2004 Scott Martin <scott@coffeeblack.org>
+ Copyright (C) 2010 Patryk Zawadzki <patrys@pld-linux.org>
+ Copyright (C) 2016 Tobias Schönberg <tobias47n9e@gmail.com>
+ Copyright (C) 2018-2020 Jeffery To <jeffery.to@gmail.com>
+ Copyright (C) 2022 Arjan Molenaar <gaphor@gmail.com>
+
+Original copyright:
+
+ GtkSourceView is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ GtkSourceView is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public License
+ along with this library; if not, see <http://www.gnu.org/licenses/>.
+
+-->
+<language id="gaphorcss" name="CSS" version="2.0">
+  <styles>
+
+    <!-- global -->
+    <style id="comment"                     name="Comment"                     map-to="def:comment"/>
+    <style id="error"                       name="Error"                       map-to="def:error"/>
+    <style id="keyword"                     name="Keyword"                     map-to="def:constant"/>
+    <style id="symbol"                      name="Symbol"/>
+    <style id="delimiter"                   name="Delimiter"/>
+    <style id="block-delimiter"             name="Block Delimiter"             map-to="css:delimiter"/>
+
+    <!-- data types -->
+    <style id="name"                        name="Name"/>
+    <style id="escape"                      name="Escape Sequence"             map-to="def:special-char"/>
+    <style id="string"                      name="String"                      map-to="def:string"/>
+    <style id="color"                       name="Color"                       map-to="def:base-n-integer"/>
+    <style id="number"                      name="Number"                      map-to="def:number"/>
+    <style id="integer"                     name="Integer"                     map-to="def:decimal"/>
+    <style id="expression"                  name="Expression"                  map-to="def:complex"/>
+    <style id="unicode-range"               name="Unicode Range"/>
+
+    <!-- style properties -->
+    <style id="property-name"               name="Property Name"               map-to="def:keyword"/>
+
+    <!-- selectors -->
+    <style id="selector-symbol"             name="Selector Symbol"             map-to="css:symbol"/>
+    <style id="id-selector"                 name="ID Selector"                 map-to="def:statement"/>
+    <style id="class-selector"              name="Class Selector"              map-to="def:identifier"/>
+    <style id="type-selector"               name="Type Selector"               map-to="def:type"/>
+    <style id="universal-selector"          name="Universal Selector"          map-to="css:selector-symbol"/>
+    <style id="attribute-selector"          name="Attribute Selector"          map-to="css:selector-symbol"/>
+    <style id="attribute-selector-operator" name="Attribute Selector Operator" map-to="css:selector-symbol"/>
+    <style id="attribute-selector-name"     name="Attribute Selector Name"     map-to="def:type"/>
+    <style id="combinator"                  name="Combinator"                  map-to="css:selector-symbol"/>
+    <style id="pseudo-selector"             name="Pseudo Selector"             map-to="def:function"/>
+    <style id="pseudo-selector-operator"    name="Pseudo Selector Operator"    map-to="css:pseudo-selector"/>
+    <style id="pseudo-element"              name="Pseudo-element"              map-to="css:pseudo-selector"/>
+    <style id="pseudo-class"                name="Pseudo-class"                map-to="css:pseudo-selector"/>
+
+  </styles>
+
+  <default-regex-options case-sensitive="false"/>
+
+  <!-- from keyword-code-point -->
+  <keyword-char-class>[^\N{U+0}-\N{U+2C}\N{U+2E}\N{U+2F}\N{U+3A}-\N{U+40}\N{U+5B}\N{U+5D}\N{U+5E}\N{U+60}\N{U+7B}-\N{U+7F}]</keyword-char-class>
+
+  <definitions>
+
+    <!--
+    contexts with end-parent="true" are written as container contexts to work around
+    https://gitlab.gnome.org/GNOME/gtksourceview/issues/14
+    -->
+
+    <!-- global -->
+
+    <!-- https://drafts.csswg.org/css-syntax/#escaping -->
+    <define-regex id="escape" extended="true">
+      \\                   # backslash
+      (?:
+        [^\n\r\f0-9a-f] |  # not newline or hex digit; or
+        [0-9a-f]{1,6} \s?  # 1-6 hex digits, trailing whitespace (not necessary in some cases)
+      )
+    </define-regex>
+
+    <!--
+    https://drafts.csswg.org/css-syntax/#name-start-code-point
+
+    includes:
+    U+0041-U+005A Latin capital letter A to Z (A-Z)
+    U+005F        Low line (_)
+    U+0061-U+007A Latin small letter A to Z (a-z)
+    U+0080-       Non-ASCII
+    -->
+    <define-regex id="identifier-start-code-point" extended="true">
+      [^\N{U+0}-\N{U+40}\N{U+5B}-\N{U+5E}\N{U+60}\N{U+7B}-\N{U+7F}]
+    </define-regex>
+
+    <!--
+    https://drafts.csswg.org/css-syntax/#name-code-point
+
+    includes:
+    U+002D        Hyphen-minus (-)
+    U+0030-U+0039 Digit zero to nine (0-9)
+    U+0041-U+005A Latin capital letter A to Z (A-Z)
+    U+005F        Low line (_)
+    U+0061-U+007A Latin small letter A to Z (a-z)
+    U+0080-       Non-ASCII
+    -->
+    <define-regex id="identifier-code-point" extended="true">
+      [^\N{U+0}-\N{U+2C}\N{U+2E}\N{U+2F}\N{U+3A}-\N{U+40}\N{U+5B}-\N{U+5E}\N{U+60}\N{U+7B}-\N{U+7F}]
+    </define-regex>
+
+    <!--
+    identifier-code-point, excluding hyphen
+
+    includes:
+    U+0030-U+0039 Digit zero to nine (0-9)
+    U+0041-U+005A Latin capital letter A to Z (A-Z)
+    U+005F        Low line (_)
+    U+0061-U+007A Latin small letter A to Z (a-z)
+    U+0080-       Non-ASCII
+    -->
+    <define-regex id="identifier-prefix-code-point" extended="true">
+      [^\N{U+0}-\N{U+2F}\N{U+3A}-\N{U+40}\N{U+5B}-\N{U+5E}\N{U+60}\N{U+7B}-\N{U+7F}]
+    </define-regex>
+
+    <!--
+    identifier-code-point, including backslash
+
+    includes:
+    U+002D        Hyphen-minus (-)
+    U+0030-U+0039 Digit zero to nine (0-9)
+    U+0041-U+005A Latin capital letter A to Z (A-Z)
+    U+005C        Reverse solidus (\)
+    U+005F        Low line (_)
+    U+0061-U+007A Latin small letter A to Z (a-z)
+    U+0080-       Non-ASCII
+    -->
+    <define-regex id="keyword-code-point" extended="true">
+      [^\N{U+0}-\N{U+2C}\N{U+2E}\N{U+2F}\N{U+3A}-\N{U+40}\N{U+5B}\N{U+5D}\N{U+5E}\N{U+60}\N{U+7B}-\N{U+7F}]
+    </define-regex>
+
+    <!--
+    a combination of name-start code point and escape
+    https://www.w3.org/TR/selectors-3/#lex
+    -->
+    <define-regex id="identifier-start-char" extended="true">
+      \%{identifier-start-code-point} | \%{escape}
+    </define-regex>
+
+    <!--
+    a combination of name code point and escape
+    https://www.w3.org/TR/selectors-3/#lex
+    -->
+    <define-regex id="identifier-chars" extended="true">
+      (?&gt; (?: \%{identifier-code-point}+ | \%{escape}+ )+ )
+    </define-regex>
+
+    <!-- https://drafts.csswg.org/css-syntax/#ident-token-diagram -->
+    <define-regex id="identifier" extended="true">
+      (?: -- | -? \%{identifier-start-char} ) \%{identifier-chars}?
+    </define-regex>
+
+    <!-- identifier-chars, excluding hyphen -->
+    <define-regex id="identifier-prefix-chars" extended="true">
+      (?&gt; (?: \%{identifier-prefix-code-point}+ | \%{escape}+ )+ )
+    </define-regex>
+
+    <define-regex id="keyword-start" extended="true">
+      (?&lt;! \%{keyword-code-point} )
+    </define-regex>
+
+    <define-regex id="keyword-end" extended="true">
+      (?! \%{keyword-code-point} )
+    </define-regex>
+
+    <define-regex id="declaration-value-end">(?=[!;}])</define-regex>
+
+    <define-regex id="optional-whitespace-or-comments" extended="true">
+      (?&gt; (?: \s+ | /\*.*?\*/ )* )
+    </define-regex>
+
+    <context id="multiline-comment" style-ref="comment" class-disabled="no-spell-check" class="comment">
+      <start>/\*</start>
+      <end>\*/</end>
+      <include>
+        <context ref="def:in-comment"/>
+      </include>
+    </context>
+
+    <context id="comment">
+      <include>
+        <context ref="multiline-comment"/>
+        <context ref="def:c-like-close-comment-outside-comment" style-ref="error"/>
+      </include>
+    </context>
+
+    <context id="slash" style-ref="symbol">
+      <match>/</match>
+    </context>
+
+    <context id="comma" style-ref="delimiter">
+      <match>,</match>
+    </context>
+
+    <context id="colon" style-ref="delimiter">
+      <match>:</match>
+    </context>
+
+    <context id="semicolon" style-ref="delimiter">
+      <match>;</match>
+    </context>
+
+
+    <!-- data types -->
+
+    <!-- custom identifier -->
+    <context id="name" style-ref="name">
+      <match extended="true">
+        \%{keyword-start} \%{identifier}
+      </match>
+    </context>
+
+    <context id="escape" style-ref="escape">
+      <match>\%{escape}</match>
+    </context>
+
+    <context id="string-content">
+      <include>
+        <context ref="escape"/>
+        <context ref="def:line-continue"/>
+      </include>
+    </context>
+
+    <context id="double-quoted-string" style-ref="string" end-at-line-end="true" class="string" class-disabled="no-spell-check">
+      <start>"</start>
+      <end>"</end>
+      <include>
+        <!-- no comment here -->
+        <context ref="string-content"/>
+      </include>
+    </context>
+
+    <context id="single-quoted-string" style-ref="string" end-at-line-end="true" class="string" class-disabled="no-spell-check">
+      <start>'</start>
+      <end>'</end>
+      <include>
+        <!-- no comment here -->
+        <context ref="string-content"/>
+      </include>
+    </context>
+
+    <context id="string">
+      <include>
+        <context ref="double-quoted-string"/>
+        <context ref="single-quoted-string"/>
+      </include>
+    </context>
+
+    <context id="hexadecimal-color" style-ref="color">
+      <match extended="true">
+        \# (?: [a-f0-9]{8} | [a-f0-9]{6} | [a-f0-9]{4} | [a-f0-9]{3} )
+        \%{keyword-end}
+      </match>
+    </context>
+
+    <context id="css3-named-color" style-ref="color">
+      <prefix>\%{keyword-start}</prefix>
+      <suffix>\%{keyword-end}</suffix>
+      <keyword>aliceblue</keyword>
+      <keyword>antiquewhite</keyword>
+      <keyword>aquamarine</keyword>
+      <keyword>azure</keyword>
+      <keyword>beige</keyword>
+      <keyword>bisque</keyword>
+      <keyword>blanchedalmond</keyword>
+      <keyword>blueviolet</keyword>
+      <keyword>brown</keyword>
+      <keyword>burlywood</keyword>
+      <keyword>cadetblue</keyword>
+      <keyword>chartreuse</keyword>
+      <keyword>chocolate</keyword>
+      <keyword>coral</keyword>
+      <keyword>cornflowerblue</keyword>
+      <keyword>cornsilk</keyword>
+      <keyword>crimson</keyword>
+      <keyword>cyan</keyword>
+      <keyword>darkblue</keyword>
+      <keyword>darkcyan</keyword>
+      <keyword>darkgoldenrod</keyword>
+      <keyword>darkgray</keyword>
+      <keyword>darkgreen</keyword>
+      <keyword>darkgrey</keyword>
+      <keyword>darkkhaki</keyword>
+      <keyword>darkmagenta</keyword>
+      <keyword>darkolivegreen</keyword>
+      <keyword>darkorange</keyword>
+      <keyword>darkorchid</keyword>
+      <keyword>darkred</keyword>
+      <keyword>darksalmon</keyword>
+      <keyword>darkseagreen</keyword>
+      <keyword>darkslateblue</keyword>
+      <keyword>darkslategray</keyword>
+      <keyword>darkslategrey</keyword>
+      <keyword>darkturquoise</keyword>
+      <keyword>darkviolet</keyword>
+      <keyword>deeppink</keyword>
+      <keyword>deepskyblue</keyword>
+      <keyword>dimgray</keyword>
+      <keyword>dimgrey</keyword>
+      <keyword>dodgerblue</keyword>
+      <keyword>firebrick</keyword>
+      <keyword>floralwhite</keyword>
+      <keyword>forestgreen</keyword>
+      <keyword>gainsboro</keyword>
+      <keyword>ghostwhite</keyword>
+      <keyword>goldenrod</keyword>
+      <keyword>gold</keyword>
+      <keyword>greenyellow</keyword>
+      <keyword>grey</keyword>
+      <keyword>honeydew</keyword>
+      <keyword>hotpink</keyword>
+      <keyword>indianred</keyword>
+      <keyword>indigo</keyword>
+      <keyword>ivory</keyword>
+      <keyword>khaki</keyword>
+      <keyword>lavenderblush</keyword>
+      <keyword>lavender</keyword>
+      <keyword>lawngreen</keyword>
+      <keyword>lemonchiffon</keyword>
+      <keyword>lightblue</keyword>
+      <keyword>lightcoral</keyword>
+      <keyword>lightcyan</keyword>
+      <keyword>lightgoldenrodyellow</keyword>
+      <keyword>lightgray</keyword>
+      <keyword>lightgreen</keyword>
+      <keyword>lightgrey</keyword>
+      <keyword>lightpink</keyword>
+      <keyword>lightsalmon</keyword>
+      <keyword>lightseagreen</keyword>
+      <keyword>lightskyblue</keyword>
+      <keyword>lightslategray</keyword>
+      <keyword>lightslategrey</keyword>
+      <keyword>lightsteelblue</keyword>
+      <keyword>lightyellow</keyword>
+      <keyword>limegreen</keyword>
+      <keyword>linen</keyword>
+      <keyword>magenta</keyword>
+      <keyword>mediumaquamarine</keyword>
+      <keyword>mediumblue</keyword>
+      <keyword>mediumorchid</keyword>
+      <keyword>mediumpurple</keyword>
+      <keyword>mediumseagreen</keyword>
+      <keyword>mediumslateblue</keyword>
+      <keyword>mediumspringgreen</keyword>
+      <keyword>mediumturquoise</keyword>
+      <keyword>mediumvioletred</keyword>
+      <keyword>midnightblue</keyword>
+      <keyword>mintcream</keyword>
+      <keyword>mistyrose</keyword>
+      <keyword>moccasin</keyword>
+      <keyword>navajowhite</keyword>
+      <keyword>oldlace</keyword>
+      <keyword>olivedrab</keyword>
+      <keyword>orangered</keyword>
+      <keyword>orchid</keyword>
+      <keyword>palegoldenrod</keyword>
+      <keyword>palegreen</keyword>
+      <keyword>paleturquoise</keyword>
+      <keyword>palevioletred</keyword>
+      <keyword>papayawhip</keyword>
+      <keyword>peachpuff</keyword>
+      <keyword>peru</keyword>
+      <keyword>pink</keyword>
+      <keyword>plum</keyword>
+      <keyword>powderblue</keyword>
+      <keyword>rebeccapurple</keyword>
+      <keyword>rosybrown</keyword>
+      <keyword>royalblue</keyword>
+      <keyword>saddlebrown</keyword>
+      <keyword>salmon</keyword>
+      <keyword>sandybrown</keyword>
+      <keyword>seagreen</keyword>
+      <keyword>seashell</keyword>
+      <keyword>sienna</keyword>
+      <keyword>skyblue</keyword>
+      <keyword>slateblue</keyword>
+      <keyword>slategray</keyword>
+      <keyword>slategrey</keyword>
+      <keyword>snow</keyword>
+      <keyword>springgreen</keyword>
+      <keyword>steelblue</keyword>
+      <keyword>tan</keyword>
+      <keyword>thistle</keyword>
+      <keyword>tomato</keyword>
+      <keyword>turquoise</keyword>
+      <keyword>violet</keyword>
+      <keyword>wheat</keyword>
+      <keyword>whitesmoke</keyword>
+      <keyword>yellowgreen</keyword>
+    </context>
+
+    <context id="named-color" style-ref="color">
+      <prefix>\%{keyword-start}</prefix>
+      <suffix>\%{keyword-end}</suffix>
+      <keyword>aqua</keyword>
+      <keyword>black</keyword>
+      <keyword>blue</keyword>
+      <keyword>fuchsia</keyword>
+      <keyword>gray</keyword>
+      <keyword>green</keyword>
+      <keyword>lime</keyword>
+      <keyword>maroon</keyword>
+      <keyword>navy</keyword>
+      <keyword>olive</keyword>
+      <keyword>orange</keyword>
+      <keyword>purple</keyword>
+      <keyword>red</keyword>
+      <keyword>silver</keyword>
+      <keyword>teal</keyword>
+      <keyword>white</keyword>
+      <keyword>yellow</keyword>
+    </context>
+
+    <define-regex id="number-magnitude" extended="true">
+      (?&gt; \d* \. \d+ | \d+ ) (?: e [+-]? \d+ )?
+    </define-regex>
+
+    <define-regex id="number" extended="true">
+      [+-]? \%{number-magnitude}
+    </define-regex>
+
+    <define-regex id="positive-number" extended="true">
+      \+? \%{number-magnitude}
+    </define-regex>
+
+    <define-regex id="integer-magnitude" extended="true">
+      (?&gt; \d+ )
+    </define-regex>
+
+    <define-regex id="integer" extended="true">
+      [+-]? \%{integer-magnitude}
+    </define-regex>
+
+    <define-regex id="positive-integer" extended="true">
+      \+? \%{integer-magnitude}
+    </define-regex>
+
+    <define-regex id="non-number-char" extended="true">
+      \%{keyword-code-point} | \.
+    </define-regex>
+
+    <context id="number" style-ref="number">
+      <match extended="true">
+        (?&lt;! \%{non-number-char} )
+        \%{number}
+        (?! \%{non-number-char} )
+      </match>
+    </context>
+
+    <context id="positive-integer" style-ref="integer">
+      <match extended="true">
+        (?&lt;! \%{non-number-char} )
+        \%{positive-integer}
+        (?! \%{non-number-char} )
+      </match>
+    </context>
+
+    <context id="unicode-range" style-ref="unicode-range">
+      <match extended="true">
+        \%{keyword-start}
+        u \+ (?&gt; [a-f0-9?]{1,6} ) (?&gt; - [a-f0-9]{1,6} )?
+        \%{keyword-end}
+      </match>
+    </context>
+
+    <!-- data values (interface between types and users) -->
+
+    <context id="name-value">
+      <include>
+        <context ref="name"/>
+      </include>
+    </context>
+
+    <context id="string-value">
+      <include>
+        <context ref="string"/>
+      </include>
+    </context>
+
+    <context id="color-value">
+      <include>
+        <context ref="hexadecimal-color"/>
+        <context ref="css3-named-color"/>
+        <context ref="named-color"/>
+        <!-- Add rgb(a)/hsl colors -->
+      </include>
+    </context>
+
+    <!-- resolution and ratio are used in media queries only -->
+    <context id="number-value">
+      <include>
+        <context ref="number"/>
+      </include>
+    </context>
+
+    <context id="unicode-range-value">
+      <include>
+        <context ref="unicode-range"/>
+      </include>
+    </context>
+
+    <!-- unicode-range is used for the unicode-range (@font-face) property only -->
+    <context id="data-value">
+      <include>
+        <context ref="string-value"/>
+        <context ref="color-value"/>
+        <context ref="number-value"/>
+        <context ref="unicode-range"/>
+      </include>
+    </context>
+
+
+    <!-- style properties -->
+
+    <context id="property-names" style-ref="property-name">
+      <prefix>\%{keyword-start}</prefix>
+      <suffix>\%{keyword-end}</suffix>
+      <keyword>background-color</keyword>
+      <keyword>border-radius</keyword>
+      <keyword>color</keyword>
+      <keyword>dash-style</keyword>
+      <keyword>padding</keyword>
+      <keyword>font-family</keyword>
+      <keyword>font-size</keyword>
+      <keyword>font-style</keyword>
+      <keyword>font-weight</keyword>
+      <keyword>justify-content</keyword>
+      <keyword>line-style</keyword>
+      <keyword>line-width</keyword>
+      <keyword>min-width</keyword>
+      <keyword>min-height</keyword>
+      <keyword>opacity</keyword>
+      <keyword>text-decoration</keyword>
+      <keyword>text-align</keyword>
+      <keyword>text-color</keyword>
+      <keyword>vertical-align</keyword>
+      <keyword>vertical-spacing</keyword>
+    </context>
+
+    <context id="property-values" style-ref="keyword">
+      <prefix>\%{keyword-start}</prefix>
+      <suffix>\%{keyword-end}</suffix>
+      <keyword>x-small</keyword>
+      <keyword>small</keyword>
+      <keyword>medium</keyword>
+      <keyword>large</keyword>
+      <keyword>x-large</keyword>
+      <keyword>normal</keyword>
+      <keyword>italic</keyword>
+      <keyword>bold</keyword>
+      <keyword>left</keyword>
+      <keyword>center</keyword>
+      <keyword>right</keyword>
+      <keyword>none</keyword>
+      <keyword>underline</keyword>
+      <keyword>top</keyword>
+      <keyword>middle</keyword>
+      <keyword>bottom</keyword>
+      <keyword>sloppy</keyword>
+      <keyword>transparent</keyword>
+    </context>
+
+    <context id="property-name">
+      <include>
+        <context ref="property-names"/>
+      </include>
+    </context>
+
+    <context id="property-value-keyword">
+      <include>
+        <context ref="property-values"/>
+      </include>
+    </context>
+
+
+    <!-- any assignable value -->
+
+    <context id="any-value">
+      <include>
+        <context ref="property-value-keyword"/>
+        <context ref="data-value"/>
+        <context ref="name-value"/>
+        <context ref="slash"/>
+        <context ref="comma"/> <!-- for lists -->
+      </include>
+    </context>
+
+    <!-- style block -->
+
+    <context id="declaration-property">
+      <include>
+        <context ref="property-name"/>
+      </include>
+    </context>
+
+    <context id="declaration-value-content">
+      <include>
+        <context ref="any-value"/>
+      </include>
+    </context>
+
+    <context id="declaration-value">
+      <start>:</start>
+      <end>\%{declaration-value-end}</end>
+      <include>
+        <context sub-pattern="0" where="start" style-ref="delimiter"/>
+        <context ref="comment"/>
+        <context ref="declaration-value-content"/>
+      </include>
+    </context>
+
+    <context id="declaration">
+      <include>
+        <context ref="declaration-property"/>
+        <context ref="declaration-value"/>
+        <context ref="semicolon"/>
+      </include>
+    </context>
+
+    <context id="style-block-content">
+      <include>
+        <context ref="declaration"/>
+      </include>
+    </context>
+
+    <context id="style-block">
+      <start>{</start>
+      <end>}</end>
+      <include>
+        <context sub-pattern="0" where="start" style-ref="block-delimiter"/>
+        <context sub-pattern="0" where="end" style-ref="block-delimiter"/>
+        <context ref="comment"/>
+        <context ref="style-block-content"/>
+      </include>
+    </context>
+
+    <context id="font-feature-value-declaration-name">
+      <include>
+        <context ref="name-value"/>
+      </include>
+    </context>
+
+    <context id="font-feature-value-declaration-value-content">
+      <include>
+        <context ref="positive-integer"/>
+      </include>
+    </context>
+
+    <context id="font-feature-value-declaration-value">
+      <start>:</start>
+      <end>\%{declaration-value-end}</end>
+      <include>
+        <context sub-pattern="0" where="start" style-ref="delimiter"/>
+        <context ref="comment"/>
+        <context ref="font-feature-value-declaration-value-content"/>
+      </include>
+    </context>
+
+    <!-- selectors -->
+
+    <!-- simple selectors -->
+
+    <context id="id-selector" style-ref="id-selector">
+      <match>#\%{identifier}</match>
+    </context>
+
+    <context id="class-selector" style-ref="class-selector">
+      <match>\.\%{identifier}</match>
+    </context>
+
+    <context id="type-selector" style-ref="type-selector">
+      <match extended="true">
+        \%{keyword-start} \%{identifier}
+      </match>
+    </context>
+
+    <context id="universal-selector" style-ref="universal-selector">
+      <match>\*</match>
+    </context>
+
+    <context id="attribute-selector-attribute-name" once-only="true" style-ref="attribute-selector-name">
+      <match extended="true">
+        \%{keyword-start} \%{identifier}
+      </match>
+    </context>
+
+    <context id="attribute-selector-operator" once-only="true" style-ref="attribute-selector-operator">
+      <match>[~|^$*]?=</match>
+    </context>
+
+    <context id="attribute-selector-content">
+      <include>
+        <context ref="attribute-selector-attribute-name"/>
+        <context ref="attribute-selector-operator"/>
+        <context ref="string-value"/>
+        <context ref="name-value"/>
+      </include>
+    </context>
+
+    <context id="attribute-selector">
+      <start>\[</start>
+      <end>]</end>
+      <include>
+        <context sub-pattern="0" where="start" style-ref="attribute-selector"/>
+        <context sub-pattern="0" where="end" style-ref="attribute-selector"/>
+        <context ref="comment"/>
+        <context ref="attribute-selector-content"/>
+      </include>
+    </context>
+
+    <context id="simple-selector">
+      <include>
+        <context ref="id-selector"/>
+        <context ref="class-selector"/>
+        <context ref="type-selector"/>
+        <context ref="universal-selector"/>
+        <context ref="attribute-selector"/>
+      </include>
+    </context>
+
+    <!-- combinators -->
+
+    <!-- technically, this should include the space character (descendant combinator) -->
+    <context id="combinator" style-ref="combinator">
+      <match>[&gt;+~]</match>
+    </context>
+
+    <!-- pseudo-elements -->
+
+    <context id="pseudo-element-names" end-parent="true" style-ref="pseudo-element">
+      <start extended="true">
+        \%{keyword-start}
+        (?: placeholder | selection )
+        \%{keyword-end}
+      </start>
+      <end>\%{def:always-match}</end>
+    </context>
+
+    <context id="pseudo-element-content">
+      <include>
+        <context ref="pseudo-element-names"/>
+      </include>
+    </context>
+
+    <context id="pseudo-element">
+      <start>::</start>
+      <end>\%{def:always-match}</end>
+      <include>
+        <context sub-pattern="0" where="start" style-ref="pseudo-selector-operator"/>
+        <context ref="comment"/>
+        <context ref="pseudo-element-content"/>
+      </include>
+    </context>
+
+    <!-- pseudo-classes -->
+
+    <context id="pseudo-class-names" end-parent="true" style-ref="pseudo-class">
+      <start extended="true">
+        \%{keyword-start}
+        (?:
+          active |
+          disabled |
+          drop |
+          focus |
+          hover
+        )
+        \%{keyword-end}
+      </start>
+      <end>\%{def:always-match}</end>
+    </context>
+
+    <context id="pseudo-function-highlighting">
+      <include>
+        <context ref="pseudo-element" style-ref="error"/>
+        <context ref="pseudo-class-pseudo-function-argument"/>
+      </include>
+    </context>
+
+    <context id="pseudo-function-highlighting-no-error">
+      <include>
+        <context ref="pseudo-element"/>
+        <context ref="pseudo-class"/>
+      </include>
+    </context>
+
+    <context id="pseudo-function" end-parent="true">
+      <start extended="true">
+        \%{keyword-start} (?: has | is | not ) \(
+      </start>
+      <end>\)</end>
+      <include>
+        <context sub-pattern="0" where="start" style-ref="pseudo-class"/>
+        <context sub-pattern="0" where="end" style-ref="pseudo-class"/>
+        <context ref="comment"/>
+        <context ref="pseudo-function-highlighting"/>
+        <context ref="simple-selector"/>
+        <context ref="combinator"/>
+        <context ref="pseudo-class"/>
+        <context ref="comma"/>
+      </include>
+    </context>
+
+    <context id="pseudo-class-content">
+      <include>
+        <context ref="pseudo-class-names"/>
+        <context ref="pseudo-function"/>
+      </include>
+    </context>
+
+    <context id="pseudo-class">
+      <start>:</start>
+      <end>\%{def:always-match}</end>
+      <include>
+        <context sub-pattern="0" where="start" style-ref="pseudo-selector-operator"/>
+        <context ref="comment"/>
+        <context ref="pseudo-class-content"/>
+      </include>
+    </context>
+
+    <context id="pseudo-class-pseudo-function-argument-content">
+      <include>
+        <context ref="pseudo-class-names"/>
+        <context ref="pseudo-function" style-ref="error"/>
+      </include>
+    </context>
+
+    <context id="pseudo-class-pseudo-function-argument">
+      <start>:</start>
+      <end>\%{def:always-match}</end>
+      <include>
+        <context sub-pattern="0" where="start" style-ref="pseudo-selector-operator"/>
+        <context ref="comment"/>
+        <context ref="pseudo-class-pseudo-function-argument-content"/>
+      </include>
+    </context>
+
+    <!-- all selectors -->
+
+    <context id="selector">
+      <include>
+        <context ref="simple-selector"/>
+        <context ref="combinator"/>
+        <context ref="pseudo-element"/>
+        <context ref="pseudo-class"/>
+        <context ref="comma"/>
+      </include>
+    </context>
+
+
+    <!-- main context -->
+
+    <context id="gaphorcss" class="no-spell-check">
+      <include>
+        <context ref="comment"/>
+        <context ref="selector"/>
+        <context ref="style-block"/>
+      </include>
+    </context>
+
+  </definitions>
+</language>
