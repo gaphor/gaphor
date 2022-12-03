@@ -1,3 +1,6 @@
+import pytest
+from gi.repository import Gtk
+
 from gaphor.diagram.tests.fixtures import find
 from gaphor.ui import APPLICATION_ID
 from gaphor.ui.greeter import Greeter
@@ -32,19 +35,21 @@ def test_greeter_with_recent_files(event_manager):
     recent_manager = RecentManagerStub(RecentInfoStub("file://path/to/foo.gaphor"))
     greeter = Greeter(None, event_manager, recent_manager)
 
-    greeter.recent_files()
+    greeter.open()
     widget = greeter.greeter
-    stack = find(widget, "stack")
 
-    assert stack.get_visible_child_name() == "recent-files"
+    recent_files = find(widget, "recent-files")
+
+    assert recent_files.get_visible()
 
 
+@pytest.mark.skipif(Gtk.get_major_version() == 3, reason="Works only for GTK4")
 def test_greeter_with_no_recent_files(event_manager):
     recent_manager = RecentManagerStub()
     greeter = Greeter(None, event_manager, recent_manager)
 
-    greeter.recent_files()
+    greeter.open()
     widget = greeter.greeter
-    stack = find(widget, "stack")
+    recent_files = find(widget, "recent-files")
 
-    assert stack.get_visible_child_name() == "recent-files"
+    assert not recent_files.get_visible()

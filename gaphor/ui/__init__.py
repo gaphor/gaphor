@@ -112,7 +112,7 @@ def run(args: list[str]) -> int:
             gtk_app.quit()
 
         try:
-            application = Application()
+            application = Application(gtk_app=gtk_app)
             apply_application_actions(application, gtk_app)
             macos_init(application)
             event_manager = application.get_service("event_manager")

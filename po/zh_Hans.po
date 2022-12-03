@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-11-27 16:18-0500\n"
+"POT-Creation-Date: 2022-12-03 16:14-0500\n"
 "PO-Revision-Date: 2022-08-26 08:19+0000\n"
 "Last-Translator: Hugel <qihu@nfschina.com>\n"
 "Language: zh_Hans\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
-#: gaphor/ui/greeter.py:29
+#: gaphor/ui/greeter.py:57
 msgid "C4 Model"
 msgstr "C4 模型"
 
@@ -101,7 +101,7 @@ msgstr "新建序列图"
 msgid "New State Machine Diagram"
 msgstr "新建状态图"
 
-#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:28
+#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:50
 msgid "RAAML"
 msgstr "RAAML"
 
@@ -283,7 +283,7 @@ msgstr "不安全控制行为"
 msgid "Relevant To"
 msgstr ""
 
-#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:27
+#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:43
 msgid "SysML"
 msgstr "SySML"
 
@@ -526,7 +526,7 @@ msgstr "验证"
 msgid "Containment"
 msgstr ""
 
-#: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:26
+#: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:36
 msgid "UML"
 msgstr "UML"
 
@@ -1507,7 +1507,7 @@ msgid "All XMI Files"
 msgstr ""
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
-#: gaphor/ui/mainwindow.py:239 gaphor/ui/mainwindow.ui:29
+#: gaphor/ui/mainwindow.py:234 gaphor/ui/mainwindow.ui:29
 #: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
 msgid "New model"
 msgstr "新建模型"
@@ -2045,25 +2045,25 @@ msgstr "数据类型"
 msgid "All Gaphor Models"
 msgstr ""
 
-#: gaphor/ui/appfilemanager.py:49
+#: gaphor/ui/appfilemanager.py:45
 msgid "Switch to {name}?"
 msgstr ""
 
-#: gaphor/ui/appfilemanager.py:50
+#: gaphor/ui/appfilemanager.py:46
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr ""
 
-#: gaphor/ui/appfilemanager.py:69
+#: gaphor/ui/appfilemanager.py:65
 msgid "Open Again"
 msgstr ""
 
-#: gaphor/ui/appfilemanager.py:70
+#: gaphor/ui/appfilemanager.py:66
 msgid "Switch"
 msgstr ""
 
-#: gaphor/ui/appfilemanager.py:93
+#: gaphor/ui/appfilemanager.py:89
 #, fuzzy
 msgid "Open a Model"
 msgstr "打开模型 …"
@@ -2104,54 +2104,54 @@ msgstr ""
 msgid "Undo"
 msgstr "撤销"
 
-#: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:90
+#: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:93
 #: gaphor/ui/help/shortcuts.ui:131
 msgid "Redo"
 msgstr "重做"
 
-#: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:106
+#: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:112
 #: gaphor/ui/help/shortcuts.ui:148
 msgid "Zoom In"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:118
+#: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:127
 #: gaphor/ui/help/shortcuts.ui:164
 msgid "Actual Size"
 msgstr "实际大小"
 
-#: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:130
+#: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:142
 #: gaphor/ui/help/shortcuts.ui:156
 msgid "Zoom Out"
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
-#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:187
-#: gaphor/ui/elementeditor.ui:198 gaphor/ui/help/shortcuts.ui:56
+#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:205
+#: gaphor/ui/elementeditor.ui:216 gaphor/ui/help/shortcuts.ui:56
 msgid "Preferences"
 msgstr "偏好设置"
 
-#: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:163
+#: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:181
 msgid "Editors"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:211
+#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:229
 msgid "Reset Tool Automatically"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:229
+#: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:247
 msgid "Remove Unused Elements"
 msgstr ""
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
-#: gaphor/ui/elementeditor.ui:231 gaphor/ui/elementeditor.ui:238
+#: gaphor/ui/elementeditor.ui:249 gaphor/ui/elementeditor.ui:256
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:246
+#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:264
 msgid "Style Sheet"
 msgstr ""
 
-#: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:275
+#: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:293
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
@@ -2264,32 +2264,72 @@ msgid "Discard"
 msgstr ""
 
 #: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
-#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:49
+#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:48
 msgid "Save"
 msgstr "保存"
 
-#: gaphor/ui/greeter.glade:102 gaphor/ui/greeter.ui:87
-msgid "Create New Model…"
+#: gaphor/ui/greeter.glade:55
+#, fuzzy
+msgid "Recently opened models"
+msgstr "最近打开的模型…"
+
+#: gaphor/ui/greeter.glade:76
+#, fuzzy
+msgid "Create a new model"
 msgstr "创建新模型 …"
 
-#: gaphor/ui/greeter.glade:109 gaphor/ui/greeter.ui:93
+#: gaphor/ui/greeter.glade:112
 #, fuzzy
 msgid "Open Other Model…"
 msgstr "打开模型 …"
 
-#: gaphor/ui/greeter.py:25
+#: gaphor/ui/greeter.py:29
 msgid "Generic"
 msgstr ""
 
-#: gaphor/ui/greeter.py:177
+#: gaphor/ui/greeter.py:30
 #, fuzzy
-msgid "Create a New Model"
-msgstr "创建新模型 …"
+msgid "An empty model"
+msgstr "新建模型"
 
-#: gaphor/ui/greeter.py:181
+#: gaphor/ui/greeter.py:37
+msgid "Unified Modeling Language template"
+msgstr ""
+
+#: gaphor/ui/greeter.py:44
+msgid "Systems Modeling Language template"
+msgstr ""
+
+#: gaphor/ui/greeter.py:51
+msgid "Risk Analysis and Assessment Modeling Language template"
+msgstr ""
+
+#: gaphor/ui/greeter.py:58
+msgid "Layered C4 Model template"
+msgstr ""
+
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:44
 #, fuzzy
-msgid "Open a Recent Model"
-msgstr "最近打开的模型…"
+msgid "Open Model…"
+msgstr "打开模型 …"
+
+#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:58
+msgid "Keyboard Shortcuts"
+msgstr "快捷键"
+
+#: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.glade:7
+#: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:59
+msgid "About Gaphor"
+msgstr "关于 Gaphor"
+
+#: gaphor/ui/greeter.ui:79
+msgid "Recently Opened"
+msgstr ""
+
+#: gaphor/ui/greeter.ui:84
+#, fuzzy
+msgid "Create New Model"
+msgstr "创建新模型 …"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
@@ -2307,50 +2347,45 @@ msgstr "开启应用菜单"
 msgid "Editor"
 msgstr "编辑器"
 
-#: gaphor/ui/help/shortcuts.ui:89 gaphor/ui/mainwindow.py:43
-msgid "Open a Model…"
-msgstr "打开模型 …"
-
-#: gaphor/ui/mainwindow.py:44
-#, fuzzy
-msgid "Recent Models…"
-msgstr "最近打开的模型…"
-
-#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:45
+#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:43
 msgid "New Model…"
 msgstr "新建模型 …"
 
-#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:50
+#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:49
 msgid "Save As…"
 msgstr "另存为…"
 
-#: gaphor/ui/mainwindow.py:51
+#: gaphor/ui/mainwindow.py:50
 msgid "Export"
 msgstr "导出"
 
-#: gaphor/ui/mainwindow.py:55
+#: gaphor/ui/mainwindow.py:54
 msgid "Tools"
 msgstr "工具"
 
-#: gaphor/ui/mainwindow.py:59
-msgid "Keyboard Shortcuts"
-msgstr "快捷键"
-
-#: gaphor/ui/help/about.glade:7 gaphor/ui/help/about.ui:10
-#: gaphor/ui/mainwindow.py:60
-msgid "About Gaphor"
-msgstr "关于 Gaphor"
-
-#: gaphor/ui/mainwindow.py:86
+#: gaphor/ui/mainwindow.py:85
 msgid "New Generic Diagram"
 msgstr "新建通用图形"
 
-#: gaphor/ui/mainwindow.py:241
+#: gaphor/ui/mainwindow.py:236
 msgid "edited"
 msgstr ""
 
-#: gaphor/ui/mainwindow.py:275
+#: gaphor/ui/mainwindow.py:270
 msgid "Profile: {name}"
+msgstr ""
+
+#: gaphor/ui/mainwindow.ui:48
+msgid "Open diagram menu"
+msgstr ""
+
+#: gaphor/ui/mainwindow.ui:55
+#, fuzzy
+msgid "Open application menu"
+msgstr "开启应用菜单"
+
+#: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:61
+msgid "Toggle property editor"
 msgstr ""
 
 #: gaphor/ui/namespace.py:48
@@ -2461,10 +2496,6 @@ msgstr "_重命名"
 msgid "Search"
 msgstr ""
 
-#: gaphor/ui/help/shortcuts.ui:40
-msgid "Toggle property editor"
-msgstr ""
-
 #: gaphor/ui/help/shortcuts.ui:48
 msgid "Close Diagram"
 msgstr ""
@@ -2476,6 +2507,10 @@ msgstr "退出 Gaphor"
 #: gaphor/ui/help/shortcuts.ui:75
 msgid "Files"
 msgstr "文件"
+
+#: gaphor/ui/help/shortcuts.ui:89
+msgid "Open a Model…"
+msgstr "打开模型 …"
 
 #: gaphor/ui/help/shortcuts.ui:117
 msgid "Undo and Redo"
@@ -2770,3 +2805,6 @@ msgstr ""
 
 #~ msgid "Close without saving changes"
 #~ msgstr ""
+
+#~ msgid "Open a Recent Model"
+#~ msgstr "最近打开的模型…"
