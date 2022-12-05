@@ -54,6 +54,7 @@
           <object class="GtkMenuButton">
             <property name="popover">hamburger</property>
             <property name="icon_name">open-menu-symbolic</property>
+            <property name="primary">1</property>
           </object>
         </child>
       </object>
