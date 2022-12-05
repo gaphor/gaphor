@@ -87,7 +87,7 @@ class ElementEditor(UIComponent, ActionProvider):
 
     @action(
         name="show-editors",
-        shortcut="<Primary>e",
+        shortcut="F9",
         state=lambda self: self.properties.get("show-editors", True),  # type: ignore[no-any-return]
     )
     def toggle_editor_visibility(self, active):
