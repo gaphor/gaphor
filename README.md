@@ -43,12 +43,12 @@ Gaphor is designed around the following principles:
 - Consistency: UML is a graphical modeling language, so all modeling is done in a diagram.
 - Workability: The application should not bother the user every time they do something non-UML-ish.
 
-Gaphor is a GUI application that is built on [GTK](https://gtk.org) and
-[Cairo](https://www.cairographics.org/).
-[PyGObject](https://pygobject.readthedocs.io/) and
-[PyCairo](https://pycairo.readthedocs.io/) provide Python bindings for those
-libraries. [Gaphas](https://github.com/gaphor/gaphas) provides the foundational
-diagramming functionality.
+Gaphor is a GUI application. It has a modern [GTK](https://gtk.org)-based interface and uses
+[Cairo](https://www.cairographics.org/) for consistent rendering.
+
+Gaphor is a library.
+You can use it from [scripts and Jupyter notebooks](https://gaphor.readthedocs.io/en/latest/scripting.html)
+and interact with models programmatically.
 
 ## 💾 Install
 
