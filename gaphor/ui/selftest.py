@@ -1,10 +1,11 @@
+import importlib.resources
 import logging
 import sys
 import time
 
 import cairo
 import gi
-from gi.repository import GLib, Gtk, Pango
+from gi.repository import GLib, Pango
 
 from gaphor.abc import Service
 from gaphor.application import Application, distribution
@@ -20,11 +21,15 @@ class Status:
         self.status = "in progress"
 
     def complete(self):
-        self.status = "complete"
+        self.status = "completed"
+
+    @property
+    def in_progress(self):
+        return self.status == "in progress"
 
     @property
     def completed(self):
-        return self.status == "complete"
+        return self.status == "completed"
 
     def __repr__(self):
         return f"{self.name}: {self.status}"
@@ -36,7 +41,11 @@ def test(func):
     def wrapper(self):
         status = Status(func.__name__)
         self.statuses.append(status)
-        return func(self, status)
+        try:
+            return func(self, status)
+        except BaseException:
+            log.exception("Test %s failed", func.__name__)
+            status.status = "failed"
 
     return wrapper
 
@@ -60,20 +69,25 @@ class SelfTest(Service):
         start = time.time()
 
         def callback():
-            if all(status.completed for status in self.statuses):
-                log.info(
-                    "All tests have been completed in %.1fs %s",
-                    time.time() - start,
-                    self.statuses,
-                )
-                gtk_app.quit()
-                return GLib.SOURCE_REMOVE
-            elif time.time() > start + timeout:
-                log.error("Not all tests have passed: %s", self.statuses)
+            if time.time() > start + timeout:
+                log.error("Tests timed out")
                 gtk_app.exit_code = 1
-                gtk_app.quit()
-                return GLib.SOURCE_REMOVE
-            return GLib.SOURCE_CONTINUE
+            elif any(status.in_progress for status in self.statuses):
+                return GLib.SOURCE_CONTINUE
+            elif all(status.completed for status in self.statuses):
+                log.info(
+                    "All tests have been completed in %.1fs",
+                    time.time() - start,
+                )
+            else:
+                log.error("Not all tests have passed")
+                gtk_app.exit_code = 1
+
+            for status in self.statuses:
+                log.info(status)
+
+            gtk_app.quit()
+            return GLib.SOURCE_REMOVE
 
         GLib.timeout_add(priority=GLib.PRIORITY_LOW, interval=100, function=callback)
 
@@ -81,12 +95,25 @@ class SelfTest(Service):
     def test_library_versions(self, status):
         log.info("Gaphor version:    %s", distribution().version)
         log.info("Python version:    %s", sys.version)
+
+        from gi.repository import Gtk
+
         log.info(
             "GTK version:       %d.%d.%d",
             Gtk.get_major_version(),
             Gtk.get_minor_version(),
             Gtk.get_micro_version(),
         )
+        if Gtk.get_major_version() != 3:
+            from gi.repository import Adw
+
+            log.info(
+                "Adwaita version:   %d.%d.%d",
+                Adw.get_major_version(),
+                Adw.get_minor_version(),
+                Adw.get_micro_version(),
+            )
+
         log.info("PyGObject version: %d.%d.%d", *gi.version_info)
         log.info("Pycairo version:   %s", cairo.version)
         log.info("Cairo version:     %s", cairo.cairo_version_string())
@@ -95,7 +122,10 @@ class SelfTest(Service):
 
     @test
     def test_new_session(self, status):
-        session = self.application.new_session()
+        with (
+            importlib.resources.files("gaphor") / "templates" / "uml.gaphor"
+        ).open() as f:
+            session = self.application.new_session(template=f)
 
         def check_new_session(session):
             main_window = session.get_service("main_window")
