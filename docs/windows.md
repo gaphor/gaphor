@@ -105,7 +105,7 @@ pipx install gvsbuild
 In the same PowerShell terminal, execute:
 
 ```PowerShell
-gvsbuild build --enable-gi --py-wheel gobject-introspection gtk3 pycairo pygobject gtksourceview4 adwaita-icon-theme hicolor-icon-theme
+gvsbuild build --enable-gi --py-wheel gobject-introspection gtk4 libadwaita pycairo pygobject gtksourceview5 adwaita-icon-theme hicolor-icon-theme
 ```
 Grab a coffee, the build will take a few minutes to complete.
 
