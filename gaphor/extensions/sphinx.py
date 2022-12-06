@@ -68,11 +68,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         self.env.note_dependency(model_file)
         model = load_model(Path(self.env.srcdir) / model_file)
 
-        outdir = (
-            (Path(self.env.app.doctreedir) / ".." / "gaphor")
-            .resolve()
-            .relative_to(self.env.srcdir)
-        )
+        outdir = (Path(self.env.app.doctreedir) / ".." / "gaphor").resolve()
         outdir.mkdir(exist_ok=True)
 
         diagram = next(
@@ -99,6 +95,9 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         save_pdf(outfile.with_suffix(".pdf"), diagram)
 
         # Image needs a relative path. Make our outfile path relative to the doc
+        outdir = outdir.relative_to(self.env.srcdir)
+        outfile = outdir / f"{diagram.id}"
+
         for _ in Path(self.env.docname).parts[:-1]:
             outfile = Path("..") / outfile
 
