@@ -10,6 +10,7 @@ from gaphas.item import NW
 from gaphas.matrix import Matrix
 from gaphas.segment import Segment
 
+import gaphor.UML.interactions
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.core.modeling import Diagram, Element, Presentation
@@ -370,3 +371,12 @@ def parse_bb(bb, height: float | None = None) -> Rect:
 
 def strip_quotes(s):
     return s.replace('"', "").replace("\\\n", "")
+
+
+# Do not auto-layout sequence diagrams
+_interaction_items = [i for i in dir(gaphor.UML.interactions) if i.endswith("Item")]
+for _item in _interaction_items:
+    as_pydot.register(getattr(gaphor.UML.interactions, _item))(lambda _: iter(()))
+
+del _interaction_items
+del _item
