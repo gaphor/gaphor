@@ -53,6 +53,7 @@
             <property name="popover">hamburger</property>
             <property name="icon_name">open-menu-symbolic</property>
             <property name="tooltip-text" translatable="true">Open application menu</property>
+            <property name="primary">1</property>
           </object>
         </child>
         <child type="end">
