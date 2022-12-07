@@ -960,6 +960,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "2old4it",
+      "name": "2old4it",
+      "avatar_url": "https://avatars.githubusercontent.com/u/76972837?v=4",
+      "profile": "https://github.com/2old4it",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
