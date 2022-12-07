@@ -35,7 +35,7 @@ else:
         )
 
 
-if Gtk.get_major_version != 3:
+if Gtk.get_major_version == 4:
 
     def new_shortcut_with_args(shortcut, name, *args):
         shortcut = Gtk.Shortcut.new(
