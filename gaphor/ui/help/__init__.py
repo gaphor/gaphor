@@ -3,6 +3,8 @@
 (help browser anyone?)
 """
 
+import sys
+
 from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider, Service
@@ -47,7 +49,12 @@ class HelpService(Service, ActionProvider):
     @action(name="app.shortcuts")
     def shortcuts(self):
         builder = Gtk.Builder()
-        builder.add_from_string(translated_ui_string("gaphor.ui.help", "shortcuts.ui"))
+        ui = translated_ui_string("gaphor.ui.help", "shortcuts.ui")
+        if Gtk.get_major_version() != 3:
+            modifier = "Meta" if sys.platform == "darwin" else "Control"
+            ui = ui.replace("&lt;Primary&gt;", f"&lt;{modifier}&gt;")
+
+        builder.add_from_string(ui)
 
         shortcuts = builder.get_object("shortcuts-gaphor")
         shortcuts.set_modal(True)
