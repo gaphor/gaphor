@@ -39,7 +39,7 @@ exclude = ["**/tests", "gaphor/conftest.py" ]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
-pycairo = "<1.23"
+pycairo = "^1.23"
 PyGObject = "^3.30"
 gaphas = "^3.1.0"
 generic = "^1.0.0"
