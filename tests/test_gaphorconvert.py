@@ -1,3 +1,5 @@
+import importlib
+
 import pytest
 
 from gaphor.plugins.diagramexport import gaphorconvert
@@ -16,8 +18,13 @@ def test_help_output(capsys):
     assert "--regex=regex" in captured.out
 
 
-def test_export_pdf(tmp_path):
-    gaphorconvert.main(["-v", "-d", str(tmp_path), "test-models/all-elements.gaphor"])
+@pytest.fixture
+def model():
+    return importlib.resources.files("test-models") / "all-elements.gaphor"
+
+
+def test_export_pdf(tmp_path, model):
+    gaphorconvert.main(["-v", "-d", str(tmp_path), str(model)])
 
     model_path = tmp_path / "New model"
 
@@ -25,10 +32,8 @@ def test_export_pdf(tmp_path):
     assert (model_path / "main.pdf").exists()
 
 
-def test_export_png(tmp_path):
-    gaphorconvert.main(
-        ["-v", "-f", "png", "-d", str(tmp_path), "test-models/all-elements.gaphor"]
-    )
+def test_export_png(tmp_path, model):
+    gaphorconvert.main(["-v", "-f", "png", "-d", str(tmp_path), str(model)])
 
     model_path = tmp_path / "New model"
 
@@ -36,10 +41,8 @@ def test_export_png(tmp_path):
     assert (model_path / "main.png").exists()
 
 
-def test_export_svg(tmp_path):
-    gaphorconvert.main(
-        ["-v", "-f", "svg", "-d", str(tmp_path), "test-models/all-elements.gaphor"]
-    )
+def test_export_svg(tmp_path, model):
+    gaphorconvert.main(["-v", "-f", "svg", "-d", str(tmp_path), str(model)])
 
     model_path = tmp_path / "New model"
 
