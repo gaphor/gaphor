@@ -70,26 +70,45 @@ choco install visualstudio2022-workload-vctools
 
 #### Install the Latest Python
 
-Download and install the latest version of Python:
+In Windows, The full installer contains all the Python components and is the
+best option for developers using Python for any kind of project.
+
+For more information on how to use the official installer, please see the
+[full installer instructions](https://docs.python.org/3/using/windows.html#windows-full).
+The default installation options should be fine for use with Gaphor.
+
+1. Install the latest Python version using the
+[official installer](https://www.python.org/downloads/windows/).
+
+2. Open a PowerShell terminal as a normal user and check the python version:
+
+   ```PowerShell
+   py -3.11 --version
+   ```
+
+#### Install Graphviz
+
+Graphviz is used by Gaphor for automatic diagram formatting.
 
 1. Install from Chocolately with administrator PowerShell:
 
    ```PowerShell
-   choco install python
+   choco install graphviz
    ```
 
-2. Restart your PowerShell terminal as a normal user and check  the python version:
+2. Restart your PowerShell terminal as a normal user and check that the dot
+   command is available:
 
    ```PowerShell
-   python --version
+   dot -?
    ```
 
 #### Install pipx
 
 From the regular user PowerShell terminal execute:
 ```PowerShell
-python -m pip install --user pipx
-python -m pipx ensurepath
+py -3.11 -m pip install --user pipx
+py -3.11 -m pipx ensurepath
 ```
 
 #### Install gvsbuild
@@ -119,7 +138,7 @@ cd gaphor
 ```
 
 Install Poetry
-```bash
+```PowerShell
 pipx install poetry
 poetry config virtualenvs.in-project true
 ```
@@ -139,6 +158,9 @@ $env:INCLUDE = $gtk_include + "\cairo;" + $gtk_include + "\glib-2.0;"
 $env:INCLUDE = $gtk_include + "\gobject-introspection-1.0;" + $env:INCLUDE
 $env:INCLUDE = $gtk_path + "\lib\glib-2.0\include;" + $gtk_include + ";" + $env:INCLUDE
 ```
+
+You can also edit your account's Environmental Variables to persist across
+PowerShell sessions.
 
 Launch Gaphor!
 ```PowerShell
