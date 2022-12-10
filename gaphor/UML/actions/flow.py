@@ -36,7 +36,6 @@ class ControlFlowItem(Named, LinePresentation):
                 ),
                 Text(text=lambda: self.subject.name or ""),
             ),
-            style={"dash-style": (9.0, 3.0)},
         )
 
         self.watch("subject[NamedElement].name")

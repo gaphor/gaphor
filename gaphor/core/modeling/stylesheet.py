@@ -40,6 +40,10 @@ SYSTEM_STYLE_SHEET = textwrap.dedent(
     interfacerealization[on_folded_interface = true] {
         dash-style: 0;
     }
+
+    controlflow {
+        dash-style: 9 3;
+    }
     """
 )
 
