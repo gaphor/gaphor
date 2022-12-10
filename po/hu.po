@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-12-03 16:14-0500\n"
-"PO-Revision-Date: 2022-11-29 00:40+0000\n"
+"PO-Revision-Date: 2022-12-11 02:49+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -2387,12 +2388,10 @@ msgid "Save"
 msgstr "Mentés"
 
 #: gaphor/ui/greeter.glade:55
-#, fuzzy
 msgid "Recently opened models"
-msgstr "Legutóbbi modellek…"
+msgstr "Legutóbb megnyitott modellek"
 
 #: gaphor/ui/greeter.glade:76
-#, fuzzy
 msgid "Create a new model"
 msgstr "Új modell létrehozása"
 
@@ -2405,28 +2404,28 @@ msgid "Generic"
 msgstr "Általános"
 
 #: gaphor/ui/greeter.py:30
-#, fuzzy
 msgid "An empty model"
-msgstr "Új modell"
+msgstr "Üres modell"
 
 #: gaphor/ui/greeter.py:37
 msgid "Unified Modeling Language template"
-msgstr ""
+msgstr "UML-sablon (Unified Modeling Language - Egységes modellezési nyelv)"
 
 #: gaphor/ui/greeter.py:44
 msgid "Systems Modeling Language template"
-msgstr ""
+msgstr "SML-sablon (Systems Modeling Language - Rendszermodellező nyelv)"
 
 #: gaphor/ui/greeter.py:51
 msgid "Risk Analysis and Assessment Modeling Language template"
 msgstr ""
+"RAAML-sablon (Risk Analysis and Assessment Modeling Language - "
+"Kockázatelemzési és -értékelési modellezési nyelv)"
 
 #: gaphor/ui/greeter.py:58
 msgid "Layered C4 Model template"
-msgstr ""
+msgstr "Réteges C4-es modell-sablon"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:44
-#, fuzzy
 msgid "Open Model…"
 msgstr "Modell megnyitása…"
 
@@ -2441,12 +2440,11 @@ msgstr "A Gaphor névjegye"
 
 #: gaphor/ui/greeter.ui:79
 msgid "Recently Opened"
-msgstr ""
+msgstr "Legutóbb megnyitott"
 
 #: gaphor/ui/greeter.ui:84
-#, fuzzy
 msgid "Create New Model"
-msgstr "Új modell létrehozása…"
+msgstr "Új modell létrehozása"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
@@ -2493,12 +2491,10 @@ msgid "Profile: {name}"
 msgstr "Profil: {name}"
 
 #: gaphor/ui/mainwindow.ui:48
-#, fuzzy
 msgid "Open diagram menu"
-msgstr "Összetevőábra"
+msgstr "Ábramenü megnyitása"
 
 #: gaphor/ui/mainwindow.ui:55
-#, fuzzy
 msgid "Open application menu"
 msgstr "Alkalmazásmenü megnyitása"
 
