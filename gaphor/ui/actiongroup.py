@@ -106,12 +106,11 @@ else:
             "<Primary>", "<Meta>" if sys.platform == "darwin" else "<Control>"
         )
 
-
-def _new_shortcut(shortcut, detailed_name):
-    return Gtk.Shortcut.new(
-        trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
-        action=Gtk.NamedAction.new(detailed_name),
-    )
+    def _new_shortcut(shortcut, detailed_name):
+        return Gtk.Shortcut.new(
+            trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
+            action=Gtk.NamedAction.new(detailed_name),
+        )
 
 
 def create_gio_action(act, provider, attrname):
