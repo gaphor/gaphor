@@ -33,6 +33,10 @@ jobs:
         uses: actions/setup-python@v4.3.1
         with:
           python-version: ${{ env.python_version }}
+      - name: Install sourcery-cli
+        run: pip install sourcery-cli
+      - name: Login to sourcery
+        run: sourcery login --token ${{ secrets.SOURCERY_TOKEN }}
       - name: Lint with Pre-commit
         uses: pre-commit/action@v3.0.0
       - name: Check translations
