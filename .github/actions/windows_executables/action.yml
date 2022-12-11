@@ -23,7 +23,9 @@ runs:
       run: poetry install --only main,packaging --no-interaction
       shell: bash
     - name: Windows specific overrides
-      run: poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\gtk\x64\release\*.whl)
+      run: |
+        poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\gtk\x64\release\PyGObject*.whl)
+        poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\gtk\x64\release\pycairo*.whl)
       shell: pwsh
     - name: Create Windows Installers
       env:
