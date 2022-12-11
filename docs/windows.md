@@ -124,7 +124,7 @@ pipx install gvsbuild
 In the same PowerShell terminal, execute:
 
 ```PowerShell
-gvsbuild build --enable-gi gobject-introspection gtk4 libadwaita gtksourceview5 adwaita-icon-theme hicolor-icon-theme
+gvsbuild build --enable-gi --py-wheel gobject-introspection gtk4 libadwaita gtksourceview5 pygobject pycairo adwaita-icon-theme hicolor-icon-theme
 ```
 Grab a coffee, the build will take a few minutes to complete.
 
@@ -143,24 +143,26 @@ pipx install poetry
 poetry config virtualenvs.in-project true
 ```
 
-Install Gaphor's other dependencies
-```PowerShell
-poetry install
-```
-
 Add GTK to your environmental variables:
 ```PowerShell
-$gtk_path = "C:\gtk-build\gtk\x64\release"
-$env:Path = $gtk_path + "\bin;" + $env:Path
-$env:LIB = $gtk_path + "\lib"
-$gtk_include = $gtk_path + "\include"
-$env:INCLUDE = $gtk_include + "\cairo;" + $gtk_include + "\glib-2.0;"
-$env:INCLUDE = $gtk_include + "\gobject-introspection-1.0;" + $env:INCLUDE
-$env:INCLUDE = $gtk_path + "\lib\glib-2.0\include;" + $gtk_include + ";" + $env:INCLUDE
+$env:Path = $env:Path + "C:\gtk-build\gtk\x64\release\bin;"
+$env:LIB = "C:\gtk-build\gtk\x64\release\lib"
+$env:INCLUDE = "C:\gtk-build\gtk\x64\release\include;C:\gtk-build\gtk\x64\release\include\cairo;C:\gtk-build\gtk\x64\release\include\glib-2.0;C:\gtk-build\gtk\x64\release\include\gobject-introspection-1.0;C:\gtk-build\gtk\x64\release\lib\glib-2.0\include;"
 ```
 
 You can also edit your account's Environmental Variables to persist across
 PowerShell sessions.
+
+Install Gaphor's dependencies
+```PowerShell
+poetry install
+```
+
+Reinstall PyGObject and pycairo using gvsbuild wheels
+```PowerShell
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\build\x64\release\pygobject\dist\PyGObject*.whl)
+poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\build\x64\release\pycairo\dist\pycairo*.whl)
+```
 
 Launch Gaphor!
 ```PowerShell
