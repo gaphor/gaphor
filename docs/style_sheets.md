@@ -326,6 +326,23 @@ association:not([memberEnd.navigability*=true]) {
 :alt: navigable association
 ```
 
+### Solid Control Flow lines
+
+In Gaphor, Control Flow lines follow the SysML styling: dashed.
+If you want, or need to strictly follow the official UML specifications,
+you can simply make those solid lines.
+
+```css
+controlflow {
+  dash-style: 0;
+}
+```
+
+```{diagram} controlflow
+:model: style-sheets
+:alt: control flow
+```
+
 ### Todo note highlight
 
 All comments beginning with the phrase "todo" can be highlighted in

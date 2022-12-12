@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.10.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.13.0">
 <Package id="9d588440-d7c2-11ea-b8c5-37ef9fca94cd">
 <name>
 <val>style-sheets</val>
@@ -13,6 +13,7 @@
 <ref refid="10701d48-d7c4-11ea-b8c5-37ef9fca94cd"/>
 <ref refid="b1cdfe7e-d7c6-11ea-b8c5-37ef9fca94cd"/>
 <ref refid="380f8d3c-fd67-11ec-9897-a87eeaeedf68"/>
+<ref refid="98156b60-78ce-11ed-825f-0456e5e540ed"/>
 </reflist>
 </ownedDiagram>
 <ownedType>
@@ -27,6 +28,7 @@
 <ref refid="b2db9e86-d7c4-11ea-b8c5-37ef9fca94cd"/>
 <ref refid="d165979e-d7c4-11ea-b8c5-37ef9fca94cd"/>
 <ref refid="d419722e-d7c6-11ea-b8c5-37ef9fca94cd"/>
+<ref refid="a28fadf8-78ce-11ed-825f-0456e5e540ed"/>
 </reflist>
 </ownedType>
 </Package>
@@ -54,7 +56,7 @@
 <val>131.0</val>
 </width>
 <height>
-<val>91.0</val>
+<val>100.0</val>
 </height>
 <diagram>
 <ref refid="9d588441-d7c2-11ea-b8c5-37ef9fca94cd"/>
@@ -102,7 +104,12 @@ association:not([memberEnd.navigability*=true]) {
 
 diagram[name=todo] comment[body^="TODO"] {
   background-color: skyblue;
-}</val>
+}
+
+diagram[name=controlflow] controlflow {
+  dash-style: 0;
+}
+</val>
 </styleSheet>
 </StyleSheet>
 <Class id="a3f548f6-d7c2-11ea-b8c5-37ef9fca94cd">
@@ -351,7 +358,7 @@ diagram[name=todo] comment[body^="TODO"] {
 <val>131.0</val>
 </width>
 <height>
-<val>91.0</val>
+<val>100.0</val>
 </height>
 <diagram>
 <ref refid="f2a6d64a-d7c2-11ea-b8c5-37ef9fca94cd"/>
@@ -478,7 +485,7 @@ diagram[name=todo] comment[body^="TODO"] {
 <val>100.0</val>
 </width>
 <height>
-<val>57.0</val>
+<val>60.0</val>
 </height>
 <diagram>
 <ref refid="ba2adb58-d7c3-11ea-b8c5-37ef9fca94cd"/>
@@ -498,7 +505,7 @@ diagram[name=todo] comment[body^="TODO"] {
 <val>100.0</val>
 </width>
 <height>
-<val>57.0</val>
+<val>60.0</val>
 </height>
 <diagram>
 <ref refid="ba2adb58-d7c3-11ea-b8c5-37ef9fca94cd"/>
@@ -521,7 +528,7 @@ diagram[name=todo] comment[body^="TODO"] {
 <val>(1.0, 0.0, 0.0, 1.0, 210.0, 84.0)</val>
 </matrix>
 <points>
-<val>[(106.0, 5.0), (-31.0, 28.5)]</val>
+<val>[(106.0, 5.0), (-31.0, 30.0)]</val>
 </points>
 <tail-connection>
 <ref refid="bddac6e7-d7c3-11ea-b8c5-37ef9fca94cd"/>
@@ -968,7 +975,7 @@ diagram[name=todo] comment[body^="TODO"] {
 </Comment>
 <CommentItem id="410d79c6-fd67-11ec-9897-a87eeaeedf68">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 420.0, 335.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 127.46485900878906, 30.988311767578125)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -998,7 +1005,7 @@ diagram[name=todo] comment[body^="TODO"] {
 </Comment>
 <CommentItem id="5118c9d8-fd67-11ec-9897-a87eeaeedf68">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 420.0, 419.0)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 127.46485900878906, 114.98831176757812)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -1016,4 +1023,156 @@ diagram[name=todo] comment[body^="TODO"] {
 <ref refid="5118c2e4-fd67-11ec-9897-a87eeaeedf68"/>
 </subject>
 </CommentItem>
+<Diagram id="98156b60-78ce-11ed-825f-0456e5e540ed">
+<diagramType>
+<val></val>
+</diagramType>
+<element>
+<ref refid="9d588440-d7c2-11ea-b8c5-37ef9fca94cd"/>
+</element>
+<name>
+<val>controlflow</val>
+</name>
+<ownedPresentation>
+<reflist>
+<ref refid="a28ee760-78ce-11ed-825f-0456e5e540ed"/>
+<ref refid="a6b1d2da-78ce-11ed-825f-0456e5e540ed"/>
+<ref refid="ac9329e2-78ce-11ed-825f-0456e5e540ed"/>
+</reflist>
+</ownedPresentation>
+</Diagram>
+<Action id="a28e8cf2-78ce-11ed-825f-0456e5e540ed">
+<activity>
+<ref refid="a28fadf8-78ce-11ed-825f-0456e5e540ed"/>
+</activity>
+<name>
+<val>From</val>
+</name>
+<outgoing>
+<reflist>
+<ref refid="ad76aadc-78ce-11ed-825f-0456e5e540ed"/>
+</reflist>
+</outgoing>
+<presentation>
+<reflist>
+<ref refid="a28ee760-78ce-11ed-825f-0456e5e540ed"/>
+</reflist>
+</presentation>
+</Action>
+<ActionItem id="a28ee760-78ce-11ed-825f-0456e5e540ed">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 122.00000762939453, 173.15623474121094)</val>
+</matrix>
+<top-left>
+<val>(0.0, -9.792938232421875)</val>
+</top-left>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>39.792938232421875</val>
+</height>
+<diagram>
+<ref refid="98156b60-78ce-11ed-825f-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="a28e8cf2-78ce-11ed-825f-0456e5e540ed"/>
+</subject>
+</ActionItem>
+<Activity id="a28fadf8-78ce-11ed-825f-0456e5e540ed">
+<edge>
+<reflist>
+<ref refid="ad76aadc-78ce-11ed-825f-0456e5e540ed"/>
+</reflist>
+</edge>
+<name>
+<val>Activity</val>
+</name>
+<node>
+<reflist>
+<ref refid="a28e8cf2-78ce-11ed-825f-0456e5e540ed"/>
+<ref refid="a6b17eca-78ce-11ed-825f-0456e5e540ed"/>
+</reflist>
+</node>
+<package>
+<ref refid="9d588440-d7c2-11ea-b8c5-37ef9fca94cd"/>
+</package>
+</Activity>
+<Action id="a6b17eca-78ce-11ed-825f-0456e5e540ed">
+<activity>
+<ref refid="a28fadf8-78ce-11ed-825f-0456e5e540ed"/>
+</activity>
+<incoming>
+<reflist>
+<ref refid="ad76aadc-78ce-11ed-825f-0456e5e540ed"/>
+</reflist>
+</incoming>
+<name>
+<val>To</val>
+</name>
+<presentation>
+<reflist>
+<ref refid="a6b1d2da-78ce-11ed-825f-0456e5e540ed"/>
+</reflist>
+</presentation>
+</Action>
+<ActionItem id="a6b1d2da-78ce-11ed-825f-0456e5e540ed">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 336.4921875, 173.15623474121094)</val>
+</matrix>
+<top-left>
+<val>(0.0, -9.792938232421875)</val>
+</top-left>
+<width>
+<val>100.0</val>
+</width>
+<height>
+<val>39.792938232421875</val>
+</height>
+<diagram>
+<ref refid="98156b60-78ce-11ed-825f-0456e5e540ed"/>
+</diagram>
+<subject>
+<ref refid="a6b17eca-78ce-11ed-825f-0456e5e540ed"/>
+</subject>
+</ActionItem>
+<ControlFlowItem id="ac9329e2-78ce-11ed-825f-0456e5e540ed">
+<diagram>
+<ref refid="98156b60-78ce-11ed-825f-0456e5e540ed"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="ad76aadc-78ce-11ed-825f-0456e5e540ed"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 201.76951599121094, 192.86326599121094)</val>
+</matrix>
+<points>
+<val>[(20.230491638183594, -8.14453125), (134.72267150878906, -8.761661153936132)]</val>
+</points>
+<head-connection>
+<ref refid="a28ee760-78ce-11ed-825f-0456e5e540ed"/>
+</head-connection>
+<tail-connection>
+<ref refid="a6b1d2da-78ce-11ed-825f-0456e5e540ed"/>
+</tail-connection>
+</ControlFlowItem>
+<ControlFlow id="ad76aadc-78ce-11ed-825f-0456e5e540ed">
+<activity>
+<ref refid="a28fadf8-78ce-11ed-825f-0456e5e540ed"/>
+</activity>
+<presentation>
+<reflist>
+<ref refid="ac9329e2-78ce-11ed-825f-0456e5e540ed"/>
+</reflist>
+</presentation>
+<source>
+<ref refid="a28e8cf2-78ce-11ed-825f-0456e5e540ed"/>
+</source>
+<target>
+<ref refid="a6b17eca-78ce-11ed-825f-0456e5e540ed"/>
+</target>
+</ControlFlow>
 </gaphor>
