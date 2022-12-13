@@ -26,7 +26,7 @@ jobs:
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3.2.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
@@ -44,7 +44,7 @@ jobs:
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3.2.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
@@ -97,7 +97,7 @@ jobs:
     outputs:
       appimage: Gaphor-${{ steps.setup_and_test.outputs.version }}-x86_64.AppImage
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3.2.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
@@ -147,7 +147,7 @@ jobs:
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
       GAPHOR_USE_GTK: 3
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3.2.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
@@ -212,7 +212,7 @@ jobs:
       LDFLAGS: -L/usr/local/opt/python@${python_version}/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3.2.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
@@ -306,7 +306,7 @@ jobs:
           Write-Output "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $env:GITHUB_ENV
           Write-Output "C:\gtk-build\gtk\x64\release\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3.2.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
