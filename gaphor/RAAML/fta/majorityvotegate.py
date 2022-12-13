@@ -2,7 +2,6 @@
 
 from math import pi
 
-import cairo
 from gaphas.geometry import Rectangle
 
 from gaphor.core import gettext
@@ -91,7 +90,6 @@ def draw_majority_vote_gate(box, context: DrawContext, bounding_box: Rectangle):
     cr.restore()
 
     # Draw "m"
-    cr.select_font_face("Sans", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
     text = "m"
     if bounding_box.height > 3 * bounding_box.width:
         cr.set_font_size(32 * bounding_box.width / DEFAULT_WIDTH)
