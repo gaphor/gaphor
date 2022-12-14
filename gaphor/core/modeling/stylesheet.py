@@ -12,7 +12,6 @@ SYSTEM_STYLE_SHEET = textwrap.dedent(
     * {
      background-color: transparent;
      color: black;
-     font-family: sans;
      font-size: 14;
      line-width: 2;
      padding: 0;
@@ -49,13 +48,6 @@ SYSTEM_STYLE_SHEET = textwrap.dedent(
 
 DEFAULT_STYLE_SHEET = textwrap.dedent(
     """\
-    * {
-     background-color: transparent;
-     color: black;
-     font-family: sans;
-     font-size: 14;
-    }
-
     diagram {
      /* line-style: sloppy 0.3; */
     }

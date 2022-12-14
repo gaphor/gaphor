@@ -7,6 +7,8 @@ from gi.repository import Pango, PangoCairo
 
 from gaphor.core.styling import FontStyle, FontWeight, Style, TextAlign, TextDecoration
 
+SYSTEM_FONT = "sans"
+
 
 class Layout:
     def __init__(
@@ -45,7 +47,7 @@ class Layout:
             self.set_alignment(text_align)
 
     def set_font(self, font: Style) -> None:
-        font_family = font.get("font-family")
+        font_family = font.get("font-family", SYSTEM_FONT)
         font_size = font.get("font-size")
         font_weight = font.get("font-weight")
         font_style = font.get("font-style")
