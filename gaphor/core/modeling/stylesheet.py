@@ -60,14 +60,25 @@ class StyleSheet(Element):
 
     def __init__(self, id=None, model=None):
         super().__init__(id, model)
-
+        self._system_font_family = "sans"
         self.compile_style_sheet()
 
     styleSheet: attribute[str] = attribute("styleSheet", str, DEFAULT_STYLE_SHEET)
 
+    @property
+    def system_font_family(self) -> str:
+        return self._system_font_family
+
+    @system_font_family.setter
+    def system_font_family(self, font_family: str):
+        self._system_font_family = font_family
+        self.compile_style_sheet()
+
     def compile_style_sheet(self) -> None:
         self._compiled_style_sheet = CompiledStyleSheet(
-            SYSTEM_STYLE_SHEET, self.styleSheet
+            SYSTEM_STYLE_SHEET,
+            f"* {{ font-family: {self._system_font_family} }}",
+            self.styleSheet,
         )
 
     def match(self, node: StyleNode) -> Style:
