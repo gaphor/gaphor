@@ -11036,25 +11036,7 @@ otherwise MRO can not be resolved.</val>
 <val>required</val>
 </name>
 </Property>
-<StyleSheet id="7b071a10-ec8e-11ea-96dc-bf74f1f80424">
-<styleSheet>
-<val>* {
- background-color: transparent;
- color: black;
- font-family: sans;
- font-size: 14;
- highlight-color: rgba(0, 0, 255, 0.4);
- line-width: 2;
- padding: 0;
-}
-
-diagram {
- line-style: normal;
- /* line-style: sloppy 0.3; */
-}
-</val>
-</styleSheet>
-</StyleSheet>
+<StyleSheet id="7b071a10-ec8e-11ea-96dc-bf74f1f80424"/>
 <Extension id="9345730a-ed52-11ea-96dc-bf74f1f80424">
 <memberEnd>
 <reflist>
