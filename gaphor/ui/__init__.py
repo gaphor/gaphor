@@ -66,11 +66,11 @@ def main(argv=sys.argv) -> int:
                 "gtk-application-prefer-dark-theme", darkdetect.isDark()
             )
         else:
-            if darkdetect.isDark():
-                color_scheme = Adw.ColorScheme.PREFER_DARK
-            else:
-                color_scheme = Adw.ColorScheme.PREFER_LIGHT
-            Adw.StyleManager.get_default().set_color_scheme(color_scheme)
+            Adw.StyleManager.get_default().set_color_scheme(
+                Adw.ColorScheme.PREFER_DARK
+                if darkdetect.isDark()
+                else Adw.ColorScheme.PREFER_LIGHT
+            )
 
     if has_option("-p", "--profiler"):
 
