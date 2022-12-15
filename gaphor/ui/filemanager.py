@@ -125,7 +125,7 @@ class FileManager(Service, ActionProvider):
             status_window = StatusWindow(
                 gettext("Loading…"),
                 gettext("Loading model from {filename}").format(filename=filename),
-                parent=self.main_window.window if self.main_window else None,
+                parent=self.parent_window,
                 queue=queue,
             )
 
@@ -163,6 +163,7 @@ class FileManager(Service, ActionProvider):
                     secondary_message=gettext(
                         "It looks like this model file contains a merge conflict."
                     ),
+                    window=self.parent_window,
                     close=lambda: self.event_manager.handle(SessionShutdown(self)),
                 )
                 # For now load the default model until we allow users to resolve the merge conflict.
@@ -176,7 +177,7 @@ class FileManager(Service, ActionProvider):
                     secondary_message=gettext(
                         "This file does not contain a valid Gaphor model."
                     ),
-                    window=self.main_window.window,
+                    window=self.parent_window,
                     close=lambda: self.event_manager.handle(SessionShutdown(self)),
                 )
             finally:
@@ -209,12 +210,11 @@ class FileManager(Service, ActionProvider):
         if not filename or (filename.exists() and not filename.is_file()):
             return
 
-        main_window = self.main_window
         queue: Queue[int] = Queue()
         status_window = StatusWindow(
             gettext("Saving…"),
             gettext("Saving model to {filename}").format(filename=filename),
-            parent=main_window.window if main_window else None,
+            parent=self.parent_window,
             queue=queue,
         )
 
@@ -234,7 +234,7 @@ class FileManager(Service, ActionProvider):
                         filename=filename
                     ),
                     secondary_message=error_message(e),
-                    window=main_window.window if main_window else None,
+                    window=self.parent_window,
                 )
                 raise
             finally:
@@ -244,6 +244,10 @@ class FileManager(Service, ActionProvider):
 
         for _ in async_saver():
             pass
+
+    @property
+    def parent_window(self):
+        return self.main_window.window if self.main_window else None
 
     @action(name="file-save", shortcut="<Primary>s")
     def action_save(self):
@@ -269,7 +273,7 @@ class FileManager(Service, ActionProvider):
         save_file_dialog(
             gettext("Save Gaphor Model As"),
             self.save,
-            parent=self.main_window.window,
+            parent=self.parent_window,
             filename=self.filename,
             extension=".gaphor",
             filters=GAPHOR_FILTER,
@@ -307,7 +311,7 @@ class FileManager(Service, ActionProvider):
                         lambda filename: self.save(
                             filename, on_save_done=confirm_shutdown
                         ),
-                        parent=self.main_window.window,
+                        parent=self.parent_window,
                         filename=self.filename,
                         extension=".gaphor",
                         filters=GAPHOR_FILTER,
@@ -317,7 +321,7 @@ class FileManager(Service, ActionProvider):
                 confirm_shutdown()
 
         if self.main_window.model_changed:
-            save_changes_before_closing_dialog(self.main_window.window, response)
+            save_changes_before_closing_dialog(self.parent_window, response)
         else:
             confirm_shutdown()
 
