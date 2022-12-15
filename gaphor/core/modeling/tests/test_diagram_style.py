@@ -3,12 +3,7 @@ import pytest
 
 from gaphor.core.eventmanager import EventManager
 from gaphor.core.modeling import ElementFactory, Presentation, StyleSheet
-from gaphor.core.modeling.diagram import (
-    FALLBACK_STYLE,
-    Diagram,
-    StyledDiagram,
-    StyledItem,
-)
+from gaphor.core.modeling.diagram import Diagram, StyledDiagram, StyledItem
 
 
 @pytest.fixture
@@ -56,18 +51,4 @@ def test_diagram_has_no_parent(diagram):
 def test_style_sheet_has_default_style():
     style_sheet = StyleSheet()
 
-    assert "* {" in style_sheet.styleSheet
-
-
-def test_system_style_sheet_covers_fallback_styles(diagram):
-    style_sheet = StyleSheet()
-    style_sheet.styleSheet = ""
-    style_sheet.compile_style_sheet()
-
-    item = diagram.create(DemoItem)
-    node = StyledItem(item)
-
-    style = style_sheet.match(node)
-
-    for prop, value in FALLBACK_STYLE.items():
-        assert style[prop] == value
+    assert "diagram {" in style_sheet.styleSheet

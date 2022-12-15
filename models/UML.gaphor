@@ -51418,21 +51418,7 @@ Fig. 9.9</val>
 </Generalization>
 <StyleSheet id="a89690ce-e0a8-11ea-b7ab-f5b4c130f24e">
 <styleSheet>
-<val>* {
- background-color: transparent;
- color: black;
- font-family: sans;
- font-size: 14;
- highlight-color: rgba(0, 0, 255, 0.4);
- line-width: 2;
- padding: 0;
-}
-
-diagram {
- line-style: normal;
- /* line-style: sloppy 0.3; */
-}
-
+<val>
 :not([subject], :is(line, box, ellipse, commentline)) {
   color: firebrick;
 }

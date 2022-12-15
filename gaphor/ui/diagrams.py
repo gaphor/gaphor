@@ -7,7 +7,13 @@ from gi.repository import Gio, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import action, event_handler
-from gaphor.core.modeling import AttributeUpdated, Diagram, ModelFlushed, ModelReady
+from gaphor.core.modeling import (
+    AttributeUpdated,
+    Diagram,
+    ModelFlushed,
+    ModelReady,
+    StyleSheet,
+)
 from gaphor.diagram.drop import drop
 from gaphor.event import ActionEnabled
 from gaphor.transaction import Transaction
@@ -324,6 +330,12 @@ class Diagrams(UIComponent, ActionProvider):
     @event_handler(ModelReady)
     def _on_model_ready(self, event=None):
         """Open the toplevel element and load toplevel diagrams."""
+
+        if style_sheet := next(self.element_factory.select(StyleSheet), None):
+            style_sheet.system_font_family = (
+                Gtk.Settings.get_default().props.gtk_font_name.rsplit(" ", 1)[0]
+            )
+
         diagram_ids = self.properties.get("opened-diagrams", [])
         current_diagram_id = self.properties.get("current-diagram", None)
 
