@@ -17,11 +17,27 @@
             <property name="orientation">vertical</property>
             <property name="valign">center</property>
             <child>
-              <object class="GtkLabel" id="title">
-                <property name="label">Gaphor</property>
-                <style>
-                  <class name="title"/>
-                </style>
+              <object class="GtkCenterBox">
+                <property name="hexpand">true</property>
+                <child type="start">
+                  <object class="GtkLabel" id="modified">
+                    <property name="halign">end</property>
+                    <property name="hexpand">true</property>
+                    <property name="label">•</property>
+                    <property name="margin-end">6</property>
+                    <property name="visible">false</property>
+                  </object>
+                </child>
+                <child type="center">
+                  <object class="GtkLabel" id="title">
+                    <property name="label">Gaphor</property>
+                    <property name="ellipsize">end</property>
+                    <property name="width-chars">3</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                </child>
               </object>
             </child>
             <child>

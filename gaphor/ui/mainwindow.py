@@ -124,6 +124,7 @@ class MainWindow(Service, ActionProvider):
         self.window: Gtk.Window = None
         self.action_group: Gio.ActionGroup = None
         self.title: Gtk.Label = None
+        self.modified: Gtk.Label = None
         self.subtitle: Gtk.Label = None
         self.filename: Path | None = None
         self.model_changed = False
@@ -176,6 +177,8 @@ class MainWindow(Service, ActionProvider):
         )
 
         self.title = builder.get_object("title")
+        if Gtk.get_major_version() != 3:
+            self.modified = builder.get_object("modified")
         self.subtitle = builder.get_object("subtitle")
         self.set_title()
 
@@ -232,8 +235,13 @@ class MainWindow(Service, ActionProvider):
         else:
             title = "Gaphor"
             subtitle = gettext("New model")
-        if self.model_changed:
-            title += " [" + gettext("edited") + "]"
+
+        if Gtk.get_major_version() == 3:
+            if self.model_changed:
+                title += " [" + gettext("edited") + "]"
+        else:
+            self.modified.set_visible(self.model_changed)
+
         self.title.set_text(title)
         self.subtitle.set_text(subtitle)
         self.window.set_title(title)
