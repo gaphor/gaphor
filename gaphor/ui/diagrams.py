@@ -69,6 +69,8 @@ class Diagrams(UIComponent, ActionProvider):
             self._notebook = Adw.TabView()
             self._notebook.props.vexpand = True
             self._bar = Adw.TabBar()
+            self._bar.set_autohide(False)
+            self._bar.set_expand_tabs(False)
             self._bar.set_view(self._notebook)
             self._box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
             self._box.append(self._bar)
