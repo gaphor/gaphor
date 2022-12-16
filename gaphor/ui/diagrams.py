@@ -3,7 +3,7 @@ from __future__ import annotations
 import logging
 
 from generic.event import Event
-from gi.repository import Gio, Gtk
+from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.core import action, event_handler
@@ -31,8 +31,6 @@ if Gtk.get_major_version() != 3:
     from gi.repository import Adw
 
 log = logging.getLogger(__name__)
-
-DIAGRAM_ICON = Gio.ThemedIcon.new("gaphor-diagram-symbolic")
 
 
 class Diagrams(UIComponent, ActionProvider):
@@ -194,7 +192,6 @@ class Diagrams(UIComponent, ActionProvider):
         else:
             page = self._notebook.append(widget)
             page.set_title(title or "")
-            page.set_icon(DIAGRAM_ICON)
             self._notebook.set_selected_page(page)
 
         view = widget.diagram_page.view
