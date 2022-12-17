@@ -2471,4 +2471,4 @@ docs = ["sphinx", "sphinx-rtd-theme", "sphinx-copybutton", "myst-nb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "c97d07234fd69d61ffd3cb1980186bcd9770e60890613a2a3e067e76d8fb7f66"
+content-hash = "e007b6ebe22cf583a78729c67a121d0a1f6c53529b1455aa444de3554049b739"
