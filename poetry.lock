@@ -122,7 +122,6 @@ optional = false
 python-versions = "*"
 files = [
     {file = "better_exceptions-0.3.3-py3-none-any.whl", hash = "sha256:9c70b1c61d5a179b84cd2c9d62c3324b667d74286207343645ed4306fdaad976"},
-    {file = "better_exceptions-0.3.3-py3.8.egg", hash = "sha256:bf111d0c9994ac1123f29c24907362bed2320a86809c85f0d858396000667ce2"},
     {file = "better_exceptions-0.3.3.tar.gz", hash = "sha256:e4e6bc18444d5f04e6e894b10381e5e921d3d544240418162c7db57e9eb3453b"},
 ]
 
@@ -1430,23 +1429,23 @@ files = [
 
 [[package]]
 name = "pycairo"
-version = "1.23.0"
+version = "1.22.0"
 description = "Python interface for cairo"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pycairo-1.23.0-cp310-cp310-win32.whl", hash = "sha256:564601e5f528531c6caec1c0177c3d0709081e1a2a5cccc13561f715080ae535"},
-    {file = "pycairo-1.23.0-cp310-cp310-win_amd64.whl", hash = "sha256:e7cde633986435d87a86b6118b7b6109c384266fd719ef959883e2729f6eafae"},
-    {file = "pycairo-1.23.0-cp311-cp311-win32.whl", hash = "sha256:3a71f758e461180d241e62ef52e85499c843bd2660fd6d87cec99c9833792bfa"},
-    {file = "pycairo-1.23.0-cp311-cp311-win_amd64.whl", hash = "sha256:2dec5378133778961993fb59d66df16070e03f4d491b67eb695ca9ad7a696008"},
-    {file = "pycairo-1.23.0-cp37-cp37m-win32.whl", hash = "sha256:d6bacff15d688ed135b4567965a4b664d9fb8de7417a7865bb138ad612043c9f"},
-    {file = "pycairo-1.23.0-cp37-cp37m-win_amd64.whl", hash = "sha256:ec305fc7f2f0299df78aadec0eaf6eb9accb90eda242b5d3492544d3f2b28027"},
-    {file = "pycairo-1.23.0-cp38-cp38-win32.whl", hash = "sha256:1a6d8e0f353062ad92954784e33dbbaf66c880c9c30e947996c542ed9748aaaf"},
-    {file = "pycairo-1.23.0-cp38-cp38-win_amd64.whl", hash = "sha256:82e335774a17870bc038e0c2fb106c1e5e7ad0c764662023886dfcfce5bb5a52"},
-    {file = "pycairo-1.23.0-cp39-cp39-win32.whl", hash = "sha256:a4b1f525bbdf637c40f4d91378de36c01ec2b7f8ecc585b700a079b9ff83298e"},
-    {file = "pycairo-1.23.0-cp39-cp39-win_amd64.whl", hash = "sha256:87efd62a7b7afad9a0a420f05b6008742a6cfc59077697be65afe8dc73ae15ad"},
-    {file = "pycairo-1.23.0.tar.gz", hash = "sha256:9b61ac818723adc04367301317eb2e814a83522f07bbd1f409af0dada463c44c"},
+    {file = "pycairo-1.22.0-cp310-cp310-win32.whl", hash = "sha256:5a62cf1d2c6339028709a600d83c0c24111feedeef3cf977bca333fbb94a79c8"},
+    {file = "pycairo-1.22.0-cp310-cp310-win_amd64.whl", hash = "sha256:62ce5e8c97eeee70170ba9a74845a0ded4bde9b7f1701d88957cbadf8cb1ccd6"},
+    {file = "pycairo-1.22.0-cp311-cp311-win32.whl", hash = "sha256:356c9fc665e8522f497b6cbe026ad8decacbb04c93e13fd5d145956433f3d471"},
+    {file = "pycairo-1.22.0-cp311-cp311-win_amd64.whl", hash = "sha256:b85807ec65a8b7966aca7aa41c39016b72515d6401a874a4b52c314471b31865"},
+    {file = "pycairo-1.22.0-cp37-cp37m-win32.whl", hash = "sha256:9fbe26b3fbe85fde063070e543b4a5f3609569ca8f79680867cecb837d5be29c"},
+    {file = "pycairo-1.22.0-cp37-cp37m-win_amd64.whl", hash = "sha256:00c8a6b92c5075ee3be7ea1d33f676d259f11f92cad7e37077dd193437c8c27c"},
+    {file = "pycairo-1.22.0-cp38-cp38-win32.whl", hash = "sha256:47aed13e950345c8248f77c8a51bff52188bef7afd3d5169584e0eddc21ba341"},
+    {file = "pycairo-1.22.0-cp38-cp38-win_amd64.whl", hash = "sha256:e81189414c11340134bffa6dcb06a378976cb87a6742f39aaefc79cb27612250"},
+    {file = "pycairo-1.22.0-cp39-cp39-win32.whl", hash = "sha256:e31a5b70664c425f4d1b71ba8aaf259920de6937a9490132ffabadad2a89764f"},
+    {file = "pycairo-1.22.0-cp39-cp39-win_amd64.whl", hash = "sha256:007ae728c56b9a0962d8c5513ae967a4fceff03e022940383c20f4f3d4c48dbe"},
+    {file = "pycairo-1.22.0.tar.gz", hash = "sha256:b34517abdf619d4c7f0274f012b398d9b03bab7adc3efd2912bf36be3f911f3f"},
 ]
 
 [[package]]
@@ -1788,6 +1787,13 @@ files = [
     {file = "PyYAML-6.0-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:f84fbc98b019fef2ee9a1cb3ce93e3187a6df0b2538a651bfb890254ba9f90b5"},
     {file = "PyYAML-6.0-cp310-cp310-win32.whl", hash = "sha256:2cd5df3de48857ed0544b34e2d40e9fac445930039f3cfe4bcc592a1f836d513"},
     {file = "PyYAML-6.0-cp310-cp310-win_amd64.whl", hash = "sha256:daf496c58a8c52083df09b80c860005194014c3698698d1a57cbcfa182142a3a"},
+    {file = "PyYAML-6.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:d4b0ba9512519522b118090257be113b9468d804b19d63c71dbcf4a48fa32358"},
+    {file = "PyYAML-6.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:81957921f441d50af23654aa6c5e5eaf9b06aba7f0a19c18a538dc7ef291c5a1"},
+    {file = "PyYAML-6.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:afa17f5bc4d1b10afd4466fd3a44dc0e245382deca5b3c353d8b757f9e3ecb8d"},
+    {file = "PyYAML-6.0-cp311-cp311-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:dbad0e9d368bb989f4515da330b88a057617d16b6a8245084f1b05400f24609f"},
+    {file = "PyYAML-6.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:432557aa2c09802be39460360ddffd48156e30721f5e8d917f01d31694216782"},
+    {file = "PyYAML-6.0-cp311-cp311-win32.whl", hash = "sha256:bfaef573a63ba8923503d27530362590ff4f576c626d86a9fed95822a8255fd7"},
+    {file = "PyYAML-6.0-cp311-cp311-win_amd64.whl", hash = "sha256:01b45c0191e6d66c470b6cf1b9531a771a83c1c4208272ead47a3ae4f2f603bf"},
     {file = "PyYAML-6.0-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:897b80890765f037df3403d22bab41627ca8811ae55e9a722fd0392850ec4d86"},
     {file = "PyYAML-6.0-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:50602afada6d6cbfad699b0c7bb50d5ccffa7e46a3d738092afddc1f9758427f"},
     {file = "PyYAML-6.0-cp36-cp36m-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:48c346915c114f5fdb3ead70312bd042a953a8ce5c7106d5bfb1a5254e47da92"},
@@ -2462,4 +2468,4 @@ docs = ["sphinx", "sphinx-rtd-theme", "sphinx-copybutton", "myst-nb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "e7a4120455c4e7f96a20cdc86d382c8e55047470ed1399fac240e8074b1f80b8"
+content-hash = "9cde293f5140818e5bdbec23dca3eb7ff4c5d7021cf450e8e639365538117533"
