@@ -24,11 +24,26 @@
   ],
   "modules": [
     {
+      "name": "fake-graphviz",
+      "buildsystem": "simple",
+      "build-commands": [
+        "mkdir -p ${FLATPAK_DEST}/bin",
+        "cp dot ${FLATPAK_DEST}/bin/dot",
+        "chmod +x ${FLATPAK_DEST}/bin/dot"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "path": "_packaging/flatpak-devel/dot"
+        }
+       ]
+    },
+    {
       "name": "install",
       "buildsystem": "simple",
       "build-commands": [
-      	"pip3 install --prefix=${FLATPAK_DEST} poetry",
-	"${FLATPAK_DEST}/bin/poetry export --output=requirements.txt",
+        "pip3 install --prefix=${FLATPAK_DEST} poetry",
+        "${FLATPAK_DEST}/bin/poetry export --output=requirements.txt",
         "pip3 install --prefix=${FLATPAK_DEST} -r requirements.txt"
       ],
       "sources": [

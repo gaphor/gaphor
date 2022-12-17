@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# This is a stub for Graphviz "dot". It doesn't do a thing, but allows us
+# to self-test Gaphor in a Flatpak build.
+
+cat << EOF
+digraph gaphor {
+        graph [bb="0,0,0,0",
+                compound=true,
+                pad=0.1111111111111111
+        ];
+        node [label="\N"];
+}
+EOF
