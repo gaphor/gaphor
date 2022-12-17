@@ -99,7 +99,7 @@ jobs:
       - name: Build Development Flatpak
         run: flatpak-builder --user --force-clean ./.flatpak-build org.gaphor.Gaphor.json
       - name: Self-Test Development Flatpak
-        run: flatpak-builder --run ./.flatpak-build org.gaphor.Gaphor.json gaphor --self-test
+        run: xvfb-run flatpak-builder --run ./.flatpak-build org.gaphor.Gaphor.json gaphor --self-test
 
   linux-appimage:
     needs: lint
