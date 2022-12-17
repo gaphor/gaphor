@@ -1432,23 +1432,23 @@ files = [
 
 [[package]]
 name = "pycairo"
-version = "1.22.0"
+version = "1.23.0"
 description = "Python interface for cairo"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pycairo-1.22.0-cp310-cp310-win32.whl", hash = "sha256:5a62cf1d2c6339028709a600d83c0c24111feedeef3cf977bca333fbb94a79c8"},
-    {file = "pycairo-1.22.0-cp310-cp310-win_amd64.whl", hash = "sha256:62ce5e8c97eeee70170ba9a74845a0ded4bde9b7f1701d88957cbadf8cb1ccd6"},
-    {file = "pycairo-1.22.0-cp311-cp311-win32.whl", hash = "sha256:356c9fc665e8522f497b6cbe026ad8decacbb04c93e13fd5d145956433f3d471"},
-    {file = "pycairo-1.22.0-cp311-cp311-win_amd64.whl", hash = "sha256:b85807ec65a8b7966aca7aa41c39016b72515d6401a874a4b52c314471b31865"},
-    {file = "pycairo-1.22.0-cp37-cp37m-win32.whl", hash = "sha256:9fbe26b3fbe85fde063070e543b4a5f3609569ca8f79680867cecb837d5be29c"},
-    {file = "pycairo-1.22.0-cp37-cp37m-win_amd64.whl", hash = "sha256:00c8a6b92c5075ee3be7ea1d33f676d259f11f92cad7e37077dd193437c8c27c"},
-    {file = "pycairo-1.22.0-cp38-cp38-win32.whl", hash = "sha256:47aed13e950345c8248f77c8a51bff52188bef7afd3d5169584e0eddc21ba341"},
-    {file = "pycairo-1.22.0-cp38-cp38-win_amd64.whl", hash = "sha256:e81189414c11340134bffa6dcb06a378976cb87a6742f39aaefc79cb27612250"},
-    {file = "pycairo-1.22.0-cp39-cp39-win32.whl", hash = "sha256:e31a5b70664c425f4d1b71ba8aaf259920de6937a9490132ffabadad2a89764f"},
-    {file = "pycairo-1.22.0-cp39-cp39-win_amd64.whl", hash = "sha256:007ae728c56b9a0962d8c5513ae967a4fceff03e022940383c20f4f3d4c48dbe"},
-    {file = "pycairo-1.22.0.tar.gz", hash = "sha256:b34517abdf619d4c7f0274f012b398d9b03bab7adc3efd2912bf36be3f911f3f"},
+    {file = "pycairo-1.23.0-cp310-cp310-win32.whl", hash = "sha256:564601e5f528531c6caec1c0177c3d0709081e1a2a5cccc13561f715080ae535"},
+    {file = "pycairo-1.23.0-cp310-cp310-win_amd64.whl", hash = "sha256:e7cde633986435d87a86b6118b7b6109c384266fd719ef959883e2729f6eafae"},
+    {file = "pycairo-1.23.0-cp311-cp311-win32.whl", hash = "sha256:3a71f758e461180d241e62ef52e85499c843bd2660fd6d87cec99c9833792bfa"},
+    {file = "pycairo-1.23.0-cp311-cp311-win_amd64.whl", hash = "sha256:2dec5378133778961993fb59d66df16070e03f4d491b67eb695ca9ad7a696008"},
+    {file = "pycairo-1.23.0-cp37-cp37m-win32.whl", hash = "sha256:d6bacff15d688ed135b4567965a4b664d9fb8de7417a7865bb138ad612043c9f"},
+    {file = "pycairo-1.23.0-cp37-cp37m-win_amd64.whl", hash = "sha256:ec305fc7f2f0299df78aadec0eaf6eb9accb90eda242b5d3492544d3f2b28027"},
+    {file = "pycairo-1.23.0-cp38-cp38-win32.whl", hash = "sha256:1a6d8e0f353062ad92954784e33dbbaf66c880c9c30e947996c542ed9748aaaf"},
+    {file = "pycairo-1.23.0-cp38-cp38-win_amd64.whl", hash = "sha256:82e335774a17870bc038e0c2fb106c1e5e7ad0c764662023886dfcfce5bb5a52"},
+    {file = "pycairo-1.23.0-cp39-cp39-win32.whl", hash = "sha256:a4b1f525bbdf637c40f4d91378de36c01ec2b7f8ecc585b700a079b9ff83298e"},
+    {file = "pycairo-1.23.0-cp39-cp39-win_amd64.whl", hash = "sha256:87efd62a7b7afad9a0a420f05b6008742a6cfc59077697be65afe8dc73ae15ad"},
+    {file = "pycairo-1.23.0.tar.gz", hash = "sha256:9b61ac818723adc04367301317eb2e814a83522f07bbd1f409af0dada463c44c"},
 ]
 
 [[package]]
@@ -2471,4 +2471,4 @@ docs = ["sphinx", "sphinx-rtd-theme", "sphinx-copybutton", "myst-nb"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "e007b6ebe22cf583a78729c67a121d0a1f6c53529b1455aa444de3554049b739"
+content-hash = "d997ffc280e7e5f12998be3fb8916b9d2e590e7a1d615dfbea2d496b84aa128b"

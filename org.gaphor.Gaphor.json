@@ -44,7 +44,7 @@
       "build-commands": [
         "pip3 install --prefix=${FLATPAK_DEST} poetry",
         "${FLATPAK_DEST}/bin/poetry export --output=requirements.txt",
-        "pip3 install --prefix=${FLATPAK_DEST} -r requirements.txt"
+        "pip3 install --ignore-installed --prefix=${FLATPAK_DEST} -r requirements.txt"
       ],
       "sources": [
         {
@@ -61,7 +61,7 @@
       "name": "gaphor",
       "buildsystem": "simple",
       "build-commands": [
-        "pip3 install --prefix=${FLATPAK_DEST} ."
+        "pip3 install --ignore-installed --prefix=${FLATPAK_DEST} ."
       ],
       "sources": [
         {
