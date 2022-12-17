@@ -517,14 +517,14 @@ files = [
 
 [[package]]
 name = "gaphas"
-version = "3.8.3"
+version = "3.9.1"
 description = "Gaphas is a GTK+ based diagramming widget"
 category = "main"
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = ">=3.9,<4.0"
 files = [
-    {file = "gaphas-3.8.3-py3-none-any.whl", hash = "sha256:7fa9895dbf5fde5362f0e772d20a41414364369df4486db202184699028415a1"},
-    {file = "gaphas-3.8.3.tar.gz", hash = "sha256:8341156f561c13a9e69e7dcd44a90215228705857acadd95618f27acf6c31512"},
+    {file = "gaphas-3.9.1-py3-none-any.whl", hash = "sha256:de37ab6ebda4860030e4679c31a545b88bdcd389610e84ff3d946985d5fd50b2"},
+    {file = "gaphas-3.9.1.tar.gz", hash = "sha256:432da917326e01f31a611ebbf17671f6e26c3c33e81215557095a157e7f7ac42"},
 ]
 
 [package.dependencies]
