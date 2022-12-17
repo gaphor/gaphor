@@ -83,6 +83,24 @@ jobs:
         if: github.event_name == 'release'
         run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
+  linux-flatpak-devel:
+    needs: lint
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3.2.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Install Linux Dependencies
+        run: sudo apt update -qq && sudo apt install -qq --no-install-recommends elfutils flatpak flatpak-builder
+      - name: Install Flatpak SDK
+        run: |
+          flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          flatpak install --user --noninteractive flathub org.gnome.Platform//43 org.gnome.Sdk//43
+      - name: Build Development Flatpak
+        run: flatpak-builder --user --force-clean ./.flatpak-build org.gaphor.Gaphor.json
+      - name: Self-Test Development Flatpak
+        run: flatpak-builder --run ./.flatpak-build org.gaphor.Gaphor.json gaphor --self-test
+
   linux-appimage:
     needs: lint
     runs-on: ubuntu-20.04
