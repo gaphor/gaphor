@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-12-03 16:14-0500\n"
-"PO-Revision-Date: 2022-11-25 11:47+0000\n"
+"PO-Revision-Date: 2022-12-19 13:47+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -1398,11 +1399,11 @@ msgstr "Kaaviota '{name}' ei ole mallissa '{model_name}' ({model_file})."
 
 #: gaphor/plugins/autolayout/pydot.py:44
 msgid "Auto Layout"
-msgstr ""
+msgstr "Automaattinen asettelu"
 
 #: gaphor/plugins/autolayout/pydot.py:52
 msgid "Auto Layout (orthogonal)"
-msgstr ""
+msgstr "Automaattinen asettelu (ortogonaalinen)"
 
 #: gaphor/plugins/console/console.py:24
 msgid ""
@@ -1454,18 +1455,16 @@ msgid "Export diagram as PDF"
 msgstr "Vie kaavio PDF-muotoon"
 
 #: gaphor/plugins/diagramexport/__init__.py:88
-#, fuzzy
 msgid "Export as EPS"
-msgstr "Vie XMI-muotoon"
+msgstr "Vie EPS-muotoon"
 
 #: gaphor/plugins/diagramexport/__init__.py:89
 msgid "Export diagram as Encapsulated PostScript"
-msgstr ""
+msgstr "Vie kaavio Encapsulated PostScript -muodossa"
 
 #: gaphor/plugins/diagramexport/__init__.py:95
-#, fuzzy
 msgid "Export diagram as EPS"
-msgstr "Vie kaavio SVG-muotoon"
+msgstr "Vie kaavio EPS-muotoon"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
 #: gaphor/plugins/errorreports/errorreports.py:65
@@ -2079,21 +2078,19 @@ msgid "Switch to {name}?"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:46
-#, fuzzy
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
 msgstr ""
-"{filename} on jo avattu. Haluatko sen sijaan vaihtaa avoinna olevaan "
-"ikkunaan?"
+"{name} on jo avattu. Haluatko sen sijaan vaihtaa avoinna olevaan ikkunaan?"
 
 #: gaphor/ui/appfilemanager.py:65
 msgid "Open Again"
-msgstr ""
+msgstr "Avaa uudelleen"
 
 #: gaphor/ui/appfilemanager.py:66
 msgid "Switch"
-msgstr ""
+msgstr "Vaihda"
 
 #: gaphor/ui/appfilemanager.py:89
 msgid "Open a Model"
@@ -2223,7 +2220,6 @@ msgid "Close"
 msgstr "Sulje"
 
 #: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:44
-#, fuzzy
 msgid "Start Debug Session"
 msgstr "Käynnistä vianjäljitysistunto"
 
@@ -2278,13 +2274,12 @@ msgid "Loading model from {filename}"
 msgstr "Ladataan mallia tiedostosta {filename}"
 
 #: gaphor/ui/filemanager.py:160
-#, fuzzy
 msgid "Merge conflict in model “{filename}”."
-msgstr "Mallia “{filename}” ei voitu avata."
+msgstr "Yhdistämisen ristiriita mallissa “{filename}”."
 
 #: gaphor/ui/filemanager.py:163
 msgid "It looks like this model file contains a merge conflict."
-msgstr ""
+msgstr "Vaikuttaa siltä, että mallitiedosto sisältää yhdistämisen ristiriidan."
 
 #: gaphor/ui/filemanager.py:173
 msgid "Unable to open model “{filename}”."
@@ -2312,13 +2307,15 @@ msgstr "Tallenna Gaphor-malli nimellä"
 
 #: gaphor/ui/filemanager.py:326
 msgid "Save Changes?"
-msgstr ""
+msgstr "Tallennetaanko muutokset?"
 
 #: gaphor/ui/filemanager.py:327
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
+"Avoinna oleva malli sisältää tallentamattomia muutoksia. Tallentamattomat "
+"muutokset katoavat pysyvästi."
 
 #: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
 msgid "Cancel"
@@ -2326,7 +2323,7 @@ msgstr "Peru"
 
 #: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
 msgid "Discard"
-msgstr ""
+msgstr "Hylkää"
 
 #: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
 #: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:48
@@ -2334,12 +2331,10 @@ msgid "Save"
 msgstr "Tallenna"
 
 #: gaphor/ui/greeter.glade:55
-#, fuzzy
 msgid "Recently opened models"
-msgstr "Äskettäiset mallit…"
+msgstr "Äskettäin avatut mallit"
 
 #: gaphor/ui/greeter.glade:76
-#, fuzzy
 msgid "Create a new model"
 msgstr "Luo uusi malli"
 
@@ -2352,28 +2347,26 @@ msgid "Generic"
 msgstr "Yleinen"
 
 #: gaphor/ui/greeter.py:30
-#, fuzzy
 msgid "An empty model"
-msgstr "Uusi malli"
+msgstr "Tyhjä malli"
 
 #: gaphor/ui/greeter.py:37
 msgid "Unified Modeling Language template"
-msgstr ""
+msgstr "Unified Modeling Language -mallipohja"
 
 #: gaphor/ui/greeter.py:44
 msgid "Systems Modeling Language template"
-msgstr ""
+msgstr "Systems Modeling Language -mallipohja"
 
 #: gaphor/ui/greeter.py:51
 msgid "Risk Analysis and Assessment Modeling Language template"
-msgstr ""
+msgstr "Risk Analysis and Assessment Modeling Language -mallipohja"
 
 #: gaphor/ui/greeter.py:58
 msgid "Layered C4 Model template"
-msgstr ""
+msgstr "Layered C4 Model -mallipohja"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:44
-#, fuzzy
 msgid "Open Model…"
 msgstr "Avaa malli…"
 
@@ -2388,12 +2381,11 @@ msgstr "Tietoja - Gaphor"
 
 #: gaphor/ui/greeter.ui:79
 msgid "Recently Opened"
-msgstr ""
+msgstr "Äskettäin avattu"
 
 #: gaphor/ui/greeter.ui:84
-#, fuzzy
 msgid "Create New Model"
-msgstr "Luo uusi malli…"
+msgstr "Luo uusi malli"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
@@ -2440,12 +2432,10 @@ msgid "Profile: {name}"
 msgstr "Profiili: {name}"
 
 #: gaphor/ui/mainwindow.ui:48
-#, fuzzy
 msgid "Open diagram menu"
-msgstr "Komponenttikaavio"
+msgstr "Avaa kaaviovalikko"
 
 #: gaphor/ui/mainwindow.ui:55
-#, fuzzy
 msgid "Open application menu"
 msgstr "Avaa sovellusvalikko"
 
