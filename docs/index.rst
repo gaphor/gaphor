@@ -23,7 +23,7 @@ plug-in.
 
 .. toctree::
    :caption: Installation
-   :maxdepth: 1
+   :hidden:
 
    linux
    macos
@@ -32,7 +32,7 @@ plug-in.
 
 .. toctree::
    :caption: Features
-   :maxdepth: 1
+   :hidden:
 
    style_sheets
    stereotypes
@@ -41,7 +41,7 @@ plug-in.
 
 .. toctree::
    :caption: Modeling languages
-   :maxdepth: 1
+   :hidden:
 
    models/core
    models/uml
@@ -51,7 +51,7 @@ plug-in.
 
 .. toctree::
    :caption: Concepts
-   :maxdepth: 1
+   :hidden:
 
    design_principles
    framework
@@ -61,7 +61,7 @@ plug-in.
 
 .. toctree::
    :caption: Internals
-   :maxdepth: 1
+   :hidden:
 
    connect
    storage
@@ -76,4 +76,4 @@ External links
 
   1. `UML Diagrams <http://www.agilemodeling.com/essays/umlDiagrams.htm>`_ (although Gaphor does not see it that black-and-white).
   2. http://www.agilemodeling.com/essays/
-* The `official UML specification <https://www.omg.org/spec/UML>`_. This ''is'' our data model.
+* The `official UML specification <https://www.omg.org/spec/UML>`_. This __is__ our data model.
