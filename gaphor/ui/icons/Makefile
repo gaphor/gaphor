@@ -12,7 +12,7 @@ ICONS=diagram \
 	class \
 	data-type \
 	enumeration \
-	primitive \
+	primitive-type \
 	block \
 	value-type \
 	proxyport \

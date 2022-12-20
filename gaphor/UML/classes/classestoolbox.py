@@ -150,7 +150,7 @@ classes = ToolSection(
         ToolDef(
             "toolbox-primitive",
             gettext("Primitive"),
-            "gaphor-primitive-symbolic",
+            "gaphor-primitive-type-symbolic",
             "<Shift>H",
             new_item_factory(
                 diagramitems.DataTypeItem,
