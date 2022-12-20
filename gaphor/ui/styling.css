@@ -61,10 +61,7 @@ flowboxchild {
 }
 
 .info {
-  border-radius: 4px;
+  border-radius: 16px;
   font-size: small;
-}
-.info:hover {
-  color: @theme_selected_fg_color;
-  background-color: @theme_selected_bg_color;
+  padding: 1px 3px;
 }

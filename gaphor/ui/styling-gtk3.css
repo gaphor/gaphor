@@ -15,3 +15,8 @@ flowboxchild:hover {
 flowboxchild:hover * {
   color: @theme_selected_fg_color;
 }
+
+.info:hover {
+  color: @theme_selected_fg_color;
+  background-color: @theme_selected_bg_color;
+}

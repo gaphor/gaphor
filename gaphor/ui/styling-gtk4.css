@@ -38,6 +38,10 @@ frame > textview {
   padding: 6px;
 }
 
+.info:hover {
+  background-color: @shade_color;
+}
+
 .info-popover {
   margin: 6px;
 }
