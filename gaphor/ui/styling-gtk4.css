@@ -63,7 +63,7 @@ frame > textview {
   border-left: 1px solid @unfocused_borders;
 }
 
-#toolbox > viewport {
+#toolbox > viewport > box {
   margin: 6px;
 }
 
