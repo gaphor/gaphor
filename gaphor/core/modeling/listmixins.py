@@ -2,8 +2,7 @@
 
 Two mixin classes are provided:
 
-1. ``querymixin``
-2. ``recursemixin``
+1. ``recursemixin``
 
 See the documentation on the mixins.
 """
@@ -12,97 +11,12 @@ See the documentation on the mixins.
 from __future__ import annotations
 
 import contextlib
-from typing import Callable, Generic, Sequence, TypeVar, overload
+from typing import Generic, Sequence, TypeVar, overload
 
-__all__ = ["querymixin", "recursemixin"]
+__all__ = ["recursemixin"]
 
 
 T = TypeVar("T")
-
-
-def matcher(expr: str) -> Callable[[T], bool]:
-    """Returns True if the expression returns True. The context for the
-    expression is the element.
-
-    Given a class:
-
-    >>> class A:
-    ...     def __init__(self, name):
-    ...         self.name = name
-
-    We can create a path for each object:
-
-    >>> a = A("root")
-    >>> a.a = A("level1")
-    >>> a.b = A("b")
-    >>> a.a.text = "help"
-
-    If we want to match, ``it`` is used to refer to the subjected object:
-
-    >>> matcher('it.name=="root"')(a)
-    True
-    >>> matcher('it.b.name=="b"')(a)
-    True
-    >>> matcher('it.name=="blah"')(a)
-    False
-    >>> matcher('it.nonexistent=="root"')(a)
-    False
-
-    NOTE: the object ``it`` was introduced since properties (descriptors) can
-    not be executed from within a dictionary context.
-    """
-
-    compiled = compile(expr, "<matcher>", "eval")
-
-    def real_matcher(element: T) -> bool:
-        try:
-            return bool(eval(compiled, {}, {"it": element}))
-        except (AttributeError, NameError):
-            # attribute does not (yet) exist
-            return False
-
-    return real_matcher
-
-
-class querymixin:
-    """Implementation of the matcher as a mixin for lists.
-
-    Given a class:
-
-    >>> class A:
-    ...     def __init__(self, name):
-    ...         self.name = name
-
-    We can do nice things with this list:
-
-    >>> class MList(querymixin, list):
-    ...     pass
-    >>> m = MList()
-    >>> m.append(A("one"))
-    >>> m.append(A("two"))
-    >>> m.append(A("three"))
-    >>> m[1].name
-    'two'
-    >>> m['it.name=="one"']  # doctest: +ELLIPSIS
-    [<gaphor.core.modeling.listmixins.A object at 0x...>]
-    >>> m['it.name=="two"', 0].name
-    'two'
-    """
-
-    def __getitem__(self, key):
-        try:
-            # See if the list can deal with it (don't change default behaviour)
-            return super().__getitem__(key)  # type: ignore[misc] # noqa: F821
-        except TypeError:
-            # Nope, try our matcher trick
-            if isinstance(key, tuple):
-                key, remainder = key[0], key[1:]
-            else:
-                remainder = None
-
-            matched = list(filter(matcher(key), self))  # type: ignore[call-overload] # noqa: F821
-            new_list = type(self)(matched)  # type: ignore[call-arg] # noqa: F821
-            return new_list.__getitem__(*remainder) if remainder else new_list
 
 
 def issafeiterable(obj):

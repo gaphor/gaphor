@@ -3,12 +3,12 @@
 from typing import Generic, List, Type, TypeVar, overload
 
 from gaphor.core.modeling.event import AssociationUpdated
-from gaphor.core.modeling.listmixins import querymixin, recursemixin, recurseproxy
+from gaphor.core.modeling.listmixins import recursemixin, recurseproxy
 
 T = TypeVar("T")
 
 
-class collectionlist(recursemixin, querymixin, List[T]):  # type: ignore[misc]
+class collectionlist(recursemixin, List[T]):  # type: ignore[misc]
     """
     >>> c = collectionlist()
     >>> c.append("a")
@@ -39,10 +39,6 @@ class collectionlist(recursemixin, querymixin, List[T]):  # type: ignore[misc]
     <gaphor.core.modeling.listmixins.recurseproxy object at 0x...>
     >>> list(c.ownedOperation[:].ownedParameter.name)
     ['foo', 'bar']
-    >>> c.ownedOperation[0].ownedParameter['it.name=="foo"', 0].name
-    'foo'
-    >>> c.ownedOperation[:].ownedParameter['it.name=="foo"', 0].name
-    'foo'
     """
 
 
