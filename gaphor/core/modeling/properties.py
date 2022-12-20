@@ -400,7 +400,7 @@ class association(umlproperty):
             return
 
         if old:
-            self.delete(obj, old, do_notify=False)
+            self._del_one(obj, old, do_notify=False)
 
         if value is not None:
             setattr(obj, self._name, value)
