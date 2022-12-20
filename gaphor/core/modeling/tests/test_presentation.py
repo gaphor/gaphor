@@ -40,6 +40,23 @@ def test_should_emit_event_when_unlinked(diagram, event_manager):
     assert events[0].element is presentation
 
 
+def test_should_unlink_more_than_once(diagram, event_manager):
+    presentation = diagram.create(Example)
+    events = []
+
+    @event_handler(ElementDeleted)
+    def handler(event):
+        events.append(event)
+
+    event_manager.subscribe(handler)
+
+    presentation.unlink()
+    presentation.unlink()
+    presentation.unlink()
+
+    assert len(events) == 1
+
+
 def test_presentation_can_not_set_new_diagram(diagram, element_factory):
     presentation = diagram.create(Example)
     new_diagram = element_factory.create(Diagram)
