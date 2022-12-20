@@ -99,10 +99,10 @@ class UndoManager(Service, ActionProvider):
         self._current_transaction = None
         self._undoing = 0
 
-        event_manager.subscribe(self.reset)
-        event_manager.subscribe(self.begin_transaction)
-        event_manager.subscribe(self.commit_transaction)
-        event_manager.subscribe(self.rollback_transaction)
+        event_manager.priority_subscribe(self.reset)
+        event_manager.priority_subscribe(self.begin_transaction)
+        event_manager.priority_subscribe(self.commit_transaction)
+        event_manager.priority_subscribe(self.rollback_transaction)
         self._register_undo_handlers()
         self._action_executed()
 
