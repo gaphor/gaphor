@@ -42,6 +42,10 @@ frame > textview {
   margin: 6px;
 }
 
+#tree_component treeexpander {
+  margin: 0 6px;
+}
+
 #tree_component .editing {
   background-color: @theme_bg_color;
   color: @theme_fg_color;
@@ -60,7 +64,7 @@ frame > textview {
 }
 
 #toolbox > viewport {
-  margin-top: 6px;
+  margin: 6px 6px 0 6px;
 }
 
 /* For toolbox and greeter */
