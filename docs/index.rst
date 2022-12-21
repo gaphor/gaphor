@@ -1,5 +1,5 @@
-Gaphor -- Technical Documentation
-==================================
+About Gaphor
+============
 
 Gaphor is a UML and SysML modeling application written in Python.
 It is designed to be easy to use, while still being powerful.
@@ -20,6 +20,16 @@ If you're into writing plug-ins for Gaphor you should have a look at our
 fabulous `Hello world <https://github.com/gaphor/gaphor.plugins.helloworld>`_
 plug-in.
 
+
+
+External resources
+------------------
+
+* You should definitely check out `Agile Modeling <http://www.agilemodeling.com>`_ including these pages:
+
+  1. `UML Diagrams <http://www.agilemodeling.com/essays/umlDiagrams.htm>`_ (although Gaphor does not see it that black-and-white).
+  2. http://www.agilemodeling.com/essays/
+* The `official UML specification <https://www.omg.org/spec/UML>`_. This __is__ our data model.
 
 .. toctree::
    :caption: Installation
@@ -67,13 +77,3 @@ plug-in.
    storage
    undo
    transaction
-
-
-External links
---------------
-
-* You should definitely check out `Agile Modeling <http://www.agilemodeling.com>`_ including these pages:
-
-  1. `UML Diagrams <http://www.agilemodeling.com/essays/umlDiagrams.htm>`_ (although Gaphor does not see it that black-and-white).
-  2. http://www.agilemodeling.com/essays/
-* The `official UML specification <https://www.omg.org/spec/UML>`_. This __is__ our data model.
