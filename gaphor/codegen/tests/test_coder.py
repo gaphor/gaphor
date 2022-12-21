@@ -281,7 +281,7 @@ def test_replace_simple_attribute(uml_metamodel: ElementFactory):
             lambda e: isinstance(e, UML.Class) and e.name == "InstanceSpecification"
         )
     )
-    a = instancespec.ownedAttribute["it.name == 'specification'"][0]
+    a = next(it for it in instancespec.ownedAttribute if it.name == "specification")
 
     assert a.name == "specification"
     assert a.typeValue == "str"
