@@ -184,6 +184,14 @@ def _load_elements_and_canvasitems(
             )
 
         if issubclass(cls, Presentation):
+            if "diagram" not in elem.references:
+                log.warning(
+                    "Removing element %s of type %s without diagram", elem.id, cls
+                )
+                assert not any(elem.id in e.references for e in elements.values())
+                del elements[elem.id]
+                return
+
             diagram_id = elem.references["diagram"]
             diagram_elem = elements[diagram_id]
             create_element(diagram_elem)

@@ -79,12 +79,15 @@ class AssociationConnect(RelationshipConnect):
         subject = line.subject
 
         def member_ends_match(subject):
-            return (
-                head_subject is subject.memberEnd[0].type
-                and tail_subject is subject.memberEnd[1].type
-            ) or (
-                head_subject is subject.memberEnd[1].type
-                and tail_subject is subject.memberEnd[0].type
+            return len(subject.memberEnd) >= 2 and (
+                (
+                    head_subject is subject.memberEnd[0].type
+                    and tail_subject is subject.memberEnd[1].type
+                )
+                or (
+                    head_subject is subject.memberEnd[1].type
+                    and tail_subject is subject.memberEnd[0].type
+                )
             )
 
         # First check if the right subject is already connected:
