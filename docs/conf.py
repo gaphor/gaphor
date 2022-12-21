@@ -102,18 +102,18 @@ gaphor_models = {
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "sphinx_rtd_theme"
+html_theme = "furo"
 html_favicon = "../logos/gaphor-24x24.png"
 html_title = ""
-html_logo = "../logos/gaphor-logo-full-white.svg"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
 html_theme_options = {
-    "logo_only": True,
-    "navigation_depth": 5,
+    "light_logo": "gaphor-logo-full-black.svg",
+    "dark_logo": "gaphor-logo-full-white.svg",
+    "sidebar_hide_name": True,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,

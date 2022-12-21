@@ -1,3 +1,15 @@
+/* Furo overrides */
+body[data-theme="dark"] article img {
+  background-color: var(--color-content-foreground);
+}
+
+@media (prefers-color-scheme: dark) {
+  body:not([data-theme="light"]) article img {
+    background-color: var(--color-content-foreground);
+  }
+}
+
+/* Jupyter output */
 .cell_output img {
-    display: block;
+  display: block;
 }
