@@ -169,7 +169,6 @@ class MessageLifelineConnect(BaseConnector):
 
 @Connector.register(ExecutionSpecificationItem, MessageItem)
 class ExecutionSpecificationMessageConnect(BaseConnector):
-
     element: ExecutionSpecificationItem
     line: MessageItem
 
@@ -193,7 +192,6 @@ class ExecutionSpecificationMessageConnect(BaseConnector):
 
 @Connector.register(LifelineItem, ExecutionSpecificationItem)
 class LifelineExecutionSpecificationConnect(BaseConnector):
-
     element: LifelineItem
     line: ExecutionSpecificationItem
 
@@ -250,7 +248,6 @@ class LifelineExecutionSpecificationConnect(BaseConnector):
 
 @Connector.register(ExecutionSpecificationItem, ExecutionSpecificationItem)
 class ExecutionSpecificationExecutionSpecificationConnect(BaseConnector):
-
     element: ExecutionSpecificationItem
     line: ExecutionSpecificationItem
 

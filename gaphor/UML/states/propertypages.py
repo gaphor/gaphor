@@ -127,7 +127,6 @@ class StatePropertyPage(PropertyPageBase):
 @PropertyPages.register(StateItem)
 @PropertyPages.register(StateMachineItem)
 class RegionPropertyPage(PropertyPageBase):
-
     order = 15
 
     def __init__(self, item: StateItem | StateMachineItem):

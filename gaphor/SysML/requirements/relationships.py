@@ -7,7 +7,6 @@ from gaphor.UML.recipes import stereotypes_str
 
 
 class DirectedRelationshipPropertyPathItem(Named, LinePresentation):
-
     relation_type = ""
 
     def __init__(self, diagram, id=None):
@@ -33,7 +32,6 @@ class DirectedRelationshipPropertyPathItem(Named, LinePresentation):
     sysml.Satisfy, head=sysml.Satisfy.sourceContext, tail=sysml.Satisfy.targetContext
 )
 class SatisfyItem(DirectedRelationshipPropertyPathItem):
-
     relation_type = gettext("satisfy")
 
 
@@ -43,13 +41,11 @@ class SatisfyItem(DirectedRelationshipPropertyPathItem):
     tail=sysml.DeriveReqt.targetContext,
 )
 class DeriveReqtItem(DirectedRelationshipPropertyPathItem):
-
     relation_type = gettext("deriveReqt")
 
 
 @represents(sysml.Trace, head=sysml.Trace.sourceContext, tail=sysml.Trace.targetContext)
 class TraceItem(DirectedRelationshipPropertyPathItem):
-
     relation_type = gettext("trace")
 
 
@@ -57,7 +53,6 @@ class TraceItem(DirectedRelationshipPropertyPathItem):
     sysml.Verify, head=sysml.Verify.sourceContext, tail=sysml.Verify.targetContext
 )
 class VerifyItem(DirectedRelationshipPropertyPathItem):
-
     relation_type = gettext("verify")
 
 
@@ -65,5 +60,4 @@ class VerifyItem(DirectedRelationshipPropertyPathItem):
     sysml.Refine, head=sysml.Refine.sourceContext, tail=sysml.Refine.targetContext
 )
 class RefineItem(DirectedRelationshipPropertyPathItem):
-
     relation_type = gettext("refine")

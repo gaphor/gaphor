@@ -66,7 +66,6 @@ def on_motion(
 
 
 class DropZoneMoveMixin:
-
     view: GtkView
     item: Item
 

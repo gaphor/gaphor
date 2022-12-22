@@ -10,14 +10,12 @@ from gaphor.UML.profiles.metaclasspropertypage import new_builder
 
 @PropertyPages.register(UML.Element)
 class StereotypePage(PropertyPageBase):
-
     order = 40
 
     def __init__(self, item):
         self.item = item
 
     def construct(self):
-
         subject = self.item.subject
         if not subject:
             return None

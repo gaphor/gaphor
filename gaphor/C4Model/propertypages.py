@@ -20,7 +20,6 @@ new_builder = new_resource_builder("gaphor.C4Model")
 @PropertyPages.register(c4model.C4Container)
 @PropertyPages.register(c4model.C4Person)
 class DescriptionPropertyPage(PropertyPageBase):
-
     order = 14
 
     def __init__(self, subject: Union[c4model.C4Container, c4model.C4Person]):
@@ -63,7 +62,6 @@ class DescriptionPropertyPage(PropertyPageBase):
 
 @PropertyPages.register(c4model.C4Container)
 class TechnologyPropertyPage(PropertyPageBase):
-
     order = 15
 
     def __init__(self, subject: c4model.C4Container):
