@@ -145,7 +145,7 @@ poetry config virtualenvs.in-project true
 
 Add GTK to your environmental variables:
 ```PowerShell
-$env:Path = $env:Path + "C:\gtk-build\gtk\x64\release\bin;"
+$env:Path = $env:Path + ";C:\gtk-build\gtk\x64\release\bin"
 $env:LIB = "C:\gtk-build\gtk\x64\release\lib"
 $env:INCLUDE = "C:\gtk-build\gtk\x64\release\include;C:\gtk-build\gtk\x64\release\include\cairo;C:\gtk-build\gtk\x64\release\include\glib-2.0;C:\gtk-build\gtk\x64\release\include\gobject-introspection-1.0;C:\gtk-build\gtk\x64\release\lib\glib-2.0\include;"
 ```
