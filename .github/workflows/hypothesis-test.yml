@@ -31,7 +31,8 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
       - name: Use Hypothesis Cache
-        uses: pat-s/always-upload-cache@v3.0.11
+        id: restore-cache
+        uses: actions/cache/restore@v3.2.0
         with:
           path: .hypothesis
           key: ${{ runner.os }}-hypothesis
@@ -40,9 +41,9 @@ jobs:
       - name: Test with Hypothesis
         run: xvfb-run poetry run pytest -m hypothesis --hypothesis-profile=ci
         shell: bash
-      - uses: nashmaniac/create-issue-action@v1.1
+      - name: Create Issue on Failure
+        uses: nashmaniac/create-issue-action@v1.1
         if: failure()
-        name: Create Issue on Failure
         with:
           title: Hypothesis tests failed
           token: ${{secrets.GITHUB_TOKEN}}
@@ -50,3 +51,9 @@ jobs:
           body: |
             Test run failed for commit ${{github.sha}}.
             See https://github.com/gaphor/gaphor/actions/workflows/hypothesis-test.yml.
+      - name: Save cache
+        uses: actions/cache/save@v3.2.0
+        if: always()
+        with:
+          path: .hypothesis
+          key: steps.restore-cache.output.key

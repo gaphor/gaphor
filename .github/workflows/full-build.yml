@@ -317,11 +317,16 @@ jobs:
       - name: Create GTK binaries dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: Get GTK binaries from cache
-        uses: actions/cache@v3.2.0
+        uses: actions/cache/restore@v3.2.0
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
           key: ${{ needs.windows-build-gtk.outputs.cachekey }}
+      - name: Check cache hit
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          echo "No GTK binaries cache"
+          exit 1
       - name: Set up env
         run: |
           Write-Output "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $env:GITHUB_ENV
