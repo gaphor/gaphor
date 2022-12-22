@@ -97,7 +97,6 @@ else:
 
 
 class DiagramPage:
-
     if Gtk.get_major_version() == 3:
         VIEW_TARGET_STRING = 0
         VIEW_TARGET_ELEMENT_ID = 1

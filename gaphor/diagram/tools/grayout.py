@@ -18,7 +18,6 @@ def connectable(line, handle, element):
 
 
 class GrayOutLineHandleMoveMixin:
-
     view: GtkView
     item: Item
     handle: Handle

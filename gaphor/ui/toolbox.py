@@ -27,7 +27,6 @@ log = logging.getLogger(__name__)
 
 
 class Toolbox(UIComponent):
-
     if Gtk.get_major_version() == 3:
         TARGET_STRING = 0
         TARGET_TOOLBOX_ACTION = 1

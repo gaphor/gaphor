@@ -19,7 +19,6 @@ log = logging.getLogger(__name__)
 
 
 class ConsoleWindow(UIComponent, ActionProvider):
-
     title = gettext("Gaphor Console")
     size = (400, 400)
 

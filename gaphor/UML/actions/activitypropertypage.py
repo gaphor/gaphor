@@ -57,7 +57,6 @@ class ActivityParameters(EditableTreeModel):
 
 @PropertyPages.register(ActivityItem)
 class ActivityItemPage(PropertyPageBase):
-
     order = 40
 
     def __init__(self, item: ActivityItem):

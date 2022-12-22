@@ -6,7 +6,6 @@ logger = logging.getLogger(__name__)
 
 
 class XMIExport:
-
     XMI_VERSION = "2.1"
     XMI_NAMESPACE = "http://schema.omg.org/spec/XMI/2.1"
     UML_NAMESPACE = "http://schema.omg.org/spec/UML/2.1"
@@ -32,7 +31,6 @@ class XMIExport:
             logger.error(f"Failed to handle {element.__class__.__name__}:{e}")
 
     def handlePackage(self, xmi, element, idref=False):
-
         attributes = {
             f"{self.XMI_PREFIX}:id": element.id,
             "name": element.name,
@@ -49,7 +47,6 @@ class XMIExport:
         xmi.endElement(f"{self.UML_PREFIX}:Package")
 
     def handleClass(self, xmi, element, idref=False):
-
         attributes = {}
 
         if idref:
@@ -76,7 +73,6 @@ class XMIExport:
         xmi.endElement(f"{self.UML_PREFIX}:Class")
 
     def handleProperty(self, xmi, element, idref=False):
-
         attributes = {
             f"{self.XMI_PREFIX}:id": element.id,
             "isStatic": str(element.isStatic),
@@ -101,7 +97,6 @@ class XMIExport:
         xmi.endElement(f"{self.UML_PREFIX}:Property")
 
     def handleOperation(self, xmi, element, idref=False):
-
         attributes = {
             f"{self.XMI_PREFIX}:id": element.id,
             "isStatic": str(element.isStatic),
@@ -119,7 +114,6 @@ class XMIExport:
         xmi.endElement(f"{self.XMI_PREFIX}:Operation")
 
     def handleParameter(self, xmi, element, idref=False):
-
         attributes = {
             f"{self.XMI_PREFIX}:id": element.id,
             "isOrdered": str(element.isOrdered),
@@ -133,14 +127,12 @@ class XMIExport:
         xmi.endElement(f"{self.XMI_PREFIX}:Parameter")
 
     def handleLiteralSpecification(self, xmi, element, idref=False):
-
         attributes = {f"{self.XMI_PREFIX}:id": element.id, "value": element.value}
         xmi.startElement(f"{self.UML_PREFIX}:LiteralSpecification", attrs=attributes)
 
         xmi.endElement(f"{self.UML_PREFIX}:LiteralSpecification")
 
     def handleAssociation(self, xmi, element, idref=False):
-
         attributes = {
             f"{self.XMI_PREFIX}:id": element.id,
             "isDerived": str(element.isDerived),
@@ -161,7 +153,6 @@ class XMIExport:
         xmi.endElement(f"{self.UML_PREFIX}:Association")
 
     def handleDependency(self, xmi, element, idref=False, name="Dependency"):
-
         attributes = {f"{self.XMI_PREFIX}:id": element.id}
         xmi.startElement(f"{self.UML_PREFIX}:{name}", attrs=attributes)
 
@@ -178,7 +169,6 @@ class XMIExport:
         xmi.endElement(f"{self.UML_PREFIX}:{name}")
 
     def handleGeneralization(self, xmi, element, idref=False):
-
         attributes = {
             f"{self.XMI_PREFIX}:id": element.id,
             "isSubstitutable": str(element.isSubstitutable),
@@ -202,7 +192,6 @@ class XMIExport:
         self.handleDependency(xmi, element, idref, name="Realization")
 
     def handleInterface(self, xmi, element, idref=False):
-
         attributes = {f"{self.XMI_PREFIX}:id": element.id}
         xmi.startElement(f"{self.UML_PREFIX}:Interface", attrs=attributes)
 

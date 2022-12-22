@@ -57,7 +57,6 @@ elif sys.platform == "darwin" and Gtk.get_major_version() == 4:
         return shortcut
 
     def add_move_binding(widget_class, shortcut, step, count):
-
         widget_class.add_shortcut(
             new_shortcut_with_args(
                 shortcut,

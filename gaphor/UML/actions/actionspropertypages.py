@@ -16,7 +16,6 @@ new_builder = new_resource_builder("gaphor.UML.actions")
 
 @PropertyPages.register(ObjectNodeItem)
 class ObjectNodePropertyPage(PropertyPageBase):
-
     order = 15
 
     ORDERING_VALUES = ["unordered", "ordered", "LIFO", "FIFO"]
@@ -70,7 +69,6 @@ class ObjectNodePropertyPage(PropertyPageBase):
 
 @PropertyPages.register(DecisionNodeItem)
 class DecisionNodePropertyPage(PropertyPageBase):
-
     order = 20
 
     def __init__(self, item):
@@ -94,7 +92,6 @@ class DecisionNodePropertyPage(PropertyPageBase):
 
 @PropertyPages.register(ForkNodeItem)
 class ForkNodePropertyPage(PropertyPageBase):
-
     order = 20
 
     def __init__(self, item):
@@ -127,7 +124,6 @@ class ForkNodePropertyPage(PropertyPageBase):
 
 @PropertyPages.register(UML.JoinNode)
 class JoinNodePropertyPage(PropertyPageBase):
-
     order = 15
 
     subject: UML.JoinNode

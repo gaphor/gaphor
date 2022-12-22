@@ -22,7 +22,6 @@ new_builder = new_resource_builder("gaphor.SysML")
 
 @PropertyPages.register(sysml.Requirement)
 class RequirementPropertyPage(PropertyPageBase):
-
     order = 15
 
     def __init__(self, subject: sysml.Requirement):
