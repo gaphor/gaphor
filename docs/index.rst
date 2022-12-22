@@ -1,6 +1,10 @@
 About Gaphor
 ============
 
+.. note::
+
+   The documentation is up to date for Gaphor |version|
+
 Gaphor is a UML and SysML modeling application written in Python.
 It is designed to be easy to use, while still being powerful.
 Gaphor implements a fully-compliant UML 2 data model,
@@ -29,7 +33,7 @@ External resources
 
   1. `UML Diagrams <http://www.agilemodeling.com/essays/umlDiagrams.htm>`_ (although Gaphor does not see it that black-and-white).
   2. http://www.agilemodeling.com/essays/
-* The `official UML specification <https://www.omg.org/spec/UML>`_. This __is__ our data model.
+* The `official UML specification <https://www.omg.org/spec/UML>`_. This *is* our data model.
 
 .. toctree::
    :caption: Installation
