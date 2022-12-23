@@ -370,7 +370,9 @@ class CssPropertyCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
             proposal = CssPropertyProposal(prop)
             store.append(proposal)
 
-        filter_fn = lambda proposal, data: proposal.text.startswith(data.word)
+        def filter_fn(proposal, data):
+            return proposal.text.startswith(data.word)
+
         store_filter = Gtk.CustomFilter.new(filter_fn, self._filter_data)
         task.proposals = Gtk.FilterListModel.new(store, store_filter)
         task.return_boolean(True)
@@ -383,12 +385,12 @@ class CssPropertyCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
         self, context: GtkSource.CompletionContext, model: Gio.ListModel
     ) -> None:
         word = context.get_word()
-        old_word = self._filter_data.word
         change = Gtk.FilterChange.DIFFERENT
-        if old_word and word.startswith(old_word):
-            change = Gtk.FilterChange.MORE_STRICT
-        elif old_word and old_word.startswith(word):
-            change = Gtk.FilterChange.LESS_STRICT
+        if old_word := self._filter_data.word:
+            if word.startswith(old_word):
+                change = Gtk.FilterChange.MORE_STRICT
+            elif old_word.startswith(word):
+                change = Gtk.FilterChange.LESS_STRICT
         self._filter_data.word = word
         model.get_filter().changed(change)
 
