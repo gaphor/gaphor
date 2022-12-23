@@ -1,7 +1,4 @@
-from gi.repository import Gio
-from gi.repository import Gtk
-from gi.repository import GObject
-from gi.repository import GtkSource
+from gi.repository import Gio, GObject, Gtk, GtkSource
 
 
 class CssPropertyCompletionProvider(GObject.GObject, GtkSource.CompletionProvider):
@@ -334,7 +331,11 @@ class CssPropertyCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
         super().__init__()
         self._filter_data: FilterData = FilterData()
 
-    def do_activate(self, context: GtkSource.CompletionContext, proposal: GtkSource.CompletionProposal) -> None:
+    def do_activate(
+        self,
+        context: GtkSource.CompletionContext,
+        proposal: GtkSource.CompletionProposal,
+    ) -> None:
         buffer = context.get_buffer()
         buffer.begin_user_action()
         has_selection, begin, end = context.get_bounds()
@@ -343,7 +344,12 @@ class CssPropertyCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
         buffer.insert(begin, proposal.text, len(proposal.text))
         buffer.end_user_action()
 
-    def do_display(self, context: GtkSource.CompletionContext, proposal: GtkSource.CompletionProposal, cell: GtkSource.CompletionCell) -> None:
+    def do_display(
+        self,
+        context: GtkSource.CompletionContext,
+        proposal: GtkSource.CompletionProposal,
+        cell: GtkSource.CompletionCell,
+    ) -> None:
         if cell.props.column == GtkSource.CompletionColumn.ICON:
             pass
         elif cell.props.column == GtkSource.CompletionColumn.TYPED_TEXT:
@@ -373,7 +379,9 @@ class CssPropertyCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
         if result.propagate_boolean():
             return result.proposals
 
-    def do_refilter(self, context: GtkSource.CompletionContext, model: Gio.ListModel) -> None:
+    def do_refilter(
+        self, context: GtkSource.CompletionContext, model: Gio.ListModel
+    ) -> None:
         word = context.get_word()
         old_word = self._filter_data.word
         change = Gtk.FilterChange.DIFFERENT
