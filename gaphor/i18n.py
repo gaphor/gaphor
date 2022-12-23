@@ -26,7 +26,9 @@ except OSError as e:
 
 @functools.lru_cache(maxsize=None)
 def translated_ui_string(package: str, ui_filename: str) -> str:
-    with (importlib.resources.files(package) / ui_filename).open() as ui_file:
+    with (importlib.resources.files(package) / ui_filename).open(
+        encoding="utf-8"
+    ) as ui_file:
         ui_xml = etree.parse(ui_file)
     for node in ui_xml.findall(".//*[@translatable='yes']"):
         node.text = gettext(node.text) if node.text else ""
