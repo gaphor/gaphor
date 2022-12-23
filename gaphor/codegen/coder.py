@@ -402,7 +402,6 @@ def is_in_toplevel_package(c: UML.Class, package_name: str) -> bool:
 
 
 def redefines(a: UML.Property) -> str | None:
-    slot: UML.Slot
     return next(
         (
             slot.value

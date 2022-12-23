@@ -39,7 +39,6 @@ class DependencyItem(Named, LinePresentation):
     """
 
     def __init__(self, diagram, id=None):
-
         additional_stereotype = {
             UML.Usage: (gettext("use"),),
             UML.Realization: (gettext("realize"),),

@@ -9,5 +9,4 @@ from gaphor.SysML.requirements.relationships import DirectedRelationshipProperty
     tail=raaml.RelevantTo.targetContext,
 )
 class RelevantToItem(DirectedRelationshipPropertyPathItem):
-
     relation_type = "relevantTo"

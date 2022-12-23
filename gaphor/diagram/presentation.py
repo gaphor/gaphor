@@ -70,7 +70,6 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
 
 
 class HandlePositionEvent(RevertibleEvent):
-
     requires_transaction = False
 
     def __init__(self, element, handle, old_value):

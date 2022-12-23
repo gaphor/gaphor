@@ -13,7 +13,6 @@ class ModelingLanguageChanged:
 
 
 class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
-
     DEFAULT_LANGUAGE = "UML"
 
     def __init__(self, event_manager=None, properties=None):

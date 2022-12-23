@@ -234,7 +234,6 @@ class NamedElementPropertyPage(PropertyPageBase):
 
 @PropertyPages.register(UML.Classifier)
 class ClassifierPropertyPage(PropertyPageBase):
-
     order = 15
 
     def __init__(self, subject):
@@ -472,7 +471,6 @@ class OperationsPage(PropertyPageBase):
 
 @PropertyPages.register(UML.Component)
 class ComponentPropertyPage(PropertyPageBase):
-
     order = 15
 
     subject: UML.Component

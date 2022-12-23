@@ -191,7 +191,6 @@ class UndoManager(Service, ActionProvider):
         self._action_executed()
 
     def discard_transaction(self):
-
         self._current_transaction = None
 
         self._action_executed()
