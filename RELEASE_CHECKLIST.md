@@ -1,6 +1,6 @@
 Although we strive to make releases as automated as possible, there are a few steps that we need to take to release a new version.
 
-- [ ] Ensure all the PRs since the last release are labeled with chore, fix, feature, translation, or skip-changelog.
+- [ ] Ensure all the PRs since the last release are labeled with chore, fix, feature, translation, documentation, or skip-changelog.
 All the items in the draft release should be under the Features, Bug Fixes, Maintenance, or Translation headings.
 - [ ] Update gaphor/ui/help/about.ui and about.glade with any additional contributors since the last release,
 update the version number, and check the copyright year.

@@ -1,3 +1,25 @@
+2.14.0
+------
+- Simplify the greeter and provide more info to new users
+- New element handle and toolbox styles
+- Use system fonts by default for diagrams
+- Add tooltips to the application header icons
+- Make sequence diagram messages horizontal by default
+- Make keyboard shortcuts more standard especially on macOS
+- macOS: cursor shortcuts for text entry widgets
+- Load template as part of CI self-test
+- Update docs to make it more clear how to edit CSS
+- Switch doc style to Furo
+- Add custom style sheet language
+- Support non-standard Sphinx directory structures
+- Continue to make model loading and saving more reliable
+- Move Control Flow line style to CSS
+- Do not auto-layout sequence diagrams
+- Use new actions/cache/(save|restore)
+- Remove querymixin from modeling lists
+- Improve Windows build reliability by limiting cores to 2
+- Croatian, Hungarian, Czech, Swedish, and Finnish translation updates
+
 2.13.0
 ------
 - Auto-layout for diagrams
