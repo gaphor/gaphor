@@ -2,15 +2,11 @@ packaging:
   - _packaging/**/*
 translation:
   - po/*
-dependencies:
-  - poetry.lock
 documentation:
   - docs/**/*
   - '*.md'
 chore:
-  - .github/**/*
   - .flake8
-  - pyproject.toml
 python:
   - gaphor/**/*.py
 skip-changelog:
