@@ -17,6 +17,7 @@ from gaphor.core.modeling.event import (
 )
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.ui.abc import UIComponent
+from gaphor.ui.css_property_completion_provider import CssPropertyCompletionProvider
 from gaphor.ui.event import DiagramSelectionChanged
 
 log = logging.getLogger(__name__)
@@ -263,6 +264,7 @@ class PreferencesStack:
         self.element_factory = element_factory
         self.lang_manager = GtkSource.LanguageManager.get_default()
         if Gtk.get_major_version() != 3:
+            GtkSource.init()
             self.lang_manager.append_search_path(
                 str(importlib.resources.files("gaphor") / "ui" / "language-specs")
             )
@@ -285,6 +287,11 @@ class PreferencesStack:
                 "css" if Gtk.get_major_version() == 3 else "gaphorcss"
             )
         )
+
+        if Gtk.get_major_version() == 4:
+            provider = CssPropertyCompletionProvider()
+            view_completion = self.style_sheet_view.get_completion()
+            view_completion.add_provider(provider)
 
         self.event_manager.subscribe(self._model_ready)
         self.event_manager.subscribe(self._style_sheet_created)
