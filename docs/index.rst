@@ -43,15 +43,6 @@ External resources
    first_model
 
 .. toctree::
-   :caption: Installation
-   :hidden:
-
-   linux
-   macos
-   windows
-   container
-
-.. toctree::
    :caption: Features
    :hidden:
 
@@ -59,6 +50,15 @@ External resources
    stereotypes
    scripting
    sphinx
+
+.. toctree::
+   :caption: Installation
+   :hidden:
+
+   linux
+   macos
+   windows
+   container
 
 .. toctree::
    :caption: Modeling languages
