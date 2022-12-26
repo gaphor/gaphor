@@ -15,7 +15,12 @@ from gaphor.diagram.shapes import (
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.SysML.sysml import Block, ValueType
-from gaphor.UML.classes.klass import attribute_watches
+from gaphor.UML.classes.klass import (
+    attribute_watches,
+    attributes_compartment,
+    operation_watches,
+    operations_compartment,
+)
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_property
@@ -31,6 +36,12 @@ class BlockItem(Classified, ElementPresentation[Block]):
         ).watch("show_references", self.update_shapes).watch(
             "show_values", self.update_shapes
         ).watch(
+            "show_operations", self.update_shapes
+        ).watch(
+            "show_attributes", self.update_shapes
+        ).watch(
+            "subject[NamedElement].name"
+        ).watch(
             "subject[NamedElement].name"
         ).watch(
             "subject[NamedElement].namespace.name"
@@ -40,6 +51,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
             "subject[Class].ownedAttribute.aggregation", self.update_shapes
         )
         attribute_watches(self, "Block")
+        operation_watches(self, "Block")
         stereotype_watches(self)
 
     show_stereotypes: attribute[int] = attribute("show_stereotypes", int)
@@ -49,6 +61,10 @@ class BlockItem(Classified, ElementPresentation[Block]):
     show_references: attribute[int] = attribute("show_references", int, default=False)
 
     show_values: attribute[int] = attribute("show_values", int, default=False)
+
+    show_attributes: attribute[int] = attribute("show_attributes", int, default=True)
+
+    show_operations: attribute[int] = attribute("show_operations", int, default=True)
 
     def additional_stereotypes(self):
         from gaphor.RAAML import raaml
@@ -121,6 +137,18 @@ class BlockItem(Classified, ElementPresentation[Block]):
                         and a.aggregation == "composite",
                     )
                 ]
+                or []
+            ),
+            *(
+                self.show_attributes
+                and self.subject
+                and [attributes_compartment(self.subject)]
+                or []
+            ),
+            *(
+                self.show_operations
+                and self.subject
+                and [operations_compartment(self.subject)]
                 or []
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
