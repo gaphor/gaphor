@@ -36,7 +36,7 @@ with mock(["gi.repository.Gtk", "gi.repository.Gdk", "gi.repository.GdkPixbuf", 
 entry_points
 ```
 
-Now let's create a class in our model for every service.
+Now let's create a component in our model for every service.
 
 ```{code-cell} ipython3
 from gaphor import UML
