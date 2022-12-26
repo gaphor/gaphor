@@ -31,31 +31,31 @@ Once the model interface is loaded you'll see the modeling interface.
 The layout of the Gaphor interface is divided into four sections,
 namely:
 
-- Navigator
+- Model Browser
 - Diagrams
 - Diagram Element Toolbox
 - Property Editor
 
 Each section has its own specific function.
 
-## Navigator
+## Model Browser
 
-The navigator section of the interface displays a hierarchical view of
+The Model Browser section of the interface displays a hierarchical view of
 your model. Every model element you create will be inserted into the
-navigator section. This view acts as a tree where you can expand and
+Model Browser. This view acts as a tree where you can expand and
 collapse different elements of your model. This provides an easy way to
 view the elements of your model from an elided perspective. That is, you
 can collapse those model elements that are irrelevant to the task at
 hand.
 
-In the figure above, you will see that there are three elements in
-the navigator view. The root element, _New Model_ is a package. Notice
+In the figure above, you will see that there are two elements in
+the Model Browser. The root element, _New Model_ is a package. Notice
 the small arrow beside _New Model_ that is pointing downward. This
 indicates that the element is expanded. You will also notice the two
 sub-elements are slightly indented in relation to _New Model_.
-The _New Diagram_ element is a diagram.
+The _main_ element is a diagram.
 
-In the navigator view, you can also right-click the model elements to
+In the Model Browser view, you can also right-click the model elements to
 get a context menu. This context menu allows you to find out in which
 diagram model elements are shown, add new diagrams and packages, and
 delete an element.
