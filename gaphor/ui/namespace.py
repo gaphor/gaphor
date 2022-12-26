@@ -55,7 +55,8 @@ def popup_model(element, modeling_language):
     part.append_submenu(
         gettext("New _Diagram"), create_diagram_types_model(modeling_language)
     )
-    part.append(gettext("New _Package"), "tree-view.create-package")
+    if isinstance(element, UML.Package):
+        part.append(gettext("New _Package"), "tree-view.create-package")
     model.append_section(None, part)
 
     part = Gio.Menu.new()
