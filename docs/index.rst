@@ -44,6 +44,13 @@ Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :doc:`Jupyter n
    merge_conflicts
 
 .. toctree::
+   :caption: Getting Started
+   :hidden:
+
+   getting_started
+   first_model
+
+.. toctree::
    :caption: Installation
    :hidden:
 
