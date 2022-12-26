@@ -36,6 +36,13 @@ External resources
 * The `official UML specification <https://www.omg.org/spec/UML>`_. This *is* our data model.
 
 .. toctree::
+   :caption: Getting Started
+   :hidden:
+
+   getting_started
+   first_model
+
+.. toctree::
    :caption: Installation
    :hidden:
 
