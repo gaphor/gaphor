@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.11.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.14.0">
 <Package id="3867dda4-7a95-11ea-a112-7f953848cf85">
 <name>
 <val>Core</val>
@@ -20,6 +20,8 @@
 <ref refid="d092794c-e0b9-11ea-b7ab-f5b4c130f24e"/>
 <ref refid="1ee6aec4-b9a9-11eb-93ad-535118859f0b"/>
 <ref refid="da0afff0-529e-11ec-b0e5-0456e5e540ed"/>
+<ref refid="446a3743-4465-11eb-8946-9bdfa28f7a50"/>
+<ref refid="216581c9-4465-11eb-8946-9bdfa28f7a50"/>
 </reflist>
 </ownedType>
 <presentation>
@@ -33,7 +35,7 @@
 <ref refid="3867dda4-7a95-11ea-a112-7f953848cf85"/>
 </element>
 <name>
-<val>main</val>
+<val>core</val>
 </name>
 <ownedPresentation>
 <reflist>
@@ -867,6 +869,9 @@ diagram {
 <ref refid="216581cc-4465-11eb-8946-9bdfa28f7a50"/>
 </reflist>
 </memberEnd>
+<package>
+<ref refid="3867dda4-7a95-11ea-a112-7f953848cf85"/>
+</package>
 <presentation>
 <reflist>
 <ref refid="216581ca-4465-11eb-8946-9bdfa28f7a50"/>
@@ -939,6 +944,9 @@ diagram {
 <ref refid="446a3746-4465-11eb-8946-9bdfa28f7a50"/>
 </reflist>
 </memberEnd>
+<package>
+<ref refid="3867dda4-7a95-11ea-a112-7f953848cf85"/>
+</package>
 <presentation>
 <reflist>
 <ref refid="446a3744-4465-11eb-8946-9bdfa28f7a50"/>

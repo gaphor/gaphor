@@ -9,7 +9,7 @@ in a diagram.
 All data models in Gaphor are generated from actual Gaphor model files.
 This allows us to provide you nice diagrams of Gaphor’s internal model.
 
-```{diagram} main
+```{diagram} core
 :model: core
 ```
 
