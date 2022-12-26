@@ -17,7 +17,7 @@ from gaphor.core.modeling.event import (
 )
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.css_property_completion_provider import CssPropertyCompletionProvider
+from gaphor.ui.csscompletion import CssPropertyCompletionProvider
 from gaphor.ui.event import DiagramSelectionChanged
 
 log = logging.getLogger(__name__)
