@@ -38,9 +38,9 @@ Gaphor has excellent integration with [Sphinx](sphinx) and [Jupyter notebooks](s
    :hidden:
 
    style_sheets
-   stereotypes
-   scripting
    sphinx
+   scripting
+   stereotypes
 
 .. toctree::
    :caption: Installation
