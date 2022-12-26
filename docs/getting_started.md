@@ -11,8 +11,8 @@ Enough talk, let's get started.
 You can find installers for Gaphor on the [Gaphor Website](https://gaphor.org/download). Gaphor can be installed on
 Linux (Flatpak, AppImage), Windows, and macOS.
 
-Once Gaphor is launched, it provides you a welcome screen.
-It shows you previously openend models and a model templates.
+Once Gaphor is launched, it provides you a welcome screen. It shows you
+previously opened models and model templates.
 
 ![welcome screen](images/getting-started-greeter.png)
 
@@ -34,7 +34,7 @@ namely:
 - Navigator
 - Diagrams
 - Diagram Element Toolbox
-- Properties pane
+- Property Editor
 
 Each section has its own specific function.
 
@@ -60,7 +60,7 @@ get a context menu. This context menu allows you to find out in which
 diagram model elements are shown, add new diagrams and packages, and
 delete an element.
 
-Double clicking on a diagram element will show it in the Diagram
+Double-clicking on a diagram element will show it in the Diagram
 section. Elements such as classes and packages can be dragged from the
 tree view on the diagrams.
 
@@ -77,27 +77,27 @@ Changes you make can be undone by pressing <kbd>Ctrl</kbd>+<kbd>z</kbd>. To re-d
 
 ## Toolbox
 
-The toolbox is mainly used to add new items to a diagram. Select
-the element you want to add by clicking on it. When you click on the
-diagram, the selected element is created. The arrow is selected again,
-so the element can be manipulated.
+The toolbox is used to add new items to a diagram. Select the element you want
+to add by clicking on it. When you click on the diagram, the selected element is
+created. The arrow is selected again, so the element can be manipulated.
 
-Tools can be selected by simply clicking on them. By default the pointer
-tool is selected after every item placement. This can be changed by
-disabling the "Reset tool" option in the Preferences window. Tools can
-also be selected by a keyboard shortcut. The actual character is displayed
-as part of the tooltip. Finally it is also possible to drag elements on the
-canvas from the toolbox.
+Tools can be selected by simply left-clicking on them. By default, the pointer
+tool is selected after every item placement. This can be changed by disabling
+the "Reset tool" option in the Preferences window. Tools can also be selected by
+keyboard shortcuts. The keyboard shortcut can be displayed as a tooltip by
+hovering over the tool button in the toolbox. Finally, it is also possible to
+drag elements on the Diagram from the toolbox.
 
 ## Property Editor
 
-The Property Editor is present on the right side of the diagrams.
-When no item is selected in the diagram, it shows you some tips and tricks.
-When an item is selected on the diagram, it contains the item details.
-Things like name, attributes and stereotypes. It can be opened with
-<kbd>F9</kbd> and the ![sidebar-show-right-symbolic](images/sidebar-show-right-symbolic.svg) icon in the header bar.
+The Property Editor is present on the right side of the diagrams. When no item
+is selected in the diagram, it shows you some tips and tricks. When an item is
+selected on the diagram, it contains the item details like name, attributes and
+stereotypes. It can be opened with <kbd>F9</kbd> and the
+![sidebar-show-right-symbolic](images/sidebar-show-right-symbolic.svg) icon in
+the header bar.
 
-The properties shown depend on the element that is selected.
+The properties that are shown depend on the item that is selected.
 
 ## Model Preferences
 
