@@ -8,7 +8,7 @@ of the system you're developing.
 
 Enough talk, let's get started.
 
-You can find installers for Gaphor on the [Gaphor website](https://gaphor.org/download). Gaphor can be installed on
+You can find installers for Gaphor on the [Gaphor Website](https://gaphor.org/download). Gaphor can be installed on
 Linux (Flatpak, AppImage), Windows, and macOS.
 
 Once Gaphor is launched, it provides you a welcome screen.
