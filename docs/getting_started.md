@@ -31,10 +31,10 @@ Once the model interface is loaded you'll see the modeling interface.
 The layout of the Gaphor interface is divided into four sections,
 namely:
 
-- Model Browser
-- Diagrams
-- Diagram Element Toolbox
-- Property Editor
+1. Model Browser
+2. Diagrams
+3. Diagram Element Toolbox
+4. Property Editor
 
 Each section has its own specific function.
 
