@@ -61,7 +61,7 @@ def load_default_model(element_factory):
         model.name = gettext("New model")
         diagram = element_factory.create(Diagram)
         diagram.element = model
-        diagram.name = gettext("main")
+        diagram.name = gettext("New diagram")
     element_factory.model_ready()
 
 
