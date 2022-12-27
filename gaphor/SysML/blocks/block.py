@@ -15,12 +15,7 @@ from gaphor.diagram.shapes import (
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.SysML.sysml import Block, ValueType
-from gaphor.UML.classes.klass import (
-    attribute_watches,
-    attributes_compartment,
-    operation_watches,
-    operations_compartment,
-)
+from gaphor.UML.classes.klass import attributes_compartment, operation_watches
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_property
@@ -38,8 +33,6 @@ class BlockItem(Classified, ElementPresentation[Block]):
         ).watch(
             "show_operations", self.update_shapes
         ).watch(
-            "show_attributes", self.update_shapes
-        ).watch(
             "subject[NamedElement].name"
         ).watch(
             "subject[NamedElement].name"
@@ -50,7 +43,6 @@ class BlockItem(Classified, ElementPresentation[Block]):
         ).watch(
             "subject[Class].ownedAttribute.aggregation", self.update_shapes
         )
-        attribute_watches(self, "Block")
         operation_watches(self, "Block")
         stereotype_watches(self)
 
@@ -148,7 +140,9 @@ class BlockItem(Classified, ElementPresentation[Block]):
             *(
                 self.show_operations
                 and self.subject
-                and [operations_compartment(self.subject)]
+                and [
+                    self.operations_compartment(gettext("operations"), self.subject),
+                ]
                 or []
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
@@ -183,4 +177,28 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 "justify-content": JustifyContent.START,
             },
             draw=draw_top_separator,
+        )
+
+    def operations_compartment(self, name, predicate):
+        def lazy_format(operation):
+            return lambda: format_property(operation) or gettext("unnamed")
+
+        return Box(
+            Text(
+                text=name,
+                style={
+                    "padding": (0, 0, 4, 0),
+                    "font-size": "x-small",
+                    "font-style": FontStyle.ITALIC,
+                },
+            ),
+            *(
+                Text(text=lazy_format(operation), style={"text-align": TextAlign.LEFT})
+                for operation in self.subject.ownedOperation
+            ),
+            style={
+                "padding": (4, 4, 4, 4),
+                "min-height": 8,
+                "justify-content": JustifyContent.START,
+            },
         )

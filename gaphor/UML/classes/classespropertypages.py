@@ -271,7 +271,6 @@ class InterfacePropertyPage(PropertyPageBase):
 @PropertyPages.register(DataTypeItem)
 @PropertyPages.register(ClassItem)
 @PropertyPages.register(InterfaceItem)
-@PropertyPages.register(BlockItem)
 class AttributesPage(PropertyPageBase):
     """An editor for attributes associated with classes and interfaces."""
 
