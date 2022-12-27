@@ -377,6 +377,7 @@ def merge_conflict_dialog(window: Gtk.Window, filename, handler) -> None:
     dialog.set_close_response("cancel")
 
     def response(dialog, answer):
+        dialog.set_transient_for(None)
         dialog.destroy()
         handler(answer)
 
