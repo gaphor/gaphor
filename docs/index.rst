@@ -23,7 +23,7 @@ What are you waiting for? :doc:`Let's get started <getting_started>`!
 For download instructions, and the blog,
 please visit the `Gaphor Website <https://gaphor.org>`_.
 
-Gaphor has excellent integration with [Sphinx](sphinx) and [Jupyter notebooks](scripting).
+Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :doc:`Jupyter notebooks <scripting>`.
 
 
 .. toctree::
