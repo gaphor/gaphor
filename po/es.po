@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-12-03 16:14-0500\n"
-"PO-Revision-Date: 2022-10-22 06:53+0000\n"
+"PO-Revision-Date: 2022-12-27 21:51+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@tuta.io>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
 ">\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -2381,12 +2381,10 @@ msgid "Save"
 msgstr "Guardar"
 
 #: gaphor/ui/greeter.glade:55
-#, fuzzy
 msgid "Recently opened models"
-msgstr "Modelos recientes…"
+msgstr "Modelos abiertos recientemente"
 
 #: gaphor/ui/greeter.glade:76
-#, fuzzy
 msgid "Create a new model"
 msgstr "Crear un modelo nuevo"
 
@@ -2399,30 +2397,28 @@ msgid "Generic"
 msgstr "Genérico"
 
 #: gaphor/ui/greeter.py:30
-#, fuzzy
 msgid "An empty model"
-msgstr "Modelo nuevo"
+msgstr "Un modelo vacío"
 
 #: gaphor/ui/greeter.py:37
 msgid "Unified Modeling Language template"
-msgstr ""
+msgstr "Plantilla de Lenguaje Unificado de Modelado"
 
 #: gaphor/ui/greeter.py:44
 msgid "Systems Modeling Language template"
-msgstr ""
+msgstr "Plantilla de Lenguaje de Modelado de Sistemas"
 
 #: gaphor/ui/greeter.py:51
 msgid "Risk Analysis and Assessment Modeling Language template"
-msgstr ""
+msgstr "Plantilla de Lenguaje de Modelado de Análisis y Evaluación de Riesgos"
 
 #: gaphor/ui/greeter.py:58
 msgid "Layered C4 Model template"
-msgstr ""
+msgstr "Plantilla de modelo C4 por capas"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:44
-#, fuzzy
 msgid "Open Model…"
-msgstr "Abrir un modelo…"
+msgstr "Abrir modelo…"
 
 #: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
@@ -2435,12 +2431,11 @@ msgstr "Acerca de Gaphor"
 
 #: gaphor/ui/greeter.ui:79
 msgid "Recently Opened"
-msgstr ""
+msgstr "Abierto recientemente"
 
 #: gaphor/ui/greeter.ui:84
-#, fuzzy
 msgid "Create New Model"
-msgstr "Crear un modelo nuevo…"
+msgstr "Crear modelo nuevo"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
@@ -2487,14 +2482,12 @@ msgid "Profile: {name}"
 msgstr "Perfil: {name}"
 
 #: gaphor/ui/mainwindow.ui:48
-#, fuzzy
 msgid "Open diagram menu"
-msgstr "Diagrama de componentes"
+msgstr "Abrir el menú del diagrama"
 
 #: gaphor/ui/mainwindow.ui:55
-#, fuzzy
 msgid "Open application menu"
-msgstr "Abrir Menú"
+msgstr "Abrir el menú de la aplicación"
 
 #: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:61
 msgid "Toggle property editor"
