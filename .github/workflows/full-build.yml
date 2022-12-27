@@ -54,7 +54,7 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3.2.0
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
@@ -121,7 +121,7 @@ jobs:
       - name: Install Linux Dependencies
         run: apt-get update -qq && apt-get install -qq --no-install-recommends graphviz
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3.2.0
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-container
@@ -177,7 +177,7 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3.2.0
+        uses: actions/cache@v3.2.2
         with:
           path: ~/Library/Caches/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -240,7 +240,7 @@ jobs:
       - name: Install macOS Dependencies
         uses: ./.github/actions/macos_dependencies
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3.2.0
+        uses: actions/cache@v3.2.2
         with:
           path: ~/Library/Caches/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -255,18 +255,18 @@ jobs:
     env:
       gvsbuild_version: 2022.6.0
       # Bump this number if you want to force a rebuild of gvsbuild with the same version
-      gvsbuild_update: 2
+      gvsbuild_update: 4
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
       - name: GTK binaries create dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: GTK binaries get from cache
-        uses: actions/cache@v3.2.0
+        uses: actions/cache@v3.2.2
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
-          key: gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}
+          key: ${{ runner.os }}-gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
         uses: actions/setup-python@v4.4.0
@@ -298,7 +298,7 @@ jobs:
           move "C:\Program Files\Git\notbin" "C:\Program Files\Git\bin"
       - name: GTK binaries output cache key
         id: output
-        run: Write-Output "cachekey=gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}" >> $env:GITHUB_OUTPUT
+        run: Write-Output "cachekey=${{ runner.os }}-gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}" >> $env:GITHUB_OUTPUT
 
   windows:
     needs: [lint, windows-build-gtk]
@@ -317,7 +317,7 @@ jobs:
       - name: Create GTK binaries dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: Get GTK binaries from cache
-        uses: actions/cache/restore@v3.2.0
+        uses: actions/cache/restore@v3.2.2
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
@@ -340,7 +340,7 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3.2.0
+        uses: actions/cache@v3.2.2
         with:
           path: ~\AppData\Local\pip\Cache
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}

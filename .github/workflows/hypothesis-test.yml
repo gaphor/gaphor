@@ -26,13 +26,13 @@ jobs:
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3.2.0
+        uses: actions/cache@v3.2.2
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
       - name: Use Hypothesis Cache
         id: restore-cache
-        uses: actions/cache/restore@v3.2.0
+        uses: actions/cache/restore@v3.2.2
         with:
           path: .hypothesis
           key: ${{ runner.os }}-hypothesis
@@ -52,7 +52,7 @@ jobs:
             Test run failed for commit ${{github.sha}}.
             See https://github.com/gaphor/gaphor/actions/workflows/hypothesis-test.yml.
       - name: Save cache
-        uses: actions/cache/save@v3.2.0
+        uses: actions/cache/save@v3.2.2
         if: always()
         with:
           path: .hypothesis
