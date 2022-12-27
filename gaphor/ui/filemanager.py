@@ -5,7 +5,6 @@ from __future__ import annotations
 import logging
 import tempfile
 from pathlib import Path
-from queue import Queue
 from typing import Callable
 
 from gaphas.decorators import g_async
@@ -118,33 +117,27 @@ class FileManager(Service, ActionProvider):
         """
         # First claim file name, so any other files will be opened in a different session
         self.filename = filename
-        queue: Queue[int] = Queue(0)
-        status_window = None
 
-        @g_async()
-        def create_status_window():
-            nonlocal status_window
-            status_window = StatusWindow(
-                gettext("Loading…"),
-                gettext("Loading model from {filename}").format(filename=filename),
-                parent=self.parent_window,
-                queue=queue,
-            )
+        status_window = StatusWindow(
+            gettext("Loading…"),
+            gettext("Loading model from {filename}").format(filename=filename),
+            parent=self.parent_window,
+        )
 
         def done():
-            if status_window:
-                status_window.destroy()
+            status_window.destroy()
             if on_load_done:
                 on_load_done()
 
-        create_status_window()
-        self._load_async(filename, queue, done)
+        self._load_async(filename, status_window.progress, done)
 
     def load_template(self, template):
         storage.load(template, self.element_factory, self.modeling_language)
         self.event_manager.handle(ModelLoaded(self))
 
-    def _load_async(self, filename: Path, queue=None, done=None):
+    def _load_async(
+        self, filename: Path, progress: Callable[[int], None] | None = None, done=None
+    ):
         assert isinstance(filename, Path)
 
         def open_model(encoding):
@@ -154,8 +147,8 @@ class FileManager(Service, ActionProvider):
                     self.element_factory,
                     self.modeling_language,
                 ):
-                    if queue:
-                        queue.put(percentage)
+                    if progress:
+                        progress(percentage)
                     yield percentage
 
         # Use low prio, so screen updates do happen
@@ -252,12 +245,10 @@ class FileManager(Service, ActionProvider):
         if not filename or (filename.exists() and not filename.is_file()):
             return
 
-        queue: Queue[int] = Queue()
         status_window = StatusWindow(
             gettext("Saving…"),
             gettext("Saving model to {filename}").format(filename=filename),
             parent=self.parent_window,
-            queue=queue,
         )
 
         @g_async()
@@ -265,7 +256,7 @@ class FileManager(Service, ActionProvider):
             try:
                 with filename.open("w", encoding="utf-8") as out:
                     for percentage in storage.save_generator(out, self.element_factory):
-                        queue.put(percentage)
+                        status_window.progress(percentage)
                         yield
 
                 self.filename = filename
