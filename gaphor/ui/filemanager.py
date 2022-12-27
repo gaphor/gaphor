@@ -185,7 +185,7 @@ class FileManager(Service, ActionProvider):
                         else:
                             self.resolve_merge_conflict(filename, resolution=answer)
 
-                    merge_conflict_dialog(
+                    resolve_merge_conflict_dialog(
                         self.parent_window, filename, handle_merge_conflict
                     )
             except Exception:
@@ -359,7 +359,7 @@ class FileManager(Service, ActionProvider):
             confirm_shutdown()
 
 
-def merge_conflict_dialog(window: Gtk.Window, filename, handler) -> None:
+def resolve_merge_conflict_dialog(window: Gtk.Window, filename, handler) -> None:
     dialog = Adw.MessageDialog.new(
         window,
         gettext("Resolve merge conflict in model “{filename}”.").format(
@@ -368,12 +368,12 @@ def merge_conflict_dialog(window: Gtk.Window, filename, handler) -> None:
     )
     dialog.set_body(
         gettext(
-            "It looks like the model contains a merge conflict. Do you want to resolve it?"
+            "The model you are opening contains a merge conflict. Do you want to open the current model or the incoming change to the model?"
         )
     )
     dialog.add_response("cancel", gettext("Cancel"))
-    dialog.add_response("current", gettext("Use current model"))
-    dialog.add_response("incoming", gettext("Use incoming model"))
+    dialog.add_response("current", gettext("Open current"))
+    dialog.add_response("incoming", gettext("Open incoming"))
     dialog.set_close_response("cancel")
 
     def response(dialog, answer):
