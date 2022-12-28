@@ -43,6 +43,9 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
+    outputs:
+      targz: gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
+      wheel: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
     steps:
       - uses: actions/checkout@v3.2.0
         with:
@@ -79,9 +82,6 @@ jobs:
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
-      - name: Publish to PyPI (release only)
-        if: github.event_name == 'release'
-        run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
   linux-flatpak-devel:
     needs: lint
@@ -380,3 +380,22 @@ jobs:
         if: always()
         run: type gaphor-self-test.txt
         shell: cmd
+
+  publish-to-pypi:
+    name: Publish to PyPI (release only)
+    needs: [ linux-gtk4, linux-flatpak-devel, macos-gtk4, check-linux-appimage, check-macos-app, check-windows-installer ]
+    runs-on: ubuntu-22.04
+    # if: github.event_name == 'release'
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.linux-gtk4.outputs.targz }}
+          path: dist
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.linux-gtk4.outputs.wheel }}
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
