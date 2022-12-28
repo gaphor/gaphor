@@ -1,3 +1,11 @@
+2.14.1
+------
+- Add autocompletion for CSS properties
+- Fix coredumps on Flatpak
+- Hide New Package menu unless package selected
+- Update Getting Started pages
+- Spanish translation update
+
 2.14.0
 ------
 - Simplify the greeter and provide more info to new users
