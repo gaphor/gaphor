@@ -397,7 +397,7 @@ jobs:
     name: Publish to PyPI (release only)
     needs: [ linux-gtk4, linux-flatpak-devel, macos-gtk4, check-linux-appimage, check-macos-app, check-windows-installer ]
     runs-on: ubuntu-22.04
-    # if: github.event_name == 'release'
+    if: github.event_name == 'release'
     steps:
       - uses: actions/download-artifact@v3
         with:
@@ -410,4 +410,3 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_TOKEN }}
-          repository_url: https://test.pypi.org/legacy/
