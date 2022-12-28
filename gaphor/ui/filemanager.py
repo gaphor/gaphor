@@ -372,8 +372,8 @@ def resolve_merge_conflict_dialog(window: Gtk.Window, filename, handler) -> None
         )
     )
     dialog.add_response("cancel", gettext("Cancel"))
-    dialog.add_response("current", gettext("Open current"))
-    dialog.add_response("incoming", gettext("Open incoming"))
+    dialog.add_response("current", gettext("Open Current"))
+    dialog.add_response("incoming", gettext("Open Incoming"))
     dialog.set_close_response("cancel")
 
     def response(dialog, answer):
