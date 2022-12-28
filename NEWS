@@ -1,3 +1,7 @@
+2.14.2
+------
+- Fix macOS release failed
+
 2.14.1
 ------
 - Add autocompletion for CSS properties
