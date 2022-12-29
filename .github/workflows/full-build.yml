@@ -10,6 +10,7 @@ env:
 
 jobs:
   skip-check:
+    name: Skip Run if Duplicate
     runs-on: ubuntu-latest
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
@@ -21,6 +22,7 @@ jobs:
           do_not_skip: '["release", "workflow_dispatch", "schedule"]'
 
   lint:
+    name: Lint
     needs: skip-check
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -39,10 +41,14 @@ jobs:
         run: pip install babel && python po/check-babel.py
 
   linux-gtk4:
+    name: Linux (GTK4)
     needs: lint
     runs-on: ubuntu-22.04
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
+    outputs:
+      targz: gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
+      wheel: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
     steps:
       - uses: actions/checkout@v3.2.0
         with:
@@ -79,11 +85,9 @@ jobs:
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
-      - name: Publish to PyPI (release only)
-        if: github.event_name == 'release'
-        run: poetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
 
   linux-flatpak-devel:
+    name: Linux (Devel Flatpak)
     needs: lint
     runs-on: ubuntu-22.04
     steps:
@@ -102,6 +106,7 @@ jobs:
         run: xvfb-run flatpak-builder --run ./.flatpak-build org.gaphor.Gaphor.json gaphor --self-test
 
   linux-appimage:
+    name: Linux (AppImage)
     needs: lint
     runs-on: ubuntu-20.04
     env:
@@ -137,6 +142,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   check-linux-appimage:
+    name: Check Linux AppImage
     needs: linux-appimage
     runs-on: ubuntu-20.04
     timeout-minutes: 10
@@ -152,6 +158,7 @@ jobs:
           xvfb-run ./${{ needs.linux-appimage.outputs.appimage }} --self-test
 
   macos:
+    name: macOS
     needs: lint
     runs-on: macos-11
     permissions:
@@ -199,6 +206,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   check-macos-app:
+    name: Check macOS App
     needs: macos
     runs-on: macos-latest
     if: ${{ github.actor != 'dependabot[bot]' }}
@@ -222,6 +230,7 @@ jobs:
           Gaphor.app/Contents/MacOS/gaphor-exe --self-test
 
   macos-gtk4:
+    name: macOS (GTK4)
     needs: lint
     runs-on: macos-latest
     timeout-minutes: 30
@@ -249,6 +258,7 @@ jobs:
         uses: ./.github/actions/setup_and_test
 
   windows-build-gtk:
+    name: Windows (Build GTK)
     needs: skip-check
     runs-on: windows-latest
     timeout-minutes: 60
@@ -301,6 +311,7 @@ jobs:
         run: Write-Output "cachekey=${{ runner.os }}-gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}" >> $env:GITHUB_OUTPUT
 
   windows:
+    name: Windows
     needs: [lint, windows-build-gtk]
     runs-on: windows-latest
     env:
@@ -359,6 +370,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
   check-windows-installer:
+    name: Check Windows Installer
     needs: windows
     runs-on: windows-latest
     timeout-minutes: 15
@@ -380,3 +392,21 @@ jobs:
         if: always()
         run: type gaphor-self-test.txt
         shell: cmd
+
+  publish-to-pypi:
+    name: Publish to PyPI (release only)
+    needs: [ linux-gtk4, linux-flatpak-devel, macos-gtk4, check-linux-appimage, check-macos-app, check-windows-installer ]
+    runs-on: ubuntu-22.04
+    if: github.event_name == 'release'
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.linux-gtk4.outputs.targz }}
+          path: dist
+      - uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.linux-gtk4.outputs.wheel }}
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
