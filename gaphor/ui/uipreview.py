@@ -13,7 +13,7 @@ from gaphor.ui.styling import Styling
 
 
 def load_components(ui_filename):
-    with open(ui_filename) as ui_file:
+    with open(ui_filename, encoding="utf-8") as ui_file:
         ui_xml = load_ui_file(ui_file)
 
     builder = Gtk.Builder.new_from_string(ui_xml, -1)

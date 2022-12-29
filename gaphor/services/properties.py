@@ -129,7 +129,7 @@ class Properties(Service):
 
         if os.path.exists(filename) and os.path.isfile(filename):
 
-            data = Path(filename).read_text()
+            data = Path(filename).read_text(encoding="utf-8")
             try:
                 self._properties = ast.literal_eval(data)
             except SyntaxError:

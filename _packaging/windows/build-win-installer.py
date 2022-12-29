@@ -6,7 +6,7 @@ import subprocess
 from pathlib import Path
 
 version = subprocess.run(
-    ["poetry", "version", "-s"], capture_output=True, text=True
+    ["poetry", "version", "-s"], encoding="utf-8", capture_output=True, text=True
 ).stdout.rstrip()
 
 
@@ -32,6 +32,7 @@ def build_installer(
             f"-DVERSION={version}",
             str(nsi),
         ],
+        encoding="utf-8",
         capture_output=True,
         text=True,
     )
@@ -41,10 +42,10 @@ def build_installer(
 
 def concatenate_files(input_files: list[Path], output_file: Path) -> None:
     print(f"Opening {output_file} for write")
-    with open(output_file, "wb") as writer:
+    with open(output_file, "wb", encoding="utf-8") as writer:
         for input_file in input_files:
             print(f"Writing {input_file}")
-            with open(input_file, "rb") as reader:
+            with open(input_file, "rb", encoding="utf-8") as reader:
                 shutil.copyfileobj(reader, writer)
 
 
@@ -52,10 +53,10 @@ def unix2dos(file_path: Path) -> None:
     win_line_ending = b"\r\n"
     unix_line_ending = b"\n"
 
-    with open(file_path, "rb") as open_file:
+    with open(file_path, "rb", encoding="utf-8") as open_file:
         content = open_file.read()
     content = content.replace(win_line_ending, unix_line_ending)
-    with open(file_path, "wb") as open_file:
+    with open(file_path, "wb", encoding="utf-8") as open_file:
         open_file.write(content)
 
 

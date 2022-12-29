@@ -35,7 +35,7 @@ def test_load_properties(properties, event_manager):
 def test_load_of_corrupted_properties(properties, event_manager, caplog):
     properties.set("test", 1)
     properties.on_model_saved(ModelSaved(None, "test_load_properties"))
-    Path(properties.filename).write_text("{ invalid content }")
+    Path(properties.filename).write_text("{ invalid content }", encoding="utf-8")
 
     new_properties = gaphor.services.properties.Properties(event_manager)
     new_properties.on_model_loaded(ModelLoaded(None, "test_load_properties"))

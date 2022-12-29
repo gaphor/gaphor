@@ -119,7 +119,7 @@ def load_model(model_file: str) -> ElementFactory:
 
     modeling_language = ModelingLanguageService()
 
-    with open(model_file) as file_obj:
+    with open(model_file, encoding="utf-8") as file_obj:
         storage.load(
             file_obj,
             element_factory,

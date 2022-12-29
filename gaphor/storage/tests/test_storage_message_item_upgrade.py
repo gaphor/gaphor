@@ -5,7 +5,7 @@ from gaphor.UML import diagramitems
 
 
 def test_message_item_upgrade(element_factory, modeling_language, test_models):
-    with (test_models / "multiple-messages.gaphor").open() as f:
+    with (test_models / "multiple-messages.gaphor").open(encoding="utf-8") as f:
         load(f, element_factory, modeling_language)
 
     diagram = element_factory.lselect(Diagram)[0]

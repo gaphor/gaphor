@@ -299,7 +299,7 @@ class ModelConsistency(RuleBasedStateMachine):
             ), f"{self.model.lselect()} != {new_model.lselect()}"
             assert {e.id for e in self.model} == {e.id for e in new_model}
         except Exception:
-            with open("falsifying_model.gaphor", "w") as out:
+            with open("falsifying_model.gaphor", "w", encoding="utf") as out:
                 storage.save(out, self.model)
             raise
 

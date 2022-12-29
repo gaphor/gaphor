@@ -33,6 +33,6 @@ def test_xmi_export(element_factory, tmp_path):
 
     exporter.export(f)
 
-    content = f.read_text()
+    content = f.read_text(encoding="utf-8")
 
     assert '<XMI xmi.version="2.1"' in content

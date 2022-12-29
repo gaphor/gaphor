@@ -4,7 +4,7 @@ from gaphor.storage.parser import parse
 
 
 def test_parsing_v2_1_model_with_grouped_item(test_models):
-    with open(test_models / "node-component-v2.1.gaphor") as f:
+    with open(test_models / "node-component-v2.1.gaphor", encoding="utf-8") as f:
         elements = parse(f)
 
     diagram = next(e for e in elements.values() if e.type == "Diagram")
@@ -18,7 +18,7 @@ def test_parsing_v2_1_model_with_grouped_item(test_models):
 
 
 def test_parsing_of_open_file(test_models):
-    with (test_models / "test-model.gaphor").open() as model:
+    with (test_models / "test-model.gaphor").open(encoding="utf-8") as model:
         elements = parse(model)
 
     assert elements

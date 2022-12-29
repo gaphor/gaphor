@@ -13,7 +13,7 @@ from gaphor.UML.classes.association import (
 
 
 def test_association_ends_are_set(element_factory, modeling_language, test_models):
-    with (test_models / "association-ends.gaphor").open() as file_obj:
+    with (test_models / "association-ends.gaphor").open(encoding="utf-8") as file_obj:
         load(file_obj, element_factory, modeling_language)
     composite = next(
         element_factory.select(

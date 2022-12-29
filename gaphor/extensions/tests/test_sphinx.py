@@ -5,12 +5,12 @@ from gaphor.extensions.sphinx import setup as sphinx_setup
 
 
 def test_setup(tmp_path):
-    (tmp_path / "conf.py").write_text("")
+    (tmp_path / "conf.py").write_text("", encoding="utf-8")
     gen = sphinx.application.Sphinx(
         srcdir="docs",
-        confdir=tmp_path,
-        outdir=tmp_path,
-        doctreedir=tmp_path,
+        confdir=str(tmp_path),
+        outdir=str(tmp_path),
+        doctreedir=str(tmp_path),
         buildername="html",
     )
 
@@ -26,7 +26,8 @@ def test_setup(tmp_path):
 
 def test_setup_load_models(tmp_path):
     (tmp_path / "conf.py").write_text(
-        "gaphor_models = {'style-sheets': 'style-sheet-examples.gaphor'}"
+        "gaphor_models = {'style-sheets': 'style-sheet-examples.gaphor'}",
+        encoding="utf-8",
     )
     gen = sphinx.application.Sphinx(
         srcdir="docs",

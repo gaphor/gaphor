@@ -28,8 +28,8 @@ def test_core_model(tmp_path):
         outfile=outfile,
     )
 
-    current_model = Path(coremodel.__file__).read_text()
-    generated_model = outfile.read_text()
+    current_model = Path(coremodel.__file__).read_text(encoding="utf-8")
+    generated_model = outfile.read_text(encoding="utf-8")
 
     assert generated_model == current_model
 
@@ -43,8 +43,8 @@ def test_uml_model(tmp_path):
         outfile=outfile,
     )
 
-    current_model = Path(uml.__file__).read_text()
-    generated_model = outfile.read_text()
+    current_model = Path(uml.__file__).read_text(encoding="utf-8")
+    generated_model = outfile.read_text(encoding="utf-8")
 
     assert generated_model == current_model
 
@@ -57,8 +57,8 @@ def test_c4model_model(tmp_path):
         outfile=outfile,
     )
 
-    current_model = Path(c4model.__file__).read_text()
-    generated_model = outfile.read_text()
+    current_model = Path(c4model.__file__).read_text(encoding="utf-8")
+    generated_model = outfile.read_text(encoding="utf-8")
 
     assert generated_model == current_model
 
@@ -74,8 +74,8 @@ def test_sysml_model(tmp_path):
         outfile=outfile,
     )
 
-    current_model = Path(sysml.__file__).read_text()
-    generated_model = outfile.read_text()
+    current_model = Path(sysml.__file__).read_text(encoding="utf-8")
+    generated_model = outfile.read_text(encoding="utf-8")
 
     assert generated_model == current_model
 
@@ -92,7 +92,7 @@ def test_raaml_model(tmp_path):
         outfile=outfile,
     )
 
-    current_model = Path(raaml.__file__).read_text()
-    generated_model = outfile.read_text()
+    current_model = Path(raaml.__file__).read_text(encoding="utf-8")
+    generated_model = outfile.read_text(encoding="utf-8")
 
     assert generated_model == current_model

@@ -19,7 +19,7 @@ class Overrides:
         self.overrides = {}
         self.header = ""
         if filename:
-            with open(filename) as fp:
+            with open(filename, encoding="utf-8") as fp:
                 self.read_overrides(fp)
 
     def read_overrides(self, fp):
