@@ -30,5 +30,7 @@ runs:
       run: poetry run poe gettext-mo
       shell: bash
     - name: Test with Pytest
+      env:
+        PYTHONWARNDEFAULTENCODING: 'true'
       run: ${{ runner.os == 'Linux' && 'xvfb-run' || '' }} poetry run pytest --cov=gaphor
       shell: bash
