@@ -17,7 +17,7 @@ def new_filter(name, pattern, mime_type=None):
     f = Gtk.FileFilter.new()
     f.set_name(name)
     f.add_pattern(pattern)
-    if mime_type:
+    if mime_type and sys.platform != "win32":
         f.add_mime_type(mime_type)
     return f
 
