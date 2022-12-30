@@ -4,7 +4,8 @@ import time
 from pathlib import Path
 
 import pyinstaller_versionfile
-from PyInstaller.utils.hooks import copy_metadata, collect_entry_point
+import semver
+from PyInstaller.utils.hooks import collect_entry_point, copy_metadata
 
 try:
     import tomllib
@@ -38,9 +39,8 @@ def get_version() -> str:
     return str(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
 
 
-def get_semver_version() -> str:
-    version = get_version()
-    return version[: version.rfind(".dev")] if "dev" in version else version
+def get_semver_version() -> semver.VersionInfo:
+    return semver.VersionInfo.parse(get_version())
 
 
 def collect_entry_points(*names):
@@ -110,9 +110,10 @@ a = Analysis(
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
+ver = get_semver_version()
 pyinstaller_versionfile.create_versionfile(
     output_file="windows/file_version_info.txt",
-    version=get_semver_version(),
+    version=f"{ver.major}.{ver.minor}.{ver.patch}.0",
     company_name="Gaphor",
     file_description="Gaphor",
     internal_name="Gaphor",
@@ -137,10 +138,10 @@ exe = EXE(
     codesign_identity=os.getenv("CODESIGN_IDENTITY"),
     entitlements_file="macos/entitlements.plist",
 )
-coll = COLLECT(
+coll = COLLECT(  # type: ignore
     exe, a.binaries, a.zipfiles, a.datas, strip=False, upx=True, name="gaphor"
 )
-app = BUNDLE(
+app = BUNDLE(  # type: ignore
     coll,
     name="Gaphor.app",
     icon="macos/gaphor.icns",

@@ -80,6 +80,7 @@ optional=true
 pyinstaller = "^5.7"
 pyinstaller-versionfile = "^2.0.0"
 tomli = ">=1.2,<3.0"
+semver = "^2.13.0"
 
 [tool.poetry.extras]
 docs = [ "sphinx", "sphinx-copybutton", "myst-nb", "furo" ]
