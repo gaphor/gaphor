@@ -7,10 +7,18 @@ __all__ = ["gettext"]
 import functools
 import gettext as _gettext
 import importlib.resources
+import locale
 import logging
+import os
+import sys
 import xml.etree.ElementTree as etree
 
 log = logging.getLogger(__name__)
+
+if sys.platform == "win32" and os.getenv("LANG") is None:
+    language, _ = locale.getlocale()
+    if language:
+        os.environ["LANG"] = language
 
 try:
     localedir = importlib.resources.files("gaphor") / "locale"
