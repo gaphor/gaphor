@@ -51,7 +51,7 @@ def collect_entry_points(*names):
     return hidden_imports
 
 
-a = Analysis(
+a = Analysis(  # type: ignore
     ["../gaphor/__main__.py"],
     pathex=["../"],
     binaries=[],
@@ -108,7 +108,7 @@ a = Analysis(
     noarchive=False,
 )
 
-pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)  # type: ignore
 
 ver = get_semver_version()
 pyinstaller_versionfile.create_versionfile(
@@ -122,7 +122,7 @@ pyinstaller_versionfile.create_versionfile(
     product_name="Gaphor",
 )
 
-exe = EXE(
+exe = EXE(  # type: ignore
     pyz,
     a.scripts,
     options=[],

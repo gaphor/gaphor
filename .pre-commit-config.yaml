@@ -3,17 +3,20 @@ repos:
   rev: 22.12.0
   hooks:
   - id: black
+    types_or: [python, spec]
     language_version: python3
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v0.991
   hooks:
   - id: mypy
+    types_or: [python, spec]
     additional_dependencies:
     - types-docutils
 - repo: https://github.com/PyCQA/flake8
   rev: 6.0.0
   hooks:
   - id: flake8
+    types_or: [python, spec]
     additional_dependencies:
       - flake8-encodings==0.5.0.post1
 - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -28,6 +31,7 @@ repos:
   rev: 5.11.4
   hooks:
   - id: isort
+    types_or: [python, spec]
     additional_dependencies: [toml]
 - repo: https://github.com/PyCQA/docformatter
   rev: v1.5.1
@@ -43,3 +47,4 @@ repos:
   rev: v3.3.1
   hooks:
   - id: pyupgrade
+    types_or: [python, spec]
