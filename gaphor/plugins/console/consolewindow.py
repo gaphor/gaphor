@@ -36,7 +36,7 @@ class ConsoleWindow(UIComponent, ActionProvider):
 
         console_py = os.path.join(get_config_dir(), "console.py")
         try:
-            with open(console_py) as f:
+            with open(console_py, encoding="utf-8") as f:
                 for line in f:
                     console.push(line)
         except OSError:

@@ -1,3 +1,5 @@
+import locale
+
 from gaphor import UML
 from gaphor.UML.actions.objectnode import ObjectNodeItem
 
@@ -26,4 +28,6 @@ def test_ordering(create):
     node.subject.ordering = "unordered"
     node.show_ordering = True
 
-    assert "{ ordering = unordered }" == ordering.text()
+    language = locale.getlocale()[0]
+    if language == "en_US":
+        assert "{ ordering = unordered }" == ordering.text()

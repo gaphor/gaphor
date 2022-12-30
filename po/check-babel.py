@@ -33,7 +33,7 @@ def check_po_files():
     po_path: Path = Path(__file__).resolve().parent
     have_errors = False
     for path in (path for path in po_path.iterdir() if path.suffix == ".po"):
-        with path.open() as po:
+        with path.open(encoding="utf-8") as po:
             messages = pofile.read_po(po)
 
         for message, error in invalid(messages):

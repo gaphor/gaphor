@@ -6,7 +6,7 @@ import subprocess
 from pathlib import Path
 
 version = subprocess.run(
-    ["poetry", "version", "-s"], capture_output=True, text=True
+    ["poetry", "version", "-s"], encoding="utf-8", capture_output=True, text=True
 ).stdout.rstrip()
 
 
@@ -32,6 +32,7 @@ def build_installer(
             f"-DVERSION={version}",
             str(nsi),
         ],
+        encoding="utf-8",
         capture_output=True,
         text=True,
     )

@@ -191,7 +191,9 @@ class MainWindow(Service, ActionProvider):
         main_content = builder.get_object("main-content")
         deserialize(
             main_content,
-            (importlib.resources.files("gaphor.ui") / "layout.xml").read_text(),
+            (importlib.resources.files("gaphor.ui") / "layout.xml").read_text(
+                encoding="utf-8"
+            ),
             _factory,
             self.properties,
         )

@@ -106,14 +106,14 @@ def main(
     )
     overrides = Overrides(overridesfile) if overridesfile else None
 
-    with (open(outfile, "w") if outfile else contextlib.nullcontext(sys.stdout)) as out:  # type: ignore[attr-defined]
+    with (open(outfile, "w", encoding="utf-8") if outfile else contextlib.nullcontext(sys.stdout)) as out:  # type: ignore[attr-defined]
         for line in coder(model, super_models, overrides):
             print(line, file=out)
 
 
 def load_model(modelfile: str, modeling_language: ModelingLanguage) -> ElementFactory:
     element_factory = ElementFactory()
-    with open(modelfile) as file_obj:
+    with open(modelfile, encoding="utf-8") as file_obj:
         storage.load(
             file_obj,
             element_factory,

@@ -14,7 +14,7 @@ def test_export_to_svg(diagram_with_box, tmp_path):
     f = tmp_path / "test.svg"
 
     save_svg(f, diagram_with_box)
-    content = f.read_text()
+    content = f.read_text(encoding="utf-8")
 
     assert "<svg" in content
 

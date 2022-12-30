@@ -122,9 +122,9 @@ class SelfTest(Service):
 
     @test
     def test_new_session(self, status):
-        with (
-            importlib.resources.files("gaphor") / "templates" / "uml.gaphor"
-        ).open() as f:
+        with (importlib.resources.files("gaphor") / "templates" / "uml.gaphor").open(
+            encoding="utf-8"
+        ) as f:
             session = self.application.new_session(template=f)
 
         def check_new_session(session):
@@ -162,4 +162,5 @@ def windows_console_output_workaround():
             filename="gaphor-self-test.txt",
             filemode="w",
             force=True,
+            encoding="utf-8",
         )

@@ -91,7 +91,7 @@ def main(argv=sys.argv[1:]):
     # we should have some gaphor files to be processed at this point
     for model in args:
         message(f"loading model {model}")
-        with open(model) as file_obj:
+        with open(model, encoding="utf-8") as file_obj:
             storage.load(file_obj, factory, modeling_language)
         message("ready for rendering")
 
