@@ -969,6 +969,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "BrainKicker",
+      "name": "BrainKicker",
+      "avatar_url": "https://avatars.githubusercontent.com/u/30545094?v=4",
+      "profile": "https://github.com/BrainKicker",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
