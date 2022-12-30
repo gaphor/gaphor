@@ -4,7 +4,7 @@
 <Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
 <name>
 <<<<<<< HEAD
-<val>New model</val>
+<val>current</val>
 
 </name>
 <ownedDiagram>
@@ -12,15 +12,20 @@
 <ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
 </reflist>
 </ownedDiagram>
+=======
+<val>incoming</val>
+</name>
+>>>>>>> 12345678 (incoming change)
 </Package>
+<<<<<<< HEAD
 <Diagram id="58d6c536-66f8-11ec-b4c8-0456e5e540ed">
 <element>
 <ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
 </element>
 <name>
-=======
-<val>new</val>
->>>>>>> 12345678 (incoming change)
+<val>diagram</val>
 </name>
 </Diagram>
+=======
+>>>>>>> 12345678 (incoming change)
 </gaphor>

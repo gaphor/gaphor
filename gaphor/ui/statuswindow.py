@@ -1,10 +1,8 @@
 """Defines a status window class for displaying the progress of a queue."""
 
 
-import contextlib
-from queue import Empty
-
-from gi.repository import Gdk, GLib, Gtk, Pango
+from gaphas.decorators import g_async
+from gi.repository import Gdk, Gtk, Pango
 
 
 class StatusWindow:
@@ -14,33 +12,23 @@ class StatusWindow:
     The progress bar is updated as the queue is updated.
     """
 
-    def __init__(self, title, message, parent=None, queue=None, display=True):
+    def __init__(self, title, message, parent=None):
         """Create the status window.
 
         The title parameter is the title of the window.  The message
         parameter is a string displayed near the progress bar to
         indicate what is happening.  The parent parameter is the parent
-        window to display the window in.  The queue parameter is a queue
-        that is used to update the progress bar.  The display parameter
-        will display the window if true.  This is the default.
+        window to display the window in.
         """
 
         self.title = title
         self.message = message
         self.parent = parent
-        self.queue = queue
         self.window: Gtk.Window = None
 
-        if display:
-            self.display()
+        self.display()
 
     def init_window(self):
-        """Create the window GUI component.
-
-        This will set the window and progress bar attributes, so they
-        can be referenced later.
-        """
-
         frame = Gtk.Frame.new(None)
         vbox = Gtk.Box.new(Gtk.Orientation.VERTICAL, spacing=12)
         label = Gtk.Label.new(self.message)
@@ -76,13 +64,8 @@ class StatusWindow:
         vbox.pack_start(label, True, True, 0)
         vbox.pack_start(self.progress_bar, expand=False, fill=False, padding=0)
 
+    @g_async()
     def display(self):
-        """Display the status window.
-
-        If a queue has been supplied to the StatusWindow instance, a new
-        gobject idle handle is created.  Once the window is destroyed,
-        this handler is removed.
-        """
         if not self.window:
             self.init_window()
 
@@ -93,14 +76,10 @@ class StatusWindow:
         else:
             self.window.show()
 
-        if self.queue:
-            self.idle_id = GLib.idle_add(
-                progress_idle_handler,
-                self.progress_bar,
-                self.queue,
-                priority=GLib.PRIORITY_DEFAULT_IDLE,
-            )
-            self.window.connect("destroy", remove_idle_handler, self.idle_id)
+    def progress(self, percentage: int):
+        """Update progress percentage (0..100)."""
+        if self.progress_bar:
+            self.progress_bar.set_fraction(min(percentage, 100.0) / 100.0)
 
     def destroy(self):
         """Destroy the status window.
@@ -110,26 +89,3 @@ class StatusWindow:
         if self.window:
             self.window.destroy()
             self.window = None
-
-
-def progress_idle_handler(progress_bar, queue):
-    """This is a gobject idle handler that updates the supplied progress bar.
-
-    The percentage is retrieved from the queue until it is empty.  The
-    progress bar is then updated with the current percentage.
-    """
-    percentage = 0
-    with contextlib.suppress(Empty):
-        percentage = queue.get(block=False)
-    if percentage:
-        progress_bar.set_fraction(min(percentage, 100.0) / 100.0)
-    return GLib.SOURCE_CONTINUE
-
-
-def remove_idle_handler(window, idle_id):
-    """This removes the supplied gobject idle id.
-
-    This handle is required by StatusWindow when it is destroyed.
-    """
-
-    GLib.source_remove(idle_id)
