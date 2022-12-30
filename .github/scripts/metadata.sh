@@ -15,7 +15,7 @@ then
     REV=""
     RELEASE="true"
 else
-    REV=".dev${GITHUB_RUN_NUMBER:-0}+${GITHUB_SHA:0:8}"
+    REV="+${GITHUB_RUN_NUMBER:-0}.${GITHUB_SHA:0:8}"
     RELEASE="false"
 
     # Update version, so it will also show in the Gaphor application
