@@ -362,9 +362,7 @@ class FileManager(Service, ActionProvider):
 def resolve_merge_conflict_dialog(window: Gtk.Window, filename, handler) -> None:
     dialog = Adw.MessageDialog.new(
         window,
-        gettext("Resolve merge conflict in model “{filename}”.").format(
-            filename=filename.name
-        ),
+        gettext("Resolve Merge Conflict?"),
     )
     dialog.set_body(
         gettext(
