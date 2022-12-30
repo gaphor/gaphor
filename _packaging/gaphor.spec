@@ -27,11 +27,13 @@ glade_files = [
 ui_files = [
     (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.ui")
 ]
+mo_files = [
+    (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor/locale").rglob("*.mo")
+]
 
 
 def get_version() -> str:
     project_dir = Path.cwd().parent
-    print(project_dir.resolve())
     f = project_dir / "pyproject.toml"
     return str(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
 
@@ -76,6 +78,7 @@ a = Analysis(
     ]
     + glade_files
     + ui_files
+    + mo_files
     + copy_metadata("gaphor")
     + copy_metadata("gaphas"),
     hiddenimports=collect_entry_points(
