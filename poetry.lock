@@ -2516,4 +2516,4 @@ docs = ["sphinx", "sphinx-copybutton", "myst-nb", "furo"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "931b6628c566517c22883944a4b4dbdd72a50f60b9f0724fa57053ef72a44c5b"
+content-hash = "47ddae4bbf560df64c637aa057a2ccfde2e81b8dbbea8614e3baae8da96becb3"
