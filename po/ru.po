@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-12-03 16:14-0500\n"
-"PO-Revision-Date: 2022-12-30 13:56+0000\n"
+"PO-Revision-Date: 2023-01-01 05:51+0000\n"
 "Last-Translator: BrainKicker <peter.sabanov@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
@@ -101,17 +101,15 @@ msgstr "Новая Диаграмма Состояний"
 
 #: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:50
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
-#, fuzzy
 msgid "New FTA Diagram"
-msgstr "_Новая диаграмма"
+msgstr "Новая Диаграмма FTA"
 
 #: gaphor/RAAML/toolbox.py:20
-#, fuzzy
 msgid "New STPA Diagram"
-msgstr "_Новая диаграмма"
+msgstr "Новая Диаграмма STPA"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -267,7 +265,7 @@ msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml.gaphor
 msgid "Controller"
-msgstr ""
+msgstr "Контроллер"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
 #, fuzzy
@@ -281,7 +279,7 @@ msgstr "Контролируемый Процесс"
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "Unsafe Control Action"
-msgstr ""
+msgstr "Небезопасное Действие Управления"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:149
 msgid "Relevant To"
@@ -293,12 +291,11 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.glade:28 gaphor/SysML/propertypages.ui:11
 msgid "Item Flow"
-msgstr ""
+msgstr "Поток Элементов"
 
 #: gaphor/SysML/propertypages.glade:51 gaphor/SysML/propertypages.ui:28
-#, fuzzy
 msgid "Item Property"
-msgstr "Параметры"
+msgstr "Свойство Элемента"
 
 #: gaphor/SysML/propertypages.glade:71 gaphor/SysML/propertypages.ui:43
 #: gaphor/UML/classes/propertypages.glade:48
@@ -313,7 +310,7 @@ msgstr "Показывать направление"
 #: gaphor/UML/actions/propertypages.glade:264
 #: gaphor/UML/actions/propertypages.ui:201
 msgid "Allocated Type"
-msgstr ""
+msgstr "Выделенный Тип"
 
 #: gaphor/SysML/propertypages.glade:123 gaphor/SysML/propertypages.ui:91
 msgid "Show Parts"
@@ -321,11 +318,11 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.glade:146 gaphor/SysML/propertypages.ui:107
 msgid "Show References"
-msgstr ""
+msgstr "Показать Ссылки"
 
 #: gaphor/SysML/propertypages.glade:172 gaphor/SysML/propertypages.ui:123
 msgid "Show Values"
-msgstr ""
+msgstr "Показать Значения"
 
 #: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:78
 #, fuzzy
@@ -371,16 +368,15 @@ msgstr ""
 
 #: gaphor/SysML/toolbox.py:25
 msgid "Internal Blocks"
-msgstr ""
+msgstr "Внутренние Блоки"
 
 #: gaphor/SysML/toolbox.py:29
 msgid "Connector"
 msgstr "Соединитель"
 
 #: gaphor/SysML/toolbox.py:36
-#, fuzzy
 msgid "Property"
-msgstr "Параметры"
+msgstr "Свойство"
 
 #: gaphor/SysML/toolbox.py:45
 msgid "Proxy Port"
@@ -414,7 +410,7 @@ msgstr ""
 
 #: gaphor/SysML/blocks/block.py:62
 msgid "block"
-msgstr ""
+msgstr "блок"
 
 #: gaphor/SysML/blocks/block.py:98
 msgid "parts"
@@ -422,12 +418,11 @@ msgstr ""
 
 #: gaphor/SysML/blocks/block.py:109
 msgid "references"
-msgstr ""
+msgstr "ссылки"
 
 #: gaphor/SysML/blocks/block.py:120
-#, fuzzy
 msgid "values"
-msgstr "Значение"
+msgstr "значения"
 
 #: gaphor/SysML/blocks/block.py:137
 msgid "unnamed"
@@ -435,11 +430,11 @@ msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:24
 msgid "Blocks"
-msgstr ""
+msgstr "Блоки"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:28
 msgid "Block"
-msgstr ""
+msgstr "Блок"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:38
 #: gaphor/UML/classes/classestoolbox.py:47
@@ -545,32 +540,31 @@ msgstr ""
 
 #: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:36
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: gaphor/UML/sanitizerservice.py:71
 msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
+"Удалены неиспользуемые элементы из модели: они не используются ни в одной "
+"другой диаграмме."
 
 #: gaphor/UML/toolbox.py:32
-#, fuzzy
 msgid "New Component Diagram"
-msgstr "Компонент"
+msgstr "Новая Диаграмма Компонентов"
 
 #: gaphor/UML/toolbox.py:33
-#, fuzzy
 msgid "New Deployment Diagram"
-msgstr "_Новая диаграмма"
+msgstr "Новая Диаграмма Развёртывания"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr ""
+msgstr "Новая Диаграмма Коммуникации"
 
 #: gaphor/UML/toolbox.py:39
-#, fuzzy
 msgid "New Profile Diagram"
-msgstr "_Новая диаграмма"
+msgstr "Новая Диаграмма Профилей"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -2161,6 +2155,20 @@ msgid ""
 "in the tree view and start typing. A search box will automatically "
 "appear.\n"
 msgstr ""
+"Добавьте элемент модели из окна инструментов на диаграмму. Здесь вы увидите "
+"его свойства.\n"
+"\n"
+"Эту панель можно скрыть, щёлкнув значок панели в заголовке.\n"
+"\n"
+"<b>Совет:</b> Большинство элементов в панели инструментов имеют сочетание "
+"клавиш (например, \"c\" для Класса).\n"
+"Выбор инструмента работает только из диаграммы. Если инструмент не выбран, "
+"щёлкните по диаграмме один раз (чтобы она была сфокусирована), а затем "
+"нажмите сочетание клавиш.\n"
+"\n"
+"<b>Совет:</b> Чтобы найти элемент в древовидном представлении, выберите "
+"элемент в древовидном представлении и начните вводить текст. Поле поиска "
+"появится автоматически.\n"
 
 #: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
 #: gaphor/ui/help/shortcuts.ui:123
@@ -2203,7 +2211,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:247
 msgid "Remove Unused Elements"
-msgstr ""
+msgstr "Удалить Неиспользуемые Элементы"
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
 #: gaphor/ui/elementeditor.ui:249 gaphor/ui/elementeditor.ui:256
@@ -2267,6 +2275,9 @@ msgid ""
 "{exc}\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"Модель не может быть сохранена в следующем расположении:\n"
+"{exc}\n"
+"Проверьте, правильно ли вы ввели расположение, и повторите попытку."
 
 #: gaphor/ui/filemanager.py:126
 msgid "Loading…"
@@ -2282,7 +2293,7 @@ msgstr "Конфликт слияния в модели “{filename}”."
 
 #: gaphor/ui/filemanager.py:163
 msgid "It looks like this model file contains a merge conflict."
-msgstr ""
+msgstr "Похоже, что этот файл модели содержит конфликт слияния."
 
 #: gaphor/ui/filemanager.py:173
 msgid "Unable to open model “{filename}”."
@@ -2290,7 +2301,7 @@ msgstr "Не удается открыть модель “{filename}”."
 
 #: gaphor/ui/filemanager.py:176
 msgid "This file does not contain a valid Gaphor model."
-msgstr ""
+msgstr "Этот файл не содержит допустимую модель Gaphor."
 
 #: gaphor/ui/filemanager.py:215
 msgid "Saving…"
@@ -2317,14 +2328,16 @@ msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
+"Открытая модель содержит несохраненные изменения. Изменения, которые не "
+"будут сохранены, будут безвозвратно потеряны."
 
 #: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
 msgid "Cancel"
-msgstr ""
+msgstr "Отмена"
 
 #: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
 msgid "Discard"
-msgstr ""
+msgstr "Отклонить"
 
 #: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
 #: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:48
@@ -2390,7 +2403,7 @@ msgstr "Создать Новую Модель"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
-msgstr ""
+msgstr "Gaphor"
 
 #: gaphor/ui/mainwindow.glade:148
 #, fuzzy
