@@ -1,17 +1,17 @@
 import logging
 import os
+import sys
 import time
 from pathlib import Path
+
+if sys.version_info >= (3, 11):
+    import tomllib
+else:
+    import tomli as tomllib
 
 import pyinstaller_versionfile
 import semver
 from PyInstaller.utils.hooks import collect_entry_point, copy_metadata
-
-try:
-    import tomllib
-except ModuleNotFoundError:
-    import tomli as tomllib
-
 
 logging.getLogger(__name__).info(
     f"Target GTK version: {os.getenv('GAPHOR_PKG_GTK', '4')}"
