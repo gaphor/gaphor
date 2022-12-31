@@ -14,6 +14,8 @@ class CssFunctionCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
         "cubic-bezier",
         "hsl",
         "hsla",
+        "lab",
+        "lch",
         "linear-gradient",
         "max",
         "min",
