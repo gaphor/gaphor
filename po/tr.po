@@ -8,290 +8,293 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-12-03 16:14-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-01-01 05:51+0000\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/gaphor/gaphor/tr/"
+">\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
 #: gaphor/ui/greeter.py:57
 msgid "C4 Model"
-msgstr ""
+msgstr "C4 Modeli"
 
 #: gaphor/C4Model/propertypages.glade:28 gaphor/C4Model/propertypages.ui:12
 msgid "Description"
-msgstr ""
+msgstr "Açıklama"
 
 #: gaphor/C4Model/propertypages.glade:75 gaphor/C4Model/propertypages.ui:39
 msgid "Technology"
-msgstr ""
+msgstr "Teknoloji"
 
 #: gaphor/C4Model/toolbox.py:29
 msgid "New Software System"
-msgstr ""
+msgstr "Yeni Yazılım Sistemi"
 
 #: gaphor/C4Model/toolbox.py:36
 msgid "New Container"
-msgstr ""
+msgstr "Yeni Taşıyıcı"
 
 #: gaphor/C4Model/toolbox.py:43
 msgid "Database"
-msgstr ""
+msgstr "Veri Tabanı"
 
 #: gaphor/C4Model/toolbox.py:44
 msgid "New Database"
-msgstr ""
+msgstr "Yeni Veri Tabanı"
 
 #: gaphor/C4Model/toolbox.py:51
 msgid "New Component"
-msgstr ""
+msgstr "Yeni Bileşen"
 
 #: gaphor/C4Model/toolbox.py:59 gaphor/C4Model/toolbox.py:65
 msgid "Person"
-msgstr ""
+msgstr "Kişi"
 
 #: gaphor/C4Model/toolbox.py:71
 msgid "Software System"
-msgstr ""
+msgstr "Yazılım Sistemi"
 
 #: gaphor/C4Model/toolbox.py:83
 msgid "Container"
-msgstr ""
+msgstr "Taşıyıcı"
 
 #: gaphor/C4Model/toolbox.py:95
 msgid "Container: Database"
-msgstr ""
+msgstr "Taşıyıcı: Veri tabanı"
 
 #: gaphor/C4Model/toolbox.py:107 gaphor/UML/classes/classestoolbox.py:59
 msgid "Component"
-msgstr ""
+msgstr "Bileşen"
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:105
 #: gaphor/UML/classes/dependencypropertypages.py:16
 msgid "Dependency"
-msgstr ""
+msgstr "Bağımlılık"
 
 #: gaphor/C4Model/toolbox.py:139
 msgid "New C4 Diagram"
-msgstr ""
+msgstr "Yeni C4 Diyagramı"
 
 #: gaphor/C4Model/toolbox.py:140 gaphor/UML/toolbox.py:30
 msgid "New Class Diagram"
-msgstr ""
+msgstr "Yeni Sınıf Diyagramı"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
 msgid "New Activity Diagram"
-msgstr ""
+msgstr "Yeni Etkinlik Diyagramı"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
 msgid "New Sequence Diagram"
-msgstr ""
+msgstr "Yeni Sıra Diyagramı"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
 msgid "New State Machine Diagram"
-msgstr ""
+msgstr "Yeni Durum Makinesi Diyagramı"
 
 #: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:50
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
 msgid "New FTA Diagram"
-msgstr ""
+msgstr "Yeni FTA Diyagramı"
 
 #: gaphor/RAAML/toolbox.py:20
 msgid "New STPA Diagram"
-msgstr ""
+msgstr "Yeni STPA Diyagramı"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
-msgstr ""
+msgstr "VE (AND) Geçidi"
 
 #: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
-msgstr ""
+msgstr "Temel Olay"
 
 #: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
-msgstr ""
+msgstr "Şartlı Olay"
 
 #: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
-msgstr ""
+msgstr "Hareketsiz Olay"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
-msgstr ""
+msgstr "Hata Ağacı Analizi"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
-msgstr ""
+msgstr "VE (AND)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
-msgstr ""
+msgstr "VEYA (OR) Geçidi"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml.gaphor
 msgid "OR"
-msgstr ""
+msgstr "VEYA (OR)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
-msgstr ""
+msgstr "DEĞİL (NOT) Geçidi"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
-msgstr ""
+msgstr "DEĞİL (NOT)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr ""
+msgstr "Sıra Zorlama (SEQ) Geçidi"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:63
 msgid "SEQ"
-msgstr ""
+msgstr "Sıra Zorlama (SEQ)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
-msgstr ""
+msgstr "Dışlayan Özel VEYA (XOR) Geçidi"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
-msgstr ""
+msgstr "Dışlayan Özel VEYA (XOR)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:41
 msgid "Majority Vote Gate"
-msgstr ""
+msgstr "Çoğunluk Oy Geçidi"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:35
 msgid "Inhibit Gate"
-msgstr ""
+msgstr "Engelleme Geçidi"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
-msgstr ""
+msgstr "İçeriye Aktar"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
 #: gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
-msgstr ""
+msgstr "Dışarıya Aktar"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:36
 msgid "Undeveloped Event"
-msgstr ""
+msgstr "Gelişmemiş Olay"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
 #: gaphor/RAAML/fta/houseevent.py:35
 msgid "House Event"
-msgstr ""
+msgstr "Ev Olayı"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
 #: gaphor/RAAML/fta/zeroevent.py:36
 msgid "Zero Event"
-msgstr ""
+msgstr "Sıfır Olay"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
-msgstr ""
+msgstr "En Üst Olay"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
-msgstr ""
+msgstr "Ara Olay"
 
 #: gaphor/RAAML/fta/seqgate.py:37
 msgid "Sequence Enforcing Gate"
-msgstr ""
+msgstr "Sıra Zorlama Geçidi"
 
 #: gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr ""
+msgstr "Dışlayan Özel VEYA (XOR) Geçidi"
 
 #: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
-msgstr ""
+msgstr "Denetim Eylemi"
 
 #: gaphor/RAAML/stpa/operationalsituation.py:34
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
-msgstr ""
+msgstr "İşletim Durumu"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
 #: gaphor/templates/raaml.gaphor
 msgid "Loss"
-msgstr ""
+msgstr "Kayıp"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard"
-msgstr ""
+msgstr "Tehlike"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml.gaphor
 msgid "Abstract Operational Situation"
-msgstr ""
+msgstr "Soyut İşletim Durumu"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:77
 #: gaphor/UML/classes/classestoolbox.py:113
 msgid "Generalization"
-msgstr ""
+msgstr "Genelleme"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:58
 msgid "Situation"
-msgstr ""
+msgstr "Durum"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
-msgstr ""
+msgstr "Denetim Yüzeyleri"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml.gaphor
 msgid "Controller"
-msgstr ""
+msgstr "Denetleyici"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
 msgid "Actuator"
-msgstr ""
+msgstr "Çalıştırıcı"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
-msgstr ""
+msgstr "Denetimli Süreç"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "Unsafe Control Action"
-msgstr ""
+msgstr "Güvensiz Denetim Eylemi"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:149
 msgid "Relevant To"
-msgstr ""
+msgstr "İlgili"
 
 #: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:43
 msgid "SysML"
-msgstr ""
+msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:28 gaphor/SysML/propertypages.ui:11
 msgid "Item Flow"
-msgstr ""
+msgstr "Öge Akışı"
 
 #: gaphor/SysML/propertypages.glade:51 gaphor/SysML/propertypages.ui:28
 msgid "Item Property"
-msgstr ""
+msgstr "Öge Özelliği"
 
 #: gaphor/SysML/propertypages.glade:71 gaphor/SysML/propertypages.ui:43
 #: gaphor/UML/classes/propertypages.glade:48
@@ -299,33 +302,33 @@ msgstr ""
 #: gaphor/UML/deployments/propertypages.glade:78
 #: gaphor/UML/deployments/propertypages.ui:42
 msgid "Invert direction"
-msgstr ""
+msgstr "Yönü tersine çevir"
 
 #: gaphor/SysML/propertypages.glade:94 gaphor/SysML/propertypages.ui:59
 #: gaphor/UML/actions/propertypages.glade:264
 #: gaphor/UML/actions/propertypages.ui:201
 msgid "Allocated Type"
-msgstr ""
+msgstr "Ayrılan Tür"
 
 #: gaphor/SysML/propertypages.glade:123 gaphor/SysML/propertypages.ui:91
 msgid "Show Parts"
-msgstr ""
+msgstr "Parçaları Göster"
 
 #: gaphor/SysML/propertypages.glade:146 gaphor/SysML/propertypages.ui:107
 msgid "Show References"
-msgstr ""
+msgstr "Referansları Göster"
 
 #: gaphor/SysML/propertypages.glade:172 gaphor/SysML/propertypages.ui:123
 msgid "Show Values"
-msgstr ""
+msgstr "Değerleri Göster"
 
 #: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:78
 msgid "Compartments"
-msgstr ""
+msgstr "Bölmeler"
 
 #: gaphor/SysML/propertypages.glade:212 gaphor/SysML/propertypages.ui:149
 msgid "Aggregation"
-msgstr ""
+msgstr "Toplama"
 
 #: gaphor/SysML/propertypages.glade:226 gaphor/SysML/propertypages.ui:159
 #: gaphor/UML/classes/propertypages.glade:119
@@ -333,7 +336,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:111
 #: gaphor/UML/classes/propertypages.ui:238
 msgid "No aggregation"
-msgstr ""
+msgstr "Toplama yok"
 
 #: gaphor/SysML/propertypages.glade:227 gaphor/SysML/propertypages.ui:160
 #: gaphor/UML/classes/propertypages.glade:120
@@ -341,7 +344,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:112
 #: gaphor/UML/classes/propertypages.ui:239
 msgid "Shared"
-msgstr ""
+msgstr "Paylaşılmış"
 
 #: gaphor/SysML/propertypages.glade:228 gaphor/SysML/propertypages.ui:161
 #: gaphor/UML/classes/propertypages.glade:121
@@ -349,401 +352,403 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:113
 #: gaphor/UML/classes/propertypages.ui:240
 msgid "Composite"
-msgstr ""
+msgstr "Bileşik"
 
 #: gaphor/SysML/propertypages.glade:248 gaphor/SysML/propertypages.ui:178
 msgid "Id"
-msgstr ""
+msgstr "Kimlik"
 
 #: gaphor/SysML/propertypages.glade:272 gaphor/SysML/propertypages.ui:192
 msgid "Text"
-msgstr ""
+msgstr "Metin"
 
 #: gaphor/SysML/toolbox.py:25
 msgid "Internal Blocks"
-msgstr ""
+msgstr "Dahili Bloklar"
 
 #: gaphor/SysML/toolbox.py:29
 msgid "Connector"
-msgstr ""
+msgstr "Bağlayıcı"
 
 #: gaphor/SysML/toolbox.py:36
 msgid "Property"
-msgstr ""
+msgstr "Özellik"
 
 #: gaphor/SysML/toolbox.py:45
 msgid "Proxy Port"
-msgstr ""
+msgstr "Vekil Sunucu Bağlantı Noktası"
 
 #: gaphor/SysML/toolbox.py:68
 msgid "New Block Definition Diagram"
-msgstr ""
+msgstr "Yeni Blok Tanım Diyagramı"
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr ""
+msgstr "Yeni Dahili Blok Diyagramı"
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
 msgid "New Package Diagram"
-msgstr ""
+msgstr "Yeni Paket Diyagramı"
 
 #: gaphor/SysML/toolbox.py:71
 msgid "New Requirement Diagram"
-msgstr ""
+msgstr "Yeni Gereksinim Diyagramı"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
 msgid "New Use Case Diagram"
-msgstr ""
+msgstr "Yeni Kullanım Örneği Diyagramı"
 
 #: gaphor/SysML/blocks/block.py:60
 msgid "ControlStructure"
-msgstr ""
+msgstr "DenetlemeYapısı"
 
 #: gaphor/SysML/blocks/block.py:62
 msgid "block"
-msgstr ""
+msgstr "blok"
 
 #: gaphor/SysML/blocks/block.py:98
 msgid "parts"
-msgstr ""
+msgstr "parçalar"
 
 #: gaphor/SysML/blocks/block.py:109
 msgid "references"
-msgstr ""
+msgstr "referanslar"
 
 #: gaphor/SysML/blocks/block.py:120
 msgid "values"
-msgstr ""
+msgstr "değerler"
 
 #: gaphor/SysML/blocks/block.py:137
 msgid "unnamed"
-msgstr ""
+msgstr "adsız"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:24
 msgid "Blocks"
-msgstr ""
+msgstr "Bloklar"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:28
 msgid "Block"
-msgstr ""
+msgstr "Blok"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:38
 #: gaphor/UML/classes/classestoolbox.py:47
 msgid "Package"
-msgstr ""
+msgstr "Paket"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:50
 #: gaphor/UML/classes/classestoolbox.py:78
 msgid "Composite Association"
-msgstr ""
+msgstr "Bileşik Kuruluş"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:60
 #: gaphor/UML/classes/classestoolbox.py:88
 msgid "Shared Association"
-msgstr ""
+msgstr "Paylaşılmış Kuruluş"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:70
 #: gaphor/UML/classes/classestoolbox.py:98
 #: gaphor/UML/usecases/usecasetoolbox.py:40
 msgid "Association"
-msgstr ""
+msgstr "Kuruluş"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:84
 msgid "ValueType"
-msgstr ""
+msgstr "DeğerTürü"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:95
 #: gaphor/UML/classes/classestoolbox.py:140
 msgid "Enumeration"
-msgstr ""
+msgstr "Numaralandırma"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 #: gaphor/UML/classes/classestoolbox.py:152
 msgid "Primitive"
-msgstr ""
+msgstr "İlkel"
 
 #: gaphor/SysML/blocks/proxyport.py:34
 msgid "proxy"
-msgstr ""
+msgstr "vekil sunucu"
 
 #: gaphor/SysML/requirements/relationships.py:37
 msgid "satisfy"
-msgstr ""
+msgstr "karşıla"
 
 #: gaphor/SysML/requirements/relationships.py:47
 msgid "deriveReqt"
-msgstr ""
+msgstr "türetmeGereksinimi"
 
 #: gaphor/SysML/requirements/relationships.py:53
 msgid "trace"
-msgstr ""
+msgstr "izle"
 
 #: gaphor/SysML/requirements/relationships.py:61
 msgid "verify"
-msgstr ""
+msgstr "doğrula"
 
 #: gaphor/SysML/requirements/relationships.py:69
 msgid "refine"
-msgstr ""
+msgstr "arıt"
 
 #: gaphor/SysML/requirements/requirement.py:62
 msgid "requirement"
-msgstr ""
+msgstr "gereksinim"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml.gaphor
 msgid "Requirements"
-msgstr ""
+msgstr "Gereksinimler"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 msgid "Requirement"
-msgstr ""
+msgstr "Gereksinim"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
-msgstr ""
+msgstr "Karşıla"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:36
 msgid "Derive Requirement"
-msgstr ""
+msgstr "Türetme Gereksinimi"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
-msgstr ""
+msgstr "İzle"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
-msgstr ""
+msgstr "arıt"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
-msgstr ""
+msgstr "Doğrula"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:64
 #: gaphor/UML/classes/classestoolbox.py:71
 msgid "Containment"
-msgstr ""
+msgstr "Kapsama"
 
 #: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:36
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: gaphor/UML/sanitizerservice.py:71
 msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
+"Kullanılmayan ögeler modelden kaldırıldı: başka hiçbir diyagramda "
+"kullanılmazlar."
 
 #: gaphor/UML/toolbox.py:32
 msgid "New Component Diagram"
-msgstr ""
+msgstr "Yeni Bileşen Diyagramı"
 
 #: gaphor/UML/toolbox.py:33
 msgid "New Deployment Diagram"
-msgstr ""
+msgstr "Yeni Dağıtım Diyagramı"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr ""
+msgstr "Yeni İletişim Diyagramı"
 
 #: gaphor/UML/toolbox.py:39
 msgid "New Profile Diagram"
-msgstr ""
+msgstr "Yeni Profil Diyagramı"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
 msgid "New {name}"
-msgstr ""
+msgstr "Yeni {name}"
 
 #: gaphor/UML/umlfmt.py:203
 msgid "general: {name}"
-msgstr ""
+msgstr "genel: {name}"
 
 #: gaphor/UML/umlfmt.py:208
 msgid "supplier: {name}"
-msgstr ""
+msgstr "tedarikçi: {name}"
 
 #: gaphor/UML/umlfmt.py:215
 msgid "extend: {name}"
-msgstr ""
+msgstr "genişlet: {name}"
 
 #: gaphor/UML/umlfmt.py:222
 msgid "include: {name}"
-msgstr ""
+msgstr "ekle: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:40
 #: gaphor/UML/actions/actionstoolbox.py:62 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Activity"
-msgstr ""
+msgstr "Etkinlikler"
 
 #: gaphor/UML/actions/actionstoolbox.py:48
 msgid "Swimlane One"
-msgstr ""
+msgstr "Kulvar Bir"
 
 #: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Swimlane Two"
-msgstr ""
+msgstr "Kulvar İki"
 
 #: gaphor/UML/actions/actionstoolbox.py:58
 msgid "Actions"
-msgstr ""
+msgstr "Eylemler"
 
 #: gaphor/UML/actions/actionstoolbox.py:74
 #: gaphor/UML/actions/actionstoolbox.py:80
 msgid "Action"
-msgstr ""
+msgstr "Eylem"
 
 #: gaphor/UML/actions/actionstoolbox.py:86
 msgid "Initial node"
-msgstr ""
+msgstr "İlk düğüm"
 
 #: gaphor/UML/actions/actionstoolbox.py:98
 msgid "Activity final node"
-msgstr ""
+msgstr "Etkinlikler son düğüm"
 
 #: gaphor/UML/actions/actionstoolbox.py:110
 msgid "Flow final node"
-msgstr ""
+msgstr "Akış son düğümü"
 
 #: gaphor/UML/actions/actionstoolbox.py:122
 msgid "Decision/merge node"
-msgstr ""
+msgstr "Karar/birleştirme düğümü"
 
 #: gaphor/UML/actions/actionstoolbox.py:134
 msgid "Fork/join node"
-msgstr ""
+msgstr "Çatal/birleşim düğümü"
 
 #: gaphor/UML/actions/actionstoolbox.py:146
 #: gaphor/UML/actions/actionstoolbox.py:152
 msgid "Object node"
-msgstr ""
+msgstr "Nesne düğümü"
 
 #: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Swimlane"
-msgstr ""
+msgstr "Kulvar"
 
 #: gaphor/UML/actions/actionstoolbox.py:170
 msgid "Control flow"
-msgstr ""
+msgstr "Denetim akışı"
 
 #: gaphor/UML/actions/actionstoolbox.py:177
 msgid "Object flow"
-msgstr ""
+msgstr "Nesne akışı"
 
 #: gaphor/UML/actions/actionstoolbox.py:184
 msgid "Send signal action"
-msgstr ""
+msgstr "Sinyal eylemi gönder"
 
 #: gaphor/UML/actions/actionstoolbox.py:190
 msgid "Send signal"
-msgstr ""
+msgstr "Sinyal gönder"
 
 #: gaphor/UML/actions/actionstoolbox.py:196
 msgid "Accept event action"
-msgstr ""
+msgstr "Olay eylemini kabul et"
 
 #: gaphor/UML/actions/actionstoolbox.py:202
 msgid "Accept event"
-msgstr ""
+msgstr "Olayı kabul et"
 
 #: gaphor/UML/actions/actionstoolbox.py:208
 msgid "Input pin"
-msgstr ""
+msgstr "Giriş pimi"
 
 #: gaphor/UML/actions/actionstoolbox.py:215
 msgid "Output pin"
-msgstr ""
+msgstr "Çıktı pimi"
 
 #: gaphor/UML/actions/activitynodes.py:190
 msgid "merge/decision"
-msgstr ""
+msgstr "birleştir/karar"
 
 #: gaphor/UML/actions/activitynodes.py:192
 msgid "merge"
-msgstr ""
+msgstr "birleştir"
 
 #: gaphor/UML/actions/activitynodes.py:194
 msgid "decision"
-msgstr ""
+msgstr "karar"
 
 #: gaphor/UML/actions/objectnode.py:14
 #: gaphor/UML/actions/propertypages.glade:217
 #: gaphor/UML/actions/propertypages.ui:163
 msgid "unordered"
-msgstr ""
+msgstr "sırasız"
 
 #: gaphor/UML/actions/objectnode.py:15
 #: gaphor/UML/actions/propertypages.glade:218
 #: gaphor/UML/actions/propertypages.ui:164
 msgid "ordered"
-msgstr ""
+msgstr "sıralı"
 
 #: gaphor/UML/actions/objectnode.py:16
 msgid "LIFO"
-msgstr ""
+msgstr "LIFO"
 
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
-msgstr ""
+msgstr "FIFO"
 
 #: gaphor/UML/actions/partitionpage.py:112
 msgid "New Swimlane"
-msgstr ""
+msgstr "Yeni Kulvar"
 
 #: gaphor/UML/actions/pin.py:59
 msgid "input pin"
-msgstr ""
+msgstr "girdi pimi"
 
 #: gaphor/UML/actions/pin.py:65
 msgid "output pin"
-msgstr ""
+msgstr "çıktı pini"
 
 #: gaphor/UML/actions/propertypages.glade:28
 #: gaphor/UML/actions/propertypages.ui:11
 msgid "Show type"
-msgstr ""
+msgstr "Türü göster"
 
 #: gaphor/UML/actions/propertypages.glade:57
 #: gaphor/UML/actions/propertypages.ui:37
 msgid "Horizontal"
-msgstr ""
+msgstr "Yatay"
 
 #: gaphor/UML/actions/propertypages.glade:83
 #: gaphor/UML/actions/propertypages.ui:59
 msgid "Join Specification"
-msgstr ""
+msgstr "Birleşim Özelliği"
 
 #: gaphor/UML/actions/propertypages.glade:116
 #: gaphor/UML/actions/propertypages.ui:89
 msgid "Swimlanes"
-msgstr ""
+msgstr "Kulvarlar"
 
 #: gaphor/UML/actions/propertypages.glade:129
 #: gaphor/UML/actions/propertypages.ui:100
 msgid "Partitions"
-msgstr ""
+msgstr "Bölümler"
 
 #: gaphor/UML/actions/propertypages.glade:170
 #: gaphor/UML/actions/propertypages.ui:130
 msgid "Upper Bound"
-msgstr ""
+msgstr "Üst Sınır"
 
 #: gaphor/UML/actions/propertypages.glade:193
 #: gaphor/UML/actions/propertypages.ui:147
 msgid "Show Ordering"
-msgstr ""
+msgstr "Sıralamayı Göster"
 
 #: gaphor/UML/actions/propertypages.glade:219
 #: gaphor/UML/actions/propertypages.ui:165
 msgid "Last In First Out (LIFO)"
-msgstr ""
+msgstr "Son Giren İlk Çıkar (LIFO)"
 
 #: gaphor/UML/actions/propertypages.glade:220
 #: gaphor/UML/actions/propertypages.ui:166
 msgid "First In First Out (FIFO)"
-msgstr ""
+msgstr "İlk Giren İlk Çıkar (FIFO)"
 
 #: gaphor/UML/actions/propertypages.glade:247
 #: gaphor/UML/actions/propertypages.ui:189
@@ -752,24 +757,24 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:25
 #: gaphor/UML/profiles/propertypages.ui:9
 msgid "Name"
-msgstr ""
+msgstr "Ad"
 
 #: gaphor/UML/actions/propertypages.glade:296
 #: gaphor/UML/actions/propertypages.ui:223
 #: gaphor/UML/states/propertypages.glade:180
 #: gaphor/UML/states/propertypages.ui:66
 msgid "Guard"
-msgstr ""
+msgstr "Koruma"
 
 #: gaphor/UML/actions/propertypages.glade:322
 #: gaphor/UML/actions/propertypages.ui:245
 msgid "Parameter Nodes"
-msgstr ""
+msgstr "Parametre Düğümleri"
 
 #: gaphor/UML/actions/propertypages.glade:350
 #: gaphor/UML/actions/propertypages.ui:271
 msgid "Parameters"
-msgstr ""
+msgstr "Parametreler"
 
 #: gaphor/UML/actions/propertypages.glade:381
 #: gaphor/UML/actions/propertypages.ui:294
@@ -784,7 +789,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:643
 #: gaphor/UML/classes/propertypages.ui:752
 msgid "🛈 Help"
-msgstr ""
+msgstr "🛈 Yardım"
 
 #: gaphor/UML/actions/propertypages.glade:408
 msgid ""
@@ -798,6 +803,16 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Etkinlik parametresi düğümlerini UML sözdizimine göre ekleyin ve düzenleyin."
+"\n"
+"\n"
+"  • <tt>parameter</tt> (girdi, ad)\n"
+"  • <tt>out attr: int</tt> (türü ile çıktı)\n"
+"  • <tt>in attr: int[0..1]</tt> (girdi, tür, ve çeşitlilik)\n"
+"\n"
+"Düzenlemek için <b>Enter</b>ʼa basın\n"
+"Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
+"Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
 #: gaphor/UML/actions/propertypages.ui:310
 msgid ""
@@ -813,13 +828,24 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"UML sözdizimine göre sınıf etkinliği ekleyin ve düzenleyin.\n"
+"\n"
+"  • <tt>attr</tt> (ad, public görümüne varsayılan)\n"
+"  • <tt>+ attr: int</tt> (tür ile public)\n"
+"  • <tt>+ attr: int[0..1]</tt> (public, tür, ve çeşitlilik)\n"
+"  • <tt>+ attr: int | bool</tt> (public, union türü)\n"
+"  • <tt># /attr: int # bir not</tt> (protected, derived, not ile)\n"
+"\n"
+"Düzenlemek için <b>Enter</b>ʼa basın\n"
+"Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
+"Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
 #: gaphor/UML/classes/classespropertypages.py:341
 #: gaphor/UML/classes/classespropertypages.py:430
 #: gaphor/UML/classes/propertypages.glade:944
 #: gaphor/UML/classes/propertypages.ui:817
 msgid "Static"
-msgstr ""
+msgstr "Sabit"
 
 #: gaphor/UML/classes/classespropertypages.py:430
 #: gaphor/UML/classes/propertypages.glade:496
@@ -827,110 +853,110 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:435
 #: gaphor/UML/classes/propertypages.ui:813
 msgid "Abstract"
-msgstr ""
+msgstr "Soyut"
 
 #: gaphor/UML/classes/classestoolbox.py:21
 msgid "Classes"
-msgstr ""
+msgstr "Sınıflar"
 
 #: gaphor/UML/classes/classestoolbox.py:25
 #: gaphor/UML/profiles/profilestoolbox.py:14
 msgid "Class"
-msgstr ""
+msgstr "Sınıf"
 
 #: gaphor/UML/classes/classestoolbox.py:35
 msgid "Interface"
-msgstr ""
+msgstr "Arayüz"
 
 #: gaphor/UML/classes/classestoolbox.py:121
 msgid "Interface Realization"
-msgstr ""
+msgstr "Arayüz Gerçekleştirme"
 
 #: gaphor/UML/classes/classestoolbox.py:128
 msgid "DataType"
-msgstr ""
+msgstr "VeriTürü"
 
 #: gaphor/UML/classes/datatype.py:57
 msgid "primitive"
-msgstr ""
+msgstr "ilkel"
 
 #: gaphor/UML/classes/datatype.py:59 gaphor/UML/classes/enumeration.py:74
 msgid "valueType"
-msgstr ""
+msgstr "değerTürü"
 
 #: gaphor/UML/classes/datatype.py:61
 msgid "dataType"
-msgstr ""
+msgstr "veriTürü"
 
 #: gaphor/UML/classes/dependency.py:44
 msgid "use"
-msgstr ""
+msgstr "kullan"
 
 #: gaphor/UML/classes/dependency.py:45
 msgid "realize"
-msgstr ""
+msgstr "gerçekleştir"
 
 #: gaphor/UML/classes/dependency.py:46
 msgid "implements"
-msgstr ""
+msgstr "uygular"
 
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
-msgstr ""
+msgstr "Kullanım"
 
 #: gaphor/UML/classes/dependencypropertypages.py:18
 msgid "Realization"
-msgstr ""
+msgstr "Gerçekleştirme"
 
 #: gaphor/UML/classes/dependencypropertypages.py:19
 msgid "Implementation"
-msgstr ""
+msgstr "Uygulama"
 
 #: gaphor/UML/classes/enumeration.py:76
 msgid "enumeration"
-msgstr ""
+msgstr "numaralandırma"
 
 #: gaphor/UML/classes/interface.py:298
 msgid "interface"
-msgstr ""
+msgstr "arayüz"
 
 #: gaphor/UML/classes/klass.py:59
 msgid "stereotype"
-msgstr ""
+msgstr "stereotip"
 
 #: gaphor/UML/classes/klass.py:61
 msgid "metaclass"
-msgstr ""
+msgstr "üstsınıf"
 
 #: gaphor/UML/classes/package.py:29
 msgid "profile"
-msgstr ""
+msgstr "profil"
 
 #: gaphor/UML/classes/propertypages.glade:29
 #: gaphor/UML/classes/propertypages.ui:12
 msgid "Show Direction"
-msgstr ""
+msgstr "Yönü Göster"
 
 #: gaphor/UML/classes/propertypages.glade:107
 #: gaphor/UML/classes/propertypages.glade:234
 #: gaphor/UML/classes/propertypages.ui:101
 #: gaphor/UML/classes/propertypages.ui:228
 msgid "Unknown navigation"
-msgstr ""
+msgstr "Bilinmeyen gezinim"
 
 #: gaphor/UML/classes/propertypages.glade:108
 #: gaphor/UML/classes/propertypages.glade:235
 #: gaphor/UML/classes/propertypages.ui:102
 #: gaphor/UML/classes/propertypages.ui:229
 msgid "Not navigable"
-msgstr ""
+msgstr "Gezinilemez"
 
 #: gaphor/UML/classes/propertypages.glade:109
 #: gaphor/UML/classes/propertypages.glade:236
 #: gaphor/UML/classes/propertypages.ui:103
 #: gaphor/UML/classes/propertypages.ui:230
 msgid "Navigable"
-msgstr ""
+msgstr "Gezinilebilir"
 
 #: gaphor/UML/classes/propertypages.glade:140
 #: gaphor/UML/classes/propertypages.glade:267
@@ -943,7 +969,7 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:93
 #: gaphor/UML/profiles/propertypages.ui:65
 msgid "Attributes"
-msgstr ""
+msgstr "Öznitelikler"
 
 #: gaphor/UML/classes/propertypages.glade:160
 #: gaphor/UML/classes/propertypages.glade:287
@@ -952,17 +978,17 @@ msgstr ""
 #: gaphor/UML/profiles/propertypages.glade:113
 #: gaphor/UML/profiles/propertypages.ui:85
 msgid "Value"
-msgstr ""
+msgstr "Değer"
 
 #: gaphor/UML/classes/propertypages.glade:181
 #: gaphor/UML/classes/propertypages.ui:50
 msgid "Head:"
-msgstr ""
+msgstr "Baş:"
 
 #: gaphor/UML/classes/propertypages.glade:309
 #: gaphor/UML/classes/propertypages.ui:177
 msgid "Tail:"
-msgstr ""
+msgstr "Kuyruk:"
 
 #: gaphor/UML/classes/propertypages.glade:339
 #: gaphor/UML/classes/propertypages.ui:84
@@ -980,11 +1006,22 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"İlişkilendirme uçlarını UML sözdizimine göre ekleyin ve düzenleyin.\n"
+"\n"
+"  • <tt>+ name</tt>\n"
+"  • <tt>+ name[1]</tt>\n"
+"  • <tt>- name[1..2]</tt>\n"
+"  • <tt>1..2</tt>\n"
+"  • <tt>- [1..2]</tt>\n"
+"\n"
+"Düzenlemek için <b>Enter</b>ʼa basın\n"
+"Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
+"Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
 #: gaphor/UML/classes/propertypages.glade:361
 #: gaphor/UML/classes/propertypages.ui:322
 msgid "Show Attributes"
-msgstr ""
+msgstr "Öznitelikleri Göster"
 
 #: gaphor/UML/classes/propertypages.glade:480
 #: gaphor/UML/classes/propertypages.ui:405
@@ -1001,33 +1038,44 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"UML sözdizimine göre sınıf niteliklerini ekleyin ve düzenleyin.\n"
+"\n"
+"  • <tt>attr</tt> (ad, public görümüne varsayılan)\n"
+"  • <tt>+ attr: int</tt> (tür ile public)\n"
+"  • <tt>+ attr: int[0..1]</tt> (public, tür, ve çeşitlilik)\n"
+"  • <tt>+ attr: int | bool</tt> (public, union türü)\n"
+"  • <tt># /attr: int # bir not</tt> (protected, derived, not ile)\n"
+"\n"
+"Düzenlemek için <b>Enter</b>ʼa basın\n"
+"Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
+"Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
 #: gaphor/UML/classes/propertypages.glade:522
 #: gaphor/UML/classes/propertypages.ui:457
 msgid "Dependency type"
-msgstr ""
+msgstr "Bağımlılık türü"
 
 #: gaphor/UML/classes/propertypages.glade:535
 #: gaphor/UML/classes/propertypages.ui:468
 msgid "Automatic"
-msgstr ""
+msgstr "Kendiliğinden"
 
 #: gaphor/UML/classes/propertypages.glade:582
 #: gaphor/UML/classes/propertypages.ui:504
 msgid "Folded"
-msgstr ""
+msgstr "Katlanmış"
 
 #: gaphor/UML/classes/propertypages.glade:646
 #: gaphor/UML/classes/propertypages.ui:563
 msgid "Show Operations"
-msgstr ""
+msgstr "İşlemleri Göster"
 
 #: gaphor/UML/classes/propertypages.glade:682
 #: gaphor/UML/classes/propertypages.glade:752
 #: gaphor/UML/classes/propertypages.ui:550
 #: gaphor/UML/classes/propertypages.ui:593
 msgid "Operations"
-msgstr ""
+msgstr "İşlemler"
 
 #: gaphor/UML/classes/propertypages.glade:776
 #: gaphor/UML/classes/propertypages.ui:657
@@ -1042,18 +1090,27 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"UML sözdizimine göre sınıf işlemlerini ekleyin ve düzenleyin.\n"
+"\n"
+"  • <tt>call()</tt>\n"
+"  • <tt>+ call(a: int[*], b: str): bool</tt> (public, parametreler)\n"
+"  • <tt># call(a: int, b: str) # bir not</tt> (protected, not ile)\n"
+"\n"
+"Düzenlemek için <b>Enter</b>ʼa basın\n"
+"Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
+"Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
 #: gaphor/UML/classes/propertypages.glade:798
 #: gaphor/UML/classes/propertypages.ui:699
 msgid "Show Enumeration Literals"
-msgstr ""
+msgstr "Numaralandırma Sabit Değerlerini Göster"
 
 #: gaphor/UML/classes/propertypages.glade:835
 #: gaphor/UML/classes/propertypages.glade:878
 #: gaphor/UML/classes/propertypages.ui:686
 #: gaphor/UML/classes/propertypages.ui:729
 msgid "Enumeration Literals"
-msgstr ""
+msgstr "Numaralandırma Sabit Değerleri"
 
 #: gaphor/UML/classes/propertypages.glade:900
 #: gaphor/UML/classes/propertypages.ui:764
@@ -1066,323 +1123,330 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"UML sözdizimine göre numaralandırma sabit değerleri ekleyin ve düzenleyin.\n"
+"\n"
+"  • <tt>enum</tt>\n"
+"\n"
+"Düzenlemek için <b>Enter</b>ʼa basın\n"
+"Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
+"Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
 #: gaphor/UML/classes/propertypages.glade:916
 #: gaphor/UML/classes/propertypages.ui:795
 msgid "Indirectly Instantiated"
-msgstr ""
+msgstr "Dolaylı Örneklenen"
 
 #: gaphor/UML/classes/propertypages.glade:937
 #: gaphor/UML/classes/propertypages.ui:812
 msgid "A."
-msgstr ""
+msgstr "A."
 
 #: gaphor/UML/classes/propertypages.glade:943
 #: gaphor/UML/classes/propertypages.ui:816
 msgid "S."
-msgstr ""
+msgstr "S."
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
 msgid "Deployments"
-msgstr ""
+msgstr "Dağıtım"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16
 msgid "Artifact"
-msgstr ""
+msgstr "Yapıt"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:28
 msgid "Node"
-msgstr ""
+msgstr "Düğüm"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:40
 msgid "Device"
-msgstr ""
+msgstr "Aygıt"
 
 #: gaphor/UML/deployments/node.py:55
 msgid "device"
-msgstr ""
+msgstr "aygıt"
 
 #: gaphor/UML/deployments/propertypages.glade:28
 #: gaphor/UML/deployments/propertypages.ui:11
 msgid "Information Flow"
-msgstr ""
+msgstr "Bilgi Akışı"
 
 #: gaphor/UML/deployments/propertypages.glade:51
 #: gaphor/UML/deployments/propertypages.ui:29
 msgid "Information Item (Class)"
-msgstr ""
+msgstr "Bilgi Ögesi (Sınıf)"
 
 #: gaphor/UML/interactions/interactionsconnect.py:79
 msgid "call()"
-msgstr ""
+msgstr "call()"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:34
 #: gaphor/UML/interactions/interactionstoolbox.py:55
 #: gaphor/templates/sysml.gaphor gaphor/templates/uml.gaphor
 msgid "Interaction"
-msgstr ""
+msgstr "Etkileşim"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:51
 #: gaphor/templates/uml.gaphor
 msgid "Interactions"
-msgstr ""
+msgstr "Etkileşimler"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:67
 msgid "Lifeline"
-msgstr ""
+msgstr "Yaşam çizgisi"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:79
 msgid "Execution Specification"
-msgstr ""
+msgstr "Çalıştırma Teknik Özellikleri"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:87
 msgid "Message"
-msgstr ""
+msgstr "ileti"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:94
 msgid "Reflexive message"
-msgstr ""
+msgstr "Dönüşlü ileti"
 
 #: gaphor/UML/interactions/propertypages.glade:25
 #: gaphor/UML/interactions/propertypages.ui:9
 msgid "Message Sort"
-msgstr ""
+msgstr "İleti Sıralaması"
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
-msgstr ""
+msgstr "içe aktar"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
-msgstr ""
+msgstr "Profiller"
 
 #: gaphor/UML/profiles/profilestoolbox.py:22
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
-msgstr ""
+msgstr "Üstsınıf"
 
 #: gaphor/UML/profiles/profilestoolbox.py:44
 msgid "Stereotype"
-msgstr ""
+msgstr "Stereotip"
 
 #: gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
-msgstr ""
+msgstr "Uzantı"
 
 #: gaphor/UML/profiles/profilestoolbox.py:63
 msgid "Import"
-msgstr ""
+msgstr "İçe Aktar"
 
 #: gaphor/UML/profiles/propertypages.glade:61
 #: gaphor/UML/profiles/propertypages.ui:44
 msgid "Show Stereotypes"
-msgstr ""
+msgstr "Stereotipleri Göster"
 
 #: gaphor/UML/profiles/propertypages.glade:137
 #: gaphor/UML/profiles/propertypages.ui:31
 msgid "Stereotypes"
-msgstr ""
+msgstr "Stereotipler"
 
 #: gaphor/UML/states/propertypages.glade:39
 #: gaphor/UML/states/propertypages.ui:104
 msgid "Show Regions"
-msgstr ""
+msgstr "Bölgeleri Göster"
 
 #: gaphor/UML/states/propertypages.glade:62
 #: gaphor/UML/states/propertypages.glade:84
 #: gaphor/UML/states/propertypages.ui:91 gaphor/UML/states/propertypages.ui:120
 msgid "Regions"
-msgstr ""
+msgstr "Bölgeler"
 
 #: gaphor/UML/states/propertypages.glade:105
 #: gaphor/UML/states/propertypages.ui:20
 msgid "Entry"
-msgstr ""
+msgstr "Girdi"
 
 #: gaphor/UML/states/propertypages.glade:122
 #: gaphor/UML/states/propertypages.ui:31
 msgid "Exit"
-msgstr ""
+msgstr "Çıkış"
 
 #: gaphor/UML/states/propertypages.glade:142
 #: gaphor/UML/states/propertypages.ui:42
 msgid "Do Activity"
-msgstr ""
+msgstr "Etkinlik Yap"
 
 #: gaphor/UML/states/propertypages.glade:164
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
-msgstr ""
+msgstr "Etkinlikler"
 
 #: gaphor/UML/states/statemachine.py:40
 msgid "statemachine"
-msgstr ""
+msgstr "durummakinesi"
 
 #: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
-msgstr ""
+msgstr "Durum"
 
 #: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
 #: gaphor/templates/sysml.gaphor
 msgid "State Machine"
-msgstr ""
+msgstr "Durum makinesi"
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
-msgstr ""
+msgstr "Durumlar"
 
 #: gaphor/UML/states/statestoolbox.py:87
 msgid "Initial Pseudostate"
-msgstr ""
+msgstr "İlk Sözde Durum"
 
 #: gaphor/UML/states/statestoolbox.py:99
 msgid "Final State"
-msgstr ""
+msgstr "Son Durum"
 
 #: gaphor/UML/states/statestoolbox.py:111
 msgid "Transition"
-msgstr ""
+msgstr "Geçiş"
 
 #: gaphor/UML/states/statestoolbox.py:118
 msgid "Shallow History Pseudostate"
-msgstr ""
+msgstr "Sığ Geçmiş Sözde Durumu"
 
 #: gaphor/UML/states/statestoolbox.py:130
 msgid "Deep History Pseudostate"
-msgstr ""
+msgstr "Derin Geçmiş Sözde Durumu"
 
 #: gaphor/UML/states/statestoolbox.py:142
 msgid "Join Pseudostate"
-msgstr ""
+msgstr "Birleşim Sözde Durumu"
 
 #: gaphor/UML/states/statestoolbox.py:154
 msgid "Fork Pseudostate"
-msgstr ""
+msgstr "Çatal Sözde Durumu"
 
 #: gaphor/UML/states/statestoolbox.py:166
 msgid "Junction Pseudostate"
-msgstr ""
+msgstr "Kavşak Sözde Durumu"
 
 #: gaphor/UML/states/statestoolbox.py:178
 msgid "Choice Pseudostate"
-msgstr ""
+msgstr "Seçim Sözde Durumu"
 
 #: gaphor/UML/states/statestoolbox.py:190
 msgid "Entry Point Pseudostate"
-msgstr ""
+msgstr "Girdi Noktası Sözde Durumu"
 
 #: gaphor/UML/states/statestoolbox.py:202
 msgid "Exit Point Pseudostate"
-msgstr ""
+msgstr "Çıkış Durumu Sözde Durumu"
 
 #: gaphor/UML/states/statestoolbox.py:214
 msgid "Terminate Pseudostate"
-msgstr ""
+msgstr "Sonlandır Sözde Durumu"
 
 #: gaphor/UML/usecases/extend.py:20
 msgid "extend"
-msgstr ""
+msgstr "genişlet"
 
 #: gaphor/UML/usecases/include.py:20
 msgid "include"
-msgstr ""
+msgstr "ekle"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:12 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Use Cases"
-msgstr ""
+msgstr "Kullanım Örnekleri"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
-msgstr ""
+msgstr "Kullanım örneği"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml.gaphor
 msgid "Actor"
-msgstr ""
+msgstr "Eylemci"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
-msgstr ""
+msgstr "Ekle"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:55
 msgid "Extend"
-msgstr ""
+msgstr "Genişlet"
 
 #: gaphor/diagram/diagramtoolbox.py:99 gaphor/ui/help/shortcuts.ui:18
 msgid "General"
-msgstr ""
+msgstr "Genel"
 
 #: gaphor/diagram/diagramtoolbox.py:103
 msgid "Pointer"
-msgstr ""
+msgstr "İmleç"
 
 #: gaphor/diagram/diagramtoolbox.py:110
 msgid "Magnet"
-msgstr ""
+msgstr "Mıknatıs"
 
 #: gaphor/diagram/diagramtoolbox.py:117
 msgid "Line"
-msgstr ""
+msgstr "Çizgi"
 
 #: gaphor/diagram/diagramtoolbox.py:124
 msgid "Box"
-msgstr ""
+msgstr "Kutu"
 
 #: gaphor/diagram/diagramtoolbox.py:132
 msgid "Ellipse"
-msgstr ""
+msgstr "Elips"
 
 #: gaphor/diagram/diagramtoolbox.py:140 gaphor/diagram/propertypages.glade:25
 #: gaphor/diagram/propertypages.ui:9
 msgid "Comment"
-msgstr ""
+msgstr "Yorum"
 
 #: gaphor/diagram/diagramtoolbox.py:148
 msgid "Comment line"
-msgstr ""
+msgstr "Yorum satırı"
 
 #: gaphor/diagram/presentation.py:49
 msgid "(from {namespace})"
-msgstr ""
+msgstr "({namespace} kaynağından)"
 
 #: gaphor/diagram/propertypages.glade:68 gaphor/diagram/propertypages.ui:46
 msgid "Rectilinear"
-msgstr ""
+msgstr "Doğrusal"
 
 #: gaphor/diagram/propertypages.glade:77 gaphor/diagram/propertypages.ui:52
 msgid "Flip orientation"
-msgstr ""
+msgstr "Yönü çevir"
 
 #: gaphor/diagram/propertypages.glade:92 gaphor/diagram/propertypages.ui:35
 msgid "Style"
-msgstr ""
+msgstr "Biçim"
 
 #: gaphor/diagram/propertypages.glade:126 gaphor/diagram/propertypages.ui:67
 msgid "Note or Remark"
-msgstr ""
+msgstr "Not veya Açıklama"
 
 #: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
 msgid "Element can’t be represented on a diagram."
-msgstr ""
+msgstr "Öğe bir diyagramda gösterilemez."
 
 #: gaphor/extensions/sphinx.py:63
 msgid "No model file configured for model '{model_name}'."
-msgstr ""
+msgstr "'{model_name}' modeli için yapılandırılan model dosyası yok."
 
 #: gaphor/extensions/sphinx.py:92
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
-msgstr ""
+msgstr "'{model_name}' ({model_file}) modelinde '{name}' diyagramı yok."
 
 #: gaphor/plugins/autolayout/pydot.py:44
 msgid "Auto Layout"
-msgstr ""
+msgstr "Otomatik Yerleşim"
 
 #: gaphor/plugins/autolayout/pydot.py:52
 msgid "Auto Layout (orthogonal)"
-msgstr ""
+msgstr "Otomatik Yerleşim (dikey)"
 
 #: gaphor/plugins/console/console.py:24
 msgid ""
@@ -1390,63 +1454,66 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
+"Gaphor Etkileşimli Python Uçbirimi\n"
+"{version}\n"
+"Daha fazla bilgi için \"help\" yazın.\n"
 
 #: gaphor/plugins/console/consolewindow.py:23
 msgid "Gaphor Console"
-msgstr ""
+msgstr "Gaphor Uçbirimi"
 
 #: gaphor/plugins/console/consolewindow.py:46
 msgid "Console"
-msgstr ""
+msgstr "Uçbirim"
 
 #: gaphor/plugins/diagramexport/__init__.py:45
 msgid "All {ext} Files"
-msgstr ""
+msgstr "Tüm {ext} Dosyaları"
 
 #: gaphor/plugins/diagramexport/__init__.py:51
 msgid "Export as SVG"
-msgstr ""
+msgstr "SVG Olarak Dışa Aktar"
 
 #: gaphor/plugins/diagramexport/__init__.py:52
 #: gaphor/plugins/diagramexport/__init__.py:57
 msgid "Export diagram as SVG"
-msgstr ""
+msgstr "Diyagramı SVG olarak dışa aktar"
 
 #: gaphor/plugins/diagramexport/__init__.py:62
 msgid "Export as PNG"
-msgstr ""
+msgstr "PNG Olarak Dışa Aktar"
 
 #: gaphor/plugins/diagramexport/__init__.py:63
 #: gaphor/plugins/diagramexport/__init__.py:68
 msgid "Export diagram as PNG"
-msgstr ""
+msgstr "Diyagramı PNG olarak dışa aktar"
 
 #: gaphor/plugins/diagramexport/__init__.py:73
 msgid "Export as PDF"
-msgstr ""
+msgstr "PDF Olarak Dışa Aktar"
 
 #: gaphor/plugins/diagramexport/__init__.py:74
 #: gaphor/plugins/diagramexport/__init__.py:80
 msgid "Export diagram as PDF"
-msgstr ""
+msgstr "Diyagramı PDF olarak dışa aktar"
 
 #: gaphor/plugins/diagramexport/__init__.py:88
 msgid "Export as EPS"
-msgstr ""
+msgstr "EPS Olarak Dışa Aktar"
 
 #: gaphor/plugins/diagramexport/__init__.py:89
 msgid "Export diagram as Encapsulated PostScript"
-msgstr ""
+msgstr "Kapsüllenmiş PostScript (EPS) olarak dışa aktar"
 
 #: gaphor/plugins/diagramexport/__init__.py:95
 msgid "Export diagram as EPS"
-msgstr ""
+msgstr "Diyagramı EPS olarak dışa aktar"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
 #: gaphor/plugins/errorreports/errorreports.py:65
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
-msgstr ""
+msgstr "Hata Raporları"
 
 #: gaphor/plugins/errorreports/errorreports.glade:21
 #: gaphor/plugins/errorreports/errorreports.ui:18
@@ -1454,14 +1521,16 @@ msgid ""
 "Any unhandled errors are shown here. You can use these to provide extra "
 "information when you create an issue on GitHub."
 msgstr ""
+"İşlenmeyen hatalar burada gösterilir. GitHubʼda bir hata raporu oluştururken "
+"ek bilgi sağlamak için bunları kullanabilirsiniz."
 
 #: gaphor/plugins/errorreports/errorreports.py:102
 msgid "No errors have been intercepted. We’re good."
-msgstr ""
+msgstr "Hiçbir hata bulunamadı. İyiyiz."
 
 #: gaphor/plugins/errorreports/errorreports.py:106
 msgid "Errors:"
-msgstr ""
+msgstr "Hatalar:"
 
 #: gaphor/plugins/errorreports/errorreports.py:155
 msgid ""
@@ -1469,498 +1538,503 @@ msgid ""
 "Please file an issue on GitHub and include information from Tools → Error"
 " Reports."
 msgstr ""
+"Beklenmeyen bir hata oluştu.\n"
+"Lütfen GitHubʼda bir hata raporu oluşturun ve Araçlar → Hata Raporlarıʼndaki "
+"bilgileri ekleyin."
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export as XMI"
-msgstr ""
+msgstr "XMI Olarak Dışa Aktar"
 
 #: gaphor/plugins/xmiexport/__init__.py:26
 msgid "Export model as XMI (XML Model Interchange) format"
-msgstr ""
+msgstr "Modeli XMI (XML Model Değişimi) olarak dışa aktar"
 
 #: gaphor/plugins/xmiexport/__init__.py:43
 msgid "Export model as XMI file"
-msgstr ""
+msgstr "Modeli XMI olarak dışa aktar"
 
 #: gaphor/plugins/xmiexport/__init__.py:47
 msgid "All XMI Files"
-msgstr ""
+msgstr "Tüm XMI Dosyaları"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
 #: gaphor/ui/mainwindow.py:234 gaphor/ui/mainwindow.ui:29
 #: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
 msgid "New model"
-msgstr ""
+msgstr "Yeni model"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:64
 msgid "main"
-msgstr ""
+msgstr "ana"
 
 #: gaphor/templates/c4model.gaphor
 msgid "1. Context diagrams"
-msgstr ""
+msgstr "1. Bağlam diyagramları"
 
 #: gaphor/templates/c4model.gaphor
 msgid "2. Container diagrams"
-msgstr ""
+msgstr "2. Taşıyıcı diyagramları"
 
 #: gaphor/templates/c4model.gaphor
 msgid "4. Code diagrams"
-msgstr ""
+msgstr "4. Kod diyagramları"
 
 #: gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
-msgstr ""
+msgstr "3. Bileşen diyagramları"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Context diagram"
-msgstr ""
+msgstr "Bağlam diyagramı"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Container diagram"
-msgstr ""
+msgstr "Taşıyıcı diyagramı"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Component diagram"
-msgstr ""
+msgstr "Bileşen diyagramı"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Code diagram"
-msgstr ""
+msgstr "Kod diyagramı"
 
 #: gaphor/templates/raaml.gaphor gaphor/templates/uml.gaphor
 msgid "Model Name Here"
-msgstr ""
+msgstr "Model Adı Buraya"
 
 #: gaphor/templates/raaml.gaphor
 msgid "STPA"
-msgstr ""
+msgstr "STPA"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss Definition"
-msgstr ""
+msgstr "Kayıp Tanımı"
 
 #: gaphor/templates/raaml.gaphor
 msgid "FTA"
-msgstr ""
+msgstr "FTA"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of System"
-msgstr ""
+msgstr "Sistemin Kaybı"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Subsystem 1"
-msgstr ""
+msgstr "Alt Sistem 1ʼin Kaybı"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Subsystem 2"
-msgstr ""
+msgstr "Alt Sistem 2ʼnin Kaybı"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard Definition"
-msgstr ""
+msgstr "Tehlike Tanımı"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Life or Injury of People"
-msgstr ""
+msgstr "Can Kaybı veya Yaralanma"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Mission"
-msgstr ""
+msgstr "Görev Kaybı"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Customer Satisfaction"
-msgstr ""
+msgstr "Müşteri Memnuniyeti Kaybı"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard 2"
-msgstr ""
+msgstr "Tehlike 2"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard 1"
-msgstr ""
+msgstr "Tehlike 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Mapping of Losses and Hazards"
-msgstr ""
+msgstr "Kayıpların ve Tehlikelerin Haritalanması"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Operational Situations"
-msgstr ""
+msgstr "İşletim Durumları"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Operational Situation 1"
-msgstr ""
+msgstr "İşletim Durumu 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Context of UCAs"
-msgstr ""
+msgstr "UCAʼların Bağlamı"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situational Context"
-msgstr ""
+msgstr "Durumsal Bağlam"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situation Hierarchy"
-msgstr ""
+msgstr "Durum Hiyerarşisi"
 
 #: gaphor/templates/raaml.gaphor
 msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
+"Hata ağacı analizi, bir sistemin arızalanması durumunda hangi nedenlerin "
+"dikkate alındığını gösterir."
 
 #: gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
-msgstr ""
+msgstr "1. Konsept Düzeyi"
 
 #: gaphor/templates/sysml.gaphor
 msgid "2. Logical Level"
-msgstr ""
+msgstr "2. Mantık Düzeyi"
 
 #: gaphor/templates/sysml.gaphor
 msgid "3. Technology Level"
-msgstr ""
+msgstr "3. Teknoloji Düzeyi"
 
 #: gaphor/templates/sysml.gaphor
 msgid "User"
-msgstr ""
+msgstr "Kullanıcı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case #1"
-msgstr ""
+msgstr "Kullanım Örneği #1"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Behavior"
-msgstr ""
+msgstr "Davranış"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Structure"
-msgstr ""
+msgstr "Yapı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Context"
-msgstr ""
+msgstr "Özellik Bağlamı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Operator"
-msgstr ""
+msgstr "İşleyen"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature"
-msgstr ""
+msgstr "Özellik"
 
 #: gaphor/templates/sysml.gaphor
 msgid "External Element"
-msgstr ""
+msgstr "Harici Öge"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Stakeholder Requirements"
-msgstr ""
+msgstr "Paydaş Gereksinimleri"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
-msgstr ""
+msgstr "Özellik Kullanıcı İhtiyacı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Structure"
-msgstr ""
+msgstr "Mantıksal Yapı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensor"
-msgstr ""
+msgstr "Algılayıcı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "sensor"
-msgstr ""
+msgstr "algılayıcı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "controller"
-msgstr ""
+msgstr "denetleyici"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Boundary"
-msgstr ""
+msgstr "Mantıksal Sınır"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Structure"
-msgstr ""
+msgstr "Teknoloji Yapısı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Boundary"
-msgstr ""
+msgstr "Teknoloji Sınırı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Requirements"
-msgstr ""
+msgstr "Teknoloji Gereksinimleri"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detailed Behavior"
-msgstr ""
+msgstr "Ayrıntılı Davranış"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System Requirements"
-msgstr ""
+msgstr "Sistem Gereksinimleri"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
-msgstr ""
+msgstr "Mantıksal Durumlar"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Event Flow"
-msgstr ""
+msgstr "Özellik Olay Akışı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Off"
-msgstr ""
+msgstr "Kapalı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "On"
-msgstr ""
+msgstr "Açık"
 
 #: gaphor/templates/sysml.gaphor
 msgid "actuator"
-msgstr ""
+msgstr "çalıştırıcı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case Function #1"
-msgstr ""
+msgstr "Kullanım Örneği Fonksiyonu #1"
 
 #: gaphor/templates/sysml.gaphor
 msgid "First Action"
-msgstr ""
+msgstr "İlk Eylem"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Second Action"
-msgstr ""
+msgstr "İkinci Eylem"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example System Requirement"
-msgstr ""
+msgstr "Örnek Sistem Gereksinimi"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensed Data"
-msgstr ""
+msgstr "Algılanan Veri"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Command"
-msgstr ""
+msgstr "Komut"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Functional Boundary Behavior"
-msgstr ""
+msgstr "İşlevsel Sınır Davranışı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Determine Actuator Command"
-msgstr ""
+msgstr "Çalıştırıcı Komutu Belirle"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Actuate Actuator"
-msgstr ""
+msgstr "Çalıştırıcıyı Çalıştır"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Actuator Command"
-msgstr ""
+msgstr "Çalıştırıcı Komut"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example Technology Requirement"
-msgstr ""
+msgstr "Örnek Teknoloji Gereksinimi"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
-msgstr ""
+msgstr "Sistem"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ECU"
-msgstr ""
+msgstr "ECU"
 
 #: gaphor/templates/sysml.gaphor
 msgid "DC Motor"
-msgstr ""
+msgstr "DC Motor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "IR Transceiver"
-msgstr ""
+msgstr "IR alıcı-verici"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ecu"
-msgstr ""
+msgstr "ecu"
 
 #: gaphor/templates/sysml.gaphor
 msgid "dc Motor"
-msgstr ""
+msgstr "dc Motor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ir Transceiver"
-msgstr ""
+msgstr "ir alıcı-verici"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detect Obstacle"
-msgstr ""
+msgstr "Engel Algıla"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Command Reverse"
-msgstr ""
+msgstr "Ters Komut"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Reverse Motor"
-msgstr ""
+msgstr "Terk Motor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detect Object"
-msgstr ""
+msgstr "Nesne Algıla"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detection Event"
-msgstr ""
+msgstr "Algılama Olayı"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
-msgstr ""
+msgstr "1. Kullanım Örnekleri"
 
 #: gaphor/templates/uml.gaphor
 msgid "2. Domain Analysis"
-msgstr ""
+msgstr "2. Etki Alanı Analizleri"
 
 #: gaphor/templates/uml.gaphor
 msgid "3. Architectural Design"
-msgstr ""
+msgstr "3. Mimari Tasarım"
 
 #: gaphor/templates/uml.gaphor
 msgid "4. Detailed Design"
-msgstr ""
+msgstr "4. Ayrıntılı Tasarım"
 
 #: gaphor/templates/uml.gaphor
 msgid "Main Actor"
-msgstr ""
+msgstr "Ana Eylemci"
 
 #: gaphor/templates/uml.gaphor
 msgid "Main Use Case"
-msgstr ""
+msgstr "Ana Kullanım Örneği"
 
 #: gaphor/templates/uml.gaphor
 msgid "Included Use Case"
-msgstr ""
+msgstr "Eklenen Kullanım Örneği"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Actor"
-msgstr ""
+msgstr "İkincil Eylemci"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Use Case"
-msgstr ""
+msgstr "İkincil Kullanım Örneği"
 
 #: gaphor/templates/uml.gaphor
 msgid "Use Case Scenarios"
-msgstr ""
+msgstr "Kullanım Örneği Senaryosu"
 
 #: gaphor/templates/uml.gaphor
 msgid "Scenario 1"
-msgstr ""
+msgstr "Senaryo 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Scenario 2"
-msgstr ""
+msgstr "Senaryo 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "Domain Entities"
-msgstr ""
+msgstr "Etki Alanı Varlıkları"
 
 #: gaphor/templates/uml.gaphor
 msgid "Software Task"
-msgstr ""
+msgstr "Yazılım Görevi"
 
 #: gaphor/templates/uml.gaphor
 msgid "performs"
-msgstr ""
+msgstr "gerçekleştir"
 
 #: gaphor/templates/uml.gaphor
 msgid "Package Dependencies"
-msgstr ""
+msgstr "Paket Bağımlılıkları"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 1"
-msgstr ""
+msgstr "SW Bileşeni 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 4"
-msgstr ""
+msgstr "SW Bileşeni 4"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 3"
-msgstr ""
+msgstr "SW Bileşeni 3"
 
 #: gaphor/templates/uml.gaphor
 msgid "SW Component 2"
-msgstr ""
+msgstr "SW Bileşeni 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "Primary Actor"
-msgstr ""
+msgstr "Ana Eylemci"
 
 #: gaphor/templates/uml.gaphor
 msgid "Actor Profile"
-msgstr ""
+msgstr "Eylemci Profili"
 
 #: gaphor/templates/uml.gaphor
 msgid "login"
-msgstr ""
+msgstr "giriş"
 
 #: gaphor/templates/uml.gaphor
 msgid "Detailed Class Design"
-msgstr ""
+msgstr "Ayrıntılı Sınıf Tasarımı"
 
 #: gaphor/templates/uml.gaphor
 msgid "First Class"
-msgstr ""
+msgstr "İlk Sınıf"
 
 #: gaphor/templates/uml.gaphor
 msgid "firstName"
-msgstr ""
+msgstr "ilkAd"
 
 #: gaphor/templates/uml.gaphor
 msgid "lastName"
-msgstr ""
+msgstr "sonAd"
 
 #: gaphor/templates/uml.gaphor
 msgid "Login"
-msgstr ""
+msgstr "Giriş"
 
 #: gaphor/templates/uml.gaphor
 msgid "lastLogin"
-msgstr ""
+msgstr "sonGiriş"
 
 #: gaphor/templates/uml.gaphor
 msgid "Second Class"
-msgstr ""
+msgstr "İkinci Sınıf"
 
 #: gaphor/templates/uml.gaphor
 msgid "released"
-msgstr ""
+msgstr "yayınlandı"
 
 #: gaphor/templates/uml.gaphor
 msgid "Implementation Architecture"
-msgstr ""
+msgstr "Uygulama Mimarisi"
 
 #: gaphor/templates/uml.gaphor
 msgid "Node 1"
-msgstr ""
+msgstr "Düğüm 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Artifact 1"
-msgstr ""
+msgstr "Yapıt 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Node 2"
-msgstr ""
+msgstr "Düğüm 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "protocol"
-msgstr ""
+msgstr "iletişim kuralı"
 
 #: gaphor/templates/uml.gaphor
 msgid "Artifact 2"
-msgstr ""
+msgstr "Yapıt 2"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -1968,12 +2042,18 @@ msgid ""
 "identifying user roles – actors – and\n"
 "associating them to their use cases."
 msgstr ""
+"Kullanıcı rollerini – eylemcileri – tanımlayarak \n"
+"ve bunları kullanım durumlarıyla ilişkilendirerek \n"
+"işlevsel gereksinimleri analiz edin."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
+"Birincil ve ikincil kullanım örneği senaryoları için etkinlik akışlarını "
+"görselleştiren etkinlik diyagramları oluşturarak soyut kullanım örneği "
+"uygulamasını modelleyin."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -1982,6 +2062,10 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
+"Basitleştirilmiş sınıf diyagramını kullanarak etki alanı varlıklarını ve "
+"bunların ilişkilerini modelleyerek etki alanı analizi gerçekleştirin. Bu "
+"diyagram bir görsel kavram sözlüğü görevi görecektir. Aynı zamanda tasarım "
+"düzeyindeki veri modeliniz için de başlangıç noktası olacaktır."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -1990,6 +2074,10 @@ msgid ""
 " and avoid design flaws such as cyclic dependencies or dependencies on "
 "unstable parts"
 msgstr ""
+"Uygulama sınıflarınızı uygun şekilde gruplamak için paket bağımlılıkları "
+"şeması hazırlayın. Bu, kodu iyi yapılandırılmış tutmanıza ve döngüsel "
+"bağımlılıklar veya kararsız parçalara bağımlılıklar gibi tasarım "
+"kusurlarından kaçınmanıza yardımcı olur"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -1997,10 +2085,16 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
+"Var olan sınıflarda veya hatta belirli sorumluluklara sahip yeni sınıflarda "
+"\n"
+"yeni metodlar bulmak için kullanım örneği senaryoları için bileşen "
+"etkileşimlerini modelleyin."
 
 #: gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
+"Nesne yönelimli veri modelinizi yakalamak için ayrıntılı sınıf diyagramları "
+"oluşturun."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2008,53 +2102,56 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
+"Bileşenlerinizin uygulanmasını gösteren başlıca yapıtları tanımlayın. "
+"Donanım düğümlerine nasıl dağıtıldıklarını, karşılıklı bağımlılıklarını ve "
+"iletişim kurallarını belirtin."
 
 #: gaphor/templates/uml.gaphor
 msgid "String"
-msgstr ""
+msgstr "Dizge"
 
 #: gaphor/templates/uml.gaphor
 msgid "Date"
-msgstr ""
+msgstr "Tarih"
 
 #: gaphor/ui/appfilemanager.py:19 gaphor/ui/filedialog.py:13
 msgid "All Gaphor Models"
-msgstr ""
+msgstr "Tüm Gaphor Modelleri"
 
 #: gaphor/ui/appfilemanager.py:45
 msgid "Switch to {name}?"
-msgstr ""
+msgstr "{name} geçilsin mi?"
 
 #: gaphor/ui/appfilemanager.py:46
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr ""
+msgstr "{name} zaten açık. Bunun yerine açık pencereye geçmek ister misiniz?"
 
 #: gaphor/ui/appfilemanager.py:65
 msgid "Open Again"
-msgstr ""
+msgstr "Tekrar Aç"
 
 #: gaphor/ui/appfilemanager.py:66
 msgid "Switch"
-msgstr ""
+msgstr "Geç"
 
 #: gaphor/ui/appfilemanager.py:89
 msgid "Open a Model"
-msgstr ""
+msgstr "Model Aç"
 
 #: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
 #: gaphor/ui/treemodel.py:44
 msgid "<None>"
-msgstr ""
+msgstr "<Yok>"
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
-msgstr ""
+msgstr "Öge seçilmedi"
 
 #: gaphor/ui/elementeditor.glade:28 gaphor/ui/elementeditor.ui:23
 msgid "Show Tips"
-msgstr ""
+msgstr "İpuçlarını Göster"
 
 #: gaphor/ui/elementeditor.glade:63 gaphor/ui/elementeditor.ui:49
 msgid ""
@@ -2073,58 +2170,71 @@ msgid ""
 "in the tree view and start typing. A search box will automatically "
 "appear.\n"
 msgstr ""
+"Araç kutusundan diyagrama bir model ögesi ekleyin. Burada özelliklerinin "
+"göründüğünü göreceksiniz.\n"
+"\n"
+"Bu bölme, başlıktaki bölme simgesine tıklanarak gizlenebilir.\n"
+"\n"
+"<b>İpucu:</b> Araç kutusundaki çoğu ögenin bir klavye kısayolu vardır ("
+"örneğin, Sınıf için \"c\").\n"
+"Araç seçimi yalnızca diyagramdan çalışır. Bir araç seçilmezse, diyagrama bir "
+"kez tıklayın (odaklanması için) ve ardından kısayol tuşuna basın.\n"
+"\n"
+"<b>İpucu:</b> Ağaç görünümünde öğe aramak için, ağaç görünümünde bir öğe "
+"seçip yazmaya başlayın. Kendiliğinden arama kutusu görünecektir.\n"
 
 #: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
 #: gaphor/ui/help/shortcuts.ui:123
 msgid "Undo"
-msgstr ""
+msgstr "Geri Al"
 
 #: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:93
 #: gaphor/ui/help/shortcuts.ui:131
 msgid "Redo"
-msgstr ""
+msgstr "Yinele"
 
 #: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:112
 #: gaphor/ui/help/shortcuts.ui:148
 msgid "Zoom In"
-msgstr ""
+msgstr "Yakınlaştır"
 
 #: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:127
 #: gaphor/ui/help/shortcuts.ui:164
 msgid "Actual Size"
-msgstr ""
+msgstr "Gerçek Boyut"
 
 #: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:142
 #: gaphor/ui/help/shortcuts.ui:156
 msgid "Zoom Out"
-msgstr ""
+msgstr "Uzaklaştır"
 
 #: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
 #: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:205
 #: gaphor/ui/elementeditor.ui:216 gaphor/ui/help/shortcuts.ui:56
 msgid "Preferences"
-msgstr ""
+msgstr "Tercihler"
 
 #: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:181
 msgid "Editors"
-msgstr ""
+msgstr "Düzenleyiciler"
 
 #: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:229
 msgid "Reset Tool Automatically"
-msgstr ""
+msgstr "Aracı Kendiliğinden Sıfırla"
 
 #: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:247
 msgid "Remove Unused Elements"
-msgstr ""
+msgstr "Kullanılmayan Ögeleri Kaldır"
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
 #: gaphor/ui/elementeditor.ui:249 gaphor/ui/elementeditor.ui:256
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
+"Herhangi bir diyagramda artık kullanılmayan öğeleri kendiliğinden kaldır."
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:264
 msgid "Style Sheet"
-msgstr ""
+msgstr "Biçim Dosyası"
 
 #: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:293
 msgid ""
@@ -2132,25 +2242,29 @@ msgid ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
+"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\""
+">Gaphorʼda biçem sayfaları</a>"
 
 #: gaphor/ui/errorhandler.py:22
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
+"Gaphor komut satırından başlatılmış. Bir hata ayıklama oturumu açmak ister "
+"misiniz?"
 
 #: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:34
 #: gaphor/ui/errorhandler.py:43 gaphor/ui/errorhandler.py:48
 msgid "Close"
-msgstr ""
+msgstr "Kapat"
 
 #: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:44
 msgid "Start Debug Session"
-msgstr ""
+msgstr "Hata Ayıklama Oturumunu Başlat"
 
 #: gaphor/ui/filedialog.py:34
 msgid "All Files"
-msgstr ""
+msgstr "Tüm Dosyalar"
 
 #: gaphor/ui/filemanager.py:40
 msgid ""
@@ -2159,12 +2273,18 @@ msgid ""
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
+"Gaphor, muhtemelen dahili bir hata nedeniyle modeli depolayamadı:\n"
+"{exc}\n"
+"Bunun bir hata olduğunu düşünüyorsanız, lütfen geliştiricilerle iletişime "
+"geçin."
 
 #: gaphor/ui/filemanager.py:44
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"Modeli kaydetmek için gerekli izinleriniz yok.\n"
+"Konumu doğru yazdığınızdan emin olun ve tekrar deneyin."
 
 #: gaphor/ui/filemanager.py:48
 msgid ""
@@ -2172,6 +2292,9 @@ msgid ""
 "Please free up some disk space and try again or save it in a different "
 "location."
 msgstr ""
+"Modeli kaydetmek için aygıtta yeterli boş alanınız yok.\n"
+"Lütfen biraz disk alanı boşaltıp tekrar deneyin veya farklı bir konuma "
+"kaydedin."
 
 #: gaphor/ui/filemanager.py:51
 msgid ""
@@ -2179,235 +2302,240 @@ msgid ""
 "{exc}\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"Model şu konumda depolanamaz:\n"
+"{exc}\n"
+"Konumu doğru yazdığınızdan emin olun ve tekrar deneyin."
 
 #: gaphor/ui/filemanager.py:126
 msgid "Loading…"
-msgstr ""
+msgstr "Yükleniyor…"
 
 #: gaphor/ui/filemanager.py:127
 msgid "Loading model from {filename}"
-msgstr ""
+msgstr "{filename} dosyasından model yükleniyor"
 
 #: gaphor/ui/filemanager.py:160
 msgid "Merge conflict in model “{filename}”."
-msgstr ""
+msgstr "“{filename}” dosyasında model birleştirme çakışması."
 
 #: gaphor/ui/filemanager.py:163
 msgid "It looks like this model file contains a merge conflict."
-msgstr ""
+msgstr "Bu model dosyası birleştirme çakışması içeriyor."
 
 #: gaphor/ui/filemanager.py:173
 msgid "Unable to open model “{filename}”."
-msgstr ""
+msgstr "“{filename}” modeli açılamadı."
 
 #: gaphor/ui/filemanager.py:176
 msgid "This file does not contain a valid Gaphor model."
-msgstr ""
+msgstr "Bu dosya geçerli bir Gaphor modeli içermiyor."
 
 #: gaphor/ui/filemanager.py:215
 msgid "Saving…"
-msgstr ""
+msgstr "Kaydediliyor…"
 
 #: gaphor/ui/filemanager.py:216
 msgid "Saving model to {filename}"
-msgstr ""
+msgstr "Model {filename} dosyasına kaydediliyor"
 
 #: gaphor/ui/filemanager.py:233
 msgid "Unable to save model “{filename}”."
-msgstr ""
+msgstr "“{filename}” modeli kaydedilemedi."
 
 #: gaphor/ui/filemanager.py:270 gaphor/ui/filemanager.py:306
 msgid "Save Gaphor Model As"
-msgstr ""
+msgstr "Gaphor Modelini Farklı Kaydet"
 
 #: gaphor/ui/filemanager.py:326
 msgid "Save Changes?"
-msgstr ""
+msgstr "Değişiklikler Kaydedilsin Mi?"
 
 #: gaphor/ui/filemanager.py:327
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
+"Açık model kaydedilmemiş değişiklikler içeriyor. Kaydedilmeyen değişiklikler "
+"kalıcı olarak yitirilecek."
 
 #: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
 msgid "Cancel"
-msgstr ""
+msgstr "İptal Et"
 
 #: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
 msgid "Discard"
-msgstr ""
+msgstr "Vazgeç"
 
 #: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
 #: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:48
 msgid "Save"
-msgstr ""
+msgstr "Kaydet"
 
 #: gaphor/ui/greeter.glade:55
 msgid "Recently opened models"
-msgstr ""
+msgstr "Son açılan modeller"
 
 #: gaphor/ui/greeter.glade:76
 msgid "Create a new model"
-msgstr ""
+msgstr "Yeni model oluştur"
 
 #: gaphor/ui/greeter.glade:112
 msgid "Open Other Model…"
-msgstr ""
+msgstr "Başka Model Aç…"
 
 #: gaphor/ui/greeter.py:29
 msgid "Generic"
-msgstr ""
+msgstr "Genel"
 
 #: gaphor/ui/greeter.py:30
 msgid "An empty model"
-msgstr ""
+msgstr "Boş bir model"
 
 #: gaphor/ui/greeter.py:37
 msgid "Unified Modeling Language template"
-msgstr ""
+msgstr "Birleşik Modelleme Dili şablonu"
 
 #: gaphor/ui/greeter.py:44
 msgid "Systems Modeling Language template"
-msgstr ""
+msgstr "Sistem Modelleme Dili şablonu"
 
 #: gaphor/ui/greeter.py:51
 msgid "Risk Analysis and Assessment Modeling Language template"
-msgstr ""
+msgstr "Risk Analizi ve Değerlendirme Modelleme Dili şablonu"
 
 #: gaphor/ui/greeter.py:58
 msgid "Layered C4 Model template"
-msgstr ""
+msgstr "Katmanlı C4 Modeli şablonu"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:44
 msgid "Open Model…"
-msgstr ""
+msgstr "Model Aç…"
 
 #: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Klavye Kısayolları"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.glade:7
 #: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:59
 msgid "About Gaphor"
-msgstr ""
+msgstr "Gaphor Hakkında"
 
 #: gaphor/ui/greeter.ui:79
 msgid "Recently Opened"
-msgstr ""
+msgstr "Son Açılanlar"
 
 #: gaphor/ui/greeter.ui:84
 msgid "Create New Model"
-msgstr ""
+msgstr "Yeni Model Oluştur"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
-msgstr ""
+msgstr "Gaphor"
 
 #: gaphor/ui/mainwindow.glade:148
 msgid "Create New diagram"
-msgstr ""
+msgstr "Yeni diyagram oluştur"
 
 #: gaphor/ui/mainwindow.glade:169
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Uygulama Menüsünü Aç"
 
 #: gaphor/ui/mainwindow.glade:191
 msgid "Editor"
-msgstr ""
+msgstr "Düzenleyici"
 
 #: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:43
 msgid "New Model…"
-msgstr ""
+msgstr "Yeni Model…"
 
 #: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:49
 msgid "Save As…"
-msgstr ""
+msgstr "Farklı Kaydet…"
 
 #: gaphor/ui/mainwindow.py:50
 msgid "Export"
-msgstr ""
+msgstr "Dışa Aktar"
 
 #: gaphor/ui/mainwindow.py:54
 msgid "Tools"
-msgstr ""
+msgstr "Araçlar"
 
 #: gaphor/ui/mainwindow.py:85
 msgid "New Generic Diagram"
-msgstr ""
+msgstr "Yeni Genel Diyagram"
 
 #: gaphor/ui/mainwindow.py:236
 msgid "edited"
-msgstr ""
+msgstr "düzenlendi"
 
 #: gaphor/ui/mainwindow.py:270
 msgid "Profile: {name}"
-msgstr ""
+msgstr "Profil: {name}"
 
 #: gaphor/ui/mainwindow.ui:48
 msgid "Open diagram menu"
-msgstr ""
+msgstr "Diyagram menüsünü aç"
 
 #: gaphor/ui/mainwindow.ui:55
 msgid "Open application menu"
-msgstr ""
+msgstr "Uygulama menüsünü aç"
 
 #: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:61
 msgid "Toggle property editor"
-msgstr ""
+msgstr "Özellik düzenleyiciyi aç/kapat"
 
 #: gaphor/ui/namespace.py:48
 msgid "_Open"
-msgstr ""
+msgstr "_Aç"
 
 #: gaphor/ui/namespace.py:48
 msgid "Add to diagram"
-msgstr ""
+msgstr "Diyagrama ekle"
 
 #: gaphor/ui/namespace.py:51
 msgid "_Rename"
-msgstr ""
+msgstr "Yeniden _Adlandır"
 
 #: gaphor/ui/namespace.py:56
 msgid "New _Diagram"
-msgstr ""
+msgstr "Yeni _Diyagram"
 
 #: gaphor/ui/namespace.py:58
 msgid "New _Package"
-msgstr ""
+msgstr "Yeni _Paket"
 
 #: gaphor/ui/namespace.py:62
 msgid "De_lete"
-msgstr ""
+msgstr "_Sil"
 
 #: gaphor/ui/namespace.py:72
 msgid "Show in “{diagram}”"
-msgstr ""
+msgstr "“{diagram}” diyagramında göster"
 
 #: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
 msgid "{name} package"
-msgstr ""
+msgstr "{name} paketi"
 
 #: gaphor/ui/namespace.py:352
 msgid "New diagram"
-msgstr ""
+msgstr "Yeni diyagram"
 
 #: gaphor/ui/namespaceview.py:141 gaphor/ui/tests/test_treemodel.py:162
 #: gaphor/ui/treemodel.py:62
 msgid "<Relationships>"
-msgstr ""
+msgstr "<İlişkiler>"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
-msgstr ""
+msgstr "Telif Hakkı © 2001-2023 Arjan J. Molenaar ve Dan Yeaw"
 
 #: gaphor/ui/help/about.glade:10
 msgid "Gaphor is the simple modeling tool written in Python"
-msgstr ""
+msgstr "Gaphor, Python ile yazılmış basit bir modelleme aracıdır"
 
 #: gaphor/ui/help/about.glade:12
 msgid "Fork me on GitHub"
-msgstr ""
+msgstr "GitHubʼda çatalla"
 
 #: gaphor/ui/help/about.glade:30
 msgid ""
@@ -2429,6 +2557,26 @@ msgid ""
 "trademarks of Object Management Group, Inc. in the United States\n"
 "and/or other countries.\n"
 msgstr ""
+"Apache Lisansı, Sürüm 2.0 (işbu “Lisans”) ile lisanslanan bu dosyayı,\n"
+"işbu lisansla uyumlu olan durumlar dışında kullanamazsınız. Lisansın bir "
+"kopyasını\n"
+"şu adresten temin edebilirsiniz:\n"
+"\n"
+"http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Yürürlükteki bir yasada belirtilmediği veya yazılı olarak beyan edilmediği "
+"sürece,\n"
+"işbu lisans altında dağıtılan yazılım “hiçbir değişiklik yapılmadan” "
+"esasıyla dağıtılmış olup,\n"
+"açıkça veya üstü kapalı olarak, HİÇBİR TEMİNAT VEYA KOŞUL İÇERMEZ.\n"
+"Özel dil uygulama izinleri ve işbu lisans altındaki kısıtlamalar için "
+"lisansa bakınız.\n"
+"\n"
+"---\n"
+"\n"
+"UML, SysML ve RAAML, Amerika Birleşik Devletleri ve/veya diğer ülkelerde \n"
+"Object Management Group, Inc.'in tescilli ticari markaları \n"
+"veya ticari markalarıdır.\n"
 
 #: gaphor/ui/help/about.ui:14
 msgid ""
@@ -2438,6 +2586,11 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
+"Telif hakkı © 2001-2023 Arjan J. Molenaar ve Dan Yeaw.\n"
+"\n"
+"UML, SysML ve RAAML, Amerika Birleşik Devletleri ve/veya diğer ülkelerde "
+"tescilli ticari markalar veya Object Management Group, Inc.'in ticari "
+"markalarıdır."
 
 #: gaphor/ui/help/about.ui:22
 msgid ""
@@ -2453,67 +2606,78 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
+"Apache Lisansı, Sürüm 2.0 (işbu “Lisans”) ile lisanslanan bu dosyayı, işbu "
+"lisansla uyumlu olan durumlar dışında kullanamazsınız. Lisansın bir "
+"kopyasını şu adresten temin edebilirsiniz:\n"
+"\n"
+"    http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Yürürlükteki bir yasada belirtilmediği veya yazılı olarak beyan edilmediği "
+"sürece, işbu lisans altında dağıtılan yazılım “hiçbir değişiklik yapılmadan” "
+"esasıyla dağıtılmış olup, açıkça veya üstü kapalı olarak, HİÇBİR TEMİNAT "
+"VEYA KOŞUL İÇERMEZ. Özel dil uygulama izinleri ve işbu lisans altındaki "
+"kısıtlamalar için lisansa bakınız."
 
 #: gaphor/ui/help/shortcuts.ui:24
 msgid "Rename"
-msgstr ""
+msgstr "Yeniden adlandır"
 
 #: gaphor/ui/help/shortcuts.ui:32
 msgid "Search"
-msgstr ""
+msgstr "Arama"
 
 #: gaphor/ui/help/shortcuts.ui:48
 msgid "Close Diagram"
-msgstr ""
+msgstr "Diyagramı Kapat"
 
 #: gaphor/ui/help/shortcuts.ui:64
 msgid "Quit Gaphor"
-msgstr ""
+msgstr "Gaphorʼdan Çık"
 
 #: gaphor/ui/help/shortcuts.ui:75
 msgid "Files"
-msgstr ""
+msgstr "Dosyalar"
 
 #: gaphor/ui/help/shortcuts.ui:89
 msgid "Open a Model…"
-msgstr ""
+msgstr "Model Aç…"
 
 #: gaphor/ui/help/shortcuts.ui:117
 msgid "Undo and Redo"
-msgstr ""
+msgstr "Geri Al ve Yinele"
 
 #: gaphor/ui/help/shortcuts.ui:142
 msgid "Zoom"
-msgstr ""
+msgstr "Yakınlaştırma"
 
 #: gaphor/ui/help/shortcuts.ui:174
 msgid "Selections"
-msgstr ""
+msgstr "Seçimler"
 
 #: gaphor/ui/help/shortcuts.ui:180
 msgid "Select All"
-msgstr ""
+msgstr "Tümünü Seç"
 
 #: gaphor/ui/help/shortcuts.ui:188
 msgid "Deselect All"
-msgstr ""
+msgstr "Tüm Seçimi Kaldır"
 
 #: gaphor/ui/help/shortcuts.ui:199
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopyala ve Yapıştır"
 
 #: gaphor/ui/help/shortcuts.ui:205
 msgid "Copy"
-msgstr ""
+msgstr "Kopyala"
 
 #: gaphor/ui/help/shortcuts.ui:213
 msgid "Cut"
-msgstr ""
+msgstr "Kes"
 
 #: gaphor/ui/help/shortcuts.ui:221
 msgid "Paste (link defining elements)"
-msgstr ""
+msgstr "Yapıştır (tanımlayıcı ögeleri bağlantıla)"
 
 #: gaphor/ui/help/shortcuts.ui:229
 msgid "Paste (copy defining elements)"
-msgstr ""
+msgstr "Yapıştır (tanımlayıcı ögeleri kopyala)"
