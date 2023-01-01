@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-12-03 16:14-0500\n"
-"PO-Revision-Date: 2023-01-01 05:51+0000\n"
+"PO-Revision-Date: 2023-01-01 10:49+0000\n"
 "Last-Translator: BrainKicker <peter.sabanov@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
@@ -2558,18 +2558,16 @@ msgid ""
 msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:24
-#, fuzzy
 msgid "Rename"
-msgstr "_Переименовать"
+msgstr "Переименовать"
 
 #: gaphor/ui/help/shortcuts.ui:32
 msgid "Search"
 msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:48
-#, fuzzy
 msgid "Close Diagram"
-msgstr "_Новая диаграмма"
+msgstr "Закрыть Диаграмму"
 
 #: gaphor/ui/help/shortcuts.ui:64
 msgid "Quit Gaphor"
@@ -2585,7 +2583,7 @@ msgstr "Открыть Модель…"
 
 #: gaphor/ui/help/shortcuts.ui:117
 msgid "Undo and Redo"
-msgstr ""
+msgstr "Отменить и Повторить"
 
 #: gaphor/ui/help/shortcuts.ui:142
 msgid "Zoom"
