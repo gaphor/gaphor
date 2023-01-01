@@ -37,14 +37,17 @@ Mark Kennedy, Melis Doğan, Tiemen Schuijbroek,
 Zsolt Sandor, mathiascode, Óscar Fernández Díaz
     </property>
     <property name="translator_credits">
-Antonin Delpeuch (fr), Arjan Molenaar (nl),
-Bill ZHANG (zh_Hans), Daniel Nylander (sv),
+Antonin Delpeuch (fr), Erwan Calvez (fr)
+Arjan Molenaar (nl), fu7mu4 (ja),
+Bill ZHANG (zh_Hans), lizhuoqi (zh_Hans),
 Fran Diéguez (gl), Jiri Grönroos (fi),
 Jordi Mallach (ca), Seong-ho Cho (ko),
 Ygor Mutti (pt_BR), albanobattistella (it),
-fu7mu4 (ja), jischebeck (de), lizhuoqi (zh_Hans),
-milotype (hr), ovari (hu), Óscar Fernández Díaz (es),
-Евгений Лежнин (ru), vikdevelop (cs), vanillajohnathan (sv)
+jischebeck (de), lizhuoqi (zh_Hans),
+milotype (hr), Óscar Fernández Díaz (es),
+Евгений Лежнин (ru), Peter Sabanov (ru),
+Sabri Ünal (tr), ovari (hu), vikdevelop (cs),
+Daniel Nylander (sv), vanillajohnathan (sv),
     </property>
     <property name="logo-icon-name">org.gaphor.Gaphor</property>
   </object>
