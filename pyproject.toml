@@ -177,7 +177,7 @@ package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
 appimage-docker-build = "docker build -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"
 appimage-docker-build-clean = "docker build --no-cache -t ghcr.io/gaphor/gaphor-appimage _packaging/appimage"
-appimage-docker-push = "docker push ghcr.io/gaphor/gaphor-appimage:latest"
+appimage-docker-push = "docker push ghcr.io/gaphor/gaphor-appimage:2023.1.0"
 appimage-docker-run = "docker run --rm -it --volume $PWD:/gaphor ghcr.io/gaphor/gaphor-appimage"
 gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini gaphor"
 gettext-po = { "script" = "po.build-babel:update_po_files" }
