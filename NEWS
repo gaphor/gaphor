@@ -1,3 +1,12 @@
+2.14.3
+------
+- Fix translations not loading in Windows, macOS, and AppImage
+- Add Turkish, and update French, Russian, and Swedesh translations
+- Add basic git merge conflict support by asking which model to load
+- Use native file chooser in Windows
+- Fix PyInstaller versionfile parse error with pre-release versions
+- Update CI to publish to PyPI after all other jobs have passed
+
 2.14.2
 ------
 - Fix macOS release failed
