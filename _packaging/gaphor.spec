@@ -1,16 +1,17 @@
 import logging
 import os
+import sys
 import time
 from pathlib import Path
 
-import pyinstaller_versionfile
-from PyInstaller.utils.hooks import copy_metadata, collect_entry_point
-
-try:
+if sys.version_info >= (3, 11):
     import tomllib
-except ModuleNotFoundError:
+else:
     import tomli as tomllib
 
+import pyinstaller_versionfile
+import semver
+from PyInstaller.utils.hooks import collect_entry_point, copy_metadata
 
 logging.getLogger(__name__).info(
     f"Target GTK version: {os.getenv('GAPHOR_PKG_GTK', '4')}"
@@ -38,9 +39,8 @@ def get_version() -> str:
     return str(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
 
 
-def get_semver_version() -> str:
-    version = get_version()
-    return version[: version.rfind(".dev")] if "dev" in version else version
+def get_semver_version() -> semver.VersionInfo:
+    return semver.VersionInfo.parse(get_version())
 
 
 def collect_entry_points(*names):
@@ -51,7 +51,7 @@ def collect_entry_points(*names):
     return hidden_imports
 
 
-a = Analysis(
+a = Analysis(  # type: ignore
     ["../gaphor/__main__.py"],
     pathex=["../"],
     binaries=[],
@@ -108,11 +108,12 @@ a = Analysis(
     noarchive=False,
 )
 
-pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)  # type: ignore
 
+ver = get_semver_version()
 pyinstaller_versionfile.create_versionfile(
     output_file="windows/file_version_info.txt",
-    version=get_semver_version(),
+    version=f"{ver.major}.{ver.minor}.{ver.patch}.0",
     company_name="Gaphor",
     file_description="Gaphor",
     internal_name="Gaphor",
@@ -121,7 +122,7 @@ pyinstaller_versionfile.create_versionfile(
     product_name="Gaphor",
 )
 
-exe = EXE(
+exe = EXE(  # type: ignore
     pyz,
     a.scripts,
     options=[],
@@ -137,10 +138,10 @@ exe = EXE(
     codesign_identity=os.getenv("CODESIGN_IDENTITY"),
     entitlements_file="macos/entitlements.plist",
 )
-coll = COLLECT(
+coll = COLLECT(  # type: ignore
     exe, a.binaries, a.zipfiles, a.datas, strip=False, upx=True, name="gaphor"
 )
-app = BUNDLE(
+app = BUNDLE(  # type: ignore
     coll,
     name="Gaphor.app",
     icon="macos/gaphor.icns",
