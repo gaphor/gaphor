@@ -98,11 +98,11 @@ runs:
         name: Gaphor-${{ inputs.version }}.dmg
         path: _packaging/dist/Gaphor-${{ inputs.version }}.dmg
     - name: Upload Assets (release only)
-      uses: AButler/upload-release-assets@v2.0
       if: github.event_name == 'release'
-      with:
-        files: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
-        repo-token: ${{ inputs.github_token }}
+      run: |
+        echo ${{ inputs.github_token }} | gh auth login --with-token
+        gh release upload ${{ inputs.version }} "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
+      shell: bash
     - name: Zip app
       id: zip
       if: inputs.mainline_build != 'true'
