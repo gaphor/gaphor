@@ -17,7 +17,10 @@ from gaphor.core.modeling.event import (
 )
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.csscompletion import CssPropertyCompletionProvider
+from gaphor.ui.csscompletion import (
+    CssFunctionCompletionProvider,
+    CssPropertyCompletionProvider,
+)
 from gaphor.ui.event import DiagramSelectionChanged
 
 log = logging.getLogger(__name__)
@@ -289,9 +292,9 @@ class PreferencesStack:
         )
 
         if Gtk.get_major_version() == 4:
-            provider = CssPropertyCompletionProvider()
             view_completion = self.style_sheet_view.get_completion()
-            view_completion.add_provider(provider)
+            view_completion.add_provider(CssFunctionCompletionProvider())
+            view_completion.add_provider(CssPropertyCompletionProvider())
 
         self.event_manager.subscribe(self._model_ready)
         self.event_manager.subscribe(self._style_sheet_created)
