@@ -31,8 +31,8 @@ runs:
         name: Gaphor-${{ inputs.version }}-x86_64.AppImage
         path: _packaging/dist/Gaphor-${{ inputs.version }}-x86_64.AppImage
     - name: Upload Assets (release only)
-      uses: AButler/upload-release-assets@v2.0
       if: github.event_name == 'release'
-      with:
-        files: "_packaging/dist/*"
-        repo-token: ${{ inputs.github_token }}
+      run: |
+        echo ${{ inputs.github_token }} | gh auth login --with-token
+        gh release upload ${{ inputs.version }} "_packaging/dist/*"
+      shell: bash
