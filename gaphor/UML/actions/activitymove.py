@@ -4,7 +4,7 @@ from gaphas.move import Move
 from gaphas.types import Pos
 
 from gaphor.diagram.presentation import connect
-from gaphor.diagram.tools.grayout import GrayOutLineHandleMoveMixin
+from gaphor.diagram.tools.handlemove import GrayOutLineHandleMoveMixin
 from gaphor.UML.actions.activity import ActivityParameterNodeItem
 
 

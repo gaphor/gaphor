@@ -8,7 +8,7 @@ from gaphas.move import Move
 from gaphas.types import Pos
 from gaphas.view import GtkView
 
-from gaphor.diagram.connectors import Connector
+from gaphor.diagram.connectors import Connector, ItemTemporaryDisconnected
 from gaphor.diagram.presentation import AttachedPresentation
 
 
@@ -53,13 +53,33 @@ class GrayOutLineHandleMoveMixin:
         self.view.selection.dropzone_item = None
 
 
+class DisconnectEventHandleMoveMixin:
+    view: GtkView
+    item: Item
+    handle: Handle
+
+    def start_move(self, pos: Pos) -> None:
+        super().start_move(pos)  # type: ignore[misc]
+        model = self.view.model
+        assert model
+        if cinfo := model.connections.get_connection(self.handle):
+            self.item.handle(
+                ItemTemporaryDisconnected(
+                    cinfo.item, cinfo.handle, cinfo.connected, cinfo.port
+                )
+            )
+
+
 @HandleMove.register(Line)
-class GrayOutLineHandleMove(
-    GrayOutLineHandleMoveMixin, GuidedItemHandleMoveMixin, ItemHandleMove
+class LineHandleMove(
+    GrayOutLineHandleMoveMixin,
+    DisconnectEventHandleMoveMixin,
+    GuidedItemHandleMoveMixin,
+    ItemHandleMove,
 ):
     pass
 
 
 @Move.register(AttachedPresentation)
-def gray_out_attached_presentation_move(item, view):
-    return GrayOutLineHandleMove(item, item.handles()[0], view)
+def attached_presentation_move(item, view):
+    return LineHandleMove(item, item.handles()[0], view)
