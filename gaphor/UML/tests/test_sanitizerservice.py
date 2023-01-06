@@ -258,12 +258,19 @@ def test_extension_generalization_with_attribute_from_super_type(element_factory
     assert not klass.appliedStereotype[0].slot
 
 
-def test_diagram_move(element_factory, mocker):
+def test_diagram_redraw_on_owner_change(element_factory, monkeypatch):
     diagram = element_factory.create(Diagram)
     diagram.create(CommentItem, subject=element_factory.create(Comment))
-    mocked_func = mocker.patch.object(diagram, "request_update")
+
+    request_update_called = 0
+
+    def mock_request_update(item):
+        nonlocal request_update_called
+        request_update_called += 1
+
+    monkeypatch.setattr(diagram, "request_update", mock_request_update)
 
     package = element_factory.create(UML.Package)
     diagram.element = package
 
-    mocked_func.assert_called()
+    assert request_update_called

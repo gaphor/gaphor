@@ -57,7 +57,6 @@ furo = { version = "^2022", optional = true }
 pytest = "^7.1"
 pytest-archon = "^0.0"
 pytest-cov = "^4.0.0"
-pytest-mock = "^3.8.2"
 xdoctest = "^1.1.0"
 hypothesis = "^6.54.5"
 ipython = "^8.5.0"
