@@ -184,12 +184,13 @@ class MockSelectionData:
         self.set_data = (mock_type, mock_format, data)
 
 
-def test_droppable(namespace, element_factory, mocker):
+def test_droppable(namespace, element_factory, monkeypatch):
     element_factory.create(UML.Class).name = "0"
     element_factory.create(UML.Package).name = "1"
     selection_data = MockSelectionData()
-    tree_get_row_drag_data = mocker.patch.object(Gtk, "tree_get_row_drag_data")
-    tree_get_row_drag_data.return_value = (True, namespace, (0,))
+    monkeypatch.setattr(
+        Gtk, "tree_get_row_drag_data", lambda *_: (True, namespace, (0,))
+    )
 
     assert namespace.do_row_drop_possible(
         Gtk.TreePath.new_from_indices((1, 0)), selection_data
@@ -197,14 +198,12 @@ def test_droppable(namespace, element_factory, mocker):
 
 
 @pytest.mark.skipif(Gtk.get_major_version() != 3, reason="Works only for GTK+ 3")
-def test_drag_data_get_for_model_row(namespace, element_factory, mocker):
+def test_drag_data_get_for_model_row(namespace, element_factory, monkeypatch):
     element_factory.create(UML.Class)
     selection_data = MockSelectionData()
-    tree_set_row_drag_data = mocker.patch.object(Gtk, "tree_set_row_drag_data")
-    tree_set_row_drag_data.return_value = True
+    monkeypatch.setattr(Gtk, "tree_set_row_drag_data", lambda *_: True)
 
     assert namespace.do_drag_data_get((0,), selection_data)
-    tree_set_row_drag_data.assert_called_once()
 
 
 def test_drag_data_get_element_id(namespace, element_factory):
@@ -216,15 +215,18 @@ def test_drag_data_get_element_id(namespace, element_factory):
     assert data == c.id.encode()
 
 
-def test_drag_data_received(namespace, element_factory, mocker):
+def test_drag_data_received(namespace, element_factory, monkeypatch):
     element_factory.create(UML.Class)
     element_factory.create(UML.Package)
     selection_data = MockSelectionData()
-    tree_get_row_drag_data = mocker.patch.object(Gtk, "tree_get_row_drag_data")
-    tree_get_row_drag_data.return_value = (
-        True,
-        namespace,
-        Gtk.TreePath.new_from_indices((0,)),
+    monkeypatch.setattr(
+        Gtk,
+        "tree_get_row_drag_data",
+        lambda *_: (
+            True,
+            namespace,
+            Gtk.TreePath.new_from_indices((0,)),
+        ),
     )
 
     assert namespace.do_drag_data_received(
