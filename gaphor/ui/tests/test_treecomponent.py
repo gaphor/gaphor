@@ -210,6 +210,16 @@ def test_create_package(tree_component, element_factory):
 
 
 @skip_if_gtk3
+def test_create_toplevel_package(tree_component, element_factory):
+    tree_component.tree_view_create_package()
+
+    package = next(p for p in element_factory.select(UML.Package) if p.name != "root")
+
+    assert package
+    assert package.owner is None
+
+
+@skip_if_gtk3
 def test_delete_element(tree_component, element_factory):
     klass = element_factory.create(UML.Class)
     assert tree_component.get_selected_element() is klass
