@@ -27,7 +27,10 @@ class CssFunctionCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
         has_selection, begin, end = context.get_bounds()
         if has_selection:
             buffer.delete(begin, end)
-        buffer.insert(begin, proposal.text, len(proposal.text))
+        text = f"{proposal.text}()"
+        buffer.insert(begin, text, len(text))
+        begin.backward_char()
+        buffer.place_cursor(begin)
         buffer.end_user_action()
 
     def do_display(
