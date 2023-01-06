@@ -2,7 +2,7 @@
 from gaphas.tool import hover_tool, rubberband_tool, view_focus_tool, zoom_tools
 from gi.repository import Gtk
 
-import gaphor.diagram.tools.grayout
+import gaphor.diagram.tools.handlemove
 import gaphor.diagram.tools.segment
 from gaphor.diagram.tools.dnd import drop_target_tool
 from gaphor.diagram.tools.dropzone import drop_zone_tool
