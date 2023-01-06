@@ -110,10 +110,7 @@ class Namespace(UIComponent, ActionProvider):
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        if Gtk.get_major_version() == 3:
-            scrolled_window.add(view)
-        else:
-            scrolled_window.set_child(view)
+        scrolled_window.add(view)
         scrolled_window.show()
         view.show()
 
@@ -124,25 +121,12 @@ class Namespace(UIComponent, ActionProvider):
         action_group, shortcuts = create_action_group(self, "tree-view")
         scrolled_window.insert_action_group("tree-view", action_group)
 
-        if Gtk.get_major_version() == 3:
-            self.create_gtk3_popup_controller(view)
-        else:
-            self.create_gtk4_popup_controller(shortcuts, view)
+        self.create_gtk3_popup_controller(view)
         self.view = view
         self.scrolled_window = scrolled_window
         self.model.refresh()
 
         return scrolled_window
-
-    def create_gtk4_popup_controller(self, shortcuts, view):
-        ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
-        ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
-        view.add_controller(ctrl)
-
-        ctrl = Gtk.GestureClick.new()
-        ctrl.set_button(Gdk.BUTTON_SECONDARY)
-        ctrl.connect("pressed", self._on_show_popup)
-        view.add_controller(ctrl)
 
     def create_gtk3_popup_controller(self, view):
         ctrl = Gtk.GestureMultiPress.new(view)
@@ -157,10 +141,7 @@ class Namespace(UIComponent, ActionProvider):
     def close(self):
         self.ctrl.clear()
         if self.view:
-            if Gtk.get_major_version() == 3:
-                self.view.destroy()
-            elif self.scrolled_window:
-                self.scrolled_window.unparent()
+            self.view.destroy()
             self.view = None
             self.scrolled_window = None
         if self.model:
@@ -193,25 +174,11 @@ class Namespace(UIComponent, ActionProvider):
         if selected_element in (None, RELATIONSHIPS):
             return
 
-        if Gtk.get_major_version() == 3:
-            menu = Gtk.Menu.new_from_model(
-                popup_model(selected_element, self.modeling_language)
-            )
-            menu.attach_to_widget(self.view, None)
-            menu.popup_at_pointer(None)
-        else:
-            menu = Gtk.PopoverMenu.new_from_model(
-                popup_model(selected_element, self.modeling_language)
-            )
-            gdk_rect = Gdk.Rectangle()
-            gdk_rect.x = x
-            gdk_rect.y = y
-            gdk_rect.width = gdk_rect.height = 1
-
-            menu.set_pointing_to(gdk_rect)
-            menu.set_has_arrow(False)
-            menu.set_parent(self.view)
-            menu.popup()
+        menu = Gtk.Menu.new_from_model(
+            popup_model(selected_element, self.modeling_language)
+        )
+        menu.attach_to_widget(self.view, None)
+        menu.popup_at_pointer(None)
 
     def _on_edit_pressed(self, ctrl, keyval, keycode, state):
         if keyval == Gdk.KEY_F2:
@@ -221,26 +188,20 @@ class Namespace(UIComponent, ActionProvider):
 
     def _on_view_row_activated(self, view, path, column):
         """Double-click on an element in the tree view."""
-        if Gtk.get_major_version() == 3:
-            view.get_action_group("tree-view").lookup_action("open").activate()
-        else:
-            view.activate_action("tree-view.open", None)
+        view.get_action_group("tree-view").lookup_action("open").activate()
 
     def _on_view_cursor_changed(self, view):
         """Another row is selected, toggle action sensitivity."""
         element = self.get_selected_element()
-        if Gtk.get_major_version() == 3:
-            action_group = view.get_action_group("tree-view")
+        action_group = view.get_action_group("tree-view")
 
-            action_group.lookup_action("create-package").set_enabled(
-                isinstance(element, UML.Package)
-            )
-            action_group.lookup_action("delete").set_enabled(
-                element and deletable(element)
-            )
-            action_group.lookup_action("rename").set_enabled(
-                isinstance(element, (Diagram, UML.NamedElement))
-            )
+        action_group.lookup_action("create-package").set_enabled(
+            isinstance(element, UML.Package)
+        )
+        action_group.lookup_action("delete").set_enabled(element and deletable(element))
+        action_group.lookup_action("rename").set_enabled(
+            isinstance(element, (Diagram, UML.NamedElement))
+        )
 
     def _on_view_destroyed(self, widget):
         self.close()

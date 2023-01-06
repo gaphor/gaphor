@@ -380,10 +380,9 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
         -1,
     )
     row = builder.get_object("row")
-    menu = None
+    row.menu = None
 
     def on_show_popup(ctrl, n_press, x, y):
-        nonlocal menu
         list_item.get_child().activate_action(
             "list.select-item",
             GLib.Variant.new_tuple(
@@ -393,15 +392,16 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
             ),
         )
         element = list_item.get_item().get_item().element
-        if menu:
-            menu.unparent()
-            menu = None
+        if row.menu:
+            # Clean menu only when we want to create a new one.
+            row.menu.unparent()
+            row.menu = None
         if element:
-            menu = Gtk.PopoverMenu.new_from_model(
+            row.menu = Gtk.PopoverMenu.new_from_model(
                 popup_model(element, modeling_language)
             )
-            menu.set_parent(row)
-            menu.popup()
+            row.menu.set_parent(row)
+            row.menu.popup()
 
     ctrl = Gtk.GestureClick.new()
     ctrl.set_button(Gdk.BUTTON_SECONDARY)
