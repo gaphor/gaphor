@@ -24,8 +24,11 @@ from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged, ElementOpened
-from gaphor.ui.mainwindow import create_diagram_types_model
-from gaphor.ui.namespace import diagram_name_for_type, popup_model
+from gaphor.ui.namespace import (
+    create_diagram_types_model,
+    diagram_name_for_type,
+    popup_model,
+)
 from gaphor.ui.namespacemodel import change_owner
 from gaphor.ui.treemodel import (
     RelationshipItem,

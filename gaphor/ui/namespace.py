@@ -22,7 +22,6 @@ from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged, ElementOpened
-from gaphor.ui.mainwindow import create_diagram_types_model
 from gaphor.ui.namespacemodel import (
     RELATIONSHIPS,
     NamespaceModel,
@@ -83,6 +82,32 @@ def popup_model(element, modeling_language):
     if part.get_n_items() > 0:
         model.append_section(None, part)
     return model
+
+
+def create_diagram_types_model(modeling_language):
+    model = Gio.Menu.new()
+
+    part = Gio.Menu.new()
+    for id, name, _ in modeling_language.diagram_types:
+        menu_item = Gio.MenuItem.new(name, "win.create-diagram")
+        menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
+        part.append_item(menu_item)
+    model.append_section(None, part)
+
+    part = Gio.Menu.new()
+    menu_item = Gio.MenuItem.new(gettext("New Generic Diagram"), "win.create-diagram")
+    menu_item.set_attribute_value("target", GLib.Variant.new_string(""))
+    part.append_item(menu_item)
+    model.append_section(None, part)
+
+    return model
+
+
+def diagram_name_for_type(modeling_language, diagram_type):
+    for id, name, _ in modeling_language.diagram_types:
+        if id == diagram_type:
+            return name
+    return gettext("New diagram")
 
 
 class Namespace(UIComponent, ActionProvider):
@@ -305,10 +330,3 @@ class Namespace(UIComponent, ActionProvider):
         if element := self.get_selected_element():
             with Transaction(self.event_manager):
                 element.unlink()
-
-
-def diagram_name_for_type(modeling_language, diagram_type):
-    for id, name, _ in modeling_language.diagram_types:
-        if id == diagram_type:
-            return name
-    return gettext("New diagram")
