@@ -70,5 +70,5 @@ runs:
       if: github.event_name == 'release'
       run: |
         echo ${{ inputs.github_token }} | gh auth login --with-token
-        gh release upload ${{ inputs.version }} "_packaging/dist/*.exe"
+        gh release upload ${{ inputs.version }} (Resolve-Path _packaging\dist\*.exe)
       shell: pwsh
