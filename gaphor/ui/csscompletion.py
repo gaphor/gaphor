@@ -104,7 +104,8 @@ class CssPropertyCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
         has_selection, begin, end = context.get_bounds()
         if has_selection:
             buffer.delete(begin, end)
-        buffer.insert(begin, proposal.text, len(proposal.text))
+        text = proposal.text + ': '
+        buffer.insert(begin, text, len(text))
         buffer.end_user_action()
 
     def do_display(
