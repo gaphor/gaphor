@@ -1,11 +1,13 @@
 import importlib.resources
 import logging
+import platform
 import sys
+import textwrap
 import time
 
 import cairo
 import gi
-from gi.repository import GLib, Pango
+from gi.repository import Gdk, GLib, Gtk, Pango
 
 from gaphor.abc import Service
 from gaphor.application import Application, distribution
@@ -93,31 +95,9 @@ class SelfTest(Service):
 
     @test
     def test_library_versions(self, status):
-        log.info("Gaphor version:    %s", distribution().version)
-        log.info("Python version:    %s", sys.version)
-
-        from gi.repository import Gtk
-
         log.info(
-            "GTK version:       %d.%d.%d",
-            Gtk.get_major_version(),
-            Gtk.get_minor_version(),
-            Gtk.get_micro_version(),
+            "System information:\n\n%s", textwrap.indent(system_information(), "\t")
         )
-        if Gtk.get_major_version() != 3:
-            from gi.repository import Adw
-
-            log.info(
-                "Adwaita version:   %d.%d.%d",
-                Adw.get_major_version(),
-                Adw.get_minor_version(),
-                Adw.get_micro_version(),
-            )
-
-        log.info("PyGObject version: %d.%d.%d", *gi.version_info)
-        log.info("Pycairo version:   %s", cairo.version)
-        log.info("Cairo version:     %s", cairo.cairo_version_string())
-        log.info("Pango version:     %s", Pango.version_string())
         status.complete()
 
     @test
@@ -150,6 +130,40 @@ class SelfTest(Service):
 
         auto_layout.layout(diagram)
         status.complete()
+
+
+def system_information():
+    return textwrap.dedent(
+        f"""\
+        Gaphor version:    {distribution().version}
+        Operating System:  {platform.system()} ({platform.release()})
+        Python version:    {platform.python_version()}
+        GTK version:       {Gtk.get_major_version()}.{Gtk.get_minor_version()}.{Gtk.get_micro_version()}
+        Adwaita version:   {adwaita_version()}
+        PyGObject version: {".".join(map(str, gi.version_info))}
+        Pycairo version:   {cairo.version}
+        Cairo version:     {cairo.cairo_version_string()}
+        Pango version:     {Pango.version_string()}
+        Display:           {display_type()}
+        """
+    )
+
+
+def adwaita_version():
+    if Gtk.get_major_version() == 3:
+        return "n.a."
+
+    from gi.repository import Adw
+
+    return (
+        f"{Adw.get_major_version()}.{Adw.get_minor_version()}.{Adw.get_micro_version()}"
+    )
+
+
+def display_type():
+    dm = Gdk.DisplayManager.get()
+    display = dm.get_default_display()
+    return display.__class__.__name__ if display else "none"
 
 
 def windows_console_output_workaround():

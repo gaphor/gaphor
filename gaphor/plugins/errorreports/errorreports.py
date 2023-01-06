@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import datetime
 import logging
-import platform
 import sys
 import textwrap
 import time
@@ -10,15 +9,15 @@ from types import TracebackType
 
 import better_exceptions
 from exceptiongroup import BaseExceptionGroup
-from gi.repository import Gdk, Gtk
+from gi.repository import Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.action import action
-from gaphor.application import distribution
 from gaphor.core.eventmanager import event_handler
 from gaphor.event import Notification, SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui.abc import UIComponent
+from gaphor.ui.selftest import system_information
 
 better_exceptions.SUPPORTS_COLOR = False
 
@@ -94,7 +93,8 @@ class ErrorReports(UIComponent, ActionProvider):
 
         buffer.delete(buffer.get_start_iter(), buffer.get_end_iter())
 
-        buffer.insert(buffer.get_end_iter(), os_information())
+        buffer.insert(buffer.get_end_iter(), system_information())
+        buffer.insert(buffer.get_end_iter(), "\n\n")
 
         if not self.exceptions:
             buffer.insert(
@@ -157,18 +157,3 @@ class ErrorReports(UIComponent, ActionProvider):
                     )
                 )
             )
-
-
-def os_information():
-    dm = Gdk.DisplayManager.get()
-    display = dm.get_default_display()
-    return textwrap.dedent(
-        f"""\
-    OS: {platform.system()} ({platform.release()})
-    Python version: {platform.python_version()}
-    GTK version: {Gtk.get_major_version()}.{Gtk.get_minor_version()}.{Gtk.get_micro_version()}
-    Display: {display.__class__.__name__ if display else "n.a."}
-    Gaphor version: {distribution().version}
-
-    """
-    )
