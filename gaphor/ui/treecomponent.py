@@ -331,17 +331,24 @@ def create_shortcut_controller(shortcuts):
 
 
 def create_popup_controller(tree_view, selection, modeling_language):
+    menu = None
+
     def on_show_popup(ctrl, n_press, x, y):
+        nonlocal menu
         selection.unselect_item(selection.get_selected())
-        menu = Gtk.PopoverMenu.new_from_model(toplevel_popup_model(modeling_language))
+        if not menu:
+            menu = Gtk.PopoverMenu.new_from_model(
+                toplevel_popup_model(modeling_language)
+            )
+            menu.set_parent(tree_view)
+            menu.set_has_arrow(False)
+
         gdk_rect = Gdk.Rectangle()
         gdk_rect.x = x
         gdk_rect.y = y
         gdk_rect.width = gdk_rect.height = 1
 
         menu.set_pointing_to(gdk_rect)
-        menu.set_has_arrow(False)
-        menu.set_parent(tree_view)
         menu.popup()
 
     ctrl = Gtk.GestureClick.new()
