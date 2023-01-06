@@ -7,25 +7,10 @@ from gaphor.core.styling import Style
 
 class CssFunctionCompletionProvider(GObject.GObject, GtkSource.CompletionProvider):
     FUNCTIONS = [
-        "attr",
-        "calc",
-        "conic-gradient",
-        "counter",
-        "cubic-bezier",
         "hsl",
         "hsla",
-        "lab",
-        "lch",
-        "linear-gradient",
-        "max",
-        "min",
-        "radial-gradient",
-        "repeating-conic-gradient",
-        "repeating-linear-gradient",
-        "repeating-radial-gradient",
         "rgb",
         "rgba",
-        "var",
     ]
 
     def __init__(self):
