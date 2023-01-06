@@ -201,7 +201,9 @@ class CssNamedColorsCompletionProvider(GObject.GObject, GtkSource.CompletionProv
             proposal = CssNamedColorProposal(color)
             store.append(proposal)
 
-        filter_fn = lambda proposal, data: proposal.text.startswith(data.word)
+        def filter_fn(proposal, data):
+            return proposal.text.startswith(data.word)
+
         store_filter = Gtk.CustomFilter.new(filter_fn, self._filter_data)
         task.proposals = Gtk.FilterListModel.new(store, store_filter)
         task.return_boolean(True)
