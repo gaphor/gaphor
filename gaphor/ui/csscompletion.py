@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+import tinycss2.color3
 from gi.repository import Gio, GObject, Gtk, GtkSource
 
 from gaphor.core.styling import Style
-import tinycss2.color3
 
 
 class CssNamedColorsCompletionProvider(GObject.GObject, GtkSource.CompletionProvider):
