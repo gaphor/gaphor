@@ -65,12 +65,12 @@ class CssNamedColorsCompletionProvider(GObject.GObject, GtkSource.CompletionProv
         self, context: GtkSource.CompletionContext, model: Gio.ListModel
     ) -> None:
         word = context.get_word()
-        old_word = self._filter_data.word
         change = Gtk.FilterChange.DIFFERENT
-        if old_word and word.startswith(old_word):
-            change = Gtk.FilterChange.MORE_STRICT
-        elif old_word and old_word.startswith(word):
-            change = Gtk.FilterChange.LESS_STRICT
+        if old_word := self._filter_data.word:
+            if word.startswith(old_word):
+                change = Gtk.FilterChange.MORE_STRICT
+            elif old_word.startswith(word):
+                change = Gtk.FilterChange.LESS_STRICT
         self._filter_data.word = word
         model.get_filter().changed(change)
 
