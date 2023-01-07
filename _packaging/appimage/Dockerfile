@@ -9,26 +9,31 @@ ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     PY_VERSION="3.11" \
     FONTCONFIG_VERSION="2.14.1" \
+    GITHUB_CLI_VERSION="2.21.2" \
     DEBIAN_FRONTEND=noninteractive
 
 # Enable source lists for build-dep
 RUN sed -i -- 's/#deb-src/deb-src/g' /etc/apt/sources.list \
  && sed -i -- 's/# deb-src/deb-src/g' /etc/apt/sources.list
 
-# Add repositories for Python deadsnakes and PowerShell
+# Add packages / repositories for Python deadsnakes, PowerShell, and GitHub CLI
 RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-transport-https \
     software-properties-common \
     wget \
+    git \
  && add-apt-repository ppa:deadsnakes/ppa \
  && wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb \
  && dpkg -i packages-microsoft-prod.deb \
+ && wget -q https://github.com/cli/cli/releases/download/v${GITHUB_CLI_VERSION}/gh_${GITHUB_CLI_VERSION}_linux_amd64.deb \
+ && dpkg -i gh_${GITHUB_CLI_VERSION}_linux_amd64.deb \
  && apt-get update && apt-get install -y --no-install-recommends \
 `# Common dependencies` \
     build-essential \
 `# GitHub Actions dependencies` \
     xvfb \
     powershell \
+    gh \
 `# jhbuild dependencies` \
     autoconf \
     automake \
