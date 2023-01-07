@@ -32,8 +32,8 @@ The layout of the Gaphor interface is divided into four sections,
 namely:
 
 1. Model Browser
-2. Diagrams
-3. Diagram Element Toolbox
+2. Diagram Element Toolbox
+3. Diagrams
 4. Property Editor
 
 Each section has its own specific function.
@@ -64,55 +64,6 @@ Double-clicking on a diagram element will show it in the Diagram
 section. Elements such as classes and packages can be dragged from the
 tree view on the diagrams.
 
-## Diagram Section
-
-The diagram section contains diagrams of the model and takes up the most space
-in the UI because it is where most of the modeling is done. Diagrams consist of
-items placed on the diagram. There are two main types of items:
-1. Elements
-2. Connectors
-
-Multiple diagrams can be opened at once: they are shown in tabs. Tabs can be
-closed by pressing <kbd>Ctrl</kbd>+<kbd>w</kbd> or left-clicking on the x in the
-diagram tab.
-
-### Elements
-
-Elements are the shapes that you add to a diagram, and together with Connectors,
-allow you to build up a model.
-
-To resize an element on the diagram, left-click on the element to select it and
-then drag the resize handles that appear at each corner.
-
-To move an element on the diagram, drag the element where you want to place it
-by pressing and holding the left mouse button, and moving the mouse before
-releasing the button.
-
-### Connectors
-
-Connectors are line-like elements that form relations between elements in the
-diagram. Each end of a connector is in one of two states:
-
-1. Connected to an element and the handle turns red
-2. Disconnected from an element and the handle turns green
-
-If both ends of a connector are disconnected, the connector can be moved by
-left-clicking on the connector and dragging it.
-
-A new segment in a connector can be added by left-clicking on the connector to
-select it and then by hovering your mouse over the connector. A green handle
-will appear in the middle of the line segments that exist. Drag the handle to
-add another segment. For example, when you first create a new connector, it will
-have a single segment. If you drag the segment handle, then it will now have two
-segments with the knee of the two segments where the handle was.
-
-### Undo and Redo
-
-Undo a change press <kbd>Ctrl</kbd>+<kbd>z</kbd> or left-click on the back arrow
-at the top of the Property Editor. To re-do a change, hit
-<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> or press the forward arrow at the
-top of the Property Editor.
-
 ## Toolbox
 
 The toolbox is used to add new items to a diagram. Select the element you want
@@ -125,6 +76,56 @@ the "Reset tool" option in the Preferences window. Tools can also be selected by
 keyboard shortcuts. The keyboard shortcut can be displayed as a tooltip by
 hovering over the tool button in the toolbox. Finally, it is also possible to
 drag elements on the Diagram from the toolbox.
+
+## Diagrams
+
+The diagram section contains diagrams of the model and takes up the most space
+in the UI because it is where most of the modeling is done. Diagrams consist of
+items placed on the diagram. There are two main types of items:
+
+1. Elements
+2. Relationships
+
+Multiple diagrams can be opened at once: they are shown in tabs. Tabs can be
+closed by pressing <kbd>Ctrl</kbd>+<kbd>w</kbd> or left-clicking on the x in the
+diagram tab.
+
+### Elements
+
+Elements are the shapes that you add to a diagram, and together with Relations,
+allow you to build up a model.
+
+To resize an element on the diagram, left-click on the element to select it and
+then drag the resize handles that appear at each corner.
+
+To move an element on the diagram, drag the element where you want to place it
+by pressing and holding the left mouse button, and moving the mouse before
+releasing the button.
+
+### Relations
+
+Relations are line-like elements that form relationships between elements in the
+diagram. Each end of a relation is in one of two states:
+
+1. Connected to an element and the handle turns red
+2. Disconnected from an element and the handle turns green
+
+If both ends of a relation are disconnected, the relation can be moved by
+left-clicking and dragging it.
+
+A new segment in a relation can be added by left-clicking on the relation to
+select it and then by hovering your mouse over it. A green handle
+will appear in the middle of the line segments that exist. Drag the handle to
+add another segment. For example, when you first create a new relation, it will
+have only one segment. If you drag the segment handle, then it will now have two
+segments with the knee of the two segments where the handle was.
+
+### Undo and Redo
+
+Undo a change press <kbd>Ctrl</kbd>+<kbd>z</kbd> or left-click on the back arrow
+at the top of the Property Editor. To re-do a change, hit
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> or press the forward arrow at the
+top of the Property Editor.
 
 ## Property Editor
 
