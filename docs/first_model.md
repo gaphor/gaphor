@@ -31,7 +31,7 @@ placed on a diagram. A diagram is a diagram. UML defines all different
 kinds of diagrams, such as Class diagrams, Component diagrams, Action
 diagrams, Sequence diagrams. But Gaphor does not place any restrictions.
 
-## Adding Relationships
+## Adding Relations
 
 Add another Class. Change the names to `Shape` and `Circle`. Let's define that `Circle` is a sub-type of `Shape`. You can do this
 by selecting one and changing the name in the Property Editor, or by double-clicking the element.
