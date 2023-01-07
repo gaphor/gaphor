@@ -34,5 +34,5 @@ runs:
       if: github.event_name == 'release'
       run: |
         echo ${{ inputs.github_token }} | gh auth login --with-token
-        gh release upload ${{ inputs.version }} "_packaging/dist/*"
+        gh release upload ${{ inputs.version }} _packaging/dist/Gaphor-${{ inputs.version }}-x86_64.AppImage
       shell: bash
