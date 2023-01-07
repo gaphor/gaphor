@@ -197,7 +197,7 @@ family, size, weight.
 
 * `padding` is defined by integers in the range of 1 to 4. No unit (px, pt, em)
   needs to be used. All values are in pixel distance.
-* `dash-style` is a list of numbers (line, gap, line, gap, ...)
+* `dash-style` is a list of numbers (line, gap, line, gap, …)
 * `line-style` only has an effect when defined on a `diagram`. A sloppiness
   factor can be provided in the range of -2 to 2.
 
@@ -253,7 +253,7 @@ C4 Model  C4 Model      Container: Database  ``c4database``
 SysML     Blocks        ValueType            ``datatype``
 SysML     Blocks        Primitive            ``datatype``
 SysML     Requirements  Derive Requirement   ``derivedreq``
-RAAML     FTA           any AND/OR/... Gate  ``and``, ``or``, etc.
+RAAML     FTA           any AND/OR/… Gate  ``and``, ``or``, etc.
 ========  ============  ===================  =============================
 ```
 
