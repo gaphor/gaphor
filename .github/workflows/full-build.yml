@@ -137,7 +137,6 @@ jobs:
         uses: ./.github/actions/linux_appimage
         if: ${{ github.actor != 'dependabot[bot]' }}
         with:
-          mainline_build: ${{ env.mainline_build }}
           version: ${{ steps.setup_and_test.outputs.version }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 

@@ -7,9 +7,6 @@ inputs:
   github_token:
     description: 'GitHub token for uploading releases'
     required: true
-  mainline_build:
-    description: 'Build is performed on the main line'
-    required: true
 runs:
   using: composite
   steps:
