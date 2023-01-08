@@ -125,8 +125,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set workspace as a safe git directory
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
-      - name: Install Linux Dependencies
-        run: apt-get update -qq && apt-get install -qq --no-install-recommends graphviz
       - name: Use Python Dependency Cache
         uses: actions/cache@v3.2.2
         with:
