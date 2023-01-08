@@ -108,13 +108,13 @@ jobs:
   linux-appimage:
     name: Linux (AppImage)
     needs: lint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
       GAPHOR_USE_GTK: 4
     permissions:
       contents: write
     container:
-      image: ghcr.io/gaphor/gaphor-appimage:2023.1.1
+      image: ghcr.io/gaphor/gaphor-appimage:2023.1.2
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     outputs:
