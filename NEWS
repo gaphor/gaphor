@@ -1,11 +1,17 @@
-2.14.3
+2.15.0
 ------
-- Fix translations not loading in Windows, macOS, and AppImage
-- Add Turkish, and update French, Russian, and Swedesh translations
 - Add basic git merge conflict support by asking which model to load
+- Improvements to CSS autocomplete with function completion
+- Insert colons, spaces, and () automatically for CSS autocomplete
 - Use native file chooser in Windows
+- Fix translations not loading in Windows, macOS, and AppImage
 - Fix PyInstaller versionfile parse error with pre-release versions
 - Update CI to publish to PyPI after all other jobs have passed
+- Replace pytest-mock with monkeypatch for tests
+- Fix PEP597 encoding warnings
+- Fix regression that caused line handles to not snap to elements
+- Add Turkish, and update French, Russian, and Swedish translations
+- Remove translation Makefile
 
 2.14.2
 ------
