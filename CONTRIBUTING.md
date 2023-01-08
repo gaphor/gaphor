@@ -14,7 +14,7 @@ changes, and helping you finalize your pull requests.
 
 ### What we are Looking For
 
-Gaphor is an open source project and we love to receive contributions from our
+Gaphor is an open source project, and we love to receive contributions from our
 community — you! There are many ways to contribute, from writing tutorials or
 blog posts, improving the documentation, translating the app, submitting bug reports
 and feature requests or writing code which can be incorporated into Gaphor itself.
@@ -22,25 +22,25 @@ and feature requests or writing code which can be incorporated into Gaphor itsel
 ### What we are not Looking For
 
 Please, don't use the issue tracker for support questions. Check whether the
-your question can be answered on the
-[Gaphor Gitter Channel](https://gitter.im/gaphor/Lobby).
+question can be answered on our [Matrix
+room](https://app.element.io/#/room/#gaphor_Lobby:gitter.im).
 
 # Ground Rules
 ### Responsibilities
 
  * Ensure cross-platform compatibility for every change that's accepted.
- Windows, Mac, Debian & Ubuntu Linux.
+ Windows, macOS, and Linux.
  * Ensure that code that goes into core meets all requirements in this
  [PR Review Checklist](https://gist.github.com/audreyr/4feef90445b9680475f2).
  * Create issues for any major changes and enhancements that you wish to make.
  * Discuss things transparently and get community feedback.
- * Don't add any classes to the codebase unless absolutely needed. Err on the side of using
- functions.
+ * Don't add any classes to the codebase unless absolutely needed. Error on the
+   side of using functions.
  * Keep feature versions as small as possible, preferably one new feature per
  version.
  * Be welcoming to newcomers and encourage diverse new contributors from all
- backgrounds. See the
- [Python Community Code of Conduct](https://www.python.org/psf/codeofconduct/).
+ backgrounds. We expect all contributors to comply with our [Code of
+ Conduct](https://github.com/gaphor/gaphor/blob/main/CODE_OF_CONDUCT.md).
 
 # Your First Contribution
 
@@ -56,24 +56,29 @@ these `first-timers-only` and `up-for-grabs` issues:
 
 Working on your first Pull Request? You can learn how from this *free* series,
 [How to Contribute to an Open Source Project on
-GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github).
+GitHub](https://app.egghead.io/playlists/how-to-contribute-to-an-open-source-project-on-github).
 
 At this point, you're ready to make your changes! Feel free to ask for help;
 everyone is a beginner at first :smile_cat:
 
 If a maintainer asks you to "rebase" your PR, they're saying that a lot of code
-has changed, and that you need to update your branch so it's easier to merge.
+has changed, and that you need to update your branch, so it's easier to merge.
 
 # Getting Started
 
 For something that is bigger than a one or two line fix:
 
 1. Create your own fork of the code
-2. Set up a development environment as per
+2. The easiest way to contribute to the project is using GitHub Codespaces:
+  - Navigate to https://github.com/gaphor/gaphor
+  - Click the Code drop-down menu and select the Open with Codespaces option.
+  - Select + New codespace at the bottom on the pane.
+
+Alternatively, you can also setup a local development environment:
   - Linux: https://gaphor.readthedocs.io/en/latest/linux.html
   - MacOS: https://gaphor.readthedocs.io/en/latest/macos.html
   - Windows: https://gaphor.readthedocs.io/en/latest/windows.html
-3. Add tests for your changes, run the tests with `make test`.
+3. Add tests for your changes, run the tests with `pytest`.
 4. Do the changes in your fork.
 5. If you like the change and think the project could use it:
     * Be sure you have the pre-commit hook installed above, it will ensure that
@@ -82,7 +87,6 @@ For something that is bigger than a one or two line fix:
     * [Sign](https://help.github.com/articles/signing-commits/) your commits.
     * Note the Gaphor Code of Conduct.
     * Create a pull request.
-
 
 Small contributions such as fixing spelling errors, where the content is small
 enough to not be considered intellectual property, can be submitted by a
@@ -100,6 +104,7 @@ functionality, some likely examples include the following:
 * Moving source files from one directory or package to another
 
 # How to Report a Bug
+
 If you find a security vulnerability, do NOT open an issue. Email dan@yeaw.me instead.
 
 When filing an issue, make sure to answer the questions in the issue template.
@@ -111,6 +116,7 @@ When filing an issue, make sure to answer the questions in the issue template.
 5. What did you see instead?
 
 # How to Suggest a Feature or Enhancement
+
 If you find yourself wishing for a feature that doesn't exist in Gaphor,
 you are probably not alone. There are bound to be others out there with similar
 needs. Many of the features that Gaphor has today have been added
@@ -119,9 +125,19 @@ which describes the feature you would like to see, why you need it, and how it
 should work.
 
 # How to translate the app
-Go to the [translation folder](https://github.com/gaphor/gaphor/tree/main/po).
-If needed, edit an existing language file (.po) or start and a new translation
-with the "gaphor.pot" file and send a Pull Request.
+
+Gaphor is translated using [Weblate](https://weblate.org). Weblate is an open
+source web-based translation tool with a tight integration with Git and GitHub.
+To update a translation, simply go to the [Gaphor Weblate
+project](https://hosted.weblate.org/projects/gaphor/) and edit the strings
+directly in the web interface. Weblate will take care of merging your changes,
+if needed, and opening a Pull Request to our project.
+
+Alternatively, you can also go to the [translation
+folder](https://github.com/gaphor/gaphor/tree/main/po) and manually edit an
+existing language file (.po) or start and a new translation by using the
+gaphor.pot file as a template. The rest of the process is the same as
+contributing a code contribution.
 
 # Code review process
 
@@ -130,6 +146,6 @@ response within a week. After feedback has been given we expect responses
 within two weeks. After two weeks we may close the pull request if it isn't
 showing any activity.
 
-
 # Community
-You can chat with the Gaphor community on gitter: https://gitter.im/Gaphor/Lobby.
+
+You can chat with the Gaphor community on [Matrix](https://app.element.io/#/room/#gaphor_Lobby:gitter.im).
