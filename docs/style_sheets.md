@@ -253,7 +253,7 @@ C4 Model  C4 Model      Container: Database  ``c4database``
 SysML     Blocks        ValueType            ``datatype``
 SysML     Blocks        Primitive            ``datatype``
 SysML     Requirements  Derive Requirement   ``derivedreq``
-RAAML     FTA           any AND/OR/… Gate  ``and``, ``or``, etc.
+RAAML     FTA           any AND/OR/… Gate    ``and``, ``or``, etc.
 ========  ============  ===================  =============================
 ```
 
