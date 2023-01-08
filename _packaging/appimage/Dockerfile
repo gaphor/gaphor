@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     git \
  && add-apt-repository ppa:deadsnakes/ppa \
+ && add-apt-repository ppa:git-core/ppa \
  && wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb \
  && dpkg -i packages-microsoft-prod.deb \
  && wget -q https://github.com/cli/cli/releases/download/v${GITHUB_CLI_VERSION}/gh_${GITHUB_CLI_VERSION}_linux_amd64.deb \
