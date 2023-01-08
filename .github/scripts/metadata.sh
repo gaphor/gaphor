@@ -15,6 +15,7 @@ then
     REV=""
     RELEASE="true"
 else
+    # PEP440 version scheme, different from semver 2.0
     REV=".dev${GITHUB_RUN_NUMBER:-0}+${GITHUB_SHA:0:8}"
     RELEASE="false"
 
