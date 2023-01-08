@@ -10,7 +10,7 @@ else:
     import tomli as tomllib
 
 import pyinstaller_versionfile
-import semver
+from packaging.version import Version
 from PyInstaller.utils.hooks import collect_entry_point, copy_metadata
 
 logging.getLogger(__name__).info(
@@ -33,14 +33,10 @@ mo_files = [
 ]
 
 
-def get_version() -> str:
+def get_version() -> Version:
     project_dir = Path.cwd().parent
     f = project_dir / "pyproject.toml"
-    return str(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
-
-
-def get_semver_version() -> semver.VersionInfo:
-    return semver.VersionInfo.parse(get_version())
+    return Version(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
 
 
 def collect_entry_points(*names):
@@ -110,10 +106,10 @@ a = Analysis(  # type: ignore
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)  # type: ignore
 
-ver = get_semver_version()
+ver = get_version()
 pyinstaller_versionfile.create_versionfile(
     output_file="windows/file_version_info.txt",
-    version=f"{ver.major}.{ver.minor}.{ver.patch}.0",
+    version=f"{ver.major}.{ver.minor}.{ver.micro}.0",
     company_name="Gaphor",
     file_description="Gaphor",
     internal_name="Gaphor",
@@ -146,9 +142,9 @@ app = BUNDLE(  # type: ignore
     name="Gaphor.app",
     icon="macos/gaphor.icns",
     bundle_identifier="org.gaphor.gaphor",
-    version=get_version(),
+    version=str(get_version()),
     info_plist={
-        "CFBundleVersion": get_version(),
+        "CFBundleVersion": str(get_version()),
         "NSHumanReadableCopyright": COPYRIGHT,
         "LSMinimumSystemVersion": "10.13",
         "NSHighResolutionCapable": True,
