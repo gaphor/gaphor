@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-12-03 16:14-0500\n"
-"PO-Revision-Date: 2023-01-09 09:49+0000\n"
+"PO-Revision-Date: 2023-01-10 23:48+0000\n"
 "Last-Translator: BrainKicker <peter.sabanov@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
@@ -2209,7 +2209,7 @@ msgstr "Перезапускать Инструмент Автоматическ
 
 #: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:247
 msgid "Remove Unused Elements"
-msgstr "Удалить Неиспользуемые Элементы"
+msgstr "Удалять Неиспользуемые Элементы"
 
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
 #: gaphor/ui/elementeditor.ui:249 gaphor/ui/elementeditor.ui:256
@@ -2459,7 +2459,7 @@ msgstr "Профиль: {name}"
 
 #: gaphor/ui/mainwindow.ui:48
 msgid "Open diagram menu"
-msgstr "Открыть меню диаграммы"
+msgstr "Открыть меню диаграмм"
 
 #: gaphor/ui/mainwindow.ui:55
 msgid "Open application menu"
