@@ -19,6 +19,7 @@ from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.csscompletion import (
     CssFunctionCompletionProvider,
+    CssNamedColorsCompletionProvider,
     CssPropertyCompletionProvider,
 )
 from gaphor.ui.event import DiagramSelectionChanged
@@ -294,6 +295,7 @@ class PreferencesStack:
         if Gtk.get_major_version() == 4:
             view_completion = self.style_sheet_view.get_completion()
             view_completion.add_provider(CssFunctionCompletionProvider())
+            view_completion.add_provider(CssNamedColorsCompletionProvider())
             view_completion.add_provider(CssPropertyCompletionProvider())
 
         self.event_manager.subscribe(self._model_ready)
