@@ -22,7 +22,7 @@ if sys.platform == "win32" and os.getenv("LANG") is None:
 
 try:
     localedir = importlib.resources.files("gaphor") / "locale"
-    translate = _gettext.translation("gaphor", localedir=str(localedir), fallback=True)
+    translate = _gettext.translation("gaphor", localedir=str(localedir))
     gettext = translate.gettext
 
 except OSError as e:
