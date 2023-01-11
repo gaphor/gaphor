@@ -16,6 +16,7 @@ from gaphor.core.modeling import (
 )
 from gaphor.diagram.drop import drop
 from gaphor.event import ActionEnabled
+from gaphor.i18n import translated_ui_string
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.diagrampage import DiagramPage, GtkView
@@ -27,10 +28,13 @@ from gaphor.ui.event import (
     ElementOpened,
 )
 
-if Gtk.get_major_version() != 3:
-    from gi.repository import Adw
-
 log = logging.getLogger(__name__)
+
+
+def new_builder():
+    builder = Gtk.Builder()
+    builder.add_from_string(translated_ui_string("gaphor.ui", "diagrams.ui"))
+    return builder
 
 
 class Diagrams(UIComponent, ActionProvider):
@@ -66,15 +70,9 @@ class Diagrams(UIComponent, ActionProvider):
                 self._notebook.connect("notify::page", self._on_current_page_changed),
             ]
         else:
-            self._notebook = Adw.TabView()
-            self._notebook.props.vexpand = True
-            self._bar = Adw.TabBar()
-            self._bar.set_autohide(False)
-            self._bar.set_view(self._notebook)
-            self._box = Gtk.Box.new(Gtk.Orientation.VERTICAL, 0)
-            self._box.append(self._bar)
-            self._box.append(self._notebook)
-            # connect view::close-page
+            builder = new_builder()
+            self._notebook = builder.get_object("notebook")
+            self._stack = builder.get_object("stack")
             self._page_handler_ids = [
                 self._notebook.connect(
                     "close-page",
@@ -98,7 +96,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.subscribe(self._on_model_ready)
 
         self._on_model_ready()
-        return self._notebook if Gtk.get_major_version() == 3 else self._box
+        return self._notebook if Gtk.get_major_version() == 3 else self._stack
 
     def close(self):
         """Close the diagrams component."""
@@ -372,6 +370,9 @@ class Diagrams(UIComponent, ActionProvider):
 
         for action_name in ["win.zoom-in", "win.zoom-out", "win.zoom-100"]:
             self.event_manager.handle(ActionEnabled(action_name, enabled))
+
+        if Gtk.get_major_version() != 3:
+            self._stack.set_visible_child_name("notebook" if enabled else "empty")
 
     @event_handler(AttributeUpdated)
     def _on_name_change(self, event):
