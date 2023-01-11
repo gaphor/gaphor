@@ -361,15 +361,11 @@ def create_popup_controller(tree_view, selection, modeling_language):
 
 
 def toplevel_popup_model(modeling_language) -> Gio.Menu:
-    model = Gio.Menu.new()
+    model = create_diagram_types_model(modeling_language)
 
     part = Gio.Menu.new()
-    part.append_submenu(
-        gettext("New _Diagram"), create_diagram_types_model(modeling_language)
-    )
     part.append(gettext("New _Package"), "tree-view.create-package")
-    model.append_section(None, part)
-
+    model.prepend_section(None, part)
     return model
 
 
