@@ -246,6 +246,12 @@ class MainWindow(Service, ActionProvider):
             else gettext("New model")
         )
 
+        window_title = (
+            f"{self.filename.name} ({str(self.filename.parent).replace(str(Path.home()), '~')}) - Gaphor"
+            if self.filename
+            else f"{gettext('New model')} - Gaphor"
+        )
+
         if Gtk.get_major_version() == 3:
             if self.model_changed:
                 title += " [" + gettext("edited") + "]"
@@ -254,7 +260,7 @@ class MainWindow(Service, ActionProvider):
 
         self.title.set_text(title)
         self.subtitle.set_text(subtitle)
-        self.window.set_title(title)
+        self.window.set_title(window_title)
 
     # Signal callbacks:
 
