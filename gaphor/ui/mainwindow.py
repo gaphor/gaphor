@@ -10,6 +10,7 @@ from gi.repository import Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import event_handler, gettext
+from gaphor.core.modeling import Diagram
 from gaphor.event import (
     ActionEnabled,
     ActiveSessionChanged,
@@ -23,6 +24,7 @@ from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
+from gaphor.ui.event import CurrentDiagramChanged
 from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.namespace import create_diagram_types_model
 from gaphor.ui.notification import InAppNotifier
@@ -112,9 +114,11 @@ class MainWindow(Service, ActionProvider):
         self.diagram_types = None
         self.in_app_notifier = None
         self._filename: Path | None = None
+        self._current_diagram: Diagram | None = None
         self._model_changed = False
 
         event_manager.subscribe(self._on_file_manager_state_changed)
+        event_manager.subscribe(self._on_current_diagram_changed)
 
     def shutdown(self):
         if self.window:
@@ -123,6 +127,7 @@ class MainWindow(Service, ActionProvider):
 
         em = self.event_manager
         em.unsubscribe(self._on_file_manager_state_changed)
+        em.unsubscribe(self._on_current_diagram_changed)
         em.unsubscribe(self._on_undo_manager_state_changed)
         em.unsubscribe(self._on_action_enabled)
         em.unsubscribe(self._on_modeling_language_selection_changed)
@@ -230,13 +235,16 @@ class MainWindow(Service, ActionProvider):
         if not self.window:
             return
 
-        if self.filename:
-            p = self.filename
-            title = p.stem
-            subtitle = str(p).replace(str(Path.home()), "~")
-        else:
-            title = "Gaphor"
-            subtitle = gettext("New model")
+        title = (
+            (self._current_diagram.name or gettext("<None>"))
+            if self._current_diagram
+            else "Gaphor"
+        )
+        subtitle = (
+            str(self.filename).replace(str(Path.home()), "~")
+            if self.filename
+            else gettext("New model")
+        )
 
         if Gtk.get_major_version() == 3:
             if self.model_changed:
@@ -258,6 +266,11 @@ class MainWindow(Service, ActionProvider):
         self.filename = Path(event.filename) if event.filename else None
         if self.window:
             self.window.present()
+
+    @event_handler(CurrentDiagramChanged)
+    def _on_current_diagram_changed(self, event):
+        self._current_diagram = event.diagram
+        self.set_title()
 
     @event_handler(UndoManagerStateChanged)
     def _on_undo_manager_state_changed(self, event):
