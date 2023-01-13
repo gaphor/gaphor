@@ -16,7 +16,6 @@ from gaphor.event import (
     ActiveSessionChanged,
     ModelLoaded,
     ModelSaved,
-    SessionCreated,
     SessionShutdownRequested,
 )
 from gaphor.i18n import translated_ui_string
@@ -136,45 +135,13 @@ class MainWindow(Service, ActionProvider):
             self.in_app_notifier = None
 
     @property
-    def filename(self) -> Path | None:
-        raise ValueError("MainWindow.filename is a write-only property")
-
-    @filename.setter
-    def filename(self, filename: Path):
-        self._filename = filename
-
-        if not self.window:
-            self._ui_updates.append(lambda: MainWindow.filename.__set__(self, filename))  # type: ignore[attr-defined,no-any-return]
-            return
-
-        subtitle = (
-            str(filename).replace(str(Path.home()), "~")
-            if filename
-            else gettext("New model")
-        )
-
-        window_title = (
-            f"{filename.name} ({str(filename.parent).replace(str(Path.home()), '~')}) - Gaphor"
-            if filename
-            else f"{gettext('New model')} - Gaphor"
-        )
-
-        self.subtitle.set_text(subtitle)
-        self.window.set_title(window_title)
-
-    @property
     def model_changed(self) -> bool:
         return self.modified.get_visible() if self.modified else False  # type: ignore[no-any-return]
 
     @model_changed.setter
     def model_changed(self, model_changed: bool):
-        if not self.window:
-            self._ui_updates.append(
-                lambda: MainWindow.model_changed.__set__(self, model_changed)  # type: ignore[attr-defined,no-any-return]
-            )
-            return
-
-        self.modified.set_visible(self.model_changed)
+        if self.modified:
+            self.modified.set_visible(model_changed)
 
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
@@ -257,14 +224,28 @@ class MainWindow(Service, ActionProvider):
 
     # Signal callbacks:
 
-    @event_handler(SessionCreated, ModelLoaded, ModelSaved)
-    def _on_file_manager_state_changed(
-        self, event: SessionCreated | ModelLoaded | ModelSaved
-    ):
-        self.model_changed = False
-        self.filename = Path(event.filename) if event.filename else None
-        if self.window:
-            self.window.present()
+    @event_handler(ModelLoaded, ModelSaved)
+    def _on_file_manager_state_changed(self, event: ModelLoaded | ModelSaved) -> None:
+        if not self.window:
+            self._ui_updates.append(lambda: self._on_file_manager_state_changed(event))  # type: ignore[no-any-return]
+            return
+
+        filename = Path(event.filename) if event.filename else None
+
+        self.subtitle.set_text(
+            str(filename).replace(str(Path.home()), "~")
+            if filename
+            else gettext("New model")
+        )
+        self.window.set_title(
+            f"{filename.name} ({str(filename.parent).replace(str(Path.home()), '~')}) - Gaphor"
+            if filename
+            else f"{gettext('New model')} - Gaphor"
+        )
+
+        self.model_changed = isinstance(event, ModelLoaded) and event.modified
+
+        self.window.present()
 
     @event_handler(CurrentDiagramChanged)
     def _on_current_diagram_changed(self, event):

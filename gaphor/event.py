@@ -68,9 +68,10 @@ class SessionShutdown(ServiceEvent):
 
 
 class ModelLoaded:
-    def __init__(self, service, filename: Path | None = None):
+    def __init__(self, service, filename: Path | None = None, modified: bool = False):
         self.service = service
         self.filename = filename
+        self.modified = modified
 
 
 class ModelSaved:

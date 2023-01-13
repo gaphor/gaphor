@@ -128,6 +128,8 @@ class FileManager(Service, ActionProvider):
             status_window.destroy()
             if on_load_done:
                 on_load_done()
+            else:
+                self.event_manager.handle(ModelLoaded(self, filename))
 
         self._load_async(filename, status_window.progress, done)
 
@@ -160,8 +162,6 @@ class FileManager(Service, ActionProvider):
                 except UnicodeDecodeError:
                     # try to load without encoding, for older models saved on windows
                     yield from open_model(encoding=None)
-
-                self.event_manager.handle(ModelLoaded(self, filename))
             except MergeConflictDetected:
                 self.filename = None
                 if Gtk.get_major_version() == 3:
@@ -222,9 +222,7 @@ class FileManager(Service, ActionProvider):
             nonlocal temp_dir
             temp_dir.cleanup()
             self.filename = filename
-            if self.main_window:
-                self.main_window.filename = filename
-                self.main_window.model_changed = True
+            self.event_manager.handle(ModelLoaded(self, filename, modified=True))
 
         if resolution == "current":
             self.load(current_filename, on_load_done=done)
