@@ -22,7 +22,7 @@ jobs:
       - name: Install Linux Dependencies
         uses: ./.github/actions/linux_dependencies
       - name: Set up Python
-        uses: actions/setup-python@v4.4.0
+        uses: actions/setup-python@v4.5.0
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
