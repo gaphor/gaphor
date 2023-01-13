@@ -105,10 +105,10 @@ def run(args: list[str]) -> int:
             if isinstance(event.service, Session):
                 main_window = event.service.get_service("main_window")
                 if main_window.window:
-                    main_window.window.present_with_time(Gdk.CURRENT_TIME)
+                    main_window.window.present()
 
         @event_handler(ApplicationShutdown)
-        def on_quit(event):
+        def on_quit(_event):
             gtk_app.quit()
 
         try:

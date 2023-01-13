@@ -8,7 +8,7 @@ from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
 from gaphor.babel import translate_model
 from gaphor.core import event_handler
-from gaphor.event import ActiveSessionChanged, SessionCreated
+from gaphor.event import SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui import APPLICATION_ID
 
@@ -208,7 +208,7 @@ class Greeter(Service, ActionProvider):
                 row.lang = template.lang
                 yield row
 
-    @event_handler(SessionCreated, ActiveSessionChanged)
+    @event_handler(SessionCreated)
     def on_session_created(self, _event=None):
         self.close()
 

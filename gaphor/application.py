@@ -107,6 +107,7 @@ class Application(Service, ActionProvider):
 
         @event_handler(ActiveSessionChanged)
         def on_active_session_changed(event):
+            logger.debug("Set active session to %s", session)
             self._active_session = session
 
         @event_handler(SessionShutdown)
@@ -129,7 +130,7 @@ class Application(Service, ActionProvider):
         return session
 
     def has_sessions(self):
-        return bool(self._active_session)
+        return bool(self._sessions)
 
     def has_session(self, filename):
         filename = Path(filename)
