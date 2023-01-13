@@ -182,8 +182,7 @@ class MainWindow(Service, ActionProvider):
         )
 
         self.title = builder.get_object("title")
-        if Gtk.get_major_version() != 3:
-            self.modified = builder.get_object("modified")
+        self.modified = builder.get_object("modified")
         self.subtitle = builder.get_object("subtitle")
         self.set_title()
 
@@ -210,7 +209,7 @@ class MainWindow(Service, ActionProvider):
 
         self.window.set_resizable(True)
         if Gtk.get_major_version() == 3:
-            self.window.show_all()
+            self.window.show()
             self.window.add_accel_group(shortcuts)
             self.window.connect("delete-event", self._on_window_close_request)
             self.window.connect("size-allocate", self._on_window_size_allocate)
@@ -252,11 +251,7 @@ class MainWindow(Service, ActionProvider):
             else f"{gettext('New model')} - Gaphor"
         )
 
-        if Gtk.get_major_version() == 3:
-            if self.model_changed:
-                title += " [" + gettext("edited") + "]"
-        else:
-            self.modified.set_visible(self.model_changed)
+        self.modified.set_visible(self.model_changed)
 
         self.title.set_text(title)
         self.subtitle.set_text(subtitle)

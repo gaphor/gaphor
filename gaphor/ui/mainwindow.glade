@@ -79,17 +79,46 @@
             <property name="visible">1</property>
             <property name="orientation">vertical</property>
             <child>
-              <object class="GtkLabel" id="title">
+              <object class="GtkBox">
+                <property name="orientation">horizontal</property>
                 <property name="visible">1</property>
-                <property name="label" translatable="yes">Gaphor</property>
-                <style>
-                  <class name="title"/>
-                </style>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="hexpand">1</property>
+                    <property name="visible">1</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="modified">
+                    <property name="visible">0</property>
+                    <property name="label">•</property>
+                    <property name="margin-end">6</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="title">
+                    <property name="visible">1</property>
+                    <property name="label" translatable="yes">Gaphor</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="hexpand">1</property>
+                    <property name="visible">1</property>
+                  </object>
+                </child>
               </object>
             </child>
             <child>
               <object class="GtkLabel" id="subtitle">
                 <property name="visible">1</property>
+                <property name="label" translatable="yes">New model</property>
                 <style>
                   <class name="subtitle"/>
                 </style>
