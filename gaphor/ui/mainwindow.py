@@ -5,12 +5,12 @@ from __future__ import annotations
 import importlib.resources
 import logging
 from pathlib import Path
+from typing import Callable
 
 from gi.repository import Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import event_handler, gettext
-from gaphor.core.modeling import Diagram
 from gaphor.event import (
     ActionEnabled,
     ActiveSessionChanged,
@@ -113,9 +113,9 @@ class MainWindow(Service, ActionProvider):
         self.modeling_language_name = None
         self.diagram_types = None
         self.in_app_notifier = None
-        self._filename: Path | None = None
-        self._current_diagram: Diagram | None = None
-        self._model_changed = False
+
+        # UI updates to be performed when the window is shown/open.
+        self._ui_updates: list[Callable[[], None]] = []
 
         event_manager.subscribe(self._on_file_manager_state_changed)
         event_manager.subscribe(self._on_current_diagram_changed)
@@ -137,21 +137,44 @@ class MainWindow(Service, ActionProvider):
 
     @property
     def filename(self) -> Path | None:
-        return self._filename
+        raise ValueError("MainWindow.filename is a write-only property")
 
     @filename.setter
     def filename(self, filename: Path):
         self._filename = filename
-        self.set_title()
+
+        if not self.window:
+            self._ui_updates.append(lambda: MainWindow.filename.__set__(self, filename))  # type: ignore[attr-defined,no-any-return]
+            return
+
+        subtitle = (
+            str(filename).replace(str(Path.home()), "~")
+            if filename
+            else gettext("New model")
+        )
+
+        window_title = (
+            f"{filename.name} ({str(filename.parent).replace(str(Path.home()), '~')}) - Gaphor"
+            if filename
+            else f"{gettext('New model')} - Gaphor"
+        )
+
+        self.subtitle.set_text(subtitle)
+        self.window.set_title(window_title)
 
     @property
     def model_changed(self) -> bool:
-        return self._model_changed
+        return self.modified.get_visible() if self.modified else False  # type: ignore[no-any-return]
 
     @model_changed.setter
     def model_changed(self, model_changed: bool):
-        self._model_changed = model_changed
-        self.set_title()
+        if not self.window:
+            self._ui_updates.append(
+                lambda: MainWindow.model_changed.__set__(self, model_changed)  # type: ignore[attr-defined,no-any-return]
+            )
+            return
+
+        self.modified.set_visible(self.model_changed)
 
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
@@ -184,7 +207,6 @@ class MainWindow(Service, ActionProvider):
         self.title = builder.get_object("title")
         self.modified = builder.get_object("modified")
         self.subtitle = builder.get_object("subtitle")
-        self.set_title()
 
         self.window.set_default_size(*self.size)
 
@@ -229,33 +251,9 @@ class MainWindow(Service, ActionProvider):
         em.subscribe(self._on_modeling_language_selection_changed)
         em.subscribe(self.in_app_notifier.handle)
 
-    def set_title(self):
-        """Sets the window title."""
-        if not self.window:
-            return
-
-        title = (
-            (self._current_diagram.name or gettext("<None>"))
-            if self._current_diagram
-            else "Gaphor"
-        )
-        subtitle = (
-            str(self.filename).replace(str(Path.home()), "~")
-            if self.filename
-            else gettext("New model")
-        )
-
-        window_title = (
-            f"{self.filename.name} ({str(self.filename.parent).replace(str(Path.home()), '~')}) - Gaphor"
-            if self.filename
-            else f"{gettext('New model')} - Gaphor"
-        )
-
-        self.modified.set_visible(self.model_changed)
-
-        self.title.set_text(title)
-        self.subtitle.set_text(subtitle)
-        self.window.set_title(window_title)
+        for handler in self._ui_updates:
+            handler()
+        del self._ui_updates[:]
 
     # Signal callbacks:
 
@@ -270,14 +268,18 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(CurrentDiagramChanged)
     def _on_current_diagram_changed(self, event):
-        self._current_diagram = event.diagram
-        self.set_title()
+        if not self.window:
+            self._ui_updates.append(lambda: self._on_current_diagram_changed(event))  # type: ignore[no-any-return]
+            return
+
+        self.title.set_text(
+            (event.diagram.name or gettext("<None>")) if event.diagram else "Gaphor"
+        )
 
     @event_handler(UndoManagerStateChanged)
     def _on_undo_manager_state_changed(self, event):
         undo_manager = event.service
-        if self.model_changed != undo_manager.can_undo():
-            self.model_changed = undo_manager.can_undo()
+        self.model_changed = undo_manager.can_undo()
 
     @event_handler(ActionEnabled)
     def _on_action_enabled(self, event):
