@@ -15,19 +15,14 @@ log = logging.getLogger(__name__)
 
 
 def namespace_view(model: Gtk.TreeModel):
-    if Gtk.get_major_version() == 3:
-        DND_TARGETS = [
-            Gtk.TargetEntry.new(
-                "GTK_TREE_MODEL_ROW",
-                Gtk.TargetFlags.SAME_APP,
-                0,
-            ),
-            Gtk.TargetEntry.new("gaphor/element-id", Gtk.TargetFlags.SAME_APP, 1),
-        ]
-    else:
-        DND_TARGETS = Gdk.ContentFormats.new(
-            ["gaphor/element-id", "GTK_TREE_MODEL_ROW"]
-        )
+    DND_TARGETS = [
+        Gtk.TargetEntry.new(
+            "GTK_TREE_MODEL_ROW",
+            Gtk.TargetFlags.SAME_APP,
+            0,
+        ),
+        Gtk.TargetEntry.new("gaphor/element-id", Gtk.TargetFlags.SAME_APP, 1),
+    ]
 
     view = Gtk.TreeView.new_with_model(model)
 
@@ -51,28 +46,16 @@ def namespace_view(model: Gtk.TreeModel):
 
     view.append_column(column)
 
-    if Gtk.get_major_version() == 3:
-        view.enable_model_drag_source(
-            Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
-            DND_TARGETS,
-            Gdk.DragAction.COPY | Gdk.DragAction.MOVE,
-        )
-        view.enable_model_drag_dest(
-            DND_TARGETS,
-            Gdk.DragAction.MOVE,
-        )
-        view._controller = tree_view_expand_collapse(view)
-    else:
-        view.enable_model_drag_source(
-            Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
-            DND_TARGETS,
-            Gdk.DragAction.COPY | Gdk.DragAction.MOVE,
-        )
-        view.enable_model_drag_dest(
-            DND_TARGETS,
-            Gdk.DragAction.MOVE,
-        )
-        tree_view_expand_collapse(view)
+    view.enable_model_drag_source(
+        Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
+        DND_TARGETS,
+        Gdk.DragAction.COPY | Gdk.DragAction.MOVE,
+    )
+    view.enable_model_drag_dest(
+        DND_TARGETS,
+        Gdk.DragAction.MOVE,
+    )
+    view._controller = tree_view_expand_collapse(view)
 
     def search_func(model, column, key, rowiter):
         # Note that this function returns `False` for a match!
@@ -171,10 +154,6 @@ def tree_view_expand_collapse(view):
             view.collapse_row(path)
             return True
 
-    if Gtk.get_major_version() == 3:
-        controller = Gtk.EventControllerKey.new(view)
-    else:
-        controller = Gtk.EventControllerKey.new()
-        view.add_controller(controller)
+    controller = Gtk.EventControllerKey.new(view)
     controller.connect("key-pressed", on_key_pressed)
     return controller

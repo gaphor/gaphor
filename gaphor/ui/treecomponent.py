@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import sys
 
-from gi.repository import Gdk, GLib, GObject, Gtk
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider
@@ -24,7 +24,11 @@ from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
 from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged, ElementOpened
-from gaphor.ui.namespace import diagram_name_for_type, popup_model
+from gaphor.ui.namespace import (
+    create_diagram_types_model,
+    diagram_name_for_type,
+    popup_model,
+)
 from gaphor.ui.namespacemodel import change_owner
 from gaphor.ui.treemodel import (
     RelationshipItem,
@@ -67,6 +71,7 @@ class TreeComponent(UIComponent, ActionProvider):
         tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
         sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
         self.selection = Gtk.SingleSelection.new(sort_model)
+        self.selection.set_can_unselect(True)
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
@@ -86,7 +91,13 @@ class TreeComponent(UIComponent, ActionProvider):
 
         action_group, shortcuts = create_action_group(self, "tree-view")
         scrolled_window.insert_action_group("tree-view", action_group)
-        self.tree_view.add_controller(create_popup_controller(shortcuts))
+        self.tree_view.add_controller(create_shortcut_controller(shortcuts))
+
+        self.tree_view.add_controller(
+            create_popup_controller(
+                self.tree_view, self.selection, self.modeling_language
+            )
+        )
 
         self.search_bar = create_search_bar(SearchEngine(self.model, self.tree_view))
 
@@ -156,15 +167,13 @@ class TreeComponent(UIComponent, ActionProvider):
     @action(name="tree-view.create-package")
     def tree_view_create_package(self):
         element = self.get_selected_element()
-        assert isinstance(element, UML.Package)
         with Transaction(self.event_manager):
             package = self.element_factory.create(UML.Package)
-            package.package = element
-            package.name = (
-                gettext("{name} package").format(name=element.name)
-                if element
-                else gettext("New model")
-            )
+            if isinstance(element, UML.Package):
+                package.package = element
+                package.name = gettext("{name} package").format(name=element.name)
+            else:
+                package.name = gettext("New package")
         self.select_element(package)
         self.tree_view_rename_selected()
 
@@ -318,10 +327,46 @@ def create_search_bar(search_engine: SearchEngine):
     return search_bar
 
 
-def create_popup_controller(shortcuts):
+def create_shortcut_controller(shortcuts):
     ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
     ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
     return ctrl
+
+
+def create_popup_controller(tree_view, selection, modeling_language):
+    menu = None
+
+    def on_show_popup(ctrl, n_press, x, y):
+        nonlocal menu
+        selection.unselect_item(selection.get_selected())
+        if not menu:
+            menu = Gtk.PopoverMenu.new_from_model(
+                toplevel_popup_model(modeling_language)
+            )
+            menu.set_parent(tree_view)
+            menu.set_has_arrow(False)
+
+        gdk_rect = Gdk.Rectangle()
+        gdk_rect.x = x
+        gdk_rect.y = y
+        gdk_rect.width = gdk_rect.height = 1
+
+        menu.set_pointing_to(gdk_rect)
+        menu.popup()
+
+    ctrl = Gtk.GestureClick.new()
+    ctrl.set_button(Gdk.BUTTON_SECONDARY)
+    ctrl.connect("pressed", on_show_popup)
+    return ctrl
+
+
+def toplevel_popup_model(modeling_language) -> Gio.Menu:
+    model = create_diagram_types_model(modeling_language)
+
+    part = Gio.Menu.new()
+    part.append(gettext("New _Package"), "tree-view.create-package")
+    model.prepend_section(None, part)
+    return model
 
 
 def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):
@@ -334,6 +379,7 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
         -1,
     )
     row = builder.get_object("row")
+    row.menu = None
 
     def on_show_popup(ctrl, n_press, x, y):
         list_item.get_child().activate_action(
@@ -345,12 +391,16 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
             ),
         )
         element = list_item.get_item().get_item().element
+        if row.menu:
+            # Clean menu only when we want to create a new one.
+            row.menu.unparent()
+            row.menu = None
         if element:
-            menu = Gtk.PopoverMenu.new_from_model(
+            row.menu = Gtk.PopoverMenu.new_from_model(
                 popup_model(element, modeling_language)
             )
-            menu.set_parent(row)
-            menu.popup()
+            row.menu.set_parent(row)
+            row.menu.popup()
 
     ctrl = Gtk.GestureClick.new()
     ctrl.set_button(Gdk.BUTTON_SECONDARY)
