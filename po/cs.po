@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-12-03 16:14-0500\n"
-"PO-Revision-Date: 2023-01-04 18:51+0000\n"
+"PO-Revision-Date: 2023-01-17 05:50+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
 "\n"
@@ -757,7 +757,7 @@ msgstr "První dovnitř, první ven (FIFO)"
 #: gaphor/UML/profiles/propertypages.glade:25
 #: gaphor/UML/profiles/propertypages.ui:9
 msgid "Name"
-msgstr "Jméno"
+msgstr "Název"
 
 #: gaphor/UML/actions/propertypages.glade:296
 #: gaphor/UML/actions/propertypages.ui:223
@@ -1295,7 +1295,7 @@ msgstr "Státní stroj"
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
-msgstr "Státy"
+msgstr "Stavy"
 
 #: gaphor/UML/states/statestoolbox.py:87
 msgid "Initial Pseudostate"
@@ -2351,14 +2351,16 @@ msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
+"Otevřený model obsahuje neuložené změny. Neuložené změny budou trvale "
+"ztraceny."
 
 #: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
 msgid "Discard"
-msgstr ""
+msgstr "Zahodit"
 
 #: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
 #: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:48
@@ -2367,49 +2369,47 @@ msgstr "Uložit"
 
 #: gaphor/ui/greeter.glade:55
 msgid "Recently opened models"
-msgstr ""
+msgstr "Nedávno otevřené modely"
 
 #: gaphor/ui/greeter.glade:76
 msgid "Create a new model"
-msgstr ""
+msgstr "Vytvořit nový model"
 
 #: gaphor/ui/greeter.glade:112
 msgid "Open Other Model…"
-msgstr ""
+msgstr "Otevřít jiný model…"
 
 #: gaphor/ui/greeter.py:29
 msgid "Generic"
-msgstr ""
+msgstr "Obecné"
 
 #: gaphor/ui/greeter.py:30
-#, fuzzy
 msgid "An empty model"
-msgstr "Nový model"
+msgstr "Prázdný model"
 
 #: gaphor/ui/greeter.py:37
 msgid "Unified Modeling Language template"
-msgstr ""
+msgstr "Šablona jednotného modelovacího jazyka"
 
 #: gaphor/ui/greeter.py:44
 msgid "Systems Modeling Language template"
-msgstr ""
+msgstr "Šablona pro modelování jazyka systemů"
 
 #: gaphor/ui/greeter.py:51
 msgid "Risk Analysis and Assessment Modeling Language template"
-msgstr ""
+msgstr "Šablona jazyka pro modelování analýzy a hodnocení rizik"
 
 #: gaphor/ui/greeter.py:58
 msgid "Layered C4 Model template"
-msgstr ""
+msgstr "Vrstvená šablona modelu C4"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:44
-#, fuzzy
 msgid "Open Model…"
-msgstr "Otevřít model…"
+msgstr "Otevřít Model…"
 
 #: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:58
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Klávesové zkratky"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.glade:7
 #: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:59
@@ -2418,12 +2418,11 @@ msgstr "O programu Gaphor"
 
 #: gaphor/ui/greeter.ui:79
 msgid "Recently Opened"
-msgstr ""
+msgstr "Nedávno otevřené"
 
 #: gaphor/ui/greeter.ui:84
-#, fuzzy
 msgid "Create New Model"
-msgstr "Nový model"
+msgstr "Vytvořit nový model"
 
 #: gaphor/ui/mainwindow.glade:84
 msgid "Gaphor"
@@ -2431,11 +2430,11 @@ msgstr "Gaphor"
 
 #: gaphor/ui/mainwindow.glade:148
 msgid "Create New diagram"
-msgstr ""
+msgstr "Vytvořit nový diagram"
 
 #: gaphor/ui/mainwindow.glade:169
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Otevřít nabídku aplikací"
 
 #: gaphor/ui/mainwindow.glade:191
 msgid "Editor"
@@ -2451,32 +2450,31 @@ msgstr "Uložit jako…"
 
 #: gaphor/ui/mainwindow.py:50
 msgid "Export"
-msgstr ""
+msgstr "Exportovat"
 
 #: gaphor/ui/mainwindow.py:54
 msgid "Tools"
-msgstr ""
+msgstr "Nástroje"
 
 #: gaphor/ui/mainwindow.py:85
 msgid "New Generic Diagram"
-msgstr ""
+msgstr "Nový obecný diagram"
 
 #: gaphor/ui/mainwindow.py:236
 msgid "edited"
-msgstr ""
+msgstr "upraveno"
 
 #: gaphor/ui/mainwindow.py:270
 msgid "Profile: {name}"
-msgstr ""
+msgstr "Profil: {name}"
 
 #: gaphor/ui/mainwindow.ui:48
-#, fuzzy
 msgid "Open diagram menu"
-msgstr "Diagram komponent"
+msgstr "Otevřít nabídku diagramu"
 
 #: gaphor/ui/mainwindow.ui:55
 msgid "Open application menu"
-msgstr ""
+msgstr "Otevřít nabídku aplikace"
 
 #: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:61
 msgid "Toggle property editor"
@@ -2484,44 +2482,44 @@ msgstr "Přepnout editor vlastností"
 
 #: gaphor/ui/namespace.py:48
 msgid "_Open"
-msgstr ""
+msgstr "_Otevřít"
 
 #: gaphor/ui/namespace.py:48
 msgid "Add to diagram"
-msgstr ""
+msgstr "Přidat do diagramu"
 
 #: gaphor/ui/namespace.py:51
 msgid "_Rename"
-msgstr ""
+msgstr "_Přejmenovat"
 
 #: gaphor/ui/namespace.py:56
 msgid "New _Diagram"
-msgstr ""
+msgstr "Nový _Diagram"
 
 #: gaphor/ui/namespace.py:58
 msgid "New _Package"
-msgstr ""
+msgstr "Nový _balíček"
 
 #: gaphor/ui/namespace.py:62
 msgid "De_lete"
-msgstr ""
+msgstr "_Odstranit"
 
 #: gaphor/ui/namespace.py:72
 msgid "Show in “{diagram}”"
-msgstr ""
+msgstr "Zobrazit v \"{diagram}\""
 
 #: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
 msgid "{name} package"
-msgstr ""
+msgstr "balíček {name}"
 
 #: gaphor/ui/namespace.py:352
 msgid "New diagram"
-msgstr ""
+msgstr "Nový diagram"
 
 #: gaphor/ui/namespaceview.py:141 gaphor/ui/tests/test_treemodel.py:162
 #: gaphor/ui/treemodel.py:62
 msgid "<Relationships>"
-msgstr ""
+msgstr "<Vztahy>"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
@@ -2583,9 +2581,13 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
+"Copyright © 2001-2022 Arjan J. Molenaar a Dan Yeaw.\n"
+"\n"
+"UML, SysML a RAAML jsou registrované ochranné známky nebo ochranné známky "
+"společnosti Object Management Group, Inc. ve Spojených státech a/nebo jiných "
+"zemích."
 
 #: gaphor/ui/help/about.ui:22
-#, fuzzy
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
 " not use this application except in compliance with the License. You may "
@@ -2599,25 +2601,17 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
-"Licencováno pod licencí Apache, verze 2.0 (dále jen \"licence\");\n"
-"tuto aplikaci smíte používat pouze v souladu s touto licencí.\n"
-"Licence. Kopii Licence můžete získat na adrese\n"
+"Licencováno pod Apache License, verze 2.0 (dále jen \"Licence\"); tuto "
+"aplikaci můžete používat pouze v souladu s Licencí. Kopii Licence můžete "
+"získat na adrese\n"
 "\n"
-"http://www.apache.org/licenses/LICENSE-2.0\n"
+"    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"Pokud to nevyžadují platné právní předpisy nebo to není písemně "
-"dohodnuto, software\n"
-"distribuován \"TAK, JAK JE\",\n"
-"BEZ ZÁRUK A PODMÍNEK JAKÉHOKOLI DRUHU, ať už se jedná o\n"
-"výslovné nebo předpokládané. Konkrétní znění naleznete v licenci\n"
-"upravující oprávnění a omezení v rámci Licence.\n"
-"\n"
-"---\n"
-"\n"
-"UML, SysML a RAAML jsou\n"
-"ochranné známky společnosti Object Management Group, Inc. ve Spojených "
-"státech,\n"
-"a/nebo v jiných zemích.\n"
+"Pokud to nevyžadují platné právní předpisy nebo to není písemně dohodnuto, "
+"je software distribuovaný v rámci Licence distribuován na základě stavu \"JAK"
+" JE\", BEZ ZÁRUK A PODMÍNEK JAKÉHOKOLIV, ať už výslovných nebo "
+"předpokládaných. Konkrétní znění upravující oprávnění a omezení v rámci "
+"Licence naleznete v Licenci."
 
 #: gaphor/ui/help/shortcuts.ui:24
 msgid "Rename"
