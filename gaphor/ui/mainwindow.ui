@@ -61,7 +61,7 @@
           <object class="GtkMenuButton">
             <property name="icon_name">gaphor-new-diagram-symbolic</property>
             <property name="popover">diagram-types</property>
-            <property name="tooltip-text" translatable="true">Open diagram menu</property>
+            <property name="tooltip-text" translatable="true">New diagram menu</property>
           </object>
         </child>
         <child type="end">

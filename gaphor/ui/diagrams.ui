@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="adw" version="1.2"/>
+  <object class="GtkStack" id="stack">
+    <child>
+      <object class="GtkStackPage">
+        <property name="name">notebook</property>
+        <property name="child">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="AdwTabBar">
+                <property name="view">notebook</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwTabView" id="notebook">
+                <property name="vexpand">1</property>
+              </object>
+            </child>
+          </object>
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkStackPage">
+        <property name="name">empty</property>
+        <property name="child">
+          <object class="AdwStatusPage">
+            <property name="icon-name">gaphor-new-diagram-symbolic</property>
+            <property name="title" translatable="yes">Open a Diagram</property>
+            <property name="description" translatable="yes">Open a diagram from the model browser, or
+create a new diagram from the New diagram menu.</property>
+          </object>
+        </property>
+      </object>
+    </child>
+  </object>
+</interface>
