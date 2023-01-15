@@ -376,20 +376,25 @@ class Diagrams(UIComponent, ActionProvider):
 
     @event_handler(AttributeUpdated)
     def _on_name_change(self, event):
-        if event.property is Diagram.name:
-            for page in range(self._notebook.get_n_pages()):
-                widget = self._notebook.get_nth_page(page)
-                if (
-                    Gtk.get_major_version() == 3
-                    and event.element is widget.diagram_page.diagram
-                ):
-                    self._notebook.set_tab_label(
-                        widget, tab_label(event.new_value, widget, self.event_manager)
-                    )
-                    return
-                elif event.element is widget.get_child().diagram_page.diagram:
-                    widget.set_title(event.new_value or "")
-                    return
+        if event.property is not Diagram.name:
+            return
+        for page in range(self._notebook.get_n_pages()):
+            widget = self._notebook.get_nth_page(page)
+            if (
+                Gtk.get_major_version() == 3
+                and event.element is widget.diagram_page.diagram
+            ):
+                self._notebook.set_tab_label(
+                    widget, tab_label(event.new_value, widget, self.event_manager)
+                )
+                if page == self._notebook.get_current_page():
+                    self.event_manager.handle(CurrentDiagramChanged(event.element))
+                return
+            elif event.element is widget.get_child().diagram_page.diagram:
+                widget.set_title(event.new_value or "")
+                if widget is self._notebook.get_selected_page():
+                    self.event_manager.handle(CurrentDiagramChanged(event.element))
+                return
 
 
 def apply_tool_select_controller(widget, toolbox):

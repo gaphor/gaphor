@@ -5,6 +5,7 @@ from __future__ import annotations
 import importlib.resources
 import logging
 from pathlib import Path
+from typing import Callable
 
 from gi.repository import Gio, GLib, Gtk
 
@@ -15,7 +16,6 @@ from gaphor.event import (
     ActiveSessionChanged,
     ModelLoaded,
     ModelSaved,
-    SessionCreated,
     SessionShutdownRequested,
 )
 from gaphor.i18n import translated_ui_string
@@ -23,6 +23,7 @@ from gaphor.services.modelinglanguage import ModelingLanguageChanged
 from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
+from gaphor.ui.event import CurrentDiagramChanged
 from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.namespace import create_diagram_types_model
 from gaphor.ui.notification import InAppNotifier
@@ -111,10 +112,12 @@ class MainWindow(Service, ActionProvider):
         self.modeling_language_name = None
         self.diagram_types = None
         self.in_app_notifier = None
-        self._filename: Path | None = None
-        self._model_changed = False
+
+        # UI updates to be performed when the window is shown/open.
+        self._ui_updates: list[Callable[[], None]] = []
 
         event_manager.subscribe(self._on_file_manager_state_changed)
+        event_manager.subscribe(self._on_current_diagram_changed)
 
     def shutdown(self):
         if self.window:
@@ -123,6 +126,7 @@ class MainWindow(Service, ActionProvider):
 
         em = self.event_manager
         em.unsubscribe(self._on_file_manager_state_changed)
+        em.unsubscribe(self._on_current_diagram_changed)
         em.unsubscribe(self._on_undo_manager_state_changed)
         em.unsubscribe(self._on_action_enabled)
         em.unsubscribe(self._on_modeling_language_selection_changed)
@@ -131,22 +135,13 @@ class MainWindow(Service, ActionProvider):
             self.in_app_notifier = None
 
     @property
-    def filename(self) -> Path | None:
-        return self._filename
-
-    @filename.setter
-    def filename(self, filename: Path):
-        self._filename = filename
-        self.set_title()
-
-    @property
     def model_changed(self) -> bool:
-        return self._model_changed
+        return self.modified.get_visible() if self.modified else False  # type: ignore[no-any-return]
 
     @model_changed.setter
     def model_changed(self, model_changed: bool):
-        self._model_changed = model_changed
-        self.set_title()
+        if self.modified:
+            self.modified.set_visible(model_changed)
 
     def get_ui_component(self, name):
         return self.component_registry.get(UIComponent, name)
@@ -177,10 +172,8 @@ class MainWindow(Service, ActionProvider):
         )
 
         self.title = builder.get_object("title")
-        if Gtk.get_major_version() != 3:
-            self.modified = builder.get_object("modified")
+        self.modified = builder.get_object("modified")
         self.subtitle = builder.get_object("subtitle")
-        self.set_title()
 
         self.window.set_default_size(*self.size)
 
@@ -205,7 +198,7 @@ class MainWindow(Service, ActionProvider):
 
         self.window.set_resizable(True)
         if Gtk.get_major_version() == 3:
-            self.window.show_all()
+            self.window.show()
             self.window.add_accel_group(shortcuts)
             self.window.connect("delete-event", self._on_window_close_request)
             self.window.connect("size-allocate", self._on_window_size_allocate)
@@ -225,45 +218,49 @@ class MainWindow(Service, ActionProvider):
         em.subscribe(self._on_modeling_language_selection_changed)
         em.subscribe(self.in_app_notifier.handle)
 
-    def set_title(self):
-        """Sets the window title."""
-        if not self.window:
-            return
-
-        if self.filename:
-            p = self.filename
-            title = p.stem
-            subtitle = str(p).replace(str(Path.home()), "~")
-        else:
-            title = "Gaphor"
-            subtitle = gettext("New model")
-
-        if Gtk.get_major_version() == 3:
-            if self.model_changed:
-                title += " [" + gettext("edited") + "]"
-        else:
-            self.modified.set_visible(self.model_changed)
-
-        self.title.set_text(title)
-        self.subtitle.set_text(subtitle)
-        self.window.set_title(title)
+        for handler in self._ui_updates:
+            handler()
+        del self._ui_updates[:]
 
     # Signal callbacks:
 
-    @event_handler(SessionCreated, ModelLoaded, ModelSaved)
-    def _on_file_manager_state_changed(
-        self, event: SessionCreated | ModelLoaded | ModelSaved
-    ):
-        self.model_changed = False
-        self.filename = Path(event.filename) if event.filename else None
-        if self.window:
-            self.window.present()
+    @event_handler(ModelLoaded, ModelSaved)
+    def _on_file_manager_state_changed(self, event: ModelLoaded | ModelSaved) -> None:
+        if not self.window:
+            self._ui_updates.append(lambda: self._on_file_manager_state_changed(event))  # type: ignore[no-any-return]
+            return
+
+        filename = Path(event.filename) if event.filename else None
+
+        self.subtitle.set_text(
+            str(filename).replace(str(Path.home()), "~")
+            if filename
+            else gettext("New model")
+        )
+        self.window.set_title(
+            f"{filename.name} ({str(filename.parent).replace(str(Path.home()), '~')}) - Gaphor"
+            if filename
+            else f"{gettext('New model')} - Gaphor"
+        )
+
+        self.model_changed = isinstance(event, ModelLoaded) and event.modified
+
+        self.window.present()
+
+    @event_handler(CurrentDiagramChanged)
+    def _on_current_diagram_changed(self, event):
+        if not self.window:
+            self._ui_updates.append(lambda: self._on_current_diagram_changed(event))  # type: ignore[no-any-return]
+            return
+
+        self.title.set_text(
+            (event.diagram.name or gettext("<None>")) if event.diagram else "Gaphor"
+        )
 
     @event_handler(UndoManagerStateChanged)
     def _on_undo_manager_state_changed(self, event):
         undo_manager = event.service
-        if self.model_changed != undo_manager.can_undo():
-            self.model_changed = undo_manager.can_undo()
+        self.model_changed = undo_manager.can_undo()
 
     @event_handler(ActionEnabled)
     def _on_action_enabled(self, event):
