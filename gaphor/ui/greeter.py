@@ -6,6 +6,7 @@ from gi.repository import GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.action import action
+from gaphor.application import distribution
 from gaphor.babel import translate_model
 from gaphor.core import event_handler
 from gaphor.event import SessionCreated
@@ -98,6 +99,8 @@ class Greeter(Service, ActionProvider):
 
         self.greeter = builder.get_object("greeter")
         self.greeter.set_application(self.gtk_app)
+        if ".dev" in distribution().version:
+            self.greeter.get_style_context().add_class("devel")
 
         listbox = builder.get_object("recent-files")
         templates = builder.get_object("templates")

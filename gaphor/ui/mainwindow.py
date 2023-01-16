@@ -10,6 +10,7 @@ from typing import Callable
 from gi.repository import Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
+from gaphor.application import distribution
 from gaphor.core import event_handler, gettext
 from gaphor.event import (
     ActionEnabled,
@@ -152,6 +153,8 @@ class MainWindow(Service, ActionProvider):
         builder = new_builder()
         self.window = builder.get_object("main-window")
         self.window.set_application(gtk_app)
+        if ".dev" in distribution().version:
+            self.window.get_style_context().add_class("devel")
 
         select_modeling_language = builder.get_object("select-modeling-language")
         popup_set_model(
