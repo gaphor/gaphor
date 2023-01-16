@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import sys
-
 from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
@@ -422,12 +420,11 @@ def list_item_factory_setup(
     ctrl.connect("pressed", on_show_popup)
     row.add_controller(ctrl)
 
-    if sys.platform != "darwin":
-        drag_source = Gtk.DragSource.new()
-        drag_source.set_actions(Gdk.DragAction.MOVE | Gdk.DragAction.COPY)
-        drag_source.connect("prepare", list_item_drag_prepare, list_item, selection)
-        drag_source.connect("drag-begin", list_item_drag_begin, list_item)
-        row.add_controller(drag_source)
+    drag_source = Gtk.DragSource.new()
+    drag_source.set_actions(Gdk.DragAction.MOVE | Gdk.DragAction.COPY)
+    drag_source.connect("prepare", list_item_drag_prepare, list_item, selection)
+    drag_source.connect("drag-begin", list_item_drag_begin, list_item)
+    row.add_controller(drag_source)
 
     drop_target = Gtk.DropTarget.new(ElementDragData.__gtype__, Gdk.DragAction.COPY)
     drop_target.set_preload(True)

@@ -5,7 +5,6 @@ This is the toolbox in the lower left of the screen.
 
 import functools
 import logging
-import sys
 from typing import Optional, Tuple
 
 from gi.repository import Gdk, GLib, GObject, Gtk
@@ -126,7 +125,7 @@ class Toolbox(UIComponent):
                 )
                 flowbox.connect("drag-begin", _flowbox_drag_begin)
                 flowbox.connect("drag-data-get", _flowbox_drag_data_get)
-            elif sys.platform != "darwin":
+            else:
                 drag_source = Gtk.DragSource.new()
                 drag_source.connect("prepare", _flowbox_drag_prepare)
                 flowbox.add_controller(drag_source)
