@@ -129,6 +129,7 @@ class SelfTest(Service):
 
     @test
     def test_file_dialog(self, status):
+        log.info("Data dirs: %s", ", ".join(GLib.get_system_data_dirs()))
         session = self.application.new_session()
         file_manager = session.get_service("file_manager")
         dialog = file_manager.action_save_as()
