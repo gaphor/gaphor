@@ -22,7 +22,7 @@ def new_filter(name, pattern, mime_type=None):
     return f
 
 
-def _file_dialog_with_filters(title, parent, action, filters):
+def _file_dialog_with_filters(title, parent, action, filters) -> Gtk.FileChooserNative:
     dialog = Gtk.FileChooserNative.new(title, parent, action, None, None)
 
     if parent:
@@ -75,7 +75,7 @@ def save_file_dialog(
     filename=None,
     extension=None,
     filters=None,
-) -> None:
+) -> Gtk.FileChooser:
     if filters is None:
         filters = []
     dialog = _file_dialog_with_filters(
@@ -124,3 +124,4 @@ def save_file_dialog(
             dialog.set_current_folder(Gio.File.parse_name(str(filename.parent)))
     dialog.set_modal(True)
     dialog.show()
+    return dialog

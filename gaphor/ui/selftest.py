@@ -65,6 +65,7 @@ class SelfTest(Service):
         self.init_timer(gtk_app, timeout=20)
         self.test_library_versions()
         self.test_new_session()
+        self.test_file_dialog()
         self.test_auto_layout()
 
     def init_timer(self, gtk_app, timeout):
@@ -117,6 +118,22 @@ class SelfTest(Service):
                 return GLib.SOURCE_CONTINUE
 
         GLib.idle_add(check_new_session, session, priority=GLib.PRIORITY_LOW)
+
+    @test
+    def test_file_dialog(self, status):
+        session = self.application.new_session()
+        file_manager = session.get_service("file_manager")
+        dialog = file_manager.action_save_as()
+        assert dialog
+
+        def check_file_dialog(dialog):
+            if dialog.get_visible():
+                status.complete()
+                return GLib.SOURCE_REMOVE
+            else:
+                return GLib.SOURCE_CONTINUE
+
+        GLib.idle_add(check_file_dialog, dialog, priority=GLib.PRIORITY_LOW)
 
     @test
     def test_auto_layout(self, status):
