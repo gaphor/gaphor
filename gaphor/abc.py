@@ -17,8 +17,8 @@ class Service(metaclass=ABCMeta):
 
 
 class ActionProvider(metaclass=ABCMeta):
-    """An action provider is a special service that provides actions (see
-    gaphor/action.py)."""
+    """An action provider is a special service that provides actions via
+    ``@action`` decorators on its methods (see gaphor/action.py)."""
 
 
 class ModelingLanguage(metaclass=ABCMeta):
