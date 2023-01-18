@@ -1,5 +1,6 @@
 import importlib.resources
 import logging
+import os
 import platform
 import sys
 import textwrap
@@ -65,7 +66,14 @@ class SelfTest(Service):
         self.init_timer(gtk_app, timeout=20)
         self.test_library_versions()
         self.test_new_session()
-        self.test_file_dialog()
+        if not (
+            os.getenv("CI")
+            and sys.platform == "darwin"
+            and Gtk.get_major_version() == 4
+        ):
+            # Skip this test for Darwin in CI (GTK 4.8): it's causing
+            # all interaction to freeze. May be fixed in GTK 4.10.
+            self.test_file_dialog()
         self.test_auto_layout()
 
     def init_timer(self, gtk_app, timeout):
