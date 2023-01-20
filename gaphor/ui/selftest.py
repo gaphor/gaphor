@@ -133,6 +133,7 @@ class SelfTest(Service):
                 "Could not find schemas in data dirs: %s",
                 ":".join(GLib.get_system_data_dirs()),
             )
+            log.info("Schemas found: %s %s", *source.list_schemas(True))
 
     @test
     def test_auto_layout(self, status):
