@@ -123,8 +123,7 @@ class SelfTest(Service):
     def test_gsettings_schemas(self, status):
         source = Gio.settings_schema_source_get_default()
         schema_id = "org.gtk.gtk4.Settings.FileChooser"
-        schema = source.lookup(schema_id, recursive=True)
-        if schema:
+        if schema := source.lookup(schema_id, recursive=True):
             status.complete()
         else:
             log.error(
