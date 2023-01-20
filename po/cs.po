@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-12-03 16:14-0500\n"
-"PO-Revision-Date: 2023-01-17 05:50+0000\n"
+"PO-Revision-Date: 2023-01-20 20:16+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
 "\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
+"X-Generator: Weblate 4.15.1\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -1417,7 +1417,7 @@ msgstr "Přímočarý"
 
 #: gaphor/diagram/propertypages.glade:77 gaphor/diagram/propertypages.ui:52
 msgid "Flip orientation"
-msgstr "Orientace převrácení"
+msgstr "Převrácená orientace"
 
 #: gaphor/diagram/propertypages.glade:92 gaphor/diagram/propertypages.ui:35
 msgid "Style"
