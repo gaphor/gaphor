@@ -1,10 +1,11 @@
+import logging
 import os
-import pprint
 import sys
-import traceback
 
 os.environ["GAPHOR_USE_GTK"] = "4"
-print("XDG_DATA_DIRS", os.getenv("XDG_DATA_DIRS") or "<empty>")
-pprint.pprint(sys.modules)
 
-traceback.print_stack()
+logging.basicConfig(level=logging.DEBUG)
+log = logging.getLogger(__name__)
+log.warning("XDG_DATA_DIRS %s", os.getenv("XDG_DATA_DIRS") or "<empty>")
+for n, m in sys.modules.items():
+    log.warning("sys modules %s: %s", n, m)
