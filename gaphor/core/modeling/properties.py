@@ -342,8 +342,9 @@ class association(umlproperty):
         if self.opposite:
             # Loading should not steal references from other elements
             opposite = getattr(type(value), self.opposite)
-            if opposite.upper == 1 and opposite.get(value):
-                log.debug(f"Cannot steal reference from {value}")
+            if opposite.upper == 1 and (opval := opposite.get(value)):
+                if opval is not obj:
+                    log.debug(f"Cannot steal reference from {value}")
                 return
 
         self.set(obj, value)
