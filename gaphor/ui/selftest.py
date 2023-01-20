@@ -171,6 +171,7 @@ def system_information():
         Cairo version:     {cairo.cairo_version_string()}
         Pango version:     {Pango.version_string()}
         Display:           {display_type()}
+        {GLib.get_system_data_dirs()}
         """
     )
 
