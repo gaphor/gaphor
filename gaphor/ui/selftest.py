@@ -1,6 +1,5 @@
 import importlib.resources
 import logging
-import os
 import platform
 import sys
 import textwrap
@@ -8,7 +7,7 @@ import time
 
 import cairo
 import gi
-from gi.repository import Gdk, GLib, Gtk, Pango
+from gi.repository import Gdk, Gio, GLib, Gtk, Pango
 
 from gaphor.abc import Service
 from gaphor.application import Application, distribution
@@ -65,15 +64,8 @@ class SelfTest(Service):
         windows_console_output_workaround()
         self.init_timer(gtk_app, timeout=20)
         self.test_library_versions()
+        self.test_gsettings_schemas()
         self.test_new_session()
-        if not (
-            os.getenv("CI")
-            and sys.platform == "darwin"
-            and Gtk.get_major_version() == 4
-        ):
-            # Skip this test for Darwin in CI (GTK 4.8): it's causing
-            # all interaction to freeze. May be fixed in GTK 4.10.
-            self.test_file_dialog()
         self.test_auto_layout()
 
     def init_timer(self, gtk_app, timeout):
@@ -128,21 +120,19 @@ class SelfTest(Service):
         GLib.idle_add(check_new_session, session, priority=GLib.PRIORITY_LOW)
 
     @test
-    def test_file_dialog(self, status):
-        log.info("Data dirs: %s", ", ".join(GLib.get_system_data_dirs()))
-        session = self.application.new_session()
-        file_manager = session.get_service("file_manager")
-        dialog = file_manager.action_save_as()
-        assert dialog
-
-        def check_file_dialog(dialog):
-            if dialog.get_visible():
-                status.complete()
-                return GLib.SOURCE_REMOVE
-            else:
-                return GLib.SOURCE_CONTINUE
-
-        GLib.idle_add(check_file_dialog, dialog, priority=GLib.PRIORITY_LOW)
+    def test_gsettings_schemas(self, status):
+        source = Gio.settings_schema_source_get_default()
+        if source.lookup("org.gtk.gtk4.Settings.FileChooser", recursive=True):
+            log.info(
+                "Schemas found in data dirs: %s",
+                ":".join(GLib.get_system_data_dirs()),
+            )
+            status.complete()
+        else:
+            log.error(
+                "Could not find schemas in data dirs: %s",
+                ":".join(GLib.get_system_data_dirs()),
+            )
 
     @test
     def test_auto_layout(self, status):
