@@ -296,12 +296,9 @@ class FileManager(Service, ActionProvider):
     @action(name="file-save-as", shortcut="<Primary><Shift>s")
     def action_save_as(self):
         """Save the model in the element_factory by allowing the user to select
-        a file name.
+        a file name."""
 
-        Returns True if the saving actually happened.
-        """
-
-        save_file_dialog(
+        return save_file_dialog(
             gettext("Save Gaphor Model As"),
             self.save,
             parent=self.parent_window,
