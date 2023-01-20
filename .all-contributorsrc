@@ -996,6 +996,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "aunsbjerg",
+      "name": "Mikkel Aunsbjerg Jakobsen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1454086?v=4",
+      "profile": "https://www.esco-medical.com/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
