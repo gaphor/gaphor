@@ -64,7 +64,8 @@ class SelfTest(Service):
         windows_console_output_workaround()
         self.init_timer(gtk_app, timeout=20)
         self.test_library_versions()
-        self.test_gsettings_schemas()
+        if Gtk.get_major_version() != 3:
+            self.test_gsettings_schemas()
         self.test_new_session()
         self.test_auto_layout()
 
