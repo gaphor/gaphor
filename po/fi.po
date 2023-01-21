@@ -7,21 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-12-03 16:14-0500\n"
+"POT-Creation-Date: 2023-01-21 18:13+0100\n"
 "PO-Revision-Date: 2022-12-19 13:47+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
-"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
-">\n"
 "Language: fi\n"
+"Language-Team: Finnish "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
-#: gaphor/ui/greeter.py:57
+#: gaphor/ui/greeter.py:58
 msgid "C4 Model"
 msgstr "C4-malli"
 
@@ -102,7 +101,7 @@ msgstr "Uusi sekvenssikaavio"
 msgid "New State Machine Diagram"
 msgstr "Uusi tilakonekaavio"
 
-#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:50
+#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:51
 msgid "RAAML"
 msgstr "RAAML"
 
@@ -176,7 +175,7 @@ msgid "XOR"
 msgstr "Vie"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:41
+#: gaphor/RAAML/fta/majorityvotegate.py:40
 msgid "Majority Vote Gate"
 msgstr "Enemmistön äänestysportti"
 
@@ -286,7 +285,7 @@ msgstr "Epäturvallinen kontrollitoiminto"
 msgid "Relevant To"
 msgstr "Relevantti kenelle"
 
-#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:43
+#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:44
 msgid "SysML"
 msgstr "SysML"
 
@@ -472,23 +471,23 @@ msgstr "Primitiivi"
 msgid "proxy"
 msgstr "proxy"
 
-#: gaphor/SysML/requirements/relationships.py:37
+#: gaphor/SysML/requirements/relationships.py:35
 msgid "satisfy"
 msgstr "tyydytä"
 
-#: gaphor/SysML/requirements/relationships.py:47
+#: gaphor/SysML/requirements/relationships.py:44
 msgid "deriveReqt"
 msgstr ""
 
-#: gaphor/SysML/requirements/relationships.py:53
+#: gaphor/SysML/requirements/relationships.py:49
 msgid "trace"
 msgstr "jälki"
 
-#: gaphor/SysML/requirements/relationships.py:61
+#: gaphor/SysML/requirements/relationships.py:56
 msgid "verify"
 msgstr "vahvista"
 
-#: gaphor/SysML/requirements/relationships.py:69
+#: gaphor/SysML/requirements/relationships.py:63
 msgid "refine"
 msgstr "tarkenna"
 
@@ -530,7 +529,7 @@ msgstr "Vahvista"
 msgid "Containment"
 msgstr "Eristäminen"
 
-#: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:36
+#: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:37
 msgid "UML"
 msgstr "UML"
 
@@ -824,14 +823,14 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/classespropertypages.py:341
-#: gaphor/UML/classes/classespropertypages.py:430
+#: gaphor/UML/classes/classespropertypages.py:340
+#: gaphor/UML/classes/classespropertypages.py:429
 #: gaphor/UML/classes/propertypages.glade:944
 #: gaphor/UML/classes/propertypages.ui:817
 msgid "Static"
 msgstr "Staattinen"
 
-#: gaphor/UML/classes/classespropertypages.py:430
+#: gaphor/UML/classes/classespropertypages.py:429
 #: gaphor/UML/classes/propertypages.glade:496
 #: gaphor/UML/classes/propertypages.glade:938
 #: gaphor/UML/classes/propertypages.ui:435
@@ -872,15 +871,15 @@ msgstr "arvoTyyppi"
 msgid "dataType"
 msgstr "dataTyyppi"
 
-#: gaphor/UML/classes/dependency.py:44
+#: gaphor/UML/classes/dependency.py:43
 msgid "use"
 msgstr "käytä"
 
-#: gaphor/UML/classes/dependency.py:45
+#: gaphor/UML/classes/dependency.py:44
 msgid "realize"
 msgstr "realisoi"
 
-#: gaphor/UML/classes/dependency.py:46
+#: gaphor/UML/classes/dependency.py:45
 msgid "implements"
 msgstr "implementoi"
 
@@ -1385,7 +1384,7 @@ msgstr "Tyyli"
 msgid "Note or Remark"
 msgstr "Huomio tai muistutus"
 
-#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
+#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:349
 msgid "Element can’t be represented on a diagram."
 msgstr "Elementtiä ei voi esittää kaaviossa."
 
@@ -1393,15 +1392,15 @@ msgstr "Elementtiä ei voi esittää kaaviossa."
 msgid "No model file configured for model '{model_name}'."
 msgstr "Mallille '{model_name}' ei ole määritetty mallitiedostoa."
 
-#: gaphor/extensions/sphinx.py:92
+#: gaphor/extensions/sphinx.py:88
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Kaaviota '{name}' ei ole mallissa '{model_name}' ({model_file})."
 
-#: gaphor/plugins/autolayout/pydot.py:44
+#: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
 msgstr "Automaattinen asettelu"
 
-#: gaphor/plugins/autolayout/pydot.py:52
+#: gaphor/plugins/autolayout/pydot.py:53
 msgid "Auto Layout (orthogonal)"
 msgstr "Automaattinen asettelu (ortogonaalinen)"
 
@@ -1415,59 +1414,59 @@ msgstr ""
 "{version}\n"
 "Kirjoita \"help\" saadaksesi lisätietoja.\n"
 
-#: gaphor/plugins/console/consolewindow.py:23
+#: gaphor/plugins/console/consolewindow.py:22
 msgid "Gaphor Console"
 msgstr "Gaphorin konsoli"
 
-#: gaphor/plugins/console/consolewindow.py:46
+#: gaphor/plugins/console/consolewindow.py:45
 msgid "Console"
 msgstr "Konsoli"
 
-#: gaphor/plugins/diagramexport/__init__.py:45
+#: gaphor/plugins/diagramexport/__init__.py:44
 msgid "All {ext} Files"
 msgstr "Kaikki {ext}-tiedostot"
 
-#: gaphor/plugins/diagramexport/__init__.py:51
+#: gaphor/plugins/diagramexport/__init__.py:50
 msgid "Export as SVG"
 msgstr "Vie SVG-kuvaksi"
 
-#: gaphor/plugins/diagramexport/__init__.py:52
-#: gaphor/plugins/diagramexport/__init__.py:57
+#: gaphor/plugins/diagramexport/__init__.py:51
+#: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export diagram as SVG"
 msgstr "Vie kaavio SVG-muotoon"
 
-#: gaphor/plugins/diagramexport/__init__.py:62
+#: gaphor/plugins/diagramexport/__init__.py:61
 msgid "Export as PNG"
 msgstr "Vie PNG-kuvaksi"
 
-#: gaphor/plugins/diagramexport/__init__.py:63
-#: gaphor/plugins/diagramexport/__init__.py:68
+#: gaphor/plugins/diagramexport/__init__.py:62
+#: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export diagram as PNG"
 msgstr "Vie kaavio PNG-muotoon"
 
-#: gaphor/plugins/diagramexport/__init__.py:73
+#: gaphor/plugins/diagramexport/__init__.py:72
 msgid "Export as PDF"
 msgstr "Vie PDF-tiedostoksi"
 
-#: gaphor/plugins/diagramexport/__init__.py:74
-#: gaphor/plugins/diagramexport/__init__.py:80
+#: gaphor/plugins/diagramexport/__init__.py:73
+#: gaphor/plugins/diagramexport/__init__.py:79
 msgid "Export diagram as PDF"
 msgstr "Vie kaavio PDF-muotoon"
 
-#: gaphor/plugins/diagramexport/__init__.py:88
+#: gaphor/plugins/diagramexport/__init__.py:87
 msgid "Export as EPS"
 msgstr "Vie EPS-muotoon"
 
-#: gaphor/plugins/diagramexport/__init__.py:89
+#: gaphor/plugins/diagramexport/__init__.py:88
 msgid "Export diagram as Encapsulated PostScript"
 msgstr "Vie kaavio Encapsulated PostScript -muodossa"
 
-#: gaphor/plugins/diagramexport/__init__.py:95
+#: gaphor/plugins/diagramexport/__init__.py:94
 msgid "Export diagram as EPS"
 msgstr "Vie kaavio EPS-muotoon"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
-#: gaphor/plugins/errorreports/errorreports.py:65
+#: gaphor/plugins/errorreports/errorreports.py:64
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
 msgstr "Virheraportit"
@@ -1515,15 +1514,16 @@ msgstr "Vie malli XMI-tiedostoksi"
 msgid "All XMI Files"
 msgstr "Kaikki XMI-tiedostot"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
-#: gaphor/ui/mainwindow.py:234 gaphor/ui/mainwindow.ui:29
-#: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
+#: gaphor/ui/mainwindow.glade:121 gaphor/ui/mainwindow.py:241
+#: gaphor/ui/mainwindow.ui:45 gaphor/ui/namespace.py:323
 msgid "New model"
 msgstr "Uusi malli"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:64
-msgid "main"
-msgstr ""
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
+#: gaphor/ui/namespace.py:110
+msgid "New diagram"
+msgstr "Uusi kaavio"
 
 #: gaphor/templates/c4model.gaphor
 msgid "1. Context diagrams"
@@ -2081,8 +2081,7 @@ msgstr ""
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr ""
-"{name} on jo avattu. Haluatko sen sijaan vaihtaa avoinna olevaan ikkunaan?"
+msgstr "{name} on jo avattu. Haluatko sen sijaan vaihtaa avoinna olevaan ikkunaan?"
 
 #: gaphor/ui/appfilemanager.py:65
 msgid "Open Again"
@@ -2096,10 +2095,21 @@ msgstr "Vaihda"
 msgid "Open a Model"
 msgstr "Avaa malli"
 
-#: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
-#: gaphor/ui/treemodel.py:44
+#: gaphor/ui/diagrampage.py:128 gaphor/ui/mainwindow.py:260
+#: gaphor/ui/namespaceview.py:126 gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<Ei mitään>"
+
+#: gaphor/ui/diagrams.ui:32
+#, fuzzy
+msgid "Open a Diagram"
+msgstr "Komponenttikaavio"
+
+#: gaphor/ui/diagrams.ui:34
+msgid ""
+"Open a diagram from the model browser, or\n"
+"create a new diagram from the New diagram menu."
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2227,7 +2237,7 @@ msgstr "Käynnistä vianjäljitysistunto"
 msgid "All Files"
 msgstr "Kaikki tiedostot"
 
-#: gaphor/ui/filemanager.py:40
+#: gaphor/ui/filemanager.py:42
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2238,7 +2248,7 @@ msgstr ""
 "{exc}\n"
 "Jos luulet tämän olevan ohjelmistovirhe, ole yhteydessä kehittäjiin."
 
-#: gaphor/ui/filemanager.py:44
+#: gaphor/ui/filemanager.py:46
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2246,7 +2256,7 @@ msgstr ""
 "Käyttöoikeutesi eivät riitä mallin tallentamiseen.\n"
 "Varmista että kirjoitit sijainnin oikein ja yritä uudelleen."
 
-#: gaphor/ui/filemanager.py:48
+#: gaphor/ui/filemanager.py:50
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2255,7 +2265,7 @@ msgstr ""
 "Laitteella ei ole riittävästi vapaata tilaa mallin tallentamiseksi.\n"
 "Vapauta levytilaa ja yritä uudelleen tai tallenna eri sijaintiin."
 
-#: gaphor/ui/filemanager.py:51
+#: gaphor/ui/filemanager.py:53
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2265,68 +2275,87 @@ msgstr ""
 "{exc}\n"
 "Varmista että kirjoitit sijainnin oikein ja yritä uudelleen."
 
-#: gaphor/ui/filemanager.py:126
+#: gaphor/ui/filemanager.py:122
 msgid "Loading…"
 msgstr "Ladataan…"
 
-#: gaphor/ui/filemanager.py:127
+#: gaphor/ui/filemanager.py:123
 msgid "Loading model from {filename}"
 msgstr "Ladataan mallia tiedostosta {filename}"
 
-#: gaphor/ui/filemanager.py:160
+#: gaphor/ui/filemanager.py:169
 msgid "Merge conflict in model “{filename}”."
 msgstr "Yhdistämisen ristiriita mallissa “{filename}”."
 
-#: gaphor/ui/filemanager.py:163
+#: gaphor/ui/filemanager.py:172
 msgid "It looks like this model file contains a merge conflict."
 msgstr "Vaikuttaa siltä, että mallitiedosto sisältää yhdistämisen ristiriidan."
 
-#: gaphor/ui/filemanager.py:173
+#: gaphor/ui/filemanager.py:194
 msgid "Unable to open model “{filename}”."
 msgstr "Mallia “{filename}” ei voitu avata."
 
-#: gaphor/ui/filemanager.py:176
+#: gaphor/ui/filemanager.py:197
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Tämä tiedosto ei sisällä kelvollista Gaphor-mallia."
 
-#: gaphor/ui/filemanager.py:215
+#: gaphor/ui/filemanager.py:247
 msgid "Saving…"
 msgstr "Tallennetaan…"
 
-#: gaphor/ui/filemanager.py:216
+#: gaphor/ui/filemanager.py:248
 msgid "Saving model to {filename}"
 msgstr "Tallennetaan mallia tiedostoon {filename}"
 
-#: gaphor/ui/filemanager.py:233
+#: gaphor/ui/filemanager.py:264
 msgid "Unable to save model “{filename}”."
 msgstr "Ei voi tallentaa mallia “{filename}”."
 
-#: gaphor/ui/filemanager.py:270 gaphor/ui/filemanager.py:306
+#: gaphor/ui/filemanager.py:302 gaphor/ui/filemanager.py:338
 msgid "Save Gaphor Model As"
 msgstr "Tallenna Gaphor-malli nimellä"
 
-#: gaphor/ui/filemanager.py:326
+#: gaphor/ui/filemanager.py:360
+msgid "Resolve Merge Conflict?"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:363
+msgid ""
+"The model you are opening contains a merge conflict. Do you want to open "
+"the current model or the incoming change to the model?"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:367 gaphor/ui/filemanager.py:395
+#: gaphor/ui/filemanager.py:409
+msgid "Cancel"
+msgstr "Peru"
+
+#: gaphor/ui/filemanager.py:368
+msgid "Open Current"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:369
+msgid "Open Incoming"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:382
 msgid "Save Changes?"
 msgstr "Tallennetaanko muutokset?"
 
-#: gaphor/ui/filemanager.py:327
+#: gaphor/ui/filemanager.py:383
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
-"Avoinna oleva malli sisältää tallentamattomia muutoksia. Tallentamattomat "
-"muutokset katoavat pysyvästi."
+"Avoinna oleva malli sisältää tallentamattomia muutoksia. Tallentamattomat"
+" muutokset katoavat pysyvästi."
 
-#: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
-msgid "Cancel"
-msgstr "Peru"
-
-#: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
+#: gaphor/ui/filemanager.py:397 gaphor/ui/filemanager.py:410
 msgid "Discard"
 msgstr "Hylkää"
 
-#: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
-#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:48
+#: gaphor/ui/filemanager.py:399 gaphor/ui/filemanager.py:411
+#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "Tallenna"
 
@@ -2342,124 +2371,117 @@ msgstr "Luo uusi malli"
 msgid "Open Other Model…"
 msgstr "Avaa muu malli…"
 
-#: gaphor/ui/greeter.py:29
+#: gaphor/ui/greeter.py:30
 msgid "Generic"
 msgstr "Yleinen"
 
-#: gaphor/ui/greeter.py:30
+#: gaphor/ui/greeter.py:31
 msgid "An empty model"
 msgstr "Tyhjä malli"
 
-#: gaphor/ui/greeter.py:37
+#: gaphor/ui/greeter.py:38
 msgid "Unified Modeling Language template"
 msgstr "Unified Modeling Language -mallipohja"
 
-#: gaphor/ui/greeter.py:44
+#: gaphor/ui/greeter.py:45
 msgid "Systems Modeling Language template"
 msgstr "Systems Modeling Language -mallipohja"
 
-#: gaphor/ui/greeter.py:51
+#: gaphor/ui/greeter.py:52
 msgid "Risk Analysis and Assessment Modeling Language template"
 msgstr "Risk Analysis and Assessment Modeling Language -mallipohja"
 
-#: gaphor/ui/greeter.py:58
+#: gaphor/ui/greeter.py:59
 msgid "Layered C4 Model template"
 msgstr "Layered C4 Model -mallipohja"
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:44
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
 msgstr "Avaa malli…"
 
-#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:58
+#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:61
 msgid "Keyboard Shortcuts"
 msgstr "Pikanäppäimet"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.glade:7
-#: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:59
+#: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:62
 msgid "About Gaphor"
 msgstr "Tietoja - Gaphor"
 
-#: gaphor/ui/greeter.ui:79
+#: gaphor/ui/greeter.ui:80
 msgid "Recently Opened"
 msgstr "Äskettäin avattu"
 
-#: gaphor/ui/greeter.ui:84
+#: gaphor/ui/greeter.ui:85
 msgid "Create New Model"
 msgstr "Luo uusi malli"
 
-#: gaphor/ui/mainwindow.glade:84
+#: gaphor/ui/mainwindow.glade:104
 msgid "Gaphor"
 msgstr "Gaphor"
 
-#: gaphor/ui/mainwindow.glade:148
+#: gaphor/ui/mainwindow.glade:177
 msgid "Create New diagram"
 msgstr "Luo uusi kaavio"
 
-#: gaphor/ui/mainwindow.glade:169
+#: gaphor/ui/mainwindow.glade:198
 msgid "Open Application Menu"
 msgstr "Avaa sovellusvalikko"
 
-#: gaphor/ui/mainwindow.glade:191
+#: gaphor/ui/mainwindow.glade:220
 msgid "Editor"
 msgstr "Näytä/piilota editori"
 
-#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:43
+#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:46
 msgid "New Model…"
 msgstr "Uusi malli…"
 
-#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:49
+#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
 msgstr "Tallenna nimellä…"
 
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/mainwindow.py:53
 msgid "Export"
 msgstr "Vie"
 
-#: gaphor/ui/mainwindow.py:54
+#: gaphor/ui/mainwindow.py:57
 msgid "Tools"
 msgstr "Työkalut"
 
-#: gaphor/ui/mainwindow.py:85
-msgid "New Generic Diagram"
-msgstr "Uusi yleinen kaavio"
-
-#: gaphor/ui/mainwindow.py:236
-msgid "edited"
-msgstr "muokattu"
-
-#: gaphor/ui/mainwindow.py:270
+#: gaphor/ui/mainwindow.py:278
 msgid "Profile: {name}"
 msgstr "Profiili: {name}"
 
-#: gaphor/ui/mainwindow.ui:48
-msgid "Open diagram menu"
+#: gaphor/ui/mainwindow.ui:64
+#, fuzzy
+msgid "New diagram menu"
 msgstr "Avaa kaaviovalikko"
 
-#: gaphor/ui/mainwindow.ui:55
+#: gaphor/ui/mainwindow.ui:71
 msgid "Open application menu"
 msgstr "Avaa sovellusvalikko"
 
-#: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:61
+#: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:78
 msgid "Toggle property editor"
 msgstr "Ominaisuusmuokkain päälle/pois"
 
-#: gaphor/ui/namespace.py:48
+#: gaphor/ui/namespace.py:47
 msgid "_Open"
 msgstr "_Avaa"
 
-#: gaphor/ui/namespace.py:48
+#: gaphor/ui/namespace.py:47
 msgid "Add to diagram"
 msgstr "Lisää kaavioon"
 
-#: gaphor/ui/namespace.py:51
+#: gaphor/ui/namespace.py:50
 msgid "_Rename"
 msgstr "_Nimeä uudelleen"
 
-#: gaphor/ui/namespace.py:56
+#: gaphor/ui/namespace.py:55
 msgid "New _Diagram"
 msgstr "Uusi k_aavio"
 
-#: gaphor/ui/namespace.py:58
+#: gaphor/ui/namespace.py:58 gaphor/ui/treecomponent.py:367
 msgid "New _Package"
 msgstr "Uusi _pakkaus"
 
@@ -2471,18 +2493,23 @@ msgstr "Po_ista"
 msgid "Show in “{diagram}”"
 msgstr "Näytä kaaviossa \"{diagram}\""
 
-#: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
+#: gaphor/ui/namespace.py:98
+msgid "New Generic Diagram"
+msgstr "Uusi yleinen kaavio"
+
+#: gaphor/ui/namespace.py:321 gaphor/ui/treecomponent.py:174
 msgid "{name} package"
 msgstr "{name}-pakkaus"
 
-#: gaphor/ui/namespace.py:352
-msgid "New diagram"
-msgstr "Uusi kaavio"
-
-#: gaphor/ui/namespaceview.py:141 gaphor/ui/tests/test_treemodel.py:162
+#: gaphor/ui/namespaceview.py:124 gaphor/ui/tests/test_treemodel.py:162
 #: gaphor/ui/treemodel.py:62
 msgid "<Relationships>"
 msgstr "<Suhteet>"
+
+#: gaphor/ui/treecomponent.py:176
+#, fuzzy
+msgid "New package"
+msgstr "{name}-pakkaus"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
@@ -2997,3 +3024,9 @@ msgstr "Liitä (kopioi määrittelevät elementit)"
 
 #~ msgid "Open a Recent Model"
 #~ msgstr "Avaa äskettäinen malli"
+
+#~ msgid "main"
+#~ msgstr ""
+
+#~ msgid "edited"
+#~ msgstr "muokattu"

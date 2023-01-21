@@ -7,21 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-12-03 16:14-0500\n"
+"POT-Creation-Date: 2023-01-21 18:13+0100\n"
 "PO-Revision-Date: 2022-12-11 02:49+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
-"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hu/>\n"
 "Language: hu\n"
+"Language-Team: Hungarian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
-#: gaphor/ui/greeter.py:57
+#: gaphor/ui/greeter.py:58
 msgid "C4 Model"
 msgstr "C4-modell"
 
@@ -102,7 +101,7 @@ msgstr "Új sorozatábra"
 msgid "New State Machine Diagram"
 msgstr "Új állapotautomataábra"
 
-#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:50
+#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:51
 msgid "RAAML"
 msgstr "RAAML"
 
@@ -174,7 +173,7 @@ msgid "XOR"
 msgstr "Kizáró VAGY kapu"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:41
+#: gaphor/RAAML/fta/majorityvotegate.py:40
 msgid "Majority Vote Gate"
 msgstr "Többségi szavazókapu"
 
@@ -284,7 +283,7 @@ msgstr "Nem biztonságos vezérlési művelet"
 msgid "Relevant To"
 msgstr "Vonatkozó"
 
-#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:43
+#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:44
 msgid "SysML"
 msgstr "SysML"
 
@@ -469,23 +468,23 @@ msgstr "Egyszerű"
 msgid "proxy"
 msgstr "közvetít"
 
-#: gaphor/SysML/requirements/relationships.py:37
+#: gaphor/SysML/requirements/relationships.py:35
 msgid "satisfy"
 msgstr "megfelelő"
 
-#: gaphor/SysML/requirements/relationships.py:47
+#: gaphor/SysML/requirements/relationships.py:44
 msgid "deriveReqt"
 msgstr "származtatási követelmény"
 
-#: gaphor/SysML/requirements/relationships.py:53
+#: gaphor/SysML/requirements/relationships.py:49
 msgid "trace"
 msgstr "nyom"
 
-#: gaphor/SysML/requirements/relationships.py:61
+#: gaphor/SysML/requirements/relationships.py:56
 msgid "verify"
 msgstr "ellenőrzés"
 
-#: gaphor/SysML/requirements/relationships.py:69
+#: gaphor/SysML/requirements/relationships.py:63
 msgid "refine"
 msgstr "finomítás"
 
@@ -527,7 +526,7 @@ msgstr "Ellenőrzés"
 msgid "Containment"
 msgstr "Tartalmazás"
 
-#: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:36
+#: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:37
 msgid "UML"
 msgstr "UML"
 
@@ -843,14 +842,14 @@ msgstr ""
 "\n"
 "A <b>-</b>/<b>=</b> gombbal mozgathatja az elemeket felfelé vagy lefelé."
 
-#: gaphor/UML/classes/classespropertypages.py:341
-#: gaphor/UML/classes/classespropertypages.py:430
+#: gaphor/UML/classes/classespropertypages.py:340
+#: gaphor/UML/classes/classespropertypages.py:429
 #: gaphor/UML/classes/propertypages.glade:944
 #: gaphor/UML/classes/propertypages.ui:817
 msgid "Static"
 msgstr "Ritkán módosul"
 
-#: gaphor/UML/classes/classespropertypages.py:430
+#: gaphor/UML/classes/classespropertypages.py:429
 #: gaphor/UML/classes/propertypages.glade:496
 #: gaphor/UML/classes/propertypages.glade:938
 #: gaphor/UML/classes/propertypages.ui:435
@@ -891,15 +890,15 @@ msgstr "értéktipus"
 msgid "dataType"
 msgstr "adattípus"
 
-#: gaphor/UML/classes/dependency.py:44
+#: gaphor/UML/classes/dependency.py:43
 msgid "use"
 msgstr "használat"
 
-#: gaphor/UML/classes/dependency.py:45
+#: gaphor/UML/classes/dependency.py:44
 msgid "realize"
 msgstr "életbe léptet"
 
-#: gaphor/UML/classes/dependency.py:46
+#: gaphor/UML/classes/dependency.py:45
 msgid "implements"
 msgstr "megvalósítás"
 
@@ -1441,7 +1440,7 @@ msgstr "Stílus"
 msgid "Note or Remark"
 msgstr "Megjegyzés"
 
-#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
+#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:349
 msgid "Element can’t be represented on a diagram."
 msgstr "Az elem nem ábrázolható egy ábrán."
 
@@ -1449,15 +1448,15 @@ msgstr "Az elem nem ábrázolható egy ábrán."
 msgid "No model file configured for model '{model_name}'."
 msgstr "Nincs beállítva modellfájl a(z) „{model_name}”-modellhez."
 
-#: gaphor/extensions/sphinx.py:92
+#: gaphor/extensions/sphinx.py:88
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Nincs ábra „{name}” a(z) „{model_name}”-modellben ({model_file})."
 
-#: gaphor/plugins/autolayout/pydot.py:44
+#: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
 msgstr "Önműködő elrendezés"
 
-#: gaphor/plugins/autolayout/pydot.py:52
+#: gaphor/plugins/autolayout/pydot.py:53
 msgid "Auto Layout (orthogonal)"
 msgstr "Önműködő elrendezés (merőleges)"
 
@@ -1471,59 +1470,59 @@ msgstr ""
 "{version}\n"
 "További információért írja be a „help” parancsot.\n"
 
-#: gaphor/plugins/console/consolewindow.py:23
+#: gaphor/plugins/console/consolewindow.py:22
 msgid "Gaphor Console"
 msgstr "Gaphor-kezelőpult"
 
-#: gaphor/plugins/console/consolewindow.py:46
+#: gaphor/plugins/console/consolewindow.py:45
 msgid "Console"
 msgstr "Kezelőpult"
 
-#: gaphor/plugins/diagramexport/__init__.py:45
+#: gaphor/plugins/diagramexport/__init__.py:44
 msgid "All {ext} Files"
 msgstr "Minden {ext}-fájl"
 
-#: gaphor/plugins/diagramexport/__init__.py:51
+#: gaphor/plugins/diagramexport/__init__.py:50
 msgid "Export as SVG"
 msgstr "Exportálás SVG-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:52
-#: gaphor/plugins/diagramexport/__init__.py:57
+#: gaphor/plugins/diagramexport/__init__.py:51
+#: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export diagram as SVG"
 msgstr "Ábra exportálása SVG-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:62
+#: gaphor/plugins/diagramexport/__init__.py:61
 msgid "Export as PNG"
 msgstr "Exportálás PNG-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:63
-#: gaphor/plugins/diagramexport/__init__.py:68
+#: gaphor/plugins/diagramexport/__init__.py:62
+#: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export diagram as PNG"
 msgstr "Ábra exportálása PNG-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:73
+#: gaphor/plugins/diagramexport/__init__.py:72
 msgid "Export as PDF"
 msgstr "Exportálás PDF-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:74
-#: gaphor/plugins/diagramexport/__init__.py:80
+#: gaphor/plugins/diagramexport/__init__.py:73
+#: gaphor/plugins/diagramexport/__init__.py:79
 msgid "Export diagram as PDF"
 msgstr "Ábra exportálása PDF-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:88
+#: gaphor/plugins/diagramexport/__init__.py:87
 msgid "Export as EPS"
 msgstr "Exportálás EPS-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:89
+#: gaphor/plugins/diagramexport/__init__.py:88
 msgid "Export diagram as Encapsulated PostScript"
 msgstr "Ábra exportálása beágyazott PostScript-fájlként"
 
-#: gaphor/plugins/diagramexport/__init__.py:95
+#: gaphor/plugins/diagramexport/__init__.py:94
 msgid "Export diagram as EPS"
 msgstr "Ábra exportálása EPS-fájlként"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
-#: gaphor/plugins/errorreports/errorreports.py:65
+#: gaphor/plugins/errorreports/errorreports.py:64
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
 msgstr "Hibajelentések"
@@ -1571,15 +1570,16 @@ msgstr "Modell exportálása XMI-fájlként"
 msgid "All XMI Files"
 msgstr "Minden XMI-fájl"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
-#: gaphor/ui/mainwindow.py:234 gaphor/ui/mainwindow.ui:29
-#: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
+#: gaphor/ui/mainwindow.glade:121 gaphor/ui/mainwindow.py:241
+#: gaphor/ui/mainwindow.ui:45 gaphor/ui/namespace.py:323
 msgid "New model"
 msgstr "Új modell"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:64
-msgid "main"
-msgstr "fő"
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
+#: gaphor/ui/namespace.py:110
+msgid "New diagram"
+msgstr "Új ábra"
 
 #: gaphor/templates/c4model.gaphor
 msgid "1. Context diagrams"
@@ -2154,10 +2154,21 @@ msgstr "Váltás"
 msgid "Open a Model"
 msgstr "Modell megnyitása"
 
-#: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
-#: gaphor/ui/treemodel.py:44
+#: gaphor/ui/diagrampage.py:128 gaphor/ui/mainwindow.py:260
+#: gaphor/ui/namespaceview.py:126 gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<Nincs>"
+
+#: gaphor/ui/diagrams.ui:32
+#, fuzzy
+msgid "Open a Diagram"
+msgstr "Összetevőábra"
+
+#: gaphor/ui/diagrams.ui:34
+msgid ""
+"Open a diagram from the model browser, or\n"
+"create a new diagram from the New diagram menu."
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2283,7 +2294,7 @@ msgstr "Hibakeresési munkamenet elindítsa"
 msgid "All Files"
 msgstr "Minden fájl"
 
-#: gaphor/ui/filemanager.py:40
+#: gaphor/ui/filemanager.py:42
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2294,7 +2305,7 @@ msgstr ""
 "{exc}\n"
 "Ha úgy gondolja, hogy ez hiba, lépjen kapcsolatba a fejlesztőkkel."
 
-#: gaphor/ui/filemanager.py:44
+#: gaphor/ui/filemanager.py:46
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2302,7 +2313,7 @@ msgstr ""
 "Nem rendelkezik a modell mentéséhez szükséges jogosultságokkal.\n"
 "Kérjük, ellenőrizze, hogy helyesen beírta a helyet, és próbálja újra."
 
-#: gaphor/ui/filemanager.py:48
+#: gaphor/ui/filemanager.py:50
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2312,7 +2323,7 @@ msgstr ""
 "Kérjük, szabadítson fel lemezterületet, és próbálja újra, vagy mentse egy"
 " másik helyre."
 
-#: gaphor/ui/filemanager.py:51
+#: gaphor/ui/filemanager.py:53
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2322,51 +2333,74 @@ msgstr ""
 "{exc}\n"
 "Kérjük, ellenőrizze, hogy helyesen beírta a helyet, és próbálja újra."
 
-#: gaphor/ui/filemanager.py:126
+#: gaphor/ui/filemanager.py:122
 msgid "Loading…"
 msgstr "Betöltés folyamatban van…"
 
-#: gaphor/ui/filemanager.py:127
+#: gaphor/ui/filemanager.py:123
 msgid "Loading model from {filename}"
 msgstr "Modell betöltése innen: {filename}"
 
-#: gaphor/ui/filemanager.py:160
+#: gaphor/ui/filemanager.py:169
 msgid "Merge conflict in model “{filename}”."
 msgstr "„{filename}”-modellfájl egyesítési ütközés."
 
-#: gaphor/ui/filemanager.py:163
+#: gaphor/ui/filemanager.py:172
 msgid "It looks like this model file contains a merge conflict."
 msgstr "Úgy tűnik, hogy ez a modellfájl egyesítési ütközést tartalmaz."
 
-#: gaphor/ui/filemanager.py:173
+#: gaphor/ui/filemanager.py:194
 msgid "Unable to open model “{filename}”."
 msgstr "Nem sikerült megnyitni a(z) „{filename}”-modellfájlt."
 
-#: gaphor/ui/filemanager.py:176
+#: gaphor/ui/filemanager.py:197
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Ez a fájl nem tartalmaz érvényes Gaphor-modellt."
 
-#: gaphor/ui/filemanager.py:215
+#: gaphor/ui/filemanager.py:247
 msgid "Saving…"
 msgstr "Mentés folyamatban van…"
 
-#: gaphor/ui/filemanager.py:216
+#: gaphor/ui/filemanager.py:248
 msgid "Saving model to {filename}"
 msgstr "Modell mentése ide: {filename}"
 
-#: gaphor/ui/filemanager.py:233
+#: gaphor/ui/filemanager.py:264
 msgid "Unable to save model “{filename}”."
 msgstr "Nem sikerült menteni a(z) „{filename}”-modellfájlt."
 
-#: gaphor/ui/filemanager.py:270 gaphor/ui/filemanager.py:306
+#: gaphor/ui/filemanager.py:302 gaphor/ui/filemanager.py:338
 msgid "Save Gaphor Model As"
 msgstr "A Gaphor-modell mentése másként"
 
-#: gaphor/ui/filemanager.py:326
+#: gaphor/ui/filemanager.py:360
+msgid "Resolve Merge Conflict?"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:363
+msgid ""
+"The model you are opening contains a merge conflict. Do you want to open "
+"the current model or the incoming change to the model?"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:367 gaphor/ui/filemanager.py:395
+#: gaphor/ui/filemanager.py:409
+msgid "Cancel"
+msgstr "Mégse"
+
+#: gaphor/ui/filemanager.py:368
+msgid "Open Current"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:369
+msgid "Open Incoming"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:382
 msgid "Save Changes?"
 msgstr "Változtatások mentése?"
 
-#: gaphor/ui/filemanager.py:327
+#: gaphor/ui/filemanager.py:383
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
@@ -2374,16 +2408,12 @@ msgstr ""
 "A megnyitott modell nem mentett változtatásokat tartalmaz. A nem mentett "
 "változtatások véglegesen elvesznek."
 
-#: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
-msgid "Cancel"
-msgstr "Mégse"
-
-#: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
+#: gaphor/ui/filemanager.py:397 gaphor/ui/filemanager.py:410
 msgid "Discard"
 msgstr "Elvetés"
 
-#: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
-#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:48
+#: gaphor/ui/filemanager.py:399 gaphor/ui/filemanager.py:411
+#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "Mentés"
 
@@ -2399,126 +2429,119 @@ msgstr "Új modell létrehozása"
 msgid "Open Other Model…"
 msgstr "Más modell megnyitása…"
 
-#: gaphor/ui/greeter.py:29
+#: gaphor/ui/greeter.py:30
 msgid "Generic"
 msgstr "Általános"
 
-#: gaphor/ui/greeter.py:30
+#: gaphor/ui/greeter.py:31
 msgid "An empty model"
 msgstr "Üres modell"
 
-#: gaphor/ui/greeter.py:37
+#: gaphor/ui/greeter.py:38
 msgid "Unified Modeling Language template"
 msgstr "UML-sablon (Unified Modeling Language - Egységes modellezési nyelv)"
 
-#: gaphor/ui/greeter.py:44
+#: gaphor/ui/greeter.py:45
 msgid "Systems Modeling Language template"
 msgstr "SML-sablon (Systems Modeling Language - Rendszermodellező nyelv)"
 
-#: gaphor/ui/greeter.py:51
+#: gaphor/ui/greeter.py:52
 msgid "Risk Analysis and Assessment Modeling Language template"
 msgstr ""
 "RAAML-sablon (Risk Analysis and Assessment Modeling Language - "
 "Kockázatelemzési és -értékelési modellezési nyelv)"
 
-#: gaphor/ui/greeter.py:58
+#: gaphor/ui/greeter.py:59
 msgid "Layered C4 Model template"
 msgstr "Réteges C4-es modell-sablon"
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:44
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
 msgstr "Modell megnyitása…"
 
-#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:58
+#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:61
 msgid "Keyboard Shortcuts"
 msgstr "Billentyűparancsok"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.glade:7
-#: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:59
+#: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:62
 msgid "About Gaphor"
 msgstr "A Gaphor névjegye"
 
-#: gaphor/ui/greeter.ui:79
+#: gaphor/ui/greeter.ui:80
 msgid "Recently Opened"
 msgstr "Legutóbb megnyitott"
 
-#: gaphor/ui/greeter.ui:84
+#: gaphor/ui/greeter.ui:85
 msgid "Create New Model"
 msgstr "Új modell létrehozása"
 
-#: gaphor/ui/mainwindow.glade:84
+#: gaphor/ui/mainwindow.glade:104
 msgid "Gaphor"
 msgstr "Gaphor"
 
-#: gaphor/ui/mainwindow.glade:148
+#: gaphor/ui/mainwindow.glade:177
 msgid "Create New diagram"
 msgstr "Új ábra létrehozása"
 
-#: gaphor/ui/mainwindow.glade:169
+#: gaphor/ui/mainwindow.glade:198
 msgid "Open Application Menu"
 msgstr "Alkalmazásmenü megnyitása"
 
-#: gaphor/ui/mainwindow.glade:191
+#: gaphor/ui/mainwindow.glade:220
 msgid "Editor"
 msgstr "Szerkesztő megjelenítése/elrejtése"
 
-#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:43
+#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:46
 msgid "New Model…"
 msgstr "Új modell…"
 
-#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:49
+#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
 msgstr "Mentés másként…"
 
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/mainwindow.py:53
 msgid "Export"
 msgstr "Exportálás"
 
-#: gaphor/ui/mainwindow.py:54
+#: gaphor/ui/mainwindow.py:57
 msgid "Tools"
 msgstr "Eszközök"
 
-#: gaphor/ui/mainwindow.py:85
-msgid "New Generic Diagram"
-msgstr "Új általános-ábra"
-
-#: gaphor/ui/mainwindow.py:236
-msgid "edited"
-msgstr "szerkesztett"
-
-#: gaphor/ui/mainwindow.py:270
+#: gaphor/ui/mainwindow.py:278
 msgid "Profile: {name}"
 msgstr "Profil: {name}"
 
-#: gaphor/ui/mainwindow.ui:48
-msgid "Open diagram menu"
+#: gaphor/ui/mainwindow.ui:64
+#, fuzzy
+msgid "New diagram menu"
 msgstr "Ábramenü megnyitása"
 
-#: gaphor/ui/mainwindow.ui:55
+#: gaphor/ui/mainwindow.ui:71
 msgid "Open application menu"
 msgstr "Alkalmazásmenü megnyitása"
 
-#: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:61
+#: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:78
 msgid "Toggle property editor"
 msgstr "Tulajdonságszerkesztő átváltása"
 
-#: gaphor/ui/namespace.py:48
+#: gaphor/ui/namespace.py:47
 msgid "_Open"
 msgstr "_Megnyitás"
 
-#: gaphor/ui/namespace.py:48
+#: gaphor/ui/namespace.py:47
 msgid "Add to diagram"
 msgstr "Ábra hozzáadása"
 
-#: gaphor/ui/namespace.py:51
+#: gaphor/ui/namespace.py:50
 msgid "_Rename"
 msgstr "Átne_vezés"
 
-#: gaphor/ui/namespace.py:56
+#: gaphor/ui/namespace.py:55
 msgid "New _Diagram"
 msgstr "Új á_bra"
 
-#: gaphor/ui/namespace.py:58
+#: gaphor/ui/namespace.py:58 gaphor/ui/treecomponent.py:367
 msgid "New _Package"
 msgstr "Új _csomag"
 
@@ -2530,18 +2553,23 @@ msgstr "_Törlés"
 msgid "Show in “{diagram}”"
 msgstr "Megjelenítés a(z) „{diagram}”-ábrán"
 
-#: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
+#: gaphor/ui/namespace.py:98
+msgid "New Generic Diagram"
+msgstr "Új általános-ábra"
+
+#: gaphor/ui/namespace.py:321 gaphor/ui/treecomponent.py:174
 msgid "{name} package"
 msgstr "{name}-csomag"
 
-#: gaphor/ui/namespace.py:352
-msgid "New diagram"
-msgstr "Új ábra"
-
-#: gaphor/ui/namespaceview.py:141 gaphor/ui/tests/test_treemodel.py:162
+#: gaphor/ui/namespaceview.py:124 gaphor/ui/tests/test_treemodel.py:162
 #: gaphor/ui/treemodel.py:62
 msgid "<Relationships>"
 msgstr "<Kapcsolatok>"
+
+#: gaphor/ui/treecomponent.py:176
+#, fuzzy
+msgid "New package"
+msgstr "{name}-csomag"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
@@ -3113,3 +3141,9 @@ msgstr "Beillesztés (meghatározó elemek másolása)"
 
 #~ msgid "Open a Recent Model"
 #~ msgstr "Legutóbbi modell megnyitása"
+
+#~ msgid "main"
+#~ msgstr "fő"
+
+#~ msgid "edited"
+#~ msgstr "szerkesztett"

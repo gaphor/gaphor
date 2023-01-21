@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-12-03 16:14-0500\n"
+"POT-Creation-Date: 2023-01-21 18:13+0100\n"
 "PO-Revision-Date: 2022-01-03 00:54+0000\n"
 "Last-Translator: Fran Diéguez <fran.dieguez@mabishu.com>\n"
 "Language: gl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
-#: gaphor/ui/greeter.py:57
+#: gaphor/ui/greeter.py:58
 msgid "C4 Model"
 msgstr "Modelo C4"
 
@@ -101,7 +101,7 @@ msgstr "Novo diagrama de secuencia"
 msgid "New State Machine Diagram"
 msgstr "Novo diagrama de máquina de estado"
 
-#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:50
+#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:51
 msgid "RAAML"
 msgstr "RAAML"
 
@@ -173,7 +173,7 @@ msgid "XOR"
 msgstr "XOR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:41
+#: gaphor/RAAML/fta/majorityvotegate.py:40
 msgid "Majority Vote Gate"
 msgstr "Porta do voto maioritario"
 
@@ -283,7 +283,7 @@ msgstr "Acción de control non segura"
 msgid "Relevant To"
 msgstr "Relevante para"
 
-#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:43
+#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:44
 msgid "SysML"
 msgstr "SysML"
 
@@ -468,23 +468,23 @@ msgstr "Primitivo"
 msgid "proxy"
 msgstr "proxi"
 
-#: gaphor/SysML/requirements/relationships.py:37
+#: gaphor/SysML/requirements/relationships.py:35
 msgid "satisfy"
 msgstr "satisfacer"
 
-#: gaphor/SysML/requirements/relationships.py:47
+#: gaphor/SysML/requirements/relationships.py:44
 msgid "deriveReqt"
 msgstr "deriveReqt"
 
-#: gaphor/SysML/requirements/relationships.py:53
+#: gaphor/SysML/requirements/relationships.py:49
 msgid "trace"
 msgstr "trazar"
 
-#: gaphor/SysML/requirements/relationships.py:61
+#: gaphor/SysML/requirements/relationships.py:56
 msgid "verify"
 msgstr "verificar"
 
-#: gaphor/SysML/requirements/relationships.py:69
+#: gaphor/SysML/requirements/relationships.py:63
 msgid "refine"
 msgstr "refinar"
 
@@ -526,7 +526,7 @@ msgstr "Verificar"
 msgid "Containment"
 msgstr "Contención"
 
-#: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:36
+#: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:37
 msgid "UML"
 msgstr "UML"
 
@@ -822,14 +822,14 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/classespropertypages.py:341
-#: gaphor/UML/classes/classespropertypages.py:430
+#: gaphor/UML/classes/classespropertypages.py:340
+#: gaphor/UML/classes/classespropertypages.py:429
 #: gaphor/UML/classes/propertypages.glade:944
 #: gaphor/UML/classes/propertypages.ui:817
 msgid "Static"
 msgstr "Estática"
 
-#: gaphor/UML/classes/classespropertypages.py:430
+#: gaphor/UML/classes/classespropertypages.py:429
 #: gaphor/UML/classes/propertypages.glade:496
 #: gaphor/UML/classes/propertypages.glade:938
 #: gaphor/UML/classes/propertypages.ui:435
@@ -870,15 +870,15 @@ msgstr "valueType"
 msgid "dataType"
 msgstr "dataType"
 
-#: gaphor/UML/classes/dependency.py:44
+#: gaphor/UML/classes/dependency.py:43
 msgid "use"
 msgstr "usar"
 
-#: gaphor/UML/classes/dependency.py:45
+#: gaphor/UML/classes/dependency.py:44
 msgid "realize"
 msgstr "realizar"
 
-#: gaphor/UML/classes/dependency.py:46
+#: gaphor/UML/classes/dependency.py:45
 msgid "implements"
 msgstr "implementa"
 
@@ -1385,7 +1385,7 @@ msgstr "Estilo"
 msgid "Note or Remark"
 msgstr "Nota ou comentario"
 
-#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
+#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:349
 msgid "Element can’t be represented on a diagram."
 msgstr ""
 
@@ -1393,15 +1393,15 @@ msgstr ""
 msgid "No model file configured for model '{model_name}'."
 msgstr "Non hai un ficheiro de modelo configurado para o modelo «{model_name}»."
 
-#: gaphor/extensions/sphinx.py:92
+#: gaphor/extensions/sphinx.py:88
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Non hai diagrama '{name}' no modelo '{model_name}' ({model_file})."
 
-#: gaphor/plugins/autolayout/pydot.py:44
+#: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
 msgstr ""
 
-#: gaphor/plugins/autolayout/pydot.py:52
+#: gaphor/plugins/autolayout/pydot.py:53
 msgid "Auto Layout (orthogonal)"
 msgstr ""
 
@@ -1415,61 +1415,61 @@ msgstr ""
 "{version}\n"
 "Escriba \"help\" para obter máis información.\n"
 
-#: gaphor/plugins/console/consolewindow.py:23
+#: gaphor/plugins/console/consolewindow.py:22
 msgid "Gaphor Console"
 msgstr "Consola de Gaphor"
 
-#: gaphor/plugins/console/consolewindow.py:46
+#: gaphor/plugins/console/consolewindow.py:45
 msgid "Console"
 msgstr "Consola"
 
-#: gaphor/plugins/diagramexport/__init__.py:45
+#: gaphor/plugins/diagramexport/__init__.py:44
 msgid "All {ext} Files"
 msgstr "Todos os ficheiros {ext}"
 
-#: gaphor/plugins/diagramexport/__init__.py:51
+#: gaphor/plugins/diagramexport/__init__.py:50
 msgid "Export as SVG"
 msgstr "Exportar como SVG"
 
-#: gaphor/plugins/diagramexport/__init__.py:52
-#: gaphor/plugins/diagramexport/__init__.py:57
+#: gaphor/plugins/diagramexport/__init__.py:51
+#: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export diagram as SVG"
 msgstr "Exportar diagrama como SVG"
 
-#: gaphor/plugins/diagramexport/__init__.py:62
+#: gaphor/plugins/diagramexport/__init__.py:61
 msgid "Export as PNG"
 msgstr "Exportar como PNG"
 
-#: gaphor/plugins/diagramexport/__init__.py:63
-#: gaphor/plugins/diagramexport/__init__.py:68
+#: gaphor/plugins/diagramexport/__init__.py:62
+#: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export diagram as PNG"
 msgstr "Exportar diagrama como SVG"
 
-#: gaphor/plugins/diagramexport/__init__.py:73
+#: gaphor/plugins/diagramexport/__init__.py:72
 msgid "Export as PDF"
 msgstr "Exportar como PDF"
 
-#: gaphor/plugins/diagramexport/__init__.py:74
-#: gaphor/plugins/diagramexport/__init__.py:80
+#: gaphor/plugins/diagramexport/__init__.py:73
+#: gaphor/plugins/diagramexport/__init__.py:79
 msgid "Export diagram as PDF"
 msgstr "Exportar diagrama como PDF"
 
-#: gaphor/plugins/diagramexport/__init__.py:88
+#: gaphor/plugins/diagramexport/__init__.py:87
 #, fuzzy
 msgid "Export as EPS"
 msgstr "Exportar como XMI"
 
-#: gaphor/plugins/diagramexport/__init__.py:89
+#: gaphor/plugins/diagramexport/__init__.py:88
 msgid "Export diagram as Encapsulated PostScript"
 msgstr ""
 
-#: gaphor/plugins/diagramexport/__init__.py:95
+#: gaphor/plugins/diagramexport/__init__.py:94
 #, fuzzy
 msgid "Export diagram as EPS"
 msgstr "Exportar diagrama como SVG"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
-#: gaphor/plugins/errorreports/errorreports.py:65
+#: gaphor/plugins/errorreports/errorreports.py:64
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
 msgstr ""
@@ -1512,15 +1512,16 @@ msgstr "Exportar modelo como ficheiro XMI"
 msgid "All XMI Files"
 msgstr "Todos os ficheiros XMI"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
-#: gaphor/ui/mainwindow.py:234 gaphor/ui/mainwindow.ui:29
-#: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
+#: gaphor/ui/mainwindow.glade:121 gaphor/ui/mainwindow.py:241
+#: gaphor/ui/mainwindow.ui:45 gaphor/ui/namespace.py:323
 msgid "New model"
 msgstr "Modelo novo"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:64
-msgid "main"
-msgstr "principal"
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
+#: gaphor/ui/namespace.py:110
+msgid "New diagram"
+msgstr "Diagrama novo"
 
 #: gaphor/templates/c4model.gaphor
 msgid "1. Context diagrams"
@@ -2111,10 +2112,21 @@ msgstr ""
 msgid "Open a Model"
 msgstr "Abrir un modelo…"
 
-#: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
-#: gaphor/ui/treemodel.py:44
+#: gaphor/ui/diagrampage.py:128 gaphor/ui/mainwindow.py:260
+#: gaphor/ui/namespaceview.py:126 gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<none></none>"
+
+#: gaphor/ui/diagrams.ui:32
+#, fuzzy
+msgid "Open a Diagram"
+msgstr "Diagramas de compoñente"
+
+#: gaphor/ui/diagrams.ui:34
+msgid ""
+"Open a diagram from the model browser, or\n"
+"create a new diagram from the New diagram menu."
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2226,7 +2238,7 @@ msgstr "Iniciar sesión de depuración"
 msgid "All Files"
 msgstr "Todos os ficheiros"
 
-#: gaphor/ui/filemanager.py:40
+#: gaphor/ui/filemanager.py:42
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2238,7 +2250,7 @@ msgstr ""
 "{exc}\n"
 "Se cree que é un erro, contacte cos desenvolvedores."
 
-#: gaphor/ui/filemanager.py:44
+#: gaphor/ui/filemanager.py:46
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2246,7 +2258,7 @@ msgstr ""
 "Non ten os permisos necesarios para gardar o modelo.\n"
 "Comprobe se escribiu a localización correctamente e tente de novo."
 
-#: gaphor/ui/filemanager.py:48
+#: gaphor/ui/filemanager.py:50
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2256,7 +2268,7 @@ msgstr ""
 "Libere algo de espazo no disco e volva a tentalo ou gárdeo nunha "
 "localización diferente."
 
-#: gaphor/ui/filemanager.py:51
+#: gaphor/ui/filemanager.py:53
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2266,67 +2278,86 @@ msgstr ""
 "{exc}\n"
 "Comprobe que escribiu a localización correctamente e ténteo de novo:"
 
-#: gaphor/ui/filemanager.py:126
+#: gaphor/ui/filemanager.py:122
 msgid "Loading…"
 msgstr "Cargando…"
 
-#: gaphor/ui/filemanager.py:127
+#: gaphor/ui/filemanager.py:123
 msgid "Loading model from {filename}"
 msgstr "Cargando modelo desde {filename}"
 
-#: gaphor/ui/filemanager.py:160
+#: gaphor/ui/filemanager.py:169
 #, fuzzy
 msgid "Merge conflict in model “{filename}”."
 msgstr "Non foi posíbel abrir o modelo «{filename}»."
 
-#: gaphor/ui/filemanager.py:163
+#: gaphor/ui/filemanager.py:172
 msgid "It looks like this model file contains a merge conflict."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:173
+#: gaphor/ui/filemanager.py:194
 msgid "Unable to open model “{filename}”."
 msgstr "Non foi posíbel abrir o modelo «{filename}»."
 
-#: gaphor/ui/filemanager.py:176
+#: gaphor/ui/filemanager.py:197
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Este ficheiro non contén un modelo válido de Gaphor."
 
-#: gaphor/ui/filemanager.py:215
+#: gaphor/ui/filemanager.py:247
 msgid "Saving…"
 msgstr "Gardando…"
 
-#: gaphor/ui/filemanager.py:216
+#: gaphor/ui/filemanager.py:248
 msgid "Saving model to {filename}"
 msgstr "Gardando o modelo en {filename}"
 
-#: gaphor/ui/filemanager.py:233
+#: gaphor/ui/filemanager.py:264
 msgid "Unable to save model “{filename}”."
 msgstr "Non foi posíbel gardar o modelo \"{filename}\"."
 
-#: gaphor/ui/filemanager.py:270 gaphor/ui/filemanager.py:306
+#: gaphor/ui/filemanager.py:302 gaphor/ui/filemanager.py:338
 msgid "Save Gaphor Model As"
 msgstr "Gardar o modelo Gaphor como"
 
-#: gaphor/ui/filemanager.py:326
+#: gaphor/ui/filemanager.py:360
+msgid "Resolve Merge Conflict?"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:363
+msgid ""
+"The model you are opening contains a merge conflict. Do you want to open "
+"the current model or the incoming change to the model?"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:367 gaphor/ui/filemanager.py:395
+#: gaphor/ui/filemanager.py:409
+msgid "Cancel"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:368
+msgid "Open Current"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:369
+msgid "Open Incoming"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:382
 msgid "Save Changes?"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:327
+#: gaphor/ui/filemanager.py:383
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
-msgid "Cancel"
-msgstr ""
-
-#: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
+#: gaphor/ui/filemanager.py:397 gaphor/ui/filemanager.py:410
 msgid "Discard"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
-#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:48
+#: gaphor/ui/filemanager.py:399 gaphor/ui/filemanager.py:411
+#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "Gardar"
 
@@ -2345,130 +2376,122 @@ msgstr "Crear novo modelo…"
 msgid "Open Other Model…"
 msgstr "Abrir un modelo…"
 
-#: gaphor/ui/greeter.py:29
+#: gaphor/ui/greeter.py:30
 msgid "Generic"
 msgstr "Xenérico"
 
-#: gaphor/ui/greeter.py:30
+#: gaphor/ui/greeter.py:31
 #, fuzzy
 msgid "An empty model"
 msgstr "Modelo novo"
 
-#: gaphor/ui/greeter.py:37
+#: gaphor/ui/greeter.py:38
 msgid "Unified Modeling Language template"
 msgstr ""
 
-#: gaphor/ui/greeter.py:44
+#: gaphor/ui/greeter.py:45
 msgid "Systems Modeling Language template"
 msgstr ""
 
-#: gaphor/ui/greeter.py:51
+#: gaphor/ui/greeter.py:52
 msgid "Risk Analysis and Assessment Modeling Language template"
 msgstr ""
 
-#: gaphor/ui/greeter.py:58
+#: gaphor/ui/greeter.py:59
 msgid "Layered C4 Model template"
 msgstr ""
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:44
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:47
 #, fuzzy
 msgid "Open Model…"
 msgstr "Abrir un modelo…"
 
-#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:58
+#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:61
 msgid "Keyboard Shortcuts"
 msgstr "Atallos de teclado"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.glade:7
-#: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:59
+#: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:62
 msgid "About Gaphor"
 msgstr "Sobre Gaphorr"
 
-#: gaphor/ui/greeter.ui:79
+#: gaphor/ui/greeter.ui:80
 msgid "Recently Opened"
 msgstr ""
 
-#: gaphor/ui/greeter.ui:84
+#: gaphor/ui/greeter.ui:85
 #, fuzzy
 msgid "Create New Model"
 msgstr "Crear novo modelo…"
 
-#: gaphor/ui/mainwindow.glade:84
+#: gaphor/ui/mainwindow.glade:104
 msgid "Gaphor"
 msgstr "Gaphor"
 
-#: gaphor/ui/mainwindow.glade:148
+#: gaphor/ui/mainwindow.glade:177
 msgid "Create New diagram"
 msgstr "Crear diagrama novo"
 
-#: gaphor/ui/mainwindow.glade:169
+#: gaphor/ui/mainwindow.glade:198
 msgid "Open Application Menu"
 msgstr "Abrir menú"
 
-#: gaphor/ui/mainwindow.glade:191
+#: gaphor/ui/mainwindow.glade:220
 msgid "Editor"
 msgstr "Mostrar/ocultar editor"
 
-#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:43
+#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:46
 msgid "New Model…"
 msgstr "Novo modelo…"
 
-#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:49
+#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
 msgstr "Gardar como…"
 
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/mainwindow.py:53
 msgid "Export"
 msgstr "Exportar"
 
-#: gaphor/ui/mainwindow.py:54
+#: gaphor/ui/mainwindow.py:57
 msgid "Tools"
 msgstr "Ferramentas"
 
-#: gaphor/ui/mainwindow.py:85
-msgid "New Generic Diagram"
-msgstr "Novo diagrama xenérico"
-
-#: gaphor/ui/mainwindow.py:236
-msgid "edited"
-msgstr "editado"
-
-#: gaphor/ui/mainwindow.py:270
+#: gaphor/ui/mainwindow.py:278
 msgid "Profile: {name}"
 msgstr "Perfil: {name}"
 
-#: gaphor/ui/mainwindow.ui:48
+#: gaphor/ui/mainwindow.ui:64
 #, fuzzy
-msgid "Open diagram menu"
+msgid "New diagram menu"
 msgstr "Diagramas de compoñente"
 
-#: gaphor/ui/mainwindow.ui:55
+#: gaphor/ui/mainwindow.ui:71
 #, fuzzy
 msgid "Open application menu"
 msgstr "Abrir menú"
 
-#: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:61
+#: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:78
 msgid "Toggle property editor"
 msgstr ""
 
-#: gaphor/ui/namespace.py:48
+#: gaphor/ui/namespace.py:47
 msgid "_Open"
 msgstr "_Abrir"
 
-#: gaphor/ui/namespace.py:48
+#: gaphor/ui/namespace.py:47
 #, fuzzy
 msgid "Add to diagram"
 msgstr "Diagrama de código"
 
-#: gaphor/ui/namespace.py:51
+#: gaphor/ui/namespace.py:50
 msgid "_Rename"
 msgstr "_Renomear"
 
-#: gaphor/ui/namespace.py:56
+#: gaphor/ui/namespace.py:55
 msgid "New _Diagram"
 msgstr "Novo _diagrama"
 
-#: gaphor/ui/namespace.py:58
+#: gaphor/ui/namespace.py:58 gaphor/ui/treecomponent.py:367
 msgid "New _Package"
 msgstr "Novo _paquete"
 
@@ -2480,18 +2503,23 @@ msgstr "_Borrar"
 msgid "Show in “{diagram}”"
 msgstr "Mostrar en «{diagram}»"
 
-#: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
+#: gaphor/ui/namespace.py:98
+msgid "New Generic Diagram"
+msgstr "Novo diagrama xenérico"
+
+#: gaphor/ui/namespace.py:321 gaphor/ui/treecomponent.py:174
 msgid "{name} package"
 msgstr "Paquete {name}"
 
-#: gaphor/ui/namespace.py:352
-msgid "New diagram"
-msgstr "Diagrama novo"
-
-#: gaphor/ui/namespaceview.py:141 gaphor/ui/tests/test_treemodel.py:162
+#: gaphor/ui/namespaceview.py:124 gaphor/ui/tests/test_treemodel.py:162
 #: gaphor/ui/treemodel.py:62
 msgid "<Relationships>"
 msgstr "<relationships></relationships>"
+
+#: gaphor/ui/treecomponent.py:176
+#, fuzzy
+msgid "New package"
+msgstr "Paquete {name}"
 
 #: gaphor/ui/help/about.glade:9
 #, fuzzy
@@ -2997,3 +3025,9 @@ msgstr ""
 
 #~ msgid "Open a Recent Model"
 #~ msgstr "Modelo recente…"
+
+#~ msgid "main"
+#~ msgstr "principal"
+
+#~ msgid "edited"
+#~ msgstr "editado"

@@ -1,4 +1,4 @@
-# Translations template for PROJECT.
+# Turkish translations for PROJECT.
 # Copyright (C) 2022 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
@@ -7,21 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-12-03 16:14-0500\n"
+"POT-Creation-Date: 2023-01-21 18:13+0100\n"
 "PO-Revision-Date: 2023-01-01 05:51+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
-"Language-Team: Turkish <https://hosted.weblate.org/projects/gaphor/gaphor/tr/"
-">\n"
 "Language: tr\n"
+"Language-Team: Turkish "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/tr/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
-#: gaphor/ui/greeter.py:57
+#: gaphor/ui/greeter.py:58
 msgid "C4 Model"
 msgstr "C4 Modeli"
 
@@ -102,7 +101,7 @@ msgstr "Yeni Sıra Diyagramı"
 msgid "New State Machine Diagram"
 msgstr "Yeni Durum Makinesi Diyagramı"
 
-#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:50
+#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:51
 msgid "RAAML"
 msgstr "RAAML"
 
@@ -174,7 +173,7 @@ msgid "XOR"
 msgstr "Dışlayan Özel VEYA (XOR)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:41
+#: gaphor/RAAML/fta/majorityvotegate.py:40
 msgid "Majority Vote Gate"
 msgstr "Çoğunluk Oy Geçidi"
 
@@ -284,7 +283,7 @@ msgstr "Güvensiz Denetim Eylemi"
 msgid "Relevant To"
 msgstr "İlgili"
 
-#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:43
+#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:44
 msgid "SysML"
 msgstr "SysML"
 
@@ -469,23 +468,23 @@ msgstr "İlkel"
 msgid "proxy"
 msgstr "vekil sunucu"
 
-#: gaphor/SysML/requirements/relationships.py:37
+#: gaphor/SysML/requirements/relationships.py:35
 msgid "satisfy"
 msgstr "karşıla"
 
-#: gaphor/SysML/requirements/relationships.py:47
+#: gaphor/SysML/requirements/relationships.py:44
 msgid "deriveReqt"
 msgstr "türetmeGereksinimi"
 
-#: gaphor/SysML/requirements/relationships.py:53
+#: gaphor/SysML/requirements/relationships.py:49
 msgid "trace"
 msgstr "izle"
 
-#: gaphor/SysML/requirements/relationships.py:61
+#: gaphor/SysML/requirements/relationships.py:56
 msgid "verify"
 msgstr "doğrula"
 
-#: gaphor/SysML/requirements/relationships.py:69
+#: gaphor/SysML/requirements/relationships.py:63
 msgid "refine"
 msgstr "arıt"
 
@@ -527,7 +526,7 @@ msgstr "Doğrula"
 msgid "Containment"
 msgstr "Kapsama"
 
-#: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:36
+#: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:37
 msgid "UML"
 msgstr "UML"
 
@@ -803,8 +802,8 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Etkinlik parametresi düğümlerini UML sözdizimine göre ekleyin ve düzenleyin."
-"\n"
+"Etkinlik parametresi düğümlerini UML sözdizimine göre ekleyin ve "
+"düzenleyin.\n"
 "\n"
 "  • <tt>parameter</tt> (girdi, ad)\n"
 "  • <tt>out attr: int</tt> (türü ile çıktı)\n"
@@ -840,14 +839,14 @@ msgstr ""
 "Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
 "Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
-#: gaphor/UML/classes/classespropertypages.py:341
-#: gaphor/UML/classes/classespropertypages.py:430
+#: gaphor/UML/classes/classespropertypages.py:340
+#: gaphor/UML/classes/classespropertypages.py:429
 #: gaphor/UML/classes/propertypages.glade:944
 #: gaphor/UML/classes/propertypages.ui:817
 msgid "Static"
 msgstr "Sabit"
 
-#: gaphor/UML/classes/classespropertypages.py:430
+#: gaphor/UML/classes/classespropertypages.py:429
 #: gaphor/UML/classes/propertypages.glade:496
 #: gaphor/UML/classes/propertypages.glade:938
 #: gaphor/UML/classes/propertypages.ui:435
@@ -888,15 +887,15 @@ msgstr "değerTürü"
 msgid "dataType"
 msgstr "veriTürü"
 
-#: gaphor/UML/classes/dependency.py:44
+#: gaphor/UML/classes/dependency.py:43
 msgid "use"
 msgstr "kullan"
 
-#: gaphor/UML/classes/dependency.py:45
+#: gaphor/UML/classes/dependency.py:44
 msgid "realize"
 msgstr "gerçekleştir"
 
-#: gaphor/UML/classes/dependency.py:46
+#: gaphor/UML/classes/dependency.py:45
 msgid "implements"
 msgstr "uygular"
 
@@ -1123,7 +1122,8 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"UML sözdizimine göre numaralandırma sabit değerleri ekleyin ve düzenleyin.\n"
+"UML sözdizimine göre numaralandırma sabit değerleri ekleyin ve "
+"düzenleyin.\n"
 "\n"
 "  • <tt>enum</tt>\n"
 "\n"
@@ -1428,7 +1428,7 @@ msgstr "Biçim"
 msgid "Note or Remark"
 msgstr "Not veya Açıklama"
 
-#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:350
+#: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:349
 msgid "Element can’t be represented on a diagram."
 msgstr "Öğe bir diyagramda gösterilemez."
 
@@ -1436,15 +1436,15 @@ msgstr "Öğe bir diyagramda gösterilemez."
 msgid "No model file configured for model '{model_name}'."
 msgstr "'{model_name}' modeli için yapılandırılan model dosyası yok."
 
-#: gaphor/extensions/sphinx.py:92
+#: gaphor/extensions/sphinx.py:88
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "'{model_name}' ({model_file}) modelinde '{name}' diyagramı yok."
 
-#: gaphor/plugins/autolayout/pydot.py:44
+#: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
 msgstr "Otomatik Yerleşim"
 
-#: gaphor/plugins/autolayout/pydot.py:52
+#: gaphor/plugins/autolayout/pydot.py:53
 msgid "Auto Layout (orthogonal)"
 msgstr "Otomatik Yerleşim (dikey)"
 
@@ -1458,59 +1458,59 @@ msgstr ""
 "{version}\n"
 "Daha fazla bilgi için \"help\" yazın.\n"
 
-#: gaphor/plugins/console/consolewindow.py:23
+#: gaphor/plugins/console/consolewindow.py:22
 msgid "Gaphor Console"
 msgstr "Gaphor Uçbirimi"
 
-#: gaphor/plugins/console/consolewindow.py:46
+#: gaphor/plugins/console/consolewindow.py:45
 msgid "Console"
 msgstr "Uçbirim"
 
-#: gaphor/plugins/diagramexport/__init__.py:45
+#: gaphor/plugins/diagramexport/__init__.py:44
 msgid "All {ext} Files"
 msgstr "Tüm {ext} Dosyaları"
 
-#: gaphor/plugins/diagramexport/__init__.py:51
+#: gaphor/plugins/diagramexport/__init__.py:50
 msgid "Export as SVG"
 msgstr "SVG Olarak Dışa Aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:52
-#: gaphor/plugins/diagramexport/__init__.py:57
+#: gaphor/plugins/diagramexport/__init__.py:51
+#: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export diagram as SVG"
 msgstr "Diyagramı SVG olarak dışa aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:62
+#: gaphor/plugins/diagramexport/__init__.py:61
 msgid "Export as PNG"
 msgstr "PNG Olarak Dışa Aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:63
-#: gaphor/plugins/diagramexport/__init__.py:68
+#: gaphor/plugins/diagramexport/__init__.py:62
+#: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export diagram as PNG"
 msgstr "Diyagramı PNG olarak dışa aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:73
+#: gaphor/plugins/diagramexport/__init__.py:72
 msgid "Export as PDF"
 msgstr "PDF Olarak Dışa Aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:74
-#: gaphor/plugins/diagramexport/__init__.py:80
+#: gaphor/plugins/diagramexport/__init__.py:73
+#: gaphor/plugins/diagramexport/__init__.py:79
 msgid "Export diagram as PDF"
 msgstr "Diyagramı PDF olarak dışa aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:88
+#: gaphor/plugins/diagramexport/__init__.py:87
 msgid "Export as EPS"
 msgstr "EPS Olarak Dışa Aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:89
+#: gaphor/plugins/diagramexport/__init__.py:88
 msgid "Export diagram as Encapsulated PostScript"
 msgstr "Kapsüllenmiş PostScript (EPS) olarak dışa aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:95
+#: gaphor/plugins/diagramexport/__init__.py:94
 msgid "Export diagram as EPS"
 msgstr "Diyagramı EPS olarak dışa aktar"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
-#: gaphor/plugins/errorreports/errorreports.py:65
+#: gaphor/plugins/errorreports/errorreports.py:64
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
 msgstr "Hata Raporları"
@@ -1521,8 +1521,8 @@ msgid ""
 "Any unhandled errors are shown here. You can use these to provide extra "
 "information when you create an issue on GitHub."
 msgstr ""
-"İşlenmeyen hatalar burada gösterilir. GitHubʼda bir hata raporu oluştururken "
-"ek bilgi sağlamak için bunları kullanabilirsiniz."
+"İşlenmeyen hatalar burada gösterilir. GitHubʼda bir hata raporu "
+"oluştururken ek bilgi sağlamak için bunları kullanabilirsiniz."
 
 #: gaphor/plugins/errorreports/errorreports.py:102
 msgid "No errors have been intercepted. We’re good."
@@ -1539,8 +1539,8 @@ msgid ""
 " Reports."
 msgstr ""
 "Beklenmeyen bir hata oluştu.\n"
-"Lütfen GitHubʼda bir hata raporu oluşturun ve Araçlar → Hata Raporlarıʼndaki "
-"bilgileri ekleyin."
+"Lütfen GitHubʼda bir hata raporu oluşturun ve Araçlar → Hata "
+"Raporlarıʼndaki bilgileri ekleyin."
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export as XMI"
@@ -1558,15 +1558,16 @@ msgstr "Modeli XMI olarak dışa aktar"
 msgid "All XMI Files"
 msgstr "Tüm XMI Dosyaları"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
-#: gaphor/ui/mainwindow.py:234 gaphor/ui/mainwindow.ui:29
-#: gaphor/ui/namespace.py:336 gaphor/ui/treecomponent.py:166
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
+#: gaphor/ui/mainwindow.glade:121 gaphor/ui/mainwindow.py:241
+#: gaphor/ui/mainwindow.ui:45 gaphor/ui/namespace.py:323
 msgid "New model"
 msgstr "Yeni model"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:64
-msgid "main"
-msgstr "ana"
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
+#: gaphor/ui/namespace.py:110
+msgid "New diagram"
+msgstr "Yeni diyagram"
 
 #: gaphor/templates/c4model.gaphor
 msgid "1. Context diagrams"
@@ -2064,8 +2065,8 @@ msgid ""
 msgstr ""
 "Basitleştirilmiş sınıf diyagramını kullanarak etki alanı varlıklarını ve "
 "bunların ilişkilerini modelleyerek etki alanı analizi gerçekleştirin. Bu "
-"diyagram bir görsel kavram sözlüğü görevi görecektir. Aynı zamanda tasarım "
-"düzeyindeki veri modeliniz için de başlangıç noktası olacaktır."
+"diyagram bir görsel kavram sözlüğü görevi görecektir. Aynı zamanda "
+"tasarım düzeyindeki veri modeliniz için de başlangıç noktası olacaktır."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2085,16 +2086,16 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
-"Var olan sınıflarda veya hatta belirli sorumluluklara sahip yeni sınıflarda "
-"\n"
+"Var olan sınıflarda veya hatta belirli sorumluluklara sahip yeni "
+"sınıflarda \n"
 "yeni metodlar bulmak için kullanım örneği senaryoları için bileşen "
 "etkileşimlerini modelleyin."
 
 #: gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
-"Nesne yönelimli veri modelinizi yakalamak için ayrıntılı sınıf diyagramları "
-"oluşturun."
+"Nesne yönelimli veri modelinizi yakalamak için ayrıntılı sınıf "
+"diyagramları oluşturun."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2103,8 +2104,8 @@ msgid ""
 "inter-dependencies and communication protocols."
 msgstr ""
 "Bileşenlerinizin uygulanmasını gösteren başlıca yapıtları tanımlayın. "
-"Donanım düğümlerine nasıl dağıtıldıklarını, karşılıklı bağımlılıklarını ve "
-"iletişim kurallarını belirtin."
+"Donanım düğümlerine nasıl dağıtıldıklarını, karşılıklı bağımlılıklarını "
+"ve iletişim kurallarını belirtin."
 
 #: gaphor/templates/uml.gaphor
 msgid "String"
@@ -2140,10 +2141,21 @@ msgstr "Geç"
 msgid "Open a Model"
 msgstr "Model Aç"
 
-#: gaphor/ui/diagrampage.py:129 gaphor/ui/namespaceview.py:143
-#: gaphor/ui/treemodel.py:44
+#: gaphor/ui/diagrampage.py:128 gaphor/ui/mainwindow.py:260
+#: gaphor/ui/namespaceview.py:126 gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<Yok>"
+
+#: gaphor/ui/diagrams.ui:32
+#, fuzzy
+msgid "Open a Diagram"
+msgstr "Bileşen diyagramı"
+
+#: gaphor/ui/diagrams.ui:34
+msgid ""
+"Open a diagram from the model browser, or\n"
+"create a new diagram from the New diagram menu."
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2175,10 +2187,10 @@ msgstr ""
 "\n"
 "Bu bölme, başlıktaki bölme simgesine tıklanarak gizlenebilir.\n"
 "\n"
-"<b>İpucu:</b> Araç kutusundaki çoğu ögenin bir klavye kısayolu vardır ("
-"örneğin, Sınıf için \"c\").\n"
-"Araç seçimi yalnızca diyagramdan çalışır. Bir araç seçilmezse, diyagrama bir "
-"kez tıklayın (odaklanması için) ve ardından kısayol tuşuna basın.\n"
+"<b>İpucu:</b> Araç kutusundaki çoğu ögenin bir klavye kısayolu vardır "
+"(örneğin, Sınıf için \"c\").\n"
+"Araç seçimi yalnızca diyagramdan çalışır. Bir araç seçilmezse, diyagrama "
+"bir kez tıklayın (odaklanması için) ve ardından kısayol tuşuna basın.\n"
 "\n"
 "<b>İpucu:</b> Ağaç görünümünde öğe aramak için, ağaç görünümünde bir öğe "
 "seçip yazmaya başlayın. Kendiliğinden arama kutusu görünecektir.\n"
@@ -2229,8 +2241,7 @@ msgstr "Kullanılmayan Ögeleri Kaldır"
 #: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
 #: gaphor/ui/elementeditor.ui:249 gaphor/ui/elementeditor.ui:256
 msgid "Automatically remove elements no longer in use in any diagram."
-msgstr ""
-"Herhangi bir diyagramda artık kullanılmayan öğeleri kendiliğinden kaldır."
+msgstr "Herhangi bir diyagramda artık kullanılmayan öğeleri kendiliğinden kaldır."
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:264
 msgid "Style Sheet"
@@ -2242,16 +2253,17 @@ msgid ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
-"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\""
-">Gaphorʼda biçem sayfaları</a>"
+"🔗 <a "
+"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Gaphorʼda"
+" biçem sayfaları</a>"
 
 #: gaphor/ui/errorhandler.py:22
 msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
-"Gaphor komut satırından başlatılmış. Bir hata ayıklama oturumu açmak ister "
-"misiniz?"
+"Gaphor komut satırından başlatılmış. Bir hata ayıklama oturumu açmak "
+"ister misiniz?"
 
 #: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:34
 #: gaphor/ui/errorhandler.py:43 gaphor/ui/errorhandler.py:48
@@ -2266,7 +2278,7 @@ msgstr "Hata Ayıklama Oturumunu Başlat"
 msgid "All Files"
 msgstr "Tüm Dosyalar"
 
-#: gaphor/ui/filemanager.py:40
+#: gaphor/ui/filemanager.py:42
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2275,10 +2287,10 @@ msgid ""
 msgstr ""
 "Gaphor, muhtemelen dahili bir hata nedeniyle modeli depolayamadı:\n"
 "{exc}\n"
-"Bunun bir hata olduğunu düşünüyorsanız, lütfen geliştiricilerle iletişime "
-"geçin."
+"Bunun bir hata olduğunu düşünüyorsanız, lütfen geliştiricilerle iletişime"
+" geçin."
 
-#: gaphor/ui/filemanager.py:44
+#: gaphor/ui/filemanager.py:46
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2286,7 +2298,7 @@ msgstr ""
 "Modeli kaydetmek için gerekli izinleriniz yok.\n"
 "Konumu doğru yazdığınızdan emin olun ve tekrar deneyin."
 
-#: gaphor/ui/filemanager.py:48
+#: gaphor/ui/filemanager.py:50
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2296,7 +2308,7 @@ msgstr ""
 "Lütfen biraz disk alanı boşaltıp tekrar deneyin veya farklı bir konuma "
 "kaydedin."
 
-#: gaphor/ui/filemanager.py:51
+#: gaphor/ui/filemanager.py:53
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2306,68 +2318,87 @@ msgstr ""
 "{exc}\n"
 "Konumu doğru yazdığınızdan emin olun ve tekrar deneyin."
 
-#: gaphor/ui/filemanager.py:126
+#: gaphor/ui/filemanager.py:122
 msgid "Loading…"
 msgstr "Yükleniyor…"
 
-#: gaphor/ui/filemanager.py:127
+#: gaphor/ui/filemanager.py:123
 msgid "Loading model from {filename}"
 msgstr "{filename} dosyasından model yükleniyor"
 
-#: gaphor/ui/filemanager.py:160
+#: gaphor/ui/filemanager.py:169
 msgid "Merge conflict in model “{filename}”."
 msgstr "“{filename}” dosyasında model birleştirme çakışması."
 
-#: gaphor/ui/filemanager.py:163
+#: gaphor/ui/filemanager.py:172
 msgid "It looks like this model file contains a merge conflict."
 msgstr "Bu model dosyası birleştirme çakışması içeriyor."
 
-#: gaphor/ui/filemanager.py:173
+#: gaphor/ui/filemanager.py:194
 msgid "Unable to open model “{filename}”."
 msgstr "“{filename}” modeli açılamadı."
 
-#: gaphor/ui/filemanager.py:176
+#: gaphor/ui/filemanager.py:197
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Bu dosya geçerli bir Gaphor modeli içermiyor."
 
-#: gaphor/ui/filemanager.py:215
+#: gaphor/ui/filemanager.py:247
 msgid "Saving…"
 msgstr "Kaydediliyor…"
 
-#: gaphor/ui/filemanager.py:216
+#: gaphor/ui/filemanager.py:248
 msgid "Saving model to {filename}"
 msgstr "Model {filename} dosyasına kaydediliyor"
 
-#: gaphor/ui/filemanager.py:233
+#: gaphor/ui/filemanager.py:264
 msgid "Unable to save model “{filename}”."
 msgstr "“{filename}” modeli kaydedilemedi."
 
-#: gaphor/ui/filemanager.py:270 gaphor/ui/filemanager.py:306
+#: gaphor/ui/filemanager.py:302 gaphor/ui/filemanager.py:338
 msgid "Save Gaphor Model As"
 msgstr "Gaphor Modelini Farklı Kaydet"
 
-#: gaphor/ui/filemanager.py:326
+#: gaphor/ui/filemanager.py:360
+msgid "Resolve Merge Conflict?"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:363
+msgid ""
+"The model you are opening contains a merge conflict. Do you want to open "
+"the current model or the incoming change to the model?"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:367 gaphor/ui/filemanager.py:395
+#: gaphor/ui/filemanager.py:409
+msgid "Cancel"
+msgstr "İptal Et"
+
+#: gaphor/ui/filemanager.py:368
+msgid "Open Current"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:369
+msgid "Open Incoming"
+msgstr ""
+
+#: gaphor/ui/filemanager.py:382
 msgid "Save Changes?"
 msgstr "Değişiklikler Kaydedilsin Mi?"
 
-#: gaphor/ui/filemanager.py:327
+#: gaphor/ui/filemanager.py:383
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
-"Açık model kaydedilmemiş değişiklikler içeriyor. Kaydedilmeyen değişiklikler "
-"kalıcı olarak yitirilecek."
+"Açık model kaydedilmemiş değişiklikler içeriyor. Kaydedilmeyen "
+"değişiklikler kalıcı olarak yitirilecek."
 
-#: gaphor/ui/filemanager.py:339 gaphor/ui/filemanager.py:353
-msgid "Cancel"
-msgstr "İptal Et"
-
-#: gaphor/ui/filemanager.py:341 gaphor/ui/filemanager.py:354
+#: gaphor/ui/filemanager.py:397 gaphor/ui/filemanager.py:410
 msgid "Discard"
 msgstr "Vazgeç"
 
-#: gaphor/ui/filemanager.py:343 gaphor/ui/filemanager.py:355
-#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:48
+#: gaphor/ui/filemanager.py:399 gaphor/ui/filemanager.py:411
+#: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "Kaydet"
 
@@ -2383,124 +2414,117 @@ msgstr "Yeni model oluştur"
 msgid "Open Other Model…"
 msgstr "Başka Model Aç…"
 
-#: gaphor/ui/greeter.py:29
+#: gaphor/ui/greeter.py:30
 msgid "Generic"
 msgstr "Genel"
 
-#: gaphor/ui/greeter.py:30
+#: gaphor/ui/greeter.py:31
 msgid "An empty model"
 msgstr "Boş bir model"
 
-#: gaphor/ui/greeter.py:37
+#: gaphor/ui/greeter.py:38
 msgid "Unified Modeling Language template"
 msgstr "Birleşik Modelleme Dili şablonu"
 
-#: gaphor/ui/greeter.py:44
+#: gaphor/ui/greeter.py:45
 msgid "Systems Modeling Language template"
 msgstr "Sistem Modelleme Dili şablonu"
 
-#: gaphor/ui/greeter.py:51
+#: gaphor/ui/greeter.py:52
 msgid "Risk Analysis and Assessment Modeling Language template"
 msgstr "Risk Analizi ve Değerlendirme Modelleme Dili şablonu"
 
-#: gaphor/ui/greeter.py:58
+#: gaphor/ui/greeter.py:59
 msgid "Layered C4 Model template"
 msgstr "Katmanlı C4 Modeli şablonu"
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:44
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
 msgstr "Model Aç…"
 
-#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:58
+#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:61
 msgid "Keyboard Shortcuts"
 msgstr "Klavye Kısayolları"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.glade:7
-#: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:59
+#: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:62
 msgid "About Gaphor"
 msgstr "Gaphor Hakkında"
 
-#: gaphor/ui/greeter.ui:79
+#: gaphor/ui/greeter.ui:80
 msgid "Recently Opened"
 msgstr "Son Açılanlar"
 
-#: gaphor/ui/greeter.ui:84
+#: gaphor/ui/greeter.ui:85
 msgid "Create New Model"
 msgstr "Yeni Model Oluştur"
 
-#: gaphor/ui/mainwindow.glade:84
+#: gaphor/ui/mainwindow.glade:104
 msgid "Gaphor"
 msgstr "Gaphor"
 
-#: gaphor/ui/mainwindow.glade:148
+#: gaphor/ui/mainwindow.glade:177
 msgid "Create New diagram"
 msgstr "Yeni diyagram oluştur"
 
-#: gaphor/ui/mainwindow.glade:169
+#: gaphor/ui/mainwindow.glade:198
 msgid "Open Application Menu"
 msgstr "Uygulama Menüsünü Aç"
 
-#: gaphor/ui/mainwindow.glade:191
+#: gaphor/ui/mainwindow.glade:220
 msgid "Editor"
 msgstr "Düzenleyici"
 
-#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:43
+#: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:46
 msgid "New Model…"
 msgstr "Yeni Model…"
 
-#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:49
+#: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
 msgstr "Farklı Kaydet…"
 
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/mainwindow.py:53
 msgid "Export"
 msgstr "Dışa Aktar"
 
-#: gaphor/ui/mainwindow.py:54
+#: gaphor/ui/mainwindow.py:57
 msgid "Tools"
 msgstr "Araçlar"
 
-#: gaphor/ui/mainwindow.py:85
-msgid "New Generic Diagram"
-msgstr "Yeni Genel Diyagram"
-
-#: gaphor/ui/mainwindow.py:236
-msgid "edited"
-msgstr "düzenlendi"
-
-#: gaphor/ui/mainwindow.py:270
+#: gaphor/ui/mainwindow.py:278
 msgid "Profile: {name}"
 msgstr "Profil: {name}"
 
-#: gaphor/ui/mainwindow.ui:48
-msgid "Open diagram menu"
+#: gaphor/ui/mainwindow.ui:64
+#, fuzzy
+msgid "New diagram menu"
 msgstr "Diyagram menüsünü aç"
 
-#: gaphor/ui/mainwindow.ui:55
+#: gaphor/ui/mainwindow.ui:71
 msgid "Open application menu"
 msgstr "Uygulama menüsünü aç"
 
-#: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:61
+#: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:78
 msgid "Toggle property editor"
 msgstr "Özellik düzenleyiciyi aç/kapat"
 
-#: gaphor/ui/namespace.py:48
+#: gaphor/ui/namespace.py:47
 msgid "_Open"
 msgstr "_Aç"
 
-#: gaphor/ui/namespace.py:48
+#: gaphor/ui/namespace.py:47
 msgid "Add to diagram"
 msgstr "Diyagrama ekle"
 
-#: gaphor/ui/namespace.py:51
+#: gaphor/ui/namespace.py:50
 msgid "_Rename"
 msgstr "Yeniden _Adlandır"
 
-#: gaphor/ui/namespace.py:56
+#: gaphor/ui/namespace.py:55
 msgid "New _Diagram"
 msgstr "Yeni _Diyagram"
 
-#: gaphor/ui/namespace.py:58
+#: gaphor/ui/namespace.py:58 gaphor/ui/treecomponent.py:367
 msgid "New _Package"
 msgstr "Yeni _Paket"
 
@@ -2512,18 +2536,23 @@ msgstr "_Sil"
 msgid "Show in “{diagram}”"
 msgstr "“{diagram}” diyagramında göster"
 
-#: gaphor/ui/namespace.py:334 gaphor/ui/treecomponent.py:164
+#: gaphor/ui/namespace.py:98
+msgid "New Generic Diagram"
+msgstr "Yeni Genel Diyagram"
+
+#: gaphor/ui/namespace.py:321 gaphor/ui/treecomponent.py:174
 msgid "{name} package"
 msgstr "{name} paketi"
 
-#: gaphor/ui/namespace.py:352
-msgid "New diagram"
-msgstr "Yeni diyagram"
-
-#: gaphor/ui/namespaceview.py:141 gaphor/ui/tests/test_treemodel.py:162
+#: gaphor/ui/namespaceview.py:124 gaphor/ui/tests/test_treemodel.py:162
 #: gaphor/ui/treemodel.py:62
 msgid "<Relationships>"
 msgstr "<İlişkiler>"
+
+#: gaphor/ui/treecomponent.py:176
+#, fuzzy
+msgid "New package"
+msgstr "{name} paketi"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
@@ -2564,8 +2593,8 @@ msgstr ""
 "\n"
 "http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"Yürürlükteki bir yasada belirtilmediği veya yazılı olarak beyan edilmediği "
-"sürece,\n"
+"Yürürlükteki bir yasada belirtilmediği veya yazılı olarak beyan "
+"edilmediği sürece,\n"
 "işbu lisans altında dağıtılan yazılım “hiçbir değişiklik yapılmadan” "
 "esasıyla dağıtılmış olup,\n"
 "açıkça veya üstü kapalı olarak, HİÇBİR TEMİNAT VEYA KOŞUL İÇERMEZ.\n"
@@ -2574,7 +2603,8 @@ msgstr ""
 "\n"
 "---\n"
 "\n"
-"UML, SysML ve RAAML, Amerika Birleşik Devletleri ve/veya diğer ülkelerde \n"
+"UML, SysML ve RAAML, Amerika Birleşik Devletleri ve/veya diğer ülkelerde"
+" \n"
 "Object Management Group, Inc.'in tescilli ticari markaları \n"
 "veya ticari markalarıdır.\n"
 
@@ -2606,17 +2636,17 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
-"Apache Lisansı, Sürüm 2.0 (işbu “Lisans”) ile lisanslanan bu dosyayı, işbu "
-"lisansla uyumlu olan durumlar dışında kullanamazsınız. Lisansın bir "
+"Apache Lisansı, Sürüm 2.0 (işbu “Lisans”) ile lisanslanan bu dosyayı, "
+"işbu lisansla uyumlu olan durumlar dışında kullanamazsınız. Lisansın bir "
 "kopyasını şu adresten temin edebilirsiniz:\n"
 "\n"
 "    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"Yürürlükteki bir yasada belirtilmediği veya yazılı olarak beyan edilmediği "
-"sürece, işbu lisans altında dağıtılan yazılım “hiçbir değişiklik yapılmadan” "
-"esasıyla dağıtılmış olup, açıkça veya üstü kapalı olarak, HİÇBİR TEMİNAT "
-"VEYA KOŞUL İÇERMEZ. Özel dil uygulama izinleri ve işbu lisans altındaki "
-"kısıtlamalar için lisansa bakınız."
+"Yürürlükteki bir yasada belirtilmediği veya yazılı olarak beyan "
+"edilmediği sürece, işbu lisans altında dağıtılan yazılım “hiçbir "
+"değişiklik yapılmadan” esasıyla dağıtılmış olup, açıkça veya üstü kapalı "
+"olarak, HİÇBİR TEMİNAT VEYA KOŞUL İÇERMEZ. Özel dil uygulama izinleri ve "
+"işbu lisans altındaki kısıtlamalar için lisansa bakınız."
 
 #: gaphor/ui/help/shortcuts.ui:24
 msgid "Rename"
@@ -2681,3 +2711,9 @@ msgstr "Yapıştır (tanımlayıcı ögeleri bağlantıla)"
 #: gaphor/ui/help/shortcuts.ui:229
 msgid "Paste (copy defining elements)"
 msgstr "Yapıştır (tanımlayıcı ögeleri kopyala)"
+
+#~ msgid "main"
+#~ msgstr "ana"
+
+#~ msgid "edited"
+#~ msgstr "düzenlendi"
