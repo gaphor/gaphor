@@ -416,47 +416,43 @@ class AssociationEnd:
 
         rc = 1000.0 if dy == 0 else dx / dy
         abs_rc = abs(rc)
-        h = dx > 0  # right side of the box
-        v = dy > 0  # bottom side
+        left_side = dx > 0
+        top_side = dy > 0
 
         if abs_rc > 6:
             # horizontal line
-            if h:
+            name_dy = -ofs * 2 - name_h
+            mult_dy = ofs * 2
+            if left_side:
                 name_dx = ofs
-                name_dy = -ofs * 2 - name_h
                 mult_dx = ofs
-                mult_dy = ofs * 2
             else:
                 name_dx = -ofs - name_w
-                name_dy = -ofs - name_h
                 mult_dx = -ofs - mult_w
-                mult_dy = ofs
         elif 0 <= abs_rc <= 0.2:
             # vertical line
-            if v:
-                name_dx = -ofs * 2.5 - name_w
+            name_dx = -ofs * 2.5 - name_w
+            mult_dx = ofs * 2.5
+            if top_side:
                 name_dy = ofs
-                mult_dx = ofs * 2.5
                 mult_dy = ofs
             else:
-                name_dx = -ofs - name_w
                 name_dy = -ofs - name_h
-                mult_dx = ofs
                 mult_dy = -ofs - mult_h
         else:
             # Should both items be placed on the same side of the line?
-            r = abs_rc < 1.0
+            same_side = abs_rc < 1.0
 
             # Find out alignment of text (depends on the direction of the line)
-            align_left = h ^ r
-            align_bottom = v ^ r
+            align_left = left_side ^ same_side
+            align_top = top_side ^ same_side
             if align_left:
                 name_dx = ofs
                 mult_dx = ofs
             else:
                 name_dx = -ofs - name_w
                 mult_dx = -ofs - mult_w
-            if align_bottom:
+            if align_top:
                 name_dy = -ofs - name_h
                 mult_dy = -ofs - name_h - mult_h
             else:
