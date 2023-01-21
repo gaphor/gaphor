@@ -46,7 +46,7 @@ class CssNamedColorsCompletionProvider(GObject.GObject, GtkSource.CompletionProv
         store = Gio.ListStore.new(CssNamedColorProposal)
         self._filter_data.word = context.get_word()
 
-        for color_name, color_rgb in tinycss2.color3._COLOR_KEYWORDS:
+        for color_name in tinycss2.color3._COLOR_KEYWORDS:
             proposal = CssNamedColorProposal(color_name)
             store.append(proposal)
 
