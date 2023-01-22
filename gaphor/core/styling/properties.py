@@ -43,6 +43,8 @@ class TextDecoration(Enum):
 
 # Style is using SVG properties where possible
 # https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
+# NB. The Style can also contain variables (start with `--`),
+#     however those are not part of the interface.
 Style = TypedDict(
     "Style",
     {

@@ -7,6 +7,8 @@ import tinycss2
 
 from gaphor.core.styling.declarations import (
     FONT_SIZE_VALUES,
+    Var,
+    declarations,
     number,
     parse_declarations,
 )
@@ -69,6 +71,17 @@ def merge_styles(*styles: Style) -> Style:
     return style
 
 
+def resolve_variables(style: Style) -> Style:
+    new_style = Style()
+    for p, v in style.items():
+        if isinstance(v, Var):
+            if v.name in style and (resolved := declarations(p, style[v.name])):  # type: ignore[literal-required]
+                new_style[p] = resolved  # type: ignore[literal-required]
+        else:
+            new_style[p] = v  # type: ignore[literal-required]
+    return new_style
+
+
 class CompiledStyleSheet:
     def __init__(self, *css: str):
         self.selectors = [
@@ -86,7 +99,7 @@ class CompiledStyleSheet:
             ),
             key=MATCH_SORT_KEY,
         )
-        return merge_styles(*(decl for _, _, decl in results))  # type: ignore[arg-type]
+        return resolve_variables(merge_styles(*(decl for _, _, decl in results)))  # type: ignore[arg-type]
 
 
 def parse_style_sheets(*css: str) -> Iterator[Rule]:

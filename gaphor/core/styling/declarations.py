@@ -1,6 +1,7 @@
-from typing import Callable, Dict, List, Optional, Sequence, Tuple, Union
+from typing import Callable, Dict, List, NamedTuple, Optional, Sequence, Tuple, Union
 
 import tinycss2.color3
+from tinycss2.ast import FunctionBlock
 from tinycss2.parser import parse_declaration_list
 
 from gaphor.core.styling.properties import (
@@ -23,6 +24,24 @@ FONT_SIZE_VALUES = {
 }
 
 
+def parse_declarations(declaration_list):
+    for decl in parse_declaration_list(
+        declaration_list, skip_comments=True, skip_whitespace=True
+    ):
+        if decl.type == "declaration":
+            name = decl.lower_name
+            yield (
+                name,
+                declarations(name, parse_value(decl.value)),
+            )
+        elif decl.type == "error":
+            yield "error", decl
+
+
+class Var(NamedTuple):
+    name: str
+
+
 class _Declarations:
     """Convert raw CSS declarations into Gaphor styling declarations."""
 
@@ -40,6 +59,11 @@ class _Declarations:
         return reg
 
     def __call__(self, property, value):
+        if property.startswith("--"):
+            return value
+        if var := parse_var(value):
+            return var
+
         for prop, func in self.declarations:
             if property == prop:
                 return func(property, value)
@@ -48,18 +72,14 @@ class _Declarations:
 declarations = _Declarations()
 
 
-def parse_declarations(declaration_list):
-    for decl in parse_declaration_list(
-        declaration_list, skip_comments=True, skip_whitespace=True
-    ):
-        if decl.type == "declaration":
-            name = decl.lower_name
-            yield (
-                name,
-                declarations(name, parse_value(decl.value)),
-            )
-        elif decl.type == "error":
-            yield "error", decl
+def parse_var(value):
+    if isinstance(value, FunctionBlock) and value.name == "var" and value.arguments:
+        for arg in value.arguments:
+            if arg.type in ("whitespace", "comment"):
+                pass
+            elif arg.type in ("ident", "string"):
+                return Var(arg.value)
+    return None
 
 
 def parse_value(tokens):

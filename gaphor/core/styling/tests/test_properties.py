@@ -95,3 +95,34 @@ def test_multi_declaration():
 
     assert props["font-weight"] == FontWeight.BOLD
     assert props["color"] == (0, 0, 0, 1)
+
+
+@pytest.mark.parametrize(
+    ["value", "expected"],
+    [
+        ["12", 12],
+        ["white", "white"],
+    ],
+)
+def test_assign_variable(value, expected):
+    css = f"* {{ --my-value: {value} }}"
+
+    props = first_decl_block(css)
+
+    assert props["--my-value"] == expected
+
+
+def test_assign_variable_with_function():
+    css = "* { --my-value: rgb(1, 2, 3) }"
+
+    props = first_decl_block(css)
+
+    assert props["--my-value"].name == "rgb"
+
+
+def test_use_variable():
+    css = "* { line-width: var(--my-value) }"
+
+    props = first_decl_block(css)
+
+    assert props["line-width"].name == "--my-value"
