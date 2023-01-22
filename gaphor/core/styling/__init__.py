@@ -75,12 +75,22 @@ def resolve_variables(style: Style, style_layers: Sequence[Style]) -> Style:
     new_style = Style()
     for p, v in style.items():
         if isinstance(v, Var):
-            if v.name in style and (resolved := declarations(p, style[v.name])):  # type: ignore[literal-required]
-                new_style[p] = resolved  # type: ignore[literal-required]
-            else:
-                for layer in style_layers:
-                    if p in layer and layer[p] is not v:  # type: ignore[literal-required]
-                        new_style[p] = layer[p]  # type: ignore[literal-required]
+            # Go through the individual layers.
+            # Fall back if a variable does not resolve.
+            for layer in reversed(style_layers):
+                if p in layer and (lv := layer[p]):  # type: ignore[literal-required]
+                    if isinstance(lv, Var):
+                        if (
+                            lv.name in style
+                            and (
+                                resolved := declarations(p, style[lv.name])  # type: ignore[literal-required]
+                            )
+                            and not isinstance(resolved, Var)
+                        ):
+                            new_style[p] = resolved  # type: ignore[literal-required]
+                            break
+                    else:
+                        new_style[p] = lv  # type: ignore[literal-required]
                         break
         else:
             new_style[p] = v  # type: ignore[literal-required]

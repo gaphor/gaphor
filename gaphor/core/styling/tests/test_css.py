@@ -281,10 +281,37 @@ def test_unknown_variable():
     assert props.get("line-width") is None
 
 
-def test_unknown_variable_fallback():
+def test_unknown_variable_should_use_original_value():
     css = "* { line-width: 1.0 } diagram { line-width: var(--myvar) }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
     props = compiled_style_sheet.match(Node("diagram"))
 
     assert props.get("line-width") == 1.0
+
+
+def test_unknown_variable_resolve_original_value():
+    css = "* { line-width: var(--lw); --lw: 1.0 } diagram { line-width: var(--myvar) }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("diagram"))
+
+    assert props.get("line-width") == 1.0
+
+
+def test_variable_cannot_contain_a_variable():
+    css = "* { line-width: var(--a); --a: var(--b); --b: 1.0 }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("diagram"))
+
+    assert props.get("line-width") is None
+
+
+def test_variable_with_property():
+    css = "* { line-width: var(line-width); }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("diagram"))
+
+    assert props.get("line-width") is None
