@@ -212,6 +212,33 @@ be provided to set the level of line wobbliness. 0.5 is default, 0.0 is a
 straight line. The value should be between -2.0 and 2.0. Values between 0.0 and
 0.5 make for a subtle effect.
 
+### Variables
+
+Since Gaphor 2.16.0 you can use [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) in your style sheets.
+
+This allows you to define often used values in a more generic way. Think of things
+like line dash style and colors.
+
+The `var()` function has some limitations:
+
+* Values can’t have a default value.
+* Variables can’t have a variable as their value.
+
+Example:
+
+```css
+diagram {
+  --bg-color: whitesmoke;
+  background-color: var(--bg-color);
+}
+
+diagram[diagramType=sd] {
+  --bg-color: rgb(200, 200, 255);
+}
+```
+
+All diagrams have a white background. Sequence diagrams get a blue-ish background.
+
 ## Working with model elements
 
 Gaphor has many model elements. How can you find out which item should be styled?
@@ -277,7 +304,7 @@ diagram[owner.name=drafts] {
   line-style: sloppy 0.3;
 }
 
-diagram[name=draft] * {
+diagram[owner.name=draft] * {
   font-family: Purisa; /* Or use some other font that's installed on your system */
 }
 ```
