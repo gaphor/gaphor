@@ -68,15 +68,20 @@ def merge_styles(*styles: Style) -> Style:
             if color and color[3] > 0.0:
                 style[color_prop] = color[:3] + (color[3] * opacity,)  # type: ignore[literal-required]
 
-    return style
+    return resolve_variables(style, styles)
 
 
-def resolve_variables(style: Style) -> Style:
+def resolve_variables(style: Style, style_layers: Sequence[Style]) -> Style:
     new_style = Style()
     for p, v in style.items():
         if isinstance(v, Var):
             if v.name in style and (resolved := declarations(p, style[v.name])):  # type: ignore[literal-required]
                 new_style[p] = resolved  # type: ignore[literal-required]
+            else:
+                for layer in style_layers:
+                    if p in layer and layer[p] is not v:  # type: ignore[literal-required]
+                        new_style[p] = layer[p]  # type: ignore[literal-required]
+                        break
         else:
             new_style[p] = v  # type: ignore[literal-required]
     return new_style
@@ -99,7 +104,7 @@ class CompiledStyleSheet:
             ),
             key=MATCH_SORT_KEY,
         )
-        return resolve_variables(merge_styles(*(decl for _, _, decl in results)))  # type: ignore[arg-type]
+        return merge_styles(*(decl for _, _, decl in results))  # type: ignore[arg-type]
 
 
 def parse_style_sheets(*css: str) -> Iterator[Rule]:

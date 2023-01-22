@@ -279,3 +279,12 @@ def test_unknown_variable():
     props = compiled_style_sheet.match(Node("diagram"))
 
     assert props.get("line-width") is None
+
+
+def test_unknown_variable_fallback():
+    css = "* { line-width: 1.0 } diagram { line-width: var(--myvar) }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("diagram"))
+
+    assert props.get("line-width") == 1.0
