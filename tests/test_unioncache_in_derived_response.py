@@ -3,7 +3,8 @@ unioncache.
 
 It looks like there is a unioncache packed in a unioncache.
 
-What makes the issue even more weird is that the derived field is not even assigned on this type.
+What makes the issue even more weird is that the derived field is not
+even assigned on this type.
 """
 
 import pytest

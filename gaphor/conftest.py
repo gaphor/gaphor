@@ -70,7 +70,6 @@ def create(diagram, element_factory):
 def saver(element_factory):
     def save():
         """Save diagram into string."""
-
         f = StringIO()
         storage.save(f, element_factory)
         data = f.getvalue()

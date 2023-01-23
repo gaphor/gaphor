@@ -212,7 +212,6 @@ def test_association_1_n():
 
 def test_association_n_n():
     """Test association n:n."""
-
     class A(Element):
         one: relation_many[B]
 

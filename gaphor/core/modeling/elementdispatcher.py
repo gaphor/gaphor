@@ -38,7 +38,8 @@ class EventWatcher:
         handler is optional and will default the default provided at
         construction time.
 
-        Watches should be set in the constructor, so they can be registered
+        Watches should be set in the constructor, so they can be
+        registered
         and unregistered in one shot.
 
         This interface is fluent (returns self).
@@ -74,23 +75,31 @@ class ElementDispatcher(Service):
     path should be provided, that is used to find those changes.
 
     The handlers are registered on their property attribute. This avoids
-    subclass lookups and is pretty specific. As a result this dispatcher is
+    subclass lookups and is pretty specific. As a result this dispatcher
+    is
     tailored for dispatching events from the data model (ElementUpdated)
 
-    For example: if you're a TransitionItem (gaphor.core.modeling.Presentation
-    instance) and you're interested in the value of the guard attribute of the
-    model element that's represented by this item (gaphor.UML.Transition), you
+    For example: if you're a TransitionItem
+    (gaphor.core.modeling.Presentation
+    instance) and you're interested in the value of the guard attribute
+    of the
+    model element that's represented by this item
+    (gaphor.UML.Transition), you
     can register a handler like this::
 
-      dispatcher.subscribe(element,
-              'guard.specification[LiteralSpecification].value', self._handler)
+    dispatcher.subscribe(element,
+    'guard.specification[LiteralSpecification].value', self._handler)
 
-    Note the '[' and ']'. This is because guard references ValueSpecification,
-    which does not have a value attribute. Therefore, the default reference type
+    Note the '[' and ']'. This is because guard references
+    ValueSpecification,
+    which does not have a value attribute. Therefore, the default
+    reference type
     is overruled in favour of the LiteralSpecification.
 
-    This dispatcher keeps track of the kind of events that are dispatched. The
-    dispatcher table is updated accordingly (so the right handlers are fired
+    This dispatcher keeps track of the kind of events that are
+    dispatched. The
+    dispatcher table is updated accordingly (so the right handlers are
+    fired
     every time).
     """
 

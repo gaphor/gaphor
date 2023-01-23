@@ -8,7 +8,6 @@ from gaphor.UML.usecases.usecase import UseCaseItem
 
 def test_use_case_glue(create):
     """Test "include" gluing to use cases."""
-
     uc1 = create(UseCaseItem, UML.UseCase)
     include = create(IncludeItem)
 

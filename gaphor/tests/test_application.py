@@ -15,7 +15,6 @@ def application():
 
 def test_service_load(application):
     """Test loading services and querying utilities."""
-
     session = application.new_session()
 
     assert (

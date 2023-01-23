@@ -37,7 +37,6 @@ class AppFileManager(Service, ActionProvider):
     @action(name="app.file-open")
     def action_open(self):
         """This menu action opens the standard model open dialog."""
-
         def open_files(filenames):
             for filename in filenames:
                 if self.application.has_session(filename):

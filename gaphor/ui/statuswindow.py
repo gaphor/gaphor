@@ -20,7 +20,6 @@ class StatusWindow:
         indicate what is happening.  The parent parameter is the parent
         window to display the window in.
         """
-
         self.title = title
         self.message = message
         self.parent = parent

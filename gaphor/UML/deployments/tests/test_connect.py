@@ -41,7 +41,6 @@ def require(component, interface):
 
 def test_glue(create):
     """Test gluing connector to component."""
-
     component = create(ComponentItem, UML.Component)
     line = create(ConnectorItem)
 
@@ -60,7 +59,6 @@ def test_component_connection(create):
 
 def test_glue_both(create):
     """Test gluing connector to component when one is connected."""
-
     c1 = create(ComponentItem, UML.Component)
     c2 = create(ComponentItem, UML.Component)
     line = create(ConnectorItem)
@@ -72,7 +70,6 @@ def test_glue_both(create):
 
 def test_non_folded_glue(create):
     """Test non-folded interface gluing."""
-
     iface = create(InterfaceItem, UML.Component)
     line = create(ConnectorItem)
 
@@ -82,7 +79,6 @@ def test_non_folded_glue(create):
 
 def test_folded_glue(create):
     """Test folded interface gluing."""
-
     iface = create(InterfaceItem, UML.Component)
     line = create(ConnectorItem)
 
@@ -93,7 +89,6 @@ def test_folded_glue(create):
 
 def test_glue_when_dependency_connected(create):
     """Test interface gluing, when dependency connected."""
-
     iface = create(InterfaceItem, UML.Component)
     dep = create(DependencyItem)
     line = create(ConnectorItem)
@@ -107,7 +102,6 @@ def test_glue_when_dependency_connected(create):
 
 def test_glue_when_implementation_connected(create):
     """Test interface gluing, when implementation connected."""
-
     iface = create(InterfaceItem, UML.Component)
     impl = create(InterfaceRealizationItem)
     line = create(ConnectorItem)
@@ -121,7 +115,6 @@ def test_glue_when_implementation_connected(create):
 
 def test_glue_when_connector_connected(create):
     """Test interface gluing, when connector connected."""
-
     iface = create(InterfaceItem, UML.Interface)
     comp = create(ComponentItem, UML.Component)
     iface.folded = Folded.REQUIRED
@@ -222,7 +215,6 @@ def test_connection(create):
 
 def test_required_port_glue(create):
     """Test if required port gluing works."""
-
     conn1 = create(ConnectorItem)
     conn2 = create(ConnectorItem)
 

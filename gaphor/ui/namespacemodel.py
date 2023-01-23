@@ -98,7 +98,6 @@ class NamespaceModel(Gtk.TreeStore):
 
         Returns: Gtk.TreeIter object of the model (not the sorted one!)
         """
-
         # Using `0` as sentinel
         if old_owner != 0:
             parent_iter = self.iter_for_element(old_owner)

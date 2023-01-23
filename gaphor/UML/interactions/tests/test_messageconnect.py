@@ -218,7 +218,6 @@ def test_communication_diagram_message_tail_glue(diagram):
 
 def test_message_glue_from_lifetimee_to_head(diagram):
     """Test gluing message on communication diagram."""
-
     lifeline1 = diagram.create(LifelineItem)
     lifeline2 = diagram.create(LifelineItem)
     message = diagram.create(MessageItem)
@@ -257,7 +256,6 @@ def test_messages_disconnect_cd(diagram, element_factory):
 
 def test_message_connect_to_execution_specification(diagram, element_factory):
     """Test gluing message on sequence diagram."""
-
     lifeline = diagram.create(
         LifelineItem, subject=element_factory.create(UML.Lifeline)
     )
@@ -273,7 +271,6 @@ def test_message_connect_to_execution_specification(diagram, element_factory):
 
 def test_message_disconnect_from_execution_specification(diagram, element_factory):
     """Test gluing message on sequence diagram."""
-
     lifeline = diagram.create(
         LifelineItem, subject=element_factory.create(UML.Lifeline)
     )

@@ -86,11 +86,14 @@ class Element:
         """Create an element. As optional parameters an id and model can be
         given.
 
-        Id is a serial number for the element. The default id is None and will
-        result in an automatic creation of an id. An existing id (such as an
+        Id is a serial number for the element. The default id is None
+        and will
+        result in an automatic creation of an id. An existing id (such
+        as an
         int or string) can be provided as well.
 
-        A model can be provided to refer to the model this element belongs to.
+        A model can be provided to refer to the model this element
+        belongs to.
         """
         self._id: Id = id or generate_id()
         # The model this element belongs to.

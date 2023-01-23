@@ -21,7 +21,6 @@ from gaphor.UML.actions.pin import InputPinItem, OutputPinItem
 
 def test_initial_node_glue(create):
     """Test flow item gluing to initial node item."""
-
     flow = create(ControlFlowItem)
     node = create(InitialNodeItem, UML.InitialNode)
 
@@ -35,7 +34,6 @@ def test_initial_node_glue(create):
 
 def test_flow_final_node_glue(create):
     """Test flow item gluing to flow final node item."""
-
     flow = create(ControlFlowItem)
     node = create(FlowFinalNodeItem, UML.FlowFinalNode)
 
@@ -249,7 +247,6 @@ def test_control_flow_reconnection(create):
 
 def test_glue(create):
     """Test flow item gluing to action items."""
-
     flow = create(ControlFlowItem)
     a1 = create(ActionItem, UML.Action)
     a2 = create(ActionItem, UML.Action)
@@ -401,12 +398,13 @@ class FlowItemDecisionAndForkNodes:
 
         Connection scheme is presented below::
 
-                  head  tail
-            [ a1 ]--flow1-->    |
-                             [ jn ] --flow3--> [ a3 ]
-            [ a2 ]--flow2-->    |
+        head  tail
+        [ a1 ]--flow1-->    |
+        [ jn ] --flow3--> [ a3 ]
+        [ a2 ]--flow2-->    |
 
-        Node class changes due to two incoming edges and one outgoing edge.
+        Node class changes due to two incoming edges and one outgoing
+        edge.
         """
         flow1 = create(ControlFlowItem)
         flow2 = create(ControlFlowItem)
@@ -435,9 +433,9 @@ class FlowItemDecisionAndForkNodes:
 
         Connection scheme is presented below::
 
-                   head  tail    | --flow2-->[ a2 ]
-            [ a1 ] --flow1--> [ jn ]
-                                 | --flow3-->[ a3 ]
+        head  tail    | --flow2-->[ a2 ]
+        [ a1 ] --flow1--> [ jn ]
+        | --flow3-->[ a3 ]
         """
         flow1 = create(ControlFlowItem)
         flow2 = create(ControlFlowItem)
@@ -473,9 +471,9 @@ class FlowItemDecisionAndForkNodes:
 
         Connection scheme is presented below::
 
-                   head  tail    |   --flow2--> [ a2 ]
-            [ a1 ] --flow1--> [ jn ]
-            [ a4 ] --flow4-->    |   --flow3--> [ a3 ]
+        head  tail    |   --flow2--> [ a2 ]
+        [ a1 ] --flow1--> [ jn ]
+        [ a4 ] --flow4-->    |   --flow3--> [ a3 ]
 
         Flow `flow4` will force the node to become a combined node.
         """
@@ -513,9 +511,9 @@ class FlowItemDecisionAndForkNodes:
 
         Connection scheme is presented below::
 
-                   head  tail    |   --flow2--> [ a2 ]
-            [ a1 ] --flow1--> [ jn ]
-            [ a4 ] --flow4-->    |   --flow3--> [ a3 ]
+        head  tail    |   --flow2--> [ a2 ]
+        [ a1 ] --flow1--> [ jn ]
+        [ a4 ] --flow4-->    |   --flow3--> [ a3 ]
 
         Flow `flow4` will force the node to become a combined node.
         """
