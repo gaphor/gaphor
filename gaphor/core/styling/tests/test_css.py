@@ -1,17 +1,17 @@
 import pytest
 
-from gaphor.core.styling import CompiledStyleSheet, parse_style_sheet
+from gaphor.core.styling import CompiledStyleSheet, compile_style_sheet
 from gaphor.core.styling.tests.test_selector import Node
 
 
 def first_decl_block(css):
-    _, value = next(parse_style_sheet(css))
+    _, value = next(compile_style_sheet(css))
     return value
 
 
 def test_empty_css():
     css = ""
-    rules = list(parse_style_sheet(css))
+    rules = list(compile_style_sheet(css))
 
     assert not rules
 
@@ -66,7 +66,7 @@ def test_multiple_rules():
     item {}
     """
 
-    rules = list(parse_style_sheet(css))
+    rules = list(compile_style_sheet(css))
 
     assert len(rules) == 2
 
@@ -75,7 +75,7 @@ def test_selectors():
     css = """
     foo, bar {}
     """
-    selector, declarations = next(parse_style_sheet(css))
+    selector, declarations = next(compile_style_sheet(css))
 
     assert len(selector) == 2
 
@@ -84,7 +84,7 @@ def test_invalid_css_syntax():
     css = """
     foo/bar ;
     """
-    rules = list(parse_style_sheet(css))
+    rules = list(compile_style_sheet(css))
     selector, _ = rules[0]
 
     assert len(rules) == 1
@@ -95,7 +95,7 @@ def test_invalid_css_syntax_in_declarations():
     css = """
     foo { foo : bar : baz }
     """
-    rules = list(parse_style_sheet(css))
+    rules = list(compile_style_sheet(css))
     _, decls = rules[0]
 
     assert len(rules) == 1
@@ -107,7 +107,7 @@ def test_invalid_selector():
     foo/bar {}
     good {}
     """
-    rules = list(parse_style_sheet(css))
+    rules = list(compile_style_sheet(css))
     selector, _ = rules[0]
 
     assert len(rules) == 2
