@@ -10,19 +10,13 @@ Original module: cssselect2.parser
 :license: BSD, see https://github.com/Kozea/cssselect2/blob/master/LICENSE for more details.
 """
 
-from tinycss2 import parse_component_value_list
-
-__all__ = ["parse"]
+import tinycss2
 
 
 def parse(input, namespaces=None):
-    """Yield tinycss2 selectors found in given ``input``.
-
-    :param input:
-        A string, or an iterable of tinycss2 component values.
-    """
+    """Parse tokens or string into selectors."""
     if isinstance(input, str):
-        input = parse_component_value_list(input, skip_comments=True)
+        input = tinycss2.tokenizer.parse_component_value_list(input, skip_comments=True)
     tokens = TokenStream(input)
     namespaces = namespaces or {}
     yield parse_selector(tokens, namespaces)

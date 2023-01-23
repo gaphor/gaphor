@@ -6,11 +6,61 @@ Ayoub.
 
 import re
 from functools import singledispatch
+from typing import Callable, Dict, Iterator, Literal, Tuple, Union
+
+import tinycss2
 
 from gaphor.core.styling import parser
+from gaphor.core.styling.declarations import parse_declarations
 
 # http://dev.w3.org/csswg/selectors/#whitespace
 split_whitespace = re.compile("[^ \t\r\n\f]+").findall
+
+
+Rule = Union[
+    Tuple[Tuple[Callable[[object], bool], Tuple[int, int, int]], Dict[str, object]],
+    Tuple[Literal["error"], Union[tinycss2.ast.ParseError, parser.SelectorError]],
+]
+
+
+def compile_style_sheet(*css: str) -> Iterator[Rule]:
+    for sheet in css:
+        if sheet:
+            rules = tinycss2.parse_stylesheet(
+                sheet, skip_comments=True, skip_whitespace=True
+            )
+            yield from compile_rules(rules)
+
+
+def compile_rules(rules):
+    for rule in rules:
+        if rule.type == "error":
+            yield "error", rule
+            continue
+
+        if rule.type == "at-rule":
+            at_rules = tinycss2.parser.parse_rule_list(
+                rule.content, skip_comments=True, skip_whitespace=True
+            )
+            # TODO: combine selector with media query
+            yield from compile_rules(at_rules)
+
+        if rule.type != "qualified-rule":
+            continue
+
+        try:
+            selectors = compile_selector_list(rule.prelude)
+        except parser.SelectorError as e:
+            yield "error", e
+            continue
+
+        declaration = {
+            prop: value
+            for prop, value in parse_declarations(rule.content)
+            if prop != "error" and value is not None
+        }
+
+        yield from ((selector, declaration) for selector in selectors)
 
 
 def compile_selector_list(input):
