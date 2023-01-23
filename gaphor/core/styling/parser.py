@@ -1,4 +1,9 @@
-"""Parser for CSS selectors, based on the tinycss2 tokenizer.
+"""Parser for CSS selectors, based on cssselect2.
+
+Changes compared to cssselect2:
+
+* The parser has been adapted to support statements like `class[subject.ownedAttribute=foo]`.
+* :not is treated as a normal pseudo-class. It's a `FunctionalPseudoClassSelector`.
 
 Original module: cssselect2.parser
 :copyright: (c) 2012 by Simon Sapin, 2017 by Guillaume Ayoub.
@@ -17,7 +22,7 @@ def parse(input, namespaces=None):
         A string, or an iterable of tinycss2 component values.
     """
     if isinstance(input, str):
-        input = parse_component_value_list(input)
+        input = parse_component_value_list(input, skip_comments=True)
     tokens = TokenStream(input)
     namespaces = namespaces or {}
     yield parse_selector(tokens, namespaces)
@@ -29,7 +34,7 @@ def parse(input, namespaces=None):
         elif next == ",":
             yield parse_selector(tokens, namespaces)
         else:
-            raise SelectorError(next, f"unpexpected {next.type} token.")
+            raise SelectorError(next, f"unexpected {next.type} token.")
 
 
 def parse_selector(tokens, namespaces):

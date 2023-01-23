@@ -301,3 +301,13 @@ def test_has_and_is_selector():
             children=[Node("foo", children=[Node("bar", state=("hover",))])],
         )
     )
+
+
+def test_media_query():
+    css = "@media(prop = true) { diagram { color: blue; } }"
+
+    (selector, specificity), payload = next(parse_style_sheet(css))
+
+    assert selector
+    assert specificity == (0, 0, 1)
+    assert payload

@@ -126,10 +126,21 @@ def parse_style_sheet(css: str) -> Iterator[Rule]:
     rules = tinycss2.parse_stylesheet(
         css or "", skip_comments=True, skip_whitespace=True
     )
+    yield from compile_rules(rules)
+
+
+def compile_rules(rules):
     for rule in rules:
         if rule.type == "error":
             yield "error", rule
             continue
+
+        if rule.type == "at-rule":
+            at_rules = tinycss2.parse_rule_list(
+                rule.content, skip_comments=True, skip_whitespace=True
+            )
+            # TODO: combine selector with media query
+            yield from compile_rules(at_rules)
 
         if rule.type != "qualified-rule":
             continue
