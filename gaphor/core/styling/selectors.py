@@ -38,7 +38,7 @@ def compile_rules(rules):
             yield "error", rule
             continue
 
-        if rule.type == "at-rule":
+        if rule.type == "at-rule" and rule.content:
             at_rules = tinycss2.parser.parse_rule_list(
                 rule.content, skip_comments=True, skip_whitespace=True
             )
@@ -47,8 +47,9 @@ def compile_rules(rules):
                 continue
             media_query = compile_node(media_selector)
             yield from (
-                ((_combine(media_query, selector), specificity), declaration)
-                for (selector, specificity), declaration in compile_rules(at_rules)
+                ((_combine(media_query, selspec[0]), selspec[1]), declaration)
+                for selspec, declaration in compile_rules(at_rules)
+                if selspec != "error"
             )
 
         if rule.type != "qualified-rule":
@@ -99,9 +100,9 @@ def compile_node(selector):
 def compile_media_selector(selector: parser.MediaSelector):
     feature = selector.feature.lower()
     operator = selector.operator
-    value = selector.value.lower()
+    dark_mode = selector.value.lower() == "dark"
     if feature == "prefers-color-scheme" and operator == "=":
-        return lambda el: el.color_scheme() == value
+        return lambda el: el.dark_mode == dark_mode
     return lambda el: False
 
 

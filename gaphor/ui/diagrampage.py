@@ -29,6 +29,10 @@ from gaphor.event import Notification
 from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramClosed, DiagramSelectionChanged, ToolSelected
 
+if Gtk.get_major_version() != 3:
+    from gi.repository import Adw
+
+
 log = logging.getLogger(__name__)
 
 
@@ -114,12 +118,20 @@ class DiagramPage:
         self.properties = properties
         self.diagram = diagram
         self.modeling_language = modeling_language
+        self.style_manager = (
+            None if Gtk.get_major_version() == 3 else Adw.StyleManager.get_default()
+        )
 
         self.view: Optional[GtkView] = None
         self.widget: Optional[Gtk.Widget] = None
         self.diagram_css: Optional[Gtk.CssProvider] = None
 
         self.rubberband_state = RubberbandState()
+        self._notify_dark_id = (
+            self.style_manager.connect("notify::dark", self._on_notify_dark)
+            if self.style_manager
+            else 0
+        )
 
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_attribute_updated)
@@ -149,11 +161,6 @@ class DiagramPage:
                 Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
             )
 
-        self.diagram_css = Gtk.CssProvider.new()
-        view.get_style_context().add_provider(
-            self.diagram_css, Gtk.STYLE_PROVIDER_PRIORITY_USER
-        )
-
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         if Gtk.get_major_version() == 3:
@@ -170,7 +177,7 @@ class DiagramPage:
 
         self.select_tool("toolbox-pointer")
 
-        self.set_drawing_style()
+        self.update_drawing_style()
 
         # Set model only after the painters are set
         view.model = self.diagram
@@ -225,13 +232,16 @@ class DiagramPage:
     @event_handler(AttributeUpdated)
     def _on_attribute_updated(self, event: AttributeUpdated):
         if event.property is StyleSheet.styleSheet:
-            self.set_drawing_style()
+            self.update_drawing_style()
 
             diagram = self.diagram
             for item in diagram.get_all_items():
                 diagram.request_update(item)
         elif event.property is Diagram.name and self.view:
             self.view.update_back_buffer()
+
+    def _on_notify_dark(self, style_manager, gparam):
+        self.update_drawing_style()
 
     def close(self):
         """Tab is destroyed.
@@ -241,6 +251,9 @@ class DiagramPage:
         assert self.widget
         if Gtk.get_major_version() == 3:
             self.widget.destroy()
+
+        if self._notify_dark_id:
+            self._notify_dark_id = self.style_manager.disconnect(self._notify_dark_id)  # type: ignore[union-attr]
 
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_attribute_updated)
@@ -263,25 +276,32 @@ class DiagramPage:
         else:
             self.view.set_cursor(None)
 
-    def set_drawing_style(self):
+    def update_drawing_style(self):
         """Set the drawing style for the diagram based on the active style
         sheet."""
         assert self.view
-        assert self.diagram_css
 
-        style = self.diagram.style(StyledDiagram(self.diagram))
+        dark_mode = self.style_manager.get_dark() if self.style_manager else False
+        style = self.diagram.style(StyledDiagram(self.diagram, dark_mode=dark_mode))
 
         bg = style.get("background-color")
-        # Default background to white, slightly gray in dark mode
-        if not bg or bg[3] == 0.0:
-            bg = (1.0, 1.0, 1.0, 0.94)
-        self.diagram_css.load_from_data(
-            f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}".encode()
-        )
+        if bg and bg[3] > 0.0:
+            if not self.diagram_css:
+                self.diagram_css = Gtk.CssProvider.new()
+                self.view.get_style_context().add_provider(
+                    self.diagram_css, Gtk.STYLE_PROVIDER_PRIORITY_USER
+                )
+
+            self.diagram_css.load_from_data(
+                f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}".encode()
+            )
+        else:
+            if self.diagram_css:
+                self.view.get_style_context().remove_provider(self.diagram_css)
+                self.diagram_css = None
 
         view = self.view
-
-        item_painter = ItemPainter(view.selection)
+        item_painter = ItemPainter(view.selection, dark_mode)
 
         if sloppiness := style.get("line-style", 0.0):
             item_painter = FreeHandPainter(item_painter, sloppiness=sloppiness)
