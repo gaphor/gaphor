@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-21 18:13+0100\n"
-"PO-Revision-Date: 2023-01-20 20:16+0000\n"
+"PO-Revision-Date: 2023-01-24 07:50+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
+"\n"
 "Language: cs\n"
-"Language-Team: Czech "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/cs/>\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.16-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -2142,15 +2143,16 @@ msgid "<None>"
 msgstr "<None>"
 
 #: gaphor/ui/diagrams.ui:32
-#, fuzzy
 msgid "Open a Diagram"
-msgstr "Diagram komponent"
+msgstr "Otevřít diagram"
 
 #: gaphor/ui/diagrams.ui:34
 msgid ""
 "Open a diagram from the model browser, or\n"
 "create a new diagram from the New diagram menu."
 msgstr ""
+"Otevřít diagram z prohlížeče modelů nebo\n"
+"vytvořit nový diagram z nabídky Nový diagram."
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2355,13 +2357,15 @@ msgstr "Uložit model Gaphor jako"
 
 #: gaphor/ui/filemanager.py:360
 msgid "Resolve Merge Conflict?"
-msgstr ""
+msgstr "Vyřešit konflikt sloučení?"
 
 #: gaphor/ui/filemanager.py:363
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
+"Otevíraný model obsahuje konflikt sloučení. Chcete otevřít aktuální model "
+"nebo příchozí změnu modelu?"
 
 #: gaphor/ui/filemanager.py:367 gaphor/ui/filemanager.py:395
 #: gaphor/ui/filemanager.py:409
@@ -2491,9 +2495,8 @@ msgid "Profile: {name}"
 msgstr "Profil: {name}"
 
 #: gaphor/ui/mainwindow.ui:64
-#, fuzzy
 msgid "New diagram menu"
-msgstr "Otevřít nabídku diagramu"
+msgstr "Nová nabídka diagramů"
 
 #: gaphor/ui/mainwindow.ui:71
 msgid "Open application menu"
@@ -2545,9 +2548,8 @@ msgid "<Relationships>"
 msgstr "<Vztahy>"
 
 #: gaphor/ui/treecomponent.py:176
-#, fuzzy
 msgid "New package"
-msgstr "balíček {name}"
+msgstr "Nový balíček"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
