@@ -16,7 +16,9 @@ from gaphor.diagram.selection import Selection
 
 
 class ItemPainter:
-    def __init__(self, selection: Selection | None = None, dark_mode=False):
+    def __init__(
+        self, selection: Selection | None = None, dark_mode: bool | None = None
+    ):
         self.selection: Selection = selection or Selection()
         self.dark_mode = dark_mode
 

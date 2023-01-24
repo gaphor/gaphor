@@ -129,7 +129,7 @@ class StyledDiagram:
         self,
         diagram: Diagram,
         selection: gaphas.selection.Selection | None = None,
-        dark_mode=False,
+        dark_mode: bool | None = None,
     ):
         self.diagram = diagram
         self.selection = selection or gaphas.selection.Selection()
@@ -167,7 +167,7 @@ class StyledItem:
         self,
         item: Presentation,
         selection: gaphas.selection.Selection | None = None,
-        dark_mode=False,
+        dark_mode: bool | None = None,
     ):
         assert item.diagram
         self.item = item
