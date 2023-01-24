@@ -18,7 +18,7 @@ SYSTEM_STYLE_SHEET = textwrap.dedent(
     }
 
     *:drop {
-     color: hsl(210, 100%, 25%);
+     color: #1a5fb4;
      line-width: 3;
     }
 
@@ -26,8 +26,14 @@ SYSTEM_STYLE_SHEET = textwrap.dedent(
      opacity: 0.5;
     }
 
-    diagram {
-     background-color: transparent;
+    @media dark-mode {
+     * {
+      color: white;
+     }
+
+     *:drop {
+      color: #62a0ea;
+     }
     }
 
     dependency,
