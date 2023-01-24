@@ -41,8 +41,10 @@ class DelayedFunction:
             GLib.source_remove(self._source_id)
 
         def timeout_function():
-            self._function(*args)
-            self._source_id = 0
+            try:
+                self._function(*args)
+            finally:
+                self._source_id = 0
 
         self._source_id = GLib.timeout_add(self._delay, timeout_function)
 
