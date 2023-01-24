@@ -31,6 +31,26 @@ def parse(input, namespaces=None):
             raise SelectorError(next, f"unexpected {next.type} token.")
 
 
+def parse_media_query(input):
+    tokens = TokenStream(input)
+    query = []
+    while 1:
+        tokens.skip_whitespace_and_comment()
+        next = tokens.next()
+        if next is None:
+            break
+        elif next.type in ("ident", "literal", "string"):
+            query.append(next.value)
+        elif next.type == "() block":
+            # lazy: only parse inside the parenthesis
+            # we do not support combinations at this time
+            tokens = TokenStream(next.content)
+        else:
+            raise SelectorError(next, f"unexpected {next.type} token.")
+
+    return MediaSelector(*query) if len(query) == 3 else None
+
+
 def parse_selector(tokens, namespaces):
     result = parse_compound_selector(tokens, namespaces)
     while 1:
@@ -248,6 +268,20 @@ class TokenStream:
 
     def skip_whitespace_and_comment(self):
         return self.skip(["comment", "whitespace"])
+
+
+class MediaSelector:
+    def __init__(self, feature, operator, value):
+        self.feature = feature
+        self.operator = operator
+        self.value = value
+
+    @property
+    def specificity(self):
+        return 0, 0, 0
+
+    def __repr__(self):
+        return f"{self.feature}{self.operator}{self.value}"
 
 
 class CombinedSelector:

@@ -4,7 +4,15 @@ from gaphor.core.styling import compile_style_sheet
 
 
 class Node:
-    def __init__(self, name, parent=None, children=None, attributes=None, state=()):
+    def __init__(
+        self,
+        name,
+        parent=None,
+        children=None,
+        attributes=None,
+        state=(),
+        color_scheme=None,
+    ):
         if attributes is None:
             attributes = {}
         self._name = name
@@ -12,6 +20,7 @@ class Node:
         self._children = children or []
         self._attributes = attributes
         self._state = state
+        self._color_scheme = color_scheme
 
         if parent:
             parent._children.append(self)
@@ -32,6 +41,9 @@ class Node:
 
     def state(self):
         return self._state
+
+    def color_scheme(self):
+        return self._color_scheme
 
 
 def test_node_test_object_parent_child():
@@ -304,10 +316,24 @@ def test_has_and_is_selector():
 
 
 def test_media_query():
-    css = "@media(prop = true) { diagram { color: blue; } }"
+    css = "@media(prefers-color-scheme = dark) { node { color: blue; } }"
 
     (selector, specificity), payload = next(compile_style_sheet(css))
 
-    assert selector
+    assert selector(Node("node", color_scheme="dark"))
     assert specificity == (0, 0, 1)
-    assert payload
+
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        "prefers-color-scheme",
+        "prefers-color-scheme true",
+        "other-query = = dark",
+    ],
+)
+def test_invalid_media_query(query):
+    css = f"@media({query}) {{ * {{ color: blue; }} }}"
+
+    with pytest.raises(StopIteration):
+        next(compile_style_sheet(css))

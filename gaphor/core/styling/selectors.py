@@ -42,8 +42,14 @@ def compile_rules(rules):
             at_rules = tinycss2.parser.parse_rule_list(
                 rule.content, skip_comments=True, skip_whitespace=True
             )
-            # TODO: combine selector with media query
-            yield from compile_rules(at_rules)
+            media_selector = parser.parse_media_query(rule.prelude)
+            if not media_selector:
+                continue
+            media_query = compile_node(media_selector)
+            yield from (
+                ((_combine(media_query, selector), specificity), declaration)
+                for (selector, specificity), declaration in compile_rules(at_rules)
+            )
 
         if rule.type != "qualified-rule":
             continue
@@ -61,6 +67,10 @@ def compile_rules(rules):
         }
 
         yield from ((selector, declaration) for selector in selectors)
+
+
+def _combine(a, b):
+    return lambda el: a(el) and b(el)
 
 
 def compile_selector_list(input):
@@ -83,6 +93,16 @@ def compile_node(selector):
     Default behavior is to deny (no match).
     """
     raise parser.SelectorError("Unknown selector", selector)
+
+
+@compile_node.register
+def compile_media_selector(selector: parser.MediaSelector):
+    feature = selector.feature.lower()
+    operator = selector.operator
+    value = selector.value.lower()
+    if feature == "prefers-color-scheme" and operator == "=":
+        return lambda el: el.color_scheme() == value
+    return lambda el: False
 
 
 @compile_node.register
