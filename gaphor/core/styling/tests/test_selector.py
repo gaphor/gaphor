@@ -11,7 +11,7 @@ class Node:
         children=None,
         attributes=None,
         state=(),
-        color_scheme=None,
+        dark_mode=False,
     ):
         if attributes is None:
             attributes = {}
@@ -20,7 +20,7 @@ class Node:
         self._children = children or []
         self._attributes = attributes
         self._state = state
-        self._color_scheme = color_scheme
+        self.dark_mode = dark_mode
 
         if parent:
             parent._children.append(self)
@@ -41,9 +41,6 @@ class Node:
 
     def state(self):
         return self._state
-
-    def color_scheme(self):
-        return self._color_scheme
 
 
 def test_node_test_object_parent_child():
@@ -315,25 +312,24 @@ def test_has_and_is_selector():
     )
 
 
-def test_media_query():
+def test_media_query_prefers_color_scheme():
     css = "@media(prefers-color-scheme = dark) { node { color: blue; } }"
 
     (selector, specificity), payload = next(compile_style_sheet(css))
 
-    assert selector(Node("node", color_scheme="dark"))
+    assert selector(Node("node", dark_mode=True))
     assert specificity == (0, 0, 1)
 
 
 @pytest.mark.parametrize(
-    "query",
+    "css",
     [
-        "prefers-color-scheme",
-        "prefers-color-scheme true",
-        "other-query = = dark",
+        "@media(prefers-color-scheme) { * { color: blue; } }",
+        "@media(prefers-color-scheme true) { * { color: blue; } }",
+        "@media(other-query = = dark) { * { color: blue; } }",
+        "@media(prefers-color-scheme = dark) { color }",
     ],
 )
-def test_invalid_media_query(query):
-    css = f"@media({query}) {{ * {{ color: blue; }} }}"
-
+def test_invalid_media_query(css):
     with pytest.raises(StopIteration):
         next(compile_style_sheet(css))
