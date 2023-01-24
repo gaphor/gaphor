@@ -98,10 +98,15 @@ def compile_node(selector):
 
 @compile_node.register
 def compile_media_selector(selector: parser.MediaSelector):
-    feature = selector.feature.lower()
-    operator = selector.operator
-    dark_mode = selector.value.lower() == "dark"
-    if feature == "prefers-color-scheme" and operator == "=":
+    query = selector.query
+    if len(query) == 1 and query[0].lower() == "dark-mode":
+        return lambda el: el.dark_mode
+    if (
+        len(query) == 3
+        and query[0].lower() == "prefers-color-scheme"
+        and query[1] == "="
+    ):
+        dark_mode = query[2].lower() == "dark"
         return lambda el: el.dark_mode == dark_mode
     return lambda el: False
 

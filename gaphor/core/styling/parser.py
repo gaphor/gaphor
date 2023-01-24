@@ -48,7 +48,7 @@ def parse_media_query(input):
         else:
             raise SelectorError(next, f"unexpected {next.type} token.")
 
-    return MediaSelector(*query) if len(query) == 3 else None
+    return MediaSelector(query)
 
 
 def parse_selector(tokens, namespaces):
@@ -271,17 +271,15 @@ class TokenStream:
 
 
 class MediaSelector:
-    def __init__(self, feature, operator, value):
-        self.feature = feature
-        self.operator = operator
-        self.value = value
+    def __init__(self, query):
+        self.query = query
 
     @property
     def specificity(self):
         return 0, 0, 0
 
     def __repr__(self):
-        return f"{self.feature}{self.operator}{self.value}"
+        return "".join(self.query)
 
 
 class CombinedSelector:

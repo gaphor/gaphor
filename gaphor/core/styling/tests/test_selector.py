@@ -1,6 +1,7 @@
 import pytest
 
 from gaphor.core.styling import compile_style_sheet
+from gaphor.core.styling.parser import SelectorError
 
 
 class Node:
@@ -312,9 +313,16 @@ def test_has_and_is_selector():
     )
 
 
-def test_media_query_prefers_color_scheme():
-    css = "@media(prefers-color-scheme = dark) { node { color: blue; } }"
-
+@pytest.mark.parametrize(
+    "css",
+    [
+        "@media(prefers-color-scheme = dark) { node { color: blue; } }",
+        "@media prefers-color-scheme = dark { node { color: blue; } }",
+        "@media(dark-mode) { node { color: blue; } }",
+        "@media dark-mode { node { color: blue; } }",
+    ],
+)
+def test_media_query(css):
     (selector, specificity), payload = next(compile_style_sheet(css))
 
     assert selector(Node("node", dark_mode=True))
@@ -322,14 +330,14 @@ def test_media_query_prefers_color_scheme():
 
 
 @pytest.mark.parametrize(
-    "css",
+    "css,exc_type",
     [
-        "@media(prefers-color-scheme) { * { color: blue; } }",
-        "@media(prefers-color-scheme true) { * { color: blue; } }",
-        "@media(other-query = = dark) { * { color: blue; } }",
-        "@media(prefers-color-scheme = dark) { color }",
+        ["@media(prefers-color-scheme { * { color: blue; } }", StopIteration],
+        ["@media prefers-color-scheme true) { * { color: blue; } }", SelectorError],
+        ["@media((other-query = = dark) { * { color: blue; } }", StopIteration],
+        ["@media{(prefers-color-scheme = dark) { color }", StopIteration],
     ],
 )
-def test_invalid_media_query(css):
-    with pytest.raises(StopIteration):
+def test_invalid_media_query(css, exc_type):
+    with pytest.raises(exc_type):
         next(compile_style_sheet(css))
