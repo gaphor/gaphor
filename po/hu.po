@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-21 18:13+0100\n"
-"PO-Revision-Date: 2023-01-24 07:50+0000\n"
+"PO-Revision-Date: 2023-01-25 17:49+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hu/>\n"
@@ -2384,6 +2384,8 @@ msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
+"A megnyitott modell egyesítési ütközést tartalmaz. Meg szeretné nyitni a "
+"jelenlegi modellt vagy a modell bejövő módosítását?"
 
 #: gaphor/ui/filemanager.py:367 gaphor/ui/filemanager.py:395
 #: gaphor/ui/filemanager.py:409
@@ -2392,11 +2394,11 @@ msgstr "Mégse"
 
 #: gaphor/ui/filemanager.py:368
 msgid "Open Current"
-msgstr ""
+msgstr "Jelenlegi megnyitása"
 
 #: gaphor/ui/filemanager.py:369
 msgid "Open Incoming"
-msgstr ""
+msgstr "Bejövő megnyitása"
 
 #: gaphor/ui/filemanager.py:382
 msgid "Save Changes?"
@@ -2515,9 +2517,8 @@ msgid "Profile: {name}"
 msgstr "Profil: {name}"
 
 #: gaphor/ui/mainwindow.ui:64
-#, fuzzy
 msgid "New diagram menu"
-msgstr "Ábramenü megnyitása"
+msgstr "Új ábra menü"
 
 #: gaphor/ui/mainwindow.ui:71
 msgid "Open application menu"
@@ -2569,9 +2570,8 @@ msgid "<Relationships>"
 msgstr "<Kapcsolatok>"
 
 #: gaphor/ui/treecomponent.py:176
-#, fuzzy
 msgid "New package"
-msgstr "{name}-csomag"
+msgstr "Új csomag"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
