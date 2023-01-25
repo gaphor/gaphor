@@ -212,6 +212,32 @@ be provided to set the level of line wobbliness. 0.5 is default, 0.0 is a
 straight line. The value should be between -2.0 and 2.0. Values between 0.0 and
 0.5 make for a subtle effect.
 
+Gaphor supports dark and light mode since 2.16.0. Dark and light color schemes are exclusively used
+for on-screen editing. When exporting images, only the default color scheme is applied.
+Color schemes can be defined with `@media` queries. The official `prefers-color-scheme = dark` query is supported,
+as well as a more convenient `dark-mode`.
+
+```css
+/* The background you see in exported diagrams: */
+diagram {
+  background-color: transparent;
+}
+
+/* Use a slightly grey background in the editor: */
+@media light-mode {
+  diagram {
+    background-color: #e1e1e1;
+  }
+}
+
+/* And antracit a slightly grey background in the editor: */
+@media dark-mode {
+  diagram {
+    background-color: #393D47;
+  }
+}
+```
+
 ### Variables
 
 Since Gaphor 2.16.0 you can use [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) in your style sheets.
