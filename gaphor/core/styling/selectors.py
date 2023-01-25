@@ -99,15 +99,21 @@ def compile_node(selector):
 @compile_node.register
 def compile_media_selector(selector: parser.MediaSelector):
     query = selector.query
-    if len(query) == 1 and query[0].lower() == "dark-mode":
-        return lambda el: el.dark_mode
-    if (
+    if len(query) == 1:
+        mode = query[0].lower()
+    elif (
         len(query) == 3
         and query[0].lower() == "prefers-color-scheme"
         and query[1] == "="
     ):
-        dark_mode = query[2].lower() == "dark"
-        return lambda el: el.dark_mode == dark_mode
+        mode = query[2].lower()
+    else:
+        mode = None
+
+    if mode in ("dark", "dark-mode"):
+        return lambda el: el.dark_mode is True
+    elif mode in ("light", "light-mode"):
+        return lambda el: el.dark_mode is False
     return lambda el: False
 
 
