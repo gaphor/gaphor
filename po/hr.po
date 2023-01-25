@@ -4,19 +4,20 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  Gaphor\n"
+"Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-21 18:13+0100\n"
-"PO-Revision-Date: 2022-12-19 13:47+0000\n"
+"PO-Revision-Date: 2023-01-25 17:49+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hr/>\n"
 "Language: hr\n"
-"Language-Team: Croatian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hr/>\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.16-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -2144,15 +2145,16 @@ msgid "<None>"
 msgstr "<Bez>"
 
 #: gaphor/ui/diagrams.ui:32
-#, fuzzy
 msgid "Open a Diagram"
-msgstr "Dijagram komponenti"
+msgstr "Otvori dijagram"
 
 #: gaphor/ui/diagrams.ui:34
 msgid ""
 "Open a diagram from the model browser, or\n"
 "create a new diagram from the New diagram menu."
 msgstr ""
+"Otvori dijagram iz preglednika modela ili\n"
+"stvori novi dijagram iz izbornika „Novi dijagram”."
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2358,13 +2360,15 @@ msgstr "Spremi Gaphor model kao"
 
 #: gaphor/ui/filemanager.py:360
 msgid "Resolve Merge Conflict?"
-msgstr ""
+msgstr "Riješiti konflikt sjedinjavanja?"
 
 #: gaphor/ui/filemanager.py:363
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
+"Model koji otvaraš sadrži konflikt u sjedinjavanju. Želiš li otvoriti "
+"aktualni model ili dolaznu promjenu modela?"
 
 #: gaphor/ui/filemanager.py:367 gaphor/ui/filemanager.py:395
 #: gaphor/ui/filemanager.py:409
@@ -2373,11 +2377,11 @@ msgstr "Odustani"
 
 #: gaphor/ui/filemanager.py:368
 msgid "Open Current"
-msgstr ""
+msgstr "Otvori aktualno"
 
 #: gaphor/ui/filemanager.py:369
 msgid "Open Incoming"
-msgstr ""
+msgstr "Otvori dolazno"
 
 #: gaphor/ui/filemanager.py:382
 msgid "Save Changes?"
@@ -2494,9 +2498,8 @@ msgid "Profile: {name}"
 msgstr "Profil: {name}"
 
 #: gaphor/ui/mainwindow.ui:64
-#, fuzzy
 msgid "New diagram menu"
-msgstr "Otvori izbornik dijagrama"
+msgstr "Izbornik za novi dijagram"
 
 #: gaphor/ui/mainwindow.ui:71
 msgid "Open application menu"
@@ -2548,9 +2551,8 @@ msgid "<Relationships>"
 msgstr "<Odnosi>"
 
 #: gaphor/ui/treecomponent.py:176
-#, fuzzy
 msgid "New package"
-msgstr "Paket {name}"
+msgstr "Novi paket"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
