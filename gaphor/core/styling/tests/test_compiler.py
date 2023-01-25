@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor.core.styling import compile_style_sheet
-from gaphor.core.styling.parser import SelectorError
+from gaphor.core.styling.selectors import SelectorError
 
 
 class Node:

@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor.core.styling import CompiledStyleSheet, compile_style_sheet
-from gaphor.core.styling.tests.test_selector import Node
+from gaphor.core.styling.tests.test_compiler import Node
 
 
 def first_decl_block(css):

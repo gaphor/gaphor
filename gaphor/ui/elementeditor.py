@@ -290,7 +290,7 @@ class PreferencesStack:
 
         self.style_sheet_buffer.set_language(
             self.lang_manager.get_language(
-                "css" if Gtk.get_major_version() == 3 else "gaphorcss"
+                "css"  # if Gtk.get_major_version() == 3 else "gaphorcss"
             )
         )
 

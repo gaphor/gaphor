@@ -1,22 +1,55 @@
 from __future__ import annotations
 
 import operator
-from typing import Iterator, Protocol, Sequence
+from typing import Iterator, Protocol, Sequence, TypedDict, Union
 
-import tinycss2
-
-from gaphor.core.styling.declarations import FONT_SIZE_VALUES, Var, declarations, number
-from gaphor.core.styling.properties import (
+from gaphor.core.styling.compiler import compile_style_sheet
+from gaphor.core.styling.declarations import (
+    FONT_SIZE_VALUES,
     Color,
     FontStyle,
     FontWeight,
     JustifyContent,
-    Style,
+    Number,
+    Padding,
     TextAlign,
     TextDecoration,
+    Var,
     VerticalAlign,
+    declarations,
+    number,
 )
-from gaphor.core.styling.selectors import compile_style_sheet
+
+# Style is using SVG properties where possible
+# https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
+# NB. The Style can also contain variables (start with `--`),
+#     however those are not part of the interface.
+Style = TypedDict(
+    "Style",
+    {
+        "background-color": Color,
+        "border-radius": Number,
+        "color": Color,
+        "dash-style": Sequence[Number],
+        "padding": Padding,
+        "font-family": str,
+        "font-size": Union[int, float, str],
+        "font-style": FontStyle,
+        "font-weight": FontWeight,
+        "justify-content": JustifyContent,
+        "line-style": Number,
+        "line-width": Number,
+        "min-width": Number,
+        "min-height": Number,
+        "opacity": Number,
+        "text-decoration": TextDecoration,
+        "text-align": TextAlign,
+        "text-color": Color,
+        "vertical-align": VerticalAlign,
+        "vertical-spacing": Number,
+    },
+    total=False,
+)
 
 
 class StyleNode(Protocol):
