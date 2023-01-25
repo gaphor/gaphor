@@ -72,8 +72,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.sorter = Gtk.CustomSorter.new(tree_item_sort)
         tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
         sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
-        self.selection = Gtk.SingleSelection.new(sort_model)
-        self.selection.set_can_unselect(True)
+        self.selection = Gtk.MultiSelection.new(sort_model)
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
@@ -125,11 +124,18 @@ class TreeComponent(UIComponent, ActionProvider):
     def select_element(self, element: Element) -> int | None:
         return select_element(self.tree_view, element)
 
+    def get_selected_elements(self) -> list[Element]:
+        assert self.model
+        bitset = self.selection.get_selection()
+        return [
+            e
+            for n in range(bitset.get_size())
+            if (e := self.selection.get_item(bitset.get_nth(n)).get_item().element)
+        ]
+
     def get_selected_element(self) -> Element | None:
         assert self.model
-        if tree_item := self.selection.get_selected_item():
-            return tree_item.get_item().element  # type: ignore[no-any-return]
-        return None
+        return next(self.get_selected_elements(), None)  # type: ignore[no-any-return,call-overload]
 
     @action(name="tree-view.open")
     def tree_view_open_selected(self):
@@ -146,7 +152,7 @@ class TreeComponent(UIComponent, ActionProvider):
 
     @action(name="tree-view.rename", shortcut="F2")
     def tree_view_rename_selected(self):
-        if row_item := self.selection.get_selected_item():
+        if row_item := get_first_selected_item(self.selection):
             tree_item: TreeItem = row_item.get_item()
             GLib.timeout_add(START_EDIT_DELAY, tree_item.start_editing)
 
@@ -181,8 +187,8 @@ class TreeComponent(UIComponent, ActionProvider):
 
     @action(name="tree-view.delete", shortcut="Delete")
     def tree_view_delete(self):
-        if element := self.get_selected_element():
-            with Transaction(self.event_manager):
+        with Transaction(self.event_manager):
+            for element in self.get_selected_elements():
                 element.unlink()
 
     @action(name="win.search", shortcut="<Primary>f")
@@ -256,7 +262,7 @@ class SearchEngine:
 
     def text_changed(self, search_text):
         if not self.selected_item:
-            self.selected_item = self.selection.get_selected_item()
+            self.selected_item = get_first_selected_item(self.selection)
         if next_item := search(
             search_text,
             sorted_tree_walker(
@@ -270,15 +276,23 @@ class SearchEngine:
             self.selection.handler_unblock(self.selected_changed_id)
 
     def search_next(self, search_text):
+        if not self.selected_item:
+            self.selected_item = get_first_selected_item(self.selection)
         if next_item := search(
             search_text,
             sorted_tree_walker(
                 self.model,
-                start_tree_item=self.selection.get_selected_item().get_item(),
+                start_tree_item=self.selected_item and self.selected_item.get_item(),
                 from_current=False,
             ),
         ):
             select_element(self.tree_view, next_item.element)
+
+
+def get_first_selected_item(selection):
+    bitset = selection.get_selection()
+    pos = bitset.get_nth(0)
+    return selection.get_item(pos)
 
 
 def select_element(tree_view: Gtk.ListView, element: Element) -> int | None:
@@ -301,7 +315,7 @@ def select_element(tree_view: Gtk.ListView, element: Element) -> int | None:
     selection = tree_view.get_model()
     pos = expand_up_to_element(element)
     if pos is not None:
-        selection.set_selected(pos)
+        selection.select_item(pos, True)
         tree_view.activate_action("list.scroll-to-item", GLib.Variant.new_uint32(pos))
     return pos
 

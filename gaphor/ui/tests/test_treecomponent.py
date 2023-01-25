@@ -201,6 +201,7 @@ def test_create_diagram(tree_component, element_factory):
 def test_create_package(tree_component, element_factory):
     parent = element_factory.create(UML.Package)
     parent.name = "root"
+    tree_component.select_element(parent)
     tree_component.tree_view_create_package()
 
     package = next(p for p in element_factory.select(UML.Package) if p.name != "root")
@@ -222,7 +223,7 @@ def test_create_toplevel_package(tree_component, element_factory):
 @skip_if_gtk3
 def test_delete_element(tree_component, element_factory):
     klass = element_factory.create(UML.Class)
-    assert tree_component.get_selected_element() is klass
+    tree_component.select_element(klass)
 
     tree_component.tree_view_delete()
 
@@ -235,9 +236,7 @@ def test_search_next(tree_component, element_factory):
     class_a.name = "a"
     class_b = element_factory.create(UML.Class)
     class_b.name = "b"
-
     search_engine = SearchEngine(tree_component.model, tree_component.tree_view)
-    assert tree_component.get_selected_element() is class_a
 
     search_engine.search_next("b")
 
@@ -252,7 +251,7 @@ def test_search_text_changed(tree_component, element_factory):
     class_b.name = "b"
 
     search_engine = SearchEngine(tree_component.model, tree_component.tree_view)
-    assert tree_component.get_selected_element() is class_a
+    # assert tree_component.get_selected_element() is class_a
 
     search_engine.text_changed("b")
 
