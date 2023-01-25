@@ -7,6 +7,8 @@ import tinycss2
 
 from gaphor.core.styling.declarations import (
     FONT_SIZE_VALUES,
+    Var,
+    declarations,
     number,
     parse_declarations,
 )
@@ -66,7 +68,33 @@ def merge_styles(*styles: Style) -> Style:
             if color and color[3] > 0.0:
                 style[color_prop] = color[:3] + (color[3] * opacity,)  # type: ignore[literal-required]
 
-    return style
+    return resolve_variables(style, styles)
+
+
+def resolve_variables(style: Style, style_layers: Sequence[Style]) -> Style:
+    new_style = Style()
+    for p, v in style.items():
+        if isinstance(v, Var):
+            # Go through the individual layers.
+            # Fall back if a variable does not resolve.
+            for layer in reversed(style_layers):
+                if p in layer and (lv := layer[p]):  # type: ignore[literal-required]
+                    if isinstance(lv, Var):
+                        if (
+                            lv.name in style
+                            and (
+                                resolved := declarations(p, style[lv.name])  # type: ignore[literal-required]
+                            )
+                            and not isinstance(resolved, Var)
+                        ):
+                            new_style[p] = resolved  # type: ignore[literal-required]
+                            break
+                    else:
+                        new_style[p] = lv  # type: ignore[literal-required]
+                        break
+        else:
+            new_style[p] = v  # type: ignore[literal-required]
+    return new_style
 
 
 class CompiledStyleSheet:

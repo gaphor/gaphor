@@ -250,3 +250,68 @@ def test_broken_line_style():
     props = compiled_style_sheet.match(Node("mytype"))
 
     assert props.get("line-style") is None
+
+
+def test_variable():
+    css = "diagram { --myvar: 12; line-width: var(--myvar) }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("diagram"))
+
+    assert props.get("line-width") == 12
+
+
+def test_variable_color():
+    css = "* { --mycolor: #123456 } diagram { color: var(--mycolor) }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("diagram"))
+
+    assert props.get("color") == pytest.approx(
+        (0x12 / 255.0, 0x34 / 255.0, 0x56 / 255.0, 1.0)
+    )
+
+
+def test_unknown_variable():
+    css = "diagram { line-width: var(--myvar) }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("diagram"))
+
+    assert props.get("line-width") is None
+
+
+def test_unknown_variable_should_use_original_value():
+    css = "* { line-width: 1.0 } diagram { line-width: var(--myvar) }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("diagram"))
+
+    assert props.get("line-width") == 1.0
+
+
+def test_unknown_variable_resolve_original_value():
+    css = "* { line-width: var(--lw); --lw: 1.0 } diagram { line-width: var(--myvar) }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("diagram"))
+
+    assert props.get("line-width") == 1.0
+
+
+def test_variable_cannot_contain_a_variable():
+    css = "* { line-width: var(--a); --a: var(--b); --b: 1.0 }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("diagram"))
+
+    assert props.get("line-width") is None
+
+
+def test_variable_with_property():
+    css = "* { line-width: var(line-width); }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("diagram"))
+
+    assert props.get("line-width") is None
