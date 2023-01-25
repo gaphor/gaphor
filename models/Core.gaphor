@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.14.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.15.0">
 <Package id="3867dda4-7a95-11ea-a112-7f953848cf85">
 <name>
 <val>Core</val>
@@ -784,21 +784,7 @@
 </Comment>
 <StyleSheet id="61a09f8c-e0b9-11ea-b7ab-f5b4c130f24e">
 <styleSheet>
-<val>* {
- background-color: transparent;
- color: black;
- font-family: sans;
- font-size: 14;
- highlight-color: rgba(0, 0, 255, 0.4);
- line-width: 2;
- padding: 0;
-}
-
-diagram {
- line-style: normal;
- /* line-style: sloppy 0.3; */
-}
-</val>
+<val></val>
 </styleSheet>
 </StyleSheet>
 <Association id="d092794c-e0b9-11ea-b7ab-f5b4c130f24e">
