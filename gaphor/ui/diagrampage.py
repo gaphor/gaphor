@@ -295,10 +295,9 @@ class DiagramPage:
             self.diagram_css.load_from_data(
                 f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}".encode()
             )
-        else:
-            if self.diagram_css:
-                self.view.get_style_context().remove_provider(self.diagram_css)
-                self.diagram_css = None
+        elif self.diagram_css:
+            self.view.get_style_context().remove_provider(self.diagram_css)
+            self.diagram_css = None
 
         view = self.view
         item_painter = ItemPainter(view.selection, dark_mode)
