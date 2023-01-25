@@ -12,7 +12,7 @@ class Node:
         children=None,
         attributes=None,
         state=(),
-        dark_mode=False,
+        dark_mode=None,
     ):
         if attributes is None:
             attributes = {}

@@ -315,3 +315,24 @@ def test_variable_with_property():
     props = compiled_style_sheet.match(Node("diagram"))
 
     assert props.get("line-width") is None
+
+
+def test_color_schemes():
+    css = """
+        * { line-width: 1; }
+        @media dark-mode {
+         * { line-width: 2; }
+        }
+        @media light-mode {
+         * { line-width: 3; }
+        }
+    """
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    normal_props = compiled_style_sheet.match(Node("node"))
+    dark_props = compiled_style_sheet.match(Node("node", dark_mode=True))
+    light_props = compiled_style_sheet.match(Node("node", dark_mode=False))
+
+    assert normal_props.get("line-width") == 1.0
+    assert dark_props.get("line-width") == 2.0
+    assert light_props.get("line-width") == 3.0
