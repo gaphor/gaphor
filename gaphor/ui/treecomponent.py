@@ -82,7 +82,8 @@ class TreeComponent(UIComponent, ActionProvider):
         self.tree_view.set_vexpand(True)
 
         def list_view_activate(list_view, position):
-            list_view.activate_action("tree-view.open", None)
+            element = self.selection.get_item(position).get_item().element
+            self.open_element(element)
 
         self.tree_view.connect("activate", list_view_activate)
 
@@ -135,15 +136,19 @@ class TreeComponent(UIComponent, ActionProvider):
 
     def get_selected_element(self) -> Element | None:
         assert self.model
-        return next(self.get_selected_elements(), None)  # type: ignore[no-any-return,call-overload]
+        return next(iter(self.get_selected_elements()), None)
 
-    @action(name="tree-view.open")
-    def tree_view_open_selected(self):
-        element = self.get_selected_element()
+    def open_element(self, element):
+        assert element
         if isinstance(element, Diagram):
             self.event_manager.handle(DiagramOpened(element))
         else:
             self.event_manager.handle(ElementOpened(element))
+
+    @action(name="tree-view.open")
+    def tree_view_open_selected(self):
+        element = self.get_selected_element()
+        self.open_element(element)
 
     @action(name="tree-view.show-in-diagram")
     def tree_view_show_in_diagram(self, diagram_id: str) -> None:
