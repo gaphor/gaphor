@@ -20,6 +20,11 @@ Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/
 pipx install poetry
 ```
 
+Ensure Gaphor will run with GTK3:
+```bash
+export GAPHOR_USE_GTK=3
+```
+
 [Clone the
 repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
 ```bash
