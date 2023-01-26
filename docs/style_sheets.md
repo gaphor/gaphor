@@ -230,7 +230,7 @@ diagram {
   }
 }
 
-/* And antracit a slightly grey background in the editor: */
+/* And anthracite a slightly grey background in the editor: */
 @media dark-mode {
   diagram {
     background-color: #393D47;
