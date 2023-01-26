@@ -76,7 +76,11 @@ class TreeComponent(UIComponent, ActionProvider):
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
-            "setup", list_item_factory_setup, self.event_manager, self.modeling_language
+            "setup",
+            list_item_factory_setup,
+            self.selection,
+            self.event_manager,
+            self.modeling_language,
         )
         self.tree_view = Gtk.ListView.new(self.selection, factory)
         self.tree_view.set_vexpand(True)
@@ -127,12 +131,7 @@ class TreeComponent(UIComponent, ActionProvider):
 
     def get_selected_elements(self) -> list[Element]:
         assert self.model
-        bitset = self.selection.get_selection()
-        return [
-            e
-            for n in range(bitset.get_size())
-            if (e := self.selection.get_item(bitset.get_nth(n)).get_item().element)
-        ]
+        return get_selected_elements(self.selection)
 
     def get_selected_element(self) -> Element | None:
         assert self.model
@@ -294,6 +293,15 @@ class SearchEngine:
             select_element(self.tree_view, next_item.element)
 
 
+def get_selected_elements(selection: Gtk.SelectionModel) -> list[Element]:
+    bitset = selection.get_selection()
+    return [
+        e
+        for n in range(bitset.get_size())
+        if (e := selection.get_item(bitset.get_nth(n)).get_item().element)
+    ]
+
+
 def get_first_selected_item(selection):
     bitset = selection.get_selection()
     pos = bitset.get_nth(0)
@@ -390,7 +398,9 @@ def toplevel_popup_model(modeling_language) -> Gio.Menu:
     return model
 
 
-def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):
+def list_item_factory_setup(
+    _factory, list_item, selection, event_manager, modeling_language
+):
     builder = Gtk.Builder()
     builder.set_current_object(list_item)
     builder.extend_with_template(
@@ -431,7 +441,7 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
     if sys.platform != "darwin":
         drag_source = Gtk.DragSource.new()
         drag_source.set_actions(Gdk.DragAction.MOVE | Gdk.DragAction.COPY)
-        drag_source.connect("prepare", list_item_drag_prepare, list_item)
+        drag_source.connect("prepare", list_item_drag_prepare, list_item, selection)
         drag_source.connect("drag-begin", list_item_drag_begin, list_item)
         row.add_controller(drag_source)
 
@@ -489,20 +499,29 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
 
 
 def list_item_drag_prepare(
-    source: Gtk.DragSource, x: int, y: int, list_item: Gtk.ListItem
+    source: Gtk.DragSource,
+    x: int,
+    y: int,
+    list_item: Gtk.ListItem,
+    selection: Gtk.SelectionModel,
 ) -> Gdk.ContentProvider | None:
-    tree_item = list_item.get_item().get_item()
-    if isinstance(tree_item, RelationshipItem):
+    elements = get_selected_elements(selection)
+    under_cursor = list_item.get_item().get_item().element
+
+    if not elements:
+        elements = [under_cursor]
+
+    if under_cursor not in elements:
         return None
 
-    v = GObject.Value(
-        ElementDragData.__gtype__, ElementDragData(element=tree_item.element)
-    )
+    v = GObject.Value(ElementDragData.__gtype__, ElementDragData(elements=elements))
     return Gdk.ContentProvider.new_for_value(v)
 
 
 def list_item_drag_begin(
-    source: Gtk.DragSource, drag: Gdk.Drag, list_item: Gtk.ListItem
+    source: Gtk.DragSource,
+    drag: Gdk.Drag,
+    list_item: Gtk.ListItem,
 ) -> None:
     tree_item = list_item.get_item().get_item()
     display = Gdk.Display.get_default()
@@ -555,7 +574,6 @@ def list_item_drop_drop(
 ) -> Gdk.DragAction:
     list_item_drop_leave(target, list_item)
 
-    element = value.element
     tree_item = list_item.get_item().get_item()
     dest_element = tree_item.element
     if y < 4:
@@ -565,9 +583,9 @@ def list_item_drop_drop(
         # This view is concerned with owner relationships.
         # Let's check if the owner relation has actually changed,
         # Otherwise roll back, to not confuse the user.
-        if not change_owner(dest_element, element):
-            tx.rollback()
-        else:
-            return True
+        for element in value.elements:
+            if not change_owner(dest_element, element):
+                tx.rollback()
+                return False
 
-    return False
+    return True
