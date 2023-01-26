@@ -750,14 +750,14 @@ test = ["faulthandler", "objgraph", "psutil"]
 
 [[package]]
 name = "hypothesis"
-version = "6.65.0"
+version = "6.65.1"
 description = "A library for property-based testing"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "hypothesis-6.65.0-py3-none-any.whl", hash = "sha256:24e3219b0b181414c06bb7a62649a6edb471f148d25c9c9687f47505b0f50b1c"},
-    {file = "hypothesis-6.65.0.tar.gz", hash = "sha256:d25914dd4008b0292d116ac315f01f6691c5460c494a0291c01d96f4bc17fe68"},
+    {file = "hypothesis-6.65.1-py3-none-any.whl", hash = "sha256:4b7ae16db09151d17e5feebea07f4f84693cc1573c25e280bc92e619df24182b"},
+    {file = "hypothesis-6.65.1.tar.gz", hash = "sha256:fb9757f4b556fc73c2eaa2c1b7d39d0184c75e4cb77dadaf6fa59373838bd629"},
 ]
 
 [package.dependencies]
