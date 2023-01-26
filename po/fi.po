@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 18:48+0100\n"
-"PO-Revision-Date: 2022-12-19 13:47+0000\n"
+"PO-Revision-Date: 2023-01-25 17:49+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -2101,15 +2102,16 @@ msgid "<None>"
 msgstr "<Ei mitään>"
 
 #: gaphor/ui/diagrams.ui:32
-#, fuzzy
 msgid "Open a Diagram"
-msgstr "Komponenttikaavio"
+msgstr "Avaa kaavio"
 
 #: gaphor/ui/diagrams.ui:34
 msgid ""
 "Open a diagram from the model browser, or\n"
 "create a new diagram from the New diagram menu."
 msgstr ""
+"Avaa kaavio malliselaimesta\n"
+"tai luo uusi kaavio Uusi kaavio -valikosta."
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2120,7 +2122,6 @@ msgid "Show Tips"
 msgstr "Näytä vinkit"
 
 #: gaphor/ui/elementeditor.glade:63 gaphor/ui/elementeditor.ui:49
-#, fuzzy
 msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see it's properties appear.\n"
@@ -2318,13 +2319,15 @@ msgstr "Tallenna Gaphor-malli nimellä"
 
 #: gaphor/ui/filemanager.py:360
 msgid "Resolve Merge Conflict?"
-msgstr ""
+msgstr "Selvitetäänkö yhdistämisen ristiriita?"
 
 #: gaphor/ui/filemanager.py:363
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
+"Malli, jonka olet avaamassa, sisältää yhdistämisen ristiriidan. Haluatko "
+"avata nykyisen mallin vai kyseiseen malliin kohdistuvan muutoksen?"
 
 #: gaphor/ui/filemanager.py:367 gaphor/ui/filemanager.py:395
 #: gaphor/ui/filemanager.py:409
@@ -2333,11 +2336,11 @@ msgstr "Peru"
 
 #: gaphor/ui/filemanager.py:368
 msgid "Open Current"
-msgstr ""
+msgstr "Avaa nykyinen"
 
 #: gaphor/ui/filemanager.py:369
 msgid "Open Incoming"
-msgstr ""
+msgstr "Avaa muutos"
 
 #: gaphor/ui/filemanager.py:382
 msgid "Save Changes?"
@@ -2454,9 +2457,8 @@ msgid "Profile: {name}"
 msgstr "Profiili: {name}"
 
 #: gaphor/ui/mainwindow.ui:64
-#, fuzzy
 msgid "New diagram menu"
-msgstr "Avaa kaaviovalikko"
+msgstr "Uusi kaavio -valikko"
 
 #: gaphor/ui/mainwindow.ui:71
 msgid "Open application menu"
@@ -2508,9 +2510,8 @@ msgid "<Relationships>"
 msgstr "<Suhteet>"
 
 #: gaphor/ui/treecomponent.py:176
-#, fuzzy
 msgid "New package"
-msgstr "{name}-pakkaus"
+msgstr "Uusi pakkaus"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
