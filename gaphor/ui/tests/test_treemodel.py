@@ -1,3 +1,5 @@
+import pytest
+
 from gaphor import UML
 from gaphor.i18n import gettext
 from gaphor.ui.treemodel import RelationshipItem, TreeItem, TreeModel, tree_item_sort
@@ -142,6 +144,7 @@ def test_tree_model_change_owner(element_factory):
     assert class_item in package_model
 
 
+@pytest.mark.xfail
 def test_tree_model_relationship_subtree(element_factory):
     tree_model = TreeModel()
     package = element_factory.create(UML.Package)

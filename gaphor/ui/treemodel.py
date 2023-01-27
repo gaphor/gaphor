@@ -113,36 +113,12 @@ class TreeModel:
             new_branch = Gio.ListStore.new(TreeItem.__gtype__)
             self.branches[item] = new_branch
             for e in owned_elements:
-                self._maybe_relationships_model(e, new_branch, create=True).append(
-                    TreeItem(e)
-                )
+                new_branch.append(TreeItem(e))
             return new_branch
         return None
 
-    def _maybe_relationships_model(
-        self, element: Element, owner_model: Gio.ListStore, create: bool
-    ) -> Gio.ListStore:
-        """Return `owner_model`, or the model to hold relationships."""
-        if not isinstance(element, UML.Relationship):
-            return owner_model
-
-        if (
-            isinstance(owner_model.get_item(0), RelationshipItem)
-            and owner_model.get_item(0) in self.branches
-        ):
-            return self.branches[owner_model.get_item(0)]
-
-        if create:
-            relationship_item = RelationshipItem()
-            relationship_branch = Gio.ListStore.new(TreeItem.__gtype__)
-            self.branches[relationship_item] = relationship_branch
-            # Add item after branch, so it is seen as expandable
-            owner_model.insert(0, relationship_item)
-            return relationship_branch
-        return owner_model
-
     def list_model_for_element(
-        self, element: Element, former_owner=_no_value, create=False
+        self, element: Element, former_owner=_no_value
     ) -> Gio.ListStore | None:
         if (
             owner := element.owner if former_owner is _no_value else former_owner
@@ -155,7 +131,7 @@ class TreeModel:
                 None,
             )
         ) is not None:
-            return self._maybe_relationships_model(element, owner_model, create)
+            return owner_model
 
         return None
 
@@ -170,9 +146,7 @@ class TreeModel:
         if (not visible(element)) or self.tree_item_for_element(element):
             return
 
-        if (
-            owner_model := self.list_model_for_element(element, create=True)
-        ) is not None:
+        if (owner_model := self.list_model_for_element(element)) is not None:
             owner_model.append(TreeItem(element))
         elif element.owner:
             self.notify_child_model(element.owner)
@@ -207,15 +181,7 @@ class TreeModel:
 
         del self.branches[tree_item]
 
-        if tree_item.element:
-            self.notify_child_model(tree_item.element)
-        elif isinstance(tree_item, RelationshipItem):
-            owner_item = self.tree_item_for_element(owner)
-            if owner_model := self.branches.get(owner_item):
-                if owner_model.get_item(0) is tree_item:
-                    owner_model.remove(0)
-        else:
-            raise NotImplementedError()
+        self.notify_child_model(tree_item.element)
 
     def notify_child_model(self, element):
         # Only notify the change, the branch is created in child_model()
