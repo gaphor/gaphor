@@ -117,7 +117,7 @@ class TreeModel:
             return new_branch
         return None
 
-    def list_model_for_element(
+    def owner_model_for_element(
         self, element: Element, former_owner=_no_value
     ) -> Gio.ListStore | None:
         if (
@@ -138,7 +138,7 @@ class TreeModel:
     def tree_item_for_element(self, element: Element | None) -> TreeItem | None:
         if element is None:
             return None
-        if owner_model := self.list_model_for_element(element):
+        if owner_model := self.owner_model_for_element(element):
             return next((ti for ti in owner_model if ti.element is element), None)
         return None
 
@@ -146,7 +146,7 @@ class TreeModel:
         if (not visible(element)) or self.tree_item_for_element(element):
             return
 
-        if (owner_model := self.list_model_for_element(element)) is not None:
+        if (owner_model := self.owner_model_for_element(element)) is not None:
             owner_model.append(TreeItem(element))
         elif element.owner:
             self.notify_child_model(element.owner)
@@ -156,14 +156,16 @@ class TreeModel:
             self.remove_element(child)
 
         if (
-            owner_model := self.list_model_for_element(
+            owner_model := self.owner_model_for_element(
                 element, former_owner=former_owner
             )
         ) is not None:
-            index = next(
-                (i for i, ti in enumerate(owner_model) if ti.element is element), None
-            )
-            if index is not None:
+            if (
+                index := next(
+                    (i for i, ti in enumerate(owner_model) if ti.element is element),
+                    None,
+                )
+            ) is not None:
                 owner_model.remove(index)
 
             if not len(owner_model):
@@ -171,7 +173,6 @@ class TreeModel:
                     owner_model,
                     element.owner if former_owner is _no_value else former_owner,
                 )
-                # TODO: if relationship, remove Relationships node if empty
 
     def remove_branch(self, branch: Gio.ListStore, owner) -> None:
         tree_item = next(ti for ti, b in self.branches.items() if b is branch)
