@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-01-25 18:48+0100\n"
+"POT-Creation-Date: 2023-01-25 19:23+0100\n"
 "PO-Revision-Date: 2022-08-24 15:18+0000\n"
 "Last-Translator: Arjan Molenaar <gaphor@gmail.com>\n"
 "Language: nl\n"
@@ -2179,99 +2179,98 @@ msgstr "Geen element geselecteerd"
 msgid "Show Tips"
 msgstr "Toon Tips"
 
-#: gaphor/ui/elementeditor.glade:63 gaphor/ui/elementeditor.ui:49
-#, fuzzy
+#: gaphor/ui/elementeditor.glade:59 gaphor/ui/elementeditor.ui:44
 msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
-"you will see it's properties appear.\n"
-"\n"
-"This pane can be hidden by clicking the pane icon in the header.\n"
-"\n"
+"you will see it's properties appear."
+msgstr ""
+
+#: gaphor/ui/elementeditor.glade:69 gaphor/ui/elementeditor.ui:53
+msgid "This pane can be hidden by clicking the pane icon in the header."
+msgstr ""
+
+#: gaphor/ui/elementeditor.glade:79 gaphor/ui/elementeditor.ui:62
+msgid ""
 "<b>Tip:</b> Most elements in the toolbox have a keyboard shortcut (e.g. "
-"\"c\" for Class).\n"
-"Tool selection only works from the diagram. If a tool does not get "
-"selected, click on the diagram once (so it's focused) and then hit the "
-"shortcut key.\n"
-"\n"
+"\"c\" for Class). Tool selection only works from the diagram. If a tool "
+"does not get selected, click on the diagram once (so it's focused) and "
+"then hit the shortcut key."
+msgstr ""
+
+#: gaphor/ui/elementeditor.glade:90
+msgid ""
 "<b>Tip:</b> To search for an element in the model browser (top left), "
 "select an element in the model browser and start typing. A search box "
 "will automatically appear.\n"
+"            "
 msgstr ""
-"Voeg een model element toe vanuit de toolbox aan het diagram. Op deze "
-"plek komen de eigenschappen van het element.\n"
-"\n"
-"Dit deelvenster kan gesloten worden middels de knop in de kop van dit "
-"venster.\n"
-"\n"
-"<b>Tip:</b> De meeste elementen in de toolbox hebben een snelkoppeling "
-"(bijv. \"c\" voor Klasse).\n"
-"Tool selectie werkt alleen vanuit een diagram. Als een tool niet wordt "
-"geselecteerd, klik dan eenmalig op het diagram (zodat het focus heeft) en"
-" activeer dan de snelkoppeling.\n"
-"\n"
-"<b>Tip:</b> Om een element te zoeken in de hierarchy (top-links), "
-"Selecteer een element in de hierarchy en begin met typen. Een zoekvenster"
-" zal automatisch verschijnen.\n"
 
-#: gaphor/ui/elementeditor.glade:99 gaphor/ui/elementeditor.ui:75
+#: gaphor/ui/elementeditor.glade:128 gaphor/ui/elementeditor.ui:100
 #: gaphor/ui/help/shortcuts.ui:123
 msgid "Undo"
 msgstr "Ongedaan maken"
 
-#: gaphor/ui/elementeditor.glade:118 gaphor/ui/elementeditor.ui:93
+#: gaphor/ui/elementeditor.glade:147 gaphor/ui/elementeditor.ui:118
 #: gaphor/ui/help/shortcuts.ui:131
 msgid "Redo"
 msgstr "Hertoepassen"
 
-#: gaphor/ui/elementeditor.glade:140 gaphor/ui/elementeditor.ui:112
+#: gaphor/ui/elementeditor.glade:169 gaphor/ui/elementeditor.ui:137
 #: gaphor/ui/help/shortcuts.ui:148
 msgid "Zoom In"
 msgstr "Vergroot"
 
-#: gaphor/ui/elementeditor.glade:155 gaphor/ui/elementeditor.ui:127
+#: gaphor/ui/elementeditor.glade:184 gaphor/ui/elementeditor.ui:152
 #: gaphor/ui/help/shortcuts.ui:164
 msgid "Actual Size"
 msgstr "Ware grootte"
 
-#: gaphor/ui/elementeditor.glade:173 gaphor/ui/elementeditor.ui:142
+#: gaphor/ui/elementeditor.glade:202 gaphor/ui/elementeditor.ui:167
 #: gaphor/ui/help/shortcuts.ui:156
 msgid "Zoom Out"
 msgstr "Verklein"
 
-#: gaphor/ui/elementeditor.glade:199 gaphor/ui/elementeditor.glade:269
-#: gaphor/ui/elementeditor.glade:390 gaphor/ui/elementeditor.ui:205
-#: gaphor/ui/elementeditor.ui:216 gaphor/ui/help/shortcuts.ui:56
+#: gaphor/ui/elementeditor.glade:228 gaphor/ui/elementeditor.glade:298
+#: gaphor/ui/elementeditor.glade:419 gaphor/ui/elementeditor.ui:230
+#: gaphor/ui/elementeditor.ui:241 gaphor/ui/help/shortcuts.ui:56
 msgid "Preferences"
 msgstr "Voorkeuren"
 
-#: gaphor/ui/elementeditor.glade:254 gaphor/ui/elementeditor.ui:181
+#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:206
 msgid "Editors"
 msgstr "Editors"
 
-#: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:229
+#: gaphor/ui/elementeditor.glade:312 gaphor/ui/elementeditor.ui:254
 msgid "Reset Tool Automatically"
 msgstr "Herstel Tool Automatisch"
 
-#: gaphor/ui/elementeditor.glade:313 gaphor/ui/elementeditor.ui:247
+#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:272
 msgid "Remove Unused Elements"
 msgstr "Verwijder Ongebruikte Elementen"
 
-#: gaphor/ui/elementeditor.glade:314 gaphor/ui/elementeditor.glade:326
-#: gaphor/ui/elementeditor.ui:249 gaphor/ui/elementeditor.ui:256
+#: gaphor/ui/elementeditor.glade:343 gaphor/ui/elementeditor.glade:355
+#: gaphor/ui/elementeditor.ui:274 gaphor/ui/elementeditor.ui:281
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 "Verwijder automatisch elementen die niet langer in gebruik zijn in enig "
 "diagram."
 
-#: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:264
+#: gaphor/ui/elementeditor.glade:371 gaphor/ui/elementeditor.ui:289
 msgid "Style Sheet"
 msgstr "Style Sheet"
 
-#: gaphor/ui/elementeditor.glade:377 gaphor/ui/elementeditor.ui:291
+#: gaphor/ui/elementeditor.glade:406 gaphor/ui/elementeditor.ui:316
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
+msgstr ""
+
+#: gaphor/ui/elementeditor.ui:71
+msgid ""
+"<b>Tip:</b> To search for an element in the model browser (top left), "
+"select an element in the model browser and start typing. A search box "
+"will automatically appear."
 msgstr ""
 
 #: gaphor/ui/errorhandler.py:22
@@ -2897,3 +2896,60 @@ msgstr ""
 
 #~ msgid "edited"
 #~ msgstr "gewijzigd"
+
+#~ msgid ""
+#~ "Add a model element from the tool"
+#~ " box (bottom left) to the diagram."
+#~ " Here you will see it's properties"
+#~ " appear.\n"
+#~ "\n"
+#~ "This pane can be hidden by clicking the pane icon in the header.\n"
+#~ "\n"
+#~ "<b>Tip:</b> Most elements in the toolbox"
+#~ " have a keyboard shortcut (e.g. \"c\""
+#~ " for Class).\n"
+#~ "Tool selection only works from the "
+#~ "diagram. If a tool does not get"
+#~ " selected, click on the diagram once"
+#~ " (so it's focused) and then hit "
+#~ "the shortcut key.\n"
+#~ "\n"
+#~ "<b>Tip:</b> To search for an element "
+#~ "in the model browser (top left), "
+#~ "select an element in the model "
+#~ "browser and start typing. A search "
+#~ "box will automatically appear.\n"
+#~ msgstr ""
+#~ "Voeg een model element toe vanuit "
+#~ "de toolbox aan het diagram. Op "
+#~ "deze plek komen de eigenschappen van "
+#~ "het element.\n"
+#~ "\n"
+#~ "Dit deelvenster kan gesloten worden "
+#~ "middels de knop in de kop van "
+#~ "dit venster.\n"
+#~ "\n"
+#~ "<b>Tip:</b> De meeste elementen in de"
+#~ " toolbox hebben een snelkoppeling (bijv."
+#~ " \"c\" voor Klasse).\n"
+#~ "Tool selectie werkt alleen vanuit een"
+#~ " diagram. Als een tool niet wordt "
+#~ "geselecteerd, klik dan eenmalig op het"
+#~ " diagram (zodat het focus heeft) en"
+#~ " activeer dan de snelkoppeling.\n"
+#~ "\n"
+#~ "<b>Tip:</b> Om een element te zoeken "
+#~ "in de hierarchy (top-links), Selecteer"
+#~ " een element in de hierarchy en "
+#~ "begin met typen. Een zoekvenster zal "
+#~ "automatisch verschijnen.\n"
+
+#~ msgid ""
+#~ "<b>Tip:</b> Most elements in the toolbox"
+#~ " have a keyboard shortcut (e.g. \"c\""
+#~ " for Class).    Tool selection only "
+#~ "works from the diagram. If a tool"
+#~ " does not get selected, click on "
+#~ "the diagram once (so it's focused) "
+#~ "and then hit the shortcut key."
+#~ msgstr ""
