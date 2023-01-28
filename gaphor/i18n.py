@@ -29,8 +29,9 @@ def _get_os_language() -> str:
         import ctypes
 
         windll = ctypes.windll.kernel32
-        language = locale.windows_locale.get(windll.GetUserDefaultUILanguage())
-        if language:
+        if language := locale.windows_locale.get(
+            windll.GetUserDefaultUILanguage()
+        ):
             return language
     elif sys.platform == "darwin":
         import subprocess
@@ -39,9 +40,11 @@ def _get_os_language() -> str:
             lang_out = subprocess.check_output(
                 ("defaults", "read", "-g", "AppleLanguages")
             )
-            languages = lang_out.decode("utf-8").strip('()\n" ').split(",")
-
-            if languages:
+            if (
+                languages := lang_out.decode("utf-8")
+                .strip('()\n" ')
+                .split(",")
+            ):
                 return languages[0][:2]
         except subprocess.CalledProcessError as error:
             log.warning(
