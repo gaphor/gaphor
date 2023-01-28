@@ -1,29 +1,55 @@
 from __future__ import annotations
 
 import operator
-from typing import Callable, Dict, Iterator, Literal, Protocol, Sequence, Tuple, Union
+from typing import Iterator, Protocol, Sequence, TypedDict, Union
 
-import tinycss2
-
+from gaphor.core.styling.compiler import compile_style_sheet
 from gaphor.core.styling.declarations import (
     FONT_SIZE_VALUES,
-    Var,
-    declarations,
-    number,
-    parse_declarations,
-)
-from gaphor.core.styling.parser import SelectorError
-from gaphor.core.styling.properties import (
     Color,
     FontStyle,
     FontWeight,
     JustifyContent,
-    Style,
+    Number,
+    Padding,
     TextAlign,
     TextDecoration,
+    Var,
     VerticalAlign,
+    declarations,
+    number,
 )
-from gaphor.core.styling.selectors import compile_selector_list
+
+# Style is using SVG properties where possible
+# https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
+# NB. The Style can also contain variables (start with `--`),
+#     however those are not part of the interface.
+Style = TypedDict(
+    "Style",
+    {
+        "background-color": Color,
+        "border-radius": Number,
+        "color": Color,
+        "dash-style": Sequence[Number],
+        "padding": Padding,
+        "font-family": str,
+        "font-size": Union[int, float, str],
+        "font-style": FontStyle,
+        "font-weight": FontWeight,
+        "justify-content": JustifyContent,
+        "line-style": Number,
+        "line-width": Number,
+        "min-width": Number,
+        "min-height": Number,
+        "opacity": Number,
+        "text-decoration": TextDecoration,
+        "text-align": TextAlign,
+        "text-color": Color,
+        "vertical-align": VerticalAlign,
+        "vertical-spacing": Number,
+    },
+    total=False,
+)
 
 
 class StyleNode(Protocol):
@@ -41,12 +67,6 @@ class StyleNode(Protocol):
 
     def state(self) -> Sequence[str]:
         ...
-
-
-Rule = Union[
-    Tuple[Tuple[Callable[[object], bool], Tuple[int, int, int]], Dict[str, object]],
-    Tuple[Literal["error"], Union[tinycss2.ast.ParseError, SelectorError]],
-]
 
 
 def merge_styles(*styles: Style) -> Style:
@@ -101,7 +121,7 @@ class CompiledStyleSheet:
     def __init__(self, *css: str):
         self.selectors = [
             (selspec[0], selspec[1], order, declarations)
-            for order, (selspec, declarations) in enumerate(parse_style_sheets(*css))
+            for order, (selspec, declarations) in enumerate(compile_style_sheet(*css))
             if selspec != "error"
         ]
 
@@ -115,38 +135,6 @@ class CompiledStyleSheet:
             key=MATCH_SORT_KEY,
         )
         return merge_styles(*(decl for _, _, decl in results))  # type: ignore[arg-type]
-
-
-def parse_style_sheets(*css: str) -> Iterator[Rule]:
-    for sheet in css:
-        yield from parse_style_sheet(sheet)
-
-
-def parse_style_sheet(css: str) -> Iterator[Rule]:
-    rules = tinycss2.parse_stylesheet(
-        css or "", skip_comments=True, skip_whitespace=True
-    )
-    for rule in rules:
-        if rule.type == "error":
-            yield "error", rule
-            continue
-
-        if rule.type != "qualified-rule":
-            continue
-
-        try:
-            selectors = compile_selector_list(rule.prelude)
-        except SelectorError as e:
-            yield "error", e
-            continue
-
-        declaration = {
-            prop: value
-            for prop, value in parse_declarations(rule.content)
-            if prop != "error" and value is not None
-        }
-
-        yield from ((selector, declaration) for selector in selectors)
 
 
 MATCH_SORT_KEY = operator.itemgetter(0, 1)

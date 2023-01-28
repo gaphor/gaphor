@@ -126,10 +126,14 @@ def qualifiedName(element: Element) -> list[str]:
 
 class StyledDiagram:
     def __init__(
-        self, diagram: Diagram, selection: gaphas.selection.Selection | None = None
+        self,
+        diagram: Diagram,
+        selection: gaphas.selection.Selection | None = None,
+        dark_mode: bool | None = None,
     ):
         self.diagram = diagram
         self.selection = selection or gaphas.selection.Selection()
+        self.dark_mode = dark_mode
 
     def name(self) -> str:
         return "diagram"
@@ -160,12 +164,16 @@ class StyledItem:
     """
 
     def __init__(
-        self, item: Presentation, selection: gaphas.selection.Selection | None = None
+        self,
+        item: Presentation,
+        selection: gaphas.selection.Selection | None = None,
+        dark_mode: bool | None = None,
     ):
         assert item.diagram
         self.item = item
         self.diagram = item.diagram
         self.selection = selection
+        self.dark_mode = dark_mode
 
     def name(self) -> str:
         return type(self.item).__name__.removesuffix("Item").lower()
@@ -173,9 +181,9 @@ class StyledItem:
     def parent(self) -> StyledItem | StyledDiagram:
         parent = self.item.parent
         return (
-            StyledItem(parent, self.selection)
+            StyledItem(parent, self.selection, self.dark_mode)
             if parent
-            else StyledDiagram(self.diagram, self.selection)
+            else StyledDiagram(self.diagram, self.selection, self.dark_mode)
         )
 
     def children(self) -> Iterator[StyledItem]:

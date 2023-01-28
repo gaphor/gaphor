@@ -1,19 +1,50 @@
+"""Definitions (types) for style sheets."""
+
+from enum import Enum
 from typing import Callable, Dict, List, NamedTuple, Optional, Sequence, Tuple, Union
 
 import tinycss2.color3
 from tinycss2.ast import FunctionBlock
 from tinycss2.parser import parse_declaration_list
 
-from gaphor.core.styling.properties import (
-    FontStyle,
-    FontWeight,
-    JustifyContent,
-    Number,
-    Padding,
-    TextAlign,
-    TextDecoration,
-    VerticalAlign,
-)
+Color = Tuple[float, float, float, float]  # RGBA
+Padding = Tuple[float, float, float, float]  # top/right/bottom/left
+Number = Union[int, float]
+
+
+class TextAlign(Enum):
+    LEFT = "left"
+    CENTER = "center"
+    RIGHT = "right"
+
+
+class VerticalAlign(Enum):
+    TOP = "top"
+    MIDDLE = "middle"
+    BOTTOM = "bottom"
+
+
+class JustifyContent(Enum):
+    CENTER = "center"
+    END = "end"
+    START = "start"
+    STRETCH = "stretch"
+
+
+class FontStyle(Enum):
+    NORMAL = "normal"
+    ITALIC = "italic"
+
+
+class FontWeight(Enum):
+    NORMAL = "normal"
+    BOLD = "bold"
+
+
+class TextDecoration(Enum):
+    NONE = "none"
+    UNDERLINE = "underline"
+
 
 FONT_SIZE_VALUES = {
     "x-small": 3 / 4,
