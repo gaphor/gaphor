@@ -13,3 +13,7 @@ body[data-theme="dark"] article img {
 .cell_output img {
   display: block;
 }
+
+.utterances {
+  margin-top: 1rem;
+}
