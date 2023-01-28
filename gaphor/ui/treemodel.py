@@ -126,7 +126,10 @@ class TreeModel:
         if not isinstance(element, UML.Relationship):
             return owner_model
 
-        if isinstance(owner_model.get_item(0), RelationshipItem):
+        if (
+            isinstance(owner_model.get_item(0), RelationshipItem)
+            and owner_model.get_item(0) in self.branches
+        ):
             return self.branches[owner_model.get_item(0)]
 
         if create:
