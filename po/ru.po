@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 18:48+0100\n"
-"PO-Revision-Date: 2023-01-28 16:39+0000\n"
+"PO-Revision-Date: 2023-01-30 01:18+0000\n"
 "Last-Translator: BrainKicker <peter.sabanov@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
@@ -2047,7 +2047,7 @@ msgid ""
 "identifying user roles – actors – and\n"
 "associating them to their use cases."
 msgstr ""
-"Проанализировать функциональные требования,\n"
+"Анализируйте функциональные требования,\n"
 "определив роли пользователей – акторов – и\n"
 "связав их с их прецедентами."
 
@@ -2056,6 +2056,9 @@ msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
+"Моделируйте реализацию абстрактного прецедента, создав диаграммы "
+"деятельности, визуализирующие потоки действий для основных и второстепенных "
+"прецедентов."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2128,12 +2131,11 @@ msgstr "Открыть Модель"
 #: gaphor/ui/diagrampage.py:128 gaphor/ui/mainwindow.py:260
 #: gaphor/ui/namespaceview.py:126 gaphor/ui/treemodel.py:44
 msgid "<None>"
-msgstr "<пусто>"
+msgstr "<Пусто>"
 
 #: gaphor/ui/diagrams.ui:32
-#, fuzzy
 msgid "Open a Diagram"
-msgstr "Диаграмма компонентов"
+msgstr "Открыть Диаграмму"
 
 #: gaphor/ui/diagrams.ui:34
 msgid ""
@@ -2166,6 +2168,10 @@ msgid ""
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
+"<b>Совет:</b> Большинство элементов на панели инструментов имеют сочетание "
+"клавиш (например, \"c\" для Class). Выбор инструмента работает только на "
+"диаграмме. Если инструмент не выбирается, щелкните на диаграмме один раз ("
+"чтобы она была сфокусирована), а затем нажмите сочетание клавиш."
 
 #: gaphor/ui/elementeditor.glade:90
 msgid ""
@@ -2174,6 +2180,10 @@ msgid ""
 "will automatically appear.\n"
 "            "
 msgstr ""
+"<b>Совет:</b> Для поиска элемента в обозревателе моделей (вверху слева) "
+"выберите в нём элемент и начните вводить текст. Автоматически появится окно "
+"поиска.\n"
+"            "
 
 #: gaphor/ui/elementeditor.glade:128 gaphor/ui/elementeditor.ui:100
 #: gaphor/ui/help/shortcuts.ui:123
@@ -2348,13 +2358,15 @@ msgstr "Сохранить модель Gaphor как"
 
 #: gaphor/ui/filemanager.py:360
 msgid "Resolve Merge Conflict?"
-msgstr ""
+msgstr "Разрешить Конфликт Слияния?"
 
 #: gaphor/ui/filemanager.py:363
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
+"Модель, которую вы открываете, содержит конфликт слияния. Вы хотите открыть "
+"текущую модель или входящие изменения в модель?"
 
 #: gaphor/ui/filemanager.py:367 gaphor/ui/filemanager.py:395
 #: gaphor/ui/filemanager.py:409
@@ -2484,9 +2496,8 @@ msgid "Profile: {name}"
 msgstr "Профиль: {name}"
 
 #: gaphor/ui/mainwindow.ui:64
-#, fuzzy
 msgid "New diagram menu"
-msgstr "Открыть меню диаграмм"
+msgstr "Новое меню диаграммы"
 
 #: gaphor/ui/mainwindow.ui:71
 msgid "Open application menu"
@@ -2538,9 +2549,8 @@ msgid "<Relationships>"
 msgstr "<Отношения>"
 
 #: gaphor/ui/treecomponent.py:176
-#, fuzzy
 msgid "New package"
-msgstr "Пакет {name}"
+msgstr "Новый пакет"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
