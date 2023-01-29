@@ -177,7 +177,6 @@ def test_tree_component_model_ready(event_manager, element_factory, modeling_lan
 
 
 @skip_if_gtk3
-@pytest.mark.xfail
 def test_tree_model_expand_to_relationship(tree_component, element_factory):
     association = element_factory.create(UML.Association)
     package = element_factory.create(UML.Package)
@@ -258,3 +257,21 @@ def test_search_text_changed(tree_component, element_factory):
     search_engine.text_changed("b")
 
     assert tree_component.get_selected_element() is class_b
+
+
+@skip_if_gtk3
+def test_generalization_text(tree_component, element_factory):
+    general = element_factory.create(UML.Class)
+    general.name = "General"
+    specific = element_factory.create(UML.Class)
+    specific.name = "Specific"
+    generalization = element_factory.create(UML.Generalization)
+    generalization.specific = specific
+    generalization.general = general
+
+    model = tree_component.model
+    tree_item = model.tree_item_for_element(specific)
+    branch = model.branches[tree_item]
+    assert tree_item
+    assert branch.relationships[0].element is generalization
+    assert branch.relationships[0].text == "general: General"
