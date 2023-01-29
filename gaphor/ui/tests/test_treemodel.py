@@ -21,6 +21,13 @@ def test_tree_item_gtype():
     assert TreeItem.__gtype__.name == "gaphor+ui+treemodel+TreeItem"
 
 
+def test_tree_item_equality(element_factory):
+    element = element_factory.create(UML.Class)
+    tree_item = TreeItem(element)
+
+    assert {tree_item: 1}[element] == 1
+
+
 def test_tree_model_add_element(element_factory):
     tree_model = TreeModel()
     element = element_factory.create(UML.Class)

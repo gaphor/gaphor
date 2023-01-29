@@ -14,7 +14,7 @@ _no_value = object()
 
 
 class TreeItem(GObject.Object):
-    def __init__(self, element):
+    def __init__(self, element: Element | None):
         super().__init__()
         self.element = element
         if element:
@@ -55,6 +55,16 @@ class TreeItem(GObject.Object):
     def start_editing(self):
         self.visible_child_name = "editing"
 
+    def __hash__(self):
+        return hash(self.element)
+
+    def __eq__(self, other):
+        if isinstance(other, Element):
+            return self.element is other
+        elif isinstance(other, TreeItem):
+            return self.element is other.element
+        return False
+
 
 class RelationshipItem(TreeItem):
     def __init__(self):
@@ -63,6 +73,60 @@ class RelationshipItem(TreeItem):
 
     def start_editing(self):
         pass
+
+    def __hash__(self):
+        return hash(self)
+
+    def __eq__(self, other):
+        return self is other
+
+
+class Branch:
+    def __init__(self):
+        self.elements = Gio.ListStore.new(TreeItem.__gtype__)
+        # self.relationships = Gio.ListStore.new(TreeItem.__gtype__)
+
+    def append(self, element: Element):
+        self.elements.append(TreeItem(element))
+
+    # def remove(self, element: Element):
+    #     ti = next((ti for ti in self.elements if ti.element is element), None)
+    #     if ti:
+
+    def remove(self, index):
+        self.elements.remove(index)
+
+    def remove_all(self):
+        self.elements.remove_all()
+
+    def get_n_items(self):
+        return self.elements.get_n_items()
+
+    def get_item(self, index):
+        return self.elements.get_item(index)
+
+    def find(self, tree_item):
+        return self.elements.find(tree_item)
+
+    def items_changed(self, index, added, removed):
+        self.elements.items_changed(index, added, removed)
+
+    def changed(self, element: Element):
+        if not (
+            tree_item := next(
+                (ti for ti in self.elements if ti.element is element), None
+            )
+        ):
+            return
+        found, index = self.elements.find(tree_item)
+        if found:
+            self.elements.items_changed(index, 1, 1)
+
+    def __len__(self):
+        return self.elements.get_n_items()
+
+    def __iter__(self):
+        return iter(self.elements)
 
 
 def visible(element):
@@ -86,23 +150,21 @@ def tree_item_sort(a, b, _user_data=None):
 class TreeModel:
     def __init__(self):
         super().__init__()
-        self.branches: dict[TreeItem | None, Gio.ListStore] = {
-            None: Gio.ListStore.new(TreeItem.__gtype__)
-        }
+        self.branches: dict[TreeItem | None, Branch] = {None: Branch()}
 
     @property
-    def root(self):
+    def root(self) -> Branch:
         return self.branches[None]
 
     def sync(self, element):
         if visible(element) and (tree_item := self.tree_item_for_element(element)):
             tree_item.sync()
 
-    def child_model(self, item: TreeItem, _user_data=None):
+    def child_model(self, item: TreeItem, _user_data=None) -> Gio.ListStore:
         """This method will create branches on demand (lazy)."""
         branches = self.branches
         if item in branches:
-            return branches[item]
+            return branches[item].elements
         elif not item.element:
             return None
         elif owned_elements := [
@@ -110,16 +172,16 @@ class TreeModel:
             for e in item.element.ownedElement
             if e.owner is item.element and visible(e)
         ]:
-            new_branch = Gio.ListStore.new(TreeItem.__gtype__)
+            new_branch = Branch()
             self.branches[item] = new_branch
             for e in owned_elements:
-                new_branch.append(TreeItem(e))
-            return new_branch
+                new_branch.append(e)
+            return new_branch.elements
         return None
 
     def owner_model_for_element(
         self, element: Element, former_owner=_no_value
-    ) -> Gio.ListStore | None:
+    ) -> Branch | None:
         if (
             owner := element.owner if former_owner is _no_value else former_owner
         ) is None:
@@ -147,7 +209,7 @@ class TreeModel:
             return
 
         if (owner_model := self.owner_model_for_element(element)) is not None:
-            owner_model.append(TreeItem(element))
+            owner_model.append(element)
         elif element.owner:
             self.notify_child_model(element.owner)
 
