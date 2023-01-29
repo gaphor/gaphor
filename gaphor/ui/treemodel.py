@@ -55,62 +55,68 @@ class TreeItem(GObject.Object):
     def start_editing(self):
         self.visible_child_name = "editing"
 
-    def __hash__(self):
-        return hash(self.element)
-
-    def __eq__(self, other):
-        if isinstance(other, Element):
-            return self.element is other
-        elif isinstance(other, TreeItem):
-            return self.element is other.element
-        return False
-
 
 class RelationshipItem(TreeItem):
-    def __init__(self):
+    def __init__(self, child_model):
         super().__init__(None)
+        self.child_model = child_model
         self.text = gettext("<Relationships>")
 
     def start_editing(self):
         pass
 
-    def __hash__(self):
-        return hash(self)
-
-    def __eq__(self, other):
-        return self is other
-
 
 class Branch:
     def __init__(self):
         self.elements = Gio.ListStore.new(TreeItem.__gtype__)
-        # self.relationships = Gio.ListStore.new(TreeItem.__gtype__)
+        self.relationships = Gio.ListStore.new(TreeItem.__gtype__)
 
     def append(self, element: Element):
-        self.elements.append(TreeItem(element))
+        if isinstance(element, UML.Relationship):
+            if self.relationships.get_n_items() == 0:
+                self.elements.insert(0, RelationshipItem(self.relationships))
+            self.relationships.append(TreeItem(element))
+        else:
+            self.elements.append(TreeItem(element))
 
     def remove(self, element):
+        list_store = (
+            self.relationships
+            if isinstance(element, UML.Relationship)
+            else self.elements
+        )
         if (
             index := next(
-                (i for i, ti in enumerate(self.elements) if ti.element is element),
+                (i for i, ti in enumerate(list_store) if ti.element is element),
                 None,
             )
         ) is not None:
-            self.elements.remove(index)
+            list_store.remove(index)
+
+        # Clean up empty relationships node
+        if list_store is self.relationships and self.relationships.get_n_items() == 0:
+            for i, e in enumerate(self.elements):
+                if isinstance(e, RelationshipItem):
+                    self.elements.remove(i)
+                    break
 
     def remove_all(self):
+        self.relationships.remove_all()
         self.elements.remove_all()
 
     def changed(self, element: Element):
+        list_store = (
+            self.relationships
+            if isinstance(element, UML.Relationship)
+            else self.elements
+        )
         if not (
-            tree_item := next(
-                (ti for ti in self.elements if ti.element is element), None
-            )
+            tree_item := next((ti for ti in list_store if ti.element is element), None)
         ):
             return
-        found, index = self.elements.find(tree_item)
+        found, index = list_store.find(tree_item)
         if found:
-            self.elements.items_changed(index, 1, 1)
+            list_store.items_changed(index, 1, 1)
 
     def __len__(self):
         return self.elements.get_n_items()
@@ -119,7 +125,8 @@ class Branch:
         return self.elements.get_item(index)
 
     def __iter__(self):
-        return iter(self.elements)
+        yield from self.elements
+        yield from self.relationships
 
 
 def visible(element):
@@ -158,6 +165,8 @@ class TreeModel:
         branches = self.branches
         if item in branches:
             return branches[item].elements
+        elif isinstance(item, RelationshipItem):
+            return item.child_model
         elif not item.element:
             return None
         elif owned_elements := [

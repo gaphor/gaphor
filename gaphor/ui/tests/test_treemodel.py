@@ -1,8 +1,12 @@
-import pytest
-
 from gaphor import UML
 from gaphor.i18n import gettext
-from gaphor.ui.treemodel import RelationshipItem, TreeItem, TreeModel, tree_item_sort
+from gaphor.ui.treemodel import (
+    Branch,
+    RelationshipItem,
+    TreeItem,
+    TreeModel,
+    tree_item_sort,
+)
 
 
 class ItemChangedHandler:
@@ -21,11 +25,35 @@ def test_tree_item_gtype():
     assert TreeItem.__gtype__.name == "gaphor+ui+treemodel+TreeItem"
 
 
-def test_tree_item_equality(element_factory):
+def test_branch_add_element(element_factory):
+    branch = Branch()
     element = element_factory.create(UML.Class)
-    tree_item = TreeItem(element)
 
-    assert {tree_item: 1}[element] == 1
+    branch.append(element)
+
+    assert len(branch) == 1
+    assert branch[0].element is element
+
+
+def test_branch_remove_element(element_factory):
+    branch = Branch()
+    element = element_factory.create(UML.Class)
+    branch.append(element)
+
+    branch.remove(element)
+
+    assert len(branch) == 0
+
+
+def test_branch_add_relationship(element_factory):
+    branch = Branch()
+    element = element_factory.create(UML.Association)
+
+    branch.append(element)
+
+    assert len(branch) == 1
+    assert isinstance(branch[0], RelationshipItem)
+    assert branch.relationships[0].element is element
 
 
 def test_tree_model_add_element(element_factory):
@@ -151,7 +179,6 @@ def test_tree_model_change_owner(element_factory):
     assert class_item in package_model
 
 
-@pytest.mark.xfail
 def test_tree_model_relationship_subtree(element_factory):
     tree_model = TreeModel()
     package = element_factory.create(UML.Package)
@@ -164,8 +191,9 @@ def test_tree_model_relationship_subtree(element_factory):
     tree_model.child_model(package_item)
     association_item = tree_model.tree_item_for_element(association)
     package_model = tree_model.branches[package_item]
-    relationship_item = package_model.get_item(0)
-    relationship_model = tree_model.owner_branch_for_element(association)
+    relationship_item = package_model[0]
+    branch = tree_model.owner_branch_for_element(association)
+    relationship_model = branch.relationships
 
     assert package_model
     assert isinstance(relationship_item, RelationshipItem)
@@ -183,7 +211,8 @@ def test_tree_model_second_relationship(element_factory):
     tree_model.add_element(association)
     package_item = tree_model.tree_item_for_element(package)
     tree_model.child_model(package_item)
-    relationship_model = tree_model.owner_branch_for_element(association)
+    branch = tree_model.owner_branch_for_element(association)
+    relationship_model = branch.relationships
 
     new_association = element_factory.create(UML.Association)
     new_association.package = package
@@ -219,7 +248,7 @@ def test_tree_model_sort_relationship_item_first(element_factory):
     a.text = "a"
     b = TreeItem(UML.Package())
     b.text = "b"
-    r = RelationshipItem()
+    r = RelationshipItem(None)
 
     assert tree_item_sort(r, b) == -1
     assert tree_item_sort(a, r) == 1
