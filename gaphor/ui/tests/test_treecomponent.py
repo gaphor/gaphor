@@ -54,7 +54,7 @@ def test_tree_component_remove_element(tree_component, element_factory):
 
     element.unlink()
 
-    assert tree_model.get_n_items() == 0
+    assert len(tree_model) == 0
     assert items_changed.removed == 1
 
 
@@ -70,7 +70,7 @@ def test_tree_subtree_changed(tree_component, element_factory):
 
     class_.package = package
 
-    assert root_model.get_n_items() == 1
+    assert len(root_model) == 1
     assert root_model_changed.added == 2
     assert root_model_changed.removed == 3  # remove + node changed
 

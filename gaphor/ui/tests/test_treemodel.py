@@ -51,7 +51,7 @@ def test_tree_model_add_nested_element(element_factory):
     package_item = tree_model.tree_item_for_element(package)
 
     assert tree_model.branches.get(package_item) is not None
-    assert tree_model.branches.get(package_item).get_item(0) is class_item
+    assert tree_model.branches.get(package_item)[0] is class_item
     assert tree_model.branches.get(class_item) is None
 
 
@@ -68,7 +68,7 @@ def test_tree_model_add_nested_element_in_reverse_order(element_factory):
     package_item = tree_model.tree_item_for_element(package)
 
     assert tree_model.branches.get(package_item) is not None
-    assert tree_model.branches.get(package_item).get_item(0) is class_item
+    assert tree_model.branches.get(package_item)[0] is class_item
     assert tree_model.branches.get(class_item) is None
 
 
@@ -128,7 +128,7 @@ def test_tree_model_remove_from_different_owner(element_factory):
     tree_model.remove_element(class_, former_owner=None)
 
     assert tree_model.tree_item_for_element(package) is not None
-    assert tree_model.root.get_n_items() == 1
+    assert len(tree_model.root) == 1
 
 
 def test_tree_model_change_owner(element_factory):
@@ -194,8 +194,8 @@ def test_tree_model_second_relationship(element_factory):
 
     assert association_item
     assert new_association_item
-    assert association_item is relationship_model.get_item(0)
-    assert new_association_item is relationship_model.get_item(1)
+    assert association_item is relationship_model[0]
+    assert new_association_item is relationship_model[1]
 
 
 def test_tree_model_remove_relationship(element_factory):

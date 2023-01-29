@@ -101,12 +101,6 @@ class Branch:
     def remove_all(self):
         self.elements.remove_all()
 
-    def get_n_items(self):
-        return self.elements.get_n_items()
-
-    def get_item(self, index):
-        return self.elements.get_item(index)
-
     def changed(self, element: Element):
         if not (
             tree_item := next(
@@ -120,6 +114,9 @@ class Branch:
 
     def __len__(self):
         return self.elements.get_n_items()
+
+    def __getitem__(self, index):
+        return self.elements.get_item(index)
 
     def __iter__(self):
         return iter(self.elements)
