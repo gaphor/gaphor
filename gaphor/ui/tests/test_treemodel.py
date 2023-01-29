@@ -165,7 +165,7 @@ def test_tree_model_relationship_subtree(element_factory):
     association_item = tree_model.tree_item_for_element(association)
     package_model = tree_model.branches[package_item]
     relationship_item = package_model.get_item(0)
-    relationship_model = tree_model.owner_model_for_element(association)
+    relationship_model = tree_model.owner_branch_for_element(association)
 
     assert package_model
     assert isinstance(relationship_item, RelationshipItem)
@@ -183,7 +183,7 @@ def test_tree_model_second_relationship(element_factory):
     tree_model.add_element(association)
     package_item = tree_model.tree_item_for_element(package)
     tree_model.child_model(package_item)
-    relationship_model = tree_model.owner_model_for_element(association)
+    relationship_model = tree_model.owner_branch_for_element(association)
 
     new_association = element_factory.create(UML.Association)
     new_association.package = package
