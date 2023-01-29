@@ -253,40 +253,26 @@ class SearchEngine:
         self.model = model
         self.tree_view = tree_view
         self.selection = self.tree_view.get_model()
-        self.selected_changed_id = self.selection.connect(
-            "selection-changed", self.on_selection_changed
-        )
-        self.selected_item = None
-
-    def on_selection_changed(self, selection, position, n_items):
-        self.reset()
-
-    def reset(self):
-        self.selected_item = None
 
     def text_changed(self, search_text):
-        if not self.selected_item:
-            self.selected_item = get_first_selected_item(self.selection)
+        selected_item = get_first_selected_item(self.selection)
         if next_item := search(
             search_text,
             sorted_tree_walker(
                 self.model,
-                start_tree_item=self.selected_item and self.selected_item.get_item(),
+                start_tree_item=selected_item and selected_item.get_item(),
                 from_current=True,
             ),
         ):
-            self.selection.handler_block(self.selected_changed_id)
             select_element(self.tree_view, next_item.element)
-            self.selection.handler_unblock(self.selected_changed_id)
 
     def search_next(self, search_text):
-        if not self.selected_item:
-            self.selected_item = get_first_selected_item(self.selection)
+        selected_item = get_first_selected_item(self.selection)
         if next_item := search(
             search_text,
             sorted_tree_walker(
                 self.model,
-                start_tree_item=self.selected_item and self.selected_item.get_item(),
+                start_tree_item=selected_item and selected_item.get_item(),
                 from_current=False,
             ),
         ):
@@ -308,7 +294,9 @@ def get_first_selected_item(selection):
     return selection.get_item(pos)
 
 
-def select_element(tree_view: Gtk.ListView, element: Element) -> int | None:
+def select_element(
+    tree_view: Gtk.ListView, element: Element, unselect_rest=True
+) -> int | None:
     def expand_up_to_element(element, expand=False) -> int | None:
         if not element:
             return 0
@@ -328,7 +316,7 @@ def select_element(tree_view: Gtk.ListView, element: Element) -> int | None:
     selection = tree_view.get_model()
     pos = expand_up_to_element(element)
     if pos is not None:
-        selection.select_item(pos, True)
+        selection.select_item(pos, unselect_rest)
         tree_view.activate_action("list.scroll-to-item", GLib.Variant.new_uint32(pos))
     return pos
 
@@ -337,15 +325,11 @@ def create_search_bar(search_engine: SearchEngine):
     def on_search_changed(entry):
         search_engine.text_changed(entry.get_text())
 
-    def on_stop_search(_entry):
-        search_engine.reset()
-
     def on_search_next(entry):
         search_engine.search_next(entry.get_text())
 
     search_entry = Gtk.SearchEntry.new()
     search_entry.connect("search-changed", on_search_changed)
-    search_entry.connect("stop-search", on_stop_search)
     search_entry.connect("activate", on_search_next)
     search_entry.connect("next-match", on_search_next)
     search_bar = Gtk.SearchBar.new()
