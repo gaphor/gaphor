@@ -25,25 +25,19 @@ def _get_os_language() -> str:
     locale.getlocale() fails to get the correct language if the region
     is set different from the language.
     """
-    if sys.platform == "win32":
+    if sys.platform == "darwin":
+        from Cocoa import NSUserDefaults
+
+        defaults = NSUserDefaults.standardUserDefaults()
+        langs = defaults.objectForKey_("AppleLanguages")
+        if language := langs.objectAtIndex_(0):
+            return language
+    elif sys.platform == "win32":
         import ctypes
 
         windll = ctypes.windll.kernel32
         if language := locale.windows_locale.get(windll.GetUserDefaultUILanguage()):
             return language
-    elif sys.platform == "darwin":
-        import subprocess
-
-        try:
-            lang_out = subprocess.check_output(
-                ("defaults", "read", "-g", "AppleLanguages")
-            )
-            if languages := lang_out.decode("utf-8").strip('()\n" ').split(","):
-                return languages[0][:2]
-        except subprocess.CalledProcessError as error:
-            log.warning(
-                f"Cannot load translation language from AppleLanguages: {error}"
-            )
     return ""
 
 
