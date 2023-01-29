@@ -187,15 +187,10 @@ class TreeModel:
         ) is None:
             return self.root
 
-        if (
-            owner_model := next(
-                (m for ti, m in self.branches.items() if ti and ti.element is owner),
-                None,
-            )
-        ) is not None:
-            return owner_model
-
-        return None
+        return next(
+            (m for ti, m in self.branches.items() if ti and ti.element is owner),
+            None,
+        )
 
     def tree_item_for_element(self, element: Element | None) -> TreeItem | None:
         if element is None:
