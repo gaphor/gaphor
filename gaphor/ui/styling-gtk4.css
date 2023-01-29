@@ -46,20 +46,20 @@ frame > textview {
   margin: 6px;
 }
 
-#tree_component treeexpander {
+#model_browser treeexpander {
   margin: 0 6px;
 }
 
-#tree_component .editing {
+#model_browser .editing {
   background-color: @theme_bg_color;
   color: @theme_fg_color;
 }
 
-#tree_component .editing selection {
+#model_browser .editing selection {
   background-color: alpha(@theme_selected_bg_color, 0.3);
 }
 
-#tree_component .move-element-above {
+#model_browser .move-element-above {
   border-top: 12px solid lighter(@insensitive_fg_color);
 }
 
