@@ -107,12 +107,6 @@ class Branch:
     def get_item(self, index):
         return self.elements.get_item(index)
 
-    def find(self, tree_item):
-        return self.elements.find(tree_item)
-
-    def items_changed(self, index, added, removed):
-        self.elements.items_changed(index, added, removed)
-
     def changed(self, element: Element):
         if not (
             tree_item := next(
@@ -236,15 +230,9 @@ class TreeModel:
 
     def notify_child_model(self, element):
         # Only notify the change, the branch is created in child_model()
-        if not (tree_item := self.tree_item_for_element(element)):
-            return
-        if self.branches.get(tree_item):
-            return
         owner_tree_item = self.tree_item_for_element(element.owner)
         if (owner_branch := self.branches.get(owner_tree_item)) is not None:
-            found, index = owner_branch.find(tree_item)
-            if found:
-                owner_branch.items_changed(index, 1, 1)
+            owner_branch.changed(element)
 
     def clear(self) -> None:
         root = self.root
