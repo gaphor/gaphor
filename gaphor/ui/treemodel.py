@@ -153,8 +153,8 @@ class TreeModel:
         self.branches: dict[TreeItem | None, Branch] = {None: Branch()}
 
     @property
-    def root(self) -> Branch:
-        return self.branches[None]
+    def root(self) -> Gio.ListStore:
+        return self.branches[None].elements
 
     def sync(self, element):
         if visible(element) and (tree_item := self.tree_item_for_element(element)):
@@ -187,7 +187,7 @@ class TreeModel:
         if (
             owner := element.owner if former_owner is _no_value else former_owner
         ) is None:
-            return self.root
+            return self.branches[None]
 
         return next(
             (m for ti, m in self.branches.items() if ti and ti.element is owner),
@@ -241,7 +241,7 @@ class TreeModel:
             owner_branch.changed(element)
 
     def clear(self) -> None:
-        root = self.root
+        root = self.branches[None]
         root.remove_all()
         self.branches.clear()
         self.branches[None] = root

@@ -60,7 +60,7 @@ class TreeComponent(UIComponent, ActionProvider):
         self.event_manager.subscribe(self.on_diagram_selection_changed)
 
         tree_model = Gtk.TreeListModel.new(
-            self.model.root.elements,
+            self.model.root,
             passthrough=False,
             autoexpand=False,
             create_func=self.model.child_model,

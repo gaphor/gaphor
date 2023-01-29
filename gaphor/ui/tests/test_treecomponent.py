@@ -50,7 +50,7 @@ def test_tree_component_remove_element(tree_component, element_factory):
     tree_model = tree_component.model.root
     element = element_factory.create(UML.Class)
     items_changed = ItemChangedHandler()
-    tree_model.elements.connect("items-changed", items_changed)
+    tree_model.connect("items-changed", items_changed)
 
     element.unlink()
 
@@ -66,7 +66,7 @@ def test_tree_subtree_changed(tree_component, element_factory):
     tree_model = tree_component.model
     root_model = tree_model.root
     root_model_changed = ItemChangedHandler()
-    root_model.elements.connect("items-changed", root_model_changed)
+    root_model.connect("items-changed", root_model_changed)
 
     class_.package = package
 
