@@ -121,8 +121,8 @@ def test_placement_partition(tab, element_factory, event_manager):
 def test_uml_toolbox_actions_shortcut_unique(toolbox_actions):
     shortcuts: Dict[str, List[str]] = {}
 
-    for category, items in toolbox_actions:
-        for action_name, label, icon_name, shortcut, *rest in items:
+    for _category, items in toolbox_actions:
+        for action_name, _label, _icon_name, shortcut, *_rest in items:
             try:
                 shortcuts[shortcut].append(action_name)
             except KeyError:

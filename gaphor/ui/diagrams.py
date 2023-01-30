@@ -55,7 +55,6 @@ class Diagrams(UIComponent, ActionProvider):
         Returns:
             The Gtk.Notebook (GTK3) or Gtk.Box with Adw.TabView and Adw.TabBar (GTK4).
         """
-
         if Gtk.get_major_version() == 3:
             self._notebook = Gtk.Notebook()
             self._notebook.props.scrollable = True
@@ -100,7 +99,6 @@ class Diagrams(UIComponent, ActionProvider):
 
     def close(self):
         """Close the diagrams component."""
-
         self.event_manager.unsubscribe(self._on_model_ready)
         self.event_manager.unsubscribe(self._on_flush_model)
         self.event_manager.unsubscribe(self._on_name_change)
@@ -305,20 +303,19 @@ class Diagrams(UIComponent, ActionProvider):
     @event_handler(DiagramClosed)
     def _on_close_diagram(self, event: Event) -> None:
         """Callback to close the tab and remove the notebook page."""
-
         diagram = event.diagram
 
-        for page_num, widget in get_widgets_on_pages(self._notebook):
+        for _page_num, widget in get_widgets_on_pages(self._notebook):
             if widget.diagram_page.get_diagram() is diagram:
                 break
         else:
             return
 
         if Gtk.get_major_version() == 3:
-            self._notebook.remove_page(page_num)
+            self._notebook.remove_page(_page_num)
             widget.destroy()
         else:
-            self._notebook.close_page(self._notebook.get_nth_page(page_num))
+            self._notebook.close_page(self._notebook.get_nth_page(_page_num))
 
         widget.diagram_page.close()
         self._update_action_state()
@@ -326,7 +323,6 @@ class Diagrams(UIComponent, ActionProvider):
     @event_handler(ModelReady)
     def _on_model_ready(self, event=None):
         """Open the toplevel element and load toplevel diagrams."""
-
         if style_sheet := next(self.element_factory.select(StyleSheet), None):
             style_sheet.system_font_family = (
                 Gtk.Settings.get_default().props.gtk_font_name.rsplit(" ", 1)[0]

@@ -75,7 +75,7 @@ class Toolbox(UIComponent):
         # Accelerator keys are lower case. Since we handle them in a key-press event
         # handler, we'll need the upper-case versions as well in case Shift is pressed.
         for _title, items in self.modeling_language.toolbox_definition:
-            for action_name, _label, _icon_name, shortcut, *rest in items:
+            for action_name, _label, _icon_name, shortcut, *_rest in items:
                 if not shortcut:
                     continue
                 keys, mod = parse_shortcut(shortcut)
@@ -130,7 +130,7 @@ class Toolbox(UIComponent):
                 drag_source.connect("prepare", _flowbox_drag_prepare)
                 flowbox.add_controller(drag_source)
 
-            for action_name, label, icon_name, shortcut, *rest in items:
+            for action_name, label, icon_name, shortcut, *_rest in items:
                 button = create_toolbox_button(action_name, icon_name, label, shortcut)
                 flowbox.insert(button, -1)
 
