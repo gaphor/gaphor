@@ -34,7 +34,7 @@ repos:
     types_or: [python, spec]
     additional_dependencies: [toml]
 - repo: https://github.com/PyCQA/docformatter
-  rev: v1.6.0.rc1
+  rev: v1.5.1
   hooks:
   - id: docformatter
     args: [--in-place]
