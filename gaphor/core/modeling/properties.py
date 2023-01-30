@@ -811,9 +811,7 @@ class derivedunion(derived[T]):
         elif isinstance(event, AssociationUpdated):
             self.handle(DerivedUpdated(event.element, self))
         else:
-            log.error(
-                "Don't know how to handle event " + str(event) + " for derived union"
-            )
+            log.error(f"Don't know how to handle event {str(event)} for derived union")
 
 
 class redefine(umlproperty):
