@@ -43,7 +43,6 @@ def main(argv=sys.argv) -> int:
     parser.  This provides plugins and services with access to the
     command line options and may add their own.
     """
-
     def has_option(*options):
         return any(o in argv for o in options)
 

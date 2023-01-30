@@ -128,7 +128,6 @@ def text_point_at_line(points, size, text_align):
      - size:    size of the text, a (width, height) tuple
      - text_align: alignment to the line: left, beginning of the line, center, middle and right: end of the line
     """
-
     if text_align == TextAlign.LEFT:
         p0 = points[0]
         p1 = points[1]

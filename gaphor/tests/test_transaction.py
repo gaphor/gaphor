@@ -50,7 +50,6 @@ def event_manager():
 
 def test_transaction_commit(event_manager):
     """Test committing a transaction."""
-
     tx = Transaction(event_manager)
 
     assert tx._stack, "Transaction has no stack"
@@ -71,7 +70,6 @@ def test_transaction_commit(event_manager):
 
 def test_transaction_rollback(event_manager):
     """Test rolling back a transaction."""
-
     tx = Transaction(event_manager)
 
     assert tx._stack, "Transaction has no stack"
@@ -120,7 +118,6 @@ def test_transaction_rollback_after_commit(event_manager):
 
 def test_transaction_stack(event_manager):
     """Test the transaction stack."""
-
     tx1 = Transaction(event_manager)
     tx2 = Transaction(event_manager)
 
@@ -133,7 +130,6 @@ def test_transaction_stack(event_manager):
 
 def test_transaction_context(event_manager):
     """Test the transaction context manager."""
-
     with Transaction(event_manager) as tx:
 
         assert isinstance(
@@ -146,7 +142,6 @@ def test_transaction_context(event_manager):
 
 def test_transaction_context_error(event_manager):
     """Test the transaction context manager with errors."""
-
     with pytest.raises(TypeError, match="transaction error"):
         with Transaction(event_manager):
             raise TypeError("transaction error")

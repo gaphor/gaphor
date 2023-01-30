@@ -31,10 +31,12 @@ class DependencyItem(Named, LinePresentation):
     dependency or usage.
 
     Usually a dependency looks like a dashed line with an arrow head.
-    The dependency can have a stereotype attached to it, stating the kind of
+    The dependency can have a stereotype attached to it, stating the
+    kind of
     dependency we're dealing with.
 
-    In case of usage dependency connected to folded interface, the line is
+    In case of usage dependency connected to folded interface, the line
+    is
     drawn as solid line without arrow head.
     """
 

@@ -8,7 +8,6 @@ from gaphor.UML.actions.activitynodes import ForkNodeItem
 @instant_editor.register(ForkNodeItem)
 def fork_node_item_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
-
     subject = item.subject
     if not isinstance(subject, UML.JoinNode):
         return False

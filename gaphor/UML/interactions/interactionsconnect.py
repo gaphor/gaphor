@@ -72,7 +72,6 @@ def owner_for_message(line, lifeline):
 
 def connect_lifelines(line, send, received):
     """Always create a new Message with two EventOccurrence instances."""
-
     def get_subject():
         if not line.subject:
             message = line.model.create(UML.Message)

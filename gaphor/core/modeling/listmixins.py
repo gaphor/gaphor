@@ -63,7 +63,6 @@ class recurseproxy(Generic[T]):
 
     def __getattr__(self, key: str) -> recurseproxy[T]:
         """Create a new proxy for the attribute."""
-
         def mygetattr():
             sentinel = object()
             for e in self.__sequence:

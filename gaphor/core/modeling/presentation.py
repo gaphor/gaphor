@@ -59,7 +59,8 @@ class Presentation(Matrices, Element, Generic[S]):
         """Watch a certain path of elements starting with the DiagramItem. The
         handler is optional and will default to a simple self.request_update().
 
-        Watches should be set in the constructor, so they can be registered
+        Watches should be set in the constructor, so they can be
+        registered
         and unregistered in one shot.
 
         This interface is fluent(returns self).

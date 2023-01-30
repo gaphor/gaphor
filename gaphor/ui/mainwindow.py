@@ -149,7 +149,6 @@ class MainWindow(Service, ActionProvider):
 
     def open(self, gtk_app=None):
         """Open the main window."""
-
         builder = new_builder()
         self.window = builder.get_object("main-window")
         self.window.set_application(gtk_app)

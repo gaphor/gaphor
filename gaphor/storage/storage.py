@@ -69,7 +69,6 @@ def save_element(name, value, factory, writer):
     gaphor.core.modeling.collection (which contains a list of references
     to other UML elements) or a Diagram (which contains diagram items).
     """
-
     def resolvable(value):
         if value.id and value in factory:
             return True

@@ -14,8 +14,6 @@ class Service(metaclass=ABCMeta):
     @abstractmethod
     def shutdown(self) -> None:
         """Shutdown the services, free resources."""
-
-
 class ActionProvider(metaclass=ABCMeta):
     """An action provider is a special service that provides actions via
     ``@action`` decorators on its methods (see gaphor/action.py)."""
@@ -29,17 +27,14 @@ class ModelingLanguage(metaclass=ABCMeta):
     @abstractmethod
     def name(self) -> str:
         """Human-readable name of the modeling language."""
-
     @property
     @abstractmethod
     def toolbox_definition(self) -> ToolboxDefinition:
         """Get structure for the toolbox."""
-
     @property
     @abstractmethod
     def diagram_types(self) -> Iterable[DiagramType]:
         """Iterate diagram types."""
-
     @abstractmethod
     def lookup_element(self, name: str) -> type[Element] | None:
         """Look up a model element type by (class) name."""

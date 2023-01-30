@@ -125,12 +125,15 @@ Upper = Union[Literal[1], Literal[2], Literal["*"]]
 class umlproperty:
     """Superclass for an attribute, enumeration, and association.
 
-    The subclasses should define a ``name`` attribute that contains the name
-    of the property. Derived properties (derivedunion and redefine) can be
+    The subclasses should define a ``name`` attribute that contains the
+    name
+    of the property. Derived properties (derivedunion and redefine) can
+    be
     connected, they will be notified when the value changes through
     `propagate(self, event)`.
 
-    In some cases properties call out and delegate actions to the ElementFactory,
+    In some cases properties call out and delegate actions to the
+    ElementFactory,
     for example, in the case of event handling.
     """
 

@@ -70,7 +70,6 @@ class MessagePropertyPage(PropertyPageBase):
     @transactional
     def _on_message_sort_change(self, combo):
         """Update message item's message sort information."""
-
         ms = self.model.get_value(combo.get_active())
 
         item = self.item

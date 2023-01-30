@@ -19,7 +19,6 @@ def class_(diagram, element_factory):
 
 def test_stereotype_page_with_no_stereotype(diagram, class_):
     """Test the Stereotype Property Page not created for a Class."""
-
     editor = StereotypePage(class_)
     page = editor.construct()
 
@@ -28,7 +27,6 @@ def test_stereotype_page_with_no_stereotype(diagram, class_):
 
 def test_stereotype_page_with_stereotype(element_factory, diagram, class_):
     """Test creation of a Stereotype Property Page."""
-
     # Create a stereotype applicable to Class types:
     metaclass = element_factory.create(UML.Class)
     metaclass.name = "Class"

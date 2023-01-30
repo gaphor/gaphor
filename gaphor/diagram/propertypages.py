@@ -79,14 +79,13 @@ class PropertyPageBase(metaclass=abc.ABCMeta):
 
         Returns the page's toplevel widget (Gtk.Widget).
         """
-
-
 class EditableTreeModel(Gtk.ListStore):
     """Editable GTK tree model based on ListStore model.
 
     Every row is represented by a list of editable values. Last column
     contains an object, which is being edited (this column is not
-    displayed). When editable value in first column is set to empty string
+    displayed). When editable value in first column is set to empty
+    string
     then object is deleted.
 
     Last row is empty and contains no object to edit. It allows to enter
@@ -119,7 +118,6 @@ class EditableTreeModel(Gtk.ListStore):
 
         Last column has to contain object being edited.
         """
-
         raise NotImplementedError
 
     def create_object(self):
@@ -190,7 +188,6 @@ class EditableTreeModel(Gtk.ListStore):
 @transactional
 def on_text_cell_edited(renderer, path, value, model, col=0):
     """Update editable tree model based on fresh user input."""
-
     iter = model.get_iter(path)
     model.update(iter, col, value)
 
@@ -198,7 +195,6 @@ def on_text_cell_edited(renderer, path, value, model, col=0):
 @transactional
 def on_bool_cell_edited(renderer, path, model, col):
     """Update editable tree model based on fresh user input."""
-
     iter = model.get_iter(path)
     model.update(iter, col, renderer.get_active())
 
@@ -265,7 +261,6 @@ def help_link(builder, help_widget, popover):
 
     GTK4 only.
     """
-
     def on_activate(*_args):
         builder.get_object(popover).show()
 

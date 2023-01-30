@@ -86,7 +86,6 @@ class ElementEditor(UIComponent, ActionProvider):
         Both the widget and event parameters default to None and are
         idempotent if set.
         """
-
         self.editors.close()
         self.preferences.close()
 

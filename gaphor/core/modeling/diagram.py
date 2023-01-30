@@ -228,7 +228,6 @@ class Diagram(Element):
 
         The diagram also has a canvas.
         """
-
         super().__init__(id, model)
         self._connections = gaphas.connections.Connections()
         self._connections.add_handler(self._on_constraint_solved)
@@ -281,7 +280,6 @@ class Diagram(Element):
 
     def save(self, save_func):
         """Apply the supplied save function to this diagram and the canvas."""
-
         super().save(save_func)
 
     def postload(self):
@@ -297,7 +295,6 @@ class Diagram(Element):
         create.  The new element also has an optional parent and
         subject.
         """
-
         return self.create_as(type, generate_id(), parent, subject)
 
     def create_as(self, type, id, parent=None, subject=None):

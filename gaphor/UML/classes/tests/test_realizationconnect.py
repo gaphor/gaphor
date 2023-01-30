@@ -9,7 +9,6 @@ from gaphor.UML.classes.klass import ClassItem
 
 def test_non_interface_glue(create):
     """Test non-interface gluing with implementation."""
-
     impl = create(InterfaceRealizationItem)
     clazz = create(ClassItem, UML.Class)
 

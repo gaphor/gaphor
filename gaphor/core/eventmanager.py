@@ -43,7 +43,8 @@ class EventManager(Service):
         """Register a handler.
 
         Priority handlers are executed directly. They should not raise
-        other events, cause that can cause a problem in the exection order.
+        other events, cause that can cause a problem in the exection
+        order.
 
         It's basically to make sure that all events are recorded by the
         undo manager.
