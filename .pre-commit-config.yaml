@@ -17,7 +17,6 @@ repos:
   hooks:
   - id: check-toml
   - id: check-yaml
-  - id: end-of-file-fixer
     exclude: '.\.gaphor'
   - id: trailing-whitespace
 - repo: https://github.com/shellcheck-py/shellcheck-py
@@ -28,5 +27,5 @@ repos:
 - repo: https://github.com/charliermarsh/ruff-pre-commit
   rev: 'v0.0.237'
   hooks:
-    - id: ruff
-      args: [--fix]
+  - id: ruff
+    args: [--fix]
