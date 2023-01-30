@@ -9,15 +9,17 @@ from gaphor.abc import ActionProvider
 from gaphor.action import action
 from gaphor.core import event_handler
 from gaphor.core.modeling import (
+    DerivedAdded,
+    DerivedDeleted,
     DerivedSet,
     Diagram,
     Element,
     ElementCreated,
     ElementDeleted,
+    ElementUpdated,
     ModelFlushed,
     ModelReady,
 )
-from gaphor.core.modeling.event import AttributeUpdated, DerivedAdded, DerivedDeleted
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.transaction import Transaction
@@ -213,8 +215,8 @@ class TreeComponent(UIComponent, ActionProvider):
         self.model.add_element(element)
         self.select_element(element)
 
-    @event_handler(AttributeUpdated)
-    def on_attribute_changed(self, event: AttributeUpdated):
+    @event_handler(ElementUpdated)
+    def on_attribute_changed(self, event: ElementUpdated):
         self.model.sync(event.element)
         self.sorter.changed(Gtk.SorterChange.DIFFERENT)
 

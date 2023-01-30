@@ -60,8 +60,8 @@ def sorted_tree_walker(
                 break
 
 
-def sorted_tree_items(list_store):
+def sorted_tree_items(branch):
     return sorted(
-        (list_store.get_item(n) for n in range(list_store.get_n_items())),
+        branch,
         key=functools.cmp_to_key(tree_item_sort),
     )
