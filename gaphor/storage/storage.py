@@ -190,7 +190,7 @@ def _load_elements_and_canvasitems(
                 log.warning(
                     "Removing element %s of type %s without diagram", elem.id, cls
                 )
-                assert not any(elem.id in e.references for e in elements.values())
+                assert all(elem.id not in e.references for e in elements.values())
                 del elements[elem.id]
                 return
 
