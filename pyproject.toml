@@ -243,10 +243,6 @@ ignore_errors = true
 module = "*.tests.*"
 ignore_errors = true
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
 [tool.ruff]
 exclude = [
     ".venv",
@@ -272,3 +268,7 @@ select = [
 
 [tool.ruff.mccabe]
 max-complexity = 18
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
