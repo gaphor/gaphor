@@ -62,7 +62,6 @@ class Transaction:
         a TransactionRollback event is emitted. Otherwise, a
         TransactionCommit event is emitted.
         """
-
         self._close()
         if not self._stack:
             if self._need_rollback:
@@ -77,7 +76,6 @@ class Transaction:
         is then marked for roll-back.  If the stack is empty, a
         TransactionRollback event is emitted.
         """
-
         self._close()
         if not self._stack:
             self._handle(TransactionRollback())
@@ -95,7 +93,6 @@ class Transaction:
         last transaction on the stack isn't this transaction, a
         Transaction error is raised.
         """
-
         try:
             last = self._stack.pop()
         except IndexError:
@@ -119,7 +116,6 @@ class Transaction:
         If an error occurred, the transaction is rolled back. Otherwise,
         it is committed.
         """
-
         if exc_type:
             if not self._need_rollback:
                 log.error(
@@ -160,7 +156,6 @@ def transactional(func):
     whereas the `@transactional` decorator emits a global event which is
     sent to the active session.
     """
-
     def _transactional(*args, **kwargs):
         if __debug__ and args and hasattr(args[0], "event_manager"):
             log.warning(f"Consider using the Transaction context manager for {args[0]}")

@@ -20,7 +20,6 @@ def undo_guard(func):
 
     The sanitizer actions are already part of that transaction.
     """
-
     def guard(self, event):
         if self.undo_manager and self.undo_manager.in_undo_transaction():
             return

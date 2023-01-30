@@ -98,8 +98,6 @@ class BaseConnector:
 
     def disconnect(self, handle: Handle) -> None:
         """Disconnect model level connections."""
-
-
 class NoConnector:
     def __init__(
         self,
@@ -139,9 +137,11 @@ class RelationshipConnect(BaseConnector):
     """Base class for relationship connections, such as associations,
     dependencies and implementations.
 
-    Unary relationships are allowed to connect both ends to the same element.
+    Unary relationships are allowed to connect both ends to the same
+    element.
 
-    This class introduces a new method: `relationship()`, which is used to
+    This class introduces a new method: `relationship()`, which is used
+    to
     find an existing relationship in the model that does not yet exist
     on the diagram.
     """

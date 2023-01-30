@@ -26,7 +26,6 @@ def instant_editor(
 @instant_editor.register(Named)
 def named_item_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
-
     subject = item.subject
     if not subject:
         return False

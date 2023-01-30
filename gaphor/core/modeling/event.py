@@ -43,7 +43,6 @@ class AttributeUpdated(ElementUpdated):
         that changed.  The old_value is the old value of the attribute
         and the new_value is the new value of the attribute.
         """
-
         super().__init__(element, attribute)
         self.old_value = old_value
         self.new_value = new_value
@@ -59,7 +58,6 @@ class AssociationUpdated(ElementUpdated):
         from.  The association parameter is the changed association
         element.
         """
-
         super().__init__(element, association)
 
 
@@ -74,7 +72,6 @@ class AssociationSet(AssociationUpdated):
         being set.  The old_value parameter is the old association and
         the new_value parameter is the new association.
         """
-
         super().__init__(element, association)
         self.old_value = old_value
         self.new_value = new_value
@@ -90,7 +87,6 @@ class AssociationAdded(AssociationUpdated):
         added to.  The association parameter is the association element
         being added.
         """
-
         super().__init__(element, association)
         self.new_value = new_value
 
@@ -105,7 +101,6 @@ class AssociationDeleted(AssociationUpdated):
         deleted from.  The association parameter is the deleted
         association element.
         """
-
         super().__init__(element, association)
         self.old_value = old_value
 
@@ -124,7 +119,6 @@ class DerivedSet(AssociationSet, DerivedUpdated):
         belongs.  The association parameter is the association of the
         derived set.
         """
-
         super().__init__(element, association, old_value, new_value)
 
 
@@ -138,7 +132,6 @@ class DerivedAdded(AssociationAdded, DerivedUpdated):
         property belongs.  The association parameter is the association
         of the derived property.
         """
-
         super().__init__(element, association, new_value)
 
 
@@ -152,7 +145,6 @@ class DerivedDeleted(AssociationDeleted, DerivedUpdated):
         property belongs.  The association parameter is the association
         of the derived property.
         """
-
         super().__init__(element, association, old_value)
 
 
@@ -166,7 +158,6 @@ class RedefinedSet(AssociationSet):
         belongs.  The association parameter is association of the
         property.
         """
-
         super().__init__(element, association, old_value, new_value)
 
 
@@ -180,7 +171,6 @@ class RedefinedAdded(AssociationAdded):
         belongs.  The association parameter is the association of the
         property.
         """
-
         super().__init__(element, association, new_value)
 
 
@@ -194,7 +184,6 @@ class RedefinedDeleted(AssociationDeleted):
         belongs.  The association parameter is the association of the
         property.
         """
-
         super().__init__(element, association, old_value)
 
 

@@ -103,7 +103,6 @@ class FileManager(Service, ActionProvider):
 
         This method is used by the filename property.
         """
-
         if filename != self._filename:
             self._filename = Path(filename) if filename else None
 
@@ -239,7 +238,6 @@ class FileManager(Service, ActionProvider):
         the correct extension.  A status window is displayed while the
         GIdleThread is executed.  This thread actually saves the model.
         """
-
         if not filename or (filename.exists() and not filename.is_file()):
             return
 
@@ -287,7 +285,6 @@ class FileManager(Service, ActionProvider):
 
         Returns True if the saving actually succeeded.
         """
-
         if filename := self.filename:
             self.save(filename)
         else:
@@ -323,7 +320,6 @@ class FileManager(Service, ActionProvider):
         The user is asked to either discard the changes, keep the
         application running or save the model and quit afterwards.
         """
-
         def confirm_shutdown():
             self.event_manager.handle(SessionShutdown(self))
 

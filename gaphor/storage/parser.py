@@ -2,21 +2,27 @@
 
 This module contains only one interesting function:
 
-    parse(filename)
+parse(filename)
 
 which returns a dictionary of ID -> <parsed_object> pairs.
 
-A parsed_object contains values and references. values is a dictionary of
-name -> value pairs. A value contains a string with the value read from the
-model file. The references contain a list of name -> reference_list pairs, where
+A parsed_object contains values and references. values is a dictionary
+of
+name -> value pairs. A value contains a string with the value read from
+the
+model file. The references contain a list of name -> reference_list
+pairs, where
 reference_list is a list of ID's.
 
 Each element has a type, which corresponds to a class name in one of the
-ModelingLanguage modules. Elements also have a unique ID, by which they are
+ModelingLanguage modules. Elements also have a unique ID, by which they
+are
 referered to in the dictionary returned by parse().
 
-The generator parse_generator(filename, loader) may be used if the loading
-takes a long time. The yielded values are the percentage of the file read.
+The generator parse_generator(filename, loader) may be used if the
+loading
+takes a long time. The yielded values are the percentage of the file
+read.
 """
 
 from __future__ import annotations

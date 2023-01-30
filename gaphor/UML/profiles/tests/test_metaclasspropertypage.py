@@ -18,7 +18,6 @@ def class_(element_factory):
 
 def test_name_input_field_for_normal_class(class_):
     """Test Metaclass Property Page not create for normal Class."""
-
     editor = MetaclassPropertyPage(class_)
     page = editor.construct()
 
@@ -27,7 +26,6 @@ def test_name_input_field_for_normal_class(class_):
 
 def test_name_selection_for_metaclass(element_factory, class_):
     """Test the creation of Metaclass Property Page."""
-
     stereotype = element_factory.create(UML.Stereotype)
     stereotype.name = "NewStereotype"
     UML.recipes.create_extension(class_, stereotype)

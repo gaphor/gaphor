@@ -27,7 +27,6 @@ def deserialize(container, layoutstr, itemfactory, properties):
     attached (check frame.get_parent()). Transient settings and such
     should be done by the invoking application.
     """
-
     def _des(element, index, parent_widget=None):
         if element.tag == "component":
             name = element.attrib["name"]
@@ -86,7 +85,6 @@ else:
 
 def factory(typename):
     """Simple decorator for populating the widget_factory dictionary."""
-
     def _factory(func):
         widget_factory[typename] = func
         return func

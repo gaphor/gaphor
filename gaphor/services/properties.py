@@ -28,7 +28,6 @@ def get_config_dir() -> str:
 
     This varies depending on platform.
     """
-
     config_dir = os.path.join(GLib.get_user_config_dir(), "gaphor")
     os.makedirs(config_dir, exist_ok=True)
 
@@ -40,7 +39,6 @@ def get_cache_dir() -> str:
 
     This varies depending on platform.
     """
-
     cache_dir = os.path.join(GLib.get_user_cache_dir(), "gaphor")
     os.makedirs(cache_dir, exist_ok=True)
 
@@ -116,7 +114,6 @@ class Properties(Service):
         If the property doesn't exist, the default parameter is
         returned.  This defaults to _no_default.
         """
-
         return self.get(key, default)
 
     def load(self):
@@ -124,7 +121,6 @@ class Properties(Service):
 
         Resources are loaded like you do with a dict().
         """
-
         filename = self.filename
 
         if os.path.exists(filename) and os.path.isfile(filename):
@@ -155,7 +151,6 @@ class Properties(Service):
         string. In case of a string the resource will be looked up in
         the GConf configuration.
         """
-
         try:
             return self._properties[key]
         except KeyError as e:
@@ -171,7 +166,6 @@ class Properties(Service):
         No smart things are done with classes and class names (like the
         resource() method does).
         """
-
         properties = self._properties
         old_value = properties.get(key)
 

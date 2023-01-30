@@ -39,7 +39,6 @@ class Status:
 
 def test(func):
     """A test function."""
-
     def wrapper(self):
         status = Status(func.__name__)
         self.statuses.append(status)

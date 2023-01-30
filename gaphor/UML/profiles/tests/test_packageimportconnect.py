@@ -9,7 +9,6 @@ from gaphor.UML.profiles.packageimport import PackageImportItem
 
 def test_glue(element_factory, diagram):
     """Test gluing package import item."""
-
     pkg_import = diagram.create(PackageImportItem)
     package1 = diagram.create(PackageItem, subject=element_factory.create(UML.Package))
     package2 = diagram.create(PackageItem, subject=element_factory.create(UML.Package))
@@ -27,7 +26,6 @@ def test_glue(element_factory, diagram):
 
 def test_package_glue(element_factory, diagram):
     """Test package import item can't glue to a class."""
-
     pkg_import = diagram.create(PackageImportItem)
     import_class = diagram.create(ClassItem, subject=element_factory.create(UML.Class))
 
@@ -38,7 +36,6 @@ def test_package_glue(element_factory, diagram):
 
 def test_connection(element_factory, diagram):
     """Test package import item connection."""
-
     pkg_import = diagram.create(PackageImportItem)
     package1 = diagram.create(PackageItem, subject=element_factory.create(UML.Package))
     package2 = diagram.create(PackageItem, subject=element_factory.create(UML.Package))

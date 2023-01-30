@@ -9,7 +9,6 @@ from gaphor.UML.classes.association import AssociationItem
 @instant_editor.register(AssociationItem)
 def association_item_editor(item, view, event_manager, pos=None) -> bool:
     """Text edit support for Named items."""
-
     subject = item.subject
     if not subject:
         return False

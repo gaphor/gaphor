@@ -32,7 +32,6 @@ def test_commentline_annotated_element(create, diagram):
 
 def test_commentline_same_comment_glue(create):
     """Test comment line item gluing to already connected comment item."""
-
     comment = create(CommentItem, Comment)
     line = create(CommentLineItem)
 
