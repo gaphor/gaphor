@@ -259,7 +259,7 @@ exclude = [
     "diagramitems.py",
     "docs/conf.py",
 ]
-ignore = ["E501"]
+ignore = ["E501", "B023", "B905"]
 line-length = 88
 select = [
     "B",
