@@ -40,8 +40,10 @@ def get_connected(item, handle):
     return None
 
 
-def clear_model(diagram, element_factory, retain=[]):
+def clear_model(diagram, element_factory, retain=None):
     """Clear the model and diagram, leaving only an empty diagram."""
+    if retain is None:
+        retain = []
     for element in list(element_factory.values()):
         if element is not diagram and element not in retain:
             element.unlink()
