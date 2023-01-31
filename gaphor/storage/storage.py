@@ -138,13 +138,13 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
 
     # The elements are iterated three times:
     size = len(elements) * 3
+    progress = 0
 
-    def update_status_queue(_n=None):
-        if _n is None:
-            _n = [0]
-        n = _n[0] = _n[0] + 1
-        if n % 30 == 0:
-            yield (n * 100) / size
+    def update_status_queue():
+        nonlocal progress, size
+        progress += 1
+        if progress % 30 == 0:
+            yield (progress * 100) / size
 
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
