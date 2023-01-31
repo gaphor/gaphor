@@ -29,12 +29,10 @@ class MetaclassPropertyPage(PropertyPageBase):
 
     subject: UML.Class
 
-    CLASSES = list(
-        sorted(
-            (c, c)
-            for c in dir(UML)
-            if _issubclass(getattr(UML, c), UML.Element) and c != "Stereotype"
-        )
+    CLASSES = sorted(
+        (c, c)
+        for c in dir(UML)
+        if _issubclass(getattr(UML, c), UML.Element) and c != "Stereotype"
     )
 
     def __init__(self, subject):

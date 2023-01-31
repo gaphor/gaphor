@@ -89,7 +89,9 @@ def draw_ellipse(box: Box, context: DrawContext, bounding_box: Rectangle):
     stroke(context)
 
 
-def ellipse(cr, x, y, w, h, dc=(4 / 3) * math.tan(math.pi / 8)):
+def ellipse(cr, x, y, w, h, dc=None):
+    if dc is None:
+        dc = (4 / 3) * math.tan(math.pi / 8)
     rx = x + w / 2.0
     ry = y + h / 2.0
     x1 = x + w
@@ -221,9 +223,11 @@ class BoundedBox(Box):
     def __init__(
         self,
         *children,
-        style: Style = {},
+        style=None,
         draw: Callable[[Box, DrawContext, Rectangle], None] | None = None,
     ):
+        if style is None:
+            style = {}
         super().__init__(*children, style=style, draw=draw)
         self.bounding_box = Rectangle()
 
@@ -246,7 +250,9 @@ class IconBox:
     - padding: a tuple (top, right, bottom, left)
     """
 
-    def __init__(self, icon, *children, style: Style = {}):
+    def __init__(self, icon, *children, style=None):
+        if style is None:
+            style = {}
         self.icon = icon
         self.children = children
         self.sizes: list[tuple[int, int]] = []

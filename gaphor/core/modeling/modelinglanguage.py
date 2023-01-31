@@ -43,10 +43,10 @@ class MockModelingLanguage(ModelingLanguage):
         return next(
             filter(
                 None,
-                map(
-                    lambda provider: provider.lookup_element(name),
-                    self._modeling_languages,
-                ),
+                [
+                    provider.lookup_element(name)
+                    for provider in self._modeling_languages
+                ],
             ),
             None,
         )

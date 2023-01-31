@@ -56,7 +56,7 @@ def test_class_association_undo_redo(event_manager, element_factory, undo_manage
 
     assert undo_manager.can_undo()
 
-    for i in range(3):
+    for _i in range(3):
         assert 8 == len(diagram.connections.solver.constraints)
 
         undo_manager.undo_transaction()
