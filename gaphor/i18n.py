@@ -30,8 +30,8 @@ def _get_os_language() -> str:
 
         defaults = NSUserDefaults.standardUserDefaults()
         langs = defaults.objectForKey_("AppleLanguages")
-        language: str
         if language := langs.objectAtIndex_(0):
+            assert isinstance(language, str)
             return language.replace("-", "_")
     elif sys.platform == "win32":
         import ctypes
