@@ -2,6 +2,8 @@
 
 Translate text in to your native language using the gettext() function.
 """
+from __future__ import annotations
+
 __all__ = ["gettext"]
 
 import functools
@@ -15,18 +17,42 @@ import xml.etree.ElementTree as etree
 
 log = logging.getLogger(__name__)
 
-if sys.platform == "win32" and os.getenv("LANG") is None:
-    language, _ = locale.getlocale()
-    if language:
-        os.environ["LANG"] = language
+
+def _get_os_language() -> str:
+    """Get the default language in Windows or macOS.
+
+    Inspired by https://github.com/nicotine-plus/nicotine-plus
+    locale.getlocale() fails to get the correct language if the region
+    is set different from the language.
+    """
+    if sys.platform == "darwin":
+        from Cocoa import NSUserDefaults
+
+        defaults = NSUserDefaults.standardUserDefaults()
+        langs = defaults.objectForKey_("AppleLanguages")
+        if language := langs.objectAtIndex_(0):
+            assert isinstance(language, str)
+            return language.replace("-", "_")
+    elif sys.platform == "win32":
+        import ctypes
+
+        windll = ctypes.windll.kernel32
+        if language := locale.windows_locale.get(windll.GetUserDefaultUILanguage()):
+            return language
+    return ""
+
 
 try:
+    if os.getenv("LANG") is None:
+        os.environ["LANG"] = _get_os_language()
     localedir = importlib.resources.files("gaphor") / "locale"
     translate = _gettext.translation("gaphor", localedir=str(localedir))
     gettext = translate.gettext
 
 except OSError as e:
-    log.warning(f"No translations were found: {e}")
+    lang = os.environ["LANG"]
+    if lang != "en_US":
+        log.warning(f"No translations were found for language {lang}: {e}")
 
     def gettext(s):
         return s
