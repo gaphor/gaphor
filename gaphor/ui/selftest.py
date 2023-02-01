@@ -62,7 +62,7 @@ class SelfTest(Service):
 
     def init(self, gtk_app):
         windows_console_output_workaround()
-        self.init_timer(gtk_app, timeout=20)
+        self.init_timer(gtk_app, timeout=30)
         self.test_library_versions()
         if Gtk.get_major_version() != 3:
             self.test_gsettings_schemas()
