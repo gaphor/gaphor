@@ -244,6 +244,32 @@ ignore_errors = true
 module = "*.tests.*"
 ignore_errors = true
 
+[tool.ruff]
+exclude = [
+    ".venv",
+    "dist",
+    "__init__.py",
+    "conftest.py",
+    "sysml.py",
+    "uml.py",
+    "coremodel.py",
+    "diagramitems.py",
+    "docs/conf.py",
+]
+ignore = ["E501", "B023", "B905"]
+line-length = 88
+select = [
+    "B",
+    "B9",
+    "C",
+    "E",
+    "F",
+    "W",
+]
+
+[tool.ruff.mccabe]
+max-complexity = 18
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

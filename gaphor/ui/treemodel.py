@@ -14,7 +14,7 @@ _no_value = object()
 
 
 class TreeItem(GObject.Object):
-    def __init__(self, element):
+    def __init__(self, element: Element | None):
         super().__init__()
         self.element = element
         if element:
@@ -57,12 +57,76 @@ class TreeItem(GObject.Object):
 
 
 class RelationshipItem(TreeItem):
-    def __init__(self):
+    def __init__(self, child_model):
         super().__init__(None)
+        self.child_model = child_model
         self.text = gettext("<Relationships>")
 
     def start_editing(self):
         pass
+
+
+class Branch:
+    def __init__(self):
+        self.elements = Gio.ListStore.new(TreeItem.__gtype__)
+        self.relationships = Gio.ListStore.new(TreeItem.__gtype__)
+
+    def append(self, element: Element):
+        if isinstance(element, UML.Relationship):
+            if self.relationships.get_n_items() == 0:
+                self.elements.insert(0, RelationshipItem(self.relationships))
+            self.relationships.append(TreeItem(element))
+        else:
+            self.elements.append(TreeItem(element))
+
+    def remove(self, element):
+        list_store = (
+            self.relationships
+            if isinstance(element, UML.Relationship)
+            else self.elements
+        )
+        if (
+            index := next(
+                (i for i, ti in enumerate(list_store) if ti.element is element),
+                None,
+            )
+        ) is not None:
+            list_store.remove(index)
+
+        # Clean up empty relationships node
+        if list_store is self.relationships and self.relationships.get_n_items() == 0:
+            for i, e in enumerate(self.elements):
+                if isinstance(e, RelationshipItem):
+                    self.elements.remove(i)
+                    break
+
+    def remove_all(self):
+        self.relationships.remove_all()
+        self.elements.remove_all()
+
+    def changed(self, element: Element):
+        list_store = (
+            self.relationships
+            if isinstance(element, UML.Relationship)
+            else self.elements
+        )
+        if not (
+            tree_item := next((ti for ti in list_store if ti.element is element), None)
+        ):
+            return
+        found, index = list_store.find(tree_item)
+        if found:
+            list_store.items_changed(index, 1, 1)
+
+    def __len__(self):
+        return self.elements.get_n_items()
+
+    def __getitem__(self, index):
+        return self.elements.get_item(index)
+
+    def __iter__(self):
+        yield from self.elements
+        yield from self.relationships
 
 
 def visible(element):
@@ -86,23 +150,23 @@ def tree_item_sort(a, b, _user_data=None):
 class TreeModel:
     def __init__(self):
         super().__init__()
-        self.branches: dict[TreeItem | None, Gio.ListStore] = {
-            None: Gio.ListStore.new(TreeItem.__gtype__)
-        }
+        self.branches: dict[TreeItem | None, Branch] = {None: Branch()}
 
     @property
-    def root(self):
-        return self.branches[None]
+    def root(self) -> Gio.ListStore:
+        return self.branches[None].elements
 
     def sync(self, element):
         if visible(element) and (tree_item := self.tree_item_for_element(element)):
             tree_item.sync()
 
-    def child_model(self, item: TreeItem, _user_data=None):
+    def child_model(self, item: TreeItem, _user_data=None) -> Gio.ListStore:
         """This method will create branches on demand (lazy)."""
         branches = self.branches
         if item in branches:
-            return branches[item]
+            return branches[item].elements
+        elif isinstance(item, RelationshipItem):
+            return item.child_model
         elif not item.element:
             return None
         elif owned_elements := [
@@ -110,70 +174,39 @@ class TreeModel:
             for e in item.element.ownedElement
             if e.owner is item.element and visible(e)
         ]:
-            new_branch = Gio.ListStore.new(TreeItem.__gtype__)
+            new_branch = Branch()
             self.branches[item] = new_branch
             for e in owned_elements:
-                self._maybe_relationships_model(e, new_branch, create=True).append(
-                    TreeItem(e)
-                )
-            return new_branch
+                new_branch.append(e)
+            return new_branch.elements
         return None
 
-    def _maybe_relationships_model(
-        self, element: Element, owner_model: Gio.ListStore, create: bool
-    ) -> Gio.ListStore:
-        """Return `owner_model`, or the model to hold relationships."""
-        if not isinstance(element, UML.Relationship):
-            return owner_model
-
-        if (
-            isinstance(owner_model.get_item(0), RelationshipItem)
-            and owner_model.get_item(0) in self.branches
-        ):
-            return self.branches[owner_model.get_item(0)]
-
-        if create:
-            relationship_item = RelationshipItem()
-            relationship_branch = Gio.ListStore.new(TreeItem.__gtype__)
-            self.branches[relationship_item] = relationship_branch
-            # Add item after branch, so it is seen as expandable
-            owner_model.insert(0, relationship_item)
-            return relationship_branch
-        return owner_model
-
-    def list_model_for_element(
-        self, element: Element, former_owner=_no_value, create=False
-    ) -> Gio.ListStore | None:
+    def owner_branch_for_element(
+        self, element: Element, former_owner=_no_value
+    ) -> Branch | None:
         if (
             owner := element.owner if former_owner is _no_value else former_owner
         ) is None:
-            return self.root
+            return self.branches[None]
 
-        if (
-            owner_model := next(
-                (m for ti, m in self.branches.items() if ti and ti.element is owner),
-                None,
-            )
-        ) is not None:
-            return self._maybe_relationships_model(element, owner_model, create)
-
-        return None
+        return next(
+            (m for ti, m in self.branches.items() if ti and ti.element is owner),
+            None,
+        )
 
     def tree_item_for_element(self, element: Element | None) -> TreeItem | None:
         if element is None:
             return None
-        if owner_model := self.list_model_for_element(element):
-            return next((ti for ti in owner_model if ti.element is element), None)
+        if owner_branch := self.owner_branch_for_element(element):
+            return next((ti for ti in owner_branch if ti.element is element), None)
         return None
 
     def add_element(self, element: Element) -> None:
         if (not visible(element)) or self.tree_item_for_element(element):
             return
 
-        if (
-            owner_model := self.list_model_for_element(element, create=True)
-        ) is not None:
-            owner_model.append(TreeItem(element))
+        if (owner_branch := self.owner_branch_for_element(element)) is not None:
+            owner_branch.append(element)
         elif element.owner:
             self.notify_child_model(element.owner)
 
@@ -182,24 +215,16 @@ class TreeModel:
             self.remove_element(child)
 
         if (
-            owner_model := self.list_model_for_element(
+            owner_branch := self.owner_branch_for_element(
                 element, former_owner=former_owner
             )
         ) is not None:
-            index = next(
-                (i for i, ti in enumerate(owner_model) if ti.element is element), None
-            )
-            if index is not None:
-                owner_model.remove(index)
+            owner_branch.remove(element)
 
-            if not len(owner_model):
-                self.remove_branch(
-                    owner_model,
-                    element.owner if former_owner is _no_value else former_owner,
-                )
-                # TODO: if relationship, remove Relationships node if empty
+            if not len(owner_branch):
+                self.remove_branch(owner_branch)
 
-    def remove_branch(self, branch: Gio.ListStore, owner) -> None:
+    def remove_branch(self, branch: Branch) -> None:
         tree_item = next(ti for ti, b in self.branches.items() if b is branch)
         if tree_item is None:
             # Do never remove the root branch
@@ -207,30 +232,16 @@ class TreeModel:
 
         del self.branches[tree_item]
 
-        if tree_item.element:
-            self.notify_child_model(tree_item.element)
-        elif isinstance(tree_item, RelationshipItem):
-            owner_item = self.tree_item_for_element(owner)
-            if owner_model := self.branches.get(owner_item):
-                if owner_model.get_item(0) is tree_item:
-                    owner_model.remove(0)
-        else:
-            raise NotImplementedError()
+        self.notify_child_model(tree_item.element)
 
     def notify_child_model(self, element):
         # Only notify the change, the branch is created in child_model()
-        if not (tree_item := self.tree_item_for_element(element)):
-            return
-        if self.branches.get(tree_item):
-            return
         owner_tree_item = self.tree_item_for_element(element.owner)
-        if (owner_model := self.branches.get(owner_tree_item)) is not None:
-            found, index = owner_model.find(tree_item)
-            if found:
-                owner_model.items_changed(index, 1, 1)
+        if (owner_branch := self.branches.get(owner_tree_item)) is not None:
+            owner_branch.changed(element)
 
     def clear(self) -> None:
-        root = self.root
+        root = self.branches[None]
         root.remove_all()
         self.branches.clear()
         self.branches[None] = root

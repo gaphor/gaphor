@@ -265,19 +265,12 @@ class InterfaceItem(Classified, ElementPresentation):
         connected_items = [
             c.item for c in self.diagram.connections.get_connections(connected=self)
         ]
-        connectors = any(
-            map(lambda i: isinstance(i.subject, UML.Connector), connected_items)
-        )
+        connectors = any(isinstance(i.subject, UML.Connector) for i in connected_items)
         if connectors or self._folded != Folded.NONE:
             provided = connectors or any(
-                map(
-                    lambda i: isinstance(i.subject, UML.InterfaceRealization),
-                    connected_items,
-                )
+                isinstance(i.subject, UML.InterfaceRealization) for i in connected_items
             )
-            required = any(
-                map(lambda i: isinstance(i.subject, UML.Usage), connected_items)
-            )
+            required = any(isinstance(i.subject, UML.Usage) for i in connected_items)
             if required and provided:
                 self.folded = Folded.ASSEMBLY
             elif required:
@@ -334,7 +327,7 @@ class InterfaceItem(Classified, ElementPresentation):
                 c.item for c in self.diagram.connections.get_connections(connected=self)
             ]
             connectors = any(
-                map(lambda i: isinstance(i.subject, UML.Connector), connected_items)
+                isinstance(i.subject, UML.Connector) for i in connected_items
             )
         return IconBox(
             Box(

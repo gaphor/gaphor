@@ -278,7 +278,7 @@ class InterfacePropertyPage(PropertyPageBase):
             c.item for c in item.diagram.connections.get_connections(connected=item)
         ]
         disallowed = (ConnectorItem,)
-        can_fold = not any(map(lambda i: isinstance(i, disallowed), connected_items))
+        can_fold = not any(isinstance(i, disallowed) for i in connected_items)
 
         folded = builder.get_object("folded")
         folded.set_active(item.folded != Folded.NONE)

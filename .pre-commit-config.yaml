@@ -12,39 +12,20 @@ repos:
     types_or: [python, spec]
     additional_dependencies:
     - types-docutils
-- repo: https://github.com/PyCQA/flake8
-  rev: 6.0.0
-  hooks:
-  - id: flake8
-    types_or: [python, spec]
-    additional_dependencies:
-      - flake8-encodings==0.5.0.post1
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.4.0
   hooks:
   - id: check-toml
   - id: check-yaml
-  - id: end-of-file-fixer
     exclude: '.\.gaphor'
   - id: trailing-whitespace
-- repo: https://github.com/PyCQA/isort
-  rev: 5.11.4
-  hooks:
-  - id: isort
-    types_or: [python, spec]
-    additional_dependencies: [toml]
-- repo: https://github.com/PyCQA/docformatter
-  rev: v1.5.1
-  hooks:
-  - id: docformatter
-    args: [--in-place]
 - repo: https://github.com/shellcheck-py/shellcheck-py
   rev: v0.9.0.2
   hooks:
   - id: shellcheck
     args: [--exclude, SC1017]
-- repo: https://github.com/asottile/pyupgrade
-  rev: v3.3.1
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  rev: 'v0.0.237'
   hooks:
-  - id: pyupgrade
-    types_or: [python, spec]
+  - id: ruff
+    args: [--fix]

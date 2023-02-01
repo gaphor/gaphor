@@ -20,6 +20,10 @@ class ActionProvider(metaclass=ABCMeta):
     """An action provider is a special service that provides actions via
     ``@action`` decorators on its methods (see gaphor/action.py)."""
 
+    @abstractmethod
+    def __init__(self):
+        pass
+
 
 class ModelingLanguage(metaclass=ABCMeta):
     """A model provider is a special service that provides an entrypoint to a

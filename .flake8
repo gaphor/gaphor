@@ -1,9 +1,0 @@
-[flake8]
-# E501 (Line too long) is handled by Black (reformatting)
-# W503 (Line break occurred before a binary operator) conflicts with Black formatting
-ignore = E501, W503
-max-line-length = 88
-max-complexity = 18
-select = B,C,E,F,W,T4,B9
-exclude = .venv, dist, __init__.py, conftest.py, sysml.py, uml.py, coremodel.py, diagramitems.py, docs/conf.py
-show-source = True

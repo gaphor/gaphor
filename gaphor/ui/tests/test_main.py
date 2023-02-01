@@ -22,7 +22,7 @@ def fake_run(monkeypatch):
         idle.attach()
         app_run(self, args)
 
-    app_run = getattr(Gtk.Application, "run")
+    app_run = Gtk.Application.run
     monkeypatch.setattr(Gtk.Application, "run", fake_run)
 
     return run

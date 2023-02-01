@@ -327,7 +327,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         completions = script.complete()
 
         if len(completions) > 1:
-            max_len = max(map(lambda c: len(c.name), completions)) + 2
+            max_len = max(len(c.name) for c in completions) + 2
             per_line = 76 // max_len
             for i, c in enumerate(completions):
                 if i % per_line == 0:

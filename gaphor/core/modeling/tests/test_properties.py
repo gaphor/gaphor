@@ -619,7 +619,7 @@ def test_derivedunion_listmixins():
     a.b[0].name = "baz"
 
     assert list(a.a[:].name) == ["foo", "bar"]
-    assert sorted(list(a.u[:].name)) == ["bar", "baz", "foo"]
+    assert sorted(a.u[:].name) == ["bar", "baz", "foo"]
 
 
 def test_composite():

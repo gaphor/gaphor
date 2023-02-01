@@ -22,7 +22,7 @@ class MenuFragment(Service):
 
     def add_actions(self, action_provider, scope="win"):
         section = Gio.Menu.new()
-        for method_name, action in iter_actions(action_provider, scope):
+        for _method_name, action in iter_actions(action_provider, scope):
             section.append(action.label, f"{action.scope}.{action.name}")
         if section.get_n_items():
             self._menu.append_section(None, section)
