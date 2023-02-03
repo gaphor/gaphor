@@ -14,6 +14,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg)](https://github.com/RichardLitt/standard-readme)
 [![All Contributors](https://img.shields.io/badge/all_contributors-32-brightgreen.svg)](#contributors)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fgaphor%2Fgaphor.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fgaphor%2Fgaphor?ref=badge_shield)
 
 
 Gaphor is a UML and SysML modeling application written in Python.
@@ -313,3 +314,6 @@ Licensed under the [Apache License v2](LICENSE.txt).
 Summary: You can do what you like with Gaphor, as long as you include the
 required notices. This permissive license contains a patent license from the
 contributors of the code.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fgaphor%2Fgaphor.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fgaphor%2Fgaphor?ref=badge_large)
