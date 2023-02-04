@@ -9,7 +9,7 @@ from gaphor.transaction import Transaction
 
 
 class ElementDragData(GObject.Object):
-    element = GObject.Property(type=object)
+    elements = GObject.Property(type=object)
 
 
 class ToolboxActionDragData(GObject.Object):
@@ -27,10 +27,21 @@ def drop_target_tool(modeling_language, event_manager) -> Gtk.EventController:
 def on_drop(target, source_value, x, y, modeling_language, event_manager):
     view = target.get_widget()
     if isinstance(source_value, ElementDragData):
-        element = source_value.element
+        elements = source_value.elements
         x, y = view.matrix.inverse().transform_point(x, y)
         with Transaction(event_manager):
-            if item := drop(element, view.model, x, y):
+            items = []
+            for element in elements:
+                if item := drop(element, view.model, x, y):
+                    x += 20
+                    y += 20
+                    items.append(item)
+
+            if len(items) > 1:
+                view.selection.unselect_all()
+                view.selection.select_items(*items)
+                return True
+            if items:
                 view.selection.unselect_all()
                 view.selection.focused_item = item
                 return True

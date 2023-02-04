@@ -3,7 +3,13 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.ui.treecomponent import SearchEngine, TreeComponent
+from gaphor.ui.treecomponent import (
+    ElementDragData,
+    SearchEngine,
+    TreeComponent,
+    get_first_selected_item,
+    list_item_drop_drop,
+)
 
 skip_if_gtk3 = pytest.mark.skipif(
     Gtk.get_major_version() == 3, reason="Gtk.ListView is not supported by GTK 3"
@@ -201,6 +207,7 @@ def test_create_diagram(tree_component, element_factory):
 def test_create_package(tree_component, element_factory):
     parent = element_factory.create(UML.Package)
     parent.name = "root"
+    tree_component.select_element(parent)
     tree_component.tree_view_create_package()
 
     package = next(p for p in element_factory.select(UML.Package) if p.name != "root")
@@ -222,6 +229,7 @@ def test_create_toplevel_package(tree_component, element_factory):
 @skip_if_gtk3
 def test_delete_element(tree_component, element_factory):
     klass = element_factory.create(UML.Class)
+    tree_component.select_element(klass)
     assert tree_component.get_selected_element() is klass
 
     tree_component.tree_view_delete()
@@ -237,6 +245,7 @@ def test_search_next(tree_component, element_factory):
     class_b.name = "b"
 
     search_engine = SearchEngine(tree_component.model, tree_component.tree_view)
+    tree_component.select_element(class_a)
     assert tree_component.get_selected_element() is class_a
 
     search_engine.search_next("b")
@@ -252,6 +261,7 @@ def test_search_text_changed(tree_component, element_factory):
     class_b.name = "b"
 
     search_engine = SearchEngine(tree_component.model, tree_component.tree_view)
+    tree_component.select_element(class_a)
     assert tree_component.get_selected_element() is class_a
 
     search_engine.text_changed("b")
@@ -275,3 +285,49 @@ def test_generalization_text(tree_component, element_factory):
     assert tree_item
     assert branch.relationships[0].element is generalization
     assert branch.relationships[0].text == "general: General"
+
+
+@skip_if_gtk3
+def test_drop_multiple_elements(tree_component, element_factory, event_manager):
+    class_a = element_factory.create(UML.Class)
+    class_a.name = "a"
+    class_b = element_factory.create(UML.Class)
+    class_b.name = "b"
+    gen = element_factory.create(UML.Generalization)
+    gen.general = class_a
+    gen.specific = class_b
+    orig = element_factory.create(UML.Package)
+    class_a.package = orig
+    class_b.package = orig
+    package = element_factory.create(UML.Package)
+
+    drag_data = ElementDragData(elements=[class_a, class_b])
+    tree_component.select_element(class_a)
+    list_item = MockRowItem(get_first_selected_item(tree_component.selection))
+    tree_component.select_element(package)
+    target = MockDropTarget()
+    list_item_drop_drop(target, drag_data, 0, 0, list_item, event_manager)
+
+    assert class_b not in tree_component.get_selected_elements()
+    assert class_a not in tree_component.get_selected_elements()
+
+
+class MockRowItem:
+    def __init__(self, list_item):
+        self.list_item = list_item
+
+    def get_item(self):
+        return self.list_item
+
+
+class MockDropTarget:
+    def get_widget(self):
+        class Widget:
+            def get_style_context(self):
+                return StyleContext()
+
+        class StyleContext:
+            def remove_class(self, _):
+                pass
+
+        return Widget()

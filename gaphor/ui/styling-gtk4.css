@@ -59,8 +59,18 @@ frame > textview {
   background-color: alpha(@theme_selected_bg_color, 0.3);
 }
 
+#model_browser box {
+  padding: 2px 0;
+  border-top: 0 solid @shade_color;
+  transition: border 200ms;
+}
+
 #model_browser .move-element-above {
-  border-top: 12px solid lighter(@insensitive_fg_color);
+  border-top-width: 12px;
+}
+
+#model_browser .move-element-above:drop(active) {
+  box-shadow: none;
 }
 
 #elementeditor {

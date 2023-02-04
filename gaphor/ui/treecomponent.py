@@ -72,18 +72,22 @@ class TreeComponent(UIComponent, ActionProvider):
         self.sorter = Gtk.CustomSorter.new(tree_item_sort)
         tree_sorter = Gtk.TreeListRowSorter.new(self.sorter)
         sort_model = Gtk.SortListModel.new(tree_model, tree_sorter)
-        self.selection = Gtk.SingleSelection.new(sort_model)
-        self.selection.set_can_unselect(True)
+        self.selection = Gtk.MultiSelection.new(sort_model)
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
-            "setup", list_item_factory_setup, self.event_manager, self.modeling_language
+            "setup",
+            list_item_factory_setup,
+            self.selection,
+            self.event_manager,
+            self.modeling_language,
         )
         self.tree_view = Gtk.ListView.new(self.selection, factory)
         self.tree_view.set_vexpand(True)
 
         def list_view_activate(list_view, position):
-            list_view.activate_action("tree-view.open", None)
+            element = self.selection.get_item(position).get_item().element
+            self.open_element(element)
 
         self.tree_view.connect("activate", list_view_activate)
 
@@ -125,19 +129,25 @@ class TreeComponent(UIComponent, ActionProvider):
     def select_element(self, element: Element) -> int | None:
         return select_element(self.tree_view, element)
 
+    def get_selected_elements(self) -> list[Element]:
+        assert self.model
+        return get_selected_elements(self.selection)
+
     def get_selected_element(self) -> Element | None:
         assert self.model
-        if tree_item := self.selection.get_selected_item():
-            return tree_item.get_item().element  # type: ignore[no-any-return]
-        return None
+        return next(iter(self.get_selected_elements()), None)
 
-    @action(name="tree-view.open")
-    def tree_view_open_selected(self):
-        element = self.get_selected_element()
+    def open_element(self, element):
+        assert element
         if isinstance(element, Diagram):
             self.event_manager.handle(DiagramOpened(element))
         else:
             self.event_manager.handle(ElementOpened(element))
+
+    @action(name="tree-view.open")
+    def tree_view_open_selected(self):
+        element = self.get_selected_element()
+        self.open_element(element)
 
     @action(name="tree-view.show-in-diagram")
     def tree_view_show_in_diagram(self, diagram_id: str) -> None:
@@ -146,7 +156,7 @@ class TreeComponent(UIComponent, ActionProvider):
 
     @action(name="tree-view.rename", shortcut="F2")
     def tree_view_rename_selected(self):
-        if row_item := self.selection.get_selected_item():
+        if row_item := get_first_selected_item(self.selection):
             tree_item: TreeItem = row_item.get_item()
             GLib.timeout_add(START_EDIT_DELAY, tree_item.start_editing)
 
@@ -181,8 +191,8 @@ class TreeComponent(UIComponent, ActionProvider):
 
     @action(name="tree-view.delete", shortcut="Delete")
     def tree_view_delete(self):
-        if element := self.get_selected_element():
-            with Transaction(self.event_manager):
+        with Transaction(self.event_manager):
+            for element in self.get_selected_elements():
                 element.unlink()
 
     @action(name="win.search", shortcut="<Primary>f")
@@ -243,45 +253,50 @@ class SearchEngine:
         self.model = model
         self.tree_view = tree_view
         self.selection = self.tree_view.get_model()
-        self.selected_changed_id = self.selection.connect(
-            "selection-changed", self.on_selection_changed
-        )
-        self.selected_item = None
-
-    def on_selection_changed(self, selection, position, n_items):
-        self.reset()
-
-    def reset(self):
-        self.selected_item = None
 
     def text_changed(self, search_text):
-        if not self.selected_item:
-            self.selected_item = self.selection.get_selected_item()
+        selected_item = get_first_selected_item(self.selection)
         if next_item := search(
             search_text,
             sorted_tree_walker(
                 self.model,
-                start_tree_item=self.selected_item and self.selected_item.get_item(),
+                start_tree_item=selected_item and selected_item.get_item(),
                 from_current=True,
             ),
         ):
-            self.selection.handler_block(self.selected_changed_id)
             select_element(self.tree_view, next_item.element)
-            self.selection.handler_unblock(self.selected_changed_id)
 
     def search_next(self, search_text):
+        selected_item = get_first_selected_item(self.selection)
         if next_item := search(
             search_text,
             sorted_tree_walker(
                 self.model,
-                start_tree_item=self.selection.get_selected_item().get_item(),
+                start_tree_item=selected_item and selected_item.get_item(),
                 from_current=False,
             ),
         ):
             select_element(self.tree_view, next_item.element)
 
 
-def select_element(tree_view: Gtk.ListView, element: Element) -> int | None:
+def get_selected_elements(selection: Gtk.SelectionModel) -> list[Element]:
+    bitset = selection.get_selection()
+    return [
+        e
+        for n in range(bitset.get_size())
+        if (e := selection.get_item(bitset.get_nth(n)).get_item().element)
+    ]
+
+
+def get_first_selected_item(selection):
+    bitset = selection.get_selection()
+    pos = bitset.get_nth(0)
+    return selection.get_item(pos)
+
+
+def select_element(
+    tree_view: Gtk.ListView, element: Element, unselect_rest=True
+) -> int | None:
     def expand_up_to_element(element, expand=False) -> int | None:
         if not element:
             return 0
@@ -301,7 +316,7 @@ def select_element(tree_view: Gtk.ListView, element: Element) -> int | None:
     selection = tree_view.get_model()
     pos = expand_up_to_element(element)
     if pos is not None:
-        selection.set_selected(pos)
+        selection.select_item(pos, unselect_rest)
         tree_view.activate_action("list.scroll-to-item", GLib.Variant.new_uint32(pos))
     return pos
 
@@ -310,15 +325,11 @@ def create_search_bar(search_engine: SearchEngine):
     def on_search_changed(entry):
         search_engine.text_changed(entry.get_text())
 
-    def on_stop_search(_entry):
-        search_engine.reset()
-
     def on_search_next(entry):
         search_engine.search_next(entry.get_text())
 
     search_entry = Gtk.SearchEntry.new()
     search_entry.connect("search-changed", on_search_changed)
-    search_entry.connect("stop-search", on_stop_search)
     search_entry.connect("activate", on_search_next)
     search_entry.connect("next-match", on_search_next)
     search_bar = Gtk.SearchBar.new()
@@ -371,7 +382,9 @@ def toplevel_popup_model(modeling_language) -> Gio.Menu:
     return model
 
 
-def list_item_factory_setup(_factory, list_item, event_manager, modeling_language):
+def list_item_factory_setup(
+    _factory, list_item, selection, event_manager, modeling_language
+):
     builder = Gtk.Builder()
     builder.set_current_object(list_item)
     builder.extend_with_template(
@@ -412,7 +425,7 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
     if sys.platform != "darwin":
         drag_source = Gtk.DragSource.new()
         drag_source.set_actions(Gdk.DragAction.MOVE | Gdk.DragAction.COPY)
-        drag_source.connect("prepare", list_item_drag_prepare, list_item)
+        drag_source.connect("prepare", list_item_drag_prepare, list_item, selection)
         drag_source.connect("drag-begin", list_item_drag_begin, list_item)
         row.add_controller(drag_source)
 
@@ -470,20 +483,29 @@ def list_item_factory_setup(_factory, list_item, event_manager, modeling_languag
 
 
 def list_item_drag_prepare(
-    source: Gtk.DragSource, x: int, y: int, list_item: Gtk.ListItem
+    source: Gtk.DragSource,
+    x: int,
+    y: int,
+    list_item: Gtk.ListItem,
+    selection: Gtk.SelectionModel,
 ) -> Gdk.ContentProvider | None:
-    tree_item = list_item.get_item().get_item()
-    if isinstance(tree_item, RelationshipItem):
+    elements = get_selected_elements(selection)
+    under_cursor = list_item.get_item().get_item().element
+
+    if not elements:
+        elements = [under_cursor]
+
+    if under_cursor not in elements:
         return None
 
-    v = GObject.Value(
-        ElementDragData.__gtype__, ElementDragData(element=tree_item.element)
-    )
+    v = GObject.Value(ElementDragData.__gtype__, ElementDragData(elements=elements))
     return Gdk.ContentProvider.new_for_value(v)
 
 
 def list_item_drag_begin(
-    source: Gtk.DragSource, drag: Gdk.Drag, list_item: Gtk.ListItem
+    source: Gtk.DragSource,
+    drag: Gdk.Drag,
+    list_item: Gtk.ListItem,
 ) -> None:
     tree_item = list_item.get_item().get_item()
     display = Gdk.Display.get_default()
@@ -536,7 +558,6 @@ def list_item_drop_drop(
 ) -> Gdk.DragAction:
     list_item_drop_leave(target, list_item)
 
-    element = value.element
     tree_item = list_item.get_item().get_item()
     dest_element = tree_item.element
     if y < 4:
@@ -546,9 +567,9 @@ def list_item_drop_drop(
         # This view is concerned with owner relationships.
         # Let's check if the owner relation has actually changed,
         # Otherwise roll back, to not confuse the user.
-        if not change_owner(dest_element, element):
-            tx.rollback()
-        else:
-            return True
+        for element in value.elements:
+            if not change_owner(dest_element, element):
+                tx.rollback()
+                return False
 
-    return False
+    return True
