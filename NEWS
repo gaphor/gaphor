@@ -1,3 +1,22 @@
+2.16.0
+------
+- Automatic switching to dark mode in diagrams
+- Add Model browser multi select and popup menu
+- Refactor and improve model browser
+- Use normal + icon for new diagram dropdown
+- Add support for CSS variables and named colors
+- Apply development mode for dev releases
+- Show diagram name in header
+- Show something when no diagrams are opened
+- Fix the packaged data dirs
+- Add license scan report and status
+- Stabilize macOS/GTK tests
+- Add a comments option to our documentation
+- Split tips in to multiple labels
+- Win and macOS: Fix wrong language selected when region not default
+- Fix translation warning never logged with missing mo files
+- Spanish, Russian, Hungarian, Czech translation update
+
 2.15.0
 ------
 - Add basic git merge conflict support by asking which model to load
