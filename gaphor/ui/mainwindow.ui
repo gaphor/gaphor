@@ -73,7 +73,7 @@
           </object>
         </child>
         <child type="end">
-          <object class="GtkButton">
+          <object class="GtkToggleButton">
             <property name="action_name">win.show-editors</property>
             <property name="tooltip-text" translatable="true">Toggle property editor</property>
             <child>
