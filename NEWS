@@ -9,7 +9,6 @@
 - Show diagram name in header
 - Show something when no diagrams are opened
 - Fix the packaged data dirs
-- Add license scan report and status
 - Stabilize macOS/GTK tests
 - Add a comments option to our documentation
 - Split tips in to multiple labels
