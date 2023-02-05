@@ -1006,6 +1006,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "sophie-h",
+      "name": "Sophie Herold",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3466497?v=4",
+      "profile": "https://blogs.gnome.org/sophieh/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
