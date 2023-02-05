@@ -262,7 +262,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 60
     env:
-      gvsbuild_version: 2023.1.0
+      gvsbuild_version: 2023.2.0
       # Bump this number if you want to force a rebuild of gvsbuild with the same version
       gvsbuild_update: 0
     outputs:
