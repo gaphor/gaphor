@@ -1013,7 +1013,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/3466497?v=4",
       "profile": "https://blogs.gnome.org/sophieh/",
       "contributions": [
-        "code"
+        "code",
+        "a11y"
       ]
     }
   ],
