@@ -74,6 +74,7 @@ class Toolbox(UIComponent):
     def activate_shortcut(self, keyval: int, state: Gdk.ModifierType) -> bool:
         # Accelerator keys are lower case. Since we handle them in a key-press event
         # handler, we'll need the upper-case versions as well in case Shift is pressed.
+        state = state & Gtk.accelerator_get_default_mod_mask()
         for _title, items in self.modeling_language.toolbox_definition:
             for action_name, _label, _icon_name, shortcut, *_rest in items:
                 if not shortcut:
