@@ -296,15 +296,28 @@ specification. Contributions of any kind are welcome!
 4.  Send a pull request and bug the maintainers until it gets merged and
     published. :smile:
 
-See [the contributing file](CONTRIBUTING.md)!
+See [the contributing guide](CONTRIBUTING.md)!
 
-### Translations
+### 🌍 Translations
 
-Translation of Gaphor is mostly done using [Weblate](https://hosted.weblate.org/projects/gaphor/gaphor/).
+Translation of Gaphor is mostly done using
+[Weblate](https://hosted.weblate.org/projects/gaphor/gaphor/).
 
-For the Linux Flatpak, the desktop entry comment string can be translated at our [Flatpak repository](https://github.com/flathub/org.gaphor.Gaphor/blob/master/share/org.gaphor.Gaphor.desktop).
+For the Linux Flatpak, the desktop entry comment string can be translated at our
+[Flatpak
+repository](https://github.com/flathub/org.gaphor.Gaphor/blob/master/share/org.gaphor.Gaphor.desktop).
 
-Thank you so much for your effort in helping us keep it available in many languages!
+Thank you so much for your effort in helping us keep it available in many
+languages!
+
+### ♿️ Code of Conduct
+
+We value your participation and want everyone to have an enjoyable and
+fulfilling experience. As a [GNOME Circle](https://circle.gnome.org/) project,
+all participants are expected to follow the GNOME [Code of
+Conduct](https://wiki.gnome.org/Foundation/CodeOfConduct), and to show respect,
+understanding, and consideration to one another. Thank you for helping make this
+a welcoming, friendly community for everyone.
 
 ## © License
 

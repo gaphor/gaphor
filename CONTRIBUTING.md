@@ -39,8 +39,8 @@ room](https://app.element.io/#/room/#gaphor_Lobby:gitter.im).
  * Keep feature versions as small as possible, preferably one new feature per
  version.
  * Be welcoming to newcomers and encourage diverse new contributors from all
- backgrounds. We expect all contributors to comply with our [Code of
- Conduct](https://github.com/gaphor/gaphor/blob/main/CODE_OF_CONDUCT.md).
+ backgrounds. We expect all contributors to comply with the GNOME [Code of
+ Conduct](https://wiki.gnome.org/Foundation/CodeOfConduct).
 
 # Your First Contribution
 
