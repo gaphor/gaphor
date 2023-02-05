@@ -1,0 +1,40 @@
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name xml:lang="en">Gaphor</name>
+  <shortdesc xml:lang="en">Simple UML and SysML modeling tool</shortdesc>
+  <homepage rdf:resource="https://gaphor.org/" />
+  <bug-database rdf:resource="https://github.com/gaphor/gaphor/issues" />
+
+  <programming-language>Python</programming-language>
+  <platform>GTK 4</platform>
+  <platform>Libadwaita</platform>
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Arjan Molenaar</foaf:name>
+      <foaf:mbox rdf:resource="mailto:gaphor@gmail.com" />
+      <foaf:account>
+        <foaf:OnlineAccount>
+          <foaf:accountServiceHomepage rdf:resource="https://github.com"/>
+          <foaf:accountName>amolenaar</foaf:accountName>
+        </foaf:OnlineAccount>
+      </foaf:account>
+    </foaf:Person>
+  </maintainer>
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Dan Yeaw</foaf:name>
+      <foaf:mbox rdf:resource="mailto:dan@yeaw.me" />
+      <foaf:account>
+        <foaf:OnlineAccount>
+          <foaf:accountServiceHomepage rdf:resource="https://github.com"/>
+          <foaf:accountName>danyeaw</foaf:accountName>
+        </foaf:OnlineAccount>
+      </foaf:account>
+    </foaf:Person>
+  </maintainer>
+</Project>
