@@ -25,12 +25,13 @@ make consistent models.
 
 ### Keep the model in sync
 
-Gaphor goes through great lengths to keep the model in sync with the diagrams.
-If it's not in the diagrams, it's not in the model. This is invaluable if you
-want to use a model to generate code or configuration for an application.
+An important part of modeling is to design a system in abstractions and be
+able to explain those to others. As systems become more complicated, it's
+important to have the design (model) layed out in diagrams.
 
-For specific cases, you can deviate from this rule: there's a setting in the
-preferences section.
+Gaphor goes through great lengths to keep the model in sync with the diagrams.
+In doing so, unused elements can be automatically removed from the model if
+they're no longer shown in any diagram.
 
 ## Out of your way
 
