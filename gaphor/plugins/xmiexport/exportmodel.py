@@ -59,7 +59,6 @@ class XMIExport:
         xmi.startElement(f"{self.UML_PREFIX}:Class", attrs=attributes)
 
         if not idref:
-
             for ownedAttribute in element.ownedAttribute:
                 xmi.startElement("ownedAttribute", attrs={})
                 self.handle(xmi, ownedAttribute)

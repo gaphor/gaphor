@@ -73,7 +73,6 @@ def main(argv=sys.argv) -> int:
             )
 
     if has_option("-p", "--profiler"):
-
         import cProfile
         import pstats
 

@@ -250,7 +250,6 @@ def test_load_and_save_of_a_model(element_factory, modeling_language, test_model
 def test_can_not_load_models_older_that_0_17_0(
     element_factory, modeling_language, test_models
 ):
-
     path = test_models / "old-gaphor-version.gaphor"
 
     def load_old_model():
