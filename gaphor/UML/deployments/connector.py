@@ -174,7 +174,6 @@ class ConnectorItem(Named, LinePresentation[UML.Connector]):
         super().draw(context)
         subject = self.subject
         if subject and subject.informationFlow:
-
             inv = (
                 1
                 if (subject.end[0].role in subject.informationFlow[:].informationTarget)

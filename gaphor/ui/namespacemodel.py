@@ -283,7 +283,6 @@ class NamespaceModel(Gtk.TreeStore):
 
         try:
             with Transaction(self.event_manager) as tx:
-
                 # This view is concerned with owner relationships.
                 # Let's check if the owner relation has actually changed,
                 # Otherwise roll back, to not confuse the user.

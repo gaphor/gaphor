@@ -45,13 +45,10 @@ def main():
 
     # Find all classes using factory select.
     for cls in element_factory.select(UML.Class):
-
         print(f"Found class {cls.name}")
 
         if options.attrs:
-
             for attr in cls.ownedAttribute:
-
                 print(f" Attribute: {attr.name}")
 
 

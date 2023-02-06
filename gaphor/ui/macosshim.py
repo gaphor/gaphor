@@ -44,7 +44,6 @@ if sys.platform != "darwin" and Gtk.get_major_version() == 3:  # noqa C901
         )
 
 elif sys.platform == "darwin" and Gtk.get_major_version() == 4:
-
     from gi.repository import GLib
 
     def new_shortcut_with_args(shortcut, signal, *args):

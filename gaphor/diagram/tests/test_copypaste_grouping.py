@@ -50,7 +50,6 @@ def test_copy_paste_of_item_with_nested_item(
 def test_copy_remove_paste_of_item_with_nested_item(
     diagram, element_factory, node_with_artifact
 ):
-
     new_items = copy_clear_and_paste_link(
         set(node_with_artifact), diagram, element_factory
     )
