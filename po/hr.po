@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 19:23+0100\n"
-"PO-Revision-Date: 2023-01-25 17:49+0000\n"
+"PO-Revision-Date: 2023-02-06 20:39+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -2172,7 +2172,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:69 gaphor/ui/elementeditor.ui:53
 msgid "This pane can be hidden by clicking the pane icon in the header."
-msgstr ""
+msgstr "Ova se ploča može se sakriti pritiskom ikone ploče u zaglavlju."
 
 #: gaphor/ui/elementeditor.glade:79 gaphor/ui/elementeditor.ui:62
 msgid ""
