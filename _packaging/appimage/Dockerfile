@@ -95,6 +95,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 `# Dependency for building a deb package` \
     devscripts \
 `# Other Gaphor dependencies` \
+    gnome-settings-daemon-schemas \
     graphviz \
 `# Python deadsnakes` \
     python$PY_VERSION \
