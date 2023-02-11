@@ -349,6 +349,10 @@ jobs:
         uses: actions/setup-python@v4.5.0
         with:
           python-version: ${{ env.python_version }}
+      - name: Install pipx
+        run: |
+          python -m pip install pipx
+          pipx ensurepath
       - name: Use Python Dependency Cache
         uses: actions/cache@v3.2.4
         with:
