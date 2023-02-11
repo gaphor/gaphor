@@ -150,5 +150,12 @@ general_tools = ToolSection(
             "<Shift>K",
             new_item_factory(general.CommentLineItem),
         ),
+        ToolDef(
+            "toolbox-metadata",
+            gettext("Diagram metadata"),
+            "gaphor-comment-line-symbolic",
+            None,
+            new_item_factory(general.MetadataItem),
+        ),
     ),
 )
