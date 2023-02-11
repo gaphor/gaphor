@@ -81,6 +81,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pytest \
     python3-lxml \
     python3-wheel \
+    python3-setuptools \
     ragel \
     shared-mime-info \
     trang \

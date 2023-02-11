@@ -7,8 +7,11 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Install pipx
+      run: python3 -m pip install pipx
+      shell: bash
     - name: Install Poetry
-      run: python3 -m pip install poetry==1.3.2
+      run: pipx install poetry==1.3.2
       shell: bash
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
