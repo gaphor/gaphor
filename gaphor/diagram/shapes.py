@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import replace
+from enum import Enum
 from math import pi
 from typing import Callable
 
@@ -75,10 +76,19 @@ def draw_border(box, context: DrawContext, bounding_box: Rectangle):
 
 
 def draw_top_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
-    x, y, w, h = bounding_box
+    x, y, w, _h = bounding_box
     cr = context.cairo
     cr.move_to(x, y)
     cr.line_to(x + w, y)
+
+    stroke(context, fill=False)
+
+
+def draw_left_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
+    x, y, _w, h = bounding_box
+    cr = context.cairo
+    cr.move_to(x, y)
+    cr.line_to(x, y + h)
 
     stroke(context, fill=False)
 
@@ -109,6 +119,11 @@ def ellipse(cr, x, y, w, h, dc=None):
     cr.close_path()
 
 
+class Orientation(Enum):
+    VERTICAL = "v"
+    HORIZONTAL = "h"
+
+
 class Box:
     """A box like shape.
 
@@ -123,6 +138,7 @@ class Box:
     def __init__(
         self,
         *children,
+        orientation: Orientation = Orientation.VERTICAL,
         style: Style | None = None,
         draw: Callable[[Box, DrawContext, Rectangle], None] | None = None,
     ):
@@ -130,6 +146,7 @@ class Box:
             style = {}
         self.children = children
         self.sizes: list[tuple[int, int]] = []
+        self._orientation = orientation
         self._inline_style = style
         self._draw_border = draw
 
@@ -150,20 +167,31 @@ class Box:
         self.sizes = sizes = [c.size(context) for c in self.children]
         if sizes:
             widths, heights = list(zip(*sizes))
+            is_vertical = self._orientation == Orientation.VERTICAL
             return (
                 max(
                     min_width,
-                    max(widths) + padding_right + padding_left,
+                    (max(widths) if is_vertical else sum(widths))
+                    + padding_right
+                    + padding_left,
                 ),
                 max(
                     min_height,
-                    sum(heights) + padding_top + padding_bottom,
+                    (sum(heights) if is_vertical else max(heights))
+                    + padding_top
+                    + padding_bottom,
                 ),
             )
         else:
             return min_width, min_height
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
+        if self._orientation == Orientation.VERTICAL:
+            self.draw_vertical(context, bounding_box)
+        else:
+            self.draw_horizontal(context, bounding_box)
+
+    def draw_vertical(self, context: DrawContext, bounding_box: Rectangle):
         style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
@@ -212,6 +240,50 @@ class Box:
                     h = avg_height
                 c.draw(context, Rectangle(x, y, w, h))
                 y += h
+
+    def draw_horizontal(self, context: DrawContext, bounding_box: Rectangle):
+        style = merge_styles(context.style, self._inline_style)
+        new_context = replace(context, style=style)
+        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
+        sizes = self.sizes
+
+        justify_content = style.get("justify-content", JustifyContent.CENTER)
+
+        if justify_content is JustifyContent.STRETCH and sizes:
+            width = bounding_box.width
+            avg_width = width / len(sizes)
+            oversized = [w for w, _h in sizes if w > avg_width]
+            d = len(sizes) - len(oversized)
+            avg_width = (width - sum(oversized)) / d if d > 0 else 0
+        else:
+            width = sum(w for w, _h in sizes)
+            avg_width = 0
+
+        if justify_content is JustifyContent.CENTER:
+            x = (
+                bounding_box.x
+                + padding_left
+                + (max(width, bounding_box.width - padding_left) - width) / 2
+            )
+        elif justify_content is JustifyContent.END:
+            x = bounding_box.x + bounding_box.width - width - padding_right
+        else:
+            x = bounding_box.x + padding_left
+
+        if self._draw_border:
+            self._draw_border(self, new_context, bounding_box)
+
+        y = bounding_box.y + padding_top
+        h = bounding_box.height - padding_bottom - padding_top
+        if self.children:
+            last_child = self.children[-1]
+            for c, (w, _h) in zip(self.children, sizes):
+                if c is last_child and justify_content is JustifyContent.START:
+                    w = bounding_box.height - x
+                elif w < avg_width:
+                    w = avg_width
+                c.draw(context, Rectangle(x, y, w, h))
+                x += w
 
 
 class BoundedBox(Box):
