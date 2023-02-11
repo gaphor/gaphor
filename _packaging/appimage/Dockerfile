@@ -8,7 +8,7 @@ LABEL org.opencontainers.image.source=https://github.com/gaphor/gaphor
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     PY_VERSION="3.11" \
-    FONTCONFIG_VERSION="2.14.1" \
+    FONTCONFIG_VERSION="2.14.2" \
     GITHUB_CLI_VERSION="2.21.2" \
     DEBIAN_FRONTEND=noninteractive
 
