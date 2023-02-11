@@ -8,7 +8,9 @@ runs:
   using: composite
   steps:
     - name: Install pipx
-      run: python3 -m pip install pipx
+      run: |
+        python3 -m pip install pipx
+        pipx ensurepath
       shell: bash
     - name: Install Poetry
       run: pipx install poetry==1.3.2
