@@ -8,7 +8,7 @@ LABEL org.opencontainers.image.source=https://github.com/gaphor/gaphor
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     PY_VERSION="3.11" \
-    FONTCONFIG_VERSION="2.14.1" \
+    FONTCONFIG_VERSION="2.14.2" \
     GITHUB_CLI_VERSION="2.21.2" \
     DEBIAN_FRONTEND=noninteractive
 
@@ -81,6 +81,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-pytest \
     python3-lxml \
     python3-wheel \
+    python3-setuptools \
     ragel \
     shared-mime-info \
     trang \
@@ -95,6 +96,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 `# Dependency for building a deb package` \
     devscripts \
 `# Other Gaphor dependencies` \
+    gnome-settings-daemon-schemas \
     graphviz \
 `# Python deadsnakes` \
     python$PY_VERSION \
@@ -162,3 +164,7 @@ RUN jhbuild build \
 
 # Environmental variable needed to run GTK for gsettings schema
 ENV XDG_DATA_DIRS="/root/jhbuild/install/share:/usr/share"
+
+# Install pipx
+RUN python3 -m pip install pipx
+ENV PIPX_BIN_DIR=/root/.local/bin
