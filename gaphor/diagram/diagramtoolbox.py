@@ -15,6 +15,8 @@ from typing import (
     Type,
     TypeVar,
 )
+import getpass
+import time
 
 from gaphas.item import SE
 
@@ -95,6 +97,13 @@ def new_item_factory(
     return item_factory
 
 
+def metadata_config(metadata_item: general.MetadataItem) -> None:
+    metadata_item.createdBy = getpass.getuser()
+    metadata_item.description = metadata_item.diagram.name
+    metadata_item.revision = "1.0"
+    metadata_item.createdAt = time.strftime("%Y-%m-%d")
+
+
 general_tools = ToolSection(
     gettext("General"),
     (
@@ -155,7 +164,7 @@ general_tools = ToolSection(
             gettext("Diagram metadata"),
             "gaphor-comment-line-symbolic",
             None,
-            new_item_factory(general.MetadataItem),
+            new_item_factory(general.MetadataItem, config_func=metadata_config),
         ),
     ),
 )

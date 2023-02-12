@@ -30,6 +30,19 @@ class MetadataItem(ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
+        self.watch("createdBy", self.update_shapes).watch(
+            "website", self.update_shapes
+        ).watch("description", self.update_shapes).watch(
+            "revision", self.update_shapes
+        ).watch(
+            "license", self.update_shapes
+        ).watch(
+            "createdAt", self.update_shapes
+        ).watch(
+            "updatedAt", self.update_shapes
+        )
+
+    def update_shapes(self, event=None):
         group_style: Style = {"justify-content": JustifyContent.STRETCH}
         box_style: Style = {"padding": (4, 4, 4, 4)}
         text_style: Style = {
@@ -43,100 +56,151 @@ class MetadataItem(ElementPresentation):
         }
 
         self.shape = Box(
-            Box(
-                Box(
-                    Text(
-                        text=gettext("created by:"),
-                        style=heading_style,
-                    ),
-                    Text(
-                        text=lambda: self.createdBy or "",
-                        style=text_style,
-                    ),
-                    style=box_style,
-                ),
-                Box(
-                    Text(
-                        text=gettext("website:"),
-                        style=heading_style,
-                    ),
-                    Text(
-                        text=lambda: self.website or "",
-                        style=text_style,
-                    ),
-                    style=box_style,
-                    draw=draw_left_separator,
-                ),
-                orientation=Orientation.HORIZONTAL,
-                style=group_style,
+            *(
+                [
+                    Box(
+                        *(
+                            [
+                                Box(
+                                    Text(
+                                        text=gettext("created by:"),
+                                        style=heading_style,
+                                    ),
+                                    Text(
+                                        text=lambda: self.createdBy or "",
+                                        style=text_style,
+                                    ),
+                                    style=box_style,
+                                )
+                            ]
+                            if self.createdBy
+                            else []
+                        ),
+                        *(
+                            [
+                                Box(
+                                    Text(
+                                        text=gettext("website:"),
+                                        style=heading_style,
+                                    ),
+                                    Text(
+                                        text=lambda: self.website or "",
+                                        style=text_style,
+                                    ),
+                                    style=box_style,
+                                    draw=draw_left_separator,
+                                )
+                            ]
+                            if self.website
+                            else []
+                        ),
+                        orientation=Orientation.HORIZONTAL,
+                        style=group_style,
+                    )
+                ]
+                if self.createdBy or self.website
+                else []
             ),
-            Box(
-                Text(
-                    text=gettext("description:"),
-                    style=heading_style,
-                ),
-                Text(
-                    text=lambda: self.description or "",
-                    style=text_style,
-                ),
-                style=box_style,
-                draw=draw_top_separator,
+            *(
+                [
+                    Box(
+                        Text(
+                            text=gettext("description:"),
+                            style=heading_style,
+                        ),
+                        Text(
+                            text=lambda: self.description or "",
+                            style=text_style,
+                        ),
+                        style=box_style,
+                        draw=draw_top_separator,
+                    )
+                ]
+                if self.description
+                else []
             ),
-            Box(
-                Box(
-                    Text(
-                        text=gettext("revision:"),
-                        style=heading_style,
-                    ),
-                    Text(
-                        text=lambda: self.revision or "",
-                        style=text_style,
-                    ),
-                    style=box_style,
-                ),
-                Box(
-                    Text(
-                        text=gettext("license:"),
-                        style=heading_style,
-                    ),
-                    Text(
-                        text=lambda: self.license or "",
-                        style=text_style,
-                    ),
-                    style=box_style,
-                    draw=draw_left_separator,
-                ),
-                Box(
-                    Text(
-                        text=gettext("created at:"),
-                        style=heading_style,
-                    ),
-                    Text(
-                        text=lambda: self.createdAt or "",
-                        style=text_style,
-                    ),
-                    style=box_style,
-                    draw=draw_left_separator,
-                ),
-                Box(
-                    Text(
-                        text=gettext("updated at:"),
-                        style=heading_style,
-                    ),
-                    Text(
-                        text=lambda: self.updatedAt or "",
-                        style=text_style,
-                    ),
-                    style=box_style,
-                    draw=draw_left_separator,
-                ),
-                orientation=Orientation.HORIZONTAL,
-                style=group_style,
-                draw=draw_top_separator,
+            *(
+                [
+                    Box(
+                        *(
+                            [
+                                Box(
+                                    Text(
+                                        text=gettext("revision:"),
+                                        style=heading_style,
+                                    ),
+                                    Text(
+                                        text=lambda: self.revision or "",
+                                        style=text_style,
+                                    ),
+                                    style=box_style,
+                                )
+                            ]
+                            if self.revision
+                            else []
+                        ),
+                        *(
+                            [
+                                Box(
+                                    Text(
+                                        text=gettext("license:"),
+                                        style=heading_style,
+                                    ),
+                                    Text(
+                                        text=lambda: self.license or "",
+                                        style=text_style,
+                                    ),
+                                    style=box_style,
+                                    draw=draw_left_separator,
+                                )
+                            ]
+                            if self.license
+                            else []
+                        ),
+                        *(
+                            [
+                                Box(
+                                    Text(
+                                        text=gettext("created at:"),
+                                        style=heading_style,
+                                    ),
+                                    Text(
+                                        text=lambda: self.createdAt or "",
+                                        style=text_style,
+                                    ),
+                                    style=box_style,
+                                    draw=draw_left_separator,
+                                )
+                            ]
+                            if self.createdAt
+                            else []
+                        ),
+                        *(
+                            [
+                                Box(
+                                    Text(
+                                        text=gettext("updated at:"),
+                                        style=heading_style,
+                                    ),
+                                    Text(
+                                        text=lambda: self.updatedAt or "",
+                                        style=text_style,
+                                    ),
+                                    style=box_style,
+                                    draw=draw_left_separator,
+                                )
+                            ]
+                            if self.updatedAt
+                            else []
+                        ),
+                        orientation=Orientation.HORIZONTAL,
+                        style=group_style,
+                        draw=draw_top_separator,
+                    )
+                ]
+                if self.revision or self.license or self.createdAt or self.updatedAt
+                else []
             ),
             draw=draw_border,
             style=group_style,
         )
-        self.watch("createdBy").watch("website").watch("description").watch(
-            "revision"
-        ).watch("license").watch("createdAt").watch("updatedAt")
