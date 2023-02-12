@@ -35,7 +35,7 @@
   <object class="GtkBox" id="technology-editor">
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkLabel" id="label4">
+      <object class="GtkLabel">
         <property name="label" translatable="yes">Technology</property>
         <property name="xalign">0</property>
         <style>

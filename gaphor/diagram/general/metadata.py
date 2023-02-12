@@ -20,8 +20,8 @@ from gaphor.i18n import gettext
 
 class MetadataItem(ElementPresentation):
     createdBy: attribute[str] = attribute("createdBy", str, "")
-    website: attribute[str] = attribute("website", str, "")
     description: attribute[str] = attribute("description", str, "")
+    website: attribute[str] = attribute("website", str, "")
     revision: attribute[str] = attribute("revision", str, "")
     license: attribute[str] = attribute("license", str, "")
     createdAt: attribute[str] = attribute("createdAt", str, "")
@@ -29,15 +29,6 @@ class MetadataItem(ElementPresentation):
 
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
-
-        # Some test data:
-        self.createdBy = "Alice A. Gaphor"
-        self.website = "https://gaphor.org"
-        self.description = "Prototype model SX-1"
-        self.revision = "0.1A"
-        self.license = "CC-PDDC"
-        self.createdAt = "2021-06-11"
-        self.updatedAt = "2021-12-06"
 
         group_style: Style = {"justify-content": JustifyContent.STRETCH}
         box_style: Style = {"padding": (4, 4, 4, 4)}
@@ -146,4 +137,6 @@ class MetadataItem(ElementPresentation):
             draw=draw_border,
             style=group_style,
         )
-        self.watch("description")
+        self.watch("createdBy").watch("website").watch("description").watch(
+            "revision"
+        ).watch("license").watch("createdAt").watch("updatedAt")
