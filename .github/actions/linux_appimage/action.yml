@@ -19,7 +19,6 @@ runs:
       run: |
         jhbuild shell
         poetry run poe package
-        glib-compile-schemas _packaging/dist/gaphor/share/glib-2.0/schemas
         cd _packaging/appimage
         make dist
       shell: bash
