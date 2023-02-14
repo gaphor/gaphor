@@ -9,6 +9,7 @@ ICONS=diagram \
 	ellipse \
 	comment \
 	comment-line \
+	metadata \
 	class \
 	data-type \
 	enumeration \

@@ -162,7 +162,7 @@ general_tools = ToolSection(
         ToolDef(
             "toolbox-metadata",
             gettext("Diagram metadata"),
-            "gaphor-comment-line-symbolic",
+            "gaphor-metadata-symbolic",
             None,
             new_item_factory(general.MetadataItem, config_func=metadata_config),
         ),

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="16.003952"
+   height="16.003952"
+   viewBox="0 0 4.2343789 4.2343791"
+   version="1.1"
+   id="svg4268"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs4262" />
+  <metadata
+     id="metadata4265">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="metadata"
+     transform="translate(-17.197521,-58.20769)">
+    <path
+       style="color:#000000;display:inline;fill:#000000;-inkscape-stroke:none"
+       d="m 17.726692,60.747656 v 0.371094 h 3.175782 v -0.371094 z"
+       id="path4895-6" />
+    <path
+       style="color:#000000;display:inline;fill:#000000;-inkscape-stroke:none"
+       d="m 17.726693,59.53125 v 0.371094 h 3.175781 V 59.53125 Z"
+       id="path4895-35" />
+    <g
+       id="rect4893-7-36"
+       style="display:inline"
+       transform="translate(-52.652086,53.572926)">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 70.114586,4.899991 h 3.704167 v 3.7041669 h -3.704167 z"
+         id="path3592-7" />
+      <path
+         style="color:#000000;fill:#000000;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 70.115234,4.6347656 a 0.26460996,0.26460996 0 0 0 -0.265625,0.265625 v 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,0.265625 h 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,-0.265625 v -3.703125 a 0.26460996,0.26460996 0 0 0 -0.265625,-0.265625 z m 0.263672,0.5292969 h 3.175781 v 3.1757813 h -3.175781 z"
+         id="path3594-5" />
+    </g>
+    <path
+       style="color:#000000;fill:#000000;stroke-width:1.5;stroke-dasharray:none"
+       d="m 19.181771,60.854167 v 1.058593 h 0.265625 v -1.058593 z"
+       id="path3139" />
+    <path
+       style="color:#000000;fill:#000000;-inkscape-stroke:none"
+       d="m 19.181641,58.738281 v 1.056641 h 0.265625 v -1.056641 z"
+       id="path3141" />
+  </g>
+</svg>

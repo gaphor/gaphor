@@ -6,7 +6,7 @@
    version="1.1"
    id="svg4268"
    sodipodi:docname="stencil.svg"
-   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -59,11 +59,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.1443315"
-     inkscape:cx="109.24421"
-     inkscape:cy="67.422916"
+     inkscape:zoom="25.154652"
+     inkscape:cx="81.177828"
+     inkscape:cy="221.62899"
      inkscape:document-units="px"
-     inkscape:current-layer="pointer"
+     inkscape:current-layer="metadata"
      showgrid="true"
      units="px"
      inkscape:window-width="1920"
@@ -1670,6 +1670,40 @@
        width="4.2333331"
        id="rect1875"
        style="display:inline;overflow:visible;visibility:visible;fill:#f0f0f0;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.132292;marker:none;enable-background:accumulate" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="metadata"
+     inkscape:label="metadata">
+    <path
+       style="color:#000000;display:inline;fill:#000000;-inkscape-stroke:none"
+       d="m 17.726692,60.747656 v 0.371094 h 3.175782 v -0.371094 z"
+       id="path4895-6" />
+    <path
+       style="color:#000000;display:inline;fill:#000000;-inkscape-stroke:none"
+       d="m 17.726693,59.53125 v 0.371094 h 3.175781 V 59.53125 Z"
+       id="path4895-35" />
+    <g
+       id="rect4893-7-36"
+       style="display:inline"
+       transform="translate(-52.652086,53.572926)">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 70.114586,4.899991 h 3.704167 v 3.7041669 h -3.704167 z"
+         id="path3592-7" />
+      <path
+         style="color:#000000;fill:#000000;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 70.115234,4.6347656 a 0.26460996,0.26460996 0 0 0 -0.265625,0.265625 v 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,0.265625 h 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,-0.265625 v -3.703125 a 0.26460996,0.26460996 0 0 0 -0.265625,-0.265625 z m 0.263672,0.5292969 h 3.175781 v 3.1757813 h -3.175781 z"
+         id="path3594-5" />
+    </g>
+    <path
+       style="color:#000000;fill:#000000;stroke-width:1.5;stroke-dasharray:none"
+       d="m 19.181771,60.854167 v 1.058593 h 0.265625 v -1.058593 z"
+       id="path3139" />
+    <path
+       style="color:#000000;fill:#000000;-inkscape-stroke:none"
+       d="m 19.181641,58.738281 v 1.056641 h 0.265625 v -1.056641 z"
+       id="path3141" />
   </g>
   <g
      inkscape:groupmode="layer"
