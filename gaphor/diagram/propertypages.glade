@@ -137,7 +137,7 @@ renderers and such.</property>
     <child>
       <object class="GtkLabel">
         <property name="visible">1</property>
-        <property name="label" translatable="yes">Created by</property>
+        <property name="label" translatable="yes">Created By</property>
         <property name="xalign">0</property>
         <style>
           <class name="title"/>
@@ -217,7 +217,7 @@ renderers and such.</property>
     <child>
       <object class="GtkLabel">
         <property name="visible">1</property>
-        <property name="label" translatable="yes">Created at</property>
+        <property name="label" translatable="yes">Created On</property>
         <property name="xalign">0</property>
         <style>
           <class name="title"/>
@@ -225,15 +225,15 @@ renderers and such.</property>
       </object>
     </child>
     <child>
-      <object class="GtkEntry" id="created-at">
+      <object class="GtkEntry" id="created-on">
         <property name="visible">1</property>
-        <signal name="changed" handler="created-at-changed" swapped="no"/>
+        <signal name="changed" handler="created-on-changed" swapped="no"/>
       </object>
     </child>
     <child>
       <object class="GtkLabel">
         <property name="visible">1</property>
-        <property name="label" translatable="yes">Updated at</property>
+        <property name="label" translatable="yes">Updated On</property>
         <property name="xalign">0</property>
         <style>
           <class name="title"/>
@@ -241,9 +241,9 @@ renderers and such.</property>
       </object>
     </child>
     <child>
-      <object class="GtkEntry" id="updated-at">
+      <object class="GtkEntry" id="updated-on">
         <property name="visible">1</property>
-        <signal name="changed" handler="updated-at-changed" swapped="no"/>
+        <signal name="changed" handler="updated-on-changed" swapped="no"/>
       </object>
     </child>
     <style>

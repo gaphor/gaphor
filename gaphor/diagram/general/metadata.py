@@ -63,7 +63,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=gettext("created by:"),
+                                        text=f'{gettext("Created By")}:',
                                         style=heading_style,
                                     ),
                                     Text(
@@ -80,7 +80,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=gettext("website:"),
+                                        text=f'{gettext("Website")}:',
                                         style=heading_style,
                                     ),
                                     Text(
@@ -105,7 +105,7 @@ class MetadataItem(ElementPresentation):
                 [
                     Box(
                         Text(
-                            text=gettext("description:"),
+                            text=f'{gettext("Description")}:',
                             style=heading_style,
                         ),
                         Text(
@@ -126,7 +126,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=gettext("revision:"),
+                                        text=f'{gettext("Revision")}:',
                                         style=heading_style,
                                     ),
                                     Text(
@@ -143,7 +143,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=gettext("license:"),
+                                        text=f'{gettext("License")}:',
                                         style=heading_style,
                                     ),
                                     Text(
@@ -161,7 +161,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=gettext("created at:"),
+                                        text=f'{gettext("Created On")}:',
                                         style=heading_style,
                                     ),
                                     Text(
@@ -179,7 +179,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=gettext("updated at:"),
+                                        text=f'{gettext("Updated On")}:',
                                         style=heading_style,
                                     ),
                                     Text(

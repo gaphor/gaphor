@@ -98,7 +98,7 @@
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkLabel">
-        <property name="label" translatable="yes">Created by</property>
+        <property name="label" translatable="yes">Created By</property>
         <property name="xalign">0</property>
         <style>
           <class name="title"/>
@@ -168,7 +168,7 @@
     </child>
     <child>
       <object class="GtkLabel">
-        <property name="label" translatable="yes">Created at</property>
+        <property name="label" translatable="yes">Created On</property>
         <property name="xalign">0</property>
         <style>
           <class name="title"/>
@@ -176,13 +176,13 @@
       </object>
     </child>
     <child>
-      <object class="GtkEntry" id="created-at">
-        <signal name="changed" handler="created-at-changed" swapped="no"/>
+      <object class="GtkEntry" id="created-on">
+        <signal name="changed" handler="created-on-changed" swapped="no"/>
       </object>
     </child>
     <child>
       <object class="GtkLabel">
-        <property name="label" translatable="yes">Updated at</property>
+        <property name="label" translatable="yes">Updated On</property>
         <property name="xalign">0</property>
         <style>
           <class name="title"/>
@@ -190,8 +190,8 @@
       </object>
     </child>
     <child>
-      <object class="GtkEntry" id="updated-at">
-        <signal name="changed" handler="updated-at-changed" swapped="no"/>
+      <object class="GtkEntry" id="updated-on">
+        <signal name="changed" handler="updated-on-changed" swapped="no"/>
       </object>
     </child>
     <style>
