@@ -1,7 +1,7 @@
 """Load and save Gaphor models to Gaphors own XML format.
 
-Three functions are exported: load(filename)     load a model from a
-file save(filename)     store the current model in a file
+Three functions are exported: `load(file_obj)`loads a model from a
+file. `save(file_obj)` stores the current model in a file.
 """
 
 __all__ = ["load", "save"]
@@ -236,13 +236,13 @@ def _load_attributes_and_references(elements, update_status_queue):
                     elem.element.load(name, ref.element)
 
 
-def load(filename, factory, modeling_language, status_queue=None):
+def load(file_obj, factory, modeling_language, status_queue=None):
     """Load a file and create a model if possible.
 
     Optionally, a status queue function can be given, to which the
     progress is written (as status_queue(progress)).
     """
-    for status in load_generator(filename, factory, modeling_language):
+    for status in load_generator(file_obj, factory, modeling_language):
         if status_queue:
             status_queue(status)
 
