@@ -64,8 +64,8 @@ class MetadataPropertyPage(PropertyPageBase):
             "website",
             "revision",
             "license",
-            "createdAt",
-            "updatedAt",
+            "createdOn",
+            "updatedOn",
         ]
 
         builder = new_builder(

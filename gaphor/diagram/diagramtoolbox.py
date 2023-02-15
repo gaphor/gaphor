@@ -101,7 +101,7 @@ def metadata_config(metadata_item: general.MetadataItem) -> None:
     metadata_item.createdBy = getpass.getuser()
     metadata_item.description = metadata_item.diagram.name
     metadata_item.revision = "1.0"
-    metadata_item.createdAt = time.strftime("%Y-%m-%d")
+    metadata_item.createdOn = time.strftime("%Y-%m-%d")
 
 
 general_tools = ToolSection(

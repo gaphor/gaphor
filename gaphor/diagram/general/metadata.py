@@ -24,8 +24,8 @@ class MetadataItem(ElementPresentation):
     website: attribute[str] = attribute("website", str, "")
     revision: attribute[str] = attribute("revision", str, "")
     license: attribute[str] = attribute("license", str, "")
-    createdAt: attribute[str] = attribute("createdAt", str, "")
-    updatedAt: attribute[str] = attribute("updatedAt", str, "")
+    createdOn: attribute[str] = attribute("createdOn", str, "")
+    updatedOn: attribute[str] = attribute("updatedOn", str, "")
 
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
@@ -37,9 +37,9 @@ class MetadataItem(ElementPresentation):
         ).watch(
             "license", self.update_shapes
         ).watch(
-            "createdAt", self.update_shapes
+            "createdOn", self.update_shapes
         ).watch(
-            "updatedAt", self.update_shapes
+            "updatedOn", self.update_shapes
         )
 
     def update_shapes(self, event=None):
@@ -165,14 +165,14 @@ class MetadataItem(ElementPresentation):
                                         style=heading_style,
                                     ),
                                     Text(
-                                        text=lambda: self.createdAt or "",
+                                        text=lambda: self.createdOn or "",
                                         style=text_style,
                                     ),
                                     style=box_style,
                                     draw=draw_left_separator,
                                 )
                             ]
-                            if self.createdAt
+                            if self.createdOn
                             else []
                         ),
                         *(
@@ -183,14 +183,14 @@ class MetadataItem(ElementPresentation):
                                         style=heading_style,
                                     ),
                                     Text(
-                                        text=lambda: self.updatedAt or "",
+                                        text=lambda: self.updatedOn or "",
                                         style=text_style,
                                     ),
                                     style=box_style,
                                     draw=draw_left_separator,
                                 )
                             ]
-                            if self.updatedAt
+                            if self.updatedOn
                             else []
                         ),
                         orientation=Orientation.HORIZONTAL,
@@ -198,7 +198,7 @@ class MetadataItem(ElementPresentation):
                         draw=draw_top_separator,
                     )
                 ]
-                if self.revision or self.license or self.createdAt or self.updatedAt
+                if self.revision or self.license or self.createdOn or self.updatedOn
                 else []
             ),
             draw=draw_border,
