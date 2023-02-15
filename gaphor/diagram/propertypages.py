@@ -290,6 +290,19 @@ def handler_blocking(widget, event_name, widget_handler):
     return handler_wrapper
 
 
+def _do_unparent(widget, _pspec, watcher):
+    if not widget.props.parent:
+        watcher.unsubscribe_all()
+
+
+def unsubscribe_all_on_destroy(widget, watcher):
+    if Gtk.get_major_version() == 3:
+        widget.connect("destroy", watcher.unsubscribe_all)
+    else:
+        widget.connect("notify::parent", _do_unparent, watcher)
+    return widget
+
+
 @PropertyPages.register(gaphas.item.Line)
 class LineStylePage(PropertyPageBase):
     """Basic line style properties: color, orthogonal, etc."""

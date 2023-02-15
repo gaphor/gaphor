@@ -217,7 +217,6 @@
 
   <object class="GtkBox" id="transition-editor">
     <property name="orientation">vertical</property>
-    <signal name="destroy" handler="transition-destroy" swapped="no"/>
     <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Guard</property>
@@ -261,7 +260,6 @@
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
-                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>

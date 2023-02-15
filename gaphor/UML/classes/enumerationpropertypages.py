@@ -8,6 +8,7 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     help_link,
     on_text_cell_edited,
+    unsubscribe_all_on_destroy,
 )
 from gaphor.transaction import transactional
 from gaphor.UML.classes.classespropertypages import (
@@ -45,7 +46,6 @@ class EnumerationPage(PropertyPageBase):
             signals={
                 "show-enumerations-changed": (self._on_show_enumerations_change,),
                 "enumerations-name-edited": (on_text_cell_edited, self.model, 0),
-                "tree-view-destroy": (self.watcher.unsubscribe_all,),
                 "enumerations-info-clicked": (self.on_enumerations_info_clicked),
             },
         )
@@ -78,7 +78,9 @@ class EnumerationPage(PropertyPageBase):
 
         self.watcher.watch("ownedLiteral.name", handler)
 
-        return builder.get_object("enumerations-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("enumerations-editor"), self.watcher
+        )
 
     @transactional
     def _on_show_enumerations_change(self, button, gparam):

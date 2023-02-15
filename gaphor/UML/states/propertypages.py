@@ -13,6 +13,7 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     handler_blocking,
     new_resource_builder,
+    unsubscribe_all_on_destroy,
 )
 from gaphor.UML.states.state import StateItem
 from gaphor.UML.states.statemachine import StateMachineItem
@@ -39,9 +40,6 @@ class TransitionPropertyPage(PropertyPageBase):
 
         builder = new_builder(
             "transition-editor",
-            signals={
-                "transition-destroy": (self.watcher.unsubscribe_all,),
-            },
         )
 
         guard = builder.get_object("guard")
@@ -55,7 +53,9 @@ class TransitionPropertyPage(PropertyPageBase):
 
         self.watcher.watch("guard[Constraint].specification", handler)
 
-        return builder.get_object("transition-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("transition-editor"), self.watcher
+        )
 
     @transactional
     def _on_guard_change(self, entry):

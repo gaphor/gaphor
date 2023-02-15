@@ -21,7 +21,6 @@ renderers and such.</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
     <property name="baseline-position">top</property>
-    <signal name="destroy" handler="container-destroyed" swapped="no"/>
     <child>
       <object class="GtkLabel" id="label2">
         <property name="visible">1</property>

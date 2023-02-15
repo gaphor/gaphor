@@ -1,6 +1,7 @@
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
+    unsubscribe_all_on_destroy,
     PropertyPageBase,
     PropertyPages,
     combo_box_text_auto_complete,
@@ -35,7 +36,7 @@ class MetaclassPropertyPage(PropertyPageBase):
         if _issubclass(getattr(UML, c), UML.Element) and c != "Stereotype"
     )
 
-    def __init__(self, subject):
+    def __init__(self, subject: UML.Class):
         self.subject = subject
         self.watcher = subject.watcher()
 
@@ -47,7 +48,6 @@ class MetaclassPropertyPage(PropertyPageBase):
             "metaclass-editor",
             signals={
                 "metaclass-combo-changed": (self._on_name_changed,),
-                "metaclass-combo-destroy": (self.watcher.unsubscribe_all,),
             },
         )
 
@@ -65,7 +65,9 @@ class MetaclassPropertyPage(PropertyPageBase):
 
         self.watcher.watch("name", handler)
 
-        return builder.get_object("metaclass-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("metaclass-editor"), self.watcher
+        )
 
     @transactional
     def _on_name_changed(self, combo):

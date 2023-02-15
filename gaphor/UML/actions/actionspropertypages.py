@@ -7,6 +7,7 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     handler_blocking,
     new_resource_builder,
+    unsubscribe_all_on_destroy,
 )
 from gaphor.UML.actions.activitynodes import DecisionNodeItem, ForkNodeItem
 from gaphor.UML.actions.objectnode import ObjectNodeItem
@@ -174,9 +175,6 @@ class FlowPropertyPageAbstract(PropertyPageBase):
 
         builder = new_builder(
             "transition-editor",
-            signals={
-                "transition-destroy": (self.watcher.unsubscribe_all,),
-            },
         )
 
         guard = builder.get_object("guard")
@@ -190,7 +188,9 @@ class FlowPropertyPageAbstract(PropertyPageBase):
 
         self.watcher.watch("guard", handler)
 
-        return builder.get_object("transition-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("transition-editor"), self.watcher
+        )
 
     @transactional
     def _on_guard_change(self, entry):

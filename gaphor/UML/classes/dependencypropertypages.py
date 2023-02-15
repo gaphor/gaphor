@@ -1,5 +1,10 @@
 from gaphor import UML
-from gaphor.diagram.propertypages import ComboModel, PropertyPageBase, PropertyPages
+from gaphor.diagram.propertypages import (
+    ComboModel,
+    PropertyPageBase,
+    PropertyPages,
+    unsubscribe_all_on_destroy,
+)
 from gaphor.i18n import gettext
 from gaphor.transaction import transactional
 from gaphor.UML.classes.classespropertypages import new_builder
@@ -28,7 +33,6 @@ class DependencyPropertyPage(PropertyPageBase):
             signals={
                 "dependency-type-changed": (self._on_dependency_type_change,),
                 "automatic-changed": (self._on_auto_dependency_change,),
-                "dependency-type-destroy": (self.watcher.unsubscribe_all,),
             },
         )
 
@@ -44,7 +48,9 @@ class DependencyPropertyPage(PropertyPageBase):
 
         self.watcher.watch("subject", self._on_subject_change)
 
-        return self.builder.get_object("dependency-editor")
+        return unsubscribe_all_on_destroy(
+            self.builder.get_object("dependency-editor"), self.watcher
+        )
 
     def _on_subject_change(self, event):
         self.update()

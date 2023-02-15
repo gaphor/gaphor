@@ -15,6 +15,7 @@ from gaphor.diagram.propertypages import (
     new_resource_builder,
     on_bool_cell_edited,
     on_text_cell_edited,
+    unsubscribe_all_on_destroy,
 )
 from gaphor.UML.classes.datatype import DataTypeItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
@@ -207,9 +208,6 @@ class NamedElementPropertyPage(PropertyPageBase):
         assert self.watcher
         builder = new_builder(
             "named-element-editor",
-            signals={
-                "name-entry-destroyed": (self.watcher.unsubscribe_all,),
-            },
         )
 
         subject = self.subject
@@ -224,7 +222,9 @@ class NamedElementPropertyPage(PropertyPageBase):
 
         self.watcher.watch("name", handler)
 
-        return builder.get_object("named-element-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("named-element-editor"), self.watcher
+        )
 
     @transactional
     def _on_name_changed(self, entry):
@@ -322,7 +322,6 @@ class AttributesPage(PropertyPageBase):
                 "show-attributes-changed": (self._on_show_attributes_change,),
                 "attributes-name-edited": (on_text_cell_edited, self.model, 0),
                 "attributes-static-edited": (on_bool_cell_edited, self.model, 1),
-                "tree-view-destroy": (self.watcher.unsubscribe_all,),
                 "attributes-info-clicked": (self.on_attributes_info_clicked),
             },
         )
@@ -369,7 +368,9 @@ class AttributesPage(PropertyPageBase):
             "ownedAttribute.typeValue", handler
         )
 
-        return builder.get_object("attributes-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("attributes-editor"), self.watcher
+        )
 
     @transactional
     def _on_show_attributes_change(self, button, gparam):
@@ -409,7 +410,6 @@ class OperationsPage(PropertyPageBase):
                 "operations-name-edited": (on_text_cell_edited, self.model, 0),
                 "operations-abstract-edited": (on_bool_cell_edited, self.model, 1),
                 "operations-static-edited": (on_bool_cell_edited, self.model, 2),
-                "tree-view-destroy": (self.watcher.unsubscribe_all,),
                 "operations-info-clicked": (self.on_operations_info_clicked),
             },
         )
@@ -458,7 +458,9 @@ class OperationsPage(PropertyPageBase):
             "ownedOperation.ownedParameter.defaultValue", handler
         )
 
-        return builder.get_object("operations-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("operations-editor"), self.watcher
+        )
 
     @transactional
     def _on_show_operations_change(self, button, gparam):
