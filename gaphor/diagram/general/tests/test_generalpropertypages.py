@@ -1,6 +1,10 @@
 from gaphor.core.modeling import Comment
-from gaphor.diagram.general.generalpropertypages import CommentPropertyPage
+from gaphor.diagram.general.generalpropertypages import (
+    CommentPropertyPage,
+    MetadataPropertyPage,
+)
 from gaphor.diagram.tests.fixtures import find
+from gaphor.diagram.general import MetadataItem
 
 
 def test_comment_property_page_body(element_factory):
@@ -26,3 +30,15 @@ def test_comment_property_page_update_text(element_factory):
     assert (
         buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter(), False) == "test"
     )
+
+
+def test_metadata_property_page(diagram):
+    metadata = diagram.create(MetadataItem)
+
+    property_page = MetadataPropertyPage(metadata)
+
+    widget = property_page.construct()
+    description = find(widget, "description")
+    description.set_text("my text")
+
+    assert metadata.description == "my text"

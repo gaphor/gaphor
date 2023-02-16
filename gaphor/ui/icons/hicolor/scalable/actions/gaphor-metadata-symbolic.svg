@@ -24,28 +24,36 @@
     </rdf:RDF>
   </metadata>
   <g
-     style="display:inline"
-     id="block"
-     transform="translate(-69.849607,-4.6347636)">
+     id="metadata"
+     transform="translate(-17.197521,-58.20769)">
+    <path
+       style="color:#000000;display:inline;fill:#000000;-inkscape-stroke:none"
+       d="m 17.726692,60.747656 v 0.371094 h 3.175782 v -0.371094 z"
+       id="path4895-6" />
+    <path
+       style="color:#000000;display:inline;fill:#000000;-inkscape-stroke:none"
+       d="m 17.726693,59.53125 v 0.371094 h 3.175781 V 59.53125 Z"
+       id="path4895-35" />
     <g
-       id="rect4893-7">
+       id="rect4893-7-36"
+       style="display:inline"
+       transform="translate(-52.652086,53.572926)">
       <path
          style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none"
          d="m 70.114586,4.899991 h 3.704167 v 3.7041669 h -3.704167 z"
-         id="path3592" />
+         id="path3592-7" />
       <path
          style="color:#000000;fill:#000000;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none"
          d="m 70.115234,4.6347656 a 0.26460996,0.26460996 0 0 0 -0.265625,0.265625 v 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,0.265625 h 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,-0.265625 v -3.703125 a 0.26460996,0.26460996 0 0 0 -0.265625,-0.265625 z m 0.263672,0.5292969 h 3.175781 v 3.1757813 h -3.175781 z"
-         id="path3594" />
+         id="path3594-5" />
     </g>
-    <g
-       aria-label="B"
-       transform="scale(1.1133449,0.89819427)"
-       id="text84-8"
-       style="font-weight:bold;font-size:3.80235px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';letter-spacing:0px;word-spacing:0px;display:inline;stroke-width:0.237647">
-      <path
-         d="m 63.843435,8.8882742 q -0.250956,0 -0.250956,-0.1901175 0,-0.1901175 0.250956,-0.1901175 h 0.05703 V 7.0517391 h -0.05703 q -0.250956,0 -0.250956,-0.1901175 0,-0.1102681 0.06464,-0.1482916 0.06844,-0.041826 0.186316,-0.041826 h 0.961994 q 0.3232,0 0.532329,0.1787105 0.212932,0.1787104 0.212932,0.4486773 0,0.2433504 -0.239548,0.4296655 0.403049,0.2015246 0.403049,0.5513408 0,0.2737692 -0.205327,0.4410726 -0.205327,0.1673034 -0.543736,0.1673034 z m 0.43727,-1.3004037 h 0.429665 q 0.205327,0 0.330805,-0.079849 0.12928,-0.083652 0.12928,-0.2129316 0,-0.1140705 -0.102664,-0.1787104 -0.102663,-0.06464 -0.281374,-0.06464 h -0.505712 z m 1.053251,0.7148418 q 0,-0.152094 -0.148292,-0.2433504 -0.148292,-0.091256 -0.391642,-0.091256 h -0.513317 v 0.5399337 h 0.665411 q 0.38784,0 0.38784,-0.2053273 z"
-         id="path1819" />
-    </g>
+    <path
+       style="color:#000000;fill:#000000;stroke-width:1.5;stroke-dasharray:none"
+       d="m 19.181771,60.854167 v 1.058593 h 0.265625 v -1.058593 z"
+       id="path3139" />
+    <path
+       style="color:#000000;fill:#000000;-inkscape-stroke:none"
+       d="m 19.181641,58.738281 v 1.056641 h 0.265625 v -1.056641 z"
+       id="path3141" />
   </g>
 </svg>
