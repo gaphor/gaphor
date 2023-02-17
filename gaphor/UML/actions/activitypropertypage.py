@@ -11,6 +11,7 @@ from gaphor.diagram.propertypages import (
     help_link,
     new_resource_builder,
     on_text_cell_edited,
+    unsubscribe_all_on_destroy,
 )
 from gaphor.UML.actions.activity import ActivityItem
 from gaphor.UML.classes.classespropertypages import on_keypress_event
@@ -77,7 +78,6 @@ class ActivityItemPage(PropertyPageBase):
             signals={
                 "parameter-edited": (on_text_cell_edited, self.model, 0),
                 "parameters-info-clicked": (self.on_parameters_info_clicked),
-                "tree-view-destroy": (self.watcher.unsubscribe_all,),
             },
         )
 
@@ -96,7 +96,9 @@ class ActivityItemPage(PropertyPageBase):
             tree_view.add_controller(controller)
         controller.connect("key-pressed", on_keypress_event, tree_view)
 
-        return builder.get_object("activity-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("activity-editor"), self.watcher
+        )
 
     def on_parameters_info_clicked(self, image, event):
         self.info.show()

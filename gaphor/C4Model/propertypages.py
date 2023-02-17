@@ -7,6 +7,7 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     handler_blocking,
     new_resource_builder,
+    unsubscribe_all_on_destroy,
 )
 
 
@@ -32,9 +33,6 @@ class DescriptionPropertyPage(PropertyPageBase):
         builder = new_builder(
             "description-editor",
             "description-text-buffer",
-            signals={
-                "container-destroyed": (self.watcher.unsubscribe_all,),
-            },
         )
         subject = self.subject
 
@@ -51,7 +49,9 @@ class DescriptionPropertyPage(PropertyPageBase):
 
         self.watcher.watch("description", text_handler)
 
-        return builder.get_object("description-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("description-editor"), self.watcher
+        )
 
     @transactional
     def _on_description_changed(self, buffer):

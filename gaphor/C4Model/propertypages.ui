@@ -6,7 +6,6 @@
 
   <object class="GtkBox" id="description-editor">
     <property name="orientation">vertical</property>
-    <signal name="destroy" handler="container-destroyed" swapped="no"/>
     <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Description</property>

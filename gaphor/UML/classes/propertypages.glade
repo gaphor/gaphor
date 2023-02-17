@@ -18,7 +18,6 @@ renderers and such.</property>
     <property name="visible">1</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
-    <signal name="destroy" handler="association-editor-destroy" swapped="no"/>
     <child>
       <object class="GtkBox">
         <property name="visible">1</property>
@@ -387,7 +386,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
-                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>
@@ -618,7 +616,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
       <object class="GtkEntry" id="name-entry">
         <property name="visible">1</property>
         <property name="can-focus">1</property>
-        <signal name="destroy" handler="name-entry-destroyed" swapped="no"/>
       </object>
       <packing>
         <property name="position">1</property>
@@ -672,7 +669,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
-                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>
@@ -826,7 +822,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
-                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>

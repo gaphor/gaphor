@@ -3,7 +3,12 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.core.format import format, parse
 from gaphor.diagram.hoversupport import widget_add_hover_support
-from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages, help_link
+from gaphor.diagram.propertypages import (
+    PropertyPageBase,
+    PropertyPages,
+    help_link,
+    unsubscribe_all_on_destroy,
+)
 from gaphor.transaction import transactional
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.classespropertypages import new_builder
@@ -104,7 +109,6 @@ class AssociationPropertyPage(PropertyPageBase):
                 "tail-navigation-changed": (self._on_end_navigability_change, tail),
                 "tail-aggregation-changed": (self._on_end_aggregation_change, tail),
                 "tail-info-clicked": (self._on_association_info_clicked,),
-                "association-editor-destroy": (self.watcher.unsubscribe_all,),
                 **head_signal_handlers,
                 **tail_signal_handlers,
             },
@@ -143,7 +147,9 @@ class AssociationPropertyPage(PropertyPageBase):
             restore_nav_handler,
         )
 
-        return builder.get_object("association-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("association-editor"), self.watcher
+        )
 
     @transactional
     def _on_show_direction_change(self, button, gparam):

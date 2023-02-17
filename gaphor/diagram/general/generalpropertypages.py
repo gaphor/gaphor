@@ -8,6 +8,7 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     handler_blocking,
     new_builder,
+    unsubscribe_all_on_destroy,
 )
 from gaphor.diagram.iconname import to_kebab_case
 
@@ -40,9 +41,10 @@ class CommentPropertyPage(PropertyPageBase):
                 buffer.set_text(event.new_value or "")
 
         self.watcher.watch("body", handler)
-        text_view.connect("destroy", self.watcher.unsubscribe_all)
 
-        return builder.get_object("comment-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("comment-editor"), self.watcher
+        )
 
     @transactional
     def _on_body_change(self, buffer):

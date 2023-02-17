@@ -1,6 +1,7 @@
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
+    unsubscribe_all_on_destroy,
     PropertyPageBase,
     PropertyPages,
     combo_box_text_auto_complete,
@@ -36,7 +37,6 @@ class RequirementPropertyPage(PropertyPageBase):
             "requirement-text-buffer",
             signals={
                 "requirement-id-changed": (self._on_id_changed,),
-                "requirement-destroyed": (self.watcher.unsubscribe_all,),
             },
         )
         subject = self.subject
@@ -57,7 +57,9 @@ class RequirementPropertyPage(PropertyPageBase):
 
         self.watcher.watch("text", text_handler)
 
-        return builder.get_object("requirement-editor")
+        return unsubscribe_all_on_destroy(
+            builder.get_object("requirement-editor"), self.watcher
+        )
 
     @transactional
     def _on_id_changed(self, entry):

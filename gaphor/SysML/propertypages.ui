@@ -172,7 +172,6 @@
 
   <object class="GtkBox" id="requirement-editor">
     <property name="orientation">vertical</property>
-    <signal name="destroy" handler="requirement-destroyed" swapped="no" />
     <child>
       <object class="GtkLabel" id="label1">
         <property name="label" translatable="yes">Id</property>

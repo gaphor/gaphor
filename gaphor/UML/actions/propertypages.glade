@@ -289,7 +289,6 @@ renderers and such.</property>
     <property name="margin-top">6</property>
     <property name="orientation">vertical</property>
     <property name="spacing">6</property>
-    <signal name="destroy" handler="transition-destroy" swapped="no"/>
     <child>
       <object class="GtkLabel">
         <property name="visible">1</property>
@@ -340,7 +339,6 @@ renderers and such.</property>
             <property name="enable-search">0</property>
             <property name="show-expanders">0</property>
             <property name="enable-grid-lines">horizontal</property>
-            <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
             <child internal-child="selection">
               <object class="GtkTreeSelection"/>
             </child>

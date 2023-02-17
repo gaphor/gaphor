@@ -4,7 +4,6 @@
 
   <object class="GtkBox" id="association-editor">
     <property name="orientation">vertical</property>
-    <signal name="destroy" handler="association-editor-destroy" swapped="no"/>
     <child>
       <object class="GtkBox">
         <child>
@@ -342,7 +341,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
-                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>
@@ -534,7 +532,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
     <child>
       <object class="GtkEntry" id="name-entry">
         <property name="focusable">1</property>
-        <signal name="destroy" handler="name-entry-destroyed" swapped="no"/>
       </object>
     </child>
     <style>
@@ -583,7 +580,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
-                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>
@@ -720,7 +716,6 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                 <property name="enable-search">0</property>
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
-                <signal name="destroy" handler="tree-view-destroy" swapped="no"/>
                 <child internal-child="selection">
                   <object class="GtkTreeSelection"/>
                 </child>
