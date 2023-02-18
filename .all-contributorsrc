@@ -1025,6 +1025,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "flipflop97",
+      "name": "Philip Goto",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13943260?v=4",
+      "profile": "https://github.com/flipflop97",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
