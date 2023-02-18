@@ -17,6 +17,7 @@ def session():
             "properties",
             "main_window",
             "model_browser",
+            "model_merge",
             "diagrams",
             "toolbox",
             "elementeditor",

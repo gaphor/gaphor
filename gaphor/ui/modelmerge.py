@@ -21,7 +21,7 @@ class ChangeSetModel:
         return None
 
 
-class ChangeSet(UIComponent):
+class ModelMerge(UIComponent):
     def __init__(self, event_manager, element_factory):
         self.element_factory = element_factory
         self.event_manager = event_manager
