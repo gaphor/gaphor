@@ -129,6 +129,7 @@ gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
 "auto_layout" = "gaphor.plugins.autolayout:AutoLayoutService"
+"model_merge" = "gaphor.ui.modelmerge:ModelMerge"
 
 [tool.poetry.plugins."gaphor.modelinglanguages"]
 "Core" = "gaphor.core.modeling.modelinglanguage:CoreModelingLanguage"
