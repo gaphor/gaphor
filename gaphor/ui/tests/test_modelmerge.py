@@ -1,7 +1,7 @@
 import pytest
 from gi.repository import Gtk
 
-from gaphor.ui.changeset import ChangeSet
+from gaphor.ui.modelmerge import ModelMerge
 
 skip_if_gtk3 = pytest.mark.skipif(
     Gtk.get_major_version() == 3,
@@ -10,8 +10,8 @@ skip_if_gtk3 = pytest.mark.skipif(
 
 
 @skip_if_gtk3
-def test_open_changeset(event_manager, element_factory):
-    change_set = ChangeSet(event_manager, element_factory)
+def test_open_model_merge(event_manager, element_factory):
+    change_set = ModelMerge(event_manager, element_factory)
 
     widget = change_set.open()
 
