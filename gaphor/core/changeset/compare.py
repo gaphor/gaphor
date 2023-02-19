@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import Iterable
 
-from gaphor.core.changeset.apply import ADD, REMOVE, UPDATE
 from gaphor.core.modeling import (
     Element,
     ElementChange,
@@ -43,7 +42,7 @@ def compare(
         e = current[key]
         yield create(
             ElementChange,
-            op=REMOVE,
+            op="remove",
             element_name=type(e).__name__,
             element_id=key,
         )
@@ -52,7 +51,7 @@ def compare(
         e = incoming[key]
         yield create(
             ElementChange,
-            op=ADD,
+            op="add",
             element_name=type(e).__name__,
             element_id=key,
         )
@@ -77,7 +76,7 @@ def updated_properties(current, incoming, create):
                 changes.append(
                     create(
                         RefChange,
-                        op=UPDATE if current else ADD,
+                        op="update" if current else "add",
                         element_id=incoming.id,
                         property_name=name,
                         property_ref=value.id,
@@ -89,7 +88,7 @@ def updated_properties(current, incoming, create):
             changes.extend(
                 create(
                     RefChange,
-                    op=ADD,
+                    op="add",
                     element_id=incoming.id,
                     property_name=name,
                     property_ref=v.id,
@@ -100,7 +99,7 @@ def updated_properties(current, incoming, create):
             changes.extend(
                 create(
                     RefChange,
-                    op=REMOVE,
+                    op="remove",
                     element_id=incoming.id,
                     property_name=name,
                     property_ref=o.id,
@@ -113,7 +112,7 @@ def updated_properties(current, incoming, create):
                 changes.append(
                     create(
                         ValueChange,
-                        op=UPDATE if current else ADD,
+                        op="update" if current else "add",
                         element_id=incoming.id,
                         property_name=name,
                         property_value=value,
