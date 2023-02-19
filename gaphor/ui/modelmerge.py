@@ -2,18 +2,20 @@ from __future__ import annotations
 
 from gi.repository import Gio, GObject, Gtk
 
-from gaphor.core.modeling import (
-    PendingChange,
-)
+from gaphor.event import ModelLoaded
+from gaphor.core.modeling import PendingChange, ElementChange
 from gaphor.i18n import translated_ui_string
 from gaphor.ui.abc import UIComponent
+from gaphor.core import event_handler
 
 
 class ChangeSetModel:
     def __init__(self, element_factory):
         self.element_factory = element_factory
         self.root = Gio.ListStore.new(ChangeItem.__gtype__)
-        for element in element_factory.select(PendingChange):
+
+    def update(self):
+        for element in self.element_factory.select(PendingChange):
             change_item = ChangeItem(element)
             self.root.append(change_item)
 
@@ -28,6 +30,14 @@ class ModelMerge(UIComponent):
         self.model = ChangeSetModel(element_factory)
         self.selection = None
         self.tree_view = None
+        event_manager.subscribe(self.on_model_loaded)
+
+    def shutdown(self):
+        self.event_manager.unsubscribe(self.on_model_loaded)
+
+    @event_handler(ModelLoaded)
+    def on_model_loaded(self, event):
+        self.model.update()
 
     def open(self):
         tree_model = Gtk.TreeListModel.new(
@@ -67,7 +77,11 @@ class ChangeItem(GObject.Object):
 
     def sync(self) -> None:
         element = self.element
-        self.label = element.element_name  # type: ignore
+        self.label = (
+            element.element_name
+            if isinstance(element, ElementChange)
+            else element.property_name  # type: ignore[attr-defined]
+        )
         self.applied = element.applied or False
 
 
