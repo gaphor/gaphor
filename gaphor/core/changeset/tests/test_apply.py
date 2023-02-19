@@ -1,11 +1,10 @@
 import pytest
 
-from gaphor.core.changeset.apply import ADD, REMOVE, apply_change
+from gaphor.core.changeset.apply import apply_change
 from gaphor.core.modeling import (
     Diagram,
     Element,
     ElementChange,
-    Presentation,
     RefChange,
     ValueChange,
 )
@@ -13,7 +12,7 @@ from gaphor.core.modeling import (
 
 def test_create_element(element_factory, modeling_language):
     change: ElementChange = element_factory.create(ElementChange)
-    change.op = ADD
+    change.op = "add"
     change.element_id = "12234"
     change.element_name = "Diagram"
 
@@ -22,25 +21,26 @@ def test_create_element(element_factory, modeling_language):
     diagram = next(element_factory.select(Diagram))
 
     assert diagram
+    assert element_factory.lookup(change.element_id)
+    assert change.applied
 
 
 def test_create_presentation(element_factory, modeling_language):
     diagram = element_factory.create(Diagram)
     change: ElementChange = element_factory.create(ElementChange)
-    change.op = ADD
+    change.op = "add"
     change.element_id = "12234"
     change.element_name = "Presentation"
 
     apply_change(change, element_factory, modeling_language, diagram=diagram)
 
-    presentation = next(element_factory.select(Presentation))
-
-    assert presentation
+    assert element_factory.lookup(change.element_id)
+    assert change.applied
 
 
 def test_create_presentation_without_diagram(element_factory, modeling_language):
     change: ElementChange = element_factory.create(ElementChange)
-    change.op = ADD
+    change.op = "add"
     change.element_id = "12234"
     change.element_name = "Presentation"
 
@@ -51,13 +51,14 @@ def test_create_presentation_without_diagram(element_factory, modeling_language)
 def test_remove_element(element_factory, modeling_language):
     diagram = element_factory.create(Diagram)
     change: ElementChange = element_factory.create(ElementChange)
-    change.op = REMOVE
+    change.op = "remove"
     change.element_id = diagram.id
     change.element_name = "Diagram"
 
     apply_change(change, element_factory, modeling_language)
 
     assert diagram not in element_factory
+    assert change.applied
 
 
 def test_update_value(element_factory, modeling_language):
@@ -70,13 +71,14 @@ def test_update_value(element_factory, modeling_language):
     apply_change(change, element_factory, modeling_language)
 
     assert diagram.name == "new value"
+    assert change.applied
 
 
 def test_add_relation(element_factory, modeling_language):
     element = element_factory.create(Element)
     diagram = element_factory.create(Diagram)
     change: RefChange = element_factory.create(RefChange)
-    change.op = ADD
+    change.op = "add"
     change.element_id = diagram.id
     change.property_name = "element"
     change.property_ref = element.id
@@ -84,6 +86,7 @@ def test_add_relation(element_factory, modeling_language):
     apply_change(change, element_factory, modeling_language)
 
     assert diagram.element is element
+    assert change.applied
 
 
 def test_remove_single_relation(element_factory, modeling_language):
@@ -92,7 +95,7 @@ def test_remove_single_relation(element_factory, modeling_language):
     diagram.element = element
 
     change: RefChange = element_factory.create(RefChange)
-    change.op = REMOVE
+    change.op = "remove"
     change.element_id = diagram.id
     change.property_name = "element"
     change.property_ref = element.id
@@ -108,7 +111,7 @@ def test_remove_many_relation(element_factory, modeling_language):
     diagram.element = element
 
     change: RefChange = element_factory.create(RefChange)
-    change.op = REMOVE
+    change.op = "remove"
     change.element_id = element.id
     change.property_name = "ownedDiagram"
     change.property_ref = diagram.id
