@@ -26,8 +26,9 @@ def compare(
     """Compare two models.
 
     Changes are recorded in the current model as `PendingChange` objects
-    (`ElementChange`, `ValueChange`, `RefChange`). Returns an iterable
-    of the added change objects
+    (`ElementChange`, `ValueChange`, `RefChange`).
+
+    Returns an iterable of the added change objects.
     """
     current_keys = set(current.keys())
     incoming_keys = set(incoming.keys())

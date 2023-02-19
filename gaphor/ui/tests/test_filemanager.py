@@ -79,6 +79,18 @@ def test_load_model_with_merge_conflict(
     file_manager.resolve_merge_conflict(model_file, resolution)
 
 
+def test_load_model_merge_conflict_and_manual_resolution(
+    file_manager: FileManager, test_models, element_factory
+):
+    model_file = test_models / "merge-conflict.gaphor"
+
+    file_manager.resolve_merge_conflict(model_file, "manual")
+
+    from gaphor.core.modeling import PendingChange
+
+    assert element_factory.lselect(PendingChange)
+
+
 def test_load_model_with_merge_conflict_and_unknown_resolution(
     file_manager: FileManager, test_models
 ):
