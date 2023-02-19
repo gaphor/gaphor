@@ -8,23 +8,27 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 19:23+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-02-19 15:40+0000\n"
+"Last-Translator: Michał Dominik <fancy0duck@duck.com>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/gaphor/gaphor/pl/>"
+"\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.16-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
 #: gaphor/ui/greeter.py:58
 msgid "C4 Model"
-msgstr ""
+msgstr "Model C4"
 
 #: gaphor/C4Model/propertypages.glade:28 gaphor/C4Model/propertypages.ui:12
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #: gaphor/C4Model/propertypages.glade:75 gaphor/C4Model/propertypages.ui:39
 msgid "Technology"
@@ -78,61 +82,61 @@ msgstr ""
 
 #: gaphor/C4Model/toolbox.py:139
 msgid "New C4 Diagram"
-msgstr ""
+msgstr "Nowy diagram C4"
 
 #: gaphor/C4Model/toolbox.py:140 gaphor/UML/toolbox.py:30
 msgid "New Class Diagram"
-msgstr ""
+msgstr "Nowy diagram klasy"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
 msgid "New Activity Diagram"
-msgstr ""
+msgstr "Nowy diagram zachowania"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
 msgid "New Sequence Diagram"
-msgstr ""
+msgstr "Nowy diagram sekwencji"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
 msgid "New State Machine Diagram"
-msgstr ""
+msgstr "Nowy diagram maszyny stanów"
 
 #: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:51
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
 msgid "New FTA Diagram"
-msgstr ""
+msgstr "Nowy diagram FTA"
 
 #: gaphor/RAAML/toolbox.py:20
 msgid "New STPA Diagram"
-msgstr ""
+msgstr "Nowy diagram STPA"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
-msgstr ""
+msgstr "Bramka AND"
 
 #: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
-msgstr ""
+msgstr "Zdarzenie podstawowe"
 
 #: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
-msgstr ""
+msgstr "Zdarzenie warunkujące"
 
 #: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
-msgstr ""
+msgstr "Zdarzenie utajone"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
-msgstr ""
+msgstr "Analiza drzewa błędów (FTA)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
@@ -140,7 +144,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
-msgstr ""
+msgstr "Bramka OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml.gaphor
 msgid "OR"
@@ -148,7 +152,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
-msgstr ""
+msgstr "Bramka NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
@@ -164,7 +168,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
-msgstr ""
+msgstr "Bramka XNOR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
@@ -221,7 +225,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr ""
+msgstr "Bramka XOR"
 
 #: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
@@ -2281,24 +2285,24 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:397 gaphor/ui/filemanager.py:410
 msgid "Discard"
-msgstr ""
+msgstr "Odrzuć"
 
 #: gaphor/ui/filemanager.py:399 gaphor/ui/filemanager.py:411
 #: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:51
 msgid "Save"
-msgstr ""
+msgstr "Zapisz"
 
 #: gaphor/ui/greeter.glade:55
 msgid "Recently opened models"
-msgstr ""
+msgstr "Ostatnio otwarte modele"
 
 #: gaphor/ui/greeter.glade:76
 msgid "Create a new model"
-msgstr ""
+msgstr "Stwórz nowy model"
 
 #: gaphor/ui/greeter.glade:112
 msgid "Open Other Model…"
-msgstr ""
+msgstr "Otwórz inny model…"
 
 #: gaphor/ui/greeter.py:30
 msgid "Generic"
@@ -2306,11 +2310,11 @@ msgstr ""
 
 #: gaphor/ui/greeter.py:31
 msgid "An empty model"
-msgstr ""
+msgstr "Pusty model"
 
 #: gaphor/ui/greeter.py:38
 msgid "Unified Modeling Language template"
-msgstr ""
+msgstr "Szablon zunifikowanego języka modelowania"
 
 #: gaphor/ui/greeter.py:45
 msgid "Systems Modeling Language template"
@@ -2326,11 +2330,11 @@ msgstr ""
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
-msgstr ""
+msgstr "Otwórz model…"
 
 #: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:61
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Skróty klawiszowe"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.glade:7
 #: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:62
@@ -2339,35 +2343,35 @@ msgstr ""
 
 #: gaphor/ui/greeter.ui:80
 msgid "Recently Opened"
-msgstr ""
+msgstr "Ostatnio otwarte"
 
 #: gaphor/ui/greeter.ui:85
 msgid "Create New Model"
-msgstr ""
+msgstr "Stwórz nowy model"
 
 #: gaphor/ui/mainwindow.glade:104
 msgid "Gaphor"
-msgstr ""
+msgstr "Gaphor"
 
 #: gaphor/ui/mainwindow.glade:177
 msgid "Create New diagram"
-msgstr ""
+msgstr "Stwórz nowy diagram"
 
 #: gaphor/ui/mainwindow.glade:198
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Otwórz menu aplikacji"
 
 #: gaphor/ui/mainwindow.glade:220
 msgid "Editor"
-msgstr ""
+msgstr "Edytor"
 
 #: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:46
 msgid "New Model…"
-msgstr ""
+msgstr "Nowy model…"
 
 #: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
-msgstr ""
+msgstr "Zapisz jako…"
 
 #: gaphor/ui/mainwindow.py:53
 msgid "Export"
@@ -2379,19 +2383,19 @@ msgstr ""
 
 #: gaphor/ui/mainwindow.py:278
 msgid "Profile: {name}"
-msgstr ""
+msgstr "Profil: {name}"
 
 #: gaphor/ui/mainwindow.ui:64
 msgid "New diagram menu"
-msgstr ""
+msgstr "Menu nowego diagramu"
 
 #: gaphor/ui/mainwindow.ui:71
 msgid "Open application menu"
-msgstr ""
+msgstr "Otwórz menu aplikacji"
 
 #: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:78
 msgid "Toggle property editor"
-msgstr ""
+msgstr "Widoczność edytora własności"
 
 #: gaphor/ui/namespace.py:47
 msgid "_Open"
@@ -2399,7 +2403,7 @@ msgstr ""
 
 #: gaphor/ui/namespace.py:47
 msgid "Add to diagram"
-msgstr ""
+msgstr "Dodaj do diagramu"
 
 #: gaphor/ui/namespace.py:50
 msgid "_Rename"
@@ -2419,7 +2423,7 @@ msgstr ""
 
 #: gaphor/ui/namespace.py:72
 msgid "Show in “{diagram}”"
-msgstr ""
+msgstr "Pokaż w “{diagram}”"
 
 #: gaphor/ui/namespace.py:98
 msgid "New Generic Diagram"
@@ -2436,7 +2440,7 @@ msgstr ""
 
 #: gaphor/ui/treecomponent.py:176
 msgid "New package"
-msgstr ""
+msgstr "Nowy pakiet"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
@@ -2497,15 +2501,15 @@ msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:24
 msgid "Rename"
-msgstr ""
+msgstr "Zmień nazwę"
 
 #: gaphor/ui/help/shortcuts.ui:32
 msgid "Search"
-msgstr ""
+msgstr "Szukaj"
 
 #: gaphor/ui/help/shortcuts.ui:48
 msgid "Close Diagram"
-msgstr ""
+msgstr "Zamknij diagram"
 
 #: gaphor/ui/help/shortcuts.ui:64
 msgid "Quit Gaphor"
@@ -2513,43 +2517,43 @@ msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:75
 msgid "Files"
-msgstr ""
+msgstr "Pliki"
 
 #: gaphor/ui/help/shortcuts.ui:89
 msgid "Open a Model…"
-msgstr ""
+msgstr "Otwórz model…"
 
 #: gaphor/ui/help/shortcuts.ui:117
 msgid "Undo and Redo"
-msgstr ""
+msgstr "Cofanie i powtarzanie"
 
 #: gaphor/ui/help/shortcuts.ui:142
 msgid "Zoom"
-msgstr ""
+msgstr "Zbliżanie"
 
 #: gaphor/ui/help/shortcuts.ui:174
 msgid "Selections"
-msgstr ""
+msgstr "Zaznaczanie"
 
 #: gaphor/ui/help/shortcuts.ui:180
 msgid "Select All"
-msgstr ""
+msgstr "Zaznacz wszystko"
 
 #: gaphor/ui/help/shortcuts.ui:188
 msgid "Deselect All"
-msgstr ""
+msgstr "Odznacz wszystko"
 
 #: gaphor/ui/help/shortcuts.ui:199
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopiowanie i wklejanie"
 
 #: gaphor/ui/help/shortcuts.ui:205
 msgid "Copy"
-msgstr ""
+msgstr "Kopiuj"
 
 #: gaphor/ui/help/shortcuts.ui:213
 msgid "Cut"
-msgstr ""
+msgstr "Wytnij"
 
 #: gaphor/ui/help/shortcuts.ui:221
 msgid "Paste (link defining elements)"
