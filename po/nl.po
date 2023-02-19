@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 19:23+0100\n"
-"PO-Revision-Date: 2023-02-18 11:35+0000\n"
+"PO-Revision-Date: 2023-02-21 01:02+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
 "\n"
@@ -560,23 +560,20 @@ msgid "New {name}"
 msgstr "Nieuw {name}"
 
 #: gaphor/UML/umlfmt.py:203
-#, fuzzy
 msgid "general: {name}"
 msgstr "algemeen: {name}"
 
 #: gaphor/UML/umlfmt.py:208
 msgid "supplier: {name}"
-msgstr ""
+msgstr "leverancier: {name}"
 
 #: gaphor/UML/umlfmt.py:215
-#, fuzzy
 msgid "extend: {name}"
-msgstr ""
+msgstr "uitbreiden: {name}"
 
 #: gaphor/UML/umlfmt.py:222
-#, fuzzy
 msgid "include: {name}"
-msgstr ""
+msgstr "omvatten: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:40
 #: gaphor/UML/actions/actionstoolbox.py:62 gaphor/templates/sysml.gaphor
@@ -719,7 +716,7 @@ msgstr "Horizontaal"
 #: gaphor/UML/actions/propertypages.glade:83
 #: gaphor/UML/actions/propertypages.ui:59
 msgid "Join Specification"
-msgstr "Join Specification"
+msgstr "Specificatie samenvoegen"
 
 #: gaphor/UML/actions/propertypages.glade:116
 #: gaphor/UML/actions/propertypages.ui:89
@@ -734,22 +731,22 @@ msgstr "Partities"
 #: gaphor/UML/actions/propertypages.glade:170
 #: gaphor/UML/actions/propertypages.ui:130
 msgid "Upper Bound"
-msgstr "Upper Bound"
+msgstr "Bovengrens"
 
 #: gaphor/UML/actions/propertypages.glade:193
 #: gaphor/UML/actions/propertypages.ui:147
 msgid "Show Ordering"
-msgstr "Toon Volgorde"
+msgstr "Volgorde tonen"
 
 #: gaphor/UML/actions/propertypages.glade:219
 #: gaphor/UML/actions/propertypages.ui:165
 msgid "Last In First Out (LIFO)"
-msgstr "Last In First Out (LIFO)"
+msgstr "Last in first out (LIFO)"
 
 #: gaphor/UML/actions/propertypages.glade:220
 #: gaphor/UML/actions/propertypages.ui:166
 msgid "First In First Out (FIFO)"
-msgstr "First In First Out (FIFO)"
+msgstr "First in first out (FIFO)"
 
 #: gaphor/UML/actions/propertypages.glade:247
 #: gaphor/UML/actions/propertypages.ui:189
@@ -765,12 +762,12 @@ msgstr "Naam"
 #: gaphor/UML/states/propertypages.glade:180
 #: gaphor/UML/states/propertypages.ui:66
 msgid "Guard"
-msgstr "Guard"
+msgstr "Bewaker"
 
 #: gaphor/UML/actions/propertypages.glade:322
 #: gaphor/UML/actions/propertypages.ui:245
 msgid "Parameter Nodes"
-msgstr "Parameter Nodes"
+msgstr "Parameter-nodes"
 
 #: gaphor/UML/actions/propertypages.glade:350
 #: gaphor/UML/actions/propertypages.ui:271
@@ -865,7 +862,7 @@ msgstr "Interface Realizatie"
 
 #: gaphor/UML/classes/classestoolbox.py:128
 msgid "DataType"
-msgstr "DataType"
+msgstr "GegevensType"
 
 #: gaphor/UML/classes/datatype.py:57
 msgid "primitive"
@@ -1044,7 +1041,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.glade:522
 #: gaphor/UML/classes/propertypages.ui:457
 msgid "Dependency type"
-msgstr "Dependency type"
+msgstr "Afhankelijkheidstype"
 
 #: gaphor/UML/classes/propertypages.glade:535
 #: gaphor/UML/classes/propertypages.ui:468
@@ -1184,11 +1181,11 @@ msgstr "Interacties"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:67
 msgid "Lifeline"
-msgstr "Lifeline"
+msgstr "Reddingslijn"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:79
 msgid "Execution Specification"
-msgstr "Execution Specification"
+msgstr "Uitvoeringsspecificatie"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:87
 msgid "Message"
