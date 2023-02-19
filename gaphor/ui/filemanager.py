@@ -13,7 +13,8 @@ from gi.repository import Adw, Gtk
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
-from gaphor.core.modeling import Diagram, StyleSheet
+from gaphor.core.changeset.compare import compare
+from gaphor.core.modeling import Diagram, StyleSheet, ElementFactory
 from gaphor.event import (
     ModelLoaded,
     ModelSaved,
@@ -191,6 +192,18 @@ class FileManager(Service, ActionProvider):
                 self.load(current_filename, on_load_done=done)
             elif answer == "incoming":
                 self.load(incoming_filename, on_load_done=done)
+            elif answer == "manual":
+                with open(current_filename, encoding="utf-8") as file_obj:
+                    storage.load(file_obj, self.element_factory, self.modeling_language)
+
+                temp_element_factory = ElementFactory()
+                with open(incoming_filename, encoding="utf-8") as file_obj:
+                    storage.load(file_obj, temp_element_factory, self.modeling_language)
+
+                with self.element_factory.block_events():
+                    list(compare(self.element_factory, temp_element_factory))
+
+                done()
             else:
                 raise ValueError(f"Unknown resolution for merge conflict: {answer}")
 
@@ -342,6 +355,7 @@ def resolve_merge_conflict_dialog(window: Gtk.Window, filename: Path, handler) -
         )
     )
     dialog.add_response("cancel", gettext("Cancel"))
+    dialog.add_response("manual", gettext("Open Merge Editor"))
     dialog.add_response("current", gettext("Open Current"))
     dialog.add_response("incoming", gettext("Open Incoming"))
     dialog.set_close_response("cancel")
