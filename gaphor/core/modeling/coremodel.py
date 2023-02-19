@@ -35,9 +35,9 @@ class Comment(Element):
 from gaphor.core.modeling.stylesheet import StyleSheet
 
 class PendingChange(Element):
-    applied: _attribute[int] = _attribute("applied", int)
+    applied: _attribute[int] = _attribute("applied", int, default=0)
     element_id: _attribute[str] = _attribute("element_id", str)
-    op: _attribute[int] = _attribute("op", int)
+    op = _enumeration("op", ("add", "remove", "update"), "add")
 
 
 class ElementChange(PendingChange):
