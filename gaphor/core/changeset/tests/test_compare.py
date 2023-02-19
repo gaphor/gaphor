@@ -1,6 +1,5 @@
 import pytest
 
-from gaphor.core.changeset.apply import ADD, REMOVE, UPDATE
 from gaphor.core.changeset.compare import UnmatchableModel, compare
 from gaphor.core.modeling import Diagram, Element, ElementFactory, PendingChange
 
@@ -35,7 +34,7 @@ def test_added_element(current, incoming, saver):
 
     change = next(compare(current, incoming))
 
-    assert change.op is ADD
+    assert change.op == "add"
     assert change.element_id == diagram.id
     assert change.element_name == "Diagram"
 
@@ -49,11 +48,11 @@ def test_added_element_with_attribute(current, incoming):
 
     elem_change, attr_change = list(compare(current, incoming))
 
-    assert elem_change.op is ADD
+    assert elem_change.op == "add"
     assert elem_change.element_id == diagram.id
     assert elem_change.element_name == "Diagram"
 
-    assert attr_change.op is ADD
+    assert attr_change.op == "add"
     assert attr_change.element_id == diagram.id
     assert attr_change.property_name == "name"
     assert attr_change.property_value == "Foo"
@@ -67,16 +66,16 @@ def test_added_element_with_reference(current, incoming):
 
     change, ref_change, other_ref = list(compare(current, incoming))
 
-    assert change.op is ADD
+    assert change.op == "add"
     assert change.element_id == diagram.id
     assert change.element_name == "Diagram"
 
-    assert ref_change.op is ADD
+    assert ref_change.op == "add"
     assert ref_change.element_id == diagram.id
     assert ref_change.property_name == "element"
     assert ref_change.property_ref == element.id
 
-    assert other_ref.op is ADD
+    assert other_ref.op == "add"
     assert other_ref.element_id == element.id
     assert other_ref.property_name == "ownedDiagram"
     assert other_ref.property_ref == diagram.id
@@ -88,7 +87,7 @@ def test_removed_element(current, incoming):
 
     change = next(compare(current, incoming))
 
-    assert change.op is REMOVE
+    assert change.op == "remove"
     assert change.element_id == diagram.id
     assert change.element_name == "Diagram"
 
@@ -101,7 +100,7 @@ def test_changed_value(current, incoming):
 
     change = next(compare(current, incoming))
 
-    assert change.op is UPDATE
+    assert change.op == "update"
     assert change.element_id == current_diagram.id
     assert change.property_name == "name"
     assert change.property_value == "New"
@@ -116,12 +115,12 @@ def test_changed_reference(current, incoming):
 
     add_ref, update_ref = sorted(compare(current, incoming), key=lambda c: c.op)
 
-    assert add_ref.op is ADD
+    assert add_ref.op == "add"
     assert add_ref.element_id == incoming_element.id
     assert add_ref.property_name == "ownedDiagram"
     assert add_ref.property_ref == current_diagram.id
 
-    assert update_ref.op is UPDATE
+    assert update_ref.op == "update"
     assert update_ref.element_id == current_diagram.id
     assert update_ref.property_name == "element"
     assert update_ref.property_ref == incoming_element.id
