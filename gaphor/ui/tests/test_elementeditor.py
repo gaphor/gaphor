@@ -4,6 +4,7 @@ from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
 from gaphor.ui.elementeditor import ElementEditor
 from gaphor.UML.diagramitems import PackageItem
+import gaphor.UML.classes.classespropertypages  # noqa
 
 
 class DiagramsStub:
