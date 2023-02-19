@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.15.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.16.0">
 <Package id="3867dda4-7a95-11ea-a112-7f953848cf85">
 <name>
 <val>Core</val>
@@ -1684,6 +1684,7 @@
 <ref refid="a862e2bc-5ee4-11ed-9155-0456e5e540ed"/>
 <ref refid="dc8a89be-5ee4-11ed-9155-0456e5e540ed"/>
 <ref refid="994b550a-5ee6-11ed-9155-0456e5e540ed"/>
+<ref refid="4e3ec662-b082-11ed-a1ab-0456e5e540ed"/>
 </reflist>
 </ownedType>
 <presentation>
@@ -1729,12 +1730,11 @@
 <ref refid="dc89a058-5ee4-11ed-9155-0456e5e540ed"/>
 <ref refid="f8ef5c9c-5ee4-11ed-9155-0456e5e540ed"/>
 <ref refid="994b834a-5ee6-11ed-9155-0456e5e540ed"/>
-<ref refid="50db5274-5ee7-11ed-9155-0456e5e540ed"/>
+<ref refid="4e3f053c-b082-11ed-a1ab-0456e5e540ed"/>
 <ref refid="03757d04-5ee5-11ed-9155-0456e5e540ed"/>
 <ref refid="1f792672-5ee5-11ed-9155-0456e5e540ed"/>
 <ref refid="3770b092-5ee5-11ed-9155-0456e5e540ed"/>
 <ref refid="d5ae2572-5ee6-11ed-9155-0456e5e540ed"/>
-<ref refid="637df3d2-5ee7-11ed-9155-0456e5e540ed"/>
 </reflist>
 </ownedPresentation>
 </Diagram>
@@ -1821,7 +1821,7 @@
 </Class>
 <ClassItem id="a8639450-5ee4-11ed-9155-0456e5e540ed">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 264.4062194824219, 424.6600799560547)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 266.63068161010744, 424.6600799560547)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -1935,7 +1935,7 @@
 </Property>
 <ClassItem id="f8ef5c9c-5ee4-11ed-9155-0456e5e540ed">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 285.8359069824219, 27.417922973632812)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 285.8359069824219, 35.74214172363281)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -1963,6 +1963,9 @@
 <diagram>
 <ref refid="6f72b252-5ee4-11ed-9155-0456e5e540ed"/>
 </diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
 <orthogonal>
 <val>1</val>
 </orthogonal>
@@ -1973,7 +1976,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 338.5202578854772, 235.95700073242188)</val>
 </matrix>
 <points>
-<val>[(-194.4863689660518, 188.7030792236328), (-194.4863689660518, 128.04685974121094), (13.452367846944696, 128.04685974121094), (13.452367846944696, 53.58598327636719)]</val>
+<val>[(-194.4863689660518, 188.7030792236328), (-194.4863689660518, 128.04685974121094), (15.664811898051482, 128.04685974121094), (15.664811898051482, 45.58598327636719)]</val>
 </points>
 <head-connection>
 <ref refid="7997092c-5ee4-11ed-9155-0456e5e540ed"/>
@@ -1999,7 +2002,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 424.5155944824219, 266.98826599121094)</val>
 </matrix>
 <points>
-<val>[(159.59906412959094, 157.67181396484375), (159.59906412959094, 96.34762573242188), (-72.5859375, 96.34762573242188), (-72.5859375, 22.554718017578125)]</val>
+<val>[(159.59906412959094, 157.67181396484375), (159.59906412959094, 96.34762573242188), (-70.3750306447347, 96.34762573242188), (-70.3750306447347, 14.554718017578125)]</val>
 </points>
 <head-connection>
 <ref refid="dc89a058-5ee4-11ed-9155-0456e5e540ed"/>
@@ -2022,7 +2025,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 350.3749694824219, 305.17576599121094)</val>
 </matrix>
 <points>
-<val>[(1.2010742187500227, 119.48431396484375), (1.93359375, -15.632781982421875)]</val>
+<val>[(3.4255363464355923, 119.48431396484375), (4.15805587768557, -23.632781982421875)]</val>
 </points>
 <head-connection>
 <ref refid="a8639450-5ee4-11ed-9155-0456e5e540ed"/>
@@ -2032,11 +2035,6 @@
 </tail-connection>
 </GeneralizationItem>
 <Class id="994b550a-5ee6-11ed-9155-0456e5e540ed">
-<comment>
-<reflist>
-<ref refid="50db3960-5ee7-11ed-9155-0456e5e540ed"/>
-</reflist>
-</comment>
 <generalization>
 <reflist>
 <ref refid="d7dfe61e-5ee6-11ed-9155-0456e5e540ed"/>
@@ -2079,10 +2077,10 @@
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>120.0</val>
+<val>124.29296875</val>
 </width>
 <height>
-<val>112.0</val>
+<val>104.0</val>
 </height>
 <diagram>
 <ref refid="6f72b252-5ee4-11ed-9155-0456e5e540ed"/>
@@ -2102,7 +2100,7 @@
 <val>op</val>
 </name>
 <typeValue>
-<val>int</val>
+<val>ChangeKind</val>
 </typeValue>
 </Property>
 <Property id="ab61574e-5ee6-11ed-9155-0456e5e540ed">
@@ -2120,6 +2118,9 @@
 <class_>
 <ref refid="994b550a-5ee6-11ed-9155-0456e5e540ed"/>
 </class_>
+<defaultValue>
+<val>0</val>
+</defaultValue>
 <name>
 <val>applied</val>
 </name>
@@ -2177,10 +2178,10 @@
 <ref refid="d7dfe61e-5ee6-11ed-9155-0456e5e540ed"/>
 </subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 348.6562194824219, 95.6953125)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 342.2167663574219, 95.6953125)</val>
 </matrix>
 <points>
-<val>[(2.7265625, 81.84767150878906), (3.1328125, -3.9922027587890625)]</val>
+<val>[(7.912109375, 81.84767150878906), (7.912109375, 4.3320159912109375)]</val>
 </points>
 <head-connection>
 <ref refid="994b834a-5ee6-11ed-9155-0456e5e540ed"/>
@@ -2202,59 +2203,71 @@
 <ref refid="994b550a-5ee6-11ed-9155-0456e5e540ed"/>
 </specific>
 </Generalization>
-<Comment id="50db3960-5ee7-11ed-9155-0456e5e540ed">
-<annotatedElement>
+<Class id="4e3ec662-b082-11ed-a1ab-0456e5e540ed">
+<name>
+<val>ChangeKind</val>
+</name>
+<ownedAttribute>
 <reflist>
-<ref refid="994b550a-5ee6-11ed-9155-0456e5e540ed"/>
+<ref refid="5448bcac-b082-11ed-a1ab-0456e5e540ed"/>
+<ref refid="564467ea-b082-11ed-a1ab-0456e5e540ed"/>
+<ref refid="588b2b4c-b082-11ed-a1ab-0456e5e540ed"/>
 </reflist>
-</annotatedElement>
-<body>
-<val>"op" is one of ADD, REMOVE, UPDATE.</val>
-</body>
+</ownedAttribute>
+<package>
+<ref refid="65f4352a-5ee4-11ed-9155-0456e5e540ed"/>
+</package>
 <presentation>
 <reflist>
-<ref refid="50db5274-5ee7-11ed-9155-0456e5e540ed"/>
+<ref refid="4e3f053c-b082-11ed-a1ab-0456e5e540ed"/>
 </reflist>
 </presentation>
-</Comment>
-<CommentItem id="50db5274-5ee7-11ed-9155-0456e5e540ed">
+</Class>
+<ClassItem id="4e3f053c-b082-11ed-a1ab-0456e5e540ed">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 496.3202819824219, 199.16404724121094)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 504.25, 177.54298400878906)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>154.57034301757812</val>
+<val>100.0</val>
 </width>
 <height>
-<val>56.63671875</val>
+<val>104.0</val>
 </height>
 <diagram>
 <ref refid="6f72b252-5ee4-11ed-9155-0456e5e540ed"/>
 </diagram>
-<subject>
-<ref refid="50db3960-5ee7-11ed-9155-0456e5e540ed"/>
-</subject>
-</CommentItem>
-<CommentLineItem id="637df3d2-5ee7-11ed-9155-0456e5e540ed">
-<diagram>
-<ref refid="6f72b252-5ee4-11ed-9155-0456e5e540ed"/>
-</diagram>
-<horizontal>
+<show_operations>
 <val>0</val>
-</horizontal>
-<matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 410.4257507324219, 231.37498474121094)</val>
-</matrix>
-<points>
-<val>[(-0.296875, 0.0), (85.89453125, -2.41796875)]</val>
-</points>
-<head-connection>
-<ref refid="994b834a-5ee6-11ed-9155-0456e5e540ed"/>
-</head-connection>
-<tail-connection>
-<ref refid="50db5274-5ee7-11ed-9155-0456e5e540ed"/>
-</tail-connection>
-</CommentLineItem>
+</show_operations>
+<subject>
+<ref refid="4e3ec662-b082-11ed-a1ab-0456e5e540ed"/>
+</subject>
+</ClassItem>
+<Property id="5448bcac-b082-11ed-a1ab-0456e5e540ed">
+<class_>
+<ref refid="4e3ec662-b082-11ed-a1ab-0456e5e540ed"/>
+</class_>
+<name>
+<val>add</val>
+</name>
+</Property>
+<Property id="564467ea-b082-11ed-a1ab-0456e5e540ed">
+<class_>
+<ref refid="4e3ec662-b082-11ed-a1ab-0456e5e540ed"/>
+</class_>
+<name>
+<val>remove</val>
+</name>
+</Property>
+<Property id="588b2b4c-b082-11ed-a1ab-0456e5e540ed">
+<class_>
+<ref refid="4e3ec662-b082-11ed-a1ab-0456e5e540ed"/>
+</class_>
+<name>
+<val>update</val>
+</name>
+</Property>
 </gaphor>
