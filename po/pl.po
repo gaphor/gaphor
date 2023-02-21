@@ -1,104 +1,107 @@
-# Dutch Gaphor Translation
-# Arjan Molenaar <gaphor@gmail.com>, 2019.
+# Translations template for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 0.6.0\n"
+"Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 19:23+0100\n"
 "PO-Revision-Date: 2023-02-21 01:02+0000\n"
-"Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
+"Last-Translator: Michał Dominik <fancy0duck@duck.com>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/gaphor/gaphor/pl/>"
 "\n"
-"Language: nl\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.16-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
 #: gaphor/ui/greeter.py:58
 msgid "C4 Model"
-msgstr "C4-model"
+msgstr "Model C4"
 
 #: gaphor/C4Model/propertypages.glade:28 gaphor/C4Model/propertypages.ui:12
 msgid "Description"
-msgstr "Beschrijving"
+msgstr "Opis"
 
 #: gaphor/C4Model/propertypages.glade:75 gaphor/C4Model/propertypages.ui:39
 msgid "Technology"
-msgstr "Technologie"
+msgstr "Technologia"
 
 #: gaphor/C4Model/toolbox.py:29
 msgid "New Software System"
-msgstr "Nieuw softwaresysteem"
+msgstr "Nowy system oprogramowania"
 
 #: gaphor/C4Model/toolbox.py:36
 msgid "New Container"
-msgstr "Nieuwe container"
+msgstr "Nowy kontener"
 
 #: gaphor/C4Model/toolbox.py:43
 msgid "Database"
-msgstr "Database"
+msgstr "Baza danych"
 
 #: gaphor/C4Model/toolbox.py:44
 msgid "New Database"
-msgstr "Nieuwe database"
+msgstr "Nowa baza danych"
 
 #: gaphor/C4Model/toolbox.py:51
 msgid "New Component"
-msgstr "Nieuwe component"
+msgstr "Nowy komponent"
 
 #: gaphor/C4Model/toolbox.py:59 gaphor/C4Model/toolbox.py:65
 msgid "Person"
-msgstr "Persoon"
+msgstr "Osoba"
 
 #: gaphor/C4Model/toolbox.py:71
 msgid "Software System"
-msgstr "Softwaresysteem"
+msgstr "System oprogramowania"
 
 #: gaphor/C4Model/toolbox.py:83
 msgid "Container"
-msgstr "Container"
+msgstr "Kontener"
 
 #: gaphor/C4Model/toolbox.py:95
 msgid "Container: Database"
-msgstr "Container: database"
+msgstr "Kontener: baza danych"
 
 #: gaphor/C4Model/toolbox.py:107 gaphor/UML/classes/classestoolbox.py:59
 msgid "Component"
-msgstr "Component"
+msgstr "Komponent"
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:105
 #: gaphor/UML/classes/dependencypropertypages.py:16
 msgid "Dependency"
-msgstr "Afhankelijkheid"
+msgstr "Zależność"
 
 #: gaphor/C4Model/toolbox.py:139
 msgid "New C4 Diagram"
-msgstr "Nieuw C4-diagram"
+msgstr "Nowy diagram C4"
 
 #: gaphor/C4Model/toolbox.py:140 gaphor/UML/toolbox.py:30
 msgid "New Class Diagram"
-msgstr "Nieuw klassediagram"
+msgstr "Nowy diagram klasy"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
 msgid "New Activity Diagram"
-msgstr "Nieuw activiteitsdiagram"
+msgstr "Nowy diagram zachowania"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
 msgid "New Sequence Diagram"
-msgstr "Nieuw sequentiediagram"
+msgstr "Nowy diagram sekwencji"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
 msgid "New State Machine Diagram"
-msgstr "Nieuw staatmachinediagram"
+msgstr "Nowy diagram maszyny stanów"
 
 #: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:51
 msgid "RAAML"
@@ -106,34 +109,34 @@ msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
 msgid "New FTA Diagram"
-msgstr "Nieuw FTA-diagram"
+msgstr "Nowy diagram FTA"
 
 #: gaphor/RAAML/toolbox.py:20
 msgid "New STPA Diagram"
-msgstr "Nieuw STPA-diagram"
+msgstr "Nowy diagram STPA"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
-msgstr "AND-poort"
+msgstr "Bramka AND"
 
 #: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
-msgstr "Basisgebeurtenis"
+msgstr "Zdarzenie podstawowe"
 
 #: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
-msgstr "Conditionele gebeurtenis"
+msgstr "Zdarzenie warunkujące"
 
 #: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
-msgstr "Slapende gebeurtenis"
+msgstr "Zdarzenie utajone"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
-msgstr "Foutenboomanalyse"
+msgstr "Analiza drzewa błędów (FTA)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
@@ -141,7 +144,7 @@ msgstr "AND"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
-msgstr "OR-poort"
+msgstr "Bramka OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml.gaphor
 msgid "OR"
@@ -149,7 +152,7 @@ msgstr "OR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
-msgstr "NOT-poort"
+msgstr "Bramka NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
@@ -157,7 +160,7 @@ msgstr "NOT"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr "Sequence Enforcing (SEQ)-poort"
+msgstr "Bramka narzucająca kolejność (SEQ)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:63
 msgid "SEQ"
@@ -165,7 +168,7 @@ msgstr "SEQ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
-msgstr "Exclusieve OR-poort"
+msgstr "Bramka XNOR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
@@ -174,113 +177,113 @@ msgstr "XOR"
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:40
 msgid "Majority Vote Gate"
-msgstr "Meerderheidsstemmingspoort"
+msgstr "Bramka głosu większości"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:35
 msgid "Inhibit Gate"
-msgstr "Blokkeerpoort"
+msgstr "Bramka utrudniająca"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
-msgstr "Overdracht in"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
 #: gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
-msgstr "Overdracht uit"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:36
 msgid "Undeveloped Event"
-msgstr "Onontwikkelde gebeurtenis"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
 #: gaphor/RAAML/fta/houseevent.py:35
 msgid "House Event"
-msgstr "Huisgebeurtenis"
+msgstr "Zdarzenie zewnętrzne"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
 #: gaphor/RAAML/fta/zeroevent.py:36
 msgid "Zero Event"
-msgstr "Nulgebeurtenis"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
-msgstr "Topgebeurtenis"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:33
 msgid "Intermediate Event"
-msgstr "Tussentijdse gebeurtenis"
+msgstr "Zdarzenie pośrednie"
 
 #: gaphor/RAAML/fta/seqgate.py:37
 msgid "Sequence Enforcing Gate"
-msgstr "Volgordeafdwangpoort"
+msgstr ""
 
 #: gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr "XOR-poort"
+msgstr "Bramka XOR"
 
 #: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
-msgstr "Controleactie"
+msgstr ""
 
 #: gaphor/RAAML/stpa/operationalsituation.py:34
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
-msgstr "Operationele situatie"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
 #: gaphor/templates/raaml.gaphor
 msgid "Loss"
-msgstr "Verlies"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard"
-msgstr "Gevaar"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml.gaphor
 msgid "Abstract Operational Situation"
-msgstr "Abstracte operationele situatie"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:77
 #: gaphor/UML/classes/classestoolbox.py:113
 msgid "Generalization"
-msgstr "Generalisatie"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:58
 msgid "Situation"
-msgstr "Situatie"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
-msgstr "Controlestructuur"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml.gaphor
 msgid "Controller"
-msgstr "Regelaar"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
 msgid "Actuator"
-msgstr "Actuator"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
-msgstr "Gecontroleerd proces"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:33
 msgid "Unsafe Control Action"
-msgstr "Onveilige controleactie"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:149
 msgid "Relevant To"
-msgstr "Relevant voor"
+msgstr ""
 
 #: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:44
 msgid "SysML"
@@ -288,11 +291,11 @@ msgstr "SysML"
 
 #: gaphor/SysML/propertypages.glade:28 gaphor/SysML/propertypages.ui:11
 msgid "Item Flow"
-msgstr "Item-stroom"
+msgstr "Przepływ elementu"
 
 #: gaphor/SysML/propertypages.glade:51 gaphor/SysML/propertypages.ui:28
 msgid "Item Property"
-msgstr "Item Eigenschap"
+msgstr "Właściwości elementu"
 
 #: gaphor/SysML/propertypages.glade:71 gaphor/SysML/propertypages.ui:43
 #: gaphor/UML/classes/propertypages.glade:48
@@ -300,33 +303,33 @@ msgstr "Item Eigenschap"
 #: gaphor/UML/deployments/propertypages.glade:78
 #: gaphor/UML/deployments/propertypages.ui:42
 msgid "Invert direction"
-msgstr "Keer richting om"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:94 gaphor/SysML/propertypages.ui:59
 #: gaphor/UML/actions/propertypages.glade:264
 #: gaphor/UML/actions/propertypages.ui:201
 msgid "Allocated Type"
-msgstr "Toegewezen type"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:123 gaphor/SysML/propertypages.ui:91
 msgid "Show Parts"
-msgstr "Onderdelen tonen"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:146 gaphor/SysML/propertypages.ui:107
 msgid "Show References"
-msgstr "Toon Referenties"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:172 gaphor/SysML/propertypages.ui:123
 msgid "Show Values"
-msgstr "Toon Waarden"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:197 gaphor/SysML/propertypages.ui:78
 msgid "Compartments"
-msgstr "Compartementen"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:212 gaphor/SysML/propertypages.ui:149
 msgid "Aggregation"
-msgstr "Aggregatie"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:226 gaphor/SysML/propertypages.ui:159
 #: gaphor/UML/classes/propertypages.glade:119
@@ -334,7 +337,7 @@ msgstr "Aggregatie"
 #: gaphor/UML/classes/propertypages.ui:111
 #: gaphor/UML/classes/propertypages.ui:238
 msgid "No aggregation"
-msgstr "Geen aggregatie"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:227 gaphor/SysML/propertypages.ui:160
 #: gaphor/UML/classes/propertypages.glade:120
@@ -342,7 +345,7 @@ msgstr "Geen aggregatie"
 #: gaphor/UML/classes/propertypages.ui:112
 #: gaphor/UML/classes/propertypages.ui:239
 msgid "Shared"
-msgstr "Gedeeld"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:228 gaphor/SysML/propertypages.ui:161
 #: gaphor/UML/classes/propertypages.glade:121
@@ -350,180 +353,180 @@ msgstr "Gedeeld"
 #: gaphor/UML/classes/propertypages.ui:113
 #: gaphor/UML/classes/propertypages.ui:240
 msgid "Composite"
-msgstr "Composiet"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:248 gaphor/SysML/propertypages.ui:178
 msgid "Id"
-msgstr "ID"
+msgstr ""
 
 #: gaphor/SysML/propertypages.glade:272 gaphor/SysML/propertypages.ui:192
 msgid "Text"
-msgstr "Tekst"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:25
 msgid "Internal Blocks"
-msgstr "Interne blokken"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:29
 msgid "Connector"
-msgstr "Connector"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:36
 msgid "Property"
-msgstr "Eigenschap"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:45
 msgid "Proxy Port"
-msgstr "Proxy-poort"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:68
 msgid "New Block Definition Diagram"
-msgstr "Nieuw Blok Definitie Diagram"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr "Nieuw Intern Blok Diagram"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
 msgid "New Package Diagram"
-msgstr "Nieuw Package Diagram"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:71
 msgid "New Requirement Diagram"
-msgstr "Nieuw Eisen Diagram"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
 msgid "New Use Case Diagram"
-msgstr "Nieuw Use Case Diagram"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:60
 msgid "ControlStructure"
-msgstr "ControleStructuur"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:62
 msgid "block"
-msgstr "blok"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:98
 msgid "parts"
-msgstr "onderdelen"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:109
 msgid "references"
-msgstr "referenties"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:120
 msgid "values"
-msgstr "waarden"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:137
 msgid "unnamed"
-msgstr "naamloos"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:24
 msgid "Blocks"
-msgstr "Blokken"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:28
 msgid "Block"
-msgstr "Blok"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:38
 #: gaphor/UML/classes/classestoolbox.py:47
 msgid "Package"
-msgstr "Pakket"
+msgstr "Pakiet"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:50
 #: gaphor/UML/classes/classestoolbox.py:78
 msgid "Composite Association"
-msgstr "Composietassociatie"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:60
 #: gaphor/UML/classes/classestoolbox.py:88
 msgid "Shared Association"
-msgstr "Gedeelde associatie"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:70
 #: gaphor/UML/classes/classestoolbox.py:98
 #: gaphor/UML/usecases/usecasetoolbox.py:40
 msgid "Association"
-msgstr "Associatie"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:84
 msgid "ValueType"
-msgstr "WaardeType"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:95
 #: gaphor/UML/classes/classestoolbox.py:140
 msgid "Enumeration"
-msgstr "Opsomming"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 #: gaphor/UML/classes/classestoolbox.py:152
 msgid "Primitive"
-msgstr "Primitief"
+msgstr ""
 
 #: gaphor/SysML/blocks/proxyport.py:34
 msgid "proxy"
-msgstr "proxy"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:35
 msgid "satisfy"
-msgstr "voldoen"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:44
 msgid "deriveReqt"
-msgstr "deriveReqt"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:49
 msgid "trace"
-msgstr "volgen"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:56
 msgid "verify"
-msgstr "verifiëren"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:63
 msgid "refine"
-msgstr "verfijnen"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirement.py:62
 msgid "requirement"
-msgstr "vereiste"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml.gaphor
 msgid "Requirements"
-msgstr "Vereisten"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 msgid "Requirement"
-msgstr "Vereiste"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
-msgstr "Voldoen"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:36
 msgid "Derive Requirement"
-msgstr "Afgeleide Eis"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
-msgstr "Volgen"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
-msgstr "Verfijnen"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
-msgstr "Verifiëren"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:64
 #: gaphor/UML/classes/classestoolbox.py:71
 msgid "Containment"
-msgstr "Insluiting"
+msgstr ""
 
 #: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:37
 msgid "UML"
@@ -534,219 +537,218 @@ msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
-"Ongebruikte elementen zijn uit model verwijderd: ze waren niet meer in "
-"gebruik."
+"Usunięto nieużywane elementy z modelu: nie są używane w żadnym diagramie."
 
 #: gaphor/UML/toolbox.py:32
 msgid "New Component Diagram"
-msgstr "Nieuw Componenten Diagram"
+msgstr "Nowy diagram komponentu"
 
 #: gaphor/UML/toolbox.py:33
 msgid "New Deployment Diagram"
-msgstr "Nieuw Deployment Diagram"
+msgstr ""
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr "Nieuw Communicatie Diagram"
+msgstr ""
 
 #: gaphor/UML/toolbox.py:39
 msgid "New Profile Diagram"
-msgstr "Nieuw Profiel Diagram"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
 #: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
 msgid "New {name}"
-msgstr "Nieuw {name}"
+msgstr ""
 
 #: gaphor/UML/umlfmt.py:203
 msgid "general: {name}"
-msgstr "algemeen: {name}"
+msgstr ""
 
 #: gaphor/UML/umlfmt.py:208
 msgid "supplier: {name}"
-msgstr "leverancier: {name}"
+msgstr ""
 
 #: gaphor/UML/umlfmt.py:215
 msgid "extend: {name}"
-msgstr "uitbreiden: {name}"
+msgstr ""
 
 #: gaphor/UML/umlfmt.py:222
 msgid "include: {name}"
-msgstr "omvatten: {name}"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:40
 #: gaphor/UML/actions/actionstoolbox.py:62 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Activity"
-msgstr "Activiteit"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:48
 msgid "Swimlane One"
-msgstr "Zwembaan Een"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Swimlane Two"
-msgstr "Zwembaan Twee"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:58
 msgid "Actions"
-msgstr "Acties"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:74
 #: gaphor/UML/actions/actionstoolbox.py:80
 msgid "Action"
-msgstr "Actie"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:86
 msgid "Initial node"
-msgstr "Initiële node"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:98
 msgid "Activity final node"
-msgstr "Laatste activiteits-node"
+msgstr "Końcowy węzeł aktywności"
 
 #: gaphor/UML/actions/actionstoolbox.py:110
 msgid "Flow final node"
-msgstr "Laatste stroom-node"
+msgstr "Końcowy węzeł przepływu"
 
 #: gaphor/UML/actions/actionstoolbox.py:122
 msgid "Decision/merge node"
-msgstr "Beslissings-/samenvoegings-node"
+msgstr "Węzeł decyzji/scalania"
 
 #: gaphor/UML/actions/actionstoolbox.py:134
 msgid "Fork/join node"
-msgstr "Splitsings-/aansluitings-node"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:146
 #: gaphor/UML/actions/actionstoolbox.py:152
 msgid "Object node"
-msgstr "Object-node"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Swimlane"
-msgstr "Zwembaan"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:170
 msgid "Control flow"
-msgstr "Controlestroom"
+msgstr "Przepływ sterowania"
 
 #: gaphor/UML/actions/actionstoolbox.py:177
 msgid "Object flow"
-msgstr "Objectstroom"
+msgstr "Przepływ obiektu"
 
 #: gaphor/UML/actions/actionstoolbox.py:184
 msgid "Send signal action"
-msgstr "Signaalactie verzenden"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:190
 msgid "Send signal"
-msgstr "Signaal verzenden"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:196
 msgid "Accept event action"
-msgstr "Gebeurtenisactie accepteren"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:202
 msgid "Accept event"
-msgstr "Gebeurtenis accepteren"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:208
 msgid "Input pin"
-msgstr "Invoer pin"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:215
 msgid "Output pin"
-msgstr "Uitvoer pin"
+msgstr ""
 
 #: gaphor/UML/actions/activitynodes.py:190
 msgid "merge/decision"
-msgstr "samenvoegen/besluit"
+msgstr "scalanie/decyzja"
 
 #: gaphor/UML/actions/activitynodes.py:192
 msgid "merge"
-msgstr "samenvoegen"
+msgstr "scalanie"
 
 #: gaphor/UML/actions/activitynodes.py:194
 msgid "decision"
-msgstr "besluit"
+msgstr ""
 
 #: gaphor/UML/actions/objectnode.py:14
 #: gaphor/UML/actions/propertypages.glade:217
 #: gaphor/UML/actions/propertypages.ui:163
 msgid "unordered"
-msgstr "ongeordend"
+msgstr ""
 
 #: gaphor/UML/actions/objectnode.py:15
 #: gaphor/UML/actions/propertypages.glade:218
 #: gaphor/UML/actions/propertypages.ui:164
 msgid "ordered"
-msgstr "geordend"
+msgstr ""
 
 #: gaphor/UML/actions/objectnode.py:16
 msgid "LIFO"
-msgstr "LIFO"
+msgstr ""
 
 #: gaphor/UML/actions/objectnode.py:17
 msgid "FIFO"
-msgstr "FIFO"
+msgstr ""
 
 #: gaphor/UML/actions/partitionpage.py:112
 msgid "New Swimlane"
-msgstr "Nieuwe Zwembaan"
+msgstr ""
 
 #: gaphor/UML/actions/pin.py:59
 msgid "input pin"
-msgstr "invoer pin"
+msgstr ""
 
 #: gaphor/UML/actions/pin.py:65
 msgid "output pin"
-msgstr "uitvoer pin"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:28
 #: gaphor/UML/actions/propertypages.ui:11
 msgid "Show type"
-msgstr "Toon type"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:57
 #: gaphor/UML/actions/propertypages.ui:37
 msgid "Horizontal"
-msgstr "Horizontaal"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:83
 #: gaphor/UML/actions/propertypages.ui:59
 msgid "Join Specification"
-msgstr "Specificatie samenvoegen"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:116
 #: gaphor/UML/actions/propertypages.ui:89
 msgid "Swimlanes"
-msgstr "Zwembanen"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:129
 #: gaphor/UML/actions/propertypages.ui:100
 msgid "Partitions"
-msgstr "Partities"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:170
 #: gaphor/UML/actions/propertypages.ui:130
 msgid "Upper Bound"
-msgstr "Bovengrens"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:193
 #: gaphor/UML/actions/propertypages.ui:147
 msgid "Show Ordering"
-msgstr "Volgorde tonen"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:219
 #: gaphor/UML/actions/propertypages.ui:165
 msgid "Last In First Out (LIFO)"
-msgstr "Last in first out (LIFO)"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:220
 #: gaphor/UML/actions/propertypages.ui:166
 msgid "First In First Out (FIFO)"
-msgstr "First in first out (FIFO)"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:247
 #: gaphor/UML/actions/propertypages.ui:189
@@ -755,24 +757,24 @@ msgstr "First in first out (FIFO)"
 #: gaphor/UML/profiles/propertypages.glade:25
 #: gaphor/UML/profiles/propertypages.ui:9
 msgid "Name"
-msgstr "Naam"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:296
 #: gaphor/UML/actions/propertypages.ui:223
 #: gaphor/UML/states/propertypages.glade:180
 #: gaphor/UML/states/propertypages.ui:66
 msgid "Guard"
-msgstr "Bewaker"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:322
 #: gaphor/UML/actions/propertypages.ui:245
 msgid "Parameter Nodes"
-msgstr "Parameter-nodes"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:350
 #: gaphor/UML/actions/propertypages.ui:271
 msgid "Parameters"
-msgstr "Parameters"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:381
 #: gaphor/UML/actions/propertypages.ui:294
@@ -787,7 +789,7 @@ msgstr "Parameters"
 #: gaphor/UML/classes/propertypages.ui:643
 #: gaphor/UML/classes/propertypages.ui:752
 msgid "🛈 Help"
-msgstr "🛈 Help"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:408
 msgid ""
@@ -816,24 +818,13 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Klasse attributen volgens de UML syntax.\n"
-"\n"
-"  • <tt>attr</tt> (naam, standaard publieke zichtbaarheid)\n"
-"  • <tt>+ attr: int</tt> (publiek met type)\n"
-"  • <tt>+ attr: int[0..1]</tt> (publiek, type, en multiplicity)\n"
-"  • <tt>+ attr: int | bool</tt> (publiek, union type)\n"
-"  • <tt># /attr: int # a note</tt> (beschermd, afgeleid, met opmerking)\n"
-"\n"
-"Druk <b>Enter</b> om te wijzigen, <b>Backspace</b>/<b>Delete</b> om items"
-" te verwijderen.\n"
-"Gebruik <b>-</b>/<b>=</b> om items naar boven of beneden te verplaatsen."
 
 #: gaphor/UML/classes/classespropertypages.py:340
 #: gaphor/UML/classes/classespropertypages.py:429
 #: gaphor/UML/classes/propertypages.glade:944
 #: gaphor/UML/classes/propertypages.ui:817
 msgid "Static"
-msgstr "Statisch"
+msgstr ""
 
 #: gaphor/UML/classes/classespropertypages.py:429
 #: gaphor/UML/classes/propertypages.glade:496
@@ -841,110 +832,110 @@ msgstr "Statisch"
 #: gaphor/UML/classes/propertypages.ui:435
 #: gaphor/UML/classes/propertypages.ui:813
 msgid "Abstract"
-msgstr "Abstract"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:21
 msgid "Classes"
-msgstr "Klassen"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:25
 #: gaphor/UML/profiles/profilestoolbox.py:14
 msgid "Class"
-msgstr "Klasse"
+msgstr "Klasa"
 
 #: gaphor/UML/classes/classestoolbox.py:35
 msgid "Interface"
-msgstr "Interface"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:121
 msgid "Interface Realization"
-msgstr "Interface Realizatie"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:128
 msgid "DataType"
-msgstr "GegevensType"
+msgstr "TypDanych"
 
 #: gaphor/UML/classes/datatype.py:57
 msgid "primitive"
-msgstr "primitieve"
+msgstr ""
 
 #: gaphor/UML/classes/datatype.py:59 gaphor/UML/classes/enumeration.py:74
 msgid "valueType"
-msgstr "waardeType"
+msgstr ""
 
 #: gaphor/UML/classes/datatype.py:61
 msgid "dataType"
-msgstr "gegevensType"
+msgstr ""
 
 #: gaphor/UML/classes/dependency.py:43
 msgid "use"
-msgstr "gebruiken"
+msgstr ""
 
 #: gaphor/UML/classes/dependency.py:44
 msgid "realize"
-msgstr "realiseren"
+msgstr ""
 
 #: gaphor/UML/classes/dependency.py:45
 msgid "implements"
-msgstr "implementeert"
+msgstr ""
 
 #: gaphor/UML/classes/dependencypropertypages.py:17
 msgid "Usage"
-msgstr "Gebruik"
+msgstr ""
 
 #: gaphor/UML/classes/dependencypropertypages.py:18
 msgid "Realization"
-msgstr "Realisatie"
+msgstr ""
 
 #: gaphor/UML/classes/dependencypropertypages.py:19
 msgid "Implementation"
-msgstr "Implementatie"
+msgstr ""
 
 #: gaphor/UML/classes/enumeration.py:76
 msgid "enumeration"
-msgstr "opsomming"
+msgstr ""
 
 #: gaphor/UML/classes/interface.py:298
 msgid "interface"
-msgstr "interface"
+msgstr ""
 
 #: gaphor/UML/classes/klass.py:59
 msgid "stereotype"
-msgstr "stereotype"
+msgstr ""
 
 #: gaphor/UML/classes/klass.py:61
 msgid "metaclass"
-msgstr "meta-klasse"
+msgstr ""
 
 #: gaphor/UML/classes/package.py:29
 msgid "profile"
-msgstr "profiel"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:29
 #: gaphor/UML/classes/propertypages.ui:12
 msgid "Show Direction"
-msgstr "Toon Richting"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:107
 #: gaphor/UML/classes/propertypages.glade:234
 #: gaphor/UML/classes/propertypages.ui:101
 #: gaphor/UML/classes/propertypages.ui:228
 msgid "Unknown navigation"
-msgstr "Onbekende navigeerbaarheid"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:108
 #: gaphor/UML/classes/propertypages.glade:235
 #: gaphor/UML/classes/propertypages.ui:102
 #: gaphor/UML/classes/propertypages.ui:229
 msgid "Not navigable"
-msgstr "Niet navigeerbaar"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:109
 #: gaphor/UML/classes/propertypages.glade:236
 #: gaphor/UML/classes/propertypages.ui:103
 #: gaphor/UML/classes/propertypages.ui:230
 msgid "Navigable"
-msgstr "Navigeerbaar"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:140
 #: gaphor/UML/classes/propertypages.glade:267
@@ -957,7 +948,7 @@ msgstr "Navigeerbaar"
 #: gaphor/UML/profiles/propertypages.glade:93
 #: gaphor/UML/profiles/propertypages.ui:65
 msgid "Attributes"
-msgstr "Attributen"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:160
 #: gaphor/UML/classes/propertypages.glade:287
@@ -966,17 +957,17 @@ msgstr "Attributen"
 #: gaphor/UML/profiles/propertypages.glade:113
 #: gaphor/UML/profiles/propertypages.ui:85
 msgid "Value"
-msgstr "Waarde"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:181
 #: gaphor/UML/classes/propertypages.ui:50
 msgid "Head:"
-msgstr "Kop:"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:309
 #: gaphor/UML/classes/propertypages.ui:177
 msgid "Tail:"
-msgstr "Staart:"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:339
 #: gaphor/UML/classes/propertypages.ui:84
@@ -994,22 +985,11 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Association ends volgens de UML syntax.\n"
-"\n"
-"  • <tt>+ naam</tt>\n"
-"  • <tt>+ naam[1]</tt>\n"
-"  • <tt>- naam[1..2]</tt>\n"
-"  • <tt>1..2</tt>\n"
-"  • <tt>- [1..2]</tt>\n"
-"\n"
-"Druk <b>Enter</b> om te wijzigen, <b>Backspace</b>/<b>Delete</b> om items"
-" te verwijderen.\n"
-"Gebruik <b>-</b>/<b>=</b> om items naar boven of beneden te verplaatsen."
 
 #: gaphor/UML/classes/propertypages.glade:361
 #: gaphor/UML/classes/propertypages.ui:322
 msgid "Show Attributes"
-msgstr "Toon Attributen"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:480
 #: gaphor/UML/classes/propertypages.ui:405
@@ -1026,44 +1006,44 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Klasse attributen volgens de UML syntax.\n"
+"Dodawaj i edytuj własności klas zgodnie ze składnią UML.\n"
 "\n"
-"  • <tt>attr</tt> (naam, standaard publieke zichtbaarheid)\n"
-"  • <tt>+ attr: int</tt> (publiek met type)\n"
-"  • <tt>+ attr: int[0..1]</tt> (publiek, type, en multiplicity)\n"
-"  • <tt>+ attr: int | bool</tt> (publiek, union type)\n"
-"  • <tt># /attr: int # a note</tt> (beschermd, afgeleid, met opmerking)\n"
+"  • <tt>attr</tt> (nazwa, domyślnie publiczna)\n"
+"  • <tt>+ attr: int</tt> (publiczne z typem)\n"
+"  • <tt>+ attr: int[0..1]</tt> (publiczne, typ, i mnogość)\n"
+"  • <tt>+ attr: int | bool</tt> (publiczne, typ union)\n"
+"  • <tt># /attr: int # a note</tt> (chronione, pochodne, z adnotacją)\n"
 "\n"
-"Druk <b>Enter</b> om te wijzigen, <b>Backspace</b>/<b>Delete</b> om items"
-" te verwijderen.\n"
-"Gebruik <b>-</b>/<b>=</b> om items naar boven of beneden te verplaatsen."
+"Wciśnij <b>Enter</b> aby edytować, <b>Backspace</b>/<b>Delete</b> aby usuwać "
+"elementy.\n"
+"Użyj <b>-</b>/<b>=</b> aby przesuwać elementy w górę bądź w dół."
 
 #: gaphor/UML/classes/propertypages.glade:522
 #: gaphor/UML/classes/propertypages.ui:457
 msgid "Dependency type"
-msgstr "Afhankelijkheidstype"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:535
 #: gaphor/UML/classes/propertypages.ui:468
 msgid "Automatic"
-msgstr "Automatisch"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:582
 #: gaphor/UML/classes/propertypages.ui:504
 msgid "Folded"
-msgstr "Opgevouwen"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:646
 #: gaphor/UML/classes/propertypages.ui:563
 msgid "Show Operations"
-msgstr "Toon Operaties"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:682
 #: gaphor/UML/classes/propertypages.glade:752
 #: gaphor/UML/classes/propertypages.ui:550
 #: gaphor/UML/classes/propertypages.ui:593
 msgid "Operations"
-msgstr "Handelingen"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:776
 #: gaphor/UML/classes/propertypages.ui:657
@@ -1078,27 +1058,27 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Klasse operaties volgens de UML syntax.\n"
+"Dodawaj i edytuj operacje klas zgodnie ze składnią UML.\n"
 "\n"
 "  • <tt>call()</tt>\n"
-"  • <tt>+ call(a: int[*], b: str): bool</tt> (publiek, parameters)\n"
-"  • <tt># call(a: int, b: str) # a note</tt> (beschermd, met opmerking)\n"
+"  • <tt>+ call(a: int[*], b: str): bool</tt> (publiczne, parametry)\n"
+"  • <tt># call(a: int, b: str) # a note</tt> (chronione, z adnotacją)\n"
 "\n"
-"Druk <b>Enter</b> om te wijzigen, <b>Backspace</b>/<b>Delete</b> om items"
-" te verwijderen.\n"
-"Gebruik <b>-</b>/<b>=</b> om items naar boven of beneden te verplaatsen."
+"Wciśnij <b>Enter</b> aby edytować, <b>Backspace</b>/<b>Delete</b> aby usuwać "
+"elementy.\n"
+"Użyj <b>-</b>/<b>=</b> aby przesuwać elementy w górę bądź w dół."
 
 #: gaphor/UML/classes/propertypages.glade:798
 #: gaphor/UML/classes/propertypages.ui:699
 msgid "Show Enumeration Literals"
-msgstr "Toon Enumeratie Literals"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:835
 #: gaphor/UML/classes/propertypages.glade:878
 #: gaphor/UML/classes/propertypages.ui:686
 #: gaphor/UML/classes/propertypages.ui:729
 msgid "Enumeration Literals"
-msgstr "Enumeratie Literals"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:900
 #: gaphor/UML/classes/propertypages.ui:764
@@ -1111,339 +1091,323 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Enumeratie literals volgens de UML syntax.\n"
-"\n"
-"  • <tt>enum</tt>\n"
-"\n"
-"Druk <b>Enter</b> om te wijzigen, <b>Backspace</b>/<b>Delete</b> om items"
-" te verwijderen.\n"
-"Gebruik <b>-</b>/<b>=</b> om items naar boven of beneden te verplaatsen."
 
 #: gaphor/UML/classes/propertypages.glade:916
 #: gaphor/UML/classes/propertypages.ui:795
 msgid "Indirectly Instantiated"
-msgstr "Indirect Geïnstantieerd"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:937
 #: gaphor/UML/classes/propertypages.ui:812
 msgid "A."
-msgstr "A."
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.glade:943
 #: gaphor/UML/classes/propertypages.ui:816
 msgid "S."
-msgstr "S."
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
 msgid "Deployments"
-msgstr "Implementaties"
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16
 msgid "Artifact"
-msgstr "Artefact"
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:28
 msgid "Node"
-msgstr "Node"
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:40
 msgid "Device"
-msgstr "Apparaat"
+msgstr ""
 
 #: gaphor/UML/deployments/node.py:55
 msgid "device"
-msgstr "apparaat"
+msgstr ""
 
 #: gaphor/UML/deployments/propertypages.glade:28
 #: gaphor/UML/deployments/propertypages.ui:11
 msgid "Information Flow"
-msgstr "Information Flow"
+msgstr "Przepływ informacji"
 
 #: gaphor/UML/deployments/propertypages.glade:51
 #: gaphor/UML/deployments/propertypages.ui:29
 msgid "Information Item (Class)"
-msgstr "Information Item (Klasse)"
+msgstr "Element informacyjny (klasa)"
 
 #: gaphor/UML/interactions/interactionsconnect.py:79
 msgid "call()"
-msgstr "aanroepen()"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:34
 #: gaphor/UML/interactions/interactionstoolbox.py:55
 #: gaphor/templates/sysml.gaphor gaphor/templates/uml.gaphor
 msgid "Interaction"
-msgstr "Interactie"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:51
 #: gaphor/templates/uml.gaphor
 msgid "Interactions"
-msgstr "Interacties"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:67
 msgid "Lifeline"
-msgstr "Reddingslijn"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:79
 msgid "Execution Specification"
-msgstr "Uitvoeringsspecificatie"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:87
 msgid "Message"
-msgstr "Bericht"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:94
 msgid "Reflexive message"
-msgstr "Reflexive message"
+msgstr ""
 
 #: gaphor/UML/interactions/propertypages.glade:25
 #: gaphor/UML/interactions/propertypages.ui:9
 msgid "Message Sort"
-msgstr "Message Sort"
+msgstr ""
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
-msgstr "importeren"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
-msgstr "Profielen"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:22
 msgid "Profile"
-msgstr "Profiel"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
-msgstr "Meta-klasse"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:44
 msgid "Stereotype"
-msgstr "Stereotype"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:56
 msgid "Extension"
-msgstr "Uitbreiding"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:63
 msgid "Import"
-msgstr "Importeren"
+msgstr ""
 
 #: gaphor/UML/profiles/propertypages.glade:61
 #: gaphor/UML/profiles/propertypages.ui:44
 msgid "Show Stereotypes"
-msgstr "Toon Stereotypen"
+msgstr ""
 
 #: gaphor/UML/profiles/propertypages.glade:137
 #: gaphor/UML/profiles/propertypages.ui:31
 msgid "Stereotypes"
-msgstr "Stereotypen"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.glade:39
 #: gaphor/UML/states/propertypages.ui:104
 msgid "Show Regions"
-msgstr "Toon Regionen"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.glade:62
 #: gaphor/UML/states/propertypages.glade:84
 #: gaphor/UML/states/propertypages.ui:91 gaphor/UML/states/propertypages.ui:120
 msgid "Regions"
-msgstr "Gebieden"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.glade:105
 #: gaphor/UML/states/propertypages.ui:20
 msgid "Entry"
-msgstr "Ingang"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.glade:122
 #: gaphor/UML/states/propertypages.ui:31
 msgid "Exit"
-msgstr "Uitgang"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.glade:142
 #: gaphor/UML/states/propertypages.ui:42
 msgid "Do Activity"
-msgstr "Do Activity"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.glade:164
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
-msgstr "Activiteiten"
+msgstr ""
 
 #: gaphor/UML/states/statemachine.py:40
 msgid "statemachine"
-msgstr "staatmachine"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
-msgstr "Staat"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
 #: gaphor/templates/sysml.gaphor
 msgid "State Machine"
-msgstr "State Machine"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
-msgstr "Staten"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:87
 msgid "Initial Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:99
 msgid "Final State"
-msgstr "Final State"
+msgstr "Stan końcowy"
 
 #: gaphor/UML/states/statestoolbox.py:111
 msgid "Transition"
-msgstr "Overgang"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:118
-#, fuzzy
 msgid "Shallow History Pseudostate"
-msgstr "History Pseudostate"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:130
-#, fuzzy
 msgid "Deep History Pseudostate"
-msgstr "History Pseudostate"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:142
-#, fuzzy
 msgid "Join Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:154
-#, fuzzy
 msgid "Fork Pseudostate"
-msgstr "History Pseudostate"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:166
-#, fuzzy
 msgid "Junction Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:178
-#, fuzzy
 msgid "Choice Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:190
-#, fuzzy
 msgid "Entry Point Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:202
-#, fuzzy
 msgid "Exit Point Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:214
-#, fuzzy
 msgid "Terminate Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr ""
 
 #: gaphor/UML/usecases/extend.py:20
 msgid "extend"
-msgstr "uitbreiden"
+msgstr ""
 
 #: gaphor/UML/usecases/include.py:20
 msgid "include"
-msgstr "opnemen"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:12 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Use Cases"
-msgstr "Use Cases"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
-msgstr "Use case"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml.gaphor
 msgid "Actor"
-msgstr "Acteur"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
-msgstr "Opnemen"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:55
 msgid "Extend"
-msgstr "Uitbreiden"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:99 gaphor/ui/help/shortcuts.ui:18
 msgid "General"
-msgstr "Algemeen"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:103
 msgid "Pointer"
-msgstr "Aanwijzer"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:110
 msgid "Magnet"
-msgstr "Magneet"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:117
 msgid "Line"
-msgstr "Lijn"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:124
 msgid "Box"
-msgstr "Rechthoek"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:132
 msgid "Ellipse"
-msgstr "Ellips"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:140 gaphor/diagram/propertypages.glade:25
 #: gaphor/diagram/propertypages.ui:9
 msgid "Comment"
-msgstr "Opmerking"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:148
 msgid "Comment line"
-msgstr "Commentaarlijn"
+msgstr ""
 
 #: gaphor/diagram/presentation.py:49
 msgid "(from {namespace})"
-msgstr "(uit {namespace})"
+msgstr ""
 
 #: gaphor/diagram/propertypages.glade:68 gaphor/diagram/propertypages.ui:46
 msgid "Rectilinear"
-msgstr "Hoekig"
+msgstr ""
 
 #: gaphor/diagram/propertypages.glade:77 gaphor/diagram/propertypages.ui:52
 msgid "Flip orientation"
-msgstr "Orientatie wisselen"
+msgstr ""
 
 #: gaphor/diagram/propertypages.glade:92 gaphor/diagram/propertypages.ui:35
 msgid "Style"
-msgstr "Stijl"
+msgstr ""
 
 #: gaphor/diagram/propertypages.glade:126 gaphor/diagram/propertypages.ui:67
 msgid "Note or Remark"
-msgstr "Notitie of Opmerking"
+msgstr ""
 
 #: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:349
 msgid "Element can’t be represented on a diagram."
-msgstr ""
+msgstr "Element nie może być przedstawiony na diagramie."
 
 #: gaphor/extensions/sphinx.py:63
 msgid "No model file configured for model '{model_name}'."
-msgstr "Geen modelbestand geconfigureerd voor model '{model_name}'."
+msgstr "Brak skonfigurowanego pliku modelu dla modelu '{model_name}'."
 
 #: gaphor/extensions/sphinx.py:88
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
-msgstr "Geen diagram '{name}' in model '{model_name}' ({model_file})."
+msgstr "Brak diagramu '{name}' w modelu '{model_name}' ({model_file})."
 
 #: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
-msgstr ""
+msgstr "Autoukład"
 
 #: gaphor/plugins/autolayout/pydot.py:53
 msgid "Auto Layout (orthogonal)"
-msgstr ""
+msgstr "Autoukład (prostokątny)"
 
 #: gaphor/plugins/console/console.py:24
 msgid ""
@@ -1451,68 +1415,66 @@ msgid ""
 "{version}\n"
 "Type \"help\" for more information.\n"
 msgstr ""
-"Gaphor Interactieve Python Console\n"
+"Interaktywna konsola Pythona Gaphora\n"
 "{version}\n"
-"Type \"help\" voor meer informatie.\n"
+"Wpisz \"help\", aby uzyskać pomoc.\n"
 
 #: gaphor/plugins/console/consolewindow.py:22
 msgid "Gaphor Console"
-msgstr "Gaphor Console"
+msgstr "Konsola Gaphora"
 
 #: gaphor/plugins/console/consolewindow.py:45
 msgid "Console"
-msgstr "Console"
+msgstr "Konsola"
 
 #: gaphor/plugins/diagramexport/__init__.py:44
 msgid "All {ext} Files"
-msgstr "Alle {ext} Bestanden"
+msgstr "Wszystkie pliki {ext}"
 
 #: gaphor/plugins/diagramexport/__init__.py:50
 msgid "Export as SVG"
-msgstr "Exporteer als SVG"
+msgstr "Eksportuj jako SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:51
 #: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export diagram as SVG"
-msgstr "Exporteer diagram naar SVG"
+msgstr "Eksportuj diagram jako SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:61
 msgid "Export as PNG"
-msgstr "Exporteer naar PNG"
+msgstr "Eksportuj jako PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:62
 #: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export diagram as PNG"
-msgstr "Exporteer diagram naar SVG"
+msgstr "Eksportuj diagram jako PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:72
 msgid "Export as PDF"
-msgstr "Exporteer naar PDF"
+msgstr "Eksportuj jako PDF"
 
 #: gaphor/plugins/diagramexport/__init__.py:73
 #: gaphor/plugins/diagramexport/__init__.py:79
 msgid "Export diagram as PDF"
-msgstr "Exporteer diagram naar PDF"
+msgstr "Eksportuj diagram jako PDF"
 
 #: gaphor/plugins/diagramexport/__init__.py:87
-#, fuzzy
 msgid "Export as EPS"
-msgstr "Exporteer als XMI"
+msgstr "Eksportuj jako EPS"
 
 #: gaphor/plugins/diagramexport/__init__.py:88
 msgid "Export diagram as Encapsulated PostScript"
-msgstr ""
+msgstr "Eksportuj diagram jako Encapsulated PostScript"
 
 #: gaphor/plugins/diagramexport/__init__.py:94
-#, fuzzy
 msgid "Export diagram as EPS"
-msgstr "Exporteer diagram naar SVG"
+msgstr "Eksportuj diagram jako EPS"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
 #: gaphor/plugins/errorreports/errorreports.py:64
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
-msgstr ""
+msgstr "Raporty błędów"
 
 #: gaphor/plugins/errorreports/errorreports.glade:21
 #: gaphor/plugins/errorreports/errorreports.ui:18
@@ -1520,14 +1482,16 @@ msgid ""
 "Any unhandled errors are shown here. You can use these to provide extra "
 "information when you create an issue on GitHub."
 msgstr ""
+"Tu znajdują się nieobsłużone błędy. Możesz użyć tych informacji, aby dodać "
+"więcej danych przy tworzeniu problemu na GitHubie."
 
 #: gaphor/plugins/errorreports/errorreports.py:102
 msgid "No errors have been intercepted. We’re good."
-msgstr ""
+msgstr "Nie wychwycono żadnych błędów. Wszystko w porządku."
 
 #: gaphor/plugins/errorreports/errorreports.py:106
 msgid "Errors:"
-msgstr "Fouten:"
+msgstr "Błędy:"
 
 #: gaphor/plugins/errorreports/errorreports.py:155
 msgid ""
@@ -1535,65 +1499,68 @@ msgid ""
 "Please file an issue on GitHub and include information from Tools → Error"
 " Reports."
 msgstr ""
+"Wystąpił nieoczekiwany błąd.\n"
+"Zgłoś proszę problem na GitHubie i umieść w nim informacje z Narzędzia → "
+"Raporty błędów."
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export as XMI"
-msgstr "Exporteer als XMI"
+msgstr "Eksportuj jako XMI"
 
 #: gaphor/plugins/xmiexport/__init__.py:26
 msgid "Export model as XMI (XML Model Interchange) format"
-msgstr "Exporteer model naar XMI (XML Model Interchange) formaat"
+msgstr "Eksportuj w formacie XMI (XML Model Interchange)"
 
 #: gaphor/plugins/xmiexport/__init__.py:43
 msgid "Export model as XMI file"
-msgstr "Exporteer model naar XMI bestand"
+msgstr "Eksportuj model jako plik XMI"
 
 #: gaphor/plugins/xmiexport/__init__.py:47
 msgid "All XMI Files"
-msgstr "Alle XMI bestanden"
+msgstr "Wszystkie pliki XMI"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
 #: gaphor/ui/mainwindow.glade:121 gaphor/ui/mainwindow.py:241
 #: gaphor/ui/mainwindow.ui:45 gaphor/ui/namespace.py:323
 msgid "New model"
-msgstr "Nieuw model"
+msgstr "Nowy model"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:66
 #: gaphor/ui/namespace.py:110
 msgid "New diagram"
-msgstr "Nieuw diagram"
+msgstr "Nowy diagram"
 
 #: gaphor/templates/c4model.gaphor
 msgid "1. Context diagrams"
-msgstr "1. Context diagrammen"
+msgstr ""
 
 #: gaphor/templates/c4model.gaphor
 msgid "2. Container diagrams"
-msgstr "2. Container diagrammen"
+msgstr ""
 
 #: gaphor/templates/c4model.gaphor
 msgid "4. Code diagrams"
-msgstr "4. Code diagrammen"
+msgstr ""
 
 #: gaphor/templates/c4model.gaphor
 msgid "3. Component diagrams"
-msgstr "3. Componenten diagrammen"
+msgstr "3. Diagramy komponentów"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Context diagram"
-msgstr "Context diagram"
+msgstr ""
 
 #: gaphor/templates/c4model.gaphor
 msgid "Container diagram"
-msgstr "Container diagram"
+msgstr ""
 
 #: gaphor/templates/c4model.gaphor
 msgid "Component diagram"
-msgstr "Componenten diagram"
+msgstr "Diagram komponentu"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Code diagram"
-msgstr "Code diagram"
+msgstr ""
 
 #: gaphor/templates/raaml.gaphor gaphor/templates/uml.gaphor
 msgid "Model Name Here"
@@ -1601,15 +1568,15 @@ msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "STPA"
-msgstr "STPA"
+msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss Definition"
-msgstr "Verliesdefinitie"
+msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "FTA"
-msgstr "FTA"
+msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of System"
@@ -1625,11 +1592,11 @@ msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard Definition"
-msgstr "Gevaardefinitie"
+msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Life or Injury of People"
-msgstr ""
+msgstr "Utrata życia lub uszczerbek na zdrowiu"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Mission"
@@ -1641,11 +1608,11 @@ msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard 2"
-msgstr "Gevaar 2"
+msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard 1"
-msgstr "Hazard 1"
+msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Mapping of Losses and Hazards"
@@ -1653,12 +1620,11 @@ msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Operational Situations"
-msgstr "Operationele situaties"
+msgstr ""
 
 #: gaphor/templates/raaml.gaphor
-#, fuzzy
 msgid "Operational Situation 1"
-msgstr "Operational Situation"
+msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Context of UCAs"
@@ -1666,11 +1632,11 @@ msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situational Context"
-msgstr "Situationele context"
+msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situation Hierarchy"
-msgstr "Situatiehiërarchie"
+msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid ""
@@ -1680,52 +1646,51 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
-msgstr "1. Concept Niveau"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "2. Logical Level"
-msgstr "2. Logisch Niveau"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "3. Technology Level"
-msgstr "3. Technologisch Niveau"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "User"
-msgstr "Gebruiker"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Use Case #1"
-msgstr "Use case"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Behavior"
-msgstr "Gedrag"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Structure"
-msgstr "Structuur"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Context"
-msgstr "Functiecontext"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Operator"
-msgstr "Operator"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature"
-msgstr "Functie"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "External Element"
-msgstr "Extern element"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Stakeholder Requirements"
-msgstr "Vereisten van belanghebbenden"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
@@ -1733,47 +1698,47 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Structure"
-msgstr "Logische structuur"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensor"
-msgstr "Sensor"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "sensor"
-msgstr "sensor"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "controller"
-msgstr "bediener"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Boundary"
-msgstr "Logische grens"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Structure"
-msgstr "Technologiestructuur"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Boundary"
-msgstr "Technologiegrens"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Requirements"
-msgstr "Technologievereisten"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detailed Behavior"
-msgstr "Gedetailleerd gedrag"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "System Requirements"
-msgstr "Systeemvereisten"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
-msgstr "Logische staten"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Event Flow"
@@ -1781,15 +1746,15 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Off"
-msgstr "Uit"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "On"
-msgstr "Aan"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "actuator"
-msgstr "actuator"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case Function #1"
@@ -1797,11 +1762,11 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "First Action"
-msgstr "Eerste actie"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Second Action"
-msgstr "Tweede actie"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example System Requirement"
@@ -1809,11 +1774,11 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensed Data"
-msgstr "Gedetecteerde gegevens"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Command"
-msgstr "Opdracht"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Functional Boundary Behavior"
@@ -1825,48 +1790,47 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Actuate Actuator"
-msgstr "Actuator activeren"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Actuator Command"
-msgstr "Actuatorcommando"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Example Technology Requirement"
-msgstr "eis"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
-msgstr "Systeem"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "ECU"
-msgstr "ECU"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "DC Motor"
-msgstr "DC-motor"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "IR Transceiver"
-msgstr "IR-ontvanger"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "ecu"
-msgstr "ecu"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "dc Motor"
-msgstr "dc-motor"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "ir Transceiver"
-msgstr "ir-ontvanger"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detect Obstacle"
-msgstr "Obstakel detecteren"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Command Reverse"
@@ -1881,14 +1845,12 @@ msgid "Detect Object"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Detection Event"
-msgstr "Conditioneel Event"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "1. Use Cases"
-msgstr "Use case"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "2. Domain Analysis"
@@ -1907,9 +1869,8 @@ msgid "Main Actor"
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Main Use Case"
-msgstr "Use case"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Included Use Case"
@@ -1940,113 +1901,100 @@ msgid "Domain Entities"
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Software Task"
-msgstr "Software Systeem"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "performs"
-msgstr "presteert"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Package Dependencies"
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 1"
-msgstr "Nieuw Component"
+msgstr "1. komponent oprogramowania"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 4"
-msgstr "Nieuw Component"
+msgstr "4. komponent oprogramowania"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 3"
-msgstr "Nieuw Component"
+msgstr "3. komponent oprogramowania"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 2"
-msgstr "Nieuw Component"
+msgstr "2. komponent oprogramowania"
 
 #: gaphor/templates/uml.gaphor
 msgid "Primary Actor"
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Actor Profile"
-msgstr "profiel"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "login"
-msgstr "inloggen"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Detailed Class Design"
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "First Class"
-msgstr "metaclass"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "firstName"
-msgstr "voorNaam"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "lastName"
-msgstr "achterNaam"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Login"
-msgstr "Inloggen"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "lastLogin"
-msgstr "laatsteLogin"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Second Class"
-msgstr "Use case"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "released"
-msgstr "uitgegeven"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Implementation Architecture"
-msgstr "Implementatie diagram"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Node 1"
-msgstr "Node"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Artifact 1"
-msgstr "Artefact"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Node 2"
-msgstr "Node"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "protocol"
-msgstr "protocol"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Artifact 2"
-msgstr "Artefact"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2097,26 +2045,25 @@ msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "String"
-msgstr "Tekenreeks"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Date"
-msgstr "Datum"
+msgstr ""
 
 #: gaphor/ui/appfilemanager.py:19 gaphor/ui/filedialog.py:13
 msgid "All Gaphor Models"
-msgstr "Alle Gaphor modellen"
+msgstr "Wszystkie modele Gaphora"
 
 #: gaphor/ui/appfilemanager.py:45
 msgid "Switch to {name}?"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:46
-#, fuzzy
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr "{filename} is reeds geopend. Wil je de geopende versie tonen?"
+msgstr "{name} jest już otwarty. Przełączyć na otwarte już okno?"
 
 #: gaphor/ui/appfilemanager.py:65
 msgid "Open Again"
@@ -2124,42 +2071,44 @@ msgstr ""
 
 #: gaphor/ui/appfilemanager.py:66
 msgid "Switch"
-msgstr "Wisselen"
+msgstr ""
 
 #: gaphor/ui/appfilemanager.py:89
-#, fuzzy
 msgid "Open a Model"
-msgstr "Open een Model…"
+msgstr ""
 
 #: gaphor/ui/diagrampage.py:128 gaphor/ui/mainwindow.py:260
 #: gaphor/ui/namespaceview.py:126 gaphor/ui/treemodel.py:44
 msgid "<None>"
-msgstr "<geen>"
+msgstr ""
 
 #: gaphor/ui/diagrams.ui:32
-#, fuzzy
 msgid "Open a Diagram"
-msgstr "Componenten diagram"
+msgstr ""
 
 #: gaphor/ui/diagrams.ui:34
 msgid ""
 "Open a diagram from the model browser, or\n"
 "create a new diagram from the New diagram menu."
 msgstr ""
+"Otwórz diagram z przeglądarki modelu,\n"
+"lub stwórz nowy z menu Nowego diagramu."
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
-msgstr "Geen element geselecteerd"
+msgstr "Nie wybrano elementu"
 
 #: gaphor/ui/elementeditor.glade:28 gaphor/ui/elementeditor.ui:23
 msgid "Show Tips"
-msgstr "Toon Tips"
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:59 gaphor/ui/elementeditor.ui:44
 msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see it's properties appear."
 msgstr ""
+"Dodaj element modelu z dostępnych po lewej na dole. Tu pojawią się własności "
+"wybranego elementu."
 
 #: gaphor/ui/elementeditor.glade:69 gaphor/ui/elementeditor.ui:53
 msgid "This pane can be hidden by clicking the pane icon in the header."
@@ -2172,6 +2121,10 @@ msgid ""
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
+"<b>Rada:</b> Większość narzędzi ma swój skrót klawiszowy (np. \"c\" wybiera "
+"Klasy). Wybór narzędzi działa wyłącznie dla diagramu. Gdy narzędzie nie "
+"zostanie aktywowane, kliknij na diagram (aby go aktywować) i wciśnij skrót "
+"klawiszowy narzędzia."
 
 #: gaphor/ui/elementeditor.glade:90
 msgid ""
@@ -2184,56 +2137,54 @@ msgstr ""
 #: gaphor/ui/elementeditor.glade:128 gaphor/ui/elementeditor.ui:100
 #: gaphor/ui/help/shortcuts.ui:123
 msgid "Undo"
-msgstr "Ongedaan maken"
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:147 gaphor/ui/elementeditor.ui:118
 #: gaphor/ui/help/shortcuts.ui:131
 msgid "Redo"
-msgstr "Opnieuw"
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:169 gaphor/ui/elementeditor.ui:137
 #: gaphor/ui/help/shortcuts.ui:148
 msgid "Zoom In"
-msgstr "Vergroot"
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:184 gaphor/ui/elementeditor.ui:152
 #: gaphor/ui/help/shortcuts.ui:164
 msgid "Actual Size"
-msgstr "Ware grootte"
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:202 gaphor/ui/elementeditor.ui:167
 #: gaphor/ui/help/shortcuts.ui:156
 msgid "Zoom Out"
-msgstr "Verklein"
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:228 gaphor/ui/elementeditor.glade:298
 #: gaphor/ui/elementeditor.glade:419 gaphor/ui/elementeditor.ui:230
 #: gaphor/ui/elementeditor.ui:241 gaphor/ui/help/shortcuts.ui:56
 msgid "Preferences"
-msgstr "Voorkeuren"
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:283 gaphor/ui/elementeditor.ui:206
 msgid "Editors"
-msgstr "Bewerkers"
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:312 gaphor/ui/elementeditor.ui:254
 msgid "Reset Tool Automatically"
-msgstr "Herstel Tool Automatisch"
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:342 gaphor/ui/elementeditor.ui:272
 msgid "Remove Unused Elements"
-msgstr "Verwijder Ongebruikte Elementen"
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:343 gaphor/ui/elementeditor.glade:355
 #: gaphor/ui/elementeditor.ui:274 gaphor/ui/elementeditor.ui:281
 msgid "Automatically remove elements no longer in use in any diagram."
-msgstr ""
-"Verwijder automatisch elementen die niet langer in gebruik zijn in enig "
-"diagram."
+msgstr "Automatycznie usuń elementy nieużywane w żadnym diagramie."
 
 #: gaphor/ui/elementeditor.glade:371 gaphor/ui/elementeditor.ui:289
 msgid "Style Sheet"
-msgstr "Style Sheet"
+msgstr ""
 
 #: gaphor/ui/elementeditor.glade:406 gaphor/ui/elementeditor.ui:316
 msgid ""
@@ -2241,6 +2192,8 @@ msgid ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
+"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\""
+">Arkusze stylów w Gaphorze</a>"
 
 #: gaphor/ui/elementeditor.ui:71
 msgid ""
@@ -2254,20 +2207,21 @@ msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
+"Wygląda na to, że Gaphor został włączony z linii komend. Rozpocząć sesję "
+"debugowania?"
 
 #: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:34
 #: gaphor/ui/errorhandler.py:43 gaphor/ui/errorhandler.py:48
 msgid "Close"
-msgstr "Sluiten"
+msgstr ""
 
 #: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:44
-#, fuzzy
 msgid "Start Debug Session"
-msgstr "Start debug sessie"
+msgstr ""
 
 #: gaphor/ui/filedialog.py:34
 msgid "All Files"
-msgstr "Alle bestanden"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:42
 msgid ""
@@ -2276,12 +2230,17 @@ msgid ""
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
+"Gaphor nie mógł przechować modelu, zapewne z powodu wewnętrznego błędu:\n"
+"{exc}\n"
+"Jeśli myślisz, że to błąd, skontaktuj się z twórcami."
 
 #: gaphor/ui/filemanager.py:46
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"Nie masz uprawnień wymaganych do zapisu modelu.\n"
+"Sprawdź, czy lokalizacja zapisu jest poprawna i spróbuj ponownie."
 
 #: gaphor/ui/filemanager.py:50
 msgid ""
@@ -2296,62 +2255,66 @@ msgid ""
 "{exc}\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"Modelu nie można zapisać w tej lokalizacji.\n"
+"{exc}\n"
+"Sprawdź, czy lokalizacja zapisu jest poprawna i spróbuj ponownie."
 
 #: gaphor/ui/filemanager.py:122
 msgid "Loading…"
-msgstr "Laden…"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:123
 msgid "Loading model from {filename}"
-msgstr "Laden van model {filename}"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:169
-#, fuzzy
 msgid "Merge conflict in model “{filename}”."
-msgstr "Kan model “{filename}” niet openen."
+msgstr "Konflikt scalania w modelu “{filename}”."
 
 #: gaphor/ui/filemanager.py:172
 msgid "It looks like this model file contains a merge conflict."
-msgstr ""
+msgstr "Wygląda na to, że plik modelu zawiera konflikt scalania."
 
 #: gaphor/ui/filemanager.py:194
 msgid "Unable to open model “{filename}”."
-msgstr "Kan model “{filename}” niet openen."
+msgstr "Nie można otworzyć modelu “{filename}”."
 
 #: gaphor/ui/filemanager.py:197
 msgid "This file does not contain a valid Gaphor model."
-msgstr "Dit bestand bevat geen valide Gaphor model."
+msgstr "Ten plik nie zawiera poprawnego modelu Gaphora."
 
 #: gaphor/ui/filemanager.py:247
 msgid "Saving…"
-msgstr "Opslaan…"
+msgstr "Zapisywanie…"
 
 #: gaphor/ui/filemanager.py:248
 msgid "Saving model to {filename}"
-msgstr "Opslaan van model {filename}"
+msgstr "Zapis modelu do {filename}"
 
 #: gaphor/ui/filemanager.py:264
 msgid "Unable to save model “{filename}”."
-msgstr "Kan model {filename} niet opslaan."
+msgstr "Nie można zapisać modelu “{filename}”."
 
 #: gaphor/ui/filemanager.py:302 gaphor/ui/filemanager.py:338
 msgid "Save Gaphor Model As"
-msgstr "Sla Gaphor model op als"
+msgstr "Zapisz model Gaphora jako"
 
 #: gaphor/ui/filemanager.py:360
 msgid "Resolve Merge Conflict?"
-msgstr ""
+msgstr "Rozwiązać konflikt scalania?"
 
 #: gaphor/ui/filemanager.py:363
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
+"Otwierany model zawiera konflikt scalania. Otworzyć bieżący model czy "
+"nadchodzącą zmianę modelu?"
 
 #: gaphor/ui/filemanager.py:367 gaphor/ui/filemanager.py:395
 #: gaphor/ui/filemanager.py:409
 msgid "Cancel"
-msgstr "Annuleren"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:368
 msgid "Open Current"
@@ -2370,43 +2333,41 @@ msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
+"Otwarty model zawiera niezapisane zmiany. Niezapisane zmiany zostaną "
+"utracone."
 
 #: gaphor/ui/filemanager.py:397 gaphor/ui/filemanager.py:410
 msgid "Discard"
-msgstr "Verwerpen"
+msgstr "Odrzuć"
 
 #: gaphor/ui/filemanager.py:399 gaphor/ui/filemanager.py:411
 #: gaphor/ui/help/shortcuts.ui:97 gaphor/ui/mainwindow.py:51
 msgid "Save"
-msgstr "Opslaan"
+msgstr "Zapisz"
 
 #: gaphor/ui/greeter.glade:55
-#, fuzzy
 msgid "Recently opened models"
-msgstr "Recente modellen…"
+msgstr "Ostatnio otwarte modele"
 
 #: gaphor/ui/greeter.glade:76
-#, fuzzy
 msgid "Create a new model"
-msgstr "Maak Nieuw Model…"
+msgstr "Stwórz nowy model"
 
 #: gaphor/ui/greeter.glade:112
-#, fuzzy
 msgid "Open Other Model…"
-msgstr "Open een Model…"
+msgstr "Otwórz inny model…"
 
 #: gaphor/ui/greeter.py:30
 msgid "Generic"
-msgstr "Algemeen"
+msgstr "Ogólny"
 
 #: gaphor/ui/greeter.py:31
-#, fuzzy
 msgid "An empty model"
-msgstr "Nieuw model"
+msgstr "Pusty model"
 
 #: gaphor/ui/greeter.py:38
 msgid "Unified Modeling Language template"
-msgstr ""
+msgstr "Szablon zunifikowanego języka modelowania"
 
 #: gaphor/ui/greeter.py:45
 msgid "Systems Modeling Language template"
@@ -2414,7 +2375,7 @@ msgstr ""
 
 #: gaphor/ui/greeter.py:52
 msgid "Risk Analysis and Assessment Modeling Language template"
-msgstr ""
+msgstr "Szablon Risk Analysis and Assessment Modeling Language"
 
 #: gaphor/ui/greeter.py:59
 msgid "Layered C4 Model template"
@@ -2422,24 +2383,24 @@ msgstr ""
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
-msgstr "Model openen…"
+msgstr "Otwórz model…"
 
 #: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:61
 msgid "Keyboard Shortcuts"
-msgstr "Sneltoetsen"
+msgstr "Skróty klawiszowe"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.glade:7
 #: gaphor/ui/help/about.ui:10 gaphor/ui/mainwindow.py:62
 msgid "About Gaphor"
-msgstr "Over Gaphor"
+msgstr "O Gaphorze"
 
 #: gaphor/ui/greeter.ui:80
 msgid "Recently Opened"
-msgstr "Onlangs geopend"
+msgstr "Ostatnio otwarte"
 
 #: gaphor/ui/greeter.ui:85
 msgid "Create New Model"
-msgstr "Nieuw model aanmaken"
+msgstr "Stwórz nowy model"
 
 #: gaphor/ui/mainwindow.glade:104
 msgid "Gaphor"
@@ -2447,107 +2408,106 @@ msgstr "Gaphor"
 
 #: gaphor/ui/mainwindow.glade:177
 msgid "Create New diagram"
-msgstr "Nieuw diagram aanmaken"
+msgstr "Stwórz nowy diagram"
 
 #: gaphor/ui/mainwindow.glade:198
 msgid "Open Application Menu"
-msgstr "App-menu openen"
+msgstr "Otwórz menu aplikacji"
 
 #: gaphor/ui/mainwindow.glade:220
 msgid "Editor"
-msgstr "Bewerker"
+msgstr "Edytor"
 
 #: gaphor/ui/help/shortcuts.ui:81 gaphor/ui/mainwindow.py:46
 msgid "New Model…"
-msgstr "Nieuw model…"
+msgstr "Nowy model…"
 
 #: gaphor/ui/help/shortcuts.ui:105 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
-msgstr "Opslaan als…"
+msgstr "Zapisz jako…"
 
 #: gaphor/ui/mainwindow.py:53
 msgid "Export"
-msgstr "Exporteren"
+msgstr "Eksportuj"
 
 #: gaphor/ui/mainwindow.py:57
 msgid "Tools"
-msgstr "Gereedschap"
+msgstr "Narzędzia"
 
 #: gaphor/ui/mainwindow.py:278
 msgid "Profile: {name}"
-msgstr "Profiel: {name}"
+msgstr "Profil: {name}"
 
 #: gaphor/ui/mainwindow.ui:64
 msgid "New diagram menu"
-msgstr "Nieuw-diagram-menu"
+msgstr "Menu nowego diagramu"
 
 #: gaphor/ui/mainwindow.ui:71
 msgid "Open application menu"
-msgstr "App-menu openen"
+msgstr "Otwórz menu aplikacji"
 
 #: gaphor/ui/help/shortcuts.ui:40 gaphor/ui/mainwindow.ui:78
 msgid "Toggle property editor"
-msgstr "Eigenschapsbewerker omschakelen"
+msgstr "Widoczność edytora własności"
 
 #: gaphor/ui/namespace.py:47
 msgid "_Open"
-msgstr "_Openen"
+msgstr "_Otwórz"
 
 #: gaphor/ui/namespace.py:47
 msgid "Add to diagram"
-msgstr "Aan diagram toevoegen"
+msgstr "Dodaj do diagramu"
 
 #: gaphor/ui/namespace.py:50
 msgid "_Rename"
-msgstr "_Hernoemen"
+msgstr ""
 
 #: gaphor/ui/namespace.py:55
 msgid "New _Diagram"
-msgstr "Nieuw _diagram"
+msgstr "Nowy _diagram"
 
 #: gaphor/ui/namespace.py:58 gaphor/ui/treecomponent.py:367
 msgid "New _Package"
-msgstr "Nieuw _pakket"
+msgstr "Nowy _pakiet"
 
 #: gaphor/ui/namespace.py:62
 msgid "De_lete"
-msgstr "_Verwijderen"
+msgstr "_Usuń"
 
 #: gaphor/ui/namespace.py:72
 msgid "Show in “{diagram}”"
-msgstr "Tonen in ‘{diagram}’"
+msgstr "Pokaż w “{diagram}”"
 
 #: gaphor/ui/namespace.py:98
 msgid "New Generic Diagram"
-msgstr "Nieuw algemeen diagram"
+msgstr "Nowy ogólny diagram"
 
 #: gaphor/ui/namespace.py:321 gaphor/ui/treecomponent.py:174
 msgid "{name} package"
-msgstr "{name}-pakket"
+msgstr "Pakiet {name}"
 
 #: gaphor/ui/namespaceview.py:124 gaphor/ui/tests/test_treemodel.py:162
 #: gaphor/ui/treemodel.py:62
 msgid "<Relationships>"
-msgstr "<relaties>"
+msgstr "<Zależności>"
 
 #: gaphor/ui/treecomponent.py:176
 msgid "New package"
-msgstr "Nieuw pakket"
+msgstr "Nowy pakiet"
 
 #: gaphor/ui/help/about.glade:9
 msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
-msgstr "Copyright © 2001-2022, Arjan J. Molenaar en Dan Yeaw"
+msgstr "Prawa autorskie © 2001-2022 Arjan J. Molenaar i Dan Yeaw"
 
 #: gaphor/ui/help/about.glade:10
 msgid "Gaphor is the simple modeling tool written in Python"
-msgstr "Gaphor is een eenvoudig te gebruiken modeleertool geschreven in Python"
+msgstr "Gaphor to proste narzędzie do modelowania napisane w Pythonie"
 
 #: gaphor/ui/help/about.glade:12
 msgid "Fork me on GitHub"
-msgstr "Fork me op GitHub"
+msgstr ""
 
 #: gaphor/ui/help/about.glade:30
-#, fuzzy
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
 "you may not use this application except in compliance with the\n"
@@ -2567,17 +2527,24 @@ msgid ""
 "trademarks of Object Management Group, Inc. in the United States\n"
 "and/or other countries.\n"
 msgstr ""
-"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-"you may not use this application except in compliance with the\n"
-"License. You may obtain a copy of the License at\n"
+"Licencjonowanie na podstawie Apache License, Version 2.0 (dalej \"Licencja\""
+");\n"
+"zabrania się wykorzystywania aplikacji inaczej niż zgodnie z Licencją.\n"
+"Kopię Licencji można uzyskać pod adresem\n"
 "\n"
 "http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"Unless required by applicable law or agreed to in writing, software\n"
-"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
-"express or implied. See the License for the specific language\n"
-"governing permissions and limitations under the License.\n"
+"Jeśli niewymagane prawnie bądź uzgodnione na piśmie,\n"
+"oprogramowanie na mocy Licencji jest rozpowszechniane na zasadzie\n"
+"AS IS, BEZ JAKIEJKOLWIEK GWARANCJI CZY WARUNKÓW, zarówno\n"
+"jawnych jak i domniemanych. Sprawdź Licencję, aby uzyskać konkrety\n"
+"dotyczące sformułowań regulujących uprawnienia i ograniczenia.\n"
+"\n"
+"---\n"
+"\n"
+"UML, SysML i RAAML są zastrzeżonymi znakami towarowymi lub\n"
+"znakami towarowymi Object Management Group, Inc.\n"
+"w Stanach Zjednoczonych i/lub innych krajach.\n"
 
 #: gaphor/ui/help/about.ui:14
 msgid ""
@@ -2589,7 +2556,6 @@ msgid ""
 msgstr ""
 
 #: gaphor/ui/help/about.ui:22
-#, fuzzy
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
 " not use this application except in compliance with the License. You may "
@@ -2603,318 +2569,78 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
-"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-"you may not use this application except in compliance with the\n"
-"License. You may obtain a copy of the License at\n"
+"Licencjonowanie na podstawie Apache License, Version 2.0 (dalej \"Licencja\""
+"); zabrania się wykorzystywania aplikacji inaczej niż zgodnie z Licencją. "
+"Kopię Licencji można uzyskać pod adresem\n"
 "\n"
-"http://www.apache.org/licenses/LICENSE-2.0\n"
+"    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
-"Unless required by applicable law or agreed to in writing, software\n"
-"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
-"express or implied. See the License for the specific language\n"
-"governing permissions and limitations under the License.\n"
+"Jeśli niewymagane prawnie bądź uzgodnione na piśmie, oprogramowanie na mocy "
+"Licencji jest rozpowszechniane na zasadzie AS IS, BEZ JAKIEJKOLWIEK "
+"GWARANCJI CZY WARUNKÓW, zarówno jawnych jak i domniemanych. Sprawdź "
+"Licencję, aby uzyskać konkrety dotyczące sformułowań regulujących "
+"uprawnienia i ograniczenia."
 
 #: gaphor/ui/help/shortcuts.ui:24
 msgid "Rename"
-msgstr "Hernoemen"
+msgstr "Zmień nazwę"
 
 #: gaphor/ui/help/shortcuts.ui:32
 msgid "Search"
-msgstr "Zoeken"
+msgstr "Szukaj"
 
 #: gaphor/ui/help/shortcuts.ui:48
 msgid "Close Diagram"
-msgstr "Diagram sluiten"
+msgstr "Zamknij diagram"
 
 #: gaphor/ui/help/shortcuts.ui:64
 msgid "Quit Gaphor"
-msgstr "Gaphor sluiten"
+msgstr "Wyjdź z Gaphora"
 
 #: gaphor/ui/help/shortcuts.ui:75
 msgid "Files"
-msgstr "Bestanden"
+msgstr "Pliki"
 
 #: gaphor/ui/help/shortcuts.ui:89
 msgid "Open a Model…"
-msgstr "Model openen…"
+msgstr "Otwórz model…"
 
 #: gaphor/ui/help/shortcuts.ui:117
 msgid "Undo and Redo"
-msgstr "Ongedaan maken en opnieuw"
+msgstr "Cofanie i powtarzanie"
 
 #: gaphor/ui/help/shortcuts.ui:142
 msgid "Zoom"
-msgstr "Zoomen"
+msgstr "Zbliżanie"
 
 #: gaphor/ui/help/shortcuts.ui:174
 msgid "Selections"
-msgstr "Selecties"
+msgstr "Zaznaczanie"
 
 #: gaphor/ui/help/shortcuts.ui:180
 msgid "Select All"
-msgstr "Alles selecteren"
+msgstr "Zaznacz wszystko"
 
 #: gaphor/ui/help/shortcuts.ui:188
 msgid "Deselect All"
-msgstr "Alles deselecteren"
+msgstr "Odznacz wszystko"
 
 #: gaphor/ui/help/shortcuts.ui:199
 msgid "Copy and Paste"
-msgstr "Kopiëren en plakken"
+msgstr "Kopiowanie i wklejanie"
 
 #: gaphor/ui/help/shortcuts.ui:205
 msgid "Copy"
-msgstr "Kopiëren"
+msgstr "Kopiuj"
 
 #: gaphor/ui/help/shortcuts.ui:213
 msgid "Cut"
-msgstr "Knippen"
+msgstr "Wytnij"
 
 #: gaphor/ui/help/shortcuts.ui:221
 msgid "Paste (link defining elements)"
-msgstr "Plakken (definiërende elementen linken)"
+msgstr "Wklej (złącz elementy określające)"
 
 #: gaphor/ui/help/shortcuts.ui:229
 msgid "Paste (copy defining elements)"
-msgstr "Plakken (definiërende elementen kopiëren)"
-
-#~ msgid ""
-#~ "Add and edit class attributes according to UML syntax.\n"
-#~ "Attribute syntax examples\n"
-#~ "- attr\n"
-#~ "- + attr: int\n"
-#~ "- # /attr: int # a note\n"
-#~ "\n"
-#~ "Press Enter to edit item, Backspace/Delete to remove item.\n"
-#~ "Use -/= to move items up or down."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add and edit class operations according to UML syntax.\n"
-#~ "Operation syntax examples\n"
-#~ "- call()\n"
-#~ "- + call(a: int, b: str) # a note\n"
-#~ "- # call(a: int, b: str): bool\n"
-#~ "\n"
-#~ "Press Enter to edit item, Backspace/Delete to remove item.\n"
-#~ "Use -/= to move items up or down."
-#~ msgstr ""
-
-#~ msgid "{name} diagram"
-#~ msgstr "{name} diagram"
-
-#~ msgid "Partition Names"
-#~ msgstr "Partitie Namen"
-
-#~ msgid ""
-#~ "Enter attribute name and multiplicity, for example\n"
-#~ "- name\n"
-#~ "+ name [1]\n"
-#~ "- name [1..2]\n"
-#~ "~ 1..2\n"
-#~ "- [1..2]"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add and edit class attributes according to UML syntax.\n"
-#~ "Attribute syntax examples\n"
-#~ "- attr\n"
-#~ "- + attr: int\n"
-#~ "- # /attr: int\n"
-#~ "\n"
-#~ "Press ENTER to edit item, BS/DEL to remove item.\n"
-#~ "Use -/= to move items up or down."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add and edit class operations according"
-#~ " to UML syntax. Operation syntax "
-#~ "examples\n"
-#~ "- call()\n"
-#~ "- + call(a: int, b: str)\n"
-#~ "- # call(a: int: b: str): bool\n"
-#~ "\n"
-#~ "Press ENTER to edit item, BS/DEL to remove item.\n"
-#~ "Use -/= to move items up or down."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add and edit enumeration literals according to UML syntax.\n"
-#~ "Enumeration literal syntax examples\n"
-#~ "- enum\n"
-#~ "\n"
-#~ "Press ENTER to edit item, BS/DEL to remove item.\n"
-#~ "Use -/= to move items up or down."
-#~ msgstr ""
-
-#~ msgid "Paste"
-#~ msgstr "Plakken"
-
-#~ msgid "Named Element"
-#~ msgstr "Named Element"
-
-#~ msgid "Paste (link)"
-#~ msgstr ""
-
-#~ msgid "4. Implementation Level"
-#~ msgstr "4. Implementatie Niveau"
-
-#~ msgid "Concept diagram"
-#~ msgstr "Concept diagram"
-
-#~ msgid "Open Gaphor Model"
-#~ msgstr "Open Gaphor model"
-
-#~ msgid "Recently opened models"
-#~ msgstr "Recent geopende modellen"
-
-#~ msgid "Create a new model from a template"
-#~ msgstr "Maak een nieuw model op basis van een template"
-
-#~ msgid "Open a Gaphor Model"
-#~ msgstr "Open Gaphor Model"
-
-#~ msgid "Gaphor - Open Model"
-#~ msgstr "Gaphor Console"
-
-#~ msgid "Gaphor - Create a New Model"
-#~ msgstr ""
-
-#~ msgid "Gaphor - Open a Recent Model"
-#~ msgstr ""
-
-#~ msgid "Settings"
-#~ msgstr "Instellingen"
-
-#~ msgid "upperBound"
-#~ msgstr "upperBound"
-
-#~ msgid "ordering"
-#~ msgstr "volgorde"
-
-#~ msgid "Components"
-#~ msgstr "Componenten"
-
-#~ msgid ""
-#~ "Drag to diagram is (temporarily) limited"
-#~ " to Classifiers, Packages, and Properties,"
-#~ " not {type}."
-#~ msgstr ""
-
-#~ msgid "Recent Model…"
-#~ msgstr "Recente modellen…"
-
-#~ msgid "Open Existing Model…"
-#~ msgstr "Open Bestaand Model…"
-
-#~ msgid "A {} can’t be part of a {}."
-#~ msgstr ""
-
-#~ msgid "Default Region"
-#~ msgstr "Standaard Regio"
-
-#~ msgid "Application"
-#~ msgstr "Applicatie"
-
-#~ msgid "New Window"
-#~ msgstr "Nieuw Venster"
-
-#~ msgid "Open"
-#~ msgstr "Openen"
-
-#~ msgid "Save As"
-#~ msgstr "Opslaan Als"
-
-#~ msgid "Diagrams"
-#~ msgstr "Diagrammen"
-
-#~ msgid "Edit"
-#~ msgstr "Wijzigen"
-
-#~ msgid "Delete"
-#~ msgstr "Verwijder"
-
-#~ msgid "Example Technolgy Requirement"
-#~ msgstr ""
-
-#~ msgid "S"
-#~ msgstr "S"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#~ msgid "Save changes before closing?"
-#~ msgstr "Wijzigingen opslaan voor afsluiten?"
-
-#~ msgid "Closing will cause any unsaved changes to be discarded."
-#~ msgstr "Als je afsluit zonder opslaan, verdwijnen uw wijzigingen."
-
-#~ msgid "Close without saving changes"
-#~ msgstr "Afsluiten _zonder opslaan"
-
-#~ msgid "Open a Recent Model"
-#~ msgstr "Recente modellen…"
-
-#~ msgid "main"
-#~ msgstr "diagram"
-
-#~ msgid "edited"
-#~ msgstr "gewijzigd"
-
-#~ msgid ""
-#~ "Add a model element from the tool"
-#~ " box (bottom left) to the diagram."
-#~ " Here you will see it's properties"
-#~ " appear.\n"
-#~ "\n"
-#~ "This pane can be hidden by clicking the pane icon in the header.\n"
-#~ "\n"
-#~ "<b>Tip:</b> Most elements in the toolbox"
-#~ " have a keyboard shortcut (e.g. \"c\""
-#~ " for Class).\n"
-#~ "Tool selection only works from the "
-#~ "diagram. If a tool does not get"
-#~ " selected, click on the diagram once"
-#~ " (so it's focused) and then hit "
-#~ "the shortcut key.\n"
-#~ "\n"
-#~ "<b>Tip:</b> To search for an element "
-#~ "in the model browser (top left), "
-#~ "select an element in the model "
-#~ "browser and start typing. A search "
-#~ "box will automatically appear.\n"
-#~ msgstr ""
-#~ "Voeg een model element toe vanuit "
-#~ "de toolbox aan het diagram. Op "
-#~ "deze plek komen de eigenschappen van "
-#~ "het element.\n"
-#~ "\n"
-#~ "Dit deelvenster kan gesloten worden "
-#~ "middels de knop in de kop van "
-#~ "dit venster.\n"
-#~ "\n"
-#~ "<b>Tip:</b> De meeste elementen in de"
-#~ " toolbox hebben een snelkoppeling (bijv."
-#~ " \"c\" voor Klasse).\n"
-#~ "Tool selectie werkt alleen vanuit een"
-#~ " diagram. Als een tool niet wordt "
-#~ "geselecteerd, klik dan eenmalig op het"
-#~ " diagram (zodat het focus heeft) en"
-#~ " activeer dan de snelkoppeling.\n"
-#~ "\n"
-#~ "<b>Tip:</b> Om een element te zoeken "
-#~ "in de hierarchy (top-links), Selecteer"
-#~ " een element in de hierarchy en "
-#~ "begin met typen. Een zoekvenster zal "
-#~ "automatisch verschijnen.\n"
-
-#~ msgid ""
-#~ "<b>Tip:</b> Most elements in the toolbox"
-#~ " have a keyboard shortcut (e.g. \"c\""
-#~ " for Class).    Tool selection only "
-#~ "works from the diagram. If a tool"
-#~ " does not get selected, click on "
-#~ "the diagram once (so it's focused) "
-#~ "and then hit the shortcut key."
-#~ msgstr ""
+msgstr "Wklej (skopiuj elementy określające)"
