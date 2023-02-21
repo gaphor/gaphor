@@ -4,7 +4,7 @@ from gi.repository import Gio, GObject, Gtk
 
 from gaphor.event import ModelLoaded
 from gaphor.core.modeling import PendingChange, ElementChange, AttributeUpdated
-from gaphor.core.changeset.apply import apply_change
+from gaphor.core.changeset.apply import apply_change, applicable
 from gaphor.i18n import translated_ui_string
 from gaphor.ui.abc import UIComponent
 from gaphor.core import event_handler
@@ -107,7 +107,7 @@ class ChangeItem(GObject.Object):
             if isinstance(element, ElementChange)
             else element.property_name  # type: ignore[attr-defined]
         )
-        self.applicable = not element.applied
+        self.applicable = not element.applied and applicable(element, element.model)
         self.applied = bool(element.applied)
 
 
