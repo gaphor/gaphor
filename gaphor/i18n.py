@@ -50,8 +50,8 @@ try:
     gettext = translate.gettext
 
 except OSError as e:
-    lang = os.environ["LANG"]
-    if lang != "en_US":
+    lang = os.getenv("LANG", "")
+    if lang.lower() not in ("c", "en_us", "en_us.utf-8"):
         log.warning(f"No translations were found for language {lang}: {e}")
 
     def gettext(s):
