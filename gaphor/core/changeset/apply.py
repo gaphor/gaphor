@@ -4,6 +4,25 @@ from gaphor.core.modeling.coremodel import ElementChange, RefChange, ValueChange
 
 
 @singledispatch
+def applicable(change) -> bool:
+    raise NotImplementedError
+
+
+@applicable.register
+def _(change: ElementChange, element_factory) -> bool:
+    element = element_factory.lookup(change.element_id)
+    return not bool(element) if change.op == "add" else bool(element)
+
+
+@applicable.register
+def _(change: ValueChange, element_factory):
+    element = element_factory.lookup(change.element_id)
+    return bool(
+        element and getattr(element, change.property_name) != change.property_value
+    )
+
+
+@singledispatch
 def apply_change(change, element_factory, modeling_factory, diagram=None):
     raise NotImplementedError
 
