@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.core.changeset.apply import apply_change
+from gaphor.core.changeset.apply import apply_change, applicable
 from gaphor.core.modeling import (
     Diagram,
     Element,
@@ -119,3 +119,52 @@ def test_remove_many_relation(element_factory, modeling_language):
     apply_change(change, element_factory, modeling_language)
 
     assert diagram.element is None
+
+
+def test_element_change_applicable(element_factory):
+    change: ElementChange = element_factory.create(ElementChange)
+    change.op = "add"
+    change.element_id = "1234"
+    change.element_name = "Presentation"
+
+    assert applicable(change, element_factory)
+
+
+def test_element_change_not_applicable(element_factory):
+    element_factory.create_as(Element, id="1234")
+    change: ElementChange = element_factory.create(ElementChange)
+    change.op = "add"
+    change.element_id = "1234"
+    change.element_name = "Presentation"
+
+    assert not applicable(change, element_factory)
+
+
+def test_update_value_applicable(element_factory):
+    diagram = element_factory.create(Diagram)
+    change: ValueChange = element_factory.create(ValueChange)
+    change.element_id = diagram.id
+    change.property_name = "name"
+    change.property_value = "new value"
+
+    assert applicable(change, element_factory)
+
+
+def test_update_value_not_applicable(element_factory):
+    diagram = element_factory.create(Diagram)
+    change: ValueChange = element_factory.create(ValueChange)
+    change.element_id = diagram.id
+    change.property_name = "name"
+    change.property_value = "new value"
+    diagram.name = "new value"
+
+    assert not applicable(change, element_factory)
+
+
+def test_update_value_without_element_not_applicable(element_factory):
+    change: ValueChange = element_factory.create(ValueChange)
+    change.element_id = "1234"
+    change.property_name = "name"
+    change.property_value = "new value"
+
+    assert not applicable(change, element_factory)
