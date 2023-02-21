@@ -29,10 +29,11 @@ def test_create_presentation(element_factory, modeling_language):
     diagram = element_factory.create(Diagram)
     change: ElementChange = element_factory.create(ElementChange)
     change.op = "add"
-    change.element_id = "12234"
-    change.element_name = "Presentation"
+    change.element_id = "1234"
+    change.element_name = "Box"
+    change.diagram_id = diagram.id
 
-    apply_change(change, element_factory, modeling_language, diagram=diagram)
+    apply_change(change, element_factory, modeling_language)
 
     assert element_factory.lookup(change.element_id)
     assert change.applied
@@ -42,7 +43,7 @@ def test_create_presentation_without_diagram(element_factory, modeling_language)
     change: ElementChange = element_factory.create(ElementChange)
     change.op = "add"
     change.element_id = "12234"
-    change.element_name = "Presentation"
+    change.element_name = "Box"
 
     with pytest.raises(TypeError):
         apply_change(change, element_factory, modeling_language)
@@ -140,6 +141,27 @@ def test_element_change_not_applicable(element_factory):
     assert not applicable(change, element_factory)
 
 
+def test_element_change_with_diagram_applicable(element_factory):
+    diagram = element_factory.create(Diagram)
+    change: ElementChange = element_factory.create(ElementChange)
+    change.op = "add"
+    change.element_id = "1234"
+    change.element_name = "Presentation"
+    change.diagram_id = diagram.id
+
+    assert applicable(change, element_factory)
+
+
+def test_element_change_without_diagram_not_applicable(element_factory):
+    change: ElementChange = element_factory.create(ElementChange)
+    change.op = "add"
+    change.element_id = "1234"
+    change.element_name = "Presentation"
+    change.diagram_id = "does-not-exist"
+
+    assert not applicable(change, element_factory)
+
+
 def test_update_value_applicable(element_factory):
     diagram = element_factory.create(Diagram)
     change: ValueChange = element_factory.create(ValueChange)
@@ -168,3 +190,15 @@ def test_update_value_without_element_not_applicable(element_factory):
     change.property_value = "new value"
 
     assert not applicable(change, element_factory)
+
+
+def test_add_relation_applicable(element_factory, modeling_language):
+    element = element_factory.create(Element)
+    diagram = element_factory.create(Diagram)
+    change: RefChange = element_factory.create(RefChange)
+    change.op = "add"
+    change.element_id = diagram.id
+    change.property_name = "element"
+    change.property_ref = element.id
+
+    assert applicable(change, element_factory)
