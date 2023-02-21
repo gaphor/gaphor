@@ -2,6 +2,7 @@ import pytest
 
 from gaphor.core.changeset.compare import UnmatchableModel, compare
 from gaphor.core.modeling import Diagram, Element, ElementFactory, PendingChange
+from gaphor.diagram.general.simpleitem import Box
 
 
 @pytest.fixture
@@ -40,6 +41,19 @@ def test_added_element(current, incoming, saver):
 
     with open("conflict.gaphor", "w", encoding="utf-8") as f:
         f.write(saver())
+
+
+def test_added_presentation(current, incoming):
+    current_diagram = current.create(Diagram)
+    diagram = incoming.create_as(Diagram, current_diagram.id)
+    box = diagram.create(Box)
+
+    change = next(compare(current, incoming))
+
+    assert change.op == "add"
+    assert change.element_id == box.id
+    assert change.element_name == "Box"
+    assert change.diagram_id == diagram.id
 
 
 def test_added_element_with_attribute(current, incoming):

@@ -8,6 +8,7 @@ from gaphor.core.modeling import (
     ElementFactory,
     RefChange,
     ValueChange,
+    Presentation,
 )
 from gaphor.core.modeling.collection import collection
 
@@ -54,6 +55,7 @@ def compare(
             op="add",
             element_name=type(e).__name__,
             element_id=key,
+            diagram_id=e.diagram.id if isinstance(e, Presentation) else None,
         )
         yield from updated_properties(None, e, create)
 
