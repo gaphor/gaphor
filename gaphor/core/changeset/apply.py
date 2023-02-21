@@ -8,7 +8,7 @@ from gaphor.core.modeling.coremodel import (
 
 
 @singledispatch
-def applicable(change) -> bool:
+def applicable(change, element_factory) -> bool:
     raise NotImplementedError
 
 
