@@ -1750,6 +1750,7 @@
 <ownedAttribute>
 <reflist>
 <ref refid="9c733038-5ee4-11ed-9155-0456e5e540ed"/>
+<ref refid="f9c0040e-b223-11ed-88ec-0456e5e540ed"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -2269,5 +2270,16 @@
 <name>
 <val>update</val>
 </name>
+</Property>
+<Property id="f9c0040e-b223-11ed-88ec-0456e5e540ed">
+<class_>
+<ref refid="7996a2fc-5ee4-11ed-9155-0456e5e540ed"/>
+</class_>
+<name>
+<val>diagram_id</val>
+</name>
+<typeValue>
+<val>str</val>
+</typeValue>
 </Property>
 </gaphor>
