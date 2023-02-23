@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 19:23+0100\n"
-"PO-Revision-Date: 2022-09-03 19:28+0000\n"
-"Last-Translator: Anonynonymouse <tom.spaine60388@gmail.com>\n"
+"PO-Revision-Date: 2023-02-25 09:37+0000\n"
+"Last-Translator: Felix <felix-schindler@outlook.com>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/gaphor/gaphor/de/>"
+"\n"
 "Language: de\n"
-"Language-Team: de <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.16-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -394,9 +396,8 @@ msgid "New Requirement Diagram"
 msgstr "Neues Anforderungsdiagramm"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
-#, fuzzy
 msgid "New Use Case Diagram"
-msgstr "{name} Diagramm"
+msgstr "Neues {name} Diagramm"
 
 #: gaphor/SysML/blocks/block.py:60
 msgid "ControlStructure"
