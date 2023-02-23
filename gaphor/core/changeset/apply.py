@@ -29,13 +29,13 @@ def _(change: ElementChange, element_factory) -> bool:
 def _(change: ElementChange, element_factory, modeling_factory):
     if change.applied:
         return
-    if change.op == "add" and not change.applied:
+    if change.op == "add":
         element_type = modeling_factory.lookup_element(change.element_name)
         diagram = (
             element_factory.lookup(change.diagram_id) if change.diagram_id else None
         )
         element_factory.create_as(element_type, change.element_id, diagram=diagram)
-    elif change.op == "remove" and not change.applied:
+    elif change.op == "remove":
         if element := element_factory.lookup(change.element_id):
             element.unlink()
     change.applied = True
