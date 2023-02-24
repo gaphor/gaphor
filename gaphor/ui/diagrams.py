@@ -376,10 +376,9 @@ class Diagrams(UIComponent, ActionProvider):
             return
         for page in range(self._notebook.get_n_pages()):
             widget = self._notebook.get_nth_page(page)
-            if (
-                Gtk.get_major_version() == 3
-                and event.element is widget.diagram_page.diagram
-            ):
+            if Gtk.get_major_version() == 3:
+                if event.element is not widget.diagram_page.diagram:
+                    continue
                 self._notebook.set_tab_label(
                     widget, tab_label(event.new_value, widget, self.event_manager)
                 )
