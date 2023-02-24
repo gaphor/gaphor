@@ -45,6 +45,9 @@ from gaphor.UML.toolbox import (
 )
 
 
+@pytest.mark.skip(
+    reason="This test takes too long since Hypothesis 6.68.1 and should be refactored"
+)
 @pytest.mark.hypothesis
 def test_auto_layouting():
     run_state_machine_as_test(AutoLayouting)
