@@ -10,8 +10,8 @@ skip_if_gtk3 = pytest.mark.skipif(
 
 
 @skip_if_gtk3
-def test_open_model_merge(event_manager, element_factory):
-    change_set = ModelMerge(event_manager, element_factory)
+def test_open_model_merge(event_manager, element_factory, modeling_language):
+    change_set = ModelMerge(event_manager, element_factory, modeling_language)
 
     widget = change_set.open()
 
