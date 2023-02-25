@@ -291,9 +291,16 @@ class DiagramPage:
         style = self.diagram.style(StyledDiagram(self.diagram, dark_mode=dark_mode))
 
         bg = style.get("background-color", (0.0, 0.0, 0.0, 0.0))
-        self.diagram_css.load_from_data(
-            f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}".encode()
-        )
+        # TODO: Temporary, until this is supported by PyGObject
+        if (Gtk.get_major_version(), Gtk.get_minor_version()) > (4, 8):
+            self.diagram_css.load_from_data(
+                f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}",
+                -1,
+            )
+        else:
+            self.diagram_css.load_from_data(
+                f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}".encode()
+            )
 
         view = self.view
         item_painter = ItemPainter(view.selection, dark_mode)
