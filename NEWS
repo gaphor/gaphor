@@ -1,3 +1,19 @@
+2.17.0
+------
+- Add support for diagram metadata
+- macOS: Fix freeze creating new diagram
+- Properly unsubscribe when property page is removed
+- Package GSettings daemon schemas for AppImage
+- Consider only default modifiers in toolbox shortcuts
+- New status page icon
+- Workaround removing skip-changelog labels
+- Update gvsbuild to version 2023.2.0
+- meta: Add .doap-file
+- Update "Keep model in sync" design principle
+- Update to using the GNOME Code of Conduct
+- Add Polish translation
+- Spanish, Dutch, Croatian, Turkish, and German Translation Updates
+
 2.16.0
 ------
 - Automatic switching to dark mode in diagrams
