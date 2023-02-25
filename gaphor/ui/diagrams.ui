@@ -28,7 +28,7 @@
         <property name="name">empty</property>
         <property name="child">
           <object class="AdwStatusPage">
-            <property name="icon-name">gaphor-new-diagram-symbolic</property>
+            <property name="icon-name">gaphor-bw</property>
             <property name="title" translatable="yes">Open a Diagram</property>
             <property name="description" translatable="yes">Open a diagram from the model browser, or
 create a new diagram from the New diagram menu.</property>

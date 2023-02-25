@@ -1,7 +1,6 @@
 STENCIL=stencil.svg
 
 ICONS=diagram \
-	new-diagram \
 	pointer \
 	magnet \
 	box \
