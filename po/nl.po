@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 19:23+0100\n"
-"PO-Revision-Date: 2023-02-21 01:02+0000\n"
+"PO-Revision-Date: 2023-02-25 09:37+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
 "\n"
@@ -1193,12 +1193,12 @@ msgstr "Bericht"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:94
 msgid "Reflexive message"
-msgstr "Reflexive message"
+msgstr "Reflexief bericht"
 
 #: gaphor/UML/interactions/propertypages.glade:25
 #: gaphor/UML/interactions/propertypages.ui:9
 msgid "Message Sort"
-msgstr "Message Sort"
+msgstr "Berichtsortering"
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
@@ -1262,7 +1262,7 @@ msgstr "Uitgang"
 #: gaphor/UML/states/propertypages.glade:142
 #: gaphor/UML/states/propertypages.ui:42
 msgid "Do Activity"
-msgstr "Do Activity"
+msgstr "Activiteit uitvoeren"
 
 #: gaphor/UML/states/propertypages.glade:164
 #: gaphor/UML/states/propertypages.ui:9
@@ -1280,7 +1280,7 @@ msgstr "Staat"
 #: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
 #: gaphor/templates/sysml.gaphor
 msgid "State Machine"
-msgstr "State Machine"
+msgstr "Staatmachine"
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
@@ -1288,60 +1288,51 @@ msgstr "Staten"
 
 #: gaphor/UML/states/statestoolbox.py:87
 msgid "Initial Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr "Initiële pseudostaat"
 
 #: gaphor/UML/states/statestoolbox.py:99
 msgid "Final State"
-msgstr "Final State"
+msgstr "Eindstaat"
 
 #: gaphor/UML/states/statestoolbox.py:111
 msgid "Transition"
 msgstr "Overgang"
 
 #: gaphor/UML/states/statestoolbox.py:118
-#, fuzzy
 msgid "Shallow History Pseudostate"
-msgstr "History Pseudostate"
+msgstr "Ondiepe geschiedenispseudostaat"
 
 #: gaphor/UML/states/statestoolbox.py:130
-#, fuzzy
 msgid "Deep History Pseudostate"
-msgstr "History Pseudostate"
+msgstr "Diepe geschiedenispseudostaat"
 
 #: gaphor/UML/states/statestoolbox.py:142
-#, fuzzy
 msgid "Join Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr "Samenvoegings-pseudostaat"
 
 #: gaphor/UML/states/statestoolbox.py:154
-#, fuzzy
 msgid "Fork Pseudostate"
-msgstr "History Pseudostate"
+msgstr "Afsplitsings-pseudostaat"
 
 #: gaphor/UML/states/statestoolbox.py:166
-#, fuzzy
 msgid "Junction Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr "Kruisings-pseudostaat"
 
 #: gaphor/UML/states/statestoolbox.py:178
-#, fuzzy
 msgid "Choice Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr "Keuze-pseudostaat"
 
 #: gaphor/UML/states/statestoolbox.py:190
-#, fuzzy
 msgid "Entry Point Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr "Beginpunt-pseudostaat"
 
 #: gaphor/UML/states/statestoolbox.py:202
-#, fuzzy
 msgid "Exit Point Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr "Eindpunt-pseudostaat"
 
 #: gaphor/UML/states/statestoolbox.py:214
-#, fuzzy
 msgid "Terminate Pseudostate"
-msgstr "Initial Pseudostate"
+msgstr "Terminatie-pseudostaat"
 
 #: gaphor/UML/usecases/extend.py:20
 msgid "extend"
@@ -1354,11 +1345,11 @@ msgstr "opnemen"
 #: gaphor/UML/usecases/usecasetoolbox.py:12 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Use Cases"
-msgstr "Use Cases"
+msgstr "Doeleinden"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
-msgstr "Use case"
+msgstr "Doeleinde"
 
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml.gaphor
 msgid "Actor"
@@ -1439,11 +1430,11 @@ msgstr "Geen diagram '{name}' in model '{model_name}' ({model_file})."
 
 #: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
-msgstr ""
+msgstr "Automatische lay-out"
 
 #: gaphor/plugins/autolayout/pydot.py:53
 msgid "Auto Layout (orthogonal)"
-msgstr ""
+msgstr "Automatische lay-out (orthogonaal)"
 
 #: gaphor/plugins/console/console.py:24
 msgid ""
@@ -1457,7 +1448,7 @@ msgstr ""
 
 #: gaphor/plugins/console/consolewindow.py:22
 msgid "Gaphor Console"
-msgstr "Gaphor Console"
+msgstr "Gaphor-console"
 
 #: gaphor/plugins/console/consolewindow.py:45
 msgid "Console"
@@ -1465,54 +1456,52 @@ msgstr "Console"
 
 #: gaphor/plugins/diagramexport/__init__.py:44
 msgid "All {ext} Files"
-msgstr "Alle {ext} Bestanden"
+msgstr "Alle {ext}-bestanden"
 
 #: gaphor/plugins/diagramexport/__init__.py:50
 msgid "Export as SVG"
-msgstr "Exporteer als SVG"
+msgstr "Exporteren als SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:51
 #: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export diagram as SVG"
-msgstr "Exporteer diagram naar SVG"
+msgstr "Diagram exporteren als SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:61
 msgid "Export as PNG"
-msgstr "Exporteer naar PNG"
+msgstr "Exporteren als PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:62
 #: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export diagram as PNG"
-msgstr "Exporteer diagram naar SVG"
+msgstr "Diagram exporteren als PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:72
 msgid "Export as PDF"
-msgstr "Exporteer naar PDF"
+msgstr "Exporteren als PDF"
 
 #: gaphor/plugins/diagramexport/__init__.py:73
 #: gaphor/plugins/diagramexport/__init__.py:79
 msgid "Export diagram as PDF"
-msgstr "Exporteer diagram naar PDF"
+msgstr "Diagram exporteren als PDF"
 
 #: gaphor/plugins/diagramexport/__init__.py:87
-#, fuzzy
 msgid "Export as EPS"
-msgstr "Exporteer als XMI"
+msgstr "Exporteren als EPS"
 
 #: gaphor/plugins/diagramexport/__init__.py:88
 msgid "Export diagram as Encapsulated PostScript"
-msgstr ""
+msgstr "Diagram exporteren als Encapsulated PostScript"
 
 #: gaphor/plugins/diagramexport/__init__.py:94
-#, fuzzy
 msgid "Export diagram as EPS"
-msgstr "Exporteer diagram naar SVG"
+msgstr "Diagram exporteren als EPS"
 
 #: gaphor/plugins/errorreports/errorreports.glade:7
 #: gaphor/plugins/errorreports/errorreports.py:64
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
-msgstr ""
+msgstr "Foutrapporten"
 
 #: gaphor/plugins/errorreports/errorreports.glade:21
 #: gaphor/plugins/errorreports/errorreports.ui:18
@@ -1538,7 +1527,7 @@ msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export as XMI"
-msgstr "Exporteer als XMI"
+msgstr "Exporteren als XMI"
 
 #: gaphor/plugins/xmiexport/__init__.py:26
 msgid "Export model as XMI (XML Model Interchange) format"
@@ -1550,7 +1539,7 @@ msgstr "Exporteer model naar XMI bestand"
 
 #: gaphor/plugins/xmiexport/__init__.py:47
 msgid "All XMI Files"
-msgstr "Alle XMI bestanden"
+msgstr "Alle XMI-bestanden"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:63
 #: gaphor/ui/mainwindow.glade:121 gaphor/ui/mainwindow.py:241
@@ -1581,11 +1570,11 @@ msgstr "3. Componenten diagrammen"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Context diagram"
-msgstr "Context diagram"
+msgstr "Contextdiagram"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Container diagram"
-msgstr "Container diagram"
+msgstr "Containerdiagram"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Component diagram"
@@ -1593,11 +1582,11 @@ msgstr "Componenten diagram"
 
 #: gaphor/templates/c4model.gaphor
 msgid "Code diagram"
-msgstr "Code diagram"
+msgstr "Codediagram"
 
 #: gaphor/templates/raaml.gaphor gaphor/templates/uml.gaphor
 msgid "Model Name Here"
-msgstr ""
+msgstr "Modelnaam hier"
 
 #: gaphor/templates/raaml.gaphor
 msgid "STPA"
@@ -1613,15 +1602,15 @@ msgstr "FTA"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of System"
-msgstr ""
+msgstr "Verlies van systeem"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Subsystem 1"
-msgstr ""
+msgstr "Verlies van subsysteem 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Subsystem 2"
-msgstr ""
+msgstr "Verlies van subsysteem 2"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard Definition"
@@ -1629,15 +1618,15 @@ msgstr "Gevaardefinitie"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Life or Injury of People"
-msgstr ""
+msgstr "Verlies van leven of verwonding van mensen"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Mission"
-msgstr ""
+msgstr "Verlies van missie"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of Customer Satisfaction"
-msgstr ""
+msgstr "Verlies van klanttevredenheid"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard 2"
@@ -1645,24 +1634,23 @@ msgstr "Gevaar 2"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard 1"
-msgstr "Hazard 1"
+msgstr "Gevaar 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Mapping of Losses and Hazards"
-msgstr ""
+msgstr "Verliezen en gevaren in kaart gebracht"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Operational Situations"
 msgstr "Operationele situaties"
 
 #: gaphor/templates/raaml.gaphor
-#, fuzzy
 msgid "Operational Situation 1"
-msgstr "Operational Situation"
+msgstr "Operationele situatie 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Context of UCAs"
-msgstr ""
+msgstr "Context van UCA's"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situational Context"
@@ -1677,6 +1665,8 @@ msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
 msgstr ""
+"De foutboomanalyse laat zien welke oorzaken voor het falen van een systeem "
+"zijn overwogen."
 
 #: gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
@@ -1695,9 +1685,8 @@ msgid "User"
 msgstr "Gebruiker"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Use Case #1"
-msgstr "Use case"
+msgstr "Doeleinde #1"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Behavior"
@@ -1729,7 +1718,7 @@ msgstr "Vereisten van belanghebbenden"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
-msgstr ""
+msgstr "Voldoen aan gebruikersbehoeften"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Structure"
@@ -1777,7 +1766,7 @@ msgstr "Logische staten"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Event Flow"
-msgstr ""
+msgstr "Functiegebeurtenisstroom"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Off"
@@ -1793,7 +1782,7 @@ msgstr "actuator"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case Function #1"
-msgstr ""
+msgstr "Doeleindefunctie #1"
 
 #: gaphor/templates/sysml.gaphor
 msgid "First Action"
@@ -1805,7 +1794,7 @@ msgstr "Tweede actie"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example System Requirement"
-msgstr ""
+msgstr "Voorbeeldsysteemvereiste"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensed Data"
@@ -1817,11 +1806,11 @@ msgstr "Opdracht"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Functional Boundary Behavior"
-msgstr ""
+msgstr "Functioneel grensgedrag"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Determine Actuator Command"
-msgstr ""
+msgstr "Actuatoropdracht vaststellen"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Actuate Actuator"
@@ -1832,9 +1821,8 @@ msgid "Actuator Command"
 msgstr "Actuatorcommando"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Example Technology Requirement"
-msgstr "eis"
+msgstr "Voorbeeldtechnologievereiste"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
@@ -1870,79 +1858,75 @@ msgstr "Obstakel detecteren"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Command Reverse"
-msgstr ""
+msgstr "Opdrachtomkering"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Reverse Motor"
-msgstr ""
+msgstr "Motor omkeren"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detect Object"
-msgstr ""
+msgstr "Object detecteren"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Detection Event"
-msgstr "Conditioneel Event"
+msgstr "Detectiegebeurtenis"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "1. Use Cases"
-msgstr "Use case"
+msgstr "1. Doeleinden"
 
 #: gaphor/templates/uml.gaphor
 msgid "2. Domain Analysis"
-msgstr ""
+msgstr "2. Domeinanalyse"
 
 #: gaphor/templates/uml.gaphor
 msgid "3. Architectural Design"
-msgstr ""
+msgstr "3. Architectonisch ontwerp"
 
 #: gaphor/templates/uml.gaphor
 msgid "4. Detailed Design"
-msgstr ""
+msgstr "4. Gedetailleerd ontwerp"
 
 #: gaphor/templates/uml.gaphor
 msgid "Main Actor"
-msgstr ""
+msgstr "Hoofduitvoerder"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Main Use Case"
-msgstr "Use case"
+msgstr "Hoofddoeleinde"
 
 #: gaphor/templates/uml.gaphor
 msgid "Included Use Case"
-msgstr ""
+msgstr "Inbegrepen doeleinde"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Actor"
-msgstr ""
+msgstr "Secundaire uitvoerder"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Use Case"
-msgstr ""
+msgstr "Secundair doeleinde"
 
 #: gaphor/templates/uml.gaphor
 msgid "Use Case Scenarios"
-msgstr ""
+msgstr "Doeleindescenario's"
 
 #: gaphor/templates/uml.gaphor
 msgid "Scenario 1"
-msgstr ""
+msgstr "Scenario 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Scenario 2"
-msgstr ""
+msgstr "Scenario 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "Domain Entities"
-msgstr ""
+msgstr "Domeinentiteiten"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Software Task"
-msgstr "Software Systeem"
+msgstr "Softwaretaak"
 
 #: gaphor/templates/uml.gaphor
 msgid "performs"
@@ -1950,36 +1934,31 @@ msgstr "presteert"
 
 #: gaphor/templates/uml.gaphor
 msgid "Package Dependencies"
-msgstr ""
+msgstr "Pakketafhankelijkheden"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 1"
-msgstr "Nieuw Component"
+msgstr "SW-component 1"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 4"
-msgstr "Nieuw Component"
+msgstr "SW-component 4"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 3"
-msgstr "Nieuw Component"
+msgstr "SW-component 3"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "SW Component 2"
-msgstr "Nieuw Component"
+msgstr "SW-component 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "Primary Actor"
-msgstr ""
+msgstr "Primaire uitvoerder"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Actor Profile"
-msgstr "profiel"
+msgstr "Uitvoerdersprofiel"
 
 #: gaphor/templates/uml.gaphor
 msgid "login"
@@ -1987,12 +1966,11 @@ msgstr "inloggen"
 
 #: gaphor/templates/uml.gaphor
 msgid "Detailed Class Design"
-msgstr ""
+msgstr "Gedetailleerd klasseontwerp"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "First Class"
-msgstr "metaclass"
+msgstr "Eerste klasse"
 
 #: gaphor/templates/uml.gaphor
 msgid "firstName"
@@ -2011,42 +1989,36 @@ msgid "lastLogin"
 msgstr "laatsteLogin"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Second Class"
-msgstr "Use case"
+msgstr "Tweede klasse"
 
 #: gaphor/templates/uml.gaphor
 msgid "released"
 msgstr "uitgegeven"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Implementation Architecture"
-msgstr "Implementatie diagram"
+msgstr "Implementatie-architectuur"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Node 1"
-msgstr "Node"
+msgstr "Node 1"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Artifact 1"
-msgstr "Artefact"
+msgstr "Artefact 1"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Node 2"
-msgstr "Node"
+msgstr "Node 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "protocol"
 msgstr "protocol"
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Artifact 2"
-msgstr "Artefact"
+msgstr "Artefact 2"
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2054,12 +2026,17 @@ msgid ""
 "identifying user roles – actors – and\n"
 "associating them to their use cases."
 msgstr ""
+"Analyseer functionele vereisten door het identificeren van gebruikersrollen –"
+" actoren – en ze te associëren met hun doeleinden."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
+"Modelleer abstracte doeleinde-implementaties door activiteitsdiagrammen te "
+"maken die activiteitsstromen visualiseren voor primaire en secundaire "
+"doeleindescenario's."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2105,31 +2082,31 @@ msgstr "Datum"
 
 #: gaphor/ui/appfilemanager.py:19 gaphor/ui/filedialog.py:13
 msgid "All Gaphor Models"
-msgstr "Alle Gaphor modellen"
+msgstr "Alle Gaphor-modellen"
 
 #: gaphor/ui/appfilemanager.py:45
 msgid "Switch to {name}?"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:46
-#, fuzzy
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
-msgstr "{filename} is reeds geopend. Wil je de geopende versie tonen?"
+msgstr ""
+"{name} is reeds geopend. Wilt u in plaats hiervan naar het geopende venster "
+"wisselen?"
 
 #: gaphor/ui/appfilemanager.py:65
 msgid "Open Again"
-msgstr ""
+msgstr "Opnieuw openen"
 
 #: gaphor/ui/appfilemanager.py:66
 msgid "Switch"
 msgstr "Wisselen"
 
 #: gaphor/ui/appfilemanager.py:89
-#, fuzzy
 msgid "Open a Model"
-msgstr "Open een Model…"
+msgstr "Model openen"
 
 #: gaphor/ui/diagrampage.py:128 gaphor/ui/mainwindow.py:260
 #: gaphor/ui/namespaceview.py:126 gaphor/ui/treemodel.py:44
@@ -2137,9 +2114,8 @@ msgid "<None>"
 msgstr "<geen>"
 
 #: gaphor/ui/diagrams.ui:32
-#, fuzzy
 msgid "Open a Diagram"
-msgstr "Componenten diagram"
+msgstr "Diagram openen"
 
 #: gaphor/ui/diagrams.ui:34
 msgid ""
@@ -2233,7 +2209,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.glade:371 gaphor/ui/elementeditor.ui:289
 msgid "Style Sheet"
-msgstr "Style Sheet"
+msgstr "Stijlblad"
 
 #: gaphor/ui/elementeditor.glade:406 gaphor/ui/elementeditor.ui:316
 msgid ""
@@ -2261,9 +2237,8 @@ msgid "Close"
 msgstr "Sluiten"
 
 #: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:44
-#, fuzzy
 msgid "Start Debug Session"
-msgstr "Start debug sessie"
+msgstr "Foutopsporingssessie starten"
 
 #: gaphor/ui/filedialog.py:34
 msgid "All Files"
@@ -2306,9 +2281,8 @@ msgid "Loading model from {filename}"
 msgstr "Laden van model {filename}"
 
 #: gaphor/ui/filemanager.py:169
-#, fuzzy
 msgid "Merge conflict in model “{filename}”."
-msgstr "Kan model “{filename}” niet openen."
+msgstr "Samenvoegingsconflict in model ‘{filename}’"
 
 #: gaphor/ui/filemanager.py:172
 msgid "It looks like this model file contains a merge conflict."
@@ -2336,7 +2310,7 @@ msgstr "Kan model {filename} niet opslaan."
 
 #: gaphor/ui/filemanager.py:302 gaphor/ui/filemanager.py:338
 msgid "Save Gaphor Model As"
-msgstr "Sla Gaphor model op als"
+msgstr "Gaphor-model opslaan als"
 
 #: gaphor/ui/filemanager.py:360
 msgid "Resolve Merge Conflict?"
@@ -2355,15 +2329,15 @@ msgstr "Annuleren"
 
 #: gaphor/ui/filemanager.py:368
 msgid "Open Current"
-msgstr ""
+msgstr "Huidige openen"
 
 #: gaphor/ui/filemanager.py:369
 msgid "Open Incoming"
-msgstr ""
+msgstr "Inkomende openen"
 
 #: gaphor/ui/filemanager.py:382
 msgid "Save Changes?"
-msgstr ""
+msgstr "Wijzigingen opslaan?"
 
 #: gaphor/ui/filemanager.py:383
 msgid ""
@@ -2381,28 +2355,24 @@ msgid "Save"
 msgstr "Opslaan"
 
 #: gaphor/ui/greeter.glade:55
-#, fuzzy
 msgid "Recently opened models"
-msgstr "Recente modellen…"
+msgstr "Onlangs geopende modellen"
 
 #: gaphor/ui/greeter.glade:76
-#, fuzzy
 msgid "Create a new model"
-msgstr "Maak Nieuw Model…"
+msgstr "Nieuw model aanmaken"
 
 #: gaphor/ui/greeter.glade:112
-#, fuzzy
 msgid "Open Other Model…"
-msgstr "Open een Model…"
+msgstr "Ander model openen…"
 
 #: gaphor/ui/greeter.py:30
 msgid "Generic"
 msgstr "Algemeen"
 
 #: gaphor/ui/greeter.py:31
-#, fuzzy
 msgid "An empty model"
-msgstr "Nieuw model"
+msgstr "Leeg model"
 
 #: gaphor/ui/greeter.py:38
 msgid "Unified Modeling Language template"
@@ -2547,7 +2517,6 @@ msgid "Fork me on GitHub"
 msgstr "Fork me op GitHub"
 
 #: gaphor/ui/help/about.glade:30
-#, fuzzy
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
 "you may not use this application except in compliance with the\n"
@@ -2567,17 +2536,6 @@ msgid ""
 "trademarks of Object Management Group, Inc. in the United States\n"
 "and/or other countries.\n"
 msgstr ""
-"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-"you may not use this application except in compliance with the\n"
-"License. You may obtain a copy of the License at\n"
-"\n"
-"http://www.apache.org/licenses/LICENSE-2.0\n"
-"\n"
-"Unless required by applicable law or agreed to in writing, software\n"
-"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
-"express or implied. See the License for the specific language\n"
-"governing permissions and limitations under the License.\n"
 
 #: gaphor/ui/help/about.ui:14
 msgid ""
@@ -2589,7 +2547,6 @@ msgid ""
 msgstr ""
 
 #: gaphor/ui/help/about.ui:22
-#, fuzzy
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
 " not use this application except in compliance with the License. You may "
@@ -2603,17 +2560,6 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
-"Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-"you may not use this application except in compliance with the\n"
-"License. You may obtain a copy of the License at\n"
-"\n"
-"http://www.apache.org/licenses/LICENSE-2.0\n"
-"\n"
-"Unless required by applicable law or agreed to in writing, software\n"
-"distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-"WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
-"express or implied. See the License for the specific language\n"
-"governing permissions and limitations under the License.\n"
 
 #: gaphor/ui/help/shortcuts.ui:24
 msgid "Rename"

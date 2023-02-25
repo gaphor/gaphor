@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 19:23+0100\n"
-"PO-Revision-Date: 2023-01-31 18:53+0000\n"
+"PO-Revision-Date: 2023-02-25 09:37+0000\n"
 "Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
 ".org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
@@ -1795,7 +1795,7 @@ msgstr "Encendido"
 
 #: gaphor/templates/sysml.gaphor
 msgid "actuator"
-msgstr "actuador"
+msgstr "accionador"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case Function #1"
