@@ -3,26 +3,38 @@ from __future__ import annotations
 from gi.repository import Gio, GObject, Gtk
 
 from gaphor.event import ModelLoaded
-from gaphor.core.modeling import PendingChange, ElementChange, AttributeUpdated
+from gaphor.core.modeling import PendingChange, AttributeUpdated
 from gaphor.core.changeset.apply import apply_change, applicable
 from gaphor.i18n import translated_ui_string
 from gaphor.ui.abc import UIComponent
 from gaphor.core import event_handler
 from gaphor.transaction import Transaction
+from gaphor.core.changeset.organize import organize_changes, Node
 
 
 class ChangeSetModel:
     def __init__(self, element_factory):
         self.element_factory = element_factory
         self.root = Gio.ListStore.new(ChangeItem.__gtype__)
+        self.child_models = {}
 
     def update(self):
-        for element in self.element_factory.select(PendingChange):
-            change_item = ChangeItem(element)
-            self.root.append(change_item)
+        self.root.remove_all()
+        self.child_models.clear()
+
+        def update_child_models(node):
+            if not node.children:
+                return
+            store = self.child_models[node] = Gio.ListStore.new(ChangeItem.__gtype__)
+            for n in node.children:
+                store.append(ChangeItem(n))
+
+        for node in organize_changes(self.element_factory):
+            update_child_models(node)
+            self.root.append(ChangeItem(node))
 
     def child_model(self, item: ChangeItem, _user_data=None):
-        return None
+        return self.child_models.get(item.node)
 
     def __iter__(self):
         return iter(self.root)
@@ -62,16 +74,20 @@ class ModelMerge(UIComponent):
         tree_model = Gtk.TreeListModel.new(
             self.model.root,
             passthrough=False,
-            autoexpand=False,
+            autoexpand=True,
             create_func=self.model.child_model,
             user_data=None,
         )
 
         self.selection = Gtk.SingleSelection.new(tree_model)
 
-        def on_apply(change):
+        def on_apply(change_node):
+            if not change_node.element:
+                return
             with Transaction(self.event_manager):
-                apply_change(change, self.element_factory, self.modeling_language)
+                apply_change(
+                    change_node.element, self.element_factory, self.modeling_language
+                )
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect("setup", list_item_factory_setup, on_apply)
@@ -91,9 +107,10 @@ class ModelMerge(UIComponent):
 
 
 class ChangeItem(GObject.Object):
-    def __init__(self, element: PendingChange):
+    def __init__(self, node: Node):
         super().__init__()
-        self.element = element
+        self.node = node
+        self.label = node.text
         self.sync()
 
     label = GObject.Property(type=str, default="Foo bar")
@@ -101,12 +118,9 @@ class ChangeItem(GObject.Object):
     applicable = GObject.Property(type=bool, default=True)
 
     def sync(self) -> None:
-        element = self.element
-        self.label = (
-            element.element_name
-            if isinstance(element, ElementChange)
-            else element.property_name  # type: ignore[attr-defined]
-        )
+        element = self.node.element
+        if not isinstance(element, PendingChange):
+            return
         self.applicable = not element.applied and applicable(element, element.model)
         self.applied = bool(element.applied)
 
@@ -124,8 +138,8 @@ def list_item_factory_setup(_factory, list_item, on_apply):
 
     def on_active(button, _gparam):
         change_item = list_item.get_item().get_item()
-        if button.get_active():
-            on_apply(change_item.element)
+        if button.get_active() and change_item.node:
+            on_apply(change_item.node)
         change_item.sync()
 
     apply.connect("notify::active", on_active)

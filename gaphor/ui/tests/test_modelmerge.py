@@ -1,7 +1,9 @@
 import pytest
 from gi.repository import Gtk
 
+from gaphor.event import ModelLoaded
 from gaphor.ui.modelmerge import ModelMerge
+from gaphor.core.modeling import ElementChange, ValueChange
 
 skip_if_gtk3 = pytest.mark.skipif(
     Gtk.get_major_version() == 3,
@@ -11,8 +13,28 @@ skip_if_gtk3 = pytest.mark.skipif(
 
 @skip_if_gtk3
 def test_open_model_merge(event_manager, element_factory, modeling_language):
-    change_set = ModelMerge(event_manager, element_factory, modeling_language)
+    model_merge = ModelMerge(event_manager, element_factory, modeling_language)
 
-    widget = change_set.open()
+    widget = model_merge.open()
 
     assert widget
+
+
+@skip_if_gtk3
+def test_build_list_store(event_manager, element_factory, modeling_language):
+    model_merge = ModelMerge(event_manager, element_factory, modeling_language)
+
+    change: ElementChange = element_factory.create(ElementChange)
+    change.op = "add"
+    change.element_id = "1234"
+    change.element_name = "Diagram"
+    vchange: ValueChange = element_factory.create(ValueChange)
+    vchange.op = "update"
+    vchange.element_id = "1234"
+    vchange.property_name = "name"
+    vchange.property_value = "my diagram"
+
+    event_manager.handle(ModelLoaded(None))
+
+    assert model_merge.model.root
+    assert model_merge.model.child_model(model_merge.model.root[0])
