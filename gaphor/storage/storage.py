@@ -221,10 +221,11 @@ def _load_attributes_and_references(elements, update_status_queue):
                 for refid in refids:
                     try:
                         ref = elements[refid]
-                    except ValueError:
+                    except KeyError:
                         log.exception(
                             f"Invalid ID for reference ({refid}) for element {elem.type}.{name}"
                         )
+                        raise
                     else:
                         elem.element.load(name, ref.element)
             else:
