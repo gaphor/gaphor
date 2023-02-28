@@ -351,7 +351,7 @@ def create_popup_controller(tree_view, selection, modeling_language):
 
     def on_show_popup(ctrl, n_press, x, y):
         nonlocal menu
-        selection.unselect_item(selection.get_selected())
+        selection.unselect_all()
         if not menu:
             menu = Gtk.PopoverMenu.new_from_model(
                 toplevel_popup_model(modeling_language)
