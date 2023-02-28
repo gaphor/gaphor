@@ -1,7 +1,63 @@
 import io
 import textwrap
+import pathlib
+
+import pygit2
 
 from gaphor.storage.mergeconflict import split
+
+
+def test_split_git_repo(tmp_path):
+    repo = pygit2.init_repository(tmp_path)
+    filename = "testfile.txt"
+    test_file = tmp_path / filename
+
+    create_merge_conflict(
+        repo,
+        test_file,
+        initial_text="Initial commit",
+        second_text="Second commit",
+        branch_text="Branch commit",
+    )
+
+    index = repo.index
+    if conflicts := index.conflicts:
+        for common, ours, theirs in conflicts:  # noqa: B007
+            if pathlib.Path(repo.workdir) / common.path == test_file:
+                break
+
+    assert ours
+    assert theirs
+    assert repo.get(ours.id).data == b"Second commit"
+    assert repo.get(theirs.id).data == b"Branch commit"
+
+
+def create_merge_conflict(repo, filename, initial_text, second_text, branch_text):
+    def commit_all(message, parents):
+        ref = "HEAD"
+        author = pygit2.Signature("Alice Author", "alice@gaphor.org")
+
+        index = repo.index
+        index.add_all()
+        index.write()
+        tree = index.write_tree()
+
+        return repo.create_commit(ref, author, author, message, tree, parents)
+
+    filename.write_text(initial_text)
+    initial_oid = commit_all("Initial commit", parents=[])
+    main_ref = repo.head
+    branch_ref = repo.references.create("refs/heads/branch", initial_oid)
+
+    repo.checkout(branch_ref)
+    filename.write_text(branch_text)
+    branch_oid = commit_all("Branch commit", parents=[initial_oid])
+
+    repo.checkout(main_ref)
+    filename.write_text(second_text)
+    commit_all("Second commit", parents=[initial_oid])
+
+    repo.merge(branch_oid)
 
 
 def test_splitter():
