@@ -179,7 +179,7 @@
             <child>
               <object class="GtkImage">
                 <property name="visible">1</property>
-                <property name="icon-name">gaphor-new-diagram-symbolic</property>
+                <property name="icon-name">list-add-symbolic</property>
               </object>
             </child>
             <style>

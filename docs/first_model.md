@@ -51,7 +51,9 @@ on the diagram.
 
 To create a new diagram, use the Model Browser. Select the element that should
 contain the new diagram. For now, select _New Model_.
-Click the ![new diagram](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-new-diagram-symbolic.svg) in the header bar.
+Click the ![new
+diagram](../gaphor/ui/icons/Adwaita/scalable/actions/list-add-symbolic.svg) in
+the header bar.
 
 ![image](/images/first-model-new-diagram-popup.png)
 
