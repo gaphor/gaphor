@@ -1,4 +1,23 @@
+from __future__ import annotations
+
 import io
+from pathlib import Path
+
+import pygit2
+
+
+def split_ours_and_theirs(filename: Path) -> tuple[bytes, bytes] | tuple[None, None]:
+    repo_path = pygit2.discover_repository(filename)
+    if not repo_path:
+        return None, None
+
+    repo = pygit2.Repository(repo_path)
+    work_path = Path(repo.workdir)
+    if conflicts := repo.index.conflicts:
+        for common, ours, theirs in conflicts:
+            if work_path / common.path == filename:
+                return repo.get(ours.id).data, repo.get(theirs.id).data
+    return None, None
 
 
 def split(fd: io.TextIOBase, current: io.TextIOBase, incoming: io.TextIOBase):

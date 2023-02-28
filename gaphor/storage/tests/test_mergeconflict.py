@@ -1,10 +1,9 @@
 import io
 import textwrap
-import pathlib
 
 import pygit2
 
-from gaphor.storage.mergeconflict import split
+from gaphor.storage.mergeconflict import split, split_ours_and_theirs
 
 
 def test_split_git_repo(tmp_path):
@@ -20,16 +19,10 @@ def test_split_git_repo(tmp_path):
         branch_text="Branch commit",
     )
 
-    index = repo.index
-    if conflicts := index.conflicts:
-        for common, ours, theirs in conflicts:  # noqa: B007
-            if pathlib.Path(repo.workdir) / common.path == test_file:
-                break
+    ours, theirs = split_ours_and_theirs(test_file)
 
-    assert ours
-    assert theirs
-    assert repo.get(ours.id).data == b"Second commit"
-    assert repo.get(theirs.id).data == b"Branch commit"
+    assert ours == b"Second commit"
+    assert theirs == b"Branch commit"
 
 
 def create_merge_conflict(repo, filename, initial_text, second_text, branch_text):
