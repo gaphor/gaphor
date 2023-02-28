@@ -142,26 +142,19 @@ class FileManager(Service, ActionProvider):
     ):
         assert isinstance(filename, Path)
 
-        def open_model(encoding):
-            with open(filename, encoding=encoding) as file_obj:
-                for percentage in storage.load_generator(
-                    file_obj,
-                    self.element_factory,
-                    self.modeling_language,
-                ):
-                    if progress:
-                        progress(percentage)
-                    yield percentage
-
         # Use low prio, so screen updates do happen
         @g_async()
         def async_loader():
             try:
-                try:
-                    yield from open_model(encoding="utf-8")
-                except UnicodeDecodeError:
-                    # try to load without encoding, for older models saved on windows
-                    yield from open_model(encoding=None)
+                with open(filename, encoding="utf-8", errors="replace") as file_obj:
+                    for percentage in storage.load_generator(
+                        file_obj,
+                        self.element_factory,
+                        self.modeling_language,
+                    ):
+                        if progress:
+                            progress(percentage)
+                        yield percentage
             except MergeConflictDetected:
                 self.filename = None
                 if Gtk.get_major_version() == 3:
