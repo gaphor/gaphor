@@ -75,9 +75,11 @@ def test_old_model_is_loaded_without_utf8_encoding(
 
 @pytest.mark.parametrize("resolution", ["current", "incoming"])
 def test_load_model_with_merge_conflict(
-    file_manager: FileManager, merge_conflict, resolution
+    file_manager: FileManager, element_factory, merge_conflict, resolution
 ):
     file_manager.resolve_merge_conflict(merge_conflict, resolution)
+
+    assert element_factory.size() > 0
 
 
 def test_load_model_with_merge_conflict_and_unknown_resolution(
@@ -91,55 +93,55 @@ def test_load_model_with_merge_conflict_and_unknown_resolution(
 def merge_conflict(tmp_path):
     initial_model = textwrap.dedent(
         """\
-    <?xml version="1.0" encoding="utf-8"?>
-    <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.12.1">
-    <StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
-    <Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
-    <name>
-    <val>current</val>
-    </name>
-    </Package>
-    </gaphor>
-    """
+        <?xml version="1.0" encoding="utf-8"?>
+        <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.12.1">
+        <StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+        <Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+        <name>
+        <val>current</val>
+        </name>
+        </Package>
+        </gaphor>
+        """
     )
 
     current_model = textwrap.dedent(
         """\
         <?xml version="1.0" encoding="utf-8"?>
-    <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.12.1">
-    <StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
-    <Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
-    <name>
-    <val>current</val>
-    </name>
-    <ownedDiagram>
-    <reflist>
-    <ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
-    </reflist>
-    </ownedDiagram>
-    </Package>
-    <Diagram id="58d6c536-66f8-11ec-b4c8-0456e5e540ed">
-    <element>
-    <ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
-    </element>
-    <name>
-    <val>diagram</val>
-    </name>
-    </Diagram>
-    </gaphor>"""
+        <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.12.1">
+        <StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+        <Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+        <name>
+        <val>current</val>
+        </name>
+        <ownedDiagram>
+        <reflist>
+        <ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+        </reflist>
+        </ownedDiagram>
+        </Package>
+        <Diagram id="58d6c536-66f8-11ec-b4c8-0456e5e540ed">
+        <element>
+        <ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+        </element>
+        <name>
+        <val>diagram</val>
+        </name>
+        </Diagram>
+        </gaphor>"""
     )
 
     incoming_model = textwrap.dedent(
         """\
-    <?xml version="1.0" encoding="utf-8"?>
-    <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.12.1">
-    <StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
-    <Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
-    <name>
-    <val>incoming</val>
-    </name>
-    </Package>
-    </gaphor>"""
+        <?xml version="1.0" encoding="utf-8"?>
+        <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.12.1">
+        <StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+        <Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+        <name>
+        <val>incoming</val>
+        </name>
+        </Package>
+        </gaphor>"""
     )
 
     model = tmp_path / "model.gaphor"

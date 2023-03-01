@@ -11,7 +11,7 @@ def in_git_repository(filename: Path) -> bool:
 
 
 def split_ours_and_theirs(
-    filename: Path, current: io.TextIOBase, incoming: io.TextIOBase
+    filename: Path, current: io.BufferedIOBase, incoming: io.BufferedIOBase
 ) -> bool:
     """For a file name, find the current (ours) and incoming (theirs) file and serialize those
     to the respected files.
@@ -25,11 +25,7 @@ def split_ours_and_theirs(
     if conflicts := repo.index.conflicts:
         for common, ours, theirs in conflicts:
             if work_path / common.path == filename:
-                current.write(
-                    repo.get(ours.id).read_raw().decode("utf-8", errors="replace")
-                )
-                incoming.write(
-                    repo.get(theirs.id).read_raw().decode("utf-8", errors="replace")
-                )
+                current.write(repo.get(ours.id).read_raw())
+                incoming.write(repo.get(theirs.id).read_raw())
                 return True
     return False
