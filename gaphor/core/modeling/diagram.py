@@ -279,11 +279,6 @@ class Diagram(Element):
         style_sheet = self.styleSheet
         return style_sheet.match(node) if style_sheet else FALLBACK_STYLE
 
-    def save(self, save_func):
-        """Apply the supplied save function to this diagram and the canvas."""
-
-        super().save(save_func)
-
     def postload(self):
         """Handle post-load functionality for the diagram."""
         self._order_owned_presentation()

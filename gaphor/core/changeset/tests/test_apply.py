@@ -8,6 +8,7 @@ from gaphor.core.modeling import (
     RefChange,
     ValueChange,
 )
+from gaphor.UML import Class
 
 
 def test_create_element(element_factory, modeling_language):
@@ -62,7 +63,7 @@ def test_remove_element(element_factory, modeling_language):
     assert change.applied
 
 
-def test_update_value(element_factory, modeling_language):
+def test_update_str_value(element_factory, modeling_language):
     diagram = element_factory.create(Diagram)
     change: ValueChange = element_factory.create(ValueChange)
     change.element_id = diagram.id
@@ -72,6 +73,19 @@ def test_update_value(element_factory, modeling_language):
     apply_change(change, element_factory, modeling_language)
 
     assert diagram.name == "new value"
+    assert change.applied
+
+
+def test_update_int_value(element_factory, modeling_language):
+    klass = element_factory.create(Class)
+    change: ValueChange = element_factory.create(ValueChange)
+    change.element_id = klass.id
+    change.property_name = "isAbstract"
+    change.property_value = "1"
+
+    apply_change(change, element_factory, modeling_language)
+
+    assert klass.isAbstract == 1
     assert change.applied
 
 
