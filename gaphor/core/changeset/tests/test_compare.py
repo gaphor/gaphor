@@ -3,6 +3,7 @@ import pytest
 from gaphor.core.changeset.compare import UnmatchableModel, compare
 from gaphor.core.modeling import Diagram, Element, ElementFactory, PendingChange
 from gaphor.diagram.general.simpleitem import Box
+from gaphor.UML import Class
 
 
 @pytest.fixture
@@ -60,7 +61,8 @@ def test_added_element_with_attribute(current, incoming):
     diagram = incoming.create(Diagram)
     diagram.name = "Foo"
 
-    elem_change, attr_change = list(compare(current, incoming))
+    vals = list(compare(current, incoming))
+    elem_change, attr_change = vals
 
     assert elem_change.op == "add"
     assert elem_change.element_id == diagram.id
@@ -106,7 +108,7 @@ def test_removed_element(current, incoming):
     assert change.element_name == "Diagram"
 
 
-def test_changed_value(current, incoming):
+def test_changed_str_value(current, incoming):
     current_diagram = current.create(Diagram)
     current_diagram.name = "Old"
     incoming_diagram = incoming.create_as(Diagram, current_diagram.id)
@@ -118,6 +120,34 @@ def test_changed_value(current, incoming):
     assert change.element_id == current_diagram.id
     assert change.property_name == "name"
     assert change.property_value == "New"
+
+
+def test_changed_int_value(current, incoming):
+    current_class = current.create(Class)
+    current_class.isAbstract = 0
+    incoming_class = incoming.create_as(Class, current_class.id)
+    incoming_class.isAbstract = 1
+
+    change = next(compare(current, incoming))
+
+    assert change.op == "update"
+    assert change.element_id == current_class.id
+    assert change.property_name == "isAbstract"
+    assert change.property_value == "1"
+
+
+def test_changed_none_value(current, incoming):
+    current_diagram = current.create(Diagram)
+    current_diagram.name = "Old"
+    incoming_diagram = incoming.create_as(Diagram, current_diagram.id)
+    incoming_diagram.name = None
+
+    change = next(compare(current, incoming))
+
+    assert change.op == "update"
+    assert change.element_id == current_diagram.id
+    assert change.property_name == "name"
+    assert change.property_value is None
 
 
 def test_changed_reference(current, incoming):
