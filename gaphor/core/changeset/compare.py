@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from operator import setitem
 from typing import Iterable
 
 from gaphor.core.modeling import (
@@ -36,7 +37,7 @@ def compare(
     def create(type, **kwargs):
         e = current.create(type)
         for name, value in kwargs.items():
-            setattr(e, name, value)
+            setattr(e, name, None if value is None else str(value))
         return e
 
     for key in current_keys.difference(incoming_keys):
@@ -70,10 +71,18 @@ def compare(
 def updated_properties(current, incoming, create):
     changes: list[ValueChange | RefChange] = []
 
-    def save_func(name, value):
-        other = getattr(current, name) if current else None
+    current_vals: dict[str, Element | collection[Element] | str | int | None] = {}
+    if current:
+        current.save(lambda n, v: setitem(current_vals, n, v))
+    incoming_vals: dict[str, Element | collection[Element] | str | int | None] = {}
+    incoming.save(lambda n, v: setitem(incoming_vals, n, v))
+
+    for name in {*current_vals.keys(), *incoming_vals.keys()}:
+        value = incoming_vals.get(name)
+        other = current_vals.get(name)
         if isinstance(value, Element):
             # Allow values to be None
+            assert other is None or isinstance(other, Element)
             if (value and value.id) != (other and other.id):
                 changes.append(
                     create(
@@ -85,8 +94,13 @@ def updated_properties(current, incoming, create):
                     )
                 )
         elif isinstance(value, collection):
-            value_ids = {v.id for v in value}
-            other_ids = {o.id for o in other} if other else set()
+            if isinstance(other, collection):
+                other_ids = {o.id for o in other}
+            elif isinstance(other, Element):
+                other_ids = {other.id}
+            else:
+                other_ids = set()
+
             changes.extend(
                 create(
                     RefChange,
@@ -98,6 +112,20 @@ def updated_properties(current, incoming, create):
                 for v in value
                 if v.id not in other_ids
             )
+        elif value != other:
+            changes.append(
+                create(
+                    ValueChange,
+                    op="update" if current else "add",
+                    element_id=incoming.id,
+                    property_name=name,
+                    property_value=value,
+                )
+            )
+
+        if isinstance(other, collection):
+            assert isinstance(value, collection)
+            value_ids = {v.id for v in value} if value else set()
             changes.extend(
                 create(
                     RefChange,
@@ -109,19 +137,5 @@ def updated_properties(current, incoming, create):
                 for o in other
                 if o.id not in value_ids
             )
-        else:
-            if value != other:
-                changes.append(
-                    create(
-                        ValueChange,
-                        op="update" if current else "add",
-                        element_id=incoming.id,
-                        property_name=name,
-                        property_value=value,
-                    )
-                )
-
-    for property in incoming.umlproperties():
-        property.save(incoming, save_func)
 
     yield from changes
