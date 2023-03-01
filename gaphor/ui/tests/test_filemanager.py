@@ -83,7 +83,7 @@ def test_load_model_with_merge_conflict(
 def test_load_model_with_merge_conflict_and_unknown_resolution(
     file_manager: FileManager, merge_conflict
 ):
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ValueError):
         file_manager.resolve_merge_conflict(merge_conflict, "nonsense")
 
 
