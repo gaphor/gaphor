@@ -4,6 +4,7 @@ import textwrap
 import pygit2
 
 from gaphor.storage.mergeconflict import split, split_ours_and_theirs
+from gaphor.storage.tests.fixtures import create_merge_conflict
 
 
 def test_split_git_repo(tmp_path):
@@ -15,42 +16,17 @@ def test_split_git_repo(tmp_path):
         repo,
         test_file,
         initial_text="Initial commit",
-        second_text="Second commit",
-        branch_text="Branch commit",
+        our_text="Second commit",
+        their_text="Branch commit",
     )
 
-    ours, theirs = split_ours_and_theirs(test_file)
+    ours = io.StringIO()
+    theirs = io.StringIO()
+    result = split_ours_and_theirs(test_file, ours, theirs)
 
-    assert ours == b"Second commit"
-    assert theirs == b"Branch commit"
-
-
-def create_merge_conflict(repo, filename, initial_text, second_text, branch_text):
-    def commit_all(message, parents):
-        ref = "HEAD"
-        author = pygit2.Signature("Alice Author", "alice@gaphor.org")
-
-        index = repo.index
-        index.add_all()
-        index.write()
-        tree = index.write_tree()
-
-        return repo.create_commit(ref, author, author, message, tree, parents)
-
-    filename.write_text(initial_text)
-    initial_oid = commit_all("Initial commit", parents=[])
-    main_ref = repo.head
-    branch_ref = repo.references.create("refs/heads/branch", initial_oid)
-
-    repo.checkout(branch_ref)
-    filename.write_text(branch_text)
-    branch_oid = commit_all("Branch commit", parents=[initial_oid])
-
-    repo.checkout(main_ref)
-    filename.write_text(second_text)
-    commit_all("Second commit", parents=[initial_oid])
-
-    repo.merge(branch_oid)
+    assert result
+    assert ours.getvalue() == "Second commit"
+    assert theirs.getvalue() == "Branch commit"
 
 
 def test_splitter():

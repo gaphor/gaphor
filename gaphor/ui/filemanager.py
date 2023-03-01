@@ -25,7 +25,7 @@ from gaphor.event import (
     SessionShutdownRequested,
 )
 from gaphor.storage import storage
-from gaphor.storage.mergeconflict import split
+from gaphor.storage.mergeconflict import split_ours_and_theirs
 from gaphor.storage.parser import MergeConflictDetected
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
@@ -178,6 +178,7 @@ class FileManager(Service, ActionProvider):
                         else:
                             self.resolve_merge_conflict(filename, resolution=answer)
 
+                    # TODO: test if it is a resolvable merge conflict
                     resolve_merge_conflict_dialog(
                         self.parent_window, filename, handle_merge_conflict
                     )
@@ -205,11 +206,13 @@ class FileManager(Service, ActionProvider):
         current_filename = Path(temp_dir.name) / f"current-{filename.name}"
         incoming_filename = Path(temp_dir.name) / f"incoming-{filename.name}"
         with (
-            filename.open(encoding="utf-8") as f,
             current_filename.open("w+", encoding="utf-8") as current_file,
             incoming_filename.open("w+", encoding="utf-8") as incoming_file,
         ):
-            split(f, current_file, incoming_file)
+            if not split_ours_and_theirs(filename, current_file, incoming_file):
+                raise RuntimeError(
+                    "Could not resolve merge conflict outside of a Git repository"
+                )
 
         def done():
             nonlocal temp_dir
@@ -222,7 +225,7 @@ class FileManager(Service, ActionProvider):
         elif resolution == "incoming":
             self.load(incoming_filename, on_load_done=done)
         else:
-            raise RuntimeError(f"Unknown resolution for merge conflict: {resolution}")
+            raise ValueError(f"Unknown resolution for merge conflict: {resolution}")
 
     def save(self, filename, on_save_done=None):
         """Save the current UML model to the specified file name.
