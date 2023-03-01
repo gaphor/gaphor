@@ -168,17 +168,7 @@ class FileManager(Service, ActionProvider):
                 # For now load the default model until we allow users to resolve the merge conflict.
                 load_default_model(self.element_factory)
             else:
-
-                def handle_merge_conflict(answer):
-                    if answer == "cancel":
-                        self.event_manager.handle(SessionShutdown(self))
-                    else:
-                        self.resolve_merge_conflict(filename, resolution=answer)
-
-                # TODO: test if it is a resolvable merge conflict
-                resolve_merge_conflict_dialog(
-                    self.parent_window, filename, handle_merge_conflict
-                )
+                self.resolve_merge_conflict(filename)
         except Exception:
             self.filename = None
             error_handler(
@@ -195,7 +185,7 @@ class FileManager(Service, ActionProvider):
             if done:
                 done()
 
-    def resolve_merge_conflict(self, filename: Path, resolution: str):
+    def resolve_merge_conflict(self, filename: Path):
         temp_dir = tempfile.TemporaryDirectory()
         current_filename = Path(temp_dir.name) / f"current-{filename.name}"
         incoming_filename = Path(temp_dir.name) / f"incoming-{filename.name}"
@@ -203,10 +193,7 @@ class FileManager(Service, ActionProvider):
             current_filename.open("wb") as current_file,
             incoming_filename.open("wb") as incoming_file,
         ):
-            if not split_ours_and_theirs(filename, current_file, incoming_file):
-                raise RuntimeError(
-                    "Could not resolve merge conflict outside of a Git repository"
-                )
+            split = split_ours_and_theirs(filename, current_file, incoming_file)
 
         def done():
             nonlocal temp_dir
@@ -214,12 +201,31 @@ class FileManager(Service, ActionProvider):
             self.filename = filename
             self.event_manager.handle(ModelLoaded(self, filename, modified=True))
 
-        if resolution == "current":
-            self.load(current_filename, on_load_done=done)
-        elif resolution == "incoming":
-            self.load(incoming_filename, on_load_done=done)
+        def handle_merge_conflict(answer):
+            if answer == "cancel":
+                self.event_manager.handle(SessionShutdown(self))
+            elif answer == "current":
+                self.load(current_filename, on_load_done=done)
+            elif answer == "incoming":
+                self.load(incoming_filename, on_load_done=done)
+            else:
+                raise ValueError(f"Unknown resolution for merge conflict: {answer}")
+
+        if split:
+            resolve_merge_conflict_dialog(
+                self.parent_window, filename, handle_merge_conflict
+            )
         else:
-            raise ValueError(f"Unknown resolution for merge conflict: {resolution}")
+            error_handler(
+                message=gettext("Unable to open model “{filename}”.").format(
+                    filename=filename.name
+                ),
+                secondary_message=gettext(
+                    "This file does not contain a valid Gaphor model."
+                ),
+                window=self.parent_window,
+                close=lambda: self.event_manager.handle(SessionShutdown(self)),
+            )
 
     def save(self, filename, on_save_done=None):
         """Save the current UML model to the specified file name.
@@ -344,7 +350,7 @@ class FileManager(Service, ActionProvider):
             confirm_shutdown()
 
 
-def resolve_merge_conflict_dialog(window: Gtk.Window, filename, handler) -> None:
+def resolve_merge_conflict_dialog(window: Gtk.Window, filename: Path, handler) -> None:
     dialog = Adw.MessageDialog.new(
         window,
         gettext("Resolve Merge Conflict?"),

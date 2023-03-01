@@ -75,18 +75,32 @@ def test_old_model_is_loaded_without_utf8_encoding(
 
 @pytest.mark.parametrize("resolution", ["current", "incoming"])
 def test_load_model_with_merge_conflict(
-    file_manager: FileManager, element_factory, merge_conflict, resolution
+    file_manager: FileManager, element_factory, merge_conflict, monkeypatch, resolution
 ):
-    file_manager.resolve_merge_conflict(merge_conflict, resolution)
+    replace_merge_conflict_dialog(monkeypatch, resolution)
+
+    file_manager.resolve_merge_conflict(merge_conflict)
 
     assert element_factory.size() > 0
 
 
 def test_load_model_with_merge_conflict_and_unknown_resolution(
-    file_manager: FileManager, merge_conflict
+    file_manager: FileManager, merge_conflict, monkeypatch
 ):
+    replace_merge_conflict_dialog(monkeypatch, "nonsense")
+
     with pytest.raises(ValueError):
-        file_manager.resolve_merge_conflict(merge_conflict, "nonsense")
+        file_manager.resolve_merge_conflict(merge_conflict)
+
+
+def replace_merge_conflict_dialog(monkeypatch, resolution):
+    def mock_merge_conflict_dialog(_window, _filename, handler):
+        handler(resolution)
+
+    monkeypatch.setattr(
+        "gaphor.ui.filemanager.resolve_merge_conflict_dialog",
+        mock_merge_conflict_dialog,
+    )
 
 
 @pytest.fixture
