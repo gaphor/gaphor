@@ -1435,14 +1435,14 @@ poetry-plugin = ["poetry (>=1.0,<2.0)"]
 
 [[package]]
 name = "pre-commit"
-version = "2.21.0"
+version = "3.1.1"
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
 category = "dev"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "pre_commit-2.21.0-py2.py3-none-any.whl", hash = "sha256:e2f91727039fc39a92f58a588a25b87f936de6567eed4f0e673e0507edc75bad"},
-    {file = "pre_commit-2.21.0.tar.gz", hash = "sha256:31ef31af7e474a8d8995027fefdfcf509b5c913ff31f2015b4ec4beb26a6f658"},
+    {file = "pre_commit-3.1.1-py2.py3-none-any.whl", hash = "sha256:b80254e60668e1dd1f5c03a1c9e0413941d61f568a57d745add265945f65bfe8"},
+    {file = "pre_commit-3.1.1.tar.gz", hash = "sha256:d63e6537f9252d99f65755ae5b79c989b462d511ebbc481b561db6a297e1e865"},
 ]
 
 [package.dependencies]
@@ -2571,4 +2571,4 @@ docs = ["sphinx", "sphinx-copybutton", "myst-nb", "furo"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "ad3ab9a4a535eb7b2ea7e884366f74eae2884ec9c0317914b047a8796f294b8c"
+content-hash = "75d8e100ed615f3004c8635ea8d80c20beda926104654c9635025ede8da571ad"
