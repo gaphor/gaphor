@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.core.changeset.compare import UnmatchableModel, compare
+from gaphor.core.changeset.compare import UnmatchableModel, compare, RefChange
 from gaphor.core.modeling import Diagram, Element, ElementFactory, PendingChange
 from gaphor.diagram.general.simpleitem import Box
 from gaphor.UML import Class
@@ -68,7 +68,7 @@ def test_added_element_with_attribute(current, incoming):
     assert elem_change.element_id == diagram.id
     assert elem_change.element_name == "Diagram"
 
-    assert attr_change.op == "add"
+    assert attr_change.op == "update"
     assert attr_change.element_id == diagram.id
     assert attr_change.property_name == "name"
     assert attr_change.property_value == "Foo"
@@ -86,7 +86,7 @@ def test_added_element_with_reference(current, incoming):
     assert change.element_id == diagram.id
     assert change.element_name == "Diagram"
 
-    assert ref_change.op == "add"
+    assert ref_change.op == "update"
     assert ref_change.element_id == diagram.id
     assert ref_change.property_name == "element"
     assert ref_change.property_ref == element.id
@@ -134,7 +134,7 @@ def test_changed_value(
     assert change.property_value == expected_value
 
 
-def test_changed_reference(current, incoming):
+def test_add_reference(current, incoming):
     current_diagram = current.create(Diagram)
     current_element = current.create(Element)
     incoming_diagram = incoming.create_as(Diagram, current_diagram.id)
@@ -143,15 +143,61 @@ def test_changed_reference(current, incoming):
 
     add_ref, update_ref = sorted(compare(current, incoming), key=lambda c: c.op)
 
+    assert isinstance(add_ref, RefChange)
     assert add_ref.op == "add"
     assert add_ref.element_id == incoming_element.id
     assert add_ref.property_name == "ownedDiagram"
     assert add_ref.property_ref == current_diagram.id
 
+    assert isinstance(update_ref, RefChange)
     assert update_ref.op == "update"
     assert update_ref.element_id == current_diagram.id
     assert update_ref.property_name == "element"
     assert update_ref.property_ref == incoming_element.id
+
+
+def test_remove_reference(current, incoming):
+    current_diagram = current.create(Diagram)
+    current_element = current.create(Element)
+    current_diagram.element = current_element
+    incoming.create_as(Diagram, current_diagram.id)
+    incoming_element = incoming.create_as(Element, current_element.id)
+
+    remove_ref, other_ref = sorted(compare(current, incoming), key=lambda c: c.op)
+
+    assert remove_ref.op == "remove"
+    assert remove_ref.element_id == incoming_element.id
+    assert remove_ref.property_name == "ownedDiagram"
+    assert remove_ref.property_ref == current_diagram.id
+
+    assert other_ref.op == "update"
+    assert other_ref.element_id == current_diagram.id
+    assert other_ref.property_name == "element"
+    assert other_ref.property_ref is None
+
+
+def test_remove_with_common_reference(current, incoming):
+    current_diagram = current.create(Diagram)
+    current_element = current.create(Element)
+    current_diagram.element = current_element
+    current_common = current.create(Diagram)
+    current_common.element = current_element
+    incoming.create_as(Diagram, current_diagram.id)
+    incoming_element = incoming.create_as(Element, current_element.id)
+    incoming_common = incoming.create_as(Diagram, current_common.id)
+    incoming_common.element = incoming_element
+
+    remove_ref, other_ref = sorted(compare(current, incoming), key=lambda c: c.op)
+
+    assert remove_ref.op == "remove"
+    assert remove_ref.element_id == incoming_element.id
+    assert remove_ref.property_name == "ownedDiagram"
+    assert remove_ref.property_ref == current_diagram.id
+
+    assert other_ref.op == "update"
+    assert other_ref.element_id == current_diagram.id
+    assert other_ref.property_name == "element"
+    assert other_ref.property_ref is None
 
 
 def test_pending_changes_end_up_in_current_model(current, incoming):
