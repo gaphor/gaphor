@@ -33,7 +33,11 @@ def organize_changes(element_factory):
             element = element_factory.lookup(change.element_id)
             yield Node(
                 change,
-                gettext("Remove element {name}").format(name=element.name),
+                gettext("Remove element {name}").format(name=element.name)
+                if hasattr(element, "name")
+                else gettext("Remove element of type {type}").format(
+                    type=type(element).__name__
+                ),
                 (
                     *_value_changes(change.element_id, element_factory),
                     *_ref_changes(change.element_id, change.op, element_factory),
