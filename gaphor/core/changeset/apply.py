@@ -45,7 +45,8 @@ def _(change: ElementChange, element_factory, modeling_factory):
 def _(change: ValueChange, element_factory):
     element = element_factory.lookup(change.element_id)
     return bool(
-        element and getattr(element, change.property_name) != change.property_value
+        element
+        and getattr(element, change.property_name, None) != change.property_value
     )
 
 
@@ -54,7 +55,8 @@ def _(change: ValueChange, element_factory, modeling_factory):
     if change.applied:
         return
     element = element_factory[change.element_id]
-    setattr(element, change.property_name, change.property_value)
+    element.load(change.property_name, change.property_value)
+    element.postload()
     change.applied = True
 
 

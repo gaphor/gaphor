@@ -68,9 +68,7 @@ def compare(
         yield from updated_properties(c, i, create)
 
 
-def updated_properties(current, incoming, create):
-    changes: list[ValueChange | RefChange] = []
-
+def updated_properties(current, incoming, create) -> Iterable[ValueChange | RefChange]:
     current_vals: dict[str, Element | collection[Element] | str | int | None] = {}
     if current:
         current.save(lambda n, v: setitem(current_vals, n, v))
@@ -83,25 +81,19 @@ def updated_properties(current, incoming, create):
         if isinstance(value, Element):
             # Allow values to be None
             assert other is None or isinstance(other, Element)
-            if (value and value.id) != (other and other.id):
-                changes.append(
-                    create(
-                        RefChange,
-                        op="update" if current else "add",
-                        element_id=incoming.id,
-                        property_name=name,
-                        property_ref=value.id,
-                    )
+            if other is None or value.id != other.id:
+                yield create(
+                    RefChange,
+                    op="update",
+                    element_id=incoming.id,
+                    property_name=name,
+                    property_ref=value.id,
                 )
         elif isinstance(value, collection):
-            if isinstance(other, collection):
-                other_ids = {o.id for o in other}
-            elif isinstance(other, Element):
-                other_ids = {other.id}
-            else:
-                other_ids = set()
+            assert other is None or isinstance(other, collection)
+            other_ids = {o.id for o in other} if other is not None else set()
 
-            changes.extend(
+            yield from (
                 create(
                     RefChange,
                     op="add",
@@ -113,20 +105,28 @@ def updated_properties(current, incoming, create):
                 if v.id not in other_ids
             )
         elif value != other:
-            changes.append(
-                create(
+            if isinstance(other, Element):
+                yield create(
+                    RefChange,
+                    op="update",
+                    element_id=incoming.id,
+                    property_name=name,
+                    property_ref=None,
+                )
+            elif not isinstance(other, collection):
+                yield create(
                     ValueChange,
-                    op="update" if current else "add",
+                    op="update",
                     element_id=incoming.id,
                     property_name=name,
                     property_value=value,
                 )
-            )
 
         if isinstance(other, collection):
-            assert isinstance(value, collection)
+            assert value is None or isinstance(value, collection)
             value_ids = {v.id for v in value} if value else set()
-            changes.extend(
+
+            yield from (
                 create(
                     RefChange,
                     op="remove",
@@ -137,5 +137,3 @@ def updated_properties(current, incoming, create):
                 for o in other
                 if o.id not in value_ids
             )
-
-    yield from changes
