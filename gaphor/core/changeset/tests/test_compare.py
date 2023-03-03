@@ -108,46 +108,30 @@ def test_removed_element(current, incoming):
     assert change.element_name == "Diagram"
 
 
-def test_changed_str_value(current, incoming):
-    current_diagram = current.create(Diagram)
-    current_diagram.name = "Old"
-    incoming_diagram = incoming.create_as(Diagram, current_diagram.id)
-    incoming_diagram.name = "New"
+@pytest.mark.parametrize(
+    "type,name,current_value,incoming_value,expected_value",
+    [
+        [Diagram, "name", "Old", "New", "New"],
+        [Diagram, "name", None, "New", "New"],
+        [Diagram, "name", "Old", None, None],
+        [Class, "isAbstract", 0, 1, "1"],
+        [Class, "isAbstract", 1, 0, None],
+    ],
+)
+def test_changed_value(
+    current, incoming, type, name, current_value, incoming_value, expected_value
+):
+    current_element = current.create(type)
+    setattr(current_element, name, current_value)
+    incoming_element = incoming.create_as(type, current_element.id)
+    setattr(incoming_element, name, incoming_value)
 
     change = next(compare(current, incoming))
 
     assert change.op == "update"
-    assert change.element_id == current_diagram.id
-    assert change.property_name == "name"
-    assert change.property_value == "New"
-
-
-def test_changed_int_value(current, incoming):
-    current_class = current.create(Class)
-    current_class.isAbstract = 0
-    incoming_class = incoming.create_as(Class, current_class.id)
-    incoming_class.isAbstract = 1
-
-    change = next(compare(current, incoming))
-
-    assert change.op == "update"
-    assert change.element_id == current_class.id
-    assert change.property_name == "isAbstract"
-    assert change.property_value == "1"
-
-
-def test_changed_none_value(current, incoming):
-    current_diagram = current.create(Diagram)
-    current_diagram.name = "Old"
-    incoming_diagram = incoming.create_as(Diagram, current_diagram.id)
-    incoming_diagram.name = None
-
-    change = next(compare(current, incoming))
-
-    assert change.op == "update"
-    assert change.element_id == current_diagram.id
-    assert change.property_name == "name"
-    assert change.property_value is None
+    assert change.element_id == current_element.id
+    assert change.property_name == name
+    assert change.property_value == expected_value
 
 
 def test_changed_reference(current, incoming):
