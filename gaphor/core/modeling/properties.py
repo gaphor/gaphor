@@ -229,8 +229,8 @@ class attribute(umlproperty, Generic[T]):
                 or self.type
             )
 
-        if isinstance(value, str):
-            value = self.type(value)
+        if self.type is int and isinstance(value, str):
+            value = int(value)
 
         if value == self.get(obj):
             return
