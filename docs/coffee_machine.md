@@ -10,9 +10,9 @@ The espresso machine consists of a few components:
 
 - A heating device
 - a pressure device, we need around 9 bar
-- A piston that needs to be filled with grinded coffee.
+- A piston that needs to be filled with ground coffee.
 - something to capture spilled liquid
-- a water resevoir
+- a water reservoir
 - a power supply
 
 External devices include:
