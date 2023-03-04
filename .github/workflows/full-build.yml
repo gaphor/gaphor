@@ -114,7 +114,7 @@ jobs:
     permissions:
       contents: write
     container:
-      image: ghcr.io/gaphor/gaphor-appimage:2023.2.0
+      image: ghcr.io/gaphor/gaphor-appimage:2023.3.0
     timeout-minutes: 30
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     outputs:
