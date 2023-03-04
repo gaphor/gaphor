@@ -53,6 +53,7 @@ sphinx-copybutton = { version = "^0.5.0", optional = true }
 myst-nb = { version = "^0.17.1", optional = true }
 furo = { version = "^2022", optional = true }
 pyobjc-framework-cocoa = {version = "^9.0.1", markers = "sys_platform == 'darwin'"}
+pygit2 = "^1.11.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.1"

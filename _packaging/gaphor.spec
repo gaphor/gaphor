@@ -82,7 +82,8 @@ a = Analysis(  # type: ignore
         "gaphor.appservices",
         "gaphor.modelinglanguages",
         "gaphor.modules",
-    ),
+    )
+    + ["_cffi_backend"],
     hooksconfig={
         "gi": {
             "module-versions": {

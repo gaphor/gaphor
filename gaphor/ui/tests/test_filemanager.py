@@ -1,9 +1,12 @@
 import sys
+import textwrap
 
 import pytest
+import pygit2
 
 from gaphor import UML
 from gaphor.ui.filemanager import FileManager
+from gaphor.storage.tests.fixtures import create_merge_conflict
 
 
 @pytest.fixture
@@ -72,17 +75,92 @@ def test_old_model_is_loaded_without_utf8_encoding(
 
 @pytest.mark.parametrize("resolution", ["current", "incoming"])
 def test_load_model_with_merge_conflict(
-    file_manager: FileManager, test_models, resolution
+    file_manager: FileManager, element_factory, merge_conflict, monkeypatch, resolution
 ):
-    model_file = test_models / "merge-conflict.gaphor"
+    replace_merge_conflict_dialog(monkeypatch, resolution)
 
-    file_manager.resolve_merge_conflict(model_file, resolution)
+    file_manager.resolve_merge_conflict(merge_conflict)
+
+    assert element_factory.size() > 0
 
 
 def test_load_model_with_merge_conflict_and_unknown_resolution(
-    file_manager: FileManager, test_models
+    file_manager: FileManager, merge_conflict, monkeypatch
 ):
-    model_file = test_models / "merge-conflict.gaphor"
+    replace_merge_conflict_dialog(monkeypatch, "nonsense")
 
-    with pytest.raises(RuntimeError):
-        file_manager.resolve_merge_conflict(model_file, "nonsense")
+    with pytest.raises(ValueError):
+        file_manager.resolve_merge_conflict(merge_conflict)
+
+
+def replace_merge_conflict_dialog(monkeypatch, resolution):
+    def mock_merge_conflict_dialog(_window, _filename, handler):
+        handler(resolution)
+
+    monkeypatch.setattr(
+        "gaphor.ui.filemanager.resolve_merge_conflict_dialog",
+        mock_merge_conflict_dialog,
+    )
+
+
+@pytest.fixture
+def merge_conflict(tmp_path):
+    initial_model = textwrap.dedent(
+        """\
+        <?xml version="1.0" encoding="utf-8"?>
+        <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.12.1">
+        <StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+        <Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+        <name>
+        <val>current</val>
+        </name>
+        </Package>
+        </gaphor>
+        """
+    )
+
+    current_model = textwrap.dedent(
+        """\
+        <?xml version="1.0" encoding="utf-8"?>
+        <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.12.1">
+        <StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+        <Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+        <name>
+        <val>current</val>
+        </name>
+        <ownedDiagram>
+        <reflist>
+        <ref refid="58d6c536-66f8-11ec-b4c8-0456e5e540ed"/>
+        </reflist>
+        </ownedDiagram>
+        </Package>
+        <Diagram id="58d6c536-66f8-11ec-b4c8-0456e5e540ed">
+        <element>
+        <ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+        </element>
+        <name>
+        <val>diagram</val>
+        </name>
+        </Diagram>
+        </gaphor>"""
+    )
+
+    incoming_model = textwrap.dedent(
+        """\
+        <?xml version="1.0" encoding="utf-8"?>
+        <gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.12.1">
+        <StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+        <Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+        <name>
+        <val>incoming</val>
+        </name>
+        </Package>
+        </gaphor>"""
+    )
+
+    model = tmp_path / "model.gaphor"
+    repo = pygit2.init_repository(tmp_path)
+
+    create_merge_conflict(repo, model, initial_model, current_model, incoming_model)
+
+    return model

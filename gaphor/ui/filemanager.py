@@ -25,7 +25,7 @@ from gaphor.event import (
     SessionShutdownRequested,
 )
 from gaphor.storage import storage
-from gaphor.storage.mergeconflict import split
+from gaphor.storage.mergeconflict import split_ours_and_theirs
 from gaphor.storage.parser import MergeConflictDetected
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.filedialog import GAPHOR_FILTER, save_file_dialog
@@ -107,6 +107,10 @@ class FileManager(Service, ActionProvider):
         if filename != self._filename:
             self._filename = Path(filename) if filename else None
 
+    def load_template(self, template):
+        storage.load(template, self.element_factory, self.modeling_language)
+        self.event_manager.handle(ModelLoaded(self))
+
     def load(self, filename: Path, on_load_done: Callable[[], None] | None = None):
         """Load the Gaphor model from the supplied file name.
 
@@ -131,19 +135,15 @@ class FileManager(Service, ActionProvider):
             else:
                 self.event_manager.handle(ModelLoaded(self, filename))
 
-        self._load_async(filename, status_window.progress, done)
+        for _ in self._load_async(filename, status_window.progress, done):
+            pass
 
-    def load_template(self, template):
-        storage.load(template, self.element_factory, self.modeling_language)
-        self.event_manager.handle(ModelLoaded(self))
-
+    @g_async()
     def _load_async(
         self, filename: Path, progress: Callable[[int], None] | None = None, done=None
     ):
-        assert isinstance(filename, Path)
-
-        def open_model(encoding):
-            with open(filename, encoding=encoding) as file_obj:
+        try:
+            with open(filename, encoding="utf-8", errors="replace") as file_obj:
                 for percentage in storage.load_generator(
                     file_obj,
                     self.element_factory,
@@ -152,71 +152,48 @@ class FileManager(Service, ActionProvider):
                     if progress:
                         progress(percentage)
                     yield percentage
-
-        # Use low prio, so screen updates do happen
-        @g_async()
-        def async_loader():
-            try:
-                try:
-                    yield from open_model(encoding="utf-8")
-                except UnicodeDecodeError:
-                    # try to load without encoding, for older models saved on windows
-                    yield from open_model(encoding=None)
-            except MergeConflictDetected:
-                self.filename = None
-                if Gtk.get_major_version() == 3:
-                    error_handler(
-                        message=gettext("Merge conflict in model “{filename}”.").format(
-                            filename=filename.name
-                        ),
-                        secondary_message=gettext(
-                            "It looks like this model file contains a merge conflict."
-                        ),
-                        window=self.parent_window,
-                        close=lambda: self.event_manager.handle(SessionShutdown(self)),
-                    )
-                    # For now load the default model until we allow users to resolve the merge conflict.
-                    load_default_model(self.element_factory)
-                else:
-
-                    def handle_merge_conflict(answer):
-                        if answer == "cancel":
-                            self.event_manager.handle(SessionShutdown(self))
-                        else:
-                            self.resolve_merge_conflict(filename, resolution=answer)
-
-                    resolve_merge_conflict_dialog(
-                        self.parent_window, filename, handle_merge_conflict
-                    )
-            except Exception:
-                self.filename = None
+        except MergeConflictDetected:
+            self.filename = None
+            if Gtk.get_major_version() == 3:
                 error_handler(
-                    message=gettext("Unable to open model “{filename}”.").format(
+                    message=gettext("Merge conflict in model “{filename}”.").format(
                         filename=filename.name
                     ),
                     secondary_message=gettext(
-                        "This file does not contain a valid Gaphor model."
+                        "It looks like this model file contains a merge conflict."
                     ),
                     window=self.parent_window,
                     close=lambda: self.event_manager.handle(SessionShutdown(self)),
                 )
-            finally:
-                if done:
-                    done()
+                # For now load the default model until we allow users to resolve the merge conflict.
+                load_default_model(self.element_factory)
+            else:
+                self.resolve_merge_conflict(filename)
+        except Exception:
+            self.filename = None
+            error_handler(
+                message=gettext("Unable to open model “{filename}”.").format(
+                    filename=filename.name
+                ),
+                secondary_message=gettext(
+                    "This file does not contain a valid Gaphor model."
+                ),
+                window=self.parent_window,
+                close=lambda: self.event_manager.handle(SessionShutdown(self)),
+            )
+        finally:
+            if done:
+                done()
 
-        for _ in async_loader():
-            pass
-
-    def resolve_merge_conflict(self, filename: Path, resolution: str):
+    def resolve_merge_conflict(self, filename: Path):
         temp_dir = tempfile.TemporaryDirectory()
         current_filename = Path(temp_dir.name) / f"current-{filename.name}"
         incoming_filename = Path(temp_dir.name) / f"incoming-{filename.name}"
         with (
-            filename.open(encoding="utf-8") as f,
-            current_filename.open("w+", encoding="utf-8") as current_file,
-            incoming_filename.open("w+", encoding="utf-8") as incoming_file,
+            current_filename.open("wb") as current_file,
+            incoming_filename.open("wb") as incoming_file,
         ):
-            split(f, current_file, incoming_file)
+            split = split_ours_and_theirs(filename, current_file, incoming_file)
 
         def done():
             nonlocal temp_dir
@@ -224,12 +201,31 @@ class FileManager(Service, ActionProvider):
             self.filename = filename
             self.event_manager.handle(ModelLoaded(self, filename, modified=True))
 
-        if resolution == "current":
-            self.load(current_filename, on_load_done=done)
-        elif resolution == "incoming":
-            self.load(incoming_filename, on_load_done=done)
+        def handle_merge_conflict(answer):
+            if answer == "cancel":
+                self.event_manager.handle(SessionShutdown(self))
+            elif answer == "current":
+                self.load(current_filename, on_load_done=done)
+            elif answer == "incoming":
+                self.load(incoming_filename, on_load_done=done)
+            else:
+                raise ValueError(f"Unknown resolution for merge conflict: {answer}")
+
+        if split:
+            resolve_merge_conflict_dialog(
+                self.parent_window, filename, handle_merge_conflict
+            )
         else:
-            raise RuntimeError(f"Unknown resolution for merge conflict: {resolution}")
+            error_handler(
+                message=gettext("Unable to open model “{filename}”.").format(
+                    filename=filename.name
+                ),
+                secondary_message=gettext(
+                    "This file does not contain a valid Gaphor model."
+                ),
+                window=self.parent_window,
+                close=lambda: self.event_manager.handle(SessionShutdown(self)),
+            )
 
     def save(self, filename, on_save_done=None):
         """Save the current UML model to the specified file name.
@@ -354,7 +350,7 @@ class FileManager(Service, ActionProvider):
             confirm_shutdown()
 
 
-def resolve_merge_conflict_dialog(window: Gtk.Window, filename, handler) -> None:
+def resolve_merge_conflict_dialog(window: Gtk.Window, filename: Path, handler) -> None:
     dialog = Adw.MessageDialog.new(
         window,
         gettext("Resolve Merge Conflict?"),

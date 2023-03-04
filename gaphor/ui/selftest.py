@@ -4,10 +4,12 @@ import platform
 import sys
 import textwrap
 import time
+import tempfile
 
 import cairo
 import gi
 from gi.repository import Gdk, Gio, GLib, Gtk, Pango
+import pygit2
 
 from gaphor.abc import Service
 from gaphor.application import Application, distribution
@@ -68,6 +70,7 @@ class SelfTest(Service):
             self.test_gsettings_schemas()
         self.test_new_session()
         self.test_auto_layout()
+        self.test_git_support()
 
     def init_timer(self, gtk_app, timeout):
         start = time.time()
@@ -147,6 +150,12 @@ class SelfTest(Service):
             diagram = element_factory.create(Diagram)
 
         auto_layout.layout(diagram)
+        status.complete()
+
+    @test
+    def test_git_support(self, status):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            pygit2.init_repository(temp_dir)
         status.complete()
 
 

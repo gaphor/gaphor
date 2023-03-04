@@ -237,7 +237,7 @@ def _load_attributes_and_references(elements, update_status_queue):
                     elem.element.load(name, ref.element)
 
 
-def load(file_obj, factory, modeling_language, status_queue=None):
+def load(file_obj: io.TextIOBase, factory, modeling_language, status_queue=None):
     """Load a file and create a model if possible.
 
     Optionally, a status queue function can be given, to which the
@@ -248,13 +248,13 @@ def load(file_obj, factory, modeling_language, status_queue=None):
             status_queue(status)
 
 
-def load_generator(file_obj, factory, modeling_language):
+def load_generator(file_obj: io.TextIOBase, factory, modeling_language):
     """Load a file and create a model if possible.
 
     This function is a generator. It will yield values from 0 to 100 (%)
     to indicate its progression.
     """
-    assert isinstance(file_obj, io.IOBase)
+    assert isinstance(file_obj, io.TextIOBase)
 
     # Use the incremental parser and yield the percentage of the file.
     loader = GaphorLoader()
