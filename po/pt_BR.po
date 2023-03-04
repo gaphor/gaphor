@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-25 19:23+0100\n"
-"PO-Revision-Date: 2023-03-02 09:38+0000\n"
+"PO-Revision-Date: 2023-03-04 14:38+0000\n"
 "Last-Translator: Felipe Nogueira <contato.fnog@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "gaphor/gaphor/pt_BR/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -397,9 +397,8 @@ msgid "New Use Case Diagram"
 msgstr "Novo Diagrama de Caso de Uso"
 
 #: gaphor/SysML/blocks/block.py:60
-#, fuzzy
 msgid "ControlStructure"
-msgstr "Estrutura de Controle"
+msgstr "ControlStructure"
 
 #: gaphor/SysML/blocks/block.py:62
 msgid "block"
@@ -777,9 +776,8 @@ msgstr ""
 
 #: gaphor/UML/actions/propertypages.glade:350
 #: gaphor/UML/actions/propertypages.ui:271
-#, fuzzy
 msgid "Parameters"
-msgstr "partes"
+msgstr "Parâmetros"
 
 #: gaphor/UML/actions/propertypages.glade:381
 #: gaphor/UML/actions/propertypages.ui:294
