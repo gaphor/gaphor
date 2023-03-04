@@ -1729,13 +1729,23 @@
 <ref refid="f3a4d688-70f4-11ec-aabc-f47b099bf663"/>
 </element>
 <name>
-<val>Use Case Function #1</val>
+<val>Brew espresso</val>
 </name>
 <ownedPresentation>
 <reflist>
 <ref refid="2c8a4940-716f-11ec-999a-f47b099bf663"/>
 <ref refid="30947dc6-716f-11ec-999a-f47b099bf663"/>
+<ref refid="988b7782-bac5-11ed-a19d-f47b099bf663"/>
+<ref refid="9d5bf18b-bac6-11ed-9b08-f47b099bf663"/>
+<ref refid="e54b998a-bac6-11ed-9a44-f47b099bf663"/>
+<ref refid="3bb120c7-bac7-11ed-84f6-f47b099bf663"/>
+<ref refid="52cdba7c-bac7-11ed-988f-f47b099bf663"/>
 <ref refid="3a53f580-716f-11ec-999a-f47b099bf663"/>
+<ref refid="1f29d8b6-bac7-11ed-a536-f47b099bf663"/>
+<ref refid="2a201834-bac7-11ed-9b09-f47b099bf663"/>
+<ref refid="317d3865-bac7-11ed-9c71-f47b099bf663"/>
+<ref refid="5e9cc0b9-bac7-11ed-82b7-f47b099bf663"/>
+<ref refid="61003f87-bac7-11ed-820f-f47b099bf663"/>
 </reflist>
 </ownedPresentation>
 </Diagram>
@@ -3369,6 +3379,11 @@
 <edge>
 <reflist>
 <ref refid="3b887fd4-716f-11ec-999a-f47b099bf663"/>
+<ref refid="2052d977-bac7-11ed-b405-f47b099bf663"/>
+<ref refid="2c0a07a0-bac7-11ed-911f-f47b099bf663"/>
+<ref refid="33730e84-bac7-11ed-bb46-f47b099bf663"/>
+<ref refid="5f764195-bac7-11ed-a285-f47b099bf663"/>
+<ref refid="616af4c5-bac7-11ed-95e0-f47b099bf663"/>
 </reflist>
 </edge>
 <name>
@@ -3378,6 +3393,11 @@
 <reflist>
 <ref refid="2c8a1ce0-716f-11ec-999a-f47b099bf663"/>
 <ref refid="30945a44-716f-11ec-999a-f47b099bf663"/>
+<ref refid="988b2bf8-bac5-11ed-a771-f47b099bf663"/>
+<ref refid="9d5b97a8-bac6-11ed-8698-f47b099bf663"/>
+<ref refid="e54b49f0-bac6-11ed-acfa-f47b099bf663"/>
+<ref refid="3bb0d2b9-bac7-11ed-a06f-f47b099bf663"/>
+<ref refid="52cd6684-bac7-11ed-be7f-f47b099bf663"/>
 </reflist>
 </node>
 <package>
@@ -3389,7 +3409,7 @@
 <ref refid="200ad022-716f-11ec-999a-f47b099bf663"/>
 </activity>
 <name>
-<val>First Action</val>
+<val>Turn on machine</val>
 </name>
 <outgoing>
 <reflist>
@@ -3413,7 +3433,7 @@
 <val>95.0</val>
 </width>
 <height>
-<val>30.0</val>
+<val>44.0</val>
 </height>
 <diagram>
 <ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
@@ -3432,8 +3452,13 @@
 </reflist>
 </incoming>
 <name>
-<val>Second Action</val>
+<val>Place ground coffee in portafilter</val>
 </name>
+<outgoing>
+<reflist>
+<ref refid="2052d977-bac7-11ed-b405-f47b099bf663"/>
+</reflist>
+</outgoing>
 <presentation>
 <reflist>
 <ref refid="30947dc6-716f-11ec-999a-f47b099bf663"/>
@@ -3451,7 +3476,7 @@
 <val>113.0</val>
 </width>
 <height>
-<val>30.0</val>
+<val>62.0</val>
 </height>
 <diagram>
 <ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
@@ -3490,7 +3515,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 173.0, 127.0)</val>
 </matrix>
 <points>
-<val>[(0.0, 9.0), (0.0, 72.0)]</val>
+<val>[(7.5, 23.0), (7.5, 72.0)]</val>
 </points>
 <head-connection>
 <ref refid="2c8a4940-716f-11ec-999a-f47b099bf663"/>
@@ -3529,4 +3554,409 @@
 <val>Technology</val>
 </body>
 </Comment>
+<Action id="988b2bf8-bac5-11ed-a771-f47b099bf663">
+<activity>
+<ref refid="200ad022-716f-11ec-999a-f47b099bf663"/>
+</activity>
+<incoming>
+<reflist>
+<ref refid="2052d977-bac7-11ed-b405-f47b099bf663"/>
+</reflist>
+</incoming>
+<name>
+<val>Tamp and polish coffee grounds</val>
+</name>
+<outgoing>
+<reflist>
+<ref refid="2c0a07a0-bac7-11ed-911f-f47b099bf663"/>
+</reflist>
+</outgoing>
+<presentation>
+<reflist>
+<ref refid="988b7782-bac5-11ed-a19d-f47b099bf663"/>
+</reflist>
+</presentation>
+</Action>
+<ActionItem id="988b7782-bac5-11ed-a19d-f47b099bf663">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 124.0, 301.7734375)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>125.0</val>
+</width>
+<height>
+<val>44.0</val>
+</height>
+<diagram>
+<ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
+</diagram>
+<subject>
+<ref refid="988b2bf8-bac5-11ed-a771-f47b099bf663"/>
+</subject>
+</ActionItem>
+<Action id="9d5b97a8-bac6-11ed-8698-f47b099bf663">
+<activity>
+<ref refid="200ad022-716f-11ec-999a-f47b099bf663"/>
+</activity>
+<incoming>
+<reflist>
+<ref refid="2c0a07a0-bac7-11ed-911f-f47b099bf663"/>
+</reflist>
+</incoming>
+<name>
+<val>Pull the shot</val>
+</name>
+<outgoing>
+<reflist>
+<ref refid="33730e84-bac7-11ed-bb46-f47b099bf663"/>
+</reflist>
+</outgoing>
+<presentation>
+<reflist>
+<ref refid="9d5bf18b-bac6-11ed-9b08-f47b099bf663"/>
+</reflist>
+</presentation>
+</Action>
+<ActionItem id="9d5bf18b-bac6-11ed-9b08-f47b099bf663">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 133.0, 398.09765625)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>101.0</val>
+</width>
+<height>
+<val>30.0</val>
+</height>
+<diagram>
+<ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
+</diagram>
+<subject>
+<ref refid="9d5b97a8-bac6-11ed-8698-f47b099bf663"/>
+</subject>
+</ActionItem>
+<Action id="e54b49f0-bac6-11ed-acfa-f47b099bf663">
+<activity>
+<ref refid="200ad022-716f-11ec-999a-f47b099bf663"/>
+</activity>
+<incoming>
+<reflist>
+<ref refid="33730e84-bac7-11ed-bb46-f47b099bf663"/>
+</reflist>
+</incoming>
+<name>
+<val>Serve espresso cup (demitasse)</val>
+</name>
+<outgoing>
+<reflist>
+<ref refid="5f764195-bac7-11ed-a285-f47b099bf663"/>
+</reflist>
+</outgoing>
+<presentation>
+<reflist>
+<ref refid="e54b998a-bac6-11ed-9a44-f47b099bf663"/>
+</reflist>
+</presentation>
+</Action>
+<ActionItem id="e54b998a-bac6-11ed-9a44-f47b099bf663">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 127.0, 488.5780944824219)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>119.0</val>
+</width>
+<height>
+<val>62.0</val>
+</height>
+<diagram>
+<ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
+</diagram>
+<subject>
+<ref refid="e54b49f0-bac6-11ed-acfa-f47b099bf663"/>
+</subject>
+</ActionItem>
+<ControlFlowItem id="1f29d8b6-bac7-11ed-a536-f47b099bf663">
+<diagram>
+<ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="2052d977-bac7-11ed-b405-f47b099bf663"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 176.56639099121094, 261.046875)</val>
+</matrix>
+<points>
+<val>[(3.9336090087890625, -0.046875), (3.9336090087890625, 40.7265625)]</val>
+</points>
+<head-connection>
+<ref refid="30947dc6-716f-11ec-999a-f47b099bf663"/>
+</head-connection>
+<tail-connection>
+<ref refid="988b7782-bac5-11ed-a19d-f47b099bf663"/>
+</tail-connection>
+</ControlFlowItem>
+<ControlFlow id="2052d977-bac7-11ed-b405-f47b099bf663">
+<activity>
+<ref refid="200ad022-716f-11ec-999a-f47b099bf663"/>
+</activity>
+<presentation>
+<reflist>
+<ref refid="1f29d8b6-bac7-11ed-a536-f47b099bf663"/>
+</reflist>
+</presentation>
+<source>
+<ref refid="30945a44-716f-11ec-999a-f47b099bf663"/>
+</source>
+<target>
+<ref refid="988b2bf8-bac5-11ed-a771-f47b099bf663"/>
+</target>
+</ControlFlow>
+<ControlFlowItem id="2a201834-bac7-11ed-9b09-f47b099bf663">
+<diagram>
+<ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="2c0a07a0-bac7-11ed-911f-f47b099bf663"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 179.24607849121094, 345.3828125)</val>
+</matrix>
+<points>
+<val>[(0.0, 0.390625), (0.0, 52.71484375)]</val>
+</points>
+<head-connection>
+<ref refid="988b7782-bac5-11ed-a19d-f47b099bf663"/>
+</head-connection>
+<tail-connection>
+<ref refid="9d5bf18b-bac6-11ed-9b08-f47b099bf663"/>
+</tail-connection>
+</ControlFlowItem>
+<ControlFlow id="2c0a07a0-bac7-11ed-911f-f47b099bf663">
+<activity>
+<ref refid="200ad022-716f-11ec-999a-f47b099bf663"/>
+</activity>
+<presentation>
+<reflist>
+<ref refid="2a201834-bac7-11ed-9b09-f47b099bf663"/>
+</reflist>
+</presentation>
+<source>
+<ref refid="988b2bf8-bac5-11ed-a771-f47b099bf663"/>
+</source>
+<target>
+<ref refid="9d5b97a8-bac6-11ed-8698-f47b099bf663"/>
+</target>
+</ControlFlow>
+<ControlFlowItem id="317d3865-bac7-11ed-9c71-f47b099bf663">
+<diagram>
+<ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="33730e84-bac7-11ed-bb46-f47b099bf663"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 181.64451599121094, 425.6952819824219)</val>
+</matrix>
+<points>
+<val>[(0.0, 2.402374267578125), (-1.1445159912109375, 62.8828125)]</val>
+</points>
+<head-connection>
+<ref refid="9d5bf18b-bac6-11ed-9b08-f47b099bf663"/>
+</head-connection>
+<tail-connection>
+<ref refid="e54b998a-bac6-11ed-9a44-f47b099bf663"/>
+</tail-connection>
+</ControlFlowItem>
+<ControlFlow id="33730e84-bac7-11ed-bb46-f47b099bf663">
+<activity>
+<ref refid="200ad022-716f-11ec-999a-f47b099bf663"/>
+</activity>
+<presentation>
+<reflist>
+<ref refid="317d3865-bac7-11ed-9c71-f47b099bf663"/>
+</reflist>
+</presentation>
+<source>
+<ref refid="9d5b97a8-bac6-11ed-8698-f47b099bf663"/>
+</source>
+<target>
+<ref refid="e54b49f0-bac6-11ed-acfa-f47b099bf663"/>
+</target>
+</ControlFlow>
+<Action id="3bb0d2b9-bac7-11ed-a06f-f47b099bf663">
+<activity>
+<ref refid="200ad022-716f-11ec-999a-f47b099bf663"/>
+</activity>
+<incoming>
+<reflist>
+<ref refid="5f764195-bac7-11ed-a285-f47b099bf663"/>
+</reflist>
+</incoming>
+<name>
+<val>Clean drip tray, filter, and basket</val>
+</name>
+<outgoing>
+<reflist>
+<ref refid="616af4c5-bac7-11ed-95e0-f47b099bf663"/>
+</reflist>
+</outgoing>
+<presentation>
+<reflist>
+<ref refid="3bb120c7-bac7-11ed-84f6-f47b099bf663"/>
+</reflist>
+</presentation>
+</Action>
+<ActionItem id="3bb120c7-bac7-11ed-84f6-f47b099bf663">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 118.64451599121094, 599.453125)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>126.0</val>
+</width>
+<height>
+<val>62.0</val>
+</height>
+<diagram>
+<ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
+</diagram>
+<subject>
+<ref refid="3bb0d2b9-bac7-11ed-a06f-f47b099bf663"/>
+</subject>
+</ActionItem>
+<Action id="52cd6684-bac7-11ed-be7f-f47b099bf663">
+<activity>
+<ref refid="200ad022-716f-11ec-999a-f47b099bf663"/>
+</activity>
+<incoming>
+<reflist>
+<ref refid="616af4c5-bac7-11ed-95e0-f47b099bf663"/>
+</reflist>
+</incoming>
+<name>
+<val>Turn off machine</val>
+</name>
+<presentation>
+<reflist>
+<ref refid="52cdba7c-bac7-11ed-988f-f47b099bf663"/>
+</reflist>
+</presentation>
+</Action>
+<ActionItem id="52cdba7c-bac7-11ed-988f-f47b099bf663">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 138.5, 721.671875)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>96.0</val>
+</width>
+<height>
+<val>44.0</val>
+</height>
+<diagram>
+<ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
+</diagram>
+<subject>
+<ref refid="52cd6684-bac7-11ed-be7f-f47b099bf663"/>
+</subject>
+</ActionItem>
+<ControlFlowItem id="5e9cc0b9-bac7-11ed-82b7-f47b099bf663">
+<diagram>
+<ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="5f764195-bac7-11ed-a285-f47b099bf663"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 179.96092224121094, 551.51171875)</val>
+</matrix>
+<points>
+<val>[(0.0, -0.933624267578125), (-0.71484375, 47.94140625)]</val>
+</points>
+<head-connection>
+<ref refid="e54b998a-bac6-11ed-9a44-f47b099bf663"/>
+</head-connection>
+<tail-connection>
+<ref refid="3bb120c7-bac7-11ed-84f6-f47b099bf663"/>
+</tail-connection>
+</ControlFlowItem>
+<ControlFlow id="5f764195-bac7-11ed-a285-f47b099bf663">
+<activity>
+<ref refid="200ad022-716f-11ec-999a-f47b099bf663"/>
+</activity>
+<presentation>
+<reflist>
+<ref refid="5e9cc0b9-bac7-11ed-82b7-f47b099bf663"/>
+</reflist>
+</presentation>
+<source>
+<ref refid="e54b49f0-bac6-11ed-acfa-f47b099bf663"/>
+</source>
+<target>
+<ref refid="3bb0d2b9-bac7-11ed-a06f-f47b099bf663"/>
+</target>
+</ControlFlow>
+<ControlFlowItem id="61003f87-bac7-11ed-820f-f47b099bf663">
+<diagram>
+<ref refid="1328f1ae-716f-11ec-999a-f47b099bf663"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<subject>
+<ref refid="616af4c5-bac7-11ed-95e0-f47b099bf663"/>
+</subject>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 202.7539520263672, 664.484375)</val>
+</matrix>
+<points>
+<val>[(-22.79302978515625, -3.03125), (-23.50787353515625, 57.1875)]</val>
+</points>
+<head-connection>
+<ref refid="3bb120c7-bac7-11ed-84f6-f47b099bf663"/>
+</head-connection>
+<tail-connection>
+<ref refid="52cdba7c-bac7-11ed-988f-f47b099bf663"/>
+</tail-connection>
+</ControlFlowItem>
+<ControlFlow id="616af4c5-bac7-11ed-95e0-f47b099bf663">
+<activity>
+<ref refid="200ad022-716f-11ec-999a-f47b099bf663"/>
+</activity>
+<presentation>
+<reflist>
+<ref refid="61003f87-bac7-11ed-820f-f47b099bf663"/>
+</reflist>
+</presentation>
+<source>
+<ref refid="3bb0d2b9-bac7-11ed-a06f-f47b099bf663"/>
+</source>
+<target>
+<ref refid="52cd6684-bac7-11ed-be7f-f47b099bf663"/>
+</target>
+</ControlFlow>
 </gaphor>
