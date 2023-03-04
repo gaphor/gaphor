@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 19:23+0100\n"
-"PO-Revision-Date: 2023-02-25 09:37+0000\n"
+"PO-Revision-Date: 2023-03-04 14:38+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
 "\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 4.16-dev\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 "Generated-By: Babel 2.11.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -816,17 +816,6 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"Klasse attributen volgens de UML syntax.\n"
-"\n"
-"  • <tt>attr</tt> (naam, standaard publieke zichtbaarheid)\n"
-"  • <tt>+ attr: int</tt> (publiek met type)\n"
-"  • <tt>+ attr: int[0..1]</tt> (publiek, type, en multiplicity)\n"
-"  • <tt>+ attr: int | bool</tt> (publiek, union type)\n"
-"  • <tt># /attr: int # a note</tt> (beschermd, afgeleid, met opmerking)\n"
-"\n"
-"Druk <b>Enter</b> om te wijzigen, <b>Backspace</b>/<b>Delete</b> om items"
-" te verwijderen.\n"
-"Gebruik <b>-</b>/<b>=</b> om items naar boven of beneden te verplaatsen."
 
 #: gaphor/UML/classes/classespropertypages.py:340
 #: gaphor/UML/classes/classespropertypages.py:429
@@ -1418,7 +1407,7 @@ msgstr "Notitie of Opmerking"
 
 #: gaphor/diagram/tools/dnd.py:39 gaphor/ui/diagrampage.py:349
 msgid "Element can’t be represented on a diagram."
-msgstr ""
+msgstr "Element kan niet worden vertegenwoordigd in een diagram."
 
 #: gaphor/extensions/sphinx.py:63
 msgid "No model file configured for model '{model_name}'."
@@ -1509,10 +1498,12 @@ msgid ""
 "Any unhandled errors are shown here. You can use these to provide extra "
 "information when you create an issue on GitHub."
 msgstr ""
+"Alle onbehandelde fouten worden hier weergegeven. U kunt deze als "
+"aanvullende informatie gebruiken bij het aanmaken van een issue op GitHub."
 
 #: gaphor/plugins/errorreports/errorreports.py:102
 msgid "No errors have been intercepted. We’re good."
-msgstr ""
+msgstr "Er zijn geen fouten onderschept. Alles is ok."
 
 #: gaphor/plugins/errorreports/errorreports.py:106
 msgid "Errors:"
@@ -1524,6 +1515,9 @@ msgid ""
 "Please file an issue on GitHub and include information from Tools → Error"
 " Reports."
 msgstr ""
+"Er is een onbekende fout opgetreden.\n"
+"Maak a.u.b. een issue aan op GitHub en voeg informatie toe van Gereedschap → "
+"Foutrapporten."
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export as XMI"
@@ -2064,6 +2058,8 @@ msgstr ""
 #: gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
 msgstr ""
+"Maak gedetailleerde klassendiagrammen om uw objectgeoriënteerde "
+"gegevensmodel vast te leggen."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2086,7 +2082,7 @@ msgstr "Alle Gaphor-modellen"
 
 #: gaphor/ui/appfilemanager.py:45
 msgid "Switch to {name}?"
-msgstr ""
+msgstr "Wisselen naar {name}?"
 
 #: gaphor/ui/appfilemanager.py:46
 msgid ""
@@ -2122,6 +2118,8 @@ msgid ""
 "Open a diagram from the model browser, or\n"
 "create a new diagram from the New diagram menu."
 msgstr ""
+"Open een diagram vanuit de model-browser, of maak een nieuw diagram aan via "
+"het menu ‘Nieuw diagram’."
 
 #: gaphor/ui/elementeditor.glade:14 gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2136,10 +2134,14 @@ msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see it's properties appear."
 msgstr ""
+"Voeg een modelelement uit de gereedschapskist (linksonder) toe aan het "
+"diagram. De eigenschappen zullen hier verschijnen."
 
 #: gaphor/ui/elementeditor.glade:69 gaphor/ui/elementeditor.ui:53
 msgid "This pane can be hidden by clicking the pane icon in the header."
 msgstr ""
+"Dit paneel kan worden verborgen door te klikken op het paneelpictogram in de "
+"titelbalk."
 
 #: gaphor/ui/elementeditor.glade:79 gaphor/ui/elementeditor.ui:62
 msgid ""
@@ -2217,6 +2219,8 @@ msgid ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
+"🔗 <a href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\""
+">Stijlbladen in Gaphor</a>"
 
 #: gaphor/ui/elementeditor.ui:71
 msgid ""
@@ -2230,6 +2234,8 @@ msgid ""
 "It looks like Gaphor is started from the command line. Do you want to "
 "open a debug session?"
 msgstr ""
+"Het lijkt erop dat Gaphor is gestart via de opdrachtregel. Wilt u een "
+"foutopsporingssessie openen?"
 
 #: gaphor/ui/errorhandler.py:31 gaphor/ui/errorhandler.py:34
 #: gaphor/ui/errorhandler.py:43 gaphor/ui/errorhandler.py:48
@@ -2271,6 +2277,9 @@ msgid ""
 "{exc}\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"Het model kan niet worden opgeslagen op deze locatie:\n"
+"{exc}\n"
+"Controleer of u de locatie correct heeft ingevoerd en probeer opnieuw."
 
 #: gaphor/ui/filemanager.py:122
 msgid "Loading…"
@@ -2286,7 +2295,7 @@ msgstr "Samenvoegingsconflict in model ‘{filename}’"
 
 #: gaphor/ui/filemanager.py:172
 msgid "It looks like this model file contains a merge conflict."
-msgstr ""
+msgstr "Het lijkt erop dat dit modelbestand een samenvoegingsconflict bevat."
 
 #: gaphor/ui/filemanager.py:194
 msgid "Unable to open model “{filename}”."
@@ -2314,7 +2323,7 @@ msgstr "Gaphor-model opslaan als"
 
 #: gaphor/ui/filemanager.py:360
 msgid "Resolve Merge Conflict?"
-msgstr ""
+msgstr "Samenvoegingsconflict oplossen?"
 
 #: gaphor/ui/filemanager.py:363
 msgid ""
@@ -2344,6 +2353,8 @@ msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
+"Het geopende model bevat niet-opgeslagen wijzigingen. Wijzigingen die niet "
+"worden opgeslagen gaan definitief verloren."
 
 #: gaphor/ui/filemanager.py:397 gaphor/ui/filemanager.py:410
 msgid "Discard"
@@ -2376,19 +2387,19 @@ msgstr "Leeg model"
 
 #: gaphor/ui/greeter.py:38
 msgid "Unified Modeling Language template"
-msgstr ""
+msgstr "Sjabloon voor Unified Modeling Language"
 
 #: gaphor/ui/greeter.py:45
 msgid "Systems Modeling Language template"
-msgstr ""
+msgstr "Sjabloon voor Systems Modeling Language"
 
 #: gaphor/ui/greeter.py:52
 msgid "Risk Analysis and Assessment Modeling Language template"
-msgstr ""
+msgstr "Sjabloon voor Risk Analysis and Assessment Modeling Language"
 
 #: gaphor/ui/greeter.py:59
 msgid "Layered C4 Model template"
-msgstr ""
+msgstr "Sjabloon voor Layered C4 Model"
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
