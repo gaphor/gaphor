@@ -36,5 +36,5 @@ def test_build_list_store(event_manager, element_factory, modeling_language):
 
     event_manager.handle(ModelLoaded(None))
 
-    assert model_merge.model.root
-    assert model_merge.model.child_model(model_merge.model.root[0])
+    assert model_merge.model
+    assert model_merge.model[0].children

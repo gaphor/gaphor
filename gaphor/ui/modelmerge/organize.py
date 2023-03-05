@@ -16,14 +16,14 @@ from gaphor.core.changeset.apply import applicable
 
 
 class Node(GObject.Object):
-    def __init__(self, element: Element | None, label: str, children: tuple[Node, ...]):
+    def __init__(self, element: Element | None, label: str, children: list[Node]):
         super().__init__()
         self.element = element
         self.label = label
         self.children = as_list_store(children) if children else None
         self.sync()
 
-    label = GObject.Property(type=str, default="Foo bar")
+    label = GObject.Property(type=str, default="")
     applied = GObject.Property(type=bool, default=True)
     applicable = GObject.Property(type=bool, default=True)
 
@@ -33,6 +33,10 @@ class Node(GObject.Object):
             return
         self.applicable = not element.applied and applicable(element, element.model)
         self.applied = bool(element.applied)
+
+        if self.children:
+            for child in self.children:
+                child.sync()
 
 
 def as_list_store(list) -> Gio.ListStore:
@@ -46,15 +50,16 @@ def as_list_store(list) -> Gio.ListStore:
 
 
 def organize_changes(element_factory):
+    # TODO: organize by ownership (Element.ownedElement)
     for change in element_factory.select(ElementChange):
         if change.op == "add":
             yield Node(
                 change,
                 gettext("Add element of type {type}").format(type=change.element_name),
-                (
+                [
                     *_value_changes(change.element_id, element_factory),
                     *_ref_changes(change.element_id, change.op, element_factory),
-                ),
+                ],
             )
         elif change.op == "remove":
             element = element_factory.lookup(change.element_id)
@@ -65,10 +70,10 @@ def organize_changes(element_factory):
                 else gettext("Remove element of type {type}").format(
                     type=type(element).__name__
                 ),
-                (
+                [
                     *_value_changes(change.element_id, element_factory),
                     *_ref_changes(change.element_id, change.op, element_factory),
-                ),
+                ],
             )
 
     added_removed = {c.element_id for c in element_factory.select(ElementChange)}
@@ -84,10 +89,10 @@ def organize_changes(element_factory):
             else gettext("Update element of type {type}").format(
                 type=type(element).__name__
             ),
-            (
+            [
                 *_value_changes(change.element_id, element_factory),
                 *_ref_changes(change.element_id, change.op, element_factory),
-            ),
+            ],
         )
 
 
@@ -98,7 +103,7 @@ def _value_changes(element_id, element_factory) -> Iterable[Node]:
             "Update attribute {name} to {value}".format(
                 name=vc.property_name, value=vc.property_value
             ),
-            (),
+            [],
         )
         for vc in element_factory.select(
             lambda e: isinstance(e, ValueChange) and e.element_id == element_id
@@ -120,7 +125,7 @@ def _ref_changes(element_id, op, element_factory) -> Iterable[Node]:
                 name=vc.property_name,
                 ref_name=_resolve_ref(vc.property_ref, element_factory),
             ),
-            (),
+            [],
         )
         for vc in element_factory.select(
             lambda e: isinstance(e, RefChange) and e.element_id == element_id
