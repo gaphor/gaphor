@@ -86,7 +86,7 @@ def main(argv=sys.argv) -> int:
     return run(argv)
 
 
-def run(args: list[str]) -> int:
+def run(argv: list[str]) -> int:
     application: Optional[Application] = None
 
     def app_startup(gtk_app):
@@ -118,7 +118,7 @@ def run(args: list[str]) -> int:
             event_manager.subscribe(on_session_created)
             event_manager.subscribe(on_quit)
             application.get_service(
-                "self_test" if "--self-test" in args else "greeter"
+                "self_test" if "--self-test" in argv else "greeter"
             ).init(gtk_app)
         except Exception:
             gtk_app.exit_code = 1
@@ -152,7 +152,7 @@ def run(args: list[str]) -> int:
     gtk_app.connect("startup", app_startup)
     gtk_app.connect("activate", app_activate)
     gtk_app.connect("open", app_open)
-    gtk_app.run(args)
+    gtk_app.run(argv)
     return gtk_app.exit_code
 
 
