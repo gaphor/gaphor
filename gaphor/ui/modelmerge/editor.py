@@ -17,7 +17,7 @@ class ModelMerge(UIComponent):
         self.element_factory = element_factory
         self.event_manager = event_manager
         self.modeling_language = modeling_language
-        self.model = ChangeSetModel(element_factory)
+        self.model = Gio.ListStore.new(Node.__gtype__)
         self.selection = None
         self.tree_view = None
         self.scrolled_window = None
@@ -28,9 +28,15 @@ class ModelMerge(UIComponent):
         self.event_manager.unsubscribe(self.on_model_loaded)
         self.event_manager.unsubscribe(self.on_pending_change)
 
+    def refresh_model(self):
+        self.model.remove_all()
+
+        for node in organize_changes(self.element_factory):
+            self.model.append(node)
+
     @event_handler(ModelLoaded)
     def on_model_loaded(self, event):
-        self.model.update()
+        self.refresh_model()
         if self.scrolled_window and next(
             self.element_factory.select(PendingChange), None
         ):
@@ -44,10 +50,10 @@ class ModelMerge(UIComponent):
 
     def open(self):
         tree_model = Gtk.TreeListModel.new(
-            self.model.root,
+            self.model,
             passthrough=False,
             autoexpand=True,
-            create_func=self.model.child_model,
+            create_func=lambda node, _: node.children,
             user_data=None,
         )
 
@@ -70,30 +76,12 @@ class ModelMerge(UIComponent):
         scrolled_window.set_child(self.tree_view)
 
         self.scrolled_window = scrolled_window
-        self.scrolled_window.set_visible(bool(self.model.root))
+        self.scrolled_window.set_visible(bool(self.model))
 
         return scrolled_window
 
     def close(self):
         pass
-
-
-class ChangeSetModel:
-    def __init__(self, element_factory):
-        self.element_factory = element_factory
-        self.root = Gio.ListStore.new(Node.__gtype__)
-
-    def update(self):
-        self.root.remove_all()
-
-        for node in organize_changes(self.element_factory):
-            self.root.append(node)
-
-    def child_model(self, item: Node, _user_data=None):
-        return item.children
-
-    def __iter__(self):
-        return iter(self.root)
 
 
 def list_item_factory_setup(_factory, list_item, on_apply):
@@ -108,9 +96,9 @@ def list_item_factory_setup(_factory, list_item, on_apply):
     apply = builder.get_object("apply")
 
     def on_active(button, _gparam):
-        change_item = list_item.get_item().get_item()
-        if button.get_active() and change_item.node:
-            on_apply(change_item.node)
-        change_item.sync()
+        node = list_item.get_item().get_item()
+        if button.get_active() and node:
+            on_apply(node)
+        node.sync()
 
     apply.connect("notify::active", on_active)

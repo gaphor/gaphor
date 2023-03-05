@@ -30,7 +30,7 @@ def run_gaphor_with_merge_conflict():
 
 def replace_merge_conflict_dialog(monkeypatch, resolution):
     def mock_merge_conflict_dialog(_window, filename, handler):
-        print("Shortcut merge conflict dialog:", filename, handler, resolution)
+        print("Shortcut merge conflict dialog:", filename)
         handler(resolution)
 
     monkeypatch.setattr(
