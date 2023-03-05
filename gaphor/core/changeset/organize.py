@@ -105,11 +105,13 @@ def _resolve_ref(ref, element_factory):
     element = element_factory.lookup(ref)
     if element and hasattr(element, "name"):
         return element.name
-    if name := next(
+    if value_changed := next(
         element_factory.select(
-            lambda e: isinstance(e, ValueChange) and e.property_name == "name"
+            lambda e: isinstance(e, ValueChange)
+            and e.element_id == ref
+            and e.property_name == "name"
         ),
         None,
     ):
-        return name
-    return gettext("<None>")
+        return value_changed.property_value
+    return gettext("nameless object")
