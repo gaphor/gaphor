@@ -1,15 +1,15 @@
 from __future__ import annotations
 
-from gi.repository import Gio, GObject, Gtk
+from gi.repository import Gio, Gtk
 
 from gaphor.event import ModelLoaded
 from gaphor.core.modeling import PendingChange, AttributeUpdated
-from gaphor.core.changeset.apply import apply_change, applicable
+from gaphor.core.changeset.apply import apply_change
 from gaphor.i18n import translated_ui_string
 from gaphor.ui.abc import UIComponent
 from gaphor.core import event_handler
 from gaphor.transaction import Transaction
-from gaphor.core.changeset.organize import organize_changes, Node
+from gaphor.ui.modelmerge.organize import organize_changes, Node
 
 
 class ModelMerge(UIComponent):
@@ -81,48 +81,19 @@ class ModelMerge(UIComponent):
 class ChangeSetModel:
     def __init__(self, element_factory):
         self.element_factory = element_factory
-        self.root = Gio.ListStore.new(ChangeItem.__gtype__)
-        self.child_models = {}
+        self.root = Gio.ListStore.new(Node.__gtype__)
 
     def update(self):
         self.root.remove_all()
-        self.child_models.clear()
-
-        def update_child_models(node):
-            if not node.children:
-                return
-            store = self.child_models[node] = Gio.ListStore.new(ChangeItem.__gtype__)
-            for n in node.children:
-                store.append(ChangeItem(n))
 
         for node in organize_changes(self.element_factory):
-            update_child_models(node)
-            self.root.append(ChangeItem(node))
+            self.root.append(node)
 
-    def child_model(self, item: ChangeItem, _user_data=None):
-        return self.child_models.get(item.node)
+    def child_model(self, item: Node, _user_data=None):
+        return item.children
 
     def __iter__(self):
         return iter(self.root)
-
-
-class ChangeItem(GObject.Object):
-    def __init__(self, node: Node):
-        super().__init__()
-        self.node = node
-        self.label = node.text
-        self.sync()
-
-    label = GObject.Property(type=str, default="Foo bar")
-    applied = GObject.Property(type=bool, default=True)
-    applicable = GObject.Property(type=bool, default=True)
-
-    def sync(self) -> None:
-        element = self.node.element
-        if not isinstance(element, PendingChange):
-            return
-        self.applicable = not element.applied and applicable(element, element.model)
-        self.applied = bool(element.applied)
 
 
 def list_item_factory_setup(_factory, list_item, on_apply):
