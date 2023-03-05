@@ -1,3 +1,4 @@
+import pytest
 from gaphor.core.modeling import (
     Diagram,
     Element,
@@ -6,6 +7,11 @@ from gaphor.core.modeling import (
     ValueChange,
 )
 from gaphor.core.changeset.organize import organize_changes
+
+
+@pytest.fixture(autouse=True)
+def mock_gettext(monkeypatch):
+    monkeypatch.setattr("gaphor.core.changeset.organize.gettext", lambda s: s)
 
 
 def test_add_element(element_factory):
