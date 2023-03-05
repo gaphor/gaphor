@@ -128,7 +128,7 @@ def test_update_reference_without_name(element_factory):
     assert add_element.element is None
     assert add_element.children
     assert add_element.children[0].element is vchange
-    assert add_element.children[0].text == "Add relation element to <None>"
+    assert add_element.children[0].text == "Add relation element to nameless object"
 
 
 def test_update_reference_with_name(element_factory):
