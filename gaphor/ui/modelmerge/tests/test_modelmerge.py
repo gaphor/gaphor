@@ -2,7 +2,7 @@ import pytest
 from gi.repository import Gtk
 
 from gaphor.event import ModelLoaded
-from gaphor.ui.modelmerge import ModelMerge
+from gaphor.ui.modelmerge.editor import ModelMerge
 from gaphor.core.modeling import ElementChange, ValueChange
 
 skip_if_gtk3 = pytest.mark.skipif(

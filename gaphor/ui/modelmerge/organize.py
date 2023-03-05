@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from typing import NamedTuple, Iterable
+from typing import Iterable
+
+from gi.repository import GObject, Gio
 
 from gaphor.core.modeling import (
     Element,
@@ -10,12 +12,37 @@ from gaphor.core.modeling import (
     PendingChange,
 )
 from gaphor.i18n import gettext
+from gaphor.core.changeset.apply import applicable
 
 
-class Node(NamedTuple):
-    element: Element | None
-    text: str
-    children: tuple[Node, ...]
+class Node(GObject.Object):
+    def __init__(self, element: Element | None, label: str, children: tuple[Node, ...]):
+        super().__init__()
+        self.element = element
+        self.label = label
+        self.children = as_list_store(children) if children else None
+        self.sync()
+
+    label = GObject.Property(type=str, default="Foo bar")
+    applied = GObject.Property(type=bool, default=True)
+    applicable = GObject.Property(type=bool, default=True)
+
+    def sync(self) -> None:
+        element = self.element
+        if not isinstance(element, PendingChange):
+            return
+        self.applicable = not element.applied and applicable(element, element.model)
+        self.applied = bool(element.applied)
+
+
+def as_list_store(list) -> Gio.ListStore:
+    if isinstance(list, Gio.ListStore):
+        return list
+
+    store = Gio.ListStore.new(Node.__gtype__)
+    for n in list:
+        store.append(n)
+    return store
 
 
 def organize_changes(element_factory):

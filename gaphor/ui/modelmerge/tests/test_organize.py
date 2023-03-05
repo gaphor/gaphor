@@ -6,12 +6,12 @@ from gaphor.core.modeling import (
     RefChange,
     ValueChange,
 )
-from gaphor.core.changeset.organize import organize_changes
+from gaphor.ui.modelmerge.organize import organize_changes
 
 
 @pytest.fixture(autouse=True)
 def mock_gettext(monkeypatch):
-    monkeypatch.setattr("gaphor.core.changeset.organize.gettext", lambda s: s)
+    monkeypatch.setattr("gaphor.ui.modelmerge.organize.gettext", lambda s: s)
 
 
 def test_add_element(element_factory):
@@ -25,7 +25,7 @@ def test_add_element(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.text == "Add element of type Diagram"
+    assert add_element.label == "Add element of type Diagram"
     assert add_element.element is change
 
 
@@ -42,7 +42,7 @@ def test_remove_element(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.text == "Remove element my diagram"
+    assert add_element.label == "Remove element my diagram"
     assert add_element.element is change
 
 
@@ -62,11 +62,11 @@ def test_add_element_with_attribute_update(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.text == "Add element of type Diagram"
+    assert add_element.label == "Add element of type Diagram"
     assert add_element.element is change
     assert add_element.children
     assert add_element.children[0].element is vchange
-    assert add_element.children[0].text == "Update attribute name to my diagram"
+    assert add_element.children[0].label == "Update attribute name to my diagram"
 
 
 def test_remove_element_with_attribute_update(element_factory):
@@ -87,11 +87,11 @@ def test_remove_element_with_attribute_update(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.text == "Add element of type Diagram"
+    assert add_element.label == "Add element of type Diagram"
     assert add_element.element is change
     assert add_element.children
     assert add_element.children[0].element is vchange
-    assert add_element.children[0].text == "Update attribute name to my diagram"
+    assert add_element.children[0].label == "Update attribute name to my diagram"
 
 
 def test_attribute_update(element_factory):
@@ -108,11 +108,11 @@ def test_attribute_update(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.text == "Update element my diagram"
+    assert add_element.label == "Update element my diagram"
     assert add_element.element is None
     assert add_element.children
     assert add_element.children[0].element is vchange
-    assert add_element.children[0].text == "Update attribute name to my diagram"
+    assert add_element.children[0].label == "Update attribute name to my diagram"
 
 
 def test_update_reference_without_name(element_factory):
@@ -130,11 +130,11 @@ def test_update_reference_without_name(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.text == "Update element my diagram"
+    assert add_element.label == "Update element my diagram"
     assert add_element.element is None
     assert add_element.children
     assert add_element.children[0].element is vchange
-    assert add_element.children[0].text == "Add relation element to nameless object"
+    assert add_element.children[0].label == "Add relation element to nameless object"
 
 
 def test_update_reference_with_name(element_factory):
@@ -152,11 +152,11 @@ def test_update_reference_with_name(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.text == "Update element of type Element"
+    assert add_element.label == "Update element of type Element"
     assert add_element.element is None
     assert add_element.children
     assert add_element.children[0].element is vchange
-    assert add_element.children[0].text == "Add relation diagram to my diagram"
+    assert add_element.children[0].label == "Add relation diagram to my diagram"
 
 
 def test_remove_reference_with_name(element_factory):
@@ -174,8 +174,8 @@ def test_remove_reference_with_name(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.text == "Update element of type Element"
+    assert add_element.label == "Update element of type Element"
     assert add_element.element is None
     assert add_element.children
     assert add_element.children[0].element is vchange
-    assert add_element.children[0].text == "Remove relation diagram to my diagram"
+    assert add_element.children[0].label == "Remove relation diagram to my diagram"

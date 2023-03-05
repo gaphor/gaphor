@@ -14,12 +14,12 @@
             <child>
               <object class="GtkCheckButton" id="apply">
                 <binding name="active">
-                  <lookup name="applied" type="gaphor+ui+modelmerge+ChangeItem">
+                  <lookup name="applied" type="gaphor+ui+modelmerge+organize+Node">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
                 <binding name="sensitive">
-                  <lookup name="applicable" type="gaphor+ui+modelmerge+ChangeItem">
+                  <lookup name="applicable" type="gaphor+ui+modelmerge+organize+Node">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
@@ -29,7 +29,7 @@
               <object class="GtkLabel">
                 <property name="xalign">0</property>
                 <binding name="label">
-                  <lookup name="label" type="gaphor+ui+modelmerge+ChangeItem">
+                  <lookup name="label" type="gaphor+ui+modelmerge+organize+Node">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
