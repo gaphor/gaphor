@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 19:23+0100\n"
-"PO-Revision-Date: 2023-03-04 14:38+0000\n"
+"PO-Revision-Date: 2023-03-05 14:34+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
 "\n"
@@ -2039,6 +2039,10 @@ msgid ""
 "a visual dictionary of concepts. It will also be a starting point for "
 "your design-level data model."
 msgstr ""
+"Voer domeinanalyses uit door domeinentiteiten en hun relaties te modelleren "
+"met behulp van een vereenvoudigd klassendiagram. Dit diagram zal dienen als "
+"een visueel woordenboek van concepten. Het zal ook een startpunt zijn voor "
+"uw gegevensmodel op ontwerpniveau."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2047,6 +2051,10 @@ msgid ""
 " and avoid design flaws such as cyclic dependencies or dependencies on "
 "unstable parts"
 msgstr ""
+"Bereid een diagram met pakketafhankelijkheden voor om uw "
+"implementatieklassen op de juiste manier te groeperen. Dit helpt u de code "
+"goed gestructureerd te houden en ontwerpfouten zoals cyclische "
+"afhankelijkheden of afhankelijkheden van onstabiele onderdelen te voorkomen."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2054,6 +2062,9 @@ msgid ""
 "new methods in\n"
 "existing classes or even new classes with specific responsibilities."
 msgstr ""
+"Modelleer componentinteracties voor doeleindescenario's om nieuwe methoden "
+"te achterhalen in bestaande klassen, of zelfs nieuwe klassen met specifieke "
+"verantwoordelijkheden."
 
 #: gaphor/templates/uml.gaphor
 msgid "Create detailed class diagrams to capture your object-oriented data model."
@@ -2067,6 +2078,10 @@ msgid ""
 "components. Indicate how they are deployed on hardware nodes, their "
 "inter-dependencies and communication protocols."
 msgstr ""
+"Definieer de belangrijkste artefacten die de implementatie van uw "
+"componenten manifesteren. Geef aan hoe ze worden geïmplementeerd op "
+"hardwareknooppunten, hun onderlinge afhankelijkheden en "
+"communicatieprotocollen."
 
 #: gaphor/templates/uml.gaphor
 msgid "String"
@@ -2150,6 +2165,10 @@ msgid ""
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
+"<b>Tip:</b> De meeste elementen in de gereedschapskist hebben een sneltoets ("
+"bijv. ‘C’ voor Klasse). Gereedschapsselectie werkt alleen vanuit het "
+"diagram. Als gereedschap niet wordt geselecteerd, klik dan éénmaal op het "
+"diagram (zodat deze gefocust is) en druk dan op de sneltoets."
 
 #: gaphor/ui/elementeditor.glade:90
 msgid ""
@@ -2158,6 +2177,10 @@ msgid ""
 "will automatically appear.\n"
 "            "
 msgstr ""
+"<b>Tip:</b> Om een element te zoeken in de model-browser (linksboven), "
+"selecteert u een element in de model-browser en begint u te typen. Er "
+"verschijnt automatisch een zoekvak.\n"
+"            "
 
 #: gaphor/ui/elementeditor.glade:128 gaphor/ui/elementeditor.ui:100
 #: gaphor/ui/help/shortcuts.ui:123
@@ -2228,6 +2251,9 @@ msgid ""
 "select an element in the model browser and start typing. A search box "
 "will automatically appear."
 msgstr ""
+"<b>Tip:</b> Om een element te zoeken in de model-browser (linksboven), "
+"selecteert u een element in de model-browser en begint u te typen. Er "
+"verschijnt automatisch een zoekvak."
 
 #: gaphor/ui/errorhandler.py:22
 msgid ""
@@ -2257,12 +2283,19 @@ msgid ""
 "{exc}\n"
 "If you think this is a bug, please contact the developers."
 msgstr ""
+"Gaphor kon het model niet opslaan, waarschijnlijk als gevolg van een interne "
+"fout:\n"
+"{exc}\n"
+"Als u denkt dat dit een fout is, neem dan contact op met de ontwikkelaars."
 
 #: gaphor/ui/filemanager.py:46
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
 msgstr ""
+"U beschikt niet over de machtigingen die nodig zijn om het model op te slaan."
+"\n"
+"Controleer of u de locatie correct hebt getypt en probeer het opnieuw."
 
 #: gaphor/ui/filemanager.py:50
 msgid ""
@@ -2270,6 +2303,9 @@ msgid ""
 "Please free up some disk space and try again or save it in a different "
 "location."
 msgstr ""
+"U hebt niet genoeg vrije ruimte op het apparaat om het model op te slaan.\n"
+"Maak wat schijfruimte vrij en probeer het opnieuw, of sla het op een andere "
+"locatie op."
 
 #: gaphor/ui/filemanager.py:53
 msgid ""
@@ -2330,6 +2366,8 @@ msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
+"Het model dat u probeert te openen bevat een samenvoegingsconflict. Wilt u "
+"het huidige model, of de inkomende wijziging van het model openen?"
 
 #: gaphor/ui/filemanager.py:367 gaphor/ui/filemanager.py:395
 #: gaphor/ui/filemanager.py:409
@@ -2556,6 +2594,10 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
+"Copyright © 2001-2022, Arjan J. Molenaar en Dan Yeaw.\n"
+"\n"
+"UML, SysML en RAAML zijn geregistreerde handelsmerken of handelsmerken van "
+"Object Management Group, Inc. in de Verenigde Staten en/of andere landen."
 
 #: gaphor/ui/help/about.ui:22
 msgid ""
