@@ -9,7 +9,7 @@ ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     PY_VERSION="3.11" \
     FONTCONFIG_VERSION="2.14.2" \
-    GITHUB_CLI_VERSION="2.21.2" \
+    GITHUB_CLI_VERSION="2.23.0" \
     DEBIAN_FRONTEND=noninteractive
 
 # Enable source lists for build-dep
