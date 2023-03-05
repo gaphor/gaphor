@@ -98,7 +98,7 @@ class ModelMerge(UIComponent):
         scrolled_window.set_child(self.tree_view)
 
         self.scrolled_window = scrolled_window
-        self.scrolled_window.set_visible(False)
+        self.scrolled_window.set_visible(bool(self.model.root))
 
         return scrolled_window
 
