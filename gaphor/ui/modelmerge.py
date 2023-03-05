@@ -12,34 +12,6 @@ from gaphor.transaction import Transaction
 from gaphor.core.changeset.organize import organize_changes, Node
 
 
-class ChangeSetModel:
-    def __init__(self, element_factory):
-        self.element_factory = element_factory
-        self.root = Gio.ListStore.new(ChangeItem.__gtype__)
-        self.child_models = {}
-
-    def update(self):
-        self.root.remove_all()
-        self.child_models.clear()
-
-        def update_child_models(node):
-            if not node.children:
-                return
-            store = self.child_models[node] = Gio.ListStore.new(ChangeItem.__gtype__)
-            for n in node.children:
-                store.append(ChangeItem(n))
-
-        for node in organize_changes(self.element_factory):
-            update_child_models(node)
-            self.root.append(ChangeItem(node))
-
-    def child_model(self, item: ChangeItem, _user_data=None):
-        return self.child_models.get(item.node)
-
-    def __iter__(self):
-        return iter(self.root)
-
-
 class ModelMerge(UIComponent):
     def __init__(self, event_manager, element_factory, modeling_language):
         self.element_factory = element_factory
@@ -104,6 +76,34 @@ class ModelMerge(UIComponent):
 
     def close(self):
         pass
+
+
+class ChangeSetModel:
+    def __init__(self, element_factory):
+        self.element_factory = element_factory
+        self.root = Gio.ListStore.new(ChangeItem.__gtype__)
+        self.child_models = {}
+
+    def update(self):
+        self.root.remove_all()
+        self.child_models.clear()
+
+        def update_child_models(node):
+            if not node.children:
+                return
+            store = self.child_models[node] = Gio.ListStore.new(ChangeItem.__gtype__)
+            for n in node.children:
+                store.append(ChangeItem(n))
+
+        for node in organize_changes(self.element_factory):
+            update_child_models(node)
+            self.root.append(ChangeItem(node))
+
+    def child_model(self, item: ChangeItem, _user_data=None):
+        return self.child_models.get(item.node)
+
+    def __iter__(self):
+        return iter(self.root)
 
 
 class ChangeItem(GObject.Object):
