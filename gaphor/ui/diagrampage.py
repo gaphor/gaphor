@@ -257,8 +257,8 @@ class DiagramPage:
         if Gtk.get_major_version() == 3:
             self.widget.destroy()
 
-        if self._notify_dark_id:
-            self._notify_dark_id = self.style_manager.disconnect(self._notify_dark_id)  # type: ignore[union-attr]
+        if self._notify_dark_id and self.style_manager:
+            self._notify_dark_id = self.style_manager.disconnect(self._notify_dark_id)
 
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_attribute_updated)
