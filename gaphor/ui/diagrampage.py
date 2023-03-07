@@ -217,7 +217,7 @@ class DiagramPage:
         )
 
     def get_tool_icon_name(self, tool_name):
-        if tool_name in ("toolbox-pointer", "toolbox-magnet"):
+        if tool_name == "toolbox-pointer":
             return None
         return next(
             t
