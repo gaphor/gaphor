@@ -131,8 +131,10 @@ class Toolbox(UIComponent):
                 drag_source.connect("prepare", _flowbox_drag_prepare)
                 flowbox.add_controller(drag_source)
 
-            for action_name, label, icon_name, shortcut, *_rest in items:
-                button = create_toolbox_button(action_name, icon_name, label, shortcut)
+            for action_name, label, icon_name, shortcut, item_factory, *_rest in items:
+                button = create_toolbox_button(
+                    action_name, icon_name, label, shortcut, bool(item_factory)
+                )
                 flowbox.insert(button, -1)
 
             if Gtk.get_major_version() == 3:
@@ -238,7 +240,11 @@ def create_toolbox_container(toolbox: Gtk.Widget) -> Gtk.ScrolledWindow:
 
 
 def create_toolbox_button(
-    action_name: str, icon_name: str, label: str, shortcut: Optional[str]
+    action_name: str,
+    icon_name: str,
+    label: str,
+    shortcut: Optional[str],
+    draggable: bool,
 ) -> Gtk.Button:
     """Creates a tool button for the toolbox."""
     button = Gtk.FlowBoxChild.new()
@@ -250,6 +256,7 @@ def create_toolbox_button(
         button.set_child(icon)
     button.action_name = action_name
     button.icon_name = icon_name
+    button.draggable = draggable
     if label:
         if shortcut:
             if Gtk.get_major_version() == 3:
@@ -303,6 +310,8 @@ else:
 
     def _flowbox_drag_prepare(source: Gtk.DragSource, x: int, y: int):
         child = source.get_widget().get_child_at_pos(x, y)
+        if not child.draggable:
+            return None
 
         display = Gdk.Display.get_default()
         theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
