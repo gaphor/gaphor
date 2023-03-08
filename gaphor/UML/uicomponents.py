@@ -18,7 +18,3 @@ from gaphor.UML.deployments import deploymentpropertypage
 from gaphor.UML.interactions import interactionspropertypages
 from gaphor.UML.profiles import metaclasspropertypage, stereotypepropertypages
 from gaphor.UML.states import dropzone, propertypages
-
-
-def init():
-    """Allow this module to be loaded from an entrypoint."""
