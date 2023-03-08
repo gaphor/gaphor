@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-01-25 19:23+0100\n"
-"PO-Revision-Date: 2023-03-05 14:34+0000\n"
+"PO-Revision-Date: 2023-03-09 12:40+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
 "\n"
@@ -33,7 +33,7 @@ msgstr "Technologie"
 
 #: gaphor/C4Model/toolbox.py:29
 msgid "New Software System"
-msgstr "Nieuw softwaresysteem"
+msgstr "Nieuw software­systeem"
 
 #: gaphor/C4Model/toolbox.py:36
 msgid "New Container"
@@ -600,28 +600,28 @@ msgstr "Actie"
 
 #: gaphor/UML/actions/actionstoolbox.py:86
 msgid "Initial node"
-msgstr "Initiële node"
+msgstr "Initiële knoop"
 
 #: gaphor/UML/actions/actionstoolbox.py:98
 msgid "Activity final node"
-msgstr "Laatste activiteits-node"
+msgstr "Laatste activiteitsknoop"
 
 #: gaphor/UML/actions/actionstoolbox.py:110
 msgid "Flow final node"
-msgstr "Laatste stroom-node"
+msgstr "Laatste stroomknoop"
 
 #: gaphor/UML/actions/actionstoolbox.py:122
 msgid "Decision/merge node"
-msgstr "Beslissings-/samenvoegings-node"
+msgstr "Beslissings-/samenvoegings­knoop"
 
 #: gaphor/UML/actions/actionstoolbox.py:134
 msgid "Fork/join node"
-msgstr "Splitsings-/aansluitings-node"
+msgstr "Splitsings-/aansluitingsknoop"
 
 #: gaphor/UML/actions/actionstoolbox.py:146
 #: gaphor/UML/actions/actionstoolbox.py:152
 msgid "Object node"
-msgstr "Object-node"
+msgstr "Object­knoop"
 
 #: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Swimlane"
@@ -767,7 +767,7 @@ msgstr "Bewaker"
 #: gaphor/UML/actions/propertypages.glade:322
 #: gaphor/UML/actions/propertypages.ui:245
 msgid "Parameter Nodes"
-msgstr "Parameter-nodes"
+msgstr "Parameter­knoop"
 
 #: gaphor/UML/actions/propertypages.glade:350
 #: gaphor/UML/actions/propertypages.ui:271
@@ -801,6 +801,15 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Voeg activiteitsparameterknopen toe en bewerk deze volgens UML-syntax.\n"
+"\n"
+"  • <tt>parameter</tt> (invoer, naam)\n"
+"  • <tt>out attr: int</tt> (uitvoer met type)\n"
+"  • <tt>in attr: int[0..1]</tt> (invoer, type, en hoeveelheid)\n"
+"\n"
+"Druk op <b>Enter</b> om te bewerken, <b>Backspace</b>/<b>Delete</b> om items "
+"te verwijderen.\n"
+"Gebruik <b>-</b>/<b>=</b> om items omhoog of omlaag te verplaatsen."
 
 #: gaphor/UML/actions/propertypages.ui:310
 msgid ""
@@ -816,6 +825,17 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Voeg klasseactiviteit toe en bewerk deze volgens UML-syntax.\n"
+"\n"
+"  • <tt>attr</tt> (naam, standaard is openbare zichtbaarheid)\n"
+"  • <tt>+ attr: int</tt> (openbaar met type)\n"
+"  • <tt>+ attr: int[0..1]</tt> (openbaar, type, en hoeveelheid)\n"
+"  • <tt>+ attr: int | bool</tt> (openbaar, samenvoegingstype)\n"
+"  • <tt># /attr: int # a note</tt> (beschermd, afgeleid, met opmerking)\n"
+"\n"
+"Druk op <b>Enter</b> om te bewerken, <b>Backspace</b>/<b>Delete</b> om items "
+"te verwijderen.\n"
+"Gebruik <b>-</b>/<b>=</b> om items omhoog of omlaag te verplaatsen."
 
 #: gaphor/UML/classes/classespropertypages.py:340
 #: gaphor/UML/classes/classespropertypages.py:429
@@ -1133,7 +1153,7 @@ msgstr "Artefact"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:28
 msgid "Node"
-msgstr "Node"
+msgstr "Knoop"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:40
 msgid "Device"
@@ -1996,7 +2016,7 @@ msgstr "Implementatie-architectuur"
 
 #: gaphor/templates/uml.gaphor
 msgid "Node 1"
-msgstr "Node 1"
+msgstr "Knoop 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Artifact 1"
@@ -2004,7 +2024,7 @@ msgstr "Artefact 1"
 
 #: gaphor/templates/uml.gaphor
 msgid "Node 2"
-msgstr "Node 2"
+msgstr "Knoop 2"
 
 #: gaphor/templates/uml.gaphor
 msgid "protocol"
@@ -2585,6 +2605,23 @@ msgid ""
 "trademarks of Object Management Group, Inc. in the United States\n"
 "and/or other countries.\n"
 msgstr ""
+"Gelicentieerd onder de Apache-licentie, Versie 2.0 (de ‘Licentie’); u mag "
+"deze app alleen gebruiken in overeenstemming met de Licentie. U kunt een "
+"kopie van de Licentie verkrijgen op\n"
+"\n"
+"http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Tenzij vereist door de toepasselijke wetgeving of schriftelijk "
+"overeengekomen, wordt software gedistribueerd onder de Licentie op een ‘AS "
+"IS’-BASIS, ZONDER GARANTIES OF VOORWAARDEN VAN ENIGE SOORT, expliciet of "
+"impliciet. Zie de Licentie voor de specifieke taal die de rechten en "
+"beperkingen onder de Licentie regelen.\n"
+"\n"
+"---\n"
+"\n"
+"UML, SysML en RAAML zijn ofwel geregistreerde handelsmerken of handelsmerken "
+"van Object Management Group, Inc. in de Verenigde Staten en/of andere landen."
+"\n"
 
 #: gaphor/ui/help/about.ui:14
 msgid ""
@@ -2613,6 +2650,17 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
+"Gelicentieerd onder de Apache-licentie, Versie 2.0 (de ‘Licentie’); u mag "
+"deze app alleen gebruiken in overeenstemming met de Licentie. U kunt een "
+"kopie van de Licentie verkrijgen op\n"
+"\n"
+"    http://www.apache.org/licenses/LICENSE-2.0\n"
+"\n"
+"Tenzij vereist door de toepasselijke wetgeving of schriftelijk "
+"overeengekomen, wordt software gedistribueerd onder de Licentie op een ‘AS "
+"IS’-BASIS, ZONDER GARANTIES OF VOORWAARDEN VAN ENIGE SOORT, expliciet of "
+"impliciet. Zie de Licentie voor de specifieke taal die de rechten en "
+"beperkingen onder de Licentie regelen."
 
 #: gaphor/ui/help/shortcuts.ui:24
 msgid "Rename"
