@@ -6,7 +6,7 @@ description: |
   Gaphor is a simple modeling tool written in Python. It is free and open source software
   for creating software and system architecture and designs. It is aimed at beginning modelers.
 grade: devel # must be 'stable' to release into candidate/stable channels
-issues: https://github.com/gaphor/gaphol/issues
+issues: https://github.com/gaphor/gaphor/issues
 source-code: https://github.com/gaphor/gaphor
 contact: https://gaphor.org/discuss/
 website: https://gaphor.org/
