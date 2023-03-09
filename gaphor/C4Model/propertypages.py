@@ -10,11 +10,6 @@ from gaphor.diagram.propertypages import (
     unsubscribe_all_on_destroy,
 )
 
-
-def init():
-    pass
-
-
 new_builder = new_resource_builder("gaphor.C4Model")
 
 

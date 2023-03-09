@@ -101,10 +101,10 @@ gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 "error_reports" = "gaphor.plugins.errorreports:ErrorReports"
 
 [tool.poetry.plugins."gaphor.modules"]
-"general_ui_components" = "gaphor.diagram.general.uicomponents:init"
-"uml_ui_components" = "gaphor.UML.uicomponents:init"
-"sysml_property_pages" = "gaphor.SysML.propertypages:init"
-"c4model_property_pages" = "gaphor.C4Model.propertypages:init"
+"general_ui_components" = "gaphor.diagram.general.uicomponents"
+"uml_ui_components" = "gaphor.UML.uicomponents"
+"sysml_property_pages" = "gaphor.SysML.propertypages"
+"c4model_property_pages" = "gaphor.C4Model.propertypages"
 
 [tool.poetry.plugins."gaphor.services"]
 "component_registry" = "gaphor.services.componentregistry:ComponentRegistry"

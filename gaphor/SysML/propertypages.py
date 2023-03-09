@@ -14,10 +14,6 @@ from gaphor.SysML.requirements.requirement import RequirementItem
 from gaphor.UML.classes.classespropertypages import AttributesPage, OperationsPage
 
 
-def init():
-    pass
-
-
 new_builder = new_resource_builder("gaphor.SysML")
 
 

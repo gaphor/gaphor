@@ -2,7 +2,3 @@
 
 import gaphor.diagram.general.generaleditors
 import gaphor.diagram.general.generalpropertypages
-
-
-def init():
-    """Allows this module to be loaded from an entrypoint."""
