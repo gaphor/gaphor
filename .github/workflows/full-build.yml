@@ -40,7 +40,7 @@ jobs:
       - name: Check translations
         run: pip install babel && python po/check-babel.py
 
-  linux-gtk4:
+  linux-wheel:
     name: Linux (Wheel)
     needs: lint
     runs-on: ubuntu-22.04
@@ -54,7 +54,10 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
-        uses: ./.github/actions/linux_dependencies
+        run: >
+          sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends upx
+          gir1.2-gtk-4.0 libgirepository1.0-dev libgtksourceview-5-dev libadwaita-1-dev
+          graphviz
       - name: Set up Python
         uses: actions/setup-python@v4.5.0
         with:
@@ -175,9 +178,9 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
-        uses: ./.github/actions/macos_dependencies
-        with:
-          gtk_version: ${{ env.GAPHOR_USE_GTK }}
+        run: >
+          brew update && brew install gtk4 gtksourceview5 libadwaita adwaita-icon-theme
+          gobject-introspection graphviz create-dmg upx
       - name: Set up Python
         uses: actions/setup-python@v4.5.0
         with:
@@ -370,17 +373,17 @@ jobs:
 
   publish-to-pypi:
     name: Publish to PyPI (release only)
-    needs: [ linux-gtk4, linux-flatpak-devel, check-linux-appimage, check-macos-app, check-windows-installer ]
+    needs: [ linux-wheel, linux-flatpak-devel, check-linux-appimage, check-macos-app, check-windows-installer ]
     runs-on: ubuntu-22.04
     if: github.event_name == 'release'
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ needs.linux-gtk4.outputs.targz }}
+          name: ${{ needs.linux-wheel.outputs.targz }}
           path: dist
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ needs.linux-gtk4.outputs.wheel }}
+          name: ${{ needs.linux-wheel.outputs.wheel }}
           path: dist
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:

@@ -25,7 +25,9 @@ jobs:
       with:
         python-version: ${{ env.python_version }}
     - name: Install Linux Dependencies
-      uses: ./.github/actions/linux_dependencies
+      run: >
+        sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
+        libgirepository1.0-dev
     - name: Use Python Dependency Cache
       uses: actions/cache@v3.3.0
       with:
