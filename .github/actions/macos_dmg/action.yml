@@ -42,15 +42,12 @@ runs:
         p12-password: ${{ inputs.certpassword_p12 }}
     - name: Create Unsigned macOS Application
       if: inputs.mainline_build != 'true'
-      env:
-        GAPHOR_PKG_GTK: "3"
       run: poetry run poe package
       shell: bash
     - name: Create Signed macOS Application
       if: inputs.mainline_build == 'true'
       env:
         CODESIGN_IDENTITY: "Developer ID Application: Daniel Yeaw (Z7V37BLNR9)"
-        GAPHOR_PKG_GTK: "3"
       run: poetry run poe package
       shell: bash
     - name: Notarize app

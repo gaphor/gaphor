@@ -13,10 +13,6 @@ import pyinstaller_versionfile
 from packaging.version import Version
 from PyInstaller.utils.hooks import collect_entry_point, copy_metadata
 
-logging.getLogger(__name__).info(
-    f"Target GTK version: {os.getenv('GAPHOR_PKG_GTK', '4')}"
-)
-
 
 block_cipher = None
 
@@ -87,14 +83,14 @@ a = Analysis(  # type: ignore
     hooksconfig={
         "gi": {
             "module-versions": {
-                "Gtk": "3.0" if os.getenv("GAPHOR_PKG_GTK") == "3" else "4.0",
-                "GtkSource": "4" if os.getenv("GAPHOR_PKG_GTK") == "3" else "5",
+                "Gtk": "4.0",
+                "GtkSource": "5",
             },
         },
     },
     hookspath=["."],
     runtime_hooks=[
-        f"use_gtk_{os.getenv('GAPHOR_PKG_GTK', '4')}.py",
+        f"use_gtk_4.py",
         "fix_path.py",
         "pydot_patch.py",
     ],

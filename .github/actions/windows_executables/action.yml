@@ -28,8 +28,6 @@ runs:
         poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\gtk\x64\release\pycairo*.whl)
       shell: pwsh
     - name: Create Windows Installers
-      env:
-        GAPHOR_PKG_GTK: "4"
       run: |
         poetry build
         poetry run poe package
