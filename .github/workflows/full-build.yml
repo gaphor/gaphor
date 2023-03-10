@@ -41,7 +41,7 @@ jobs:
         run: pip install babel && python po/check-babel.py
 
   linux-gtk4:
-    name: Linux (GTK4)
+    name: Linux (Wheel)
     needs: lint
     runs-on: ubuntu-22.04
     timeout-minutes: 30
@@ -169,7 +169,7 @@ jobs:
     env:
       LDFLAGS: -L/usr/local/opt/python@${python_version}/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
-      GAPHOR_USE_GTK: 3
+      GAPHOR_USE_GTK: 4
     steps:
       - uses: actions/checkout@v3.3.0
         with:
@@ -227,34 +227,6 @@ jobs:
         run: |
           unzip -q ${{ needs.macos.outputs.artifact }}
           Gaphor.app/Contents/MacOS/gaphor-exe --self-test
-
-  macos-gtk4:
-    name: macOS (GTK4)
-    needs: lint
-    runs-on: macos-latest
-    timeout-minutes: 30
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
-    env:
-      LDFLAGS: -L/usr/local/opt/python@${python_version}/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
-    steps:
-      - uses: actions/checkout@v3.3.0
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Set up Python
-        uses: actions/setup-python@v4.5.0
-        with:
-          python-version: ${{ env.python_version }}
-      - name: Install macOS Dependencies
-        uses: ./.github/actions/macos_dependencies
-      - name: Use Python Dependency Cache
-        uses: actions/cache@v3.3.0
-        with:
-          path: ~/Library/Caches/pip
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: ${{ runner.os }}-poetry-
-      - name: Install Dependencies and Test
-        uses: ./.github/actions/setup_and_test
 
   windows-build-gtk:
     name: Windows (Build GTK)
@@ -398,7 +370,7 @@ jobs:
 
   publish-to-pypi:
     name: Publish to PyPI (release only)
-    needs: [ linux-gtk4, linux-flatpak-devel, macos-gtk4, check-linux-appimage, check-macos-app, check-windows-installer ]
+    needs: [ linux-gtk4, linux-flatpak-devel, check-linux-appimage, check-macos-app, check-windows-installer ]
     runs-on: ubuntu-22.04
     if: github.event_name == 'release'
     steps:
