@@ -1,7 +1,7 @@
 import logging
 import os.path
 
-from gi.repository import Adw, Gtk
+from gi.repository import Adw
 
 from pathlib import Path
 
@@ -57,11 +57,9 @@ class AppFileManager(Service, ActionProvider):
                     dialog.set_close_response("open")
 
                     def response(dialog, answer):
-                        # Gtk.ResponseType.NO is for GTK3, open is for GTK4
-                        force_new_session = answer in [Gtk.ResponseType.NO, "open"]
                         dialog.destroy()
                         self.application.new_session(
-                            filename=filename, force=force_new_session
+                            filename=filename, force=(answer == "open")
                         )
 
                     dialog.connect("response", response)

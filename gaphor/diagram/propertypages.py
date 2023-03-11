@@ -253,10 +253,7 @@ def combo_box_text_auto_complete(
 
 
 def help_link(builder, help_widget, popover):
-    """Show the help popover for a `Help` link in the property page.
-
-    GTK4 only.
-    """
+    """Show the help popover for a `Help` link in the property page."""
 
     def on_activate(*_args):
         builder.get_object(popover).show()

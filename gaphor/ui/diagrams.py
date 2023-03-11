@@ -50,11 +50,7 @@ class Diagrams(UIComponent, ActionProvider):
         self._page_handler_ids: list[int] = []
 
     def open(self):
-        """Open the diagrams component.
-
-        Returns:
-            The Gtk.Notebook (GTK3) or Gtk.Box with Adw.TabView and Adw.TabBar (GTK4).
-        """
+        """Open the diagrams component."""
         builder = new_builder()
         self._notebook = builder.get_object("notebook")
         self._stack = builder.get_object("stack")
