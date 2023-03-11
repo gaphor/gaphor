@@ -2,24 +2,20 @@
 
 from typing import Set
 
-from gi.repository import Gdk, GLib, GObject, Gtk
+from gi.repository import Gdk, GLib, GObject
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import Transaction, action
 from gaphor.core.modeling import Presentation
 from gaphor.diagram.copypaste import copy, paste_full, paste_link
 
-if Gtk.get_major_version() == 3:
-    copy_buffer: object = None
 
-else:
+class CopyBuffer(GObject.Object):
+    def __init__(self, buffer):
+        super().__init__()
+        self.buffer = buffer
 
-    class CopyBuffer(GObject.Object):
-        def __init__(self, buffer):
-            super().__init__()
-            self.buffer = buffer
-
-        buffer = GObject.Property(type=object)
+    buffer = GObject.Property(type=object)
 
 
 class CopyService(Service, ActionProvider):
@@ -42,63 +38,30 @@ class CopyService(Service, ActionProvider):
         self.element_factory = element_factory
         self.diagrams = diagrams
 
-        if Gtk.get_major_version() == 3:
-            self.clipboard = Gtk.Clipboard.get_default(Gdk.Display.get_default())
-            self._owner_change_id = self.clipboard.connect(
-                "owner-change", self.on_clipboard_owner_change
-            )
-        else:
-            self.clipboard = Gdk.Display.get_default().get_primary_clipboard()
+        self.clipboard = Gdk.Display.get_default().get_primary_clipboard()
 
-    if Gtk.get_major_version() == 3:
+    def shutdown(self):
+        pass
 
-        def shutdown(self):
-            self.clipboard.disconnect(self._owner_change_id)
+    def copy(self, items):
+        if items:
+            copy_buffer = copy(items)
+            v = GObject.Value(CopyBuffer.__gtype__, CopyBuffer(buffer=copy_buffer))
+            self.clipboard.set_content(Gdk.ContentProvider.new_for_value(v))
 
-        def on_clipboard_owner_change(self, clipboard, event=None):
-            view = self.diagrams.get_current_view()
-            if view and not view.is_focus():
-                global copy_buffer
-                copy_buffer = set()
-
-        def copy(self, items):
-            global copy_buffer
-            if items:
-                copy_buffer = copy(items)
-
-        def _paste(self, diagram, paster, callback):
-            global copy_buffer
-            if not copy_buffer:
-                return
-
-            items = self._paste_internal(diagram, copy_buffer, paster)
+    def _paste(self, diagram, paster, callback):
+        def on_paste(_source_object, result):
+            copy_buffer = self.clipboard.read_value_finish(result)
+            items = self._paste_internal(diagram, copy_buffer.buffer, paster)
             if callback:
                 callback(items)
 
-    else:
-
-        def shutdown(self):
-            pass
-
-        def copy(self, items):
-            if items:
-                copy_buffer = copy(items)
-                v = GObject.Value(CopyBuffer.__gtype__, CopyBuffer(buffer=copy_buffer))
-                self.clipboard.set_content(Gdk.ContentProvider.new_for_value(v))
-
-        def _paste(self, diagram, paster, callback):
-            def on_paste(_source_object, result):
-                copy_buffer = self.clipboard.read_value_finish(result)
-                items = self._paste_internal(diagram, copy_buffer.buffer, paster)
-                if callback:
-                    callback(items)
-
-            self.clipboard.read_value_async(
-                CopyBuffer.__gtype__,
-                io_priority=GLib.PRIORITY_DEFAULT,
-                cancellable=None,
-                callback=on_paste,
-            )
+        self.clipboard.read_value_async(
+            CopyBuffer.__gtype__,
+            io_priority=GLib.PRIORITY_DEFAULT,
+            cancellable=None,
+            callback=on_paste,
+        )
 
     def paste_link(self, diagram, callback=None):
         self._paste(diagram, paste_link, callback)
@@ -131,9 +94,6 @@ class CopyService(Service, ActionProvider):
             if not items:
                 return
 
-            if Gtk.get_major_version() == 3:
-                self.clipboard.set_text("", -1)
-
             self.copy(items)
 
     @action(name="edit-cut", shortcut="<Primary>x")
@@ -143,9 +103,6 @@ class CopyService(Service, ActionProvider):
             items = view.selection.selected_items
             if not items:
                 return
-
-            if Gtk.get_major_version() == 3:
-                self.clipboard.set_text("", -1)
 
             self.copy(items)
 
