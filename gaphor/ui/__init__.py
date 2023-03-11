@@ -2,27 +2,18 @@
 and diagram windows."""
 
 import logging
-import os
 import sys
 from typing import Optional
 
 import darkdetect
 import gi
 
-if os.getenv("GAPHOR_USE_GTK") != "NONE":
-    # Allow to explicitly *not* initialize GTK (for docs, mainly)
-    gtk_version = "3.0" if os.getenv("GAPHOR_USE_GTK") == "3" else "4.0"
-    gtk_source_version = "4" if os.getenv("GAPHOR_USE_GTK") == "3" else "5"
+gi.require_version("Gtk", "4.0")
+gi.require_version("Gdk", "4.0")
+gi.require_version("GtkSource", "5")
+gi.require_version("Adw", "1")
 
-    gi.require_version("Gtk", gtk_version)
-    gi.require_version("Gdk", gtk_version)
-    gi.require_version("GtkSource", gtk_source_version)
-    if gtk_version == "4.0":
-        gi.require_version("Adw", "1")
-        from gi.repository import Adw
-
-
-from gi.repository import Gdk, Gio, GLib, Gtk
+from gi.repository import Adw, Gio, GLib, Gtk
 
 from gaphor.application import Application, Session, distribution
 from gaphor.core import event_handler
@@ -139,14 +130,9 @@ def run(argv: list[str]) -> int:
             for file in files:
                 application.new_session(filename=file.get_path())
 
-    if gtk_version == "3.0":
-        gtk_app = Gtk.Application(
-            application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
-        )
-    else:
-        gtk_app = Adw.Application(
-            application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
-        )
+    gtk_app = Adw.Application(
+        application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
+    )
     gtk_app.exit_code = 0
     add_main_options(gtk_app)
     gtk_app.connect("startup", app_startup)

@@ -23,15 +23,29 @@ class MyOtherService:
         ...
 ```
 
+```{code-cell} ipython3
+:tags: [remove-cell]
+
+# Mock some gi related code (require_version, GTK, etc.), since this is not installed on RTD
+import sys
+import gi
+from sphinx.ext.autodoc.mock import MockFinder
+
+gi.require_version = lambda *_: ...
+
+finder = MockFinder([
+    "gi.repository.Adw", "gi.repository.Gtk", "gi.repository.Gdk",
+    "gi.repository.GdkPixbuf", "gi.repository.GtkSource"
+])
+sys.meta_path.insert(0, finder)
+```
+
 Let's first load the entry points.
 
 ```{code-cell} ipython3
-from sphinx.ext.autodoc.mock import mock
 from gaphor.entrypoint import load_entry_points
 
-
-with mock(["gi.repository.Gtk", "gi.repository.Gdk", "gi.repository.GdkPixbuf", "gi.repository.GtkSource", "gi.repository.Adw"]):
-    entry_points = load_entry_points("gaphor.services")
+entry_points = load_entry_points("gaphor.services")
 
 entry_points
 ```
