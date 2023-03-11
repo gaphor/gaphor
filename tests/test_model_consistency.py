@@ -58,7 +58,7 @@ from gaphor.RAAML.toolbox import fta, stpa
 from gaphor.storage import storage
 from gaphor.SysML.toolbox import blocks, internal_blocks, requirements
 from gaphor.ui.filemanager import load_default_model
-from gaphor.ui.namespacemodel import change_owner
+from gaphor.diagram.group import change_owner
 from gaphor.UML import diagramitems
 from gaphor.UML.toolbox import (
     actions,
