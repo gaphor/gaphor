@@ -18,9 +18,6 @@ block_cipher = None
 
 COPYRIGHT = f"Copyright © 2001-{time.strftime('%Y')} Arjan J. Molenaar and Dan Yeaw."
 
-glade_files = [
-    (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.glade")
-]
 ui_files = [
     (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.ui")
 ]
@@ -68,7 +65,6 @@ a = Analysis(  # type: ignore
         ("../gaphor/locale/*", "gaphor/locale"),
         ("../gaphor/templates/*.gaphor", "gaphor/templates"),
     ]
-    + glade_files
     + ui_files
     + mo_files
     + copy_metadata("gaphor")
