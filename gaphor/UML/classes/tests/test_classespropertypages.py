@@ -45,7 +45,7 @@ def test_classifier_property_page(element_factory):
 
     widget = property_page.construct()
     abstract = find(widget, "abstract")
-    abstract.set_state(True)
+    abstract.set_active(True)
 
     assert subject.isAbstract
 

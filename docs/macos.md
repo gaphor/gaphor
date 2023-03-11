@@ -13,16 +13,11 @@ To setup a development environment with macOS:
 1. Install [Homebrew](https://brew.sh)
 1. Open a terminal and execute:
 ```bash
-brew install python3 gobject-introspection gtk+3 gtksourceview4 adwaita-icon-theme gtk-mac-integration
+brew install python3 gobject-introspection gtk4 gtksourceview5 libadwaita adwaita-icon-theme graphviz
 ```
 Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/pipx/):
 ```bash
 pipx install poetry
-```
-
-Ensure Gaphor will run with GTK3:
-```bash
-export GAPHOR_USE_GTK=3
 ```
 
 [Clone the

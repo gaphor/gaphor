@@ -14,8 +14,6 @@ runs:
       run: poetry install --only main,packaging --no-interaction
       shell: bash
     - name: Build AppImage
-      env:
-        GAPHOR_PKG_GTK: "4"
       run: |
         jhbuild shell
         poetry run poe package

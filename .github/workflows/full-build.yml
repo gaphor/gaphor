@@ -40,8 +40,8 @@ jobs:
       - name: Check translations
         run: pip install babel && python po/check-babel.py
 
-  linux-gtk4:
-    name: Linux (GTK4)
+  linux-wheel:
+    name: Linux (Wheel)
     needs: lint
     runs-on: ubuntu-22.04
     timeout-minutes: 30
@@ -54,7 +54,10 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
-        uses: ./.github/actions/linux_dependencies
+        run: >
+          sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends upx
+          gir1.2-gtk-4.0 libgirepository1.0-dev libgtksourceview-5-dev libadwaita-1-dev
+          graphviz
       - name: Set up Python
         uses: actions/setup-python@v4.5.0
         with:
@@ -169,15 +172,15 @@ jobs:
     env:
       LDFLAGS: -L/usr/local/opt/python@${python_version}/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
-      GAPHOR_USE_GTK: 3
+      GAPHOR_USE_GTK: 4
     steps:
       - uses: actions/checkout@v3.3.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
-        uses: ./.github/actions/macos_dependencies
-        with:
-          gtk_version: ${{ env.GAPHOR_USE_GTK }}
+        run: >
+          brew update && brew install gtk4 gtksourceview5 libadwaita adwaita-icon-theme
+          gobject-introspection graphviz create-dmg upx
       - name: Set up Python
         uses: actions/setup-python@v4.5.0
         with:
@@ -196,7 +199,7 @@ jobs:
         if: ${{ github.actor != 'dependabot[bot]' }}
         uses: ./.github/actions/macos_dmg
         with:
-          mainline_build: ${{ env.mainline_build }}
+          sign_app: ${{ env.mainline_build }}
           version: ${{ steps.setup_and_test.outputs.version }}
           base64_encoded_p12: ${{ secrets.BASE64_ENCODED_P12 }}
           certpassword_p12: ${{ secrets.CERTPASSWORD_P12 }}
@@ -217,44 +220,10 @@ jobs:
           name: ${{ needs.macos.outputs.artifact }}
           path: .
       - name: Perform self-test (dmg)
-        if: "endsWith(needs.macos.outputs.artifact, '.dmg')"
         run: |
           hdiutil attach ${{ needs.macos.outputs.artifact }}
           cd /Volumes/Gaphor*
           Gaphor.app/Contents/MacOS/gaphor-exe --self-test
-      - name: Perform self-test (zip)
-        if: "endsWith(needs.macos.outputs.artifact, '.zip')"
-        run: |
-          unzip -q ${{ needs.macos.outputs.artifact }}
-          Gaphor.app/Contents/MacOS/gaphor-exe --self-test
-
-  macos-gtk4:
-    name: macOS (GTK4)
-    needs: lint
-    runs-on: macos-latest
-    timeout-minutes: 30
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
-    env:
-      LDFLAGS: -L/usr/local/opt/python@${python_version}/lib
-      PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
-    steps:
-      - uses: actions/checkout@v3.3.0
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Set up Python
-        uses: actions/setup-python@v4.5.0
-        with:
-          python-version: ${{ env.python_version }}
-      - name: Install macOS Dependencies
-        uses: ./.github/actions/macos_dependencies
-      - name: Use Python Dependency Cache
-        uses: actions/cache@v3.3.0
-        with:
-          path: ~/Library/Caches/pip
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: ${{ runner.os }}-poetry-
-      - name: Install Dependencies and Test
-        uses: ./.github/actions/setup_and_test
 
   windows-build-gtk:
     name: Windows (Build GTK)
@@ -398,17 +367,17 @@ jobs:
 
   publish-to-pypi:
     name: Publish to PyPI (release only)
-    needs: [ linux-gtk4, linux-flatpak-devel, macos-gtk4, check-linux-appimage, check-macos-app, check-windows-installer ]
+    needs: [ linux-wheel, linux-flatpak-devel, check-linux-appimage, check-macos-app, check-windows-installer ]
     runs-on: ubuntu-22.04
     if: github.event_name == 'release'
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ needs.linux-gtk4.outputs.targz }}
+          name: ${{ needs.linux-wheel.outputs.targz }}
           path: dist
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ needs.linux-gtk4.outputs.wheel }}
+          name: ${{ needs.linux-wheel.outputs.wheel }}
           path: dist
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
