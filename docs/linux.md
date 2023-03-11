@@ -76,13 +76,7 @@ poetry install
 poetry run gaphor
 ```
 
-NOTE: Gaphor starts with a GTK 4 UI by default. It works best with GTK >=4.8 and libadwaita >=1.2.
-
-To start with a GTK+3 UI, run:
-
-```bash
-GAPHOR_USE_GTK=3 poetry run gaphor
-```
+NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita >=1.2.
 
 ## Create a Flatpak Package
 

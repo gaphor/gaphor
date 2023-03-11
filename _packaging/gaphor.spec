@@ -90,7 +90,6 @@ a = Analysis(  # type: ignore
     },
     hookspath=["."],
     runtime_hooks=[
-        f"use_gtk_4.py",
         "fix_path.py",
         "pydot_patch.py",
     ],
