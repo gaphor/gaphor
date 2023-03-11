@@ -26,6 +26,10 @@ from gaphor.ui.event import DiagramSelectionChanged
 
 log = logging.getLogger(__name__)
 
+if Gtk.get_major_version() != 3:
+    from gi.repository import Adw
+
+    GtkSource.init()
 
 new_builder = new_resource_builder("gaphor.ui", "elementeditor")
 
@@ -269,8 +273,11 @@ class PreferencesStack:
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.lang_manager = GtkSource.LanguageManager.get_default()
+        self.style_manager = (
+            None if Gtk.get_major_version() == 3 else Adw.StyleManager.get_default()
+        )
+        self._notify_dark_id = 0
         if Gtk.get_major_version() != 3:
-            GtkSource.init()
             self.lang_manager.append_search_path(
                 str(importlib.resources.files("gaphor") / "ui" / "language-specs")
             )
@@ -299,6 +306,11 @@ class PreferencesStack:
             view_completion.add_provider(CssFunctionCompletionProvider())
             view_completion.add_provider(CssNamedColorsCompletionProvider())
             view_completion.add_provider(CssPropertyCompletionProvider())
+            assert self.style_manager
+            self._notify_dark_id = self.style_manager.connect(
+                "notify::dark", self._on_notify_dark
+            )
+            self._on_notify_dark(self.style_manager, None)
 
         self.event_manager.subscribe(self._model_ready)
         self.event_manager.subscribe(self._style_sheet_created)
@@ -310,6 +322,8 @@ class PreferencesStack:
         self.event_manager.unsubscribe(self._model_ready)
         self.event_manager.unsubscribe(self._style_sheet_changed)
         self.event_manager.unsubscribe(self._style_sheet_created)
+        if self._notify_dark_id and self.style_manager:
+            self._notify_dark_id = self.style_manager.disconnect(self._notify_dark_id)
 
     @property
     def style_sheet(self):
@@ -346,3 +360,10 @@ class PreferencesStack:
     def _style_sheet_changed(self, event):
         if event.property is StyleSheet.styleSheet:
             self.update_text()
+
+    def _on_notify_dark(self, style_manager, _gparam):
+        scheme_manager = GtkSource.StyleSchemeManager.get_default()
+        scheme = scheme_manager.get_scheme(
+            "Adwaita-dark" if style_manager.get_dark() else "Adwaita"
+        )
+        self.style_sheet_buffer.set_style_scheme(scheme)
