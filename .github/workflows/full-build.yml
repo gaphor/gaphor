@@ -199,7 +199,7 @@ jobs:
         if: ${{ github.actor != 'dependabot[bot]' }}
         uses: ./.github/actions/macos_dmg
         with:
-          mainline_build: ${{ env.mainline_build }}
+          sign_app: ${{ env.mainline_build }}
           version: ${{ steps.setup_and_test.outputs.version }}
           base64_encoded_p12: ${{ secrets.BASE64_ENCODED_P12 }}
           certpassword_p12: ${{ secrets.CERTPASSWORD_P12 }}
