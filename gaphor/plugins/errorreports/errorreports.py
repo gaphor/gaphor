@@ -28,11 +28,8 @@ START_TIME = time.time()
 
 def new_builder():
     builder = Gtk.Builder()
-    ui_file = (
-        "errorreports.glade" if Gtk.get_major_version() == 3 else "errorreports.ui"
-    )
     builder.add_from_string(
-        translated_ui_string("gaphor.plugins.errorreports", ui_file)
+        translated_ui_string("gaphor.plugins.errorreports", "errorreports.ui")
     )
     return builder
 
@@ -73,10 +70,7 @@ class ErrorReports(UIComponent, ActionProvider):
         self.buffer = builder.get_object("buffer")
 
         self.window.connect("destroy", self.close)
-        if Gtk.get_major_version() == 3:
-            self.window.show_all()
-        else:
-            self.window.show()
+        self.window.show()
 
         self.update_text()
 
