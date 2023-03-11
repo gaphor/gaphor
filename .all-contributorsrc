@@ -1043,6 +1043,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "Psycomentis06",
+      "name": "Amor Ali",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58190728?v=4",
+      "profile": "https://github.com/Psycomentis06",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
