@@ -220,15 +220,9 @@ jobs:
           name: ${{ needs.macos.outputs.artifact }}
           path: .
       - name: Perform self-test (dmg)
-        if: "endsWith(needs.macos.outputs.artifact, '.dmg')"
         run: |
           hdiutil attach ${{ needs.macos.outputs.artifact }}
           cd /Volumes/Gaphor*
-          Gaphor.app/Contents/MacOS/gaphor-exe --self-test
-      - name: Perform self-test (zip)
-        if: "endsWith(needs.macos.outputs.artifact, '.zip')"
-        run: |
-          unzip -q ${{ needs.macos.outputs.artifact }}
           Gaphor.app/Contents/MacOS/gaphor-exe --self-test
 
   windows-build-gtk:

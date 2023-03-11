@@ -64,7 +64,6 @@ runs:
         product-path: "_packaging/dist/Gaphor.app"
     - name: Create dmg
       id: dmg
-      if: inputs.mainline_build == 'true'
       run: |
         cd _packaging
         create-dmg --volname "Gaphor ${{ inputs.version }}" \
@@ -89,7 +88,6 @@ runs:
       with:
         product-path: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
     - name: Upload Gaphor-${{ inputs.version }}.dmg
-      if: inputs.mainline_build == 'true'
       uses: actions/upload-artifact@v3
       with:
         name: Gaphor-${{ inputs.version }}.dmg
@@ -100,17 +98,3 @@ runs:
         echo ${{ inputs.github_token }} | gh auth login --with-token
         gh release upload ${{ inputs.version }} "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
       shell: bash
-    - name: Zip app
-      id: zip
-      if: inputs.mainline_build != 'true'
-      run: |
-        cd _packaging/dist/
-        zip -rq Gaphor-${{ inputs.version }}.app.zip Gaphor.app
-        echo "artifact=Gaphor-${{ inputs.version }}.app.zip" >> $GITHUB_OUTPUT
-      shell: bash
-    - name: Upload Gaphor-${{ inputs.version }}.app.zip
-      if: inputs.mainline_build != 'true'
-      uses: actions/upload-artifact@v3
-      with:
-        name: Gaphor-${{ inputs.version }}.app.zip
-        path: _packaging/dist/Gaphor-${{ inputs.version }}.app.zip
