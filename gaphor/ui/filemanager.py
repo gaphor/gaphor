@@ -307,8 +307,7 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(SessionShutdown(self))
 
         def response(answer):
-            # Gtk.ResponseType.YES is GTK3, save is GTK4
-            if answer in [Gtk.ResponseType.YES, "save"]:
+            if answer == "save":
                 if filename := self.filename:
                     self.save(filename, on_save_done=confirm_shutdown)
 
@@ -323,8 +322,7 @@ class FileManager(Service, ActionProvider):
                         extension=".gaphor",
                         filters=GAPHOR_FILTER,
                     )
-            # Gtk.ResponseType.REJECT is GTK3, discard is GTK4
-            elif answer in [Gtk.ResponseType.REJECT, "discard"]:
+            elif answer == "discard":
                 confirm_shutdown()
 
         if self.main_window.model_changed:

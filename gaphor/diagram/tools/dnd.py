@@ -17,7 +17,7 @@ class ToolboxActionDragData(GObject.Object):
 
 
 def drop_target_tool(modeling_language, event_manager) -> Gtk.EventController:
-    """GTK4 DropTarget tool."""
+    """DropTarget tool."""
     drop_target = Gtk.DropTarget.new(GObject.TYPE_NONE, Gdk.DragAction.COPY)
     drop_target.set_gtypes([ElementDragData.__gtype__, ToolboxActionDragData.__gtype__])
     drop_target.connect("drop", on_drop, modeling_language, event_manager)

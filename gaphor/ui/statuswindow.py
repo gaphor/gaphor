@@ -2,7 +2,7 @@
 
 
 from gaphas.decorators import g_async
-from gi.repository import Gdk, Gtk, Pango
+from gi.repository import Gtk, Pango
 
 
 class StatusWindow:
@@ -50,16 +50,6 @@ class StatusWindow:
         self.window.set_modal(True)
         self.window.set_resizable(False)
         self.window.set_decorated(False)
-
-    def create_gtk3_window_with_progress_bar(self, frame, vbox, label):
-        self.window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
-        self.window.set_position(Gtk.WindowPosition.CENTER_ON_PARENT)
-        self.window.set_keep_above(True)
-        self.window.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN)
-        self.window.add(frame)
-        frame.add(vbox)
-        vbox.pack_start(label, True, True, 0)
-        vbox.pack_start(self.progress_bar, expand=False, fill=False, padding=0)
 
     @g_async()
     def display(self):

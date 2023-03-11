@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <!-- interface-requires gtk+ 3.17 -->
-
   <object class="GtkShortcutsWindow" id="shortcuts-gaphor">
     <property name="modal">1</property>
 
