@@ -7,9 +7,13 @@ import os
 import sys
 import xml.etree.ElementTree as etree
 
-from gi.repository import Adw, Gio, GLib, Gtk
+import gi
 
 from gaphor.ui.styling import Styling
+
+gi.require_version("Gtk", "4.0")
+
+from gi.repository import Adw, Gio, GLib, Gtk  # noqa: E402
 
 
 def load_components(ui_filename):
@@ -74,10 +78,6 @@ def app_open(app, files, n_files, hint):
 
 
 if __name__ == "__main__":
-    if Gtk.get_major_version() != 4:
-        print("UI Preview works with GTK 4 only.")
-        sys.exit(1)
-
     app = Adw.Application(
         application_id="org.gaphor.UIPreview", flags=Gio.ApplicationFlags.HANDLES_OPEN
     )

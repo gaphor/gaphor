@@ -46,8 +46,8 @@ def diagram(element_factory, event_manager):
 
 
 @pytest.fixture
-def view(diagram, event_manager, element_factory, modeling_language):
-    page = DiagramPage(diagram, event_manager, element_factory, {}, modeling_language)
+def view(diagram, event_manager, modeling_language):
+    page = DiagramPage(diagram, event_manager, modeling_language)
     page.construct()
     return page.view
 

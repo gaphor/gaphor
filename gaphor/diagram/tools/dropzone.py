@@ -27,11 +27,7 @@ log = logging.getLogger(__name__)
 def drop_zone_tool(
     view: GtkView, item_class: type[Presentation], subject_class: type[Element] | None
 ) -> Gtk.EventController:
-    ctrl = (
-        Gtk.EventControllerMotion.new(view)
-        if Gtk.get_major_version() == 3
-        else Gtk.EventControllerMotion.new()
-    )
+    ctrl = Gtk.EventControllerMotion.new()
     ctrl.connect("motion", on_motion, item_class, subject_class)
     return ctrl
 

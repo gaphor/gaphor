@@ -35,18 +35,12 @@ def properties():
 
 
 @pytest.fixture
-def tab(event_manager, element_factory, properties):
+def tab(event_manager, element_factory):
     diagram = element_factory.create(Diagram)
-    tab = DiagramPage(
-        diagram, event_manager, element_factory, properties, UMLModelingLanguage()
-    )
+    tab = DiagramPage(diagram, event_manager, UMLModelingLanguage())
 
-    if Gtk.get_major_version() == 3:
-        window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
-        window.add(tab.construct())
-    else:
-        window = Gtk.Window.new()
-        window.set_child(tab.construct())
+    window = Gtk.Window.new()
+    window.set_child(tab.construct())
 
     window.show()
     yield tab
@@ -81,11 +75,8 @@ def test_placement_action(tool_def, tab, event_manager):
     if not tool_def.item_factory:
         return
 
-    if Gtk.get_major_version() == 3:
-        tool = Gtk.GestureDrag.new(tab.view)
-    else:
-        tool = Gtk.GestureDrag.new()
-        tab.view.add_controller(tool)
+    tool = Gtk.GestureDrag.new()
+    tab.view.add_controller(tool)
 
     placement_state = PlacementState(
         tool_def.item_factory, event_manager, tool_def.handle_index

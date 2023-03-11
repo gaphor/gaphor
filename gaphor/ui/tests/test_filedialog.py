@@ -31,32 +31,14 @@ class FileChooserStub:
         assert signal == "response"
         self._response_callback = callback
 
-    if Gtk.get_major_version() == 3:
+    def get_file(self):
+        return Gio.File.new_for_path(self._current_folder).get_child(self._current_name)
 
-        def get_filename(self):
-            return str(Path(self._current_folder, self._current_name))
+    def set_current_name(self, name: str):
+        self._current_name = name
 
-        def set_filename(self, name):
-            self._current_name = name
-
-        def set_current_folder(self, name):
-            self._current_folder = name
-
-        def set_do_overwrite_confirmation(self, confirm):
-            pass
-
-    else:
-
-        def get_file(self):
-            return Gio.File.new_for_path(self._current_folder).get_child(
-                self._current_name
-            )
-
-        def set_current_name(self, name: str):
-            self._current_name = name
-
-        def set_current_folder(self, name: Gio.File):
-            self._current_folder = name.get_parse_name()
+    def set_current_folder(self, name: Gio.File):
+        self._current_folder = name.get_parse_name()
 
     def add_filter(self, filter):
         pass

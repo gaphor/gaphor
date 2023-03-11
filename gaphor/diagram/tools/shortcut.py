@@ -6,10 +6,7 @@ from gaphor.core.modeling import Presentation, self_and_owners
 
 
 def shortcut_tool(view, event_manager):
-    if Gtk.get_major_version() == 3:
-        ctrl = Gtk.EventControllerKey.new(view)
-    else:
-        ctrl = Gtk.EventControllerKey.new()
+    ctrl = Gtk.EventControllerKey.new()
     ctrl.connect("key-pressed", on_delete, event_manager)
     return ctrl
 

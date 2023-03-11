@@ -12,7 +12,6 @@ from gi.repository import Gdk, GLib, GObject, Gtk
 from gaphor.core.eventmanager import EventManager, event_handler
 from gaphor.diagram.diagramtoolbox import ToolboxDefinition
 from gaphor.diagram.event import ToolCompleted
-from gaphor.diagram.hoversupport import flowbox_add_hover_support
 from gaphor.diagram.tools.dnd import ToolboxActionDragData
 from gaphor.services.modelinglanguage import (
     ModelingLanguageChanged,
@@ -26,17 +25,6 @@ log = logging.getLogger(__name__)
 
 
 class Toolbox(UIComponent):
-    if Gtk.get_major_version() == 3:
-        TARGET_STRING = 0
-        TARGET_TOOLBOX_ACTION = 1
-        DND_TARGETS = [
-            Gtk.TargetEntry.new("STRING", Gtk.TargetFlags.SAME_APP, TARGET_STRING),
-            Gtk.TargetEntry.new("text/plain", Gtk.TargetFlags.SAME_APP, TARGET_STRING),
-            Gtk.TargetEntry.new(
-                "gaphor/toolbox-action", Gtk.TargetFlags.SAME_APP, TARGET_TOOLBOX_ACTION
-            ),
-        ]
-
     def __init__(
         self,
         event_manager: EventManager,
@@ -61,9 +49,7 @@ class Toolbox(UIComponent):
 
     def close(self) -> None:
         if self._toolbox:
-            if Gtk.get_major_version() == 3:
-                self._toolbox.destroy()
-            elif self._toolbox_container:
+            if self._toolbox_container:
                 self._toolbox_container.unparent()
             self._toolbox = None
         self.event_manager.unsubscribe(self._on_modeling_language_changed)
@@ -112,23 +98,11 @@ class Toolbox(UIComponent):
             flowbox.set_row_spacing(1)
             flowbox.set_column_spacing(1)
             flowbox.set_max_children_per_line(12)
-            if Gtk.get_major_version() == 3:
-                flowbox_add_hover_support(flowbox)
             flowbox.connect("child-activated", self._on_tool_activated)
 
-            if Gtk.get_major_version() == 3:
-                # Enable Drag and Drop
-                flowbox.drag_source_set(
-                    Gdk.ModifierType.BUTTON1_MASK | Gdk.ModifierType.BUTTON3_MASK,
-                    self.DND_TARGETS,
-                    Gdk.DragAction.COPY | Gdk.DragAction.LINK,
-                )
-                flowbox.connect("drag-begin", _flowbox_drag_begin)
-                flowbox.connect("drag-data-get", _flowbox_drag_data_get)
-            else:
-                drag_source = Gtk.DragSource.new()
-                drag_source.connect("prepare", _flowbox_drag_prepare)
-                flowbox.add_controller(drag_source)
+            drag_source = Gtk.DragSource.new()
+            drag_source.connect("prepare", _flowbox_drag_prepare)
+            flowbox.add_controller(drag_source)
 
             for action_name, label, icon_name, shortcut, item_factory, *_rest in items:
                 button = create_toolbox_button(
@@ -136,17 +110,10 @@ class Toolbox(UIComponent):
                 )
                 flowbox.insert(button, -1)
 
-            if Gtk.get_major_version() == 3:
-                revealer.add(flowbox)
-                toolbox.add(expander)
-                toolbox.add(revealer)
-            else:
-                revealer.set_child(flowbox)
-                toolbox.append(expander)
-                toolbox.append(revealer)
+            revealer.set_child(flowbox)
+            toolbox.append(expander)
+            toolbox.append(revealer)
 
-        if Gtk.get_major_version() == 3:
-            toolbox.show_all()
         return toolbox
 
     def expanded_sections(self, index=None, state=None):
@@ -202,11 +169,7 @@ class Toolbox(UIComponent):
         """Reconfigures the toolbox based on the modeling language selected."""
         toolbox = self.create_toolbox(self.modeling_language.toolbox_definition)
         if self._toolbox_container:
-            if Gtk.get_major_version() == 3:
-                self._toolbox_container.remove(self._toolbox_container.get_child())
-                self._toolbox_container.add(toolbox)
-            else:
-                self._toolbox_container.set_child(toolbox)
+            self._toolbox_container.set_child(toolbox)
         self._toolbox = toolbox
         self.select_tool("toolbox-pointer")
 
@@ -230,11 +193,7 @@ class Toolbox(UIComponent):
 def create_toolbox_container(toolbox: Gtk.Widget) -> Gtk.ScrolledWindow:
     toolbox_container = Gtk.ScrolledWindow()
     toolbox_container.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-    if Gtk.get_major_version() == 3:
-        toolbox_container.add(toolbox)
-        toolbox_container.show()
-    else:
-        toolbox_container.set_child(toolbox)
+    toolbox_container.set_child(toolbox)
     return toolbox_container
 
 
@@ -247,21 +206,14 @@ def create_toolbox_button(
 ) -> Gtk.Button:
     """Creates a tool button for the toolbox."""
     button = Gtk.FlowBoxChild.new()
-    if Gtk.get_major_version() == 3:
-        icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
-        button.add(icon)
-    else:
-        icon = Gtk.Image.new_from_icon_name(icon_name)
-        button.set_child(icon)
+    icon = Gtk.Image.new_from_icon_name(icon_name)
+    button.set_child(icon)
     button.action_name = action_name
     button.icon_name = icon_name
     button.draggable = draggable
     if label:
         if shortcut:
-            if Gtk.get_major_version() == 3:
-                a, m = Gtk.accelerator_parse(shortcut)
-            else:
-                _, a, m = Gtk.accelerator_parse(shortcut)
+            _, a, m = Gtk.accelerator_parse(shortcut)
             button.set_tooltip_text(f"{label} ({Gtk.accelerator_get_label(a, m)})")
         else:
             button.set_tooltip_text(f"{label}")
@@ -269,65 +221,34 @@ def create_toolbox_button(
     return button
 
 
-if Gtk.get_major_version() == 3:
+def iter_children(widget):
+    child = widget.get_first_child()
+    while child:
+        yield child
+        child = child.get_next_sibling()
 
-    def iter_children(widget):
-        yield from widget.get_children()
 
-    def _flowbox_drag_begin(flowbox: Gtk.FlowBox, context: Gdk.DragContext) -> None:
-        event = Gtk.get_current_event()
-        assert event
-        child = flowbox.get_child_at_pos(event.x, event.y)
-        flowbox.drag_source_set_icon_name(child.icon_name)
-        flowbox._dnd_child = child
+def _flowbox_drag_prepare(source: Gtk.DragSource, x: int, y: int):
+    child = source.get_widget().get_child_at_pos(x, y)
+    if not child.draggable:
+        return None
 
-    def _flowbox_drag_data_get(
-        flowbox: Gtk.FlowBox,
-        context: Gdk.DragContext,
-        data: Gtk.SelectionData,
-        info: int,
-        time: int,
-    ) -> None:
-        """The drag-data-get event signal handler.
+    display = Gdk.Display.get_default()
+    theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
+        child.icon_name,
+        None,
+        24,
+        1,
+        Gtk.TextDirection.NONE,
+        Gtk.IconLookupFlags.FORCE_SYMBOLIC,
+    )
+    source.set_icon(theme_icon, 0, 0)
 
-        The drag-data-get signal is emitted on the drag source when the
-        drop site requests the data which is dragged.
-        """
-        data.set(
-            type=data.get_target(),
-            format=8,
-            data=flowbox._dnd_child.action_name.encode(),
-        )
-
-else:
-
-    def iter_children(widget):
-        child = widget.get_first_child()
-        while child:
-            yield child
-            child = child.get_next_sibling()
-
-    def _flowbox_drag_prepare(source: Gtk.DragSource, x: int, y: int):
-        child = source.get_widget().get_child_at_pos(x, y)
-        if not child.draggable:
-            return None
-
-        display = Gdk.Display.get_default()
-        theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
-            child.icon_name,
-            None,
-            24,
-            1,
-            Gtk.TextDirection.NONE,
-            Gtk.IconLookupFlags.FORCE_SYMBOLIC,
-        )
-        source.set_icon(theme_icon, 0, 0)
-
-        v = GObject.Value(
-            ToolboxActionDragData.__gtype__,
-            ToolboxActionDragData(action=child.action_name),
-        )
-        return Gdk.ContentProvider.new_for_value(v)
+    v = GObject.Value(
+        ToolboxActionDragData.__gtype__,
+        ToolboxActionDragData(action=child.action_name),
+    )
+    return Gdk.ContentProvider.new_for_value(v)
 
 
 _upper_offset: int = ord("A") - ord("a")
@@ -335,8 +256,5 @@ _upper_offset: int = ord("A") - ord("a")
 
 @functools.lru_cache(maxsize=None)
 def parse_shortcut(shortcut: str) -> Tuple[Tuple[int, int], Gdk.ModifierType]:
-    if Gtk.get_major_version() == 3:
-        key, mod = Gtk.accelerator_parse(shortcut)
-    else:
-        _, key, mod = Gtk.accelerator_parse(shortcut)
+    _, key, mod = Gtk.accelerator_parse(shortcut)
     return (key, key + _upper_offset), mod

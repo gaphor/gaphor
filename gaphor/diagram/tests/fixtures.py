@@ -67,30 +67,17 @@ def copy_clear_and_paste_link(items, diagram, element_factory, retain=None):
     return paste_link(buffer, diagram, element_factory.lookup)
 
 
-if Gtk.get_major_version() == 3:
+def find(widget, name):
+    if widget.get_buildable_id() == name:
+        return widget
+    if isinstance(widget, Gtk.Expander):
+        # Iterating children will only iterate the label section
+        return find(widget.get_child(), name)
+    if sibling := widget.get_next_sibling():
+        if found := find(sibling, name):
+            return found
+    if child := widget.get_first_child():
+        if found := find(child, name):
+            return found
 
-    def find(widget, name):
-        if Gtk.Buildable.get_name(widget) == name:
-            return widget
-        if isinstance(widget, Gtk.Container):
-            for child in widget.get_children():
-                if found := find(child, name):
-                    return found
-        return None
-
-else:
-
-    def find(widget, name):
-        if widget.get_buildable_id() == name:
-            return widget
-        if isinstance(widget, Gtk.Expander):
-            # Iterating children will only iterate the label section
-            return find(widget.get_child(), name)
-        if sibling := widget.get_next_sibling():
-            if found := find(sibling, name):
-                return found
-        if child := widget.get_first_child():
-            if found := find(child, name):
-                return found
-
-        return None
+    return None

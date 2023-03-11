@@ -15,8 +15,7 @@ from gaphor.i18n import translated_ui_string
 
 def new_builder(ui_file):
     builder = Gtk.Builder()
-    ui_file = f"{ui_file}.glade" if Gtk.get_major_version() == 3 else f"{ui_file}.ui"
-    builder.add_from_string(translated_ui_string("gaphor.ui.help", ui_file))
+    builder.add_from_string(translated_ui_string("gaphor.ui.help", f"{ui_file}.ui"))
     return builder
 
 
@@ -39,20 +38,15 @@ class HelpService(Service, ActionProvider):
         about.set_version(distribution().version)
         about.set_transient_for(self.window)
 
-        if Gtk.get_major_version() == 3:
-            about.run()
-            about.destroy()
-        else:
-            about.set_modal(True)
-            about.show()
+        about.set_modal(True)
+        about.show()
 
     @action(name="app.shortcuts")
     def shortcuts(self):
         builder = Gtk.Builder()
         ui = translated_ui_string("gaphor.ui.help", "shortcuts.ui")
-        if Gtk.get_major_version() != 3:
-            modifier = "Meta" if sys.platform == "darwin" else "Control"
-            ui = ui.replace("&lt;Primary&gt;", f"&lt;{modifier}&gt;")
+        modifier = "Meta" if sys.platform == "darwin" else "Control"
+        ui = ui.replace("&lt;Primary&gt;", f"&lt;{modifier}&gt;")
 
         builder.add_from_string(ui)
 

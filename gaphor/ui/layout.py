@@ -3,18 +3,11 @@
 from typing import Callable, Dict
 from xml.etree.ElementTree import fromstring
 
-from gi.repository import Gdk, Gtk
+from gi.repository import Gtk
 
-if Gtk.get_major_version() == 3:
 
-    def is_maximized(window: Gtk.Window) -> bool:
-        window_state = window.get_window().get_state()
-        return window_state & (Gdk.WindowState.MAXIMIZED | Gdk.WindowState.FULLSCREEN)  # type: ignore[no-any-return]
-
-else:
-
-    def is_maximized(window: Gtk.Window) -> bool:
-        return window.is_maximized()  # type: ignore[no-any-return]
+def is_maximized(window: Gtk.Window) -> bool:
+    return window.is_maximized()  # type: ignore[no-any-return]
 
 
 widget_factory: Dict[str, Callable] = {}
@@ -55,33 +48,18 @@ def deserialize(container, layoutstr, itemfactory, properties):
     return layout
 
 
-if Gtk.get_major_version() == 3:
-
-    def add(widget, index, parent_widget, resize=False, shrink=False):
-        if isinstance(parent_widget, Gtk.Paned):
-            if index == 0:
-                parent_widget.pack1(child=widget, resize=resize, shrink=shrink)
-            elif index == 1:
-                parent_widget.pack2(child=widget, resize=resize, shrink=shrink)
-        elif isinstance(parent_widget, Gtk.Box):
-            parent_widget.pack_start(widget, resize, resize, 0)
-        else:
-            parent_widget.add(widget)
-
-else:
-
-    def add(widget, index, parent_widget, resize=False, shrink=False):
-        if isinstance(parent_widget, Gtk.Paned):
-            if index == 0:
-                parent_widget.set_start_child(widget)
-            elif index == 1:
-                parent_widget.set_end_child(widget)
-        elif isinstance(parent_widget, Gtk.Box):
-            parent_widget.append(widget)
-        else:
-            parent_widget.set_child(widget)
-        widget.set_hexpand_set(True)
-        widget.set_hexpand(resize)
+def add(widget, index, parent_widget, resize=False, shrink=False):
+    if isinstance(parent_widget, Gtk.Paned):
+        if index == 0:
+            parent_widget.set_start_child(widget)
+        elif index == 1:
+            parent_widget.set_end_child(widget)
+    elif isinstance(parent_widget, Gtk.Box):
+        parent_widget.append(widget)
+    else:
+        parent_widget.set_child(widget)
+    widget.set_hexpand_set(True)
+    widget.set_hexpand(resize)
 
 
 def factory(typename):
@@ -95,8 +73,7 @@ def factory(typename):
 
 
 def _position_changed(paned, _gparam, properties):
-    window = paned.get_toplevel() if Gtk.get_major_version() == 3 else paned.get_root()
-    if not is_maximized(window):
+    if not is_maximized(paned.get_root()):
         properties.set(paned.get_name(), paned.props.position)
 
 

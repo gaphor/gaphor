@@ -50,42 +50,24 @@ class Diagrams(UIComponent, ActionProvider):
         self._page_handler_ids: list[int] = []
 
     def open(self):
-        """Open the diagrams component.
-
-        Returns:
-            The Gtk.Notebook (GTK3) or Gtk.Box with Adw.TabView and Adw.TabBar (GTK4).
-        """
-        if Gtk.get_major_version() == 3:
-            self._notebook = Gtk.Notebook()
-            self._notebook.props.scrollable = True
-            self._notebook.show()
-
-            self._notebook.connect("destroy", self._on_notebook_destroy)
-            self._notebook.connect("switch-page", self._on_switch_page)
-            self._page_handler_ids = [
-                self._notebook.connect("page-added", self._on_page_changed),
-                self._notebook.connect("page-removed", self._on_page_changed),
-                self._notebook.connect("page-reordered", self._on_page_changed),
-                self._notebook.connect("notify::page", self._on_current_page_changed),
-            ]
-        else:
-            builder = new_builder()
-            self._notebook = builder.get_object("notebook")
-            self._stack = builder.get_object("stack")
-            self._page_handler_ids = [
-                self._notebook.connect(
-                    "close-page",
-                    lambda _notebook, page: self.event_manager.handle(
-                        DiagramClosed(page.get_child().diagram_page.get_diagram())
-                    ),
+        """Open the diagrams component."""
+        builder = new_builder()
+        self._notebook = builder.get_object("notebook")
+        self._stack = builder.get_object("stack")
+        self._page_handler_ids = [
+            self._notebook.connect(
+                "close-page",
+                lambda _notebook, page: self.event_manager.handle(
+                    DiagramClosed(page.get_child().diagram_page.get_diagram())
                 ),
-                self._notebook.connect("page-attached", self._on_page_changed),
-                self._notebook.connect("page-detached", self._on_page_changed),
-                self._notebook.connect("page-reordered", self._on_page_changed),
-                self._notebook.connect(
-                    "notify::selected-page", self._on_current_page_changed
-                ),
-            ]
+            ),
+            self._notebook.connect("page-attached", self._on_page_changed),
+            self._notebook.connect("page-detached", self._on_page_changed),
+            self._notebook.connect("page-reordered", self._on_page_changed),
+            self._notebook.connect(
+                "notify::selected-page", self._on_current_page_changed
+            ),
+        ]
 
         self.event_manager.subscribe(self._on_show_diagram)
         self.event_manager.subscribe(self._on_show_element)
@@ -95,7 +77,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.subscribe(self._on_model_ready)
 
         self._on_model_ready()
-        return self._notebook if Gtk.get_major_version() == 3 else self._stack
+        return self._stack
 
     def close(self):
         """Close the diagrams component."""
@@ -106,9 +88,7 @@ class Diagrams(UIComponent, ActionProvider):
         self.event_manager.unsubscribe(self._on_show_element)
         self.event_manager.unsubscribe(self._on_show_diagram)
         if self._notebook:
-            if Gtk.get_major_version() == 3:
-                self._notebook.destroy()
-            elif parent := self._notebook.get_parent():
+            if parent := self._notebook.get_parent():
                 parent.remove(self._notebook)
             self._notebook = None
 
@@ -119,23 +99,13 @@ class Diagrams(UIComponent, ActionProvider):
         """
         if not self._notebook:
             return None
-        if Gtk.get_major_version() == 3:
-            page_num = self._notebook.get_current_page()
-            child_widget = self._notebook.get_nth_page(page_num)
-            return child_widget.diagram_page.get_diagram() if child_widget else None
-        else:
-            selected = self._notebook.get_selected_page()
-            return selected.get_child().diagram_page.get_diagram() if selected else None
+        selected = self._notebook.get_selected_page()
+        return selected.get_child().diagram_page.get_diagram() if selected else None
 
     def set_current_diagram(self, diagram: Diagram) -> bool:
         for page_num, widget in get_widgets_on_pages(self._notebook):
             if widget.diagram_page.get_diagram() is diagram:
-                if Gtk.get_major_version() == 3:
-                    self._notebook.set_current_page(page_num)
-                else:
-                    self._notebook.set_selected_page(
-                        self._notebook.get_nth_page(page_num)
-                    )
+                self._notebook.set_selected_page(self._notebook.get_nth_page(page_num))
                 self.get_current_view().grab_focus()
                 return True
         return False
@@ -147,20 +117,13 @@ class Diagrams(UIComponent, ActionProvider):
         """
         if not self._notebook:
             return None
-        if Gtk.get_major_version() == 3:
-            page_num = self._notebook.get_current_page()
-            child_widget = self._notebook.get_nth_page(page_num)
-            return child_widget and child_widget.diagram_page.get_view()
-        else:
-            selected = self._notebook.get_selected_page()
-            return selected and selected.get_child().diagram_page.get_view()
+        selected = self._notebook.get_selected_page()
+        return selected and selected.get_child().diagram_page.get_view()
 
     def create_diagram_page(self, diagram: Diagram) -> DiagramPage:
         page = DiagramPage(
             diagram,
             self.event_manager,
-            self.element_factory,
-            self.properties,
             self.modeling_language,
         )
         widget = page.construct()
@@ -180,16 +143,9 @@ class Diagrams(UIComponent, ActionProvider):
             title (str): The title of the tab, the diagram name.
             widget (Gtk.Widget): The child widget of the tab.
         """
-        if Gtk.get_major_version() == 3:
-            page_num = self._notebook.append_page(
-                child=widget, tab_label=tab_label(title, widget, self.event_manager)
-            )
-            self._notebook.set_current_page(page_num)
-            self._notebook.set_tab_reorderable(widget, True)
-        else:
-            page = self._notebook.append(widget)
-            page.set_title(title or "")
-            self._notebook.set_selected_page(page)
+        page = self._notebook.append(widget)
+        page.set_title(title or "")
+        self._notebook.set_selected_page(page)
 
         view = widget.diagram_page.view
         self.event_manager.handle(
@@ -217,8 +173,7 @@ class Diagrams(UIComponent, ActionProvider):
                 return
             for page_num in range(notebook.get_n_pages()):
                 if page := notebook.get_nth_page(page_num):
-                    if Gtk.get_major_version() != 3:
-                        page = page.get_child()
+                    page = page.get_child()
                     if diagram := page.diagram_page.get_diagram():
                         yield diagram.id
 
@@ -311,11 +266,7 @@ class Diagrams(UIComponent, ActionProvider):
         else:
             return
 
-        if Gtk.get_major_version() == 3:
-            self._notebook.remove_page(_page_num)
-            widget.destroy()
-        else:
-            self._notebook.close_page(self._notebook.get_nth_page(_page_num))
+        self._notebook.close_page(self._notebook.get_nth_page(_page_num))
 
         widget.diagram_page.close()
         self._update_action_state()
@@ -345,20 +296,13 @@ class Diagrams(UIComponent, ActionProvider):
             if self.set_current_diagram(current_diagram):
                 return
         if self._notebook and self._notebook.get_n_pages():
-            if Gtk.get_major_version() == 3:
-                self._notebook.set_current_page(0)
-            else:
-                self._notebook.set_selected_page(self._notebook.get_nth_page(0))
+            self._notebook.set_selected_page(self._notebook.get_nth_page(0))
 
     @event_handler(ModelFlushed)
     def _on_flush_model(self, event):
         """Close all tabs."""
-        if Gtk.get_major_version() == 3:
-            while self._notebook.get_n_pages():
-                self._notebook.remove_page(0)
-        else:
-            for page in self._notebook.get_pages():
-                self._notebook.close_page(page)
+        for page in self._notebook.get_pages():
+            self._notebook.close_page(page)
         self._update_action_state()
 
     def _update_action_state(self):
@@ -367,8 +311,7 @@ class Diagrams(UIComponent, ActionProvider):
         for action_name in ["win.zoom-in", "win.zoom-out", "win.zoom-100"]:
             self.event_manager.handle(ActionEnabled(action_name, enabled))
 
-        if Gtk.get_major_version() != 3:
-            self._stack.set_visible_child_name("notebook" if enabled else "empty")
+        self._stack.set_visible_child_name("notebook" if enabled else "empty")
 
     @event_handler(AttributeUpdated)
     def _on_name_change(self, event):
@@ -376,16 +319,7 @@ class Diagrams(UIComponent, ActionProvider):
             return
         for page in range(self._notebook.get_n_pages()):
             widget = self._notebook.get_nth_page(page)
-            if Gtk.get_major_version() == 3:
-                if event.element is not widget.diagram_page.diagram:
-                    continue
-                self._notebook.set_tab_label(
-                    widget, tab_label(event.new_value, widget, self.event_manager)
-                )
-                if page == self._notebook.get_current_page():
-                    self.event_manager.handle(CurrentDiagramChanged(event.element))
-                return
-            elif event.element is widget.get_child().diagram_page.diagram:
+            if event.element is widget.get_child().diagram_page.diagram:
                 widget.set_title(event.new_value or "")
                 if widget is self._notebook.get_selected_page():
                     self.event_manager.handle(CurrentDiagramChanged(event.element))
@@ -393,12 +327,8 @@ class Diagrams(UIComponent, ActionProvider):
 
 
 def apply_tool_select_controller(widget, toolbox):
-    if Gtk.get_major_version() == 3:
-        ctrl = Gtk.EventControllerKey.new(widget)
-        widget._toolbox_controller = ctrl
-    else:
-        ctrl = Gtk.EventControllerKey.new()
-        widget.add_controller(ctrl)
+    ctrl = Gtk.EventControllerKey.new()
+    widget.add_controller(ctrl)
 
     def on_shortcut(_ctrl, keyval, _keycode, state):
         toolbox.activate_shortcut(keyval, state)
@@ -420,20 +350,11 @@ def tab_label(title, widget, event_manager):
     )
 
     label = Gtk.Label.new(title)
-    if Gtk.get_major_version() == 3:
-        tab_box.pack_start(child=label, expand=True, fill=True, padding=0)
-        close_image = Gtk.Image.new_from_icon_name(
-            icon_name="window-close-symbolic", size=Gtk.IconSize.BUTTON
-        )
-        button.add(close_image)
-        tab_box.pack_start(child=button, expand=False, fill=False, padding=0)
-        tab_box.show_all()
-    else:
-        tab_box.append(label)
-        close_image = Gtk.Image.new_from_icon_name("window-close-symbolic")
-        button.set_child(close_image)
-        tab_box.append(button)
-        tab_box.show()
+    tab_box.append(label)
+    close_image = Gtk.Image.new_from_icon_name("window-close-symbolic")
+    button.set_child(close_image)
+    tab_box.append(button)
+    tab_box.show()
 
     return tab_box
 
@@ -450,9 +371,5 @@ def get_widgets_on_pages(notebook):
     if not notebook:
         return
 
-    if Gtk.get_major_version() == 3:
-        for page_num in range(notebook.get_n_pages()):
-            yield (page_num, notebook.get_nth_page(page_num))
-    else:
-        for page_num in range(notebook.get_n_pages()):
-            yield (page_num, notebook.get_nth_page(page_num).get_child())
+    for page_num in range(notebook.get_n_pages()):
+        yield (page_num, notebook.get_nth_page(page_num).get_child())

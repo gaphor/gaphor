@@ -61,12 +61,8 @@ def popup_entry(text, update_text=None, done=None):
 
 def show_popover(widget, view, box, commit):
     popover = Gtk.Popover.new()
-    if Gtk.get_major_version() == 3:
-        popover.add(widget)
-        popover.set_relative_to(view)
-    else:
-        popover.set_child(widget)
-        popover.set_parent(view)
+    popover.set_child(widget)
+    popover.set_parent(view)
 
     gdk_rect = Gdk.Rectangle()
     gdk_rect.x = box.x
@@ -95,23 +91,15 @@ def show_popover(widget, view, box, commit):
             nonlocal should_commit
             should_commit = False
 
-    if Gtk.get_major_version() == 3:
+    controller = Gtk.EventControllerKey.new()
+    popover.add_controller(controller)
+    controller.connect("key-pressed", on_escape)
 
-        def on_escape3(popover, event):
-            return on_escape(popover, event.keyval, 0, event.get_state())
+    if isinstance(widget, Gtk.Entry):
+        widget.connect("activate", lambda w: popover.popdown())
 
-        popover.connect("key-press-event", on_escape3)
-        popover.popup()
-    else:
-        controller = Gtk.EventControllerKey.new()
-        popover.add_controller(controller)
-        controller.connect("key-pressed", on_escape)
-
-        if isinstance(widget, Gtk.Entry):
-            widget.connect("activate", lambda w: popover.popdown())
-
-        if popover.get_root():
-            # Test for root window to avoid segfaults in unit test
-            popover.show()
+    if popover.get_root():
+        # Test for root window to avoid segfaults in unit test
+        popover.show()
 
     return popover

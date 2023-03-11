@@ -8,10 +8,7 @@ from pathlib import Path
 from typing import Callable
 
 from gaphas.decorators import g_async
-from gi.repository import Gtk
-
-if Gtk.get_major_version() == 4:
-    from gi.repository import Adw
+from gi.repository import Adw, Gtk
 
 from gaphor import UML
 from gaphor.abc import ActionProvider, Service
@@ -154,21 +151,7 @@ class FileManager(Service, ActionProvider):
                     yield percentage
         except MergeConflictDetected:
             self.filename = None
-            if Gtk.get_major_version() == 3:
-                error_handler(
-                    message=gettext("Merge conflict in model “{filename}”.").format(
-                        filename=filename.name
-                    ),
-                    secondary_message=gettext(
-                        "It looks like this model file contains a merge conflict."
-                    ),
-                    window=self.parent_window,
-                    close=lambda: self.event_manager.handle(SessionShutdown(self)),
-                )
-                # For now load the default model until we allow users to resolve the merge conflict.
-                load_default_model(self.element_factory)
-            else:
-                self.resolve_merge_conflict(filename)
+            self.resolve_merge_conflict(filename)
         except Exception:
             self.filename = None
             error_handler(
@@ -324,8 +307,7 @@ class FileManager(Service, ActionProvider):
             self.event_manager.handle(SessionShutdown(self))
 
         def response(answer):
-            # Gtk.ResponseType.YES is GTK3, save is GTK4
-            if answer in [Gtk.ResponseType.YES, "save"]:
+            if answer == "save":
                 if filename := self.filename:
                     self.save(filename, on_save_done=confirm_shutdown)
 
@@ -340,8 +322,7 @@ class FileManager(Service, ActionProvider):
                         extension=".gaphor",
                         filters=GAPHOR_FILTER,
                     )
-            # Gtk.ResponseType.REJECT is GTK3, discard is GTK4
-            elif answer in [Gtk.ResponseType.REJECT, "discard"]:
+            elif answer == "discard":
                 confirm_shutdown()
 
         if self.main_window.model_changed:
@@ -379,36 +360,18 @@ def save_changes_before_closing_dialog(window: Gtk.Window, handler) -> None:
     body = gettext(
         "The open model contains unsaved changes. Changes which are not saved will be permanently lost."
     )
-    if Gtk.get_major_version() == 3:
-        dialog = Gtk.MessageDialog(
-            message_type=Gtk.MessageType.WARNING,
-            text=title,
-            secondary_text=body,
-        )
-        dialog.set_transient_for(window)
-        dialog.set_modal(True)
-        dialog.add_buttons(
-            gettext("Cancel"),
-            Gtk.ResponseType.CANCEL,
-            gettext("Discard"),
-            Gtk.ResponseType.REJECT,
-            gettext("Save"),
-            Gtk.ResponseType.YES,
-        )
-        dialog.set_default_response(Gtk.ResponseType.YES)
-    else:
-        dialog = Adw.MessageDialog.new(
-            window,
-            title,
-        )
-        dialog.set_body(body)
-        dialog.add_response("cancel", gettext("Cancel"))
-        dialog.add_response("discard", gettext("Discard"))
-        dialog.add_response("save", gettext("Save"))
-        dialog.set_response_appearance("discard", Adw.ResponseAppearance.DESTRUCTIVE)
-        dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED)
-        dialog.set_default_response("save")
-        dialog.set_close_response("cancel")
+    dialog = Adw.MessageDialog.new(
+        window,
+        title,
+    )
+    dialog.set_body(body)
+    dialog.add_response("cancel", gettext("Cancel"))
+    dialog.add_response("discard", gettext("Discard"))
+    dialog.add_response("save", gettext("Save"))
+    dialog.set_response_appearance("discard", Adw.ResponseAppearance.DESTRUCTIVE)
+    dialog.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED)
+    dialog.set_default_response("save")
+    dialog.set_close_response("cancel")
 
     def response(dialog, answer):
         # Unset transient window: it can cause crashes on flatpak

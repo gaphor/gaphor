@@ -1,8 +1,5 @@
-from gi.repository import Gtk
-
 from gaphor import UML
 from gaphor.core.format import format, parse
-from gaphor.diagram.hoversupport import widget_add_hover_support
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -115,12 +112,8 @@ class AssociationPropertyPage(PropertyPageBase):
         )
 
         self.info = builder.get_object("association-info")
-        if Gtk.get_major_version() == 3:
-            widget_add_hover_support(builder.get_object("head-info-icon"))
-            widget_add_hover_support(builder.get_object("tail-info-icon"))
-        else:
-            help_link(builder, "head-info-icon", "head-info")
-            help_link(builder, "tail-info-icon", "tail-info")
+        help_link(builder, "head-info-icon", "head-info")
+        help_link(builder, "tail-info-icon", "tail-info")
 
         show_direction = builder.get_object("show-direction")
         show_direction.set_active(self.item.show_direction)

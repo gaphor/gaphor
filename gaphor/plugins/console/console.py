@@ -169,11 +169,8 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.history: List[str] = []
         self.banner = banner
 
-        if Gtk.get_major_version() == 3:
-            self.text_controller = Gtk.EventControllerKey.new(self.text)
-        else:
-            self.text_controller = Gtk.EventControllerKey.new()
-            self.text.add_controller(self.text_controller)
+        self.text_controller = Gtk.EventControllerKey.new()
+        self.text.add_controller(self.text_controller)
 
         self.text_controller.connect("key-pressed", self.key_pressed)
 
@@ -195,11 +192,7 @@ class GTKInterpreterConsole(Gtk.ScrolledWindow):
         self.write(self.banner, style["banner"])
         self.prompt()
 
-        if Gtk.get_major_version() == 3:
-            self.add(self.text)
-            self.text.show()
-        else:
-            self.set_child(self.text)
+        self.set_child(self.text)
 
     def reset_buffer(self):
         self.buffer = []
@@ -356,13 +349,8 @@ def main(main_loop=True):
 
     console.text_controller.connect("key-pressed", key_event)
 
-    if Gtk.get_major_version() == 3:
-        window.connect("destroy", lambda w: app.quit())
-        window.add(console)
-        window.show_all()
-    else:
-        window.set_child(console)
-        window.show()
+    window.set_child(console)
+    window.show()
 
     if main_loop:
 

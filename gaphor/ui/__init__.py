@@ -2,33 +2,23 @@
 and diagram windows."""
 
 import logging
-import os
 import sys
 from typing import Optional
 
 import darkdetect
 import gi
 
-if os.getenv("GAPHOR_USE_GTK") != "NONE":
-    # Allow to explicitly *not* initialize GTK (for docs, mainly)
-    gtk_version = "3.0" if os.getenv("GAPHOR_USE_GTK") == "3" else "4.0"
-    gtk_source_version = "4" if os.getenv("GAPHOR_USE_GTK") == "3" else "5"
+gi.require_version("Gtk", "4.0")
+gi.require_version("Gdk", "4.0")
+gi.require_version("GtkSource", "5")
+gi.require_version("Adw", "1")
 
-    gi.require_version("Gtk", gtk_version)
-    gi.require_version("Gdk", gtk_version)
-    gi.require_version("GtkSource", gtk_source_version)
-    if gtk_version == "4.0":
-        gi.require_version("Adw", "1")
-        from gi.repository import Adw
-
-
-from gi.repository import Gdk, Gio, GLib, Gtk
+from gi.repository import Adw, Gio, GLib, Gtk
 
 from gaphor.application import Application, Session, distribution
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
 from gaphor.ui.actiongroup import apply_application_actions
-from gaphor.ui.macosshim import macos_init
 
 APPLICATION_ID = "org.gaphor.Gaphor"
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
@@ -61,16 +51,11 @@ def main(argv=sys.argv) -> int:
 
     # Set dark mode for non-FreeDesktop platforms only:
     if sys.platform in ("darwin", "win32"):
-        if Gtk.get_major_version() == 3:
-            Gtk.Settings.get_default().set_property(
-                "gtk-application-prefer-dark-theme", darkdetect.isDark()
-            )
-        else:
-            Adw.StyleManager.get_default().set_color_scheme(
-                Adw.ColorScheme.PREFER_DARK
-                if darkdetect.isDark()
-                else Adw.ColorScheme.PREFER_LIGHT
-            )
+        Adw.StyleManager.get_default().set_color_scheme(
+            Adw.ColorScheme.PREFER_DARK
+            if darkdetect.isDark()
+            else Adw.ColorScheme.PREFER_LIGHT
+        )
 
     if has_option("-p", "--profiler"):
         import cProfile
@@ -113,7 +98,6 @@ def run(argv: list[str]) -> int:
         try:
             application = Application(gtk_app=gtk_app)
             apply_application_actions(application, gtk_app)
-            macos_init(application)
             event_manager = application.get_service("event_manager")
             event_manager.subscribe(on_session_created)
             event_manager.subscribe(on_quit)
@@ -139,14 +123,9 @@ def run(argv: list[str]) -> int:
             for file in files:
                 application.new_session(filename=file.get_path())
 
-    if gtk_version == "3.0":
-        gtk_app = Gtk.Application(
-            application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
-        )
-    else:
-        gtk_app = Adw.Application(
-            application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
-        )
+    gtk_app = Adw.Application(
+        application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
+    )
     gtk_app.exit_code = 0
     add_main_options(gtk_app)
     gtk_app.connect("startup", app_startup)

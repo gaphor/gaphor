@@ -3,10 +3,7 @@
 import logging
 import os
 
-from gi.repository import Gdk, Gtk
-
-if Gtk.get_major_version() == 4:
-    from gi.repository import Adw
+from gi.repository import Adw, Gdk, Gtk
 
 from gaphor.abc import ActionProvider
 from gaphor.action import action
@@ -59,11 +56,7 @@ class ConsoleWindow(UIComponent, ActionProvider):
             self.window = None
 
     def construct(self):
-        window = (
-            Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
-            if Gtk.get_major_version() == 3
-            else Adw.Window.new()
-        )
+        window = Adw.Window.new()
         window.set_transient_for(self.main_window.window)
         window.set_title(self.title)
         window.set_default_size(700, 480)
@@ -75,17 +68,12 @@ class ConsoleWindow(UIComponent, ActionProvider):
                 "select": element_factory.lselect,
             }
         )
-        if Gtk.get_major_version() == 3:
-            console.show()
-            window.add(console)
-            window.connect("destroy", self.close)
-        else:
-            box = Gtk.Box(orientation="vertical")
-            header_bar = Gtk.HeaderBar()
-            box.append(header_bar)
-            box.append(console)
-            window.set_content(box)
-            window.connect("close-request", self.close)
+        box = Gtk.Box(orientation="vertical")
+        header_bar = Gtk.HeaderBar()
+        box.append(header_bar)
+        box.append(console)
+        window.set_content(box)
+        window.connect("close-request", self.close)
         window.show()
         self.window = window
 

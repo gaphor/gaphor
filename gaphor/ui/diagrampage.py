@@ -1,21 +1,20 @@
 import functools
 import importlib
 import logging
-from typing import Dict, Optional
+from typing import Optional
 
 from gaphas.guide import GuidePainter
 from gaphas.painter import FreeHandPainter, HandlePainter, PainterChain
 from gaphas.segment import LineSegmentPainter
 from gaphas.tool.rubberband import RubberbandPainter, RubberbandState
 from gaphas.view import GtkView
-from gi.repository import Gdk, GdkPixbuf, Gtk
+from gi.repository import Adw, Gdk, GdkPixbuf, Gtk
 
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import Diagram, StyledDiagram
 from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
-from gaphor.diagram.drop import drop
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.selection import Selection
 from gaphor.diagram.tools import (
@@ -24,13 +23,7 @@ from gaphor.diagram.tools import (
     apply_placement_tool_set,
 )
 from gaphor.diagram.tools.magnet import MagnetPainter
-from gaphor.diagram.tools.placement import create_item, open_editor
-from gaphor.event import Notification
-from gaphor.transaction import Transaction
 from gaphor.ui.event import DiagramClosed, DiagramSelectionChanged, ToolSelected
-
-if Gtk.get_major_version() != 3:
-    from gi.repository import Adw
 
 
 log = logging.getLogger(__name__)
@@ -46,91 +39,52 @@ if hasattr(GtkView, "set_css_name"):
     GtkView.set_css_name("diagramview")
 
 
-if Gtk.get_major_version() == 3:
-    _placement_pixbuf_map: Dict[str, GdkPixbuf.Pixbuf] = {}
+@functools.lru_cache(maxsize=None)
+def get_placement_icon(display, icon_name):
+    if display is None:
+        display = Gdk.Display.get_default()
+    pixbuf = placement_icon_base().copy()
+    theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
+        icon_name,
+        None,
+        24,
+        1,
+        Gtk.TextDirection.NONE,
+        Gtk.IconLookupFlags.FORCE_SYMBOLIC,
+    )
+    icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(
+        theme_icon.get_file().get_path(), 32, 32, True
+    )
+    icon.copy_area(
+        0,
+        0,
+        icon.get_width(),
+        icon.get_height(),
+        pixbuf,
+        9,
+        15,
+    )
+    return Gdk.Texture.new_for_pixbuf(pixbuf)
 
-    def get_placement_cursor(display, icon_name):
-        if icon_name in _placement_pixbuf_map:
-            pixbuf = _placement_pixbuf_map[icon_name]
-        else:
-            pixbuf = placement_icon_base().copy()
-            icon = Gtk.IconTheme.get_default().load_icon(icon_name, 24, 0)
-            icon.copy_area(
-                0,
-                0,
-                icon.get_width(),
-                icon.get_height(),
-                pixbuf,
-                9,
-                15,
-            )
-            _placement_pixbuf_map[icon_name] = pixbuf
-        return Gdk.Cursor.new_from_pixbuf(display, pixbuf, 1, 1)
 
-else:
-
-    @functools.lru_cache(maxsize=None)
-    def get_placement_icon(display, icon_name):
-        if display is None:
-            display = Gdk.Display.get_default()
-        pixbuf = placement_icon_base().copy()
-        theme_icon = Gtk.IconTheme.get_for_display(display).lookup_icon(
-            icon_name,
-            None,
-            24,
-            1,
-            Gtk.TextDirection.NONE,
-            Gtk.IconLookupFlags.FORCE_SYMBOLIC,
-        )
-        icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(
-            theme_icon.get_file().get_path(), 32, 32, True
-        )
-        icon.copy_area(
-            0,
-            0,
-            icon.get_width(),
-            icon.get_height(),
-            pixbuf,
-            9,
-            15,
-        )
-        return Gdk.Texture.new_for_pixbuf(pixbuf)
-
-    def get_placement_cursor(display, icon_name):
-        return Gdk.Cursor.new_from_texture(get_placement_icon(display, icon_name), 1, 1)
+def get_placement_cursor(display, icon_name):
+    return Gdk.Cursor.new_from_texture(get_placement_icon(display, icon_name), 1, 1)
 
 
 class DiagramPage:
-    if Gtk.get_major_version() == 3:
-        VIEW_TARGET_STRING = 0
-        VIEW_TARGET_ELEMENT_ID = 1
-        VIEW_TARGET_TOOLBOX_ACTION = 2
-        VIEW_DND_TARGETS = [
-            Gtk.TargetEntry.new("gaphor/element-id", 0, VIEW_TARGET_ELEMENT_ID),
-            Gtk.TargetEntry.new("gaphor/toolbox-action", 0, VIEW_TARGET_TOOLBOX_ACTION),
-        ]
-
-    def __init__(
-        self, diagram, event_manager, element_factory, properties, modeling_language
-    ):
+    def __init__(self, diagram, event_manager, modeling_language):
         self.event_manager = event_manager
-        self.element_factory = element_factory
-        self.properties = properties
         self.diagram = diagram
         self.modeling_language = modeling_language
-        self.style_manager = (
-            None if Gtk.get_major_version() == 3 else Adw.StyleManager.get_default()
-        )
+        self.style_manager = Adw.StyleManager.get_default()
 
         self.view: Optional[GtkView] = None
         self.widget: Optional[Gtk.Widget] = None
         self.diagram_css: Optional[Gtk.CssProvider] = None
 
         self.rubberband_state = RubberbandState()
-        self._notify_dark_id = (
-            self.style_manager.connect("notify::dark", self._on_notify_dark)
-            if self.style_manager
-            else 0
+        self._notify_dark_id = self.style_manager.connect(
+            "notify::dark", self._on_notify_dark
         )
 
         self.event_manager.subscribe(self._on_element_delete)
@@ -153,13 +107,6 @@ class DiagramPage:
         assert self.diagram
 
         view = GtkView(selection=Selection())
-        if Gtk.get_major_version() == 3:
-            view.add_events(Gdk.EventMask.SMOOTH_SCROLL_MASK)
-            view.drag_dest_set(
-                Gtk.DestDefaults.ALL,
-                DiagramPage.VIEW_DND_TARGETS,
-                Gdk.DragAction.MOVE | Gdk.DragAction.COPY | Gdk.DragAction.LINK,
-            )
 
         self.diagram_css = Gtk.CssProvider.new()
         view.get_style_context().add_provider(
@@ -168,12 +115,7 @@ class DiagramPage:
 
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        if Gtk.get_major_version() == 3:
-            scrolled_window.add(view)
-            scrolled_window.show_all()
-            view.connect("drag-data-received", self._on_drag_data_received)
-        else:
-            scrolled_window.set_child(view)
+        scrolled_window.set_child(view)
 
         view.selection.add_handler(self._on_view_selection_changed)
 
@@ -254,10 +196,8 @@ class DiagramPage:
         Do the same thing that would be done if Close was pressed.
         """
         assert self.widget
-        if Gtk.get_major_version() == 3:
-            self.widget.destroy()
 
-        if self._notify_dark_id and self.style_manager:
+        if self._notify_dark_id:
             self._notify_dark_id = self.style_manager.disconnect(self._notify_dark_id)
 
         self.event_manager.unsubscribe(self._on_element_delete)
@@ -269,14 +209,7 @@ class DiagramPage:
         if not self.view:
             return
         self.apply_tool_set(tool_name)
-        icon_name = self.get_tool_icon_name(tool_name)
-        if Gtk.get_major_version() == 3:
-            window = self.view.get_window()
-            if icon_name and window:
-                window.set_cursor(get_placement_cursor(window.get_display(), icon_name))
-            elif window:
-                window.set_cursor(None)
-        elif icon_name:
+        if icon_name := self.get_tool_icon_name(tool_name):
             self.view.set_cursor(get_placement_cursor(None, icon_name))
         else:
             self.view.set_cursor(None)
@@ -287,7 +220,7 @@ class DiagramPage:
         assert self.view
         assert self.diagram_css
 
-        dark_mode = self.style_manager.get_dark() if self.style_manager else False
+        dark_mode = self.style_manager.get_dark()
         style = self.diagram.style(StyledDiagram(self.diagram, dark_mode=dark_mode))
 
         bg = style.get("background-color", (0.0, 0.0, 0.0, 0.0))
@@ -332,45 +265,3 @@ class DiagramPage:
                 view, selection.focused_item, selection.selected_items
             )
         )
-
-    if Gtk.get_major_version() == 3:
-
-        def _on_drag_data_received(self, view, context, x, y, data, info, time):
-            """Handle data dropped on the diagram."""
-            if (
-                data
-                and data.get_format() == 8
-                and info == DiagramPage.VIEW_TARGET_TOOLBOX_ACTION
-            ):
-                tool_def = get_tool_def(
-                    self.modeling_language, data.get_data().decode()
-                )
-                with Transaction(self.event_manager):
-                    item = create_item(view, tool_def.item_factory, x, y)
-                open_editor(item, view, self.event_manager)
-                context.finish(True, False, time)
-            elif (
-                data
-                and data.get_format() == 8
-                and info == DiagramPage.VIEW_TARGET_ELEMENT_ID
-            ):
-                element_id = data.get_data().decode()
-                element = self.element_factory.lookup(element_id)
-                assert element
-
-                x, y = view.matrix.inverse().transform_point(x, y)
-                with Transaction(self.event_manager):
-                    if item := drop(element, self.diagram, x, y):
-                        view.selection.unselect_all()
-                        view.selection.focused_item = item
-
-                        context.finish(True, False, time)
-                    else:
-                        self.event_manager.handle(
-                            Notification(
-                                gettext("Element can’t be represented on a diagram.")
-                            )
-                        )
-                        context.finish(False, False, time)
-            else:
-                context.finish(False, False, time)

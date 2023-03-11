@@ -24,14 +24,10 @@ def diagrams(event_manager, element_factory, modeling_language, properties):
     diagrams = Diagrams(
         event_manager, element_factory, properties, modeling_language, toolbox
     )
-    if Gtk.get_major_version() == 3:
-        window = Gtk.Window.new(Gtk.WindowType.TOPLEVEL)
-        window.add(diagrams.open())
-    else:
-        window = Gtk.Window.new()
-        box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
-        window.set_child(box)
-        box.append(diagrams.open())
+    window = Gtk.Window.new()
+    box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
+    window.set_child(box)
+    box.append(diagrams.open())
     window.show()
     yield diagrams
     diagrams.close()

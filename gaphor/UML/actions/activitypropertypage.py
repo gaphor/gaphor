@@ -3,7 +3,6 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.core.format import format, parse
-from gaphor.diagram.hoversupport import widget_add_hover_support
 from gaphor.diagram.propertypages import (
     EditableTreeModel,
     PropertyPageBase,
@@ -82,18 +81,12 @@ class ActivityItemPage(PropertyPageBase):
         )
 
         self.info = builder.get_object("parameters-info")
-        if Gtk.get_major_version() == 3:
-            widget_add_hover_support(builder.get_object("parameters-info-icon"))
-        else:
-            help_link(builder, "parameters-info-icon", "parameters-info")
+        help_link(builder, "parameters-info-icon", "parameters-info")
 
         tree_view: Gtk.TreeView = builder.get_object("parameter-list")
         tree_view.set_model(self.model)
-        if Gtk.get_major_version() == 3:
-            controller = self.key_controller = Gtk.EventControllerKey.new(tree_view)
-        else:
-            controller = Gtk.EventControllerKey.new()
-            tree_view.add_controller(controller)
+        controller = Gtk.EventControllerKey.new()
+        tree_view.add_controller(controller)
         controller.connect("key-pressed", on_keypress_event, tree_view)
 
         return unsubscribe_all_on_destroy(

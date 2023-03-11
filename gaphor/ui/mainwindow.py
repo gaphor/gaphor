@@ -26,7 +26,7 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.event import CurrentDiagramChanged
 from gaphor.ui.layout import deserialize, is_maximized
-from gaphor.ui.namespace import create_diagram_types_model
+from gaphor.ui.modelbrowser import create_diagram_types_model
 from gaphor.ui.notification import InAppNotifier
 
 log = logging.getLogger(__name__)
@@ -34,8 +34,7 @@ log = logging.getLogger(__name__)
 
 def new_builder():
     builder = Gtk.Builder()
-    ui_file = "mainwindow.glade" if Gtk.get_major_version() == 3 else "mainwindow.ui"
-    builder.add_from_string(translated_ui_string("gaphor.ui", ui_file))
+    builder.add_from_string(translated_ui_string("gaphor.ui", "mainwindow.ui"))
     return builder
 
 
@@ -72,13 +71,6 @@ def create_modeling_language_model(modeling_language):
         menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
         model.append_item(menu_item)
     return model
-
-
-def popup_set_model(popup, model):
-    if Gtk.get_major_version() == 3:
-        popup.bind_model(model, None)
-    else:
-        popup.set_menu_model(model)
 
 
 class MainWindow(Service, ActionProvider):
@@ -157,20 +149,18 @@ class MainWindow(Service, ActionProvider):
             self.window.get_style_context().add_class("devel")
 
         select_modeling_language = builder.get_object("select-modeling-language")
-        popup_set_model(
-            select_modeling_language,
+        select_modeling_language.set_menu_model(
             create_modeling_language_model(self.modeling_language),
         )
         self.modeling_language_name = builder.get_object("modeling-language-name")
 
         self.diagram_types = builder.get_object("diagram-types")
-        popup_set_model(
-            self.diagram_types, create_diagram_types_model(self.modeling_language)
+        self.diagram_types.set_menu_model(
+            create_diagram_types_model(self.modeling_language)
         )
 
         hamburger = builder.get_object("hamburger")
-        popup_set_model(
-            hamburger,
+        hamburger.set_menu_model(
             create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
         )
 
@@ -200,17 +190,11 @@ class MainWindow(Service, ActionProvider):
         self._on_modeling_language_selection_changed()
 
         self.window.set_resizable(True)
-        if Gtk.get_major_version() == 3:
-            self.window.show()
-            self.window.add_accel_group(shortcuts)
-            self.window.connect("delete-event", self._on_window_close_request)
-            self.window.connect("size-allocate", self._on_window_size_allocate)
-        else:
-            self.window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
-            self.window.connect("close-request", self._on_window_close_request)
-            self.window.connect("notify::default-height", self._on_window_size_changed)
-            self.window.connect("notify::default-width", self._on_window_size_changed)
-            self.window.show()
+        self.window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
+        self.window.connect("close-request", self._on_window_close_request)
+        self.window.connect("notify::default-height", self._on_window_size_changed)
+        self.window.connect("notify::default-width", self._on_window_size_changed)
+        self.window.show()
 
         self.window.connect("notify::is-active", self._on_window_active)
 
@@ -278,8 +262,8 @@ class MainWindow(Service, ActionProvider):
                 gettext("Profile: {name}").format(name=self.modeling_language.name)
             )
         if self.diagram_types:
-            popup_set_model(
-                self.diagram_types, create_diagram_types_model(self.modeling_language)
+            self.diagram_types.set_menu_model(
+                create_diagram_types_model(self.modeling_language)
             )
 
     def _on_window_active(self, window, prop):
@@ -289,16 +273,7 @@ class MainWindow(Service, ActionProvider):
         self.event_manager.handle(SessionShutdownRequested(self))
         return True
 
-    if Gtk.get_major_version() == 3:
-
-        def _on_window_size_allocate(self, window, allocation):
-            if not is_maximized(window):
-                width, height = window.get_size()
-                self.properties.set("ui.window-size", (width, height))
-
-    else:
-
-        def _on_window_size_changed(self, window, gspec):
-            if not is_maximized(window):
-                width, height = window.get_default_size()
-                self.properties.set("ui.window-size", (width, height))
+    def _on_window_size_changed(self, window, gspec):
+        if not is_maximized(window):
+            width, height = window.get_default_size()
+            self.properties.set("ui.window-size", (width, height))
