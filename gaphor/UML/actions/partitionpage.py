@@ -1,6 +1,5 @@
 """Activity partition property page."""
 
-from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
@@ -40,15 +39,7 @@ class PartitionPropertyPage(PropertyPageBase):
         self.partitions = builder.get_object("partitions")
         if self.partitions:
             for partition in self.item.partition:
-                if Gtk.get_major_version() == 3:
-                    self.partitions.pack_start(
-                        self.construct_partition(partition),
-                        expand=False,
-                        fill=False,
-                        padding=0,
-                    )
-                else:
-                    self.partitions.append(self.construct_partition(partition))
+                self.partitions.append(self.construct_partition(partition))
 
         return builder.get_object("partition-editor")
 
@@ -113,23 +104,10 @@ class PartitionPropertyPage(PropertyPageBase):
             partition.activity = self.item.subject.activity
             self.item.partition.append(partition)
 
-            if Gtk.get_major_version() == 3:
-                self.partitions.pack_start(
-                    self.construct_partition(partition),
-                    expand=False,
-                    fill=False,
-                    padding=0,
-                )
-            else:
-                self.partitions.append(self.construct_partition(partition))
+            self.partitions.append(self.construct_partition(partition))
         while num_partitions < len(self.item.partition):
             partition = self.item.partition[-1]
             partition.unlink()
 
-            if Gtk.get_major_version() == 3:
-                last_child = self.partitions.get_children()[-1]
-                self.partitions.remove(last_child)
-                last_child.destroy()
-            else:
-                last_child = self.partitions.get_last_child()
-                self.partitions.remove(last_child)
+            last_child = self.partitions.get_last_child()
+            self.partitions.remove(last_child)

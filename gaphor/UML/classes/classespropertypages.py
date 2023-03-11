@@ -5,7 +5,6 @@ from gi.repository import Gdk, Gtk
 from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.core.format import format, parse
-from gaphor.diagram.hoversupport import widget_add_hover_support
 from gaphor.diagram.propertypages import (
     EditableTreeModel,
     PropertyPageBase,
@@ -326,10 +325,7 @@ class AttributesPage(PropertyPageBase):
             },
         )
         self.info = builder.get_object("attributes-info")
-        if Gtk.get_major_version() == 3:
-            widget_add_hover_support(builder.get_object("attributes-info-icon"))
-        else:
-            help_link(builder, "attributes-info-icon", "attributes-info")
+        help_link(builder, "attributes-info-icon", "attributes-info")
 
         show_attributes = builder.get_object("show-attributes")
         show_attributes.set_active(self.item.show_attributes)
@@ -337,11 +333,8 @@ class AttributesPage(PropertyPageBase):
         tree_view: Gtk.TreeView = builder.get_object("attributes-list")
         tree_view.set_model(self.model)
         tree_view_column_tooltips(tree_view, ["", gettext("Static")])
-        if Gtk.get_major_version() == 3:
-            controller = self.key_controller = Gtk.EventControllerKey.new(tree_view)
-        else:
-            controller = Gtk.EventControllerKey.new()
-            tree_view.add_controller(controller)
+        controller = Gtk.EventControllerKey.new()
+        tree_view.add_controller(controller)
         controller.connect("key-pressed", on_keypress_event, tree_view)
 
         def handler(event):
@@ -415,10 +408,7 @@ class OperationsPage(PropertyPageBase):
         )
 
         self.info = builder.get_object("operations-info")
-        if Gtk.get_major_version() == 3:
-            widget_add_hover_support(builder.get_object("operations-info-icon"))
-        else:
-            help_link(builder, "operations-info-icon", "operations-info")
+        help_link(builder, "operations-info-icon", "operations-info")
 
         show_operations = builder.get_object("show-operations")
         show_operations.set_active(self.item.show_operations)
@@ -428,11 +418,8 @@ class OperationsPage(PropertyPageBase):
         tree_view_column_tooltips(
             tree_view, ["", gettext("Abstract"), gettext("Static")]
         )
-        if Gtk.get_major_version() == 3:
-            controller = self.key_controller = Gtk.EventControllerKey.new(tree_view)
-        else:
-            controller = Gtk.EventControllerKey.new()
-            tree_view.add_controller(controller)
+        controller = Gtk.EventControllerKey.new()
+        tree_view.add_controller(controller)
         controller.connect("key-pressed", on_keypress_event, tree_view)
 
         def handler(event):
