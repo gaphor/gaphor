@@ -16,6 +16,22 @@ from generic.multidispatch import FunctionDispatcher, multidispatch
 from gaphor.core.modeling import Diagram, Element, self_and_owners
 
 
+def change_owner(new_parent, element):
+    if element.owner is new_parent:
+        return False
+
+    if new_parent is None and element.owner:
+        return ungroup(element.owner, element)
+
+    if not can_group(new_parent, element):
+        return False
+
+    if element.owner:
+        ungroup(element.owner, element)
+
+    return group(new_parent, element)
+
+
 def no_group(parent, element) -> bool:
     return False
 

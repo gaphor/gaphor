@@ -26,7 +26,7 @@ from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.event import CurrentDiagramChanged
 from gaphor.ui.layout import deserialize, is_maximized
-from gaphor.ui.namespace import create_diagram_types_model
+from gaphor.ui.modelbrowser import create_diagram_types_model
 from gaphor.ui.notification import InAppNotifier
 
 log = logging.getLogger(__name__)
