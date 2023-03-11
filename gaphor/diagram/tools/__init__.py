@@ -59,5 +59,4 @@ def add_basic_tools(view, modeling_language, event_manager):
         view.add_controller(tool)
     view.add_controller(view_focus_tool(view))
     view.add_controller(shortcut_tool(view, event_manager))
-    if Gtk.get_major_version() != 3:
-        view.add_controller(drop_target_tool(modeling_language, event_manager))
+    view.add_controller(drop_target_tool(modeling_language, event_manager))

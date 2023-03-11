@@ -18,18 +18,10 @@ from gaphor.i18n import translated_ui_string
 
 def new_resource_builder(package, property_pages="propertypages"):
     def new_builder(*object_ids, signals=None):
-        if Gtk.get_major_version() == 3:
-            builder = Gtk.Builder()
-            ui_file = f"{property_pages}.glade"
-        else:
-            builder = Gtk.Builder(signals)
-            ui_file = f"{property_pages}.ui"
-
+        builder = Gtk.Builder(signals)
         builder.add_objects_from_string(
-            translated_ui_string(package, ui_file), object_ids
+            translated_ui_string(package, f"{property_pages}.ui"), object_ids
         )
-        if signals and Gtk.get_major_version() == 3:
-            builder.connect_signals(signals)
         return builder
 
     return new_builder
@@ -296,10 +288,7 @@ def _do_unparent(widget, _pspec, watcher):
 
 
 def unsubscribe_all_on_destroy(widget, watcher):
-    if Gtk.get_major_version() == 3:
-        widget.connect("destroy", watcher.unsubscribe_all)
-    else:
-        widget.connect("notify::parent", _do_unparent, watcher)
+    widget.connect("notify::parent", _do_unparent, watcher)
     return widget
 
 

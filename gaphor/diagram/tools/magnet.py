@@ -14,11 +14,7 @@ from gaphor.diagram.event import ToolCompleted
 
 def magnet_tool(view: GtkView, event_manager) -> Gtk.GestureDrag:
     """Handle item movement and movement of handles."""
-    gesture = (
-        Gtk.GestureDrag.new(view)
-        if Gtk.get_major_version() == 3
-        else Gtk.GestureDrag.new()
-    )
+    gesture = Gtk.GestureDrag.new()
     drag_state = DragState(event_manager)
     gesture.connect("drag-begin", on_drag_begin, drag_state)
     gesture.connect("drag-update", on_drag_update, drag_state)

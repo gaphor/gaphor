@@ -8,7 +8,7 @@ import tempfile
 
 import cairo
 import gi
-from gi.repository import Gdk, Gio, GLib, Gtk, Pango
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Pango
 import pygit2
 
 from gaphor.abc import Service
@@ -66,8 +66,7 @@ class SelfTest(Service):
         windows_console_output_workaround()
         self.init_timer(gtk_app, timeout=30)
         self.test_library_versions()
-        if Gtk.get_major_version() != 3:
-            self.test_gsettings_schemas()
+        self.test_gsettings_schemas()
         self.test_new_session()
         self.test_auto_layout()
         self.test_git_support()
@@ -177,11 +176,6 @@ def system_information():
 
 
 def adwaita_version():
-    if Gtk.get_major_version() == 3:
-        return "n.a."
-
-    from gi.repository import Adw
-
     return (
         f"{Adw.get_major_version()}.{Adw.get_minor_version()}.{Adw.get_micro_version()}"
     )

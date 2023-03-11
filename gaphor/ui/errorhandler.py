@@ -8,10 +8,7 @@ method exits with an exception.
 import pdb
 import sys
 
-from gi.repository import Gtk
-
-if Gtk.get_major_version() == 4:
-    from gi.repository import Adw
+from gi.repository import Adw
 
 from gaphor.i18n import gettext
 
@@ -22,32 +19,20 @@ def error_handler(message, secondary_message="", window=None, close=None):
     debug_body = (f"{secondary_message}\n\n" if secondary_message else "") + gettext(
         "It looks like Gaphor is started from the command line. Do you want to open a debug session?"
     )
-    if Gtk.get_major_version() == 3:
-        dialog = Gtk.MessageDialog(message_type=Gtk.MessageType.ERROR, text=message)
-        dialog.set_transient_for(window)
-
-        if __debug__ and exc_traceback and sys.stdin.isatty():
-            dialog.props.secondary_text = debug_body
-            dialog.add_buttons(gettext("Close"), 0, gettext("Start Debug Session"), 100)
-        else:
-            dialog.props.secondary_text = secondary_message
-            dialog.add_button(gettext("Close"), 0)
-        dialog.set_modal(True)
+    dialog = Adw.MessageDialog.new(
+        window,
+        message,
+    )
+    if __debug__ and exc_traceback and sys.stdin.isatty():
+        dialog.set_body(debug_body)
+        dialog.add_response("close", gettext("Close"))
+        dialog.add_response("debug", gettext("Start Debug Session"))
+        dialog.set_default_response("debug")
     else:
-        dialog = Adw.MessageDialog.new(
-            window,
-            message,
-        )
-        if __debug__ and exc_traceback and sys.stdin.isatty():
-            dialog.set_body(debug_body)
-            dialog.add_response("close", gettext("Close"))
-            dialog.add_response("debug", gettext("Start Debug Session"))
-            dialog.set_default_response("debug")
-        else:
-            dialog.set_body(secondary_message)
-            dialog.add_response("close", gettext("Close"))
-            dialog.set_default_response("close")
-        dialog.set_close_response("close")
+        dialog.set_body(secondary_message)
+        dialog.add_response("close", gettext("Close"))
+        dialog.set_default_response("close")
+    dialog.set_close_response("close")
 
     def response(dialog, answer):
         dialog.destroy()
