@@ -37,14 +37,11 @@ class StatusWindow:
         self.progress_bar = Gtk.ProgressBar.new()
         self.progress_bar.set_size_request(400, -1)
 
-        if Gtk.get_major_version() == 3:
-            self.create_gtk3_window_with_progress_bar(frame, vbox, label)
-        else:
-            self.window = Gtk.Window.new()
-            self.window.set_child(frame)
-            frame.set_child(vbox)
-            vbox.append(label)
-            vbox.append(self.progress_bar)
+        self.window = Gtk.Window.new()
+        self.window.set_child(frame)
+        frame.set_child(vbox)
+        vbox.append(label)
+        vbox.append(self.progress_bar)
 
         self.window.set_title(self.title)
         self.window.get_style_context().add_class("status-window")
@@ -71,10 +68,7 @@ class StatusWindow:
 
         assert self.window
 
-        if Gtk.get_major_version() == 3:
-            self.window.show_all()
-        else:
-            self.window.show()
+        self.window.show()
 
     def progress(self, percentage: int):
         """Update progress percentage (0..100)."""

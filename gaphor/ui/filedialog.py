@@ -44,27 +44,18 @@ def open_file_dialog(title, handler, parent=None, dirname=None, filters=None) ->
     dialog.set_select_multiple(True)
 
     def response(_dialog, answer):
-        if Gtk.get_major_version() == 3:
-            filenames = (
-                dialog.get_filenames() if answer == Gtk.ResponseType.ACCEPT else []
-            )
-        else:
-            filenames = (
-                [f.get_path() for f in dialog.get_files()]
-                if answer == Gtk.ResponseType.ACCEPT
-                else []
-            )
+        filenames = (
+            [f.get_path() for f in dialog.get_files()]
+            if answer == Gtk.ResponseType.ACCEPT
+            else []
+        )
         dialog.destroy()
         handler(filenames)
 
     dialog.connect("response", response)
     dialog.set_modal(True)
-    if Gtk.get_major_version() == 3:
-        if dirname:
-            dialog.set_current_folder(dirname)
-    else:
-        if dirname:
-            dialog.set_current_folder(Gio.File.parse_name(dirname))
+    if dirname:
+        dialog.set_current_folder(Gio.File.parse_name(dirname))
     dialog.show()
 
 
@@ -83,16 +74,10 @@ def save_file_dialog(
     )
 
     def get_filename() -> Path:
-        if Gtk.get_major_version() == 3:
-            return Path(dialog.get_filename())
-        else:
-            return Path(dialog.get_file().get_path())
+        return Path(dialog.get_file().get_path())
 
     def set_filename(filename: Path):
-        if Gtk.get_major_version() == 3:
-            dialog.set_filename(str(filename.name))
-        else:
-            dialog.set_current_name(str(filename.name))
+        dialog.set_current_name(str(filename.name))
 
     def overwrite_check() -> Path | None:
         filename = get_filename()
@@ -115,13 +100,7 @@ def save_file_dialog(
     dialog.connect("response", response)
     if filename:
         set_filename(filename)
-    if Gtk.get_major_version() == 3:
-        dialog.set_do_overwrite_confirmation(True)
-        if filename:
-            dialog.set_current_folder(str(filename.parent))
-    else:
-        if filename:
-            dialog.set_current_folder(Gio.File.parse_name(str(filename.parent)))
+        dialog.set_current_folder(Gio.File.parse_name(str(filename.parent)))
     dialog.set_modal(True)
     dialog.show()
     return dialog

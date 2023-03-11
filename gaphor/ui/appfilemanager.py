@@ -1,10 +1,7 @@
 import logging
 import os.path
 
-from gi.repository import Gtk
-
-if Gtk.get_major_version() == 4:
-    from gi.repository import Adw
+from gi.repository import Adw, Gtk
 
 from pathlib import Path
 
@@ -46,29 +43,18 @@ class AppFileManager(Service, ActionProvider):
                     body = gettext(
                         "{name} is already opened. Do you want to switch to the opened window instead?"
                     ).format(name=name)
-                    if Gtk.get_major_version() == 3:
-                        dialog = Gtk.MessageDialog(
-                            message_type=Gtk.MessageType.QUESTION,
-                            buttons=Gtk.ButtonsType.YES_NO,
-                            text=title,
-                            secondary_text=body,
-                        )
-                        dialog.set_transient_for(self.window)
-
-                        dialog.set_modal(True)
-                    else:
-                        dialog = Adw.MessageDialog.new(
-                            self.window,
-                            title,
-                        )
-                        dialog.set_body(body)
-                        dialog.add_response("open", gettext("Open Again"))
-                        dialog.add_response("switch", gettext("Switch"))
-                        dialog.set_response_appearance(
-                            "switch", Adw.ResponseAppearance.SUGGESTED
-                        )
-                        dialog.set_default_response("switch")
-                        dialog.set_close_response("open")
+                    dialog = Adw.MessageDialog.new(
+                        self.window,
+                        title,
+                    )
+                    dialog.set_body(body)
+                    dialog.add_response("open", gettext("Open Again"))
+                    dialog.add_response("switch", gettext("Switch"))
+                    dialog.set_response_appearance(
+                        "switch", Adw.ResponseAppearance.SUGGESTED
+                    )
+                    dialog.set_default_response("switch")
+                    dialog.set_close_response("open")
 
                     def response(dialog, answer):
                         # Gtk.ResponseType.NO is for GTK3, open is for GTK4

@@ -19,7 +19,6 @@ from gaphor.application import Application, Session, distribution
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
 from gaphor.ui.actiongroup import apply_application_actions
-from gaphor.ui.macosshim import macos_init
 
 APPLICATION_ID = "org.gaphor.Gaphor"
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
@@ -52,16 +51,11 @@ def main(argv=sys.argv) -> int:
 
     # Set dark mode for non-FreeDesktop platforms only:
     if sys.platform in ("darwin", "win32"):
-        if Gtk.get_major_version() == 3:
-            Gtk.Settings.get_default().set_property(
-                "gtk-application-prefer-dark-theme", darkdetect.isDark()
-            )
-        else:
-            Adw.StyleManager.get_default().set_color_scheme(
-                Adw.ColorScheme.PREFER_DARK
-                if darkdetect.isDark()
-                else Adw.ColorScheme.PREFER_LIGHT
-            )
+        Adw.StyleManager.get_default().set_color_scheme(
+            Adw.ColorScheme.PREFER_DARK
+            if darkdetect.isDark()
+            else Adw.ColorScheme.PREFER_LIGHT
+        )
 
     if has_option("-p", "--profiler"):
         import cProfile
@@ -104,7 +98,6 @@ def run(argv: list[str]) -> int:
         try:
             application = Application(gtk_app=gtk_app)
             apply_application_actions(application, gtk_app)
-            macos_init(application)
             event_manager = application.get_service("event_manager")
             event_manager.subscribe(on_session_created)
             event_manager.subscribe(on_quit)

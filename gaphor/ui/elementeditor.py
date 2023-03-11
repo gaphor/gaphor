@@ -108,12 +108,7 @@ class ElementEditor(UIComponent, ActionProvider):
     @action(name="show-preferences", shortcut="<Primary>comma", state=False)
     def toggle_editor_preferences(self, active):
         if not self.revealer.get_child_revealed():
-            if Gtk.get_major_version() == 3:
-                self.revealer.get_action_group("win").lookup_action(
-                    "show-editors"
-                ).activate()
-            else:
-                self.revealer.activate_action("win.show-editors", None)
+            self.revealer.activate_action("win.show-editors", None)
 
         self.editor_stack.set_visible_child_name("preferences" if active else "editors")
 
@@ -185,10 +180,7 @@ class EditorStack:
                 elif isinstance(page, Gtk.Expander):
                     page.set_expanded(self._expanded_pages.get(name, True))
                     page.connect_after("activate", self.on_expand, name)
-                if Gtk.get_major_version() == 3:
-                    self.vbox.pack_start(page, False, True, 0)
-                else:
-                    self.vbox.append(page)
+                self.vbox.append(page)
             except Exception:
                 log.error(
                     f"Could not construct property page for {name}", exc_info=True
@@ -197,12 +189,8 @@ class EditorStack:
     def clear_pages(self):
         """Remove all tabs from the notebook."""
         assert self.vbox
-        if Gtk.get_major_version() == 3:
-            for page in self.vbox.get_children():
-                page.destroy()
-        else:
-            while page := self.vbox.get_first_child():
-                self.vbox.remove(page)
+        while page := self.vbox.get_first_child():
+            self.vbox.remove(page)
 
     def on_expand(self, widget, name):
         self._expanded_pages[name] = widget.get_expanded()
@@ -215,12 +203,7 @@ class EditorStack:
         """
         assert self.vbox
         item = event and event.focused_item or focused_item
-        children = (
-            self.vbox.get_children()
-            if Gtk.get_major_version() == 3
-            else self.vbox.get_first_child()
-        )
-        if item is self._current_item and children:
+        if item is self._current_item and self.vbox.get_first_child():
             return
 
         self._current_item = item
@@ -235,15 +218,7 @@ class EditorStack:
         assert self.vbox
         builder = new_builder("no-item-selected")
 
-        if Gtk.get_major_version() == 3:
-            self.vbox.pack_start(
-                child=builder.get_object("no-item-selected"),
-                expand=False,
-                fill=True,
-                padding=0,
-            )
-        else:
-            self.vbox.append(builder.get_object("no-item-selected"))
+        self.vbox.append(builder.get_object("no-item-selected"))
 
         tips = builder.get_object("tips")
 
@@ -277,10 +252,9 @@ class PreferencesStack:
             None if Gtk.get_major_version() == 3 else Adw.StyleManager.get_default()
         )
         self._notify_dark_id = 0
-        if Gtk.get_major_version() != 3:
-            self.lang_manager.append_search_path(
-                str(importlib.resources.files("gaphor") / "ui" / "language-specs")
-            )
+        self.lang_manager.append_search_path(
+            str(importlib.resources.files("gaphor") / "ui" / "language-specs")
+        )
 
         def tx_update_style_sheet(style_sheet, text):
             self._in_update = 1
@@ -296,21 +270,18 @@ class PreferencesStack:
         self.style_sheet_view = builder.get_object("style-sheet-view")
 
         self.style_sheet_buffer.set_language(
-            self.lang_manager.get_language(
-                "css" if Gtk.get_major_version() == 3 else "gaphorcss"
-            )
+            self.lang_manager.get_language("gaphorcss")
         )
 
-        if Gtk.get_major_version() == 4:
-            view_completion = self.style_sheet_view.get_completion()
-            view_completion.add_provider(CssFunctionCompletionProvider())
-            view_completion.add_provider(CssNamedColorsCompletionProvider())
-            view_completion.add_provider(CssPropertyCompletionProvider())
-            assert self.style_manager
-            self._notify_dark_id = self.style_manager.connect(
-                "notify::dark", self._on_notify_dark
-            )
-            self._on_notify_dark(self.style_manager, None)
+        view_completion = self.style_sheet_view.get_completion()
+        view_completion.add_provider(CssFunctionCompletionProvider())
+        view_completion.add_provider(CssNamedColorsCompletionProvider())
+        view_completion.add_provider(CssPropertyCompletionProvider())
+        assert self.style_manager
+        self._notify_dark_id = self.style_manager.connect(
+            "notify::dark", self._on_notify_dark
+        )
+        self._on_notify_dark(self.style_manager, None)
 
         self.event_manager.subscribe(self._model_ready)
         self.event_manager.subscribe(self._style_sheet_created)
