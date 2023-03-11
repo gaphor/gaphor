@@ -8,10 +8,7 @@ from gaphor.abc import Service
 class Styling(Service):
     def __init__(self):
         self.style_provider = Gtk.CssProvider()
-        css_file = (
-            importlib.resources.files("gaphor.ui")
-            / f"styling-gtk{Gtk.get_major_version()}.css"
-        )
+        css_file = importlib.resources.files("gaphor.ui") / "styling.css"
         self.style_provider.load_from_path(str(css_file))
 
         self.init_styling()
