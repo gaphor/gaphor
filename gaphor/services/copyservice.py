@@ -90,11 +90,10 @@ class CopyService(Service, ActionProvider):
     def copy_action(self):
         view = self.diagrams.get_current_view()
         if view.is_focus():
-            items = view.selection.selected_items
-            if not items:
+            if items := view.selection.selected_items:
+                self.copy(items)
+            else:
                 return
-
-            self.copy(items)
 
     @action(name="edit-cut", shortcut="<Primary>x")
     def cut_action(self):
