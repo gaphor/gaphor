@@ -215,8 +215,7 @@ class DiagramPage:
         if not self.view:
             return
         self.apply_tool_set(tool_name)
-        icon_name = self.get_tool_icon_name(tool_name)
-        if icon_name:
+        if icon_name := self.get_tool_icon_name(tool_name):
             self.view.set_cursor(get_placement_cursor(None, icon_name))
         else:
             self.view.set_cursor(None)
