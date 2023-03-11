@@ -72,12 +72,8 @@ def get_placement_cursor(display, icon_name):
 
 
 class DiagramPage:
-    def __init__(
-        self, diagram, event_manager, element_factory, properties, modeling_language
-    ):
+    def __init__(self, diagram, event_manager, modeling_language):
         self.event_manager = event_manager
-        self.element_factory = element_factory
-        self.properties = properties
         self.diagram = diagram
         self.modeling_language = modeling_language
         self.style_manager = Adw.StyleManager.get_default()

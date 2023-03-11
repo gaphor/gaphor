@@ -10,10 +10,8 @@ from gaphor.ui.diagrampage import DiagramPage, get_placement_cursor, placement_i
 
 
 @pytest.fixture
-def page(diagram, event_manager, element_factory, modeling_language, properties):
-    page = DiagramPage(
-        diagram, event_manager, element_factory, properties, modeling_language
-    )
+def page(diagram, event_manager, modeling_language):
+    page = DiagramPage(diagram, event_manager, modeling_language)
     page.construct()
     assert page.diagram == diagram
     assert page.view.model == diagram
