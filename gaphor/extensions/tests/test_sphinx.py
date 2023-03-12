@@ -1,9 +1,11 @@
+import pytest
 import sphinx.application
 import sphinx.util.docutils
 
 from gaphor.extensions.sphinx import setup as sphinx_setup
 
 
+@pytest.mark.filterwarnings("ignore:'imghdr'")
 def test_setup(tmp_path):
     (tmp_path / "conf.py").write_text("", encoding="utf-8")
     gen = sphinx.application.Sphinx(
