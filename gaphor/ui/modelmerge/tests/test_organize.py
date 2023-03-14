@@ -69,7 +69,7 @@ def test_remove_element(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.label == "Remove element my diagram"
+    assert add_element.label == "Remove element “my diagram”"
     assert change in add_element.elements
 
 
@@ -89,7 +89,7 @@ def test_add_element_with_attribute_update(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.label == "Add element of type Diagram"
+    assert add_element.label == "Add Diagram “my diagram”"
     assert change in add_element.elements
     assert vchange in add_element.elements
     assert not add_element.children
@@ -113,7 +113,7 @@ def test_remove_element_with_attribute_update(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.label == "Add element of type Diagram"
+    assert add_element.label == "Add Diagram “my diagram”"
     assert change in add_element.elements
     assert vchange in add_element.elements
     assert not add_element.children
