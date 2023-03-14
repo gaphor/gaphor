@@ -27,7 +27,8 @@ def change(element_factory):
             assert "element_name" in kwargs
         elif change_type is RefChange:
             assert "property_name" in kwargs
-            assert "property_ref" in kwargs
+            if "property_ref" not in kwargs:
+                kwargs["property_ref"] = str(uuid1())
         elif change_type is ValueChange:
             assert "property_name" in kwargs
             assert "property_value" in kwargs
@@ -207,6 +208,22 @@ def test_remove_reference_with_name(element_factory):
     assert add_element.children
     assert add_element.children[0].element is vchange
     assert add_element.children[0].label == "Remove relation diagram to my diagram"
+
+
+def test_add_diagram_with_reference(element_factory, change):
+    add_diagram = change(ElementChange, op="add", element_name="Diagram")
+    ref = change(
+        RefChange,
+        op="add",
+        element_id=add_diagram.element_id,
+        property_name="package",
+    )
+
+    tree = list(organize_changes(element_factory))
+
+    assert add_diagram in tree[0].elements
+    assert tree[0].children
+    assert ref in tree[0].children[0].elements
 
 
 def test_add_diagram_contains_presentation(element_factory, change):
