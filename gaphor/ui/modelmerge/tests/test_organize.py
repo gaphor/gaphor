@@ -53,7 +53,7 @@ def test_add_element(element_factory):
 
     assert len(tree) == 1
     assert add_element.label == "Add element of type Diagram"
-    assert add_element.element is change
+    assert change in add_element.elements
 
 
 def test_remove_element(element_factory):
@@ -70,7 +70,7 @@ def test_remove_element(element_factory):
 
     assert len(tree) == 1
     assert add_element.label == "Remove element my diagram"
-    assert add_element.element is change
+    assert change in add_element.elements
 
 
 def test_add_element_with_attribute_update(element_factory):
@@ -90,10 +90,9 @@ def test_add_element_with_attribute_update(element_factory):
 
     assert len(tree) == 1
     assert add_element.label == "Add element of type Diagram"
-    assert add_element.element is change
-    assert add_element.children
-    assert add_element.children[0].element is vchange
-    assert add_element.children[0].label == "Update attribute name to my diagram"
+    assert change in add_element.elements
+    assert vchange in add_element.elements
+    assert not add_element.children
 
 
 def test_remove_element_with_attribute_update(element_factory):
@@ -115,10 +114,9 @@ def test_remove_element_with_attribute_update(element_factory):
 
     assert len(tree) == 1
     assert add_element.label == "Add element of type Diagram"
-    assert add_element.element is change
-    assert add_element.children
-    assert add_element.children[0].element is vchange
-    assert add_element.children[0].label == "Update attribute name to my diagram"
+    assert change in add_element.elements
+    assert vchange in add_element.elements
+    assert not add_element.children
 
 
 @pytest.mark.xfail
@@ -137,10 +135,9 @@ def test_attribute_update(element_factory):
 
     assert len(tree) == 1
     assert add_element.label == "Update element my diagram"
-    assert add_element.element is None
+    assert not add_element.elements
     assert add_element.children
-    assert add_element.children[0].element is vchange
-    assert add_element.children[0].label == "Update attribute name to my diagram"
+    assert vchange in add_element.children
 
 
 @pytest.mark.xfail
@@ -225,6 +222,6 @@ def test_add_diagram_contains_presentation(element_factory, change):
 
     tree = list(organize_changes(element_factory))
 
-    assert tree[0].element is add_diagram
+    assert add_diagram in tree[0].elements
     assert tree[0].children
-    assert tree[0].children[0].element is add_class_item
+    assert add_class_item in tree[0].children[0].elements
