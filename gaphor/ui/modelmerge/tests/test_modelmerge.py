@@ -1,17 +1,8 @@
-import pytest
-from gi.repository import Gtk
-
 from gaphor.event import ModelLoaded
 from gaphor.ui.modelmerge.editor import ModelMerge
 from gaphor.core.modeling import ElementChange, ValueChange
 
-skip_if_gtk3 = pytest.mark.skipif(
-    Gtk.get_major_version() == 3,
-    reason="Gtk.ListView/TreeListModel is not supported by GTK 3",
-)
 
-
-@skip_if_gtk3
 def test_open_model_merge(event_manager, element_factory, modeling_language):
     model_merge = ModelMerge(event_manager, element_factory, modeling_language)
 
@@ -20,7 +11,6 @@ def test_open_model_merge(event_manager, element_factory, modeling_language):
     assert widget
 
 
-@skip_if_gtk3
 def test_build_list_store(event_manager, element_factory, modeling_language):
     model_merge = ModelMerge(event_manager, element_factory, modeling_language)
 
@@ -37,4 +27,4 @@ def test_build_list_store(event_manager, element_factory, modeling_language):
     event_manager.handle(ModelLoaded(None))
 
     assert model_merge.model
-    assert model_merge.model[0].children
+    assert not model_merge.model[0].children

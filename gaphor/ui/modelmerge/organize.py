@@ -5,7 +5,6 @@ from typing import Iterable
 from gi.repository import GObject, Gio
 
 from gaphor.core.modeling import (
-    Element,
     ElementChange,
     RefChange,
     ValueChange,
@@ -19,9 +18,9 @@ from gaphor.core.changeset.apply import applicable
 
 
 class Node(GObject.Object):
-    def __init__(self, element: Element | None, label: str, children: list[Node]):
+    def __init__(self, elements: list[PendingChange], label: str, children: list[Node]):
         super().__init__()
-        self.element = element
+        self.elements = elements
         self.label = label
         self.children = as_list_store(children) if children else None
         self.sync()
@@ -31,11 +30,10 @@ class Node(GObject.Object):
     applicable = GObject.Property(type=bool, default=True)
 
     def sync(self) -> None:
-        element = self.element
-        if not isinstance(element, PendingChange):
-            return
-        self.applicable = not element.applied and applicable(element, element.model)
-        self.applied = bool(element.applied)
+        self.applicable = any(
+            not e.applied and applicable(e, e.model) for e in self.elements
+        )
+        self.applied = all(e.applied for e in self.elements)
 
         if self.children:
             for child in self.children:
@@ -55,38 +53,33 @@ def as_list_store(list) -> Gio.ListStore:
 def organize_changes(element_factory):
     # TODO: Iterate all diagrams / Presentations in diagram (ownedPresentation refs) / Subjects (refs to elements) / ...
     # diagram / Presentation / model elements + refs to other Presentations
-    for change in element_factory.select(ElementChange):
-        if change.element_name != "Diagram":
-            continue
-        yield from _element_changes(element_factory, "ownedPresentation")
+    yield from _element_changes(element_factory, "ownedPresentation")
 
 
 def _element_changes(element_factory, property_name: str):
-    added_removed_ids = set()
+    added_removed_ids: set[str] = set()
 
     for change in element_factory.select(ElementChange):
+        # TODO:
         if change.element_name != "Diagram":
             continue
 
         node = _element_change(change, element_factory, property_name)
-        added_removed_ids.add(node.element.element_id)
+        added_removed_ids.update(e.element_id for e in node.elements)
         yield node
 
     for change in element_factory.select(
-        lambda e: isinstance(e, RefChange)
-        and e.property_name == property_name
-        and e.element_id not in added_removed_ids
+        lambda e: isinstance(e, ElementChange) and e.element_id not in added_removed_ids
     ):
         element = element_factory.lookup(change.element_id)
         yield Node(
-            None,
+            list(_value_changes(change.element_id, element_factory)),
             gettext("Update element {name}").format(name=element.name)
             if hasattr(element, "name")
             else gettext("Update element of type {type}").format(
                 type=type(element).__name__
             ),
             [
-                *_value_changes(change.element_id, element_factory),
                 *_ref_changes(change.element_id, change.op, element_factory, None),
             ],
         )
@@ -95,10 +88,9 @@ def _element_changes(element_factory, property_name: str):
 def _element_change(change, element_factory, property_name):
     if change.op == "add":
         return Node(
-            change,
+            [change, *_value_changes(change.element_id, element_factory)],
             gettext("Add element of type {type}").format(type=change.element_name),
             [
-                *_value_changes(change.element_id, element_factory),
                 *_ref_changes(
                     change.element_id, change.op, element_factory, property_name
                 ),
@@ -107,14 +99,13 @@ def _element_change(change, element_factory, property_name):
     elif change.op == "remove":
         element = element_factory.lookup(change.element_id)
         return Node(
-            change,
+            [*_value_changes(change.element_id, element_factory), change],
             gettext("Remove element {name}").format(name=element.name)
             if hasattr(element, "name")
             else gettext("Remove element of type {type}").format(
                 type=type(element).__name__
             ),
             [
-                *_value_changes(change.element_id, element_factory),
                 *_ref_changes(
                     change.element_id, change.op, element_factory, property_name
                 ),
@@ -124,18 +115,9 @@ def _element_change(change, element_factory, property_name):
         raise ValueError(f"Unknown operation for {change}: {change.op}")
 
 
-def _value_changes(element_id, element_factory) -> Iterable[Node]:
-    return (
-        Node(
-            vc,
-            "Update attribute {name} to {value}".format(
-                name=vc.property_name, value=vc.property_value
-            ),
-            [],
-        )
-        for vc in element_factory.select(
-            lambda e: isinstance(e, ValueChange) and e.element_id == element_id
-        )
+def _value_changes(element_id, element_factory) -> Iterable[ValueChange]:
+    return element_factory.select(  # type: ignore[no-any-return]
+        lambda e: isinstance(e, ValueChange) and e.element_id == element_id
     )
 
 
@@ -155,7 +137,7 @@ def _ref_changes(element_id, op, element_factory, property_name) -> Iterable[Nod
             yield _element_change(element_change, element_factory, None)
         else:
             yield Node(
-                rc,
+                [rc],
                 (
                     gettext("Add relation {name} to {ref_name}")
                     if op == "add"
