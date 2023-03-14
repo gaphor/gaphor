@@ -127,8 +127,26 @@ def _ref_changes(
 
 def _create_label(change, element_factory):
     element = element_factory.lookup(change.element_id)
+    name = (
+        element.name
+        if hasattr(element, "name")
+        else v.property_value
+        if (
+            v := next(
+                element_factory.select(
+                    lambda e: isinstance(e, ValueChange)
+                    and e.element_id == change.element_id
+                    and e.property_name == "name"
+                ),
+                None,
+            )
+        )
+        else None
+    )
+
     op = change.op
     if isinstance(change, ElementChange) and change.element_name.endswith("Item"):
+        # TODO: find subject type
         if op == "add":
             return gettext("Add presentation of type {type}").format(
                 type=change.element_name
@@ -139,45 +157,49 @@ def _create_label(change, element_factory):
             )
         else:
             return (
-                gettext("Update presentation {name}").format(name=element.name)
-                if hasattr(element, "name")
+                gettext("Update presentation “{name}”").format(name=name)
+                if name
                 else gettext("Update presentation of type {type}").format(
                     type=type(element).__name__
                 )
             )
     if isinstance(change, ElementChange):
         if op == "add":
-            return gettext("Add element of type {type}").format(
-                type=change.element_name
+            return (
+                gettext("Add {type} “{name}”").format(
+                    type=change.element_name, name=name
+                )
+                if name
+                else gettext("Add element of type {type}").format(
+                    type=change.element_name
+                )
             )
         elif op == "remove":
             return (
-                gettext("Remove element {name}").format(name=element.name)
-                if hasattr(element, "name")
+                gettext("Remove element “{name}”").format(name=name)
+                if name
                 else gettext("Remove element of type {type}").format(
                     type=type(element).__name__
                 )
             )
         else:
             return (
-                gettext("Update element {name}").format(name=element.name)
-                if hasattr(element, "name")
+                gettext("Update element “{name}”").format(name=name)
+                if name
                 else gettext("Update element of type {type}").format(
                     type=type(element).__name__
                 )
             )
     elif isinstance(change, RefChange):
         return (
-            (
-                gettext("Add relation {name} to {ref_name}")
-                if op == "add"
-                else gettext("Remove relation {name} to {ref_name}")
-                if op == "remove"
-                else gettext("Update relation {name} to {ref_name}")
-            ).format(
-                name=change.property_name,
-                ref_name=_resolve_ref(change.property_ref, element_factory),
-            ),
+            gettext("Add relation “{name}” to “{ref_name}”")
+            if op == "add"
+            else gettext("Remove relation “{name}” to “{ref_name}”")
+            if op == "remove"
+            else gettext("Update relation “{name}” to “{ref_name}”")
+        ).format(
+            name=change.property_name,
+            ref_name=_resolve_ref(change.property_ref, element_factory),
         )
 
 
