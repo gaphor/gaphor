@@ -71,7 +71,7 @@ class ModelMerge(UIComponent):
         self.tree_view = Gtk.ListView.new(self.selection, factory)
 
         scrolled_window = Gtk.ScrolledWindow()
-        scrolled_window.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_child(self.tree_view)
 
         self.scrolled_window = scrolled_window
