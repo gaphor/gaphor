@@ -107,17 +107,19 @@ def _ref_changes(
     element_id, op, element_factory, property_name, *nested_properties
 ) -> Iterable[Node]:
     for change in element_factory.select(
-        lambda e: isinstance(e, RefChange)
-        and e.element_id == element_id
-        and e.property_name == property_name
+        lambda e: isinstance(e, RefChange) and e.element_id == element_id
     ):
-        if nested_properties and (
-            element_change := next(
-                element_factory.select(
-                    lambda e: isinstance(e, ElementChange)
-                    and e.element_id == change.property_ref
-                ),
-                None,
+        if (
+            change.property_name == property_name
+            and nested_properties
+            and (
+                element_change := next(
+                    element_factory.select(
+                        lambda e: isinstance(e, ElementChange)
+                        and e.element_id == change.property_ref
+                    ),
+                    None,
+                )
             )
         ):
             yield _element_change(element_change, element_factory, *nested_properties)
@@ -191,16 +193,27 @@ def _create_label(change, element_factory):
                 )
             )
     elif isinstance(change, RefChange):
-        return (
-            gettext("Add relation “{name}” to “{ref_name}”")
-            if op == "add"
-            else gettext("Remove relation “{name}” to “{ref_name}”")
-            if op == "remove"
-            else gettext("Update relation “{name}” to “{ref_name}”")
-        ).format(
-            name=change.property_name,
-            ref_name=_resolve_ref(change.property_ref, element_factory),
-        )
+        if ref_name := _resolve_ref(change.property_ref, element_factory):
+            return (
+                gettext("Add relation “{name}” to “{ref_name}”")
+                if op == "add"
+                else gettext("Remove relation “{name}” to “{ref_name}”")
+                if op == "remove"
+                else gettext("Update relation “{name}” to “{ref_name}”")
+            ).format(
+                name=change.property_name,
+                ref_name=ref_name,
+            )
+        else:
+            return (
+                gettext("Add relation “{name}”")
+                if op == "add"
+                else gettext("Remove relation “{name}”")
+                if op == "remove"
+                else gettext("Update relation “{name}”")
+            ).format(
+                name=change.property_name,
+            )
 
 
 def _resolve_ref(ref, element_factory):
@@ -216,4 +229,4 @@ def _resolve_ref(ref, element_factory):
         None,
     ):
         return value_changed.property_value
-    return gettext("nameless object")
+    return None
