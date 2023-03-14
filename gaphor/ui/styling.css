@@ -155,3 +155,8 @@ flowboxchild:hover {
 flowboxchild:active {
   background-color: alpha(@shade_color, 2);
 }
+
+
+#model_merge {
+  min-width: 300px;
+}
