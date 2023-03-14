@@ -59,13 +59,12 @@ class ModelMerge(UIComponent):
 
         self.selection = Gtk.SingleSelection.new(tree_model)
 
-        def on_apply(change_node):
-            if not change_node.element:
+        def on_apply(change_node: Node):
+            if not change_node.elements:
                 return
             with Transaction(self.event_manager):
-                apply_change(
-                    change_node.element, self.element_factory, self.modeling_language
-                )
+                for element in change_node.elements:
+                    apply_change(element, self.element_factory, self.modeling_language)
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect("setup", list_item_factory_setup, on_apply)
