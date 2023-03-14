@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Iterable
+from typing import Iterable, Sequence
 
 from gi.repository import GObject, Gio
 
@@ -18,11 +18,11 @@ from gaphor.core.changeset.apply import applicable
 
 
 class Node(GObject.Object):
-    def __init__(self, elements: list[PendingChange], label: str, children: list[Node]):
+    def __init__(self, elements: list[PendingChange], children: list[Node], label: str):
         super().__init__()
         self.elements = elements
         self.label = label
-        self.children = as_list_store(children) if children else None
+        self.children: Sequence[Node] = as_list_store(children) if children else None
         self.sync()
 
     label = GObject.Property(type=str, default="")
@@ -71,17 +71,12 @@ def _element_changes(element_factory, property_name: str):
     for change in element_factory.select(
         lambda e: isinstance(e, ElementChange) and e.element_id not in added_removed_ids
     ):
-        element = element_factory.lookup(change.element_id)
         yield Node(
             list(_value_changes(change.element_id, element_factory)),
-            gettext("Update element {name}").format(name=element.name)
-            if hasattr(element, "name")
-            else gettext("Update element of type {type}").format(
-                type=type(element).__name__
-            ),
             [
                 *_ref_changes(change.element_id, change.op, element_factory, None),
             ],
+            _create_label(change, element_factory)
         )
 
 
@@ -89,27 +84,22 @@ def _element_change(change, element_factory, property_name):
     if change.op == "add":
         return Node(
             [change, *_value_changes(change.element_id, element_factory)],
-            gettext("Add element of type {type}").format(type=change.element_name),
             [
                 *_ref_changes(
                     change.element_id, change.op, element_factory, property_name
                 ),
             ],
+            _create_label(change, element_factory),
         )
     elif change.op == "remove":
-        element = element_factory.lookup(change.element_id)
         return Node(
             [*_value_changes(change.element_id, element_factory), change],
-            gettext("Remove element {name}").format(name=element.name)
-            if hasattr(element, "name")
-            else gettext("Remove element of type {type}").format(
-                type=type(element).__name__
-            ),
             [
                 *_ref_changes(
                     change.element_id, change.op, element_factory, property_name
                 ),
             ],
+            _create_label(change, element_factory),
         )
     else:
         raise ValueError(f"Unknown operation for {change}: {change.op}")
@@ -122,7 +112,7 @@ def _value_changes(element_id, element_factory) -> Iterable[ValueChange]:
 
 
 def _ref_changes(element_id, op, element_factory, property_name) -> Iterable[Node]:
-    for rc in element_factory.select(
+    for change in element_factory.select(
         lambda e: isinstance(e, RefChange)
         and e.element_id == element_id
         and e.property_name == property_name
@@ -130,26 +120,69 @@ def _ref_changes(element_id, op, element_factory, property_name) -> Iterable[Nod
         if element_change := next(
             element_factory.select(
                 lambda e: isinstance(e, ElementChange)
-                and e.element_id == rc.property_ref
+                and e.element_id == change.property_ref
             ),
             None,
         ):
             yield _element_change(element_change, element_factory, None)
         else:
-            yield Node(
-                [rc],
-                (
-                    gettext("Add relation {name} to {ref_name}")
-                    if op == "add"
-                    else gettext("Remove relation {name} to {ref_name}")
-                    if op == "remove"
-                    else gettext("Update relation {name} to {ref_name}")
-                ).format(
-                    name=rc.property_name,
-                    ref_name=_resolve_ref(rc.property_ref, element_factory),
-                ),
-                [],
+            yield Node([change], [], _create_label(change, element_factory))
+
+
+def _create_label(change, element_factory):
+    element = element_factory.lookup(change.element_id)
+    op = change.op
+    if isinstance(change, ElementChange) and change.element_name.endswith("Item"):
+        if op == "add":
+            return gettext("Add presentation of type {type}").format(
+                type=change.element_name
             )
+        elif op == "remove":
+            return gettext("Add presentation of type {type}").format(
+                type=change.element_name
+            )
+        else:
+            return (
+                gettext("Update presentation {name}").format(name=element.name)
+                if hasattr(element, "name")
+                else gettext("Update presentation of type {type}").format(
+                    type=type(element).__name__
+                )
+            )
+    if isinstance(change, ElementChange):
+        if op == "add":
+            return gettext("Add element of type {type}").format(
+                type=change.element_name
+            )
+        elif op == "remove":
+            return (
+                gettext("Remove element {name}").format(name=element.name)
+                if hasattr(element, "name")
+                else gettext("Remove element of type {type}").format(
+                    type=type(element).__name__
+                )
+            )
+        else:
+            return (
+                gettext("Update element {name}").format(name=element.name)
+                if hasattr(element, "name")
+                else gettext("Update element of type {type}").format(
+                    type=type(element).__name__
+                )
+            )
+    elif isinstance(change, RefChange):
+        return (
+            (
+                gettext("Add relation {name} to {ref_name}")
+                if op == "add"
+                else gettext("Remove relation {name} to {ref_name}")
+                if op == "remove"
+                else gettext("Update relation {name} to {ref_name}")
+            ).format(
+                name=change.property_name,
+                ref_name=_resolve_ref(change.property_ref, element_factory),
+            ),
+        )
 
 
 def _resolve_ref(ref, element_factory):
