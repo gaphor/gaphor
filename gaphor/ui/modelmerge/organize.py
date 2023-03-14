@@ -14,9 +14,6 @@ from gaphor.i18n import gettext
 from gaphor.core.changeset.apply import applicable
 
 
-# TODO: add attribute changes as part of the element create operation!
-
-
 class Node(GObject.Object):
     def __init__(self, elements: list[PendingChange], children: list[Node], label: str):
         super().__init__()
@@ -51,42 +48,37 @@ def as_list_store(list) -> Gio.ListStore:
 
 
 def organize_changes(element_factory):
-    # TODO: Iterate all diagrams / Presentations in diagram (ownedPresentation refs) / Subjects (refs to elements) / ...
-    # diagram / Presentation / model elements + refs to other Presentations
-    yield from _element_changes(element_factory, "ownedPresentation")
-
-
-def _element_changes(element_factory, property_name: str):
-    added_removed_ids: set[str] = set()
-
-    for change in element_factory.select(ElementChange):
-        # TODO:
-        if change.element_name != "Diagram":
-            continue
-
-        node = _element_change(change, element_factory, property_name)
-        added_removed_ids.update(e.element_id for e in node.elements)
-        yield node
+    # TODO: link other (non-presentation) elements to presentation
+    property_names = ("ownedPresentation", "subject", None)
+    seen_change_ids: set[str] = set()
 
     for change in element_factory.select(
-        lambda e: isinstance(e, ElementChange) and e.element_id not in added_removed_ids
+        lambda e: isinstance(e, ElementChange)
+        and e.element_name == "Diagram"
+        and e.element_id not in seen_change_ids
     ):
-        yield Node(
-            list(_value_changes(change.element_id, element_factory)),
-            [
-                *_ref_changes(change.element_id, change.op, element_factory, None),
-            ],
-            _create_label(change, element_factory)
-        )
+        node = _element_change(change, element_factory, *property_names)
+        seen_change_ids.update(_all_change_ids(node))
+        yield node
+
+    # TODO: Add/remove/update presentations to existing diagrams
+    # TODO: Add/remove/update elements with/without a presentation
 
 
-def _element_change(change, element_factory, property_name):
+def _all_change_ids(node: Node):
+    yield from (e.id for e in node.elements)
+    if node.children:
+        for c in node.children:
+            yield from _all_change_ids(c)
+
+
+def _element_change(change, element_factory, *property_names):
     if change.op == "add":
         return Node(
             [change, *_value_changes(change.element_id, element_factory)],
             [
                 *_ref_changes(
-                    change.element_id, change.op, element_factory, property_name
+                    change.element_id, change.op, element_factory, *property_names
                 ),
             ],
             _create_label(change, element_factory),
@@ -96,7 +88,7 @@ def _element_change(change, element_factory, property_name):
             [*_value_changes(change.element_id, element_factory), change],
             [
                 *_ref_changes(
-                    change.element_id, change.op, element_factory, property_name
+                    change.element_id, change.op, element_factory, *property_names
                 ),
             ],
             _create_label(change, element_factory),
@@ -111,20 +103,24 @@ def _value_changes(element_id, element_factory) -> Iterable[ValueChange]:
     )
 
 
-def _ref_changes(element_id, op, element_factory, property_name) -> Iterable[Node]:
+def _ref_changes(
+    element_id, op, element_factory, property_name, *nested_properties
+) -> Iterable[Node]:
     for change in element_factory.select(
         lambda e: isinstance(e, RefChange)
         and e.element_id == element_id
         and e.property_name == property_name
     ):
-        if element_change := next(
-            element_factory.select(
-                lambda e: isinstance(e, ElementChange)
-                and e.element_id == change.property_ref
-            ),
-            None,
+        if nested_properties and (
+            element_change := next(
+                element_factory.select(
+                    lambda e: isinstance(e, ElementChange)
+                    and e.element_id == change.property_ref
+                ),
+                None,
+            )
         ):
-            yield _element_change(element_change, element_factory, None)
+            yield _element_change(element_change, element_factory, *nested_properties)
         else:
             yield Node([change], [], _create_label(change, element_factory))
 
