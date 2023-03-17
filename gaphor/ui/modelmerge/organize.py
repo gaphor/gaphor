@@ -12,6 +12,7 @@ from gaphor.core.modeling import (
 )
 from gaphor.i18n import gettext
 from gaphor.core.changeset.apply import applicable
+from gaphor.core.modeling import Diagram
 
 
 class Node(GObject.Object):
@@ -48,20 +49,59 @@ def as_list_store(list) -> Gio.ListStore:
 
 
 def organize_changes(element_factory):
-    # TODO: link other (non-presentation) elements to presentation
-    property_names = ("ownedPresentation", "subject", None)
+    def _not_presentation(change):
+        if element := element_factory.lookup(change.property_ref):
+            name = type(element).__name__
+        if element_change := next(
+            element_factory.select(
+                lambda e: isinstance(e, ElementChange)
+                and e.element_id == change.property_ref
+            ),
+            None,
+        ):
+            name = element_change.element_name
+        return name and name != "Diagram" and not name.endswith("Item")
+
+    property_names = (
+        lambda change: change.property_name == "ownedPresentation",
+        _not_presentation,
+        lambda _: False,
+    )
+
     seen_change_ids: set[str] = set()
 
     for change in element_factory.select(
-        lambda e: isinstance(e, ElementChange)
-        and e.element_name == "Diagram"
-        and e.element_id not in seen_change_ids
+        lambda e: isinstance(e, ElementChange) and e.element_name == "Diagram"
     ):
         node = _element_change(change, element_factory, *property_names)
         seen_change_ids.update(_all_change_ids(node))
         yield node
 
     # TODO: Add/remove/update presentations to existing diagrams
+    for diagram in element_factory.select(Diagram):
+        value_changes: list[PendingChange] = [
+            val
+            for val in _value_changes(diagram.id, element_factory)
+            if val.id not in seen_change_ids
+        ]
+        ref_changes = [
+            ref
+            for ref in _ref_changes(diagram.id, element_factory, *property_names)
+            if all(e.id not in seen_change_ids for e in ref.elements)
+        ]
+        if value_changes or ref_changes:
+            node = Node(
+                value_changes,
+                ref_changes,
+                gettext("Update diagram “{name}”").format(
+                    name=diagram.name or gettext("<None>")
+                ),
+            )
+            seen_change_ids.update(_all_change_ids(node))
+            yield node
+
+        # TODO: check updates for ownedPresentation
+
     # TODO: Add/remove/update elements with/without a presentation
 
 
@@ -76,21 +116,17 @@ def _element_change(change, element_factory, *property_names):
     if change.op == "add":
         return Node(
             [change, *_value_changes(change.element_id, element_factory)],
-            [
-                *_ref_changes(
-                    change.element_id, change.op, element_factory, *property_names
-                ),
-            ],
+            list(
+                _ref_changes(change.element_id, element_factory, *property_names),
+            ),
             _create_label(change, element_factory),
         )
     elif change.op == "remove":
         return Node(
             [*_value_changes(change.element_id, element_factory), change],
-            [
-                *_ref_changes(
-                    change.element_id, change.op, element_factory, *property_names
-                ),
-            ],
+            list(
+                _ref_changes(change.element_id, element_factory, *property_names),
+            ),
             _create_label(change, element_factory),
         )
     else:
@@ -104,13 +140,13 @@ def _value_changes(element_id, element_factory) -> Iterable[ValueChange]:
 
 
 def _ref_changes(
-    element_id, op, element_factory, property_name, *nested_properties
+    element_id, element_factory, property_name, *nested_properties
 ) -> Iterable[Node]:
     for change in element_factory.select(
         lambda e: isinstance(e, RefChange) and e.element_id == element_id
     ):
         if (
-            change.property_name == property_name
+            property_name(change)
             and nested_properties
             and (
                 element_change := next(
@@ -149,11 +185,7 @@ def _create_label(change, element_factory):
     op = change.op
     if isinstance(change, ElementChange) and change.element_name.endswith("Item"):
         # TODO: find subject type
-        if op == "add":
-            return gettext("Add presentation of type {type}").format(
-                type=change.element_name
-            )
-        elif op == "remove":
+        if op in ["add", "remove"]:
             return gettext("Add presentation of type {type}").format(
                 type=change.element_name
             )
