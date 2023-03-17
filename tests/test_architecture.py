@@ -100,7 +100,7 @@ def test_modeling_languages_do_not_depend_on_ui_package():
 
 
 def test_moduling_languages_should_initialize_without_gtk():
-    modeling_languages = [  # type: ignore[var-annotated]
+    modeling_languages: list[str] = [
         c.__module__ for c in load_entry_points("gaphor.modelinglanguages").values()
     ]
     assert modeling_languages
