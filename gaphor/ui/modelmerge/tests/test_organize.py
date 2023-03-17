@@ -96,18 +96,19 @@ def test_add_element_with_attribute_update(element_factory):
     assert not add_element.children
 
 
-def test_remove_element_with_attribute_update(element_factory):
+def test_remove_element_with_attribute_update(element_factory, change):
     diagram = element_factory.create(Diagram)
     diagram.name = "my diagram"
-    change: ElementChange = element_factory.create(ElementChange)
-    change.op = "add"
-    change.element_id = diagram.id
-    change.element_name = "Diagram"
-    vchange: ValueChange = element_factory.create(ValueChange)
-    vchange.op = "update"
-    vchange.element_id = diagram.id
-    vchange.property_name = "name"
-    vchange.property_value = "my diagram"
+    echange: ElementChange = change(
+        ElementChange, element_name="Diagram", op="add", element_id=diagram.id
+    )
+    vchange: ValueChange = change(
+        ValueChange,
+        op="update",
+        element_id=diagram.id,
+        property_name="name",
+        property_value="my diagram",
+    )
 
     tree = list(organize_changes(element_factory))
 
@@ -115,20 +116,22 @@ def test_remove_element_with_attribute_update(element_factory):
 
     assert len(tree) == 1
     assert add_element.label == "Add Diagram “my diagram”"
-    assert change in add_element.elements
+    assert echange in add_element.elements
     assert vchange in add_element.elements
     assert not add_element.children
 
 
 @pytest.mark.xfail
-def test_attribute_update(element_factory):
+def test_attribute_update(element_factory, change):
     diagram = element_factory.create(Diagram)
     diagram.name = "my diagram"
-    vchange: ValueChange = element_factory.create(ValueChange)
-    vchange.op = "update"
-    vchange.element_id = diagram.id
-    vchange.property_name = "name"
-    vchange.property_value = "my diagram"
+    vchange: ValueChange = change(
+        ValueChange,
+        op="update",
+        element_id=diagram.id,
+        property_name="name",
+        property_value="my diagram",
+    )
 
     tree = list(organize_changes(element_factory))
 
@@ -270,3 +273,21 @@ def test_add_diagram_contains_presentation_with_subject(element_factory, change)
     assert add_class_item in tree[0].children[0].elements
     assert tree[0].children[0].children
     assert add_class in tree[0].children[0].children[0].elements
+
+
+def test_add_presentation_to_existing_diagram(element_factory, change):
+    diagram = element_factory.create(Diagram)
+    add_class_item = change(ElementChange, op="add", element_name="ClassItem")
+    change(
+        RefChange,
+        op="add",
+        element_id=diagram.id,
+        property_name="ownedPresentation",
+        property_ref=add_class_item.element_id,
+    )
+
+    tree = list(organize_changes(element_factory))
+
+    assert not tree[0].elements
+    assert tree[0].children
+    assert add_class_item in tree[0].children[0].elements

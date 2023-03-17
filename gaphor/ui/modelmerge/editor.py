@@ -52,7 +52,7 @@ class ModelMerge(UIComponent):
         tree_model = Gtk.TreeListModel.new(
             self.model,
             passthrough=False,
-            autoexpand=True,
+            autoexpand=False,
             create_func=lambda node, _: node.children,
             user_data=None,
         )
