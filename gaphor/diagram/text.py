@@ -86,10 +86,7 @@ class Layout:
     def set_text(self, text: str) -> None:
         if text != self.text:
             self.text = text
-            self.update_text()
-
-    def update_text(self) -> None:
-        self.layout.set_text(self.text, length=-1)
+            self.layout.set_text(self.text, length=-1)
 
     def set_width(self, width: int) -> None:
         self.width = width
