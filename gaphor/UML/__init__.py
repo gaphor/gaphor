@@ -7,4 +7,4 @@ import gaphor.UML.drop
 import gaphor.UML.iconname
 import gaphor.UML.group
 import gaphor.UML.modelinglanguage
-from gaphor.UML import recipes
+import gaphor.UML.recipes
