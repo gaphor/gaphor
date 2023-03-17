@@ -2,7 +2,7 @@ import pytest
 
 from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general import CommentItem
-from gaphor.services.copyservice import CopyService
+from gaphor.ui.copyservice import CopyService
 
 
 class DiagramsStub:

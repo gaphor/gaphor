@@ -70,14 +70,6 @@ def test_services_package():
         .may_import("gaphor.diagram*")
         .may_import("gaphor.services*")
         .should_not_import("gaphor*")
-        .check(gaphor)
-    )
-
-    (
-        archrule("Only Copy service depends on UI libraries")
-        .match("gaphor.services*")
-        .exclude("gaphor.services.copyservice")
-        .exclude("*.tests.*")
         .should_not_import(*UI_LIBRARIES)
         .check(gaphor)
     )
