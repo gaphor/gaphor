@@ -60,7 +60,7 @@ def organize_changes(element_factory):
             None,
         ):
             name = element_change.element_name
-        return name and not (name == "Diagram" or name.endswith("Item"))
+        return name and name != "Diagram" and not name.endswith("Item")
 
     property_names = (
         lambda change: change.property_name == "ownedPresentation",
@@ -185,11 +185,7 @@ def _create_label(change, element_factory):
     op = change.op
     if isinstance(change, ElementChange) and change.element_name.endswith("Item"):
         # TODO: find subject type
-        if op == "add":
-            return gettext("Add presentation of type {type}").format(
-                type=change.element_name
-            )
-        elif op == "remove":
+        if op in ["add", "remove"]:
             return gettext("Add presentation of type {type}").format(
                 type=change.element_name
             )
