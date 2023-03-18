@@ -51,7 +51,6 @@ def test_diagram_package():
         archrule("GTK dependencies")
         .match("gaphor.diagram*")
         .exclude("*.tests.*")
-        .exclude("gaphor.diagram.hoversupport")
         .exclude("gaphor.diagram.general.uicomponents")
         .exclude("gaphor.diagram.tools*")
         .exclude("gaphor.diagram.*editors")
@@ -70,14 +69,6 @@ def test_services_package():
         .may_import("gaphor.diagram*")
         .may_import("gaphor.services*")
         .should_not_import("gaphor*")
-        .check(gaphor)
-    )
-
-    (
-        archrule("Only Copy service depends on UI libraries")
-        .match("gaphor.services*")
-        .exclude("gaphor.services.copyservice")
-        .exclude("*.tests.*")
         .should_not_import(*UI_LIBRARIES)
         .check(gaphor)
     )
@@ -98,7 +89,7 @@ def test_storage_package():
     )
 
 
-def test_modeling_languages_do_not_depend_on_ui_package():
+def test_modeling_languages_should_not_depend_on_ui_package():
     (
         archrule("Modeling languages should not depend on the UI package")
         .match("gaphor.C4Model*", "gaphor.RAAML*", "gaphor.SysML*", "gaphor.UML*")
@@ -108,7 +99,7 @@ def test_modeling_languages_do_not_depend_on_ui_package():
 
 
 def test_moduling_languages_should_initialize_without_gtk():
-    modeling_languages = [  # type: ignore[var-annotated]
+    modeling_languages: list[str] = [
         c.__module__ for c in load_entry_points("gaphor.modelinglanguages").values()
     ]
     assert modeling_languages
@@ -123,7 +114,7 @@ def test_moduling_languages_should_initialize_without_gtk():
 
 def test_uml_package_does_not_depend_on_other_modeling_languages():
     (
-        archrule("Modeling languages should not depend on the UI package")
+        archrule("No modeling language dependencies for UML")
         .match("gaphor.UML*")
         .exclude("*.tests.*")
         .should_not_import("gaphor.C4Model*", "gaphor.RAAML*", "gaphor.SysML*")

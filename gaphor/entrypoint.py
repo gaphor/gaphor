@@ -2,7 +2,7 @@ import functools
 import importlib.metadata
 import inspect
 import logging
-from typing import Dict, Type, TypeVar
+from typing import Dict, TypeVar
 
 T = TypeVar("T")
 
@@ -22,7 +22,7 @@ def list_entry_points(group):
         return importlib.metadata.entry_points()[group]
 
 
-def load_entry_points(scope, services=None) -> Dict[str, Type[T]]:
+def load_entry_points(scope, services=None) -> Dict[str, type]:
     """Load services from resources."""
     uninitialized_services = {}
     for ep in list_entry_points(scope):
@@ -34,7 +34,7 @@ def load_entry_points(scope, services=None) -> Dict[str, Type[T]]:
 
 
 def init_entry_points(
-    uninitialized_services: Dict[str, Type[T]], **known_services: T
+    uninitialized_services: Dict[str, type[T]], **known_services: T
 ) -> Dict[str, T]:
     """Instantiate service definitions, taking into account dependencies
     defined in the constructor.
