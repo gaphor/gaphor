@@ -31,7 +31,7 @@ class ModelMerge(UIComponent):
     def refresh_model(self):
         self.model.remove_all()
 
-        for node in organize_changes(self.element_factory):
+        for node in organize_changes(self.element_factory, self.modeling_language):
             self.model.append(node)
 
     @event_handler(ModelLoaded)
