@@ -848,6 +848,12 @@ class redefine(umlproperty):
             self.original.opposite if isinstance(self.original, association) else None
         )
 
+    @property
+    def composite(self) -> bool:
+        return (
+            self.original.composite if isinstance(self.original, association) else False
+        )
+
     def load(self, obj, value):
         if self.original.name == self.name:
             self.original.load(obj, value)
