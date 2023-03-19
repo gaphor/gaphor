@@ -64,10 +64,19 @@ def organize_changes(element_factory):
             name = element_change.element_name
         return name and name != "Diagram" and not name.endswith("Item")
 
+    def _composite(change):
+        return change.property_name in (
+            "subject",
+            "ownedAttribute",
+            "ownedPresentation",
+        )
+
     property_names = (
-        lambda change: change.property_name == "ownedPresentation",
-        _not_presentation,
-        lambda _: False,
+        lambda change: change.property_name == "ownedPresentation"
+        or _composite(change),
+        _composite,
+        _composite,
+        _composite,
     )
 
     seen_change_ids: set[str] = set()
@@ -105,14 +114,20 @@ def organize_changes(element_factory):
         # TODO: check updates for ownedPresentation
 
     # TODO: Add/remove/update elements with/without a presentation
-    for element_id, changes in groupby(
+    for element_id, changes_iter in groupby(
         element_factory.select(
             lambda e: isinstance(e, PendingChange) and e.id not in seen_change_ids
         ),
         lambda e: e.element_id,  # type: ignore[no-any-return]
     ):
-        element = element_factory.lookup(element_id)
-        if element:
+        changes = list(changes_iter)
+        if element_change := next(
+            (c for c in changes if isinstance(c, ElementChange)), None
+        ):
+            node = _element_change(element_change, element_factory, lambda _: False)
+            seen_change_ids.update(_all_change_ids(node))
+            yield node
+        elif element := element_factory.lookup(element_id):
             node = Node(
                 [c for c in changes if isinstance(c, ValueChange)],
                 list(_ref_change_nodes(element.id, element_factory, lambda _: False)),
@@ -184,6 +199,10 @@ def _ref_change_nodes(
             yield _element_change(element_change, element_factory, *nested_properties)
         else:
             yield Node([change], [], _create_label(change, element_factory))
+
+
+def composite(change):
+    return True
 
 
 def _create_label(change, element_factory):

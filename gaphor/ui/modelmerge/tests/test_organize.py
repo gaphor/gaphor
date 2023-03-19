@@ -307,3 +307,44 @@ def test_add_presentation_to_existing_diagram(element_factory, change):
     assert not tree[0].elements
     assert tree[0].children
     assert add_class_item in tree[0].children[0].elements
+
+
+def test_add_diagram_contains_presentation_with_subject_and_composite_element(
+    element_factory, change
+):
+    add_diagram = change(ElementChange, op="add", element_name="Diagram")
+    add_class_item = change(ElementChange, op="add", element_name="ClassItem")
+    change(
+        RefChange,
+        op="add",
+        element_id=add_diagram.element_id,
+        property_name="ownedPresentation",
+        property_ref=add_class_item.element_id,
+    )
+    add_class = change(ElementChange, op="add", element_name="Class")
+    change(
+        RefChange,
+        op="add",
+        element_id=add_class_item.element_id,
+        property_name="subject",
+        property_ref=add_class.element_id,
+    )
+    add_property = change(ElementChange, op="add", element_name="Property")
+    change(
+        RefChange,
+        op="add",
+        element_id=add_class.element_id,
+        property_name="ownedAttribute",
+        property_ref=add_property.element_id,
+    )
+
+    tree = list(organize_changes(element_factory))
+
+    assert len(tree) == 1
+    assert add_diagram in tree[0].elements
+    assert tree[0].children
+    assert add_class_item in tree[0].children[0].elements
+    assert tree[0].children[0].children
+    assert add_class in tree[0].children[0].children[0].elements
+    assert tree[0].children[0].children[0].children
+    assert add_property in tree[0].children[0].children[0].children[0].elements
