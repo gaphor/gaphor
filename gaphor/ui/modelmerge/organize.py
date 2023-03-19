@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+
+from itertools import groupby
 from typing import Iterable, Sequence
 
 from gi.repository import GObject, Gio
@@ -86,7 +88,7 @@ def organize_changes(element_factory):
         ]
         ref_changes = [
             ref
-            for ref in _ref_changes(diagram.id, element_factory, *property_names)
+            for ref in _ref_change_nodes(diagram.id, element_factory, *property_names)
             if all(e.id not in seen_change_ids for e in ref.elements)
         ]
         if value_changes or ref_changes:
@@ -103,6 +105,27 @@ def organize_changes(element_factory):
         # TODO: check updates for ownedPresentation
 
     # TODO: Add/remove/update elements with/without a presentation
+    for element_id, changes in groupby(
+        element_factory.select(
+            lambda e: isinstance(e, PendingChange) and e.id not in seen_change_ids
+        ),
+        lambda e: e.element_id,  # type: ignore[no-any-return]
+    ):
+        element = element_factory.lookup(element_id)
+        if element:
+            node = Node(
+                [c for c in changes if isinstance(c, ValueChange)],
+                list(_ref_change_nodes(element.id, element_factory, lambda _: False)),
+                gettext("Update element “{name}”").format(
+                    name=element.name or gettext("<None>")
+                )
+                if hasattr(element, "name")
+                else gettext("Update element of type “{type}”").format(
+                    type=type(element).__name__
+                ),
+            )
+            seen_change_ids.update(_all_change_ids(node))
+            yield node
 
 
 def _all_change_ids(node: Node):
@@ -117,7 +140,7 @@ def _element_change(change, element_factory, *property_names):
         return Node(
             [change, *_value_changes(change.element_id, element_factory)],
             list(
-                _ref_changes(change.element_id, element_factory, *property_names),
+                _ref_change_nodes(change.element_id, element_factory, *property_names),
             ),
             _create_label(change, element_factory),
         )
@@ -125,7 +148,7 @@ def _element_change(change, element_factory, *property_names):
         return Node(
             [*_value_changes(change.element_id, element_factory), change],
             list(
-                _ref_changes(change.element_id, element_factory, *property_names),
+                _ref_change_nodes(change.element_id, element_factory, *property_names),
             ),
             _create_label(change, element_factory),
         )
@@ -139,7 +162,7 @@ def _value_changes(element_id, element_factory) -> Iterable[ValueChange]:
     )
 
 
-def _ref_changes(
+def _ref_change_nodes(
     element_id, element_factory, property_name, *nested_properties
 ) -> Iterable[Node]:
     for change in element_factory.select(
