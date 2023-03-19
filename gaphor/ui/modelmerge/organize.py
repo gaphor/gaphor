@@ -69,21 +69,22 @@ def organize_changes(element_factory, modeling_language):
         else:
             raise ValueError("Can’t resolve id {element_id} to a type")
 
-    def _composite(change: RefChange):
+    def composite(change: RefChange):
         element_type = lookup_element(change.element_id)
-        prop = getattr(element_type, change.property_name)
-        return prop.composite
+        prop = getattr(element_type, change.property_name, None)
+        return prop and prop.composite
 
-    def _not_presentation(change: RefChange):
+    def not_presentation(change: RefChange):
         element_type = lookup_element(change.property_ref)
         return not issubclass(element_type, (Diagram, Presentation))
 
+    def composite_and_not_presentation(change: RefChange):
+        return composite(change) and not_presentation(change)
+
     nesting_rules = (
-        _composite,
-        _not_presentation,
-        _composite,
-        _composite,
-        _composite,
+        composite,
+        not_presentation,
+        composite_and_not_presentation,
     )
 
     seen_change_ids: set[str] = set()
@@ -131,13 +132,19 @@ def organize_changes(element_factory, modeling_language):
         if element_change := next(
             (c for c in changes if isinstance(c, ElementChange)), None
         ):
-            node = _element_change_node(element_change, element_factory, _composite)
+            node = _element_change_node(
+                element_change, element_factory, composite_and_not_presentation
+            )
             seen_change_ids.update(_all_change_ids(node))
             yield node
         elif element := element_factory.lookup(element_id):
             node = Node(
                 [c for c in changes if isinstance(c, ValueChange)],
-                list(_ref_change_nodes(element.id, element_factory, _composite)),
+                list(
+                    _ref_change_nodes(
+                        element.id, element_factory, composite_and_not_presentation
+                    )
+                ),
                 gettext("Update element “{name}”").format(
                     name=element.name or gettext("<None>")
                 )
