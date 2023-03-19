@@ -8,6 +8,7 @@ from gaphor.core.modeling import (
     RefChange,
     ValueChange,
 )
+from gaphor import UML
 from gaphor.ui.modelmerge.organize import organize_changes
 
 
@@ -121,8 +122,7 @@ def test_remove_element_with_attribute_update(element_factory, change):
     assert not add_element.children
 
 
-@pytest.mark.xfail
-def test_attribute_update(element_factory, change):
+def test_update_diagram_attribute(element_factory, change):
     diagram = element_factory.create(Diagram)
     diagram.name = "my diagram"
     vchange: ValueChange = change(
@@ -138,13 +138,31 @@ def test_attribute_update(element_factory, change):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.label == "Update element my diagram"
-    assert not add_element.elements
-    assert add_element.children
-    assert vchange in add_element.children
+    assert add_element.label == "Update diagram “my diagram”"
+    assert vchange in add_element.elements
+    assert not add_element.children
 
 
-@pytest.mark.xfail
+def test_update_model_attribute(element_factory, change):
+    klass = element_factory.create(UML.Class)
+    vchange: ValueChange = change(
+        ValueChange,
+        op="update",
+        element_id=klass.id,
+        property_name="name",
+        property_value="my class",
+    )
+
+    tree = list(organize_changes(element_factory))
+
+    add_element = tree[0]
+
+    assert len(tree) == 1
+    assert add_element.label == "Update element “<None>”"
+    assert vchange in add_element.elements
+    assert not add_element.children
+
+
 def test_update_reference_without_name(element_factory):
     diagram = element_factory.create(Diagram)
     diagram.name = "my diagram"
@@ -160,14 +178,13 @@ def test_update_reference_without_name(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.label == "Update element my diagram"
-    assert add_element.element is None
+    assert add_element.label == "Update diagram “my diagram”"
+    assert not add_element.elements
     assert add_element.children
-    assert add_element.children[0].element is vchange
-    assert add_element.children[0].label == "Add relation element to nameless object"
+    assert vchange in add_element.children[0].elements
+    assert add_element.children[0].label == "Add relation “element”"
 
 
-@pytest.mark.xfail
 def test_update_reference_with_name(element_factory):
     diagram = element_factory.create(Diagram)
     diagram.name = "my diagram"
@@ -183,14 +200,13 @@ def test_update_reference_with_name(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.label == "Update element of type Element"
-    assert add_element.element is None
+    assert add_element.label == "Update element of type “Element”"
+    assert not add_element.elements
     assert add_element.children
-    assert add_element.children[0].element is vchange
-    assert add_element.children[0].label == "Add relation diagram to my diagram"
+    assert vchange in add_element.children[0].elements
+    assert add_element.children[0].label == "Add relation “diagram” to “my diagram”"
 
 
-@pytest.mark.xfail
 def test_remove_reference_with_name(element_factory):
     diagram = element_factory.create(Diagram)
     diagram.name = "my diagram"
@@ -206,11 +222,11 @@ def test_remove_reference_with_name(element_factory):
     add_element = tree[0]
 
     assert len(tree) == 1
-    assert add_element.label == "Update element of type Element"
-    assert add_element.element is None
+    assert add_element.label == "Update element of type “Element”"
+    assert not add_element.elements
     assert add_element.children
-    assert add_element.children[0].element is vchange
-    assert add_element.children[0].label == "Remove relation diagram to my diagram"
+    assert vchange in add_element.children[0].elements
+    assert add_element.children[0].label == "Remove relation “diagram” to “my diagram”"
 
 
 def test_add_diagram_with_reference(element_factory, change):
