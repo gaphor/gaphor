@@ -14,7 +14,7 @@ from gaphor.core.modeling import (
 )
 from gaphor.i18n import gettext
 from gaphor.core.changeset.apply import applicable
-from gaphor.core.modeling import Diagram
+from gaphor.core.modeling import Diagram, Presentation
 
 
 class Node(GObject.Object):
@@ -39,6 +39,9 @@ class Node(GObject.Object):
             for child in self.children:
                 child.sync()
 
+    def __repr__(self):
+        return f"<Node elements={self.elements} label='{self.label}'>"
+
 
 def as_list_store(list) -> Gio.ListStore:
     if isinstance(list, Gio.ListStore):
@@ -50,30 +53,34 @@ def as_list_store(list) -> Gio.ListStore:
     return store
 
 
-def organize_changes(element_factory):
-    def _not_presentation(change):
-        if element := element_factory.lookup(change.property_ref):
-            name = type(element).__name__
-        if element_change := next(
+def organize_changes(element_factory, modeling_language):
+    def lookup_element(element_id: str):
+        if element := element_factory.lookup(element_id):
+            return type(element)
+        elif element_change := next(
             element_factory.select(
-                lambda e: isinstance(e, ElementChange)
-                and e.element_id == change.property_ref
+                lambda e: isinstance(e, ElementChange) and e.element_id == element_id
             ),
             None,
         ):
-            name = element_change.element_name
-        return name and name != "Diagram" and not name.endswith("Item")
+            element_type = modeling_language.lookup_element(element_change.element_name)
+            assert element_type
+            return element_type
+        else:
+            raise ValueError("Can’t resolve id {element_id} to a type")
 
-    def _composite(change):
-        return change.property_name in (
-            "subject",
-            "ownedAttribute",
-            "ownedPresentation",
-        )
+    def _composite(change: RefChange):
+        element_type = lookup_element(change.element_id)
+        prop = getattr(element_type, change.property_name)
+        return prop.composite
 
-    property_names = (
-        lambda change: change.property_name == "ownedPresentation"
-        or _composite(change),
+    def _not_presentation(change: RefChange):
+        element_type = lookup_element(change.property_ref)
+        return not issubclass(element_type, (Diagram, Presentation))
+
+    nesting_rules = (
+        _composite,
+        _not_presentation,
         _composite,
         _composite,
         _composite,
@@ -81,29 +88,31 @@ def organize_changes(element_factory):
 
     seen_change_ids: set[str] = set()
 
+    # Add/remove diagrams
     for change in element_factory.select(
         lambda e: isinstance(e, ElementChange) and e.element_name == "Diagram"
     ):
-        node = _element_change(change, element_factory, *property_names)
+        node = _element_change_node(change, element_factory, *nesting_rules)
         seen_change_ids.update(_all_change_ids(node))
         yield node
 
-    # TODO: Add/remove/update presentations to existing diagrams
-    for diagram in element_factory.select(Diagram):
-        value_changes: list[PendingChange] = [
-            val
-            for val in _value_changes(diagram.id, element_factory)
-            if val.id not in seen_change_ids
-        ]
-        ref_changes = [
-            ref
-            for ref in _ref_change_nodes(diagram.id, element_factory, *property_names)
-            if all(e.id not in seen_change_ids for e in ref.elements)
-        ]
+    # Add/remove/update presentations to existing diagrams
+    for diagram in element_factory.select(
+        lambda e: isinstance(e, Diagram) and e.id not in seen_change_ids
+    ):
+        value_changes: list[PendingChange] = list(
+            _value_changes(diagram.id, element_factory)
+        )
+        ref_changes = list(
+            _ref_change_nodes(diagram.id, element_factory, *nesting_rules)
+        )
+        presentation_updates = list(
+            _presentation_updates(diagram, element_factory, *nesting_rules[1:])
+        )
         if value_changes or ref_changes:
             node = Node(
                 value_changes,
-                ref_changes,
+                ref_changes + presentation_updates,
                 gettext("Update diagram “{name}”").format(
                     name=diagram.name or gettext("<None>")
                 ),
@@ -111,9 +120,7 @@ def organize_changes(element_factory):
             seen_change_ids.update(_all_change_ids(node))
             yield node
 
-        # TODO: check updates for ownedPresentation
-
-    # TODO: Add/remove/update elements with/without a presentation
+    # Add/remove/update elements with/without a presentation
     for element_id, changes_iter in groupby(
         element_factory.select(
             lambda e: isinstance(e, PendingChange) and e.id not in seen_change_ids
@@ -124,13 +131,13 @@ def organize_changes(element_factory):
         if element_change := next(
             (c for c in changes if isinstance(c, ElementChange)), None
         ):
-            node = _element_change(element_change, element_factory, lambda _: False)
+            node = _element_change_node(element_change, element_factory, _composite)
             seen_change_ids.update(_all_change_ids(node))
             yield node
         elif element := element_factory.lookup(element_id):
             node = Node(
                 [c for c in changes if isinstance(c, ValueChange)],
-                list(_ref_change_nodes(element.id, element_factory, lambda _: False)),
+                list(_ref_change_nodes(element.id, element_factory, _composite)),
                 gettext("Update element “{name}”").format(
                     name=element.name or gettext("<None>")
                 )
@@ -145,17 +152,18 @@ def organize_changes(element_factory):
 
 def _all_change_ids(node: Node):
     yield from (e.id for e in node.elements)
+    yield from (e.element_id for e in node.elements)
     if node.children:
         for c in node.children:
             yield from _all_change_ids(c)
 
 
-def _element_change(change, element_factory, *property_names):
+def _element_change_node(change, element_factory, *nesting_rules):
     if change.op == "add":
         return Node(
             [change, *_value_changes(change.element_id, element_factory)],
             list(
-                _ref_change_nodes(change.element_id, element_factory, *property_names),
+                _ref_change_nodes(change.element_id, element_factory, *nesting_rules),
             ),
             _create_label(change, element_factory),
         )
@@ -163,7 +171,7 @@ def _element_change(change, element_factory, *property_names):
         return Node(
             [*_value_changes(change.element_id, element_factory), change],
             list(
-                _ref_change_nodes(change.element_id, element_factory, *property_names),
+                _ref_change_nodes(change.element_id, element_factory, *nesting_rules),
             ),
             _create_label(change, element_factory),
         )
@@ -178,31 +186,41 @@ def _value_changes(element_id, element_factory) -> Iterable[ValueChange]:
 
 
 def _ref_change_nodes(
-    element_id, element_factory, property_name, *nested_properties
+    element_id, element_factory, nesting_rule, *nesting_rules
 ) -> Iterable[Node]:
     for change in element_factory.select(
         lambda e: isinstance(e, RefChange) and e.element_id == element_id
     ):
-        if (
-            property_name(change)
-            and nested_properties
-            and (
-                element_change := next(
-                    element_factory.select(
-                        lambda e: isinstance(e, ElementChange)
-                        and e.element_id == change.property_ref
-                    ),
-                    None,
-                )
+        if nesting_rule(change) and (
+            element_change := next(
+                element_factory.select(
+                    lambda e: isinstance(e, ElementChange)
+                    and e.element_id == change.property_ref
+                ),
+                None,
             )
         ):
-            yield _element_change(element_change, element_factory, *nested_properties)
-        else:
-            yield Node([change], [], _create_label(change, element_factory))
+            yield _element_change_node(
+                element_change, element_factory, *(nesting_rules or [nesting_rule])
+            )
+        yield Node([change], [], _create_label(change, element_factory))
 
 
-def composite(change):
-    return True
+def _presentation_updates(diagram, element_factory, *nesting_rules):
+    for presentation in diagram.ownedPresentation:
+        value_changes: list[PendingChange] = list(
+            _value_changes(presentation.id, element_factory)
+        )
+        ref_changes = list(
+            _ref_change_nodes(presentation.id, element_factory, *nesting_rules)
+        )
+        if value_changes or ref_changes:
+            node = Node(
+                value_changes,
+                ref_changes,
+                gettext("Update presentation “{type}”").format(type=type(presentation)),
+            )
+            yield node
 
 
 def _create_label(change, element_factory):
@@ -227,8 +245,12 @@ def _create_label(change, element_factory):
     op = change.op
     if isinstance(change, ElementChange) and change.element_name.endswith("Item"):
         # TODO: find subject type
-        if op in ["add", "remove"]:
+        if op == "add":
             return gettext("Add presentation of type {type}").format(
+                type=change.element_name
+            )
+        if op == "remove":
+            return gettext("Remove presentation of type {type}").format(
                 type=change.element_name
             )
         else:
