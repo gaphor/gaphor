@@ -5,7 +5,7 @@ from gaphor.core.modeling import (
     PendingChange,
 )
 from gaphor import UML
-from gaphor.UML.diagramitems import ClassItem, AssociationItem
+from gaphor.UML.diagramitems import ClassItem, AssociationItem, ExtensionItem
 from gaphor.ui.modelmerge.organize import organize_changes, Node
 from gaphor.UML.umllex import parse
 from gaphor.core.changeset.compare import compare
@@ -64,4 +64,19 @@ def test_association_with_existing_classes(element_factory, modeling_language, c
     tree = list(organize_changes(current, modeling_language))
 
     assert len(tree) == 3
+    assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
+
+
+def test_extension(element_factory, modeling_language, create):
+    class_item = create(ClassItem, UML.Class)
+    stereotype_item = create(ClassItem, UML.Stereotype)
+    extension = create(ExtensionItem)
+    connect(extension, extension.head, class_item)
+    connect(extension, extension.tail, stereotype_item)
+
+    current = ElementFactory()
+    all(compare(current, element_factory))
+    tree = list(organize_changes(current, modeling_language))
+
+    assert len(tree) == 1
     assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
