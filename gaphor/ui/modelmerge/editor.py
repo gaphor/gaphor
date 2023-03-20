@@ -89,7 +89,7 @@ def list_item_factory_setup(_factory, list_item, on_apply):
     builder.extend_with_template(
         list_item,
         type(list_item).__gtype__,
-        translated_ui_string("gaphor.ui", "change.ui"),
+        translated_ui_string("gaphor.ui.modelmerge", "change.ui"),
         -1,
     )
     apply = builder.get_object("apply")
