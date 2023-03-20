@@ -225,9 +225,7 @@ def _presentation_updates(diagram, element_factory, *nesting_rules):
             yield Node(
                 value_changes,
                 ref_changes,
-                gettext("Update presentation “{type}”").format(
-                    type=type(presentation)
-                ),
+                gettext("Update presentation “{type}”").format(type=type(presentation)),
             )
 
 
