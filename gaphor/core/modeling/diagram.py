@@ -378,7 +378,6 @@ class Diagram(Element):
     def update_now(
         self,
         dirty_items: Sequence[Presentation],
-        dirty_matrix_items: Sequence[Presentation] = (),
     ) -> None:
         """Update the diagram canvas."""
         sort = self.sort

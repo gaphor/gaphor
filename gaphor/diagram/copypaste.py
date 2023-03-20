@@ -167,7 +167,7 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
     for name, ser in data.items():
         for value in deserialize(ser, lookup):
             item.load(name, value)
-    diagram.update_now((), [item])
+    diagram.update_now((item,))
 
 
 class CopyData(NamedTuple):
