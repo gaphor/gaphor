@@ -5,11 +5,18 @@ from gaphor.core.modeling import (
     PendingChange,
 )
 from gaphor import UML
-from gaphor.UML.diagramitems import ClassItem, AssociationItem, ExtensionItem
+from gaphor.UML.diagramitems import (
+    ClassItem,
+    AssociationItem,
+    ExtensionItem,
+    ActivityItem,
+    PartitionItem,
+)
 from gaphor.ui.modelmerge.organize import organize_changes, Node
 from gaphor.UML.umllex import parse
 from gaphor.core.changeset.compare import compare
 from gaphor.diagram.tests.fixtures import connect
+from gaphor.UML.actions.actionstoolbox import partition_config
 
 
 def all_change_ids(nodes: Iterable[Node]):
@@ -79,4 +86,37 @@ def test_extension(element_factory, modeling_language, create):
     tree = list(organize_changes(current, modeling_language))
 
     assert len(tree) == 1
+    assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
+
+
+def test_activity_with_parameter_node(element_factory, modeling_language, create):
+    activity = create(ActivityItem, UML.Activity)
+    node = element_factory.create(UML.ActivityParameterNode)
+    node.parameter = element_factory.create(UML.Parameter)
+    activity.subject.node = node
+
+    current = ElementFactory()
+    all(compare(current, element_factory))
+    tree = list(organize_changes(current, modeling_language))
+
+    assert len(tree) == 1
+    assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
+
+
+def test_partition_with_swim_lanes(element_factory, modeling_language, create):
+    partition = create(PartitionItem, UML.ActivityPartition)
+    # NB. This adds an extra Activity namespace!
+    partition_config(partition)
+
+    partition.partition = element_factory.create(UML.ActivityPartition)
+    partition.partition = element_factory.create(UML.ActivityPartition)
+    partition.partition[0].activity = partition.subject.activity
+    partition.partition[1].activity = partition.subject.activity
+
+    current = ElementFactory()
+    all(compare(current, element_factory))
+    tree = list(organize_changes(current, modeling_language))
+
+    # Create diagram + extra Activity
+    assert len(tree) == 2
     assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
