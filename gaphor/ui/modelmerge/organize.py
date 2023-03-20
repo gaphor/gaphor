@@ -222,12 +222,13 @@ def _presentation_updates(diagram, element_factory, *nesting_rules):
             _ref_change_nodes(presentation.id, element_factory, *nesting_rules)
         )
         if value_changes or ref_changes:
-            node = Node(
+            yield Node(
                 value_changes,
                 ref_changes,
-                gettext("Update presentation “{type}”").format(type=type(presentation)),
+                gettext("Update presentation “{type}”").format(
+                    type=type(presentation)
+                ),
             )
-            yield node
 
 
 def _create_label(change, element_factory):
