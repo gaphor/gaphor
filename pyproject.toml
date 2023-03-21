@@ -45,7 +45,6 @@ gaphas = ">3.9.0,<5.0"
 generic = "^1.0.0"
 tinycss2 = "^1.0.2"
 jedi = "^0.18.1"
-darkdetect = ">=0.5.1,<0.9.0"
 better-exceptions = "^0.3.3"
 pydot = "^1.4.2"
 sphinx = { version = ">=4.3,<6.0", optional = true }

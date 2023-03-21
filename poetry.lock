@@ -457,21 +457,6 @@ tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.1
 toml = ["tomli"]
 
 [[package]]
-name = "darkdetect"
-version = "0.8.0"
-description = "Detect OS Dark Mode from Python"
-category = "main"
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "darkdetect-0.8.0-py3-none-any.whl", hash = "sha256:a7509ccf517eaad92b31c214f593dbcf138ea8a43b2935406bbd565e15527a85"},
-    {file = "darkdetect-0.8.0.tar.gz", hash = "sha256:b5428e1170263eb5dea44c25dc3895edd75e6f52300986353cd63533fe7df8b1"},
-]
-
-[package.extras]
-macos-listener = ["pyobjc-framework-Cocoa"]
-
-[[package]]
 name = "debugpy"
 version = "1.6.6"
 description = "An implementation of the Debug Adapter Protocol for Python"
