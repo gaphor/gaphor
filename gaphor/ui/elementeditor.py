@@ -86,6 +86,9 @@ class ElementEditor(UIComponent, ActionProvider):
         self.revealer.set_reveal_child(self.properties.get("show-editors", True))
         self.editor_stack = builder.get_object("editor-stack")
 
+        resolve = builder.get_object("modelmerge-resolve")
+        resolve.connect_after("clicked", self.on_model_loaded)
+
         self.editors.open(builder)
         self.preferences.open(builder)
         self.modelmerge.open(builder)
