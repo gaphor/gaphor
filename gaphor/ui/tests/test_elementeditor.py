@@ -22,9 +22,11 @@ class DummyProperties(dict):
         self[key] = val
 
 
-def test_reopen_of_window(event_manager, element_factory, diagrams):
+def test_reopen_of_window(event_manager, element_factory, modeling_language, diagrams):
     properties = DummyProperties()
-    editor = ElementEditor(event_manager, element_factory, diagrams, properties)
+    editor = ElementEditor(
+        event_manager, element_factory, modeling_language, diagrams, properties
+    )
 
     editor.open()
     editor.close()
@@ -32,9 +34,13 @@ def test_reopen_of_window(event_manager, element_factory, diagrams):
     editor.close()
 
 
-def test_create_pages(event_manager, element_factory, diagrams, create):
+def test_create_pages(
+    event_manager, element_factory, modeling_language, diagrams, create
+):
     properties = DummyProperties()
-    editor = ElementEditor(event_manager, element_factory, diagrams, properties)
+    editor = ElementEditor(
+        event_manager, element_factory, modeling_language, diagrams, properties
+    )
     package_item = create(PackageItem, UML.Package)
 
     editor.open()

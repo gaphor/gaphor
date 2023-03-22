@@ -20,7 +20,6 @@ class ModelMerge(UIComponent):
         self.model = Gio.ListStore.new(Node.__gtype__)
         self.selection = None
         self.tree_view = None
-        self.scrolled_window = None
         event_manager.subscribe(self.on_model_loaded)
         event_manager.subscribe(self.on_pending_change)
 
@@ -28,27 +27,17 @@ class ModelMerge(UIComponent):
         self.event_manager.unsubscribe(self.on_model_loaded)
         self.event_manager.unsubscribe(self.on_pending_change)
 
+    @property
+    def needs_merge(self):
+        return bool(next(self.element_factory.select(PendingChange), None))
+
     def refresh_model(self):
         self.model.remove_all()
 
         for node in organize_changes(self.element_factory, self.modeling_language):
             self.model.append(node)
 
-    @event_handler(ModelLoaded)
-    def on_model_loaded(self, event):
-        self.refresh_model()
-        if self.scrolled_window and next(
-            self.element_factory.select(PendingChange), None
-        ):
-            self.scrolled_window.set_visible(True)
-
-    @event_handler(AttributeUpdated)
-    def on_pending_change(self, event):
-        if event.property is PendingChange.applied:
-            for item in self.model:
-                item.sync()
-
-    def open(self):
+    def open(self, builder):
         tree_model = Gtk.TreeListModel.new(
             self.model,
             passthrough=False,
@@ -68,19 +57,33 @@ class ModelMerge(UIComponent):
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect("setup", list_item_factory_setup, on_apply)
-        self.tree_view = Gtk.ListView.new(self.selection, factory)
 
-        scrolled_window = Gtk.ScrolledWindow()
-        scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        scrolled_window.set_child(self.tree_view)
+        self.tree_view = builder.get_object("modelmerge")
+        self.tree_view.set_model(self.selection)
+        self.tree_view.set_factory(factory)
 
-        self.scrolled_window = scrolled_window
-        self.scrolled_window.set_visible(bool(self.model))
-
-        return scrolled_window
+        resolve = builder.get_object("modelmerge-resolve")
+        resolve.connect("clicked", self.on_resolve_merge)
 
     def close(self):
         pass
+
+    def on_resolve_merge(self, _button):
+        pending_changes = self.element_factory.lselect(PendingChange)
+        self.model.remove_all()
+        with Transaction(self.event_manager):
+            for change in pending_changes:
+                change.unlink()
+
+    @event_handler(ModelLoaded)
+    def on_model_loaded(self, event):
+        self.refresh_model()
+
+    @event_handler(AttributeUpdated)
+    def on_pending_change(self, event):
+        if event.property is PendingChange.applied:
+            for item in self.model:
+                item.sync()
 
 
 def list_item_factory_setup(_factory, list_item, on_apply):

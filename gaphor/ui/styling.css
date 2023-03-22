@@ -112,7 +112,7 @@ frame > textview {
   margin: 6px;
 }
 
-#model_browser treeexpander {
+treeexpander {
   margin: 0 6px;
 }
 

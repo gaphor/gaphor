@@ -8,7 +8,6 @@
     <box orientation="horizontal" resize="true">
       <component name="diagrams" resize="true" />
       <component name="elementeditor" />
-      <component name="model_merge" />
     </box>
   </paned>
 </layout>

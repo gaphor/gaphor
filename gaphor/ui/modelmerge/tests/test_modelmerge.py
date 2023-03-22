@@ -3,14 +3,6 @@ from gaphor.ui.modelmerge.editor import ModelMerge
 from gaphor.core.modeling import ElementChange, ValueChange
 
 
-def test_open_model_merge(event_manager, element_factory, modeling_language):
-    model_merge = ModelMerge(event_manager, element_factory, modeling_language)
-
-    widget = model_merge.open()
-
-    assert widget
-
-
 def test_build_list_store(event_manager, element_factory, modeling_language):
     model_merge = ModelMerge(event_manager, element_factory, modeling_language)
 
