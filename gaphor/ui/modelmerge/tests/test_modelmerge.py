@@ -1,4 +1,3 @@
-from gaphor.event import ModelLoaded
 from gaphor.ui.modelmerge.editor import ModelMerge
 from gaphor.core.modeling import ElementChange, ValueChange
 
@@ -16,7 +15,7 @@ def test_build_list_store(event_manager, element_factory, modeling_language):
     vchange.property_name = "name"
     vchange.property_value = "my diagram"
 
-    event_manager.handle(ModelLoaded(None))
+    model_merge.refresh_model()
 
     assert model_merge.model
     assert not model_merge.model[0].children

@@ -6,13 +6,12 @@ from gaphor.event import ModelLoaded
 from gaphor.core.modeling import PendingChange
 from gaphor.core.changeset.apply import apply_change, applicable
 from gaphor.i18n import translated_ui_string
-from gaphor.ui.abc import UIComponent
 from gaphor.core import event_handler
 from gaphor.transaction import Transaction
 from gaphor.ui.modelmerge.organize import organize_changes, Node
 
 
-class ModelMerge(UIComponent):
+class ModelMerge:
     def __init__(self, event_manager, element_factory, modeling_language):
         self.element_factory = element_factory
         self.event_manager = event_manager
@@ -20,10 +19,6 @@ class ModelMerge(UIComponent):
         self.model = Gio.ListStore.new(Node.__gtype__)
         self.selection = None
         self.tree_view = None
-        event_manager.subscribe(self.on_model_loaded)
-
-    def shutdown(self):
-        self.event_manager.unsubscribe(self.on_model_loaded)
 
     @property
     def needs_merge(self):
@@ -74,8 +69,12 @@ class ModelMerge(UIComponent):
         resolve = builder.get_object("modelmerge-resolve")
         resolve.connect("clicked", self.on_resolve_merge)
 
+        self.event_manager.subscribe(self.on_model_loaded)
+
+        self.refresh_model()
+
     def close(self):
-        pass
+        self.event_manager.unsubscribe(self.on_model_loaded)
 
     def on_resolve_merge(self, _button):
         pending_changes = self.element_factory.lselect(PendingChange)
