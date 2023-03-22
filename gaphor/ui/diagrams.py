@@ -177,6 +177,9 @@ class Diagrams(UIComponent, ActionProvider):
                     if diagram := page.diagram_page.get_diagram():
                         yield diagram.id
 
+        self._stack.set_visible_child_name(
+            "notebook" if notebook.get_n_pages() else "empty"
+        )
         self.properties.set("opened-diagrams", list(diagram_ids()))
 
     def _on_current_page_changed(self, _notebook_or_tab_page, _gparam):
@@ -310,8 +313,6 @@ class Diagrams(UIComponent, ActionProvider):
 
         for action_name in ["win.zoom-in", "win.zoom-out", "win.zoom-100"]:
             self.event_manager.handle(ActionEnabled(action_name, enabled))
-
-        self._stack.set_visible_child_name("notebook" if enabled else "empty")
 
     @event_handler(AttributeUpdated)
     def _on_name_change(self, event):
