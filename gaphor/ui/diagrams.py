@@ -154,18 +154,6 @@ class Diagrams(UIComponent, ActionProvider):
             )
         )
 
-    def _on_notebook_destroy(self, notebook):
-        for id in self._page_handler_ids:
-            notebook.disconnect(id)
-
-    def _on_switch_page(self, notebook, page, new_page_num):
-        view = page.diagram_page.view
-        self.event_manager.handle(
-            DiagramSelectionChanged(
-                view, view.selection.focused_item, view.selection.selected_items
-            )
-        )
-
     def _on_page_changed(self, notebook, _page, _page_num):
         def diagram_ids():
             notebook = self._notebook
@@ -335,29 +323,6 @@ def apply_tool_select_controller(widget, toolbox):
         toolbox.activate_shortcut(keyval, state)
 
     ctrl.connect("key-pressed", on_shortcut)
-
-
-def tab_label(title, widget, event_manager):
-    tab_box = Gtk.Box.new(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
-    button = Gtk.Button()
-    button.get_style_context().add_class("flat")
-    button.set_focus_on_click(False)
-
-    button.connect(
-        "clicked",
-        lambda _button: event_manager.handle(
-            DiagramClosed(widget.diagram_page.get_diagram())
-        ),
-    )
-
-    label = Gtk.Label.new(title)
-    tab_box.append(label)
-    close_image = Gtk.Image.new_from_icon_name("window-close-symbolic")
-    button.set_child(close_image)
-    tab_box.append(button)
-    tab_box.show()
-
-    return tab_box
 
 
 def get_widgets_on_pages(notebook):
