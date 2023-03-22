@@ -136,6 +136,28 @@ def test_remove_many_relation(element_factory, modeling_language):
     assert diagram.element is None
 
 
+def test_apply_opposite_relation(element_factory, modeling_language):
+    element = element_factory.create(Element)
+    diagram = element_factory.create(Diagram)
+
+    change: RefChange = element_factory.create(RefChange)
+    change.op = "add"
+    change.element_id = element.id
+    change.property_name = "ownedDiagram"
+    change.property_ref = diagram.id
+
+    other: RefChange = element_factory.create(RefChange)
+    other.op = "update"
+    other.element_id = diagram.id
+    other.property_name = "element"
+    other.property_ref = element.id
+
+    apply_change(change, element_factory, modeling_language)
+
+    assert change.applied
+    assert other.applied
+
+
 def test_element_change_applicable(element_factory):
     change: ElementChange = element_factory.create(ElementChange)
     change.op = "add"

@@ -73,14 +73,26 @@ def _(change: RefChange, element_factory, modeling_factory):
         return
     element = element_factory[change.element_id]
     ref = element_factory[change.property_ref]
+    prop = getattr(type(element), change.property_name, None)
     if change.op in ("add", "update"):
         element.load(change.property_name, ref)
         element.postload()
-    elif change.op == "remove" and (
-        prop := getattr(type(element), change.property_name, None)
-    ):
+    elif change.op == "remove" and prop:
         if prop.upper == 1:
             delattr(element, change.property_name)
         else:
             getattr(element, change.property_name).remove(ref)
     change.applied = True
+
+    if prop and prop.opposite:
+        other = next(
+            element_factory.select(
+                lambda e: isinstance(e, RefChange)
+                and e.element_id == change.property_ref
+                and e.property_ref == change.element_id
+                and e.property_name == prop.opposite
+            ),
+            None,
+        )
+        if other:
+            other.applied = True
