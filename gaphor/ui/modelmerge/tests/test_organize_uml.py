@@ -5,18 +5,24 @@ from gaphor.core.modeling import (
     PendingChange,
 )
 from gaphor import UML
+from gaphor.SysML import sysml
+from gaphor.SysML.diagramitems import BlockItem, PropertyItem, ProxyPortItem
 from gaphor.UML.diagramitems import (
     ClassItem,
     AssociationItem,
     ExtensionItem,
     ActivityItem,
     PartitionItem,
+    ConnectorItem,
+    StateItem,
+    TransitionItem,
 )
 from gaphor.ui.modelmerge.organize import organize_changes, Node
 from gaphor.UML.umllex import parse
 from gaphor.core.changeset.compare import compare
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.actions.actionstoolbox import partition_config
+from gaphor.SysML.propertypages import create_item_flow
 
 
 def all_change_ids(nodes: Iterable[Node]):
@@ -119,4 +125,51 @@ def test_partition_with_swim_lanes(element_factory, modeling_language, create):
 
     # Create diagram + extra Activity
     assert len(tree) == 2
+    assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
+
+
+def test_connector_with_item_flow(element_factory, modeling_language, create):
+    block_item = create(BlockItem, sysml.Block)
+    property_item = create(PropertyItem, UML.Property)
+    proxy_port_item = create(ProxyPortItem)
+    connector_item = create(ConnectorItem)
+    connect(proxy_port_item, proxy_port_item.handles()[0], block_item)
+    connect(connector_item, connector_item.head, proxy_port_item)
+    connect(connector_item, connector_item.tail, property_item)
+    create_item_flow(connector_item.subject)
+
+    current = ElementFactory()
+    all(compare(current, element_factory))
+    tree = list(organize_changes(current, modeling_language))
+
+    assert len(tree) == 1
+    assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
+
+
+def test_state_with_entry_do_exit_criteria(element_factory, modeling_language, create):
+    state_item = create(StateItem, UML.State)
+    state_item.subject.entry = element_factory.create(UML.Activity)
+    state_item.subject.doActivity = element_factory.create(UML.Activity)
+
+    current = ElementFactory()
+    all(compare(current, element_factory))
+    tree = list(organize_changes(current, modeling_language))
+
+    assert len(tree) == 1
+    assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
+
+
+def test_transition_with_guard(element_factory, modeling_language, create):
+    head_state_item = create(StateItem, UML.State)
+    tail_state_item = create(StateItem, UML.State)
+    transition_item = create(TransitionItem)
+    connect(transition_item, transition_item.head, head_state_item)
+    connect(transition_item, transition_item.tail, tail_state_item)
+
+    current = ElementFactory()
+    all(compare(current, element_factory))
+    tree = list(organize_changes(current, modeling_language))
+
+    assert transition_item.subject.guard
+    assert len(tree) == 1
     assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
