@@ -3,7 +3,7 @@ from __future__ import annotations
 from gi.repository import Gio, Gtk
 
 from gaphor.event import ModelLoaded
-from gaphor.core.modeling import PendingChange, AttributeUpdated
+from gaphor.core.modeling import PendingChange
 from gaphor.core.changeset.apply import apply_change, applicable
 from gaphor.i18n import translated_ui_string
 from gaphor.ui.abc import UIComponent
@@ -21,11 +21,9 @@ class ModelMerge(UIComponent):
         self.selection = None
         self.tree_view = None
         event_manager.subscribe(self.on_model_loaded)
-        event_manager.subscribe(self.on_pending_change)
 
     def shutdown(self):
         self.event_manager.unsubscribe(self.on_model_loaded)
-        self.event_manager.unsubscribe(self.on_pending_change)
 
     @property
     def needs_merge(self):
@@ -48,9 +46,10 @@ class ModelMerge(UIComponent):
 
         self.selection = Gtk.SingleSelection.new(tree_model)
 
-        def on_apply(change_node: Node):
+        def on_apply(change_node: Node, sync=True):
             if not change_node.elements:
                 return
+
             with Transaction(self.event_manager):
                 for element in change_node.elements:
                     if applicable(element, self.element_factory):
@@ -59,7 +58,11 @@ class ModelMerge(UIComponent):
                         )
                 if change_node.children:
                     for n in change_node.children:
-                        on_apply(n)
+                        on_apply(n, sync=False)
+
+            if sync:
+                for item in self.model:
+                    item.sync()
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect("setup", list_item_factory_setup, on_apply)
@@ -84,12 +87,6 @@ class ModelMerge(UIComponent):
     @event_handler(ModelLoaded)
     def on_model_loaded(self, event):
         self.refresh_model()
-
-    @event_handler(AttributeUpdated)
-    def on_pending_change(self, event):
-        if event.property is PendingChange.applied:
-            for item in self.model:
-                item.sync()
 
 
 def list_item_factory_setup(_factory, list_item, on_apply):
