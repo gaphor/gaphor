@@ -4,7 +4,7 @@ from gi.repository import Gio, Gtk
 
 from gaphor.event import ModelLoaded
 from gaphor.core.modeling import PendingChange, AttributeUpdated
-from gaphor.core.changeset.apply import apply_change
+from gaphor.core.changeset.apply import apply_change, applicable
 from gaphor.i18n import translated_ui_string
 from gaphor.ui.abc import UIComponent
 from gaphor.core import event_handler
@@ -53,7 +53,13 @@ class ModelMerge(UIComponent):
                 return
             with Transaction(self.event_manager):
                 for element in change_node.elements:
-                    apply_change(element, self.element_factory, self.modeling_language)
+                    if applicable(element, self.element_factory):
+                        apply_change(
+                            element, self.element_factory, self.modeling_language
+                        )
+                if change_node.children:
+                    for n in change_node.children:
+                        on_apply(n)
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect("setup", list_item_factory_setup, on_apply)
