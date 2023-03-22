@@ -136,15 +136,66 @@ class FileManager(Service, ActionProvider):
         for _ in self._load_async(filename, status_window.progress, done):
             pass
 
+    def merge(
+        self,
+        current_filename: Path,
+        incoming_filename: Path,
+        on_load_done: Callable[[], None] | None = None,
+    ):
+        status_window = StatusWindow(
+            gettext("Loading…"),
+            gettext("Loading current and incoming model"),
+            parent=self.parent_window,
+        )
+
+        incoming_element_factory = ElementFactory()
+
+        def current_progress(percentage):
+            status_window.progress(percentage / 2)
+
+        def incoming_progress(percentage):
+            status_window.progress(50 + percentage / 2)
+
+        # Make this callback async, so we can call _load_async again: it's a generator and we can only run one at a time
+        @g_async()
+        def current_done():
+            log.debug("Loading incoming model from %s", incoming_filename)
+            for _ in self._load_async(
+                incoming_filename,
+                incoming_progress,
+                incoming_done,
+                element_factory=incoming_element_factory,
+            ):
+                pass
+
+        def incoming_done():
+            try:
+                log.debug("Comparing models")
+                with self.element_factory.block_events():
+                    list(compare(self.element_factory, incoming_element_factory))
+
+                if on_load_done:
+                    on_load_done()
+            finally:
+                status_window.destroy()
+
+        log.debug("Loading current model from %s", current_filename)
+        for _ in self._load_async(current_filename, current_progress, current_done):
+            pass
+
     @g_async()
     def _load_async(
-        self, filename: Path, progress: Callable[[int], None] | None = None, done=None
+        self,
+        filename: Path,
+        progress: Callable[[int], None] | None = None,
+        done=None,
+        element_factory=None,
     ):
         try:
             with open(filename, encoding="utf-8", errors="replace") as file_obj:
                 for percentage in storage.load_generator(
                     file_obj,
-                    self.element_factory,
+                    element_factory or self.element_factory,
                     self.modeling_language,
                 ):
                     if progress:
@@ -193,17 +244,7 @@ class FileManager(Service, ActionProvider):
             elif answer == "incoming":
                 self.load(incoming_filename, on_load_done=done)
             elif answer == "manual":
-                with open(current_filename, encoding="utf-8") as file_obj:
-                    storage.load(file_obj, self.element_factory, self.modeling_language)
-
-                temp_element_factory = ElementFactory()
-                with open(incoming_filename, encoding="utf-8") as file_obj:
-                    storage.load(file_obj, temp_element_factory, self.modeling_language)
-
-                with self.element_factory.block_events():
-                    list(compare(self.element_factory, temp_element_factory))
-
-                done()
+                self.merge(current_filename, incoming_filename, on_load_done=done)
             else:
                 raise ValueError(f"Unknown resolution for merge conflict: {answer}")
 
