@@ -5,8 +5,13 @@ from gaphor.core.modeling import (
     PendingChange,
 )
 from gaphor import UML
+from gaphor.core.changeset.compare import compare
+from gaphor.diagram.tests.fixtures import connect
 from gaphor.SysML import sysml
 from gaphor.SysML.diagramitems import BlockItem, PropertyItem, ProxyPortItem
+from gaphor.SysML.propertypages import create_item_flow
+from gaphor.ui.modelmerge.organize import organize_changes, Node
+from gaphor.UML.actions.actionstoolbox import partition_config
 from gaphor.UML.diagramitems import (
     ClassItem,
     AssociationItem,
@@ -17,12 +22,8 @@ from gaphor.UML.diagramitems import (
     StateItem,
     TransitionItem,
 )
-from gaphor.ui.modelmerge.organize import organize_changes, Node
+from gaphor.UML.recipes import apply_stereotype
 from gaphor.UML.umllex import parse
-from gaphor.core.changeset.compare import compare
-from gaphor.diagram.tests.fixtures import connect
-from gaphor.UML.actions.actionstoolbox import partition_config
-from gaphor.SysML.propertypages import create_item_flow
 
 
 def all_change_ids(nodes: Iterable[Node]):
@@ -172,4 +173,18 @@ def test_transition_with_guard(element_factory, modeling_language, create):
 
     assert transition_item.subject.guard
     assert len(tree) == 1
+    assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
+
+
+def test_applied_stereotype(element_factory, modeling_language, create):
+    stereotype = element_factory.create(UML.Stereotype)
+    class_item = create(ClassItem, UML.Class)
+    apply_stereotype(class_item.subject, stereotype)
+
+    current = ElementFactory()
+    all(compare(current, element_factory))
+    tree = list(organize_changes(current, modeling_language))
+
+    # Create Stereotype + create diagram
+    assert len(tree) == 2
     assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
