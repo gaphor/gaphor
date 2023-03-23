@@ -68,7 +68,7 @@ sphinx = ">=4.3,<6.0"
 pre-commit = ">=2.20,<4.0"
 
 [tool.poetry.group.automation.dependencies]
-poethepoet = ">=0.17.1,<0.19.0"
+poethepoet = ">=0.17.1,<0.20.0"
 
 [tool.poetry.group.translation.dependencies]
 babel = "^2.10.3"
