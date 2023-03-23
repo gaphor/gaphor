@@ -85,7 +85,7 @@ def _(change: RefChange, element_factory, modeling_factory):
     change.applied = True
 
     if prop and prop.opposite:
-        other = next(
+        if other := next(
             element_factory.select(
                 lambda e: isinstance(e, RefChange)
                 and e.element_id == change.property_ref
@@ -93,6 +93,5 @@ def _(change: RefChange, element_factory, modeling_factory):
                 and e.property_name == prop.opposite
             ),
             None,
-        )
-        if other:
+        ):
             other.applied = True
