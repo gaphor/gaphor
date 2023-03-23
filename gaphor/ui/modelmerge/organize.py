@@ -27,17 +27,33 @@ class Node(GObject.Object):
 
     label = GObject.Property(type=str, default="")
     applied = GObject.Property(type=bool, default=True)
-    applicable = GObject.Property(type=bool, default=True)
+    sensitive = GObject.Property(type=bool, default=True)
+    inconsistent = GObject.Property(type=bool, default=False)
 
     def sync(self) -> None:
-        self.applicable = any(
-            not e.applied and applicable(e, e.model) for e in self.elements
-        )
-        self.applied = all(e.applied for e in self.elements)
-
         if self.children:
             for child in self.children:
                 child.sync()
+
+        self.applied = all(e.applied for e in self.elements) and (
+            not self.children or all(c.applied for c in self.children)
+        )
+        self.sensitive = (
+            not self.applied
+            or any(not e.applied and applicable(e, e.model) for e in self.elements)
+            or (self.children and any(c.sensitive for c in self.children))
+        )
+        self.inconsistent = (
+            not self.applied
+            and self.children
+            and (
+                any(c.inconsistent for c in self.children)
+                or not (
+                    all(c.applied for c in self.children)
+                    or all(not c.applied for c in self.children)
+                )
+            )
+        )
 
     def __repr__(self):
         return f"<Node elements={self.elements} label='{self.label}'>"

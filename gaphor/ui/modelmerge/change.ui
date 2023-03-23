@@ -19,12 +19,17 @@
                   </lookup>
                 </binding>
                 <binding name="sensitive">
-                  <lookup name="applicable" type="gaphor+ui+modelmerge+organize+Node">
+                  <lookup name="sensitive" type="gaphor+ui+modelmerge+organize+Node">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
                 <binding name="label">
                   <lookup name="label" type="gaphor+ui+modelmerge+organize+Node">
+                    <lookup name="item">expander</lookup>
+                  </lookup>
+                </binding>
+                <binding name="inconsistent">
+                  <lookup name="inconsistent" type="gaphor+ui+modelmerge+organize+Node">
                     <lookup name="item">expander</lookup>
                   </lookup>
                 </binding>
