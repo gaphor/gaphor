@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 120
     steps:
-      - uses: actions/checkout@v3.4.0
+      - uses: actions/checkout@v3.5.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
