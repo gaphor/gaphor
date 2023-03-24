@@ -102,7 +102,7 @@ jobs:
       - name: Install Flatpak SDK
         run: |
           flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak install --user --noninteractive flathub org.gnome.Platform//43 org.gnome.Sdk//43
+          flatpak install --user --noninteractive flathub org.gnome.Platform//44 org.gnome.Sdk//44
       - name: Build Development Flatpak
         run: flatpak-builder --user --force-clean ./.flatpak-build org.gaphor.Gaphor.json
       - name: Self-Test Development Flatpak
