@@ -3,7 +3,7 @@ import pytest
 from gaphor.core.changeset.compare import UnmatchableModel, compare, RefChange
 from gaphor.core.modeling import Diagram, Element, ElementFactory, PendingChange
 from gaphor.diagram.general.simpleitem import Box
-from gaphor.UML import Class
+from gaphor.UML import Class, Property
 
 
 @pytest.fixture
@@ -132,6 +132,19 @@ def test_changed_value(
     assert change.element_id == current_element.id
     assert change.property_name == name
     assert change.property_value == expected_value
+
+
+def test_changed_enumeration_with_default_value(current, incoming):
+    current_property = current.create(Property)
+    incoming.create_as(Property, current_property.id)
+    current_property.aggregation = "shared"
+
+    change = next(compare(current, incoming))
+
+    assert change.op == "update"
+    assert change.element_id == current_property.id
+    assert change.property_name == "aggregation"
+    assert change.property_value is None
 
 
 def test_add_reference(current, incoming):

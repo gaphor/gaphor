@@ -8,7 +8,7 @@ from gaphor.core.modeling import (
     RefChange,
     ValueChange,
 )
-from gaphor.UML import Class
+from gaphor.UML import Class, Property
 
 
 def test_create_element(element_factory, modeling_language):
@@ -86,6 +86,45 @@ def test_update_int_value(element_factory, modeling_language):
     apply_change(change, element_factory, modeling_language)
 
     assert klass.isAbstract == 1
+    assert change.applied
+
+
+def test_update_str_default_value(element_factory, modeling_language):
+    diagram = element_factory.create(Diagram)
+    diagram.name = "old name"
+    change: ValueChange = element_factory.create(ValueChange)
+    change.element_id = diagram.id
+    change.property_name = "name"
+
+    apply_change(change, element_factory, modeling_language)
+
+    assert not diagram.name
+    assert change.applied
+
+
+def test_update_int_default_value(element_factory, modeling_language):
+    klass = element_factory.create(Class)
+    klass.isAbstract = 1
+    change: ValueChange = element_factory.create(ValueChange)
+    change.element_id = klass.id
+    change.property_name = "isAbstract"
+
+    apply_change(change, element_factory, modeling_language)
+
+    assert not klass.isAbstract
+    assert change.applied
+
+
+def test_update_enumeration_default_value(element_factory, modeling_language):
+    property = element_factory.create(Property)
+    property.aggregation = "shared"
+    change: ValueChange = element_factory.create(ValueChange)
+    change.element_id = property.id
+    change.property_name = "aggregation"
+
+    apply_change(change, element_factory, modeling_language)
+
+    assert property.aggregation == "none"
     assert change.applied
 
 

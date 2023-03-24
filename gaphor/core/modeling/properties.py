@@ -199,14 +199,9 @@ class attribute(umlproperty, Generic[T]):
         self.type = type
         self.default: str | int | None = default
 
-    def load(self, obj, value: str):
+    def load(self, obj, value: str | None):
         """Load the attribute value."""
-        try:
-            setattr(obj, self._name, self.type(value))
-        except ValueError as e:
-            error_msg = f"Failed to load attribute {self._name} of type {self.type} with value {value}"
-
-            raise TypeError(error_msg) from e
+        self.set(obj, value)
 
     def unlink(self, obj):
         self.set(obj, self.default)
@@ -229,8 +224,8 @@ class attribute(umlproperty, Generic[T]):
                 or self.type
             )
 
-        if self.type is int and isinstance(value, str):
-            value = int(value)
+        if self.type is int and isinstance(value, (str, bool)):
+            value = 0 if value == "False" else 1 if value == "True" else int(value)
 
         if value == self.get(obj):
             return
@@ -275,10 +270,8 @@ class enumeration(umlproperty):
     def get(self, obj):
         return getattr(obj, self._name, self.default)
 
-    def load(self, obj, value):
-        if value not in self.values:
-            raise TypeError(f"Value should be one of {str(self.values)}")
-        setattr(obj, self._name, value)
+    def load(self, obj, value: str | None):
+        self.set(obj, self.default if value is None else value)
 
     def unlink(self, obj):
         self.set(obj, self.default)
