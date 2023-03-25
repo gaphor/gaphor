@@ -375,22 +375,17 @@ class Diagram(Element):
         dirty_items: Sequence[Presentation],
     ) -> None:
         """Update the diagram canvas."""
-        sort = self.sort
 
         def dirty_items_with_ancestors():
             for item in set(dirty_items):
                 yield item
                 yield from gaphas.canvas.ancestors(self, item)
 
-        all_dirty_items = list(reversed(list(sort(dirty_items_with_ancestors()))))
-        self._update_items(all_dirty_items)
-
-        self._connections.solve()
-
-    def _update_items(self, items):
-        for item in items:
+        for item in reversed(list(self.sort(dirty_items_with_ancestors()))):
             if update := getattr(item, "update", None):
                 update(UpdateContext(style=self.style(StyledItem(item))))
+
+        self._connections.solve()
 
     def _on_constraint_solved(self, cinfo: gaphas.connections.Connection) -> None:
         dirty_items = set()
