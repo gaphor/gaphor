@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 
 from gi.repository import Gdk, Gtk
@@ -9,8 +11,8 @@ from gaphor.diagram.propertypages import (
     EditableTreeModel,
     PropertyPageBase,
     PropertyPages,
-    handler_blocking,
     help_link,
+    NamePropertyPage,
     new_resource_builder,
     on_bool_cell_edited,
     on_text_cell_edited,
@@ -180,7 +182,7 @@ def tree_view_column_tooltips(tree_view, tooltips):
 
 
 @PropertyPages.register(UML.NamedElement)
-class NamedElementPropertyPage(PropertyPageBase):
+class NamedElementPropertyPage(NamePropertyPage):
     """An adapter which works for any named item view.
 
     It also sets up a table view which can be extended.
@@ -188,13 +190,8 @@ class NamedElementPropertyPage(PropertyPageBase):
 
     order = 10
 
-    def __init__(self, subject: UML.NamedElement):
-        super().__init__()
-        assert subject is None or isinstance(subject, UML.NamedElement), "%s" % type(
-            subject
-        )
-        self.subject = subject
-        self.watcher = subject.watcher() if subject else None
+    def __init__(self, subject: UML.NamedElement | None):
+        super().__init__(subject)
 
     def construct(self):
         if (
@@ -204,31 +201,7 @@ class NamedElementPropertyPage(PropertyPageBase):
         ):
             return
 
-        assert self.watcher
-        builder = new_builder(
-            "named-element-editor",
-        )
-
-        subject = self.subject
-
-        entry = builder.get_object("name-entry")
-        entry.set_text(subject and subject.name or "")
-
-        @handler_blocking(entry, "changed", self._on_name_changed)
-        def handler(event):
-            if event.element is subject and event.new_value != entry.get_text():
-                entry.set_text(event.new_value or "")
-
-        self.watcher.watch("name", handler)
-
-        return unsubscribe_all_on_destroy(
-            builder.get_object("named-element-editor"), self.watcher
-        )
-
-    @transactional
-    def _on_name_changed(self, entry):
-        if self.subject.name != entry.get_text():
-            self.subject.name = entry.get_text()
+        return super().construct()
 
 
 @PropertyPages.register(UML.Classifier)

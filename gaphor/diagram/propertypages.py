@@ -12,7 +12,7 @@ from gaphas.segment import Segment
 from gi.repository import Gtk
 
 from gaphor.core import transactional
-from gaphor.core.modeling import Element
+from gaphor.core.modeling import Diagram, Element
 from gaphor.i18n import translated_ui_string
 
 
@@ -287,6 +287,52 @@ def _do_unparent(widget, _pspec, watcher):
 def unsubscribe_all_on_destroy(widget, watcher):
     widget.connect("notify::parent", _do_unparent, watcher)
     return widget
+
+
+@PropertyPages.register(Diagram)
+class NamePropertyPage(PropertyPageBase):
+    """An adapter which works for any named item view.
+
+    It also sets up a table view which can be extended.
+    """
+
+    order = 10
+
+    def __init__(self, subject):
+        assert subject is None or hasattr(subject, "name")
+        super().__init__()
+        self.subject = subject
+        self.watcher = subject.watcher() if subject else None
+
+    def construct(self):
+        if not self.subject:
+            return
+
+        assert self.watcher
+        builder = new_builder(
+            "name-editor",
+        )
+
+        subject = self.subject
+
+        entry = builder.get_object("name-entry")
+        entry.set_text(subject and subject.name or "")
+
+        @handler_blocking(entry, "changed", self._on_name_changed)
+        def handler(event):
+            if event.element is subject and event.new_value != entry.get_text():
+                entry.set_text(event.new_value or "")
+
+        self.watcher.watch("name", handler)
+
+        return unsubscribe_all_on_destroy(
+            builder.get_object("name-editor"), self.watcher
+        )
+
+    @transactional
+    def _on_name_changed(self, entry):
+        if self.subject.name != entry.get_text():
+            self.subject.name = entry.get_text()
 
 
 @PropertyPages.register(gaphas.item.Line)
