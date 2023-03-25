@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.16.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.17.0">
 <Package id="3867dda4-7a95-11ea-a112-7f953848cf85">
 <name>
 <val>Core</val>
@@ -143,9 +143,6 @@
 <orthogonal>
 <val>1</val>
 </orthogonal>
-<show_direction>
-<val>0</val>
-</show_direction>
 <subject>
 <ref refid="69c25758-7a95-11ea-a112-7f953848cf85"/>
 </subject>
@@ -274,10 +271,10 @@
 <val>(0.0, 0.0)</val>
 </top-left>
 <width>
-<val>149.0</val>
+<val>167.0</val>
 </width>
 <height>
-<val>72.0</val>
+<val>86.0</val>
 </height>
 <diagram>
 <ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
@@ -306,7 +303,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 578.8867180749799, 121.22430419921875)</val>
 </matrix>
 <points>
-<val>[(268.32792254114315, 400.1944580078125), (268.32792254114315, 74.77569580078125), (-1.2882266396698014, 74.77569580078125), (-1.2882266396698014, 0.0)]</val>
+<val>[(277.32792254114315, 400.1944580078125), (277.32792254114315, 74.77569580078125), (-1.2882266396698014, 74.77569580078125), (-1.2882266396698014, 0.0)]</val>
 </points>
 <head-connection>
 <ref refid="15e4b0b3-9f17-11ea-b537-dfaaecc5bf61"/>
@@ -342,14 +339,11 @@
 <horizontal>
 <val>0</val>
 </horizontal>
-<orthogonal>
-<val>0</val>
-</orthogonal>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 432.1161416499558, 523.8687744140625)</val>
 </matrix>
 <points>
-<val>[(463.8777691246364, -2.45001220703125), (507.8702047855911, -55.74224853515625)]</val>
+<val>[(478.7705668619011, -2.45001220703125), (507.8702047855911, -55.74224853515625)]</val>
 </points>
 <head-connection>
 <ref refid="15e4b0b3-9f17-11ea-b537-dfaaecc5bf61"/>
@@ -371,9 +365,6 @@
 <orthogonal>
 <val>1</val>
 </orthogonal>
-<show_direction>
-<val>0</val>
-</show_direction>
 <subject>
 <ref refid="d092794c-e0b9-11ea-b7ab-f5b4c130f24e"/>
 </subject>
@@ -406,9 +397,6 @@
 <orthogonal>
 <val>1</val>
 </orthogonal>
-<show_direction>
-<val>0</val>
-</show_direction>
 <subject>
 <ref refid="216581c9-4465-11eb-8946-9bdfa28f7a50"/>
 </subject>
@@ -441,9 +429,6 @@
 <orthogonal>
 <val>1</val>
 </orthogonal>
-<show_direction>
-<val>0</val>
-</show_direction>
 <subject>
 <ref refid="446a3743-4465-11eb-8946-9bdfa28f7a50"/>
 </subject>
@@ -490,9 +475,6 @@
 <horizontal>
 <val>0</val>
 </horizontal>
-<orthogonal>
-<val>0</val>
-</orthogonal>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 505.0, 557.0)</val>
 </matrix>
@@ -747,6 +729,7 @@
 <ownedAttribute>
 <reflist>
 <ref refid="23ba48d2-9f17-11ea-b537-dfaaecc5bf61"/>
+<ref refid="14f07570-cb37-11ed-94dd-0456e5e540ed"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -2280,6 +2263,17 @@
 </name>
 <typeValue>
 <val>str</val>
+</typeValue>
+</Property>
+<Property id="14f07570-cb37-11ed-94dd-0456e5e540ed">
+<class_>
+<ref refid="15e4b0b2-9f17-11ea-b537-dfaaecc5bf61"/>
+</class_>
+<name>
+<val>naturalLanguage</val>
+</name>
+<typeValue>
+<val>String</val>
 </typeValue>
 </Property>
 </gaphor>
