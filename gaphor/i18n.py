@@ -4,8 +4,6 @@ Translate text in to your native language using the gettext() function.
 """
 from __future__ import annotations
 
-__all__ = ["gettext"]
-
 import functools
 import gettext as _gettext
 import importlib.resources
@@ -42,20 +40,20 @@ def _get_os_language() -> str:
     return ""
 
 
-try:
-    if os.getenv("LANG") is None:
-        os.environ["LANG"] = _get_os_language()
-    localedir = importlib.resources.files("gaphor") / "locale"
-    translate = _gettext.translation("gaphor", localedir=str(localedir))
-    gettext = translate.gettext
+@functools.lru_cache(maxsize=None)
+def translation(lang) -> _gettext.GNUTranslations | _gettext.NullTranslations:
+    try:
+        localedir = importlib.resources.files("gaphor") / "locale"
+        return _gettext.translation(
+            "gaphor", localedir=str(localedir), languages=[lang, "C"]
+        )
+    except FileNotFoundError as e:
+        if lang.lower() not in ("c", "en_us", "en_us.utf-8"):
+            log.warning(f"No translations were found for language {lang}: {e}")
+    return _gettext.NullTranslations()
 
-except OSError as e:
-    lang = os.getenv("LANG", "")
-    if lang.lower() not in ("c", "en_us", "en_us.utf-8"):
-        log.warning(f"No translations were found for language {lang}: {e}")
 
-    def gettext(s):
-        return s
+gettext = translation(os.getenv("LANG") or _get_os_language()).gettext
 
 
 @functools.lru_cache(maxsize=None)
