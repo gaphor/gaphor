@@ -2,7 +2,7 @@ import pytest
 
 from gaphor.application import Session
 from gaphor.core.modeling import Diagram
-from gaphor.ui.event import DiagramOpened
+from gaphor.diagram.event import DiagramOpened
 
 
 @pytest.fixture

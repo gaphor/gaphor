@@ -15,6 +15,7 @@ from gaphor.core.modeling import (
     StyleSheet,
 )
 from gaphor.diagram.drop import drop
+from gaphor.diagram.event import DiagramOpened
 from gaphor.event import ActionEnabled
 from gaphor.i18n import translated_ui_string
 from gaphor.transaction import Transaction
@@ -23,7 +24,6 @@ from gaphor.ui.diagrampage import DiagramPage, GtkView
 from gaphor.ui.event import (
     CurrentDiagramChanged,
     DiagramClosed,
-    DiagramOpened,
     DiagramSelectionChanged,
     ElementOpened,
 )

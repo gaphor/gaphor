@@ -3,14 +3,14 @@ An item representing a diagram.
 """
 
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.diagram.presentation import ElementPresentation
+from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import IconBox, Text, Box, stroke, draw_border
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 
 
 @represents(Diagram)
-class DiagramItem(ElementPresentation):
+class DiagramItem(ElementPresentation, Named):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=30, height=30)
         for h in self.handles():

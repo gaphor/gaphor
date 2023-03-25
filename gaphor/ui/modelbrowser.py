@@ -18,12 +18,13 @@ from gaphor.core.modeling import (
     ModelFlushed,
     ModelReady,
 )
+from gaphor.diagram.event import DiagramOpened
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.transaction import Transaction
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import create_action_group
-from gaphor.ui.event import DiagramOpened, DiagramSelectionChanged, ElementOpened
+from gaphor.ui.event import DiagramSelectionChanged, ElementOpened
 from gaphor.diagram.group import change_owner
 from gaphor.ui.treemodel import (
     RelationshipItem,
