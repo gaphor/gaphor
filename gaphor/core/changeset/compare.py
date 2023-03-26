@@ -10,6 +10,7 @@ from gaphor.core.modeling import (
     RefChange,
     ValueChange,
     Presentation,
+    StyleSheet,
 )
 from gaphor.core.modeling.collection import collection
 
@@ -34,6 +35,9 @@ def compare(
     current_keys = set(current.keys())
     incoming_keys = set(incoming.keys())
 
+    current_style_sheet = None
+    incoming_style_sheet = None
+
     def create(type, **kwargs):
         e = current.create(type)
         for name, value in kwargs.items():
@@ -42,23 +46,29 @@ def compare(
 
     for key in current_keys.difference(incoming_keys):
         e = current[key]
-        yield create(
-            ElementChange,
-            op="remove",
-            element_name=type(e).__name__,
-            element_id=key,
-        )
+        if isinstance(e, StyleSheet):
+            current_style_sheet = e
+        else:
+            yield create(
+                ElementChange,
+                op="remove",
+                element_name=type(e).__name__,
+                element_id=key,
+            )
 
     for key in incoming_keys.difference(current_keys):
         e = incoming[key]
-        yield create(
-            ElementChange,
-            op="add",
-            element_name=type(e).__name__,
-            element_id=key,
-            diagram_id=e.diagram.id if isinstance(e, Presentation) else None,
-        )
-        yield from updated_properties(None, e, create)
+        if isinstance(e, StyleSheet):
+            incoming_style_sheet = e
+        else:
+            yield create(
+                ElementChange,
+                op="add",
+                element_name=type(e).__name__,
+                element_id=key,
+                diagram_id=e.diagram.id if isinstance(e, Presentation) else None,
+            )
+            yield from updated_properties(None, e, create)
 
     for key in current_keys.intersection(incoming_keys):
         c = current[key]
@@ -66,6 +76,13 @@ def compare(
         if type(c) is not type(i):
             raise UnmatchableModel(c, i)
         yield from updated_properties(c, i, create)
+
+    if (
+        current_style_sheet
+        and incoming_style_sheet
+        and current_style_sheet.id != incoming_style_sheet.id
+    ):
+        yield from updated_properties(current_style_sheet, incoming_style_sheet, create)
 
 
 def updated_properties(current, incoming, create) -> Iterable[ValueChange | RefChange]:
@@ -76,8 +93,11 @@ def updated_properties(current, incoming, create) -> Iterable[ValueChange | RefC
     incoming.save(lambda n, v: setitem(incoming_vals, n, v))
 
     for name in {*current_vals.keys(), *incoming_vals.keys()}:
+        if name == "id":
+            continue
         value = incoming_vals.get(name)
         other = current_vals.get(name)
+        id = current.id if current else incoming.id
         if isinstance(value, Element):
             # Allow values to be None
             assert other is None or isinstance(other, Element)
@@ -85,7 +105,7 @@ def updated_properties(current, incoming, create) -> Iterable[ValueChange | RefC
                 yield create(
                     RefChange,
                     op="update",
-                    element_id=incoming.id,
+                    element_id=id,
                     property_name=name,
                     property_ref=value.id,
                 )
@@ -97,7 +117,7 @@ def updated_properties(current, incoming, create) -> Iterable[ValueChange | RefC
                 create(
                     RefChange,
                     op="add",
-                    element_id=incoming.id,
+                    element_id=id,
                     property_name=name,
                     property_ref=v.id,
                 )
@@ -109,7 +129,7 @@ def updated_properties(current, incoming, create) -> Iterable[ValueChange | RefC
                 yield create(
                     RefChange,
                     op="update",
-                    element_id=incoming.id,
+                    element_id=id,
                     property_name=name,
                     property_ref=None,
                 )
@@ -117,7 +137,7 @@ def updated_properties(current, incoming, create) -> Iterable[ValueChange | RefC
                 yield create(
                     ValueChange,
                     op="update",
-                    element_id=incoming.id,
+                    element_id=id,
                     property_name=name,
                     property_value=value,
                 )
@@ -130,7 +150,7 @@ def updated_properties(current, incoming, create) -> Iterable[ValueChange | RefC
                 create(
                     RefChange,
                     op="remove",
-                    element_id=incoming.id,
+                    element_id=id,
                     property_name=name,
                     property_ref=o.id,
                 )

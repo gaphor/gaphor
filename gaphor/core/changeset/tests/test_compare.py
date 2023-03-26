@@ -1,7 +1,13 @@
 import pytest
 
 from gaphor.core.changeset.compare import UnmatchableModel, compare, RefChange
-from gaphor.core.modeling import Diagram, Element, ElementFactory, PendingChange
+from gaphor.core.modeling import (
+    Diagram,
+    Element,
+    ElementFactory,
+    PendingChange,
+    StyleSheet,
+)
 from gaphor.diagram.general.simpleitem import Box
 from gaphor.UML import Class, Property
 
@@ -230,3 +236,25 @@ def test_types_should_match(current, incoming):
 
     with pytest.raises(UnmatchableModel):
         next(compare(current, incoming))
+
+
+def test_style_sheet_with_different_ids(current, incoming):
+    current.create(StyleSheet)
+    incoming.create(StyleSheet)
+
+    changes = set(compare(current, incoming))
+
+    assert not changes
+
+
+def test_style_sheet_comparison(current, incoming):
+    current_style_sheet = current.create(StyleSheet)
+    incoming_style_sheet = incoming.create(StyleSheet)
+    incoming_style_sheet.styleSheet = "foo {}"
+
+    change = next(compare(current, incoming))
+
+    assert change.op == "update"
+    assert change.element_id == current_style_sheet.id
+    assert change.property_name == "styleSheet"
+    assert change.property_value == "foo {}"
