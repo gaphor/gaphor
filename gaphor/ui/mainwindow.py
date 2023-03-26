@@ -97,11 +97,8 @@ class MainWindow(Service, ActionProvider):
         self.export_menu = export_menu
         self.tools_menu = tools_menu
 
-        self.window: Gtk.Window = None
+        self._builder: Gtk.Builder | None = new_builder()
         self.action_group: Gio.ActionGroup = None
-        self.title: Gtk.Label = None
-        self.modified: Gtk.Label = None
-        self.subtitle: Gtk.Label = None
         self.modeling_language_name = None
         self.diagram_types = None
         self.in_app_notifier = None
@@ -115,7 +112,7 @@ class MainWindow(Service, ActionProvider):
     def shutdown(self):
         if self.window:
             self.window.destroy()
-            self.window = None
+            self._builder = None
 
         em = self.event_manager
         em.unsubscribe(self._on_file_manager_state_changed)
@@ -126,6 +123,22 @@ class MainWindow(Service, ActionProvider):
         if self.in_app_notifier:
             em.unsubscribe(self.in_app_notifier.handle)
             self.in_app_notifier = None
+
+    @property
+    def window(self):
+        return self._builder.get_object("main-window") if self._builder else None
+
+    @property
+    def title(self):
+        return self._builder.get_object("title") if self._builder else None
+
+    @property
+    def modified(self):
+        return self._builder.get_object("modified") if self._builder else None
+
+    @property
+    def subtitle(self):
+        return self._builder.get_object("subtitle") if self._builder else None
 
     @property
     def model_changed(self) -> bool:
@@ -142,11 +155,12 @@ class MainWindow(Service, ActionProvider):
     def open(self, gtk_app=None):
         """Open the main window."""
 
-        builder = new_builder()
-        self.window = builder.get_object("main-window")
-        self.window.set_application(gtk_app)
+        builder = self._builder
+        assert builder
+        window = self.window
+        window.set_application(gtk_app)
         if ".dev" in distribution().version:
-            self.window.get_style_context().add_class("devel")
+            window.get_style_context().add_class("devel")
 
         select_modeling_language = builder.get_object("select-modeling-language")
         select_modeling_language.set_menu_model(
@@ -164,11 +178,7 @@ class MainWindow(Service, ActionProvider):
             create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
         )
 
-        self.title = builder.get_object("title")
-        self.modified = builder.get_object("modified")
-        self.subtitle = builder.get_object("subtitle")
-
-        self.window.set_default_size(*self.size)
+        window.set_default_size(*self.size)
 
         def _factory(name):
             comp = self.get_ui_component(name)
@@ -185,18 +195,18 @@ class MainWindow(Service, ActionProvider):
         )
 
         self.action_group, shortcuts = window_action_group(self.component_registry)
-        self.window.insert_action_group("win", self.action_group)
+        window.insert_action_group("win", self.action_group)
 
         self._on_modeling_language_selection_changed()
 
-        self.window.set_resizable(True)
-        self.window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
-        self.window.connect("close-request", self._on_window_close_request)
-        self.window.connect("notify::default-height", self._on_window_size_changed)
-        self.window.connect("notify::default-width", self._on_window_size_changed)
-        self.window.show()
+        window.set_resizable(True)
+        window.add_controller(Gtk.ShortcutController.new_for_model(shortcuts))
+        window.connect("close-request", self._on_window_close_request)
+        window.connect("notify::default-height", self._on_window_size_changed)
+        window.connect("notify::default-width", self._on_window_size_changed)
+        window.show()
 
-        self.window.connect("notify::is-active", self._on_window_active)
+        window.connect("notify::is-active", self._on_window_active)
 
         self.in_app_notifier = InAppNotifier(builder)
         em = self.event_manager
@@ -213,7 +223,7 @@ class MainWindow(Service, ActionProvider):
 
     @event_handler(ModelLoaded, ModelSaved)
     def _on_file_manager_state_changed(self, event: ModelLoaded | ModelSaved) -> None:
-        if not self.window:
+        if not (window := self.window):
             self._ui_updates.append(lambda: self._on_file_manager_state_changed(event))  # type: ignore[no-any-return]
             return
 
@@ -224,7 +234,7 @@ class MainWindow(Service, ActionProvider):
             if filename
             else gettext("New model")
         )
-        self.window.set_title(
+        window.set_title(
             f"{filename.name} ({str(filename.parent).replace(str(Path.home()), '~')}) - Gaphor"
             if filename
             else f"{gettext('New model')} - Gaphor"
@@ -232,7 +242,7 @@ class MainWindow(Service, ActionProvider):
 
         self.model_changed = isinstance(event, ModelLoaded) and event.modified
 
-        self.window.present()
+        window.present()
 
     @event_handler(CurrentDiagramChanged)
     def _on_current_diagram_changed(self, event):
