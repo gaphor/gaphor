@@ -5,6 +5,19 @@
   <object class="GtkStack" id="stack">
     <child>
       <object class="GtkStackPage">
+        <property name="name">empty</property>
+        <property name="child">
+          <object class="AdwStatusPage">
+            <property name="icon-name">gaphor-bw</property>
+            <property name="title" translatable="yes">Open a Diagram</property>
+            <property name="description" translatable="yes">Open a diagram from the model browser, or
+create a new diagram from the New diagram menu.</property>
+          </object>
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkStackPage">
         <property name="name">notebook</property>
         <property name="child">
           <object class="GtkBox">
@@ -19,19 +32,6 @@
                 <property name="vexpand">1</property>
               </object>
             </child>
-          </object>
-        </property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkStackPage">
-        <property name="name">empty</property>
-        <property name="child">
-          <object class="AdwStatusPage">
-            <property name="icon-name">gaphor-bw</property>
-            <property name="title" translatable="yes">Open a Diagram</property>
-            <property name="description" translatable="yes">Open a diagram from the model browser, or
-create a new diagram from the New diagram menu.</property>
           </object>
         </property>
       </object>
