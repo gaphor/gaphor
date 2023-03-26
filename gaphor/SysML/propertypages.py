@@ -211,11 +211,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
         active = switch.get_active()
         subject = self.subject
         if active and not subject.informationFlow:
-            iflow = subject.model.create(sysml.ItemFlow)
-            subject.informationFlow = iflow
-            iflow.informationSource = subject.end[0].role
-            iflow.informationTarget = subject.end[1].role
-            iflow.itemProperty = subject.model.create(sysml.Property)
+            create_item_flow(self.subject)
         elif not active and self.subject.informationFlow:
             self.subject.informationFlow[0].unlink()
         self.entry.set_sensitive(switch.get_active())
@@ -254,3 +250,12 @@ class ItemFlowPropertyPage(PropertyPageBase):
             iflow.informationTarget,
             iflow.informationSource,
         )
+
+
+def create_item_flow(subject: sysml.Connector) -> sysml.ItemFlow:
+    iflow = subject.model.create(sysml.ItemFlow)
+    subject.informationFlow = iflow
+    iflow.informationSource = subject.end[0].role
+    iflow.informationTarget = subject.end[1].role
+    iflow.itemProperty = subject.model.create(sysml.Property)
+    return iflow

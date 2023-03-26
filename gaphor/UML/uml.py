@@ -772,9 +772,9 @@ class OpaqueAction(Action):
 # defined in umloverrides.py
 
 
-Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, opposite="extended")
 Element.relationship = derivedunion("relationship", Relationship)
 Element.directedRelationship = derivedunion("directedRelationship", DirectedRelationship)
+Element.appliedStereotype = association("appliedStereotype", InstanceSpecification, composite=True, opposite="extended")
 Element.relationship.add(Element.directedRelationship)  # type: ignore[attr-defined]
 NamedElement.supplierDependency = association("supplierDependency", Dependency, opposite="supplier")
 NamedElement.clientDependency = association("clientDependency", Dependency, composite=True, opposite="client")
@@ -1159,12 +1159,12 @@ Element.owner.add(ActivityGroup.activity)  # type: ignore[attr-defined]
 Element.ownedElement.add(ActivityGroup.subgroup)  # type: ignore[attr-defined]
 Constraint.constrainedElement = association("constrainedElement", Element)
 Constraint.owningState = association("owningState", State, upper=1, opposite="statevariant")
-Constraint.transition = association("transition", Transition, upper=1, opposite="guard")
 Constraint.stateInvariant = association("stateInvariant", StateInvariant, upper=1, opposite="invariant")
 Constraint.parameterSet = association("parameterSet", ParameterSet, upper=1, opposite="condition")
-Element.owner.add(Constraint.transition)  # type: ignore[attr-defined]
+Constraint.transition = association("transition", Transition, upper=1, opposite="guard")
 Element.owner.add(Constraint.stateInvariant)  # type: ignore[attr-defined]
 Element.owner.add(Constraint.parameterSet)  # type: ignore[attr-defined]
+Element.owner.add(Constraint.transition)  # type: ignore[attr-defined]
 PackageImport.importedPackage = association("importedPackage", Package, upper=1)
 PackageImport.importingNamespace = association("importingNamespace", Namespace, upper=1, opposite="packageImport")
 DirectedRelationship.target.add(PackageImport.importedPackage)  # type: ignore[attr-defined]
@@ -1232,9 +1232,9 @@ Namespace.ownedMember.add(Region.subvertex)  # type: ignore[attr-defined]
 NamedElement.namespace.add(Region.state)  # type: ignore[attr-defined]
 Transition.container = association("container", Region, upper=1)
 Transition.effect = association("effect", Behavior, upper=1, composite=True)
-Transition.guard = association("guard", Constraint, upper=1, composite=True, opposite="transition")
 Transition.source = association("source", Vertex, upper=1, opposite="outgoing")
 Transition.target = association("target", Vertex, upper=1, opposite="incoming")
+Transition.guard = association("guard", Constraint, upper=1, composite=True, opposite="transition")
 NamedElement.namespace.add(Transition.container)  # type: ignore[attr-defined]
 Element.ownedElement.add(Transition.effect)  # type: ignore[attr-defined]
 Element.ownedElement.add(Transition.guard)  # type: ignore[attr-defined]

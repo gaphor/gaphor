@@ -199,14 +199,9 @@ class attribute(umlproperty, Generic[T]):
         self.type = type
         self.default: str | int | None = default
 
-    def load(self, obj, value: str):
+    def load(self, obj, value: str | None):
         """Load the attribute value."""
-        try:
-            setattr(obj, self._name, self.type(value))
-        except ValueError as e:
-            error_msg = f"Failed to load attribute {self._name} of type {self.type} with value {value}"
-
-            raise TypeError(error_msg) from e
+        self.set(obj, value)
 
     def unlink(self, obj):
         self.set(obj, self.default)
@@ -228,6 +223,9 @@ class attribute(umlproperty, Generic[T]):
                 and self.type.__name__
                 or self.type
             )
+
+        if self.type is int and isinstance(value, (str, bool)):
+            value = 0 if value == "False" else 1 if value == "True" else int(value)
 
         if value == self.get(obj):
             return
@@ -272,10 +270,8 @@ class enumeration(umlproperty):
     def get(self, obj):
         return getattr(obj, self._name, self.default)
 
-    def load(self, obj, value):
-        if value not in self.values:
-            raise TypeError(f"Value should be one of {str(self.values)}")
-        setattr(obj, self._name, value)
+    def load(self, obj, value: str | None):
+        self.set(obj, self.default if value is None else value)
 
     def unlink(self, obj):
         self.set(obj, self.default)
@@ -808,9 +804,7 @@ class derivedunion(derived[T]):
         elif isinstance(event, AssociationUpdated):
             self.handle(DerivedUpdated(event.element, self))
         else:
-            log.error(
-                "Don't know how to handle event " + str(event) + " for derived union"
-            )
+            log.error(f"Don't know how to handle event {str(event)} for derived union")
 
 
 class redefine(umlproperty):
@@ -845,6 +839,12 @@ class redefine(umlproperty):
     def opposite(self) -> str | None:
         return (
             self.original.opposite if isinstance(self.original, association) else None
+        )
+
+    @property
+    def composite(self) -> bool:
+        return (
+            self.original.composite if isinstance(self.original, association) else False
         )
 
     def load(self, obj, value):

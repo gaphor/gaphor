@@ -44,7 +44,6 @@
             <property name="label" translatable="yes">Add a model element from the tool box (bottom left) to the diagram. Here you will see it&apos;s properties appear.</property>
             <property name="use_markup">1</property>
             <property name="wrap">1</property>
-            <property name="max_width_chars">20</property>
             <property name="xalign">0</property>
           </object>
         </child>
@@ -53,7 +52,6 @@
             <property name="label" translatable="yes">This pane can be hidden by clicking the pane icon in the header.</property>
             <property name="use_markup">1</property>
             <property name="wrap">1</property>
-            <property name="max_width_chars">20</property>
             <property name="xalign">0</property>
           </object>
         </child>
@@ -62,7 +60,6 @@
             <property name="label" translatable="yes">&lt;b&gt;Tip:&lt;/b&gt; Most elements in the toolbox have a keyboard shortcut (e.g. &quot;c&quot; for Class). Tool selection only works from the diagram. If a tool does not get selected, click on the diagram once (so it&apos;s focused) and then hit the shortcut key.</property>
             <property name="use_markup">1</property>
             <property name="wrap">1</property>
-            <property name="max_width_chars">20</property>
             <property name="xalign">0</property>
           </object>
         </child>
@@ -71,7 +68,6 @@
             <property name="label" translatable="yes">&lt;b&gt;Tip:&lt;/b&gt; To search for an element in the model browser (top left), select an element in the model browser and start typing. A search box will automatically appear.</property>
             <property name="use_markup">1</property>
             <property name="wrap">1</property>
-            <property name="max_width_chars">20</property>
             <property name="xalign">0</property>
           </object>
         </child>
@@ -183,6 +179,7 @@
             </child>
             <child>
               <object class="GtkToggleButton">
+                <property name="margin-start">38</property>
                 <property name="receives_default">1</property>
                 <property name="action_name">win.show-preferences</property>
                 <child>
@@ -224,6 +221,7 @@
                 </property>
               </object>
             </child>
+
             <child>
               <object class="GtkStackPage">
                 <property name="name">preferences</property>
@@ -316,7 +314,6 @@
                         <property name="label" translatable="yes">🔗 &lt;a href=&quot;https://gaphor.readthedocs.io/en/latest/style_sheets.html&quot;&gt;Style sheets in Gaphor&lt;/a&gt;</property>
                         <property name="use_markup">1</property>
                         <property name="wrap">1</property>
-                        <property name="max_width_chars">28</property>
                         <property name="xalign">0</property>
                       </object>
                     </child>
@@ -324,6 +321,60 @@
                 </property>
               </object>
             </child>
+
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">modelmerge</property>
+                <property name="title" translatable="yes">Merge Models</property>
+                <property name="child">
+                  <object class="GtkBox">
+                    <property name="margin_start">6</property>
+                    <property name="margin_end">6</property>
+                    <property name="margin_top">6</property>
+                    <property name="margin_bottom">6</property>
+                    <property name="spacing">6</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Merge Model Changes</property>
+                        <property name="use_markup">1</property>
+                        <property name="wrap">1</property>
+                        <property name="xalign">0</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Apply incoming changes from the conflicting model. Use Undo to revert changes.</property>
+                        <property name="use_markup">1</property>
+                        <property name="wrap">1</property>
+                        <property name="xalign">0</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkFrame">
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="vexpand">1</property>
+                            <child>
+                              <object class="GtkListView" id="modelmerge" />
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="modelmerge-resolve">
+                        <property name="label" translatable="yes">Resolve</property>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+
           </object>
         </child>
       </object>

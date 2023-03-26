@@ -401,6 +401,29 @@ def test_attributes():
         a.a = 1
 
 
+@pytest.mark.parametrize(
+    "input,expected",
+    [
+        [None, None],
+        [0, 0],
+        [1, 1],
+        [2, 2],
+        [False, 0],
+        [True, 1],
+        ["False", 0],
+        ["True", 1],
+    ],
+)
+def test_int_and_boolean_attributes(input, expected):
+    class A(Element):
+        a = attribute("a", int, 0)
+
+    a = A()
+    a.a = input
+
+    assert a.a == expected
+
+
 def test_attributes_loading_failure():
     class A(Element):
         a: attribute[int]
@@ -409,7 +432,7 @@ def test_attributes_loading_failure():
 
     a = A()
 
-    with pytest.raises(TypeError):
+    with pytest.raises(ValueError):
         A.a.load(a, "not-int")
 
 

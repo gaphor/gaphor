@@ -34,6 +34,27 @@ class Comment(Element):
 # 13: override StyleSheet
 from gaphor.core.modeling.stylesheet import StyleSheet
 
+class PendingChange(Element):
+    applied: _attribute[int] = _attribute("applied", int, default=0)
+    element_id: _attribute[str] = _attribute("element_id", str)
+    op = _enumeration("op", ("add", "remove", "update"), "add")
+
+
+class ElementChange(PendingChange):
+    diagram_id: _attribute[str] = _attribute("diagram_id", str)
+    element_name: _attribute[str] = _attribute("element_name", str)
+
+
+class ValueChange(PendingChange):
+    property_name: _attribute[str] = _attribute("property_name", str)
+    property_value: _attribute[str] = _attribute("property_value", str)
+
+
+class RefChange(PendingChange):
+    property_name: _attribute[str] = _attribute("property_name", str)
+    property_ref: _attribute[str] = _attribute("property_ref", str)
+
+
 
 Element.comment = association("comment", Comment, opposite="annotatedElement")
 Element.ownedElement = derivedunion("ownedElement", Element)

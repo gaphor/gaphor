@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.11.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.17.0">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -7278,9 +7278,9 @@
 </name>
 <ownedAttribute>
 <reflist>
-<ref refid="DCE:53614994-E81E-11DD-BD54-000D936B094A"/>
 <ref refid="DCE:53759D24-45CF-11D7-B5CA-613352B2821F"/>
 <ref refid="DCE:522B4098-45D1-11D7-B5CA-613352B2821F"/>
+<ref refid="DCE:53614994-E81E-11DD-BD54-000D936B094A"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -22878,8 +22878,8 @@ specially for Gaphor</val>
 <ref refid="DCE:E3346ABA-8FD1-11D8-9422-00C00C03A405"/>
 <ref refid="DCE:CFB37DAA-83E0-11D7-ADE2-4B1972AF3391"/>
 <ref refid="DCE:3085F9E8-4B39-11D7-B391-02BBFE4396CE"/>
-<ref refid="81d1054a-909f-11ea-85c4-7f4489bdcce3"/>
 <ref refid="DCE:F057D6FA-8FD1-11D8-9422-00C00C03A405"/>
+<ref refid="81d1054a-909f-11ea-85c4-7f4489bdcce3"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -24557,9 +24557,9 @@ specially for Gaphor</val>
 <ref refid="DCE:1E0DD9E8-4A8A-11D7-B090-133D836EF880"/>
 <ref refid="DCE:07DC8E08-4A8A-11D7-B090-133D836EF880"/>
 <ref refid="DCE:F0F613D4-4663-11DA-A766-00123FE76EBE"/>
-<ref refid="DCE:1A68075E-4664-11DA-A766-00123FE76EBE"/>
 <ref refid="DCE:AE69FD6C-3B14-11D9-83CE-A0BAF22E8A12"/>
 <ref refid="4b206270-909f-11ea-85c4-7f4489bdcce3"/>
+<ref refid="DCE:1A68075E-4664-11DA-A766-00123FE76EBE"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -27527,10 +27527,10 @@ specially for Gaphor</val>
 <ref refid="DCE:53659F26-E81E-11DD-BD54-000D936B094A"/>
 </tail_subject>
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 249.5, 288.6016949152542)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 249.5, 288.0)</val>
 </matrix>
 <points>
-<val>[(0.0, 0.0), (245.5, 0.3983050847458003)]</val>
+<val>[(0.0, 0.6016949152541997), (245.5, 1.0)]</val>
 </points>
 <head-connection>
 <ref refid="DCE:4DAF34B6-E81E-11DD-BD54-000D936B094A"/>
@@ -34527,9 +34527,9 @@ directly in a model.</val>
 <ref refid="DCE:F2E5FA7C-4587-11DA-A04F-00123FE76EBE"/>
 <ref refid="DCE:2BA9B7E2-4588-11DA-A04F-00123FE76EBE"/>
 <ref refid="DCE:6DDCD62A-4663-11DA-A766-00123FE76EBE"/>
-<ref refid="DCE:1A67758C-4664-11DA-A766-00123FE76EBE"/>
 <ref refid="DCE:C332DA26-4588-11DA-A04F-00123FE76EBE"/>
 <ref refid="DCE:05B8F916-4589-11DA-A04F-00123FE76EBE"/>
+<ref refid="DCE:1A67758C-4664-11DA-A766-00123FE76EBE"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -36668,6 +36668,9 @@ directly in a model.</val>
 </presentation>
 </Association>
 <Property id="DCE:53614994-E81E-11DD-BD54-000D936B094A">
+<aggregation>
+<val>composite</val>
+</aggregation>
 <association>
 <ref refid="DCE:535FC86C-E81E-11DD-BD54-000D936B094A"/>
 </association>

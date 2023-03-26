@@ -23,6 +23,9 @@ from gaphor.ui.csscompletion import (
     CssPropertyCompletionProvider,
 )
 from gaphor.ui.event import DiagramSelectionChanged
+from gaphor.ui.modelmerge import ModelMerge
+from gaphor.event import ModelLoaded
+
 
 log = logging.getLogger(__name__)
 
@@ -60,16 +63,20 @@ class ElementEditor(UIComponent, ActionProvider):
     the diagram.
     """
 
-    def __init__(self, event_manager, element_factory, diagrams, properties):
+    def __init__(
+        self, event_manager, element_factory, modeling_language, diagrams, properties
+    ):
         """Constructor.
 
         Build the action group for the element editor window. This will
         place a button for opening the window in the toolbar. The widget
         attribute is a PropertyEditor.
         """
+        self.event_manager = event_manager
         self.properties = properties
         self.editors = EditorStack(event_manager, diagrams, properties)
         self.preferences = PreferencesStack(event_manager, element_factory)
+        self.modelmerge = ModelMerge(event_manager, element_factory, modeling_language)
 
     def open(self):
         """Display the ElementEditor pane."""
@@ -79,8 +86,16 @@ class ElementEditor(UIComponent, ActionProvider):
         self.revealer.set_reveal_child(self.properties.get("show-editors", True))
         self.editor_stack = builder.get_object("editor-stack")
 
+        resolve = builder.get_object("modelmerge-resolve")
+        resolve.connect_after("clicked", self.on_model_loaded)
+
         self.editors.open(builder)
         self.preferences.open(builder)
+        self.modelmerge.open(builder)
+
+        self.event_manager.subscribe(self.on_model_loaded)
+
+        self.on_model_loaded(None)
 
         return self.revealer
 
@@ -91,10 +106,19 @@ class ElementEditor(UIComponent, ActionProvider):
         idempotent if set.
         """
 
+        self.event_manager.unsubscribe(self.on_model_loaded)
+
         self.editors.close()
         self.preferences.close()
+        self.modelmerge.close()
 
         return True
+
+    @event_handler(ModelLoaded)
+    def on_model_loaded(self, event):
+        self.editor_stack.set_visible_child_name(
+            "modelmerge" if self.modelmerge.needs_merge else "editors"
+        )
 
     @action(
         name="show-editors",
@@ -110,7 +134,13 @@ class ElementEditor(UIComponent, ActionProvider):
         if not self.revealer.get_child_revealed():
             self.revealer.activate_action("win.show-editors", None)
 
-        self.editor_stack.set_visible_child_name("preferences" if active else "editors")
+        self.editor_stack.set_visible_child_name(
+            "preferences"
+            if active
+            else "modelmerge"
+            if self.modelmerge.needs_merge
+            else "editors"
+        )
 
     @action(
         name="reset-tool-after-create",

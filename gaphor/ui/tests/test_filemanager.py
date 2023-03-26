@@ -84,6 +84,18 @@ def test_load_model_with_merge_conflict(
     assert element_factory.size() > 0
 
 
+def test_load_model_merge_conflict_and_manual_resolution(
+    file_manager: FileManager, element_factory, merge_conflict, monkeypatch
+):
+    replace_merge_conflict_dialog(monkeypatch, "manual")
+
+    file_manager.resolve_merge_conflict(merge_conflict)
+
+    from gaphor.core.modeling import PendingChange
+
+    assert element_factory.lselect(PendingChange)
+
+
 def test_load_model_with_merge_conflict_and_unknown_resolution(
     file_manager: FileManager, merge_conflict, monkeypatch
 ):
