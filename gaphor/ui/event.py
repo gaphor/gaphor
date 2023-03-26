@@ -6,11 +6,6 @@ class ElementOpened:
         self.element = element
 
 
-class DiagramOpened:
-    def __init__(self, diagram):
-        self.diagram = diagram
-
-
 class DiagramClosed:
     def __init__(self, diagram):
         self.diagram = diagram

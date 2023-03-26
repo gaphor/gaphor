@@ -46,8 +46,8 @@ def test_create_pages(
     editor.open()
     editor.editors.create_pages(package_item)
 
-    assert find(editor.editors.vbox, "named-element-editor")
+    assert find(editor.editors.vbox, "name-editor")
 
     editor.editors.clear_pages()
 
-    assert not find(editor.editors.vbox, "named-element-editor")
+    assert not find(editor.editors.vbox, "name-editor")

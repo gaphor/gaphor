@@ -2,8 +2,9 @@ import pytest
 
 from gaphor.application import Session
 from gaphor.core.modeling import Comment, Diagram
+from gaphor.diagram.event import DiagramOpened
 from gaphor.ui.abc import UIComponent
-from gaphor.ui.event import DiagramOpened, ElementOpened
+from gaphor.ui.event import ElementOpened
 
 
 @pytest.fixture

@@ -1,6 +1,21 @@
+from gaphor.core.modeling import Diagram
 from gaphor.diagram.general import Line
-from gaphor.diagram.propertypages import LineStylePage, NotePropertyPage
+from gaphor.diagram.propertypages import (
+    LineStylePage,
+    NamePropertyPage,
+    NotePropertyPage,
+)
 from gaphor.diagram.tests.fixtures import find
+
+
+def test_name_page(element_factory):
+    diagram = element_factory.create(Diagram)
+    property_page = NamePropertyPage(diagram)
+    widget = property_page.construct()
+    name = find(widget, "name-entry")
+    name.set_text("A new note")
+
+    assert diagram.name == "A new note"
 
 
 def test_line_style_page_rectilinear(diagram):

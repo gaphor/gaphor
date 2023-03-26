@@ -1,5 +1,7 @@
 from gi.repository import Gdk, Gtk
 
+from gaphor.core.modeling import Diagram
+from gaphor.diagram.event import DiagramOpened
 from gaphor.diagram.instanteditors import instant_editor
 
 
@@ -22,6 +24,11 @@ def on_key_pressed(controller, keyval, keycode, state, event_manager):
 def on_double_click(gesture, n_press, x, y, event_manager):
     view = gesture.get_widget()
     item = view.selection.hovered_item
-    if item and n_press == 2:
+    if not item or n_press != 2:
+        return
+
+    if isinstance(item.subject, Diagram):
+        event_manager.handle(DiagramOpened(item.subject))
+    else:
         ix, iy = view.get_matrix_v2i(item).transform_point(x, y)
         return instant_editor(item, view, event_manager, (ix, iy))

@@ -53,6 +53,7 @@ class GroupPreconditions:
 group: FunctionDispatcher[Callable[[Element, Element], bool]] = GroupPreconditions(
     multidispatch(object, object)(no_group)
 )
+group.register(None, object)(no_group)
 
 
 def can_group(parent: Element, element_or_type: Element | type[Element]) -> bool:
