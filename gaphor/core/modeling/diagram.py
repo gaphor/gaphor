@@ -279,6 +279,10 @@ class Diagram(Element):
         style_sheet = self.styleSheet
         return style_sheet.match(node) if style_sheet else FALLBACK_STYLE
 
+    def gettext(self, message):
+        """Translate a message to the language used in the model."""
+        return message
+
     def postload(self):
         """Handle post-load functionality for the diagram."""
         self._order_owned_presentation()

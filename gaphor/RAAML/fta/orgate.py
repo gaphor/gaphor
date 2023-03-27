@@ -4,7 +4,6 @@ from math import pi
 
 from gaphas.geometry import Rectangle
 
-from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -34,7 +33,9 @@ class ORItem(Classified, ElementPresentation):
                 draw=draw_or_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("OR Gate")]),
+                text=lambda: stereotypes_str(
+                    self.subject, [self.diagram.gettext("OR Gate")]
+                ),
             ),
             Text(
                 text=lambda: self.subject.name or "",

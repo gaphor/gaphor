@@ -1,5 +1,4 @@
 from gaphor.C4Model import c4model
-from gaphor.core import gettext
 from gaphor.core.styling import FontWeight, JustifyContent, TextAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_border
@@ -18,6 +17,7 @@ class C4ContainerItem(Named, ElementPresentation):
         self.watch("children", self.update_shapes)
 
     def update_shapes(self, event=None):
+        diagram = self.diagram
         text_align = (
             TextAlign.LEFT if self.diagram and self.children else TextAlign.CENTER
         )
@@ -28,8 +28,8 @@ class C4ContainerItem(Named, ElementPresentation):
             ),
             Text(
                 text=lambda: self.subject.technology
-                and f"[{gettext(self.subject.type)}: {self.subject.technology}]"
-                or f"[{gettext(self.subject.type)}]",
+                and f"[{diagram.gettext(self.subject.type)}: {self.subject.technology}]"
+                or f"[{diagram.gettext(self.subject.type)}]",
                 style={"font-size": "x-small", "text-align": text_align},
             ),
             *(

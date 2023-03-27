@@ -15,7 +15,6 @@ from gaphor.diagram.shapes import (
     draw_top_separator,
     Orientation,
 )
-from gaphor.i18n import gettext
 
 
 class MetadataItem(ElementPresentation):
@@ -43,6 +42,7 @@ class MetadataItem(ElementPresentation):
         )
 
     def update_shapes(self, event=None):
+        diagram = self.diagram
         group_style: Style = {"justify-content": JustifyContent.STRETCH}
         box_style: Style = {"padding": (4, 4, 4, 4)}
         text_style: Style = {
@@ -63,7 +63,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=f'{gettext("Created By")}:',
+                                        text=f'{diagram.gettext("Created By")}:',
                                         style=heading_style,
                                     ),
                                     Text(
@@ -80,7 +80,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=f'{gettext("Website")}:',
+                                        text=f'{diagram.gettext("Website")}:',
                                         style=heading_style,
                                     ),
                                     Text(
@@ -105,7 +105,7 @@ class MetadataItem(ElementPresentation):
                 [
                     Box(
                         Text(
-                            text=f'{gettext("Description")}:',
+                            text=f'{diagram.gettext("Description")}:',
                             style=heading_style,
                         ),
                         Text(
@@ -126,7 +126,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=f'{gettext("Revision")}:',
+                                        text=f'{diagram.gettext("Revision")}:',
                                         style=heading_style,
                                     ),
                                     Text(
@@ -143,7 +143,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=f'{gettext("License")}:',
+                                        text=f'{diagram.gettext("License")}:',
                                         style=heading_style,
                                     ),
                                     Text(
@@ -161,7 +161,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=f'{gettext("Created On")}:',
+                                        text=f'{diagram.gettext("Created On")}:',
                                         style=heading_style,
                                     ),
                                     Text(
@@ -179,7 +179,7 @@ class MetadataItem(ElementPresentation):
                             [
                                 Box(
                                     Text(
-                                        text=f'{gettext("Updated On")}:',
+                                        text=f'{diagram.gettext("Updated On")}:',
                                         style=heading_style,
                                     ),
                                     Text(

@@ -2,7 +2,6 @@
 
 from gaphas.geometry import Rectangle
 
-from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -30,7 +29,7 @@ class IntermediateEventItem(Classified, ElementPresentation):
             Box(
                 Text(
                     text=lambda: stereotypes_str(
-                        self.subject, [gettext("Intermediate Event")]
+                        self.subject, [self.diagram.gettext("Intermediate Event")]
                     ),
                 ),
                 Text(

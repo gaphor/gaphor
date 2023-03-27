@@ -6,7 +6,6 @@ from gaphor import UML
 from gaphor.core.modeling import Element, Presentation
 from gaphor.diagram.connectors import BaseConnector, Connector
 from gaphor.diagram.group import group
-from gaphor.i18n import gettext
 from gaphor.UML.interactions.executionspecification import ExecutionSpecificationItem
 from gaphor.UML.interactions.interaction import InteractionItem
 from gaphor.UML.interactions.lifeline import LifelineItem
@@ -76,7 +75,7 @@ def connect_lifelines(line, send, received):
     def get_subject():
         if not line.subject:
             message = line.model.create(UML.Message)
-            message.name = gettext("call()")
+            message.name = line.diagram.gettext("call()")
             line.subject = message
         return line.subject
 

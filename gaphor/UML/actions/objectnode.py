@@ -44,13 +44,13 @@ class ObjectNodeItem(Named, ElementPresentation):
                 Text(
                     text=lambda: self.subject.upperBound
                     not in (None, "", DEFAULT_UPPER_BOUND)
-                    and f'{{ {gettext("upperBound")} = {self.subject.upperBound} }}'
+                    and f'{{ {self.diagram.gettext("upperBound")} = {self.subject.upperBound} }}'
                     or ""
                 ),
                 Text(
                     text=lambda: self.show_ordering
                     and self.subject.ordering
-                    and f'{{ {gettext("ordering")} = {ORDERING_TEXT.get(self.subject.ordering)} }}'
+                    and f'{{ {self.diagram.gettext("ordering")} = {ORDERING_TEXT.get(self.subject.ordering)} }}'
                     or ""
                 ),
             ),

@@ -1,7 +1,6 @@
 import logging
 
 from gaphor import UML
-from gaphor.core import gettext
 from gaphor.core.format import format
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import (
@@ -56,9 +55,9 @@ class ClassItem(Classified, ElementPresentation[UML.Class]):
 
     def additional_stereotypes(self):
         if isinstance(self.subject, UML.Stereotype):
-            return [gettext("stereotype")]
+            return [self.diagram.gettext("stereotype")]
         elif UML.recipes.is_metaclass(self.subject):
-            return [gettext("metaclass")]
+            return [self.diagram.gettext("metaclass")]
         else:
             return ()
 

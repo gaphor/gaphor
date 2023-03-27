@@ -14,7 +14,7 @@ from gaphor.UML.toolboxconfig import namespace_config
 def activity_config(new_item, name=None):
     subject = new_item.subject
     if name:
-        subject.name = gettext("New {name}").format(name=name)
+        subject.name = new_item.diagram.gettext("New {name}").format(name=name)
     if subject.activity:
         return
 
@@ -37,7 +37,7 @@ def activity_config(new_item, name=None):
         subject.activity = activities[0]
     else:
         activity = subject.model.create(UML.Activity)
-        activity.name = gettext("Activity")
+        activity.name = new_item.diagram.gettext("Activity")
         activity.package = package
         subject.activity = activity
 
@@ -45,11 +45,11 @@ def activity_config(new_item, name=None):
 def partition_config(new_item):
     activity_config(new_item)
     subject = new_item.subject
-    subject.name = gettext("Swimlane One")
+    subject.name = new_item.diagram.gettext("Swimlane One")
     new_item.partition = subject
 
     partition = subject.model.create(UML.ActivityPartition)
-    partition.name = gettext("Swimlane Two")
+    partition.name = new_item.diagram.gettext("Swimlane Two")
     partition.activity = subject.activity
     new_item.partition = partition
 

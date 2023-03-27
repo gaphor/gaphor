@@ -1,7 +1,6 @@
 from math import pi
 
 from gaphor.C4Model import c4model
-from gaphor.core import gettext
 from gaphor.core.styling import FontWeight, JustifyContent, TextAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, stroke
@@ -24,7 +23,7 @@ class C4PersonItem(Named, ElementPresentation):
                     style={"font-weight": FontWeight.BOLD},
                 ),
                 Text(
-                    text=lambda: f"[{gettext('Person')}]",
+                    text=lambda: f"[{self.diagram.gettext('Person')}]",
                     style={"font-size": "x-small"},
                 ),
                 Text(

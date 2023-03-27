@@ -1,4 +1,3 @@
-from gaphor.core import gettext
 from gaphor.diagram.presentation import AttachedPresentation, Named
 from gaphor.diagram.shapes import (
     Box,
@@ -31,7 +30,11 @@ class ProxyPortItem(Named, AttachedPresentation[sysml.ProxyPort]):
     def update_shapes(self):
         self.shape = IconBox(
             Box(style={"background-color": (1, 1, 1, 1)}, draw=draw_border),
-            Text(text=lambda: stereotypes_str(self.subject, [gettext("proxy")])),
+            Text(
+                text=lambda: stereotypes_str(
+                    self.subject, [self.diagram.gettext("proxy")]
+                )
+            ),
             Text(text=lambda: self.subject and self.subject.name or ""),
             style=text_position(self.connected_side()),
         )

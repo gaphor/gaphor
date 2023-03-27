@@ -2,7 +2,6 @@
 
 from gaphas.geometry import Rectangle
 
-from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -32,7 +31,9 @@ class DormantEventItem(Classified, ElementPresentation):
                 draw=draw_dormant_event,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("Dormant Event")]),
+                text=lambda: stereotypes_str(
+                    self.subject, [self.diagram.gettext("Dormant Event")]
+                ),
             ),
             Text(
                 text=lambda: self.subject.name or "",

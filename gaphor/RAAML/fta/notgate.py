@@ -2,7 +2,6 @@
 
 from gaphas.geometry import Rectangle
 
-from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -32,7 +31,9 @@ class NOTItem(Classified, ElementPresentation):
                 draw=draw_not_gate,
             ),
             Text(
-                text=lambda: stereotypes_str(self.subject, [gettext("NOT Gate")]),
+                text=lambda: stereotypes_str(
+                    self.subject, [self.diagram.gettext("NOT Gate")]
+                ),
             ),
             Text(
                 text=lambda: self.subject.name or "",

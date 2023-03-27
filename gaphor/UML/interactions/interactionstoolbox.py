@@ -13,7 +13,9 @@ from gaphor.UML.toolboxconfig import namespace_config
 
 def interaction_config(new_item):
     subject = new_item.subject
-    subject.name = gettext("New {name}").format(name=gettext(type(subject).__name__))
+    subject.name = new_item.diagram.gettext("New {name}").format(
+        name=new_item.diagram.gettext(type(subject).__name__)
+    )
     if subject.interaction:
         return
 
@@ -31,7 +33,7 @@ def interaction_config(new_item):
         interaction = interactions[0]
     else:
         interaction = subject.model.create(UML.Interaction)
-        interaction.name = gettext("Interaction")
+        interaction.name = new_item.diagram.gettext("Interaction")
         interaction.package = package
 
     subject.interaction = interaction

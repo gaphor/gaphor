@@ -15,7 +15,6 @@ module.
 """
 
 from gaphor import UML
-from gaphor.core import gettext
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import Classified, ElementPresentation
@@ -52,7 +51,7 @@ class NodeItem(Classified, ElementPresentation):
                     text=lambda: UML.recipes.stereotypes_str(
                         self.subject,
                         isinstance(self.subject, UML.Device)
-                        and (gettext("device"),)
+                        and (self.diagram.gettext("device"),)
                         or (),
                     ),
                 ),

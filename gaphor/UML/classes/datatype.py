@@ -1,7 +1,6 @@
 import logging
 
 from gaphor import UML
-from gaphor.core import gettext
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import FontStyle, FontWeight, JustifyContent
 from gaphor.diagram.presentation import (
@@ -54,11 +53,11 @@ class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
         from gaphor.SysML import sysml
 
         if isinstance(self.subject, UML.PrimitiveType):
-            return [gettext("primitive")]
+            return [self.diagram.gettext("primitive")]
         elif isinstance(self.subject, sysml.ValueType):
-            return [gettext("valueType")]
+            return [self.diagram.gettext("valueType")]
         elif isinstance(self.subject, UML.DataType):
-            return [gettext("dataType")]
+            return [self.diagram.gettext("dataType")]
         else:
             return ()
 

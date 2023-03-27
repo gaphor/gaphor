@@ -1,5 +1,4 @@
 from gaphor.C4Model import c4model
-from gaphor.core import gettext
 from gaphor.core.styling import FontWeight, JustifyContent, TextAlign
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, ellipse, stroke
@@ -17,6 +16,7 @@ class C4DatabaseItem(Named, ElementPresentation):
         self.watch("subject[C4Container].type")
 
     def update_shapes(self, event=None):
+        diagram = self.diagram
         self.shape = Box(
             Box(
                 Text(
@@ -25,8 +25,8 @@ class C4DatabaseItem(Named, ElementPresentation):
                 ),
                 Text(
                     text=lambda: self.subject.technology
-                    and f"[{gettext(self.subject.type)}: {self.subject.technology}]"
-                    or f"[{gettext(self.subject.type)}]",
+                    and f"[{diagram.gettext(self.subject.type)}: {self.subject.technology}]"
+                    or f"[{diagram.gettext(self.subject.type)}]",
                     style={"font-size": "x-small"},
                 ),
                 Text(
