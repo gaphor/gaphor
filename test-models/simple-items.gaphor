@@ -32,6 +32,9 @@
 <horizontal>
 <val>0</val>
 </horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <matrix>
 <val>(1.0, 0.0, 0.0, 1.0, 336.0, 113.0)</val>
 </matrix>
