@@ -3,7 +3,9 @@
 import importlib.resources
 import logging
 from typing import Optional
+from unicodedata import normalize
 
+from babel import Locale
 from gi.repository import GLib, Gtk, GtkSource
 
 from gaphor.abc import ActionProvider
@@ -16,7 +18,7 @@ from gaphor.core.modeling.event import (
     ModelReady,
 )
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
-from gaphor.i18n import gettext
+from gaphor.i18n import localedir
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.csscompletion import (
     CssFunctionCompletionProvider,
@@ -36,32 +38,6 @@ if Gtk.get_major_version() != 3:
     GtkSource.init()
 
 new_builder = new_resource_builder("gaphor.ui", "elementeditor")
-
-
-LANGUAGES = [
-    (None, gettext("System")),
-    ("ca", gettext("Catalan")),
-    ("zh_Hans", gettext("Chinese (Simpl.)")),
-    ("hr", gettext("Croatian")),
-    ("cs", gettext("Czech")),
-    ("nl", gettext("Dutch")),
-    ("C", gettext("English")),
-    ("de", gettext("German")),
-    ("fi", gettext("Finnish")),
-    ("fr", gettext("French")),
-    ("gl", gettext("Galician")),
-    ("hu", gettext("Hungarian")),
-    ("it", gettext("Italian")),
-    ("ja", gettext("Japanese")),
-    ("ko", gettext("Korean")),
-    ("pl", gettext("Polish")),
-    ("pt_BR", gettext("Portuguese (Brazil)")),
-    ("ru", gettext("Russian")),
-    ("sl", gettext("Slovenian")),
-    ("es", gettext("Spanish")),
-    ("sv", gettext("Swedish")),
-    ("tr", gettext("Turkish")),
-]
 
 
 class DelayedFunction:
@@ -322,6 +298,18 @@ class PreferencesStack:
         self._style_sheet_update = DelayedFunction(800, tx_update_style_sheet)
         self._in_update = 0
 
+        self._languages = [
+            (None, "English"),
+            *sorted(
+                (
+                    (d.name, Locale.parse(d.name).get_language_name())
+                    for d in localedir.iterdir()
+                    if d.is_dir()
+                ),
+                key=lambda k: normalize("NFC", k[1]).casefold(),
+            ),
+        ]
+
     def open(self, builder):
         self.language_dropdown = builder.get_object("language-dropdown")
         self.style_sheet_buffer = builder.get_object("style-sheet-buffer")
@@ -342,7 +330,7 @@ class PreferencesStack:
         self._on_notify_dark(self.style_manager, None)
 
         language_model = builder.get_object("language-model")
-        for _code, language in LANGUAGES:
+        for _code, language in self._languages:
             language_model.append(language)
 
         self.event_manager.subscribe(self._model_ready)
@@ -384,7 +372,7 @@ class PreferencesStack:
             next(
                 (
                     i
-                    for i, (code, _) in enumerate(LANGUAGES)
+                    for i, (code, _) in enumerate(self._languages)
                     if code == style_sheet.naturalLanguage
                 ),
                 0,
@@ -409,7 +397,8 @@ class PreferencesStack:
     def on_language_changed(self, dropdown, _gparam):
         if (style_sheet := self.style_sheet) and not self._in_update:
             with Transaction(self.event_manager):
-                style_sheet.naturalLanguage = LANGUAGES[dropdown.get_selected()][0]
+                code, _name = self._languages[dropdown.get_selected()]
+                style_sheet.naturalLanguage = code
 
     def _on_notify_dark(self, style_manager, _gparam):
         scheme_manager = GtkSource.StyleSchemeManager.get_default()

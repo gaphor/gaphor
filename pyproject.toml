@@ -44,6 +44,7 @@ PyGObject = "^3.30"
 gaphas = ">3.9.0,<5.0"
 generic = "^1.0.0"
 tinycss2 = "^1.0.2"
+babel = "^2.10.3"
 jedi = "^0.18.1"
 darkdetect = ">=0.5.1,<0.9.0"
 better-exceptions = "^0.3.3"
@@ -63,16 +64,13 @@ xdoctest = "^1.1.0"
 hypothesis = "^6.54.5"
 ipython = "^8.5.0"
 sphinx = ">=4.3,<6.0"
+babelgladeextractor = "^0.7"
 
 [tool.poetry.group.lint.dependencies]
 pre-commit = ">=2.20,<4.0"
 
 [tool.poetry.group.automation.dependencies]
 poethepoet = ">=0.17.1,<0.20.0"
-
-[tool.poetry.group.translation.dependencies]
-babel = "^2.10.3"
-babelgladeextractor = "^0.7"
 
 [tool.poetry.group.packaging]
 optional=true

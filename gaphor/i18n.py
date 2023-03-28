@@ -15,6 +15,8 @@ import xml.etree.ElementTree as etree
 
 log = logging.getLogger(__name__)
 
+localedir = importlib.resources.files("gaphor") / "locale"
+
 
 def _get_os_language() -> str:
     """Get the default language in Windows or macOS.
@@ -43,7 +45,6 @@ def _get_os_language() -> str:
 @functools.lru_cache(maxsize=2)
 def translation(lang) -> _gettext.GNUTranslations | _gettext.NullTranslations:
     try:
-        localedir = importlib.resources.files("gaphor") / "locale"
         return _gettext.translation(
             "gaphor", localedir=str(localedir), languages=[lang, "C"]
         )
