@@ -45,15 +45,13 @@ jobs:
         run: xvfb-run poetry run pytest -m hypothesis --hypothesis-profile=ci
         shell: bash
       - name: Create Issue on Failure
-        uses: nashmaniac/create-issue-action@v1.1
+        uses: JasonEtco/create-an-issue@v2
         if: failure()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          title: Hypothesis tests failed
-          token: ${{secrets.GITHUB_TOKEN}}
-          labels: bug,hypothesis
-          body: |
-            Test run failed for commit ${{github.sha}}.
-            See https://github.com/gaphor/gaphor/actions/workflows/hypothesis-test.yml.
+          filename: .github/hypothesis-test-failed.md
+          update_existing: true
       - name: Save cache
         uses: actions/cache/save@v3.3.1
         if: always()
