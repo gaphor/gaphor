@@ -62,7 +62,6 @@ a = Analysis(  # type: ignore
         ),
         ("../gaphor/ui/language-specs/*.lang", "gaphor/ui/language-specs"),
         ("../LICENSE.txt", "gaphor"),
-        ("../gaphor/locale/*", "gaphor/locale"),
         ("../gaphor/templates/*.gaphor", "gaphor/templates"),
     ]
     + ui_files
@@ -75,7 +74,7 @@ a = Analysis(  # type: ignore
         "gaphor.modelinglanguages",
         "gaphor.modules",
     )
-    + ["_cffi_backend"],
+    + ["_cffi_backend", "babel.numbers"],
     hooksconfig={
         "gi": {
             "module-versions": {
