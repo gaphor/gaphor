@@ -56,6 +56,11 @@ def translation(lang) -> _gettext.GNUTranslations | _gettext.NullTranslations:
 gettext = translation(os.getenv("LANG") or _get_os_language()).gettext
 
 
+def i18nize(message):
+    """Pick up text for internationalization without actually translating it, like gettext() does."""
+    return message
+
+
 @functools.lru_cache(maxsize=None)
 def translated_ui_string(package: str, ui_filename: str) -> str:
     with (importlib.resources.files(package) / ui_filename).open(
