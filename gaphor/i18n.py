@@ -40,7 +40,7 @@ def _get_os_language() -> str:
     return ""
 
 
-@functools.lru_cache(maxsize=None)
+@functools.lru_cache(maxsize=2)
 def translation(lang) -> _gettext.GNUTranslations | _gettext.NullTranslations:
     try:
         localedir = importlib.resources.files("gaphor") / "locale"
