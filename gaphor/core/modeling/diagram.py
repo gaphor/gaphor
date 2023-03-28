@@ -39,6 +39,7 @@ from gaphor.core.modeling.properties import (
 )
 from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.core.styling import Style, StyleNode
+from gaphor.i18n import translation
 
 log = logging.getLogger(__name__)
 
@@ -281,7 +282,11 @@ class Diagram(Element):
 
     def gettext(self, message):
         """Translate a message to the language used in the model."""
-        return message
+        style_sheet = self.styleSheet
+        if style_sheet and style_sheet.naturalLanguage:
+            return translation(style_sheet.naturalLanguage).gettext(message)
+        else:
+            return message
 
     def postload(self):
         """Handle post-load functionality for the diagram."""
