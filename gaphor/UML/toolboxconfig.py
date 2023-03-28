@@ -1,10 +1,9 @@
-from gaphor.core import gettext
 from gaphor.UML.recipes import owner_package
 
 
 def named_element_config(new_item, name=None):
-    new_item.subject.name = gettext("New {name}").format(
-        name=name or gettext(type(new_item.subject).__name__)
+    new_item.subject.name = new_item.diagram.gettext("New {name}").format(
+        name=name or new_item.diagram.gettext(type(new_item.subject).__name__)
     )
 
 

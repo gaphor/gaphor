@@ -1,7 +1,7 @@
 """The action definition for the SysML toolbox."""
 
 from gaphor import UML
-from gaphor.core import gettext
+from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
     DiagramTypes,
@@ -65,12 +65,12 @@ sysml_toolbox_actions: ToolboxDefinition = (
 
 # Not implemented: Parameter Diagram
 sysml_diagram_types: DiagramTypes = (
-    DiagramType("bdd", gettext("New Block Definition Diagram"), (blocks,)),
-    DiagramType("ibd", gettext("New Internal Block Diagram"), (internal_blocks,)),
-    DiagramType("pkg", gettext("New Package Diagram"), (blocks,)),
-    DiagramType("req", gettext("New Requirement Diagram"), (requirements,)),
-    DiagramType("act", gettext("New Activity Diagram"), (actions,)),
-    DiagramType("sd", gettext("New Sequence Diagram"), (interactions,)),
-    DiagramType("stm", gettext("New State Machine Diagram"), (states,)),
-    DiagramType("uc", gettext("New Use Case Diagram"), (use_cases,)),
+    DiagramType("bdd", i18nize("New Block Definition Diagram"), (blocks,)),
+    DiagramType("ibd", i18nize("New Internal Block Diagram"), (internal_blocks,)),
+    DiagramType("pkg", i18nize("New Package Diagram"), (blocks,)),
+    DiagramType("req", i18nize("New Requirement Diagram"), (requirements,)),
+    DiagramType("act", i18nize("New Activity Diagram"), (actions,)),
+    DiagramType("sd", i18nize("New Sequence Diagram"), (interactions,)),
+    DiagramType("stm", i18nize("New State Machine Diagram"), (states,)),
+    DiagramType("uc", i18nize("New Use Case Diagram"), (use_cases,)),
 )

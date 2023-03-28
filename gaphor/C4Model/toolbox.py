@@ -4,7 +4,7 @@ from functools import partial
 from gaphas.item import SE
 
 from gaphor.C4Model import c4model, diagramitems
-from gaphor.core import gettext
+from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
     DiagramTypes,
@@ -62,7 +62,7 @@ c4 = ToolSection(
             new_item_factory(
                 diagramitems.C4PersonItem,
                 c4model.C4Person,
-                config_func=partial(namespace_config, name=gettext("Person")),
+                config_func=partial(namespace_config, name=i18nize("Person")),
             ),
             handle_index=SE,
         ),
@@ -136,9 +136,9 @@ c4model_toolbox_actions: ToolboxDefinition = (
 )
 
 c4model_diagram_types: DiagramTypes = (
-    DiagramType("c4", gettext("New C4 Diagram"), (c4,)),
-    DiagramType("cls", gettext("New Class Diagram"), (classes,)),
-    DiagramType("act", gettext("New Activity Diagram"), (actions,)),
-    DiagramType("sd", gettext("New Sequence Diagram"), (interactions,)),
-    DiagramType("stm", gettext("New State Machine Diagram"), (states,)),
+    DiagramType("c4", i18nize("New C4 Diagram"), (c4,)),
+    DiagramType("cls", i18nize("New Class Diagram"), (classes,)),
+    DiagramType("act", i18nize("New Activity Diagram"), (actions,)),
+    DiagramType("sd", i18nize("New Sequence Diagram"), (interactions,)),
+    DiagramType("stm", i18nize("New State Machine Diagram"), (states,)),
 )

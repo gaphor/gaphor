@@ -4,7 +4,7 @@ from functools import partial
 from gaphas.item import SE
 
 from gaphor import UML
-from gaphor.core import gettext
+from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
 from gaphor.UML import diagramitems
 from gaphor.UML.recipes import owner_package
@@ -77,7 +77,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.ActionItem,
                 UML.Action,
-                config_func=partial(activity_config, name=gettext("Action")),
+                config_func=partial(activity_config, name=i18nize("Action")),
             ),
             handle_index=SE,
         ),
@@ -149,7 +149,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.ObjectNodeItem,
                 UML.ObjectNode,
-                config_func=partial(activity_config, name=gettext("Object node")),
+                config_func=partial(activity_config, name=i18nize("Object node")),
             ),
             handle_index=SE,
         ),
@@ -187,7 +187,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.SendSignalActionItem,
                 UML.SendSignalAction,
-                config_func=partial(activity_config, name=gettext("Send signal")),
+                config_func=partial(activity_config, name=i18nize("Send signal")),
             ),
             handle_index=SE,
         ),
@@ -199,7 +199,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.AcceptEventActionItem,
                 UML.AcceptEventAction,
-                config_func=partial(activity_config, name=gettext("Accept event")),
+                config_func=partial(activity_config, name=i18nize("Accept event")),
             ),
             handle_index=SE,
         ),

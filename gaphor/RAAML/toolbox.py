@@ -5,7 +5,7 @@ from gaphor.diagram.diagramtoolbox import (
     ToolboxDefinition,
     general_tools,
 )
-from gaphor.i18n import gettext
+from gaphor.i18n import i18nize
 from gaphor.RAAML.fta.ftatoolbox import fta
 from gaphor.RAAML.stpa.stpatoolbox import stpa
 
@@ -16,6 +16,6 @@ raaml_toolbox_actions: ToolboxDefinition = (
 )
 
 raaml_diagram_types: DiagramTypes = (
-    DiagramType("fta", gettext("New FTA Diagram"), (fta,)),
-    DiagramType("stpa", gettext("New STPA Diagram"), (stpa,)),
+    DiagramType("fta", i18nize("New FTA Diagram"), (fta,)),
+    DiagramType("stpa", i18nize("New STPA Diagram"), (stpa,)),
 )

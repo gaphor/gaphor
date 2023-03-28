@@ -3,8 +3,8 @@
 import re
 from typing import Tuple
 
-from gaphor.core import gettext
 from gaphor.core.format import format
+from gaphor.i18n import gettext
 from gaphor.UML import uml as UML
 
 # Do not render if the name still contains a visibility element

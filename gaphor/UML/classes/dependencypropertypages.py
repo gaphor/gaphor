@@ -5,7 +5,6 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     unsubscribe_all_on_destroy,
 )
-from gaphor.i18n import gettext
 from gaphor.transaction import transactional
 from gaphor.UML.classes.classespropertypages import new_builder
 from gaphor.UML.classes.dependency import DependencyItem
@@ -16,13 +15,6 @@ class DependencyPropertyPage(PropertyPageBase):
     """Dependency item editor."""
 
     order = 20
-
-    DEPENDENCY_TYPES = (
-        (gettext("Dependency"), UML.Dependency),
-        (gettext("Usage"), UML.Usage),
-        (gettext("Realization"), UML.Realization),
-        (gettext("Implementation"), UML.InterfaceRealization),
-    )
 
     def __init__(self, item):
         super().__init__()
@@ -38,7 +30,15 @@ class DependencyPropertyPage(PropertyPageBase):
 
     def construct(self):
         dependency_combo = self.builder.get_object("dependency-combo")
-        model = ComboModel(self.DEPENDENCY_TYPES)
+        gettext = self.item.diagram.gettext
+        model = ComboModel(
+            (
+                (gettext("Dependency"), UML.Dependency),
+                (gettext("Usage"), UML.Usage),
+                (gettext("Realization"), UML.Realization),
+                (gettext("Implementation"), UML.InterfaceRealization),
+            )
+        )
         dependency_combo.set_model(model)
 
         automatic = self.builder.get_object("automatic")
