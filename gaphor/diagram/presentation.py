@@ -12,7 +12,7 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver.constraint import BaseConstraint
 
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.event import RevertibleEvent
+from gaphor.core.modeling.event import RevertibleEvent, AttributeUpdated
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
@@ -214,9 +214,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self._shape_head_rect = None
         self._shape_middle_rect = None
         self._shape_tail_rect = None
-        self.watch("orthogonal", self._on_orthogonal).watch(
-            "horizontal", self._on_horizontal
-        )
+
         self.watch_handle(self.head)
         self.watch_handle(self.tail)
 
@@ -249,10 +247,12 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     def insert_handle(self, index: int, handle: Handle) -> None:
         super().insert_handle(index, handle)
         self.watch_handle(handle)
+        self.update_orthogonal_constraints()
 
     def remove_handle(self, handle: Handle) -> None:
         self.remove_watch_handle(handle)
         super().remove_handle(handle)
+        self.update_orthogonal_constraints()
 
     def update_shape_bounds(self, context):
         def shape_bounds(shape, align):
@@ -338,9 +338,6 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     def postload(self):
         super().postload()
 
-        if self.orthogonal:
-            self._on_orthogonal(None)
-
         if hasattr(self, "_load_head_connection"):
             postload_connect(self, self.head, self._load_head_connection)
             assert self._connections.get_connection(self.head)
@@ -351,13 +348,15 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
             assert self._connections.get_connection(self.tail)
             del self._load_tail_connection
 
-    def _on_orthogonal(self, _event):
-        if self.orthogonal and len(self.handles()) < 3:
-            raise ValueError("Can't set orthogonal line with less than 3 handles")
-        self.update_orthogonal_constraints(self.orthogonal)
+        self.update_orthogonal_constraints()
 
-    def _on_horizontal(self, _event):
-        self.update_orthogonal_constraints(self.orthogonal)
+    def handle(self, event):
+        if isinstance(event, AttributeUpdated) and event.property in (
+            LinePresentation.horizontal,
+            LinePresentation.orthogonal,
+        ):
+            self.update_orthogonal_constraints()
+        super().handle(event)
 
 
 def draw_line_end(context, end_handle, second_handle, draw):

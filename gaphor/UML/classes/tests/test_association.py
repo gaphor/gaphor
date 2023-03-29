@@ -4,7 +4,6 @@ import pytest
 
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import connect, get_connected
-from gaphor.tests.raises import raises_exception_group
 from gaphor.UML.classes.association import (
     AssociationItem,
     draw_default_head,
@@ -89,24 +88,6 @@ def test_association_end_updates(create, diagram):
     diagram.update_now((a,))
 
     assert a.head_end._name == "+ blah", a.head_end.get_name()
-
-
-def test_association_orthogonal(items, create):
-    c1 = create(ClassItem, UML.Class)
-    c2 = create(ClassItem, UML.Class)
-    a = create(AssociationItem)
-
-    connect(a, a.head, c1)
-    c = get_connected(a, a.head)
-    assert c is c1
-
-    a.matrix.translate(100, 100)
-    connect(a, a.tail, c2)
-    c = get_connected(a, a.tail)
-    assert c is c2
-
-    with raises_exception_group(ValueError):
-        a.orthogonal = True
 
 
 def test_association_end_owner_handles(items):
