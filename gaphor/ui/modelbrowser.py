@@ -487,11 +487,8 @@ def list_item_drag_prepare(
     elements = get_selected_elements(selection)
     under_cursor = list_item.get_item().get_item().element
 
-    if not elements:
+    if not elements or under_cursor not in elements:
         elements = [under_cursor]
-
-    if under_cursor not in elements:
-        return None
 
     v = GObject.Value(ElementDragData.__gtype__, ElementDragData(elements=elements))
     return Gdk.ContentProvider.new_for_value(v)
