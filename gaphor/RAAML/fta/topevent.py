@@ -2,7 +2,6 @@
 
 from gaphas.geometry import Rectangle
 
-from gaphor.core import gettext
 from gaphor.core.modeling import DrawContext
 from gaphor.diagram.presentation import (
     Classified,
@@ -29,7 +28,9 @@ class TopEventItem(Classified, ElementPresentation):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: stereotypes_str(self.subject, [gettext("Top Event")]),
+                    text=lambda: stereotypes_str(
+                        self.subject, [self.diagram.gettext("Top Event")]
+                    ),
                 ),
                 Text(
                     text=lambda: self.subject.name or "",

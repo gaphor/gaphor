@@ -4,7 +4,7 @@ from functools import partial
 from gaphas.item import SE
 
 from gaphor import UML
-from gaphor.core import gettext
+from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
 from gaphor.UML import diagramitems
 from gaphor.UML.recipes import owner_package
@@ -14,7 +14,7 @@ from gaphor.UML.toolboxconfig import namespace_config
 def activity_config(new_item, name=None):
     subject = new_item.subject
     if name:
-        subject.name = gettext("New {name}").format(name=name)
+        subject.name = new_item.diagram.gettext("New {name}").format(name=name)
     if subject.activity:
         return
 
@@ -37,7 +37,7 @@ def activity_config(new_item, name=None):
         subject.activity = activities[0]
     else:
         activity = subject.model.create(UML.Activity)
-        activity.name = gettext("Activity")
+        activity.name = new_item.diagram.gettext("Activity")
         activity.package = package
         subject.activity = activity
 
@@ -45,11 +45,11 @@ def activity_config(new_item, name=None):
 def partition_config(new_item):
     activity_config(new_item)
     subject = new_item.subject
-    subject.name = gettext("Swimlane One")
+    subject.name = new_item.diagram.gettext("Swimlane One")
     new_item.partition = subject
 
     partition = subject.model.create(UML.ActivityPartition)
-    partition.name = gettext("Swimlane Two")
+    partition.name = new_item.diagram.gettext("Swimlane Two")
     partition.activity = subject.activity
     new_item.partition = partition
 
@@ -77,7 +77,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.ActionItem,
                 UML.Action,
-                config_func=partial(activity_config, name=gettext("Action")),
+                config_func=partial(activity_config, name=i18nize("Action")),
             ),
             handle_index=SE,
         ),
@@ -149,7 +149,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.ObjectNodeItem,
                 UML.ObjectNode,
-                config_func=partial(activity_config, name=gettext("Object node")),
+                config_func=partial(activity_config, name=i18nize("Object node")),
             ),
             handle_index=SE,
         ),
@@ -187,7 +187,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.SendSignalActionItem,
                 UML.SendSignalAction,
-                config_func=partial(activity_config, name=gettext("Send signal")),
+                config_func=partial(activity_config, name=i18nize("Send signal")),
             ),
             handle_index=SE,
         ),
@@ -199,7 +199,7 @@ actions = ToolSection(
             new_item_factory(
                 diagramitems.AcceptEventActionItem,
                 UML.AcceptEventAction,
-                config_func=partial(activity_config, name=gettext("Accept event")),
+                config_func=partial(activity_config, name=i18nize("Accept event")),
             ),
             handle_index=SE,
         ),

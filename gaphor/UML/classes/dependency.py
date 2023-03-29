@@ -15,7 +15,7 @@ the type of dependency in an automatic way.
 """
 
 from gaphor import UML
-from gaphor.core import gettext
+from gaphor.i18n import i18nize
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, stroke
@@ -40,9 +40,9 @@ class DependencyItem(Named, LinePresentation):
 
     def __init__(self, diagram, id=None):
         additional_stereotype = {
-            UML.Usage: (gettext("use"),),
-            UML.Realization: (gettext("realize"),),
-            UML.InterfaceRealization: (gettext("implements"),),
+            UML.Usage: (i18nize("use"),),
+            UML.Realization: (i18nize("realize"),),
+            UML.InterfaceRealization: (i18nize("implements"),),
         }
 
         self._dependency_type = UML.Dependency
@@ -54,7 +54,12 @@ class DependencyItem(Named, LinePresentation):
                 Text(
                     text=lambda: stereotypes_str(
                         self.subject,
-                        additional_stereotype.get(self._dependency_type, ()),
+                        [
+                            diagram.gettext(s)
+                            for s in additional_stereotype.get(
+                                self._dependency_type, ()
+                            )
+                        ],
                     ),
                 ),
                 Text(text=lambda: self.subject.name or ""),

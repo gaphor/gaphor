@@ -5,16 +5,16 @@ from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, IconBox, Text, draw_border
 from gaphor.diagram.support import represents
-from gaphor.i18n import gettext
+from gaphor.i18n import i18nize
 from gaphor.UML.recipes import stereotypes_str
 
 DEFAULT_UPPER_BOUND = "*"
 
 ORDERING_TEXT = {
-    "unordered": gettext("unordered"),
-    "ordered": gettext("ordered"),
-    "LIFO": gettext("LIFO"),
-    "FIFO": gettext("FIFO"),
+    "unordered": i18nize("unordered"),
+    "ordered": i18nize("ordered"),
+    "LIFO": i18nize("LIFO"),
+    "FIFO": i18nize("FIFO"),
 }
 
 
@@ -44,13 +44,13 @@ class ObjectNodeItem(Named, ElementPresentation):
                 Text(
                     text=lambda: self.subject.upperBound
                     not in (None, "", DEFAULT_UPPER_BOUND)
-                    and f'{{ {gettext("upperBound")} = {self.subject.upperBound} }}'
+                    and f'{{ {diagram.gettext("upperBound")} = {self.subject.upperBound} }}'
                     or ""
                 ),
                 Text(
                     text=lambda: self.show_ordering
                     and self.subject.ordering
-                    and f'{{ {gettext("ordering")} = {ORDERING_TEXT.get(self.subject.ordering)} }}'
+                    and f'{{ {diagram.gettext("ordering")} = {diagram.gettext(ORDERING_TEXT.get(self.subject.ordering))} }}'
                     or ""
                 ),
             ),

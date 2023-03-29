@@ -1,5 +1,4 @@
 from gaphor import UML
-from gaphor.core import gettext
 from gaphor.diagram.presentation import AttachedPresentation, Named
 from gaphor.diagram.shapes import (
     Box,
@@ -56,10 +55,10 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
 @represents(UML.InputPin)
 class InputPinItem(PinItem):
     def pin_type(self):
-        return gettext("input pin")
+        return self.diagram.gettext("input pin")
 
 
 @represents(UML.OutputPin)
 class OutputPinItem(PinItem):
     def pin_type(self):
-        return gettext("output pin")
+        return self.diagram.gettext("output pin")

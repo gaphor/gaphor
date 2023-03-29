@@ -3,7 +3,9 @@
 import importlib.resources
 import logging
 from typing import Optional
+from unicodedata import normalize
 
+from babel import Locale
 from gi.repository import GLib, Gtk, GtkSource
 
 from gaphor.abc import ActionProvider
@@ -16,6 +18,7 @@ from gaphor.core.modeling.event import (
     ModelReady,
 )
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
+from gaphor.i18n import localedir
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.csscompletion import (
     CssFunctionCompletionProvider,
@@ -295,7 +298,20 @@ class PreferencesStack:
         self._style_sheet_update = DelayedFunction(800, tx_update_style_sheet)
         self._in_update = 0
 
+        self._languages = [
+            (None, "English"),
+            *sorted(
+                (
+                    (d.name, Locale.parse(d.name).get_language_name().title())
+                    for d in localedir.iterdir()
+                    if d.is_dir()
+                ),
+                key=lambda k: normalize("NFC", k[1]).casefold(),
+            ),
+        ]
+
     def open(self, builder):
+        self.language_dropdown = builder.get_object("language-dropdown")
         self.style_sheet_buffer = builder.get_object("style-sheet-buffer")
         self.style_sheet_view = builder.get_object("style-sheet-view")
 
@@ -313,11 +329,17 @@ class PreferencesStack:
         )
         self._on_notify_dark(self.style_manager, None)
 
+        language_model = builder.get_object("language-model")
+        for _code, language in self._languages:
+            language_model.append(language)
+
         self.event_manager.subscribe(self._model_ready)
         self.event_manager.subscribe(self._style_sheet_created)
         self.event_manager.subscribe(self._style_sheet_changed)
         self.style_sheet_buffer.connect("changed", self.on_style_sheet_changed)
-        self.update_text()
+        self.language_dropdown.connect("notify::selected", self.on_language_changed)
+
+        self.update()
 
     def close(self):
         self.event_manager.unsubscribe(self._model_ready)
@@ -339,28 +361,44 @@ class PreferencesStack:
 
             self._style_sheet_update(style_sheet, text)
 
-    def update_text(self):
+    def update(self):
         style_sheet = self.style_sheet
         if not style_sheet or self._in_update:
             return
 
         self._in_update = 1
         self.style_sheet_buffer.set_text(style_sheet.styleSheet or "")
+        self.language_dropdown.set_selected(
+            next(
+                (
+                    i
+                    for i, (code, _) in enumerate(self._languages)
+                    if code == style_sheet.naturalLanguage
+                ),
+                0,
+            )
+        )
         self._in_update = 0
 
     @event_handler(ModelReady)
     def _model_ready(self, event):
-        self.update_text()
+        self.update()
 
     @event_handler(ElementCreated)
     def _style_sheet_created(self, event):
         if isinstance(event.element, StyleSheet):
-            self.update_text()
+            self.update()
 
     @event_handler(AttributeUpdated)
     def _style_sheet_changed(self, event):
         if event.property is StyleSheet.styleSheet:
-            self.update_text()
+            self.update()
+
+    def on_language_changed(self, dropdown, _gparam):
+        if (style_sheet := self.style_sheet) and not self._in_update:
+            with Transaction(self.event_manager):
+                code, _name = self._languages[dropdown.get_selected()]
+                style_sheet.naturalLanguage = code
 
     def _on_notify_dark(self, style_manager, _gparam):
         scheme_manager = GtkSource.StyleSchemeManager.get_default()

@@ -11,7 +11,6 @@ from gaphor.diagram.presentation import (
 from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
-from gaphor.i18n import gettext
 from gaphor.RAAML import raaml
 from gaphor.UML.recipes import stereotypes_str
 
@@ -31,7 +30,7 @@ class OperationalSituationItem(Classified, ElementPresentation):
             Box(
                 Text(
                     text=lambda: stereotypes_str(
-                        self.subject, [gettext("Operational Situation")]
+                        self.subject, [self.diagram.gettext("Operational Situation")]
                     ),
                 ),
                 Text(

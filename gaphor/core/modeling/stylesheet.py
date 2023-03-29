@@ -70,6 +70,7 @@ class StyleSheet(Element):
         self.compile_style_sheet()
 
     styleSheet: attribute[str] = attribute("styleSheet", str, DEFAULT_STYLE_SHEET)
+    naturalLanguage: attribute[str] = attribute("naturalLanguage", str)
 
     @property
     def system_font_family(self) -> str:

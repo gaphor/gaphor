@@ -18,7 +18,6 @@ from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.shapes import stroke
 from gaphor.diagram.text import TextAlign, text_point_at_line
-from gaphor.i18n import gettext
 
 
 class Named:
@@ -46,7 +45,7 @@ def from_package_str(item):
         return False
 
     return (
-        gettext("(from {namespace})").format(namespace=namespace.name)
+        diagram.gettext("(from {namespace})").format(namespace=namespace.name)
         if namespace is not item.diagram.owner
         else ""
     )

@@ -13,7 +13,7 @@ from gaphor.UML.toolboxconfig import namespace_config
 
 
 def state_config(new_item):
-    state_machine_config(new_item, name=gettext("State"))
+    state_machine_config(new_item, name=new_item.diagram.gettext("State"))
 
 
 def pseudostate_config(new_item, kind):
@@ -24,7 +24,7 @@ def pseudostate_config(new_item, kind):
 def state_machine_config(new_item, name=None):
     subject = new_item.subject
     if name:
-        subject.name = gettext("New {name}").format(name=name)
+        subject.name = new_item.diagram.gettext("New {name}").format(name=name)
     if subject.container:
         return
 
@@ -43,7 +43,7 @@ def state_machine_config(new_item, name=None):
         state_machine = state_machines[0]
     else:
         state_machine = subject.model.create(UML.StateMachine)
-        state_machine.name = gettext("State Machine")
+        state_machine.name = new_item.diagram.gettext("State Machine")
         state_machine.package = package
 
     if state_machine.region:

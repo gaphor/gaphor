@@ -178,7 +178,10 @@ class DiagramPage:
 
     @event_handler(AttributeUpdated)
     def _on_attribute_updated(self, event: AttributeUpdated):
-        if event.property is StyleSheet.styleSheet:
+        if (
+            event.property is StyleSheet.styleSheet
+            or event.property is StyleSheet.naturalLanguage
+        ):
             self.update_drawing_style()
 
             diagram = self.diagram

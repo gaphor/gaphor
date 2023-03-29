@@ -164,7 +164,9 @@ class ModelBrowser(UIComponent, ActionProvider):
             diagram = self.element_factory.create(Diagram)
             if isinstance(element, UML.NamedElement):
                 diagram.element = element
-            diagram.name = diagram_name_for_type(self.modeling_language, diagram_type)
+            diagram.name = diagram_name_for_type(
+                diagram, self.modeling_language, diagram_type
+            )
             diagram.diagramType = diagram_type
         self.select_element(diagram)
         self.event_manager.handle(DiagramOpened(diagram))
@@ -619,7 +621,7 @@ def create_diagram_types_model(modeling_language):
 
     part = Gio.Menu.new()
     for id, name, _ in modeling_language.diagram_types:
-        menu_item = Gio.MenuItem.new(name, "win.create-diagram")
+        menu_item = Gio.MenuItem.new(gettext(name), "win.create-diagram")
         menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
         part.append_item(menu_item)
     model.append_section(None, part)
@@ -633,8 +635,8 @@ def create_diagram_types_model(modeling_language):
     return model
 
 
-def diagram_name_for_type(modeling_language, diagram_type):
+def diagram_name_for_type(diagram, modeling_language, diagram_type):
     for id, name, _ in modeling_language.diagram_types:
         if id == diagram_type:
-            return name
-    return gettext("New diagram")
+            return diagram.gettext(name)
+    return diagram.gettext("New diagram")

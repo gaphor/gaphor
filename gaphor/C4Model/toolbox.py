@@ -4,7 +4,7 @@ from functools import partial
 from gaphas.item import SE
 
 from gaphor.C4Model import c4model, diagramitems
-from gaphor.core import gettext
+from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
     DiagramTypes,
@@ -26,29 +26,29 @@ def software_system_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
     subject.type = "Software System"
-    subject.name = gettext("New Software System")
+    subject.name = new_item.diagram.gettext("New Software System")
 
 
 def container_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
     subject.type = "Container"
-    subject.name = gettext("New Container")
+    subject.name = new_item.diagram.gettext("New Container")
 
 
 def container_database_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
     subject.type = "Container"
-    subject.technology = gettext("Database")
-    subject.name = gettext("New Database")
+    subject.technology = new_item.diagram.gettext("Database")
+    subject.name = new_item.diagram.gettext("New Database")
 
 
 def component_config(new_item):
     default_namespace(new_item)
     subject = new_item.subject
     subject.type = "Component"
-    subject.name = gettext("New Component")
+    subject.name = new_item.diagram.gettext("New Component")
 
 
 c4 = ToolSection(
@@ -62,7 +62,7 @@ c4 = ToolSection(
             new_item_factory(
                 diagramitems.C4PersonItem,
                 c4model.C4Person,
-                config_func=partial(namespace_config, name=gettext("Person")),
+                config_func=partial(namespace_config, name=i18nize("Person")),
             ),
             handle_index=SE,
         ),
@@ -136,9 +136,9 @@ c4model_toolbox_actions: ToolboxDefinition = (
 )
 
 c4model_diagram_types: DiagramTypes = (
-    DiagramType("c4", gettext("New C4 Diagram"), (c4,)),
-    DiagramType("cls", gettext("New Class Diagram"), (classes,)),
-    DiagramType("act", gettext("New Activity Diagram"), (actions,)),
-    DiagramType("sd", gettext("New Sequence Diagram"), (interactions,)),
-    DiagramType("stm", gettext("New State Machine Diagram"), (states,)),
+    DiagramType("c4", i18nize("New C4 Diagram"), (c4,)),
+    DiagramType("cls", i18nize("New Class Diagram"), (classes,)),
+    DiagramType("act", i18nize("New Activity Diagram"), (actions,)),
+    DiagramType("sd", i18nize("New Sequence Diagram"), (interactions,)),
+    DiagramType("stm", i18nize("New State Machine Diagram"), (states,)),
 )

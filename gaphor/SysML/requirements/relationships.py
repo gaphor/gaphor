@@ -1,4 +1,3 @@
-from gaphor.core import gettext
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_arrow_head
 from gaphor.diagram.support import represents
@@ -32,7 +31,9 @@ class DirectedRelationshipPropertyPathItem(Named, LinePresentation):
     sysml.Satisfy, head=sysml.Satisfy.sourceContext, tail=sysml.Satisfy.targetContext
 )
 class SatisfyItem(DirectedRelationshipPropertyPathItem):
-    relation_type = gettext("satisfy")
+    @property
+    def relation_type(self):
+        return self.diagram.gettext("satisfy")
 
 
 @represents(
@@ -41,23 +42,31 @@ class SatisfyItem(DirectedRelationshipPropertyPathItem):
     tail=sysml.DeriveReqt.targetContext,
 )
 class DeriveReqtItem(DirectedRelationshipPropertyPathItem):
-    relation_type = gettext("deriveReqt")
+    @property
+    def relation_type(self):
+        return self.diagram.gettext("deriveReqt")
 
 
 @represents(sysml.Trace, head=sysml.Trace.sourceContext, tail=sysml.Trace.targetContext)
 class TraceItem(DirectedRelationshipPropertyPathItem):
-    relation_type = gettext("trace")
+    @property
+    def relation_type(self):
+        return self.diagram.gettext("trace")
 
 
 @represents(
     sysml.Verify, head=sysml.Verify.sourceContext, tail=sysml.Verify.targetContext
 )
 class VerifyItem(DirectedRelationshipPropertyPathItem):
-    relation_type = gettext("verify")
+    @property
+    def relation_type(self):
+        return self.diagram.gettext("verify")
 
 
 @represents(
     sysml.Refine, head=sysml.Refine.sourceContext, tail=sysml.Refine.targetContext
 )
 class RefineItem(DirectedRelationshipPropertyPathItem):
-    relation_type = gettext("refine")
+    @property
+    def relation_type(self):
+        return self.diagram.gettext("refine")

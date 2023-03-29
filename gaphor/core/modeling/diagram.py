@@ -39,6 +39,7 @@ from gaphor.core.modeling.properties import (
 )
 from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.core.styling import Style, StyleNode
+from gaphor.i18n import translation
 
 log = logging.getLogger(__name__)
 
@@ -279,6 +280,14 @@ class Diagram(Element):
         style_sheet = self.styleSheet
         return style_sheet.match(node) if style_sheet else FALLBACK_STYLE
 
+    def gettext(self, message):
+        """Translate a message to the language used in the model."""
+        style_sheet = self.styleSheet
+        if style_sheet and style_sheet.naturalLanguage:
+            return translation(style_sheet.naturalLanguage).gettext(message)
+        else:
+            return message
+
     def postload(self):
         """Handle post-load functionality for the diagram."""
         self._order_owned_presentation()
@@ -375,22 +384,17 @@ class Diagram(Element):
         dirty_items: Sequence[Presentation],
     ) -> None:
         """Update the diagram canvas."""
-        sort = self.sort
 
         def dirty_items_with_ancestors():
             for item in set(dirty_items):
                 yield item
                 yield from gaphas.canvas.ancestors(self, item)
 
-        all_dirty_items = list(reversed(list(sort(dirty_items_with_ancestors()))))
-        self._update_items(all_dirty_items)
-
-        self._connections.solve()
-
-    def _update_items(self, items):
-        for item in items:
+        for item in reversed(list(self.sort(dirty_items_with_ancestors()))):
             if update := getattr(item, "update", None):
                 update(UpdateContext(style=self.style(StyledItem(item))))
+
+        self._connections.solve()
 
     def _on_constraint_solved(self, cinfo: gaphas.connections.Connection) -> None:
         dirty_items = set()

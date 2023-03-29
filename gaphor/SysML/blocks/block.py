@@ -1,4 +1,3 @@
-from gaphor.core import gettext
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     Classified,
@@ -55,11 +54,11 @@ class BlockItem(Classified, ElementPresentation[Block]):
         from gaphor.RAAML import raaml
 
         if isinstance(self.subject, raaml.Situation):
-            return [gettext("Situation")]
+            return [self.diagram.gettext("Situation")]
         elif isinstance(self.subject, raaml.ControlStructure):
-            return [gettext("ControlStructure")]
+            return [self.diagram.gettext("ControlStructure")]
         elif isinstance(self.subject, Block):
-            return [gettext("block")]
+            return [self.diagram.gettext("block")]
         else:
             return ()
 
@@ -95,7 +94,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 and self.subject
                 and [
                     self.block_compartment(
-                        gettext("parts"),
+                        self.diagram.gettext("parts"),
                         lambda a: not a.association and a.aggregation == "composite",
                     )
                 ]
@@ -106,7 +105,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 and self.subject
                 and [
                     self.block_compartment(
-                        gettext("references"),
+                        self.diagram.gettext("references"),
                         lambda a: not a.association and a.aggregation != "composite",
                     )
                 ]
@@ -117,7 +116,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 and self.subject
                 and [
                     self.block_compartment(
-                        gettext("values"),
+                        self.diagram.gettext("values"),
                         lambda a: isinstance(a.type, ValueType)
                         and a.aggregation == "composite",
                     )
@@ -134,7 +133,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
     def block_compartment(self, name, predicate):
         # We need to fix the attribute value, since the for loop changes it.
         def lazy_format(attribute):
-            return lambda: format_property(attribute) or gettext("unnamed")
+            return lambda: format_property(attribute) or self.diagram.gettext("unnamed")
 
         return Box(
             Text(

@@ -18,7 +18,6 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import Box, IconBox, Text, ellipse, stroke
 from gaphor.diagram.support import represents
-from gaphor.i18n import gettext
 from gaphor.UML.recipes import stereotypes_str
 
 DEFAULT_JOIN_SPEC = "and"
@@ -187,11 +186,11 @@ class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
         if not self.show_underlaying_type:
             return ""
         if self.combined:
-            return gettext("merge/decision")
+            return self.diagram.gettext("merge/decision")
         elif isinstance(self.subject, UML.MergeNode):
-            return gettext("merge")
+            return self.diagram.gettext("merge")
         elif isinstance(self.subject, UML.DecisionNode):
-            return gettext("decision")
+            return self.diagram.gettext("decision")
         return ""
 
 
