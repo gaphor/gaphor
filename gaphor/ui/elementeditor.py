@@ -302,7 +302,7 @@ class PreferencesStack:
             (None, "English"),
             *sorted(
                 (
-                    (d.name, Locale.parse(d.name).get_language_name())
+                    (d.name, Locale.parse(d.name).get_language_name().title())
                     for d in localedir.iterdir()
                     if d.is_dir()
                 ),
