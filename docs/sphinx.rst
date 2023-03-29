@@ -1,4 +1,4 @@
-Sphinx extension
+Sphinx Extension
 ================
 
 What's more awesome than to use Gaphor diagrams directly in your `Sphinx`_ documentation.
