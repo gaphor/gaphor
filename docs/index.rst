@@ -41,6 +41,7 @@ Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :doc:`Jupyter n
    sphinx
    scripting
    stereotypes
+   merge_conflicts
 
 .. toctree::
    :caption: Installation
