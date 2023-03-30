@@ -52,14 +52,14 @@ runs:
       shell: bash
     - name: Notarize app
       if: inputs.sign_app == 'true'
-      uses: devbotsxyz/xcode-notarize@v1.0.0
+      uses: BoundfoxStudios/action-xcode-notarize@v1.1
       with:
         product-path: "_packaging/dist/Gaphor.app"
         appstore-connect-username: ${{ inputs.ac_username }}
         appstore-connect-password: ${{ inputs.ac_password }}
     - name: Staple app
       if: inputs.sign_app == 'true'
-      uses: devbotsxyz/xcode-staple@v1.0.0
+      uses: BoundfoxStudios/action-xcode-staple@v1
       with:
         product-path: "_packaging/dist/Gaphor.app"
     - name: Create dmg
@@ -76,7 +76,7 @@ runs:
       shell: bash
     - name: Notarize dmg
       if: inputs.sign_app == 'true'
-      uses: devbotsxyz/xcode-notarize@v1
+      uses: BoundfoxStudios/action-xcode-notarize@v1.1
       with:
         product-path: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
         appstore-connect-username: ${{ inputs.ac_username }}
@@ -84,7 +84,7 @@ runs:
         primary-bundle-id: org.gaphor.gaphor
     - name: Staple .dmg
       if: inputs.sign_app == 'true'
-      uses: devbotsxyz/xcode-staple@v1.0.0
+      uses: BoundfoxStudios/action-xcode-staple@v1
       with:
         product-path: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
     - name: Upload Gaphor-${{ inputs.version }}.dmg
