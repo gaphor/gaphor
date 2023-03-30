@@ -4,16 +4,17 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-03-27 11:32+0200\n"
-"PO-Revision-Date: 2023-02-25 09:37+0000\n"
-"Last-Translator: Óscar Fernández Díaz "
-"<oscfdezdz@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2023-03-29 21:40+0000\n"
+"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
+".org>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -1295,9 +1296,8 @@ msgid "Comment line"
 msgstr "Línea de comentario"
 
 #: gaphor/diagram/diagramtoolbox.py:164
-#, fuzzy
 msgid "Diagram metadata"
-msgstr "Menú del diagrama nuevo"
+msgstr "Metadatos del diagrama"
 
 #: gaphor/diagram/presentation.py:49
 msgid "(from {namespace})"
@@ -1321,30 +1321,27 @@ msgstr "Nota o comentario"
 
 #: gaphor/diagram/propertypages.ui:123
 msgid "Created By"
-msgstr ""
+msgstr "Creado por"
 
 #: gaphor/diagram/propertypages.ui:151
 msgid "Website"
-msgstr ""
+msgstr "Página web"
 
 #: gaphor/diagram/propertypages.ui:165
-#, fuzzy
 msgid "Revision"
-msgstr "decisión"
+msgstr "Revisión"
 
 #: gaphor/diagram/propertypages.ui:179
-#, fuzzy
 msgid "License"
-msgstr "Línea"
+msgstr "Licencia"
 
 #: gaphor/diagram/propertypages.ui:193
-#, fuzzy
 msgid "Created On"
-msgstr "Crear modelo nuevo"
+msgstr "Creado el"
 
 #: gaphor/diagram/propertypages.ui:207
 msgid "Updated On"
-msgstr ""
+msgstr "Actualizado el"
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -2178,23 +2175,24 @@ msgstr ""
 "de estilo en Gaphor</a>"
 
 #: gaphor/ui/elementeditor.ui:328
-#, fuzzy
 msgid "Merge Models"
-msgstr "Modelo nuevo"
+msgstr "Combinar modelos"
 
 #: gaphor/ui/elementeditor.ui:339
 msgid "Merge Model Changes"
-msgstr ""
+msgstr "Combinar cambios de modelo"
 
 #: gaphor/ui/elementeditor.ui:350
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
+"Aplique los cambios entrantes del modelo en conflicto. Use Deshacer para "
+"revertir los cambios."
 
 #: gaphor/ui/elementeditor.ui:370
 msgid "Resolve"
-msgstr ""
+msgstr "Resolver"
 
 #: gaphor/ui/errorhandler.py:19
 msgid ""
@@ -2270,7 +2268,7 @@ msgstr "Cargando modelo desde {filename}"
 
 #: gaphor/ui/filemanager.py:147
 msgid "Loading current and incoming model"
-msgstr ""
+msgstr "Cargando modelo actual y entrante"
 
 #: gaphor/ui/filemanager.py:210 gaphor/ui/filemanager.py:257
 msgid "Unable to open model “{filename}”."
@@ -2314,7 +2312,7 @@ msgstr "Cancelar"
 
 #: gaphor/ui/filemanager.py:399
 msgid "Open Merge Editor"
-msgstr ""
+msgstr "Abrir el editor de combinación"
 
 #: gaphor/ui/filemanager.py:400
 msgid "Open Current"
@@ -2467,7 +2465,6 @@ msgid "<Relationships>"
 msgstr "<Relationships>"
 
 #: gaphor/ui/help/about.ui:14
-#, fuzzy
 msgid ""
 "Copyright © 2001-2023 Arjan J. Molenaar and Dan Yeaw.\n"
 "\n"
@@ -2475,7 +2472,7 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
-"Copyright © 2001-2022 Arjan J. Molenaar y Dan Yeaw.\n"
+"Copyright © 2001-2023 Arjan J. Molenaar y Dan Yeaw.\n"
 "\n"
 "UML, SysML y RAAML son marcas registradas o marcas comerciales de Object "
 "Management Group, Inc. en Estados Unidos y/o en otros países."
@@ -2571,82 +2568,80 @@ msgid "Paste (copy defining elements)"
 msgstr "Pegar (copiar elementos de definición)"
 
 #: gaphor/ui/modelmerge/organize.py:133
-#, fuzzy
 msgid "Update diagram “{name}”"
-msgstr "Menú del diagrama nuevo"
+msgstr "Actualizar diagrama “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:164 gaphor/ui/modelmerge/organize.py:306
 msgid "Update element “{name}”"
-msgstr ""
+msgstr "Actualizar elemento “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:168
 msgid "Update element of type “{type}”"
-msgstr ""
+msgstr "Actualizar elemento de tipo “{type}”"
 
 #: gaphor/ui/modelmerge/organize.py:244
 msgid "Update presentation “{type}”"
-msgstr ""
+msgstr "Actualizar presentación “{type}”"
 
 #: gaphor/ui/modelmerge/organize.py:270
 msgid "Add presentation of type {type}"
-msgstr ""
+msgstr "Añadir presentación de tipo {type}"
 
 #: gaphor/ui/modelmerge/organize.py:274
 msgid "Remove presentation of type {type}"
-msgstr ""
+msgstr "Eliminar presentación de tipo {type}"
 
 #: gaphor/ui/modelmerge/organize.py:279
 msgid "Update presentation “{name}”"
-msgstr ""
+msgstr "Actualizar presentación “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:281
 msgid "Update presentation of type {type}"
-msgstr ""
+msgstr "Actualizar presentación de tipo {type}"
 
 #: gaphor/ui/modelmerge/organize.py:288
 msgid "Add {type} “{name}”"
-msgstr ""
+msgstr "Añadir {type} “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:292
 msgid "Add element of type {type}"
-msgstr ""
+msgstr "Añadir elemento de tipo {type}"
 
 #: gaphor/ui/modelmerge/organize.py:298
-#, fuzzy
 msgid "Remove element “{name}”"
-msgstr "Eliminar los elementos no usados"
+msgstr "Eliminar elemento “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:300
 msgid "Remove element of type {type}"
-msgstr ""
+msgstr "Eliminar elemento de tipo {type}"
 
 #: gaphor/ui/modelmerge/organize.py:308
 msgid "Update element of type {type}"
-msgstr ""
+msgstr "Actualizar elemento de tipo {type}"
 
 #: gaphor/ui/modelmerge/organize.py:315
 msgid "Add relation “{name}” to “{ref_name}”"
-msgstr ""
+msgstr "Añadir relación “{name}” a “{ref_name}”"
 
 #: gaphor/ui/modelmerge/organize.py:317
 msgid "Remove relation “{name}” to “{ref_name}”"
-msgstr ""
+msgstr "Eliminar relación “{name}” a “{ref_name}”"
 
 #: gaphor/ui/modelmerge/organize.py:319
 msgid "Update relation “{name}” to “{ref_name}”"
-msgstr ""
+msgstr "Actualizar relación “{name}” a “{ref_name}”"
 
 #: gaphor/ui/modelmerge/organize.py:326
 msgid "Add relation “{name}”"
-msgstr ""
+msgstr "Añadir relación “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:328
 msgid "Remove relation “{name}”"
-msgstr ""
+msgstr "Eliminar relación “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:330
 msgid "Update relation “{name}”"
-msgstr ""
+msgstr "Actualizar relación “{name}”"
 
 #~ msgid "Diagrams"
 #~ msgstr "Diagramas"
@@ -3200,4 +3195,3 @@ msgstr ""
 #~ "Group, Inc. en los Estados Unidos\n"
 #~ ""
 #~ "y/o en otros países.\n"
-
