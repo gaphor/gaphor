@@ -36,7 +36,7 @@ runs:
       run: poetry build
       shell: bash
     - name: Import codesign certificate
-      uses: apple-actions/import-codesign-certs@v1.0.4
+      uses: apple-actions/import-codesign-certs@v2
       with:
         p12-file-base64: ${{ inputs.base64_encoded_p12 }}
         p12-password: ${{ inputs.certpassword_p12 }}
