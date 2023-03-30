@@ -1061,6 +1061,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "mcdigregorio",
+      "name": "mcdigregorio",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17177951?v=4",
+      "profile": "https://github.com/mcdigregorio",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
