@@ -200,7 +200,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
         ):
             iflow = self.subject.informationFlow[0]
             assert isinstance(iflow, sysml.ItemFlow)
-            self.entry.set_text(iflow.itemProperty.name)
+            self.entry.set_text(iflow.itemProperty.name or "")
             if iflow.itemProperty.type:
                 combo.set_active_id(iflow.itemProperty.type.id)
 
