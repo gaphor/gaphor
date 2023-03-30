@@ -1,6 +1,6 @@
 """Tools for handling items on a diagram."""
 from gaphas.tool import hover_tool, rubberband_tool, view_focus_tool, zoom_tools
-from gi.repository import Gtk
+from gaphas.tool.scroll import pan_tool
 
 import gaphor.diagram.tools.handlemove
 import gaphor.diagram.tools.segment
@@ -57,6 +57,7 @@ def apply_placement_tool_set(
 def add_basic_tools(view, modeling_language, event_manager):
     for tool in zoom_tools(view):
         view.add_controller(tool)
+    view.add_controller(pan_tool(view))
     view.add_controller(view_focus_tool(view))
     view.add_controller(shortcut_tool(view, event_manager))
     view.add_controller(drop_target_tool(modeling_language, event_manager))
