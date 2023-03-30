@@ -491,7 +491,6 @@ files = [
     {file = "debugpy-1.6.6-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:9b5d1b13d7c7bf5d7cf700e33c0b8ddb7baf030fcf502f76fc061ddd9405d16c"},
     {file = "debugpy-1.6.6-cp38-cp38-win32.whl", hash = "sha256:70ab53918fd907a3ade01909b3ed783287ede362c80c75f41e79596d5ccacd32"},
     {file = "debugpy-1.6.6-cp38-cp38-win_amd64.whl", hash = "sha256:c05349890804d846eca32ce0623ab66c06f8800db881af7a876dc073ac1c2225"},
-    {file = "debugpy-1.6.6-cp39-cp39-macosx_11_0_x86_64.whl", hash = "sha256:11a0f3a106f69901e4a9a5683ce943a7a5605696024134b522aa1bfda25b5fec"},
     {file = "debugpy-1.6.6-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:a771739902b1ae22a120dbbb6bd91b2cae6696c0e318b5007c5348519a4211c6"},
     {file = "debugpy-1.6.6-cp39-cp39-win32.whl", hash = "sha256:549ae0cb2d34fc09d1675f9b01942499751d174381b6082279cf19cdb3c47cbe"},
     {file = "debugpy-1.6.6-cp39-cp39-win_amd64.whl", hash = "sha256:de4a045fbf388e120bb6ec66501458d3134f4729faed26ff95de52a754abddb1"},
@@ -616,14 +615,14 @@ sphinx-basic-ng = "*"
 
 [[package]]
 name = "gaphas"
-version = "3.10.1"
+version = "3.10.2"
 description = "Gaphas is a GTK+ based diagramming widget"
 category = "main"
 optional = false
 python-versions = ">=3.9,<3.12"
 files = [
-    {file = "gaphas-3.10.1-py3-none-any.whl", hash = "sha256:8c9ff196edc0a5565f6da4a04cc35163cc065588aa2510fea5ce37cb29eafd41"},
-    {file = "gaphas-3.10.1.tar.gz", hash = "sha256:9400da3c95b6f522b2b498175b2a7cd011562f5e065f3bccccbe13dad7df8992"},
+    {file = "gaphas-3.10.2-py3-none-any.whl", hash = "sha256:517d8facf058e88598a46e9dac7aaef4f729cccf7b83bffe5e5e8bee65d47f79"},
+    {file = "gaphas-3.10.2.tar.gz", hash = "sha256:60cedebdc89a1bd002841d15e3b26f979ef4b75a4bed820e0bcc9b9c77d72d56"},
 ]
 
 [package.dependencies]
