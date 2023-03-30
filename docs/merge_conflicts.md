@@ -22,7 +22,7 @@ The Merge Editor is shown on the right side, replacing the (normal) element edit
 ![merge conflict window](images/merge-conflict-window.png)
 
 Merge actions are grouped by diagram, where possible.
-Once changes are applied, they can only be reverted by pressing undoing the change (hit _Undo_).
+Once changes are applied, they can only be reverted by undoing the change (hit _Undo_).
 
 ```{note}
 If you accept all changes, you’ll end up with the incoming model.
