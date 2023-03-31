@@ -269,7 +269,7 @@ All diagrams have a white background. Sequence diagrams get a blue-ish backgroun
 
 Gaphor has many model elements. How can you find out which item should be styled?
 
-Gaphor pnly styles the elements that are in the model, so you should be explicit
+Gaphor only styles the elements that are in the model, so you should be explicit
 on their names. For example: `Component` inherits from `Class` in the UML model,
 but changing a color for `Class` does not change it for `Component`.
 
