@@ -5,7 +5,13 @@ from pathlib import Path
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext
-from gaphor.diagram.export import save_eps, save_pdf, save_png, save_svg
+from gaphor.diagram.export import (
+    escape_filename,
+    save_eps,
+    save_pdf,
+    save_png,
+    save_svg,
+)
 from gaphor.ui.filedialog import save_file_dialog
 
 
@@ -26,9 +32,9 @@ class DiagramExport(Service, ActionProvider):
 
     def save_dialog(self, diagram, title, ext, mime_type, handler):
         dot_ext = f".{ext}"
-        filename = self.filename.with_name(diagram.name or "export").with_suffix(
-            dot_ext
-        )
+        filename = self.filename.with_name(
+            escape_filename(diagram.name) or "export"
+        ).with_suffix(dot_ext)
 
         def save_handler(filename):
             self.filename = filename

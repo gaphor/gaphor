@@ -8,7 +8,7 @@ from typing import List
 
 from gaphor.application import Session
 from gaphor.core.modeling import Diagram
-from gaphor.plugins.diagramexport import save_pdf, save_png, save_svg
+from gaphor.diagram.export import escape_filename, save_pdf, save_png, save_svg
 from gaphor.storage import storage
 
 
@@ -99,7 +99,7 @@ def main(argv=sys.argv[1:]):
             odir = pkg2dir(diagram.owner)
 
             # just diagram name
-            dname = diagram.name
+            dname = escape_filename(diagram.name)
             # full diagram name including package path
             pname = f"{odir}/{dname}"
 

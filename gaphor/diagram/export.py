@@ -1,10 +1,16 @@
 """Service dedicated to exporting diagrams to a variety of file formats."""
 
+import re
+
 import cairo
 from gaphas.painter import BoundingBoxPainter, FreeHandPainter, PainterChain
 
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
+
+
+def escape_filename(diagram_name):
+    return re.sub("\\W+", "_", diagram_name)
 
 
 def render(diagram, new_surface, padding=8, write_to_png=None) -> None:

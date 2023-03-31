@@ -1,6 +1,12 @@
 import pytest
 
-from gaphor.diagram.export import save_eps, save_pdf, save_png, save_svg
+from gaphor.diagram.export import (
+    escape_filename,
+    save_eps,
+    save_pdf,
+    save_png,
+    save_svg,
+)
 from gaphor.diagram.general import Box
 
 
@@ -44,3 +50,10 @@ def test_export_to_eps(diagram_with_box, tmp_path):
     content = f.read_bytes()
 
     assert b"%!PS-Adobe-3.0 EPSF-3.0" in content
+
+
+def test_escape_filename():
+    assert escape_filename("foo bar") == "foo_bar"
+    assert escape_filename(r"foo \ bar >") == "foo_bar_"
+    assert escape_filename("çëÆØ") == "çëÆØ"
+    assert escape_filename("こんにちは") == "こんにちは"  # should read: "hello"
