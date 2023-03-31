@@ -330,7 +330,7 @@ diagram[owner.name=drafts] {
   line-style: sloppy 0.3;
 }
 
-diagram[owner.name=draft] * {
+diagram[owner.name=drafts] * {
   font-family: Purisa; /* Or use some other font that's installed on your system */
 }
 ```
