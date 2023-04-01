@@ -82,17 +82,18 @@ def organize_changes(element_factory, modeling_language):
             element_type = modeling_language.lookup_element(element_change.element_name)
             assert element_type
             return element_type
-        else:
-            raise ValueError("Can’t resolve id {element_id} to a type")
+        return None
 
     def composite(change: RefChange):
         element_type = lookup_element(change.element_id)
+        if not element_type:
+            return False
         prop = getattr(element_type, change.property_name, None)
         return prop and prop.composite
 
     def not_presentation(change: RefChange):
         element_type = lookup_element(change.property_ref)
-        return not issubclass(element_type, (Diagram, Presentation))
+        return element_type and not issubclass(element_type, (Diagram, Presentation))
 
     def composite_and_not_presentation(change: RefChange):
         return composite(change) and not_presentation(change)
