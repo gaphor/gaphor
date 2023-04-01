@@ -222,13 +222,17 @@ class FileManager(Service, ActionProvider):
 
     def resolve_merge_conflict(self, filename: Path):
         temp_dir = tempfile.TemporaryDirectory()
+        ancestor_filename = Path(temp_dir.name) / f"ancestor-{filename.name}"
         current_filename = Path(temp_dir.name) / f"current-{filename.name}"
         incoming_filename = Path(temp_dir.name) / f"incoming-{filename.name}"
         with (
+            ancestor_filename.open("wb") as ancestor_file,
             current_filename.open("wb") as current_file,
             incoming_filename.open("wb") as incoming_file,
         ):
-            split = split_ours_and_theirs(filename, current_file, incoming_file)
+            split = split_ours_and_theirs(
+                filename, ancestor_file, current_file, incoming_file
+            )
 
         def done():
             nonlocal temp_dir
