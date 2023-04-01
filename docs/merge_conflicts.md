@@ -13,19 +13,25 @@ the incoming model or merge changes manually via the Merge Editor.
 
 ![merge dialog](images/merge-dialog.png)
 
-If you choose *Open Merge Editor*, both models will be loaded and the differences will be calculated.
-The differences are added to the model, so you can save the file and continue merge conflict resolution
-at a later point.
+If you choose *Open Merge Editor*, both models will be loaded. The current model remains as is.
+In addition, the changes made to the incoming model are calculated. Those changes are stored as _pending change_ objects in the model.
 
-The Merge Editor is shown on the right side, replacing the (normal) element editor.
+```{tip}
+Pending changes are part of the model, you can save the model with changes and resolve those at a later point.
+```
+
+The Merge Editor is shown on the right side, replacing the (normal) Property Editor.
 
 ![merge conflict window](images/merge-conflict-window.png)
 
 Merge actions are grouped by diagram, where possible.
+When you apply a change, all changes listed as children are also applied.
 Once changes are applied, they can only be reverted by undoing the change (hit _Undo_).
 
 ```{note}
-If you accept all changes, you’ll end up with the incoming model.
+The Merge Editor replaces the Property Editor, as long as there are pending changes in the model.
+
+It is concidered good practice to resolve the merge conflict before you continue modeling.
 ```
 
 When all conflicts have been resolved, press *Resolve* to finish merge conflict resolution.
