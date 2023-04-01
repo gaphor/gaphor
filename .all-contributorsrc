@@ -1070,6 +1070,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "peter88213",
+      "name": "peter88213",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42072564?v=4",
+      "profile": "https://peter88213.github.io",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
