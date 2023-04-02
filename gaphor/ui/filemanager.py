@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import tempfile
+from functools import partial
 from pathlib import Path
 from typing import Callable
 
@@ -138,6 +139,7 @@ class FileManager(Service, ActionProvider):
 
     def merge(
         self,
+        ancestor_filename: Path,
         current_filename: Path,
         incoming_filename: Path,
         on_load_done: Callable[[], None] | None = None,
@@ -148,21 +150,30 @@ class FileManager(Service, ActionProvider):
             parent=self.parent_window,
         )
 
+        ancestor_element_factory = ElementFactory()
         incoming_element_factory = ElementFactory()
 
-        def current_progress(percentage):
-            status_window.progress(percentage / 2)
-
-        def incoming_progress(percentage):
-            status_window.progress(50 + percentage / 2)
+        def progress(percentage, completed=0):
+            status_window.progress(completed + percentage / 3)
 
         # Make this callback async, so we can call _load_async again: it's a generator and we can only run one at a time
         @g_async()
         def current_done():
+            log.debug("Loading ancestor model from %s", ancestor_filename)
+            for _ in self._load_async(
+                ancestor_filename,
+                partial(progress, completed=33),
+                ancestor_done,
+                element_factory=ancestor_element_factory,
+            ):
+                pass
+
+        @g_async()
+        def ancestor_done():
             log.debug("Loading incoming model from %s", incoming_filename)
             for _ in self._load_async(
                 incoming_filename,
-                incoming_progress,
+                partial(progress, completed=66),
                 incoming_done,
                 element_factory=incoming_element_factory,
             ):
@@ -172,7 +183,13 @@ class FileManager(Service, ActionProvider):
             try:
                 log.debug("Comparing models")
                 with self.element_factory.block_events():
-                    list(compare(self.element_factory, incoming_element_factory))
+                    list(
+                        compare(
+                            self.element_factory,
+                            ancestor_element_factory,
+                            incoming_element_factory,
+                        )
+                    )
 
                 if on_load_done:
                     on_load_done()
@@ -180,7 +197,7 @@ class FileManager(Service, ActionProvider):
                 status_window.destroy()
 
         log.debug("Loading current model from %s", current_filename)
-        for _ in self._load_async(current_filename, current_progress, current_done):
+        for _ in self._load_async(current_filename, progress, current_done):
             pass
 
     @g_async()
@@ -222,13 +239,17 @@ class FileManager(Service, ActionProvider):
 
     def resolve_merge_conflict(self, filename: Path):
         temp_dir = tempfile.TemporaryDirectory()
+        ancestor_filename = Path(temp_dir.name) / f"ancestor-{filename.name}"
         current_filename = Path(temp_dir.name) / f"current-{filename.name}"
         incoming_filename = Path(temp_dir.name) / f"incoming-{filename.name}"
         with (
+            ancestor_filename.open("wb") as ancestor_file,
             current_filename.open("wb") as current_file,
             incoming_filename.open("wb") as incoming_file,
         ):
-            split = split_ours_and_theirs(filename, current_file, incoming_file)
+            split = split_ours_and_theirs(
+                filename, ancestor_file, current_file, incoming_file
+            )
 
         def done():
             nonlocal temp_dir
@@ -244,7 +265,12 @@ class FileManager(Service, ActionProvider):
             elif answer == "incoming":
                 self.load(incoming_filename, on_load_done=done)
             elif answer == "manual":
-                self.merge(current_filename, incoming_filename, on_load_done=done)
+                self.merge(
+                    ancestor_filename,
+                    current_filename,
+                    incoming_filename,
+                    on_load_done=done,
+                )
             else:
                 raise ValueError(f"Unknown resolution for merge conflict: {answer}")
 

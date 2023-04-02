@@ -42,7 +42,7 @@ def test_class_with_members(element_factory, modeling_language, create):
     parse(class_item.subject.ownedOperation[0], "+ to_string(arg: int): str")
 
     current = ElementFactory()
-    all(compare(current, element_factory))
+    all(compare(current, current, element_factory))
     tree = list(organize_changes(current, modeling_language))
 
     assert len(tree) == 1
@@ -57,7 +57,7 @@ def test_association(element_factory, modeling_language, create):
     connect(association, association.tail, tail_class_item)
 
     current = ElementFactory()
-    all(compare(current, element_factory))
+    all(compare(current, current, element_factory))
     tree = list(organize_changes(current, modeling_language))
 
     assert len(tree) == 1
@@ -74,7 +74,7 @@ def test_association_with_existing_classes(element_factory, modeling_language, c
     current = ElementFactory()
     current.create_as(UML.Class, head_class_item.subject.id)
     current.create_as(UML.Class, tail_class_item.subject.id)
-    all(compare(current, element_factory))
+    all(compare(current, current, element_factory))
     tree = list(organize_changes(current, modeling_language))
 
     assert len(tree) == 3
@@ -89,7 +89,7 @@ def test_extension(element_factory, modeling_language, create):
     connect(extension, extension.tail, stereotype_item)
 
     current = ElementFactory()
-    all(compare(current, element_factory))
+    all(compare(current, current, element_factory))
     tree = list(organize_changes(current, modeling_language))
 
     assert len(tree) == 1
@@ -103,7 +103,7 @@ def test_activity_with_parameter_node(element_factory, modeling_language, create
     activity.subject.node = node
 
     current = ElementFactory()
-    all(compare(current, element_factory))
+    all(compare(current, current, element_factory))
     tree = list(organize_changes(current, modeling_language))
 
     assert len(tree) == 1
@@ -121,7 +121,7 @@ def test_partition_with_swim_lanes(element_factory, modeling_language, create):
     partition.partition[1].activity = partition.subject.activity
 
     current = ElementFactory()
-    all(compare(current, element_factory))
+    all(compare(current, current, element_factory))
     tree = list(organize_changes(current, modeling_language))
 
     # Create diagram + extra Activity
@@ -140,7 +140,7 @@ def test_connector_with_item_flow(element_factory, modeling_language, create):
     create_item_flow(connector_item.subject)
 
     current = ElementFactory()
-    all(compare(current, element_factory))
+    all(compare(current, current, element_factory))
     tree = list(organize_changes(current, modeling_language))
 
     assert len(tree) == 1
@@ -153,7 +153,7 @@ def test_state_with_entry_do_exit_criteria(element_factory, modeling_language, c
     state_item.subject.doActivity = element_factory.create(UML.Activity)
 
     current = ElementFactory()
-    all(compare(current, element_factory))
+    all(compare(current, current, element_factory))
     tree = list(organize_changes(current, modeling_language))
 
     assert len(tree) == 1
@@ -168,7 +168,7 @@ def test_transition_with_guard(element_factory, modeling_language, create):
     connect(transition_item, transition_item.tail, tail_state_item)
 
     current = ElementFactory()
-    all(compare(current, element_factory))
+    all(compare(current, current, element_factory))
     tree = list(organize_changes(current, modeling_language))
 
     assert transition_item.subject.guard
@@ -182,7 +182,7 @@ def test_applied_stereotype(element_factory, modeling_language, create):
     apply_stereotype(class_item.subject, stereotype)
 
     current = ElementFactory()
-    all(compare(current, element_factory))
+    all(compare(current, current, element_factory))
     tree = list(organize_changes(current, modeling_language))
 
     # Create Stereotype + create diagram

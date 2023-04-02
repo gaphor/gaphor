@@ -16,14 +16,14 @@ from gaphor.core.modeling.collection import collection
 
 
 class UnmatchableModel(Exception):
-    def __init__(self, current, incoming):
-        super().__init__(f"Incompatible types {current} != {incoming}")
-        self.current = current
+    def __init__(self, ancestor, incoming):
+        super().__init__(f"Incompatible types {ancestor} != {incoming}")
+        self.ancestor = ancestor
         self.incoming = incoming
 
 
 def compare(
-    current: ElementFactory, incoming: ElementFactory
+    current: ElementFactory, ancestor: ElementFactory, incoming: ElementFactory
 ) -> Iterable[ElementChange | ValueChange | RefChange]:
     """Compare two models.
 
@@ -32,10 +32,10 @@ def compare(
 
     Returns an iterable of the added change objects.
     """
-    current_keys = set(current.keys())
+    ancestor_keys = set(ancestor.keys())
     incoming_keys = set(incoming.keys())
 
-    current_style_sheet = None
+    ancestor_style_sheet = None
     incoming_style_sheet = None
 
     def create(type, **kwargs):
@@ -44,10 +44,10 @@ def compare(
             setattr(e, name, None if value is None else str(value))
         return e
 
-    for key in current_keys.difference(incoming_keys):
-        e = current[key]
+    for key in ancestor_keys.difference(incoming_keys):
+        e = ancestor[key]
         if isinstance(e, StyleSheet):
-            current_style_sheet = e
+            ancestor_style_sheet = e
         else:
             yield create(
                 ElementChange,
@@ -56,7 +56,7 @@ def compare(
                 element_id=key,
             )
 
-    for key in incoming_keys.difference(current_keys):
+    for key in incoming_keys.difference(ancestor_keys):
         e = incoming[key]
         if isinstance(e, StyleSheet):
             incoming_style_sheet = e
@@ -70,34 +70,36 @@ def compare(
             )
             yield from updated_properties(None, e, create)
 
-    for key in current_keys.intersection(incoming_keys):
-        c = current[key]
+    for key in ancestor_keys.intersection(incoming_keys):
+        a = ancestor[key]
         i = incoming[key]
-        if type(c) is not type(i):
-            raise UnmatchableModel(c, i)
-        yield from updated_properties(c, i, create)
+        if type(a) is not type(i):
+            raise UnmatchableModel(a, i)
+        yield from updated_properties(a, i, create)
 
     if (
-        current_style_sheet
+        ancestor_style_sheet
         and incoming_style_sheet
-        and current_style_sheet.id != incoming_style_sheet.id
+        and ancestor_style_sheet.id != incoming_style_sheet.id
     ):
-        yield from updated_properties(current_style_sheet, incoming_style_sheet, create)
+        yield from updated_properties(
+            ancestor_style_sheet, incoming_style_sheet, create
+        )
 
 
-def updated_properties(current, incoming, create) -> Iterable[ValueChange | RefChange]:
-    current_vals: dict[str, Element | collection[Element] | str | int | None] = {}
-    if current:
-        current.save(lambda n, v: setitem(current_vals, n, v))
+def updated_properties(ancestor, incoming, create) -> Iterable[ValueChange | RefChange]:
+    ancestor_vals: dict[str, Element | collection[Element] | str | int | None] = {}
+    if ancestor:
+        ancestor.save(lambda n, v: setitem(ancestor_vals, n, v))
     incoming_vals: dict[str, Element | collection[Element] | str | int | None] = {}
     incoming.save(lambda n, v: setitem(incoming_vals, n, v))
 
-    for name in {*current_vals.keys(), *incoming_vals.keys()}:
+    for name in {*ancestor_vals.keys(), *incoming_vals.keys()}:
         if name == "id":
             continue
         value = incoming_vals.get(name)
-        other = current_vals.get(name)
-        id = current.id if current else incoming.id
+        other = ancestor_vals.get(name)
+        id = ancestor.id if ancestor else incoming.id
         if isinstance(value, Element):
             # Allow values to be None
             assert other is None or isinstance(other, Element)

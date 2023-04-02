@@ -19,10 +19,12 @@ def test_split_git_repo(tmp_path):
         their_text="Branch commit",
     )
 
+    ancestor = io.BytesIO()
     ours = io.BytesIO()
     theirs = io.BytesIO()
-    result = split_ours_and_theirs(test_file, ours, theirs)
+    result = split_ours_and_theirs(test_file, ancestor, ours, theirs)
 
     assert result
+    assert ancestor.getbuffer() == b"Initial commit"
     assert ours.getbuffer() == b"Second commit"
     assert theirs.getbuffer() == b"Branch commit"

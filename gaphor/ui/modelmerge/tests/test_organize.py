@@ -253,6 +253,34 @@ def test_add_diagram_with_reference(element_factory, modeling_language, change):
     assert ref in tree[0].children[0].elements
 
 
+def test_unresolvable_reference_element_id(element_factory, modeling_language, change):
+    change(
+        RefChange,
+        op="add",
+        element_id="12345",
+        property_name="element",
+    )
+
+    tree = list(organize_changes(element_factory, modeling_language))
+
+    assert not tree
+
+
+def test_unresolvable_reference_property_ref(
+    element_factory, modeling_language, change
+):
+    change(
+        RefChange,
+        op="add",
+        property_name="element",
+        property_ref="12345",
+    )
+
+    tree = list(organize_changes(element_factory, modeling_language))
+
+    assert not tree
+
+
 def test_add_diagram_contains_presentation(element_factory, modeling_language, change):
     add_diagram = change(ElementChange, op="add", element_name="Diagram")
     add_class_item = change(ElementChange, op="add", element_name="ClassItem")

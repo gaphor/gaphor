@@ -18,29 +18,34 @@ def current(element_factory):
 
 
 @pytest.fixture
+def ancestor():
+    return ElementFactory()
+
+
+@pytest.fixture
 def incoming():
     return ElementFactory()
 
 
-def test_empty_element_factories(current, incoming):
-    change_set = list(compare(current, incoming))
+def test_empty_element_factories(current, ancestor, incoming):
+    change_set = list(compare(current, ancestor, incoming))
 
     assert not change_set
 
 
-def test_similar_element_factories(current, incoming):
+def test_similar_element_factories(current, ancestor, incoming):
     element = incoming.create(Element)
-    current.create_as(Element, element.id)
+    ancestor.create_as(Element, element.id)
 
-    change_set = list(compare(current, incoming))
+    change_set = list(compare(current, ancestor, incoming))
 
     assert not change_set
 
 
-def test_added_element(current, incoming, saver):
+def test_added_element(current, ancestor, incoming, saver):
     diagram = incoming.create(Diagram)
 
-    change = next(compare(current, incoming))
+    change = next(compare(current, ancestor, incoming))
 
     assert change.op == "add"
     assert change.element_id == diagram.id
@@ -50,12 +55,12 @@ def test_added_element(current, incoming, saver):
         f.write(saver())
 
 
-def test_added_presentation(current, incoming):
-    current_diagram = current.create(Diagram)
-    diagram = incoming.create_as(Diagram, current_diagram.id)
+def test_added_presentation(current, ancestor, incoming):
+    ancestor_diagram = ancestor.create(Diagram)
+    diagram = incoming.create_as(Diagram, ancestor_diagram.id)
     box = diagram.create(Box)
 
-    change = next(compare(current, incoming))
+    change = next(compare(current, ancestor, incoming))
 
     assert change.op == "add"
     assert change.element_id == box.id
@@ -63,11 +68,11 @@ def test_added_presentation(current, incoming):
     assert change.diagram_id == diagram.id
 
 
-def test_added_element_with_attribute(current, incoming):
+def test_added_element_with_attribute(current, ancestor, incoming):
     diagram = incoming.create(Diagram)
     diagram.name = "Foo"
 
-    vals = list(compare(current, incoming))
+    vals = list(compare(current, ancestor, incoming))
     elem_change, attr_change = vals
 
     assert elem_change.op == "add"
@@ -80,13 +85,13 @@ def test_added_element_with_attribute(current, incoming):
     assert attr_change.property_value == "Foo"
 
 
-def test_added_element_with_reference(current, incoming):
+def test_added_element_with_reference(current, ancestor, incoming):
     diagram = incoming.create(Diagram)
     element = incoming.create(Element)
-    current.create_as(Element, element.id)
+    ancestor.create_as(Element, element.id)
     diagram.element = element
 
-    change, ref_change, other_ref = list(compare(current, incoming))
+    change, ref_change, other_ref = list(compare(current, ancestor, incoming))
 
     assert change.op == "add"
     assert change.element_id == diagram.id
@@ -103,11 +108,11 @@ def test_added_element_with_reference(current, incoming):
     assert other_ref.property_ref == diagram.id
 
 
-def test_removed_element(current, incoming):
-    diagram = current.create(Diagram)
+def test_removed_element(current, ancestor, incoming):
+    diagram = ancestor.create(Diagram)
     diagram.name = "Foo"
 
-    change = next(compare(current, incoming))
+    change = next(compare(current, ancestor, incoming))
 
     assert change.op == "remove"
     assert change.element_id == diagram.id
@@ -125,136 +130,149 @@ def test_removed_element(current, incoming):
     ],
 )
 def test_changed_value(
-    current, incoming, type, name, current_value, incoming_value, expected_value
+    current,
+    ancestor,
+    incoming,
+    type,
+    name,
+    current_value,
+    incoming_value,
+    expected_value,
 ):
-    current_element = current.create(type)
-    setattr(current_element, name, current_value)
-    incoming_element = incoming.create_as(type, current_element.id)
+    ancestor_element = ancestor.create(type)
+    setattr(ancestor_element, name, current_value)
+    incoming_element = incoming.create_as(type, ancestor_element.id)
     setattr(incoming_element, name, incoming_value)
 
-    change = next(compare(current, incoming))
+    change = next(compare(current, ancestor, incoming))
 
     assert change.op == "update"
-    assert change.element_id == current_element.id
+    assert change.element_id == ancestor_element.id
     assert change.property_name == name
     assert change.property_value == expected_value
 
 
-def test_changed_enumeration_with_default_value(current, incoming):
-    current_property = current.create(Property)
-    incoming.create_as(Property, current_property.id)
-    current_property.aggregation = "shared"
+def test_changed_enumeration_with_default_value(current, ancestor, incoming):
+    ancestor_property = ancestor.create(Property)
+    incoming.create_as(Property, ancestor_property.id)
+    ancestor_property.aggregation = "shared"
 
-    change = next(compare(current, incoming))
+    change = next(compare(current, ancestor, incoming))
 
     assert change.op == "update"
-    assert change.element_id == current_property.id
+    assert change.element_id == ancestor_property.id
     assert change.property_name == "aggregation"
     assert change.property_value is None
 
 
-def test_add_reference(current, incoming):
-    current_diagram = current.create(Diagram)
-    current_element = current.create(Element)
-    incoming_diagram = incoming.create_as(Diagram, current_diagram.id)
-    incoming_element = incoming.create_as(Element, current_element.id)
+def test_add_reference(current, ancestor, incoming):
+    ancestor_diagram = ancestor.create(Diagram)
+    ancestor_element = ancestor.create(Element)
+    incoming_diagram = incoming.create_as(Diagram, ancestor_diagram.id)
+    incoming_element = incoming.create_as(Element, ancestor_element.id)
     incoming_diagram.element = incoming_element
 
-    add_ref, update_ref = sorted(compare(current, incoming), key=lambda c: c.op)
+    add_ref, update_ref = sorted(
+        compare(current, ancestor, incoming), key=lambda c: c.op
+    )
 
     assert isinstance(add_ref, RefChange)
     assert add_ref.op == "add"
     assert add_ref.element_id == incoming_element.id
     assert add_ref.property_name == "ownedDiagram"
-    assert add_ref.property_ref == current_diagram.id
+    assert add_ref.property_ref == ancestor_diagram.id
 
     assert isinstance(update_ref, RefChange)
     assert update_ref.op == "update"
-    assert update_ref.element_id == current_diagram.id
+    assert update_ref.element_id == ancestor_diagram.id
     assert update_ref.property_name == "element"
     assert update_ref.property_ref == incoming_element.id
 
 
-def test_remove_reference(current, incoming):
-    current_diagram = current.create(Diagram)
-    current_element = current.create(Element)
-    current_diagram.element = current_element
-    incoming.create_as(Diagram, current_diagram.id)
-    incoming_element = incoming.create_as(Element, current_element.id)
+def test_remove_reference(current, ancestor, incoming):
+    ancestor_diagram = ancestor.create(Diagram)
+    ancestor_element = ancestor.create(Element)
+    ancestor_diagram.element = ancestor_element
+    incoming.create_as(Diagram, ancestor_diagram.id)
+    incoming_element = incoming.create_as(Element, ancestor_element.id)
 
-    remove_ref, other_ref = sorted(compare(current, incoming), key=lambda c: c.op)
+    remove_ref, other_ref = sorted(
+        compare(current, ancestor, incoming), key=lambda c: c.op
+    )
 
     assert remove_ref.op == "remove"
     assert remove_ref.element_id == incoming_element.id
     assert remove_ref.property_name == "ownedDiagram"
-    assert remove_ref.property_ref == current_diagram.id
+    assert remove_ref.property_ref == ancestor_diagram.id
 
     assert other_ref.op == "update"
-    assert other_ref.element_id == current_diagram.id
+    assert other_ref.element_id == ancestor_diagram.id
     assert other_ref.property_name == "element"
     assert other_ref.property_ref is None
 
 
-def test_remove_with_common_reference(current, incoming):
-    current_diagram = current.create(Diagram)
-    current_element = current.create(Element)
-    current_diagram.element = current_element
-    current_common = current.create(Diagram)
-    current_common.element = current_element
-    incoming.create_as(Diagram, current_diagram.id)
-    incoming_element = incoming.create_as(Element, current_element.id)
-    incoming_common = incoming.create_as(Diagram, current_common.id)
+def test_remove_with_common_reference(current, ancestor, incoming):
+    ancestor_diagram = ancestor.create(Diagram)
+    ancestor_element = ancestor.create(Element)
+    ancestor_diagram.element = ancestor_element
+    ancestor_common = ancestor.create(Diagram)
+    ancestor_common.element = ancestor_element
+    incoming.create_as(Diagram, ancestor_diagram.id)
+    incoming_element = incoming.create_as(Element, ancestor_element.id)
+    incoming_common = incoming.create_as(Diagram, ancestor_common.id)
     incoming_common.element = incoming_element
 
-    remove_ref, other_ref = sorted(compare(current, incoming), key=lambda c: c.op)
+    remove_ref, other_ref = sorted(
+        compare(current, ancestor, incoming), key=lambda c: c.op
+    )
 
     assert remove_ref.op == "remove"
     assert remove_ref.element_id == incoming_element.id
     assert remove_ref.property_name == "ownedDiagram"
-    assert remove_ref.property_ref == current_diagram.id
+    assert remove_ref.property_ref == ancestor_diagram.id
 
     assert other_ref.op == "update"
-    assert other_ref.element_id == current_diagram.id
+    assert other_ref.element_id == ancestor_diagram.id
     assert other_ref.property_name == "element"
     assert other_ref.property_ref is None
 
 
-def test_pending_changes_end_up_in_current_model(current, incoming):
+def test_pending_changes_end_up_in_current_model(current, ancestor, incoming):
     diagram = incoming.create(Diagram)
     element = incoming.create(Element)
-    current.create_as(Element, element.id)
+    ancestor.create_as(Element, element.id)
     diagram.element = element
 
-    changes = set(compare(current, incoming))
+    changes = set(compare(current, ancestor, incoming))
 
     assert changes == set(current.select(PendingChange))
 
 
-def test_types_should_match(current, incoming):
-    current_diagram = current.create(Diagram)
-    incoming.create_as(Element, current_diagram.id)
+def test_types_should_match(current, ancestor, incoming):
+    ancestor_diagram = ancestor.create(Diagram)
+    incoming.create_as(Element, ancestor_diagram.id)
 
     with pytest.raises(UnmatchableModel):
-        next(compare(current, incoming))
+        next(compare(current, ancestor, incoming))
 
 
-def test_style_sheet_with_different_ids(current, incoming):
-    current.create(StyleSheet)
+def test_style_sheet_with_different_ids(current, ancestor, incoming):
+    ancestor.create(StyleSheet)
     incoming.create(StyleSheet)
 
-    changes = set(compare(current, incoming))
+    changes = set(compare(current, ancestor, incoming))
 
     assert not changes
 
 
-def test_style_sheet_comparison(current, incoming):
-    current_style_sheet = current.create(StyleSheet)
+def test_style_sheet_comparison(current, ancestor, incoming):
+    ancestor_style_sheet = ancestor.create(StyleSheet)
     incoming_style_sheet = incoming.create(StyleSheet)
     incoming_style_sheet.styleSheet = "foo {}"
 
-    change = next(compare(current, incoming))
+    change = next(compare(current, ancestor, incoming))
 
     assert change.op == "update"
-    assert change.element_id == current_style_sheet.id
+    assert change.element_id == ancestor_style_sheet.id
     assert change.property_name == "styleSheet"
     assert change.property_value == "foo {}"
