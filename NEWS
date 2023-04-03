@@ -1,22 +1,22 @@
 2.18.0
 ------
-- Support for manually resolving Git merge conflicts to the common ancestor
+- Support for manually resolving Git merge conflicts
 - Drop support for GTK3, bundle macOS with GTK4
 - Enable middle-click mouse scrolling of diagrams
 - Support for changing the spoken language in a model
 - Add diagrams in diagrams
-- Fix drag from model browser
-- Fix orthogonal lines
-- Toggle the "no tabs" background based on notebook activity
-- Update diagram directly when partitions change
-- Make main window always available
 - Upgrade development build to GNOME 44
 - Clean up application architecture for copy service
 - Css editor dark mode
-- Update notarize, staple, and cert actions
+- macOS: update notarize, staple, and cert actions
 - Just load modules for gaphor.modules entry points
-- Fix doc build failure due to New Diagram icon missing
 - Finnish, Dutch, Spanish, Polish, Portuguese (BRA) translation update
+- Fixes:
+  - Toggle the "no tabs" background based on notebook activity
+  - Fix drag from model browser
+  - Fix orthogonal lines during copy/paste
+  - Update diagram directly when partitions change
+  - Make main window always available to avoid warnings
 
 2.17.0
 ------
