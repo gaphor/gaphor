@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "2.17.0"
+version = "2.18.0"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
@@ -175,10 +175,10 @@ docs = { "cwd" = "docs", "shell" = "sphinx-build -b html . _build/html" }
 clean = { "shell" = "rm -rf dist build _packaging/dist _packaging/build _packaging/windows/file_version_info.txt docs/_build" }
 package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
-appimage-docker-build = "docker build -t ghcr.io/gaphor/gaphor-appimage:2023.3.0 _packaging/appimage"
-appimage-docker-build-clean = "docker build --no-cache -t ghcr.io/gaphor/gaphor-appimage:2023.3.0 _packaging/appimage"
-appimage-docker-push = "docker push ghcr.io/gaphor/gaphor-appimage:2023.3.0"
-appimage-docker-run = "docker run --rm -it --volume $PWD:/gaphor ghcr.io/gaphor/gaphor-appimage:2023.3.0"
+appimage-docker-build = "docker build -t ghcr.io/gaphor/gaphor-appimage:2023.4.0 _packaging/appimage"
+appimage-docker-build-clean = "docker build --no-cache -t ghcr.io/gaphor/gaphor-appimage:2023.4.0 _packaging/appimage"
+appimage-docker-push = "docker push ghcr.io/gaphor/gaphor-appimage:2023.4.0"
+appimage-docker-run = "docker run --rm -it --volume $PWD:/gaphor ghcr.io/gaphor/gaphor-appimage:2023.4.0"
 gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini -k i18nize gaphor"
 gettext-po = { "script" = "po.build-babel:update_po_files" }
 gettext-mo = { "script" = "po.build-babel:compile_mo_files" }
