@@ -24,4 +24,4 @@ def test_toolbox():
     modeling_language = CoreModelingLanguage()
 
     with pytest.raises(ValueError):
-        modeling_language.toolbox_definition
+        modeling_language.toolbox_definition  # noqa: B018

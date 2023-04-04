@@ -192,8 +192,6 @@ def parse_association_end(el: uml.Property, s: str) -> None:
     The association end holds two strings. It is automatically figured
     out which string is fed to the parser.
     """
-    el.model.create
-
     # if no name, then clear as there could be some garbage
     # due to previous parsing (i.e. '[1'
     m = association_end_name_pat.match(s)
