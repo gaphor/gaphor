@@ -64,7 +64,6 @@ If you want to start developing on Gaphor, have a look at the [Installation
 section of our Tech docs](https://gaphor.readthedocs.io/en/latest/).
 
 ## 🔦 Usage
-### Creating models
 
 If using Gaphor for the first time you will be presented with a greeter dialog
 at startup in which you can select one of 5 models available to you to work in:
@@ -84,43 +83,13 @@ To select an element you want to place, for example a Class, click on the icon
 in the Toolbox and then again on the diagram. This will place a new Class item
 on the diagram and add a new Class to the model (it shows up in the Navigation).
 The selected tool will reset itself to the Pointer tool if the option ''Diagram
--> Reset tool'' is selected.
+→ Reset tool'' is selected.
 
 Portions of the toolbox may also be collapsed depending on the type of diagram
 you are modeling with. You can expand the collapsed portions of the toolbox if
 needed.
 
-### Create a New Diagram
-
-1. Use the Navigation to select an element that can contain a diagram (a
-Package or Profile)
-2. Select the New diagram button in the upper left and select the type of
-diagram you would like to create from the dropdown.
-
-It is also possible to create a new diagram by right clicking on a Package or
-Profile in the Navigation and selecting New Diagram.
-
-### Copy and Paste
-
-Items in a diagram can be copied and pasted in the same diagram or other
-diagrams.
-
-Ctrl+V: The default way to paste uses a link defining elements mode. This places
-an existing item in the diagram, but the item itself is not duplicated. In other
-words, if you paste a Class object in a diagram, the Class will be added to the
-diagram, but there will be no new Class in the Navigation.
-
-Shift+Ctrl+V: Copy defining elements. This places a new item in the model by
-fully duplicating the item that was copied.
-
-### Drag and Drop
-
-Adding an existing element to a diagram is done by dragging the element from
-the Navigation section onto a diagram. Diagrams and attribute/operations of a
-Class show up in the Navigation but can not be added to a diagram.
-
-Elements can also be dragged within the Navigation in order to rearrange them
-in to different packages.
+If you want to know more, please read our documentation on https://docs.gaphor.org.
 
 ## ♥ Contributing
 
@@ -327,7 +296,7 @@ Conduct](https://wiki.gnome.org/Foundation/CodeOfConduct), and to show respect,
 understanding, and consideration to one another. Thank you for helping make this
 a welcoming, friendly community for everyone.
 
-## © License
+## 🄯 License
 
 Copyright © Arjan Molenaar and Dan Yeaw
 
