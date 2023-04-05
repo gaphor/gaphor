@@ -104,9 +104,8 @@ jobs:
         with:
           bundle: gaphor.flatpak
           manifest-path: org.gaphor.Gaphor.json
+          run-tests: true
           cache-key: flatpak-builder-${{ github.sha }}
-      - name: Self-Test Development Flatpak
-        run: xvfb-run flatpak-builder --run ./.flatpak-builder org.gaphor.Gaphor.json gaphor --self-test
 
   linux-appimage:
     name: Linux (AppImage)

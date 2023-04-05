@@ -12,6 +12,9 @@
   "build-options": {
     "build-args": [
       "--share=network"
+    ],
+    "test-args": [
+      "--socket=wayland"
     ]
   },
   "finish-args": [
@@ -68,6 +71,10 @@
           "type": "dir",
           "path": "."
         }
+      ],
+      "run-tests": true,
+      "test-commands": [
+        "gaphor --self-test"
       ]
     }
   ]
