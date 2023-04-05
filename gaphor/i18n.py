@@ -49,7 +49,7 @@ def translation(lang) -> _gettext.GNUTranslations | _gettext.NullTranslations:
             "gaphor", localedir=str(localedir), languages=[lang, "C"]
         )
     except FileNotFoundError as e:
-        if lang.lower() not in ("c", "en_us", "en_us.utf-8"):
+        if lang.lower() not in ("c", "c.utf-8", "en_us", "en_us.utf-8"):
             log.warning(f"No translations were found for language {lang}: {e}")
     return _gettext.NullTranslations()
 
