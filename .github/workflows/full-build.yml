@@ -93,20 +93,19 @@ jobs:
     name: Linux (Devel Flatpak)
     needs: lint
     runs-on: ubuntu-22.04
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:gnome-44
+      options: --privileged
     steps:
       - uses: actions/checkout@v3.5.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: Install Linux Dependencies
-        run: sudo apt update -qq && sudo apt install -qq --no-install-recommends elfutils flatpak flatpak-builder
-      - name: Install Flatpak SDK
-        run: |
-          flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak install --user --noninteractive flathub org.gnome.Platform//44 org.gnome.Sdk//44
-      - name: Build Development Flatpak
-        run: flatpak-builder --user --force-clean ./.flatpak-build org.gaphor.Gaphor.json
-      - name: Self-Test Development Flatpak
-        run: xvfb-run flatpak-builder --run ./.flatpak-build org.gaphor.Gaphor.json gaphor --self-test
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: gaphor.flatpak
+          manifest-path: org.gaphor.Gaphor.json
+          run-tests: true
+          cache-key: flatpak-builder-${{ github.sha }}
 
   linux-appimage:
     name: Linux (AppImage)
