@@ -141,7 +141,9 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 self.show_operations
                 and self.subject
                 and [
-                    self.operations_compartment(gettext("operations"), self.subject),
+                    self.operations_compartment(
+                        self.diagram.gettext("operations"), self.subject
+                    ),
                 ]
                 or []
             ),
@@ -181,7 +183,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
 
     def operations_compartment(self, name, predicate):
         def lazy_format(operation):
-            return lambda: format_property(operation) or gettext("unnamed")
+            return lambda: format_property(operation) or self.diagram.gettext("unnamed")
 
         return Box(
             Text(
