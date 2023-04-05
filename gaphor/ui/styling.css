@@ -125,7 +125,7 @@ frame > textview {
   background-color: alpha(@theme_selected_bg_color, 0.3);
 }
 
-#model_browser box {
+#model_browser .row {
   padding: 2px 0;
   border-top: 0 solid @shade_color;
   transition: border 200ms;
