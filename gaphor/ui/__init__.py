@@ -5,7 +5,6 @@ import logging
 import sys
 from typing import Optional
 
-import darkdetect
 import gi
 
 gi.require_version("Gtk", "4.0")
@@ -48,14 +47,6 @@ def main(argv=sys.argv) -> int:
         logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
     else:
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
-
-    # Set dark mode for non-FreeDesktop platforms only:
-    if sys.platform in ("darwin", "win32"):
-        Adw.StyleManager.get_default().set_color_scheme(
-            Adw.ColorScheme.PREFER_DARK
-            if darkdetect.isDark()
-            else Adw.ColorScheme.PREFER_LIGHT
-        )
 
     if has_option("-p", "--profiler"):
         import cProfile
