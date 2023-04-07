@@ -54,9 +54,9 @@ class BlockItem(Classified, ElementPresentation[Block]):
 
     show_values: attribute[int] = attribute("show_values", int, default=False)
 
-    show_attributes: attribute[int] = attribute("show_attributes", int, default=True)
+    show_attributes: attribute[int] = attribute("show_attributes", int, default=False)
 
-    show_operations: attribute[int] = attribute("show_operations", int, default=True)
+    show_operations: attribute[int] = attribute("show_operations", int, default=False)
 
     def additional_stereotypes(self):
         from gaphor.RAAML import raaml
