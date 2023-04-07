@@ -71,6 +71,8 @@ class RequirementPropertyPage(PropertyPageBase):
 PropertyPages.register(RequirementItem)(AttributesPage)
 PropertyPages.register(RequirementItem)(OperationsPage)
 
+PropertyPages.register(BlockItem)(OperationsPage)
+
 
 @PropertyPages.register(BlockItem)
 class CompartmentPage(PropertyPageBase):
