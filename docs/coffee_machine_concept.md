@@ -1,3 +1,7 @@
+---
+file_format: mystnb
+---
+
 # Coffee Machine: Concept Level
 
 The concept level defines the problem we are trying to solve. For the espresso
@@ -28,7 +32,7 @@ espresso machine. In the context of the espresso machine, a use case diagram
 would be used to identify and define the different ways in which the machine
 will be used by its users, such as the café staff and customers.
 
-The diagram would typically include different "actors" or users, such as the
+The diagram would typically include different actors or users, such as the
 barista, the customer, and possibly a manager or maintenance technician. It
 would also include different "use cases" or scenarios, which describe the
 different actions that the users can take with the machine, such as placing an
@@ -56,6 +60,10 @@ Machine. The actor, in this case, is a cat barista who interacts with the
 system (an espresso machine) to accomplish a particular task, which is brewing
 espresso.
 
+```{diagram} Use Cases
+:model: coffee-machine
+```
+
 The use case Brew espresso represents a specific functionality or action that
 the system (the Espresso Machine block) can perform. It describes the steps or
 interactions necessary to complete the task of brewing espresso, such as
@@ -67,5 +75,68 @@ It is represented by an oval shape with the use case name inside and an
 association with the actor. The association represents the interaction from the
 actor to the use case.
 
-# Context Diagram
+## Domain Diagram
 
+A domain diagram is a graphical representation of the concepts, terms, and
+relationships within a specific domain. In the case of a coffee shop, a domain
+diagram could represent the key elements and relationships within the coffee
+shop domain.
+
+The following is a domain diagram that builds upon the context diagram with
+additional blocks:
+- Barista
+- Coffee Machine
+- Roasted Coffee
+- Coffee Grinder
+- Water Supply
+- Customer
+
+Each block represents a key concept within the coffee shop domain, and the
+containment relationship is used between the domain and the blocks to show
+that they are part of the domain.
+
+```{diagram} Espresso Domain
+:model: coffee-machine
+```
+
+The Barista block is responsible for preparing and serving the coffee to the
+customers. The Roasted Coffee block contains the types of coffee available for
+the barista to use. The Coffee Grinder block grinds the roasted coffee beans to
+the desired consistency before brewing. The Water Supply block contains the
+water source for the coffee machine, and finally the Customer block represents
+the person who orders and receives the coffee.
+
+The ants need more of your help to rename the Feature Domain diagram and update it
+so that it matches the one above.
+
+The domain diagram provides a high-level view of the coffee shop domain and the
+key concepts and relationships involved in it. It can be a useful tool for
+understanding the relationships between different elements of the domain and
+for communicating these relationships to others.
+
+## Context Diagram
+
+The context diagram is a high-level view of the system, and it shows its
+interaction with external entities. In the case of a coffee machine, a context
+diagram provides a clear and concise representation of the system and its
+interactions with the external environment.
+
+The context diagram for a coffee machine shows the coffee machine as the
+system at the center, with all its external entities surrounding it. The
+external entities include the barista, the power source, the coffee
+grinder, and the water source.
+
+```{diagram} Espresso Context
+:model: coffee-machine
+```
+
+The interactions between the Espresso Machine and the external entities should
+be shown as ItemFlows on the associations. We don't currently support adding flows
+like this, but we hopefully will soon!
+
+The ants need more of your help to rename the Feature Context diagram and update it
+so that it matches the one above.
+
+Overall, the context diagram for a coffee machine provides a high-level view of
+the system and its interactions with external entities. It is a useful tool for
+understanding the system and its role in the broader environment.
