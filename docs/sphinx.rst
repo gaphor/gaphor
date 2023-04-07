@@ -8,7 +8,7 @@ Whether you write your docs in `reStructured Text`_ or `Markdown`_, we've got yo
 
    Here we cover the reStructured Text syntax. If you prefer markdown, we suggest you
    have a look at the `MyST-parser <https://myst-parser.readthedocs.io/>`_, as it
-   `supports Sphinx directives <https://myst-parser.readthedocs.io/en/latest/syntax/syntax.html>`_.
+   `supports Sphinx directives <https://myst-parser.readthedocs.io/en/latest/syntax/roles-and-directives.html>`_.
 
 It requires `minimal effort to set up <#configuration>`_. Adding a diagram is as simple as:
 
