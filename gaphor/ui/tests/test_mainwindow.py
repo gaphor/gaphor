@@ -20,7 +20,7 @@ def session():
             "model_browser",
             "diagrams",
             "toolbox",
-            "elementeditor",
+            "element_editor",
             "export_menu",
             "tools_menu",
         ]
