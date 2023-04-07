@@ -7,7 +7,7 @@
     </paned>
     <box orientation="horizontal" resize="true">
       <component name="diagrams" resize="true" />
-      <component name="elementeditor" />
+      <component name="element_editor" />
     </box>
   </paned>
 </layout>
