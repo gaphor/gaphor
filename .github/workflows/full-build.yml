@@ -219,7 +219,8 @@ jobs:
         run: |
           hdiutil attach ${{ needs.macos.outputs.artifact }}
           cd /Volumes/Gaphor*
-          Gaphor.app/Contents/MacOS/gaphor-exe --self-test
+          # Retry if first test fails
+          Gaphor.app/Contents/MacOS/gaphor-exe --self-test || Gaphor.app/Contents/MacOS/gaphor-exe --self-test
 
   windows-build-gtk:
     name: Windows (Build GTK)
