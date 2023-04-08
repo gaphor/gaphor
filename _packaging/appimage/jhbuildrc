@@ -16,20 +16,22 @@ skip = [
     'gtk-doc',
 ]
 
-branches['gtk4'] = (None, 'gtk-4-8')
-branches['glib'] = (None, 'glib-2-74')
-branches['librsvg'] = (None, 'librsvg-2.54')
-branches['libadwaita'] = (None, 'libadwaita-1-2')
-branches['gobject-introspection'] = (None, 'gnome-42')
+branches['gtk4'] = (None, 'gtk-4-10')
+branches['libadwaita'] = (None, 'libadwaita-1-3')
+# branches['gobject-introspection'] = (None, 'gnome-42')
+# branches['glib'] = (None, 'glib-2-74')
+# branches['librsvg'] = (None, 'librsvg-2.54')
 
 module_autogenargs['librsvg'] = '--enable-vala=no --enable-gtk-doc=no'
 
 mesonargs = '--buildtype=release'
 module_mesonargs['gtksourceview'] = '-Dvapi=false --buildtype=release'
 module_mesonargs['libadwaita'] = '-Dintrospection=enabled -Dvapi=false -Dexamples=false -Dtests=false  --buildtype=release'
-module_mesonargs['gtk4'] = '-Dmedia-gstreamer=disabled -Dprint-cups=disabled --buildtype=release'
+module_mesonargs['gtk4'] = '-Dintrospection=enabled -Dmedia-gstreamer=disabled -Dprint-cups=disabled --buildtype=release'
 module_mesonargs['gdk-pixbuf'] = '-Dman=false --buildtype=release'
 module_mesonargs['gobject-introspection'] = '-Dcairo=enabled --buildtype=release'
+# https://gitlab.gnome.org/GNOME/glib/-/issues/2966
+module_mesonargs['glib'] = '-Dtests=false'
 
 shallow_clone = True
 ignore_suggests = True
