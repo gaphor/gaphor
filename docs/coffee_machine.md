@@ -125,4 +125,5 @@ package](images/coffee-machine-pillars.png)
 ```{toctree}
 coffee_machine_concept
 coffee_machine_logical
+coffee_machine_wrapup
 ```

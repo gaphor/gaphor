@@ -140,3 +140,47 @@ so that it matches the one above.
 Overall, the context diagram for a coffee machine provides a high-level view of
 the system and its interactions with external entities. It is a useful tool for
 understanding the system and its role in the broader environment.
+
+## Concept Requirements
+Concept requirements are typically collected by analyzing the needs of the
+stakeholders involved in the development of the coffee machine. This involves
+identifying and gathering input from various stakeholders, such as the barista,
+the other engineers working on the product, manufacturing, and service.
+
+To collect concept requirements, stakeholders may be asked questions about what
+they want the coffee machine to do, what features it should have, and what
+problems it should solve. They may also be asked to provide feedback on
+existing coffee machines to identify areas where improvements could be made.
+
+Once the needs of the stakeholders have been gathered, they can be analyzed to
+identify common themes and requirements. This information can then be used to
+develop the concept requirements for the coffee machine, which serve as a
+starting point for the design process.
+
+The following are some concept requirements for a coffee machine that addresses
+a water tank, heat-up time, and HMI button:
+
+-  Water Tank: The coffee machine should have a water tank of sufficient size to
+   make multiple cups of coffee before needing a refill. The water tank should be
+   easy to access and fill.
+
+-  Heat-up Time: The coffee machine should have a heat-up time of no more than 3
+   minutes from the time the user turns on the machine until it's ready to brew
+   coffee.
+
+-  HMI Button: The coffee machine should have an HMI with a 1 cup brew button to
+   make it easy for the user to select the amount of coffee they want to brew. The
+   HMI should be intuitive and easy to use.
+
+```{diagram} Stakeholder Requirements
+:model: coffee-machine
+```
+
+Help the ants update the Stakeholders Requirements diagram with these
+requirements.
+
+Throughout the design process, the concept requirements will be refined and
+expanded upon as more information becomes available and the needs of the
+stakeholders become clearer. This iterative process ensures that the final
+design of the coffee machine meets the needs of all stakeholders and delivers a
+high-quality product.
