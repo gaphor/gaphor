@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-03-27 11:32+0200\n"
+"POT-Creation-Date: 2023-04-09 15:14-0400\n"
 "PO-Revision-Date: 2023-04-08 06:09+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
-"Language-Team: Turkish <https://hosted.weblate.org/projects/gaphor/gaphor/tr/"
-">\n"
 "Language: tr\n"
+"Language-Team: Turkish "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/tr/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -75,7 +74,7 @@ msgstr "Bileşen"
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:105
-#: gaphor/UML/classes/dependencypropertypages.py:21
+#: gaphor/UML/classes/dependencypropertypages.py:36
 msgid "Dependency"
 msgstr "Bağımlılık"
 
@@ -123,7 +122,7 @@ msgstr "VE (AND) Geçidi"
 msgid "Basic Event"
 msgstr "Temel Olay"
 
-#: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/conditionalevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr "Şartlı Olay"
@@ -174,7 +173,7 @@ msgid "XOR"
 msgstr "Dışlayan Özel VEYA (XOR)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:40
+#: gaphor/RAAML/fta/majorityvotegate.py:39
 msgid "Majority Vote Gate"
 msgstr "Çoğunluk Oy Geçidi"
 
@@ -194,7 +193,7 @@ msgid "Transfer Out"
 msgstr "Dışarıya Aktar"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
-#: gaphor/RAAML/fta/undevelopedevent.py:36
+#: gaphor/RAAML/fta/undevelopedevent.py:35
 msgid "Undeveloped Event"
 msgstr "Gelişmemiş Olay"
 
@@ -214,11 +213,11 @@ msgid "Top Event"
 msgstr "En Üst Olay"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
-#: gaphor/RAAML/fta/intermediateevent.py:33
+#: gaphor/RAAML/fta/intermediateevent.py:32
 msgid "Intermediate Event"
 msgstr "Ara Olay"
 
-#: gaphor/RAAML/fta/seqgate.py:37
+#: gaphor/RAAML/fta/seqgate.py:36
 msgid "Sequence Enforcing Gate"
 msgstr "Sıra Zorlama Geçidi"
 
@@ -226,11 +225,11 @@ msgstr "Sıra Zorlama Geçidi"
 msgid "XOR Gate"
 msgstr "Dışlayan Özel VEYA (XOR) Geçidi"
 
-#: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:158
+#: gaphor/RAAML/stpa/controlaction.py:32 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
 msgstr "Denetim Eylemi"
 
-#: gaphor/RAAML/stpa/operationalsituation.py:34
+#: gaphor/RAAML/stpa/operationalsituation.py:33
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
 msgstr "İşletim Durumu"
@@ -255,7 +254,7 @@ msgstr "Soyut İşletim Durumu"
 msgid "Generalization"
 msgstr "Genelleme"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:58
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:65
 msgid "Situation"
 msgstr "Durum"
 
@@ -276,7 +275,7 @@ msgid "Controlled Process"
 msgstr "Denetimli Süreç"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
-#: gaphor/RAAML/stpa/unsafecontrolaction.py:33
+#: gaphor/RAAML/stpa/unsafecontrolaction.py:32
 msgid "Unsafe Control Action"
 msgstr "Güvensiz Denetim Eylemi"
 
@@ -384,27 +383,32 @@ msgstr "Yeni Gereksinim Diyagramı"
 msgid "New Use Case Diagram"
 msgstr "Yeni Kullanım Örneği Diyagramı"
 
-#: gaphor/SysML/blocks/block.py:60
+#: gaphor/SysML/blocks/block.py:67
 msgid "ControlStructure"
 msgstr "DenetlemeYapısı"
 
-#: gaphor/SysML/blocks/block.py:62
+#: gaphor/SysML/blocks/block.py:69
 msgid "block"
 msgstr "blok"
 
-#: gaphor/SysML/blocks/block.py:98
+#: gaphor/SysML/blocks/block.py:105
 msgid "parts"
 msgstr "parçalar"
 
-#: gaphor/SysML/blocks/block.py:109
+#: gaphor/SysML/blocks/block.py:116
 msgid "references"
 msgstr "referanslar"
 
-#: gaphor/SysML/blocks/block.py:120
+#: gaphor/SysML/blocks/block.py:127
 msgid "values"
 msgstr "değerler"
 
-#: gaphor/SysML/blocks/block.py:137
+#: gaphor/SysML/blocks/block.py:145
+#, fuzzy
+msgid "operations"
+msgstr "İşlemler"
+
+#: gaphor/SysML/blocks/block.py:160 gaphor/SysML/blocks/block.py:186
 msgid "unnamed"
 msgstr "adsız"
 
@@ -451,31 +455,31 @@ msgstr "Numaralandırma"
 msgid "Primitive"
 msgstr "İlkel"
 
-#: gaphor/SysML/blocks/proxyport.py:34
+#: gaphor/SysML/blocks/proxyport.py:35
 msgid "proxy"
 msgstr "vekil sunucu"
 
-#: gaphor/SysML/requirements/relationships.py:35
+#: gaphor/SysML/requirements/relationships.py:36
 msgid "satisfy"
 msgstr "karşıla"
 
-#: gaphor/SysML/requirements/relationships.py:44
+#: gaphor/SysML/requirements/relationships.py:47
 msgid "deriveReqt"
 msgstr "türetmeGereksinimi"
 
-#: gaphor/SysML/requirements/relationships.py:49
+#: gaphor/SysML/requirements/relationships.py:54
 msgid "trace"
 msgstr "izle"
 
-#: gaphor/SysML/requirements/relationships.py:56
+#: gaphor/SysML/requirements/relationships.py:63
 msgid "verify"
 msgstr "doğrula"
 
-#: gaphor/SysML/requirements/relationships.py:63
+#: gaphor/SysML/requirements/relationships.py:72
 msgid "refine"
 msgstr "arıt"
 
-#: gaphor/SysML/requirements/requirement.py:62
+#: gaphor/SysML/requirements/requirement.py:61
 msgid "requirement"
 msgstr "gereksinim"
 
@@ -543,7 +547,7 @@ msgstr "Yeni Profil Diyagramı"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
-#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
+#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:5
 msgid "New {name}"
 msgstr "Yeni {name}"
 
@@ -647,15 +651,15 @@ msgstr "Giriş pimi"
 msgid "Output pin"
 msgstr "Çıktı pimi"
 
-#: gaphor/UML/actions/activitynodes.py:190
+#: gaphor/UML/actions/activitynodes.py:189
 msgid "merge/decision"
 msgstr "birleştir/karar"
 
-#: gaphor/UML/actions/activitynodes.py:192
+#: gaphor/UML/actions/activitynodes.py:191
 msgid "merge"
 msgstr "birleştir"
 
-#: gaphor/UML/actions/activitynodes.py:194
+#: gaphor/UML/actions/activitynodes.py:193
 msgid "decision"
 msgstr "karar"
 
@@ -679,11 +683,11 @@ msgstr "FIFO"
 msgid "New Swimlane"
 msgstr "Yeni Kulvar"
 
-#: gaphor/UML/actions/pin.py:59
+#: gaphor/UML/actions/pin.py:58
 msgid "input pin"
 msgstr "girdi pimi"
 
-#: gaphor/UML/actions/pin.py:65
+#: gaphor/UML/actions/pin.py:64
 msgid "output pin"
 msgstr "çıktı pini"
 
@@ -809,15 +813,15 @@ msgstr "Arayüz Gerçekleştirme"
 msgid "DataType"
 msgstr "VeriTürü"
 
-#: gaphor/UML/classes/datatype.py:57
+#: gaphor/UML/classes/datatype.py:56
 msgid "primitive"
 msgstr "ilkel"
 
-#: gaphor/UML/classes/datatype.py:59 gaphor/UML/classes/enumeration.py:74
+#: gaphor/UML/classes/datatype.py:58 gaphor/UML/classes/enumeration.py:73
 msgid "valueType"
 msgstr "değerTürü"
 
-#: gaphor/UML/classes/datatype.py:61
+#: gaphor/UML/classes/datatype.py:60
 msgid "dataType"
 msgstr "veriTürü"
 
@@ -833,35 +837,35 @@ msgstr "gerçekleştir"
 msgid "implements"
 msgstr "uygular"
 
-#: gaphor/UML/classes/dependencypropertypages.py:22
+#: gaphor/UML/classes/dependencypropertypages.py:37
 msgid "Usage"
 msgstr "Kullanım"
 
-#: gaphor/UML/classes/dependencypropertypages.py:23
+#: gaphor/UML/classes/dependencypropertypages.py:38
 msgid "Realization"
 msgstr "Gerçekleştirme"
 
-#: gaphor/UML/classes/dependencypropertypages.py:24
+#: gaphor/UML/classes/dependencypropertypages.py:39
 msgid "Implementation"
 msgstr "Uygulama"
 
-#: gaphor/UML/classes/enumeration.py:76
+#: gaphor/UML/classes/enumeration.py:75
 msgid "enumeration"
 msgstr "numaralandırma"
 
-#: gaphor/UML/classes/interface.py:291
+#: gaphor/UML/classes/interface.py:290
 msgid "interface"
 msgstr "arayüz"
 
-#: gaphor/UML/classes/klass.py:59
+#: gaphor/UML/classes/klass.py:58
 msgid "stereotype"
 msgstr "stereotip"
 
-#: gaphor/UML/classes/klass.py:61
+#: gaphor/UML/classes/klass.py:60
 msgid "metaclass"
 msgstr "üstsınıf"
 
-#: gaphor/UML/classes/package.py:29
+#: gaphor/UML/classes/package.py:28
 msgid "profile"
 msgstr "profil"
 
@@ -1062,7 +1066,7 @@ msgstr "Düğüm"
 msgid "Device"
 msgstr "Aygıt"
 
-#: gaphor/UML/deployments/node.py:55
+#: gaphor/UML/deployments/node.py:54
 msgid "device"
 msgstr "aygıt"
 
@@ -1074,34 +1078,34 @@ msgstr "Bilgi Akışı"
 msgid "Information Item (Class)"
 msgstr "Bilgi Ögesi (Sınıf)"
 
-#: gaphor/UML/interactions/interactionsconnect.py:79
+#: gaphor/UML/interactions/interactionsconnect.py:78
 msgid "call()"
 msgstr "call()"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:34
-#: gaphor/UML/interactions/interactionstoolbox.py:55
+#: gaphor/UML/interactions/interactionstoolbox.py:36
+#: gaphor/UML/interactions/interactionstoolbox.py:57
 #: gaphor/templates/sysml.gaphor gaphor/templates/uml.gaphor
 msgid "Interaction"
 msgstr "Etkileşim"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:51
+#: gaphor/UML/interactions/interactionstoolbox.py:53
 #: gaphor/templates/uml.gaphor
 msgid "Interactions"
 msgstr "Etkileşimler"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:67
+#: gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Lifeline"
 msgstr "Yaşam çizgisi"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:79
+#: gaphor/UML/interactions/interactionstoolbox.py:81
 msgid "Execution Specification"
 msgstr "Çalıştırma Teknik Özellikleri"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:87
+#: gaphor/UML/interactions/interactionstoolbox.py:89
 msgid "Message"
 msgstr "ileti"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:94
+#: gaphor/UML/interactions/interactionstoolbox.py:96
 msgid "Reflexive message"
 msgstr "Dönüşlü ileti"
 
@@ -1169,7 +1173,7 @@ msgstr "Bölgeler"
 msgid "Show Regions"
 msgstr "Bölgeleri Göster"
 
-#: gaphor/UML/states/statemachine.py:40
+#: gaphor/UML/states/statemachine.py:39
 msgid "statemachine"
 msgstr "durummakinesi"
 
@@ -1234,11 +1238,11 @@ msgstr "Çıkış Durumu Sözde Durumu"
 msgid "Terminate Pseudostate"
 msgstr "Sonlandır Sözde Durumu"
 
-#: gaphor/UML/usecases/extend.py:20
+#: gaphor/UML/usecases/extend.py:21
 msgid "extend"
 msgstr "genişlet"
 
-#: gaphor/UML/usecases/include.py:20
+#: gaphor/UML/usecases/include.py:21
 msgid "include"
 msgstr "ekle"
 
@@ -1299,7 +1303,7 @@ msgstr "Yorum satırı"
 msgid "Diagram metadata"
 msgstr "Diyagram üst verisi"
 
-#: gaphor/diagram/presentation.py:49
+#: gaphor/diagram/presentation.py:48
 msgid "(from {namespace})"
 msgstr "({namespace} kaynağından)"
 
@@ -1381,46 +1385,46 @@ msgstr "Gaphor Uçbirimi"
 msgid "Console"
 msgstr "Uçbirim"
 
-#: gaphor/plugins/diagramexport/__init__.py:44
+#: gaphor/plugins/diagramexport/__init__.py:50
 msgid "All {ext} Files"
 msgstr "Tüm {ext} Dosyaları"
 
-#: gaphor/plugins/diagramexport/__init__.py:50
+#: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export as SVG"
 msgstr "SVG Olarak Dışa Aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:51
-#: gaphor/plugins/diagramexport/__init__.py:56
+#: gaphor/plugins/diagramexport/__init__.py:57
+#: gaphor/plugins/diagramexport/__init__.py:62
 msgid "Export diagram as SVG"
 msgstr "Diyagramı SVG olarak dışa aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:61
+#: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export as PNG"
 msgstr "PNG Olarak Dışa Aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:62
-#: gaphor/plugins/diagramexport/__init__.py:67
+#: gaphor/plugins/diagramexport/__init__.py:68
+#: gaphor/plugins/diagramexport/__init__.py:73
 msgid "Export diagram as PNG"
 msgstr "Diyagramı PNG olarak dışa aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:72
+#: gaphor/plugins/diagramexport/__init__.py:78
 msgid "Export as PDF"
 msgstr "PDF Olarak Dışa Aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:73
 #: gaphor/plugins/diagramexport/__init__.py:79
+#: gaphor/plugins/diagramexport/__init__.py:85
 msgid "Export diagram as PDF"
 msgstr "Diyagramı PDF olarak dışa aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:87
+#: gaphor/plugins/diagramexport/__init__.py:93
 msgid "Export as EPS"
 msgstr "EPS Olarak Dışa Aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:88
+#: gaphor/plugins/diagramexport/__init__.py:94
 msgid "Export diagram as Encapsulated PostScript"
 msgstr "Kapsüllenmiş PostScript (EPS) olarak dışa aktar"
 
-#: gaphor/plugins/diagramexport/__init__.py:94
+#: gaphor/plugins/diagramexport/__init__.py:100
 msgid "Export diagram as EPS"
 msgstr "Diyagramı EPS olarak dışa aktar"
 
@@ -1471,13 +1475,13 @@ msgstr "Modeli XMI olarak dışa aktar"
 msgid "All XMI Files"
 msgstr "Tüm XMI Dosyaları"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:45
 msgid "New model"
 msgstr "Yeni model"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:64
-#: gaphor/ui/modelbrowser.py:640
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:65
+#: gaphor/ui/modelbrowser.py:639
 msgid "New diagram"
 msgstr "Yeni diyagram"
 
@@ -2054,7 +2058,7 @@ msgid "Open a Model"
 msgstr "Model Aç"
 
 #: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:254
-#: gaphor/ui/modelmerge/organize.py:134 gaphor/ui/modelmerge/organize.py:165
+#: gaphor/ui/modelmerge/organize.py:135 gaphor/ui/modelmerge/organize.py:166
 #: gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<Yok>"
@@ -2154,11 +2158,20 @@ msgstr "Kullanılmayan Ögeleri Kaldır"
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr "Herhangi bir diyagramda artık kullanılmayan öğeleri kendiliğinden kaldır."
 
-#: gaphor/ui/elementeditor.ui:287
+#: gaphor/ui/elementeditor.ui:290
+#, fuzzy
+msgid "Language"
+msgstr "sonAd"
+
+#: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
+msgid "The (spoken) language used in this model."
+msgstr ""
+
+#: gaphor/ui/elementeditor.ui:308
 msgid "Style Sheet"
 msgstr "Biçim Dosyası"
 
-#: gaphor/ui/elementeditor.ui:314
+#: gaphor/ui/elementeditor.ui:335
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
@@ -2168,23 +2181,23 @@ msgstr ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Gaphorʼda"
 " biçem sayfaları</a>"
 
-#: gaphor/ui/elementeditor.ui:328
+#: gaphor/ui/elementeditor.ui:349
 msgid "Merge Models"
 msgstr "Modelleri Birleştir"
 
-#: gaphor/ui/elementeditor.ui:339
+#: gaphor/ui/elementeditor.ui:360
 msgid "Merge Model Changes"
 msgstr "Model Değişikliklerini Birleştir"
 
-#: gaphor/ui/elementeditor.ui:350
+#: gaphor/ui/elementeditor.ui:371
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
-"Çakışan modelden gelen değişiklikleri uygula. Değişiklikleri geri almak için "
-"Geri Al'ı kullanın."
+"Çakışan modelden gelen değişiklikleri uygula. Değişiklikleri geri almak "
+"için Geri Al'ı kullanın."
 
-#: gaphor/ui/elementeditor.ui:370
+#: gaphor/ui/elementeditor.ui:391
 msgid "Resolve"
 msgstr "Çöz"
 
@@ -2208,7 +2221,7 @@ msgstr "Hata Ayıklama Oturumunu Başlat"
 msgid "All Files"
 msgstr "Tüm Dosyalar"
 
-#: gaphor/ui/filemanager.py:40
+#: gaphor/ui/filemanager.py:41
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2220,7 +2233,7 @@ msgstr ""
 "Bunun bir hata olduğunu düşünüyorsanız, lütfen geliştiricilerle iletişime"
 " geçin."
 
-#: gaphor/ui/filemanager.py:44
+#: gaphor/ui/filemanager.py:45
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2228,7 +2241,7 @@ msgstr ""
 "Modeli kaydetmek için gerekli izinleriniz yok.\n"
 "Konumu doğru yazdığınızdan emin olun ve tekrar deneyin."
 
-#: gaphor/ui/filemanager.py:48
+#: gaphor/ui/filemanager.py:49
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2238,7 +2251,7 @@ msgstr ""
 "Lütfen biraz disk alanı boşaltıp tekrar deneyin veya farklı bir konuma "
 "kaydedin."
 
-#: gaphor/ui/filemanager.py:51
+#: gaphor/ui/filemanager.py:52
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2248,47 +2261,47 @@ msgstr ""
 "{exc}\n"
 "Konumu doğru yazdığınızdan emin olun ve tekrar deneyin."
 
-#: gaphor/ui/filemanager.py:124 gaphor/ui/filemanager.py:146
+#: gaphor/ui/filemanager.py:125 gaphor/ui/filemanager.py:148
 msgid "Loading…"
 msgstr "Yükleniyor…"
 
-#: gaphor/ui/filemanager.py:125
+#: gaphor/ui/filemanager.py:126
 msgid "Loading model from {filename}"
 msgstr "{filename} dosyasından model yükleniyor"
 
-#: gaphor/ui/filemanager.py:147
+#: gaphor/ui/filemanager.py:149
 msgid "Loading current and incoming model"
 msgstr "Geçerli ve gelen modelin yüklenmesi"
 
-#: gaphor/ui/filemanager.py:210 gaphor/ui/filemanager.py:257
+#: gaphor/ui/filemanager.py:227 gaphor/ui/filemanager.py:283
 msgid "Unable to open model “{filename}”."
 msgstr "“{filename}” modeli açılamadı."
 
-#: gaphor/ui/filemanager.py:213 gaphor/ui/filemanager.py:260
+#: gaphor/ui/filemanager.py:230 gaphor/ui/filemanager.py:286
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Bu dosya geçerli bir Gaphor modeli içermiyor."
 
-#: gaphor/ui/filemanager.py:280
+#: gaphor/ui/filemanager.py:306
 msgid "Saving…"
 msgstr "Kaydediliyor…"
 
-#: gaphor/ui/filemanager.py:281
+#: gaphor/ui/filemanager.py:307
 msgid "Saving model to {filename}"
 msgstr "Model {filename} dosyasına kaydediliyor"
 
-#: gaphor/ui/filemanager.py:297
+#: gaphor/ui/filemanager.py:323
 msgid "Unable to save model “{filename}”."
 msgstr "“{filename}” modeli kaydedilemedi."
 
-#: gaphor/ui/filemanager.py:335 gaphor/ui/filemanager.py:370
+#: gaphor/ui/filemanager.py:361 gaphor/ui/filemanager.py:396
 msgid "Save Gaphor Model As"
 msgstr "Gaphor Modelini Farklı Kaydet"
 
-#: gaphor/ui/filemanager.py:391
+#: gaphor/ui/filemanager.py:417
 msgid "Resolve Merge Conflict?"
 msgstr "Birleştirme Çakışması Çözülsün Mü?"
 
-#: gaphor/ui/filemanager.py:394
+#: gaphor/ui/filemanager.py:420
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
@@ -2296,27 +2309,27 @@ msgstr ""
 "Açmakta olduğunuz model birleştirme çakışması içeriyor. Geçerli modeli mi"
 " yoksa modele gelen değişikliği mi açmak istiyorsunuz?"
 
-#: gaphor/ui/filemanager.py:398 gaphor/ui/filemanager.py:423
+#: gaphor/ui/filemanager.py:424 gaphor/ui/filemanager.py:449
 msgid "Cancel"
 msgstr "İptal Et"
 
-#: gaphor/ui/filemanager.py:399
+#: gaphor/ui/filemanager.py:425
 msgid "Open Merge Editor"
 msgstr "Birleştirme Düzenleyicisini Aç"
 
-#: gaphor/ui/filemanager.py:400
+#: gaphor/ui/filemanager.py:426
 msgid "Open Current"
 msgstr "Geçerliyi Aç"
 
-#: gaphor/ui/filemanager.py:401
+#: gaphor/ui/filemanager.py:427
 msgid "Open Incoming"
 msgstr "Geleni Aç"
 
-#: gaphor/ui/filemanager.py:414
+#: gaphor/ui/filemanager.py:440
 msgid "Save Changes?"
 msgstr "Değişiklikler Kaydedilsin Mi?"
 
-#: gaphor/ui/filemanager.py:415
+#: gaphor/ui/filemanager.py:441
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
@@ -2324,11 +2337,11 @@ msgstr ""
 "Açık model kaydedilmemiş değişiklikler içeriyor. Kaydedilmeyen "
 "değişiklikler kalıcı olarak yitirilecek."
 
-#: gaphor/ui/filemanager.py:424
+#: gaphor/ui/filemanager.py:450
 msgid "Discard"
 msgstr "Vazgeç"
 
-#: gaphor/ui/filemanager.py:425 gaphor/ui/help/shortcuts.ui:95
+#: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:95
 #: gaphor/ui/mainwindow.py:50
 msgid "Save"
 msgstr "Kaydet"
@@ -2410,43 +2423,43 @@ msgstr "Uygulama menüsünü aç"
 msgid "Toggle property editor"
 msgstr "Özellik düzenleyiciyi aç/kapat"
 
-#: gaphor/ui/modelbrowser.py:180
+#: gaphor/ui/modelbrowser.py:182
 msgid "{name} package"
 msgstr "{name} paketi"
 
-#: gaphor/ui/modelbrowser.py:182
+#: gaphor/ui/modelbrowser.py:184
 msgid "New package"
 msgstr "Yeni paket"
 
-#: gaphor/ui/modelbrowser.py:374 gaphor/ui/modelbrowser.py:588
+#: gaphor/ui/modelbrowser.py:376 gaphor/ui/modelbrowser.py:587
 msgid "New _Package"
 msgstr "Yeni _Paket"
 
-#: gaphor/ui/modelbrowser.py:577
+#: gaphor/ui/modelbrowser.py:576
 msgid "_Open"
 msgstr "_Aç"
 
-#: gaphor/ui/modelbrowser.py:577
+#: gaphor/ui/modelbrowser.py:576
 msgid "Add to diagram"
 msgstr "Diyagrama ekle"
 
-#: gaphor/ui/modelbrowser.py:580
+#: gaphor/ui/modelbrowser.py:579
 msgid "_Rename"
 msgstr "Yeniden _Adlandır"
 
-#: gaphor/ui/modelbrowser.py:585
+#: gaphor/ui/modelbrowser.py:584
 msgid "New _Diagram"
 msgstr "Yeni _Diyagram"
 
-#: gaphor/ui/modelbrowser.py:592
+#: gaphor/ui/modelbrowser.py:591
 msgid "De_lete"
 msgstr "_Sil"
 
-#: gaphor/ui/modelbrowser.py:602
+#: gaphor/ui/modelbrowser.py:601
 msgid "Show in “{diagram}”"
 msgstr "“{diagram}” diyagramında göster"
 
-#: gaphor/ui/modelbrowser.py:628
+#: gaphor/ui/modelbrowser.py:627
 msgid "New Generic Diagram"
 msgstr "Yeni Genel Diyagram"
 
@@ -2465,8 +2478,8 @@ msgstr ""
 "Telif Hakkı © 2001-2023 Arjan J. Molenaar ve Dan Yeaw.\n"
 "\n"
 "UML, SysML ve RAAML, Object Management Group, Inc. şirketinin Amerika "
-"Birleşik Devletleri ve/veya diğer ülkelerdeki tescilli ticari markaları veya "
-"ticari markalarıdır."
+"Birleşik Devletleri ve/veya diğer ülkelerdeki tescilli ticari markaları "
+"veya ticari markalarıdır."
 
 #: gaphor/ui/help/about.ui:22
 msgid ""
@@ -2558,79 +2571,79 @@ msgstr "Yapıştır (tanımlayıcı ögeleri bağlantıla)"
 msgid "Paste (copy defining elements)"
 msgstr "Yapıştır (tanımlayıcı ögeleri kopyala)"
 
-#: gaphor/ui/modelmerge/organize.py:133
+#: gaphor/ui/modelmerge/organize.py:134
 msgid "Update diagram “{name}”"
 msgstr "“{name}” diyagramını güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:164 gaphor/ui/modelmerge/organize.py:306
+#: gaphor/ui/modelmerge/organize.py:165 gaphor/ui/modelmerge/organize.py:307
 msgid "Update element “{name}”"
 msgstr "“{name}” ögesini güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:168
+#: gaphor/ui/modelmerge/organize.py:169
 msgid "Update element of type “{type}”"
 msgstr "“{type}” türündeki ögeyi güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:244
+#: gaphor/ui/modelmerge/organize.py:245
 msgid "Update presentation “{type}”"
 msgstr "“{type}” sunumunu güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:270
+#: gaphor/ui/modelmerge/organize.py:271
 msgid "Add presentation of type {type}"
 msgstr "{type} türünde sunum ekle"
 
-#: gaphor/ui/modelmerge/organize.py:274
+#: gaphor/ui/modelmerge/organize.py:275
 msgid "Remove presentation of type {type}"
 msgstr "{type} türünün sunumunu kaldır"
 
-#: gaphor/ui/modelmerge/organize.py:279
+#: gaphor/ui/modelmerge/organize.py:280
 msgid "Update presentation “{name}”"
 msgstr "“{name}” sunumunu güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:281
+#: gaphor/ui/modelmerge/organize.py:282
 msgid "Update presentation of type {type}"
 msgstr "{type} türünün sunumunu güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:288
+#: gaphor/ui/modelmerge/organize.py:289
 msgid "Add {type} “{name}”"
 msgstr "{type} “{name}” ekle"
 
-#: gaphor/ui/modelmerge/organize.py:292
+#: gaphor/ui/modelmerge/organize.py:293
 msgid "Add element of type {type}"
 msgstr "{type} türünde öge ekle"
 
-#: gaphor/ui/modelmerge/organize.py:298
+#: gaphor/ui/modelmerge/organize.py:299
 msgid "Remove element “{name}”"
 msgstr "“{name}” ögesini kaldır"
 
-#: gaphor/ui/modelmerge/organize.py:300
+#: gaphor/ui/modelmerge/organize.py:301
 msgid "Remove element of type {type}"
 msgstr "{type} türündeki öğeyi kaldır"
 
-#: gaphor/ui/modelmerge/organize.py:308
+#: gaphor/ui/modelmerge/organize.py:309
 msgid "Update element of type {type}"
 msgstr "{type} türündeki ögeyi güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:315
+#: gaphor/ui/modelmerge/organize.py:316
 msgid "Add relation “{name}” to “{ref_name}”"
 msgstr "“{name}” ögesine “{ref_name}” ilişkisi ekle"
 
-#: gaphor/ui/modelmerge/organize.py:317
+#: gaphor/ui/modelmerge/organize.py:318
 msgid "Remove relation “{name}” to “{ref_name}”"
 msgstr "“{name}” ile “{ref_name}” arasındaki ilişkiyi kaldır"
 
-#: gaphor/ui/modelmerge/organize.py:319
+#: gaphor/ui/modelmerge/organize.py:320
 msgid "Update relation “{name}” to “{ref_name}”"
 msgstr "“{name}” ilişkisini “{ref_name}” olarak güncelle"
 
-#: gaphor/ui/modelmerge/organize.py:326
+#: gaphor/ui/modelmerge/organize.py:327
 msgid "Add relation “{name}”"
 msgstr "“{name}” ilişkisi ekle"
 
-#: gaphor/ui/modelmerge/organize.py:328
+#: gaphor/ui/modelmerge/organize.py:329
 msgid "Remove relation “{name}”"
 msgstr "“{name}” ilişkisini kaldır"
 
-#: gaphor/ui/modelmerge/organize.py:330
+#: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr "“{name}” ilişkisini güncelle"
 
@@ -2811,3 +2824,4 @@ msgstr "“{name}” ilişkisini güncelle"
 #~ " Devletleri ve/veya diğer ülkelerde \n"
 #~ "Object Management Group, Inc.'in tescilli ticari markaları \n"
 #~ "veya ticari markalarıdır.\n"
+

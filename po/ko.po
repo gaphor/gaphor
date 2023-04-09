@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor master\n"
 "Report-Msgid-Bugs-To: https://github.com/gaphor/gaphor/issues\n"
-"POT-Creation-Date: 2023-03-27 11:32+0200\n"
+"POT-Creation-Date: 2023-04-09 15:14-0400\n"
 "PO-Revision-Date: 2021-08-31 14:20+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language: ko\n"
@@ -77,7 +77,7 @@ msgstr "구성요소"
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:105
-#: gaphor/UML/classes/dependencypropertypages.py:21
+#: gaphor/UML/classes/dependencypropertypages.py:36
 msgid "Dependency"
 msgstr "의존요소"
 
@@ -132,7 +132,7 @@ msgstr "AND 게이트"
 msgid "Basic Event"
 msgstr "기본 이벤트"
 
-#: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/conditionalevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr "조건 이벤트"
@@ -184,7 +184,7 @@ msgid "XOR"
 msgstr "내보내기"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:40
+#: gaphor/RAAML/fta/majorityvotegate.py:39
 msgid "Majority Vote Gate"
 msgstr "다수결 투표 게이트"
 
@@ -204,7 +204,7 @@ msgid "Transfer Out"
 msgstr "송신"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
-#: gaphor/RAAML/fta/undevelopedevent.py:36
+#: gaphor/RAAML/fta/undevelopedevent.py:35
 msgid "Undeveloped Event"
 msgstr "미개발 이벤트"
 
@@ -224,11 +224,11 @@ msgid "Top Event"
 msgstr "최상단 이벤트"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
-#: gaphor/RAAML/fta/intermediateevent.py:33
+#: gaphor/RAAML/fta/intermediateevent.py:32
 msgid "Intermediate Event"
 msgstr "중간 이벤트"
 
-#: gaphor/RAAML/fta/seqgate.py:37
+#: gaphor/RAAML/fta/seqgate.py:36
 #, fuzzy
 msgid "Sequence Enforcing Gate"
 msgstr "시퀀스 강제(SEQ) 게이트"
@@ -237,11 +237,11 @@ msgstr "시퀀스 강제(SEQ) 게이트"
 msgid "XOR Gate"
 msgstr ""
 
-#: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:158
+#: gaphor/RAAML/stpa/controlaction.py:32 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
 msgstr "제어 동작"
 
-#: gaphor/RAAML/stpa/operationalsituation.py:34
+#: gaphor/RAAML/stpa/operationalsituation.py:33
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
 msgstr "처리 상황"
@@ -266,7 +266,7 @@ msgstr "추상 처리 상황"
 msgid "Generalization"
 msgstr "일반화"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:58
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:65
 msgid "Situation"
 msgstr "상황"
 
@@ -287,7 +287,7 @@ msgid "Controlled Process"
 msgstr "제어 프로세스"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
-#: gaphor/RAAML/stpa/unsafecontrolaction.py:33
+#: gaphor/RAAML/stpa/unsafecontrolaction.py:32
 msgid "Unsafe Control Action"
 msgstr "안전하지 않은 제어 동작"
 
@@ -401,30 +401,35 @@ msgstr "요구"
 msgid "New Use Case Diagram"
 msgstr "새 다이어그램(_D)"
 
-#: gaphor/SysML/blocks/block.py:60
+#: gaphor/SysML/blocks/block.py:67
 #, fuzzy
 msgid "ControlStructure"
 msgstr "제어 구조"
 
-#: gaphor/SysML/blocks/block.py:62
+#: gaphor/SysML/blocks/block.py:69
 #, fuzzy
 msgid "block"
 msgstr "블록"
 
-#: gaphor/SysML/blocks/block.py:98
+#: gaphor/SysML/blocks/block.py:105
 msgid "parts"
 msgstr "부분"
 
-#: gaphor/SysML/blocks/block.py:109
+#: gaphor/SysML/blocks/block.py:116
 msgid "references"
 msgstr "참조"
 
-#: gaphor/SysML/blocks/block.py:120
+#: gaphor/SysML/blocks/block.py:127
 #, fuzzy
 msgid "values"
 msgstr "값"
 
-#: gaphor/SysML/blocks/block.py:137
+#: gaphor/SysML/blocks/block.py:145
+#, fuzzy
+msgid "operations"
+msgstr "동작"
+
+#: gaphor/SysML/blocks/block.py:160 gaphor/SysML/blocks/block.py:186
 msgid "unnamed"
 msgstr "이름없음"
 
@@ -471,36 +476,36 @@ msgstr "열거"
 msgid "Primitive"
 msgstr "원시"
 
-#: gaphor/SysML/blocks/proxyport.py:34
+#: gaphor/SysML/blocks/proxyport.py:35
 msgid "proxy"
 msgstr ""
 
-#: gaphor/SysML/requirements/relationships.py:35
+#: gaphor/SysML/requirements/relationships.py:36
 #, fuzzy
 msgid "satisfy"
 msgstr "만족"
 
-#: gaphor/SysML/requirements/relationships.py:44
+#: gaphor/SysML/requirements/relationships.py:47
 #, fuzzy
 msgid "deriveReqt"
 msgstr "파생 요구"
 
-#: gaphor/SysML/requirements/relationships.py:49
+#: gaphor/SysML/requirements/relationships.py:54
 #, fuzzy
 msgid "trace"
 msgstr "추적"
 
-#: gaphor/SysML/requirements/relationships.py:56
+#: gaphor/SysML/requirements/relationships.py:63
 #, fuzzy
 msgid "verify"
 msgstr "검증"
 
-#: gaphor/SysML/requirements/relationships.py:63
+#: gaphor/SysML/requirements/relationships.py:72
 #, fuzzy
 msgid "refine"
 msgstr "정제"
 
-#: gaphor/SysML/requirements/requirement.py:62
+#: gaphor/SysML/requirements/requirement.py:61
 #, fuzzy
 msgid "requirement"
 msgstr "요구"
@@ -571,7 +576,7 @@ msgstr "새 다이어그램(_D)"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
-#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
+#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:5
 msgid "New {name}"
 msgstr ""
 
@@ -683,15 +688,15 @@ msgstr ""
 msgid "Output pin"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:190
+#: gaphor/UML/actions/activitynodes.py:189
 msgid "merge/decision"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:192
+#: gaphor/UML/actions/activitynodes.py:191
 msgid "merge"
 msgstr ""
 
-#: gaphor/UML/actions/activitynodes.py:194
+#: gaphor/UML/actions/activitynodes.py:193
 msgid "decision"
 msgstr ""
 
@@ -715,11 +720,11 @@ msgstr "FIFO"
 msgid "New Swimlane"
 msgstr ""
 
-#: gaphor/UML/actions/pin.py:59
+#: gaphor/UML/actions/pin.py:58
 msgid "input pin"
 msgstr ""
 
-#: gaphor/UML/actions/pin.py:65
+#: gaphor/UML/actions/pin.py:64
 msgid "output pin"
 msgstr ""
 
@@ -836,17 +841,17 @@ msgstr "인터페이스 실체화"
 msgid "DataType"
 msgstr "데이터형식"
 
-#: gaphor/UML/classes/datatype.py:57
+#: gaphor/UML/classes/datatype.py:56
 #, fuzzy
 msgid "primitive"
 msgstr "원시"
 
-#: gaphor/UML/classes/datatype.py:59 gaphor/UML/classes/enumeration.py:74
+#: gaphor/UML/classes/datatype.py:58 gaphor/UML/classes/enumeration.py:73
 #, fuzzy
 msgid "valueType"
 msgstr "값 형식"
 
-#: gaphor/UML/classes/datatype.py:61
+#: gaphor/UML/classes/datatype.py:60
 #, fuzzy
 msgid "dataType"
 msgstr "데이터형식"
@@ -864,39 +869,39 @@ msgstr ""
 msgid "implements"
 msgstr "구현"
 
-#: gaphor/UML/classes/dependencypropertypages.py:22
+#: gaphor/UML/classes/dependencypropertypages.py:37
 msgid "Usage"
 msgstr "사용법"
 
-#: gaphor/UML/classes/dependencypropertypages.py:23
+#: gaphor/UML/classes/dependencypropertypages.py:38
 msgid "Realization"
 msgstr "실체화"
 
-#: gaphor/UML/classes/dependencypropertypages.py:24
+#: gaphor/UML/classes/dependencypropertypages.py:39
 msgid "Implementation"
 msgstr "구현"
 
-#: gaphor/UML/classes/enumeration.py:76
+#: gaphor/UML/classes/enumeration.py:75
 #, fuzzy
 msgid "enumeration"
 msgstr "열거"
 
-#: gaphor/UML/classes/interface.py:291
+#: gaphor/UML/classes/interface.py:290
 #, fuzzy
 msgid "interface"
 msgstr "인터페이스"
 
-#: gaphor/UML/classes/klass.py:59
+#: gaphor/UML/classes/klass.py:58
 #, fuzzy
 msgid "stereotype"
 msgstr "이중형식"
 
-#: gaphor/UML/classes/klass.py:61
+#: gaphor/UML/classes/klass.py:60
 #, fuzzy
 msgid "metaclass"
 msgstr "메타클래스"
 
-#: gaphor/UML/classes/package.py:29
+#: gaphor/UML/classes/package.py:28
 #, fuzzy
 msgid "profile"
 msgstr "프로파일"
@@ -1060,7 +1065,7 @@ msgstr "노드"
 msgid "Device"
 msgstr "장치"
 
-#: gaphor/UML/deployments/node.py:55
+#: gaphor/UML/deployments/node.py:54
 #, fuzzy
 msgid "device"
 msgstr "장치"
@@ -1073,34 +1078,34 @@ msgstr ""
 msgid "Information Item (Class)"
 msgstr ""
 
-#: gaphor/UML/interactions/interactionsconnect.py:79
+#: gaphor/UML/interactions/interactionsconnect.py:78
 msgid "call()"
 msgstr ""
 
-#: gaphor/UML/interactions/interactionstoolbox.py:34
-#: gaphor/UML/interactions/interactionstoolbox.py:55
+#: gaphor/UML/interactions/interactionstoolbox.py:36
+#: gaphor/UML/interactions/interactionstoolbox.py:57
 #: gaphor/templates/sysml.gaphor gaphor/templates/uml.gaphor
 msgid "Interaction"
 msgstr "상호작용"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:51
+#: gaphor/UML/interactions/interactionstoolbox.py:53
 #: gaphor/templates/uml.gaphor
 msgid "Interactions"
 msgstr "상호작용"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:67
+#: gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Lifeline"
 msgstr "생명선"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:79
+#: gaphor/UML/interactions/interactionstoolbox.py:81
 msgid "Execution Specification"
 msgstr "실행 명세"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:87
+#: gaphor/UML/interactions/interactionstoolbox.py:89
 msgid "Message"
 msgstr "메시지"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:94
+#: gaphor/UML/interactions/interactionstoolbox.py:96
 msgid "Reflexive message"
 msgstr ""
 
@@ -1171,7 +1176,7 @@ msgstr "응집"
 msgid "Show Regions"
 msgstr "방향 표시"
 
-#: gaphor/UML/states/statemachine.py:40
+#: gaphor/UML/states/statemachine.py:39
 msgid "statemachine"
 msgstr ""
 
@@ -1245,12 +1250,12 @@ msgstr "초기 의사상태"
 msgid "Terminate Pseudostate"
 msgstr "초기 의사상태"
 
-#: gaphor/UML/usecases/extend.py:20
+#: gaphor/UML/usecases/extend.py:21
 #, fuzzy
 msgid "extend"
 msgstr "확장"
 
-#: gaphor/UML/usecases/include.py:20
+#: gaphor/UML/usecases/include.py:21
 #, fuzzy
 msgid "include"
 msgstr "포함"
@@ -1314,7 +1319,7 @@ msgstr "설명줄"
 msgid "Diagram metadata"
 msgstr "새 다이어그램(_D)"
 
-#: gaphor/diagram/presentation.py:49
+#: gaphor/diagram/presentation.py:48
 msgid "(from {namespace})"
 msgstr ""
 
@@ -1397,49 +1402,49 @@ msgstr ""
 msgid "Console"
 msgstr ""
 
-#: gaphor/plugins/diagramexport/__init__.py:44
+#: gaphor/plugins/diagramexport/__init__.py:50
 msgid "All {ext} Files"
 msgstr "파일 총 {ext}개"
 
-#: gaphor/plugins/diagramexport/__init__.py:50
+#: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export as SVG"
 msgstr ""
 
-#: gaphor/plugins/diagramexport/__init__.py:51
-#: gaphor/plugins/diagramexport/__init__.py:56
+#: gaphor/plugins/diagramexport/__init__.py:57
+#: gaphor/plugins/diagramexport/__init__.py:62
 #, fuzzy
 msgid "Export diagram as SVG"
 msgstr "다이어그램을 SVG로 내보내기"
 
-#: gaphor/plugins/diagramexport/__init__.py:61
+#: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export as PNG"
 msgstr ""
 
-#: gaphor/plugins/diagramexport/__init__.py:62
-#: gaphor/plugins/diagramexport/__init__.py:67
+#: gaphor/plugins/diagramexport/__init__.py:68
+#: gaphor/plugins/diagramexport/__init__.py:73
 #, fuzzy
 msgid "Export diagram as PNG"
 msgstr "다이어그램을 SVG로 내보내기"
 
-#: gaphor/plugins/diagramexport/__init__.py:72
+#: gaphor/plugins/diagramexport/__init__.py:78
 msgid "Export as PDF"
 msgstr ""
 
-#: gaphor/plugins/diagramexport/__init__.py:73
 #: gaphor/plugins/diagramexport/__init__.py:79
+#: gaphor/plugins/diagramexport/__init__.py:85
 #, fuzzy
 msgid "Export diagram as PDF"
 msgstr "다이어그램을 SVG로 내보내기"
 
-#: gaphor/plugins/diagramexport/__init__.py:87
+#: gaphor/plugins/diagramexport/__init__.py:93
 msgid "Export as EPS"
 msgstr ""
 
-#: gaphor/plugins/diagramexport/__init__.py:88
+#: gaphor/plugins/diagramexport/__init__.py:94
 msgid "Export diagram as Encapsulated PostScript"
 msgstr ""
 
-#: gaphor/plugins/diagramexport/__init__.py:94
+#: gaphor/plugins/diagramexport/__init__.py:100
 #, fuzzy
 msgid "Export diagram as EPS"
 msgstr "다이어그램을 SVG로 내보내기"
@@ -1488,13 +1493,13 @@ msgstr "XMI 파일로 모델 내보내기"
 msgid "All XMI Files"
 msgstr "모든 XMI 파일"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:45
 msgid "New model"
 msgstr "새 모델"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:64
-#: gaphor/ui/modelbrowser.py:640
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:65
+#: gaphor/ui/modelbrowser.py:639
 #, fuzzy
 msgid "New diagram"
 msgstr "새 다이어그램(_D)"
@@ -2097,7 +2102,7 @@ msgid "Open a Model"
 msgstr "가포 모델 열기"
 
 #: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:254
-#: gaphor/ui/modelmerge/organize.py:134 gaphor/ui/modelmerge/organize.py:165
+#: gaphor/ui/modelmerge/organize.py:135 gaphor/ui/modelmerge/organize.py:166
 #: gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<없음>"
@@ -2189,12 +2194,21 @@ msgstr ""
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:287
+#: gaphor/ui/elementeditor.ui:290
+#, fuzzy
+msgid "Language"
+msgstr "AND 게이트"
+
+#: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
+msgid "The (spoken) language used in this model."
+msgstr ""
+
+#: gaphor/ui/elementeditor.ui:308
 #, fuzzy
 msgid "Style Sheet"
 msgstr "스타일시트"
 
-#: gaphor/ui/elementeditor.ui:314
+#: gaphor/ui/elementeditor.ui:335
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
@@ -2204,22 +2218,22 @@ msgstr ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">가포 스타일"
 " 시트</a>"
 
-#: gaphor/ui/elementeditor.ui:328
+#: gaphor/ui/elementeditor.ui:349
 #, fuzzy
 msgid "Merge Models"
 msgstr "새 모델"
 
-#: gaphor/ui/elementeditor.ui:339
+#: gaphor/ui/elementeditor.ui:360
 msgid "Merge Model Changes"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:350
+#: gaphor/ui/elementeditor.ui:371
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:370
+#: gaphor/ui/elementeditor.ui:391
 msgid "Resolve"
 msgstr ""
 
@@ -2242,7 +2256,7 @@ msgstr "디버깅 세션 시작"
 msgid "All Files"
 msgstr "모든 파일"
 
-#: gaphor/ui/filemanager.py:40
+#: gaphor/ui/filemanager.py:41
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2253,7 +2267,7 @@ msgstr ""
 "{exc}\n"
 "버그라 생각하신다면, 개발자에게 연락하십시오."
 
-#: gaphor/ui/filemanager.py:44
+#: gaphor/ui/filemanager.py:45
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2261,7 +2275,7 @@ msgstr ""
 "모델 저장에 필요한 권한이 없습니다.\n"
 "위치를 올바르게 입력했는지 확인하고 다시 시도하십시오."
 
-#: gaphor/ui/filemanager.py:48
+#: gaphor/ui/filemanager.py:49
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2270,7 +2284,7 @@ msgstr ""
 "모델을 저장할 장치에 충분한 공간이 없습니다.\n"
 "디스크 일부 공간을 비운 후 다시 시도하시거나 다른 위치에 저장하십시오."
 
-#: gaphor/ui/filemanager.py:51
+#: gaphor/ui/filemanager.py:52
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2280,83 +2294,83 @@ msgstr ""
 "{exc}\n"
 "위치를 올바르게 입력했는지 확인하고 다시 시도하십시오."
 
-#: gaphor/ui/filemanager.py:124 gaphor/ui/filemanager.py:146
+#: gaphor/ui/filemanager.py:125 gaphor/ui/filemanager.py:148
 msgid "Loading…"
 msgstr "불러오는 중..."
 
-#: gaphor/ui/filemanager.py:125
+#: gaphor/ui/filemanager.py:126
 msgid "Loading model from {filename}"
 msgstr "{filename}에서 모델 불러오는 중"
 
-#: gaphor/ui/filemanager.py:147
+#: gaphor/ui/filemanager.py:149
 msgid "Loading current and incoming model"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:210 gaphor/ui/filemanager.py:257
+#: gaphor/ui/filemanager.py:227 gaphor/ui/filemanager.py:283
 msgid "Unable to open model “{filename}”."
 msgstr "“{filename}” 모델을 열 수 없습니다."
 
-#: gaphor/ui/filemanager.py:213 gaphor/ui/filemanager.py:260
+#: gaphor/ui/filemanager.py:230 gaphor/ui/filemanager.py:286
 msgid "This file does not contain a valid Gaphor model."
 msgstr "이 파일에 적절한 가포 모델이 없습니다."
 
-#: gaphor/ui/filemanager.py:280
+#: gaphor/ui/filemanager.py:306
 msgid "Saving…"
 msgstr "저장중..."
 
-#: gaphor/ui/filemanager.py:281
+#: gaphor/ui/filemanager.py:307
 msgid "Saving model to {filename}"
 msgstr "{filename}으로 모델 저장하는 중"
 
-#: gaphor/ui/filemanager.py:297
+#: gaphor/ui/filemanager.py:323
 msgid "Unable to save model “{filename}”."
 msgstr "“{filename}” 모델을 저장할 수 없습니다."
 
-#: gaphor/ui/filemanager.py:335 gaphor/ui/filemanager.py:370
+#: gaphor/ui/filemanager.py:361 gaphor/ui/filemanager.py:396
 msgid "Save Gaphor Model As"
 msgstr "다른 이름으로 가포 모델 저장"
 
-#: gaphor/ui/filemanager.py:391
+#: gaphor/ui/filemanager.py:417
 msgid "Resolve Merge Conflict?"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:394
+#: gaphor/ui/filemanager.py:420
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:398 gaphor/ui/filemanager.py:423
+#: gaphor/ui/filemanager.py:424 gaphor/ui/filemanager.py:449
 msgid "Cancel"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:399
+#: gaphor/ui/filemanager.py:425
 msgid "Open Merge Editor"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:400
+#: gaphor/ui/filemanager.py:426
 msgid "Open Current"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:401
+#: gaphor/ui/filemanager.py:427
 msgid "Open Incoming"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:414
+#: gaphor/ui/filemanager.py:440
 msgid "Save Changes?"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:415
+#: gaphor/ui/filemanager.py:441
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
 msgstr ""
 
-#: gaphor/ui/filemanager.py:424
+#: gaphor/ui/filemanager.py:450
 msgid "Discard"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:425 gaphor/ui/help/shortcuts.ui:95
+#: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:95
 #: gaphor/ui/mainwindow.py:50
 msgid "Save"
 msgstr "저장"
@@ -2443,46 +2457,46 @@ msgstr ""
 msgid "Toggle property editor"
 msgstr ""
 
-#: gaphor/ui/modelbrowser.py:180
+#: gaphor/ui/modelbrowser.py:182
 #, fuzzy
 msgid "{name} package"
 msgstr "새 패키지(_P)"
 
-#: gaphor/ui/modelbrowser.py:182
+#: gaphor/ui/modelbrowser.py:184
 #, fuzzy
 msgid "New package"
 msgstr "새 패키지(_P)"
 
-#: gaphor/ui/modelbrowser.py:374 gaphor/ui/modelbrowser.py:588
+#: gaphor/ui/modelbrowser.py:376 gaphor/ui/modelbrowser.py:587
 msgid "New _Package"
 msgstr "새 패키지(_P)"
 
-#: gaphor/ui/modelbrowser.py:577
+#: gaphor/ui/modelbrowser.py:576
 msgid "_Open"
 msgstr "열기(_O)"
 
-#: gaphor/ui/modelbrowser.py:577
+#: gaphor/ui/modelbrowser.py:576
 #, fuzzy
 msgid "Add to diagram"
 msgstr "새 다이어그램(_D)"
 
-#: gaphor/ui/modelbrowser.py:580
+#: gaphor/ui/modelbrowser.py:579
 msgid "_Rename"
 msgstr "이름 바꾸기(_R)"
 
-#: gaphor/ui/modelbrowser.py:585
+#: gaphor/ui/modelbrowser.py:584
 msgid "New _Diagram"
 msgstr "새 다이어그램(_D)"
 
-#: gaphor/ui/modelbrowser.py:592
+#: gaphor/ui/modelbrowser.py:591
 msgid "De_lete"
 msgstr "삭제(_L)"
 
-#: gaphor/ui/modelbrowser.py:602
+#: gaphor/ui/modelbrowser.py:601
 msgid "Show in “{diagram}”"
 msgstr "\"{diagram}\"에 표시"
 
-#: gaphor/ui/modelbrowser.py:628
+#: gaphor/ui/modelbrowser.py:627
 #, fuzzy
 msgid "New Generic Diagram"
 msgstr "새 다이어그램(_D)"
@@ -2583,80 +2597,80 @@ msgstr ""
 msgid "Paste (copy defining elements)"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:133
+#: gaphor/ui/modelmerge/organize.py:134
 #, fuzzy
 msgid "Update diagram “{name}”"
 msgstr "새 다이어그램(_D)"
 
-#: gaphor/ui/modelmerge/organize.py:164 gaphor/ui/modelmerge/organize.py:306
+#: gaphor/ui/modelmerge/organize.py:165 gaphor/ui/modelmerge/organize.py:307
 msgid "Update element “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:168
+#: gaphor/ui/modelmerge/organize.py:169
 msgid "Update element of type “{type}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:244
+#: gaphor/ui/modelmerge/organize.py:245
 msgid "Update presentation “{type}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:270
+#: gaphor/ui/modelmerge/organize.py:271
 msgid "Add presentation of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:274
+#: gaphor/ui/modelmerge/organize.py:275
 msgid "Remove presentation of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:279
+#: gaphor/ui/modelmerge/organize.py:280
 msgid "Update presentation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:281
+#: gaphor/ui/modelmerge/organize.py:282
 msgid "Update presentation of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:288
+#: gaphor/ui/modelmerge/organize.py:289
 msgid "Add {type} “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:292
+#: gaphor/ui/modelmerge/organize.py:293
 msgid "Add element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:298
+#: gaphor/ui/modelmerge/organize.py:299
 msgid "Remove element “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:300
+#: gaphor/ui/modelmerge/organize.py:301
 msgid "Remove element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:308
+#: gaphor/ui/modelmerge/organize.py:309
 msgid "Update element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:315
+#: gaphor/ui/modelmerge/organize.py:316
 msgid "Add relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:317
+#: gaphor/ui/modelmerge/organize.py:318
 msgid "Remove relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:319
+#: gaphor/ui/modelmerge/organize.py:320
 msgid "Update relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:326
+#: gaphor/ui/modelmerge/organize.py:327
 msgid "Add relation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:328
+#: gaphor/ui/modelmerge/organize.py:329
 msgid "Remove relation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:330
+#: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr ""
 

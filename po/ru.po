@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-03-27 11:32+0200\n"
+"POT-Creation-Date: 2023-04-09 15:14-0400\n"
 "PO-Revision-Date: 2023-01-30 01:18+0000\n"
 "Last-Translator: BrainKicker <peter.sabanov@gmail.com>\n"
 "Language: ru\n"
@@ -71,7 +71,7 @@ msgstr "Компонент"
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:105
-#: gaphor/UML/classes/dependencypropertypages.py:21
+#: gaphor/UML/classes/dependencypropertypages.py:36
 msgid "Dependency"
 msgstr "Зависимость"
 
@@ -119,7 +119,7 @@ msgstr "Элемент И"
 msgid "Basic Event"
 msgstr "Обычное Событие"
 
-#: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/conditionalevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr "Условное Событие"
@@ -170,7 +170,7 @@ msgid "XOR"
 msgstr "ИскИЛИ"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:40
+#: gaphor/RAAML/fta/majorityvotegate.py:39
 msgid "Majority Vote Gate"
 msgstr "Элемент Большинства Голосов"
 
@@ -190,7 +190,7 @@ msgid "Transfer Out"
 msgstr "Выход"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
-#: gaphor/RAAML/fta/undevelopedevent.py:36
+#: gaphor/RAAML/fta/undevelopedevent.py:35
 msgid "Undeveloped Event"
 msgstr "Неразработанное Событие"
 
@@ -210,11 +210,11 @@ msgid "Top Event"
 msgstr "Верхнее Событие"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
-#: gaphor/RAAML/fta/intermediateevent.py:33
+#: gaphor/RAAML/fta/intermediateevent.py:32
 msgid "Intermediate Event"
 msgstr "Промежуточное Событие"
 
-#: gaphor/RAAML/fta/seqgate.py:37
+#: gaphor/RAAML/fta/seqgate.py:36
 msgid "Sequence Enforcing Gate"
 msgstr "Последовательный Элемент"
 
@@ -222,11 +222,11 @@ msgstr "Последовательный Элемент"
 msgid "XOR Gate"
 msgstr "Элемент ИскИЛИ"
 
-#: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:158
+#: gaphor/RAAML/stpa/controlaction.py:32 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
 msgstr "Управляющее Действие"
 
-#: gaphor/RAAML/stpa/operationalsituation.py:34
+#: gaphor/RAAML/stpa/operationalsituation.py:33
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
 msgstr "Оперативная Обстановка"
@@ -251,7 +251,7 @@ msgstr "Абстрактная Оперативная Обстановка"
 msgid "Generalization"
 msgstr "Обобщение"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:58
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:65
 msgid "Situation"
 msgstr "Ситуация"
 
@@ -272,7 +272,7 @@ msgid "Controlled Process"
 msgstr "Контролируемый Процесс"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
-#: gaphor/RAAML/stpa/unsafecontrolaction.py:33
+#: gaphor/RAAML/stpa/unsafecontrolaction.py:32
 msgid "Unsafe Control Action"
 msgstr "Небезопасное Действие Управления"
 
@@ -380,27 +380,32 @@ msgstr "Новая Диаграмма Требований"
 msgid "New Use Case Diagram"
 msgstr "Новая Диаграмма Прецедентов"
 
-#: gaphor/SysML/blocks/block.py:60
+#: gaphor/SysML/blocks/block.py:67
 msgid "ControlStructure"
 msgstr "СтруктураУправления"
 
-#: gaphor/SysML/blocks/block.py:62
+#: gaphor/SysML/blocks/block.py:69
 msgid "block"
 msgstr "блок"
 
-#: gaphor/SysML/blocks/block.py:98
+#: gaphor/SysML/blocks/block.py:105
 msgid "parts"
 msgstr "части"
 
-#: gaphor/SysML/blocks/block.py:109
+#: gaphor/SysML/blocks/block.py:116
 msgid "references"
 msgstr "ссылки"
 
-#: gaphor/SysML/blocks/block.py:120
+#: gaphor/SysML/blocks/block.py:127
 msgid "values"
 msgstr "значения"
 
-#: gaphor/SysML/blocks/block.py:137
+#: gaphor/SysML/blocks/block.py:145
+#, fuzzy
+msgid "operations"
+msgstr "Методы"
+
+#: gaphor/SysML/blocks/block.py:160 gaphor/SysML/blocks/block.py:186
 msgid "unnamed"
 msgstr "безымянный"
 
@@ -447,31 +452,31 @@ msgstr "Перечисление"
 msgid "Primitive"
 msgstr "Примитив"
 
-#: gaphor/SysML/blocks/proxyport.py:34
+#: gaphor/SysML/blocks/proxyport.py:35
 msgid "proxy"
 msgstr "прокси"
 
-#: gaphor/SysML/requirements/relationships.py:35
+#: gaphor/SysML/requirements/relationships.py:36
 msgid "satisfy"
 msgstr "удовлетворяет"
 
-#: gaphor/SysML/requirements/relationships.py:44
+#: gaphor/SysML/requirements/relationships.py:47
 msgid "deriveReqt"
 msgstr "выводитТребов"
 
-#: gaphor/SysML/requirements/relationships.py:49
+#: gaphor/SysML/requirements/relationships.py:54
 msgid "trace"
 msgstr "отслеживает"
 
-#: gaphor/SysML/requirements/relationships.py:56
+#: gaphor/SysML/requirements/relationships.py:63
 msgid "verify"
 msgstr "проверяет"
 
-#: gaphor/SysML/requirements/relationships.py:63
+#: gaphor/SysML/requirements/relationships.py:72
 msgid "refine"
 msgstr "очищает"
 
-#: gaphor/SysML/requirements/requirement.py:62
+#: gaphor/SysML/requirements/requirement.py:61
 msgid "requirement"
 msgstr "требование"
 
@@ -539,7 +544,7 @@ msgstr "Новая Диаграмма Профилей"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
-#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
+#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:5
 msgid "New {name}"
 msgstr "Новый {name}"
 
@@ -643,15 +648,15 @@ msgstr "Входной контакт"
 msgid "Output pin"
 msgstr "Выходной контакт"
 
-#: gaphor/UML/actions/activitynodes.py:190
+#: gaphor/UML/actions/activitynodes.py:189
 msgid "merge/decision"
 msgstr "слияние/решение"
 
-#: gaphor/UML/actions/activitynodes.py:192
+#: gaphor/UML/actions/activitynodes.py:191
 msgid "merge"
 msgstr "слияние"
 
-#: gaphor/UML/actions/activitynodes.py:194
+#: gaphor/UML/actions/activitynodes.py:193
 msgid "decision"
 msgstr "решение"
 
@@ -675,11 +680,11 @@ msgstr "FIFO"
 msgid "New Swimlane"
 msgstr "Новая Дорожка"
 
-#: gaphor/UML/actions/pin.py:59
+#: gaphor/UML/actions/pin.py:58
 msgid "input pin"
 msgstr "входной контакт"
 
-#: gaphor/UML/actions/pin.py:65
+#: gaphor/UML/actions/pin.py:64
 msgid "output pin"
 msgstr "выходной контакт"
 
@@ -807,15 +812,15 @@ msgstr "Реализация Интерфейса"
 msgid "DataType"
 msgstr "ТипДанных"
 
-#: gaphor/UML/classes/datatype.py:57
+#: gaphor/UML/classes/datatype.py:56
 msgid "primitive"
 msgstr "примитив"
 
-#: gaphor/UML/classes/datatype.py:59 gaphor/UML/classes/enumeration.py:74
+#: gaphor/UML/classes/datatype.py:58 gaphor/UML/classes/enumeration.py:73
 msgid "valueType"
 msgstr "типЗначения"
 
-#: gaphor/UML/classes/datatype.py:61
+#: gaphor/UML/classes/datatype.py:60
 msgid "dataType"
 msgstr "типДанных"
 
@@ -831,35 +836,35 @@ msgstr "реализует"
 msgid "implements"
 msgstr "имплементирует"
 
-#: gaphor/UML/classes/dependencypropertypages.py:22
+#: gaphor/UML/classes/dependencypropertypages.py:37
 msgid "Usage"
 msgstr "Использование"
 
-#: gaphor/UML/classes/dependencypropertypages.py:23
+#: gaphor/UML/classes/dependencypropertypages.py:38
 msgid "Realization"
 msgstr "Реализация"
 
-#: gaphor/UML/classes/dependencypropertypages.py:24
+#: gaphor/UML/classes/dependencypropertypages.py:39
 msgid "Implementation"
 msgstr "Имплементация"
 
-#: gaphor/UML/classes/enumeration.py:76
+#: gaphor/UML/classes/enumeration.py:75
 msgid "enumeration"
 msgstr "перечисление"
 
-#: gaphor/UML/classes/interface.py:291
+#: gaphor/UML/classes/interface.py:290
 msgid "interface"
 msgstr "интерфейс"
 
-#: gaphor/UML/classes/klass.py:59
+#: gaphor/UML/classes/klass.py:58
 msgid "stereotype"
 msgstr "стереотип"
 
-#: gaphor/UML/classes/klass.py:61
+#: gaphor/UML/classes/klass.py:60
 msgid "metaclass"
 msgstr "метакласс"
 
-#: gaphor/UML/classes/package.py:29
+#: gaphor/UML/classes/package.py:28
 msgid "profile"
 msgstr "профиль"
 
@@ -1063,7 +1068,7 @@ msgstr "Узел"
 msgid "Device"
 msgstr "Устройство"
 
-#: gaphor/UML/deployments/node.py:55
+#: gaphor/UML/deployments/node.py:54
 msgid "device"
 msgstr "устройство"
 
@@ -1075,34 +1080,34 @@ msgstr "Информационный Поток"
 msgid "Information Item (Class)"
 msgstr "Информационный Элемент (Класс)"
 
-#: gaphor/UML/interactions/interactionsconnect.py:79
+#: gaphor/UML/interactions/interactionsconnect.py:78
 msgid "call()"
 msgstr "вызов()"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:34
-#: gaphor/UML/interactions/interactionstoolbox.py:55
+#: gaphor/UML/interactions/interactionstoolbox.py:36
+#: gaphor/UML/interactions/interactionstoolbox.py:57
 #: gaphor/templates/sysml.gaphor gaphor/templates/uml.gaphor
 msgid "Interaction"
 msgstr "Взаимодействие"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:51
+#: gaphor/UML/interactions/interactionstoolbox.py:53
 #: gaphor/templates/uml.gaphor
 msgid "Interactions"
 msgstr "Взаимодействия"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:67
+#: gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Lifeline"
 msgstr "Линия жизни"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:79
+#: gaphor/UML/interactions/interactionstoolbox.py:81
 msgid "Execution Specification"
 msgstr "Спецификация Исполнения"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:87
+#: gaphor/UML/interactions/interactionstoolbox.py:89
 msgid "Message"
 msgstr "Сообщение"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:94
+#: gaphor/UML/interactions/interactionstoolbox.py:96
 msgid "Reflexive message"
 msgstr "Рефлексивное сообщение"
 
@@ -1170,7 +1175,7 @@ msgstr "Регионы"
 msgid "Show Regions"
 msgstr "Показать Регионы"
 
-#: gaphor/UML/states/statemachine.py:40
+#: gaphor/UML/states/statemachine.py:39
 msgid "statemachine"
 msgstr "конечный автомат"
 
@@ -1235,11 +1240,11 @@ msgstr "Точка Выхода"
 msgid "Terminate Pseudostate"
 msgstr "Узел Завершения"
 
-#: gaphor/UML/usecases/extend.py:20
+#: gaphor/UML/usecases/extend.py:21
 msgid "extend"
 msgstr "расширить"
 
-#: gaphor/UML/usecases/include.py:20
+#: gaphor/UML/usecases/include.py:21
 msgid "include"
 msgstr "включить"
 
@@ -1301,7 +1306,7 @@ msgstr "Линия к комментарию"
 msgid "Diagram metadata"
 msgstr "Новое меню диаграммы"
 
-#: gaphor/diagram/presentation.py:49
+#: gaphor/diagram/presentation.py:48
 msgid "(from {namespace})"
 msgstr "(из {namespace})"
 
@@ -1386,46 +1391,46 @@ msgstr "Консоль Gaphor"
 msgid "Console"
 msgstr "Консоль"
 
-#: gaphor/plugins/diagramexport/__init__.py:44
+#: gaphor/plugins/diagramexport/__init__.py:50
 msgid "All {ext} Files"
 msgstr "Все Файлы {ext}"
 
-#: gaphor/plugins/diagramexport/__init__.py:50
+#: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export as SVG"
 msgstr "Экспортировать как SVG"
 
-#: gaphor/plugins/diagramexport/__init__.py:51
-#: gaphor/plugins/diagramexport/__init__.py:56
+#: gaphor/plugins/diagramexport/__init__.py:57
+#: gaphor/plugins/diagramexport/__init__.py:62
 msgid "Export diagram as SVG"
 msgstr "Экспортировать диаграмму как SVG"
 
-#: gaphor/plugins/diagramexport/__init__.py:61
+#: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export as PNG"
 msgstr "Экспортировать как PNG"
 
-#: gaphor/plugins/diagramexport/__init__.py:62
-#: gaphor/plugins/diagramexport/__init__.py:67
+#: gaphor/plugins/diagramexport/__init__.py:68
+#: gaphor/plugins/diagramexport/__init__.py:73
 msgid "Export diagram as PNG"
 msgstr "Экспортировать диаграмму как PNG"
 
-#: gaphor/plugins/diagramexport/__init__.py:72
+#: gaphor/plugins/diagramexport/__init__.py:78
 msgid "Export as PDF"
 msgstr "Экспортировать как PDF"
 
-#: gaphor/plugins/diagramexport/__init__.py:73
 #: gaphor/plugins/diagramexport/__init__.py:79
+#: gaphor/plugins/diagramexport/__init__.py:85
 msgid "Export diagram as PDF"
 msgstr "Экспортировать диаграмму как PDF"
 
-#: gaphor/plugins/diagramexport/__init__.py:87
+#: gaphor/plugins/diagramexport/__init__.py:93
 msgid "Export as EPS"
 msgstr "Экспортировать как EPS"
 
-#: gaphor/plugins/diagramexport/__init__.py:88
+#: gaphor/plugins/diagramexport/__init__.py:94
 msgid "Export diagram as Encapsulated PostScript"
 msgstr "Экспортировать диаграмму как Encapsulated PostScript"
 
-#: gaphor/plugins/diagramexport/__init__.py:94
+#: gaphor/plugins/diagramexport/__init__.py:100
 msgid "Export diagram as EPS"
 msgstr "Экспортировать диаграмму как EPS"
 
@@ -1477,13 +1482,13 @@ msgstr "Экспортировать модель как файл XMI"
 msgid "All XMI Files"
 msgstr "Все Файлы XMI"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:45
 msgid "New model"
 msgstr "Новая модель"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:64
-#: gaphor/ui/modelbrowser.py:640
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:65
+#: gaphor/ui/modelbrowser.py:639
 msgid "New diagram"
 msgstr "Новая диаграмма"
 
@@ -2043,7 +2048,7 @@ msgid "Open a Model"
 msgstr "Открыть Модель"
 
 #: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:254
-#: gaphor/ui/modelmerge/organize.py:134 gaphor/ui/modelmerge/organize.py:165
+#: gaphor/ui/modelmerge/organize.py:135 gaphor/ui/modelmerge/organize.py:166
 #: gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<Пусто>"
@@ -2139,11 +2144,20 @@ msgstr ""
 "Автоматически удалять элементы, которые больше не используются ни в одной"
 " диаграмме."
 
-#: gaphor/ui/elementeditor.ui:287
+#: gaphor/ui/elementeditor.ui:290
+#, fuzzy
+msgid "Language"
+msgstr "фамилия"
+
+#: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
+msgid "The (spoken) language used in this model."
+msgstr ""
+
+#: gaphor/ui/elementeditor.ui:308
 msgid "Style Sheet"
 msgstr "Таблица Стилей"
 
-#: gaphor/ui/elementeditor.ui:314
+#: gaphor/ui/elementeditor.ui:335
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
@@ -2153,22 +2167,22 @@ msgstr ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Таблицы"
 " стилей в Gaphor</a>"
 
-#: gaphor/ui/elementeditor.ui:328
+#: gaphor/ui/elementeditor.ui:349
 #, fuzzy
 msgid "Merge Models"
 msgstr "Новая модель"
 
-#: gaphor/ui/elementeditor.ui:339
+#: gaphor/ui/elementeditor.ui:360
 msgid "Merge Model Changes"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:350
+#: gaphor/ui/elementeditor.ui:371
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:370
+#: gaphor/ui/elementeditor.ui:391
 msgid "Resolve"
 msgstr ""
 
@@ -2192,7 +2206,7 @@ msgstr "Начать Сеанс Отладки"
 msgid "All Files"
 msgstr "Все файлы"
 
-#: gaphor/ui/filemanager.py:40
+#: gaphor/ui/filemanager.py:41
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2203,7 +2217,7 @@ msgstr ""
 "{exc}\n"
 "Если вы считаете, что это ошибка, пожалуйста, свяжитесь с разработчиками."
 
-#: gaphor/ui/filemanager.py:44
+#: gaphor/ui/filemanager.py:45
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2211,7 +2225,7 @@ msgstr ""
 "У вас нет разрешений, необходимых для сохранения модели.\n"
 "Проверьте, правильно ли вы ввели расположение, и повторите попытку."
 
-#: gaphor/ui/filemanager.py:48
+#: gaphor/ui/filemanager.py:49
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2221,7 +2235,7 @@ msgstr ""
 "Пожалуйста, освободите место на диске и повторите попытку или сохраните "
 "модель в другом месте."
 
-#: gaphor/ui/filemanager.py:51
+#: gaphor/ui/filemanager.py:52
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2231,47 +2245,47 @@ msgstr ""
 "{exc}\n"
 "Проверьте, правильно ли вы ввели расположение, и повторите попытку."
 
-#: gaphor/ui/filemanager.py:124 gaphor/ui/filemanager.py:146
+#: gaphor/ui/filemanager.py:125 gaphor/ui/filemanager.py:148
 msgid "Loading…"
 msgstr "Загрузка…"
 
-#: gaphor/ui/filemanager.py:125
+#: gaphor/ui/filemanager.py:126
 msgid "Loading model from {filename}"
 msgstr "Загрузка модели из {filename}"
 
-#: gaphor/ui/filemanager.py:147
+#: gaphor/ui/filemanager.py:149
 msgid "Loading current and incoming model"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:210 gaphor/ui/filemanager.py:257
+#: gaphor/ui/filemanager.py:227 gaphor/ui/filemanager.py:283
 msgid "Unable to open model “{filename}”."
 msgstr "Не удается открыть модель “{filename}”."
 
-#: gaphor/ui/filemanager.py:213 gaphor/ui/filemanager.py:260
+#: gaphor/ui/filemanager.py:230 gaphor/ui/filemanager.py:286
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Этот файл не содержит допустимую модель Gaphor."
 
-#: gaphor/ui/filemanager.py:280
+#: gaphor/ui/filemanager.py:306
 msgid "Saving…"
 msgstr "Сохранение…"
 
-#: gaphor/ui/filemanager.py:281
+#: gaphor/ui/filemanager.py:307
 msgid "Saving model to {filename}"
 msgstr "Сохранение модели в {filename}"
 
-#: gaphor/ui/filemanager.py:297
+#: gaphor/ui/filemanager.py:323
 msgid "Unable to save model “{filename}”."
 msgstr "Не удалось сохранить модель в “{filename}”."
 
-#: gaphor/ui/filemanager.py:335 gaphor/ui/filemanager.py:370
+#: gaphor/ui/filemanager.py:361 gaphor/ui/filemanager.py:396
 msgid "Save Gaphor Model As"
 msgstr "Сохранить модель Gaphor как"
 
-#: gaphor/ui/filemanager.py:391
+#: gaphor/ui/filemanager.py:417
 msgid "Resolve Merge Conflict?"
 msgstr "Разрешить Конфликт Слияния?"
 
-#: gaphor/ui/filemanager.py:394
+#: gaphor/ui/filemanager.py:420
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
@@ -2279,27 +2293,27 @@ msgstr ""
 "Модель, которую вы открываете, содержит конфликт слияния. Вы хотите "
 "открыть текущую модель или входящие изменения в модель?"
 
-#: gaphor/ui/filemanager.py:398 gaphor/ui/filemanager.py:423
+#: gaphor/ui/filemanager.py:424 gaphor/ui/filemanager.py:449
 msgid "Cancel"
 msgstr "Отмена"
 
-#: gaphor/ui/filemanager.py:399
+#: gaphor/ui/filemanager.py:425
 msgid "Open Merge Editor"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:400
+#: gaphor/ui/filemanager.py:426
 msgid "Open Current"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:401
+#: gaphor/ui/filemanager.py:427
 msgid "Open Incoming"
 msgstr ""
 
-#: gaphor/ui/filemanager.py:414
+#: gaphor/ui/filemanager.py:440
 msgid "Save Changes?"
 msgstr "Сохранить изменения?"
 
-#: gaphor/ui/filemanager.py:415
+#: gaphor/ui/filemanager.py:441
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
@@ -2307,11 +2321,11 @@ msgstr ""
 "Открытая модель содержит несохраненные изменения. Изменения, которые не "
 "будут сохранены, будут безвозвратно потеряны."
 
-#: gaphor/ui/filemanager.py:424
+#: gaphor/ui/filemanager.py:450
 msgid "Discard"
 msgstr "Отклонить"
 
-#: gaphor/ui/filemanager.py:425 gaphor/ui/help/shortcuts.ui:95
+#: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:95
 #: gaphor/ui/mainwindow.py:50
 msgid "Save"
 msgstr "Сохранить"
@@ -2393,43 +2407,43 @@ msgstr "Открыть меню приложения"
 msgid "Toggle property editor"
 msgstr "Переключить редактор свойств"
 
-#: gaphor/ui/modelbrowser.py:180
+#: gaphor/ui/modelbrowser.py:182
 msgid "{name} package"
 msgstr "Пакет {name}"
 
-#: gaphor/ui/modelbrowser.py:182
+#: gaphor/ui/modelbrowser.py:184
 msgid "New package"
 msgstr "Новый пакет"
 
-#: gaphor/ui/modelbrowser.py:374 gaphor/ui/modelbrowser.py:588
+#: gaphor/ui/modelbrowser.py:376 gaphor/ui/modelbrowser.py:587
 msgid "New _Package"
 msgstr "Новый _Пакет"
 
-#: gaphor/ui/modelbrowser.py:577
+#: gaphor/ui/modelbrowser.py:576
 msgid "_Open"
 msgstr "_Открыть"
 
-#: gaphor/ui/modelbrowser.py:577
+#: gaphor/ui/modelbrowser.py:576
 msgid "Add to diagram"
 msgstr "Добавить к диаграмме"
 
-#: gaphor/ui/modelbrowser.py:580
+#: gaphor/ui/modelbrowser.py:579
 msgid "_Rename"
 msgstr "_Переименовать"
 
-#: gaphor/ui/modelbrowser.py:585
+#: gaphor/ui/modelbrowser.py:584
 msgid "New _Diagram"
 msgstr "Новая _Диаграмма"
 
-#: gaphor/ui/modelbrowser.py:592
+#: gaphor/ui/modelbrowser.py:591
 msgid "De_lete"
 msgstr "_Удалить"
 
-#: gaphor/ui/modelbrowser.py:602
+#: gaphor/ui/modelbrowser.py:601
 msgid "Show in “{diagram}”"
 msgstr "Показать в “{diagram}”"
 
-#: gaphor/ui/modelbrowser.py:628
+#: gaphor/ui/modelbrowser.py:627
 msgid "New Generic Diagram"
 msgstr "Новая Общая Диаграмма"
 
@@ -2542,81 +2556,81 @@ msgstr "Вставить (ссылки на определяющие элеме�
 msgid "Paste (copy defining elements)"
 msgstr "Вставить (копировать определяющие элементы)"
 
-#: gaphor/ui/modelmerge/organize.py:133
+#: gaphor/ui/modelmerge/organize.py:134
 #, fuzzy
 msgid "Update diagram “{name}”"
 msgstr "Новое меню диаграммы"
 
-#: gaphor/ui/modelmerge/organize.py:164 gaphor/ui/modelmerge/organize.py:306
+#: gaphor/ui/modelmerge/organize.py:165 gaphor/ui/modelmerge/organize.py:307
 msgid "Update element “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:168
+#: gaphor/ui/modelmerge/organize.py:169
 msgid "Update element of type “{type}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:244
+#: gaphor/ui/modelmerge/organize.py:245
 msgid "Update presentation “{type}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:270
+#: gaphor/ui/modelmerge/organize.py:271
 msgid "Add presentation of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:274
+#: gaphor/ui/modelmerge/organize.py:275
 msgid "Remove presentation of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:279
+#: gaphor/ui/modelmerge/organize.py:280
 msgid "Update presentation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:281
+#: gaphor/ui/modelmerge/organize.py:282
 msgid "Update presentation of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:288
+#: gaphor/ui/modelmerge/organize.py:289
 msgid "Add {type} “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:292
+#: gaphor/ui/modelmerge/organize.py:293
 msgid "Add element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:298
+#: gaphor/ui/modelmerge/organize.py:299
 #, fuzzy
 msgid "Remove element “{name}”"
 msgstr "Удалять Неиспользуемые Элементы"
 
-#: gaphor/ui/modelmerge/organize.py:300
+#: gaphor/ui/modelmerge/organize.py:301
 msgid "Remove element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:308
+#: gaphor/ui/modelmerge/organize.py:309
 msgid "Update element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:315
+#: gaphor/ui/modelmerge/organize.py:316
 msgid "Add relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:317
+#: gaphor/ui/modelmerge/organize.py:318
 msgid "Remove relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:319
+#: gaphor/ui/modelmerge/organize.py:320
 msgid "Update relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:326
+#: gaphor/ui/modelmerge/organize.py:327
 msgid "Add relation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:328
+#: gaphor/ui/modelmerge/organize.py:329
 msgid "Remove relation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:330
+#: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr ""
 

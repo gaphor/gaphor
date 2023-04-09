@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-03-27 11:32+0200\n"
+"POT-Creation-Date: 2023-04-09 15:14-0400\n"
 "PO-Revision-Date: 2023-04-09 19:09+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
-"Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
-"\n"
 "Language: cs\n"
+"Language-Team: Czech "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/cs/>\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.17-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -75,7 +74,7 @@ msgstr "Komponenta"
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:105
-#: gaphor/UML/classes/dependencypropertypages.py:21
+#: gaphor/UML/classes/dependencypropertypages.py:36
 msgid "Dependency"
 msgstr "Závislost"
 
@@ -123,7 +122,7 @@ msgstr "Brána AND"
 msgid "Basic Event"
 msgstr "Základní událost"
 
-#: gaphor/RAAML/fta/conditionalevent.py:33 gaphor/RAAML/fta/ftatoolbox.py:136
+#: gaphor/RAAML/fta/conditionalevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
 msgstr "Podmíněná událost"
@@ -174,7 +173,7 @@ msgid "XOR"
 msgstr "XOR"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
-#: gaphor/RAAML/fta/majorityvotegate.py:40
+#: gaphor/RAAML/fta/majorityvotegate.py:39
 msgid "Majority Vote Gate"
 msgstr "Brána majoritního hlasování"
 
@@ -194,7 +193,7 @@ msgid "Transfer Out"
 msgstr "Přenést ven"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
-#: gaphor/RAAML/fta/undevelopedevent.py:36
+#: gaphor/RAAML/fta/undevelopedevent.py:35
 msgid "Undeveloped Event"
 msgstr "Nerozvinutá událost"
 
@@ -214,11 +213,11 @@ msgid "Top Event"
 msgstr "Top událost"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
-#: gaphor/RAAML/fta/intermediateevent.py:33
+#: gaphor/RAAML/fta/intermediateevent.py:32
 msgid "Intermediate Event"
 msgstr "Přechodná událost"
 
-#: gaphor/RAAML/fta/seqgate.py:37
+#: gaphor/RAAML/fta/seqgate.py:36
 msgid "Sequence Enforcing Gate"
 msgstr "Brána vynucující sekvenci"
 
@@ -226,11 +225,11 @@ msgstr "Brána vynucující sekvenci"
 msgid "XOR Gate"
 msgstr "Brána XOR"
 
-#: gaphor/RAAML/stpa/controlaction.py:33 gaphor/RAAML/stpa/stpatoolbox.py:158
+#: gaphor/RAAML/stpa/controlaction.py:32 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
 msgstr "Ovládací akce"
 
-#: gaphor/RAAML/stpa/operationalsituation.py:34
+#: gaphor/RAAML/stpa/operationalsituation.py:33
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
 msgstr "Provozní situace"
@@ -255,7 +254,7 @@ msgstr "Abstraktní provozní situace"
 msgid "Generalization"
 msgstr "Zobecnění"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:58
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:65
 msgid "Situation"
 msgstr "Situace"
 
@@ -276,7 +275,7 @@ msgid "Controlled Process"
 msgstr "Řízený proces"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
-#: gaphor/RAAML/stpa/unsafecontrolaction.py:33
+#: gaphor/RAAML/stpa/unsafecontrolaction.py:32
 msgid "Unsafe Control Action"
 msgstr "Nebezpečná kontrolní akce"
 
@@ -384,27 +383,32 @@ msgstr "Diagram nových požadavků"
 msgid "New Use Case Diagram"
 msgstr "Nový diagram případů užití"
 
-#: gaphor/SysML/blocks/block.py:60
+#: gaphor/SysML/blocks/block.py:67
 msgid "ControlStructure"
 msgstr "KontrolníStruktura"
 
-#: gaphor/SysML/blocks/block.py:62
+#: gaphor/SysML/blocks/block.py:69
 msgid "block"
 msgstr "blokovat"
 
-#: gaphor/SysML/blocks/block.py:98
+#: gaphor/SysML/blocks/block.py:105
 msgid "parts"
 msgstr "části"
 
-#: gaphor/SysML/blocks/block.py:109
+#: gaphor/SysML/blocks/block.py:116
 msgid "references"
 msgstr "Reference"
 
-#: gaphor/SysML/blocks/block.py:120
+#: gaphor/SysML/blocks/block.py:127
 msgid "values"
 msgstr "hodnoty"
 
-#: gaphor/SysML/blocks/block.py:137
+#: gaphor/SysML/blocks/block.py:145
+#, fuzzy
+msgid "operations"
+msgstr "Operace"
+
+#: gaphor/SysML/blocks/block.py:160 gaphor/SysML/blocks/block.py:186
 msgid "unnamed"
 msgstr "nejmenovaný"
 
@@ -451,31 +455,31 @@ msgstr "Výčet"
 msgid "Primitive"
 msgstr "Primitivní"
 
-#: gaphor/SysML/blocks/proxyport.py:34
+#: gaphor/SysML/blocks/proxyport.py:35
 msgid "proxy"
 msgstr "proxy"
 
-#: gaphor/SysML/requirements/relationships.py:35
+#: gaphor/SysML/requirements/relationships.py:36
 msgid "satisfy"
 msgstr "uspokojit"
 
-#: gaphor/SysML/requirements/relationships.py:44
+#: gaphor/SysML/requirements/relationships.py:47
 msgid "deriveReqt"
 msgstr "deriveReqt"
 
-#: gaphor/SysML/requirements/relationships.py:49
+#: gaphor/SysML/requirements/relationships.py:54
 msgid "trace"
 msgstr "stopa"
 
-#: gaphor/SysML/requirements/relationships.py:56
+#: gaphor/SysML/requirements/relationships.py:63
 msgid "verify"
 msgstr "ověřit"
 
-#: gaphor/SysML/requirements/relationships.py:63
+#: gaphor/SysML/requirements/relationships.py:72
 msgid "refine"
 msgstr "upřesnit"
 
-#: gaphor/SysML/requirements/requirement.py:62
+#: gaphor/SysML/requirements/requirement.py:61
 msgid "requirement"
 msgstr "požadavek"
 
@@ -543,7 +547,7 @@ msgstr "Nové schéma profilu"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
-#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:6
+#: gaphor/UML/states/statestoolbox.py:27 gaphor/UML/toolboxconfig.py:5
 msgid "New {name}"
 msgstr "Nové {name}"
 
@@ -647,15 +651,15 @@ msgstr "Vstupní pin"
 msgid "Output pin"
 msgstr "Výstupní pin"
 
-#: gaphor/UML/actions/activitynodes.py:190
+#: gaphor/UML/actions/activitynodes.py:189
 msgid "merge/decision"
 msgstr "sloučit/rozhodnout"
 
-#: gaphor/UML/actions/activitynodes.py:192
+#: gaphor/UML/actions/activitynodes.py:191
 msgid "merge"
 msgstr "sloučit"
 
-#: gaphor/UML/actions/activitynodes.py:194
+#: gaphor/UML/actions/activitynodes.py:193
 msgid "decision"
 msgstr "rozhodnutí"
 
@@ -679,11 +683,11 @@ msgstr "FIFO"
 msgid "New Swimlane"
 msgstr "Nový Swimlane"
 
-#: gaphor/UML/actions/pin.py:59
+#: gaphor/UML/actions/pin.py:58
 msgid "input pin"
 msgstr "vstupní pin"
 
-#: gaphor/UML/actions/pin.py:65
+#: gaphor/UML/actions/pin.py:64
 msgid "output pin"
 msgstr "výstupní pin"
 
@@ -809,15 +813,15 @@ msgstr "Realizace rozhraní"
 msgid "DataType"
 msgstr "Datový typ"
 
-#: gaphor/UML/classes/datatype.py:57
+#: gaphor/UML/classes/datatype.py:56
 msgid "primitive"
 msgstr "primitivní"
 
-#: gaphor/UML/classes/datatype.py:59 gaphor/UML/classes/enumeration.py:74
+#: gaphor/UML/classes/datatype.py:58 gaphor/UML/classes/enumeration.py:73
 msgid "valueType"
 msgstr "typ hodnoty"
 
-#: gaphor/UML/classes/datatype.py:61
+#: gaphor/UML/classes/datatype.py:60
 msgid "dataType"
 msgstr "datový typ"
 
@@ -833,35 +837,35 @@ msgstr "realizovat"
 msgid "implements"
 msgstr "implementace"
 
-#: gaphor/UML/classes/dependencypropertypages.py:22
+#: gaphor/UML/classes/dependencypropertypages.py:37
 msgid "Usage"
 msgstr "Použití"
 
-#: gaphor/UML/classes/dependencypropertypages.py:23
+#: gaphor/UML/classes/dependencypropertypages.py:38
 msgid "Realization"
 msgstr "Realizace"
 
-#: gaphor/UML/classes/dependencypropertypages.py:24
+#: gaphor/UML/classes/dependencypropertypages.py:39
 msgid "Implementation"
 msgstr "Implementace"
 
-#: gaphor/UML/classes/enumeration.py:76
+#: gaphor/UML/classes/enumeration.py:75
 msgid "enumeration"
 msgstr "výčet"
 
-#: gaphor/UML/classes/interface.py:291
+#: gaphor/UML/classes/interface.py:290
 msgid "interface"
 msgstr "rozhraní"
 
-#: gaphor/UML/classes/klass.py:59
+#: gaphor/UML/classes/klass.py:58
 msgid "stereotype"
 msgstr "stereotyp"
 
-#: gaphor/UML/classes/klass.py:61
+#: gaphor/UML/classes/klass.py:60
 msgid "metaclass"
 msgstr "metatřída"
 
-#: gaphor/UML/classes/package.py:29
+#: gaphor/UML/classes/package.py:28
 msgid "profile"
 msgstr "profil"
 
@@ -1061,7 +1065,7 @@ msgstr "Node"
 msgid "Device"
 msgstr "Zařízení"
 
-#: gaphor/UML/deployments/node.py:55
+#: gaphor/UML/deployments/node.py:54
 msgid "device"
 msgstr "zařízení"
 
@@ -1073,34 +1077,34 @@ msgstr "Tok informací"
 msgid "Information Item (Class)"
 msgstr "Informační položka (třída)"
 
-#: gaphor/UML/interactions/interactionsconnect.py:79
+#: gaphor/UML/interactions/interactionsconnect.py:78
 msgid "call()"
 msgstr "call()"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:34
-#: gaphor/UML/interactions/interactionstoolbox.py:55
+#: gaphor/UML/interactions/interactionstoolbox.py:36
+#: gaphor/UML/interactions/interactionstoolbox.py:57
 #: gaphor/templates/sysml.gaphor gaphor/templates/uml.gaphor
 msgid "Interaction"
 msgstr "Interakce"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:51
+#: gaphor/UML/interactions/interactionstoolbox.py:53
 #: gaphor/templates/uml.gaphor
 msgid "Interactions"
 msgstr "Interakce"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:67
+#: gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Lifeline"
 msgstr "_Lifeline"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:79
+#: gaphor/UML/interactions/interactionstoolbox.py:81
 msgid "Execution Specification"
 msgstr "Specifikace provedení"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:87
+#: gaphor/UML/interactions/interactionstoolbox.py:89
 msgid "Message"
 msgstr "Zpráva"
 
-#: gaphor/UML/interactions/interactionstoolbox.py:94
+#: gaphor/UML/interactions/interactionstoolbox.py:96
 msgid "Reflexive message"
 msgstr "Reflexivní zpráva"
 
@@ -1168,7 +1172,7 @@ msgstr "Regiony"
 msgid "Show Regions"
 msgstr "Zobrazit regiony"
 
-#: gaphor/UML/states/statemachine.py:40
+#: gaphor/UML/states/statemachine.py:39
 msgid "statemachine"
 msgstr "státní stroj"
 
@@ -1233,11 +1237,11 @@ msgstr "Výstupní bod Pseudostát"
 msgid "Terminate Pseudostate"
 msgstr "Ukončit pseudostát"
 
-#: gaphor/UML/usecases/extend.py:20
+#: gaphor/UML/usecases/extend.py:21
 msgid "extend"
 msgstr "rozšířit"
 
-#: gaphor/UML/usecases/include.py:20
+#: gaphor/UML/usecases/include.py:21
 msgid "include"
 msgstr "zahrnout"
 
@@ -1298,7 +1302,7 @@ msgstr "Řádek komentáře"
 msgid "Diagram metadata"
 msgstr "Metadata diagramu"
 
-#: gaphor/diagram/presentation.py:49
+#: gaphor/diagram/presentation.py:48
 msgid "(from {namespace})"
 msgstr "(od {namespace})"
 
@@ -1380,46 +1384,46 @@ msgstr "Konzole Gaphor"
 msgid "Console"
 msgstr "Konzole"
 
-#: gaphor/plugins/diagramexport/__init__.py:44
+#: gaphor/plugins/diagramexport/__init__.py:50
 msgid "All {ext} Files"
 msgstr "Všechny soubory {ext}"
 
-#: gaphor/plugins/diagramexport/__init__.py:50
+#: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export as SVG"
 msgstr "Exportovat jako SVG"
 
-#: gaphor/plugins/diagramexport/__init__.py:51
-#: gaphor/plugins/diagramexport/__init__.py:56
+#: gaphor/plugins/diagramexport/__init__.py:57
+#: gaphor/plugins/diagramexport/__init__.py:62
 msgid "Export diagram as SVG"
 msgstr "Exportovat diagram jako SVG"
 
-#: gaphor/plugins/diagramexport/__init__.py:61
+#: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export as PNG"
 msgstr "Exportovat jako PNG"
 
-#: gaphor/plugins/diagramexport/__init__.py:62
-#: gaphor/plugins/diagramexport/__init__.py:67
+#: gaphor/plugins/diagramexport/__init__.py:68
+#: gaphor/plugins/diagramexport/__init__.py:73
 msgid "Export diagram as PNG"
 msgstr "Exportovat diagram jako PNG"
 
-#: gaphor/plugins/diagramexport/__init__.py:72
+#: gaphor/plugins/diagramexport/__init__.py:78
 msgid "Export as PDF"
 msgstr "Exportovat jako PDF"
 
-#: gaphor/plugins/diagramexport/__init__.py:73
 #: gaphor/plugins/diagramexport/__init__.py:79
+#: gaphor/plugins/diagramexport/__init__.py:85
 msgid "Export diagram as PDF"
 msgstr "Exportovat diagram jako PDF"
 
-#: gaphor/plugins/diagramexport/__init__.py:87
+#: gaphor/plugins/diagramexport/__init__.py:93
 msgid "Export as EPS"
 msgstr "Exportovat jako EPS"
 
-#: gaphor/plugins/diagramexport/__init__.py:88
+#: gaphor/plugins/diagramexport/__init__.py:94
 msgid "Export diagram as Encapsulated PostScript"
 msgstr "Exportovat diagram jako zapouzdřený PostScript"
 
-#: gaphor/plugins/diagramexport/__init__.py:94
+#: gaphor/plugins/diagramexport/__init__.py:100
 msgid "Export diagram as EPS"
 msgstr "Export diagramu jako EPS"
 
@@ -1470,13 +1474,13 @@ msgstr "Exportujte model jako soubor XMI"
 msgid "All XMI Files"
 msgstr "Všechny soubory XMI"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:61
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:45
 msgid "New model"
 msgstr "Nový model"
 
-#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:64
-#: gaphor/ui/modelbrowser.py:640
+#: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:65
+#: gaphor/ui/modelbrowser.py:639
 msgid "New diagram"
 msgstr "Nový diagram"
 
@@ -2050,7 +2054,7 @@ msgid "Open a Model"
 msgstr "Otevřete model"
 
 #: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:254
-#: gaphor/ui/modelmerge/organize.py:134 gaphor/ui/modelmerge/organize.py:165
+#: gaphor/ui/modelmerge/organize.py:135 gaphor/ui/modelmerge/organize.py:166
 #: gaphor/ui/treemodel.py:44
 msgid "<None>"
 msgstr "<None>"
@@ -2094,10 +2098,10 @@ msgid ""
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
-"<b>Tip:</b> Většina prvků ve skupině nástrojů má klávesovou zkratku (např. "
-"\"c\" pro Třída). Výběr nástroje funguje pouze z diagramu. Pokud se nástroj "
-"nevybere, klikněte jednou na diagram (aby se objevil focus) a pak stiskněte "
-"klávesovou zkratku."
+"<b>Tip:</b> Většina prvků ve skupině nástrojů má klávesovou zkratku "
+"(např. \"c\" pro Třída). Výběr nástroje funguje pouze z diagramu. Pokud "
+"se nástroj nevybere, klikněte jednou na diagram (aby se objevil focus) a "
+"pak stiskněte klávesovou zkratku."
 
 #: gaphor/ui/elementeditor.ui:68
 msgid ""
@@ -2150,11 +2154,20 @@ msgstr "Odstranit nepoužívané prvky"
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr "Automaticky odstranit prvky, které se již nepoužívají v žádném diagramu."
 
-#: gaphor/ui/elementeditor.ui:287
+#: gaphor/ui/elementeditor.ui:290
+#, fuzzy
+msgid "Language"
+msgstr "příjmení"
+
+#: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
+msgid "The (spoken) language used in this model."
+msgstr ""
+
+#: gaphor/ui/elementeditor.ui:308
 msgid "Style Sheet"
 msgstr "Předloha stylů"
 
-#: gaphor/ui/elementeditor.ui:314
+#: gaphor/ui/elementeditor.ui:335
 msgid ""
 "🔗 <a "
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
@@ -2164,23 +2177,23 @@ msgstr ""
 "href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Styly "
 "v Gaphoru</a>"
 
-#: gaphor/ui/elementeditor.ui:328
+#: gaphor/ui/elementeditor.ui:349
 msgid "Merge Models"
 msgstr "Sloučit modely"
 
-#: gaphor/ui/elementeditor.ui:339
+#: gaphor/ui/elementeditor.ui:360
 msgid "Merge Model Changes"
 msgstr "Sloučit změny modelu"
 
-#: gaphor/ui/elementeditor.ui:350
+#: gaphor/ui/elementeditor.ui:371
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
-"Použijí se příchozí změny z konfliktního modelu. Pro vrácení změn použijte "
-"Undo."
+"Použijí se příchozí změny z konfliktního modelu. Pro vrácení změn "
+"použijte Undo."
 
-#: gaphor/ui/elementeditor.ui:370
+#: gaphor/ui/elementeditor.ui:391
 msgid "Resolve"
 msgstr "Vyřešit"
 
@@ -2204,7 +2217,7 @@ msgstr "Spustit relaci ladění"
 msgid "All Files"
 msgstr "Všechny soubory"
 
-#: gaphor/ui/filemanager.py:40
+#: gaphor/ui/filemanager.py:41
 msgid ""
 "Gaphor was not able to store the model, probably due to an internal "
 "error:\n"
@@ -2215,7 +2228,7 @@ msgstr ""
 "{exc}\n"
 "Pokud si myslíte, že se jedná o chybu, kontaktujte prosím vývojáře."
 
-#: gaphor/ui/filemanager.py:44
+#: gaphor/ui/filemanager.py:45
 msgid ""
 "You do not have the permissions necessary to save the model.\n"
 "Please check that you typed the location correctly and try again."
@@ -2223,7 +2236,7 @@ msgstr ""
 "Nemáte potřebná oprávnění k uložení modelu.\n"
 "Zkontrolujte, zda jste správně zadali umístění, a zkuste to znovu."
 
-#: gaphor/ui/filemanager.py:48
+#: gaphor/ui/filemanager.py:49
 msgid ""
 "You do not have enough free space on the device to save the model.\n"
 "Please free up some disk space and try again or save it in a different "
@@ -2232,7 +2245,7 @@ msgstr ""
 "V zařízení nemáte dostatek volného místa pro uložení modelu.\n"
 "Uvolněte místo na disku a zkuste to znovu nebo jej uložte na jiné místo."
 
-#: gaphor/ui/filemanager.py:51
+#: gaphor/ui/filemanager.py:52
 msgid ""
 "The model cannot be stored at this location:\n"
 "{exc}\n"
@@ -2242,47 +2255,47 @@ msgstr ""
 "{exc}.\n"
 "Zkontrolujte prosím, zda jste zadali umístění správně, a zkuste to znovu."
 
-#: gaphor/ui/filemanager.py:124 gaphor/ui/filemanager.py:146
+#: gaphor/ui/filemanager.py:125 gaphor/ui/filemanager.py:148
 msgid "Loading…"
 msgstr "Načítání…"
 
-#: gaphor/ui/filemanager.py:125
+#: gaphor/ui/filemanager.py:126
 msgid "Loading model from {filename}"
 msgstr "Načítání modelu z {filename}"
 
-#: gaphor/ui/filemanager.py:147
+#: gaphor/ui/filemanager.py:149
 msgid "Loading current and incoming model"
 msgstr "Načítání aktuálního a příchozího modelu"
 
-#: gaphor/ui/filemanager.py:210 gaphor/ui/filemanager.py:257
+#: gaphor/ui/filemanager.py:227 gaphor/ui/filemanager.py:283
 msgid "Unable to open model “{filename}”."
 msgstr "Nelze otevřít model \"{filename}\"."
 
-#: gaphor/ui/filemanager.py:213 gaphor/ui/filemanager.py:260
+#: gaphor/ui/filemanager.py:230 gaphor/ui/filemanager.py:286
 msgid "This file does not contain a valid Gaphor model."
 msgstr "Tento soubor neobsahuje platný model Gaphor."
 
-#: gaphor/ui/filemanager.py:280
+#: gaphor/ui/filemanager.py:306
 msgid "Saving…"
 msgstr "Ukládání…"
 
-#: gaphor/ui/filemanager.py:281
+#: gaphor/ui/filemanager.py:307
 msgid "Saving model to {filename}"
 msgstr "Ukládání modelu do {filename}"
 
-#: gaphor/ui/filemanager.py:297
+#: gaphor/ui/filemanager.py:323
 msgid "Unable to save model “{filename}”."
 msgstr "Nelze uložit model \"{filename}\"."
 
-#: gaphor/ui/filemanager.py:335 gaphor/ui/filemanager.py:370
+#: gaphor/ui/filemanager.py:361 gaphor/ui/filemanager.py:396
 msgid "Save Gaphor Model As"
 msgstr "Uložit model Gaphor jako"
 
-#: gaphor/ui/filemanager.py:391
+#: gaphor/ui/filemanager.py:417
 msgid "Resolve Merge Conflict?"
 msgstr "Vyřešit konflikt sloučení?"
 
-#: gaphor/ui/filemanager.py:394
+#: gaphor/ui/filemanager.py:420
 msgid ""
 "The model you are opening contains a merge conflict. Do you want to open "
 "the current model or the incoming change to the model?"
@@ -2290,27 +2303,27 @@ msgstr ""
 "Otevíraný model obsahuje konflikt sloučení. Chcete otevřít aktuální model"
 " nebo příchozí změnu modelu?"
 
-#: gaphor/ui/filemanager.py:398 gaphor/ui/filemanager.py:423
+#: gaphor/ui/filemanager.py:424 gaphor/ui/filemanager.py:449
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: gaphor/ui/filemanager.py:399
+#: gaphor/ui/filemanager.py:425
 msgid "Open Merge Editor"
 msgstr "Otevřít editor sloučení"
 
-#: gaphor/ui/filemanager.py:400
+#: gaphor/ui/filemanager.py:426
 msgid "Open Current"
 msgstr "Otevřít aktuální"
 
-#: gaphor/ui/filemanager.py:401
+#: gaphor/ui/filemanager.py:427
 msgid "Open Incoming"
 msgstr "Otevřít příchozí"
 
-#: gaphor/ui/filemanager.py:414
+#: gaphor/ui/filemanager.py:440
 msgid "Save Changes?"
 msgstr "Uložit změny?"
 
-#: gaphor/ui/filemanager.py:415
+#: gaphor/ui/filemanager.py:441
 msgid ""
 "The open model contains unsaved changes. Changes which are not saved will"
 " be permanently lost."
@@ -2318,11 +2331,11 @@ msgstr ""
 "Otevřený model obsahuje neuložené změny. Neuložené změny budou trvale "
 "ztraceny."
 
-#: gaphor/ui/filemanager.py:424
+#: gaphor/ui/filemanager.py:450
 msgid "Discard"
 msgstr "Zahodit"
 
-#: gaphor/ui/filemanager.py:425 gaphor/ui/help/shortcuts.ui:95
+#: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:95
 #: gaphor/ui/mainwindow.py:50
 msgid "Save"
 msgstr "Uložit"
@@ -2404,43 +2417,43 @@ msgstr "Otevřít nabídku aplikace"
 msgid "Toggle property editor"
 msgstr "Přepnout editor vlastností"
 
-#: gaphor/ui/modelbrowser.py:180
+#: gaphor/ui/modelbrowser.py:182
 msgid "{name} package"
 msgstr "balíček {name}"
 
-#: gaphor/ui/modelbrowser.py:182
+#: gaphor/ui/modelbrowser.py:184
 msgid "New package"
 msgstr "Nový balíček"
 
-#: gaphor/ui/modelbrowser.py:374 gaphor/ui/modelbrowser.py:588
+#: gaphor/ui/modelbrowser.py:376 gaphor/ui/modelbrowser.py:587
 msgid "New _Package"
 msgstr "Nový _balíček"
 
-#: gaphor/ui/modelbrowser.py:577
+#: gaphor/ui/modelbrowser.py:576
 msgid "_Open"
 msgstr "_Otevřít"
 
-#: gaphor/ui/modelbrowser.py:577
+#: gaphor/ui/modelbrowser.py:576
 msgid "Add to diagram"
 msgstr "Přidat do diagramu"
 
-#: gaphor/ui/modelbrowser.py:580
+#: gaphor/ui/modelbrowser.py:579
 msgid "_Rename"
 msgstr "_Přejmenovat"
 
-#: gaphor/ui/modelbrowser.py:585
+#: gaphor/ui/modelbrowser.py:584
 msgid "New _Diagram"
 msgstr "Nový _Diagram"
 
-#: gaphor/ui/modelbrowser.py:592
+#: gaphor/ui/modelbrowser.py:591
 msgid "De_lete"
 msgstr "_Odstranit"
 
-#: gaphor/ui/modelbrowser.py:602
+#: gaphor/ui/modelbrowser.py:601
 msgid "Show in “{diagram}”"
 msgstr "Zobrazit v \"{diagram}\""
 
-#: gaphor/ui/modelbrowser.py:628
+#: gaphor/ui/modelbrowser.py:627
 msgid "New Generic Diagram"
 msgstr "Nový obecný diagram"
 
@@ -2458,9 +2471,9 @@ msgid ""
 msgstr ""
 "Copyright © 2001-2023 Arjan J. Molenaar a Dan Yeaw.\n"
 "\n"
-"UML, SysML a RAAML jsou registrované ochranné známky nebo ochranné známky "
-"společnosti Object Management Group, Inc. ve Spojených státech a/nebo jiných "
-"zemích."
+"UML, SysML a RAAML jsou registrované ochranné známky nebo ochranné známky"
+" společnosti Object Management Group, Inc. ve Spojených státech a/nebo "
+"jiných zemích."
 
 #: gaphor/ui/help/about.ui:22
 msgid ""
@@ -2552,80 +2565,80 @@ msgstr "Vložit (prvky definující odkaz)"
 msgid "Paste (copy defining elements)"
 msgstr "Vložit (kopírování definujících prvků)"
 
-#: gaphor/ui/modelmerge/organize.py:133
+#: gaphor/ui/modelmerge/organize.py:134
 msgid "Update diagram “{name}”"
 msgstr "Aktualizovat diagram \"{name}\""
 
-#: gaphor/ui/modelmerge/organize.py:164 gaphor/ui/modelmerge/organize.py:306
+#: gaphor/ui/modelmerge/organize.py:165 gaphor/ui/modelmerge/organize.py:307
 msgid "Update element “{name}”"
 msgstr "Aktualizovat prvek \"{name}\""
 
-#: gaphor/ui/modelmerge/organize.py:168
+#: gaphor/ui/modelmerge/organize.py:169
 msgid "Update element of type “{type}”"
 msgstr "Aktualizovat prvku typu \"{type}\""
 
-#: gaphor/ui/modelmerge/organize.py:244
+#: gaphor/ui/modelmerge/organize.py:245
 msgid "Update presentation “{type}”"
 msgstr "Aktualizovat prezentaci \"{type}\""
 
-#: gaphor/ui/modelmerge/organize.py:270
+#: gaphor/ui/modelmerge/organize.py:271
 msgid "Add presentation of type {type}"
 msgstr "Přidat typ prezentace {type}"
 
-#: gaphor/ui/modelmerge/organize.py:274
+#: gaphor/ui/modelmerge/organize.py:275
 msgid "Remove presentation of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:279
+#: gaphor/ui/modelmerge/organize.py:280
 msgid "Update presentation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:281
+#: gaphor/ui/modelmerge/organize.py:282
 msgid "Update presentation of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:288
+#: gaphor/ui/modelmerge/organize.py:289
 msgid "Add {type} “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:292
+#: gaphor/ui/modelmerge/organize.py:293
 msgid "Add element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:298
+#: gaphor/ui/modelmerge/organize.py:299
 #, fuzzy
 msgid "Remove element “{name}”"
 msgstr "Odstranit nepoužívané prvky"
 
-#: gaphor/ui/modelmerge/organize.py:300
+#: gaphor/ui/modelmerge/organize.py:301
 msgid "Remove element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:308
+#: gaphor/ui/modelmerge/organize.py:309
 msgid "Update element of type {type}"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:315
+#: gaphor/ui/modelmerge/organize.py:316
 msgid "Add relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:317
+#: gaphor/ui/modelmerge/organize.py:318
 msgid "Remove relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:319
+#: gaphor/ui/modelmerge/organize.py:320
 msgid "Update relation “{name}” to “{ref_name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:326
+#: gaphor/ui/modelmerge/organize.py:327
 msgid "Add relation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:328
+#: gaphor/ui/modelmerge/organize.py:329
 msgid "Remove relation “{name}”"
 msgstr ""
 
-#: gaphor/ui/modelmerge/organize.py:330
+#: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr ""
 
@@ -2848,3 +2861,4 @@ msgstr ""
 #~ "ochranné známky společnosti Object Management"
 #~ " Group, Inc. ve Spojených státech,\n"
 #~ "a/nebo v jiných zemích.\n"
+
