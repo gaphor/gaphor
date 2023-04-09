@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-03-27 11:32+0200\n"
-"PO-Revision-Date: 2023-01-24 07:50+0000\n"
+"PO-Revision-Date: 2023-04-09 19:09+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
+"\n"
 "Language: cs\n"
-"Language-Team: Czech "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/cs/>\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.17-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -1294,9 +1295,8 @@ msgid "Comment line"
 msgstr "Řádek komentáře"
 
 #: gaphor/diagram/diagramtoolbox.py:164
-#, fuzzy
 msgid "Diagram metadata"
-msgstr "Nová nabídka diagramů"
+msgstr "Metadata diagramu"
 
 #: gaphor/diagram/presentation.py:49
 msgid "(from {namespace})"
@@ -1320,30 +1320,27 @@ msgstr "Poznámka"
 
 #: gaphor/diagram/propertypages.ui:123
 msgid "Created By"
-msgstr ""
+msgstr "Vytvořil"
 
 #: gaphor/diagram/propertypages.ui:151
 msgid "Website"
-msgstr ""
+msgstr "Web"
 
 #: gaphor/diagram/propertypages.ui:165
-#, fuzzy
 msgid "Revision"
-msgstr "rozhodnutí"
+msgstr "Revize"
 
 #: gaphor/diagram/propertypages.ui:179
-#, fuzzy
 msgid "License"
-msgstr "Řádek"
+msgstr "Licence"
 
 #: gaphor/diagram/propertypages.ui:193
-#, fuzzy
 msgid "Created On"
-msgstr "Vytvořit nový model"
+msgstr "Vytvořeno"
 
 #: gaphor/diagram/propertypages.ui:207
 msgid "Updated On"
-msgstr ""
+msgstr "Aktualizováno"
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -2083,10 +2080,12 @@ msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see it's properties appear."
 msgstr ""
+"Přidejte do diagramu prvek modelu z okna nástrojů (vlevo dole). Zde se "
+"zobrazí jeho vlastnosti."
 
 #: gaphor/ui/elementeditor.ui:52
 msgid "This pane can be hidden by clicking the pane icon in the header."
-msgstr ""
+msgstr "Toto podokno lze skrýt kliknutím na ikonu podokna v záhlaví."
 
 #: gaphor/ui/elementeditor.ui:60
 msgid ""
@@ -2095,6 +2094,10 @@ msgid ""
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
+"<b>Tip:</b> Většina prvků ve skupině nástrojů má klávesovou zkratku (např. "
+"\"c\" pro Třída). Výběr nástroje funguje pouze z diagramu. Pokud se nástroj "
+"nevybere, klikněte jednou na diagram (aby se objevil focus) a pak stiskněte "
+"klávesovou zkratku."
 
 #: gaphor/ui/elementeditor.ui:68
 msgid ""
@@ -2102,6 +2105,9 @@ msgid ""
 "select an element in the model browser and start typing. A search box "
 "will automatically appear."
 msgstr ""
+"<b>Tip:</b> Chcete-li vyhledat prvek v prohlížeči modelů (vlevo nahoře), "
+"vyberte prvek v prohlížeči modelů a začněte psát. Automaticky se zobrazí "
+"vyhledávací pole."
 
 #: gaphor/ui/elementeditor.ui:96 gaphor/ui/help/shortcuts.ui:121
 msgid "Undo"
@@ -2159,23 +2165,24 @@ msgstr ""
 "v Gaphoru</a>"
 
 #: gaphor/ui/elementeditor.ui:328
-#, fuzzy
 msgid "Merge Models"
-msgstr "Nový model"
+msgstr "Sloučit modely"
 
 #: gaphor/ui/elementeditor.ui:339
 msgid "Merge Model Changes"
-msgstr ""
+msgstr "Sloučit změny modelu"
 
 #: gaphor/ui/elementeditor.ui:350
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
+"Použijí se příchozí změny z konfliktního modelu. Pro vrácení změn použijte "
+"Undo."
 
 #: gaphor/ui/elementeditor.ui:370
 msgid "Resolve"
-msgstr ""
+msgstr "Vyřešit"
 
 #: gaphor/ui/errorhandler.py:19
 msgid ""
@@ -2245,7 +2252,7 @@ msgstr "Načítání modelu z {filename}"
 
 #: gaphor/ui/filemanager.py:147
 msgid "Loading current and incoming model"
-msgstr ""
+msgstr "Načítání aktuálního a příchozího modelu"
 
 #: gaphor/ui/filemanager.py:210 gaphor/ui/filemanager.py:257
 msgid "Unable to open model “{filename}”."
@@ -2289,15 +2296,15 @@ msgstr "Zrušit"
 
 #: gaphor/ui/filemanager.py:399
 msgid "Open Merge Editor"
-msgstr ""
+msgstr "Otevřít editor sloučení"
 
 #: gaphor/ui/filemanager.py:400
 msgid "Open Current"
-msgstr ""
+msgstr "Otevřít aktuální"
 
 #: gaphor/ui/filemanager.py:401
 msgid "Open Incoming"
-msgstr ""
+msgstr "Otevřít příchozí"
 
 #: gaphor/ui/filemanager.py:414
 msgid "Save Changes?"
@@ -2442,7 +2449,6 @@ msgid "<Relationships>"
 msgstr "<Vztahy>"
 
 #: gaphor/ui/help/about.ui:14
-#, fuzzy
 msgid ""
 "Copyright © 2001-2023 Arjan J. Molenaar and Dan Yeaw.\n"
 "\n"
@@ -2450,11 +2456,11 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
-"Copyright © 2001-2022 Arjan J. Molenaar a Dan Yeaw.\n"
+"Copyright © 2001-2023 Arjan J. Molenaar a Dan Yeaw.\n"
 "\n"
-"UML, SysML a RAAML jsou registrované ochranné známky nebo ochranné známky"
-" společnosti Object Management Group, Inc. ve Spojených státech a/nebo "
-"jiných zemích."
+"UML, SysML a RAAML jsou registrované ochranné známky nebo ochranné známky "
+"společnosti Object Management Group, Inc. ve Spojených státech a/nebo jiných "
+"zemích."
 
 #: gaphor/ui/help/about.ui:22
 msgid ""
@@ -2547,25 +2553,24 @@ msgid "Paste (copy defining elements)"
 msgstr "Vložit (kopírování definujících prvků)"
 
 #: gaphor/ui/modelmerge/organize.py:133
-#, fuzzy
 msgid "Update diagram “{name}”"
-msgstr "Nová nabídka diagramů"
+msgstr "Aktualizovat diagram \"{name}\""
 
 #: gaphor/ui/modelmerge/organize.py:164 gaphor/ui/modelmerge/organize.py:306
 msgid "Update element “{name}”"
-msgstr ""
+msgstr "Aktualizovat prvek \"{name}\""
 
 #: gaphor/ui/modelmerge/organize.py:168
 msgid "Update element of type “{type}”"
-msgstr ""
+msgstr "Aktualizovat prvku typu \"{type}\""
 
 #: gaphor/ui/modelmerge/organize.py:244
 msgid "Update presentation “{type}”"
-msgstr ""
+msgstr "Aktualizovat prezentaci \"{type}\""
 
 #: gaphor/ui/modelmerge/organize.py:270
 msgid "Add presentation of type {type}"
-msgstr ""
+msgstr "Přidat typ prezentace {type}"
 
 #: gaphor/ui/modelmerge/organize.py:274
 msgid "Remove presentation of type {type}"
@@ -2843,4 +2848,3 @@ msgstr ""
 #~ "ochranné známky společnosti Object Management"
 #~ " Group, Inc. ve Spojených státech,\n"
 #~ "a/nebo v jiných zemích.\n"
-
