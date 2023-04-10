@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-03-31 12:39+0000\n"
+"PO-Revision-Date: 2023-04-12 10:51+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -746,9 +747,8 @@ msgid "Parameter Nodes"
 msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:269
-#, fuzzy
 msgid "Parameters"
-msgstr "osat"
+msgstr "Parametrit"
 
 #: gaphor/UML/actions/propertypages.ui:292
 #: gaphor/UML/classes/propertypages.ui:67
@@ -1299,19 +1299,16 @@ msgid "Website"
 msgstr "Verkkosivusto"
 
 #: gaphor/diagram/propertypages.ui:165
-#, fuzzy
 msgid "Revision"
-msgstr "päätös"
+msgstr "Versio"
 
 #: gaphor/diagram/propertypages.ui:179
-#, fuzzy
 msgid "License"
-msgstr "Viiva"
+msgstr "Lisenssi"
 
 #: gaphor/diagram/propertypages.ui:193
-#, fuzzy
 msgid "Created On"
-msgstr "Luo uusi malli"
+msgstr "Luotu"
 
 #: gaphor/diagram/propertypages.ui:207
 msgid "Updated On"
@@ -2056,10 +2053,14 @@ msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see it's properties appear."
 msgstr ""
+"Lisää mallielementti työkalulaatikosta vasemmalta alhaalta kaavioon. Näet "
+"sen ominaisuudet tässä."
 
 #: gaphor/ui/elementeditor.ui:52
 msgid "This pane can be hidden by clicking the pane icon in the header."
 msgstr ""
+"Tämä paneeli on mahdollista piilottaa napsauttamalla paneelikuvaketta "
+"otsakkeesta."
 
 #: gaphor/ui/elementeditor.ui:60
 msgid ""
@@ -2120,13 +2121,12 @@ msgstr ""
 "kaaviossa."
 
 #: gaphor/ui/elementeditor.ui:290
-#, fuzzy
 msgid "Language"
-msgstr "sukuNimi"
+msgstr "Kieli"
 
 #: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
 msgid "The (spoken) language used in this model."
-msgstr ""
+msgstr "Tässä mallissa käytettävä (puhuttu) kieli."
 
 #: gaphor/ui/elementeditor.ui:308
 msgid "Style Sheet"
@@ -2143,9 +2143,8 @@ msgstr ""
 " Gaphorissa</a>"
 
 #: gaphor/ui/elementeditor.ui:349
-#, fuzzy
 msgid "Merge Models"
-msgstr "Uusi malli"
+msgstr "Yhdistä mallit"
 
 #: gaphor/ui/elementeditor.ui:360
 msgid "Merge Model Changes"
@@ -2156,10 +2155,12 @@ msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
+"Toteuta muutokset ristiriidan aiheuttavasta mallista. Käytä "
+"kumoamistoimintoa peruaksesi muutokset."
 
 #: gaphor/ui/elementeditor.ui:391
 msgid "Resolve"
-msgstr ""
+msgstr "Selvitä"
 
 #: gaphor/ui/errorhandler.py:19
 msgid ""
@@ -2229,7 +2230,7 @@ msgstr "Ladataan mallia tiedostosta {filename}"
 
 #: gaphor/ui/filemanager.py:149
 msgid "Loading current and incoming model"
-msgstr ""
+msgstr "Ladataan nykyistä ja tulevaa mallia"
 
 #: gaphor/ui/filemanager.py:227 gaphor/ui/filemanager.py:283
 msgid "Unable to open model “{filename}”."
@@ -2514,9 +2515,8 @@ msgid "Paste (copy defining elements)"
 msgstr "Liitä (kopioi määrittelevät elementit)"
 
 #: gaphor/ui/modelmerge/organize.py:134
-#, fuzzy
 msgid "Update diagram “{name}”"
-msgstr "Uusi kaavio -valikko"
+msgstr "Päivitä kaavio “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:165 gaphor/ui/modelmerge/organize.py:307
 msgid "Update element “{name}”"
@@ -2555,9 +2555,8 @@ msgid "Add element of type {type}"
 msgstr "Lisää elementti tyyppiä {type}"
 
 #: gaphor/ui/modelmerge/organize.py:299
-#, fuzzy
 msgid "Remove element “{name}”"
-msgstr "Poista käyttämättömät elementit"
+msgstr "Poista elementti “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:301
 msgid "Remove element of type {type}"
@@ -3129,4 +3128,3 @@ msgstr "Päivitä relaatio “{name}”"
 #~ "Object Management Group, Inc. in the "
 #~ "United States and/or other countries."
 #~ msgstr ""
-
