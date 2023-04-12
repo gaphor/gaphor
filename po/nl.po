@@ -3,18 +3,19 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  0.6.0\n"
+"Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-03-29 21:40+0000\n"
+"PO-Revision-Date: 2023-04-12 10:51+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
+"\n"
 "Language: nl\n"
-"Language-Team: Dutch "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/nl/>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 4.17-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -402,9 +403,8 @@ msgid "values"
 msgstr "waarden"
 
 #: gaphor/SysML/blocks/block.py:145
-#, fuzzy
 msgid "operations"
-msgstr "Handelingen"
+msgstr "handelingen"
 
 #: gaphor/SysML/blocks/block.py:160 gaphor/SysML/blocks/block.py:186
 msgid "unnamed"
@@ -2164,13 +2164,12 @@ msgstr ""
 "diagram."
 
 #: gaphor/ui/elementeditor.ui:290
-#, fuzzy
 msgid "Language"
-msgstr "achterNaam"
+msgstr "Taal"
 
 #: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
 msgid "The (spoken) language used in this model."
-msgstr ""
+msgstr "De (gesproken) taal gebruikt in dit model"
 
 #: gaphor/ui/elementeditor.ui:308
 msgid "Style Sheet"
@@ -3012,4 +3011,3 @@ msgstr "Relatie ‘{name}’ bijwerken"
 #~ "van Object Management Group, Inc. in "
 #~ "de Verenigde Staten en/of andere landen."
 #~ "\n"
-
