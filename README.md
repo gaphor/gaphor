@@ -21,15 +21,7 @@ It is designed to be easy to use, while still being powerful. Gaphor implements 
 
 <img alt="Gaphor Demo" src="https://raw.githubusercontent.com/gaphor/gaphor/main/docs/images/gaphor-demo.gif" style="display: block; margin: 2em auto">
 
-## 📑 Table of Contents
-
-- [Background](#background)
-- [Install](#floppy_disk-install)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-
-## 📜 Background
+## Background
 
 Gaphor is a UML and SysML modeling application written in Python. We designed
 it to be easy to use, while still being powerful. Gaphor implements a
@@ -50,7 +42,7 @@ Gaphor is a library.
 You can use it from [scripts and Jupyter notebooks](https://gaphor.readthedocs.io/en/latest/scripting.html)
 and interact with models programmatically.
 
-## 💾 Install
+## Install
 
 You can find [the latest version](https://gaphor.org/download) on the
 [gaphor.org website](https://gaphor.org/download). Gaphor ships installers for
@@ -63,7 +55,7 @@ All releases are available on
 If you want to start developing on Gaphor, have a look at the [Installation
 section of our Tech docs](https://gaphor.readthedocs.io/en/latest/).
 
-## 🔦 Usage
+## Usage
 
 If using Gaphor for the first time you will be presented with a greeter dialog
 at startup in which you can select one of 5 models available to you to work in:
@@ -91,7 +83,7 @@ needed.
 
 If you want to know more, please read our documentation on https://docs.gaphor.org.
 
-## ♥ Contributing
+## Contributing
 
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
@@ -275,7 +267,7 @@ specification. Contributions of any kind are welcome!
 
 See [the contributing guide](CONTRIBUTING.md)!
 
-### 🌍 Translations
+### Translations
 
 Translation of Gaphor is mostly done using
 [Weblate](https://hosted.weblate.org/projects/gaphor/gaphor/).
@@ -287,7 +279,7 @@ repository](https://github.com/flathub/org.gaphor.Gaphor/blob/master/share/org.g
 Thank you so much for your effort in helping us keep it available in many
 languages!
 
-### ♿️ Code of Conduct
+### Code of Conduct
 
 We value your participation and want everyone to have an enjoyable and
 fulfilling experience. As a [GNOME Circle](https://circle.gnome.org/) project,
@@ -296,7 +288,7 @@ Conduct](https://wiki.gnome.org/Foundation/CodeOfConduct), and to show respect,
 understanding, and consideration to one another. Thank you for helping make this
 a welcoming, friendly community for everyone.
 
-## 🄯 License
+## License
 
 Copyright © Arjan Molenaar and Dan Yeaw
 
