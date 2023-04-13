@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3.5.1
+      uses: actions/checkout@v3.5.2
     - name: Set up Python
       uses: actions/setup-python@v4.5.0
       with:
