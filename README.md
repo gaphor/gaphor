@@ -296,7 +296,7 @@ Conduct](https://wiki.gnome.org/Foundation/CodeOfConduct), and to show respect,
 understanding, and consideration to one another. Thank you for helping make this
 a welcoming, friendly community for everyone.
 
-## 🄯 License
+## ©️ License
 
 Copyright © Arjan Molenaar and Dan Yeaw
 
