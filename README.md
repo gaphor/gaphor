@@ -52,6 +52,10 @@ Gaphor is a library.
 You can use it from [scripts and Jupyter notebooks](https://gaphor.readthedocs.io/en/latest/scripting.html)
 and interact with models programmatically.
 
+Non-Goals:
+- Generating UML diagrams from source code - [pynsource](https://github.com/abulka/pynsource) or [pyreverse](https://github.com/pylint-dev/pylint/tree/main/pylint/pyreverse) might be what you are looking for
+- Generating source code from diagrams or creating other concrete executable artifacts including use of fUML or ALF
+
 ## 💾 Install
 
 You can find [the latest version](https://gaphor.org/download) on the
