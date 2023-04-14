@@ -23,11 +23,13 @@ It is designed to be easy to use, while still being powerful. Gaphor implements 
 
 ## 📑 Table of Contents
 
-- [Background](#background)
-- [Install](#floppy_disk-install)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Background](#-background)
+- [Install](#-install)
+- [Usage](#-usage)
+- [Contributing](#-contributing)
+    - [Translations](#-translations)
+    - [Code of Conduct](#%EF%B8%8F-code-of-conduct)
+- [License](#%EF%B8%8F-license)
 
 ## 📜 Background
 
