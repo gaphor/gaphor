@@ -23,13 +23,14 @@ It is designed to be easy to use, while still being powerful. Gaphor implements 
 
 ## 📑 Table of Contents
 
-- [Background](#-background)
-- [Install](#-install)
-- [Usage](#-usage)
-- [Contributing](#-contributing)
-    - [Translations](#-translations)
-    - [Code of Conduct](#%EF%B8%8F-code-of-conduct)
-- [License](#%EF%B8%8F-license)
+- [📑 Table of Contents](#-table-of-contents)
+- [📜 Background](#-background)
+- [💾 Install](#-install)
+- [🔦 Usage](#-usage)
+- [♥ Contributing](#-contributing)
+  - [🌍 Translations](#-translations)
+  - [♿️ Code of Conduct](#️-code-of-conduct)
+- [©️ License](#️-license)
 
 ## 📜 Background
 
@@ -53,8 +54,11 @@ You can use it from [scripts and Jupyter notebooks](https://gaphor.readthedocs.i
 and interact with models programmatically.
 
 Non-Goals:
-- Generating UML diagrams from source code - [pynsource](https://github.com/abulka/pynsource) or [pyreverse](https://github.com/pylint-dev/pylint/tree/main/pylint/pyreverse) might be what you are looking for
-- Generating source code from diagrams or creating other concrete executable artifacts including use of fUML or ALF
+
+- Generating UML diagrams from source code. [pynsource](https://github.com/abulka/pynsource) or [pyreverse](https://github.com/pylint-dev/pylint/tree/main/pylint/pyreverse) might be what you are looking for.
+- Generating source code from diagrams or creating other concrete executable artifacts including use of fUML or ALF.
+
+Allthough it is possible to perform those tasks, Gaphor is a library, those goals are not part of this project.
 
 ## 💾 Install
 
