@@ -13,17 +13,17 @@ def create_merge_conflict(repo, filename, initial_text, our_text, their_text):
 
         return repo.create_commit(ref, author, author, message, tree, parents)
 
-    filename.write_text(initial_text)
+    filename.write_text(initial_text, encoding="utf-8")
     initial_oid = commit_all("Initial commit", parents=[])
     main_ref = repo.head
     branch_ref = repo.references.create("refs/heads/branch", initial_oid)
 
     repo.checkout(branch_ref)
-    filename.write_text(their_text)
+    filename.write_text(their_text, encoding="utf-8")
     branch_oid = commit_all("Branch commit", parents=[initial_oid])
 
     repo.checkout(main_ref)
-    filename.write_text(our_text)
+    filename.write_text(our_text, encoding="utf-8")
     commit_all("Second commit", parents=[initial_oid])
 
     repo.merge(branch_oid)
