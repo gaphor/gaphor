@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-04-12 10:51+0000\n"
+"PO-Revision-Date: 2023-04-14 12:33+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -350,7 +350,7 @@ msgstr "Tekst"
 
 #: gaphor/SysML/toolbox.py:25
 msgid "Internal Blocks"
-msgstr "Unutarnji blokovi"
+msgstr "Interni blokovi"
 
 #: gaphor/SysML/toolbox.py:29
 msgid "Connector"
@@ -370,7 +370,7 @@ msgstr "Novi dijagram definicija blokova"
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr "Novi dijagram unutarnjih blokova"
+msgstr "Novi dijagram internih blokova"
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
 msgid "New Package Diagram"
@@ -863,7 +863,7 @@ msgstr "stereotip"
 
 #: gaphor/UML/classes/klass.py:60
 msgid "metaclass"
-msgstr "meta-klasa"
+msgstr "metaklasa"
 
 #: gaphor/UML/classes/package.py:28
 msgid "profile"
