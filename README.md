@@ -58,7 +58,10 @@ Non-Goals:
 - Generating UML diagrams from source code. [pynsource](https://github.com/abulka/pynsource) or [pyreverse](https://github.com/pylint-dev/pylint/tree/main/pylint/pyreverse) might be what you are looking for.
 - Generating source code from diagrams or creating other concrete executable artifacts including use of fUML or ALF.
 
-Allthough it is possible to perform those tasks, Gaphor is a library, those goals are not part of this project.
+Although it would be possible to incorporate these features, these aren't the
+goals of this project. However, if these are important capabilities for you,
+you may be able to extend Gaphor by creating a
+[plugin](https://docs.gaphor.org/en/latest/service_oriented.html#example-plugin).
 
 ## 💾 Install
 
