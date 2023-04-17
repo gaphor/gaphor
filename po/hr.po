@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-04-14 12:33+0000\n"
+"PO-Revision-Date: 2023-04-18 11:28+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 4.17\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -108,7 +108,7 @@ msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
 msgid "New FTA Diagram"
-msgstr "Novi dijagram analize stabla kvarova (FTA)"
+msgstr "Novi dijagram analize kvarova"
 
 #: gaphor/RAAML/toolbox.py:20
 msgid "New STPA Diagram"
@@ -116,7 +116,7 @@ msgstr "Novi dijagram sustavno-teoretske analize procesa (STPA)"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
-msgstr "Sklop I"
+msgstr "Sklopka I"
 
 #: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
@@ -135,7 +135,7 @@ msgstr "Neaktivni događaj"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
-msgstr "Analiza kvarova stabla"
+msgstr "Analiza kvarova"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
@@ -143,7 +143,7 @@ msgstr "I"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
-msgstr "Sklop ILI"
+msgstr "Sklopka ILI"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml.gaphor
 msgid "OR"
@@ -151,7 +151,7 @@ msgstr "ILI"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
-msgstr "Sklop NE"
+msgstr "Sklopka NE"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
@@ -159,15 +159,15 @@ msgstr "NIJE"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr "Sklop sprovođenja slijeda (SEQ)"
+msgstr "Sklopka sprovođenja slijeda (SEQ)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:63
 msgid "SEQ"
-msgstr "SEQ"
+msgstr "SEQ (sprovođenja slijeda)"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
-msgstr "Sklop isključivo ILI"
+msgstr "Sklopka isključivo ILI"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
@@ -176,12 +176,12 @@ msgstr "XILI"
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:39
 msgid "Majority Vote Gate"
-msgstr "Sklop većina glasova"
+msgstr "Sklopka većina glasova"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:35
 msgid "Inhibit Gate"
-msgstr "Sklop I s uvjetom"
+msgstr "Sklopka I s uvjetom"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:35
@@ -220,11 +220,11 @@ msgstr "Intermedijarni događaj"
 
 #: gaphor/RAAML/fta/seqgate.py:36
 msgid "Sequence Enforcing Gate"
-msgstr "Sklop sprovođenja slijeda"
+msgstr "Sklopka sprovođenja slijeda"
 
 #: gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr "Sklop XILI"
+msgstr "Sklopka XILI"
 
 #: gaphor/RAAML/stpa/controlaction.py:32 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
@@ -453,7 +453,7 @@ msgstr "Nabrajanje"
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 #: gaphor/UML/classes/classestoolbox.py:152
 msgid "Primitive"
-msgstr "Primitivne"
+msgstr "Bez strukture"
 
 #: gaphor/SysML/blocks/proxyport.py:35
 msgid "proxy"
@@ -815,7 +815,7 @@ msgstr "Vrsta podataka"
 
 #: gaphor/UML/classes/datatype.py:56
 msgid "primitive"
-msgstr "vrsta primitivnih podataka"
+msgstr "bez strukture"
 
 #: gaphor/UML/classes/datatype.py:58 gaphor/UML/classes/enumeration.py:73
 msgid "valueType"
@@ -1530,7 +1530,7 @@ msgstr "Definicija gubitka"
 
 #: gaphor/templates/raaml.gaphor
 msgid "FTA"
-msgstr "FTA (analiza stabla kvarova)"
+msgstr "FTA (analiza kvarova)"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss of System"
@@ -1596,8 +1596,7 @@ msgstr "Hijerarhija stanja"
 msgid ""
 "The fault tree analysis shows which causes for the failure of a system "
 "have been considered."
-msgstr ""
-"Analiza kvarova stabla prikazuje koji su uzroci kvara sustava uzeti u obzir."
+msgstr "Analiza kvarova prikazuje koji su uzroci kvara sustava uzeti u obzir."
 
 #: gaphor/templates/sysml.gaphor
 msgid "1. Concept Level"
@@ -2489,14 +2488,14 @@ msgid ""
 "See the License for the specific language governing permissions and "
 "limitations under the License."
 msgstr ""
-"Licenciran pod Apache licencom, verzija 2.0 („licenca”); program se smije"
-" koristiti samo u skladu s licencom. Primjerak licence se nalazi na\n"
+"Licenciran pod Apache licencom, verzija 2.0 („licenca”); program se smije "
+"koristiti samo u skladu s licencom. Primjerak licence se nalazi na\n"
 "\n"
 "    http://www.apache.org/licenses/LICENSE-2.0\n"
 "\n"
 "Osim ako to zahtijeva mjerodavni zakon ili ako je to pismeno dogovoreno, "
-"softver distribuiran pod ovom licencom distribuira se na osnovi stanja\n"
-"„KAKVO JE”, BEZ JAMSTVA ILI UVJETA BILO KOJE VRSTE izričitih ili "
+"softver distribuiran pod ovom licencom distribuira se na osnovi stanja „"
+"KAKVO JE”, BEZ JAMSTVA ILI UVJETA BILO KOJE VRSTE izričitih ili "
 "podrazumijevanih. Pogledaj licencu za određeni jezik koja regulira "
 "dopuštenja i ograničenja u okviru licence."
 
