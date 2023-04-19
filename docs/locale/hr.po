@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-04-18 11:28+0000\n"
+"PO-Revision-Date: 2023-04-20 21:50+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
@@ -78,19 +78,27 @@ msgstr ""
 
 #: ../design_principles.md:1
 msgid "Design Principles"
-msgstr ""
+msgstr "Načela konstruiranja"
 
 #: ../design_principles.md:3
 msgid "Gaphor has been around for quite a few years. In those years we (the Gaphor developers) learned a few things on how to build it. Gaphor tries to be easily accessible for novice users as well as a useful tool for more experienced users."
 msgstr ""
+"Gaphor postoji već nekoliko godina. Tijekom tih godina su programeri Gaphora "
+"naučili neke stvari o tome kako ga izgraditi. Gaphor je namijenjen za "
+"početnike i za iskusnije korisnike."
 
 #: ../design_principles.md:7
 msgid "Gaphor is not your average editor. It's a modeling environment. This implies there is a language underpinning the models. Languages adhere to rules and Gaphor tries to follow those rules."
 msgstr ""
+"Gaphor nije običan uređivač. Gaphor je okruženje za modeliranje. To znači da "
+"postoji jezik na kojem se modeli temelje. Jezici se pridržavaju pravila i "
+"Gaphor se pokušava pridržavati tih pravila."
 
 #: ../design_principles.md:11
 msgid "Usability is very important. When you're new to Gaphor, it should be easy to find your way around. Minimal knowledge of UML should at least allow you to create a class diagram."
 msgstr ""
+"Upotrebljivost je vrlo važna. Kao početnik ćeš se lako snaći. Osnovno "
+"poznavanje UML-a je dovoljno barem za stvaranje dijagrama klasa."
 
 #: ../design_principles.md:15
 msgid "Guidance"
@@ -115,23 +123,32 @@ msgstr ""
 
 #: ../design_principles.md:26
 msgid "Keep the model in sync"
-msgstr ""
+msgstr "Održavanje sinkronizacije modela"
 
 #: ../design_principles.md:28
 msgid "An important part of modeling is to design a system in abstractions and be able to explain those to others. As systems become more complicated, it's important to have the design (model) layed out in diagrams."
 msgstr ""
+"Važan dio modeliranja je stvaranje sustava abstraktno i biti u stanju "
+"objasniti to drugima. Kako sustavi postaju kompliciraniji, važno je imati "
+"dizajn (model) koji se prikazuje u dijagramima."
 
 #: ../design_principles.md:32
 msgid "Gaphor goes through great lengths to keep the model in sync with the diagrams. In doing so, unused elements can be automatically removed from the model if they're no longer shown in any diagram."
 msgstr ""
+"Gaphor održava sinkronizaciju modela s dijagramima. Pritom se nekorišteni "
+"elementi mogu automatski ukloniti iz modela ako se više ne prikazuju u "
+"nijednom dijagramu."
 
 #: ../design_principles.md:36
 msgid "Out of your way"
-msgstr ""
+msgstr "Bez smetnji"
 
 #: ../design_principles.md:38
 msgid "When modeling, you should be busy with your problem or solution domain, not with the tool. Gaphor tries to stay out of your way as much as possible. It does not try to nag you with error messages, because the model is not \"correct\"."
 msgstr ""
+"Tijekom modeliranja koncentriraj se na problem ili rješenje, a ne na alat. "
+"Gaphor će se uplesti što manje moguće. Neće te gnjaviti porukama o greškama "
+"zbog modela koji nije „ispravan”."
 
 #: ../design_principles.md:42
 msgid "Avoid dialogs"
@@ -237,27 +254,31 @@ msgstr ""
 
 #: ../event_system.md:1
 msgid "Event System"
-msgstr ""
+msgstr "Sustav događaja"
 
 #: ../event_system.md:3
 msgid "The event system in Gaphor provides an API to *handle* events and to *subscribe* to events."
 msgstr ""
+"Sustav događaja u Gaphoru pruža API za *rukovanje* događajima i za "
+"*pretplatu* na događaje."
 
 #: ../event_system.md:6
 msgid "In Gaphor we manage event handler subscriptions through the `EventManager` service. Gaphor is highly event driven:"
 msgstr ""
+"U Gaphoru upravljamo pretplatama za rukovanje događajima putem usluge „"
+"Upravljač događaja”. Gaphor je izrazito vođen događajima:"
 
 #: ../event_system.md:9
 msgid "Changes in the loaded model are emitted as events"
-msgstr ""
+msgstr "Promjene u učitanom modelu emitiraju se kao događaji"
 
 #: ../event_system.md:10
 msgid "Changes on diagrams are emitted as events"
-msgstr ""
+msgstr "Promjene u dijagramima emitiraju se kao događaji"
 
 #: ../event_system.md:11
 msgid "Changes in the UI are emitted as events"
-msgstr ""
+msgstr "Promjene u korisničkom sučelju emitiraju se kao događaji"
 
 #: ../event_system.md:13
 msgid "Although Gaphor depends heavily on GTK for its user interface, Gaphor is using its own event dispatcher. Events can be structured in hierarchies. For example, an `AttributeUpdated` event is a subtype of `ElementUpdated`. If we are interested in all changes to elements, we can also register `ElementUpdated` and receive all `AttributeUpdated` events as well."
