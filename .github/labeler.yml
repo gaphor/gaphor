@@ -2,8 +2,10 @@ packaging:
   - _packaging/**/*
 translation:
   - po/*
+  - docs/locale/*
 documentation:
-  - docs/**/*
+  - docs/*.md
+  - docs/*.rst
   - '*.md'
 chore:
   - .flake8
