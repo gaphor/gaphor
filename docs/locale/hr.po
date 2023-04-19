@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-04-15 18:55+0000\n"
+"PO-Revision-Date: 2023-04-18 11:28+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 4.17\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
@@ -1136,15 +1136,15 @@ msgstr ""
 
 #: ../modeling_language.md:24
 msgid "Diagram types"
-msgstr ""
+msgstr "Vrste dijagrma"
 
 #: ../modeling_language.md:25
 msgid "A toolbox definition"
-msgstr ""
+msgstr "Definicija kutija alata"
 
 #: ../modeling_language.md:26
 msgid "[Connectors](#connectors), allow diagram items to connect"
-msgstr ""
+msgstr "[Spojnice](#connectors) omogućuju spajanje elemenata dijagrama"
 
 #: ../modeling_language.md:27
 msgid "[Copy/paste](#copy-and-paste) behavior when element copying is not trivial, for example with more than one element is involved"
@@ -1152,15 +1152,19 @@ msgstr ""
 
 #: ../modeling_language.md:29
 msgid "[Grouping](#grouping), allow elements to be nested in one another"
-msgstr ""
+msgstr "[Grupiranje](#grouping), omogućuje međusobno ugniježđivanje elemenata"
 
 #: ../modeling_language.md:30
 msgid "[Dropping](#dropping), allow elements to be dragged from the tree view onto a diagram"
 msgstr ""
+"[Ispuštanje](#dropping), omogućuje povlačenje elemenata iz prikaza stabla u "
+"dijagram"
 
 #: ../modeling_language.md:31
 msgid "[Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent"
 msgstr ""
+"[Pravila automatskog čišćenja](#automated-model-cleanup) za održavanje "
+"dosljednosti modela"
 
 #: ../modeling_language.md:33
 msgid "The first three by functionalities are exposed by the `ModelingLanguage` class. The other functionalities can be extended by adding handlers to the respective generic functions."
@@ -1204,11 +1208,11 @@ msgstr ""
 
 #: ../modeling_language.md:51
 msgid "Connectors"
-msgstr ""
+msgstr "Spojnice"
 
 #: ../modeling_language.md:53
 msgid "Connectors are used to connect one element to another."
-msgstr ""
+msgstr "Spojnice se koriste za spajanje elemenata."
 
 #: ../modeling_language.md:55
 msgid "Connectors should adhere to the `ConnectorProtocol`. Normally you would inherit from `BaseConnector`."
@@ -1228,11 +1232,11 @@ msgstr "Parametri"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:5
 msgid "connecting item"
-msgstr ""
+msgstr "spajanje elementa"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:7
 msgid "connectable item"
-msgstr ""
+msgstr "spojiv element"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:10
 msgid "The following methods are required to make this work:"
@@ -1591,163 +1595,163 @@ msgstr "Metode"
 
 #: ../models/raaml/Methods.rst:5
 msgid "FTA/FTA Library/Events/Basic Event"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Događaji/Osnovni događaj"
 
 #: ../models/raaml/Methods.rst:11
 msgid "FTA/FTA Library/Events/Conditional Event"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Događaji/Uvjetni događaj"
 
 #: ../models/raaml/Methods.rst:17
 msgid "FTA/FTA Library/Events/Dormant Event"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Događaji/Neaktivni događaj"
 
 #: ../models/raaml/Methods.rst:23
 msgid "FTA/FTA Library/Events/Events"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Događaji/Događaji"
 
 #: ../models/raaml/Methods.rst:29
 msgid "FTA/FTA Library/Events/Event"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Događaji/Događaj"
 
 #: ../models/raaml/Methods.rst:35
 msgid "FTA/FTA Library/Events/House Event"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Događaji/Kućni događaj"
 
 #: ../models/raaml/Methods.rst:41
 msgid "FTA/FTA Library/Events/Intermediate Event"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Događaji/Međudogađaj"
 
 #: ../models/raaml/Methods.rst:47
 msgid "FTA/FTA Library/Events/Top Event"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Događaji/Glavni događaj"
 
 #: ../models/raaml/Methods.rst:53
 msgid "FTA/FTA Library/Events/Undeveloped Event"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Događaji/Nerazvijeni događaj"
 
 #: ../models/raaml/Methods.rst:59
 msgid "FTA/FTA Library/Events/Zero Event"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Događaji/Nula događaja"
 
 #: ../models/raaml/Methods.rst:65
 msgid "FTA/FTA Library/FTA Element"
-msgstr ""
+msgstr "FTA/FTA biblioteka/FTA element"
 
 #: ../models/raaml/Methods.rst:71
 msgid "FTA/FTA Library/FTA Library"
-msgstr ""
+msgstr "FTA/FTA biblioteka/FTA biblioteka"
 
 #: ../models/raaml/Methods.rst:77
 msgid "FTA/FTA Library/FTA Tree"
-msgstr ""
+msgstr "FTA/FTA biblioteka/FTA stablo"
 
 #: ../models/raaml/Methods.rst:83
 msgid "FTA/FTA Library/Gates/AND"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Sklopke/I"
 
 #: ../models/raaml/Methods.rst:89
 msgid "FTA/FTA Library/Gates/Gate"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Sklopke/Sklopka"
 
 #: ../models/raaml/Methods.rst:95
 msgid "FTA/FTA Library/Gates/INHIBIT"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Sklopke/S preduvjetom"
 
 #: ../models/raaml/Methods.rst:101
 msgid "FTA/FTA Library/Gates/MAJORITY_VOTE"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Sklopke/VEĆINA_GLASOVA"
 
 #: ../models/raaml/Methods.rst:107
 msgid "FTA/FTA Library/Gates/NOT"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Sklopke/NE"
 
 #: ../models/raaml/Methods.rst:113
 msgid "FTA/FTA Library/Gates/OR"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Sklopke/ILI"
 
 #: ../models/raaml/Methods.rst:119
 msgid "FTA/FTA Library/Gates/SEQ"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Sklopke/sprovođenje slijeda"
 
 #: ../models/raaml/Methods.rst:125
 msgid "FTA/FTA Library/Gates/XOR"
-msgstr ""
+msgstr "FTA/FTA biblioteka/Sklopke/XILI"
 
 #: ../models/raaml/Methods.rst:131
 msgid "FTA/FTA Profile/AND"
-msgstr ""
+msgstr "FTA/FTA profil/I"
 
 #: ../models/raaml/Methods.rst:137
 msgid "FTA/FTA Profile/Conditional Event"
-msgstr ""
+msgstr "FTA/FTA profil/Uvjetni događaj"
 
 #: ../models/raaml/Methods.rst:143
 msgid "FTA/FTA Profile/Dormant Event"
-msgstr ""
+msgstr "FTA/FTA profil/Neaktivni događaj"
 
 #: ../models/raaml/Methods.rst:149
 msgid "FTA/FTA Profile/Event"
-msgstr ""
+msgstr "FTA/FTA profil/Događaj"
 
 #: ../models/raaml/Methods.rst:155
 msgid "FTA/FTA Profile/Gate"
-msgstr ""
+msgstr "FTA/FTA profil/Sklopka"
 
 #: ../models/raaml/Methods.rst:161
 msgid "FTA/FTA Profile/House Event"
-msgstr ""
+msgstr "FTA/FTA profil/Domaći događaj"
 
 #: ../models/raaml/Methods.rst:167
 msgid "FTA/FTA Profile/INHIBIT"
-msgstr ""
+msgstr "FTA/FTA profil/UVJET"
 
 #: ../models/raaml/Methods.rst:173
 msgid "FTA/FTA Profile/Intermediate Event"
-msgstr ""
+msgstr "FTA/FTA profil/Međudogađaj"
 
 #: ../models/raaml/Methods.rst:179
 msgid "FTA/FTA Profile/MAJORITY_VOTE"
-msgstr ""
+msgstr "FTA/FTA profil/VEĆINA_GLASOVA"
 
 #: ../models/raaml/Methods.rst:185
 msgid "FTA/FTA Profile/NOT"
-msgstr ""
+msgstr "FTA/FTA profil/NE"
 
 #: ../models/raaml/Methods.rst:191
 msgid "FTA/FTA Profile/OR"
-msgstr ""
+msgstr "FTA/FTA profil/ILI"
 
 #: ../models/raaml/Methods.rst:197
 msgid "FTA/FTA Profile/SEQ"
-msgstr ""
+msgstr "FTA/FTA profil/SPROVOĐENJE_SLIJDA"
 
 #: ../models/raaml/Methods.rst:203
 msgid "FTA/FTA Profile/Top Event"
-msgstr ""
+msgstr "FTA/FTA profil/Glavni događaj"
 
 #: ../models/raaml/Methods.rst:209
 msgid "FTA/FTA Profile/Transfer In"
-msgstr ""
+msgstr "FTA/FTA profil/Prijenos u"
 
 #: ../models/raaml/Methods.rst:215
 msgid "FTA/FTA Profile/Transfer Out"
-msgstr ""
+msgstr "FTA/FTA profil/Prijenos iz"
 
 #: ../models/raaml/Methods.rst:221
 msgid "FTA/FTA Profile/Tree"
-msgstr ""
+msgstr "FTA/FTA profil/Stablo"
 
 #: ../models/raaml/Methods.rst:227
 msgid "FTA/FTA Profile/XOR"
-msgstr ""
+msgstr "FTA/FTA profil/XILI"
 
 #: ../models/raaml/Methods.rst:233
 msgid "FTA/FTA Profile/Zero Event"
-msgstr ""
+msgstr "FTA/FTA profil/Nula događaj"
 
 #: ../models/raaml/Methods.rst:239
 msgid "FTA/FTA"
-msgstr ""
+msgstr "FTA/FTA"
 
 #: ../models/sysml.md:1
 msgid "Systems Modeling Language"
@@ -1756,6 +1760,8 @@ msgstr "Jezici modeliranja sustava"
 #: ../models/sysml.md:3
 msgid "Gaphor implements part of the [SysML 1.6](https://www.omg.org/spec/SysML) specification."
 msgstr ""
+"Gaphor implementira dio [SysML 1.6](https://www.omg.org/spec/SysML) "
+"specifikacije."
 
 #: ../models/sysml/Activities.rst:2
 msgid "Activities"
@@ -1789,7 +1795,7 @@ msgstr ""
 
 #: ../models/sysml/Blocks.rst:20
 msgid "Connector Ends"
-msgstr ""
+msgstr "Kraj spojnice"
 
 #: ../models/sysml/Blocks.rst:26
 msgid "Properties"
@@ -1801,11 +1807,11 @@ msgstr "Staze svojstava"
 
 #: ../models/sysml/Blocks.rst:38
 msgid "Property-Specific Types"
-msgstr ""
+msgstr "Vrste svojstava"
 
 #: ../models/sysml/Blocks.rst:44
 msgid "Property Strings"
-msgstr ""
+msgstr "Izrazi svojstava"
 
 #: ../models/sysml/Blocks.rst:50
 msgid "Value Types"
@@ -1841,7 +1847,7 @@ msgstr ""
 
 #: ../models/sysml/PortsAndFlows.rst:23
 msgid "Provided and Required Features"
-msgstr ""
+msgstr "Postojeće i potrebne značajke"
 
 #: ../models/sysml/PortsAndFlows.rst:29
 msgid "Item Flow"
@@ -1871,7 +1877,7 @@ msgstr ""
 
 #: ../models/uml/01._Common_Structure.rst:2
 msgid "01. Common Structure"
-msgstr ""
+msgstr "01. Uobičajena struktura"
 
 #: ../models/uml/01._Common_Structure.rst:5
 msgid "1. Root"
@@ -1891,7 +1897,7 @@ msgstr "3. Imenski prostori"
 
 #: ../models/uml/01._Common_Structure.rst:22
 msgid "4. Types and Multiplicity"
-msgstr ""
+msgstr "4. Vrste i mnogostrukost"
 
 #: ../models/uml/01._Common_Structure.rst:28
 msgid "5. Constraints"
@@ -3380,7 +3386,7 @@ msgstr "``datatype``"
 
 #: ../style_sheets.md:307
 msgid "Primitive"
-msgstr "Izvorni"
+msgstr "Bez strukture"
 
 #: ../style_sheets.md:308
 msgid "Derive Requirement"
@@ -3396,7 +3402,7 @@ msgstr "RAAML"
 
 #: ../style_sheets.md:309
 msgid "FTA"
-msgstr "FTA (analiza stabla kvarova)"
+msgstr "FTA (analiza kvarova)"
 
 #: ../style_sheets.md:309
 msgid "any AND/OR/… Gate"
