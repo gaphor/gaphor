@@ -1,4 +1,4 @@
-# C4 Model
+# The C4 Model
 
 The [C4 model](https://c4model.com/) is a simple visual language to describe the static structure of a software system.
 
