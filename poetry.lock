@@ -1153,21 +1153,21 @@ files = [
 
 [[package]]
 name = "myst-nb"
-version = "0.17.1"
+version = "0.17.2"
 description = "A Jupyter Notebook Sphinx reader built on top of the MyST markdown parser."
 category = "main"
 optional = true
 python-versions = ">=3.7"
 files = [
-    {file = "myst-nb-0.17.1.tar.gz", hash = "sha256:14df725f3e00cb5efef4f863bf0c273490c8c662dfee39ed8a7b374bf2561933"},
-    {file = "myst_nb-0.17.1-py3-none-any.whl", hash = "sha256:c268d11aa4936b4bdd18b3b2cd5baa14fdb80c80d2983c02329ade52010f6260"},
+    {file = "myst-nb-0.17.2.tar.gz", hash = "sha256:0f61386515fab07c73646adca97fff2f69f41e90d313a260217c5bbe419d858b"},
+    {file = "myst_nb-0.17.2-py3-none-any.whl", hash = "sha256:132ca4d0f5c308fdd4b6fdaba077712e28e119ccdafd04d6e41b51aac5483494"},
 ]
 
 [package.dependencies]
 importlib_metadata = "*"
 ipykernel = "*"
 ipython = "*"
-jupyter-cache = ">=0.5.0,<0.6.0"
+jupyter-cache = ">=0.5,<0.7"
 myst-parser = ">=0.18.0,<0.19.0"
 nbclient = "*"
 nbformat = ">=5.0,<6.0"
@@ -1177,8 +1177,8 @@ typing-extensions = "*"
 
 [package.extras]
 code-style = ["pre-commit"]
-rtd = ["alabaster", "altair", "bokeh", "coconut (>=1.4.3,<1.5.0)", "ipykernel (>=5.5,<6.0)", "ipywidgets", "jupytext (>=1.11.2,<1.12.0)", "matplotlib", "numpy", "pandas", "plotly", "sphinx-book-theme (>=0.3.0,<0.4.0)", "sphinx-copybutton", "sphinx-design (>=0.1.0,<0.2.0)", "sphinxcontrib-bibtex", "sympy"]
-testing = ["beautifulsoup4", "coverage (>=6.4,<7.0)", "ipykernel (>=5.5,<6.0)", "ipython (!=8.1.0,<8.5)", "ipywidgets (>=8)", "jupytext (>=1.11.2,<1.12.0)", "matplotlib (>=3.5.3,<3.6)", "nbdime", "numpy", "pandas", "pytest (>=7.1,<8.0)", "pytest-cov (>=3.0,<4.0)", "pytest-param-files (>=0.3.3,<0.4.0)", "pytest-regressions", "sympy (>=1.10.1)"]
+rtd = ["alabaster", "altair", "bokeh", "coconut (>=1.4.3,<2.3.0)", "ipykernel (>=5.5,<6.0)", "ipywidgets", "jupytext (>=1.11.2,<1.12.0)", "matplotlib", "numpy", "pandas", "plotly", "sphinx-book-theme (>=0.3.0,<0.4.0)", "sphinx-copybutton", "sphinx-design (>=0.4.0,<0.5.0)", "sphinxcontrib-bibtex", "sympy"]
+testing = ["beautifulsoup4", "coverage (>=6.4,<8.0)", "ipykernel (>=5.5,<6.0)", "ipython (!=8.1.0,<8.5)", "ipywidgets (>=8)", "jupytext (>=1.11.2,<1.12.0)", "matplotlib (>=3.5.3,<3.6)", "nbdime", "numpy", "pandas", "pytest (>=7.1,<8.0)", "pytest-cov (>=3,<5)", "pytest-param-files (>=0.3.3,<0.4.0)", "pytest-regressions", "sympy (>=1.10.1)"]
 
 [[package]]
 name = "myst-parser"
