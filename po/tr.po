@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-04-08 06:09+0000\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"PO-Revision-Date: 2023-04-22 13:40+0000\n"
+"Last-Translator: Eren İnce <erenince@proton.me>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/gaphor/gaphor/tr/"
+">\n"
 "Language: tr\n"
-"Language-Team: Turkish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/tr/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.18-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -404,7 +405,6 @@ msgid "values"
 msgstr "değerler"
 
 #: gaphor/SysML/blocks/block.py:145
-#, fuzzy
 msgid "operations"
 msgstr "İşlemler"
 
@@ -776,8 +776,8 @@ msgstr ""
 "  • <tt>+ attr: int | bool</tt> (public, union türü)\n"
 "  • <tt># /attr: int # bir not</tt> (protected, derived, not ile)\n"
 "\n"
-"Düzenlemek için <b>Enter</b>ʼa basın\n"
-"Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
+"Düzenlemek için <b>Enter</b>ʼa basın, Ögeleri kaldırmak için <b>Geri "
+"Sil</b>/<b>Sil</b>ʼe basın.\n"
 "Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
 #: gaphor/UML/classes/classespropertypages.py:308
@@ -900,8 +900,8 @@ msgstr ""
 "  • <tt>1..2</tt>\n"
 "  • <tt>- [1..2]</tt>\n"
 "\n"
-"Düzenlemek için <b>Enter</b>ʼa basın\n"
-"Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
+"Düzenlemek için <b>Enter</b>ʼa basın, Ögeleri kaldırmak için <b>Geri "
+"Sil</b>/<b>Sil</b>ʼe basın.\n"
 "Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
 #: gaphor/UML/classes/propertypages.ui:100
@@ -963,8 +963,8 @@ msgstr ""
 "  • <tt>+ attr: int | bool</tt> (public, union türü)\n"
 "  • <tt># /attr: int # bir not</tt> (protected, derived, not ile)\n"
 "\n"
-"Düzenlemek için <b>Enter</b>ʼa basın\n"
-"Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
+"Düzenlemek için <b>Enter</b>ʼa basın, Ögeleri kaldırmak için <b>Geri "
+"Sil</b>/<b>Sil</b>ʼe basın.\n"
 "Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
 #: gaphor/UML/classes/propertypages.ui:455
@@ -1006,8 +1006,8 @@ msgstr ""
 "  • <tt>+ call(a: int[*], b: str): bool</tt> (public, parametreler)\n"
 "  • <tt># call(a: int, b: str) # bir not</tt> (protected, not ile)\n"
 "\n"
-"Düzenlemek için <b>Enter</b>ʼa basın\n"
-"Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
+"Düzenlemek için <b>Enter</b>ʼa basın, Ögeleri kaldırmak için <b>Geri "
+"Sil</b>/<b>Sil</b>ʼe basın.\n"
 "Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
 #: gaphor/UML/classes/propertypages.ui:660
@@ -1029,13 +1029,12 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
-"UML sözdizimine göre numaralandırma sabit değerleri ekleyin ve "
-"düzenleyin.\n"
+"UML sözdizimine göre numaralandırma sabit değerleri ekleyin ve düzenleyin.\n"
 "\n"
 "  • <tt>enum</tt>\n"
 "\n"
-"Düzenlemek için <b>Enter</b>ʼa basın\n"
-"Ögeleri kaldırmak için <b>Geri Sil</b>/<b>Sil</b>ʼe basın.\n"
+"Düzenlemek için <b>Enter</b>ʼa basın, Ögeleri kaldırmak için <b>Geri "
+"Sil</b>/<b>Sil</b>ʼe basın.\n"
 "Öğeleri yukarı veya aşağı taşımak için <b>-</b>/<b>=</b> kullanın."
 
 #: gaphor/UML/classes/propertypages.ui:768
@@ -2159,13 +2158,12 @@ msgid "Automatically remove elements no longer in use in any diagram."
 msgstr "Herhangi bir diyagramda artık kullanılmayan öğeleri kendiliğinden kaldır."
 
 #: gaphor/ui/elementeditor.ui:290
-#, fuzzy
 msgid "Language"
-msgstr "sonAd"
+msgstr "Dil"
 
 #: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
 msgid "The (spoken) language used in this model."
-msgstr ""
+msgstr "Resmi olmayan (konuşulan/sokak dili) bu modelde kullanılmıştır."
 
 #: gaphor/ui/elementeditor.ui:308
 msgid "Style Sheet"
@@ -2824,4 +2822,3 @@ msgstr "“{name}” ilişkisini güncelle"
 #~ " Devletleri ve/veya diğer ülkelerde \n"
 #~ "Object Management Group, Inc.'in tescilli ticari markaları \n"
 #~ "veya ticari markalarıdır.\n"
-
