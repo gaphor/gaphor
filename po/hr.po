@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-04-18 11:28+0000\n"
+"PO-Revision-Date: 2023-04-22 13:40+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 4.18-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -155,7 +155,7 @@ msgstr "Sklopka NE"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
-msgstr "NIJE"
+msgstr "NE"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
@@ -453,7 +453,7 @@ msgstr "Nabrajanje"
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 #: gaphor/UML/classes/classestoolbox.py:152
 msgid "Primitive"
-msgstr "Bez strukture"
+msgstr "Osnovni element"
 
 #: gaphor/SysML/blocks/proxyport.py:35
 msgid "proxy"
@@ -815,7 +815,7 @@ msgstr "Vrsta podataka"
 
 #: gaphor/UML/classes/datatype.py:56
 msgid "primitive"
-msgstr "bez strukture"
+msgstr "osnovni element"
 
 #: gaphor/UML/classes/datatype.py:58 gaphor/UML/classes/enumeration.py:73
 msgid "valueType"
@@ -1215,7 +1215,7 @@ msgstr "Sjedinjavanje"
 
 #: gaphor/UML/states/statestoolbox.py:154
 msgid "Fork Pseudostate"
-msgstr "Račvanje"
+msgstr "Pseudostanje račvanja"
 
 #: gaphor/UML/states/statestoolbox.py:166
 msgid "Junction Pseudostate"
@@ -1223,7 +1223,7 @@ msgstr "Razdvajanje"
 
 #: gaphor/UML/states/statestoolbox.py:178
 msgid "Choice Pseudostate"
-msgstr "Izbor"
+msgstr "Izbor pseudostanja"
 
 #: gaphor/UML/states/statestoolbox.py:190
 msgid "Entry Point Pseudostate"
@@ -1304,7 +1304,7 @@ msgstr "Metapodaci dijagrama"
 
 #: gaphor/diagram/presentation.py:48
 msgid "(from {namespace})"
-msgstr "(od {namespace})"
+msgstr "(iz {namespace})"
 
 #: gaphor/diagram/propertypages.ui:57
 msgid "Style"
@@ -1582,7 +1582,7 @@ msgstr "Operacijska situacija 1"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Context of UCAs"
-msgstr "Sadržaj UCA-ova (nesigurnih kontrolnih radnji)"
+msgstr "Sadržaj UCA-ova"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Situational Context"
@@ -1628,7 +1628,7 @@ msgstr "Struktura"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Context"
-msgstr "Sadržaj značajke"
+msgstr "Kontekst"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Operator"
@@ -1648,7 +1648,7 @@ msgstr "Preduvjeti za sudionike"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
-msgstr "Značajka potrebe korisnika"
+msgstr "Potrebe korisnika"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Structure"
@@ -1664,7 +1664,7 @@ msgstr "senzor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "controller"
-msgstr "kontrolor"
+msgstr "kontroler"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Boundary"
@@ -2098,10 +2098,10 @@ msgid ""
 "does not get selected, click on the diagram once (so it's focused) and "
 "then hit the shortcut key."
 msgstr ""
-"<b>Savjet:</b> većina elemenata u kutiji alata ima tipkovne prečace (npr."
-" „c” za razred). Biranje alata radi samo za dijagrame. Ako se alat ne "
-"odabere, pritisni jednom na dijagram (tako da postane aktivan), a zatim "
-"pritisni tipku prečaca."
+"<b>Savjet:</b> većina elemenata u kutiji alata ima tipkovne prečace (npr. „c”"
+" za klasu). Biranje alata radi samo u dijagramu. Ako se alat ne odabere, "
+"pritisni jednom na dijagram (tako da postane aktivan), a zatim pritisni "
+"tipku prečaca."
 
 #: gaphor/ui/elementeditor.ui:68
 msgid ""
