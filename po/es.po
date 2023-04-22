@@ -2180,11 +2180,11 @@ msgstr "Hoja de estilo"
 #: gaphor/ui/elementeditor.ui:335
 msgid ""
 "🔗 <a "
-"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
+"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
 "🔗 <a "
-"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Hojas "
+"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Hojas "
 "de estilo en Gaphor</a>"
 
 #: gaphor/ui/elementeditor.ui:349

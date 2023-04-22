@@ -18,7 +18,7 @@
     </screenshot>
   </screenshots>
   <url type="homepage">https://gaphor.org</url>
-  <url type="help">https://gaphor.readthedocs.io</url>
+  <url type="help">https://docs.gaphor.org</url>
   <description>
     <p>Gaphor is a simple modeling tool written in Python. It is Free and Open Source software
         for creating software and system architecture and designs. It is aimed at beginning modelers.

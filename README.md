@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml/badge.svg)](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml?query=branch%3Amain)
 [![Hypothesis Tests](https://github.com/gaphor/gaphor/actions/workflows/hypothesis-test.yml/badge.svg)](https://github.com/gaphor/gaphor/actions/workflows/hypothesis-test.yml?query=branch%3Amain)
-[![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)](https://gaphor.readthedocs.io)
+[![Docs build state](https://readthedocs.org/projects/gaphor/badge/?version=latest)](https://docs.gaphor.org)
 [![PyPI](https://img.shields.io/pypi/v/gaphor.svg)](https://pypi.org/project/gaphor)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/gaphor)](https://pypistats.org/packages/gaphor)
 [![Matrix](https://img.shields.io/badge/chat-on%20Matrix-success)](https://app.element.io/#/room/#gaphor_Lobby:gitter.im)
@@ -50,7 +50,7 @@ Gaphor is a GUI application. It has a modern [GTK](https://gtk.org)-based interf
 [Cairo](https://www.cairographics.org/) for consistent rendering.
 
 Gaphor is a library.
-You can use it from [scripts and Jupyter notebooks](https://gaphor.readthedocs.io/en/latest/scripting.html)
+You can use it from [scripts and Jupyter notebooks](https://docs.gaphor.org/en/latest/scripting.html)
 and interact with models programmatically.
 
 Non-Goals:
@@ -74,7 +74,7 @@ All releases are available on
 [GitHub](https://github.com/gaphor/gaphor/releases/).
 
 If you want to start developing on Gaphor, have a look at the [Installation
-section of our Tech docs](https://gaphor.readthedocs.io/en/latest/).
+section of our Tech docs](https://docs.gaphor.org/en/latest/).
 
 ## 🔦 Usage
 

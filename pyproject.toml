@@ -11,7 +11,7 @@ readme = "README.md"
 
 homepage = "https://gaphor.org/"
 repository = "https://github.com/gaphor/gaphor"
-documentation = "https://gaphor.readthedocs.io/"
+documentation = "https://docs.gaphor.org/"
 
 keywords = ["gtk+", "diagram", "UML", "MBSE", "gaphor", "modeling"]
 

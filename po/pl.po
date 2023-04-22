@@ -2139,11 +2139,11 @@ msgstr "Arkusz stylów"
 #: gaphor/ui/elementeditor.ui:335
 msgid ""
 "🔗 <a "
-"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
+"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
 "🔗 <a "
-"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Arkusze"
+"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Arkusze"
 " stylów w Gaphorze</a>"
 
 #: gaphor/ui/elementeditor.ui:349

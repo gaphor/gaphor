@@ -2135,11 +2135,11 @@ msgstr "Tyylisivu"
 #: gaphor/ui/elementeditor.ui:335
 msgid ""
 "🔗 <a "
-"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
+"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
 "🔗 <a "
-"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Tyylisivut"
+"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Tyylisivut"
 " Gaphorissa</a>"
 
 #: gaphor/ui/elementeditor.ui:349

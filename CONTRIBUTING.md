@@ -75,9 +75,9 @@ For something that is bigger than a one or two line fix:
   - Select + New codespace at the bottom on the pane.
 
 Alternatively, you can also setup a local development environment:
-  - Linux: https://gaphor.readthedocs.io/en/latest/linux.html
-  - MacOS: https://gaphor.readthedocs.io/en/latest/macos.html
-  - Windows: https://gaphor.readthedocs.io/en/latest/windows.html
+  - Linux: https://docs.gaphor.org/en/latest/linux.html
+  - MacOS: https://docs.gaphor.org/en/latest/macos.html
+  - Windows: https://docs.gaphor.org/en/latest/windows.html
 3. Add tests for your changes, run the tests with `pytest`.
 4. Do the changes in your fork.
 5. If you like the change and think the project could use it:

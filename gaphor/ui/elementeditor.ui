@@ -332,7 +332,7 @@
                     </child>
                     <child>
                       <object class="GtkLabel">
-                        <property name="label" translatable="yes">🔗 &lt;a href=&quot;https://gaphor.readthedocs.io/en/latest/style_sheets.html&quot;&gt;Style sheets in Gaphor&lt;/a&gt;</property>
+                        <property name="label" translatable="yes">🔗 &lt;a href=&quot;https://docs.gaphor.org/en/latest/style_sheets.html&quot;&gt;Style sheets in Gaphor&lt;/a&gt;</property>
                         <property name="use_markup">1</property>
                         <property name="wrap">1</property>
                         <property name="xalign">0</property>

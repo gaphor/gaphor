@@ -2211,11 +2211,11 @@ msgstr "스타일시트"
 #: gaphor/ui/elementeditor.ui:335
 msgid ""
 "🔗 <a "
-"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">Style "
+"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
 "🔗 <a "
-"href=\"https://gaphor.readthedocs.io/en/latest/style_sheets.html\">가포 스타일"
+"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">가포 스타일"
 " 시트</a>"
 
 #: gaphor/ui/elementeditor.ui:349
