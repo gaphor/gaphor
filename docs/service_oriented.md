@@ -103,7 +103,7 @@ implement the `gaphor.ui.abc.UIComponent` interface:
    :members:
 ```
 
-Typically a service and UI component would like to present some actions
+Typically, a service and UI component would like to present some actions
 to the user, by means of menu entries. Every service and UI component
 can advertise actions by implementing the `gaphor.abc.ActionProvider`
 interface:
@@ -116,21 +116,18 @@ interface:
 ## Example plugin
 
 A small example is provided by means of the Hello world plugin. Take a look at
-the files at [GitHub](https://github.com/gaphor/gaphor.plugins.helloworld). The
+the files at [GitHub](https://github.com/gaphor/gaphor_plugin_helloworld). The
 example plugin needs to be updated to support versions 1.0.0 and later of Gaphor.
 
 The
-[setup.py](https://github.com/gaphor/gaphor.plugins.helloworld/blob/master/setup.py)
-file contains an entry point:
+[pyproject.toml](https://github.com/gaphor/gaphor_plugin_helloworld/blob/main/pyproject.toml)
+file contains a plugin:
 
-    entry_points = {
-        'gaphor.services': [
-            'helloworld = gaphor.plugins.helloworld:HelloWorldPlugin',
-        ]
-    }
+    [tool.poetry.plugins."gaphor.services"]
+    "helloworld" = "gaphor_helloworld_plugin:HelloWorldPlugin"
 
 This refers to the class `HelloWorldPlugin` in package/module
-[gaphor.plugins.helloworld](https://github.com/gaphor/gaphor.plugins.helloworld/blob/master/gaphor/plugins/helloworld/__init__.py).
+[gaphor_plugins_helloworld](https://github.com/gaphor/gaphor_plugin_helloworld/blob/main/gaphor_helloworld_plugin/__init__.py).
 
 Here is a stripped version of the hello world plugin:
 
