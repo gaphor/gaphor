@@ -1,7 +1,7 @@
 # Gaphor on Windows
 
-Gaphor can be installed as with our our installer.
-Check out the [Gaphor download page](https://gaphor.org/download.html#windows)
+Gaphor can be installed as with our installer.
+Check out the [Gaphor download page](https://gaphor.org/download#windows)
 for details.
 
 Older releases are available from [GitHub](https://github.com/gaphor/gaphor/releases).

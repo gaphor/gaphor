@@ -753,7 +753,7 @@ msgid "Gaphor on Linux"
 msgstr ""
 
 #: ../linux.md:3
-msgid "Gaphor can be installed as Flatpak and AppImage on Linux, some distributions provide packages. Check out the [Gaphor download page](https://gaphor.org/download.html#linux) for details."
+msgid "Gaphor can be installed as Flatpak and AppImage on Linux, some distributions provide packages. Check out the [Gaphor download page](https://gaphor.org/download#linux) for details."
 msgstr ""
 
 #: ../linux.md:7
@@ -913,7 +913,7 @@ msgid "Gaphor on macOS"
 msgstr ""
 
 #: ../macos.md:3
-msgid "The latest release of Gaphor can be downloaded from the [Gaphor download page](https://gaphor.org/download.html#macos). Gaphor can also be installed as a [Homebrew cask](https://formulae.brew.sh/cask/gaphor)."
+msgid "The latest release of Gaphor can be downloaded from the [Gaphor download page](https://gaphor.org/download#macos). Gaphor can also be installed as a [Homebrew cask](https://formulae.brew.sh/cask/gaphor)."
 msgstr ""
 
 #: ../macos.md:12
@@ -3486,7 +3486,7 @@ msgid "Gaphor on Windows"
 msgstr ""
 
 #: ../windows.md:3
-msgid "Gaphor can be installed as with our our installer. Check out the [Gaphor download page](https://gaphor.org/download.html#windows) for details."
+msgid "Gaphor can be installed as with our our installer. Check out the [Gaphor download page](https://gaphor.org/download#windows) for details."
 msgstr ""
 
 #: ../windows.md:13

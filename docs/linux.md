@@ -1,7 +1,7 @@
 # Gaphor on Linux
 
 Gaphor can be installed as Flatpak and AppImage on Linux, some distributions provide
-packages. Check out the [Gaphor download page](https://gaphor.org/download.html#linux)
+packages. Check out the [Gaphor download page](https://gaphor.org/download/#linux)
 for details.
 
 Older releases are available from [GitHub](https://github.com/gaphor/gaphor/releases).
