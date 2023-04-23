@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-04-22 13:40+0000\n"
+"PO-Revision-Date: 2023-04-23 14:20+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hr/>\n"
@@ -2617,7 +2617,7 @@ msgstr "Aktualiziraj element vrste {type}"
 
 #: gaphor/ui/modelmerge/organize.py:316
 msgid "Add relation “{name}” to “{ref_name}”"
-msgstr "Dodaj vezu „{name}” s „{ref_name}”"
+msgstr "Dodaj „{ref_name}” vezu „{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:318
 msgid "Remove relation “{name}” to “{ref_name}”"
