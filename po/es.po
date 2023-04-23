@@ -4,16 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-03-29 21:40+0000\n"
-"Last-Translator: Óscar Fernández Díaz "
-"<oscfdezdz@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2023-04-23 14:20+0000\n"
+"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
+">\n"
 "Language: es\n"
-"Language-Team: Spanish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/es/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.18-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -401,7 +401,6 @@ msgid "values"
 msgstr "valores"
 
 #: gaphor/SysML/blocks/block.py:145
-#, fuzzy
 msgid "operations"
 msgstr "Operaciones"
 
@@ -2165,13 +2164,12 @@ msgstr ""
 "diagrama."
 
 #: gaphor/ui/elementeditor.ui:290
-#, fuzzy
 msgid "Language"
-msgstr "apellidos"
+msgstr "Idioma"
 
 #: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
 msgid "The (spoken) language used in this model."
-msgstr ""
+msgstr "El lenguaje (hablado) utilizado en este modelo."
 
 #: gaphor/ui/elementeditor.ui:308
 msgid "Style Sheet"
@@ -3208,4 +3206,3 @@ msgstr "Actualizar relación “{name}”"
 #~ "Group, Inc. en los Estados Unidos\n"
 #~ ""
 #~ "y/o en otros países.\n"
-
