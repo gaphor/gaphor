@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-04-24 01:34+0000\n"
+"PO-Revision-Date: 2023-04-26 08:50+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gaphor/gaphor/de/>"
 "\n"
@@ -1209,43 +1209,36 @@ msgid "Transition"
 msgstr "Überleitung"
 
 #: gaphor/UML/states/statestoolbox.py:118
-#, fuzzy
 msgid "Shallow History Pseudostate"
-msgstr "Historischer Pseudozustand"
+msgstr "Pseudozustand flacher Geschichte"
 
 #: gaphor/UML/states/statestoolbox.py:130
-#, fuzzy
 msgid "Deep History Pseudostate"
-msgstr "Historischer Pseudozustand"
+msgstr "Pseudozustand tiefer Geschichte"
 
 #: gaphor/UML/states/statestoolbox.py:142
-#, fuzzy
 msgid "Join Pseudostate"
-msgstr "Anfänglicher Pseudozustand"
+msgstr "Pseudozustand Beitritt"
 
 #: gaphor/UML/states/statestoolbox.py:154
-#, fuzzy
 msgid "Fork Pseudostate"
-msgstr "Historischer Pseudozustand"
+msgstr "Pseudozustand Gabelung"
 
 #: gaphor/UML/states/statestoolbox.py:166
-#, fuzzy
 msgid "Junction Pseudostate"
-msgstr "Anfänglicher Pseudozustand"
+msgstr "Pseudozustand Knotenpunkt"
 
 #: gaphor/UML/states/statestoolbox.py:178
 msgid "Choice Pseudostate"
-msgstr "Auswahl Pseudozustand"
+msgstr "Pseudozustand Auswahl"
 
 #: gaphor/UML/states/statestoolbox.py:190
-#, fuzzy
 msgid "Entry Point Pseudostate"
-msgstr "Anfänglicher Pseudozustand"
+msgstr "Pseudozustand Einstiegspunkt"
 
 #: gaphor/UML/states/statestoolbox.py:202
-#, fuzzy
 msgid "Exit Point Pseudostate"
-msgstr "Anfänglicher Pseudozustand"
+msgstr "Pseudozustand Austrittspunkt"
 
 #: gaphor/UML/states/statestoolbox.py:214
 msgid "Terminate Pseudostate"
@@ -1677,7 +1670,7 @@ msgstr "Sensor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "sensor"
-msgstr "sensor"
+msgstr "Sensor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "controller"
@@ -1785,7 +1778,7 @@ msgstr "DC Motor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "IR Transceiver"
-msgstr "IR Transceiver"
+msgstr "IR Empfangsgerät"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ecu"
@@ -1797,7 +1790,7 @@ msgstr "dc Motor"
 
 #: gaphor/templates/sysml.gaphor
 msgid "ir Transceiver"
-msgstr "ir Transceiver"
+msgstr "ir Empfangsgerät"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detect Obstacle"
