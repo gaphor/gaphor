@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-04-23 14:20+0000\n"
+"PO-Revision-Date: 2023-04-27 21:47+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -801,7 +801,7 @@ msgstr ""
 
 #: ../getting_started.md:141
 msgid "Model Preferences"
-msgstr ""
+msgstr "Postavke modela"
 
 #: ../getting_started.md:143
 msgid "The Property Editor also contains model preferences: Click the ![document-properties-symbolic](images/document-properties-symbolic.svg) button. Here you can set a few model related settings and edit the [style sheet](style_sheets)."
