@@ -8,20 +8,17 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-04-27 21:47+0000\n"
-"Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
-"Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/"
-"docs-gaphor-org/nl/>\n"
-"Language: nl\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
-msgstr "Verbindingsprotocol"
+msgstr ""
 
 #: ../connect.md:3
 msgid "In Gaphor, if a connection is made on a diagram between an element and a relationship, the connection is also made at semantic level (the model). From a GUI point of view, a button release event is what kicks of the decision whether the connection is allowed."
@@ -81,7 +78,7 @@ msgstr ""
 
 #: ../design_principles.md:15
 msgid "Guidance"
-msgstr "Begeleiding"
+msgstr ""
 
 #: ../design_principles.md:17
 msgid "To help users, Gaphor should provide guidance where it can."
@@ -145,7 +142,7 @@ msgstr ""
 
 #: ../design_principles.md:63
 msgid "Continuity"
-msgstr "Continuïteit"
+msgstr ""
 
 #: ../design_principles.md:65
 msgid "A model that is created should be usable in the future. Gaphor does acknowledge that. We care about compatibility."
@@ -161,7 +158,7 @@ msgstr ""
 
 #: ../design_principles.md:73
 msgid "Multi-platform"
-msgstr "Multi-platform"
+msgstr ""
 
 #: ../design_principles.md:75
 msgid "We put a lot of effort in making Gaphor run on all major platforms: Windows, macOS, and Linux. Having Gaphor available on all platforms is essential if the model needs to be shared. It would be awful if you need to run one specific operating system in order to open a model."
@@ -377,11 +374,11 @@ msgstr ""
 
 #: ../framework.md:1
 msgid "Framework"
-msgstr "Framework"
+msgstr ""
 
 #: ../framework.md:3
 msgid "Overview"
-msgstr "Overzicht"
+msgstr ""
 
 #: ../framework.md:5
 msgid "Gaphor is built in a light, service oriented fashion. The application is split in a series of services, such as a file, event, and undo managers. Those services are loaded based on entry points defined in the `pyproject.toml` file. To learn more about the architecture, please see the description about the [Service Oriented Architecture](service_oriented.md)."
@@ -397,7 +394,7 @@ msgstr ""
 
 #: ../framework.md:23
 msgid "Transactional"
-msgstr "Transactioneel"
+msgstr ""
 
 #: ../framework.md:25
 msgid "Gaphor is [transactional](transaction.md), which means it keeps track of the functions it performs as a series of transactions. The transactions work by sending an event when a transaction starts and sending another when a transaction ends. This allows, for example, the undo manager to keep a running log of the previous transactions so that a transaction can be reversed if the undo button is pressed."
@@ -571,7 +568,7 @@ msgstr ""
 #: ../getting_started.md:36
 #: ../getting_started.md:80
 msgid "Diagrams"
-msgstr "Diagrammen"
+msgstr ""
 
 #: ../getting_started.md:37
 #: ../getting_started.md:130
@@ -600,7 +597,7 @@ msgstr ""
 
 #: ../getting_started.md:67
 msgid "Toolbox"
-msgstr "Gereedschapskist"
+msgstr ""
 
 #: ../getting_started.md:69
 msgid "The toolbox is used to add new items to a diagram. Select the element you want to add by clicking on it. When you click on the diagram, the selected element is created. The arrow is selected again, so the element can be manipulated."
@@ -617,11 +614,11 @@ msgstr ""
 #: ../getting_started.md:86
 #: ../getting_started.md:93
 msgid "Elements"
-msgstr "Elementen"
+msgstr ""
 
 #: ../getting_started.md:87
 msgid "Relationships"
-msgstr "Relaties"
+msgstr ""
 
 #: ../getting_started.md:89
 msgid "Multiple diagrams can be opened at once: they are shown in tabs. Tabs can be closed by pressing <kbd>Ctrl</kbd>+<kbd>w</kbd> or left-clicking on the x in the diagram tab."
@@ -641,7 +638,7 @@ msgstr ""
 
 #: ../getting_started.md:105
 msgid "Relations"
-msgstr "Relaties"
+msgstr ""
 
 #: ../getting_started.md:107
 msgid "Relations are line-like elements that form relationships between elements in the diagram. Each end of a relation is in one of two states:"
@@ -701,11 +698,11 @@ msgstr ""
 
 #: ../index.rst:36
 msgid "Features"
-msgstr "Functies"
+msgstr ""
 
 #: ../index.rst:46
 msgid "Installation"
-msgstr "Installatie"
+msgstr ""
 
 #: ../index.rst:55
 msgid "Modeling languages"
@@ -713,11 +710,11 @@ msgstr ""
 
 #: ../index.rst:65
 msgid "Concepts"
-msgstr "Concepten"
+msgstr ""
 
 #: ../index.rst:75
 msgid "Internals"
-msgstr "Intern"
+msgstr ""
 
 #: ../index.rst:2
 msgid "About Gaphor"
@@ -1109,7 +1106,7 @@ msgstr ""
 
 #: ../modeling_language.md:51
 msgid "Connectors"
-msgstr "Connectoren"
+msgstr ""
 
 #: ../modeling_language.md:53
 msgid "Connectors are used to connect one element to another."
@@ -1129,7 +1126,7 @@ msgstr ""
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:0
 msgid "Parameters"
-msgstr "Parameters"
+msgstr ""
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:5
 msgid "connecting item"
@@ -1229,7 +1226,7 @@ msgstr ""
 
 #: ../modeling_language.md:110
 msgid "Grouping"
-msgstr "Groepering"
+msgstr ""
 
 #: ../modeling_language.md:112
 msgid "Grouping is done by dragging one item on top of another, in a diagram or in the tree view."
@@ -1249,7 +1246,7 @@ msgstr ""
 
 #: ../modeling_language.md:132
 msgid "Dropping"
-msgstr "Neerzetten"
+msgstr ""
 
 #: ../modeling_language.md:134
 msgid "Dropping is performed by dragging an element from the tree view and drop it on a diagram. This is an easy way to extend a diagram with already existing model elements."
@@ -1364,7 +1361,7 @@ msgstr ""
 #: ../models/sysml.md:9
 #: ../models/uml.md:15
 msgid "Packages"
-msgstr "Pakketten"
+msgstr ""
 
 #: ../models/raaml.md:1
 msgid "Risk Analysis and Assessment Modeling Language"
@@ -1376,7 +1373,7 @@ msgstr ""
 
 #: ../models/raaml/Core.rst:2
 msgid "Core"
-msgstr "Kern"
+msgstr ""
 
 #: ../models/raaml/Core.rst:5
 msgid "Core Library/Any Situation"
@@ -1400,7 +1397,7 @@ msgstr ""
 
 #: ../models/raaml/General.rst:2
 msgid "General"
-msgstr "Algemeen"
+msgstr ""
 
 #: ../models/raaml/General.rst:5
 msgid "Basic Event"
@@ -1492,7 +1489,7 @@ msgstr ""
 
 #: ../models/raaml/Methods.rst:2
 msgid "Methods"
-msgstr "Methoden"
+msgstr ""
 
 #: ../models/raaml/Methods.rst:5
 msgid "FTA/FTA Library/Events/Basic Event"
@@ -1664,11 +1661,11 @@ msgstr ""
 
 #: ../models/sysml/Activities.rst:2
 msgid "Activities"
-msgstr "Activiteiten"
+msgstr ""
 
 #: ../models/sysml/Allocations.rst:2
 msgid "Allocations"
-msgstr "Toewijzingen"
+msgstr ""
 
 #: ../models/sysml/Allocations.rst:5
 msgid "AllocatedActivityPartition"
@@ -1676,13 +1673,13 @@ msgstr ""
 
 #: ../models/sysml/Allocations.rst:11
 msgid "Allocation"
-msgstr "Toewijzing"
+msgstr ""
 
 #: ../models/sysml/Blocks.rst:2
 #: ../style_sheets.md:306
 #: ../style_sheets.md:307
 msgid "Blocks"
-msgstr "Blokken"
+msgstr ""
 
 #: ../models/sysml/Blocks.rst:8
 msgid "Adjunt and Classifier Behavior Properties"
@@ -1698,7 +1695,7 @@ msgstr ""
 
 #: ../models/sysml/Blocks.rst:26
 msgid "Properties"
-msgstr "Eigenschappen"
+msgstr ""
 
 #: ../models/sysml/Blocks.rst:32
 msgid "Property Paths"
@@ -1722,7 +1719,7 @@ msgstr ""
 
 #: ../models/sysml/Libraries.rst:2
 msgid "Libraries"
-msgstr "Bibliotheken"
+msgstr ""
 
 #: ../models/sysml/ModelElements.rst:2
 msgid "ModelElements"
@@ -1755,7 +1752,7 @@ msgstr ""
 #: ../models/sysml/Requirements.rst:2
 #: ../style_sheets.md:308
 msgid "Requirements"
-msgstr "Vereisten"
+msgstr ""
 
 #: ../models/uml.md:1
 msgid "Unified Modeling Language"
@@ -2187,7 +2184,7 @@ msgstr ""
 
 #: ../scripting.md:235
 msgid "Examples"
-msgstr "Voorbeelden"
+msgstr ""
 
 #: ../scripting.md:237
 msgid "Here is another example:"
@@ -2207,7 +2204,7 @@ msgstr ""
 
 #: ../service_oriented.md:15
 msgid "Services"
-msgstr "Diensten"
+msgstr ""
 
 #: ../service_oriented.md:17
 msgid "Gaphor is modeled around the concept of services. Each service can be registered with the application and then it can be used by other services or other objects living within the application."
@@ -2271,7 +2268,7 @@ msgstr ""
 
 #: ../service_oriented.md:87
 msgid "Interfaces"
-msgstr "Interfaces"
+msgstr ""
 
 #: ../service_oriented.md:89
 msgid "Each service (and plugin) should implement the `gaphor.abc.Service` interface:"
@@ -2391,7 +2388,7 @@ msgstr ""
 
 #: ../sphinx.rst:53
 msgid "Configuration"
-msgstr "Configuratie"
+msgstr ""
 
 #: ../sphinx.rst:55
 msgid "To add Gaphor diagram support to Sphinx, make sure Gaphor is listed as a dependency."
@@ -2443,7 +2440,7 @@ msgstr ""
 
 #: ../sphinx.rst:109
 msgid "Errors"
-msgstr "Fouten"
+msgstr ""
 
 #: ../sphinx.rst:111
 msgid "Errors are shown on the console when the documentation is built and in the document."
@@ -2459,7 +2456,7 @@ msgstr ""
 
 #: ../stereotypes.md:1
 msgid "Stereotypes"
-msgstr "Stereotypen"
+msgstr ""
 
 #: ../stereotypes.md:3
 msgid "In UML, stereotypes are way to extend the application of the UML language to new domains. For example: SysML started as a profile for UML."
@@ -2771,7 +2768,7 @@ msgstr ""
 
 #: ../style_sheets.md:133
 msgid "Colors"
-msgstr "Kleuren"
+msgstr ""
 
 #: ../style_sheets.md:137
 msgid "``background-color``"
@@ -2779,7 +2776,7 @@ msgstr ""
 
 #: ../style_sheets.md:137
 msgid "Examples:"
-msgstr "Voorbeelden:"
+msgstr ""
 
 #: ../style_sheets.md:139
 msgid "``background-color: azure;``"
@@ -3007,7 +3004,7 @@ msgstr ""
 
 #: ../style_sheets.md:241
 msgid "Variables"
-msgstr "Variabelen"
+msgstr ""
 
 #: ../style_sheets.md:243
 msgid "Since Gaphor 2.16.0 you can use [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) in your style sheets."
@@ -3031,7 +3028,7 @@ msgstr ""
 
 #: ../style_sheets.md:253
 msgid "Example:"
-msgstr "Voorbeeld:"
+msgstr ""
 
 #: ../style_sheets.md:266
 msgid "All diagrams have a white background. Sequence diagrams get a blue-ish background."
@@ -3059,15 +3056,15 @@ msgstr ""
 
 #: ../style_sheets.md:287
 msgid "Profile"
-msgstr "Profiel"
+msgstr ""
 
 #: ../style_sheets.md:287
 msgid "Group"
-msgstr "Groep"
+msgstr ""
 
 #: ../style_sheets.md:287
 msgid "Element"
-msgstr "Element"
+msgstr ""
 
 #: ../style_sheets.md:287
 msgid "CSS element"
@@ -3099,11 +3096,11 @@ msgstr ""
 #: ../style_sheets.md:299
 #: ../style_sheets.md:300
 msgid "UML"
-msgstr "UML"
+msgstr ""
 
 #: ../style_sheets.md:292
 msgid "Classes"
-msgstr "Klassen"
+msgstr ""
 
 #: ../style_sheets.md:292
 msgid "all Association's"
@@ -3115,7 +3112,7 @@ msgstr ""
 
 #: ../style_sheets.md:293
 msgid "Components"
-msgstr "Onderdelen"
+msgstr ""
 
 #: ../style_sheets.md:293
 msgid "Device/Node"
@@ -3129,7 +3126,7 @@ msgstr ""
 #: ../style_sheets.md:295
 #: ../style_sheets.md:296
 msgid "Actions"
-msgstr "Acties"
+msgstr ""
 
 #: ../style_sheets.md:294
 msgid "Decision/Merge Node"
@@ -3157,7 +3154,7 @@ msgstr ""
 
 #: ../style_sheets.md:297
 msgid "Interactions"
-msgstr "Interacties"
+msgstr ""
 
 #: ../style_sheets.md:297
 msgid "Reflexive message"
@@ -3170,7 +3167,7 @@ msgstr ""
 #: ../style_sheets.md:298
 #: ../style_sheets.md:299
 msgid "States"
-msgstr "Toestanden"
+msgstr ""
 
 #: ../style_sheets.md:298
 msgid "Initial Pseudostate"
@@ -3187,7 +3184,7 @@ msgstr ""
 
 #: ../style_sheets.md:300
 msgid "Profiles"
-msgstr "Profielen"
+msgstr ""
 
 #: ../style_sheets.md:300
 msgid "Metaclass"
@@ -3199,7 +3196,7 @@ msgstr ""
 
 #: ../style_sheets.md:301
 msgid "Person"
-msgstr "Persoon"
+msgstr ""
 
 #: ../style_sheets.md:301
 msgid "``c4person``"
@@ -3215,7 +3212,7 @@ msgstr ""
 
 #: ../style_sheets.md:303
 msgid "Component"
-msgstr "Onderdeel"
+msgstr ""
 
 #: ../style_sheets.md:303
 msgid "``c4container[type=\"Component\"]``"
@@ -3223,7 +3220,7 @@ msgstr ""
 
 #: ../style_sheets.md:304
 msgid "Container"
-msgstr "Container"
+msgstr ""
 
 #: ../style_sheets.md:304
 msgid "``c4container[type=\"Container\"]``"
@@ -3241,7 +3238,7 @@ msgstr ""
 #: ../style_sheets.md:307
 #: ../style_sheets.md:308
 msgid "SysML"
-msgstr "SysML"
+msgstr ""
 
 #: ../style_sheets.md:306
 msgid "ValueType"
@@ -3266,11 +3263,11 @@ msgstr ""
 
 #: ../style_sheets.md:309
 msgid "RAAML"
-msgstr "RAAML"
+msgstr ""
 
 #: ../style_sheets.md:309
 msgid "FTA"
-msgstr "FTA"
+msgstr ""
 
 #: ../style_sheets.md:309
 msgid "any AND/OR/… Gate"
@@ -3282,7 +3279,7 @@ msgstr ""
 
 #: ../style_sheets.md:314
 msgid "Ideas"
-msgstr "Ideeën"
+msgstr ""
 
 #: ../style_sheets.md:316
 msgid "Here are some ideas that go just beyond changing a color or a font. With the following examples we dig in to Gaphor's model structure to reveal more information to the users."
