@@ -4,9 +4,6 @@ inputs:
   version:
     description: 'Gaphor version number'
     required: true
-  github_token:
-    description: 'GitHub token for uploading releases'
-    required: true
 runs:
   using: composite
   steps:
@@ -27,7 +24,7 @@ runs:
         path: _packaging/dist/Gaphor-${{ inputs.version }}-x86_64.AppImage
     - name: Upload Assets (release only)
       if: github.event_name == 'release'
-      run: |
-        echo ${{ inputs.github_token }} | gh auth login --with-token
-        gh release upload ${{ inputs.version }} _packaging/dist/Gaphor-${{ inputs.version }}-x86_64.AppImage
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: gh release upload ${{ inputs.version }} _packaging/dist/Gaphor-${{ inputs.version }}-x86_64.AppImage
       shell: bash

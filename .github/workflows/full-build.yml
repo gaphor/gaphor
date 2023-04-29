@@ -138,7 +138,6 @@ jobs:
         if: ${{ github.actor != 'dependabot[bot]' }}
         with:
           version: ${{ steps.setup_and_test.outputs.version }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   check-linux-appimage:
     name: Check Linux AppImage
@@ -201,7 +200,6 @@ jobs:
           certpassword_p12: ${{ secrets.CERTPASSWORD_P12 }}
           ac_username:  ${{ secrets.AC_USERNAME }}
           ac_password: ${{ secrets.AC_PASSWORD }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   check-macos-app:
     name: Check macOS App
@@ -335,7 +333,6 @@ jobs:
           version: ${{ steps.setup_and_test.outputs.version }}
           cert_password: ${{ secrets.CERTPASSWORD }}
           base64_encoded_pfx: ${{ secrets.BASE64_ENCODED_PFX }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   check-windows-installer:
     name: Check Windows Installer

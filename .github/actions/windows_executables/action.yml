@@ -10,9 +10,6 @@ inputs:
   base64_encoded_pfx:
     description: 'The base 64 encoded Windows signing certificate'
     required: true
-  github_token:
-    description: 'GitHub token for uploading releases'
-    required: true
   mainline_build:
     description: 'Build is performed on the main line'
     required: true
@@ -66,7 +63,7 @@ runs:
         path: _packaging/dist/gaphor-${{ inputs.version }}-portable.exe
     - name: Upload Assets (release only)
       if: github.event_name == 'release'
-      run: |
-        echo ${{ inputs.github_token }} | gh auth login --with-token
-        gh release upload ${{ inputs.version }} (Resolve-Path _packaging\dist\*.exe)
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: gh release upload ${{ inputs.version }} (Resolve-Path _packaging\dist\*.exe)
       shell: pwsh
