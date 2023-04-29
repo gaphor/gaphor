@@ -2,7 +2,7 @@ packaging:
   - _packaging/**/*
 translation:
   - po/*
-  - docs/locale/*
+  - docs/locale/**/*
 documentation:
   - docs/*.md
   - docs/*.rst
