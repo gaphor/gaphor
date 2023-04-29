@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-04-26 08:50+0000\n"
+"PO-Revision-Date: 2023-04-29 13:23+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/gaphor/gaphor/de/>"
 "\n"
@@ -121,7 +121,7 @@ msgstr "UND-Gatter"
 #: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
-msgstr "Ereignis"
+msgstr "Grundereignis"
 
 #: gaphor/RAAML/fta/conditionalevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
@@ -575,11 +575,11 @@ msgstr "Aktivität"
 
 #: gaphor/UML/actions/actionstoolbox.py:48
 msgid "Swimlane One"
-msgstr "Streifen Eins"
+msgstr "Swimlane Eins"
 
 #: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Swimlane Two"
-msgstr "Streifen Zwei"
+msgstr "Swimlane Zwei"
 
 #: gaphor/UML/actions/actionstoolbox.py:58
 msgid "Actions"
@@ -681,7 +681,7 @@ msgstr "FIFO"
 
 #: gaphor/UML/actions/partitionpage.py:103
 msgid "New Swimlane"
-msgstr "Neuer Streifen"
+msgstr "Neue Swimlane"
 
 #: gaphor/UML/actions/pin.py:58
 msgid "input pin"
@@ -705,7 +705,7 @@ msgstr "Spezifikation verbinden"
 
 #: gaphor/UML/actions/propertypages.ui:89
 msgid "Swimlanes"
-msgstr "Streifen"
+msgstr "Swimlanes"
 
 #: gaphor/UML/actions/propertypages.ui:100
 msgid "Partitions"
@@ -1125,7 +1125,7 @@ msgstr "importieren"
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
-msgstr "Profil"
+msgstr "Profile"
 
 #: gaphor/UML/profiles/profilestoolbox.py:22
 msgid "Profile"
@@ -1842,7 +1842,7 @@ msgstr "Einbezogener Anwendungsfall"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Actor"
-msgstr "Sekundärer aktor"
+msgstr "Sekundärer Aktor"
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Use Case"
