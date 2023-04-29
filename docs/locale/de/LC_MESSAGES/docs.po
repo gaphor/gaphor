@@ -8,13 +8,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-04-29 13:23+0000\n"
+"Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/gaphor/"
+"docs-gaphor-org/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
@@ -158,7 +161,7 @@ msgstr ""
 
 #: ../design_principles.md:73
 msgid "Multi-platform"
-msgstr ""
+msgstr "Plattformübergreifend"
 
 #: ../design_principles.md:75
 msgid "We put a lot of effort in making Gaphor run on all major platforms: Windows, macOS, and Linux. Having Gaphor available on all platforms is essential if the model needs to be shared. It would be awful if you need to run one specific operating system in order to open a model."
@@ -662,7 +665,7 @@ msgstr ""
 
 #: ../getting_started.md:123
 msgid "Undo and Redo"
-msgstr ""
+msgstr "Rückgängig und Wiederholen"
 
 #: ../getting_started.md:125
 msgid "Undo a change press <kbd>Ctrl</kbd>+<kbd>z</kbd> or left-click on the back arrow at the top of the Property Editor. To re-do a change, hit <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> or press the forward arrow at the top of the Property Editor."
@@ -718,7 +721,7 @@ msgstr ""
 
 #: ../index.rst:2
 msgid "About Gaphor"
-msgstr ""
+msgstr "Über Gaphor"
 
 #: ../index.rst:6
 msgid "The documentation is up to date for Gaphor |version|"
@@ -743,6 +746,8 @@ msgstr ""
 #: ../index.rst:23
 msgid "For download instructions, and the blog, please visit the `Gaphor Website <https://gaphor.org>`_."
 msgstr ""
+"Anweisungen zum Herunterladen und den Blog befinden sich auf der `Gaphor "
+"Webseite <https://gaphor.org>`_."
 
 #: ../index.rst:26
 msgid "Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :doc:`Jupyter notebooks <scripting>`."
@@ -1126,7 +1131,7 @@ msgstr ""
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:0
 msgid "Parameters"
-msgstr ""
+msgstr "Parameter"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:5
 msgid "connecting item"
@@ -1327,7 +1332,7 @@ msgstr ""
 #: ../style_sheets.md:304
 #: ../style_sheets.md:305
 msgid "C4 Model"
-msgstr ""
+msgstr "C4 Modell"
 
 #: ../models/c4model.md:3
 msgid "The [C4 model](https://c4model.com/) is a simple visual language to describe the static structure of a software system."
@@ -1397,11 +1402,11 @@ msgstr ""
 
 #: ../models/raaml/General.rst:2
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: ../models/raaml/General.rst:5
 msgid "Basic Event"
-msgstr ""
+msgstr "Grundereignis"
 
 #: ../models/raaml/General.rst:11
 msgid "General Concepts Library/Abstract Cause"
@@ -1661,7 +1666,7 @@ msgstr ""
 
 #: ../models/sysml/Activities.rst:2
 msgid "Activities"
-msgstr ""
+msgstr "Aktivitäten"
 
 #: ../models/sysml/Allocations.rst:2
 msgid "Allocations"
@@ -1679,7 +1684,7 @@ msgstr ""
 #: ../style_sheets.md:306
 #: ../style_sheets.md:307
 msgid "Blocks"
-msgstr ""
+msgstr "Blöcke"
 
 #: ../models/sysml/Blocks.rst:8
 msgid "Adjunt and Classifier Behavior Properties"
@@ -1747,12 +1752,12 @@ msgstr ""
 
 #: ../models/sysml/PortsAndFlows.rst:29
 msgid "Item Flow"
-msgstr ""
+msgstr "Elementfluss"
 
 #: ../models/sysml/Requirements.rst:2
 #: ../style_sheets.md:308
 msgid "Requirements"
-msgstr ""
+msgstr "Anforderungen"
 
 #: ../models/uml.md:1
 msgid "Unified Modeling Language"
@@ -2456,7 +2461,7 @@ msgstr ""
 
 #: ../stereotypes.md:1
 msgid "Stereotypes"
-msgstr ""
+msgstr "Stereotypen"
 
 #: ../stereotypes.md:3
 msgid "In UML, stereotypes are way to extend the application of the UML language to new domains. For example: SysML started as a profile for UML."
@@ -3056,7 +3061,7 @@ msgstr ""
 
 #: ../style_sheets.md:287
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: ../style_sheets.md:287
 msgid "Group"
@@ -3096,11 +3101,11 @@ msgstr ""
 #: ../style_sheets.md:299
 #: ../style_sheets.md:300
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: ../style_sheets.md:292
 msgid "Classes"
-msgstr ""
+msgstr "Klassen"
 
 #: ../style_sheets.md:292
 msgid "all Association's"
@@ -3112,11 +3117,11 @@ msgstr ""
 
 #: ../style_sheets.md:293
 msgid "Components"
-msgstr ""
+msgstr "Komponenten"
 
 #: ../style_sheets.md:293
 msgid "Device/Node"
-msgstr ""
+msgstr "Gerät/Knoten"
 
 #: ../style_sheets.md:293
 msgid "``node``"
@@ -3126,11 +3131,11 @@ msgstr ""
 #: ../style_sheets.md:295
 #: ../style_sheets.md:296
 msgid "Actions"
-msgstr ""
+msgstr "Aktionen"
 
 #: ../style_sheets.md:294
 msgid "Decision/Merge Node"
-msgstr ""
+msgstr "Entscheidungs-/Zusammenführungsknoten"
 
 #: ../style_sheets.md:294
 msgid "``decisionnode``"
@@ -3146,7 +3151,7 @@ msgstr ""
 
 #: ../style_sheets.md:296
 msgid "Swimlane"
-msgstr ""
+msgstr "Swimlane"
 
 #: ../style_sheets.md:296
 msgid "``partition``"
@@ -3154,11 +3159,11 @@ msgstr ""
 
 #: ../style_sheets.md:297
 msgid "Interactions"
-msgstr ""
+msgstr "Interaktionen"
 
 #: ../style_sheets.md:297
 msgid "Reflexive message"
-msgstr ""
+msgstr "Zurückbeziehende Nachricht"
 
 #: ../style_sheets.md:297
 msgid "``message``"
@@ -3167,11 +3172,11 @@ msgstr ""
 #: ../style_sheets.md:298
 #: ../style_sheets.md:299
 msgid "States"
-msgstr ""
+msgstr "Zustände"
 
 #: ../style_sheets.md:298
 msgid "Initial Pseudostate"
-msgstr ""
+msgstr "Anfänglicher Pseudozustand"
 
 #: ../style_sheets.md:298
 #: ../style_sheets.md:299
@@ -3184,11 +3189,11 @@ msgstr ""
 
 #: ../style_sheets.md:300
 msgid "Profiles"
-msgstr ""
+msgstr "Profile"
 
 #: ../style_sheets.md:300
 msgid "Metaclass"
-msgstr ""
+msgstr "Metaklasse"
 
 #: ../style_sheets.md:300
 msgid "``class``"
@@ -3196,7 +3201,7 @@ msgstr ""
 
 #: ../style_sheets.md:301
 msgid "Person"
-msgstr ""
+msgstr "Person"
 
 #: ../style_sheets.md:301
 msgid "``c4person``"
@@ -3204,7 +3209,7 @@ msgstr ""
 
 #: ../style_sheets.md:302
 msgid "Software System"
-msgstr ""
+msgstr "Software-System"
 
 #: ../style_sheets.md:302
 msgid "``c4container[type=\"Software System\"]``"
@@ -3212,7 +3217,7 @@ msgstr ""
 
 #: ../style_sheets.md:303
 msgid "Component"
-msgstr ""
+msgstr "Komponente"
 
 #: ../style_sheets.md:303
 msgid "``c4container[type=\"Component\"]``"
@@ -3220,7 +3225,7 @@ msgstr ""
 
 #: ../style_sheets.md:304
 msgid "Container"
-msgstr ""
+msgstr "Container"
 
 #: ../style_sheets.md:304
 msgid "``c4container[type=\"Container\"]``"
@@ -3228,7 +3233,7 @@ msgstr ""
 
 #: ../style_sheets.md:305
 msgid "Container: Database"
-msgstr ""
+msgstr "Container: Datenbank"
 
 #: ../style_sheets.md:305
 msgid "``c4database``"
@@ -3238,11 +3243,11 @@ msgstr ""
 #: ../style_sheets.md:307
 #: ../style_sheets.md:308
 msgid "SysML"
-msgstr ""
+msgstr "SysML"
 
 #: ../style_sheets.md:306
 msgid "ValueType"
-msgstr ""
+msgstr "Wertetyp"
 
 #: ../style_sheets.md:306
 #: ../style_sheets.md:307
@@ -3251,11 +3256,11 @@ msgstr ""
 
 #: ../style_sheets.md:307
 msgid "Primitive"
-msgstr ""
+msgstr "Grundelement"
 
 #: ../style_sheets.md:308
 msgid "Derive Requirement"
-msgstr ""
+msgstr "Ableiten der Anforderung"
 
 #: ../style_sheets.md:308
 msgid "``derivedreq``"
@@ -3263,11 +3268,11 @@ msgstr ""
 
 #: ../style_sheets.md:309
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: ../style_sheets.md:309
 msgid "FTA"
-msgstr ""
+msgstr "FTA"
 
 #: ../style_sheets.md:309
 msgid "any AND/OR/… Gate"
@@ -3547,7 +3552,7 @@ msgstr ""
 
 #: ../windows.md:61
 msgid "Python"
-msgstr ""
+msgstr "Python"
 
 #: ../windows.md:63
 msgid "Install Visual Studio 2022"
