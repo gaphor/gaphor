@@ -6,7 +6,7 @@
 
 ID := Gaphor-x86_64
 # Do not change version by hand!
-VERSION := 2.17.0
+VERSION := 2.18.1
 
 BUILD := build
 DIST := dist

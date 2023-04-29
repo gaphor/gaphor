@@ -1,3 +1,14 @@
+2.18.1
+------
+- Make operations visible on Blocks
+- A quick fix for crashes in the CSS editor, disable autocomplete
+- Fix doc translation catalogs not found
+- Fix encoding warnings for no encoding argument
+- Update AppImage build with GTK 4.10
+- Add non-goals to README
+- Enable translation of docs, and add Crotian, German, and Dutch
+- Updates to most translations and add Tamil
+
 2.18.0
 ------
 - Support for manually resolving Git merge conflicts
