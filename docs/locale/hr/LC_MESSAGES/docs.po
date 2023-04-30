@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-04-27 21:47+0000\n"
+"PO-Revision-Date: 2023-05-01 11:47+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -763,7 +763,7 @@ msgstr ""
 
 #: ../getting_started.md:110
 msgid "Connected to an element and the handle turns red"
-msgstr "Povezan s elementom – crvena ručka"
+msgstr "Spajanje s elementom – crvena ručka"
 
 #: ../getting_started.md:111
 msgid "Disconnected from an element and the handle turns green"
@@ -1253,7 +1253,7 @@ msgstr "Parametri"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:5
 msgid "connecting item"
-msgstr "spajanje elementa"
+msgstr "spojni element"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:7
 msgid "connectable item"
@@ -1816,7 +1816,7 @@ msgstr ""
 
 #: ../models/sysml/Blocks.rst:20
 msgid "Connector Ends"
-msgstr "Kraj spojnice"
+msgstr "Krajevi spojnica"
 
 #: ../models/sysml/Blocks.rst:26
 msgid "Properties"
@@ -1894,7 +1894,7 @@ msgid "Gaphor follows the [official UML 2.5.1 data model](https://www.omg.org/sp
 msgstr ""
 "Gaphor slijedi [službeni model podataka UML 2.5.1](https://www.omg.org/spec/"
 "UML/). Tamo gdje su napravljene promjene, modelu je dodan komentar. Osobito "
-"gdje _m:n_ odnosi određuju podskup _1:n_ odnose."
+"gdje _m:n_ odnosi čine podskup _1:n_ odnosa."
 
 #: ../models/uml/01._Common_Structure.rst:2
 msgid "01. Common Structure"
@@ -3467,7 +3467,7 @@ msgstr ""
 
 #: ../style_sheets.md:358
 msgid "unconnected relationship"
-msgstr "nepovezani odnosi"
+msgstr "nepovezani odnos"
 
 #: ../style_sheets.md:363
 msgid "Navigable associations"
