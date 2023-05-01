@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: 0.6.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-04-12 10:51+0000\n"
+"PO-Revision-Date: 2023-05-01 19:50+0000\n"
 "Last-Translator: Philip Goto <philip.goto@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/gaphor/gaphor/nl/>"
 "\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 4.18-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -313,11 +313,11 @@ msgstr "Onderdelen tonen"
 
 #: gaphor/SysML/propertypages.ui:107
 msgid "Show References"
-msgstr "Toon Referenties"
+msgstr "Verwijzingen tonen"
 
 #: gaphor/SysML/propertypages.ui:123
 msgid "Show Values"
-msgstr "Toon Waarden"
+msgstr "Waarden tonen"
 
 #: gaphor/SysML/propertypages.ui:149
 msgid "Aggregation"
@@ -364,23 +364,23 @@ msgstr "Proxy-poort"
 
 #: gaphor/SysML/toolbox.py:68
 msgid "New Block Definition Diagram"
-msgstr "Nieuw Blok Definitie Diagram"
+msgstr "Nieuw blok­definitie­diagram"
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr "Nieuw Intern Blok Diagram"
+msgstr "Nieuw intern blok­diagram"
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
 msgid "New Package Diagram"
-msgstr "Nieuw Package Diagram"
+msgstr "Nieuw pakket­diagram"
 
 #: gaphor/SysML/toolbox.py:71
 msgid "New Requirement Diagram"
-msgstr "Nieuw Eisen Diagram"
+msgstr "Nieuw vereisten­diagram"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
 msgid "New Use Case Diagram"
-msgstr "Nieuw Use Case Diagram"
+msgstr "Nieuw Doeleinde­diagram"
 
 #: gaphor/SysML/blocks/block.py:67
 msgid "ControlStructure"
@@ -529,19 +529,19 @@ msgstr ""
 
 #: gaphor/UML/toolbox.py:32
 msgid "New Component Diagram"
-msgstr "Nieuw Componenten Diagram"
+msgstr "Nieuw componenten­diagram"
 
 #: gaphor/UML/toolbox.py:33
 msgid "New Deployment Diagram"
-msgstr "Nieuw Deployment Diagram"
+msgstr "Nieuw inzettings­diagram"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr "Nieuw Communicatie Diagram"
+msgstr "Nieuw communicatie­diagram"
 
 #: gaphor/UML/toolbox.py:39
 msgid "New Profile Diagram"
-msgstr "Nieuw Profiel Diagram"
+msgstr "Nieuw profiel­diagram"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -573,11 +573,11 @@ msgstr "Activiteit"
 
 #: gaphor/UML/actions/actionstoolbox.py:48
 msgid "Swimlane One"
-msgstr "Zwembaan Een"
+msgstr "Zwembaan één"
 
 #: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Swimlane Two"
-msgstr "Zwembaan Twee"
+msgstr "Zwembaan twee"
 
 #: gaphor/UML/actions/actionstoolbox.py:58
 msgid "Actions"
@@ -691,7 +691,7 @@ msgstr "uitvoer pin"
 
 #: gaphor/UML/actions/propertypages.ui:11
 msgid "Show type"
-msgstr "Toon type"
+msgstr "Type tonen"
 
 #: gaphor/UML/actions/propertypages.ui:37
 msgid "Horizontal"
@@ -869,7 +869,7 @@ msgstr "profiel"
 
 #: gaphor/UML/classes/propertypages.ui:11
 msgid "Show Direction"
-msgstr "Toon Richting"
+msgstr "Richting tonen"
 
 #: gaphor/UML/classes/propertypages.ui:49
 msgid "Head:"
@@ -937,7 +937,7 @@ msgstr "Staart:"
 
 #: gaphor/UML/classes/propertypages.ui:321
 msgid "Show Attributes"
-msgstr "Toon Attributen"
+msgstr "Attributen tonen"
 
 #: gaphor/UML/classes/propertypages.ui:403
 msgid ""
@@ -984,7 +984,7 @@ msgstr "Handelingen"
 
 #: gaphor/UML/classes/propertypages.ui:538
 msgid "Show Operations"
-msgstr "Toon Operaties"
+msgstr "Handelingen tonen"
 
 #: gaphor/UML/classes/propertypages.ui:631
 msgid ""
@@ -1015,7 +1015,7 @@ msgstr "Enumeratie Literals"
 
 #: gaphor/UML/classes/propertypages.ui:673
 msgid "Show Enumeration Literals"
-msgstr "Toon Enumeratie Literals"
+msgstr "Opsommings­tekens tonen"
 
 #: gaphor/UML/classes/propertypages.ui:737
 msgid ""
@@ -1144,7 +1144,7 @@ msgstr "Stereotypen"
 
 #: gaphor/UML/profiles/propertypages.ui:43
 msgid "Show Stereotypes"
-msgstr "Toon Stereotypen"
+msgstr "Stereotypen tonen"
 
 #: gaphor/UML/states/propertypages.ui:9
 msgid "Activities"
@@ -1168,7 +1168,7 @@ msgstr "Gebieden"
 
 #: gaphor/UML/states/propertypages.ui:103
 msgid "Show Regions"
-msgstr "Toon Regionen"
+msgstr "Regio's tonen"
 
 #: gaphor/UML/states/statemachine.py:39
 msgid "statemachine"
@@ -1318,7 +1318,7 @@ msgstr "Orientatie wisselen"
 
 #: gaphor/diagram/propertypages.ui:89
 msgid "Note or Remark"
-msgstr "Notitie of Opmerking"
+msgstr "Notitie of opmerking"
 
 #: gaphor/diagram/propertypages.ui:123
 msgid "Created By"
@@ -2081,7 +2081,7 @@ msgstr "Geen element geselecteerd"
 
 #: gaphor/ui/elementeditor.ui:23
 msgid "Show Tips"
-msgstr "Toon Tips"
+msgstr "Tips tonen"
 
 #: gaphor/ui/elementeditor.ui:44
 msgid ""
@@ -2130,7 +2130,7 @@ msgstr "Opnieuw"
 
 #: gaphor/ui/elementeditor.ui:133 gaphor/ui/help/shortcuts.ui:146
 msgid "Zoom In"
-msgstr "Vergroot"
+msgstr "Inzoomen"
 
 #: gaphor/ui/elementeditor.ui:148 gaphor/ui/help/shortcuts.ui:162
 msgid "Actual Size"
@@ -2138,7 +2138,7 @@ msgstr "Ware grootte"
 
 #: gaphor/ui/elementeditor.ui:163 gaphor/ui/help/shortcuts.ui:154
 msgid "Zoom Out"
-msgstr "Verklein"
+msgstr "Uitzoomen"
 
 #: gaphor/ui/elementeditor.ui:203
 msgid "Editors"
@@ -2151,11 +2151,11 @@ msgstr "Voorkeuren"
 
 #: gaphor/ui/elementeditor.ui:252
 msgid "Reset Tool Automatically"
-msgstr "Herstel Tool Automatisch"
+msgstr "Gereedschap automatisch resetten"
 
 #: gaphor/ui/elementeditor.ui:270
 msgid "Remove Unused Elements"
-msgstr "Verwijder Ongebruikte Elementen"
+msgstr "Ongebruikte elementen verwijderen"
 
 #: gaphor/ui/elementeditor.ui:272 gaphor/ui/elementeditor.ui:279
 msgid "Automatically remove elements no longer in use in any diagram."
