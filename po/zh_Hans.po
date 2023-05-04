@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-04-09 15:14-0400\n"
-"PO-Revision-Date: 2023-04-26 08:50+0000\n"
+"PO-Revision-Date: 2023-05-05 09:51+0000\n"
 "Last-Translator: johnvon <handanlinzhang@163.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "gaphor/gaphor/zh_Hans/>\n"
@@ -347,7 +347,7 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.ui:191
 msgid "Text"
-msgstr ""
+msgstr "文本"
 
 #: gaphor/SysML/toolbox.py:25
 msgid "Internal Blocks"
@@ -359,7 +359,7 @@ msgstr ""
 
 #: gaphor/SysML/toolbox.py:36
 msgid "Property"
-msgstr ""
+msgstr "属性"
 
 #: gaphor/SysML/toolbox.py:45
 msgid "Proxy Port"
@@ -412,7 +412,7 @@ msgstr "操作"
 
 #: gaphor/SysML/blocks/block.py:160 gaphor/SysML/blocks/block.py:186
 msgid "unnamed"
-msgstr ""
+msgstr "未命名"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:24
 msgid "Blocks"
@@ -441,7 +441,7 @@ msgstr ""
 #: gaphor/UML/classes/classestoolbox.py:98
 #: gaphor/UML/usecases/usecasetoolbox.py:40
 msgid "Association"
-msgstr ""
+msgstr "关联"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:84
 msgid "ValueType"
@@ -450,7 +450,7 @@ msgstr ""
 #: gaphor/SysML/blocks/blockstoolbox.py:95
 #: gaphor/UML/classes/classestoolbox.py:140
 msgid "Enumeration"
-msgstr ""
+msgstr "枚举"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 #: gaphor/UML/classes/classestoolbox.py:152
