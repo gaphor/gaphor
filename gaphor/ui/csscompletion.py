@@ -6,10 +6,15 @@ from gi.repository import Gio, GObject, Gtk, GtkSource
 from gaphor.core.styling import Style
 
 
-class CssNamedColorsCompletionProvider(GObject.GObject, GtkSource.CompletionProvider):
+class CompletionProviderBase(GObject.GObject, GtkSource.CompletionProvider):
+    priority = 0
+
     def __init__(self):
         super().__init__()
         self._filter_data: FilterData = FilterData()
+
+    def proposal_text(self, proposal: GtkSource.CompletionProposal) -> str:
+        return proposal.text  # type: ignore[no-any-return]
 
     def do_activate(
         self,
@@ -21,7 +26,8 @@ class CssNamedColorsCompletionProvider(GObject.GObject, GtkSource.CompletionProv
         has_selection, begin, end = context.get_bounds()
         if has_selection:
             buffer.delete(begin, end)
-        buffer.insert(begin, proposal.text, len(proposal.text))
+        text = self.proposal_text(proposal)
+        buffer.insert(begin, text, len(text))
         buffer.end_user_action()
 
     def do_display(
@@ -36,10 +42,27 @@ class CssNamedColorsCompletionProvider(GObject.GObject, GtkSource.CompletionProv
             cell.set_text(proposal.text)
 
     def do_get_priority(self, context: GtkSource.CompletionContext) -> int:
-        return -4
+        return self.priority
 
     def do_get_title(self) -> str:
-        return "Colors"
+        return "<not used>"
+
+    def do_refilter(
+        self, context: GtkSource.CompletionContext, model: Gio.ListModel
+    ) -> None:
+        word = context.get_word()
+        old_word = self._filter_data.word
+        change = Gtk.FilterChange.DIFFERENT
+        if old_word and word.startswith(old_word):
+            change = Gtk.FilterChange.MORE_STRICT
+        elif old_word and old_word.startswith(word):
+            change = Gtk.FilterChange.LESS_STRICT
+        self._filter_data.word = word
+        model.get_filter().changed(change)
+
+
+class CssNamedColorsCompletionProvider(CompletionProviderBase):
+    priority = -4
 
     def do_populate_async(self, context, cancellable, callback, user_data=None) -> None:
         store = Gio.ListStore.new(CssNamedColorProposal)
@@ -55,19 +78,6 @@ class CssNamedColorsCompletionProvider(GObject.GObject, GtkSource.CompletionProv
         store_filter = Gtk.CustomFilter.new(filter_fn, self._filter_data)
         proposals = Gtk.FilterListModel.new(store, store_filter)
         context.set_proposals_for_provider(self, proposals)
-
-    def do_refilter(
-        self, context: GtkSource.CompletionContext, model: Gio.ListModel
-    ) -> None:
-        word = context.get_word()
-        old_word = self._filter_data.word
-        change = Gtk.FilterChange.DIFFERENT
-        if old_word and word.startswith(old_word):
-            change = Gtk.FilterChange.MORE_STRICT
-        elif old_word and old_word.startswith(word):
-            change = Gtk.FilterChange.LESS_STRICT
-        self._filter_data.word = word
-        model.get_filter().changed(change)
 
 
 class CssNamedColorProposal(GObject.Object, GtkSource.CompletionProposal):
