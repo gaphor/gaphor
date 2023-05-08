@@ -41,7 +41,7 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkLabel">
-            <property name="label" translatable="yes">Add a model element from the tool box (bottom left) to the diagram. Here you will see it&apos;s properties appear.</property>
+            <property name="label" translatable="yes">Add a model element from the tool box (bottom left) to the diagram. Here you will see its properties appear.</property>
             <property name="use_markup">1</property>
             <property name="wrap">1</property>
             <property name="xalign">0</property>
