@@ -6,7 +6,7 @@ from typing import Optional
 from unicodedata import normalize
 
 from babel import Locale
-from gi.repository import GLib, Gtk, GtkSource
+from gi.repository import Adw, GLib, Gtk, GtkSource
 
 from gaphor.abc import ActionProvider
 from gaphor.core import Transaction, action, event_handler
@@ -26,11 +26,6 @@ from gaphor.event import ModelLoaded
 
 
 log = logging.getLogger(__name__)
-
-if Gtk.get_major_version() != 3:
-    from gi.repository import Adw
-
-    GtkSource.init()
 
 new_builder = new_resource_builder("gaphor.ui", "elementeditor")
 
@@ -276,9 +271,7 @@ class PreferencesStack:
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.lang_manager = GtkSource.LanguageManager.get_default()
-        self.style_manager = (
-            None if Gtk.get_major_version() == 3 else Adw.StyleManager.get_default()
-        )
+        self.style_manager = Adw.StyleManager.get_default()
         self._notify_dark_id = 0
         self.lang_manager.append_search_path(
             str(importlib.resources.files("gaphor") / "ui" / "language-specs")

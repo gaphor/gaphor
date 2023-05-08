@@ -12,7 +12,7 @@ gi.require_version("Gdk", "4.0")
 gi.require_version("GtkSource", "5")
 gi.require_version("Adw", "1")
 
-from gi.repository import Adw, Gio, GLib, Gtk
+from gi.repository import Adw, Gio, GLib, Gtk, GtkSource
 
 from gaphor.application import Application, Session, distribution
 from gaphor.core import event_handler
@@ -21,6 +21,8 @@ from gaphor.ui.actiongroup import apply_application_actions
 
 APPLICATION_ID = "org.gaphor.Gaphor"
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
+
+GtkSource.init()
 
 
 def main(argv=sys.argv) -> int:
