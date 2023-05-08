@@ -42,7 +42,6 @@ class CssNamedColorsCompletionProvider(GObject.GObject, GtkSource.CompletionProv
         return "Colors"
 
     def do_populate_async(self, context, cancellable, callback, user_data=None) -> None:
-        task = Gio.Task.new(self, cancellable, callback)
         store = Gio.ListStore.new(CssNamedColorProposal)
         self._filter_data.word = context.get_word()
 
@@ -54,12 +53,8 @@ class CssNamedColorsCompletionProvider(GObject.GObject, GtkSource.CompletionProv
             return proposal.text.startswith(data.word)
 
         store_filter = Gtk.CustomFilter.new(filter_fn, self._filter_data)
-        task.proposals = Gtk.FilterListModel.new(store, store_filter)
-        task.return_boolean(True)
-
-    def do_populate_finish(self, result: Gio.AsyncResult) -> Gio.ListModel:
-        if result.propagate_boolean():
-            return result.proposals
+        proposals = Gtk.FilterListModel.new(store, store_filter)
+        context.set_proposals_for_provider(self, proposals)
 
     def do_refilter(
         self, context: GtkSource.CompletionContext, model: Gio.ListModel
@@ -127,7 +122,6 @@ class CssFunctionCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
         return "Functions"
 
     def do_populate_async(self, context, cancellable, callback, user_data=None) -> None:
-        task = Gio.Task.new(self, cancellable, callback)
         store = Gio.ListStore.new(CssFunctionProposal)
         self._filter_data.word = context.get_word()
 
@@ -139,12 +133,8 @@ class CssFunctionCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
             return proposal.text.startswith(data.word)
 
         store_filter = Gtk.CustomFilter.new(filter_fn, self._filter_data)
-        task.proposals = Gtk.FilterListModel.new(store, store_filter)
-        task.return_boolean(True)
-
-    def do_populate_finish(self, result: Gio.AsyncResult) -> Gio.ListModel:
-        if result.propagate_boolean():
-            return result.proposals
+        proposals = Gtk.FilterListModel.new(store, store_filter)
+        context.set_proposals_for_provider(self, proposals)
 
     def do_refilter(
         self, context: GtkSource.CompletionContext, model: Gio.ListModel
@@ -205,7 +195,6 @@ class CssPropertyCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
         return "Properties"
 
     def do_populate_async(self, context, cancellable, callback, user_data=None) -> None:
-        task = Gio.Task.new(self, cancellable, callback)
         store = Gio.ListStore.new(CssPropertyProposal)
         self._filter_data.word = context.get_word()
 
@@ -217,12 +206,8 @@ class CssPropertyCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
             return proposal.text.startswith(data.word)
 
         store_filter = Gtk.CustomFilter.new(filter_fn, self._filter_data)
-        task.proposals = Gtk.FilterListModel.new(store, store_filter)
-        task.return_boolean(True)
-
-    def do_populate_finish(self, result: Gio.AsyncResult) -> Gio.ListModel:
-        if result.propagate_boolean():
-            return result.proposals
+        proposals = Gtk.FilterListModel.new(store, store_filter)
+        context.set_proposals_for_provider(self, proposals)
 
     def do_refilter(
         self, context: GtkSource.CompletionContext, model: Gio.ListModel
