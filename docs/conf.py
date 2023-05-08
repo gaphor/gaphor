@@ -48,7 +48,12 @@ extensions = [
     "IPython.sphinxext.ipython_console_highlighting",
 ]
 
-autodoc_mock_imports = ["gi.repository.Gdk", "gi.repository.Gtk", "gi.repository.Adw"]
+autodoc_mock_imports = [
+    "gi.repository.Gdk",
+    "gi.repository.Gtk",
+    "gi.repository.Adw",
+    "gi.repository.GtkSource",
+]
 gi.require_version = lambda *_: ...
 
 os.environ["PYDEVD_DISABLE_FILE_VALIDATION"] = "1"
