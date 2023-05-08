@@ -1115,6 +1115,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "ajoga",
+      "name": "Aurélien Joga",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37543966?v=4",
+      "profile": "https://github.com/ajoga",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
