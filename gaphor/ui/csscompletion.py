@@ -7,14 +7,19 @@ from gaphor.core.styling import Style
 
 
 class CompletionProviderBase(GObject.GObject, GtkSource.CompletionProvider):
-    priority = 0
-
-    def __init__(self):
+    def __init__(self, priority: int):
         super().__init__()
+        self._priority = priority
         self._filter_data: FilterData = FilterData()
 
+    def proposals(self) -> Gio.ListStore:
+        raise NotImplementedError()
+
     def proposal_text(self, proposal: GtkSource.CompletionProposal) -> str:
-        return proposal.text  # type: ignore[no-any-return]
+        raise NotImplementedError()
+
+    def position_cursor(self, buffer, cursor):
+        pass
 
     def do_activate(
         self,
@@ -28,6 +33,7 @@ class CompletionProviderBase(GObject.GObject, GtkSource.CompletionProvider):
             buffer.delete(begin, end)
         text = self.proposal_text(proposal)
         buffer.insert(begin, text, len(text))
+        self.position_cursor(buffer, begin)
         buffer.end_user_action()
 
     def do_display(
@@ -42,35 +48,14 @@ class CompletionProviderBase(GObject.GObject, GtkSource.CompletionProvider):
             cell.set_text(proposal.text)
 
     def do_get_priority(self, context: GtkSource.CompletionContext) -> int:
-        return self.priority
+        return self._priority
 
     def do_get_title(self) -> str:
-        return "<not used>"
-
-    def do_refilter(
-        self, context: GtkSource.CompletionContext, model: Gio.ListModel
-    ) -> None:
-        word = context.get_word()
-        old_word = self._filter_data.word
-        change = Gtk.FilterChange.DIFFERENT
-        if old_word and word.startswith(old_word):
-            change = Gtk.FilterChange.MORE_STRICT
-        elif old_word and old_word.startswith(word):
-            change = Gtk.FilterChange.LESS_STRICT
-        self._filter_data.word = word
-        model.get_filter().changed(change)
-
-
-class CssNamedColorsCompletionProvider(CompletionProviderBase):
-    priority = -4
+        return self.__class__.__name__
 
     def do_populate_async(self, context, cancellable, callback, user_data=None) -> None:
-        store = Gio.ListStore.new(CssNamedColorProposal)
         self._filter_data.word = context.get_word()
-
-        for color_name in tinycss2.color3._COLOR_KEYWORDS:
-            proposal = CssNamedColorProposal(color_name)
-            store.append(proposal)
+        store = self.proposals()
 
         def filter_fn(proposal, data):
             return proposal.text.startswith(data.word)
@@ -78,6 +63,34 @@ class CssNamedColorsCompletionProvider(CompletionProviderBase):
         store_filter = Gtk.CustomFilter.new(filter_fn, self._filter_data)
         proposals = Gtk.FilterListModel.new(store, store_filter)
         context.set_proposals_for_provider(self, proposals)
+
+    def do_refilter(
+        self, context: GtkSource.CompletionContext, model: Gio.ListModel
+    ) -> None:
+        word = context.get_word()
+        change = Gtk.FilterChange.DIFFERENT
+        if old_word := self._filter_data.word:
+            if word.startswith(old_word):
+                change = Gtk.FilterChange.MORE_STRICT
+            elif old_word.startswith(word):
+                change = Gtk.FilterChange.LESS_STRICT
+        self._filter_data.word = word
+        model.get_filter().changed(change)
+
+
+class CssNamedColorsCompletionProvider(CompletionProviderBase):
+    def __init__(self):
+        super().__init__(priority=-4)
+
+    def proposal_text(self, proposal: GtkSource.CompletionProposal) -> str:
+        return proposal.text  # type: ignore[no-any-return]
+
+    def proposals(self):
+        store = Gio.ListStore.new(CssNamedColorProposal)
+        for color_name in tinycss2.color3._COLOR_KEYWORDS:
+            proposal = CssNamedColorProposal(color_name)
+            store.append(proposal)
+        return store
 
 
 class CssNamedColorProposal(GObject.Object, GtkSource.CompletionProposal):
@@ -86,7 +99,7 @@ class CssNamedColorProposal(GObject.Object, GtkSource.CompletionProposal):
         self.text: str = text
 
 
-class CssFunctionCompletionProvider(GObject.GObject, GtkSource.CompletionProvider):
+class CssFunctionCompletionProvider(CompletionProviderBase):
     FUNCTIONS = [
         "hsl",
         "hsla",
@@ -95,69 +108,21 @@ class CssFunctionCompletionProvider(GObject.GObject, GtkSource.CompletionProvide
     ]
 
     def __init__(self):
-        super().__init__()
-        self._filter_data: FilterData = FilterData()
+        super().__init__(priority=3)
 
-    def do_activate(
-        self,
-        context: GtkSource.CompletionContext,
-        proposal: GtkSource.CompletionProposal,
-    ) -> None:
-        buffer = context.get_buffer()
-        buffer.begin_user_action()
-        has_selection, begin, end = context.get_bounds()
-        if has_selection:
-            buffer.delete(begin, end)
-        text = f"{proposal.text}()"
-        buffer.insert(begin, text, len(text))
-        begin.backward_char()
-        buffer.place_cursor(begin)
-        buffer.end_user_action()
+    def proposal_text(self, proposal: GtkSource.CompletionProposal) -> str:
+        return f"{proposal.text}()"
 
-    def do_display(
-        self,
-        context: GtkSource.CompletionContext,
-        proposal: GtkSource.CompletionProposal,
-        cell: GtkSource.CompletionCell,
-    ) -> None:
-        if cell.props.column == GtkSource.CompletionColumn.ICON:
-            pass
-        elif cell.props.column == GtkSource.CompletionColumn.TYPED_TEXT:
-            cell.set_text(proposal.text)
+    def position_cursor(self, buffer, cursor):
+        cursor.backward_char()
+        buffer.place_cursor(cursor)
 
-    def do_get_priority(self, context: GtkSource.CompletionContext) -> int:
-        return 3
-
-    def do_get_title(self) -> str:
-        return "Functions"
-
-    def do_populate_async(self, context, cancellable, callback, user_data=None) -> None:
+    def proposals(self):
         store = Gio.ListStore.new(CssFunctionProposal)
-        self._filter_data.word = context.get_word()
-
         for function in self.FUNCTIONS:
             proposal = CssFunctionProposal(function)
             store.append(proposal)
-
-        def filter_fn(proposal, data):
-            return proposal.text.startswith(data.word)
-
-        store_filter = Gtk.CustomFilter.new(filter_fn, self._filter_data)
-        proposals = Gtk.FilterListModel.new(store, store_filter)
-        context.set_proposals_for_provider(self, proposals)
-
-    def do_refilter(
-        self, context: GtkSource.CompletionContext, model: Gio.ListModel
-    ) -> None:
-        word = context.get_word()
-        change = Gtk.FilterChange.DIFFERENT
-        if old_word := self._filter_data.word:
-            if word.startswith(old_word):
-                change = Gtk.FilterChange.MORE_STRICT
-            elif old_word.startswith(word):
-                change = Gtk.FilterChange.LESS_STRICT
-        self._filter_data.word = word
-        model.get_filter().changed(change)
+        return store
 
 
 class CssFunctionProposal(GObject.Object, GtkSource.CompletionProposal):
@@ -166,71 +131,22 @@ class CssFunctionProposal(GObject.Object, GtkSource.CompletionProposal):
         self.text: str = text
 
 
-class CssPropertyCompletionProvider(GObject.GObject, GtkSource.CompletionProvider):
+class CssPropertyCompletionProvider(CompletionProviderBase):
     PROPERTIES = sorted(Style.__optional_keys__)
 
     def __init__(self):
-        super().__init__()
-        self._filter_data: FilterData = FilterData()
+        super().__init__(priority=1)
 
-    def do_activate(
-        self,
-        context: GtkSource.CompletionContext,
-        proposal: GtkSource.CompletionProposal,
-    ) -> None:
-        buffer = context.get_buffer()
-        buffer.begin_user_action()
-        has_selection, begin, end = context.get_bounds()
-        if has_selection:
-            buffer.delete(begin, end)
-        text = f"{proposal.text}: "
-        buffer.insert(begin, text, len(text))
-        buffer.end_user_action()
+    def proposal_text(self, proposal):
+        return f"{proposal.text}: "
 
-    def do_display(
-        self,
-        context: GtkSource.CompletionContext,
-        proposal: GtkSource.CompletionProposal,
-        cell: GtkSource.CompletionCell,
-    ) -> None:
-        if cell.props.column == GtkSource.CompletionColumn.ICON:
-            pass
-        elif cell.props.column == GtkSource.CompletionColumn.TYPED_TEXT:
-            cell.set_text(proposal.text)
-
-    def do_get_priority(self, context: GtkSource.CompletionContext) -> int:
-        return 1
-
-    def do_get_title(self) -> str:
-        return "Properties"
-
-    def do_populate_async(self, context, cancellable, callback, user_data=None) -> None:
+    def proposals(self):
         store = Gio.ListStore.new(CssPropertyProposal)
-        self._filter_data.word = context.get_word()
 
         for prop in self.PROPERTIES:
             proposal = CssPropertyProposal(prop)
             store.append(proposal)
-
-        def filter_fn(proposal, data):
-            return proposal.text.startswith(data.word)
-
-        store_filter = Gtk.CustomFilter.new(filter_fn, self._filter_data)
-        proposals = Gtk.FilterListModel.new(store, store_filter)
-        context.set_proposals_for_provider(self, proposals)
-
-    def do_refilter(
-        self, context: GtkSource.CompletionContext, model: Gio.ListModel
-    ) -> None:
-        word = context.get_word()
-        change = Gtk.FilterChange.DIFFERENT
-        if old_word := self._filter_data.word:
-            if word.startswith(old_word):
-                change = Gtk.FilterChange.MORE_STRICT
-            elif old_word.startswith(word):
-                change = Gtk.FilterChange.LESS_STRICT
-        self._filter_data.word = word
-        model.get_filter().changed(change)
+        return store
 
 
 class CssPropertyProposal(GObject.Object, GtkSource.CompletionProposal):
