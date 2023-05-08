@@ -17,6 +17,68 @@ class ProposalBase:
         pass
 
 
+class CssNamedColorProposals(ProposalBase):
+    def __init__(self):
+        super().__init__()
+        store = Gio.ListStore.new(TextProposal)
+        for color_name in tinycss2.color3._COLOR_KEYWORDS:
+            proposal = TextProposal(color_name)
+            store.append(proposal)
+        self.store = store
+
+    def proposals(self):
+        return self.store
+
+    def proposal_text(self, proposal: GtkSource.CompletionProposal) -> str:
+        return proposal.text  # type: ignore[no-any-return]
+
+
+class CssFunctionProposals(ProposalBase):
+    FUNCTIONS = [
+        "hsl",
+        "hsla",
+        "rgb",
+        "rgba",
+    ]
+
+    def __init__(self):
+        super().__init__()
+        store = Gio.ListStore.new(TextProposal)
+        for function in self.FUNCTIONS:
+            proposal = TextProposal(function)
+            store.append(proposal)
+        self.store = store
+
+    def proposals(self):
+        return self.store
+
+    def proposal_text(self, proposal: GtkSource.CompletionProposal) -> str:
+        return f"{proposal.text}()"
+
+    def position_cursor(self, buffer, cursor):
+        cursor.backward_char()
+        buffer.place_cursor(cursor)
+
+
+class CssPropertyProposals(ProposalBase):
+    PROPERTIES = sorted(Style.__optional_keys__)
+
+    def __init__(self):
+        super().__init__()
+
+        store = Gio.ListStore.new(TextProposal)
+        for prop in self.PROPERTIES:
+            proposal = TextProposal(prop)
+            store.append(proposal)
+        self.store = store
+
+    def proposals(self):
+        return self.store
+
+    def proposal_text(self, proposal):
+        return f"{proposal.text}: "
+
+
 class CompletionProviderWrapper(GObject.GObject, GtkSource.CompletionProvider):
     def __init__(self, priority: int, proposals: ProposalBase):
         super().__init__()
@@ -81,81 +143,7 @@ class CompletionProviderWrapper(GObject.GObject, GtkSource.CompletionProvider):
         model.get_filter().changed(change)
 
 
-class CssNamedColorProposals(ProposalBase):
-    def __init__(self):
-        super().__init__()
-        store = Gio.ListStore.new(CssNamedColorProposal)
-        for color_name in tinycss2.color3._COLOR_KEYWORDS:
-            proposal = CssNamedColorProposal(color_name)
-            store.append(proposal)
-        self.store = store
-
-    def proposals(self):
-        return self.store
-
-    def proposal_text(self, proposal: GtkSource.CompletionProposal) -> str:
-        return proposal.text  # type: ignore[no-any-return]
-
-
-class CssNamedColorProposal(GObject.Object, GtkSource.CompletionProposal):
-    def __init__(self, text: str):
-        super().__init__()
-        self.text: str = text
-
-
-class CssFunctionProposals(ProposalBase):
-    FUNCTIONS = [
-        "hsl",
-        "hsla",
-        "rgb",
-        "rgba",
-    ]
-
-    def __init__(self):
-        super().__init__()
-        store = Gio.ListStore.new(CssFunctionProposal)
-        for function in self.FUNCTIONS:
-            proposal = CssFunctionProposal(function)
-            store.append(proposal)
-        self.store = store
-
-    def proposals(self):
-        return self.store
-
-    def proposal_text(self, proposal: GtkSource.CompletionProposal) -> str:
-        return f"{proposal.text}()"
-
-    def position_cursor(self, buffer, cursor):
-        cursor.backward_char()
-        buffer.place_cursor(cursor)
-
-
-class CssFunctionProposal(GObject.Object, GtkSource.CompletionProposal):
-    def __init__(self, text: str):
-        super().__init__()
-        self.text: str = text
-
-
-class CssPropertyProposals(ProposalBase):
-    PROPERTIES = sorted(Style.__optional_keys__)
-
-    def __init__(self):
-        super().__init__()
-
-        store = Gio.ListStore.new(CssPropertyProposal)
-        for prop in self.PROPERTIES:
-            proposal = CssPropertyProposal(prop)
-            store.append(proposal)
-        self.store = store
-
-    def proposals(self):
-        return self.store
-
-    def proposal_text(self, proposal):
-        return f"{proposal.text}: "
-
-
-class CssPropertyProposal(GObject.Object, GtkSource.CompletionProposal):
+class TextProposal(GObject.Object, GtkSource.CompletionProposal):
     def __init__(self, text: str):
         super().__init__()
         self.text: str = text
