@@ -6,12 +6,7 @@ from gi.repository import Gio, GObject, Gtk, GtkSource
 from gaphor.core.styling import Style
 
 
-class CompletionProviderBase(GObject.GObject, GtkSource.CompletionProvider):
-    def __init__(self, priority: int):
-        super().__init__()
-        self._priority = priority
-        self._filter_data: FilterData = FilterData()
-
+class ProposalBase:
     def proposals(self) -> Gio.ListStore:
         raise NotImplementedError()
 
@@ -20,6 +15,14 @@ class CompletionProviderBase(GObject.GObject, GtkSource.CompletionProvider):
 
     def position_cursor(self, buffer, cursor):
         pass
+
+
+class CompletionProviderWrapper(GObject.GObject, GtkSource.CompletionProvider):
+    def __init__(self, priority: int, proposals: ProposalBase):
+        super().__init__()
+        self._priority = priority
+        self._proposals = proposals
+        self._filter_data: FilterData = FilterData()
 
     def do_activate(
         self,
@@ -31,9 +34,9 @@ class CompletionProviderBase(GObject.GObject, GtkSource.CompletionProvider):
         has_selection, begin, end = context.get_bounds()
         if has_selection:
             buffer.delete(begin, end)
-        text = self.proposal_text(proposal)
+        text = self._proposals.proposal_text(proposal)
         buffer.insert(begin, text, len(text))
-        self.position_cursor(buffer, begin)
+        self._proposals.position_cursor(buffer, begin)
         buffer.end_user_action()
 
     def do_display(
@@ -55,7 +58,7 @@ class CompletionProviderBase(GObject.GObject, GtkSource.CompletionProvider):
 
     def do_populate_async(self, context, cancellable, callback, user_data=None) -> None:
         self._filter_data.word = context.get_word()
-        store = self.proposals()
+        store = self._proposals.proposals()
 
         def filter_fn(proposal, data):
             return proposal.text.startswith(data.word)
@@ -78,19 +81,20 @@ class CompletionProviderBase(GObject.GObject, GtkSource.CompletionProvider):
         model.get_filter().changed(change)
 
 
-class CssNamedColorsCompletionProvider(CompletionProviderBase):
+class CssNamedColorProposals(ProposalBase):
     def __init__(self):
-        super().__init__(priority=-4)
-
-    def proposal_text(self, proposal: GtkSource.CompletionProposal) -> str:
-        return proposal.text  # type: ignore[no-any-return]
-
-    def proposals(self):
+        super().__init__()
         store = Gio.ListStore.new(CssNamedColorProposal)
         for color_name in tinycss2.color3._COLOR_KEYWORDS:
             proposal = CssNamedColorProposal(color_name)
             store.append(proposal)
-        return store
+        self.store = store
+
+    def proposals(self):
+        return self.store
+
+    def proposal_text(self, proposal: GtkSource.CompletionProposal) -> str:
+        return proposal.text  # type: ignore[no-any-return]
 
 
 class CssNamedColorProposal(GObject.Object, GtkSource.CompletionProposal):
@@ -99,7 +103,7 @@ class CssNamedColorProposal(GObject.Object, GtkSource.CompletionProposal):
         self.text: str = text
 
 
-class CssFunctionCompletionProvider(CompletionProviderBase):
+class CssFunctionProposals(ProposalBase):
     FUNCTIONS = [
         "hsl",
         "hsla",
@@ -108,7 +112,15 @@ class CssFunctionCompletionProvider(CompletionProviderBase):
     ]
 
     def __init__(self):
-        super().__init__(priority=3)
+        super().__init__()
+        store = Gio.ListStore.new(CssFunctionProposal)
+        for function in self.FUNCTIONS:
+            proposal = CssFunctionProposal(function)
+            store.append(proposal)
+        self.store = store
+
+    def proposals(self):
+        return self.store
 
     def proposal_text(self, proposal: GtkSource.CompletionProposal) -> str:
         return f"{proposal.text}()"
@@ -117,13 +129,6 @@ class CssFunctionCompletionProvider(CompletionProviderBase):
         cursor.backward_char()
         buffer.place_cursor(cursor)
 
-    def proposals(self):
-        store = Gio.ListStore.new(CssFunctionProposal)
-        for function in self.FUNCTIONS:
-            proposal = CssFunctionProposal(function)
-            store.append(proposal)
-        return store
-
 
 class CssFunctionProposal(GObject.Object, GtkSource.CompletionProposal):
     def __init__(self, text: str):
@@ -131,22 +136,23 @@ class CssFunctionProposal(GObject.Object, GtkSource.CompletionProposal):
         self.text: str = text
 
 
-class CssPropertyCompletionProvider(CompletionProviderBase):
+class CssPropertyProposals(ProposalBase):
     PROPERTIES = sorted(Style.__optional_keys__)
 
     def __init__(self):
-        super().__init__(priority=1)
+        super().__init__()
 
-    def proposal_text(self, proposal):
-        return f"{proposal.text}: "
-
-    def proposals(self):
         store = Gio.ListStore.new(CssPropertyProposal)
-
         for prop in self.PROPERTIES:
             proposal = CssPropertyProposal(prop)
             store.append(proposal)
-        return store
+        self.store = store
+
+    def proposals(self):
+        return self.store
+
+    def proposal_text(self, proposal):
+        return f"{proposal.text}: "
 
 
 class CssPropertyProposal(GObject.Object, GtkSource.CompletionProposal):

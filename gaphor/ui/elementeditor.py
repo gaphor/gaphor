@@ -21,9 +21,10 @@ from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.i18n import localedir
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.csscompletion import (
-    CssFunctionCompletionProvider,
-    CssNamedColorsCompletionProvider,
-    CssPropertyCompletionProvider,
+    CssFunctionProposals,
+    CssNamedColorProposals,
+    CssPropertyProposals,
+    CompletionProviderWrapper,
 )
 from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.ui.modelmerge import ModelMerge
@@ -320,9 +321,15 @@ class PreferencesStack:
         )
 
         view_completion = self.style_sheet_view.get_completion()
-        view_completion.add_provider(CssFunctionCompletionProvider())
-        view_completion.add_provider(CssNamedColorsCompletionProvider())
-        view_completion.add_provider(CssPropertyCompletionProvider())
+        view_completion.add_provider(
+            CompletionProviderWrapper(priority=3, proposals=CssFunctionProposals())
+        )
+        view_completion.add_provider(
+            CompletionProviderWrapper(priority=-4, proposals=CssNamedColorProposals())
+        )
+        view_completion.add_provider(
+            CompletionProviderWrapper(priority=1, proposals=CssPropertyProposals())
+        )
         assert self.style_manager
         self._notify_dark_id = self.style_manager.connect(
             "notify::dark", self._on_notify_dark
