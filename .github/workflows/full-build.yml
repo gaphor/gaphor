@@ -107,54 +107,6 @@ jobs:
           run-tests: true
           cache-key: flatpak-builder-${{ github.sha }}
 
-  linux-appimage:
-    name: Linux (AppImage)
-    needs: lint
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    container:
-      image: ghcr.io/gaphor/gaphor-appimage:2023.4.0
-    timeout-minutes: 30
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
-    outputs:
-      appimage: Gaphor-${{ steps.setup_and_test.outputs.version }}-x86_64.AppImage
-    steps:
-      - uses: actions/checkout@v3.5.2
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Set workspace as a safe git directory
-        run: git config --global --add safe.directory $GITHUB_WORKSPACE
-      - name: Use Python Dependency Cache
-        uses: actions/cache@v3.3.1
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-container
-      - name: Install Dependencies and Test
-        id: setup_and_test
-        uses: ./.github/actions/setup_and_test
-      - name: Create Linux Appimage
-        uses: ./.github/actions/linux_appimage
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        with:
-          version: ${{ steps.setup_and_test.outputs.version }}
-
-  check-linux-appimage:
-    name: Check Linux AppImage
-    needs: linux-appimage
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    if: ${{ github.actor != 'dependabot[bot]' }}
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: ${{ needs.linux-appimage.outputs.appimage }}
-          path: .
-      - name: Perform self-test
-        run: |
-          chmod +x ${{ needs.linux-appimage.outputs.appimage }}
-          xvfb-run ./${{ needs.linux-appimage.outputs.appimage }} --self-test
-
   macos:
     name: macOS
     needs: lint
@@ -360,7 +312,7 @@ jobs:
 
   publish-to-pypi:
     name: Publish to PyPI (release only)
-    needs: [ linux-wheel, linux-flatpak-devel, check-linux-appimage, check-macos-app, check-windows-installer ]
+    needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
     runs-on: ubuntu-22.04
     if: github.event_name == 'release'
     steps:
