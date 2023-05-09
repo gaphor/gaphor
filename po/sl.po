@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-04-09 15:14-0400\n"
+"POT-Creation-Date: 2023-05-08 21:48-0400\n"
 "PO-Revision-Date: 2022-10-17 00:00+0000\n"
 "Last-Translator: perovsek <jaka@kompot.si>\n"
 "Language: sl\n"
@@ -2003,7 +2003,7 @@ msgstr ""
 #: gaphor/ui/elementeditor.ui:44
 msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
-"you will see it's properties appear."
+"you will see its properties appear."
 msgstr ""
 
 #: gaphor/ui/elementeditor.ui:52
@@ -2081,8 +2081,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:335
 msgid ""
-"🔗 <a "
-"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
+"🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
 
@@ -2723,5 +2722,12 @@ msgstr ""
 #~ "registered trademarks or trademarks of "
 #~ "Object Management Group, Inc. in the "
 #~ "United States and/or other countries."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Add a model element from the tool"
+#~ " box (bottom left) to the diagram."
+#~ " Here you will see it's properties"
+#~ " appear."
 #~ msgstr ""
 

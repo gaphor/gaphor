@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-04-09 15:14-0400\n"
+"POT-Creation-Date: 2023-05-08 21:48-0400\n"
 "PO-Revision-Date: 2023-04-12 10:51+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
-"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
-">\n"
 "Language: fi\n"
+"Language-Team: Finnish "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -2049,12 +2048,13 @@ msgid "Show Tips"
 msgstr "Näytä vinkit"
 
 #: gaphor/ui/elementeditor.ui:44
+#, fuzzy
 msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
-"you will see it's properties appear."
+"you will see its properties appear."
 msgstr ""
-"Lisää mallielementti työkalulaatikosta vasemmalta alhaalta kaavioon. Näet "
-"sen ominaisuudet tässä."
+"Lisää mallielementti työkalulaatikosta vasemmalta alhaalta kaavioon. Näet"
+" sen ominaisuudet tässä."
 
 #: gaphor/ui/elementeditor.ui:52
 msgid "This pane can be hidden by clicking the pane icon in the header."
@@ -2134,13 +2134,12 @@ msgstr "Tyylisivu"
 
 #: gaphor/ui/elementeditor.ui:335
 msgid ""
-"🔗 <a "
-"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
+"🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
 "🔗 <a "
-"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Tyylisivut"
-" Gaphorissa</a>"
+"href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Tyylisivut "
+"Gaphorissa</a>"
 
 #: gaphor/ui/elementeditor.ui:349
 msgid "Merge Models"
@@ -3128,3 +3127,4 @@ msgstr "Päivitä relaatio “{name}”"
 #~ "Object Management Group, Inc. in the "
 #~ "United States and/or other countries."
 #~ msgstr ""
+
