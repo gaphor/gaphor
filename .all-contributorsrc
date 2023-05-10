@@ -1124,6 +1124,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "pajakpawel",
+      "name": "Paweł Pająk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32963953?v=4",
+      "profile": "https://github.com/pajakpawel",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
