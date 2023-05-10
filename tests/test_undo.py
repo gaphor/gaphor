@@ -7,9 +7,15 @@ from gaphor.application import Application
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.tests.fixtures import connect
-from gaphor.UML.classes import AssociationItem, ClassItem, GeneralizationItem
+from gaphor.UML.classes import (
+    AssociationItem,
+    ClassItem,
+    GeneralizationItem,
+    PackageItem,
+)
 from gaphor.UML.interactions import MessageItem
 from gaphor.UML.interactions.interactionstoolbox import reflexive_message_config
+from gaphor.UML.profiles import ExtensionItem
 
 
 @pytest.fixture
@@ -346,3 +352,45 @@ def test_reconnect_on_same_element(event_manager, element_factory, undo_manager)
     diagram.update_now(diagram.ownedPresentation)
 
     assert original_handle_pos == copy_pos(association.head.pos)
+
+
+def test_undo_applied_stereotyoe(event_manager, element_factory, undo_manager):
+    with Transaction(event_manager):
+        package = next(element_factory.select(UML.Package))
+        diagram: Diagram = next(element_factory.select(Diagram))
+        diagram.name = "new diagram"
+        package_item = diagram.create(PackageItem, subject=package)
+
+        assert diagram.element is package
+
+        klass = element_factory.create(UML.Class)
+        klass.package = package
+        diagram.create(ClassItem, subject=klass)
+
+        metaclass = element_factory.create(UML.Class)
+        metaclass.name = "Class"
+        metaclass.package = package
+        stereotype = element_factory.create(UML.Stereotype)
+        stereotype.ownedAttribute = element_factory.create(UML.Property)
+        stereotype.ownedAttribute[0].name = "attr"
+        stereotype.package = package
+
+        metaclass_item = diagram.create(ClassItem, subject=metaclass)
+        stereotype_item = diagram.create(ClassItem, subject=stereotype)
+        extension = diagram.create(ExtensionItem)
+        connect(extension, extension.head, metaclass_item)
+        connect(extension, extension.tail, stereotype_item)
+
+        instance_spec = UML.recipes.apply_stereotype(klass, stereotype)
+        slot = UML.recipes.add_slot(instance_spec, stereotype.ownedAttribute[0])
+        slot.value = "val"
+
+        from gaphor.storage.storage import save
+
+        with open("out.gaphor", "w") as f:
+            save(f, element_factory)
+
+    with Transaction(event_manager):
+        package_item.unlink()
+
+    undo_manager.undo_transaction()
