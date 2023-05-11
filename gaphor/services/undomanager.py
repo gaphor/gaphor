@@ -98,6 +98,7 @@ class UndoManager(Service, ActionProvider):
         self._stack_depth = 20
         self._current_transaction = None
         self._undoing = 0
+        self._rolling_back = 0
 
         event_manager.priority_subscribe(self.reset)
         event_manager.priority_subscribe(self.begin_transaction)
@@ -172,11 +173,18 @@ class UndoManager(Service, ActionProvider):
         """Roll back the transaction we're in."""
         assert self._current_transaction
 
+        if self._rolling_back:
+            logger.error(
+                "Already performing a rollback, ignoring additional rollback events"
+            )
+            return
+
         # Store stacks
         undo_stack = list(self._undo_stack)
 
         erroneous_tx = self._current_transaction
         self._current_transaction = None
+        self._rolling_back += 1
         try:
             with Transaction(self.event_manager):
                 try:
@@ -187,6 +195,7 @@ class UndoManager(Service, ActionProvider):
         finally:
             # Discard all data collected in the rollback "transaction"
             self._undo_stack = undo_stack
+            self._rolling_back -= 1
 
         self._action_executed()
 

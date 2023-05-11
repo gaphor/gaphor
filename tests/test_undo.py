@@ -1,21 +1,20 @@
 import logging
 
 import pytest
+from exceptiongroup import ExceptionGroup
 
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram
+from gaphor.core import Transaction, event_handler
+from gaphor.core.modeling import Diagram, AssociationUpdated
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import (
     AssociationItem,
     ClassItem,
     GeneralizationItem,
-    PackageItem,
 )
 from gaphor.UML.interactions import MessageItem
 from gaphor.UML.interactions.interactionstoolbox import reflexive_message_config
-from gaphor.UML.profiles import ExtensionItem
 
 
 @pytest.fixture
@@ -354,43 +353,27 @@ def test_reconnect_on_same_element(event_manager, element_factory, undo_manager)
     assert original_handle_pos == copy_pos(association.head.pos)
 
 
-def test_undo_applied_stereotyoe(event_manager, element_factory, undo_manager):
+def test_exception_raised_during_undo(event_manager, element_factory, undo_manager):
+    next(element_factory.select(Diagram))
+    package: UML.Package = next(element_factory.select(UML.Package))
+
     with Transaction(event_manager):
-        package = next(element_factory.select(UML.Package))
-        diagram: Diagram = next(element_factory.select(Diagram))
-        diagram.name = "new diagram"
-        package_item = diagram.create(PackageItem, subject=package)
-
-        assert diagram.element is package
-
         klass = element_factory.create(UML.Class)
         klass.package = package
-        diagram.create(ClassItem, subject=klass)
-
-        metaclass = element_factory.create(UML.Class)
-        metaclass.name = "Class"
-        metaclass.package = package
-        stereotype = element_factory.create(UML.Stereotype)
-        stereotype.ownedAttribute = element_factory.create(UML.Property)
-        stereotype.ownedAttribute[0].name = "attr"
-        stereotype.package = package
-
-        metaclass_item = diagram.create(ClassItem, subject=metaclass)
-        stereotype_item = diagram.create(ClassItem, subject=stereotype)
-        extension = diagram.create(ExtensionItem)
-        connect(extension, extension.head, metaclass_item)
-        connect(extension, extension.tail, stereotype_item)
-
-        instance_spec = UML.recipes.apply_stereotype(klass, stereotype)
-        slot = UML.recipes.add_slot(instance_spec, stereotype.ownedAttribute[0])
-        slot.value = "val"
-
-        from gaphor.storage.storage import save
-
-        with open("out.gaphor", "w") as f:
-            save(f, element_factory)
 
     with Transaction(event_manager):
-        package_item.unlink()
+        klass.unlink()
 
-    undo_manager.undo_transaction()
+    @event_handler(AssociationUpdated)
+    def raise_an_exception(event):
+        if event.property is UML.Class.package:
+            raise ValueError("Test exception")
+
+    event_manager.subscribe(raise_an_exception)
+
+    with pytest.raises(ExceptionGroup):
+        undo_manager.undo_transaction()
+
+
+class UndoRequested:
+    pass
