@@ -7,7 +7,7 @@ from gaphor.application import distribution
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
 
-def main(argv) -> int:
+def main(argv=sys.argv) -> int:
     """Start Gaphor from the command line."""
     args = parse_args(argv)
 
@@ -98,4 +98,4 @@ def parse_args(argv):
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv))
+    sys.exit(main())
