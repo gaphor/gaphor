@@ -8,36 +8,8 @@ LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
 
 def main(argv) -> int:
-    """Start Gaphor from the command line.  This function creates an option
-    parser for retrieving arguments and options from the command line.  This
-    includes a Gaphor model to load.
-
-    The application is then initialized, passing along the option
-    parser.  This provides plugins and services with access to the
-    command line options and may add their own.
-    """
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "-v", "--version", help="Print version and exit", action="store_true"
-    )
-    parser.add_argument("-d", "--debug", help="Debug output", action="store_true")
-    parser.add_argument("-q", "--quiet", help="Quiet output", action="store_true")
-    parser.add_argument(
-        "-p", "--profiler", help="Run in profiler (cProfile)", action="store_true"
-    )
-    parser.add_argument("--exec", help="Execute a script file and exit", dest="script")
-    parser.add_argument(
-        "--self-test", help="Run self test and exit", action="store_true"
-    )
-    parser.add_argument(
-        "--gapplication-service",
-        help="Enter GApplication service mode (use from D-Bus service files)",
-        action="store_true",
-    )
-    parser.add_argument("filename", nargs="*", help="Model(s) to load")
-
-    args = parser.parse_args(args=argv[1:])
+    """Start Gaphor from the command line."""
+    args = parse_args(argv)
 
     if args.version:
         print(f"Gaphor {distribution().version}")
@@ -55,7 +27,7 @@ def main(argv) -> int:
         return execute_script(args.script)
 
     return ui(
-        argv[0], args.filename, args.self_test, args.profiler, args.gapplication_service
+        argv[0], args.model, args.self_test, args.profiler, args.gapplication_service
     )
 
 
@@ -66,7 +38,7 @@ def execute_script(script: str) -> int:
     return 0
 
 
-def ui(prog, filenames, self_test, profiler, gapplication_service) -> int:
+def ui(prog, models, self_test, profiler, gapplication_service) -> int:
     # Only now import the UI module
     from gaphor.ui import run
 
@@ -75,7 +47,7 @@ def ui(prog, filenames, self_test, profiler, gapplication_service) -> int:
         run_argv += ["--self-test"]
     if gapplication_service:
         run_argv += ["--gapplication-service"]
-    run_argv.extend(filenames)
+    run_argv.extend(models)
 
     if profiler:
         import cProfile
@@ -89,6 +61,40 @@ def ui(prog, filenames, self_test, profiler, gapplication_service) -> int:
         return exit_code
 
     return run(run_argv)
+
+
+def parse_args(argv):
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-v", "--version", help="Print version and exit", action="store_true"
+    )
+    parser.add_argument(
+        "-d", "--debug", help="Enable debug logging", action="store_true"
+    )
+    parser.add_argument(
+        "-q", "--quiet", help="Only show warning and error logging", action="store_true"
+    )
+
+    exec_group = parser.add_argument_group("Scripting options")
+    exec_group.add_argument(
+        "--exec", help="Execute a script file and exit", dest="script"
+    )
+
+    ui_group = parser.add_argument_group("Interactive (GUI) options")
+    ui_group.add_argument(
+        "-p", "--profiler", help="Run in profiler (cProfile)", action="store_true"
+    )
+    ui_group.add_argument(
+        "--self-test", help="Run self test and exit", action="store_true"
+    )
+    ui_group.add_argument("model", nargs="*", help="Model file(s) to load")
+
+    gapplication_group = parser.add_argument_group(
+        "GApplication settings (use from D-Bus service files)"
+    )
+    gapplication_group.add_argument("--gapplication-service", action="store_true")
+
+    return parser.parse_args(args=argv[1:])
 
 
 if __name__ == "__main__":
