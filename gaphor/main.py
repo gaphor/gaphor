@@ -66,28 +66,28 @@ def ui(prog, models, self_test, profiler, gapplication_service) -> int:
 def parse_args(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-v", "--version", help="Print version and exit", action="store_true"
+        "-v", "--version", help="print version and exit", action="store_true"
     )
     parser.add_argument(
-        "-d", "--debug", help="Enable debug logging", action="store_true"
+        "-d", "--debug", help="enable debug logging", action="store_true"
     )
     parser.add_argument(
-        "-q", "--quiet", help="Only show warning and error logging", action="store_true"
+        "-q", "--quiet", help="only show warning and error logging", action="store_true"
     )
 
-    exec_group = parser.add_argument_group("Scripting options")
+    exec_group = parser.add_argument_group("scripting options")
     exec_group.add_argument(
-        "--exec", help="Execute a script file and exit", dest="script"
+        "--exec", help="execute a script file and exit", dest="script", metavar="script"
     )
 
-    ui_group = parser.add_argument_group("Interactive (GUI) options")
+    ui_group = parser.add_argument_group("interactive (GUI) options")
     ui_group.add_argument(
-        "-p", "--profiler", help="Run in profiler (cProfile)", action="store_true"
+        "-p", "--profiler", help="run in profiler (cProfile)", action="store_true"
     )
     ui_group.add_argument(
-        "--self-test", help="Run self test and exit", action="store_true"
+        "--self-test", help="run self test and exit", action="store_true"
     )
-    ui_group.add_argument("model", nargs="*", help="Model file(s) to load")
+    ui_group.add_argument("model", nargs="*", help="model file(s) to load")
 
     gapplication_group = parser.add_argument_group(
         "GApplication settings (use from D-Bus service files)"
