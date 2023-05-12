@@ -1,6 +1,7 @@
 import sys
 
-from gaphor.ui import main
+from gaphor.main import main
+
 
 if __name__ == "__main__":
     sys.exit(main(sys.argv))
