@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 
 import pytest
 
@@ -54,3 +55,11 @@ def test_gapplication_service(mock_gaphor_ui_run):
     main([APP_NAME, "--gapplication-service"])
 
     assert mock_gaphor_ui_run == [APP_NAME, "--gapplication-service"]
+
+
+def test_run_script(capsys):
+    run_script = Path(__file__).parent / "run_script.py"
+
+    main([APP_NAME, "--exec", str(run_script)])
+
+    assert "Running a test script for Gaphor" in capsys.readouterr().out

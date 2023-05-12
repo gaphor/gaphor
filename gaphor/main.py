@@ -26,6 +26,7 @@ def main(argv) -> int:
     parser.add_argument(
         "-p", "--profiler", help="Run in profiler (cProfile)", action="store_true"
     )
+    parser.add_argument("--exec", help="Execute a script file and exit", dest="script")
     parser.add_argument(
         "--self-test", help="Run self test and exit", action="store_true"
     )
@@ -50,9 +51,19 @@ def main(argv) -> int:
     else:
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 
+    if args.script:
+        return execute_script(args.script)
+
     return ui(
         argv[0], args.filename, args.self_test, args.profiler, args.gapplication_service
     )
+
+
+def execute_script(script: str) -> int:
+    import runpy
+
+    runpy.run_path(script, run_name="__main__")
+    return 0
 
 
 def ui(prog, filenames, self_test, profiler, gapplication_service) -> int:
