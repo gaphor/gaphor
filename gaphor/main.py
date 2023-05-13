@@ -11,10 +11,17 @@ def main(argv=sys.argv) -> int:
     """Start Gaphor from the command line."""
     args = parse_args(argv)
 
-    if args.version:
-        print(f"Gaphor {distribution().version}")
-        return 0
+    logging_config(args)
 
+    if hasattr(args, "func"):
+        return args.func(args)  # type: ignore[no-any-return]
+
+    return ui(
+        argv[0], args.model, args.self_test, args.profiler, args.gapplication_service
+    )
+
+
+def logging_config(args):
     if args.debug:
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
         logging.getLogger("gaphor").setLevel(logging.DEBUG)
@@ -23,18 +30,18 @@ def main(argv=sys.argv) -> int:
     else:
         logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
 
-    if args.script:
-        return execute_script(args.script)
 
-    return ui(
-        argv[0], args.model, args.self_test, args.profiler, args.gapplication_service
-    )
-
-
-def execute_script(script: str) -> int:
+def execute_script(args) -> int:
     import runpy
 
+    logging_config(args)
+    script = args.script
     runpy.run_path(script, run_name="__main__")
+    return 0
+
+
+def export_script(args):
+    print("Placeholder for diagram export")
     return 0
 
 
@@ -64,10 +71,15 @@ def ui(prog, models, self_test, profiler, gapplication_service) -> int:
 
 
 def parse_args(argv):
-    parser = argparse.ArgumentParser(description="Gaphor is the simple modeling tool.")
+    parser = argparse.ArgumentParser(
+        description="Gaphor is the simple modeling tool.",
+        add_help=False,
+    )
+
     parser.add_argument(
         "-v", "--version", help="print version and exit", nargs=0, action=VersionAction
     )
+
     parser.add_argument(
         "-d", "--debug", help="enable debug logging", action="store_true"
     )
@@ -75,26 +87,39 @@ def parse_args(argv):
         "-q", "--quiet", help="only show warning and error logging", action="store_true"
     )
 
-    exec_group = parser.add_argument_group("scripting options")
-    exec_group.add_argument(
-        "--exec", help="execute a script file and exit", dest="script", metavar="script"
-    )
-
-    ui_group = parser.add_argument_group("interactive (GUI) options")
-    ui_group.add_argument(
+    gui_parser = argparse.ArgumentParser(parents=[parser])
+    gui_parser.add_argument(
         "-p", "--profiler", help="run in profiler (cProfile)", action="store_true"
     )
-    ui_group.add_argument(
+    gui_parser.add_argument(
         "--self-test", help="run self test and exit", action="store_true"
     )
-    ui_group.add_argument("model", nargs="*", help="model file(s) to load")
+    gui_parser.add_argument("--gapplication-service", action="store_true")
+    gui_parser.add_argument("model", nargs="*", help="model file(s) to load")
 
-    gapplication_group = parser.add_argument_group(
-        "GApplication settings (use from D-Bus service files)"
-    )
-    gapplication_group.add_argument("--gapplication-service", action="store_true")
+    exec_parser = argparse.ArgumentParser(parents=[parser])
+    exec_parser.add_argument("script", help="execute a script file and exit")
+    exec_parser.set_defaults(func=execute_script)
 
-    return parser.parse_args(args=argv[1:])
+    export_parser = argparse.ArgumentParser(parents=[parser])
+    export_parser.set_defaults(func=export_script)
+
+    commands = {
+        "gui": gui_parser,
+        "exec": exec_parser,
+        "export": export_parser,
+    }
+
+    gui_parser.epilog = "extra commands: exec, export"
+
+    args, extra_args = parser.parse_known_args(args=argv[1:])
+
+    if extra_args and (cmd_parser := commands.get(extra_args[0])):
+        cmd_parser.parse_args(extra_args[1:], namespace=args)
+    else:
+        gui_parser.parse_args(extra_args, namespace=args)
+
+    return args
 
 
 class VersionAction(argparse.Action):
