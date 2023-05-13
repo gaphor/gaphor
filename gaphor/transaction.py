@@ -78,11 +78,8 @@ class Transaction:
         TransactionRollback event is emitted.
         """
 
-        self._close()
-        if not self._stack:
-            self._handle(TransactionRollback())
-        else:
-            self.mark_rollback()
+        self.mark_rollback()
+        self.commit()
 
     def mark_rollback(self):
         for tx in self._stack:
@@ -120,18 +117,12 @@ class Transaction:
         it is committed.
         """
 
-        if exc_type:
-            if not self._need_rollback:
-                log.error(
-                    "Transaction terminated due to an exception, performing a rollback",
-                )
-            try:
-                self.rollback()
-            except Exception:
-                log.error("Rollback failed", exc_info=True)
-                raise
-        else:
-            self.commit()
+        if exc_type and not self._need_rollback:
+            log.error(
+                "Transaction terminated due to an exception, performing a rollback",
+            )
+            self.mark_rollback()
+        self.commit()
 
 
 class TransactionContext:
