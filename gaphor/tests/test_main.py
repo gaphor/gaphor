@@ -1,4 +1,5 @@
 import logging
+import sys
 from pathlib import Path
 
 import pytest
@@ -6,7 +7,7 @@ import pytest
 import gaphor.ui
 from gaphor.main import main
 
-APP_NAME = "/path/to/gaphor"
+APP_NAME = sys.argv[0]
 
 
 @pytest.fixture(autouse=True)
@@ -61,6 +62,6 @@ def test_gapplication_service(mock_gaphor_ui_run):
 def test_run_script(capsys):
     run_script = Path(__file__).parent / "run_script.py"
 
-    main([APP_NAME, "--exec", str(run_script)])
+    main([APP_NAME, "exec", str(run_script)])
 
     assert "Running a test script for Gaphor" in capsys.readouterr().out
