@@ -8,7 +8,7 @@ import tempfile
 
 import cairo
 import gi
-from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Pango
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk, GtkSource, Pango
 import pygit2
 
 from gaphor.abc import Service
@@ -161,23 +161,19 @@ class SelfTest(Service):
 def system_information():
     return textwrap.dedent(
         f"""\
-        Gaphor version:    {distribution().version}
-        Operating System:  {platform.system()} ({platform.release()})
-        Python version:    {platform.python_version()}
-        GTK version:       {Gtk.get_major_version()}.{Gtk.get_minor_version()}.{Gtk.get_micro_version()}
-        Adwaita version:   {adwaita_version()}
-        PyGObject version: {".".join(map(str, gi.version_info))}
-        Pycairo version:   {cairo.version}
-        Cairo version:     {cairo.cairo_version_string()}
-        Pango version:     {Pango.version_string()}
-        Display:           {display_type()}
+        Gaphor version:         {distribution().version}
+        Operating System:       {platform.system()} ({platform.release()})
+        Display:                {display_type()}
+        Python version:         {platform.python_version()}
+        GTK version:            {Gtk.get_major_version()}.{Gtk.get_minor_version()}.{Gtk.get_micro_version()}
+        Adwaita version:        {Adw.get_major_version()}.{Adw.get_minor_version()}.{Adw.get_micro_version()}
+        GtkSourceView version:  {GtkSource.get_major_version()}.{GtkSource.get_minor_version()}.{GtkSource.get_micro_version()}
+        Cairo version:          {cairo.cairo_version_string()}
+        Pango version:          {Pango.version_string()}
+        PyGObject version:      {gi.__version__}
+        Pycairo version:        {cairo.version}
+        pygit2/libgit2 version: {pygit2.__version__} / {pygit2.LIBGIT2_VERSION}
         """
-    )
-
-
-def adwaita_version():
-    return (
-        f"{Adw.get_major_version()}.{Adw.get_minor_version()}.{Adw.get_micro_version()}"
     )
 
 
