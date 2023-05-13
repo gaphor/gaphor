@@ -117,7 +117,7 @@ An error will appear in the documentation. Something like this:
    No diagram ‘Wrong name’ in model ‘example’ (../examples/sequence-diagram.gaphor).
 
 
-.. _Sphinx: https://sphinx-doc.org
+.. _Sphinx: https://www.sphinx-doc.org
 .. _reStructured Text: https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html
 .. _Markdown: https://myst-parser.readthedocs.io
 .. _Image properties: https://docutils.sourceforge.io/docs/ref/rst/directives.html#image

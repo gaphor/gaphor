@@ -1079,6 +1079,60 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "gnu-ewm",
+      "name": "Eryk Michalak",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73967801?v=4",
+      "profile": "https://github.com/gnu-ewm",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "jposada202020",
+      "name": "jposada202020",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34255413?v=4",
+      "profile": "https://github.com/jposada202020",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "eUgEntOptIc44",
+      "name": "Jean-Luc Tibaux",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90517741?v=4",
+      "profile": "https://eugentoptic44.codeberg.page/",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "johnvonlzf",
+      "name": "johnvon",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5709453?v=4",
+      "profile": "https://github.com/johnvonlzf",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "ajoga",
+      "name": "Aurélien Joga",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37543966?v=4",
+      "profile": "https://github.com/ajoga",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "pajakpawel",
+      "name": "Paweł Pająk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32963953?v=4",
+      "profile": "https://github.com/pajakpawel",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,

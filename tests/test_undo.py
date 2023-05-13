@@ -1,13 +1,18 @@
 import logging
 
 import pytest
+from exceptiongroup import ExceptionGroup
 
 from gaphor import UML
 from gaphor.application import Application
-from gaphor.core import Transaction
-from gaphor.core.modeling import Diagram
+from gaphor.core import Transaction, event_handler
+from gaphor.core.modeling import Diagram, AssociationUpdated
 from gaphor.diagram.tests.fixtures import connect
-from gaphor.UML.classes import AssociationItem, ClassItem, GeneralizationItem
+from gaphor.UML.classes import (
+    AssociationItem,
+    ClassItem,
+    GeneralizationItem,
+)
 from gaphor.UML.interactions import MessageItem
 from gaphor.UML.interactions.interactionstoolbox import reflexive_message_config
 
@@ -346,3 +351,60 @@ def test_reconnect_on_same_element(event_manager, element_factory, undo_manager)
     diagram.update_now(diagram.ownedPresentation)
 
     assert original_handle_pos == copy_pos(association.head.pos)
+
+
+def test_exception_raised_during_undo(event_manager, element_factory, undo_manager):
+    package: UML.Package = next(element_factory.select(UML.Package))
+
+    with Transaction(event_manager):
+        klass = element_factory.create(UML.Class)
+        klass.package = package
+
+    with Transaction(event_manager):
+        klass.unlink()
+
+    @event_handler(AssociationUpdated)
+    def raise_an_exception(event):
+        if event.property is UML.Class.package:
+            raise ValueError("Test exception")
+
+    event_manager.subscribe(raise_an_exception)
+
+    with pytest.raises(ExceptionGroup):
+        undo_manager.undo_transaction()
+
+
+def test_exception_raised_during_undo_from_event_handler(
+    event_manager, element_factory, undo_manager
+):
+    package: UML.Package = next(element_factory.select(UML.Package))
+
+    with Transaction(event_manager):
+        klass = element_factory.create(UML.Class)
+        klass.package = package
+
+    with Transaction(event_manager):
+        klass.unlink()
+
+    @event_handler(AssociationUpdated)
+    def raise_an_exception(event):
+        if event.property is UML.Class.package:
+            raise ValueError("Test exception")
+
+    event_manager.subscribe(raise_an_exception)
+
+    @event_handler(UndoRequested)
+    def on_undo_requested(event):
+        undo_manager.undo_transaction()
+
+    event_manager.subscribe(on_undo_requested)
+
+    with pytest.raises(ExceptionGroup):
+        event_manager.handle(UndoRequested())
+
+    # Handle remaining events on the queue
+    event_manager.handle()
+
+
+class UndoRequested:
+    pass

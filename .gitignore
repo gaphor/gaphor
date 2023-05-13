@@ -1,6 +1,8 @@
 build
 dist
 gaphor/locale/*/LC_MESSAGES
+docs/locale/*/LC_MESSAGES/*.mo
+docs/locale/.doctrees
 html
 *.pyc
 *.pyo

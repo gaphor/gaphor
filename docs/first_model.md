@@ -6,7 +6,7 @@ In this tutorial we refer to the different parts of the gaphor interface:
 {ref}`Property Editor <getting_started:property editor>`.
 
 Although the names should speak for themselves, you can check out the [Getting
-Started](getting_started) page for more information about those sections.
+Started](getting_started) page for more information.
 ```
 
 Once Gaphor is started, and you can start a new model with the _Generic_ template. The

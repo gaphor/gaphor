@@ -1,7 +1,7 @@
 # Gaphor on Linux
 
-Gaphor can be installed as Flatpak and AppImage on Linux, some distributions provide
-packages. Check out the [Gaphor download page](https://gaphor.org/download.html#linux)
+Gaphor can be installed as Flatpak on Linux, some distributions provide
+packages. Check out the [Gaphor download page](https://gaphor.org/download/#linux)
 for details.
 
 Older releases are available from [GitHub](https://github.com/gaphor/gaphor/releases).
@@ -113,25 +113,6 @@ repository](https://github.com/flathub/org.gaphor.Gaphor).
 
        make install
 
-## Create an AppImage Package
-
-[AppImage](https://appimage.org/) is a format for distributing portable software
-on Linux without needing superuser permissions to install the application. The
-AppImage file is one executable which contains both Gaphor and Python. It allows
-Gaphor to be run on any AppImage supported platform without installation or root
-access.
-
-We build our AppImage by first bundling Gaphor with PyInstaller and then
-converting it in to an AppImage.
-
-In order for the built AppImage to be compatible with older versions of Linux,
-we build the release versions using Docker with an older LTS version of Ubuntu.
-
-```Bash
-poetry run poe package
-cd _packaging/appimage
-make dist
-```
 ## Linux Distribution Packages
 
 Examples of Gaphor and Gaphas RPM spec files can be found in [PLD

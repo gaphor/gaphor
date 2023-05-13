@@ -16,9 +16,6 @@ inputs:
   ac_password:
     description: 'ac_password'
     required: true
-  github_token:
-    description: 'GitHub token for uploading releases'
-    required: true
   sign_app:
     description: 'Build is performed on the main line'
     required: true
@@ -94,7 +91,7 @@ runs:
         path: _packaging/dist/Gaphor-${{ inputs.version }}.dmg
     - name: Upload Assets (release only)
       if: github.event_name == 'release'
-      run: |
-        echo ${{ inputs.github_token }} | gh auth login --with-token
-        gh release upload ${{ inputs.version }} "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: gh release upload ${{ inputs.version }} "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
       shell: bash

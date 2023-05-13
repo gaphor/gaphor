@@ -1,6 +1,6 @@
 # Gaphor on macOS
 
-The latest release of Gaphor can be downloaded from the [Gaphor download page](https://gaphor.org/download.html#macos). Gaphor can also be installed as a [Homebrew cask](https://formulae.brew.sh/cask/gaphor).
+The latest release of Gaphor can be downloaded from the [Gaphor download page](https://gaphor.org/download#macos). Gaphor can also be installed as a [Homebrew cask](https://formulae.brew.sh/cask/gaphor).
 
 Older releases are available from [GitHub](https://github.com/gaphor/gaphor/releases).
 

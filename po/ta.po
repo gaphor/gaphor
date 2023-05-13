@@ -1,19 +1,19 @@
-# Chinese (Simplified) translations for PROJECT.
-# Copyright (C) 2021 ORGANIZATION
+# Tamil translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-08 21:50-0400\n"
-"PO-Revision-Date: 2023-05-05 09:51+0000\n"
-"Last-Translator: johnvon <handanlinzhang@163.com>\n"
-"Language: zh_Hans\n"
-"Language-Team: Chinese (Simplified) "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/zh_Hans/>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"POT-Creation-Date: 2023-05-08 21:48-0400\n"
+"PO-Revision-Date: 2023-04-14 09:50+0000\n"
+"Last-Translator: \"K.B.Dharun Krishna\" <kbdharunkrishna@gmail.com>\n"
+"Language: ta\n"
+"Language-Team: Tamil "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/ta/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,186 +22,185 @@ msgstr ""
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
 #: gaphor/ui/greeter.py:55
 msgid "C4 Model"
-msgstr "C4 模型"
+msgstr "C4 மாதிரி"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:137
 msgid "Description"
-msgstr "描述"
+msgstr "விளக்கம்"
 
 #: gaphor/C4Model/propertypages.ui:38
 msgid "Technology"
-msgstr "技术"
+msgstr "தொழில்நுட்பம்"
 
 #: gaphor/C4Model/toolbox.py:29
 msgid "New Software System"
-msgstr "新建软件系统"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:36
 msgid "New Container"
-msgstr "新建容器"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:43
 msgid "Database"
-msgstr "数据库"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:44
 msgid "New Database"
-msgstr "创建新数据库"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:51
 msgid "New Component"
-msgstr "新建组件"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:59 gaphor/C4Model/toolbox.py:65
 msgid "Person"
-msgstr "参与人"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:71
 msgid "Software System"
-msgstr "软件系统"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:83
 msgid "Container"
-msgstr "容器"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:95
 msgid "Container: Database"
-msgstr "容器: 数据库"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:107 gaphor/UML/classes/classestoolbox.py:59
 msgid "Component"
-msgstr "组件"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:105
 #: gaphor/UML/classes/dependencypropertypages.py:36
 msgid "Dependency"
-msgstr "依赖"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:139
 msgid "New C4 Diagram"
-msgstr "新建 C4 模型图"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:140 gaphor/UML/toolbox.py:30
 msgid "New Class Diagram"
-msgstr "新建类图"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
 msgid "New Activity Diagram"
-msgstr "新建活动图"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
 msgid "New Sequence Diagram"
-msgstr "新建序列图"
+msgstr ""
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
 msgid "New State Machine Diagram"
-msgstr "新建状态图"
+msgstr ""
 
 #: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:48
 msgid "RAAML"
-msgstr "RAAML"
+msgstr ""
 
 #: gaphor/RAAML/toolbox.py:19
 msgid "New FTA Diagram"
-msgstr "新建 FTA 图"
+msgstr ""
 
 #: gaphor/RAAML/toolbox.py:20
 msgid "New STPA Diagram"
-msgstr "新建 STPA 图"
+msgstr ""
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
-msgstr "与门"
+msgstr ""
 
 #: gaphor/RAAML/fta/basicevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:125
 #: gaphor/RAAML/fta/ftatoolbox.py:131
 msgid "Basic Event"
-msgstr "基本事件"
+msgstr ""
 
 #: gaphor/RAAML/fta/conditionalevent.py:32 gaphor/RAAML/fta/ftatoolbox.py:136
 #: gaphor/RAAML/fta/ftatoolbox.py:143
 msgid "Conditional Event"
-msgstr "条件式事件"
+msgstr ""
 
 #: gaphor/RAAML/fta/dormantevent.py:35 gaphor/RAAML/fta/ftatoolbox.py:162
 #: gaphor/RAAML/fta/ftatoolbox.py:168
 msgid "Dormant Event"
-msgstr "休眠事件"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:12 gaphor/templates/raaml.gaphor
 msgid "Fault Tree Analysis"
-msgstr "故障树分析"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:30
 msgid "AND"
-msgstr "与"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:35 gaphor/RAAML/fta/orgate.py:37
 msgid "OR Gate"
-msgstr "或门"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:41 gaphor/templates/raaml.gaphor
 msgid "OR"
-msgstr "或"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
 msgid "NOT Gate"
-msgstr "非门"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
-msgstr "非"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:57
 msgid "Sequence Enforcing (SEQ) Gate"
-msgstr "顺序相关门"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:63
 msgid "SEQ"
-msgstr "顺序相关门"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:68
 msgid "Exclusive OR Gate"
-msgstr "异或门"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
 msgid "XOR"
-msgstr "异或"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:39
 msgid "Majority Vote Gate"
-msgstr "多数表决门"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:35
-#, fuzzy
 msgid "Inhibit Gate"
-msgstr "禁门"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:35
 msgid "Transfer In"
-msgstr "转入"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
 #: gaphor/RAAML/fta/transferout.py:36
 msgid "Transfer Out"
-msgstr "转出"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:35
 msgid "Undeveloped Event"
-msgstr "未展开事件"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
 #: gaphor/RAAML/fta/houseevent.py:35
 msgid "House Event"
-msgstr "房形事件"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
 #: gaphor/RAAML/fta/zeroevent.py:36
@@ -211,49 +210,49 @@ msgstr ""
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
-msgstr "顶事件"
+msgstr ""
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:32
 msgid "Intermediate Event"
-msgstr "中间事件"
+msgstr ""
 
 #: gaphor/RAAML/fta/seqgate.py:36
 msgid "Sequence Enforcing Gate"
-msgstr "顺序相关门"
+msgstr ""
 
 #: gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr "异或门"
+msgstr ""
 
 #: gaphor/RAAML/stpa/controlaction.py:32 gaphor/RAAML/stpa/stpatoolbox.py:158
 msgid "Control Action"
-msgstr "控制行为"
+msgstr ""
 
 #: gaphor/RAAML/stpa/operationalsituation.py:33
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
-msgstr "场景态势"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
 #: gaphor/templates/raaml.gaphor
 msgid "Loss"
-msgstr "丧失"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard"
-msgstr "危害"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml.gaphor
 msgid "Abstract Operational Situation"
-msgstr "抽象场景态势"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:77
 #: gaphor/UML/classes/classestoolbox.py:113
 msgid "Generalization"
-msgstr "泛化"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:65
 msgid "Situation"
@@ -261,7 +260,7 @@ msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
-msgstr "控制结构"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml.gaphor
 msgid "Controller"
@@ -269,16 +268,16 @@ msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
 msgid "Actuator"
-msgstr "作动器"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
-msgstr "受控过程"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:32
 msgid "Unsafe Control Action"
-msgstr "不安全控制行为"
+msgstr ""
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:149
 msgid "Relevant To"
@@ -286,7 +285,7 @@ msgstr ""
 
 #: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:41
 msgid "SysML"
-msgstr "SySML"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:11
 msgid "Item Flow"
@@ -294,7 +293,7 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.ui:28
 msgid "Item Property"
-msgstr "项目属性"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:43 gaphor/UML/classes/propertypages.ui:21
 #: gaphor/UML/deployments/propertypages.ui:42
@@ -315,11 +314,11 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.ui:107
 msgid "Show References"
-msgstr "显示引用"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:123
 msgid "Show Values"
-msgstr "显示值"
+msgstr ""
 
 #: gaphor/SysML/propertypages.ui:149
 msgid "Aggregation"
@@ -346,7 +345,7 @@ msgstr ""
 
 #: gaphor/SysML/propertypages.ui:191
 msgid "Text"
-msgstr "文本"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:25
 msgid "Internal Blocks"
@@ -358,7 +357,7 @@ msgstr ""
 
 #: gaphor/SysML/toolbox.py:36
 msgid "Property"
-msgstr "属性"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:45
 msgid "Proxy Port"
@@ -374,19 +373,19 @@ msgstr ""
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
 msgid "New Package Diagram"
-msgstr "新建包图"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:71
 msgid "New Requirement Diagram"
-msgstr "新建需求图"
+msgstr ""
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
 msgid "New Use Case Diagram"
-msgstr "新建用例图"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:67
 msgid "ControlStructure"
-msgstr "控制结构"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:69
 msgid "block"
@@ -405,13 +404,12 @@ msgid "values"
 msgstr ""
 
 #: gaphor/SysML/blocks/block.py:145
-#, fuzzy
 msgid "operations"
-msgstr "操作"
+msgstr ""
 
 #: gaphor/SysML/blocks/block.py:160 gaphor/SysML/blocks/block.py:186
 msgid "unnamed"
-msgstr "未命名"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:24
 msgid "Blocks"
@@ -440,7 +438,7 @@ msgstr ""
 #: gaphor/UML/classes/classestoolbox.py:98
 #: gaphor/UML/usecases/usecasetoolbox.py:40
 msgid "Association"
-msgstr "关联"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:84
 msgid "ValueType"
@@ -449,7 +447,7 @@ msgstr ""
 #: gaphor/SysML/blocks/blockstoolbox.py:95
 #: gaphor/UML/classes/classestoolbox.py:140
 msgid "Enumeration"
-msgstr "枚举"
+msgstr ""
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 #: gaphor/UML/classes/classestoolbox.py:152
@@ -458,11 +456,11 @@ msgstr ""
 
 #: gaphor/SysML/blocks/proxyport.py:35
 msgid "proxy"
-msgstr "代理"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:36
 msgid "satisfy"
-msgstr "满足"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:47
 msgid "deriveReqt"
@@ -474,44 +472,44 @@ msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:63
 msgid "verify"
-msgstr "验证"
+msgstr ""
 
 #: gaphor/SysML/requirements/relationships.py:72
 msgid "refine"
-msgstr "提炼"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirement.py:61
 msgid "requirement"
-msgstr "需求"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml.gaphor
 msgid "Requirements"
-msgstr "需求"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 msgid "Requirement"
-msgstr "需求"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
-msgstr "满足"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:36
 msgid "Derive Requirement"
-msgstr "派生需求"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
-msgstr "跟踪"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
-msgstr "提炼"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:57
 msgid "Verify"
-msgstr "验证"
+msgstr ""
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:64
 #: gaphor/UML/classes/classestoolbox.py:71
@@ -520,7 +518,7 @@ msgstr ""
 
 #: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:34
 msgid "UML"
-msgstr "UML"
+msgstr ""
 
 #: gaphor/UML/sanitizerservice.py:71
 msgid ""
@@ -530,19 +528,19 @@ msgstr ""
 
 #: gaphor/UML/toolbox.py:32
 msgid "New Component Diagram"
-msgstr "新建组件图"
+msgstr ""
 
 #: gaphor/UML/toolbox.py:33
 msgid "New Deployment Diagram"
-msgstr "新建部署图"
+msgstr ""
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr "新建通讯图"
+msgstr ""
 
 #: gaphor/UML/toolbox.py:39
 msgid "New Profile Diagram"
-msgstr "新建配置图"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -551,50 +549,47 @@ msgid "New {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:203
-#, fuzzy
 msgid "general: {name}"
-msgstr "通用: {name}"
+msgstr ""
 
 #: gaphor/UML/umlfmt.py:208
 msgid "supplier: {name}"
 msgstr ""
 
 #: gaphor/UML/umlfmt.py:215
-#, fuzzy
 msgid "extend: {name}"
-msgstr "扩展: {name}"
+msgstr ""
 
 #: gaphor/UML/umlfmt.py:222
-#, fuzzy
 msgid "include: {name}"
-msgstr "包含: {name}"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:40
 #: gaphor/UML/actions/actionstoolbox.py:62 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Activity"
-msgstr "活动"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:48
 msgid "Swimlane One"
-msgstr "泳道 1"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Swimlane Two"
-msgstr "泳道 2"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:58
 msgid "Actions"
-msgstr "活动"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:74
 #: gaphor/UML/actions/actionstoolbox.py:80
 msgid "Action"
-msgstr "活动"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:86
 msgid "Initial node"
-msgstr "初始节点"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:98
 msgid "Activity final node"
@@ -619,12 +614,11 @@ msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Swimlane"
-msgstr "泳道"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:170
-#, fuzzy
 msgid "Control flow"
-msgstr "控制行为"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:177
 msgid "Object flow"
@@ -636,7 +630,7 @@ msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:190
 msgid "Send signal"
-msgstr "发送信号"
+msgstr ""
 
 #: gaphor/UML/actions/actionstoolbox.py:196
 msgid "Accept event action"
@@ -696,7 +690,7 @@ msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:11
 msgid "Show type"
-msgstr "显示类型"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:37
 msgid "Horizontal"
@@ -708,7 +702,7 @@ msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:89
 msgid "Swimlanes"
-msgstr "泳道"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:100
 msgid "Partitions"
@@ -716,7 +710,7 @@ msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:130
 msgid "Upper Bound"
-msgstr "上限"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:147
 msgid "Show Ordering"
@@ -724,11 +718,11 @@ msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:165
 msgid "Last In First Out (LIFO)"
-msgstr "后进先出"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:166
 msgid "First In First Out (FIFO)"
-msgstr "先进先出"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:189
 #: gaphor/UML/profiles/propertypages.ui:9 gaphor/diagram/propertypages.ui:36
@@ -755,7 +749,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:617
 #: gaphor/UML/classes/propertypages.ui:725
 msgid "🛈 Help"
-msgstr "🛈 帮助"
+msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:308
 msgid ""
@@ -782,20 +776,20 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:433
 #: gaphor/UML/classes/propertypages.ui:786
 msgid "Abstract"
-msgstr "抽象"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:21
 msgid "Classes"
-msgstr "类"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:25
 #: gaphor/UML/profiles/profilestoolbox.py:14
 msgid "Class"
-msgstr "类"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:35
 msgid "Interface"
-msgstr "接口"
+msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:121
 msgid "Interface Realization"
@@ -803,23 +797,23 @@ msgstr ""
 
 #: gaphor/UML/classes/classestoolbox.py:128
 msgid "DataType"
-msgstr "数据类型"
+msgstr ""
 
 #: gaphor/UML/classes/datatype.py:56
 msgid "primitive"
-msgstr "原始"
+msgstr ""
 
 #: gaphor/UML/classes/datatype.py:58 gaphor/UML/classes/enumeration.py:73
 msgid "valueType"
-msgstr "值类型"
+msgstr ""
 
 #: gaphor/UML/classes/datatype.py:60
 msgid "dataType"
-msgstr "数据类型"
+msgstr ""
 
 #: gaphor/UML/classes/dependency.py:43
 msgid "use"
-msgstr "使用"
+msgstr ""
 
 #: gaphor/UML/classes/dependency.py:44
 msgid "realize"
@@ -827,11 +821,11 @@ msgstr ""
 
 #: gaphor/UML/classes/dependency.py:45
 msgid "implements"
-msgstr "实现"
+msgstr ""
 
 #: gaphor/UML/classes/dependencypropertypages.py:37
 msgid "Usage"
-msgstr "用途"
+msgstr ""
 
 #: gaphor/UML/classes/dependencypropertypages.py:38
 msgid "Realization"
@@ -839,15 +833,15 @@ msgstr ""
 
 #: gaphor/UML/classes/dependencypropertypages.py:39
 msgid "Implementation"
-msgstr "实现"
+msgstr ""
 
 #: gaphor/UML/classes/enumeration.py:75
 msgid "enumeration"
-msgstr "枚举"
+msgstr ""
 
 #: gaphor/UML/classes/interface.py:290
 msgid "interface"
-msgstr "接口"
+msgstr ""
 
 #: gaphor/UML/classes/klass.py:58
 msgid "stereotype"
@@ -855,19 +849,19 @@ msgstr ""
 
 #: gaphor/UML/classes/klass.py:60
 msgid "metaclass"
-msgstr "元类"
+msgstr ""
 
 #: gaphor/UML/classes/package.py:28
 msgid "profile"
-msgstr "配置"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:11
 msgid "Show Direction"
-msgstr "显示方向"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:49
 msgid "Head:"
-msgstr "头:"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:83
 #: gaphor/UML/classes/propertypages.ui:210
@@ -906,21 +900,21 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:350
 #: gaphor/UML/profiles/propertypages.ui:64
 msgid "Attributes"
-msgstr "属性"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:147
 #: gaphor/UML/classes/propertypages.ui:274
 #: gaphor/UML/profiles/propertypages.ui:84
 msgid "Value"
-msgstr "值"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:176
 msgid "Tail:"
-msgstr "尾:"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:321
 msgid "Show Attributes"
-msgstr "显示属性"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:403
 msgid ""
@@ -939,24 +933,24 @@ msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:455
 msgid "Dependency type"
-msgstr "依赖类型"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:466
 msgid "Automatic"
-msgstr "自动的"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:502
 msgid "Folded"
-msgstr "折叠的"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:525
 #: gaphor/UML/classes/propertypages.ui:567
 msgid "Operations"
-msgstr "操作"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:538
 msgid "Show Operations"
-msgstr "显示操作"
+msgstr ""
 
 #: gaphor/UML/classes/propertypages.ui:631
 msgid ""
@@ -1004,9 +998,8 @@ msgid "S."
 msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
-#, fuzzy
 msgid "Deployments"
-msgstr "实现"
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:16
 msgid "Artifact"
@@ -1014,19 +1007,19 @@ msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:28
 msgid "Node"
-msgstr "节点"
+msgstr ""
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:40
 msgid "Device"
-msgstr "设备"
+msgstr ""
 
 #: gaphor/UML/deployments/node.py:54
 msgid "device"
-msgstr "设备"
+msgstr ""
 
 #: gaphor/UML/deployments/propertypages.ui:11
 msgid "Information Flow"
-msgstr "信息流"
+msgstr ""
 
 #: gaphor/UML/deployments/propertypages.ui:29
 msgid "Information Item (Class)"
@@ -1049,7 +1042,7 @@ msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Lifeline"
-msgstr "生命周期"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:81
 msgid "Execution Specification"
@@ -1057,7 +1050,7 @@ msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:89
 msgid "Message"
-msgstr "消息"
+msgstr ""
 
 #: gaphor/UML/interactions/interactionstoolbox.py:96
 msgid "Reflexive message"
@@ -1069,19 +1062,19 @@ msgstr ""
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
-msgstr "导入"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:18
 msgid "Profiles"
-msgstr "配置"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:22
 msgid "Profile"
-msgstr "配置"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:34
 msgid "Metaclass"
-msgstr "元数"
+msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:44
 msgid "Stereotype"
@@ -1093,7 +1086,7 @@ msgstr ""
 
 #: gaphor/UML/profiles/profilestoolbox.py:63
 msgid "Import"
-msgstr "导入"
+msgstr ""
 
 #: gaphor/UML/profiles/propertypages.ui:30
 msgid "Stereotypes"
@@ -1113,112 +1106,101 @@ msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:31
 msgid "Exit"
-msgstr "退出"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:42
 msgid "Do Activity"
 msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:90 gaphor/UML/states/propertypages.ui:119
-#, fuzzy
 msgid "Regions"
-msgstr "提炼"
+msgstr ""
 
 #: gaphor/UML/states/propertypages.ui:103
-#, fuzzy
 msgid "Show Regions"
-msgstr "显示方向"
+msgstr ""
 
 #: gaphor/UML/states/statemachine.py:39
-#, fuzzy
 msgid "statemachine"
-msgstr "状态机"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
-msgstr "状态"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
 #: gaphor/templates/sysml.gaphor
 msgid "State Machine"
-msgstr "状态机"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
-msgstr "状态"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:87
 msgid "Initial Pseudostate"
-msgstr "初始伪状态"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:99
 msgid "Final State"
-msgstr "终结状态"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:111
 msgid "Transition"
-msgstr "过渡"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:118
 msgid "Shallow History Pseudostate"
 msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:130
-#, fuzzy
 msgid "Deep History Pseudostate"
-msgstr "初始伪状态"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:142
-#, fuzzy
 msgid "Join Pseudostate"
-msgstr "初始伪状态"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:154
-#, fuzzy
 msgid "Fork Pseudostate"
-msgstr "初始伪状态"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:166
-#, fuzzy
 msgid "Junction Pseudostate"
-msgstr "初始伪状态"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:178
-#, fuzzy
 msgid "Choice Pseudostate"
-msgstr "初始伪状态"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:190
-#, fuzzy
 msgid "Entry Point Pseudostate"
-msgstr "初始伪状态"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:202
-#, fuzzy
 msgid "Exit Point Pseudostate"
-msgstr "初始伪状态"
+msgstr ""
 
 #: gaphor/UML/states/statestoolbox.py:214
-#, fuzzy
 msgid "Terminate Pseudostate"
-msgstr "初始伪状态"
+msgstr ""
 
 #: gaphor/UML/usecases/extend.py:21
 msgid "extend"
-msgstr "扩展"
+msgstr ""
 
 #: gaphor/UML/usecases/include.py:21
 msgid "include"
-msgstr "包含"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:12 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Use Cases"
-msgstr "用例"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:16
 msgid "Use case"
-msgstr "用例"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:28 gaphor/templates/uml.gaphor
 msgid "Actor"
@@ -1226,15 +1208,15 @@ msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:47
 msgid "Include"
-msgstr "包含"
+msgstr ""
 
 #: gaphor/UML/usecases/usecasetoolbox.py:55
 msgid "Extend"
-msgstr "扩展"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:108 gaphor/ui/help/shortcuts.ui:16
 msgid "General"
-msgstr "通用"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:112
 msgid "Pointer"
@@ -1246,28 +1228,27 @@ msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:126
 msgid "Line"
-msgstr "线"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:133
 msgid "Box"
-msgstr "方框"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:141
 msgid "Ellipse"
-msgstr "椭圆"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:149 gaphor/diagram/propertypages.ui:9
 msgid "Comment"
-msgstr "注释"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:157
 msgid "Comment line"
-msgstr "注释行"
+msgstr ""
 
 #: gaphor/diagram/diagramtoolbox.py:164
-#, fuzzy
 msgid "Diagram metadata"
-msgstr "新建 C4 模型图"
+msgstr ""
 
 #: gaphor/diagram/presentation.py:48
 msgid "(from {namespace})"
@@ -1275,19 +1256,19 @@ msgstr ""
 
 #: gaphor/diagram/propertypages.ui:57
 msgid "Style"
-msgstr "样式"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:68
 msgid "Rectilinear"
-msgstr "直角曲线"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:74
 msgid "Flip orientation"
-msgstr "翻转方向"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:89
 msgid "Note or Remark"
-msgstr "备注"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:123
 msgid "Created By"
@@ -1298,19 +1279,16 @@ msgid "Website"
 msgstr ""
 
 #: gaphor/diagram/propertypages.ui:165
-#, fuzzy
 msgid "Revision"
-msgstr "提炼"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:179
-#, fuzzy
 msgid "License"
-msgstr "线"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:193
-#, fuzzy
 msgid "Created On"
-msgstr "创建新模型 …"
+msgstr ""
 
 #: gaphor/diagram/propertypages.ui:207
 msgid "Updated On"
@@ -1345,11 +1323,11 @@ msgstr ""
 
 #: gaphor/plugins/console/consolewindow.py:19
 msgid "Gaphor Console"
-msgstr "Gaphor 控制台"
+msgstr ""
 
 #: gaphor/plugins/console/consolewindow.py:42
 msgid "Console"
-msgstr "控制台"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:50
 msgid "All {ext} Files"
@@ -1357,44 +1335,42 @@ msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export as SVG"
-msgstr "导出为 SVG 文件"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:57
 #: gaphor/plugins/diagramexport/__init__.py:62
 msgid "Export diagram as SVG"
-msgstr "导出图型为 SVG 文件"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export as PNG"
-msgstr "导出为 PNG 文件"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:68
 #: gaphor/plugins/diagramexport/__init__.py:73
 msgid "Export diagram as PNG"
-msgstr "导出图形为 PNG 文件"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:78
 msgid "Export as PDF"
-msgstr "导出为 PDF 文件"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:79
 #: gaphor/plugins/diagramexport/__init__.py:85
 msgid "Export diagram as PDF"
-msgstr "导出图形为 PDF 文件"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:93
-#, fuzzy
 msgid "Export as EPS"
-msgstr "导出为 XML 文件"
+msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:94
 msgid "Export diagram as Encapsulated PostScript"
 msgstr ""
 
 #: gaphor/plugins/diagramexport/__init__.py:100
-#, fuzzy
 msgid "Export diagram as EPS"
-msgstr "导出图型为 SVG 文件"
+msgstr ""
 
 #: gaphor/plugins/errorreports/errorreports.py:61
 #: gaphor/plugins/errorreports/errorreports.ui:6
@@ -1424,15 +1400,15 @@ msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:25
 msgid "Export as XMI"
-msgstr "导出为 XML 文件"
+msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:26
 msgid "Export model as XMI (XML Model Interchange) format"
-msgstr "导出模型为 XMI (XML 模型交换) 格式"
+msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:43
 msgid "Export model as XMI file"
-msgstr "导出模型为 XMI 文件"
+msgstr ""
 
 #: gaphor/plugins/xmiexport/__init__.py:47
 msgid "All XMI Files"
@@ -1441,7 +1417,7 @@ msgstr ""
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
 #: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:45
 msgid "New model"
-msgstr "新建模型"
+msgstr ""
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:65
 #: gaphor/ui/modelbrowser.py:639
@@ -1571,9 +1547,8 @@ msgid "2. Logical Level"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "3. Technology Level"
-msgstr "技术"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "User"
@@ -1585,11 +1560,11 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Behavior"
-msgstr "行为"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Structure"
-msgstr "结构"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Context"
@@ -1609,7 +1584,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Stakeholder Requirements"
-msgstr "干系人需求"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
@@ -1617,7 +1592,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical Structure"
-msgstr "逻辑结构"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensor"
@@ -1637,16 +1612,15 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Structure"
-msgstr "技术结构"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Technology Boundary"
-msgstr "技术"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Requirements"
-msgstr "技术需求"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detailed Behavior"
@@ -1654,7 +1628,7 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "System Requirements"
-msgstr "系统需求"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
@@ -1682,11 +1656,11 @@ msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "First Action"
-msgstr "动作 1"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Second Action"
-msgstr "动作 2"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example System Requirement"
@@ -1717,9 +1691,8 @@ msgid "Actuator Command"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Example Technology Requirement"
-msgstr "技术需求"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
@@ -1795,7 +1768,7 @@ msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Included Use Case"
-msgstr "被包含的用例"
+msgstr ""
 
 #: gaphor/templates/uml.gaphor
 msgid "Secondary Actor"
@@ -1969,9 +1942,8 @@ msgid "String"
 msgstr ""
 
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Date"
-msgstr "数据类型"
+msgstr ""
 
 #: gaphor/ui/appfilemanager.py:16 gaphor/ui/filedialog.py:13
 msgid "All Gaphor Models"
@@ -1996,9 +1968,8 @@ msgid "Switch"
 msgstr ""
 
 #: gaphor/ui/appfilemanager.py:73
-#, fuzzy
 msgid "Open a Model"
-msgstr "打开模型 …"
+msgstr ""
 
 #: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:254
 #: gaphor/ui/modelmerge/organize.py:135 gaphor/ui/modelmerge/organize.py:166
@@ -2007,9 +1978,8 @@ msgid "<None>"
 msgstr ""
 
 #: gaphor/ui/diagrams.ui:12
-#, fuzzy
 msgid "Open a Diagram"
-msgstr "新建类图"
+msgstr ""
 
 #: gaphor/ui/diagrams.ui:14
 msgid ""
@@ -2052,11 +2022,11 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:96 gaphor/ui/help/shortcuts.ui:121
 msgid "Undo"
-msgstr "撤销"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:114 gaphor/ui/help/shortcuts.ui:129
 msgid "Redo"
-msgstr "重做"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:133 gaphor/ui/help/shortcuts.ui:146
 msgid "Zoom In"
@@ -2064,7 +2034,7 @@ msgstr ""
 
 #: gaphor/ui/elementeditor.ui:148 gaphor/ui/help/shortcuts.ui:162
 msgid "Actual Size"
-msgstr "实际大小"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:163 gaphor/ui/help/shortcuts.ui:154
 msgid "Zoom Out"
@@ -2077,7 +2047,7 @@ msgstr ""
 #: gaphor/ui/elementeditor.ui:228 gaphor/ui/elementeditor.ui:239
 #: gaphor/ui/help/shortcuts.ui:54
 msgid "Preferences"
-msgstr "偏好设置"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:252
 msgid "Reset Tool Automatically"
@@ -2092,9 +2062,8 @@ msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 
 #: gaphor/ui/elementeditor.ui:290
-#, fuzzy
 msgid "Language"
-msgstr "与门"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
 msgid "The (spoken) language used in this model."
@@ -2111,9 +2080,8 @@ msgid ""
 msgstr ""
 
 #: gaphor/ui/elementeditor.ui:349
-#, fuzzy
 msgid "Merge Models"
-msgstr "新建模型"
+msgstr ""
 
 #: gaphor/ui/elementeditor.ui:360
 msgid "Merge Model Changes"
@@ -2177,7 +2145,7 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:125 gaphor/ui/filemanager.py:148
 msgid "Loading…"
-msgstr "加载中…"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:126
 msgid "Loading model from {filename}"
@@ -2197,7 +2165,7 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:306
 msgid "Saving…"
-msgstr "保存中…"
+msgstr ""
 
 #: gaphor/ui/filemanager.py:307
 msgid "Saving model to {filename}"
@@ -2254,16 +2222,15 @@ msgstr ""
 #: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:95
 #: gaphor/ui/mainwindow.py:50
 msgid "Save"
-msgstr "保存"
+msgstr ""
 
 #: gaphor/ui/greeter.py:27
 msgid "Generic"
 msgstr ""
 
 #: gaphor/ui/greeter.py:28
-#, fuzzy
 msgid "An empty model"
-msgstr "新建模型"
+msgstr ""
 
 #: gaphor/ui/greeter.py:35
 msgid "Unified Modeling Language template"
@@ -2282,57 +2249,53 @@ msgid "Layered C4 Model template"
 msgstr ""
 
 #: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:46
-#, fuzzy
 msgid "Open Model…"
-msgstr "打开模型 …"
+msgstr ""
 
 #: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:60
 msgid "Keyboard Shortcuts"
-msgstr "快捷键"
+msgstr ""
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.ui:10
 #: gaphor/ui/mainwindow.py:61
 msgid "About Gaphor"
-msgstr "关于 Gaphor"
+msgstr ""
 
 #: gaphor/ui/greeter.ui:80
 msgid "Recently Opened"
 msgstr ""
 
 #: gaphor/ui/greeter.ui:85
-#, fuzzy
 msgid "Create New Model"
-msgstr "创建新模型 …"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:79 gaphor/ui/mainwindow.py:45
 msgid "New Model…"
-msgstr "新建模型 …"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:103 gaphor/ui/mainwindow.py:51
 msgid "Save As…"
-msgstr "另存为…"
+msgstr ""
 
 #: gaphor/ui/mainwindow.py:52
 msgid "Export"
-msgstr "导出"
+msgstr ""
 
 #: gaphor/ui/mainwindow.py:56
 msgid "Tools"
-msgstr "工具"
+msgstr ""
 
 #: gaphor/ui/mainwindow.py:272
 msgid "Profile: {name}"
 msgstr ""
 
 #: gaphor/ui/mainwindow.ui:63
-#, fuzzy
 msgid "New diagram menu"
-msgstr "新建 C4 模型图"
+msgstr ""
 
 #: gaphor/ui/mainwindow.ui:71
-#, fuzzy
 msgid "Open application menu"
-msgstr "开启应用菜单"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:38 gaphor/ui/mainwindow.ui:78
 msgid "Toggle property editor"
@@ -2343,9 +2306,8 @@ msgid "{name} package"
 msgstr ""
 
 #: gaphor/ui/modelbrowser.py:184
-#, fuzzy
 msgid "New package"
-msgstr "新建包图"
+msgstr ""
 
 #: gaphor/ui/modelbrowser.py:376 gaphor/ui/modelbrowser.py:587
 msgid "New _Package"
@@ -2353,16 +2315,15 @@ msgstr ""
 
 #: gaphor/ui/modelbrowser.py:576
 msgid "_Open"
-msgstr "_打开"
+msgstr ""
 
 #: gaphor/ui/modelbrowser.py:576
-#, fuzzy
 msgid "Add to diagram"
-msgstr "创建新图形"
+msgstr ""
 
 #: gaphor/ui/modelbrowser.py:579
 msgid "_Rename"
-msgstr "_重命名"
+msgstr ""
 
 #: gaphor/ui/modelbrowser.py:584
 msgid "New _Diagram"
@@ -2378,7 +2339,7 @@ msgstr ""
 
 #: gaphor/ui/modelbrowser.py:627
 msgid "New Generic Diagram"
-msgstr "新建通用图形"
+msgstr ""
 
 #: gaphor/ui/tests/test_treemodel.py:200 gaphor/ui/treemodel.py:63
 msgid "<Relationships>"
@@ -2409,9 +2370,8 @@ msgid ""
 msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:22
-#, fuzzy
 msgid "Rename"
-msgstr "_重命名"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:30
 msgid "Search"
@@ -2423,15 +2383,15 @@ msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:62
 msgid "Quit Gaphor"
-msgstr "退出 Gaphor"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:73
 msgid "Files"
-msgstr "文件"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:87
 msgid "Open a Model…"
-msgstr "打开模型 …"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:115
 msgid "Undo and Redo"
@@ -2442,17 +2402,16 @@ msgid "Zoom"
 msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:172
-#, fuzzy
 msgid "Selections"
-msgstr "活动"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:178
 msgid "Select All"
-msgstr "选择全部"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:186
 msgid "Deselect All"
-msgstr "取消选择全部"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:197
 msgid "Copy and Paste"
@@ -2460,7 +2419,7 @@ msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:203
 msgid "Copy"
-msgstr "复制"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:211
 msgid "Cut"
@@ -2475,9 +2434,8 @@ msgid "Paste (copy defining elements)"
 msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:134
-#, fuzzy
 msgid "Update diagram “{name}”"
-msgstr "新建 C4 模型图"
+msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:165 gaphor/ui/modelmerge/organize.py:307
 msgid "Update element “{name}”"
@@ -2549,413 +2507,7 @@ msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
-msgstr "更新关系“{name}”"
-
-#~ msgid "Show references"
-#~ msgstr ""
-
-#~ msgid "Parts and References"
-#~ msgstr ""
-
-#~ msgid "Information Item (Class):"
-#~ msgstr ""
-
-#~ msgid "Reset tool automatically"
-#~ msgstr ""
-
-#~ msgid "Style sheet"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "The model contains some references to"
-#~ " items that are not maintained. Do"
-#~ " you want to clean the model "
-#~ "before saving?"
-#~ msgstr ""
-
-#~ msgid "Recently opened files"
-#~ msgstr ""
-
-#~ msgid "Here goes a short informative message."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Do you really want to delete diagram {name}?\n"
-#~ "\n"
-#~ "This will possibly delete diagram items\n"
-#~ "that are not shown in other diagrams."
-#~ msgstr ""
-
-#~ msgid "No recently opened models"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add and edit class attributes according to UML syntax.\n"
-#~ "Attribute syntax examples\n"
-#~ "- attr\n"
-#~ "- + attr: int\n"
-#~ "- # /attr: int # a note\n"
-#~ "\n"
-#~ "Press Enter to edit item, Backspace/Delete to remove item.\n"
-#~ "Use -/= to move items up or down."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add and edit class operations according to UML syntax.\n"
-#~ "Operation syntax examples\n"
-#~ "- call()\n"
-#~ "- + call(a: int, b: str) # a note\n"
-#~ "- # call(a: int, b: str): bool\n"
-#~ "\n"
-#~ "Press Enter to edit item, Backspace/Delete to remove item.\n"
-#~ "Use -/= to move items up or down."
-#~ msgstr ""
-
-#~ msgid "{name} diagram"
-#~ msgstr ""
-
-#~ msgid "Partition Names"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Enter attribute name and multiplicity, for example\n"
-#~ "- name\n"
-#~ "+ name [1]\n"
-#~ "- name [1..2]\n"
-#~ "~ 1..2\n"
-#~ "- [1..2]"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add and edit class attributes according to UML syntax.\n"
-#~ "Attribute syntax examples\n"
-#~ "- attr\n"
-#~ "- + attr: int\n"
-#~ "- # /attr: int\n"
-#~ "\n"
-#~ "Press ENTER to edit item, BS/DEL to remove item.\n"
-#~ "Use -/= to move items up or down."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add and edit class operations according"
-#~ " to UML syntax. Operation syntax "
-#~ "examples\n"
-#~ "- call()\n"
-#~ "- + call(a: int, b: str)\n"
-#~ "- # call(a: int: b: str): bool\n"
-#~ "\n"
-#~ "Press ENTER to edit item, BS/DEL to remove item.\n"
-#~ "Use -/= to move items up or down."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add and edit enumeration literals according to UML syntax.\n"
-#~ "Enumeration literal syntax examples\n"
-#~ "- enum\n"
-#~ "\n"
-#~ "Press ENTER to edit item, BS/DEL to remove item.\n"
-#~ "Use -/= to move items up or down."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-#~ "you may not use this application except in compliance with the\n"
-#~ "License. You may obtain a copy of the License at\n"
-#~ "\n"
-#~ "http://www.apache.org/licenses/LICENSE-2.0\n"
-#~ "\n"
-#~ "Unless required by applicable law or agreed to in writing, software\n"
-#~ "distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-#~ "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
-#~ "express or implied. See the License for the specific language\n"
-#~ "governing permissions and limitations under the License.\n"
-#~ msgstr ""
-
-#~ msgid "Paste"
-#~ msgstr ""
-
-#~ msgid "Named Element"
-#~ msgstr ""
-
-#~ msgid "Paste (link)"
-#~ msgstr ""
-
-#~ msgid "4. Implementation Level"
-#~ msgstr ""
-
-#~ msgid "Logical diagram"
-#~ msgstr ""
-
-#~ msgid "Implementation diagram"
-#~ msgstr ""
-
-#~ msgid "Concept diagram"
-#~ msgstr ""
-
-#~ msgid "Open Gaphor Model"
-#~ msgstr ""
-
-#~ msgid "Recently opened models"
-#~ msgstr "最近打开的模型…"
-
-#~ msgid "Create a new model from a template"
-#~ msgstr ""
-
-#~ msgid "Open a Gaphor Model"
-#~ msgstr "打开 Gaphor 模型"
-
-#~ msgid "Copyright © 2001-2021 Arjan J. Molenaar and Dan Yeaw"
-#~ msgstr ""
-
-#~ msgid "Gaphor - Open Model"
-#~ msgstr "Gaphor 控制台"
-
-#~ msgid "Gaphor - Create a New Model"
-#~ msgstr ""
-
-#~ msgid "Gaphor - Open a Recent Model"
-#~ msgstr ""
-
-#~ msgid "Settings"
-#~ msgstr ""
-
-#~ msgid "Control/object flow"
-#~ msgstr ""
-
-#~ msgid "upperBound"
-#~ msgstr ""
-
-#~ msgid "ordering"
-#~ msgstr ""
-
-#~ msgid "Components"
-#~ msgstr "组件"
-
-#~ msgid ""
-#~ "Drag to diagram is (temporarily) limited"
-#~ " to Classifiers, Packages, and Properties,"
-#~ " not {type}."
-#~ msgstr ""
-
-#~ msgid "Close _without saving changes"
-#~ msgstr ""
-
-#~ msgid "Recent Model…"
-#~ msgstr "最近打开的模型…"
-
-#~ msgid "Open Existing Model…"
-#~ msgstr "打开模型 …"
-
-#~ msgid "A {} can’t be part of a {}."
-#~ msgstr ""
-
-#~ msgid "Default Region"
-#~ msgstr ""
-
-#~ msgid "History Pseudostate"
-#~ msgstr ""
-
-#~ msgid "Application"
-#~ msgstr ""
-
-#~ msgid "New Window"
-#~ msgstr "新建窗口"
-
-#~ msgid "Open"
-#~ msgstr "打开"
-
-#~ msgid "Save As"
-#~ msgstr "另存为"
-
-#~ msgid "Diagrams"
-#~ msgstr ""
-
-#~ msgid "Edit"
-#~ msgstr "编辑"
-
-#~ msgid "Delete"
-#~ msgstr "删除"
-
-#~ msgid "Example Technolgy Requirement"
-#~ msgstr ""
-
-#~ msgid "S"
-#~ msgstr ""
-
-#~ msgid "A"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "{filename} is already opened. Do you "
-#~ "want to switch to the opened "
-#~ "window instead?"
-#~ msgstr ""
-
-#~ msgid "Start debug session"
-#~ msgstr ""
-
-#~ msgid "Save changes before closing?"
-#~ msgstr ""
-
-#~ msgid "Closing will cause any unsaved changes to be discarded."
-#~ msgstr ""
-
-#~ msgid "Close without saving changes"
-#~ msgstr ""
-
-#~ msgid "Open a Recent Model"
-#~ msgstr "最近打开的模型…"
-
-#~ msgid "main"
-#~ msgstr ""
-
-#~ msgid "edited"
-#~ msgstr ""
-
-#~ msgid "Open diagram menu"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add a model element from the tool"
-#~ " box to the diagram. Here you "
-#~ "will see it's properties appear.\n"
-#~ "\n"
-#~ "This pane can be hidden by clicking the pane icon in the header.\n"
-#~ "\n"
-#~ "<b>Tip:</b> Most elements in the toolbox"
-#~ " have a keyboard shortcut (e.g. \"c\""
-#~ " for Class).\n"
-#~ "Tool selection only works from the "
-#~ "diagram. If a tool does not get"
-#~ " selected, click on the diagram once"
-#~ " (so it's focused) and then hit "
-#~ "the shortcut key.\n"
-#~ "\n"
-#~ "<b>Tip:</b> To search for an element "
-#~ "in the tree view, select an "
-#~ "element in the tree view and start"
-#~ " typing. A search box will "
-#~ "automatically appear.\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add a model element from the tool"
-#~ " box (bottom left) to the diagram."
-#~ " Here you will see it's properties"
-#~ " appear.\n"
-#~ "\n"
-#~ "This pane can be hidden by clicking the pane icon in the header.\n"
-#~ "\n"
-#~ "<b>Tip:</b> Most elements in the toolbox"
-#~ " have a keyboard shortcut (e.g. \"c\""
-#~ " for Class).\n"
-#~ "Tool selection only works from the "
-#~ "diagram. If a tool does not get"
-#~ " selected, click on the diagram once"
-#~ " (so it's focused) and then hit "
-#~ "the shortcut key.\n"
-#~ "\n"
-#~ "<b>Tip:</b> To search for an element "
-#~ "in the model browser (top left), "
-#~ "select an element in the model "
-#~ "browser and start typing. A search "
-#~ "box will automatically appear.\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "<b>Tip:</b> Most elements in the toolbox"
-#~ " have a keyboard shortcut (e.g. \"c\""
-#~ " for Class).    Tool selection only "
-#~ "works from the diagram. If a tool"
-#~ " does not get selected, click on "
-#~ "the diagram once (so it's focused) "
-#~ "and then hit the shortcut key."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Add and edit activity parameter nodes according to UML syntax.\n"
-#~ "\n"
-#~ "  • <tt>parameter</tt> (input, name)\n"
-#~ "  • <tt>out attr: int</tt> (output with type)\n"
-#~ "  • <tt>in attr: int[0..1]</tt> (input, type, and multiplicity)\n"
-#~ "\n"
-#~ "Press <b>Enter</b> to edit, "
-#~ "<b>Backspace</b>/<b>Delete</b> to remove items.\n"
-#~ ""
-#~ "Use <b>-</b>/<b>=</b> to move items up or down."
-#~ msgstr ""
-
-#~ msgid ""
-#~ "<b>Tip:</b> To search for an element "
-#~ "in the model browser (top left), "
-#~ "select an element in the model "
-#~ "browser and start typing. A search "
-#~ "box will automatically appear.\n"
-#~ "            "
-#~ msgstr ""
-
-#~ msgid "Merge conflict in model “{filename}”."
-#~ msgstr ""
-
-#~ msgid "It looks like this model file contains a merge conflict."
-#~ msgstr ""
-
-#~ msgid "Create a new model"
-#~ msgstr "创建新模型 …"
-
-#~ msgid "Open Other Model…"
-#~ msgstr "打开模型 …"
-
-#~ msgid "Gaphor"
-#~ msgstr "Gaphor"
-
-#~ msgid "Create New diagram"
-#~ msgstr "创建新图形"
-
-#~ msgid "Open Application Menu"
-#~ msgstr "开启应用菜单"
-
-#~ msgid "Editor"
-#~ msgstr "编辑器"
-
-#~ msgid "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw"
-#~ msgstr ""
-
-#~ msgid "Gaphor is the simple modeling tool written in Python"
-#~ msgstr "Gaphor 是用 python 编写的简单建模工具"
-
-#~ msgid "Fork me on GitHub"
-#~ msgstr "在 GitHub 上 Fork"
-
-#~ msgid ""
-#~ "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-#~ "you may not use this application except in compliance with the\n"
-#~ "License. You may obtain a copy of the License at\n"
-#~ "\n"
-#~ "http://www.apache.org/licenses/LICENSE-2.0\n"
-#~ "\n"
-#~ "Unless required by applicable law or agreed to in writing, software\n"
-#~ "distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-#~ "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either\n"
-#~ "express or implied. See the License for the specific language\n"
-#~ "governing permissions and limitations under the License.\n"
-#~ "\n"
-#~ "---\n"
-#~ "\n"
-#~ "UML, SysML, and RAAML are either registered trademarks or\n"
-#~ "trademarks of Object Management Group, Inc. in the United States\n"
-#~ "and/or other countries.\n"
-#~ msgstr ""
-
-#~ msgid ""
-#~ "Copyright © 2001-2022 Arjan J. Molenaar and Dan Yeaw.\n"
-#~ "\n"
-#~ "UML, SysML, and RAAML are either "
-#~ "registered trademarks or trademarks of "
-#~ "Object Management Group, Inc. in the "
-#~ "United States and/or other countries."
-#~ msgstr ""
+msgstr ""
 
 #~ msgid ""
 #~ "Add a model element from the tool"

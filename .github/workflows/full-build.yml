@@ -28,17 +28,23 @@ jobs:
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v4.5.0
+        uses: actions/setup-python@v4.6.0
         with:
           python-version: ${{ env.python_version }}
       - name: Lint with Pre-commit
         uses: pre-commit/action@v3.0.0
       - name: Check translations
         run: pip install babel && python po/check-babel.py
+      - name: Check Poetry lock file integrity
+        run: |
+          pipx install --pip-args=--constraint=.github/constraints.txt poetry
+          poetry check
+          poetry lock --no-update
+          git diff --exit-code
 
   linux-wheel:
     name: Linux (Wheel)
@@ -50,7 +56,7 @@ jobs:
       targz: gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
       wheel: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
@@ -59,7 +65,7 @@ jobs:
           gir1.2-gtk-4.0 libgirepository1.0-dev libgtksourceview-5-dev libadwaita-1-dev
           graphviz
       - name: Set up Python
-        uses: actions/setup-python@v4.5.0
+        uses: actions/setup-python@v4.6.0
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
@@ -71,7 +77,7 @@ jobs:
         id: setup_and_test
         uses: ./.github/actions/setup_and_test
       - name: Upload Code Coverage to Code Climate
-        uses: paambaati/codeclimate-action@v3.2.0
+        uses: paambaati/codeclimate-action@v4.0.0
         env:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
@@ -97,7 +103,7 @@ jobs:
       image: bilelmoussaoui/flatpak-github-actions:gnome-44
       options: --privileged
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
@@ -106,55 +112,6 @@ jobs:
           manifest-path: org.gaphor.Gaphor.json
           run-tests: true
           cache-key: flatpak-builder-${{ github.sha }}
-
-  linux-appimage:
-    name: Linux (AppImage)
-    needs: lint
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    container:
-      image: ghcr.io/gaphor/gaphor-appimage:2023.3.0
-    timeout-minutes: 30
-    if: "!contains(github.event.head_commit.message, 'skip ci')"
-    outputs:
-      appimage: Gaphor-${{ steps.setup_and_test.outputs.version }}-x86_64.AppImage
-    steps:
-      - uses: actions/checkout@v3.5.0
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Set workspace as a safe git directory
-        run: git config --global --add safe.directory $GITHUB_WORKSPACE
-      - name: Use Python Dependency Cache
-        uses: actions/cache@v3.3.1
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-container
-      - name: Install Dependencies and Test
-        id: setup_and_test
-        uses: ./.github/actions/setup_and_test
-      - name: Create Linux Appimage
-        uses: ./.github/actions/linux_appimage
-        if: ${{ github.actor != 'dependabot[bot]' }}
-        with:
-          version: ${{ steps.setup_and_test.outputs.version }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-  check-linux-appimage:
-    name: Check Linux AppImage
-    needs: linux-appimage
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-    if: ${{ github.actor != 'dependabot[bot]' }}
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: ${{ needs.linux-appimage.outputs.appimage }}
-          path: .
-      - name: Perform self-test
-        run: |
-          chmod +x ${{ needs.linux-appimage.outputs.appimage }}
-          xvfb-run ./${{ needs.linux-appimage.outputs.appimage }} --self-test
 
   macos:
     name: macOS
@@ -170,15 +127,15 @@ jobs:
       LDFLAGS: -L/usr/local/opt/python@${python_version}/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
         run: >
-          brew update && brew install gtk4 gtksourceview5 libadwaita adwaita-icon-theme
+          brew install gtk4 gtksourceview5 libadwaita adwaita-icon-theme
           gobject-introspection graphviz create-dmg upx
       - name: Set up Python
-        uses: actions/setup-python@v4.5.0
+        uses: actions/setup-python@v4.6.0
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
@@ -201,7 +158,6 @@ jobs:
           certpassword_p12: ${{ secrets.CERTPASSWORD_P12 }}
           ac_username:  ${{ secrets.AC_USERNAME }}
           ac_password: ${{ secrets.AC_PASSWORD }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   check-macos-app:
     name: Check macOS App
@@ -228,7 +184,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 60
     env:
-      gvsbuild_version: 2023.4.0
+      gvsbuild_version: 2023.5.0
       # Bump this number if you want to force a rebuild of gvsbuild with the same version
       gvsbuild_update: 0
     outputs:
@@ -244,7 +200,7 @@ jobs:
           key: ${{ runner.os }}-gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/setup-python@v4.5.0
+        uses: actions/setup-python@v4.6.0
         with:
           python-version: ${{ env.python_version }}
       - name: GTK binaries move git binary
@@ -307,11 +263,11 @@ jobs:
           Write-Output "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $env:GITHUB_ENV
           Write-Output "C:\gtk-build\gtk\x64\release\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
-      - uses: actions/checkout@v3.5.0
+      - uses: actions/checkout@v3.5.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v4.5.0
+        uses: actions/setup-python@v4.6.0
         with:
           python-version: ${{ env.python_version }}
       - name: Install pipx
@@ -335,7 +291,6 @@ jobs:
           version: ${{ steps.setup_and_test.outputs.version }}
           cert_password: ${{ secrets.CERTPASSWORD }}
           base64_encoded_pfx: ${{ secrets.BASE64_ENCODED_PFX }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   check-windows-installer:
     name: Check Windows Installer
@@ -363,7 +318,7 @@ jobs:
 
   publish-to-pypi:
     name: Publish to PyPI (release only)
-    needs: [ linux-wheel, linux-flatpak-devel, check-linux-appimage, check-macos-app, check-windows-installer ]
+    needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
     runs-on: ubuntu-22.04
     if: github.event_name == 'release'
     steps:

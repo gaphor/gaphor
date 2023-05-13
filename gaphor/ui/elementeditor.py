@@ -6,7 +6,7 @@ from typing import Optional
 from unicodedata import normalize
 
 from babel import Locale
-from gi.repository import GLib, Gtk, GtkSource
+from gi.repository import Adw, GLib, Gtk, GtkSource
 
 from gaphor.abc import ActionProvider
 from gaphor.core import Transaction, action, event_handler
@@ -21,9 +21,10 @@ from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
 from gaphor.i18n import localedir
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.csscompletion import (
-    CssFunctionCompletionProvider,
-    CssNamedColorsCompletionProvider,
-    CssPropertyCompletionProvider,
+    CssFunctionProposals,
+    CssNamedColorProposals,
+    CssPropertyProposals,
+    CompletionProviderWrapper,
 )
 from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.ui.modelmerge import ModelMerge
@@ -31,11 +32,6 @@ from gaphor.event import ModelLoaded
 
 
 log = logging.getLogger(__name__)
-
-if Gtk.get_major_version() != 3:
-    from gi.repository import Adw
-
-    GtkSource.init()
 
 new_builder = new_resource_builder("gaphor.ui", "elementeditor")
 
@@ -281,9 +277,7 @@ class PreferencesStack:
         self.event_manager = event_manager
         self.element_factory = element_factory
         self.lang_manager = GtkSource.LanguageManager.get_default()
-        self.style_manager = (
-            None if Gtk.get_major_version() == 3 else Adw.StyleManager.get_default()
-        )
+        self.style_manager = Adw.StyleManager.get_default()
         self._notify_dark_id = 0
         self.lang_manager.append_search_path(
             str(importlib.resources.files("gaphor") / "ui" / "language-specs")
@@ -320,9 +314,15 @@ class PreferencesStack:
         )
 
         view_completion = self.style_sheet_view.get_completion()
-        view_completion.add_provider(CssFunctionCompletionProvider())
-        view_completion.add_provider(CssNamedColorsCompletionProvider())
-        view_completion.add_provider(CssPropertyCompletionProvider())
+        view_completion.add_provider(
+            CompletionProviderWrapper(priority=3, proposals=CssFunctionProposals())
+        )
+        view_completion.add_provider(
+            CompletionProviderWrapper(priority=-4, proposals=CssNamedColorProposals())
+        )
+        view_completion.add_provider(
+            CompletionProviderWrapper(priority=1, proposals=CssPropertyProposals())
+        )
         assert self.style_manager
         self._notify_dark_id = self.style_manager.connect(
             "notify::dark", self._on_notify_dark

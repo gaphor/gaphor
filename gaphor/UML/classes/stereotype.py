@@ -36,7 +36,9 @@ def _create_stereotype_compartment(appliedStereotype):
     if slots:
         return Box(
             Text(
-                text=lazy_format(appliedStereotype.classifier[0]),
+                text=lazy_format(appliedStereotype.classifier[0])
+                if appliedStereotype.classifier
+                else "",
                 style={"padding": (0, 0, 4, 0)},
             ),
             *(

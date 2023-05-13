@@ -11,7 +11,7 @@ Unicode true
 !define ID "gaphor"
 !define DESC "Modeling Tool"
 
-!define WEBSITE "https://gaphor.readthedocs.io"
+!define WEBSITE "https://docs.gaphor.org"
 
 !define UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${NAME}"
 !define INSTDIR_KEY "Software\${NAME}"
