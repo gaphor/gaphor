@@ -66,7 +66,7 @@ def ui(prog, models, self_test, profiler, gapplication_service) -> int:
 def parse_args(argv):
     parser = argparse.ArgumentParser(description="Gaphor is the simple modeling tool.")
     parser.add_argument(
-        "-v", "--version", help="print version and exit", action="store_true"
+        "-v", "--version", help="print version and exit", nargs=0, action=VersionAction
     )
     parser.add_argument(
         "-d", "--debug", help="enable debug logging", action="store_true"
@@ -95,3 +95,9 @@ def parse_args(argv):
     gapplication_group.add_argument("--gapplication-service", action="store_true")
 
     return parser.parse_args(args=argv[1:])
+
+
+class VersionAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        print(f"Gaphor {distribution().version}")
+        parser.exit()
