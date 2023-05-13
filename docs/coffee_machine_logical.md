@@ -65,7 +65,9 @@ one cup mode or two cup mode.
 
 ```{diagram} Logical States
 :model: coffee-machine
+:alt: State machine diagram showing logical states including on and off
 ```
+
 Open the Logical States diagram and use the Toolbox to add the additional
 substates and transition. Guards for the transitions, shown surrounded by
 brackets, are added by selecting the transition and adding the guard in the
@@ -97,6 +99,7 @@ parts.
 
 ```{diagram} Logical Structure
 :model: coffee-machine
+:alt: Block definition diagram showing the coffee machine and its logical parts
 ```
 
 - Water tank: The water tank is a container that stores the water used in the
@@ -157,6 +160,7 @@ part properties of the blocks that were in the Logical Structure diagram above.
 
 ```{diagram} Logical Boundary
 :model: coffee-machine
+:alt: Internal block diagram showing the clear box view of the espresso machine
 ```
 
 The interactions between the part properties inside the espresso machine are
@@ -218,6 +222,7 @@ Here we derive two requirements:
 
 ```{diagram} Logical Requirements
 :model: coffee-machine
+:alt: Logical requirements for the controller command and the water pressure derived from concept requirements
 ```
 
 Update the Logical Requirements diagram with these requirements. If you want,

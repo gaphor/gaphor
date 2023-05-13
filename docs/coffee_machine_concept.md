@@ -64,6 +64,7 @@ espresso.
 
 ```{diagram} Use Cases
 :model: coffee-machine
+:alt: Use case diagram showing an actor named Barista and a use case called Brew espresso
 ```
 
 The use case Brew espresso represents a specific functionality or action that
@@ -99,6 +100,7 @@ that they are part of the domain.
 
 ```{diagram} Espresso Domain
 :model: coffee-machine
+:alt: Block Definition Diagram showing hierarchy of blocks in the Coffee Shop domain
 ```
 
 The Barista block is responsible for preparing and serving the coffee to the
@@ -130,6 +132,7 @@ grinder, and the water source.
 
 ```{diagram} Espresso Context
 :model: coffee-machine
+:alt: Block definition diagram showing context of the coffee shop with external entities
 ```
 
 ```{attention}
@@ -178,6 +181,7 @@ a water tank, heat-up time, and HMI button:
 
 ```{diagram} Concept Requirements
 :model: coffee-machine
+:alt: Concept requirements for water tank, heat-up time, and HMI button
 ```
 
 Help the ants update the Concept Requirements diagram with these
