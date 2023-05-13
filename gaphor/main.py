@@ -95,7 +95,3 @@ def parse_args(argv):
     gapplication_group.add_argument("--gapplication-service", action="store_true")
 
     return parser.parse_args(args=argv[1:])
-
-
-if __name__ == "__main__":
-    sys.exit(main())
