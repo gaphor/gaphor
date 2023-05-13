@@ -164,7 +164,7 @@ a water tank, heat-up time, and HMI button:
    make multiple cups of coffee before needing a refill. The water tank should be
    easy to access and fill.
 
--  Heat-up Time: The coffee machine should have a heat-up time of no more than 3
+-  Heat-up Time: The coffee machine should have a heat-up time of no more than 10
    minutes from the time the user turns on the machine until it's ready to brew
    coffee.
 
@@ -172,7 +172,7 @@ a water tank, heat-up time, and HMI button:
    make it easy for the user to select the amount of coffee they want to brew. The
    HMI should be intuitive and easy to use.
 
-```{diagram} Stakeholder Requirements
+```{diagram} Concept Requirements
 :model: coffee-machine
 ```
 

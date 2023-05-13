@@ -675,7 +675,7 @@
 <ref refid="012edaba-70f5-11ec-aabc-f47b099bf663"/>
 </element>
 <name>
-<val>Stakeholder Requirements</val>
+<val>Concept Requirements</val>
 </name>
 <ownedPresentation>
 <reflist>
@@ -1306,7 +1306,7 @@
 <ref refid="cca1054c-70f5-11ec-aabc-f47b099bf663"/>
 </element>
 <name>
-<val>System Requirements</val>
+<val>Logical Requirements</val>
 </name>
 <ownedPresentation>
 <reflist>
