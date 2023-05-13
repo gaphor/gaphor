@@ -1,9 +1,7 @@
 """This module contains user interface related code, such as the main screen
 and diagram windows."""
 
-import logging
-import sys
-from typing import Optional
+from __future__ import annotations
 
 import gi
 
@@ -14,58 +12,18 @@ gi.require_version("Adw", "1")
 
 from gi.repository import Adw, Gio, GLib, Gtk, GtkSource
 
-from gaphor.application import Application, Session, distribution
+from gaphor.application import Application, Session
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
 from gaphor.ui.actiongroup import apply_application_actions
 
 APPLICATION_ID = "org.gaphor.Gaphor"
-LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
 GtkSource.init()
 
 
-def main(argv=sys.argv) -> int:
-    """Start Gaphor from the command line.  This function creates an option
-    parser for retrieving arguments and options from the command line.  This
-    includes a Gaphor model to load.
-
-    The application is then initialized, passing along the option
-    parser.  This provides plugins and services with access to the
-    command line options and may add their own.
-    """
-
-    def has_option(*options):
-        return any(o in argv for o in options)
-
-    if has_option("-v", "--version"):
-        print(f"Gaphor {distribution().version}")
-        return 0
-
-    if has_option("-d", "--debug"):
-        logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
-        logging.getLogger("gaphor").setLevel(logging.DEBUG)
-    elif has_option("-q", "--quiet"):
-        logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT)
-    else:
-        logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
-
-    if has_option("-p", "--profiler"):
-        import cProfile
-        import pstats
-
-        with cProfile.Profile() as profile:
-            exit_code = profile.runcall(run, argv)
-
-        profile_stats = pstats.Stats(profile)
-        profile_stats.strip_dirs().sort_stats("time").print_stats(50)
-        return exit_code
-
-    return run(argv)
-
-
 def run(argv: list[str]) -> int:
-    application: Optional[Application] = None
+    application: Application | None = None
 
     def app_startup(gtk_app):
         nonlocal application
@@ -129,42 +87,7 @@ def run(argv: list[str]) -> int:
 
 
 def add_main_options(gtk_app):
-    """These parameters are handled in `gaphor.ui.main()`.
-
-    Define them here, so they show up on `gaphor --help`.
-    """
-    gtk_app.add_main_option(
-        "version",
-        ord("v"),
-        GLib.OptionFlags.NONE,
-        GLib.OptionArg.NONE,
-        "Print version and exit",
-        None,
-    )
-    gtk_app.add_main_option(
-        "debug",
-        ord("d"),
-        GLib.OptionFlags.NONE,
-        GLib.OptionArg.NONE,
-        "Debug output",
-        None,
-    )
-    gtk_app.add_main_option(
-        "quiet",
-        ord("q"),
-        GLib.OptionFlags.NONE,
-        GLib.OptionArg.NONE,
-        "Quiet output",
-        None,
-    )
-    gtk_app.add_main_option(
-        "profiler",
-        ord("p"),
-        GLib.OptionFlags.NONE,
-        GLib.OptionArg.NONE,
-        "Run in profiler",
-        None,
-    )
+    """These parameters are handled in `gaphor.ui.run()`."""
     gtk_app.add_main_option(
         "self-test",
         0,

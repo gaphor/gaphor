@@ -185,7 +185,7 @@ def display_type():
 
 def windows_console_output_workaround():
     if sys.platform == "win32":
-        from gaphor.ui import LOG_FORMAT
+        from gaphor.main import LOG_FORMAT
 
         logging.basicConfig(
             level=logging.INFO,
