@@ -8,6 +8,9 @@ In this tutorial we refer to the different parts of the gaphor interface:
 Although the names should speak for themselves, you can check out the [Getting
 Started](getting_started) page for more information about those sections.
 ```
+
+## Introduction
+
 In the bustling town of Antville, a colony of ants had formed a Systems
 Engineering consulting company called AntSource. They value collaboration,
 transparency, and community-driven engineering, and seeks to empower their
@@ -120,8 +123,7 @@ packages that we will start to build up the design for the espresso machine.
 ![Three pillar packages nested under each abstraction level
 package](images/coffee-machine-pillars.png)
 
-## Up Next
-
+## Table of Contents
 ```{toctree}
 coffee_machine_concept
 coffee_machine_logical

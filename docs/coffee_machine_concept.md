@@ -4,6 +4,8 @@ file_format: mystnb
 
 # Coffee Machine: Concept Level
 
+## Introduction
+
 The concept level defines the problem we are trying to solve. For the espresso
 machine, we are going to use diagrams at this abstraction level to answer questions like:
 
@@ -130,9 +132,11 @@ grinder, and the water source.
 :model: coffee-machine
 ```
 
+```{attention}
 The interactions between the Espresso Machine and the external entities should
 be shown as ItemFlows on the associations. We don't currently support adding flows
 like this, but we hopefully will soon!
+```
 
 The ants need more of your help to rename the Feature Context diagram and update it
 so that it matches the one above.
@@ -176,7 +180,7 @@ a water tank, heat-up time, and HMI button:
 :model: coffee-machine
 ```
 
-Help the ants update the Stakeholders Requirements diagram with these
+Help the ants update the Concept Requirements diagram with these
 requirements.
 
 Throughout the design process, the concept requirements will be refined and
