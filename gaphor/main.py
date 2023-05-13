@@ -66,19 +66,28 @@ def parse_args(argv):
 
     if extra_args and (command := commands.get(extra_args[0])):
         cmd, *extra_args = extra_args
-        cmd_parser = command(
-            argparse.ArgumentParser(prog=f"{parser.prog} {cmd}", parents=[parser])
+        p = command()
+        cmd_parser = argparse.ArgumentParser(
+            description=p.description,
+            prog=f"{parser.prog} {cmd}",
+            parents=[parser, p],
+            add_help=False,
         )
+
     else:
-        cmd_parser = gui_parser(
-            argparse.ArgumentParser(prog=f"{parser.prog} [command]", parents=[parser])
+        p = gui_parser()
+        cmd_parser = argparse.ArgumentParser(
+            description=p.description,
+            prog=f"{parser.prog} [command]",
+            parents=[parser, p],
+            add_help=False,
         )
         cmd_parser.epilog = f"commands: {', '.join(commands)}"
 
     return cmd_parser.parse_args(extra_args, namespace=args)
 
 
-def gui_parser(parser):
+def gui_parser():
     def run(args) -> int:
         # Only now import the UI module
         import gaphor.ui
@@ -92,6 +101,7 @@ def gui_parser(parser):
 
         return gaphor.ui.run(run_argv)
 
+    parser = argparse.ArgumentParser()
     parser.description = "Gaphor is the simple modeling tool."
     parser.add_argument(
         "--self-test", help="run self test and exit", action="store_true"
@@ -102,7 +112,7 @@ def gui_parser(parser):
     return parser
 
 
-def exec_parser(parser):
+def exec_parser():
     def execute_script(args) -> int:
         import runpy
 
@@ -110,17 +120,19 @@ def exec_parser(parser):
         runpy.run_path(script, run_name="__main__")
         return 0
 
+    parser = argparse.ArgumentParser()
     parser.description = "Execute a python script from within Gaphor."
     parser.add_argument("script", help="execute a script file and exit")
     parser.set_defaults(func=execute_script)
     return parser
 
 
-def export_parser(parser):
+def export_parser():
     def export_script(args) -> int:
         print("Placeholder for diagram export")
         return 0
 
+    parser = argparse.ArgumentParser()
     parser.description = "Export diagrams from a Gaphor model."
     parser.set_defaults(func=export_script)
     return parser
