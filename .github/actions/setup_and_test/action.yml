@@ -8,7 +8,7 @@ runs:
   using: composite
   steps:
     - name: Install Poetry
-      run: pipx install --pip-args=--constraint=.github/constraints.txt poetry
+      run: pipx install --python ${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
       shell: bash
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
