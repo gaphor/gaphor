@@ -103,11 +103,13 @@ def gui_parser():
 
     parser = argparse.ArgumentParser()
     parser.description = "Gaphor is the simple modeling tool."
-    parser.add_argument(
+
+    group = parser.add_argument_group("options (no command provided)")
+    group.add_argument(
         "--self-test", help="run self test and exit", action="store_true"
     )
-    parser.add_argument("--gapplication-service", action="store_true")
-    parser.add_argument("model", nargs="*", help="model file(s) to load")
+    group.add_argument("--gapplication-service", action="store_true")
+    group.add_argument("model", nargs="*", help="model file(s) to load")
     parser.set_defaults(func=run)
     return parser
 
