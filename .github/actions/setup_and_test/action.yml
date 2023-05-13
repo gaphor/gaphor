@@ -8,7 +8,12 @@ runs:
   using: composite
   steps:
     - name: Install Poetry
-      run: pipx install --python ${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
+      if: runner.os == 'Linux'
+      run: pipx install --python python${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
+      shell: bash
+    - name: Install Poetry (Windows/macOS)
+      if: runner.os != 'Linux'
+      run: pipx install --pip-args=--constraint=.github/constraints.txt poetry
       shell: bash
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
@@ -18,7 +23,8 @@ runs:
       run: .github/scripts/metadata.sh
       shell: bash
     - name: Install Python Dependencies
-      run: poetry install --no-interaction
+      run: |
+        poetry install --no-interaction
       shell: bash
     - name: Windows specific overrides
       if: runner.os == 'Windows'

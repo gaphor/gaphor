@@ -41,7 +41,7 @@ jobs:
         run: pip install babel && python po/check-babel.py
       - name: Check Poetry lock file integrity
         run: |
-          pipx install --pip-args=--constraint=.github/constraints.txt poetry
+          pipx install --python python${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
           poetry check
           poetry lock --no-update
           git diff --exit-code
