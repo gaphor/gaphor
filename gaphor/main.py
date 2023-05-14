@@ -1,5 +1,6 @@
 import argparse
 import logging
+import os
 import sys
 
 from gaphor.application import distribution
@@ -14,11 +15,11 @@ def main(argv=sys.argv) -> int:
     logging_config()
 
     commands = {
-        "exec": exec_parser,
-        "export": export_parser,
+        "exec": exec_parser(),
+        "export": export_parser(),
     }
 
-    args = parse_args(argv, commands)
+    args = parse_args(argv[1:], commands)
 
     if args.profiler:
         import cProfile
@@ -34,9 +35,29 @@ def main(argv=sys.argv) -> int:
     return args.command(args)  # type: ignore[no-any-return]
 
 
-def parse_args(argv, commands):
-    parser = argparse.ArgumentParser(add_help=False)
+def parse_args(args, commands):
+    if args and (command := commands.get(args[0])):
+        cmd, *options = args
+        epilog = None
+    else:
+        command = gui_parser()
+        cmd = "[command]"
+        options = args
+        epilog = f"commands: {', '.join(commands)}"
 
+    cmd_parser = argparse.ArgumentParser(
+        description=command.description,
+        epilog=epilog,
+        prog=f"{prog()} {cmd}",
+        parents=[default_parser(), command],
+        add_help=False,
+    )
+
+    return cmd_parser.parse_args(options)
+
+
+def default_parser():
+    parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument(
         "-v", "--version", help="print version and exit", nargs=0, action=VersionAction
     )
@@ -58,34 +79,10 @@ def parse_args(argv, commands):
         action=LogLevelAction,
         const=logging.WARNING,
     )
-
     parser.add_argument(
         "-p", "--profiler", help="run in profiler (cProfile)", action="store_true"
     )
-
-    args, extra_args = parser.parse_known_args(args=argv[1:])
-
-    if extra_args and (command := commands.get(extra_args[0])):
-        cmd, *extra_args = extra_args
-        p = command()
-        cmd_parser = argparse.ArgumentParser(
-            description=p.description,
-            prog=f"{parser.prog} {cmd}",
-            parents=[parser, p],
-            add_help=False,
-        )
-
-    else:
-        p = gui_parser()
-        cmd_parser = argparse.ArgumentParser(
-            description=p.description,
-            prog=f"{parser.prog} [command]",
-            parents=[parser, p],
-            add_help=False,
-        )
-        cmd_parser.epilog = f"commands: {', '.join(commands)}"
-
-    return cmd_parser.parse_args(extra_args, namespace=args)
+    return parser
 
 
 def gui_parser():
@@ -150,3 +147,7 @@ class VersionAction(argparse.Action):
 class LogLevelAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         logging_config(self.const)
+
+
+def prog():
+    return os.path.basename(sys.argv[0])
