@@ -167,7 +167,7 @@ def system_information():
         Python version:         {platform.python_version()}
         GTK version:            {Gtk.get_major_version()}.{Gtk.get_minor_version()}.{Gtk.get_micro_version()}
         Adwaita version:        {Adw.get_major_version()}.{Adw.get_minor_version()}.{Adw.get_micro_version()}
-        GtkSourceView version:  {GtkSource.get_major_version()}.{GtkSource.get_minor_version()}.{GtkSource.get_micro_version()}
+        GtkSourceView version:  {gtk_source_view_version()}
         Cairo version:          {cairo.cairo_version_string()}
         Pango version:          {Pango.version_string()}
         PyGObject version:      {gi.__version__}
@@ -181,6 +181,13 @@ def display_type():
     dm = Gdk.DisplayManager.get()
     display = dm.get_default_display()
     return display.__class__.__name__ if display else "none"
+
+
+def gtk_source_view_version():
+    if hasattr(GtkSource, "get_major_version"):
+        return f"{GtkSource.get_major_version()}.{GtkSource.get_minor_version()}.{GtkSource.get_micro_version()}"
+    else:
+        return "-"
 
 
 def windows_console_output_workaround():
