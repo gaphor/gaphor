@@ -42,6 +42,7 @@ jobs:
       - name: Check Poetry lock file integrity
         run: |
           pipx install --python python${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
+          poetry config virtualenvs.in-project true
           poetry check
           poetry lock --no-update
           git diff --exit-code
