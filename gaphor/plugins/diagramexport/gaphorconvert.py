@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-import optparse
+import argparse
+import logging
 import os
 import re
 import sys
@@ -12,6 +13,9 @@ from gaphor.diagram.export import escape_filename, save_pdf, save_png, save_svg
 from gaphor.storage import storage
 
 
+log = logging.getLogger(__name__)
+
+
 def pkg2dir(package):
     """Return directory path from package class."""
     name: List[str] = []
@@ -21,34 +25,28 @@ def pkg2dir(package):
     return "/".join(name)
 
 
-def parse_options(argv):
-    usage = "usage: %prog [options] file1 file2..."
+def export_parser():
+    parser = argparse.ArgumentParser()
 
-    parser = optparse.OptionParser(usage=usage)
-
-    parser.add_option(
-        "-v", "--verbose", dest="verbose", action="store_true", help="verbose output"
-    )
-    parser.add_option(
+    parser.add_argument(
         "-u",
         "--use-underscores",
         dest="underscores",
         action="store_true",
         help="use underscores instead of spaces for output filenames",
     )
-    parser.add_option(
-        "-d", "--dir", dest="dir", metavar="directory", help="output to directory"
+    parser.add_argument(
+        "-d", "--dir", metavar="directory", help="output to directory", default="."
     )
-    parser.add_option(
+    parser.add_argument(
         "-f",
         "--format",
-        dest="format",
         metavar="format",
         help="output file format, default pdf",
         default="pdf",
         choices=["pdf", "svg", "png"],
     )
-    parser.add_option(
+    parser.add_argument(
         "-r",
         "--regex",
         dest="regex",
@@ -56,22 +54,13 @@ def parse_options(argv):
         help="process diagrams which name matches given regular expression;"
         " name includes package name; regular expressions are case insensitive",
     )
+    parser.add_argument("model", nargs="+")
+    parser.set_defaults(command=export_command)
 
-    options, args = parser.parse_args(argv)
-
-    if not args:
-        parser.print_help()
-
-    return options, args
+    return parser
 
 
-def main(argv=sys.argv[1:]):
-    options, args = parse_options(argv)
-
-    def message(msg):
-        if options.verbose:
-            print(msg, file=sys.stderr)
-
+def export_command(args):
     session = Session(
         services=[
             "event_manager",
@@ -85,15 +74,15 @@ def main(argv=sys.argv[1:]):
     modeling_language = session.get_service("modeling_language")
 
     name_re = None
-    if options.regex:
-        name_re = re.compile(options.regex, re.I)
+    if args.regex:
+        name_re = re.compile(args.regex, re.I)
 
     # we should have some gaphor files to be processed at this point
-    for model in args:
-        message(f"loading model {model}")
+    for model in args.model:
+        log.debug("loading model %s", model)
         with open(model, encoding="utf-8") as file_obj:
             storage.load(file_obj, factory, modeling_language)
-        message("ready for rendering")
+        log.debug("ready for rendering")
 
         for diagram in factory.select(Diagram):
             odir = pkg2dir(diagram.owner)
@@ -103,30 +92,38 @@ def main(argv=sys.argv[1:]):
             # full diagram name including package path
             pname = f"{odir}/{dname}"
 
-            if options.underscores:
+            if args.underscores:
                 odir = odir.replace(" ", "_")
                 dname = dname.replace(" ", "_")
 
             if name_re and not name_re.search(pname):
-                message(f"skipping {pname}")
+                log.debug("skipping %s", pname)
                 continue
 
-            if options.dir:
-                odir = f"{options.dir}/{odir}"
+            if args.dir:
+                odir = f"{args.dir}/{odir}"
 
-            outfilename = f"{odir}/{dname}.{options.format}"
+            outfilename = f"{odir}/{dname}.{args.format}"
 
             if not os.path.exists(odir):
-                message(f"creating dir {odir}")
+                log.debug("creating dir %s", odir)
                 os.makedirs(odir)
 
-            message(f"rendering: {pname} -> {outfilename}...")
+            log.debug("rendering: %s -> %s...", pname, outfilename)
 
-            if options.format == "pdf":
+            if args.format == "pdf":
                 save_pdf(outfilename, diagram)
-            elif options.format == "svg":
+            elif args.format == "svg":
                 save_svg(outfilename, diagram)
-            elif options.format == "png":
+            elif args.format == "png":
                 save_png(outfilename, diagram)
             else:
-                raise RuntimeError(f"Unknown file format: {options.format}")
+                raise RuntimeError(f"Unknown file format: {args.format}")
+
+
+def main(argv=sys.argv[1:]):
+    parser = export_parser()
+
+    args = parser.parse_args(argv)
+
+    return export_command(args)
