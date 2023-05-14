@@ -3,6 +3,7 @@ import logging
 import sys
 
 from gaphor.application import distribution
+from gaphor.plugins.diagramexport.exportcli import export_parser
 
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
@@ -122,21 +123,11 @@ def exec_parser():
         runpy.run_path(script, run_name="__main__")
         return 0
 
-    parser = argparse.ArgumentParser()
-    parser.description = "Execute a python script from within Gaphor."
+    parser = argparse.ArgumentParser(
+        description="Execute a python script from within Gaphor."
+    )
     parser.add_argument("script", help="execute a script file and exit")
     parser.set_defaults(command=execute_script)
-    return parser
-
-
-def export_parser():
-    def export_script(args) -> int:
-        print("Placeholder for diagram export")
-        return 0
-
-    parser = argparse.ArgumentParser()
-    parser.description = "Export diagrams from a Gaphor model."
-    parser.set_defaults(command=export_script)
     return parser
 
 

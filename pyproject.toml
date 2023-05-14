@@ -86,7 +86,6 @@ docs = [ "sphinx", "sphinx-copybutton", "sphinx-intl", "myst-nb", "furo" ]
 
 [tool.poetry.scripts]
 gaphor = "gaphor.main:main"
-gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 
 [tool.poetry.plugins."gaphor.appservices"]
 "event_manager" = "gaphor.core.eventmanager:EventManager"

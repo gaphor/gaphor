@@ -4,7 +4,6 @@ import argparse
 import logging
 import os
 import re
-import sys
 from typing import List
 
 from gaphor.application import Session
@@ -26,7 +25,7 @@ def pkg2dir(package):
 
 
 def export_parser():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Export diagrams from a Gaphor model.")
 
     parser.add_argument(
         "-u",
@@ -36,7 +35,7 @@ def export_parser():
         help="use underscores instead of spaces for output filenames",
     )
     parser.add_argument(
-        "-d", "--dir", metavar="directory", help="output to directory", default="."
+        "-o", "--dir", metavar="directory", help="output to directory", default="."
     )
     parser.add_argument(
         "-f",
@@ -119,11 +118,3 @@ def export_command(args):
                 save_png(outfilename, diagram)
             else:
                 raise RuntimeError(f"Unknown file format: {args.format}")
-
-
-def main(argv=sys.argv[1:]):
-    parser = export_parser()
-
-    args = parser.parse_args(argv)
-
-    return export_command(args)
