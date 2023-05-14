@@ -12,23 +12,28 @@ def main(argv=sys.argv) -> int:
 
     logging_config()
 
-    args = parse_args(argv)
+    commands = {
+        "exec": exec_parser,
+        "export": export_parser,
+    }
+
+    args = parse_args(argv, commands)
 
     if args.profiler:
         import cProfile
         import pstats
 
         with cProfile.Profile() as profile:
-            exit_code: int = profile.runcall(args.func, args)
+            exit_code: int = profile.runcall(args.command, args)
 
         profile_stats = pstats.Stats(profile)
         profile_stats.strip_dirs().sort_stats("time").print_stats(50)
         return exit_code
 
-    return args.func(args)  # type: ignore[no-any-return]
+    return args.command(args)  # type: ignore[no-any-return]
 
 
-def parse_args(argv):
+def parse_args(argv, commands):
     parser = argparse.ArgumentParser(add_help=False)
 
     parser.add_argument(
@@ -56,11 +61,6 @@ def parse_args(argv):
     parser.add_argument(
         "-p", "--profiler", help="run in profiler (cProfile)", action="store_true"
     )
-
-    commands = {
-        "exec": exec_parser,
-        "export": export_parser,
-    }
 
     args, extra_args = parser.parse_known_args(args=argv[1:])
 
@@ -110,7 +110,7 @@ def gui_parser():
     )
     group.add_argument("--gapplication-service", action="store_true")
     group.add_argument("model", nargs="*", help="model file(s) to load")
-    parser.set_defaults(func=run)
+    parser.set_defaults(command=run)
     return parser
 
 
@@ -125,7 +125,7 @@ def exec_parser():
     parser = argparse.ArgumentParser()
     parser.description = "Execute a python script from within Gaphor."
     parser.add_argument("script", help="execute a script file and exit")
-    parser.set_defaults(func=execute_script)
+    parser.set_defaults(command=execute_script)
     return parser
 
 
@@ -136,7 +136,7 @@ def export_parser():
 
     parser = argparse.ArgumentParser()
     parser.description = "Export diagrams from a Gaphor model."
-    parser.set_defaults(func=export_script)
+    parser.set_defaults(command=export_script)
     return parser
 
 
