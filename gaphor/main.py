@@ -56,13 +56,13 @@ def parse_args(args, commands):
 def default_parser():
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument(
-        "-v", "--version", help="print version and exit", nargs=0, action=VersionAction
+        "-V", "--version", help="print version and exit", nargs=0, action=VersionAction
     )
 
     loglevel = parser.add_mutually_exclusive_group()
     loglevel.add_argument(
-        "-d",
-        "--debug",
+        "-v",
+        "--verbose",
         help="enable debug logging",
         nargs=0,
         action=LogLevelAction,

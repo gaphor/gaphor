@@ -30,13 +30,13 @@ def test_run_main():
 
 def test_version(capsys):
     with pytest.raises(SystemExit):
-        main([APP_NAME, "-v"])
+        main([APP_NAME, "-V"])
 
     assert "Gaphor" in capsys.readouterr().out
 
 
 def test_debug_logging():
-    main([APP_NAME, "-d"])
+    main([APP_NAME, "-v"])
 
     assert logging.getLogger("gaphor").getEffectiveLevel() == logging.DEBUG
 
