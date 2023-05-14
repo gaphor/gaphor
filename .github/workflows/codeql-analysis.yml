@@ -34,12 +34,11 @@ jobs:
         path: ~/.cache/pip
         key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
     - name: Install Poetry
-      run: pipx install --pip-args=--constraint=.github/constraints.txt poetry
+      run: pipx install --python python${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
     - name: Install Python Dependencies
       run: |
-        poetry env use ${{ env.python_version }}
         poetry install --no-interaction
         # Set the `CODEQL-PYTHON` environment variable to the Python executable
         # that includes the dependencies
