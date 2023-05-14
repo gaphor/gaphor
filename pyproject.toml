@@ -134,6 +134,10 @@ gaphor = "gaphor.main:main"
 "C4Model" = "gaphor.C4Model.modelinglanguage:C4ModelLanguage"
 "RAAML" = "gaphor.RAAML.modelinglanguage:RAAMLModelingLanguage"
 
+[tool.poetry.plugins."gaphor.argparsers"]
+exec = "gaphor.main:exec_parser"
+export = "gaphor.plugins.diagramexport.exportcli:export_parser"
+
 [tool.poetry.plugins."babel.extractors"]
 "gaphor" = "gaphor.babel:extract_gaphor"
 

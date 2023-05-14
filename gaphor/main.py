@@ -4,7 +4,7 @@ import os
 import sys
 
 from gaphor.application import distribution
-from gaphor.plugins.diagramexport.exportcli import export_parser
+from gaphor.entrypoint import initialize
 
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
@@ -14,10 +14,7 @@ def main(argv=sys.argv) -> int:
 
     logging_config()
 
-    commands = {
-        "exec": exec_parser(),
-        "export": export_parser(),
-    }
+    commands: dict[str, argparse.ArgumentParser] = initialize("gaphor.argparsers")
 
     args = parse_args(argv[1:], commands)
 
