@@ -32,29 +32,37 @@ def main(argv=sys.argv) -> int:
     return args.command(args)  # type: ignore[no-any-return]
 
 
-def parse_args(args, commands):
-    if args and (command := commands.get(args[0])):
-        cmd, *options = args
-        epilog = None
-    else:
-        command = gui_parser()
-        cmd = "[command]"
-        options = args
-        epilog = f"commands: {', '.join(commands)}"
-
-    cmd_parser = argparse.ArgumentParser(
-        description=command.description,
-        epilog=epilog,
-        prog=f"{prog()} {cmd}",
-        parents=[default_parser(), command],
-        add_help=False,
+def parse_args(args: list[str], commands: dict[str, argparse.ArgumentParser]):
+    defaults = default_parser()
+    parser = argparse.ArgumentParser(
+        description="Gaphor is the simple modeling tool.",
+        epilog="Thank you for using Gaphor <https://gaphor.org>.",
+        parents=[defaults],
     )
+    subparsers = parser.add_subparsers(title="subcommands")
 
-    return cmd_parser.parse_args(options)
+    for name, cmd_parser in commands.items():
+        sp = subparsers.add_parser(
+            name,
+            description=cmd_parser.description,
+            help=(cmd_parser.description or "").lower().rstrip("."),
+            parents=[defaults, cmd_parser],
+            add_help=False,
+        )
+
+        # Special case: fall back to gui subcommand if none is provided
+        if name == "gui" and not (args and args[0] in commands):
+            # Workaround: show toplevel help on the gui subcommand
+            sp.format_help = parser.format_help  # type: ignore[method-assign]
+            args.insert(0, "gui")
+
+    return parser.parse_args(args)
 
 
 def default_parser():
-    parser = argparse.ArgumentParser(add_help=False)
+    parser = argparse.ArgumentParser(
+        description="Gaphor is the simple modeling tool.", add_help=False
+    )
     parser.add_argument(
         "-V", "--version", help="print version and exit", nargs=0, action=VersionAction
     )
@@ -96,8 +104,9 @@ def gui_parser():
 
         return gaphor.ui.run(run_argv)
 
-    parser = argparse.ArgumentParser()
-    parser.description = "Gaphor is the simple modeling tool."
+    parser = argparse.ArgumentParser(
+        description="Start the GUI (default if no subcommand is provided)."
+    )
 
     group = parser.add_argument_group("options (no command provided)")
     group.add_argument(

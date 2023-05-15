@@ -135,6 +135,7 @@ gaphor = "gaphor.main:main"
 "RAAML" = "gaphor.RAAML.modelinglanguage:RAAMLModelingLanguage"
 
 [tool.poetry.plugins."gaphor.argparsers"]
+gui = "gaphor.main:gui_parser"
 exec = "gaphor.main:exec_parser"
 export = "gaphor.plugins.diagramexport.exportcli:export_parser"
 
