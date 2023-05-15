@@ -28,7 +28,8 @@ def test_run_main():
 
 
 def test_version(capsys):
-    main([APP_NAME, "-v"])
+    with pytest.raises(SystemExit):
+        main([APP_NAME, "-v"])
 
     assert "Gaphor" in capsys.readouterr().out
 
