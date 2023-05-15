@@ -69,6 +69,7 @@ a = Analysis(  # type: ignore
     + copy_metadata("gaphor")
     + copy_metadata("gaphas"),
     hiddenimports=collect_entry_points(
+        "gaphor.argparsers",
         "gaphor.services",
         "gaphor.appservices",
         "gaphor.modelinglanguages",
