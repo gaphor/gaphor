@@ -16,7 +16,7 @@ machine.
 
 In the end, Cappuccino was thrilled with the machine, which worked flawlessly
 and was a big hit with his customers. He was so impressed with the ants' work
-that he offered them a long-term contract to design all of his cafe's systems.
+that he offered them a long-term contract to design all of his café's systems.
 The ants were proud of their success, knowing that it was all thanks to their
 expertise and deep understanding of systems engineering principles. They had
 proven that, with the right tools and approach, anything is possible.
