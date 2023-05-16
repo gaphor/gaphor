@@ -113,6 +113,14 @@ jobs:
           manifest-path: org.gaphor.Gaphor.json
           run-tests: true
           cache-key: flatpak-builder-${{ github.sha }}
+      - name: Use Python Dependency Cache
+        uses: actions/cache@v3.3.1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
+      - name: Install Dependencies and Test
+        id: setup_and_test
+        uses: ./.github/actions/setup_and_test
 
   macos:
     name: macOS
