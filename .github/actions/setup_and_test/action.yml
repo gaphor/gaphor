@@ -4,12 +4,16 @@ outputs:
   version:
     description: 'Build version with added dev reference for non-releases'
     value: ${{ steps.meta.outputs.version }}
+inputs:
+  python-version:
+    description: 'Python version number for Linux'
+    required: false
 runs:
   using: composite
   steps:
     - name: Install Poetry (Linux)
       if: runner.os == 'Linux'
-      run: pipx install --python python${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
+      run: pipx install --python python${{ inputs.python-version }} --pip-args=--constraint=.github/constraints.txt poetry
       shell: bash
     - name: Install Poetry (Windows/macOS)
       if: runner.os != 'Linux'
