@@ -37,9 +37,12 @@ def parse_args(args: list[str], commands: dict[str, argparse.ArgumentParser]):
     parser = argparse.ArgumentParser(
         description="Gaphor is the simple modeling tool.",
         epilog="Thank you for using Gaphor <https://gaphor.org>.",
-        parents=[defaults],
+        parents=[version_parser()],
     )
-    subparsers = parser.add_subparsers(title="subcommands")
+    subparsers = parser.add_subparsers(
+        title="subcommands (default: gui)",
+        description=f"Get help for commands with {prog()} COMMAND --help.",
+    )
 
     for name, cmd_parser in commands.items():
         sp = subparsers.add_parser(
@@ -59,19 +62,22 @@ def parse_args(args: list[str], commands: dict[str, argparse.ArgumentParser]):
     return parser.parse_args(args)
 
 
-def default_parser():
-    parser = argparse.ArgumentParser(
-        description="Gaphor is the simple modeling tool.", add_help=False
-    )
+def version_parser():
+    parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument(
         "-V", "--version", help="print version and exit", nargs=0, action=VersionAction
     )
+    return parser
+
+
+def default_parser():
+    parser = argparse.ArgumentParser(add_help=False)
 
     loglevel = parser.add_mutually_exclusive_group()
     loglevel.add_argument(
         "-v",
         "--verbose",
-        help="enable debug logging",
+        help="enable verbose logging",
         nargs=0,
         action=LogLevelAction,
         const=logging.DEBUG,
@@ -85,7 +91,7 @@ def default_parser():
         const=logging.WARNING,
     )
     parser.add_argument(
-        "-p", "--profiler", help="run in profiler (cProfile)", action="store_true"
+        "--profiler", help="run in profiler (cProfile)", action="store_true"
     )
     return parser
 
@@ -95,6 +101,7 @@ def gui_parser():
         # Only now import the UI module
         import gaphor.ui
 
+        # Recreate a command line for our GTK gui
         run_argv = [sys.argv[0]]
         if args.self_test:
             run_argv += ["--self-test"]
@@ -105,7 +112,7 @@ def gui_parser():
         return gaphor.ui.run(run_argv)
 
     parser = argparse.ArgumentParser(
-        description="Start the GUI (default if no subcommand is provided)."
+        description="Launch the GUI.", parents=[version_parser()]
     )
 
     group = parser.add_argument_group("options (no command provided)")
