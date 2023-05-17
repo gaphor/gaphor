@@ -7,7 +7,7 @@ Plan:
    for line ends.
 """
 
-from math import atan2, pi
+from math import pi
 from typing import Optional
 
 from gaphas.connector import Handle
@@ -16,7 +16,7 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphor import UML
 from gaphor.core.modeling.properties import association, attribute, enumeration
 from gaphor.core.styling import Style, merge_styles
-from gaphor.diagram.presentation import LinePresentation, Named
+from gaphor.diagram.presentation import LinePresentation, Named, get_center_pos
 from gaphor.diagram.shapes import (
     Box,
     Text,
@@ -26,7 +26,7 @@ from gaphor.diagram.shapes import (
     stroke,
 )
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import Layout, middle_segment
+from gaphor.diagram.text import Layout
 from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_association_end
 
@@ -221,17 +221,6 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
                 cr.line_to(6 * inv, 7)
                 cr.line_to(0, 12)
                 cr.fill()
-
-
-def get_center_pos(points):
-    """Return position in the centre of middle segment of a line.
-
-    Angle of the middle segment is also returned.
-    """
-    h0, h1 = middle_segment(points)
-    pos = (h0.pos.x + h1.pos.x) / 2, (h0.pos.y + h1.pos.y) / 2
-    angle = atan2(h1.pos.y - h0.pos.y, h1.pos.x - h0.pos.x)
-    return pos, angle
 
 
 def draw_head_none(context):

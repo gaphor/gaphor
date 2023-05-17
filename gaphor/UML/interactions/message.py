@@ -45,16 +45,15 @@ operation information in message's name.
 See also ``lifeline`` module documentation.
 """
 
-from math import atan2, pi
+from math import pi
 
 from gaphas.connector import Handle
 from gaphas.constraint import constraint
 
 from gaphor import UML
-from gaphor.diagram.presentation import LinePresentation, Named
+from gaphor.diagram.presentation import LinePresentation, Named, get_center_pos
 from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import middle_segment
 from gaphor.UML.interactions.lifeline import LifelineItem
 from gaphor.UML.recipes import stereotypes_str
 
@@ -119,16 +118,6 @@ class MessageItem(Named, LinePresentation[UML.Message]):
         super().remove_handle(handle)
         if len(self.handles()) == 2:
             self.diagram.connections.add_constraint(self, self._horizontal_line)
-
-    def _get_center_pos(self):
-        """Return position in the centre of middle segment of a line.
-
-        Angle of the middle segment is also returned.
-        """
-        p0, p1 = middle_segment([h.pos for h in self.handles()])
-        pos = (p0.x + p1.x) / 2, (p0.y + p1.y) / 2
-        angle = atan2(p1.y - p0.y, p1.x - p0.x)
-        return pos, angle
 
     def _draw_circle(self, cr):
         """Draw circle for lost/found messages."""
@@ -239,7 +228,7 @@ class MessageItem(Named, LinePresentation[UML.Message]):
         # inverted messages
         self._is_communication = self.is_communication()
         if self._is_communication:
-            pos, angle = self._get_center_pos()
+            pos, angle = get_center_pos(self.handles())
             self._arrow_pos = pos
             self._arrow_angle = angle
             cr = context.cairo
