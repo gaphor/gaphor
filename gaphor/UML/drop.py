@@ -28,7 +28,11 @@ def drop_relationship(element: UML.Relationship, diagram, x, y):
 
 
 def diagram_has_presentation(diagram, element):
-    return next((p for p in element.presentation if p.diagram is diagram), None)
+    return (
+        next((p for p in element.presentation if p.diagram is diagram), None)
+        if element
+        else None
+    )
 
 
 @drop.register
@@ -45,10 +49,17 @@ def drop_connector(element: UML.Connector, diagram, x, y):
 
 @drop.register
 def drop_message(element: UML.Message, diagram, x, y):
-    assert isinstance(element.sendEvent, UML.MessageOccurrenceSpecification)
-    assert isinstance(element.receiveEvent, UML.MessageOccurrenceSpecification)
     return _drop(
-        element, element.sendEvent.covered, element.receiveEvent.covered, diagram, x, y
+        element,
+        element.sendEvent.covered
+        if isinstance(element.sendEvent, UML.MessageOccurrenceSpecification)
+        else None,
+        element.receiveEvent.covered
+        if isinstance(element.receiveEvent, UML.MessageOccurrenceSpecification)
+        else None,
+        diagram,
+        x,
+        y,
     )
 
 
@@ -59,7 +70,7 @@ def _drop(element, head_element, tail_element, diagram, x, y):
 
     head_item = diagram_has_presentation(diagram, head_element)
     tail_item = diagram_has_presentation(diagram, tail_element)
-    if not head_item or not tail_item:
+    if (head_element and not head_item) or (tail_element and not tail_item):
         return None
 
     item = diagram.create(item_class)
@@ -68,7 +79,9 @@ def _drop(element, head_element, tail_element, diagram, x, y):
     item.matrix.translate(x, y)
     item.subject = element
 
-    connect(item, item.head, head_item)
-    connect(item, item.tail, tail_item)
+    if head_item:
+        connect(item, item.head, head_item)
+    if tail_item:
+        connect(item, item.tail, tail_item)
 
     return item

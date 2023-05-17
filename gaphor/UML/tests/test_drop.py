@@ -85,3 +85,33 @@ def test_drop_message(diagram, element_factory):
     assert item
     assert diagram.connections.get_connection(item.head).connected is a.presentation[0]
     assert diagram.connections.get_connection(item.tail).connected is b.presentation[0]
+
+
+def test_drop_message_send_connected(diagram, element_factory):
+    a = element_factory.create(UML.Lifeline)
+
+    a_item = drop(a, diagram, 0, 0)
+    msg_item = diagram.create(MessageItem)
+    connect_lifelines(msg_item, send=a_item, received=None)
+    message = msg_item.subject
+
+    item = drop(message, diagram, 0, 0)
+
+    assert item
+    assert diagram.connections.get_connection(item.head).connected is a.presentation[0]
+    assert not diagram.connections.get_connection(item.tail)
+
+
+def test_drop_message_received_connected(diagram, element_factory):
+    b = element_factory.create(UML.Lifeline)
+
+    b_item = drop(b, diagram, 0, 0)
+    msg_item = diagram.create(MessageItem)
+    connect_lifelines(msg_item, send=None, received=b_item)
+    message = msg_item.subject
+
+    item = drop(message, diagram, 0, 0)
+
+    assert item
+    assert not diagram.connections.get_connection(item.head)
+    assert diagram.connections.get_connection(item.tail).connected is b.presentation[0]
