@@ -13,14 +13,9 @@ from gaphor.SysML.propertypages import (
 
 @pytest.fixture
 def connector(element_factory):
-    subject = element_factory.create(UML.Connector)
-    head_end = element_factory.create(UML.ConnectorEnd)
-    head_end.role = element_factory.create(UML.Property)
-    tail_end = element_factory.create(UML.ConnectorEnd)
-    tail_end.role = element_factory.create(UML.Property)
-    subject.end = head_end
-    subject.end = tail_end
-    return subject
+    prop_a = element_factory.create(UML.Property)
+    prop_b = element_factory.create(UML.Property)
+    return UML.recipes.create_connector(prop_a, prop_b)
 
 
 def test_requirement_property_page_id(element_factory):
