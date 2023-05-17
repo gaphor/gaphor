@@ -2,6 +2,7 @@
 and diagram windows."""
 
 from __future__ import annotations
+import sys
 
 import gi
 
@@ -96,3 +97,7 @@ def add_main_options(gtk_app):
         "Run self test and exit",
         None,
     )
+
+
+if __name__ == "__main__":
+    run(sys.argv)

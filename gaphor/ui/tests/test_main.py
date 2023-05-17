@@ -1,7 +1,12 @@
+import sys
+
 import pytest
 from gi.repository import GLib, Gtk
 
 import gaphor.main
+
+
+APP_NAME = sys.argv[0]
 
 
 @pytest.fixture(autouse=True)
@@ -31,14 +36,14 @@ def fake_run(monkeypatch):
 def test_application_startup(monkeypatch):
     run = fake_run(monkeypatch)
 
-    gaphor.main.main(["gaphor"])
+    gaphor.main.main([APP_NAME])
 
-    assert run == ["gaphor"]
+    assert run == [APP_NAME]
 
 
 def test_application_startup_with_model(monkeypatch):
     run = fake_run(monkeypatch)
 
-    gaphor.main.main(["gaphor", "test-models/all-elements.gaphor"])
+    gaphor.main.main([APP_NAME, "test-models/all-elements.gaphor"])
 
-    assert run == ["gaphor", "test-models/all-elements.gaphor"]
+    assert run == [APP_NAME, "test-models/all-elements.gaphor"]

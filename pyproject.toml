@@ -86,7 +86,6 @@ docs = [ "sphinx", "sphinx-copybutton", "sphinx-intl", "myst-nb", "furo" ]
 
 [tool.poetry.scripts]
 gaphor = "gaphor.main:main"
-gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 
 [tool.poetry.plugins."gaphor.appservices"]
 "event_manager" = "gaphor.core.eventmanager:EventManager"
@@ -134,6 +133,11 @@ gaphorconvert = "gaphor.plugins.diagramexport.gaphorconvert:main"
 "SysML" = "gaphor.SysML.modelinglanguage:SysMLModelingLanguage"
 "C4Model" = "gaphor.C4Model.modelinglanguage:C4ModelLanguage"
 "RAAML" = "gaphor.RAAML.modelinglanguage:RAAMLModelingLanguage"
+
+[tool.poetry.plugins."gaphor.argparsers"]
+gui = "gaphor.main:gui_parser"
+exec = "gaphor.main:exec_parser"
+export = "gaphor.plugins.diagramexport.exportcli:export_parser"
 
 [tool.poetry.plugins."babel.extractors"]
 "gaphor" = "gaphor.babel:extract_gaphor"
