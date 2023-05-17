@@ -34,7 +34,7 @@ jobs:
         path: ~/.cache/pip
         key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
     - name: Install Poetry
-      run: pipx install --pip-args=--constraint=.github/constraints.txt poetry
+      run: pipx install --python python${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
     - name: Install Python Dependencies
