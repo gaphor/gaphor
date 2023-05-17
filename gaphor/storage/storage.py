@@ -179,6 +179,8 @@ def _load_elements_and_canvasitems(
             elem = upgrade_generalization_arrow_direction(elem)
         if version_lower_than(gaphor_version, (2, 9, 0)):
             elem = upgrade_flow_item_to_control_flow_item(elem, elements)
+        if version_lower_than(gaphor_version, (2, 19, 0)):
+            elem = upgrade_delete_property_information_flow(elem)
 
         if not (cls := modeling_language.lookup_element(elem.type)):
             raise UnknownModelElementError(
@@ -399,4 +401,11 @@ def upgrade_flow_item_to_control_flow_item(elem, elements):
             subject_type = "ControlFlow"
 
         elem.type = f"{subject_type}Item"
+    return elem
+
+
+# since 2.18.2
+def upgrade_delete_property_information_flow(elem):
+    if elem.type == "Property" and "informationFlow" in elem.references:
+        del elem.references["informationFlow"]
     return elem

@@ -12,7 +12,6 @@ def property_deletable(element: Property) -> bool:
     return not (
         element.association
         or element.end
-        or element.informationFlow
         or element.itemFlow  # type: ignore[attr-defined]
     )
 
