@@ -100,12 +100,15 @@ interfaces are connectable elements.
 """
 
 from gaphor import UML
-from gaphor.core.format import format
 from gaphor.diagram.presentation import LinePresentation, Named
-from gaphor.diagram.shapes import Box, Text, cairo_state
+from gaphor.diagram.shapes import Box, Text
 from gaphor.diagram.support import represents
-from gaphor.UML.classes.association import get_center_pos
 from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.informationflow import (
+    shape_information_flow,
+    watch_information_flow,
+    draw_information_flow,
+)
 
 
 @represents(UML.Connector)
@@ -132,62 +135,20 @@ class ConnectorItem(Named, LinePresentation[UML.Connector]):
                     text=lambda: stereotypes_str(self.subject),
                 ),
                 Text(text=lambda: self.subject.name or ""),
-                Text(
-                    text=lambda: ", ".join(
-                        self.subject.informationFlow[:].conveyed[:].name
-                    )
-                ),
-                # Also support SysML ItemFlow:
-                Text(
-                    text=lambda: stereotypes_str(
-                        self.subject.informationFlow[0].itemProperty.type,  # type: ignore[attr-defined]
-                        raaml_stereotype_workaround(
-                            self.subject.informationFlow[0].itemProperty.type  # type: ignore[attr-defined]
-                        ),
-                    )
-                    if self.subject.informationFlow
-                    else ""
-                ),
-                Text(
-                    text=lambda: format(
-                        self.subject.informationFlow[0].itemProperty, type=True  # type: ignore[attr-defined]
-                    )
-                    if self.subject.informationFlow
-                    else ""
-                ),
+                *shape_information_flow(self),
             ),
         )
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-        self.watch("subject[Connector].informationFlow.informationSource")
-        self.watch("subject[Connector].informationFlow.conveyed.name")
-        self.watch("subject[Connector].informationFlow[ItemFlow].itemProperty.name")
-        self.watch(
-            "subject[Connector].informationFlow[ItemFlow].itemProperty.type.name"
-        )
-        self.watch(
-            "subject[Connector].informationFlow[ItemFlow].itemProperty.type.appliedStereotype.classifier.name"
-        )
+        watch_information_flow(self)
 
     def draw(self, context):
         super().draw(context)
-        subject = self.subject
-        if subject and subject.informationFlow:
-            inv = (
-                1
-                if (subject.end[0].role in subject.informationFlow[:].informationTarget)
-                else -1
-            )
-            handles = self.handles()
-            pos, angle = get_center_pos(handles)
-            with cairo_state(context.cairo) as cr:
-                cr.translate(*pos)
-                cr.rotate(angle)
-                cr.move_to(0, 0)
-                cr.line_to(12 * inv, 8)
-                cr.line_to(12 * inv, -8)
-                cr.fill()
+        draw_information_flow(
+            self,
+            context,
+        )
 
     def draw_tail(self, context):
         cr = context.cairo
@@ -196,15 +157,3 @@ class ConnectorItem(Named, LinePresentation[UML.Connector]):
             cr.move_to(15, -6)
             cr.line_to(0, 0)
             cr.line_to(15, 6)
-
-
-def raaml_stereotype_workaround(element):
-    """This is a temporary fix to ensure ItemFlow is showing proper stereotypes
-    for Controller, Feedback and ControlAction from RAAML."""
-    if not element:
-        return ()
-
-    name: str = type(element).__name__
-    if name in {"Controller", "Feedback", "ControlAction"}:
-        return (name[0].lower() + name[1:],)
-    return ()
