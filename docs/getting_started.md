@@ -22,7 +22,7 @@ You can select a template to get started.
 - **UML:** A template for the *Unified Modeling Language* for modeling a software system
 - **SysML:** A template for the *Systems Modeling Language* for modeling a wide range of systems and systems-of-systems
 - **RAAML:** A template for the *Risk Analysis and Assessment Modeling language* for safety and reliability analysis
-- **C4 Model:** A template for *Context, Containers, Components, and Code* which for lean modeling of software architecture
+- **C4 Model:** A template for *Context, Containers, Components, and Code* which is for lean modeling of software architecture
 
 Once the model interface is loaded you'll see the modeling interface.
 

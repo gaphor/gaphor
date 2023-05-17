@@ -95,6 +95,8 @@ gaphor_models = {
     "connect": "connect.gaphor",
     "stereotypes": "stereotypes.gaphor",
     "example": "../examples/sequence-diagram.gaphor",
+    "coffee-machine": "../examples/coffee-machine.gaphor",
+    "sysml-template": "../gaphor/templates/sysml.gaphor",
     "style-sheets": "style-sheet-examples.gaphor",
     "core": "../models/Core.gaphor",
     "uml": "../models/UML.gaphor",
