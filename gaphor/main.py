@@ -44,6 +44,7 @@ def parse_args(args: list[str], commands: dict[str, argparse.ArgumentParser]):
         description=f"Get help for commands with {prog()} COMMAND --help.",
     )
 
+    active_parser = parser
     for name, cmd_parser in commands.items():
         sp = subparsers.add_parser(
             name,
@@ -57,9 +58,9 @@ def parse_args(args: list[str], commands: dict[str, argparse.ArgumentParser]):
         if name == "gui" and not (args and args[0] in commands):
             # Workaround: show toplevel help on the gui subcommand
             sp.format_help = parser.format_help  # type: ignore[method-assign]
-            args.insert(0, "gui")
+            active_parser = sp
 
-    return parser.parse_args(args)
+    return active_parser.parse_args(args)
 
 
 def version_parser():
