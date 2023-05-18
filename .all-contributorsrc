@@ -1133,6 +1133,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Linuxiness",
+      "name": "Igor Lerinc",
+      "avatar_url": "https://avatars.githubusercontent.com/u/99252096?v=4",
+      "profile": "https://github.com/Linuxiness",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
