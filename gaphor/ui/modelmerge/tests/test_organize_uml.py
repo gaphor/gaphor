@@ -143,7 +143,7 @@ def test_connector_with_item_flow(element_factory, modeling_language, create):
     all(compare(current, current, element_factory))
     tree = list(organize_changes(current, modeling_language))
 
-    assert len(tree) == 1
+    assert len(tree) == 3
     assert {e.id for e in current.select(PendingChange)} == set(all_change_ids(tree))
 
 

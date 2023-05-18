@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
@@ -153,15 +155,25 @@ class PropertyPropertyPage(PropertyPageBase):
         self.subject.aggregation = self.AGGREGATION[combo.get_active()]
 
 
+@PropertyPages.register(UML.Association)
 @PropertyPages.register(sysml.Connector)
 class ItemFlowPropertyPage(PropertyPageBase):
     """Item Flow on Connectors."""
 
     order = 35
 
-    def __init__(self, subject: sysml.Connector):
+    def __init__(self, subject: UML.Association | sysml.Connector):
         super().__init__()
         self.subject = subject
+
+    @property
+    def information_flow(self):
+        subject = self.subject
+        if isinstance(subject, sysml.Connector):
+            iflows = subject.informationFlow
+        elif isinstance(subject, UML.Relationship):
+            iflows = subject.abstraction
+        return iflows[0] if iflows else None
 
     def construct(self):
         if not self.subject:
@@ -186,21 +198,15 @@ class ItemFlowPropertyPage(PropertyPageBase):
             ((c.id, c.name) for c in self.subject.model.select(UML.Classifier)),
         )
 
-        use_flow.set_active(
-            self.subject.informationFlow
-            and type(self.subject.informationFlow[0]) is sysml.ItemFlow
-        )
+        use_flow.set_active(isinstance(self.information_flow, sysml.ItemFlow))
         use_flow.set_sensitive(
             not (
-                self.subject.informationFlow
-                and type(self.subject.informationFlow[0]) is UML.InformationFlow
+                self.information_flow
+                and type(self.information_flow) is UML.InformationFlow
             )
         )
         self.entry.set_sensitive(use_flow.get_active())
-        if self.subject.informationFlow and any(
-            self.subject.informationFlow[:].itemProperty
-        ):
-            iflow = self.subject.informationFlow[0]
+        if (iflow := self.information_flow) and iflow.itemProperty:
             assert isinstance(iflow, sysml.ItemFlow)
             self.entry.set_text(iflow.itemProperty.name or "")
             if iflow.itemProperty.type:
@@ -212,28 +218,30 @@ class ItemFlowPropertyPage(PropertyPageBase):
     def _on_item_flow_active(self, switch, gparam):
         active = switch.get_active()
         subject = self.subject
-        if active and not subject.informationFlow:
-            create_item_flow(self.subject)
-        elif not active and self.subject.informationFlow:
-            self.subject.informationFlow[0].unlink()
+        iflow = self.information_flow
+        if active and not iflow:
+            if isinstance(subject, sysml.Connector):
+                subject.informationFlow = create_item_flow(subject)
+            elif isinstance(subject, UML.Relationship):
+                subject.abstraction = create_item_flow(subject)
+        elif not active and iflow:
+            iflow.unlink()
         self.entry.set_sensitive(switch.get_active())
         self.entry.set_text("")
 
     @transactional
     def _on_item_flow_name_changed(self, entry):
-        if not self.subject.informationFlow:
+        if not (iflow := self.information_flow):
             return
 
-        iflow = self.subject.informationFlow[0]
         assert isinstance(iflow, sysml.ItemFlow)
         iflow.itemProperty.name = entry.get_text()
 
     @transactional
     def _on_item_flow_type_changed(self, combo):
-        if not self.subject.informationFlow:
+        if not (iflow := self.information_flow):
             return
 
-        iflow = self.subject.informationFlow[0]
         assert isinstance(iflow, sysml.ItemFlow)
         if id := combo.get_active_id():
             element = self.subject.model.lookup(id)
@@ -244,20 +252,22 @@ class ItemFlowPropertyPage(PropertyPageBase):
 
     @transactional
     def _invert_direction_changed(self, button):
-        if not self.subject.informationFlow:
+        if not (iflow := self.information_flow):
             return
 
-        iflow = self.subject.informationFlow[0]
         iflow.informationSource, iflow.informationTarget = (
             iflow.informationTarget,
             iflow.informationSource,
         )
 
 
-def create_item_flow(subject: sysml.Connector) -> sysml.ItemFlow:
+def create_item_flow(subject: UML.Association | sysml.Connector) -> sysml.ItemFlow:
     iflow = subject.model.create(sysml.ItemFlow)
-    subject.informationFlow = iflow
-    iflow.informationSource = subject.end[0].role
-    iflow.informationTarget = subject.end[1].role
+    if isinstance(subject, sysml.Connector):
+        iflow.informationSource = subject.end[0].role
+        iflow.informationTarget = subject.end[1].role
+    elif isinstance(subject, UML.Relationship):
+        iflow.informationSource = subject.memberEnd[0]
+        iflow.informationTarget = subject.memberEnd[1]
     iflow.itemProperty = subject.model.create(sysml.Property)
     return iflow

@@ -29,6 +29,12 @@ from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout
 from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_association_end
+from gaphor.UML.informationflow import (
+    shape_information_flow,
+    watch_information_flow,
+    draw_information_flow,
+)
+
 
 half_pi = pi / 2
 
@@ -51,6 +57,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
                     text=lambda: stereotypes_str(self.subject),
                 ),
                 Text(text=lambda: self.subject.name or ""),
+                *shape_information_flow(self, "abstraction"),
             ),
         )
 
@@ -97,6 +104,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
         ).watch(
             "preferred_aggregation", self.on_association_end_value
         )
+        watch_information_flow(self, "Association", "abstraction")
 
     show_direction: attribute[int] = attribute("show_direction", int, default=False)
     preferred_aggregation = enumeration(
@@ -191,6 +199,14 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
 
     def draw(self, context):
         super().draw(context)
+
+        if self.subject and self.subject.abstraction:
+            draw_information_flow(
+                self,
+                context,
+                self.subject.memberEnd[0]
+                in self.subject.abstraction[:].informationTarget,
+            )
 
         handles = self.handles()
 
