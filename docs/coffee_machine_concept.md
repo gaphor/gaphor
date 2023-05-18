@@ -135,12 +135,6 @@ grinder, and the water source.
 :alt: Block definition diagram showing context of the coffee shop with external entities
 ```
 
-```{attention}
-The interactions between the Espresso Machine and the external entities should
-be shown as ItemFlows on the associations. We don't currently support adding flows
-like this, but we hopefully will soon!
-```
-
 The ants need more of your help to rename the Feature Context diagram and update it
 so that it matches the one above.
 
