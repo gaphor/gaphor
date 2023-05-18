@@ -135,20 +135,23 @@ class ConnectorItem(Named, LinePresentation[UML.Connector]):
                     text=lambda: stereotypes_str(self.subject),
                 ),
                 Text(text=lambda: self.subject.name or ""),
-                *shape_information_flow(self),
+                *shape_information_flow(self, "informationFlow"),
             ),
         )
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
-        watch_information_flow(self)
+        watch_information_flow(self, "Connector", "informationFlow")
 
     def draw(self, context):
         super().draw(context)
-        draw_information_flow(
-            self,
-            context,
-        )
+        subject = self.subject
+        if subject and subject.informationFlow:
+            draw_information_flow(
+                self,
+                context,
+                subject.end[0].role in subject.informationFlow[:].informationTarget,
+            )
 
     def draw_tail(self, context):
         cr = context.cairo

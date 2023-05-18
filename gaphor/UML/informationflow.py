@@ -10,64 +10,52 @@ from gaphor.UML.classes.association import get_center_pos
 from gaphor.UML.recipes import stereotypes_str
 
 
-def shape_information_flow(presentation: Presentation) -> list[Text]:
+def shape_information_flow(presentation: Presentation, attribute: str) -> list[Text]:
     return [
         Text(
             text=lambda: ", ".join(
-                presentation.subject.informationFlow[:].conveyed[:].name
+                getattr(presentation.subject, attribute)[:].conveyed[:].name
             )
         ),
         # Also support SysML ItemFlow:
         Text(
             text=lambda: stereotypes_str(
-                presentation.subject.informationFlow[0].itemProperty.type,
-                raaml_stereotype_workaround(
-                    presentation.subject.informationFlow[0].itemProperty.type
-                ),
+                iflow[0].itemProperty.type,
+                raaml_stereotype_workaround(iflow[0].itemProperty.type),
             )
-            if presentation.subject.informationFlow
+            if (iflow := getattr(presentation.subject, attribute))
             else ""
         ),
         Text(
-            text=lambda: format(
-                presentation.subject.informationFlow[0].itemProperty, type=True
-            )
-            if presentation.subject.informationFlow
+            text=lambda: format(iflow[0].itemProperty, type=True)
+            if (iflow := getattr(presentation.subject, attribute))
             else ""
         ),
     ]
 
 
-def watch_information_flow(presentation: Presentation) -> None:
-    presentation.watch("subject[Connector].informationFlow.informationSource")
-    presentation.watch("subject[Connector].informationFlow.conveyed.name")
-    presentation.watch("subject[Connector].informationFlow[ItemFlow].itemProperty.name")
+def watch_information_flow(
+    presentation: Presentation, cast: str, attribute: str
+) -> None:
+    presentation.watch(f"subject[{cast}].{attribute}.informationSource")
+    presentation.watch(f"subject[{cast}].{attribute}.conveyed.name")
+    presentation.watch(f"subject[{cast}].{attribute}[ItemFlow].itemProperty.name")
+    presentation.watch(f"subject[{cast}].{attribute}[ItemFlow].itemProperty.type.name")
     presentation.watch(
-        "subject[Connector].informationFlow[ItemFlow].itemProperty.type.name"
-    )
-    presentation.watch(
-        "subject[Connector].informationFlow[ItemFlow].itemProperty.type.appliedStereotype.classifier.name"
+        f"subject[{cast}].{attribute}[ItemFlow].itemProperty.type.appliedStereotype.classifier.name"
     )
 
 
-def draw_information_flow(presentation: Presentation, context) -> None:
-    subject = presentation.subject
-    if not subject or not subject.informationFlow:
-        return
-
+def draw_information_flow(presentation: Presentation, context, invert: bool) -> None:
     handles = presentation.handles()
     pos, angle = get_center_pos(handles)
-    inv = (
-        1
-        if (subject.end[0].role in subject.informationFlow[:].informationTarget)
-        else -1
-    )
+    f = 1 if invert else -1
     with cairo_state(context.cairo) as cr:
         cr.translate(*pos)
         cr.rotate(angle)
         cr.move_to(0, 0)
-        cr.line_to(12 * inv, 8)
-        cr.line_to(12 * inv, -8)
+        cr.line_to(12 * f, 8)
+        cr.line_to(12 * f, -8)
         cr.fill()
 
 
