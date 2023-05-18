@@ -254,7 +254,7 @@
 - Add Chinese (Simplified) translation
 
 2.7.1
-_____
+-----
 - Fix lines don't disconnect when moved
 - No GTK required anymore for generating docs
 - Update Python to 3.10.0
@@ -396,18 +396,18 @@ _____
 - Fix association direction arrow is not updated
 
 2.3.2
-_____
+-----
 - Fix issue where ornaments were not show on associations
   after loading a model
 
 2.3.1
-_____
+-----
 - Fix scrollbars cause the diagram to disappear
 - Update Italian translation
 - Left align the toolbox header labels
 
 2.3.0
-_____
+-----
 - Add support for C4 model
 - Add support for Fault Tree Analysis with RAAML
 - Update the UML data model to align closer to version 2.5.1
@@ -422,9 +422,8 @@ _____
 - Fix undo and redo does not set attributes
 - Fix selection lasso is in the wrong place after scrolling
 
-
 2.2.2
-_____
+-----
 - Fix undo of deleted elements
 - Fix requirements are missing ID and text
 - Add CSS styling to dropzone and grayed out elements
