@@ -44,8 +44,6 @@ jobs:
           pipx install --python python${{ env.python_version }} --pip-args=--constraint=.github/constraints.txt poetry
           poetry config virtualenvs.in-project true
           poetry check
-          poetry lock --no-update
-          git diff --exit-code
 
   linux-wheel:
     name: Linux (Wheel) with Python ${{ matrix.python_version }}

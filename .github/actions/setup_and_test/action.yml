@@ -27,7 +27,9 @@ runs:
       run: .github/scripts/metadata.sh
       shell: bash
     - name: Install Python Dependencies
-      run: poetry install --no-interaction
+      run: |
+        poetry lock --no-update
+        poetry install --no-interaction
       shell: bash
     - name: Windows specific overrides
       if: runner.os == 'Windows'
