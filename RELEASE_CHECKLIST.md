@@ -10,8 +10,6 @@ All the items in the draft release should be under the Features, Bug Fixes, Main
 - [ ] Wait for the build to finish and the release artifacts to be uploaded.
       The PyPI release is made automatically during the build.
       Pull requests are created for https://github.com/gaphor/gaphor.github.io and https://github.com/flathub/org.gaphor.Gaphor.
-- [ ] In the https://github.com/flathub/org.gaphor.Gaphor repo, create a new branch. Run `make update VERSION=a.b.c`.
-Commit your changes and create a PR.
 - [ ] In the https://github.com/flathub/org.gaphor.Gaphor repo, install the test build using the instructions, and ensure that it launches using `flatpak run org.gaphor.Gaphor`. Then merge the PR.
 - [ ] In the https://github.com/gaphor/gaphor.github.io repo, verify and merge the pull request.
 - [ ] Join the #thisweek:gnome.org Matrix room and write to the TWIG-Bot about the new version.
