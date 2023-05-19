@@ -7,7 +7,7 @@ def block_property_group(parent, element):
     """Add Property to a Block."""
 
     if element.association:
-        return False
+        return element.owner is parent
 
     parent.ownedAttribute = element
     return True
