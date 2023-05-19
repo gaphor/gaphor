@@ -11,4 +11,4 @@ jobs:
           token: ${{ secrets.DISPATCH_TOKEN }}
           repository: gaphor/gaphor.github.io
           event-type: version-update
-          client-payload": '{ "version": "some-version" }'
+          client-payload: '{ "version": "some-version" }'
