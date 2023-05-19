@@ -8,7 +8,7 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.DISPATCH_TOKEN }}
           repository: gaphor/gaphor.github.io
           event-type: version-update
-          client_payload": '{ "version": "some-version" }'
+          client-payload": '{ "version": "some-version" }'
