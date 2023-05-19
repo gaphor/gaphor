@@ -57,6 +57,7 @@ jobs:
     outputs:
       targz: gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
       wheel: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
+      version: ${{ steps.setup_and_test.outputs.version }}
     steps:
       - uses: actions/checkout@v3.5.2
         with:
@@ -334,6 +335,8 @@ jobs:
     needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
     runs-on: ubuntu-22.04
     if: github.event_name == 'release'
+    outputs:
+      version: ${{ needs.linux-wheel.outputs.version }}
     steps:
       - uses: actions/download-artifact@v3
         with:
@@ -346,3 +349,29 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_TOKEN }}
+
+  trigger-website-version-update:
+    name: Trigger version update on gaphor/gaphor.github.io
+    needs: [ publish-to-pypi ]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.DISPATCH_TOKEN }}
+          repository: gaphor/gaphor.github.io
+          event-type: version-update
+          client-payload: '{ "version": "${{ needs.publish-to-pypi.outputs.version }}" }'
+
+  trigger-flatpak-version-update:
+    name: Trigger version update on flathub/org.gaphor.Gaphor
+    needs: [ publish-to-pypi ]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.DISPATCH_TOKEN }}
+          repository: flathub/org.gaphor.Gaphor
+          event-type: version-update
+          client-payload: '{ "version": "${{ needs.publish-to-pypi.outputs.version }}" }'
