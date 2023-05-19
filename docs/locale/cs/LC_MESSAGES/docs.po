@@ -8,301 +8,415 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-05-19 19:09+0000\n"
+"Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/"
+"docs-gaphor-org/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
-msgstr ""
+msgstr "Protokol připojení"
 
 #: ../connect.md:3
 msgid "In Gaphor, if a connection is made on a diagram between an element and a relationship, the connection is also made at semantic level (the model). From a GUI point of view, a button release event is what kicks of the decision whether the connection is allowed."
 msgstr ""
+"Pokud je v Gaphoru vytvořeno spojení mezi elementem a vztahem, je také "
+"vytvořeno i na sémantické úrovni (modelu). Z pohledu grafického rozhraní, "
+"událost stisknutí tlačítka je to, co nakopne rozhodnutí, zda je spojení "
+"povoleno."
 
 #: ../connect.md:12
 msgid "The check if a connection is allowed should also check if it is valid to create a relation to/from the same element (like associations, but not generalizations)."
 msgstr ""
+"Kontrola, zda je spojení povoleno, by měla také zkontrolovat, zda je platné "
+"vytvořit vztah k/ze stejného prvku (jako asociace, ale ne zobecnění)."
 
 #: ../container.md:1
 msgid "Gaphor in a Container"
-msgstr ""
+msgstr "Gaphor v kontejneru"
 
 #: ../container.md:3
 msgid "Instead of setting up a development environment locally, the easiest way to contribute to the project is using GitHub Codespaces."
 msgstr ""
+"Namísto lokálního nastavení vývojového prostředí je nejjednodušší způsob, "
+"jak přispívat do projektu, pomocí GitHub Codespaces."
 
 #: ../container.md:6
 msgid "GitHub Codespaces"
-msgstr ""
+msgstr "GitHub codespaces"
 
 #: ../container.md:8
 msgid "Follow these steps to open Gaphor in a Codespace:"
 msgstr ""
+"Chcete-li otevřít aplikaci Gaphor v Codespaces, postupujte podle "
+"následujících kroků:"
 
 #: ../container.md:9
 msgid "Navigate to https://github.com/gaphor/gaphor"
-msgstr ""
+msgstr "Přejděte na https://github.com/gaphor/gaphor"
 
 #: ../container.md:10
 msgid "Click the Code drop-down menu and select the **Open with Codespaces** option."
 msgstr ""
+"Klikněte na rozbalovací menu a vyberte možnost **Otevřít pomocí Codespaces**."
 
 #: ../container.md:11
 msgid "Select **+ New codespace** at the bottom on the pane."
-msgstr ""
+msgstr "Vyberte **+ Nový codespace** v dolní části podokna."
 
 #: ../container.md:13
 msgid "For more info, check out the [GitHub documentation](https://docs.github.com/en/free-pro-team@latest/github/developing-online-with-codespaces/creating-a-codespace#creating-a-codespace)."
 msgstr ""
+"Více informací najdete na [GitHub documentation](https://docs.github.com/en/"
+"free-pro-team@latest/github/developing-online-with-codespaces/"
+"creating-a-codespace#creating-a-codespace)."
 
 #: ../design_principles.md:1
 msgid "Design Principles"
-msgstr ""
+msgstr "Principy designu"
 
 #: ../design_principles.md:3
 msgid "Gaphor has been around for quite a few years. In those years we (the Gaphor developers) learned a few things on how to build it. Gaphor tries to be easily accessible for novice users as well as a useful tool for more experienced users."
 msgstr ""
+"Gaphor je na trhu již několik let. Za ty roky jsme se my (vývojáři Gaphoru) "
+"naučili několik věcí, jak jej vytvořit. Gaphor se snaží být snadno přístupný "
+"pro začínající uživatele i užitečným nástrojem pro zkušenější uživatele."
 
 #: ../design_principles.md:7
 msgid "Gaphor is not your average editor. It's a modeling environment. This implies there is a language underpinning the models. Languages adhere to rules and Gaphor tries to follow those rules."
 msgstr ""
+"Gaphor není běžný editor. Je to modelovací prostředí. To znamená, že "
+"existuje jazyk, který je základem modelů. Jazyky se řídí pravidly a Gaphor "
+"se snaží tato pravidla dodržovat."
 
 #: ../design_principles.md:11
 msgid "Usability is very important. When you're new to Gaphor, it should be easy to find your way around. Minimal knowledge of UML should at least allow you to create a class diagram."
 msgstr ""
+"Použitelnost je velmi důležitá. Když jste v aplikaci Gaphor noví, mělo by "
+"být snadné se v ní zorientovat. Minimální znalost jazyka UML by vám měla "
+"umožnit vytvořit alespoň diagram tříd."
 
 #: ../design_principles.md:15
 msgid "Guidance"
-msgstr ""
+msgstr "Poradenství"
 
 #: ../design_principles.md:17
 msgid "To help users, Gaphor should provide guidance where it can."
-msgstr ""
+msgstr "Gaphor by měl uživatelům poskytnout návod, pokud je to možné."
 
 #: ../design_principles.md:19
 msgid "Help with relationships"
-msgstr ""
+msgstr "Pomoc se vztahy"
 
 #: ../design_principles.md:21
 msgid "The diagram has a feature that it grays out all elements a relationship can not connect to. This helps you to decide where a relation can connect to. You can still mix different elements, but we try to make it as simple as possible to make consistent models."
 msgstr ""
+"Diagram má tu vlastnost, že všechny prvky, ke kterým se vztah nemůže "
+"připojit, jsou šedé. To vám pomůže rozhodnout, ke kterému prvku se vztah "
+"může připojit. Stále můžete míchat různé prvky, ale snažíme se to co nejvíce "
+"zjednodušit, aby byly modely konzistentní."
 
 #: ../design_principles.md:26
 msgid "Keep the model in sync"
-msgstr ""
+msgstr "Synchronizace modelu"
 
 #: ../design_principles.md:28
 msgid "An important part of modeling is to design a system in abstractions and be able to explain those to others. As systems become more complicated, it's important to have the design (model) layed out in diagrams."
 msgstr ""
+"Důležitou součástí modelování je navrhnout systém v abstrakcích a být "
+"schopen je vysvětlit ostatním. Vzhledem k tomu, že se systémy stávají "
+"komplikovanějšími, je důležité mít návrh (model) rozložený v diagramech."
 
 #: ../design_principles.md:32
 msgid "Gaphor goes through great lengths to keep the model in sync with the diagrams. In doing so, unused elements can be automatically removed from the model if they're no longer shown in any diagram."
 msgstr ""
+"Společnost Gaphor si dává záležet na tom, aby byl model synchronizován s "
+"diagramy. Nepoužívané prvky lze přitom z modelu automaticky odstranit, pokud "
+"se již v žádném diagramu nezobrazují."
 
 #: ../design_principles.md:36
 msgid "Out of your way"
-msgstr ""
+msgstr "Z cesty"
 
 #: ../design_principles.md:38
 msgid "When modeling, you should be busy with your problem or solution domain, not with the tool. Gaphor tries to stay out of your way as much as possible. It does not try to nag you with error messages, because the model is not \"correct\"."
 msgstr ""
+"Při modelování byste se měli zabývat svým problémem nebo oblastí řešení, "
+"nikoli nástrojem. Gaphor se vám snaží co nejvíce nepřekážet. Nesnaží se vás "
+"otravovat chybovými hlášeními, protože model není \"správný\"."
 
 #: ../design_principles.md:42
 msgid "Avoid dialogs"
-msgstr ""
+msgstr "Vyhněte se dialogům"
 
 #: ../design_principles.md:44
 msgid "In doing the right thing, and staying out of the way of users, Gaphor avoids the use of dialogs as much as possible."
 msgstr ""
+"V rámci správného postupu a snahy nepřekážet uživatelům se Gaphor co nejvíce "
+"vyhýbá používání dialogových oken."
 
 #: ../design_principles.md:47
 msgid "Gaphor should allow you to do the sensible thing (see above) and not get you out of your flow with all sorts of questions."
 msgstr ""
+"Gaphor by vám měl umožnit dělat rozumné věci (viz výše) a nevyvést vás z "
+"míry nejrůznějšími otázkami."
 
 #: ../design_principles.md:50
 msgid "Notify on changes"
-msgstr ""
+msgstr "Upozornění na změny"
 
 #: ../design_principles.md:52
 msgid "When Gaphor is doing something that is not directly visible, you'll see a notification, for example, an element that's indirectly removed from the model. It will not interrupt you with dialogs, but only provide a small in-app notification. If the change is undesired, hit `undo`."
 msgstr ""
+"Když Gaphor provádí něco, co není přímo viditelné, zobrazí se oznámení, "
+"například prvek, který je nepřímo odstraněn z modelu. Nebude vás přerušovat "
+"dialogovými okny, ale pouze poskytne malé oznámení v aplikaci. Pokud je "
+"změna nežádoucí, stiskněte tlačítko `undo`."
 
 #: ../design_principles.md:57
 msgid "Balanced"
-msgstr ""
+msgstr "Vyvážený"
 
 #: ../design_principles.md:59
 msgid "Although Gaphor implements quite a bit of the UML 2 model, it's not complete. We try to find the right balance in features to suite both expert and novice modellers."
 msgstr ""
+"Ačkoli Gaphor implementuje poměrně velkou část modelu UML 2, není úplný. "
+"Snažíme se najít správnou rovnováhu funkcí, aby vyhovovala jak expertům, tak "
+"začínajícím modelářům."
 
 #: ../design_principles.md:63
 msgid "Continuity"
-msgstr ""
+msgstr "Kontinuita"
 
 #: ../design_principles.md:65
 msgid "A model that is created should be usable in the future. Gaphor does acknowledge that. We care about compatibility."
 msgstr ""
+"Vytvořený model by měl být použitelný i v budoucnu. Gaphor to uznává. Záleží "
+"nám na kompatibilitě."
 
 #: ../design_principles.md:68
 msgid "Backwards compatibility"
-msgstr ""
+msgstr "Zpětná kompatibilita"
 
 #: ../design_principles.md:70
 msgid "Gaphor is capable of loading models going back to Gaphor 1.0. It's important for a tool to always allow older models to be loaded."
 msgstr ""
+"Gaphor umí načítat modely od verze Gaphor 1.0. Je důležité, aby nástroj vždy "
+"umožňoval načítání starších modelů."
 
 #: ../design_principles.md:73
 msgid "Multi-platform"
-msgstr ""
+msgstr "Multiplatformní"
 
 #: ../design_principles.md:75
 msgid "We put a lot of effort in making Gaphor run on all major platforms: Windows, macOS, and Linux. Having Gaphor available on all platforms is essential if the model needs to be shared. It would be awful if you need to run one specific operating system in order to open a model."
 msgstr ""
+"Vynaložili jsme velké úsilí na to, aby Gaphor fungoval na všech hlavních "
+"platformách: Windows, macOS a Linux. Pokud má být model Gaphor sdílen, je "
+"nezbytné, aby byl k dispozici na všech platformách. Bylo by hrozné, kdybyste "
+"k otevření modelu potřebovali spustit jen jeden konkrétní operační systém."
 
 #: ../design_principles.md:80
 msgid "So far, we do not support the fourth major platform (web). Native applications provide a better user experience (once installed). But this may change."
 msgstr ""
+"Čtvrtou hlavní platformu (web) zatím nepodporujeme. Nativní aplikace "
+"poskytují lepší uživatelský zážitek (po instalaci). To se však může změnit."
 
 #: ../design_principles.md:83
 msgid "User interaction"
-msgstr ""
+msgstr "Uživatelská interakce"
 
 #: ../design_principles.md:85
 msgid "Gaphor is originally written on Linux. It uses [GTK](https://gtk.org) as it's user interface toolkit. This sort of implies that Gaphor follows the [GNOME Human Interface Guidelines (HIG)](https://developer.gnome.org/hig/). Gaphor is also a multi-platform application. We try to stay close to the GNOME HIG, but try not to introduce concepts that are not available on Windows and macOS."
 msgstr ""
+"Gaphor je původně napsán pro systém Linux. Jako sadu nástrojů uživatelského "
+"rozhraní používá [GTK](https://gtk.org). Z toho tak trochu vyplývá, že se "
+"Gaphor řídí [GNOME Human Interface Guidelines (HIG)](https://developer.gnome."
+"org/hig/). Gaphor je také multiplatformní aplikace. Snažíme se držet se HIG "
+"GNOME, ale snažíme se nezavádět koncepty, které nejsou k dispozici v "
+"systémech Windows a MacOS."
 
 #: ../design_principles.md:91
 msgid "User interface components are not generated. We found that UI generation (like many enterprise modeling tools do) provides an awful user experience. We want users to use Gaphor on a regular basis, so we aim for it to be a tool that's pleasant to look at and easy to work with."
 msgstr ""
+"Komponenty uživatelského rozhraní se negenerují. Zjistili jsme, že "
+"generování uživatelského rozhraní (podobně jako mnoho nástrojů pro podnikové "
+"modelování) poskytuje uživatelům hrozný zážitek. Chceme, aby uživatelé "
+"používali Gaphor pravidelně, proto se snažíme, aby to byl nástroj, na který "
+"se příjemně dívá a se kterým se snadno pracuje."
 
 #: ../design_principles.md:97
 msgid "What else?"
-msgstr ""
+msgstr "Co dál?"
 
 #: ../design_principles.md:99
 msgid "**Idempotency** Allow the same operation to be applied multiple times. This should not affect the result."
 msgstr ""
+"**Idempotence** Umožňuje použít stejnou operaci vícekrát. To by nemělo mít "
+"vliv na výsledek."
 
 #: ../design_principles.md:101
 msgid "**Event Driven** Gaphor is a user application. It acts to user events. The application uses an internal event dispatches (event bus) to distribute events to interested parties. Everyone should be able to listen to events."
 msgstr ""
+"**Řízení událostmi** Gaphor je uživatelská aplikace. Reaguje na události "
+"uživatele. Aplikace používá interní dispečink událostí (sběrnici událostí) k "
+"distribuci událostí zainteresovaným stranám. Každý by měl mít možnost "
+"událostem naslouchat."
 
 #: ../event_system.md:1
 msgid "Event System"
-msgstr ""
+msgstr "Systém událostí"
 
 #: ../event_system.md:3
 msgid "The event system in Gaphor provides an API to *handle* events and to *subscribe* to events."
 msgstr ""
+"Systém událostí v Gaphoru poskytuje rozhraní API pro *obsluhu* událostí a "
+"*odběr* událostí."
 
 #: ../event_system.md:6
 msgid "In Gaphor we manage event handler subscriptions through the `EventManager` service. Gaphor is highly event driven:"
 msgstr ""
+"V Gaphoru spravujeme odběry obsluhy událostí prostřednictvím služby "
+"`EventManager`. Gaphor je do značné míry řízen událostmi:"
 
 #: ../event_system.md:9
 msgid "Changes in the loaded model are emitted as events"
-msgstr ""
+msgstr "Změny v načteném modelu jsou vysílány jako události"
 
 #: ../event_system.md:10
 msgid "Changes on diagrams are emitted as events"
-msgstr ""
+msgstr "Změny v diagramech jsou vysílány jako události"
 
 #: ../event_system.md:11
 msgid "Changes in the UI are emitted as events"
-msgstr ""
+msgstr "Změny v uživatelském rozhraní jsou vysílány jako události"
 
 #: ../event_system.md:13
 msgid "Although Gaphor depends heavily on GTK for its user interface, Gaphor is using its own event dispatcher. Events can be structured in hierarchies. For example, an `AttributeUpdated` event is a subtype of `ElementUpdated`. If we are interested in all changes to elements, we can also register `ElementUpdated` and receive all `AttributeUpdated` events as well."
 msgstr ""
+"Přestože je Gaphor pro své uživatelské rozhraní do značné míry závislý na "
+"GTK, používá vlastní dispečer událostí. Události mohou být strukturovány do "
+"hierarchií. Například událost `AttributeUpdated` je podtypem události "
+"`ElementUpdated`. Pokud nás zajímají všechny změny prvků, můžeme "
+"zaregistrovat také `ElementUpdated` a přijímat také všechny události "
+"`AttributeUpdated`."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager:1
 msgid "The Event Manager."
-msgstr ""
+msgstr "Správce událostí."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.handle:1
 msgid "Send event notifications to registered handlers."
-msgstr ""
+msgstr "Odeslat notifikace o událostech registrovaným zpracovatelům."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:1
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:1
 msgid "Register a handler."
-msgstr ""
+msgstr "Zaregistrujte zpracovatele."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:3
 msgid "Priority handlers are executed directly. They should not raise other events, cause that can cause a problem in the exection order."
 msgstr ""
+"Obslužné rutiny priority se provádějí přímo. Neměly by vyvolávat jiné "
+"události, protože by to mohlo způsobit problém v pořadí vyřizování."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:6
 msgid "It's basically to make sure that all events are recorded by the undo manager."
-msgstr ""
+msgstr "V podstatě jde o to, aby správce zrušení zaznamenal všechny události."
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.Service.shutdown:1
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.shutdown:1
 msgid "Shutdown the services, free resources."
-msgstr ""
+msgstr "Vypněte služby bezplatnými zdroji."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:3
 msgid "Handlers are triggered (executed) when specific events are emitted through the handle() method."
 msgstr ""
+"Obslužné rutiny se spouštějí (provádějí) při vyslání určitých událostí "
+"prostřednictvím metody handle()."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.unsubscribe:1
 msgid "Unregister a previously registered handler."
-msgstr ""
+msgstr "Zrušení registrace dříve zaregistrované obslužné rutiny."
 
 #: ../event_system.md:24
 msgid "Under the hood events are handled by the Generics library. For more information about how the Generic library handles events see the [Generic documentation](https://generic.readthedocs.io)."
 msgstr ""
+"Události pod kapotou zpracovává knihovna Generics. Další informace o tom, "
+"jak knihovna Generic zpracovává události, najdete v [Dokumentace "
+"Generic](https://generic.readthedocs.io)."
 
 #: ../first_model.md:1
 msgid "Your First Model"
-msgstr ""
+msgstr "Váš první model"
 
 #: ../first_model.md:4
 msgid "In this tutorial we refer to the different parts of the gaphor interface: {ref}`Model Browser <getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}`Property Editor <getting_started:property editor>`."
 msgstr ""
+"V tomto návodu se budeme odkazovat na odlišné části rozhraní Gaphor: {ref}` "
+"Prohlížeč modelů <getting_started:model browser>`, "
+"[Toolbox](getting_started:toolbox), {ref}` Editor vlastností "
+"<getting_started:property editor>`."
 
 #: ../first_model.md:8
 msgid "Although the names should speak for themselves, you can check out the [Getting Started](getting_started) page for more information about those sections."
 msgstr ""
+"Ačkoli názvy by měly mluvit samy za sebe, více informací o těchto sekcích "
+"najdete na stránce [Začínáme](getting_started)."
 
 #: ../first_model.md:12
 msgid "Once Gaphor is started, and you can start a new model with the _Generic_ template. The initial diagram is already open in the Diagram section."
 msgstr ""
+"Po spuštění aplikace Gaphor můžete spustit nový model pomocí šablony "
+"_Generic_. Počáteční diagram je již otevřen v sekci Diagram."
 
 #: ../first_model.md:15
 msgid "Select an element you want to place, in this case a Class (![new class](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic.svg)) by clicking on the icon in the Toolbox and click on the diagram. This will place a new Class item instance on the diagram and add a new Class to the model -- it shows up in the Model Browser. The selected tool will reset itself to the Pointer tool after the element is placed on the diagram."
 msgstr ""
+"Vyberte prvek, který chcete umístit, v tomto případě třídu (![new class](../"
+"gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic.svg)) "
+"kliknutím na ikonu v panelu nástrojů a klikněte na diagram. Tím se do "
+"diagramu umístí nová instance prvku Třída a do modelu se přidá nová třída -- "
+"zobrazí se v Průzkumníku modelů. Vybraný nástroj se po umístění prvku na "
+"diagram přenastaví na nástroj Ukazatel."
 
 #: ../first_model.md:15
 msgid "newclass"
-msgstr ""
+msgstr "newclass"
 
 #: ../first_model.md:22
 msgid "The Property Editor on the right side will show you details about the newly added class, such as its name (_New Class_), attributes and operations (methods)."
 msgstr ""
+"Editor vlastností na pravé straně zobrazí podrobnosti o nově přidané třídě, "
+"například její název (_Nová třída_), atributy a operace (metody)."
 
 #: ../first_model.md:25
 msgid "![image](images/first-model-class.png)"
-msgstr ""
+msgstr "![obrázek](images/first-model-class.png)"
 
 #: ../first_model.md:25
 #: ../first_model.md:48
 #: ../first_model.md:60
 msgid "image"
-msgstr ""
+msgstr "obrázek"
 
 #: ../first_model.md:27
 msgid "It's simple to add elements to a diagram."
-msgstr ""
+msgstr "Přidávání prvků do diagramu je jednoduché."
 
 #: ../first_model.md:29
 msgid "Gaphor does not make any assumptions about which elements should be placed on a diagram. A diagram is a diagram. UML defines all different kinds of diagrams, such as Class diagrams, Component diagrams, Action diagrams, Sequence diagrams. But Gaphor does not place any restrictions."
 msgstr ""
+"Gaphor nevytváří žádné předpoklady o tom, které prvky by měly být umístěny v "
+"diagramu. Diagram je diagram. UML definuje všechny různé druhy diagramů, "
+"jako jsou diagramy tříd, diagramy komponent, diagramy akcí, diagramy "
+"sekvencí. Gaphor však neklade žádná omezení."
 
 #: ../first_model.md:34
 msgid "Adding Relations"
