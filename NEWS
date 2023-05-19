@@ -1,7 +1,9 @@
 2.19.0
 ------
-- Docs: A coffee machine tutorial has been added
 - Interactions: fixed DnD for partially connected messages
+- Restore CSS auto-complete
+- Docs: A coffee machine tutorial has been added
+- CLI: export diagrams and run scripts within Gaphor
 
 2.18.1
 ------
