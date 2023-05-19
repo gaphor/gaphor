@@ -22,12 +22,11 @@
 - macOS: update notarize, staple, and cert actions
 - Just load modules for gaphor.modules entry points
 - Finnish, Dutch, Spanish, Polish, Portuguese (BRA) translation update
-- Fixes:
-  - Toggle the "no tabs" background based on notebook activity
-  - Fix drag from model browser
-  - Fix orthogonal lines during copy/paste
-  - Update diagram directly when partitions change
-  - Make main window always available to avoid warnings
+- Toggle the "no tabs" background based on notebook activity
+- Fix drag from model browser
+- Fix orthogonal lines during copy/paste
+- Update diagram directly when partitions change
+- Make main window always available to avoid warnings
 
 2.17.0
 ------
@@ -314,27 +313,27 @@
 
 2.6.2
 -----
- - Fix localization of UI files
- - Fix icons in dark mode
- - Update Spanish, Finnish, Hugarian, and Portuguese (Br) translations
+- Fix localization of UI files
+- Fix icons in dark mode
+- Update Spanish, Finnish, Hugarian, and Portuguese (Br) translations
 
 2.6.1
 -----
- - Display guard conditions in square brackets
- - Use flat buttons in the header bar
- - Fix translation support
- - Fix drag and drop of elements does not work on diagrams
- - Fix parameter is incorrect error with ";;" in path
- - Fix fork/join node incorrectly rotates
- - Fix close button on about dialog doesn't work in Windows
- - Fix wrong label is displayed when object node ordering is enabled
- - Improve inline editor undo/redo behavior
- - Fixed closing of about dialog
- - Add VSCode debug instructions for Windows
- - Rename usage of Partitions to Swimlanes
- - Update Dutch and Hungarian Translations
- - Croatian translation updates
- - Simplify attribute and enumeration lookup
+- Display guard conditions in square brackets
+- Use flat buttons in the header bar
+- Fix translation support
+- Fix drag and drop of elements does not work on diagrams
+- Fix parameter is incorrect error with ";;" in path
+- Fix fork/join node incorrectly rotates
+- Fix close button on about dialog doesn't work in Windows
+- Fix wrong label is displayed when object node ordering is enabled
+- Improve inline editor undo/redo behavior
+- Fixed closing of about dialog
+- Add VSCode debug instructions for Windows
+- Rename usage of Partitions to Swimlanes
+- Update Dutch and Hungarian Translations
+- Croatian translation updates
+- Simplify attribute and enumeration lookup
 
 2.6.0
 -----
