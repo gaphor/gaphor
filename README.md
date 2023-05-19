@@ -309,6 +309,10 @@ repository](https://github.com/flathub/org.gaphor.Gaphor/blob/master/share/org.g
 Thank you so much for your effort in helping us keep it available in many
 languages!
 
+<a href="https://hosted.weblate.org/engage/gaphor/">
+<img src="https://hosted.weblate.org/widgets/gaphor/-/glossary/multi-auto.svg" alt="Translation status" />
+</a>
+
 ### ♿️ Code of Conduct
 
 We value your participation and want everyone to have an enjoyable and
