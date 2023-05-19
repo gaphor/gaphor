@@ -1,3 +1,8 @@
+2.19.0
+------
+- Docs: A coffee machine tutorial has been added
+- Interactions: fixed DnD for partially connected messages
+
 2.18.1
 ------
 - Make operations visible on Blocks
