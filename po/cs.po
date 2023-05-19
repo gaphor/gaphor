@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-05-08 21:48-0400\n"
-"PO-Revision-Date: 2023-04-09 19:09+0000\n"
+"PO-Revision-Date: 2023-05-20 13:51+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/gaphor/cs/>"
+"\n"
 "Language: cs\n"
-"Language-Team: Czech "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/cs/>\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 4.18-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -404,9 +405,8 @@ msgid "values"
 msgstr "hodnoty"
 
 #: gaphor/SysML/blocks/block.py:145
-#, fuzzy
 msgid "operations"
-msgstr "Operace"
+msgstr "operace"
 
 #: gaphor/SysML/blocks/block.py:160 gaphor/SysML/blocks/block.py:186
 msgid "unnamed"
@@ -2080,7 +2080,6 @@ msgid "Show Tips"
 msgstr "Zobrazit tipy"
 
 #: gaphor/ui/elementeditor.ui:44
-#, fuzzy
 msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see its properties appear."
@@ -2156,13 +2155,12 @@ msgid "Automatically remove elements no longer in use in any diagram."
 msgstr "Automaticky odstranit prvky, které se již nepoužívají v žádném diagramu."
 
 #: gaphor/ui/elementeditor.ui:290
-#, fuzzy
 msgid "Language"
-msgstr "příjmení"
+msgstr "Jazyk"
 
 #: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
 msgid "The (spoken) language used in this model."
-msgstr ""
+msgstr "(mluvící) jazyk používaný v tomto modelu."
 
 #: gaphor/ui/elementeditor.ui:308
 msgid "Style Sheet"
@@ -2586,60 +2584,59 @@ msgstr "Přidat typ prezentace {type}"
 
 #: gaphor/ui/modelmerge/organize.py:275
 msgid "Remove presentation of type {type}"
-msgstr ""
+msgstr "Odstranit prezentaci typu {type}"
 
 #: gaphor/ui/modelmerge/organize.py:280
 msgid "Update presentation “{name}”"
-msgstr ""
+msgstr "Aktualizovat prezentaci “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:282
 msgid "Update presentation of type {type}"
-msgstr ""
+msgstr "Aktualizovat prezentaci typu {type}"
 
 #: gaphor/ui/modelmerge/organize.py:289
 msgid "Add {type} “{name}”"
-msgstr ""
+msgstr "Přidat {type} “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:293
 msgid "Add element of type {type}"
-msgstr ""
+msgstr "Přidat element typu {type}"
 
 #: gaphor/ui/modelmerge/organize.py:299
-#, fuzzy
 msgid "Remove element “{name}”"
-msgstr "Odstranit nepoužívané prvky"
+msgstr "Odstranit element “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:301
 msgid "Remove element of type {type}"
-msgstr ""
+msgstr "Odstranit element typu {type}"
 
 #: gaphor/ui/modelmerge/organize.py:309
 msgid "Update element of type {type}"
-msgstr ""
+msgstr "Aktualizovat element typu {type}"
 
 #: gaphor/ui/modelmerge/organize.py:316
 msgid "Add relation “{name}” to “{ref_name}”"
-msgstr ""
+msgstr "Přidat relaci “{name}” do “{ref_name}”"
 
 #: gaphor/ui/modelmerge/organize.py:318
 msgid "Remove relation “{name}” to “{ref_name}”"
-msgstr ""
+msgstr "Odstranit relaci “{name}” na “{ref_name}”"
 
 #: gaphor/ui/modelmerge/organize.py:320
 msgid "Update relation “{name}” to “{ref_name}”"
-msgstr ""
+msgstr "Aktualizovat relaci “{name}” na “{ref_name}”"
 
 #: gaphor/ui/modelmerge/organize.py:327
 msgid "Add relation “{name}”"
-msgstr ""
+msgstr "Přidat relaci “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:329
 msgid "Remove relation “{name}”"
-msgstr ""
+msgstr "Odstranit relaci “{name}”"
 
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
-msgstr ""
+msgstr "Aktualizovat relaci “{name}”"
 
 #~ msgid "Default Region"
 #~ msgstr "Výchozí oblast"
@@ -2860,4 +2857,3 @@ msgstr ""
 #~ "ochranné známky společnosti Object Management"
 #~ " Group, Inc. ve Spojených státech,\n"
 #~ "a/nebo v jiných zemích.\n"
-
