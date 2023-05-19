@@ -2,11 +2,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  steps:
-    - name: Repository Dispatch
-      uses: peter-evans/repository-dispatch@v2
-      with:
-        token: ${{ secrets.PAT }}
-        repository: gaphor/gaphor.github.io
-        event-type: version-update
-        client_payload": '{ "version": "some-version" }'
+  test-trigger-remote-repo:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT }}
+          repository: gaphor/gaphor.github.io
+          event-type: version-update
+          client_payload": '{ "version": "some-version" }'
