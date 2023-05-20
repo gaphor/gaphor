@@ -55,7 +55,6 @@ def popup_entry(text, update_text=None, done=None):
     buffer = Gtk.EntryBuffer()
     buffer.set_text(text, -1)
     entry = Gtk.Entry.new_with_buffer(buffer)
-    entry.show()
     return entry
 
 
