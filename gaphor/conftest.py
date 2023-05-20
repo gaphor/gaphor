@@ -24,6 +24,7 @@ from gaphor.core.modeling.modelinglanguage import (
     MockModelingLanguage,
 )
 from gaphor.storage import storage
+from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.modelinglanguage import UMLModelingLanguage
 
 
@@ -43,7 +44,9 @@ def element_factory(event_manager, modeling_language):
 
 @pytest.fixture
 def modeling_language():
-    return MockModelingLanguage(CoreModelingLanguage(), UMLModelingLanguage())
+    return MockModelingLanguage(
+        CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()
+    )
 
 
 @pytest.fixture

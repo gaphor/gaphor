@@ -17,7 +17,7 @@ from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.shapes import stroke
-from gaphor.diagram.text import TextAlign, text_point_at_line
+from gaphor.diagram.text import TextAlign, text_point_at_line, middle_segment
 
 
 class Named:
@@ -356,6 +356,17 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         ):
             self.update_orthogonal_constraints()
         super().handle(event)
+
+
+def get_center_pos(points):
+    """Return position in the centre of middle segment of a line.
+
+    Angle of the middle segment is also returned.
+    """
+    h0, h1 = middle_segment(points)
+    pos = (h0.pos.x + h1.pos.x) / 2, (h0.pos.y + h1.pos.y) / 2
+    angle = atan2(h1.pos.y - h0.pos.y, h1.pos.x - h0.pos.x)
+    return pos, angle
 
 
 def draw_line_end(context, end_handle, second_handle, draw):

@@ -12,15 +12,17 @@ from gaphor.SysML.propertypages import (
 
 
 @pytest.fixture
+def association(element_factory):
+    class_a = element_factory.create(UML.Class)
+    class_b = element_factory.create(UML.Class)
+    return UML.recipes.create_association(class_a, class_b)
+
+
+@pytest.fixture
 def connector(element_factory):
-    subject = element_factory.create(UML.Connector)
-    head_end = element_factory.create(UML.ConnectorEnd)
-    head_end.role = element_factory.create(UML.Property)
-    tail_end = element_factory.create(UML.ConnectorEnd)
-    tail_end.role = element_factory.create(UML.Property)
-    subject.end = head_end
-    subject.end = tail_end
-    return subject
+    prop_a = element_factory.create(UML.Property)
+    prop_b = element_factory.create(UML.Property)
+    return UML.recipes.create_connector(prop_a, prop_b)
 
 
 def test_requirement_property_page_id(element_factory):
@@ -95,12 +97,26 @@ def test_property_property_page(element_factory):
     assert subject.aggregation == "composite"
 
 
-def test_item_flow(connector):
+def test_association_item_flow(association):
+    property_page = ItemFlowPropertyPage(association)
+
+    widget = property_page.construct()
+    use = find(widget, "use-item-flow")
+    use.set_active(True)
+
+    assert association.abstraction
+    assert association.abstraction[0].itemProperty
+    assert association.abstraction[0].informationSource is association.memberEnd[0]
+    assert association.abstraction[0].informationTarget is association.memberEnd[1]
+
+
+def test_connector_item_flow(connector):
     property_page = ItemFlowPropertyPage(connector)
 
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
     use.set_active(True)
+
     assert connector.informationFlow
     assert connector.informationFlow[0].itemProperty
 
@@ -171,16 +187,8 @@ def test_item_flow_source_and_target(element_factory):
     assert subject.informationFlow[0].informationTarget is tail_end.role
 
 
-def test_item_flow_invert_direction(element_factory):
-    subject = element_factory.create(UML.Connector)
-    head_end = element_factory.create(UML.ConnectorEnd)
-    head_end.role = element_factory.create(UML.Property)
-    tail_end = element_factory.create(UML.ConnectorEnd)
-    tail_end.role = element_factory.create(UML.Property)
-    subject.end = head_end
-    subject.end = tail_end
-
-    property_page = ItemFlowPropertyPage(subject)
+def test_connector_item_flow_invert_direction(connector):
+    property_page = ItemFlowPropertyPage(connector)
 
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
@@ -188,5 +196,20 @@ def test_item_flow_invert_direction(element_factory):
 
     property_page._invert_direction_changed(None)
 
-    assert subject.informationFlow[0].informationSource is tail_end.role
-    assert subject.informationFlow[0].informationTarget is head_end.role
+    information_flow = connector.informationFlow[0]
+    assert information_flow.informationSource is connector.end[1].role
+    assert information_flow.informationTarget is connector.end[0].role
+
+
+def test_association_item_flow_invert_direction(association):
+    property_page = ItemFlowPropertyPage(association)
+
+    widget = property_page.construct()
+    use = find(widget, "use-item-flow")
+    use.set_active(True)
+
+    property_page._invert_direction_changed(None)
+
+    information_flow = association.abstraction[0]
+    assert information_flow.informationSource is association.memberEnd[1]
+    assert information_flow.informationTarget is association.memberEnd[0]

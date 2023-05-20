@@ -1,28 +1,14 @@
 """Test connector item connectors."""
 
-import pytest
 
 from gaphor import UML
-from gaphor.core.modeling.modelinglanguage import (
-    CoreModelingLanguage,
-    MockModelingLanguage,
-)
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
-from gaphor.SysML.modelinglanguage import SysMLModelingLanguage
 from gaphor.UML.classes.component import ComponentItem
 from gaphor.UML.classes.dependency import DependencyItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem, Side
 from gaphor.UML.classes.interfacerealization import InterfaceRealizationItem
 from gaphor.UML.deployments import ConnectorItem
 from gaphor.UML.deployments.connectorconnect import LegacyConnectorConnectBase
-from gaphor.UML.modelinglanguage import UMLModelingLanguage
-
-
-@pytest.fixture
-def modeling_language():
-    return MockModelingLanguage(
-        CoreModelingLanguage(), UMLModelingLanguage(), SysMLModelingLanguage()
-    )
 
 
 def provide(component, interface):

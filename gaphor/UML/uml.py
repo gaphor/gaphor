@@ -23,7 +23,6 @@ from typing import Callable
 from gaphor.core.modeling.element import Element
 class NamedElement(Element):
     clientDependency: relation_many[Dependency]
-    informationFlow: relation_many[InformationFlow]
     memberNamespace: relation_many[Namespace]
     name: _attribute[str] = _attribute("name", str)
     namespace: relation_one[Namespace]
@@ -57,6 +56,7 @@ class EnumerationLiteral(InstanceSpecification):
 
 
 class Relationship(Element):
+    abstraction: relation_many[InformationFlow]
     relatedElement: relation_many[Element]
 
 
@@ -557,7 +557,7 @@ class GeneralOrdering(NamedElement):
 class Connector(Feature):
     contract: relation_many[Behavior]
     end: relation_many[ConnectorEnd]
-    informationFlow: relation_many[InformationFlow]  # type: ignore[assignment]
+    informationFlow: relation_many[InformationFlow]
     kind = _enumeration("kind", ("assembly", "delegation"), "assembly")
     redefinedConnector: relation_many[Connector]
     structuredClassifier: relation_one[StructuredClassifier]
@@ -743,7 +743,7 @@ class Image(Element):
 
 
 class ComponentRealization(Realization):
-    abstraction: relation_one[Component]
+    abstraction: relation_one[Component]  # type: ignore[assignment]
     realizingClassifier: relation_one[Classifier]
 
 
@@ -792,13 +792,11 @@ NamedElement.qualifiedName = derived(
 )
 
 NamedElement.memberNamespace = derivedunion("memberNamespace", Namespace)
-NamedElement.informationFlow = association("informationFlow", InformationFlow, opposite="informationTarget")
 Element.directedRelationship.add(NamedElement.supplierDependency)  # type: ignore[attr-defined]
 Element.ownedElement.add(NamedElement.clientDependency)  # type: ignore[attr-defined]
 Element.directedRelationship.add(NamedElement.clientDependency)  # type: ignore[attr-defined]
 Element.owner.add(NamedElement.namespace)  # type: ignore[attr-defined]
 NamedElement.memberNamespace.add(NamedElement.namespace)  # type: ignore[attr-defined]
-Element.directedRelationship.add(NamedElement.informationFlow)  # type: ignore[attr-defined]
 PackageableElement.owningPackage = derivedunion("owningPackage", Package, upper=1)
 PackageableElement.component = association("component", Component, upper=1, opposite="packagedElement")
 NamedElement.namespace.add(PackageableElement.owningPackage)  # type: ignore[attr-defined]
@@ -813,6 +811,7 @@ Element.ownedElement.add(InstanceSpecification.slot)  # type: ignore[attr-define
 EnumerationLiteral.enumeration = association("enumeration", Enumeration, upper=1, opposite="ownedLiteral")
 NamedElement.namespace.add(EnumerationLiteral.enumeration)  # type: ignore[attr-defined]
 Relationship.relatedElement = derivedunion("relatedElement", Element, lower=1)
+Relationship.abstraction = association("abstraction", InformationFlow, composite=True, opposite="realization")
 DirectedRelationship.target = derivedunion("target", Element, lower=1)
 DirectedRelationship.source = derivedunion("source", Element, lower=1)
 Relationship.relatedElement.add(DirectedRelationship.target)  # type: ignore[attr-defined]
@@ -1301,13 +1300,13 @@ Element.ownedElement.add(ParameterSet.condition)  # type: ignore[attr-defined]
 ComponentRealization.abstraction = redefine(ComponentRealization, "abstraction", Component, Dependency.supplier)
 ComponentRealization.realizingClassifier = redefine(ComponentRealization, "realizingClassifier", Classifier, Dependency.client)
 InformationItem.represented = association("represented", Classifier)
-InformationFlow.realization = association("realization", Relationship)
-InformationFlow.conveyed = association("conveyed", Classifier, lower=1)
 InformationFlow.realizingActivityEdge = association("realizingActivityEdge", ActivityEdge)
 InformationFlow.realizingMessage = association("realizingMessage", Message)
-InformationFlow.realizingConnector = association("realizingConnector", Connector, upper=1, opposite="informationFlow")
 InformationFlow.informationSource = association("informationSource", NamedElement, upper=1)
-InformationFlow.informationTarget = association("informationTarget", NamedElement, upper=1, opposite="informationFlow")
-Element.owner.add(InformationFlow.realizingConnector)  # type: ignore[attr-defined]
+InformationFlow.realizingConnector = association("realizingConnector", Connector, upper=1, opposite="informationFlow")
+InformationFlow.informationTarget = association("informationTarget", NamedElement, upper=1)
+InformationFlow.conveyed = association("conveyed", Classifier, lower=1)
+InformationFlow.realization = association("realization", Relationship, opposite="abstraction")
 DirectedRelationship.source.add(InformationFlow.informationSource)  # type: ignore[attr-defined]
+Element.owner.add(InformationFlow.realizingConnector)  # type: ignore[attr-defined]
 DirectedRelationship.target.add(InformationFlow.informationTarget)  # type: ignore[attr-defined]
