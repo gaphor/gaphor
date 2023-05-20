@@ -46,7 +46,7 @@ class FileChooserStub:
     def set_modal(self, modal):
         pass
 
-    def show(self):
+    def set_visible(self, visible):
         pass
 
     def destroy(self):

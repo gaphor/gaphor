@@ -99,6 +99,6 @@ def show_popover(widget, view, box, commit):
 
     if popover.get_root():
         # Test for root window to avoid segfaults in unit test
-        popover.show()
+        popover.set_visible(True)
 
     return popover

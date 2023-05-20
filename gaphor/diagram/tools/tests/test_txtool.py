@@ -9,7 +9,7 @@ from gaphor.transaction import TransactionBegin
 def window(view):
     window = Gtk.Window.new()
     window.set_child(view)
-    window.show()
+    window.set_visible(True)
     yield window
     window.destroy()
 

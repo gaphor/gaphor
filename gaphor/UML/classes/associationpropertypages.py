@@ -176,4 +176,4 @@ class AssociationPropertyPage(PropertyPageBase):
 
     def _on_association_info_clicked(self, widget, event):
         self.info.set_relative_to(widget)
-        self.info.show()
+        self.info.set_visible(True)

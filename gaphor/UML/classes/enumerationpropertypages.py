@@ -81,7 +81,7 @@ class EnumerationPage(PropertyPageBase):
         self.item.request_update()
 
     def on_enumerations_info_clicked(self, image, event):
-        self.info.show()
+        self.info.set_visible(True)
 
 
 PropertyPages.register(EnumerationItem)(AttributesPage)

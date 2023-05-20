@@ -39,7 +39,7 @@ class HelpService(Service, ActionProvider):
         about.set_transient_for(self.window)
 
         about.set_modal(True)
-        about.show()
+        about.set_visible(True)
 
     @action(name="app.shortcuts")
     def shortcuts(self):
@@ -54,5 +54,5 @@ class HelpService(Service, ActionProvider):
         shortcuts.set_modal(True)
         shortcuts.set_transient_for(self.window)
 
-        shortcuts.show()
+        shortcuts.set_visible(True)
         return shortcuts

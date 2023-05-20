@@ -58,7 +58,7 @@ class StatusWindow:
 
         assert self.window
 
-        self.window.show()
+        self.window.set_visible(True)
 
     def progress(self, percentage: int):
         """Update progress percentage (0..100)."""

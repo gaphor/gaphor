@@ -344,7 +344,7 @@ class AttributesPage(PropertyPageBase):
         self.item.request_update()
 
     def on_attributes_info_clicked(self, image, event):
-        self.info.show()
+        self.info.set_visible(True)
 
 
 @PropertyPages.register(DataTypeItem)
@@ -428,7 +428,7 @@ class OperationsPage(PropertyPageBase):
         self.item.request_update()
 
     def on_operations_info_clicked(self, image, event):
-        self.info.show()
+        self.info.set_visible(True)
 
 
 @PropertyPages.register(UML.Component)

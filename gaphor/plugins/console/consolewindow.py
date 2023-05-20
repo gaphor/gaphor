@@ -74,7 +74,7 @@ class ConsoleWindow(UIComponent, ActionProvider):
         box.append(console)
         window.set_content(box)
         window.connect("close-request", self.close)
-        window.show()
+        window.set_visible(True)
         self.window = window
 
         def key_event(widget, keyval, keycode, state):

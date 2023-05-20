@@ -253,7 +253,7 @@ class EditorStack:
 
         def on_show_tips_changed(checkbox, gparam):
             active = checkbox.get_active()
-            tips.show() if active else tips.hide()
+            tips.set_visible(active)
             self.properties.set("show-tips", active)
 
         show_tips = builder.get_object("show-tips")

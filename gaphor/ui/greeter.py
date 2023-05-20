@@ -111,7 +111,7 @@ class Greeter(Service, ActionProvider):
             templates.add(widget)
 
         self.greeter.connect("close-request", self._on_window_close_request)
-        self.greeter.show()
+        self.greeter.set_visible(True)
 
     def close(self):
         if self.greeter:
