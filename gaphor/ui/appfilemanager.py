@@ -63,7 +63,7 @@ class AppFileManager(Service, ActionProvider):
                         )
 
                     dialog.connect("response", response)
-                    dialog.show()
+                    dialog.set_visible(True)
                 else:
                     self.application.new_session(filename=filename)
 

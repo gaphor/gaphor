@@ -42,7 +42,7 @@ def tab(event_manager, element_factory):
     window = Gtk.Window.new()
     window.set_child(tab.construct())
 
-    window.show()
+    window.set_visible(True)
     yield tab
     window.destroy()
 

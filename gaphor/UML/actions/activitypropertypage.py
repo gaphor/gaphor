@@ -94,4 +94,4 @@ class ActivityItemPage(PropertyPageBase):
         )
 
     def on_parameters_info_clicked(self, image, event):
-        self.info.show()
+        self.info.set_visible(True)

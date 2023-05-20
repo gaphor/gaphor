@@ -54,9 +54,7 @@ def named_item_editor(item, view, event_manager, pos=None) -> bool:
 def popup_entry(text, update_text=None, done=None):
     buffer = Gtk.EntryBuffer()
     buffer.set_text(text, -1)
-    entry = Gtk.Entry.new_with_buffer(buffer)
-    entry.show()
-    return entry
+    return Gtk.Entry.new_with_buffer(buffer)
 
 
 def show_popover(widget, view, box, commit):
@@ -100,6 +98,6 @@ def show_popover(widget, view, box, commit):
 
     if popover.get_root():
         # Test for root window to avoid segfaults in unit test
-        popover.show()
+        popover.set_visible(True)
 
     return popover

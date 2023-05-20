@@ -63,7 +63,7 @@ class AssociationPropertyPage(PropertyPageBase):
             stereotype_list.set_model(stereotypes_model)
         else:
             stereotype_frame = builder.get_object(f"{end_name}-stereotype-frame")
-            stereotype_frame.hide()
+            stereotype_frame.set_visible(False)
 
     def update_end_name(self, builder, end_name, subject):
         name = builder.get_object(f"{end_name}-name")
@@ -176,4 +176,4 @@ class AssociationPropertyPage(PropertyPageBase):
 
     def _on_association_info_clicked(self, widget, event):
         self.info.set_relative_to(widget)
-        self.info.show()
+        self.info.set_visible(True)

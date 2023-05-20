@@ -44,7 +44,7 @@ class StatusWindow:
         vbox.append(self.progress_bar)
 
         self.window.set_title(self.title)
-        self.window.get_style_context().add_class("status-window")
+        self.window.add_css_class("status-window")
         if self.parent:
             self.window.set_transient_for(self.parent)
         self.window.set_modal(True)
@@ -58,7 +58,7 @@ class StatusWindow:
 
         assert self.window
 
-        self.window.show()
+        self.window.set_visible(True)
 
     def progress(self, percentage: int):
         """Update progress percentage (0..100)."""

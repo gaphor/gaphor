@@ -204,7 +204,7 @@ class MainWindow(Service, ActionProvider):
         window.connect("close-request", self._on_window_close_request)
         window.connect("notify::default-height", self._on_window_size_changed)
         window.connect("notify::default-width", self._on_window_size_changed)
-        window.show()
+        window.set_visible(True)
 
         window.connect("notify::is-active", self._on_window_active)
 

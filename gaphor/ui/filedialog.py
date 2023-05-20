@@ -56,7 +56,7 @@ def open_file_dialog(title, handler, parent=None, dirname=None, filters=None) ->
     dialog.set_modal(True)
     if dirname:
         dialog.set_current_folder(Gio.File.parse_name(dirname))
-    dialog.show()
+    dialog.set_visible(True)
 
 
 def save_file_dialog(
@@ -93,7 +93,7 @@ def save_file_dialog(
                 dialog.destroy()
                 handler(filename)
             else:
-                dialog.show()
+                dialog.set_visible(True)
         else:
             dialog.destroy()
 
@@ -102,5 +102,5 @@ def save_file_dialog(
         set_filename(filename)
         dialog.set_current_folder(Gio.File.parse_name(str(filename.parent)))
     dialog.set_modal(True)
-    dialog.show()
+    dialog.set_visible(True)
     return dialog

@@ -99,7 +99,6 @@ def paned(parent, index, properties, name, orientation, position=None):
     add(paned, index, parent)
     paned.set_position(properties.get(name, int(position)))
     paned.connect("notify::position", _position_changed, properties)
-    paned.show()
     return paned
 
 
@@ -112,5 +111,4 @@ def box(parent, index, properties, orientation, resize="false"):
         0,
     )
     add(box, index, parent, resize == "true")
-    box.show()
     return box

@@ -433,7 +433,7 @@ def resolve_merge_conflict_dialog(window: Gtk.Window, filename: Path, handler) -
         handler(answer)
 
     dialog.connect("response", response)
-    dialog.show()
+    dialog.set_visible(True)
 
 
 def save_changes_before_closing_dialog(window: Gtk.Window, handler) -> None:
@@ -462,4 +462,4 @@ def save_changes_before_closing_dialog(window: Gtk.Window, handler) -> None:
         handler(answer)
 
     dialog.connect("response", response)
-    dialog.show()
+    dialog.set_visible(True)

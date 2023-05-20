@@ -28,7 +28,7 @@ def diagrams(event_manager, element_factory, modeling_language, properties):
     box = Gtk.Box.new(Gtk.Orientation.HORIZONTAL, 0)
     window.set_child(box)
     box.append(diagrams.open())
-    window.show()
+    window.set_visible(True)
     yield diagrams
     diagrams.close()
 

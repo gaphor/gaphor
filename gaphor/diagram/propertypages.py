@@ -256,7 +256,7 @@ def help_link(builder, help_widget, popover):
     """Show the help popover for a `Help` link in the property page."""
 
     def on_activate(*_args):
-        builder.get_object(popover).show()
+        builder.get_object(popover).set_visible(True)
 
     help = builder.get_object(help_widget)
     help.set_accessible_role(Gtk.AccessibleRole.BUTTON)
