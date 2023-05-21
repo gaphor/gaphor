@@ -92,7 +92,7 @@ def test_property_property_page(element_factory):
 
     widget = property_page.construct()
     show_references = find(widget, "aggregation")
-    show_references.set_active(2)
+    show_references.set_selected(2)
 
     assert subject.aggregation == "composite"
 
