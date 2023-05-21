@@ -109,8 +109,10 @@ class DiagramPage:
         view = GtkView(selection=Selection())
 
         self.diagram_css = Gtk.CssProvider.new()
-        view.get_style_context().add_provider(
-            self.diagram_css, Gtk.STYLE_PROVIDER_PRIORITY_USER
+        Gtk.StyleContext.add_provider_for_display(
+            Gdk.Display.get_default(),
+            self.diagram_css,
+            Gtk.STYLE_PROVIDER_PRIORITY_USER,
         )
 
         scrolled_window = Gtk.ScrolledWindow()
