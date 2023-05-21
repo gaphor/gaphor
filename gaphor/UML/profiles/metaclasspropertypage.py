@@ -1,10 +1,11 @@
+from gi.repository import Gtk
+
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     unsubscribe_all_on_destroy,
     PropertyPageBase,
     PropertyPages,
-    combo_box_text_auto_complete,
     handler_blocking,
     new_resource_builder,
 )
@@ -31,7 +32,7 @@ class MetaclassPropertyPage(PropertyPageBase):
     subject: UML.Class
 
     CLASSES = sorted(
-        (c, c)
+        c
         for c in dir(UML)
         if _issubclass(getattr(UML, c), UML.Element) and c != "Stereotype"
     )
@@ -47,21 +48,19 @@ class MetaclassPropertyPage(PropertyPageBase):
         builder = new_builder(
             "metaclass-editor",
             signals={
-                "metaclass-combo-changed": (self._on_name_changed,),
+                # "metaclass-combo-changed": (self._on_name_changed,),
             },
         )
 
-        combo = builder.get_object("metaclass-combo")
-        combo_box_text_auto_complete(
-            combo, self.CLASSES, self.subject and self.subject.name or ""
-        )
+        dropdown = builder.get_object("metaclass-dropdown")
+        dropdown.set_model(Gtk.StringList.new(self.CLASSES))
+        if self.subject and self.subject.name in self.CLASSES:
+            dropdown.set_selected(self.CLASSES.index(self.subject.name))
 
-        entry = combo.get_child()
-
-        @handler_blocking(combo, "changed", self._on_name_changed)
+        @handler_blocking(dropdown, "notify::selected-item", self._on_name_changed)
         def handler(event):
-            if event.element is self.subject and entry.get_text() != event.new_value:
-                entry.set_text(event.new_value or "")
+            if event.element is self.subject and event.new_value in self.CLASSES:
+                dropdown.set_selected(self.CLASSES.index(self.subject.name))
 
         self.watcher.watch("name", handler)
 
@@ -70,5 +69,5 @@ class MetaclassPropertyPage(PropertyPageBase):
         )
 
     @transactional
-    def _on_name_changed(self, combo):
-        self.subject.name = combo.get_active_text()
+    def _on_name_changed(self, dropdown, _pspec):
+        self.subject.name = dropdown.get_selected_item().get_string()

@@ -14,8 +14,11 @@
       </object>
     </child>
     <child>
-      <object class="GtkComboBoxText" id="metaclass-combo">
-        <property name="has-entry">1</property>
+      <object class="GtkDropDown" id="metaclass-dropdown">
+        <property name="enable-search">1</property>
+        <property name="expression">
+          <lookup type="GtkStringObject" name="string"></lookup>
+        </property>
       </object>
     </child>
     <style>
