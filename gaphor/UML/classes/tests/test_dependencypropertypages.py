@@ -10,8 +10,8 @@ def test_dependency_property_page(diagram, element_factory):
     property_page = DependencyPropertyPage(item)
 
     widget = property_page.construct()
-    dependency_combo = find(widget, "dependency-combo")
-    dependency_combo.set_active(2)
+    dependency_combo = find(widget, "dependency-dropdown")
+    dependency_combo.set_selected(2)
 
     assert item.dependency_type is UML.Realization
 

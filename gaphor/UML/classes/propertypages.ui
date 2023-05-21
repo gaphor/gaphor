@@ -493,14 +493,18 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
       </object>
     </child>
     <child>
-      <object class="GtkComboBox" id="dependency-combo">
-        <signal name="changed" handler="dependency-type-changed" swapped="no"/>
-        <child>
-          <object class="GtkCellRendererText"/>
-          <attributes>
-            <attribute name="text">0</attribute>
-          </attributes>
-        </child>
+      <object class="GtkDropDown" id="dependency-dropdown">
+        <property name="model">
+          <object class="GtkStringList">
+            <items>
+              <item translatable="yes">Dependency</item>
+              <item translatable="yes">Usage</item>
+              <item translatable="yes">Realization</item>
+              <item translatable="yes">Implementation</item>
+            </items>
+          </object>
+        </property>
+        <signal name="notify::selected" handler="dependency-type-changed" swapped="no"/>
       </object>
     </child>
     <style>
