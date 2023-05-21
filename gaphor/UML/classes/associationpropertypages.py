@@ -53,10 +53,10 @@ class AssociationPropertyPage(PropertyPageBase):
         self.update_end_name(builder, end_name, subject)
 
         navigation = builder.get_object(f"{end_name}-navigation")
-        navigation.set_active(self.NAVIGABILITY.index(subject.navigability))
+        navigation.set_selected(self.NAVIGABILITY.index(subject.navigability))
 
         aggregation = builder.get_object(f"{end_name}-aggregation")
-        aggregation.set_active(self.AGGREGATION.index(subject.aggregation))
+        aggregation.set_selected(self.AGGREGATION.index(subject.aggregation))
 
         if stereotypes_model:
             stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
@@ -160,19 +160,19 @@ class AssociationPropertyPage(PropertyPageBase):
             self.semaphore -= 1
 
     @transactional
-    def _on_end_navigability_change(self, combo, end):
+    def _on_end_navigability_change(self, dropdown, _pspec, end):
         if end.subject and end.subject.opposite and end.subject.opposite.type:
             UML.recipes.set_navigability(
                 end.subject.association,
                 end.subject,
-                self.NAVIGABILITY[combo.get_active()],
+                self.NAVIGABILITY[dropdown.get_selected()],
             )
             # Call this again, or non-navigability will not be displayed
             self.item.update_ends()
 
     @transactional
-    def _on_end_aggregation_change(self, combo, end):
-        end.subject.aggregation = self.AGGREGATION[combo.get_active()]
+    def _on_end_aggregation_change(self, dropdown, _pspec, end):
+        end.subject.aggregation = self.AGGREGATION[dropdown.get_selected()]
 
     def _on_association_info_clicked(self, widget, event):
         self.info.set_relative_to(widget)
