@@ -9,11 +9,28 @@ from typing import Callable, Dict, Iterable, List, Tuple, Type
 
 import gaphas.item
 from gaphas.segment import Segment
-from gi.repository import Gtk
+from gi.repository import GObject, Gtk
 
 from gaphor.core import transactional
 from gaphor.core.modeling import Diagram, Element
 from gaphor.i18n import translated_ui_string
+
+
+class LabelValue(GObject.Object):
+    __gtype_name__ = "LabelValue"
+
+    def __init__(self, label, value):
+        super().__init__()
+        self._label = label
+        self._value = value
+
+    @GObject.Property(type=str)
+    def label(self):
+        return self._label
+
+    @property
+    def value(self):
+        return self._value
 
 
 def new_resource_builder(package, property_pages="propertypages"):

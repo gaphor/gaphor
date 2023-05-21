@@ -154,10 +154,13 @@ def test_item_flow_type(connector, element_factory):
     widget = property_page.construct()
     use = find(widget, "use-item-flow")
     use.set_active(True)
-    combo = find(widget, "item-flow-type")
-    combo.set_active_id(type.id)
+    dropdown = find(widget, "item-flow-type")
+    bar_index = next(
+        n for n, lv in enumerate(dropdown.get_model()) if lv.value == type.id
+    )
+    dropdown.set_selected(bar_index)
 
-    assert combo.get_child().get_text() == "Bar"
+    assert dropdown.get_selected_item().label == "Bar"
     assert connector.informationFlow[0].itemProperty.type is type
 
 

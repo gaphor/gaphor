@@ -17,7 +17,7 @@
       <object class="GtkDropDown" id="metaclass-dropdown">
         <property name="enable-search">1</property>
         <property name="expression">
-          <lookup type="GtkStringObject" name="string"></lookup>
+          <lookup type="GtkStringObject" name="string"/>
         </property>
       </object>
     </child>
