@@ -14,14 +14,20 @@
       </object>
     </child>
     <child>
-      <object class="GtkComboBox" id="message-combo">
-        <signal name="changed" handler="message-combo-changed" swapped="no"/>
-        <child>
-          <object class="GtkCellRendererText"/>
-          <attributes>
-            <attribute name="text">0</attribute>
-          </attributes>
-        </child>
+      <object class="GtkDropDown" id="message-combo">
+        <property name="model">
+          <object class="GtkStringList">
+            <items>
+              <item translatable="yes">Call</item>
+              <item translatable="yes">Asynchronous</item>
+              <item translatable="yes">Signal</item>
+              <item translatable="yes">Reply</item>
+              <item translatable="yes">Create</item>
+              <item translatable="yes">Delete</item>
+            </items>
+          </object>
+        </property>
+        <signal name="notify::selected" handler="message-combo-changed" swapped="no"/>
       </object>
     </child>
     <style>

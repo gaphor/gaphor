@@ -11,6 +11,6 @@ def test_message_property_page(diagram, element_factory):
 
     widget = property_page.construct()
     message_combo = find(widget, "message-combo")
-    message_combo.set_active(2)
+    message_combo.set_selected(2)
 
     assert item.subject.messageSort == "asynchSignal"
