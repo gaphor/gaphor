@@ -158,14 +158,18 @@
       </object>
     </child>
     <child>
-      <object class="GtkComboBoxText" id="ordering">
-        <items>
-          <item id="0" translatable="yes">unordered</item>
-          <item id="1" translatable="yes">ordered</item>
-          <item id="2" translatable="yes">Last In First Out (LIFO)</item>
-          <item id="3" translatable="yes">First In First Out (FIFO)</item>
-        </items>
-        <signal name="changed" handler="ordering-changed" swapped="no"/>
+      <object class="GtkDropDown" id="ordering">
+        <property name="model">
+          <object class="GtkStringList">
+            <items>
+              <item translatable="yes">unordered</item>
+              <item translatable="yes">ordered</item>
+              <item translatable="yes">Last In First Out (LIFO)</item>
+              <item translatable="yes">First In First Out (FIFO)</item>
+            </items>
+          </object>
+        </property>
+        <signal name="notify::selected" handler="ordering-changed" swapped="no"/>
       </object>
     </child>
     <style>

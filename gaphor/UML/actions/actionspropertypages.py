@@ -46,7 +46,7 @@ class ObjectNodePropertyPage(PropertyPageBase):
         upper_bound.set_text(subject.upperBound or "")
 
         ordering = builder.get_object("ordering")
-        ordering.set_active(self.ORDERING_VALUES.index(subject.ordering))
+        ordering.set_selected(self.ORDERING_VALUES.index(subject.ordering))
 
         show_ordering = builder.get_object("show-ordering")
         show_ordering.set_active(self.item.show_ordering)
@@ -59,8 +59,8 @@ class ObjectNodePropertyPage(PropertyPageBase):
         self.item.subject.upperBound = value
 
     @transactional
-    def _on_ordering_change(self, combo):
-        value = self.ORDERING_VALUES[combo.get_active()]
+    def _on_ordering_change(self, dropdown, _pspec):
+        value = self.ORDERING_VALUES[dropdown.get_selected()]
         self.item.subject.ordering = value
 
     @transactional
