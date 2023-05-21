@@ -5,7 +5,7 @@ gaphor.adapter package.
 """
 
 import abc
-from typing import Callable, Dict, Iterable, List, Tuple, Type
+from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
 from gaphas.segment import Segment
@@ -249,24 +249,6 @@ class ComboModel(Gtk.ListStore):
     def get_value(self, index):
         """Get value for given ``index``."""
         return self._data[index][1]
-
-
-def combo_box_text_auto_complete(
-    combo: Gtk.ComboBoxText, data_iterator: Iterable[tuple[str, str]], text: str = ""
-) -> None:
-    for id, name in data_iterator:
-        if name:
-            combo.append(id, name)
-
-    completion = Gtk.EntryCompletion()
-    completion.set_model(combo.get_model())
-    completion.set_minimum_key_length(1)
-    completion.set_text_column(0)
-
-    entry = combo.get_child()
-    entry.set_completion(completion)
-    if text:
-        entry.set_text(text)
 
 
 def help_link(builder, help_widget, popover):

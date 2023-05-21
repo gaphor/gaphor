@@ -45,7 +45,10 @@ def test_partition_type(diagram, element_factory):
 
     widget = property_page.construct_partition(item.partition[0])
 
-    combo = find(widget, "partition-type")
-    combo.set_active_id(class_.id)
+    dropdown = find(widget, "partition-type")
+    class_index = next(
+        n for n, lv in enumerate(dropdown.get_model()) if lv.value == class_.id
+    )
+    dropdown.set_selected(class_index)
 
     assert item.partition[0].represents is class_

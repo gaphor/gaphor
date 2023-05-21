@@ -1,12 +1,11 @@
-"""Activity partition property page."""
-
+from gi.repository import Gio
 
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
+    LabelValue,
     PropertyPageBase,
     PropertyPages,
-    combo_box_text_auto_complete,
     new_resource_builder,
 )
 from gaphor.UML.actions.partition import PartitionItem
@@ -48,23 +47,35 @@ class PartitionPropertyPage(PropertyPageBase):
             "partition",
             signals={
                 "partition-name-changed": (self._on_partition_name_changed, partition),
-                "partition-type-changed": (self._on_partition_type_changed, partition),
             },
         )
 
         builder.get_object("partition-name").set_text(partition.name or "")
 
-        combo = builder.get_object("partition-type")
-        combo_box_text_auto_complete(
-            combo,
+        dropdown = builder.get_object("partition-type")
+        model = Gio.ListStore.new(LabelValue)
+        model.append(LabelValue("", None))
+        for c in sorted(
             (
-                (c.id, c.name)
+                c
                 for c in self.item.model.select(UML.Classifier)
                 if c.name and not isinstance(c, UML.Behavior)
             ),
-        )
+            key=lambda c: c.name or "",
+        ):
+            model.append(LabelValue(c.name, c.id))
+        dropdown.set_model(model)
+
         if partition.represents:
-            combo.set_active_id(partition.represents.id)
+            dropdown.set_selected(
+                next(
+                    n
+                    for n, lv in enumerate(model)
+                    if lv.value == partition.represents.id
+                )
+            )
+
+        dropdown.connect("notify::selected", self._on_partition_type_changed, partition)
 
         return builder.get_object("partition")
 
@@ -80,9 +91,9 @@ class PartitionPropertyPage(PropertyPageBase):
         partition.name = entry.get_text()
 
     @transactional
-    def _on_partition_type_changed(self, combo, partition):
+    def _on_partition_type_changed(self, combo, _pspec, partition):
         """Event handler for editing partition names."""
-        if id := combo.get_active_id():
+        if id := combo.get_selected_item().value:
             element = self.item.model.lookup(id)
             partition.represents = element
         else:

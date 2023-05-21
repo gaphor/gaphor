@@ -207,9 +207,11 @@
           </object>
         </child>
         <child>
-          <object class="GtkComboBoxText" id="partition-type">
-            <property name="has-entry">1</property>
-            <signal name="changed" handler="partition-type-changed" swapped="no"/>
+          <object class="GtkDropDown" id="partition-type">
+            <property name="enable-search">1</property>
+            <property name="expression">
+              <lookup type="LabelValue" name="label" />
+            </property>
           </object>
         </child>
         <style>
