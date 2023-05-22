@@ -56,27 +56,35 @@ def open_file_dialog(
     filters=None,
     pixbuf_formats: bool = False,
 ) -> None:
-    if filters is None:
-        filters = []
-    dialog = _file_dialog_with_filters(
-        title, parent, Gtk.FileChooserAction.OPEN, filters, pixbuf_formats
-    )
-    dialog.set_select_multiple(True)
+    # if filters is None:
+    #     filters = []
+    # dialog = _file_dialog_with_filters(
+    #     title, parent, Gtk.FileChooserAction.OPEN, filters, pixbuf_formats
+    # )
+    # dialog.set_select_multiple(True)
+    dialog = Gtk.FileDialog.new()
+    dialog.set_title(title)
 
-    def response(_dialog, answer):
-        filenames = (
-            [f.get_path() for f in dialog.get_files()]
-            if answer == Gtk.ResponseType.ACCEPT
-            else []
-        )
-        dialog.destroy()
-        handler(filenames)
-
-    dialog.connect("response", response)
-    dialog.set_modal(True)
     if dirname:
-        dialog.set_current_folder(Gio.File.parse_name(dirname))
-    dialog.show()
+        dialog.set_initial_folder(Gio.File.parse_name(dirname))
+
+    if filters or pixbuf_formats:
+        store = Gio.ListStore.new(Gtk.FileFilter)
+        if pixbuf_formats:
+            store.append(new_image_filter())
+        for name, pattern, mime_type in filters:
+            filter = Gtk.FileFilter.new()
+            filter.set_name(name)
+            filter.add_pattern(pattern)
+            filter.add_mime_type(mime_type)
+            store.append(filter)
+        dialog.set_filters(store)
+
+    def response(dialog, result):
+        files = dialog.open_multiple_finish(result)
+        handler([Path(f.get_path()) for f in files])
+
+    dialog.open_multiple(parent=parent, cancellable=None, callback=response)
 
 
 def save_file_dialog(
