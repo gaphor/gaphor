@@ -33,6 +33,11 @@ from sphinx.ext.autodoc.mock import MockFinder
 
 gi.require_version = lambda *_: ...
 
+gi.require_versions({
+    "Pango": "1.0",
+    "PangoCairo": "1.0",
+})
+
 finder = MockFinder([
     "gi.repository.Adw", "gi.repository.Gtk", "gi.repository.Gdk",
     "gi.repository.GdkPixbuf", "gi.repository.GtkSource", "gi.repository.Graphene"
