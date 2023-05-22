@@ -47,9 +47,6 @@ class MetaclassPropertyPage(PropertyPageBase):
 
         builder = new_builder(
             "metaclass-editor",
-            signals={
-                # "metaclass-combo-changed": (self._on_name_changed,),
-            },
         )
 
         dropdown = builder.get_object("metaclass-dropdown")
