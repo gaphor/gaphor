@@ -4,6 +4,7 @@ on:
   push:
   release:
     types: [published]
+
 env:
   python_version: '3.11'
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
