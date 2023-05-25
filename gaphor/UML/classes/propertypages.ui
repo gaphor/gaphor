@@ -95,23 +95,31 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
               </object>
             </child>
             <child>
-              <object class="GtkComboBoxText" id="head-navigation">
-                <items>
-                  <item id="0" translatable="yes">Unknown navigation</item>
-                  <item id="1" translatable="yes">Not navigable</item>
-                  <item id="2" translatable="yes">Navigable</item>
-                </items>
-                <signal name="changed" handler="head-navigation-changed" swapped="no"/>
+              <object class="GtkDropDown" id="head-navigation">
+                <property name="model">
+                  <object class="GtkStringList">
+                    <items>
+                      <item translatable="yes">Unknown navigation</item>
+                      <item translatable="yes">Not navigable</item>
+                      <item translatable="yes">Navigable</item>
+                    </items>
+                  </object>
+                </property>
+                <signal name="notify::selected" handler="head-navigation-changed" swapped="no"/>
               </object>
             </child>
             <child>
-              <object class="GtkComboBoxText" id="head-aggregation">
-                <items>
-                  <item id="0" translatable="yes">No aggregation</item>
-                  <item id="1" translatable="yes">Shared</item>
-                  <item id="2" translatable="yes">Composite</item>
-                </items>
-                <signal name="changed" handler="head-aggregation-changed" swapped="no"/>
+              <object class="GtkDropDown" id="head-aggregation">
+                <property name="model">
+                  <object class="GtkStringList">
+                    <items>
+                      <item translatable="yes">No aggregation</item>
+                      <item translatable="yes">Shared</item>
+                      <item translatable="yes">Composite</item>
+                    </items>
+                  </object>
+                </property>
+                <signal name="notify::selected" handler="head-aggregation-changed" swapped="no"/>
               </object>
             </child>
             <child>
@@ -222,23 +230,31 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
               </object>
             </child>
             <child>
-              <object class="GtkComboBoxText" id="tail-navigation">
-                <items>
-                  <item id="0" translatable="yes">Unknown navigation</item>
-                  <item id="1" translatable="yes">Not navigable</item>
-                  <item id="2" translatable="yes">Navigable</item>
-                </items>
-                <signal name="changed" handler="tail-navigation-changed" swapped="no"/>
+              <object class="GtkDropDown" id="tail-navigation">
+                <property name="model">
+                  <object class="GtkStringList">
+                    <items>
+                      <item translatable="yes">Unknown navigation</item>
+                      <item translatable="yes">Not navigable</item>
+                      <item translatable="yes">Navigable</item>
+                    </items>
+                  </object>
+                </property>
+                <signal name="notify::selected" handler="tail-navigation-changed" swapped="no"/>
               </object>
             </child>
             <child>
-              <object class="GtkComboBoxText" id="tail-aggregation">
-                <items>
-                  <item id="0" translatable="yes">No aggregation</item>
-                  <item id="1" translatable="yes">Shared</item>
-                  <item id="2" translatable="yes">Composite</item>
-                </items>
-                <signal name="changed" handler="tail-aggregation-changed" swapped="no"/>
+              <object class="GtkDropDown" id="tail-aggregation">
+                <property name="model">
+                  <object class="GtkStringList">
+                    <items>
+                      <item translatable="yes">No aggregation</item>
+                      <item translatable="yes">Shared</item>
+                      <item translatable="yes">Composite</item>
+                    </items>
+                  </object>
+                </property>
+                <signal name="notify::selected" handler="tail-aggregation-changed" swapped="no"/>
               </object>
             </child>
             <child>
@@ -477,14 +493,18 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
       </object>
     </child>
     <child>
-      <object class="GtkComboBox" id="dependency-combo">
-        <signal name="changed" handler="dependency-type-changed" swapped="no"/>
-        <child>
-          <object class="GtkCellRendererText"/>
-          <attributes>
-            <attribute name="text">0</attribute>
-          </attributes>
-        </child>
+      <object class="GtkDropDown" id="dependency-dropdown">
+        <property name="model">
+          <object class="GtkStringList">
+            <items>
+              <item translatable="yes">Dependency</item>
+              <item translatable="yes">Usage</item>
+              <item translatable="yes">Realization</item>
+              <item translatable="yes">Implementation</item>
+            </items>
+          </object>
+        </property>
+        <signal name="notify::selected" handler="dependency-type-changed" swapped="no"/>
       </object>
     </child>
     <style>

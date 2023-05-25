@@ -69,9 +69,11 @@
           </object>
         </child>
         <child>
-          <object class="GtkComboBoxText" id="item-flow-type">
-            <property name="has-entry">1</property>
-            <signal name="changed" handler="item-flow-type-changed" swapped="no" />
+          <object class="GtkDropDown" id="item-flow-type">
+            <property name="enable-search">1</property>
+            <property name="expression">
+              <lookup type="LabelValue" name="label" />
+            </property>
           </object>
         </child>
         <style>
@@ -167,13 +169,17 @@
       </object>
     </child>
     <child>
-      <object class="GtkComboBoxText" id="aggregation">
-        <items>
-          <item id="0" translatable="yes">No aggregation</item>
-          <item id="1" translatable="yes">Shared</item>
-          <item id="2" translatable="yes">Composite</item>
-        </items>
-        <signal name="changed" handler="aggregation-changed" swapped="no" />
+      <object class="GtkDropDown" id="aggregation">
+        <property name="model">
+          <object class="GtkStringList">
+            <items>
+              <item translatable="yes">No aggregation</item>
+              <item translatable="yes">Shared</item>
+              <item translatable="yes">Composite</item>
+            </items>
+          </object>
+        </property>
+        <signal name="notify::selected" handler="aggregation-changed" swapped="no" />
       </object>
     </child>
     <style>

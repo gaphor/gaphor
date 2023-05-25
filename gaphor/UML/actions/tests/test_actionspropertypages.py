@@ -44,7 +44,7 @@ def test_object_node_property_page_ordering(diagram, element_factory):
 
     widget = property_page.construct()
     ordering = find(widget, "ordering")
-    ordering.set_active(3)
+    ordering.set_selected(3)
 
     assert item.subject.ordering == "FIFO"
 

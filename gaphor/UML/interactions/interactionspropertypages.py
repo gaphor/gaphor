@@ -1,6 +1,5 @@
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
-    ComboModel,
     PropertyPageBase,
     PropertyPages,
     new_resource_builder,
@@ -21,14 +20,14 @@ class MessagePropertyPage(PropertyPageBase):
 
     order = 15
 
-    MESSAGE_SORT = [
-        ("Call", "synchCall"),
-        ("Asynchronous", "asynchCall"),
-        ("Signal", "asynchSignal"),
-        ("Create", "createMessage"),
-        ("Delete", "deleteMessage"),
-        ("Reply", "reply"),
-    ]
+    MESSAGE_SORT = (
+        "synchCall",
+        "asynchCall",
+        "asynchSignal",
+        "reply",
+        "createMessage",
+        "deleteMessage",
+    )
 
     def __init__(self, item):
         self.item = item
@@ -45,8 +44,9 @@ class MessagePropertyPage(PropertyPageBase):
             signals={"message-combo-changed": (self._on_message_sort_change,)},
         )
 
-        sort_data = self.MESSAGE_SORT
         lifeline = get_lifeline(item, item.tail)
+
+        dropdown = builder.get_object("message-combo")
 
         # disallow connecting two delete messages to a lifeline
         if (
@@ -54,24 +54,17 @@ class MessagePropertyPage(PropertyPageBase):
             and lifeline.is_destroyed
             and subject.messageSort != "deleteMessage"
         ):
-            sort_data = sort_data.copy()
-            assert sort_data[4][1] == "deleteMessage"
-            del sort_data[4]
+            dropdown.get_model().remove(self.MESSAGE_SORT.index("deleteMessage"))
 
-        self.model = ComboModel(sort_data)
-        combo = builder.get_object("message-combo")
-        combo.set_model(self.model)
-
-        index = self.model.get_index(subject.messageSort)
-        combo.set_active(index)
+        dropdown.set_selected(self.MESSAGE_SORT.index(subject.messageSort))
 
         return builder.get_object("message-editor")
 
     @transactional
-    def _on_message_sort_change(self, combo):
+    def _on_message_sort_change(self, dropdown, _pspec):
         """Update message item's message sort information."""
 
-        ms = self.model.get_value(combo.get_active())
+        ms = self.MESSAGE_SORT[dropdown.get_selected()]
 
         item = self.item
         subject = item.subject

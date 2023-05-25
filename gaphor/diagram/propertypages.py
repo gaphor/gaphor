@@ -5,15 +5,32 @@ gaphor.adapter package.
 """
 
 import abc
-from typing import Callable, Dict, Iterable, List, Tuple, Type
+from typing import Callable, Dict, List, Tuple, Type
 
 import gaphas.item
 from gaphas.segment import Segment
-from gi.repository import Gtk
+from gi.repository import GObject, Gtk
 
 from gaphor.core import transactional
 from gaphor.core.modeling import Diagram, Element
 from gaphor.i18n import translated_ui_string
+
+
+class LabelValue(GObject.Object):
+    __gtype_name__ = "LabelValue"
+
+    def __init__(self, label, value):
+        super().__init__()
+        self._label = label
+        self._value = value
+
+    @GObject.Property(type=str)
+    def label(self):
+        return self._label
+
+    @property
+    def value(self):
+        return self._value
 
 
 def new_resource_builder(package, property_pages="propertypages"):
@@ -232,24 +249,6 @@ class ComboModel(Gtk.ListStore):
     def get_value(self, index):
         """Get value for given ``index``."""
         return self._data[index][1]
-
-
-def combo_box_text_auto_complete(
-    combo: Gtk.ComboBoxText, data_iterator: Iterable[tuple[str, str]], text: str = ""
-) -> None:
-    for id, name in data_iterator:
-        if name:
-            combo.append(id, name)
-
-    completion = Gtk.EntryCompletion()
-    completion.set_model(combo.get_model())
-    completion.set_minimum_key_length(1)
-    completion.set_text_column(0)
-
-    entry = combo.get_child()
-    entry.set_completion(completion)
-    if text:
-        entry.set_text(text)
 
 
 def help_link(builder, help_widget, popover):

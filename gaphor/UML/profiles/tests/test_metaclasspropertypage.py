@@ -37,11 +37,11 @@ def test_name_selection_for_metaclass(element_factory, class_):
 
     assert page
 
-    combo = find(page, "metaclass-combo")
+    dropdown = find(page, "metaclass-dropdown")
 
-    assert type(combo) is Gtk.ComboBoxText
-    assert combo.get_child().get_text() == "Class"
+    assert type(dropdown) is Gtk.DropDown
+    assert dropdown.get_selected_item().get_string() == "Class"
 
-    class_.name = "Blah"
+    class_.name = "Action"
 
-    assert combo.get_child().get_text() == "Blah"
+    assert dropdown.get_selected_item().get_string() == "Action"

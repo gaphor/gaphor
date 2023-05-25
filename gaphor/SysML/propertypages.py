@@ -1,12 +1,14 @@
 from __future__ import annotations
 
+from gi.repository import Gio
+
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
+    LabelValue,
     unsubscribe_all_on_destroy,
     PropertyPageBase,
     PropertyPages,
-    combo_box_text_auto_complete,
     handler_blocking,
     new_resource_builder,
 )
@@ -146,13 +148,13 @@ class PropertyPropertyPage(PropertyPageBase):
         )
 
         aggregation = builder.get_object("aggregation")
-        aggregation.set_active(self.AGGREGATION.index(self.subject.aggregation))
+        aggregation.set_selected(self.AGGREGATION.index(self.subject.aggregation))
 
         return builder.get_object("property-editor")
 
     @transactional
-    def _on_aggregation_change(self, combo):
-        self.subject.aggregation = self.AGGREGATION[combo.get_active()]
+    def _on_aggregation_change(self, combo, _pspec):
+        self.subject.aggregation = self.AGGREGATION[combo.get_selected()]
 
 
 @PropertyPages.register(UML.Association)
@@ -192,11 +194,15 @@ class ItemFlowPropertyPage(PropertyPageBase):
         use_flow = builder.get_object("use-item-flow")
         self.entry = builder.get_object("item-flow-name")
 
-        combo = builder.get_object("item-flow-type")
-        combo_box_text_auto_complete(
-            combo,
-            ((c.id, c.name) for c in self.subject.model.select(UML.Classifier)),
-        )
+        dropdown = builder.get_object("item-flow-type")
+        model = Gio.ListStore.new(LabelValue)
+        model.append(LabelValue("", None))
+        for c in sorted(
+            (c for c in self.subject.model.select(UML.Classifier) if c.name),
+            key=lambda c: c.name or "",
+        ):
+            model.append(LabelValue(c.name, c.id))
+        dropdown.set_model(model)
 
         use_flow.set_active(isinstance(self.information_flow, sysml.ItemFlow))
         use_flow.set_sensitive(
@@ -210,7 +216,15 @@ class ItemFlowPropertyPage(PropertyPageBase):
             assert isinstance(iflow, sysml.ItemFlow)
             self.entry.set_text(iflow.itemProperty.name or "")
             if iflow.itemProperty.type:
-                combo.set_active_id(iflow.itemProperty.type.id)
+                dropdown.set_selected(
+                    next(
+                        n
+                        for n, lv in enumerate(model)
+                        if lv.value == iflow.itemProperty.type.id
+                    )
+                )
+
+        dropdown.connect("notify::selected", self._on_item_flow_type_changed)
 
         return builder.get_object("item-flow-editor")
 
@@ -238,12 +252,12 @@ class ItemFlowPropertyPage(PropertyPageBase):
         iflow.itemProperty.name = entry.get_text()
 
     @transactional
-    def _on_item_flow_type_changed(self, combo):
+    def _on_item_flow_type_changed(self, dropdown, _pspec):
         if not (iflow := self.information_flow):
             return
 
         assert isinstance(iflow, sysml.ItemFlow)
-        if id := combo.get_active_id():
+        if id := dropdown.get_selected_item().value:
             element = self.subject.model.lookup(id)
             assert isinstance(element, UML.Type)
             iflow.itemProperty.type = element

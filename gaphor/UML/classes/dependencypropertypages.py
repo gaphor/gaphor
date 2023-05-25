@@ -1,6 +1,5 @@
 from gaphor import UML
 from gaphor.diagram.propertypages import (
-    ComboModel,
     PropertyPageBase,
     PropertyPages,
     unsubscribe_all_on_destroy,
@@ -16,6 +15,13 @@ class DependencyPropertyPage(PropertyPageBase):
 
     order = 20
 
+    DEPENDENCIES = (
+        UML.Dependency,
+        UML.Usage,
+        UML.Realization,
+        UML.InterfaceRealization,
+    )
+
     def __init__(self, item):
         super().__init__()
         self.item = item
@@ -29,18 +35,6 @@ class DependencyPropertyPage(PropertyPageBase):
         )
 
     def construct(self):
-        dependency_combo = self.builder.get_object("dependency-combo")
-        gettext = self.item.diagram.gettext
-        model = ComboModel(
-            (
-                (gettext("Dependency"), UML.Dependency),
-                (gettext("Usage"), UML.Usage),
-                (gettext("Realization"), UML.Realization),
-                (gettext("Implementation"), UML.InterfaceRealization),
-            )
-        )
-        dependency_combo.set_model(model)
-
         automatic = self.builder.get_object("automatic")
         automatic.set_active(self.item.auto_dependency)
 
@@ -60,16 +54,14 @@ class DependencyPropertyPage(PropertyPageBase):
 
         Disallow dependency type when dependency is established.
         """
-        combo = self.builder.get_object("dependency-combo")
-        if combo.get_model():
-            item = self.item
-            index = combo.get_model().get_index(item.dependency_type)
-            combo.props.sensitive = not item.auto_dependency
-            combo.set_active(index)
+        dropdown = self.builder.get_object("dependency-dropdown")
+        index = self.DEPENDENCIES.index(self.item.dependency_type)
+        dropdown.props.sensitive = not self.item.auto_dependency
+        dropdown.set_selected(index)
 
     @transactional
-    def _on_dependency_type_change(self, combo):
-        cls = combo.get_model().get_value(combo.get_active())
+    def _on_dependency_type_change(self, dropdown, _pspec):
+        cls = self.DEPENDENCIES[dropdown.get_selected()]
         self.item.dependency_type = cls
         if subject := self.item.subject:
             UML.recipes.swap_element(subject, cls)
