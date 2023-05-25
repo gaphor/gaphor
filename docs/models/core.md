@@ -17,3 +17,15 @@ The `Element` base class provides event notification and integrates
 with the model repository (internally known as `ElementFactory`).
 Bi-directional relationships are also possible, as well as derived
 relations.
+
+## Change Sets
+
+The core model has support for change sets, sets of pending changes.
+Normally you end up with a change set when you
+[resolve a merge conflict](../merge_conflicts) in your model.
+
+This diagram is provided for completion sake.
+
+```{diagram} change sets
+:model: core
+```
