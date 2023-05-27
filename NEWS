@@ -2,6 +2,7 @@
 ------
 (unreleased)
 
+- Dropped support for AppImage (for discussion see https://github.com/gaphor/gaphor/issues/2285)
 - Interactions: fixed DnD for partially connected messages
 - Restore CSS auto-complete
 - Docs: A coffee machine tutorial has been added
