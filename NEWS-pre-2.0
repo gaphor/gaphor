@@ -1,0 +1,236 @@
+1.2.0
+-----
+- Improved support for Sequence Diagrams
+- Support multiple windows
+- Proper file icons on Mac and Linux
+- No longer a console on Windows
+- Support i18n
+- Improved search in tree view
+- "Show in Diagram" option in tree view popup menu
+- Internally, the Gaphor application is no longer a singleton
+- Overall a lot of code simplification
+- A fair share of bug fixes
+
+1.1.1
+-----
+- Reset tool after creation by default
+- Remove setup.py and MANIFEST.in
+
+1.1.0
+-----
+- New menu structure, according to the GNOME HIG
+- Dark theme support
+- Convert docs to Markdown
+- Convert strings in to f-string format
+- Change Windows packaging to use PyInstaller
+- The Element Editor is now part of the main window
+- New render mechanism for diagram items
+- Code is (partly) statically checked by Mypy
+- Many, many bug fixes
+
+1.0.2
+-----
+- Remove dependency on zope.component and zope.interface libraries
+- Fix crash when running Gaphor with Wayland on Linux
+- Improved font rendering in macOS
+- Fix exceptions when renaming, deleting, or creating a package or diagram
+- Disable drag and drop from the selection tool
+- Fix many GTK deprecation warnings
+- Convert most tests to Pytest
+
+1.0.1
+-----
+- Restore the alignment plugin
+- Fix corruption of Namespace during undo
+- Start the app as a Gtk.Application
+- Combine the UIManager service into the ActionManager
+- Fix Flatpak packages
+- Refactor the UML module to make it more atomic
+
+1.0.0
+-----
+- Port to Python 3
+- Port from GTK+ 2 and PyGTK to GTK+ 3 with PyGObject
+- Drop use of etk.docking
+- Overhaul the README
+- Add contributing guide and code of conduct
+- Adopt Black as code formatter
+- Add CI/CD for Windows, macOS, Linux with Azure-Pipelines and ReadTheDocs
+
+0.17.2
+------
+- Improved Python3 compatibility
+
+0.17.1
+------
+- Added Russian translation
+- Pango is used for text rendering, instead of the Cairo toy-api (seriously,
+  that's what the docs say)
+- Small code improvements
+
+0.17
+----
+- New Docking widget layout
+- Improved componentized services
+- UIComponent rewrite (due to new interface)
+- ValueSpecification and subclasses are now treated as attribute. This
+  saves a lot of object construction and Java-ish headaches.
+
+0.16.0
+------
+- Guides support from Gaphas 0.7.0
+- "hand written" drawing style
+- Keyboard shortcuts for toolbox selection
+- Fixed issue in undo transaction handling
+- Proper dialog when exiting with changed model
+
+0.15.0
+------
+- Fixed bugs related to diagrams loading.
+- Subsystem item is added (part of components).
+- Partition item, known as swimlanes, is added (part of actions).
+- Node item can group other nodes, artifacts and components.
+- Stereotype names shown in stereotype attribute compartments are centered.
+- Stereotype creating and applying is simplified.
+- Association ends stereotype editing is supported.
+- State item supports entry, exit and do activities.
+
+0.14.0
+------
+- Reintroduced assembly connections.
+- Stereotypes can have attributes.
+- Major speed improvements due to new notification system.
+
+0.13.1
+------
+- added desktop file and gaphor icons
+- update to gaphas 0.4
+
+0.13.0
+------
+- Transition to zope events completed.
+- state machines
+
+For a complete set of changes and fixes see:
+  http://gaphor.devjavu.com/query?milestone=Gaphor+0.13.0
+
+0.12.0
+------
+- undo/redo fixes
+- allow to create packages in model tree
+- improved messages on communication diagrams
+- improved text align algorithms
+- tagged values can be reordered and removed (like class attributes and
+  operations)
+- text entry used to on-diagram editing is much nicer, now
+
+0.11.2
+------
+- improved items's connection adapters
+- fixed comment line, comment, message and lifeline items connection
+  adapters to implement UML specification more closely
+- items gluing speedup
+- property page is updated when association or other diagram line connects
+  to appropriate diagram items
+- removing and reordering of class' attributes and operations is possible
+  again
+- association name and multiplicity editing improvements
+
+0.11.1
+------
+- support gaphas 0.3.0 API
+- bugfixes
+
+0.11.0
+------
+- Sequence diagrams
+- Non-UML drawing primitives (rectangles, ellipses, lines).
+- Major performance improvements in Gaphas 0.2.0.
+- Property editor
+- Lots of user interface tweaks
+- Services are loaded through Egg entry points.
+- New plugin infrastructure, based on setuptools.
+- gtk.UIManager is now used for menus.
+
+0.10.0
+------
+- New undo management system
+- Setuptools is used for installation and also within Gaphor
+- Depends on zope.component 3.4 and gaphas 0.1.3 (installed on as-needed basis)
+- Installable as Python Egg
+
+0.9.0
+-----
+- New pure-python canvas implementation (gaphas)
+- Zope Adapters used for item connections
+- Undo managements temporarily disabled
+- Added loads of unit tests
+
+NOTE: if you have Zope 3 installed it's probably not a good idea to install
+      Gaphor too, since Gaphor tries to install Zope3 packages too.
+      Don't worry, you can run Gaphor perfectly well using the run-gaphor.sh
+      script.
+
+0.8.1
+-----
+- support for automatic realization dependencies between components and
+  interfaces
+- provided and required interfaces of component realizing classifiers are
+  visible in Component.{provided,required} derived associations
+- missing icons added
+
+0.8.0
+-----
+- actions: flow final, fork, join and object nodes
+- assembly connector
+- flows and also initial, flow final and activity final nodes can have names
+- flows can be split and merged using activity edge connectors
+- object inspector panel added
+- pdf file export
+- gaphorconvert utility, which allows easy batch conversion of diagrams
+  into svg or pdf files
+- user interface fixes
+- require gtk+ 2.8.x
+
+0.7.1
+-----
+- Real UML2 associations;
+- Stereotypes;
+- Atrifact and Node types;
+- Settings of open and closed toolboxes as well as the window size are saved;
+- Diagrams are shown in bold in the tree view, abstract classes are italic;
+- Added recent files option;
+- Keyboard shortcuts can be configured at runtime.
+- Spanish translation
+- Python2.4 fixes
+
+0.7.0
+-----
+- XMI export plugin
+- Item alignment
+- Full featured undo mechanism
+- Copy/paste
+- usability improvements
+- require DiaCanvas2 0.14.2
+
+0.6.0
+-----
+- Enhanced Plugin support
+- Interfaces
+- Support for Stereotypes
+
+0.5.0
+-----
+- Support for UseCases
+- Plugins
+- Packages can be reordered
+- Interfaces
+
+0.4.0
+-----
+- Support for Actions
+- Support for Components
+
+0.3.0
+-----
+- New and improved interface
