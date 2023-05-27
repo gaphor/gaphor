@@ -90,6 +90,7 @@ nb_execution_raise_on_error = True
 nb_render_markdown_format = "myst"
 
 myst_heading_anchors = 3
+suppress_warnings = ["myst.header"]
 
 gaphor_models = {
     "connect": "connect.gaphor",

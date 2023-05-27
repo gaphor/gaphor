@@ -33,6 +33,7 @@ Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :doc:`Jupyter n
    getting_started
    first_model
    coffee_machine
+   changelog
 
 .. toctree::
    :caption: Features
