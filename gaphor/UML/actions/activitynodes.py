@@ -177,7 +177,7 @@ class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-    show_underlaying_type: attribute[int] = attribute("show_type", int, 0)
+    show_underlaying_type: attribute[int] = attribute("show_underlaying_type", int, 0)
     combined: relation_one[UML.ControlNode] = association(
         "combined", UML.ControlNode, upper=1
     )
