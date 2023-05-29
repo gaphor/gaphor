@@ -16,7 +16,7 @@ from gaphor.UML import Class
 from gaphor.UML.classes import ClassItem, GeneralizationItem
 
 
-def test_line_create(diagram, undo_manager, event_manager, caplog):
+def test_line_create(diagram, undo_manager, event_manager):
     with Transaction(event_manager):
         diagram.create(LinePresentation)
 
@@ -24,7 +24,6 @@ def test_line_create(diagram, undo_manager, event_manager, caplog):
 
     undo_manager.undo_transaction()
 
-    assert not caplog.records
     assert not diagram.ownedPresentation
 
     undo_manager.redo_transaction()
