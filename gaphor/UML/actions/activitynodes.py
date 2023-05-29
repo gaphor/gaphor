@@ -173,17 +173,17 @@ class DecisionNodeItem(ActivityNodeItem, ElementPresentation):
             Text(text=lambda: self.subject and self.subject.name or ""),
         )
 
-        self.watch("show_underlaying_type")
+        self.watch("show_underlying_type")
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
 
-    show_underlaying_type: attribute[int] = attribute("show_underlaying_type", int, 0)
+    show_underlying_type: attribute[int] = attribute("show_underlying_type", int, 0)
     combined: relation_one[UML.ControlNode] = association(
         "combined", UML.ControlNode, upper=1
     )
 
     def node_type(self):
-        if not self.show_underlaying_type:
+        if not self.show_underlying_type:
             return ""
         if self.combined:
             return self.diagram.gettext("merge/decision")

@@ -397,7 +397,7 @@ def upgrade_generalization_arrow_direction(elem):
 def upgrade_decision_node_item_show_type(elem):
     if elem.type == "DecisionNodeItem":
         if "show_type" in elem.values:
-            elem.values["show_underlaying_type"] = elem.values["show_type"]
+            elem.values["show_underlying_type"] = elem.values["show_type"]
             del elem.values["show_type"]
     return elem
 

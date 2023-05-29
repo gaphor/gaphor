@@ -82,13 +82,13 @@ class DecisionNodePropertyPage(PropertyPageBase):
         )
 
         show_type = builder.get_object("show-type")
-        show_type.set_active(self.item.show_underlaying_type)
+        show_type.set_active(self.item.show_underlying_type)
 
         return builder.get_object("decision-node-editor")
 
     @transactional
     def _on_show_type_change(self, button, gparam):
-        self.item.show_underlaying_type = button.get_active()
+        self.item.show_underlying_type = button.get_active()
 
 
 @PropertyPages.register(ForkNodeItem)

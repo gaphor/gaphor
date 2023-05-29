@@ -71,7 +71,7 @@ name has been changed there as well.
 
 ```{important}
 Elements in a diagram are only a _representation_ of the elements in the
-underlaying model. The model is what you see in the Model Browser.
+underlying model. The model is what you see in the Model Browser.
 
 Elements in the model are automatically removed when there are no more
 representations in any of the diagrams.

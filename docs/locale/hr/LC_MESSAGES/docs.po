@@ -439,7 +439,7 @@ msgid "Now change the name of class `Circle` to `Ellipse`. Check the other diagr
 msgstr ""
 
 #: ../first_model.md:73
-msgid "Elements in a diagram are only a _representation_ of the elements in the underlaying model. The model is what you see in the Model Browser."
+msgid "Elements in a diagram are only a _representation_ of the elements in the underlying model. The model is what you see in the Model Browser."
 msgstr ""
 
 #: ../first_model.md:76

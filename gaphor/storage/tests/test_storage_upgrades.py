@@ -115,4 +115,4 @@ def test_upgradedecision_node_item_show_type(loader):
     parsed_item.values["show_type"] = "1"
     item = loader(parsed_item)[0]
 
-    assert item.show_underlaying_type == 1
+    assert item.show_underlying_type == 1
