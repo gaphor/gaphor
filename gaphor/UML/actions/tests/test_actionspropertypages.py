@@ -59,7 +59,7 @@ def test_decision_node_property_page_show_type(diagram, element_factory):
     show_type = find(widget, "show-type")
     show_type.set_active(True)
 
-    assert item.show_underlaying_type
+    assert item.show_underlying_type
 
 
 def test_fork_node_property_page(diagram, element_factory):

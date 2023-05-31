@@ -181,6 +181,7 @@ def _load_elements_and_canvasitems(
             elem = upgrade_flow_item_to_control_flow_item(elem, elements)
         if version_lower_than(gaphor_version, (2, 19, 0)):
             elem = upgrade_delete_property_information_flow(elem)
+            elem = upgrade_decision_node_item_show_type(elem)
 
         if not (cls := modeling_language.lookup_element(elem.type)):
             raise UnknownModelElementError(
@@ -389,6 +390,15 @@ def upgrade_generalization_arrow_direction(elem):
                 tail_ids,
                 head_ids,
             )
+    return elem
+
+
+# since 2.19.0
+def upgrade_decision_node_item_show_type(elem):
+    if elem.type == "DecisionNodeItem":
+        if "show_type" in elem.values:
+            elem.values["show_underlying_type"] = elem.values["show_type"]
+            del elem.values["show_type"]
     return elem
 
 
