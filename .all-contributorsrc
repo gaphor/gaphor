@@ -1142,9 +1142,19 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Fell-x27",
+      "name": "Fell-x27",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18358207?v=4",
+      "profile": "https://github.com/Fell-x27",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "skipCi": true,
-  "commitConvention": "angular"
+  "commitConvention": "angular",
+  "commitType": "docs"
 }
