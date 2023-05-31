@@ -406,7 +406,7 @@ class FileManager(Service, ActionProvider):
                 confirm_shutdown()
 
         if self.main_window.model_changed:
-            save_changes_before_closing_dialog(self.parent_window, response)
+            save_changes_before_close_dialog(self.parent_window, response)
         else:
             confirm_shutdown()
 
@@ -436,7 +436,7 @@ def resolve_merge_conflict_dialog(window: Gtk.Window, filename: Path, handler) -
     dialog.set_visible(True)
 
 
-def save_changes_before_closing_dialog(window: Gtk.Window, handler) -> None:
+def save_changes_before_close_dialog(window: Gtk.Window, handler) -> None:
     title = gettext("Save Changes?")
     body = gettext(
         "The open model contains unsaved changes. Changes which are not saved will be permanently lost."
