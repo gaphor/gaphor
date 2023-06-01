@@ -48,24 +48,24 @@ babel = "^2.10.3"
 jedi = "^0.18.1"
 better-exceptions = "^0.3.3"
 pydot = "^1.4.2"
+pygit2 = "^1.11.1"
+pyobjc-framework-cocoa = { version = "^9.0.1", markers = "sys_platform == 'darwin'" }
 sphinx = { version = ">=4.3,<6.0", optional = true }
 sphinx-copybutton = { version = "^0.5.0", optional = true }
-sphinx-intl = {version = "^2.1.0", optional = true}
+sphinx-intl = { version = "^2.1.0", optional = true }
 myst-nb = { version = "^0.17.1", optional = true }
 furo = { version = ">=2022,<2024", optional = true }
-pyobjc-framework-cocoa = {version = "^9.0.1", markers = "sys_platform == 'darwin'"}
-pygit2 = "^1.11.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.1"
 pytest-archon = "^0.0"
 pytest-cov = "^4.0.0"
+pytest-randomly = "^3.12.0"
 xdoctest = "^1.1.0"
 hypothesis = "^6.54.5"
 ipython = "^8.5.0"
 sphinx = ">=4.3,<6.0"
 babelgladeextractor = "^0.7"
-pytest-randomly = "^3.12.0"
 
 [tool.poetry.group.lint.dependencies]
 pre-commit = ">=2.20,<4.0"
