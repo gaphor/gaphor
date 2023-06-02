@@ -65,7 +65,7 @@ you may be able to extend Gaphor by creating a
 
 ## 💾 Install
 
-<a href='https://flathub.org/apps/org.gaphor.Gaphor'><img width='240' alt='Download on Flathub' title='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.png'/></a>
+<a href='https://flathub.org/apps/org.gaphor.Gaphor'><img width='240' alt='Download on Flathub' title='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.svg'/></a>
 
 You can find [the latest version](https://gaphor.org/download) on the
 [gaphor.org website](https://gaphor.org/download). Gaphor ships installers for
