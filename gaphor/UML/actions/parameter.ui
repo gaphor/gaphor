@@ -16,7 +16,7 @@
           <object class="GtkStackPage">
             <property name="name">readonly</property>
             <property name="child">
-              <object class="GtkLabel">
+              <object class="GtkLabel" id="label">
                 <property name="xalign">0</property>
                 <binding name="label">
                   <lookup name="parameter" type="ActivityParameterNodeView">

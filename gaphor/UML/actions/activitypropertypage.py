@@ -165,6 +165,14 @@ def list_item_factory_setup(_factory, list_item):
     key_ctrl.connect("key-pressed", text_key_pressed)
     text.add_controller(key_ctrl)
 
+    def double_click(ctrl, n_press, x, y):
+        if n_press == 2:
+            stack.activate_action("parameter.rename")
+
+    click_ctrl = Gtk.GestureClick.new()
+    click_ctrl.connect("pressed", double_click)
+    builder.get_object("label").add_controller(click_ctrl)
+
     def start_editing(stack, pspec):
         if stack.get_visible_child_name() == "editing":
             text.grab_focus()
