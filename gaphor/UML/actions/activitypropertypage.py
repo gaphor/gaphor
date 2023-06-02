@@ -1,10 +1,12 @@
 from __future__ import annotations
 
-from gi.repository import GLib, GObject, Gio, Gtk
+from gi.repository import GLib, GObject, Gio, Gdk, Gtk
+from gaphas.decorators import nonrecursive
 
 from gaphor import UML
+from gaphor.action import action
 from gaphor.core import transactional
-from gaphor.core.format import parse
+from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -15,18 +17,33 @@ from gaphor.diagram.propertypages import (
 from gaphor.i18n import translated_ui_string
 from gaphor.UML.actions.activity import ActivityItem
 
+from gaphor.ui.actiongroup import create_action_group
+
+START_EDIT_DELAY = 100
+
+
+def create_shortcut_controller(shortcuts):
+    ctrl = Gtk.ShortcutController.new_for_model(shortcuts)
+    ctrl.set_scope(Gtk.ShortcutScope.LOCAL)
+    return ctrl
+
+
 new_builder = new_resource_builder("gaphor.UML.actions")
 
 
 class ActivityParameterNodeView(GObject.Object):
+    __gtype_name__ = "ActivityParameterNodeView"
+
     def __init__(self, node: UML.ActivityParameterNode | None, activity: UML.Activity):
         super().__init__()
         self.node = node
         self.activity = activity
 
+    mode = GObject.Property(type=str, default="readonly")
+
     @GObject.Property(type=str)
     def parameter(self) -> str:
-        return self.node.parameter.name  # format(self.node.parameter)
+        return format(self.node.parameter) if self.node else ""
 
     @parameter.setter  # type: ignore[no-redef]
     @transactional
@@ -38,6 +55,9 @@ class ActivityParameterNodeView(GObject.Object):
             self.node = node
             self.activity.node = node
         parse(self.node.parameter, value)
+
+    def start_editing(self):
+        self.mode = "editing"
 
 
 def activity_parameter_node_model(activity: UML.Activity) -> Gio.ListModel:
@@ -79,20 +99,20 @@ class ActivityItemPage(PropertyPageBase):
         list_view: Gtk.ListView = builder.get_object("parameter-list")
 
         self.model = activity_parameter_node_model(subject)
-        selection = Gtk.SingleSelection.new(self.model)
-        list_view.set_model(selection)
+        self.selection = Gtk.SingleSelection.new(self.model)
+        list_view.set_model(self.selection)
 
-        list_item_ui = translated_ui_string(
-            "gaphor.UML.actions", "parameter.ui"
-        ).encode("utf-8")
-        factory = Gtk.BuilderListItemFactory.new_from_bytes(
-            Gtk.BuilderCScope.new(), GLib.Bytes.new(list_item_ui)
+        factory = Gtk.SignalListItemFactory.new()
+        factory.connect(
+            "setup",
+            list_item_factory_setup,
         )
+
         list_view.set_factory(factory)
 
-        # controller = Gtk.EventControllerKey.new()
-        # list_view.add_controller(controller)
-        # controller.connect("key-pressed", on_keypress_event, list_view)
+        action_group, shortcuts = create_action_group(self, "parameter")
+        list_view.insert_action_group("parameter", action_group)
+        list_view.add_controller(create_shortcut_controller(shortcuts))
 
         return unsubscribe_all_on_destroy(
             builder.get_object("activity-editor"), self.watcher
@@ -100,3 +120,53 @@ class ActivityItemPage(PropertyPageBase):
 
     def on_parameters_info_clicked(self, image, event):
         self.info.set_visible(True)
+
+    @action(name="parameter.rename", shortcut="F2")
+    def _list_view_rename_selected(self):
+        if view := self.selection.get_selected_item():
+            GLib.timeout_add(START_EDIT_DELAY, view.start_editing)
+
+
+def list_item_factory_setup(_factory, list_item):
+    builder = Gtk.Builder()
+    builder.set_current_object(list_item)
+    builder.extend_with_template(
+        list_item,
+        type(list_item).__gtype__,
+        translated_ui_string("gaphor.UML.actions", "parameter.ui"),
+        -1,
+    )
+
+    stack = builder.get_object("stack")
+    text = builder.get_object("text")
+
+    @nonrecursive
+    def end_editing(ctrl=None, should_commit=True):
+        list_item.get_item().mode = "readonly"
+        if should_commit:
+            list_item.get_item().parameter = text.get_buffer().get_text()
+        stack.get_parent().grab_focus()
+
+    def text_key_pressed(ctrl, keyval, keycode, state):
+        if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
+            end_editing()
+            return True
+        elif keyval == Gdk.KEY_Escape:
+            end_editing(should_commit=False)
+            list_item.get_item().notify("parameter")
+            return True
+        return False
+
+    focus_ctrl = Gtk.EventControllerFocus.new()
+    focus_ctrl.connect("leave", end_editing)
+    text.add_controller(focus_ctrl)
+
+    key_ctrl = Gtk.EventControllerKey.new()
+    key_ctrl.connect("key-pressed", text_key_pressed)
+    text.add_controller(key_ctrl)
+
+    def start_editing(stack, pspec):
+        if stack.get_visible_child_name() == "editing":
+            text.grab_focus()
+
+    stack.connect("notify::visible-child-name", start_editing)

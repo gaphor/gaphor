@@ -1,7 +1,9 @@
 import pytest
 
 from gaphor import UML
+from gaphor.UML.actions.activity import ActivityItem
 from gaphor.UML.actions.activitypropertypage import (
+    ActivityItemPage,
     activity_parameter_node_model,
 )
 
@@ -65,3 +67,12 @@ def test_activity_parameter_node_add_new_parameter(element_factory):
 @pytest.mark.skip
 def test_activity_parameter_node_reorder(create, element_factory):
     ...
+
+
+def test_construct_activity_itemproperty_page(create):
+    activity_item = create(ActivityItem, UML.Activity)
+
+    property_page = ActivityItemPage(activity_item)
+    widget = property_page.construct()
+
+    assert widget

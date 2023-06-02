@@ -5,7 +5,7 @@
     <property name="child">
       <object class="GtkStack" id="stack">
         <binding name="visible-child-name">
-          <lookup name="mode" type="gaphor+UML+actions+activitypropertypage+ActivityParameterNodeView">
+          <lookup name="mode" type="ActivityParameterNodeView">
             <lookup name="item">GtkListItem</lookup>
           </lookup>
         </binding>
@@ -16,7 +16,7 @@
               <object class="GtkLabel">
                 <property name="xalign">0</property>
                 <binding name="label">
-                  <lookup name="parameter" type="gaphor+UML+actions+activitypropertypage+ActivityParameterNodeView">
+                  <lookup name="parameter" type="ActivityParameterNodeView">
                     <lookup name="item">GtkListItem</lookup>
                   </lookup>
                 </binding>
@@ -43,7 +43,7 @@
   </template>
   <object class="GtkEntryBuffer" id="buffer">
     <binding name="text">
-      <lookup name="parameter" type="gaphor+UML+actions+activitypropertypage+ActivityParameterNodeView">
+      <lookup name="parameter" type="ActivityParameterNodeView">
         <lookup name="item">GtkListItem</lookup>
       </lookup>
     </binding>
