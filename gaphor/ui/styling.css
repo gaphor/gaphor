@@ -104,6 +104,10 @@ frame > textview {
   padding: 6px;
 }
 
+listview .row {
+  padding: 2px 0;
+}
+
 .editing {
   background-color: @theme_bg_color;
   color: @theme_fg_color;
@@ -126,7 +130,6 @@ frame > textview {
 }
 
 #model_browser .row {
-  padding: 2px 0;
   border-top: 0 solid @shade_color;
   transition: border 200ms;
 }

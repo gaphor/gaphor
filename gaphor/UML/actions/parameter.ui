@@ -4,6 +4,9 @@
   <template class="GtkListItem">
     <property name="child">
       <object class="GtkStack" id="stack">
+        <style>
+          <class name="row"/>
+        </style>
         <binding name="visible-child-name">
           <lookup name="mode" type="ActivityParameterNodeView">
             <lookup name="item">GtkListItem</lookup>
