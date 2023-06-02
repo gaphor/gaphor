@@ -3,14 +3,49 @@
   <requires lib="gtk" version="4.6"/>
   <template class="GtkListItem">
     <property name="child">
-      <object class="GtkLabel">
-        <property name="xalign">0</property>
-        <binding name="label">
-          <lookup name="parameter" type="gaphor+UML+actions+activitypropertypage+ActivityParameterNodeView">
+      <object class="GtkStack" id="stack">
+        <binding name="visible-child-name">
+          <lookup name="mode" type="gaphor+UML+actions+activitypropertypage+ActivityParameterNodeView">
             <lookup name="item">GtkListItem</lookup>
           </lookup>
         </binding>
+        <child>
+          <object class="GtkStackPage">
+            <property name="name">readonly</property>
+            <property name="child">
+              <object class="GtkLabel">
+                <property name="xalign">0</property>
+                <binding name="label">
+                  <lookup name="parameter" type="gaphor+UML+actions+activitypropertypage+ActivityParameterNodeView">
+                    <lookup name="item">GtkListItem</lookup>
+                  </lookup>
+                </binding>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkStackPage">
+            <property name="name">editing</property>
+            <property name="child">
+              <object class="GtkText" id="text">
+                <property name="propagate-text-width">yes</property>
+                <property name="buffer">buffer</property>
+                <style>
+                  <class name="editing"/>
+                </style>
+              </object>
+            </property>
+          </object>
+        </child>
       </object>
     </property>
   </template>
+  <object class="GtkEntryBuffer" id="buffer">
+    <binding name="text">
+      <lookup name="parameter" type="gaphor+UML+actions+activitypropertypage+ActivityParameterNodeView">
+        <lookup name="item">GtkListItem</lookup>
+      </lookup>
+    </binding>
+  </object>
 </interface>

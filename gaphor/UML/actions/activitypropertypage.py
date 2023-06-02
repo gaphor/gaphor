@@ -19,9 +19,10 @@ new_builder = new_resource_builder("gaphor.UML.actions")
 
 
 class ActivityParameterNodeView(GObject.Object):
-    def __init__(self, node: UML.ActivityParameterNode | None):
+    def __init__(self, node: UML.ActivityParameterNode | None, activity: UML.Activity):
         super().__init__()
         self.node = node
+        self.activity = activity
 
     @GObject.Property(type=str)
     def parameter(self) -> str:
@@ -30,6 +31,12 @@ class ActivityParameterNodeView(GObject.Object):
     @parameter.setter  # type: ignore[no-redef]
     @transactional
     def parameter(self, value):
+        if not self.node:
+            model = self.activity.model
+            node = model.create(UML.ActivityParameterNode)
+            node.parameter = model.create(UML.Parameter)
+            self.node = node
+            self.activity.node = node
         parse(self.node.parameter, value)
 
 
@@ -38,8 +45,8 @@ def activity_parameter_node_model(activity: UML.Activity) -> Gio.ListModel:
 
     for node in activity.node:
         if isinstance(node, UML.ActivityParameterNode) and node.parameter:
-            store.append(ActivityParameterNodeView(node))
-    store.append(ActivityParameterNodeView(None))
+            store.append(ActivityParameterNodeView(node, activity))
+    store.append(ActivityParameterNodeView(None, activity))
 
     return store
 

@@ -1,56 +1,67 @@
 import pytest
-from gi.repository import Gtk
 
 from gaphor import UML
-from gaphor.UML.actions.activity import ActivityItem
-from gaphor.UML.actions.activitypropertypage import ActivityItemPage, ActivityParameters
+from gaphor.UML.actions.activitypropertypage import (
+    activity_parameter_node_model,
+)
 
 
-def test_activity_parameter_node_editing(create):
-    activity_item = create(ActivityItem, UML.Activity)
-    model = ActivityParameters(activity_item)
-    model.append([None, None])
-    path = Gtk.TreePath.new_first()
-    iter = model.get_iter(path)
-    model.update(iter, col=0, value="param")
-
-    assert model[iter][-1] is activity_item.subject.node[0]
+def activity_parameter_node(element_factory, name=None):
+    node = element_factory.create(UML.ActivityParameterNode)
+    node.parameter = element_factory.create(UML.Parameter)
+    node.name = name
+    return node
 
 
-def test_activity_parameter_node_reorder(create, element_factory):
-    activity_item = create(ActivityItem, UML.Activity)
+def test_activity_parameter_node_empty(element_factory):
+    activity = element_factory.create(UML.Activity)
+    model = activity_parameter_node_model(activity)
 
-    def activity_parameter_node(name):
-        node = element_factory.create(UML.ActivityParameterNode)
-        node.parameter = element_factory.create(UML.Parameter)
-        node.name = name
-        activity_item.subject.node = node
-        return node
+    empty = model.get_item(0)
 
-    node1 = activity_parameter_node("param1")
-    node2 = activity_parameter_node("param2")
-    node3 = activity_parameter_node("param3")
+    assert not empty.node
 
-    list_store = ActivityParameters(activity_item)
 
-    new_order = [node3, node1, node2]
-    list_store.sync_model(new_order)
+def test_activity_parameter_node_in_model(element_factory):
+    activity = element_factory.create(UML.Activity)
+    activity.node = activity_parameter_node(element_factory, "name")
+    model = activity_parameter_node_model(activity)
 
-    assert activity_item.subject.node[0] is node3
-    assert activity_item.subject.node[1] is node1
-    assert activity_item.subject.node[2] is node2
+    param = model.get_item(0)
+    empty = model.get_item(1)
+
+    assert param.node is activity.node[0]
+    assert not empty.node
+
+
+def test_activity_parameter_node_edit_existing_parameter(element_factory):
+    activity = element_factory.create(UML.Activity)
+    activity.node = activity_parameter_node(element_factory)
+    parameter = activity.node[0].parameter
+    model = activity_parameter_node_model(activity)
+
+    view = model.get_item(0)
+    view.parameter = "in attr: str"
+
+    assert parameter.direction == "in"
+    assert parameter.name == "attr"
+    assert parameter.typeValue == "str"
+
+
+def test_activity_parameter_node_add_new_parameter(element_factory):
+    activity = element_factory.create(UML.Activity)
+    model = activity_parameter_node_model(activity)
+
+    view = model.get_item(0)
+    view.parameter = "in attr: str"
+    parameter = activity.node[0].parameter
+
+    assert view.node in activity.node
+    assert parameter.direction == "in"
+    assert parameter.name == "attr"
+    assert parameter.typeValue == "str"
 
 
 @pytest.mark.skip
-def test_activity_page_add_attribute(create):
-    activity_item = create(ActivityItem, UML.Activity)
-    property_page = ActivityItemPage(activity_item)
-
-    property_page.construct()
-    view = property_page.model.get_item(0)
-
-    view.parameter = "in attr: str"
-
-    assert activity_item.subject.node[0].parameter.direction == "in"
-    assert activity_item.subject.node[0].parameter.name == "attr"
-    assert activity_item.subject.node[0].parameter.typeValue == "str"
+def test_activity_parameter_node_reorder(create, element_factory):
+    ...
