@@ -92,7 +92,9 @@ def loader(element_factory, modeling_language):
         assert not list(element_factory.select())
 
         f = StringIO(data)
-        storage.load(f, factory=element_factory, modeling_language=modeling_language)
+        storage.load(
+            f, element_factory=element_factory, modeling_language=modeling_language
+        )
         f.close()
 
     return load
