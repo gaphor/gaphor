@@ -20,6 +20,7 @@ from gaphor.ui.actiongroup import apply_application_actions
 
 APPLICATION_ID = "org.gaphor.Gaphor"
 
+Adw.init()
 GtkSource.init()
 
 
