@@ -335,6 +335,8 @@ jobs:
     name: Publish to PyPI (release only)
     needs: [ linux-wheel, linux-flatpak-devel, check-macos-app, check-windows-installer ]
     runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
     if: github.event_name == 'release'
     outputs:
       version: ${{ needs.linux-wheel.outputs.version }}
@@ -348,8 +350,6 @@ jobs:
           name: ${{ needs.linux-wheel.outputs.wheel }}
           path: dist
       - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_TOKEN }}
 
   trigger-website-version-update:
     name: Trigger version update on gaphor/gaphor.github.io
