@@ -3,52 +3,16 @@
   <requires lib="gtk" version="4.6"/>
   <template class="GtkListItem">
     <property name="child">
-      <object class="GtkStack" id="stack">
+      <object class="GtkEditableLabel" id="text">
         <style>
           <class name="row"/>
         </style>
-        <binding name="visible-child-name">
-          <lookup name="mode" type="ActivityParameterNodeView">
+        <binding name="text">
+          <lookup name="parameter" type="ActivityParameterNodeView">
             <lookup name="item">GtkListItem</lookup>
           </lookup>
         </binding>
-        <child>
-          <object class="GtkStackPage">
-            <property name="name">readonly</property>
-            <property name="child">
-              <object class="GtkLabel" id="label">
-                <property name="xalign">0</property>
-                <binding name="label">
-                  <lookup name="parameter" type="ActivityParameterNodeView">
-                    <lookup name="item">GtkListItem</lookup>
-                  </lookup>
-                </binding>
-              </object>
-            </property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkStackPage">
-            <property name="name">editing</property>
-            <property name="child">
-              <object class="GtkText" id="text">
-                <property name="propagate-text-width">yes</property>
-                <property name="buffer">buffer</property>
-                <style>
-                  <class name="editing"/>
-                </style>
-              </object>
-            </property>
-          </object>
-        </child>
       </object>
     </property>
   </template>
-  <object class="GtkEntryBuffer" id="buffer">
-    <binding name="text">
-      <lookup name="parameter" type="ActivityParameterNodeView">
-        <lookup name="item">GtkListItem</lookup>
-      </lookup>
-    </binding>
-  </object>
 </interface>

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from gi.repository import GLib, GObject, Gio, Gdk, Gtk
-from gaphas.decorators import nonrecursive
+from gi.repository import GLib, GObject, Gio, Gtk
 
 from gaphor import UML
 from gaphor.action import action
@@ -137,44 +136,10 @@ def list_item_factory_setup(_factory, list_item):
         -1,
     )
 
-    stack = builder.get_object("stack")
+    def end_editing(text, pspec):
+        if not text.props.editing:
+            list_item.get_item().mode = "readonly"
+            list_item.get_item().parameter = text.get_text()
+
     text = builder.get_object("text")
-
-    @nonrecursive
-    def end_editing(ctrl=None, should_commit=True):
-        list_item.get_item().mode = "readonly"
-        if should_commit:
-            list_item.get_item().parameter = text.get_buffer().get_text()
-        stack.get_parent().grab_focus()
-
-    def text_key_pressed(ctrl, keyval, keycode, state):
-        if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
-            end_editing()
-            return True
-        elif keyval == Gdk.KEY_Escape:
-            end_editing(should_commit=False)
-            list_item.get_item().notify("parameter")
-            return True
-        return False
-
-    focus_ctrl = Gtk.EventControllerFocus.new()
-    focus_ctrl.connect("leave", end_editing)
-    text.add_controller(focus_ctrl)
-
-    key_ctrl = Gtk.EventControllerKey.new()
-    key_ctrl.connect("key-pressed", text_key_pressed)
-    text.add_controller(key_ctrl)
-
-    def double_click(ctrl, n_press, x, y):
-        if n_press == 2:
-            stack.activate_action("parameter.rename")
-
-    click_ctrl = Gtk.GestureClick.new()
-    click_ctrl.connect("pressed", double_click)
-    builder.get_object("label").add_controller(click_ctrl)
-
-    def start_editing(stack, pspec):
-        if stack.get_visible_child_name() == "editing":
-            text.grab_focus()
-
-    stack.connect("notify::visible-child-name", start_editing)
+    text.connect("notify::editing", end_editing)
