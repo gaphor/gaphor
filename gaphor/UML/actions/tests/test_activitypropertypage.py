@@ -64,6 +64,62 @@ def test_activity_parameter_node_add_new_parameter(element_factory):
     assert parameter.typeValue == "str"
 
 
+def test_update_model_when_new_parameter_added(create, element_factory):
+    activity_item = create(ActivityItem, UML.Activity)
+
+    property_page = ActivityItemPage(activity_item)
+    property_page.construct()
+
+    activity_item.subject.node = activity_parameter_node(element_factory, "one")
+
+    assert property_page.model.get_n_items() == 2  # one + empty row
+
+
+def test_update_model_when_new_parameter_added_via_list_model(create, element_factory):
+    activity_item = create(ActivityItem, UML.Activity)
+
+    property_page = ActivityItemPage(activity_item)
+    property_page.construct()
+
+    new_view = property_page.model.get_item(0)
+    new_view.parameter = "new"
+
+    assert property_page.model.get_n_items() == 2  # one + empty row
+    assert property_page.model.get_item(0).node is new_view.node
+    assert property_page.model.get_item(1).node is None
+
+
+def test_update_model_with_single_node_when_parameter_deleted(create, element_factory):
+    activity_item = create(ActivityItem, UML.Activity)
+    activity_item.subject.node = node = activity_parameter_node(element_factory, "one")
+
+    property_page = ActivityItemPage(activity_item)
+    property_page.construct()
+
+    del activity_item.subject.node[node]
+
+    assert not activity_item.subject.node
+    assert property_page.model.get_n_items() == 1
+    assert property_page.model.get_item(0).node is None
+
+
+def test_update_model_with_multiple_nodes_when_parameter_deleted(
+    create, element_factory
+):
+    activity_item = create(ActivityItem, UML.Activity)
+    activity_item.subject.node = node = activity_parameter_node(element_factory, "one")
+    activity_item.subject.node = activity_parameter_node(element_factory, "two")
+
+    property_page = ActivityItemPage(activity_item)
+    property_page.construct()
+
+    del activity_item.subject.node[node]
+
+    assert property_page.model.get_n_items() == 2
+    assert property_page.model.get_item(0).node in activity_item.subject.node
+    assert property_page.model.get_item(1).node is None
+
+
 @pytest.mark.skip
 def test_activity_parameter_node_reorder(create, element_factory):
     ...
