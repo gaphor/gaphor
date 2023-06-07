@@ -87,7 +87,7 @@
     <property name="margin-top">12</property>
     <child type="label">
       <object class="GtkLabel" id="titlelabel">
-        <property name="label" translatable="1">Regions</property>
+        <property name="label" translatable="yes">Regions</property>
         <attributes>
           <attribute name="weight" value="bold"></attribute>
         </attributes>
@@ -100,7 +100,7 @@
           <object class="GtkBox">
             <child>
               <object class="GtkLabel">
-                <property name="label" translatable="1">Show Regions</property>
+                <property name="label" translatable="yes">Show Regions</property>
                 <property name="halign">start</property>
                 <property name="hexpand">1</property>
               </object>
@@ -116,7 +116,7 @@
           <object class="GtkBox">
             <child>
               <object class="GtkLabel">
-                <property name="label" translatable="1">Regions</property>
+                <property name="label" translatable="yes">Regions</property>
                 <property name="halign">start</property>
                 <property name="hexpand">1</property>
               </object>
