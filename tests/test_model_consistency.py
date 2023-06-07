@@ -290,7 +290,7 @@ class ModelConsistency(RuleBasedStateMachine):
                 buffer.seek(0)
                 storage.load(
                     buffer,
-                    factory=new_model,
+                    element_factory=new_model,
                     modeling_language=self.session.get_service("modeling_language"),
                 )
 

@@ -49,7 +49,7 @@ def test_save_uml(element_factory):
     element_factory.create(UML.Class)
 
     out = PseudoFile()
-    storage.save(out, factory=element_factory)
+    storage.save(out, element_factory=element_factory)
     out.close()
 
     assert "<Package " in out.data
@@ -64,7 +64,7 @@ def test_save_item(diagram, element_factory):
     diagram.create(CommentItem, subject=element_factory.create(Comment))
 
     out = PseudoFile()
-    storage.save(out, factory=element_factory)
+    storage.save(out, element_factory=element_factory)
     out.close()
 
     assert "<Diagram " in out.data
@@ -198,7 +198,7 @@ def test_save_and_load_of_association_with_two_connected_classes(
     assert a.subject
 
     fd = StringIO()
-    storage.save(fd, factory=element_factory)
+    storage.save(fd, element_factory=element_factory)
     data = fd.getvalue()
     fd.close()
 
@@ -207,7 +207,9 @@ def test_save_and_load_of_association_with_two_connected_classes(
     element_factory.flush()
     assert not list(element_factory.select())
     fd = StringIO(data)
-    storage.load(fd, factory=element_factory, modeling_language=modeling_language)
+    storage.load(
+        fd, element_factory=element_factory, modeling_language=modeling_language
+    )
     fd.close()
 
     diagrams = element_factory.lselect(Diagram)
@@ -229,13 +231,13 @@ def test_load_and_save_of_a_model(element_factory, modeling_language, test_model
     with open(path, encoding="utf-8") as ifile:
         storage.load(
             ifile,
-            factory=element_factory,
+            element_factory=element_factory,
             modeling_language=modeling_language,
         )
 
     pf = PseudoFile()
 
-    storage.save(pf, factory=element_factory)
+    storage.save(pf, element_factory=element_factory)
 
     orig = path.read_text(encoding="utf-8")
     copy = pf.data
@@ -256,7 +258,7 @@ def test_can_not_load_models_older_that_0_17_0(
         with open(path, encoding="utf-8") as ifile:
             storage.load(
                 ifile,
-                factory=element_factory,
+                element_factory=element_factory,
                 modeling_language=modeling_language,
             )
 

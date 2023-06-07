@@ -24,13 +24,13 @@ NAMESPACE_MODEL = "http://gaphor.sourceforge.net/model"
 log = logging.getLogger(__name__)
 
 
-def save(out=None, factory=None, status_queue=None):
-    for status in save_generator(out, factory):
+def save(out=None, element_factory=None, status_queue=None):
+    for status in save_generator(out, element_factory):
         if status_queue:
             status_queue(status)
 
 
-def save_generator(out, factory):
+def save_generator(out, element_factory):
     """Save the current model using @writer, which is a
     gaphor.storage.xmlwriter.XMLWriter instance."""
 
@@ -46,12 +46,12 @@ def save_generator(out, factory):
         },
     )
 
-    size = factory.size()
-    for n, e in enumerate(factory.values(), start=1):
+    size = element_factory.size()
+    for n, e in enumerate(element_factory.values(), start=1):
         clazz = e.__class__.__name__
         assert e.id
         writer.startElement(clazz, {"id": str(e.id)})
-        e.save(partial(save_element, factory=factory, writer=writer))
+        e.save(partial(save_element, element_factory=element_factory, writer=writer))
         writer.endElement(clazz)
 
         if n % 25 == 0:
@@ -62,7 +62,7 @@ def save_generator(out, factory):
     writer.endDocument()
 
 
-def save_element(name, value, factory, writer):
+def save_element(name, value, element_factory, writer):
     """Save attributes and references from items in the gaphor.UML module.
 
     A value may be a primitive (string, int), a
@@ -71,7 +71,7 @@ def save_element(name, value, factory, writer):
     """
 
     def resolvable(value):
-        if value.id and value in factory:
+        if value.id and value in element_factory:
             return True
         log.warning(
             f"Model has unknown reference {value.id}. Reference will be skipped."
@@ -122,14 +122,16 @@ def save_element(name, value, factory, writer):
         save_value(name, value)
 
 
-def load_elements(elements, factory, modeling_language, gaphor_version="1.0.0"):
+def load_elements(elements, element_factory, modeling_language, gaphor_version="1.0.0"):
     for _ in load_elements_generator(
-        elements, factory, modeling_language, gaphor_version
+        elements, element_factory, modeling_language, gaphor_version
     ):
         pass
 
 
-def load_elements_generator(elements, factory, modeling_language, gaphor_version):
+def load_elements_generator(
+    elements, element_factory, modeling_language, gaphor_version
+):
     """Load a file and create a model if possible.
 
     Exceptions: IOError, ValueError.
@@ -149,11 +151,15 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
     # First create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
     yield from _load_elements_and_canvasitems(
-        elements, factory, modeling_language, gaphor_version, update_status_queue
+        elements,
+        element_factory,
+        modeling_language,
+        gaphor_version,
+        update_status_queue,
     )
     yield from _load_attributes_and_references(elements, update_status_queue)
 
-    upgrade_ensure_style_sheet_is_present(factory)
+    upgrade_ensure_style_sheet_is_present(element_factory)
 
     for _id, elem in list(elements.items()):
         yield from update_status_queue()
@@ -161,7 +167,7 @@ def load_elements_generator(elements, factory, modeling_language, gaphor_version
 
 
 def _load_elements_and_canvasitems(
-    elements, factory, modeling_language, gaphor_version, update_status_queue
+    elements, element_factory, modeling_language, gaphor_version, update_status_queue
 ):
     def create_element(elem):
         if elem.element:
@@ -200,9 +206,9 @@ def _load_elements_and_canvasitems(
             diagram_id = elem.references["diagram"]
             diagram_elem = elements[diagram_id]
             create_element(diagram_elem)
-            elem.element = factory.create_as(cls, elem.id, diagram_elem.element)
+            elem.element = element_factory.create_as(cls, elem.id, diagram_elem.element)
         else:
-            elem.element = factory.create_as(cls, elem.id)
+            elem.element = element_factory.create_as(cls, elem.id)
 
     for _id, elem in list(elements.items()):
         yield from update_status_queue()
@@ -240,18 +246,20 @@ def _load_attributes_and_references(elements, update_status_queue):
                     elem.element.load(name, ref.element)
 
 
-def load(file_obj: io.TextIOBase, factory, modeling_language, status_queue=None):
+def load(
+    file_obj: io.TextIOBase, element_factory, modeling_language, status_queue=None
+):
     """Load a file and create a model if possible.
 
     Optionally, a status queue function can be given, to which the
     progress is written (as status_queue(progress)).
     """
-    for status in load_generator(file_obj, factory, modeling_language):
+    for status in load_generator(file_obj, element_factory, modeling_language):
         if status_queue:
             status_queue(status)
 
 
-def load_generator(file_obj: io.TextIOBase, factory, modeling_language):
+def load_generator(file_obj: io.TextIOBase, element_factory, modeling_language):
     """Load a file and create a model if possible.
 
     This function is a generator. It will yield values from 0 to 100 (%)
@@ -277,10 +285,10 @@ def load_generator(file_obj: io.TextIOBase, factory, modeling_language):
 
     log.info(f"Read {len(elements)} elements from file")
 
-    factory.flush()
-    with factory.block_events():
+    element_factory.flush()
+    with element_factory.block_events():
         for percentage in load_elements_generator(
-            elements, factory, modeling_language, gaphor_version
+            elements, element_factory, modeling_language, gaphor_version
         ):
             if percentage:
                 yield percentage / 2 + 50
@@ -288,7 +296,7 @@ def load_generator(file_obj: io.TextIOBase, factory, modeling_language):
                 yield percentage
 
     yield 100
-    factory.model_ready()
+    element_factory.model_ready()
 
 
 def version_lower_than(gaphor_version, version):
