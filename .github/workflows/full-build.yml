@@ -10,21 +10,8 @@ env:
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
 
 jobs:
-  skip-check:
-    name: Skip Run if Duplicate
-    runs-on: ubuntu-latest
-    outputs:
-      should_skip: ${{ steps.skip_check.outputs.should_skip }}
-    steps:
-      - id: skip_check
-        uses: fkirc/skip-duplicate-actions@v5.3.0
-        with:
-          concurrent_skipping: 'same_content'
-          do_not_skip: '["release", "workflow_dispatch", "schedule"]'
-
   lint:
     name: Lint
-    needs: skip-check
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
@@ -195,7 +182,6 @@ jobs:
 
   windows-build-gtk:
     name: Windows (Build GTK)
-    needs: skip-check
     runs-on: windows-latest
     timeout-minutes: 60
     env:
