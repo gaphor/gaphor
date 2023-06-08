@@ -1693,40 +1693,42 @@ PyYAML = "*"
 
 [[package]]
 name = "pyobjc-core"
-version = "9.1.1"
+version = "9.2"
 description = "Python<->ObjC Interoperability Module"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pyobjc-core-9.1.1.tar.gz", hash = "sha256:4b6cb9053b5fcd3c0e76b8c8105a8110786b20f3403c5643a688c5ec51c55c6b"},
-    {file = "pyobjc_core-9.1.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:4bd07049fd9fe5b40e4b7c468af9cf942508387faf383a5acb043d20627bad2c"},
-    {file = "pyobjc_core-9.1.1-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:1a8307527621729ff2ab67860e7ed84f76ad0da881b248c2ef31e0da0088e4ba"},
-    {file = "pyobjc_core-9.1.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:083004d28b92ccb483a41195c600728854843b0486566aba2d6e63eef51f80e6"},
-    {file = "pyobjc_core-9.1.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:d61e9517d451bc062a7fae8b3648f4deba4fa54a24926fa1cf581b90ef4ced5a"},
-    {file = "pyobjc_core-9.1.1-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:1626909916603a3b04c07c721cf1af0e0b892cec85bb3db98d05ba024f1786fc"},
-    {file = "pyobjc_core-9.1.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:2dde96462b52e952515d142e2afbb6913624a02c13582047e06211e6c3993728"},
+    {file = "pyobjc-core-9.2.tar.gz", hash = "sha256:d734b9291fec91ff4e3ae38b9c6839debf02b79c07314476e87da8e90b2c68c3"},
+    {file = "pyobjc_core-9.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:fa674a39949f5cde8e5c7bbcd24496446bfc67592b028aedbec7f81dc5fc4daa"},
+    {file = "pyobjc_core-9.2-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:bbc8de304ee322a1ee530b4d2daca135a49b4a49aa3cedc6b2c26c43885f4842"},
+    {file = "pyobjc_core-9.2-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:0fa950f092673883b8bd28bc18397415cabb457bf410920762109b411789ade9"},
+    {file = "pyobjc_core-9.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:586e4cae966282eaa61b21cae66ccdcee9d69c036979def26eebdc08ddebe20f"},
+    {file = "pyobjc_core-9.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:41189c2c680931c0395a55691763c481fc681f454f21bb4f1644f98c24a45954"},
+    {file = "pyobjc_core-9.2-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:2d23ee539f2ba5e9f5653d75a13f575c7e36586fc0086792739e69e4c2617eda"},
+    {file = "pyobjc_core-9.2-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:b9809cf96678797acb72a758f34932fe8e2602d5ab7abec15c5ac68ddb481720"},
 ]
 
 [[package]]
 name = "pyobjc-framework-cocoa"
-version = "9.1.1"
+version = "9.2"
 description = "Wrappers for the Cocoa frameworks on macOS"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pyobjc-framework-Cocoa-9.1.1.tar.gz", hash = "sha256:345c32b6d1f3db45f635e400f2d0d6c0f0f7349d45ec823f76fc1df43d13caeb"},
-    {file = "pyobjc_framework_Cocoa-9.1.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:9176a4276f3b4b4758e9b9ca10698be5341ceffaeaa4fa055133417179e6bc37"},
-    {file = "pyobjc_framework_Cocoa-9.1.1-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:5e1e96fb3461f46ff951413515f2029e21be268b0e033db6abee7b64ec8e93d3"},
-    {file = "pyobjc_framework_Cocoa-9.1.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:083b195c496d30c6b9dd86126a6093c4b95e0138e9b052b13e54103fcc0b4872"},
-    {file = "pyobjc_framework_Cocoa-9.1.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:a1b3333b1aa045608848bd68bbab4c31171f36aeeaa2fabeb4527c6f6f1e33cd"},
-    {file = "pyobjc_framework_Cocoa-9.1.1-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:54c017354671f0d955432986c42218e452ca69906a101c8e7acde8510432303a"},
-    {file = "pyobjc_framework_Cocoa-9.1.1-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:10c0075688ce95b92caf59e368585fffdcc98c919bc345067af070222f5d01d2"},
+    {file = "pyobjc-framework-Cocoa-9.2.tar.gz", hash = "sha256:efd78080872d8c8de6c2b97e0e4eac99d6203a5d1637aa135d071d464eb2db53"},
+    {file = "pyobjc_framework_Cocoa-9.2-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:9e02d8a7cc4eb7685377c50ba4f17345701acf4c05b1e7480d421bff9e2f62a4"},
+    {file = "pyobjc_framework_Cocoa-9.2-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:3b1e6287b3149e4c6679cdbccd8e9ef6557a4e492a892e80a77df143f40026d2"},
+    {file = "pyobjc_framework_Cocoa-9.2-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:312977ce2e3989073c6b324c69ba24283de206fe7acd6dbbbaf3e29238a22537"},
+    {file = "pyobjc_framework_Cocoa-9.2-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:aae7841cf40c26dd915f4dd828f91c6616e6b7998630b72e704750c09e00f334"},
+    {file = "pyobjc_framework_Cocoa-9.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:739a421e14382a46cbeb9a883f192dceff368ad28ec34d895c48c0ad34cf2c1d"},
+    {file = "pyobjc_framework_Cocoa-9.2-cp38-cp38-macosx_11_0_universal2.whl", hash = "sha256:32d9ac1033fac1b821ddee8c68f972a7074ad8c50bec0bea9a719034c1c2fb94"},
+    {file = "pyobjc_framework_Cocoa-9.2-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:b236bb965e41aeb2e215d4e98a5a230d4b63252c6d26e00924ea2e69540a59d6"},
 ]
 
 [package.dependencies]
-pyobjc-core = ">=9.1.1"
+pyobjc-core = ">=9.2"
 
 [[package]]
 name = "pyparsing"
