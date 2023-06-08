@@ -3,7 +3,7 @@
   <requires lib="gtk" version="4.0"/>
   <object class="GtkTextBuffer" id="buffer"/>
   <object class="GtkWindow" id="error-reports">
-    <property name="title" translatable="1">Error Reports</property>
+    <property name="title" translatable="yes">Error Reports</property>
     <property name="default-width">600</property>
     <property name="default-height">400</property>
     <property name="child">
@@ -15,7 +15,7 @@
             <property name="margin-end">6</property>
             <property name="margin-top">6</property>
             <property name="margin-bottom">6</property>
-            <property name="label" translatable="1">Any unhandled errors are shown here. You can use these to provide extra information when you create an issue on GitHub.</property>
+            <property name="label" translatable="yes">Any unhandled errors are shown here. You can use these to provide extra information when you create an issue on GitHub.</property>
             <property name="wrap">1</property>
             <property name="xalign">0</property>
           </object>
