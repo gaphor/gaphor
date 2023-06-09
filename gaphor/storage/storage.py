@@ -223,7 +223,10 @@ def _load_attributes_and_references(elements, update_status_queue):
 
         # load attributes and references:
         for name, value in list(elem.values.items()):
-            elem.element.load(name, value)
+            try:
+                elem.element.load(name, value)
+            except AttributeError:
+                log.exception(f"Invalid attribute name {elem.type}.{name}")
 
         for name, refids in list(elem.references.items()):
             if isinstance(refids, list):
@@ -234,13 +237,12 @@ def _load_attributes_and_references(elements, update_status_queue):
                         log.exception(
                             f"Invalid ID for reference ({refid}) for element {elem.type}.{name}"
                         )
-                        raise
                     else:
                         elem.element.load(name, ref.element)
             else:
                 try:
                     ref = elements[refids]
-                except ValueError:
+                except KeyError:
                     log.exception(f"Invalid ID for reference ({refids})")
                 else:
                     elem.element.load(name, ref.element)

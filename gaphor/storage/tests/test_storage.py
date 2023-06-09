@@ -288,3 +288,42 @@ def test_save_with_invalidreference(element_factory, saver, caplog):
     assert p.id in data
     assert c.id not in data
     assert "Model has unknown reference" in caplog.text
+
+
+def test_save_and_load_with_invalid_element_type(element_factory, saver, loader):
+    element_factory.create(UML.Package)
+
+    data = saver()
+    data = data.replace("Package", "Foobar")
+
+    with pytest.raises(storage.UnknownModelElementError):
+        loader(data)
+
+
+def test_save_and_load_with_invalid_attribute(element_factory, saver, loader):
+    p = element_factory.create(UML.Package)
+    p.name = "name"
+
+    data = saver()
+    data = data.replace("name", "foobar")
+    loader(data)
+
+    package = next(element_factory.select(UML.Package))
+
+    assert not hasattr(package, "foobar")
+    assert not package.name
+
+
+def test_save_and_load_with_invalid_reference(element_factory, saver, loader):
+    p1 = element_factory.create(UML.Package)
+    p2 = element_factory.create(UML.Package)
+    p2.package = p1
+
+    data = saver()
+    data = data.replace(p1.id, "foobar", 1)
+    loader(data)
+
+    package = next(element_factory.select(UML.Package))
+
+    assert not hasattr(package, "foobar")
+    assert not package.name
