@@ -677,13 +677,13 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "hypothesis"
-version = "6.76.0"
+version = "6.77.0"
 description = "A library for property-based testing"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "hypothesis-6.76.0-py3-none-any.whl", hash = "sha256:034f73dd485933b0f4c319d7c3c58230492fdd7b16e821d67d150a78138adb93"},
-    {file = "hypothesis-6.76.0.tar.gz", hash = "sha256:526657eb3e4f2076b0383f722b2e6a92fd15d1d42db532decae8c41b14cab801"},
+    {file = "hypothesis-6.77.0-py3-none-any.whl", hash = "sha256:bfa03bb5c7d8b775378fc795d9251c885cd1be7d8ddf677f3ebd8f3892efc782"},
+    {file = "hypothesis-6.77.0.tar.gz", hash = "sha256:23bfe3743d0c88e61330debca60fc813db2ef83be5777f2baf113d035ac76081"},
 ]
 
 [package.dependencies]
