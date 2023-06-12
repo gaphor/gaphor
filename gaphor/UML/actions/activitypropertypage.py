@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from gi.repository import GObject, Gio, Gtk
+from gi.repository import GObject, Gio, Gdk, Gtk
 
 from gaphor import UML
 from gaphor.core import transactional, event_handler
@@ -105,6 +105,7 @@ class ActivityItemPage(PropertyPageBase):
         self.model = activity_parameter_node_model(subject)
         selection = Gtk.SingleSelection.new(self.model)
         list_view.set_model(selection)
+        list_view.add_controller(keyboard_shortcuts(selection))
 
         factory = Gtk.SignalListItemFactory.new()
         factory.connect(
@@ -145,3 +146,37 @@ def list_item_factory_setup(_factory, list_item):
 
     text = builder.get_object("text")
     text.connect("notify::editing", end_editing)
+
+
+def keyboard_shortcuts(selection):
+    ctrl = Gtk.EventControllerKey.new()
+    ctrl.connect("key-pressed", list_view_handler, selection)
+    return ctrl
+
+
+@transactional
+def list_view_handler(_list_view, keyval, _keycode, state, selection):
+    item = selection.get_selected_item()
+    if not (item and item.node):
+        return False
+
+    if keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace) and not state & (
+        Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
+    ):
+        item.node.unlink()
+        return True
+
+    elif keyval in (Gdk.KEY_equal, Gdk.KEY_plus, Gdk.KEY_minus, Gdk.KEY_underscore):
+        pos = selection.get_selected()
+        swap_pos = pos + 1 if keyval in (Gdk.KEY_equal, Gdk.KEY_plus) else pos - 1
+        if not 0 <= swap_pos < selection.get_n_items():
+            return False
+
+        other = selection.get_item(swap_pos)
+        if not (other and other.node):
+            return False
+
+        if item.activity.node.swap(item.node, other.node):
+            selection.set_selected(swap_pos)
+        return True
+    return False

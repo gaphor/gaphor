@@ -1,11 +1,12 @@
-import pytest
-
+from gi.repository import Gdk
 from gaphor import UML
 from gaphor.UML.actions.activity import ActivityItem
 from gaphor.UML.actions.activitypropertypage import (
     ActivityItemPage,
     activity_parameter_node_model,
+    list_view_handler,
 )
+from gaphor.diagram.tests.fixtures import find
 
 
 def activity_parameter_node(element_factory, name=None):
@@ -120,9 +121,59 @@ def test_update_model_with_multiple_nodes_when_parameter_deleted(
     assert property_page.model.get_item(1).node is None
 
 
-@pytest.mark.skip
-def test_activity_parameter_node_reorder(create, element_factory):
-    ...
+def test_activity_parameter_node_reorder_down(create, element_factory):
+    activity_item = create(ActivityItem, UML.Activity)
+    activity_item.subject.node = activity_parameter_node(element_factory, "one")
+    activity_item.subject.node = activity_parameter_node(element_factory, "two")
+    node_one, node_two = activity_item.subject.node
+
+    property_page = ActivityItemPage(activity_item)
+    widget = property_page.construct()
+
+    list_view = find(widget, "parameter-list")
+    selection = list_view.get_model()
+
+    list_view_handler(None, Gdk.KEY_plus, None, 0, selection)
+
+    assert activity_item.subject.node[0] is node_two
+    assert activity_item.subject.node[1] is node_one
+
+
+def test_activity_parameter_node_reorder_up(create, element_factory):
+    activity_item = create(ActivityItem, UML.Activity)
+    activity_item.subject.node = activity_parameter_node(element_factory, "one")
+    activity_item.subject.node = activity_parameter_node(element_factory, "two")
+    node_one, node_two = activity_item.subject.node
+
+    property_page = ActivityItemPage(activity_item)
+    widget = property_page.construct()
+
+    list_view = find(widget, "parameter-list")
+    selection = list_view.get_model()
+    selection.set_selected(1)
+
+    list_view_handler(None, Gdk.KEY_minus, None, 0, selection)
+
+    assert activity_item.subject.node[0] is node_two
+    assert activity_item.subject.node[1] is node_one
+
+
+def test_activity_parameter_node_reorder_first_node_up(create, element_factory):
+    activity_item = create(ActivityItem, UML.Activity)
+    activity_item.subject.node = activity_parameter_node(element_factory, "one")
+    activity_item.subject.node = activity_parameter_node(element_factory, "two")
+    node_one, node_two = activity_item.subject.node
+
+    property_page = ActivityItemPage(activity_item)
+    widget = property_page.construct()
+
+    list_view = find(widget, "parameter-list")
+    selection = list_view.get_model()
+
+    list_view_handler(None, Gdk.KEY_minus, None, 0, selection)
+
+    assert activity_item.subject.node[0] is node_one
+    assert activity_item.subject.node[1] is node_two
 
 
 def test_construct_activity_itemproperty_page(create):
