@@ -139,6 +139,7 @@ gaphor = "gaphor.main:main"
 gui = "gaphor.main:gui_parser"
 exec = "gaphor.main:exec_parser"
 export = "gaphor.plugins.diagramexport.exportcli:export_parser"
+plugins = "gaphor.plugins.manager:parser"
 
 [tool.poetry.plugins."babel.extractors"]
 "gaphor" = "gaphor.babel:extract_gaphor"
