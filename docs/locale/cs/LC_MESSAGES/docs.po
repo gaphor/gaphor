@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-05-19 19:09+0000\n"
+"PO-Revision-Date: 2023-06-14 09:52+0000\n"
 "Last-Translator: vikdevelop <super-vik1@protonmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/cs/>\n"
@@ -420,251 +420,345 @@ msgstr ""
 
 #: ../first_model.md:34
 msgid "Adding Relations"
-msgstr ""
+msgstr "Přidání vztahů"
 
 #: ../first_model.md:36
 msgid "Add another Class. Change the names to `Shape` and `Circle`. Let's define that `Circle` is a sub-type of `Shape`. You can do this by selecting one and changing the name in the Property Editor, or by double-clicking the element."
 msgstr ""
+"Přidání jiné třídy. Změňte názvy na `Shape` a `Circle`. Definujme, že "
+"`Circle` je podtyp `Shape`. To můžete udělat výběrem jednoho z nich a změnou "
+"názvu v editoru vlastností, nebo dvojitým kliknutím na prvek."
 
 #: ../first_model.md:40
 msgid "Select Generalization (![new generalization](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg))."
 msgstr ""
+"Vyberte generalizaci (![nová generalizace](../gaphor/ui/icons/hicolor/"
+"scalable/actions/gaphor-generalization-symbolic.svg))."
 
 #: ../first_model.md:40
 msgid "newgeneralization"
-msgstr ""
+msgstr "newgeneralization"
 
 #: ../first_model.md:43
 msgid "Move the mouse cursor over `Shape`. Click, hold and drag the line end over `Circle`. Release the mouse button, and you should have your relationship between `Shape` and `Circle`. You can see both ends of the relation are red, indicating they are connected to their class."
 msgstr ""
+"Přesuňte kurzor myši na položku `Shape`. Klikněte, podržte a přetáhněte "
+"konec čáry nad `Kruh`. Uvolněte tlačítko myši a měli byste mít vztah mezi "
+"`Shape` a `Circle`. Vidíte, že oba konce vztahu jsou červené, což znamená, "
+"že jsou spojeny se svou třídou."
 
 #: ../first_model.md:48
 msgid "![image](images/first-model-generalization.png)"
-msgstr ""
+msgstr "![obrázek](images/first-model-generalization.png)"
 
 #: ../first_model.md:50
 msgid "Optionally you can run the auto-layout (![open menu](images/open-menu-symbolic.svg) → Tools → Auto Layout) to align the elements on the diagram."
 msgstr ""
+"Dobrovolně můžete spustit automatické rozvržení (![otevřít nabídku](images/"
+"open-menu-symbolic.svg) → Nástroje → Automatické rozvržení) pro zarovnání "
+"prvků na diagram."
 
 #: ../first_model.md:50
 msgid "openmenu"
-msgstr ""
+msgstr "openmenu"
 
 #: ../first_model.md:54
 msgid "Creating New Diagrams"
-msgstr ""
+msgstr "Vytváření nových diagramů"
 
 #: ../first_model.md:56
 msgid "To create a new diagram, use the Model Browser. Select the element that should contain the new diagram. For now, select _New Model_. Click the New Diagram menu (![new diagram](images/list-add-symbolic.svg)) in the header bar."
 msgstr ""
+"K vytvoření nového diagramu, použijte prohlížeč modelů. Vyberte prvek který "
+"by měl obsahovat diagram. Prozatím vyberte _New Model_. Klikněte na nabídku "
+"nového diagramu (![nový diagram](images/list-add-symbolic.svg)) v záhlaví."
 
 #: ../first_model.md:56
 msgid "new diagram"
-msgstr ""
+msgstr "nový diagram"
 
 #: ../first_model.md:60
 msgid "![image](/images/first-model-new-diagram-popup.png)"
-msgstr ""
+msgstr "![obrázek](/images/first-model-new-diagram-popup.png)"
 
 #: ../first_model.md:62
 msgid "Select _New Generic Diagram_ and a new diagram is created."
-msgstr ""
+msgstr "Vyberte _Nový obecný diagram_ a nový diagram je vytvořen."
 
 #: ../first_model.md:64
 msgid "Now drag the elements from the Model Browser onto the new diagram. First the classes `Shape` and `Circle`. Add the generalization last. Drop it somewhere between the two classes. The relation will be created to the diagram."
 msgstr ""
+"Nyní přetáhněte prvky z prohlížeče modelu na nový diagram. Nejprve třídy "
+"`Shape` and `Circle`. Přidejte generalizaci jako poslední. Vhoďte ji "
+"kamkoliv mezi dvě třídy. Do diagramu se vytvoří vztah."
 
 #: ../first_model.md:68
 msgid "Now change the name of class `Circle` to `Ellipse`. Check the other diagram. The name has been changed there as well."
 msgstr ""
+"Nyní změňte jméno třídy `Circle` na `Ellipse`. Zkontrolujte další diagram. "
+"Název byl změněn i tam."
 
 #: ../first_model.md:73
 msgid "Elements in a diagram are only a _representation_ of the elements in the underlying model. The model is what you see in the Model Browser."
 msgstr ""
+"Prvky v diagramu jsou pouze _reprezentací_ prvků v základním modelů. Model "
+"je to, co vidíte v prohlížeči modelů."
 
 #: ../first_model.md:76
 msgid "Elements in the model are automatically removed when there are no more representations in any of the diagrams."
 msgstr ""
+"Prvky v modelu jsou automaticky odstraněny když tam není více reprezentací v "
+"některém z diagramů."
 
 #: ../framework.md:1
 msgid "Framework"
-msgstr ""
+msgstr "Framework"
 
 #: ../framework.md:3
 msgid "Overview"
-msgstr ""
+msgstr "Přehled"
 
 #: ../framework.md:5
 msgid "Gaphor is built in a light, service oriented fashion. The application is split in a series of services, such as a file, event, and undo managers. Those services are loaded based on entry points defined in the `pyproject.toml` file. To learn more about the architecture, please see the description about the [Service Oriented Architecture](service_oriented.md)."
 msgstr ""
+"Gaphor je postaven na lehkém, na služby orientovaném způsobu. Aplikace je "
+"rozdělena na řadu služeb, jako je správce souborů, událostí a odvolání. Tyto "
+"služby jsou načítány na základě vstupních bodů definovaných v souboru "
+"`pyproject.toml`. Další informace o architektuře naleznete v popisu [Service "
+"Oriented Architecture](service_oriented.md)."
 
 #: ../framework.md:11
 msgid "Event driven"
-msgstr ""
+msgstr "Řízení události"
 
 #: ../framework.md:13
 msgid "Parts of Gaphor communicate with each other through events. Whenever something important happens, for example, an attribute of a model element changes, an event is sent. When other parts of the application are interested in a change, they register an event handler for that event type. Events are emitted though a central broker so you do not have to register on every individual element that can send an event they are interested in. For example, a diagram item could register an event rule and then check if the element that sent the event is actually the event the item is representing. For more information see the full description of the [event system](event_system.md)."
 msgstr ""
+"Části Gaphoru spolu komunikují prostřednictvím událostí. Kdykoli se stane "
+"něco důležitého, například se změní atribut prvku modelu, je odeslána "
+"událost. Když se o změnu zajímají ostatní části aplikace, zaregistrují "
+"obsluhu události daného typu. Události jsou vysílány prostřednictvím "
+"centrálního zprostředkovatele, takže se nemusíte registrovat na každém "
+"jednotlivém prvku, který může odeslat událost, o kterou mají zájem. "
+"Například prvek diagramu by mohl zaregistrovat pravidlo události a poté "
+"zkontrolovat, zda prvek, který událost odeslal, je skutečně událostí, kterou "
+"prvek reprezentuje. Další informace naleznete v úplném popisu [systému "
+"událostí](event_system.md)."
 
 #: ../framework.md:23
 msgid "Transactional"
-msgstr ""
+msgstr "Transakce"
 
 #: ../framework.md:25
 msgid "Gaphor is [transactional](transaction.md), which means it keeps track of the functions it performs as a series of transactions. The transactions work by sending an event when a transaction starts and sending another when a transaction ends. This allows, for example, the undo manager to keep a running log of the previous transactions so that a transaction can be reversed if the undo button is pressed."
 msgstr ""
+"Gaphor je [transakční](transaction.md), což znamená, že sleduje funkce, "
+"které provádí, jako sérii transakcí. Transakce fungují tak, že se při "
+"zahájení transakce odešle událost a při jejím ukončení se odešle další. To "
+"umožňuje například správci zrušení transakce vést průběžný protokol "
+"předchozích transakcí, aby bylo možné transakci vrátit zpět, pokud je "
+"stisknuto tlačítko zrušit."
 
 #: ../framework.md:32
 msgid "Main Components"
-msgstr ""
+msgstr "Hlavní komponenty"
 
 #: ../framework.md:34
 msgid "The main portion of Gaphor that executes first is called the `Application`. Gaphor can have multiple models open at any time. Each model is kept in a `Session`. Only one Application instance is active. Each session will load its own services defined as [gaphor.services](service_oriented.md)."
 msgstr ""
+"Hlavní části Gaphoru které se spouští jako první, se nazývají `Application`. "
+"Gaphor může mít více modelů otevřený v každém okamžiku. Každý model je "
+"zachován v `Sezení`. Jen jedna instance aplikace je aktivní. V každém sezení "
+"budou načteny jejich služby definované jako [gaphor."
+"services](service_oriented.md)."
 
 #: ../framework.md:40
 msgid "The most notable services are:"
-msgstr ""
+msgstr "Mezi nejvýznamnější služby patří:"
 
 #: ../framework.md:42
 msgid "event_manager"
-msgstr ""
+msgstr "event_manager"
 
 #: ../framework.md:44
 msgid "This is the central component used for event dispatching. Every service that does something with events (both sending and receiving) depends on this component."
 msgstr ""
+"Tohle je centrální komponenta používaná pro jakékoliv odesílání událostí. "
+"Každá služba která dělá cokoliv s událostmi (odesílání a přijímání) závisí "
+"na této komponentě."
 
 #: ../framework.md:48
 msgid "file_manager"
-msgstr ""
+msgstr "file_manager"
 
 #: ../framework.md:50
 msgid "Loading and saving a model is done through this service."
-msgstr ""
+msgstr "Načítání a ukládání modelu se provádí prostřednictvím této služby."
 
 #: ../framework.md:52
 msgid "element_factory"
-msgstr ""
+msgstr "element_factory"
 
 #: ../framework.md:54
 msgid "The [data model](models/core.md) itself is maintained in the element factory (`gaphor.core.modeling.elementfactory`). This service is used to create model elements, as well as to lookup elements or query for a set of elements."
 msgstr ""
+"Samotný [datový model](models/core.md) je udržován v továrně na prvky "
+"(`gaphor.core.modeling.elementfactory`). Tato služba slouží k vytváření "
+"prvků modelu, stejně jako k vyhledávání prvků nebo dotazování na množinu "
+"prvků."
 
 #: ../framework.md:58
 msgid "undo_manager"
-msgstr ""
+msgstr "undo_manager"
 
 #: ../framework.md:60
 msgid "One of the most appreciated services. It allows users to make a mistake every now and then!"
 msgstr ""
+"Jedna z nejoceňovanějších služeb. Umožňuje uživatelům občas udělat chybu!"
 
 #: ../framework.md:63
 msgid "The undo manager is transactional. Actions performed by a user are only stored if a transaction is active. If a transaction is completed (committed) a new undo action is stored. Transactions can also be rolled back, in which case all changes are played back directly. For more information see the full description of the [undo manager](undo.md)."
 msgstr ""
+"Správce zrušení je transakční. Akce provedené uživatelem se ukládají pouze v "
+"případě, že je transakce aktivní. Pokud je transakce dokončena (odevzdána), "
+"uloží se nová akce odvolání. Transakce lze také vrátit zpět, v takovém "
+"případě se všechny změny přehrají přímo. Další informace naleznete v úplném "
+"popisu [správce undo](undo.md)."
 
 #: ../gaphor-services.md:5
 msgid "Example: Gaphor services"
-msgstr ""
+msgstr "Příklad: Služby Gaphor"
 
 #: ../gaphor-services.md:7
 msgid "In this example we're doing something a little less trivial. In Gaphor, services are defined as entry points. Each service is a class, and takes parameters with names that match other services. This allows services to depend on other services."
 msgstr ""
+"V tomto příkladu děláme něco méně triviálního. V Gaphoru jsou služby "
+"definovány jako vstupní body. Každá služba je třída a přijímá parametry se "
+"jmény, která odpovídají jiným službám. Díky tomu mohou služby záviset na "
+"jiných službách."
 
 #: ../gaphor-services.md:12
 msgid "It looks something like this:"
-msgstr ""
+msgstr "Vypadá to asi takto:"
 
 #: ../gaphor-services.md:43
 msgid "Let's first load the entry points."
-msgstr ""
+msgstr "Nejprve načteme vstupní body."
 
 #: ../gaphor-services.md:53
 msgid "Now let's create a component in our model for every service."
-msgstr ""
+msgstr "Nyní vytvoříme v našem modelu komponentu pro každou službu."
 
 #: ../gaphor-services.md:70
 msgid "With all components mapped, we can create dependencies between those components, based on the constructor parameter names."
 msgstr ""
+"Když máme všechny komponenty namapované, můžeme mezi nimi vytvořit "
+"závislosti na základě názvů parametrů konstruktorů."
 
 #: ../gaphor-services.md:86
 msgid "With all elements in the model, we can create a diagram. Let's drop the components and dependencies on the diagram and let auto-layout do its magic."
 msgstr ""
+"Se všemi prvky v modelu můžeme vytvořit diagram. Vrhneme na diagram "
+"komponenty a závislosti a necháme automatické rozvržení, aby se postaralo o "
+"svá kouzla."
 
 #: ../gaphor-services.md:89
 msgid "To make the dependency look good, we have to add a style sheet. If you create a new diagram via the GUI, this element is automatically added."
 msgstr ""
+"Aby závislost vypadala dobře, musíme přidat list stylů. Pokud vytvoříte nový "
+"diagram prostřednictvím grafického uživatelského rozhraní, tento prvek se "
+"přidá automaticky."
 
 #: ../gaphor-services.md:103
 msgid "Last step is to layout and draw the diagram."
-msgstr ""
+msgstr "Posledním krokem je rozvržení a nakreslení schématu."
 
 #: ../gaphor-services.md:113
 msgid "That's all. As you can see from the diagram, a lot of services rely on `EventManager`."
 msgstr ""
+"To je vše. Jak vidíte z diagramu, mnoho služeb se spoléhá na `EventManager`."
 
 #: ../getting_started.md:1
 msgid "Get Started with Gaphor"
-msgstr ""
+msgstr "Začněte s aplikací Gaphor"
 
 #: ../getting_started.md:3
 msgid "Gaphor is more than a diagram editor: it's a modeling environment. Where simple diagram editors such as Microsoft Visio and [draw.io](https://draw.io) allow you to create pictures, Gaphor actually keeps track of the elements you add to the model. In Gaphor you can create diagrams to track and visualize different aspects of the system you're developing."
 msgstr ""
+"Gaphor je víc než jen editor diagramů: je to modelovací prostředí. Tam, kde "
+"jednoduché editory diagramů, jako je Microsoft Visio a [draw.io](https://draw"
+".io), umožňují vytvářet obrázky, Gaphor skutečně sleduje prvky, které do "
+"modelu přidáváte. V aplikaci Gaphor můžete vytvářet diagramy pro sledování a "
+"vizualizaci různých aspektů vyvíjeného systému."
 
 #: ../getting_started.md:9
 msgid "Enough talk, let's get started."
-msgstr ""
+msgstr "Dost řečí, začneme."
 
 #: ../getting_started.md:11
 msgid "You can find installers for Gaphor on the [Gaphor Website](https://gaphor.org/download). Gaphor can be installed on Linux (Flatpak, AppImage), Windows, and macOS."
 msgstr ""
+"Instalační programy pro Gaphor najdete na [webové stránce "
+"Gaphor](https://gaphor.org/download). Gaphor lze nainstalovat do systémů "
+"Linux (Flatpak, AppImage), Windows a MacOS."
 
 #: ../getting_started.md:14
 msgid "Once Gaphor is launched, it provides you a welcome screen. It shows you previously opened models and model templates."
 msgstr ""
+"Po spuštění aplikace Gaphor se zobrazí uvítací obrazovka. Na ní se zobrazí "
+"dříve otevřené modely a šablony modelů."
 
 #: ../getting_started.md:17
 msgid "![welcome screen](images/getting-started-greeter.png)"
-msgstr ""
+msgstr "![welcome screen](images/getting-started-greeter.png)"
 
 #: ../getting_started.md:17
 msgid "welcome screen"
-msgstr ""
+msgstr "uvítací obrazovka"
 
 #: ../getting_started.md:19
 msgid "You can select a template to get started."
-msgstr ""
+msgstr "Můžete vybrat šablonu pro začátek."
 
 #: ../getting_started.md:21
 msgid "**Generic:** a blank model to start with"
-msgstr ""
+msgstr "**Generic:** prázdný model k pro začátek"
 
 #: ../getting_started.md:22
 msgid "**UML:** A template for the *Unified Modeling Language* for modeling a software system"
 msgstr ""
+"**UML:** Šablona *nedefinovaný modelovací Language* pro modelování "
+"softwarového systému."
 
 #: ../getting_started.md:23
 msgid "**SysML:** A template for the *Systems Modeling Language* for modeling a wide range of systems and systems-of-systems"
 msgstr ""
+"**SysML:** Šablona jazyka *systémový modelovací jazyk* pro modelování široké "
+"škály systémů a systém systémů"
 
 #: ../getting_started.md:24
 msgid "**RAAML:** A template for the *Risk Analysis and Assessment Modeling language* for safety and reliability analysis"
 msgstr ""
+"**RAAML:** Šablona pro *Jazyk pro modelování analýzy a posuzování rizik* pro "
+"analýzu bezpečnosti a spolehlivosti"
 
 #: ../getting_started.md:25
 msgid "**C4 Model:** A template for *Context, Containers, Components, and Code* which for lean modeling of software architecture"
 msgstr ""
+"**Model C4:** Šablona pro *kontext, kontejnery, komponenty a kód*, která "
+"slouží k úspornému modelování softwarové architektury"
 
 #: ../getting_started.md:27
 msgid "Once the model interface is loaded you'll see the modeling interface."
-msgstr ""
+msgstr "Po načtení rozhraní modelu se zobrazí rozhraní pro modelování."
 
 #: ../getting_started.md:29
 msgid "![new model](images/getting-started-new-model.png)"
-msgstr ""
+msgstr "![nový model](images/getting-started-new-model.png)"
 
 #: ../getting_started.md:29
 msgid "new model"
-msgstr ""
+msgstr "nový model"
 
 #: ../getting_started.md:31
 msgid "The layout of the Gaphor interface is divided into four sections, namely:"
