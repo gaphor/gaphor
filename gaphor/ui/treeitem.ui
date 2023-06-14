@@ -10,7 +10,9 @@
         </binding>
         <property name="child">
           <object class="GtkBox" id="row">
-            <style><class name="row"/></style>
+            <style>
+              <class name="row"/>
+            </style>
             <property name="spacing">6</property>
             <child>
               <object class="GtkImage">

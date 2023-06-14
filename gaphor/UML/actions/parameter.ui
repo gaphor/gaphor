@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<interface>
+  <requires lib="gtk" version="4.6"/>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkEditableLabel" id="text">
+        <style>
+          <class name="row"/>
+        </style>
+        <binding name="text">
+          <lookup name="parameter" type="ActivityParameterNodeView">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+      </object>
+    </property>
+  </template>
+</interface>
