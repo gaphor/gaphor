@@ -15,6 +15,7 @@ from gaphor.abc import Service
 from gaphor.application import Application, distribution
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
+from gaphor.plugins import manager
 
 log = logging.getLogger(__name__)
 
@@ -70,6 +71,7 @@ class SelfTest(Service):
         self.test_new_session()
         self.test_auto_layout()
         self.test_git_support()
+        self.test_plugin_support()
 
     def init_timer(self, gtk_app, timeout):
         start = time.time()
@@ -156,6 +158,13 @@ class SelfTest(Service):
         with tempfile.TemporaryDirectory() as temp_dir:
             pygit2.init_repository(temp_dir)
         status.complete()
+
+    @test
+    def test_plugin_support(self, status):
+        parser = manager.parser()
+        args = parser.parse_args(["check"])
+        if args.command(args) == 0:
+            status.complete()
 
 
 def system_information():
