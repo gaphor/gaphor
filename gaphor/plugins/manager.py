@@ -6,32 +6,44 @@ import sys
 
 
 from gaphor.plugins import default_plugin_path
+from gaphor.main import prog
 
 
 def parser():
-    parser = argparse.ArgumentParser(description="Export diagrams from a Gaphor model.")
+    parser = argparse.ArgumentParser(description="Plugin related subcommands.")
 
-    subparser = parser.add_subparsers(title="plugin subcommands")
+    subparser = parser.add_subparsers(
+        title="plugin subcommands",
+        description=f"Get help for plugin commands with {prog()} plugin COMMAND --help.",
+    )
 
     list_parser = subparser.add_parser(
-        "list", description="list all installed plugin modules"
+        "list",
+        description="List all installed plugin packages.",
+        help="list all installed plugin packages",
     )
     list_parser.set_defaults(command=list_plugins)
 
     install_parser = subparser.add_parser(
-        "install", description="install plugin modules"
+        "install",
+        description="Install plugin packages from pypi.",
+        help="install plugin packages",
     )
     install_parser.add_argument("name")
     install_parser.set_defaults(command=install_plugin)
 
     uninstall_parser = subparser.add_parser(
-        "uninstall", description="uninstalled plugin modules"
+        "uninstall",
+        description="Uninstall packages from the plugin folder.",
+        help="uninstalled plugin modules",
     )
     uninstall_parser.add_argument("name")
     uninstall_parser.set_defaults(command=uninstall_plugin)
 
     check_parser = subparser.add_parser(
-        "check", description="check plugin module dependencies"
+        "check",
+        description="Check plugin package dependencies.",
+        help="check plugin package dependencies",
     )
     check_parser.set_defaults(command=check_plugins)
 
