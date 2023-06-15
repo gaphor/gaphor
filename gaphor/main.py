@@ -5,6 +5,7 @@ import sys
 
 from gaphor.application import distribution
 from gaphor.entrypoint import initialize
+from gaphor.plugins import enable_plugins, default_plugin_path
 
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
@@ -14,22 +15,23 @@ def main(argv=sys.argv) -> int:
 
     logging_config()
 
-    commands: dict[str, argparse.ArgumentParser] = initialize("gaphor.argparsers")
+    with enable_plugins(default_plugin_path()):
+        commands: dict[str, argparse.ArgumentParser] = initialize("gaphor.argparsers")
 
-    args = parse_args(argv[1:], commands)
+        args = parse_args(argv[1:], commands)
 
-    if args.profiler:
-        import cProfile
-        import pstats
+        if args.profiler:
+            import cProfile
+            import pstats
 
-        with cProfile.Profile() as profile:
-            exit_code: int = profile.runcall(args.command, args)
+            with cProfile.Profile() as profile:
+                exit_code: int = profile.runcall(args.command, args)
 
-        profile_stats = pstats.Stats(profile)
-        profile_stats.strip_dirs().sort_stats("time").print_stats(50)
-        return exit_code
+            profile_stats = pstats.Stats(profile)
+            profile_stats.strip_dirs().sort_stats("time").print_stats(50)
+            return exit_code
 
-    return args.command(args)  # type: ignore[no-any-return]
+        return args.command(args)  # type: ignore[no-any-return]
 
 
 def parse_args(args: list[str], commands: dict[str, argparse.ArgumentParser]):

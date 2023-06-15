@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gaphor-test-plugin"
+description = "Just for plugin integration testing"
+version = "1.0"
+
+[project.entry-points."gaphor.services"]
+test_plugin = "gaphor_test_plugin:TestService"
