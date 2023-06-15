@@ -3,12 +3,9 @@
 import argparse
 import subprocess
 import sys
-import pathlib
 
-from gi.repository import GLib
 
-PLUGIN_PATH = pathlib.Path(GLib.get_user_state_dir(), "gaphor-plugins-2")
-PLUGIN_PATH.mkdir(parents=True, exist_ok=True)
+from gaphor.plugins import default_plugin_path
 
 
 def parser():
@@ -44,12 +41,26 @@ def parser():
 
 
 def list_plugins(args):
-    subprocess.run([sys.executable, "-m", "pip", "list", "--path", PLUGIN_PATH])
+    subprocess.run(
+        [sys.executable, "-m", "pip", "list", "--path", default_plugin_path()]
+    )
 
 
 def install_plugin(args):
+    path = default_plugin_path()
+    path.mkdir(parents=True, exist_ok=True)
+
     subprocess.run(
-        [sys.executable, "-m", "pip", "install", "--target", PLUGIN_PATH, args.name]
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--force-reinstall",
+            "--target",
+            path,
+            args.name,
+        ]
     )
 
 
@@ -57,7 +68,7 @@ def uninstall_plugin(args):
     subprocess.run(
         [sys.executable, "-m", "pip", "uninstall", args.name],
         env={
-            "PYTHONPATH": PLUGIN_PATH,
+            "PYTHONPATH": default_plugin_path(),
         },
     )
 
@@ -66,6 +77,6 @@ def check_plugins(args):
     subprocess.run(
         [sys.executable, "-m", "pip", "check"],
         env={
-            "PYTHONPATH": PLUGIN_PATH,
+            "PYTHONPATH": default_plugin_path(),
         },
     )
