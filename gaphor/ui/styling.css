@@ -146,6 +146,10 @@ listview .row {
   border-left: 1px solid @unfocused_borders;
 }
 
+.editor-wide {
+  min-width: 350px;
+}
+
 #toolbox > viewport > box {
   margin: 6px;
 }
