@@ -162,7 +162,7 @@ class SelfTest(Service):
     @test
     def test_plugin_support(self, status):
         parser = manager.parser()
-        args = parser.parse_args(["check"])
+        args = parser.parse_args(["list"])
         if args.command(args) == 0:
             status.complete()
 
