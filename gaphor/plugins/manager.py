@@ -54,7 +54,7 @@ def parser():
 
 def list_plugins(args):
     completed = subprocess.run(
-        [sys.executable, "-m", "pip", "list", "--path", default_plugin_path()],
+        [sys.executable, "-m", "pip", "list", "--path", str(default_plugin_path())],
         capture_output=True,
     )
     print(completed.stdout)
@@ -76,7 +76,7 @@ def install_plugin(args):
             "install",
             "--force-reinstall",
             "--target",
-            path,
+            str(path),
             args.name,
         ]
     )
@@ -87,7 +87,7 @@ def uninstall_plugin(args):
     completed = subprocess.run(
         [sys.executable, "-m", "pip", "uninstall", args.name],
         env={
-            "PYTHONPATH": default_plugin_path(),
+            "PYTHONPATH": str(default_plugin_path()),
         },
     )
     return completed.returncode
@@ -97,7 +97,7 @@ def check_plugins(args):
     completed = subprocess.run(
         [sys.executable, "-m", "pip", "check"],
         env={
-            "PYTHONPATH": default_plugin_path(),
+            "PYTHONPATH": str(default_plugin_path()),
         },
     )
     return completed.returncode
