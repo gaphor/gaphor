@@ -88,6 +88,7 @@
             <style>
               <class name="toolbar"/>
             </style>
+            <property name="halign">end</property>
             <child>
               <object class="GtkBox">
                 <child>
@@ -197,6 +198,7 @@
         <child>
           <object class="GtkStack" id="editor-stack">
             <property name="transition_type">slide-left-right</property>
+            <property name="hhomogeneous">0</property>
             <child>
               <object class="GtkStackPage">
                 <property name="name">editors</property>
@@ -228,6 +230,9 @@
                 <property name="title" translatable="yes">Preferences</property>
                 <property name="child">
                   <object class="GtkBox">
+                    <style>
+                      <class name="editor-wide" />
+                    </style>
                     <property name="margin_start">6</property>
                     <property name="margin_end">6</property>
                     <property name="margin_top">12</property>
@@ -349,6 +354,9 @@
                 <property name="title" translatable="yes">Merge Models</property>
                 <property name="child">
                   <object class="GtkBox">
+                    <style>
+                      <class name="editor-wide" />
+                    </style>
                     <property name="margin_start">6</property>
                     <property name="margin_end">6</property>
                     <property name="margin_top">6</property>
