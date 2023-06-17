@@ -4,7 +4,7 @@
 
 2.19.0
 ------
-- Dropped support for AppImage (for discussion see https://github.com/gaphor/gaphor/issues/2285)
+- Dropped support for AppImage
 - Add Information Flow support for Associations
 - Interactions: fixed DnD for partially connected messages
 - Restore CSS auto-complete
