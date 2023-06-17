@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-08 21:48-0400\n"
+"POT-Creation-Date: 2023-06-17 15:06-0400\n"
 "PO-Revision-Date: 2023-04-29 13:23+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language: de\n"
@@ -28,7 +28,7 @@ msgstr "C4 Modell"
 msgid "Description"
 msgstr "Beschreibung"
 
-#: gaphor/C4Model/propertypages.ui:38
+#: gaphor/C4Model/propertypages.ui:38 gaphor/templates/sysml.gaphor
 msgid "Technology"
 msgstr "Technologie"
 
@@ -74,7 +74,7 @@ msgstr "Komponente"
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:105
-#: gaphor/UML/classes/dependencypropertypages.py:36
+#: gaphor/UML/classes/propertypages.ui:500
 msgid "Dependency"
 msgstr "Abhängigkeit"
 
@@ -287,63 +287,67 @@ msgstr "Relevant für"
 msgid "SysML"
 msgstr "SysML"
 
-#: gaphor/SysML/propertypages.ui:11
+#: gaphor/SysML/propertypages.ui:9
 msgid "Item Flow"
 msgstr "Elementfluss"
 
-#: gaphor/SysML/propertypages.ui:28
+#: gaphor/SysML/propertypages.ui:22
+#, fuzzy
+msgid "Enable Item Flow"
+msgstr "Elementfluss"
+
+#: gaphor/SysML/propertypages.ui:36
 msgid "Item Property"
 msgstr "Elementeigenschaft"
 
-#: gaphor/SysML/propertypages.ui:43 gaphor/UML/classes/propertypages.ui:21
-#: gaphor/UML/deployments/propertypages.ui:42
+#: gaphor/SysML/propertypages.ui:51 gaphor/UML/classes/propertypages.ui:21
 msgid "Invert direction"
 msgstr "Richtung umkehren"
 
-#: gaphor/SysML/propertypages.ui:59 gaphor/UML/actions/propertypages.ui:201
+#: gaphor/SysML/propertypages.ui:67 gaphor/UML/actions/propertypages.ui:205
 msgid "Allocated Type"
 msgstr "Zugeordneter Typ"
 
-#: gaphor/SysML/propertypages.ui:78
+#: gaphor/SysML/propertypages.ui:93
 msgid "Compartments"
 msgstr "Abteilungen"
 
-#: gaphor/SysML/propertypages.ui:91
+#: gaphor/SysML/propertypages.ui:106
 msgid "Show Parts"
 msgstr "Bestandteile anzeigen"
 
-#: gaphor/SysML/propertypages.ui:107
+#: gaphor/SysML/propertypages.ui:122
 msgid "Show References"
 msgstr "Verweise anzeigen"
 
-#: gaphor/SysML/propertypages.ui:123
+#: gaphor/SysML/propertypages.ui:138
 msgid "Show Values"
 msgstr "Werte anzeigen"
 
-#: gaphor/SysML/propertypages.ui:149
+#: gaphor/SysML/propertypages.ui:164
 msgid "Aggregation"
 msgstr "Aggregation"
 
-#: gaphor/SysML/propertypages.ui:159 gaphor/UML/classes/propertypages.ui:110
-#: gaphor/UML/classes/propertypages.ui:237
+#: gaphor/SysML/propertypages.ui:176 gaphor/UML/classes/propertypages.ui:116
+#: gaphor/UML/classes/propertypages.ui:251
 msgid "No aggregation"
 msgstr "Keine Aggregation"
 
-#: gaphor/SysML/propertypages.ui:160 gaphor/UML/classes/propertypages.ui:111
-#: gaphor/UML/classes/propertypages.ui:238
+#: gaphor/SysML/propertypages.ui:177 gaphor/UML/classes/propertypages.ui:117
+#: gaphor/UML/classes/propertypages.ui:252
 msgid "Shared"
 msgstr "Geteilt"
 
-#: gaphor/SysML/propertypages.ui:161 gaphor/UML/classes/propertypages.ui:112
-#: gaphor/UML/classes/propertypages.ui:239
+#: gaphor/SysML/propertypages.ui:178 gaphor/UML/classes/propertypages.ui:118
+#: gaphor/UML/classes/propertypages.ui:253
 msgid "Composite"
 msgstr "Komposition"
 
-#: gaphor/SysML/propertypages.ui:177
+#: gaphor/SysML/propertypages.ui:196
 msgid "Id"
 msgstr "Id"
 
-#: gaphor/SysML/propertypages.ui:191
+#: gaphor/SysML/propertypages.ui:210
 msgid "Text"
 msgstr "Text"
 
@@ -662,11 +666,11 @@ msgstr "Zusammenführung"
 msgid "decision"
 msgstr "Entscheidung"
 
-#: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:163
+#: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:165
 msgid "unordered"
 msgstr "ungeordnet"
 
-#: gaphor/UML/actions/objectnode.py:15 gaphor/UML/actions/propertypages.ui:164
+#: gaphor/UML/actions/objectnode.py:15 gaphor/UML/actions/propertypages.ui:166
 msgid "ordered"
 msgstr "geordnet"
 
@@ -678,7 +682,7 @@ msgstr "LIFO"
 msgid "FIFO"
 msgstr "FIFO"
 
-#: gaphor/UML/actions/partitionpage.py:103
+#: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
 msgstr "Neue Swimlane"
 
@@ -718,42 +722,38 @@ msgstr "Obere Schranke"
 msgid "Show Ordering"
 msgstr "Reihenfolge anzeigen"
 
-#: gaphor/UML/actions/propertypages.ui:165
+#: gaphor/UML/actions/propertypages.ui:167
 msgid "Last In First Out (LIFO)"
 msgstr "Last In First Out (LIFO)"
 
-#: gaphor/UML/actions/propertypages.ui:166
+#: gaphor/UML/actions/propertypages.ui:168
 msgid "First In First Out (FIFO)"
 msgstr "First In First Out (FIFO)"
 
-#: gaphor/UML/actions/propertypages.ui:189
+#: gaphor/UML/actions/propertypages.ui:193
 #: gaphor/UML/profiles/propertypages.ui:9 gaphor/diagram/propertypages.ui:36
 msgid "Name"
 msgstr "Name"
 
-#: gaphor/UML/actions/propertypages.ui:222
+#: gaphor/UML/actions/propertypages.ui:228
 #: gaphor/UML/states/propertypages.ui:65
 msgid "Guard"
 msgstr "Wächter"
 
-#: gaphor/UML/actions/propertypages.ui:244
+#: gaphor/UML/actions/propertypages.ui:250
 msgid "Parameter Nodes"
 msgstr "Knotenparameter"
 
-#: gaphor/UML/actions/propertypages.ui:269
-msgid "Parameters"
-msgstr "Parameter"
-
-#: gaphor/UML/actions/propertypages.ui:292
+#: gaphor/UML/actions/propertypages.ui:272
 #: gaphor/UML/classes/propertypages.ui:67
-#: gaphor/UML/classes/propertypages.ui:194
-#: gaphor/UML/classes/propertypages.ui:386
-#: gaphor/UML/classes/propertypages.ui:617
-#: gaphor/UML/classes/propertypages.ui:725
+#: gaphor/UML/classes/propertypages.ui:202
+#: gaphor/UML/classes/propertypages.ui:402
+#: gaphor/UML/classes/propertypages.ui:637
+#: gaphor/UML/classes/propertypages.ui:745
 msgid "🛈 Help"
 msgstr "🛈 Hilfe"
 
-#: gaphor/UML/actions/propertypages.ui:308
+#: gaphor/UML/actions/propertypages.ui:288
 msgid ""
 "Add and edit class activity according to UML syntax.\n"
 "\n"
@@ -783,13 +783,13 @@ msgstr ""
 
 #: gaphor/UML/classes/classespropertypages.py:308
 #: gaphor/UML/classes/classespropertypages.py:392
-#: gaphor/UML/classes/propertypages.ui:790
+#: gaphor/UML/classes/propertypages.ui:810
 msgid "Static"
 msgstr "Statisch"
 
 #: gaphor/UML/classes/classespropertypages.py:392
-#: gaphor/UML/classes/propertypages.ui:433
-#: gaphor/UML/classes/propertypages.ui:786
+#: gaphor/UML/classes/propertypages.ui:449
+#: gaphor/UML/classes/propertypages.ui:806
 msgid "Abstract"
 msgstr "Abstrakt"
 
@@ -838,18 +838,6 @@ msgstr "realisiert"
 msgid "implements"
 msgstr "implementiert"
 
-#: gaphor/UML/classes/dependencypropertypages.py:37
-msgid "Usage"
-msgstr "Verwendung"
-
-#: gaphor/UML/classes/dependencypropertypages.py:38
-msgid "Realization"
-msgstr "Realisierung"
-
-#: gaphor/UML/classes/dependencypropertypages.py:39
-msgid "Implementation"
-msgstr "Implementierung"
-
 #: gaphor/UML/classes/enumeration.py:75
 msgid "enumeration"
 msgstr "Aufzählung"
@@ -879,7 +867,7 @@ msgid "Head:"
 msgstr "Kopf:"
 
 #: gaphor/UML/classes/propertypages.ui:83
-#: gaphor/UML/classes/propertypages.ui:210
+#: gaphor/UML/classes/propertypages.ui:218
 msgid ""
 "Add and edit association ends according to UML syntax.\n"
 "\n"
@@ -906,44 +894,44 @@ msgstr ""
 "Verwenden Sie <b>-</b>/<b>=</b>, um Elemente nach oben oder unten zu "
 "verschieben."
 
-#: gaphor/UML/classes/propertypages.ui:100
-#: gaphor/UML/classes/propertypages.ui:227
+#: gaphor/UML/classes/propertypages.ui:102
+#: gaphor/UML/classes/propertypages.ui:237
 msgid "Unknown navigation"
 msgstr "Unbekannte Navigation"
 
-#: gaphor/UML/classes/propertypages.ui:101
-#: gaphor/UML/classes/propertypages.ui:228
+#: gaphor/UML/classes/propertypages.ui:103
+#: gaphor/UML/classes/propertypages.ui:238
 msgid "Not navigable"
 msgstr "Nicht navigierbar"
 
-#: gaphor/UML/classes/propertypages.ui:102
-#: gaphor/UML/classes/propertypages.ui:229
+#: gaphor/UML/classes/propertypages.ui:104
+#: gaphor/UML/classes/propertypages.ui:239
 msgid "Navigable"
 msgstr "Navigierbar"
 
-#: gaphor/UML/classes/propertypages.ui:127
-#: gaphor/UML/classes/propertypages.ui:254
-#: gaphor/UML/classes/propertypages.ui:308
-#: gaphor/UML/classes/propertypages.ui:350
-#: gaphor/UML/profiles/propertypages.ui:64
+#: gaphor/UML/classes/propertypages.ui:135
+#: gaphor/UML/classes/propertypages.ui:270
+#: gaphor/UML/classes/propertypages.ui:324
+#: gaphor/UML/classes/propertypages.ui:366
+#: gaphor/UML/profiles/propertypages.ui:67
 msgid "Attributes"
 msgstr "Attribute"
 
-#: gaphor/UML/classes/propertypages.ui:147
-#: gaphor/UML/classes/propertypages.ui:274
-#: gaphor/UML/profiles/propertypages.ui:84
+#: gaphor/UML/classes/propertypages.ui:155
+#: gaphor/UML/classes/propertypages.ui:290
+#: gaphor/UML/profiles/propertypages.ui:87
 msgid "Value"
 msgstr "Wert"
 
-#: gaphor/UML/classes/propertypages.ui:176
+#: gaphor/UML/classes/propertypages.ui:184
 msgid "Tail:"
 msgstr "Ende:"
 
-#: gaphor/UML/classes/propertypages.ui:321
+#: gaphor/UML/classes/propertypages.ui:337
 msgid "Show Attributes"
 msgstr "Attribute anzeigen"
 
-#: gaphor/UML/classes/propertypages.ui:403
+#: gaphor/UML/classes/propertypages.ui:419
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "\n"
@@ -971,28 +959,40 @@ msgstr ""
 "Verwenden Sie <b>-</b>/<b>=</b>, um Elemente nach oben oder unten zu "
 "verschieben."
 
-#: gaphor/UML/classes/propertypages.ui:455
+#: gaphor/UML/classes/propertypages.ui:471
 msgid "Dependency type"
 msgstr "Abhängigkeitsart"
 
-#: gaphor/UML/classes/propertypages.ui:466
+#: gaphor/UML/classes/propertypages.ui:482
 msgid "Automatic"
 msgstr "Automatisch"
 
+#: gaphor/UML/classes/propertypages.ui:501
+msgid "Usage"
+msgstr "Verwendung"
+
 #: gaphor/UML/classes/propertypages.ui:502
+msgid "Realization"
+msgstr "Realisierung"
+
+#: gaphor/UML/classes/propertypages.ui:503
+msgid "Implementation"
+msgstr "Implementierung"
+
+#: gaphor/UML/classes/propertypages.ui:522
 msgid "Folded"
 msgstr "Gefaltet"
 
-#: gaphor/UML/classes/propertypages.ui:525
-#: gaphor/UML/classes/propertypages.ui:567
+#: gaphor/UML/classes/propertypages.ui:545
+#: gaphor/UML/classes/propertypages.ui:587
 msgid "Operations"
 msgstr "Operationen"
 
-#: gaphor/UML/classes/propertypages.ui:538
+#: gaphor/UML/classes/propertypages.ui:558
 msgid "Show Operations"
 msgstr "Operationen anzeigen"
 
-#: gaphor/UML/classes/propertypages.ui:631
+#: gaphor/UML/classes/propertypages.ui:651
 msgid ""
 "Add and edit class operations according to UML syntax.\n"
 "\n"
@@ -1015,16 +1015,16 @@ msgstr ""
 "Verwenden Sie <b>-</b>/<b>=</b>, um Elemente nach oben oder unten zu "
 "verschieben."
 
-#: gaphor/UML/classes/propertypages.ui:660
-#: gaphor/UML/classes/propertypages.ui:702
+#: gaphor/UML/classes/propertypages.ui:680
+#: gaphor/UML/classes/propertypages.ui:722
 msgid "Enumeration Literals"
 msgstr "Aufzählungsliterale"
 
-#: gaphor/UML/classes/propertypages.ui:673
+#: gaphor/UML/classes/propertypages.ui:693
 msgid "Show Enumeration Literals"
 msgstr "Aufzählungsliterale anzeigen"
 
-#: gaphor/UML/classes/propertypages.ui:737
+#: gaphor/UML/classes/propertypages.ui:757
 msgid ""
 "Add and edit enumeration literals according to UML syntax.\n"
 "\n"
@@ -1043,15 +1043,15 @@ msgstr ""
 "Verwenden Sie <b>-</b>/<b>=</b>, um Elemente nach oben oder unten zu "
 "verschieben."
 
-#: gaphor/UML/classes/propertypages.ui:768
+#: gaphor/UML/classes/propertypages.ui:788
 msgid "Indirectly Instantiated"
 msgstr "Indirekt instanziiert"
 
-#: gaphor/UML/classes/propertypages.ui:785
+#: gaphor/UML/classes/propertypages.ui:805
 msgid "A."
 msgstr "A."
 
-#: gaphor/UML/classes/propertypages.ui:789
+#: gaphor/UML/classes/propertypages.ui:809
 msgid "S."
 msgstr "S."
 
@@ -1074,14 +1074,6 @@ msgstr "Gerät"
 #: gaphor/UML/deployments/node.py:54
 msgid "device"
 msgstr "Gerät"
-
-#: gaphor/UML/deployments/propertypages.ui:11
-msgid "Information Flow"
-msgstr "Informationsfluss"
-
-#: gaphor/UML/deployments/propertypages.ui:29
-msgid "Information Item (Class)"
-msgstr "Informationselement (Klasse)"
 
 #: gaphor/UML/interactions/interactionsconnect.py:78
 msgid "call()"
@@ -1118,6 +1110,34 @@ msgstr "Zurückbeziehende Nachricht"
 msgid "Message Sort"
 msgstr "Nachrichten sortieren"
 
+#: gaphor/UML/interactions/propertypages.ui:21
+#, fuzzy
+msgid "Call"
+msgstr "Aufruf()"
+
+#: gaphor/UML/interactions/propertypages.ui:22
+msgid "Asynchronous"
+msgstr ""
+
+#: gaphor/UML/interactions/propertypages.ui:23
+#, fuzzy
+msgid "Signal"
+msgstr "Signal senden"
+
+#: gaphor/UML/interactions/propertypages.ui:24
+msgid "Reply"
+msgstr ""
+
+#: gaphor/UML/interactions/propertypages.ui:25
+#, fuzzy
+msgid "Create"
+msgstr "Erstellt am"
+
+#: gaphor/UML/interactions/propertypages.ui:26
+#, fuzzy
+msgid "Delete"
+msgstr "_Löschen"
+
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
 msgstr "importieren"
@@ -1146,11 +1166,11 @@ msgstr "Erweiterung"
 msgid "Import"
 msgstr "Importieren"
 
-#: gaphor/UML/profiles/propertypages.ui:30
+#: gaphor/UML/profiles/propertypages.ui:33
 msgid "Stereotypes"
 msgstr "Stereotypen"
 
-#: gaphor/UML/profiles/propertypages.ui:43
+#: gaphor/UML/profiles/propertypages.ui:46
 msgid "Show Stereotypes"
 msgstr "Stereotypen anzeigen"
 
@@ -1636,7 +1656,8 @@ msgid "Structure"
 msgstr "Struktur"
 
 #: gaphor/templates/sysml.gaphor
-msgid "Feature Context"
+#, fuzzy
+msgid "Feature Domain"
 msgstr "Kontext"
 
 #: gaphor/templates/sysml.gaphor
@@ -1652,8 +1673,9 @@ msgid "External Element"
 msgstr "Externes Element"
 
 #: gaphor/templates/sysml.gaphor
-msgid "Stakeholder Requirements"
-msgstr "Anforderungen für Teilnehmer"
+#, fuzzy
+msgid "Concept Requirements"
+msgstr "Anforderungen"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
@@ -1696,8 +1718,9 @@ msgid "Detailed Behavior"
 msgstr "Detailliertes Verhalten"
 
 #: gaphor/templates/sysml.gaphor
-msgid "System Requirements"
-msgstr "Systemanforderung"
+#, fuzzy
+msgid "Logical Requirements"
+msgstr "Anforderungen"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
@@ -1756,10 +1779,6 @@ msgid "Actuate Actuator"
 msgstr "Aktuator betätigen"
 
 #: gaphor/templates/sysml.gaphor
-msgid "Actuator Command"
-msgstr "Aktuator Befehl"
-
-#: gaphor/templates/sysml.gaphor
 msgid "Example Technology Requirement"
 msgstr "Beispiel für technologische Anforderung"
 
@@ -1810,6 +1829,54 @@ msgstr "Objekt erkennen"
 #: gaphor/templates/sysml.gaphor
 msgid "Detection Event"
 msgstr "Erkennungsereignis"
+
+#: gaphor/templates/sysml.gaphor
+msgid "Feature Context"
+msgstr "Kontext"
+
+#: gaphor/templates/sysml.gaphor
+#, fuzzy
+msgid "Read Input"
+msgstr "Erstellt am"
+
+#: gaphor/templates/sysml.gaphor
+#, fuzzy
+msgid "FeatureInput"
+msgstr "Funktion"
+
+#: gaphor/templates/sysml.gaphor
+#, fuzzy
+msgid "Request Actuation"
+msgstr "Erste Aktion"
+
+#: gaphor/templates/sysml.gaphor
+#, fuzzy
+msgid "Actuation Command"
+msgstr "Aktuator Befehl"
+
+#: gaphor/templates/sysml.gaphor
+#, fuzzy
+msgid "Model Navigation"
+msgstr "Unbekannte Navigation"
+
+#: gaphor/templates/sysml.gaphor
+#, fuzzy
+msgid "Concept"
+msgstr "Konnektor"
+
+#: gaphor/templates/sysml.gaphor
+#, fuzzy
+msgid "Logical"
+msgstr "Anmeldung"
+
+#: gaphor/templates/sysml.gaphor
+msgid "Pillar"
+msgstr ""
+
+#: gaphor/templates/sysml.gaphor
+#, fuzzy
+msgid "Abstraction Level"
+msgstr "Abstrakt"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
@@ -2131,62 +2198,62 @@ msgstr ""
 "wählen Sie ein Element im Modellbrowser aus und beginnen Sie zu tippen. "
 "Es wird automatisch ein Suchfeld angezeigt."
 
-#: gaphor/ui/elementeditor.ui:96 gaphor/ui/help/shortcuts.ui:121
+#: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:121
 msgid "Undo"
 msgstr "Rückgängig machen"
 
-#: gaphor/ui/elementeditor.ui:114 gaphor/ui/help/shortcuts.ui:129
+#: gaphor/ui/elementeditor.ui:115 gaphor/ui/help/shortcuts.ui:129
 msgid "Redo"
 msgstr "Wiederholen"
 
-#: gaphor/ui/elementeditor.ui:133 gaphor/ui/help/shortcuts.ui:146
+#: gaphor/ui/elementeditor.ui:134 gaphor/ui/help/shortcuts.ui:146
 msgid "Zoom In"
 msgstr "Vergrößern"
 
-#: gaphor/ui/elementeditor.ui:148 gaphor/ui/help/shortcuts.ui:162
+#: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:162
 msgid "Actual Size"
 msgstr "Tatsächliche Größe"
 
-#: gaphor/ui/elementeditor.ui:163 gaphor/ui/help/shortcuts.ui:154
+#: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:154
 msgid "Zoom Out"
 msgstr "Verkleinern"
 
-#: gaphor/ui/elementeditor.ui:203
+#: gaphor/ui/elementeditor.ui:205
 msgid "Editors"
 msgstr "Editoren"
 
-#: gaphor/ui/elementeditor.ui:228 gaphor/ui/elementeditor.ui:239
+#: gaphor/ui/elementeditor.ui:230 gaphor/ui/elementeditor.ui:244
 #: gaphor/ui/help/shortcuts.ui:54
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: gaphor/ui/elementeditor.ui:252
+#: gaphor/ui/elementeditor.ui:257
 msgid "Reset Tool Automatically"
 msgstr "Werkzeug automatisch zurücksetzen"
 
-#: gaphor/ui/elementeditor.ui:270
+#: gaphor/ui/elementeditor.ui:275
 msgid "Remove Unused Elements"
 msgstr "Unbenutzte Felder entfernen"
 
-#: gaphor/ui/elementeditor.ui:272 gaphor/ui/elementeditor.ui:279
+#: gaphor/ui/elementeditor.ui:277 gaphor/ui/elementeditor.ui:284
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 "Entfernen Sie automatisch Elemente die in keinem Diagramm mehr verwendet "
 "werden."
 
-#: gaphor/ui/elementeditor.ui:290
+#: gaphor/ui/elementeditor.ui:295
 msgid "Language"
 msgstr "Sprache"
 
-#: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
+#: gaphor/ui/elementeditor.ui:297 gaphor/ui/elementeditor.ui:305
 msgid "The (spoken) language used in this model."
 msgstr "In diesem Modell verwendete (gesprochene) Sprache."
 
-#: gaphor/ui/elementeditor.ui:308
+#: gaphor/ui/elementeditor.ui:313
 msgid "Style Sheet"
 msgstr "Stilvorlagen"
 
-#: gaphor/ui/elementeditor.ui:335
+#: gaphor/ui/elementeditor.ui:340
 msgid ""
 "🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
@@ -2195,15 +2262,15 @@ msgstr ""
 "href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Stilvorlagen"
 " in Gaphor</a>"
 
-#: gaphor/ui/elementeditor.ui:349
+#: gaphor/ui/elementeditor.ui:354
 msgid "Merge Models"
 msgstr "Modelle zusammenführen"
 
-#: gaphor/ui/elementeditor.ui:360
+#: gaphor/ui/elementeditor.ui:368
 msgid "Merge Model Changes"
 msgstr "Modelländerungen zusammenführen"
 
-#: gaphor/ui/elementeditor.ui:371
+#: gaphor/ui/elementeditor.ui:379
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
@@ -2211,7 +2278,7 @@ msgstr ""
 "Wenden Sie eingehende Änderungen aus dem widersprüchlichen Modell an. "
 "Verwenden Sie \"Rückgängig\", um Änderungen rückgängig zu machen."
 
-#: gaphor/ui/elementeditor.ui:391
+#: gaphor/ui/elementeditor.ui:399
 msgid "Resolve"
 msgstr "Aufösen"
 
@@ -2487,7 +2554,7 @@ msgstr "Neues allgemeines Diagramm"
 msgid "<Relationships>"
 msgstr "<Beziehungen>"
 
-#: gaphor/ui/help/about.ui:14
+#: gaphor/ui/help/about.ui:13
 msgid ""
 "Copyright © 2001-2023 Arjan J. Molenaar and Dan Yeaw.\n"
 "\n"
@@ -2501,7 +2568,7 @@ msgstr ""
 "Object Management Group, Inc. in den Vereinigten Staaten und/oder anderen"
 " Ländern."
 
-#: gaphor/ui/help/about.ui:22
+#: gaphor/ui/help/about.ui:21
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
 " not use this application except in compliance with the License. You may "
@@ -3102,4 +3169,19 @@ msgstr "Verbindung “{name}” aktualisieren"
 #~ "Object Management Group, Inc. in the "
 #~ "United States and/or other countries."
 #~ msgstr ""
+
+#~ msgid "Parameters"
+#~ msgstr "Parameter"
+
+#~ msgid "Information Flow"
+#~ msgstr "Informationsfluss"
+
+#~ msgid "Information Item (Class)"
+#~ msgstr "Informationselement (Klasse)"
+
+#~ msgid "Stakeholder Requirements"
+#~ msgstr "Anforderungen für Teilnehmer"
+
+#~ msgid "System Requirements"
+#~ msgstr "Systemanforderung"
 

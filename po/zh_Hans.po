@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-05-08 21:50-0400\n"
+"POT-Creation-Date: 2023-06-17 15:06-0400\n"
 "PO-Revision-Date: 2023-05-05 09:51+0000\n"
 "Last-Translator: johnvon <handanlinzhang@163.com>\n"
 "Language: zh_Hans\n"
@@ -28,7 +28,7 @@ msgstr "C4 模型"
 msgid "Description"
 msgstr "描述"
 
-#: gaphor/C4Model/propertypages.ui:38
+#: gaphor/C4Model/propertypages.ui:38 gaphor/templates/sysml.gaphor
 msgid "Technology"
 msgstr "技术"
 
@@ -74,7 +74,7 @@ msgstr "组件"
 
 #: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
 #: gaphor/UML/classes/classestoolbox.py:105
-#: gaphor/UML/classes/dependencypropertypages.py:36
+#: gaphor/UML/classes/propertypages.ui:500
 msgid "Dependency"
 msgstr "依赖"
 
@@ -288,63 +288,66 @@ msgstr ""
 msgid "SysML"
 msgstr "SySML"
 
-#: gaphor/SysML/propertypages.ui:11
+#: gaphor/SysML/propertypages.ui:9
 msgid "Item Flow"
 msgstr ""
 
-#: gaphor/SysML/propertypages.ui:28
+#: gaphor/SysML/propertypages.ui:22
+msgid "Enable Item Flow"
+msgstr ""
+
+#: gaphor/SysML/propertypages.ui:36
 msgid "Item Property"
 msgstr "项目属性"
 
-#: gaphor/SysML/propertypages.ui:43 gaphor/UML/classes/propertypages.ui:21
-#: gaphor/UML/deployments/propertypages.ui:42
+#: gaphor/SysML/propertypages.ui:51 gaphor/UML/classes/propertypages.ui:21
 msgid "Invert direction"
 msgstr ""
 
-#: gaphor/SysML/propertypages.ui:59 gaphor/UML/actions/propertypages.ui:201
+#: gaphor/SysML/propertypages.ui:67 gaphor/UML/actions/propertypages.ui:205
 msgid "Allocated Type"
 msgstr ""
 
-#: gaphor/SysML/propertypages.ui:78
+#: gaphor/SysML/propertypages.ui:93
 msgid "Compartments"
 msgstr ""
 
-#: gaphor/SysML/propertypages.ui:91
+#: gaphor/SysML/propertypages.ui:106
 msgid "Show Parts"
 msgstr ""
 
-#: gaphor/SysML/propertypages.ui:107
+#: gaphor/SysML/propertypages.ui:122
 msgid "Show References"
 msgstr "显示引用"
 
-#: gaphor/SysML/propertypages.ui:123
+#: gaphor/SysML/propertypages.ui:138
 msgid "Show Values"
 msgstr "显示值"
 
-#: gaphor/SysML/propertypages.ui:149
+#: gaphor/SysML/propertypages.ui:164
 msgid "Aggregation"
 msgstr ""
 
-#: gaphor/SysML/propertypages.ui:159 gaphor/UML/classes/propertypages.ui:110
-#: gaphor/UML/classes/propertypages.ui:237
+#: gaphor/SysML/propertypages.ui:176 gaphor/UML/classes/propertypages.ui:116
+#: gaphor/UML/classes/propertypages.ui:251
 msgid "No aggregation"
 msgstr ""
 
-#: gaphor/SysML/propertypages.ui:160 gaphor/UML/classes/propertypages.ui:111
-#: gaphor/UML/classes/propertypages.ui:238
+#: gaphor/SysML/propertypages.ui:177 gaphor/UML/classes/propertypages.ui:117
+#: gaphor/UML/classes/propertypages.ui:252
 msgid "Shared"
 msgstr ""
 
-#: gaphor/SysML/propertypages.ui:161 gaphor/UML/classes/propertypages.ui:112
-#: gaphor/UML/classes/propertypages.ui:239
+#: gaphor/SysML/propertypages.ui:178 gaphor/UML/classes/propertypages.ui:118
+#: gaphor/UML/classes/propertypages.ui:253
 msgid "Composite"
 msgstr ""
 
-#: gaphor/SysML/propertypages.ui:177
+#: gaphor/SysML/propertypages.ui:196
 msgid "Id"
 msgstr ""
 
-#: gaphor/SysML/propertypages.ui:191
+#: gaphor/SysML/propertypages.ui:210
 msgid "Text"
 msgstr "文本"
 
@@ -666,11 +669,11 @@ msgstr ""
 msgid "decision"
 msgstr ""
 
-#: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:163
+#: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:165
 msgid "unordered"
 msgstr ""
 
-#: gaphor/UML/actions/objectnode.py:15 gaphor/UML/actions/propertypages.ui:164
+#: gaphor/UML/actions/objectnode.py:15 gaphor/UML/actions/propertypages.ui:166
 msgid "ordered"
 msgstr ""
 
@@ -682,7 +685,7 @@ msgstr ""
 msgid "FIFO"
 msgstr ""
 
-#: gaphor/UML/actions/partitionpage.py:103
+#: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
 msgstr ""
 
@@ -722,42 +725,38 @@ msgstr "上限"
 msgid "Show Ordering"
 msgstr ""
 
-#: gaphor/UML/actions/propertypages.ui:165
+#: gaphor/UML/actions/propertypages.ui:167
 msgid "Last In First Out (LIFO)"
 msgstr "后进先出"
 
-#: gaphor/UML/actions/propertypages.ui:166
+#: gaphor/UML/actions/propertypages.ui:168
 msgid "First In First Out (FIFO)"
 msgstr "先进先出"
 
-#: gaphor/UML/actions/propertypages.ui:189
+#: gaphor/UML/actions/propertypages.ui:193
 #: gaphor/UML/profiles/propertypages.ui:9 gaphor/diagram/propertypages.ui:36
 msgid "Name"
 msgstr ""
 
-#: gaphor/UML/actions/propertypages.ui:222
+#: gaphor/UML/actions/propertypages.ui:228
 #: gaphor/UML/states/propertypages.ui:65
 msgid "Guard"
 msgstr ""
 
-#: gaphor/UML/actions/propertypages.ui:244
+#: gaphor/UML/actions/propertypages.ui:250
 msgid "Parameter Nodes"
 msgstr ""
 
-#: gaphor/UML/actions/propertypages.ui:269
-msgid "Parameters"
-msgstr ""
-
-#: gaphor/UML/actions/propertypages.ui:292
+#: gaphor/UML/actions/propertypages.ui:272
 #: gaphor/UML/classes/propertypages.ui:67
-#: gaphor/UML/classes/propertypages.ui:194
-#: gaphor/UML/classes/propertypages.ui:386
-#: gaphor/UML/classes/propertypages.ui:617
-#: gaphor/UML/classes/propertypages.ui:725
+#: gaphor/UML/classes/propertypages.ui:202
+#: gaphor/UML/classes/propertypages.ui:402
+#: gaphor/UML/classes/propertypages.ui:637
+#: gaphor/UML/classes/propertypages.ui:745
 msgid "🛈 Help"
 msgstr "🛈 帮助"
 
-#: gaphor/UML/actions/propertypages.ui:308
+#: gaphor/UML/actions/propertypages.ui:288
 msgid ""
 "Add and edit class activity according to UML syntax.\n"
 "\n"
@@ -774,13 +773,13 @@ msgstr ""
 
 #: gaphor/UML/classes/classespropertypages.py:308
 #: gaphor/UML/classes/classespropertypages.py:392
-#: gaphor/UML/classes/propertypages.ui:790
+#: gaphor/UML/classes/propertypages.ui:810
 msgid "Static"
 msgstr ""
 
 #: gaphor/UML/classes/classespropertypages.py:392
-#: gaphor/UML/classes/propertypages.ui:433
-#: gaphor/UML/classes/propertypages.ui:786
+#: gaphor/UML/classes/propertypages.ui:449
+#: gaphor/UML/classes/propertypages.ui:806
 msgid "Abstract"
 msgstr "抽象"
 
@@ -829,18 +828,6 @@ msgstr ""
 msgid "implements"
 msgstr "实现"
 
-#: gaphor/UML/classes/dependencypropertypages.py:37
-msgid "Usage"
-msgstr "用途"
-
-#: gaphor/UML/classes/dependencypropertypages.py:38
-msgid "Realization"
-msgstr ""
-
-#: gaphor/UML/classes/dependencypropertypages.py:39
-msgid "Implementation"
-msgstr "实现"
-
 #: gaphor/UML/classes/enumeration.py:75
 msgid "enumeration"
 msgstr "枚举"
@@ -870,7 +857,7 @@ msgid "Head:"
 msgstr "头:"
 
 #: gaphor/UML/classes/propertypages.ui:83
-#: gaphor/UML/classes/propertypages.ui:210
+#: gaphor/UML/classes/propertypages.ui:218
 msgid ""
 "Add and edit association ends according to UML syntax.\n"
 "\n"
@@ -885,44 +872,44 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:100
-#: gaphor/UML/classes/propertypages.ui:227
+#: gaphor/UML/classes/propertypages.ui:102
+#: gaphor/UML/classes/propertypages.ui:237
 msgid "Unknown navigation"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:101
-#: gaphor/UML/classes/propertypages.ui:228
+#: gaphor/UML/classes/propertypages.ui:103
+#: gaphor/UML/classes/propertypages.ui:238
 msgid "Not navigable"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:102
-#: gaphor/UML/classes/propertypages.ui:229
+#: gaphor/UML/classes/propertypages.ui:104
+#: gaphor/UML/classes/propertypages.ui:239
 msgid "Navigable"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:127
-#: gaphor/UML/classes/propertypages.ui:254
-#: gaphor/UML/classes/propertypages.ui:308
-#: gaphor/UML/classes/propertypages.ui:350
-#: gaphor/UML/profiles/propertypages.ui:64
+#: gaphor/UML/classes/propertypages.ui:135
+#: gaphor/UML/classes/propertypages.ui:270
+#: gaphor/UML/classes/propertypages.ui:324
+#: gaphor/UML/classes/propertypages.ui:366
+#: gaphor/UML/profiles/propertypages.ui:67
 msgid "Attributes"
 msgstr "属性"
 
-#: gaphor/UML/classes/propertypages.ui:147
-#: gaphor/UML/classes/propertypages.ui:274
-#: gaphor/UML/profiles/propertypages.ui:84
+#: gaphor/UML/classes/propertypages.ui:155
+#: gaphor/UML/classes/propertypages.ui:290
+#: gaphor/UML/profiles/propertypages.ui:87
 msgid "Value"
 msgstr "值"
 
-#: gaphor/UML/classes/propertypages.ui:176
+#: gaphor/UML/classes/propertypages.ui:184
 msgid "Tail:"
 msgstr "尾:"
 
-#: gaphor/UML/classes/propertypages.ui:321
+#: gaphor/UML/classes/propertypages.ui:337
 msgid "Show Attributes"
 msgstr "显示属性"
 
-#: gaphor/UML/classes/propertypages.ui:403
+#: gaphor/UML/classes/propertypages.ui:419
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "\n"
@@ -937,28 +924,40 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:455
+#: gaphor/UML/classes/propertypages.ui:471
 msgid "Dependency type"
 msgstr "依赖类型"
 
-#: gaphor/UML/classes/propertypages.ui:466
+#: gaphor/UML/classes/propertypages.ui:482
 msgid "Automatic"
 msgstr "自动的"
 
+#: gaphor/UML/classes/propertypages.ui:501
+msgid "Usage"
+msgstr "用途"
+
 #: gaphor/UML/classes/propertypages.ui:502
+msgid "Realization"
+msgstr ""
+
+#: gaphor/UML/classes/propertypages.ui:503
+msgid "Implementation"
+msgstr "实现"
+
+#: gaphor/UML/classes/propertypages.ui:522
 msgid "Folded"
 msgstr "折叠的"
 
-#: gaphor/UML/classes/propertypages.ui:525
-#: gaphor/UML/classes/propertypages.ui:567
+#: gaphor/UML/classes/propertypages.ui:545
+#: gaphor/UML/classes/propertypages.ui:587
 msgid "Operations"
 msgstr "操作"
 
-#: gaphor/UML/classes/propertypages.ui:538
+#: gaphor/UML/classes/propertypages.ui:558
 msgid "Show Operations"
 msgstr "显示操作"
 
-#: gaphor/UML/classes/propertypages.ui:631
+#: gaphor/UML/classes/propertypages.ui:651
 msgid ""
 "Add and edit class operations according to UML syntax.\n"
 "\n"
@@ -971,16 +970,16 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:660
-#: gaphor/UML/classes/propertypages.ui:702
+#: gaphor/UML/classes/propertypages.ui:680
+#: gaphor/UML/classes/propertypages.ui:722
 msgid "Enumeration Literals"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:673
+#: gaphor/UML/classes/propertypages.ui:693
 msgid "Show Enumeration Literals"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:737
+#: gaphor/UML/classes/propertypages.ui:757
 msgid ""
 "Add and edit enumeration literals according to UML syntax.\n"
 "\n"
@@ -991,15 +990,15 @@ msgid ""
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:768
+#: gaphor/UML/classes/propertypages.ui:788
 msgid "Indirectly Instantiated"
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:785
+#: gaphor/UML/classes/propertypages.ui:805
 msgid "A."
 msgstr ""
 
-#: gaphor/UML/classes/propertypages.ui:789
+#: gaphor/UML/classes/propertypages.ui:809
 msgid "S."
 msgstr ""
 
@@ -1023,14 +1022,6 @@ msgstr "设备"
 #: gaphor/UML/deployments/node.py:54
 msgid "device"
 msgstr "设备"
-
-#: gaphor/UML/deployments/propertypages.ui:11
-msgid "Information Flow"
-msgstr "信息流"
-
-#: gaphor/UML/deployments/propertypages.ui:29
-msgid "Information Item (Class)"
-msgstr ""
 
 #: gaphor/UML/interactions/interactionsconnect.py:78
 msgid "call()"
@@ -1067,6 +1058,33 @@ msgstr ""
 msgid "Message Sort"
 msgstr ""
 
+#: gaphor/UML/interactions/propertypages.ui:21
+msgid "Call"
+msgstr ""
+
+#: gaphor/UML/interactions/propertypages.ui:22
+msgid "Asynchronous"
+msgstr ""
+
+#: gaphor/UML/interactions/propertypages.ui:23
+#, fuzzy
+msgid "Signal"
+msgstr "发送信号"
+
+#: gaphor/UML/interactions/propertypages.ui:24
+msgid "Reply"
+msgstr ""
+
+#: gaphor/UML/interactions/propertypages.ui:25
+#, fuzzy
+msgid "Create"
+msgstr "创建新模型 …"
+
+#: gaphor/UML/interactions/propertypages.ui:26
+#, fuzzy
+msgid "Delete"
+msgstr "数据类型"
+
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
 msgstr "导入"
@@ -1095,11 +1113,11 @@ msgstr ""
 msgid "Import"
 msgstr "导入"
 
-#: gaphor/UML/profiles/propertypages.ui:30
+#: gaphor/UML/profiles/propertypages.ui:33
 msgid "Stereotypes"
 msgstr ""
 
-#: gaphor/UML/profiles/propertypages.ui:43
+#: gaphor/UML/profiles/propertypages.ui:46
 msgid "Show Stereotypes"
 msgstr ""
 
@@ -1592,7 +1610,7 @@ msgid "Structure"
 msgstr "结构"
 
 #: gaphor/templates/sysml.gaphor
-msgid "Feature Context"
+msgid "Feature Domain"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
@@ -1608,8 +1626,9 @@ msgid "External Element"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-msgid "Stakeholder Requirements"
-msgstr "干系人需求"
+#, fuzzy
+msgid "Concept Requirements"
+msgstr "需求"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
@@ -1653,8 +1672,9 @@ msgid "Detailed Behavior"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-msgid "System Requirements"
-msgstr "系统需求"
+#, fuzzy
+msgid "Logical Requirements"
+msgstr "需求"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
@@ -1713,10 +1733,6 @@ msgid "Actuate Actuator"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-msgid "Actuator Command"
-msgstr ""
-
-#: gaphor/templates/sysml.gaphor
 #, fuzzy
 msgid "Example Technology Requirement"
 msgstr "技术需求"
@@ -1768,6 +1784,49 @@ msgstr ""
 #: gaphor/templates/sysml.gaphor
 msgid "Detection Event"
 msgstr ""
+
+#: gaphor/templates/sysml.gaphor
+msgid "Feature Context"
+msgstr ""
+
+#: gaphor/templates/sysml.gaphor
+#, fuzzy
+msgid "Read Input"
+msgstr "创建新模型 …"
+
+#: gaphor/templates/sysml.gaphor
+msgid "FeatureInput"
+msgstr ""
+
+#: gaphor/templates/sysml.gaphor
+#, fuzzy
+msgid "Request Actuation"
+msgstr "动作 1"
+
+#: gaphor/templates/sysml.gaphor
+msgid "Actuation Command"
+msgstr ""
+
+#: gaphor/templates/sysml.gaphor
+msgid "Model Navigation"
+msgstr ""
+
+#: gaphor/templates/sysml.gaphor
+msgid "Concept"
+msgstr ""
+
+#: gaphor/templates/sysml.gaphor
+msgid "Logical"
+msgstr ""
+
+#: gaphor/templates/sysml.gaphor
+msgid "Pillar"
+msgstr ""
+
+#: gaphor/templates/sysml.gaphor
+#, fuzzy
+msgid "Abstraction Level"
+msgstr "抽象"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
@@ -2050,82 +2109,82 @@ msgid ""
 "will automatically appear."
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:96 gaphor/ui/help/shortcuts.ui:121
+#: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:121
 msgid "Undo"
 msgstr "撤销"
 
-#: gaphor/ui/elementeditor.ui:114 gaphor/ui/help/shortcuts.ui:129
+#: gaphor/ui/elementeditor.ui:115 gaphor/ui/help/shortcuts.ui:129
 msgid "Redo"
 msgstr "重做"
 
-#: gaphor/ui/elementeditor.ui:133 gaphor/ui/help/shortcuts.ui:146
+#: gaphor/ui/elementeditor.ui:134 gaphor/ui/help/shortcuts.ui:146
 msgid "Zoom In"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:148 gaphor/ui/help/shortcuts.ui:162
+#: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:162
 msgid "Actual Size"
 msgstr "实际大小"
 
-#: gaphor/ui/elementeditor.ui:163 gaphor/ui/help/shortcuts.ui:154
+#: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:154
 msgid "Zoom Out"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:203
+#: gaphor/ui/elementeditor.ui:205
 msgid "Editors"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:228 gaphor/ui/elementeditor.ui:239
+#: gaphor/ui/elementeditor.ui:230 gaphor/ui/elementeditor.ui:244
 #: gaphor/ui/help/shortcuts.ui:54
 msgid "Preferences"
 msgstr "偏好设置"
 
-#: gaphor/ui/elementeditor.ui:252
+#: gaphor/ui/elementeditor.ui:257
 msgid "Reset Tool Automatically"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:270
+#: gaphor/ui/elementeditor.ui:275
 msgid "Remove Unused Elements"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:272 gaphor/ui/elementeditor.ui:279
+#: gaphor/ui/elementeditor.ui:277 gaphor/ui/elementeditor.ui:284
 msgid "Automatically remove elements no longer in use in any diagram."
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:290
+#: gaphor/ui/elementeditor.ui:295
 #, fuzzy
 msgid "Language"
 msgstr "与门"
 
-#: gaphor/ui/elementeditor.ui:292 gaphor/ui/elementeditor.ui:300
+#: gaphor/ui/elementeditor.ui:297 gaphor/ui/elementeditor.ui:305
 msgid "The (spoken) language used in this model."
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:308
+#: gaphor/ui/elementeditor.ui:313
 msgid "Style Sheet"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:335
+#: gaphor/ui/elementeditor.ui:340
 msgid ""
 "🔗 <a href=\"https://docs.gaphor.org/en/latest/style_sheets.html\">Style "
 "sheets in Gaphor</a>"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:349
+#: gaphor/ui/elementeditor.ui:354
 #, fuzzy
 msgid "Merge Models"
 msgstr "新建模型"
 
-#: gaphor/ui/elementeditor.ui:360
+#: gaphor/ui/elementeditor.ui:368
 msgid "Merge Model Changes"
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:371
+#: gaphor/ui/elementeditor.ui:379
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:391
+#: gaphor/ui/elementeditor.ui:399
 msgid "Resolve"
 msgstr ""
 
@@ -2384,7 +2443,7 @@ msgstr "新建通用图形"
 msgid "<Relationships>"
 msgstr ""
 
-#: gaphor/ui/help/about.ui:14
+#: gaphor/ui/help/about.ui:13
 msgid ""
 "Copyright © 2001-2023 Arjan J. Molenaar and Dan Yeaw.\n"
 "\n"
@@ -2393,7 +2452,7 @@ msgid ""
 "countries."
 msgstr ""
 
-#: gaphor/ui/help/about.ui:22
+#: gaphor/ui/help/about.ui:21
 msgid ""
 "Licensed under the Apache License, Version 2.0 (the \"License\"); you may"
 " not use this application except in compliance with the License. You may "
@@ -2962,5 +3021,23 @@ msgstr "更新关系“{name}”"
 #~ " box (bottom left) to the diagram."
 #~ " Here you will see it's properties"
 #~ " appear."
+#~ msgstr ""
+
+#~ msgid "Parameters"
+#~ msgstr ""
+
+#~ msgid "Information Flow"
+#~ msgstr "信息流"
+
+#~ msgid "Information Item (Class)"
+#~ msgstr ""
+
+#~ msgid "Stakeholder Requirements"
+#~ msgstr "干系人需求"
+
+#~ msgid "System Requirements"
+#~ msgstr "系统需求"
+
+#~ msgid "Actuator Command"
 #~ msgstr ""
 
