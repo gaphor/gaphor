@@ -1,12 +1,21 @@
-2.19.0
+2.19.1
 ------
 (unreleased)
 
+2.19.0
+------
 - Dropped support for AppImage (for discussion see https://github.com/gaphor/gaphor/issues/2285)
+- Add Information Flow support for Associations
 - Interactions: fixed DnD for partially connected messages
 - Restore CSS auto-complete
 - Docs: A coffee machine tutorial has been added
+- Make model loading more lenient to model corruption
 - CLI: export diagrams and run scripts within Gaphor
+- Enable PyPI Trusted Publisher
+- Replace deprecated Gtk.TreeView with ListView: Activity Parameter Nodes
+- Use consistent naming for element_factory in storage module
+- Use new style Dropdowns for selecting items in property editor
+- Updates to translations
 
 2.18.1
 ------
