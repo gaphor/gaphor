@@ -1,3 +1,5 @@
+import sys
+
 import pytest
 
 from gaphor.plugins import (
@@ -14,7 +16,9 @@ def install_test_plugin(tmp_path, monkeypatch):
 
     parser = manager.parser()
     args = parser.parse_args(["install", "test-plugin/"])
-    args.command(args)
+    exit_code = args.command(args)
+
+    assert exit_code == 0
 
 
 def test_plugin_installed(tmp_path):
@@ -22,6 +26,16 @@ def test_plugin_installed(tmp_path):
         entry_points = load_entry_points("gaphor.services")
 
     assert "test_plugin" in entry_points
+
+
+def test_sys_argv_is_not_changed():
+    orig_argv = list(sys.argv)
+
+    parser = manager.parser()
+    args = parser.parse_args(["list"])
+    args.command(args)
+
+    assert sys.argv == orig_argv
 
 
 def test_plugin_list(capsys):

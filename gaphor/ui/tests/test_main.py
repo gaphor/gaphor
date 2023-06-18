@@ -6,7 +6,9 @@ from gi.repository import GLib, Gtk
 import gaphor.main
 
 
-APP_NAME = sys.argv[0]
+@pytest.fixture
+def app_name():
+    return sys.argv[0]
 
 
 @pytest.fixture(autouse=True)
@@ -33,17 +35,17 @@ def fake_run(monkeypatch):
     return run
 
 
-def test_application_startup(monkeypatch):
+def test_application_startup(monkeypatch, app_name):
     run = fake_run(monkeypatch)
 
-    gaphor.main.main([APP_NAME])
+    gaphor.main.main([app_name])
 
-    assert run == [APP_NAME]
+    assert run == [app_name]
 
 
-def test_application_startup_with_model(monkeypatch):
+def test_application_startup_with_model(monkeypatch, app_name):
     run = fake_run(monkeypatch)
 
-    gaphor.main.main([APP_NAME, "test-models/all-elements.gaphor"])
+    gaphor.main.main([app_name, "test-models/all-elements.gaphor"])
 
-    assert run == [APP_NAME, "test-models/all-elements.gaphor"]
+    assert run == [app_name, "test-models/all-elements.gaphor"]

@@ -1,7 +1,11 @@
 """A plugins manager."""
 
+# Run pip via runpy: https://pip.pypa.io/en/stable/user_guide/#using-pip-from-your-program.
+
 import argparse
-import subprocess
+import contextlib
+import os
+import runpy
 import sys
 
 
@@ -53,51 +57,53 @@ def parser():
 
 
 def list_plugins(args):
-    completed = subprocess.run(
-        [sys.executable, "-m", "pip", "list", "--path", str(default_plugin_path())],
-        capture_output=True,
-    )
-    print(completed.stdout)
-    if completed.stderr:
-        print("--- stderr ---", file=sys.stderr)
-        print(completed.stderr, file=sys.stderr)
-    return completed.returncode
+    return run_pip("list", "--path", str(default_plugin_path()))
 
 
 def install_plugin(args):
     path = default_plugin_path()
     path.mkdir(parents=True, exist_ok=True)
 
-    completed = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "pip",
-            "install",
-            "--force-reinstall",
-            "--target",
-            str(path),
-            args.name,
-        ]
+    return run_pip(
+        "install",
+        "--force-reinstall",
+        "--target",
+        str(path),
+        args.name,
     )
-    return completed.returncode
 
 
 def uninstall_plugin(args):
-    completed = subprocess.run(
-        [sys.executable, "-m", "pip", "uninstall", args.name],
-        env={
-            "PYTHONPATH": str(default_plugin_path()),
-        },
-    )
-    return completed.returncode
+    return run_pip("uninstall", args.name)
 
 
 def check_plugins(args):
-    completed = subprocess.run(
-        [sys.executable, "-m", "pip", "check"],
-        env={
-            "PYTHONPATH": str(default_plugin_path()),
-        },
-    )
-    return completed.returncode
+    return run_pip("check")
+
+
+@contextlib.contextmanager
+def argv(*args):
+    orig_argv = list(sys.argv)
+    sys.argv = list(args)
+    yield
+    sys.argv = orig_argv
+
+
+@contextlib.contextmanager
+def pythonpath():
+    if has_pythonpath := ("PYTHONPATH" in os.environ):
+        orig_pythonpath = os.environ["PYTHONPATH"]
+    os.environ["PYTHONPATH"] = str(default_plugin_path())
+    yield
+    if has_pythonpath:
+        os.environ["PYTHONPATH"] = orig_pythonpath
+    else:
+        del os.environ["PYTHONPATH"]
+
+
+def run_pip(*args):
+    with pythonpath(), argv("pip", *args):
+        try:
+            runpy.run_module("pip", run_name="__main__")
+        except SystemExit as se:
+            return se.code
