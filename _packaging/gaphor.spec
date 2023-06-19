@@ -66,8 +66,7 @@ a = Analysis(  # type: ignore
     ]
     + ui_files
     + mo_files
-    + copy_metadata("gaphor")
-    + copy_metadata("gaphas"),
+    + copy_metadata("gaphor"),
     hiddenimports=collect_entry_points(
         "gaphor.argparsers",
         "gaphor.services",
