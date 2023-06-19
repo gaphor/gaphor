@@ -74,7 +74,15 @@ a = Analysis(  # type: ignore
         "gaphor.modelinglanguages",
         "gaphor.modules",
     )
-    + ["_cffi_backend", "babel.numbers"],
+    + [
+        "_cffi_backend",
+        "babel.numbers",
+        "pip.__main__",
+        "pip._internal.commands.check",
+        "pip._internal.commands.install",
+        "pip._internal.commands.list",
+        "pip._internal.commands.uninstall",
+    ],
     hooksconfig={
         "gi": {
             "module-versions": {
