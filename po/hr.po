@@ -4,19 +4,20 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  Gaphor\n"
+"Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-17 15:06-0400\n"
-"PO-Revision-Date: 2023-05-11 16:48+0000\n"
+"PO-Revision-Date: 2023-06-20 14:53+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hr/>\n"
 "Language: hr\n"
-"Language-Team: Croatian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hr/>\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.18.1\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -268,7 +269,7 @@ msgstr "Kontroler"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
 msgid "Actuator"
-msgstr "Aktuator"
+msgstr "Upravljač"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
@@ -292,9 +293,8 @@ msgid "Item Flow"
 msgstr "Tok elementa"
 
 #: gaphor/SysML/propertypages.ui:22
-#, fuzzy
 msgid "Enable Item Flow"
-msgstr "Tok elementa"
+msgstr "Aktiviraj tok elementa"
 
 #: gaphor/SysML/propertypages.ui:36
 msgid "Item Property"
@@ -381,7 +381,7 @@ msgstr "Novi dijagram paketa"
 
 #: gaphor/SysML/toolbox.py:71
 msgid "New Requirement Diagram"
-msgstr "Novi dijagram preduvjeta"
+msgstr "Novi dijagram uvjeta"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
 msgid "New Use Case Diagram"
@@ -484,16 +484,16 @@ msgstr "razradi"
 
 #: gaphor/SysML/requirements/requirement.py:61
 msgid "requirement"
-msgstr "preduvjet"
+msgstr "uvjet"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml.gaphor
 msgid "Requirements"
-msgstr "Preduvjeti"
+msgstr "Uvjeti"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 msgid "Requirement"
-msgstr "Preduvjet"
+msgstr "Uvjet"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
 msgid "Satisfy"
@@ -501,7 +501,7 @@ msgstr "Zadovolji"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:36
 msgid "Derive Requirement"
-msgstr "Izvedi preduvjet"
+msgstr "Izvedeni uvjet"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
@@ -1104,32 +1104,28 @@ msgid "Message Sort"
 msgstr "Razvrstavanje poruka"
 
 #: gaphor/UML/interactions/propertypages.ui:21
-#, fuzzy
 msgid "Call"
-msgstr "poziv()"
+msgstr "Poziv"
 
 #: gaphor/UML/interactions/propertypages.ui:22
 msgid "Asynchronous"
-msgstr ""
+msgstr "Asinkrono"
 
 #: gaphor/UML/interactions/propertypages.ui:23
-#, fuzzy
 msgid "Signal"
-msgstr "Pošalji signal"
+msgstr "Signal"
 
 #: gaphor/UML/interactions/propertypages.ui:24
 msgid "Reply"
-msgstr ""
+msgstr "Odgovori"
 
 #: gaphor/UML/interactions/propertypages.ui:25
-#, fuzzy
 msgid "Create"
-msgstr "Stvoreno"
+msgstr "Stvori"
 
 #: gaphor/UML/interactions/propertypages.ui:26
-#, fuzzy
 msgid "Delete"
-msgstr "Iz_briši"
+msgstr "Izbriši"
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
@@ -1323,7 +1319,7 @@ msgstr "Metapodaci dijagrama"
 
 #: gaphor/diagram/presentation.py:48
 msgid "(from {namespace})"
-msgstr "(iz {namespace})"
+msgstr "(od {namespace})"
 
 #: gaphor/diagram/propertypages.ui:57
 msgid "Style"
@@ -1646,9 +1642,8 @@ msgid "Structure"
 msgstr "Struktura"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Feature Domain"
-msgstr "Kontekst"
+msgstr "Domena značajke"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Operator"
@@ -1663,9 +1658,8 @@ msgid "External Element"
 msgstr "Vanjski element"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept Requirements"
-msgstr "Preduvjeti"
+msgstr "Konceptualni uvjeti"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
@@ -1701,16 +1695,15 @@ msgstr "Granica tehnologije"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Technology Requirements"
-msgstr "Preduvjeti za tehnologiju"
+msgstr "Tehnološki uvjeti"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Detailed Behavior"
 msgstr "Detaljno ponašanje"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical Requirements"
-msgstr "Preduvjeti"
+msgstr "Logički uvjeti"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
@@ -1730,7 +1723,7 @@ msgstr "Uključeno"
 
 #: gaphor/templates/sysml.gaphor
 msgid "actuator"
-msgstr "aktuator"
+msgstr "upravljač"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Use Case Function #1"
@@ -1746,7 +1739,7 @@ msgstr "Druga radnja"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example System Requirement"
-msgstr "Primjer preduvjeta za sustav"
+msgstr "Primjer sustavskog uvjeta"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Sensed Data"
@@ -1762,15 +1755,15 @@ msgstr "Funkcionalno ponašanje granica"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Determine Actuator Command"
-msgstr "Naredba za određivanje aktuatora"
+msgstr "Naredba za određivanje upravljača"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Actuate Actuator"
-msgstr "Pokreni aktuatora"
+msgstr "Pokreni upravljač"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Example Technology Requirement"
-msgstr "Primjer preduvjeta za tehnologiju"
+msgstr "Primjer tehnološkog uvjeta"
 
 #: gaphor/templates/sysml.gaphor
 msgid "System"
@@ -1822,12 +1815,11 @@ msgstr "Događaj otkrivanja"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature Context"
-msgstr "Kontekst"
+msgstr "Kontekst značajke"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Read Input"
-msgstr "Stvoreno"
+msgstr "Čitaj unos"
 
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
@@ -1835,38 +1827,32 @@ msgid "FeatureInput"
 msgstr "Značajka"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Request Actuation"
-msgstr "Prva radnja"
+msgstr "Zatraži upravljač"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Actuation Command"
-msgstr "Naredba aktuatora"
+msgstr "Naredba pokretanja"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Model Navigation"
-msgstr "Nepoznata dostupnost"
+msgstr "Navigacija modela"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept"
-msgstr "Spojnica"
+msgstr "Koncept"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical"
-msgstr "Prijava"
+msgstr "Logika"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Pillar"
-msgstr ""
+msgstr "Stup"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Abstraction Level"
-msgstr "Apstrakt"
+msgstr "Razina apstrakcije"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
@@ -2022,7 +2008,7 @@ msgid ""
 "identifying user roles – actors – and\n"
 "associating them to their use cases."
 msgstr ""
-"Analiziraj funkcionalne preduvjete putem\n"
+"Analiziraj funkcionalne uvjete putem\n"
 "prepoznavanja korisničkih uloga (sudionika) i\n"
 "povezivanjem sudionika s njihovim slučajevima."
 
@@ -3363,4 +3349,3 @@ msgstr "Aktualiziraj vezu „{name}”"
 
 #~ msgid "System Requirements"
 #~ msgstr "Preduvjeti za sustav"
-
