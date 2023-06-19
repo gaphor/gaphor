@@ -9,8 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
 "PO-Revision-Date: 2023-06-20 14:53+0000\n"
-"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
-".org>\n"
+"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/es/>\n"
 "Language: es\n"
@@ -962,6 +961,11 @@ msgstr "Deshacer y rehacer"
 #: ../getting_started.md:125
 msgid "Undo a change press <kbd>Ctrl</kbd>+<kbd>z</kbd> or left-click on the back arrow at the top of the Property Editor. To re-do a change, hit <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> or press the forward arrow at the top of the Property Editor."
 msgstr ""
+"Para deshacer un cambio pulse <kbd>Ctrl</kbd>+<kbd>z</kbd> o haga clic con "
+"el botón izquierdo del ratón en la flecha para deshacer situada en la parte "
+"superior del Editor de Propiedades. Para rehacer un cambio, pulse "
+"<kbd>Ctrl</kbd>+<kbd>Mayús</kbd>+<kbd>z</kbd> o pulse la flecha de rehacer "
+"en la parte superior del Editor de propiedades."
 
 #: ../getting_started.md:132
 msgid "The Property Editor is present on the right side of the diagrams. When no item is selected in the diagram, it shows you some tips and tricks. When an item is selected on the diagram, it contains the item details like name, attributes and stereotypes. It can be opened with <kbd>F9</kbd> and the ![sidebar-show-right-symbolic](images/sidebar-show-right-symbolic.svg) icon in the header bar."
@@ -969,47 +973,52 @@ msgstr ""
 
 #: ../getting_started.md:132
 msgid "sidebar-show-right-symbolic"
-msgstr ""
+msgstr "sidebar-show-right-symbolic"
 
 #: ../getting_started.md:139
+#, fuzzy
 msgid "The properties that are shown depend on the item that is selected."
-msgstr ""
+msgstr "Las propiedades que se muestran dependen del elemento seleccionado."
 
 #: ../getting_started.md:141
 msgid "Model Preferences"
-msgstr ""
+msgstr "Preferencias del modelo"
 
 #: ../getting_started.md:143
 msgid "The Property Editor also contains model preferences: Click the ![document-properties-symbolic](images/document-properties-symbolic.svg) button. Here you can set a few model related settings and edit the [style sheet](style_sheets)."
 msgstr ""
+"El Editor de propiedades también contiene las preferencias del modelo: Haga "
+"clic en el botón ![document-properties-symbolic](images/document-properties-"
+"symbolic.svg). Aquí puede establecer algunos ajustes relacionados con el "
+"modelo y editar la [style sheet](style_sheets)."
 
 #: ../getting_started.md:143
 msgid "document-properties-symbolic"
-msgstr ""
+msgstr "document-properties-symbolic"
 
 #: ../index.rst:29
 msgid "Getting Started"
-msgstr ""
+msgstr "Primeros pasos"
 
 #: ../index.rst:36
 msgid "Features"
-msgstr ""
+msgstr "Funciones"
 
 #: ../index.rst:46
 msgid "Installation"
-msgstr ""
+msgstr "Instalación"
 
 #: ../index.rst:55
 msgid "Modeling languages"
-msgstr ""
+msgstr "Lenguajes de modelado"
 
 #: ../index.rst:65
 msgid "Concepts"
-msgstr ""
+msgstr "Conceptos"
 
 #: ../index.rst:75
 msgid "Internals"
-msgstr ""
+msgstr "Funcionamiento interno"
 
 #: ../index.rst:2
 msgid "About Gaphor"
