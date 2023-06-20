@@ -66,6 +66,7 @@ def install_plugin(args):
 
     return run_pip(
         "install",
+        "-vvv",
         "--force-reinstall",
         "--target",
         str(path),
@@ -85,6 +86,7 @@ def check_plugins(args):
 def argv(*args):
     orig_argv = list(sys.argv)
     sys.argv = list(args)
+    print("Running pip with argv", sys.argv)
     yield
     sys.argv = orig_argv
 
@@ -101,9 +103,46 @@ def pythonpath():
         del os.environ["PYTHONPATH"]
 
 
+@contextlib.contextmanager
+def pip_subprocess():
+    os.environ["_GAPHOR_PIP_RUNNING_IN_SUBPROCESS"] = "1"
+    yield
+    del os.environ["_GAPHOR_PIP_RUNNING_IN_SUBPROCESS"]
+
+
 def run_pip(*args):
-    with pythonpath(), argv("pip", *args):
+    with pythonpath(), pip_subprocess(), argv(sys.executable, *args):
         try:
             runpy.run_module("pip", run_name="__main__")
         except SystemExit as se:
             return se.code
+
+
+def run_pip_subprocess(*args) -> int:
+    # It's called as [sys.executable, "/path/to/pip", ...]
+    # We need to remove "/path/to/pip".
+
+    # TODO: from this argument, we need to find out what is the package or
+    # module we want to execute.
+    # substract the base path from argv[1], maybe remove the .py extension and replace "/" by ".".
+
+    print("run pip subprocess:", sys.argv)
+
+    base_path = os.path.dirname(sys.executable)
+    module = sys.argv[1]
+    del sys.argv[1]
+
+    if module.startswith(base_path):
+        module = module[len(base_path) + 1 :]
+    if module.endswith(".py"):
+        module = module[:-3].replace("/", ".")
+
+    print("running module:", module)
+    try:
+        runpy.run_module(module, run_name="__main__")
+    except SystemExit as se:
+        return se.code  # type: ignore[return-value]
+    return 0
+    # del sys.argv[1]
+
+    # runpy.run_module("pip", run_name="__main__")

@@ -13,6 +13,15 @@ LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 def main(argv=sys.argv) -> int:
     """Start Gaphor from the command line."""
 
+    # This is a workaround for plugin installs: pip launches
+    # subprocesses and we need to catch those, since we only
+    # have one main process when the app is packaged with
+    # PyInstaller.
+    if os.getenv("_GAPHOR_PIP_RUNNING_IN_SUBPROCESS") == "1":
+        from gaphor.plugins.manager import run_pip_subprocess
+
+        return run_pip_subprocess(sys.argv)
+
     logging_config()
 
     with enable_plugins(default_plugin_path()):

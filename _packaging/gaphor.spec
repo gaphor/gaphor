@@ -40,6 +40,27 @@ def collect_entry_points(*names):
     return hidden_imports
 
 
+import glob
+import pip
+from pip._internal.commands import commands_dict as pip_commands_dict
+
+pip_hiddenimports: list[str] = [
+    "pip.__main__",
+    "pip.__pip-runner__",
+    "pip._vendor.pyproject_hooks._in_process._in_process",
+    *(c.module_path for c in pip_commands_dict.values()),
+    "setuptools.build_meta",
+    "wheel.__main__",
+]
+
+pip_datas: list[tuple[str, str]] = [
+    (
+        str(Path(pip.__file__).parent / "_vendor" / "certifi" / "cacert.pem"),
+        "pip/_vendor/certifi",
+    )
+]
+
+
 a = Analysis(  # type: ignore
     ["../gaphor/__main__.py"],
     pathex=["../"],
@@ -63,6 +84,7 @@ a = Analysis(  # type: ignore
         ("../gaphor/ui/language-specs/*.lang", "gaphor/ui/language-specs"),
         ("../LICENSE.txt", "gaphor"),
         ("../gaphor/templates/*.gaphor", "gaphor/templates"),
+        *pip_datas,
     ]
     + ui_files
     + mo_files
@@ -77,12 +99,8 @@ a = Analysis(  # type: ignore
     + [
         "_cffi_backend",
         "babel.numbers",
-        "pip.__main__",
-        "pip._internal.commands.check",
-        "pip._internal.commands.install",
-        "pip._internal.commands.list",
-        "pip._internal.commands.uninstall",
-    ],
+    ]
+    + pip_hiddenimports,
     hooksconfig={
         "gi": {
             "module-versions": {
