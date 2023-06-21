@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-05-01 11:47+0000\n"
+"PO-Revision-Date: 2023-06-20 14:53+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/hr/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 4.18.1\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
@@ -1877,7 +1877,7 @@ msgstr "Tok elementa"
 #: ../models/sysml/Requirements.rst:2
 #: ../style_sheets.md:308
 msgid "Requirements"
-msgstr "Preduvjeti"
+msgstr "Uvjeti"
 
 #: ../models/uml.md:1
 msgid "Unified Modeling Language"
@@ -3411,7 +3411,7 @@ msgstr "Osnovni element"
 
 #: ../style_sheets.md:308
 msgid "Derive Requirement"
-msgstr "Izvedi preduvjet"
+msgstr "Izvedeni uvjet"
 
 #: ../style_sheets.md:308
 msgid "``derivedreq``"

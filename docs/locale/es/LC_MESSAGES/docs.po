@@ -8,665 +8,964 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2023-06-20 14:53+0000\n"
+"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
+"docs-gaphor-org/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.18.1\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
-msgstr ""
+msgstr "Protocolo de conexión"
 
 #: ../connect.md:3
 msgid "In Gaphor, if a connection is made on a diagram between an element and a relationship, the connection is also made at semantic level (the model). From a GUI point of view, a button release event is what kicks of the decision whether the connection is allowed."
 msgstr ""
+"En Gaphor, si se establece una conexión en un diagrama entre un elemento y "
+"una relación, la conexión también se establece a nivel semántico (el modelo)"
+". Desde el punto de vista de la interfaz gráfica de usuario, un evento de "
+"liberación de un botón es lo que da el pistoletazo de salida a la decisión "
+"de si se permite la conexión."
 
 #: ../connect.md:12
 msgid "The check if a connection is allowed should also check if it is valid to create a relation to/from the same element (like associations, but not generalizations)."
 msgstr ""
+"La comprobación de si se permite una conexión también debería comprobar si "
+"es válido crear una relación hacia/desde el mismo elemento (como las "
+"asociaciones, pero no las generalizaciones)."
 
 #: ../container.md:1
 msgid "Gaphor in a Container"
-msgstr ""
+msgstr "Gaphor en un contenedor"
 
 #: ../container.md:3
 msgid "Instead of setting up a development environment locally, the easiest way to contribute to the project is using GitHub Codespaces."
 msgstr ""
+"En lugar de crear un entorno de desarrollo local, la forma más sencilla de "
+"contribuir al proyecto es usar GitHub Codespaces."
 
 #: ../container.md:6
 msgid "GitHub Codespaces"
-msgstr ""
+msgstr "GitHub Codespaces"
 
 #: ../container.md:8
 msgid "Follow these steps to open Gaphor in a Codespace:"
-msgstr ""
+msgstr "Siga estos pasos para abrir Gaphor en un Codespace:"
 
 #: ../container.md:9
 msgid "Navigate to https://github.com/gaphor/gaphor"
-msgstr ""
+msgstr "Navegar hasta https://github.com/gaphor/gaphor"
 
 #: ../container.md:10
 msgid "Click the Code drop-down menu and select the **Open with Codespaces** option."
 msgstr ""
+"Haga clic en el menú desplegable Código y seleccione la opción **Abrir con "
+"Codespaces**."
 
 #: ../container.md:11
 msgid "Select **+ New codespace** at the bottom on the pane."
-msgstr ""
+msgstr "Seleccione **+ Codespace nuevo** en la parte inferior del panel."
 
 #: ../container.md:13
 msgid "For more info, check out the [GitHub documentation](https://docs.github.com/en/free-pro-team@latest/github/developing-online-with-codespaces/creating-a-codespace#creating-a-codespace)."
 msgstr ""
+"Para más información, consulte la [documentación de GitHub](https://docs."
+"github.com/es/free-pro-team@latest/github/developing-online-with-codespaces/"
+"creating-a-codespace#creating-a-codespace)."
 
 #: ../design_principles.md:1
 msgid "Design Principles"
-msgstr ""
+msgstr "Principios de diseño"
 
 #: ../design_principles.md:3
 msgid "Gaphor has been around for quite a few years. In those years we (the Gaphor developers) learned a few things on how to build it. Gaphor tries to be easily accessible for novice users as well as a useful tool for more experienced users."
 msgstr ""
+"Gaphor existe desde hace bastantes años. En esos años nosotros (los "
+"desarrolladores de Gaphor) aprendimos algunas cosas sobre cómo construirlo. "
+"Gaphor intenta ser fácilmente accesible para los usuarios principiantes, así "
+"como una herramienta útil para los usuarios más experimentados."
 
 #: ../design_principles.md:7
 msgid "Gaphor is not your average editor. It's a modeling environment. This implies there is a language underpinning the models. Languages adhere to rules and Gaphor tries to follow those rules."
 msgstr ""
+"Gaphor no es un editor al uso. Es un entorno de modelado. Esto implica que "
+"hay un lenguaje que sustenta los modelos. Los lenguajes se adhieren a reglas "
+"y Gaphor intenta seguir esas reglas."
 
 #: ../design_principles.md:11
 msgid "Usability is very important. When you're new to Gaphor, it should be easy to find your way around. Minimal knowledge of UML should at least allow you to create a class diagram."
 msgstr ""
+"La usabilidad es muy importante. Cuando se es nuevo en Gaphor, debe ser "
+"fácil orientarse. Un conocimiento mínimo de UML debería al menos permitirle "
+"crear un diagrama de clases."
 
 #: ../design_principles.md:15
 msgid "Guidance"
-msgstr ""
+msgstr "Orientación"
 
 #: ../design_principles.md:17
 msgid "To help users, Gaphor should provide guidance where it can."
 msgstr ""
+"Para ayudar a los usuarios, Gaphor debe proporcionar orientación siempre que "
+"pueda."
 
 #: ../design_principles.md:19
 msgid "Help with relationships"
-msgstr ""
+msgstr "Ayuda con las relaciones"
 
 #: ../design_principles.md:21
 msgid "The diagram has a feature that it grays out all elements a relationship can not connect to. This helps you to decide where a relation can connect to. You can still mix different elements, but we try to make it as simple as possible to make consistent models."
 msgstr ""
+"El diagrama muestra en gris todos los elementos a los que no puede "
+"conectarse una relación. Esto ayuda a decidir dónde puede conectarse una "
+"relación. Puede mezclar diferentes elementos, pero intentamos que sea lo más "
+"sencillo posible para crear modelos coherentes."
 
 #: ../design_principles.md:26
 msgid "Keep the model in sync"
-msgstr ""
+msgstr "Mantener el modelo sincronizado"
 
 #: ../design_principles.md:28
 msgid "An important part of modeling is to design a system in abstractions and be able to explain those to others. As systems become more complicated, it's important to have the design (model) layed out in diagrams."
 msgstr ""
+"Una parte importante del modelado es diseñar un sistema en abstracciones y "
+"ser capaz de explicarlas a otros. A medida que los sistemas se complican, es "
+"importante disponer del diseño (modelo) en diagramas."
 
 #: ../design_principles.md:32
 msgid "Gaphor goes through great lengths to keep the model in sync with the diagrams. In doing so, unused elements can be automatically removed from the model if they're no longer shown in any diagram."
 msgstr ""
+"Gaphor hace todo lo posible para mantener el modelo sincronizado con los "
+"diagramas. De este modo, los elementos no usados pueden eliminarse "
+"automáticamente del modelo si ya no se muestran en ningún diagrama."
 
 #: ../design_principles.md:36
 msgid "Out of your way"
-msgstr ""
+msgstr "Fuera de su camino"
 
 #: ../design_principles.md:38
 msgid "When modeling, you should be busy with your problem or solution domain, not with the tool. Gaphor tries to stay out of your way as much as possible. It does not try to nag you with error messages, because the model is not \"correct\"."
 msgstr ""
+"Al modelar, debe estar ocupado con su problema o dominio de solución, no con "
+"la herramienta. Gaphor intenta mantenerse al margen en la medida de lo "
+"posible. No trata de fastidiarle con mensajes de error, porque el modelo no "
+"es \"correcto\"."
 
 #: ../design_principles.md:42
 msgid "Avoid dialogs"
-msgstr ""
+msgstr "Evitar diálogos"
 
 #: ../design_principles.md:44
 msgid "In doing the right thing, and staying out of the way of users, Gaphor avoids the use of dialogs as much as possible."
 msgstr ""
+"Para hacer lo correcto y no estorbar a los usuarios, Gaphor evita en lo "
+"posible el uso de diálogos."
 
 #: ../design_principles.md:47
 msgid "Gaphor should allow you to do the sensible thing (see above) and not get you out of your flow with all sorts of questions."
 msgstr ""
+"Gaphor debe permitirle hacer lo más sensato (véase más arriba) y no sacarle "
+"de sus casillas con todo tipo de preguntas."
 
 #: ../design_principles.md:50
 msgid "Notify on changes"
-msgstr ""
+msgstr "Notificar cambios"
 
 #: ../design_principles.md:52
 msgid "When Gaphor is doing something that is not directly visible, you'll see a notification, for example, an element that's indirectly removed from the model. It will not interrupt you with dialogs, but only provide a small in-app notification. If the change is undesired, hit `undo`."
 msgstr ""
+"Cuando Gaphor está haciendo algo que no es directamente visible, verá una "
+"notificación, por ejemplo, un elemento que se elimina indirectamente del "
+"modelo. No le interrumpirá con diálogos, sino que sólo proporcionará una "
+"pequeña notificación en la aplicación. Si el cambio no es deseado, pulse "
+"`deshacer`."
 
 #: ../design_principles.md:57
 msgid "Balanced"
-msgstr ""
+msgstr "Equilibrado"
 
 #: ../design_principles.md:59
 msgid "Although Gaphor implements quite a bit of the UML 2 model, it's not complete. We try to find the right balance in features to suite both expert and novice modellers."
 msgstr ""
+"Aunque Gaphor implementa gran parte del modelo UML 2, no está completo. "
+"Intentamos encontrar el equilibrio adecuado en las características para "
+"satisfacer tanto a los modeladores expertos como a los principiantes."
 
 #: ../design_principles.md:63
 msgid "Continuity"
-msgstr ""
+msgstr "Continuidad"
 
 #: ../design_principles.md:65
 msgid "A model that is created should be usable in the future. Gaphor does acknowledge that. We care about compatibility."
 msgstr ""
+"Un modelo creado debe poder usarse en el futuro. Gaphor lo reconoce. Nos "
+"importa la compatibilidad."
 
 #: ../design_principles.md:68
 msgid "Backwards compatibility"
-msgstr ""
+msgstr "Compatibilidad con versiones anteriores"
 
 #: ../design_principles.md:70
 msgid "Gaphor is capable of loading models going back to Gaphor 1.0. It's important for a tool to always allow older models to be loaded."
 msgstr ""
+"Gaphor es capaz de cargar modelos que se remontan a Gaphor 1.0. Es "
+"importante que una herramienta siempre permita cargar modelos antiguos."
 
 #: ../design_principles.md:73
 msgid "Multi-platform"
-msgstr ""
+msgstr "Multiplataforma"
 
 #: ../design_principles.md:75
 msgid "We put a lot of effort in making Gaphor run on all major platforms: Windows, macOS, and Linux. Having Gaphor available on all platforms is essential if the model needs to be shared. It would be awful if you need to run one specific operating system in order to open a model."
 msgstr ""
+"Nos hemos esforzado mucho para que Gaphor funcione en las principales "
+"plataformas: Windows, macOS y Linux. Disponer de Gaphor en todas las "
+"plataformas es esencial si se quiere compartir el modelo. Sería horrible "
+"tener que ejecutar un sistema operativo específico para abrir un modelo."
 
 #: ../design_principles.md:80
 msgid "So far, we do not support the fourth major platform (web). Native applications provide a better user experience (once installed). But this may change."
 msgstr ""
+"Hasta ahora, no soportamos la cuarta plataforma principal (web). Las "
+"aplicaciones nativas ofrecen una mejor experiencia de usuario (una vez "
+"instaladas). Pero esto puede cambiar."
 
 #: ../design_principles.md:83
 msgid "User interaction"
-msgstr ""
+msgstr "Interacción del usuario"
 
 #: ../design_principles.md:85
 msgid "Gaphor is originally written on Linux. It uses [GTK](https://gtk.org) as it's user interface toolkit. This sort of implies that Gaphor follows the [GNOME Human Interface Guidelines (HIG)](https://developer.gnome.org/hig/). Gaphor is also a multi-platform application. We try to stay close to the GNOME HIG, but try not to introduce concepts that are not available on Windows and macOS."
 msgstr ""
+"Gaphor está escrito originalmente en Linux. Usa [GTK](https://gtk.org) como "
+"interfaz de usuario. Esto implica que Gaphor sigue las [GNOME Human "
+"Interface Guidelines (HIG)](https://developer.gnome.org/hig/). Gaphor es "
+"también una aplicación multiplataforma. Tratamos de mantenernos cerca de las "
+"HIG de GNOME, pero tratamos de no introducir conceptos que no están "
+"disponibles en Windows y macOS."
 
 #: ../design_principles.md:91
 msgid "User interface components are not generated. We found that UI generation (like many enterprise modeling tools do) provides an awful user experience. We want users to use Gaphor on a regular basis, so we aim for it to be a tool that's pleasant to look at and easy to work with."
 msgstr ""
+"No se generan componentes de interfaz de usuario. Nos dimos cuenta de que la "
+"generación de interfaz de usuario (al igual que muchas herramientas de "
+"modelado empresarial) proporciona una experiencia de usuario horrible. "
+"Queremos que los usuarios usen Gaphor con regularidad, así que nuestro "
+"objetivo es que sea una herramienta agradable a la vista y con la que sea "
+"fácil trabajar."
 
 #: ../design_principles.md:97
 msgid "What else?"
-msgstr ""
+msgstr "¿Qué más?"
 
 #: ../design_principles.md:99
 msgid "**Idempotency** Allow the same operation to be applied multiple times. This should not affect the result."
 msgstr ""
+"**Idempotencia** Permitir que la misma operación se aplique varias veces. "
+"Esto no debería afectar al resultado."
 
 #: ../design_principles.md:101
 msgid "**Event Driven** Gaphor is a user application. It acts to user events. The application uses an internal event dispatches (event bus) to distribute events to interested parties. Everyone should be able to listen to events."
 msgstr ""
+"**Dirigido por eventos** Gaphor es una aplicación de usuario. Actúa ante "
+"eventos del usuario. La aplicación usa un despachador de eventos interno ("
+"bus de eventos) para distribuir los eventos a las partes interesadas. Todo "
+"el mundo debe ser capaz de escuchar los eventos."
 
 #: ../event_system.md:1
 msgid "Event System"
-msgstr ""
+msgstr "Sistema de eventos"
 
 #: ../event_system.md:3
 msgid "The event system in Gaphor provides an API to *handle* events and to *subscribe* to events."
 msgstr ""
+"El sistema de eventos de Gaphor proporciona una API para *manejar* eventos y "
+"*suscribirse* a eventos."
 
 #: ../event_system.md:6
 msgid "In Gaphor we manage event handler subscriptions through the `EventManager` service. Gaphor is highly event driven:"
 msgstr ""
+"En Gaphor gestionamos las suscripciones a los manejadores de eventos a "
+"través del servicio `EventManager`. Gaphor está altamente orientado a "
+"eventos:"
 
 #: ../event_system.md:9
 msgid "Changes in the loaded model are emitted as events"
-msgstr ""
+msgstr "Los cambios en el modelo cargado se emiten como eventos"
 
 #: ../event_system.md:10
 msgid "Changes on diagrams are emitted as events"
-msgstr ""
+msgstr "Los cambios en los diagramas se emiten como eventos"
 
 #: ../event_system.md:11
 msgid "Changes in the UI are emitted as events"
-msgstr ""
+msgstr "Los cambios en la interfaz de usuario se emiten como eventos"
 
 #: ../event_system.md:13
 msgid "Although Gaphor depends heavily on GTK for its user interface, Gaphor is using its own event dispatcher. Events can be structured in hierarchies. For example, an `AttributeUpdated` event is a subtype of `ElementUpdated`. If we are interested in all changes to elements, we can also register `ElementUpdated` and receive all `AttributeUpdated` events as well."
 msgstr ""
+"Aunque Gaphor depende en gran medida de GTK para su interfaz de usuario, "
+"Gaphor usa su propio despachador de eventos. Los eventos se pueden "
+"estructurar en jerarquías. Por ejemplo, un evento `AttributeUpdated` es un "
+"subtipo de `ElementUpdated`. Si estamos interesados en todos los cambios en "
+"los elementos, también podemos registrar `ElementUpdated` y recibir todos "
+"los eventos `AttributeUpdated` también."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager:1
 msgid "The Event Manager."
-msgstr ""
+msgstr "El gestor de eventos."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.handle:1
 msgid "Send event notifications to registered handlers."
-msgstr ""
+msgstr "Enviar notificaciones de eventos a los manejadores registrados."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:1
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:1
 msgid "Register a handler."
-msgstr ""
+msgstr "Registrar un manejador."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:3
 msgid "Priority handlers are executed directly. They should not raise other events, cause that can cause a problem in the exection order."
 msgstr ""
+"Los manejadores de prioridad se ejecutan directamente. No deben lanzar otros "
+"eventos, porque eso puede causar un problema en el orden de ejecución."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:6
 msgid "It's basically to make sure that all events are recorded by the undo manager."
 msgstr ""
+"Es básicamente para asegurarse de que todos los eventos son registrados por "
+"el gestor de deshacer."
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.Service.shutdown:1
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.shutdown:1
 msgid "Shutdown the services, free resources."
-msgstr ""
+msgstr "Apagar los servicios, liberar recursos."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:3
 msgid "Handlers are triggered (executed) when specific events are emitted through the handle() method."
 msgstr ""
+"Los manejadores se accionan (ejecutan) cuando se emiten eventos específicos "
+"a través del método handle()."
 
 #: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.unsubscribe:1
 msgid "Unregister a previously registered handler."
-msgstr ""
+msgstr "Anula el registro de un manipulador previamente registrado."
 
 #: ../event_system.md:24
 msgid "Under the hood events are handled by the Generics library. For more information about how the Generic library handles events see the [Generic documentation](https://generic.readthedocs.io)."
 msgstr ""
+"Bajo el capó los eventos son manejados por la librería Generic. Para obtener "
+"más información sobre cómo la biblioteca Generic gestiona los eventos, "
+"consulte la [documentación de Generic](https://generic.readthedocs.io)."
 
 #: ../first_model.md:1
 msgid "Your First Model"
-msgstr ""
+msgstr "Su primer modelo"
 
 #: ../first_model.md:4
 msgid "In this tutorial we refer to the different parts of the gaphor interface: {ref}`Model Browser <getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}`Property Editor <getting_started:property editor>`."
 msgstr ""
+"En este tutorial hacemos referencia a las diferentes partes de la interfaz "
+"gaphor: {ref}`Navegador de modelos <getting_started:model browser>`, [Caja "
+"de herramientas](getting_started:toolbox), {ref}`Editor de propiedades "
+"<getting_started:property editor>`."
 
 #: ../first_model.md:8
 msgid "Although the names should speak for themselves, you can check out the [Getting Started](getting_started) page for more information about those sections."
 msgstr ""
+"Aunque los nombres deberían hablar por sí solos, puede consultar la página ["
+"Primeros pasos](getting_started) para obtener más información sobre estas "
+"secciones."
 
 #: ../first_model.md:12
 msgid "Once Gaphor is started, and you can start a new model with the _Generic_ template. The initial diagram is already open in the Diagram section."
 msgstr ""
+"Una vez iniciado Gaphor, puede iniciar un modelo nuevo con la plantilla "
+"_Genérico_. El diagrama inicial ya está abierto en la sección Diagrama."
 
 #: ../first_model.md:15
 msgid "Select an element you want to place, in this case a Class (![new class](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic.svg)) by clicking on the icon in the Toolbox and click on the diagram. This will place a new Class item instance on the diagram and add a new Class to the model -- it shows up in the Model Browser. The selected tool will reset itself to the Pointer tool after the element is placed on the diagram."
 msgstr ""
+"Seleccione un elemento que desee colocar, en este caso una Clase (![new "
+"class](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic."
+"svg)) haciendo clic en el icono en la Caja de herramientas y haga clic en el "
+"diagrama. Esto colocará una nueva instancia de elemento Clase en el diagrama "
+"y añadirá una Clase nueva al modelo -- se muestra en el Navegador de "
+"modelos. La herramienta seleccionada se restablecerá a la herramienta "
+"Puntero después de colocar el elemento en el diagrama."
 
 #: ../first_model.md:15
 msgid "newclass"
-msgstr ""
+msgstr "clasenueva"
 
 #: ../first_model.md:22
 msgid "The Property Editor on the right side will show you details about the newly added class, such as its name (_New Class_), attributes and operations (methods)."
 msgstr ""
+"El Editor de propiedades de la derecha le mostrará detalles sobre la clase "
+"recién añadida, como su nombre (_Clase nueva_), atributos y operaciones "
+"(métodos)."
 
 #: ../first_model.md:25
 msgid "![image](images/first-model-class.png)"
-msgstr ""
+msgstr "![imagen](images/first-model-class.png)"
 
 #: ../first_model.md:25
 #: ../first_model.md:48
 #: ../first_model.md:60
 msgid "image"
-msgstr ""
+msgstr "imagen"
 
 #: ../first_model.md:27
 msgid "It's simple to add elements to a diagram."
-msgstr ""
+msgstr "Añadir elementos a un diagrama es muy sencillo."
 
 #: ../first_model.md:29
 msgid "Gaphor does not make any assumptions about which elements should be placed on a diagram. A diagram is a diagram. UML defines all different kinds of diagrams, such as Class diagrams, Component diagrams, Action diagrams, Sequence diagrams. But Gaphor does not place any restrictions."
 msgstr ""
+"Gaphor no hace suposiciones sobre qué elementos deben colocarse en un "
+"diagrama. Un diagrama es un diagrama. UML define todos los diferentes tipos "
+"de diagramas, tales como diagramas de clase, diagramas de componentes, "
+"diagramas de acción, diagramas de secuencia. Pero Gaphor no impone ninguna "
+"restricción."
 
 #: ../first_model.md:34
 msgid "Adding Relations"
-msgstr ""
+msgstr "Añadir relaciones"
 
 #: ../first_model.md:36
 msgid "Add another Class. Change the names to `Shape` and `Circle`. Let's define that `Circle` is a sub-type of `Shape`. You can do this by selecting one and changing the name in the Property Editor, or by double-clicking the element."
 msgstr ""
+"Añada otra clase. Cambie los nombres a `Forma` y `Círculo`. Definamos que "
+"`Círculo` es un subtipo de `Forma`. Puede hacerlo seleccionando uno y "
+"cambiando el nombre en el Editor de propiedades, o haciendo doble clic en el "
+"elemento."
 
 #: ../first_model.md:40
 msgid "Select Generalization (![new generalization](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg))."
 msgstr ""
+"Seleccione Generalización (![generalización nueva](../gaphor/ui/icons/"
+"hicolor/scalable/actions/gaphor-generalization-symbolic.svg))."
 
 #: ../first_model.md:40
 msgid "newgeneralization"
-msgstr ""
+msgstr "generalizaciónnueva"
 
 #: ../first_model.md:43
 msgid "Move the mouse cursor over `Shape`. Click, hold and drag the line end over `Circle`. Release the mouse button, and you should have your relationship between `Shape` and `Circle`. You can see both ends of the relation are red, indicating they are connected to their class."
 msgstr ""
+"Mueva el cursor del ratón sobre `Forma`. Pulse, mantenga pulsado y arrastre "
+"el extremo de la línea sobre `Círculo`. Suelte el botón del ratón y tendrá "
+"la relación entre `Forma` y `Círculo`. Puede ver que ambos extremos de la "
+"relación están en rojo, indicando que están conectados a su clase."
 
 #: ../first_model.md:48
 msgid "![image](images/first-model-generalization.png)"
-msgstr ""
+msgstr "![imagen](images/first-model-generalization.png)"
 
 #: ../first_model.md:50
 msgid "Optionally you can run the auto-layout (![open menu](images/open-menu-symbolic.svg) → Tools → Auto Layout) to align the elements on the diagram."
 msgstr ""
+"Opcionalmente, puede ejecutar el diseño automático (![abrir menú](images/"
+"open-menu-symbolic.svg) → Herramientas → Diseño automático) para alinear los "
+"elementos en el diagrama."
 
 #: ../first_model.md:50
 msgid "openmenu"
-msgstr ""
+msgstr "abrirmenú"
 
 #: ../first_model.md:54
 msgid "Creating New Diagrams"
-msgstr ""
+msgstr "Crear diagramas nuevos"
 
 #: ../first_model.md:56
 msgid "To create a new diagram, use the Model Browser. Select the element that should contain the new diagram. For now, select _New Model_. Click the New Diagram menu (![new diagram](images/list-add-symbolic.svg)) in the header bar."
 msgstr ""
+"Para crear un diagrama nuevo, use el Navegador de modelos. Seleccione el "
+"elemento que debe contener el nuevo diagrama. Por ahora, seleccione _Modelo "
+"nuevo_. Haga clic en el menú Diagrama nuevo (![diagrama nuevo](images/list-"
+"add-symbolic.svg)) en la barra de cabecera."
 
 #: ../first_model.md:56
 msgid "new diagram"
-msgstr ""
+msgstr "diagrama nuevo"
 
 #: ../first_model.md:60
 msgid "![image](/images/first-model-new-diagram-popup.png)"
-msgstr ""
+msgstr "![imagen](/images/first-model-new-diagram-popup.png)"
 
 #: ../first_model.md:62
 msgid "Select _New Generic Diagram_ and a new diagram is created."
-msgstr ""
+msgstr "Seleccione _Diagrama genérico nuevo_ y se creará un diagrama nuevo."
 
 #: ../first_model.md:64
 msgid "Now drag the elements from the Model Browser onto the new diagram. First the classes `Shape` and `Circle`. Add the generalization last. Drop it somewhere between the two classes. The relation will be created to the diagram."
 msgstr ""
+"Ahora arrastre los elementos del Navegador de modelos al diagrama nuevo. "
+"Primero las clases `Forma` y `Círculo`. Añada la generalización en último "
+"lugar. Suéltela en algún lugar entre las dos clases. La relación se creará "
+"en el diagrama."
 
 #: ../first_model.md:68
 msgid "Now change the name of class `Circle` to `Ellipse`. Check the other diagram. The name has been changed there as well."
 msgstr ""
+"Ahora cambie el nombre de la clase `Círculo` por `Elipse`. Compruebe el otro "
+"diagrama. El nombre ha cambiado allí también."
 
 #: ../first_model.md:73
 msgid "Elements in a diagram are only a _representation_ of the elements in the underlying model. The model is what you see in the Model Browser."
 msgstr ""
+"Los elementos de un diagrama son sólo una _representación_ de los elementos "
+"del modelo subyacente. El modelo es lo que se ve en el Navegador de modelos."
 
 #: ../first_model.md:76
 msgid "Elements in the model are automatically removed when there are no more representations in any of the diagrams."
 msgstr ""
+"Los elementos del modelo se eliminan automáticamente cuando ya no hay "
+"representaciones en ninguno de los diagramas."
 
 #: ../framework.md:1
 msgid "Framework"
-msgstr ""
+msgstr "Framework"
 
 #: ../framework.md:3
 msgid "Overview"
-msgstr ""
+msgstr "Resumen"
 
 #: ../framework.md:5
 msgid "Gaphor is built in a light, service oriented fashion. The application is split in a series of services, such as a file, event, and undo managers. Those services are loaded based on entry points defined in the `pyproject.toml` file. To learn more about the architecture, please see the description about the [Service Oriented Architecture](service_oriented.md)."
 msgstr ""
+"Gaphor está construido de una manera ligera y orientada a servicios. La "
+"aplicación se divide en una serie de servicios, como un gestor de archivos, "
+"eventos y deshacer. Estos servicios se cargan en base a los puntos de "
+"entrada definidos en el archivo `pyproject.toml`. Para obtener más "
+"información sobre la arquitectura, consulte la descripción sobre la ["
+"Arquitectura Orientada a Servicios](service_oriented.md)."
 
 #: ../framework.md:11
 msgid "Event driven"
-msgstr ""
+msgstr "Dirigido por eventos"
 
 #: ../framework.md:13
 msgid "Parts of Gaphor communicate with each other through events. Whenever something important happens, for example, an attribute of a model element changes, an event is sent. When other parts of the application are interested in a change, they register an event handler for that event type. Events are emitted though a central broker so you do not have to register on every individual element that can send an event they are interested in. For example, a diagram item could register an event rule and then check if the element that sent the event is actually the event the item is representing. For more information see the full description of the [event system](event_system.md)."
 msgstr ""
+"Las partes de Gaphor se comunican entre sí mediante eventos. Cada vez que "
+"algo importante sucede, por ejemplo, un atributo de un elemento del modelo "
+"cambia, se envía un evento. Cuando otras partes de la aplicación están "
+"interesadas en un cambio, registran un controlador de eventos para ese tipo "
+"de evento. Los eventos se emiten a través de un intermediario central, por "
+"lo que no es necesario registrarse en cada elemento individual que pueda "
+"enviar un evento en el que estén interesados. Por ejemplo, un elemento de "
+"diagrama podría registrar una regla de evento y luego comprobar si el "
+"elemento que envió el evento es realmente el evento que el elemento está "
+"representando. Para más información, consulte la descripción completa del ["
+"sistema de eventos](event_system.md)."
 
 #: ../framework.md:23
 msgid "Transactional"
-msgstr ""
+msgstr "Transaccional"
 
 #: ../framework.md:25
 msgid "Gaphor is [transactional](transaction.md), which means it keeps track of the functions it performs as a series of transactions. The transactions work by sending an event when a transaction starts and sending another when a transaction ends. This allows, for example, the undo manager to keep a running log of the previous transactions so that a transaction can be reversed if the undo button is pressed."
 msgstr ""
+"Gaphor es [transaccional](transaction.md), lo que significa que mantiene un "
+"registro de las funciones que realiza como una serie de transacciones. Las "
+"transacciones funcionan enviando un evento cuando una transacción comienza y "
+"enviando otro cuando una transacción termina. Esto permite, por ejemplo, que "
+"el gestor de deshacer mantenga un registro de las transacciones anteriores "
+"para que una transacción pueda ser revertida si se pulsa el botón de "
+"deshacer."
 
 #: ../framework.md:32
 msgid "Main Components"
-msgstr ""
+msgstr "Componentes principales"
 
 #: ../framework.md:34
 msgid "The main portion of Gaphor that executes first is called the `Application`. Gaphor can have multiple models open at any time. Each model is kept in a `Session`. Only one Application instance is active. Each session will load its own services defined as [gaphor.services](service_oriented.md)."
 msgstr ""
+"La parte principal de Gaphor que se ejecuta primero se llama `Aplicación`. "
+"Gaphor puede tener varios modelos abiertos en cualquier momento. Cada modelo "
+"se mantiene en una `Sesión`. Sólo una instancia de la aplicación está "
+"activa. Cada sesión cargará sus propios servicios definidos como [gaphor."
+"services](service_oriented.md)."
 
 #: ../framework.md:40
 msgid "The most notable services are:"
-msgstr ""
+msgstr "Los servicios más destacados son:"
 
 #: ../framework.md:42
 msgid "event_manager"
-msgstr ""
+msgstr "gestor_de_eventos"
 
 #: ../framework.md:44
 msgid "This is the central component used for event dispatching. Every service that does something with events (both sending and receiving) depends on this component."
 msgstr ""
+"Este es el componente central usado para el envío de eventos. Cada servicio "
+"que hace algo con eventos (tanto enviar como recibir) depende de este "
+"componente."
 
 #: ../framework.md:48
 msgid "file_manager"
-msgstr ""
+msgstr "gestor_archivos"
 
 #: ../framework.md:50
 msgid "Loading and saving a model is done through this service."
-msgstr ""
+msgstr "La carga y guardado de un modelo se realiza a través de este servicio."
 
 #: ../framework.md:52
 msgid "element_factory"
-msgstr ""
+msgstr "fábrica_de_elementos"
 
 #: ../framework.md:54
 msgid "The [data model](models/core.md) itself is maintained in the element factory (`gaphor.core.modeling.elementfactory`). This service is used to create model elements, as well as to lookup elements or query for a set of elements."
 msgstr ""
+"El propio [modelo de datos](models/core.md) se mantiene en la fábrica de "
+"elementos (`gaphor.core.modeling.elementfactory`). Este servicio se usa para "
+"crear elementos del modelo, así como para buscar elementos o consultar un "
+"conjunto de elementos."
 
 #: ../framework.md:58
 msgid "undo_manager"
-msgstr ""
+msgstr "gestor_deshacer"
 
 #: ../framework.md:60
 msgid "One of the most appreciated services. It allows users to make a mistake every now and then!"
 msgstr ""
+"Uno de los servicios más apreciados. ¡Permite a los usuarios equivocarse de "
+"vez en cuando!"
 
 #: ../framework.md:63
 msgid "The undo manager is transactional. Actions performed by a user are only stored if a transaction is active. If a transaction is completed (committed) a new undo action is stored. Transactions can also be rolled back, in which case all changes are played back directly. For more information see the full description of the [undo manager](undo.md)."
 msgstr ""
+"El gestor de deshacer es transaccional. Las acciones realizadas por un "
+"usuario sólo se almacenan si hay una transacción activa. Si se completa una "
+"transacción (confirmada) se almacena una acción nueva de deshacer. Las "
+"transacciones también pueden revertirse, en cuyo caso todos los cambios se "
+"reproducen directamente. Para más información consulte la descripción "
+"completa del [gestor de deshacer](undo.md)."
 
 #: ../gaphor-services.md:5
 msgid "Example: Gaphor services"
-msgstr ""
+msgstr "Ejemplo: Servicios de Gaphor"
 
 #: ../gaphor-services.md:7
 msgid "In this example we're doing something a little less trivial. In Gaphor, services are defined as entry points. Each service is a class, and takes parameters with names that match other services. This allows services to depend on other services."
 msgstr ""
+"En este ejemplo estamos haciendo algo un poco menos trivial. En Gaphor, los "
+"servicios se definen como puntos de entrada. Cada servicio es una clase, y "
+"toma parámetros con nombres que coinciden con otros servicios. Esto permite "
+"que los servicios dependan de otros servicios."
 
 #: ../gaphor-services.md:12
 msgid "It looks something like this:"
-msgstr ""
+msgstr "Es algo parecido a esto:"
 
 #: ../gaphor-services.md:43
 msgid "Let's first load the entry points."
-msgstr ""
+msgstr "Carguemos primero los puntos de entrada."
 
 #: ../gaphor-services.md:53
 msgid "Now let's create a component in our model for every service."
-msgstr ""
+msgstr "Ahora vamos a crear un componente en nuestro modelo para cada servicio."
 
 #: ../gaphor-services.md:70
 msgid "With all components mapped, we can create dependencies between those components, based on the constructor parameter names."
 msgstr ""
+"Con todos los componentes mapeados, podemos crear dependencias entre esos "
+"componentes, basándonos en los nombres de los parámetros del constructor."
 
 #: ../gaphor-services.md:86
 msgid "With all elements in the model, we can create a diagram. Let's drop the components and dependencies on the diagram and let auto-layout do its magic."
 msgstr ""
+"Con todos los elementos en el modelo, podemos crear un diagrama. Vamos a "
+"soltar los componentes y las dependencias en el diagrama y dejar que el "
+"diseño automático haga su magia."
 
 #: ../gaphor-services.md:89
 msgid "To make the dependency look good, we have to add a style sheet. If you create a new diagram via the GUI, this element is automatically added."
 msgstr ""
+"Para que la dependencia se vea bien, tenemos que añadir una hoja de estilo. "
+"Si crea un diagrama nuevo a través de la interfaz gráfica de usuario, este "
+"elemento se añade automáticamente."
 
 #: ../gaphor-services.md:103
 msgid "Last step is to layout and draw the diagram."
-msgstr ""
+msgstr "El último paso consiste en maquetar y dibujar el diagrama."
 
 #: ../gaphor-services.md:113
 msgid "That's all. As you can see from the diagram, a lot of services rely on `EventManager`."
 msgstr ""
+"Eso es todo. Como puede ver en el diagrama, muchos servicios dependen de "
+"`EventManager`."
 
 #: ../getting_started.md:1
 msgid "Get Started with Gaphor"
-msgstr ""
+msgstr "Primeros pasos con Gaphor"
 
 #: ../getting_started.md:3
 msgid "Gaphor is more than a diagram editor: it's a modeling environment. Where simple diagram editors such as Microsoft Visio and [draw.io](https://draw.io) allow you to create pictures, Gaphor actually keeps track of the elements you add to the model. In Gaphor you can create diagrams to track and visualize different aspects of the system you're developing."
 msgstr ""
+"Gaphor es más que un editor de diagramas: es un entorno de modelado. "
+"Mientras que los editores de diagramas sencillos como Microsoft Visio y [draw"
+".io](https://draw.io) permiten crear imágenes, Gaphor realiza un seguimiento "
+"de los elementos que se añaden al modelo. En Gaphor puede crear diagramas "
+"para seguir y visualizar diferentes aspectos del sistema que está "
+"desarrollando."
 
 #: ../getting_started.md:9
 msgid "Enough talk, let's get started."
-msgstr ""
+msgstr "Dejémonos de cháchara, empecemos."
 
 #: ../getting_started.md:11
 msgid "You can find installers for Gaphor on the [Gaphor Website](https://gaphor.org/download). Gaphor can be installed on Linux (Flatpak, AppImage), Windows, and macOS."
 msgstr ""
+"Puede encontrar instaladores para Gaphor en el [sitio web de "
+"Gaphor](https://gaphor.org/download). Gaphor puede instalarse en Linux ("
+"Flatpak, AppImage), Windows y macOS."
 
 #: ../getting_started.md:14
 msgid "Once Gaphor is launched, it provides you a welcome screen. It shows you previously opened models and model templates."
 msgstr ""
+"Una vez que se inicia Gaphor, aparece una pantalla de bienvenida. En ella se "
+"muestran los modelos y plantillas de modelos abiertos anteriormente."
 
 #: ../getting_started.md:17
 msgid "![welcome screen](images/getting-started-greeter.png)"
-msgstr ""
+msgstr "![pantalla de bienvenida](images/getting-started-greeter.png)"
 
 #: ../getting_started.md:17
 msgid "welcome screen"
-msgstr ""
+msgstr "pantalla de bienvenida"
 
 #: ../getting_started.md:19
 msgid "You can select a template to get started."
-msgstr ""
+msgstr "Puede seleccionar una plantilla para empezar."
 
 #: ../getting_started.md:21
 msgid "**Generic:** a blank model to start with"
-msgstr ""
+msgstr "**Genérico:** un modelo en blanco para empezar"
 
 #: ../getting_started.md:22
 msgid "**UML:** A template for the *Unified Modeling Language* for modeling a software system"
 msgstr ""
+"**UML:** Una plantilla del *Lenguaje Unificado de Modelado* para modelar un "
+"sistema de software"
 
 #: ../getting_started.md:23
 msgid "**SysML:** A template for the *Systems Modeling Language* for modeling a wide range of systems and systems-of-systems"
 msgstr ""
+"**SysML:** Una plantilla del *Lenguaje de Modelado de Sistemas* para modelar "
+"una amplia gama de sistemas y sistemas de sistemas"
 
 #: ../getting_started.md:24
 msgid "**RAAML:** A template for the *Risk Analysis and Assessment Modeling language* for safety and reliability analysis"
 msgstr ""
+"**RAAML:** Una plantilla para el *Lenguaje de Modelado de Análisis y "
+"Evaluación de Riesgos* para análisis de seguridad y fiabilidad"
 
 #: ../getting_started.md:25
 msgid "**C4 Model:** A template for *Context, Containers, Components, and Code* which for lean modeling of software architecture"
 msgstr ""
+"**Modelo C4:** Una plantilla para *Contexto, Contenedores, Componentes y "
+"Código* que para el modelado lean de la arquitectura de software"
 
 #: ../getting_started.md:27
 msgid "Once the model interface is loaded you'll see the modeling interface."
-msgstr ""
+msgstr "Una vez cargada la interfaz del modelo, verá la interfaz de modelado."
 
 #: ../getting_started.md:29
 msgid "![new model](images/getting-started-new-model.png)"
-msgstr ""
+msgstr "![modelo nuevo](images/getting-started-new-model.png)"
 
 #: ../getting_started.md:29
 msgid "new model"
-msgstr ""
+msgstr "modelo nuevo"
 
 #: ../getting_started.md:31
 msgid "The layout of the Gaphor interface is divided into four sections, namely:"
-msgstr ""
+msgstr "La disposición de la interfaz Gaphor se divide en cuatro secciones:"
 
 #: ../getting_started.md:34
 #: ../getting_started.md:41
 msgid "Model Browser"
-msgstr ""
+msgstr "Modelo de navegador"
 
 #: ../getting_started.md:35
 msgid "Diagram Element Toolbox"
-msgstr ""
+msgstr "Caja de herramientas de elementos de diagrama"
 
 #: ../getting_started.md:36
 #: ../getting_started.md:80
 msgid "Diagrams"
-msgstr ""
+msgstr "Diagramas"
 
 #: ../getting_started.md:37
 #: ../getting_started.md:130
 msgid "Property Editor"
-msgstr ""
+msgstr "Editor de propiedades"
 
 #: ../getting_started.md:39
 msgid "Each section has its own specific function."
-msgstr ""
+msgstr "Cada sección tiene su función específica."
 
 #: ../getting_started.md:43
 msgid "The Model Browser section of the interface displays a hierarchical view of your model. Every model element you create will be inserted into the Model Browser. This view acts as a tree where you can expand and collapse different elements of your model. This provides an easy way to view the elements of your model from an elided perspective. That is, you can collapse those model elements that are irrelevant to the task at hand."
 msgstr ""
+"La sección Navegador de modelos de la interfaz muestra una vista jerárquica "
+"de su modelo. Cada elemento del modelo que cree se insertará en el Navegador "
+"de modelos. Esta vista actúa como un árbol en el que puede expandir y "
+"contraer diferentes elementos de su modelo. Esto proporciona una manera "
+"fácil de ver los elementos de su modelo desde una perspectiva elidida. Es "
+"decir, puede contraer aquellos elementos del modelo que son irrelevantes "
+"para la tarea que está realizando."
 
 #: ../getting_started.md:51
 msgid "In the figure above, you will see that there are two elements in the Model Browser. The root element, _New Model_ is a package. Notice the small arrow beside _New Model_ that is pointing downward. This indicates that the element is expanded. You will also notice the two sub-elements are slightly indented in relation to _New Model_. The _main_ element is a diagram."
 msgstr ""
+"En la figura anterior, verá que hay dos elementos en el Navegador de "
+"modelos. El elemento raíz, _Modelo nuevo_ es un paquete. Observe la pequeña "
+"flecha al lado de _Modelo nuevo_ que apunta hacia abajo. Esto indica que el "
+"elemento está expandido. También observará que los dos subelementos están "
+"ligeramente sangrados con respecto a _Modelo nuevo_. El elemento _principal_ "
+"es un diagrama."
 
 #: ../getting_started.md:58
 msgid "In the Model Browser view, you can also right-click the model elements to get a context menu. This context menu allows you to find out in which diagram model elements are shown, add new diagrams and packages, and delete an element."
 msgstr ""
+"En la vista del Navegador de modelos, también puede hacer clic con el botón "
+"derecho del ratón en los elementos del modelo para obtener un menú "
+"contextual. Este menú contextual le permite averiguar en qué diagrama se "
+"muestran los elementos del modelo, añadir nuevos diagramas y paquetes, y "
+"eliminar un elemento."
 
 #: ../getting_started.md:63
 msgid "Double-clicking on a diagram element will show it in the Diagram section. Elements such as classes and packages can be dragged from the tree view on the diagrams."
 msgstr ""
+"Haciendo doble clic en un elemento del diagrama se mostrará en la sección "
+"Diagrama. Los elementos como clases y paquetes pueden arrastrarse desde la "
+"vista en árbol a los diagramas."
 
 #: ../getting_started.md:67
 msgid "Toolbox"
-msgstr ""
+msgstr "Caja de herramientas"
 
 #: ../getting_started.md:69
 msgid "The toolbox is used to add new items to a diagram. Select the element you want to add by clicking on it. When you click on the diagram, the selected element is created. The arrow is selected again, so the element can be manipulated."
 msgstr ""
+"La caja de herramientas se usa para añadir elementos nuevos a un diagrama. "
+"Seleccione el elemento que desea añadir haciendo clic sobre él. Al hacer "
+"clic en el diagrama, se crea el elemento seleccionado. La flecha vuelve a "
+"estar seleccionada, por lo que el elemento puede manipularse."
 
 #: ../getting_started.md:73
 msgid "Tools can be selected by simply left-clicking on them. By default, the pointer tool is selected after every item placement. This can be changed by disabling the \"Reset tool\" option in the Preferences window. Tools can also be selected by keyboard shortcuts. The keyboard shortcut can be displayed as a tooltip by hovering over the tool button in the toolbox. Finally, it is also possible to drag elements on the Diagram from the toolbox."
 msgstr ""
+"Las herramientas pueden seleccionarse simplemente haciendo clic con el botón "
+"izquierdo del ratón sobre ellas. Por defecto, la herramienta puntero se "
+"selecciona después de cada colocación de un elemento. Esto puede cambiarse "
+"desactivando la opción \"Restablecer herramienta\" en la ventana de "
+"Preferencias. Las herramientas también pueden seleccionarse mediante atajos "
+"del teclado. El atajo del teclado puede mostrarse como información sobre la "
+"herramienta pasando el ratón por encima del botón de la herramienta en la "
+"caja de herramientas. Por último, también es posible arrastrar elementos "
+"sobre el Diagrama desde la caja de herramientas."
 
 #: ../getting_started.md:82
 msgid "The diagram section contains diagrams of the model and takes up the most space in the UI because it is where most of the modeling is done. Diagrams consist of items placed on the diagram. There are two main types of items:"
 msgstr ""
+"La sección de diagramas contiene diagramas del modelo y es la que ocupa más "
+"espacio en la interfaz de usuario porque es donde se realiza la mayor parte "
+"del modelado. Los diagramas constan de elementos colocados en el diagrama. "
+"Hay dos tipos principales de elementos:"
 
 #: ../getting_started.md:86
 #: ../getting_started.md:93
 msgid "Elements"
-msgstr ""
+msgstr "Elementos"
 
 #: ../getting_started.md:87
 msgid "Relationships"
-msgstr ""
+msgstr "Relaciones"
 
 #: ../getting_started.md:89
 msgid "Multiple diagrams can be opened at once: they are shown in tabs. Tabs can be closed by pressing <kbd>Ctrl</kbd>+<kbd>w</kbd> or left-clicking on the x in the diagram tab."
 msgstr ""
+"Se pueden abrir varios diagramas a la vez: se muestran en pestañas. Las "
+"pestañas se pueden cerrar pulsando <kbd>Ctrl</kbd>+<kbd>w</kbd> o haciendo "
+"clic con el botón izquierdo del ratón en la x de la pestaña del diagrama."
 
 #: ../getting_started.md:95
 msgid "Elements are the shapes that you add to a diagram, and together with Relations, allow you to build up a model."
 msgstr ""
+"Los elementos son las formas que se añaden a un diagrama y, junto con las "
+"Relaciones, permiten construir un modelo."
 
 #: ../getting_started.md:98
 msgid "To resize an element on the diagram, left-click on the element to select it and then drag the resize handles that appear at each corner."
 msgstr ""
+"Para cambiar el tamaño de un elemento del diagrama, haga clic con el botón "
+"izquierdo del ratón en el elemento para seleccionarlo y, a continuación, "
+"arrastre los tiradores de cambio de tamaño que aparecen en cada esquina."
 
 #: ../getting_started.md:101
 msgid "To move an element on the diagram, drag the element where you want to place it by pressing and holding the left mouse button, and moving the mouse before releasing the button."
 msgstr ""
+"Para mover un elemento en el diagrama, arrastre el elemento donde desee "
+"colocarlo manteniendo pulsado el botón izquierdo del ratón y moviendo el "
+"ratón antes de soltar el botón."
 
 #: ../getting_started.md:105
 msgid "Relations"
-msgstr ""
+msgstr "Relaciones"
 
 #: ../getting_started.md:107
 msgid "Relations are line-like elements that form relationships between elements in the diagram. Each end of a relation is in one of two states:"
 msgstr ""
+"Las relaciones son elementos en forma de línea que forman relaciones entre "
+"los elementos del diagrama. Cada extremo de una relación se encuentra en uno "
+"de dos estados:"
 
 #: ../getting_started.md:110
 msgid "Connected to an element and the handle turns red"
-msgstr ""
+msgstr "Conectado a un elemento y la manilla se vuelve roja"
 
 #: ../getting_started.md:111
 msgid "Disconnected from an element and the handle turns green"
-msgstr ""
+msgstr "Desconectado de un elemento y la manilla se vuelve verde"
 
 #: ../getting_started.md:113
 msgid "If both ends of a relation are disconnected, the relation can be moved by left-clicking and dragging it."
 msgstr ""
+"Si ambos extremos de una relación están desconectados, la relación puede "
+"desplazarse haciendo clic con el botón izquierdo del ratón y arrastrándola."
 
 #: ../getting_started.md:116
 msgid "A new segment in a relation can be added by left-clicking on the relation to select it and then by hovering your mouse over it. A green handle will appear in the middle of the line segments that exist. Drag the handle to add another segment. For example, when you first create a new relation, it will have only one segment. If you drag the segment handle, then it will now have two segments with the knee of the two segments where the handle was."
 msgstr ""
+"Se puede añadir un nuevo segmento en una relación haciendo clic con el botón "
+"izquierdo del ratón en la relación para seleccionarla y, a continuación, "
+"pasando el ratón por encima. Aparecerá un asa verde en medio de los "
+"segmentos de línea existentes. Arrastre el asa para añadir otro segmento. "
+"Por ejemplo, cuando se crea una nueva relación, ésta sólo tendrá un "
+"segmento. Si arrastra el asa del segmento, ahora tendrá dos segmentos con la "
+"rodilla de los dos segmentos donde estaba el asa."
 
 #: ../getting_started.md:123
 msgid "Undo and Redo"
-msgstr ""
+msgstr "Deshacer y rehacer"
 
 #: ../getting_started.md:125
 msgid "Undo a change press <kbd>Ctrl</kbd>+<kbd>z</kbd> or left-click on the back arrow at the top of the Property Editor. To re-do a change, hit <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> or press the forward arrow at the top of the Property Editor."
 msgstr ""
+"Para deshacer un cambio pulse <kbd>Ctrl</kbd>+<kbd>z</kbd> o haga clic con "
+"el botón izquierdo del ratón en la flecha para deshacer situada en la parte "
+"superior del Editor de Propiedades. Para rehacer un cambio, pulse "
+"<kbd>Ctrl</kbd>+<kbd>Mayús</kbd>+<kbd>z</kbd> o pulse la flecha de rehacer "
+"en la parte superior del Editor de propiedades."
 
 #: ../getting_started.md:132
 msgid "The Property Editor is present on the right side of the diagrams. When no item is selected in the diagram, it shows you some tips and tricks. When an item is selected on the diagram, it contains the item details like name, attributes and stereotypes. It can be opened with <kbd>F9</kbd> and the ![sidebar-show-right-symbolic](images/sidebar-show-right-symbolic.svg) icon in the header bar."
@@ -674,47 +973,52 @@ msgstr ""
 
 #: ../getting_started.md:132
 msgid "sidebar-show-right-symbolic"
-msgstr ""
+msgstr "sidebar-show-right-symbolic"
 
 #: ../getting_started.md:139
+#, fuzzy
 msgid "The properties that are shown depend on the item that is selected."
-msgstr ""
+msgstr "Las propiedades que se muestran dependen del elemento seleccionado."
 
 #: ../getting_started.md:141
 msgid "Model Preferences"
-msgstr ""
+msgstr "Preferencias del modelo"
 
 #: ../getting_started.md:143
 msgid "The Property Editor also contains model preferences: Click the ![document-properties-symbolic](images/document-properties-symbolic.svg) button. Here you can set a few model related settings and edit the [style sheet](style_sheets)."
 msgstr ""
+"El Editor de propiedades también contiene las preferencias del modelo: Haga "
+"clic en el botón ![document-properties-symbolic](images/document-properties-"
+"symbolic.svg). Aquí puede establecer algunos ajustes relacionados con el "
+"modelo y editar la [style sheet](style_sheets)."
 
 #: ../getting_started.md:143
 msgid "document-properties-symbolic"
-msgstr ""
+msgstr "document-properties-symbolic"
 
 #: ../index.rst:29
 msgid "Getting Started"
-msgstr ""
+msgstr "Primeros pasos"
 
 #: ../index.rst:36
 msgid "Features"
-msgstr ""
+msgstr "Funciones"
 
 #: ../index.rst:46
 msgid "Installation"
-msgstr ""
+msgstr "Instalación"
 
 #: ../index.rst:55
 msgid "Modeling languages"
-msgstr ""
+msgstr "Lenguajes de modelado"
 
 #: ../index.rst:65
 msgid "Concepts"
-msgstr ""
+msgstr "Conceptos"
 
 #: ../index.rst:75
 msgid "Internals"
-msgstr ""
+msgstr "Funcionamiento interno"
 
 #: ../index.rst:2
 msgid "About Gaphor"
