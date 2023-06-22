@@ -8,8 +8,9 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-06-20 14:53+0000\n"
-"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
+"PO-Revision-Date: 2023-06-21 19:49+0000\n"
+"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
+".org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/es/>\n"
 "Language: es\n"
@@ -976,7 +977,6 @@ msgid "sidebar-show-right-symbolic"
 msgstr "sidebar-show-right-symbolic"
 
 #: ../getting_started.md:139
-#, fuzzy
 msgid "The properties that are shown depend on the item that is selected."
 msgstr "Las propiedades que se muestran dependen del elemento seleccionado."
 
@@ -1022,259 +1022,354 @@ msgstr "Funcionamiento interno"
 
 #: ../index.rst:2
 msgid "About Gaphor"
-msgstr ""
+msgstr "Acerca de Gaphor"
 
 #: ../index.rst:6
 msgid "The documentation is up to date for Gaphor |version|"
-msgstr ""
+msgstr "La documentación está actualizada para Gaphor |version|"
 
 #: ../index.rst:8
 msgid "Gaphor is a UML and SysML modeling application written in Python. It is designed to be easy to use, while still being powerful. Gaphor implements a fully-compliant UML 2 data model, so it is much more than a picture drawing tool."
 msgstr ""
+"Gaphor es una aplicación de modelado UML y SysML escrita en Python. Está "
+"diseñado para ser fácil de usar, sin dejar de ser potente. Gaphor implementa "
+"un modelo de datos UML 2 totalmente compatible, por lo que es mucho más que "
+"una herramienta de dibujo de imágenes."
 
 #: ../index.rst:13
 msgid "You can use Gaphor to quickly visualize different aspects of a system as well as create complete, highly complex models."
 msgstr ""
+"Puede usar Gaphor para visualizar rápidamente distintos aspectos de un "
+"sistema, así como para crear modelos completos de gran complejidad."
 
 #: ../index.rst:18
 msgid "Gaphor is 100% Open source. The code and issue tracker can be found on `GitHub <https://github.com/gaphor/gaphor>`_."
 msgstr ""
+"Gaphor es 100% de código abierto. El código y el gestor de incidencias se "
+"encuentran en `GitHub <https://github.com/gaphor/gaphor>`_."
 
 #: ../index.rst:21
 msgid "What are you waiting for? :doc:`Let's get started <getting_started>`!"
-msgstr ""
+msgstr "¿A qué espera? :doc:`¡Comencemos <getting_started>`!"
 
 #: ../index.rst:23
 msgid "For download instructions, and the blog, please visit the `Gaphor Website <https://gaphor.org>`_."
 msgstr ""
+"Para obtener instrucciones de descarga y consultar el blog, visite el sitio "
+"web de `Gaphor <https://gaphor.org>`_."
 
 #: ../index.rst:26
 msgid "Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :doc:`Jupyter notebooks <scripting>`."
 msgstr ""
+"Gaphor tiene una excelente integración con :doc:`Sphinx <sphinx>` y :doc:`"
+"Jupyter notebooks <scripting>`."
 
 #: ../linux.md:1
 msgid "Gaphor on Linux"
-msgstr ""
+msgstr "Gaphor en Linux"
 
 #: ../linux.md:3
 msgid "Gaphor can be installed as Flatpak and AppImage on Linux, some distributions provide packages. Check out the [Gaphor download page](https://gaphor.org/download#linux) for details."
 msgstr ""
+"Gaphor se puede instalar como Flatpak y AppImage en Linux, algunas "
+"distribuciones proporcionan paquetes. Consulte la [página de descarga de "
+"Gaphor](https://gaphor.org/download#linux) para más detalles."
 
 #: ../linux.md:7
 #: ../macos.md:5
 #: ../windows.md:7
 msgid "Older releases are available from [GitHub](https://github.com/gaphor/gaphor/releases)."
 msgstr ""
+"Las versiones anteriores están disponibles en [GitHub](https://github.com/"
+"gaphor/gaphor/releases)."
 
 #: ../linux.md:9
 #: ../macos.md:7
 #: ../windows.md:9
 msgid "[CI builds](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml) are also available."
 msgstr ""
+"También están disponibles [construcciones CI](https://github.com/gaphor/"
+"gaphor/actions/workflows/full-build.yml)."
 
 #: ../linux.md:11
 #: ../macos.md:10
 #: ../windows.md:11
 msgid "Development Environment"
-msgstr ""
+msgstr "Entorno de desarrollo"
 
 #: ../linux.md:13
 msgid "There are two ways to set up a development environment:"
-msgstr ""
+msgstr "Hay dos formas de configurar un entorno de desarrollo:"
 
 #: ../linux.md:15
 msgid "[GNOME Builder](#gnome-builder), ideal for “drive by” contributions."
 msgstr ""
+"[GNOME Builder](#gnome-builder), ideal para contribuciones \"drive by\"."
 
 #: ../linux.md:16
 msgid "[A local environment](#a-local-environment)."
-msgstr ""
+msgstr "[Un entorno local](#a-local-environment)."
 
 #: ../linux.md:18
 msgid "GNOME Builder"
-msgstr ""
+msgstr "GNOME Builder"
 
 #: ../linux.md:20
 msgid "Open [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) 43 or newer, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository). Check if the _Build Profile_ is set to `org.gaphor.Gaphor.json`. If so, hit the _Run_ button to start the application."
 msgstr ""
+"Abra [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) 43 "
+"o más reciente, [clone el repositorio](https://help.github.com/en/github/"
+"creating-cloning-and-archiving-repositories/cloning-a-repository). Compruebe "
+"si la _Configuración activa_ está configurada como `org.gaphor.Gaphor.json`. "
+"Si es así, pulse el botón _Ejecutar_ para iniciar la aplicación."
 
 #: ../linux.md:25
 msgid "A Local Environment"
-msgstr ""
+msgstr "Un entorno local"
 
 #: ../linux.md:27
 msgid "To set up a development environment with Linux, you first need a fairly new Linux distribution version. For example, the latest Ubuntu LTS or newer, Arch, Debian Testing, SUSE Tumbleweed, or similar. Gaphor depends on newer versions of GTK, and we don't test for backwards compatibility. You will also need the latest stable version of Python. In order to get the latest stable version without interfering with your system-wide Python version, we recommend that you install [pyenv](https://github.com/pyenv/pyenv)."
 msgstr ""
+"Para configurar un entorno de desarrollo con Linux, primero necesita una "
+"versión de distribución de Linux bastante nueva. Por ejemplo, la última "
+"Ubuntu LTS o más reciente, Arch, Debian Testing, SUSE Tumbleweed, o similar. "
+"Gaphor depende de versiones más recientes de GTK, y no comprobamos la "
+"compatibilidad con versiones anteriores. También necesitará la última "
+"versión estable de Python. Para obtener la última versión estable sin "
+"interferir con la versión de Python de todo el sistema, le recomendamos que "
+"instale [pyenv](https://github.com/pyenv/pyenv)."
 
 #: ../linux.md:35
 msgid "Install the pyenv [prerequisites](https://github.com/pyenv/pyenv/wiki/Common-build-problems) first, and then install pyenv:"
 msgstr ""
+"Instale primero pyenv [prerrequisitos](https://github.com/pyenv/pyenv/wiki/"
+"Common-build-problems) y, a continuación, instale pyenv:"
 
 #: ../linux.md:42
 msgid "Make sure you follow the instruction at the end of the installation script to install the commands in your shell's rc file. Next install the latest version of Python by executing:"
 msgstr ""
+"Asegúrese de seguir las instrucciones al final del script de instalación "
+"para instalar los comandos en el archivo rc de su shell. A continuación "
+"instale la última versión de Python ejecutando:"
 
 #: ../linux.md:50
 msgid "Where 3.x.x is replaced by the latest stable version of Python (pyenv should let you tab-complete available versions)."
 msgstr ""
+"Donde 3.x.x se sustituye por la última versión estable de Python (pyenv "
+"debería permitirte completar por tabuladores las versiones disponibles)."
 
 #: ../linux.md:52
 msgid "Next install the Gaphor prerequisites by installing the gobject introspection and cairo build dependencies, for example, in Ubuntu execute:"
 msgstr ""
+"A continuación, instale los requisitos previos de Gaphor instalando las "
+"dependencias de gobject introspection y cairo build, por ejemplo, en Ubuntu "
+"execute:"
 
 #: ../linux.md:61
 #: ../macos.md:18
 msgid "Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/pipx/):"
 msgstr ""
+"Instale [Poetry](https://python-poetry.org) usando [pipx](https://pypa.github"
+".io/pipx/):"
 
 #: ../linux.md:66
 #: ../macos.md:23
 msgid "[Clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository)."
 msgstr ""
+"[Clonar el repositorio](https://help.github.com/en/github/"
+"creating-cloning-and-archiving-repositories/cloning-a-repository)."
 
 #: ../linux.md:79
 msgid "NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita >=1.2."
 msgstr ""
+"NOTA: Gaphor requiere GTK 4. Funciona mejor con GTK >=4.8 y libadwaita >=1.2."
 
 #: ../linux.md:81
 msgid "Create a Flatpak Package"
-msgstr ""
+msgstr "Crear un paquete Flatpak"
 
 #: ../linux.md:83
 msgid "The main method that Gaphor is packaged for Linux is with a Flatpak package. [Flatpak](https://flatpak.org) is a software utility for software deployment and package management for Linux. It offer a sandbox environment in which users can run application software in isolation from the rest of the system."
 msgstr ""
+"El principal método de empaquetado de Gaphor para Linux es con un paquete "
+"Flatpak. [Flatpak](https://flatpak.org) es una utilidad de software para el "
+"despliegue de software y la gestión de paquetes para Linux. Ofrece un "
+"entorno de aislamiento en el que los usuarios pueden ejecutar software de "
+"aplicación aislado del resto del sistema."
 
 #: ../linux.md:88
 msgid "We distribute the official Flatpak using [Flathub](https://flathub.org), and building of the image is done at the [Gaphor Flathub repository](https://github.com/flathub/org.gaphor.Gaphor)."
 msgstr ""
+"Distribuimos el Flatpak oficial usando [Flathub](https://flathub.org), y la "
+"construcción de la imagen se realiza en el [repositorio Gaphor "
+"Flathub](https://github.com/flathub/org.gaphor.Gaphor)."
 
 #: ../linux.md:92
 msgid "[Install Flatpak](https://flatpak.org/setup)"
-msgstr ""
+msgstr "[Instalar Flatpak](https://flatpak.org/setup)"
 
 #: ../linux.md:94
 msgid "Install flatpak-builder"
-msgstr ""
+msgstr "Instalar flatpak-builder"
 
 #: ../linux.md:98
 msgid "Install the GNOME SDK"
-msgstr ""
+msgstr "Instalar el SDK de GNOME"
 
 #: ../linux.md:102
 msgid "Clone the Flathub repository and install the necessary SDK:"
-msgstr ""
+msgstr "Clone el repositorio de Flathub e instale el SDK necesario:"
 
 #: ../linux.md:108
 msgid "Build Gaphor Flatpak"
-msgstr ""
+msgstr "Construir Gaphor Flatpak"
 
 #: ../linux.md:112
 msgid "Install the Flatpak"
-msgstr ""
+msgstr "Instalar el Flatpak"
 
 #: ../linux.md:116
 msgid "Create an AppImage Package"
-msgstr ""
+msgstr "Crear un paquete AppImage"
 
 #: ../linux.md:118
 msgid "[AppImage](https://appimage.org/) is a format for distributing portable software on Linux without needing superuser permissions to install the application. The AppImage file is one executable which contains both Gaphor and Python. It allows Gaphor to be run on any AppImage supported platform without installation or root access."
 msgstr ""
+"[AppImage](https://appimage.org/) es un formato para distribuir software "
+"portable en Linux sin necesidad de permisos de superusuario para instalar la "
+"aplicación. El archivo AppImage es un ejecutable que contiene tanto Gaphor "
+"como Python. Permite ejecutar Gaphor en cualquier plataforma compatible con "
+"AppImage sin necesidad de instalación o acceso de root."
 
 #: ../linux.md:124
 msgid "We build our AppImage by first bundling Gaphor with PyInstaller and then converting it in to an AppImage."
 msgstr ""
+"Construimos nuestra AppImage primero empaquetando Gaphor con PyInstaller y "
+"luego convirtiéndolo en una AppImage."
 
 #: ../linux.md:127
 msgid "In order for the built AppImage to be compatible with older versions of Linux, we build the release versions using Docker with an older LTS version of Ubuntu."
 msgstr ""
+"Para que la AppImage construida sea compatible con versiones antiguas de "
+"Linux, construimos las versiones de lanzamiento usando Docker con una "
+"versión LTS antigua de Ubuntu."
 
 #: ../linux.md:135
 msgid "Linux Distribution Packages"
-msgstr ""
+msgstr "Paquetes de distribución Linux"
 
 #: ../linux.md:137
 msgid "Examples of Gaphor and Gaphas RPM spec files can be found in [PLD Linux](https://www.pld-linux.org/) [repository](https://github.com/pld-linux/):"
 msgstr ""
+"Se pueden encontrar ejemplos de archivos de especificaciones RPM de Gaphor y "
+"Gaphas en [PLD Linux](https://www.pld-linux.org/) "
+"[repositorio](https://github.com/pld-linux/):"
 
 #: ../linux.md:141
 msgid "https://github.com/pld-linux/python-gaphas"
-msgstr ""
+msgstr "https://github.com/pld-linux/python-gaphas"
 
 #: ../linux.md:142
 msgid "https://github.com/pld-linux/gaphor"
-msgstr ""
+msgstr "https://github.com/pld-linux/gaphor"
 
 #: ../linux.md:144
 msgid "There is also an [Arch User Repository (AUR) for Gaphor](https://aur.archlinux.org/packages/python-gaphor) available for Arch users."
 msgstr ""
+"También hay un [Arch User Repository (AUR) para Gaphor](https://aur.archlinux"
+".org/packages/python-gaphor) disponible para los usuarios de Arch."
 
 #: ../linux.md:148
 msgid "Please, do not hesitate to contact us if you need help to create a Linux package for Gaphor or Gaphas."
 msgstr ""
+"No dude en ponerse en contacto con nosotros si necesita ayuda para crear un "
+"paquete Linux para Gaphor o Gaphas."
 
 #: ../macos.md:1
 msgid "Gaphor on macOS"
-msgstr ""
+msgstr "Gaphor en macOS"
 
 #: ../macos.md:3
 msgid "The latest release of Gaphor can be downloaded from the [Gaphor download page](https://gaphor.org/download#macos). Gaphor can also be installed as a [Homebrew cask](https://formulae.brew.sh/cask/gaphor)."
 msgstr ""
+"La última versión de Gaphor puede descargarse de la [página de descargas de "
+"Gaphor](https://gaphor.org/download#macos). Gaphor también puede instalarse "
+"como [Homebrew cask](https://formulae.brew.sh/cask/gaphor)."
 
 #: ../macos.md:12
 msgid "To setup a development environment with macOS:"
-msgstr ""
+msgstr "Para configurar un entorno de desarrollo con macOS:"
 
 #: ../macos.md:13
 msgid "Install [Homebrew](https://brew.sh)"
-msgstr ""
+msgstr "Instalar [Homebrew](https://brew.sh)"
 
 #: ../macos.md:14
 msgid "Open a terminal and execute:"
-msgstr ""
+msgstr "Abra un terminal y ejecute:"
 
 #: ../macos.md:32
 msgid "If PyGObject does not compile and complains about a missing `ffi.h` file, set the following environment variable and run `poetry install` again:"
 msgstr ""
+"Si PyGObject no compila y se queja de que falta el archivo `ffi.h`, "
+"establezca la siguiente variable de entorno y ejecute `poetry install` de "
+"nuevo:"
 
 #: ../macos.md:39
 msgid "Packaging for macOS"
-msgstr ""
+msgstr "Empaquetado para macOS"
 
 #: ../macos.md:41
 msgid "In order to create an exe installation package for macOS, we utilize [PyInstaller](https://pyinstaller.org) which analyzes Gaphor to find all the dependencies and bundle them in to a single folder."
 msgstr ""
+"Para crear un paquete de instalación exe para macOS, usamos "
+"[PyInstaller](https://pyinstaller.org) que analiza Gaphor para encontrar "
+"todas las dependencias y agruparlas en una única carpeta."
 
 #: ../macos.md:45
 msgid "Follow the instructions for settings up a development environment above"
 msgstr ""
+"Siga las instrucciones anteriores para configurar un entorno de desarrollo"
 
 #: ../macos.md:46
 msgid "Open a terminal and execute the following from the repository directory:"
 msgstr ""
+"Abra un terminal y ejecute lo siguiente desde el directorio del repositorio:"
 
 #: ../merge_conflicts.md:1
 msgid "Resolve Merge Conflicts"
-msgstr ""
+msgstr "Resolver conflictos de fusión"
 
 #: ../merge_conflicts.md:3
 msgid "Suppose you’re working on a model. If you create a change, while someone else has also made changes, there’s a fair chance you'll end up with a merge conflict."
 msgstr ""
+"Supongamos que está trabajando en un modelo. Si crea un cambio, mientras que "
+"otra persona también ha hecho cambios, hay una buena probabilidad de que "
+"termine con un conflicto de fusión."
 
 #: ../merge_conflicts.md:6
 msgid "Gaphor tries to make the changes to a model as small as possible: all elements are stored in the same order. However, since a Gaphor model is a persisted graph of objects, merging changes is not as simple as opening a text editor."
 msgstr ""
+"Gaphor intenta que los cambios en un modelo sean lo más pequeños posible: "
+"todos los elementos se almacenan en el mismo orden. Sin embargo, dado que un "
+"modelo Gaphor es un gráfico persistente de objetos, fusionar cambios no es "
+"tan sencillo como abrir un editor de texto."
 
 #: ../merge_conflicts.md:10
 msgid "From Gaphor 2.18 onwards Gaphor is also capable of merging models. Once a merge conflict has been detected, Gaphor will offer the option to open the current model, the incoming model or merge changes manually via the Merge Editor."
 msgstr ""
+"A partir de Gaphor 2.18, Gaphor también es capaz de fusionar modelos. Una "
+"vez detectado un conflicto de fusión, Gaphor ofrecerá la opción de abrir el "
+"modelo actual, el modelo entrante o fusionar los cambios manualmente a "
+"través del Editor de fusión."
 
 #: ../merge_conflicts.md:14
 msgid "![merge dialog](images/merge-dialog.png)"
-msgstr ""
+msgstr "![diálogo de fusión](images/merge-dialog.png)"
 
 #: ../merge_conflicts.md:14
 msgid "merge dialog"
-msgstr ""
+msgstr "diálogo de fusión"
 
 #: ../merge_conflicts.md:16
 msgid "If you choose *Open Merge Editor*, both models will be loaded. The current model remains as is. In addition, the changes made to the incoming model are calculated. Those changes are stored as _pending change_ objects in the model."
