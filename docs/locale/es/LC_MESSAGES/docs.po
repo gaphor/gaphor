@@ -8,9 +8,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-06-21 19:49+0000\n"
-"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
-".org>\n"
+"PO-Revision-Date: 2023-06-25 06:52+0000\n"
+"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/es/>\n"
 "Language: es\n"
@@ -971,6 +970,12 @@ msgstr ""
 #: ../getting_started.md:132
 msgid "The Property Editor is present on the right side of the diagrams. When no item is selected in the diagram, it shows you some tips and tricks. When an item is selected on the diagram, it contains the item details like name, attributes and stereotypes. It can be opened with <kbd>F9</kbd> and the ![sidebar-show-right-symbolic](images/sidebar-show-right-symbolic.svg) icon in the header bar."
 msgstr ""
+"El Editor de Propiedades está presente en la parte derecha de los diagramas. "
+"Cuando no hay ningún elemento seleccionado en el diagrama, le muestra "
+"algunos consejos y trucos. Cuando se selecciona un elemento en el diagrama, "
+"contiene los detalles del elemento como nombre, atributos y estereotipos. "
+"Puede abrirse con <kbd>F9</kbd> y el icono ![sidebar-show-right-symbolic]("
+"images/sidebar-show-right-symbolic.svg) de la barra de cabecera."
 
 #: ../getting_started.md:132
 msgid "sidebar-show-right-symbolic"
@@ -1374,118 +1379,171 @@ msgstr "diálogo de fusión"
 #: ../merge_conflicts.md:16
 msgid "If you choose *Open Merge Editor*, both models will be loaded. The current model remains as is. In addition, the changes made to the incoming model are calculated. Those changes are stored as _pending change_ objects in the model."
 msgstr ""
+"Si elige *Abrir editor de fusión*, se cargarán ambos modelos. El modelo "
+"actual permanece tal cual. Además, se calculan los cambios realizados en el "
+"modelo entrante. Esos cambios se almacenan como objetos _pending change_ en "
+"el modelo."
 
 #: ../merge_conflicts.md:20
 msgid "Pending changes are part of the model, you can save the model with changes and resolve those at a later point."
 msgstr ""
+"Los cambios pendientes forman parte del modelo, puede guardar el modelo con "
+"los cambios y resolverlos más adelante."
 
 #: ../merge_conflicts.md:23
 msgid "The Merge Editor is shown on the right side, replacing the (normal) Property Editor."
 msgstr ""
+"El Editor de Fusión se muestra a la derecha, sustituyendo al Editor de "
+"Propiedades (por defecto)."
 
 #: ../merge_conflicts.md:25
 msgid "![merge conflict window](images/merge-conflict-window.png)"
-msgstr ""
+msgstr "![merge conflict window](images/merge-conflict-window.png)"
 
 #: ../merge_conflicts.md:25
 msgid "merge conflict window"
-msgstr ""
+msgstr "Ventana de fusionar conflictos"
 
 #: ../merge_conflicts.md:27
 msgid "Merge actions are grouped by diagram, where possible. When you apply a change, all changes listed as children are also applied. Once changes are applied, they can only be reverted by undoing the change (hit _Undo_)."
 msgstr ""
+"Las acciones de fusión se agrupan por diagrama, siempre que sea posible. "
+"Cuando se aplica un cambio, también se aplican todos los cambios listados "
+"como dependientes. Una vez aplicados los cambios, solo pueden revertirse "
+"deshaciendo el cambio (pulse _Deshacer_)."
 
 #: ../merge_conflicts.md:32
 msgid "The Merge Editor replaces the Property Editor, as long as there are pending changes in the model."
 msgstr ""
+"El Editor de fusiones sustituye al Editor de propiedades, siempre que haya "
+"cambios pendientes en el modelo."
 
 #: ../merge_conflicts.md:34
 msgid "It is concidered good practice to resolve the merge conflict before you continue modeling."
 msgstr ""
+"Se considera una buena práctica resolver el conflicto de fusión antes de "
+"seguir modelando."
 
 #: ../merge_conflicts.md:37
 msgid "When all conflicts have been resolved, press *Resolve* to finish merge conflict resolution."
 msgstr ""
+"Cuando se hayan resuelto todos los conflictos, pulse *Resolver* para "
+"finalizar la resolución de conflictos de fusión."
 
 #: ../modeling_language.md:1
 msgid "Modeling Languages"
-msgstr ""
+msgstr "Lenguajes de modelado"
 
 #: ../modeling_language.md:3
 msgid "Since version 2.0, Gaphor supports the concept of Modeling languages. This allows for development of separate modeling languages separate from the Gaphor core application."
 msgstr ""
+"Desde la versión 2.0, Gaphor soporta el concepto de lenguajes de modelado. "
+"Esto permite el desarrollo de lenguajes de modelado independientes de la "
+"aplicación central de Gaphor."
 
 #: ../modeling_language.md:7
 msgid "The main language was, and will be UML. Gaphor now also supports a subset of SysML, RAAML and the C4 model."
 msgstr ""
+"El lenguaje principal era y será UML. Ahora Gaphor también admite un "
+"subconjunto de SysML, RAAML y el modelo C4."
 
 #: ../modeling_language.md:10
 msgid "A modeling language in Gaphor is defined by a class implementing the `gaphor.abc.ModelingLanguage` abstract base class. The modeling language should be registered as a `gaphor.modelinglanguage` entry point."
 msgstr ""
+"Un lenguaje de modelado en Gaphor se define por una clase que implementa la "
+"clase base abstracta `gaphor.abc.ModelingLanguage`. El lenguaje de modelado "
+"debe ser registrado como un punto de entrada `gaphor.modelinglanguage`."
 
 #: ../modeling_language.md:14
 msgid "The `ModelingLanguage` interface is fairly minimal. It allows other services to look up elements and diagram items, as well as a toolbox, and diagram types. However, the responsibilities of a modeling language do not stop there. Parts of functionality will be implemented by registering handlers to a set of generic functions."
 msgstr ""
+"La interfaz `ModelingLanguage` es bastante mínima. Permite que otros "
+"servicios busquen elementos y elementos de diagramas, así como una caja de "
+"herramientas y tipos de diagramas. Sin embargo, las responsabilidades de un "
+"lenguaje de modelado no terminan ahí. Partes de la funcionalidad se "
+"implementarán mediante el registro de manejadores a un conjunto de funciones "
+"genéricas."
 
 #: ../modeling_language.md:20
 msgid "But let's not get ahead of ourselves. What is the functionality a modeling language implementation can offer?"
 msgstr ""
+"Pero no nos adelantemos. ¿Cuál es la funcionalidad que puede ofrecer la "
+"aplicación de un lenguaje de modelado?"
 
 #: ../modeling_language.md:23
 msgid "A data model (elements) and diagram items"
-msgstr ""
+msgstr "Un modelo de dato (elementos) y elementos de esquema"
 
 #: ../modeling_language.md:24
 msgid "Diagram types"
-msgstr ""
+msgstr "Tipos de diagramas"
 
 #: ../modeling_language.md:25
 msgid "A toolbox definition"
-msgstr ""
+msgstr "Una definición de caja de herramientas"
 
 #: ../modeling_language.md:26
 msgid "[Connectors](#connectors), allow diagram items to connect"
-msgstr ""
+msgstr "[Conectores](#conectores), permite conectar elementos del diagrama"
 
 #: ../modeling_language.md:27
 msgid "[Copy/paste](#copy-and-paste) behavior when element copying is not trivial, for example with more than one element is involved"
 msgstr ""
+"Comportamiento [Copiar/pegar](#copiar-y-pegar) cuando la copia de elementos "
+"no es trivial, por ejemplo, cuando hay más de un elemento implicado"
 
 #: ../modeling_language.md:29
 msgid "[Grouping](#grouping), allow elements to be nested in one another"
-msgstr ""
+msgstr "[Agrupación](#agrupación), permite anidar elementos entre sí"
 
 #: ../modeling_language.md:30
 msgid "[Dropping](#dropping), allow elements to be dragged from the tree view onto a diagram"
 msgstr ""
+"[Dropping](#dropping), permitir que los elementos se arrastren desde la "
+"vista de árbol a un diagrama"
 
 #: ../modeling_language.md:31
 msgid "[Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent"
 msgstr ""
+"[Reglas de limpieza automática](#automated-model-cleanup) para mantener la "
+"coherencia del modelo"
 
 #: ../modeling_language.md:33
 msgid "The first three by functionalities are exposed by the `ModelingLanguage` class. The other functionalities can be extended by adding handlers to the respective generic functions."
 msgstr ""
+"Las tres primeras funcionalidades están expuestas por la clase "
+"`ModelingLanguage`. Las otras funcionalidades pueden ampliarse añadiendo "
+"manejadores a las respectivas funciones genéricas."
 
 #: ../modeling_language.md:37
 msgid "Modeling languages can also provide new UI components. Those components are not loaded directly when you import a modeling language package. Instead they should be imported via the `gaphor.modules` entrypoint."
 msgstr ""
+"Los lenguajes de modelado también pueden proporcionar nuevos componentes de "
+"interfaz de usuario. Estos componentes no se cargan directamente al importar "
+"un paquete de lenguaje de modelado. En su lugar, deben importarse a través "
+"del punto de entrada `gaphor.modules`."
 
 #: ../modeling_language.md:41
 msgid "[Editor pages](#editor-property-pages), shown in the collapsible pane on the right side"
 msgstr ""
+"[Páginas del editor](#editor-property-pages), que se muestran en el panel "
+"desplegable de la derecha"
 
 #: ../modeling_language.md:42
 msgid "[Instant (diagram) editor popups](#instant-diagram-editor-popups)"
 msgstr ""
+"[Ventanas emergentes instantáneas del editor (de diagramas)](#instant-"
+"diagram-editor-popups)"
 
 #: ../modeling_language.md:43
 msgid "Special diagram interactions"
-msgstr ""
+msgstr "Interacciones especiales de diagramas"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage:1
 msgid "A model provider is a special service that provides an entrypoint to a model implementation, such as UML, SysML, RAAML."
 msgstr ""
+"Un proveedor de modelos es un servicio especial que proporciona un punto de "
+"entrada a una implementación de modelo, como UML, SysML, RAAML."
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.diagram_types:1
 msgid "Iterate diagram types."
@@ -1776,23 +1834,23 @@ msgstr ""
 
 #: ../models/raaml/Core.rst:5
 msgid "Core Library/Any Situation"
-msgstr ""
+msgstr "Biblioteca central/Cualquier situación"
 
 #: ../models/raaml/Core.rst:11
 msgid "Core Profile/Controlling Measure"
-msgstr ""
+msgstr "Perfil básico/Medida de control"
 
 #: ../models/raaml/Core.rst:17
 msgid "Core Profile/Relevant To"
-msgstr ""
+msgstr "Perfil básico/Relevante para"
 
 #: ../models/raaml/Core.rst:23
 msgid "Core Profile/Situation"
-msgstr ""
+msgstr "Perfil básico/Situación"
 
 #: ../models/raaml/Core.rst:29
 msgid "Core Profile/Violates"
-msgstr ""
+msgstr "Perfil básico/Viola"
 
 #: ../models/raaml/General.rst:2
 msgid "General"
@@ -1804,87 +1862,87 @@ msgstr ""
 
 #: ../models/raaml/General.rst:11
 msgid "General Concepts Library/Abstract Cause"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/Causa abstracta"
 
 #: ../models/raaml/General.rst:17
 msgid "General Concepts Library/Abstract Effect"
-msgstr ""
+msgstr "Biblioteca de Conceptos generales/Efecto Abstracto"
 
 #: ../models/raaml/General.rst:23
 msgid "General Concepts Library/Abstract Event"
-msgstr ""
+msgstr "Biblioteca de Conceptos generales/Efecto Abstracto"
 
 #: ../models/raaml/General.rst:29
 msgid "General Concepts Library/Abstract Failure Mode"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/Modo de error abstracto"
 
 #: ../models/raaml/General.rst:35
 msgid "General Concepts Library/Abstract Risk"
-msgstr ""
+msgstr "Biblioteca de Conceptos generales/Riesgo Abstracto"
 
 #: ../models/raaml/General.rst:41
 msgid "General Concepts Library/Activation"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/activación"
 
 #: ../models/raaml/General.rst:47
 msgid "General Concepts Library/Cause"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/causa"
 
 #: ../models/raaml/General.rst:53
 msgid "General Concepts Library/Dysfunctional Event"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/Evento disfuncional"
 
 #: ../models/raaml/General.rst:59
 msgid "General Concepts Library/Effect"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/Efecto"
 
 #: ../models/raaml/General.rst:65
 msgid "General Concepts Library/Error Propagation"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/propagación de errores"
 
 #: ../models/raaml/General.rst:71
 msgid "General Concepts Library/Error Realization"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/Realización de errores"
 
 #: ../models/raaml/General.rst:77
 msgid "General Concepts Library/Harm Potential"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/Potencial de daño"
 
 #: ../models/raaml/General.rst:83
 msgid "General Concepts Library/Hazard"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/Peligros"
 
 #: ../models/raaml/General.rst:89
 msgid "General Concepts Library/Scenario"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/escenario"
 
 #: ../models/raaml/General.rst:95
 msgid "General Concepts Library/Undesired State"
-msgstr ""
+msgstr "Biblioteca de conceptos generales/Estado no deseado"
 
 #: ../models/raaml/General.rst:101
 msgid "General Concepts Profile/Detection"
-msgstr ""
+msgstr "Perfil de Conceptos Generales/Detección"
 
 #: ../models/raaml/General.rst:107
 msgid "General Concepts Profile/Failure State"
-msgstr ""
+msgstr "Perfil de Conceptos Generales/Estado de fallo"
 
 #: ../models/raaml/General.rst:113
 msgid "General Concepts Profile/Mitigation"
-msgstr ""
+msgstr "Perfil de Conceptos Generales/Mitigación"
 
 #: ../models/raaml/General.rst:119
 msgid "General Concepts Profile/Prevention"
-msgstr ""
+msgstr "Perfil de Conceptos Generales/Prevención"
 
 #: ../models/raaml/General.rst:125
 msgid "General Concepts Profile/Recommendation"
-msgstr ""
+msgstr "Perfil de Conceptos Generales/Recomendación"
 
 #: ../models/raaml/General.rst:131
 msgid "General Concepts Profile/Undeveloped"
-msgstr ""
+msgstr "Perfil de Conceptos Generales/Sin Desarrollar"
 
 #: ../models/raaml/Methods.rst:2
 msgid "Methods"
@@ -1892,23 +1950,23 @@ msgstr ""
 
 #: ../models/raaml/Methods.rst:5
 msgid "FTA/FTA Library/Events/Basic Event"
-msgstr ""
+msgstr "FTA/FTA Biblioteca/Eventos/Eventos básicos"
 
 #: ../models/raaml/Methods.rst:11
 msgid "FTA/FTA Library/Events/Conditional Event"
-msgstr ""
+msgstr "FTA/FTA Biblioteca/Eventos/Eventos condicionales"
 
 #: ../models/raaml/Methods.rst:17
 msgid "FTA/FTA Library/Events/Dormant Event"
-msgstr ""
+msgstr "FTA/FTA Biblioteca/Eventos/Evento inactivo"
 
 #: ../models/raaml/Methods.rst:23
 msgid "FTA/FTA Library/Events/Events"
-msgstr ""
+msgstr "FTA/FTA Biblioteca/Eventos/Eventos"
 
 #: ../models/raaml/Methods.rst:29
 msgid "FTA/FTA Library/Events/Event"
-msgstr ""
+msgstr "FTA/FTA Biblioteca/Eventos/Evento"
 
 #: ../models/raaml/Methods.rst:35
 msgid "FTA/FTA Library/Events/House Event"
