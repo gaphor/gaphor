@@ -9,7 +9,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
 "PO-Revision-Date: 2023-06-25 06:52+0000\n"
-"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
+"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
+".org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/es/>\n"
 "Language: es\n"
@@ -1547,235 +1548,305 @@ msgstr ""
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.diagram_types:1
 msgid "Iterate diagram types."
-msgstr ""
+msgstr "Iterar tipos de diagramas."
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.lookup_element:1
 msgid "Look up a model element type by (class) name."
-msgstr ""
+msgstr "Buscar un tipo de elemento del modelo por nombre (de clase)."
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.name:1
 msgid "Human-readable name of the modeling language."
-msgstr ""
+msgstr "Nombre legible del lenguaje de modelado."
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.toolbox_definition:1
 msgid "Get structure for the toolbox."
-msgstr ""
+msgstr "Obtener estructura para la caja de herramientas."
 
 #: ../modeling_language.md:51
 msgid "Connectors"
-msgstr ""
+msgstr "Conectores"
 
 #: ../modeling_language.md:53
 msgid "Connectors are used to connect one element to another."
-msgstr ""
+msgstr "Los conectores sirven para unir un elemento con otro."
 
 #: ../modeling_language.md:55
 msgid "Connectors should adhere to the `ConnectorProtocol`. Normally you would inherit from `BaseConnector`."
 msgstr ""
+"Los conectores deben adherirse al `ConnectorProtocol`. Normalmente se hereda "
+"de `BaseConnector`."
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:1
 msgid "Connection adapter for Gaphor diagram items."
-msgstr ""
+msgstr "Adaptador de conexión para elementos del diagrama Gaphor."
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:3
 msgid "Line item ``line`` connects with a handle to a connectable item ``element``."
 msgstr ""
+"El elemento de línea ``line`` se conecta con un manejador a un elemento "
+"conectable ``element``."
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:0
 msgid "Parameters"
-msgstr ""
+msgstr "Parámetros"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:5
 msgid "connecting item"
-msgstr ""
+msgstr "elemento de conexión"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:7
 msgid "connectable item"
-msgstr ""
+msgstr "elemento conectable"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:10
 msgid "The following methods are required to make this work:"
-msgstr ""
+msgstr "Para que esto funcione se necesitan los siguientes métodos:"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:12
 msgid "``allow()``: is the connection allowed at all (during mouse movement for example)."
 msgstr ""
+"``allow()``: si la conexión está permitida (durante el movimiento del ratón, "
+"por ejemplo)."
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:13
 msgid "``connect()``: Establish a connection between element and line. Also takes care of disconnects, if required (e.g. 1:1 relationships)"
 msgstr ""
+"``connect()``: Establece una conexión entre elemento y línea. También se "
+"encarga de las desconexiones, si es necesario (por ejemplo, relaciones 1:1)"
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:15
 msgid "``disconnect()``: Break connection, called when dropping a handle on a point where it can not connect."
 msgstr ""
+"``disconnect()``: Rompe la conexión, se llama cuando se suelta un manejador "
+"en un punto donde no se puede conectar."
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:18
 msgid "By convention the adapters are registered by (element, line) -- in that order."
 msgstr ""
+"Por convención, los adaptadores se registran por (elemento, línea) -- en ese "
+"orden."
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.allow:1
 msgid "Determine if items can be connected."
-msgstr ""
+msgstr "Determina si los elementos pueden conectarse."
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.allow:3
 msgid "Returns `True` if connection is allowed."
-msgstr ""
+msgstr "Devuelve `True` si la conexión está permitida."
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.connect:1
 msgid "Connect to an element. Note that at this point the line may be connected to some other, or the same element. The connection at model level also still exists."
 msgstr ""
+"Conectar a un elemento. Tenga en cuenta que en este punto la línea puede "
+"estar conectada a algún otro, o al mismo elemento. La conexión a nivel de "
+"modelo también sigue existiendo."
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.connect:5
 msgid "Returns `True` if a connection is established."
-msgstr ""
+msgstr "Devuelve `True` si se ha establecido una conexión."
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.disconnect:1
 msgid "Disconnect model level connections."
-msgstr ""
+msgstr "Desconecte las conexiones de nivel de modelo."
 
 #: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.get_connected:1
 msgid "Get item connected to a handle."
-msgstr ""
+msgstr "Obtener elemento conectado a un manejador."
 
 #: ../modeling_language.md:63
 msgid "Copy and paste"
-msgstr ""
+msgstr "Copiar y pegar"
 
 #: ../modeling_language.md:65
 msgid "Copy and paste works out of the box for simple items: one diagram item with one model element (the `subject`). It leveages the `load()` and `save()` methods of the elements to ensure all relevant data is copied."
 msgstr ""
+"Copiar y pegar funciona para elementos simples: un elemento del diagrama con "
+"un elemento del modelo (el `sujeto`). Usa los métodos `load()` y `save()` de "
+"los elementos para asegurarse de que se copian todos los datos relevantes."
 
 #: ../modeling_language.md:68
 msgid "Sometimes items need more than one model element to work. For example an Association: it has two association ends."
 msgstr ""
+"A veces los elementos necesitan más de un elemento del modelo para "
+"funcionar. Por ejemplo una asociación: tiene dos extremos de asociación."
 
 #: ../modeling_language.md:70
 msgid "In those specific cases you need to implement your own copy and paste functions. To create such a thing you'll need to create two functions: one for copying and one for pasting."
 msgstr ""
+"En esos casos específicos necesita implementar sus propias funciones de "
+"copiar y pegar. Para crear algo así necesitará crear dos funciones: una para "
+"copiar y otra para pegar."
 
 #: ../modeling_language.md:76
 msgid "Create a copy of an element (or list of elements). The returned type should be distinct, so the `paste()` function can properly dispatch."
 msgstr ""
+"Crea una copia de un elemento (o lista de elementos). El tipo devuelto debe "
+"ser distinto, para que la función `paste()` pueda despacharse correctamente."
 
 #: ../modeling_language.md:82
 msgid "Paste previously copied data. Based on the data type created in the ``copy()`` function, try to duplicate the copied elements. Returns the newly created item or element"
 msgstr ""
+"Pega los datos copiados previamente. Basándose en el tipo de datos creado en "
+"la función ``copy()``, intenta duplicar los elementos copiados. Devuelve el "
+"elemento o ítem recién creado"
 
 #: ../modeling_language.md:88
 msgid "Create a copy of the Presentation element, but try to link the underlying model element. A shallow copy."
 msgstr ""
+"Crea una copia del elemento presentación, pero intenta vincular el elemento "
+"modelo subyacente. Una copia superficial."
 
 #: ../modeling_language.md:93
 msgid "Create a copy of both Presentation and model element. A deep copy."
 msgstr ""
+"Crea una copia tanto de la presentación como del elemento modelo. Una copia "
+"profunda."
 
 #: ../modeling_language.md:96
 msgid "To serialize the copied elements and deserialize them again, there are two functions available:"
 msgstr ""
+"Para serializar los elementos copiados y deserializarlos de nuevo, hay dos "
+"funciones disponibles:"
 
 #: ../modeling_language.md:101
 msgid "Return a serialized version of a value. If the ``value`` is an element, it's referenced."
 msgstr ""
+"Devuelve una versión serializada de un valor. Si el ``valor`` es un "
+"elemento, se hace referencia a él."
 
 #: ../modeling_language.md:106
 msgid "Deserialize a value previously serialized with ``serialize()``. The ``lookup`` function is used to resolve references to other elements."
 msgstr ""
+"Deserializa un valor previamente serializado con ``serialize()``. La función "
+"``lookup`` se usa para resolver referencias a otros elementos."
 
 #: ../modeling_language.md:110
 msgid "Grouping"
-msgstr ""
+msgstr "Agrupación"
 
 #: ../modeling_language.md:112
 msgid "Grouping is done by dragging one item on top of another, in a diagram or in the tree view."
 msgstr ""
+"La agrupación se realiza arrastrando un elemento sobre otro, en un diagrama "
+"o en la vista en árbol."
 
 #: ../modeling_language.md:117
 msgid "Group an element in a parent element. The grouping can be based on ownership, but other types of grouping are also possible."
 msgstr ""
+"Agrupa un elemento en un elemento padre. La agrupación puede basarse en la "
+"propiedad, pero también son posibles otros tipos de agrupación."
 
 #: ../modeling_language.md:122
 msgid "Remove the grouping from an element. The function needs to check if the provided `parent` node is the right one."
 msgstr ""
+"Elimina la agrupación de un elemento. La función necesita comprobar si el "
+"nodo `parent` proporcionado es el correcto."
 
 #: ../modeling_language.md:127
 msgid "This function tries to determine if grouping is possible, without actually performing a group operation. This is not 100% accurate."
 msgstr ""
+"Esta función intenta determinar si la agrupación es posible, sin realizar "
+"realmente una operación de agrupación. Esto no es 100% preciso."
 
 #: ../modeling_language.md:132
 msgid "Dropping"
-msgstr ""
+msgstr "Soltando"
 
 #: ../modeling_language.md:134
 msgid "Dropping is performed by dragging an element from the tree view and drop it on a diagram. This is an easy way to extend a diagram with already existing model elements."
 msgstr ""
+"El soltado se realiza arrastrando un elemento desde la vista de árbol y "
+"soltándolo en un diagrama. Se trata de una forma sencilla de ampliar un "
+"diagrama con elementos de modelo ya existentes."
 
 #: ../modeling_language.md:140
 msgid "The drop function creates a new presentation for an element on the diagram. For relationships, a drop only works if both connected elements are present in the same diagram."
 msgstr ""
+"La función de soltar crea una nueva presentación para un elemento en el "
+"diagrama. Para las relaciones, soltar sólo funciona si los dos elementos "
+"conectados están presentes en el mismo diagrama."
 
 #: ../modeling_language.md:144
 msgid "The big difference with dragging an element from the toolbox, is that dragging from the toolbox will actually place a new ``Presentation`` element on the diagram. ``drop`` works the other way around: it starts with a model element and creates an accompanying ``Presentation``."
 msgstr ""
+"La gran diferencia con arrastrar un elemento desde la caja de herramientas, "
+"es que arrastrar desde la caja de herramientas colocará un nuevo elemento de "
+"``Presentación`` en el diagrama. ``drop`` funciona al revés: comienza con un "
+"elemento del modelo y crea una ``Presentación`` que lo acompaña."
 
 #: ../modeling_language.md:149
 msgid "Automated model cleanup"
-msgstr ""
+msgstr "Limpieza automática de modelos"
 
 #: ../modeling_language.md:151
 msgid "Gaphor wants to keep the model in sync with the diagrams."
-msgstr ""
+msgstr "Gaphor quiere mantener el modelo sincronizado con los diagramas."
 
 #: ../modeling_language.md:153
 msgid "A little dispatch function is used to determine if a model element can be removed."
 msgstr ""
+"Se usa una pequeña función de envío para determinar si se puede eliminar un "
+"elemento del modelo."
 
 #: ../modeling_language.md:158
 msgid "Determine if a model element can safely be removed."
-msgstr ""
+msgstr "Determina si un elemento del modelo puede eliminarse con seguridad."
 
 #: ../modeling_language.md:161
 msgid "Editor property pages"
-msgstr ""
+msgstr "Páginas de propiedades del editor"
 
 #: ../modeling_language.md:163
 msgid "The editor page is constructed from snippets. For example: almost each element has a name, so there is a UI snippet that allows you to edit a name."
 msgstr ""
+"La página del editor se construye a partir de fragmentos. Por ejemplo: casi "
+"todos los elementos tienen un nombre, por lo que hay un fragmento de IU que "
+"permite editar un nombre."
 
 #: ../modeling_language.md:166
 msgid "Each property page (snippet) should inherit from `PropertyPageBase`."
 msgstr ""
+"Cada página de propiedades (fragmento) debe heredar de `PropertyPageBase`."
 
 #: ../../gaphor/diagram/propertypages.py:docstring of gaphor.diagram.propertypages.PropertyPageBase:1
 msgid "A property page which can display itself in a notebook."
-msgstr ""
+msgstr "Una página de propiedades que puede mostrarse en un cuaderno."
 
 #: ../../gaphor/diagram/propertypages.py:docstring of gaphor.diagram.propertypages.PropertyPageBase.construct:1
 msgid "Create the page (Gtk.Widget) that belongs to the Property page."
-msgstr ""
+msgstr "Crea la página (Gtk.Widget) que pertenece a la página propiedad."
 
 #: ../../gaphor/diagram/propertypages.py:docstring of gaphor.diagram.propertypages.PropertyPageBase.construct:3
 msgid "Returns the page's toplevel widget (Gtk.Widget)."
-msgstr ""
+msgstr "Devuelve el widget de nivel superior de la página (Gtk.Widget)."
 
 #: ../modeling_language.md:173
 msgid "Instant (diagram) editor popups"
-msgstr ""
+msgstr "Ventanas emergentes instantáneas del editor (de diagramas)"
 
 #: ../modeling_language.md:175
 msgid "When you double click on an item in a diagram, a popup can show up so you can easily change the name."
 msgstr ""
+"Cuando hace doble clic en un elemento de un diagrama, puede aparecer una "
+"ventana emergente para que pueda cambiar el nombre fácilmente."
 
 #: ../modeling_language.md:177
 msgid "By default this works for any named element. You can register your own inline editor function if you need to."
 msgstr ""
+"Por defecto esto funciona para cualquier elemento con nombre. Puede "
+"registrar su propia función de editor en línea si lo necesita."
 
 #: ../modeling_language.md:182
 msgid "Show a small editor popup in the diagram. Makes for easy editing without resorting to the Element editor."
 msgstr ""
+"Muestra una pequeña ventana emergente del editor en el diagrama. Facilita la "
+"edición sin recurrir al editor de elementos."
 
 #: ../modeling_language.md:185
 msgid "In case of a mouse press event, the mouse position (relative to the element) are also provided."
 msgstr ""
+"En el caso de un evento de pulsación del ratón, también se proporciona la "
+"posición del ratón (relativa al elemento)."
 
 #: ../models/c4model.md:1
 #: ../style_sheets.md:301
@@ -1784,53 +1855,67 @@ msgstr ""
 #: ../style_sheets.md:304
 #: ../style_sheets.md:305
 msgid "C4 Model"
-msgstr ""
+msgstr "Modelo C4"
 
 #: ../models/c4model.md:3
 msgid "The [C4 model](https://c4model.com/) is a simple visual language to describe the static structure of a software system."
 msgstr ""
+"El [modelo C4](https://c4model.com/) es un lenguaje visual sencillo para "
+"describir la estructura estática de un sistema de software."
 
 #: ../models/c4model.md:5
 msgid "It’s based on the [UML](uml.md) language."
-msgstr ""
+msgstr "Se basa en el lenguaje [UML](uml.md)."
 
 #: ../models/core.md:1
 msgid "Modeling Language Core"
-msgstr ""
+msgstr "Lenguaje de modelado básico"
 
 #: ../models/core.md:3
 msgid "The Core modeling language is the the basis for any other language."
-msgstr ""
+msgstr "El lenguaje de modelado Core es la base de cualquier otro lenguaje."
 
 #: ../models/core.md:5
 msgid "The `Element` class acts as the root for all gaphor domain classes. `Diagram` and `Presentation` form the basis for everything you see in a diagram."
 msgstr ""
+"La clase `Element` actúa como raíz de todas las clases de dominio gaphor. "
+"Las clases `Diagram` y `Presentation` forman la base de todo lo que se ve en "
+"un diagrama."
 
 #: ../models/core.md:9
 msgid "All data models in Gaphor are generated from actual Gaphor model files. This allows us to provide you nice diagrams of Gaphor’s internal model."
 msgstr ""
+"Todos los modelos de datos en Gaphor se generan a partir de archivos de "
+"modelo reales de Gaphor. Esto nos permite ofrecerle bonitos diagramas del "
+"modelo interno de Gaphor."
 
 #: ../models/core.md:16
 msgid "The `Element` base class provides event notification and integrates with the model repository (internally known as `ElementFactory`). Bi-directional relationships are also possible, as well as derived relations."
 msgstr ""
+"La clase base `Element` proporciona notificación de eventos y se integra con "
+"el repositorio del modelo (conocido internamente como `ElementFactory`). Las "
+"relaciones bidireccionales también son posibles, así como las relaciones "
+"derivadas."
 
 #: ../models/raaml.md:10
 #: ../models/sysml.md:9
 #: ../models/uml.md:15
 msgid "Packages"
-msgstr ""
+msgstr "Paquetes"
 
 #: ../models/raaml.md:1
 msgid "Risk Analysis and Assessment Modeling Language"
-msgstr ""
+msgstr "Lenguaje de modelización de análisis y evaluación de riesgos"
 
 #: ../models/raaml.md:3
 msgid "Gaphor implements parts of the [RAAML 1.0 specification](https://www.omg.org/spec/RAAML)."
 msgstr ""
+"Gaphor implementa partes de la [especificación RAAML 1.0](https://www.omg."
+"org/spec/RAAML)."
 
 #: ../models/raaml/Core.rst:2
 msgid "Core"
-msgstr ""
+msgstr "Core"
 
 #: ../models/raaml/Core.rst:5
 msgid "Core Library/Any Situation"
@@ -1854,11 +1939,11 @@ msgstr "Perfil básico/Viola"
 
 #: ../models/raaml/General.rst:2
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: ../models/raaml/General.rst:5
 msgid "Basic Event"
-msgstr ""
+msgstr "Evento básico"
 
 #: ../models/raaml/General.rst:11
 msgid "General Concepts Library/Abstract Cause"
@@ -1946,7 +2031,7 @@ msgstr "Perfil de Conceptos Generales/Sin Desarrollar"
 
 #: ../models/raaml/Methods.rst:2
 msgid "Methods"
-msgstr ""
+msgstr "Métodos"
 
 #: ../models/raaml/Methods.rst:5
 msgid "FTA/FTA Library/Events/Basic Event"
@@ -2110,19 +2195,21 @@ msgstr ""
 
 #: ../models/sysml.md:1
 msgid "Systems Modeling Language"
-msgstr ""
+msgstr "Lenguaje de modelado de sistemas"
 
 #: ../models/sysml.md:3
 msgid "Gaphor implements part of the [SysML 1.6](https://www.omg.org/spec/SysML) specification."
 msgstr ""
+"Gaphor implementa parte de la especificación [SysML 1.6](https://www.omg.org/"
+"spec/SysML)."
 
 #: ../models/sysml/Activities.rst:2
 msgid "Activities"
-msgstr ""
+msgstr "Actividades"
 
 #: ../models/sysml/Allocations.rst:2
 msgid "Allocations"
-msgstr ""
+msgstr "Asignaciones"
 
 #: ../models/sysml/Allocations.rst:5
 msgid "AllocatedActivityPartition"
@@ -2130,29 +2217,29 @@ msgstr ""
 
 #: ../models/sysml/Allocations.rst:11
 msgid "Allocation"
-msgstr ""
+msgstr "Asignación"
 
 #: ../models/sysml/Blocks.rst:2
 #: ../style_sheets.md:306
 #: ../style_sheets.md:307
 msgid "Blocks"
-msgstr ""
+msgstr "Bloques"
 
 #: ../models/sysml/Blocks.rst:8
 msgid "Adjunt and Classifier Behavior Properties"
-msgstr ""
+msgstr "Propiedades de comportamiento de adjetivos y clasificadores"
 
 #: ../models/sysml/Blocks.rst:14
 msgid "Bound References"
-msgstr ""
+msgstr "Referencias vinculantes"
 
 #: ../models/sysml/Blocks.rst:20
 msgid "Connector Ends"
-msgstr ""
+msgstr "Extremos del conector"
 
 #: ../models/sysml/Blocks.rst:26
 msgid "Properties"
-msgstr ""
+msgstr "Propiedades"
 
 #: ../models/sysml/Blocks.rst:32
 msgid "Property Paths"
@@ -2160,15 +2247,15 @@ msgstr ""
 
 #: ../models/sysml/Blocks.rst:38
 msgid "Property-Specific Types"
-msgstr ""
+msgstr "Tipos específicos de propiedad"
 
 #: ../models/sysml/Blocks.rst:44
 msgid "Property Strings"
-msgstr ""
+msgstr "Cadenas de propiedades"
 
 #: ../models/sysml/Blocks.rst:50
 msgid "Value Types"
-msgstr ""
+msgstr "Tipos de valores"
 
 #: ../models/sysml/ConstraintBlocks.rst:2
 msgid "ConstraintBlocks"
@@ -2176,7 +2263,7 @@ msgstr ""
 
 #: ../models/sysml/Libraries.rst:2
 msgid "Libraries"
-msgstr ""
+msgstr "Bibliotecas"
 
 #: ../models/sysml/ModelElements.rst:2
 msgid "ModelElements"
@@ -2188,216 +2275,222 @@ msgstr ""
 
 #: ../models/sysml/PortsAndFlows.rst:5
 msgid "Actions on Nested Ports"
-msgstr ""
+msgstr "Acciones en puertos anidados"
 
 #: ../models/sysml/PortsAndFlows.rst:11
 msgid "Port Stereotypes"
-msgstr ""
+msgstr "Estereotipos del puerto"
 
 #: ../models/sysml/PortsAndFlows.rst:17
 msgid "Property Value Change Events"
-msgstr ""
+msgstr "Eventos de cambio de valor de la propiedad"
 
 #: ../models/sysml/PortsAndFlows.rst:23
 msgid "Provided and Required Features"
-msgstr ""
+msgstr "Funciones previstas y necesarias"
 
 #: ../models/sysml/PortsAndFlows.rst:29
 msgid "Item Flow"
-msgstr ""
+msgstr "Flujo de elementos"
 
 #: ../models/sysml/Requirements.rst:2
 #: ../style_sheets.md:308
 msgid "Requirements"
-msgstr ""
+msgstr "Requisitos"
 
 #: ../models/uml.md:1
 msgid "Unified Modeling Language"
-msgstr ""
+msgstr "Lenguaje Unificado de Modelado"
 
 #: ../models/uml.md:3
 msgid "The UML model is the most extensive model in Gaphor. It is used as a base language for [SysML](sysml.md), [RAAML](raaml.md), and [C4](c4model.md)."
 msgstr ""
+"El modelo UML es el más extenso de Gaphor. Se usa como lenguaje base para "
+"[SysML](sysml.md), [RAAML](raaml.md), y [C4](c4model.md)."
 
 #: ../models/uml.md:7
 msgid "Gaphor follows the [official UML 2.5.1 data model](https://www.omg.org/spec/UML/). Where changes have been made a comment has been added to the model. In particular where _m:n_ relationships subset _1:n_ relationships."
 msgstr ""
+"Gaphor sigue el [modelo oficial de datos UML 2.5.1](https://www.omg.org/spec/"
+"UML/). Cuando se han realizado cambios, se ha añadido un comentario al "
+"modelo. En particular, cuando las relaciones _m:n_ sustituyen a las "
+"relaciones _1:n_."
 
 #: ../models/uml/01._Common_Structure.rst:2
 msgid "01. Common Structure"
-msgstr ""
+msgstr "01. Estructura común"
 
 #: ../models/uml/01._Common_Structure.rst:5
 msgid "1. Root"
-msgstr ""
+msgstr "1. Raíz"
 
 #: ../models/uml/01._Common_Structure.rst:11
 msgid "2. Templates"
-msgstr ""
+msgstr "2. Plantillas"
 
 #: ../models/uml/01._Common_Structure.rst:13
 msgid "Not implemented."
-msgstr ""
+msgstr "No implementado."
 
 #: ../models/uml/01._Common_Structure.rst:16
 msgid "3. Namespaces"
-msgstr ""
+msgstr "3. Espacios de nombres"
 
 #: ../models/uml/01._Common_Structure.rst:22
 msgid "4. Types and Multiplicity"
-msgstr ""
+msgstr "4. Tipos y multiplicidad"
 
 #: ../models/uml/01._Common_Structure.rst:28
 msgid "5. Constraints"
-msgstr ""
+msgstr "5. Restricciones"
 
 #: ../models/uml/01._Common_Structure.rst:34
 msgid "6. Dependencies"
-msgstr ""
+msgstr "6. Dependencias"
 
 #: ../models/uml/02._Values.rst:2
 msgid "02. Values"
-msgstr ""
+msgstr "02. Valores"
 
 #: ../models/uml/02._Values.rst:5
 msgid "1. Literals"
-msgstr ""
+msgstr "1. Literales"
 
 #: ../models/uml/02._Values.rst:11
 msgid "2. Expressions"
-msgstr ""
+msgstr "2. Expresiones"
 
 #: ../models/uml/03._Classification.rst:2
 msgid "03. Classification"
-msgstr ""
+msgstr "03. Clasificación"
 
 #: ../models/uml/03._Classification.rst:5
 msgid "1. Classifiers"
-msgstr ""
+msgstr "1. Clasificadores"
 
 #: ../models/uml/03._Classification.rst:11
 msgid "3. Features"
-msgstr ""
+msgstr "3. Características"
 
 #: ../models/uml/03._Classification.rst:17
 msgid "4. Properties"
-msgstr ""
+msgstr "4. Propiedades"
 
 #: ../models/uml/03._Classification.rst:23
 msgid "5. Operations"
-msgstr ""
+msgstr "5. Operaciones"
 
 #: ../models/uml/03._Classification.rst:29
 msgid "7. Instances"
-msgstr ""
+msgstr "7. Instancias"
 
 #: ../models/uml/04._Simple_Classifiers.rst:2
 msgid "04. Simple Classifiers"
-msgstr ""
+msgstr "04. Clasificadores simples"
 
 #: ../models/uml/04._Simple_Classifiers.rst:5
 msgid "1. Data Types"
-msgstr ""
+msgstr "1. Tipos de datos"
 
 #: ../models/uml/04._Simple_Classifiers.rst:11
 msgid "3. Interfaces"
-msgstr ""
+msgstr "3. Interfaces"
 
 #: ../models/uml/05._Structured_Classifiers.rst:2
 msgid "05. Structured Classifiers"
-msgstr ""
+msgstr "05. Clasificadores estructurados"
 
 #: ../models/uml/05._Structured_Classifiers.rst:5
 msgid "1. Structured Classifiers"
-msgstr ""
+msgstr "1. Clasificadores estructurados"
 
 #: ../models/uml/05._Structured_Classifiers.rst:11
 msgid "2. Encapsulated Classifiers"
-msgstr ""
+msgstr "2. Clasificadores encapsulados"
 
 #: ../models/uml/05._Structured_Classifiers.rst:17
 msgid "3. Classes"
-msgstr ""
+msgstr "3. Clases"
 
 #: ../models/uml/05._Structured_Classifiers.rst:23
 msgid "4. Associations"
-msgstr ""
+msgstr "4. Asociaciones"
 
 #: ../models/uml/05._Structured_Classifiers.rst:29
 msgid "5. Components"
-msgstr ""
+msgstr "5. Componentes"
 
 #: ../models/uml/05._Structured_Classifiers.rst:35
 msgid "6. Collaborations"
-msgstr ""
+msgstr "6. Colaboraciones"
 
 #: ../models/uml/06._Packaging.rst:2
 msgid "06. Packaging"
-msgstr ""
+msgstr "06. Empaquetado"
 
 #: ../models/uml/06._Packaging.rst:5
 msgid "1. Packages"
-msgstr ""
+msgstr "1. Paquetes"
 
 #: ../models/uml/06._Packaging.rst:11
 msgid "2. Profiles"
-msgstr ""
+msgstr "2. Perfiles"
 
 #: ../models/uml/07._Common_Behaviors.rst:2
 msgid "07. Common Behaviors"
-msgstr ""
+msgstr "07. Comportamientos comunes"
 
 #: ../models/uml/07._Common_Behaviors.rst:5
 msgid "1. Behaviors"
-msgstr ""
+msgstr "1. Comportamientos"
 
 #: ../models/uml/07._Common_Behaviors.rst:11
 msgid "2. Events"
-msgstr ""
+msgstr "2. Eventos"
 
 #: ../models/uml/08._State_Machines.rst:2
 msgid "08. State Machines"
-msgstr ""
+msgstr "08. Máquinas de estado"
 
 #: ../models/uml/08._State_Machines.rst:5
 msgid "1. Behavior State Machines"
-msgstr ""
+msgstr "1. Máquinas de estado de comportamiento"
 
 #: ../models/uml/09._Activities.rst:2
 msgid "09. Activities"
-msgstr ""
+msgstr "09. Actividades"
 
 #: ../models/uml/09._Activities.rst:5
 msgid "1. Activities"
-msgstr ""
+msgstr "1. Actividades"
 
 #: ../models/uml/09._Activities.rst:11
 msgid "2. Control Nodes"
-msgstr ""
+msgstr "2. Nodos de control"
 
 #: ../models/uml/09._Activities.rst:17
 msgid "3. Object Nodes"
-msgstr ""
+msgstr "3. Nodos objeto"
 
 #: ../models/uml/09._Activities.rst:23
 msgid "4. Executable Nodes"
-msgstr ""
+msgstr "4. Nodos ejecutables"
 
 #: ../models/uml/09._Activities.rst:29
 msgid "5. Activity Groups"
-msgstr ""
+msgstr "5. Grupos de actividad"
 
 #: ../models/uml/10._Actions.rst:2
 msgid "10. Actions"
-msgstr ""
+msgstr "10. Acciones"
 
 #: ../models/uml/10._Actions.rst:5
 msgid "1. Actions"
-msgstr ""
+msgstr "1. Acciones"
 
 #: ../models/uml/10._Actions.rst:11
 msgid "2. Invocation Actions"
-msgstr ""
+msgstr "2. Acciones de invocación"
 
 #: ../models/uml/10._Actions.rst:17
 msgid "7. Structural Feature Actions"
