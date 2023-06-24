@@ -78,6 +78,33 @@ poetry run gaphor
 
 NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita >=1.2.
 
+### Debugging using Visual Studio Code
+
+Before you start debugging you'll need to open Gaphor is vscode (the folder
+containing `pyproject.toml`). You'll need to have the Python extension installed.
+
+Create a file `.vscode/launch.json` with the following content:
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Gaphor UI",
+            "type": "python",
+            "request": "launch",
+            "module": "gaphor",
+            "justMyCode": false,
+            "env": {
+                "GDK_BACKEND": "wayland",
+            }
+        }
+    ]
+}
+```
+
+`GDK_BACKEND` is added since VSCode by default uses XWayland (the X11 emulator).
+
 ## Create a Flatpak Package
 
 The main method that Gaphor is packaged for Linux is with a Flatpak package.

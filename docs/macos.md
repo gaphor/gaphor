@@ -36,6 +36,28 @@ export PKG_CONFIG_PATH=/usr/local/opt/libffi/lib/pkgconfig
 poetry install
 ```
 
+### Debugging using Visual Studio Code
+
+Before you start debugging you'll need to open Gaphor is VSCode (the folder
+containing `pyproject.toml`). You'll need to have the Python extension installed.
+
+Create a file `.vscode/launch.json` with the following content:
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Gaphor UI",
+            "type": "python",
+            "request": "launch",
+            "module": "gaphor",
+            "justMyCode": false,
+        }
+    ]
+}
+```
+
 ## Packaging for macOS
 
 In order to create an exe installation package for macOS, we utilize
