@@ -317,8 +317,7 @@ Here are some ideas that go just beyond changing a color or a font. With the
 following examples we dig in to Gaphor's model structure to reveal more
 information to the users.
 
-To create your own expression you may want to use the Console (Tools ->
-Console, in the Hamburger menu). Drop us a line on
+To create your own expression you may want to use the Console (![open menu](images/open-menu-symbolic.svg) → Tools → Console). Drop us a line on
 [Gitter](https://gitter.im/gaphor/Lobby) and we would be happy to help you.
 
 ### The drafts package

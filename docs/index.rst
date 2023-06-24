@@ -44,6 +44,7 @@ Did you know Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :d
    scripting
    stereotypes
    merge_conflicts
+   plugins
 
 .. toctree::
    :caption: Installation

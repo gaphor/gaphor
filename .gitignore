@@ -11,7 +11,7 @@ html
 *~
 \#*\#
 .eggs/
-gaphor.egg-info/
+*.egg-info/
 gaphor.prof
 .gpg
 pip-wheel-metadata
