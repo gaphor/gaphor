@@ -10,9 +10,11 @@ from gaphor.plugins import enable_plugins, default_plugin_path
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 
 
-def main(argv=sys.argv) -> int:
+def main(argv=None) -> int:
     """Start Gaphor from the command line."""
 
+    if argv is None:
+        argv = sys.argv
     logging_config()
 
     with enable_plugins(default_plugin_path()):
@@ -20,18 +22,19 @@ def main(argv=sys.argv) -> int:
 
         args = parse_args(argv[1:], commands)
 
-        if args.profiler:
-            import cProfile
-            import pstats
+        return run_profiler(args) if args.profiler else args.command(args)  # type: ignore[no-any-return]
 
-            with cProfile.Profile() as profile:
-                exit_code: int = profile.runcall(args.command, args)
 
-            profile_stats = pstats.Stats(profile)
-            profile_stats.strip_dirs().sort_stats("time").print_stats(50)
-            return exit_code
+def run_profiler(args):
+    import cProfile
+    import pstats
 
-        return args.command(args)  # type: ignore[no-any-return]
+    with cProfile.Profile() as profile:
+        exit_code: int = profile.runcall(args.command, args)
+
+    profile_stats = pstats.Stats(profile)
+    profile_stats.strip_dirs().sort_stats("time").print_stats(50)
+    return exit_code
 
 
 def parse_args(args: list[str], commands: dict[str, argparse.ArgumentParser]):

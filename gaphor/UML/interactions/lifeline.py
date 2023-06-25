@@ -57,10 +57,8 @@ class BetweenConstraint(BaseConstraint):
         upper = self.upper.value
         if lower > upper:
             lower, upper = upper, lower
-        if self.v.value < lower:
-            self.v.value = lower
-        if self.v.value > upper:
-            self.v.value = upper
+        self.v.value = max(self.v.value, lower)
+        self.v.value = min(self.v.value, upper)
 
 
 class BetweenPort(LinePort):

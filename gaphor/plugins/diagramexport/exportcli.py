@@ -72,10 +72,7 @@ def export_command(args):
     factory = session.get_service("element_factory")
     modeling_language = session.get_service("modeling_language")
 
-    name_re = None
-    if args.regex:
-        name_re = re.compile(args.regex, re.I)
-
+    name_re = re.compile(args.regex, re.I) if args.regex else None
     # we should have some gaphor files to be processed at this point
     for model in args.model:
         log.debug("loading model %s", model)

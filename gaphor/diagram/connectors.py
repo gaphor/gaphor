@@ -238,9 +238,7 @@ class RelationshipConnect(BaseConnector):
             return relation
 
         line = self.line
-        relation = self.new_relation_from_copy(type)
-        if not relation:
-            relation = self.new_relation(type)
+        relation = self.new_relation_from_copy(type) or self.new_relation(type)
 
         assert isinstance(relation, type)
         line_head = self.get_connected(line.head)
