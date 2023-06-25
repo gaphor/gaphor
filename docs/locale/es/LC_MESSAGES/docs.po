@@ -8,9 +8,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-06-25 06:52+0000\n"
-"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
-".org>\n"
+"PO-Revision-Date: 2023-06-26 16:51+0000\n"
+"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/es/>\n"
 "Language: es\n"
@@ -2055,143 +2054,143 @@ msgstr "FTA/FTA Biblioteca/Eventos/Evento"
 
 #: ../models/raaml/Methods.rst:35
 msgid "FTA/FTA Library/Events/House Event"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Eventos/Evento de la casa"
 
 #: ../models/raaml/Methods.rst:41
 msgid "FTA/FTA Library/Events/Intermediate Event"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Eventos/Evento intermedio"
 
 #: ../models/raaml/Methods.rst:47
 msgid "FTA/FTA Library/Events/Top Event"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Eventos/Evento principal"
 
 #: ../models/raaml/Methods.rst:53
 msgid "FTA/FTA Library/Events/Undeveloped Event"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Eventos/Evento sin desarrollar"
 
 #: ../models/raaml/Methods.rst:59
 msgid "FTA/FTA Library/Events/Zero Event"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Eventos/Evento cero"
 
 #: ../models/raaml/Methods.rst:65
 msgid "FTA/FTA Library/FTA Element"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Elemento FTA"
 
 #: ../models/raaml/Methods.rst:71
 msgid "FTA/FTA Library/FTA Library"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Biblioteca FTA"
 
 #: ../models/raaml/Methods.rst:77
 msgid "FTA/FTA Library/FTA Tree"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Árbol FTA"
 
 #: ../models/raaml/Methods.rst:83
 msgid "FTA/FTA Library/Gates/AND"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Puertas/Y"
 
 #: ../models/raaml/Methods.rst:89
 msgid "FTA/FTA Library/Gates/Gate"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Puertas/Puerta"
 
 #: ../models/raaml/Methods.rst:95
 msgid "FTA/FTA Library/Gates/INHIBIT"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Puertas/INHIBIR"
 
 #: ../models/raaml/Methods.rst:101
 msgid "FTA/FTA Library/Gates/MAJORITY_VOTE"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Puertas/MAJORITY_VOTE"
 
 #: ../models/raaml/Methods.rst:107
 msgid "FTA/FTA Library/Gates/NOT"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Puertas/NOT"
 
 #: ../models/raaml/Methods.rst:113
 msgid "FTA/FTA Library/Gates/OR"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Puertas/OR"
 
 #: ../models/raaml/Methods.rst:119
 msgid "FTA/FTA Library/Gates/SEQ"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Puertas/SEQ"
 
 #: ../models/raaml/Methods.rst:125
 msgid "FTA/FTA Library/Gates/XOR"
-msgstr ""
+msgstr "FTA/Biblioteca FTA/Puertas/XOR"
 
 #: ../models/raaml/Methods.rst:131
 msgid "FTA/FTA Profile/AND"
-msgstr ""
+msgstr "FTA/Perfil FTA/AND"
 
 #: ../models/raaml/Methods.rst:137
 msgid "FTA/FTA Profile/Conditional Event"
-msgstr ""
+msgstr "FTA/Perfil FTA/Evento condicional"
 
 #: ../models/raaml/Methods.rst:143
 msgid "FTA/FTA Profile/Dormant Event"
-msgstr ""
+msgstr "FTA/Perfil FTA/Evento inactivo"
 
 #: ../models/raaml/Methods.rst:149
 msgid "FTA/FTA Profile/Event"
-msgstr ""
+msgstr "FTA/Perfil FTA/Evento"
 
 #: ../models/raaml/Methods.rst:155
 msgid "FTA/FTA Profile/Gate"
-msgstr ""
+msgstr "FTA/Perfil FTA/Puerta"
 
 #: ../models/raaml/Methods.rst:161
 msgid "FTA/FTA Profile/House Event"
-msgstr ""
+msgstr "FTA/Perfil de FTA/Evento de la casa"
 
 #: ../models/raaml/Methods.rst:167
 msgid "FTA/FTA Profile/INHIBIT"
-msgstr ""
+msgstr "FTA/Perfil FTA/INHIBIT"
 
 #: ../models/raaml/Methods.rst:173
 msgid "FTA/FTA Profile/Intermediate Event"
-msgstr ""
+msgstr "FTA/Perfil FTA/Evento intermedio"
 
 #: ../models/raaml/Methods.rst:179
 msgid "FTA/FTA Profile/MAJORITY_VOTE"
-msgstr ""
+msgstr "FTA/Perfil de FTA/MAJORITY_VOTE"
 
 #: ../models/raaml/Methods.rst:185
 msgid "FTA/FTA Profile/NOT"
-msgstr ""
+msgstr "FTA/Perfil FTA/NOT"
 
 #: ../models/raaml/Methods.rst:191
 msgid "FTA/FTA Profile/OR"
-msgstr ""
+msgstr "FTA/Perfil FTA/OR"
 
 #: ../models/raaml/Methods.rst:197
 msgid "FTA/FTA Profile/SEQ"
-msgstr ""
+msgstr "FTA/Perfil FTA/SEQ"
 
 #: ../models/raaml/Methods.rst:203
 msgid "FTA/FTA Profile/Top Event"
-msgstr ""
+msgstr "FTA/Perfil de FTA/Evento Principal"
 
 #: ../models/raaml/Methods.rst:209
 msgid "FTA/FTA Profile/Transfer In"
-msgstr ""
+msgstr "FTA/Perfil FTA/Transferencia entrante"
 
 #: ../models/raaml/Methods.rst:215
 msgid "FTA/FTA Profile/Transfer Out"
-msgstr ""
+msgstr "FTA/Perfil FTA/Transferencia de salida"
 
 #: ../models/raaml/Methods.rst:221
 msgid "FTA/FTA Profile/Tree"
-msgstr ""
+msgstr "FTA/Perfil FTA/Árbol"
 
 #: ../models/raaml/Methods.rst:227
 msgid "FTA/FTA Profile/XOR"
-msgstr ""
+msgstr "FTA/Perfil FTA/XOR"
 
 #: ../models/raaml/Methods.rst:233
 msgid "FTA/FTA Profile/Zero Event"
-msgstr ""
+msgstr "FTA/Perfil FTA/Evento cero"
 
 #: ../models/raaml/Methods.rst:239
 msgid "FTA/FTA"
-msgstr ""
+msgstr "FTA/FTA"
 
 #: ../models/sysml.md:1
 msgid "Systems Modeling Language"
@@ -2213,7 +2212,7 @@ msgstr "Asignaciones"
 
 #: ../models/sysml/Allocations.rst:5
 msgid "AllocatedActivityPartition"
-msgstr ""
+msgstr "AllocatedActivityPartition"
 
 #: ../models/sysml/Allocations.rst:11
 msgid "Allocation"
@@ -2243,7 +2242,7 @@ msgstr "Propiedades"
 
 #: ../models/sysml/Blocks.rst:32
 msgid "Property Paths"
-msgstr ""
+msgstr "Rutas de acceso a las propiedades"
 
 #: ../models/sysml/Blocks.rst:38
 msgid "Property-Specific Types"
@@ -2259,7 +2258,7 @@ msgstr "Tipos de valores"
 
 #: ../models/sysml/ConstraintBlocks.rst:2
 msgid "ConstraintBlocks"
-msgstr ""
+msgstr "Bloques de restricción"
 
 #: ../models/sysml/Libraries.rst:2
 msgid "Libraries"
@@ -2267,7 +2266,7 @@ msgstr "Bibliotecas"
 
 #: ../models/sysml/ModelElements.rst:2
 msgid "ModelElements"
-msgstr ""
+msgstr "ModelElements"
 
 #: ../models/sysml/PortsAndFlows.rst:2
 msgid "PortsAndFlows"
