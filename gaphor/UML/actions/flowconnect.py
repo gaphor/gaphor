@@ -223,6 +223,7 @@ class FlowForkDecisionNodeControlFlowConnect(FlowConnect):
 
 
 @Connector.register(ForkNodeItem, ControlFlowItem)
+@Connector.register(ForkNodeItem, ObjectFlowItem)
 class FlowForkNodeControlFlowConnect(FlowForkDecisionNodeControlFlowConnect):
     """Connect Flow to a ForkNode."""
 
