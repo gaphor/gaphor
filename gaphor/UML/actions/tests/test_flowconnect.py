@@ -568,11 +568,13 @@ class TestFlowItemDecisionNode(FlowItemDecisionAndForkNodes):
     fork_node_cls = UML.DecisionNode
     join_node_cls = UML.MergeNode
 
+
 class TestObjectFlowItemForkNode(FlowItemDecisionAndForkNodes):
     item_cls = ForkNodeItem
     fork_node_cls = UML.ForkNode
     join_node_cls = UML.JoinNode
     flow_cls = ObjectFlowItem
+
 
 class TestObjectFlowItemDecisionNode(FlowItemDecisionAndForkNodes):
     item_cls = DecisionNodeItem
