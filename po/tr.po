@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-17 15:06-0400\n"
-"PO-Revision-Date: 2023-05-15 11:50+0000\n"
+"PO-Revision-Date: 2023-06-26 04:42+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/gaphor/gaphor/tr/"
+">\n"
 "Language: tr\n"
-"Language-Team: Turkish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/tr/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.18.1\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -292,9 +293,8 @@ msgid "Item Flow"
 msgstr "Öge Akışı"
 
 #: gaphor/SysML/propertypages.ui:22
-#, fuzzy
 msgid "Enable Item Flow"
-msgstr "Öge Akışı"
+msgstr "Öge Akışını Etkinleştir"
 
 #: gaphor/SysML/propertypages.ui:36
 msgid "Item Property"
@@ -409,7 +409,7 @@ msgstr "değerler"
 
 #: gaphor/SysML/blocks/block.py:145
 msgid "operations"
-msgstr "İşlemler"
+msgstr "işlemler"
 
 #: gaphor/SysML/blocks/block.py:160 gaphor/SysML/blocks/block.py:186
 msgid "unnamed"
@@ -1105,32 +1105,28 @@ msgid "Message Sort"
 msgstr "İleti Sıralaması"
 
 #: gaphor/UML/interactions/propertypages.ui:21
-#, fuzzy
 msgid "Call"
-msgstr "call()"
+msgstr "Çağrı"
 
 #: gaphor/UML/interactions/propertypages.ui:22
 msgid "Asynchronous"
-msgstr ""
+msgstr "Eşzamansız"
 
 #: gaphor/UML/interactions/propertypages.ui:23
-#, fuzzy
 msgid "Signal"
-msgstr "Sinyal gönder"
+msgstr "Sinyal"
 
 #: gaphor/UML/interactions/propertypages.ui:24
 msgid "Reply"
-msgstr ""
+msgstr "Yanıt"
 
 #: gaphor/UML/interactions/propertypages.ui:25
-#, fuzzy
 msgid "Create"
-msgstr "Oluşturulma"
+msgstr "Oluştur"
 
 #: gaphor/UML/interactions/propertypages.ui:26
-#, fuzzy
 msgid "Delete"
-msgstr "_Sil"
+msgstr "Sil"
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
@@ -1649,9 +1645,8 @@ msgid "Structure"
 msgstr "Yapı"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Feature Domain"
-msgstr "Özellik Bağlamı"
+msgstr "Özellik Alan Adı"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Operator"
@@ -1666,9 +1661,8 @@ msgid "External Element"
 msgstr "Harici Öge"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept Requirements"
-msgstr "Gereksinimler"
+msgstr "Konsept Gereksinimleri"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
@@ -1711,9 +1705,8 @@ msgid "Detailed Behavior"
 msgstr "Ayrıntılı Davranış"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical Requirements"
-msgstr "Gereksinimler"
+msgstr "Mantıksal Gereksinimler"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
@@ -1828,48 +1821,40 @@ msgid "Feature Context"
 msgstr "Özellik Bağlamı"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Read Input"
-msgstr "Oluşturulma"
+msgstr "Girdiyi Oku"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "FeatureInput"
-msgstr "Özellik"
+msgstr "ÖzellikGirişi"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Request Actuation"
-msgstr "İlk Eylem"
+msgstr "İstek Çalıştırma"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Actuation Command"
 msgstr "Çalıştırıcı Komut"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Model Navigation"
-msgstr "Bilinmeyen gezinim"
+msgstr "Model Gezintisi"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept"
-msgstr "Bağlayıcı"
+msgstr "Konsept"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical"
-msgstr "Giriş"
+msgstr "Mantıksal"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Pillar"
-msgstr ""
+msgstr "Sütun"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Abstraction Level"
-msgstr "Soyut"
+msgstr "Soyutlama Düzeyi"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
@@ -2903,4 +2888,3 @@ msgstr "“{name}” ilişkisini güncelle"
 
 #~ msgid "System Requirements"
 #~ msgstr "Sistem Gereksinimleri"
-

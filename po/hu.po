@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-17 15:06-0400\n"
-"PO-Revision-Date: 2023-05-15 11:50+0000\n"
+"PO-Revision-Date: 2023-06-26 04:42+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.18.1\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -292,9 +293,8 @@ msgid "Item Flow"
 msgstr "Tételfolyam"
 
 #: gaphor/SysML/propertypages.ui:22
-#, fuzzy
 msgid "Enable Item Flow"
-msgstr "Tételfolyam"
+msgstr "Tételfolyam engedélyezése"
 
 #: gaphor/SysML/propertypages.ui:36
 msgid "Item Property"
@@ -1116,32 +1116,28 @@ msgid "Message Sort"
 msgstr "Üzenetek rendezése"
 
 #: gaphor/UML/interactions/propertypages.ui:21
-#, fuzzy
 msgid "Call"
-msgstr "hívás()"
+msgstr "Hívás"
 
 #: gaphor/UML/interactions/propertypages.ui:22
 msgid "Asynchronous"
-msgstr ""
+msgstr "Aszinkron"
 
 #: gaphor/UML/interactions/propertypages.ui:23
-#, fuzzy
 msgid "Signal"
-msgstr "Jelküldési művelet"
+msgstr "Jelzés"
 
 #: gaphor/UML/interactions/propertypages.ui:24
 msgid "Reply"
-msgstr ""
+msgstr "Válasz"
 
 #: gaphor/UML/interactions/propertypages.ui:25
-#, fuzzy
 msgid "Create"
-msgstr "Létrehozva"
+msgstr "Létrehozás"
 
 #: gaphor/UML/interactions/propertypages.ui:26
-#, fuzzy
 msgid "Delete"
-msgstr "_Törlés"
+msgstr "Törlés"
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
@@ -1660,7 +1656,6 @@ msgid "Structure"
 msgstr "Szerkezet"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Feature Domain"
 msgstr "Jellegzetes környezete"
 
@@ -1677,9 +1672,8 @@ msgid "External Element"
 msgstr "Külső elem"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept Requirements"
-msgstr "Követelmények"
+msgstr "Koncepció követelményei"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
@@ -1722,9 +1716,8 @@ msgid "Detailed Behavior"
 msgstr "Részletes viselkedés"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical Requirements"
-msgstr "Követelmények"
+msgstr "Logika követelményei"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
@@ -1839,48 +1832,40 @@ msgid "Feature Context"
 msgstr "Jellegzetes környezete"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Read Input"
-msgstr "Létrehozva"
+msgstr "Bemenet olvasása"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "FeatureInput"
-msgstr "Jellemző"
+msgstr "Jellemző bemenete"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Request Actuation"
-msgstr "1. művelet"
+msgstr "Működtetés lekérése"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Actuation Command"
-msgstr "Indítószerkezet parancs"
+msgstr "Működtetés-parancs"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Model Navigation"
-msgstr "Ismeretlen navigáció"
+msgstr "Modell-navigáció"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept"
-msgstr "Összekötő"
+msgstr "Koncepció"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical"
-msgstr "Bejelentkezés"
+msgstr "Logikai"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Pillar"
-msgstr ""
+msgstr "Oszlop"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Abstraction Level"
-msgstr "Elvont"
+msgstr "Absztrakciós szint"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
@@ -3330,4 +3315,3 @@ msgstr "„{name}”-kapcsolat frissítése"
 
 #~ msgid "System Requirements"
 #~ msgstr "Rendszerkövetelmények"
-

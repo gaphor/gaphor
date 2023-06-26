@@ -4,25 +4,24 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-17 15:06-0400\n"
-"PO-Revision-Date: 2022-12-30 13:56+0000\n"
-"Last-Translator: Erwan Calvez <erwancalv@gmail.com>\n"
+"PO-Revision-Date: 2023-06-26 20:30+0000\n"
+"Last-Translator: mimidbe <hamid.bentabet@gmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
+"\n"
 "Language: fr\n"
-"Language-Team: French "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fr/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.18.1\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
 #: gaphor/ui/greeter.py:55
-#, fuzzy
 msgid "C4 Model"
 msgstr "Modèle C4"
 
 #: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:137
-#, fuzzy
 msgid "Description"
 msgstr "Description"
 
@@ -31,32 +30,26 @@ msgid "Technology"
 msgstr "Technologie"
 
 #: gaphor/C4Model/toolbox.py:29
-#, fuzzy
 msgid "New Software System"
 msgstr "Nouveau Système Logiciel"
 
 #: gaphor/C4Model/toolbox.py:36
-#, fuzzy
 msgid "New Container"
 msgstr "Nouveau Conteneur"
 
 #: gaphor/C4Model/toolbox.py:43
-#, fuzzy
 msgid "Database"
 msgstr "Base de données"
 
 #: gaphor/C4Model/toolbox.py:44
-#, fuzzy
 msgid "New Database"
 msgstr "Nouvelle base de données"
 
 #: gaphor/C4Model/toolbox.py:51
-#, fuzzy
 msgid "New Component"
 msgstr "Nouveau composant"
 
 #: gaphor/C4Model/toolbox.py:59 gaphor/C4Model/toolbox.py:65
-#, fuzzy
 msgid "Person"
 msgstr "Personne"
 
@@ -65,7 +58,6 @@ msgid "Software System"
 msgstr "Système logiciel"
 
 #: gaphor/C4Model/toolbox.py:83
-#, fuzzy
 msgid "Container"
 msgstr "Conteneur"
 
@@ -84,44 +76,37 @@ msgid "Dependency"
 msgstr "Dépendance"
 
 #: gaphor/C4Model/toolbox.py:139
-#, fuzzy
 msgid "New C4 Diagram"
 msgstr "Nouveau diagramme C4"
 
 #: gaphor/C4Model/toolbox.py:140 gaphor/UML/toolbox.py:30
-#, fuzzy
 msgid "New Class Diagram"
 msgstr "Nouveau diagramme de classes"
 
 #: gaphor/C4Model/toolbox.py:141 gaphor/SysML/toolbox.py:72
 #: gaphor/UML/toolbox.py:34
-#, fuzzy
 msgid "New Activity Diagram"
 msgstr "Nouveau diagramme d’activité"
 
 #: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:73
 #: gaphor/UML/toolbox.py:35
-#, fuzzy
 msgid "New Sequence Diagram"
 msgstr "Nouveau diagramme de séquence"
 
 #: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:74
 #: gaphor/UML/toolbox.py:37
-#, fuzzy
 msgid "New State Machine Diagram"
-msgstr "Diagramme de la nouvelle machine à états"
+msgstr "Nouveau Diagramme d'état"
 
 #: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:48
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
-#, fuzzy
 msgid "New FTA Diagram"
 msgstr "Nouveau diagramme FTA"
 
 #: gaphor/RAAML/toolbox.py:20
-#, fuzzy
 msgid "New STPA Diagram"
 msgstr "Nouveau diagramme STPA"
 
@@ -161,9 +146,8 @@ msgid "OR"
 msgstr "OU"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:46 gaphor/RAAML/fta/notgate.py:35
-#, fuzzy
 msgid "NOT Gate"
-msgstr "État"
+msgstr "Porte NON"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:52
 msgid "NOT"
@@ -182,9 +166,8 @@ msgid "Exclusive OR Gate"
 msgstr "Porte OU exclusive"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:74
-#, fuzzy
 msgid "XOR"
-msgstr "Exporter"
+msgstr "OU Exclusif"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:79 gaphor/RAAML/fta/ftatoolbox.py:86
 #: gaphor/RAAML/fta/majorityvotegate.py:39
@@ -194,7 +177,7 @@ msgstr "Porte du vote majoritaire"
 #: gaphor/RAAML/fta/ftatoolbox.py:92 gaphor/RAAML/fta/ftatoolbox.py:98
 #: gaphor/RAAML/fta/inhibitgate.py:35
 msgid "Inhibit Gate"
-msgstr "Inhiber la porte"
+msgstr "Porte d'Inhibition"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:35
@@ -209,7 +192,7 @@ msgstr ""
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:35
 msgid "Undeveloped Event"
-msgstr ""
+msgstr "Evènement  Sous-développé"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:173 gaphor/RAAML/fta/ftatoolbox.py:179
 #: gaphor/RAAML/fta/houseevent.py:35
@@ -219,12 +202,12 @@ msgstr ""
 #: gaphor/RAAML/fta/ftatoolbox.py:184 gaphor/RAAML/fta/ftatoolbox.py:190
 #: gaphor/RAAML/fta/zeroevent.py:36
 msgid "Zero Event"
-msgstr ""
+msgstr "Evènement Zéro"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:195 gaphor/RAAML/fta/ftatoolbox.py:201
 #: gaphor/RAAML/fta/topevent.py:32
 msgid "Top Event"
-msgstr ""
+msgstr "Evènement au sommet"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:206 gaphor/RAAML/fta/ftatoolbox.py:213
 #: gaphor/RAAML/fta/intermediateevent.py:32
@@ -237,7 +220,7 @@ msgstr ""
 
 #: gaphor/RAAML/fta/xorgate.py:36
 msgid "XOR Gate"
-msgstr ""
+msgstr "Porte OU Exclusif"
 
 #: gaphor/RAAML/stpa/controlaction.py:32 gaphor/RAAML/stpa/stpatoolbox.py:158
 #, fuzzy
@@ -247,23 +230,22 @@ msgstr "Interaction"
 #: gaphor/RAAML/stpa/operationalsituation.py:33
 #: gaphor/RAAML/stpa/stpatoolbox.py:127
 msgid "Operational Situation"
-msgstr ""
+msgstr "Situation Opérationnelle"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:17 gaphor/RAAML/stpa/stpatoolbox.py:43
 #: gaphor/templates/raaml.gaphor
-#, fuzzy
 msgid "Loss"
-msgstr "Classe"
+msgstr "Perte"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:22 gaphor/RAAML/stpa/stpatoolbox.py:52
 #: gaphor/templates/raaml.gaphor
 msgid "Hazard"
-msgstr ""
+msgstr "Accident"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:27 gaphor/RAAML/stpa/stpatoolbox.py:116
 #: gaphor/templates/raaml.gaphor
 msgid "Abstract Operational Situation"
-msgstr ""
+msgstr "Situation Opérationnel Abstraite"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:77
 #: gaphor/UML/classes/classestoolbox.py:113
@@ -277,11 +259,11 @@ msgstr "Association"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:72
 msgid "Control Structure"
-msgstr ""
+msgstr "Structure de Contrôle"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:83 gaphor/templates/sysml.gaphor
 msgid "Controller"
-msgstr ""
+msgstr "Controlleur"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
 #, fuzzy
@@ -290,150 +272,143 @@ msgstr "Acteur"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
-msgstr ""
+msgstr "Processus Contrôlé"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:138
 #: gaphor/RAAML/stpa/unsafecontrolaction.py:32
 msgid "Unsafe Control Action"
-msgstr ""
+msgstr "Action de Contrôle Non Sûre"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:149
 msgid "Relevant To"
 msgstr ""
 
 #: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:41
+#, fuzzy
 msgid "SysML"
-msgstr ""
+msgstr "SysML"
 
 #: gaphor/SysML/propertypages.ui:9
 msgid "Item Flow"
-msgstr ""
+msgstr "Flux d'Elément"
 
 #: gaphor/SysML/propertypages.ui:22
 msgid "Enable Item Flow"
-msgstr ""
+msgstr "Autorise  le Flux d'Elément"
 
 #: gaphor/SysML/propertypages.ui:36
-#, fuzzy
 msgid "Item Property"
-msgstr "Propriétés"
+msgstr "Propriété de l'Elément"
 
 #: gaphor/SysML/propertypages.ui:51 gaphor/UML/classes/propertypages.ui:21
-#, fuzzy
 msgid "Invert direction"
-msgstr "Montrer la direction"
+msgstr "Inverser la direction"
 
 #: gaphor/SysML/propertypages.ui:67 gaphor/UML/actions/propertypages.ui:205
 msgid "Allocated Type"
-msgstr ""
+msgstr "Type Alloué"
 
 #: gaphor/SysML/propertypages.ui:93
-#, fuzzy
 msgid "Compartments"
-msgstr "Implémentation"
+msgstr "Compartiments"
 
 #: gaphor/SysML/propertypages.ui:106
 msgid "Show Parts"
-msgstr ""
+msgstr "Montrer les Composants"
 
 #: gaphor/SysML/propertypages.ui:122
-#, fuzzy
 msgid "Show References"
-msgstr "Préférences"
+msgstr "Montrer les Préférences"
 
 #: gaphor/SysML/propertypages.ui:138
 msgid "Show Values"
-msgstr ""
+msgstr "Montrer les Valeurs"
 
 #: gaphor/SysML/propertypages.ui:164
 #, fuzzy
 msgid "Aggregation"
-msgstr "Partition"
+msgstr "Aggregation"
 
 #: gaphor/SysML/propertypages.ui:176 gaphor/UML/classes/propertypages.ui:116
 #: gaphor/UML/classes/propertypages.ui:251
 msgid "No aggregation"
-msgstr ""
+msgstr "Pas d'agrégation"
 
 #: gaphor/SysML/propertypages.ui:177 gaphor/UML/classes/propertypages.ui:117
 #: gaphor/UML/classes/propertypages.ui:252
 msgid "Shared"
-msgstr ""
+msgstr "Partagé"
 
 #: gaphor/SysML/propertypages.ui:178 gaphor/UML/classes/propertypages.ui:118
 #: gaphor/UML/classes/propertypages.ui:253
+#, fuzzy
 msgid "Composite"
-msgstr ""
+msgstr "Composite"
 
 #: gaphor/SysML/propertypages.ui:196
+#, fuzzy
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: gaphor/SysML/propertypages.ui:210
 msgid "Text"
-msgstr ""
+msgstr "Texte"
 
 #: gaphor/SysML/toolbox.py:25
 msgid "Internal Blocks"
-msgstr ""
+msgstr "Blocs Internes"
 
 #: gaphor/SysML/toolbox.py:29
 msgid "Connector"
 msgstr "Connecteur"
 
 #: gaphor/SysML/toolbox.py:36
-#, fuzzy
 msgid "Property"
-msgstr "Propriétés"
+msgstr "Propriété"
 
 #: gaphor/SysML/toolbox.py:45
-#, fuzzy
 msgid "Proxy Port"
-msgstr "Exporter"
+msgstr "Port Proxy"
 
 #: gaphor/SysML/toolbox.py:68
 msgid "New Block Definition Diagram"
-msgstr ""
+msgstr "Nouveau Diagramme de Définition de Bloc"
 
 #: gaphor/SysML/toolbox.py:69
 msgid "New Internal Block Diagram"
-msgstr ""
+msgstr "Nouveau Diagramme de Bloc Interne"
 
 #: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
-#, fuzzy
 msgid "New Package Diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Nouveau Diagramme de Paquetage"
 
 #: gaphor/SysML/toolbox.py:71
 msgid "New Requirement Diagram"
-msgstr ""
+msgstr "Nouveau Diagramme d'Exigence"
 
 #: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
-#, fuzzy
 msgid "New Use Case Diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Nouveau Diagramme d'Usage"
 
 #: gaphor/SysML/blocks/block.py:67
 msgid "ControlStructure"
-msgstr ""
+msgstr "Structure de Contrôle"
 
 #: gaphor/SysML/blocks/block.py:69
 msgid "block"
-msgstr ""
+msgstr "Bloc"
 
 #: gaphor/SysML/blocks/block.py:105
 msgid "parts"
-msgstr ""
+msgstr "Composants"
 
 #: gaphor/SysML/blocks/block.py:116
-#, fuzzy
 msgid "references"
-msgstr "Préférences"
+msgstr "Références"
 
 #: gaphor/SysML/blocks/block.py:127
-#, fuzzy
 msgid "values"
-msgstr "Valeur"
+msgstr "Valeurs"
 
 #: gaphor/SysML/blocks/block.py:145
 #, fuzzy
@@ -442,15 +417,15 @@ msgstr "Opérations"
 
 #: gaphor/SysML/blocks/block.py:160 gaphor/SysML/blocks/block.py:186
 msgid "unnamed"
-msgstr ""
+msgstr "sans Nom"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:24
 msgid "Blocks"
-msgstr ""
+msgstr "Blocs"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:28
 msgid "Block"
-msgstr ""
+msgstr "Bloc"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:38
 #: gaphor/UML/classes/classestoolbox.py:47
@@ -459,15 +434,13 @@ msgstr "Paquetage"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:50
 #: gaphor/UML/classes/classestoolbox.py:78
-#, fuzzy
 msgid "Composite Association"
-msgstr "Association"
+msgstr "Association Composite"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:60
 #: gaphor/UML/classes/classestoolbox.py:88
-#, fuzzy
 msgid "Shared Association"
-msgstr "Association"
+msgstr "Association Partagée"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:70
 #: gaphor/UML/classes/classestoolbox.py:98
@@ -477,35 +450,35 @@ msgstr "Association"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:84
 msgid "ValueType"
-msgstr ""
+msgstr "Type de la Valeur"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:95
 #: gaphor/UML/classes/classestoolbox.py:140
-#, fuzzy
 msgid "Enumeration"
-msgstr "Interaction"
+msgstr "Enumération"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 #: gaphor/UML/classes/classestoolbox.py:152
 msgid "Primitive"
-msgstr ""
+msgstr "Primitif"
 
 #: gaphor/SysML/blocks/proxyport.py:35
+#, fuzzy
 msgid "proxy"
-msgstr ""
+msgstr "proxy"
 
 #: gaphor/SysML/requirements/relationships.py:36
+#, fuzzy
 msgid "satisfy"
-msgstr ""
+msgstr "satisfait"
 
 #: gaphor/SysML/requirements/relationships.py:47
 msgid "deriveReqt"
-msgstr ""
+msgstr "deriveExig."
 
 #: gaphor/SysML/requirements/relationships.py:54
-#, fuzzy
 msgid "trace"
-msgstr "Interface"
+msgstr "tracer"
 
 #: gaphor/SysML/requirements/relationships.py:63
 #, fuzzy
@@ -519,28 +492,30 @@ msgstr "Affiner"
 
 #: gaphor/SysML/requirements/requirement.py:61
 msgid "requirement"
-msgstr ""
+msgstr "exigence"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:13
 #: gaphor/templates/sysml.gaphor
 msgid "Requirements"
-msgstr ""
+msgstr "Exigences"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:17
 msgid "Requirement"
-msgstr ""
+msgstr "Exigence"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:29
+#, fuzzy
 msgid "Satisfy"
-msgstr ""
+msgstr "Satisfaire"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:36
+#, fuzzy
 msgid "Derive Requirement"
-msgstr ""
+msgstr "Dériver l'Exigence"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:43
 msgid "Trace"
-msgstr ""
+msgstr "Tracer"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:50
 msgid "Refine"
@@ -553,36 +528,36 @@ msgstr "Vérifier"
 #: gaphor/SysML/requirements/requirementstoolbox.py:64
 #: gaphor/UML/classes/classestoolbox.py:71
 msgid "Containment"
-msgstr ""
+msgstr "Contenant"
 
 #: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:34
+#, fuzzy
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: gaphor/UML/sanitizerservice.py:71
 msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
 msgstr ""
+"Suppression des éléments inutilisés du modèle : ils ne sont utilisés dans "
+"aucun autre diagramme."
 
 #: gaphor/UML/toolbox.py:32
-#, fuzzy
 msgid "New Component Diagram"
-msgstr "Composant"
+msgstr "Nouveau Diagramme de Composant"
 
 #: gaphor/UML/toolbox.py:33
-#, fuzzy
 msgid "New Deployment Diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Nouveau Diagramme de Déploiement"
 
 #: gaphor/UML/toolbox.py:36
 msgid "New Communication Diagram"
-msgstr ""
+msgstr "Nouveau Diagramme de Communication"
 
 #: gaphor/UML/toolbox.py:39
-#, fuzzy
 msgid "New Profile Diagram"
-msgstr "Nouveau _Diagramme"
+msgstr "Nouveau Diagramme de Profile"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -597,7 +572,7 @@ msgstr "général: {name}"
 
 #: gaphor/UML/umlfmt.py:208
 msgid "supplier: {name}"
-msgstr ""
+msgstr "fournisseur: {name}"
 
 #: gaphor/UML/umlfmt.py:215
 #, fuzzy
@@ -612,17 +587,16 @@ msgstr "inclure: {name}"
 #: gaphor/UML/actions/actionstoolbox.py:40
 #: gaphor/UML/actions/actionstoolbox.py:62 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Activity"
-msgstr "Fait une activité"
+msgstr "Activité"
 
 #: gaphor/UML/actions/actionstoolbox.py:48
 msgid "Swimlane One"
-msgstr ""
+msgstr "Couloir Un"
 
 #: gaphor/UML/actions/actionstoolbox.py:52
 msgid "Swimlane Two"
-msgstr ""
+msgstr "Couloir Deux"
 
 #: gaphor/UML/actions/actionstoolbox.py:58
 msgid "Actions"
@@ -660,56 +634,51 @@ msgstr "Nœud d'objet"
 
 #: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Swimlane"
-msgstr ""
+msgstr "Couloir"
 
 #: gaphor/UML/actions/actionstoolbox.py:170
-#, fuzzy
 msgid "Control flow"
-msgstr "Flot de contrôle et d'objet"
+msgstr "Flot de Contrôle"
 
 #: gaphor/UML/actions/actionstoolbox.py:177
-#, fuzzy
 msgid "Object flow"
-msgstr "Flot de contrôle et d'objet"
+msgstr "Flot d'Objet"
 
 #: gaphor/UML/actions/actionstoolbox.py:184
 msgid "Send signal action"
 msgstr "Envoyer un signal d'action"
 
 #: gaphor/UML/actions/actionstoolbox.py:190
-#, fuzzy
 msgid "Send signal"
-msgstr "Envoyer un signal d'action"
+msgstr "Envoyer un signal"
 
 #: gaphor/UML/actions/actionstoolbox.py:196
-#, fuzzy
 msgid "Accept event action"
-msgstr "Implémentation"
+msgstr "Accepter l'action évènement"
 
 #: gaphor/UML/actions/actionstoolbox.py:202
-#, fuzzy
 msgid "Accept event"
-msgstr "Implémentation"
+msgstr "Accepter évènement"
 
 #: gaphor/UML/actions/actionstoolbox.py:208
 msgid "Input pin"
-msgstr ""
+msgstr "Broche d'Entrée"
 
 #: gaphor/UML/actions/actionstoolbox.py:215
 msgid "Output pin"
-msgstr ""
+msgstr "Broche de Sortie"
 
 #: gaphor/UML/actions/activitynodes.py:189
 msgid "merge/decision"
-msgstr ""
+msgstr "fusion/décision"
 
 #: gaphor/UML/actions/activitynodes.py:191
 msgid "merge"
-msgstr ""
+msgstr "fusionne"
 
 #: gaphor/UML/actions/activitynodes.py:193
 msgid "decision"
-msgstr ""
+msgstr "décision"
 
 #: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:165
 msgid "unordered"
@@ -720,29 +689,30 @@ msgid "ordered"
 msgstr "ordonné"
 
 #: gaphor/UML/actions/objectnode.py:16
+#, fuzzy
 msgid "LIFO"
-msgstr ""
+msgstr "LIFO"
 
 #: gaphor/UML/actions/objectnode.py:17
+#, fuzzy
 msgid "FIFO"
-msgstr ""
+msgstr "FIFO"
 
 #: gaphor/UML/actions/partitionpage.py:114
 msgid "New Swimlane"
-msgstr ""
+msgstr "Nouveau Couloir"
 
 #: gaphor/UML/actions/pin.py:58
 msgid "input pin"
-msgstr ""
+msgstr "Broche d'Entrée"
 
 #: gaphor/UML/actions/pin.py:64
 msgid "output pin"
-msgstr ""
+msgstr "Broche de Sortie"
 
 #: gaphor/UML/actions/propertypages.ui:11
-#, fuzzy
 msgid "Show type"
-msgstr "Stéréotype"
+msgstr "Montrer le type"
 
 #: gaphor/UML/actions/propertypages.ui:37
 msgid "Horizontal"
@@ -754,28 +724,27 @@ msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:89
 msgid "Swimlanes"
-msgstr ""
+msgstr "Couloir"
 
 #: gaphor/UML/actions/propertypages.ui:100
-#, fuzzy
 msgid "Partitions"
-msgstr "Partition"
+msgstr "Partitions"
 
 #: gaphor/UML/actions/propertypages.ui:130
 msgid "Upper Bound"
-msgstr ""
+msgstr "Frontière Haute"
 
 #: gaphor/UML/actions/propertypages.ui:147
 msgid "Show Ordering"
-msgstr ""
+msgstr "Montrer le Classement"
 
 #: gaphor/UML/actions/propertypages.ui:167
 msgid "Last In First Out (LIFO)"
-msgstr ""
+msgstr "Dernier entré Premier sortie (LIFO)"
 
 #: gaphor/UML/actions/propertypages.ui:168
 msgid "First In First Out (FIFO)"
-msgstr ""
+msgstr "Premier entré Premier sortie (FIFO)"
 
 #: gaphor/UML/actions/propertypages.ui:193
 #: gaphor/UML/profiles/propertypages.ui:9 gaphor/diagram/propertypages.ui:36
@@ -789,7 +758,7 @@ msgstr "Garde"
 
 #: gaphor/UML/actions/propertypages.ui:250
 msgid "Parameter Nodes"
-msgstr ""
+msgstr "Paramètres des Nœuds"
 
 #: gaphor/UML/actions/propertypages.ui:272
 #: gaphor/UML/classes/propertypages.ui:67
@@ -798,7 +767,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:637
 #: gaphor/UML/classes/propertypages.ui:745
 msgid "🛈 Help"
-msgstr ""
+msgstr "🛈 Aide"
 
 #: gaphor/UML/actions/propertypages.ui:288
 msgid ""
@@ -814,13 +783,24 @@ msgid ""
 "items.\n"
 "Use <b>-</b>/<b>=</b> to move items up or down."
 msgstr ""
+"Ajouter et modifier l’activité de classe selon la syntaxe UML.\n"
+"\n"
+"  • <tt>attr</tt> ( (nom, visibilité publique par défaut)\n"
+"  • <tt>+ attr: int</tt> (publique avec type)\n"
+"  • <tt>+ attr: int[0..1]</tt> (publique, type, et multiplicité)\n"
+"  • <tt>+ attr: int | bool</tt> (publique, type union )\n"
+"  • <tt># /attr: int # a note</tt> (protégé, dérivé, avec remarque)\n"
+"\n"
+"Presser <b>Entrer</b> pour modifier, <b>retour arrière</b>/<b>Supprimer</b> "
+"pour retirer des éléments.\n"
+"Utiliser <b>-</b>/<b>=</b> /<b>=</b> pour déplacer les éléments vers le haut "
+"ou le bas."
 
 #: gaphor/UML/classes/classespropertypages.py:308
 #: gaphor/UML/classes/classespropertypages.py:392
 #: gaphor/UML/classes/propertypages.ui:810
-#, fuzzy
 msgid "Static"
-msgstr "Automatique"
+msgstr "Statique"
 
 #: gaphor/UML/classes/classespropertypages.py:392
 #: gaphor/UML/classes/propertypages.ui:449
@@ -842,45 +822,42 @@ msgid "Interface"
 msgstr "Interface"
 
 #: gaphor/UML/classes/classestoolbox.py:121
-#, fuzzy
 msgid "Interface Realization"
-msgstr "Généralisation"
+msgstr "Réalisation de l'Interface"
 
 #: gaphor/UML/classes/classestoolbox.py:128
-#, fuzzy
 msgid "DataType"
-msgstr "État"
+msgstr "TypeDonnée"
 
 #: gaphor/UML/classes/datatype.py:56
 msgid "primitive"
-msgstr ""
+msgstr "primitif"
 
 #: gaphor/UML/classes/datatype.py:58 gaphor/UML/classes/enumeration.py:73
+#, fuzzy
 msgid "valueType"
-msgstr ""
+msgstr "TypeValeur"
 
 #: gaphor/UML/classes/datatype.py:60
 #, fuzzy
 msgid "dataType"
-msgstr "État"
+msgstr "type de Donnée"
 
 #: gaphor/UML/classes/dependency.py:43
 msgid "use"
-msgstr ""
+msgstr "user"
 
 #: gaphor/UML/classes/dependency.py:44
 msgid "realize"
-msgstr ""
+msgstr "réaliser"
 
 #: gaphor/UML/classes/dependency.py:45
-#, fuzzy
 msgid "implements"
-msgstr "Implémentation"
+msgstr "Implémentations"
 
 #: gaphor/UML/classes/enumeration.py:75
-#, fuzzy
 msgid "enumeration"
-msgstr "Interaction"
+msgstr "énumération"
 
 #: gaphor/UML/classes/interface.py:290
 #, fuzzy
@@ -909,7 +886,7 @@ msgstr "Montrer la direction"
 
 #: gaphor/UML/classes/propertypages.ui:49
 msgid "Head:"
-msgstr ""
+msgstr "Entête:"
 
 #: gaphor/UML/classes/propertypages.ui:83
 #: gaphor/UML/classes/propertypages.ui:218
@@ -958,7 +935,7 @@ msgstr "Valeur"
 
 #: gaphor/UML/classes/propertypages.ui:184
 msgid "Tail:"
-msgstr ""
+msgstr "Queue:"
 
 #: gaphor/UML/classes/propertypages.ui:337
 msgid "Show Attributes"
@@ -1010,7 +987,7 @@ msgstr "Opérations"
 
 #: gaphor/UML/classes/propertypages.ui:558
 msgid "Show Operations"
-msgstr ""
+msgstr "Afficher les opérations"
 
 #: gaphor/UML/classes/propertypages.ui:651
 msgid ""
@@ -1073,16 +1050,15 @@ msgstr "Nœud"
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:40
 msgid "Device"
-msgstr "Appareil"
+msgstr "Dispositif"
 
 #: gaphor/UML/deployments/node.py:54
-#, fuzzy
 msgid "device"
-msgstr "Appareil"
+msgstr "dispositif"
 
 #: gaphor/UML/interactions/interactionsconnect.py:78
 msgid "call()"
-msgstr ""
+msgstr "appel()"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:36
 #: gaphor/UML/interactions/interactionstoolbox.py:57
@@ -1097,7 +1073,7 @@ msgstr "Interactions"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:69
 msgid "Lifeline"
-msgstr "Temps de vie"
+msgstr "Ligne de vie"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:81
 msgid "Execution Specification"
@@ -1109,7 +1085,7 @@ msgstr "Message"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:96
 msgid "Reflexive message"
-msgstr ""
+msgstr "Message réflexif"
 
 #: gaphor/UML/interactions/propertypages.ui:9
 msgid "Message Sort"
@@ -1117,30 +1093,27 @@ msgstr "Tri des messages"
 
 #: gaphor/UML/interactions/propertypages.ui:21
 msgid "Call"
-msgstr ""
+msgstr "Appel"
 
 #: gaphor/UML/interactions/propertypages.ui:22
 msgid "Asynchronous"
-msgstr ""
+msgstr "Asynchrone"
 
 #: gaphor/UML/interactions/propertypages.ui:23
-#, fuzzy
 msgid "Signal"
-msgstr "Envoyer un signal d'action"
+msgstr "Signal"
 
 #: gaphor/UML/interactions/propertypages.ui:24
 msgid "Reply"
-msgstr ""
+msgstr "Répondre"
 
 #: gaphor/UML/interactions/propertypages.ui:25
-#, fuzzy
 msgid "Create"
-msgstr "Nouveau modèle"
+msgstr "Créer"
 
 #: gaphor/UML/interactions/propertypages.ui:26
-#, fuzzy
 msgid "Delete"
-msgstr "_Supprimer"
+msgstr "Supprimer"
 
 #: gaphor/UML/profiles/packageimport.py:24
 #, fuzzy
@@ -1202,13 +1175,12 @@ msgid "Regions"
 msgstr "Partition"
 
 #: gaphor/UML/states/propertypages.ui:103
-#, fuzzy
 msgid "Show Regions"
-msgstr "Montrer la direction"
+msgstr "Montrer les Partitions"
 
 #: gaphor/UML/states/statemachine.py:39
 msgid "statemachine"
-msgstr ""
+msgstr "machine à états"
 
 #: gaphor/UML/states/statestoolbox.py:16 gaphor/UML/states/statestoolbox.py:75
 msgid "State"
@@ -1217,7 +1189,7 @@ msgstr "État"
 #: gaphor/UML/states/statestoolbox.py:46 gaphor/UML/states/statestoolbox.py:63
 #: gaphor/templates/sysml.gaphor
 msgid "State Machine"
-msgstr ""
+msgstr "Machine à états"
 
 #: gaphor/UML/states/statestoolbox.py:59
 msgid "States"
@@ -1241,9 +1213,8 @@ msgid "Shallow History Pseudostate"
 msgstr "Pseudo-état historique"
 
 #: gaphor/UML/states/statestoolbox.py:130
-#, fuzzy
 msgid "Deep History Pseudostate"
-msgstr "Pseudo-état historique"
+msgstr "Pseudo-état historique Profond"
 
 #: gaphor/UML/states/statestoolbox.py:142
 #, fuzzy
@@ -1256,14 +1227,12 @@ msgid "Fork Pseudostate"
 msgstr "Pseudo-état historique"
 
 #: gaphor/UML/states/statestoolbox.py:166
-#, fuzzy
 msgid "Junction Pseudostate"
-msgstr "Pseudo-état initial"
+msgstr "Pseudo-état de jonction"
 
 #: gaphor/UML/states/statestoolbox.py:178
-#, fuzzy
 msgid "Choice Pseudostate"
-msgstr "Pseudo-état initial"
+msgstr "Pseudo-état de choix"
 
 #: gaphor/UML/states/statestoolbox.py:190
 #, fuzzy
@@ -1271,14 +1240,12 @@ msgid "Entry Point Pseudostate"
 msgstr "Pseudo-état initial"
 
 #: gaphor/UML/states/statestoolbox.py:202
-#, fuzzy
 msgid "Exit Point Pseudostate"
-msgstr "Pseudo-état initial"
+msgstr "Pseudo-état de sortie"
 
 #: gaphor/UML/states/statestoolbox.py:214
-#, fuzzy
 msgid "Terminate Pseudostate"
-msgstr "Pseudo-état initial"
+msgstr "Pseudo-état final"
 
 #: gaphor/UML/usecases/extend.py:21
 #, fuzzy
@@ -1320,9 +1287,8 @@ msgid "Pointer"
 msgstr "Pointeur"
 
 #: gaphor/diagram/diagramtoolbox.py:119
-#, fuzzy
 msgid "Magnet"
-msgstr "principal"
+msgstr "Aimant"
 
 #: gaphor/diagram/diagramtoolbox.py:126
 msgid "Line"
@@ -1345,9 +1311,8 @@ msgid "Comment line"
 msgstr "Ligne de commentaire"
 
 #: gaphor/diagram/diagramtoolbox.py:164
-#, fuzzy
 msgid "Diagram metadata"
-msgstr "Nouveau _Diagramme"
+msgstr "Diagramme de Méta-data"
 
 #: gaphor/diagram/presentation.py:48
 msgid "(from {namespace})"
@@ -1372,30 +1337,28 @@ msgstr "Note / Remarque"
 
 #: gaphor/diagram/propertypages.ui:123
 msgid "Created By"
-msgstr ""
+msgstr "Créer par"
 
 #: gaphor/diagram/propertypages.ui:151
 msgid "Website"
-msgstr ""
+msgstr "site Web"
 
 #: gaphor/diagram/propertypages.ui:165
-#, fuzzy
 msgid "Revision"
-msgstr "Partition"
+msgstr "Révision"
 
 #: gaphor/diagram/propertypages.ui:179
 #, fuzzy
 msgid "License"
-msgstr "Ligne"
+msgstr "License"
 
 #: gaphor/diagram/propertypages.ui:193
-#, fuzzy
 msgid "Created On"
-msgstr "Nouveau modèle"
+msgstr "Créé Sur"
 
 #: gaphor/diagram/propertypages.ui:207
 msgid "Updated On"
-msgstr ""
+msgstr "Mise à jour On"
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1411,11 +1374,11 @@ msgstr ""
 
 #: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
-msgstr ""
+msgstr "Disposition Automatique"
 
 #: gaphor/plugins/autolayout/pydot.py:53
 msgid "Auto Layout (orthogonal)"
-msgstr ""
+msgstr "Disposition Automatique (orthogonale)"
 
 #: gaphor/plugins/console/console.py:24
 msgid ""
@@ -1426,11 +1389,12 @@ msgstr ""
 
 #: gaphor/plugins/console/consolewindow.py:19
 msgid "Gaphor Console"
-msgstr ""
+msgstr "Console de Gaphor"
 
 #: gaphor/plugins/console/consolewindow.py:42
+#, fuzzy
 msgid "Console"
-msgstr ""
+msgstr "Console"
 
 #: gaphor/plugins/diagramexport/__init__.py:50
 msgid "All {ext} Files"
@@ -1438,7 +1402,7 @@ msgstr "Tous les fichiers {ext}"
 
 #: gaphor/plugins/diagramexport/__init__.py:56
 msgid "Export as SVG"
-msgstr ""
+msgstr "Exporter en SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:57
 #: gaphor/plugins/diagramexport/__init__.py:62
@@ -1448,49 +1412,46 @@ msgstr "Exporter le diagramme en SVG"
 
 #: gaphor/plugins/diagramexport/__init__.py:67
 msgid "Export as PNG"
-msgstr ""
+msgstr "Exporter en PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:68
 #: gaphor/plugins/diagramexport/__init__.py:73
-#, fuzzy
 msgid "Export diagram as PNG"
-msgstr "Exporter le diagramme en SVG"
+msgstr "Exporter le diagramme en PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:78
 msgid "Export as PDF"
-msgstr ""
+msgstr "Exporter en PDF"
 
 #: gaphor/plugins/diagramexport/__init__.py:79
 #: gaphor/plugins/diagramexport/__init__.py:85
-#, fuzzy
 msgid "Export diagram as PDF"
-msgstr "Exporter le diagramme en SVG"
+msgstr "Exporter le diagramme en PDF"
 
 #: gaphor/plugins/diagramexport/__init__.py:93
 msgid "Export as EPS"
-msgstr ""
+msgstr "Exporter en EPS"
 
 #: gaphor/plugins/diagramexport/__init__.py:94
 msgid "Export diagram as Encapsulated PostScript"
-msgstr ""
+msgstr "Exporter le diagramme en PostScript Encapsulé"
 
 #: gaphor/plugins/diagramexport/__init__.py:100
-#, fuzzy
 msgid "Export diagram as EPS"
-msgstr "Exporter le diagramme en SVG"
+msgstr "Exporter le diagramme en EPS"
 
 #: gaphor/plugins/errorreports/errorreports.py:61
 #: gaphor/plugins/errorreports/errorreports.ui:6
 msgid "Error Reports"
-msgstr ""
+msgstr "rapports d'erreurs"
 
 #: gaphor/plugins/errorreports/errorreports.py:96
 msgid "No errors have been intercepted. We’re good."
-msgstr ""
+msgstr "Aucune erreur n’a été interceptée. Tout va bien."
 
 #: gaphor/plugins/errorreports/errorreports.py:100
 msgid "Errors:"
-msgstr ""
+msgstr "Erreurs:"
 
 #: gaphor/plugins/errorreports/errorreports.py:149
 msgid ""
@@ -3427,4 +3388,3 @@ msgstr ""
 
 #~ msgid "Actuator Command"
 #~ msgstr ""
-
