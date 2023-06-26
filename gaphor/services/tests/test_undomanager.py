@@ -215,6 +215,35 @@ def test_undo_association_1_n(event_manager, element_factory, undo_manager):
     assert b1 is a2.one
 
 
+def test_undo_association_undo_in_same_order(
+    event_manager, element_factory, undo_manager
+):
+    class A(Element):
+        pass
+
+    class B(Element):
+        pass
+
+    A.one = association("one", B, upper=1, opposite="two")
+    B.two = association("two", A, upper="*", opposite="one")
+
+    with Transaction(event_manager):
+        a1 = element_factory.create(A)
+        a2 = element_factory.create(A)
+        a3 = element_factory.create(A)
+        b = element_factory.create(B)
+        b.two = a1
+        b.two = a2
+        b.two = a3
+
+    with Transaction(event_manager):
+        del b.two[a2]
+
+    undo_manager.undo_transaction()
+
+    assert [e.id for e in b.two] == [a1.id, a2.id, a3.id]
+
+
 def test_element_factory_undo(element_factory, undo_manager):
     undo_manager.begin_transaction()
     p = element_factory.create(Element)

@@ -98,7 +98,7 @@ class AssociationAdded(AssociationUpdated):
 class AssociationDeleted(AssociationUpdated):
     """An association element has been deleted."""
 
-    def __init__(self, element, association, old_value):
+    def __init__(self, element, association, old_value, index):
         """Constructor.
 
         The element parameter is the element the association has been
@@ -108,6 +108,7 @@ class AssociationDeleted(AssociationUpdated):
 
         super().__init__(element, association)
         self.old_value = old_value
+        self.index = index
 
 
 class DerivedUpdated(AssociationUpdated):
@@ -153,7 +154,7 @@ class DerivedDeleted(AssociationDeleted, DerivedUpdated):
         of the derived property.
         """
 
-        super().__init__(element, association, old_value)
+        super().__init__(element, association, old_value, index=-1)
 
 
 class RedefinedSet(AssociationSet):
@@ -187,7 +188,7 @@ class RedefinedAdded(AssociationAdded):
 class RedefinedDeleted(AssociationDeleted):
     """A redefined property has been deleted."""
 
-    def __init__(self, element, association, old_value):
+    def __init__(self, element, association, old_value, index):
         """Constructor.
 
         The element parameter is the element to which the property
@@ -195,7 +196,7 @@ class RedefinedDeleted(AssociationDeleted):
         property.
         """
 
-        super().__init__(element, association, old_value)
+        super().__init__(element, association, old_value, index)
 
 
 class ElementCreated(ServiceEvent):

@@ -369,7 +369,9 @@ class association(umlproperty):
             setattr(obj, self._name, v)
         return v
 
-    def set(self, obj, value: T | None, from_opposite=False) -> None:
+    def set(
+        self, obj, value: T | None, index: int | None = None, from_opposite=False
+    ) -> None:
         """Set a new value for our attribute. If this is a collection, append
         to the existing collection.
 
@@ -381,7 +383,7 @@ class association(umlproperty):
         if self.upper == 1:
             self._set_one(obj, value, from_opposite)
         else:
-            self._set_many(obj, value, from_opposite)
+            self._set_many(obj, value, index, from_opposite)
 
     def _set_one(self, obj, value, from_opposite=False) -> None:
         if not (isinstance(value, self.type) or (value is None)):
@@ -409,7 +411,9 @@ class association(umlproperty):
 
         self.handle(AssociationSet(obj, self, old, value))
 
-    def _set_many(self, obj, value, from_opposite=False, from_load=False) -> None:
+    def _set_many(
+        self, obj, value, index, from_opposite=False, from_load=False
+    ) -> None:
         if not isinstance(value, self.type):
             raise TypeError(f"Value should be of type {self.type.__name__}")
 
@@ -418,10 +422,17 @@ class association(umlproperty):
         if value in c:
             if from_load:
                 c.items.remove(value)
-                c.items.append(value)
+                if index is None:
+                    c.items.append(value)
+                else:
+                    c.items.insert(index, value)
             return
 
-        c.items.append(value)
+        if index is None:
+            c.items.append(value)
+        else:
+            c.items.insert(index, value)
+
         try:
             self._set_opposite(obj, value, from_opposite)
         except Exception:
@@ -478,12 +489,13 @@ class association(umlproperty):
         if c := self._get_many(obj):
             items: collectionlist = c.items
             try:
+                index = items.index(value)
                 items.remove(value)
             except ValueError:
                 pass
             else:
                 if do_notify:
-                    self.handle(AssociationDeleted(obj, self, value))
+                    self.handle(AssociationDeleted(obj, self, value, index))
 
             # Remove items collection if empty
             if not items:
@@ -875,7 +887,7 @@ class redefine(umlproperty):
                 f"Value should be of type {self.type.__name__}, got a {type(value)} instead"
             )
         assert isinstance(self.original, association)
-        return self.original.set(obj, value, from_opposite)
+        return self.original.set(obj, value, from_opposite=from_opposite)
 
     def delete(self, obj, value, from_opposite=False, do_notify=True):
         assert isinstance(self.original, association)
@@ -893,7 +905,9 @@ class redefine(umlproperty):
             elif isinstance(event, AssociationAdded):
                 self.handle(RedefinedAdded(event.element, self, event.new_value))
             elif isinstance(event, AssociationDeleted):
-                self.handle(RedefinedDeleted(event.element, self, event.old_value))
+                self.handle(
+                    RedefinedDeleted(event.element, self, event.old_value, event.index)
+                )
             else:
                 log.error(
                     "Don't know how to handle event "
