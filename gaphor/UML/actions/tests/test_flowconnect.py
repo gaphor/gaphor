@@ -514,7 +514,6 @@ class FlowItemDecisionAndForkNodes:
         assert len(jn.combined.incoming) == 1
         assert jn.subject.outgoing[0] is jn.combined.incoming[0]
 
-    @pytest.mark.xfail
     @pytest.mark.parametrize(
         "flow_item,uml_flow",
         [(ControlFlowItem, UML.ControlFlow), (ObjectFlowItem, UML.ObjectFlow)],
