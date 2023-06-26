@@ -114,7 +114,7 @@ Connector.register(InputPinItem, ObjectFlowItem)(FlowConnect)
 Connector.register(OutputPinItem, ObjectFlowItem)(FlowConnect)
 
 
-class FlowForkDecisionNodeControlFlowConnect(FlowConnect):
+class FlowForkDecisionNodeFlowConnect(FlowConnect):
     """Abstract class with common behaviour for Fork/Join node and
     Decision/Merge node."""
 
@@ -224,7 +224,7 @@ class FlowForkDecisionNodeControlFlowConnect(FlowConnect):
 
 @Connector.register(ForkNodeItem, ControlFlowItem)
 @Connector.register(ForkNodeItem, ObjectFlowItem)
-class FlowForkNodeControlFlowConnect(FlowForkDecisionNodeControlFlowConnect):
+class FlowForkNodeFlowConnect(FlowForkDecisionNodeFlowConnect):
     """Connect Flow to a ForkNode."""
 
     fork_node_cls = UML.ForkNode
@@ -232,7 +232,8 @@ class FlowForkNodeControlFlowConnect(FlowForkDecisionNodeControlFlowConnect):
 
 
 @Connector.register(DecisionNodeItem, ControlFlowItem)
-class FlowDecisionNodeControlFlowConnect(FlowForkDecisionNodeControlFlowConnect):
+@Connector.register(DecisionNodeItem, ObjectFlowItem)
+class FlowDecisionNodeFlowConnect(FlowForkDecisionNodeFlowConnect):
     """Connect Flow to a DecisionNode."""
 
     fork_node_cls = UML.DecisionNode
