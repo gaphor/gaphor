@@ -555,18 +555,15 @@ class FlowItemDecisionAndForkNodes:
         # needed for tests below
         flow = jn.subject.outgoing[0]
         node = jn.combined
-        print(flow4)
-        print(f"++{node}++")
+
         assert flow in element_factory.lselect(uml_flow)
         assert node in element_factory.lselect(self.fork_node_cls)
 
         # test disconnection
-        print(f"\n\n===={jn.combined}====")
         disconnect(flow4, flow4.head)        
         assert get_connected(flow4, flow4.head) is None
 
-        #!!!!MRFK !!!!
-        print(f"* jn:*{jn.combined}*********")
+
         assert jn.combined is None
 
         flows = element_factory.lselect(uml_flow)

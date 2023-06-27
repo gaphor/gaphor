@@ -181,9 +181,7 @@ class FlowForkDecisionNodeFlowConnect(FlowConnect):
     def decombine_nodes(self):
         """Decombine join/fork or decision/merge nodes."""
         element = self.element
-        print('here1')
         if element.combined:
-            print('here2')
             join_node = element.subject
             cflow = join_node.outgoing[0]  # combining flow
             fork_node = cflow.target
@@ -194,7 +192,6 @@ class FlowForkDecisionNodeFlowConnect(FlowConnect):
             assert isinstance(fork_node, fork_node_cls)
 
             if len(join_node.incoming) < 2 or len(fork_node.outgoing) < 2:
-                print('here3')
                 # Move all outgoing edges to the first node (the join node):
                 for f in list(fork_node.outgoing):
                     f.source = join_node
@@ -202,11 +199,9 @@ class FlowForkDecisionNodeFlowConnect(FlowConnect):
                 fork_node.unlink()
                 # swap subject to fork node if outgoing > 1
                 if len(join_node.outgoing) > 1:
-                    print('here4')
                     assert len(join_node.incoming) < 2
                     UML.recipes.swap_element(join_node, fork_node_cls)
                 del element.combined
-                print(f"--element:-{element.combined}---")
 
 
     def connect_subject(self, handle):
