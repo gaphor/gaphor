@@ -224,7 +224,7 @@ class MainWindow(Service, ActionProvider):
     @event_handler(ModelLoaded, ModelSaved)
     def _on_file_manager_state_changed(self, event: ModelLoaded | ModelSaved) -> None:
         if not (window := self.window):
-            self._ui_updates.append(lambda: self._on_file_manager_state_changed(event))  # type: ignore[no-any-return]
+            self._ui_updates.append(lambda: self._on_file_manager_state_changed(event))
             return
 
         filename = Path(event.filename) if event.filename else None
@@ -247,7 +247,7 @@ class MainWindow(Service, ActionProvider):
     @event_handler(CurrentDiagramChanged)
     def _on_current_diagram_changed(self, event):
         if not self.window:
-            self._ui_updates.append(lambda: self._on_current_diagram_changed(event))  # type: ignore[no-any-return]
+            self._ui_updates.append(lambda: self._on_current_diagram_changed(event))
             return
 
         self.title.set_text(
