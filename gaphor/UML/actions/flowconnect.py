@@ -80,7 +80,7 @@ class FlowConnect(RelationshipConnect):
         otc = self.get_connected(opposite)
         if (
             opposite
-            and isinstance(line, ControlFlowItem)
+            and (isinstance(line, ControlFlowItem) or isinstance(line, ObjectLFlowItem))
             and isinstance(otc, (ForkNodeItem, DecisionNodeItem))
         ):
             adapter = Connector(otc, line)
@@ -93,7 +93,7 @@ class FlowConnect(RelationshipConnect):
         otc = self.get_connected(opposite)
         if (
             opposite
-            and isinstance(line, ControlFlowItem)
+            and (isinstance(line, ControlFlowItem) or isinstance(line, ObjectLFlowItem))
             and isinstance(otc, (ForkNodeItem, DecisionNodeItem))
         ):
             adapter = Connector(otc, line)
