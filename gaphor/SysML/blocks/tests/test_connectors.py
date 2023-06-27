@@ -7,12 +7,21 @@ from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
 from gaphor.SysML.blocks.connectors import BlockProperyProxyPortConnector
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
+from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.UML.deployments import ConnectorItem
 
 
 @pytest.fixture
 def block_item(diagram, element_factory):
     return diagram.create(BlockItem, subject=element_factory.create(sysml.Block))
+
+
+@pytest.fixture
+def property_item(diagram, element_factory):
+    type = element_factory.create(sysml.Block)
+    prop = diagram.create(PropertyItem, subject=element_factory.create(sysml.Property))
+    prop.subject.type = type
+    return prop
 
 
 @pytest.fixture
@@ -76,6 +85,19 @@ def test_disconnect_proxy_port_to_block(block_item, proxy_port_item):
 
     assert proxy_port_item.subject is None
     assert proxy_port_item.diagram
+
+
+def test_connect_proxy_port_to_property(property_item, proxy_port_item):
+    connector = Connector(property_item, proxy_port_item)
+
+    connected = connector.connect(
+        proxy_port_item.handles()[0], property_item.ports()[0]
+    )
+
+    assert connected
+    assert proxy_port_item.subject
+    assert proxy_port_item.subject.encapsulatedClassifier is property_item.subject.type
+    assert proxy_port_item.subject in property_item.subject.type.ownedPort
 
 
 def test_allow_connector_to_proxy_port(
