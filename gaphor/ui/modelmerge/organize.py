@@ -143,7 +143,7 @@ def organize_changes(element_factory, modeling_language):
         element_factory.select(
             lambda e: isinstance(e, PendingChange) and e.id not in seen_change_ids
         ),
-        lambda e: e.element_id,  # type: ignore[no-any-return]
+        lambda e: e.element_id,
     ):
         changes = list(changes_iter)
         if element_change := next(

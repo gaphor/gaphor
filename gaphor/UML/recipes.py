@@ -142,7 +142,7 @@ def get_stereotypes(element):
                 stereotypes.append(sub)
 
     # Lambda key sort issue in mypy: https://github.com/python/mypy/issues/9656
-    return sorted(stereotypes, key=lambda st: st.name)  # type: ignore
+    return sorted(stereotypes, key=lambda st: st.name)
 
 
 def get_applied_stereotypes(element):

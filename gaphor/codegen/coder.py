@@ -188,7 +188,7 @@ def coder(
 
 def class_declaration(class_: UML.Class):
     base_classes = ", ".join(
-        c.name for c in sorted(bases(class_), key=lambda c: c.name)  # type: ignore[no-any-return]
+        c.name for c in sorted(bases(class_), key=lambda c: c.name)
     )
     return f"class {class_.name}({base_classes}):"
 
