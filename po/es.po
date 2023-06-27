@@ -4,9 +4,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-17 15:06-0400\n"
-"PO-Revision-Date: 2023-06-26 04:42+0000\n"
-"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
-".org>\n"
+"PO-Revision-Date: 2023-06-28 14:48+0000\n"
+"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
 ">\n"
 "Language: es\n"
@@ -56,7 +55,7 @@ msgstr "Persona"
 
 #: gaphor/C4Model/toolbox.py:71
 msgid "Software System"
-msgstr "Sistema de software"
+msgstr "Sistema informático"
 
 #: gaphor/C4Model/toolbox.py:83
 msgid "Container"
@@ -443,7 +442,7 @@ msgstr "Asociación"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:84
 msgid "ValueType"
-msgstr "TipoValor"
+msgstr "ValueType"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:95
 #: gaphor/UML/classes/classestoolbox.py:140
@@ -617,7 +616,7 @@ msgstr "Nodo objeto"
 
 #: gaphor/UML/actions/actionstoolbox.py:158
 msgid "Swimlane"
-msgstr "Swimlane"
+msgstr "Carril"
 
 #: gaphor/UML/actions/actionstoolbox.py:170
 msgid "Control flow"
@@ -1098,7 +1097,7 @@ msgstr "Mensaje"
 
 #: gaphor/UML/interactions/interactionstoolbox.py:96
 msgid "Reflexive message"
-msgstr "Mensaje reflexivo"
+msgstr "mensaje reflexivo"
 
 #: gaphor/UML/interactions/propertypages.ui:9
 msgid "Message Sort"
