@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-06-26 16:51+0000\n"
+"PO-Revision-Date: 2023-06-28 14:48+0000\n"
 "Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/es/>\n"
@@ -2270,7 +2270,7 @@ msgstr "ModelElements"
 
 #: ../models/sysml/PortsAndFlows.rst:2
 msgid "PortsAndFlows"
-msgstr ""
+msgstr "PortsAndFlows"
 
 #: ../models/sysml/PortsAndFlows.rst:5
 msgid "Actions on Nested Ports"
@@ -2493,167 +2493,213 @@ msgstr "2. Acciones de invocación"
 
 #: ../models/uml/10._Actions.rst:17
 msgid "7. Structural Feature Actions"
-msgstr ""
+msgstr "7. Acciones de características estructurales"
 
 #: ../models/uml/10._Actions.rst:23
 msgid "9. Accept Event Actions"
-msgstr ""
+msgstr "9. Aceptar acciones de eventos"
 
 #: ../models/uml/11._Interactions.rst:2
 msgid "11. Interactions"
-msgstr ""
+msgstr "11. Interacciones"
 
 #: ../models/uml/11._Interactions.rst:5
 msgid "1. Interactions"
-msgstr ""
+msgstr "1. Interacciones"
 
 #: ../models/uml/11._Interactions.rst:11
 msgid "2. Lifelines"
-msgstr ""
+msgstr "2. Líneas de vida"
 
 #: ../models/uml/11._Interactions.rst:17
 msgid "3. Messages"
-msgstr ""
+msgstr "3. Mensajes"
 
 #: ../models/uml/11._Interactions.rst:23
 msgid "4. Occurrences"
-msgstr ""
+msgstr "4. Ocurrencias"
 
 #: ../models/uml/12._Use_Cases.rst:2
 msgid "12. Use Cases"
-msgstr ""
+msgstr "12. Casos prácticos"
 
 #: ../models/uml/12._Use_Cases.rst:5
 msgid "UseCases"
-msgstr ""
+msgstr "UseCases"
 
 #: ../models/uml/13._Deployments.rst:2
 msgid "13. Deployments"
-msgstr ""
+msgstr "13. Despliegues"
 
 #: ../models/uml/13._Deployments.rst:5
 msgid "1. Deployments"
-msgstr ""
+msgstr "1. Despliegues"
 
 #: ../models/uml/13._Deployments.rst:11
 msgid "2. Artifacts"
-msgstr ""
+msgstr "2. Artefactos"
 
 #: ../models/uml/13._Deployments.rst:17
 msgid "3. Nodes"
-msgstr ""
+msgstr "3. Nodos"
 
 #: ../models/uml/14._Information_Flows.rst:2
 msgid "14. Information Flows"
-msgstr ""
+msgstr "14. Flujos de información"
 
 #: ../models/uml/A._Gaphor_Specific_Constructs.rst:2
 msgid "A. Gaphor Specific Constructs"
-msgstr ""
+msgstr "A. Constructores específicos de Gaphor"
 
 #: ../models/uml/A._Gaphor_Specific_Constructs.rst:5
 msgid "1. Stereotype Applications"
-msgstr ""
+msgstr "1. Aplicaciones de estereotipo"
 
 #: ../models/uml/B._Gaphor_Profile.rst:2
 msgid "B. Gaphor Profile"
-msgstr ""
+msgstr "B. Perfil de Gaphor"
 
 #: ../models/uml/B._Gaphor_Profile.rst:4
 msgid "In order to provide extra information to the diagram elements (mainly association ends), the Gaphor model has been extended with stereotypes."
 msgstr ""
+"Para proporcionar información adicional a los elementos del diagrama ("
+"principalmente extremos de asociación), el modelo Gaphor se ha ampliado con "
+"estereotipos."
 
 #: ../scripting.md:5
 msgid "Jupyter and Scripting"
-msgstr ""
+msgstr "Jupyter y Scripting"
 
 #: ../scripting.md:7
 msgid "One way to work with models is through the GUI. However, you may also be interested in getting more out of your models by interacting with them through Python scripts and [Jupyter notebooks](https://jupyter.org/)."
 msgstr ""
+"Una forma de trabajar con los modelos es a través de la GUI. Sin embargo, "
+"también puede interesarte sacar más partido de tus modelos interactuando con "
+"ellos mediante scripts de Python y [Jupyter notebooks](https://jupyter.org/)."
 
 #: ../scripting.md:11
 msgid "You can use scripts to:"
-msgstr ""
+msgstr "Puede utilizar scripts para:"
 
 #: ../scripting.md:13
 msgid "Explore the model, check for (in)valid conditions."
-msgstr ""
+msgstr "Explorar el modelo, comprobar las condiciones (no)válidas."
 
 #: ../scripting.md:14
 msgid "Generate code, as is done for Gaphor’s data model."
-msgstr ""
+msgstr "Genere código, como se hace para el modelo de datos de Gaphor."
 
 #: ../scripting.md:15
 msgid "Update a model from another source, like a CSV file."
-msgstr ""
+msgstr "Actualizar un modelo a partir de otra fuente, como un archivo CSV."
 
 #: ../scripting.md:17
 msgid "Since Gaphor is written in Python, it also functions as a library."
 msgstr ""
+"Dado que Gaphor está escrito en Python, también funciona como una biblioteca."
 
 #: ../scripting.md:19
 msgid "Getting started"
-msgstr ""
+msgstr "Primeros pasos"
 
 #: ../scripting.md:21
 msgid "To get started, you’ll need a Python console. You can use the interactive console in Gaphor, use a Jupyter notebook, although that will require setting up a Python development environment."
 msgstr ""
+"Para empezar, necesitarás una consola Python. Puedes usar la consola "
+"interactiva en Gaphor, usar un Jupyter notebook, aunque eso requerirá "
+"configurar un entorno de desarrollo Python."
 
 #: ../scripting.md:25
 msgid "Query a model"
-msgstr ""
+msgstr "Consultar un modelo"
 
 #: ../scripting.md:27
 msgid "The first step is to load a model. For this you’ll need an `ElementFactory`. The `ElementFactory` is responsible to creating and maintaining the model. It acts as a repository for the model while you’re working on it."
 msgstr ""
+"El primer paso es cargar un modelo. Para ello necesitarás un `ElementFactory`"
+". El `ElementFactory` es responsable de crear y mantener el modelo. Actúa "
+"como un repositorio para el modelo mientras trabajas en él."
 
 #: ../scripting.md:37
 msgid "The module `gaphor.storage` contains everything to load and save models. Gaphor supports multiple [modeling languages](modeling_language). The `ModelingLanguageService` consolidates those languages and makes it easy for the loader logic to find the appropriate classes."
 msgstr ""
+"El módulo `gaphor.storage` contiene todo lo necesario para cargar y guardar "
+"modelos. Gaphor soporta múltiples [modeling languages](modeling_language). "
+"El `ModelingLanguageService` consolida esos idiomas y hace que sea fácil "
+"para la lógica del cargador encontrar las clases apropiadas."
 
 #: ../scripting.md:43
 msgid "In versions before 2.13, an `EventManager` is required. In later versions, the `ModelingLanguageService` can be initialized without event manager."
 msgstr ""
+"En versiones anteriores a la 2.13, se requiere un `EventManager`. En "
+"versiones posteriores, el `ModelingLanguageService` puede ser inicializado "
+"sin gestor de eventos."
 
 #: ../scripting.md:65
 msgid "At this point the model is loaded in the `element_factory` and can be queried."
 msgstr ""
+"En este punto el modelo se carga en la `element_factory` y puede ser "
+"consultado."
 
 #: ../scripting.md:68
 msgid "A modeling language consists of the model elements, and diagram items. Graphical components are loaded separately. For the most basic manupilations, GTK (the GUI toolkit we use) is not required, but you may run into situations where Gaphor tries to load the GTK library."
 msgstr ""
+"Un lenguaje de modelado se compone de los elementos del modelo y de los "
+"elementos del diagrama. Los componentes gráficos se cargan por separado. "
+"Para las manipulaciones más básicas, GTK (el conjunto de herramientas GUI "
+"que utilizamos) no es necesario, pero puede encontrarse con situaciones en "
+"las que Gaphor intente cargar la biblioteca GTK."
 
 #: ../scripting.md:73
 msgid "One trick to avoid this (when generating Sphinx docs at least) is to use autodoc’s mock function to mock out the GTK and GDK libraries. However, Pango needs to be installed for text rendering."
 msgstr ""
+"Un truco para evitar esto (al menos cuando se generan documentos Sphinx) es "
+"usar la función mock de autodoc para imitar las librerías GTK y GDK. Sin "
+"embargo, Pango necesita ser instalado para el renderizado de texto."
 
 #: ../scripting.md:78
 msgid "A simple query only tells you what elements are in the model. The method `ElementFactory.select()` returns an iterator. Sometimes it’s easier to obtain a list directly. For those cases you can use `ElementFatory.lselect()`. Here we select the last five elements:"
 msgstr ""
+"Una consulta simple sólo te dice qué elementos hay en el modelo. El método "
+"`ElementFactory.select()` devuelve un iterador. A veces es más fácil obtener "
+"una lista directamente. Para esos casos puedes usar `ElementFatory.lselect()`"
+". Aquí seleccionamos los últimos cinco elementos:"
 
 #: ../scripting.md:88
 msgid "Elements can also be queried by type and with a predicate function:"
 msgstr ""
+"Los elementos también pueden consultarse por tipo y con una función de "
+"predicado:"
 
 #: ../scripting.md:103
 msgid "Now, let’s say we want to do some simple (pseudo-)code generation. We can iterate class attributes and write some output."
 msgstr ""
+"Ahora, digamos que queremos hacer una generación simple de (pseudo) código. "
+"Podemos iterar atributos de clase y escribir algunos resultados."
 
 #: ../scripting.md:124
 msgid "To find out which relations can be queried, have a look at the [modeling language](modeling_language) documentation. Gaphor’s data models have been built using the [UML](models/uml) language."
 msgstr ""
+"Para saber qué relaciones se pueden consultar, eche un vistazo a la "
+"documentación de [modeling language](modeling_language). Los modelos de "
+"datos de Gaphor se han construido utilizando el lenguaje [UML](models/uml)."
 
 #: ../scripting.md:128
 msgid "You can find out more about a model property by printing it."
 msgstr ""
+"Puede obtener más información sobre una propiedad de modelo imprimiéndola."
 
 #: ../scripting.md:134
 msgid "In this case it tells us that the type of `UML.Class.ownedAttribute` is `UML.Property`. `UML.Property.class_` is set to the owner class when `ownedAttribute` is set. It is a bidirectional relation."
 msgstr ""
+"En este caso nos dice que el tipo de `UML.Class.ownedAttribute` es `UML."
+"Property`. El atributo `UML.Property.class_` se establece en la clase "
+"propietaria cuando se establece `ownedAttribute`. Se trata de una relación "
+"bidireccional."
 
 #: ../scripting.md:138
 msgid "Draw a diagram"
-msgstr ""
+msgstr "Dibujar un diagrama"
 
 #: ../scripting.md:140
 msgid "Another nice feature is drawing the diagrams. At this moment this requires a function. This behavior is similar to the [`diagram` directive](sphinx)."
@@ -3005,7 +3051,7 @@ msgstr ""
 
 #: ../stereotypes.md:1
 msgid "Stereotypes"
-msgstr ""
+msgstr "Estereotipos"
 
 #: ../stereotypes.md:3
 msgid "In UML, stereotypes are way to extend the application of the UML language to new domains. For example: SysML started as a profile for UML."
@@ -3605,7 +3651,7 @@ msgstr ""
 
 #: ../style_sheets.md:287
 msgid "Profile"
-msgstr ""
+msgstr "Perfil"
 
 #: ../style_sheets.md:287
 msgid "Group"
@@ -3645,11 +3691,11 @@ msgstr ""
 #: ../style_sheets.md:299
 #: ../style_sheets.md:300
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: ../style_sheets.md:292
 msgid "Classes"
-msgstr ""
+msgstr "Clases"
 
 #: ../style_sheets.md:292
 msgid "all Association's"
@@ -3675,7 +3721,7 @@ msgstr ""
 #: ../style_sheets.md:295
 #: ../style_sheets.md:296
 msgid "Actions"
-msgstr ""
+msgstr "Acciones"
 
 #: ../style_sheets.md:294
 msgid "Decision/Merge Node"
@@ -3695,7 +3741,7 @@ msgstr ""
 
 #: ../style_sheets.md:296
 msgid "Swimlane"
-msgstr ""
+msgstr "Carril"
 
 #: ../style_sheets.md:296
 msgid "``partition``"
@@ -3703,11 +3749,11 @@ msgstr ""
 
 #: ../style_sheets.md:297
 msgid "Interactions"
-msgstr ""
+msgstr "Interacciones"
 
 #: ../style_sheets.md:297
 msgid "Reflexive message"
-msgstr ""
+msgstr "mensaje reflexivo"
 
 #: ../style_sheets.md:297
 msgid "``message``"
@@ -3716,11 +3762,11 @@ msgstr ""
 #: ../style_sheets.md:298
 #: ../style_sheets.md:299
 msgid "States"
-msgstr ""
+msgstr "Estados"
 
 #: ../style_sheets.md:298
 msgid "Initial Pseudostate"
-msgstr ""
+msgstr "Pseudoestado inicial"
 
 #: ../style_sheets.md:298
 #: ../style_sheets.md:299
@@ -3733,11 +3779,11 @@ msgstr ""
 
 #: ../style_sheets.md:300
 msgid "Profiles"
-msgstr ""
+msgstr "Perfiles"
 
 #: ../style_sheets.md:300
 msgid "Metaclass"
-msgstr ""
+msgstr "Metaclase"
 
 #: ../style_sheets.md:300
 msgid "``class``"
@@ -3745,7 +3791,7 @@ msgstr ""
 
 #: ../style_sheets.md:301
 msgid "Person"
-msgstr ""
+msgstr "Persona"
 
 #: ../style_sheets.md:301
 msgid "``c4person``"
@@ -3753,7 +3799,7 @@ msgstr ""
 
 #: ../style_sheets.md:302
 msgid "Software System"
-msgstr ""
+msgstr "Sistema informático"
 
 #: ../style_sheets.md:302
 msgid "``c4container[type=\"Software System\"]``"
@@ -3761,7 +3807,7 @@ msgstr ""
 
 #: ../style_sheets.md:303
 msgid "Component"
-msgstr ""
+msgstr "Componente"
 
 #: ../style_sheets.md:303
 msgid "``c4container[type=\"Component\"]``"
@@ -3769,7 +3815,7 @@ msgstr ""
 
 #: ../style_sheets.md:304
 msgid "Container"
-msgstr ""
+msgstr "Contenedor"
 
 #: ../style_sheets.md:304
 msgid "``c4container[type=\"Container\"]``"
@@ -3777,7 +3823,7 @@ msgstr ""
 
 #: ../style_sheets.md:305
 msgid "Container: Database"
-msgstr ""
+msgstr "Contenedor: Base de datos"
 
 #: ../style_sheets.md:305
 msgid "``c4database``"
@@ -3787,11 +3833,11 @@ msgstr ""
 #: ../style_sheets.md:307
 #: ../style_sheets.md:308
 msgid "SysML"
-msgstr ""
+msgstr "SysML"
 
 #: ../style_sheets.md:306
 msgid "ValueType"
-msgstr ""
+msgstr "ValueType"
 
 #: ../style_sheets.md:306
 #: ../style_sheets.md:307
@@ -3800,11 +3846,11 @@ msgstr ""
 
 #: ../style_sheets.md:307
 msgid "Primitive"
-msgstr ""
+msgstr "Primitivo"
 
 #: ../style_sheets.md:308
 msgid "Derive Requirement"
-msgstr ""
+msgstr "Derivación de requisitos"
 
 #: ../style_sheets.md:308
 msgid "``derivedreq``"
@@ -3812,11 +3858,11 @@ msgstr ""
 
 #: ../style_sheets.md:309
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: ../style_sheets.md:309
 msgid "FTA"
-msgstr ""
+msgstr "FTA"
 
 #: ../style_sheets.md:309
 msgid "any AND/OR/… Gate"
@@ -4096,7 +4142,7 @@ msgstr ""
 
 #: ../windows.md:61
 msgid "Python"
-msgstr ""
+msgstr "Python"
 
 #: ../windows.md:63
 msgid "Install Visual Studio 2022"
