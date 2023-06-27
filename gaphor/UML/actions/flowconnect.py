@@ -203,7 +203,6 @@ class FlowForkDecisionNodeFlowConnect(FlowConnect):
                     UML.recipes.swap_element(join_node, fork_node_cls)
                 del element.combined
 
-
     def connect_subject(self, handle):
         """In addition to a subject connect, the subject of the element may be
         changed.

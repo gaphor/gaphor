@@ -560,11 +560,11 @@ class FlowItemDecisionAndForkNodes:
         assert node in element_factory.lselect(self.fork_node_cls)
 
         # test disconnection
-        disconnect(flow4, flow4.head)        
+        disconnect(flow4, flow4.head)
         assert get_connected(flow4, flow4.head) is None
 
-
         assert jn.combined is None
+
 
         flows = element_factory.lselect(uml_flow)
         nodes = element_factory.lselect(self.fork_node_cls)
