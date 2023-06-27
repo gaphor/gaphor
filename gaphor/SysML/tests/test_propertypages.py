@@ -97,6 +97,23 @@ def test_property_property_page(element_factory):
     assert subject.aggregation == "composite"
 
 
+def test_property_type(element_factory):
+    subject = element_factory.create(SysML.sysml.Property)
+    type = element_factory.create(UML.Class)
+    type.name = "Bar"
+    property_page = PropertyPropertyPage(subject)
+
+    widget = property_page.construct()
+    dropdown = find(widget, "property-type")
+    bar_index = next(
+        n for n, lv in enumerate(dropdown.get_model()) if lv.value == type.id
+    )
+    dropdown.set_selected(bar_index)
+
+    assert dropdown.get_selected_item().label == "Bar"
+    assert subject.type is type
+
+
 def test_association_item_flow(association):
     property_page = ItemFlowPropertyPage(association)
 

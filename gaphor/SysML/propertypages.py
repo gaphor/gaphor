@@ -144,17 +144,42 @@ class PropertyPropertyPage(PropertyPageBase):
 
         builder = new_builder(
             "property-editor",
-            signals={"aggregation-changed": (self._on_aggregation_change,)},
+            signals={
+                "aggregation-changed": (self._on_aggregation_change,),
+                "property-type-changed": (self._on_property_type_changed,),
+            },
         )
 
         aggregation = builder.get_object("aggregation")
         aggregation.set_selected(self.AGGREGATION.index(self.subject.aggregation))
+
+        dropdown = builder.get_object("property-type")
+        model = list_of_classifiers(self.subject.model)
+        dropdown.set_model(model)
+
+        if self.subject.type:
+            dropdown.set_selected(
+                next(
+                    n for n, lv in enumerate(model) if lv.value == self.subject.type.id
+                )
+            )
+
+        dropdown.connect("notify::selected", self._on_property_type_changed)
 
         return builder.get_object("property-editor")
 
     @transactional
     def _on_aggregation_change(self, combo, _pspec):
         self.subject.aggregation = self.AGGREGATION[combo.get_selected()]
+
+    @transactional
+    def _on_property_type_changed(self, dropdown, _pspec):
+        if id := dropdown.get_selected_item().value:
+            element = self.subject.model.lookup(id)
+            assert isinstance(element, UML.Type)
+            self.subject.type = element
+        else:
+            del self.subject.type
 
 
 @PropertyPages.register(UML.Association)
@@ -186,7 +211,6 @@ class ItemFlowPropertyPage(PropertyPageBase):
             signals={
                 "item-flow-active": (self._on_item_flow_active,),
                 "item-flow-name-changed": (self._on_item_flow_name_changed,),
-                "item-flow-type-changed": (self._on_item_flow_type_changed,),
                 "invert-direction-changed": (self._invert_direction_changed,),
             },
         )
@@ -195,13 +219,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
         self.entry = builder.get_object("item-flow-name")
 
         dropdown = builder.get_object("item-flow-type")
-        model = Gio.ListStore.new(LabelValue)
-        model.append(LabelValue("", None))
-        for c in sorted(
-            (c for c in self.subject.model.select(UML.Classifier) if c.name),
-            key=lambda c: c.name or "",
-        ):
-            model.append(LabelValue(c.name, c.id))
+        model = list_of_classifiers(self.subject.model)
         dropdown.set_model(model)
 
         use_flow.set_active(isinstance(self.information_flow, sysml.ItemFlow))
@@ -273,6 +291,17 @@ class ItemFlowPropertyPage(PropertyPageBase):
             iflow.informationTarget,
             iflow.informationSource,
         )
+
+
+def list_of_classifiers(element_factory):
+    model = Gio.ListStore.new(LabelValue)
+    model.append(LabelValue("", None))
+    for c in sorted(
+        (c for c in element_factory.select(UML.Classifier) if c.name),
+        key=lambda c: c.name or "",
+    ):
+        model.append(LabelValue(c.name, c.id))
+    return model
 
 
 def create_item_flow(subject: UML.Association | sysml.Connector) -> sysml.ItemFlow:
