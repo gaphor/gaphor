@@ -568,8 +568,8 @@ class FlowItemDecisionAndForkNodes:
 
         flows = element_factory.lselect(uml_flow)
         nodes = element_factory.lselect(self.fork_node_cls)
-        #assert node not in nodes, f"{node} in {nodes}"
-        #assert flow not in flows, f"{flow} in {flows}"
+        assert node not in nodes, f"{node} in {nodes}"
+        assert flow not in flows, f"{flow} in {flows}"
 
 
 class TestFlowItemForkNode(FlowItemDecisionAndForkNodes):
