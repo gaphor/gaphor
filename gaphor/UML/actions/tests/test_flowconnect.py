@@ -565,7 +565,6 @@ class FlowItemDecisionAndForkNodes:
 
         assert jn.combined is None
 
-
         flows = element_factory.lselect(uml_flow)
         nodes = element_factory.lselect(self.fork_node_cls)
         assert node not in nodes, f"{node} in {nodes}"
