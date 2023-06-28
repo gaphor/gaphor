@@ -11,12 +11,13 @@ from gi.repository import Gio, GLib, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
-from gaphor.core import event_handler, gettext
+from gaphor.core import action, event_handler, gettext
 from gaphor.event import (
     ActionEnabled,
     ActiveSessionChanged,
     ModelLoaded,
     ModelSaved,
+    Notification,
     SessionShutdownRequested,
 )
 from gaphor.i18n import translated_ui_string
@@ -218,6 +219,21 @@ class MainWindow(Service, ActionProvider):
         for handler in self._ui_updates:
             handler()
         del self._ui_updates[:]
+
+    # Actions:
+
+    @action("fullscreen", shortcut="F11", state=False)
+    def toggle_fullscreen(self, active):
+        if not self.window:
+            return
+
+        if active:
+            self.window.fullscreen()
+            self.event_manager.handle(
+                Notification(gettext("Press F11 to exit Fullscreen"))
+            )
+        else:
+            self.window.unfullscreen()
 
     # Signal callbacks:
 

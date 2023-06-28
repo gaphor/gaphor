@@ -58,6 +58,14 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
+                <property name="accelerator">F11</property>
+                <property name="title" translatable="yes">Toggle Fullscreen</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">1</property>
                 <property name="accelerator">&lt;Primary&gt;q</property>
                 <property name="title" translatable="yes">Quit Gaphor</property>
               </object>
