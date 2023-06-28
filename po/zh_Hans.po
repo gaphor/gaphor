@@ -2394,7 +2394,7 @@ msgid "Open application menu"
 msgstr "开启应用菜单"
 
 #: gaphor/ui/help/shortcuts.ui:38 gaphor/ui/mainwindow.ui:78
-msgid "Toggle property editor"
+msgid "Toggle Property Editor"
 msgstr ""
 
 #: gaphor/ui/modelbrowser.py:182

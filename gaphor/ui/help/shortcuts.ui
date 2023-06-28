@@ -35,7 +35,7 @@
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
                 <property name="accelerator">F9</property>
-                <property name="title" translatable="yes">Toggle property editor</property>
+                <property name="title" translatable="yes">Toggle Property Editor</property>
               </object>
             </child>
 
