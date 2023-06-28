@@ -8,8 +8,9 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-06-28 14:48+0000\n"
-"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
+"PO-Revision-Date: 2023-06-28 22:47+0000\n"
+"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
+".org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/es/>\n"
 "Language: es\n"
@@ -3837,7 +3838,7 @@ msgstr "SysML"
 
 #: ../style_sheets.md:306
 msgid "ValueType"
-msgstr "ValueType"
+msgstr "ValorTipo"
 
 #: ../style_sheets.md:306
 #: ../style_sheets.md:307
