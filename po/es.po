@@ -4,8 +4,9 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.8.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-17 15:06-0400\n"
-"PO-Revision-Date: 2023-06-28 14:48+0000\n"
-"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
+"PO-Revision-Date: 2023-06-28 22:47+0000\n"
+"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
+".org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/gaphor/es/"
 ">\n"
 "Language: es\n"
@@ -442,7 +443,7 @@ msgstr "Asociación"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:84
 msgid "ValueType"
-msgstr "ValueType"
+msgstr "ValorTipo"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:95
 #: gaphor/UML/classes/classestoolbox.py:140
@@ -769,10 +770,10 @@ msgstr ""
 "  • <tt>+ attr: int</tt> (público con tipo)\n"
 "  • <tt>+ attr: int[0..1]</tt> (público, tipo, y multiplicidad)\n"
 "  • <tt>+ attr: int | bool</tt> (public, union type)\n"
-"  • <tt># /attr: int # una nota</tt> (protegidas, derivadas, con "
-"observación)\n"
+"  • <tt># /attr: int # una nota</tt> (protegidas, derivadas, con observación)"
 "\n"
-"Pulse <b>Enter</b> to edit, <b>Retroceso</b>/<b>Eliminar</b> para "
+"\n"
+"Pulse <b>Enter</b> para editar, <b>Retroceso</b>/<b>Eliminar</b> para "
 "eliminar elementos.\n"
 "Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
@@ -945,11 +946,11 @@ msgstr ""
 "  • <tt>attr</tt> (nombre, predeterminado a la visibilidad pública)\n"
 "  • <tt>+ attr: int</tt> (público con tipo)\n"
 "  • <tt>+ attr: int[0..1]</tt> (público, tipo, y multiplicidad)\n"
-"  • <tt>+ attr: int | bool</tt> (public, union type)\n"
-"  • <tt># /attr: int # una nota</tt> (protegidas, derivadas, con "
-"observación)\n"
+"  • <tt>+ attr: int | bool</tt> (público, tipo de unión)\n"
+"  • <tt># /attr: int # una nota</tt> (protegidas, derivadas, con observación)"
 "\n"
-"Pulse <b>Enter</b> to edit, <b>Retroceso</b>/<b>Eliminar</b> para "
+"\n"
+"Pulse <b>Enter</b> para editar, <b>Retroceso</b>/<b>Eliminar</b> para "
 "eliminar elementos.\n"
 "Use <b>-</b>/<b>=</b> para mover elementos arriba o abajo."
 
@@ -1419,7 +1420,7 @@ msgstr "Exportar como PNG"
 #: gaphor/plugins/diagramexport/__init__.py:68
 #: gaphor/plugins/diagramexport/__init__.py:73
 msgid "Export diagram as PNG"
-msgstr "Exportar diagrama como SVG"
+msgstr "Exportar diagrama como PNG"
 
 #: gaphor/plugins/diagramexport/__init__.py:78
 msgid "Export as PDF"
@@ -1873,7 +1874,7 @@ msgstr "4. Diseño detallado"
 
 #: gaphor/templates/uml.gaphor
 msgid "Main Actor"
-msgstr "Actor principal"
+msgstr "Actor protagonista"
 
 #: gaphor/templates/uml.gaphor
 msgid "Main Use Case"
