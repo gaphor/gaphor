@@ -2,6 +2,10 @@
 ------
 (unreleased)
 
+* Fix: order is preserved when undoing a change
+* UML actions: ObjectNode now also connects to decision/merge and join/fork nodes.
+* Experimental: support for plugins
+
 2.19.0
 ------
 - Dropped support for AppImage

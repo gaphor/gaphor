@@ -104,7 +104,7 @@ releasing the button.
 
 ### Relations
 
-Relations are line-like elements that form relationships between elements in the
+Relations are line-like items that form relationships between elements in the
 diagram. Each end of a relation is in one of two states:
 
 1. Connected to an element and the handle turns red
@@ -119,6 +119,19 @@ will appear in the middle of the line segments that exist. Drag the handle to
 add another segment. For example, when you first create a new relation, it will
 have only one segment. If you drag the segment handle, then it will now have two
 segments with the knee of the two segments where the handle was.
+
+### Copy and Paste
+
+As stated before, Gaphor is a modeling environent. This means that every _item_ in a diagram
+is backed by a _model element_ found in the model browser. This means that you can show the same
+_model element_ in different diagrams.
+
+* <kbd>Ctrl</kbd>+<kbd>v</kbd> is used to paste _only_ the presentation element.
+* <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> is used to paste a new presentation with a new model element.
+
+```{important}
+<kbd>Ctrl</kbd>+<kbd>v</kbd> does a "shallow" paste. <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>v</kbd> does a "deep" paste.
+```
 
 ### Undo and Redo
 
