@@ -1,6 +1,8 @@
 """Flow item connection adapters tests."""
 
-from typing import Type
+from typing import Type, Union
+
+import pytest as pytest
 
 from gaphor import UML
 from gaphor.core.modeling import Presentation
@@ -368,7 +370,7 @@ def test_object_flow_reconnection(create):
 class FlowItemDecisionAndForkNodes:
     """Base class for flow connecting to decision and fork nodes.
 
-    See `TestFlowItemDecisionNode` and `Test FlowItemForkNode` test cases.
+    See `TestFlowItemDecisionNode` and `TestFlowItemForkNode` test cases.
 
     Not tested yet
 
@@ -379,12 +381,13 @@ class FlowItemDecisionAndForkNodes:
     """
 
     item_cls: Type[Presentation]
-    fork_node_cls: Type[UML.ControlNode]
-    join_node_cls: Type[UML.ControlNode]
+    fork_node_cls: Union[UML.ControlNode, UML.ObjectNode]
+    join_node_cls: Union[UML.ControlNode, UML.ObjectNode]
 
-    def test_glue(self, create):
+    @pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
+    def test_glue(self, create, flow_item):
         """Test decision/fork nodes glue."""
-        flow = create(ControlFlowItem)
+        flow = create(flow_item)
         action = create(ActionItem, UML.Action)
         node = create(self.item_cls, self.join_node_cls)
 
@@ -396,7 +399,8 @@ class FlowItemDecisionAndForkNodes:
         glued = allow(flow, flow.tail, node)
         assert glued
 
-    def test_node_class_change(self, create):
+    @pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
+    def test_node_class_change(self, create, flow_item):
         """Test node incoming edges.
 
         Connection scheme is presented below::
@@ -408,9 +412,9 @@ class FlowItemDecisionAndForkNodes:
 
         Node class changes due to two incoming edges and one outgoing edge.
         """
-        flow1 = create(ControlFlowItem)
-        flow2 = create(ControlFlowItem)
-        flow3 = create(ControlFlowItem)
+        flow1 = create(flow_item)
+        flow2 = create(flow_item)
+        flow3 = create(flow_item)
         a1 = create(ActionItem, UML.Action)
         a2 = create(ActionItem, UML.Action)
         jn = create(self.item_cls, self.fork_node_cls)
@@ -430,7 +434,8 @@ class FlowItemDecisionAndForkNodes:
         # node class changes
         assert isinstance(jn.subject, self.join_node_cls)
 
-    def test_outgoing_edges(self, create):
+    @pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
+    def test_outgoing_edges(self, create, flow_item):
         """Test outgoing edges.
 
         Connection scheme is presented below::
@@ -439,9 +444,9 @@ class FlowItemDecisionAndForkNodes:
             [ a1 ] --flow1--> [ jn ]
                                  | --flow3-->[ a3 ]
         """
-        flow1 = create(ControlFlowItem)
-        flow2 = create(ControlFlowItem)
-        flow3 = create(ControlFlowItem)
+        flow1 = create(flow_item)
+        flow2 = create(flow_item)
+        flow3 = create(flow_item)
         a1 = create(ActionItem, UML.Action)
         a2 = create(ActionItem, UML.Action)
         jn = create(self.item_cls, self.join_node_cls)
@@ -468,7 +473,8 @@ class FlowItemDecisionAndForkNodes:
 
         assert isinstance(jn.subject, self.fork_node_cls), f"{jn.subject}"
 
-    def test_combined_nodes_connection(self, create):
+    @pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
+    def test_combined_nodes_connection(self, create, flow_item):
         """Test combined nodes connection.
 
         Connection scheme is presented below::
@@ -479,10 +485,10 @@ class FlowItemDecisionAndForkNodes:
 
         Flow `flow4` will force the node to become a combined node.
         """
-        flow1 = create(ControlFlowItem)
-        flow2 = create(ControlFlowItem)
-        flow3 = create(ControlFlowItem)
-        flow4 = create(ControlFlowItem)
+        flow1 = create(flow_item)
+        flow2 = create(flow_item)
+        flow3 = create(flow_item)
+        flow4 = create(flow_item)
         a1 = create(ActionItem, UML.Action)
         a2 = create(ActionItem, UML.Action)
         a4 = create(ActionItem, UML.Action)
@@ -508,7 +514,13 @@ class FlowItemDecisionAndForkNodes:
         assert len(jn.combined.incoming) == 1
         assert jn.subject.outgoing[0] is jn.combined.incoming[0]
 
-    def test_combined_node_disconnection(self, create, element_factory):
+    @pytest.mark.parametrize(
+        "flow_item,uml_flow",
+        [(ControlFlowItem, UML.ControlFlow), (ObjectFlowItem, UML.ObjectFlow)],
+    )
+    def test_combined_node_disconnection(
+        self, create, element_factory, flow_item, uml_flow
+    ):
         """Test combined nodes disconnection.
 
         Connection scheme is presented below::
@@ -519,10 +531,10 @@ class FlowItemDecisionAndForkNodes:
 
         Flow `flow4` will force the node to become a combined node.
         """
-        flow1 = create(ControlFlowItem)
-        flow2 = create(ControlFlowItem)
-        flow3 = create(ControlFlowItem)
-        flow4 = create(ControlFlowItem)
+        flow1 = create(flow_item)
+        flow2 = create(flow_item)
+        flow3 = create(flow_item)
+        flow4 = create(flow_item)
         a1 = create(ActionItem, UML.Action)
         a2 = create(ActionItem, UML.Action)
         a4 = create(ActionItem, UML.Action)
@@ -541,20 +553,22 @@ class FlowItemDecisionAndForkNodes:
         connect(flow4, flow4.tail, jn)
 
         # needed for tests below
-        cflow = jn.subject.outgoing[0]
-        cnode = jn.combined
-        assert cflow in element_factory.lselect(UML.ControlFlow)
-        assert cnode in element_factory.lselect(self.fork_node_cls)
+        flow = jn.subject.outgoing[0]
+        node = jn.combined
+
+        assert flow in element_factory.lselect(uml_flow)
+        assert node in element_factory.lselect(self.fork_node_cls)
 
         # test disconnection
         disconnect(flow4, flow4.head)
         assert get_connected(flow4, flow4.head) is None
+
         assert jn.combined is None
 
-        flows = element_factory.lselect(UML.ControlFlow)
+        flows = element_factory.lselect(uml_flow)
         nodes = element_factory.lselect(self.fork_node_cls)
-        assert cnode not in nodes, f"{cnode} in {nodes}"
-        assert cflow not in flows, f"{cflow} in {flows}"
+        assert node not in nodes, f"{node} in {nodes}"
+        assert flow not in flows, f"{flow} in {flows}"
 
 
 class TestFlowItemForkNode(FlowItemDecisionAndForkNodes):
