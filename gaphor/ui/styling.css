@@ -141,7 +141,7 @@ listview .row {
   box-shadow: none;
 }
 
-#elementeditor {
+#element_editor {
   border-left: 1px solid @unfocused_borders;
 }
 
