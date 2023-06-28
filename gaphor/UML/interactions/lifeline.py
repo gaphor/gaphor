@@ -37,6 +37,11 @@ from gaphor.diagram.text import FontWeight
 from gaphor.UML.recipes import stereotypes_str
 
 
+def clamp(value, min_value, max_value):
+    """Restrict a value between a min and max."""
+    return max(min_value, min(value, max_value))
+
+
 class BetweenConstraint(BaseConstraint):
     """b <= a <= c.
 
@@ -57,10 +62,7 @@ class BetweenConstraint(BaseConstraint):
         upper = self.upper.value
         if lower > upper:
             lower, upper = upper, lower
-        if self.v.value < lower:
-            self.v.value = lower
-        if self.v.value > upper:
-            self.v.value = upper
+        self.v.value = clamp(self.v.value, lower, upper)
 
 
 class BetweenPort(LinePort):

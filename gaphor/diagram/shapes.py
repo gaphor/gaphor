@@ -197,13 +197,14 @@ class Box:
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         sizes = self.sizes
 
-        justify_content = style.get("justify-content")
-        if not justify_content:
-            justify_content = {
+        justify_content = (
+            style.get("justify-content")
+            or {
                 VerticalAlign.TOP: JustifyContent.START,
                 VerticalAlign.MIDDLE: JustifyContent.CENTER,
                 VerticalAlign.BOTTOM: JustifyContent.END,
             }[style.get("vertical-align", VerticalAlign.MIDDLE)]
+        )
 
         if justify_content is JustifyContent.STRETCH and sizes:
             height = bounding_box.height

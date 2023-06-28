@@ -75,8 +75,7 @@ flowboxchild {
 }
 
 .greeter preferencesgroup row {
-  padding: 6px;
-  padding-right: 0px;
+  padding: 6px 0 6px 6px;
   min-width: 400px;
 }
 

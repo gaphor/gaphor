@@ -109,7 +109,8 @@ class GaphorLoader(handler.ContentHandler):
 
     def __init__(self):
         handler.ContentHandler.__init__(self)
-        # make sure all variables are initialized:
+        self.version = None
+        self.gaphor_version = None
         self.startDocument()
 
     def push(self, element, state):
@@ -253,9 +254,9 @@ class GaphorLoader(handler.ContentHandler):
         if state == ROOT and name == "gaphor":
             assert attrs["version"] in ("3.0",)
             self.version = attrs["version"]
-            self.gaphor_version = attrs.get("gaphor-version")
-            if not self.gaphor_version:
-                self.gaphor_version = attrs.get("gaphor_version")
+            self.gaphor_version = attrs.get("gaphor-version") or attrs.get(
+                "gaphor_version"
+            )
             self.push(None, GAPHOR)
             return True
 
