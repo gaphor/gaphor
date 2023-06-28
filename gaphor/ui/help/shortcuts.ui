@@ -167,7 +167,7 @@
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;Primary&gt;0</property>
-                <property name="title" translatable="yes">Actual Size</property>
+                <property name="title" translatable="yes">Reset Zoom</property>
               </object>
             </child>
           </object>
