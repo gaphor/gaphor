@@ -434,11 +434,12 @@ class UndoManager(Service, ActionProvider):
             return
         element_id = event.element.id
         value_id = event.old_value.id
+        index = event.index
 
         def undo_association_delete_event():
             element = self.lookup(element_id)
             value = self.lookup(value_id)
-            association.set(element, value, from_opposite=True)
+            association.set(element, value, index=index, from_opposite=True)
 
         undo_association_delete_event.__doc__ = (
             f"{event.element}.{association.name} add {event.old_value}."
