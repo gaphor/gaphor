@@ -1161,6 +1161,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "mikekidner",
+      "name": "mikekidner",
+      "avatar_url": "https://avatars.githubusercontent.com/u/50702106?v=4",
+      "profile": "https://github.com/mikekidner",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
