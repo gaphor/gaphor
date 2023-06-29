@@ -2155,7 +2155,7 @@ msgid "Zoom In"
 msgstr "Zbliż"
 
 #: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:162
-msgid "Actual Size"
+msgid "Reset Zoom"
 msgstr "Rzeczywisty rozmiar"
 
 #: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:154
@@ -2439,7 +2439,7 @@ msgid "Open application menu"
 msgstr "Otwórz menu aplikacji"
 
 #: gaphor/ui/help/shortcuts.ui:38 gaphor/ui/mainwindow.ui:78
-msgid "Toggle property editor"
+msgid "Toggle Property Editor"
 msgstr "Widoczność edytora własności"
 
 #: gaphor/ui/modelbrowser.py:182

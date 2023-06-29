@@ -2223,7 +2223,7 @@ msgid "Zoom In"
 msgstr "확대"
 
 #: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:162
-msgid "Actual Size"
+msgid "Reset Zoom"
 msgstr ""
 
 #: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:154
@@ -2511,7 +2511,7 @@ msgid "Open application menu"
 msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:38 gaphor/ui/mainwindow.ui:78
-msgid "Toggle property editor"
+msgid "Toggle Property Editor"
 msgstr ""
 
 #: gaphor/ui/modelbrowser.py:182

@@ -7,7 +7,7 @@ from gi.repository import Gtk
 
 
 def is_maximized(window: Gtk.Window) -> bool:
-    return window.is_maximized()  # type: ignore[no-any-return]
+    return window.is_maximized() or window.is_fullscreen()  # type: ignore[no-any-return]
 
 
 widget_factory: Dict[str, Callable] = {}

@@ -146,7 +146,7 @@
                 <child>
                   <object class="GtkButton">
                     <property name="receives_default">1</property>
-                    <property name="tooltip_text" translatable="yes">Actual Size</property>
+                    <property name="tooltip_text" translatable="yes">Reset Zoom</property>
                     <property name="action_name">win.zoom-100</property>
                     <child>
                       <object class="GtkImage">

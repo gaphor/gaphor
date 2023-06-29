@@ -75,7 +75,7 @@
         <child type="end">
           <object class="GtkToggleButton">
             <property name="action_name">win.show-editors</property>
-            <property name="tooltip-text" translatable="yes">Toggle property editor</property>
+            <property name="tooltip-text" translatable="yes">Toggle Property Editor</property>
             <child>
               <object class="GtkImage">
                 <property name="icon_name">sidebar-show-right-symbolic</property>

@@ -35,7 +35,7 @@
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
                 <property name="accelerator">F9</property>
-                <property name="title" translatable="yes">Toggle property editor</property>
+                <property name="title" translatable="yes">Toggle Property Editor</property>
               </object>
             </child>
 
@@ -52,6 +52,14 @@
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;Primary&gt;comma</property>
                 <property name="title" translatable="yes">Preferences</property>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="visible">1</property>
+                <property name="accelerator">F11</property>
+                <property name="title" translatable="yes">Toggle Fullscreen</property>
               </object>
             </child>
 
@@ -159,7 +167,7 @@
               <object class="GtkShortcutsShortcut">
                 <property name="visible">1</property>
                 <property name="accelerator">&lt;Primary&gt;0</property>
-                <property name="title" translatable="yes">Actual Size</property>
+                <property name="title" translatable="yes">Reset Zoom</property>
               </object>
             </child>
           </object>

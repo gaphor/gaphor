@@ -41,7 +41,7 @@ class HelpService(Service, ActionProvider):
         about.set_modal(True)
         about.set_visible(True)
 
-    @action(name="app.shortcuts")
+    @action(name="app.shortcuts", shortcut="<Primary>question")
     def shortcuts(self):
         builder = Gtk.Builder()
         ui = translated_ui_string("gaphor.ui.help", "shortcuts.ui")
