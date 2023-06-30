@@ -59,11 +59,11 @@ class ContainmentConnect(BaseConnector):
         hct = self.get_connected(handle)
 
         if hct and oct:
-            if hct.subject in oct.subject.ownedElement:
+            if oct.subject and hct.subject in oct.subject.ownedElement:
                 assert isinstance(hct.subject, (UML.Type, UML.Package))
                 ungroup(oct.subject, hct.subject)
                 hct.subject.package = owner_package(hct.diagram.owner)
-            if oct.subject in hct.subject.ownedElement:
+            if hct.subject and oct.subject in hct.subject.ownedElement:
                 assert isinstance(oct.subject, (UML.Type, UML.Package))
                 ungroup(hct.subject, oct.subject)
                 oct.subject.package = owner_package(oct.diagram.owner)
