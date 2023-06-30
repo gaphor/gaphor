@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-17 15:06-0400\n"
+"POT-Creation-Date: 2023-06-30 21:22+0200\n"
 "PO-Revision-Date: 2023-01-30 01:18+0000\n"
 "Last-Translator: BrainKicker <peter.sabanov@gmail.com>\n"
 "Language: ru\n"
@@ -340,11 +340,16 @@ msgstr "Совместный"
 msgid "Composite"
 msgstr "Составной"
 
-#: gaphor/SysML/propertypages.ui:196
+#: gaphor/SysML/propertypages.ui:187
+#, fuzzy
+msgid "Type"
+msgstr "Стиль"
+
+#: gaphor/SysML/propertypages.ui:210
 msgid "Id"
 msgstr "Идентификатор"
 
-#: gaphor/SysML/propertypages.ui:210
+#: gaphor/SysML/propertypages.ui:224
 msgid "Text"
 msgstr "Текст"
 
@@ -1503,7 +1508,7 @@ msgid "All XMI Files"
 msgstr "Все Файлы XMI"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
-#: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:45
+#: gaphor/ui/mainwindow.py:251 gaphor/ui/mainwindow.ui:45
 msgid "New model"
 msgstr "Новая модель"
 
@@ -2113,7 +2118,7 @@ msgstr "Переключиться"
 msgid "Open a Model"
 msgstr "Открыть Модель"
 
-#: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:254
+#: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:270
 #: gaphor/ui/modelmerge/organize.py:135 gaphor/ui/modelmerge/organize.py:166
 #: gaphor/ui/treemodel.py:44
 msgid "<None>"
@@ -2167,23 +2172,23 @@ msgid ""
 "will automatically appear."
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:121
+#: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:129
 msgid "Undo"
 msgstr "Отменить"
 
-#: gaphor/ui/elementeditor.ui:115 gaphor/ui/help/shortcuts.ui:129
+#: gaphor/ui/elementeditor.ui:115 gaphor/ui/help/shortcuts.ui:137
 msgid "Redo"
 msgstr "Повторить"
 
-#: gaphor/ui/elementeditor.ui:134 gaphor/ui/help/shortcuts.ui:146
+#: gaphor/ui/elementeditor.ui:134 gaphor/ui/help/shortcuts.ui:154
 msgid "Zoom In"
 msgstr "Приблизить"
 
-#: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:162
+#: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:170
 msgid "Reset Zoom"
 msgstr "Реальный Размер"
 
-#: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:154
+#: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:162
 msgid "Zoom Out"
 msgstr "Отдалить"
 
@@ -2389,8 +2394,8 @@ msgstr ""
 msgid "Discard"
 msgstr "Отклонить"
 
-#: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:95
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:103
+#: gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "Сохранить"
 
@@ -2418,16 +2423,16 @@ msgstr "Шаблон Языка Моделирования Анализа и О�
 msgid "Layered C4 Model template"
 msgstr "Многоуровневый шаблон Модели C4"
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:46
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
 msgstr "Открыть Модель…"
 
-#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:60
+#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:61
 msgid "Keyboard Shortcuts"
 msgstr "Сочетания клавиш"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.ui:10
-#: gaphor/ui/mainwindow.py:61
+#: gaphor/ui/mainwindow.py:62
 msgid "About Gaphor"
 msgstr "О Gaphor"
 
@@ -2439,23 +2444,27 @@ msgstr "Недавно Открытые"
 msgid "Create New Model"
 msgstr "Создать Новую Модель"
 
-#: gaphor/ui/help/shortcuts.ui:79 gaphor/ui/mainwindow.py:45
+#: gaphor/ui/help/shortcuts.ui:87 gaphor/ui/mainwindow.py:46
 msgid "New Model…"
 msgstr "Новая Модель…"
 
-#: gaphor/ui/help/shortcuts.ui:103 gaphor/ui/mainwindow.py:51
+#: gaphor/ui/help/shortcuts.ui:111 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
 msgstr "Сохранить Как…"
 
-#: gaphor/ui/mainwindow.py:52
+#: gaphor/ui/mainwindow.py:53
 msgid "Export"
 msgstr "Экспортировать"
 
-#: gaphor/ui/mainwindow.py:56
+#: gaphor/ui/mainwindow.py:57
 msgid "Tools"
 msgstr "Инструменты"
 
-#: gaphor/ui/mainwindow.py:272
+#: gaphor/ui/mainwindow.py:233
+msgid "Press F11 to exit Fullscreen"
+msgstr ""
+
+#: gaphor/ui/mainwindow.py:288
 msgid "Profile: {name}"
 msgstr "Профиль: {name}"
 
@@ -2569,54 +2578,58 @@ msgid "Close Diagram"
 msgstr "Закрыть Диаграмму"
 
 #: gaphor/ui/help/shortcuts.ui:62
+msgid "Toggle Fullscreen"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:70
 msgid "Quit Gaphor"
 msgstr "Выйти из Gaphor"
 
-#: gaphor/ui/help/shortcuts.ui:73
+#: gaphor/ui/help/shortcuts.ui:81
 msgid "Files"
 msgstr "Файлы"
 
-#: gaphor/ui/help/shortcuts.ui:87
+#: gaphor/ui/help/shortcuts.ui:95
 msgid "Open a Model…"
 msgstr "Открыть Модель…"
 
-#: gaphor/ui/help/shortcuts.ui:115
+#: gaphor/ui/help/shortcuts.ui:123
 msgid "Undo and Redo"
 msgstr "Отменить и Повторить"
 
-#: gaphor/ui/help/shortcuts.ui:140
+#: gaphor/ui/help/shortcuts.ui:148
 msgid "Zoom"
 msgstr "Масштабирование"
 
-#: gaphor/ui/help/shortcuts.ui:172
+#: gaphor/ui/help/shortcuts.ui:180
 msgid "Selections"
 msgstr "Выделение"
 
-#: gaphor/ui/help/shortcuts.ui:178
+#: gaphor/ui/help/shortcuts.ui:186
 msgid "Select All"
 msgstr "Выделить Всё"
 
-#: gaphor/ui/help/shortcuts.ui:186
+#: gaphor/ui/help/shortcuts.ui:194
 msgid "Deselect All"
 msgstr "Отменить Выделение"
 
-#: gaphor/ui/help/shortcuts.ui:197
+#: gaphor/ui/help/shortcuts.ui:205
 msgid "Copy and Paste"
 msgstr "Копирование и Вставка"
 
-#: gaphor/ui/help/shortcuts.ui:203
+#: gaphor/ui/help/shortcuts.ui:211
 msgid "Copy"
 msgstr "Копировать"
 
-#: gaphor/ui/help/shortcuts.ui:211
+#: gaphor/ui/help/shortcuts.ui:219
 msgid "Cut"
 msgstr "Вырезать"
 
-#: gaphor/ui/help/shortcuts.ui:219
+#: gaphor/ui/help/shortcuts.ui:227
 msgid "Paste (link defining elements)"
 msgstr "Вставить (ссылки на определяющие элементы)"
 
-#: gaphor/ui/help/shortcuts.ui:227
+#: gaphor/ui/help/shortcuts.ui:235
 msgid "Paste (copy defining elements)"
 msgstr "Вставить (копировать определяющие элементы)"
 
@@ -2697,3 +2710,4 @@ msgstr ""
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr ""
+

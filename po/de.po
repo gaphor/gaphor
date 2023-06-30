@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-17 15:06-0400\n"
+"POT-Creation-Date: 2023-06-30 21:22+0200\n"
 "PO-Revision-Date: 2023-04-29 13:23+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language: de\n"
@@ -343,11 +343,16 @@ msgstr "Geteilt"
 msgid "Composite"
 msgstr "Komposition"
 
-#: gaphor/SysML/propertypages.ui:196
+#: gaphor/SysML/propertypages.ui:187
+#, fuzzy
+msgid "Type"
+msgstr "Stil"
+
+#: gaphor/SysML/propertypages.ui:210
 msgid "Id"
 msgstr "Id"
 
-#: gaphor/SysML/propertypages.ui:210
+#: gaphor/SysML/propertypages.ui:224
 msgid "Text"
 msgstr "Text"
 
@@ -1502,7 +1507,7 @@ msgid "All XMI Files"
 msgstr "Alle XMI-Dateien"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
-#: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:45
+#: gaphor/ui/mainwindow.py:251 gaphor/ui/mainwindow.ui:45
 msgid "New model"
 msgstr "Neues Modell"
 
@@ -2134,7 +2139,7 @@ msgstr "Wechseln"
 msgid "Open a Model"
 msgstr "Modell öffnen"
 
-#: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:254
+#: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:270
 #: gaphor/ui/modelmerge/organize.py:135 gaphor/ui/modelmerge/organize.py:166
 #: gaphor/ui/treemodel.py:44
 msgid "<None>"
@@ -2198,23 +2203,23 @@ msgstr ""
 "wählen Sie ein Element im Modellbrowser aus und beginnen Sie zu tippen. "
 "Es wird automatisch ein Suchfeld angezeigt."
 
-#: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:121
+#: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:129
 msgid "Undo"
 msgstr "Rückgängig machen"
 
-#: gaphor/ui/elementeditor.ui:115 gaphor/ui/help/shortcuts.ui:129
+#: gaphor/ui/elementeditor.ui:115 gaphor/ui/help/shortcuts.ui:137
 msgid "Redo"
 msgstr "Wiederholen"
 
-#: gaphor/ui/elementeditor.ui:134 gaphor/ui/help/shortcuts.ui:146
+#: gaphor/ui/elementeditor.ui:134 gaphor/ui/help/shortcuts.ui:154
 msgid "Zoom In"
 msgstr "Vergrößern"
 
-#: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:162
+#: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:170
 msgid "Reset Zoom"
 msgstr "Tatsächliche Größe"
 
-#: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:154
+#: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:162
 msgid "Zoom Out"
 msgstr "Verkleinern"
 
@@ -2428,8 +2433,8 @@ msgstr ""
 msgid "Discard"
 msgstr "Verwerfen"
 
-#: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:95
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:103
+#: gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "Speichern"
 
@@ -2457,16 +2462,16 @@ msgstr "Risk Analysis and Assessment Modeling Language Vorlage"
 msgid "Layered C4 Model template"
 msgstr "Layered C4 Model Vorlage"
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:46
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
 msgstr "Modell öffnen…"
 
-#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:60
+#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:61
 msgid "Keyboard Shortcuts"
 msgstr "Tastatürkürzel"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.ui:10
-#: gaphor/ui/mainwindow.py:61
+#: gaphor/ui/mainwindow.py:62
 msgid "About Gaphor"
 msgstr "Über Gaphor"
 
@@ -2478,23 +2483,27 @@ msgstr "Zuletzt geöffnete"
 msgid "Create New Model"
 msgstr "Neues Modell erstellen"
 
-#: gaphor/ui/help/shortcuts.ui:79 gaphor/ui/mainwindow.py:45
+#: gaphor/ui/help/shortcuts.ui:87 gaphor/ui/mainwindow.py:46
 msgid "New Model…"
 msgstr "Neues Modell…"
 
-#: gaphor/ui/help/shortcuts.ui:103 gaphor/ui/mainwindow.py:51
+#: gaphor/ui/help/shortcuts.ui:111 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
 msgstr "Speichern unter…"
 
-#: gaphor/ui/mainwindow.py:52
+#: gaphor/ui/mainwindow.py:53
 msgid "Export"
 msgstr "Exportieren"
 
-#: gaphor/ui/mainwindow.py:56
+#: gaphor/ui/mainwindow.py:57
 msgid "Tools"
 msgstr "Werkzeuge"
 
-#: gaphor/ui/mainwindow.py:272
+#: gaphor/ui/mainwindow.py:233
+msgid "Press F11 to exit Fullscreen"
+msgstr ""
+
+#: gaphor/ui/mainwindow.py:288
 msgid "Profile: {name}"
 msgstr "Profil: {name}"
 
@@ -2608,54 +2617,58 @@ msgid "Close Diagram"
 msgstr "Diagramm schließen"
 
 #: gaphor/ui/help/shortcuts.ui:62
+msgid "Toggle Fullscreen"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:70
 msgid "Quit Gaphor"
 msgstr "Gaphor beenden"
 
-#: gaphor/ui/help/shortcuts.ui:73
+#: gaphor/ui/help/shortcuts.ui:81
 msgid "Files"
 msgstr "Dateien"
 
-#: gaphor/ui/help/shortcuts.ui:87
+#: gaphor/ui/help/shortcuts.ui:95
 msgid "Open a Model…"
 msgstr "Ein Modell öffnen…"
 
-#: gaphor/ui/help/shortcuts.ui:115
+#: gaphor/ui/help/shortcuts.ui:123
 msgid "Undo and Redo"
 msgstr "Rückgängig und Wiederholen"
 
-#: gaphor/ui/help/shortcuts.ui:140
+#: gaphor/ui/help/shortcuts.ui:148
 msgid "Zoom"
 msgstr "Zoom"
 
-#: gaphor/ui/help/shortcuts.ui:172
+#: gaphor/ui/help/shortcuts.ui:180
 msgid "Selections"
 msgstr "Auswahl"
 
-#: gaphor/ui/help/shortcuts.ui:178
+#: gaphor/ui/help/shortcuts.ui:186
 msgid "Select All"
 msgstr "Alles auswählen"
 
-#: gaphor/ui/help/shortcuts.ui:186
+#: gaphor/ui/help/shortcuts.ui:194
 msgid "Deselect All"
 msgstr "Alles abwählen"
 
-#: gaphor/ui/help/shortcuts.ui:197
+#: gaphor/ui/help/shortcuts.ui:205
 msgid "Copy and Paste"
 msgstr "Kopieren und Einfügen"
 
-#: gaphor/ui/help/shortcuts.ui:203
+#: gaphor/ui/help/shortcuts.ui:211
 msgid "Copy"
 msgstr "Kopieren"
 
-#: gaphor/ui/help/shortcuts.ui:211
+#: gaphor/ui/help/shortcuts.ui:219
 msgid "Cut"
 msgstr "Ausschneiden"
 
-#: gaphor/ui/help/shortcuts.ui:219
+#: gaphor/ui/help/shortcuts.ui:227
 msgid "Paste (link defining elements)"
 msgstr "Einfügen (verknüpfe definierende Elemente)"
 
-#: gaphor/ui/help/shortcuts.ui:227
+#: gaphor/ui/help/shortcuts.ui:235
 msgid "Paste (copy defining elements)"
 msgstr "Einfügen (kopiere definierende Elemente)"
 
@@ -2734,3 +2747,4 @@ msgstr "Verbindung “{name}” entfernen"
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr "Verbindung “{name}” aktualisieren"
+

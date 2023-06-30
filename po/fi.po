@@ -7,17 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-17 15:06-0400\n"
+"POT-Creation-Date: 2023-06-30 21:22+0200\n"
 "PO-Revision-Date: 2023-06-20 14:53+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
-"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
-">\n"
 "Language: fi\n"
+"Language-Team: Finnish "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.1\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -347,11 +346,16 @@ msgstr "Jaettu"
 msgid "Composite"
 msgstr "Komposiitti"
 
-#: gaphor/SysML/propertypages.ui:196
+#: gaphor/SysML/propertypages.ui:187
+#, fuzzy
+msgid "Type"
+msgstr "Tyyli"
+
+#: gaphor/SysML/propertypages.ui:210
 msgid "Id"
 msgstr "Id"
 
-#: gaphor/SysML/propertypages.ui:210
+#: gaphor/SysML/propertypages.ui:224
 msgid "Text"
 msgstr "Teksti"
 
@@ -1460,7 +1464,7 @@ msgid "All XMI Files"
 msgstr "Kaikki XMI-tiedostot"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
-#: gaphor/ui/mainwindow.py:235 gaphor/ui/mainwindow.ui:45
+#: gaphor/ui/mainwindow.py:251 gaphor/ui/mainwindow.ui:45
 msgid "New model"
 msgstr "Uusi malli"
 
@@ -1999,9 +2003,9 @@ msgid ""
 "Model abstract use case implementation by creating activity diagrams "
 "visualizing activity flows for primary and secondary use case scenarios."
 msgstr ""
-"Mallinna abstrakteja käyttötapaustoteutuksia luomalla aktiviteettikaavioita "
-"toimintojen virran visualisoimiseksi ensi- ja toissijaisia "
-"käyttötapausskenaarioita varten."
+"Mallinna abstrakteja käyttötapaustoteutuksia luomalla "
+"aktiviteettikaavioita toimintojen virran visualisoimiseksi ensi- ja "
+"toissijaisia käyttötapausskenaarioita varten."
 
 #: gaphor/templates/uml.gaphor
 msgid ""
@@ -2087,7 +2091,7 @@ msgstr "Vaihda"
 msgid "Open a Model"
 msgstr "Avaa malli"
 
-#: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:254
+#: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:270
 #: gaphor/ui/modelmerge/organize.py:135 gaphor/ui/modelmerge/organize.py:166
 #: gaphor/ui/treemodel.py:44
 msgid "<None>"
@@ -2142,23 +2146,23 @@ msgid ""
 "will automatically appear."
 msgstr ""
 
-#: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:121
+#: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:129
 msgid "Undo"
 msgstr "Kumoa"
 
-#: gaphor/ui/elementeditor.ui:115 gaphor/ui/help/shortcuts.ui:129
+#: gaphor/ui/elementeditor.ui:115 gaphor/ui/help/shortcuts.ui:137
 msgid "Redo"
 msgstr "Tee uudelleen"
 
-#: gaphor/ui/elementeditor.ui:134 gaphor/ui/help/shortcuts.ui:146
+#: gaphor/ui/elementeditor.ui:134 gaphor/ui/help/shortcuts.ui:154
 msgid "Zoom In"
 msgstr "Lähennä"
 
-#: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:162
+#: gaphor/ui/elementeditor.ui:149 gaphor/ui/help/shortcuts.ui:170
 msgid "Reset Zoom"
 msgstr "Todellinen koko"
 
-#: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:154
+#: gaphor/ui/elementeditor.ui:164 gaphor/ui/help/shortcuts.ui:162
 msgid "Zoom Out"
 msgstr "Loitonna"
 
@@ -2364,8 +2368,8 @@ msgstr ""
 msgid "Discard"
 msgstr "Hylkää"
 
-#: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:95
-#: gaphor/ui/mainwindow.py:50
+#: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:103
+#: gaphor/ui/mainwindow.py:51
 msgid "Save"
 msgstr "Tallenna"
 
@@ -2393,16 +2397,16 @@ msgstr "Risk Analysis and Assessment Modeling Language -mallipohja"
 msgid "Layered C4 Model template"
 msgstr "Layered C4 Model -mallipohja"
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:46
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:47
 msgid "Open Model…"
 msgstr "Avaa malli…"
 
-#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:60
+#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:61
 msgid "Keyboard Shortcuts"
 msgstr "Pikanäppäimet"
 
 #: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.ui:10
-#: gaphor/ui/mainwindow.py:61
+#: gaphor/ui/mainwindow.py:62
 msgid "About Gaphor"
 msgstr "Tietoja - Gaphor"
 
@@ -2414,23 +2418,27 @@ msgstr "Äskettäin avattu"
 msgid "Create New Model"
 msgstr "Luo uusi malli"
 
-#: gaphor/ui/help/shortcuts.ui:79 gaphor/ui/mainwindow.py:45
+#: gaphor/ui/help/shortcuts.ui:87 gaphor/ui/mainwindow.py:46
 msgid "New Model…"
 msgstr "Uusi malli…"
 
-#: gaphor/ui/help/shortcuts.ui:103 gaphor/ui/mainwindow.py:51
+#: gaphor/ui/help/shortcuts.ui:111 gaphor/ui/mainwindow.py:52
 msgid "Save As…"
 msgstr "Tallenna nimellä…"
 
-#: gaphor/ui/mainwindow.py:52
+#: gaphor/ui/mainwindow.py:53
 msgid "Export"
 msgstr "Vie"
 
-#: gaphor/ui/mainwindow.py:56
+#: gaphor/ui/mainwindow.py:57
 msgid "Tools"
 msgstr "Työkalut"
 
-#: gaphor/ui/mainwindow.py:272
+#: gaphor/ui/mainwindow.py:233
+msgid "Press F11 to exit Fullscreen"
+msgstr ""
+
+#: gaphor/ui/mainwindow.py:288
 msgid "Profile: {name}"
 msgstr "Profiili: {name}"
 
@@ -2527,54 +2535,58 @@ msgid "Close Diagram"
 msgstr "Sulje kaavio"
 
 #: gaphor/ui/help/shortcuts.ui:62
+msgid "Toggle Fullscreen"
+msgstr ""
+
+#: gaphor/ui/help/shortcuts.ui:70
 msgid "Quit Gaphor"
 msgstr "Lopeta Gaphor"
 
-#: gaphor/ui/help/shortcuts.ui:73
+#: gaphor/ui/help/shortcuts.ui:81
 msgid "Files"
 msgstr "Tiedostot"
 
-#: gaphor/ui/help/shortcuts.ui:87
+#: gaphor/ui/help/shortcuts.ui:95
 msgid "Open a Model…"
 msgstr "Avaa malli…"
 
-#: gaphor/ui/help/shortcuts.ui:115
+#: gaphor/ui/help/shortcuts.ui:123
 msgid "Undo and Redo"
 msgstr "Kumoa ja tee uudelleen"
 
-#: gaphor/ui/help/shortcuts.ui:140
+#: gaphor/ui/help/shortcuts.ui:148
 msgid "Zoom"
 msgstr "Mittakaava"
 
-#: gaphor/ui/help/shortcuts.ui:172
+#: gaphor/ui/help/shortcuts.ui:180
 msgid "Selections"
 msgstr "Valinnat"
 
-#: gaphor/ui/help/shortcuts.ui:178
+#: gaphor/ui/help/shortcuts.ui:186
 msgid "Select All"
 msgstr "Valitse kaikki"
 
-#: gaphor/ui/help/shortcuts.ui:186
+#: gaphor/ui/help/shortcuts.ui:194
 msgid "Deselect All"
 msgstr "Älä valitse mitään"
 
-#: gaphor/ui/help/shortcuts.ui:197
+#: gaphor/ui/help/shortcuts.ui:205
 msgid "Copy and Paste"
 msgstr "Kopioi ja liitä"
 
-#: gaphor/ui/help/shortcuts.ui:203
+#: gaphor/ui/help/shortcuts.ui:211
 msgid "Copy"
 msgstr "Kopioi"
 
-#: gaphor/ui/help/shortcuts.ui:211
+#: gaphor/ui/help/shortcuts.ui:219
 msgid "Cut"
 msgstr "Leikkaa"
 
-#: gaphor/ui/help/shortcuts.ui:219
+#: gaphor/ui/help/shortcuts.ui:227
 msgid "Paste (link defining elements)"
 msgstr "Liitä (linkitä määrittelevät elementit)"
 
-#: gaphor/ui/help/shortcuts.ui:227
+#: gaphor/ui/help/shortcuts.ui:235
 msgid "Paste (copy defining elements)"
 msgstr "Liitä (kopioi määrittelevät elementit)"
 
@@ -2653,3 +2665,4 @@ msgstr "Poista relaatio “{name}”"
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr "Päivitä relaatio “{name}”"
+
