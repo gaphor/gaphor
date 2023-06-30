@@ -16,16 +16,22 @@ from gaphor.UML.deployments import ConnectorItem
 class BlockProperyProxyPortConnector:
     def __init__(
         self,
-        block: Union[BlockItem, PropertyItem],
+        block_or_property: Union[BlockItem, PropertyItem],
         proxy_port: ProxyPortItem,
     ) -> None:
-        assert block.diagram is proxy_port.diagram
-        self.block = block
+        assert block_or_property.diagram is proxy_port.diagram
+        self.element = block_or_property
         self.proxy_port = proxy_port
 
     def allow(self, handle: Handle, port: Port) -> bool:
         return (
-            bool(self.block.diagram) and self.block.diagram is self.proxy_port.diagram
+            bool(self.element.diagram)
+            and self.element.diagram is self.proxy_port.diagram
+            and (
+                isinstance(self.element.subject, UML.EncapsulatedClassifier)
+                or isinstance(self.element.subject, UML.Property)
+                and isinstance(self.element.subject.type, UML.EncapsulatedClassifier)
+            )
         )
 
     def connect(self, handle: Handle, port: Port) -> bool:
@@ -36,12 +42,17 @@ class BlockProperyProxyPortConnector:
         proxy_port = self.proxy_port
         if not proxy_port.subject:
             proxy_port.subject = proxy_port.model.create(sysml.ProxyPort)
-        if isinstance(self.block.subject, UML.EncapsulatedClassifier):
-            proxy_port.subject.encapsulatedClassifier = self.block.subject
+
+        if isinstance(self.element.subject, UML.EncapsulatedClassifier):
+            proxy_port.subject.encapsulatedClassifier = self.element.subject
+        elif isinstance(self.element.subject, UML.Property) and isinstance(
+            self.element.subject.type, UML.EncapsulatedClassifier
+        ):
+            proxy_port.subject.encapsulatedClassifier = self.element.subject.type
 
         # This raises the item in the item hierarchy
         assert proxy_port.diagram
-        proxy_port.change_parent(self.block)
+        proxy_port.change_parent(self.element)
 
         return True
 
