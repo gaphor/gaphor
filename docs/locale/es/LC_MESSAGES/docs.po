@@ -8,9 +8,8 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-06-28 22:47+0000\n"
-"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
-".org>\n"
+"PO-Revision-Date: 2023-06-30 19:23+0000\n"
+"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/es/>\n"
 "Language: es\n"
@@ -18,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18.1\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 #: ../connect.md:1
 msgid "Connection Protocol"
@@ -2705,222 +2704,318 @@ msgstr "Dibujar un diagrama"
 #: ../scripting.md:140
 msgid "Another nice feature is drawing the diagrams. At this moment this requires a function. This behavior is similar to the [`diagram` directive](sphinx)."
 msgstr ""
+"Otra buena función es la de dibujar diagramas. En este momento esto requiere "
+"una función. Este comportamiento es similar a la [`diagram` "
+"directive](sphinx)."
 
 #: ../scripting.md:151
 msgid "Create a diagram"
-msgstr ""
+msgstr "Crear un diagrama"
 
 #: ../scripting.md:153
 msgid "(Requires Gaphor 2.13)"
-msgstr ""
+msgstr "(Requiere Gaphor 2.13)"
 
 #: ../scripting.md:155
 msgid "Now let's make something a little more fancy. We still have the core model loaded in the element factory. From this model we can create a custom diagram. With a little help of the auto-layout service, we can make it a readable diagram."
 msgstr ""
+"Ahora vamos a hacer algo un poco más elegante. Todavía tenemos el modelo "
+"central cargado en la fábrica de elementos. A partir de este modelo podemos "
+"crear un diagrama personalizado. Con un poco de ayuda del servicio de auto-"
+"diseño, podemos hacer que sea un diagrama legible."
 
 #: ../scripting.md:160
 msgid "To create the diagram, we [`drop` elements](modeling_language:dropping) on the diagram. Items on a diagram represent an element in the model. We'll also drop all associations on the model. Only if both ends can connect, the association will be added."
 msgstr ""
+"Para crear el diagrama, [`drop` elements](modeling_language:dropping) en el "
+"diagrama. Los elementos en un diagrama representan un elemento en el modelo. "
+"También arrastraremos todas las asociaciones en el modelo. Solo si ambos "
+"extremos se pueden conectar, la asociación será añadida."
 
 #: ../scripting.md:186
 msgid "The diagram is not perfect, but you get the picture."
-msgstr ""
+msgstr "El diagrama no es perfecto, pero te haces una idea."
 
 #: ../scripting.md:188
 msgid "Update a model"
-msgstr ""
+msgstr "Actualizar un modelo"
 
 #: ../scripting.md:190
 msgid "Updating a model always starts with the element factory: that’s where elements are created."
 msgstr ""
+"La actualización de un modelo siempre empieza por la fábrica de elementos: "
+"es ahí donde se crean los elementos."
 
 #: ../scripting.md:193
 msgid "To create a UML Class instance, you can:"
-msgstr ""
+msgstr "Para crear una instancia de clase UML, puede:"
 
 #: ../scripting.md:200
 msgid "To give it an attribute, create an attribute type (`UML.Property`) and then assign the attribute values."
 msgstr ""
+"Para darle un atributo, cree un tipo de atributo ('UML. Property') y, a "
+"continuación, asigne los valores de atributo."
 
 #: ../scripting.md:210
 msgid "Adding it to the diagram looks like this:"
-msgstr ""
+msgstr "Añadiéndolo al diagrama queda así:"
 
 #: ../scripting.md:218
 msgid "If you save the model, your changes are persisted:"
-msgstr ""
+msgstr "Si guarda el modelo, los cambios se mantienen:"
 
 #: ../scripting.md:225
 msgid "What else"
-msgstr ""
+msgstr "Qué más"
 
 #: ../scripting.md:227
 msgid "What else is there to know…"
-msgstr ""
+msgstr "Qué más hay que saber…"
 
 #: ../scripting.md:229
 msgid "Gaphor supports derived associations. For example, `element.owner` points to the owner element. For an attribute that would be its containing class."
 msgstr ""
+"Gaphor admite asociaciones derivadas. Por ejemplo, `element.owner` apunta al "
+"elemento propietario. Para un atributo que sería su clase contenedora."
 
 #: ../scripting.md:230
 msgid "All data models are described in the `Modeling Languages` section of the docs."
 msgstr ""
+"Todos los modelos de datos se describen en la sección \"Lenguajes de "
+"modelado\" de la documentación."
 
 #: ../scripting.md:231
 msgid "If you use Gaphor’s Console, you’ll need to apply all changes in a transaction, or they will result in an error."
 msgstr ""
+"Si utiliza la consola de Gaphor, tendrá que aplicar todos los cambios en una "
+"transacción, o se producirá un error."
 
 #: ../scripting.md:232
 msgid "If you want a comprehensive example of a code generator, have a look at [Gaphor’s `coder` module](https://github.com/gaphor/gaphor/blob/main/gaphor/codegen/coder.py). This module is used to generate the code for the data models used by Gaphor."
 msgstr ""
+"Si quieres un ejemplo completo de un generador de código, echa un vistazo al "
+"[modulo `coder` de Gaphor](https://github.com/gaphor/gaphor/blob/main/gaphor/"
+"codegen/coder.py). Este módulo se utiliza para generar el código de los "
+"modelos de datos utilizados por Gaphor."
 
 #: ../scripting.md:233
 msgid "This page is rendered with [MyST-NB](https://myst-nb.readthedocs.io/). It’s actually a Jupyter Notebook!"
 msgstr ""
+"Esta página se renderiza con [MyST-NB](https://myst-nb.readthedocs.io/). ¡En "
+"realidad es un Jupyter Notebook!"
 
 #: ../scripting.md:235
 msgid "Examples"
-msgstr ""
+msgstr "Ejemplos"
 
 #: ../scripting.md:237
 msgid "Here is another example:"
-msgstr ""
+msgstr "Aquí hay otro ejemplo:"
 
 #: ../service_oriented.md:1
 msgid "Service Oriented Architecture"
-msgstr ""
+msgstr "Arquitectura orientada a Servicios"
 
 #: ../service_oriented.md:3
 msgid "Gaphor has a service oriented architecture. What does this mean? Well, Gaphor is built as a set of small islands (services). Each island provides a specific piece of functionality. For example, we use separate services to load/save models, provide the menu structure, and to handle the undo system."
 msgstr ""
+"Gaphor tiene una arquitectura orientada a servicios. ¿Qué significa esto? "
+"Bueno, Gaphor está construido como un conjunto de pequeñas islas (servicios)"
+". Cada isla proporciona una funcionalidad específica. Por ejemplo, "
+"utilizamos servicios separados para cargar/guardar modelos, proporcionar la "
+"estructura del menú, y para manejar el sistema de deshacer."
 
 #: ../service_oriented.md:8
 msgid "We define services as entry points in the `pyproject.toml`. With entry points, applications can register functionality for specific purposes. We also group entry points in to *entry point groups*. For example, we use the console_scripts entry point group to start an application from the command line."
 msgstr ""
+"Definimos los servicios como puntos de entrada en el `pyproject.toml`. Con "
+"los puntos de entrada, las aplicaciones pueden registrar funcionalidades "
+"para fines específicos. También agrupamos los puntos de entrada en *grupos "
+"de puntos de entrada*. Por ejemplo, utilizamos el grupo de puntos de entrada "
+"console_scripts para iniciar una aplicación desde la línea de comandos."
 
 #: ../service_oriented.md:15
 msgid "Services"
-msgstr ""
+msgstr "Servicios"
 
 #: ../service_oriented.md:17
 msgid "Gaphor is modeled around the concept of services. Each service can be registered with the application and then it can be used by other services or other objects living within the application."
 msgstr ""
+"Gaphor se modela en torno al concepto de servicios. Cada servicio puede ser "
+"registrado con la aplicación y luego puede ser utilizado por otros servicios "
+"u otros objetos que existen dentro de la aplicación."
 
 #: ../service_oriented.md:21
 msgid "Each service should implement the Service interface. This interface defines one method:"
 msgstr ""
+"Cada servicio debe implementar la interfaz Service. Esta interfaz define un "
+"método:"
 
 #: ../service_oriented.md:26
 msgid "Which is called when a service needs to be cleaned up."
-msgstr ""
+msgstr "Que se llama cuando hay que limpiar un servicio."
 
 #: ../service_oriented.md:28
 msgid "We allow each service to define its own methods, as long as the service is implemented too."
 msgstr ""
+"Permitimos que cada servicio defina sus propios métodos, siempre y cuando el "
+"servicio también esté implementado."
 
 #: ../service_oriented.md:31
 msgid "Services should be defined as entry points in the `pyproject.toml` file."
 msgstr ""
+"Los servicios deben definirse como puntos de entrada en el archivo `pyproject"
+".toml`."
 
 #: ../service_oriented.md:33
 msgid "Typically, a service does some work in the background. Services can also expose actions that can be invoked by users. For example, the _Ctrl-z_ key combo (undo) is implemented by the UndoManager service."
 msgstr ""
+"Normalmente, un servicio realiza algún trabajo en segundo plano. Los "
+"servicios también pueden exponer acciones que pueden ser invocadas por los "
+"usuarios. Por ejemplo, la combinación de teclas _Ctrl-z_ (deshacer) está "
+"implementada por el servicio UndoManager."
 
 #: ../service_oriented.md:37
 msgid "A service can also depend on another services. Service initialization resolves these dependencies. To define a service dependency, just add it to the constructor by its name defined in the entry point:"
 msgstr ""
+"Un servicio también puede depender de otros servicios. La inicialización del "
+"servicio resuelve estas dependencias. Para definir una dependencia de "
+"servicio, basta con añadirla al constructor por su nombre definido en el "
+"punto de entrada:"
 
 #: ../service_oriented.md:54
 msgid "Services that expose actions should also inherit from the ActionProvider interface. This interface does not require any additional methods to be implemented. Action methods should be annotated with an `@action` annotation."
 msgstr ""
+"Los servicios que exponen acciones también deben heredar de la interfaz "
+"ActionProvider. Esta interfaz no requiere la implementación de ningún método "
+"adicional. Los métodos de acción deben llevar la anotación `@action`."
 
 #: ../service_oriented.md:58
 msgid "Example: ElementFactory"
-msgstr ""
+msgstr "Ejemplo: fábrica de elementos"
 
 #: ../service_oriented.md:60
 msgid "A nice example of a service in use is the ElementFactory. It is one of the core services."
 msgstr ""
+"Un buen ejemplo de un servicio en uso es ElementFactory. Es uno de los "
+"servicios centrales."
 
 #: ../service_oriented.md:62
 msgid "The UndoManager depends on the events emitted by the ElementFactory. When an important events occurs, like an element is created or destroyed, that event is emitted. We then use an event handler for ElementFactory that stores the add/remove signals in the undo system. Another example of events that are emitted are with `UML.Element`s. Those classes, or more specifically, the properties, send notifications every time their state changes."
 msgstr ""
+"El UndoManager depende de los eventos emitidos por el ElementFactory. Cuando "
+"ocurre un evento importante, como la creación o destrucción de un elemento, "
+"ese evento es emitido. Entonces usamos un manejador de eventos para el "
+"ElementFactory que almacena las señales de añadir/eliminar en el sistema de "
+"deshacer. Otro ejemplo de eventos que se emiten son los `UML.Element`s. "
+"Estas clases, o más específicamente, las propiedades, envían notificaciones "
+"cada vez que su estado cambia."
 
 #: ../service_oriented.md:69
 msgid "Entry Points"
-msgstr ""
+msgstr "Puntos de entrada"
 
 #: ../service_oriented.md:71
 msgid "Gaphor uses a main entry point group called `gaphor.services`."
 msgstr ""
+"Gaphor utiliza un punto principal de entrada de grupo llamado `gaphor."
+"services`."
 
 #: ../service_oriented.md:73
 msgid "Services are used to perform the core functionality of the application while breaking the functions in to individual components. For example, the element factory and undo manager are both services."
 msgstr ""
+"Los servicios se utilizan para llevar a cabo la funcionalidad básica de la "
+"aplicación, dividiendo las funciones en componentes individuales. Por "
+"ejemplo, la fábrica de elementos y el gestor de deshacer son ambos servicios."
 
 #: ../service_oriented.md:77
 msgid "Plugins can also be created to extend Gaphor beyond the core functionality as an add-on. For example, a plugin could be created to connect model data to other applications. Plugins are also defined as services. For example a new XMI export plugin would be defined as follows in the `pyproject.toml`:"
 msgstr ""
+"Plugins pueden ser creados también para extender Gaphor más allá de la "
+"funcionalidad de núcleo como un add-on. Por ejemplo, un plugin podría ser "
+"creado para conectar los datos del modelo a otras aplicaciones. Los plugins "
+"también son definidos como servicios. Por ejemplo, un nuevo plugin XMI de "
+"exportación sería definido como sigue en el `pyproject.toml`:"
 
 #: ../service_oriented.md:87
 msgid "Interfaces"
-msgstr ""
+msgstr "Interfaces"
 
 #: ../service_oriented.md:89
 msgid "Each service (and plugin) should implement the `gaphor.abc.Service` interface:"
 msgstr ""
+"Cada servicio (y plugin) debe implementar la interfaz `gaphor.abc.Service`:"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.Service:1
 msgid "Base interface for all services in Gaphor."
-msgstr ""
+msgstr "Interfaz base para todos los servicios de Gaphor."
 
 #: ../service_oriented.md:96
 msgid "Another more specialized service that also inherits from `gaphor.abc.Service`, is the UI Component service. Services that use this interface are used to define windows and user interface functionality. A UI component should implement the `gaphor.ui.abc.UIComponent` interface:"
 msgstr ""
+"Otro servicio más especializado que también hereda de `gaphor.abc.Service`, "
+"es el servicio UI Component. Los servicios que utilizan esta interfaz se "
+"utilizan para definir las ventanas y la funcionalidad de la interfaz de "
+"usuario. Un componente de interfaz de usuario debe implementar la interfaz "
+"`gaphor.ui.abc.UIComponent`:"
 
 #: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent:1
 msgid "A user interface component."
-msgstr ""
+msgstr "Un componente de la interfaz de usuario."
 
 #: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent.close:1
 msgid "Close the UI component."
-msgstr ""
+msgstr "Cierre el componente de la interfaz de usuario."
 
 #: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent.close:3
 msgid "The component can decide to hide or destroy the UI components."
 msgstr ""
+"El componente puede decidir ocultar o destruir los componentes de la "
+"interfaz de usuario."
 
 #: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent.open:1
 msgid "Create and display the UI components (windows)."
-msgstr ""
+msgstr "Crear y mostrar los componentes de la interfaz de usuario (ventanas)."
 
 #: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent.shutdown:1
 msgid "Shut down this component."
-msgstr ""
+msgstr "Apague este componente."
 
 #: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent.shutdown:3
 msgid "It's not supposed to be opened again."
-msgstr ""
+msgstr "No se supone que se vuelva a abrir."
 
 #: ../service_oriented.md:106
 msgid "Typically a service and UI component would like to present some actions to the user, by means of menu entries. Every service and UI component can advertise actions by implementing the `gaphor.abc.ActionProvider` interface:"
 msgstr ""
+"Normalmente, un servicio y un componente de interfaz de usuario desea "
+"presentar algunas acciones al usuario mediante entradas de menú. Cada "
+"servicio y componente UI puede anunciar acciones implementando la interfaz "
+"`gaphor.abc.ActionProvider`:"
 
 #: ../../gaphor/abc.py:docstring of gaphor.abc.ActionProvider:1
 msgid "An action provider is a special service that provides actions via ``@action`` decorators on its methods (see gaphor/action.py)."
 msgstr ""
+"Un proveedor de acciones es un servicio especial que proporciona acciones a "
+"través de decoradores de @action en sus métodos (ver gaphor/action.py)."
 
 #: ../service_oriented.md:116
 msgid "Example plugin"
-msgstr ""
+msgstr "Ejemplo de plugin"
 
 #: ../service_oriented.md:118
 msgid "A small example is provided by means of the Hello world plugin. Take a look at the files at [GitHub](https://github.com/gaphor/gaphor.plugins.helloworld). The example plugin needs to be updated to support versions 1.0.0 and later of Gaphor."
 msgstr ""
+"Se proporciona un pequeño ejemplo mediante el plugin Hello world. Eche un "
+"vistazo a los archivos en [GitHub](https://github.com/gaphor/gaphor.plugins."
+"helloworld). Es necesario actualizar el plugin de ejemplo para que sea "
+"compatible con las versiones 1.0.0 y posteriores de Gaphor."
 
 #: ../service_oriented.md:122
 msgid "The [setup.py](https://github.com/gaphor/gaphor.plugins.helloworld/blob/master/setup.py) file contains an entry point:"
 msgstr ""
+"El archivo [setup.py](https://github.com/gaphor/gaphor.plugins.helloworld/"
+"blob/master/setup.py) contiene un punto de entrada:"
 
 #: ../service_oriented.md:132
 msgid "This refers to the class `HelloWorldPlugin` in package/module [gaphor.plugins.helloworld](https://github.com/gaphor/gaphor.plugins.helloworld/blob/master/gaphor/plugins/helloworld/__init__.py)."
@@ -3008,47 +3103,58 @@ msgstr ""
 
 #: ../sphinx.rst:84
 msgid "Now include ``diagram`` directives in your documents."
-msgstr ""
+msgstr "Ahora incluye las directivas ``diagram`` en tus documentos."
 
 #: ../sphinx.rst:88
 msgid "Read the Docs"
-msgstr ""
+msgstr "Read the Docs"
 
 #: ../sphinx.rst:90
 msgid "The diagram directive plays nice with `Read the docs`_. To make diagrams render, it's best to use a `.readthedocs.yaml`_ file in your project. Make sure to include the extra ``apt_packages`` as shown below."
 msgstr ""
+"La directiva de diagramas funciona bien con `Read the docs`_. Para hacer que "
+"los diagramas se muestren, es mejor usar un archivo `.readthedocs.yaml`_ en "
+"tu proyecto. Asegúrate de incluir el extra ``apt_packages`` como se muestra "
+"a continuación."
 
 #: ../sphinx.rst:94
 msgid "This is the ``.readthedocs.yaml`` file we use for Gaphor:"
-msgstr ""
+msgstr "Este es el archivo ``.readthedocs.yaml`` que utilizamos para Gaphor:"
 
 #: ../sphinx.rst:99
 msgid "``libgirepository1.0-dev`` is required to build PyGObject."
-msgstr ""
+msgstr "Se requiere ``libgirepository1.0-dev`` para compilar PyGObject."
 
 #: ../sphinx.rst:100
 msgid "``gir1.2-pango-1.0`` is required for text rendering."
-msgstr ""
+msgstr "Se requiere ``gir1.2-pango-1.0`` para la representación de texto."
 
 #: ../sphinx.rst:104
 msgid "For Gaphor 2.7.0, ``gir1.2-gtk-3.0`` and ``gir1.2-gtksource-4`` are required ``apt_packages``, although we do not use the GUI. From Gaphor 2.7.1 onwards all you need is GI-repository and Pango."
 msgstr ""
+"Para Gaphor 2.7.0, ``gir1.2-gtk-3.0`` y ``gir1.2-gtksource-4`` son "
+"necesarios ``apt_packages``, aunque no usamos la GUI. Desde Gaphor 2.7.1 en "
+"adelante, todo lo que necesita es un repositorio GI y Pango."
 
 #: ../sphinx.rst:109
 msgid "Errors"
-msgstr ""
+msgstr "Errores"
 
 #: ../sphinx.rst:111
 msgid "Errors are shown on the console when the documentation is built and in the document."
 msgstr ""
+"Los errores se muestran en la consola cuando se construye la documentación y "
+"en el documento."
 
 #: ../sphinx.rst:113
 msgid "An error will appear in the documentation. Something like this:"
-msgstr ""
+msgstr "Aparecerá un error en la documentación. Algo como esto:"
 
 #: ../sphinx.rst:117
 msgid "No diagram ‘Wrong name’ in model ‘example’ (../examples/sequence-diagram.gaphor)."
 msgstr ""
+"No hay diagrama 'Nombre incorrecto' en el modelo 'ejemplo' (../examples/"
+"sequence-diagram.gaphor)."
 
 #: ../stereotypes.md:1
 msgid "Stereotypes"
@@ -3057,30 +3163,50 @@ msgstr "Estereotipos"
 #: ../stereotypes.md:3
 msgid "In UML, stereotypes are way to extend the application of the UML language to new domains. For example: SysML started as a profile for UML."
 msgstr ""
+"En UML, los estereotipos son una forma de extender la aplicación del "
+"lenguaje UML a nuevos dominios. Por ejemplo: SysML comenzó como un perfil "
+"para UML."
 
 #: ../stereotypes.md:6
 msgid "Gaphor supports stereotypes too. They're *the* way for you to adapt your models to your specific needs."
 msgstr ""
+"Gaphor también admite estereotipos. Son *la* forma de adaptar sus modelos a "
+"sus necesidades específicas."
 
 #: ../stereotypes.md:9
 msgid "The UML, SysML, RAAML and other models used in Gaphor – the code is generated from Gaphor model files – make use of stereotypes to provide specific information used when generating the data model code."
 msgstr ""
+"Los modelos UML, SysML, RAAML y otros utilizados en Gaphor - el código se "
+"genera a partir de archivos de modelo Gaphor - hacen uso de estereotipos "
+"para proporcionar información específica utilizada al generar el código del "
+"modelo de datos."
 
 #: ../stereotypes.md:13
 msgid "To create a stereotype, ensure the UML Profile is active and open the *Profile* section of the toolbox. First add a *Metaclass* to your diagram. Next add a *Stereotype*, and connect both with a *Extension*. The `«metaclass»` stereotype will only show once the *Extension* is connected both class and stereotype."
 msgstr ""
+"Para crear un estereotipo, asegúrese de que el Perfil UML está activo y abra "
+"la sección *Perfil* de la caja de herramientas. Primero añada una *Metaclase*"
+" a su diagrama. Después añada un *Estereotipo*, y conecte ambos con una "
+"*Extensión*. El estereotipo `\"metaclass\"` solo se mostrará una vez que la "
+"*Extensión* esté conectada tanto a la clase como al estereotipo."
 
 #: ../stereotypes.md:20
 msgid "The class names in the metaclass should be a class name from the UML model, such as `Class`, `Interface`, `Property`, `Association`. Or even `Element` if you want to use the stereotype on all elements."
 msgstr ""
+"Los nombres de clase en la metaclase deben ser un nombre de clase del modelo "
+"UML, como `Class`, `Interface`, `Property`, `Association`. O incluso "
+"\"Elemento\" si desea utilizar el estereotipo en todos los elementos."
 
 #: ../stereotypes.md:25
 msgid "Your stereotype declaration may look something like this:"
-msgstr ""
+msgstr "Su declaración de estereotipo puede parecer algo así:"
 
 #: ../stereotypes.md:31
 msgid "The `Asynchronous` stereotype has a property `priority`. This property can be proved a value once the stereotype is applied to a *Property*, such as an association end."
 msgstr ""
+"El estereotipo `Asynchronous` tiene una propiedad `priority`. A esta "
+"propiedad se le puede asignar un valor una vez que el estereotipo se aplica "
+"a una *Propiedad*, como un extremo de asociación."
 
 #: ../stereotypes.md:35
 msgid "When a stereotype can be applied to a model element, a *Stereotype* section will appear in the editor."
