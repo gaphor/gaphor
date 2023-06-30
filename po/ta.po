@@ -2559,29 +2559,3 @@ msgstr ""
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr ""
-
-#~ msgid ""
-#~ "Add a model element from the tool"
-#~ " box (bottom left) to the diagram."
-#~ " Here you will see it's properties"
-#~ " appear."
-#~ msgstr ""
-
-#~ msgid "Parameters"
-#~ msgstr ""
-
-#~ msgid "Information Flow"
-#~ msgstr ""
-
-#~ msgid "Information Item (Class)"
-#~ msgstr ""
-
-#~ msgid "Stakeholder Requirements"
-#~ msgstr ""
-
-#~ msgid "System Requirements"
-#~ msgstr ""
-
-#~ msgid "Actuator Command"
-#~ msgstr ""
-
