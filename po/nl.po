@@ -290,9 +290,8 @@ msgid "Item Flow"
 msgstr "Item-stroom"
 
 #: gaphor/SysML/propertypages.ui:22
-#, fuzzy
 msgid "Enable Item Flow"
-msgstr "Item-stroom"
+msgstr "Activeer Item-stroom"
 
 #: gaphor/SysML/propertypages.ui:36
 msgid "Item Property"
@@ -342,9 +341,8 @@ msgid "Composite"
 msgstr "Composiet"
 
 #: gaphor/SysML/propertypages.ui:187
-#, fuzzy
 msgid "Type"
-msgstr "Stijl"
+msgstr "Type"
 
 #: gaphor/SysML/propertypages.ui:210
 msgid "Id"
@@ -1107,32 +1105,28 @@ msgid "Message Sort"
 msgstr "Berichtsortering"
 
 #: gaphor/UML/interactions/propertypages.ui:21
-#, fuzzy
 msgid "Call"
-msgstr "aanroepen()"
+msgstr "Aanroepen"
 
 #: gaphor/UML/interactions/propertypages.ui:22
 msgid "Asynchronous"
-msgstr ""
+msgstr "Asynchroon"
 
 #: gaphor/UML/interactions/propertypages.ui:23
-#, fuzzy
 msgid "Signal"
-msgstr "Signaal verzenden"
+msgstr "Signaal"
 
 #: gaphor/UML/interactions/propertypages.ui:24
 msgid "Reply"
-msgstr ""
+msgstr "Antwoord"
 
 #: gaphor/UML/interactions/propertypages.ui:25
-#, fuzzy
 msgid "Create"
 msgstr "Gemaakt op"
 
 #: gaphor/UML/interactions/propertypages.ui:26
-#, fuzzy
 msgid "Delete"
-msgstr "_Verwijderen"
+msgstr "Verwijderen"
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
@@ -1652,9 +1646,8 @@ msgid "Structure"
 msgstr "Structuur"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Feature Domain"
-msgstr "Functiecontext"
+msgstr "Functiionaliteitsdomein"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Operator"
@@ -1669,9 +1662,8 @@ msgid "External Element"
 msgstr "Extern element"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept Requirements"
-msgstr "Vereisten"
+msgstr "Concept Vereisten"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
@@ -1714,9 +1706,8 @@ msgid "Detailed Behavior"
 msgstr "Gedetailleerd gedrag"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical Requirements"
-msgstr "Vereisten"
+msgstr "Logische Vereisten"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
@@ -1831,48 +1822,40 @@ msgid "Feature Context"
 msgstr "Functiecontext"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Read Input"
 msgstr "Gemaakt op"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "FeatureInput"
 msgstr "Functie"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Request Actuation"
 msgstr "Eerste actie"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Actuation Command"
 msgstr "Actuatorcommando"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Model Navigation"
 msgstr "Onbekende navigeerbaarheid"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept"
-msgstr "Connector"
+msgstr "Concept"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical"
-msgstr "Inloggen"
+msgstr "Logisch"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Pillar"
-msgstr ""
+msgstr "Pilaar"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Abstraction Level"
-msgstr "Abstract"
+msgstr "Abstractie niveau"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
@@ -2485,7 +2468,7 @@ msgstr "Gereedschap"
 
 #: gaphor/ui/mainwindow.py:233
 msgid "Press F11 to exit Fullscreen"
-msgstr ""
+msgstr "Druk F11 om volledig schem te verlaten"
 
 #: gaphor/ui/mainwindow.py:288
 msgid "Profile: {name}"
@@ -2601,7 +2584,7 @@ msgstr "Diagram sluiten"
 
 #: gaphor/ui/help/shortcuts.ui:62
 msgid "Toggle Fullscreen"
-msgstr ""
+msgstr "Wissel Volledig Scherm"
 
 #: gaphor/ui/help/shortcuts.ui:70
 msgid "Quit Gaphor"
