@@ -1,10 +1,15 @@
-2.19.1
+2.19.2
 ------
 (unreleased)
 
-* Fix: order is preserved when undoing a change
-* UML actions: ObjectNode now also connects to decision/merge and join/fork nodes.
-* Experimental: support for plugins
+2.19.1
+------
+- Fix: order is preserved when undoing a change
+- Actions: ObjectNode now also connects to decision/merge and join/fork nodes.
+- Fix: ports should be nested under properties
+- Experimental: support for plugins
+- Add fullscreen mode with F11
+- Remove Tkinter from packaging
 
 2.19.0
 ------
