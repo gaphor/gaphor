@@ -11,3 +11,8 @@ updates:
     schedule:
       interval: "daily"
     labels: ["skip-changelog"]
+
+  - package-ecosystem: docker
+    directory: /.devcontainer
+    schedule:
+      interval: daily
