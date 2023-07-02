@@ -11,7 +11,57 @@ comment
   on, since attributes have been written anyway. Note that no smart things
   wrt inheritance is done.
 %%
+override AbstractRequirement.derived(DirectedRelationshipPropertyPath.sourceContext): derived[AbstractRequirement]
+
+AbstractRequirement.derived = derived("derived", AbstractRequirement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, DeriveReqt)])
+%%
+override AbstractRequirement.derivedFrom(DirectedRelationshipPropertyPath.targetContext): derived[AbstractRequirement]
+
+AbstractRequirement.derivedFrom = derived("derivedFrom", AbstractRequirement, 0, "*", lambda self: [
+  drrp.sourceContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext and drrp.targetContext is self and isinstance(drrp, DeriveReqt)
+])
+%%
+override AbstractRequirement.master(DirectedRelationshipPropertyPath.sourceContext): derived[AbstractRequirement]
+
+AbstractRequirement.master = derived("master", AbstractRequirement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, Copy)
+])
+%%
+override AbstractRequirement.refinedBy(DirectedRelationshipPropertyPath.sourceContext): derived[NamedElement]
+
+AbstractRequirement.refinedBy = derived("refinedBy", NamedElement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, Refine)
+])
+%%
+override AbstractRequirement.satisfiedBy(DirectedRelationshipPropertyPath.sourceContext): derived[NamedElement]
+
+AbstractRequirement.satisfiedBy = derived("satisfiedBy", NamedElement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, Satisfy)
+])
 %%
 override AbstractRequirement.tracedTo(DirectedRelationshipPropertyPath.sourceContext): derived[NamedElement]
 
-AbstractRequirement.tracedTo = derived('tracedTo', NamedElement, 0, '*', lambda self: [drrp.targetContext for drrp in self.model.select(DirectedRelationshipPropertyPath) if drrp.targetContext and isinstance(drrp, Trace)])
+AbstractRequirement.tracedTo = derived("tracedTo", NamedElement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, Trace)
+])
+%%
+override AbstractRequirement.verifiedBy(DirectedRelationshipPropertyPath.sourceContext): derived[NamedElement]
+
+AbstractRequirement.verifiedBy = derived("verifiedBy", NamedElement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, Verify)
+])

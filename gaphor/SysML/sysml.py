@@ -19,15 +19,15 @@ from gaphor.core.modeling.properties import (
 
 from gaphor.UML.uml import NamedElement
 class AbstractRequirement(NamedElement):
-    derived: relation_many[AbstractRequirement]
-    derivedFrom: relation_many[AbstractRequirement]
+    derived: derived[AbstractRequirement]
+    derivedFrom: derived[AbstractRequirement]
     externalId: _attribute[str] = _attribute("externalId", str)
-    master: relation_many[AbstractRequirement]
-    refinedBy: relation_many[NamedElement]
-    satisfiedBy: relation_many[NamedElement]
+    master: derived[AbstractRequirement]
+    refinedBy: derived[NamedElement]
+    satisfiedBy: derived[NamedElement]
     text: _attribute[str] = _attribute("text", str)
     tracedTo: derived[NamedElement]
-    verifiedBy: relation_many[NamedElement]
+    verifiedBy: derived[NamedElement]
 
 
 from gaphor.UML.uml import Class
@@ -287,16 +287,61 @@ class ItemFlow(InformationFlow):
 
 
 
-AbstractRequirement.derived = derivedunion("derived", AbstractRequirement)
-AbstractRequirement.derivedFrom = derivedunion("derivedFrom", AbstractRequirement)
-AbstractRequirement.master = derivedunion("master", AbstractRequirement)
-AbstractRequirement.refinedBy = derivedunion("refinedBy", NamedElement)
-AbstractRequirement.satisfiedBy = derivedunion("satisfiedBy", NamedElement)
-# 15: override AbstractRequirement.tracedTo(DirectedRelationshipPropertyPath.sourceContext): derived[NamedElement]
+# 14: override AbstractRequirement.derived(DirectedRelationshipPropertyPath.sourceContext): derived[AbstractRequirement]
 
-AbstractRequirement.tracedTo = derived('tracedTo', NamedElement, 0, '*', lambda self: [drrp.targetContext for drrp in self.model.select(DirectedRelationshipPropertyPath) if drrp.targetContext and isinstance(drrp, Trace)])
+AbstractRequirement.derived = derived("derived", AbstractRequirement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, DeriveReqt)])
 
-AbstractRequirement.verifiedBy = derivedunion("verifiedBy", NamedElement)
+# 21: override AbstractRequirement.derivedFrom(DirectedRelationshipPropertyPath.targetContext): derived[AbstractRequirement]
+
+AbstractRequirement.derivedFrom = derived("derivedFrom", AbstractRequirement, 0, "*", lambda self: [
+  drrp.sourceContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext and drrp.targetContext is self and isinstance(drrp, DeriveReqt)
+])
+
+# 29: override AbstractRequirement.master(DirectedRelationshipPropertyPath.sourceContext): derived[AbstractRequirement]
+
+AbstractRequirement.master = derived("master", AbstractRequirement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, Copy)
+])
+
+# 37: override AbstractRequirement.refinedBy(DirectedRelationshipPropertyPath.sourceContext): derived[NamedElement]
+
+AbstractRequirement.refinedBy = derived("refinedBy", NamedElement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, Refine)
+])
+
+# 45: override AbstractRequirement.satisfiedBy(DirectedRelationshipPropertyPath.sourceContext): derived[NamedElement]
+
+AbstractRequirement.satisfiedBy = derived("satisfiedBy", NamedElement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, Satisfy)
+])
+
+# 53: override AbstractRequirement.tracedTo(DirectedRelationshipPropertyPath.sourceContext): derived[NamedElement]
+
+AbstractRequirement.tracedTo = derived("tracedTo", NamedElement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, Trace)
+])
+
+# 61: override AbstractRequirement.verifiedBy(DirectedRelationshipPropertyPath.sourceContext): derived[NamedElement]
+
+AbstractRequirement.verifiedBy = derived("verifiedBy", NamedElement, 0, "*", lambda self: [
+  drrp.targetContext
+  for drrp in self.model.select(DirectedRelationshipPropertyPath)
+  if drrp.sourceContext is self and drrp.targetContext and isinstance(drrp, Verify)
+])
+
 DirectedRelationshipPropertyPath.targetContext = association("targetContext", Classifier, upper=1)
 DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", Classifier, upper=1)
 DirectedRelationshipPropertyPath.sourcePropertyPath = association("sourcePropertyPath", Property)
