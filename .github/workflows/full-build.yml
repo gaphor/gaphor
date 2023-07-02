@@ -158,8 +158,8 @@ jobs:
           version: ${{ steps.setup_and_test.outputs.version }}
           base64_encoded_p12: ${{ secrets.BASE64_ENCODED_P12 }}
           certpassword_p12: ${{ secrets.CERTPASSWORD_P12 }}
-          ac_username:  ${{ secrets.AC_USERNAME }}
-          ac_password: ${{ secrets.AC_PASSWORD }}
+          ac_username:  ${{ secrets.APPLE_NOTARY_USER }}
+          ac_password: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
 
   check-macos-app:
     name: Check macOS App
