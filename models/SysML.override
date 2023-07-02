@@ -11,3 +11,7 @@ comment
   on, since attributes have been written anyway. Note that no smart things
   wrt inheritance is done.
 %%
+%%
+override AbstractRequirement.tracedTo(DirectedRelationshipPropertyPath.sourceContext): derived[NamedElement]
+
+AbstractRequirement.tracedTo = derived('tracedTo', NamedElement, 0, '*', lambda self: [drrp.targetContext for drrp in self.model.select(DirectedRelationshipPropertyPath) if drrp.targetContext and isinstance(drrp, Trace)])

@@ -26,7 +26,7 @@ class AbstractRequirement(NamedElement):
     refinedBy: relation_many[NamedElement]
     satisfiedBy: relation_many[NamedElement]
     text: _attribute[str] = _attribute("text", str)
-    tracedTo: relation_many[NamedElement]
+    tracedTo: derived[NamedElement]
     verifiedBy: relation_many[NamedElement]
 
 
@@ -292,7 +292,10 @@ AbstractRequirement.derivedFrom = derivedunion("derivedFrom", AbstractRequiremen
 AbstractRequirement.master = derivedunion("master", AbstractRequirement)
 AbstractRequirement.refinedBy = derivedunion("refinedBy", NamedElement)
 AbstractRequirement.satisfiedBy = derivedunion("satisfiedBy", NamedElement)
-AbstractRequirement.tracedTo = derivedunion("tracedTo", NamedElement)
+# 15: override AbstractRequirement.tracedTo(DirectedRelationshipPropertyPath.sourceContext): derived[NamedElement]
+
+AbstractRequirement.tracedTo = derived('tracedTo', NamedElement, 0, '*', lambda self: [drrp.targetContext for drrp in self.model.select(DirectedRelationshipPropertyPath) if drrp.targetContext and isinstance(drrp, Trace)])
+
 AbstractRequirement.verifiedBy = derivedunion("verifiedBy", NamedElement)
 DirectedRelationshipPropertyPath.targetContext = association("targetContext", Classifier, upper=1)
 DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", Classifier, upper=1)

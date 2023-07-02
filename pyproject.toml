@@ -157,6 +157,7 @@ uml.script = """gaphor.codegen.coder:main(
     )"""
 sysml.script = """gaphor.codegen.coder:main(
     modelfile='models/SysML.gaphor',
+    overridesfile='models/SysML.override',
     outfile='gaphor/SysML/sysml.py',
     supermodelfiles=[
         ('Core', 'models/Core.gaphor'),
