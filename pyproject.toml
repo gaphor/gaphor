@@ -38,7 +38,7 @@ include = ["gaphor/locale/*/LC_MESSAGES/*"]
 exclude = ["**/tests", "gaphor/conftest.py" ]
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.12"
+python = ">=3.9,<3.13"
 pycairo = "^1.22.0"
 PyGObject = "^3.30"
 gaphas = ">3.9.0,<5.0"
