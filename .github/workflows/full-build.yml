@@ -16,15 +16,20 @@ jobs:
     timeout-minutes: 10
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3.5.3
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v4.6.1
+        uses: actions/setup-python@bd6b4b6205c4dbad673328db7b31b7fab9e241c0 # v4.6.1
         with:
           python-version: ${{ env.python_version }}
       - name: Lint with Pre-commit
-        uses: pre-commit/action@v3.0.0
+        uses: pre-commit/action@646c83fcd040023954eafda54b4db0192ce70507 # v3.0.0
       - name: Check translations
         run: pip install babel && python po/check-babel.py
       - name: Check Poetry lock file integrity
@@ -47,7 +52,12 @@ jobs:
       wheel: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
       version: ${{ steps.setup_and_test.outputs.version }}
     steps:
-      - uses: actions/checkout@v3.5.3
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
@@ -56,11 +66,11 @@ jobs:
           gir1.2-gtk-4.0 libgirepository1.0-dev libgtksourceview-5-dev libadwaita-1-dev
           graphviz
       - name: Set up Python
-        uses: actions/setup-python@v4.6.1
+        uses: actions/setup-python@bd6b4b6205c4dbad673328db7b31b7fab9e241c0 # v4.6.1
         with:
           python-version: ${{ matrix.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
@@ -71,7 +81,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Upload Code Coverage to Code Climate
         if: ${{ matrix.python_version == env.python_version }}
-        uses: paambaati/codeclimate-action@v4.0.0
+        uses: paambaati/codeclimate-action@5f637ccd517bc8960de0fe59379dd922bcba9486 # v4.0.0
         env:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
@@ -81,13 +91,13 @@ jobs:
         run: poetry build
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
           path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}.tar.gz
       - name: Upload gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         with:
           name: gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.setup_and_test.outputs.version }}-py3-none-any.whl
@@ -100,15 +110,20 @@ jobs:
       image: bilelmoussaoui/flatpak-github-actions:gnome-44
       options: --privileged
     steps:
-      - uses: actions/checkout@v3.5.3
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
-      - uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+      - uses: flatpak/flatpak-github-actions/flatpak-builder@0c1e6013638a1773c475ccf010b455c9f6a873cf # v6.1
         with:
           bundle: gaphor.flatpak
           manifest-path: org.gaphor.Gaphor.json
@@ -129,7 +144,12 @@ jobs:
       LDFLAGS: -L/usr/local/opt/python@${python_version}/lib
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
-      - uses: actions/checkout@v3.5.3
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
@@ -137,11 +157,11 @@ jobs:
           brew install gtk4 gtksourceview5 libadwaita adwaita-icon-theme
           gobject-introspection graphviz create-dmg upx
       - name: Set up Python
-        uses: actions/setup-python@v4.6.1
+        uses: actions/setup-python@bd6b4b6205c4dbad673328db7b31b7fab9e241c0 # v4.6.1
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
           path: ~/Library/Caches/pip
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -168,7 +188,12 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' }}
     timeout-minutes: 10
     steps:
-      - uses: actions/download-artifact@v3
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         id: download
         with:
           name: ${{ needs.macos.outputs.artifact }}
@@ -191,17 +216,22 @@ jobs:
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
       - name: GTK binaries create dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: GTK binaries get from cache
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
           key: ${{ runner.os }}-gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/setup-python@v4.6.1
+        uses: actions/setup-python@bd6b4b6205c4dbad673328db7b31b7fab9e241c0 # v4.6.1
         with:
           python-version: ${{ env.python_version }}
       - name: GTK binaries move git binary
@@ -246,10 +276,15 @@ jobs:
       installer: gaphor-${{ steps.setup_and_test.outputs.version }}-installer.exe
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
       - name: Create GTK binaries dir
         run: mkdir C:\gtk-build\gtk\x64\release
       - name: Get GTK binaries from cache
-        uses: actions/cache/restore@v3.3.1
+        uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         id: cache
         with:
           path: C:\gtk-build\gtk\x64\release\**
@@ -264,11 +299,11 @@ jobs:
           Write-Output "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $env:GITHUB_ENV
           Write-Output "C:\gtk-build\gtk\x64\release\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@v4.6.1
+        uses: actions/setup-python@bd6b4b6205c4dbad673328db7b31b7fab9e241c0 # v4.6.1
         with:
           python-version: ${{ env.python_version }}
       - name: Install pipx
@@ -276,7 +311,7 @@ jobs:
           python -m pip install pipx
           pipx ensurepath
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
           path: ~\AppData\Local\pip\Cache
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
@@ -300,7 +335,12 @@ jobs:
     timeout-minutes: 15
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
-      - uses: actions/download-artifact@v3
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: ${{ needs.windows.outputs.installer }}
           path: .
@@ -327,23 +367,34 @@ jobs:
     outputs:
       version: ${{ needs.linux-wheel.outputs.version }}
     steps:
-      - uses: actions/download-artifact@v3
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: ${{ needs.linux-wheel.outputs.targz }}
           path: dist
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
         with:
           name: ${{ needs.linux-wheel.outputs.wheel }}
           path: dist
-      - uses: pypa/gh-action-pypi-publish@release/v1
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@f5622bde02b04381239da3573277701ceca8f6a0 # release/v1
 
   trigger-website-version-update:
     name: Trigger version update on gaphor/gaphor.github.io
     needs: [ publish-to-pypi ]
     runs-on: ubuntu-22.04
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@26b39ed245ab8f31526069329e112ab2fb224588 # v2.1.1
         with:
           token: ${{ secrets.DISPATCH_TOKEN }}
           repository: gaphor/gaphor.github.io
@@ -355,8 +406,13 @@ jobs:
     needs: [ publish-to-pypi ]
     runs-on: ubuntu-22.04
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@26b39ed245ab8f31526069329e112ab2fb224588 # v2.1.1
         with:
           token: ${{ secrets.DISPATCH_TOKEN }}
           repository: flathub/org.gaphor.Gaphor

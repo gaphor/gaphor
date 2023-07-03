@@ -18,10 +18,15 @@ jobs:
     name: Analyze
     runs-on: ubuntu-22.04
     steps:
+    - name: Harden Runner
+      uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+      with:
+        egress-policy: audit
+
     - name: Checkout repository
-      uses: actions/checkout@v3.5.3
+      uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
     - name: Set up Python
-      uses: actions/setup-python@v4.6.1
+      uses: actions/setup-python@bd6b4b6205c4dbad673328db7b31b7fab9e241c0 # v4.6.1
       with:
         python-version: ${{ env.python_version }}
     - name: Install Linux Dependencies
@@ -29,7 +34,7 @@ jobs:
         sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends
         libgirepository1.0-dev
     - name: Use Python Dependency Cache
-      uses: actions/cache@v3.3.1
+      uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-22.04
@@ -44,11 +49,11 @@ jobs:
         # that includes the dependencies
         echo "CODEQL_PYTHON=$(which python)" >> $GITHUB_ENV
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@f6e388ebf0efc915c6c5b165b019ee61a6746a38 # v2.20.1
       with:
         languages: python
         # Override the default behavior so that the action doesn't attempt
         # to auto-install Python dependencies
         setup-python-dependencies: false
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@f6e388ebf0efc915c6c5b165b019ee61a6746a38 # v2.20.1

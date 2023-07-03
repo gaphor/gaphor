@@ -16,7 +16,12 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v3.5.3
+      - name: Harden Runner
+        uses: step-security/harden-runner@55d479fb1c5bcad5a4f9099a5d9f37c8857b2845 # v2.4.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
@@ -25,17 +30,17 @@ jobs:
           gir1.2-gtk-4.0 libgirepository1.0-dev libgtksourceview-5-dev libadwaita-1-dev
           graphviz
       - name: Set up Python
-        uses: actions/setup-python@v4.6.1
+        uses: actions/setup-python@bd6b4b6205c4dbad673328db7b31b7fab9e241c0 # v4.6.1
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
-        uses: actions/cache@v3.3.1
+        uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}-20.04
       - name: Use Hypothesis Cache
         id: restore-cache
-        uses: actions/cache/restore@v3.3.1
+        uses: actions/cache/restore@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         with:
           path: .hypothesis
           key: ${{ runner.os }}-hypothesis
@@ -45,7 +50,7 @@ jobs:
         run: xvfb-run poetry run pytest -m hypothesis --hypothesis-profile=ci
         shell: bash
       - name: Create Issue on Failure
-        uses: JasonEtco/create-an-issue@v2
+        uses: JasonEtco/create-an-issue@e27dddc79c92bc6e4562f268fffa5ed752639abd # v2.9.1
         if: failure()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -53,7 +58,7 @@ jobs:
           filename: .github/hypothesis-test-failed.md
           update_existing: true
       - name: Save cache
-        uses: actions/cache/save@v3.3.1
+        uses: actions/cache/save@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
         if: always()
         with:
           path: .hypothesis

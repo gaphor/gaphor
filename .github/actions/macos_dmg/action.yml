@@ -32,15 +32,16 @@ runs:
     - name: Build Wheel
       run: poetry build
       shell: bash
-    - name: Import codesign certificate
-      uses: apple-actions/import-codesign-certs@v2
-      with:
-        p12-file-base64: ${{ inputs.base64_encoded_p12 }}
-        p12-password: ${{ inputs.certpassword_p12 }}
     - name: Create Unsigned macOS Application
       if: inputs.sign_app != 'true'
       run: poetry run poe package
       shell: bash
+    - name: Import codesign certificate
+      if: inputs.sign_app == 'true'
+      uses: apple-actions/import-codesign-certs@v2
+      with:
+        p12-file-base64: ${{ inputs.base64_encoded_p12 }}
+        p12-password: ${{ inputs.certpassword_p12 }}
     - name: Create Signed macOS Application
       if: inputs.sign_app == 'true'
       env:
