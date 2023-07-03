@@ -56,6 +56,7 @@ execute:
 ```bash
 sudo apt-get install -y python3-dev python3-gi python3-gi-cairo
 gir1.2-gtk-4.0 libgirepository1.0-dev libcairo2-dev libgtksourceview-5-dev
+libadwaita-1-dev graphviz libgit2-dev
 ```
 
 Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/pipx/):

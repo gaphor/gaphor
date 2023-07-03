@@ -64,7 +64,7 @@ jobs:
         run: >
           sudo apt-get update -qq && sudo apt-get install -qq --no-install-recommends upx
           gir1.2-gtk-4.0 libgirepository1.0-dev libgtksourceview-5-dev libadwaita-1-dev
-          graphviz
+          graphviz libgit2-dev
       - name: Set up Python
         uses: actions/setup-python@bd6b4b6205c4dbad673328db7b31b7fab9e241c0 # v4.6.1
         with:
