@@ -572,13 +572,13 @@ sphinx-basic-ng = "*"
 
 [[package]]
 name = "gaphas"
-version = "3.11.1"
-description = "Gaphas is a GTK+ based diagramming widget"
+version = "3.11.2"
+description = "Gaphas is a GTK diagramming widget"
 optional = false
 python-versions = ">=3.9,<3.12"
 files = [
-    {file = "gaphas-3.11.1-py3-none-any.whl", hash = "sha256:5326eaa0a3f69e63209f6e1ca5e7c180252eb755f3d7d6d62b516b2b19bde1eb"},
-    {file = "gaphas-3.11.1.tar.gz", hash = "sha256:4eaaeb1aefa393a58d5d49d725aa3bd491c4bbb22cdbb51e1c01b6f7f269a9bf"},
+    {file = "gaphas-3.11.2-py3-none-any.whl", hash = "sha256:15378033a08ff0239b3bbef21c2ed455d35d5321e0d6c8d2dce1751083639595"},
+    {file = "gaphas-3.11.2.tar.gz", hash = "sha256:75c134b968522459d25557a74254833309c77ba191abbee1093e855766103770"},
 ]
 
 [package.dependencies]
@@ -586,7 +586,7 @@ pycairo = ">=1.20.0,<2.0.0"
 PyGObject = ">=3.38.0,<4.0.0"
 
 [package.extras]
-docs = ["furo (>=2022,<2024)", "gaphor (>=2.15.0,<3.0.0)", "sphinx (>=4.3,<7.0)"]
+docs = ["furo (>=2022,<2024)", "sphinx (>=4.3,<8.0)"]
 
 [[package]]
 name = "generic"
