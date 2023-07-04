@@ -32,13 +32,16 @@ class Status:
     def complete(self):
         self.status = "completed"
 
+    def skip(self):
+        self.status = "skipped"
+
     @property
     def in_progress(self):
         return self.status == "in progress"
 
     @property
     def completed(self):
-        return self.status == "completed"
+        return self.status in ("completed", "skipped")
 
     def __repr__(self):
         return f"{self.name}: {self.status}"
@@ -159,7 +162,7 @@ class SelfTest(Service):
     @test
     def test_git_support(self, status):
         if "pygit2" not in globals():
-            status.complete()
+            status.skip()
             return
 
         with tempfile.TemporaryDirectory() as temp_dir:
