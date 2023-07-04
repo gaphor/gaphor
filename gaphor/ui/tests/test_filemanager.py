@@ -2,11 +2,16 @@ import sys
 import textwrap
 
 import pytest
-import pygit2
 
 from gaphor import UML
 from gaphor.ui.filemanager import FileManager
-from gaphor.storage.tests.fixtures import create_merge_conflict
+
+try:
+    import pygit2
+except ImportError:
+    pass
+else:
+    from gaphor.storage.tests.fixtures import create_merge_conflict
 
 
 @pytest.fixture
@@ -73,6 +78,7 @@ def test_old_model_is_loaded_without_utf8_encoding(
     file_manager.load(model_file)
 
 
+@pytest.mark.skipif("pygit2" not in globals(), reason="No pygit2 installed")
 @pytest.mark.parametrize("resolution", ["current", "incoming"])
 def test_load_model_with_merge_conflict(
     file_manager: FileManager, element_factory, merge_conflict, monkeypatch, resolution
@@ -84,6 +90,7 @@ def test_load_model_with_merge_conflict(
     assert element_factory.size() > 0
 
 
+@pytest.mark.skipif("pygit2" not in globals(), reason="No pygit2 installed")
 def test_load_model_merge_conflict_and_manual_resolution(
     file_manager: FileManager, element_factory, merge_conflict, monkeypatch
 ):
@@ -96,6 +103,7 @@ def test_load_model_merge_conflict_and_manual_resolution(
     assert element_factory.lselect(PendingChange)
 
 
+@pytest.mark.skipif("pygit2" not in globals(), reason="No pygit2 installed")
 def test_load_model_with_merge_conflict_and_unknown_resolution(
     file_manager: FileManager, merge_conflict, monkeypatch
 ):
