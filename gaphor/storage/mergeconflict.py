@@ -3,7 +3,12 @@ from __future__ import annotations
 import io
 from pathlib import Path
 
-import pygit2
+try:
+    import pygit2
+except ImportError:
+    import warnings
+
+    warnings.warn("Library pygit2 not found", ImportWarning, stacklevel=1)
 
 
 def in_git_repository(filename: Path) -> bool:
@@ -19,6 +24,9 @@ def split_ours_and_theirs(
     """For a file name, find the current (ours) and incoming (theirs) file and serialize those
     to the respected files.
     """
+    if "pygit2" not in globals():
+        return False
+
     repo_path = pygit2.discover_repository(filename)
     if not repo_path:
         return False
