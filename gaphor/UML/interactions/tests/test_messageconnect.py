@@ -271,6 +271,34 @@ def test_message_connect_to_execution_specification(diagram, element_factory):
     assert message.subject.sendEvent.covered is lifeline.subject
 
 
+def test_message_connect_to_execution_specification_in_interaction(
+    diagram, element_factory
+):
+    interaction = diagram.create(
+        InteractionItem, subject=element_factory.create(UML.Interaction)
+    )
+
+    lifeline = diagram.create(
+        LifelineItem, subject=element_factory.create(UML.Lifeline)
+    )
+    assert group(interaction.subject, lifeline.subject)
+
+    exec_spec = diagram.create(ExecutionSpecificationItem)
+    connect(exec_spec, exec_spec.handles()[0], lifeline, lifeline.lifetime.port)
+
+    message = diagram.create(MessageItem)
+    connect(message, message.head, exec_spec, exec_spec.ports()[0])
+
+    # In this particular case, the message is not (yet) tied to an interaction
+    message.subject.interaction = None
+
+    connect(message, message.tail, lifeline, lifeline.lifetime.port)
+
+    assert lifeline.subject.interaction is interaction.subject
+    assert exec_spec.subject.enclosingInteraction is interaction.subject
+    assert message.subject.interaction is interaction.subject
+
+
 def test_message_disconnect_from_execution_specification(diagram, element_factory):
     """Test gluing message on sequence diagram."""
 

@@ -141,8 +141,8 @@ class MessageLifelineConnect(BaseConnector):
 
     def connect(self, handle, port):
         line = self.line
-        send = self.get_connected(line.head)
-        received = self.get_connected(line.tail)
+        send = get_lifeline(line, line.head)
+        received = get_lifeline(line, line.tail)
         connect_lifelines(line, send, received)
         return True
 
