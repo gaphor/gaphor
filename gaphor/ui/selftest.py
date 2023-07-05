@@ -9,12 +9,17 @@ import tempfile
 import cairo
 import gi
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk, GtkSource, Pango
-import pygit2
 
 from gaphor.abc import Service
 from gaphor.application import Application, distribution
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
+
+try:
+    import pygit2
+except ImportError:
+    pass
+
 
 log = logging.getLogger(__name__)
 
@@ -27,13 +32,16 @@ class Status:
     def complete(self):
         self.status = "completed"
 
+    def skip(self):
+        self.status = "skipped"
+
     @property
     def in_progress(self):
         return self.status == "in progress"
 
     @property
     def completed(self):
-        return self.status == "completed"
+        return self.status in ("completed", "skipped")
 
     def __repr__(self):
         return f"{self.name}: {self.status}"
@@ -153,6 +161,10 @@ class SelfTest(Service):
 
     @test
     def test_git_support(self, status):
+        if "pygit2" not in globals():
+            status.skip()
+            return
+
         with tempfile.TemporaryDirectory() as temp_dir:
             pygit2.init_repository(temp_dir)
         status.complete()
@@ -172,7 +184,7 @@ def system_information():
         Pango version:          {Pango.version_string()}
         PyGObject version:      {gi.__version__}
         Pycairo version:        {cairo.version}
-        pygit2/libgit2 version: {pygit2.__version__} / {pygit2.LIBGIT2_VERSION}
+        pygit2/libgit2 version: {"pygit2" in globals() and f"{pygit2.__version__}  / {pygit2.LIBGIT2_VERSION}" or "-NONE-"}
         """
     )
 
