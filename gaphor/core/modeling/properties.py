@@ -633,11 +633,6 @@ class derived(umlproperty, Generic[T]):
 
     def postload(self, obj):
         self.version += 1
-        if self.upper == 1:
-            u = self.filter(obj)
-            assert (
-                len(u) <= 1
-            ), f"Derived union {self.name} of item {obj.id} should have length 1 {tuple(u)}"
 
     def save(self, obj, save_func):
         pass
@@ -652,9 +647,6 @@ class derived(umlproperty, Generic[T]):
         """
         u = self.filter(obj)
         if self.upper == 1:
-            assert (
-                len(u) <= 1
-            ), f"Derived union {self.name} of item {obj.id} should have length 1 {tuple(u)}"
             uc = unioncache(self, u[0] if u else None, self.version)
         else:
             uc = unioncache(self, collectionlist(u), self.version)
