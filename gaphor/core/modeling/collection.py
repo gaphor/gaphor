@@ -1,6 +1,6 @@
 """1:n and n:m relations in the data model are saved using a collection."""
 
-from typing import Generic, List, Type, TypeVar, overload
+from typing import Generic, Type, TypeVar, overload
 
 from gaphor.core.modeling.event import AssociationUpdated
 from gaphor.core.modeling.listmixins import recursemixin, recurseproxy
@@ -8,7 +8,7 @@ from gaphor.core.modeling.listmixins import recursemixin, recurseproxy
 T = TypeVar("T")
 
 
-class collectionlist(recursemixin, List[T]):  # type: ignore[misc]
+class collectionlist(recursemixin, list[T]):  # type: ignore[misc]
     """
     >>> c = collectionlist()
     >>> c.append("a")
