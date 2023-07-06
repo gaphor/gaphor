@@ -613,14 +613,12 @@ class derived(umlproperty, Generic[T]):
         self.upper = upper
         self.filter = filter
         self.subsets: set[umlproperty] = set()
-        self.single = False
 
         for s in subsets:
             self.add(s)
 
     def add(self, subset):
         self.subsets.add(subset)
-        self.single = len(self.subsets) == 1
         assert isinstance(
             subset, (association, derived)
         ), f"have element {subset}, expected association"
@@ -771,13 +769,13 @@ class derivedunion(derived[T]):
         if not isinstance(event, AssociationUpdated):
             return
 
-        values = self._union(event.element, exclude=event.property)
+        values = set(self._union(event.element, exclude=event.property))
 
         if self.upper == 1:
             assert isinstance(event, AssociationSet)
             old_value, new_value = event.old_value, event.new_value
             # This is a [0..1] event
-            if not self.single:
+            if len(self.subsets) > 1:
                 new_values = set(values)
                 if new_value:
                     new_values.add(new_value)
