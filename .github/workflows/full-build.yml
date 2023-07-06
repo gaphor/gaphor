@@ -82,7 +82,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Upload Code Coverage to Code Climate
         if: ${{ matrix.python_version == env.python_version }}
-        uses: paambaati/codeclimate-action@5f637ccd517bc8960de0fe59379dd922bcba9486 # v4.0.0
+        uses: paambaati/codeclimate-action@9dea053ab1947f448753ac842b9980de2e44fe88 # v4.0.0
         env:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
