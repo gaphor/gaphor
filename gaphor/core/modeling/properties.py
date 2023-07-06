@@ -39,7 +39,7 @@ from typing import (
     overload,
 )
 
-from gaphor.core.modeling.collection import collection, collectionlist
+from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -487,7 +487,7 @@ class association(umlproperty):
 
         c: collection
         if c := self._get_many(obj):
-            items: collectionlist = c.items
+            items: list = c.items
             try:
                 index = items.index(value)
                 items.remove(value)
@@ -647,7 +647,9 @@ class derived(umlproperty, Generic[T]):
         if self.upper == 1:
             uc = unioncache(self, u[0] if u else None, self.version)
         else:
-            uc = unioncache(self, collectionlist(u), self.version)
+            c = collection(self, obj, self.type)
+            c.items.extend(u)  # type: ignore[arg-type]
+            uc = unioncache(self, c, self.version)
         setattr(obj, self._name, uc)
         return uc
 
@@ -752,7 +754,7 @@ class derivedunion(derived[T]):
             elif tmp:
                 # [0..1] property
                 u.add(tmp)
-        return collectionlist(u)
+        return list(u)
 
     def propagate(self, event):
         """Re-emit state change for the derived union (as Derived*Event's).

@@ -3,43 +3,12 @@
 from typing import Generic, Type, TypeVar, overload
 
 from gaphor.core.modeling.event import AssociationUpdated
-from gaphor.core.modeling.listmixins import recursemixin, recurseproxy
+from gaphor.core.modeling.listmixins import recurseproxy
 
 T = TypeVar("T")
 
 
-class collectionlist(recursemixin, list[T]):  # type: ignore[misc]
-    """
-    >>> c = collectionlist()
-    >>> c.append("a")
-    >>> c.append("b")
-    >>> c.append("c")
-    >>> c
-    ['a', 'b', 'c']
-
-    It should work with the datamodel too:
-
-    >>> from gaphor.UML import *
-    >>> c = Class()
-    >>> c.ownedOperation = Operation()
-    >>> c.ownedOperation  # doctest: +ELLIPSIS
-    [<gaphor.UML.uml.Operation element ...>]
-    >>> c.ownedOperation[0]  # doctest: +ELLIPSIS
-    <gaphor.UML.uml.Operation element ...>
-    >>> c.ownedOperation = Operation()
-    >>> c.ownedOperation[0].ownedParameter = Parameter()
-    >>> c.ownedOperation[0].ownedParameter = Parameter()
-    >>> c.ownedOperation[0].ownedParameter[0].name = "foo"
-    >>> c.ownedOperation[0].ownedParameter[0].name
-    'foo'
-    >>> c.ownedOperation[0].ownedParameter[1].name = "bar"
-    >>> list(c.ownedOperation[0].ownedParameter[:].name)
-    ['foo', 'bar']
-    >>> c.ownedOperation[:].ownedParameter.name  # doctest: +ELLIPSIS
-    <gaphor.core.modeling.listmixins.recurseproxy object at 0x...>
-    >>> list(c.ownedOperation[:].ownedParameter.name)
-    ['foo', 'bar']
-    """
+_recurseproxy_trigger = slice(None, None, None)
 
 
 class collection(Generic[T]):
@@ -49,7 +18,7 @@ class collection(Generic[T]):
         self.property = property
         self.object = object
         self.type = type
-        self.items: collectionlist[T] = collectionlist()
+        self.items: list[T] = []
 
     def __len__(self) -> int:
         return len(self.items)
@@ -69,7 +38,10 @@ class collection(Generic[T]):
         ...
 
     def __getitem__(self, key):
-        return self.items.__getitem__(key)
+        if key == _recurseproxy_trigger:
+            return recurseproxy(self.items)
+        else:
+            return self.items.__getitem__(key)
 
     def __contains__(self, obj) -> bool:
         return self.items.__contains__(obj)
@@ -78,12 +50,17 @@ class collection(Generic[T]):
         return iter(self.items)
 
     def __str__(self):
-        return str(self.items)
+        return f"collection({str(self.items)})"
 
     __repr__ = __str__
 
     def __bool__(self):
         return self.items != []
+
+    def __eq__(self, other):
+        return self.items == other or (
+            isinstance(other, collection) and self.items == other.items
+        )
 
     def append(self, value: T) -> None:
         if isinstance(value, self.type):

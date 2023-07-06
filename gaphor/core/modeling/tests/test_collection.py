@@ -2,7 +2,7 @@
 
 import pytest
 
-from gaphor.core.modeling.collection import collection, collectionlist
+from gaphor.core.modeling.collection import collection
 
 
 class MockElement:
@@ -19,14 +19,6 @@ class MockProperty:
 
     def set(self, object, value):
         self.values.append((object, value))
-
-
-def test_listing():
-    c: collectionlist[str] = collectionlist()
-    c.append("a")
-    c.append("b")
-    c.append("c")
-    assert str(c) == "['a', 'b', 'c']"
 
 
 def test_append():
