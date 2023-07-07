@@ -1,15 +1,10 @@
 import abc
-from typing import Tuple
 
 from gaphor.abc import Service
 
 
 class UIComponent(Service):
     """A user interface component."""
-
-    ui_name: str  # "The UIComponent name, provided by the loader"
-
-    size: Tuple[int, int]  # "Size used for floating the component"
 
     @abc.abstractmethod
     def open(self):
