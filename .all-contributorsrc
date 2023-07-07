@@ -1172,6 +1172,15 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "Bambofy",
+      "name": "Richard Bamford",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1304898?v=4",
+      "profile": "https://richardbamford.dev/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
