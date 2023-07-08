@@ -4,7 +4,9 @@
 
 2.19.2
 ------
+- Add SysML Requirements trace derived unions
 - Fix Parameter Node and Execution Specification with Dark mode
+- Scale parameter nodes to contain long names
 - Lenient derived unions
 - Fix segfault by reverting Gtk.ListVew for Parameters
 - Fix connect interaction fragments
@@ -12,6 +14,7 @@
 - Add Python 3.12 Support, Update Poetry to version 1.5.1
 - Apply security best practices to GitHub Actions
 - Create a Security Policy and Run Scorecard Checks
+- Only use mature translations for released versions of Gaphor
 - Update Spanish, Hungarian, and Finnish translations
 - Fix scaling of Activity Parameter nodes
 
