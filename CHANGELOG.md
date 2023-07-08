@@ -1,6 +1,18 @@
-2.19.2
+2.19.3
 ------
 (unreleased)
+
+2.19.2
+------
+- Fix Parameter Node and Execution Specification with Dark mode
+- Lenient derived unions
+- Fix segfault by reverting Gtk.ListVew for Parameters
+- Fix connect interaction fragments
+- chore: clean up deprecated properties from UIComponent
+- Add Python 3.12 Support, Update Poetry to version 1.5.1
+- Apply security best practices to GitHub Actions
+- Create a Security Policy and Run Scorecard Checks
+- Update Spanish, Hungarian, and Finnish translations
 
 2.19.1
 ------
