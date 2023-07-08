@@ -29,7 +29,7 @@ class ProxyPortItem(Named, AttachedPresentation[sysml.ProxyPort]):
 
     def update_shapes(self):
         self.shape = IconBox(
-            Box(style={"background-color": (1, 1, 1, 1)}, draw=draw_border),
+            Box(draw=draw_border),
             Text(
                 text=lambda: stereotypes_str(
                     self.subject, [self.diagram.gettext("proxy")]

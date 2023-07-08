@@ -10,6 +10,7 @@ from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
 SYSTEM_STYLE_SHEET = textwrap.dedent(
     """\
     * {
+     --opaque-background-color: white;
      background-color: transparent;
      color: black;
      font-size: 14;
@@ -26,8 +27,15 @@ SYSTEM_STYLE_SHEET = textwrap.dedent(
      opacity: 0.5;
     }
 
+    @media light-mode {
+     * {
+      --opaque-background-color: #fafafa;
+     }
+    }
+
     @media dark-mode {
      * {
+      --opaque-background-color: #242424;
       color: white;
      }
 
@@ -48,6 +56,12 @@ SYSTEM_STYLE_SHEET = textwrap.dedent(
 
     controlflow {
         dash-style: 9 3;
+    }
+
+    proxyport,
+    activityparameternode,
+    executionspecification {
+     background-color: var(--opaque-background-color);
     }
     """
 )
