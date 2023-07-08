@@ -16,9 +16,6 @@ log = logging.getLogger(__name__)
 
 
 class ConsoleWindow(UIComponent, ActionProvider):
-    title = gettext("Gaphor Console")
-    size = (400, 400)
-
     def __init__(self, component_registry, main_window, tools_menu):
         self.component_registry = component_registry
         self.main_window = main_window
@@ -58,7 +55,7 @@ class ConsoleWindow(UIComponent, ActionProvider):
     def construct(self):
         window = Adw.Window.new()
         window.set_transient_for(self.main_window.window)
-        window.set_title(self.title)
+        window.set_title(gettext("Gaphor Console"))
         window.set_default_size(700, 480)
 
         element_factory = self.component_registry.get_service("element_factory")

@@ -1,11 +1,9 @@
 """Flow item connection adapters tests."""
 
-from typing import Type, Union
 
 import pytest as pytest
 
 from gaphor import UML
-from gaphor.core.modeling import Presentation
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect, get_connected
 from gaphor.UML.actions.action import ActionItem
 from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
@@ -367,217 +365,208 @@ def test_object_flow_reconnection(create):
     assert flow.subject.guard == "tguard"
 
 
-class FlowItemDecisionAndForkNodes:
-    """Base class for flow connecting to decision and fork nodes.
+fork_and_decision_items = pytest.mark.parametrize(
+    "item_cls,fork_node_cls,join_node_cls",
+    [
+        [ForkNodeItem, UML.ForkNode, UML.JoinNode],
+        [DecisionNodeItem, UML.DecisionNode, UML.MergeNode],
+    ],
+)
 
-    See `TestFlowItemDecisionNode` and `TestFlowItemForkNode` test cases.
 
-    Not tested yet
+@fork_and_decision_items
+@pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
+def test_glue_flow_item(create, item_cls, fork_node_cls, join_node_cls, flow_item):
+    """Test decision/fork nodes glue."""
+    flow = create(flow_item)
+    action = create(ActionItem, UML.Action)
+    node = create(item_cls, join_node_cls)
 
-    - If a join node has an incoming object flow, it must have an outgoing
-      object flow, otherwise, it must have an outgoing control flow.
-    - The edges coming into and out of a fork node must be either all
-      object flows or all control flows.
+    glued = allow(flow, flow.head, node)
+    assert glued
+
+    connect(flow, flow.head, action)
+
+    glued = allow(flow, flow.tail, node)
+    assert glued
+
+
+@fork_and_decision_items
+@pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
+def test_node_class_change(create, item_cls, fork_node_cls, join_node_cls, flow_item):
+    """Test node incoming edges.
+
+    Connection scheme is presented below::
+
+                head  tail
+        [ a1 ]--flow1-->    |
+                            [ jn ] --flow3--> [ a3 ]
+        [ a2 ]--flow2-->    |
+
+    Node class changes due to two incoming edges and one outgoing edge.
     """
+    flow1 = create(flow_item)
+    flow2 = create(flow_item)
+    flow3 = create(flow_item)
+    a1 = create(ActionItem, UML.Action)
+    a2 = create(ActionItem, UML.Action)
+    jn = create(item_cls, fork_node_cls)
 
-    item_cls: Type[Presentation]
-    fork_node_cls: Union[UML.ControlNode, UML.ObjectNode]
-    join_node_cls: Union[UML.ControlNode, UML.ObjectNode]
+    assert isinstance(jn.subject, fork_node_cls)
 
-    @pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
-    def test_glue(self, create, flow_item):
-        """Test decision/fork nodes glue."""
-        flow = create(flow_item)
-        action = create(ActionItem, UML.Action)
-        node = create(self.item_cls, self.join_node_cls)
+    # connect actions first
+    connect(flow1, flow1.head, a1)
+    connect(flow2, flow2.head, a2)
+    connect(flow3, flow3.tail, a2)
 
-        glued = allow(flow, flow.head, node)
-        assert glued
+    # connect to the node
+    connect(flow1, flow1.tail, jn)
+    connect(flow2, flow2.tail, jn)
+    connect(flow3, flow3.head, jn)
 
-        connect(flow, flow.head, action)
-
-        glued = allow(flow, flow.tail, node)
-        assert glued
-
-    @pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
-    def test_node_class_change(self, create, flow_item):
-        """Test node incoming edges.
-
-        Connection scheme is presented below::
-
-                  head  tail
-            [ a1 ]--flow1-->    |
-                             [ jn ] --flow3--> [ a3 ]
-            [ a2 ]--flow2-->    |
-
-        Node class changes due to two incoming edges and one outgoing edge.
-        """
-        flow1 = create(flow_item)
-        flow2 = create(flow_item)
-        flow3 = create(flow_item)
-        a1 = create(ActionItem, UML.Action)
-        a2 = create(ActionItem, UML.Action)
-        jn = create(self.item_cls, self.fork_node_cls)
-
-        assert isinstance(jn.subject, self.fork_node_cls)
-
-        # connect actions first
-        connect(flow1, flow1.head, a1)
-        connect(flow2, flow2.head, a2)
-        connect(flow3, flow3.tail, a2)
-
-        # connect to the node
-        connect(flow1, flow1.tail, jn)
-        connect(flow2, flow2.tail, jn)
-        connect(flow3, flow3.head, jn)
-
-        # node class changes
-        assert isinstance(jn.subject, self.join_node_cls)
-
-    @pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
-    def test_outgoing_edges(self, create, flow_item):
-        """Test outgoing edges.
-
-        Connection scheme is presented below::
-
-                   head  tail    | --flow2-->[ a2 ]
-            [ a1 ] --flow1--> [ jn ]
-                                 | --flow3-->[ a3 ]
-        """
-        flow1 = create(flow_item)
-        flow2 = create(flow_item)
-        flow3 = create(flow_item)
-        a1 = create(ActionItem, UML.Action)
-        a2 = create(ActionItem, UML.Action)
-        jn = create(self.item_cls, self.join_node_cls)
-
-        # connect actions first
-        connect(flow1, flow1.head, a1)
-        connect(flow2, flow2.tail, a2)
-        connect(flow3, flow3.tail, a2)
-
-        # connect to the node
-        connect(flow1, flow1.tail, jn)
-        assert isinstance(jn.subject, self.join_node_cls)
-
-        connect(flow2, flow2.head, jn)
-        assert isinstance(jn.subject, self.join_node_cls)
-
-        assert len(jn.subject.incoming) == 1
-        assert len(jn.subject.outgoing) == 1
-        assert flow1.subject in jn.subject.incoming
-        assert flow2.subject in jn.subject.outgoing
-
-        connect(flow3, flow3.head, jn)
-        assert len(jn.subject.outgoing) == 2
-
-        assert isinstance(jn.subject, self.fork_node_cls), f"{jn.subject}"
-
-    @pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
-    def test_combined_nodes_connection(self, create, flow_item):
-        """Test combined nodes connection.
-
-        Connection scheme is presented below::
-
-                   head  tail    |   --flow2--> [ a2 ]
-            [ a1 ] --flow1--> [ jn ]
-            [ a4 ] --flow4-->    |   --flow3--> [ a3 ]
-
-        Flow `flow4` will force the node to become a combined node.
-        """
-        flow1 = create(flow_item)
-        flow2 = create(flow_item)
-        flow3 = create(flow_item)
-        flow4 = create(flow_item)
-        a1 = create(ActionItem, UML.Action)
-        a2 = create(ActionItem, UML.Action)
-        a4 = create(ActionItem, UML.Action)
-        jn = create(self.item_cls, self.join_node_cls)
-
-        # connect actions first
-        connect(flow1, flow1.head, a1)
-        connect(flow2, flow2.tail, a2)
-        connect(flow3, flow3.tail, a2)
-        connect(flow4, flow4.head, a4)
-
-        # connect to the node
-        connect(flow1, flow1.tail, jn)
-        connect(flow2, flow2.head, jn)
-        connect(flow3, flow3.head, jn)
-
-        connect(flow4, flow4.tail, jn)
-        assert isinstance(jn.subject, self.join_node_cls)
-        assert jn.combined is not None
-
-        # check node combination
-        assert len(jn.subject.outgoing) == 1
-        assert len(jn.combined.incoming) == 1
-        assert jn.subject.outgoing[0] is jn.combined.incoming[0]
-
-    @pytest.mark.parametrize(
-        "flow_item,uml_flow",
-        [(ControlFlowItem, UML.ControlFlow), (ObjectFlowItem, UML.ObjectFlow)],
-    )
-    def test_combined_node_disconnection(
-        self, create, element_factory, flow_item, uml_flow
-    ):
-        """Test combined nodes disconnection.
-
-        Connection scheme is presented below::
-
-                   head  tail    |   --flow2--> [ a2 ]
-            [ a1 ] --flow1--> [ jn ]
-            [ a4 ] --flow4-->    |   --flow3--> [ a3 ]
-
-        Flow `flow4` will force the node to become a combined node.
-        """
-        flow1 = create(flow_item)
-        flow2 = create(flow_item)
-        flow3 = create(flow_item)
-        flow4 = create(flow_item)
-        a1 = create(ActionItem, UML.Action)
-        a2 = create(ActionItem, UML.Action)
-        a4 = create(ActionItem, UML.Action)
-        jn = create(self.item_cls, self.join_node_cls)
-
-        # connect actions first
-        connect(flow1, flow1.head, a1)
-        connect(flow2, flow2.tail, a2)
-        connect(flow3, flow3.tail, a2)
-        connect(flow4, flow4.head, a4)
-
-        # connect to the node
-        connect(flow1, flow1.tail, jn)
-        connect(flow2, flow2.head, jn)
-        connect(flow3, flow3.head, jn)
-        connect(flow4, flow4.tail, jn)
-
-        # needed for tests below
-        flow = jn.subject.outgoing[0]
-        node = jn.combined
-
-        assert flow in element_factory.lselect(uml_flow)
-        assert node in element_factory.lselect(self.fork_node_cls)
-
-        # test disconnection
-        disconnect(flow4, flow4.head)
-        assert get_connected(flow4, flow4.head) is None
-
-        assert jn.combined is None
-
-        flows = element_factory.lselect(uml_flow)
-        nodes = element_factory.lselect(self.fork_node_cls)
-        assert node not in nodes, f"{node} in {nodes}"
-        assert flow not in flows, f"{flow} in {flows}"
+    # node class changes
+    assert isinstance(jn.subject, join_node_cls)
 
 
-class TestFlowItemForkNode(FlowItemDecisionAndForkNodes):
-    item_cls = ForkNodeItem
-    fork_node_cls = UML.ForkNode
-    join_node_cls = UML.JoinNode
+@fork_and_decision_items
+@pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
+def test_outgoing_edges(create, item_cls, fork_node_cls, join_node_cls, flow_item):
+    """Test outgoing edges.
+
+    Connection scheme is presented below::
+
+                head  tail    | --flow2-->[ a2 ]
+        [ a1 ] --flow1--> [ jn ]
+                                | --flow3-->[ a3 ]
+    """
+    flow1 = create(flow_item)
+    flow2 = create(flow_item)
+    flow3 = create(flow_item)
+    a1 = create(ActionItem, UML.Action)
+    a2 = create(ActionItem, UML.Action)
+    jn = create(item_cls, join_node_cls)
+
+    # connect actions first
+    connect(flow1, flow1.head, a1)
+    connect(flow2, flow2.tail, a2)
+    connect(flow3, flow3.tail, a2)
+
+    # connect to the node
+    connect(flow1, flow1.tail, jn)
+    assert isinstance(jn.subject, join_node_cls)
+
+    connect(flow2, flow2.head, jn)
+    assert isinstance(jn.subject, join_node_cls)
+
+    assert len(jn.subject.incoming) == 1
+    assert len(jn.subject.outgoing) == 1
+    assert flow1.subject in jn.subject.incoming
+    assert flow2.subject in jn.subject.outgoing
+
+    connect(flow3, flow3.head, jn)
+    assert len(jn.subject.outgoing) == 2
+
+    assert isinstance(jn.subject, fork_node_cls), f"{jn.subject}"
 
 
-class TestFlowItemDecisionNode(FlowItemDecisionAndForkNodes):
-    item_cls = DecisionNodeItem
-    fork_node_cls = UML.DecisionNode
-    join_node_cls = UML.MergeNode
+@fork_and_decision_items
+@pytest.mark.parametrize("flow_item", [ControlFlowItem, ObjectFlowItem])
+def test_combined_nodes_connection(
+    create, item_cls, fork_node_cls, join_node_cls, flow_item
+):
+    """Test combined nodes connection.
+
+    Connection scheme is presented below::
+
+                head  tail    |   --flow2--> [ a2 ]
+        [ a1 ] --flow1--> [ jn ]
+        [ a4 ] --flow4-->    |   --flow3--> [ a3 ]
+
+    Flow `flow4` will force the node to become a combined node.
+    """
+    flow1 = create(flow_item)
+    flow2 = create(flow_item)
+    flow3 = create(flow_item)
+    flow4 = create(flow_item)
+    a1 = create(ActionItem, UML.Action)
+    a2 = create(ActionItem, UML.Action)
+    a4 = create(ActionItem, UML.Action)
+    jn = create(item_cls, join_node_cls)
+
+    # connect actions first
+    connect(flow1, flow1.head, a1)
+    connect(flow2, flow2.tail, a2)
+    connect(flow3, flow3.tail, a2)
+    connect(flow4, flow4.head, a4)
+
+    # connect to the node
+    connect(flow1, flow1.tail, jn)
+    connect(flow2, flow2.head, jn)
+    connect(flow3, flow3.head, jn)
+
+    connect(flow4, flow4.tail, jn)
+    assert isinstance(jn.subject, join_node_cls)
+    assert jn.combined is not None
+
+    # check node combination
+    assert len(jn.subject.outgoing) == 1
+    assert len(jn.combined.incoming) == 1
+    assert jn.subject.outgoing[0] is jn.combined.incoming[0]
+
+
+@fork_and_decision_items
+@pytest.mark.parametrize(
+    "flow_item,uml_flow",
+    [(ControlFlowItem, UML.ControlFlow), (ObjectFlowItem, UML.ObjectFlow)],
+)
+def test_combined_node_disconnection(
+    create, element_factory, item_cls, fork_node_cls, join_node_cls, flow_item, uml_flow
+):
+    """Test combined nodes disconnection.
+
+    Connection scheme is presented below::
+
+                head  tail    |   --flow2--> [ a2 ]
+        [ a1 ] --flow1--> [ jn ]
+        [ a4 ] --flow4-->    |   --flow3--> [ a3 ]
+
+    Flow `flow4` will force the node to become a combined node.
+    """
+    flow1 = create(flow_item)
+    flow2 = create(flow_item)
+    flow3 = create(flow_item)
+    flow4 = create(flow_item)
+    a1 = create(ActionItem, UML.Action)
+    a2 = create(ActionItem, UML.Action)
+    a4 = create(ActionItem, UML.Action)
+    jn = create(item_cls, join_node_cls)
+
+    # connect actions first
+    connect(flow1, flow1.head, a1)
+    connect(flow2, flow2.tail, a2)
+    connect(flow3, flow3.tail, a2)
+    connect(flow4, flow4.head, a4)
+
+    # connect to the node
+    connect(flow1, flow1.tail, jn)
+    connect(flow2, flow2.head, jn)
+    connect(flow3, flow3.head, jn)
+    connect(flow4, flow4.tail, jn)
+
+    # needed for tests below
+    flow = jn.subject.outgoing[0]
+    node = jn.combined
+
+    assert flow in element_factory.lselect(uml_flow)
+    assert node in element_factory.lselect(fork_node_cls)
+
+    # test disconnection
+    disconnect(flow4, flow4.head)
+    assert get_connected(flow4, flow4.head) is None
+
+    assert jn.combined is None
+
+    flows = element_factory.lselect(uml_flow)
+    nodes = element_factory.lselect(fork_node_cls)
+    assert node not in nodes, f"{node} in {nodes}"
+    assert flow not in flows, f"{flow} in {flows}"
