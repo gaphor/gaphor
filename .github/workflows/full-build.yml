@@ -397,7 +397,7 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@26b39ed245ab8f31526069329e112ab2fb224588 # v2.1.1
         with:
-          token: ${{ secrets.DISPATCH_TOKEN }}
+          token: ${{ secrets.WEBSITE_DISPATCH_TOKEN }} # Expires 2024-07-08
           repository: gaphor/gaphor.github.io
           event-type: version-update
           client-payload: '{ "version": "${{ needs.publish-to-pypi.outputs.version }}" }'
@@ -415,7 +415,7 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@26b39ed245ab8f31526069329e112ab2fb224588 # v2.1.1
         with:
-          token: ${{ secrets.DISPATCH_TOKEN }}
+          token: ${{ secrets.FLATHUB_DISPATCH_TOKEN }} # Expires 2024-07-08
           repository: flathub/org.gaphor.Gaphor
           event-type: version-update
           client-payload: '{ "version": "${{ needs.publish-to-pypi.outputs.version }}" }'
