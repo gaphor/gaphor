@@ -43,7 +43,7 @@ from gaphor.i18n import translation
 
 log = logging.getLogger(__name__)
 
-# Not all styles are requires: "background-color", "font-weight",
+# Not all styles are required: "background-color", "font-weight",
 # "text-color", and "text-decoration" are optional (can default to None)
 FALLBACK_STYLE: Style = {
     "color": (0, 0, 0, 1),
