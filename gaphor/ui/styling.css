@@ -103,6 +103,19 @@ frame > textview {
   padding: 6px;
 }
 
+listview .row {
+  padding: 2px 0;
+}
+
+.editing {
+  background-color: @theme_bg_color;
+  color: @theme_fg_color;
+}
+
+.editing selection {
+  background-color: alpha(@theme_selected_bg_color, 0.3);
+}
+
 .info:hover {
   background-color: @shade_color;
 }
@@ -115,17 +128,7 @@ frame > textview {
   margin: 0 6px;
 }
 
-#model_browser .editing {
-  background-color: @theme_bg_color;
-  color: @theme_fg_color;
-}
-
-#model_browser .editing selection {
-  background-color: alpha(@theme_selected_bg_color, 0.3);
-}
-
 #model_browser .row {
-  padding: 2px 0;
   border-top: 0 solid @shade_color;
   transition: border 200ms;
 }
