@@ -2,7 +2,12 @@ from gi.repository import Gtk
 
 from gaphor import UML
 from gaphor.UML.actions.activity import ActivityItem
-from gaphor.UML.actions.activitypropertypage import ActivityItemPage, ActivityParameters
+from gaphor.UML.actions.activitypropertypage import (
+    ActivityItemPage,
+    ActivityParameters,
+    ActivityParameterNodeNamePropertyPage,
+)
+from gaphor.diagram.tests.fixtures import find
 
 
 def test_activity_parameter_node_editing(create):
@@ -51,3 +56,15 @@ def test_activity_page_add_attribute(create):
     assert activity_item.subject.node[0].parameter.direction == "in"
     assert activity_item.subject.node[0].parameter.name == "attr"
     assert activity_item.subject.node[0].parameter.typeValue == "str"
+
+
+def test_activity_parameter_node_name_editing(create, element_factory):
+    subject = element_factory.create(UML.ActivityParameterNode)
+    subject.parameter = element_factory.create(UML.Parameter)
+    property_page = ActivityParameterNodeNamePropertyPage(subject)
+
+    widget = property_page.construct()
+    name = find(widget, "name-entry")
+    name.set_text("A new name")
+
+    assert subject.parameter.name == "A new name"

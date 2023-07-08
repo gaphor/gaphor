@@ -5,7 +5,7 @@ gaphor.adapter package.
 """
 
 import abc
-from typing import Callable, Dict, List, Tuple, Type
+from typing import Callable, List, Tuple, Type
 
 import gaphas.item
 from gaphas.segment import Segment
@@ -210,45 +210,6 @@ def on_bool_cell_edited(renderer, path, model, col):
 
     iter = model.get_iter(path)
     model.update(iter, col, renderer.get_active())
-
-
-class ComboModel(Gtk.ListStore):
-    """combo box model.
-
-    Model allows to easily create a combo box with values and their labels,
-    for example
-
-        label1  ->  value1
-        label2  ->  value2
-        label3  ->  value3
-
-    Labels are displayed by combo box and programmer has easy access to
-    values associated with given label.
-
-    Attributes:
-
-    - _data: model data
-    - _indices: dictionary of values' indices
-    """
-
-    def __init__(self, data):
-        super().__init__(str)
-
-        self._indices: Dict[Tuple[str, str], int] = {}
-        self._data = data
-
-        # add labels to underlying model and store index information
-        for i, (label, value) in enumerate(data):
-            self.append([label])
-            self._indices[value] = i
-
-    def get_index(self, value):
-        """Return index of a ``value``."""
-        return self._indices[value]
-
-    def get_value(self, index):
-        """Get value for given ``index``."""
-        return self._data[index][1]
 
 
 def help_link(builder, help_widget, popover):

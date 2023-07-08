@@ -13,6 +13,7 @@
 - Apply security best practices to GitHub Actions
 - Create a Security Policy and Run Scorecard Checks
 - Update Spanish, Hungarian, and Finnish translations
+- Fix scaling of Activity Parameter nodes
 
 2.19.1
 ------

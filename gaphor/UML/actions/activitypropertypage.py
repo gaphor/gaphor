@@ -9,6 +9,8 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     help_link,
     new_resource_builder,
+    new_builder as diagram_new_builder,
+    handler_blocking,
     on_text_cell_edited,
     unsubscribe_all_on_destroy,
 )
@@ -95,3 +97,49 @@ class ActivityItemPage(PropertyPageBase):
 
     def on_parameters_info_clicked(self, image, event):
         self.info.set_visible(True)
+
+
+@PropertyPages.register(UML.ActivityParameterNode)
+class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
+    """An adapter which works for any named item view.
+
+    It also sets up a table view which can be extended.
+    """
+
+    order = 10
+
+    def __init__(self, subject):
+        assert subject is None or hasattr(subject, "name")
+        super().__init__()
+        self.subject = subject
+        self.watcher = subject.watcher() if subject else None
+
+    def construct(self):
+        if not self.subject:
+            return
+
+        assert self.watcher
+        builder = diagram_new_builder(
+            "name-editor",
+        )
+
+        subject = self.subject
+
+        entry = builder.get_object("name-entry")
+        entry.set_text(subject and subject.parameter and subject.parameter.name or "")
+
+        @handler_blocking(entry, "changed", self._on_name_changed)
+        def handler(event):
+            if event.element is subject and event.new_value != entry.get_text():
+                entry.set_text(event.new_value or "")
+
+        self.watcher.watch("parameter.name", handler)
+
+        return unsubscribe_all_on_destroy(
+            builder.get_object("name-editor"), self.watcher
+        )
+
+    @transactional
+    def _on_name_changed(self, entry):
+        if self.subject.parameter.name != entry.get_text():
+            self.subject.parameter.name = entry.get_text()
