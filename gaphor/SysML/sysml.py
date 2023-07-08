@@ -20,9 +20,9 @@ from gaphor.core.modeling.properties import (
 
 def _directed_relationship_property_path_target_source(type):
     return lambda self: [
-        drrp.targetContext
-        for drrp in self.model.select(type)
-        if drrp.sourceContext is self and drrp.targetContext
+        element.targetContext
+        for element in self.model.select(type)
+        if element.sourceContext is self and element.targetContext
     ]
 
 from gaphor.UML.uml import NamedElement
@@ -303,9 +303,9 @@ AbstractRequirement.derived = derived("derived", AbstractRequirement, 0, "*",
 # 28: override AbstractRequirement.derivedFrom: derived[AbstractRequirement]
 
 AbstractRequirement.derivedFrom = derived("derivedFrom", AbstractRequirement, 0, "*", lambda self: [
-    drrp.sourceContext
-    for drrp in self.model.select(DeriveReqt)
-    if drrp.sourceContext and drrp.targetContext is self
+    element.sourceContext
+    for element in self.model.select(DeriveReqt)
+    if element.sourceContext and element.targetContext is self
 ])
 
 # 36: override AbstractRequirement.master: derived[AbstractRequirement]
