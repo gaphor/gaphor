@@ -505,7 +505,7 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
             self._last_connected_side = side
             self.update_shapes()
 
-        self.shape.size(context)
+        return self.shape.size(context)
 
     def connected_side(self) -> str | None:
         cinfo = self._connections.get_connection(self._handle)

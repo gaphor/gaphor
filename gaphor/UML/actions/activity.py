@@ -89,12 +89,14 @@ class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode])
             shape=Box(
                 Text(
                     text=lambda: self.subject.parameter.name or "",
+                    width=120,
                 ),
                 style={"padding": (4, 12, 4, 12)},
                 draw=draw_border,
             ),
-            width=100,
-            height=30,
         )
 
         self.watch("subject[ActivityParameterNode].parameter.name")
+
+    def update(self, context):
+        self.width, self.height = super().update(context)
