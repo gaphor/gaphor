@@ -67,6 +67,7 @@ def test_sysml_model(tmp_path):
     outfile = tmp_path / "sysml.py"
     main(
         modelfile="models/SysML.gaphor",
+        overridesfile="models/SysML.override",
         supermodelfiles=[
             ("Core", "models/Core.gaphor"),
             ("UML", "models/UML.gaphor"),

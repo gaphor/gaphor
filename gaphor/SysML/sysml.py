@@ -17,17 +17,25 @@ from gaphor.core.modeling.properties import (
 )
 
 
+
+def _directed_relationship_property_path_target_source(type):
+    return lambda self: [
+        element.targetContext
+        for element in self.model.select(type)
+        if element.sourceContext is self and element.targetContext
+    ]
+
 from gaphor.UML.uml import NamedElement
 class AbstractRequirement(NamedElement):
-    derived: relation_many[AbstractRequirement]
-    derivedFrom: relation_many[AbstractRequirement]
+    derived: derived[AbstractRequirement]
+    derivedFrom: derived[AbstractRequirement]
     externalId: _attribute[str] = _attribute("externalId", str)
-    master: relation_many[AbstractRequirement]
-    refinedBy: relation_many[NamedElement]
-    satisfiedBy: relation_many[NamedElement]
+    master: derived[AbstractRequirement]
+    refinedBy: derived[NamedElement]
+    satisfiedBy: derived[NamedElement]
     text: _attribute[str] = _attribute("text", str)
-    tracedTo: relation_many[NamedElement]
-    verifiedBy: relation_many[NamedElement]
+    tracedTo: derived[NamedElement]
+    verifiedBy: derived[NamedElement]
 
 
 from gaphor.UML.uml import Class
@@ -287,13 +295,44 @@ class ItemFlow(InformationFlow):
 
 
 
-AbstractRequirement.derived = derivedunion("derived", AbstractRequirement)
-AbstractRequirement.derivedFrom = derivedunion("derivedFrom", AbstractRequirement)
-AbstractRequirement.master = derivedunion("master", AbstractRequirement)
-AbstractRequirement.refinedBy = derivedunion("refinedBy", NamedElement)
-AbstractRequirement.satisfiedBy = derivedunion("satisfiedBy", NamedElement)
-AbstractRequirement.tracedTo = derivedunion("tracedTo", NamedElement)
-AbstractRequirement.verifiedBy = derivedunion("verifiedBy", NamedElement)
+# 23: override AbstractRequirement.derived: derived[AbstractRequirement]
+
+AbstractRequirement.derived = derived("derived", AbstractRequirement, 0, "*",
+    _directed_relationship_property_path_target_source(DeriveReqt))
+
+# 28: override AbstractRequirement.derivedFrom: derived[AbstractRequirement]
+
+AbstractRequirement.derivedFrom = derived("derivedFrom", AbstractRequirement, 0, "*", lambda self: [
+    element.sourceContext
+    for element in self.model.select(DeriveReqt)
+    if element.sourceContext and element.targetContext is self
+])
+
+# 36: override AbstractRequirement.master: derived[AbstractRequirement]
+
+AbstractRequirement.master = derived("master", AbstractRequirement, 0, "*",
+    _directed_relationship_property_path_target_source(Copy))
+
+# 41: override AbstractRequirement.refinedBy: derived[NamedElement]
+
+AbstractRequirement.refinedBy = derived("refinedBy", NamedElement, 0, "*",
+    _directed_relationship_property_path_target_source(Refine))
+
+# 46: override AbstractRequirement.satisfiedBy: derived[NamedElement]
+
+AbstractRequirement.satisfiedBy = derived("satisfiedBy", NamedElement, 0, "*",
+    _directed_relationship_property_path_target_source(Satisfy))
+
+# 51: override AbstractRequirement.tracedTo: derived[NamedElement]
+
+AbstractRequirement.tracedTo = derived("tracedTo", NamedElement, 0, "*",
+    _directed_relationship_property_path_target_source(Trace))
+
+# 56: override AbstractRequirement.verifiedBy: derived[NamedElement]
+
+AbstractRequirement.verifiedBy = derived("verifiedBy", NamedElement, 0, "*",
+    _directed_relationship_property_path_target_source(Verify))
+
 DirectedRelationshipPropertyPath.targetContext = association("targetContext", Classifier, upper=1)
 DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", Classifier, upper=1)
 DirectedRelationshipPropertyPath.sourcePropertyPath = association("sourcePropertyPath", Property)
