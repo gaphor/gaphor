@@ -4,7 +4,7 @@ import pytest
 
 from gaphor.core import event_handler
 from gaphor.core.modeling import Element
-from gaphor.core.modeling.collection import collectionlist
+from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.event import AssociationUpdated
 from gaphor.core.modeling.properties import (
     association,
@@ -465,7 +465,7 @@ def test_derived():
 
     a = A()
 
-    assert isinstance(a.a, collectionlist)
+    assert isinstance(a.a, collection)
     assert a.a == ["a", "b", "c"]
 
 

@@ -1,45 +1,13 @@
 """1:n and n:m relations in the data model are saved using a collection."""
 
-from typing import Generic, List, Type, TypeVar, overload
+from __future__ import annotations
+
+import contextlib
+from typing import Generic, Sequence, Type, TypeVar, overload
 
 from gaphor.core.modeling.event import AssociationUpdated
-from gaphor.core.modeling.listmixins import recursemixin, recurseproxy
 
 T = TypeVar("T")
-
-
-class collectionlist(recursemixin, List[T]):  # type: ignore[misc]
-    """
-    >>> c = collectionlist()
-    >>> c.append("a")
-    >>> c.append("b")
-    >>> c.append("c")
-    >>> c
-    ['a', 'b', 'c']
-
-    It should work with the datamodel too:
-
-    >>> from gaphor.UML import *
-    >>> c = Class()
-    >>> c.ownedOperation = Operation()
-    >>> c.ownedOperation  # doctest: +ELLIPSIS
-    [<gaphor.UML.uml.Operation element ...>]
-    >>> c.ownedOperation[0]  # doctest: +ELLIPSIS
-    <gaphor.UML.uml.Operation element ...>
-    >>> c.ownedOperation = Operation()
-    >>> c.ownedOperation[0].ownedParameter = Parameter()
-    >>> c.ownedOperation[0].ownedParameter = Parameter()
-    >>> c.ownedOperation[0].ownedParameter[0].name = "foo"
-    >>> c.ownedOperation[0].ownedParameter[0].name
-    'foo'
-    >>> c.ownedOperation[0].ownedParameter[1].name = "bar"
-    >>> list(c.ownedOperation[0].ownedParameter[:].name)
-    ['foo', 'bar']
-    >>> c.ownedOperation[:].ownedParameter.name  # doctest: +ELLIPSIS
-    <gaphor.core.modeling.listmixins.recurseproxy object at 0x...>
-    >>> list(c.ownedOperation[:].ownedParameter.name)
-    ['foo', 'bar']
-    """
 
 
 class collection(Generic[T]):
@@ -49,7 +17,7 @@ class collection(Generic[T]):
         self.property = property
         self.object = object
         self.type = type
-        self.items: collectionlist[T] = collectionlist()
+        self.items: list[T] = []
 
     def __len__(self) -> int:
         return len(self.items)
@@ -69,7 +37,10 @@ class collection(Generic[T]):
         ...
 
     def __getitem__(self, key):
-        return self.items.__getitem__(key)
+        if key == _recurseproxy_trigger:
+            return recurseproxy(self.items)
+        else:
+            return self.items.__getitem__(key)
 
     def __contains__(self, obj) -> bool:
         return self.items.__contains__(obj)
@@ -78,12 +49,22 @@ class collection(Generic[T]):
         return iter(self.items)
 
     def __str__(self):
-        return str(self.items)
+        return f"collection({str(self.items)})"
 
     __repr__ = __str__
 
     def __bool__(self):
         return self.items != []
+
+    def __eq__(self, other):
+        return self.items == other or (
+            isinstance(other, collection) and self.items == other.items
+        )
+
+    def index(self, key: T) -> int:
+        """Given an object, return the position of that object in the
+        collection."""
+        return self.items.index(key)
 
     def append(self, value: T) -> None:
         if isinstance(value, self.type):
@@ -94,11 +75,6 @@ class collection(Generic[T]):
     def remove(self, value: T) -> None:
         if value in self.items:
             self.property.delete(self.object, value)
-
-    def index(self, key: T) -> int:
-        """Given an object, return the position of that object in the
-        collection."""
-        return self.items.index(key)
 
     # OCL members (from SMW by Ivan Porres, http://www.abo.fi/~iporres/smw)
 
@@ -153,3 +129,66 @@ class collection(Generic[T]):
     def order(self, key):
         self.items.sort(key=key)
         self.object.handle(AssociationUpdated(self.object, self.property))
+
+
+_recurseproxy_trigger = slice(None, None, None)
+
+
+class recurseproxy(Generic[T]):
+    """Proxy object (helper) for the recusemixin.
+
+    The proxy has limited capabilities compared to a real list (or set):
+    it can be iterated and a getitem can be performed. On the other
+    side, the type of the original sequence is maintained, so getitem
+    operations act as if they're executed on the original list.
+    """
+
+    def __init__(self, sequence: Sequence[T]):
+        self.__sequence = sequence
+
+    def __getitem__(self, key: int | slice) -> T:
+        return self.__sequence.__getitem__(key)  # type: ignore[return-value]
+
+    def __iter__(self):
+        """Iterate over the items.
+
+        If there is some level of nesting, the parent items are iterated
+        as well.
+        """
+        return iter(self.__sequence)
+
+    def __getattr__(self, key: str) -> recurseproxy[T]:
+        """Create a new proxy for the attribute."""
+
+        def mygetattr():
+            sentinel = object()
+            for e in self.__sequence:
+                obj = getattr(e, key, sentinel)
+                if obj is sentinel:
+                    pass
+                elif issafeiterable(obj):
+                    yield from obj  # type: ignore[misc]
+                else:
+                    yield obj
+
+        # Create a copy of the proxy type, including a copy of the sequence type
+        return type(self)(type(self.__sequence)(mygetattr()))  # type: ignore[call-arg]
+
+
+def issafeiterable(obj):
+    """Checks if the object is iterable, but not a string.
+
+    >>> issafeiterable([])
+    True
+    >>> issafeiterable(set())
+    True
+    >>> issafeiterable({})
+    True
+    >>> issafeiterable(1)
+    False
+    >>> issafeiterable("text")
+    False
+    """
+    with contextlib.suppress(TypeError):
+        return iter(obj) and not isinstance(obj, str)
+    return False

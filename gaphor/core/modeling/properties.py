@@ -39,7 +39,7 @@ from typing import (
     overload,
 )
 
-from gaphor.core.modeling.collection import collection, collectionlist
+from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.event import (
     AssociationAdded,
     AssociationDeleted,
@@ -487,7 +487,7 @@ class association(umlproperty):
 
         c: collection
         if c := self._get_many(obj):
-            items: collectionlist = c.items
+            items: list = c.items
             try:
                 index = items.index(value)
                 items.remove(value)
@@ -613,14 +613,12 @@ class derived(umlproperty, Generic[T]):
         self.upper = upper
         self.filter = filter
         self.subsets: set[umlproperty] = set()
-        self.single = False
 
         for s in subsets:
             self.add(s)
 
     def add(self, subset):
         self.subsets.add(subset)
-        self.single = len(self.subsets) == 1
         assert isinstance(
             subset, (association, derived)
         ), f"have element {subset}, expected association"
@@ -633,11 +631,6 @@ class derived(umlproperty, Generic[T]):
 
     def postload(self, obj):
         self.version += 1
-        if self.upper == 1:
-            u = self.filter(obj)
-            assert (
-                len(u) <= 1
-            ), f"Derived union {self.name} of item {obj.id} should have length 1 {tuple(u)}"
 
     def save(self, obj, save_func):
         pass
@@ -652,12 +645,11 @@ class derived(umlproperty, Generic[T]):
         """
         u = self.filter(obj)
         if self.upper == 1:
-            assert (
-                len(u) <= 1
-            ), f"Derived union {self.name} of item {obj.id} should have length 1 {tuple(u)}"
             uc = unioncache(self, u[0] if u else None, self.version)
         else:
-            uc = unioncache(self, collectionlist(u), self.version)
+            c = collection(self, obj, self.type)
+            c.items.extend(u)  # type: ignore[arg-type]
+            uc = unioncache(self, c, self.version)
         setattr(obj, self._name, uc)
         return uc
 
@@ -762,7 +754,7 @@ class derivedunion(derived[T]):
             elif tmp:
                 # [0..1] property
                 u.add(tmp)
-        return collectionlist(u)
+        return list(u)
 
     def propagate(self, event):
         """Re-emit state change for the derived union (as Derived*Event's).
@@ -779,13 +771,13 @@ class derivedunion(derived[T]):
         if not isinstance(event, AssociationUpdated):
             return
 
-        values = self._union(event.element, exclude=event.property)
+        values = set(self._union(event.element, exclude=event.property))
 
         if self.upper == 1:
             assert isinstance(event, AssociationSet)
             old_value, new_value = event.old_value, event.new_value
             # This is a [0..1] event
-            if not self.single:
+            if len(self.subsets) > 1:
                 new_values = set(values)
                 if new_value:
                     new_values.add(new_value)
