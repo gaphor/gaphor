@@ -90,7 +90,7 @@ class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode])
                 Text(
                     text=lambda: self.subject.parameter.name or "",
                 ),
-                style={"padding": (4, 12, 4, 12), "background-color": (1, 1, 1, 1)},
+                style={"padding": (4, 12, 4, 12)},
                 draw=draw_border,
             ),
             width=100,

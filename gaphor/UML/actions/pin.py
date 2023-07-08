@@ -41,7 +41,7 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
         )
 
         self.shape = IconBox(
-            Box(style={"background-color": (1, 1, 1, 1)}, draw=draw_border),
+            Box(draw=draw_border),
             Text(
                 text=lambda: stereotypes_str(
                     self.subject, [] if self.subject else [self.pin_type()]

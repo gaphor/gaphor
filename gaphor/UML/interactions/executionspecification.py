@@ -80,9 +80,7 @@ class ExecutionSpecificationItem(
 
         self._ports = [BetweenPort(nw, sw), BetweenPort(ne, se)]
 
-        self._shape = Box(
-            style={"background-color": (1.0, 1.0, 1.0, 1.0)}, draw=draw_border
-        )
+        self._shape = Box(draw=draw_border)
 
     def handles(self):
         return self._handles
