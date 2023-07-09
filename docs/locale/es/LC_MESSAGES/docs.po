@@ -8,8 +8,9 @@ msgstr ""
 "Project-Id-Version: Gaphor 2.18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-09 15:06-0400\n"
-"PO-Revision-Date: 2023-06-30 19:23+0000\n"
-"Last-Translator: Jose David M <jquintana202020@gmail.com>\n"
+"PO-Revision-Date: 2023-07-09 10:54+0000\n"
+"Last-Translator: Óscar Fernández Díaz <oscfdezdz@users.noreply.hosted.weblate"
+".org>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/gaphor/"
 "docs-gaphor-org/es/>\n"
 "Language: es\n"
@@ -3020,86 +3021,116 @@ msgstr ""
 #: ../service_oriented.md:132
 msgid "This refers to the class `HelloWorldPlugin` in package/module [gaphor.plugins.helloworld](https://github.com/gaphor/gaphor.plugins.helloworld/blob/master/gaphor/plugins/helloworld/__init__.py)."
 msgstr ""
+"Hace referencia a la clase `HelloWorldPlugin` del paquete/módulo [gaphor."
+"plugins.helloworld](https://github.com/gaphor/gaphor.plugins.helloworld/blob/"
+"master/gaphor/plugins/helloworld/__init__.py)."
 
 #: ../service_oriented.md:135
 msgid "Here is a stripped version of the hello world plugin:"
-msgstr ""
+msgstr "Aquí tiene una versión reducida del plugin hello world:"
 
 #: ../service_oriented.md:160
 msgid "As stated before, a plugin should implement the `Service` interface. It also implements `ActionProvider`, saying it has some actions to be performed by the user."
 msgstr ""
+"Como se ha dicho antes, un plugin debe implementar la interfaz `Service`. "
+"También implementa `ActionProvider`, diciendo que tiene algunas acciones a "
+"realizar por el usuario."
 
 #: ../service_oriented.md:163
 msgid "The menu entry will be part of the \"Tools\" extension menu. This extension point is created as a service. Other services can also be passed as dependencies. Services can get references to other services by defining them as arguments of the constructor."
 msgstr ""
+"La entrada de menú formará parte del menú de extensión \"Herramientas\". "
+"Este punto de extensión se crea como un servicio. También se pueden pasar "
+"otros servicios como dependencias. Los servicios pueden obtener referencias "
+"a otros servicios definiéndolos como argumentos del constructor."
 
 #: ../service_oriented.md:167
 msgid "All action defined in this service are registered."
-msgstr ""
+msgstr "Se registran todas las acciones definidas en este servicio."
 
 #: ../service_oriented.md:168
 msgid "Each service has a `shutdown()` method. This allows the service to perform some cleanup when it's shut down."
 msgstr ""
+"Cada servicio tiene un método `shutdown()`. Esto permite al servicio "
+"realizar alguna limpieza cuando se apaga."
 
 #: ../service_oriented.md:170
 msgid "The action that can be invoked. The action is defined and will be picked up by `add_actions()` method (see 3.)"
 msgstr ""
+"La acción que puede ser invocada. La acción está definida y será recogida "
+"por el método `add_actions()` (ver 3.)"
 
 #: ../sphinx.rst:2
 msgid "Sphinx Extension"
-msgstr ""
+msgstr "Extensión Sphinx"
 
 #: ../sphinx.rst:4
 msgid "What's more awesome than to use Gaphor diagrams directly in your `Sphinx`_ documentation. Whether you write your docs in `reStructured Text`_ or `Markdown`_, we've got you covered."
 msgstr ""
+"Qué es más impresionante que usar diagramas Gaphor directamente en su "
+"documentación `Sphinx`_. Si usted escribe sus documentos en `reStructured "
+"Text`_ o `Markdown`_, le tenemos cubierto."
 
 #: ../sphinx.rst:9
 msgid "Here we cover the reStructured Text syntax. If you prefer markdown, we suggest you have a look at the `MyST-parser <https://myst-parser.readthedocs.io/>`_, as it `supports Sphinx directives <https://myst-parser.readthedocs.io/en/latest/syntax/syntax.html>`_."
 msgstr ""
+"Aquí cubrimos la sintaxis de reStructured Text. Si prefiere markdown, le "
+"sugerimos que eche un vistazo a `MyST-parser <https://myst-parser.readthedocs"
+".io/>`_, ya que `soporta directivas Sphinx <https://myst-parser.readthedocs."
+"io/en/latest/syntax/syntax.html>`_."
 
 #: ../sphinx.rst:13
 msgid "It requires `minimal effort to set up <#configuration>`_. Adding a diagram is as simple as:"
 msgstr ""
+"Requiere un `esfuerzo mínimo para configurar <#configuration>`_. Añadir un "
+"diagrama es tan simple como:"
 
 #: ../sphinx.rst:22
 msgid "In case you use multiple Gaphor source files, you need to define a ``:model:`` attribute and add the model names to the Sphinx configuration file (``conf.py``)."
 msgstr ""
+"En caso de usar múltiples archivos fuente Gaphor, es necesario definir un "
+"atributo ``:model:`` y añadir los nombres de los modelos al archivo de "
+"configuración de Sphinx (``conf.py``)."
 
 #: ../sphinx.rst:30
 msgid "Diagrams can be referenced by their name, or by their fully qualified name."
 msgstr ""
+"Se puede hacer referencia a los diagramas por su nombre o por su nombre "
+"completo."
 
 #: ../sphinx.rst:36
 msgid "`Image properties`_ can also be applied:"
-msgstr ""
+msgstr "También se pueden aplicar `propiedades de imagen`_:"
 
 #: ../sphinx.rst:-1
 msgid "A description suitable for an example"
-msgstr ""
+msgstr "Una descripción adecuada para un ejemplo"
 
 #: ../sphinx.rst:53
 msgid "Configuration"
-msgstr ""
+msgstr "Configuración"
 
 #: ../sphinx.rst:55
 msgid "To add Gaphor diagram support to Sphinx, make sure Gaphor is listed as a dependency."
 msgstr ""
+"Para añadir soporte de diagramas Gaphor a Sphinx, asegúrese de que Gaphor "
+"aparece como dependencia."
 
 #: ../sphinx.rst:59
 msgid "Gaphor requires at least Python 3.9."
-msgstr ""
+msgstr "Gaphor requiere al menos Python 3.9."
 
 #: ../sphinx.rst:61
 msgid "Secondly, add the following to your ``conf.py`` file:"
-msgstr ""
+msgstr "En segundo lugar, añada lo siguiente a su archivo ``conf.py``:"
 
 #: ../sphinx.rst:63
 msgid "Step 1: Add gaphor as extension."
-msgstr ""
+msgstr "Paso 1: Añadir gaphor como extensión."
 
 #: ../sphinx.rst:71
 msgid "Step 2: Add references to models"
-msgstr ""
+msgstr "Paso 2: Añadir referencias a los modelos"
 
 #: ../sphinx.rst:84
 msgid "Now include ``diagram`` directives in your documents."
@@ -3107,7 +3138,7 @@ msgstr "Ahora incluye las directivas ``diagram`` en tus documentos."
 
 #: ../sphinx.rst:88
 msgid "Read the Docs"
-msgstr "Read the Docs"
+msgstr "Leer la documentación"
 
 #: ../sphinx.rst:90
 msgid "The diagram directive plays nice with `Read the docs`_. To make diagrams render, it's best to use a `.readthedocs.yaml`_ file in your project. Make sure to include the extra ``apt_packages`` as shown below."
@@ -3211,570 +3242,685 @@ msgstr ""
 #: ../stereotypes.md:35
 msgid "When a stereotype can be applied to a model element, a *Stereotype* section will appear in the editor."
 msgstr ""
+"Cuando se puede aplicar un estereotipo a un elemento del modelo, aparecerá "
+"una sección *Estereotipo* en el editor."
 
 #: ../stereotypes.md:38
 msgid "![Stereotype usage example](images/stereotype-usage.png)"
-msgstr ""
+msgstr "![Ejemplo de uso de estereotipos](images/stereotype-usage.png)"
 
 #: ../stereotypes.md:38
 msgid "Stereotype usage example"
-msgstr ""
+msgstr "Ejemplo de uso de estereotipos"
 
 #: ../storage.md:1
 msgid "File Format"
-msgstr ""
+msgstr "Formato de archivo"
 
 #: ../storage.md:3
 msgid "The root element of Gaphor models is the `Gaphor` tag, all other elements are contained in this. The Gaphor element delimits the beginning and the end of an Gaphor model."
 msgstr ""
+"El elemento raíz de los modelos Gaphor es la etiqueta `Gaphor`, todos los "
+"demás elementos están contenidos en ella. El elemento Gaphor delimita el "
+"principio y el final de un modelo Gaphor."
 
 #: ../storage.md:7
 msgid "The idea is to keep the file format as simple and extensible as possible: UML elements (including Diagram) are at the top level with no nesting. A UML element can have two tags: references (`ref`) and values (`val`). References are used to point to other UML elements. Values have a value inside (an integer or a string)."
 msgstr ""
+"La idea es mantener el formato de archivo tan simple y extensible como sea "
+"posible: Los elementos UML (incluido el diagrama) están en el nivel superior "
+"sin anidamiento. Un elemento UML puede tener dos etiquetas: referencias "
+"(`ref`) y valores (`val`). Las referencias se usan para apuntar a otros "
+"elementos UML. Los valores tienen un valor en su interior (un entero o una "
+"cadena)."
 
 #: ../storage.md:11
 msgid "Since many references are bi-directional, you'll find both ends defined in the file (e.g. `Package.ownedType` - `Actor.package`, and `Diagram.ownedPresentation` and `UseCaseItem.diagram`)."
 msgstr ""
+"Dado que muchas referencias son bidireccionales, encontrarás ambos extremos "
+"definidos en el fichero (p. ej., `Package.ownedType` - `Actor.package`, y "
+"`Diagram.ownedPresentation` y `UseCaseItem.diagram`)."
 
 #: ../style_sheets.md:1
 msgid "Style Sheets"
-msgstr ""
+msgstr "Hojas de estilo"
 
 #: ../style_sheets.md:3
 msgid "Since Gaphor 2.0, diagrams can have a different look by means of style sheets. Style sheets use the Cascading Style Sheets (CSS) syntax. CSS is used to describe the presentation of a document written in a markup language, and is most commonly used with HTML for web pages."
 msgstr ""
+"Desde Gaphor 2.0, los diagramas pueden tener un aspecto diferente mediante "
+"hojas de estilo. Las hojas de estilo usan la sintaxis Cascading Style Sheets "
+"(CSS). CSS se usa para describir la presentación de un documento escrito en "
+"un lenguaje de marcado, y se usa más comúnmente con HTML para páginas web."
 
 #: ../style_sheets.md:8
 msgid "On the [W3C CSS home page](https://www.w3.org/Style/CSS/Overview.en.html), CSS is described as:"
 msgstr ""
+"En la [página principal de CSS del W3C](https://www.w3.org/Style/CSS/Overview"
+".en.html), CSS se describe como:"
 
 #: ../style_sheets.md:11
 msgid "Cascading Style Sheets (CSS) is a simple mechanism for adding style (e.g., fonts, colors, spacing) to Web documents."
 msgstr ""
+"Cascading Style Sheets (CSS) es un mecanismo sencillo para añadir estilo ("
+"por ejemplo, fuentes, colores, espaciado) a los documentos web."
 
 #: ../style_sheets.md:14
 msgid "Its application goes well beyond web documents, though. Gaphor uses CSS to provide style elements to items in diagrams. CSS allows us, users of Gaphor, to change the visual appearance of our diagrams. Color and line styles can be changed to make it easier to read the diagrams."
 msgstr ""
+"Pero su aplicación va mucho más allá de los documentos web. Gaphor usa CSS "
+"para proporcionar elementos de estilo a los elementos de los diagramas. CSS "
+"nos permite, a los usuarios de Gaphor, cambiar el aspecto visual de nuestros "
+"diagramas. Se pueden cambiar el color y los estilos de línea para facilitar "
+"la lectura de los diagramas."
 
 #: ../style_sheets.md:19
 msgid "Since we're dealing with a diagram, and not a HTML document, some CSS features have been left out."
 msgstr ""
+"Dado que se trata de un diagrama y no de un documento HTML, se han omitido "
+"algunas características CSS."
 
 #: ../style_sheets.md:22
 msgid "The style is part of the model, so everyone working on a model will have the same style. To edit the style press the tools page button at the top right corner in gaphor:"
 msgstr ""
+"El estilo es parte del modelo, por lo que todos los que trabajen en un "
+"modelo tendrán el mismo estilo. Para editar el estilo pulse el botón de la "
+"página de herramientas en la esquina superior derecha en gaphor:"
 
 #: ../style_sheets.md:26
 msgid "![Button to access style code](images/css-button.png)"
-msgstr ""
+msgstr "![Botón para acceder al código de estilo](images/css-button.png)"
 
 #: ../style_sheets.md:26
 msgid "Button to access style code"
-msgstr ""
+msgstr "Botón para acceder al código de estilo"
 
 #: ../style_sheets.md:28
 msgid "Here is a simple example of how to change the background color of a class:"
 msgstr ""
+"He aquí un ejemplo sencillo de cómo cambiar el color de fondo de una clase:"
 
 #: ../style_sheets.md:36
 msgid "background beige"
-msgstr ""
+msgstr "fondo beige"
 
 #: ../style_sheets.md:41
 msgid "Or change the color of a component, only when it's nested in a node:"
 msgstr ""
+"O cambiar el color de un componente, sólo cuando está anidado en un nodo:"
 
 #: ../style_sheets.md:49
 msgid "nested component"
-msgstr ""
+msgstr "componente anidado"
 
 #: ../style_sheets.md:54
 msgid "The diagram itself is also expressed as a CSS node. It's pretty easy to define a \"dark\" style:"
 msgstr ""
+"El propio diagrama también se expresa como un nodo CSS. Es bastante fácil "
+"definir un estilo \"oscuro\":"
 
 #: ../style_sheets.md:68
 msgid "dark-style"
-msgstr ""
+msgstr "estilo-oscuro"
 
 #: ../style_sheets.md:75
 msgid "Here you already see the first custom attribute: `text-color`. This property allows you to control the color of the text drawn in an item. `color` is used for the lines (strokes) that make the layout of a diagram item."
 msgstr ""
+"Aquí ya se ve el primer atributo personalizado: `text-color`. Esta propiedad "
+"le permite controlar el color del texto dibujado en un elemento. El `color` "
+"se usa para las líneas (trazos) que hacen el diseño de un elemento de "
+"diagrama."
 
 #: ../style_sheets.md:79
 msgid "Supported selectors"
-msgstr ""
+msgstr "Selectores compatibles"
 
 #: ../style_sheets.md:81
 msgid "Since we are dealing with diagrams and models, we do not need all the features of CSS. Below you'll find a summary of all CSS features supported by Gaphor."
 msgstr ""
+"Dado que estamos tratando con diagramas y modelos, no necesitamos todas las "
+"características de CSS. A continuación encontrarás un resumen de todas las "
+"características CSS soportadas por Gaphor."
 
 #: ../style_sheets.md:86
 msgid "``*``"
-msgstr ""
+msgstr "``*``"
 
 #: ../style_sheets.md:86
 msgid "All items on the diagram, including the diagram itself."
-msgstr ""
+msgstr "Todos los elementos del diagrama, incluido el propio diagrama."
 
 #: ../style_sheets.md:87
 msgid "``node component``"
-msgstr ""
+msgstr "``componente nodo``"
 
 #: ../style_sheets.md:87
 msgid "Any component item which is a descendant of a node."
-msgstr ""
+msgstr "Cualquier elemento componente descendiente de un nodo."
 
 #: ../style_sheets.md:88
 msgid "``node > component``"
-msgstr ""
+msgstr "``nodo > componente``"
 
 #: ../style_sheets.md:88
 msgid "A component item which is a child of a node."
-msgstr ""
+msgstr "Un elemento componente que es hijo de un nodo."
 
 #: ../style_sheets.md:89
 msgid "``generaliation[subject]``"
-msgstr ""
+msgstr "``generaliación[tema]``"
 
 #: ../style_sheets.md:89
 msgid "A generalization item with a subject present."
-msgstr ""
+msgstr "Un elemento de generalización con un sujeto presente."
 
 #: ../style_sheets.md:90
 msgid "``class[name=Foo]``"
-msgstr ""
+msgstr "``clase[nombre=Foo]``"
 
 #: ../style_sheets.md:90
 msgid "A class with name \"Foo\"."
-msgstr ""
+msgstr "Una clase con el nombre \"Foo\"."
 
 #: ../style_sheets.md:91
 msgid "``diagram[name^=draft]``"
-msgstr ""
+msgstr "``diagrama[nombre^=borrador]``"
 
 #: ../style_sheets.md:91
 msgid "A diagram with a name starting with \"draft\"."
-msgstr ""
+msgstr "Un diagrama cuyo nombre empieza por \"borrador\"."
 
 #: ../style_sheets.md:92
 msgid "``diagram[name$=draft]``"
-msgstr ""
+msgstr "``diagrama[nombre$=borrador]``"
 
 #: ../style_sheets.md:92
 msgid "A diagram with a name ends with \"draft\"."
-msgstr ""
+msgstr "Un diagrama con nombre terminado en \"borrador\"."
 
 #: ../style_sheets.md:93
 msgid "``diagram[name*=draft]``"
-msgstr ""
+msgstr "``diagrama[nombre*=borrador]``"
 
 #: ../style_sheets.md:93
 msgid "A diagram with a name containing the text \"draft\"."
-msgstr ""
+msgstr "Un diagrama con un nombre que contiene el texto \"borrador\"."
 
 #: ../style_sheets.md:94
 msgid "``diagram[name~=draft item]``"
-msgstr ""
+msgstr "``diagrama[nombre~=borrador elemento]``"
 
 #: ../style_sheets.md:94
 msgid "A diagram with a name of \"draft\" or \"item\"."
-msgstr ""
+msgstr "Un diagrama con el nombre \"borrador\" o \"elemento\"."
 
 #: ../style_sheets.md:95
 msgid "``diagram[name|=draft]``"
-msgstr ""
+msgstr "``diagrama[nombre|=borrador]``"
 
 #: ../style_sheets.md:95
 msgid "A diagram with a name is \"draft\" or starts with \"draft-\"."
-msgstr ""
+msgstr "Un diagrama con nombre \"borrador\" o que empieza por \"borrador-\"."
 
 #: ../style_sheets.md:96
 msgid "``*:focus``"
-msgstr ""
+msgstr "``*:focus``"
 
 #: ../style_sheets.md:96
 msgid "The focused item. Other pseudo classes are:"
-msgstr ""
+msgstr "El elemento enfocado. Otras pseudo clases son:"
 
 #: ../style_sheets.md:98
 msgid "``:active`` selected items"
-msgstr ""
+msgstr "``:active`` elementos seleccionados"
 
 #: ../style_sheets.md:99
 msgid "``:hover`` for the item under the mouse"
-msgstr ""
+msgstr "``:hover`` para el elemento bajo el ratón"
 
 #: ../style_sheets.md:100
 msgid "``:drop`` if an item is dragged and can be dropped on this item"
 msgstr ""
+"``:drop`` si se arrastra un elemento y se puede soltar sobre este elemento"
 
 #: ../style_sheets.md:101
 msgid "``:disabled`` if an element is grayed out during handle movement"
 msgstr ""
+"``:disabled`` si un elemento está en gris durante el movimiento del manejador"
 
 #: ../style_sheets.md:102
 msgid "``node:empty``"
-msgstr ""
+msgstr "``nodo:vacío``"
 
 #: ../style_sheets.md:102
 msgid "A node containing no child nodes in the diagram."
-msgstr ""
+msgstr "Un nodo que no contiene nodos hijos en el diagrama."
 
 #: ../style_sheets.md:103
 msgid "``:root``"
-msgstr ""
+msgstr "``:root``"
 
 #: ../style_sheets.md:103
 msgid "An item is at the top level of the diagram."
-msgstr ""
+msgstr "Un elemento se encuentra en el nivel superior del diagrama."
 
 #: ../style_sheets.md:105
 msgid "This is only applicable for the diagram"
-msgstr ""
+msgstr "Esto solo es aplicable para el diagrama"
 
 #: ../style_sheets.md:106
 msgid "``:has()``"
-msgstr ""
+msgstr "``:has()``"
 
 #: ../style_sheets.md:106
 msgid "The item contains any of the provided selectors."
-msgstr ""
+msgstr "El elemento contiene cualquiera de los selectores proporcionados."
 
 #: ../style_sheets.md:108
 msgid "E.g. ``node:has(component)``: a node containing a component item."
 msgstr ""
+"P. ej., ``node:has(component)``: un nodo que contiene un elemento componente."
 
 #: ../style_sheets.md:109
 msgid "``:is()``"
-msgstr ""
+msgstr "``:is()``"
 
 #: ../style_sheets.md:109
 msgid "Match any of the provided selectors."
-msgstr ""
+msgstr "Coincide con cualquiera de los selectores proporcionados."
 
 #: ../style_sheets.md:111
 msgid "E.g. ``:is(node, subsystem) > component``: a node or subsystem."
-msgstr ""
+msgstr "P. ej., ``:is(node, subsystem) > component``: un nodo o subsistema."
 
 #: ../style_sheets.md:112
 msgid "``:not()``"
-msgstr ""
+msgstr "``:not()``"
 
 #: ../style_sheets.md:112
 msgid "Negate the selector."
-msgstr ""
+msgstr "Negar el selector."
 
 #: ../style_sheets.md:114
 msgid "E.g. ``:not([subject])``: Any item that has no \"subject\"."
-msgstr ""
+msgstr "P. ej., ``:not([subject])``: Cualquier elemento que no tenga \"tema\"."
 
 #: ../style_sheets.md:118
 msgid "The official specification of [CSS3 attribute selectors](https://www.w3.org/TR/2018/REC-selectors-3-20181106/#attribute-selectors)."
 msgstr ""
+"La especificación oficial de [CSS3 attribute selectors](https://www.w3.org/"
+"TR/2018/REC-selectors-3-20181106/#attribute-selectors)."
 
 #: ../style_sheets.md:119
 msgid "Gaphor provides the `|=` attribute selector for the sake of completeness. It's probably not very useful in this context, though."
 msgstr ""
+"Gaphor proporciona el selector de atributos `|=` en aras de la "
+"exhaustividad. Sin embargo, probablemente no sea muy útil en este contexto."
 
 #: ../style_sheets.md:121
 msgid "Please note that Gaphor CSS does not support IDs for diagram items, so the CSS syntax for IDs (`#some-id`) is not used. Also, class syntax (`.some-class`) is not supported currently."
 msgstr ""
+"Tenga en cuenta que Gaphor CSS no admite ID para elementos de diagrama, por "
+"lo que no se usa la sintaxis CSS para ID (`#some-id`). Además, la sintaxis "
+"de clase (`.some-class`) no está soportada actualmente."
 
 #: ../style_sheets.md:125
 msgid "Style properties"
-msgstr ""
+msgstr "Propiedades de estilo"
 
 #: ../style_sheets.md:127
 msgid "Gaphor supports a subset of CSS properties and some Gaphor specific properties. The style sheet interpreter is relatively straight forward. All widths, heights, and sizes are measured in pixels. You can’t use complex style declarations, like the `font` property in HTML/CSS which can contain font family, size, weight."
 msgstr ""
+"Gaphor soporta un subconjunto de propiedades CSS y algunas propiedades "
+"específicas de Gaphor. El intérprete de hojas de estilo es relativamente "
+"sencillo. Todas las anchuras, alturas y tamaños se miden en píxeles. No se "
+"pueden usar declaraciones de estilo complejas, como la propiedad `font` en "
+"HTML/CSS que puede contener familia de fuentes, tamaño, peso."
 
 #: ../style_sheets.md:133
 msgid "Colors"
-msgstr ""
+msgstr "Colores"
 
 #: ../style_sheets.md:137
 msgid "``background-color``"
-msgstr ""
+msgstr "``background-color``"
 
 #: ../style_sheets.md:137
 msgid "Examples:"
-msgstr ""
+msgstr "Ejemplos:"
 
 #: ../style_sheets.md:139
 msgid "``background-color: azure;``"
-msgstr ""
+msgstr "``background-color: azure;``"
 
 #: ../style_sheets.md:141
 msgid "``background-color: rgb(255, 255, 255);``"
-msgstr ""
+msgstr "``background-color: rgb(255, 255, 255);``"
 
 #: ../style_sheets.md:143
 msgid "``background-color: hsl(130, 95%, 10%);``"
-msgstr ""
+msgstr "``background-color: hsl(130, 95%, 10%);``"
 
 #: ../style_sheets.md:144
 msgid "``color``"
-msgstr ""
+msgstr "``color``"
 
 #: ../style_sheets.md:144
 msgid "Color used for lines."
-msgstr ""
+msgstr "Color usado para las líneas."
 
 #: ../style_sheets.md:145
 msgid "``text-color``"
-msgstr ""
+msgstr "``text-color``"
 
 #: ../style_sheets.md:145
 msgid "Color for text."
-msgstr ""
+msgstr "Color del texto."
 
 #: ../style_sheets.md:146
 msgid "``opacity``"
-msgstr ""
+msgstr "``opacity``"
 
 #: ../style_sheets.md:146
 msgid "Color opacity factor (``0.0`` - ``1.0``), applied to all colors."
 msgstr ""
+"Factor de opacidad del color (``0.0`` - ``1.0``), aplicado a todos los "
+"colores."
 
 #: ../style_sheets.md:151
 msgid "A color can be any [CSS3 color code](https://www.w3.org/TR/2018/REC-css-color-3-20180619/), as described in the CSS documentation. Gaphor supports all color notations: `rgb()`, `rgba()`, `hsl()`, `hsla()`, Hex code (`#ffffff`) and color names."
 msgstr ""
+"Un color puede ser cualquier [código de color CSS3](https://www.w3.org/TR/"
+"2018/REC-css-color-3-20180619/), como se describe en la documentación CSS. "
+"Gaphor soporta todas las notaciones de color: `rgb()`, `rgba()`, `hsl()`, "
+"`hsla()`, código hexadecimal (`#ffffff`) y nombres de color."
 
 #: ../style_sheets.md:155
 msgid "Text and fonts"
-msgstr ""
+msgstr "Texto y tipografías"
 
 #: ../style_sheets.md:159
 msgid "``font-family``"
-msgstr ""
+msgstr "``font-family``"
 
 #: ../style_sheets.md:159
 msgid "A single font name (e.g. ``sans``, ``serif``, ``courier``)."
 msgstr ""
+"Un único nombre de tipografía (p. ej., ``sans``, ``serif``, ``courier``)."
 
 #: ../style_sheets.md:160
 msgid "``font-size``"
-msgstr ""
+msgstr "``font-size``"
 
 #: ../style_sheets.md:160
 msgid "An absolute size (e.g. ``14``) or a size value (e.g. ``small``)."
 msgstr ""
+"Un tamaño absoluto (p. ej., ``14``) o un valor de tamaño (p. ej., ``small``)."
 
 #: ../style_sheets.md:161
 msgid "``font-style``"
-msgstr ""
+msgstr "``font-style``"
 
 #: ../style_sheets.md:161
 msgid "Either ``normal`` or ``italic``."
-msgstr ""
+msgstr "Ya sea ``normal`` o ``italic``."
 
 #: ../style_sheets.md:162
 msgid "``font-weight``"
-msgstr ""
+msgstr "``font-weight``"
 
 #: ../style_sheets.md:162
 msgid "Either ``normal`` or ``bold``."
-msgstr ""
+msgstr "Ya sea ``normal`` o ``bold``."
 
 #: ../style_sheets.md:163
 msgid "``text-align``"
-msgstr ""
+msgstr "``text-align``"
 
 #: ../style_sheets.md:163
 msgid "Either ``left``, ``center``, ``right``."
-msgstr ""
+msgstr "Ya sea ``left``, ``center``, ``right``."
 
 #: ../style_sheets.md:164
 msgid "``text-decoration``"
-msgstr ""
+msgstr "``text-decoration``"
 
 #: ../style_sheets.md:164
 msgid "Either ``none`` or ``underline``."
-msgstr ""
+msgstr "Ya sea ``none`` o ``underline``."
 
 #: ../style_sheets.md:165
 msgid "``vertical-align``"
-msgstr ""
+msgstr "``vertical-align``"
 
 #: ../style_sheets.md:165
 msgid "Vertical alignment for text."
-msgstr ""
+msgstr "Alineación vertical del texto."
 
 #: ../style_sheets.md:167
 msgid "Either ``top``, ``middle`` or ``bottom``."
-msgstr ""
+msgstr "Ya sea ``top``, ``middle`` o ``bottom``."
 
 #: ../style_sheets.md:168
 msgid "``vertical-spacing``"
-msgstr ""
+msgstr "``vertical-spacing``"
 
 #: ../style_sheets.md:168
 msgid "Set vertical spacing for icon-like items (actors, start state)."
 msgstr ""
+"Establece el espaciado vertical para los elementos tipo icono (actores, "
+"estado inicial)."
 
 #: ../style_sheets.md:170
 msgid "Example: ``vertical-spacing: 4``."
-msgstr ""
+msgstr "Ejemplo: ``vertical-spacing: 4``."
 
 #: ../style_sheets.md:174
 msgid "`font-family` can be only one font name, not a list of (fallback) names, as is used for HTML."
 msgstr ""
+"`font-family` puede ser solo un nombre de tipografía, no una lista de "
+"nombres (fallback), como se usa para HTML."
 
 #: ../style_sheets.md:176
 msgid "`font-size` can be a number or [CSS absolute-size values](https://drafts.csswg.org/css-fonts-3/#font-size-prop). Only the values `x-small`, `small`, `medium`, `large` and `x-large` are supported."
 msgstr ""
+"`font-size` puede ser un número o [valores CSS de tamaño "
+"absoluto](https://drafts.csswg.org/css-fonts-3/#font-size-prop). Solo se "
+"admiten los valores `x-small`, `small`, `medium`, `large` y `x-large`."
 
 #: ../style_sheets.md:179
 msgid "Drawing and spacing"
-msgstr ""
+msgstr "Trazado y espaciado"
 
 #: ../style_sheets.md:183
 msgid "``border-radius``"
-msgstr ""
+msgstr "``border-radius``"
 
 #: ../style_sheets.md:183
 msgid "Radius for rectangles: ``border-radius: 4``."
-msgstr ""
+msgstr "Radio para rectángulos: ``border-radius: 4``."
 
 #: ../style_sheets.md:184
 msgid "``dash-style``"
-msgstr ""
+msgstr "``dash-style``"
 
 #: ../style_sheets.md:184
 msgid "Style for dashed lines: ``dash-style: 7 5``."
-msgstr ""
+msgstr "Estilo para líneas discontinuas: ``dash-style: 7 5``."
 
 #: ../style_sheets.md:185
 msgid "``justify-content``"
-msgstr ""
+msgstr "``justify-content``"
 
 #: ../style_sheets.md:185
 msgid "Content alignment for boxes."
-msgstr ""
+msgstr "Alineación del contenido de las cajas."
 
 #: ../style_sheets.md:187
 msgid "Either ``start``, ``end``, ``center`` or ``stretch``."
-msgstr ""
+msgstr "Ya sea ``start``, ``end``, ``center`` o ``stretch``."
 
 #: ../style_sheets.md:188
 msgid "``line-style``"
-msgstr ""
+msgstr "``line-style``"
 
 #: ../style_sheets.md:188
 msgid "Either ``normal`` or ``sloppy [factor]``."
-msgstr ""
+msgstr "Ya sea ``normal`` o ``sloppy [factor]``."
 
 #: ../style_sheets.md:189
 msgid "``line-width``"
-msgstr ""
+msgstr "``line-width``"
 
 #: ../style_sheets.md:189
 msgid "Set the width for lines: ``line-width: 2``."
-msgstr ""
+msgstr "Establece el ancho de las líneas: ``line-width: 2``."
 
 #: ../style_sheets.md:190
 msgid "``min-height``"
-msgstr ""
+msgstr "``min-height``"
 
 #: ../style_sheets.md:190
 msgid "Set minimal height for an item: ``min-height: 50``."
-msgstr ""
+msgstr "Establece la altura mínima de un elemento: ``min-height: 50``."
 
 #: ../style_sheets.md:191
 msgid "``min-width``"
-msgstr ""
+msgstr "``min-width``"
 
 #: ../style_sheets.md:191
 msgid "Set minimal width for an item: ``min-width: 100``."
-msgstr ""
+msgstr "Establece el ancho mínimo de un elemento: ``min-width: 100``."
 
 #: ../style_sheets.md:192
 msgid "``padding``"
-msgstr ""
+msgstr "``padding``"
 
 #: ../style_sheets.md:192
 msgid "CSS style padding (top, right, bottom, left)."
-msgstr ""
+msgstr "Estilo CSS de relleno (arriba, derecha, abajo, izquierda)."
 
 #: ../style_sheets.md:194
 msgid "Example: ``padding: 3 4``."
-msgstr ""
+msgstr "Ejemplo: ``padding: 3 4``."
 
 #: ../style_sheets.md:198
 msgid "`padding` is defined by integers in the range of 1 to 4. No unit (px, pt, em) needs to be used. All values are in pixel distance."
 msgstr ""
+"`padding` está definido por enteros en el rango de 1 a 4. No es necesario "
+"usar ninguna unidad (px, pt, em). Todos los valores están en distancia de "
+"píxel."
 
 #: ../style_sheets.md:200
 msgid "`dash-style` is a list of numbers (line, gap, line, gap, …)"
-msgstr ""
+msgstr "`dash-style` es una lista de números (línea, hueco, línea, hueco, …)"
 
 #: ../style_sheets.md:201
 msgid "`line-style` only has an effect when defined on a `diagram`. A sloppiness factor can be provided in the range of -2 to 2."
 msgstr ""
+"`line-style` solo tiene efecto cuando se define en un `diagram`. Se puede "
+"proporcionar un factor de omisión en el rango de -2 a 2."
 
 #: ../style_sheets.md:204
 msgid "Diagram styles"
-msgstr ""
+msgstr "Estilos de diagrama"
 
 #: ../style_sheets.md:206
 msgid "Only a few properties can be defined on a diagram, namely `background-color` and `line-style`. You define the diagram style separately from the diagram item styles. That way it's possible to set the background color for diagrams specifically. The line style can be the normal straight lines, or a more playful \"sloppy\" style. For the sloppy style an optional wobliness factor can be provided to set the level of line wobbliness. 0.5 is default, 0.0 is a straight line. The value should be between -2.0 and 2.0. Values between 0.0 and 0.5 make for a subtle effect."
 msgstr ""
+"En un diagrama solo pueden definirse unas pocas propiedades, a saber, "
+"`background-color` y `line-style`. El estilo del diagrama se define por "
+"separado de los estilos de los elementos del diagrama. De esta manera es "
+"posible establecer el color de fondo para los diagramas específicamente. El "
+"estilo de línea puede ser las líneas rectas normales, o un estilo \"omisión\""
+" más juguetón. Para el estilo \"omisión\" se puede proporcionar un factor "
+"opcional de bamboleo para establecer el nivel de bamboleo de la línea. 0.5 "
+"es el valor predeterminado, 0.0 es una línea recta. El valor debe estar "
+"comprendido entre -2,0 y 2,0. Los valores entre 0,0 y 0,5 producen un efecto "
+"sutil."
 
 #: ../style_sheets.md:215
 msgid "Gaphor supports dark and light mode since 2.16.0. Dark and light color schemes are exclusively used for on-screen editing. When exporting images, only the default color scheme is applied. Color schemes can be defined with `@media` queries. The official `prefers-color-scheme = dark` query is supported, as well as a more convenient `dark-mode`."
 msgstr ""
+"Gaphor soporta los modos oscuro y claro desde la versión 2.16.0. Los "
+"esquemas de color oscuro y claro se usan exclusivamente para la edición en "
+"pantalla. Al exportar imágenes, sólo se aplica el esquema de color "
+"predeterminado. Los esquemas de color se pueden definir con consultas "
+"`@media`. La consulta oficial `prefers-color-scheme = dark` está soportada, "
+"así como la más conveniente `dark-mode`."
 
 #: ../style_sheets.md:241
 msgid "Variables"
-msgstr ""
+msgstr "Variables"
 
 #: ../style_sheets.md:243
 msgid "Since Gaphor 2.16.0 you can use [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) in your style sheets."
 msgstr ""
+"Desde Gaphor 2.16.0 puede usar [variables CSS](https://developer.mozilla.org/"
+"en-US/docs/Web/CSS/Using_CSS_custom_properties) en sus hojas de estilo."
 
 #: ../style_sheets.md:245
 msgid "This allows you to define often used values in a more generic way. Think of things like line dash style and colors."
 msgstr ""
+"Esto le permite definir valores de uso frecuente de forma más genérica. "
+"Piense en cosas como el estilo de guiones de línea y los colores."
 
 #: ../style_sheets.md:248
 msgid "The `var()` function has some limitations:"
-msgstr ""
+msgstr "La función `var()` tiene algunas limitaciones:"
 
 #: ../style_sheets.md:250
 msgid "Values can’t have a default value."
-msgstr ""
+msgstr "Los valores no pueden tener un valor predeterminado."
 
 #: ../style_sheets.md:251
 msgid "Variables can’t have a variable as their value."
-msgstr ""
+msgstr "Las variables no pueden tener una variable como valor."
 
 #: ../style_sheets.md:253
 msgid "Example:"
-msgstr ""
+msgstr "Ejemplo:"
 
 #: ../style_sheets.md:266
 msgid "All diagrams have a white background. Sequence diagrams get a blue-ish background."
 msgstr ""
+"Todos los diagramas tienen un fondo blanco. Los diagramas de secuencia "
+"tienen un fondo azulado."
 
 #: ../style_sheets.md:268
 msgid "Working with model elements"
-msgstr ""
+msgstr "Trabajar con elementos del modelo"
 
 #: ../style_sheets.md:270
 msgid "Gaphor has many model elements. How can you find out which item should be styled?"
 msgstr ""
+"Gaphor tiene muchos elementos de modelo. ¿Cómo se puede saber qué elemento "
+"debe ser estilizado?"
 
 #: ../style_sheets.md:272
 msgid "Gaphor only styles the elements that are in the model, so you should be explicit on their names. For example: `Component` inherits from `Class` in the UML model, but changing a color for `Class` does not change it for `Component`."
 msgstr ""
+"Gaphor solo aplica estilo a los elementos que están en el modelo, por lo que "
+"debe ser explícito en sus nombres. Por ejemplo: `Component` hereda de `Class`"
+" en el modelo UML, pero cambiar un color para `Class` no lo cambia para "
+"`Component`."
 
 #: ../style_sheets.md:276
 msgid "If you hover over a button the toolbox (bottom-left section), a popup will appear with the item's name and a shortcut. As a general rule, you can use the component name, glued together as the name in the stylesheet. A *Component* can be addressed as `component`, *Use Case* as `usecase`. The name matching is case insensitive. CSS names are written in lower case by default."
 msgstr ""
+"Si pasa el ratón por encima de un botón de la caja de herramientas (sección "
+"inferior izquierda), aparecerá una ventana emergente con el nombre del "
+"elemento y un acceso directo. Como regla general, puede usar el nombre del "
+"componente, pegado como el nombre en la hoja de estilos. Un *Componente* "
+"puede ser direccionado como `component`, *Caso de uso* como `usecase`. La "
+"coincidencia de nombres es insensible a mayúsculas y minúsculas. Los nombres "
+"CSS se escriben en minúsculas por defecto."
 
 #: ../style_sheets.md:283
 msgid "However, since the CSS element names are derived from names used within Gaphor, there are a few exceptions."
 msgstr ""
+"Sin embargo, como los nombres de los elementos CSS se derivan de los nombres "
+"usados en Gaphor, hay algunas excepciones."
 
 #: ../style_sheets.md:287
 msgid "Profile"
@@ -3782,31 +3928,31 @@ msgstr "Perfil"
 
 #: ../style_sheets.md:287
 msgid "Group"
-msgstr ""
+msgstr "Grupo"
 
 #: ../style_sheets.md:287
 msgid "Element"
-msgstr ""
+msgstr "Elemento"
 
 #: ../style_sheets.md:287
 msgid "CSS element"
-msgstr ""
+msgstr "Elemento CSS"
 
 #: ../style_sheets.md:289
 msgid "\\*"
-msgstr ""
+msgstr "\\*"
 
 #: ../style_sheets.md:289
 msgid "*element name*"
-msgstr ""
+msgstr "*nombre del elemento*"
 
 #: ../style_sheets.md:289
 msgid "element name without spaces"
-msgstr ""
+msgstr "nombre del elemento sin espacios"
 
 #: ../style_sheets.md:291
 msgid "E.g. ``class``, ``usecase``."
-msgstr ""
+msgstr "P. ej. ``class``, ``usecase``."
 
 #: ../style_sheets.md:292
 #: ../style_sheets.md:293
@@ -3826,23 +3972,23 @@ msgstr "Clases"
 
 #: ../style_sheets.md:292
 msgid "all Association's"
-msgstr ""
+msgstr "Todas las asociaciones"
 
 #: ../style_sheets.md:292
 msgid "``association``"
-msgstr ""
+msgstr "``association``"
 
 #: ../style_sheets.md:293
 msgid "Components"
-msgstr ""
+msgstr "Componentes"
 
 #: ../style_sheets.md:293
 msgid "Device/Node"
-msgstr ""
+msgstr "Dispositivo/Nodo"
 
 #: ../style_sheets.md:293
 msgid "``node``"
-msgstr ""
+msgstr "``node``"
 
 #: ../style_sheets.md:294
 #: ../style_sheets.md:295
@@ -3852,19 +3998,19 @@ msgstr "Acciones"
 
 #: ../style_sheets.md:294
 msgid "Decision/Merge Node"
-msgstr ""
+msgstr "Nodo de decisión/fusión"
 
 #: ../style_sheets.md:294
 msgid "``decisionnode``"
-msgstr ""
+msgstr "``decisionnode``"
 
 #: ../style_sheets.md:295
 msgid "Fork/Join Node"
-msgstr ""
+msgstr "Nodo de bifurcación/unión"
 
 #: ../style_sheets.md:295
 msgid "``forknode``"
-msgstr ""
+msgstr "``forknode``"
 
 #: ../style_sheets.md:296
 msgid "Swimlane"
@@ -3872,7 +4018,7 @@ msgstr "Carril"
 
 #: ../style_sheets.md:296
 msgid "``partition``"
-msgstr ""
+msgstr "``partition``"
 
 #: ../style_sheets.md:297
 msgid "Interactions"
@@ -3884,7 +4030,7 @@ msgstr "mensaje reflexivo"
 
 #: ../style_sheets.md:297
 msgid "``message``"
-msgstr ""
+msgstr "``message``"
 
 #: ../style_sheets.md:298
 #: ../style_sheets.md:299
@@ -3898,11 +4044,11 @@ msgstr "Pseudoestado inicial"
 #: ../style_sheets.md:298
 #: ../style_sheets.md:299
 msgid "``pseudostate``"
-msgstr ""
+msgstr "``pseudostate``"
 
 #: ../style_sheets.md:299
 msgid "History Pseudostate"
-msgstr ""
+msgstr "Pseudoestado de historia"
 
 #: ../style_sheets.md:300
 msgid "Profiles"
@@ -3914,7 +4060,7 @@ msgstr "Metaclase"
 
 #: ../style_sheets.md:300
 msgid "``class``"
-msgstr ""
+msgstr "``class``"
 
 #: ../style_sheets.md:301
 msgid "Person"
@@ -3922,7 +4068,7 @@ msgstr "Persona"
 
 #: ../style_sheets.md:301
 msgid "``c4person``"
-msgstr ""
+msgstr "``c4person``"
 
 #: ../style_sheets.md:302
 msgid "Software System"
@@ -3930,7 +4076,7 @@ msgstr "Sistema informático"
 
 #: ../style_sheets.md:302
 msgid "``c4container[type=\"Software System\"]``"
-msgstr ""
+msgstr "``c4container[type=\"Software System\"]``"
 
 #: ../style_sheets.md:303
 msgid "Component"
@@ -3938,7 +4084,7 @@ msgstr "Componente"
 
 #: ../style_sheets.md:303
 msgid "``c4container[type=\"Component\"]``"
-msgstr ""
+msgstr "``c4container[type=\"Component\"]``"
 
 #: ../style_sheets.md:304
 msgid "Container"
@@ -3946,7 +4092,7 @@ msgstr "Contenedor"
 
 #: ../style_sheets.md:304
 msgid "``c4container[type=\"Container\"]``"
-msgstr ""
+msgstr "``c4container[type=\"Container\"]``"
 
 #: ../style_sheets.md:305
 msgid "Container: Database"
@@ -3954,7 +4100,7 @@ msgstr "Contenedor: Base de datos"
 
 #: ../style_sheets.md:305
 msgid "``c4database``"
-msgstr ""
+msgstr "``c4database``"
 
 #: ../style_sheets.md:306
 #: ../style_sheets.md:307
@@ -3969,7 +4115,7 @@ msgstr "ValorTipo"
 #: ../style_sheets.md:306
 #: ../style_sheets.md:307
 msgid "``datatype``"
-msgstr ""
+msgstr "``datatype``"
 
 #: ../style_sheets.md:307
 msgid "Primitive"
@@ -3981,7 +4127,7 @@ msgstr "Derivación de requisitos"
 
 #: ../style_sheets.md:308
 msgid "``derivedreq``"
-msgstr ""
+msgstr "``derivedreq``"
 
 #: ../style_sheets.md:309
 msgid "RAAML"
@@ -3993,279 +4139,362 @@ msgstr "FTA"
 
 #: ../style_sheets.md:309
 msgid "any AND/OR/… Gate"
-msgstr ""
+msgstr "cualquier puerta AND/OR/…"
 
 #: ../style_sheets.md:309
 msgid "``and``, ``or``, etc."
-msgstr ""
+msgstr "``and``, ``or``, etc."
 
 #: ../style_sheets.md:314
 msgid "Ideas"
-msgstr ""
+msgstr "Ideas"
 
 #: ../style_sheets.md:316
 msgid "Here are some ideas that go just beyond changing a color or a font. With the following examples we dig in to Gaphor's model structure to reveal more information to the users."
 msgstr ""
+"He aquí algunas ideas que van más allá de cambiar un color o un tipo de "
+"letra. Con los siguientes ejemplos profundizamos en la estructura del modelo "
+"de Gaphor para revelar más información a los usuarios."
 
 #: ../style_sheets.md:320
 msgid "To create your own expression you may want to use the Console (Tools -> Console, in the Hamburger menu). Drop us a line on [Gitter](https://gitter.im/gaphor/Lobby) and we would be happy to help you."
 msgstr ""
+"Para crear su propia expresión puede usar la Consola (Herramientas -> "
+"Consola, en el menú de hamburguesa). Escríbenos a [Gitter](https://gitter.im/"
+"gaphor/Lobby) y estaremos encantados de ayudarle."
 
 #: ../style_sheets.md:324
 msgid "The drafts package"
-msgstr ""
+msgstr "El paquete de borradores"
 
 #: ../style_sheets.md:326
 msgid "All diagrams in the package \"Drafts\" should be drawn using sloppy lines:"
 msgstr ""
+"Todos los diagramas del paquete \"Borradores\" deben dibujarse con líneas "
+"poco definidas:"
 
 #: ../style_sheets.md:338
 msgid "draft style"
-msgstr ""
+msgstr "estilo borrador"
 
 #: ../style_sheets.md:343
 msgid "Unconnected relationships"
-msgstr ""
+msgstr "Relaciones inconexas"
 
 #: ../style_sheets.md:345
 msgid "All items on a diagram that are not backed by a model element, should be drawn in a dark red color. This can be used to spot not-so-well connected relationships, such as Generalization, Implementation, and Dependency. These items will only be backed by a model element once you connect both line ends. This rule will exclude simple elements, like lines and boxes, which will never have a backing model element."
 msgstr ""
+"Todos los elementos de un diagrama que no estén respaldados por un elemento "
+"del modelo deben dibujarse en color rojo oscuro. Esto se puede usar para "
+"detectar relaciones no muy bien conectadas, como Generalización, "
+"Implementación y Dependencia. Estos elementos sólo estarán respaldados por "
+"un elemento del modelo una vez que conecte ambos extremos de la línea. Esta "
+"regla excluirá elementos simples, como líneas y cajas, que nunca tendrán un "
+"elemento modelo de respaldo."
 
 #: ../style_sheets.md:358
 msgid "unconnected relationship"
-msgstr ""
+msgstr "relación inconexa"
 
 #: ../style_sheets.md:363
 msgid "Navigable associations"
-msgstr ""
+msgstr "Asociaciones navegables"
 
 #: ../style_sheets.md:365
 msgid "An example of how to apply a style to a navigable association is to color an association blue if neither of the ends are navigable. This color could act as a validation rule for a model where at least one end of each association should be navigable. This is actually the case for the model file used to create Gaphor's data model."
 msgstr ""
+"Un ejemplo de cómo aplicar un estilo a una asociación navegable es colorear "
+"de azul una asociación si ninguno de sus extremos es navegable. Este color "
+"podría actuar como una regla de validación para un modelo en el que al menos "
+"un extremo de cada asociación debe ser navegable. Este es el caso del "
+"fichero modelo usado para crear el modelo de datos de Gaphor."
 
 #: ../style_sheets.md:377
 msgid "navigable association"
-msgstr ""
+msgstr "asociación navegable"
 
 #: ../style_sheets.md:382
 msgid "Solid Control Flow lines"
-msgstr ""
+msgstr "Líneas sólidas de flujo de control"
 
 #: ../style_sheets.md:384
 msgid "In Gaphor, Control Flow lines follow the SysML styling: dashed. If you want, or need to strictly follow the official UML specifications, you can simply make those solid lines."
 msgstr ""
+"En Gaphor, las líneas de flujo de control siguen el estilo SysML: "
+"discontinuas. Si desea, o necesita seguir estrictamente las especificaciones "
+"oficiales UML, puede simplemente hacer esas líneas sólidas."
 
 #: ../style_sheets.md:394
 msgid "control flow"
-msgstr ""
+msgstr "flujo de control"
 
 #: ../style_sheets.md:399
 msgid "Todo note highlight"
-msgstr ""
+msgstr "Nota destacada"
 
 #: ../style_sheets.md:401
 msgid "All comments beginning with the phrase \"todo\" can be highlighted in a different user-specific colour. This can be used to make yourself aware that you have to do some additional work to finalize the diagram."
 msgstr ""
+"Todos los comentarios que empiecen por la frase \"todo\" pueden resaltarse "
+"con un color diferente específico para cada usuario. Esto puede usarse para "
+"avisarle de que tiene que hacer algún trabajo adicional para finalizar el "
+"diagrama."
 
 #: ../style_sheets.md:411
 msgid "highlighted todo note"
-msgstr ""
+msgstr "nota destacada"
 
 #: ../transaction.md:1
 msgid "Transaction support"
-msgstr ""
+msgstr "Soporte de transacciones"
 
 #: ../transaction.md:3
 msgid "Transaction support is located in module `gaphor.transaction`:"
 msgstr ""
+"El soporte de transacciones se encuentra en el módulo `gaphor.transaction`:"
 
 #: ../transaction.md:10
 msgid "Do some basic initialization, so event emission will work. Since the transaction decorator does not know about the active user session (window), it emits it's events via a global list of subscribers:"
 msgstr ""
+"Hacer alguna inicialización básica, para que la emisión de eventos funcione. "
+"Dado que el decorador de transacciones no conoce la sesión de usuario activa "
+"(ventana), emite sus eventos a través de una lista global de suscriptores:"
 
 #: ../transaction.md:18
 msgid "The Transaction class is used mainly to signal the begin and end of a transaction. This is done by the TransactionBegin, TransactionCommit and TransactionRollback events:"
 msgstr ""
+"La clase Transaction se usa principalmente para señalar el comienzo y el "
+"final de una transacción. Esto se hace mediante los eventos "
+"TransactionBegin, TransactionCommit y TransactionRollback:"
 
 #: ../transaction.md:26
 msgid "Same goes for commit and rollback events:"
-msgstr ""
+msgstr "Lo mismo ocurre con los eventos de commit y rollback:"
 
 #: ../transaction.md:37
 msgid "A Transaction is started by initiating a Transaction instance:"
-msgstr ""
+msgstr "Una transacción se inicia con una instancia de transacción:"
 
 #: ../transaction.md:42
 msgid "On success, a transaction can be committed:"
-msgstr ""
+msgstr "En caso de éxito, se puede confirmar la transacción:"
 
 #: ../transaction.md:47
 msgid "After a commit, a rollback is no longer allowed (the transaction is closed):"
 msgstr ""
+"Después de una confirmación, ya no se permite revertir (la transacción se "
+"cierra):"
 
 #: ../transaction.md:55
 msgid "Transactions may be nested:"
-msgstr ""
+msgstr "Las transacciones pueden estar anidadas:"
 
 #: ../transaction.md:64
 msgid "Transactions should be closed in the right order (subtransactions first):"
 msgstr ""
+"Las transacciones deben cerrarse en el orden correcto (primero las "
+"subtransacciones):"
 
 #: ../transaction.md:79
 msgid "The transactional decorator can be used to mark functions as transactional:"
 msgstr ""
+"El decorador transaccional puede usarse para marcar funciones como "
+"transaccionales:"
 
 #: ../transaction.md:89
 msgid "If an exception is raised from within the decorated function a rollback is performed:"
-msgstr ""
+msgstr "Si se produce una excepción dentro de la función decorada, se revierte:"
 
 #: ../transaction.md:103
 msgid "Cleanup:"
-msgstr ""
+msgstr "Limpieza:"
 
 #: ../undo.md:1
 msgid "Undo Manager"
-msgstr ""
+msgstr "Gestor de deshacer"
 
 #: ../undo.md:3
 msgid "Undo is a required feature in modern applications. Gaphor is no exception. Having an undo function in place means you can change the model and easily revert to an older state."
 msgstr ""
+"Deshacer es una característica necesaria en las aplicaciones modernas. "
+"Gaphor no es una excepción. Tener una función de deshacer en su lugar "
+"significa que puede cambiar el modelo y fácilmente volver a un estado "
+"anterior."
 
 #: ../undo.md:7
 msgid "Overview of Transactions"
-msgstr ""
+msgstr "Resumen de las transacciones"
 
 #: ../undo.md:9
 msgid "The recording and playback of changes in Gaphor is handled by the the Undo Manager. The Undo Manager works transactionally. A transaction must succeed or fail as a complete unit. If the transaction fails in the middle, it is rolled back. In Gaphor this is achieved by the `transaction` module, which provides a context manager `Transaction` and a decorator called `@transactional`."
 msgstr ""
+"La grabación y reproducción de cambios en Gaphor se gestiona mediante el "
+"Gestor de deshacer. El Gestor de deshacer funciona transaccionalmente. Una "
+"transacción debe tener éxito o fallar como una unidad completa. Si la "
+"transacción falla en el medio, es revertida. En Gaphor esto se consigue "
+"mediante el módulo `transaction`, que proporciona un gestor de contexto "
+"`Transaction` y un decorador llamado `@transactional`."
 
 #: ../undo.md:16
 msgid "When transactions take place, they emit event notifications on the key transaction milestones so that other services can make use of the events. The event notifications are for the begin of the transaction, and the commit of the transaction if it is successful or the rollback of the transaction if it fails."
 msgstr ""
+"Cuando las transacciones tienen lugar, emiten notificaciones de eventos "
+"sobre los hitos clave de la transacción para que otros servicios puedan "
+"hacer uso de los eventos. Las notificaciones de eventos son para el inicio "
+"de la transacción, y la confirmación de la transacción si tiene éxito o la "
+"reversión de la transacción si falla."
 
 #: ../undo.md:21
 msgid "Start of a Transaction"
-msgstr ""
+msgstr "Inicio de una transacción"
 
 #: ../undo.md:23
 msgid "A `Transaction` object is created."
-msgstr ""
+msgstr "Se crea un objeto `Transaction`."
 
 #: ../undo.md:24
 msgid "`TransactionBegin` event is emitted."
-msgstr ""
+msgstr "Se emite el evento `TransactionBegin`."
 
 #: ../undo.md:25
 msgid "The `UndoManager` instantiates a new `ActionStack` which is the transaction object, and adds the undo action to the stack."
 msgstr ""
+"El `UndoManager` instancia una nueva `ActionStack` que es el objeto de la "
+"transacción, y añade la acción de deshacer a la pila."
 
 #: ../undo.md:28
 msgid "Nested transactions are supported to allow a transaction to be added inside of another transaction that is already in progress."
 msgstr ""
+"Se admiten transacciones anidadas para permitir que se añada una transacción "
+"dentro de otra que ya esté en curso."
 
 #: ../undo.md:31
 msgid "Successful Transaction"
-msgstr ""
+msgstr "Transacción exitosa"
 
 #: ../undo.md:33
 msgid "A `TransactionCommit` event is emitted"
-msgstr ""
+msgstr "Se emite un evento `TransactionCommit`"
 
 #: ../undo.md:34
 msgid "The `UndoManager` closes and stores the transaction."
-msgstr ""
+msgstr "El `UndoManager` cierra y almacena la transacción."
 
 #: ../undo.md:36
 msgid "Failed Transaction"
-msgstr ""
+msgstr "Transacción fallida"
 
 #: ../undo.md:38
 msgid "A `TransactionRollback` event is emitted."
-msgstr ""
+msgstr "Se emite un evento `TransactionRollback`."
 
 #: ../undo.md:39
 msgid "The `UndoManager` plays back all the recorded actions, but does not store it."
 msgstr ""
+"El `UndoManager` reproduce todas las acciones grabadas, pero no las almacena."
 
 #: ../undo.md:42
 msgid "References"
-msgstr ""
+msgstr "Referencias"
 
 #: ../undo.md:44
 msgid "[A Framework for Undoing Actions in Collaborative Systems](http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf)"
 msgstr ""
+"[Un marco para deshacer acciones en sistemas colaborativos](http://web.eecs."
+"umich.edu/~aprakash/papers/undo-tochi94.pdf)"
 
 #: ../undo.md:46
 msgid "[Undoing Actions in Collaborative Work: Framework and Experience](https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf)"
 msgstr ""
+"[Deshacer acciones en el trabajo colaborativo: marco y "
+"experiencia](https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf)"
 
 #: ../undo.md:48
 msgid "[Implementing a Selective Undo Framework in Python](https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)"
 msgstr ""
+"[Implementación de un marco de deshacer selectivo en Python](https://legacy."
+"python.org/workshops/1997-10/proceedings/zukowski.html)"
 
 #: ../windows.md:1
 msgid "Gaphor on Windows"
-msgstr ""
+msgstr "Gaphor en Windows"
 
 #: ../windows.md:3
 msgid "Gaphor can be installed as with our our installer. Check out the [Gaphor download page](https://gaphor.org/download#windows) for details."
 msgstr ""
+"Gaphor se puede instalar con nuestro instalador. Consulte la [página de "
+"descarga de Gaphor](https://gaphor.org/download#windows) para más detalles."
 
 #: ../windows.md:13
 msgid "Choco"
-msgstr ""
+msgstr "Choco"
 
 #: ../windows.md:15
 msgid "We recommend using [Chocolately](https://chocolatey.org/) as a package manager in Windows."
 msgstr ""
+"Recomendamos usar [Chocolately](https://chocolatey.org/) como gestor de "
+"paquetes en Windows."
 
 #: ../windows.md:18
 msgid "To install it, open PowerShell as an administrator, then execute:"
-msgstr ""
+msgstr "Para instalarlo, abra PowerShell como administrador y ejecute:"
 
 #: ../windows.md:24
 msgid "To run local scripts in follow-on steps, also execute"
-msgstr ""
+msgstr "Para ejecutar scripts locales en los pasos siguientes, ejecute también"
 
 #: ../windows.md:30
 msgid "This allows for local PowerShell scripts to run without signing, but still requires signing for remote scripts."
 msgstr ""
+"Esto permite que los scripts locales de PowerShell se ejecuten sin firmar, "
+"pero sigue siendo necesario firmar los scripts remotos."
 
 #: ../windows.md:33
 msgid "Git"
-msgstr ""
+msgstr "Git"
 
 #: ../windows.md:35
 msgid "To setup a development environment in Windows first install [Git](https://gitforwindows.org) by executing as an administrator:"
 msgstr ""
+"Para configurar un entorno de desarrollo en Windows primero instale "
+"[Git](https://gitforwindows.org) ejecutándolo como administrador:"
 
 #: ../windows.md:42
 msgid "MSYS2"
-msgstr ""
+msgstr "MSYS2"
 
 #: ../windows.md:44
 msgid "The development environment in the next step needs MSYS2 installed to provide some Linux command line tools in Windows."
 msgstr ""
+"El entorno de desarrollo en el siguiente paso necesita MSYS2 instalado para "
+"proporcionar algunas herramientas de línea de comandos de Linux en Windows."
 
 #: ../windows.md:47
 msgid "Keep PowerShell open as administrator and install [MSYS2](http://www.msys2.org/):"
 msgstr ""
+"Mantenga PowerShell abierto como administrador e instale [MSYS2](http://www."
+"msys2.org/):"
 
 #: ../windows.md:53
 msgid "GTK and Python with gvsbuild"
-msgstr ""
+msgstr "GTK y Python con gvsbuild"
 
 #: ../windows.md:55
 msgid "gvsbuild provides a Python script helps you build the GTK library stack for Windows using Visual Studio. By compiling GTK with Visual Studio, we can then use a standard Python development environment in Windows."
 msgstr ""
+"gvsbuild proporciona un script en Python que ayuda a construir la pila de "
+"librerías GTK para Windows usando Visual Studio. Al compilar GTK con Visual "
+"Studio, podemos usar un entorno de desarrollo Python estándar en Windows."
 
 #: ../windows.md:59
 msgid "First we will install the gvsbuild dependencies:"
-msgstr ""
+msgstr "Primero instalaremos las dependencias de gvsbuild:"
 
 #: ../windows.md:60
 msgid "Visual C++ build tools workload for Visual Studio 2022 Build Tools"
 msgstr ""
+"Carga de trabajo de las herramientas de creación de Visual C++ para Visual "
+"Studio 2022 Build Tools"
 
 #: ../windows.md:61
 msgid "Python"
@@ -4273,157 +4502,183 @@ msgstr "Python"
 
 #: ../windows.md:63
 msgid "Install Visual Studio 2022"
-msgstr ""
+msgstr "Instalar Visual Studio 2022"
 
 #: ../windows.md:65
 msgid "With your admin PowerShell terminal:"
-msgstr ""
+msgstr "Con su terminal PowerShell de administrador:"
 
 #: ../windows.md:71
 msgid "Install the Latest Python"
-msgstr ""
+msgstr "Instalar la última versión de Python"
 
 #: ../windows.md:73
 msgid "In Windows, The full installer contains all the Python components and is the best option for developers using Python for any kind of project."
 msgstr ""
+"En Windows, el instalador completo contiene todos los componentes de Python "
+"y es la mejor opción para los desarrolladores que usen Python para cualquier "
+"tipo de proyecto."
 
 #: ../windows.md:76
 msgid "For more information on how to use the official installer, please see the [full installer instructions](https://docs.python.org/3/using/windows.html#windows-full). The default installation options should be fine for use with Gaphor."
 msgstr ""
+"Para más información sobre cómo usar el instalador oficial, consulte las ["
+"instrucciones completas del instalador](https://docs.python.org/3/using/"
+"windows.html#windows-full). Las opciones de instalación predeterminadas "
+"deberían ser adecuadas para Gaphor."
 
 #: ../windows.md:80
 msgid "Install the latest Python version using the [official installer](https://www.python.org/downloads/windows/)."
 msgstr ""
+"Instale la última versión de Python usando el [instalador "
+"oficial](https://www.python.org/downloads/windows/)."
 
 #: ../windows.md:83
 msgid "Open a PowerShell terminal as a normal user and check the python version:"
 msgstr ""
+"Abra un terminal PowerShell como usuario normal y compruebe la versión de "
+"python:"
 
 #: ../windows.md:89
 msgid "Install Graphviz"
-msgstr ""
+msgstr "Instalar Graphviz"
 
 #: ../windows.md:91
 msgid "Graphviz is used by Gaphor for automatic diagram formatting."
-msgstr ""
+msgstr "Gaphor usa Graphviz para dar formato automático a los diagramas."
 
 #: ../windows.md:93
 msgid "Install from Chocolately with administrator PowerShell:"
-msgstr ""
+msgstr "Instalar desde Chocolately con PowerShell de administrador:"
 
 #: ../windows.md:99
 msgid "Restart your PowerShell terminal as a normal user and check that the dot command is available:"
 msgstr ""
+"Reinicie su terminal PowerShell como usuario normal y compruebe que el "
+"comando dot está disponible:"
 
 #: ../windows.md:106
 msgid "Install pipx"
-msgstr ""
+msgstr "Instalar pipx"
 
 #: ../windows.md:108
 #: ../windows.md:116
 msgid "From the regular user PowerShell terminal execute:"
-msgstr ""
+msgstr "Desde el terminal PowerShell del usuario normal ejecutar:"
 
 #: ../windows.md:114
 msgid "Install gvsbuild"
-msgstr ""
+msgstr "Instalar gvsbuild"
 
 #: ../windows.md:122
 msgid "Build GTK"
-msgstr ""
+msgstr "Construir GTK"
 
 #: ../windows.md:124
 msgid "In the same PowerShell terminal, execute:"
-msgstr ""
+msgstr "En el mismo terminal PowerShell, ejecute:"
 
 #: ../windows.md:129
 msgid "Grab a coffee, the build will take a few minutes to complete."
-msgstr ""
+msgstr "Tómese un café, la construcción tardará unos minutos en completarse."
 
 #: ../windows.md:131
 msgid "Setup Gaphor"
-msgstr ""
+msgstr "Configurar Gaphor"
 
 #: ../windows.md:133
 msgid "In the same PowerShell terminal, clone the repository:"
-msgstr ""
+msgstr "En el mismo terminal PowerShell, clone el repositorio:"
 
 #: ../windows.md:140
 msgid "Install Poetry"
-msgstr ""
+msgstr "Instalar Poetry"
 
 #: ../windows.md:146
 msgid "Add GTK to your environmental variables:"
-msgstr ""
+msgstr "Añada GTK a sus variables de entorno:"
 
 #: ../windows.md:153
 msgid "You can also edit your account's Environmental Variables to persist across PowerShell sessions."
 msgstr ""
+"También puede editar las variables de entorno de su cuenta para que "
+"persistan en todas las sesiones de PowerShell."
 
 #: ../windows.md:156
 msgid "Install Gaphor's dependencies"
-msgstr ""
+msgstr "Instalar dependencias de Gaphor"
 
 #: ../windows.md:161
 msgid "Reinstall PyGObject and pycairo using gvsbuild wheels"
-msgstr ""
+msgstr "Reinstale PyGObject y pycairo usando gvsbuild wheels"
 
 #: ../windows.md:167
 msgid "Launch Gaphor!"
-msgstr ""
+msgstr "¡Inicie Gaphor!"
 
 #: ../windows.md:172
 msgid "Debugging using Visual Studio Code"
-msgstr ""
+msgstr "Depuración con Visual Studio Code"
 
 #: ../windows.md:174
 msgid "Start a new PowerShell terminal, and set current directory to the project folder:"
 msgstr ""
+"Inicie un nuevo terminal PowerShell y establezca el directorio actual en la "
+"carpeta del proyecto:"
 
 #: ../windows.md:179
 msgid "Ensure that path environment variable is set:"
-msgstr ""
+msgstr "Asegúrese de que la variable de entorno path está activada:"
 
 #: ../windows.md:184
 msgid "Start Visual Studio Code:"
-msgstr ""
+msgstr "Inicie Visual Studio Code:"
 
 #: ../windows.md:189
 msgid "To start the debugger, execute the following steps:"
-msgstr ""
+msgstr "Para iniciar el depurador, ejecute los siguientes pasos:"
 
 #: ../windows.md:190
 msgid "Open `__main__.py` file from `gaphor` folder"
-msgstr ""
+msgstr "Abra el archivo `__main__.py` de la carpeta `gaphor`"
 
 #: ../windows.md:191
 msgid "Add a breakpoint on line `main(sys.argv)`"
-msgstr ""
+msgstr "Añada un punto de interrupción en la línea `main(sys.argv)`"
 
 #: ../windows.md:192
 msgid "In the menu, select Run → Start debugging"
-msgstr ""
+msgstr "En el menú, seleccione Ejecutar → Iniciar depuración"
 
 #: ../windows.md:193
 msgid "Choose Select module from the list"
-msgstr ""
+msgstr "Elija Seleccionar módulo de la lista"
 
 #: ../windows.md:194
 msgid "Enter `gaphor` as module name"
-msgstr ""
+msgstr "Introduzca `gaphor` como nombre del módulo"
 
 #: ../windows.md:196
 msgid "Visual Studio Code will start the application in debug mode, and will stop at main."
 msgstr ""
+"Visual Studio Code iniciará la aplicación en modo de depuración y se "
+"detendrá en main."
 
 #: ../windows.md:198
 msgid "Packaging for Windows"
-msgstr ""
+msgstr "Empaquetado para Windows"
 
 #: ../windows.md:200
 msgid "In order to create an exe installation package for Windows, we utilize [PyInstaller](https://pyinstaller.org) which analyzes Gaphor to find all the dependencies and bundle them in to a single folder. We then use a custom bash script that creates a Windows installer using [NSIS](https://nsis.sourceforge.io/Main_Page) and a portable installer using [7-Zip](https://www.7-zip.org). To install them, open PowerShell as an administrator, then execute:"
 msgstr ""
+"Para crear un paquete de instalación exe para Windows, usamos "
+"[PyInstaller](https://pyinstaller.org) que analiza Gaphor para encontrar "
+"todas las dependencias y agruparlas en una única carpeta. A continuación, "
+"usamos un script bash personalizado que crea un instalador de Windows usando "
+"[NSIS](https://nsis.sourceforge.io/Main_Page) y un instalador portable "
+"usando [7-Zip](https://www.7-zip.org). Para instalarlos, abra PowerShell "
+"como administrador y ejecute:"
 
 #: ../windows.md:212
 msgid "Then build your installer using:"
-msgstr ""
+msgstr "Luego construya su instalador usando:"
