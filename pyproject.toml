@@ -184,8 +184,9 @@ package = { "cwd" = "_packaging", shell = "pyinstaller -y gaphor.spec"}
 win-installer = { "script" = "_packaging.windows.build-win-installer:main" }
 gettext-pot = "pybabel extract -o po/gaphor.pot -F po/babel.ini -k i18nize gaphor"
 gettext-po = { "script" = "po.build-babel:update_po_files" }
-gettext-mo = { "script" = "po.build-babel:compile_mo_files" }
-translations = ["gettext-pot", "gettext-po", "gettext-mo"]
+gettext-mo-all = { "script" = "po.build-babel:compile_mo_all" }
+gettext-mo-release = { "script" = "po.build-babel:compile_mo_release" }
+translations = ["gettext-pot", "gettext-po", "gettext-mo-all"]
 icons = { "shell" = "make -C gaphor/ui/icons" }
 
 [tool.poe.executor]
