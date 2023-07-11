@@ -78,17 +78,19 @@ def merge_styles(*styles: Style) -> Style:
             abs_font_size = font_size
         style.update(s)
 
-    if abs_font_size and style["font-size"] in FONT_SIZE_VALUES:
-        style["font-size"] = abs_font_size * FONT_SIZE_VALUES[style["font-size"]]  # type: ignore[index,operator]
+    resolved_style = resolve_variables(style, styles)
 
-    if "opacity" in style:
-        opacity = style["opacity"]
+    if abs_font_size and resolved_style["font-size"] in FONT_SIZE_VALUES:
+        resolved_style["font-size"] = abs_font_size * FONT_SIZE_VALUES[resolved_style["font-size"]]  # type: ignore[index,operator]
+
+    if "opacity" in resolved_style:
+        opacity = resolved_style["opacity"]
         for color_prop in ("color", "background-color", "text-color"):
-            color: Color | None = style.get(color_prop)  # type: ignore[assignment]
+            color: Color | None = resolved_style.get(color_prop)  # type: ignore[assignment]
             if color and color[3] > 0.0:
-                style[color_prop] = color[:3] + (color[3] * opacity,)  # type: ignore[literal-required]
+                resolved_style[color_prop] = color[:3] + (color[3] * opacity,)  # type: ignore[literal-required]
 
-    return resolve_variables(style, styles)
+    return resolved_style
 
 
 def resolve_variables(style: Style, style_layers: Sequence[Style]) -> Style:

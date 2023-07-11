@@ -1,6 +1,7 @@
 import pytest
 
 from gaphor.core.styling import merge_styles
+from gaphor.core.styling.declarations import Var
 
 
 def test_merge_opacity():
@@ -47,3 +48,12 @@ def test_font_size_override_with_relative_size():
     style = merge_styles({"font-size": 10}, {"font-size": 24}, {"font-size": "x-small"})
 
     assert style["font-size"] == 24 * 3 / 4
+
+
+def test_color_override_with_variables():
+    style = merge_styles(
+        {"--my-color": "white", "--my-opacity": 0.5},
+        {"color": Var("--my-color"), "opacity": Var("--my-opacity")},
+    )
+
+    assert style["color"] == (1.0, 1.0, 1.0, 0.5)
