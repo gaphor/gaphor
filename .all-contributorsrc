@@ -1199,6 +1199,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "tfirchau",
+      "name": "Thomas Firchau",
+      "avatar_url": "https://avatars.githubusercontent.com/u/71006757?v=4",
+      "profile": "https://github.com/tfirchau",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
