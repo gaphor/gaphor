@@ -154,7 +154,7 @@ The properties that are shown depend on the item that is selected.
 ## Model Preferences
 
 The Property Editor also contains model preferences: Click the ![document-properties-symbolic](images/document-properties-symbolic.svg)
-button. 
+button.
 
 ### Reset Tool Automatically
 
@@ -168,10 +168,10 @@ By default elements that are not part of any diagram in the model will be remove
 
 The language modifier is only applicable to the loaded model and how it is shown in the diagram. The language setting is saved as part of the model and defaults to English.
 
-The UI language of Gaphor is controlled by the operating system. 
+The UI language of Gaphor is controlled by the operating system.
 
 ```{note}
-Gaphor considers the ``LANG`` environment variable on Linux, Windows and macOS. 
+Gaphor considers the ``LANG`` environment variable on Linux, Windows and macOS.
 
 On Windows and macOS it can be set independently of the operating system's language settings to a different language.
 ```
