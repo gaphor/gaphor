@@ -154,4 +154,27 @@ The properties that are shown depend on the item that is selected.
 ## Model Preferences
 
 The Property Editor also contains model preferences: Click the ![document-properties-symbolic](images/document-properties-symbolic.svg)
-button. Here you can set a few model related settings and edit the [style sheet](style_sheets).
+button. 
+
+### Reset Tool Automatically
+
+By default the pointer tool is selected after an element is placed from the toolbox. If this option is turned off, the same type of element will be placed by clicking in the diagram until another element is selected in the toolbox.
+
+### Remove Unused Elements
+
+By default elements that are not part of any diagram in the model will be removed. If this option is turned off, elements remain in the model and may be found in the model browser.
+
+### Language
+
+The language modifier is only applicable to the loaded model and how it is shown in the diagram. The language setting is saved as part of the model and defaults to English.
+
+The UI language of Gaphor is controlled by the operating system. 
+
+```{note}
+Gaphor considers the ``LANG`` environment variable on Linux, Windows and macOS. 
+
+On Windows and macOS it can be set independently of the operating system's language settings to a different language.
+```
+### Style Sheet
+
+The [style sheet](style_sheets) allows to change the visual appearance of diagrams and model elements.
