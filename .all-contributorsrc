@@ -1190,6 +1190,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "2old4this",
+      "name": "2old4this",
+      "avatar_url": "https://avatars.githubusercontent.com/u/108221?v=4",
+      "profile": "https://github.com/2old4this",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
