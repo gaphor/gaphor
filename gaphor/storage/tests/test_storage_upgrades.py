@@ -116,3 +116,17 @@ def test_upgradedecision_node_item_show_type(loader):
     item = loader(parsed_item)[0]
 
     assert item.show_underlying_type == 1
+
+
+@pytest.mark.parametrize("type", ["Property", "Port", "ProxyPort"])
+def test_upgrade_delete_property_information_flow(
+    element_factory, modeling_language, type
+):
+    prop = element(id="1", type=type)
+    iflow = element(id="2", type="InformationFlow")
+    prop.references["informationFlow"] = ["1"]
+
+    load_elements({e.id: e for e in [prop, iflow]}, element_factory, modeling_language)
+
+    assert element_factory.lselect(modeling_language.lookup_element(type))
+    assert element_factory.lselect(modeling_language.lookup_element("InformationFlow"))

@@ -426,6 +426,9 @@ def upgrade_flow_item_to_control_flow_item(elem, elements):
 
 # since 2.19.0
 def upgrade_delete_property_information_flow(elem):
-    if elem.type == "Property" and "informationFlow" in elem.references:
+    if (
+        elem.type in ("Property", "Port", "ProxyPort")
+        and "informationFlow" in elem.references
+    ):
         del elem.references["informationFlow"]
     return elem
