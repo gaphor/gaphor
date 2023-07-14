@@ -126,11 +126,6 @@ def paste_element(
 paste.register(ElementCopy, paste_element)
 
 
-@copy.register
-def _copy_diagram(element: Diagram) -> Iterator[tuple[Id, ElementCopy]]:
-    yield element.id, copy_element(element, blacklist=["ownedPresentation"])
-
-
 class PresentationCopy(NamedTuple):
     cls: type[Element]
     data: dict[str, tuple[str, str]]
@@ -168,6 +163,37 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
         for value in deserialize(ser, lookup):
             item.load(name, value)
     diagram.update_now((item,))
+
+
+class DiagramCopy(NamedTuple):
+    data: dict[str, tuple[str, str]]
+    presentations: list[Opaque]
+
+
+@copy.register
+def _copy_diagram(element: Diagram) -> Iterator[tuple[Id, ElementCopy]]:
+    yield element.id, DiagramCopy(
+        copy_element(element, blacklist=["ownedPresentation"]),
+        list(
+            itertools.chain.from_iterable(
+                copy_presentation(item) for item in element.ownedPresentation
+            )
+        ),
+    )
+
+
+@paste.register
+def _paste_diagram(copy_data: DiagramCopy, diagram, lookup):
+    paster = paste_element(copy_data.data, diagram, lookup)
+    new_diagram = next(paster)
+    yield new_diagram
+    next(paster, None)
+
+    for _id, data in copy_data.presentations:
+        paster = paste(data, new_diagram, lookup)
+        new_presentation = next(paster)
+        yield new_presentation
+        next(paster, None)
 
 
 class CopyData(NamedTuple):
