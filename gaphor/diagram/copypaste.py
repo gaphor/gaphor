@@ -191,8 +191,7 @@ def _paste_diagram(copy_data: DiagramCopy, diagram, lookup):
 
     for _id, data in copy_data.presentations:
         paster = paste(data, new_diagram, lookup)
-        new_presentation = next(paster)
-        yield new_presentation
+        yield next(paster)
         next(paster, None)
 
 
