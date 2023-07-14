@@ -14,6 +14,7 @@ from gaphor.diagram.propertypages import (
 )
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
+from gaphor.SysML.blocks.proxyport import ProxyPortItem
 from gaphor.SysML.requirements.requirement import RequirementItem
 from gaphor.UML.classes.classespropertypages import AttributesPage, OperationsPage
 
@@ -87,7 +88,6 @@ class CompartmentPage(PropertyPageBase):
     def __init__(self, item):
         super().__init__()
         self.item = item
-        self.watcher = item.subject and item.subject.watcher()
 
     def construct(self):
         if not self.item.subject:
@@ -180,6 +180,35 @@ class PropertyPropertyPage(PropertyPageBase):
             self.subject.type = element
         else:
             del self.subject.type
+
+
+@PropertyPages.register(ProxyPortItem)
+class ProxyPortPropertyPage(PropertyPageBase):
+    order = 31
+
+    def __init__(self, item):
+        super().__init__()
+        self.item = item
+
+    def construct(self):
+        if not self.item.subject:
+            return
+
+        builder = new_builder(
+            "proxyport-editor",
+            signals={
+                "show-type-changed": (self._on_show_type_change,),
+            },
+        )
+
+        show_type = builder.get_object("show-type")
+        show_type.set_active(self.item.show_type)
+
+        return builder.get_object("proxyport-editor")
+
+    @transactional
+    def _on_show_type_change(self, button, _gparam):
+        self.item.show_type = button.get_active()
 
 
 @PropertyPages.register(UML.Association)

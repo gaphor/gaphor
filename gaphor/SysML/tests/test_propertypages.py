@@ -7,6 +7,7 @@ from gaphor.SysML.propertypages import (
     CompartmentPage,
     ItemFlowPropertyPage,
     PropertyPropertyPage,
+    ProxyPortPropertyPage,
     RequirementPropertyPage,
 )
 
@@ -45,6 +46,20 @@ def test_requirement_property_page_text(diagram, element_factory):
     requirement_text.get_buffer().set_text("test")
 
     assert subject.text == "test"
+
+
+def test_proxyport_property_page_show_type(diagram, element_factory):
+    item = diagram.create(
+        SysML.blocks.ProxyPortItem,
+        subject=element_factory.create(SysML.sysml.ProxyPort),
+    )
+    property_page = ProxyPortPropertyPage(item)
+
+    widget = property_page.construct()
+    show_parts = find(widget, "show-type")
+    show_parts.set_active(True)
+
+    assert item.show_type
 
 
 def test_compartment_property_page_show_parts(diagram, element_factory):
