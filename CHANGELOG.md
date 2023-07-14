@@ -1,6 +1,12 @@
-2.19.3
+2.19.4
 ------
 (unreleased)
+
+2.19.3
+------
+- Windows: Fix missing toolbar icons
+- Fix loading of ProxyPorts with informationFlow attached
+- Fix to resolve CSS style variables before using the values
 
 2.19.2
 ------
