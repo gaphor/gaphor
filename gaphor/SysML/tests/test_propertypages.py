@@ -6,8 +6,8 @@ from gaphor.diagram.tests.fixtures import find
 from gaphor.SysML.propertypages import (
     CompartmentPage,
     ItemFlowPropertyPage,
-    PropertyPropertyPage,
-    ProxyPortPropertyPage,
+    PropertyAggregationPropertyPage,
+    PropertyTypePropertyPage,
     RequirementPropertyPage,
 )
 
@@ -48,12 +48,12 @@ def test_requirement_property_page_text(diagram, element_factory):
     assert subject.text == "test"
 
 
-def test_proxyport_property_page_show_type(diagram, element_factory):
+def test_property_type_property_page_show_type(diagram, element_factory):
     item = diagram.create(
         SysML.blocks.ProxyPortItem,
         subject=element_factory.create(SysML.sysml.ProxyPort),
     )
-    property_page = ProxyPortPropertyPage(item)
+    property_page = PropertyTypePropertyPage(item)
 
     widget = property_page.construct()
     show_parts = find(widget, "show-type")
@@ -101,9 +101,9 @@ def test_compartment_property_page_show_values(diagram, element_factory):
     assert item.show_values
 
 
-def test_property_property_page(element_factory):
+def test_property_aggregation_page(element_factory):
     subject = element_factory.create(SysML.sysml.Property)
-    property_page = PropertyPropertyPage(subject)
+    property_page = PropertyAggregationPropertyPage(subject)
 
     widget = property_page.construct()
     show_references = find(widget, "aggregation")
@@ -112,20 +112,24 @@ def test_property_property_page(element_factory):
     assert subject.aggregation == "composite"
 
 
-def test_no_property_property_page_for_ports(element_factory):
+def test_no_property_aggregation_page_for_ports(element_factory):
     subject = element_factory.create(UML.Port)
-    property_page = PropertyPropertyPage(subject)
+    property_page = PropertyAggregationPropertyPage(subject)
 
     widget = property_page.construct()
 
     assert not widget
 
 
-def test_property_type(element_factory):
-    subject = element_factory.create(SysML.sysml.Property)
+def test_property_type(diagram, element_factory):
+    item = diagram.create(
+        SysML.blocks.PropertyItem,
+        subject=element_factory.create(UML.Property),
+    )
+
     type = element_factory.create(UML.Class)
     type.name = "Bar"
-    property_page = PropertyPropertyPage(subject)
+    property_page = PropertyTypePropertyPage(item)
 
     widget = property_page.construct()
     dropdown = find(widget, "property-type")
@@ -135,7 +139,7 @@ def test_property_type(element_factory):
     dropdown.set_selected(bar_index)
 
     assert dropdown.get_selected_item().label == "Bar"
-    assert subject.type is type
+    assert item.subject.type is type
 
 
 def test_association_item_flow(association):

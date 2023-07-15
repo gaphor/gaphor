@@ -14,6 +14,7 @@ from gaphor.diagram.propertypages import (
 )
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
+from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
 from gaphor.SysML.requirements.requirement import RequirementItem
 from gaphor.UML.classes.classespropertypages import AttributesPage, OperationsPage
@@ -124,7 +125,7 @@ class CompartmentPage(PropertyPageBase):
 
 
 @PropertyPages.register(sysml.Property)
-class PropertyPropertyPage(PropertyPageBase):
+class PropertyAggregationPropertyPage(PropertyPageBase):
     """An editor for Properties (a.k.a.
 
     attributes).
@@ -143,47 +144,25 @@ class PropertyPropertyPage(PropertyPageBase):
             return
 
         builder = new_builder(
-            "property-editor",
+            "property-aggregation-editor",
             signals={
                 "aggregation-changed": (self._on_aggregation_change,),
-                "property-type-changed": (self._on_property_type_changed,),
             },
         )
 
         aggregation = builder.get_object("aggregation")
         aggregation.set_selected(self.AGGREGATION.index(self.subject.aggregation))
 
-        dropdown = builder.get_object("property-type")
-        model = list_of_classifiers(self.subject.model)
-        dropdown.set_model(model)
-
-        if self.subject.type:
-            dropdown.set_selected(
-                next(
-                    n for n, lv in enumerate(model) if lv.value == self.subject.type.id
-                )
-            )
-
-        dropdown.connect("notify::selected", self._on_property_type_changed)
-
-        return builder.get_object("property-editor")
+        return builder.get_object("property-aggregation-editor")
 
     @transactional
     def _on_aggregation_change(self, combo, _pspec):
         self.subject.aggregation = self.AGGREGATION[combo.get_selected()]
 
-    @transactional
-    def _on_property_type_changed(self, dropdown, _pspec):
-        if id := dropdown.get_selected_item().value:
-            element = self.subject.model.lookup(id)
-            assert isinstance(element, UML.Type)
-            self.subject.type = element
-        else:
-            del self.subject.type
 
-
+@PropertyPages.register(PropertyItem)
 @PropertyPages.register(ProxyPortItem)
-class ProxyPortPropertyPage(PropertyPageBase):
+class PropertyTypePropertyPage(PropertyPageBase):
     order = 31
 
     def __init__(self, item):
@@ -195,16 +174,44 @@ class ProxyPortPropertyPage(PropertyPageBase):
             return
 
         builder = new_builder(
-            "proxyport-editor",
+            "property-type-editor",
             signals={
                 "show-type-changed": (self._on_show_type_change,),
             },
         )
 
-        show_type = builder.get_object("show-type")
-        show_type.set_active(self.item.show_type)
+        dropdown = builder.get_object("property-type")
+        model = list_of_classifiers(self.item.subject.model)
+        dropdown.set_model(model)
 
-        return builder.get_object("proxyport-editor")
+        if self.item.subject.type:
+            dropdown.set_selected(
+                next(
+                    n
+                    for n, lv in enumerate(model)
+                    if lv.value == self.item.subject.type.id
+                )
+            )
+
+        dropdown.connect("notify::selected", self._on_property_type_changed)
+
+        if isinstance(self.item.subject, UML.Port):
+            show_type = builder.get_object("show-type")
+            show_type.set_active(self.item.show_type)
+        else:
+            builder.get_object("type-toggle-box").unparent()
+
+        return builder.get_object("property-type-editor")
+
+    @transactional
+    def _on_property_type_changed(self, dropdown, _pspec):
+        subject = self.item.subject
+        if id := dropdown.get_selected_item().value:
+            element = subject.model.lookup(id)
+            assert isinstance(element, UML.Type)
+            subject.type = element
+        else:
+            del subject.type
 
     @transactional
     def _on_show_type_change(self, button, _gparam):
