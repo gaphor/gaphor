@@ -203,4 +203,5 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 "min-height": 8,
                 "justify-content": JustifyContent.START,
             },
+            draw=draw_top_separator,
         )
