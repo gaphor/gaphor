@@ -81,7 +81,8 @@ class ModelBrowser(UIComponent, ActionProvider):
 
         def list_view_activate(list_view, position):
             element = self.selection.get_item(position).get_item().element
-            self.open_element(element)
+            if element:
+                self.open_element(element)
 
         self.tree_view.connect("activate", list_view_activate)
 
