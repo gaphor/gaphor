@@ -139,7 +139,7 @@ class PropertyPropertyPage(PropertyPageBase):
         self.subject = subject
 
     def construct(self):
-        if not self.subject:
+        if not self.subject or isinstance(self.subject, UML.Port):
             return
 
         builder = new_builder(

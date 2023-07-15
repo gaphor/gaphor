@@ -112,6 +112,15 @@ def test_property_property_page(element_factory):
     assert subject.aggregation == "composite"
 
 
+def test_no_property_property_page_for_ports(element_factory):
+    subject = element_factory.create(UML.Port)
+    property_page = PropertyPropertyPage(subject)
+
+    widget = property_page.construct()
+
+    assert not widget
+
+
 def test_property_type(element_factory):
     subject = element_factory.create(SysML.sysml.Property)
     type = element_factory.create(UML.Class)
