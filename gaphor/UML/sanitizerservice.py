@@ -63,7 +63,12 @@ class SanitizerService(Service):
             return
 
         old_subject = event.old_value
-        if old_subject and not old_subject.presentation and deletable(old_subject):
+        if (
+            old_subject
+            and deletable(old_subject)
+            and not old_subject.presentation
+            and not old_subject.ownedElement
+        ):
             old_subject.unlink()
 
             self.event_manager.handle(
