@@ -288,6 +288,28 @@ def test_drop_multiple_elements(model_browser, element_factory, event_manager):
     assert class_a not in model_browser.get_selected_elements()
 
 
+def test_unlink_element_should_not_collapse_branch(
+    model_browser, element_factory, event_manager
+):
+    package = element_factory.create(UML.Package)
+    package.name = "p"
+    class_a = element_factory.create(UML.Class)
+    class_a.package = package
+    class_a.name = "a"
+    class_b = element_factory.create(UML.Class)
+    class_b.package = package
+    class_b.name = "b"
+
+    row0 = model_browser.selection.get_item(0)
+    row0.set_expanded(True)
+
+    class_a.unlink()
+
+    assert row0.get_item().element is package
+    assert row0.get_expanded()
+    assert model_browser.selection.get_item(1).get_item().element is class_b
+
+
 class MockRowItem:
     def __init__(self, list_item):
         self.list_item = list_item

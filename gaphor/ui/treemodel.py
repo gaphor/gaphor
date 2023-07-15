@@ -237,7 +237,10 @@ class TreeModel:
     def notify_child_model(self, element):
         # Only notify the change, the branch is created in child_model()
         owner_tree_item = self.tree_item_for_element(element.owner)
-        if (owner_branch := self.branches.get(owner_tree_item)) is not None:
+        if (
+            not self.branches.get(self.tree_item_for_element(element))
+            and (owner_branch := self.branches.get(owner_tree_item)) is not None
+        ):
             owner_branch.changed(element)
 
     def clear(self) -> None:
