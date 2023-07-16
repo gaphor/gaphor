@@ -62,22 +62,19 @@ class SanitizerService(Service):
         ):
             return
 
-        old_subject = event.old_value
-        if (
-            old_subject
-            and deletable(old_subject)
-            and not old_subject.presentation
-            and not old_subject.ownedElement
-        ):
-            old_subject.unlink()
+        if old_subject := event.old_value:
+            if isinstance(old_subject, UML.Package) and old_subject.ownedElement:
+                return
+            elif deletable(old_subject) and not old_subject.presentation:
+                old_subject.unlink()
 
-            self.event_manager.handle(
-                Notification(
-                    gettext(
-                        "Removed unused elements from the model: they are not used in any other diagram."
+                self.event_manager.handle(
+                    Notification(
+                        gettext(
+                            "Removed unused elements from the model: they are not used in any other diagram."
+                        )
                     )
                 )
-            )
 
     @event_handler(AssociationSet)
     @undo_guard
