@@ -24,6 +24,7 @@ language implementation can offer?
 * Diagram types
 * A toolbox definition
 * [Connectors](#connectors), allow diagram items to connect
+* [Format/parse](#format-and-parse) model elements to and from a textual representation
 * [Copy/paste](#copy-and-paste) behavior when element copying is not trivial,
   for example with more than one element is involved
 * [Grouping](#grouping), allow elements to be nested in one another
@@ -60,6 +61,33 @@ Normally you would inherit from `BaseConnector`.
    :members:
 ```
 
+## Format and parse
+
+Model elements can be formatted to a simple text representation. This is used for example in the Model Browser.
+It's not a full serialization of the model element.
+
+In some cases it's useful to parse a text back into an object. This is done when you edit attributes and operations
+on a class.
+
+Not every ``format()`` needs to have an equivalent ``parse()`` function.
+
+```{eval-rst}
+.. function:: gaphor.core.format.format(element: Element) -> str
+
+   Returns a human readable representation of the model element. In most cases this is just the name,
+   however, properties (attributes) and operations are formatted more extensively:
+
+   .. code::
+
+      + attr: str
+      + format(element: Element): string
+
+.. function:: gaphor.core.format.parse(element: Element, text: str) -> None
+
+   Parse ``text`` and populate ``element``. The element is populated with elements from the text. This may mean that
+   new model elements are created as part of the parse process.
+```
+
 ## Copy and paste
 
 Copy and paste works out of the box for simple items: one diagram item with one model element (the `subject`).
@@ -71,7 +99,7 @@ In those specific cases you need to implement your own copy and paste functions.
 two functions: one for copying and one for pasting.
 
 ```{eval-rst}
-.. function:: gaphor.diagram.copypaste.copy(obj: Element) -> Iterator[tuple[Id, Opaque]]
+.. function:: gaphor.diagram.copypaste.copy(element: Element) -> Iterator[tuple[Id, Opaque]]
 
    Create a copy of an element (or list of elements).
    The returned type should be distinct, so the `paste()`
