@@ -1,8 +1,11 @@
 import math
 
+from gi.repository import Gio
+
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
+    LabelValue,
     PropertyPageBase,
     PropertyPages,
     handler_blocking,
@@ -66,6 +69,55 @@ class ObjectNodePropertyPage(PropertyPageBase):
     @transactional
     def _on_ordering_show_change(self, button, gparam):
         self.item.show_ordering = button.get_active()
+
+
+@PropertyPages.register(UML.CallBehaviorAction)
+class CallBehaviorActionPropertyPage(PropertyPageBase):
+    order = 15
+
+    def __init__(self, item):
+        self.subject = item
+
+    def construct(self):
+        builder = new_builder("call-action-editor")
+
+        dropdown = builder.get_object("behavior")
+        options = self._behavior_options()
+        dropdown.set_model(options)
+
+        if self.subject.behavior:
+            dropdown.set_selected(
+                next(
+                    n
+                    for n, lv in enumerate(options)
+                    if lv.value == self.subject.behavior.id
+                )
+            )
+
+        dropdown.connect("notify::selected", self._on_behavior_changed)
+
+        return builder.get_object("call-action-editor")
+
+    def _behavior_options(self):
+        options = Gio.ListStore.new(LabelValue)
+        options.append(LabelValue("", None))
+
+        for c in sorted(
+            (c for c in self.subject.model.select(UML.Behavior) if c.name),
+            key=lambda c: c.name or "",
+        ):
+            options.append(LabelValue(c.name, c.id))
+
+        return options
+
+    @transactional
+    def _on_behavior_changed(self, dropdown, _pspec):
+        if id := dropdown.get_selected_item().value:
+            element = self.subject.model.lookup(id)
+            assert isinstance(element, UML.Behavior)
+            self.subject.behavior = element
+        else:
+            del self.subject.behavior
 
 
 @PropertyPages.register(DecisionNodeItem)

@@ -222,3 +222,11 @@ def format_include(el):
     return gettext("include: {name}").format(
         name=el.addition and el.addition.name or ""
     )
+
+
+@format.register(UML.CallBehaviorAction)
+def format_call_behavior_action_name(el):
+    """Name conforms to UML2.5.1 16.3.4.1 naming description"""
+    if el.behavior and not el.name:
+        return el.behavior.name
+    return el.name or ""
