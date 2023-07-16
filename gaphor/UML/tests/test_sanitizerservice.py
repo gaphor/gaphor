@@ -4,7 +4,7 @@ from gaphor import UML
 from gaphor.core.modeling import Comment, Diagram
 from gaphor.diagram.general import CommentItem, CommentLineItem
 from gaphor.diagram.tests.fixtures import connect
-from gaphor.UML.classes import ClassItem, GeneralizationItem
+from gaphor.UML.classes import ClassItem, GeneralizationItem, PackageItem
 from gaphor.UML.profiles import ExtensionItem
 from gaphor.UML.sanitizerservice import SanitizerService
 
@@ -52,7 +52,7 @@ def test_connect_element_with_comments(create_item, diagram):
 
 
 def test_presentation_delete(create_item, element_factory):
-    """Remove element if the last instance of an item is deleted."""
+    """Remove element if the last presentation of an item is deleted."""
     klassitem = create_item(ClassItem, UML.Class)
     klass = klassitem.subject
 
@@ -65,6 +65,26 @@ def test_presentation_delete(create_item, element_factory):
 
     assert not klassitem.diagram
     assert klass not in element_factory
+
+
+def test_no_presentation_delete_with_owned_element(create_item, element_factory):
+    """Do not remove element if it has children."""
+    package_item = create_item(PackageItem, UML.Package)
+    package = package_item.subject
+    class_item = create_item(ClassItem, UML.Class)
+    klass = class_item.subject
+    klass.package = package
+
+    assert class_item.subject.presentation[0] is class_item
+    assert class_item.diagram
+    assert package.ownedElement[0] == klass
+
+    # Delete presentation here:
+
+    package_item.unlink()
+
+    assert not package_item.diagram
+    assert package in element_factory
 
 
 def test_stereotype_attribute_delete(element_factory):

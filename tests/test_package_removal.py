@@ -39,9 +39,10 @@ def test_package_removal(session, event_manager, element_factory):
     # Check the profile has 1 presentation
     assert len(profiles[0].presentation) == 1
 
-    # Unlink the presentation
+    # Unlink the presentation and profile
     with Transaction(event_manager):
         profiles[0].presentation[0].unlink()
+        profiles[0].unlink()
 
     assert not element_factory.lselect(UML.Profile)
 
