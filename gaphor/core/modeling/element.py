@@ -100,12 +100,12 @@ class Element:
 
     @property
     def id(self) -> Id:
-        "Id"
+        "An id (read-only), unique within the model."
         return self._id
 
     @property
     def model(self) -> RepositoryProtocol:
-        """The owning model, raises TypeError when model is not set."""
+        """The owning model, raises :class:`TypeError` when model is not set."""
         if not self._model:
             raise TypeError(
                 "Can't retrieve the model since it's not set on construction"
@@ -122,15 +122,15 @@ class Element:
                 if isinstance(prop, umlprop):
                     yield prop
 
-    def save(self, save_func):
-        """Save the state by calling save_func(name, value)."""
+    def save(self, save_func) -> None:
+        """Save the state by calling ``save_func(name, value)``."""
         for prop in self.umlproperties():
             prop.save(self, save_func)
 
-    def load(self, name, value):
+    def load(self, name, value) -> None:
         """Loads value in name.
 
-        Make sure that for every load postload() should be called.
+        Make sure that after all elements are loaded, postload() should be called.
         """
         prop = getattr(type(self), name)
         prop.load(self, value)
@@ -140,13 +140,19 @@ class Element:
 
     __repr__ = __str__
 
-    def postload(self):
-        """Fix up the odds and ends."""
+    def postload(self) -> None:
+        """Fix up the odds and ends.
+
+        This is run after all elements are loaded.
+        """
         for prop in self.umlproperties():
             prop.postload(self)
 
-    def unlink(self):
-        """Unlink the element. All the elements references are destroyed.
+    def unlink(self) -> None:
+        """Unlink the element.
+
+        All the elements references are destroyed.
+        For composite associations, the associated elements are also unlinked.
 
         The unlink lock is acquired while unlinking this element's
         properties to avoid recursion problems.
@@ -168,23 +174,39 @@ class Element:
         log.debug("unlinking %s", self)
         self.handle(unlink_event)
 
-    def handle(self, event):
-        """Propagate incoming events."""
+    def handle(self, event) -> None:
+        """Propagate incoming events.
+
+        This only works if the element has been created by an :class:`~gaphor.core.modeling.ElementFactory`
+        """
         if model := self._model:
             model.handle(event)
 
     def watcher(self, default_handler: Handler | None = None) -> EventWatcherProtocol:
+        """Create a new watcher for this element.
+
+        Watchers provide a convenient way to get signalled when a property relative to
+        ``self`` has been changed.
+
+        To use a watcher, the element should be created by a properly wired up :class:`~gaphor.core.modeling.ElementFactory``.
+
+        This example is purely illustrative:
+
+        >>> element = Element()
+        >>> watcher = element.watcher(default_handler=print)
+        >>> watcher.watch("note")  # Watch for changed on element.note
+        """
         if model := self._model:
             return model.watcher(self, default_handler)
         else:
             return DummyEventWatcher()
 
     def isKindOf(self, class_: type[Element]) -> bool:
-        """Returns true if the object is an instance of `class_`."""
+        """Returns :const:`True` if the object is an instance of ``class_``."""
         return isinstance(self, class_)
 
     def isTypeOf(self, other: Element) -> bool:
-        """Returns true if the object is of the same type as the other."""
+        """Returns :const:`True` if the object is of the same type as the ``other``."""
         return isinstance(self, type(other))
 
     def __setattr__(self, key, value):
@@ -221,7 +243,7 @@ class RepositoryProtocol(Protocol):
         ...
 
     @overload
-    def select(self, expression: type[T]) -> Iterator[T]:
+    def select(self, type_: type[T]) -> Iterator[T]:
         ...
 
     @overload

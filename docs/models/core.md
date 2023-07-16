@@ -29,3 +29,10 @@ This diagram is provided for completion sake.
 ```{diagram} change sets
 :model: core
 ```
+
+
+```{toctree}
+:hidden:
+
+core_element
+```
