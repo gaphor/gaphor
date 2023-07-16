@@ -164,9 +164,9 @@ By default the pointer tool is selected after an element is placed from the tool
 
 By default elements that are not part of any diagram in the model will be removed. If this option is turned off, elements remain in the model and may be found in the model browser.
 
-### Language
+### Diagram Language
 
-The language modifier is only applicable to the loaded model and how it is shown in the diagram. The language setting is saved as part of the model and defaults to English.
+The diagram language modifier is only applicable to the loaded model and how it is shown in the diagram. The diagram language setting is saved as part of the model and defaults to English.
 
 The UI language of Gaphor is controlled by the operating system.
 

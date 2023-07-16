@@ -292,9 +292,9 @@
                         <child>
                           <object class="GtkLabel">
                             <property name="hexpand">1</property>
-                            <property name="label" translatable="yes">Language</property>
+                            <property name="label" translatable="yes">Diagram Language</property>
                             <property name="xalign">0</property>
-                            <property name="tooltip-text" translatable="yes">The (spoken) language used in this model.</property>
+                            <property name="tooltip-text" translatable="yes">The (natural) language used in this model.</property>
                           </object>
                         </child>
                         <child>
@@ -302,7 +302,7 @@
                             <property name="model">
                               <object class="GtkStringList" id="language-model" />
                             </property>
-                            <property name="tooltip-text" translatable="yes">The (spoken) language used in this model.</property>
+                            <property name="tooltip-text" translatable="yes">The (natural) language used in this model.</property>
                           </object>
                         </child>
                       </object>
