@@ -24,7 +24,9 @@ class ItemPainter:
 
     def paint_item(self, item, cr):
         selection = self.selection
-        diagram = item.diagram
+        if not (diagram := item.diagram):
+            return
+
         style = diagram.style(StyledItem(item, selection, self.dark_mode))
 
         cr.save()
