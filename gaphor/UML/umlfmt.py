@@ -180,8 +180,8 @@ def format_slot(el):
 
 
 @format.register(UML.NamedElement)
+@format.register(UML.Pin)
 def format_namedelement(el, **kwargs):
-    """Format named element."""
     return el.name or ""
 
 
