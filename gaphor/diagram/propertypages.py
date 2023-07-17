@@ -381,4 +381,3 @@ class NotePropertyPage(PropertyPageBase):
         self.subject.note = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), False
         )
-
