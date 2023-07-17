@@ -58,7 +58,7 @@ def init_entry_points(
                 if depcls:
                     kwargs[param_name] = init(param_name, depcls)
                 elif param.default is inspect.Parameter.empty:
-                    logger.warn(
+                    logger.warning(
                         "Entrypoint %s parameter %s does not reference a resolved dependency",
                         name,
                         param_name,
