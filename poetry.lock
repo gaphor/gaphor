@@ -590,17 +590,20 @@ docs = ["furo (>=2022,<2024)", "sphinx (>=4.3,<8.0)"]
 
 [[package]]
 name = "generic"
-version = "1.1.1"
+version = "1.1.2"
 description = "Generic programming library for Python"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "generic-1.1.1-py3-none-any.whl", hash = "sha256:be881c40192f97bf567c4ffe0f1d3613db0206ee10ee3352b6226328900c7691"},
-    {file = "generic-1.1.1.tar.gz", hash = "sha256:507cf6bfa2b994d61bedcc415624df3e4a6ed8cf0b22d0291a84a0dc16f66ea2"},
+    {file = "generic-1.1.2-py3-none-any.whl", hash = "sha256:05ab64121496a31eb56882df64347841d7e7cd65bff9f7b12576ee14f6bd5ae2"},
+    {file = "generic-1.1.2.tar.gz", hash = "sha256:35f52f9a450801d9be519aa60568743194d588b25291e4689cf3529d577e45b0"},
 ]
 
 [package.dependencies]
-exceptiongroup = ">=1.0.0-rc.5,<2.0.0"
+exceptiongroup = ">=1.0.0,<2.0.0"
+
+[package.extras]
+docs = ["furo (>=2022,<2024)", "sphinx (>=4.3,<7.1)"]
 
 [[package]]
 name = "greenlet"
