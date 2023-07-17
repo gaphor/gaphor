@@ -327,7 +327,7 @@ class LineStylePage(PropertyPageBase):
         return builder.get_object("line-editor")
 
     @transactional
-    def _on_orthogonal_change(self, button):
+    def _on_orthogonal_change(self, button, gparam):
         if len(self.item.handles()) < 3:
             line_segment = Segment(self.item, self.item.diagram)
             line_segment.split_segment(0)
@@ -337,7 +337,7 @@ class LineStylePage(PropertyPageBase):
         self.horizontal_button.set_sensitive(active)
 
     @transactional
-    def _on_horizontal_change(self, button):
+    def _on_horizontal_change(self, button, gparam):
         self.item.horizontal = button.get_active()
         self.item.diagram.update_now((self.item,))
 
@@ -381,3 +381,4 @@ class NotePropertyPage(PropertyPageBase):
         self.subject.note = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), False
         )
+

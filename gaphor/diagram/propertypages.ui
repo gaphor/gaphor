@@ -64,15 +64,43 @@
       <object class="GtkBox">
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkCheckButton" id="line-rectilinear">
-            <property name="label" translatable="yes">Rectilinear</property>
-            <signal name="toggled" handler="rectilinear-changed" swapped="no"/>
+          <object class="GtkBox">
+            <property name="margin_top">6</property>
+            <property name="margin_bottom">6</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Rectilinear</property>
+                <property name="halign">start</property>
+                <property name="hexpand">1</property>
+                <property name="hexpand-set">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="line-rectilinear">
+                <property name="halign">end</property>
+                <signal name="notify::active" handler="rectilinear-changed" swapped="no"/>
+              </object>
+            </child>
           </object>
         </child>
         <child>
-          <object class="GtkCheckButton" id="flip-orientation">
-            <property name="label" translatable="yes">Flip orientation</property>
-            <signal name="toggled" handler="orientation-changed" swapped="no"/>
+          <object class="GtkBox">
+            <property name="margin_top">6</property>
+            <property name="margin_bottom">6</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Flip orientation</property>
+                <property name="halign">start</property>
+                <property name="hexpand">1</property>
+                <property name="hexpand-set">1</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="flip-orientation">
+                <property name="halign">end</property>
+                <signal name="notify::active" handler="orientation-changed" swapped="no"/>
+              </object>
+            </child>
           </object>
         </child>
       </object>
@@ -222,3 +250,4 @@
   </object>
 
 </interface>
+
