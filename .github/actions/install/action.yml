@@ -1,5 +1,5 @@
-name: 'Install Dependencies and Test'
-description: 'Collects project metadata, installs Python and Poetry, runs pytest'
+name: 'Install Dependencies'
+description: 'Collects project metadata, installs Python, Poetry, and Gaphor'
 outputs:
   version:
     description: 'Build version with added dev reference for non-releases'
@@ -44,7 +44,4 @@ runs:
     - name: Compile release translations
       if: github.event_name == 'release'
       run: poetry run poe gettext-mo-release
-      shell: bash
-    - name: Test with Pytest
-      run: ${{ runner.os == 'Linux' && 'xvfb-run' || '' }} poetry run pytest --cov
       shell: bash

@@ -81,6 +81,8 @@ jobs:
         uses: ./.github/actions/install
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Run Gaphor Tests
+        run: xvfb-run poetry run pytest --cov
       - name: Upload Code Coverage to Code Climate
         if: ${{ matrix.python_version == env.python_version }}
         uses: paambaati/codeclimate-action@4cace242c6e0a2dd554bbb3cc12c58047d8af3e5 # v5.0.0
@@ -171,6 +173,8 @@ jobs:
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
+      - name: Run Gaphor Tests
+        run: poetry run pytest --cov
       - name: Create macOS Application
         id: create
         if: ${{ github.actor != 'dependabot[bot]' }}
@@ -321,6 +325,8 @@ jobs:
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
+      - name: Run Gaphor Tests
+        run: poetry run pytest --cov
       - name: Create Windows Executables
         uses: ./.github/actions/windows_executables
         if: ${{ github.actor != 'dependabot[bot]' }}
