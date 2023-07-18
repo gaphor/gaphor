@@ -1,0 +1,6 @@
+[run]
+source = gaphor
+omit =
+    */tests/*
+    gaphor/ui/uipreview.py
+

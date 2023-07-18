@@ -205,13 +205,6 @@ addopts = [
 ]
 junit_family = "xunit1"
 
-[tool.coverage.run]
-source = [ "gaphor" ]
-omit = [
-    "*/tests/*",
-    "gaphor/ui/uipreview.py"
-]
-
 [tool.isort]
 multi_line_output = 3
 include_trailing_comma = true
