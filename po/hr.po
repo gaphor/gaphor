@@ -4,19 +4,20 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version:  Gaphor\n"
+"Project-Id-Version: Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-30 21:22+0200\n"
-"PO-Revision-Date: 2023-06-20 14:53+0000\n"
+"PO-Revision-Date: 2023-07-19 13:06+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hr/>\n"
 "Language: hr\n"
-"Language-Team: Croatian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hr/>\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.0-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -343,9 +344,8 @@ msgid "Composite"
 msgstr "Sastavljeno"
 
 #: gaphor/SysML/propertypages.ui:187
-#, fuzzy
 msgid "Type"
-msgstr "Stil"
+msgstr "Vrsta"
 
 #: gaphor/SysML/propertypages.ui:210
 msgid "Id"
@@ -615,7 +615,7 @@ msgstr "Čvor odluke/sjedinjavanja"
 
 #: gaphor/UML/actions/actionstoolbox.py:134
 msgid "Fork/join node"
-msgstr "Čvor račvanja/spajanja"
+msgstr "Čvor grananja/spajanja"
 
 #: gaphor/UML/actions/actionstoolbox.py:146
 #: gaphor/UML/actions/actionstoolbox.py:152
@@ -1234,7 +1234,7 @@ msgstr "Pseudostanje pridruživanja"
 
 #: gaphor/UML/states/statestoolbox.py:154
 msgid "Fork Pseudostate"
-msgstr "Pseudostanje račvanja"
+msgstr "Pseudostanje grananja"
 
 #: gaphor/UML/states/statestoolbox.py:166
 msgid "Junction Pseudostate"
@@ -1826,17 +1826,16 @@ msgid "Read Input"
 msgstr "Čitaj unos"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "FeatureInput"
-msgstr "Značajka"
+msgstr "Unos značajki"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Request Actuation"
-msgstr "Zatraži upravljač"
+msgstr "Zatraži izvršavanje"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Actuation Command"
-msgstr "Naredba pokretanja"
+msgstr "Naredba za izvršavanje"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Model Navigation"
@@ -2457,7 +2456,7 @@ msgstr "Alati"
 
 #: gaphor/ui/mainwindow.py:233
 msgid "Press F11 to exit Fullscreen"
-msgstr ""
+msgstr "Pritisni F11 za napuštanje cjeloekranskog prikaza"
 
 #: gaphor/ui/mainwindow.py:288
 msgid "Profile: {name}"
@@ -2571,7 +2570,7 @@ msgstr "Zatvori dijagram"
 
 #: gaphor/ui/help/shortcuts.ui:62
 msgid "Toggle Fullscreen"
-msgstr ""
+msgstr "Uklj./Isklj. cjeloekranski prikaz"
 
 #: gaphor/ui/help/shortcuts.ui:70
 msgid "Quit Gaphor"
@@ -2700,4 +2699,3 @@ msgstr "Ukloni vezu „{name}”"
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr "Aktualiziraj vezu „{name}”"
-
