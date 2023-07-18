@@ -1,4 +1,4 @@
-# flake8: noqa F401,F811
+# ruff: noqa: F401,F811
 from gaphor import UML
 from gaphor.diagram.tests.test_instanteditors import view
 from gaphor.UML import recipes
