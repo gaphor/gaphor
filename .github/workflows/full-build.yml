@@ -8,6 +8,7 @@ on:
 env:
   python_version: '3.11'
   mainline_build: ${{ github.ref == 'refs/heads/main' || github.event.label.name == 'translation' || github.event_name == 'release' }}
+  PYTHONWARNDEFAULTENCODING: 'true'
 
 jobs:
   lint:
