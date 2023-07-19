@@ -1,4 +1,3 @@
-# flake8: noqa F401,F811
 """Diagram could not be loaded due to JuggleError (presumed cyclic resolving of
 diagram items)."""
 

@@ -1,4 +1,4 @@
-# flake8: noqa F401,F811
+# ruff: noqa: F401,F811
 import pytest
 
 from gaphor import UML
