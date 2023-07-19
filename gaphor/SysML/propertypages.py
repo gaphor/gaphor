@@ -109,6 +109,9 @@ class CompartmentPage(PropertyPageBase):
         show_references = builder.get_object("show-references")
         show_references.set_active(self.item.show_references)
 
+        show_values = builder.get_object("show-values")
+        show_values.set_active(self.item.show_values)
+
         return builder.get_object("compartment-editor")
 
     @transactional
