@@ -37,20 +37,20 @@ def copy(obj: Element | Iterable) -> Iterator[tuple[Id, Opaque]]:
 
 
 def paste_link(
-    copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element | None]
+    copy_data: Opaque, diagram: Diagram, lookup: Callable[[Id], Element | None]
 ) -> set[Presentation]:
     return _paste(copy_data, diagram, lookup, full=False)
 
 
 def paste_full(
-    copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element | None]
+    copy_data: Opaque, diagram: Diagram, lookup: Callable[[Id], Element | None]
 ) -> set[Presentation]:
     return _paste(copy_data, diagram, lookup, full=True)
 
 
 @singledispatch
 def paste(
-    copy_data: Opaque, diagram: Diagram, lookup: Callable[[str], Element | None]
+    copy_data: Opaque, diagram: Diagram, lookup: Callable[[Id], Element | None]
 ) -> Iterator[Element]:
     """Paste previously copied data.
 
@@ -85,7 +85,7 @@ def deserialize(ser, lookup):
 
 class ElementCopy(NamedTuple):
     cls: type[Element]
-    id: str | bool
+    id: Id
     data: dict[str, tuple[str, str]]
 
 
@@ -134,7 +134,7 @@ def _copy_diagram(element: Diagram) -> Iterator[tuple[Id, ElementCopy]]:
 class PresentationCopy(NamedTuple):
     cls: type[Element]
     data: dict[str, tuple[str, str]]
-    parent: str | None
+    parent: Id | None
 
 
 def copy_presentation(item: Presentation) -> PresentationCopy:
@@ -171,7 +171,7 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
 
 
 class CopyData(NamedTuple):
-    elements: dict[str, object]
+    elements: dict[Id, Opaque]
 
 
 @copy.register  # type: ignore[arg-type]
@@ -183,9 +183,9 @@ def _copy_all(items: Iterable) -> CopyData:
 def _paste(copy_data, diagram, lookup, full) -> set[Presentation]:
     assert isinstance(copy_data, CopyData)
 
-    new_elements: dict[str, Element | None] = {}
+    new_elements: dict[Id, Element | None] = {}
 
-    def element_lookup(ref: str):
+    def element_lookup(ref: Id):
         if ref in new_elements:
             return new_elements[ref]
 
