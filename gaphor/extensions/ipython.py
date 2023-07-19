@@ -7,6 +7,7 @@ from IPython.display import SVG, DisplayObject, Image
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.export import save_png, save_svg
 from gaphor.plugins.autolayout import AutoLayout
+from gaphor.services.modelinglanguage import ModelingLanguageService
 
 
 def auto_layout(diagram: Diagram) -> None:
@@ -16,11 +17,13 @@ def auto_layout(diagram: Diagram) -> None:
 
 def draw(diagram: Diagram, format="png") -> DisplayObject:
     buffer = BytesIO()
+    modeling_language = ModelingLanguageService()
+
     if format == "svg":
-        save_svg(buffer, diagram)
+        save_svg(buffer, diagram, modeling_language)
         return SVG(buffer.getvalue())
     elif format == "png":
-        save_png(buffer, diagram)
+        save_png(buffer, diagram, modeling_language)
         return Image(buffer.getvalue())
     else:
         raise ValueError(

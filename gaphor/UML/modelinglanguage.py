@@ -26,3 +26,6 @@ class UMLModelingLanguage(ModelingLanguage):
 
     def lookup_element(self, name):
         return getattr(uml, name, None) or getattr(diagramitems, name, None)
+
+    def format_diagram_label(self, diagram) -> str:
+        return str(diagram.name)

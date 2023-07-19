@@ -18,10 +18,13 @@ from gaphor.ui.filedialog import save_file_dialog
 class DiagramExport(Service, ActionProvider):
     """Service for exporting diagrams as images (SVG, PNG, PDF)."""
 
-    def __init__(self, diagrams=None, export_menu=None, main_window=None):
+    def __init__(
+        self, diagrams=None, export_menu=None, main_window=None, modeling_language=None
+    ):
         self.diagrams = diagrams
         self.export_menu = export_menu
         self.main_window = main_window
+        self.modeling_language = modeling_language
         if export_menu:
             export_menu.add_actions(self)
         self.filename: Path = Path("export").absolute()
@@ -35,10 +38,11 @@ class DiagramExport(Service, ActionProvider):
         filename = self.filename.with_name(
             escape_filename(diagram.name) or "export"
         ).with_suffix(dot_ext)
+        modeling_language = self.modeling_language
 
         def save_handler(filename):
             self.filename = filename
-            handler(filename, diagram)
+            handler(filename, diagram, modeling_language)
 
         save_file_dialog(
             title,

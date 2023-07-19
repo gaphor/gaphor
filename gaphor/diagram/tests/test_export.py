@@ -8,6 +8,7 @@ from gaphor.diagram.export import (
     save_svg,
 )
 from gaphor.diagram.general import Box
+from gaphor.services.modelinglanguage import ModelingLanguageService
 
 
 @pytest.fixture
@@ -19,7 +20,7 @@ def diagram_with_box(diagram):
 def test_export_to_svg(diagram_with_box, tmp_path):
     f = tmp_path / "test.svg"
 
-    save_svg(f, diagram_with_box)
+    save_svg(f, diagram_with_box, ModelingLanguageService())
     content = f.read_text(encoding="utf-8")
 
     assert "<svg" in content
@@ -28,7 +29,7 @@ def test_export_to_svg(diagram_with_box, tmp_path):
 def test_export_to_png(diagram_with_box, tmp_path):
     f = tmp_path / "test.png"
 
-    save_png(f, diagram_with_box)
+    save_png(f, diagram_with_box, ModelingLanguageService())
     content = f.read_bytes()
 
     assert b"PNG" in content
@@ -37,7 +38,7 @@ def test_export_to_png(diagram_with_box, tmp_path):
 def test_export_to_pdf(diagram_with_box, tmp_path):
     f = tmp_path / "test.pdf"
 
-    save_pdf(f, diagram_with_box)
+    save_pdf(f, diagram_with_box, ModelingLanguageService())
     content = f.read_bytes()
 
     assert b"%PDF" in content
@@ -46,7 +47,7 @@ def test_export_to_pdf(diagram_with_box, tmp_path):
 def test_export_to_eps(diagram_with_box, tmp_path):
     f = tmp_path / "test.eps"
 
-    save_eps(f, diagram_with_box)
+    save_eps(f, diagram_with_box, ModelingLanguageService())
     content = f.read_bytes()
 
     assert b"%!PS-Adobe-3.0 EPSF-3.0" in content

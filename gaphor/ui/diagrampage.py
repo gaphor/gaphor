@@ -13,7 +13,7 @@ from gi.repository import Adw, Gdk, GdkPixbuf, Gtk
 from gaphor.core import event_handler, gettext
 from gaphor.core.modeling import StyleSheet
 from gaphor.core.modeling.diagram import Diagram, StyledDiagram
-from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted
+from gaphor.core.modeling.event import AttributeUpdated, ElementDeleted, ElementUpdated
 from gaphor.diagram.diagramtoolbox import get_tool_def, tooliter
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
 from gaphor.diagram.selection import Selection
@@ -23,7 +23,12 @@ from gaphor.diagram.tools import (
     apply_placement_tool_set,
 )
 from gaphor.diagram.tools.magnet import MagnetPainter
-from gaphor.ui.event import DiagramClosed, DiagramSelectionChanged, ToolSelected
+from gaphor.ui.event import (
+    DiagramClosed,
+    DiagramSelectionChanged,
+    ToolSelected,
+)
+from gaphor.services.modelinglanguage import ModelingLanguageChanged
 
 
 log = logging.getLogger(__name__)
@@ -88,8 +93,10 @@ class DiagramPage:
         )
 
         self.event_manager.subscribe(self._on_element_delete)
+        self.event_manager.subscribe(self._on_element_changed)
         self.event_manager.subscribe(self._on_attribute_updated)
         self.event_manager.subscribe(self._on_tool_selected)
+        self.event_manager.subscribe(self._on_modeling_language_changed)
 
     title = property(lambda s: s.diagram and s.diagram.name or gettext("<None>"))
 
@@ -169,9 +176,18 @@ class DiagramPage:
             if t.id == tool_name
         ).icon_name
 
+    @event_handler(ElementUpdated)
+    def _on_element_changed(self, event: ElementUpdated):
+        if self.diagram.element == event.element or self.diagram == event.element:
+            self.update_drawing_style()
+
     @event_handler(ToolSelected)
     def _on_tool_selected(self, event: ToolSelected):
         self.select_tool(event.tool_name)
+
+    @event_handler(ModelingLanguageChanged)
+    def _on_modeling_language_changed(self, event: ModelingLanguageChanged):
+        self.update_drawing_style()
 
     @event_handler(ElementDeleted)
     def _on_element_delete(self, event: ElementDeleted):
@@ -208,6 +224,8 @@ class DiagramPage:
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_attribute_updated)
         self.event_manager.unsubscribe(self._on_tool_selected)
+        self.event_manager.unsubscribe(self._on_modeling_language_changed)
+        self.event_manager.unsubscribe(self._on_element_changed)
         self.view = None
 
     def select_tool(self, tool_name: str):
@@ -255,7 +273,7 @@ class DiagramPage:
             .append(GuidePainter(view))
             .append(MagnetPainter(view))
             .append(RubberbandPainter(self.rubberband_state))
-            .append(DiagramTypePainter(self.diagram))
+            .append(DiagramTypePainter(self.diagram, self.modeling_language))
         )
 
         view.request_update(self.diagram.get_all_items())

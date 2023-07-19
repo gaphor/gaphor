@@ -67,6 +67,9 @@ class ModelingLanguageService(Service, ActionProvider, ModelingLanguage):
     def diagram_types(self):
         return self._modeling_language().diagram_types
 
+    def format_diagram_label(self, diagram) -> str:
+        return self._modeling_language().format_diagram_label(diagram)
+
     def lookup_element(self, name):
         return next(
             filter(

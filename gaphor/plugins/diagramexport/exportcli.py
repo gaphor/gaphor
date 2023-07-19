@@ -108,10 +108,10 @@ def export_command(args):
             log.debug("rendering: %s -> %s...", pname, outfilename)
 
             if args.format == "pdf":
-                save_pdf(outfilename, diagram)
+                save_pdf(outfilename, diagram, modeling_language)
             elif args.format == "svg":
-                save_svg(outfilename, diagram)
+                save_svg(outfilename, diagram, modeling_language)
             elif args.format == "png":
-                save_png(outfilename, diagram)
+                save_png(outfilename, diagram, modeling_language)
             else:
                 raise RuntimeError(f"Unknown file format: {args.format}")

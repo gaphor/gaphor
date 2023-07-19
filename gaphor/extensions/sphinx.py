@@ -91,8 +91,9 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
             )
 
         outfile = outdir / f"{diagram.id}"
-        save_svg(outfile.with_suffix(".svg"), diagram)
-        save_pdf(outfile.with_suffix(".pdf"), diagram)
+        modeling_language = ModelingLanguageService()
+        save_svg(outfile.with_suffix(".svg"), diagram, modeling_language)
+        save_pdf(outfile.with_suffix(".pdf"), diagram, modeling_language)
 
         # Image needs a relative path. Make our outfile path relative to the doc
         outdir = outdir.relative_to(self.env.srcdir)

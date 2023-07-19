@@ -47,3 +47,7 @@ class ModelingLanguage(metaclass=ABCMeta):
     @abstractmethod
     def lookup_element(self, name: str) -> type[Element] | None:
         """Look up a model element type by (class) name."""
+
+    @abstractmethod
+    def format_diagram_label(self, diagram) -> str:
+        """Format diagram type modeling language specific way"""

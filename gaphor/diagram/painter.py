@@ -56,8 +56,9 @@ class ItemPainter:
 
 
 class DiagramTypePainter:
-    def __init__(self, diagram):
+    def __init__(self, diagram, modeling_language):
         self.diagram = diagram
+        self.modeling_language = modeling_language
 
     def paint(self, _items, cr):
         diagram = self.diagram
@@ -67,7 +68,8 @@ class DiagramTypePainter:
         layout = PangoCairo.create_layout(cr)
         escape = GLib.markup_escape_text
         layout.set_markup(
-            f"<b>{escape(diagram.diagramType)}</b> {escape(diagram.name)}", length=-1
+            f"<b>{escape(diagram.diagramType)}</b> {escape(self.modeling_language.format_diagram_label(diagram))}",
+            length=-1,
         )
 
         font_family = style.get("font-family")

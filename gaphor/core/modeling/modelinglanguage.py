@@ -20,6 +20,9 @@ class CoreModelingLanguage(ModelingLanguage):
     def lookup_element(self, name):
         return getattr(coremodel, name, None)
 
+    def format_diagram_label(self, diagram) -> str:
+        return str(diagram.name)
+
 
 class MockModelingLanguage(ModelingLanguage):
     """This class can be used to instantly combine modeling languages."""
@@ -50,3 +53,6 @@ class MockModelingLanguage(ModelingLanguage):
             ),
             None,
         )
+
+    def format_diagram_label(self, diagram) -> str:
+        return str(diagram.name)
