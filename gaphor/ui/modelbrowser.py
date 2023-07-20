@@ -179,7 +179,8 @@ class ModelBrowser(UIComponent, ActionProvider):
     @action(name="tree-view.open")
     def tree_view_open_selected(self):
         element = self.get_selected_element()
-        self.open_element(element)
+        if element:
+            self.open_element(element)
 
     @action(name="tree-view.show-in-diagram")
     def tree_view_show_in_diagram(self, diagram_id: str) -> None:
