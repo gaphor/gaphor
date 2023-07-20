@@ -22,7 +22,6 @@ class DescriptionPropertyPage(PropertyPageBase):
 
     def __init__(self, subject: c4model.Container | c4model.Person, event_manager):
         super().__init__()
-        assert subject
         self.subject = subject
         self.event_manager = event_manager
         self.watcher = subject.watcher()
@@ -65,7 +64,6 @@ class TechnologyPropertyPage(PropertyPageBase):
 
     def __init__(self, subject: c4model.Container | c4model.Dependency, event_manager):
         super().__init__()
-        assert subject
         self.subject = subject
         self.event_manager = event_manager
 
