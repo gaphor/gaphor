@@ -146,7 +146,7 @@ class Application(Service, ActionProvider):
 
         return session
 
-    def shutdown_session(self, session):
+    def shutdown_session(self, session: Session):
         assert session
         session.shutdown()
         self._sessions.discard(session)
