@@ -384,7 +384,7 @@ class Diagram(Base):
         """
         return next((item for item in self.get_all_items() if item.id == id), None)
 
-    def unlink(self):
+    def unlink(self) -> None:
         """Unlink all canvas items then unlink this diagram."""
         for item in self.ownedPresentation:
             self.connections.remove_connections_to_item(item)
@@ -504,4 +504,4 @@ class Diagram(Base):
 
 @runtime_checkable
 class PresentationRepositoryProtocol(Protocol):
-    def create_as(self, type: type[P], id: str, diagram: Diagram) -> P: ...
+    def create_as(self, type: type[P], id: Id, diagram: Diagram) -> P: ...
