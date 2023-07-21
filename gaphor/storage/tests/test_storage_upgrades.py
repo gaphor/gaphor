@@ -10,8 +10,9 @@ from gaphor.UML import diagramitems
 def loader(element_factory, modeling_language):
     def _loader(*parsed_items):
         for item in parsed_items:
-            item.references["diagram"] = "1"
-            upgrade_canvasitem(item, "1.0.0")
+            if item.type.endswith("Item"):
+                item.references["diagram"] = "1"
+                upgrade_canvasitem(item, "1.0.0")
         parsed_data = {
             "1": element(id="1", type="Diagram"),
             **{p.id: p for p in parsed_items},
@@ -130,3 +131,33 @@ def test_upgrade_delete_property_information_flow(
 
     assert element_factory.lselect(modeling_language.lookup_element(type))
     assert element_factory.lselect(modeling_language.lookup_element("InformationFlow"))
+
+
+def test_upgrade_note_on_model_element(loader, element_factory):
+    cls_item = element(id="2", type="ClassItem")
+    cls = element(id="3", type="Class")
+    cls_item.values["note"] = "my note"
+    cls_item.references["subject"] = cls.id
+
+    loader(cls_item, cls)
+    _, cls_item, cls, *_ = element_factory.lselect()
+
+    assert not cls_item.note
+    assert cls.note == "my note"
+
+
+def test_upgrade_append_notes_on_model_element(loader, element_factory):
+    cls_item1 = element(id="2", type="ClassItem")
+    cls_item2 = element(id="3", type="ClassItem")
+    cls = element(id="44", type="Class")
+    cls_item1.values["note"] = "my note"
+    cls_item1.references["subject"] = cls.id
+    cls_item2.values["note"] = "another note"
+    cls_item2.references["subject"] = cls.id
+
+    loader(cls_item1, cls_item2, cls)
+    _, cls_item1, cls_item2, cls, *_ = element_factory.lselect()
+
+    assert not cls_item1.note
+    assert not cls_item2.note
+    assert cls.note == "my note\n\nanother note"
