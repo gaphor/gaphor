@@ -9,13 +9,14 @@ __all__ = ["load", "save"]
 import io
 import logging
 from functools import partial
+from typing import Iterable
 
 from gaphor import application
+from gaphor.core.modeling import Element, ElementFactory, Presentation
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import Element
-from gaphor.core.modeling.presentation import Presentation
+from gaphor.core.modeling.modelinglanguage import ModelingLanguage
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.storage.parser import GaphorLoader, parse_generator
+from gaphor.storage.parser import GaphorLoader, parse_generator, element
 from gaphor.storage.xmlwriter import XMLWriter
 
 FILE_FORMAT_VERSION = "3.0"
@@ -130,8 +131,11 @@ def load_elements(elements, element_factory, modeling_language, gaphor_version="
 
 
 def load_elements_generator(
-    elements, element_factory, modeling_language, gaphor_version
-):
+    elements: dict[str, element],
+    element_factory: ElementFactory,
+    modeling_language: ModelingLanguage,
+    gaphor_version: str,
+) -> Iterable[int]:
     """Load a file and create a model if possible.
 
     Exceptions: IOError, ValueError.
@@ -163,6 +167,7 @@ def load_elements_generator(
 
     for _id, elem in list(elements.items()):
         yield from update_status_queue()
+        assert elem.element
         elem.element.postload()
 
 
@@ -261,7 +266,11 @@ def load(
             status_queue(status)
 
 
-def load_generator(file_obj: io.TextIOBase, element_factory, modeling_language):
+def load_generator(
+    file_obj: io.TextIOBase,
+    element_factory: ElementFactory,
+    modeling_language: ModelingLanguage,
+) -> Iterable[int]:
     """Load a file and create a model if possible.
 
     This function is a generator. It will yield values from 0 to 100 (%)
