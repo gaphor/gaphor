@@ -1,5 +1,5 @@
-from gaphor.core.modeling import Diagram
-from gaphor.diagram.general import Line
+from gaphor.core.modeling import Comment, Diagram
+from gaphor.diagram.general import Line, CommentItem
 from gaphor.diagram.propertypages import (
     LineStylePage,
     NamePropertyPage,
@@ -39,11 +39,31 @@ def test_line_style_page_orientation(diagram):
     assert item.horizontal
 
 
-def test_note_page(diagram):
+def test_note_page_with_item_without_subject(diagram):
     item = diagram.create(Line)
     property_page = NotePropertyPage(item)
     widget = property_page.construct()
+
+    assert not widget
+
+
+def test_note_page_with_item_with_subject(create):
+    item = create(CommentItem, Comment)
+    property_page = NotePropertyPage(item)
+    widget = property_page.construct()
+
     note = find(widget, "note")
     note.get_buffer().set_text("A new note")
 
-    assert item.note == "A new note"
+    assert item.subject.note == "A new note"
+
+
+def test_note_page_with_subject(element_factory):
+    comment = element_factory.create(Comment)
+    property_page = NotePropertyPage(comment)
+    widget = property_page.construct()
+
+    note = find(widget, "note")
+    note.get_buffer().set_text("A new note")
+
+    assert comment.note == "A new note"
