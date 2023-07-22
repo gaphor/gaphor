@@ -60,10 +60,13 @@ class _PropertyPages:
             Tuple[Type[Element], Callable[[Element], PropertyPageBase]]
         ] = []
 
-    def register(self, subject_type):
+    def register(self, subject_type, func=None):
         def reg(func):
             self.pages.append((subject_type, func))
             return func
+
+        if func:
+            return reg(func)
 
         return reg
 
