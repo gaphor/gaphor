@@ -108,7 +108,7 @@ classes = ToolSection(
             "toolbox-direct-association",
             gettext("Direct Association"),
             "gaphor-direct-association-symbolic",
-            "<Shift>O",
+            None,
             new_item_factory(
                 diagramitems.AssociationItem,
                 config_func=direct_association_config,
