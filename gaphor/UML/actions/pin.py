@@ -47,10 +47,18 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
                     self.subject, [] if self.subject else [self.pin_type()]
                 )
             ),
-            Text(text=lambda: self.subject and self.subject.name or ""),
+            Text(text=self._format_name),
             style=text_position(self.connected_side()),
         )
 
+    def _format_name(self):
+        if not self.subject:
+            return ""
+
+        name = self.subject.name or ""
+        if self.show_type and self.subject.type:
+            return f"{name}: {self.subject.type.name or ''}"
+        return name
 
 @represents(UML.InputPin)
 class InputPinItem(PinItem):
