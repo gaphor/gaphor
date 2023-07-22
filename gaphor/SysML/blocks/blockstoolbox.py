@@ -11,6 +11,7 @@ from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.classes.classestoolbox import (
     composite_association_config,
     shared_association_config,
+    direct_association_config,
 )
 from gaphor.UML.toolboxconfig import namespace_config
 
@@ -71,6 +72,16 @@ blocks = ToolSection(
             "gaphor-association-symbolic",
             "<Shift>A",
             new_item_factory(uml_items.AssociationItem),
+        ),
+        ToolDef(
+            "toolbox-direct-association",
+            gettext("Direct Association"),
+            "gaphor-direct-association-symbolic",
+            None,
+            new_item_factory(
+                uml_items.AssociationItem,
+                config_func=direct_association_config,
+            ),
         ),
         ToolDef(
             "toolbox-generalization",

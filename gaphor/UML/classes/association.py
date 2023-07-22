@@ -103,12 +103,19 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
             "show_direction"
         ).watch(
             "preferred_aggregation", self.on_association_end_value
+        ).watch(
+            "preferred_tail_navigability", self.on_association_end_value
         )
         watch_information_flow(self, "Association", "abstraction")
 
     show_direction: attribute[int] = attribute("show_direction", int, default=False)
+
     preferred_aggregation = enumeration(
         "preferred_aggregation", ("none", "shared", "composite"), "none"
+    )
+
+    preferred_tail_navigability = enumeration(
+        "preferred_tail_navigability", ("none", "navigable"), "none"
     )
 
     def load(self, name, value):
