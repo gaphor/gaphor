@@ -14,7 +14,7 @@ from gaphas.segment import Segment
 from gi.repository import GObject, Gtk
 
 from gaphor.core import transactional
-from gaphor.core.modeling import Diagram, Element
+from gaphor.core.modeling import Diagram, Element, Presentation
 from gaphor.i18n import translated_ui_string
 
 
@@ -351,8 +351,8 @@ class NotePropertyPage(PropertyPageBase):
     order = 300
 
     def __init__(self, subject):
-        self.subject = subject
-        self.watcher = subject and subject.watcher()
+        self.subject = subject.subject if isinstance(subject, Presentation) else subject
+        self.watcher = self.subject and self.subject.watcher()
 
     def construct(self):
         subject = self.subject

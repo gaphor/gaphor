@@ -9,13 +9,14 @@ __all__ = ["load", "save"]
 import io
 import logging
 from functools import partial
+from typing import Callable, Iterable
 
 from gaphor import application
+from gaphor.core.modeling import Diagram, Element, ElementFactory, Presentation
 from gaphor.core.modeling.collection import collection
-from gaphor.core.modeling.element import Element
-from gaphor.core.modeling.presentation import Presentation
+from gaphor.core.modeling.modelinglanguage import ModelingLanguage
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.storage.parser import GaphorLoader, parse_generator
+from gaphor.storage.parser import GaphorLoader, parse_generator, element
 from gaphor.storage.xmlwriter import XMLWriter
 
 FILE_FORMAT_VERSION = "3.0"
@@ -130,8 +131,11 @@ def load_elements(elements, element_factory, modeling_language, gaphor_version="
 
 
 def load_elements_generator(
-    elements, element_factory, modeling_language, gaphor_version
-):
+    elements: dict[str, element],
+    element_factory: ElementFactory,
+    modeling_language: ModelingLanguage,
+    gaphor_version: str,
+) -> Iterable[float]:
     """Load a file and create a model if possible.
 
     Exceptions: IOError, ValueError.
@@ -142,7 +146,7 @@ def load_elements_generator(
     size = len(elements) * 3
     progress = 0
 
-    def update_status_queue():
+    def update_status_queue() -> Iterable[float]:
         nonlocal progress, size
         progress += 1
         if progress % 30 == 0:
@@ -163,11 +167,16 @@ def load_elements_generator(
 
     for _id, elem in list(elements.items()):
         yield from update_status_queue()
+        assert elem.element
         elem.element.postload()
 
 
 def _load_elements_and_canvasitems(
-    elements, element_factory, modeling_language, gaphor_version, update_status_queue
+    elements: dict[str, element],
+    element_factory: ElementFactory,
+    modeling_language: ModelingLanguage,
+    gaphor_version: str,
+    update_status_queue: Callable[[], Iterable[float]],
 ):
     def create_element(elem):
         if elem.element:
@@ -188,7 +197,8 @@ def _load_elements_and_canvasitems(
         if version_lower_than(gaphor_version, (2, 19, 0)):
             elem = upgrade_delete_property_information_flow(elem)
             elem = upgrade_decision_node_item_show_type(elem)
-
+        if version_lower_than(gaphor_version, (2, 20, 0)):
+            elem = upgrade_note_on_model_element_only(elem, elements)
         if not (cls := modeling_language.lookup_element(elem.type)):
             raise UnknownModelElementError(
                 f"Type {elem.type} cannot be loaded: no such element"
@@ -206,6 +216,7 @@ def _load_elements_and_canvasitems(
             diagram_id = elem.references["diagram"]
             diagram_elem = elements[diagram_id]
             create_element(diagram_elem)
+            assert isinstance(diagram_elem.element, Diagram)
             elem.element = element_factory.create_as(cls, elem.id, diagram_elem.element)
         else:
             elem.element = element_factory.create_as(cls, elem.id)
@@ -261,7 +272,11 @@ def load(
             status_queue(status)
 
 
-def load_generator(file_obj: io.TextIOBase, element_factory, modeling_language):
+def load_generator(
+    file_obj: io.TextIOBase,
+    element_factory: ElementFactory,
+    modeling_language: ModelingLanguage,
+) -> Iterable[int]:
     """Load a file and create a model if possible.
 
     This function is a generator. It will yield values from 0 to 100 (%)
@@ -431,4 +446,18 @@ def upgrade_delete_property_information_flow(elem):
         and "informationFlow" in elem.references
     ):
         del elem.references["informationFlow"]
+    return elem
+
+
+# since 2.20.0
+def upgrade_note_on_model_element_only(
+    elem: element, elements: dict[str, element]
+) -> element:
+    if elem.type.endswith("Item") and "note" in elem.values:
+        if subject := elements.get(elem.references.get("subject", None)):  # type: ignore[arg-type]
+            if subject.values.get("note"):
+                subject.values["note"] += "\n\n" + elem.values["note"]
+            else:
+                subject.values["note"] = elem.values["note"]
+            del elem.values["note"]
     return elem

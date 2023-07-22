@@ -26,6 +26,7 @@ import os
 from collections import OrderedDict
 from xml.sax import SAXParseException, handler, make_parser, xmlreader
 
+from gaphor.core.modeling import Element
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
 
 __all__ = ["parse", "ParserException"]
@@ -64,7 +65,7 @@ class element(base):
         base.__init__(self)
         self.id = id
         self.type = type
-        self.element: object = None
+        self.element: Element | None = None
 
 
 class canvas(base):
@@ -110,7 +111,7 @@ class GaphorLoader(handler.ContentHandler):
     def __init__(self):
         handler.ContentHandler.__init__(self)
         self.version = None
-        self.gaphor_version = None
+        self.gaphor_version = ""
         self.startDocument()
 
     def push(self, element, state):
@@ -141,7 +142,7 @@ class GaphorLoader(handler.ContentHandler):
     def startDocument(self):
         """Start of document: all our attributes are initialized."""
         self.version = None
-        self.gaphor_version = None
+        self.gaphor_version = ""
         self.elements: dict[str, element] = OrderedDict()
         self._stack: list[tuple[element | canvas, State]] = []
         self.text = ""
