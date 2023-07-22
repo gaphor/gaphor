@@ -36,7 +36,7 @@ The other functionalities can be extended by adding handlers to the respective
 generic functions.
 
 Modeling languages can also provide new UI components. Those components are not loaded
-directly when you import a modeling language package. Instead they should be imported via
+directly when you import a modeling language package. Instead, they should be imported via
 the `gaphor.modules` entrypoint.
 
 * [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
@@ -63,8 +63,8 @@ Normally you would inherit from `BaseConnector`.
 
 ## Format and parse
 
-Model elements can be formatted to a simple text representation. This is used for example in the Model Browser.
-It's not a full serialization of the model element.
+Model elements can be formatted to a simple text representation. For example, This is used in the Model Browser.
+It isn't a full serialization of the model element.
 
 In some cases it's useful to parse a text back into an object. This is done when you edit attributes and operations
 on a class.
@@ -91,7 +91,7 @@ Not every ``format()`` needs to have an equivalent ``parse()`` function.
 ## Copy and paste
 
 Copy and paste works out of the box for simple items: one diagram item with one model element (the `subject`).
-It leveages the `load()` and `save()` methods of the elements to ensure all relevant data is copied.
+It leverages the `load()` and `save()` methods of the elements to ensure all relevant data is copied.
 
 Sometimes items need more than one model element to work. For example an Association: it has two association ends.
 
@@ -200,9 +200,9 @@ Each property page (snippet) should inherit from `PropertyPageBase`.
 
 ## Instant (diagram) editor popups
 
-When you double click on an item in a diagram, a popup can show up so you can easily change the name.
+When you double-click on an item in a diagram, a popup can show up, so you can easily change the name.
 
-By default this works for any named element. You can register your own inline editor function if you need to.
+By default, this works for any named element. You can register your own inline editor function if you need to.
 
 ```{eval-rst}
 .. function:: gaphor.diagram.instanteditors.instant_editor(item: Item, view, event_manager, pos: Optional[Tuple[int, int]] = None) -> bool
