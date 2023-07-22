@@ -128,7 +128,7 @@ class AssociationPropertyPage(PropertyPageBase):
         def restore_nav_handler(event):
             for end_name, end in (("head", head), ("tail", tail)):
                 combo = builder.get_object(f"{end_name}-navigation")
-                self._on_end_navigability_change(combo, end)
+                self._on_end_navigability_change(combo, None, end)
 
         # Watch on association end:
         self.watcher.watch("memberEnd[Property].name", name_handler).watch(
