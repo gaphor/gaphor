@@ -24,6 +24,7 @@ language implementation can offer?
 * Diagram types
 * A toolbox definition
 * [Connectors](#connectors), allow diagram items to connect
+* [Format/parse](#format-and-parse) model elements to and from a textual representation
 * [Copy/paste](#copy-and-paste) behavior when element copying is not trivial,
   for example with more than one element is involved
 * [Grouping](#grouping), allow elements to be nested in one another
@@ -35,7 +36,7 @@ The other functionalities can be extended by adding handlers to the respective
 generic functions.
 
 Modeling languages can also provide new UI components. Those components are not loaded
-directly when you import a modeling language package. Instead they should be imported via
+directly when you import a modeling language package. Instead, they should be imported via
 the `gaphor.modules` entrypoint.
 
 * [Editor pages](#editor-property-pages), shown in the collapsible pane on the right side
@@ -60,10 +61,37 @@ Normally you would inherit from `BaseConnector`.
    :members:
 ```
 
+## Format and parse
+
+Model elements can be formatted to a simple text representation. For example, This is used in the Model Browser.
+It isn't a full serialization of the model element.
+
+In some cases it's useful to parse a text back into an object. This is done when you edit attributes and operations
+on a class.
+
+Not every ``format()`` needs to have an equivalent ``parse()`` function.
+
+```{eval-rst}
+.. function:: gaphor.core.format.format(element: Element) -> str
+
+   Returns a human readable representation of the model element. In most cases this is just the name,
+   however, properties (attributes) and operations are formatted more extensively:
+
+   .. code::
+
+      + attr: str
+      + format(element: Element): string
+
+.. function:: gaphor.core.format.parse(element: Element, text: str) -> None
+
+   Parse ``text`` and populate ``element``. The element is populated with elements from the text. This may mean that
+   new model elements are created as part of the parse process.
+```
+
 ## Copy and paste
 
 Copy and paste works out of the box for simple items: one diagram item with one model element (the `subject`).
-It leveages the `load()` and `save()` methods of the elements to ensure all relevant data is copied.
+It leverages the `load()` and `save()` methods of the elements to ensure all relevant data is copied.
 
 Sometimes items need more than one model element to work. For example an Association: it has two association ends.
 
@@ -167,9 +195,9 @@ Each property page (snippet) should inherit from `PropertyPageBase`.
 
 ## Instant (diagram) editor popups
 
-When you double click on an item in a diagram, a popup can show up so you can easily change the name.
+When you double-click on an item in a diagram, a popup can show up, so you can easily change the name.
 
-By default this works for any named element. You can register your own inline editor function if you need to.
+By default, this works for any named element. You can register your own inline editor function if you need to.
 
 ```{function} gaphor.diagram.instanteditors.instant_editor(item: ~gaphas.item.Item, view, event_manager: ~gaphor.core.eventmanager.EventManager, pos: tuple[int, int] | None = None) -> bool
 
