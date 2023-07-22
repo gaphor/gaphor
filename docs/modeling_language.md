@@ -70,41 +70,37 @@ Sometimes items need more than one model element to work. For example an Associa
 In those specific cases you need to implement your own copy and paste functions. To create such a thing you'll need to create
 two functions: one for copying and one for pasting.
 
-```{eval-rst}
-.. function:: gaphor.diagram.copypaste.copy(obj: Element) -> Iterator[tuple[Id, Opaque]]
+```{function} gaphor.diagram.copypaste.copy(obj: ~gaphor.core.modeling.Element) -> ~typing.Iterator[tuple[Id, Opaque]]
 
-   Create a copy of an element (or list of elements).
-   The returned type should be distinct, so the `paste()`
-   function can properly dispatch.
-
-.. function:: gaphor.diagram.copypaste.paste(copy_data: T, diagram: Diagram, lookup: Callable[[str], Element | None]) -> Iterator[Element]
-
-   Paste previously copied data. Based on the data type created in the
-   ``copy()`` function, try to duplicate the copied elements.
-   Returns the newly created item or element
-
-.. function:: gaphor.diagram.copypaste.paste_link(copy_data: CopyData, diagram: Diagram, lookup: Callable[[str], Element | None]) -> set[Presentation]:
-
-   Create a copy of the Presentation element, but try to link the underlying model element.
-   A shallow copy.
-
-.. function:: gaphor.diagram.copypaste.paste_full(copy_data: CopyData, diagram: Diagram, lookup: Callable[[str], Element | None]) -> set[Presentation]:
-
-   Create a copy of both Presentation and model element. A deep copy.
+Create a copy of an element (or list of elements).
+The returned type should be distinct, so the `paste()`
+function can properly dispatch.
+A copy function normally copies only the element and mandatory related elements. E.g. an Association needs two association ends.
 ```
 
-To serialize the copied elements and deserialize them again, there are two functions available:
+```{function} gaphor.diagram.copypaste.paste(copy_data: T, diagram: ~gaphor.core.modeling.Diagram, lookup: ~typing.Callable[[str], ~gaphor.core.modeling.Element | None]) -> ~typing.Iterator[~gaphor.core.modeling.Element]
 
-```{eval-rst}
-.. function:: gaphor.diagram.copypaste.serialize(value)
+Paste previously copied data. Based on the data type created in the
+``copy()`` function, try to duplicate the copied elements.
+Returns the newly created item or element
+```
 
-   Return a serialized version of a value. If the ``value`` is an element,
-   it's referenced.
+Gaphor provides some convenience functions:
 
-.. function:: gaphor.diagram.copypaste.deserialize(ser, lookup)
+```{function} copy_full(items: ~typing.Collection, lookup: ~typing.Callable[[Id], ~gaphor.core.modeling.Element | None] | None = None) -> CopyData:
 
-   Deserialize a value previously serialized with ``serialize()``. The
-   ``lookup`` function is used to resolve references to other elements.
+Copy ``items``. The ``lookup`` function is used to look up owned elements (shown as child nodes in the Model Browser).
+```
+
+```{function} gaphor.diagram.copypaste.paste_link(copy_data: CopyData, diagram: ~gaphor.core.modeling.Diagram) -> set[~gaphor.core.modeling.Presentation]:
+
+Paste a copy of the Presentation element to the diagram, but try to link the underlying model element.
+A shallow copy.
+```
+
+```{function} gaphor.diagram.copypaste.paste_full(copy_data: CopyData, diagram: ~gaphor.core.modeling.Diagram) -> set[~gaphor.core.modeling.Presentation]:
+
+Paste a copy of both Presentation and model element. A deep copy.
 ```
 
 ## Grouping
