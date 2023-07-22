@@ -65,10 +65,7 @@ class _PropertyPages:
             self.pages.append((subject_type, func))
             return func
 
-        if func:
-            return reg(func)
-
-        return reg
+        return reg(func) if func else reg
 
     def __call__(self, subject):
         for subject_type, func in self.pages:
