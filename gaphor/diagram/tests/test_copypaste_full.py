@@ -1,5 +1,6 @@
 from gaphor import UML
 from gaphor.core.modeling import Diagram, ElementFactory
+from gaphor.diagram.general import DiagramItem
 from gaphor.diagram.copypaste import copy_full, paste_full
 from gaphor.diagram.tests.test_copypaste_link import two_classes_and_a_generalization
 from gaphor.UML.classes import ClassItem, GeneralizationItem, PackageItem
@@ -66,9 +67,8 @@ def test_copy_element_factory(diagram, element_factory):
     new_diagram = new_element_factory.create(Diagram)
     paste_full(buffer, new_diagram)
 
-    # new element factory has one more diagram:
-    assert len(new_element_factory.lselect(Diagram)) == 2
-    assert element_factory.size() == new_element_factory.size() - 1
+    assert len(new_element_factory.lselect(Diagram)) == 1
+    assert element_factory.size() == new_element_factory.size()
 
 
 def test_copy_package_with_diagram(element_factory):
@@ -119,3 +119,19 @@ def test_full_copy_package_with_owned_package(element_factory):
     assert new_package.nestedPackage
     assert subpackage not in new_package.nestedPackage
     assert new_package.nestedPackage[0].name == "subpackage"
+
+
+def test_copy_diagram_with_elements(diagram, element_factory):
+    other_diagram: Diagram = element_factory.create(Diagram)
+    two_classes_and_a_generalization(other_diagram, element_factory)
+
+    diagram_item = diagram.create(DiagramItem, subject=other_diagram)
+
+    copy_buffer = copy_full([diagram_item], element_factory.lookup)
+
+    target_diagram: Diagram = element_factory.create(Diagram)
+    (new_diagram_item, *other) = paste_full(copy_buffer, target_diagram)
+
+    new_diagram = new_diagram_item.subject
+
+    assert new_diagram.ownedPresentation

@@ -16,7 +16,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 from functools import singledispatch
-from typing import Callable, Iterator, NamedTuple
+from typing import Callable, Collection, Iterator, NamedTuple
 
 from gaphor.core.modeling import Diagram, Presentation
 from gaphor.core.modeling.collection import collection
@@ -37,15 +37,18 @@ def copy(obj: Element | Iterable) -> Iterator[tuple[Id, Opaque]]:
 
 class CopyData(NamedTuple):
     elements: dict[Id, Opaque]
+    diagram_refs: set[Id]
 
 
 def copy_full(
-    items: Iterable, lookup: Callable[[Id], Element | None] | None = None
+    items: Collection, lookup: Callable[[Id], Element | None] | None = None
 ) -> CopyData:
     """Copy items, including owned elements."""
     elements = {ref: data for item in items for ref, data in copy(item)}
+    diagram_refs = {item.diagram.id for item in items if isinstance(item, Presentation)}
+
     if not lookup:
-        return CopyData(elements=elements)
+        return CopyData(elements=elements, diagram_refs=diagram_refs)
 
     def copy_owned(e):
         for o in e.ownedElement:
@@ -58,7 +61,7 @@ def copy_full(
     for ref in list(elements.keys()):
         copy_owned(lookup(ref))
 
-    return CopyData(elements=elements)
+    return CopyData(elements=elements, diagram_refs=diagram_refs)
 
 
 def paste_link(copy_data: Opaque, diagram: Diagram) -> set[Presentation]:
@@ -155,6 +158,7 @@ def _copy_diagram(element: Diagram) -> Iterator[tuple[Id, ElementCopy]]:
 class PresentationCopy(NamedTuple):
     cls: type[Element]
     data: dict[str, tuple[str, str]]
+    diagram: Id
     parent: Id | None
 
 
@@ -165,6 +169,7 @@ def copy_presentation(item: Presentation) -> PresentationCopy:
     return PresentationCopy(
         cls=item.__class__,
         data=copy_element(item, blacklist=["diagram", "parent", "children"]).data,
+        diagram=item.diagram.id,
         parent=parent.id if parent else None,
     )
 
@@ -177,8 +182,9 @@ def _copy_presentation(item: Presentation) -> Iterator[tuple[Id, object]]:
 
 
 @paste.register
-def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
-    cls, data, parent = copy_data
+def _paste_presentation(copy_data: PresentationCopy, _diagram, lookup):
+    cls, data, diagram_ref, parent = copy_data
+    diagram = lookup(diagram_ref)
     item = diagram.create(cls)
     yield item
     if parent:
@@ -194,8 +200,10 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
 def _paste(copy_data: Opaque, diagram: Diagram, full: bool) -> set[Presentation]:
     assert isinstance(copy_data, CopyData)
 
-    new_elements: dict[Id, Element | None] = {}
     model = diagram.model
+
+    # Map the original diagram ids to our new target diagram
+    new_elements: dict[Id, Element] = {ref: diagram for ref in copy_data.diagram_refs}
 
     def element_lookup(ref: Id):
         if ref in new_elements:
@@ -226,4 +234,8 @@ def _paste(copy_data: Opaque, diagram: Diagram, full: bool) -> set[Presentation]
         assert element
         element.postload()
 
-    return {e for e in new_elements.values() if isinstance(e, Presentation)}
+    return {
+        e
+        for e in new_elements.values()
+        if isinstance(e, Presentation) and e.diagram is diagram
+    }
