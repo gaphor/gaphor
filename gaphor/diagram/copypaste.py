@@ -25,16 +25,6 @@ from gaphor.core.modeling.element import Element, Id
 Opaque = object
 
 
-@singledispatch
-def copy(obj: Element | Iterable) -> Iterator[tuple[Id, Opaque]]:
-    """Create a copy of an element (or list of elements).
-
-    The returned type should be distinct, so the `paste()` function can
-    properly dispatch.
-    """
-    raise ValueError(f"No copier for {obj}")
-
-
 class CopyData(NamedTuple):
     elements: dict[Id, Opaque]
     diagram_refs: set[Id]
@@ -70,6 +60,16 @@ def paste_link(copy_data: Opaque, diagram: Diagram) -> set[Presentation]:
 
 def paste_full(copy_data: Opaque, diagram: Diagram) -> set[Presentation]:
     return _paste(copy_data, diagram, full=True)
+
+
+@singledispatch
+def copy(obj: Element | Iterable) -> Iterator[tuple[Id, Opaque]]:
+    """Create a copy of an element (or list of elements).
+
+    The returned type should be distinct, so the `paste()` function can
+    properly dispatch.
+    """
+    raise ValueError(f"No copier for {obj}")
 
 
 @singledispatch
