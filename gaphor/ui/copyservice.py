@@ -7,7 +7,7 @@ from gi.repository import Gdk, GLib, GObject
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import Transaction, action
 from gaphor.core.modeling import Presentation
-from gaphor.diagram.copypaste import copy, paste_full, paste_link
+from gaphor.diagram.copypaste import copy_full, paste_full, paste_link
 
 
 class CopyBuffer(GObject.Object):
@@ -45,7 +45,7 @@ class CopyService(Service, ActionProvider):
 
     def copy(self, items):
         if items:
-            copy_buffer = copy(items)
+            copy_buffer = copy_full(items)
             v = GObject.Value(CopyBuffer.__gtype__, CopyBuffer(buffer=copy_buffer))
             self.clipboard.set_content(Gdk.ContentProvider.new_for_value(v))
 

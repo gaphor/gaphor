@@ -1,6 +1,6 @@
 from gaphor import UML
 from gaphor.core.modeling import Diagram, ElementFactory
-from gaphor.diagram.copypaste import copy, paste_full
+from gaphor.diagram.copypaste import copy_full, paste_full
 from gaphor.diagram.tests.test_copypaste_link import two_classes_and_a_generalization
 from gaphor.UML.classes import ClassItem, GeneralizationItem, PackageItem
 
@@ -10,7 +10,7 @@ def test_copied_item_references_new_model_element(diagram, element_factory):
     cls.name = "Name"
     cls_item = diagram.create(ClassItem, subject=cls)
 
-    buffer = copy({cls_item})
+    buffer = copy_full({cls_item})
 
     all(paste_full(buffer, diagram, element_factory.lookup))
 
@@ -30,7 +30,7 @@ def test_copy_multiple_items(diagram, element_factory):
     cls_item1 = diagram.create(ClassItem, subject=cls)
     cls_item2 = diagram.create(ClassItem, subject=cls)
 
-    buffer = copy({cls_item1, cls_item2})
+    buffer = copy_full({cls_item1, cls_item2})
 
     paste_full(buffer, diagram, element_factory.lookup)
 
@@ -43,7 +43,7 @@ def test_copy_items_with_connections(diagram, element_factory):
         diagram, element_factory
     )
 
-    buffer = copy({gen_cls_item, gen_item, spc_cls_item})
+    buffer = copy_full({gen_cls_item, gen_item, spc_cls_item})
     new_items = paste_full(buffer, diagram, element_factory.lookup)
     (new_cls1, new_cls2) = (ci.subject for ci in new_items if isinstance(ci, ClassItem))
     (new_gen,) = (gi.subject for gi in new_items if isinstance(gi, GeneralizationItem))
@@ -60,7 +60,7 @@ def test_copy_element_factory(diagram, element_factory):
     """
     two_classes_and_a_generalization(diagram, element_factory)
 
-    buffer = copy(element_factory)
+    buffer = copy_full(element_factory)
 
     new_element_factory = ElementFactory()
     new_diagram = new_element_factory.create(Diagram)
@@ -77,7 +77,7 @@ def test_copy_package_with_diagram(element_factory):
     package.ownedDiagram = diagram
     package_item = diagram.create(PackageItem, subject=package)
 
-    copy_buffer = copy([package_item])
+    copy_buffer = copy_full([package_item])
     (new_package_item,) = paste_full(copy_buffer, diagram, element_factory.lookup)
     new_package = new_package_item.subject
 
@@ -93,7 +93,7 @@ def test_copy_package_with_owned_package(element_factory):
     subpackage.package = package
     package_item = diagram.create(PackageItem, subject=package)
 
-    copy_buffer = copy([package_item])
+    copy_buffer = copy_full([package_item])
     (new_package_item,) = paste_full(copy_buffer, diagram, element_factory.lookup)
     new_package = new_package_item.subject
 

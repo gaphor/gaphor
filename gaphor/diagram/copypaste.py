@@ -36,6 +36,16 @@ def copy(obj: Element | Iterable) -> Iterator[tuple[Id, Opaque]]:
     raise ValueError(f"No copier for {obj}")
 
 
+class CopyData(NamedTuple):
+    elements: dict[Id, Opaque]
+
+
+def copy_full(items: Iterable) -> CopyData:
+    """Copy items, including owned elements."""
+    elements = itertools.chain.from_iterable(copy(item) for item in items)
+    return CopyData(elements=dict(elements))
+
+
 def paste_link(
     copy_data: Opaque, diagram: Diagram, lookup: Callable[[Id], Element | None]
 ) -> set[Presentation]:
@@ -168,16 +178,6 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
         for value in deserialize(ser, lookup):
             item.load(name, value)
     diagram.update_now((item,))
-
-
-class CopyData(NamedTuple):
-    elements: dict[Id, Opaque]
-
-
-@copy.register  # type: ignore[arg-type]
-def _copy_all(items: Iterable) -> CopyData:
-    elements = itertools.chain.from_iterable(copy(item) for item in items)
-    return CopyData(elements=dict(elements))
 
 
 def _paste(copy_data, diagram, lookup, full) -> set[Presentation]:
