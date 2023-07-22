@@ -6,7 +6,7 @@ from gaphor.UML.copypaste import copy_named_element
 
 
 @copy.register
-def copy_class(element: PartitionItem):
+def copy_partition_item(element: PartitionItem):
     yield element.id, copy_presentation(element)
     for partition in element.partition:
         yield from copy(partition)

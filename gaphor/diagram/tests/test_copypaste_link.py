@@ -1,6 +1,6 @@
 from gaphor import UML
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.copypaste import copy, paste, paste_link
+from gaphor.diagram.copypaste import copy, copy_full, paste, paste_link
 from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
 from gaphor.diagram.tests.fixtures import connect, copy_clear_and_paste_link
 from gaphor.UML.classes import ClassItem, GeneralizationItem
@@ -37,9 +37,9 @@ def test_copy_multiple_items(diagram, element_factory):
     cls_item1 = diagram.create(ClassItem, subject=cls)
     cls_item2 = diagram.create(ClassItem, subject=cls)
 
-    buffer = copy({cls_item1, cls_item2})
+    buffer = copy_full({cls_item1, cls_item2})
 
-    paste_link(buffer, diagram, element_factory.lookup)
+    paste_link(buffer, diagram)
 
     assert len(list(diagram.get_all_items())) == 4
     assert len(element_factory.lselect(UML.Class)) == 1
@@ -51,9 +51,9 @@ def test_copy_item_without_copying_connection(diagram, element_factory):
     gen_item = diagram.create(GeneralizationItem)
     connect(gen_item, gen_item.handles()[0], cls_item)
 
-    buffer = copy({cls_item})
+    buffer = copy_full({cls_item})
 
-    new_items = paste_link(buffer, diagram, element_factory.lookup)
+    new_items = paste_link(buffer, diagram)
 
     assert len(list(diagram.get_all_items())) == 3
     assert len(element_factory.lselect(UML.Class)) == 1
@@ -77,9 +77,9 @@ def test_copy_item_with_connection(diagram, element_factory):
     gen_cls_item, spc_cls_item, gen_item = two_classes_and_a_generalization(
         diagram, element_factory
     )
-    buffer = copy({gen_cls_item, gen_item, spc_cls_item})
+    buffer = copy_full({gen_cls_item, gen_item, spc_cls_item})
 
-    new_items = paste_link(buffer, diagram, element_factory.lookup)
+    new_items = paste_link(buffer, diagram)
     new_gen_item = next(i for i in new_items if isinstance(i, GeneralizationItem))
 
     new_cls_item1 = diagram.connections.get_connection(
@@ -109,7 +109,7 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
     orig_cls_id = cls.id
     cls_item = diagram.create(ClassItem, subject=cls)
 
-    buffer = copy({cls_item})
+    buffer = copy_full({cls_item})
 
     cls_item.unlink()
     cls.unlink()  # normally handled by the sanitizer service
@@ -119,7 +119,7 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
     assert cls not in element_factory.select()
     assert not element_factory.lookup(orig_cls_id)
 
-    paste_link(buffer, diagram, element_factory.lookup)
+    paste_link(buffer, diagram)
     new_cls = element_factory.lselect(UML.Class)[0]
     (new_cls_item,) = diagram.get_all_items()
     assert new_cls.package is package
@@ -181,9 +181,9 @@ def test_copy_to_new_diagram(diagram, element_factory):
     cls = element_factory.create(UML.Class)
     cls_item = diagram.create(ClassItem, subject=cls)
 
-    buffer = copy({cls_item})
+    buffer = copy_full({cls_item})
 
-    paste_link(buffer, new_diagram, element_factory.lookup)
+    paste_link(buffer, new_diagram)
 
     assert len(list(new_diagram.get_all_items())) == 1
     assert next(new_diagram.get_all_items()).diagram is new_diagram

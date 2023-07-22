@@ -4,6 +4,8 @@ To register property pages implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
+from __future__ import annotations
+
 import abc
 from typing import Callable, List, Tuple, Type
 
@@ -83,7 +85,7 @@ class PropertyPageBase(metaclass=abc.ABCMeta):
         super().__init__()
 
     @abc.abstractmethod
-    def construct(self):
+    def construct(self) -> Gtk.Widget | None:
         """Create the page (Gtk.Widget) that belongs to the Property page.
 
         Returns the page's toplevel widget (Gtk.Widget).

@@ -1,4 +1,4 @@
-from gaphor.diagram.copypaste import copy, paste_full
+from gaphor.diagram.copypaste import copy_full, paste_full
 from gaphor.diagram.tests.test_copypaste_link import two_classes_and_a_generalization
 
 
@@ -7,8 +7,8 @@ def test_copy_connected_item(diagram, element_factory):
         diagram, element_factory
     )
 
-    buffer = copy({spc_cls_item})
-    (new_cls_item,) = paste_full(buffer, diagram, element_factory.lookup)
+    buffer = copy_full({spc_cls_item})
+    (new_cls_item,) = paste_full(buffer, diagram)
 
     assert new_cls_item.subject
     assert gen_item.subject.general is gen_cls_item.subject
