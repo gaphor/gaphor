@@ -14,7 +14,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkDropDown" id="property-type">
+      <object class="GtkDropDown" id="element-type">
         <property name="enable-search">1</property>
         <property name="expression">
           <lookup type="LabelValue" name="label" />

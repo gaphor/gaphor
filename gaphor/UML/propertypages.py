@@ -16,6 +16,9 @@ class TypedElementPropertyPage(PropertyPageBase):
     order = 31
 
     def __init__(self, item):
+        assert (not item.subject) or isinstance(
+            item.subject, UML.TypedElement
+        ), item.subject
         super().__init__()
         self.item = item
 
@@ -30,8 +33,8 @@ class TypedElementPropertyPage(PropertyPageBase):
             },
         )
 
-        dropdown = builder.get_object("property-type")
-        model = list_of_classifiers(self.item.subject.model)
+        dropdown = builder.get_object("element-type")
+        model = list_of_classifiers(self.item.subject.model, UML.Classifier)
         dropdown.set_model(model)
 
         if self.item.subject.type:
@@ -68,11 +71,11 @@ class TypedElementPropertyPage(PropertyPageBase):
         self.item.show_type = button.get_active()
 
 
-def list_of_classifiers(element_factory):
+def list_of_classifiers(element_factory, required_type):
     model = Gio.ListStore.new(LabelValue)
     model.append(LabelValue("", None))
     for c in sorted(
-        (c for c in element_factory.select(UML.Classifier) if c.name),
+        (c for c in element_factory.select(required_type) if c.name),
         key=lambda c: c.name or "",
     ):
         model.append(LabelValue(c.name, c.id))

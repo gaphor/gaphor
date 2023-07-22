@@ -201,7 +201,7 @@ class ItemFlowPropertyPage(PropertyPageBase):
         self.entry = builder.get_object("item-flow-name")
 
         dropdown = builder.get_object("item-flow-type")
-        model = list_of_classifiers(self.subject.model)
+        model = list_of_classifiers(self.subject.model, UML.Classifier)
         dropdown.set_model(model)
 
         use_flow.set_active(isinstance(self.information_flow, sysml.ItemFlow))

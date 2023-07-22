@@ -132,7 +132,7 @@ def test_property_type(diagram, element_factory):
     property_page = TypedElementPropertyPage(item)
 
     widget = property_page.construct()
-    dropdown = find(widget, "property-type")
+    dropdown = find(widget, "element-type")
     bar_index = next(
         n for n, lv in enumerate(dropdown.get_model()) if lv.value == type.id
     )
