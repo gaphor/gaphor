@@ -12,11 +12,14 @@ from gaphor.UML.toolboxconfig import namespace_config
 def composite_association_config(assoc_item: diagramitems.AssociationItem) -> None:
     assoc_item.preferred_aggregation = "composite"
 
+
 def shared_association_config(assoc_item: diagramitems.AssociationItem) -> None:
     assoc_item.preferred_aggregation = "shared"
 
+
 def direct_association_config(assoc_item: diagramitems.AssociationItem) -> None:
     assoc_item.preferred_tail_navigability = "navigable"
+
 
 classes = ToolSection(
     gettext("Classes"),

@@ -109,7 +109,7 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
         watch_information_flow(self, "Association", "abstraction")
 
     show_direction: attribute[int] = attribute("show_direction", int, default=False)
-    
+
     preferred_aggregation = enumeration(
         "preferred_aggregation", ("none", "shared", "composite"), "none"
     )

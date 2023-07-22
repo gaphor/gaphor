@@ -126,7 +126,10 @@ class AssociationConnect(RelationshipConnect):
         else:
             relation = self.new_relation(head_subject, tail_subject)
             tail_subject = relation.memberEnd[1]
-            if line.preferred_aggregation in ("shared", "composite") or line.preferred_tail_navigability == "navigable":
+            if (
+                line.preferred_aggregation in ("shared", "composite")
+                or line.preferred_tail_navigability == "navigable"
+            ):
                 UML.recipes.set_navigability(relation, tail_subject, True)
             tail_subject.aggregation = line.preferred_aggregation
             line.preferred_aggregation = "none"
