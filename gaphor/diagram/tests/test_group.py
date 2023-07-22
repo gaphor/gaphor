@@ -1,5 +1,5 @@
-from gaphor.core.modeling import Diagram, Element
-from gaphor.diagram.group import can_group, group, ungroup
+from gaphor.core.modeling import Diagram, Element, ElementFactory
+from gaphor.diagram.group import can_group, group, ungroup, change_owner
 
 
 def test_group_diagram(element_factory):
@@ -49,3 +49,11 @@ def test_can_group_with_instance(element_factory):
     parent = element_factory.create(Element)
 
     assert can_group(parent, diagram)
+
+
+def test_cannot_change_owner_from_different_models(element_factory):
+    other_element_factory = ElementFactory()
+    diagram = element_factory.create(Diagram)
+    parent = other_element_factory.create(Element)
+
+    assert not change_owner(parent, diagram)
