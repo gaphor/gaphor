@@ -7,7 +7,7 @@ from gaphor.SysML.propertypages import (
     CompartmentPage,
     ItemFlowPropertyPage,
     PropertyAggregationPropertyPage,
-    PropertyTypePropertyPage,
+    TypedElementPropertyPage,
     RequirementPropertyPage,
 )
 
@@ -53,7 +53,7 @@ def test_property_type_property_page_show_type(diagram, element_factory):
         SysML.blocks.ProxyPortItem,
         subject=element_factory.create(SysML.sysml.ProxyPort),
     )
-    property_page = PropertyTypePropertyPage(item)
+    property_page = TypedElementPropertyPage(item)
 
     widget = property_page.construct()
     show_parts = find(widget, "show-type")
@@ -129,7 +129,7 @@ def test_property_type(diagram, element_factory):
 
     type = element_factory.create(UML.Class)
     type.name = "Bar"
-    property_page = PropertyTypePropertyPage(item)
+    property_page = TypedElementPropertyPage(item)
 
     widget = property_page.construct()
     dropdown = find(widget, "property-type")

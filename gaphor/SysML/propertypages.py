@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from gi.repository import Gio
 
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
-    LabelValue,
     unsubscribe_all_on_destroy,
     PropertyPageBase,
     PropertyPages,
@@ -18,7 +16,7 @@ from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
 from gaphor.SysML.requirements.requirement import RequirementItem
 from gaphor.UML.classes.classespropertypages import AttributesPage, OperationsPage
-
+from gaphor.UML.propertypages import TypedElementPropertyPage, list_of_classifiers
 
 new_builder = new_resource_builder("gaphor.SysML")
 
@@ -78,6 +76,9 @@ PropertyPages.register(RequirementItem)(AttributesPage)
 PropertyPages.register(RequirementItem)(OperationsPage)
 
 PropertyPages.register(BlockItem)(OperationsPage)
+
+PropertyPages.register(PropertyItem)(TypedElementPropertyPage)
+PropertyPages.register(ProxyPortItem)(TypedElementPropertyPage)
 
 
 @PropertyPages.register(BlockItem)
@@ -161,64 +162,6 @@ class PropertyAggregationPropertyPage(PropertyPageBase):
     @transactional
     def _on_aggregation_change(self, combo, _pspec):
         self.subject.aggregation = self.AGGREGATION[combo.get_selected()]
-
-
-@PropertyPages.register(PropertyItem)
-@PropertyPages.register(ProxyPortItem)
-class PropertyTypePropertyPage(PropertyPageBase):
-    order = 31
-
-    def __init__(self, item):
-        super().__init__()
-        self.item = item
-
-    def construct(self):
-        if not self.item.subject:
-            return
-
-        builder = new_builder(
-            "property-type-editor",
-            signals={
-                "show-type-changed": (self._on_show_type_change,),
-            },
-        )
-
-        dropdown = builder.get_object("property-type")
-        model = list_of_classifiers(self.item.subject.model)
-        dropdown.set_model(model)
-
-        if self.item.subject.type:
-            dropdown.set_selected(
-                next(
-                    n
-                    for n, lv in enumerate(model)
-                    if lv.value == self.item.subject.type.id
-                )
-            )
-
-        dropdown.connect("notify::selected", self._on_property_type_changed)
-
-        if isinstance(self.item.subject, UML.Port):
-            show_type = builder.get_object("show-type")
-            show_type.set_active(self.item.show_type)
-        else:
-            builder.get_object("type-toggle-box").unparent()
-
-        return builder.get_object("property-type-editor")
-
-    @transactional
-    def _on_property_type_changed(self, dropdown, _pspec):
-        subject = self.item.subject
-        if id := dropdown.get_selected_item().value:
-            element = subject.model.lookup(id)
-            assert isinstance(element, UML.Type)
-            subject.type = element
-        else:
-            del subject.type
-
-    @transactional
-    def _on_show_type_change(self, button, _gparam):
-        self.item.show_type = button.get_active()
 
 
 @PropertyPages.register(UML.Association)
@@ -330,17 +273,6 @@ class ItemFlowPropertyPage(PropertyPageBase):
             iflow.informationTarget,
             iflow.informationSource,
         )
-
-
-def list_of_classifiers(element_factory):
-    model = Gio.ListStore.new(LabelValue)
-    model.append(LabelValue("", None))
-    for c in sorted(
-        (c for c in element_factory.select(UML.Classifier) if c.name),
-        key=lambda c: c.name or "",
-    ):
-        model.append(LabelValue(c.name, c.id))
-    return model
 
 
 def create_item_flow(subject: UML.Association | sysml.Connector) -> sysml.ItemFlow:

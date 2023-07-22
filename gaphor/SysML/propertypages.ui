@@ -187,46 +187,6 @@
     </style>
   </object>
 
-  <object class="GtkBox" id="property-type-editor">
-    <property name="orientation">vertical</property>
-    <child>
-      <object class="GtkLabel">
-        <property name="label" translatable="yes">Type</property>
-        <property name="xalign">0</property>
-        <style>
-          <class name="title"/>
-        </style>
-      </object>
-    </child>
-    <child>
-      <object class="GtkDropDown" id="property-type">
-        <property name="enable-search">1</property>
-        <property name="expression">
-          <lookup type="LabelValue" name="label" />
-        </property>
-      </object>
-    </child>
-    <child>
-      <object class="GtkBox" id="type-toggle-box">
-        <child>
-          <object class="GtkLabel">
-            <property name="label" translatable="yes">Show Type</property>
-            <property name="halign">start</property>
-            <property name="hexpand">yes</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkSwitch" id="show-type">
-            <signal name="notify::active" handler="show-type-changed" swapped="no" />
-          </object>
-        </child>
-      </object>
-    </child>
-    <style>
-      <class name="propertypage"/>
-    </style>
-  </object>
-
   <object class="GtkTextBuffer" id="requirement-text-buffer" />
 
   <object class="GtkBox" id="requirement-editor">
