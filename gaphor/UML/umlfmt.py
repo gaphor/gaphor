@@ -189,6 +189,7 @@ def format_pin(el, **kwargs):
     if not el:
         return ""
 
+
     s = []
 
     s.append(el.name or "")
