@@ -45,7 +45,7 @@ class CopyService(Service, ActionProvider):
 
     def copy(self, items):
         if items:
-            copy_buffer = copy_full(items)
+            copy_buffer = copy_full(items, self.element_factory.lookup)
             v = GObject.Value(CopyBuffer.__gtype__, CopyBuffer(buffer=copy_buffer))
             self.clipboard.set_content(Gdk.ContentProvider.new_for_value(v))
 

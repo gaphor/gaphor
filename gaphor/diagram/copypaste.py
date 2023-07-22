@@ -14,7 +14,6 @@ the `paste()` function will load this data in a model.
 
 from __future__ import annotations
 
-import itertools
 from collections.abc import Iterable
 from functools import singledispatch
 from typing import Callable, Iterator, NamedTuple
@@ -40,10 +39,26 @@ class CopyData(NamedTuple):
     elements: dict[Id, Opaque]
 
 
-def copy_full(items: Iterable) -> CopyData:
+def copy_full(
+    items: Iterable, lookup: Callable[[Id], Element | None] | None = None
+) -> CopyData:
     """Copy items, including owned elements."""
-    elements = itertools.chain.from_iterable(copy(item) for item in items)
-    return CopyData(elements=dict(elements))
+    elements = {ref: data for item in items for ref, data in copy(item)}
+    if not lookup:
+        return CopyData(elements=elements)
+
+    def copy_owned(e):
+        for o in e.ownedElement:
+            if o.owner is e:
+                for ref, data in copy(o):
+                    if ref not in elements:
+                        elements[ref] = data
+                        copy_owned(o)
+
+    for ref in list(elements.keys()):
+        copy_owned(lookup(ref))
+
+    return CopyData(elements=elements)
 
 
 def paste_link(

@@ -86,7 +86,7 @@ def test_copy_package_with_diagram(element_factory):
     assert diagram.element is package
 
 
-def test_copy_package_with_owned_package(element_factory):
+def test_shallow_copy_package_with_owned_package(element_factory):
     diagram: Diagram = element_factory.create(Diagram)
     package = element_factory.create(UML.Package)
     subpackage = element_factory.create(UML.Package)
@@ -100,3 +100,22 @@ def test_copy_package_with_owned_package(element_factory):
     assert subpackage in package.nestedPackage
     assert subpackage.package is package
     assert subpackage not in new_package.nestedPackage
+
+
+def test_full_copy_package_with_owned_package(element_factory):
+    diagram: Diagram = element_factory.create(Diagram)
+    package = element_factory.create(UML.Package)
+    subpackage = element_factory.create(UML.Package)
+    subpackage.package = package
+    subpackage.name = "subpackage"
+    package_item = diagram.create(PackageItem, subject=package)
+
+    copy_buffer = copy_full([package_item], element_factory.lookup)
+    (new_package_item,) = paste_full(copy_buffer, diagram, element_factory.lookup)
+    new_package = new_package_item.subject
+
+    assert subpackage in package.nestedPackage
+    assert subpackage.package is package
+    assert new_package.nestedPackage
+    assert subpackage not in new_package.nestedPackage
+    assert new_package.nestedPackage[0].name == "subpackage"
