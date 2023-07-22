@@ -248,3 +248,27 @@ class FlowPropertyPageAbstract(PropertyPageBase):
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
         self.subject.guard = value
+
+@PropertyPages.register(UML.Pin)
+class PinPropertyPage(PropertyPageBase):
+    """Pin element editor."""
+
+    order = 15
+
+    subject: UML.Pin
+
+    def __init__(self, subject):
+        self.subject = subject
+        self.watcher = subject and subject.watcher()
+
+    def construct(self):
+        subject = self.subject
+
+        if not subject:
+            return
+
+        builder = new_builder(
+            "pin-editor",
+        )
+
+        return builder.get_object("pin-editor")
