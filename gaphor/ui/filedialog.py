@@ -93,7 +93,7 @@ def save_file_dialog(
                 dialog.destroy()
                 handler(filename)
             else:
-                dialog.set_visible(True)
+                dialog.show()
         else:
             dialog.destroy()
 
