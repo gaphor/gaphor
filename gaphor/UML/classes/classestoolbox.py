@@ -17,6 +17,10 @@ def shared_association_config(assoc_item: diagramitems.AssociationItem) -> None:
     assoc_item.preferred_aggregation = "shared"
 
 
+def direct_association_config(assoc_item: diagramitems.AssociationItem) -> None:
+    assoc_item.preferred_tail_navigability = "navigable"
+
+
 classes = ToolSection(
     gettext("Classes"),
     (
@@ -99,6 +103,16 @@ classes = ToolSection(
             "gaphor-association-symbolic",
             "<Shift>A",
             new_item_factory(diagramitems.AssociationItem),
+        ),
+        ToolDef(
+            "toolbox-direct-association",
+            gettext("Direct Association"),
+            "gaphor-direct-association-symbolic",
+            None,
+            new_item_factory(
+                diagramitems.AssociationItem,
+                config_func=direct_association_config,
+            ),
         ),
         ToolDef(
             "toolbox-dependency",
