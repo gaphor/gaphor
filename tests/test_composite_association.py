@@ -1,4 +1,4 @@
-# flake8: noqa F401,F811
+# ruff: noqa: F401,F811
 from gaphor import UML
 from gaphor.conftest import (
     create,
@@ -21,7 +21,7 @@ def test_connect_composite_association(create, diagram):
     composite_association_config(a)
 
     property_page = AssociationPropertyPage(a)
-    widget = property_page.construct()
+    _widget = property_page.construct()
 
     connect(a, a.head, c1)
     connect(a, a.tail, c2)

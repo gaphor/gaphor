@@ -82,6 +82,20 @@ actions = ToolSection(
             handle_index=SE,
         ),
         ToolDef(
+            "toolbox-call-behavior-action",
+            gettext("Call behavior action"),
+            "gaphor-call-behavior-action-symbolic",
+            "<Alt>a",
+            new_item_factory(
+                diagramitems.CallBehaviorActionItem,
+                UML.CallBehaviorAction,
+                config_func=partial(
+                    activity_config, name=i18nize("CallBehaviorAction")
+                ),
+            ),
+            handle_index=SE,
+        ),
+        ToolDef(
             "toolbox-initial-node",
             gettext("Initial node"),
             "gaphor-initial-node-symbolic",

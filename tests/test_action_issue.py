@@ -1,4 +1,4 @@
-# flake8: noqa F401,F811
+# ruff: noqa: F401,F811
 from gaphor import UML
 from gaphor.conftest import element_factory, event_manager, modeling_language
 from gaphor.core.modeling import Diagram

@@ -226,4 +226,9 @@ epub_exclude_files = ["search.html"]
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {"https://docs.python.org/": None}
+intersphinx_mapping = {
+    "gnome": ("https://amolenaar.pages.gitlab.gnome.org/pygobject-docs", None),
+    "pygobject": ("https://pygobject.readthedocs.io/en/latest", None),
+    "gaphas": ("https://gaphas.readthedocs.io/en/stable", None),
+    "python": ("https://docs.python.org/3", None),
+}

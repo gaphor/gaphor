@@ -1,4 +1,4 @@
-# flake8: noqa F401,F811
+# ruff: noqa: F401,F811
 from gaphor.core.modeling import Comment
 from gaphor.diagram.general import CommentItem
 from gaphor.diagram.general.generaleditors import comment_item_editor

@@ -23,3 +23,11 @@ if sys.platform == "win32":
     from gaphor.windowsshim import gi_init
 
     gi_init()
+
+
+def __getattr__(name: str):
+    if name == "__version__":
+        import gaphor.application
+
+        return gaphor.application.distribution().version
+    raise AttributeError(f"module '{__name__!r}' has no attribute '{name!r}'")

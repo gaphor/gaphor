@@ -1,13 +1,14 @@
 """Copy / Paste functionality."""
 
-from typing import Set
+from __future__ import annotations
+from typing import Callable, Collection
 
 from gi.repository import Gdk, GLib, GObject
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import Transaction, action
-from gaphor.core.modeling import Presentation
-from gaphor.diagram.copypaste import copy, paste_full, paste_link
+from gaphor.core.modeling import Diagram, Presentation
+from gaphor.diagram.copypaste import copy_full, paste_full, paste_link, Opaque
 
 
 class CopyBuffer(GObject.Object):
@@ -43,18 +44,45 @@ class CopyService(Service, ActionProvider):
     def shutdown(self):
         pass
 
-    def copy(self, items):
+    def copy(self, items: Collection[Presentation]) -> None:
         if items:
-            copy_buffer = copy(items)
+            copy_buffer = copy_full(items, self.element_factory.lookup)
             v = GObject.Value(CopyBuffer.__gtype__, CopyBuffer(buffer=copy_buffer))
             self.clipboard.set_content(Gdk.ContentProvider.new_for_value(v))
 
-    def _paste(self, diagram, paster, callback):
+    def paste_link(
+        self,
+        diagram: Diagram,
+        callback: Callable[[set[Presentation]], None] | None = None,
+    ) -> None:
+        self._paste(diagram, paste_link, callback)
+
+    def paste_full(
+        self,
+        diagram: Diagram,
+        callback: Callable[[set[Presentation]], None] | None = None,
+    ) -> None:
+        self._paste(diagram, paste_full, callback)
+
+    def _paste(
+        self,
+        diagram: Diagram,
+        paster: Callable[[Opaque, Diagram], set[Presentation]],
+        callback: Callable[[set[Presentation]], None] | None,
+    ) -> None:
         def on_paste(_source_object, result):
             copy_buffer = self.clipboard.read_value_finish(result)
-            items = self._paste_internal(diagram, copy_buffer.buffer, paster)
+            with Transaction(self.event_manager):
+                # Create new id's that have to be used to create the items:
+                new_items = paster(copy_buffer.buffer, diagram)
+
+                # move pasted items a bit, so user can see result of his action :)
+                for item in new_items:
+                    if item.parent not in new_items:
+                        item.matrix.translate(10, 10)
+
             if callback:
-                callback(items)
+                callback(new_items)
 
         self.clipboard.read_value_async(
             CopyBuffer.__gtype__,
@@ -62,26 +90,6 @@ class CopyService(Service, ActionProvider):
             cancellable=None,
             callback=on_paste,
         )
-
-    def paste_link(self, diagram, callback=None):
-        self._paste(diagram, paste_link, callback)
-
-    def paste_full(self, diagram, callback=None):
-        self._paste(diagram, paste_full, callback)
-
-    def _paste_internal(self, diagram, copy_buffer, paster):
-        with Transaction(self.event_manager):
-            # Create new id's that have to be used to create the items:
-            new_items: Set[Presentation] = paster(
-                copy_buffer, diagram, self.element_factory.lookup
-            )
-
-            # move pasted items a bit, so user can see result of his action :)
-            for item in new_items:
-                if item.parent not in new_items:
-                    item.matrix.translate(10, 10)
-
-        return new_items
 
     @action(
         name="edit-copy",

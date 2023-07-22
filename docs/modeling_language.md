@@ -98,63 +98,60 @@ Sometimes items need more than one model element to work. For example an Associa
 In those specific cases you need to implement your own copy and paste functions. To create such a thing you'll need to create
 two functions: one for copying and one for pasting.
 
-```{eval-rst}
-.. function:: gaphor.diagram.copypaste.copy(element: Element) -> Iterator[tuple[Id, Opaque]]
+```{function} gaphor.diagram.copypaste.copy(obj: ~gaphor.core.modeling.Element) -> ~typing.Iterator[tuple[Id, Opaque]]
 
-   Create a copy of an element (or list of elements).
-   The returned type should be distinct, so the `paste()`
-   function can properly dispatch.
-
-.. function:: gaphor.diagram.copypaste.paste(copy_data: T, diagram: Diagram, lookup: Callable[[str], Element | None]) -> Iterator[Element]
-
-   Paste previously copied data. Based on the data type created in the
-   ``copy()`` function, try to duplicate the copied elements.
-   Returns the newly created item or element
-
-.. function:: gaphor.diagram.copypaste.paste_link(copy_data: CopyData, diagram: Diagram, lookup: Callable[[str], Element | None]) -> set[Presentation]:
-
-   Create a copy of the Presentation element, but try to link the underlying model element.
-   A shallow copy.
-
-.. function:: gaphor.diagram.copypaste.paste_full(copy_data: CopyData, diagram: Diagram, lookup: Callable[[str], Element | None]) -> set[Presentation]:
-
-   Create a copy of both Presentation and model element. A deep copy.
+Create a copy of an element (or list of elements).
+The returned type should be distinct, so the `paste()`
+function can properly dispatch.
+A copy function normally copies only the element and mandatory related elements. E.g. an Association needs two association ends.
 ```
 
-To serialize the copied elements and deserialize them again, there are two functions available:
+```{function} gaphor.diagram.copypaste.paste(copy_data: Opaque, diagram: ~gaphor.core.modeling.Diagram, lookup: ~typing.Callable[[str], ~gaphor.core.modeling.Element | None]) -> ~typing.Iterator[~gaphor.core.modeling.Element]
 
-```{eval-rst}
-.. function:: gaphor.diagram.copypaste.serialize(value)
+Paste previously copied data. Based on the data type created in the
+``copy()`` function, try to duplicate the copied elements.
+Returns the newly created item or element.
+```
 
-   Return a serialized version of a value. If the ``value`` is an element,
-   it's referenced.
+Gaphor provides some convenience functions:
 
-.. function:: gaphor.diagram.copypaste.deserialize(ser, lookup)
+```{function} gaphor.diagram.copypaste.copy_full(items: ~typing.Collection[~gaphor.core.modeling.Element], lookup: ~typing.Callable[[Id], ~gaphor.core.modeling.Element | None] | None = None) -> CopyData:
 
-   Deserialize a value previously serialized with ``serialize()``. The
-   ``lookup`` function is used to resolve references to other elements.
+Copy ``items``. The ``lookup`` function is used to look up owned elements (shown as child nodes in the Model Browser).
+```
+
+```{function} gaphor.diagram.copypaste.paste_link(copy_data: CopyData, diagram: ~gaphor.core.modeling.Diagram) -> set[~gaphor.core.modeling.Presentation]:
+
+Paste a copy of the Presentation element to the diagram, but try to link the underlying model element.
+A shallow copy.
+```
+
+```{function} gaphor.diagram.copypaste.paste_full(copy_data: CopyData, diagram: ~gaphor.core.modeling.Diagram) -> set[~gaphor.core.modeling.Presentation]:
+
+Paste a copy of both Presentation and model element. A deep copy.
 ```
 
 ## Grouping
 
 Grouping is done by dragging one item on top of another, in a diagram or in the tree view.
 
-```{eval-rst}
-.. function:: gaphor.diagram.group.group(parent: Element, element: Element) -> bool
+```{function} gaphor.diagram.group.group(parent: ~gaphor.core.modeling.Element, element: ~gaphor.core.modeling.Element) -> bool
 
-   Group an element in a parent element. The grouping can be based on ownership,
-   but other types of grouping are also possible.
+Group an element in a parent element. The grouping can be based on ownership,
+but other types of grouping are also possible.
+```
 
-.. function:: gaphor.diagram.group.ungroup(parent: Element, element: Element) -> bool
+```{function} gaphor.diagram.group.ungroup(parent: ~gaphor.core.modeling.Element, element: ~gaphor.core.modeling.Element) -> bool
 
-   Remove the grouping from an element.
-   The function needs to check if the provided `parent` node is the right one.
+Remove the grouping from an element.
+The function needs to check if the provided `parent` node is the right one.
+```
 
-.. function:: gaphor.diagram.group.can_group(parent_type: Type[Element], element_or_type: Type[Element] | Element) -> bool
+```{function} gaphor.diagram.group.can_group(parent_type: type[~gaphor.core.modeling.Element], element_or_type: type[~gaphor.core.modeling.Element] | ~gaphor.core.modeling.Element) -> bool
 
-   This function tries to determine if grouping is possible,
-   without actually performing a group operation.
-   This is not 100% accurate.
+This function tries to determine if grouping is possible,
+without actually performing a group operation.
+This is not 100% accurate.
 ```
 
 ## Dropping
@@ -162,16 +159,15 @@ Grouping is done by dragging one item on top of another, in a diagram or in the 
 Dropping is performed by dragging an element from the tree view and drop it on a diagram.
 This is an easy way to extend a diagram with already existing model elements.
 
-```{eval-rst}
-.. function:: gaphor.diagram.drop.drop(element: Element, diagram: Diagram, x: float, y: float) -> Presentation | None
+```{function} gaphor.diagram.drop.drop(element: ~gaphor.core.modeling.Element, diagram: ~gaphor.core.modeling.Diagram, x: float, y: float) -> ~gaphor.core.modeling.Presentation | None
 
-   The drop function creates a new presentation for an element on the diagram.
-   For relationships, a drop only works if both connected elements are present in the
-   same diagram.
+The drop function creates a new presentation for an element on the diagram.
+For relationships, a drop only works if both connected elements are present in the
+same diagram.
 
-   The big difference with dragging an element from the toolbox, is that dragging from the toolbox
-   will actually place a new ``Presentation`` element on the diagram. ``drop`` works the other way
-   around: it starts with a model element and creates an accompanying ``Presentation``.
+The big difference with dragging an element from the toolbox, is that dragging from the toolbox
+will actually place a new ``Presentation`` element on the diagram. ``drop`` works the other way
+around: it starts with a model element and creates an accompanying ``Presentation``.
 ```
 
 ## Automated model cleanup
@@ -180,10 +176,9 @@ Gaphor wants to keep the model in sync with the diagrams.
 
 A little dispatch function is used to determine if a model element can be removed.
 
-```{eval-rst}
-.. function:: gaphor.diagram.deletable.deletable(element: Element) -> bool
+```{function} gaphor.diagram.deletable.deletable(element: ~gaphor.core.modeling.Element) -> bool
 
-   Determine if a model element can safely be removed.
+Determine if a model element can safely be removed.
 ```
 
 ## Editor property pages
@@ -204,12 +199,11 @@ When you double-click on an item in a diagram, a popup can show up, so you can e
 
 By default, this works for any named element. You can register your own inline editor function if you need to.
 
-```{eval-rst}
-.. function:: gaphor.diagram.instanteditors.instant_editor(item: Item, view, event_manager, pos: Optional[Tuple[int, int]] = None) -> bool
+```{function} gaphor.diagram.instanteditors.instant_editor(item: ~gaphas.item.Item, view, event_manager: ~gaphor.core.eventmanager.EventManager, pos: tuple[int, int] | None = None) -> bool
 
-   Show a small editor popup in the diagram. Makes for
-   easy editing without resorting to the Element editor.
+Show a small editor popup in the diagram. Makes for
+easy editing without resorting to the Element editor.
 
-   In case of a mouse press event, the mouse position
-   (relative to the element) are also provided.
+In case of a mouse press event, the mouse position
+(relative to the element) are also provided.
 ```

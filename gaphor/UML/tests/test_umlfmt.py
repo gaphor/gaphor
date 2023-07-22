@@ -147,3 +147,10 @@ def test_slot(factory):
     slot = add_tag_is_foo_metadata_field(a, factory)
 
     assert 'tag = "foo"' == format(slot)
+
+
+def test_pin(factory):
+    pin = factory.create(UML.InputPin)
+    pin.name = "foo"
+
+    assert format(pin) == "foo"

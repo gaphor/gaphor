@@ -1,4 +1,4 @@
-# flake8: noqa F401
+# ruff: noqa: F401
 
 from gaphor.UML.actions import (
     actionseditors,

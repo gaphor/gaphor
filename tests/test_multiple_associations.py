@@ -20,7 +20,7 @@ from gaphor import UML
 from gaphor.application import Session
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
-from gaphor.diagram.copypaste import copy, paste_link
+from gaphor.diagram.copypaste import copy_full, paste_link
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML import diagramitems
 from gaphor.UML.recipes import set_navigability
@@ -62,9 +62,9 @@ def class_and_association_with_copy(diagram, event_manager, element_factory):
 
         set_navigability(a.subject, a.subject.memberEnd[0], True)
 
-        copy_buffer = copy({a, c})
+        copy_buffer = copy_full({a, c})
         new_diagram = element_factory.create(Diagram)
-        pasted_items = paste_link(copy_buffer, new_diagram, element_factory.lookup)
+        pasted_items = paste_link(copy_buffer, new_diagram)
 
     aa = pasted_items.pop()
     if not isinstance(aa, diagramitems.AssociationItem):

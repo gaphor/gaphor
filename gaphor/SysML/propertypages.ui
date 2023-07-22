@@ -157,7 +157,7 @@
     </style>
   </object>
 
-  <object class="GtkBox" id="property-editor">
+  <object class="GtkBox" id="property-aggregation-editor">
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkLabel" id="label3">
@@ -182,10 +182,20 @@
         <signal name="notify::selected" handler="aggregation-changed" swapped="no" />
       </object>
     </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+  <object class="GtkBox" id="property-type-editor">
+    <property name="orientation">vertical</property>
     <child>
       <object class="GtkLabel">
         <property name="label" translatable="yes">Type</property>
         <property name="xalign">0</property>
+        <style>
+          <class name="title"/>
+        </style>
       </object>
     </child>
     <child>
@@ -194,6 +204,22 @@
         <property name="expression">
           <lookup type="LabelValue" name="label" />
         </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox" id="type-toggle-box">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show Type</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-type">
+            <signal name="notify::active" handler="show-type-changed" swapped="no" />
+          </object>
+        </child>
       </object>
     </child>
     <style>

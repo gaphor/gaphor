@@ -5,6 +5,7 @@ from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.umlfmt import format_call_behavior_action_name
 
 
 @represents(UML.Action)
@@ -30,6 +31,58 @@ class ActionItem(Named, ElementPresentation):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+
+
+@represents(UML.CallBehaviorAction)
+class CallBehaviorActionItem(ActionItem):
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
+
+        self.shape = Box(
+            Text(
+                text=lambda: stereotypes_str(self.subject),
+            ),
+            Text(
+                text=lambda: format_call_behavior_action_name(self.subject),
+                width=lambda: self.width - 4,
+            ),
+            style={
+                "padding": (4, 24, 4, 12),
+                "border-radius": 15,
+            },
+            draw=self.draw_border_with_fork,
+        )
+
+        self.watch("subject[CallBehaviorAction].behavior.name")
+
+    def draw_border_with_fork(self, box, context, bounding_box):
+        draw_border(box, context, bounding_box)
+
+        cr = context.cairo
+        x, y, width, height = bounding_box
+
+        x_offset = width - 15
+        y_offset = height - 15
+        half_width = 5
+        half_height = 5
+
+        cr.move_to(x_offset, y_offset - half_height)
+        cr.line_to(x_offset, y_offset + half_height)
+        cr.close_path()
+
+        cr.move_to(x_offset - half_width, y_offset)
+        cr.line_to(x_offset + half_width, y_offset)
+        cr.close_path()
+
+        cr.move_to(x_offset - half_width, y_offset)
+        cr.line_to(x_offset - half_width, y_offset + half_height)
+        cr.close_path()
+
+        cr.move_to(x_offset + half_width, y_offset)
+        cr.line_to(x_offset + half_width, y_offset + half_height)
+        cr.close_path()
+
+        stroke(context)
 
 
 @represents(UML.SendSignalAction)

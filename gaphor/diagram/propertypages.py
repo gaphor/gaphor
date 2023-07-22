@@ -4,6 +4,8 @@ To register property pages implemented in this module, it is imported in
 gaphor.adapter package.
 """
 
+from __future__ import annotations
+
 import abc
 from typing import Callable, List, Tuple, Type
 
@@ -83,7 +85,7 @@ class PropertyPageBase(metaclass=abc.ABCMeta):
         super().__init__()
 
     @abc.abstractmethod
-    def construct(self):
+    def construct(self) -> Gtk.Widget | None:
         """Create the page (Gtk.Widget) that belongs to the Property page.
 
         Returns the page's toplevel widget (Gtk.Widget).
@@ -327,7 +329,7 @@ class LineStylePage(PropertyPageBase):
         return builder.get_object("line-editor")
 
     @transactional
-    def _on_orthogonal_change(self, button):
+    def _on_orthogonal_change(self, button, gparam):
         if len(self.item.handles()) < 3:
             line_segment = Segment(self.item, self.item.diagram)
             line_segment.split_segment(0)
@@ -337,7 +339,7 @@ class LineStylePage(PropertyPageBase):
         self.horizontal_button.set_sensitive(active)
 
     @transactional
-    def _on_horizontal_change(self, button):
+    def _on_horizontal_change(self, button, gparam):
         self.item.horizontal = button.get_active()
         self.item.diagram.update_now((self.item,))
 

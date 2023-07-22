@@ -47,7 +47,7 @@ from gaphor.C4Model.toolbox import c4
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram, ElementFactory, Presentation, StyleSheet
 from gaphor.core.modeling.element import Element, generate_id, uuid_generator
-from gaphor.diagram.copypaste import copy, paste_full, paste_link
+from gaphor.diagram.copypaste import copy_full, paste_full, paste_link
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.drop import drop
 from gaphor.diagram.group import can_group
@@ -251,21 +251,21 @@ class ModelConsistency(RuleBasedStateMachine):
                 unique=True,
             )
         )
-        self.copy_buffer = copy(items)
+        self.copy_buffer = copy_full(items)
 
     @rule(data=data())
     def paste_link(self, data):
         assume(self.copy_buffer)
         diagram = data.draw(self.diagrams())
         with self.transaction:
-            paste_link(self.copy_buffer, diagram, self.model.lookup)
+            paste_link(self.copy_buffer, diagram)
 
     @rule(data=data())
     def paste_full(self, data):
         assume(self.copy_buffer)
         diagram = data.draw(self.diagrams())
         with self.transaction:
-            new_items = paste_full(self.copy_buffer, diagram, self.model.lookup)
+            new_items = paste_full(self.copy_buffer, diagram)
         self.fully_pasted_items.update(new_items)
 
     @invariant()
