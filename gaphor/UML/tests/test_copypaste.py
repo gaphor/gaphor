@@ -8,7 +8,7 @@ def test_copy_connected_item(diagram, element_factory):
     )
 
     buffer = copy_full({spc_cls_item})
-    (new_cls_item,) = paste_full(buffer, diagram, element_factory.lookup)
+    (new_cls_item,) = paste_full(buffer, diagram)
 
     assert new_cls_item.subject
     assert gen_item.subject.general is gen_cls_item.subject

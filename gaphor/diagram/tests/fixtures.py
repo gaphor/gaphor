@@ -56,7 +56,7 @@ def copy_and_paste_link(items, diagram, element_factory, retain=None):
     if retain is None:
         retain = []
     buffer = copy_full(items)
-    return paste_link(buffer, diagram, element_factory.lookup)
+    return paste_link(buffer, diagram)
 
 
 def copy_clear_and_paste_link(items, diagram, element_factory, retain=None):
@@ -64,7 +64,7 @@ def copy_clear_and_paste_link(items, diagram, element_factory, retain=None):
         retain = []
     buffer = copy_full(items)
     clear_model(diagram, element_factory, retain)
-    return paste_link(buffer, diagram, element_factory.lookup)
+    return paste_link(buffer, diagram)
 
 
 def find(widget, name):

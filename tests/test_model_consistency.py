@@ -258,14 +258,14 @@ class ModelConsistency(RuleBasedStateMachine):
         assume(self.copy_buffer)
         diagram = data.draw(self.diagrams())
         with self.transaction:
-            paste_link(self.copy_buffer, diagram, self.model.lookup)
+            paste_link(self.copy_buffer, diagram)
 
     @rule(data=data())
     def paste_full(self, data):
         assume(self.copy_buffer)
         diagram = data.draw(self.diagrams())
         with self.transaction:
-            new_items = paste_full(self.copy_buffer, diagram, self.model.lookup)
+            new_items = paste_full(self.copy_buffer, diagram)
         self.fully_pasted_items.update(new_items)
 
     @invariant()

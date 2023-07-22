@@ -13,7 +13,7 @@ def test_shallow_copy_activity_with_parameter(diagram, element_factory):
 
     copy_data = copy_full({activity_item})
 
-    new_elements = paste_link(copy_data, diagram, element_factory.lookup)
+    new_elements = paste_link(copy_data, diagram)
     new_activity_item = next(
         (e for e in new_elements if isinstance(e, ActivityItem)), None
     )
@@ -33,7 +33,7 @@ def test_deep_copy_activity_with_parameter(diagram, element_factory):
     node.parameter.name = "Name"
 
     copy_data = copy_full({activity_item})
-    new_elements = paste_full(copy_data, diagram, element_factory.lookup)
+    new_elements = paste_full(copy_data, diagram)
     new_activity_item = next(
         (e for e in new_elements if isinstance(e, ActivityItem)), None
     )

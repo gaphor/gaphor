@@ -12,7 +12,7 @@ def test_copied_item_references_new_model_element(diagram, element_factory):
 
     buffer = copy_full({cls_item})
 
-    all(paste_full(buffer, diagram, element_factory.lookup))
+    all(paste_full(buffer, diagram))
 
     assert len(list(diagram.get_all_items())) == 2
     item1, item2 = diagram.get_all_items()
@@ -32,7 +32,7 @@ def test_copy_multiple_items(diagram, element_factory):
 
     buffer = copy_full({cls_item1, cls_item2})
 
-    paste_full(buffer, diagram, element_factory.lookup)
+    paste_full(buffer, diagram)
 
     assert len(list(diagram.get_all_items())) == 4
     assert len(element_factory.lselect(UML.Class)) == 2
@@ -44,7 +44,7 @@ def test_copy_items_with_connections(diagram, element_factory):
     )
 
     buffer = copy_full({gen_cls_item, gen_item, spc_cls_item})
-    new_items = paste_full(buffer, diagram, element_factory.lookup)
+    new_items = paste_full(buffer, diagram)
     (new_cls1, new_cls2) = (ci.subject for ci in new_items if isinstance(ci, ClassItem))
     (new_gen,) = (gi.subject for gi in new_items if isinstance(gi, GeneralizationItem))
 
@@ -64,7 +64,7 @@ def test_copy_element_factory(diagram, element_factory):
 
     new_element_factory = ElementFactory()
     new_diagram = new_element_factory.create(Diagram)
-    paste_full(buffer, new_diagram, new_element_factory.lookup)
+    paste_full(buffer, new_diagram)
 
     # new element factory has one more diagram:
     assert len(new_element_factory.lselect(Diagram)) == 2
@@ -78,7 +78,7 @@ def test_copy_package_with_diagram(element_factory):
     package_item = diagram.create(PackageItem, subject=package)
 
     copy_buffer = copy_full([package_item])
-    (new_package_item,) = paste_full(copy_buffer, diagram, element_factory.lookup)
+    (new_package_item,) = paste_full(copy_buffer, diagram)
     new_package = new_package_item.subject
 
     assert diagram in package.ownedDiagram
@@ -94,7 +94,7 @@ def test_shallow_copy_package_with_owned_package(element_factory):
     package_item = diagram.create(PackageItem, subject=package)
 
     copy_buffer = copy_full([package_item])
-    (new_package_item,) = paste_full(copy_buffer, diagram, element_factory.lookup)
+    (new_package_item,) = paste_full(copy_buffer, diagram)
     new_package = new_package_item.subject
 
     assert subpackage in package.nestedPackage
@@ -111,7 +111,7 @@ def test_full_copy_package_with_owned_package(element_factory):
     package_item = diagram.create(PackageItem, subject=package)
 
     copy_buffer = copy_full([package_item], element_factory.lookup)
-    (new_package_item,) = paste_full(copy_buffer, diagram, element_factory.lookup)
+    (new_package_item,) = paste_full(copy_buffer, diagram)
     new_package = new_package_item.subject
 
     assert subpackage in package.nestedPackage

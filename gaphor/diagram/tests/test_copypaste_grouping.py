@@ -22,24 +22,22 @@ def node_with_artifact(diagram, element_factory):
     return node_item, artifact_item
 
 
-def test_copy_paste_of_nested_item(diagram, element_factory, node_with_artifact):
+def test_copy_paste_of_nested_item(diagram, node_with_artifact):
     node_item, artifact_item = node_with_artifact
 
     buffer = copy_full({artifact_item})
 
-    (new_comp_item,) = paste_link(buffer, diagram, element_factory.lookup)
+    (new_comp_item,) = paste_link(buffer, diagram)
 
     assert new_comp_item.parent is node_item
 
 
-def test_copy_paste_of_item_with_nested_item(
-    diagram, element_factory, node_with_artifact
-):
+def test_copy_paste_of_item_with_nested_item(diagram, node_with_artifact):
     node_item, artifact_item = node_with_artifact
 
     buffer = copy_full(set(node_with_artifact))
 
-    new_items = paste_link(buffer, diagram, element_factory.lookup)
+    new_items = paste_link(buffer, diagram)
 
     new_node_item = next(i for i in new_items if isinstance(i, NodeItem))
     new_comp_item = next(i for i in new_items if isinstance(i, ArtifactItem))

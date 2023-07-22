@@ -39,7 +39,7 @@ def test_copy_multiple_items(diagram, element_factory):
 
     buffer = copy_full({cls_item1, cls_item2})
 
-    paste_link(buffer, diagram, element_factory.lookup)
+    paste_link(buffer, diagram)
 
     assert len(list(diagram.get_all_items())) == 4
     assert len(element_factory.lselect(UML.Class)) == 1
@@ -53,7 +53,7 @@ def test_copy_item_without_copying_connection(diagram, element_factory):
 
     buffer = copy_full({cls_item})
 
-    new_items = paste_link(buffer, diagram, element_factory.lookup)
+    new_items = paste_link(buffer, diagram)
 
     assert len(list(diagram.get_all_items())) == 3
     assert len(element_factory.lselect(UML.Class)) == 1
@@ -79,7 +79,7 @@ def test_copy_item_with_connection(diagram, element_factory):
     )
     buffer = copy_full({gen_cls_item, gen_item, spc_cls_item})
 
-    new_items = paste_link(buffer, diagram, element_factory.lookup)
+    new_items = paste_link(buffer, diagram)
     new_gen_item = next(i for i in new_items if isinstance(i, GeneralizationItem))
 
     new_cls_item1 = diagram.connections.get_connection(
@@ -119,7 +119,7 @@ def test_copy_item_when_subject_has_been_removed(diagram, element_factory):
     assert cls not in element_factory.select()
     assert not element_factory.lookup(orig_cls_id)
 
-    paste_link(buffer, diagram, element_factory.lookup)
+    paste_link(buffer, diagram)
     new_cls = element_factory.lselect(UML.Class)[0]
     (new_cls_item,) = diagram.get_all_items()
     assert new_cls.package is package
@@ -183,7 +183,7 @@ def test_copy_to_new_diagram(diagram, element_factory):
 
     buffer = copy_full({cls_item})
 
-    paste_link(buffer, new_diagram, element_factory.lookup)
+    paste_link(buffer, new_diagram)
 
     assert len(list(new_diagram.get_all_items())) == 1
     assert next(new_diagram.get_all_items()).diagram is new_diagram

@@ -61,16 +61,12 @@ def copy_full(
     return CopyData(elements=elements)
 
 
-def paste_link(
-    copy_data: Opaque, diagram: Diagram, lookup: Callable[[Id], Element | None]
-) -> set[Presentation]:
-    return _paste(copy_data, diagram, lookup, full=False)
+def paste_link(copy_data: Opaque, diagram: Diagram) -> set[Presentation]:
+    return _paste(copy_data, diagram, full=False)
 
 
-def paste_full(
-    copy_data: Opaque, diagram: Diagram, lookup: Callable[[Id], Element | None]
-) -> set[Presentation]:
-    return _paste(copy_data, diagram, lookup, full=True)
+def paste_full(copy_data: Opaque, diagram: Diagram) -> set[Presentation]:
+    return _paste(copy_data, diagram, full=True)
 
 
 @singledispatch
@@ -195,16 +191,17 @@ def paste_presentation(copy_data: PresentationCopy, diagram, lookup):
     diagram.update_now((item,))
 
 
-def _paste(copy_data, diagram, lookup, full) -> set[Presentation]:
+def _paste(copy_data: Opaque, diagram: Diagram, full: bool) -> set[Presentation]:
     assert isinstance(copy_data, CopyData)
 
     new_elements: dict[Id, Element | None] = {}
+    model = diagram.model
 
     def element_lookup(ref: Id):
         if ref in new_elements:
             return new_elements[ref]
 
-        looked_up = lookup(ref)
+        looked_up = model.lookup(ref)
         if not full and looked_up and not isinstance(looked_up, Presentation):
             return looked_up
 
