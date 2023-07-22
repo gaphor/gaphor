@@ -52,21 +52,21 @@ def stroke(context: DrawContext, fill=True, dash=True):
 
 def draw_border(box, context: DrawContext, bounding_box: Rectangle):
     cr = context.cairo
-    d = context.style.get("border-radius", 0)
     x, y, width, height = bounding_box
+    d = min(context.style.get("border-radius", 0), width / 2.0, height / 2.0)
 
-    cr.move_to(x, d)
+    cr.move_to(x, y + d)
     cr.set_dash(context.style.get("dash-style", ()), 0)
     if d:
-        x1 = width + x
-        y1 = height + y
-        cr.arc(d, d, d, pi, 1.5 * pi)
+        x1 = x + width
+        y1 = y + height
+        cr.arc(x + d, y + d, d, pi, 1.5 * pi)
         cr.line_to(x1 - d, y)
-        cr.arc(x1 - d, d, d, 1.5 * pi, y)
+        cr.arc(x1 - d, y + d, d, 1.5 * pi, 0)
         cr.line_to(x1, y1 - d)
         cr.arc(x1 - d, y1 - d, d, 0, 0.5 * pi)
-        cr.line_to(d, y1)
-        cr.arc(d, y1 - d, d, 0.5 * pi, pi)
+        cr.line_to(x + d, y1)
+        cr.arc(x + d, y1 - d, d, 0.5 * pi, pi)
     else:
         cr.rectangle(x, y, width, height)
 
