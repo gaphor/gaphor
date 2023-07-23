@@ -294,7 +294,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
 
         draw_line_end(context, handles[-1], handles[-2], self.draw_tail)
 
-        stroke(context)
+        stroke(context, fill=False)
 
         for shape, rect in (
             (self._shape_head, self._shape_head_rect),

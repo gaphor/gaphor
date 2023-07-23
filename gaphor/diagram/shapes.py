@@ -467,7 +467,7 @@ def draw_arrow_head(context: DrawContext):
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
-    stroke(context, dash=False)
+    stroke(context, fill=False, dash=False)
     cr.restore()
     cr.move_to(0, 0)
 
@@ -475,13 +475,13 @@ def draw_arrow_head(context: DrawContext):
 def draw_arrow_tail(context: DrawContext):
     cr = context.cairo
     cr.line_to(0, 0)
-    stroke(context)
+    stroke(context, fill=False)
     cr.save()
     cr.set_dash((), 0)
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
-    stroke(context, dash=False)
+    stroke(context, fill=False, dash=False)
     cr.restore()
 
 
