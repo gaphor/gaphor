@@ -13,6 +13,7 @@ from gi.repository import GLib, Pango, PangoCairo
 
 from gaphor.core.modeling.diagram import DrawContext, StyledDiagram, StyledItem
 from gaphor.diagram.selection import Selection
+from gaphor.diagram.diagramlabel import diagram_label
 
 
 class ItemPainter:
@@ -67,7 +68,8 @@ class DiagramTypePainter:
         layout = PangoCairo.create_layout(cr)
         escape = GLib.markup_escape_text
         layout.set_markup(
-            f"<b>{escape(diagram.diagramType)}</b> {escape(diagram.name)}", length=-1
+            f"<b>{escape(diagram.diagramType)}</b> {escape(diagram_label(diagram))}",
+            length=-1,
         )
 
         font_family = style.get("font-family")

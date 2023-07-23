@@ -122,7 +122,7 @@ class Toolbox(UIComponent):
         expanded_sections = next(
             (
                 sections
-                for id, _, sections in self.modeling_language.diagram_types
+                for id, _, sections, _ in self.modeling_language.diagram_types
                 if id == diagram_type
             ),
             (),
