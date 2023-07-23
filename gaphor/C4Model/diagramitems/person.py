@@ -66,4 +66,4 @@ def draw_person(box, context, bounding_box):
 
     cr.close_path()
 
-    stroke(context)
+    stroke(context, fill=True)

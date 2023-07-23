@@ -107,7 +107,7 @@ def draw_activity_final_node(_box, context, _bounding_box):
     ellipse(cr, 0, 0, d, d)
     cr.set_line_width(0.01)
     cr.set_line_width(2)
-    stroke(context)
+    stroke(context, fill=True)
 
     d = inner_radius * 2
     ellipse(cr, 5, 5, d, d)
@@ -145,7 +145,7 @@ def draw_flow_final_node(_box, context, bounding_box):
     r = 10
     d = r * 2
     ellipse(cr, *bounding_box)
-    stroke(context)
+    stroke(context, fill=True)
 
     dr = (1 - math.sin(math.pi / 4)) * r
     cr.move_to(dr, dr)
@@ -205,7 +205,7 @@ def draw_decision_node(_box, context, _bounding_box):
     cr.line_to(r2, r * 2)
     cr.line_to(0, r)
     cr.close_path()
-    stroke(context)
+    stroke(context, fill=True)
 
 
 @represents(UML.ForkNode)

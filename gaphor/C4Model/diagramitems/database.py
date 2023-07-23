@@ -61,4 +61,4 @@ def draw_database(box, context, bounding_box):
     cr.curve_to(x1, y1, width / 2, y1 + height * d, x, y1)
     cr.line_to(x, y)
 
-    stroke(context)
+    stroke(context, fill=True)

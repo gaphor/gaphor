@@ -91,4 +91,4 @@ def draw_node(box, context, bounding_box):
     cr.move_to(w, 0)
     cr.line_to(w + d, -d)
 
-    stroke(context)
+    stroke(context, fill=True)

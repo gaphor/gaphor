@@ -31,7 +31,7 @@ class cairo_state:
         self._cr.restore()
 
 
-def stroke(context: DrawContext, fill=True, dash=True):
+def stroke(context: DrawContext, fill: bool, dash=True):
     style = context.style
     cr = context.cairo
     fill_color = style.get("background-color")
@@ -72,7 +72,7 @@ def draw_border(box, context: DrawContext, bounding_box: Rectangle):
 
     cr.close_path()
 
-    stroke(context)
+    stroke(context, fill=True)
 
 
 def draw_top_separator(box: Box, context: DrawContext, bounding_box: Rectangle):
@@ -96,7 +96,7 @@ def draw_left_separator(box: Box, context: DrawContext, bounding_box: Rectangle)
 def draw_ellipse(box: Box, context: DrawContext, bounding_box: Rectangle):
     ellipse(context.cairo, *bounding_box)
 
-    stroke(context)
+    stroke(context, fill=True)
 
 
 def ellipse(cr, x, y, w, h, dc=None):
@@ -467,7 +467,7 @@ def draw_arrow_head(context: DrawContext):
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
-    stroke(context, dash=False)
+    stroke(context, fill=False, dash=False)
     cr.restore()
     cr.move_to(0, 0)
 
@@ -475,13 +475,13 @@ def draw_arrow_head(context: DrawContext):
 def draw_arrow_tail(context: DrawContext):
     cr = context.cairo
     cr.line_to(0, 0)
-    stroke(context)
+    stroke(context, fill=False)
     cr.save()
     cr.set_dash((), 0)
     cr.move_to(15, -6)
     cr.line_to(0, 0)
     cr.line_to(15, 6)
-    stroke(context, dash=False)
+    stroke(context, fill=False, dash=False)
     cr.restore()
 
 
@@ -497,4 +497,4 @@ def draw_diamond(
     cr.line_to(x2, center_y)
     cr.line_to(center_x, y1)
     cr.line_to(x1, center_y)
-    stroke(context)
+    stroke(context, fill=True)

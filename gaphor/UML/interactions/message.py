@@ -173,7 +173,7 @@ class MessageItem(Named, LinePresentation[UML.Message]):
             cr.set_dash((7.0, 5.0), 0)
 
         cr.line_to(0, 0)
-        stroke(context, dash=False)
+        stroke(context, fill=False, dash=False)
 
         cr.set_dash((), 0)
 
@@ -190,7 +190,7 @@ class MessageItem(Named, LinePresentation[UML.Message]):
         else:
             self._draw_arrow(cr)
 
-        stroke(context)
+        stroke(context, fill=False)
 
     def _draw_decorating_arrow(self, cr, inverted=False):
         with cairo_state(cr):

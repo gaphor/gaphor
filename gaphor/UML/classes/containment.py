@@ -22,6 +22,6 @@ def draw_crossed_circle_head(context: DrawContext):
     cr.line_to(2 * radius, 0)
     cr.move_to(radius, radius)
     cr.line_to(radius, -radius)
-    stroke(context, dash=False)
+    stroke(context, fill=False, dash=False)
     cr.restore()
     cr.move_to(0, 0)

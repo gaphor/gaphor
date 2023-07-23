@@ -104,5 +104,5 @@ class DependencyItem(Named, LinePresentation):
             cr.move_to(15, -6)
             cr.line_to(0, 0)
             cr.line_to(15, 6)
-            stroke(context, dash=False)
+            stroke(context, fill=False, dash=False)
         cr.move_to(0, 0)

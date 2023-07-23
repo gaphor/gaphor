@@ -82,7 +82,7 @@ class CallBehaviorActionItem(ActionItem):
         cr.line_to(x_offset + half_width, y_offset + half_height)
         cr.close_path()
 
-        stroke(context)
+        stroke(context, fill=True)
 
 
 @represents(UML.SendSignalAction)
@@ -113,7 +113,7 @@ class SendSignalActionItem(Named, ElementPresentation):
         cr.line_to(0, height)
         cr.close_path()
 
-        stroke(context)
+        stroke(context, fill=True)
 
 
 @represents(UML.AcceptEventAction)
@@ -144,4 +144,4 @@ class AcceptEventActionItem(Named, ElementPresentation):
         cr.line_to(d, height / 2)
         cr.close_path()
 
-        stroke(context)
+        stroke(context, fill=True)

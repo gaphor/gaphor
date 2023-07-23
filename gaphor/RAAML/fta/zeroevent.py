@@ -60,4 +60,4 @@ def draw_zero_event(box, context: DrawContext, bounding_box: Rectangle):
     wall_bottom = bounding_box.height
     cr.move_to(left, wall_top)
     cr.line_to(right, wall_bottom)
-    stroke(context)
+    stroke(context, fill=True)

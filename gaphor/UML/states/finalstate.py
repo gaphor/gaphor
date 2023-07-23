@@ -34,7 +34,7 @@ def draw_final_state(box, context, bounding_box):
     ellipse(cr, *bounding_box)
     cr.set_line_width(0.01)
     cr.set_line_width(2)
-    stroke(context)
+    stroke(context, fill=True)
 
     if stroke_color := context.style["color"]:
         cr.set_source_rgba(*stroke_color)

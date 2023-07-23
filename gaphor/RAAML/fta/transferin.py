@@ -56,4 +56,4 @@ def draw_transfer_in(box, context: DrawContext, bounding_box: Rectangle):
     cr.line_to(bounding_box.width, bounding_box.height)
     cr.line_to(bounding_box.width / 2.0, 0)
     cr.line_to(0, bounding_box.height)
-    stroke(context)
+    stroke(context, fill=True)

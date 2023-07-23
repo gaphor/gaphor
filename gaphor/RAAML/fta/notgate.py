@@ -60,4 +60,4 @@ def draw_not_gate(box, context: DrawContext, bounding_box: Rectangle):
     cr.line_to(x1, 0)
     cr.line_to(x2, height)
     cr.line_to(x1, height)
-    stroke(context)
+    stroke(context, fill=True)

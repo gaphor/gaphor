@@ -62,4 +62,4 @@ def draw_seq_gate(box, context: DrawContext, bounding_box: Rectangle):
     ry = bounding_box.height * 2.0 / 3.0
     cr.line_to(bounding_box.width / 2.0, wall_top - ry / 2.0)
     cr.line_to(bounding_box.width, wall_bottom)
-    stroke(context)
+    stroke(context, fill=True)

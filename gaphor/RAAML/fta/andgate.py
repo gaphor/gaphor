@@ -86,4 +86,4 @@ def draw_and_gate(box, context: DrawContext, bounding_box: Rectangle):
     center = bounding_box.width / 2.0
     cr.move_to(center, wall_top - ry / 2.0)
     cr.line_to(center, 0)
-    stroke(context)
+    stroke(context, fill=True)

@@ -53,5 +53,5 @@ class InterfaceRealizationItem(Named, LinePresentation):
             cr.line_to(15, -10)
             cr.line_to(15, 10)
             cr.close_path()
-            stroke(context, dash=False)
+            stroke(context, fill=False, dash=False)
             cr.move_to(15, 0)

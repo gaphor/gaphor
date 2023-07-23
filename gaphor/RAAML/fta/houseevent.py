@@ -62,4 +62,4 @@ def draw_house_event(box, context: DrawContext, bounding_box: Rectangle):
     cr.line_to(bounding_box.width / 2.0, 0)
     cr.line_to(left, wall_top)
     cr.line_to(left, wall_bottom)
-    stroke(context)
+    stroke(context, fill=True)
