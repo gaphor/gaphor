@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk" version="4.0"/>
+  <requires lib="gtk" version="4.0" />
 
   <object class="GtkBox" id="decision-node-editor">
     <property name="orientation">vertical</property>
@@ -16,13 +16,13 @@
         <child>
           <object class="GtkSwitch" id="show-type">
             <property name="focusable">1</property>
-            <signal name="notify::active" handler="show-type-changed" swapped="no"/>
+            <signal name="notify::active" handler="show-type-changed" swapped="no" />
           </object>
         </child>
       </object>
     </child>
     <style>
-      <class name="propertypage"/>
+      <class name="propertypage" />
     </style>
   </object>
 
@@ -42,13 +42,13 @@
         <child>
           <object class="GtkSwitch" id="horizontal">
             <property name="focusable">1</property>
-            <signal name="notify::active" handler="horizontal-changed" swapped="no"/>
+            <signal name="notify::active" handler="horizontal-changed" swapped="no" />
           </object>
         </child>
       </object>
     </child>
     <style>
-      <class name="propertypage"/>
+      <class name="propertypage" />
     </style>
   </object>
 
@@ -59,18 +59,18 @@
         <property name="label" translatable="yes">Join Specification</property>
         <property name="xalign">0</property>
         <style>
-          <class name="title"/>
+          <class name="title" />
         </style>
       </object>
     </child>
     <child>
       <object class="GtkEntry" id="join-spec">
         <property name="focusable">1</property>
-        <signal name="changed" handler="join-spec-changed" swapped="no"/>
+        <signal name="changed" handler="join-spec-changed" swapped="no" />
       </object>
     </child>
     <style>
-      <class name="propertypage"/>
+      <class name="propertypage" />
     </style>
   </object>
 
@@ -89,7 +89,7 @@
         <property name="label" translatable="yes">Swimlanes</property>
         <property name="xalign">0</property>
         <style>
-          <class name="title"/>
+          <class name="title" />
         </style>
       </object>
     </child>
@@ -107,7 +107,7 @@
             <property name="focusable">1</property>
             <property name="adjustment">num-partitions-adjustment</property>
             <property name="numeric">1</property>
-            <signal name="value-changed" handler="partitions-changed" swapped="no"/>
+            <signal name="value-changed" handler="partitions-changed" swapped="no" />
           </object>
         </child>
       </object>
@@ -119,7 +119,7 @@
       </object>
     </child>
     <style>
-      <class name="propertypage"/>
+      <class name="propertypage" />
     </style>
   </object>
 
@@ -130,14 +130,14 @@
         <property name="label" translatable="yes">Upper Bound</property>
         <property name="xalign">0</property>
         <style>
-          <class name="title"/>
+          <class name="title" />
         </style>
       </object>
     </child>
     <child>
       <object class="GtkEntry" id="upper-bound">
         <property name="focusable">1</property>
-        <signal name="changed" handler="upper-bound-changed" swapped="no"/>
+        <signal name="changed" handler="upper-bound-changed" swapped="no" />
       </object>
     </child>
     <child>
@@ -152,7 +152,7 @@
         <child>
           <object class="GtkSwitch" id="show-ordering">
             <property name="focusable">1</property>
-            <signal name="notify::active" handler="show-ordering-changed" swapped="no"/>
+            <signal name="notify::active" handler="show-ordering-changed" swapped="no" />
           </object>
         </child>
       </object>
@@ -169,11 +169,11 @@
             </items>
           </object>
         </property>
-        <signal name="notify::selected" handler="ordering-changed" swapped="no"/>
+        <signal name="notify::selected" handler="ordering-changed" swapped="no" />
       </object>
     </child>
     <style>
-      <class name="propertypage"/>
+      <class name="propertypage" />
     </style>
   </object>
 
@@ -197,7 +197,7 @@
         <child>
           <object class="GtkEntry" id="partition-name">
             <property name="focusable">1</property>
-            <signal name="changed" handler="partition-name-changed" swapped="no"/>
+            <signal name="changed" handler="partition-name-changed" swapped="no" />
           </object>
         </child>
         <child>
@@ -215,7 +215,7 @@
           </object>
         </child>
         <style>
-          <class name="propertypage"/>
+          <class name="propertypage" />
         </style>
       </object>
     </child>
@@ -228,7 +228,7 @@
         <property name="label" translatable="yes">Behavior</property>
         <property name="xalign">0</property>
         <style>
-          <class name="title"/>
+          <class name="title" />
         </style>
       </object>
     </child>
@@ -241,7 +241,7 @@
       </object>
     </child>
     <style>
-      <class name="propertypage"/>
+      <class name="propertypage" />
     </style>
   </object>
 
@@ -252,7 +252,7 @@
         <property name="label" translatable="yes">Guard</property>
         <property name="xalign">0</property>
         <style>
-          <class name="title"/>
+          <class name="title" />
         </style>
       </object>
     </child>
@@ -262,7 +262,7 @@
       </object>
     </child>
     <style>
-      <class name="propertypage"/>
+      <class name="propertypage" />
     </style>
   </object>
 
@@ -273,7 +273,7 @@
       <object class="GtkLabel">
         <property name="label" translatable="yes">Parameter Nodes</property>
         <style>
-          <class name="title"/>
+          <class name="title" />
         </style>
       </object>
     </child>
@@ -291,7 +291,7 @@
                 <property name="show-expanders">0</property>
                 <property name="enable-grid-lines">horizontal</property>
                 <child internal-child="selection">
-                  <object class="GtkTreeSelection"/>
+                  <object class="GtkTreeSelection" />
                 </child>
                 <child>
                   <object class="GtkTreeViewColumn">
@@ -304,7 +304,7 @@
                         <property name="ypad">2</property>
                         <property name="xalign">0</property>
                         <property name="editable">1</property>
-                        <signal name="edited" handler="parameter-edited" swapped="no"/>
+                        <signal name="edited" handler="parameter-edited" swapped="no" />
                       </object>
                       <attributes>
                         <attribute name="text">0</attribute>
@@ -338,21 +338,77 @@ Press &lt;b&gt;Enter&lt;/b&gt; to edit, &lt;b&gt;Backspace&lt;/b&gt;/&lt;b&gt;De
 Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</property>
                     <property name="use-markup">1</property>
                     <style>
-                      <class name="info-popover"/>
+                      <class name="info-popover" />
                     </style>
                   </object>
                 </property>
               </object>
             </child>
             <style>
-              <class name="info"/>
+              <class name="info" />
             </style>
           </object>
         </child>
       </object>
     </child>
     <style>
-      <class name="propertypage"/>
+      <class name="propertypage" />
+    </style>
+  </object>
+
+  <object class="GtkBox" id="pin-editor">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Type</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title" />
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkDropDown" id="type">
+        <property name="enable-search">1</property>
+        <property name="expression">
+          <lookup type="LabelValue" name="label" />
+        </property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Multiplicity</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title" />
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkEntry" id="multiplicity-lower">
+            <property name="focusable">1</property>
+            <signal name="changed" handler="multiplicity-lower-changed" swapped="no" />
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="label"> .. </property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="multiplicity-upper">
+            <property name="focusable">1</property>
+            <signal name="changed" handler="multiplicity-upper-changed" swapped="no" />
+          </object>
+        </child>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage" />
     </style>
   </object>
 

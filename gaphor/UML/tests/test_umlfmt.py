@@ -153,4 +153,10 @@ def test_pin(factory):
     pin = factory.create(UML.InputPin)
     pin.name = "foo"
 
-    assert format(pin) == "foo"
+    pin.type = factory.create(UML.Class)
+    pin.type.name = "MyClass"
+
+    pin.lowerValue = "1"
+    pin.upperValue = "*"
+
+    assert format(pin) == "foo: MyClass[1..*]"

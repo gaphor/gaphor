@@ -248,3 +248,81 @@ class FlowPropertyPageAbstract(PropertyPageBase):
     def _on_guard_change(self, entry):
         value = entry.get_text().strip()
         self.subject.guard = value
+
+
+@PropertyPages.register(UML.Pin)
+class PinPropertyPage(PropertyPageBase):
+    """Pin element editor."""
+
+    order = 15
+
+    subject: UML.Pin
+
+    def __init__(self, subject):
+        self.subject = subject
+        self.watcher = subject and subject.watcher()
+
+    def construct(self):
+        subject = self.subject
+
+        if not subject:
+            return
+
+        builder = new_builder(
+            "pin-editor",
+            signals={
+                "multiplicity-lower-changed": (self._on_multiplicity_lower_change,),
+                "multiplicity-upper-changed": (self._on_multiplicity_upper_change,),
+            },
+        )
+
+        dropdown = builder.get_object("type")
+        model = self.list_of_classifiers(subject.model)
+        dropdown.set_model(model)
+
+        if subject.type:
+            dropdown.set_selected(
+                next(n for n, lv in enumerate(model) if lv.value == subject.type.id)
+            )
+
+        dropdown.connect("notify::selected", self._on_type_changed)
+
+        multiplicity_lower = builder.get_object("multiplicity-lower")
+        multiplicity_lower.set_text(subject.lowerValue or "")
+
+        multiplicity_upper = builder.get_object("multiplicity-upper")
+        multiplicity_upper.set_text(subject.upperValue or "")
+
+        return builder.get_object("pin-editor")
+
+    def list_of_classifiers(self, element_factory):
+        options = Gio.ListStore.new(LabelValue)
+        options.append(LabelValue("", None))
+
+        for c in sorted(
+            (c for c in element_factory.select(UML.Classifier) if c.name),
+            key=lambda c: c.name or "",
+        ):
+            options.append(LabelValue(c.name, c.id))
+
+        return options
+
+    @transactional
+    def _on_type_changed(self, dropdown, _pspec):
+        subject = self.subject
+        if id := dropdown.get_selected_item().value:
+            element = subject.model.lookup(id)
+            assert isinstance(element, UML.Type)
+            subject.type = element
+        else:
+            del subject.type
+
+    @transactional
+    def _on_multiplicity_lower_change(self, entry):
+        value = entry.get_text().strip()
+        self.subject.lowerValue = value
+
+    @transactional
+    def _on_multiplicity_upper_change(self, entry):
+        value = entry.get_text().strip()
+        self.subject.upperValue = value
