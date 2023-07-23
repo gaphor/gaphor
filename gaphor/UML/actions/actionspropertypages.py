@@ -249,6 +249,7 @@ class FlowPropertyPageAbstract(PropertyPageBase):
         value = entry.get_text().strip()
         self.subject.guard = value
 
+
 @PropertyPages.register(UML.Pin)
 class PinPropertyPage(PropertyPageBase):
     """Pin element editor."""
@@ -281,11 +282,7 @@ class PinPropertyPage(PropertyPageBase):
 
         if subject.type:
             dropdown.set_selected(
-                next(
-                    n
-                    for n, lv in enumerate(model)
-                    if lv.value == subject.type.id
-                )
+                next(n for n, lv in enumerate(model) if lv.value == subject.type.id)
             )
 
         dropdown.connect("notify::selected", self._on_type_changed)

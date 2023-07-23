@@ -183,12 +183,11 @@ def format_slot(el):
 def format_namedelement(el, **kwargs):
     return el.name or ""
 
+
 @format.register(UML.Pin)
 def format_pin(el, **kwargs):
-
     if not el:
         return ""
-
 
     s = []
 
@@ -196,11 +195,12 @@ def format_pin(el, **kwargs):
 
     if el.type and el.type.name:
         s.append(f": {el.type.name}")
-    
+
     if el.upperValue or el.lowerValue:
         s.append(format_multiplicity(el))
-    
+
     return "".join(s)
+
 
 @format.register(UML.MultiplicityElement)
 def format_multiplicity(el, bare=False):

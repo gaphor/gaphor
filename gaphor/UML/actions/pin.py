@@ -12,6 +12,7 @@ from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_pin
 
+
 def text_position(position):
     return {
         "text-align": TextAlign.LEFT if position == "left" else TextAlign.RIGHT,
@@ -53,6 +54,7 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
             Text(text=lambda: format_pin(self.subject)),
             style=text_position(self.connected_side()),
         )
+
 
 @represents(UML.InputPin)
 class InputPinItem(PinItem):
