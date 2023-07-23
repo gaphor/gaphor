@@ -194,8 +194,8 @@ def format_pin(el, **kwargs):
 
     s.append(el.name or "")
 
-    if el.typeValue:
-        s.append(f": {el.typeValue}")
+    if el.type and el.type.name:
+        s.append(f": {el.type.name}")
     
     if el.upperValue or el.lowerValue:
         s.append(format_multiplicity(el))

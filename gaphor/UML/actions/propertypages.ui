@@ -389,7 +389,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         <child>
           <object class="GtkEntry" id="multiplicity-lower">
             <property name="focusable">1</property>
-            <!--<signal name="changed" handler="pin-multiplicity-lower-changed" swapped="no" />-->
+            <signal name="changed" handler="multiplicity-lower-changed" swapped="no" />
           </object>
         </child>
         <child>
@@ -402,7 +402,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         <child>
           <object class="GtkEntry" id="multiplicity-upper">
             <property name="focusable">1</property>
-            <!--<signal name="changed" handler="pin-multiplicity-upper-changed" swapped="no" />-->
+            <signal name="changed" handler="multiplicity-upper-changed" swapped="no" />
           </object>
         </child>
       </object>

@@ -25,6 +25,9 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id, width=16, height=16)
         self.watch("subject[NamedElement].name")
+        self.watch("subject[TypedElement].type")
+        self.watch("subject[MultiplicityElement].lowerValue")
+        self.watch("subject[MultiplicityElement].upperValue")
 
     def pin_type(self):
         return ""
