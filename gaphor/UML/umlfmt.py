@@ -189,9 +189,7 @@ def format_pin(el, **kwargs):
     if not el:
         return ""
 
-    s = []
-
-    s.append(el.name or "")
+    s = [el.name or ""]
 
     if el.type and el.type.name:
         s.append(f": {el.type.name}")
@@ -244,6 +242,4 @@ def format_include(el):
 @format.register(UML.CallBehaviorAction)
 def format_call_behavior_action_name(el):
     """Name conforms to UML2.5.1 16.3.4.1 naming description"""
-    if el.behavior and not el.name:
-        return el.behavior.name
-    return el.name or ""
+    return el.behavior.name if el.behavior and not el.name else el.name or ""
