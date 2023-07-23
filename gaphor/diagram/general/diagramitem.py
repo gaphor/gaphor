@@ -46,4 +46,4 @@ def draw_diagram(box, context, bounding_box):
     cr.move_to(17, 9)
     cr.line_to(8, 9)
     cr.line_to(8, 12)
-    stroke(context)
+    stroke(context, fill=True)

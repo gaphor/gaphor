@@ -124,4 +124,4 @@ class PartitionItem(ElementPresentation):
         cr.line_to(0 + bounding_box.width, 0)
         cr.move_to(0, header_height)
         cr.line_to(0 + bounding_box.width, header_height)
-        stroke(context)
+        stroke(context, fill=True)

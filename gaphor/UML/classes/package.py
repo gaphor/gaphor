@@ -61,4 +61,4 @@ def draw_package(box, context, bounding_box):
         cr.line_to(w, h)
         cr.line_to(w, y)
         cr.line_to(o, y)
-        stroke(context)
+        stroke(context, fill=True)

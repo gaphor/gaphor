@@ -54,4 +54,4 @@ def draw_basic_event(box, context: DrawContext, bounding_box: Rectangle):
     cr = context.cairo
     cr.move_to(bounding_box.width, bounding_box.height)
     ellipse(cr, *bounding_box)
-    stroke(context)
+    stroke(context, fill=True)

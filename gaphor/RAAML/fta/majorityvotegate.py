@@ -106,4 +106,4 @@ def draw_majority_vote_gate(box, context: DrawContext, bounding_box: Rectangle):
     cr.move_to(x, y)
     cr.show_text(text)
 
-    stroke(context)
+    stroke(context, fill=True)

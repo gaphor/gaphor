@@ -63,4 +63,4 @@ def draw_xor_gate(box, context: DrawContext, bounding_box: Rectangle):
     cr.move_to(0, bottom_points)
     cr.line_to(bounding_box.width / 2.0, point_top)
     cr.line_to(bounding_box.width, bottom_points)
-    stroke(context)
+    stroke(context, fill=True)

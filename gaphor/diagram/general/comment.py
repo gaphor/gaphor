@@ -45,4 +45,4 @@ def draw_border(box, context, bounding_box, ear):
     line_to(x, h)
     line_to(w, h)
     line_to(w, y + ear)
-    stroke(context)
+    stroke(context, fill=True)

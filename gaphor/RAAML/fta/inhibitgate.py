@@ -80,4 +80,4 @@ def draw_inhibit_gate(box, context: DrawContext, bounding_box: Rectangle):
     middle_height = bounding_box.height / 2.0
     cr.move_to(right, middle_height)
     cr.line_to(bounding_box.width, middle_height)
-    stroke(context)
+    stroke(context, fill=True)
