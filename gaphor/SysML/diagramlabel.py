@@ -20,9 +20,7 @@ def sysml_diagram_label(diagram):
             return "package"
         if isinstance(el, Requirement):
             return "requirement"
-        if isinstance(el, StateMachine):
-            return "state machine"
-        return ""
+        return "state machine" if isinstance(el, StateMachine) else ""
 
     if diagram.element:
         return (
