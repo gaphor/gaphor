@@ -7,7 +7,7 @@ from gi.repository import Gio, GObject, Pango
 from gaphor import UML
 from gaphor.core.format import format
 from gaphor.core.modeling import Diagram, Element
-from gaphor.diagram.iconname import get_icon_name
+from gaphor.diagram.iconname import icon_name
 from gaphor.i18n import gettext
 
 _no_value = object()
@@ -43,7 +43,7 @@ class TreeItem(GObject.Object):
         if element := self.element:
             self.text = format(element) or gettext("<None>")
             self.notify("edit-text")
-            self.icon = get_icon_name(element)
+            self.icon = icon_name(element)
             self.icon_visible = bool(
                 self.icon
                 and not isinstance(
