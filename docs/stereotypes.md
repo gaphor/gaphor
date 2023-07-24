@@ -73,4 +73,4 @@ requirement[appliedStereotype.classifier.name=system]{
 }
 ```
 
-[Style Sheets](style_sheets) has more detail on how CSS works in Gaphor 
+[Style Sheets](style_sheets) has more detail on how CSS works in Gaphor
