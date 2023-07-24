@@ -1,4 +1,4 @@
-"""With `get_icon_name` you can retrieve an icon name for a model element."""
+"""With `icon_name` you can retrieve an icon name for a model element."""
 
 import re
 from functools import singledispatch
@@ -15,4 +15,4 @@ def get_default_icon_name(element):
     return f"gaphor-{to_kebab_case(element.__class__.__name__)}-symbolic"
 
 
-get_icon_name = singledispatch(get_default_icon_name)
+icon_name = singledispatch(get_default_icon_name)
