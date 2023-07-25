@@ -48,6 +48,6 @@ class AlignService(Service, ActionProvider):
             item.width = 200
             item.height = 200
 
-            item.matrix.translate(0,0)
+            item.matrix.translate(-30.0,-30.0)
 
             diagram.update_now(diagram.get_all_items())
