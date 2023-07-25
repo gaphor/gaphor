@@ -50,11 +50,12 @@ your needs. For example, creating Customer vs System requirements.
 * Add a profile element to the diagram
 * Add a meta-class element to the diagram, within the profile.
 * Add a stereotype element to the diagram, within the profile.
-* Name the meta class after the base element you want to create your stereotype from,
-  * then connect using the generalization relationship
-* OR,
-* Connect using the generalization relationship and select the base element from the drop down menu on the right hand side.
-  * In this case only UML elements can be used as base elements.
+* Connect meta-class and stereotype with an Extension relation. The head should be attached to the class. As soon as the Extension is connected, the class will get a stereotype _metaclass_ assigned.
+
+With the meta-class and stereotype placed on the diagram, either:
+
+* Double-click the meta-class and name it after the base element you want to create your stereotype from.
+* Select the base element from the drop down menu in the Property Editor on the right hand side. In this case only UML elements can be used as base elements.
 
 ### Styling Stereotypes
 
