@@ -293,6 +293,12 @@ class ItemFlow(InformationFlow):
     itemProperty: relation_one[Property]
 
 
+from gaphor.core.modeling.diagram import Diagram
+from gaphor.UML.uml import Class
+class SysMLDiagram(Diagram):
+    pass
+
+
 
 # 23: override AbstractRequirement.derived: derived[AbstractRequirement]
 

@@ -155,6 +155,18 @@ class ModelBrowser(UIComponent, ActionProvider):
             tree_item: TreeItem = row_item.get_item()
             GLib.timeout_add(START_EDIT_DELAY, tree_item.start_editing)
 
+    def _diagram_type_or(
+        self, id: str, default_diagram: type[Diagram]
+    ) -> type[Diagram]:
+        return next(
+            (
+                dt.diagram_type
+                for dt in self.modeling_language.diagram_types
+                if dt.id == id
+            ),
+            default_diagram,
+        )
+
     @action(name="win.create-diagram")
     def tree_view_create_diagram(self, diagram_type: str):
         element = self.get_selected_element()
@@ -162,7 +174,9 @@ class ModelBrowser(UIComponent, ActionProvider):
             element = element.owner
 
         with Transaction(self.event_manager):
-            diagram = self.element_factory.create(Diagram)
+            type = self._diagram_type_or(diagram_type, Diagram)
+            diagram = self.element_factory.create(type)
+
             if isinstance(element, UML.NamedElement):
                 diagram.element = element
             diagram.name = diagram_name_for_type(
@@ -618,7 +632,7 @@ def create_diagram_types_model(modeling_language):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    for id, name, _ in modeling_language.diagram_types:
+    for id, name, _, _ in modeling_language.diagram_types:
         menu_item = Gio.MenuItem.new(gettext(name), "win.create-diagram")
         menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
         part.append_item(menu_item)
@@ -634,7 +648,7 @@ def create_diagram_types_model(modeling_language):
 
 
 def diagram_name_for_type(diagram, modeling_language, diagram_type):
-    for id, name, _ in modeling_language.diagram_types:
+    for id, name, _, _ in modeling_language.diagram_types:
         if id == diagram_type:
             return diagram.gettext(name)
     return diagram.gettext("New diagram")

@@ -369,4 +369,4 @@ class InterfaceItem(Classified, ElementPresentation):
             cr.move_to(cx + self.RADIUS_PROVIDED, cy)
             cr.arc(cx, cy, self.RADIUS_PROVIDED, 0, pi * 2)
 
-        stroke(context)
+        stroke(context, fill=True)

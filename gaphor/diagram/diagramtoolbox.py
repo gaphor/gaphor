@@ -51,6 +51,7 @@ class DiagramType(NamedTuple):
     id: str
     name: str
     sections: Collection[ToolSection]
+    diagram_type: Type[Diagram] = Diagram
 
 
 DiagramTypes = Sequence[DiagramType]

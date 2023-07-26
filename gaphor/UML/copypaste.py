@@ -41,8 +41,12 @@ def paste_named_element(copy_data: NamedElementCopy, diagram, lookup):
     element = next(paster)
     yield element
     next(paster, None)
-    if not element.namespace and isinstance(element, (Type, Package)):
-        element.package = owner_package(diagram.owner)
+    if (
+        not element.namespace
+        and isinstance(element, (Type, Package))
+        and (package := owner_package(diagram.owner)) is not element
+    ):
+        element.package = package
 
 
 paste.register(NamedElementCopy, paste_named_element)

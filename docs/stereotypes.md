@@ -36,3 +36,42 @@ When a stereotype can be applied to a model element, a *Stereotype* section
 will appear in the editor.
 
 ![Stereotype usage example](images/stereotype-usage.png)
+
+## Creating a profile
+
+In SysML extending the profile using stereotypes is often required to tailor the model to
+your needs. For example, creating Customer vs System requirements.
+
+### To add a profile to your model:
+
+* Create a package called `profile` this can be done by right clicking in the left hand column.
+* Switch modelling language to the UML profile (top of left hand menu drop down)
+* Within the package create a profile diagram (prf)
+* Add a profile element to the diagram
+* Add a meta-class element to the diagram, within the profile.
+* Add a stereotype element to the diagram, within the profile.
+* Connect meta-class and stereotype with an Extension relation. The head should be attached to the class. As soon as the Extension is connected, the class will get a stereotype _metaclass_ assigned.
+
+With the meta-class and stereotype placed on the diagram, either:
+
+* Double-click the meta-class and name it after the base element you want to create your stereotype from.
+* Select the base element from the drop down menu in the Property Editor on the right hand side. In this case only UML elements can be used as base elements.
+
+### Styling Stereotypes
+
+You can apply styling to stereotypes. For example here the base element `requirement` has a stereotype `system requirement`
+
+``` css
+/*Add style to Requirement element*/
+requirement{
+    background-color: #C5E7E7;
+    text-color: #2A2A2A;
+}
+/*Update Requirement styling for the System stereotype*/
+requirement[appliedStereotype.classifier.name=system]{
+    background-color: #D5F7E7;
+    text-color: #2A2A2A;
+}
+```
+
+[Style Sheets](style_sheets) has more detail on how CSS works in Gaphor

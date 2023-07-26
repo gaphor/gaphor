@@ -56,4 +56,4 @@ def draw_transfer_out(box, context: DrawContext, bounding_box: Rectangle):
     cr = context.cairo
     cr.move_to(bounding_box.width / 4.0, bounding_box.height / 2.0)
     cr.line_to(0, bounding_box.height / 2.0)
-    stroke(context)
+    stroke(context, fill=True)

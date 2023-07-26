@@ -12,6 +12,7 @@ from gaphor.diagram.diagramtoolbox import (
     new_item_factory,
 )
 from gaphor.SysML import diagramitems as sysml_items
+from gaphor.SysML.sysml import SysMLDiagram
 from gaphor.SysML.blocks.blockstoolbox import blocks
 from gaphor.SysML.requirements.requirementstoolbox import requirements
 from gaphor.UML import diagramitems as uml_items
@@ -65,12 +66,18 @@ sysml_toolbox_actions: ToolboxDefinition = (
 
 # Not implemented: Parameter Diagram
 sysml_diagram_types: DiagramTypes = (
-    DiagramType("bdd", i18nize("New Block Definition Diagram"), (blocks,)),
-    DiagramType("ibd", i18nize("New Internal Block Diagram"), (internal_blocks,)),
-    DiagramType("pkg", i18nize("New Package Diagram"), (blocks,)),
-    DiagramType("req", i18nize("New Requirement Diagram"), (requirements,)),
-    DiagramType("act", i18nize("New Activity Diagram"), (actions,)),
-    DiagramType("sd", i18nize("New Sequence Diagram"), (interactions,)),
-    DiagramType("stm", i18nize("New State Machine Diagram"), (states,)),
-    DiagramType("uc", i18nize("New Use Case Diagram"), (use_cases,)),
+    DiagramType(
+        "bdd", i18nize("New Block Definition Diagram"), (blocks,), SysMLDiagram
+    ),
+    DiagramType(
+        "ibd", i18nize("New Internal Block Diagram"), (internal_blocks,), SysMLDiagram
+    ),
+    DiagramType("pkg", i18nize("New Package Diagram"), (blocks,), SysMLDiagram),
+    DiagramType(
+        "req", i18nize("New Requirement Diagram"), (requirements,), SysMLDiagram
+    ),
+    DiagramType("act", i18nize("New Activity Diagram"), (actions,), SysMLDiagram),
+    DiagramType("sd", i18nize("New Sequence Diagram"), (interactions,), SysMLDiagram),
+    DiagramType("stm", i18nize("New State Machine Diagram"), (states,), SysMLDiagram),
+    DiagramType("uc", i18nize("New Use Case Diagram"), (use_cases,), SysMLDiagram),
 )

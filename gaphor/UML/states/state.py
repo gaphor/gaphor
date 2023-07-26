@@ -109,4 +109,4 @@ def draw_state(box, context, bounding_box):
     cr.curve_to(ddx, height, 0, height - ddy, 0, height - dy)
     cr.close_path()
 
-    stroke(context)
+    stroke(context, fill=True)

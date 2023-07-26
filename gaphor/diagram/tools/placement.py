@@ -104,6 +104,8 @@ def on_drag_end(gesture, offset_x, offset_y, placement_state):
         placement_state.moving.stop_move((x + offset_x, y + offset_y))
         connect_opposite_handle(view, item, x, y, placement_state.handle_index)
         placement_state.event_manager.handle(DiagramItemPlaced(item))
+        view.selection.dropzone_item = None
+        view.model.request_update(item)
         open_editor(item, view, placement_state.event_manager)
 
 

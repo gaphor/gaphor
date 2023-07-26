@@ -292,10 +292,10 @@ def draw_tail_composite(context):
     at association tail."""
     cr = context.cairo
     cr.line_to(20, 0)
-    stroke(context)
+    stroke(context, fill=True)
     _draw_diamond(cr)
     cr.fill_preserve()
-    stroke(context)
+    stroke(context, fill=True)
 
 
 def draw_head_shared(context):
