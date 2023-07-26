@@ -36,39 +36,57 @@ class AlignService(Service, ActionProvider):
         name="align-left", label=gettext("Align left")
     )
     def align_left(self):
-        self._align_elements(self._align_elements_left)
+        self._modify_elements(self._align_elements_left)
 
     @action(
         name="align-right", label=gettext("Align right")
     )
     def align_right(self):
-        self._align_elements(self._align_elements_right)
+        self._modify_elements(self._align_elements_right)
 
     @action(
         name="align-vertical-center", label=gettext("Align vertical center")
     )
     def align_vertical_center(self):
-        self._align_elements(self._align_elements_vertical_center)
+        self._modify_elements(self._align_elements_vertical_center)
 
     @action(
         name="align-top", label=gettext("Align top")
     )
     def align_top(self):
-        self._align_elements(self._align_elements_top)
+        self._modify_elements(self._align_elements_top)
 
     @action(
         name="align-bottom", label=gettext("Align bottom")
     )
     def align_bottom(self):
-        self._align_elements(self._align_elements_bottom)
+        self._modify_elements(self._align_elements_bottom)
 
     @action(
         name="align-horizontal-center", label=gettext("Align horizontal center")
     )
     def align_horizontal_center(self):
-        self._align_elements(self._align_elements_horizontal_center)
+        self._modify_elements(self._align_elements_horizontal_center)
 
-    def _align_elements(self, f):
+    @action(
+        name="resize-max-width", label=gettext("Max width")
+    )
+    def resize_max_width(self):
+        self._modify_elements(self._resize_elements_max_width)
+
+    @action(
+        name="resize-max-height", label=gettext("Max height")
+    )
+    def resize_max_height(self):
+        self._modify_elements(self._resize_elements_max_height)
+
+    @action(
+        name="resize-max-size", label=gettext("Max size")
+    )
+    def resize_max_size(self):
+        self._modify_elements(self._resize_elements_max_size)
+
+    def _modify_elements(self, f):
         if current_diagram := self.diagrams.get_current_diagram():
             elements = {item for item in self.event.selected_items if isinstance(item, ElementPresentation)}
             with Transaction(self.event_manager):
@@ -119,6 +137,29 @@ class AlignService(Service, ActionProvider):
         for item in elements:
             item.matrix.translate(0, center_edge - self._pos_y(item) - item.height / 2)
 
+    def _resize_elements_max_width(self, elements: set[ElementPresentation]):
+
+        max_width = self._max_width(elements)
+
+        for item in elements:
+            item.width = max_width
+
+    def _resize_elements_max_height(self, elements: set[ElementPresentation]):
+
+        max_height = self._max_height(elements)
+
+        for item in elements:
+            item.height = max_height
+
+    def _resize_elements_max_size(self, elements: set[ElementPresentation]):
+
+        max_width = self._max_width(elements)
+        max_height = self._max_height(elements)
+
+        for item in elements:
+            item.width = max_width
+            item.height = max_height
+
     def _left_edge(self, elements: set[ElementPresentation]):
         return min(set(map(lambda item : self._pos_x(item), elements)))
 
@@ -130,6 +171,12 @@ class AlignService(Service, ActionProvider):
 
     def _bottom_edge(self, elements: set[ElementPresentation]):
         return max(set(map(lambda item : self._pos_y(item) + item.height, elements)))
+
+    def _max_width(self, elements: set[ElementPresentation]):
+        return max(set(map(lambda item : item.width, elements)))
+
+    def _max_height(self, elements: set[ElementPresentation]):
+        return max(set(map(lambda item : item.height, elements)))
 
     def _pos_x(self, item: ElementPresentation):
         _,_,_,_,x,_ = item.matrix.tuple()
