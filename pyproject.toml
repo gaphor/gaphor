@@ -205,16 +205,6 @@ addopts = [
 ]
 junit_family = "xunit1"
 
-[tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-line_length = 88
-known_third_party = ["cairo", "gaphas", "generic", "gi", "pytest", "tinycss2", "tomli"]
-skip = "flatpak,.venv,build,dist"
-skip_glob = "gaphor/diagram/general/__init__.py,gaphor/UML/__init__.py,gaphor/UML/*/__init__.py,gaphor/RAAML/stpa/__init__.py"
-
 [tool.mypy]
 python_version = "3.10"
 warn_return_any = true
