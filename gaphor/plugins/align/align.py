@@ -87,11 +87,12 @@ class AlignService(Service, ActionProvider):
         self._modify_elements(self._resize_elements_max_size)
 
     def _modify_elements(self, f):
-        if current_diagram := self.diagrams.get_current_diagram():
-            elements = {item for item in self.event.selected_items if isinstance(item, ElementPresentation)}
-            with Transaction(self.event_manager):
-                f(elements)
-                current_diagram.update_now(current_diagram.get_all_items())
+        if self.event:
+            if current_diagram := self.diagrams.get_current_diagram():
+                elements = {item for item in self.event.selected_items if isinstance(item, ElementPresentation)}
+                with Transaction(self.event_manager):
+                    f(elements)
+                    current_diagram.update_now(current_diagram.get_all_items())
 
     def _align_elements_left(self, elements: set[ElementPresentation]):
 
@@ -116,14 +117,12 @@ class AlignService(Service, ActionProvider):
             item.matrix.translate(center_edge - self._pos_x(item) - item.width / 2, 0)
 
     def _align_elements_top(self, elements: set[ElementPresentation]):
-
         top_edge = self._top_edge(elements)
 
         for item in elements:
             item.matrix.translate(0, top_edge - self._pos_y(item))
 
     def _align_elements_bottom(self, elements: set[ElementPresentation]):
-
         bottom_edge = self._bottom_edge(elements)
 
         for item in elements:
