@@ -14,6 +14,7 @@ from gaphor.diagram.presentation import ElementPresentation
 
 from gaphor.transaction import Transaction
 
+
 class AlignService(Service, ActionProvider):
     def __init__(self, event_manager, diagrams, tools_menu=None, dump_gv=False):
         self.event_manager = event_manager
@@ -37,17 +38,26 @@ class AlignService(Service, ActionProvider):
     )
     def align_left(self):
         if current_diagram := self.diagrams.get_current_diagram():
-            self._align_elements_left(current_diagram, self.event.selected_items)
+            elements = {item for item in self.event.selected_items if isinstance(item, ElementPresentation)}
+            with Transaction(self.event_manager):
+                self._align_elements_left(elements)
+                current_diagram.update_now(current_diagram.get_all_items())
 
-    def _align_elements_left(self, diagram: Diagram, selected_items):
+    def _align_elements_left(self, elements: set[ElementPresentation]):
+            min_x = min(set(map(lambda item : self.pos_x(item), elements)))
+            for item in elements:
+                item.matrix.translate(min_x - self.pos_x(item), 0)
+            
+    def _align_elements_right(self, elements: set[ElementPresentation]):
+            min_x = min(set(map(lambda item : self.pos_x(item), elements)))
 
-        with Transaction(self.event_manager) as tx:
-            result = {item for item in selected_items if isinstance(item, ElementPresentation)}
-            item = result.pop()
+            for item in elements:
+                item.matrix.translate(min_x - self.pos_x(item), 0)
 
-            item.width = 200
-            item.height = 200
+    def pos_x(self, item: ElementPresentation):
+        _,_,_,_,x,_ = item.matrix.tuple()
+        return x
 
-            item.matrix.translate(-30.0,-30.0)
-
-            diagram.update_now(diagram.get_all_items())
+    def pos_y(self, item: ElementPresentation):
+        _,_,_,_,_,y = item.matrix.tuple()
+        return y
