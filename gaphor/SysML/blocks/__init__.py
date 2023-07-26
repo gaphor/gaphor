@@ -1,4 +1,3 @@
-import gaphor.SysML.blocks.blockmove
 import gaphor.SysML.blocks.connectors
 import gaphor.SysML.blocks.datatype
 import gaphor.SysML.blocks.group

@@ -101,7 +101,7 @@ gaphor = "gaphor.main:main"
 [tool.poetry.plugins."gaphor.modules"]
 "general_ui_components" = "gaphor.diagram.general.uicomponents"
 "uml_ui_components" = "gaphor.UML.uicomponents"
-"sysml_property_pages" = "gaphor.SysML.propertypages"
+"sysml_property_pages" = "gaphor.SysML.uicomponents"
 "c4model_property_pages" = "gaphor.C4Model.propertypages"
 
 [tool.poetry.plugins."gaphor.services"]
