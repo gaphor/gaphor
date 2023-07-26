@@ -3,7 +3,6 @@
 from gaphor import UML
 from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import (
-    DiagramType,
     DiagramTypes,
     ToolboxDefinition,
     ToolDef,
@@ -12,7 +11,6 @@ from gaphor.diagram.diagramtoolbox import (
     new_item_factory,
 )
 from gaphor.SysML import diagramitems as sysml_items
-from gaphor.SysML.sysml import SysMLDiagram
 from gaphor.SysML.blocks.blockstoolbox import blocks
 from gaphor.SysML.requirements.requirementstoolbox import requirements
 from gaphor.UML import diagramitems as uml_items
@@ -21,6 +19,9 @@ from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
 from gaphor.UML.toolboxconfig import named_element_config
 from gaphor.UML.usecases.usecasetoolbox import use_cases
+from gaphor.SysML.sysml import Block, ConstraintBlock, Requirement
+from gaphor.UML.uml import Package, Activity, Interaction, StateMachine
+from gaphor.SysML.diagramtype import SysMLDiagramType, DiagramDefault
 
 internal_blocks = ToolSection(
     gettext("Internal Blocks"),
@@ -63,21 +64,89 @@ sysml_toolbox_actions: ToolboxDefinition = (
     use_cases,
 )
 
+root = type(None)
 
 # Not implemented: Parameter Diagram
 sysml_diagram_types: DiagramTypes = (
-    DiagramType(
-        "bdd", i18nize("New Block Definition Diagram"), (blocks,), SysMLDiagram
+    SysMLDiagramType(
+        "bdd",
+        i18nize("New Block Definition Diagram"),
+        (blocks,),
+        (Block, Package, ConstraintBlock, Activity),
+        (DiagramDefault(root, Package, i18nize("New Package")),),
     ),
-    DiagramType(
-        "ibd", i18nize("New Internal Block Diagram"), (internal_blocks,), SysMLDiagram
+    SysMLDiagramType(
+        "ibd",
+        i18nize("New Internal Block Diagram"),
+        (internal_blocks,),
+        (
+            Block,
+            ConstraintBlock,
+        ),
+        (
+            DiagramDefault(Package, Block, i18nize("New Block")),
+            DiagramDefault(root, Block, i18nize("New Block")),
+        ),
     ),
-    DiagramType("pkg", i18nize("New Package Diagram"), (blocks,), SysMLDiagram),
-    DiagramType(
-        "req", i18nize("New Requirement Diagram"), (requirements,), SysMLDiagram
+    SysMLDiagramType(
+        "pkg",
+        i18nize("New Package Diagram"),
+        (blocks,),
+        (Package,),  # model, modelLibrary, profile
+        (DiagramDefault(root, Package, i18nize("New Package")),),
     ),
-    DiagramType("act", i18nize("New Activity Diagram"), (actions,), SysMLDiagram),
-    DiagramType("sd", i18nize("New Sequence Diagram"), (interactions,), SysMLDiagram),
-    DiagramType("stm", i18nize("New State Machine Diagram"), (states,), SysMLDiagram),
-    DiagramType("uc", i18nize("New Use Case Diagram"), (use_cases,), SysMLDiagram),
+    SysMLDiagramType(
+        "req",
+        i18nize("New Requirement Diagram"),
+        (requirements,),
+        (
+            Package,
+            Requirement,
+            # model,
+            # modelLibrary
+        ),
+        (DiagramDefault(root, Package, i18nize("New Package")),),
+    ),
+    SysMLDiagramType(
+        "act",
+        i18nize("New Activity Diagram"),
+        (actions,),
+        (Activity,),
+        (
+            DiagramDefault(Package, Activity, i18nize("New Activity")),
+            DiagramDefault(root, Activity, i18nize("New Activity")),
+        ),
+    ),
+    SysMLDiagramType(
+        "sd",
+        i18nize("New Sequence Diagram"),
+        (interactions,),
+        (Interaction,),
+        (
+            DiagramDefault(Package, Interaction, i18nize("New Interaction")),
+            DiagramDefault(root, Interaction, i18nize("New Interaction")),
+        ),
+    ),
+    SysMLDiagramType(
+        "stm",
+        i18nize("New State Machine Diagram"),
+        (states,),
+        (StateMachine,),
+        (
+            DiagramDefault(Package, StateMachine, i18nize("New State Machine")),
+            DiagramDefault(root, StateMachine, i18nize("New State Machine")),
+        ),
+    ),
+    SysMLDiagramType(
+        "uc",
+        i18nize("New Use Case Diagram"),
+        (use_cases,),
+        (
+            Package,
+            Block,
+            # model,
+            # modelLibrary
+        ),
+        (DiagramDefault(root, Package, i18nize("New Package")),),
+    ),
 )
