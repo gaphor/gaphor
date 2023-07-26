@@ -50,6 +50,24 @@ class AlignService(Service, ActionProvider):
     def align_vertical_center(self):
         self._align_elements(self._align_elements_vertical_center)
 
+    @action(
+        name="align-top", label=gettext("Align top")
+    )
+    def align_top(self):
+        self._align_elements(self._align_elements_top)
+
+    @action(
+        name="align-bottom", label=gettext("Align bottom")
+    )
+    def align_bottom(self):
+        self._align_elements(self._align_elements_bottom)
+
+    @action(
+        name="align-horizontal-center", label=gettext("Align horizontal center")
+    )
+    def align_horizontal_center(self):
+        self._align_elements(self._align_elements_horizontal_center)
+
     def _align_elements(self, f):
         if current_diagram := self.diagrams.get_current_diagram():
             elements = {item for item in self.event.selected_items if isinstance(item, ElementPresentation)}
@@ -58,17 +76,60 @@ class AlignService(Service, ActionProvider):
                 current_diagram.update_now(current_diagram.get_all_items())
 
     def _align_elements_left(self, elements: set[ElementPresentation]):
-            left_edge = min(set(map(lambda item : self._pos_x(item), elements)))
-            for item in elements:
-                item.matrix.translate(left_edge - self._pos_x(item), 0)
+
+        left_edge = self._left_edge(elements)
+
+        for item in elements:
+            item.matrix.translate(left_edge - self._pos_x(item), 0)
             
     def _align_elements_right(self, elements: set[ElementPresentation]):
-            right_edge = max(set(map(lambda item : self._pos_x(item) + item.width, elements)))
-            for item in elements:
-                item.matrix.translate(right_edge - (self._pos_x(item) + item.width), 0)
+
+        right_edge = self._right_edge(elements)
+
+        for item in elements:
+            item.matrix.translate(right_edge - (self._pos_x(item) + item.width), 0)
 
     def _align_elements_vertical_center(self, elements: set[ElementPresentation]):
-        pass
+        left_edge = self._left_edge(elements)
+        right_edge = self._right_edge(elements)
+        center_edge = left_edge + (right_edge - left_edge) / 2
+
+        for item in elements:
+            item.matrix.translate(center_edge - self._pos_x(item) - item.width / 2, 0)
+
+    def _align_elements_top(self, elements: set[ElementPresentation]):
+
+        top_edge = self._top_edge(elements)
+
+        for item in elements:
+            item.matrix.translate(0, top_edge - self._pos_y(item))
+
+    def _align_elements_bottom(self, elements: set[ElementPresentation]):
+
+        bottom_edge = self._bottom_edge(elements)
+
+        for item in elements:
+            item.matrix.translate(0, bottom_edge - (self._pos_y(item) + item.height))
+
+    def _align_elements_horizontal_center(self, elements: set[ElementPresentation]):
+        top_edge = self._top_edge(elements)
+        bottom_edge = self._bottom_edge(elements)
+        center_edge = top_edge + (bottom_edge - top_edge) / 2
+
+        for item in elements:
+            item.matrix.translate(0, center_edge - self._pos_y(item) - item.height / 2)
+
+    def _left_edge(self, elements: set[ElementPresentation]):
+        return min(set(map(lambda item : self._pos_x(item), elements)))
+
+    def _right_edge(self, elements: set[ElementPresentation]):
+        return max(set(map(lambda item : self._pos_x(item) + item.width, elements)))
+
+    def _top_edge(self, elements: set[ElementPresentation]):
+        return min(set(map(lambda item : self._pos_y(item), elements)))
+
+    def _bottom_edge(self, elements: set[ElementPresentation]):
+        return max(set(map(lambda item : self._pos_y(item) + item.height, elements)))
 
     def _pos_x(self, item: ElementPresentation):
         _,_,_,_,x,_ = item.matrix.tuple()
