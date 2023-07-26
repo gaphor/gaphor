@@ -16,7 +16,7 @@ def initialize(scope, services=None, **known_services: T) -> Dict[str, T]:
 @functools.lru_cache(maxsize=4)
 def list_entry_points(group):
     try:
-        return importlib.metadata.entry_points(group=group)  # type: ignore[call-arg]
+        return importlib.metadata.entry_points(group=group)
     except TypeError:
         # Fallback for Python < 3.10
         return importlib.metadata.entry_points()[group]
