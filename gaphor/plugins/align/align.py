@@ -44,6 +44,12 @@ class AlignService(Service, ActionProvider):
     def align_right(self):
         self._align_elements(self._align_elements_right)
 
+    @action(
+        name="align-vertical-center", label=gettext("Align vertical center")
+    )
+    def align_vertical_center(self):
+        self._align_elements(self._align_elements_vertical_center)
+
     def _align_elements(self, f):
         if current_diagram := self.diagrams.get_current_diagram():
             elements = {item for item in self.event.selected_items if isinstance(item, ElementPresentation)}
@@ -60,6 +66,9 @@ class AlignService(Service, ActionProvider):
             right_edge = max(set(map(lambda item : self._pos_x(item) + item.width, elements)))
             for item in elements:
                 item.matrix.translate(right_edge - (self._pos_x(item) + item.width), 0)
+
+    def _align_elements_vertical_center(self, elements: set[ElementPresentation]):
+        pass
 
     def _pos_x(self, item: ElementPresentation):
         _,_,_,_,x,_ = item.matrix.tuple()
