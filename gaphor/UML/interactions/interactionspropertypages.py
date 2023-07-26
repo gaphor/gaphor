@@ -6,8 +6,55 @@ from gaphor.diagram.propertypages import (
 )
 from gaphor.UML.interactions.interactionsconnect import get_lifeline
 from gaphor.UML.interactions.message import MessageItem
+from gaphor.UML.propertypages import list_of_classifiers
+from gaphor import UML
+
 
 new_builder = new_resource_builder("gaphor.UML.interactions")
+
+
+@PropertyPages.register(UML.Lifeline)
+class LifelinePropertyPage(PropertyPageBase):
+    order = 31
+
+    def __init__(self, subject: UML.Lifeline):
+        super().__init__()
+        self.subject = subject
+
+    def construct(self):
+        if not self.subject:
+            return
+
+        builder = new_builder(
+            "lifeline-editor",
+        )
+
+        dropdown = builder.get_object("element-type")
+        model = list_of_classifiers(self.subject.model, UML.ConnectableElement)
+        dropdown.set_model(model)
+
+        if self.subject.represents:
+            dropdown.set_selected(
+                next(
+                    n
+                    for n, lv in enumerate(model)
+                    if lv.value == self.subject.represents.id
+                )
+            )
+
+        dropdown.connect("notify::selected", self._on_property_type_changed)
+
+        return builder.get_object("lifeline-editor")
+
+    @transactional
+    def _on_property_type_changed(self, dropdown, _pspec):
+        subject = self.subject
+        if id := dropdown.get_selected_item().value:
+            element = subject.model.lookup(id)
+            assert isinstance(element, UML.ConnectableElement)
+            subject.represents = element
+        else:
+            del subject.represents
 
 
 @PropertyPages.register(MessageItem)

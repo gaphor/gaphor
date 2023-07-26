@@ -278,6 +278,7 @@ class Component(Class):
 
 class ConnectableElement(TypedElement):
     end: relation_many[ConnectorEnd]
+    lifeline: relation_many[Lifeline]
 
 
 class Interface(Classifier, ConnectableElement):
@@ -524,6 +525,8 @@ class StateInvariant(InteractionFragment):
 class Lifeline(NamedElement):
     coveredBy: relation_many[InteractionFragment]
     interaction: relation_one[Interaction]
+    represents: relation_one[ConnectableElement]
+    selector: _attribute[str] = _attribute("selector", str)
     parse: Callable[[Lifeline, str], None]
     render: Callable[[Lifeline], str]
 
@@ -992,6 +995,7 @@ Component.packagedElement = association("packagedElement", PackageableElement, c
 Component.realization = redefine(Component, "realization", ComponentRealization, NamedElement.supplierDependency)
 Namespace.ownedMember.add(Component.packagedElement)  # type: ignore[attr-defined]
 ConnectableElement.end = association("end", ConnectorEnd, opposite="role")
+ConnectableElement.lifeline = association("lifeline", Lifeline, opposite="represents")
 Interface.ownedOperation = association("ownedOperation", Operation, composite=True, opposite="interface_")
 Interface.nestedClassifier = association("nestedClassifier", Classifier, composite=True)
 Interface.redefinedInterface = association("redefinedInterface", Interface)
@@ -1195,6 +1199,7 @@ StateInvariant.covered = redefine(StateInvariant, "covered", Lifeline, Interacti
 Element.ownedElement.add(StateInvariant.invariant)  # type: ignore[attr-defined]
 Lifeline.interaction = association("interaction", Interaction, upper=1, opposite="lifeline")
 Lifeline.coveredBy = association("coveredBy", InteractionFragment, opposite="covered")
+Lifeline.represents = association("represents", ConnectableElement, upper=1, opposite="lifeline")
 NamedElement.namespace.add(Lifeline.interaction)  # type: ignore[attr-defined]
 # 98: override Message.messageKind: property
 # defined in umloverrides.py
