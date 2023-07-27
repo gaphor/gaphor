@@ -38,7 +38,7 @@ include = ["gaphor/locale/*/LC_MESSAGES/*"]
 exclude = ["**/tests", "gaphor/conftest.py" ]
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.13"
+python = ">=3.10,<3.13"
 pycairo = "^1.22.0"
 PyGObject = "^3.30"
 gaphas = ">3.9.0,<5.0"
@@ -101,7 +101,7 @@ gaphor = "gaphor.main:main"
 [tool.poetry.plugins."gaphor.modules"]
 "general_ui_components" = "gaphor.diagram.general.uicomponents"
 "uml_ui_components" = "gaphor.UML.uicomponents"
-"sysml_property_pages" = "gaphor.SysML.propertypages"
+"sysml_property_pages" = "gaphor.SysML.uicomponents"
 "c4model_property_pages" = "gaphor.C4Model.propertypages"
 
 [tool.poetry.plugins."gaphor.services"]
@@ -206,18 +206,8 @@ addopts = [
 ]
 junit_family = "xunit1"
 
-[tool.isort]
-multi_line_output = 3
-include_trailing_comma = true
-force_grid_wrap = 0
-use_parentheses = true
-line_length = 88
-known_third_party = ["cairo", "gaphas", "generic", "gi", "pytest", "tinycss2", "tomli"]
-skip = "flatpak,.venv,build,dist"
-skip_glob = "gaphor/diagram/general/__init__.py,gaphor/UML/__init__.py,gaphor/UML/*/__init__.py,gaphor/RAAML/stpa/__init__.py"
-
 [tool.mypy]
-python_version = 3.9
+python_version = "3.10"
 warn_return_any = true
 warn_unused_configs = true
 warn_redundant_casts = true

@@ -167,7 +167,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
                 text=lambda: stereotypes_str(self.subject),
             ),
             Text(
-                text=lambda: self.subject.name or "",
+                text=self._format_name,
                 style={"font-weight": FontWeight.BOLD},
             ),
             draw=self.draw_lifeline,
@@ -175,6 +175,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+        self.watch("subject[Lifeline].represents.name")
         self.setup_constraints()
 
     is_destroyed: attribute[int] = attribute("is_destroyed", int, default=False)
@@ -223,6 +224,15 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
             self._lifetime.top.pos.x = self._lifetime.bottom.pos.x = (
                 self._handles[NW].pos.x + self.width / 2
             )
+
+    def _format_name(self):
+        if not self.subject:
+            return ""
+
+        name = self.subject.name or ""
+        if self.subject.represents:
+            return f"{name}: {self.subject.represents.name or ''}"
+        return name
 
     def draw_lifeline(self, box, context, bounding_box):
         """Draw lifeline.

@@ -1,6 +1,7 @@
 from typing import Optional
 
 from gaphas.connector import Handle
+from gaphor.diagram.presentation import connect
 from gaphas.guide import GuidedItemHandleMoveMixin
 from gaphas.handlemove import ConnectionSinkType, HandleMove, ItemHandleMove
 from gaphas.item import Item, Line
@@ -83,3 +84,31 @@ class LineHandleMove(
 @Move.register(AttachedPresentation)
 def attached_presentation_move(item, view):
     return LineHandleMove(item, item.handles()[0], view)
+
+
+class StickyAttachedHandleMove(GuidedItemHandleMoveMixin, ItemHandleMove):
+    """Allows item to be connected to its parent by dragging.
+    Once a connection is estableshed, the item is stuck with its parent
+    and moves only along its border.
+    """
+
+    def connect(self, pos: Pos) -> None:
+        if self.item.parent:
+            self.snap_to_parent()
+        else:
+            super().connect(pos)
+
+    def move(self, pos: Pos) -> None:
+        super().move(pos)
+
+        if self.item.parent:
+            self.snap_to_parent()
+
+    def snap_to_parent(self):
+        assert self.item.parent
+        connect(self.item, self.handle, self.item.parent)
+        self.view.model.request_update(self.item)
+
+
+def sticky_attached_move(item, view):
+    return StickyAttachedHandleMove(item, item.handles()[0], view)
