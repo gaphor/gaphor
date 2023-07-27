@@ -37,8 +37,7 @@ class ToolDef(NamedTuple):
     shortcut: Optional[str]
     item_factory: Optional[ItemFactory]
     handle_index: int = -1
-
-
+    
 class ToolSection(NamedTuple):
     name: str
     tools: Collection[ToolDef]
@@ -67,7 +66,6 @@ def get_tool_def(modeling_language, tool_name):
     return next(
         t for t in tooliter(modeling_language.toolbox_definition) if t.id == tool_name
     )
-
 
 def new_item_factory(
     item_class: Type[Presentation],
@@ -103,7 +101,6 @@ def metadata_config(metadata_item: general.MetadataItem) -> None:
     metadata_item.description = metadata_item.diagram.name
     metadata_item.revision = "1.0"
     metadata_item.createdOn = time.strftime("%Y-%m-%d")
-
 
 general_tools = ToolSection(
     gettext("General"),
@@ -166,6 +163,19 @@ general_tools = ToolSection(
             "gaphor-metadata-symbolic",
             None,
             new_item_factory(general.MetadataItem, config_func=metadata_config),
+        ),
+    ),
+)
+
+alignment_tools = ToolSection(
+    gettext("Alignment"),
+    (
+        ToolDef(
+            "align-left",
+            gettext("Align left"),
+            "gaphor-pointer-symbolic",
+            "Escape",
+            item_factory=None,
         ),
     ),
 )

@@ -24,6 +24,8 @@ class AlignService(Service, ActionProvider):
 
         self.event_manager.subscribe(self._selection_changed)
 
+    # -------------------------------------------------------------------------
+
     def shutdown(self):
         self.event_manager.unsubscribe(self._selection_changed)
 
@@ -31,6 +33,8 @@ class AlignService(Service, ActionProvider):
     def _selection_changed(self, event=None, focused_item=None):
         self.event = event
         pass
+
+    # -------------------------------------------------------------------------
 
     @action(
         name="align-left", label=gettext("Align left")
@@ -85,6 +89,8 @@ class AlignService(Service, ActionProvider):
     )
     def resize_max_size(self):
         self._modify_elements(self._resize_elements_max_size)
+
+    # -------------------------------------------------------------------------
 
     def _modify_elements(self, f):
         if self.event:
