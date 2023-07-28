@@ -18,7 +18,7 @@ from gaphor.SysML.sysml import Block, ValueType
 from gaphor.UML.classes.klass import attributes_compartment, operation_watches
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.recipes import stereotypes_str
-from gaphor.UML.umlfmt import format_property
+from gaphor.UML.umlfmt import format_operation, format_property
 
 
 @represents(Block)
@@ -183,7 +183,9 @@ class BlockItem(Classified, ElementPresentation[Block]):
 
     def operations_compartment(self, name, predicate):
         def lazy_format(operation):
-            return lambda: format_property(operation) or self.diagram.gettext("unnamed")
+            return lambda: format_operation(operation) or self.diagram.gettext(
+                "unnamed"
+            )
 
         return Box(
             Text(
