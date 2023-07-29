@@ -82,6 +82,7 @@ PropertyPages.register(InterfaceBlockItem)(OperationsPage)
 PropertyPages.register(PropertyItem)(TypedElementPropertyPage)
 PropertyPages.register(ProxyPortItem)(TypedElementPropertyPage)
 
+
 @PropertyPages.register(BlockItem)
 class CompartmentPage(PropertyPageBase):
     """An editor for Block items."""

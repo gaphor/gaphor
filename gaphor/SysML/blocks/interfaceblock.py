@@ -20,18 +20,15 @@ from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_wa
 from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_operation, format_property
 
+
 @represents(InterfaceBlock)
 class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
-        self.watch(
-            "show_stereotypes", self.update_shapes
-        ).watch(
+        self.watch("show_stereotypes", self.update_shapes).watch(
             "show_parts", self.update_shapes
-        ).watch(
-            "show_references", self.update_shapes
-        ).watch(
+        ).watch("show_references", self.update_shapes).watch(
             "show_values", self.update_shapes
         ).watch(
             "show_operations", self.update_shapes
@@ -175,7 +172,9 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
 
     def operations_compartment(self, name, predicate):
         def lazy_format(operation):
-            return lambda: format_operation(operation) or self.diagram.gettext("unnamed")
+            return lambda: format_operation(operation) or self.diagram.gettext(
+                "unnamed"
+            )
 
         return Box(
             Text(

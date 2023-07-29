@@ -11,6 +11,7 @@ from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
 from gaphor.UML.deployments import ConnectorItem
 
+
 @Connector.register(InterfaceBlockItem, ProxyPortItem)
 @Connector.register(BlockItem, ProxyPortItem)
 @Connector.register(PropertyItem, ProxyPortItem)

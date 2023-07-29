@@ -40,7 +40,9 @@ blocks = ToolSection(
             "gaphor-interfaceblock-symbolic",
             None,
             new_item_factory(
-                sysml_items.InterfaceBlockItem, sysml.InterfaceBlock, config_func=namespace_config
+                sysml_items.InterfaceBlockItem,
+                sysml.InterfaceBlock,
+                config_func=namespace_config,
             ),
             handle_index=SE,
         ),
