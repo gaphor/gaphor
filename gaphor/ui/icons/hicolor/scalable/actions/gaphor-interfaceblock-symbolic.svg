@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="16.003952"
+   height="16.003952"
+   viewBox="0 0 4.2343789 4.2343791"
+   version="1.1"
+   id="svg4268"
+   sodipodi:docname="gaphor-interfaceblock-symbolic.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="51.17486"
+     inkscape:cx="4.5823281"
+     inkscape:cy="8.0117464"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="0"
+     inkscape:window-y="33"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4268" />
+  <defs
+     id="defs4262" />
+  <metadata
+     id="metadata4265">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="intermediate-event"
+     style="display:inline"
+     transform="translate(-69.849607,-55.033201)">
+    <g
+       id="rect544-6">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 70.114578,55.297916 h 3.704167 v 3.704167 h -3.704167 z"
+         id="path2248" />
+      <path
+         style="color:#000000;fill:#000000;stroke-linecap:round;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 70.115234,55.033203 a 0.26460996,0.26460996 0 0 0 -0.265625,0.265625 v 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,0.265625 h 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,-0.265625 v -3.703125 a 0.26460996,0.26460996 0 0 0 -0.265625,-0.265625 z m 0.263672,0.529297 h 3.175781 v 3.175781 h -3.175781 z"
+         id="path2250" />
+    </g>
+    <g
+       aria-label="IE"
+       id="text548-2"
+       style="font-weight:bold;font-size:2.46944px;line-height:1.25;font-family:FreeMono;-inkscape-font-specification:'FreeMono, Bold';letter-spacing:0px;word-spacing:0px;display:inline;stroke-width:0.264583">
+      <g
+         id="g269">
+        <path
+           d="m 72.339683,57.623288 c 0.05268,0 0.09301,0.0091 0.121003,0.02716 0.02799,0.01646 0.04198,0.04856 0.04198,0.09631 0,0.08232 -0.05433,0.123472 -0.162983,0.123472 h -0.74577 c -0.108656,0 -0.162984,-0.04116 -0.162984,-0.123472 0,-0.04774 0.01399,-0.07984 0.04198,-0.09631 0.02799,-0.01811 0.06832,-0.02716 0.121003,-0.02716 h 0.249413 v -0.945795 h -0.249413 c -0.108656,0 -0.162984,-0.04116 -0.162984,-0.123472 0,-0.04774 0.01399,-0.07984 0.04198,-0.09631 0.02799,-0.01811 0.06832,-0.02716 0.121003,-0.02716 h 0.745769 c 0.05268,0 0.09301,0.0091 0.121004,0.02716 0.02799,0.01647 0.04198,0.04857 0.04198,0.09631 0,0.08232 -0.05433,0.123472 -0.162983,0.123472 h -0.249413 v 0.945795 z"
+           id="path1770"
+           sodipodi:nodetypes="scsssscsccsscsscssccs" />
+      </g>
+    </g>
+  </g>
+</svg>
