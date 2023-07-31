@@ -4,6 +4,7 @@ from gaphor import UML
 from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import (
     DiagramTypes,
+    ElementCreateInfo,
     ToolboxDefinition,
     ToolDef,
     ToolSection,
@@ -11,6 +12,12 @@ from gaphor.diagram.diagramtoolbox import (
     new_item_factory,
 )
 from gaphor.SysML import diagramitems as sysml_items
+from gaphor.SysML.sysml import (
+    Block,
+    ConstraintBlock,
+    Requirement,
+    ValueType,
+)
 from gaphor.SysML.blocks.blockstoolbox import blocks
 from gaphor.SysML.requirements.requirementstoolbox import requirements
 from gaphor.UML import diagramitems as uml_items
@@ -19,9 +26,16 @@ from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
 from gaphor.UML.toolboxconfig import named_element_config
 from gaphor.UML.usecases.usecasetoolbox import use_cases
-from gaphor.SysML.sysml import Block, ConstraintBlock, Requirement
-from gaphor.UML.uml import Package, Activity, Interaction, StateMachine
 from gaphor.SysML.diagramtype import SysMLDiagramType, DiagramDefault
+from gaphor.UML.uml import (
+    Package,
+    Activity,
+    Actor,
+    Interaction,
+    StateMachine,
+    Enumeration,
+    UseCase,
+)
 
 internal_blocks = ToolSection(
     gettext("Internal Blocks"),
@@ -149,4 +163,30 @@ sysml_diagram_types: DiagramTypes = (
         ),
         (DiagramDefault(root, Package, i18nize("New Package")),),
     ),
+)
+
+sysml_element_types = (
+    ElementCreateInfo("activity", i18nize("New Activity"), Activity, (Package,)),
+    ElementCreateInfo("actor", i18nize("New Actor"), Actor, (Package,)),
+    ElementCreateInfo("block", i18nize("New Block"), Block, (Package,)),
+    ElementCreateInfo(
+        "enumeration", i18nize("New Enumeration"), Enumeration, (Package,)
+    ),
+    ElementCreateInfo(
+        "interaction", i18nize("New Interaction"), Interaction, (Package,)
+    ),
+    ElementCreateInfo(
+        "requirement",
+        i18nize("New Requirement"),
+        Requirement,
+        (
+            Package,
+            Requirement,
+        ),
+    ),
+    ElementCreateInfo(
+        "statemachine", i18nize("New State Machine"), StateMachine, (Package,)
+    ),
+    ElementCreateInfo("usecase", i18nize("New Use Case"), UseCase, (Package,)),
+    ElementCreateInfo("valuetype", i18nize("New Value Type"), ValueType, (Package,)),
 )
