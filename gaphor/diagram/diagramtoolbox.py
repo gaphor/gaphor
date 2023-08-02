@@ -47,11 +47,26 @@ class ToolSection(NamedTuple):
 ToolboxDefinition = Sequence[ToolSection]
 
 
-class DiagramType(NamedTuple):
+class DiagramType:
     id: str
     name: str
     sections: Collection[ToolSection]
-    diagram_type: Type[Diagram] = Diagram
+
+    def __init__(self, id, name, sections):
+        self.id = id
+        self.name = name
+        self.sections = sections
+
+    def allowed(self, element: Type[Element]) -> bool:
+        return True
+
+    def create(self, element_factory, element):
+        diagram = element_factory.create(Diagram)
+        diagram.element = element
+        diagram.name = diagram.gettext(self.name)
+        diagram.diagramType = self.id
+
+        return diagram
 
 
 DiagramTypes = Sequence[DiagramType]
