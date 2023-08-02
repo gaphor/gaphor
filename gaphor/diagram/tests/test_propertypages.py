@@ -28,7 +28,7 @@ def test_line_style_page_rectilinear(diagram):
 
     assert item.orthogonal
 
-    
+
 def test_line_style_page_orientation(diagram):
     item = diagram.create(Line)
     property_page = LineStylePage(item)

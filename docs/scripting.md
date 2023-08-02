@@ -251,7 +251,7 @@ for req_id,txt in enumerate(txts):
     my_class.text = f"{txt}"
     my_class.externalId = f"{req_id}"
 
-    drop(my_class, my_diagram, x=0, y=0)        
+    drop(my_class, my_diagram, x=0, y=0)
 
 with open(outfile, "w") as out:
     storage.save(out, element_factory)
@@ -282,8 +282,8 @@ for interface,signals in interfaces.items():
         my_attr.typeValue = vtype
         my_class.ownedAttribute = my_attr
 
-    drop(my_class, my_diagram, x=0, y=0)    
-    
+    drop(my_class, my_diagram, x=0, y=0)
+
 
 with open(outfile, "w") as out:
     storage.save(out, element_factory)

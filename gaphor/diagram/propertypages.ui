@@ -146,7 +146,7 @@
 
 
 
-  
+
   <object class="GtkBox" id="metadata-editor">
     <property name="orientation">vertical</property>
     <child>
