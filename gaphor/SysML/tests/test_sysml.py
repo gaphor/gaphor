@@ -51,9 +51,6 @@ def test_requirement_refined_by(element_factory):
     refine.sourceContext = req
     refine.targetContext = refined
 
-    print(req.refinedBy[0].name)
-    print(refined.name)
-
     assert refined in req.refinedBy
 
 
