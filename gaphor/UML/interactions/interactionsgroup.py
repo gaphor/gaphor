@@ -17,15 +17,3 @@ def interaction_message_group(parent, element):
 
 
 group.register(Interaction, Type)(no_group)
-
-"""
-from gaphor.UML.interactions.lifeline import LifetimeItem
-from gaphor.UML.interactions.executionspecification import ExecutioSpecificationItem
-
-
-HandleMove.register(ExecutionSpecificationItem, StickyAttachedHandleMove)
-Move.register(ExecutionSpecificationItem, sticky_attached_move)
-
-HandleMove.register(LifetimeItem, StickyAttachedHandleMove)
-Move.register(LifetimeItem, sticky_attached_move)
-"""
