@@ -38,7 +38,7 @@ blocks = ToolSection(
             "toolbox-interfaceblock",
             gettext("InterfaceBlock"),
             "gaphor-interfaceblock-symbolic",
-            None,
+            "<Shift>I",
             new_item_factory(
                 sysml_items.InterfaceBlockItem,
                 sysml.InterfaceBlock,
