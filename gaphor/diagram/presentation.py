@@ -24,6 +24,10 @@ class Named:
     """Marker for any NamedElement presentations."""
 
 
+class Valued:
+    """Marker for any element that has a value."""
+
+
 class Classified(Named):
     """Marker for Classifier presentations."""
 
