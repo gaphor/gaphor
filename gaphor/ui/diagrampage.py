@@ -209,6 +209,11 @@ class DiagramPage:
         if self._notify_dark_id:
             self._notify_dark_id = self.style_manager.disconnect(self._notify_dark_id)
 
+        Gtk.StyleContext.remove_provider_for_display(
+            Gdk.Display.get_default(),
+            self.diagram_css,
+        )
+
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_attribute_updated)
         self.event_manager.unsubscribe(self._on_tool_selected)
