@@ -5,35 +5,11 @@
    viewBox="0 0 4.2343789 4.2343791"
    version="1.1"
    id="svg4268"
-   sodipodi:docname="gaphor-interfaceblock-symbolic.svg"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <sodipodi:namedview
-     id="namedview12"
-     pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
-     inkscape:showpageshadow="2"
-     inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
-     inkscape:zoom="50.487531"
-     inkscape:cx="8.0118793"
-     inkscape:cy="8.0019758"
-     inkscape:window-width="1920"
-     inkscape:window-height="1010"
-     inkscape:window-x="0"
-     inkscape:window-y="33"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg4268"
-     showguides="true" />
   <defs
      id="defs4262" />
   <metadata
@@ -71,7 +47,6 @@
         <path
            d="m 71.568086,57.638126 c 0.05436,0 0.09596,0.0093 0.124845,0.02803 0.02889,0.017 0.04332,0.05011 0.04332,0.09937 0,0.08494 -0.05605,0.12739 -0.168165,0.12739 h -0.76948 c -0.112108,0 -0.168165,-0.04246 -0.168165,-0.12739 0,-0.04925 0.01443,-0.08239 0.04332,-0.09937 0.02887,-0.01868 0.07049,-0.02803 0.124846,-0.02803 H 71.05595 V 56.66226 h -0.257342 c -0.112108,0 -0.168166,-0.04246 -0.168166,-0.127391 0,-0.04925 0.01443,-0.08239 0.04332,-0.09937 0.02887,-0.01868 0.07049,-0.02803 0.124845,-0.02803 h 0.76948 c 0.05436,0 0.09596,0.0093 0.124845,0.02803 0.02889,0.017 0.04332,0.05011 0.04332,0.09937 0,0.08494 -0.05605,0.127391 -0.168165,0.127391 H 71.31075 v 0.975866 z"
            id="path1770"
-           sodipodi:nodetypes="scsssscsccsscsscssccs"
            style="stroke-width:0.272996" />
       </g>
     </g>

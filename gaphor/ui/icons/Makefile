@@ -14,6 +14,7 @@ ICONS=diagram \
 	enumeration \
 	primitive-type \
 	block \
+	interfaceblock \
 	value-type \
 	proxyport \
 	package \
