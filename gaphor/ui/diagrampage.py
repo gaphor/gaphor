@@ -171,7 +171,7 @@ class DiagramPage:
         ).icon_name
 
     def _css_class(self):
-        return f"diagram-{str(id(self))}"
+        return f"diagram-{id(self)}"
 
     @event_handler(ToolSelected)
     def _on_tool_selected(self, event: ToolSelected):
