@@ -107,6 +107,7 @@ class DiagramPage:
         assert self.diagram
 
         view = GtkView(selection=Selection())
+        view.add_css_class(self._css_class())
 
         self.diagram_css = Gtk.CssProvider.new()
         Gtk.StyleContext.add_provider_for_display(
@@ -169,6 +170,9 @@ class DiagramPage:
             if t.id == tool_name
         ).icon_name
 
+    def _css_class(self):
+        return f"diagram-{id(self)}"
+
     @event_handler(ToolSelected)
     def _on_tool_selected(self, event: ToolSelected):
         self.select_tool(event.tool_name)
@@ -205,6 +209,11 @@ class DiagramPage:
         if self._notify_dark_id:
             self._notify_dark_id = self.style_manager.disconnect(self._notify_dark_id)
 
+        Gtk.StyleContext.remove_provider_for_display(
+            Gdk.Display.get_default(),
+            self.diagram_css,
+        )
+
         self.event_manager.unsubscribe(self._on_element_delete)
         self.event_manager.unsubscribe(self._on_attribute_updated)
         self.event_manager.unsubscribe(self._on_tool_selected)
@@ -232,12 +241,12 @@ class DiagramPage:
         # TODO: Temporary, until this is supported by PyGObject
         if (Gtk.get_major_version(), Gtk.get_minor_version()) > (4, 8):
             self.diagram_css.load_from_data(
-                f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}",
+                f".{self._css_class()} {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}",
                 -1,
             )
         else:
             self.diagram_css.load_from_data(
-                f"diagramview {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}".encode()
+                f".{self._css_class()} {{ background-color: rgba({int(255*bg[0])}, {int(255*bg[1])}, {int(255*bg[2])}, {bg[3]}); }}".encode()
             )
 
         view = self.view
