@@ -37,7 +37,7 @@ blocks = ToolSection(
         ToolDef(
             "toolbox-interfaceblock",
             gettext("InterfaceBlock"),
-            "gaphor-interfaceblock-symbolic",
+            "gaphor-interface-block-symbolic",
             None,
             new_item_factory(
                 sysml_items.InterfaceBlockItem,
