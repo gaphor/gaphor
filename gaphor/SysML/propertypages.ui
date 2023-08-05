@@ -157,6 +157,46 @@
     </style>
   </object>
 
+  <object class="GtkExpander" id="interfaceblock-editor">
+    <property name="expanded">1</property>
+    <child type="label">
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Compartments</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkBox">
+            <child>
+              <object class="GtkLabel">
+                <property name="label" translatable="yes">Show Values</property>
+                <property name="halign">start</property>
+                <property name="hexpand">yes</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSwitch" id="show-values">
+                <signal name="notify::active" handler="show-values-changed" swapped="no" />
+              </object>
+            </child>
+          </object>
+        </child>
+        <style>
+          <class name="propertypage"/>
+        </style>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
+
   <object class="GtkBox" id="property-aggregation-editor">
     <property name="orientation">vertical</property>
     <child>

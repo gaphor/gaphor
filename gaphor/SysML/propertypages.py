@@ -12,6 +12,7 @@ from gaphor.diagram.propertypages import (
 )
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
+from gaphor.SysML.blocks.interfaceblock import InterfaceBlockItem
 from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
 from gaphor.SysML.requirements.requirement import RequirementItem
@@ -76,6 +77,7 @@ PropertyPages.register(RequirementItem)(AttributesPage)
 PropertyPages.register(RequirementItem)(OperationsPage)
 
 PropertyPages.register(BlockItem)(OperationsPage)
+PropertyPages.register(InterfaceBlockItem)(OperationsPage)
 
 PropertyPages.register(PropertyItem)(TypedElementPropertyPage)
 PropertyPages.register(ProxyPortItem)(TypedElementPropertyPage)
@@ -122,6 +124,37 @@ class CompartmentPage(PropertyPageBase):
     @transactional
     def _on_show_references_change(self, button, gparam):
         self.item.show_references = button.get_active()
+
+    @transactional
+    def _on_show_values_change(self, button, gparam):
+        self.item.show_values = button.get_active()
+
+
+@PropertyPages.register(InterfaceBlockItem)
+class InterfaceBlockPage(PropertyPageBase):
+    """An editor for InterfaceBlock items."""
+
+    order = 30
+
+    def __init__(self, item):
+        super().__init__()
+        self.item = item
+
+    def construct(self):
+        if not self.item.subject:
+            return
+
+        builder = new_builder(
+            "interfaceblock-editor",
+            signals={
+                "show-values-changed": (self._on_show_values_change,),
+            },
+        )
+
+        show_values = builder.get_object("show-values")
+        show_values.set_active(self.item.show_values)
+
+        return builder.get_object("interfaceblock-editor")
 
     @transactional
     def _on_show_values_change(self, button, gparam):
