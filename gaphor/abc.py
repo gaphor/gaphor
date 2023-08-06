@@ -5,7 +5,11 @@ from typing import TYPE_CHECKING, Iterable
 
 if TYPE_CHECKING:
     from gaphor.core.modeling import Element
-    from gaphor.diagram.diagramtoolbox import DiagramType, ToolboxDefinition
+    from gaphor.diagram.diagramtoolbox import (
+        DiagramType,
+        ToolboxDefinition,
+        ElementCreateInfo,
+    )
 
 
 class Service(metaclass=ABCMeta):
@@ -43,6 +47,11 @@ class ModelingLanguage(metaclass=ABCMeta):
     @abstractmethod
     def diagram_types(self) -> Iterable[DiagramType]:
         """Iterate diagram types."""
+
+    @property
+    @abstractmethod
+    def element_types(self) -> Iterable[ElementCreateInfo]:
+        """Iterate element types."""
 
     @abstractmethod
     def lookup_element(self, name: str) -> type[Element] | None:

@@ -5,9 +5,17 @@ from typing import Iterable
 
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import DiagramType, ToolboxDefinition
+from gaphor.diagram.diagramtoolbox import (
+    DiagramType,
+    ToolboxDefinition,
+    ElementCreateInfo,
+)
 from gaphor.RAAML import diagramitems, raaml
-from gaphor.RAAML.toolbox import raaml_diagram_types, raaml_toolbox_actions
+from gaphor.RAAML.toolbox import (
+    raaml_diagram_types,
+    raaml_toolbox_actions,
+    raaml_element_types,
+)
 
 
 class RAAMLModelingLanguage(ModelingLanguage):
@@ -22,6 +30,10 @@ class RAAMLModelingLanguage(ModelingLanguage):
     @property
     def diagram_types(self) -> Iterable[DiagramType]:
         yield from raaml_diagram_types
+
+    @property
+    def element_types(self) -> Iterable[ElementCreateInfo]:
+        yield from raaml_element_types
 
     def lookup_element(self, name):
         return getattr(raaml, name, None) or getattr(diagramitems, name, None)

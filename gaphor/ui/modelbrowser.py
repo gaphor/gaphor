@@ -177,6 +177,27 @@ class ModelBrowser(UIComponent, ActionProvider):
         self.event_manager.handle(DiagramOpened(diagram))
         self.tree_view_rename_selected()
 
+    def element_type(self, id: str):
+        return next(
+            el_type
+            for el_type in self.modeling_language.element_types
+            if el_type.id == id
+        )
+
+    @action(name="tree-view.create-element")
+    def tree_view_create_element(self, id: str):
+        owner = self.get_selected_element()
+        element_def = self.element_type(id)
+
+        with Transaction(self.event_manager):
+            element = self.element_factory.create(element_def.element_type)
+            element.name = element_def.name
+            if owner:
+                change_owner(owner, element)
+
+            self.select_element(element)
+            self.tree_view_rename_selected()
+
     @action(name="tree-view.create-package")
     def tree_view_create_package(self):
         element = self.get_selected_element()
@@ -588,6 +609,14 @@ def popup_model(element, modeling_language):
     part.append_submenu(
         gettext("New _Diagram"), create_diagram_types_model(modeling_language, element)
     )
+    if any(
+        isinstance(element, element_type.allowed_owning_elements)
+        for element_type in modeling_language.element_types
+    ):
+        part.append_submenu(
+            gettext("New _Element"),
+            create_element_types_model(modeling_language, element),
+        )
     if isinstance(element, UML.Package):
         part.append(gettext("New _Package"), "tree-view.create-package")
     model.append_section(None, part)
@@ -639,5 +668,17 @@ def create_diagram_types_model(modeling_language, element=None):
     menu_item.set_attribute_value("target", GLib.Variant.new_string(""))
     part.append_item(menu_item)
     model.append_section(None, part)
+
+    return model
+
+
+def create_element_types_model(modeling_language, element):
+    model = Gio.Menu.new()
+
+    for id, name, _, allowed_owning_elements in modeling_language.element_types:
+        if isinstance(element, allowed_owning_elements):
+            menu_item = Gio.MenuItem.new(gettext(name), "tree-view.create-element")
+            menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
+            model.append_item(menu_item)
 
     return model

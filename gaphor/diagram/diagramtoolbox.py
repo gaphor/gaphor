@@ -72,6 +72,13 @@ class DiagramType:
 DiagramTypes = Sequence[DiagramType]
 
 
+class ElementCreateInfo(NamedTuple):
+    id: str
+    name: str
+    element_type: Type[Element]
+    allowed_owning_elements: Collection[Type[Element]]
+
+
 def tooliter(toolbox_actions: Sequence[Tuple[str, Sequence[ToolDef]]]):
     """Iterate toolbox items, regardless of section headers."""
     for _name, section in toolbox_actions:
