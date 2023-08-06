@@ -1,6 +1,49 @@
-2.19.4
+2.20.1
 ------
 (unreleased)
+
+2.20.0
+------
+- Add ValueSpecificationAction
+- New element creation through model browser
+- Interface block support on diagram
+- Constrain SysML diagram creation in the model explorer to conform with SysML 1.6 specification
+- Type selection for Lifelines
+- Support SysMLDiagram type and diagram type specific header formatting
+- Pin type multiplicity
+- Deep copy for packages and diagrams
+- Direct association
+- Add CallBehaviorAction
+- Toggle visibility of ProxyPort.type
+- Support gaphor.__version__
+- Fix diagram background shouldn't be shared between open models
+- Fix displaying operations in blocks
+- Fix activity parameter node is always stuck to the activity when moving
+- Avoid copy cycles when fully pasting diagram items
+- Ensure a newly placed item is no longer a dropzone item
+- Fix incorrect filling between shapes
+- Fix weird pin rendering
+- Allow only changing element ownership in the same model
+- Fix notes: should be applied to model elements
+- Fix error when inverting association
+- Providing value for 'Show value' in properties page
+- Replaced GtkCheckButton with GtkSwitch
+- Format pins by their name
+- Ensure painter is only drawing on valid diagrams
+- Do not remove unused Packages with children
+- Tree view should not collapse when an element is deleted
+- Fix operations in Blocks missing top separator
+- Only open model browser elements with a model element
+- Upgrade Gvsbuild to 2023.7.1
+- Pipeline maintenance, require Python 3.10+
+- Build incoming pull requests
+- Separate build and test CI/CD steps
+- Fix dependency error by upgrading PyYAML
+- Rename "Note or Remark" field to just "Note"
+- Update stereotype docs
+- Document parse format and Element
+- Rename the Language setting to Diagram Language
+- Update Croatian translations
 
 2.19.3
 ------
