@@ -1,6 +1,36 @@
-2.19.4
+2.20.1
 ------
 (unreleased)
+
+2.20.0
+------
+- Add ValueSpecificationAction
+- New element creation through model browser
+- Interface block support on diagram
+- Constrain SysML diagram creation in the model explorer to conform with SysML 1.6 specification
+- Add type selection for Lifelines
+- Support SysMLDiagram type and diagram type specific header formatting
+- Pin type multiplicity
+- Deep copy for packages and diagrams
+- Add Direct association to toolbar menu
+- Add CallBehaviorAction to Activity profile
+- Add operations compartment to Blocks
+- Toggle visibility of ProxyPort type
+- Provide value for 'Show value' in properties page
+- Format pins by their name
+- Do not remove unused Packages with children
+- Fix: tree view should not collapse when an element is deleted
+- Fix: only open model browser elements with a model element
+- Upgrade Gvsbuild to 2023.7.1
+- Update minimal Pytho nversion to 3.10
+- Fix: ensure a newly placed item is no longer a dropzone item
+- Fix: incorrect filling between shapes
+- Fix: weird pin rendering
+- Fix: diagram background shouldn't be shared between open models
+- Fix: activity parameter node is always stuck to the activity when moving
+- Fix: notes should be applied to model elements and will be named "Note"
+- Fix: error when inverting association
+- Update Croatian translations
 
 2.19.3
 ------
