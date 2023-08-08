@@ -15,6 +15,8 @@ ICONS=diagram \
 	primitive-type \
 	block \
 	interface-block \
+	value-specification-action \
+	call-behavior-action \
 	value-type \
 	proxyport \
 	package \
