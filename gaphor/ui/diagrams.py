@@ -206,6 +206,46 @@ class Diagrams(UIComponent, ActionProvider):
             view.zoom(1 / zx)
 
     @action(
+        name="move-left",
+        shortcut="<Alt>j",
+    )
+    def move_left(self):
+        self.translate_selected_elements(-1, 0)
+
+    @action(
+        name="move-right",
+        shortcut="<Alt>k",
+    )
+    def move_right(self):
+        self.translate_selected_elements(1, 0)
+
+    @action(
+        name="move-up",
+        shortcut="<Alt>n",
+    )
+    def move_up(self):
+        self.translate_selected_elements(0, -1)
+
+    @action(
+        name="move-down",
+        shortcut="<Alt>m",
+    )
+    def move_down(self):
+        self.translate_selected_elements(0, 1)
+
+    def translate_selected_elements(self, dx: int, dy: int):
+        view = self.get_current_view()
+        diagram = self.get_current_diagram()
+        if not (view and diagram):
+            return
+
+        selection = view.selection.selected_items    
+    
+        with Transaction(self.event_manager):
+            for item in selection:
+                item.matrix.translate(dx, dy)
+
+    @action(
         name="select-all",
         shortcut="<Primary>a",
     )
