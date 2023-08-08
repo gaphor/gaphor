@@ -267,8 +267,8 @@ class Diagrams(UIComponent, ActionProvider):
         if not (view and diagram):
             return
 
-        selection = view.selection.selected_items    
-    
+        selection = view.selection.selected_items
+
         with Transaction(self.event_manager):
             for item in selection:
                 item.matrix.translate(dx, dy)
