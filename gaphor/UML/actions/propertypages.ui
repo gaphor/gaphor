@@ -245,6 +245,27 @@
     </style>
   </object>
 
+  <object class="GtkBox" id="value-specifiation-action-editor">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Value</property>
+        <property name="xalign">0</property>
+        <style>
+          <class name="title" />
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkEntry" id="value">
+        <property name="focusable">1</property>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage" />
+    </style>
+  </object>
+
   <object class="GtkBox" id="transition-editor">
     <property name="orientation">vertical</property>
     <child>

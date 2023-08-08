@@ -6,7 +6,7 @@ from gaphas import Item
 from gaphas.geometry import Rectangle
 from gi.repository import Gdk, Gtk
 
-from gaphor.diagram.presentation import LinePresentation, Named
+from gaphor.diagram.presentation import LinePresentation, Named, Valued
 from gaphor.transaction import Transaction
 
 
@@ -45,6 +45,34 @@ def named_item_editor(item, view, event_manager, pos=None) -> bool:
     def update_text():
         with Transaction(event_manager):
             item.subject.name = entry.get_buffer().get_text()
+
+    show_popover(entry, view, box, update_text)
+
+    return True
+
+
+@instant_editor.register(Valued)
+def valued_item_editor(item, view, event_manager, pos=None) -> bool:
+    """Text edit support for Valued items."""
+
+    subject = item.subject
+    if not subject:
+        return False
+
+    if isinstance(item, LinePresentation):
+        box = item.middle_shape_size
+        i2v = view.get_matrix_i2v(item)
+        x, y = i2v.transform_point(box.x, box.y)
+        w, h = i2v.transform_distance(box.width, box.height)
+        box = Rectangle(x, y, w, h)
+    else:
+        box = view.get_item_bounding_box(item)
+    value = subject.value or ""
+    entry = popup_entry(value)
+
+    def update_text():
+        with Transaction(event_manager):
+            item.subject.value = entry.get_buffer().get_text()
 
     show_popover(entry, view, box, update_text)
 

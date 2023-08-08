@@ -1,7 +1,7 @@
 """Action diagram item."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.diagram.presentation import ElementPresentation, Named, Valued
 from gaphor.diagram.shapes import Box, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.UML.recipes import stereotypes_str
@@ -31,6 +31,30 @@ class ActionItem(Named, ElementPresentation):
 
         self.watch("subject[NamedElement].name")
         self.watch("subject.appliedStereotype.classifier.name")
+
+
+@represents(UML.ValueSpecificationAction)
+class ValueSpecificationActionItem(Valued, ElementPresentation):
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id, width=50, height=30)
+
+        self.width = 100
+        self.shape = Box(
+            Text(
+                text=lambda: "«valueSpecification»",
+            ),
+            Text(
+                text=lambda: self.subject.value or "",
+                width=lambda: self.width - 4,
+            ),
+            style={
+                "padding": (4, 12, 4, 12),
+                "border-radius": 15,
+            },
+            draw=draw_border,
+        )
+
+        self.watch("subject[ValueSpecificationAction].value")
 
 
 @represents(UML.CallBehaviorAction)

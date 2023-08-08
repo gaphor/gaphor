@@ -776,6 +776,11 @@ class CallBehaviorAction(CallAction):
     behavior: relation_one[Behavior]
 
 
+class ValueSpecificationAction(Action):
+    result: relation_one[OutputPin]
+    value: _attribute[str] = _attribute("value", str)
+
+
 # 86: override Lifeline.parse: Callable[[Lifeline, str], None]
 # defined in umloverrides.py
 
@@ -1326,3 +1331,4 @@ Element.owner.add(InformationFlow.realizingConnector)  # type: ignore[attr-defin
 DirectedRelationship.target.add(InformationFlow.informationTarget)  # type: ignore[attr-defined]
 CallAction.result = association("result", OutputPin, composite=True)
 CallBehaviorAction.behavior = association("behavior", Behavior, upper=1, composite=True)
+ValueSpecificationAction.result = association("result", OutputPin, upper=1, composite=True)
