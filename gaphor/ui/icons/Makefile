@@ -87,7 +87,7 @@ ICONS=diagram \
 	item-flow \
 	requirement \
 	satisfy \
-	derive \
+	derive-reqt \
 	trace \
 	refine \
 	verify \

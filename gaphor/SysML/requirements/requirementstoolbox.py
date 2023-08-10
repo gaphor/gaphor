@@ -34,7 +34,7 @@ requirements = ToolSection(
         ToolDef(
             "toolbox-derive-reqt-dependency",
             gettext("Derive Requirement"),
-            "gaphor-derive-symbolic",
+            "gaphor-derive-reqt-symbolic",
             "<Shift>D",
             new_item_factory(sysml_items.DeriveReqtItem),
         ),
