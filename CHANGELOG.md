@@ -1,6 +1,7 @@
 2.20.1
 ------
 - Fix missing derive relationship icon in the model browser
+- Fix block not showing parts
 
 2.20.0
 ------
