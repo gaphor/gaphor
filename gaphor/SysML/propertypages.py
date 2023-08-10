@@ -15,8 +15,7 @@ from gaphor.SysML.blocks.block import BlockItem
 from gaphor.SysML.blocks.interfaceblock import InterfaceBlockItem
 from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
-from gaphor.SysML.requirements.requirement import RequirementItem
-from gaphor.UML.classes.classespropertypages import AttributesPage, OperationsPage
+from gaphor.UML.classes.classespropertypages import OperationsPage
 from gaphor.UML.propertypages import TypedElementPropertyPage, list_of_classifiers
 
 new_builder = new_resource_builder("gaphor.SysML")
@@ -71,6 +70,7 @@ class RequirementPropertyPage(PropertyPageBase):
         self.subject.text = buffer.get_text(
             buffer.get_start_iter(), buffer.get_end_iter(), False
         )
+
 
 PropertyPages.register(BlockItem)(OperationsPage)
 PropertyPages.register(InterfaceBlockItem)(OperationsPage)
