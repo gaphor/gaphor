@@ -41,7 +41,7 @@
           </object>
         </child>
       </object>
-    </child>  
+    </child>
     <child>
       <object class="GtkLabel" id="label1">
         <property name="label" translatable="yes">Name</property>
