@@ -103,7 +103,8 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 and [
                     self.block_compartment(
                         self.diagram.gettext("parts"),
-                        lambda a: not a.association and a.aggregation == "composite",
+                        lambda a: a.aggregation
+                        and a.aggregation in ("composite", "shared"),
                     )
                 ]
                 or []
