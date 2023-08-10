@@ -15,6 +15,7 @@ from gaphor.SysML import diagramitems as sysml_items
 from gaphor.SysML.sysml import (
     Block,
     ConstraintBlock,
+    InterfaceBlock,
     Requirement,
     ValueType,
 )
@@ -174,6 +175,9 @@ sysml_element_types = (
     ),
     ElementCreateInfo(
         "interaction", i18nize("New Interaction"), Interaction, (Package,)
+    ),
+    ElementCreateInfo(
+        "interfaceblock", i18nize("New Interface Block"), InterfaceBlock, (Package,)
     ),
     ElementCreateInfo(
         "requirement",
