@@ -35,7 +35,7 @@
       <object class="GtkBox">
         <child>
           <object class="GtkLabel" id="type-label">
-            <property name="label" translatable="no">[[name]]</property>
+            <property name="label">[[name]]</property>
             <property name="halign">center</property>
             <property name="hexpand">yes</property>
           </object>
