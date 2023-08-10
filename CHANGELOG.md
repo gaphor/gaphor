@@ -1,6 +1,6 @@
 2.20.1
 ------
-(unreleased)
+- Fix missing derive relationship icon in the model browser
 
 2.20.0
 ------
