@@ -72,10 +72,6 @@ class RequirementPropertyPage(PropertyPageBase):
             buffer.get_start_iter(), buffer.get_end_iter(), False
         )
 
-
-PropertyPages.register(RequirementItem)(AttributesPage)
-PropertyPages.register(RequirementItem)(OperationsPage)
-
 PropertyPages.register(BlockItem)(OperationsPage)
 PropertyPages.register(InterfaceBlockItem)(OperationsPage)
 
