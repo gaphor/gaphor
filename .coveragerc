@@ -4,3 +4,10 @@ omit =
     */tests/*
     gaphor/ui/uipreview.py
 
+[report]
+exclude_also =
+    if TYPE_CHECKING:
+    @abc\.abstractmethod
+    @overload
+    \.\.\.
+    raise NotImplementedError
