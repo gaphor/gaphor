@@ -281,7 +281,7 @@ class NamePropertyPage(PropertyPageBase):
         entry.set_text(subject and subject.name or "")
 
         type = builder.get_object("type-label")
-        type.set_markup(f"<b><i>{subject.__class__.__name__}</i></b>")
+        type.set_text(subject.__class__.__name__)
 
         @handler_blocking(entry, "changed", self._on_name_changed)
         def handler(event):
