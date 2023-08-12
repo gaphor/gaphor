@@ -29,6 +29,9 @@ class Comment(Element):
     annotatedElement: relation_many[Element]
     body: _attribute[str] = _attribute("body", str)
 
+class Image(Element):
+    content: _attribute[str] = _attribute("content", str)
+    dimension: _attribute[str] = _attribute("dimension", str)
 
 # 13: override StyleSheet
 from gaphor.core.modeling.stylesheet import StyleSheet

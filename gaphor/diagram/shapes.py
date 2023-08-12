@@ -118,7 +118,6 @@ def ellipse(cr, x, y, w, h, dc=None):
 
     cr.close_path()
 
-
 class Orientation(Enum):
     VERTICAL = "v"
     HORIZONTAL = "h"
