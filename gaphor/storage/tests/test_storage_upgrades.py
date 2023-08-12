@@ -127,7 +127,7 @@ def test_upgrade_delete_property_information_flow(
     iflow = element(id="2", type="InformationFlow")
     prop.references["informationFlow"] = ["1"]
 
-    load_elements({e.id: e for e in [prop, iflow]}, element_factory, modeling_language)
+    load_elements({e.id: e for e in (prop, iflow)}, element_factory, modeling_language)
 
     assert element_factory.lselect(modeling_language.lookup_element(type))
     assert element_factory.lselect(modeling_language.lookup_element("InformationFlow"))

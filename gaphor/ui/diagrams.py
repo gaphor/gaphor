@@ -367,7 +367,7 @@ class Diagrams(UIComponent, ActionProvider):
     def _update_action_state(self):
         enabled = self._notebook and self._notebook.get_n_pages() > 0
 
-        for action_name in ["win.zoom-in", "win.zoom-out", "win.zoom-100"]:
+        for action_name in ("win.zoom-in", "win.zoom-out", "win.zoom-100"):
             self.event_manager.handle(ActionEnabled(action_name, enabled))
 
     @event_handler(AttributeUpdated)

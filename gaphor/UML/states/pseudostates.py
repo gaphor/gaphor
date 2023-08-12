@@ -74,7 +74,7 @@ def draw_deep_history_pseudostate(box, context, bounding_box):
     cr.move_to(9, 15)
     cr.line_to(15, 15)
 
-    for p in [(21, 9), (25, 12), (18.5, 17), (23.5, 17), (17, 12)]:
+    for p in ((21, 9), (25, 12), (18.5, 17), (23.5, 17), (17, 12)):
         cr.move_to(21, 13)
         cr.line_to(*p)
     stroke(context, fill=False)

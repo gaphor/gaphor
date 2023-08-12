@@ -40,17 +40,17 @@ if sys.platform == "darwin":
         )
 
     for widget_class in (Gtk.Text, Gtk.TextView):
-        for shortcut, signal in [
+        for shortcut, signal in (
             ("<Meta>x", "cut-clipboard"),
             ("<Meta>c", "copy-clipboard"),
             ("<Meta>v", "paste-clipboard"),
-        ]:
+        ):
             widget_class.add_shortcut(new_shortcut_with_args(shortcut, signal))
 
-        for shortcut, action in [
+        for shortcut, action in (
             ("<Meta>z", "text.undo"),
             ("<Meta><Shift>z", "text.redo"),
-        ]:
+        ):
             widget_class.add_shortcut(
                 Gtk.Shortcut.new(
                     trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
@@ -58,14 +58,14 @@ if sys.platform == "darwin":
                 )
             )
 
-        for shortcut, step, count in [
+        for shortcut, step, count in (
             ("<Meta>Up|<Meta>KP_Up", Gtk.MovementStep.BUFFER_ENDS, -1),
             ("<Meta>Down|<Meta>KP_Down", Gtk.MovementStep.BUFFER_ENDS, 1),
             ("<Meta>Left|<Meta>KP_Left", Gtk.MovementStep.DISPLAY_LINE_ENDS, -1),
             ("<Meta>Right|<Meta>KP_Right", Gtk.MovementStep.DISPLAY_LINE_ENDS, 1),
             ("<Alt>Left|<Alt>KP_Left", Gtk.MovementStep.WORDS, -1),
             ("<Alt>Right|<Alt>KP_Right", Gtk.MovementStep.WORDS, 1),
-        ]:
+        ):
             add_move_binding(widget_class, shortcut, step, count)
 
     # Gtk.Text
