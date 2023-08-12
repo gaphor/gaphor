@@ -23,6 +23,9 @@ APPLICATION_ID = "org.gaphor.Gaphor"
 Adw.init()
 GtkSource.init()
 
+if sys.platform == "darwin":
+    import gaphor.ui.macosshim
+
 
 def run(argv: list[str]) -> int:
     application: Application | None = None

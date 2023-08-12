@@ -1,13 +1,11 @@
 import logging
 import sys
 
-from gi.repository import Gtk
-
 log = logging.getLogger(__name__)
 
 
 if sys.platform == "darwin":
-    from gi.repository import GLib
+    from gi.repository import GLib, Gtk
 
     def new_shortcut_with_args(shortcut, signal, *args):
         shortcut = Gtk.Shortcut.new(
