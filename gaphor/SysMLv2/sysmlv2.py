@@ -2560,6 +2560,46 @@ class DerivedPartdefinition(EDerivedCollection):
     pass
 
 
+class DerivedPortdefinition(EDerivedCollection):
+    pass
+
+
+class PortUsage(OccurrenceUsage):
+    """<p>A <code>PortUsage</code> is a usage of a <code>PortDefinition</code>. A <code>PortUsage<code> itself as well as all its <code>nestedUsages</code> must be referential (non-composite).</p>
+    nestedUsage->
+        reject(oclIsKindOf(PortUsage))->
+        forAll(not isComposite)
+    specializesFromLibrary('Ports::ports')
+    isComposite and owningType <> null and
+    (owningType.oclIsKindOf(PortDefinition) or
+     owningType.oclIsKindOf(PortUsage)) implies
+        specializesFromLibrary('Ports::Port::subports')
+    owningType = null or
+    not owningType.oclIsKindOf(PortDefinition) and
+    not owningType.oclIsKindOf(PortUsage) implies
+        isReference"""
+
+    portDefinition = EReference(
+        ordered=True,
+        unique=True,
+        containment=False,
+        derived=True,
+        upper=-1,
+        transient=True,
+        derived_class=DerivedPortdefinition,
+    )
+
+    def __init__(self, *, portDefinition=None, **kwargs):
+        super().__init__(**kwargs)
+
+        if portDefinition:
+            self.portDefinition.extend(portDefinition)
+
+
+class DerivedExpression(EDerivedCollection):
+    pass
+
+
 class PartUsage(ItemUsage):
     """<p>A <code>PartUsage</code> is a usage of a <code>PartDefinition</code> to represent a system or a part of a system. At least one of the <code>itemDefinitions</code> of the <code>PartUsage</code> must be a <code>PartDefinition</code>.</p>
 

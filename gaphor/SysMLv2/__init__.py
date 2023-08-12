@@ -92,6 +92,7 @@ from gaphor.SysMLv2.sysmlv2 import (
     IncludeUseCaseUsage,
     OperatorExpression,
     FeatureChainExpression,
+    PortUsage,
 )
 
 from gaphor.SysMLv2 import sysmlv2
@@ -116,6 +117,7 @@ __all__ = [
     "PartUsage",
     "PartDefinition",
     "PortDefinition",
+    "PortUsage",
     "ConjugatedPortDefinition",
     "FlowConnectionUsage",
     "ItemFlow",
@@ -201,6 +203,7 @@ Usage.directedUsage.eType = Usage
 Usage.nestedOccurrence.eType = OccurrenceUsage
 Usage.nestedItem.eType = ItemUsage
 Usage.nestedPart.eType = PartUsage
+Usage.nestedPort.eType = PortUsage
 Usage.nestedConnection.eType = ConnectorAsUsage
 Usage.nestedFlow.eType = FlowConnectionUsage
 Usage.nestedInterface.eType = InterfaceUsage
