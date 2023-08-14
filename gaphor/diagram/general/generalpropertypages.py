@@ -99,9 +99,11 @@ class MetadataPropertyPage(PropertyPageBase):
         text = entry.get_text()
         setattr(self.item, field_name, text)
 
+
 FILTER_IMAGES = [
     ("Images", "*.png, *.jpg, *.jpeg", "image/*"),
 ]
+
 
 @PropertyPages.register(ImageItem)
 class ImagePropertyPage(PropertyPageBase):
@@ -117,26 +119,25 @@ class ImagePropertyPage(PropertyPageBase):
         if not subject:
             return
 
-        builder = new_builder("image-editor",
-                              signals={
-                                "select-image": (self._on_open_image_clicked,),  
-                                "set-default-size": (self._on_default_size_clicked),              
-                              })
+        builder = new_builder(
+            "image-editor",
+            signals={
+                "select-image": (self._on_open_image_clicked,),
+                "set-default-size": (self._on_default_size_clicked),
+            },
+        )
         return builder.get_object("image-editor")
-    
+
     @transactional
     def _on_open_image_clicked(self, button):
-
         open_file_dialog(
-            gettext("Select an image…"),
-            self.open_files,
-            filters = FILTER_IMAGES
+            gettext("Select an image…"), self.open_files, filters=FILTER_IMAGES
         )
-    
+
     @transactional
     def open_files(self, filenames):
         for filename in filenames:
-            with open(filename, 'rb') as file:
+            with open(filename, "rb") as file:
                 try:
                     image_data = file.read()
                     image = PILImage.open(io.BytesIO(image_data))
@@ -144,24 +145,26 @@ class ImagePropertyPage(PropertyPageBase):
                     image.close()
 
                     base64_encoded_data = base64.b64encode(image_data)
-                    self.subject.subject.content = base64_encoded_data.decode('ascii')
-                    self.subject.subject.dimension = f"{self.subject.width} {self.subject.height}" 
+                    self.subject.subject.content = base64_encoded_data.decode("ascii")
+                    self.subject.subject.dimension = (
+                        f"{self.subject.width} {self.subject.height}"
+                    )
                     return
-                except Exception as e:
+                except Exception:
                     error_handler(
                         message=gettext("Unable to parse image “{filename}”.").format(
                             filename=filename
                         )
-                    )            
+                    )
 
     @transactional
     def _on_default_size_clicked(self, button):
-        if (self.subject and self.subject.subject and self.subject.subject.content):
-            base64_img_bytes = self.subject.subject.content.encode('ascii')
+        if self.subject and self.subject.subject and self.subject.subject.content:
+            base64_img_bytes = self.subject.subject.content.encode("ascii")
             image_data = base64.decodebytes(base64_img_bytes)
             image = PILImage.open(io.BytesIO(image_data))
-            
-            self.subject.width = image.width
-            self.subject.height= image.height
 
-            self.subject.subject.dimension =  f"{image.width} {image.height}"
+            self.subject.width = image.width
+            self.subject.height = image.height
+
+            self.subject.subject.dimension = f"{image.width} {image.height}"
