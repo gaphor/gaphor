@@ -710,13 +710,14 @@ test = ["objgraph", "psutil"]
 
 [[package]]
 name = "hypothesis"
-version = "6.82.3"
+version = "6.82.4"
 description = "A library for property-based testing"
 category = "dev"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "hypothesis-6.82.3-py3-none-any.whl", hash = "sha256:7ff0f6a12d3cd9372e30f84d300e2468c3923e813198a93b9e479dda91858460"},
+    {file = "hypothesis-6.82.4-py3-none-any.whl", hash = "sha256:3f1e730ea678d01ad2183325b1350faa6b097b98ced1e97e0ba67bcf5e2439ea"},
+    {file = "hypothesis-6.82.4.tar.gz", hash = "sha256:11f32a66cf361a72f2a36527a15639ea6814d1dbf54782c3a8ea31585d62ab27"},
 ]
 
 [package.dependencies]
@@ -1489,14 +1490,14 @@ testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "poethepoet"
-version = "0.21.1"
+version = "0.22.0"
 description = "A task runner that works well with poetry."
 category = "dev"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "poethepoet-0.21.1-py3-none-any.whl", hash = "sha256:c79b2aefc889c4490db9d64ecc1896db78700aa212b8c5f0bca4aee0395e7714"},
-    {file = "poethepoet-0.21.1.tar.gz", hash = "sha256:39d754f53714545a23cfc94b122deaf3548218b6e35b453c30973c5598719e9f"},
+    {file = "poethepoet-0.22.0-py3-none-any.whl", hash = "sha256:f654e52c19b7c689d5293ab6a065787b21f125884c0b367650292df4f3cb508c"},
+    {file = "poethepoet-0.22.0.tar.gz", hash = "sha256:659d7678fd8b349bd40941e3de7d6d386171dab3e7c8babcdcd8ead288c9ea47"},
 ]
 
 [package.dependencies]
