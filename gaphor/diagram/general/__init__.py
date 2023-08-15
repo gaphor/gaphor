@@ -14,5 +14,5 @@ __all__ = [
     "Ellipse",
     "Line",
     "MetadataItem",
-    "ImageItem"
+    "ImageItem",
 ]

@@ -196,6 +196,5 @@ general_tools = ToolSection(
             None,
             new_item_factory(general.ImageItem, Image),
         ),
-
     ),
 )
