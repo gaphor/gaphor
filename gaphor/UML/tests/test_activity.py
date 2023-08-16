@@ -26,7 +26,7 @@ def item_factory(request):
 
 @pytest.mark.parametrize("item_factory", activity_node_names, indirect=True)
 def test_create_action_should_create_an_activity(diagram, item_factory):
-    action = item_factory(diagram)
+    action = item_factory.create_item(diagram)
 
     assert action.subject.activity
     assert action.subject.owner is action.subject.activity
@@ -37,7 +37,7 @@ def test_create_action_should_add_to_existing_activity(
     diagram, item_factory, element_factory
 ):
     activity = element_factory.create(UML.Activity)
-    action = item_factory(diagram)
+    action = item_factory.create_item(diagram)
 
     assert action.subject.activity is activity
 
@@ -50,6 +50,6 @@ def test_create_action_should_add_to_existing_activity_in_package(
     diagram.element = package
     activity = element_factory.create(UML.Activity)
     activity.package = package
-    action = item_factory(diagram)
+    action = item_factory.create_item(diagram)
 
     assert action.subject.activity is activity

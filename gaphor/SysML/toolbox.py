@@ -1,6 +1,5 @@
 """The action definition for the SysML toolbox."""
 
-from gaphor import UML
 from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import (
     DiagramTypes,
@@ -9,19 +8,19 @@ from gaphor.diagram.diagramtoolbox import (
     ToolDef,
     ToolSection,
     general_tools,
-    new_item_factory,
+    new_element_item_factory,
+    new_deferred_element_item_factory,
 )
-from gaphor.SysML import diagramitems as sysml_items
 from gaphor.SysML.sysml import (
     Block,
     ConstraintBlock,
     InterfaceBlock,
     Requirement,
     ValueType,
+    ProxyPort,
 )
 from gaphor.SysML.blocks.blockstoolbox import blocks
 from gaphor.SysML.requirements.requirementstoolbox import requirements
-from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
@@ -36,6 +35,8 @@ from gaphor.UML.uml import (
     StateMachine,
     Enumeration,
     UseCase,
+    Connector,
+    Property,
 )
 
 internal_blocks = ToolSection(
@@ -46,23 +47,21 @@ internal_blocks = ToolSection(
             gettext("Connector"),
             "gaphor-connector-symbolic",
             "<Shift>C",
-            new_item_factory(uml_items.ConnectorItem),
+            new_deferred_element_item_factory(Connector),
         ),
         ToolDef(
             "toolbox-property",
             gettext("Property"),
             "gaphor-property-symbolic",
             "o",
-            new_item_factory(
-                sysml_items.PropertyItem, UML.Property, config_func=named_element_config
-            ),
+            new_element_item_factory(Property, config_func=named_element_config),
         ),
         ToolDef(
             "toolbox-proxy-port",
             gettext("Proxy Port"),
             "gaphor-proxyport-symbolic",
             "x",
-            new_item_factory(sysml_items.ProxyPortItem),
+            new_deferred_element_item_factory(ProxyPort),
         ),
     ),
 )

@@ -153,8 +153,10 @@ class DiagramPage:
         tool_def = get_tool_def(self.modeling_language, tool_name)
         item_factory = tool_def.item_factory
         handle_index = tool_def.handle_index
+
         return apply_placement_tool_set(
             self.view,
+            diagram=self.diagram,
             item_factory=item_factory,
             modeling_language=self.modeling_language,
             event_manager=self.event_manager,

@@ -1,10 +1,14 @@
 """The definition for the STPA section of the RAAML toolbox."""
 
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    new_element_item_factory,
+    new_deferred_element_item_factory,
+)
 from gaphor.i18n import gettext
-from gaphor.RAAML import diagramitems, raaml
-from gaphor.SysML import diagramitems as sysml_items
-from gaphor.UML import diagramitems as uml_items
+from gaphor.RAAML import raaml
+from gaphor.UML import uml
 from gaphor.UML.toolboxconfig import (
     default_namespace,
     named_element_config,
@@ -35,7 +39,7 @@ stpa = ToolSection(
             gettext("Generalization"),
             "gaphor-generalization-symbolic",
             "<Shift>G",
-            new_item_factory(uml_items.GeneralizationItem),
+            new_deferred_element_item_factory(uml.Generalization),
             handle_index=0,
         ),
         ToolDef(
@@ -43,26 +47,21 @@ stpa = ToolSection(
             gettext("Loss"),
             "gaphor-loss-symbolic",
             "<Shift>L",
-            new_item_factory(
-                sysml_items.BlockItem, raaml.Loss, config_func=loss_config
-            ),
+            new_element_item_factory(raaml.Loss, config_func=loss_config),
         ),
         ToolDef(
             "hazard",
             gettext("Hazard"),
             "gaphor-hazard-symbolic",
             "<Shift>H",
-            new_item_factory(
-                sysml_items.BlockItem, raaml.Hazard, config_func=hazard_config
-            ),
+            new_element_item_factory(raaml.Hazard, config_func=hazard_config),
         ),
         ToolDef(
             "situation",
             gettext("Situation"),
             "gaphor-situation-symbolic",
             "s",
-            new_item_factory(
-                sysml_items.BlockItem,
+            new_element_item_factory(
                 raaml.Situation,
                 config_func=namespace_config,
             ),
@@ -72,8 +71,7 @@ stpa = ToolSection(
             gettext("Control Structure"),
             "gaphor-control-structure-symbolic",
             "f",
-            new_item_factory(
-                sysml_items.BlockItem,
+            new_element_item_factory(
                 raaml.ControlStructure,
                 config_func=namespace_config,
             ),
@@ -83,8 +81,7 @@ stpa = ToolSection(
             gettext("Controller"),
             "gaphor-controller-symbolic",
             "w",
-            new_item_factory(
-                sysml_items.PropertyItem,
+            new_element_item_factory(
                 raaml.Controller,
                 config_func=named_element_config,
             ),
@@ -94,8 +91,7 @@ stpa = ToolSection(
             gettext("Actuator"),
             "gaphor-actuator-symbolic",
             "q",
-            new_item_factory(
-                sysml_items.PropertyItem,
+            new_element_item_factory(
                 raaml.Actuator,
                 config_func=named_element_config,
             ),
@@ -105,8 +101,7 @@ stpa = ToolSection(
             gettext("Controlled Process"),
             "gaphor-controlled-process-symbolic",
             "<Shift>P",
-            new_item_factory(
-                sysml_items.PropertyItem,
+            new_element_item_factory(
                 raaml.ControlledProcess,
                 config_func=named_element_config,
             ),
@@ -116,8 +111,7 @@ stpa = ToolSection(
             gettext("Abstract Operational Situation"),
             "gaphor-abstract-operational-situation-symbolic",
             "<Shift>J",
-            new_item_factory(
-                diagramitems.OperationalSituationItem,
+            new_element_item_factory(
                 raaml.AbstractOperationalSituation,
                 config_func=abstract_operational_situation_config,
             ),
@@ -127,8 +121,7 @@ stpa = ToolSection(
             gettext("Operational Situation"),
             "gaphor-operational-situation-symbolic",
             "<Shift>O",
-            new_item_factory(
-                diagramitems.OperationalSituationItem,
+            new_element_item_factory(
                 raaml.OperationalSituation,
                 config_func=namespace_config,
             ),
@@ -138,8 +131,7 @@ stpa = ToolSection(
             gettext("Unsafe Control Action"),
             "gaphor-unsafe-control-action-symbolic",
             "u",
-            new_item_factory(
-                diagramitems.UnsafeControlActionItem,
+            new_element_item_factory(
                 raaml.UnsafeControlAction,
                 config_func=namespace_config,
             ),
@@ -149,8 +141,8 @@ stpa = ToolSection(
             gettext("Relevant To"),
             "gaphor-relevant-to-symbolic",
             "r",
-            new_item_factory(
-                diagramitems.RelevantToItem,
+            new_deferred_element_item_factory(
+                raaml.RelevantTo,
             ),
         ),
         ToolDef(
@@ -158,8 +150,7 @@ stpa = ToolSection(
             gettext("Control Action"),
             "gaphor-control-action-symbolic",
             "<Shift>M",
-            new_item_factory(
-                diagramitems.ControlActionItem,
+            new_element_item_factory(
                 raaml.ControlAction,
                 config_func=namespace_config,
             ),

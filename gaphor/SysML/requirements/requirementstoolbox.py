@@ -3,8 +3,13 @@
 from gaphas.item import SE
 
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
-from gaphor.SysML import diagramitems as sysml_items
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    new_item_factory,
+    new_element_item_factory,
+    new_deferred_element_item_factory,
+)
 from gaphor.SysML import sysml
 from gaphor.UML.classes import ContainmentItem
 from gaphor.UML.toolboxconfig import namespace_config
@@ -17,8 +22,7 @@ requirements = ToolSection(
             gettext("Requirement"),
             "gaphor-requirement-symbolic",
             "r",
-            new_item_factory(
-                sysml_items.RequirementItem,
+            new_element_item_factory(
                 sysml.Requirement,
                 config_func=namespace_config,
             ),
@@ -29,35 +33,35 @@ requirements = ToolSection(
             gettext("Satisfy"),
             "gaphor-satisfy-symbolic",
             "<Shift>I",
-            new_item_factory(sysml_items.SatisfyItem),
+            new_deferred_element_item_factory(sysml.Satisfy),
         ),
         ToolDef(
             "toolbox-derive-reqt-dependency",
             gettext("Derive Requirement"),
             "gaphor-derive-reqt-symbolic",
             "<Shift>D",
-            new_item_factory(sysml_items.DeriveReqtItem),
+            new_deferred_element_item_factory(sysml.DeriveReqt),
         ),
         ToolDef(
             "toolbox-trace-dependency",
             gettext("Trace"),
             "gaphor-trace-symbolic",
             "y",
-            new_item_factory(sysml_items.TraceItem),
+            new_deferred_element_item_factory(sysml.Trace),
         ),
         ToolDef(
             "toolbox-refine-dependency",
             gettext("Refine"),
             "gaphor-refine-symbolic",
             None,
-            new_item_factory(sysml_items.RefineItem),
+            new_deferred_element_item_factory(sysml.Refine),
         ),
         ToolDef(
             "toolbox-verify-dependency",
             gettext("Verify"),
             "gaphor-verify-symbolic",
             "<Shift>V",
-            new_item_factory(sysml_items.VerifyItem),
+            new_deferred_element_item_factory(sysml.Verify),
         ),
         ToolDef(
             "toolbox-containment",

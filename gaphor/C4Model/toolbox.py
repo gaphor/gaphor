@@ -3,7 +3,7 @@ from functools import partial
 
 from gaphas.item import SE
 
-from gaphor.C4Model import c4model, diagramitems
+from gaphor.C4Model import c4model
 from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
@@ -13,9 +13,9 @@ from gaphor.diagram.diagramtoolbox import (
     ToolDef,
     ToolSection,
     general_tools,
-    new_item_factory,
+    new_element_item_factory,
+    new_deferred_element_item_factory,
 )
-from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.classes.classestoolbox import classes
 from gaphor.UML.interactions.interactionstoolbox import interactions
@@ -31,6 +31,7 @@ from gaphor.UML.uml import (
     DataType,
     Enumeration,
     PrimitiveType,
+    Dependency,
 )
 
 
@@ -71,8 +72,7 @@ c4 = ToolSection(
             gettext("Person"),
             "gaphor-c4-person-symbolic",
             "P",
-            new_item_factory(
-                diagramitems.C4PersonItem,
+            new_element_item_factory(
                 c4model.C4Person,
                 config_func=partial(namespace_config, name=i18nize("Person")),
             ),
@@ -83,8 +83,7 @@ c4 = ToolSection(
             gettext("Software System"),
             "gaphor-c4-software-system-symbolic",
             "<Shift>S",
-            new_item_factory(
-                diagramitems.C4ContainerItem,
+            new_element_item_factory(
                 c4model.C4Container,
                 config_func=software_system_config,
             ),
@@ -95,8 +94,7 @@ c4 = ToolSection(
             gettext("Container"),
             "gaphor-c4-container-symbolic",
             "u",
-            new_item_factory(
-                diagramitems.C4ContainerItem,
+            new_element_item_factory(
                 c4model.C4Container,
                 config_func=container_config,
             ),
@@ -107,8 +105,7 @@ c4 = ToolSection(
             gettext("Container: Database"),
             "gaphor-c4-database-symbolic",
             "<Shift>B",
-            new_item_factory(
-                diagramitems.C4DatabaseItem,
+            new_element_item_factory(
                 c4model.C4Database,
                 config_func=container_database_config,
             ),
@@ -119,8 +116,7 @@ c4 = ToolSection(
             gettext("Component"),
             "gaphor-c4-component-symbolic",
             "<Shift>X",
-            new_item_factory(
-                diagramitems.C4ContainerItem,
+            new_element_item_factory(
                 c4model.C4Container,
                 config_func=component_config,
             ),
@@ -131,7 +127,7 @@ c4 = ToolSection(
             gettext("Dependency"),
             "gaphor-dependency-symbolic",
             "d",
-            new_item_factory(uml_items.DependencyItem),
+            new_deferred_element_item_factory(Dependency),
             handle_index=0,
         ),
     ),

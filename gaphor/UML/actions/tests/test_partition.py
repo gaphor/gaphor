@@ -1,7 +1,7 @@
 import pytest
 
 from gaphor import UML
-from gaphor.diagram.diagramtoolbox import new_item_factory
+from gaphor.diagram.diagramtoolbox import new_element_item_factory
 from gaphor.diagram.tests.fixtures import copy_and_paste_link, copy_clear_and_paste_link
 from gaphor.UML.actions.actionstoolbox import partition_config
 from gaphor.UML.actions.partition import PartitionItem
@@ -9,8 +9,7 @@ from gaphor.UML.actions.partition import PartitionItem
 
 @pytest.fixture
 def partition_item_factory():
-    return new_item_factory(
-        PartitionItem,
+    return new_element_item_factory(
         UML.ActivityPartition,
         config_func=partition_config,
     )
@@ -18,7 +17,7 @@ def partition_item_factory():
 
 @pytest.fixture
 def partition_item(partition_item_factory, diagram):
-    return partition_item_factory(diagram)
+    return partition_item_factory.create_item(diagram)
 
 
 def test_partition_placement_adds_two_partitions(partition_item: PartitionItem):

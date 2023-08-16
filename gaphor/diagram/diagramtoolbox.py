@@ -17,6 +17,7 @@ from typing import (
 )
 import getpass
 import time
+from abc import abstractmethod
 
 from gaphas.item import SE
 
@@ -24,6 +25,12 @@ from gaphor.core import gettext
 from gaphor.core.modeling import Comment, Diagram, Element, Presentation
 from gaphor.diagram import general
 from gaphor.diagram.group import group
+from gaphor.diagram.support import (
+    get_diagram_item,
+    has_diagram_item,
+    diagram_item_has_element,
+)
+
 
 ItemFactory = Callable[[Diagram, Optional[Presentation]], Presentation]
 P = TypeVar("P", bound=Presentation, covariant=True)
@@ -91,33 +98,110 @@ def get_tool_def(modeling_language, tool_name):
     )
 
 
-def new_item_factory(
-    item_class: Type[Presentation],
-    subject_class: Optional[Type[Element]] = None,
-    config_func: Optional[ConfigFuncType] = None,
-):
-    """``config_func`` may be a function accepting the newly created item."""
+class AbstractItemFactory:
+    @abstractmethod
+    def create_item(self, diagram, parent=None):
+        """Creates item, configures the item and optionaly creates the element"""
 
-    def item_factory(diagram, parent=None):
-        if subject_class:
-            element_factory = diagram.model
-            subject = element_factory.create(subject_class)
-        else:
-            subject = None
+    @abstractmethod
+    def item_class(self, diagram):
+        """Returns item class"""
 
-        item = diagram.create(item_class, subject=subject)
+    def subject_class(self):
+        return None
 
-        if parent and subject and group(parent.subject, item.subject):
-            item.change_parent(parent)
 
-        if config_func:
-            config_func(item)
+class ItemOnlyFactory(AbstractItemFactory):
+    def __init__(
+        self, item_class: Type[Presentation], config_func: Optional[ConfigFuncType]
+    ):
+        assert not diagram_item_has_element(item_class)
+
+        self._item_class = item_class
+        self._config_func = config_func
+
+    def create_item(self, diagram, parent=None):
+        item = diagram.create(self.item_class(diagram), subject=None)
+
+        if self._config_func:
+            self._config_func(item)
 
         return item
 
-    item_factory.item_class = item_class  # type: ignore[attr-defined]
-    item_factory.subject_class = subject_class  # type: ignore[attr-defined]
-    return item_factory
+    def item_class(self, diagram):
+        return self._item_class
+
+
+class ElementItemFactory(AbstractItemFactory):
+    def __init__(
+        self, subject_class: Type[Element], config_func: Optional[ConfigFuncType]
+    ):
+        assert has_diagram_item(subject_class)
+
+        self._subject_class = subject_class
+        self._config_func = config_func
+
+    def create_item(self, diagram, parent=None):
+        element_factory = diagram.model
+        subject = element_factory.create(self._subject_class)
+
+        item = diagram.create(self.item_class(diagram), subject=subject)
+
+        if parent and group(parent.subject, item.subject):
+            item.change_parent(parent)
+
+        if self._config_func:
+            self._config_func(item)
+
+        return item
+
+    def item_class(self, diagram):
+        return get_diagram_item(self._subject_class, type(diagram))
+
+    def subject_class(self):
+        return self._subject_class
+
+
+class DeferredElementItemFactory(ElementItemFactory):
+    """Creates only item, but depending on the subject class"""
+
+    def create_item(self, diagram, parent=None):
+        item = diagram.create(self.item_class(diagram))
+
+        if self._config_func:
+            self._config_func(item)
+
+        return item
+
+
+def new_element_item_factory(
+    subject_class: Type[Element], config_func: Optional[ConfigFuncType] = None
+):
+    """
+    Creates new element and adds it on the diagram.
+    ``config_func`` may be a function accepting the newly created item.
+    """
+    return ElementItemFactory(subject_class=subject_class, config_func=config_func)
+
+
+def new_deferred_element_item_factory(
+    subject_class: Type[Element], config_func: Optional[ConfigFuncType] = None
+):
+    """
+    Creates new item depending on the diagram, but does not create the element.
+    ``config_func`` may be a function accepting the newly created item.
+    """
+    return DeferredElementItemFactory(
+        subject_class=subject_class, config_func=config_func
+    )
+
+
+def new_item_factory(
+    item_class: Type[Presentation],
+    config_func: Optional[ConfigFuncType] = None,
+):
+    """``config_func`` may be a function accepting the newly created item."""
+    return ItemOnlyFactory(item_class=item_class, config_func=config_func)
 
 
 def metadata_config(metadata_item: general.MetadataItem) -> None:
@@ -172,7 +256,7 @@ general_tools = ToolSection(
             gettext("Comment"),
             "gaphor-comment-symbolic",
             "k",
-            new_item_factory(general.CommentItem, Comment),
+            new_element_item_factory(Comment),
             handle_index=SE,
         ),
         ToolDef(

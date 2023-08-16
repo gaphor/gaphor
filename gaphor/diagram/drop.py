@@ -8,7 +8,7 @@ from gaphor.diagram.support import get_diagram_item
 
 @singledispatch
 def drop(element: Element, diagram: Diagram, x: float, y: float):
-    if item_class := get_diagram_item(type(element)):
+    if item_class := get_diagram_item(type(element), type(diagram)):
         item = diagram.create(item_class)
         assert item
 

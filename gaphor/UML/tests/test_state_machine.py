@@ -31,7 +31,7 @@ def item_factory(request):
 def test_create_state_on_diagram_should_create_a_state_machine_with_region(
     diagram, item_factory
 ):
-    state = item_factory(diagram)
+    state = item_factory.create_item(diagram)
 
     assert state.subject.container
     assert state.subject.container.stateMachine
@@ -42,7 +42,7 @@ def test_create_state_should_add_to_existing_state_machine(
     diagram, item_factory, element_factory
 ):
     state_machine = element_factory.create(UML.StateMachine)
-    state = item_factory(diagram)
+    state = item_factory.create_item(diagram)
     region = state.subject.container
 
     assert region
@@ -57,7 +57,7 @@ def test_create_state_should_add_to_existing_state_machine_and_region(
     region = element_factory.create(UML.Region)
     region.stateMachine = state_machine
 
-    state = item_factory(diagram)
+    state = item_factory.create_item(diagram)
 
     assert state.subject.container is region
 
@@ -74,7 +74,7 @@ def test_create_state_should_add_to_existing_state_machine_and_region_in_package
     diagram.element = package
     state_machine.package = package
 
-    state = item_factory(diagram)
+    state = item_factory.create_item(diagram)
 
     assert state.subject.container is region
 
@@ -89,6 +89,6 @@ def test_create_state_should_add_to_existing_state_machine_in_package(
     diagram.element = package
     state_machine.package = package
 
-    state = item_factory(diagram)
+    state = item_factory.create_item(diagram)
 
     assert state.subject.container.stateMachine is state_machine

@@ -4,8 +4,12 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
-from gaphor.SysML import diagramitems as sysml_items
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    new_element_item_factory,
+    new_deferred_element_item_factory,
+)
 from gaphor.SysML import sysml
 from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.classes.classestoolbox import (
@@ -29,9 +33,7 @@ blocks = ToolSection(
             gettext("Block"),
             "gaphor-block-symbolic",
             "<Shift>B",
-            new_item_factory(
-                sysml_items.BlockItem, sysml.Block, config_func=namespace_config
-            ),
+            new_element_item_factory(sysml.Block, config_func=namespace_config),
             handle_index=SE,
         ),
         ToolDef(
@@ -39,8 +41,7 @@ blocks = ToolSection(
             gettext("InterfaceBlock"),
             "gaphor-interface-block-symbolic",
             None,
-            new_item_factory(
-                sysml_items.InterfaceBlockItem,
+            new_element_item_factory(
                 sysml.InterfaceBlock,
                 config_func=namespace_config,
             ),
@@ -51,8 +52,7 @@ blocks = ToolSection(
             gettext("Package"),
             "gaphor-package-symbolic",
             "p",
-            new_item_factory(
-                uml_items.PackageItem,
+            new_element_item_factory(
                 UML.Package,
                 config_func=namespace_config,
             ),
@@ -63,8 +63,8 @@ blocks = ToolSection(
             gettext("Composite Association"),
             "gaphor-composite-association-symbolic",
             "<Shift>Z",
-            new_item_factory(
-                uml_items.AssociationItem,
+            new_deferred_element_item_factory(
+                UML.Association,
                 config_func=composite_association_config,
             ),
         ),
@@ -73,8 +73,8 @@ blocks = ToolSection(
             gettext("Shared Association"),
             "gaphor-shared-association-symbolic",
             "<Shift>Q",
-            new_item_factory(
-                uml_items.AssociationItem,
+            new_deferred_element_item_factory(
+                UML.Association,
                 config_func=shared_association_config,
             ),
         ),
@@ -83,15 +83,15 @@ blocks = ToolSection(
             gettext("Association"),
             "gaphor-association-symbolic",
             "<Shift>A",
-            new_item_factory(uml_items.AssociationItem),
+            new_deferred_element_item_factory(UML.Association),
         ),
         ToolDef(
             "toolbox-direct-association",
             gettext("Direct Association"),
             "gaphor-direct-association-symbolic",
             None,
-            new_item_factory(
-                uml_items.AssociationItem,
+            new_deferred_element_item_factory(
+                UML.Association,
                 config_func=direct_association_config,
             ),
         ),
@@ -100,15 +100,14 @@ blocks = ToolSection(
             gettext("Generalization"),
             "gaphor-generalization-symbolic",
             "<Shift>G",
-            new_item_factory(uml_items.GeneralizationItem),
+            new_deferred_element_item_factory(UML.Generalization),
         ),
         ToolDef(
             "toolbox-value-type",
             gettext("ValueType"),
             "gaphor-value-type-symbolic",
             "<Shift>L",
-            new_item_factory(
-                uml_items.DataTypeItem,
+            new_element_item_factory(
                 sysml.ValueType,
                 config_func=namespace_config,
             ),
@@ -118,8 +117,7 @@ blocks = ToolSection(
             gettext("Enumeration"),
             "gaphor-enumeration-symbolic",
             "<Shift>W",
-            new_item_factory(
-                uml_items.EnumerationItem,
+            new_element_item_factory(
                 UML.Enumeration,
                 config_func=sysml_enumeration_config,
             ),
@@ -130,8 +128,7 @@ blocks = ToolSection(
             gettext("Primitive"),
             "gaphor-primitive-type-symbolic",
             "<Shift>H",
-            new_item_factory(
-                uml_items.DataTypeItem,
+            new_element_item_factory(
                 UML.PrimitiveType,
                 config_func=namespace_config,
             ),
