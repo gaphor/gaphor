@@ -7,7 +7,7 @@ from gaphor.UML.drop import diagram_has_presentation
 
 @drop.register
 def drop_proxy_port(element: ProxyPort, diagram, x, y):
-    item_class = get_diagram_item(type(element))
+    item_class = get_diagram_item(type(element), type(diagram))
     if not item_class:
         return None
 

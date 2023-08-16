@@ -4,7 +4,13 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    new_item_factory,
+    new_element_item_factory,
+    new_deferred_element_item_factory,
+)
 from gaphor.UML import diagramitems
 from gaphor.UML.toolboxconfig import namespace_config
 
@@ -29,9 +35,7 @@ classes = ToolSection(
             gettext("Class"),
             "gaphor-class-symbolic",
             "c",
-            new_item_factory(
-                diagramitems.ClassItem, UML.Class, config_func=namespace_config
-            ),
+            new_element_item_factory(UML.Class, config_func=namespace_config),
             handle_index=SE,
         ),
         ToolDef(
@@ -39,8 +43,7 @@ classes = ToolSection(
             gettext("Interface"),
             "gaphor-interface-symbolic",
             "i",
-            new_item_factory(
-                diagramitems.InterfaceItem,
+            new_element_item_factory(
                 UML.Interface,
                 config_func=namespace_config,
             ),
@@ -51,8 +54,7 @@ classes = ToolSection(
             gettext("Package"),
             "gaphor-package-symbolic",
             "p",
-            new_item_factory(
-                diagramitems.PackageItem,
+            new_element_item_factory(
                 UML.Package,
                 config_func=namespace_config,
             ),
@@ -63,8 +65,7 @@ classes = ToolSection(
             gettext("Component"),
             "gaphor-component-symbolic",
             "o",
-            new_item_factory(
-                diagramitems.ComponentItem,
+            new_element_item_factory(
                 UML.Component,
                 config_func=namespace_config,
             ),
@@ -82,8 +83,8 @@ classes = ToolSection(
             gettext("Composite Association"),
             "gaphor-composite-association-symbolic",
             "<Shift>Z",
-            new_item_factory(
-                diagramitems.AssociationItem,
+            new_deferred_element_item_factory(
+                UML.Association,
                 config_func=composite_association_config,
             ),
         ),
@@ -92,8 +93,8 @@ classes = ToolSection(
             gettext("Shared Association"),
             "gaphor-shared-association-symbolic",
             "<Shift>Q",
-            new_item_factory(
-                diagramitems.AssociationItem,
+            new_deferred_element_item_factory(
+                UML.Association,
                 config_func=shared_association_config,
             ),
         ),
@@ -102,15 +103,15 @@ classes = ToolSection(
             gettext("Association"),
             "gaphor-association-symbolic",
             "<Shift>A",
-            new_item_factory(diagramitems.AssociationItem),
+            new_deferred_element_item_factory(UML.Association),
         ),
         ToolDef(
             "toolbox-direct-association",
             gettext("Direct Association"),
             "gaphor-direct-association-symbolic",
             None,
-            new_item_factory(
-                diagramitems.AssociationItem,
+            new_deferred_element_item_factory(
+                UML.Association,
                 config_func=direct_association_config,
             ),
         ),
@@ -119,7 +120,7 @@ classes = ToolSection(
             gettext("Dependency"),
             "gaphor-dependency-symbolic",
             "<Shift>D",
-            new_item_factory(diagramitems.DependencyItem),
+            new_deferred_element_item_factory(UML.Dependency),
             handle_index=0,
         ),
         ToolDef(
@@ -127,7 +128,7 @@ classes = ToolSection(
             gettext("Generalization"),
             "gaphor-generalization-symbolic",
             "<Shift>G",
-            new_item_factory(diagramitems.GeneralizationItem),
+            new_deferred_element_item_factory(UML.Generalization),
             handle_index=0,
         ),
         ToolDef(
@@ -135,15 +136,14 @@ classes = ToolSection(
             gettext("Interface Realization"),
             "gaphor-interface-realization-symbolic",
             "<Shift>I",
-            new_item_factory(diagramitems.InterfaceRealizationItem),
+            new_deferred_element_item_factory(UML.InterfaceRealization),
         ),
         ToolDef(
             "toolbox-data-type",
             gettext("DataType"),
             "gaphor-data-type-symbolic",
             "<Shift>L",
-            new_item_factory(
-                diagramitems.DataTypeItem,
+            new_element_item_factory(
                 UML.DataType,
                 config_func=namespace_config,
             ),
@@ -154,8 +154,7 @@ classes = ToolSection(
             gettext("Enumeration"),
             "gaphor-enumeration-symbolic",
             "<Shift>W",
-            new_item_factory(
-                diagramitems.EnumerationItem,
+            new_element_item_factory(
                 UML.Enumeration,
                 config_func=namespace_config,
             ),
@@ -166,8 +165,7 @@ classes = ToolSection(
             gettext("Primitive"),
             "gaphor-primitive-type-symbolic",
             "<Shift>H",
-            new_item_factory(
-                diagramitems.DataTypeItem,
+            new_element_item_factory(
                 UML.PrimitiveType,
                 config_func=namespace_config,
             ),

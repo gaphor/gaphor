@@ -8,7 +8,7 @@ from gaphor.diagram.support import get_diagram_item, get_diagram_item_metadata
 
 @drop.register
 def drop_relationship(element: UML.Relationship, diagram, x, y):
-    item_class = get_diagram_item(type(element))
+    item_class = get_diagram_item(type(element), type(diagram))
     if not item_class:
         return None
 
@@ -64,7 +64,7 @@ def drop_message(element: UML.Message, diagram, x, y):
 
 
 def _drop(element, head_element, tail_element, diagram, x, y):
-    item_class = get_diagram_item(type(element))
+    item_class = get_diagram_item(type(element), type(diagram))
     if not item_class:
         return None
 

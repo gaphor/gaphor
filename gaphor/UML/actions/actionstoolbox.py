@@ -5,8 +5,12 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.i18n import gettext, i18nize
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
-from gaphor.UML import diagramitems
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    new_element_item_factory,
+    new_deferred_element_item_factory,
+)
 from gaphor.UML.recipes import owner_package
 from gaphor.UML.toolboxconfig import namespace_config
 
@@ -67,8 +71,7 @@ actions = ToolSection(
             gettext("Activity"),
             "gaphor-activity-symbolic",
             None,
-            new_item_factory(
-                diagramitems.ActivityItem,
+            new_element_item_factory(
                 UML.Activity,
                 config_func=namespace_config,
             ),
@@ -79,8 +82,7 @@ actions = ToolSection(
             gettext("Action"),
             "gaphor-action-symbolic",
             "a",
-            new_item_factory(
-                diagramitems.ActionItem,
+            new_element_item_factory(
                 UML.Action,
                 config_func=partial(activity_config, name=i18nize("Action")),
             ),
@@ -91,8 +93,7 @@ actions = ToolSection(
             gettext("Call behavior action"),
             "gaphor-call-behavior-action-symbolic",
             "<Alt>a",
-            new_item_factory(
-                diagramitems.CallBehaviorActionItem,
+            new_element_item_factory(
                 UML.CallBehaviorAction,
                 config_func=partial(
                     activity_config, name=i18nize("CallBehaviorAction")
@@ -105,8 +106,7 @@ actions = ToolSection(
             gettext("Value specification action"),
             "gaphor-value-specification-action-symbolic",
             "<Alt>v",
-            new_item_factory(
-                diagramitems.ValueSpecificationActionItem,
+            new_element_item_factory(
                 UML.ValueSpecificationAction,
                 config_func=value_specification_action_config,
             ),
@@ -117,8 +117,7 @@ actions = ToolSection(
             gettext("Initial node"),
             "gaphor-initial-node-symbolic",
             "j",
-            new_item_factory(
-                diagramitems.InitialNodeItem,
+            new_element_item_factory(
                 UML.InitialNode,
                 config_func=activity_config,
             ),
@@ -129,8 +128,7 @@ actions = ToolSection(
             gettext("Activity final node"),
             "gaphor-activity-final-node-symbolic",
             "f",
-            new_item_factory(
-                diagramitems.ActivityFinalNodeItem,
+            new_element_item_factory(
                 UML.ActivityFinalNode,
                 config_func=activity_config,
             ),
@@ -141,8 +139,7 @@ actions = ToolSection(
             gettext("Flow final node"),
             "gaphor-flow-final-node-symbolic",
             "w",
-            new_item_factory(
-                diagramitems.FlowFinalNodeItem,
+            new_element_item_factory(
                 UML.FlowFinalNode,
                 config_func=activity_config,
             ),
@@ -153,8 +150,7 @@ actions = ToolSection(
             gettext("Decision/merge node"),
             "gaphor-decision-node-symbolic",
             "g",
-            new_item_factory(
-                diagramitems.DecisionNodeItem,
+            new_element_item_factory(
                 UML.DecisionNode,
                 config_func=activity_config,
             ),
@@ -165,8 +161,7 @@ actions = ToolSection(
             gettext("Fork/join node"),
             "gaphor-fork-node-symbolic",
             "<Shift>R",
-            new_item_factory(
-                diagramitems.ForkNodeItem,
+            new_element_item_factory(
                 UML.JoinNode,
                 config_func=activity_config,
             ),
@@ -177,8 +172,7 @@ actions = ToolSection(
             gettext("Object node"),
             "gaphor-object-node-symbolic",
             "<Shift>O",
-            new_item_factory(
-                diagramitems.ObjectNodeItem,
+            new_element_item_factory(
                 UML.ObjectNode,
                 config_func=partial(activity_config, name=i18nize("Object node")),
             ),
@@ -189,8 +183,7 @@ actions = ToolSection(
             gettext("Swimlane"),
             "gaphor-activity-partition-symbolic",
             "<Shift>P",
-            new_item_factory(
-                diagramitems.PartitionItem,
+            new_element_item_factory(
                 UML.ActivityPartition,
                 config_func=partition_config,
             ),
@@ -201,22 +194,21 @@ actions = ToolSection(
             gettext("Control flow"),
             "gaphor-control-flow-symbolic",
             "<Shift>F",
-            new_item_factory(diagramitems.ControlFlowItem),
+            new_deferred_element_item_factory(UML.ControlFlow),
         ),
         ToolDef(
             "toolbox-object-flow",
             gettext("Object flow"),
             "gaphor-object-flow-symbolic",
             "<Shift>Y",
-            new_item_factory(diagramitems.ObjectFlowItem),
+            new_deferred_element_item_factory(UML.ObjectFlow),
         ),
         ToolDef(
             "toolbox-send-signal-action",
             gettext("Send signal action"),
             "gaphor-send-signal-action-symbolic",
             None,
-            new_item_factory(
-                diagramitems.SendSignalActionItem,
+            new_element_item_factory(
                 UML.SendSignalAction,
                 config_func=partial(activity_config, name=i18nize("Send signal")),
             ),
@@ -227,8 +219,7 @@ actions = ToolSection(
             gettext("Accept event action"),
             "gaphor-accept-event-action-symbolic",
             None,
-            new_item_factory(
-                diagramitems.AcceptEventActionItem,
+            new_element_item_factory(
                 UML.AcceptEventAction,
                 config_func=partial(activity_config, name=i18nize("Accept event")),
             ),
@@ -239,14 +230,14 @@ actions = ToolSection(
             gettext("Input pin"),
             "gaphor-input-pin-symbolic",
             None,
-            new_item_factory(diagramitems.InputPinItem),
+            new_deferred_element_item_factory(UML.InputPin),
         ),
         ToolDef(
             "toolbox-output-pin",
             gettext("Output pin"),
             "gaphor-output-pin-symbolic",
             None,
-            new_item_factory(diagramitems.OutputPinItem),
+            new_deferred_element_item_factory(UML.OutputPin),
         ),
     ),
 )

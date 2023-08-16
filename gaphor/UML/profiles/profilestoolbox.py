@@ -4,8 +4,12 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
-from gaphor.UML import diagramitems
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    new_element_item_factory,
+    new_deferred_element_item_factory,
+)
 from gaphor.UML.toolboxconfig import namespace_config
 
 
@@ -22,8 +26,7 @@ profiles: ToolSection = ToolSection(
             gettext("Profile"),
             "gaphor-profile-symbolic",
             "r",
-            new_item_factory(
-                diagramitems.PackageItem,
+            new_element_item_factory(
                 UML.Profile,
                 config_func=namespace_config,
             ),
@@ -34,9 +37,7 @@ profiles: ToolSection = ToolSection(
             gettext("Metaclass"),
             "gaphor-metaclass-symbolic",
             "m",
-            new_item_factory(
-                diagramitems.ClassItem, UML.Class, config_func=metaclass_config
-            ),
+            new_element_item_factory(UML.Class, config_func=metaclass_config),
             handle_index=SE,
         ),
         ToolDef(
@@ -44,8 +45,7 @@ profiles: ToolSection = ToolSection(
             gettext("Stereotype"),
             "gaphor-stereotype-symbolic",
             "z",
-            new_item_factory(
-                diagramitems.ClassItem,
+            new_element_item_factory(
                 UML.Stereotype,
                 config_func=namespace_config,
             ),
@@ -56,14 +56,14 @@ profiles: ToolSection = ToolSection(
             gettext("Extension"),
             "gaphor-extension-symbolic",
             "<Shift>E",
-            new_item_factory(diagramitems.ExtensionItem),
+            new_deferred_element_item_factory(UML.Extension),
         ),
         ToolDef(
             "toolbox-import",
             gettext("Import"),
             "gaphor-import-symbolic",
             "<Shift>M",
-            new_item_factory(diagramitems.PackageImportItem),
+            new_deferred_element_item_factory(UML.PackageImport),
             handle_index=0,
         ),
     ),

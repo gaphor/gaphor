@@ -5,8 +5,12 @@ from gaphas.segment import Segment
 
 from gaphor import UML
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
-from gaphor.UML import diagramitems
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    new_element_item_factory,
+    new_deferred_element_item_factory,
+)
 from gaphor.UML.recipes import owner_package
 from gaphor.UML.toolboxconfig import namespace_config
 
@@ -57,8 +61,7 @@ interactions = ToolSection(
             gettext("Interaction"),
             "gaphor-interaction-symbolic",
             "<Shift>N",
-            new_item_factory(
-                diagramitems.InteractionItem,
+            new_element_item_factory(
                 UML.Interaction,
                 config_func=namespace_config,
             ),
@@ -69,8 +72,7 @@ interactions = ToolSection(
             gettext("Lifeline"),
             "gaphor-lifeline-symbolic",
             "v",
-            new_item_factory(
-                diagramitems.LifelineItem,
+            new_element_item_factory(
                 UML.Lifeline,
                 config_func=interaction_config,
             ),
@@ -81,7 +83,7 @@ interactions = ToolSection(
             gettext("Execution Specification"),
             "gaphor-execution-specification-symbolic",
             None,
-            new_item_factory(diagramitems.ExecutionSpecificationItem),
+            new_deferred_element_item_factory(UML.ExecutionSpecification),
             handle_index=0,
         ),
         ToolDef(
@@ -89,15 +91,15 @@ interactions = ToolSection(
             gettext("Message"),
             "gaphor-message-symbolic",
             "M",
-            new_item_factory(diagramitems.MessageItem),
+            new_deferred_element_item_factory(UML.Message),
         ),
         ToolDef(
             "toolbox-reflexive-message",
             gettext("Reflexive message"),
             "gaphor-reflexive-message-symbolic",
             None,
-            new_item_factory(
-                diagramitems.MessageItem, config_func=reflexive_message_config
+            new_deferred_element_item_factory(
+                UML.Message, config_func=reflexive_message_config
             ),
         ),
     ),

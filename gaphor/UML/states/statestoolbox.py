@@ -6,8 +6,12 @@ from gaphas.item import SE
 
 from gaphor import UML
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
-from gaphor.UML import diagramitems
+from gaphor.diagram.diagramtoolbox import (
+    ToolDef,
+    ToolSection,
+    new_element_item_factory,
+    new_deferred_element_item_factory,
+)
 from gaphor.UML.recipes import owner_package
 from gaphor.UML.toolboxconfig import namespace_config
 
@@ -63,8 +67,7 @@ states = ToolSection(
             gettext("State Machine"),
             "gaphor-state-machine-symbolic",
             None,
-            new_item_factory(
-                diagramitems.StateMachineItem,
+            new_element_item_factory(
                 UML.StateMachine,
                 config_func=namespace_config,
             ),
@@ -75,8 +78,7 @@ states = ToolSection(
             gettext("State"),
             "gaphor-state-symbolic",
             "s",
-            new_item_factory(
-                diagramitems.StateItem,
+            new_element_item_factory(
                 UML.State,
                 config_func=state_config,
             ),
@@ -87,8 +89,7 @@ states = ToolSection(
             gettext("Initial Pseudostate"),
             "gaphor-initial-pseudostate-symbolic",
             None,
-            new_item_factory(
-                diagramitems.PseudostateItem,
+            new_element_item_factory(
                 UML.Pseudostate,
                 partial(pseudostate_config, kind="initial"),
             ),
@@ -99,8 +100,7 @@ states = ToolSection(
             gettext("Final State"),
             "gaphor-final-state-symbolic",
             None,
-            new_item_factory(
-                diagramitems.FinalStateItem,
+            new_element_item_factory(
                 UML.FinalState,
                 config_func=state_machine_config,
             ),
@@ -111,15 +111,14 @@ states = ToolSection(
             gettext("Transition"),
             "gaphor-transition-symbolic",
             "<Shift>T",
-            new_item_factory(diagramitems.TransitionItem),
+            new_deferred_element_item_factory(UML.Transition),
         ),
         ToolDef(
             "toolbox-shallow-history-pseudostate",
             gettext("Shallow History Pseudostate"),
             "gaphor-shallow-history-pseudostate-symbolic",
             None,
-            new_item_factory(
-                diagramitems.PseudostateItem,
+            new_element_item_factory(
                 UML.Pseudostate,
                 partial(pseudostate_config, kind="shallowHistory"),
             ),
@@ -130,8 +129,7 @@ states = ToolSection(
             gettext("Deep History Pseudostate"),
             "gaphor-deep-history-pseudostate-symbolic",
             None,
-            new_item_factory(
-                diagramitems.PseudostateItem,
+            new_element_item_factory(
                 UML.Pseudostate,
                 partial(pseudostate_config, kind="deepHistory"),
             ),
@@ -142,8 +140,7 @@ states = ToolSection(
             gettext("Join Pseudostate"),
             "gaphor-join-pseudostate-symbolic",
             None,
-            new_item_factory(
-                diagramitems.PseudostateItem,
+            new_element_item_factory(
                 UML.Pseudostate,
                 partial(pseudostate_config, kind="join"),
             ),
@@ -154,8 +151,7 @@ states = ToolSection(
             gettext("Fork Pseudostate"),
             "gaphor-fork-pseudostate-symbolic",
             None,
-            new_item_factory(
-                diagramitems.PseudostateItem,
+            new_element_item_factory(
                 UML.Pseudostate,
                 partial(pseudostate_config, kind="fork"),
             ),
@@ -166,8 +162,7 @@ states = ToolSection(
             gettext("Junction Pseudostate"),
             "gaphor-junction-pseudostate-symbolic",
             None,
-            new_item_factory(
-                diagramitems.PseudostateItem,
+            new_element_item_factory(
                 UML.Pseudostate,
                 partial(pseudostate_config, kind="junction"),
             ),
@@ -178,8 +173,7 @@ states = ToolSection(
             gettext("Choice Pseudostate"),
             "gaphor-choice-pseudostate-symbolic",
             None,
-            new_item_factory(
-                diagramitems.PseudostateItem,
+            new_element_item_factory(
                 UML.Pseudostate,
                 partial(pseudostate_config, kind="choice"),
             ),
@@ -190,8 +184,7 @@ states = ToolSection(
             gettext("Entry Point Pseudostate"),
             "gaphor-entry-point-pseudostate-symbolic",
             None,
-            new_item_factory(
-                diagramitems.PseudostateItem,
+            new_element_item_factory(
                 UML.Pseudostate,
                 partial(pseudostate_config, kind="entryPoint"),
             ),
@@ -202,8 +195,7 @@ states = ToolSection(
             gettext("Exit Point Pseudostate"),
             "gaphor-exit-point-pseudostate-symbolic",
             None,
-            new_item_factory(
-                diagramitems.PseudostateItem,
+            new_element_item_factory(
                 UML.Pseudostate,
                 partial(pseudostate_config, kind="exitPoint"),
             ),
@@ -214,8 +206,7 @@ states = ToolSection(
             gettext("Terminate Pseudostate"),
             "gaphor-terminate-pseudostate-symbolic",
             None,
-            new_item_factory(
-                diagramitems.PseudostateItem,
+            new_element_item_factory(
                 UML.Pseudostate,
                 partial(pseudostate_config, kind="terminate"),
             ),

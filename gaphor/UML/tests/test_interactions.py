@@ -23,7 +23,7 @@ def lifeline_factory():
 def test_create_lifeline_on_diagram_should_create_an_interaction(
     diagram, lifeline_factory
 ):
-    lifeline = lifeline_factory(diagram)
+    lifeline = lifeline_factory.create_item(diagram)
 
     assert lifeline.subject.interaction
 
@@ -32,7 +32,7 @@ def test_create_lifeline_on_diagram_should_use_existing_interaction(
     diagram, lifeline_factory, element_factory
 ):
     interaction = element_factory.create(UML.Interaction)
-    lifeline = lifeline_factory(diagram)
+    lifeline = lifeline_factory.create_item(diagram)
 
     assert lifeline.subject.interaction is interaction
 
@@ -42,7 +42,7 @@ def test_create_lifeline_on_diagram_in_package_should_create_an_interaction(
 ):
     package = element_factory.create(UML.Package)
     diagram.element = package
-    lifeline = lifeline_factory(diagram)
+    lifeline = lifeline_factory.create_item(diagram)
 
     assert lifeline.subject.interaction
     assert lifeline.subject.interaction.package is package
@@ -51,6 +51,6 @@ def test_create_lifeline_on_diagram_in_package_should_create_an_interaction(
 def test_create_lifeline_over_interaction_uses_that_interaction(
     diagram, interaction, lifeline_factory
 ):
-    lifeline = lifeline_factory(diagram, parent=interaction)
+    lifeline = lifeline_factory.create_item(diagram, parent=interaction)
 
     assert lifeline.subject.interaction is interaction.subject

@@ -38,7 +38,7 @@ def apply_magnet_tool_set(view, modeling_language, event_manager):
 
 
 def apply_placement_tool_set(
-    view, item_factory, modeling_language, event_manager, handle_index
+    view, diagram, item_factory, modeling_language, event_manager, handle_index
 ):
     view.remove_all_controllers()
     view.add_controller(view_focus_tool(view))
@@ -49,7 +49,9 @@ def apply_placement_tool_set(
         )
     )
     view.add_controller(
-        drop_zone_tool(view, item_factory.item_class, item_factory.subject_class)
+        drop_zone_tool(
+            view, item_factory.item_class(diagram), item_factory.subject_class()
+        )
     )
     add_basic_tools(view, modeling_language, event_manager)
 
