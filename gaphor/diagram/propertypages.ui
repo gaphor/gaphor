@@ -265,4 +265,34 @@
     </style>
   </object>
 
+  <object class="GtkBox" id="image-editor">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="label" translatable="yes">Image</property>
+        <property name="halign">center</property>
+        <property name="hexpand">yes</property>
+        <property name="margin-bottom">20</property>
+        <style>
+          <class name="title"/>
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label" translatable="yes">Select an image…</property>
+        <signal name="clicked" handler="select-image" swapped="no"/>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton">
+        <property name="label" translatable="yes">Set default size</property>
+        <signal name="clicked" handler="set-default-size" swapped="no"/>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
 </interface>

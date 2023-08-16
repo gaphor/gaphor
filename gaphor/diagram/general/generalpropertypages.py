@@ -1,8 +1,13 @@
+import io
+import base64
+
 from gi.repository import Gtk
 
-from gaphor.core import transactional
+from gaphor.core import transactional, gettext
 from gaphor.core.modeling import Comment
 from gaphor.diagram.general.metadata import MetadataItem
+from gaphor.diagram.general.coreimage import CoreImageItem
+
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -11,6 +16,10 @@ from gaphor.diagram.propertypages import (
     unsubscribe_all_on_destroy,
 )
 from gaphor.diagram.iconname import to_kebab_case
+
+from gaphor.ui.errorhandler import error_handler
+from gaphor.ui.filedialog import open_file_dialog
+from PIL import Image as PILImage
 
 
 @PropertyPages.register(Comment)
@@ -88,3 +97,73 @@ class MetadataPropertyPage(PropertyPageBase):
     def _on_field_change(self, entry, field_name):
         text = entry.get_text()
         setattr(self.item, field_name, text)
+
+
+FILTER_IMAGES = [
+    ("Images", "*.png, *.jpg, *.jpeg", "image/*"),
+]
+
+
+@PropertyPages.register(CoreImageItem)
+class CoreImagePropertyPage(PropertyPageBase):
+    """Edit image settings"""
+
+    def __init__(self, subject):
+        self.subject = subject
+        self.watcher = subject and subject.watcher()
+
+    def construct(self):
+        subject = self.subject
+
+        if not subject:
+            return
+
+        builder = new_builder(
+            "image-editor",
+            signals={
+                "select-image": (self._on_open_image_clicked,),
+                "set-default-size": (self._on_default_size_clicked),
+            },
+        )
+        return builder.get_object("image-editor")
+
+    @transactional
+    def _on_open_image_clicked(self, button):
+        open_file_dialog(
+            gettext("Select an image…"), self.open_files, filters=FILTER_IMAGES
+        )
+
+    @transactional
+    def open_files(self, filenames):
+        for filename in filenames:
+            with open(filename, "rb") as file:
+                try:
+                    image_data = file.read()
+                    image = PILImage.open(io.BytesIO(image_data))
+                    image.verify()
+                    image.close()
+
+                    base64_encoded_data = base64.b64encode(image_data)
+                    self.subject.subject.content = base64_encoded_data.decode("ascii")
+                    self.subject.subject.dimension = (
+                        f"{self.subject.width} {self.subject.height}"
+                    )
+                    return
+                except Exception:
+                    error_handler(
+                        message=gettext("Unable to parse image “{filename}”.").format(
+                            filename=filename
+                        )
+                    )
+
+    @transactional
+    def _on_default_size_clicked(self, button):
+        if self.subject and self.subject.subject and self.subject.subject.content:
+            base64_img_bytes = self.subject.subject.content.encode("ascii")
+            image_data = base64.decodebytes(base64_img_bytes)
+            image = PILImage.open(io.BytesIO(image_data))
+
+            self.subject.width = image.width
+            self.subject.height = image.height
+
+            self.subject.subject.dimension = f"{image.width} {image.height}"

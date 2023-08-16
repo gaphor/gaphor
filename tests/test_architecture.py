@@ -43,6 +43,7 @@ def test_diagram_package():
         .may_import("gaphor.diagram*")
         .may_import("gaphor.UML.recipes")
         .may_import("gaphor.UML.uml")
+        .may_import("gaphor.ui.*")
         .should_not_import("gaphor*")
         .check(gaphor)
     )

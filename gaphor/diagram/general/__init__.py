@@ -4,6 +4,7 @@ from gaphor.diagram.general.commentline import CommentLineItem
 from gaphor.diagram.general.diagramitem import DiagramItem
 from gaphor.diagram.general.simpleitem import Box, Ellipse, Line
 from gaphor.diagram.general.metadata import MetadataItem
+from gaphor.diagram.general.coreimage import CoreImageItem
 
 __all__ = [
     "CommentItem",
@@ -13,4 +14,5 @@ __all__ = [
     "Ellipse",
     "Line",
     "MetadataItem",
+    "CoreImageItem",
 ]

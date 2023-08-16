@@ -4459,6 +4459,41 @@
     </g>
   </g>
   <g
+  inkscape:groupmode="layer"
+  id="image"
+  inkscape:label="image"
+  style="display:inline">
+  <g
+  id="metadata"
+  style="display:inline"
+  transform="translate(-17.197521,-58.20769)">
+ <path
+    style="color:#000000;display:inline;fill:#000000;-inkscape-stroke:none"
+    d="m 18.264815,61.37719 c 0.614559,0.0079 1.493051,0.0016 2.107643,0.0016 l -0.003,-0.546842 -0.549139,-1.022026 -0.572463,0.77529 -0.459869,-0.290357 -0.53407,0.552564 z"
+    id="path4895-6"
+    sodipodi:nodetypes="cccccccc" />
+ <g
+    id="rect4893-7-36"
+    style="display:inline"
+    transform="translate(-52.652086,53.572926)">
+   <path
+      style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none"
+      d="m 70.114586,4.899991 h 3.704167 v 3.7041669 h -3.704167 z"
+      id="path3592-7" />
+   <path
+      style="color:#000000;fill:#000000;stroke-linecap:square;stroke-linejoin:round;-inkscape-stroke:none"
+      d="m 70.115234,4.6347656 a 0.26460996,0.26460996 0 0 0 -0.265625,0.265625 v 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,0.265625 h 3.703125 a 0.26460996,0.26460996 0 0 0 0.265625,-0.265625 v -3.703125 a 0.26460996,0.26460996 0 0 0 -0.265625,-0.265625 z m 0.263672,0.5292969 h 3.175781 v 3.1757813 h -3.175781 z"
+      id="path3594-5" />
+ </g>
+</g>
+<circle
+  style="fill:#000000;stroke-width:0.571206;stroke-miterlimit:0"
+  id="path5366"
+  cx="1.4552084"
+  cy="1.4552084"
+  r="0.39687499" />
+</g>
+  <g
      inkscape:groupmode="layer"
      id="import"
      inkscape:label="import"

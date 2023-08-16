@@ -4,6 +4,7 @@ from gaphor.core.modeling.coremodel import (
     PendingChange,
     RefChange,
     ValueChange,
+    CoreImage,
 )
 from gaphor.core.modeling.diagram import Diagram, DrawContext, UpdateContext
 from gaphor.core.modeling.element import Element, self_and_owners
