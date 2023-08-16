@@ -739,11 +739,7 @@ class ParameterSet(NamedElement):
     parameter: relation_many[Parameter]
 
 
-class Image(Element):
-    content: _attribute[str] = _attribute("content", str)
-    format: _attribute[str] = _attribute("format", str)
-
-
+from gaphor.core.modeling.coremodel import Image
 class ComponentRealization(Realization):
     abstraction: relation_one[Component]  # type: ignore[assignment]
     realizingClassifier: relation_one[Classifier]
