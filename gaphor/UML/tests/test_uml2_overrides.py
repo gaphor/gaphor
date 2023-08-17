@@ -13,3 +13,34 @@ def test_qualified_name():
     p2.package = p1
 
     assert p3.qualifiedName == ["package1", "package2", "package3"]
+
+
+def test_partly_connected_component_required_relation():
+    usage = UML.Usage()
+    component = UML.Component()
+
+    component.clientDependency = usage
+
+    assert not component.required
+
+
+def test_component_required_relation():
+    usage = UML.Usage()
+    component = UML.Component()
+    interface = UML.Interface()
+
+    component.clientDependency = usage
+    usage.supplier = interface
+
+    assert interface in component.required
+
+
+def test_component_provided_relation():
+    realization = UML.InterfaceRealization()
+    component = UML.Component()
+    interface = UML.Interface()
+
+    component.interfaceRealization = realization
+    realization.contract = interface
+
+    assert interface in component.provided
