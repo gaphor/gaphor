@@ -265,11 +265,11 @@
     </style>
   </object>
 
-  <object class="GtkBox" id="image-editor">
+  <object class="GtkBox" id="picture-editor">
     <property name="orientation">vertical</property>
     <child>
       <object class="GtkLabel">
-        <property name="label" translatable="yes">Image</property>
+        <property name="label" translatable="yes">Picture</property>
         <property name="halign">center</property>
         <property name="hexpand">yes</property>
         <property name="margin-bottom">20</property>
@@ -280,8 +280,8 @@
     </child>
     <child>
       <object class="GtkButton">
-        <property name="label" translatable="yes">Select an image…</property>
-        <signal name="clicked" handler="select-image" swapped="no"/>
+        <property name="label" translatable="yes">Select picture...</property>
+        <signal name="clicked" handler="select-picture" swapped="no"/>
       </object>
     </child>
     <child>

@@ -21,7 +21,7 @@ import time
 from gaphas.item import SE
 
 from gaphor.core import gettext
-from gaphor.core.modeling import Comment, Diagram, Element, Presentation, CoreImage
+from gaphor.core.modeling import Comment, Diagram, Element, Presentation, Picture
 from gaphor.diagram import general
 from gaphor.diagram.group import group
 
@@ -190,11 +190,11 @@ general_tools = ToolSection(
             new_item_factory(general.MetadataItem, config_func=metadata_config),
         ),
         ToolDef(
-            "toolbox-image",
-            gettext("Image"),
-            "gaphor-image-symbolic",
+            "toolbox-picture",
+            gettext("Picture"),
+            "gaphor-picture-symbolic",
             None,
-            new_item_factory(general.CoreImageItem, CoreImage),
+            new_item_factory(general.PictureItem, Picture),
         ),
     ),
 )

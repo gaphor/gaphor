@@ -54,9 +54,10 @@ class RefChange(PendingChange):
     property_ref: _attribute[str] = _attribute("property_ref", str)
 
 
-class CoreImage(Element):
+class Picture(Element):
     content: _attribute[str] = _attribute("content", str)
     dimension: _attribute[str] = _attribute("dimension", str)
+
 
 
 Element.comment = association("comment", Comment, opposite="annotatedElement")

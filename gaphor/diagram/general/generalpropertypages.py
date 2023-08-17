@@ -6,7 +6,7 @@ from gi.repository import Gtk
 from gaphor.core import transactional, gettext
 from gaphor.core.modeling import Comment
 from gaphor.diagram.general.metadata import MetadataItem
-from gaphor.diagram.general.coreimage import CoreImageItem
+from gaphor.diagram.general.picture import PictureItem
 
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
@@ -19,7 +19,7 @@ from gaphor.diagram.iconname import to_kebab_case
 
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.filedialog import open_file_dialog
-from PIL import Image as PILImage
+from PIL import Image
 
 
 @PropertyPages.register(Comment)
@@ -104,9 +104,9 @@ FILTER_IMAGES = [
 ]
 
 
-@PropertyPages.register(CoreImageItem)
-class CoreImagePropertyPage(PropertyPageBase):
-    """Edit image settings"""
+@PropertyPages.register(PictureItem)
+class PicturePropertyPage(PropertyPageBase):
+    """Edit picture settings"""
 
     def __init__(self, subject):
         self.subject = subject
@@ -119,18 +119,18 @@ class CoreImagePropertyPage(PropertyPageBase):
             return
 
         builder = new_builder(
-            "image-editor",
+            "picture-editor",
             signals={
-                "select-image": (self._on_open_image_clicked,),
+                "select-picture": (self._on_select_picture_clicked,),
                 "set-default-size": (self._on_default_size_clicked),
             },
         )
-        return builder.get_object("image-editor")
+        return builder.get_object("picture-editor")
 
     @transactional
-    def _on_open_image_clicked(self, button):
+    def _on_select_picture_clicked(self, button):
         open_file_dialog(
-            gettext("Select an image…"), self.open_files, filters=FILTER_IMAGES
+            gettext("Select a picture..."), self.open_files, filters=FILTER_IMAGES
         )
 
     @transactional
@@ -139,7 +139,7 @@ class CoreImagePropertyPage(PropertyPageBase):
             with open(filename, "rb") as file:
                 try:
                     image_data = file.read()
-                    image = PILImage.open(io.BytesIO(image_data))
+                    image = Image.open(io.BytesIO(image_data))
                     image.verify()
                     image.close()
 
@@ -151,7 +151,7 @@ class CoreImagePropertyPage(PropertyPageBase):
                     return
                 except Exception:
                     error_handler(
-                        message=gettext("Unable to parse image “{filename}”.").format(
+                        message=gettext("Unable to parse picture “{filename}”.").format(
                             filename=filename
                         )
                     )
@@ -161,7 +161,7 @@ class CoreImagePropertyPage(PropertyPageBase):
         if self.subject and self.subject.subject and self.subject.subject.content:
             base64_img_bytes = self.subject.subject.content.encode("ascii")
             image_data = base64.decodebytes(base64_img_bytes)
-            image = PILImage.open(io.BytesIO(image_data))
+            image = Image.open(io.BytesIO(image_data))
 
             self.subject.width = image.width
             self.subject.height = image.height

@@ -1,19 +1,19 @@
-"""CoreImageItem diagram item."""
+"""PictureItem diagram item."""
 
 import base64
 import cairo
 import io
-from PIL import Image as PILImage
+from PIL import Image
 
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, IconBox
 from gaphor.diagram.support import represents
 
-from gaphor.core.modeling import CoreImage
+from gaphor.core.modeling import Picture
 
 
-@represents(CoreImage)
-class CoreImageItem(ElementPresentation):
+@represents(Picture)
+class PictureItem(ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
@@ -22,8 +22,8 @@ class CoreImageItem(ElementPresentation):
 
         self.shape = IconBox(Box(draw=self.draw_image))
 
-        self.watch("subject[CoreImage].dimension")
-        self.watch("subject[CoreImage].content")
+        self.watch("subject[Picture].dimension")
+        self.watch("subject[Picture].content")
 
     def create_default_surface(self):
         width = int(self.width)
@@ -61,7 +61,7 @@ class CoreImageItem(ElementPresentation):
     def create_content_surface(self):
         base64_img_bytes = self.subject.content.encode("ascii")
         image_data = base64.decodebytes(base64_img_bytes)
-        image = PILImage.open(io.BytesIO(image_data))
+        image = Image.open(io.BytesIO(image_data))
         surface = self._from_pil(image)
 
         surface_width = surface.get_width()
@@ -91,7 +91,7 @@ class CoreImageItem(ElementPresentation):
 
     def _from_pil(
         self,
-        im: PILImage,
+        im: Image,
         alpha: float = 1.0,
         format: cairo.Format = cairo.FORMAT_ARGB32,
     ) -> cairo.ImageSurface:
