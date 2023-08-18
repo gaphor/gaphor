@@ -9,6 +9,7 @@ from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
 
 SYSTEM_STYLE_SHEET = textwrap.dedent(
     """\
+    /* --start-system-style-sheet-- */
     * {
      --opaque-background-color: white;
      background-color: transparent;
@@ -63,6 +64,7 @@ SYSTEM_STYLE_SHEET = textwrap.dedent(
     executionspecification {
      background-color: var(--opaque-background-color);
     }
+    /* --end-system-style-sheet-- */
     """
 )
 
