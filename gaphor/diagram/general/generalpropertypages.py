@@ -145,8 +145,10 @@ class PicturePropertyPage(PropertyPageBase):
 
                     base64_encoded_data = base64.b64encode(image_data)
                     self.subject.subject.content = base64_encoded_data.decode("ascii")
-                    self.subject.subject.width = int(self.subject.width)
-                    self.subject.subject.height = int(self.subject.height)
+                    self.subject.subject.width = image.width
+                    self.subject.subject.height = image.height
+                    self.subject.width = image.width
+                    self.subject.height = image.height
                     return
                 except Exception:
                     error_handler(
