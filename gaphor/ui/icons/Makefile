@@ -8,6 +8,7 @@ ICONS=diagram \
 	ellipse \
 	comment \
 	comment-line \
+	picture \
 	metadata \
 	class \
 	data-type \
