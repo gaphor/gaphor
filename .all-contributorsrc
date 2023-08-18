@@ -1226,6 +1226,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "matzipan",
+      "name": "Andrei",
+      "avatar_url": "https://avatars.githubusercontent.com/u/317239?v=4",
+      "profile": "http://andreizisu.webmonsters.ro",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
