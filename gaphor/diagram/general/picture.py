@@ -89,6 +89,11 @@ class PictureItem(ElementPresentation):
         cr.set_source_surface(surface, 0, 0)
         cr.paint()
         cr.restore()
+       
+        context_width = surface.get_width() * scale_xy
+        context_height = surface.get_height() * scale_xy
+        self.width = min(self.width, context_width)
+        self.height = min(self.height, context_height)
 
     def _from_pil(
         self,
