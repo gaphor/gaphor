@@ -411,3 +411,12 @@ comment[body^="TODO"] {
 :model: style-sheets
 :alt: highlighted todo note
 ```
+
+## System Style Sheet
+
+```{literalinclude} ../gaphor/core/modeling/stylesheet.py
+:language: css
+:dedent: 4
+:start-after: /* --start-system-style-sheet-- */
+:end-before: /* --end-system-style-sheet-- */
+```
