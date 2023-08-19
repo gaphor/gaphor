@@ -100,7 +100,7 @@ class MetadataPropertyPage(PropertyPageBase):
 
 
 FILTER_IMAGES = [
-    ("Images", "*.png, *.jpg, *.jpeg", "image/*"),
+    ("Images", "*.png *.jpg *.jpeg", "image/*"),
 ]
 
 

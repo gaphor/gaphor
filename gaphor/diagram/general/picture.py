@@ -89,7 +89,7 @@ class PictureItem(ElementPresentation):
         cr.set_source_surface(surface, 0, 0)
         cr.paint()
         cr.restore()
-       
+
         context_width = surface.get_width() * scale_xy
         context_height = surface.get_height() * scale_xy
         self.width = min(self.width, context_width)
@@ -101,10 +101,15 @@ class PictureItem(ElementPresentation):
         alpha: float = 1.0,
         format: cairo.Format = cairo.FORMAT_ARGB32,
     ) -> cairo.ImageSurface:
-        """
-        :param im: Pillow Image
-        :param alpha: 0..1 alpha to add to non-alpha images
-        :param format: Pixel format for output surface
+        """Create a new Cairo image surface from a Pillow Image
+
+        Args:
+            im (Image): Pillow Image
+            alpha (float): 0..1 alpha to add to non-alpha images
+            format (cairo.Format): Pixel format for output surface
+
+        Returns:
+            cairo.ImageSurface: The image surface representing the pillow image
         """
         assert format in (
             cairo.FORMAT_RGB24,
