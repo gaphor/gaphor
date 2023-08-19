@@ -249,7 +249,6 @@ class ModelBrowser(UIComponent, ActionProvider):
 
     @event_handler(ElementUpdated)
     def on_attribute_changed(self, event: ElementUpdated):
-        print("on_attribute_changed", event.element)
         self.model.sync(event.element)
         self.sorter.changed(Gtk.SorterChange.DIFFERENT)
 
