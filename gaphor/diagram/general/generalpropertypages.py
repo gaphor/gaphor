@@ -145,8 +145,6 @@ class PicturePropertyPage(PropertyPageBase):
 
                     base64_encoded_data = base64.b64encode(image_data)
                     self.subject.subject.content = base64_encoded_data.decode("ascii")
-                    self.subject.subject.width = image.width
-                    self.subject.subject.height = image.height
                     self.subject.width = image.width
                     self.subject.height = image.height
                     return
@@ -166,7 +164,3 @@ class PicturePropertyPage(PropertyPageBase):
 
             self.subject.width = image.width
             self.subject.height = image.height
-
-            # this is the way we are enforcing the element to be redrawn
-            self.subject.subject.width = image.width
-            self.subject.subject.height = image.height

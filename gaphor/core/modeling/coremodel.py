@@ -56,8 +56,6 @@ class RefChange(PendingChange):
 
 class Picture(Element):
     content: _attribute[str] = _attribute("content", str)
-    height: _attribute[int] = _attribute("height", int)
-    width: _attribute[int] = _attribute("width", int)
 
 
 

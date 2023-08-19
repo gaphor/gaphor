@@ -22,8 +22,6 @@ class PictureItem(ElementPresentation):
 
         self.shape = IconBox(Box(draw=self.draw_image))
 
-        self.watch("subject[Picture].width")
-        self.watch("subject[Picture].height")
         self.watch("subject[Picture].content")
 
     def create_default_surface(self):

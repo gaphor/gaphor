@@ -2307,8 +2307,6 @@
 <ownedAttribute>
 <reflist>
 <ref refid="f0dbcbb8-3c55-11ee-99bb-48a4721e5d5c"/>
-<ref refid="fbf8ccda-3c55-11ee-99bb-48a4721e5d5c"/>
-<ref refid="80a405d4-3d83-11ee-99bb-48a4721e5d5c"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -2322,7 +2320,7 @@
 </Class>
 <ClassItem id="ec990458-3c55-11ee-99bb-48a4721e5d5c">
 <matrix>
-<val>(1.0, 0.0, 0.0, 1.0, 171.79924257088157, 231.96893310546875)</val>
+<val>(1.0, 0.0, 0.0, 1.0, 172.35806610029329, 231.96893310546875)</val>
 </matrix>
 <top-left>
 <val>(0.0, 0.0)</val>
@@ -2351,17 +2349,6 @@
 <val>str</val>
 </typeValue>
 </Property>
-<Property id="fbf8ccda-3c55-11ee-99bb-48a4721e5d5c">
-<class_>
-<ref refid="e873d808-3c55-11ee-99bb-48a4721e5d5c"/>
-</class_>
-<name>
-<val>width</val>
-</name>
-<typeValue>
-<val>int</val>
-</typeValue>
-</Property>
 <GeneralizationItem id="04992128-3c56-11ee-99bb-48a4721e5d5c">
 <diagram>
 <ref refid="3867dda5-7a95-11ea-a112-7f953848cf85"/>
@@ -2379,7 +2366,7 @@
 <val>(1.0, 0.0, 0.0, 1.0, 778.9138946533204, 152.11792815252807)</val>
 </matrix>
 <points>
-<val>[(-549.5558285530271, 79.85100495294068), (-549.5558285530271, 43.882071847471934), (-200.31540321801037, 43.882071847471934), (-200.31540321801037, -30.893623953309316), (-200.31540321801037, -30.893623953309316)]</val>
+<val>[(-548.9970050236154, 79.85100495294068), (-548.9970050236154, 43.882071847471934), (-200.31540321801037, 43.882071847471934), (-200.31540321801037, -30.893623953309316), (-200.31540321801037, -30.893623953309316)]</val>
 </points>
 <head-connection>
 <ref refid="ec990458-3c55-11ee-99bb-48a4721e5d5c"/>
@@ -2401,15 +2388,4 @@
 <ref refid="e873d808-3c55-11ee-99bb-48a4721e5d5c"/>
 </specific>
 </Generalization>
-<Property id="80a405d4-3d83-11ee-99bb-48a4721e5d5c">
-<class_>
-<ref refid="e873d808-3c55-11ee-99bb-48a4721e5d5c"/>
-</class_>
-<name>
-<val>height</val>
-</name>
-<typeValue>
-<val>int</val>
-</typeValue>
-</Property>
 </gaphor>
