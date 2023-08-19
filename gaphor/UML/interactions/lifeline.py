@@ -202,7 +202,7 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
             top.pos.y, bottom.pos.y, delta=LifetimeItem.MIN_LENGTH
         )
 
-        for c in [c1, c2, c3, self._lifetime._c_min_length]:
+        for c in (c1, c2, c3, self._lifetime._c_min_length):
             self._connections.add_constraint(self, c)
 
     def save(self, save_func):

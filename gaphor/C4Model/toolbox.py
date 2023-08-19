@@ -8,6 +8,7 @@ from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
     DiagramTypes,
+    ElementCreateInfo,
     ToolboxDefinition,
     ToolDef,
     ToolSection,
@@ -20,6 +21,17 @@ from gaphor.UML.classes.classestoolbox import classes
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
 from gaphor.UML.toolboxconfig import default_namespace, namespace_config
+from gaphor.UML.uml import (
+    Package,
+    Activity,
+    Interaction,
+    StateMachine,
+    Class,
+    Component,
+    DataType,
+    Enumeration,
+    PrimitiveType,
+)
 
 
 def software_system_config(new_item):
@@ -141,4 +153,27 @@ c4model_diagram_types: DiagramTypes = (
     DiagramType("act", i18nize("New Activity Diagram"), (actions,)),
     DiagramType("sd", i18nize("New Sequence Diagram"), (interactions,)),
     DiagramType("stm", i18nize("New State Machine Diagram"), (states,)),
+)
+
+c4model_element_types = (
+    ElementCreateInfo("activity", i18nize("New Activity"), Activity, (Package,)),
+    ElementCreateInfo(
+        "interaction", i18nize("New Interaction"), Interaction, (Package,)
+    ),
+    ElementCreateInfo(
+        "statemachine", i18nize("New State Machine"), StateMachine, (Package,)
+    ),
+    ElementCreateInfo("class", i18nize("New Class"), Class, (Package,)),
+    ElementCreateInfo("component", i18nize("New Component"), Component, (Package,)),
+    ElementCreateInfo("datatype", i18nize("New Data Type"), DataType, (Package,)),
+    ElementCreateInfo(
+        "enumeration", i18nize("New Enumeration"), Enumeration, (Package,)
+    ),
+    ElementCreateInfo(
+        "primitive", i18nize("New Primitive Type"), PrimitiveType, (Package,)
+    ),
+    ElementCreateInfo("person", i18nize("New Person"), c4model.C4Person, (Package,)),
+    ElementCreateInfo(
+        "database", i18nize("New Database"), c4model.C4Database, (Package,)
+    ),
 )

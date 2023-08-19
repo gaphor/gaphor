@@ -46,5 +46,5 @@ def translate_model(fileobj):
 def translatable_nodes(tree):
     NS = {"g": "http://gaphor.sourceforge.net/model"}
 
-    for tag in ["name", "body", "typeValue"]:
+    for tag in ("name", "body", "typeValue"):
         yield from tree.findall(f".//g:{tag}/g:val", NS)

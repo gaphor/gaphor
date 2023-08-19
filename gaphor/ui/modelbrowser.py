@@ -34,6 +34,7 @@ from gaphor.ui.treemodel import (
     visible,
 )
 from gaphor.ui.treesearch import search, sorted_tree_walker
+from gaphor.diagram.diagramtoolbox import DiagramType
 
 START_EDIT_DELAY = 100  # ms
 
@@ -155,37 +156,47 @@ class ModelBrowser(UIComponent, ActionProvider):
             tree_item: TreeItem = row_item.get_item()
             GLib.timeout_add(START_EDIT_DELAY, tree_item.start_editing)
 
-    def _diagram_type_or(
-        self, id: str, default_diagram: type[Diagram]
-    ) -> type[Diagram]:
+    def _diagram_type_or(self, id: str, default_diagram: DiagramType) -> DiagramType:
         return next(
-            (
-                dt.diagram_type
-                for dt in self.modeling_language.diagram_types
-                if dt.id == id
-            ),
+            (dt for dt in self.modeling_language.diagram_types if dt.id == id),
             default_diagram,
         )
 
     @action(name="win.create-diagram")
-    def tree_view_create_diagram(self, diagram_type: str):
+    def tree_view_create_diagram(self, diagram_kind: str):
         element = self.get_selected_element()
         while element and not isinstance(element, UML.NamedElement):
             element = element.owner
 
         with Transaction(self.event_manager):
-            type = self._diagram_type_or(diagram_type, Diagram)
-            diagram = self.element_factory.create(type)
-
-            if isinstance(element, UML.NamedElement):
-                diagram.element = element
-            diagram.name = diagram_name_for_type(
-                diagram, self.modeling_language, diagram_type
+            diagram_type = self._diagram_type_or(
+                diagram_kind, DiagramType(diagram_kind, "ASD", ())
             )
-            diagram.diagramType = diagram_type
+            diagram = diagram_type.create(self.element_factory, element)
         self.select_element(diagram)
         self.event_manager.handle(DiagramOpened(diagram))
         self.tree_view_rename_selected()
+
+    def element_type(self, id: str):
+        return next(
+            el_type
+            for el_type in self.modeling_language.element_types
+            if el_type.id == id
+        )
+
+    @action(name="tree-view.create-element")
+    def tree_view_create_element(self, id: str):
+        owner = self.get_selected_element()
+        element_def = self.element_type(id)
+
+        with Transaction(self.event_manager):
+            element = self.element_factory.create(element_def.element_type)
+            element.name = element_def.name
+            if owner:
+                change_owner(owner, element)
+
+            self.select_element(element)
+            self.tree_view_rename_selected()
 
     @action(name="tree-view.create-package")
     def tree_view_create_package(self):
@@ -596,8 +607,16 @@ def popup_model(element, modeling_language):
 
     part = Gio.Menu.new()
     part.append_submenu(
-        gettext("New _Diagram"), create_diagram_types_model(modeling_language)
+        gettext("New _Diagram"), create_diagram_types_model(modeling_language, element)
     )
+    if any(
+        isinstance(element, element_type.allowed_owning_elements)
+        for element_type in modeling_language.element_types
+    ):
+        part.append_submenu(
+            gettext("New _Element"),
+            create_element_types_model(modeling_language, element),
+        )
     if isinstance(element, UML.Package):
         part.append(gettext("New _Package"), "tree-view.create-package")
     model.append_section(None, part)
@@ -628,14 +647,20 @@ def popup_model(element, modeling_language):
     return model
 
 
-def create_diagram_types_model(modeling_language):
+def create_diagram_types_model(modeling_language, element=None):
     model = Gio.Menu.new()
 
     part = Gio.Menu.new()
-    for id, name, _, _ in modeling_language.diagram_types:
-        menu_item = Gio.MenuItem.new(gettext(name), "win.create-diagram")
-        menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
-        part.append_item(menu_item)
+    for diagram_type in modeling_language.diagram_types:
+        if diagram_type.allowed(element):
+            menu_item = Gio.MenuItem.new(
+                gettext(diagram_type.name), "win.create-diagram"
+            )
+            menu_item.set_attribute_value(
+                "target", GLib.Variant.new_string(diagram_type.id)
+            )
+            part.append_item(menu_item)
+
     model.append_section(None, part)
 
     part = Gio.Menu.new()
@@ -647,8 +672,13 @@ def create_diagram_types_model(modeling_language):
     return model
 
 
-def diagram_name_for_type(diagram, modeling_language, diagram_type):
-    for id, name, _, _ in modeling_language.diagram_types:
-        if id == diagram_type:
-            return diagram.gettext(name)
-    return diagram.gettext("New diagram")
+def create_element_types_model(modeling_language, element):
+    model = Gio.Menu.new()
+
+    for id, name, _, allowed_owning_elements in modeling_language.element_types:
+        if isinstance(element, allowed_owning_elements):
+            menu_item = Gio.MenuItem.new(gettext(name), "tree-view.create-element")
+            menu_item.set_attribute_value("target", GLib.Variant.new_string(id))
+            model.append_item(menu_item)
+
+    return model

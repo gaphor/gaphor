@@ -121,9 +121,9 @@ class Toolbox(UIComponent):
         expanded_property = f"toolbox-{self.modeling_language.active_modeling_language}-{diagram_type}-expanded"
         expanded_sections = next(
             (
-                sections
-                for id, _, sections, _ in self.modeling_language.diagram_types
-                if id == diagram_type
+                diagram.sections
+                for diagram in self.modeling_language.diagram_types
+                if diagram.id == diagram_type
             ),
             (),
         )

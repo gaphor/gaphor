@@ -35,6 +35,18 @@ blocks = ToolSection(
             handle_index=SE,
         ),
         ToolDef(
+            "toolbox-interfaceblock",
+            gettext("InterfaceBlock"),
+            "gaphor-interface-block-symbolic",
+            None,
+            new_item_factory(
+                sysml_items.InterfaceBlockItem,
+                sysml.InterfaceBlock,
+                config_func=namespace_config,
+            ),
+            handle_index=SE,
+        ),
+        ToolDef(
             "toolbox-package",
             gettext("Package"),
             "gaphor-package-symbolic",

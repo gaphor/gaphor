@@ -234,6 +234,64 @@ What else is there to know…
 
 ## Examples
 
+Expanding on the information above the following snippetts show how to create requirements and interfaces.
+
+### Requirements from text fields
+```
+txts = ['req1', 'req2', 'bob the cat']
+my_diagram = element_factory.create(Diagram)
+my_diagram.name=' my diagram'
+reqPackage = element_factory.create(UML.Package)
+reqPackage.name = "Requirements"
+drop(reqPackage, my_diagram, x=0, y=0)
+
+for req_id,txt in enumerate(txts):
+    my_class = element_factory.create(SysML.sysml.Requirement)
+    my_class.name = f"{req_id}-{txt[:3]}"
+    my_class.text = f"{txt}"
+    my_class.externalId = f"{req_id}"
+
+    drop(my_class, my_diagram, x=0, y=0)
+
+with open(outfile, "w") as out:
+    storage.save(out, element_factory)
+
+```
+
+### Interfaces from dictionaries
+```
+
+# get interface definitions from file into this dictionary format
+interfaces = {'Interface1': ['signal1:type1', 'signal2:type1', 'signal3:type1'],
+              'Interface2': ['signal4:type2', 'signal5:type2', 'signal6:type2']}
+
+
+my_diagram = element_factory.create(Diagram)
+my_diagram.name=' my diagram'
+intPackage = element_factory.create(UML.Package)
+intPackage.name = "Interfaces"
+drop(intPackage, my_diagram, x=0, y=0)
+
+for interface,signals in interfaces.items():
+    my_class = element_factory.create(UML.uml.Interface)
+    my_class.name = f"{interface}"
+    for s in signals:
+        my_attr = element_factory.create(UML.Property)
+        name,vtype = s.split(':')
+        my_attr.name = name
+        my_attr.typeValue = vtype
+        my_class.ownedAttribute = my_attr
+
+    drop(my_class, my_diagram, x=0, y=0)
+
+
+with open(outfile, "w") as out:
+    storage.save(out, element_factory)
+
+```
+
+
+
 Here is another example:
 
 ```{toctree}

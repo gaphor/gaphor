@@ -8,6 +8,7 @@ from gaphor.UML.actions import (
 from gaphor.UML.actions.action import (
     AcceptEventActionItem,
     ActionItem,
+    ValueSpecificationActionItem,
     CallBehaviorActionItem,
     SendSignalActionItem,
 )
@@ -29,6 +30,7 @@ from gaphor.UML.actions.pin import InputPinItem, OutputPinItem
 __all__ = [
     "AcceptEventActionItem",
     "ActionItem",
+    "ValueSpecificationActionItem",
     "CallBehaviorActionItem",
     "ActivityItem",
     "ActivityParameterNodeItem",

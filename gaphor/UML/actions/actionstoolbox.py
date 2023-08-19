@@ -54,6 +54,11 @@ def partition_config(new_item):
     new_item.partition = partition
 
 
+def value_specification_action_config(new_item):
+    activity_config(new_item, i18nize("ValueSpecificationAction"))
+    new_item.subject.value = "1"
+
+
 actions = ToolSection(
     gettext("Actions"),
     (
@@ -92,6 +97,18 @@ actions = ToolSection(
                 config_func=partial(
                     activity_config, name=i18nize("CallBehaviorAction")
                 ),
+            ),
+            handle_index=SE,
+        ),
+        ToolDef(
+            "toolbox-value-specification-action",
+            gettext("Value specification action"),
+            "gaphor-value-specification-action-symbolic",
+            "<Alt>v",
+            new_item_factory(
+                diagramitems.ValueSpecificationActionItem,
+                UML.ValueSpecificationAction,
+                config_func=value_specification_action_config,
             ),
             handle_index=SE,
         ),

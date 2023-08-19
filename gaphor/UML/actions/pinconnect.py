@@ -2,8 +2,8 @@ from gaphas.connector import Handle, Port
 
 from gaphor import UML
 from gaphor.diagram.connectors import Connector
-from gaphor.UML.actions.action import ActionItem
-from gaphor.UML.actions.pin import InputPinItem, PinItem
+from gaphor.UML.actions.action import ActionItem, ValueSpecificationActionItem
+from gaphor.UML.actions.pin import InputPinItem, PinItem, OutputPinItem
 
 
 @Connector.register(ActionItem, PinItem)
@@ -46,3 +46,14 @@ class ActionPinConnector:
             del pin.subject
             pin.change_parent(None)
             subject.unlink()
+
+
+@Connector.register(ValueSpecificationActionItem, PinItem)
+class ValueSpecificationActionPinConnector(ActionPinConnector):
+    def allow(self, handle: Handle, port: Port) -> bool:
+        return (
+            super().allow(handle, port)
+            and not len(self.action.subject.outputValue)
+            and isinstance(self.pin, OutputPinItem)
+            and not self.pin.subject
+        )

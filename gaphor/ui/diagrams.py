@@ -206,6 +206,74 @@ class Diagrams(UIComponent, ActionProvider):
             view.zoom(1 / zx)
 
     @action(
+        name="move-left-small",
+        shortcut="<Alt>Left",
+    )
+    def move_left_small(self):
+        self.translate_selected_elements(-1, 0)
+
+    @action(
+        name="move-left-large",
+        shortcut="<Alt><Shift>Left",
+    )
+    def move_left_large(self):
+        self.translate_selected_elements(-10, 0)
+
+    @action(
+        name="move-right-small",
+        shortcut="<Alt>Right",
+    )
+    def move_right_small(self):
+        self.translate_selected_elements(1, 0)
+
+    @action(
+        name="move-right-large",
+        shortcut="<Alt><Shift>Right",
+    )
+    def move_right_large(self):
+        self.translate_selected_elements(10, 0)
+
+    @action(
+        name="move-up-small",
+        shortcut="<Alt>Up",
+    )
+    def move_up_small(self):
+        self.translate_selected_elements(0, -1)
+
+    @action(
+        name="move-up-large",
+        shortcut="<Alt><Shift>Up",
+    )
+    def move_up_large(self):
+        self.translate_selected_elements(0, -10)
+
+    @action(
+        name="move-down-small",
+        shortcut="<Alt>Down",
+    )
+    def move_down_small(self):
+        self.translate_selected_elements(0, 1)
+
+    @action(
+        name="move-down-large",
+        shortcut="<Alt><Shift>Down",
+    )
+    def move_down_large(self):
+        self.translate_selected_elements(0, 10)
+
+    def translate_selected_elements(self, dx: int, dy: int):
+        view = self.get_current_view()
+        diagram = self.get_current_diagram()
+        if not (view and diagram):
+            return
+
+        selection = view.selection.selected_items
+
+        with Transaction(self.event_manager):
+            for item in selection:
+                item.matrix.translate(dx, dy)
+
+    @action(
         name="select-all",
         shortcut="<Primary>a",
     )
@@ -299,7 +367,7 @@ class Diagrams(UIComponent, ActionProvider):
     def _update_action_state(self):
         enabled = self._notebook and self._notebook.get_n_pages() > 0
 
-        for action_name in ["win.zoom-in", "win.zoom-out", "win.zoom-100"]:
+        for action_name in ("win.zoom-in", "win.zoom-out", "win.zoom-100"):
             self.event_manager.handle(ActionEnabled(action_name, enabled))
 
     @event_handler(AttributeUpdated)

@@ -45,6 +45,7 @@ NAMED_EXCLUSIONS = [
     diagramitems.DiagramItem,
     diagramitems.ExecutionSpecificationItem,
     diagramitems.PartitionItem,
+    diagramitems.ValueSpecificationActionItem,
 ]
 
 

@@ -14,6 +14,9 @@ ICONS=diagram \
 	enumeration \
 	primitive-type \
 	block \
+	interface-block \
+	value-specification-action \
+	call-behavior-action \
 	value-type \
 	proxyport \
 	package \
@@ -84,7 +87,7 @@ ICONS=diagram \
 	item-flow \
 	requirement \
 	satisfy \
-	derive \
+	derive-reqt \
 	trace \
 	refine \
 	verify \

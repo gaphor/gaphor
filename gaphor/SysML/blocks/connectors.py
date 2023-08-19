@@ -6,17 +6,19 @@ from gaphor import UML
 from gaphor.diagram.connectors import Connector, RelationshipConnect
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem
+from gaphor.SysML.blocks.interfaceblock import InterfaceBlockItem
 from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
 from gaphor.UML.deployments import ConnectorItem
 
 
+@Connector.register(InterfaceBlockItem, ProxyPortItem)
 @Connector.register(BlockItem, ProxyPortItem)
 @Connector.register(PropertyItem, ProxyPortItem)
 class BlockProperyProxyPortConnector:
     def __init__(
         self,
-        block_or_property: Union[BlockItem, PropertyItem],
+        block_or_property: Union[BlockItem, PropertyItem, InterfaceBlockItem],
         proxy_port: ProxyPortItem,
     ) -> None:
         assert block_or_property.diagram is proxy_port.diagram

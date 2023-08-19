@@ -32,6 +32,19 @@
     <property name="orientation">vertical</property>
     <property name="baseline-position">top</property>
     <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel" id="type-label">
+            <property name="halign">center</property>
+            <property name="hexpand">yes</property>
+            <style>
+              <class name="title"/>
+            </style>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
       <object class="GtkLabel" id="label1">
         <property name="label" translatable="yes">Name</property>
         <property name="xalign">0</property>
@@ -114,7 +127,7 @@
     <property name="expanded">1</property>
     <child type="label">
       <object class="GtkLabel">
-        <property name="label" translatable="yes">Note or Remark</property>
+        <property name="label" translatable="yes">Note</property>
         <property name="xalign">0</property>
         <style>
           <class name="title"/>
@@ -143,6 +156,9 @@
       <class name="propertypage"/>
     </style>
   </object>
+
+
+
 
   <object class="GtkBox" id="metadata-editor">
     <property name="orientation">vertical</property>
@@ -250,4 +266,3 @@
   </object>
 
 </interface>
-

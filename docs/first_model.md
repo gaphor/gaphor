@@ -21,6 +21,7 @@ Pointer tool after the element is placed on the diagram.
 
 The Property Editor on the right side will show you details about the newly added
 class, such as its name (_New Class_), attributes and operations (methods).
+The Note field can contain any text you wish to associate with the element, (this will not show on a diagram).
 
 ![image](images/first-model-class.png)
 

@@ -71,6 +71,28 @@ class ObjectNodePropertyPage(PropertyPageBase):
         self.item.show_ordering = button.get_active()
 
 
+@PropertyPages.register(UML.ValueSpecificationAction)
+class ValueSpecificationActionPropertyPage(PropertyPageBase):
+    order = 15
+
+    def __init__(self, item):
+        self.subject = item
+
+    def construct(self):
+        builder = new_builder("value-specifiation-action-editor")
+
+        value = builder.get_object("value")
+        value.set_text(self.subject.value or "")
+        value.connect("changed", self._on_value_change)
+
+        return builder.get_object("value-specifiation-action-editor")
+
+    @transactional
+    def _on_value_change(self, entry):
+        value = entry.get_text()
+        self.subject.value = value
+
+
 @PropertyPages.register(UML.CallBehaviorAction)
 class CallBehaviorActionPropertyPage(PropertyPageBase):
     order = 15

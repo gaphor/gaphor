@@ -338,18 +338,21 @@ AbstractRequirement.tracedTo = derived("tracedTo", NamedElement, 0, "*",
 AbstractRequirement.verifiedBy = derived("verifiedBy", NamedElement, 0, "*",
     _directed_relationship_property_path_target_source(Verify))
 
-DirectedRelationshipPropertyPath.targetContext = association("targetContext", Classifier, upper=1)
-DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", Classifier, upper=1)
 DirectedRelationshipPropertyPath.sourcePropertyPath = association("sourcePropertyPath", Property)
 DirectedRelationshipPropertyPath.targetPropertyPath = association("targetPropertyPath", Property)
-Property.itemFlow = association("itemFlow", ItemFlow, upper=1, opposite="itemProperty")
+DirectedRelationshipPropertyPath.targetContext = association("targetContext", Classifier, upper=1, opposite="targetDirectedRelationshipPropertyPath_")
+DirectedRelationshipPropertyPath.sourceContext = association("sourceContext", Classifier, upper=1)
 from gaphor.UML.uml import Element
+Element.owner.add(DirectedRelationshipPropertyPath.targetContext)  # type: ignore[attr-defined]
+Property.itemFlow = association("itemFlow", ItemFlow, upper=1, opposite="itemProperty")
 Element.owner.add(Property.itemFlow)  # type: ignore[attr-defined]
 ConnectorProperty.connector = association("connector", Connector, upper=1, composite=True)
 ParticipantProperty.end_ = association("end_", Property, upper=1, composite=True)
 ValueType.unit = association("unit", InstanceSpecification, upper=1)
 ValueType.quantityKind = association("quantityKind", InstanceSpecification, upper=1)
 ElementPropertyPath.propertyPath = association("propertyPath", Property, lower=1)
+Classifier.targetDirectedRelationshipPropertyPath_ = association("targetDirectedRelationshipPropertyPath_", DirectedRelationshipPropertyPath, composite=True, opposite="targetContext")
+Element.ownedElement.add(Classifier.targetDirectedRelationshipPropertyPath_)  # type: ignore[attr-defined]
 BoundReference.boundend = association("boundend", ConnectorEnd, composite=True)
 BoundReference.bindingPath = derivedunion("bindingPath", Property, lower=1)
 AdjuntProperty.principal = association("principal", Element, upper=1)

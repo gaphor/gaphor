@@ -5,9 +5,13 @@ from typing import Iterable
 
 from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
-from gaphor.diagram.diagramtoolbox import DiagramType, ToolboxDefinition
+from gaphor.diagram.diagramtoolbox import (
+    DiagramType,
+    ToolboxDefinition,
+    ElementCreateInfo,
+)
 from gaphor.UML import diagramitems, uml
-from gaphor.UML.toolbox import uml_diagram_types, uml_toolbox_actions
+from gaphor.UML.toolbox import uml_diagram_types, uml_toolbox_actions, uml_element_types
 
 
 class UMLModelingLanguage(ModelingLanguage):
@@ -23,6 +27,10 @@ class UMLModelingLanguage(ModelingLanguage):
     def diagram_types(self) -> Iterable[DiagramType]:
         """Return an iterator (id, name) for each diagram type."""
         yield from uml_diagram_types
+
+    @property
+    def element_types(self) -> Iterable[ElementCreateInfo]:
+        yield from uml_element_types
 
     def lookup_element(self, name):
         return getattr(uml, name, None) or getattr(diagramitems, name, None)

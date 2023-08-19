@@ -17,6 +17,10 @@ class CoreModelingLanguage(ModelingLanguage):
     def diagram_types(self):
         raise ValueError("No diagram types for the core model")
 
+    @property
+    def element_types(self):
+        return ValueError("No element types for the core model")
+
     def lookup_element(self, name):
         return getattr(coremodel, name, None)
 
@@ -37,6 +41,10 @@ class MockModelingLanguage(ModelingLanguage):
 
     @property
     def diagram_types(self):
+        return ()
+
+    @property
+    def element_types(self):
         return ()
 
     def lookup_element(self, name):

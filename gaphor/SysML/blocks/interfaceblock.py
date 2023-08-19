@@ -14,15 +14,15 @@ from gaphor.diagram.shapes import (
 )
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
-from gaphor.SysML.sysml import Block, ValueType
+from gaphor.SysML.sysml import InterfaceBlock, ValueType
 from gaphor.UML.classes.klass import attributes_compartment, operation_watches
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_operation, format_property
 
 
-@represents(Block)
-class BlockItem(Classified, ElementPresentation[Block]):
+@represents(InterfaceBlock)
+class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
 
@@ -65,8 +65,8 @@ class BlockItem(Classified, ElementPresentation[Block]):
             return [self.diagram.gettext("Situation")]
         elif isinstance(self.subject, raaml.ControlStructure):
             return [self.diagram.gettext("ControlStructure")]
-        elif isinstance(self.subject, Block):
-            return [self.diagram.gettext("block")]
+        elif isinstance(self.subject, InterfaceBlock):
+            return [self.diagram.gettext("interfaceblock")]
         else:
             return ()
 
@@ -98,23 +98,12 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 },
             ),
             *(
-                self.show_parts
-                and self.subject
-                and [
-                    self.block_compartment(
-                        self.diagram.gettext("parts"),
-                        lambda a: a.aggregation and a.aggregation == "composite",
-                    )
-                ]
-                or []
-            ),
-            *(
                 self.show_references
                 and self.subject
                 and [
                     self.block_compartment(
                         self.diagram.gettext("references"),
-                        lambda a: a.aggregation and a.aggregation == "shared",
+                        lambda a: not a.association and a.aggregation != "composite",
                     )
                 ]
                 or []

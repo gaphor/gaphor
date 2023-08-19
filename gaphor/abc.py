@@ -1,49 +1,58 @@
 from __future__ import annotations
 
-from abc import ABCMeta, abstractmethod
+import abc
 from typing import TYPE_CHECKING, Iterable
 
 if TYPE_CHECKING:
     from gaphor.core.modeling import Element
-    from gaphor.diagram.diagramtoolbox import DiagramType, ToolboxDefinition
+    from gaphor.diagram.diagramtoolbox import (
+        DiagramType,
+        ToolboxDefinition,
+        ElementCreateInfo,
+    )
 
 
-class Service(metaclass=ABCMeta):
+class Service(metaclass=abc.ABCMeta):
     """Base interface for all services in Gaphor."""
 
-    @abstractmethod
+    @abc.abstractmethod
     def shutdown(self) -> None:
         """Shutdown the services, free resources."""
 
 
-class ActionProvider(metaclass=ABCMeta):
+class ActionProvider(metaclass=abc.ABCMeta):
     """An action provider is a special service that provides actions via
     ``@action`` decorators on its methods (see gaphor/action.py)."""
 
-    @abstractmethod
+    @abc.abstractmethod
     def __init__(self):
         pass
 
 
-class ModelingLanguage(metaclass=ABCMeta):
+class ModelingLanguage(metaclass=abc.ABCMeta):
     """A model provider is a special service that provides an entrypoint to a
     model implementation, such as UML, SysML, RAAML."""
 
     @property
-    @abstractmethod
+    @abc.abstractmethod
     def name(self) -> str:
         """Human-readable name of the modeling language."""
 
     @property
-    @abstractmethod
+    @abc.abstractmethod
     def toolbox_definition(self) -> ToolboxDefinition:
         """Get structure for the toolbox."""
 
     @property
-    @abstractmethod
+    @abc.abstractmethod
     def diagram_types(self) -> Iterable[DiagramType]:
         """Iterate diagram types."""
 
-    @abstractmethod
+    @property
+    @abc.abstractmethod
+    def element_types(self) -> Iterable[ElementCreateInfo]:
+        """Iterate element types."""
+
+    @abc.abstractmethod
     def lookup_element(self, name: str) -> type[Element] | None:
         """Look up a model element type by (class) name."""

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "2.19.3"
+version = "2.20.0"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
@@ -45,7 +45,7 @@ gaphas = ">3.9.0,<5.0"
 generic = "^1.0.0"
 tinycss2 = "^1.0.2"
 babel = "^2.10.3"
-jedi = "^0.18.1"
+jedi = ">=0.18.1,<0.20.0"
 better-exceptions = "^0.3.3"
 pydot = "^1.4.2"
 pygit2 = { version = "^1.11.1", python = "< 3.12" }
@@ -71,7 +71,7 @@ babelgladeextractor = "^0.7"
 pre-commit = ">=2.20,<4.0"
 
 [tool.poetry.group.automation.dependencies]
-poethepoet = ">=0.17.1,<0.22.0"
+poethepoet = ">=0.17.1,<0.23.0"
 
 [tool.poetry.group.packaging]
 optional=true
