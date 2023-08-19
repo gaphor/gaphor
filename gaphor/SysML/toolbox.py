@@ -18,6 +18,14 @@ from gaphor.SysML.sysml import (
     Requirement,
     ValueType,
     ProxyPort,
+    SysMLActivityDiagram,
+    SysMLInteractionDiagram,
+    SysMLInternalBlockDiagram,
+    SysMLBlockDefinitionDiagram,
+    SysMLRequirementDiagram,
+    SysMLStateMachineDiagram,
+    SysMLPackageDiagram,
+    SysMLUseCaseDiagram,
 )
 from gaphor.SysML.blocks.blockstoolbox import blocks
 from gaphor.SysML.requirements.requirementstoolbox import requirements
@@ -84,6 +92,7 @@ root = type(None)
 sysml_diagram_types: DiagramTypes = (
     SysMLDiagramType(
         "bdd",
+        SysMLBlockDefinitionDiagram,
         i18nize("New Block Definition Diagram"),
         (blocks,),
         (Block, Package, ConstraintBlock, Activity),
@@ -91,6 +100,7 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "ibd",
+        SysMLInternalBlockDiagram,
         i18nize("New Internal Block Diagram"),
         (internal_blocks,),
         (
@@ -104,6 +114,7 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "pkg",
+        SysMLPackageDiagram,
         i18nize("New Package Diagram"),
         (blocks,),
         (Package,),  # model, modelLibrary, profile
@@ -111,6 +122,7 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "req",
+        SysMLRequirementDiagram,
         i18nize("New Requirement Diagram"),
         (requirements,),
         (
@@ -123,6 +135,7 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "act",
+        SysMLActivityDiagram,
         i18nize("New Activity Diagram"),
         (actions,),
         (Activity,),
@@ -133,6 +146,7 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "sd",
+        SysMLInteractionDiagram,
         i18nize("New Sequence Diagram"),
         (interactions,),
         (Interaction,),
@@ -143,6 +157,7 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "stm",
+        SysMLStateMachineDiagram,
         i18nize("New State Machine Diagram"),
         (states,),
         (StateMachine,),
@@ -153,6 +168,7 @@ sysml_diagram_types: DiagramTypes = (
     ),
     SysMLDiagramType(
         "uc",
+        SysMLUseCaseDiagram,
         i18nize("New Use Case Diagram"),
         (use_cases,),
         (

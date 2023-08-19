@@ -11,8 +11,12 @@ class DiagramDefault:
 
 
 class SysMLDiagramType(DiagramType):
-    def __init__(self, id, name, sections, allowed_types=(), defaults=()):
+    def __init__(self, id, create_type, name, sections, allowed_types=(), defaults=()):
         super().__init__(id, name, sections)
+
+        assert issubclass(create_type, SysMLDiagram)
+
+        self.create_type = create_type
         self._allowed_types = allowed_types
         assert all(d.to_type in allowed_types for d in defaults)
         self._defaults = defaults
@@ -33,7 +37,7 @@ class SysMLDiagramType(DiagramType):
                 change_owner(element, new_element)
             element = new_element
 
-        diagram = element_factory.create(SysMLDiagram)
+        diagram = element_factory.create(self.create_type)
         diagram.name = diagram.gettext(self.name)
         diagram.diagramType = self.id
         if element:
