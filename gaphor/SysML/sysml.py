@@ -299,6 +299,54 @@ class SysMLDiagram(Diagram):
     pass
 
 
+class SysMLBehaviorDiagram(SysMLDiagram):
+    pass
+
+
+class SysMLActivityDiagram(SysMLBehaviorDiagram):
+    pass
+
+
+class SysMLInteractionDiagram(SysMLBehaviorDiagram):
+    pass
+
+
+class SysMLStateMachineDiagram(SysMLBehaviorDiagram):
+    pass
+
+
+class SysMLDiagramWithAssociations(SysMLDiagram):
+    pass
+
+
+class SysMLUseCaseDiagram(SysMLBehaviorDiagram, SysMLDiagramWithAssociations):
+    pass
+
+
+class SysMLStructureDiagram(SysMLDiagramWithAssociations):
+    pass
+
+
+class SysMLRequirementDiagram(SysMLStructureDiagram):
+    pass
+
+
+class SysMLBlockDefinitionDiagram(SysMLStructureDiagram):
+    pass
+
+
+class SysMLPackageDiagram(SysMLStructureDiagram):
+    pass
+
+
+class SysMLInternalBlockDiagram(SysMLStructureDiagram):
+    pass
+
+
+class SysMLParametricDiagram(SysMLInternalBlockDiagram):
+    isConstraintPropertyRounded: _attribute[int] = _attribute("isConstraintPropertyRounded", int, default=False)
+
+
 
 # 23: override AbstractRequirement.derived: derived[AbstractRequirement]
 
