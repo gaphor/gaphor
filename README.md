@@ -283,6 +283,7 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/oscfdezdz"><img src="https://avatars.githubusercontent.com/u/42654671?v=4?s=100" width="100px;" alt="Óscar Fernández Díaz"/><br /><sub><b>Óscar Fernández Díaz</b></sub></a><br /><a href="#translation-oscfdezdz" title="Translation">🌍</a> <a href="https://github.com/gaphor/gaphor/commits?author=oscfdezdz" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/zlv"><img src="https://avatars.githubusercontent.com/u/602210?v=4?s=100" width="100px;" alt="Евгений Лежнин"/><br /><sub><b>Евгений Лежнин</b></sub></a><br /><a href="#translation-zlv" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/BrainKicker"><img src="https://avatars.githubusercontent.com/u/30545094?v=4?s=100" width="100px;" alt="Пётр Сабанов"/><br /><sub><b>Пётр Сабанов</b></sub></a><br /><a href="#translation-BrainKicker" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/pinxue"><img src="https://avatars.githubusercontent.com/u/958237?v=4?s=100" width="100px;" alt="品雪"/><br /><sub><b>品雪</b></sub></a><br /><a href="https://github.com/gaphor/gaphor/issues?q=author%3Apinxue" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
