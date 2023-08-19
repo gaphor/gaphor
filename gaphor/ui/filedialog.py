@@ -13,7 +13,7 @@ from gaphor.i18n import gettext
 GAPHOR_FILTER = [(gettext("All Gaphor Models"), "*.gaphor", "application/x-gaphor")]
 
 
-def new_filter(name, pattern, mime_type=None):
+def new_filter(name: str, pattern: str, mime_type: str | None = None) -> Gtk.FileFilter:
     f = Gtk.FileFilter.new()
     f.set_name(name)
     f.add_pattern(pattern)
@@ -22,24 +22,43 @@ def new_filter(name, pattern, mime_type=None):
     return f
 
 
-def _file_dialog_with_filters(title, parent, action, filters) -> Gtk.FileChooserNative:
+def new_image_filter() -> Gtk.FileFilter:
+    f = Gtk.FileFilter.new()
+    f.set_name(gettext("Images"))
+    f.add_pixbuf_formats()
+    return f
+
+
+def _file_dialog_with_filters(
+    title, parent, action, filters, pixbuf_formats: bool
+) -> Gtk.FileChooserNative:
     dialog = Gtk.FileChooserNative.new(title, parent, action, None, None)
 
     if parent:
         dialog.set_transient_for(parent)
 
     if sys.platform != "darwin":
-        for name, pattern, mime_type in filters:
-            dialog.add_filter(new_filter(name, pattern, mime_type))
+        if pixbuf_formats:
+            dialog.add_filter(new_image_filter())
+        else:
+            for name, patterns, mime_type in filters:
+                dialog.add_filter(new_filter(name, patterns, mime_type))
         dialog.add_filter(new_filter(gettext("All Files"), "*"))
     return dialog
 
 
-def open_file_dialog(title, handler, parent=None, dirname=None, filters=None) -> None:
+def open_file_dialog(
+    title,
+    handler,
+    parent=None,
+    dirname=None,
+    filters=None,
+    pixbuf_formats: bool = False,
+) -> None:
     if filters is None:
         filters = []
     dialog = _file_dialog_with_filters(
-        title, parent, Gtk.FileChooserAction.OPEN, filters
+        title, parent, Gtk.FileChooserAction.OPEN, filters, pixbuf_formats
     )
     dialog.set_select_multiple(True)
 
@@ -70,7 +89,7 @@ def save_file_dialog(
     if filters is None:
         filters = []
     dialog = _file_dialog_with_filters(
-        title, parent, Gtk.FileChooserAction.SAVE, filters
+        title, parent, Gtk.FileChooserAction.SAVE, filters, False
     )
 
     def get_filename() -> Path:

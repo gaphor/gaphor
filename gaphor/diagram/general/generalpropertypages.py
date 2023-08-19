@@ -99,11 +99,6 @@ class MetadataPropertyPage(PropertyPageBase):
         setattr(self.item, field_name, text)
 
 
-FILTER_IMAGES = [
-    ("Images", "*.png *.jpg *.jpeg", "image/*"),
-]
-
-
 @PropertyPages.register(PictureItem)
 class PicturePropertyPage(PropertyPageBase):
     """Edit picture settings"""
@@ -130,7 +125,7 @@ class PicturePropertyPage(PropertyPageBase):
     @transactional
     def _on_select_picture_clicked(self, button):
         open_file_dialog(
-            gettext("Select a picture..."), self.open_files, filters=FILTER_IMAGES
+            gettext("Select a picture..."), self.open_files, pixbuf_formats=True
         )
 
     @transactional
