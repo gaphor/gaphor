@@ -2,6 +2,7 @@
 ------
 - Fix missing derive relationship icon in the model browser
 - Fix block not showing parts
+- Represent activity, interaction and state machine as blocks on SysML block definition diagram
 
 2.20.0
 ------

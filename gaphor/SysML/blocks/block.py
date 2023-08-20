@@ -14,11 +14,12 @@ from gaphor.diagram.shapes import (
 )
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontStyle, FontWeight
-from gaphor.SysML.sysml import Block, ValueType
+from gaphor.SysML.sysml import Block, ValueType, SysMLBlockDefinitionDiagram
 from gaphor.UML.classes.klass import attributes_compartment, operation_watches
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_operation, format_property
+from gaphor.UML.uml import Activity, StateMachine, Interaction
 
 
 @represents(Block)
@@ -207,3 +208,58 @@ class BlockItem(Classified, ElementPresentation[Block]):
             },
             draw=draw_top_separator,
         )
+
+
+class BehaviorAsBlockItem(Classified, ElementPresentation[Block]):
+    def __init__(self, diagram, id=None):
+        super().__init__(diagram, id)
+
+        self.watch("subject[NamedElement].name", self.update_shapes).watch(
+            "subject[NamedElement].namespace.name", self.update_shapes
+        ).watch("subject[Classifier].isAbstract", self.update_shapes)
+        stereotype_watches(self)
+
+    def stereotype(self) -> str:
+        return "behavior"
+
+    def update_shapes(self, event=None):
+        self.shape = Box(
+            Text(text=lambda: f"«{self.diagram.gettext(self.stereotype())}»"),
+            Text(
+                text=lambda: self.subject.name or "",
+                width=lambda: self.width - 4,
+                style={
+                    "font-weight": FontWeight.BOLD,
+                    "font-style": FontStyle.ITALIC
+                    if self.subject and self.subject.isAbstract
+                    else FontStyle.NORMAL,
+                },
+            ),
+            Text(
+                text=lambda: from_package_str(self),
+                style={"font-size": "x-small"},
+            ),
+            style={
+                "padding": (12, 4, 12, 4),
+                "justify-content": JustifyContent.START,
+            },
+            draw=draw_border,
+        )
+
+
+@represents(Activity, SysMLBlockDefinitionDiagram)
+class ActivityAsBlockItem(BehaviorAsBlockItem):
+    def stereotype(self) -> str:
+        return "activity"
+
+
+@represents(Interaction, SysMLBlockDefinitionDiagram)
+class InteractionAsBlockItem(BehaviorAsBlockItem):
+    def stereotype(self) -> str:
+        return "interaction"
+
+
+@represents(StateMachine, SysMLBlockDefinitionDiagram)
+class StateMachineAsBlockItem(BehaviorAsBlockItem):
+    def stereotype(self) -> str:
+        return "state machine"
