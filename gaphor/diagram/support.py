@@ -42,7 +42,7 @@ def closest_instance(item, options, project=lambda x: x):
         for opt in options
     ]
 
-    _, opt = min([(count, opt) for opt, count in occurrences if count])
+    _, opt = min((count, opt) for opt, count in occurrences if count)
 
     return opt
 
