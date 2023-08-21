@@ -5,10 +5,12 @@ gaphor.adapter package.
 """
 
 from __future__ import annotations
+from gi.repository import Gio
 
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
+    LabelValue,
     PropertyPageBase,
     PropertyPages,
     handler_blocking,
@@ -80,48 +82,93 @@ class StatePropertyPage(PropertyPageBase):
         if not subject:
             return
 
-        builder = new_builder(
-            "state-editor",
-            signals={
-                "entry-changed": (self.on_text_change, self.set_entry),
-                "exit-changed": (self.on_text_change, self.set_exit),
-                "do-activity-changed": (self.on_text_change, self.set_do_activity),
-            },
+        builder = new_builder("state-editor")
+        options = self._behavior_options()
+
+        entry_dropdown = builder.get_object("entry")
+        entry_dropdown.set_model(options)
+
+        if self.subject.entry:
+            entry_dropdown.set_selected(
+                next(
+                    n
+                    for n, lv in enumerate(options)
+                    if lv.value == self.subject.entry.id
+                )
+            )
+
+        entry_dropdown.connect("notify::selected", self._on_entry_behavior_changed)
+
+        exit_dropdown = builder.get_object("exit")
+        exit_dropdown.set_model(options)
+
+        if self.subject.exit:
+            exit_dropdown.set_selected(
+                next(
+                    n
+                    for n, lv in enumerate(options)
+                    if lv.value == self.subject.exit.id
+                )
+            )
+
+        exit_dropdown.connect("notify::selected", self._on_exit_behavior_changed)
+
+        do_activity_dropdown = builder.get_object("do-activity")
+        do_activity_dropdown.set_model(options)
+
+        if self.subject.doActivity:
+            do_activity_dropdown.set_selected(
+                next(
+                    n
+                    for n, lv in enumerate(options)
+                    if lv.value == self.subject.doActivity.id
+                )
+            )
+
+        do_activity_dropdown.connect(
+            "notify::selected", self._on_do_activity_behavior_changed
         )
-
-        entry = builder.get_object("entry")
-        if subject.entry:
-            entry.set_text(subject.entry.name or "")
-
-        exit = builder.get_object("exit")
-        if subject.exit:
-            exit.set_text(subject.exit.name or "")
-
-        do_activity = builder.get_object("do-activity")
-        if subject.doActivity:
-            do_activity.set_text(self.subject.doActivity.name or "")
 
         return builder.get_object("state-editor")
 
+    def _behavior_options(self):
+        options = Gio.ListStore.new(LabelValue)
+        options.append(LabelValue("", None))
+
+        for c in sorted(
+            (c for c in self.subject.model.select(UML.Behavior) if c.name),
+            key=lambda c: c.name or "",
+        ):
+            options.append(LabelValue(c.name, c.id))
+
+        return options
+
     @transactional
-    def on_text_change(self, entry, method):
-        value = entry.get_text().strip()
-        method(value)
+    def _on_entry_behavior_changed(self, dropdown, _pspec):
+        if id := dropdown.get_selected_item().value:
+            element = self.subject.model.lookup(id)
+            assert isinstance(element, UML.Behavior)
+            self.subject.entry = element
+        else:
+            del self.subject.entry
 
-    def set_entry(self, text):
-        if not self.subject.entry:
-            self.subject.entry = self.subject.model.create(UML.Activity)
-        self.subject.entry.name = text
+    @transactional
+    def _on_exit_behavior_changed(self, dropdown, _pspec):
+        if id := dropdown.get_selected_item().value:
+            element = self.subject.model.lookup(id)
+            assert isinstance(element, UML.Behavior)
+            self.subject.exit = element
+        else:
+            del self.subject.exit
 
-    def set_exit(self, text):
-        if not self.subject.exit:
-            self.subject.exit = self.subject.model.create(UML.Activity)
-        self.subject.exit.name = text
-
-    def set_do_activity(self, text):
-        if not self.subject.doActivity:
-            self.subject.doActivity = self.subject.model.create(UML.Activity)
-        self.subject.doActivity.name = text
+    @transactional
+    def _on_do_activity_behavior_changed(self, dropdown, _pspec):
+        if id := dropdown.get_selected_item().value:
+            element = self.subject.model.lookup(id)
+            assert isinstance(element, UML.Behavior)
+            self.subject.doActivity = element
+        else:
+            del self.subject.doActivity
 
 
 @PropertyPages.register(StateItem)
