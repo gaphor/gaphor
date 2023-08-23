@@ -125,7 +125,10 @@ class PicturePropertyPage(PropertyPageBase):
     @transactional
     def _on_select_picture_clicked(self, button):
         open_file_dialog(
-            gettext("Select a picture..."), self.open_files, pixbuf_formats=True
+            gettext("Select a picture..."),
+            self.open_files,
+            pixbuf_formats=True,
+            parent=button.get_root(),
         )
 
     @transactional
