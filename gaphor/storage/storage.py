@@ -199,6 +199,8 @@ def _load_elements_and_canvasitems(
             elem = upgrade_decision_node_item_show_type(elem)
         if version_lower_than(gaphor_version, (2, 20, 0)):
             elem = upgrade_note_on_model_element_only(elem, elements)
+        if version_lower_than(gaphor_version, (2, 21, 0)):
+            elem = upgrade_diagram_representation(elem, elements)
         if not (cls := modeling_language.lookup_element(elem.type)):
             raise UnknownModelElementError(
                 f"Type {elem.type} cannot be loaded: no such element"
@@ -460,4 +462,40 @@ def upgrade_note_on_model_element_only(
             else:
                 subject.values["note"] = elem.values["note"]
             del elem.values["note"]
+    return elem
+
+
+# since 2.20.1
+def upgrade_diagram_representation(
+    elem: element, elements: dict[str, element]
+) -> element:
+    refectorings_when_sysml_bdd: dict[str, str] = {
+        "ActivityItem": "ActivityAsBlockItem",
+        "InteractionItem": "InteractionAsBlockItem",
+        "StateMachineItem": "StateMachineAsBlockItem",
+    }
+
+    if new_type := refectorings_when_sysml_bdd.get(elem.type, None):
+        diagram = elements.get(elem.references.get("diagram", None))  # type: ignore[arg-type]
+        if (
+            diagram
+            and diagram.type.startswith("SysML")
+            and diagram.values["diagramType"] == "bdd"
+        ):
+            elem.type = new_type
+    elif elem.type == "SysMLDiagram":
+        diagram_refactorings: dict[str, str] = {
+            "bdd": "SysMLBlockDefinitionDiagram",
+            "ibd": "SysMLInternalBlockDiagram",
+            "pkg": "SysMLPackageDiagram",
+            "req": "SysMLRequirementDiagram",
+            "act": "SysMLActivityDiagram",
+            "sd": "SysMLInteractionDiagram",
+            "stm": "SysMLStateMachineDiagram",
+            "uc": "SysMLUseCaseDiagram",
+        }
+
+        if new_type := diagram_refactorings.get(elem.values["diagramType"], None):
+            elem.type = new_type
+
     return elem
