@@ -70,13 +70,14 @@ class AlignService(Service, ActionProvider):
     # -------------------------------------------------------------------------
 
     def _modify_elements(self, f):
-        if self.event:
+        if self.event and len(self.event.selected_items) >= 2:
             if current_diagram := self.diagrams.get_current_diagram():
                 elements = {
                     item
                     for item in self.event.selected_items
                     if isinstance(item, ElementPresentation)
                 }
+
                 with Transaction(self.event_manager):
                     f(elements)
                     current_diagram.update_now(current_diagram.get_all_items())
