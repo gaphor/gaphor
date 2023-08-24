@@ -30,6 +30,7 @@ from gaphor.UML.uml import (
     Node,
     Package,
     Profile,
+    Stereotype,
     StateMachine,
     UseCase,
 )
@@ -84,6 +85,6 @@ uml_element_types = (
     ElementCreateInfo(
         "statemachine", i18nize("New State Machine"), StateMachine, (Package,)
     ),
-    ElementCreateInfo("stereotype", i18nize("New Stereotype"), Profile, (Package,)),
+    ElementCreateInfo("stereotype", i18nize("New Stereotype"), Stereotype, (Package,)),
     ElementCreateInfo("usecase", i18nize("New Use Case"), UseCase, (Package,)),
 )
