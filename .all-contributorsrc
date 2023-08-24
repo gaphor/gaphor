@@ -1226,6 +1226,24 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "matzipan",
+      "name": "Andrei",
+      "avatar_url": "https://avatars.githubusercontent.com/u/317239?v=4",
+      "profile": "http://andreizisu.webmonsters.ro",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "pinxue",
+      "name": "品雪",
+      "avatar_url": "https://avatars.githubusercontent.com/u/958237?v=4",
+      "profile": "https://github.com/pinxue",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,

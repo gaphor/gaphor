@@ -78,17 +78,19 @@ def property_navigability(self: uml.Property) -> list[bool | None]:
 uml.Property.navigability = derived("navigability", bool, 0, 1, property_navigability)
 
 
-def _pr_interface_deps(classifier, dep_type):
+def _pr_interface_deps(classifier: uml.NamedElement, dep_type):
     """Return all interfaces, which are connected to a classifier with given
     dependency type."""
     return (
-        dep.supplier[0]
+        dep.supplier
         for dep in classifier.clientDependency
-        if dep.isKindOf(dep_type) and dep.supplier[0].isKindOf(uml.Interface)
+        if dep.isKindOf(dep_type)
+        and dep.supplier
+        and dep.supplier.isKindOf(uml.Interface)
     )
 
 
-def _pr_rc_interface_deps(component, dep_type):
+def _pr_rc_interface_deps(component: uml.Component, dep_type):
     """Return all interfaces, which are connected to realizing classifiers of
     specified component. Returned interfaces are connected to realizing
     classifiers with given dependency type.
@@ -101,10 +103,10 @@ def _pr_rc_interface_deps(component, dep_type):
     )
 
 
-def component_provided(self) -> list[uml.Realization]:
+def component_provided(self: uml.Component) -> list[uml.Realization]:
     """Interfaces provided to component environment."""
     implementations = (
-        impl.contract[0]
+        impl.contract
         for impl in self.interfaceRealization
         if impl.isKindOf(uml.InterfaceRealization)
     )
