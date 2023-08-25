@@ -11,12 +11,11 @@ from gaphor.transaction import Transaction
 
 
 class AlignService(Service, ActionProvider):
-    def __init__(self, event_manager, diagrams, tools_menu=None, dump_gv=False):
+    def __init__(self, event_manager, diagrams, tools_menu=None):
         self.event_manager = event_manager
         self.diagrams = diagrams
         if tools_menu:
             tools_menu.add_actions(self)
-        self.dump_gv = dump_gv
 
         self.event_manager.subscribe(self._selection_changed)
 
