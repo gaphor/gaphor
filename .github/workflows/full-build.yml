@@ -29,7 +29,7 @@ jobs:
             github.com:443
             pypi.org:443
             objects.githubusercontent.com
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
@@ -65,7 +65,7 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install Linux Dependencies
@@ -126,7 +126,7 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Use Python Dependency Cache
@@ -160,7 +160,7 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
@@ -312,7 +312,7 @@ jobs:
           Write-Output "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $env:GITHUB_ENV
           Write-Output "C:\gtk-build\gtk\x64\release\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
-      - uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
