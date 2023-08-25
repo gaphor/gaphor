@@ -128,6 +128,7 @@ gaphor = "gaphor.main:main"
 "diagram_export" = "gaphor.plugins.diagramexport:DiagramExport"
 "xmi_export" = "gaphor.plugins.xmiexport:XMIExport"
 "auto_layout" = "gaphor.plugins.autolayout:AutoLayoutService"
+"align" = "gaphor.plugins.align:AlignService"
 
 [tool.poetry.plugins."gaphor.modelinglanguages"]
 "Core" = "gaphor.core.modeling.modelinglanguage:CoreModelingLanguage"
