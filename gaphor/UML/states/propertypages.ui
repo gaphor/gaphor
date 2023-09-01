@@ -19,33 +19,51 @@
           <object class="GtkLabel">
             <property name="label" translatable="yes">Entry</property>
             <property name="xalign">0</property>
+            <style>
+              <class name="title" />
+            </style>
           </object>
         </child>
         <child>
-          <object class="GtkEntry" id="entry">
-            <signal name="changed" handler="entry-changed"/>
+          <object class="GtkDropDown" id="entry">
+            <property name="enable-search">1</property>
+            <property name="expression">
+              <lookup type="LabelValue" name="label" />
+            </property>
           </object>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="label" translatable="yes">Exit</property>
             <property name="xalign">0</property>
+            <style>
+              <class name="title" />
+            </style>
           </object>
         </child>
         <child>
-          <object class="GtkEntry" id="exit">
-            <signal name="changed" handler="exit-changed"/>
+          <object class="GtkDropDown" id="exit">
+            <property name="enable-search">1</property>
+            <property name="expression">
+              <lookup type="LabelValue" name="label" />
+            </property>
           </object>
         </child>
         <child>
           <object class="GtkLabel">
-            <property name="label" translatable="yes">Do Activity</property>
+            <property name="label" translatable="yes">Do activity</property>
             <property name="xalign">0</property>
+            <style>
+              <class name="title" />
+            </style>
           </object>
         </child>
         <child>
-          <object class="GtkEntry" id="do-activity">
-            <signal name="changed" handler="do-activity-changed" swapped="no"/>
+          <object class="GtkDropDown" id="do-activity">
+            <property name="enable-search">1</property>
+            <property name="expression">
+              <lookup type="LabelValue" name="label" />
+            </property>
           </object>
         </child>
         <style>

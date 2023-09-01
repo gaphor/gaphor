@@ -2,6 +2,7 @@
 ------
 - Fix missing derive relationship icon in the model browser
 - Fix block not showing parts
+- Support state entry, exit, do behavior selection amongst the existing behaviors via dropdown
 
 2.20.0
 ------
