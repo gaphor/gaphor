@@ -57,7 +57,7 @@ def test_copy_item_without_copying_connection(diagram, element_factory):
 
     assert len(list(diagram.get_all_items())) == 3
     assert len(element_factory.lselect(UML.Class)) == 1
-    assert type(new_items) is set
+    assert isinstance(new_items, set)
     assert len(new_items) == 1
 
 
