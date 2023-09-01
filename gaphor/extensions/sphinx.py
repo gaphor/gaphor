@@ -101,6 +101,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         for _ in Path(self.env.docname).parts[:-1]:
             outfile = Path("..") / outfile
 
+        nodes.header()
         return [
             nodes.image(
                 rawsource=self.block_text, uri=f"{str(outfile)}.*", **self.options
