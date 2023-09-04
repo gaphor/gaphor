@@ -1,8 +1,26 @@
-2.20.1
+2.21.1
 ------
+(Unreleased)
+
+2.21.0
+------
+- Add picture as core element
+- Move diagram elements with the arrow keys
+- Add interface block to element creation menu
+- Support state entry, exit, and do behavior selection via dropdown
+- Add feature to align diagram elements
+- Display type of element in the properties panel
+- Removed unnecessary operations and attributes for requirements
+- Enable macOS keybindings again
 - Fix missing derive relationship icon in the model browser
-- Fix block not showing parts
-- Support state entry, exit, do behavior selection amongst the existing behaviors via dropdown
+- Fix block not showing parts and references
+- Fixed Profile is created instead of Stereotype in model browser
+- Add ownership rules to DirectedRelationshipPropertyPath.targetContext
+- Add tests and fix `Component.required`
+- Present the Greeter, instead of only making it visible
+- Fix derive-reqt model browser icon
+- Improve coverage reporting
+- Add system style sheet to the documentation
 
 2.20.0
 ------
