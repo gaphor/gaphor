@@ -409,7 +409,7 @@ jobs:
           egress-policy: audit
 
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@26b39ed245ab8f31526069329e112ab2fb224588 # v2.1.1
+        uses: peter-evans/repository-dispatch@bf47d102fdb849e755b0b0023ea3e81a44b6f570 # v2.1.2
         with:
           token: ${{ secrets.WEBSITE_DISPATCH_TOKEN }} # Expires 2024-07-08
           repository: gaphor/gaphor.github.io
@@ -427,7 +427,7 @@ jobs:
           egress-policy: audit
 
       - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@26b39ed245ab8f31526069329e112ab2fb224588 # v2.1.1
+        uses: peter-evans/repository-dispatch@bf47d102fdb849e755b0b0023ea3e81a44b6f570 # v2.1.2
         with:
           token: ${{ secrets.FLATHUB_DISPATCH_TOKEN }} # Expires 2024-07-08
           repository: flathub/org.gaphor.Gaphor
