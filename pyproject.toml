@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gaphor"
-version = "2.20.0"
+version = "2.21.0"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
     "Arjan J. Molenaar <gaphor@gmail.com>",
@@ -13,7 +13,7 @@ homepage = "https://gaphor.org/"
 repository = "https://github.com/gaphor/gaphor"
 documentation = "https://docs.gaphor.org/"
 
-keywords = ["gtk+", "diagram", "UML", "MBSE", "gaphor", "modeling"]
+keywords = ["GTK", "diagram", "UML", "MBSE", "modeling"]
 
 classifiers = [
     "Development Status :: 5 - Production/Stable",
