@@ -30,7 +30,7 @@ def get_config_dir() -> str:
     """
 
     config_dir = os.path.join(GLib.get_user_config_dir(), "gaphor")
-    os.makedirs(config_dir, exist_ok=True)
+    Path(config_dir).mkdir(exist_ok=True, parents=True)
 
     return config_dir
 
@@ -42,7 +42,7 @@ def get_cache_dir() -> str:
     """
 
     cache_dir = os.path.join(GLib.get_user_cache_dir(), "gaphor")
-    os.makedirs(cache_dir, exist_ok=True)
+    Path(cache_dir).mkdir(exist_ok=True, parents=True)
 
     return cache_dir
 
@@ -127,8 +127,9 @@ class Properties(Service):
 
         filename = self.filename
 
-        if os.path.exists(filename) and os.path.isfile(filename):
-            data = Path(filename).read_text(encoding="utf-8")
+        file_path = Path(filename)
+        if file_path.is_file():
+            data = file_path.read_text(encoding="utf-8")
             try:
                 self._properties = ast.literal_eval(data)
             except SyntaxError:

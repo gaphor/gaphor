@@ -2,8 +2,8 @@
 
 import argparse
 import logging
-import os
 import re
+from pathlib import Path
 from typing import List
 
 from gaphor.application import Session
@@ -101,9 +101,9 @@ def export_command(args):
 
             outfilename = f"{odir}/{dname}.{args.format}"
 
-            if not os.path.exists(odir):
+            if not Path(odir).exists():
                 log.debug("creating dir %s", odir)
-                os.makedirs(odir)
+                Path(odir).mkdir(parents=True)
 
             log.debug("rendering: %s -> %s...", pname, outfilename)
 
