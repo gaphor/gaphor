@@ -8,7 +8,6 @@ These are things like preferences.
 import ast
 import hashlib
 import logging
-import os
 import pprint
 from pathlib import Path
 from typing import Dict
@@ -23,26 +22,26 @@ from gaphor.event import ModelLoaded, ModelSaved, SessionCreated
 log = logging.getLogger(__name__)
 
 
-def get_config_dir() -> str:
+def get_config_dir() -> Path:
     """Return the directory where the user's config is stored.
 
     This varies depending on platform.
     """
 
-    config_dir = os.path.join(GLib.get_user_config_dir(), "gaphor")
-    Path(config_dir).mkdir(exist_ok=True, parents=True)
+    config_dir = Path(GLib.get_user_config_dir()) / "gaphor"
+    config_dir.mkdir(exist_ok=True, parents=True)
 
     return config_dir
 
 
-def get_cache_dir() -> str:
+def get_cache_dir() -> Path:
     """Return the directory where the user's cache is stored.
 
     This varies depending on platform.
     """
 
-    cache_dir = os.path.join(GLib.get_user_cache_dir(), "gaphor")
-    Path(cache_dir).mkdir(exist_ok=True, parents=True)
+    cache_dir = Path(GLib.get_user_cache_dir()) / "gaphor"
+    cache_dir.mkdir(exist_ok=True, parents=True)
 
     return cache_dir
 
@@ -75,7 +74,7 @@ class Properties(Service):
 
     def __init__(self, event_manager):
         self.event_manager = event_manager
-        self.filename = os.path.join(get_cache_dir(), file_hash(""))
+        self.filename: Path = get_cache_dir() / file_hash("")
         self._properties: Dict[str, object] = {}
 
         event_manager.subscribe(self.on_model_loaded)
@@ -97,12 +96,12 @@ class Properties(Service):
 
     @event_handler(ModelLoaded, SessionCreated)
     def on_model_loaded(self, event):
-        self.filename = os.path.join(get_cache_dir(), file_hash(event.filename or ""))
+        self.filename = get_cache_dir() / file_hash(event.filename or "")
         self.load()
 
     @event_handler(ModelSaved)
     def on_model_saved(self, event):
-        self.filename = os.path.join(get_cache_dir(), file_hash(event.filename))
+        self.filename = get_cache_dir() / file_hash(event.filename)
         self.save()
 
     @event_handler(ModelFlushed)
@@ -127,13 +126,12 @@ class Properties(Service):
 
         filename = self.filename
 
-        file_path = Path(filename)
-        if file_path.is_file():
-            data = file_path.read_text(encoding="utf-8")
+        if filename.is_file():
+            data = filename.read_text(encoding="utf-8")
             try:
                 self._properties = ast.literal_eval(data)
             except SyntaxError:
-                log.error("Invalid syntax in property file %s", filename)
+                log.error(f"Invalid syntax in property file {filename}")
 
             for key, value in list(self._properties.items()):
                 self.event_manager.handle(PropertyChanged(key, None, value))
