@@ -32,4 +32,4 @@ repos:
 - repo: https://github.com/dosisod/refurb
   rev: v1.21.0
   hooks:
-    - id: refurb
+  - id: refurb
