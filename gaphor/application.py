@@ -88,7 +88,7 @@ class Application(Service, ActionProvider):
 
     def new_session(self, *, filename=None, template=None, services=None, force=False):
         filename = Path(filename) if filename else None
-        if filename is None and template is None:
+        if filename is None is template:
             return self._new_session(services=services)
 
         if filename and not force:
