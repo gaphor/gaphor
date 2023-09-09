@@ -8,7 +8,7 @@ from gaphor.i18n import gettext
 from gaphor.UML import uml as UML
 
 # Do not render if the name still contains a visibility element
-no_render_pat = re.compile(r"^\s*[+#-]", re.MULTILINE | re.S)
+no_render_pat = re.compile(r"^\s*[+#-]", re.MULTILINE | re.DOTALL)
 vis_map = {"public": "+", "protected": "#", "package": "~", "private": "-"}
 
 
