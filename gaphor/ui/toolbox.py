@@ -254,7 +254,7 @@ def _flowbox_drag_prepare(source: Gtk.DragSource, x: int, y: int):
 _upper_offset: int = ord("A") - ord("a")
 
 
-@functools.lru_cache(maxsize=None)
+@functools.cache
 def parse_shortcut(shortcut: str) -> Tuple[Tuple[int, int], Gdk.ModifierType]:
     _, key, mod = Gtk.accelerator_parse(shortcut)
     return (key, key + _upper_offset), mod

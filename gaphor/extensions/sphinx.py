@@ -112,7 +112,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         return [nodes.error("", nodes.paragraph(text=text))]
 
 
-@functools.lru_cache(maxsize=None)
+@functools.cache
 def load_model(model_file: str) -> ElementFactory:
     element_factory = ElementFactory()
 

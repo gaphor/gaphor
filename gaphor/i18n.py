@@ -62,7 +62,7 @@ def i18nize(message):
     return message
 
 
-@functools.lru_cache(maxsize=None)
+@functools.cache
 def translated_ui_string(package: str, ui_filename: str) -> str:
     with (importlib.resources.files(package) / ui_filename).open(
         encoding="utf-8"

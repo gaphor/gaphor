@@ -39,7 +39,7 @@ if hasattr(GtkView, "set_css_name"):
     GtkView.set_css_name("diagramview")
 
 
-@functools.lru_cache(maxsize=None)
+@functools.cache
 def get_placement_icon(display, icon_name):
     if display is None:
         display = Gdk.Display.get_default()
