@@ -22,6 +22,7 @@ To do:
 
 from __future__ import annotations
 
+import contextlib
 import itertools
 from functools import singledispatch
 from io import StringIO
@@ -170,10 +171,8 @@ class ModelConsistency(RuleBasedStateMachine):
             self.try_connect_relation(data, item, item.tail)
 
     def try_connect_relation(self, data, item, handle):
-        try:
+        with contextlib.suppress(UnsatisfiedAssumption):
             self._connect_relation(data, item, handle)
-        except UnsatisfiedAssumption:
-            pass
 
     @rule(data=data())
     def delete_element(self, data):

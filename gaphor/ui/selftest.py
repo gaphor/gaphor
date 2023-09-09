@@ -5,6 +5,7 @@ import sys
 import textwrap
 import time
 import tempfile
+import contextlib
 
 import cairo
 import gi
@@ -15,10 +16,8 @@ from gaphor.application import Application, distribution
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
 
-try:
+with contextlib.suppress(ImportError):
     import pygit2
-except ImportError:
-    pass
 
 
 log = logging.getLogger(__name__)
