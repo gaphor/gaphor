@@ -63,8 +63,7 @@ def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
         applied = ()
     if s := ", ".join(itertools.chain(stereotypes, applied)):
         return f"«{s}»"
-    else:
-        return ""
+    return ""
 
 
 def stereotype_name(stereotype):
@@ -80,8 +79,7 @@ def stereotype_name(stereotype):
         return ""
     elif len(name) > 1 and name[1].isupper():
         return name
-    else:
-        return name[0].lower() + name[1:]
+    return name[0].lower() + name[1:]
 
 
 def apply_stereotype(element, stereotype):

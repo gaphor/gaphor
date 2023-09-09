@@ -52,5 +52,4 @@ def _create_stereotype_compartment(appliedStereotype):
             },
             draw=draw_top_separator,
         )
-    else:
-        return None
+    return None

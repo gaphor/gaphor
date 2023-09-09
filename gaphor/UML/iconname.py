@@ -6,8 +6,7 @@ from gaphor.UML import uml as UML
 def get_name_for_class(element):
     if element.extension:
         return "gaphor-metaclass-symbolic"
-    else:
-        return get_default_icon_name(element)
+    return get_default_icon_name(element)
 
 
 @icon_name.register(UML.Pseudostate)

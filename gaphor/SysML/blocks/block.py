@@ -67,8 +67,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
             return [self.diagram.gettext("ControlStructure")]
         elif isinstance(self.subject, Block):
             return [self.diagram.gettext("block")]
-        else:
-            return ()
+        return ()
 
     def update_shapes(self, event=None):
         self.shape = Box(

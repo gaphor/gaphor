@@ -128,5 +128,4 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
                 style={"padding": (4, 4, 4, 4), "min-height": 8},
                 draw=draw_top_separator,
             )
-        else:
-            return Box()
+        return Box()

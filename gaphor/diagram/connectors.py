@@ -390,8 +390,7 @@ class MetadataRelationConnect(DirectionalRelationshipConnect):
                 )
             )
 
-        else:
-            return False
+        return False
 
     def connect_subject(self, handle):
         subject_type = get_model_element(type(self.line))

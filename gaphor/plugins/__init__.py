@@ -31,8 +31,7 @@ PLUGIN_VERSION = 2
 def default_plugin_path() -> pathlib.Path:
     if plugin_path_envvar := os.getenv("GAPHOR_PLUGIN_PATH"):
         return pathlib.Path(plugin_path_envvar)
-    else:
-        return pathlib.Path.home() / ".local" / "gaphor" / f"plugins-{PLUGIN_VERSION}"
+    return pathlib.Path.home() / ".local" / "gaphor" / f"plugins-{PLUGIN_VERSION}"
 
 
 @contextlib.contextmanager

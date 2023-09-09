@@ -46,8 +46,7 @@ class ContainmentConnect(BaseConnector):
             return None, None
         elif handle is line.head:
             return self.element.subject, connected_to.subject
-        else:
-            return connected_to.subject, self.element.subject
+        return connected_to.subject, self.element.subject
 
     def connect(self, handle, port) -> bool:
         container, contained = self.container_and_contained_element(handle)

@@ -58,8 +58,7 @@ class DataTypeItem(Classified, ElementPresentation[UML.DataType]):
             return [self.diagram.gettext("valueType")]
         elif isinstance(self.subject, UML.DataType):
             return [self.diagram.gettext("dataType")]
-        else:
-            return ()
+        return ()
 
     def update_shapes(self, event=None):
         self.shape = Box(

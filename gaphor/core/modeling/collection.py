@@ -39,8 +39,7 @@ class collection(Generic[T]):
     def __getitem__(self, key):
         if key == _recurseproxy_trigger:
             return recurseproxy(self.items)
-        else:
-            return self.items.__getitem__(key)
+        return self.items.__getitem__(key)
 
     def __contains__(self, obj) -> bool:
         return self.items.__contains__(obj)

@@ -316,8 +316,7 @@ class CompoundSelector:
             return tuple(
                 map(sum, zip(*(sel.specificity for sel in self.simple_selectors)))
             )
-        else:
-            return 0, 0, 0
+        return 0, 0, 0
 
     def __repr__(self):
         return "".join(map(repr, self.simple_selectors))

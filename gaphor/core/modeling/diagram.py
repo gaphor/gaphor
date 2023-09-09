@@ -285,8 +285,7 @@ class Diagram(Element):
         style_sheet = self.styleSheet
         if style_sheet and style_sheet.naturalLanguage:
             return translation(style_sheet.naturalLanguage).gettext(message)
-        else:
-            return message
+        return message
 
     def postload(self):
         """Handle post-load functionality for the diagram."""
