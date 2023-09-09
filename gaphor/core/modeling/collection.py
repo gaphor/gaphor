@@ -48,7 +48,7 @@ class collection(Generic[T]):
         return iter(self.items)
 
     def __str__(self):
-        return f"collection({str(self.items)})"
+        return f"collection({self.items})"
 
     __repr__ = __str__
 
