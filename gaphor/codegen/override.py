@@ -37,7 +37,7 @@ class Overrides:
         line = fp.readline()
         linenum = 1
         while line:
-            if line in ["%%\n", "%%"]:
+            if line in ("%%\n", "%%"):
                 if lines:
                     bufs.append((list(lines), line_number))
                 line_number = linenum + 1

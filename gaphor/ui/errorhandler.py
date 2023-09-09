@@ -36,7 +36,7 @@ def error_handler(message, secondary_message="", window=None, close=None):
 
     def response(dialog, answer):
         dialog.destroy()
-        if exc_traceback and answer in [100, "debug"]:
+        if exc_traceback and answer in (100, "debug"):
             pdb.post_mortem(exc_traceback)
         elif close:
             close()
