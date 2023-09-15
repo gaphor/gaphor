@@ -219,7 +219,7 @@ def _ref_change_nodes(
             element_change := next(
                 element_factory.select(
                     lambda e: isinstance(e, ElementChange)
-                    and e.element_id == change.property_ref
+                    and e.element_id == change.property_ref  # noqa: B023
                 ),
                 None,
             )
