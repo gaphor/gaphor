@@ -43,6 +43,9 @@ class AppFileManager(Service, ActionProvider):
                     body = gettext(
                         "{name} is already opened. Do you want to switch to the opened window instead?"
                     ).format(name=name)
+
+                    # Should show only one dialog at a time
+
                     dialog = Adw.MessageDialog.new(
                         self.window,
                         title,
@@ -56,7 +59,8 @@ class AppFileManager(Service, ActionProvider):
                     dialog.set_default_response("switch")
                     dialog.set_close_response("open")
 
-                    def response(dialog, answer):
+                    def response(dialog, answer, filename=filename):
+                        print(answer)
                         dialog.destroy()
                         self.application.new_session(
                             filename=filename, force=(answer == "open")

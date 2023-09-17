@@ -1,5 +1,6 @@
 import io
-import xml.etree.ElementTree as etree
+
+import defusedxml.ElementTree as etree
 
 from gaphor.i18n import gettext
 

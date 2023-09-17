@@ -11,7 +11,8 @@ import locale
 import logging
 import os
 import sys
-import xml.etree.ElementTree as etree
+
+import defusedxml.ElementTree as etree
 
 log = logging.getLogger(__name__)
 
@@ -71,4 +72,4 @@ def translated_ui_string(package: str, ui_filename: str) -> str:
     for node in ui_xml.findall(".//*[@translatable='yes']"):
         node.text = gettext(node.text) if node.text else ""
         del node.attrib["translatable"]
-    return etree.tostring(ui_xml.getroot(), encoding="unicode", method="xml")
+    return etree.tostring(ui_xml.getroot(), encoding="unicode", method="xml")  # type: ignore[no-any-return]

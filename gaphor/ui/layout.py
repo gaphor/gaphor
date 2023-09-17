@@ -1,8 +1,8 @@
 """Layout code from a simple XML description."""
 
 from typing import Callable, Dict
-from xml.etree.ElementTree import fromstring
 
+from defusedxml.ElementTree import fromstring
 from gi.repository import Gtk
 
 

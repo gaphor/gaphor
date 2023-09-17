@@ -5,8 +5,8 @@ Usage:
 """
 import os
 import sys
-import xml.etree.ElementTree as etree
 
+import defusedxml.ElementTree as etree
 import gi
 
 from gaphor.ui.styling import Styling
@@ -37,7 +37,7 @@ def load_ui_file(ui_file) -> str:
     for node in ui_xml.findall(".//*[signal]"):
         for signal in node.findall("signal"):
             node.remove(signal)
-    return etree.tostring(ui_xml.getroot(), encoding="unicode", method="xml")
+    return etree.tostring(ui_xml.getroot(), encoding="unicode", method="xml")  # type: ignore[no-any-return]
 
 
 def in_window(app, name, component):

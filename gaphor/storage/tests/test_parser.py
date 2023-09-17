@@ -1,5 +1,8 @@
 from io import StringIO
 
+import pytest
+from defusedxml import EntitiesForbidden
+
 from gaphor.storage.parser import parse
 
 
@@ -24,7 +27,7 @@ def test_parsing_of_open_file(test_models):
     assert elements
 
 
-def test_parsing_of_xml_entities(test_models):
+def test_parsing_of_xml_entities():
     model = StringIO(
         """<?xml version="1.0" encoding="utf-8"?>
         <!DOCTYPE gaphor [
@@ -37,13 +40,12 @@ def test_parsing_of_xml_entities(test_models):
          </Package>
         </gaphor>"""
     )
-    elements = parse(model)
 
-    assert elements
-    assert elements["0"].values["name"] == "okay"
+    with pytest.raises(EntitiesForbidden):
+        parse(model)
 
 
-def test_parsing_of_xml_external_entities_should_fail(test_models):
+def test_parsing_of_xml_external_entities_should_fail():
     model = StringIO(
         """<?xml version="1.0" encoding="utf-8"?>
         <!DOCTYPE gaphor [
@@ -56,7 +58,6 @@ def test_parsing_of_xml_external_entities_should_fail(test_models):
          </Package>
         </gaphor>"""
     )
-    elements = parse(model)
 
-    assert elements
-    assert elements["0"].values["name"] == ""
+    with pytest.raises(EntitiesForbidden):
+        parse(model)

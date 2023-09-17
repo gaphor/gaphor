@@ -462,7 +462,8 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             prop.typeValue = "int"
         elif c := next(
             element_factory.select(
-                lambda e: isinstance(e, UML.Class) and e.name == prop.typeValue
+                lambda e: isinstance(e, UML.Class)
+                and e.name == prop.typeValue  # noqa: B023
             ),
             None,
         ):

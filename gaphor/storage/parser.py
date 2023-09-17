@@ -24,7 +24,9 @@ from __future__ import annotations
 import logging
 import os
 from collections import OrderedDict
-from xml.sax import SAXParseException, handler, make_parser, xmlreader
+from xml.sax import SAXParseException, handler, xmlreader
+
+from defusedxml.sax import make_parser
 
 from gaphor.core.modeling import Element
 from gaphor.storage.upgrade_canvasitem import upgrade_canvasitem
