@@ -194,8 +194,7 @@ class EditableTreeModel(Gtk.ListStore):
         if obj := self._get_object(iter):
             obj.unlink()
             return super().remove(iter)
-        else:
-            return iter
+        return iter
 
 
 @transactional

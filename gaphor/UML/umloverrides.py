@@ -71,8 +71,7 @@ def property_navigability(self: uml.Property) -> list[bool | None]:
         return [self is assoc.ownedEnd]
     elif assoc.ownedEnd is None or self in assoc.ownedEnd:
         return [None]
-    else:
-        return [False]
+    return [False]
 
 
 uml.Property.navigability = derived("navigability", bool, 0, 1, property_navigability)

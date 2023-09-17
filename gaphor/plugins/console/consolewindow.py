@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import logging
-import os
 
 from gi.repository import Adw, Gdk, Gtk
 
@@ -28,9 +27,9 @@ class ConsoleWindow(UIComponent, ActionProvider):
         Saves some repetitive typing.
         """
 
-        console_py = os.path.join(get_config_dir(), "console.py")
+        console_py = get_config_dir() / "console.py"
         try:
-            with open(console_py, encoding="utf-8") as f:
+            with console_py.open(encoding="utf-8") as f:
                 for line in f:
                     console.push(line)
         except OSError:

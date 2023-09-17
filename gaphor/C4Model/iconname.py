@@ -8,8 +8,7 @@ def get_name_for_class(element):
         return "gaphor-c4-software-system-symbolic"
     elif element.type == "Component":
         return "gaphor-c4-component-symbolic"
-    else:
-        return get_default_icon_name(element)
+    return get_default_icon_name(element)
 
 
 @icon_name.register(C4Database)

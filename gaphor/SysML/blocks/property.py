@@ -34,14 +34,12 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
     def justify(self) -> JustifyContent:
         if self.diagram and self.children:
             return JustifyContent.START
-        else:
-            return JustifyContent.CENTER
+        return JustifyContent.CENTER
 
     def dash(self) -> Sequence[Union[int, float]]:
         if self.subject and self.subject.aggregation != "composite":
             return (7.0, 5.0)
-        else:
-            return ()
+        return ()
 
     def update_shapes(self, event=None):
         self.shape = Box(

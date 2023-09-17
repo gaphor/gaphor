@@ -1,3 +1,5 @@
+import contextlib
+
 import pytest
 
 import gaphor.UML.diagramitems
@@ -11,11 +13,9 @@ from gaphor.core.modeling.properties import umlproperty
 def presentations(module):
     for name in dir(module):
         element_type = getattr(module, name)
-        try:
+        with contextlib.suppress(TypeError):
             if issubclass(element_type, Element):
                 yield element_type
-        except TypeError:
-            pass
 
 
 def flatten(list):

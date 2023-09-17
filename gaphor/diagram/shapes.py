@@ -182,8 +182,7 @@ class Box:
                     + padding_bottom,
                 ),
             )
-        else:
-            return min_width, min_height
+        return min_width, min_height
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         if self._orientation == Orientation.VERTICAL:

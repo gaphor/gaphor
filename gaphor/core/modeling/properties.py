@@ -278,7 +278,7 @@ class enumeration(umlproperty):
 
     def set(self, obj, value):
         if value not in self.values:
-            raise TypeError(f"Value should be one of {str(self.values)}")
+            raise TypeError(f"Value should be one of {self.values}")
         old = self.get(obj)
         if value == old:
             return
@@ -808,7 +808,7 @@ class derivedunion(derived[T]):
         elif isinstance(event, AssociationUpdated):
             self.handle(DerivedUpdated(event.element, self))
         else:
-            log.error(f"Don't know how to handle event {str(event)} for derived union")
+            log.error(f"Don't know how to handle event {event} for derived union")
 
 
 class redefine(umlproperty):

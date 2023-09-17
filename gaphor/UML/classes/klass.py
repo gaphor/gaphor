@@ -58,8 +58,7 @@ class ClassItem(Classified, ElementPresentation[UML.Class]):
             return [self.diagram.gettext("stereotype")]
         elif UML.recipes.is_metaclass(self.subject):
             return [self.diagram.gettext("metaclass")]
-        else:
-            return ()
+        return ()
 
     def update_shapes(self, event=None):
         self.shape = Box(

@@ -20,14 +20,11 @@ def sysml_diagram_label(diagram):
             return "package"
         if isinstance(el, Requirement):
             return "requirement"
-        if isinstance(el, StateMachine):
-            return "state machine"
-        return ""
+        return "state machine" if isinstance(el, StateMachine) else ""
 
     if diagram.element:
         return (
             f"[{element_type(diagram.element)}] {diagram.element.name} [{diagram.name}]"
         )
-    else:
-        # TODO: SysML specification does not allow parentless elements, but since it is not constrained (yet), it may happen.
-        return diagram.name
+    # TODO: SysML specification does not allow parentless elements, but since it is not constrained (yet), it may happen.
+    return diagram.name

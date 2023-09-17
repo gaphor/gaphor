@@ -55,7 +55,7 @@ garbage_subpat = r"\s*(?P<garbage>.*)"
 
 
 def compile(regex):
-    return re.compile(regex, re.MULTILINE | re.S)
+    return re.compile(regex, re.MULTILINE | re.DOTALL)
 
 
 # Attribute:

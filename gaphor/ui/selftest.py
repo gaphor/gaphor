@@ -5,6 +5,7 @@ import sys
 import textwrap
 import time
 import tempfile
+import contextlib
 
 import cairo
 import gi
@@ -15,10 +16,8 @@ from gaphor.application import Application, distribution
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
 
-try:
+with contextlib.suppress(ImportError):
     import pygit2
-except ImportError:
-    pass
 
 
 log = logging.getLogger(__name__)
@@ -125,8 +124,7 @@ class SelfTest(Service):
             if main_window.window and main_window.window.get_visible():
                 status.complete()
                 return GLib.SOURCE_REMOVE
-            else:
-                return GLib.SOURCE_CONTINUE
+            return GLib.SOURCE_CONTINUE
 
         GLib.idle_add(check_new_session, session, priority=GLib.PRIORITY_LOW)
 
@@ -198,8 +196,7 @@ def display_type():
 def gtk_source_view_version():
     if hasattr(GtkSource, "get_major_version"):
         return f"{GtkSource.get_major_version()}.{GtkSource.get_minor_version()}.{GtkSource.get_micro_version()}"
-    else:
-        return "-"
+    return "-"
 
 
 def windows_console_output_workaround():

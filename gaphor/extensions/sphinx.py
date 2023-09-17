@@ -103,9 +103,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
 
         nodes.header()
         return [
-            nodes.image(
-                rawsource=self.block_text, uri=f"{str(outfile)}.*", **self.options
-            )
+            nodes.image(rawsource=self.block_text, uri=f"{outfile}.*", **self.options)
         ]
 
     def logging_error_node(self, text: str) -> list[nodes.Node]:
@@ -114,7 +112,7 @@ class DiagramDirective(sphinx.util.docutils.SphinxDirective):
         return [nodes.error("", nodes.paragraph(text=text))]
 
 
-@functools.lru_cache(maxsize=None)
+@functools.cache
 def load_model(model_file: str) -> ElementFactory:
     element_factory = ElementFactory()
 

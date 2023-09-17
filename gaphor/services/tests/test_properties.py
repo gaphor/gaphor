@@ -8,7 +8,9 @@ from gaphor.event import ModelLoaded, ModelSaved
 
 @pytest.fixture
 def properties(event_manager, tmpdir, monkeypatch):
-    monkeypatch.setattr(gaphor.services.properties, "get_cache_dir", lambda: tmpdir)
+    monkeypatch.setattr(
+        gaphor.services.properties, "get_cache_dir", lambda: Path(tmpdir)
+    )
     properties = gaphor.services.properties.Properties(event_manager)
     yield properties
     properties.shutdown()
@@ -46,9 +48,9 @@ def test_load_of_corrupted_properties(properties, event_manager, caplog):
 
 def test_config_dir():
     config_dir = gaphor.services.properties.get_config_dir()
-    assert config_dir.endswith("gaphor")
+    assert str(config_dir).endswith("gaphor")
 
 
 def test_cache_dir():
     cache_dir = gaphor.services.properties.get_cache_dir()
-    assert cache_dir.endswith("gaphor")
+    assert str(cache_dir).endswith("gaphor")

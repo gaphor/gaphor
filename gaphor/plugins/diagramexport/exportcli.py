@@ -2,8 +2,8 @@
 
 import argparse
 import logging
-import os
 import re
+from pathlib import Path
 from typing import List
 
 from gaphor.application import Session
@@ -72,7 +72,7 @@ def export_command(args):
     factory = session.get_service("element_factory")
     modeling_language = session.get_service("modeling_language")
 
-    name_re = re.compile(args.regex, re.I) if args.regex else None
+    name_re = re.compile(args.regex, re.IGNORECASE) if args.regex else None
     # we should have some gaphor files to be processed at this point
     for model in args.model:
         log.debug("loading model %s", model)
@@ -101,9 +101,9 @@ def export_command(args):
 
             outfilename = f"{odir}/{dname}.{args.format}"
 
-            if not os.path.exists(odir):
+            if not Path(odir).exists():
                 log.debug("creating dir %s", odir)
-                os.makedirs(odir)
+                Path(odir).mkdir(parents=True)
 
             log.debug("rendering: %s -> %s...", pname, outfilename)
 

@@ -209,7 +209,7 @@ class FileManager(Service, ActionProvider):
         element_factory=None,
     ):
         try:
-            with open(filename, encoding="utf-8", errors="replace") as file_obj:
+            with filename.open(encoding="utf-8", errors="replace") as file_obj:
                 for percentage in storage.load_generator(
                     file_obj,
                     element_factory or self.element_factory,

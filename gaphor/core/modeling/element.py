@@ -198,8 +198,7 @@ class Element:
         """
         if model := self._model:
             return model.watcher(self, default_handler)
-        else:
-            return DummyEventWatcher()
+        return DummyEventWatcher()
 
     def isKindOf(self, class_: type[Element]) -> bool:
         """Returns :const:`True` if the object is an instance of ``class_``."""

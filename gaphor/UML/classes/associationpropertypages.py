@@ -38,11 +38,10 @@ class AssociationPropertyPage(PropertyPageBase):
                 f"{end_name}-toggle-stereotype": toggle_handler,
                 f"{end_name}-set-slot-value": set_value_handler,
             }
-        else:
-            return None, {
-                f"{end_name}-toggle-stereotype": (_dummy_handler,),
-                f"{end_name}-set-slot-value": (_dummy_handler,),
-            }
+        return None, {
+            f"{end_name}-toggle-stereotype": (_dummy_handler,),
+            f"{end_name}-set-slot-value": (_dummy_handler,),
+        }
 
     def construct_end(self, builder, end_name, end, stereotypes_model):
         subject = end.subject
