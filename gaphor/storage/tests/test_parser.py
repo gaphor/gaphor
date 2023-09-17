@@ -40,7 +40,7 @@ def test_parsing_of_xml_entities():
          </Package>
         </gaphor>"""
     )
-    
+
     with pytest.raises(EntitiesForbidden):
         parse(model)
 
