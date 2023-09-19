@@ -42,6 +42,9 @@ pip install --target $HOME/.local/gaphor/plugins-2 git+https://github.com/gaphor
 Then start Gaphor as you normally would.
 A new Hello World entry has been added to the tools menu (![open menu](images/open-menu-symbolic.svg) → Tools → Hello World).
 
+## Create your own plugin
+
 If you want to write a plugin yourself, you can familiarize yourself with Gaphor's
-[design principles](design_principles), [service oriented architecture](service_oriented), and [event driven framework](framework).
+[design principles](design_principles), [service oriented architecture](service_oriented) (includes a plugin example),
+and [event driven framework](framework).
 Next you can have a look at the [Hello World plugin](https://github.com/gaphor/gaphor_plugin_helloworld) available on GitHub.
