@@ -73,7 +73,7 @@ babelgladeextractor = "^0.7"
 pre-commit = ">=2.20,<4.0"
 
 [tool.poetry.group.automation.dependencies]
-poethepoet = ">=0.17.1,<0.23.0"
+poethepoet = ">=0.17.1,<0.24.0"
 
 [tool.poetry.group.packaging]
 optional=true
