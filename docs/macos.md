@@ -32,7 +32,7 @@ poetry run gaphor
 If PyGObject does not compile and complains about a missing `ffi.h` file, set the following
 environment variable and run `poetry install` again:
 ```bash
-export PKG_CONFIG_PATH=/usr/local/opt/libffi/lib/pkgconfig
+export PKG_CONFIG_PATH=/opt/homebrew/opt/libffi/lib/pkgconfig  # use /usr/local/ for older Homebrew installs
 poetry install
 ```
 
