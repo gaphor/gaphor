@@ -86,7 +86,7 @@ of CSS. Below you'll find a summary of all CSS features supported by Gaphor.
 ``*``                         All items on the diagram, including the diagram itself.
 ``node component``            Any component item which is a descendant of a node.
 ``node > component``          A component item which is a child of a node.
-``generaliation[subject]``    A generalization item with a subject present.
+``generalization[subject]``   A generalization item with a subject present.
 ``class[name=Foo]``           A class with name "Foo".
 ``diagram[name^=draft]``      A diagram with a name starting with "draft".
 ``diagram[name$=draft]``      A diagram with a name ends with "draft".
