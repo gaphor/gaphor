@@ -57,19 +57,22 @@ def from_package_str(item):
 
 def connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.Item):
     connector = ConnectorAspect(item, handle, item.diagram.connections)
-    sink = ConnectionSink(target, distance=1e40)
+    sink = ConnectionSink(target, distance=float("inf"))
     connector.connect(sink)
 
 
 def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.Item):
-    """Helper function: when loading a model, handles should be connected as
-    part of the `postload` step.
+    """Reconnect handles after model loading.
 
-    This function finds a suitable spot on the `target` item to connect
-    the handle to.
+    When loading a model, handles should be connected as part of the `postload` step.
+
+    This function finds a suitable spot on the `target` item to connect the `handle` to.
     """
     target.postload()
-    connect(item, handle, target)
+    connector = ConnectorAspect(item, handle, item.diagram.connections)
+    sink = ConnectionSink(target, distance=float("inf"))
+    connector.glue(sink)
+    connector.connect_handle(sink)
 
 
 class HandlePositionEvent(RevertibleEvent):
