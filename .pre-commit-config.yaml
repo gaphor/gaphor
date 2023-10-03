@@ -20,12 +20,12 @@ repos:
     exclude: '.\.gaphor'
   - id: trailing-whitespace
 - repo: https://github.com/shellcheck-py/shellcheck-py
-  rev: v0.9.0.5
+  rev: v0.9.0.6
   hooks:
   - id: shellcheck
     args: [--exclude, SC1017]
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: 'v0.0.291'
+  rev: 'v0.0.292'
   hooks:
   - id: ruff
     args: [--fix]
