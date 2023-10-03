@@ -1,6 +1,6 @@
-"""Copy and paste data based on an element's `save()` and `load()` methods.
+"""Copy and deep/shallow paste elements in a model or between models.
 
-The `copy()` function will return all values serialized, either as string
+The `copy_full()` function will return all values serialized, either as string
 values or reference id's.
 
 The `paste_link()` function will resolve those values and place instances of
@@ -8,8 +8,15 @@ them on the diagram using the same defining element.
 The `paste_full()` function is similar, but it creates new defining elements
 for the elements being pasted.
 
-The `copy()` function returns only data that has to be part of the copy buffer.
-the `paste()` function will load this data in a model.
+The `copy()` dispatch function is an iterator that returns a copy of the element
+and optionally any related elements. E.g. a Presentation element is likely
+to also create a copy of its subject.
+
+The `paste()` dispatch function works in two parts. First it creates the element
+and yields it. On the next invocation it will populate the element and perform
+complete the model loading.
+
+`copy()` and `paste()` use `Element`'s `save()` and `load()` methods.
 """
 
 from __future__ import annotations
