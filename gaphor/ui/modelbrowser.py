@@ -18,6 +18,7 @@ from gaphor.core.modeling import (
     ModelFlushed,
     ModelReady,
 )
+from gaphor.diagram.deletable import deletable
 from gaphor.diagram.event import DiagramOpened
 from gaphor.diagram.tools.dnd import ElementDragData
 from gaphor.i18n import gettext, translated_ui_string
@@ -215,7 +216,8 @@ class ModelBrowser(UIComponent, ActionProvider):
     def tree_view_delete(self):
         with Transaction(self.event_manager):
             for element in self.get_selected_elements():
-                element.unlink()
+                if deletable(element):
+                    element.unlink()
 
     @action(name="win.search", shortcut="<Primary>f")
     def tree_view_search(self):

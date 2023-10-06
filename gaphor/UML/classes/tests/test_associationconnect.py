@@ -217,3 +217,22 @@ def test_disconnect_association_in_new_diagram_should_clear_ends(
     assert not asc.subject
     assert not asc.head_subject
     assert not asc.tail_subject
+
+
+@pytest.mark.xfail
+def test_connect_association_missing_head_subject(create, element_factory):
+    asc_item = create(AssociationItem, UML.Association)
+    c1 = create(ClassItem, UML.Class)
+    c2 = create(ClassItem, UML.Class)
+
+    asc = asc_item.subject = UML.recipes.create_association(c1.subject, c2.subject)
+
+    # Now break the association by removing one end:
+    asc.memberEnd[0].unlink()
+
+    connect(asc_item, asc_item.tail, c1)
+    connect(asc_item, asc_item.head, c2)
+
+    assert len(asc_item.subject.memberEnd) == 2
+    assert not asc_item.head_subject
+    assert asc_item.tail_subject
