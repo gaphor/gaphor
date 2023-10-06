@@ -42,7 +42,7 @@
 - Fix: tree view should not collapse when an element is deleted
 - Fix: only open model browser elements with a model element
 - Upgrade Gvsbuild to 2023.7.1
-- Update minimal Pytho nversion to 3.10
+- Update minimal Python version to 3.10
 - Fix: ensure a newly placed item is no longer a dropzone item
 - Fix: incorrect filling between shapes
 - Fix: weird pin rendering

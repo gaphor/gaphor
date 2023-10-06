@@ -118,7 +118,7 @@ jobs:
     needs: lint
     runs-on: ubuntu-22.04
     container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-44
+      image: bilelmoussaoui/flatpak-github-actions:gnome-45
       options: --privileged
     steps:
       - name: Harden Runner

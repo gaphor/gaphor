@@ -48,11 +48,12 @@ def save_generator(out, element_factory):
     )
 
     size = element_factory.size()
+    save_func = partial(save_element, element_factory=element_factory, writer=writer)
     for n, e in enumerate(element_factory.values(), start=1):
         clazz = e.__class__.__name__
         assert e.id
         writer.startElement(clazz, {"id": str(e.id)})
-        e.save(partial(save_element, element_factory=element_factory, writer=writer))
+        e.save(save_func)
         writer.endElement(clazz)
 
         if n % 25 == 0:
