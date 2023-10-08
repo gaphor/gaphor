@@ -214,7 +214,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self._shape_middle = shape_middle
         self._shape_tail = shape_tail
 
-        self.fuzziness = 2
+        self.fuzziness = 4
         self._shape_head_rect = None
         self._shape_middle_rect = None
         self._shape_tail_rect = None
