@@ -2,16 +2,28 @@
 
 (help browser anyone?)
 """
+import logging
 
 import webbrowser
 import sys
+from enum import Enum
 
-from gi.repository import Adw, GObject, Gtk
+from gi.repository import Adw, Gio, GObject, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
 from gaphor.core import action
 from gaphor.i18n import translated_ui_string
+from gaphor.ui import APPLICATION_ID
+
+
+logger = logging.getLogger(__name__)
+
+
+class StyleValue(Enum):
+    SYSTEM = 0
+    DARK = 1
+    LIGHT = 2
 
 
 def new_builder(ui_file):
@@ -20,9 +32,24 @@ def new_builder(ui_file):
     return builder
 
 
+def get_settings() -> Gio.Settings | None:
+    """Get the Gio Settings for Gaphor."""
+    schemas = Gio.Settings.list_schemas()
+    if APPLICATION_ID in schemas:
+        return Gio.Settings(schema_id=APPLICATION_ID)
+    logger.info(
+        "Settings schema not found and settings won't be saved, run `poe install-schemas`"
+    )
+    return None
+
+
 class HelpService(Service, ActionProvider):
     def __init__(self, application):
         self.application = application
+        self.settings = get_settings()
+        if self.settings:
+            self.style_variant = StyleValue(self.settings.get_enum("style-variant"))
+            self._set_style_variant(self.style_variant)
 
     def shutdown(self):
         pass
@@ -58,15 +85,25 @@ class HelpService(Service, ActionProvider):
         shortcuts.set_visible(True)
         return shortcuts
 
-    def _on_dark_mode_selected(self, dropdown, param):
-        style_manager = self.application.gtk_app.get_style_manager()
-        selected = dropdown.props.selected_item
+    def _on_dark_mode_selected(self, combo_row: Gtk.Widget, param) -> None:
+        selected = combo_row.props.selected_item
         if selected.props.string == "Dark":
-            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
+            self._set_style_variant(StyleValue.DARK)
         elif selected.props.string == "Light":
-            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
+            self._set_style_variant(StyleValue.LIGHT)
         else:
+            self._set_style_variant(StyleValue.SYSTEM)
+
+    def _set_style_variant(self, style_value: StyleValue) -> None:
+        style_manager = self.application.gtk_app.get_style_manager()
+        if style_value == StyleValue.DARK:
+            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
+        elif style_value == StyleValue.LIGHT:
+            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
+        elif style_value == StyleValue.SYSTEM:
             style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
+        if self.settings:
+            self.settings.set_enum("style-variant", style_value.value)
 
     @action(name="app.preferences", shortcut="<Primary>comma")
     def preferences(self):
@@ -80,6 +117,11 @@ class HelpService(Service, ActionProvider):
         preferences.set_transient_for(self.window)
 
         dark_mode_selection = builder.get_object("dark_mode_selection")
+
+        # Bind with mapping not supported: https://gitlab.gnome.org/GNOME/pygobject/-/issues/98
+        if self.settings:
+            self.style_variant = self.settings.get_enum("style-variant")
+            dark_mode_selection.set_selected(self.style_variant)
         dark_mode_selection.connect(
             "notify::selected-item", self._on_dark_mode_selected
         )
