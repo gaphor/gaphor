@@ -173,7 +173,15 @@ class TreeModel:
             e
             for e in item.element.ownedElement
             if e.owner is item.element and visible(e)
-        ]:
+        ] + (
+            [
+                e
+                for e in item.element.member
+                if e.memberNamespace is item.element and not e.owner and visible(e)
+            ]
+            if isinstance(item.element, UML.Namespace)
+            else []
+        ):
             new_branch = Branch()
             self.branches[item] = new_branch
             for e in owned_elements:
@@ -185,7 +193,16 @@ class TreeModel:
         self, element: Element, former_owner=_no_value
     ) -> Branch | None:
         if (
-            owner := element.owner if former_owner is _no_value else former_owner
+            owner := (
+                element.owner
+                or (
+                    element.memberNamespace
+                    if isinstance(element, UML.NamedElement)
+                    else None
+                )
+            )
+            if former_owner is _no_value
+            else former_owner
         ) is None:
             return self.branches[None]
 
@@ -209,10 +226,25 @@ class TreeModel:
             owner_branch.append(element)
         elif element.owner:
             self.notify_child_model(element.owner)
+        elif isinstance(element, UML.NamedElement) and element.memberNamespace:
+            self.notify_child_model(element.memberNamespace)
 
     def remove_element(self, element: Element, former_owner=_no_value) -> None:
         for child in element.ownedElement:
             self.remove_element(child)
+
+        if isinstance(element, UML.Namespace):
+            for child in element.member:
+                self.remove_element(child)
+
+        # Deal with member relation, but exclude namespace, since it also relates to the owner
+        if (
+            former_owner is None
+            and isinstance(element, UML.NamedElement)
+            and element.memberNamespace
+            and element.memberNamespace is not element.namespace
+        ):
+            former_owner = element.memberNamespace
 
         if (
             owner_branch := self.owner_branch_for_element(
@@ -236,7 +268,14 @@ class TreeModel:
 
     def notify_child_model(self, element):
         # Only notify the change, the branch is created in child_model()
-        owner_tree_item = self.tree_item_for_element(element.owner)
+        owner_tree_item = self.tree_item_for_element(
+            element.owner
+            or (
+                element.memberNamespace
+                if isinstance(element, UML.NamedElement)
+                else None
+            )
+        )
         if (
             not self.branches.get(self.tree_item_for_element(element))
             and (owner_branch := self.branches.get(owner_tree_item)) is not None

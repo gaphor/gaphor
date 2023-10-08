@@ -57,22 +57,6 @@ def test_model_browser_remove_element(model_browser, element_factory):
     assert items_changed.removed == 1
 
 
-def test_tree_subtree_changed(model_browser, element_factory):
-    class_ = element_factory.create(UML.Class)
-    package = element_factory.create(UML.Package)
-
-    tree_model = model_browser.model
-    root_model = tree_model.root
-    root_model_changed = ItemChangedHandler()
-    root_model.connect("items-changed", root_model_changed)
-
-    class_.package = package
-
-    assert len(root_model) == 1
-    assert root_model_changed.added == 2
-    assert root_model_changed.removed == 3  # remove + node changed
-
-
 def test_model_browser_add_nested_element(model_browser, element_factory):
     tree_model = model_browser.model
     class_ = element_factory.create(UML.Class)
@@ -116,6 +100,25 @@ def test_model_browser_remove_nested_element(model_browser, element_factory):
     child_model = tree_model.child_model(package_item)
     assert tree_model.tree_item_for_element(package) is not None
     assert child_model is None
+
+
+def test_change_from_member_to_owner(model_browser, element_factory):
+    tree_model = model_browser.model
+    property = element_factory.create(UML.Property)
+    association = element_factory.create(UML.Association)
+    klass = element_factory.create(UML.Class)
+
+    association.memberEnd = property
+    klass.ownedAttribute = property
+
+    association_item = tree_model.tree_item_for_element(association)
+    klass_item = tree_model.tree_item_for_element(klass)
+    property_item = tree_model.tree_item_for_element(property)
+    association_model = tree_model.branches.get(association_item)
+    klass_model = tree_model.branches.get(klass_item)
+
+    assert not association_model
+    assert property_item in klass_model.elements
 
 
 def test_element_name_changed(model_browser, element_factory):
