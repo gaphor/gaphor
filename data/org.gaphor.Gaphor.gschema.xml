@@ -11,5 +11,10 @@
             <summary>Style Variant</summary>
             <description>Use the light or dark variant of the theme.</description>
         </key>
+        <key name="use-english" type="b">
+            <default>false</default>
+            <summary>Use English</summary>
+            <description>Override language to English.</description>
+        </key>
     </schema>
 </schemalist>

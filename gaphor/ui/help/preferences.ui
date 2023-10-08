@@ -33,8 +33,8 @@
                         <property name="title" translatable="true">Language Settings</property>
                         <property name="description" translatable="true">Change the language of text in the application.</property>
                         <child>
-                            <object class="AdwSwitchRow" id="override_to_english">
-                                <property name="title" translatable="true">Override System Language to English</property>
+                            <object class="AdwSwitchRow" id="use_english">
+                                <property name="title" translatable="true">Override system language to English.</property>
                             </object>
                         </child>
                     </object>

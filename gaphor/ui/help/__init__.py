@@ -85,7 +85,7 @@ class HelpService(Service, ActionProvider):
         shortcuts.set_visible(True)
         return shortcuts
 
-    def _on_dark_mode_selected(self, combo_row: Gtk.Widget, param) -> None:
+    def _on_dark_mode_selected(self, combo_row: Adw.ComboRow, param) -> None:
         selected = combo_row.props.selected_item
         if selected.props.string == "Dark":
             self._set_style_variant(StyleValue.DARK)
@@ -117,11 +117,18 @@ class HelpService(Service, ActionProvider):
         preferences.set_transient_for(self.window)
 
         dark_mode_selection = builder.get_object("dark_mode_selection")
+        use_english = builder.get_object("use_english")
 
-        # Bind with mapping not supported: https://gitlab.gnome.org/GNOME/pygobject/-/issues/98
         if self.settings:
+            self.settings.bind(
+                "use-english", use_english, "active", Gio.SettingsBindFlags.DEFAULT
+            )
+
+            # Bind with mapping not supported by PyGObject: https://gitlab.gnome.org/GNOME/pygobject/-/issues/98
+            # To bind to a function that can map between guint and a string
             self.style_variant = self.settings.get_enum("style-variant")
             dark_mode_selection.set_selected(self.style_variant)
+
         dark_mode_selection.connect(
             "notify::selected-item", self._on_dark_mode_selected
         )
