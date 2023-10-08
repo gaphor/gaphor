@@ -95,13 +95,14 @@ class HelpService(Service, ActionProvider):
             self._set_style_variant(StyleValue.SYSTEM)
 
     def _set_style_variant(self, style_value: StyleValue) -> None:
-        style_manager = self.application.gtk_app.get_style_manager()
-        if style_value == StyleValue.DARK:
-            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
-        elif style_value == StyleValue.LIGHT:
-            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
-        elif style_value == StyleValue.SYSTEM:
-            style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
+        if gtk_app := self.application.gtk_app:
+            style_manager = gtk_app.get_style_manager()
+            if style_value == StyleValue.DARK:
+                style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
+            elif style_value == StyleValue.LIGHT:
+                style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
+            elif style_value == StyleValue.SYSTEM:
+                style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
         if self.settings:
             self.settings.set_enum("style-variant", style_value.value)
 
