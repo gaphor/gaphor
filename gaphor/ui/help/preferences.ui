@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0"/>
+    <object class="AdwPreferencesWindow" id="preferences">
+        <property name="title" translatable="true">Preferences</property>
+        <child>
+            <object class="AdwPreferencesPage" id="appearance_page">
+                <property name="title" translatable="true">Appearance</property>
+                <property name="icon-name">applications-graphics-symbolic</property>
+                <child>
+                    <object class="AdwPreferencesGroup">
+                        <property name="title" translatable="true">Color Settings</property>
+                        <property name="description" translatable="true">Change the color scheme of the application.
+                        </property>
+                        <child>
+                            <object class="AdwComboRow" id="dark_mode_selection">
+                                <property name="title">Override Dark Mode</property>
+                                <property name="model">
+                                    <object class="GtkStringList">
+                                        <items>
+                                            <item translatable="yes">System</item>
+                                            <item translatable="yes">Dark</item>
+                                            <item translatable="yes">Light</item>
+                                        </items>
+                                    </object>
+                                </property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child>
+                    <object class="AdwPreferencesGroup">
+                        <property name="title" translatable="true">Language Settings</property>
+                        <property name="description" translatable="true">Change the language of text in the application.</property>
+                        <child>
+                            <object class="AdwSwitchRow" id="override_to_english">
+                                <property name="title" translatable="true">Override System Language to English</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </object>
+</interface>

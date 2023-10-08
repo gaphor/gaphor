@@ -1,4 +1,4 @@
-"""About and help services.
+"""About, preferences, and help services.
 
 (help browser anyone?)
 """
@@ -6,7 +6,7 @@
 import webbrowser
 import sys
 
-from gi.repository import GObject, Gtk
+from gi.repository import Adw, GObject, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
@@ -57,6 +57,35 @@ class HelpService(Service, ActionProvider):
 
         shortcuts.set_visible(True)
         return shortcuts
+
+    def _on_dark_mode_selected(self, dropdown, param):
+        style_manager = self.application.gtk_app.get_style_manager()
+        selected = dropdown.props.selected_item
+        if selected.props.string == "Dark":
+            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
+        elif selected.props.string == "Light":
+            style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
+        else:
+            style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
+
+    @action(name="app.preferences", shortcut="<Primary>comma")
+    def preferences(self):
+        builder = Gtk.Builder()
+        ui = translated_ui_string("gaphor.ui.help", "preferences.ui")
+
+        builder.add_from_string(ui)
+
+        preferences = builder.get_object("preferences")
+        preferences.set_modal(True)
+        preferences.set_transient_for(self.window)
+
+        dark_mode_selection = builder.get_object("dark_mode_selection")
+        dark_mode_selection.connect(
+            "notify::selected-item", self._on_dark_mode_selected
+        )
+
+        preferences.set_visible(True)
+        return preferences
 
 
 def activate_link(window, uri):
