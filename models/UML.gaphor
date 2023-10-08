@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.19.3">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.21.0">
 <Association id="DCE:12A2B620-4B3C-11D7-B391-02BBFE4396CE">
 <memberEnd>
 <reflist>
@@ -6124,9 +6124,9 @@
 <ref refid="DCE:BAEADF3E-65C6-11D7-89A9-9C62884CFFDE"/>
 <ref refid="DCE:D33A9738-4694-11D7-B567-379CA7034986"/>
 <ref refid="90a6d158-b9b1-11eb-93ad-535118859f0b"/>
-<ref refid="DCE:B7B7E77C-4694-11D7-B567-379CA7034986"/>
 <ref refid="98bdb712-b9b1-11eb-93ad-535118859f0b"/>
 <ref refid="aa8a8fb0-e185-11ea-b7ab-f5b4c130f24e"/>
+<ref refid="DCE:B7B7E77C-4694-11D7-B567-379CA7034986"/>
 </reflist>
 </ownedAttribute>
 <package>
@@ -12337,10 +12337,10 @@
 <ref refid="DCE:7D753EF0-464D-11D7-AA08-1B85D5275D8A"/>
 </type>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
 <upperValue>
-<val>*</val>
+<val>1</val>
 </upperValue>
 </Property>
 <Association id="DCE:B0D2CA8A-4B35-11D7-B391-02BBFE4396CE">
@@ -20335,9 +20335,9 @@
 <ref refid="DCE:8F7D73F4-464D-11D7-AA08-1B85D5275D8A"/>
 <ref refid="DCE:D33A1420-4694-11D7-B567-379CA7034986"/>
 <ref refid="DCE:18E7ADF0-4697-11D7-B567-379CA7034986"/>
-<ref refid="DCE:B7B7B610-4694-11D7-B567-379CA7034986"/>
 <ref refid="DCE:7D124DD0-4697-11D7-B567-379CA7034986"/>
 <ref refid="5d8d968e-e96c-11ea-96dc-bf74f1f80424"/>
+<ref refid="DCE:B7B7B610-4694-11D7-B567-379CA7034986"/>
 </reflist>
 </ownedAttribute>
 <package>

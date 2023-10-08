@@ -22,7 +22,7 @@ from typing import Callable
 from gaphor.core.modeling.element import Element
 class NamedElement(Element):
     clientDependency: relation_many[Dependency]
-    memberNamespace: relation_many[Namespace]
+    memberNamespace: relation_one[Namespace]
     name: _attribute[str] = _attribute("name", str)
     namespace: relation_one[Namespace]
     qualifiedName: derived[list[str]]
@@ -807,7 +807,7 @@ NamedElement.qualifiedName = derived(
     lambda obj: [qualifiedName(obj)],
 )
 
-NamedElement.memberNamespace = derivedunion("memberNamespace", Namespace)
+NamedElement.memberNamespace = derivedunion("memberNamespace", Namespace, upper=1)
 Element.directedRelationship.add(NamedElement.supplierDependency)  # type: ignore[attr-defined]
 Element.ownedElement.add(NamedElement.clientDependency)  # type: ignore[attr-defined]
 Element.directedRelationship.add(NamedElement.clientDependency)  # type: ignore[attr-defined]
