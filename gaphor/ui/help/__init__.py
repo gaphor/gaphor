@@ -14,7 +14,7 @@ from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
 from gaphor.core import action
 from gaphor.i18n import translated_ui_string
-from gaphor.ui import APPLICATION_ID
+from gaphor.settings import settings
 
 
 logger = logging.getLogger(__name__)
@@ -32,23 +32,11 @@ def new_builder(ui_file):
     return builder
 
 
-def get_settings() -> Gio.Settings | None:
-    """Get the Gio Settings for Gaphor."""
-    schemas = Gio.Settings.list_schemas()
-    if APPLICATION_ID in schemas:
-        return Gio.Settings(schema_id=APPLICATION_ID)
-    logger.info(
-        "Settings schema not found and settings won't be saved, run `poe install-schemas`"
-    )
-    return None
-
-
 class HelpService(Service, ActionProvider):
     def __init__(self, application):
         self.application = application
-        self.settings = get_settings()
-        if self.settings:
-            self.style_variant = StyleValue(self.settings.get_enum("style-variant"))
+        if settings:
+            self.style_variant = StyleValue(settings.get_enum("style-variant"))
             self._set_style_variant(self.style_variant)
 
     def shutdown(self):
@@ -103,8 +91,8 @@ class HelpService(Service, ActionProvider):
                 style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
             elif style_value == StyleValue.SYSTEM:
                 style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
-        if self.settings:
-            self.settings.set_enum("style-variant", style_value.value)
+        if settings:
+            settings.set_enum("style-variant", style_value.value)
 
     @action(name="app.preferences", shortcut="<Primary>comma")
     def preferences(self):
@@ -120,14 +108,14 @@ class HelpService(Service, ActionProvider):
         dark_mode_selection = builder.get_object("dark_mode_selection")
         use_english = builder.get_object("use_english")
 
-        if self.settings:
-            self.settings.bind(
+        if settings:
+            settings.bind(
                 "use-english", use_english, "active", Gio.SettingsBindFlags.DEFAULT
             )
 
             # Bind with mapping not supported by PyGObject: https://gitlab.gnome.org/GNOME/pygobject/-/issues/98
             # To bind to a function that can map between guint and a string
-            self.style_variant = self.settings.get_enum("style-variant")
+            self.style_variant = settings.get_enum("style-variant")
             dark_mode_selection.set_selected(self.style_variant)
 
         dark_mode_selection.connect(

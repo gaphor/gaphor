@@ -12,15 +12,14 @@ import logging
 import os
 import sys
 
+from gaphor.settings import settings
+
 import defusedxml.ElementTree as etree
 
-from gi.repository import Gio
 
 log = logging.getLogger(__name__)
 
 localedir = importlib.resources.files("gaphor") / "locale"
-
-APPLICATION_ID = "org.gaphor.Gaphor"
 
 
 def _get_os_language() -> str:
@@ -59,15 +58,6 @@ def translation(lang) -> _gettext.GNUTranslations | _gettext.NullTranslations:
     return _gettext.NullTranslations()
 
 
-def get_settings() -> Gio.Settings | None:
-    """Get the Gio Settings for Gaphor."""
-    schemas = Gio.Settings.list_schemas()
-    if APPLICATION_ID in schemas:
-        return Gio.Settings(schema_id=APPLICATION_ID)
-    return None
-
-
-settings = get_settings()
 if settings and settings.get_boolean("use-english"):
     gettext = translation("en_US.UTF-8").gettext
 else:
