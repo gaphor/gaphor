@@ -13,7 +13,7 @@ repos:
     additional_dependencies:
     - types-docutils
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.4.0
+  rev: v4.5.0
   hooks:
   - id: check-toml
   - id: check-yaml
