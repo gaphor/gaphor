@@ -235,14 +235,16 @@ class ModelBrowser(UIComponent, ActionProvider):
     @event_handler(DerivedAdded, DerivedDeleted)
     def on_owned_element_changed(self, event):
         """Ensure we update the node once owned elements change."""
-        if event.property is Element.ownedElement:
+        if event.property in (Element.ownedElement, UML.Namespace.member):
             self.model.notify_child_model(event.element)
 
     @event_handler(DerivedSet)
     def on_owner_changed(self, event: DerivedSet):
         # Should check on ownedElement as well, since it may not have been updated
         # before this thing triggers
-        if (event.property is not Element.owner) or not visible(event.element):
+        if (
+            event.property not in (Element.owner, UML.NamedElement.memberNamespace)
+        ) or not visible(event.element):
             return
         element = event.element
         self.model.remove_element(element, former_owner=event.old_value)

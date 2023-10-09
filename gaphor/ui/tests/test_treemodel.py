@@ -254,3 +254,19 @@ def test_tree_model_sort_relationship_item_first(element_factory):
     assert tree_item_sort(a, r) == 1
     assert tree_item_sort(a, b) == -1
     assert tree_item_sort(b, a) == 1
+
+
+def test_element_with_member_and_no_owner(element_factory):
+    tree_model = TreeModel()
+    property = element_factory.create(UML.Property)
+    association = element_factory.create(UML.Association)
+    association.memberEnd = property
+    tree_model.add_element(association)
+    tree_model.add_element(property)
+    association_item = tree_model.tree_item_for_element(association)
+    tree_model.child_model(association_item)
+    property_item = tree_model.tree_item_for_element(property)
+
+    association_model = tree_model.branches.get(association_item)
+
+    assert property_item in association_model.elements
