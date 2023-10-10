@@ -11,6 +11,7 @@ GAPHOR_CORE = [
     "gaphor.i18n",
     "gaphor.transaction",
     "gaphor.event",
+    "gaphor.settings",
 ]
 
 UI_LIBRARIES = [
