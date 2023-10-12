@@ -138,10 +138,6 @@ class TransactionContext:
         self._tx.mark_rollback()
 
 
-# Add a `handler(event) -> None` to receive events emitted via @transactional
-subscribers: set[Callable[[object], None]] = set()
-
-
 def transactional(func):
     """The transactional decorator makes a function transactional. Events are
     emitted through the (global) `subscribers` set.
@@ -156,15 +152,31 @@ def transactional(func):
         if __debug__ and args and hasattr(args[0], "event_manager"):
             log.warning(f"Consider using the Transaction context manager for {args[0]}")
 
-        with Transaction(_SubscribersHandler):
+        with Transaction(subscribers):
             return func(*args, **kwargs)
 
     return _transactional
 
 
 class _SubscribersHandler:
-    @classmethod
-    def handle(cls, event):
-        global subscribers
-        for o in subscribers:
+    """Global `@transactional` annotation subscribers.
+
+    Add and remove a `handler(event) -> None` to receive events emitted
+    by `@transactional` annotated functions.
+    """
+
+    def __init__(self):
+        self._subscribers: set[Callable[[object], None]] = set()
+
+    def add(self, handler: Callable[[object], None]) -> None:
+        self._subscribers.add(handler)
+
+    def discard(self, handler: Callable[[object], None]) -> None:
+        self._subscribers.discard(handler)
+
+    def handle(self, event):
+        for o in self._subscribers:
             o(event)
+
+
+subscribers = _SubscribersHandler()
