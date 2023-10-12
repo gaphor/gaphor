@@ -49,11 +49,11 @@ jobs:
         # that includes the dependencies
         echo "CODEQL_PYTHON=$(which python)" >> $GITHUB_ENV
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@fdcae64e1484d349b3366718cdfef3d404390e85 # v2.22.1
+      uses: github/codeql-action/init@d90b8d79de6dc1f58e83a1499aa58d6c93dc28de # v2.22.2
       with:
         languages: python
         # Override the default behavior so that the action doesn't attempt
         # to auto-install Python dependencies
         setup-python-dependencies: false
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@fdcae64e1484d349b3366718cdfef3d404390e85 # v2.22.1
+      uses: github/codeql-action/analyze@d90b8d79de6dc1f58e83a1499aa58d6c93dc28de # v2.22.2
