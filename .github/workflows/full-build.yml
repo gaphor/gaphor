@@ -63,22 +63,20 @@ jobs:
     steps:
       - name: Install Linux Dependencies
         run: >
-          dnf install -y gcc git gobject-introspection-devel
-          cairo-gobject-devel graphviz pkg-config gtk4 gtksourceview5-devel
-          libadwaita-devel cairo-devel upx python${{ matrix.python_version }}
-          python${{ matrix.python_version }}-devel python-launcher
-          xorg-x11-server-Xvfb
-      - name: Install pip
-        run: python${{ matrix.python_version }} -m ensurepip
-      - name: Install pipx
-        run: |
-          py -${{ matrix.python_version }} -m pip install pipx
-          echo "/github/home/.local/bin" >> $GITHUB_PATH
+          dnf install -y gcc git graphviz pkg-config python-launcher upx
+          xorg-x11-server-Xvfb gtk4 gobject-introspection-devel
+          cairo-gobject-devel gtksourceview5-devel libadwaita-devel cairo-devel
+          python${{ matrix.python_version }}-devel
       - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - name: Set ownership of Checkout directory
+      - name: Set ownership of checkout directory
         run: chown -R $(id -u):$(id -g) $PWD
+      - name: Install pipx
+        run: |
+          python${{ matrix.python_version }} -m ensurepip
+          py -${{ matrix.python_version }} -m pip install pipx
+          echo "/github/home/.local/bin" >> $GITHUB_PATH
       - name: Use Python Dependency Cache
         uses: actions/cache@704facf57e6136b1bc63b828d79edcd491f0ee84 # v3.3.2
         with:
