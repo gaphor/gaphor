@@ -6,7 +6,7 @@ repos:
     types_or: [python, spec]
     language_version: python3
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.5.1
+  rev: v1.6.0
   hooks:
   - id: mypy
     types_or: [python, spec]
