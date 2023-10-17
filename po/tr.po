@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-30 21:22+0200\n"
-"PO-Revision-Date: 2023-06-26 04:42+0000\n"
+"PO-Revision-Date: 2023-10-16 04:01+0000\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/gaphor/gaphor/tr/"
+">\n"
 "Language: tr\n"
-"Language-Team: Turkish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/tr/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.1-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -343,9 +344,8 @@ msgid "Composite"
 msgstr "Bileşik"
 
 #: gaphor/SysML/propertypages.ui:187
-#, fuzzy
 msgid "Type"
-msgstr "Biçim"
+msgstr "Tür"
 
 #: gaphor/SysML/propertypages.ui:210
 msgid "Id"
@@ -2364,7 +2364,7 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:424 gaphor/ui/filemanager.py:449
 msgid "Cancel"
-msgstr "İptal Et"
+msgstr "İptal"
 
 #: gaphor/ui/filemanager.py:425
 msgid "Open Merge Editor"
@@ -2392,7 +2392,7 @@ msgstr ""
 
 #: gaphor/ui/filemanager.py:450
 msgid "Discard"
-msgstr "Vazgeç"
+msgstr "Gözden Çıkar"
 
 #: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:103
 #: gaphor/ui/mainwindow.py:51
@@ -2462,7 +2462,7 @@ msgstr "Araçlar"
 
 #: gaphor/ui/mainwindow.py:233
 msgid "Press F11 to exit Fullscreen"
-msgstr ""
+msgstr "Tam Ekrandan Çıkmak İçin F11 Tuşuna Basın"
 
 #: gaphor/ui/mainwindow.py:288
 msgid "Profile: {name}"
@@ -2578,7 +2578,7 @@ msgstr "Diyagramı Kapat"
 
 #: gaphor/ui/help/shortcuts.ui:62
 msgid "Toggle Fullscreen"
-msgstr ""
+msgstr "Tam Ekranı Aç/Kapat"
 
 #: gaphor/ui/help/shortcuts.ui:70
 msgid "Quit Gaphor"
@@ -2707,4 +2707,3 @@ msgstr "“{name}” ilişkisini kaldır"
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr "“{name}” ilişkisini güncelle"
-
