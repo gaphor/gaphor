@@ -29,7 +29,7 @@ jobs:
             github.com:443
             pypi.org:443
             objects.githubusercontent.com
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
@@ -67,7 +67,7 @@ jobs:
           xorg-x11-server-Xvfb gtk4 gobject-introspection-devel
           cairo-gobject-devel gtksourceview5-devel libadwaita-devel cairo-devel
           python${{ matrix.python_version }}-devel
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set ownership of checkout directory
@@ -125,7 +125,7 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Use Python Dependency Cache
@@ -159,7 +159,7 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
@@ -311,7 +311,7 @@ jobs:
           Write-Output "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $env:GITHUB_ENV
           Write-Output "C:\gtk-build\gtk\x64\release\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
-      - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
