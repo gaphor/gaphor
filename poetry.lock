@@ -1641,35 +1641,35 @@ pycairo = ">=1.16,<2.0"
 
 [[package]]
 name = "pyinstaller"
-version = "5.13.2"
+version = "6.1.0"
 description = "PyInstaller bundles a Python application and all its dependencies into a single package."
 optional = false
-python-versions = "<3.13,>=3.7"
+python-versions = "<3.13,>=3.8"
 files = [
-    {file = "pyinstaller-5.13.2-py3-none-macosx_10_13_universal2.whl", hash = "sha256:16cbd66b59a37f4ee59373a003608d15df180a0d9eb1a29ff3bfbfae64b23d0f"},
-    {file = "pyinstaller-5.13.2-py3-none-manylinux2014_aarch64.whl", hash = "sha256:8f6dd0e797ae7efdd79226f78f35eb6a4981db16c13325e962a83395c0ec7420"},
-    {file = "pyinstaller-5.13.2-py3-none-manylinux2014_i686.whl", hash = "sha256:65133ed89467edb2862036b35d7c5ebd381670412e1e4361215e289c786dd4e6"},
-    {file = "pyinstaller-5.13.2-py3-none-manylinux2014_ppc64le.whl", hash = "sha256:7d51734423685ab2a4324ab2981d9781b203dcae42839161a9ee98bfeaabdade"},
-    {file = "pyinstaller-5.13.2-py3-none-manylinux2014_s390x.whl", hash = "sha256:2c2fe9c52cb4577a3ac39626b84cf16cf30c2792f785502661286184f162ae0d"},
-    {file = "pyinstaller-5.13.2-py3-none-manylinux2014_x86_64.whl", hash = "sha256:c63ef6133eefe36c4b2f4daf4cfea3d6412ece2ca218f77aaf967e52a95ac9b8"},
-    {file = "pyinstaller-5.13.2-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:aadafb6f213549a5906829bb252e586e2cf72a7fbdb5731810695e6516f0ab30"},
-    {file = "pyinstaller-5.13.2-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:b2e1c7f5cceb5e9800927ddd51acf9cc78fbaa9e79e822c48b0ee52d9ce3c892"},
-    {file = "pyinstaller-5.13.2-py3-none-win32.whl", hash = "sha256:421cd24f26144f19b66d3868b49ed673176765f92fa9f7914cd2158d25b6d17e"},
-    {file = "pyinstaller-5.13.2-py3-none-win_amd64.whl", hash = "sha256:ddcc2b36052a70052479a9e5da1af067b4496f43686ca3cdda99f8367d0627e4"},
-    {file = "pyinstaller-5.13.2-py3-none-win_arm64.whl", hash = "sha256:27cd64e7cc6b74c5b1066cbf47d75f940b71356166031deb9778a2579bb874c6"},
-    {file = "pyinstaller-5.13.2.tar.gz", hash = "sha256:c8e5d3489c3a7cc5f8401c2d1f48a70e588f9967e391c3b06ddac1f685f8d5d2"},
+    {file = "pyinstaller-6.1.0-py3-none-macosx_10_13_universal2.whl", hash = "sha256:da78942d31c1911ea4abcd3ca3bd0c062af7f163a5e227fd18a359b61deda4ca"},
+    {file = "pyinstaller-6.1.0-py3-none-manylinux2014_aarch64.whl", hash = "sha256:f63d2353537bac7bfeeaedbe5ac99f3be35daa290dd1ad1be90768acbf77e3d5"},
+    {file = "pyinstaller-6.1.0-py3-none-manylinux2014_i686.whl", hash = "sha256:6e71d9f6f5a1e0f7523e8ebee1b76bb29538f64d863e3711c2b21033f499e2b9"},
+    {file = "pyinstaller-6.1.0-py3-none-manylinux2014_ppc64le.whl", hash = "sha256:bebf6f442bbe6343acaec873803510ee1930d026846a018f727da4e0690081f8"},
+    {file = "pyinstaller-6.1.0-py3-none-manylinux2014_s390x.whl", hash = "sha256:3c04963637481a3edf1eec64ab4c3fce098908f02fc472c11e73be7eedc08b95"},
+    {file = "pyinstaller-6.1.0-py3-none-manylinux2014_x86_64.whl", hash = "sha256:4368e4eb9999ce32e3280330b3c26f175e0fa7fa13efb4d2dc4ade488ff6d7c2"},
+    {file = "pyinstaller-6.1.0-py3-none-musllinux_1_1_aarch64.whl", hash = "sha256:041ab9311d08162356829bf47293a613c44dc9ace28846fb63098889c7383c5d"},
+    {file = "pyinstaller-6.1.0-py3-none-musllinux_1_1_x86_64.whl", hash = "sha256:331f050e8f9e923bb6b50454acfc0547fd52092585c61eb5f2fc93de60703f13"},
+    {file = "pyinstaller-6.1.0-py3-none-win32.whl", hash = "sha256:9e8b5bbc1bdf554ade1360e62e4959091430c3cc15ebfff3c28c8894fd1f312a"},
+    {file = "pyinstaller-6.1.0-py3-none-win_amd64.whl", hash = "sha256:f9f5bcaef6122d93c54ee7a9ecb07eab5b81a7ebfb5cb99af2b2a6ff49eff62f"},
+    {file = "pyinstaller-6.1.0-py3-none-win_arm64.whl", hash = "sha256:dd438afd2abb643f5399c0cb254a11c217c06782cb274a2911dd785f9f67fa9e"},
+    {file = "pyinstaller-6.1.0.tar.gz", hash = "sha256:8f3d49c60f3344bf3d4a6d4258bda665dad185ab2b097341d3af2a6387c838ef"},
 ]
 
 [package.dependencies]
 altgraph = "*"
 macholib = {version = ">=1.8", markers = "sys_platform == \"darwin\""}
+packaging = ">=20.0"
 pefile = {version = ">=2022.5.30", markers = "sys_platform == \"win32\""}
 pyinstaller-hooks-contrib = ">=2021.4"
 pywin32-ctypes = {version = ">=0.2.1", markers = "sys_platform == \"win32\""}
 setuptools = ">=42.0.0"
 
 [package.extras]
-encryption = ["tinyaes (>=1.0.0)"]
 hook-testing = ["execnet (>=1.5.0)", "psutil", "pytest (>=2.7.3)"]
 
 [[package]]
@@ -2736,4 +2736,4 @@ docs = ["furo", "myst-nb", "sphinx", "sphinx-copybutton", "sphinx-intl"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.13"
-content-hash = "88ab6e5d0f2651eb211e5a39bb012f9fd46ade0d42caddcad46b8ec984f2ecba"
+content-hash = "5f5d51a45a5bba377331e4c7ebeb50e8d9209b76520f2917e962832b0a8806a0"
