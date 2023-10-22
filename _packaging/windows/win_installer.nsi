@@ -34,7 +34,7 @@ Var UNINST_BIN
 !define MUI_ABORTWARNING
 !define MUI_ICON "gaphor.ico"
 
-!insertmacro MUI_PAGE_LICENSE "gaphor\LICENSE.txt"
+!insertmacro MUI_PAGE_LICENSE "_internal\gaphor\LICENSE.txt"
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 
