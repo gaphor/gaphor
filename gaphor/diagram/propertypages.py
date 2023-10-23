@@ -76,7 +76,7 @@ class _PropertyPages:
 PropertyPages = _PropertyPages()
 
 
-class PropertyPageBase(metaclass=abc.ABCMeta):
+class PropertyPageBase(abc.ABC):
     """A property page which can display itself in a notebook."""
 
     order = 100  # Order number, used for ordered display

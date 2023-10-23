@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     )
 
 
-class Service(metaclass=abc.ABCMeta):
+class Service(abc.ABC):
     """Base interface for all services in Gaphor."""
 
     @abc.abstractmethod
@@ -20,7 +20,7 @@ class Service(metaclass=abc.ABCMeta):
         """Shutdown the services, free resources."""
 
 
-class ActionProvider(metaclass=abc.ABCMeta):
+class ActionProvider(abc.ABC):
     """An action provider is a special service that provides actions via
     ``@action`` decorators on its methods (see gaphor/action.py)."""
 
@@ -29,7 +29,7 @@ class ActionProvider(metaclass=abc.ABCMeta):
         pass
 
 
-class ModelingLanguage(metaclass=abc.ABCMeta):
+class ModelingLanguage(abc.ABC):
     """A model provider is a special service that provides an entrypoint to a
     model implementation, such as UML, SysML, RAAML."""
 
