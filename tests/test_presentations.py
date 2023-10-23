@@ -12,15 +12,13 @@ from gaphor.UML import diagramitems as uml_diagramitems
 
 diagramitems = [
     c
-    for c in itertools.chain(
-        *(
-            diagramitems.__dict__.values()
-            for diagramitems in (
-                uml_diagramitems,
-                sysml_diagramitems,
-                raaml_diagramitems,
-                c4_diagramitems,
-            )
+    for c in itertools.chain.from_iterable(
+        diagramitems.__dict__.values()
+        for diagramitems in (
+            uml_diagramitems,
+            sysml_diagramitems,
+            raaml_diagramitems,
+            c4_diagramitems,
         )
     )
     if isinstance(c, type)
