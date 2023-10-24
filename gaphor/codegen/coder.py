@@ -64,9 +64,7 @@ header = textwrap.dedent(
         relation_one,
     )
 
-    """.format(
-        "ruff"
-    )  # work around tooling triggers
+    """.format("ruff")  # work around tooling triggers
 )
 
 
@@ -105,7 +103,9 @@ def main(
     )
     overrides = Overrides(overridesfile) if overridesfile else None
 
-    with open(outfile, "w", encoding="utf-8") if outfile else contextlib.nullcontext(sys.stdout) as out:  # type: ignore[attr-defined]
+    with open(outfile, "w", encoding="utf-8") if outfile else contextlib.nullcontext(
+        sys.stdout
+    ) as out:  # type: ignore[attr-defined]
         for line in coder(model, super_models, overrides):
             print(line, file=out)
 
@@ -462,8 +462,7 @@ def resolve_attribute_type_values(element_factory: ElementFactory) -> None:
             prop.typeValue = "int"
         elif c := next(
             element_factory.select(
-                lambda e: isinstance(e, UML.Class)
-                and e.name == prop.typeValue  # noqa: B023
+                lambda e: isinstance(e, UML.Class) and e.name == prop.typeValue  # noqa: B023
             ),
             None,
         ):

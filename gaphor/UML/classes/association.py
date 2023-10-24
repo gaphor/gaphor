@@ -77,35 +77,21 @@ class AssociationItem(Named, LinePresentation[UML.Association]):
             self.on_association_end_value,
         ).watch(
             f"{base}.appliedStereotype.slot.value", self.on_association_end_value
-        ).watch(
-            f"{base}.classifier", self.on_association_end_value
-        ).watch(
+        ).watch(f"{base}.classifier", self.on_association_end_value).watch(
             f"{base}.visibility", self.on_association_end_value
-        ).watch(
-            f"{base}.lowerValue", self.on_association_end_value
-        ).watch(
+        ).watch(f"{base}.lowerValue", self.on_association_end_value).watch(
             f"{base}.upperValue", self.on_association_end_value
-        ).watch(
-            f"{base}.owningAssociation", self.on_association_end_value
-        ).watch(
+        ).watch(f"{base}.owningAssociation", self.on_association_end_value).watch(
             f"{base}.type[Class].ownedAttribute", self.on_association_end_value
         ).watch(
             f"{base}.type[Interface].ownedAttribute", self.on_association_end_value
         ).watch(
             f"{base}.appliedStereotype.classifier", self.on_association_end_value
-        ).watch(
-            "subject[Association].memberEnd"
-        ).watch(
+        ).watch("subject[Association].memberEnd").watch(
             "subject[Association].ownedEnd"
-        ).watch(
-            "subject[Association].navigableOwnedEnd"
-        ).watch(
-            "show_direction"
-        ).watch(
+        ).watch("subject[Association].navigableOwnedEnd").watch("show_direction").watch(
             "preferred_aggregation", self.on_association_end_value
-        ).watch(
-            "preferred_tail_navigability", self.on_association_end_value
-        )
+        ).watch("preferred_tail_navigability", self.on_association_end_value)
         watch_information_flow(self, "Association", "abstraction")
 
     show_direction: attribute[int] = attribute("show_direction", int, default=False)

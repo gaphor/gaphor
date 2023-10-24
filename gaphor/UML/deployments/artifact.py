@@ -43,7 +43,7 @@ class ArtifactItem(Classified, ElementPresentation):
                 if self.diagram and self.children
                 else JustifyContent.CENTER,
             },
-            draw=draw_border
+            draw=draw_border,
         )
 
 

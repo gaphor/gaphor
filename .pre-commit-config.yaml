@@ -1,21 +1,13 @@
 repos:
-- repo: https://github.com/psf/black
-  rev: 23.10.0
-  hooks:
-  - id: black
-    types_or: [python, spec]
-    language_version: python3
 - repo: https://github.com/pre-commit/mirrors-mypy
   rev: v1.6.1
   hooks:
   - id: mypy
-    types_or: [python, spec]
     additional_dependencies:
     - types-docutils
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.5.0
   hooks:
-  - id: check-toml
   - id: check-yaml
     exclude: '.\.gaphor'
   - id: trailing-whitespace
@@ -29,7 +21,5 @@ repos:
   hooks:
   - id: ruff
     args: [--fix]
-- repo: https://github.com/dosisod/refurb
-  rev: v1.22.1
-  hooks:
-  - id: refurb
+  - id: ruff-format
+    types_or: [python, spec]

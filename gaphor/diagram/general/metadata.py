@@ -33,13 +33,9 @@ class MetadataItem(ElementPresentation):
             "website", self.update_shapes
         ).watch("description", self.update_shapes).watch(
             "revision", self.update_shapes
-        ).watch(
-            "license", self.update_shapes
-        ).watch(
+        ).watch("license", self.update_shapes).watch(
             "createdOn", self.update_shapes
-        ).watch(
-            "updatedOn", self.update_shapes
-        )
+        ).watch("updatedOn", self.update_shapes)
 
     def update_shapes(self, event=None):
         diagram = self.diagram

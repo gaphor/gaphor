@@ -10,9 +10,7 @@ def stereotype_watches(presentation):
         "subject.appliedStereotype.classifier.name"
     ).watch("subject.appliedStereotype.slot", presentation.update_shapes).watch(
         "subject.appliedStereotype.slot.definingFeature.name"
-    ).watch(
-        "subject.appliedStereotype.slot.value", presentation.update_shapes
-    )
+    ).watch("subject.appliedStereotype.slot.value", presentation.update_shapes)
 
 
 def stereotype_compartments(subject):
