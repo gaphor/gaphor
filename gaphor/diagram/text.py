@@ -18,9 +18,9 @@ class Layout:
         default_size: tuple[int, int] = (0, 0),
     ):
         self.layout = PangoCairo.create_layout(instant_cairo_context())
-        self.font_id: tuple[
-            str, float | str, FontWeight | None, FontStyle | None
-        ] | None = None
+        self.font_id: (
+            tuple[str, float | str, FontWeight | None, FontStyle | None] | None
+        ) = None
         self.text = ""
         self.width = -1
         self.default_size = default_size

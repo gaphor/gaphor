@@ -38,13 +38,9 @@ class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
             "show_operations", self.update_shapes
         ).watch("show_enumerations", self.update_shapes).watch(
             "subject[NamedElement].name"
-        ).watch(
-            "subject[NamedElement].namespace.name"
-        ).watch(
+        ).watch("subject[NamedElement].namespace.name").watch(
             "subject[Enumeration].ownedLiteral", self.update_shapes
-        ).watch(
-            "subject[Enumeration].ownedLiteral.name", self.update_shapes
-        )
+        ).watch("subject[Enumeration].ownedLiteral.name", self.update_shapes)
         attribute_watches(self, "Enumeration")
         operation_watches(self, "Enumeration")
         stereotype_watches(self)

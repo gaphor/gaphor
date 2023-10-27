@@ -61,5 +61,5 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
                 "justify-content": self.justify(),
                 "dash-style": self.dash(),
             },
-            draw=draw_border
+            draw=draw_border,
         )

@@ -38,9 +38,7 @@ class ClassItem(Classified, ElementPresentation[UML.Class]):
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
-        ).watch(
-            "subject[NamedElement].namespace.name"
-        ).watch(
+        ).watch("subject[NamedElement].namespace.name").watch(
             "subject[Classifier].isAbstract", self.update_shapes
         )
         attribute_watches(self, "Class")
@@ -108,25 +106,15 @@ def attribute_watches(presentation, cast):
         f"subject[{cast}].ownedAttribute", presentation.update_shapes
     ).watch(
         f"subject[{cast}].ownedAttribute.association", presentation.update_shapes
-    ).watch(
-        f"subject[{cast}].ownedAttribute.name"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedAttribute.name").watch(
         f"subject[{cast}].ownedAttribute.isStatic", presentation.update_shapes
-    ).watch(
-        f"subject[{cast}].ownedAttribute.isDerived"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedAttribute.isDerived").watch(
         f"subject[{cast}].ownedAttribute.visibility"
-    ).watch(
-        f"subject[{cast}].ownedAttribute.lowerValue"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedAttribute.lowerValue").watch(
         f"subject[{cast}].ownedAttribute.upperValue"
-    ).watch(
-        f"subject[{cast}].ownedAttribute.defaultValue"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedAttribute.defaultValue").watch(
         f"subject[{cast}].ownedAttribute.type"
-    ).watch(
-        f"subject[{cast}].ownedAttribute.typeValue"
-    )
+    ).watch(f"subject[{cast}].ownedAttribute.typeValue")
 
 
 def operation_watches(presentation, cast):
@@ -136,17 +124,11 @@ def operation_watches(presentation, cast):
         f"subject[{cast}].ownedOperation.isAbstract", presentation.update_shapes
     ).watch(
         f"subject[{cast}].ownedOperation.isStatic", presentation.update_shapes
-    ).watch(
-        f"subject[{cast}].ownedOperation.visibility"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedOperation.visibility").watch(
         f"subject[{cast}].ownedOperation.ownedParameter.lowerValue"
-    ).watch(
-        f"subject[{cast}].ownedOperation.ownedParameter.upperValue"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedOperation.ownedParameter.upperValue").watch(
         f"subject[{cast}].ownedOperation.ownedParameter.typeValue"
-    ).watch(
-        f"subject[{cast}].ownedOperation.ownedParameter.defaultValue"
-    )
+    ).watch(f"subject[{cast}].ownedOperation.ownedParameter.defaultValue")
 
 
 def attributes_compartment(subject):

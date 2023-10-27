@@ -185,21 +185,13 @@ class InterfaceItem(Classified, ElementPresentation):
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
-        ).watch(
-            "subject[NamedElement].namespace.name"
-        ).watch(
+        ).watch("subject[NamedElement].namespace.name").watch(
             "subject.appliedStereotype", self.update_shapes
-        ).watch(
-            "subject.appliedStereotype.classifier.name"
-        ).watch(
+        ).watch("subject.appliedStereotype.classifier.name").watch(
             "subject.appliedStereotype.slot", self.update_shapes
-        ).watch(
-            "subject.appliedStereotype.slot.definingFeature.name"
-        ).watch(
+        ).watch("subject.appliedStereotype.slot.definingFeature.name").watch(
             "subject.appliedStereotype.slot.value", self.update_shapes
-        ).watch(
-            "subject[Interface].supplierDependency", self.update_shapes
-        )
+        ).watch("subject[Interface].supplierDependency", self.update_shapes)
         attribute_watches(self, "Interface")
         operation_watches(self, "Interface")
 

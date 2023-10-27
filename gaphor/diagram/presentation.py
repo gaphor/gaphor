@@ -116,7 +116,13 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
     _port_sides = ("top", "right", "bottom", "left")
 
     def __init__(self, diagram: Diagram, id=None, shape=None, width=100, height=50):
-        super().__init__(connections=diagram.connections, diagram=diagram, id=id, width=width, height=height)  # type: ignore[call-arg]
+        super().__init__(
+            connections=diagram.connections,
+            diagram=diagram,
+            id=id,
+            width=width,
+            height=height,
+        )  # type: ignore[call-arg]
         self._shape = shape
         for handle in self.handles():
             self.watch_handle(handle)
