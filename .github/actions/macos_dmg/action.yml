@@ -10,11 +10,14 @@ inputs:
   certpassword_p12:
     description: 'certpassword_p12'
     required: true
-  ac_username:
-    description: 'ac_usernmame'
+  notary_username:
+    description: 'Username for notarizing'
     required: true
-  ac_password:
-    description: 'ac_password'
+  notary_password:
+    description: 'Password for notarizing'
+    required: true
+  notary_team_id:
+    description: 'Team ID for notarizing'
     required: true
   sign_app:
     description: 'Build is performed on the main line'
@@ -48,18 +51,28 @@ runs:
         CODESIGN_IDENTITY: "Developer ID Application: Daniel Yeaw (Z7V37BLNR9)"
       run: poetry run poe package
       shell: bash
+    - name: Store notary credentials
+      if: inputs.sign_app == 'true'
+      run: >
+        xcrun notarytool store-credentials "notarytool-profile"
+        --apple-id "${{ inputs.notary_username }}"
+        --team-id "${{ inputs.notary_team_id }}"
+        --password "${{ inputs.notary_password }}"
+      shell: bash
     - name: Notarize app
       if: inputs.sign_app == 'true'
-      uses: BoundfoxStudios/action-xcode-notarize@v1.1
-      with:
-        product-path: "_packaging/dist/Gaphor.app"
-        appstore-connect-username: ${{ inputs.ac_username }}
-        appstore-connect-password: ${{ inputs.ac_password }}
+      env:
+        PRODUCT_PATH: "_packaging/dist/Gaphor.app"
+      run: |
+        ditto -c -k --keepParent "${{ env.PRODUCT_PATH }}" "notarization.zip"
+        xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait
+      shell: bash
     - name: Staple app
       if: inputs.sign_app == 'true'
-      uses: BoundfoxStudios/action-xcode-staple@v1
-      with:
-        product-path: "_packaging/dist/Gaphor.app"
+      env:
+        PRODUCT_PATH: "_packaging/dist/Gaphor.app"
+      run: xcrun stapler staple ${{ env.PRODUCT_PATH }}
+      shell: bash
     - name: Create dmg
       id: dmg
       run: |
@@ -74,17 +87,18 @@ runs:
       shell: bash
     - name: Notarize dmg
       if: inputs.sign_app == 'true'
-      uses: BoundfoxStudios/action-xcode-notarize@v1.1
-      with:
-        product-path: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
-        appstore-connect-username: ${{ inputs.ac_username }}
-        appstore-connect-password: ${{ inputs.ac_password }}
-        primary-bundle-id: org.gaphor.gaphor
+      env:
+        PRODUCT_PATH: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
+      run: |
+        ditto -c -k --keepParent "${{ env.PRODUCT_PATH }}" "notarization.zip"
+        xcrun notarytool submit "notarization.zip" --keychain-profile "notarytool-profile" --wait
+      shell: bash
     - name: Staple .dmg
       if: inputs.sign_app == 'true'
-      uses: BoundfoxStudios/action-xcode-staple@v1
-      with:
-        product-path: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
+      env:
+        PRODUCT_PATH: "_packaging/dist/Gaphor-${{ inputs.version }}.dmg"
+      run: xcrun stapler staple ${{ env.PRODUCT_PATH }}
+      shell: bash
     - name: Upload Gaphor-${{ inputs.version }}.dmg
       uses: actions/upload-artifact@v3
       with:
