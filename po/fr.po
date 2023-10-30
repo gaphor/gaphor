@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-30 21:22+0200\n"
-"PO-Revision-Date: 2023-06-26 20:30+0000\n"
-"Last-Translator: mimidbe <hamid.bentabet@gmail.com>\n"
+"PO-Revision-Date: 2023-10-31 11:03+0000\n"
+"Last-Translator: Pierre Flanet <pierre.flanet@protonmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
+"\n"
 "Language: fr\n"
-"Language-Team: French "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fr/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.2-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -180,13 +181,15 @@ msgstr "Porte d'Inhibition"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:103 gaphor/RAAML/fta/ftatoolbox.py:109
 #: gaphor/RAAML/fta/transferin.py:35
+#, fuzzy
 msgid "Transfer In"
-msgstr "Transfert dans"
+msgstr "Transfert entrant"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:114 gaphor/RAAML/fta/ftatoolbox.py:120
 #: gaphor/RAAML/fta/transferout.py:36
+#, fuzzy
 msgid "Transfer Out"
-msgstr ""
+msgstr "Transfert sortant"
 
 #: gaphor/RAAML/fta/ftatoolbox.py:149 gaphor/RAAML/fta/ftatoolbox.py:156
 #: gaphor/RAAML/fta/undevelopedevent.py:35
@@ -2707,4 +2710,3 @@ msgstr ""
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr ""
-
