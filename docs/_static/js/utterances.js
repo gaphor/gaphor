@@ -1,5 +1,5 @@
 function addUtterances() {
-    var script = document.createElement("script");
+    let script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://utteranc.es/client.js";
     script.async = "async";
@@ -8,7 +8,7 @@ function addUtterances() {
     script.setAttribute("theme", "preferred-color-scheme");
     script.setAttribute("crossorigin", "anonymous");
 
-    var bottomOfPage = document.querySelector("footer > .bottom-of-page");
+    let bottomOfPage = document.querySelector("footer > .bottom-of-page");
     if (bottomOfPage) {
         bottomOfPage.parentNode.insertBefore(script, bottomOfPage);
     }
