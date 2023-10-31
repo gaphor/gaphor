@@ -287,7 +287,7 @@ def test_unknown_variable_should_use_original_value():
     compiled_style_sheet = CompiledStyleSheet(css)
     props = compiled_style_sheet.match(Node("diagram"))
 
-    assert props.get("line-width") == 1.0
+    assert props.get("line-width") == pytest.approx(1.0)
 
 
 def test_unknown_variable_resolve_original_value():
@@ -296,7 +296,7 @@ def test_unknown_variable_resolve_original_value():
     compiled_style_sheet = CompiledStyleSheet(css)
     props = compiled_style_sheet.match(Node("diagram"))
 
-    assert props.get("line-width") == 1.0
+    assert props.get("line-width") == pytest.approx(1.0)
 
 
 def test_variable_cannot_contain_a_variable():
@@ -333,6 +333,6 @@ def test_color_schemes():
     dark_props = compiled_style_sheet.match(Node("node", dark_mode=True))
     light_props = compiled_style_sheet.match(Node("node", dark_mode=False))
 
-    assert normal_props.get("line-width") == 1.0
-    assert dark_props.get("line-width") == 2.0
-    assert light_props.get("line-width") == 3.0
+    assert normal_props.get("line-width") == pytest.approx(1.0)
+    assert dark_props.get("line-width") == pytest.approx(2.0)
+    assert light_props.get("line-width") == pytest.approx(3.0)

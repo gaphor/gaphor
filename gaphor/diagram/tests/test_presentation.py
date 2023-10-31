@@ -1,3 +1,5 @@
+import pytest
+
 from gaphor import UML
 from gaphor.diagram.presentation import ElementPresentation, LinePresentation
 from gaphor.diagram.tests.fixtures import connect
@@ -57,8 +59,8 @@ def test_element_saving(element_factory, diagram):
 
     assert len(properties) == 6
     assert properties["matrix"] == (1.0, 0.0, 0.0, 1.0, 0.0, 0.0)
-    assert properties["width"] == 100.0
-    assert properties["height"] == 50.0
+    assert properties["width"] == pytest.approx(100.0)
+    assert properties["height"] == pytest.approx(50.0)
     assert properties["top-left"] == (0, 0)
     assert properties["subject"] is subject
     assert properties["diagram"] is diagram
