@@ -1,3 +1,4 @@
+import pytest
 from gaphas import Item
 
 from gaphor.core.modeling import Diagram
@@ -16,7 +17,7 @@ def test_proxy_port_item_conforms_to_item_protocol(diagram):
 def test_proxy_port_item_point(diagram):
     item = ProxyPortItem(diagram)
 
-    assert item.point(0, 0) == 0.0
+    assert item.point(0, 0) == pytest.approx(0.0)
 
 
 def test_ports(diagram):

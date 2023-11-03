@@ -33,7 +33,7 @@ class PinItem(Named, AttachedPresentation[UML.Pin]):
     def pin_type(self):
         return ""
 
-    def update_shapes(self):
+    def update_shapes(self, event=None):
         position = self.connected_side()
         self.update_width(
             self.width,
