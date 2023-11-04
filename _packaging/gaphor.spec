@@ -88,7 +88,7 @@ a = Analysis(  # type: ignore
         "fix_path.py",
         "pydot_patch.py",
     ],
-    excludes=["FixTk", "tcl", "tk", "_tkinter", "tkinter", "Tkinter"],
+    excludes=["FixTk", "tcl", "tk", "_tkinter", "tkinter", "Tkinter", "docutils"],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     cipher=block_cipher,
@@ -105,7 +105,7 @@ pyinstaller_versionfile.create_versionfile(
     file_description="Gaphor",
     internal_name="Gaphor",
     legal_copyright=COPYRIGHT,
-    original_filename="gaphor-exe.exe",
+    original_filename="gaphor.exe",
     product_name="Gaphor",
 )
 
@@ -114,7 +114,7 @@ exe = EXE(  # type: ignore
     a.scripts,
     options=[],
     exclude_binaries=True,
-    name="gaphor-exe",
+    name="gaphor",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
