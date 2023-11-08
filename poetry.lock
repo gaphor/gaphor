@@ -1139,57 +1139,57 @@ files = [
 
 [[package]]
 name = "myst-nb"
-version = "0.17.2"
+version = "1.0.0"
 description = "A Jupyter Notebook Sphinx reader built on top of the MyST markdown parser."
 optional = true
-python-versions = ">=3.7"
+python-versions = ">=3.9"
 files = [
-    {file = "myst-nb-0.17.2.tar.gz", hash = "sha256:0f61386515fab07c73646adca97fff2f69f41e90d313a260217c5bbe419d858b"},
-    {file = "myst_nb-0.17.2-py3-none-any.whl", hash = "sha256:132ca4d0f5c308fdd4b6fdaba077712e28e119ccdafd04d6e41b51aac5483494"},
+    {file = "myst_nb-1.0.0-py3-none-any.whl", hash = "sha256:ee8febc6dd7d9e32bede0c66a9b962b2e2fdab697428ee9fbfd4919d82380911"},
+    {file = "myst_nb-1.0.0.tar.gz", hash = "sha256:9077e42a1c6b441ea55078506f83555dda5d6c816ef4930841d71d239e3e0c5e"},
 ]
 
 [package.dependencies]
 importlib_metadata = "*"
 ipykernel = "*"
 ipython = "*"
-jupyter-cache = ">=0.5,<0.7"
-myst-parser = ">=0.18.0,<0.19.0"
+jupyter-cache = ">=0.5"
+myst-parser = ">=1.0.0"
 nbclient = "*"
-nbformat = ">=5.0,<6.0"
+nbformat = ">=5.0"
 pyyaml = "*"
-sphinx = ">=4,<6"
+sphinx = ">=5"
 typing-extensions = "*"
 
 [package.extras]
 code-style = ["pre-commit"]
-rtd = ["alabaster", "altair", "bokeh", "coconut (>=1.4.3,<2.3.0)", "ipykernel (>=5.5,<6.0)", "ipywidgets", "jupytext (>=1.11.2,<1.12.0)", "matplotlib", "numpy", "pandas", "plotly", "sphinx-book-theme (>=0.3.0,<0.4.0)", "sphinx-copybutton", "sphinx-design (>=0.4.0,<0.5.0)", "sphinxcontrib-bibtex", "sympy"]
-testing = ["beautifulsoup4", "coverage (>=6.4,<8.0)", "ipykernel (>=5.5,<6.0)", "ipython (!=8.1.0,<8.5)", "ipywidgets (>=8)", "jupytext (>=1.11.2,<1.12.0)", "matplotlib (>=3.5.3,<3.6)", "nbdime", "numpy", "pandas", "pytest (>=7.1,<8.0)", "pytest-cov (>=3,<5)", "pytest-param-files (>=0.3.3,<0.4.0)", "pytest-regressions", "sympy (>=1.10.1)"]
+rtd = ["alabaster", "altair", "bokeh", "coconut (>=1.4.3,<3.1.0)", "ipykernel (>=5.5,<7.0)", "ipywidgets", "jupytext (>=1.11.2,<1.16.0)", "matplotlib", "numpy", "pandas", "plotly", "sphinx-book-theme (>=0.3)", "sphinx-copybutton", "sphinx-design (>=0.4.0,<0.5.0)", "sphinxcontrib-bibtex", "sympy"]
+testing = ["beautifulsoup4", "coverage (>=6.4,<8.0)", "ipykernel (>=5.5,<7.0)", "ipython (!=8.1.0,<8.17)", "ipywidgets (>=8)", "jupytext (>=1.11.2,<1.16.0)", "matplotlib (==3.7.*)", "nbdime", "numpy", "pandas", "pytest (>=7.1,<8.0)", "pytest-cov (>=3,<5)", "pytest-param-files (>=0.3.3,<0.4.0)", "pytest-regressions", "sympy (>=1.10.1)"]
 
 [[package]]
 name = "myst-parser"
-version = "0.18.1"
-description = "An extended commonmark compliant parser, with bridges to docutils & sphinx."
+version = "1.0.0"
+description = "An extended [CommonMark](https://spec.commonmark.org/) compliant parser,"
 optional = true
 python-versions = ">=3.7"
 files = [
-    {file = "myst-parser-0.18.1.tar.gz", hash = "sha256:79317f4bb2c13053dd6e64f9da1ba1da6cd9c40c8a430c447a7b146a594c246d"},
-    {file = "myst_parser-0.18.1-py3-none-any.whl", hash = "sha256:61b275b85d9f58aa327f370913ae1bec26ebad372cc99f3ab85c8ec3ee8d9fb8"},
+    {file = "myst-parser-1.0.0.tar.gz", hash = "sha256:502845659313099542bd38a2ae62f01360e7dd4b1310f025dd014dfc0439cdae"},
+    {file = "myst_parser-1.0.0-py3-none-any.whl", hash = "sha256:69fb40a586c6fa68995e6521ac0a525793935db7e724ca9bac1d33be51be9a4c"},
 ]
 
 [package.dependencies]
 docutils = ">=0.15,<0.20"
 jinja2 = "*"
 markdown-it-py = ">=1.0.0,<3.0.0"
-mdit-py-plugins = ">=0.3.1,<0.4.0"
+mdit-py-plugins = ">=0.3.4,<0.4.0"
 pyyaml = "*"
-sphinx = ">=4,<6"
-typing-extensions = "*"
+sphinx = ">=5,<7"
 
 [package.extras]
-code-style = ["pre-commit (>=2.12,<3.0)"]
+code-style = ["pre-commit (>=3.0,<4.0)"]
 linkify = ["linkify-it-py (>=1.0,<2.0)"]
-rtd = ["ipython", "sphinx-book-theme", "sphinx-design", "sphinxcontrib.mermaid (>=0.7.1,<0.8.0)", "sphinxext-opengraph (>=0.6.3,<0.7.0)", "sphinxext-rediraffe (>=0.2.7,<0.3.0)"]
-testing = ["beautifulsoup4", "coverage[toml]", "pytest (>=6,<7)", "pytest-cov", "pytest-param-files (>=0.3.4,<0.4.0)", "pytest-regressions", "sphinx (<5.2)", "sphinx-pytest"]
+rtd = ["ipython", "pydata-sphinx-theme (==v0.13.0rc4)", "sphinx-autodoc2 (>=0.4.2,<0.5.0)", "sphinx-book-theme (==1.0.0rc2)", "sphinx-copybutton", "sphinx-design2", "sphinx-pyscript", "sphinx-tippy (>=0.3.1)", "sphinx-togglebutton", "sphinxext-opengraph (>=0.7.5,<0.8.0)", "sphinxext-rediraffe (>=0.2.7,<0.3.0)"]
+testing = ["beautifulsoup4", "coverage[toml]", "pytest (>=7,<8)", "pytest-cov", "pytest-param-files (>=0.3.4,<0.4.0)", "pytest-regressions", "sphinx-pytest"]
+testing-docutils = ["pygments", "pytest (>=7,<8)", "pytest-param-files (>=0.3.4,<0.4.0)"]
 
 [[package]]
 name = "nbclient"
@@ -2734,4 +2734,4 @@ docs = ["furo", "myst-nb", "sphinx", "sphinx-copybutton", "sphinx-intl"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.13"
-content-hash = "e2d605fe4df59ca62043168ead087b5cb700a5a604a578a474a50cfed33c3b03"
+content-hash = "824c54d7e03b3c7e2d54c17ed6593d12d596ca9a9b048eba5a6d8e6a1dc18254"
