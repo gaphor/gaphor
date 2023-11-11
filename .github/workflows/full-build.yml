@@ -154,7 +154,7 @@ jobs:
   macos:
     name: macOS
     needs: lint
-    runs-on: macos-11
+    runs-on: macos-latest
     permissions:
       contents: write
     timeout-minutes: 45
