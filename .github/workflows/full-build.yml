@@ -175,8 +175,8 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
         run: >
-          brew install gtk4 gtksourceview5 libadwaita adwaita-icon-theme
-          gobject-introspection graphviz create-dmg upx
+          brew update && brew install gtk4 gtksourceview5 libadwaita
+          adwaita-icon-theme gobject-introspection graphviz create-dmg upx
       - name: Set up Python
         uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
         with:
