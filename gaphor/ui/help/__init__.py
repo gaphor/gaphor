@@ -3,9 +3,10 @@
 (help browser anyone?)
 """
 
+import webbrowser
 import sys
 
-from gi.repository import Gtk
+from gi.repository import GObject, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
@@ -37,7 +38,7 @@ class HelpService(Service, ActionProvider):
 
         about.set_version(distribution().version)
         about.set_transient_for(self.window)
-
+        about.connect("activate-link", activate_link)
         about.set_modal(True)
         about.set_visible(True)
 
@@ -56,3 +57,11 @@ class HelpService(Service, ActionProvider):
 
         shortcuts.set_visible(True)
         return shortcuts
+
+
+def activate_link(window, uri):
+    """D-Bus does not work on macOS, so we open URL's ourselves.
+    """
+    if sys.platform == "darwin":
+        GObject.signal_stop_emission_by_name(window, "activate-link")
+        webbrowser.open(uri)
