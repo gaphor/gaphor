@@ -2,7 +2,8 @@ from gaphor.diagram.drop import drop
 from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item
 from gaphor.SysML.sysml import ProxyPort
-from gaphor.UML.drop import diagram_has_presentation
+from gaphor.SysML.sysml import Block
+from gaphor.UML.uml import Property
 
 
 @drop.register
@@ -11,7 +12,28 @@ def drop_proxy_port(element: ProxyPort, diagram, x, y):
     if not item_class:
         return None
 
-    head_item = diagram_has_presentation(diagram, element.encapsulatedClassifier)
+    def port_owning_item_block(item):
+        match item.subject:
+            case Property():
+                block = (
+                    item.subject.type if isinstance(item.subject.type, Block) else None
+                )
+            case Block():
+                block = item.subject
+            case _:
+                return False
+        return element in block.ownedPort if block else False
+
+    def drop_distance_to_item(item):
+        local_x, local_y = item.matrix_i2c.inverse().transform_point(x, y)
+        return item.point(local_x, local_y)
+
+    head_item = min(
+        diagram.select(lambda item: port_owning_item_block(item)),
+        key=drop_distance_to_item,
+        default=None,
+    )
+
     if not head_item:
         return None
 

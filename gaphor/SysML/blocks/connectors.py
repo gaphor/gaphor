@@ -21,7 +21,6 @@ class BlockProperyProxyPortConnector:
         block_or_property: Union[BlockItem, PropertyItem, InterfaceBlockItem],
         proxy_port: ProxyPortItem,
     ) -> None:
-        assert block_or_property.diagram is proxy_port.diagram
         self.element = block_or_property
         self.proxy_port = proxy_port
 
@@ -54,6 +53,7 @@ class BlockProperyProxyPortConnector:
 
         # This raises the item in the item hierarchy
         assert proxy_port.diagram
+        assert self.element.diagram is proxy_port.diagram
         proxy_port.change_parent(self.element)
 
         return True
