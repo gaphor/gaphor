@@ -1,6 +1,6 @@
 2.21.1
 ------
-(Unreleased)
+- Allow adding existing proxy port on the owning block's property
 
 2.21.0
 ------
