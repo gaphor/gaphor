@@ -1,7 +1,7 @@
 2.21.1
 ------
 - Add proxy port to the closest port owning item
-- Allow adding existing proxy port on the owner block property
+- Allow adding existing proxy port on the owning block's property
 - Fix proxy port drag icon
 
 2.21.0

@@ -19,7 +19,7 @@ ICONS=diagram \
 	value-specification-action \
 	call-behavior-action \
 	value-type \
-	proxyport \
+	proxy-port \
 	package \
 	containment \
 	interface \
