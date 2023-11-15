@@ -1,6 +1,7 @@
 2.21.1
 ------
 - Allow adding existing proxy port on the owning block's property
+- Fix proxy port drag icon
 
 2.21.0
 ------
