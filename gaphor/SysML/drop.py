@@ -21,9 +21,8 @@ def drop_proxy_port(element: ProxyPort, diagram, x, y):
         )
 
     head_item = next(
-        (
-            item
-            for item in diagram.select(
+        iter(
+            diagram.select(
                 property_item_which_is_typed_by_block_owning_the_port
             )
         ),
