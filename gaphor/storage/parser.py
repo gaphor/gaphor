@@ -304,7 +304,7 @@ def parse(filename) -> dict[str, element]:
     return loader.elements
 
 
-class ErrorHandler:
+class ErrorHandler(handler.ErrorHandler):
     def error(self, exception):
         raise exception from None
 
