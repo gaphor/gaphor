@@ -1271,6 +1271,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "kbdharun",
+      "name": "K.B.Dharun Krishna",
+      "avatar_url": "https://avatars.githubusercontent.com/u/26346867?v=4",
+      "profile": "https://kbdharun.dev",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
