@@ -7,6 +7,7 @@
 - Catch errors when a clipboard is empty
 - Fix DnD file opening on macOS
 - Fix libadwaita 1.4.0 missing for hypothesis tests
+- Replace ActivityItem specific property page with Activity specific property page
 
 2.22.0
 ------
