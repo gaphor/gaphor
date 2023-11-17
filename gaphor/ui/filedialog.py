@@ -11,7 +11,7 @@ from gi.repository import Gio, Gtk
 
 from gaphor.i18n import gettext
 
-GAPHOR_FILTER = [(gettext("All Gaphor Models"), "*.gaphor", "application/x-gaphor")]
+GAPHOR_FILTER = [(gettext("Gaphor Models"), "*.gaphor", "application/x-gaphor")]
 
 
 def new_filter(name: str, pattern: str, mime_type: str | None = None) -> Gtk.FileFilter:
@@ -74,7 +74,7 @@ def save_file_dialog(
 ) -> Gtk.FileChooser:
     dialog = Gtk.FileDialog.new()
     dialog.set_title(title)
-    
+
     if filename:
         dialog.set_initial_file(Gio.File.parse_name(str(filename)))
 

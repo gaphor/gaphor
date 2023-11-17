@@ -2061,8 +2061,8 @@ msgid "Date"
 msgstr "日期"
 
 #: gaphor/ui/appfilemanager.py:16 gaphor/ui/filedialog.py:13
-msgid "All Gaphor Models"
-msgstr "所有 Gaphor 模型"
+msgid "Gaphor Models"
+msgstr "Gaphor 模型"
 
 #: gaphor/ui/appfilemanager.py:42
 msgid "Switch to {name}?"

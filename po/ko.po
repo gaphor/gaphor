@@ -2138,7 +2138,7 @@ msgid "Date"
 msgstr "데이터형식"
 
 #: gaphor/ui/appfilemanager.py:16 gaphor/ui/filedialog.py:13
-msgid "All Gaphor Models"
+msgid "Gaphor Models"
 msgstr "모든 가포 모델"
 
 #: gaphor/ui/appfilemanager.py:42

@@ -2100,7 +2100,7 @@ msgid "Date"
 msgstr "状態"
 
 #: gaphor/ui/appfilemanager.py:16 gaphor/ui/filedialog.py:13
-msgid "All Gaphor Models"
+msgid "Gaphor Models"
 msgstr "全Gaphorモデル"
 
 #: gaphor/ui/appfilemanager.py:42

@@ -2083,7 +2083,7 @@ msgid "Date"
 msgstr "Дата"
 
 #: gaphor/ui/appfilemanager.py:16 gaphor/ui/filedialog.py:13
-msgid "All Gaphor Models"
+msgid "Gaphor Models"
 msgstr "Все Модели Gaphor"
 
 #: gaphor/ui/appfilemanager.py:42
