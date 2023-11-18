@@ -12,7 +12,7 @@ from cairo import LINE_JOIN_ROUND
 from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling.diagram import DrawContext, StyledDiagram, StyledItem
-from gaphor.diagram.diagramlabel import diagram_label
+from gaphor.diagram.diagramlabel import diagram_label, paint_diagram_type
 from gaphor.diagram.selection import Selection
 from gaphor.diagram.shapes import Box, CssNode, Orientation, Text, cairo_state, stroke
 
@@ -73,7 +73,8 @@ class DiagramTypePainter:
 
     def paint(self, _items, cr):
         diagram = self.diagram
-        if not diagram.diagramType:
+
+        if not paint_diagram_type(diagram):
             return
 
         style = diagram.style(StyledDiagram(diagram))

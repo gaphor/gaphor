@@ -1,5 +1,6 @@
 # ruff: noqa: F401
 
+import gaphor.SysML.deletable
 import gaphor.SysML.diagramlabel
 import gaphor.SysML.drop
 import gaphor.SysML.iconname

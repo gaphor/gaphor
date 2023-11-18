@@ -2,7 +2,10 @@ from gaphas.view import GtkView
 from gi.repository import Gdk, Gtk
 
 from gaphor.core import Transaction
-from gaphor.core.modeling import Presentation, self_and_owners
+from gaphor.core.modeling import Presentation
+from gaphor.diagram.deletable import deletable
+from gaphor.event import Notification
+from gaphor.i18n import gettext
 
 
 def shortcut_tool(event_manager):
@@ -29,6 +32,9 @@ def delete_selected_items(view: GtkView, event_manager):
         items = view.selection.selected_items
         for i in list(items):
             assert isinstance(i, Presentation)
-            if i.subject and i.subject in self_and_owners(i.diagram):
-                del i.diagram.element
-            i.unlink()
+            if deletable(i):
+                i.unlink()
+            else:
+                event_manager.handle(
+                    Notification(gettext("Selected diagram item is not deletable"))
+                )

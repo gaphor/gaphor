@@ -20,6 +20,7 @@ def test_delete_selected_items(create, diagram, event_manager):
     assert not diagram.ownedPresentation
 
 
+# TODO: Do we still want this feature?
 def test_delete_selected_owner(create, diagram, event_manager):
     package_item = create(PackageItem, UML.Package)
     diagram.element = package_item.subject
