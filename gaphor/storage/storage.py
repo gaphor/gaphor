@@ -14,7 +14,9 @@ from typing import Callable, Iterable
 from gaphor import application
 from gaphor.core.modeling import Diagram, Element, ElementFactory, Presentation
 from gaphor.core.modeling.collection import collection
+from gaphor.core.modeling.element import generate_id
 from gaphor.core.modeling.modelinglanguage import ModelingLanguage
+from gaphor.core.modeling.presentation import literal_eval
 from gaphor.core.modeling.stylesheet import StyleSheet
 from gaphor.storage.parser import GaphorLoader, element, parse_generator
 from gaphor.storage.xmlwriter import XMLWriter
@@ -153,8 +155,12 @@ def load_elements_generator(
         if progress % 30 == 0:
             yield (progress * 100) / size
 
-    # First create elements and canvas items in the factory
+    # First ensure that all sysml diagrams have a frame
+    if version_lower_than(gaphor_version, (2, 22, 0)):
+        ensure_sysml_diagrams_have_a_frame(elements)
+    # Then create elements and canvas items in the factory
     # The elements are stored as attribute 'element' on the parser objects:
+
     yield from _load_elements_and_canvasitems(
         elements,
         element_factory,
@@ -462,3 +468,135 @@ def upgrade_note_on_model_element_only(
                 subject.values["note"] = elem.values["note"]
             del elem.values["note"]
     return elem
+
+
+# since 2.22.0
+def ensure_sysml_diagrams_have_a_frame(elements):
+    diagrams = [elements[id] for id in elements if elements[id].type == "SysMLDiagram"]
+
+    def parse_diagram_boundaries(diagram):
+        def parse_points(item, parent_offset_x, parent_offset_y):
+            _, _, _, _, offset_x, offset_y = literal_eval(item.values.get("matrix"))
+            # TODO: use matrix match here
+
+            item_points = []
+
+            if points := item.values.get("points", None):
+                item_points.extend(
+                    [
+                        (x + offset_x + parent_offset_x, y + offset_y + parent_offset_y)
+                        for x, y in literal_eval(points)
+                    ]
+                )
+            elif top_left := item.values.get("top-left", None):
+                local_x, local_y = literal_eval(top_left)
+                x, y = (
+                    local_x + offset_x + parent_offset_x,
+                    local_y + offset_y + parent_offset_y,
+                )
+                width = literal_eval(item.values.get("width"))
+                height = literal_eval(item.values.get("height"))
+                item_points.extend([(x, y), (x + width, y + height)])
+            elif point := item.values.get("point", None):
+                local_x, local_y = literal_eval(point)
+                item_points.extend(
+                    [
+                        (
+                            local_x + offset_x + parent_offset_x,
+                            local_y + offset_y + parent_offset_y,
+                        )
+                    ]
+                )
+            else:
+                # TODO: probably fork, join node
+                pass
+
+            for child_id in item.references.get("children", []):
+                item_points.extend(
+                    parse_points(
+                        elements[child_id],
+                        offset_x + parent_offset_x,
+                        offset_y + parent_offset_y,
+                    )
+                )
+
+            return item_points
+
+        points = [
+            p
+            for id in diagram.references.get("ownedPresentation")
+            if not elements[id].references.get("parent", None)
+            for p in parse_points(elements[id], 0, 0)
+        ]
+
+        min_x = min((x for x, _ in points), default=0)
+        min_y = min((y for _, y in points), default=0)
+        max_x = max((x for x, _ in points), default=min_x)
+        max_y = max((y for _, y in points), default=min_y)
+
+        return (min_x, min_y, max_x - min_x, max_y - min_y)
+
+    def add_frame(diagram):
+        # Create frame
+        frame = element(generate_id(), "DiagramFrameItem")
+        elements[frame.id] = frame
+        # Attach subject
+        if element_id := diagram.references.get("element", None):
+            subject = elements[element_id]
+            frame.references["subject"] = subject.id
+            subject.references.setdefault("presentation", []).append(frame.id)
+        # Position and size the frame
+        min_x, min_y, width, height = parse_diagram_boundaries(diagram)
+        padding = 50
+        frame.values[
+            "matrix"
+        ] = f"(1.0, 0.0, 0.0, 1.0, {min_x - padding}, {min_y - padding})"
+        frame.values["top-left"] = "(0.0, 0.0)"
+        frame.values["width"] = f"{width + 2 * padding}"
+        frame.values["height"] = f"{height + 2 * padding}"
+        # Group the parentless items to the frame
+        parentless_items = (
+            item
+            for item in (
+                elements[id] for id in diagram.references.get("ownedPresentation", [])
+            )
+            if not item.references.get("parent", None)
+        )
+        for item in parentless_items:
+            frame.references.setdefault("children", []).append(item.id)  # type: ignore[union-attr] # we know for a fact that it can only be list, because we set it here first time
+            item.references["parent"] = frame.id
+            (a, b, c, d, x, y) = literal_eval(item.values.get("matrix"))
+            # TODO: use matrix math here
+            item.values[
+                "matrix"
+            ] = f"({a}, {b}, {c}, {d}, {x - (min_x - padding)}, {y - (min_y - padding)})"
+        # Attach the frame to the diagram
+        frame.references["diagram"] = diagram.id
+        diagram.references.setdefault("ownedPresentation", []).append(frame.id)
+
+    def replace_diagram_element_item_with_frame(item):
+        item.type = "DiagramFrameItem"
+
+    for diagram in diagrams:
+        if any(
+            elements[id].type == "DiagramFrameItem"
+            for id in diagram.references.get("ownedPresentation", [])
+        ):
+            continue
+
+        if el := diagram.references.get("element", None):
+            element_items = [
+                item
+                for item in (
+                    elements[id]
+                    for id in diagram.references.get("ownedPresentation", [])
+                )
+                if item.references.get("subject", None) == el
+            ]
+
+            if len(element_items) == 1:
+                replace_diagram_element_item_with_frame(element_items[0])
+            else:
+                add_frame(diagram)
+        else:
+            add_frame(diagram)

@@ -12,7 +12,7 @@ from cairo import LINE_JOIN_ROUND
 from gi.repository import GLib, Pango, PangoCairo
 
 from gaphor.core.modeling.diagram import DrawContext, StyledDiagram, StyledItem
-from gaphor.diagram.diagramlabel import diagram_label
+from gaphor.diagram.diagramlabel import diagram_label, paint_diagram_type
 from gaphor.diagram.selection import Selection
 
 
@@ -62,7 +62,8 @@ class DiagramTypePainter:
 
     def paint(self, _items, cr):
         diagram = self.diagram
-        if not diagram.diagramType:
+
+        if not diagram.diagramType or not paint_diagram_type(diagram):
             return
         style = diagram.style(StyledDiagram(diagram))
         layout = PangoCairo.create_layout(cr)

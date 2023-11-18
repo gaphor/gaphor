@@ -9,31 +9,45 @@ from gaphor.SysML.blocks.block import BlockItem
 from gaphor.SysML.blocks.interfaceblock import InterfaceBlockItem
 from gaphor.SysML.blocks.property import PropertyItem
 from gaphor.SysML.blocks.proxyport import ProxyPortItem
+from gaphor.SysML.diagramtype import DiagramFrameItem
 from gaphor.UML.deployments import ConnectorItem
 
 
 @Connector.register(InterfaceBlockItem, ProxyPortItem)
 @Connector.register(BlockItem, ProxyPortItem)
 @Connector.register(PropertyItem, ProxyPortItem)
+@Connector.register(DiagramFrameItem, ProxyPortItem)
 class BlockProperyProxyPortConnector:
     def __init__(
         self,
-        block_or_property: Union[BlockItem, PropertyItem, InterfaceBlockItem],
+        element: Union[BlockItem, PropertyItem, DiagramFrameItem, InterfaceBlockItem],
         proxy_port: ProxyPortItem,
     ) -> None:
-        self.element = block_or_property
+        self.element = element
         self.proxy_port = proxy_port
 
     def allow(self, handle: Handle, port: Port) -> bool:
-        return (
-            bool(self.element.diagram)
-            and self.element.diagram is self.proxy_port.diagram
-            and (
-                isinstance(self.element.subject, UML.EncapsulatedClassifier)
-                or isinstance(self.element.subject, UML.Property)
-                and isinstance(self.element.subject.type, UML.EncapsulatedClassifier)
-            )
-        )
+        # Early return when diagrams are not the same
+        if (
+            not bool(self.element.diagram)
+            or self.element.diagram is not self.proxy_port.diagram
+        ):
+            return False
+
+        match self.element:
+            case DiagramFrameItem():
+                # Allow only on blocks
+                return isinstance(self.element.subject, sysml.Block) and isinstance(
+                    self.element.subject, UML.EncapsulatedClassifier
+                )
+            case _:
+                return (
+                    isinstance(self.element.subject, UML.EncapsulatedClassifier)
+                    or isinstance(self.element.subject, UML.Property)
+                    and isinstance(
+                        self.element.subject.type, UML.EncapsulatedClassifier
+                    )
+                )
 
     def connect(self, handle: Handle, port: Port) -> bool:
         """Connect and reconnect at model level.

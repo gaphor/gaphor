@@ -5,6 +5,7 @@
 - Fix proxy port drag icon
 - Allow removing proxy port element only if the item from any diagram gets removed
 - Replace ActivityItem specific property page with Activity specific property page
+- Replace diagram header with diagram frame item
 
 2.21.0
 ------

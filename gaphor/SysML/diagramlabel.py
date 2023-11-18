@@ -1,4 +1,4 @@
-from gaphor.diagram.diagramlabel import diagram_label
+from gaphor.diagram.diagramlabel import diagram_label, paint_diagram_type
 from gaphor.SysML.sysml import Block, ConstraintBlock, Requirement, SysMLDiagram
 from gaphor.UML.uml import Activity, Interaction, Package, Profile, StateMachine
 
@@ -28,3 +28,8 @@ def sysml_diagram_label(diagram):
         )
     # TODO: SysML specification does not allow parentless elements, but since it is not constrained (yet), it may happen.
     return diagram.name
+
+
+@paint_diagram_type.register(SysMLDiagram)
+def sysml_paint_diagram_type(diagram) -> bool:
+    return False
