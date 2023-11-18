@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Harden Runner
-      uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+      uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
       with:
         egress-policy: audit
 
@@ -49,11 +49,11 @@ jobs:
         # that includes the dependencies
         echo "CODEQL_PYTHON=$(which python)" >> $GITHUB_ENV
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@74483a38d39275f33fcff5f35b679b5ca4a26a99 # v2.22.5
+      uses: github/codeql-action/init@66b90a5db151a8042fa97405c6cf843bbe433f7b # v2.22.7
       with:
         languages: python
         # Override the default behavior so that the action doesn't attempt
         # to auto-install Python dependencies
         setup-python-dependencies: false
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@74483a38d39275f33fcff5f35b679b5ca4a26a99 # v2.22.5
+      uses: github/codeql-action/analyze@66b90a5db151a8042fa97405c6cf843bbe433f7b # v2.22.7

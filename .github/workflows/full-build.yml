@@ -19,7 +19,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           disable-file-monitoring: true
@@ -121,7 +121,7 @@ jobs:
       options: --privileged
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -155,7 +155,7 @@ jobs:
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -202,7 +202,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -216,21 +216,21 @@ jobs:
           hdiutil attach ${{ needs.macos.outputs.artifact }}
           cd /Volumes/Gaphor*
           # Retry if first test fails
-          Gaphor.app/Contents/MacOS/gaphor-exe --self-test || Gaphor.app/Contents/MacOS/gaphor-exe --self-test
+          Gaphor.app/Contents/MacOS/gaphor --self-test || Gaphor.app/Contents/MacOS/gaphor --self-test
 
   windows-build-gtk:
     name: Windows (Build GTK)
     runs-on: windows-latest
     timeout-minutes: 60
     env:
-      gvsbuild_version: 2023.10.1
+      gvsbuild_version: 2023.11.0
       # Bump this number if you want to force a rebuild of gvsbuild with the same version
       gvsbuild_update: 0
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -290,7 +290,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -351,7 +351,7 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -365,7 +365,7 @@ jobs:
         shell: cmd
       - name: Perform self-test
         timeout-minutes: 5
-        run: start "" /WAIT "C:\Program Files\Gaphor\gaphor-exe.exe" --self-test
+        run: start "" /WAIT "C:\Program Files\Gaphor\gaphor.exe" --self-test
         shell: cmd
       - name: Test output
         if: always()
@@ -383,7 +383,7 @@ jobs:
       version: ${{ needs.linux-wheel.outputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -404,7 +404,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -422,7 +422,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
