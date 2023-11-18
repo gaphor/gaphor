@@ -5,6 +5,7 @@ from gaphor.diagram.general import CommentLineItem
 from gaphor.diagram.presentation import Classified, Named
 from gaphor.diagram.support import get_model_element
 from gaphor.SysML import diagramitems
+from gaphor.SysML.diagramframe import DiagramFrameItem
 from gaphor.UML import Classifier, NamedElement
 
 
@@ -28,7 +29,7 @@ def all_items_and_elements():
     [cls for cls in diagramitems.__dict__.values() if _issubclass(cls, Presentation)],
 )
 def test_all_diagram_items_have_a_model_element_mapping(item_class):
-    if item_class is CommentLineItem:
+    if item_class in (CommentLineItem, DiagramFrameItem):
         assert not get_model_element(item_class)
     else:
         assert get_model_element(item_class)
