@@ -183,7 +183,6 @@ jobs:
         run: poetry run pytest --cov
       - name: Create macOS Application
         id: create
-        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: ./.github/actions/macos_dmg
         with:
           sign_app: ${{ env.mainline_build }}
@@ -198,7 +197,6 @@ jobs:
     name: Check macOS App
     needs: macos
     runs-on: macos-latest
-    if: ${{ github.actor != 'dependabot[bot]' }}
     timeout-minutes: 10
     steps:
       - name: Harden Runner
@@ -336,7 +334,6 @@ jobs:
         run: poetry run pytest --cov
       - name: Create Windows Executables
         uses: ./.github/actions/windows_executables
-        if: ${{ github.actor != 'dependabot[bot]' }}
         with:
           mainline_build: ${{ env.mainline_build }}
           version: ${{ steps.install.outputs.version }}
@@ -348,7 +345,6 @@ jobs:
     needs: windows
     runs-on: windows-latest
     timeout-minutes: 15
-    if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
