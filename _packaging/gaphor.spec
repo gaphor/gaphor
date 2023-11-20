@@ -1,12 +1,8 @@
 import os
-import sys
 import time
 from pathlib import Path
 
-if sys.version_info >= (3, 11):
-    import tomllib
-else:
-    import tomli as tomllib
+import tomllib
 
 import pyinstaller_versionfile
 from packaging.version import Version
