@@ -11,6 +11,7 @@ on:
       - main
   release:
     types: [published]
+  workflow_dispatch:
 
 env:
   python_version: '3.11'
