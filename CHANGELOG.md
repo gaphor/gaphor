@@ -1,6 +1,9 @@
 2.21.1
 ------
-(Unreleased)
+- Add proxy port to the closest port owning item
+- Allow adding existing proxy port on the owning block's property
+- Fix proxy port drag icon
+- Allow removing proxy port element only if the item from any diagram gets removed
 
 2.21.0
 ------

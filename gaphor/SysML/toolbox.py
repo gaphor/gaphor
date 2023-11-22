@@ -60,7 +60,7 @@ internal_blocks = ToolSection(
         ToolDef(
             "toolbox-proxy-port",
             gettext("Proxy Port"),
-            "gaphor-proxyport-symbolic",
+            "gaphor-proxy-port-symbolic",
             "x",
             new_item_factory(sysml_items.ProxyPortItem),
         ),
