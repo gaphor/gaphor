@@ -11,17 +11,11 @@ logger = logging.getLogger(__name__)
 class Settings(Gio.Settings):
     """Gaphor settings."""
 
-    def __init__(self):
-        Gio.Settings.__init__(self)
-
     @classmethod
     def new(cls) -> Gio.Settings | None:
         """Create a new Settings object."""
         schema_source = Gio.SettingsSchemaSource.get_default()
-        if (
-            Gio.SettingsSchemaSource.lookup(schema_source, APPLICATION_ID, False)
-            is not None
-        ):
+        if Gio.SettingsSchemaSource.lookup(schema_source, APPLICATION_ID, False):
             gio_settings = Gio.Settings.new(APPLICATION_ID)
             gio_settings.__class__ = Settings
             return gio_settings
