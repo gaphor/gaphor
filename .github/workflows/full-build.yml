@@ -2,9 +2,20 @@ name: Full Build
 
 on:
   push:
+    branches:
+      - main
+    paths-ignore:
+      - '*.md'
   pull_request:
+    branches:
+      - main
   release:
     types: [published]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   python_version: '3.11'
