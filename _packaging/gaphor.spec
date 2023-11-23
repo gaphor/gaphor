@@ -1,13 +1,8 @@
-import logging
 import os
-import sys
 import time
 from pathlib import Path
 
-if sys.version_info >= (3, 11):
-    import tomllib
-else:
-    import tomli as tomllib
+import tomllib
 
 import pyinstaller_versionfile
 from packaging.version import Version
@@ -29,7 +24,9 @@ mo_files = [
 def get_version() -> Version:
     project_dir = Path.cwd().parent
     f = project_dir / "pyproject.toml"
-    return Version(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
+    return Version(
+        tomllib.loads(f.read_text(encoding="utf-8"))["tool"]["poetry"]["version"]
+    )
 
 
 def collect_entry_points(*names):
