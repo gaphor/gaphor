@@ -15,7 +15,7 @@ class Settings(Gio.Settings):
     def new(cls) -> Gio.Settings | None:
         """Create a new Settings object."""
         schema_source = Gio.SettingsSchemaSource.get_default()
-        if Gio.SettingsSchemaSource.lookup(schema_source, APPLICATION_ID, False):
+        if schema_source.lookup(APPLICATION_ID, False):
             gio_settings = Gio.Settings.new(APPLICATION_ID)
             gio_settings.__class__ = Settings
             return gio_settings

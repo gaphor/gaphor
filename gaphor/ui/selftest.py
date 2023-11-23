@@ -15,6 +15,7 @@ from gaphor.abc import Service
 from gaphor.application import Application, distribution
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
+from gaphor.ui import APPLICATION_ID
 
 with contextlib.suppress(ImportError):
     import pygit2
@@ -74,6 +75,7 @@ class SelfTest(Service):
         self.init_timer(gtk_app, timeout=30)
         self.test_library_versions()
         self.test_gsettings_schemas()
+        self.test_gio_settings_schemas()
         self.test_new_session()
         self.test_auto_layout()
         self.test_git_support()
@@ -133,13 +135,29 @@ class SelfTest(Service):
         source = Gio.settings_schema_source_get_default()
         if source.lookup("org.gtk.gtk4.Settings.FileChooser", recursive=True):
             log.info(
-                "Schemas found in data dirs: %s",
+                "FileChooser schemas found in data dirs: %s",
                 ":".join(GLib.get_system_data_dirs()),
             )
             status.complete()
         else:
             log.error(
-                "Could not find schemas in data dirs: %s",
+                "Could not find FileChooser schemas in data dirs: %s",
+                ":".join(GLib.get_system_data_dirs()),
+            )
+            log.info("FileChooser schemas found: %s %s", *source.list_schemas(True))
+
+    @test
+    def test_gio_settings_schemas(self, status):
+        source = Gio.SettingsSchemaSource.get_default()
+        if source.lookup(APPLICATION_ID, recursive=False):
+            log.info(
+                "Settings schemas found in data dirs: %s",
+                ":".join(GLib.get_system_data_dirs()),
+            )
+            status.complete()
+        else:
+            log.error(
+                "Could not find settings schemas in data dirs: %s",
                 ":".join(GLib.get_system_data_dirs()),
             )
             log.info("Schemas found: %s %s", *source.list_schemas(True))

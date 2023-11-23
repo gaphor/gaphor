@@ -37,6 +37,9 @@ runs:
         poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\gtk\x64\release\PyGObject*.whl)
         poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\gtk\x64\release\pycairo*.whl)
       shell: pwsh
+    - name: Install settings schemas
+      run: poetry run poe install-schemas
+      shell: bash
     - name: Compile all translations
       if: github.event_name != 'release'
       run: poetry run poe gettext-mo-all
