@@ -154,7 +154,7 @@ jobs:
   macos:
     name: macOS
     needs: lint
-    runs-on: macos-latest
+    runs-on: macos-12
     permissions:
       contents: write
     timeout-minutes: 45
@@ -210,7 +210,7 @@ jobs:
   check-macos-app:
     name: Check macOS App
     needs: macos
-    runs-on: macos-latest
+    runs-on: macos-12
     timeout-minutes: 10
     steps:
       - name: Harden Runner
