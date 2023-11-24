@@ -6,24 +6,30 @@ from __future__ import annotations
 
 from gaphor.core.modeling.properties import (
     association,
-    attribute as _attribute,
     derived,
     derivedunion,
-    enumeration as _enumeration,
     redefine,
     relation_many,
     relation_one,
 )
-
-
-from gaphor.UML.uml import Class
+from gaphor.core.modeling.properties import (
+    attribute as _attribute,
+)
+from gaphor.core.modeling.properties import (
+    enumeration as _enumeration,
+)
 from gaphor.SysML.sysml import Block
+from gaphor.UML.uml import Class
+
+
 class Situation(Block, Class):
     pass
 
 
 from gaphor.SysML.sysml import DirectedRelationshipPropertyPath
 from gaphor.UML.uml import Dependency
+
+
 class RelevantTo(Dependency, DirectedRelationshipPropertyPath):
     pass
 
@@ -88,6 +94,8 @@ class AbstractRisk(Scenario):
 
 
 from gaphor.UML.uml import Dependency
+
+
 class Detection(ControllingMeasure, Dependency):
     pass
 
@@ -105,6 +113,8 @@ class Recommendation(ControllingMeasure, Dependency):
 
 
 from gaphor.UML.uml import State
+
+
 class FailureState(State):
     pass
 
@@ -126,6 +136,8 @@ class EventDef(FTAElement):
 
 
 from gaphor.UML.uml import Event
+
+
 class Gate(Class):
     pass
 
@@ -187,6 +199,8 @@ class TopEvent(Class):
 
 
 from gaphor.UML.uml import Property
+
+
 class TransferIn(Property):
     pass
 
@@ -277,11 +291,15 @@ class UnsafeControlAction_Def(Situation):
 
 
 from gaphor.UML.uml import Property
+
+
 class Actuator(Property):
     pass
 
 
 from gaphor.UML.uml import DataType
+
+
 class Signal():
     pass
 
