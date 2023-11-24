@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.14.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 21:22+0200\n"
-"PO-Revision-Date: 2023-03-04 14:38+0000\n"
-"Last-Translator: Felipe Nogueira <contato.fnog@gmail.com>\n"
+"PO-Revision-Date: 2023-11-23 23:06+0000\n"
+"Last-Translator: Jean Elias <jeancme@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
+"gaphor/gaphor/pt_BR/>\n"
 "Language: pt_BR\n"
-"Language-Team: Portuguese (Brazil) "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/pt_BR/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.2.1-rc\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -263,9 +264,8 @@ msgid "Controller"
 msgstr "Controlador"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:94 gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Actuator"
-msgstr "Ator"
+msgstr "Atuador"
 
 #: gaphor/RAAML/stpa/stpatoolbox.py:105
 msgid "Controlled Process"
@@ -290,9 +290,8 @@ msgid "Item Flow"
 msgstr "Fluxo de Itens"
 
 #: gaphor/SysML/propertypages.ui:22
-#, fuzzy
 msgid "Enable Item Flow"
-msgstr "Fluxo de Itens"
+msgstr "Habilitar Fluxo de Itens"
 
 #: gaphor/SysML/propertypages.ui:36
 msgid "Item Property"
@@ -630,9 +629,8 @@ msgid "Swimlane"
 msgstr "Raia"
 
 #: gaphor/UML/actions/actionstoolbox.py:170
-#, fuzzy
 msgid "Control flow"
-msgstr "Controlador"
+msgstr "Fluxo de Controle"
 
 #: gaphor/UML/actions/actionstoolbox.py:177
 #, fuzzy
@@ -657,11 +655,11 @@ msgstr "Aceitar evento"
 
 #: gaphor/UML/actions/actionstoolbox.py:208
 msgid "Input pin"
-msgstr ""
+msgstr "Pino de entrada"
 
 #: gaphor/UML/actions/actionstoolbox.py:215
 msgid "Output pin"
-msgstr ""
+msgstr "Pino de saída"
 
 #: gaphor/UML/actions/activitynodes.py:189
 msgid "merge/decision"
@@ -697,11 +695,11 @@ msgstr "Nova Raia"
 
 #: gaphor/UML/actions/pin.py:58
 msgid "input pin"
-msgstr ""
+msgstr "pino de entrada"
 
 #: gaphor/UML/actions/pin.py:64
 msgid "output pin"
-msgstr ""
+msgstr "pino de saída"
 
 #: gaphor/UML/actions/propertypages.ui:11
 msgid "Show type"
@@ -760,7 +758,7 @@ msgstr ""
 #: gaphor/UML/classes/propertypages.ui:637
 #: gaphor/UML/classes/propertypages.ui:745
 msgid "🛈 Help"
-msgstr ""
+msgstr "🛈 Ajuda"
 
 #: gaphor/UML/actions/propertypages.ui:288
 msgid ""
@@ -780,9 +778,8 @@ msgstr ""
 #: gaphor/UML/classes/classespropertypages.py:308
 #: gaphor/UML/classes/classespropertypages.py:392
 #: gaphor/UML/classes/propertypages.ui:810
-#, fuzzy
 msgid "Static"
-msgstr "Automático"
+msgstr "Estático"
 
 #: gaphor/UML/classes/classespropertypages.py:392
 #: gaphor/UML/classes/propertypages.ui:449
@@ -814,7 +811,7 @@ msgstr "Tipo de dado"
 
 #: gaphor/UML/classes/datatype.py:56
 msgid "primitive"
-msgstr ""
+msgstr "primitivo"
 
 #: gaphor/UML/classes/datatype.py:58 gaphor/UML/classes/enumeration.py:73
 msgid "valueType"
@@ -2713,4 +2710,3 @@ msgstr ""
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr ""
-
