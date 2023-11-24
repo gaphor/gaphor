@@ -6,7 +6,7 @@ from exceptiongroup import ExceptionGroup
 from gaphor import UML
 from gaphor.application import Application
 from gaphor.core import Transaction, event_handler
-from gaphor.core.modeling import Diagram, AssociationUpdated
+from gaphor.core.modeling import AssociationUpdated, Diagram
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.UML.classes import (
     AssociationItem,

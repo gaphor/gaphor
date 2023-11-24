@@ -1,8 +1,7 @@
 from gaphor.diagram.drop import drop
 from gaphor.diagram.presentation import connect
 from gaphor.diagram.support import get_diagram_item
-from gaphor.SysML.sysml import ProxyPort
-from gaphor.SysML.sysml import Block
+from gaphor.SysML.sysml import Block, ProxyPort
 from gaphor.UML.uml import Property
 
 

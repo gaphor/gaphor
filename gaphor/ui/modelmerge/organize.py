@@ -1,20 +1,20 @@
 from __future__ import annotations
 
-
 from itertools import groupby
 from typing import Iterable, Sequence
 
-from gi.repository import GObject, Gio
+from gi.repository import Gio, GObject
 
+from gaphor.core.changeset.apply import applicable
 from gaphor.core.modeling import (
+    Diagram,
     ElementChange,
+    PendingChange,
+    Presentation,
     RefChange,
     ValueChange,
-    PendingChange,
 )
 from gaphor.i18n import gettext
-from gaphor.core.changeset.apply import applicable
-from gaphor.core.modeling import Diagram, Presentation
 
 
 class Node(GObject.Object):

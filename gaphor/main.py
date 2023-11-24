@@ -5,7 +5,7 @@ import sys
 
 from gaphor.application import distribution
 from gaphor.entrypoint import initialize
-from gaphor.plugins import enable_plugins, default_plugin_path
+from gaphor.plugins import default_plugin_path, enable_plugins
 
 LOG_FORMAT = "%(name)s %(levelname)s %(message)s"
 

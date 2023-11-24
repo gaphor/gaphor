@@ -7,11 +7,11 @@ from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
-    ToolboxDefinition,
     ElementCreateInfo,
+    ToolboxDefinition,
 )
 from gaphor.UML import diagramitems, uml
-from gaphor.UML.toolbox import uml_diagram_types, uml_toolbox_actions, uml_element_types
+from gaphor.UML.toolbox import uml_diagram_types, uml_element_types, uml_toolbox_actions
 
 
 class UMLModelingLanguage(ModelingLanguage):

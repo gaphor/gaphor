@@ -1,6 +1,8 @@
 from uuid import uuid1
 
 import pytest
+
+from gaphor import UML
 from gaphor.core.modeling import (
     Diagram,
     Element,
@@ -8,9 +10,8 @@ from gaphor.core.modeling import (
     RefChange,
     ValueChange,
 )
-from gaphor import UML
-from gaphor.UML.diagramitems import ClassItem
 from gaphor.ui.modelmerge.organize import organize_changes
+from gaphor.UML.diagramitems import ClassItem
 
 
 @pytest.fixture(autouse=True)

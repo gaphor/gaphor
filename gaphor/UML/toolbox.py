@@ -14,15 +14,14 @@ from gaphor.UML.deployments.deploymentstoolbox import deployments
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.profiles.profilestoolbox import profiles
 from gaphor.UML.states.statestoolbox import states
-from gaphor.UML.usecases.usecasetoolbox import use_cases
 from gaphor.UML.uml import (
-    Device,
     Activity,
     Actor,
     Artifact,
     Class,
     Component,
     DataType,
+    Device,
     Enumeration,
     InstanceSpecification,
     Interaction,
@@ -30,10 +29,11 @@ from gaphor.UML.uml import (
     Node,
     Package,
     Profile,
-    Stereotype,
     StateMachine,
+    Stereotype,
     UseCase,
 )
+from gaphor.UML.usecases.usecasetoolbox import use_cases
 
 uml_toolbox_actions: ToolboxDefinition = (
     general_tools,

@@ -257,6 +257,7 @@ select = [
     "F",
     "W",
 ]
+extend-select = ["I"]
 
 [tool.ruff.mccabe]
 max-complexity = 18

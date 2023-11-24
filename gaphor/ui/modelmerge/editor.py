@@ -1,20 +1,20 @@
 from __future__ import annotations
 
-from gi.repository import Gio, Gtk
 from gaphas.decorators import nonrecursive
+from gi.repository import Gio, Gtk
 
+from gaphor.core import event_handler
+from gaphor.core.changeset.apply import applicable, apply_change
+from gaphor.core.modeling import PendingChange
 from gaphor.event import (
     ModelLoaded,
     TransactionBegin,
     TransactionCommit,
     TransactionRollback,
 )
-from gaphor.core.modeling import PendingChange
-from gaphor.core.changeset.apply import apply_change, applicable
 from gaphor.i18n import translated_ui_string
-from gaphor.core import event_handler
 from gaphor.transaction import Transaction
-from gaphor.ui.modelmerge.organize import organize_changes, Node
+from gaphor.ui.modelmerge.organize import Node, organize_changes
 
 
 class ModelMerge:

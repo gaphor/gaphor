@@ -1,5 +1,5 @@
 from gaphor.core.modeling import Diagram, Element, ElementFactory
-from gaphor.diagram.group import can_group, group, ungroup, change_owner
+from gaphor.diagram.group import can_group, change_owner, group, ungroup
 
 
 def test_group_diagram(element_factory):

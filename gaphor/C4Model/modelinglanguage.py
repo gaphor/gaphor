@@ -6,14 +6,14 @@ from gaphor.abc import ModelingLanguage
 from gaphor.C4Model import c4model, diagramitems
 from gaphor.C4Model.toolbox import (
     c4model_diagram_types,
-    c4model_toolbox_actions,
     c4model_element_types,
+    c4model_toolbox_actions,
 )
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
-    ToolboxDefinition,
     ElementCreateInfo,
+    ToolboxDefinition,
 )
 
 

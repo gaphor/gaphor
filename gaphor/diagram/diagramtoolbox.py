@@ -5,6 +5,8 @@ We bind the Toolbox to a diagram. When a diagram page (tab) is switched,
 the actions bound to the toolbuttons should change as well.
 """
 
+import getpass
+import time
 from typing import (
     Callable,
     Collection,
@@ -15,13 +17,11 @@ from typing import (
     Type,
     TypeVar,
 )
-import getpass
-import time
 
 from gaphas.item import SE
 
 from gaphor.core import gettext
-from gaphor.core.modeling import Comment, Diagram, Element, Presentation, Picture
+from gaphor.core.modeling import Comment, Diagram, Element, Picture, Presentation
 from gaphor.diagram import general
 from gaphor.diagram.group import group
 

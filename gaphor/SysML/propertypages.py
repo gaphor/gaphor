@@ -1,14 +1,13 @@
 from __future__ import annotations
 
-
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
-    unsubscribe_all_on_destroy,
     PropertyPageBase,
     PropertyPages,
     handler_blocking,
     new_resource_builder,
+    unsubscribe_all_on_destroy,
 )
 from gaphor.SysML import sysml
 from gaphor.SysML.blocks.block import BlockItem

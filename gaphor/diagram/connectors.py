@@ -11,9 +11,8 @@ import itertools
 from typing import Iterator, Protocol, TypeVar
 
 from gaphas.connections import Connection
-from gaphas.connector import ConnectionSink
+from gaphas.connector import ConnectionSink, Handle, Port
 from gaphas.connector import Connector as ConnectorAspect
-from gaphas.connector import Handle, Port
 from generic.multidispatch import FunctionDispatcher, multidispatch
 
 from gaphor.core.modeling import Diagram, Element, Presentation

@@ -51,7 +51,7 @@ from gaphor.core.modeling.element import Element, generate_id, uuid_generator
 from gaphor.diagram.copypaste import copy_full, paste_full, paste_link
 from gaphor.diagram.deletable import deletable
 from gaphor.diagram.drop import drop
-from gaphor.diagram.group import can_group
+from gaphor.diagram.group import can_group, change_owner
 from gaphor.diagram.presentation import LinePresentation
 from gaphor.diagram.support import get_diagram_item_metadata
 from gaphor.diagram.tests.fixtures import allow, connect, disconnect
@@ -59,7 +59,6 @@ from gaphor.RAAML.toolbox import fta, stpa
 from gaphor.storage import storage
 from gaphor.SysML.toolbox import blocks, internal_blocks, requirements
 from gaphor.ui.filemanager import load_default_model
-from gaphor.diagram.group import change_owner
 from gaphor.UML import diagramitems
 from gaphor.UML.toolbox import (
     actions,

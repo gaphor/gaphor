@@ -7,12 +7,14 @@ from gaphor.diagram.propertypages import (
     EditableTreeModel,
     PropertyPageBase,
     PropertyPages,
+    handler_blocking,
     help_link,
     new_resource_builder,
-    new_builder as diagram_new_builder,
-    handler_blocking,
     on_text_cell_edited,
     unsubscribe_all_on_destroy,
+)
+from gaphor.diagram.propertypages import (
+    new_builder as diagram_new_builder,
 )
 from gaphor.UML.actions.activity import ActivityItem
 from gaphor.UML.classes.classespropertypages import on_keypress_event

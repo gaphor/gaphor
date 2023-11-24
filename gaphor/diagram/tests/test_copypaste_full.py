@@ -1,7 +1,7 @@
 from gaphor import UML
 from gaphor.core.modeling import Diagram, ElementFactory
-from gaphor.diagram.general import DiagramItem
 from gaphor.diagram.copypaste import copy_full, paste_full
+from gaphor.diagram.general import DiagramItem
 from gaphor.diagram.tests.test_copypaste_link import two_classes_and_a_generalization
 from gaphor.UML.classes import ClassItem, GeneralizationItem, PackageItem
 

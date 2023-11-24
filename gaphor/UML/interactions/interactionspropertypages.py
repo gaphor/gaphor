@@ -1,3 +1,4 @@
+from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
@@ -7,8 +8,6 @@ from gaphor.diagram.propertypages import (
 from gaphor.UML.interactions.interactionsconnect import get_lifeline
 from gaphor.UML.interactions.message import MessageItem
 from gaphor.UML.propertypages import list_of_classifiers
-from gaphor import UML
-
 
 new_builder = new_resource_builder("gaphor.UML.interactions")
 

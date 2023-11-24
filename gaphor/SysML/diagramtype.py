@@ -1,6 +1,6 @@
 from gaphor.diagram.diagramtoolbox import DiagramType
-from gaphor.SysML.sysml import SysMLDiagram
 from gaphor.diagram.group import change_owner
+from gaphor.SysML.sysml import SysMLDiagram
 
 
 class DiagramDefault:

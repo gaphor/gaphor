@@ -1,7 +1,7 @@
 import pytest
 
-from gaphor.SysML import sysml
 from gaphor.core.format import format
+from gaphor.SysML import sysml
 
 TYPES = [sysml.Allocate, sysml.Refine, sysml.Trace]
 

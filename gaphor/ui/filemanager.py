@@ -15,7 +15,7 @@ from gaphor import UML
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, event_handler, gettext
 from gaphor.core.changeset.compare import compare
-from gaphor.core.modeling import Diagram, StyleSheet, ElementFactory
+from gaphor.core.modeling import Diagram, ElementFactory, StyleSheet
 from gaphor.event import (
     ModelLoaded,
     ModelSaved,
