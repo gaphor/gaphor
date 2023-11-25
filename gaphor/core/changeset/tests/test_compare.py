@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.core.changeset.compare import UnmatchableModel, compare, RefChange
+from gaphor.core.changeset.compare import RefChange, UnmatchableModel, compare
 from gaphor.core.modeling import (
     Diagram,
     Element,

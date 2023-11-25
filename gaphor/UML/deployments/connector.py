@@ -103,12 +103,12 @@ from gaphor import UML
 from gaphor.diagram.presentation import LinePresentation, Named
 from gaphor.diagram.shapes import Box, Text
 from gaphor.diagram.support import represents
-from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.informationflow import (
+    draw_information_flow,
     shape_information_flow,
     watch_information_flow,
-    draw_information_flow,
 )
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Connector)

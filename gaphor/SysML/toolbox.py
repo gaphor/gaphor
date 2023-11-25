@@ -1,7 +1,6 @@
 """The action definition for the SysML toolbox."""
 
 from gaphor import UML
-from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import (
     DiagramTypes,
     ElementCreateInfo,
@@ -11,7 +10,11 @@ from gaphor.diagram.diagramtoolbox import (
     general_tools,
     new_item_factory,
 )
+from gaphor.i18n import gettext, i18nize
 from gaphor.SysML import diagramitems as sysml_items
+from gaphor.SysML.blocks.blockstoolbox import blocks
+from gaphor.SysML.diagramtype import DiagramDefault, SysMLDiagramType
+from gaphor.SysML.requirements.requirementstoolbox import requirements
 from gaphor.SysML.sysml import (
     Block,
     ConstraintBlock,
@@ -19,24 +22,21 @@ from gaphor.SysML.sysml import (
     Requirement,
     ValueType,
 )
-from gaphor.SysML.blocks.blockstoolbox import blocks
-from gaphor.SysML.requirements.requirementstoolbox import requirements
 from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
 from gaphor.UML.toolboxconfig import named_element_config
-from gaphor.UML.usecases.usecasetoolbox import use_cases
-from gaphor.SysML.diagramtype import SysMLDiagramType, DiagramDefault
 from gaphor.UML.uml import (
-    Package,
     Activity,
     Actor,
-    Interaction,
-    StateMachine,
     Enumeration,
+    Interaction,
+    Package,
+    StateMachine,
     UseCase,
 )
+from gaphor.UML.usecases.usecasetoolbox import use_cases
 
 internal_blocks = ToolSection(
     gettext("Internal Blocks"),

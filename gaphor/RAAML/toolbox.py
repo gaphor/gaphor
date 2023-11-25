@@ -8,9 +8,9 @@ from gaphor.diagram.diagramtoolbox import (
 )
 from gaphor.i18n import i18nize
 from gaphor.RAAML.fta.ftatoolbox import fta
+from gaphor.RAAML.raaml import Hazard, Loss, Situation, TopEvent
 from gaphor.RAAML.stpa.stpatoolbox import stpa
 from gaphor.UML.uml import Package
-from gaphor.RAAML.raaml import TopEvent, Loss, Hazard, Situation
 
 raaml_toolbox_actions: ToolboxDefinition = (
     general_tools,

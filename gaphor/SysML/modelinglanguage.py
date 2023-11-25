@@ -7,14 +7,14 @@ from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
-    ToolboxDefinition,
     ElementCreateInfo,
+    ToolboxDefinition,
 )
 from gaphor.SysML import diagramitems, sysml
 from gaphor.SysML.toolbox import (
     sysml_diagram_types,
-    sysml_toolbox_actions,
     sysml_element_types,
+    sysml_toolbox_actions,
 )
 
 

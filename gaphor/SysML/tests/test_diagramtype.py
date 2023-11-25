@@ -1,4 +1,4 @@
-from gaphor.SysML.diagramtype import SysMLDiagramType, DiagramDefault
+from gaphor.SysML.diagramtype import DiagramDefault, SysMLDiagramType
 from gaphor.UML.uml import NamedElement
 
 

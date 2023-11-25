@@ -12,8 +12,8 @@ from cairo import LINE_JOIN_ROUND
 from gi.repository import GLib, Pango, PangoCairo
 
 from gaphor.core.modeling.diagram import DrawContext, StyledDiagram, StyledItem
-from gaphor.diagram.selection import Selection
 from gaphor.diagram.diagramlabel import diagram_label
+from gaphor.diagram.selection import Selection
 
 
 class ItemPainter:

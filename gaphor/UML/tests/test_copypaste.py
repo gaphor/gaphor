@@ -1,8 +1,8 @@
+from gaphor import UML
 from gaphor.core.modeling import Diagram
 from gaphor.diagram.copypaste import copy_full, paste_full
 from gaphor.diagram.tests.test_copypaste_link import two_classes_and_a_generalization
 from gaphor.UML.classes import PackageItem
-from gaphor import UML
 
 
 def test_copy_connected_item(diagram, element_factory):

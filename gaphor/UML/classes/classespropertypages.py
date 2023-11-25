@@ -9,10 +9,10 @@ from gaphor.core import gettext, transactional
 from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
     EditableTreeModel,
+    NamePropertyPage,
     PropertyPageBase,
     PropertyPages,
     help_link,
-    NamePropertyPage,
     new_resource_builder,
     on_bool_cell_edited,
     on_text_cell_edited,

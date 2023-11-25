@@ -8,10 +8,10 @@ from gaphor.diagram.shapes import (
     Box,
     DrawContext,
     IconBox,
+    Orientation,
     Text,
     TextAlign,
     VerticalAlign,
-    Orientation,
 )
 
 

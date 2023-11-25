@@ -1,9 +1,8 @@
 import logging
 import os.path
+from pathlib import Path
 
 from gi.repository import Adw
-
-from pathlib import Path
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import action, gettext

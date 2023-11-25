@@ -25,7 +25,6 @@ from gaphor.diagram.tools import (
 from gaphor.diagram.tools.magnet import MagnetPainter
 from gaphor.ui.event import DiagramClosed, DiagramSelectionChanged, ToolSelected
 
-
 log = logging.getLogger(__name__)
 
 

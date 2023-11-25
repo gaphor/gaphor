@@ -1,6 +1,6 @@
 from gaphor.diagram.diagramlabel import diagram_label
-from gaphor.SysML.sysml import SysMLDiagram, Block, ConstraintBlock, Requirement
-from gaphor.UML.uml import Activity, Package, Interaction, Profile, StateMachine
+from gaphor.SysML.sysml import Block, ConstraintBlock, Requirement, SysMLDiagram
+from gaphor.UML.uml import Activity, Interaction, Package, Profile, StateMachine
 
 
 @diagram_label.register(SysMLDiagram)
