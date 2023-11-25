@@ -245,8 +245,9 @@ exclude = [
     "coremodel.py",
     "diagramitems.py",
     "docs/conf.py",
+    "gaphor/RAAML/raaml.py",
+    "gaphor/C4Model/c4model.py",
 ]
-# ignore = ["E501", "B023", "B905"]
 ignore = ["E501"]
 line-length = 88
 select = [
