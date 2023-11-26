@@ -92,6 +92,7 @@ ICONS=diagram \
 	trace \
 	refine \
 	verify \
+	allocate \
 	constraint \
 	view-editor \
 	c4-person \
