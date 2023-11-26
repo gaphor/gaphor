@@ -1,19 +1,19 @@
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import (
+    FontWeight,
+    JustifyContent,
     Style,
     TextAlign,
     VerticalAlign,
-    FontWeight,
-    JustifyContent,
 )
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import (
     Box,
+    Orientation,
     Text,
     draw_border,
     draw_left_separator,
     draw_top_separator,
-    Orientation,
 )
 
 

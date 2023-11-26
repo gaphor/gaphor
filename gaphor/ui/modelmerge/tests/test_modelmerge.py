@@ -1,5 +1,5 @@
-from gaphor.ui.modelmerge.editor import ModelMerge
 from gaphor.core.modeling import ElementChange, ValueChange
+from gaphor.ui.modelmerge.editor import ModelMerge
 
 
 def test_build_list_store(event_manager, element_factory, modeling_language):

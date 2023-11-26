@@ -2,10 +2,10 @@ import contextlib
 
 import pytest
 
-import gaphor.UML.diagramitems
-import gaphor.SysML.diagramitems
 import gaphor.C4Model.diagramitems
 import gaphor.RAAML.diagramitems
+import gaphor.SysML.diagramitems
+import gaphor.UML.diagramitems
 from gaphor.core.modeling import Element
 from gaphor.core.modeling.properties import umlproperty
 

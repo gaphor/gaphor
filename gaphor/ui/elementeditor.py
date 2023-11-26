@@ -18,18 +18,17 @@ from gaphor.core.modeling.event import (
     ModelReady,
 )
 from gaphor.diagram.propertypages import PropertyPages, new_resource_builder
+from gaphor.event import ModelLoaded
 from gaphor.i18n import localedir
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.csscompletion import (
+    CompletionProviderWrapper,
     CssFunctionProposals,
     CssNamedColorProposals,
     CssPropertyProposals,
-    CompletionProviderWrapper,
 )
 from gaphor.ui.event import DiagramSelectionChanged
 from gaphor.ui.modelmerge import ModelMerge
-from gaphor.event import ModelLoaded
-
 
 log = logging.getLogger(__name__)
 

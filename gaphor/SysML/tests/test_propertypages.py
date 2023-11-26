@@ -7,8 +7,8 @@ from gaphor.SysML.propertypages import (
     CompartmentPage,
     ItemFlowPropertyPage,
     PropertyAggregationPropertyPage,
-    TypedElementPropertyPage,
     RequirementPropertyPage,
+    TypedElementPropertyPage,
 )
 
 

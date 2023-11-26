@@ -7,14 +7,14 @@ from gaphor.abc import ModelingLanguage
 from gaphor.core import gettext
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
-    ToolboxDefinition,
     ElementCreateInfo,
+    ToolboxDefinition,
 )
 from gaphor.RAAML import diagramitems, raaml
 from gaphor.RAAML.toolbox import (
     raaml_diagram_types,
-    raaml_toolbox_actions,
     raaml_element_types,
+    raaml_toolbox_actions,
 )
 
 

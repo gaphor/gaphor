@@ -4,20 +4,19 @@ from dataclasses import replace
 from math import atan2
 
 import gaphas
-from gaphas.connector import ConnectionSink
+from gaphas.connector import ConnectionSink, Handle, LinePort, Position
 from gaphas.connector import Connector as ConnectorAspect
-from gaphas.connector import Handle, LinePort, Position
 from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver.constraint import BaseConstraint
 
 from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.event import RevertibleEvent, AttributeUpdated
+from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.shapes import stroke
-from gaphor.diagram.text import TextAlign, text_point_at_line, middle_segment
+from gaphor.diagram.text import TextAlign, middle_segment, text_point_at_line
 
 
 class Named:

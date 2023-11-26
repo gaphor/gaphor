@@ -27,14 +27,13 @@ from gaphor.diagram.shapes import (
 )
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import Layout
-from gaphor.UML.recipes import stereotypes_str
-from gaphor.UML.umlfmt import format_association_end
 from gaphor.UML.informationflow import (
+    draw_information_flow,
     shape_information_flow,
     watch_information_flow,
-    draw_information_flow,
 )
-
+from gaphor.UML.recipes import stereotypes_str
+from gaphor.UML.umlfmt import format_association_end
 
 half_pi = pi / 2
 

@@ -1,10 +1,10 @@
 from gaphor.core.modeling import Comment
+from gaphor.diagram.general import MetadataItem
 from gaphor.diagram.general.generalpropertypages import (
     CommentPropertyPage,
     MetadataPropertyPage,
 )
 from gaphor.diagram.tests.fixtures import find
-from gaphor.diagram.general import MetadataItem
 
 
 def test_comment_property_page_body(element_factory):

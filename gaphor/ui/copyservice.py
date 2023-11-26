@@ -1,6 +1,7 @@
 """Copy / Paste functionality."""
 
 from __future__ import annotations
+
 from typing import Callable, Collection
 
 from gi.repository import Gdk, GLib, GObject
@@ -8,7 +9,7 @@ from gi.repository import Gdk, GLib, GObject
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import Transaction, action
 from gaphor.core.modeling import Diagram, Presentation
-from gaphor.diagram.copypaste import copy_full, paste_full, paste_link, Opaque
+from gaphor.diagram.copypaste import Opaque, copy_full, paste_full, paste_link
 
 
 class CopyBuffer(GObject.Object):

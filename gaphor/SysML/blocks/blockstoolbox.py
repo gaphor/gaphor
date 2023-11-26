@@ -10,8 +10,8 @@ from gaphor.SysML import sysml
 from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.classes.classestoolbox import (
     composite_association_config,
-    shared_association_config,
     direct_association_config,
+    shared_association_config,
 )
 from gaphor.UML.toolboxconfig import namespace_config
 

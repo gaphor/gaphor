@@ -1,7 +1,6 @@
 from typing import Optional
 
 from gaphas.connector import Handle
-from gaphor.diagram.presentation import connect
 from gaphas.guide import GuidedItemHandleMoveMixin
 from gaphas.handlemove import ConnectionSinkType, HandleMove, ItemHandleMove
 from gaphas.item import Item, Line
@@ -10,7 +9,7 @@ from gaphas.types import Pos
 from gaphas.view import GtkView
 
 from gaphor.diagram.connectors import Connector, ItemTemporaryDisconnected
-from gaphor.diagram.presentation import AttachedPresentation
+from gaphor.diagram.presentation import AttachedPresentation, connect
 
 
 def connectable(line, handle, element):

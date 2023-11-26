@@ -4,8 +4,8 @@ from gaphor import UML
 from gaphor.core.modeling import Diagram
 from gaphor.ui.modelbrowser import (
     ElementDragData,
-    SearchEngine,
     ModelBrowser,
+    SearchEngine,
     get_first_selected_item,
     list_item_drop_drop,
 )

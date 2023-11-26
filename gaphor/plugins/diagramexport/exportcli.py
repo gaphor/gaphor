@@ -11,7 +11,6 @@ from gaphor.core.modeling import Diagram
 from gaphor.diagram.export import escape_filename, save_pdf, save_png, save_svg
 from gaphor.storage import storage
 
-
 log = logging.getLogger(__name__)
 
 

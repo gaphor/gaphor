@@ -1,11 +1,11 @@
+import contextlib
 import importlib.resources
 import logging
 import platform
 import sys
+import tempfile
 import textwrap
 import time
-import tempfile
-import contextlib
 
 import cairo
 import gi
