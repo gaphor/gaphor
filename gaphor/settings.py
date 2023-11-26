@@ -1,7 +1,8 @@
 """Application settings support for Gaphor."""
 
-from gi.repository import Gio
 import logging
+
+from gi.repository import Gio
 
 APPLICATION_ID = "org.gaphor.Gaphor"
 

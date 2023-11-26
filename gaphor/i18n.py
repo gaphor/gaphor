@@ -12,10 +12,9 @@ import logging
 import os
 import sys
 
-from gaphor.settings import settings
-
 import defusedxml.ElementTree as etree
 
+from gaphor.settings import settings
 
 log = logging.getLogger(__name__)
 
