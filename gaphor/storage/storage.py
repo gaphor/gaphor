@@ -507,10 +507,6 @@ def ensure_sysml_diagrams_have_a_frame(elements):
                         )
                     ]
                 )
-            else:
-                # TODO: probably fork, join node
-                pass
-
             for child_id in item.references.get("children", []):
                 item_points.extend(
                     parse_points(
