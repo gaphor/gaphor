@@ -192,6 +192,14 @@ gettext-mo-release = { "script" = "po.build-babel:compile_mo_release" }
 translations = ["gettext-pot", "gettext-po", "gettext-mo-all"]
 icons = { "shell" = "make -C gaphor/ui/icons" }
 
+[tool.poe.tasks.install-schemas]
+shell = """
+    glib-compile-schemas data
+    mkdir -p ~/.local/share/glib-2.0/schemas
+    cp data/org.gaphor.Gaphor.gschema.xml ~/.local/share/glib-2.0/schemas/
+    cp data/gschemas.compiled ~/.local/share/glib-2.0/schemas/
+"""
+
 [tool.poe.executor]
 type = "virtualenv"
 

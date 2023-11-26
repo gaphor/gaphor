@@ -41,6 +41,9 @@ htmlcov
 # Flatpak
 .flatpak-builder
 
+# Schemas
+data/gschemas.compiled
+
 # Windows Install
 _packaging/windows/gaphor-script.py
 _packaging/windows/_build_root

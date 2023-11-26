@@ -73,7 +73,7 @@ class Greeter(Service, ActionProvider):
         self.event_manager = event_manager
         self.recent_manager = recent_manager or Gtk.RecentManager.get_default()
         self.greeter: Gtk.Window = None
-        self.gtk_app: Gtk.Application = None
+        self.gtk_app: Adw.Application = None
         event_manager.subscribe(self.on_session_created)
 
     def init(self, gtk_app):

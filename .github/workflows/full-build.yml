@@ -154,7 +154,7 @@ jobs:
   macos:
     name: macOS
     needs: lint
-    runs-on: macos-11
+    runs-on: macos-12
     permissions:
       contents: write
     timeout-minutes: 45
@@ -174,9 +174,12 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
+        env:
+          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
+          HOMEBREW_NO_INSTALL_CLEANUP: 1
         run: >
-          brew install gtk4 gtksourceview5 libadwaita adwaita-icon-theme
-          gobject-introspection graphviz create-dmg upx
+          brew update && brew install gtk4 gtksourceview5 libadwaita
+          adwaita-icon-theme gobject-introspection graphviz create-dmg upx
       - name: Set up Python
         uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
         with:
@@ -207,7 +210,7 @@ jobs:
   check-macos-app:
     name: Check macOS App
     needs: macos
-    runs-on: macos-latest
+    runs-on: macos-12
     timeout-minutes: 10
     steps:
       - name: Harden Runner
@@ -319,6 +322,7 @@ jobs:
       - name: Set up env
         run: |
           Write-Output "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $env:GITHUB_ENV
+          Write-Output "XDG_DATA_HOME=$HOME\.local\share" >> $env:GITHUB_ENV
           Write-Output "C:\gtk-build\gtk\x64\release\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1

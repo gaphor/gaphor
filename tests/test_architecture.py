@@ -11,6 +11,7 @@ GAPHOR_CORE = [
     "gaphor.i18n",
     "gaphor.transaction",
     "gaphor.event",
+    "gaphor.settings",
 ]
 
 UI_LIBRARIES = [
@@ -28,7 +29,7 @@ def test_core_packages():
         .exclude("*.tests.*")
         .may_import(*GAPHOR_CORE)
         .should_not_import("gaphor*")
-        .should_not_import("gi.*")
+        .should_not_import(*UI_LIBRARIES)
         .check(gaphor, skip_type_checking=True)
     )
 

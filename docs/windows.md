@@ -148,6 +148,7 @@ Add GTK to your environmental variables:
 $env:Path = $env:Path + ";C:\gtk-build\gtk\x64\release\bin"
 $env:LIB = "C:\gtk-build\gtk\x64\release\lib"
 $env:INCLUDE = "C:\gtk-build\gtk\x64\release\include;C:\gtk-build\gtk\x64\release\include\cairo;C:\gtk-build\gtk\x64\release\include\glib-2.0;C:\gtk-build\gtk\x64\release\include\gobject-introspection-1.0;C:\gtk-build\gtk\x64\release\lib\glib-2.0\include;"
+$env:XDG_DATA_HOME = "$HOME\.local\share"
 ```
 
 You can also edit your account's Environmental Variables to persist across
