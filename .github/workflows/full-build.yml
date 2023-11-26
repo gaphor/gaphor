@@ -322,6 +322,7 @@ jobs:
       - name: Set up env
         run: |
           Write-Output "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $env:GITHUB_ENV
+          Write-Output "XDG_DATA_HOME=$HOME\.local\share" >> $env:GITHUB_ENV
           Write-Output "C:\gtk-build\gtk\x64\release\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
