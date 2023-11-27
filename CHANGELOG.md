@@ -2,6 +2,7 @@
 ------
 - Proxy port improvements
 - Add preferences for overriding dark mode and language to English
+- Add allocations toolbox with allocate relationship item
 - Add members in model browser
 - Make line selection easier by increasing tolerance
 - Make model loading more lenient

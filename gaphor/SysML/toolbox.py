@@ -12,6 +12,7 @@ from gaphor.diagram.diagramtoolbox import (
 )
 from gaphor.i18n import gettext, i18nize
 from gaphor.SysML import diagramitems as sysml_items
+from gaphor.SysML.allocations.allocationstoolbox import allocations
 from gaphor.SysML.blocks.blockstoolbox import blocks
 from gaphor.SysML.diagramtype import DiagramDefault, SysMLDiagramType
 from gaphor.SysML.requirements.requirementstoolbox import requirements
@@ -77,6 +78,7 @@ sysml_toolbox_actions: ToolboxDefinition = (
     interactions,
     states,
     use_cases,
+    allocations,
 )
 
 root = type(None)
