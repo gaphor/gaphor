@@ -14,6 +14,7 @@ from gaphor.core.styling import (
     Style,
     TextAlign,
     VerticalAlign,
+    WhiteSpace,
     merge_styles,
 )
 from gaphor.diagram.text import Layout
@@ -410,11 +411,15 @@ class Text:
         min_w = style.get("min-width", 0)
         min_h = style.get("min-height", 0)
         text_align = style.get("text-align", TextAlign.CENTER)
+        white_space = style.get("white-space", WhiteSpace.NOWRAP)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
 
         layout = self._layout
         layout.set(
-            text=self.text(), font=style, width=self.width(), text_align=text_align
+            text=self.text(),
+            font=style,
+            width=-1 if white_space == WhiteSpace.NOWRAP else self.width(),
+            text_align=text_align,
         )
         width, height = layout.size()
         return (
