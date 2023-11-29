@@ -1280,6 +1280,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "3fla1416",
+      "name": "3fla1416",
+      "avatar_url": "https://avatars.githubusercontent.com/u/108428517?v=4",
+      "profile": "https://github.com/3fla1416",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
