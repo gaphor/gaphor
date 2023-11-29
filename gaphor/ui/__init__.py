@@ -79,8 +79,11 @@ def run(argv: list[str]) -> int:
             for file in files:
                 application.new_session(filename=file.get_path())
 
+    # Register session on Darwin, so an NSApplicationDelegate is registered that allows to open files
     gtk_app = Adw.Application(
-        application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
+        application_id=APPLICATION_ID,
+        flags=Gio.ApplicationFlags.HANDLES_OPEN,
+        register_session=(sys.platform == "darwin")
     )
     gtk_app.exit_code = 0
     add_main_options(gtk_app)
