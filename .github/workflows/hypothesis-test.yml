@@ -51,6 +51,8 @@ jobs:
           key: ${{ runner.os }}-hypothesis
       - name: Install Dependencies
         uses: ./.github/actions/install
+        with:
+          python-version: ${{ env.python_version }}
       - name: Test with Hypothesis
         run: xvfb-run poetry run pytest -m hypothesis --hypothesis-profile=ci
         shell: bash
