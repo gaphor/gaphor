@@ -72,7 +72,13 @@ class CopyService(Service, ActionProvider):
         callback: Callable[[set[Presentation]], None] | None,
     ) -> None:
         def on_paste(_source_object, result):
-            copy_buffer = self.clipboard.read_value_finish(result)
+            try:
+                copy_buffer = self.clipboard.read_value_finish(result)
+            except GLib.GError as e:
+                if str(e).startswith("g-io-error-quark:"):
+                    return
+                raise
+
             with Transaction(self.event_manager):
                 # Create new id's that have to be used to create the items:
                 new_items = paster(copy_buffer.buffer, diagram)
