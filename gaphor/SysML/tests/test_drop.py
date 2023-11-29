@@ -5,6 +5,14 @@ from gaphor.SysML.blocks import PropertyItem, ProxyPortItem
 from gaphor.UML.recipes import create_connector
 
 
+def test_drop_sysml_diagram(diagram, element_factory):
+    sysml_diagram = element_factory.create(sysml.SysMLDiagram)
+
+    item = drop(sysml_diagram, diagram, 0, 0)
+
+    assert item
+
+
 def test_drop_connector(diagram, element_factory):
     proxy_port = element_factory.create(sysml.ProxyPort)
     proxy_port_item = diagram.create(ProxyPortItem, subject=proxy_port)
