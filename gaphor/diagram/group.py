@@ -17,10 +17,10 @@ from gaphor.core.modeling import Diagram, Element, self_and_owners
 
 
 def change_owner(new_parent, element):
-    if element.model is not new_parent.model:
+    if new_parent and element.model is not new_parent.model:
         return False
 
-    if element.owner is new_parent:
+    if new_parent and element.owner is new_parent:
         return False
 
     if new_parent is None and element.owner:
