@@ -16,9 +16,8 @@ from gi.repository import Adw, Gio, GLib, Gtk, GtkSource
 from gaphor.application import Application, Session
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
+from gaphor.settings import APPLICATION_ID, settings, StyleVariant
 from gaphor.ui.actiongroup import apply_application_actions
-
-APPLICATION_ID = "org.gaphor.Gaphor"
 
 Adw.init()
 GtkSource.init()
@@ -79,9 +78,19 @@ def run(argv: list[str]) -> int:
             for file in files:
                 application.new_session(filename=file.get_path())
 
+    def update_color_scheme(style_variant: StyleVariant):
+        gtk_app.get_style_manager().set_color_scheme(
+            {
+                StyleVariant.DARK: Adw.ColorScheme.FORCE_DARK,
+                StyleVariant.LIGHT: Adw.ColorScheme.FORCE_LIGHT,
+            }.get(style_variant, Adw.ColorScheme.DEFAULT)
+        )
+
     gtk_app = Adw.Application(
         application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
     )
+
+    settings.style_variant_changed(update_color_scheme)
     gtk_app.exit_code = 0
     add_main_options(gtk_app)
     gtk_app.connect("startup", app_startup)
