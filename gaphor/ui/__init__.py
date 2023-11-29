@@ -78,10 +78,19 @@ def run(argv: list[str]) -> int:
             for file in files:
                 application.new_session(filename=file.get_path())
 
+    def update_color_scheme(style_variant: StyleVariant):
+        gtk_app.get_style_manager().set_color_scheme(
+            {
+                StyleVariant.DARK: Adw.ColorScheme.FORCE_DARK,
+                StyleVariant.LIGHT: Adw.ColorScheme.FORCE_LIGHT,
+            }.get(style_variant, Adw.ColorScheme.DEFAULT)
+        )
+
     gtk_app = Adw.Application(
         application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
     )
-    update_color_scheme(gtk_app, settings.style_variant)
+
+    settings.style_variant_changed(update_color_scheme)
     gtk_app.exit_code = 0
     add_main_options(gtk_app)
     gtk_app.connect("startup", app_startup)
@@ -100,15 +109,6 @@ def add_main_options(gtk_app):
         GLib.OptionArg.NONE,
         "Run self test and exit",
         None,
-    )
-
-
-def update_color_scheme(app: Adw.Application, style_variant: StyleVariant):
-    app.get_style_manager().set_color_scheme(
-        {
-            StyleVariant.DARK: Adw.ColorScheme.FORCE_DARK,
-            StyleVariant.LIGHT: Adw.ColorScheme.FORCE_LIGHT,
-        }.get(style_variant, Adw.ColorScheme.DEFAULT)
     )
 
 

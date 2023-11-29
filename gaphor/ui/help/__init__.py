@@ -15,7 +15,7 @@ from gaphor.application import distribution
 from gaphor.core import action
 from gaphor.i18n import translated_ui_string, gettext
 from gaphor.settings import settings, StyleVariant
-from gaphor.ui import update_color_scheme
+
 
 logger = logging.getLogger(__name__)
 
@@ -74,7 +74,6 @@ class HelpService(Service, ActionProvider):
                 settings.style_variant =  StyleVariant.LIGHT
             else:
                 settings.style_variant =  StyleVariant.SYSTEM
-            update_color_scheme(gtk_app, settings.style_variant)
 
     def _on_use_english_selected(self, switch_row: Adw.SwitchRow, param) -> None:
         if self.preferences_window:

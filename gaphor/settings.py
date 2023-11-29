@@ -51,6 +51,15 @@ class Settings:
             style_variant = self._gio_settings.get_enum("style-variant")
             target.set_property(prop, style_variant)
 
+    def style_variant_changed(self, callback):
+        if self._gio_settings:
+
+            def _on_changed(_settings, _name):
+                callback(self.style_variant)
+
+            self._gio_settings.connect("changed::style-variant", _on_changed)
+            callback(self.style_variant)
+
     @property
     def use_english(self) -> bool:
         return (  # type: ignore[no-any-return]
