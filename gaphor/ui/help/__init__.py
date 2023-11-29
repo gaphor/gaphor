@@ -8,22 +8,16 @@ import webbrowser
 import sys
 from enum import Enum
 
-from gi.repository import Adw, Gio, GObject, Gtk
+from gi.repository import Adw, GObject, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
 from gaphor.core import action
 from gaphor.i18n import translated_ui_string, gettext
-from gaphor.settings import settings
-
+from gaphor.settings import settings, StyleVariant
+from gaphor.ui import update_color_scheme
 
 logger = logging.getLogger(__name__)
-
-
-class StyleValue(Enum):
-    SYSTEM = 0
-    DARK = 1
-    LIGHT = 2
 
 
 def new_builder(ui_file):
@@ -36,9 +30,6 @@ class HelpService(Service, ActionProvider):
     def __init__(self, application):
         self.application = application
         self.preferences_window = None
-        if settings:
-            self.style_variant = StyleValue(settings.get_enum("style-variant"))
-            self._set_style_variant(self.style_variant)
 
     def shutdown(self):
         pass
@@ -75,13 +66,15 @@ class HelpService(Service, ActionProvider):
         return shortcuts
 
     def _on_dark_mode_selected(self, combo_row: Adw.ComboRow, param) -> None:
-        selected = combo_row.props.selected_item
-        if selected.props.string == "Dark":
-            self._set_style_variant(StyleValue.DARK)
-        elif selected.props.string == "Light":
-            self._set_style_variant(StyleValue.LIGHT)
-        else:
-            self._set_style_variant(StyleValue.SYSTEM)
+        if gtk_app := self.application.gtk_app:
+            selected = combo_row.props.selected_item
+            if selected.props.string == "Dark":
+                settings.style_variant = StyleVariant.DARK
+            elif selected.props.string == "Light":
+                settings.style_variant =  StyleVariant.LIGHT
+            else:
+                settings.style_variant =  StyleVariant.SYSTEM
+            update_color_scheme(gtk_app, settings.style_variant)
 
     def _on_use_english_selected(self, switch_row: Adw.SwitchRow, param) -> None:
         if self.preferences_window:
@@ -90,18 +83,6 @@ class HelpService(Service, ActionProvider):
                     title=gettext("Restart Gaphor to enable language changes"),
                 )
             )
-
-    def _set_style_variant(self, style_value: StyleValue) -> None:
-        if gtk_app := self.application.gtk_app:
-            style_manager = gtk_app.get_style_manager()
-            if style_value == StyleValue.DARK:
-                style_manager.set_color_scheme(Adw.ColorScheme.FORCE_DARK)
-            elif style_value == StyleValue.LIGHT:
-                style_manager.set_color_scheme(Adw.ColorScheme.FORCE_LIGHT)
-            elif style_value == StyleValue.SYSTEM:
-                style_manager.set_color_scheme(Adw.ColorScheme.DEFAULT)
-        if settings:
-            settings.set_enum("style-variant", style_value.value)
 
     @action(name="app.preferences", shortcut="<Primary>comma")
     def preferences(self):
@@ -117,17 +98,10 @@ class HelpService(Service, ActionProvider):
         dark_mode_selection: Adw.ComboRow = builder.get_object("dark_mode_selection")
         use_english: Adw.SwitchRow = builder.get_object("use_english")
 
-        if settings:
-            settings.bind(
-                "use-english", use_english, "active", Gio.SettingsBindFlags.DEFAULT
-            )
-            use_english.connect("notify::active", self._on_use_english_selected)
+        settings.bind_use_english(use_english, "active")
+        use_english.connect("notify::active", self._on_use_english_selected)
 
-            # Bind with mapping not supported by PyGObject: https://gitlab.gnome.org/GNOME/pygobject/-/issues/98
-            # To bind to a function that can map between guint and a string
-            self.style_variant = settings.get_enum("style-variant")
-            dark_mode_selection.set_selected(self.style_variant)
-
+        settings.bind_style_variant(dark_mode_selection, "selected")
         dark_mode_selection.connect(
             "notify::selected-item", self._on_dark_mode_selected
         )

@@ -57,7 +57,7 @@ def translation(lang) -> _gettext.GNUTranslations | _gettext.NullTranslations:
     return _gettext.NullTranslations()
 
 
-if settings and settings.get_boolean("use-english"):
+if settings.use_english:
     gettext = translation("en_US.UTF-8").gettext
 else:
     gettext = translation(os.getenv("LANG") or _get_os_language()).gettext
