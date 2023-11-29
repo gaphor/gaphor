@@ -65,7 +65,7 @@
       "buildsystem": "simple",
       "build-commands": [
         "pip3 install --ignore-installed --prefix=${FLATPAK_DEST} .",
-        "install -D org.gaphor.Gaphor.gschema.xml /app/share/glib-2.0/schemas/org.gaphor.Gaphor.gschema.xml",
+        "install -D data/org.gaphor.Gaphor.gschema.xml /app/share/glib-2.0/schemas/org.gaphor.Gaphor.gschema.xml",
         "glib-compile-schemas /app/share/glib-2.0/schemas"
       ],
       "sources": [
