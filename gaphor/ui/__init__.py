@@ -86,8 +86,11 @@ def run(argv: list[str]) -> int:
             }.get(style_variant, Adw.ColorScheme.DEFAULT)
         )
 
+    # Register session on Darwin, so the NSApplicationDelegate is registered for opening files
     gtk_app = Adw.Application(
-        application_id=APPLICATION_ID, flags=Gio.ApplicationFlags.HANDLES_OPEN
+        application_id=APPLICATION_ID,
+        flags=Gio.ApplicationFlags.HANDLES_OPEN,
+        register_session=(sys.platform == "darwin")
     )
 
     settings.style_variant_changed(update_color_scheme)
