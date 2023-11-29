@@ -18,8 +18,8 @@ def test_preferences(builder):
 
 
 def test_preferences_dark_mode(builder):
-    dark_mode_selection = builder.get_object("dark_mode_selection")
-    assert dark_mode_selection.get_selected() == 0
+    style_variant = builder.get_object("style_variant")
+    assert style_variant.get_selected() == 0
 
 
 def test_preferences_use_english(builder):

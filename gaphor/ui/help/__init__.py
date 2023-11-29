@@ -65,7 +65,7 @@ class HelpService(Service, ActionProvider):
         shortcuts.set_visible(True)
         return shortcuts
 
-    def _on_dark_mode_selected(self, combo_row: Adw.ComboRow, param) -> None:
+    def _on_style_variant_selected(self, combo_row: Adw.ComboRow, param) -> None:
         if gtk_app := self.application.gtk_app:
             selected = combo_row.props.selected_item
             if selected.props.string == "Dark":
@@ -95,15 +95,15 @@ class HelpService(Service, ActionProvider):
         self.preferences_window.set_modal(True)
         self.preferences_window.set_transient_for(self.window)
 
-        dark_mode_selection: Adw.ComboRow = builder.get_object("dark_mode_selection")
+        style_variant: Adw.ComboRow = builder.get_object("style_variant")
         use_english: Adw.SwitchRow = builder.get_object("use_english")
 
         settings.bind_use_english(use_english, "active")
         use_english.connect("notify::active", self._on_use_english_selected)
 
-        settings.bind_style_variant(dark_mode_selection, "selected")
-        dark_mode_selection.connect(
-            "notify::selected-item", self._on_dark_mode_selected
+        settings.bind_style_variant(style_variant, "selected")
+        style_variant.connect(
+            "notify::selected-item", self._on_style_variant_selected
         )
 
         self.preferences_window.set_visible(True)

@@ -11,7 +11,7 @@
                     <object class="AdwPreferencesGroup">
                         <property name="title" translatable="true">Colors</property>
                         <child>
-                            <object class="AdwComboRow" id="dark_mode_selection">
+                            <object class="AdwComboRow" id="style_variant">
                                 <property name="title">Force Dark or Light Color Scheme</property>
                                 <property name="model">
                                     <object class="GtkStringList">
