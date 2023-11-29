@@ -1,3 +1,13 @@
+2.22.1
+------
+- Flatpak: Fix app preferences aren't saved
+- Fix TypeError when changing to dark mode and refactor settings
+- Fix grouping: allow to group to "root"
+- Add support for dropping SysML diagrams on diagrams
+- Catch errors when a clipboard is empty
+- Fix DnD file opening on macOS
+- Fix libadwaita 1.4.0 missing for hypothesis tests
+
 2.22.0
 ------
 - Proxy port improvements
