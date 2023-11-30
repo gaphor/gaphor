@@ -92,6 +92,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments
+from gaphor.UML.recipes import stereotypes_str
 
 
 class Folded(Enum):
@@ -278,7 +279,7 @@ class InterfaceItem(Classified, ElementPresentation):
         return Box(
             Box(
                 Text(
-                    text=lambda: UML.recipes.stereotypes_str(
+                    text=lambda: stereotypes_str(
                         self.subject, (self.diagram.gettext("interface"),)
                     ),
                 ),
@@ -325,7 +326,7 @@ class InterfaceItem(Classified, ElementPresentation):
                 draw=self.draw_interface_ball_and_socket,
             ),
             Text(
-                text=lambda: UML.recipes.stereotypes_str(self.subject),
+                text=lambda: stereotypes_str(self.subject),
             ),
             Text(
                 text=lambda: self.subject.name or "",
