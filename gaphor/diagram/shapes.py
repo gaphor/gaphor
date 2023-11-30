@@ -411,7 +411,7 @@ class Text:
         min_w = style.get("min-width", 0)
         min_h = style.get("min-height", 0)
         text_align = style.get("text-align", TextAlign.CENTER)
-        white_space = style.get("white-space", WhiteSpace.NOWRAP)
+        white_space = style.get("white-space", WhiteSpace.NORMAL)
         padding_top, padding_right, padding_bottom, padding_left = style["padding"]
 
         layout = self._layout
