@@ -6,7 +6,6 @@ import sys
 import tempfile
 import textwrap
 import time
-from pathlib import Path
 
 import cairo
 import gi
@@ -75,8 +74,7 @@ class SelfTest(Service):
         windows_console_output_workaround()
         self.init_timer(gtk_app, timeout=30)
         self.test_library_versions()
-        self.test_filechooser_schemas()
-        self.test_preferences_schemas()
+        self.test_gsettings_schemas()
         self.test_new_session()
         self.test_auto_layout()
         self.test_git_support()
@@ -132,35 +130,18 @@ class SelfTest(Service):
         GLib.idle_add(check_new_session, session, priority=GLib.PRIORITY_LOW)
 
     @test
-    def test_filechooser_schemas(self, status):
+    def test_gsettings_schemas(self, status):
         source = Gio.settings_schema_source_get_default()
-        if source.lookup("org.gtk.gtk4.Settings.FileChooser", recursive=True):
-            log.info(
-                "FileChooser schemas found in data dirs: %s",
-                ":".join(GLib.get_system_data_dirs()),
-            )
-            status.complete()
-        else:
-            log.error(
-                "Could not find FileChooser schemas in data dirs: %s",
-                ":".join(GLib.get_system_data_dirs()),
-            )
-            log.info("FileChooser schemas found: %s %s", *source.list_schemas(True))
-
-    @test
-    def test_preferences_schemas(self, status):
-        source = Gio.SettingsSchemaSource.get_default()
-        schema_dirs = GLib.get_system_data_dirs()
-        user_data_dir = Path.home() / ".local/share"
-        schema_dirs.append(str(user_data_dir))
-        if source.lookup(APPLICATION_ID, recursive=True):
-            log.info(f"Settings schemas found in schema dir: {schema_dirs}")
-            status.complete()
-        else:
-            log.error(
-                f"Could not find settings schemas in {schema_dirs}",
-            )
-            log.info("Schemas found: %s %s", *source.list_schemas(True))
+        data_dirs = [GLib.get_user_data_dir(), *GLib.get_system_data_dirs()]
+        for schema in ["org.gtk.gtk4.Settings.FileChooser", APPLICATION_ID]:
+            if source.lookup(schema, recursive=True):
+                log.info("Schema %s found", schema)
+            else:
+                log.debug("Schemas found: %s %s", *source.list_schemas(True))
+                raise RuntimeError(
+                    f"Could not find schema {schema} in data dirs: {':'.join(data_dirs)}"
+                )
+        status.complete()
 
     @test
     def test_auto_layout(self, status):
