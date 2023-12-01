@@ -9,6 +9,7 @@ from gaphor.core.styling import (
     JustifyContent,
     TextAlign,
     TextDecoration,
+    WhiteSpace,
 )
 from gaphor.diagram.presentation import (
     Classified,
@@ -146,6 +147,7 @@ def attributes_compartment(subject):
                     "text-decoration": TextDecoration.UNDERLINE
                     if attribute.isStatic
                     else TextDecoration.NONE,
+                    "white-space": WhiteSpace.NOWRAP,
                 },
             )
             for attribute in subject.ownedAttribute
@@ -178,6 +180,7 @@ def operations_compartment(subject):
                     "text-decoration": TextDecoration.UNDERLINE
                     if operation.isStatic
                     else TextDecoration.NONE,
+                    "white-space": WhiteSpace.NOWRAP,
                 },
             )
             for operation in subject.ownedOperation

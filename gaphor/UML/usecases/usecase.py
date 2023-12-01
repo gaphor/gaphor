@@ -26,8 +26,8 @@ class UseCaseItem(Classified, ElementPresentation):
             ),
             Text(
                 text=lambda: self.subject.name or "",
-                width=lambda: self.width,
                 style={
+                    "padding": (4, 4, 4, 4),
                     "font-weight": FontWeight.BOLD,
                     "font-style": FontStyle.ITALIC
                     if self.subject and self.subject.isAbstract

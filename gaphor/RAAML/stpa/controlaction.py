@@ -34,7 +34,6 @@ class ControlActionItem(Classified, ElementPresentation):
                 ),
                 Text(
                     text=lambda: self.subject.name or "",
-                    width=lambda: self.width - 4,
                     style={
                         "font-weight": FontWeight.BOLD,
                         "font-style": FontStyle.NORMAL,

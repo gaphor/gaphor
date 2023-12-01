@@ -406,7 +406,7 @@ class IconBox:
 
 
 class Text:
-    def __init__(self, text=lambda: "", width=lambda: -1, style: Style | None = None):
+    def __init__(self, text: str | Callable[[], str], style: Style | None = None):
         if style is None:
             style = {}
         self._text = text if callable(text) else lambda: text
