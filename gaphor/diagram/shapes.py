@@ -11,6 +11,7 @@ from gaphas.geometry import Rectangle
 from gaphor.core.modeling import DrawContext, UpdateContext
 from gaphor.core.styling import (
     JustifyContent,
+    Padding,
     Style,
     TextAlign,
     VerticalAlign,
@@ -125,6 +126,19 @@ class Orientation(Enum):
     HORIZONTAL = "h"
 
 
+def rectangle_shrink(rect: Rectangle | None, padding: Padding) -> Rectangle:
+    if rect is None:
+        return Rectangle()
+
+    top, right, bottom, left = padding
+    return Rectangle(
+        rect.x + left,
+        rect.y + top,
+        rect.width - left - right,
+        rect.height - top - bottom,
+    )
+
+
 class Box:
     """A box like shape.
 
@@ -160,15 +174,17 @@ class Box:
     def __getitem__(self, index):
         return self.children[index]
 
-    def size(self, context: UpdateContext):
+    def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        self.sizes = sizes = [c.size(context) for c in self.children]
+        padding = style["padding"]
+        new_bounds = rectangle_shrink(bounding_box, padding)
+        self.sizes = sizes = [c.size(context, new_bounds) for c in self.children]
         if sizes:
             widths, heights = list(zip(*sizes))
             is_vertical = self._orientation == Orientation.VERTICAL
+            padding_top, padding_right, padding_bottom, padding_left = padding
             return (
                 max(
                     min_width,
@@ -331,13 +347,16 @@ class IconBox:
         self.sizes: list[tuple[int, int]] = []
         self._inline_style = style
 
-    def size(self, context: UpdateContext):
+    def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        self.sizes = [c.size(context) for c in self.children]
-        width, height = self.icon.size(context)
+        padding = style["padding"]
+        # TODO: width should be * 2.6
+        new_bounds = rectangle_shrink(bounding_box, padding)
+        self.sizes = [c.size(context, new_bounds) for c in self.children]
+        width, height = self.icon.size(context, new_bounds)
+        padding_top, padding_right, padding_bottom, padding_left = padding
         return (
             max(min_width, width + padding_right + padding_left),
             max(min_height, height + padding_top + padding_bottom),
@@ -378,12 +397,7 @@ class IconBox:
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        x = bounding_box.x + padding_left
-        y = bounding_box.y + padding_top
-        w = bounding_box.width - padding_right - padding_left
-        h = bounding_box.height - padding_top - padding_bottom
-        self.icon.draw(new_context, Rectangle(x, y, w, h))
+        self.icon.draw(new_context, rectangle_shrink(bounding_box, style["padding"]))
 
         cx, cy, max_w, total_h = self.child_pos(style, bounding_box)
         for c, (cw, ch) in zip(self.children, self.sizes):
@@ -396,7 +410,6 @@ class Text:
         if style is None:
             style = {}
         self._text = text if callable(text) else lambda: text
-        self.width = width if callable(width) else lambda: width
         self._inline_style = style
         self._layout = Layout()
 
@@ -406,35 +419,27 @@ class Text:
         except AttributeError:
             return ""
 
-    def size(self, context: UpdateContext):
+    def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = merge_styles(context.style, self._inline_style)
         min_w = style.get("min-width", 0)
         min_h = style.get("min-height", 0)
         text_align = style.get("text-align", TextAlign.CENTER)
         white_space = style.get("white-space", WhiteSpace.NORMAL)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
 
         layout = self._layout
         layout.set(
             text=self.text(),
             font=style,
-            width=-1 if white_space == WhiteSpace.NOWRAP else self.width(),
+            width=bounding_box.width
+            if bounding_box and white_space == WhiteSpace.NORMAL
+            else -1,
             text_align=text_align,
         )
         width, height = layout.size()
+        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         return (
             max(min_w, width + padding_right + padding_left),
             max(min_h, height + padding_top + padding_bottom),
-        )
-
-    def text_box(self, style: Style, bounding_box: Rectangle) -> Rectangle:
-        """Add padding to a bounding box."""
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        return Rectangle(
-            bounding_box.x + padding_left,
-            bounding_box.y + padding_top,
-            bounding_box.width - padding_right - padding_left,
-            bounding_box.height - padding_top - padding_bottom,
         )
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
@@ -442,7 +447,7 @@ class Text:
         style = merge_styles(context.style, self._inline_style)
         min_w = max(style.get("min-width", 0), bounding_box.width)
         min_h = max(style.get("min-height", 0), bounding_box.height)
-        text_box = self.text_box(style, bounding_box)
+        text_box = rectangle_shrink(bounding_box, style["padding"])
 
         with cairo_state(context.cairo) as cr:
             if text_color := style.get("text-color"):
