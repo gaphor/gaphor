@@ -34,7 +34,6 @@ def test_all_diagram_items_have_a_model_element_mapping(item_class):
         CommentLineItem,
         MetadataItem,
         diagramitems.ContainmentItem,
-        diagramitems.ActivityParameterNodeItem,
     ):
         assert not get_model_element(item_class)
     else:
@@ -46,6 +45,7 @@ NAMED_EXCLUSIONS = [
     diagramitems.ExecutionSpecificationItem,
     diagramitems.PartitionItem,
     diagramitems.ValueSpecificationActionItem,
+    diagramitems.ActivityParameterNodeItem,
 ]
 
 
