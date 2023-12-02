@@ -13,16 +13,18 @@ from gaphor.diagram.support import represents
 class CommentItem(ElementPresentation):
     def __init__(self, diagram, id=None):
         super().__init__(diagram, id)
-        offset = 5
-        ear = 15
+        offset = 4
+        ear = 12
         self.min_width = ear + 2 * offset
         self.height = 50
         self.width = 100
 
         self._body = Text(
             text=lambda: self.subject.body or "",
-            width=lambda: self.width - ear - 2 * offset,
-            style={"text-align": TextAlign.LEFT, "vertical-align": VerticalAlign.TOP},
+            style={
+                "text-align": TextAlign.LEFT,
+                "vertical-align": VerticalAlign.TOP,
+            },
         )
 
         self.shape = Box(

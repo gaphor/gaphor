@@ -1,6 +1,7 @@
 import pytest
 
 from gaphor.core.styling import CompiledStyleSheet, compile_style_sheet
+from gaphor.core.styling.declarations import WhiteSpace
 from gaphor.core.styling.tests.test_compiler import Node
 
 
@@ -336,3 +337,20 @@ def test_color_schemes():
     assert normal_props.get("line-width") == pytest.approx(1.0)
     assert dark_props.get("line-width") == pytest.approx(2.0)
     assert light_props.get("line-width") == pytest.approx(3.0)
+
+
+@pytest.mark.parametrize(
+    "white_space_value,result",
+    [
+        ["normal", WhiteSpace.NORMAL],
+        ["nowrap", WhiteSpace.NOWRAP],
+        ["none", None],
+    ],
+)
+def test_white_space_normal(white_space_value, result):
+    css = f"* {{ white-space: {white_space_value} }}"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("node"))
+
+    assert props.get("white-space") is result

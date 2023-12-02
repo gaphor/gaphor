@@ -18,6 +18,7 @@ from gaphor.core.styling.declarations import (
     VerticalAlign,
     declarations,
     number,
+    WhiteSpace,
 )
 
 # Style is using SVG properties where possible
@@ -47,6 +48,7 @@ Style = TypedDict(
         "text-color": Color,
         "vertical-align": VerticalAlign,
         "vertical-spacing": Number,
+        "white-space": WhiteSpace,
     },
     total=False,
 )

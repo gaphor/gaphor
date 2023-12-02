@@ -17,6 +17,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
+from gaphor.UML.recipes import stereotypes_str
 
 log = logging.getLogger(__name__)
 
@@ -63,7 +64,7 @@ class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.recipes.stereotypes_str(
+                    text=lambda: stereotypes_str(
                         self.subject,
                         [
                             self.diagram.gettext("valueType")

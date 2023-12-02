@@ -20,7 +20,6 @@ class ActionItem(Named, ElementPresentation):
             ),
             Text(
                 text=lambda: self.subject.name or "",
-                width=lambda: self.width - 4,
             ),
             style={
                 "padding": (4, 12, 4, 12),
@@ -45,7 +44,6 @@ class ValueSpecificationActionItem(Valued, ElementPresentation):
             ),
             Text(
                 text=lambda: self.subject.value or "",
-                width=lambda: self.width - 4,
             ),
             style={
                 "padding": (4, 12, 4, 12),
@@ -68,7 +66,6 @@ class CallBehaviorActionItem(ActionItem):
             ),
             Text(
                 text=lambda: format_call_behavior_action_name(self.subject),
-                width=lambda: self.width - 4,
             ),
             style={
                 "padding": (4, 24, 4, 12),

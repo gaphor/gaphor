@@ -38,8 +38,7 @@ class C4ContainerItem(Named, ElementPresentation):
                 else (
                     Text(
                         text=lambda: self.subject.description or "",
-                        width=lambda: self.width - 8,
-                        style={"padding": (4, 0, 0, 0), "text-align": text_align},
+                        style={"padding": (4, 4, 0, 4), "text-align": text_align},
                     ),
                 )
             ),

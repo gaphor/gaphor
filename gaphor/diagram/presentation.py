@@ -10,7 +10,7 @@ from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver.constraint import BaseConstraint
 
-from gaphor.core.modeling.diagram import Diagram
+from gaphor.core.modeling.diagram import Diagram, DrawContext
 from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
@@ -127,10 +127,12 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
             self.watch_handle(handle)
 
         diagram.connections.add_constraint(
-            self, MinimalValueConstraint(self.min_width, width)
+            self,
+            MinimalValueConstraint(self.min_width, width),  # type: ignore[has-type]
         )
         diagram.connections.add_constraint(
-            self, MinimalValueConstraint(self.min_height, height)
+            self,
+            MinimalValueConstraint(self.min_height, height),  # type: ignore[has-type]
         )
 
     def port_side(self, port):
@@ -153,7 +155,9 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
         if not self.shape:
             self.update_shapes()
         if self.shape:
-            self.min_width, self.min_height = self.shape.size(context)
+            self.min_width, self.min_height = self.shape.size(
+                context, bounding_box=Rectangle(0, 0, self.width, self.height)
+            )
 
     def draw(self, context):
         x, y = self.handles()[0].pos
@@ -289,7 +293,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         ]
         return min(d0, *ds) if ds else d0
 
-    def draw(self, context):
+    def draw(self, context: DrawContext):
         style = merge_styles(context.style, self.style)
         context = replace(context, style=style)
 
@@ -515,7 +519,7 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
             self._last_connected_side = side
             self.update_shapes()
 
-        return self.shape.size(context)
+        return self.shape.size(context, bounding_box=self.dimensions())
 
     def connected_side(self) -> str | None:
         cinfo = self._connections.get_connection(self._handle)

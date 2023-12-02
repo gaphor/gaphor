@@ -9,6 +9,7 @@ from gaphor.diagram.shapes import (
     JustifyContent,
     Text,
     TextAlign,
+    WhiteSpace,
     draw_border,
     draw_top_separator,
 )
@@ -73,7 +74,6 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 ),
                 Text(
                     text=lambda: self.subject.name or "",
-                    width=lambda: self.width - 4,
                     style={
                         "font-weight": FontWeight.BOLD,
                         "font-style": FontStyle.ITALIC
@@ -162,7 +162,13 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 },
             ),
             *(
-                Text(text=lazy_format(attribute), style={"text-align": TextAlign.LEFT})
+                Text(
+                    text=lazy_format(attribute),
+                    style={
+                        "text-align": TextAlign.LEFT,
+                        "white-space": WhiteSpace.NOWRAP,
+                    },
+                )
                 for attribute in self.subject.ownedAttribute
                 if predicate(attribute)
             ),
@@ -190,7 +196,13 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 },
             ),
             *(
-                Text(text=lazy_format(operation), style={"text-align": TextAlign.LEFT})
+                Text(
+                    text=lazy_format(operation),
+                    style={
+                        "text-align": TextAlign.LEFT,
+                        "white-space": WhiteSpace.NOWRAP,
+                    },
+                )
                 for operation in self.subject.ownedOperation
             ),
             style={

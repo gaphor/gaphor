@@ -28,8 +28,7 @@ class C4PersonItem(Named, ElementPresentation):
                 ),
                 Text(
                     text=lambda: self.subject.description or "",
-                    width=lambda: self.width - 8,
-                    style={"padding": (4, 0, 0, 0)},
+                    style={"padding": (4, 4, 0, 4)},
                 ),
                 style={"padding": (4, 4, 4, 4)},
             ),
