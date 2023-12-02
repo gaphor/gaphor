@@ -352,10 +352,13 @@ class IconBox:
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
         padding = style["padding"]
-        # TODO: width should be * 2.6
+
         new_bounds = rectangle_shrink(bounding_box, padding)
-        self.sizes = [c.size(context, new_bounds) for c in self.children]
         width, height = self.icon.size(context, new_bounds)
+
+        new_bounds.expand(new_bounds.width * 1.32)
+        self.sizes = [c.size(context, new_bounds) for c in self.children]
+
         padding_top, padding_right, padding_bottom, padding_left = padding
         return (
             max(min_width, width + padding_right + padding_left),
