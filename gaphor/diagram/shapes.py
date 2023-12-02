@@ -121,6 +121,56 @@ def ellipse(cr, x, y, w, h, dc=None):
     cr.close_path()
 
 
+def draw_default_head(context: DrawContext):
+    """Default head drawer: move cursor to the first handle."""
+    context.cairo.move_to(0, 0)
+
+
+def draw_default_tail(context: DrawContext):
+    """Default tail drawer: draw line to the last handle."""
+    context.cairo.line_to(0, 0)
+
+
+def draw_arrow_head(context: DrawContext):
+    cr = context.cairo
+    cr.save()
+    cr.set_dash((), 0)
+    cr.move_to(15, -6)
+    cr.line_to(0, 0)
+    cr.line_to(15, 6)
+    stroke(context, fill=False, dash=False)
+    cr.restore()
+    cr.move_to(0, 0)
+
+
+def draw_arrow_tail(context: DrawContext):
+    cr = context.cairo
+    cr.line_to(0, 0)
+    stroke(context, fill=False)
+    cr.save()
+    cr.set_dash((), 0)
+    cr.move_to(15, -6)
+    cr.line_to(0, 0)
+    cr.line_to(15, 6)
+    stroke(context, fill=False, dash=False)
+    cr.restore()
+
+
+def draw_diamond(
+    context: DrawContext, x1: float, x2: float, y1: float, y2: float
+) -> None:
+    """Draw a diamond."""
+    cr = context.cairo
+    center_x = x1 + (x2 - x1) / 2.0
+    center_y = y1 + (y2 - y1) / 2.0
+    cr.move_to(x1, center_y)
+    cr.line_to(center_x, y2)
+    cr.line_to(x2, center_y)
+    cr.line_to(center_x, y1)
+    cr.line_to(x1, center_y)
+    stroke(context, fill=True)
+
+
 class Orientation(Enum):
     VERTICAL = "v"
     HORIZONTAL = "h"
@@ -460,53 +510,3 @@ class Text:
             cr.move_to(text_box.x, text_box.y)
             layout.set(font=style)
             layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
-
-
-def draw_default_head(context: DrawContext):
-    """Default head drawer: move cursor to the first handle."""
-    context.cairo.move_to(0, 0)
-
-
-def draw_default_tail(context: DrawContext):
-    """Default tail drawer: draw line to the last handle."""
-    context.cairo.line_to(0, 0)
-
-
-def draw_arrow_head(context: DrawContext):
-    cr = context.cairo
-    cr.save()
-    cr.set_dash((), 0)
-    cr.move_to(15, -6)
-    cr.line_to(0, 0)
-    cr.line_to(15, 6)
-    stroke(context, fill=False, dash=False)
-    cr.restore()
-    cr.move_to(0, 0)
-
-
-def draw_arrow_tail(context: DrawContext):
-    cr = context.cairo
-    cr.line_to(0, 0)
-    stroke(context, fill=False)
-    cr.save()
-    cr.set_dash((), 0)
-    cr.move_to(15, -6)
-    cr.line_to(0, 0)
-    cr.line_to(15, 6)
-    stroke(context, fill=False, dash=False)
-    cr.restore()
-
-
-def draw_diamond(
-    context: DrawContext, x1: float, x2: float, y1: float, y2: float
-) -> None:
-    """Draw a diamond."""
-    cr = context.cairo
-    center_x = x1 + (x2 - x1) / 2.0
-    center_y = y1 + (y2 - y1) / 2.0
-    cr.move_to(x1, center_y)
-    cr.line_to(center_x, y2)
-    cr.line_to(x2, center_y)
-    cr.line_to(center_x, y1)
-    cr.line_to(x1, center_y)
-    stroke(context, fill=True)
