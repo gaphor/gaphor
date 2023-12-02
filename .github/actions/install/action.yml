@@ -11,13 +11,8 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Install Poetry (Linux)
-      if: runner.os == 'Linux'
-      run: pipx install --python python${{ inputs.python-version }} --pip-args=--constraint=.github/constraints.txt poetry
-      shell: bash
-    - name: Install Poetry (Windows/macOS)
-      if: runner.os != 'Linux'
-      run: pipx install --pip-args=--constraint=.github/constraints.txt poetry
+    - name: Install Poetry
+      run: pipx install --python ${{ inputs.python-version }} --pip-args=--constraint=.github/constraints.txt poetry
       shell: bash
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
