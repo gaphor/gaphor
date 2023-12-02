@@ -3,6 +3,7 @@ save files."""
 
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -123,3 +124,13 @@ def save_file_dialog(
     dialog.set_modal(True)
     dialog.show()
     return dialog
+
+
+def pretty_path(path: Path) -> str:
+    if path.is_relative_to(Path.home()):
+        return str(path).replace(str(Path.home()), "~", 1)
+    elif hasattr(os, "getuid"):
+        document_portal_dir = f"/run/user/{os.getuid()}/doc"
+        if path.is_relative_to(document_portal_dir):
+            return f"{path.name} ({gettext('Flatpak Document Portal')})"
+    return str(path)
