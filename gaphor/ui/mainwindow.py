@@ -82,8 +82,6 @@ class MainWindow(Service, ActionProvider):
     It contains a Namespace-based tree view and a menu and a statusbar.
     """
 
-    size = property(lambda s: s.properties.get("ui.window-size", (860, 580)))
-
     def __init__(
         self,
         event_manager,
@@ -181,7 +179,11 @@ class MainWindow(Service, ActionProvider):
             create_hamburger_model(self.export_menu.menu, self.tools_menu.menu),
         )
 
-        window.set_default_size(*self.size)
+        window.set_default_size(*(self.properties.get("ui.window-size", (860, 580))))
+        if self.properties.get("ui.window-mode", "") == "maximized":
+            window.maximize()
+        elif self.properties.get("ui.window-mode", "") == "fullscreened":
+            window.fullscreen()
 
         def _factory(name):
             comp = self.get_ui_component(name)
@@ -207,6 +209,8 @@ class MainWindow(Service, ActionProvider):
         window.connect("close-request", self._on_window_close_request)
         window.connect("notify::default-height", self._on_window_size_changed)
         window.connect("notify::default-width", self._on_window_size_changed)
+        window.connect("notify::maximized", self._on_window_mode_changed)
+        window.connect("notify::fullscreened", self._on_window_mode_changed)
         window.set_visible(True)
 
         window.connect("notify::is-active", self._on_window_active)
@@ -299,7 +303,11 @@ class MainWindow(Service, ActionProvider):
         self.event_manager.handle(SessionShutdownRequested(self))
         return True
 
-    def _on_window_size_changed(self, window, gspec):
+    def _on_window_size_changed(self, window, _gspec):
         if not is_maximized(window):
             width, height = window.get_default_size()
             self.properties.set("ui.window-size", (width, height))
+
+    def _on_window_mode_changed(self, window, gspec):
+        mode = gspec.name
+        self.properties.set("ui.window-mode", mode if window.get_property(mode) else "")

@@ -1,4 +1,5 @@
 import pytest
+from gi.repository import GLib
 
 from gaphor.application import Session
 from gaphor.core.modeling import Comment, Diagram
@@ -97,3 +98,68 @@ def test_flush_model(session):
     event_manager.handle(DiagramOpened(diagram))
 
     element_factory.flush()
+
+
+@pytest.mark.skip(reason="May cause funky window manager behavior")
+def test_window_mode_maximized(session):
+    main_window = session.get_service("main_window")
+    properties = session.get_service("properties")
+
+    main_window.window.unfullscreen()
+    main_window.window.maximize()
+    iteration(lambda: properties.get("ui.window-mode") == "maximized")
+
+    assert properties.get("ui.window-mode") == "maximized"
+
+    main_window.window.unmaximize()
+
+
+@pytest.mark.skip(reason="May cause funky window manager behavior")
+def test_window_mode_fullscreened(session):
+    main_window = session.get_service("main_window")
+    properties = session.get_service("properties")
+
+    main_window.window.fullscreen()
+    iteration(lambda: properties.get("ui.window-mode") == "fullscreened")
+
+    assert properties.get("ui.window-mode") == "fullscreened"
+
+    main_window.window.unfullscreen()
+
+
+def test_window_mode_normal(session):
+    main_window = session.get_service("main_window")
+    properties = session.get_service("properties")
+
+    main_window.window.unfullscreen()
+    main_window.window.unmaximize()
+    iteration(lambda: properties.get("ui.window-mode") == "")
+
+    assert properties.get("ui.window-mode") == ""
+
+
+def iteration(condition, timeout=5):
+    sentinel = False
+
+    def check_condition():
+        nonlocal sentinel
+        if condition():
+            sentinel = True
+        return GLib.SOURCE_REMOVE if sentinel else GLib.SOURCE_CONTINUE
+
+    def do_timeout():
+        nonlocal sentinel
+        sentinel = True
+        print("Check timed out")
+        return GLib.SOURCE_REMOVE
+
+    GLib.idle_add(check_condition, priority=GLib.PRIORITY_LOW)
+    timeout_id = GLib.timeout_add(interval=timeout * 1_000, function=do_timeout)
+
+    ctx = GLib.main_context_default()
+    while ctx.pending():
+        if sentinel:
+            break
+        ctx.iteration(False)
+
+    GLib.source_remove(timeout_id)
