@@ -22,8 +22,9 @@
     "--share=ipc",
     "--socket=wayland",
     "--device=dri",
-    "--filesystem=host",
-    "--socket=session-bus"
+    "--socket=session-bus",
+    "--talk-name=org.gtk.vfs.*",
+    "--filesystem=xdg-run/gvfsd"
   ],
   "modules": [
     {

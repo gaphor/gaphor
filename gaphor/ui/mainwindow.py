@@ -26,6 +26,7 @@ from gaphor.services.undomanager import UndoManagerStateChanged
 from gaphor.ui.abc import UIComponent
 from gaphor.ui.actiongroup import window_action_group
 from gaphor.ui.event import CurrentDiagramChanged
+from gaphor.ui.filedialog import pretty_path
 from gaphor.ui.layout import deserialize, is_maximized
 from gaphor.ui.modelbrowser import create_diagram_types_model
 from gaphor.ui.notification import InAppNotifier
@@ -247,12 +248,10 @@ class MainWindow(Service, ActionProvider):
         filename = Path(event.filename) if event.filename else None
 
         self.subtitle.set_text(
-            str(filename).replace(str(Path.home()), "~")
-            if filename
-            else gettext("New model")
+            pretty_path(filename) if filename else gettext("New model")
         )
         window.set_title(
-            f"{filename.name} ({str(filename.parent).replace(str(Path.home()), '~')}) - Gaphor"
+            f"{filename.name} ({pretty_path(filename.parent)}) - Gaphor"
             if filename
             else f"{gettext('New model')} - Gaphor"
         )
