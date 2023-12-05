@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-30 21:22+0200\n"
-"PO-Revision-Date: 2023-12-04 13:04+0000\n"
+"PO-Revision-Date: 2023-12-06 08:04+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
@@ -2648,7 +2648,7 @@ msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:280
 msgid "Update presentation “{name}”"
-msgstr ""
+msgstr "Обновить презентацию «{name}»"
 
 #: gaphor/ui/modelmerge/organize.py:282
 msgid "Update presentation of type {type}"
