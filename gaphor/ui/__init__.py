@@ -2,7 +2,9 @@
 and diagram windows."""
 
 from __future__ import annotations
+
 import sys
+import warnings
 
 import gi
 
@@ -11,7 +13,7 @@ gi.require_version("Gdk", "4.0")
 gi.require_version("GtkSource", "5")
 gi.require_version("Adw", "1")
 
-from gi.repository import Adw, Gio, GLib, Gtk, GtkSource
+from gi.repository import Adw, Gio, GLib, GtkSource
 
 from gaphor.application import Application, Session
 from gaphor.core import event_handler
@@ -23,7 +25,12 @@ Adw.init()
 GtkSource.init()
 
 if sys.platform == "darwin":
-    import gaphor.ui.macosshim
+    from gaphor.ui.macosshim import init_macos_shortcuts
+    try:
+        init_macos_shortcuts()
+    except TypeError:
+        # Initialization can fail if Gtk is mocked
+        warnings.warn("macOS shortcuts were not initialized", RuntimeWarning)
 
 
 def run(argv: list[str]) -> int:
