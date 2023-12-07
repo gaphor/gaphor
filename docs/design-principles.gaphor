@@ -1,0 +1,911 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.22.1">
+<StyleSheet id="58d6989a-66f8-11ec-b4c8-0456e5e540ed"/>
+<Package id="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed">
+<name>
+<val>Gaphor</val>
+</name>
+<nestedPackage>
+<reflist>
+<ref refid="b537eef6-81b2-11ee-88e3-a85e451ea141"/>
+</reflist>
+</nestedPackage>
+</Package>
+<Package id="b537eef6-81b2-11ee-88e3-a85e451ea141">
+<name>
+<val>Requirements</val>
+</name>
+<ownedDiagram>
+<reflist>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</reflist>
+</ownedDiagram>
+<ownedType>
+<reflist>
+<ref refid="f468219d-81b2-11ee-84e2-a85e451ea141"/>
+<ref refid="d554d913-81b2-11ee-a89c-a85e451ea141"/>
+</reflist>
+</ownedType>
+<package>
+<ref refid="58d6c2e8-66f8-11ec-b4c8-0456e5e540ed"/>
+</package>
+</Package>
+<SysMLDiagram id="bf6c3c3b-81b2-11ee-ad01-a85e451ea141">
+<diagramType>
+<val>req</val>
+</diagramType>
+<element>
+<ref refid="b537eef6-81b2-11ee-88e3-a85e451ea141"/>
+</element>
+<name>
+<val>Design Principles</val>
+</name>
+<ownedPresentation>
+<reflist>
+<ref refid="d55563f6-81b2-11ee-ad1f-a85e451ea141"/>
+<ref refid="f4687995-81b2-11ee-8688-a85e451ea141"/>
+<ref refid="03ff9f12-81b3-11ee-8b5c-a85e451ea141"/>
+<ref refid="13d3c70b-81b3-11ee-b3c4-a85e451ea141"/>
+<ref refid="1470c110-81b3-11ee-b171-a85e451ea141"/>
+<ref refid="4d351578-81b4-11ee-a43c-a85e451ea141"/>
+<ref refid="696d0724-81b4-11ee-a66e-a85e451ea141"/>
+<ref refid="98dc7656-81b5-11ee-be55-a85e451ea141"/>
+<ref refid="bb6ea4c9-81b5-11ee-a87e-a85e451ea141"/>
+<ref refid="03031419-81b6-11ee-8c9e-a85e451ea141"/>
+<ref refid="ac5f6741-81b8-11ee-b878-a85e451ea141"/>
+<ref refid="ada5ee4d-81b8-11ee-9b5f-a85e451ea141"/>
+<ref refid="aedddd01-81b8-11ee-a641-a85e451ea141"/>
+<ref refid="b01bee1c-81b8-11ee-a219-a85e451ea141"/>
+<ref refid="fe4ebf71-81b2-11ee-8187-a85e451ea141"/>
+<ref refid="98a01f62-81b4-11ee-9c5b-a85e451ea141"/>
+<ref refid="3014241e-81b5-11ee-b9f9-a85e451ea141"/>
+<ref refid="aeda071b-81b5-11ee-9326-a85e451ea141"/>
+<ref refid="d4308a42-81b5-11ee-9b77-a85e451ea141"/>
+<ref refid="1298339f-81b6-11ee-ab2c-a85e451ea141"/>
+<ref refid="5da1aee0-81b8-11ee-8e4f-a85e451ea141"/>
+<ref refid="6d497c38-81b8-11ee-bcf1-a85e451ea141"/>
+<ref refid="3345b1b9-81b9-11ee-a767-a85e451ea141"/>
+<ref refid="7d086289-81b9-11ee-ae78-a85e451ea141"/>
+<ref refid="81f9f803-81b9-11ee-a340-a85e451ea141"/>
+<ref refid="85fe303d-81ba-11ee-89bd-a85e451ea141"/>
+<ref refid="8b808810-81ba-11ee-a44a-a85e451ea141"/>
+</reflist>
+</ownedPresentation>
+</SysMLDiagram>
+<Requirement id="d554d913-81b2-11ee-a89c-a85e451ea141">
+<name>
+<val>Design Principles</val>
+</name>
+<nestedClassifier>
+<reflist>
+<ref refid="13d37914-81b3-11ee-9054-a85e451ea141"/>
+<ref refid="14707377-81b3-11ee-9a85-a85e451ea141"/>
+<ref refid="03ff511a-81b3-11ee-874d-a85e451ea141"/>
+</reflist>
+</nestedClassifier>
+<package>
+<ref refid="b537eef6-81b2-11ee-88e3-a85e451ea141"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="d55563f6-81b2-11ee-ad1f-a85e451ea141"/>
+</reflist>
+</presentation>
+</Requirement>
+<RequirementItem id="d55563f6-81b2-11ee-ad1f-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 99.0, -53.0)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>113.0</val>
+</width>
+<height>
+<val>99.0</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="d554d913-81b2-11ee-a89c-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<Requirement id="f468219d-81b2-11ee-84e2-a85e451ea141">
+<name>
+<val>Guidence</val>
+</name>
+<nestedClassifier>
+<reflist>
+<ref refid="4d34ee6e-81b4-11ee-aa97-a85e451ea141"/>
+<ref refid="696ce00a-81b4-11ee-b666-a85e451ea141"/>
+</reflist>
+</nestedClassifier>
+<package>
+<ref refid="b537eef6-81b2-11ee-88e3-a85e451ea141"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="f4687995-81b2-11ee-8688-a85e451ea141"/>
+</reflist>
+</presentation>
+</Requirement>
+<RequirementItem id="f4687995-81b2-11ee-8688-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -376.0, 121.25800759812023)</val>
+</matrix>
+<top-left>
+<val>(7.0, 0.0)</val>
+</top-left>
+<width>
+<val>247.0</val>
+</width>
+<height>
+<val>103.0723031002675</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="f468219d-81b2-11ee-84e2-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<ContainmentItem id="fe4ebf71-81b2-11ee-8187-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 7.0, 45.0)</val>
+</matrix>
+<points>
+<val>[(148.5, 1.0), (148.5, 42.81429550214739), (-252.5, 42.81429550214739), (-252.5, 76.25800759812023), (-252.5, 76.25800759812023)]</val>
+</points>
+<head-connection>
+<ref refid="d55563f6-81b2-11ee-ad1f-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="f4687995-81b2-11ee-8688-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<Requirement id="03ff511a-81b3-11ee-874d-a85e451ea141">
+<name>
+<val>Out of your way</val>
+</name>
+<nestedClassifier>
+<reflist>
+<ref refid="98dc0369-81b5-11ee-af6b-a85e451ea141"/>
+<ref refid="bb6e30da-81b5-11ee-b98c-a85e451ea141"/>
+<ref refid="030293a8-81b6-11ee-bc09-a85e451ea141"/>
+</reflist>
+</nestedClassifier>
+<nestingClass>
+<ref refid="d554d913-81b2-11ee-a89c-a85e451ea141"/>
+</nestingClass>
+<presentation>
+<reflist>
+<ref refid="03ff9f12-81b3-11ee-8b5c-a85e451ea141"/>
+</reflist>
+</presentation>
+</Requirement>
+<RequirementItem id="03ff9f12-81b3-11ee-8b5c-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -94.09000000000003, 121.25800759812023)</val>
+</matrix>
+<top-left>
+<val>(8.090000000000032, 0.0)</val>
+</top-left>
+<width>
+<val>247.0</val>
+</width>
+<height>
+<val>102.24199240187977</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="03ff511a-81b3-11ee-874d-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<Requirement id="13d37914-81b3-11ee-9054-a85e451ea141">
+<name>
+<val>Continuity</val>
+</name>
+<nestedClassifier>
+<reflist>
+<ref refid="ac5ef7a0-81b8-11ee-ac6a-a85e451ea141"/>
+<ref refid="ada59f01-81b8-11ee-a9fa-a85e451ea141"/>
+</reflist>
+</nestedClassifier>
+<nestingClass>
+<ref refid="d554d913-81b2-11ee-a89c-a85e451ea141"/>
+</nestingClass>
+<presentation>
+<reflist>
+<ref refid="13d3c70b-81b3-11ee-b3c4-a85e451ea141"/>
+</reflist>
+</presentation>
+</Requirement>
+<RequirementItem id="13d3c70b-81b3-11ee-b3c4-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 154.0, 95.75800759812023)</val>
+</matrix>
+<top-left>
+<val>(48.0, 25.5)</val>
+</top-left>
+<width>
+<val>247.0</val>
+</width>
+<height>
+<val>103.0723031002675</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="13d37914-81b3-11ee-9054-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<Requirement id="14707377-81b3-11ee-9a85-a85e451ea141">
+<name>
+<val>User interaction</val>
+</name>
+<nestedClassifier>
+<reflist>
+<ref refid="b01b8257-81b8-11ee-ad85-a85e451ea141"/>
+<ref refid="aeddb46a-81b8-11ee-86fb-a85e451ea141"/>
+</reflist>
+</nestedClassifier>
+<nestingClass>
+<ref refid="d554d913-81b2-11ee-a89c-a85e451ea141"/>
+</nestingClass>
+<presentation>
+<reflist>
+<ref refid="1470c110-81b3-11ee-b171-a85e451ea141"/>
+</reflist>
+</presentation>
+</Requirement>
+<RequirementItem id="1470c110-81b3-11ee-b171-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 495.0, 123.0160151962404)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>247.0</val>
+</width>
+<height>
+<val>99.55628790402716</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="14707377-81b3-11ee-9a85-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<Requirement id="4d34ee6e-81b4-11ee-aa97-a85e451ea141">
+<name>
+<val>Help with relashionships</val>
+</name>
+<nestingClass>
+<ref refid="f468219d-81b2-11ee-84e2-a85e451ea141"/>
+</nestingClass>
+<note>
+<val> This helps you to decide where a relation can connect to. You can still mix different elements, but we try to make it as simple as possible to make consistent models.</val>
+</note>
+<presentation>
+<reflist>
+<ref refid="4d351578-81b4-11ee-a43c-a85e451ea141"/>
+</reflist>
+</presentation>
+<text>
+<val>The diagram has a feature that it grays out all elements a relationship can not connect to.</val>
+</text>
+</Requirement>
+<RequirementItem id="4d351578-81b4-11ee-a43c-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -327.0, 203.32648361711375)</val>
+</matrix>
+<top-left>
+<val>(0.0, 59.487811885033636)</val>
+</top-left>
+<width>
+<val>205.0</val>
+</width>
+<height>
+<val>160.06590552014904</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="4d34ee6e-81b4-11ee-aa97-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<Requirement id="696ce00a-81b4-11ee-b666-a85e451ea141">
+<name>
+<val>Keep model in sync</val>
+</name>
+<nestingClass>
+<ref refid="f468219d-81b2-11ee-84e2-a85e451ea141"/>
+</nestingClass>
+<presentation>
+<reflist>
+<ref refid="696d0724-81b4-11ee-a66e-a85e451ea141"/>
+</reflist>
+</presentation>
+<text>
+<val>Diagrams reflect the actual state of the model.</val>
+</text>
+</Requirement>
+<RequirementItem id="696d0724-81b4-11ee-a66e-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -322.0, 469.9794508513412)</val>
+</matrix>
+<top-left>
+<val>(-5.0, 0.0)</val>
+</top-left>
+<width>
+<val>205.0</val>
+</width>
+<height>
+<val>127.0</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="696ce00a-81b4-11ee-b666-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<ContainmentItem id="98a01f62-81b4-11ee-9c5b-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -342.0, 173.03792279840792)</val>
+</matrix>
+<points>
+<val>[(-5.2537912434899, 51.292387899979815), (-5.2537912434899, 186.96207720159208), (15.0, 186.96207720159208)]</val>
+</points>
+<head-connection>
+<ref refid="f4687995-81b2-11ee-8688-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="4d351578-81b4-11ee-a43c-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<ContainmentItem id="3014241e-81b5-11ee-b9f9-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -351.0, 216.83484465080613)</val>
+</matrix>
+<points>
+<val>[(3.7462087565101, 7.495466047581601), (3.7462087565101, 341.4656800988429), (24.0, 341.4656800988429)]</val>
+</points>
+<head-connection>
+<ref refid="f4687995-81b2-11ee-8688-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="696d0724-81b4-11ee-a66e-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<Requirement id="98dc0369-81b5-11ee-af6b-a85e451ea141">
+<name>
+<val>Avoid dialogs</val>
+</name>
+<nestingClass>
+<ref refid="03ff511a-81b3-11ee-874d-a85e451ea141"/>
+</nestingClass>
+<note>
+<val>In doing the right thing, and staying out of the way of users, Gaphor avoids the use of dialogs as much as possible.
+
+Gaphor should allow you to do the sensible thing (see above) and not get you out of your flow with all sorts of questions.</val>
+</note>
+<presentation>
+<reflist>
+<ref refid="98dc7656-81b5-11ee-be55-a85e451ea141"/>
+</reflist>
+</presentation>
+<text>
+<val>Allow you to do the sensible thing and avoid the use of dialogs as much as possible.</val>
+</text>
+</Requirement>
+<RequirementItem id="98dc7656-81b5-11ee-be55-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -39.0, 261.88020102229643)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>178.23106086934285</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="98dc0369-81b5-11ee-af6b-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<ContainmentItem id="aeda071b-81b5-11ee-9326-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -56.0, 217.48781188503364)</val>
+</matrix>
+<points>
+<val>[(-3.0, 6.012188114966364), (-3.0, 141.5780936351154), (17.0, 141.5780936351154)]</val>
+</points>
+<head-connection>
+<ref refid="03ff9f12-81b3-11ee-8b5c-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="98dc7656-81b5-11ee-be55-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<Requirement id="bb6e30da-81b5-11ee-b98c-a85e451ea141">
+<name>
+<val>Notify on changes</val>
+</name>
+<nestingClass>
+<ref refid="03ff511a-81b3-11ee-874d-a85e451ea141"/>
+</nestingClass>
+<note>
+<val>When Gaphor is doing something that is not directly visible, you’ll see a notification, for example, an element that’s indirectly removed from the model. It will not interrupt you with dialogs, but only provide a small in-app notification. If the change is undesired, hit undo.</val>
+</note>
+<presentation>
+<reflist>
+<ref refid="bb6ea4c9-81b5-11ee-a87e-a85e451ea141"/>
+</reflist>
+</presentation>
+<text>
+<val>Show the user a discrete notification when Gaphor is doing something that is not directly visible.</val>
+</text>
+</Requirement>
+<RequirementItem id="bb6ea4c9-81b5-11ee-a87e-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 5.0, 469.9794508513412)</val>
+</matrix>
+<top-left>
+<val>(-44.0, 0.0)</val>
+</top-left>
+<width>
+<val>204.0</val>
+</width>
+<height>
+<val>159.83477067316693</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="bb6e30da-81b5-11ee-b98c-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<ContainmentItem id="d4308a42-81b5-11ee-9b77-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -57.0, 218.48781188503364)</val>
+</matrix>
+<points>
+<val>[(-2.0, 5.012188114966364), (-2.0, 328.04451706774273), (18.0, 328.04451706774273)]</val>
+</points>
+<head-connection>
+<ref refid="03ff9f12-81b3-11ee-8b5c-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="bb6ea4c9-81b5-11ee-a87e-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<Requirement id="030293a8-81b6-11ee-bc09-a85e451ea141">
+<name>
+<val>Balanced</val>
+</name>
+<nestingClass>
+<ref refid="03ff511a-81b3-11ee-874d-a85e451ea141"/>
+</nestingClass>
+<note>
+<val>Although Gaphor implements quite a bit of the UML 2 model, it’s not complete. We try to find the right balance in features to suite both expert and novice modellers.
+
+</val>
+</note>
+<presentation>
+<reflist>
+<ref refid="03031419-81b6-11ee-8c9e-a85e451ea141"/>
+</reflist>
+</presentation>
+<text>
+<val>Find a balance between advanced, but complicated, aspects of the language and it being simple enough for novice users.</val>
+</text>
+</Requirement>
+<RequirementItem id="03031419-81b6-11ee-8c9e-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -39.0, 661.4672627363749)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>200.0</val>
+</width>
+<height>
+<val>187.0</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="030293a8-81b6-11ee-bc09-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<ContainmentItem id="1298339f-81b6-11ee-ab2c-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, -58.0, 216.14077911926114)</val>
+</matrix>
+<points>
+<val>[(-1.0, 7.35922088073886), (-1.0, 538.8264836171138), (19.0, 538.8264836171138)]</val>
+</points>
+<head-connection>
+<ref refid="03ff9f12-81b3-11ee-8b5c-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="03031419-81b6-11ee-8c9e-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<ContainmentItem id="5da1aee0-81b8-11ee-8e4f-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 75.0, 63.81429550214739)</val>
+</matrix>
+<points>
+<val>[(80.5, -17.814295502147388), (80.5, 24.0), (246.6338181703332, 24.0), (246.6338181703332, 57.44371209597284)]</val>
+</points>
+<head-connection>
+<ref refid="d55563f6-81b2-11ee-ad1f-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="13d3c70b-81b3-11ee-b3c4-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<ContainmentItem id="6d497c38-81b8-11ee-bcf1-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 96.0, 62.81429550214739)</val>
+</matrix>
+<points>
+<val>[(59.5, -16.814295502147388), (59.5, 25.0), (522.5, 25.0), (522.5, 60.201719694093015)]</val>
+</points>
+<head-connection>
+<ref refid="d55563f6-81b2-11ee-ad1f-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="1470c110-81b3-11ee-b171-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<Requirement id="ac5ef7a0-81b8-11ee-ac6a-a85e451ea141">
+<name>
+<val>Backwards compatibility</val>
+</name>
+<nestingClass>
+<ref refid="13d37914-81b3-11ee-9054-a85e451ea141"/>
+</nestingClass>
+<presentation>
+<reflist>
+<ref refid="ac5f6741-81b8-11ee-b878-a85e451ea141"/>
+</reflist>
+</presentation>
+<text>
+<val>capable of loading models going back to Gaphor 1.0</val>
+</text>
+</Requirement>
+<RequirementItem id="ac5f6741-81b8-11ee-b878-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 347.0, 261.88020102229643)</val>
+</matrix>
+<top-left>
+<val>(-96.0, 0.0)</val>
+</top-left>
+<width>
+<val>198.0</val>
+</width>
+<height>
+<val>161.0</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="ac5ef7a0-81b8-11ee-ac6a-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<Requirement id="ada59f01-81b8-11ee-a9fa-a85e451ea141">
+<name>
+<val>Multi-platform</val>
+</name>
+<nestingClass>
+<ref refid="13d37914-81b3-11ee-9054-a85e451ea141"/>
+</nestingClass>
+<presentation>
+<reflist>
+<ref refid="ada5ee4d-81b8-11ee-9b5f-a85e451ea141"/>
+</reflist>
+</presentation>
+<text>
+<val>Run on all major platforms: Windows, macOS, and Linux.</val>
+</text>
+</Requirement>
+<RequirementItem id="ada5ee4d-81b8-11ee-9b5f-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 351.0, 469.9794508513412)</val>
+</matrix>
+<top-left>
+<val>(-100.0, 0.0)</val>
+</top-left>
+<width>
+<val>198.0</val>
+</width>
+<height>
+<val>152.83477067316693</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="ada59f01-81b8-11ee-a9fa-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<Requirement id="aeddb46a-81b8-11ee-86fb-a85e451ea141">
+<name>
+<val>Adhere to HIG</val>
+</name>
+<nestingClass>
+<ref refid="14707377-81b3-11ee-9a85-a85e451ea141"/>
+</nestingClass>
+<presentation>
+<reflist>
+<ref refid="aedddd01-81b8-11ee-a641-a85e451ea141"/>
+</reflist>
+</presentation>
+<text>
+<val>follows the GNOME Human Interface Guidelines (HIG)</val>
+</text>
+</Requirement>
+<RequirementItem id="aedddd01-81b8-11ee-a641-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 638.0, 262.8142955021474)</val>
+</matrix>
+<top-left>
+<val>(-94.0, 0.0)</val>
+</top-left>
+<width>
+<val>198.0</val>
+</width>
+<height>
+<val>161.0</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="aeddb46a-81b8-11ee-86fb-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<Requirement id="b01b8257-81b8-11ee-ad85-a85e451ea141">
+<name>
+<val>Handmade components</val>
+</name>
+<nestingClass>
+<ref refid="14707377-81b3-11ee-9a85-a85e451ea141"/>
+</nestingClass>
+<presentation>
+<reflist>
+<ref refid="b01bee1c-81b8-11ee-a219-a85e451ea141"/>
+</reflist>
+</presentation>
+<text>
+<val>User interface components are to be handmade to offer the best user experience possible. No generated components.</val>
+</text>
+</Requirement>
+<RequirementItem id="b01bee1c-81b8-11ee-a219-a85e451ea141">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 642.0, 469.9794508513412)</val>
+</matrix>
+<top-left>
+<val>(-98.0, 0.0)</val>
+</top-left>
+<width>
+<val>198.0</val>
+</width>
+<height>
+<val>167.83477067316693</val>
+</height>
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<subject>
+<ref refid="b01b8257-81b8-11ee-ad85-a85e451ea141"/>
+</subject>
+</RequirementItem>
+<ContainmentItem id="3345b1b9-81b9-11ee-a767-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 155.0, 47.01268690859865)</val>
+</matrix>
+<points>
+<val>[(0.5, -1.0126869085986527), (0.5, 40.801608593548735), (-117.5, 40.801608593548735), (-117.5, 74.24532068952158)]</val>
+</points>
+<head-connection>
+<ref refid="d55563f6-81b2-11ee-ad1f-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="03ff9f12-81b3-11ee-8b5c-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<ContainmentItem id="7d086289-81b9-11ee-ae78-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 223.0, 224.01268690859865)</val>
+</matrix>
+<points>
+<val>[(6.0, 0.31762378978908146), (6.0, 118.36751411369778), (28.0, 118.36751411369778)]</val>
+</points>
+<head-connection>
+<ref refid="13d3c70b-81b3-11ee-b3c4-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="ac5f6741-81b8-11ee-b878-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<ContainmentItem id="81f9f803-81b9-11ee-a340-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 223.0, 222.01268690859865)</val>
+</matrix>
+<points>
+<val>[(6.0, 2.3176237897890815), (6.0, 336.2746722917027), (28.0, 336.2746722917027)]</val>
+</points>
+<head-connection>
+<ref refid="13d3c70b-81b3-11ee-b3c4-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="ada5ee4d-81b8-11ee-9b5f-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<ContainmentItem id="85fe303d-81ba-11ee-89bd-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 511.0, 221.01268690859865)</val>
+</matrix>
+<points>
+<val>[(12.0, 1.5596161916689084), (12.0, 298.23711729037643), (33.0, 298.23711729037643)]</val>
+</points>
+<head-connection>
+<ref refid="1470c110-81b3-11ee-b171-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="b01bee1c-81b8-11ee-a219-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+<ContainmentItem id="8b808810-81ba-11ee-a44a-a85e451ea141">
+<diagram>
+<ref refid="bf6c3c3b-81b2-11ee-ad01-a85e451ea141"/>
+</diagram>
+<horizontal>
+<val>0</val>
+</horizontal>
+<orthogonal>
+<val>1</val>
+</orthogonal>
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 511.0, 220.01268690859865)</val>
+</matrix>
+<points>
+<val>[(12.0, 2.5596161916689084), (12.0, 96.85479787134018), (33.0, 96.85479787134018)]</val>
+</points>
+<head-connection>
+<ref refid="1470c110-81b3-11ee-b171-a85e451ea141"/>
+</head-connection>
+<tail-connection>
+<ref refid="aedddd01-81b8-11ee-a641-a85e451ea141"/>
+</tail-connection>
+</ContainmentItem>
+</gaphor>

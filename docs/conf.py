@@ -94,6 +94,7 @@ suppress_warnings = ["myst.header"]
 
 gaphor_models = {
     "connect": "connect.gaphor",
+    "design-principles": "design-principles.gaphor",
     "stereotypes": "stereotypes.gaphor",
     "example": "../examples/sequence-diagram.gaphor",
     "coffee-machine": "../examples/coffee-machine.gaphor",

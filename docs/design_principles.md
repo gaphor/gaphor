@@ -12,6 +12,10 @@ Usability is very important. When you're new to Gaphor, it should be easy
 to find your way around. Minimal knowledge of UML should at least allow you to
 create a class diagram.
 
+```{diagram} Design Principles
+:model: design-principles
+```
+
 ## Guidance
 
 To help users, Gaphor should provide guidance where it can.
