@@ -22,8 +22,8 @@ from gaphor.application import distribution
 # -- Project information -----------------------------------------------------
 
 project = "Gaphor"
-copyright = f"2001-{date.today().year}, Arjan J. Molenaar"
-author = "Arjan J. Molenaar"
+copyright = f"2001-{date.today().year}, Arjan Molenaar"
+author = "Arjan Molenaar"
 version = distribution().version
 
 # -- General configuration ---------------------------------------------------

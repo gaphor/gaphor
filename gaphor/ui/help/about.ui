@@ -6,9 +6,9 @@
     <property name="modal">true</property>
     <property name="application-name">Gaphor</property>
     <property name="application-icon">org.gaphor.Gaphor</property>
-    <property name="developer-name">Arjan J. Molenaar and Dan Yeaw</property>
+    <property name="developer-name">Arjan Molenaar and Dan Yeaw</property>
     <property name="title" translatable="yes">About Gaphor</property>
-    <property name="copyright" translatable="yes">Copyright © 2001-2023 Arjan J. Molenaar and Dan Yeaw.
+    <property name="copyright" translatable="yes">Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.
 
 UML, SysML, and RAAML are either registered trademarks or trademarks of Object Management Group, Inc. in the United States and/or other countries.</property>
     <property name="website">https://gaphor.org</property>
