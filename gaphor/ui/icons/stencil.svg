@@ -6,7 +6,7 @@
    version="1.1"
    id="svg4268"
    sodipodi:docname="stencil.svg"
-   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -59,17 +59,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.8255788"
-     inkscape:cx="344.41464"
-     inkscape:cy="-6.7349434"
+     inkscape:zoom="1.806237"
+     inkscape:cx="72.803293"
+     inkscape:cy="139.23976"
      inkscape:document-units="px"
-     inkscape:current-layer="verify-5"
+     inkscape:current-layer="merge-node"
      showgrid="true"
      units="px"
-     inkscape:window-width="1920"
-     inkscape:window-height="1012"
+     inkscape:window-width="1648"
+     inkscape:window-height="1040"
      inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-y="39"
      inkscape:window-maximized="1"
      showborder="false"
      inkscape:document-rotation="0"
@@ -2822,9 +2822,9 @@
        transform="matrix(0.8766316,0,0,0.8766316,3.2020685,7.3785495)"><tspan
          x="26.549852"
          y="53.38855"
-         id="tspan5"><tspan
+         id="tspan2"><tspan
            style="font-weight:bold"
-           id="tspan4">V</tspan></tspan></text>
+           id="tspan1">V</tspan></tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -4855,6 +4855,24 @@
          style="color:#000000;fill:#000000;-inkscape-stroke:none"
          d="m 103.1875,-3.4394531 v 2.3808594 c 0,0.12126615 0.0602,0.21632712 0.11914,0.27929683 0.059,0.0629697 0.12399,0.10685875 0.19531,0.14648437 0.14266,0.0792512 0.31478,0.14018 0.50977,0.19335937 0.38998,0.10635875 0.86669,0.17578126 1.29297,0.17578125 0.42627,1e-8 0.90298,-0.0694224 1.29297,-0.17578125 0.19499,-0.0531794 0.36711,-0.11410751 0.50976,-0.19335937 0.0713,-0.0396259 0.13634,-0.0835131 0.19531,-0.14648437 0.059,-0.0629713 0.11719,-0.15802985 0.11719,-0.27929683 v -2.3808594 h -0.52734 V -1.125 c -0.0108,0.00848 -0.0168,0.014776 -0.043,0.029297 -0.0806,0.044771 -0.22182,0.10044512 -0.39063,0.14648435 -0.33762,0.0920785 -0.78682,0.15625 -1.15429,0.15625 -0.36748,0 -0.81668,-0.0641714 -1.1543,-0.15625 -0.16881,-0.0460393 -0.31199,-0.10171235 -0.39258,-0.14648435 -0.0248,-0.013764 -0.0299,-0.018792 -0.041,-0.027344 v -2.3164062 z"
          id="path1429" />
+    </g>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="merge-node"
+     inkscape:label="merge-node"
+     style="display:inline"
+     transform="translate(-4.9804281,0.14648318)">
+    <g
+       id="g9">
+      <path
+         style="color:#000000;fill:#000000;fill-opacity:0;stroke-width:0.529167;stroke-linejoin:round;-inkscape-stroke:none"
+         d="M 3.4395833,39.295824 2.1166666,41.147907 3.4395833,42.99999 4.7624999,41.147907 Z"
+         id="path8" />
+      <path
+         style="color:#000000;fill:#000000;stroke-linejoin:round;-inkscape-stroke:none"
+         d="m 3.4394531,39.03125 a 0.26460996,0.26460996 0 0 0 -0.2148437,0.111328 l -1.3242188,1.851563 a 0.26460996,0.26460996 0 0 0 0,0.30664 l 1.3242188,1.853516 a 0.26460996,0.26460996 0 0 0 0.4296875,0 l 1.3242187,-1.853516 a 0.26460996,0.26460996 0 0 0 0,-0.30664 L 3.6542969,39.142578 A 0.26460996,0.26460996 0 0 0 3.4394531,39.03125 Z m 0,0.71875 L 4.4375,41.148437 3.4394531,42.544922 2.4414063,41.148437 Z"
+         id="path9" />
     </g>
   </g>
 </svg>
