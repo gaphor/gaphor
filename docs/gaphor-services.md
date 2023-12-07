@@ -28,6 +28,7 @@ class MyOtherService:
 
 # Mock some gi related code (require_version, GTK, etc.), since this is not installed on RTD
 import sys
+import warnings
 import gi
 from sphinx.ext.autodoc.mock import MockFinder
 
@@ -43,6 +44,8 @@ finder = MockFinder([
     "gi.repository.GdkPixbuf", "gi.repository.GtkSource", "gi.repository.Graphene"
 ])
 sys.meta_path.insert(0, finder)
+
+warnings.simplefilter("ignore")
 ```
 
 Let's first load the entry points.

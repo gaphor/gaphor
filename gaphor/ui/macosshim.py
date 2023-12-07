@@ -1,12 +1,7 @@
-import logging
-import sys
-
-log = logging.getLogger(__name__)
+from gi.repository import GLib, Gtk
 
 
-if sys.platform == "darwin":
-    from gi.repository import GLib, Gtk
-
+def init_macos_shortcuts():
     def new_shortcut_with_args(shortcut, signal, *args):
         shortcut = Gtk.Shortcut.new(
             trigger=Gtk.ShortcutTrigger.parse_string(shortcut),
