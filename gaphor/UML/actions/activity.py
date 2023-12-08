@@ -81,6 +81,7 @@ class ActivityItem(Classified, ElementPresentation):
                 del self.children[parameter_items[node]]
 
 
+@represents(UML.ActivityParameterNode)
 class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode]):
     def __init__(self, diagram, id=None):
         super().__init__(
