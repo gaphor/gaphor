@@ -8,7 +8,8 @@ stored in the same order. However, since a Gaphor model is a persisted graph of 
 merging changes is not as simple as opening a text editor.
 
 From Gaphor 2.18 onwards Gaphor is also capable of merging models.
-Once a merge conflict has been detected, Gaphor will offer the option to open the current model,
+Once a merge conflict has been detected (i.e., when the model file contains git conflict-resolution markers `<<<<<<<`, `=======`, and `>>>>>>>`), 
+Gaphor will offer the option to open the current model,
 the incoming model or merge changes manually via the Merge Editor.
 
 ![merge dialog](images/merge-dialog.png)
