@@ -2,6 +2,7 @@ from gaphor.diagram.diagramtoolbox import DiagramType
 from gaphor.diagram.general.diagramitem import DiagramItem
 from gaphor.diagram.group import change_owner
 from gaphor.diagram.support import represents
+from gaphor.SysML.diagramframe import DiagramFrameItem
 from gaphor.SysML.sysml import SysMLDiagram
 
 represents(SysMLDiagram)(DiagramItem)
@@ -42,5 +43,9 @@ class SysMLDiagramType(DiagramType):
         diagram.diagramType = self.id
         if element:
             change_owner(element, diagram)
+
+        frame = diagram.create(DiagramFrameItem, subject=diagram.element)
+        frame.width = max(600, frame.width)
+        frame.height = max(400, frame.height)
 
         return diagram

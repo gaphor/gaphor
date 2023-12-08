@@ -4,15 +4,15 @@ from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.actions.activity import ActivityItem
 from gaphor.UML.actions.activitypropertypage import (
-    ActivityItemPage,
     ActivityParameterNodeNamePropertyPage,
     ActivityParameters,
+    ActivityPropertyPage,
 )
 
 
 def test_activity_parameter_node_editing(create):
     activity_item = create(ActivityItem, UML.Activity)
-    model = ActivityParameters(activity_item)
+    model = ActivityParameters(activity_item.subject)
     model.append([None, None])
     path = Gtk.TreePath.new_first()
     iter = model.get_iter(path)
@@ -35,7 +35,7 @@ def test_activity_parameter_node_reorder(create, element_factory):
     node2 = activity_parameter_node("param2")
     node3 = activity_parameter_node("param3")
 
-    list_store = ActivityParameters(activity_item)
+    list_store = ActivityParameters(activity_item.subject)
 
     new_order = [node3, node1, node2]
     list_store.sync_model(new_order)
@@ -47,7 +47,7 @@ def test_activity_parameter_node_reorder(create, element_factory):
 
 def test_activity_page_add_attribute(create):
     activity_item = create(ActivityItem, UML.Activity)
-    property_page = ActivityItemPage(activity_item)
+    property_page = ActivityPropertyPage(activity_item.subject)
 
     property_page.construct()
     iter = property_page.model.get_iter((0,))
