@@ -180,7 +180,6 @@ jobs:
         run: >
           brew update && brew install gtk4 gtksourceview5 libadwaita
           adwaita-icon-theme gobject-introspection graphviz create-dmg upx
-          python-launcher pipx && pipx ensurepath
       - name: Set up Python
         uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
         with:
@@ -195,7 +194,7 @@ jobs:
         id: install
         uses: ./.github/actions/install
         with:
-          python-version: ${{ env.python_version }}
+          python-version: python${{ env.python_version }}
       - name: Run Gaphor Tests
         run: poetry run pytest --cov
       - name: Create macOS Application
