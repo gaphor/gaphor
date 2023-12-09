@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-30 21:22+0200\n"
-"PO-Revision-Date: 2023-04-29 13:23+0000\n"
+"PO-Revision-Date: 2023-12-09 02:31+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/gaphor/gaphor/de/>"
+"\n"
 "Language: de\n"
-"Language-Team: German "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/de/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.3-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -292,9 +293,8 @@ msgid "Item Flow"
 msgstr "Elementfluss"
 
 #: gaphor/SysML/propertypages.ui:22
-#, fuzzy
 msgid "Enable Item Flow"
-msgstr "Elementfluss"
+msgstr "Elementfluss aktivieren"
 
 #: gaphor/SysML/propertypages.ui:36
 msgid "Item Property"
@@ -344,9 +344,8 @@ msgid "Composite"
 msgstr "Komposition"
 
 #: gaphor/SysML/propertypages.ui:187
-#, fuzzy
 msgid "Type"
-msgstr "Stil"
+msgstr "Typ"
 
 #: gaphor/SysML/propertypages.ui:210
 msgid "Id"
@@ -1116,32 +1115,28 @@ msgid "Message Sort"
 msgstr "Nachrichten sortieren"
 
 #: gaphor/UML/interactions/propertypages.ui:21
-#, fuzzy
 msgid "Call"
-msgstr "Aufruf()"
+msgstr "Aufruf"
 
 #: gaphor/UML/interactions/propertypages.ui:22
 msgid "Asynchronous"
-msgstr ""
+msgstr "Asynchron"
 
 #: gaphor/UML/interactions/propertypages.ui:23
-#, fuzzy
 msgid "Signal"
-msgstr "Signal senden"
+msgstr "Signal"
 
 #: gaphor/UML/interactions/propertypages.ui:24
 msgid "Reply"
-msgstr ""
+msgstr "Antwort"
 
 #: gaphor/UML/interactions/propertypages.ui:25
-#, fuzzy
 msgid "Create"
-msgstr "Erstellt am"
+msgstr "Erstellen"
 
 #: gaphor/UML/interactions/propertypages.ui:26
-#, fuzzy
 msgid "Delete"
-msgstr "_Löschen"
+msgstr "Löschen"
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
@@ -1661,9 +1656,8 @@ msgid "Structure"
 msgstr "Struktur"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Feature Domain"
-msgstr "Kontext"
+msgstr "Feature-Domäne"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Operator"
@@ -1678,9 +1672,8 @@ msgid "External Element"
 msgstr "Externes Element"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept Requirements"
-msgstr "Anforderungen"
+msgstr "Konzeptanforderungen"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Feature User Need"
@@ -1723,9 +1716,8 @@ msgid "Detailed Behavior"
 msgstr "Detailliertes Verhalten"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical Requirements"
-msgstr "Anforderungen"
+msgstr "Logische Anforderungen"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Logical States"
@@ -1840,48 +1832,40 @@ msgid "Feature Context"
 msgstr "Kontext"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Read Input"
-msgstr "Erstellt am"
+msgstr "Eingabe lesen"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "FeatureInput"
-msgstr "Funktion"
+msgstr "Funktionseingabe"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Request Actuation"
-msgstr "Erste Aktion"
+msgstr "Aktivierung anfordern"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Actuation Command"
-msgstr "Aktuator Befehl"
+msgstr "Aktivierungsbefehl"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Model Navigation"
-msgstr "Unbekannte Navigation"
+msgstr "Modellnavigation"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept"
-msgstr "Konnektor"
+msgstr "Konzept"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical"
-msgstr "Anmeldung"
+msgstr "Logisch"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Pillar"
-msgstr ""
+msgstr "Säule"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Abstraction Level"
-msgstr "Abstrakt"
+msgstr "Abstraktionsebene"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
@@ -2166,13 +2150,12 @@ msgid "Show Tips"
 msgstr "Tipps anzeigen"
 
 #: gaphor/ui/elementeditor.ui:44
-#, fuzzy
 msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see its properties appear."
 msgstr ""
-"Fügen Sie dem Diagramm ein Modellelement aus der Toolbox hinzu (unten "
-"links). Hier werden die Eigenschaften angezeigt."
+"Fügen Sie ein Modellelement aus der Toolbox hinzu (unten links). Hier werden "
+"die Eigenschaften angezeigt."
 
 #: gaphor/ui/elementeditor.ui:52
 msgid "This pane can be hidden by clicking the pane icon in the header."
@@ -2501,7 +2484,7 @@ msgstr "Werkzeuge"
 
 #: gaphor/ui/mainwindow.py:233
 msgid "Press F11 to exit Fullscreen"
-msgstr ""
+msgstr "Drücken Sie F11, um den Vollbildmodus zu verlassen"
 
 #: gaphor/ui/mainwindow.py:288
 msgid "Profile: {name}"
@@ -2618,7 +2601,7 @@ msgstr "Diagramm schließen"
 
 #: gaphor/ui/help/shortcuts.ui:62
 msgid "Toggle Fullscreen"
-msgstr ""
+msgstr "Vollbildmodus umschalten"
 
 #: gaphor/ui/help/shortcuts.ui:70
 msgid "Quit Gaphor"
@@ -2747,4 +2730,3 @@ msgstr "Verbindung “{name}” entfernen"
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr "Verbindung “{name}” aktualisieren"
-
