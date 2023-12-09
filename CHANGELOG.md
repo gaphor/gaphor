@@ -1,3 +1,7 @@
+2.22.2
+------
+- Fix values showing under part compartment
+
 2.22.1
 ------
 - Flatpak: Fix app preferences aren't saved
@@ -7,7 +11,7 @@
 - Catch errors when a clipboard is empty
 - Fix DnD file opening on macOS
 - Fix libadwaita 1.4.0 missing for hypothesis tests
-- Fix values showing under part compartment
+- Make ActivityParameterNode droppable
 
 2.22.0
 ------

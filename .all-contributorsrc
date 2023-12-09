@@ -1316,6 +1316,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "bayerl",
+      "name": "bayerl",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16454634?v=4",
+      "profile": "https://github.com/bayerl",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
