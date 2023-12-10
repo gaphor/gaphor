@@ -6,7 +6,7 @@ outputs:
     value: ${{ steps.meta.outputs.version }}
 inputs:
   python-version:
-    description: 'Python version number for Linux'
+    description: 'Python version. Can be a version python$V or $V depending on the platform.'
     required: false
 runs:
   using: composite
