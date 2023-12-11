@@ -96,7 +96,9 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 and [
                     self.block_compartment(
                         self.diagram.gettext("parts"),
-                        lambda a: a.aggregation and a.aggregation == "composite",
+                        lambda a: isinstance(a.type, Block)
+                        and a.aggregation
+                        and a.aggregation == "composite",
                     )
                 ]
                 or []

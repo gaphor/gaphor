@@ -1,3 +1,7 @@
+2.22.2
+------
+- Fix values showing under part compartment
+
 2.22.1
 ------
 - Flatpak: Fix app preferences aren't saved
