@@ -46,7 +46,7 @@ def open_file_dialog(
     parent=None,
     dirname=None,
     filters=None,
-    image_filter = False,
+    image_filter=False,
 ) -> None:
     dialog = Gtk.FileDialog.new()
     dialog.set_title(title)
