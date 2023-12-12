@@ -211,7 +211,7 @@ class MainWindow(Service, ActionProvider):
 
         window.connect("notify::is-active", self._on_window_active)
 
-        self.in_app_notifier = InAppNotifier(builder)
+        self.in_app_notifier = InAppNotifier(main_content)
         em = self.event_manager
         em.subscribe(self._on_undo_manager_state_changed)
         em.subscribe(self._on_action_enabled)
