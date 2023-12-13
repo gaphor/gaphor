@@ -3,7 +3,7 @@ name = "gaphor"
 version = "2.22.1"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
-    "Arjan J. Molenaar <gaphor@gmail.com>",
+    "Arjan Molenaar <gaphor@gmail.com>",
     "Dan Yeaw <dan@yeaw.me>"
 ]
 

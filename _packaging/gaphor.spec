@@ -11,7 +11,7 @@ from PyInstaller.utils.hooks import collect_entry_point, copy_metadata
 
 block_cipher = None
 
-COPYRIGHT = f"Copyright © 2001-{time.strftime('%Y')} Arjan J. Molenaar and Dan Yeaw."
+COPYRIGHT = f"Copyright © 2001-{time.strftime('%Y')} Arjan Molenaar and Dan Yeaw."
 
 ui_files = [
     (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.ui")

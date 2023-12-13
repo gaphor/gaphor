@@ -76,7 +76,7 @@ All releases are available on
 [GitHub](https://github.com/gaphor/gaphor/releases/).
 
 If you want to start developing on Gaphor, have a look at the [Installation
-section of our Tech docs](https://docs.gaphor.org/en/latest/).
+section of our documentation](https://docs.gaphor.org/en/latest/).
 
 ## 🔦 Usage
 
@@ -88,7 +88,7 @@ at startup in which you can select one of 5 models available to you to work in:
 - **RAAML:** *Risk Analysis and Assessment Modeling language* template
 - **C4 Model:** *a lean graphical notation technique for modelling the architecture of software systems* template
 
-After you select a template, the main Gaphor Window will load, and you will be
+After you select a template, the main Gaphor window will load, and you will be
 ready to start modeling. Gaphor will automatically select the correct profile
 based on the template that you selected, but you can also select other modeling
 profiles if needed by clicking on the button next to the Profile dropdown menu
@@ -96,9 +96,8 @@ at the top of your window.
 
 To select an element you want to place, for example a Class, click on the icon
 in the Toolbox and then again on the diagram. This will place a new Class item
-on the diagram and add a new Class to the model (it shows up in the Navigation).
-The selected tool will reset itself to the Pointer tool if the option ''Diagram
-→ Reset tool'' is selected.
+on the diagram and add a new Class to the model (it shows up in the
+[Model Browser](https://docs.gaphor.org/en/latest/getting_started.html#model-browser)).
 
 Portions of the toolbox may also be collapsed depending on the type of diagram
 you are modeling with. You can expand the collapsed portions of the toolbox if

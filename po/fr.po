@@ -2537,7 +2537,7 @@ msgstr ""
 
 #: gaphor/ui/help/about.ui:13
 msgid ""
-"Copyright © 2001-2023 Arjan J. Molenaar and Dan Yeaw.\n"
+"Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.\n"
 "\n"
 "UML, SysML, and RAAML are either registered trademarks or trademarks of "
 "Object Management Group, Inc. in the United States and/or other "

@@ -68,6 +68,7 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     This function finds a suitable spot on the `target` item to connect the `handle` to.
     """
     target.postload()
+    item.diagram.update_now({item, target})
     connector = ConnectorAspect(item, handle, item.diagram.connections)
     sink = ConnectionSink(target, distance=float("inf"))
     connector.glue(sink)

@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2001-2023, Arjan J. Molenaar
+# Copyright (C) 2001-2023, Arjan Molenaar
 # This file is distributed under the same license as the Gaphor package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
