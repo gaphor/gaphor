@@ -1325,6 +1325,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "Petalzu",
+      "name": "Petal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/106128925?v=4",
+      "profile": "https://github.com/Petalzu",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
