@@ -197,7 +197,7 @@ def test_tree_model_relationship_subtree(element_factory):
 
     assert package_model
     assert isinstance(relationship_item, RelationshipItem)
-    assert relationship_item.text == gettext("<Relationships>")
+    assert relationship_item.text_field.readonly_text == gettext("<Relationships>")
     assert association_item is relationship_model.get_item(0)
 
 
@@ -245,9 +245,9 @@ def test_tree_model_remove_relationship(element_factory):
 
 def test_tree_model_sort_relationship_item_first(element_factory):
     a = TreeItem(UML.Package())
-    a.text = "a"
+    a.text_field.readonly_text = "a"
     b = TreeItem(UML.Package())
-    b.text = "b"
+    b.text_field.readonly_text = "b"
     r = RelationshipItem(None)
 
     assert tree_item_sort(r, b) == -1

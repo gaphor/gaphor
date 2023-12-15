@@ -9,6 +9,7 @@ from gaphor.core.format import format
 from gaphor.core.modeling import Diagram, Element
 from gaphor.diagram.iconname import icon_name
 from gaphor.i18n import gettext
+from gaphor.ui.textfield import TextFieldModel
 
 _no_value = object()
 
@@ -16,33 +17,21 @@ _no_value = object()
 class TreeItem(GObject.Object):
     def __init__(self, element: Element | None):
         super().__init__()
+        self.text_field = TextFieldModel()
         self.element = element
         if element:
             self.sync()
 
-    text = GObject.Property(type=str)
+    text_field = GObject.Property(type=TextFieldModel)
     icon = GObject.Property(type=str)
     icon_visible = GObject.Property(type=bool, default=False)
-    attributes = GObject.Property(type=Pango.AttrList)
-    visible_child_name = GObject.Property(type=str, default="default")
-
-    @GObject.Property(type=str)
-    def read_only(self):
-        return not self.element or not hasattr(self.element, "name")
-
-    @GObject.Property(type=str)
-    def edit_text(self):
-        return "" if self.read_only else (self.element.name or "")
-
-    @edit_text.setter  # type: ignore[no-redef]
-    def edit_text(self, text):
-        if not self.read_only:
-            self.element.name = text or ""
 
     def sync(self) -> None:
         if element := self.element:
-            self.text = format(element) or gettext("<None>")
-            self.notify("edit-text")
+            self.text_field.readonly_text = format(element) or gettext("<None>")
+            self.text_field.editable_text = (
+                (self.element.name or "") if hasattr(self.element, "name") else ""
+            )
             self.icon = icon_name(element)
             self.icon_visible = bool(
                 self.icon
@@ -50,20 +39,23 @@ class TreeItem(GObject.Object):
                     element, (UML.Parameter, UML.Property, UML.Operation)
                 )
             )
-            self.attributes = pango_attributes(element)
+            self.text_field.attributes = pango_attributes(element)
+
+    def commit(self):
+        if hasattr(self.element, "name"):
+            assert self.element
+            self.element.name = self.text_field.editable_text or ""
 
     def start_editing(self):
-        self.visible_child_name = "editing"
+        self.text_field.start_editing()
 
 
 class RelationshipItem(TreeItem):
     def __init__(self, child_model):
         super().__init__(None)
         self.child_model = child_model
-        self.text = gettext("<Relationships>")
-
-    def start_editing(self):
-        pass
+        self.text_field.readonly_text = gettext("<Relationships>")
+        self.text_field.allow_editing = False
 
 
 class Branch:
@@ -142,8 +134,8 @@ def tree_item_sort(a, b, _user_data=None):
         return -1
     if isinstance(b, RelationshipItem):
         return 1
-    na = normalize("NFC", a.text).casefold()
-    nb = normalize("NFC", b.text).casefold()
+    na = normalize("NFC", a.text_field.readonly_text).casefold()
+    nb = normalize("NFC", b.text_field.readonly_text).casefold()
     return (na > nb) - (na < nb)
 
 

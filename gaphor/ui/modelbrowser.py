@@ -462,49 +462,13 @@ def list_item_factory_setup(
     drop_target.connect("drop", list_item_drop_drop, list_item, event_manager)
     row.add_controller(drop_target)
 
-    text = builder.get_object("text")
-
-    should_commit = True
-
-    def end_editing():
-        list_item.get_item().get_item().visible_child_name = "default"
-        row.get_parent().grab_focus()
-
-    def text_focus_out(ctrl):
+    def done_editing(_text_field, should_commit):
         if should_commit:
-            edit_text = text.get_buffer().get_text()
             tree_item = list_item.get_item().get_item()
             with Transaction(event_manager):
-                tree_item.edit_text = edit_text
-        end_editing()
+                tree_item.commit()
 
-    def text_key_pressed(ctrl, keyval, keycode, state):
-        if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
-            end_editing()
-            return True
-        elif keyval == Gdk.KEY_Escape:
-            nonlocal should_commit
-            should_commit = False
-            list_item.get_item().get_item().sync()
-            end_editing()
-            return True
-        return False
-
-    focus_ctrl = Gtk.EventControllerFocus.new()
-    focus_ctrl.connect("leave", text_focus_out)
-    text.add_controller(focus_ctrl)
-
-    key_ctrl = Gtk.EventControllerKey.new()
-    key_ctrl.connect("key-pressed", text_key_pressed)
-    text.add_controller(key_ctrl)
-
-    def start_editing(stack, pspec):
-        nonlocal should_commit
-        if stack.get_visible_child_name() == "editing":
-            should_commit = True
-            text.grab_focus()
-
-    builder.get_object("stack").connect("notify::visible-child-name", start_editing)
+    builder.get_object("text").connect("done-editing", done_editing)
 
 
 def list_item_drag_prepare(

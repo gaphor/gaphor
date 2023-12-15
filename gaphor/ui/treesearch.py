@@ -25,7 +25,7 @@ def search(search_text, tree_walker: Iterable[TreeItem]):
     search_text = normalize("NFC", search_text).casefold()
 
     for tree_item in tree_walker:
-        text = normalize("NFC", tree_item.text).casefold()
+        text = normalize("NFC", tree_item.text_field.readonly_text).casefold()
         if tree_item.element and search_text in text:
             return tree_item
 
