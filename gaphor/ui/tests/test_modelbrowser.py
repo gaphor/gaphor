@@ -129,7 +129,7 @@ def test_element_name_changed(model_browser, element_factory):
 
     weight, style = tree_item.attributes.get_attributes()
 
-    assert tree_item.text == "foo"
+    assert tree_item.readonly_text == "foo"
     assert weight.as_int().value == 400
     assert style.as_int().value == 0
 
@@ -264,7 +264,7 @@ def test_generalization_text(model_browser, element_factory):
     branch = model.branches[tree_item]
     assert tree_item
     assert branch.relationships[0].element is generalization
-    assert branch.relationships[0].text == "general: General"
+    assert branch.relationships[0].readonly_text == "general: General"
 
 
 def test_drop_multiple_elements(model_browser, element_factory, event_manager):

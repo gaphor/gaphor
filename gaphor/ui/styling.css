@@ -107,12 +107,12 @@ listview .row {
   padding: 2px 0;
 }
 
-.editing {
+textfield text {
   background-color: @theme_bg_color;
   color: @theme_fg_color;
 }
 
-.editing selection {
+textfield text selection {
   background-color: alpha(@theme_selected_bg_color, 0.3);
 }
 

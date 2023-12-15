@@ -20,29 +20,31 @@ class TreeItem(GObject.Object):
         if element:
             self.sync()
 
-    text = GObject.Property(type=str)
     icon = GObject.Property(type=str)
     icon_visible = GObject.Property(type=bool, default=False)
-    attributes = GObject.Property(type=Pango.AttrList)
-    visible_child_name = GObject.Property(type=str, default="default")
 
-    @GObject.Property(type=str)
+    readonly_text = GObject.Property(type=str)
+    attributes = GObject.Property(type=Pango.AttrList)
+    editing = GObject.Property(type=bool, default=False)
+    can_edit = GObject.Property(type=bool, default=True)
+
     def read_only(self):
         return not self.element or not hasattr(self.element, "name")
 
     @GObject.Property(type=str)
-    def edit_text(self):
-        return "" if self.read_only else (self.element.name or "")
+    def editable_text(self):
+        return "" if self.read_only() else (self.element.name or "")
 
-    @edit_text.setter  # type: ignore[no-redef]
-    def edit_text(self, text):
-        if not self.read_only:
+    @editable_text.setter  # type: ignore[no-redef]
+    # @transactional
+    def editable_text(self, text):
+        if not self.read_only():
             self.element.name = text or ""
 
     def sync(self) -> None:
         if element := self.element:
-            self.text = format(element) or gettext("<None>")
-            self.notify("edit-text")
+            self.readonly_text = format(element) or gettext("<None>")
+            self.notify("editable-text")
             self.icon = icon_name(element)
             self.icon_visible = bool(
                 self.icon
@@ -53,17 +55,15 @@ class TreeItem(GObject.Object):
             self.attributes = pango_attributes(element)
 
     def start_editing(self):
-        self.visible_child_name = "editing"
+        self.editing = True
 
 
 class RelationshipItem(TreeItem):
     def __init__(self, child_model):
         super().__init__(None)
         self.child_model = child_model
-        self.text = gettext("<Relationships>")
-
-    def start_editing(self):
-        pass
+        self.readonly_text = gettext("<Relationships>")
+        self.can_editing = False
 
 
 class Branch:
@@ -142,8 +142,8 @@ def tree_item_sort(a, b, _user_data=None):
         return -1
     if isinstance(b, RelationshipItem):
         return 1
-    na = normalize("NFC", a.text).casefold()
-    nb = normalize("NFC", b.text).casefold()
+    na = normalize("NFC", a.readonly_text).casefold()
+    nb = normalize("NFC", b.readonly_text).casefold()
     return (na > nb) - (na < nb)
 
 

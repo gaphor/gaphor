@@ -15,6 +15,7 @@ gi.require_version("Adw", "1")
 
 from gi.repository import Adw, Gio, GLib, GtkSource
 
+import gaphor.ui.textfield
 from gaphor.application import Application, Session
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
