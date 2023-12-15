@@ -1,4 +1,6 @@
-from gi.repository import GLib, Gdk, GObject, Gtk, Pango
+from gi.repository import Gdk, GLib, GObject, Gtk, Pango
+
+START_EDIT_DELAY = 100  # ms
 
 _XML = """\
 <?xml version="1.0" encoding="UTF-8"?>
@@ -60,7 +62,6 @@ class TextField(Gtk.Stack):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         _text_field_edit_controls(self)
-        self.connect("notify::readonly-text", print)
 
     readonly_text = GObject.Property(type=str, default="")
     editable_text = GObject.Property(type=str, default="")

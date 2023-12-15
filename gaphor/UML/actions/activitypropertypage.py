@@ -143,12 +143,32 @@ def list_item_factory_setup(_factory, list_item):
         -1,
     )
 
+    text = builder.get_object("text")
+
+    def on_double_click(ctrl, n_press, x, y):
+        if n_press == 2:
+            text.start_editing()
+
+    ctrl = Gtk.GestureClick.new()
+    ctrl.set_button(Gdk.BUTTON_PRIMARY)
+    ctrl.connect("pressed", on_double_click)
+    text.add_controller(ctrl)
+
+    def start_editing(_ctrl, keyval, _keycode, _state):
+        if keyval in (Gdk.KEY_F2,):
+            text.start_editing()
+            return True
+        return False
+
+    key_ctrl = Gtk.EventControllerKey.new()
+    key_ctrl.connect("key-pressed", start_editing)
+    text.add_controller(key_ctrl)
+
     def end_editing(text, pspec):
         if not text.props.editing:
-            list_item.get_item().parameter = text.get_text()
+            list_item.get_item().parameter = text.editable_text
 
-    text = builder.get_object("text")
-    text.connect("notify::editing", end_editing)
+    text.connect("done-editing", end_editing)
 
 
 def keyboard_shortcuts(selection):
