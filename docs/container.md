@@ -14,7 +14,7 @@ For more info, check out the [GitHub documentation](https://docs.github.com/en/f
 
 ## Remote access to Gaphor graphic window with Codespaces
 
-When using Codespaces, chances are that you also want to interact with the 
+When using Codespaces, chances are that you also want to interact with the
 graphical window of Gaphor.
 
 This is facilitated in Gaphor by use of container feature called [desktop-lite](https://github.com/devcontainers/features/tree/main/src/desktop-lite). This feature is activated by default in the Gaphor's [devcontainer.json](https://github.com/gaphor/gaphor/blob/main/.devcontainer/devcontainer.json) file.
