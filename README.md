@@ -1,4 +1,4 @@
-<h1 align="center"><img src="https://github.com/gaphor/gaphor/blob/main/logos/gaphor-logo-full.svg?raw=true" alt="Gaphor - UML/SysML Modeling" height="96"/></h1>
+<h1 align="center"><img src="https://github.com/gaphor/gaphor/blob/main/data/logos/gaphor-logo-full.svg?raw=true" alt="Gaphor - UML/SysML Modeling" height="96"/></h1>
 
 [![Build](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml/badge.svg)](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml?query=branch%3Amain)
 [![Hypothesis Tests](https://github.com/gaphor/gaphor/actions/workflows/hypothesis-test.yml/badge.svg)](https://github.com/gaphor/gaphor/actions/workflows/hypothesis-test.yml?query=branch%3Amain)
