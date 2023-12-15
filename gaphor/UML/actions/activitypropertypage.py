@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from gi.repository import GObject, Gio, Gdk, Gtk
+from gi.repository import Gdk, Gio, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import transactional, event_handler
+from gaphor.core import event_handler, transactional
 from gaphor.core.format import format, parse
 from gaphor.core.modeling import AssociationUpdated
 from gaphor.diagram.propertypages import (
@@ -19,7 +19,6 @@ from gaphor.diagram.propertypages import (
 )
 from gaphor.i18n import translated_ui_string
 from gaphor.UML.actions.activity import ActivityItem
-
 
 new_builder = new_resource_builder("gaphor.UML.actions")
 
@@ -230,4 +229,3 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
     def _on_name_changed(self, entry):
         if self.subject.parameter.name != entry.get_text():
             self.subject.parameter.name = entry.get_text()
-

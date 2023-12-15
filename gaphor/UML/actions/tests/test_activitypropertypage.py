@@ -1,4 +1,5 @@
 from gi.repository import Gdk
+
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.actions.activity import ActivityItem
