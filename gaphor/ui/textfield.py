@@ -102,7 +102,7 @@ class TextField(Gtk.Stack):
 
     @property
     def is_editing(self) -> bool:
-        return bool(self.get_visible_child_name() == "editing")
+        return self.get_visible_child_name() == "editing"
 
     def done_editing(self, should_commit):
         if self.is_editing:
