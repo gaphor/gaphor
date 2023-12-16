@@ -1,11 +1,11 @@
+import contextlib
 import importlib.resources
 import logging
 import platform
 import sys
+import tempfile
 import textwrap
 import time
-import tempfile
-import contextlib
 
 import cairo
 import gi
@@ -15,6 +15,7 @@ from gaphor.abc import Service
 from gaphor.application import Application, distribution
 from gaphor.core import Transaction
 from gaphor.core.modeling import Diagram
+from gaphor.ui import APPLICATION_ID
 
 with contextlib.suppress(ImportError):
     import pygit2
@@ -131,18 +132,16 @@ class SelfTest(Service):
     @test
     def test_gsettings_schemas(self, status):
         source = Gio.settings_schema_source_get_default()
-        if source.lookup("org.gtk.gtk4.Settings.FileChooser", recursive=True):
-            log.info(
-                "Schemas found in data dirs: %s",
-                ":".join(GLib.get_system_data_dirs()),
-            )
-            status.complete()
-        else:
-            log.error(
-                "Could not find schemas in data dirs: %s",
-                ":".join(GLib.get_system_data_dirs()),
-            )
-            log.info("Schemas found: %s %s", *source.list_schemas(True))
+        data_dirs = [GLib.get_user_data_dir(), *GLib.get_system_data_dirs()]
+        for schema in ["org.gtk.gtk4.Settings.FileChooser", APPLICATION_ID]:
+            if source.lookup(schema, recursive=True):
+                log.info("Schema %s found", schema)
+            else:
+                log.debug("Schemas found: %s %s", *source.list_schemas(True))
+                raise RuntimeError(
+                    f"Could not find schema {schema} in data dirs: {':'.join(data_dirs)}"
+                )
+        status.complete()
 
     @test
     def test_auto_layout(self, status):

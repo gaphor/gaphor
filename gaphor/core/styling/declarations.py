@@ -46,6 +46,11 @@ class TextDecoration(Enum):
     UNDERLINE = "underline"
 
 
+class WhiteSpace(Enum):
+    NORMAL = "normal"
+    NOWRAP = "nowrap"
+
+
 FONT_SIZE_VALUES = {
     "x-small": 3 / 4,
     "small": 8 / 9,
@@ -219,6 +224,7 @@ enum_styles: Dict[str, Dict[str, object]] = {
     "text-decoration": {e.value: e for e in TextDecoration},
     "text-align": {e.value: e for e in TextAlign},
     "vertical-align": {e.value: e for e in VerticalAlign},
+    "white-space": {e.value: e for e in WhiteSpace},
 }
 
 

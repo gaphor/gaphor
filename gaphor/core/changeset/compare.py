@@ -7,10 +7,10 @@ from gaphor.core.modeling import (
     Element,
     ElementChange,
     ElementFactory,
-    RefChange,
-    ValueChange,
     Presentation,
+    RefChange,
     StyleSheet,
+    ValueChange,
 )
 from gaphor.core.modeling.collection import collection
 

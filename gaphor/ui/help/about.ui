@@ -6,9 +6,9 @@
     <property name="modal">true</property>
     <property name="application-name">Gaphor</property>
     <property name="application-icon">org.gaphor.Gaphor</property>
-    <property name="developer-name">Arjan J. Molenaar and Dan Yeaw</property>
+    <property name="developer-name">Arjan Molenaar and Dan Yeaw</property>
     <property name="title" translatable="yes">About Gaphor</property>
-    <property name="copyright" translatable="yes">Copyright © 2001-2023 Arjan J. Molenaar and Dan Yeaw.
+    <property name="copyright" translatable="yes">Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.
 
 UML, SysML, and RAAML are either registered trademarks or trademarks of Object Management Group, Inc. in the United States and/or other countries.</property>
     <property name="website">https://gaphor.org</property>
@@ -42,39 +42,43 @@ Unless required by applicable law or agreed to in writing, software distributed 
       Amor Ali
       mcdigregorio
       peter88213</property>
-    <property name="translator-credits">Antonin Delpeuch (fr)
+    <property name="translator-credits">3fla1416 (fr)
+      Albano Battistella (it)
+      Antonin Delpeuch (fr)
       Arjan Molenaar (nl)
       Bill ZHANG (zh_Hans)
       Daniel Nylander (sv)
-      Eryk Michalak (pl)
       Erwan Calvez (fr)
+      Eryk Michalak (pl)
+      Felipe Nogueira (pt_BR)
       Fran Diéguez (gl)
+      Jean Elias (pt_BR)
       Jiri Grönroos (fi)
       Jordi Mallach (ca)
       Jose David M (es)
+      K.B.Dharun Krishna (ta)
       Michał Dominik (pl)
       Peter Sabanov (ru)
       Philip Goto (nl)
       Sabri Ünal (tr)
       Seong-ho Cho (ko)
       Ygor Mutti (pt_BR)
-      albanobattistella (it)
       fu7mu4 (ja)
       jischebeck (de)
       jonvon (zh_Hans)
       lizhuoqi (zh_Hans)
       milotype (hr, de)
       ovari (hu)
+      vanillajonathan (sv)
       vikdevelop (cs)
       Óscar Fernández Díaz (es)
-      Евгений Лежнин (ru)
-      vanillajonathan (sv)
-      Felipe Nogueira (pt_BR)</property>
+      Евгений Лежнин (ru)</property>
     <property name="designers">Arjan Molenaar
       Dan Yeaw
       Tobias Bernard</property>
     <property name="documenters">Alexis Howells
       Arjan Molenaar
+      Brandan Glendenning
       Dan Yeaw
       Jens Pfeifle
       Mike Kidner

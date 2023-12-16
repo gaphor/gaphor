@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0"/>
+    <requires lib="adw" version="1.0"/>
+    <object class="AdwPreferencesWindow" id="preferences">
+        <property name="title" translatable="true">Preferences</property>
+        <child>
+            <object class="AdwPreferencesPage" id="appearance_page">
+                <property name="title" translatable="true">Appearance</property>
+                <property name="icon-name">applications-graphics-symbolic</property>
+                <child>
+                    <object class="AdwPreferencesGroup">
+                        <property name="title" translatable="true">Colors</property>
+                        <child>
+                            <object class="AdwComboRow" id="style_variant">
+                                <property name="title">Force Dark or Light Color Scheme</property>
+                                <property name="model">
+                                    <object class="GtkStringList">
+                                        <items>
+                                            <item translatable="yes">System</item>
+                                            <item translatable="yes">Dark</item>
+                                            <item translatable="yes">Light</item>
+                                        </items>
+                                    </object>
+                                </property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child>
+                    <object class="AdwPreferencesGroup">
+                        <property name="title" translatable="true">Language</property>
+                        <child>
+                            <object class="AdwSwitchRow" id="use_english">
+                                <property name="title" translatable="true">Change from System Language to English</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </object>
+</interface>

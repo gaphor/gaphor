@@ -1,6 +1,36 @@
-2.21.1
+2.22.2
 ------
-(Unreleased)
+- Fix values showing under part compartment
+
+2.22.1
+------
+- Flatpak: Fix app preferences aren't saved
+- Fix TypeError when changing to dark mode and refactor settings
+- Fix grouping: allow to group to "root"
+- Add support for dropping SysML diagrams on diagrams
+- Catch errors when a clipboard is empty
+- Fix DnD file opening on macOS
+- Fix libadwaita 1.4.0 missing for hypothesis tests
+- Make ActivityParameterNode droppable
+
+2.22.0
+------
+- Proxy port improvements
+- Add preferences for overriding dark mode and language to English
+- Add allocations toolbox with allocate relationship item
+- Add members in model browser
+- Make line selection easier by increasing tolerance
+- Make model loading more lenient
+- Remove duplicated elements in Component.provided property
+- Replace Black, check toml, isort, and refurb with Ruff
+- macOS: fix About dialog links
+- macOS: upgrade notarization from altool to notarytool
+- Upgrade to libadwaita 1.4.0
+- Update Sphinx to version 6.0
+- Update PyInstaller to version 6.1
+- Clean up transactional event handling
+- Use defusedxml to avoid loading potentially dangerous xml
+- Update Portuguese (Brazilian), Italian, Tamil,
 
 2.21.0
 ------

@@ -16,7 +16,7 @@ from gaphor.core.modeling import Diagram, Element, ElementFactory, Presentation
 from gaphor.core.modeling.collection import collection
 from gaphor.core.modeling.modelinglanguage import ModelingLanguage
 from gaphor.core.modeling.stylesheet import StyleSheet
-from gaphor.storage.parser import GaphorLoader, parse_generator, element
+from gaphor.storage.parser import GaphorLoader, element, parse_generator
 from gaphor.storage.xmlwriter import XMLWriter
 
 FILE_FORMAT_VERSION = "3.0"

@@ -9,6 +9,7 @@ from gaphor.diagram.presentation import ElementPresentation, Named
 from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments
+from gaphor.UML.recipes import stereotypes_str
 from gaphor.UML.umlfmt import format_property
 
 
@@ -45,7 +46,7 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.recipes.stereotypes_str(self.subject),
+                    text=lambda: stereotypes_str(self.subject),
                 ),
                 Text(
                     text=lambda: format_property(
@@ -61,5 +62,5 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
                 "justify-content": self.justify(),
                 "dash-style": self.dash(),
             },
-            draw=draw_border
+            draw=draw_border,
         )

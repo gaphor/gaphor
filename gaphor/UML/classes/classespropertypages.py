@@ -9,10 +9,10 @@ from gaphor.core import gettext, transactional
 from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
     EditableTreeModel,
+    NamePropertyPage,
     PropertyPageBase,
     PropertyPages,
     help_link,
-    NamePropertyPage,
     new_resource_builder,
     on_bool_cell_edited,
     on_text_cell_edited,
@@ -326,13 +326,9 @@ class AttributesPage(PropertyPageBase):
             "ownedAttribute.isDerived", handler
         ).watch("ownedAttribute.visibility", handler).watch(
             "ownedAttribute.isStatic", handler
-        ).watch(
-            "ownedAttribute.lowerValue", handler
-        ).watch(
+        ).watch("ownedAttribute.lowerValue", handler).watch(
             "ownedAttribute.upperValue", handler
-        ).watch(
-            "ownedAttribute.defaultValue", handler
-        ).watch(
+        ).watch("ownedAttribute.defaultValue", handler).watch(
             "ownedAttribute.typeValue", handler
         )
 
@@ -412,13 +408,9 @@ class OperationsPage(PropertyPageBase):
             "ownedOperation.isAbstract", handler
         ).watch("ownedOperation.visibility", handler).watch(
             "ownedOperation.ownedParameter.lowerValue", handler
-        ).watch(
-            "ownedOperation.ownedParameter.upperValue", handler
-        ).watch(
+        ).watch("ownedOperation.ownedParameter.upperValue", handler).watch(
             "ownedOperation.ownedParameter.typeValue", handler
-        ).watch(
-            "ownedOperation.ownedParameter.defaultValue", handler
-        )
+        ).watch("ownedOperation.ownedParameter.defaultValue", handler)
 
         return unsubscribe_all_on_destroy(
             builder.get_object("operations-editor"), self.watcher

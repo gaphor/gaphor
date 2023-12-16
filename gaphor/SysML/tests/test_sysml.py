@@ -1,6 +1,5 @@
 from gaphor.SysML import sysml
 
-
 # sysml.AbstractRequirement.tracedTo = derived('tracedTo', UML.NamedElement, 0, '*', lambda self: [drrp.targetContext for drrp in self.model.select(sysml.DirectedRelationshipPropertyPath) if drrp.targetContext and isinstance(drrp, sysml.Trace)])
 
 

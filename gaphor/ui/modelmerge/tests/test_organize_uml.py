@@ -1,24 +1,24 @@
 from typing import Iterable
 
+from gaphor import UML
+from gaphor.core.changeset.compare import compare
 from gaphor.core.modeling import (
     ElementFactory,
     PendingChange,
 )
-from gaphor import UML
-from gaphor.core.changeset.compare import compare
 from gaphor.diagram.tests.fixtures import connect
 from gaphor.SysML import sysml
 from gaphor.SysML.diagramitems import BlockItem, PropertyItem, ProxyPortItem
 from gaphor.SysML.propertypages import create_item_flow
-from gaphor.ui.modelmerge.organize import organize_changes, Node
+from gaphor.ui.modelmerge.organize import Node, organize_changes
 from gaphor.UML.actions.actionstoolbox import partition_config
 from gaphor.UML.diagramitems import (
-    ClassItem,
-    AssociationItem,
-    ExtensionItem,
     ActivityItem,
-    PartitionItem,
+    AssociationItem,
+    ClassItem,
     ConnectorItem,
+    ExtensionItem,
+    PartitionItem,
     StateItem,
     TransitionItem,
 )

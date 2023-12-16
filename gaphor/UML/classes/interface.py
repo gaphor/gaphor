@@ -92,6 +92,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments
+from gaphor.UML.recipes import stereotypes_str
 
 
 class Folded(Enum):
@@ -185,21 +186,13 @@ class InterfaceItem(Classified, ElementPresentation):
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
-        ).watch(
-            "subject[NamedElement].namespace.name"
-        ).watch(
+        ).watch("subject[NamedElement].namespace.name").watch(
             "subject.appliedStereotype", self.update_shapes
-        ).watch(
-            "subject.appliedStereotype.classifier.name"
-        ).watch(
+        ).watch("subject.appliedStereotype.classifier.name").watch(
             "subject.appliedStereotype.slot", self.update_shapes
-        ).watch(
-            "subject.appliedStereotype.slot.definingFeature.name"
-        ).watch(
+        ).watch("subject.appliedStereotype.slot.definingFeature.name").watch(
             "subject.appliedStereotype.slot.value", self.update_shapes
-        ).watch(
-            "subject[Interface].supplierDependency", self.update_shapes
-        )
+        ).watch("subject[Interface].supplierDependency", self.update_shapes)
         attribute_watches(self, "Interface")
         operation_watches(self, "Interface")
 
@@ -286,7 +279,7 @@ class InterfaceItem(Classified, ElementPresentation):
         return Box(
             Box(
                 Text(
-                    text=lambda: UML.recipes.stereotypes_str(
+                    text=lambda: stereotypes_str(
                         self.subject, (self.diagram.gettext("interface"),)
                     ),
                 ),
@@ -333,7 +326,7 @@ class InterfaceItem(Classified, ElementPresentation):
                 draw=self.draw_interface_ball_and_socket,
             ),
             Text(
-                text=lambda: UML.recipes.stereotypes_str(self.subject),
+                text=lambda: stereotypes_str(self.subject),
             ),
             Text(
                 text=lambda: self.subject.name or "",

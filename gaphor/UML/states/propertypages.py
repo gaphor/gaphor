@@ -5,6 +5,7 @@ gaphor.adapter package.
 """
 
 from __future__ import annotations
+
 from gi.repository import Gio
 
 from gaphor import UML

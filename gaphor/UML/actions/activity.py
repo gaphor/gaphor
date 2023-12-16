@@ -81,6 +81,7 @@ class ActivityItem(Classified, ElementPresentation):
                 del self.children[parameter_items[node]]
 
 
+@represents(UML.ActivityParameterNode)
 class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode]):
     def __init__(self, diagram, id=None):
         super().__init__(
@@ -89,9 +90,8 @@ class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode])
             shape=Box(
                 Text(
                     text=lambda: self.subject.parameter.name or "",
-                    width=120,
                 ),
-                style={"padding": (4, 12, 4, 12)},
+                style={"padding": (4, 12, 4, 12), "min-width": 120},
                 draw=draw_border,
             ),
         )

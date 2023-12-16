@@ -1,6 +1,6 @@
 import pytest
 
-from gaphor.core.changeset.apply import apply_change, applicable
+from gaphor.core.changeset.apply import applicable, apply_change
 from gaphor.core.modeling import (
     Diagram,
     Element,

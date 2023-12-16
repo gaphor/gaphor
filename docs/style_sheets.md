@@ -168,6 +168,9 @@ family, size, weight.
 ``vertical-spacing``    Set vertical spacing for icon-like items (actors, start state).
 
                         Example: ``vertical-spacing: 4``.
+``white-space``         Change the line wrapping behavior for text.
+                        Some text, like class' attributes and operations, cannot be wrapped.
+                        Either ``normal`` (text is wrapped) or ``nowrap``.
 ======================= =======================================
 ```
 

@@ -7,6 +7,7 @@ from gaphor.diagram.presentation import Classified, ElementPresentation
 from gaphor.diagram.shapes import Box, Text, cairo_state, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Component)
@@ -30,7 +31,7 @@ class ComponentItem(Classified, ElementPresentation):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.recipes.stereotypes_str(self.subject),
+                    text=lambda: stereotypes_str(self.subject),
                 ),
                 Text(
                     text=lambda: self.subject.name or "",
@@ -48,7 +49,7 @@ class ComponentItem(Classified, ElementPresentation):
                 if self.diagram and self.children
                 else JustifyContent.CENTER,
             },
-            draw=draw_border
+            draw=draw_border,
         )
 
 

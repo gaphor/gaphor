@@ -9,6 +9,7 @@ from gaphor.diagram.shapes import (
     JustifyContent,
     Text,
     TextAlign,
+    WhiteSpace,
     draw_border,
     draw_top_separator,
 )
@@ -30,17 +31,11 @@ class BlockItem(Classified, ElementPresentation[Block]):
             "show_parts", self.update_shapes
         ).watch("show_references", self.update_shapes).watch(
             "show_values", self.update_shapes
-        ).watch(
-            "show_operations", self.update_shapes
-        ).watch(
+        ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
-        ).watch(
-            "subject[NamedElement].name"
-        ).watch(
+        ).watch("subject[NamedElement].name").watch(
             "subject[NamedElement].namespace.name"
-        ).watch(
-            "subject[Classifier].isAbstract", self.update_shapes
-        ).watch(
+        ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
             "subject[Class].ownedAttribute.aggregation", self.update_shapes
         )
         operation_watches(self, "Block")
@@ -79,7 +74,6 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 ),
                 Text(
                     text=lambda: self.subject.name or "",
-                    width=lambda: self.width - 4,
                     style={
                         "font-weight": FontWeight.BOLD,
                         "font-style": FontStyle.ITALIC
@@ -102,7 +96,9 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 and [
                     self.block_compartment(
                         self.diagram.gettext("parts"),
-                        lambda a: a.aggregation and a.aggregation == "composite",
+                        lambda a: isinstance(a.type, Block)
+                        and a.aggregation
+                        and a.aggregation == "composite",
                     )
                 ]
                 or []
@@ -168,7 +164,13 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 },
             ),
             *(
-                Text(text=lazy_format(attribute), style={"text-align": TextAlign.LEFT})
+                Text(
+                    text=lazy_format(attribute),
+                    style={
+                        "text-align": TextAlign.LEFT,
+                        "white-space": WhiteSpace.NOWRAP,
+                    },
+                )
                 for attribute in self.subject.ownedAttribute
                 if predicate(attribute)
             ),
@@ -196,7 +198,13 @@ class BlockItem(Classified, ElementPresentation[Block]):
                 },
             ),
             *(
-                Text(text=lazy_format(operation), style={"text-align": TextAlign.LEFT})
+                Text(
+                    text=lazy_format(operation),
+                    style={
+                        "text-align": TextAlign.LEFT,
+                        "white-space": WhiteSpace.NOWRAP,
+                    },
+                )
                 for operation in self.subject.ownedOperation
             ),
             style={

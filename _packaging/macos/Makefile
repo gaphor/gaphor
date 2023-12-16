@@ -13,7 +13,7 @@ ICON_FILES=\
 	gaphor.iconset/icon_512x512.png \
 	gaphor.iconset/icon_512x512@2x.png
 
-LOGO = ../../logos/org.gaphor.Gaphor.svg
+LOGO = ../../data/logos/gaphor-mac.svg
 
 all: gaphor.icns
 

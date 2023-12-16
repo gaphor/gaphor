@@ -11,12 +11,14 @@ GAPHOR_CORE = [
     "gaphor.i18n",
     "gaphor.transaction",
     "gaphor.event",
+    "gaphor.settings",
 ]
 
 UI_LIBRARIES = [
     "gi.repository.Adw",
     "gi.repository.Gdk",
     "gi.repository.Gtk",
+    "gi.repository.GObject",
 ]
 
 
@@ -33,8 +35,10 @@ def test_core_packages():
 
 
 def test_diagram_package():
-    # NB. gaphor.diagram.tools.dropzone includes gaphor.UML.recipes,
+    # NB1. gaphor.diagram.tools.dropzone includes gaphor.UML.recipes,
     # so it can assign the right owner package to a newly created element.
+    # NB2. The image property page requires a file dialog and some error
+    # handling. Unfortunately this is UI code, so we need it from there.
     (
         archrule("Diagrams are part of the core")
         .match("gaphor.diagram*")
@@ -43,7 +47,8 @@ def test_diagram_package():
         .may_import("gaphor.diagram*")
         .may_import("gaphor.UML.recipes")
         .may_import("gaphor.UML.uml")
-        .may_import("gaphor.ui.*")
+        .may_import("gaphor.ui.filedialog")
+        .may_import("gaphor.ui.errorhandler")
         .should_not_import("gaphor*")
         .check(gaphor)
     )

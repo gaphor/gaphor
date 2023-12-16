@@ -2,9 +2,20 @@ name: Full Build
 
 on:
   push:
+    branches:
+      - main
+    paths-ignore:
+      - '*.md'
   pull_request:
+    branches:
+      - main
   release:
     types: [published]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   python_version: '3.11'
@@ -19,7 +30,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           disable-sudo: true
           disable-file-monitoring: true
@@ -33,7 +44,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
         with:
           python-version: ${{ env.python_version }}
       - name: Lint with Pre-commit
@@ -101,13 +112,13 @@ jobs:
         run: poetry build
       - name: Upload gaphor-${{ steps.install.outputs.version }}.tar.gz
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3.1.3
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
         with:
           name: gaphor-${{ steps.install.outputs.version }}.tar.gz
           path: dist/gaphor-${{ steps.install.outputs.version }}.tar.gz
       - name: Upload gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
         if: ${{ matrix.python_version == env.python_version }}
-        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3.1.3
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4.0.0
         with:
           name: gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
           path: dist/gaphor-${{ steps.install.outputs.version }}-py3-none-any.whl
@@ -121,7 +132,7 @@ jobs:
       options: --privileged
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -143,7 +154,7 @@ jobs:
   macos:
     name: macOS
     needs: lint
-    runs-on: macos-11
+    runs-on: macos-12
     permissions:
       contents: write
     timeout-minutes: 45
@@ -155,7 +166,7 @@ jobs:
       PKG_CONFIG_PATH: /usr/local/opt/libffi/lib/pkgconfig:/usr/local/opt/python@${python_version}/lib/pkgconfig:${PKG_CONFIG_PATH:-}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -163,11 +174,14 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Install macOS Dependencies
+        env:
+          HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK: 1
+          HOMEBREW_NO_INSTALL_CLEANUP: 1
         run: >
-          brew install gtk4 gtksourceview5 libadwaita adwaita-icon-theme
-          gobject-introspection graphviz create-dmg upx
+          brew update && brew install gtk4 gtksourceview5 libadwaita
+          adwaita-icon-theme gobject-introspection graphviz create-dmg upx
       - name: Set up Python
-        uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
         with:
           python-version: ${{ env.python_version }}
       - name: Use Python Dependency Cache
@@ -179,29 +193,30 @@ jobs:
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
+        with:
+          python-version: python${{ env.python_version }}
       - name: Run Gaphor Tests
         run: poetry run pytest --cov
       - name: Create macOS Application
         id: create
-        if: ${{ github.actor != 'dependabot[bot]' }}
         uses: ./.github/actions/macos_dmg
         with:
           sign_app: ${{ env.mainline_build }}
           version: ${{ steps.install.outputs.version }}
           base64_encoded_p12: ${{ secrets.BASE64_ENCODED_P12 }}
           certpassword_p12: ${{ secrets.CERTPASSWORD_P12 }}
-          ac_username:  ${{ secrets.APPLE_NOTARY_USER }}
-          ac_password: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          notary_username:  ${{ secrets.APPLE_NOTARY_USER }}
+          notary_password: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          notary_team_id: ${{ secrets.APPLE_TEAM_ID }}
 
   check-macos-app:
     name: Check macOS App
     needs: macos
-    runs-on: macos-latest
-    if: ${{ github.actor != 'dependabot[bot]' }}
+    runs-on: macos-12
     timeout-minutes: 10
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -215,21 +230,21 @@ jobs:
           hdiutil attach ${{ needs.macos.outputs.artifact }}
           cd /Volumes/Gaphor*
           # Retry if first test fails
-          Gaphor.app/Contents/MacOS/gaphor-exe --self-test || Gaphor.app/Contents/MacOS/gaphor-exe --self-test
+          Gaphor.app/Contents/MacOS/gaphor --self-test || Gaphor.app/Contents/MacOS/gaphor --self-test
 
   windows-build-gtk:
     name: Windows (Build GTK)
     runs-on: windows-latest
     timeout-minutes: 60
     env:
-      gvsbuild_version: 2023.10.1
+      gvsbuild_version: 2023.11.0
       # Bump this number if you want to force a rebuild of gvsbuild with the same version
       gvsbuild_update: 0
     outputs:
       cachekey: ${{ steps.output.outputs.cachekey }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -243,7 +258,7 @@ jobs:
           key: ${{ runner.os }}-gvsbuild-${{ env.gvsbuild_update }}-${{ env.gvsbuild_version }}
       - name: Set up Python
         if: steps.cache.outputs.cache-hit != 'true'
-        uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
         with:
           python-version: ${{ env.python_version }}
       - name: GTK binaries move git binary
@@ -289,7 +304,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -309,13 +324,14 @@ jobs:
       - name: Set up env
         run: |
           Write-Output "PKG_CONFIG=C:\gtk-build\gtk\x64\release\bin\pkgconf.exe" >> $env:GITHUB_ENV
+          Write-Output "XDG_DATA_HOME=$HOME\.local\share" >> $env:GITHUB_ENV
           Write-Output "C:\gtk-build\gtk\x64\release\bin" >> $env:GITHUB_PATH
           choco install graphviz -y
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
-        uses: actions/setup-python@65d7f2d534ac1bc67fcd62888c5f4f3d2cb2b236 # v4.7.1
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
         with:
           python-version: ${{ env.python_version }}
       - name: Install pipx
@@ -331,11 +347,12 @@ jobs:
       - name: Install Dependencies
         id: install
         uses: ./.github/actions/install
+        with:
+          python-version: ${{ env.python_version }}
       - name: Run Gaphor Tests
         run: poetry run pytest --cov
       - name: Create Windows Executables
         uses: ./.github/actions/windows_executables
-        if: ${{ github.actor != 'dependabot[bot]' }}
         with:
           mainline_build: ${{ env.mainline_build }}
           version: ${{ steps.install.outputs.version }}
@@ -347,10 +364,9 @@ jobs:
     needs: windows
     runs-on: windows-latest
     timeout-minutes: 15
-    if: ${{ github.actor != 'dependabot[bot]' }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -364,7 +380,7 @@ jobs:
         shell: cmd
       - name: Perform self-test
         timeout-minutes: 5
-        run: start "" /WAIT "C:\Program Files\Gaphor\gaphor-exe.exe" --self-test
+        run: start "" /WAIT "C:\Program Files\Gaphor\gaphor.exe" --self-test
         shell: cmd
       - name: Test output
         if: always()
@@ -382,7 +398,7 @@ jobs:
       version: ${{ needs.linux-wheel.outputs.version }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -395,7 +411,7 @@ jobs:
           name: ${{ needs.linux-wheel.outputs.wheel }}
           path: dist
       - name: Publish package distributions to PyPI
-        uses: pypa/gh-action-pypi-publish@b7f401de30cb6434a1e19f805ff006643653240e # release/v1
+        uses: pypa/gh-action-pypi-publish@2f6f737ca5f74c637829c0f5c3acd0e29ea5e8bf # release/v1
 
   trigger-website-version-update:
     name: Trigger version update on gaphor/gaphor.github.io
@@ -403,7 +419,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 
@@ -421,7 +437,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@1b05615854632b887b69ae1be8cbefe72d3ae423 # v2.6.0
+        uses: step-security/harden-runner@eb238b55efaa70779f274895e782ed17c84f2895 # v2.6.1
         with:
           egress-policy: audit
 

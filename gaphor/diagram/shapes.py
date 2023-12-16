@@ -11,9 +11,11 @@ from gaphas.geometry import Rectangle
 from gaphor.core.modeling import DrawContext, UpdateContext
 from gaphor.core.styling import (
     JustifyContent,
+    Padding,
     Style,
     TextAlign,
     VerticalAlign,
+    WhiteSpace,
     merge_styles,
 )
 from gaphor.diagram.text import Layout
@@ -119,9 +121,72 @@ def ellipse(cr, x, y, w, h, dc=None):
     cr.close_path()
 
 
+def draw_default_head(context: DrawContext):
+    """Default head drawer: move cursor to the first handle."""
+    context.cairo.move_to(0, 0)
+
+
+def draw_default_tail(context: DrawContext):
+    """Default tail drawer: draw line to the last handle."""
+    context.cairo.line_to(0, 0)
+
+
+def draw_arrow_head(context: DrawContext):
+    cr = context.cairo
+    cr.save()
+    cr.set_dash((), 0)
+    cr.move_to(15, -6)
+    cr.line_to(0, 0)
+    cr.line_to(15, 6)
+    stroke(context, fill=False, dash=False)
+    cr.restore()
+    cr.move_to(0, 0)
+
+
+def draw_arrow_tail(context: DrawContext):
+    cr = context.cairo
+    cr.line_to(0, 0)
+    stroke(context, fill=False)
+    cr.save()
+    cr.set_dash((), 0)
+    cr.move_to(15, -6)
+    cr.line_to(0, 0)
+    cr.line_to(15, 6)
+    stroke(context, fill=False, dash=False)
+    cr.restore()
+
+
+def draw_diamond(
+    context: DrawContext, x1: float, x2: float, y1: float, y2: float
+) -> None:
+    """Draw a diamond."""
+    cr = context.cairo
+    center_x = x1 + (x2 - x1) / 2.0
+    center_y = y1 + (y2 - y1) / 2.0
+    cr.move_to(x1, center_y)
+    cr.line_to(center_x, y2)
+    cr.line_to(x2, center_y)
+    cr.line_to(center_x, y1)
+    cr.line_to(x1, center_y)
+    stroke(context, fill=True)
+
+
 class Orientation(Enum):
     VERTICAL = "v"
     HORIZONTAL = "h"
+
+
+def rectangle_shrink(rect: Rectangle | None, padding: Padding) -> Rectangle:
+    if rect is None:
+        return Rectangle()
+
+    top, right, bottom, left = padding
+    return Rectangle(
+        rect.x + left,
+        rect.y + top,
+        rect.width - left - right,
+        rect.height - top - bottom,
+    )
 
 
 class Box:
@@ -159,15 +224,17 @@ class Box:
     def __getitem__(self, index):
         return self.children[index]
 
-    def size(self, context: UpdateContext):
+    def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        self.sizes = sizes = [c.size(context) for c in self.children]
+        padding = style["padding"]
+        new_bounds = rectangle_shrink(bounding_box, padding)
+        self.sizes = sizes = [c.size(context, new_bounds) for c in self.children]
         if sizes:
             widths, heights = list(zip(*sizes))
             is_vertical = self._orientation == Orientation.VERTICAL
+            padding_top, padding_right, padding_bottom, padding_left = padding
             return (
                 max(
                     min_width,
@@ -330,13 +397,19 @@ class IconBox:
         self.sizes: list[tuple[int, int]] = []
         self._inline_style = style
 
-    def size(self, context: UpdateContext):
+    def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        self.sizes = [c.size(context) for c in self.children]
-        width, height = self.icon.size(context)
+        padding = style["padding"]
+
+        new_bounds = rectangle_shrink(bounding_box, padding)
+        width, height = self.icon.size(context, new_bounds)
+
+        new_bounds.expand(new_bounds.width * 1.32)
+        self.sizes = [c.size(context, new_bounds) for c in self.children]
+
+        padding_top, padding_right, padding_bottom, padding_left = padding
         return (
             max(min_width, width + padding_right + padding_left),
             max(min_height, height + padding_top + padding_bottom),
@@ -377,12 +450,7 @@ class IconBox:
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        x = bounding_box.x + padding_left
-        y = bounding_box.y + padding_top
-        w = bounding_box.width - padding_right - padding_left
-        h = bounding_box.height - padding_top - padding_bottom
-        self.icon.draw(new_context, Rectangle(x, y, w, h))
+        self.icon.draw(new_context, rectangle_shrink(bounding_box, style["padding"]))
 
         cx, cy, max_w, total_h = self.child_pos(style, bounding_box)
         for c, (cw, ch) in zip(self.children, self.sizes):
@@ -391,11 +459,10 @@ class IconBox:
 
 
 class Text:
-    def __init__(self, text=lambda: "", width=lambda: -1, style: Style | None = None):
+    def __init__(self, text: str | Callable[[], str], style: Style | None = None):
         if style is None:
             style = {}
         self._text = text if callable(text) else lambda: text
-        self.width = width if callable(width) else lambda: width
         self._inline_style = style
         self._layout = Layout()
 
@@ -405,31 +472,27 @@ class Text:
         except AttributeError:
             return ""
 
-    def size(self, context: UpdateContext):
+    def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = merge_styles(context.style, self._inline_style)
         min_w = style.get("min-width", 0)
         min_h = style.get("min-height", 0)
         text_align = style.get("text-align", TextAlign.CENTER)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
+        white_space = style.get("white-space", WhiteSpace.NORMAL)
 
         layout = self._layout
         layout.set(
-            text=self.text(), font=style, width=self.width(), text_align=text_align
+            text=self.text(),
+            font=style,
+            width=bounding_box.width
+            if bounding_box and white_space == WhiteSpace.NORMAL
+            else -1,
+            text_align=text_align,
         )
         width, height = layout.size()
+        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
         return (
             max(min_w, width + padding_right + padding_left),
             max(min_h, height + padding_top + padding_bottom),
-        )
-
-    def text_box(self, style: Style, bounding_box: Rectangle) -> Rectangle:
-        """Add padding to a bounding box."""
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
-        return Rectangle(
-            bounding_box.x + padding_left,
-            bounding_box.y + padding_top,
-            bounding_box.width - padding_right - padding_left,
-            bounding_box.height - padding_top - padding_bottom,
         )
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
@@ -437,7 +500,7 @@ class Text:
         style = merge_styles(context.style, self._inline_style)
         min_w = max(style.get("min-width", 0), bounding_box.width)
         min_h = max(style.get("min-height", 0), bounding_box.height)
-        text_box = self.text_box(style, bounding_box)
+        text_box = rectangle_shrink(bounding_box, style["padding"])
 
         with cairo_state(context.cairo) as cr:
             if text_color := style.get("text-color"):
@@ -447,53 +510,3 @@ class Text:
             cr.move_to(text_box.x, text_box.y)
             layout.set(font=style)
             layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
-
-
-def draw_default_head(context: DrawContext):
-    """Default head drawer: move cursor to the first handle."""
-    context.cairo.move_to(0, 0)
-
-
-def draw_default_tail(context: DrawContext):
-    """Default tail drawer: draw line to the last handle."""
-    context.cairo.line_to(0, 0)
-
-
-def draw_arrow_head(context: DrawContext):
-    cr = context.cairo
-    cr.save()
-    cr.set_dash((), 0)
-    cr.move_to(15, -6)
-    cr.line_to(0, 0)
-    cr.line_to(15, 6)
-    stroke(context, fill=False, dash=False)
-    cr.restore()
-    cr.move_to(0, 0)
-
-
-def draw_arrow_tail(context: DrawContext):
-    cr = context.cairo
-    cr.line_to(0, 0)
-    stroke(context, fill=False)
-    cr.save()
-    cr.set_dash((), 0)
-    cr.move_to(15, -6)
-    cr.line_to(0, 0)
-    cr.line_to(15, 6)
-    stroke(context, fill=False, dash=False)
-    cr.restore()
-
-
-def draw_diamond(
-    context: DrawContext, x1: float, x2: float, y1: float, y2: float
-) -> None:
-    """Draw a diamond."""
-    cr = context.cairo
-    center_x = x1 + (x2 - x1) / 2.0
-    center_y = y1 + (y2 - y1) / 2.0
-    cr.move_to(x1, center_y)
-    cr.line_to(center_x, y2)
-    cr.line_to(x2, center_y)
-    cr.line_to(center_x, y1)
-    cr.line_to(x1, center_y)
-    stroke(context, fill=True)

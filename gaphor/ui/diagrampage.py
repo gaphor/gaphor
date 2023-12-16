@@ -25,7 +25,6 @@ from gaphor.diagram.tools import (
 from gaphor.diagram.tools.magnet import MagnetPainter
 from gaphor.ui.event import DiagramClosed, DiagramSelectionChanged, ToolSelected
 
-
 log = logging.getLogger(__name__)
 
 
@@ -83,9 +82,6 @@ class DiagramPage:
         self.diagram_css: Optional[Gtk.CssProvider] = None
 
         self.rubberband_state = RubberbandState()
-        self._notify_dark_id = self.style_manager.connect(
-            "notify::dark", self._on_notify_dark
-        )
 
         self.event_manager.subscribe(self._on_element_delete)
         self.event_manager.subscribe(self._on_attribute_updated)
@@ -119,6 +115,9 @@ class DiagramPage:
         scrolled_window = Gtk.ScrolledWindow()
         scrolled_window.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
         scrolled_window.set_child(view)
+        self.style_manager.connect_object(
+            "notify::dark", self._on_notify_dark, scrolled_window
+        )
 
         view.selection.add_handler(self._on_view_selection_changed)
 
@@ -205,9 +204,6 @@ class DiagramPage:
         Do the same thing that would be done if Close was pressed.
         """
         assert self.widget
-
-        if self._notify_dark_id:
-            self._notify_dark_id = self.style_manager.disconnect(self._notify_dark_id)
 
         Gtk.StyleContext.remove_provider_for_display(
             Gdk.Display.get_default(),

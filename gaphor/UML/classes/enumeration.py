@@ -17,6 +17,7 @@ from gaphor.UML.classes.klass import (
     operations_compartment,
 )
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
+from gaphor.UML.recipes import stereotypes_str
 
 log = logging.getLogger(__name__)
 
@@ -38,13 +39,9 @@ class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
             "show_operations", self.update_shapes
         ).watch("show_enumerations", self.update_shapes).watch(
             "subject[NamedElement].name"
-        ).watch(
-            "subject[NamedElement].namespace.name"
-        ).watch(
+        ).watch("subject[NamedElement].namespace.name").watch(
             "subject[Enumeration].ownedLiteral", self.update_shapes
-        ).watch(
-            "subject[Enumeration].ownedLiteral.name", self.update_shapes
-        )
+        ).watch("subject[Enumeration].ownedLiteral.name", self.update_shapes)
         attribute_watches(self, "Enumeration")
         operation_watches(self, "Enumeration")
         stereotype_watches(self)
@@ -67,7 +64,7 @@ class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.recipes.stereotypes_str(
+                    text=lambda: stereotypes_str(
                         self.subject,
                         [
                             self.diagram.gettext("valueType")

@@ -6,18 +6,13 @@ outputs:
     value: ${{ steps.meta.outputs.version }}
 inputs:
   python-version:
-    description: 'Python version number for Linux'
+    description: 'Python version. Can be a version python$V or $V depending on the platform.'
     required: false
 runs:
   using: composite
   steps:
-    - name: Install Poetry (Linux)
-      if: runner.os == 'Linux'
-      run: pipx install --python python${{ inputs.python-version }} --pip-args=--constraint=.github/constraints.txt poetry
-      shell: bash
-    - name: Install Poetry (Windows/macOS)
-      if: runner.os != 'Linux'
-      run: pipx install --pip-args=--constraint=.github/constraints.txt poetry
+    - name: Install Poetry
+      run: pipx install --python ${{ inputs.python-version }} --pip-args=--constraint=.github/constraints.txt poetry
       shell: bash
     - name: Configure Poetry
       run: poetry config virtualenvs.in-project true
@@ -37,6 +32,9 @@ runs:
         poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\gtk\x64\release\PyGObject*.whl)
         poetry run pip install --force-reinstall (Resolve-Path C:\gtk-build\gtk\x64\release\pycairo*.whl)
       shell: pwsh
+    - name: Install settings schemas
+      run: poetry run poe install-schemas
+      shell: bash
     - name: Compile all translations
       if: github.event_name != 'release'
       run: poetry run poe gettext-mo-all

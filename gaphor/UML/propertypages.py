@@ -1,13 +1,12 @@
 from gi.repository import Gio
 
+from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
     LabelValue,
     PropertyPageBase,
     new_resource_builder,
 )
-from gaphor import UML
-
 
 new_builder = new_resource_builder("gaphor.UML")
 

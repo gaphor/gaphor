@@ -1,7 +1,7 @@
 """Support code for dealing with stereotypes in diagrams."""
 
 from gaphor.core.format import format
-from gaphor.core.styling import JustifyContent, TextAlign
+from gaphor.core.styling import JustifyContent, TextAlign, WhiteSpace
 from gaphor.diagram.shapes import Box, Text, draw_top_separator
 
 
@@ -10,9 +10,7 @@ def stereotype_watches(presentation):
         "subject.appliedStereotype.classifier.name"
     ).watch("subject.appliedStereotype.slot", presentation.update_shapes).watch(
         "subject.appliedStereotype.slot.definingFeature.name"
-    ).watch(
-        "subject.appliedStereotype.slot.value", presentation.update_shapes
-    )
+    ).watch("subject.appliedStereotype.slot.value", presentation.update_shapes)
 
 
 def stereotype_compartments(subject):
@@ -42,7 +40,13 @@ def _create_stereotype_compartment(appliedStereotype):
                 style={"padding": (0, 0, 4, 0)},
             ),
             *(
-                Text(text=lazy_format(slot), style={"text-align": TextAlign.LEFT})
+                Text(
+                    text=lazy_format(slot),
+                    style={
+                        "text-align": TextAlign.LEFT,
+                        "white-space": WhiteSpace.NOWRAP,
+                    },
+                )
                 for slot in slots
             ),
             style={

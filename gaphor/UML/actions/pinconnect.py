@@ -3,7 +3,7 @@ from gaphas.connector import Handle, Port
 from gaphor import UML
 from gaphor.diagram.connectors import Connector
 from gaphor.UML.actions.action import ActionItem, ValueSpecificationActionItem
-from gaphor.UML.actions.pin import InputPinItem, PinItem, OutputPinItem
+from gaphor.UML.actions.pin import InputPinItem, OutputPinItem, PinItem
 
 
 @Connector.register(ActionItem, PinItem)

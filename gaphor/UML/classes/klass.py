@@ -9,6 +9,7 @@ from gaphor.core.styling import (
     JustifyContent,
     TextAlign,
     TextDecoration,
+    WhiteSpace,
 )
 from gaphor.diagram.presentation import (
     Classified,
@@ -18,6 +19,7 @@ from gaphor.diagram.presentation import (
 from gaphor.diagram.shapes import Box, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
+from gaphor.UML.recipes import stereotypes_str
 
 log = logging.getLogger(__name__)
 
@@ -38,9 +40,7 @@ class ClassItem(Classified, ElementPresentation[UML.Class]):
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
-        ).watch(
-            "subject[NamedElement].namespace.name"
-        ).watch(
+        ).watch("subject[NamedElement].namespace.name").watch(
             "subject[Classifier].isAbstract", self.update_shapes
         )
         attribute_watches(self, "Class")
@@ -64,7 +64,7 @@ class ClassItem(Classified, ElementPresentation[UML.Class]):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.recipes.stereotypes_str(
+                    text=lambda: stereotypes_str(
                         self.subject, self.additional_stereotypes()
                     ),
                 ),
@@ -108,25 +108,15 @@ def attribute_watches(presentation, cast):
         f"subject[{cast}].ownedAttribute", presentation.update_shapes
     ).watch(
         f"subject[{cast}].ownedAttribute.association", presentation.update_shapes
-    ).watch(
-        f"subject[{cast}].ownedAttribute.name"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedAttribute.name").watch(
         f"subject[{cast}].ownedAttribute.isStatic", presentation.update_shapes
-    ).watch(
-        f"subject[{cast}].ownedAttribute.isDerived"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedAttribute.isDerived").watch(
         f"subject[{cast}].ownedAttribute.visibility"
-    ).watch(
-        f"subject[{cast}].ownedAttribute.lowerValue"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedAttribute.lowerValue").watch(
         f"subject[{cast}].ownedAttribute.upperValue"
-    ).watch(
-        f"subject[{cast}].ownedAttribute.defaultValue"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedAttribute.defaultValue").watch(
         f"subject[{cast}].ownedAttribute.type"
-    ).watch(
-        f"subject[{cast}].ownedAttribute.typeValue"
-    )
+    ).watch(f"subject[{cast}].ownedAttribute.typeValue")
 
 
 def operation_watches(presentation, cast):
@@ -136,17 +126,11 @@ def operation_watches(presentation, cast):
         f"subject[{cast}].ownedOperation.isAbstract", presentation.update_shapes
     ).watch(
         f"subject[{cast}].ownedOperation.isStatic", presentation.update_shapes
-    ).watch(
-        f"subject[{cast}].ownedOperation.visibility"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedOperation.visibility").watch(
         f"subject[{cast}].ownedOperation.ownedParameter.lowerValue"
-    ).watch(
-        f"subject[{cast}].ownedOperation.ownedParameter.upperValue"
-    ).watch(
+    ).watch(f"subject[{cast}].ownedOperation.ownedParameter.upperValue").watch(
         f"subject[{cast}].ownedOperation.ownedParameter.typeValue"
-    ).watch(
-        f"subject[{cast}].ownedOperation.ownedParameter.defaultValue"
-    )
+    ).watch(f"subject[{cast}].ownedOperation.ownedParameter.defaultValue")
 
 
 def attributes_compartment(subject):
@@ -163,6 +147,7 @@ def attributes_compartment(subject):
                     "text-decoration": TextDecoration.UNDERLINE
                     if attribute.isStatic
                     else TextDecoration.NONE,
+                    "white-space": WhiteSpace.NOWRAP,
                 },
             )
             for attribute in subject.ownedAttribute
@@ -195,6 +180,7 @@ def operations_compartment(subject):
                     "text-decoration": TextDecoration.UNDERLINE
                     if operation.isStatic
                     else TextDecoration.NONE,
+                    "white-space": WhiteSpace.NOWRAP,
                 },
             )
             for operation in subject.ownedOperation

@@ -1,5 +1,5 @@
 from gaphor.core.modeling import Comment, Diagram
-from gaphor.diagram.general import Line, CommentItem
+from gaphor.diagram.general import CommentItem, Line
 from gaphor.diagram.propertypages import (
     LineStylePage,
     NamePropertyPage,

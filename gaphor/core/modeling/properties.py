@@ -391,7 +391,7 @@ class association(umlproperty):
                 f"Value should be of type {self.type.__name__}, got a {type(value)} instead"
             )
 
-        old = self.get(obj)
+        old = self._get_one(obj)
 
         # do nothing if we are assigned our current value:
         # Still do your thing, since undo handlers expect that.
@@ -460,12 +460,11 @@ class association(umlproperty):
         """Delete is used for element deletion and for removal of elements from
         a list."""
         if self.upper == 1:
-            self._del_one(obj, value, from_opposite, do_notify)
+            self._del_one(obj, self._get_one(obj), from_opposite, do_notify)
         else:
             self._del_many(obj, value, from_opposite, do_notify)
 
     def _del_one(self, obj, value, from_opposite=False, do_notify=True):
-        value = self._get_one(obj)
         if value is None:
             return
 

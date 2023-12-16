@@ -1,10 +1,10 @@
-import pygit2
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from gaphor.ui import run
-from gaphor.storage.tests.fixtures import create_merge_conflict
+import pygit2
 
+from gaphor.storage.tests.fixtures import create_merge_conflict
+from gaphor.ui import run
 
 workspace = Path(__file__).parent.parent
 

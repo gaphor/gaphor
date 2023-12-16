@@ -1,13 +1,8 @@
-import logging
 import os
-import sys
 import time
 from pathlib import Path
 
-if sys.version_info >= (3, 11):
-    import tomllib
-else:
-    import tomli as tomllib
+import tomllib
 
 import pyinstaller_versionfile
 from packaging.version import Version
@@ -16,7 +11,7 @@ from PyInstaller.utils.hooks import collect_entry_point, copy_metadata
 
 block_cipher = None
 
-COPYRIGHT = f"Copyright © 2001-{time.strftime('%Y')} Arjan J. Molenaar and Dan Yeaw."
+COPYRIGHT = f"Copyright © 2001-{time.strftime('%Y')} Arjan Molenaar and Dan Yeaw."
 
 ui_files = [
     (str(p), str(Path(*p.parts[1:-1]))) for p in Path("../gaphor").rglob("*.ui")
@@ -29,7 +24,9 @@ mo_files = [
 def get_version() -> Version:
     project_dir = Path.cwd().parent
     f = project_dir / "pyproject.toml"
-    return Version(tomllib.loads(f.read_text())["tool"]["poetry"]["version"])
+    return Version(
+        tomllib.loads(f.read_text(encoding="utf-8"))["tool"]["poetry"]["version"]
+    )
 
 
 def collect_entry_points(*names):
@@ -63,6 +60,8 @@ a = Analysis(  # type: ignore
         ("../gaphor/ui/language-specs/*.lang", "gaphor/ui/language-specs"),
         ("../LICENSE.txt", "gaphor"),
         ("../gaphor/templates/*.gaphor", "gaphor/templates"),
+        ("../data/org.gaphor.Gaphor.gschema.xml", "share/glib-2.0/schemas"),
+        ("../data/gschemas.compiled", "share/glib-2.0/schemas"),
     ]
     + ui_files
     + mo_files
@@ -105,7 +104,7 @@ pyinstaller_versionfile.create_versionfile(
     file_description="Gaphor",
     internal_name="Gaphor",
     legal_copyright=COPYRIGHT,
-    original_filename="gaphor-exe.exe",
+    original_filename="gaphor.exe",
     product_name="Gaphor",
 )
 
@@ -114,7 +113,7 @@ exe = EXE(  # type: ignore
     a.scripts,
     options=[],
     exclude_binaries=True,
-    name="gaphor-exe",
+    name="gaphor",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

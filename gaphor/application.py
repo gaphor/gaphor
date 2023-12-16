@@ -79,6 +79,10 @@ class Application(Service, ActionProvider):
         return self._gtk_app.get_active_window() if self._gtk_app else None
 
     @property
+    def gtk_app(self):
+        return self._gtk_app
+
+    @property
     def sessions(self):
         return self._sessions
 

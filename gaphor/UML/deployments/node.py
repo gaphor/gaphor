@@ -22,6 +22,7 @@ from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 from gaphor.UML.classes.stereotype import stereotype_compartments
+from gaphor.UML.recipes import stereotypes_str
 
 
 @represents(UML.Node)
@@ -48,7 +49,7 @@ class NodeItem(Classified, ElementPresentation):
         self.shape = Box(
             Box(
                 Text(
-                    text=lambda: UML.recipes.stereotypes_str(
+                    text=lambda: stereotypes_str(
                         self.subject,
                         isinstance(self.subject, UML.Device)
                         and (self.diagram.gettext("device"),)
@@ -70,7 +71,7 @@ class NodeItem(Classified, ElementPresentation):
                 if self.diagram and self.children
                 else JustifyContent.CENTER,
             },
-            draw=draw_node
+            draw=draw_node,
         )
 
 

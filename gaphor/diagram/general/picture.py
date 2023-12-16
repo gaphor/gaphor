@@ -1,15 +1,15 @@
 """PictureItem diagram item."""
 
 import base64
-import cairo
 import io
+
+import cairo
 from PIL import Image
 
+from gaphor.core.modeling import Picture
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import Box, IconBox
 from gaphor.diagram.support import represents
-
-from gaphor.core.modeling import Picture
 
 
 @represents(Picture)

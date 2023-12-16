@@ -22,8 +22,8 @@ from gaphor.application import distribution
 # -- Project information -----------------------------------------------------
 
 project = "Gaphor"
-copyright = f"2001-{date.today().year}, Arjan J. Molenaar"
-author = "Arjan J. Molenaar"
+copyright = f"2001-{date.today().year}, Arjan Molenaar"
+author = "Arjan Molenaar"
 version = distribution().version
 
 # -- General configuration ---------------------------------------------------
@@ -94,6 +94,7 @@ suppress_warnings = ["myst.header"]
 
 gaphor_models = {
     "connect": "connect.gaphor",
+    "design-principles": "design-principles.gaphor",
     "stereotypes": "stereotypes.gaphor",
     "example": "../examples/sequence-diagram.gaphor",
     "coffee-machine": "../examples/coffee-machine.gaphor",
@@ -112,7 +113,7 @@ gaphor_models = {
 # a list of builtin themes.
 #
 html_theme = "furo"
-html_favicon = "../logos/gaphor-24x24.png"
+html_favicon = "../data/logos/gaphor-24x24.png"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

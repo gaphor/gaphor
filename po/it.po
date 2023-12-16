@@ -8,14 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-30 21:22+0200\n"
-"PO-Revision-Date: 2021-03-21 14:30+0100\n"
-"Last-Translator: Albano Battistella <albano_battistella@hotmail.com>\n"
+"PO-Revision-Date: 2023-11-20 05:12+0000\n"
+"Last-Translator: albanobattistella <albano_battistella@hotmail.com>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/gaphor/gaphor/it/"
+">\n"
 "Language: it\n"
-"Language-Team: Italian <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.2\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -31,7 +33,7 @@ msgstr "Associazione"
 
 #: gaphor/C4Model/propertypages.ui:38 gaphor/templates/sysml.gaphor
 msgid "Technology"
-msgstr ""
+msgstr "Tecnologia"
 
 #: gaphor/C4Model/toolbox.py:29
 msgid "New Software System"
@@ -49,7 +51,7 @@ msgstr "Stato"
 
 #: gaphor/C4Model/toolbox.py:44
 msgid "New Database"
-msgstr ""
+msgstr "Nuovo Database"
 
 #: gaphor/C4Model/toolbox.py:51
 #, fuzzy
@@ -63,7 +65,7 @@ msgstr "Operazioni"
 
 #: gaphor/C4Model/toolbox.py:71
 msgid "Software System"
-msgstr ""
+msgstr "Sistema Software"
 
 #: gaphor/C4Model/toolbox.py:83
 #, fuzzy
@@ -72,7 +74,7 @@ msgstr "Puntatore"
 
 #: gaphor/C4Model/toolbox.py:95
 msgid "Container: Database"
-msgstr ""
+msgstr "Container: Database"
 
 #: gaphor/C4Model/toolbox.py:107 gaphor/UML/classes/classestoolbox.py:59
 msgid "Component"
@@ -114,7 +116,7 @@ msgstr "Nuovo_Diagrama"
 
 #: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:48
 msgid "RAAML"
-msgstr ""
+msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:19
 #, fuzzy
@@ -305,7 +307,7 @@ msgstr ""
 
 #: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:41
 msgid "SysML"
-msgstr ""
+msgstr "SysML"
 
 #: gaphor/SysML/propertypages.ui:9
 msgid "Item Flow"
@@ -571,7 +573,7 @@ msgstr ""
 
 #: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:34
 msgid "UML"
-msgstr ""
+msgstr "UML"
 
 #: gaphor/UML/sanitizerservice.py:71
 msgid ""
@@ -626,9 +628,8 @@ msgstr "includi: {name}"
 #: gaphor/UML/actions/actionstoolbox.py:40
 #: gaphor/UML/actions/actionstoolbox.py:62 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
-#, fuzzy
 msgid "Activity"
-msgstr "Fai attività"
+msgstr "Attività"
 
 #: gaphor/UML/actions/actionstoolbox.py:48
 msgid "Swimlane One"
@@ -1592,7 +1593,7 @@ msgstr ""
 
 #: gaphor/templates/raaml.gaphor
 msgid "STPA"
-msgstr ""
+msgstr "STPA"
 
 #: gaphor/templates/raaml.gaphor
 msgid "Loss Definition"
@@ -2572,7 +2573,7 @@ msgstr ""
 
 #: gaphor/ui/help/about.ui:13
 msgid ""
-"Copyright © 2001-2023 Arjan J. Molenaar and Dan Yeaw.\n"
+"Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.\n"
 "\n"
 "UML, SysML, and RAAML are either registered trademarks or trademarks of "
 "Object Management Group, Inc. in the United States and/or other "
@@ -2745,4 +2746,3 @@ msgstr ""
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr ""
-

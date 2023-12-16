@@ -1,6 +1,7 @@
 """Copy / Paste functionality."""
 
 from __future__ import annotations
+
 from typing import Callable, Collection
 
 from gi.repository import Gdk, GLib, GObject
@@ -8,7 +9,7 @@ from gi.repository import Gdk, GLib, GObject
 from gaphor.abc import ActionProvider, Service
 from gaphor.core import Transaction, action
 from gaphor.core.modeling import Diagram, Presentation
-from gaphor.diagram.copypaste import copy_full, paste_full, paste_link, Opaque
+from gaphor.diagram.copypaste import Opaque, copy_full, paste_full, paste_link
 
 
 class CopyBuffer(GObject.Object):
@@ -71,7 +72,13 @@ class CopyService(Service, ActionProvider):
         callback: Callable[[set[Presentation]], None] | None,
     ) -> None:
         def on_paste(_source_object, result):
-            copy_buffer = self.clipboard.read_value_finish(result)
+            try:
+                copy_buffer = self.clipboard.read_value_finish(result)
+            except GLib.GError as e:
+                if str(e).startswith("g-io-error-quark:"):
+                    return
+                raise
+
             with Transaction(self.event_manager):
                 # Create new id's that have to be used to create the items:
                 new_items = paster(copy_buffer.buffer, diagram)

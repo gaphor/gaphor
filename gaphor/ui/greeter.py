@@ -12,6 +12,7 @@ from gaphor.core import event_handler
 from gaphor.event import SessionCreated
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.ui import APPLICATION_ID
+from gaphor.ui.filedialog import pretty_path
 
 
 class ModelTemplate(NamedTuple):
@@ -73,7 +74,7 @@ class Greeter(Service, ActionProvider):
         self.event_manager = event_manager
         self.recent_manager = recent_manager or Gtk.RecentManager.get_default()
         self.greeter: Gtk.Window = None
-        self.gtk_app: Gtk.Application = None
+        self.gtk_app: Adw.Application = None
         event_manager.subscribe(self.on_session_created)
 
     def init(self, gtk_app):
@@ -133,7 +134,7 @@ class Greeter(Service, ActionProvider):
             row = Adw.ActionRow.new()
             row.set_activatable(True)
             row.set_title(str(Path(filename).stem))
-            row.set_subtitle(item.get_uri_display().replace(str(Path.home()), "~"))
+            row.set_subtitle(pretty_path(Path(item.get_uri_display())))
             row.add_suffix(Gtk.Image.new_from_icon_name("go-next-symbolic"))
             row.connect("activated", self._on_recent_file_activated)
             row.filename = filename

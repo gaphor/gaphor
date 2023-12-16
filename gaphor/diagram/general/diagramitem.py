@@ -4,7 +4,7 @@ An item representing a diagram.
 
 from gaphor.core.modeling.diagram import Diagram
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import IconBox, Text, Box, stroke, draw_border
+from gaphor.diagram.shapes import Box, IconBox, Text, draw_border, stroke
 from gaphor.diagram.support import represents
 from gaphor.diagram.text import FontWeight
 

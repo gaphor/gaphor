@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk" version="4.0"/>
+  <requires lib="adw" version="1.0"/>
   <object class="GtkPopoverMenu" id="hamburger">
   </object>
   <object class="GtkPopoverMenu" id="recent-files">
@@ -89,39 +90,7 @@
       </object>
     </child>
     <child>
-      <object class="GtkOverlay" id="main-content">
-        <property name="name">overlay</property>
-        <child type="overlay">
-          <object class="GtkRevealer" id="notification-revealer">
-            <property name="halign">center</property>
-            <property name="valign">start</property>
-            <property name="child">
-              <object class="GtkBox">
-                <property name="halign">center</property>
-                <property name="valign">start</property>
-                <property name="spacing">6</property>
-                <child>
-                  <object class="GtkLabel" id="notification-message">
-                    <property name="margin-start">6</property>
-                    <property name="label">Here goes a short informative message.</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton" id="notification-close">
-                    <child>
-                      <object class="GtkImage">
-                        <property name="icon_name">window-close-symbolic</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <style>
-                  <class name="app-notification"/>
-                </style>
-              </object>
-            </property>
-          </object>
-        </child>
+      <object class="AdwToastOverlay" id="main-content">
       </object>
     </child>
   </object>

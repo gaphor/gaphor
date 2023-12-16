@@ -19,7 +19,7 @@ ICONS=diagram \
 	value-specification-action \
 	call-behavior-action \
 	value-type \
-	proxyport \
+	proxy-port \
 	package \
 	containment \
 	interface \
@@ -45,6 +45,7 @@ ICONS=diagram \
 	output-pin \
 	flow-final-node \
 	decision-node \
+	merge-node \
 	fork-node \
 	join-node \
 	activity \
@@ -92,6 +93,7 @@ ICONS=diagram \
 	trace \
 	refine \
 	verify \
+	allocate \
 	constraint \
 	view-editor \
 	c4-person \
@@ -133,7 +135,14 @@ ICONS=diagram \
 ICON_THEME=hicolor/scalable/actions
 
 ICON_FILES=$(patsubst %,$(ICON_THEME)/gaphor-%-symbolic.svg,$(ICONS))
-INKSCAPE=flatpak run org.inkscape.Inkscape
+
+UNAME := $(shell uname)
+
+ifeq ($(UNAME),Darwin)
+  INKSCAPE=inkscape
+else
+  INKSCAPE=flatpak run org.inkscape.Inkscape
+endif
 
 all: verify $(ICON_FILES)
 

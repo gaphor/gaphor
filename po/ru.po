@@ -4,16 +4,17 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-06-30 21:22+0200\n"
-"PO-Revision-Date: 2023-01-30 01:18+0000\n"
-"Last-Translator: BrainKicker <peter.sabanov@gmail.com>\n"
+"PO-Revision-Date: 2023-12-06 08:04+0000\n"
+"Last-Translator: Сергей <asvmail.as@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
+">\n"
 "Language: ru\n"
-"Language-Team: Russian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/ru/>\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.3-dev\n"
 "Generated-By: Babel 2.12.1\n"
 
 #: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
@@ -289,9 +290,8 @@ msgid "Item Flow"
 msgstr "Поток Элементов"
 
 #: gaphor/SysML/propertypages.ui:22
-#, fuzzy
 msgid "Enable Item Flow"
-msgstr "Поток Элементов"
+msgstr "Включить Поток Элементов"
 
 #: gaphor/SysML/propertypages.ui:36
 msgid "Item Property"
@@ -341,9 +341,8 @@ msgid "Composite"
 msgstr "Составной"
 
 #: gaphor/SysML/propertypages.ui:187
-#, fuzzy
 msgid "Type"
-msgstr "Стиль"
+msgstr "Тип"
 
 #: gaphor/SysML/propertypages.ui:210
 msgid "Id"
@@ -1113,32 +1112,28 @@ msgid "Message Sort"
 msgstr "Сортировка Сообщений"
 
 #: gaphor/UML/interactions/propertypages.ui:21
-#, fuzzy
 msgid "Call"
-msgstr "вызов()"
+msgstr "Вызов"
 
 #: gaphor/UML/interactions/propertypages.ui:22
 msgid "Asynchronous"
-msgstr ""
+msgstr "Асинхронный"
 
 #: gaphor/UML/interactions/propertypages.ui:23
-#, fuzzy
 msgid "Signal"
-msgstr "Отправить сигнал"
+msgstr "Сигнал"
 
 #: gaphor/UML/interactions/propertypages.ui:24
 msgid "Reply"
 msgstr ""
 
 #: gaphor/UML/interactions/propertypages.ui:25
-#, fuzzy
 msgid "Create"
-msgstr "Создать Новую Модель"
+msgstr "Создать"
 
 #: gaphor/UML/interactions/propertypages.ui:26
-#, fuzzy
 msgid "Delete"
-msgstr "_Удалить"
+msgstr "Удалить"
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
@@ -1327,9 +1322,8 @@ msgid "Comment line"
 msgstr "Линия к комментарию"
 
 #: gaphor/diagram/diagramtoolbox.py:164
-#, fuzzy
 msgid "Diagram metadata"
-msgstr "Новое меню диаграммы"
+msgstr "Метаданные диаграммы"
 
 #: gaphor/diagram/presentation.py:48
 msgid "(from {namespace})"
@@ -1353,30 +1347,27 @@ msgstr "Заметка или Примечание"
 
 #: gaphor/diagram/propertypages.ui:123
 msgid "Created By"
-msgstr ""
+msgstr "Создано"
 
 #: gaphor/diagram/propertypages.ui:151
 msgid "Website"
-msgstr ""
+msgstr "Веб-сайт"
 
 #: gaphor/diagram/propertypages.ui:165
-#, fuzzy
 msgid "Revision"
-msgstr "решение"
+msgstr "Ревизия"
 
 #: gaphor/diagram/propertypages.ui:179
-#, fuzzy
 msgid "License"
-msgstr "Линия"
+msgstr "Лицензия"
 
 #: gaphor/diagram/propertypages.ui:193
-#, fuzzy
 msgid "Created On"
-msgstr "Создать Новую Модель"
+msgstr "Создано на"
 
 #: gaphor/diagram/propertypages.ui:207
 msgid "Updated On"
-msgstr ""
+msgstr "Обновлено"
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1879,9 +1870,8 @@ msgid "Pillar"
 msgstr ""
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Abstraction Level"
-msgstr "Абстрактный"
+msgstr "Уровень абстракции"
 
 #: gaphor/templates/uml.gaphor
 msgid "1. Use Cases"
@@ -2216,9 +2206,8 @@ msgstr ""
 " диаграмме."
 
 #: gaphor/ui/elementeditor.ui:295
-#, fuzzy
 msgid "Language"
-msgstr "фамилия"
+msgstr "Язык"
 
 #: gaphor/ui/elementeditor.ui:297 gaphor/ui/elementeditor.ui:305
 msgid "The (spoken) language used in this model."
@@ -2527,13 +2516,13 @@ msgstr "<Отношения>"
 #: gaphor/ui/help/about.ui:13
 #, fuzzy
 msgid ""
-"Copyright © 2001-2023 Arjan J. Molenaar and Dan Yeaw.\n"
+"Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.\n"
 "\n"
 "UML, SysML, and RAAML are either registered trademarks or trademarks of "
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
-"Авторское право © 2001-2022 Arjan J. Molenaar и Dan Yeaw.\n"
+"Авторское право © 2001-2022 Arjan Molenaar и Dan Yeaw.\n"
 "\n"
 "UML, SysML и RAAML являются либо зарегистрированными товарными знаками, "
 "либо товарными знаками Object Management Group, Inc. в Соединенных Штатах"
@@ -2634,17 +2623,16 @@ msgid "Paste (copy defining elements)"
 msgstr "Вставить (копировать определяющие элементы)"
 
 #: gaphor/ui/modelmerge/organize.py:134
-#, fuzzy
 msgid "Update diagram “{name}”"
-msgstr "Новое меню диаграммы"
+msgstr "Обновить диаграмму «{name}»"
 
 #: gaphor/ui/modelmerge/organize.py:165 gaphor/ui/modelmerge/organize.py:307
 msgid "Update element “{name}”"
-msgstr ""
+msgstr "Обновить элемент «{name}»"
 
 #: gaphor/ui/modelmerge/organize.py:169
 msgid "Update element of type “{type}”"
-msgstr ""
+msgstr "Обновить элемент типа «{type}»"
 
 #: gaphor/ui/modelmerge/organize.py:245
 msgid "Update presentation “{type}”"
@@ -2660,7 +2648,7 @@ msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:280
 msgid "Update presentation “{name}”"
-msgstr ""
+msgstr "Обновить презентацию «{name}»"
 
 #: gaphor/ui/modelmerge/organize.py:282
 msgid "Update presentation of type {type}"
@@ -2668,24 +2656,23 @@ msgstr ""
 
 #: gaphor/ui/modelmerge/organize.py:289
 msgid "Add {type} “{name}”"
-msgstr ""
+msgstr "Добавить {type} «{name}»"
 
 #: gaphor/ui/modelmerge/organize.py:293
 msgid "Add element of type {type}"
-msgstr ""
+msgstr "Добавить элемент типа {type}"
 
 #: gaphor/ui/modelmerge/organize.py:299
-#, fuzzy
 msgid "Remove element “{name}”"
-msgstr "Удалять Неиспользуемые Элементы"
+msgstr "Удалить элемент «{name}»"
 
 #: gaphor/ui/modelmerge/organize.py:301
 msgid "Remove element of type {type}"
-msgstr ""
+msgstr "Удалить элемент типа {type}"
 
 #: gaphor/ui/modelmerge/organize.py:309
 msgid "Update element of type {type}"
-msgstr ""
+msgstr "Обновить элемент типа {type}"
 
 #: gaphor/ui/modelmerge/organize.py:316
 msgid "Add relation “{name}” to “{ref_name}”"
@@ -2710,4 +2697,3 @@ msgstr ""
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr ""
-

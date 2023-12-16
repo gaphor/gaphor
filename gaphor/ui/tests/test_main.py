@@ -5,7 +5,6 @@ from gi.repository import GLib, Gtk
 
 import gaphor.main
 
-
 APP_NAME = sys.argv[0]
 
 

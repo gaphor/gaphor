@@ -4,20 +4,19 @@ from dataclasses import replace
 from math import atan2
 
 import gaphas
-from gaphas.connector import ConnectionSink
+from gaphas.connector import ConnectionSink, Handle, LinePort, Position
 from gaphas.connector import Connector as ConnectorAspect
-from gaphas.connector import Handle, LinePort, Position
 from gaphas.constraint import constraint
 from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver.constraint import BaseConstraint
 
-from gaphor.core.modeling.diagram import Diagram
-from gaphor.core.modeling.event import RevertibleEvent, AttributeUpdated
+from gaphor.core.modeling.diagram import Diagram, DrawContext
+from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
 from gaphor.diagram.shapes import stroke
-from gaphor.diagram.text import TextAlign, text_point_at_line, middle_segment
+from gaphor.diagram.text import TextAlign, middle_segment, text_point_at_line
 
 
 class Named:
@@ -69,6 +68,7 @@ def postload_connect(item: gaphas.Item, handle: gaphas.Handle, target: gaphas.It
     This function finds a suitable spot on the `target` item to connect the `handle` to.
     """
     target.postload()
+    item.diagram.update_now({item, target})
     connector = ConnectorAspect(item, handle, item.diagram.connections)
     sink = ConnectionSink(target, distance=float("inf"))
     connector.glue(sink)
@@ -116,16 +116,24 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
     _port_sides = ("top", "right", "bottom", "left")
 
     def __init__(self, diagram: Diagram, id=None, shape=None, width=100, height=50):
-        super().__init__(connections=diagram.connections, diagram=diagram, id=id, width=width, height=height)  # type: ignore[call-arg]
+        super().__init__(
+            connections=diagram.connections,
+            diagram=diagram,
+            id=id,
+            width=width,
+            height=height,
+        )  # type: ignore[call-arg]
         self._shape = shape
         for handle in self.handles():
             self.watch_handle(handle)
 
         diagram.connections.add_constraint(
-            self, MinimalValueConstraint(self.min_width, width)
+            self,
+            MinimalValueConstraint(self.min_width, width),  # type: ignore[has-type]
         )
         diagram.connections.add_constraint(
-            self, MinimalValueConstraint(self.min_height, height)
+            self,
+            MinimalValueConstraint(self.min_height, height),  # type: ignore[has-type]
         )
 
     def port_side(self, port):
@@ -148,7 +156,9 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
         if not self.shape:
             self.update_shapes()
         if self.shape:
-            self.min_width, self.min_height = self.shape.size(context)
+            self.min_width, self.min_height = self.shape.size(
+                context, bounding_box=Rectangle(0, 0, self.width, self.height)
+            )
 
     def draw(self, context):
         x, y = self.handles()[0].pos
@@ -284,7 +294,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         ]
         return min(d0, *ds) if ds else d0
 
-    def draw(self, context):
+    def draw(self, context: DrawContext):
         style = merge_styles(context.style, self.style)
         context = replace(context, style=style)
 
@@ -510,7 +520,7 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
             self._last_connected_side = side
             self.update_shapes()
 
-        return self.shape.size(context)
+        return self.shape.size(context, bounding_box=self.dimensions())
 
     def connected_side(self) -> str | None:
         cinfo = self._connections.get_connection(self._handle)

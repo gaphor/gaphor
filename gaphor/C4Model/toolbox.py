@@ -4,7 +4,6 @@ from functools import partial
 from gaphas.item import SE
 
 from gaphor.C4Model import c4model, diagramitems
-from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import (
     DiagramType,
     DiagramTypes,
@@ -15,6 +14,7 @@ from gaphor.diagram.diagramtoolbox import (
     general_tools,
     new_item_factory,
 )
+from gaphor.i18n import gettext, i18nize
 from gaphor.UML import diagramitems as uml_items
 from gaphor.UML.actions.actionstoolbox import actions
 from gaphor.UML.classes.classestoolbox import classes
@@ -22,15 +22,15 @@ from gaphor.UML.interactions.interactionstoolbox import interactions
 from gaphor.UML.states.statestoolbox import states
 from gaphor.UML.toolboxconfig import default_namespace, namespace_config
 from gaphor.UML.uml import (
-    Package,
     Activity,
-    Interaction,
-    StateMachine,
     Class,
     Component,
     DataType,
     Enumeration,
+    Interaction,
+    Package,
     PrimitiveType,
+    StateMachine,
 )
 
 

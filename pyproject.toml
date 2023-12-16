@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "gaphor"
-version = "2.21.0"
+version = "2.22.1"
 description = "Gaphor is the simple modeling tool written in Python."
 authors = [
-    "Arjan J. Molenaar <gaphor@gmail.com>",
+    "Arjan Molenaar <gaphor@gmail.com>",
     "Dan Yeaw <dan@yeaw.me>"
 ]
 
@@ -48,13 +48,13 @@ babel = "^2.10.3"
 jedi = ">=0.18.1,<0.20.0"
 better-exceptions = "^0.3.3"
 pydot = "^1.4.2"
-pillow = "^10.0.0"
-pygit2 = { version = "^1.11.1", python = "< 3.12" }
+pillow = ">=10.0.0,<10.1.0"
+pygit2 = "^1.11.1"
 pyobjc-framework-cocoa = { version = ">=9.0.1,<11.0.0", markers = "sys_platform == 'darwin'" }
-sphinx = { version = ">=4.3,<6.0", optional = true }
+sphinx = { version = ">=6,<8", optional = true }
 sphinx-copybutton = { version = "^0.5.0", optional = true }
 sphinx-intl = { version = "^2.1.0", optional = true }
-myst-nb = { version = "^0.17.1", optional = true }
+myst-nb = { version = ">=0.17.1,<1.1.0", optional = true }
 furo = { version = ">=2022,<2024", optional = true }
 defusedxml = "^0.7.1"
 
@@ -66,7 +66,7 @@ pytest-randomly = "^3.12.0"
 xdoctest = "^1.1.0"
 hypothesis = "^6.54.5"
 ipython = "^8.5.0"
-sphinx = ">=4.3,<6.0"
+sphinx = ">=6,<8"
 babelgladeextractor = "^0.7"
 
 [tool.poetry.group.lint.dependencies]
@@ -79,7 +79,7 @@ poethepoet = ">=0.17.1,<0.25.0"
 optional=true
 
 [tool.poetry.group.packaging.dependencies]
-pyinstaller = "<6.0"
+pyinstaller = "^6.0"
 pyinstaller-versionfile = "^2.0.0"
 semver = ">=2.13,<4.0"
 tomli = { version = ">=1.2,<3.0", python = "<3.11" }
@@ -192,6 +192,14 @@ gettext-mo-release = { "script" = "po.build-babel:compile_mo_release" }
 translations = ["gettext-pot", "gettext-po", "gettext-mo-all"]
 icons = { "shell" = "make -C gaphor/ui/icons" }
 
+[tool.poe.tasks.install-schemas]
+shell = """
+    glib-compile-schemas data
+    mkdir -p ~/.local/share/glib-2.0/schemas
+    cp data/org.gaphor.Gaphor.gschema.xml ~/.local/share/glib-2.0/schemas/
+    cp data/gschemas.compiled ~/.local/share/glib-2.0/schemas/
+"""
+
 [tool.poe.executor]
 type = "virtualenv"
 
@@ -245,8 +253,9 @@ exclude = [
     "coremodel.py",
     "diagramitems.py",
     "docs/conf.py",
+    "gaphor/RAAML/raaml.py",
+    "gaphor/C4Model/c4model.py",
 ]
-# ignore = ["E501", "B023", "B905"]
 ignore = ["E501"]
 line-length = 88
 select = [
@@ -257,12 +266,10 @@ select = [
     "F",
     "W",
 ]
+extend-select = ["I"]
 
 [tool.ruff.mccabe]
 max-complexity = 18
-
-[tool.refurb]
-ignore = ["FURB179"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

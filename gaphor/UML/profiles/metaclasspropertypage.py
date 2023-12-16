@@ -3,11 +3,11 @@ from gi.repository import Gtk
 from gaphor import UML
 from gaphor.core import transactional
 from gaphor.diagram.propertypages import (
-    unsubscribe_all_on_destroy,
     PropertyPageBase,
     PropertyPages,
     handler_blocking,
     new_resource_builder,
+    unsubscribe_all_on_destroy,
 )
 
 new_builder = new_resource_builder("gaphor.UML.profiles")

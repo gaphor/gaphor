@@ -34,13 +34,9 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
             "show_attributes", self.update_shapes
         ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
-        ).watch(
-            "subject[NamedElement].namespace.name"
-        ).watch(
+        ).watch("subject[NamedElement].namespace.name").watch(
             "subject[Classifier].isAbstract", self.update_shapes
-        ).watch(
-            "subject[AbstractRequirement].externalId", self.update_shapes
-        ).watch(
+        ).watch("subject[AbstractRequirement].externalId", self.update_shapes).watch(
             "subject[AbstractRequirement].text", self.update_shapes
         )
         attribute_watches(self, "Requirement")
@@ -63,7 +59,6 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
                 ),
                 Text(
                     text=lambda: self.subject.name or "",
-                    width=lambda: self.width - 4,
                     style={
                         "font-weight": FontWeight.BOLD,
                         "font-style": FontStyle.ITALIC
@@ -118,7 +113,6 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
                     [
                         Text(
                             text=lambda: f"Text: {subject.text}",
-                            width=lambda: self.width - 8,
                             style={"text-align": TextAlign.LEFT},
                         )
                     ]

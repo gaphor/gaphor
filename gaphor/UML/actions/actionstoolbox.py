@@ -4,8 +4,8 @@ from functools import partial
 from gaphas.item import SE
 
 from gaphor import UML
-from gaphor.i18n import gettext, i18nize
 from gaphor.diagram.diagramtoolbox import ToolDef, ToolSection, new_item_factory
+from gaphor.i18n import gettext, i18nize
 from gaphor.UML import diagramitems
 from gaphor.UML.recipes import owner_package
 from gaphor.UML.toolboxconfig import namespace_config

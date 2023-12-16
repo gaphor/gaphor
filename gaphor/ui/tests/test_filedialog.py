@@ -1,10 +1,10 @@
-import os.path
+import os
 from pathlib import Path
 
 import pytest
 from gi.repository import Gio, Gtk
 
-from gaphor.ui.filedialog import save_file_dialog
+from gaphor.ui.filedialog import pretty_path, save_file_dialog
 
 
 class FileChooserStub:
@@ -146,3 +146,20 @@ def test_save_dialog_filename_without_extension(file_chooser):
     file_chooser.stub_select_file("/test/path", "model")
 
     assert selected_file.parts == (os.path.sep, "test", "path", "model.gaphor")
+
+
+def test_format_home_folder():
+    display_name = pretty_path(Path.home() / "folder" / "mymodel.gaphor")
+
+    assert display_name.startswith("~")
+    assert display_name.endswith("mymodel.gaphor")
+
+
+@pytest.mark.skipif(not hasattr(os, "getuid"), reason="Only on Unix")
+def test_format_portal_document():
+    display_name = pretty_path(
+        Path(f"/run/user/{os.getuid()}/doc/123abc/mymodel.gaphor")
+    )
+
+    assert display_name.startswith("mymodel.gaphor")
+    assert display_name.endswith(")")

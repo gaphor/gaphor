@@ -1,19 +1,19 @@
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import (
+    FontWeight,
+    JustifyContent,
     Style,
     TextAlign,
     VerticalAlign,
-    FontWeight,
-    JustifyContent,
 )
 from gaphor.diagram.presentation import ElementPresentation
 from gaphor.diagram.shapes import (
     Box,
+    Orientation,
     Text,
     draw_border,
     draw_left_separator,
     draw_top_separator,
-    Orientation,
 )
 
 
@@ -33,13 +33,9 @@ class MetadataItem(ElementPresentation):
             "website", self.update_shapes
         ).watch("description", self.update_shapes).watch(
             "revision", self.update_shapes
-        ).watch(
-            "license", self.update_shapes
-        ).watch(
+        ).watch("license", self.update_shapes).watch(
             "createdOn", self.update_shapes
-        ).watch(
-            "updatedOn", self.update_shapes
-        )
+        ).watch("updatedOn", self.update_shapes)
 
     def update_shapes(self, event=None):
         diagram = self.diagram

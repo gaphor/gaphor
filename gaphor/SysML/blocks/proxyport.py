@@ -32,7 +32,7 @@ class ProxyPortItem(Named, AttachedPresentation[sysml.ProxyPort]):
 
     show_type: attribute[int] = attribute("show_type", int, default=False)
 
-    def update_shapes(self):
+    def update_shapes(self, event=None):
         self.shape = IconBox(
             Box(draw=draw_border),
             Text(

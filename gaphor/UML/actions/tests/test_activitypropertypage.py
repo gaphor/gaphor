@@ -1,13 +1,13 @@
 from gi.repository import Gtk
 
 from gaphor import UML
+from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.actions.activity import ActivityItem
 from gaphor.UML.actions.activitypropertypage import (
     ActivityItemPage,
-    ActivityParameters,
     ActivityParameterNodeNamePropertyPage,
+    ActivityParameters,
 )
-from gaphor.diagram.tests.fixtures import find
 
 
 def test_activity_parameter_node_editing(create):

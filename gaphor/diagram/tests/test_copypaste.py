@@ -1,4 +1,5 @@
 import pytest
+
 from gaphor.diagram.copypaste import copy, paste
 
 

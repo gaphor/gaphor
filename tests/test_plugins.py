@@ -2,11 +2,11 @@ import subprocess
 import sys
 from pathlib import Path
 
-from gaphor.plugins import (
-    enable_plugins,
-    default_plugin_path,
-)
 from gaphor.entrypoint import load_entry_points
+from gaphor.plugins import (
+    default_plugin_path,
+    enable_plugins,
+)
 
 
 def test_loading_plugins(tmp_path, monkeypatch):

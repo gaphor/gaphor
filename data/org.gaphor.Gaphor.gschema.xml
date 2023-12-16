@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="gaphor">
+    <enum id="org.gaphor.Gaphor.StyleVariant">
+        <value nick="System" value="0"/>
+        <value nick="Dark" value="1"/>
+        <value nick="Light" value="2"/>
+    </enum>
+    <schema id="org.gaphor.Gaphor" path="/org/gaphor/gaphor/">
+        <key name="style-variant" enum="org.gaphor.Gaphor.StyleVariant">
+            <default>'System'</default>
+            <summary>Style Variant</summary>
+            <description>Use the light or dark variant of the theme.</description>
+        </key>
+        <key name="use-english" type="b">
+            <default>false</default>
+            <summary>Use English</summary>
+            <description>Override language to English.</description>
+        </key>
+    </schema>
+</schemalist>

@@ -30,17 +30,11 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
             "show_parts", self.update_shapes
         ).watch("show_references", self.update_shapes).watch(
             "show_values", self.update_shapes
-        ).watch(
-            "show_operations", self.update_shapes
-        ).watch(
+        ).watch("show_operations", self.update_shapes).watch(
             "subject[NamedElement].name"
-        ).watch(
-            "subject[NamedElement].name"
-        ).watch(
+        ).watch("subject[NamedElement].name").watch(
             "subject[NamedElement].namespace.name"
-        ).watch(
-            "subject[Classifier].isAbstract", self.update_shapes
-        ).watch(
+        ).watch("subject[Classifier].isAbstract", self.update_shapes).watch(
             "subject[Class].ownedAttribute.aggregation", self.update_shapes
         )
         operation_watches(self, "Block")
@@ -79,7 +73,6 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
                 ),
                 Text(
                     text=lambda: self.subject.name or "",
-                    width=lambda: self.width - 4,
                     style={
                         "font-weight": FontWeight.BOLD,
                         "font-style": FontStyle.ITALIC

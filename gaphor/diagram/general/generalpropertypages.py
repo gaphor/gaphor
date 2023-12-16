@@ -1,13 +1,14 @@
-import io
 import base64
+import io
 
 from gi.repository import Gtk
+from PIL import Image
 
-from gaphor.core import transactional, gettext
+from gaphor.core import gettext, transactional
 from gaphor.core.modeling import Comment
 from gaphor.diagram.general.metadata import MetadataItem
 from gaphor.diagram.general.picture import PictureItem
-
+from gaphor.diagram.iconname import to_kebab_case
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
@@ -15,11 +16,8 @@ from gaphor.diagram.propertypages import (
     new_builder,
     unsubscribe_all_on_destroy,
 )
-from gaphor.diagram.iconname import to_kebab_case
-
 from gaphor.ui.errorhandler import error_handler
 from gaphor.ui.filedialog import open_file_dialog
-from PIL import Image
 
 
 @PropertyPages.register(Comment)

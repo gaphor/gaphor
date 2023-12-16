@@ -23,7 +23,10 @@ def invalid(messages):
             yield message, f"Empty placeholder for '{message.id}': '{message.string}'"
 
         if set(id_formats) != set(str_formats):
-            yield message, f"Invalid placeholders for '{message.id}': '{message.string}'"
+            yield (
+                message,
+                f"Invalid placeholders for '{message.id}': '{message.string}'",
+            )
 
         if html_entity.findall(message.string):
             yield message, f"Translation contains HTML entities: '{message.string}'"

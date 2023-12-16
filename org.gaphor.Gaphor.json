@@ -22,8 +22,9 @@
     "--share=ipc",
     "--socket=wayland",
     "--device=dri",
-    "--filesystem=host",
-    "--socket=session-bus"
+    "--socket=session-bus",
+    "--talk-name=org.gtk.vfs.*",
+    "--filesystem=xdg-run/gvfsd"
   ],
   "modules": [
     {
@@ -64,12 +65,18 @@
       "name": "gaphor",
       "buildsystem": "simple",
       "build-commands": [
-        "pip3 install --ignore-installed --prefix=${FLATPAK_DEST} ."
+        "pip3 install --ignore-installed --prefix=${FLATPAK_DEST} .",
+        "install -D data/org.gaphor.Gaphor.gschema.xml /app/share/glib-2.0/schemas/org.gaphor.Gaphor.gschema.xml",
+        "glib-compile-schemas /app/share/glib-2.0/schemas"
       ],
       "sources": [
         {
           "type": "dir",
           "path": "."
+        },
+        {
+          "type": "file",
+          "path": "data/org.gaphor.Gaphor.gschema.xml"
         }
       ],
       "run-tests": true,

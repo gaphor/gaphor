@@ -7,8 +7,8 @@ if TYPE_CHECKING:
     from gaphor.core.modeling import Element
     from gaphor.diagram.diagramtoolbox import (
         DiagramType,
-        ToolboxDefinition,
         ElementCreateInfo,
+        ToolboxDefinition,
     )
 
 
