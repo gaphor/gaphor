@@ -102,7 +102,7 @@ jobs:
         run: xvfb-run poetry run pytest --cov
       - name: Upload Code Coverage to Code Climate
         if: ${{ matrix.python_version == env.python_version }}
-        uses: paambaati/codeclimate-action@4cace242c6e0a2dd554bbb3cc12c58047d8af3e5 # v5.0.0
+        uses: paambaati/codeclimate-action@a1831d7162ea1fbc612ffe5fb3b90278b7999d59 # v5.0.0
         env:
           CC_TEST_REPORTER_ID: 05f6288b94a87daa172d3e96a33ec331a4374be7d01eb9a42b3b21c4c550a8ff
         with:
