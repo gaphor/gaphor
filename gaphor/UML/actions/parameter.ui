@@ -14,6 +14,13 @@
             <lookup name="item">GtkListItem</lookup>
           </lookup>
         </binding>
+        <child>
+          <object class="GtkGestureClick">
+            <property name="button">1</property>
+            <signal name="pressed" handler="on_double_click" />
+          </object>
+        </child>
+        <signal name="done-editing" handler="end_editing" object="GtkListItem" swapped="no" />
         <style>
           <class name="row"/>
         </style>

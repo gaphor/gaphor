@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from gi.repository import Gdk, Gio, GObject, Gtk
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import event_handler, transactional
@@ -110,13 +110,7 @@ class ActivityItemPage(PropertyPageBase):
         list_view.set_model(selection)
         list_view.add_controller(keyboard_shortcuts(selection))
 
-        factory = Gtk.SignalListItemFactory.new()
-        factory.connect(
-            "setup",
-            list_item_factory_setup,
-        )
-
-        list_view.set_factory(factory)
+        list_view.set_factory(list_item_factory())
 
         if self.watcher:
             self.watcher.watch("node", self.on_nodes_changed)
@@ -133,42 +127,29 @@ class ActivityItemPage(PropertyPageBase):
         self.info.set_visible(True)
 
 
-def list_item_factory_setup(_factory, list_item):
-    builder = Gtk.Builder()
-    builder.set_current_object(list_item)
-    builder.extend_with_template(
-        list_item,
-        type(list_item).__gtype__,
-        translated_ui_string("gaphor.UML.actions", "parameter.ui"),
-        -1,
-    )
-
-    text = builder.get_object("text")
-
+def list_item_factory():
     def on_double_click(ctrl, n_press, x, y):
         if n_press == 2:
+            text = ctrl.get_widget()
             text.start_editing()
 
-    ctrl = Gtk.GestureClick.new()
-    ctrl.set_button(Gdk.BUTTON_PRIMARY)
-    ctrl.connect("pressed", on_double_click)
-    text.add_controller(ctrl)
-
-    def start_editing(_ctrl, keyval, _keycode, _state):
-        if keyval in (Gdk.KEY_F2,):
-            text.start_editing()
-            return True
-        return False
-
-    key_ctrl = Gtk.EventControllerKey.new()
-    key_ctrl.connect("key-pressed", start_editing)
-    text.add_controller(key_ctrl)
-
-    def end_editing(text, pspec):
-        if not text.props.editing:
+    def end_editing(list_item, should_commit):
+        text = list_item.get_child()
+        if should_commit:
             list_item.get_item().parameter = text.editable_text
 
-    text.connect("done-editing", end_editing)
+    ui_string = translated_ui_string("gaphor.UML.actions", "parameter.ui")
+    ui_bytes = GLib.Bytes.new(ui_string.encode("utf-8"))
+
+    return Gtk.BuilderListItemFactory.new_from_bytes(
+        Gtk.Builder.BuilderScope(
+            {
+                "on_double_click": on_double_click,
+                "end_editing": end_editing,
+            }
+        ),
+        ui_bytes,
+    )
 
 
 def keyboard_shortcuts(selection):
