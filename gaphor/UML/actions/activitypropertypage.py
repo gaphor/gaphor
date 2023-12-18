@@ -31,6 +31,8 @@ class ActivityParameterNodeView(GObject.Object):
         self.node = node
         self.activity = activity
 
+    editing = GObject.Property(type=bool, default=False)
+
     @GObject.Property(type=str)
     def parameter(self) -> str:
         return format(self.node.parameter) if self.node else ""
@@ -45,6 +47,9 @@ class ActivityParameterNodeView(GObject.Object):
             self.node = node
             self.activity.node = node
         parse(self.node.parameter, value)
+
+    def start_editing(self):
+        self.editing = True
 
 
 def activity_parameter_node_model(activity: UML.Activity) -> Gio.ListModel:
@@ -161,6 +166,11 @@ def keyboard_shortcuts(selection):
 @transactional
 def list_view_handler(_list_view, keyval, _keycode, state, selection):
     item = selection.get_selected_item()
+
+    if keyval in (Gdk.KEY_F2,):
+        item.start_editing()
+        return True
+
     if not (item and item.node):
         return False
 
