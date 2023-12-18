@@ -76,10 +76,16 @@ class TextField(Gtk.Stack):
 
     @editing.setter  # type: ignore[no-redef]
     def editing(self, value):
+        if not self.can_edit:
+            return
+
         if value:
-            GLib.timeout_add(
-                START_EDIT_DELAY, lambda: self.set_visible_child_name("editing")
-            )
+
+            def _start_editing():
+                self.set_visible_child_name("editing")
+                self._text.grab_focus()
+
+            GLib.timeout_add(START_EDIT_DELAY, _start_editing)
         else:
             self.set_visible_child_name("default")
 
@@ -127,9 +133,3 @@ def _text_field_edit_controls(text_field: TextField):
     key_ctrl = Gtk.EventControllerKey.new()
     key_ctrl.connect("key-pressed", text_key_pressed)
     text_field._text.add_controller(key_ctrl)
-
-    def start_editing(text_field, _pspec):
-        if text_field.get_visible_child_name() == "editing":
-            text_field._text.grab_focus()
-
-    text_field.connect("notify::visible-child-name", start_editing)

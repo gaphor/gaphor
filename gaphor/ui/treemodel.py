@@ -36,7 +36,6 @@ class TreeItem(GObject.Object):
         return "" if self.read_only() else (self.element.name or "")
 
     @editable_text.setter  # type: ignore[no-redef]
-    # @transactional
     def editable_text(self, text):
         if not self.read_only():
             self.element.name = text or ""
@@ -63,7 +62,7 @@ class RelationshipItem(TreeItem):
         super().__init__(None)
         self.child_model = child_model
         self.readonly_text = gettext("<Relationships>")
-        self.can_editing = False
+        self.can_edit = False
 
 
 class Branch:
