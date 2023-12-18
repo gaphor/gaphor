@@ -110,6 +110,7 @@ listview .row {
 textfield text {
   background-color: @theme_bg_color;
   color: @theme_fg_color;
+  border: 1px solid @theme_bg_color;
 }
 
 textfield text selection {
