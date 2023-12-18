@@ -37,6 +37,16 @@ _XML = """\
                 </binding>
               </object>
             </property>
+            <child>
+              <object class="GtkEventControllerFocus">
+                <signal name="leave" handler="on_text_focus_out" />
+              </object>
+            </child>
+            <child>
+              <object class="GtkEventControllerKey">
+                <signal name="key-pressed" handler="on_text_key_pressed" />
+              </object>
+            </child>
           </object>
         </property>
       </object>
@@ -61,7 +71,6 @@ class TextField(Gtk.Stack):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        _text_field_edit_controls(self)
 
     readonly_text = GObject.Property(type=str, default="")
     editable_text = GObject.Property(type=str, default="")
@@ -108,28 +117,20 @@ class TextField(Gtk.Stack):
         else:
             self._text.get_buffer().set_text(self.editable_text, -1)
 
+    @Gtk.Template.Callback()
+    def on_text_focus_out(self, _ctrl):
+        if self.editing:
+            self.done_editing(True)
 
-TextField.set_css_name("textfield")
-
-
-def _text_field_edit_controls(text_field: TextField):
-    def text_focus_out(_ctrl):
-        if text_field.editing:
-            text_field.done_editing(True)
-
-    def text_key_pressed(_ctrl, keyval, _keycode, _state):
+    @Gtk.Template.Callback()
+    def on_text_key_pressed(self, _ctrl, keyval, _keycode, _state):
         if keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
-            text_field.done_editing(True)
+            self.done_editing(True)
             return True
         elif keyval == Gdk.KEY_Escape:
-            text_field.done_editing(False)
+            self.done_editing(False)
             return True
         return False
 
-    focus_ctrl = Gtk.EventControllerFocus.new()
-    focus_ctrl.connect("leave", text_focus_out)
-    text_field._text.add_controller(focus_ctrl)
 
-    key_ctrl = Gtk.EventControllerKey.new()
-    key_ctrl.connect("key-pressed", text_key_pressed)
-    text_field._text.add_controller(key_ctrl)
+TextField.set_css_name("textfield")
