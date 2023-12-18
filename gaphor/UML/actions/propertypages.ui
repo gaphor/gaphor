@@ -340,7 +340,7 @@
         <child>
           <object class="GtkLabel" id="parameters-info-icon">
             <property name="halign">end</property>
-            <property name="label" translatable="yes">🛈 Help</property>
+            <property name="label" translatable="yes">ⓘ Help</property>
             <child>
               <object class="GtkPopover" id="parameters-info">
                 <property name="visible">0</property>

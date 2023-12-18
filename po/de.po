@@ -754,8 +754,8 @@ msgstr "Knotenparameter"
 #: gaphor/UML/classes/propertypages.ui:402
 #: gaphor/UML/classes/propertypages.ui:637
 #: gaphor/UML/classes/propertypages.ui:745
-msgid "🛈 Help"
-msgstr "🛈 Hilfe"
+msgid "ⓘ Help"
+msgstr "ⓘ Hilfe"
 
 #: gaphor/UML/actions/propertypages.ui:288
 msgid ""

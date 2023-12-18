@@ -64,7 +64,7 @@
             <child>
               <object class="GtkLabel" id="head-info-icon">
                 <property name="halign">end</property>
-                <property name="label" translatable="yes">🛈 Help</property>
+                <property name="label" translatable="yes">ⓘ Help</property>
                 <child>
                   <object class="GtkPopover" id="head-info">
                     <property name="visible">0</property>
@@ -199,7 +199,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <child>
               <object class="GtkLabel" id="tail-info-icon">
                 <property name="halign">end</property>
-                <property name="label" translatable="yes">🛈 Help</property>
+                <property name="label" translatable="yes">ⓘ Help</property>
                 <child>
                   <object class="GtkPopover" id="tail-info">
                     <property name="visible">0</property>
@@ -399,7 +399,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         <child>
           <object class="GtkLabel" id="attributes-info-icon">
             <property name="halign">end</property>
-            <property name="label" translatable="yes">🛈 Help</property>
+            <property name="label" translatable="yes">ⓘ Help</property>
 
             <child>
               <object class="GtkPopover" id="attributes-info">
@@ -634,7 +634,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
           <object class="GtkLabel" id="operations-info-icon">
             <property name="visible">1</property>
             <property name="halign">end</property>
-            <property name="label" translatable="yes">🛈 Help</property>
+            <property name="label" translatable="yes">ⓘ Help</property>
             <child>
               <object class="GtkPopover" id="operations-info">
                 <property name="visible">0</property>
@@ -742,7 +742,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
           <object class="GtkLabel" id="enumerations-info-icon">
             <property name="visible">1</property>
             <property name="halign">end</property>
-            <property name="label" translatable="yes">🛈 Help</property>
+            <property name="label" translatable="yes">ⓘ Help</property>
 
             <child>
               <object class="GtkPopover" id="enumerations-info">
