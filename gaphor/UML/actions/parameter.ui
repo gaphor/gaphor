@@ -4,6 +4,7 @@
   <template class="GtkListItem">
     <property name="child">
       <object class="TextField" id="text">
+        <property name="placeholder-text" translatable="yes">Add a Parameter</property>
         <binding name="editable-text">
           <lookup name="parameter" type="ActivityParameterNodeView">
             <lookup name="item">GtkListItem</lookup>

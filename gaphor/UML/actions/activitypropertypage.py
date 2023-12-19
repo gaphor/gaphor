@@ -41,6 +41,9 @@ class ActivityParameterNodeView(GObject.Object):
     @transactional
     def parameter(self, value):
         if not self.node:
+            if not value:
+                return
+
             model = self.activity.model
             node = model.create(UML.ActivityParameterNode)
             node.parameter = model.create(UML.Parameter)

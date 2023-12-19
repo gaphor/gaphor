@@ -51,6 +51,23 @@ _XML = """\
         </property>
       </object>
     </child>
+    <child>
+      <object class="GtkStackPage">
+        <property name="name">placeholder</property>
+        <property name="child">
+          <object class="GtkLabel">
+            <property name="xalign">0</property>
+            <property name="hexpand">yes</property>
+            <binding name="label">
+              <lookup name="placeholder-text">TextField</lookup>
+            </binding>
+            <style>
+              <class name="dim-label" />
+            </style>
+          </object>
+        </property>
+      </object>
+    </child>
   </template>
 </interface>
 """
@@ -71,13 +88,23 @@ class TextField(Gtk.Stack):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self._readonly_text = ""
 
-    readonly_text = GObject.Property(type=str, default="")
     editable_text = GObject.Property(type=str, default="")
+    placeholder_text = GObject.Property(type=str, default="")
     attributes = GObject.Property(type=Pango.AttrList)
     """Pango style attributes for the readonly text."""
 
     can_edit = GObject.Property(type=bool, default=True)
+
+    @GObject.Property(type=str, default="")
+    def readonly_text(self):
+        return self._readonly_text
+
+    @readonly_text.setter  # type: ignore[no-redef]
+    def readonly_text(self, value):
+        self._readonly_text = value or ""
+        self.set_visible_child_name("default" if value else "placeholder")
 
     @GObject.Property(type=bool, default=False)
     def editing(self):
@@ -96,7 +123,9 @@ class TextField(Gtk.Stack):
 
             GLib.timeout_add(START_EDIT_DELAY, _start_editing)
         else:
-            self.set_visible_child_name("default")
+            self.set_visible_child_name(
+                "default" if self.readonly_text else "placeholder"
+            )
 
     _text = Gtk.Template.Child()
 
