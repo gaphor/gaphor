@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtkColumnViewCell">
+    <property name="child">
+      <object class="TextField">
+        <property name="placeholder-text">{placeholder_text}</property>
+        <binding name="readonly-text">
+          <lookup name="{attribute}" type="{gtype_name}">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+        <binding name="editable-text">
+          <lookup name="{attribute}" type="{gtype_name}">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+        <child>
+          <object class="GtkGestureClick">
+            <property name="button">1</property>
+            <signal name="pressed" handler="on_double_click" />
+          </object>
+        </child>
+        <signal name="done-editing" handler="on_done_editing" object="GtkColumnViewCell" swapped="no" />
+      </object>
+    </property>
+  </template>
+</interface>

@@ -22,6 +22,13 @@ from gaphor.UML.classes.datatype import DataTypeItem
 from gaphor.UML.classes.interface import Folded, InterfaceItem
 from gaphor.UML.classes.klass import ClassItem
 from gaphor.UML.deployments.connector import ConnectorItem
+from gaphor.UML.propertypages import (
+    check_button_handlers,
+    create_list_store,
+    list_item_factory,
+    text_field_handlers,
+    update_list_store,
+)
 
 log = logging.getLogger(__name__)
 
@@ -48,45 +55,6 @@ def on_keypress_event(ctrl, keyval, keycode, state, tree):
         model.swap(iter, model.iter_previous(iter))
         return True
     return False
-
-
-class ClassAttributes(EditableTreeModel):
-    """GTK tree model to edit class attributes."""
-
-    def __init__(self, item):
-        super().__init__(item, cols=(str, bool, object))
-
-    def get_rows(self):
-        for attr in self._item.subject.ownedAttribute:
-            if not attr.association:
-                yield [format(attr, note=True), attr.isStatic, attr]
-
-    def create_object(self):
-        attr = self._item.model.create(UML.Property)
-        self._item.subject.ownedAttribute = attr
-        return attr
-
-    @transactional
-    def set_object_value(self, row, col, value):
-        attr = row[-1]
-        if col == 0:
-            parse(attr, value)
-            row[0] = format(attr, note=True)
-        elif col == 1:
-            attr.isStatic = not attr.isStatic
-            row[1] = attr.isStatic
-        elif col == 2:
-            # Value in attribute object changed:
-            row[0] = format(attr, note=True)
-            row[1] = attr.isStatic
-
-    def swap_objects(self, o1, o2):
-        return self._item.subject.ownedAttribute.swap(o1, o2)
-
-    def sync_model(self, new_order):
-        self._item.subject.ownedAttribute.order(
-            lambda e: new_order.index(e) if e in new_order else len(new_order)
-        )
 
 
 class ClassOperations(EditableTreeModel):
@@ -270,24 +238,55 @@ class InterfacePropertyPage(PropertyPageBase):
 
 
 class AttributeView(GObject.Object):
-    def __init__(self, attr: UML.Property | None):
+    def __init__(self, attr: UML.Property | None, klass: UML.Class):
         super().__init__()
         self.attr = attr
-        self.attribute = format(attr, note=True) if attr else ""
-        self.static = attr.isStatic if attr else False
+        self.klass = klass
 
-    attribute = GObject.Property(type=str, default="")
-    static = GObject.Property(type=bool, default=False)
+    @GObject.Property(type=str, default="")
+    def attribute(self):
+        return format(self.attr, note=True) if self.attr else ""
+
+    @attribute.setter  # type: ignore[no-redef]
+    @transactional
+    def attribute(self, value):
+        if not self.attr:
+            if not value:
+                return
+
+            model = self.klass.model
+            self.attr = model.create(UML.Property)
+            self.klass.ownedAttribute = self.attr
+        parse(self.attr, value)
+
+    @GObject.Property(type=bool, default=False)
+    def static(self):
+        return self.attr.isStatic if self.attr else False
+
+    @static.setter  # type: ignore[no-redef]
+    @transactional
+    def static(self, value):
+        if not self.attr:
+            return
+
+        self.attr.isStatic = value
 
 
-def attribute_model(klass: UML.Class) -> Gio.ListModel:
-    store = Gio.ListStore.new(AttributeView)
+def attribute_model(klass: UML.Class) -> Gio.ListStore:
+    return create_list_store(
+        AttributeView,
+        (a for a in klass.ownedAttribute if not a.association),
+        lambda attr: AttributeView(attr, klass),
+    )
 
-    for attr in klass.ownedAttribute:
-        if not attr.association:
-            store.append(AttributeView(attr))
 
-    return store
+def update_attribute_model(store: Gio.ListStore, klass: UML.Class) -> None:
+    update_list_store(
+        store,
+        lambda item: item.attr,
+        (a for a in klass.ownedAttribute if not a.association),
+        lambda attr: AttributeView(attr, klass),
+    )
 
 
 @PropertyPages.register(DataTypeItem)
@@ -307,17 +306,13 @@ class AttributesPage(PropertyPageBase):
         if not self.item.subject:
             return
 
-        self.model = ClassAttributes(self.item)
-
         builder = new_builder(
             "attributes-editor",
             "attributes-info",
             "static-label",
             signals={
-                "show-attributes-changed": (self._on_show_attributes_change,),
-                "attributes-name-edited": (on_text_cell_edited, self.model, 0),
-                "attributes-static-edited": (on_bool_cell_edited, self.model, 1),
-                "attributes-info-clicked": (self.on_attributes_info_clicked),
+                "show-attributes-changed": (self.on_show_attributes_changed,),
+                "attributes-info-clicked": (self.on_attributes_info_clicked,),
             },
         )
         self.info = builder.get_object("attributes-info")
@@ -328,38 +323,44 @@ class AttributesPage(PropertyPageBase):
 
         column_view: Gtk.ColumnView = builder.get_object("attributes-list")
 
+        for column, factory in zip(
+            column_view.get_columns(),
+            [
+                list_item_factory(
+                    "text-field-cell.ui",
+                    klass=AttributeView,
+                    attribute="attribute",
+                    placeholder_text="New Attribute…",
+                    signal_handlers=text_field_handlers("attribute"),
+                ),
+                list_item_factory(
+                    "check-button-cell.ui",
+                    klass=AttributeView,
+                    attribute="static",
+                    signal_handlers=check_button_handlers("static"),
+                ),
+            ],
+        ):
+            column.set_factory(factory)
+
         self.model = attribute_model(self.item.subject)
         selection = Gtk.SingleSelection.new(self.model)
         column_view.set_model(selection)
 
-        def handler(event):
-            attribute = event.element
-            for row in self.model:
-                if row[-1] is attribute:
-                    row[:] = [
-                        format(attribute, note=True),
-                        attribute.isStatic,
-                        attribute,
-                    ]
-
-        self.watcher.watch("ownedAttribute.name", handler).watch(
-            "ownedAttribute.isDerived", handler
-        ).watch("ownedAttribute.visibility", handler).watch(
-            "ownedAttribute.isStatic", handler
-        ).watch("ownedAttribute.lowerValue", handler).watch(
-            "ownedAttribute.upperValue", handler
-        ).watch("ownedAttribute.defaultValue", handler).watch(
-            "ownedAttribute.typeValue", handler
-        )
+        if self.watcher:
+            self.watcher.watch("ownedAttribute", self.on_attributes_changed)
 
         return unsubscribe_all_on_destroy(
             builder.get_object("attributes-editor"), self.watcher
         )
 
     @transactional
-    def _on_show_attributes_change(self, button, gparam):
+    def on_show_attributes_changed(self, button, gparam):
         self.item.show_attributes = button.get_active()
         self.item.request_update()
+
+    def on_attributes_changed(self, event):
+        update_attribute_model(self.model, self.item.subject)
 
     def on_attributes_info_clicked(self, image, event):
         self.info.set_visible(True)

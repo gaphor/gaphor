@@ -360,52 +360,11 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                   <object class="GtkColumnViewColumn">
                     <property name="title" translatable="yes">Attribute</property>
                     <property name="expand">1</property>
-                    <property name="factory">
-                      <object class="GtkBuilderListItemFactory">
-                        <property name="bytes"><![CDATA[
-<?xml version="1.0" encoding="UTF-8"?>
-<interface>
-  <template class="GtkColumnViewCell">
-    <property name="child">
-      <object class="TextField">
-        <property name="placeholder-text">New Attribute…</property>
-        <binding name="readonly-text">
-          <lookup name="attribute" type="gaphor+UML+classes+classespropertypages+AttributeView">
-            <lookup name="item">GtkColumnViewCell</lookup>
-          </lookup>
-        </binding>
-      </object>
-    </property>
-  </template>
-</interface>
-                        ]]></property>
-                      </object>
-                    </property>
                   </object>
                 </child>
                 <child>
                   <object class="GtkColumnViewColumn">
                     <property name="title" translatable="yes">Static</property>
-                    <property name="factory">
-                      <object class="GtkBuilderListItemFactory">
-                        <property name="bytes"><![CDATA[
-<?xml version="1.0" encoding="UTF-8"?>
-<interface>
-  <template class="GtkColumnViewCell">
-    <property name="child">
-      <object class="GtkCheckButton">
-        <binding name="active">
-          <lookup name="static" type="gaphor+UML+classes+classespropertypages+AttributeView">
-            <lookup name="item">GtkColumnViewCell</lookup>
-          </lookup>
-        </binding>
-      </object>
-    </property>
-  </template>
-</interface>
-                        ]]></property>
-                      </object>
-                    </property>
                   </object>
                 </child>
               </object>
