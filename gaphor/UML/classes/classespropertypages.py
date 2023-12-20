@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 
-from gi.repository import Gdk, Gtk
+from gi.repository import Gdk, Gio, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
@@ -269,6 +269,27 @@ class InterfacePropertyPage(PropertyPageBase):
         item.folded = Folded.PROVIDED if fold else Folded.NONE
 
 
+class AttributeView(GObject.Object):
+    def __init__(self, attr: UML.Property | None):
+        super().__init__()
+        self.attr = attr
+        self.attribute = format(attr, note=True) if attr else ""
+        self.static = attr.isStatic if attr else False
+
+    attribute = GObject.Property(type=str, default="")
+    static = GObject.Property(type=bool, default=False)
+
+
+def attribute_model(klass: UML.Class) -> Gio.ListModel:
+    store = Gio.ListStore.new(AttributeView)
+
+    for attr in klass.ownedAttribute:
+        if not attr.association:
+            store.append(AttributeView(attr))
+
+    return store
+
+
 @PropertyPages.register(DataTypeItem)
 @PropertyPages.register(ClassItem)
 @PropertyPages.register(InterfaceItem)
@@ -305,12 +326,11 @@ class AttributesPage(PropertyPageBase):
         show_attributes = builder.get_object("show-attributes")
         show_attributes.set_active(self.item.show_attributes)
 
-        tree_view: Gtk.TreeView = builder.get_object("attributes-list")
-        tree_view.set_model(self.model)
-        tree_view_column_tooltips(tree_view, ["", gettext("Static")])
-        controller = Gtk.EventControllerKey.new()
-        tree_view.add_controller(controller)
-        controller.connect("key-pressed", on_keypress_event, tree_view)
+        column_view: Gtk.ColumnView = builder.get_object("attributes-list")
+
+        self.model = attribute_model(self.item.subject)
+        selection = Gtk.SingleSelection.new(self.model)
+        column_view.set_model(selection)
 
         def handler(event):
             attribute = event.element

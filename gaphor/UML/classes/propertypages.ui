@@ -350,46 +350,62 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         <child>
           <object class="GtkFrame">
             <property name="child">
-              <object class="GtkTreeView" id="attributes-list">
+              <object class="GtkColumnView" id="attributes-list">
                 <property name="height-request">112</property>
                 <property name="focusable">1</property>
-                <property name="headers-clickable">0</property>
-                <property name="enable-search">0</property>
-                <property name="show-expanders">0</property>
-                <property name="enable-grid-lines">horizontal</property>
-                <child internal-child="selection">
-                  <object class="GtkTreeSelection"/>
-                </child>
+                <style>
+                  <class name="data-table"/>
+                </style>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="resizable">1</property>
-                    <property name="title" translatable="yes">Attributes</property>
+                  <object class="GtkColumnViewColumn">
+                    <property name="title" translatable="yes">Attribute</property>
                     <property name="expand">1</property>
-                    <child>
-                      <object class="GtkCellRendererText">
-                        <property name="xpad">2</property>
-                        <property name="ypad">2</property>
-                        <property name="xalign">0</property>
-                        <property name="editable">1</property>
-                        <signal name="edited" handler="attributes-name-edited" swapped="no"/>
+                    <property name="factory">
+                      <object class="GtkBuilderListItemFactory">
+                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtkColumnViewCell">
+    <property name="child">
+      <object class="TextField">
+        <property name="placeholder-text">New Attribute…</property>
+        <binding name="readonly-text">
+          <lookup name="attribute" type="gaphor+UML+classes+classespropertypages+AttributeView">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+      </object>
+    </property>
+  </template>
+</interface>
+                        ]]></property>
                       </object>
-                      <attributes>
-                        <attribute name="text">0</attribute>
-                      </attributes>
-                    </child>
+                    </property>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="widget">static-label</property>
-                    <child>
-                      <object class="GtkCellRendererToggle">
-                        <signal name="toggled" handler="attributes-static-edited" swapped="no"/>
+                  <object class="GtkColumnViewColumn">
+                    <property name="title" translatable="yes">Static</property>
+                    <property name="factory">
+                      <object class="GtkBuilderListItemFactory">
+                        <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtkColumnViewCell">
+    <property name="child">
+      <object class="GtkCheckButton">
+        <binding name="active">
+          <lookup name="static" type="gaphor+UML+classes+classespropertypages+AttributeView">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+      </object>
+    </property>
+  </template>
+</interface>
+                        ]]></property>
                       </object>
-                      <attributes>
-                        <attribute name="active">1</attribute>
-                      </attributes>
-                    </child>
+                    </property>
                   </object>
                 </child>
               </object>
