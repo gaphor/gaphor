@@ -7,7 +7,7 @@ from gaphor.UML.actions.activitypropertypage import (
     ActivityItemPage,
     ActivityParameterNodeNamePropertyPage,
     activity_parameter_node_model,
-    list_view_handler,
+    list_view_key_handler,
 )
 
 
@@ -145,9 +145,8 @@ def test_activity_parameter_node_reorder_down(create, element_factory):
     widget = property_page.construct()
 
     list_view = find(widget, "parameter-list")
-    selection = list_view.get_model()
 
-    list_view_handler(None, Gdk.KEY_plus, None, 0, selection)
+    list_view_key_handler(ControllerStub(list_view), Gdk.KEY_plus, None, 0)
 
     assert activity_item.subject.node[0] is node_two
     assert activity_item.subject.node[1] is node_one
@@ -166,7 +165,7 @@ def test_activity_parameter_node_reorder_up(create, element_factory):
     selection = list_view.get_model()
     selection.set_selected(1)
 
-    list_view_handler(None, Gdk.KEY_minus, None, 0, selection)
+    list_view_key_handler(ControllerStub(list_view), Gdk.KEY_minus, None, 0)
 
     assert activity_item.subject.node[0] is node_two
     assert activity_item.subject.node[1] is node_one
@@ -182,9 +181,8 @@ def test_activity_parameter_node_reorder_first_node_up(create, element_factory):
     widget = property_page.construct()
 
     list_view = find(widget, "parameter-list")
-    selection = list_view.get_model()
 
-    list_view_handler(None, Gdk.KEY_minus, None, 0, selection)
+    list_view_key_handler(ControllerStub(list_view), Gdk.KEY_minus, None, 0)
 
     assert activity_item.subject.node[0] is node_one
     assert activity_item.subject.node[1] is node_two
@@ -197,3 +195,11 @@ def test_construct_activity_itemproperty_page(create):
     widget = property_page.construct()
 
     assert widget
+
+
+class ControllerStub:
+    def __init__(self, widget):
+        self._widget = widget
+
+    def get_widget(self):
+        return self._widget

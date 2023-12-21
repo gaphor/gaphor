@@ -14,6 +14,11 @@
             <lookup name="item">GtkColumnViewCell</lookup>
           </lookup>
         </binding>
+        <binding name="editing">
+          <lookup name="editing" type="{gtype_name}">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
         <child>
           <object class="GtkGestureClick">
             <property name="button">1</property>

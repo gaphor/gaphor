@@ -1,4 +1,4 @@
-from gi.repository import Gio, GLib, Gtk
+from gi.repository import Gdk, Gio, GLib, Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
@@ -87,7 +87,7 @@ def list_item_factory(
 ):
     ui_string = translated_ui_string("gaphor.UML", ui_filename).format(
         gtype_name=klass.__gtype__.name,
-        attribute=attribute,
+        attribute=attribute.name,
         placeholder_text=placeholder_text,
     )
 
@@ -154,3 +154,43 @@ def check_button_handlers(model_field: str):
     return {
         "on_toggled": on_toggled,
     }
+
+
+@transactional
+def list_view_key_handler(ctrl, keyval, _keycode, state):
+    """Handle keyboard shortcuts in a list view in the property editor.
+
+    Attach to ``Gtk.EventControllerKey:key-pressed`` signals.
+    """
+    list_view = ctrl.get_widget()
+    selection = list_view.get_model()
+    item = selection.get_selected_item()
+
+    if keyval in (Gdk.KEY_F2,):
+        item.start_editing()
+        return True
+
+    if not item or item.empty():
+        return False
+
+    if keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace) and not state & (
+        Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
+    ):
+        item.unlink()
+        return True
+
+    elif keyval in (Gdk.KEY_equal, Gdk.KEY_plus, Gdk.KEY_minus, Gdk.KEY_underscore):
+        pos = selection.get_selected()
+        swap_pos = pos + 1 if keyval in (Gdk.KEY_equal, Gdk.KEY_plus) else pos - 1
+        if not 0 <= swap_pos < selection.get_n_items():
+            return False
+
+        other = selection.get_item(swap_pos)
+        if not other or other.empty():
+            return False
+
+        if item.swap(item, other):
+            selection.set_selected(swap_pos)
+        return True
+
+    return False

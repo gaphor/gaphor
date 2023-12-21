@@ -367,6 +367,11 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                     <property name="title" translatable="yes">Static</property>
                   </object>
                 </child>
+                <child>
+                  <object class="GtkEventControllerKey">
+                    <signal name="key-pressed" handler="column-view-key-pressed" />
+                  </object>
+                </child>
               </object>
             </property>
           </object>

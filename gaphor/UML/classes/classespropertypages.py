@@ -26,6 +26,7 @@ from gaphor.UML.propertypages import (
     check_button_handlers,
     create_list_store,
     list_item_factory,
+    list_view_key_handler,
     text_field_handlers,
     update_list_store,
 )
@@ -271,6 +272,21 @@ class AttributeView(GObject.Object):
 
         self.attr.isStatic = value
 
+    editing = GObject.Property(type=bool, default=False)
+
+    def start_editing(self):
+        self.editing = True
+
+    def empty(self):
+        return not self.attr
+
+    def unlink(self):
+        if self.attr:
+            self.attr.unlink()
+
+    def swap(self, item1, item2):
+        return self.klass.ownedAttribute.swap(item1.attr, item2.attr)
+
 
 def attribute_model(klass: UML.Class) -> Gio.ListStore:
     return create_list_store(
@@ -311,6 +327,7 @@ class AttributesPage(PropertyPageBase):
             "attributes-info",
             "static-label",
             signals={
+                "column-view-key-pressed": (list_view_key_handler,),
                 "show-attributes-changed": (self.on_show_attributes_changed,),
                 "attributes-info-clicked": (self.on_attributes_info_clicked,),
             },
@@ -329,14 +346,14 @@ class AttributesPage(PropertyPageBase):
                 list_item_factory(
                     "text-field-cell.ui",
                     klass=AttributeView,
-                    attribute="attribute",
+                    attribute=AttributeView.attribute,
                     placeholder_text="New Attribute…",
                     signal_handlers=text_field_handlers("attribute"),
                 ),
                 list_item_factory(
                     "check-button-cell.ui",
                     klass=AttributeView,
-                    attribute="static",
+                    attribute=AttributeView.static,
                     signal_handlers=check_button_handlers("static"),
                 ),
             ],
