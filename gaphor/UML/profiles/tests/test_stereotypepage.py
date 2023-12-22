@@ -43,6 +43,6 @@ def test_stereotype_page_with_stereotype(element_factory, diagram, class_):
 
     stereotype_view = find(page, "stereotype-list")
 
-    assert isinstance(stereotype_view, Gtk.TreeView)
+    assert isinstance(stereotype_view, Gtk.ListView)
     assert len(stereotype_view.get_model()) == 1
     assert page is not None
