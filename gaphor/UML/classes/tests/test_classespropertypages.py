@@ -137,7 +137,6 @@ def test_operations_page_add_operation(diagram, element_factory):
     property_page = OperationsPage(item)
 
     property_page.construct()
-    iter = property_page.model.get_iter((0,))
-    property_page.model.update(iter, 0, "+ oper()")
+    property_page.model.get_item(0).operation = "+ oper()"
 
     assert item.subject.ownedOperation[0].name == "oper"

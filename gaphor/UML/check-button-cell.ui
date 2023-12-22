@@ -3,6 +3,7 @@
   <template class="GtkColumnViewCell">
     <property name="child">
       <object class="GtkCheckButton">
+        <property name="halign">center</property>
         <binding name="active">
           <lookup name="{attribute}" type="{gtype_name}">
             <lookup name="item">GtkColumnViewCell</lookup>

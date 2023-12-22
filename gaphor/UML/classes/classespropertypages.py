@@ -14,8 +14,6 @@ from gaphor.diagram.propertypages import (
     PropertyPages,
     help_link,
     new_resource_builder,
-    on_bool_cell_edited,
-    on_text_cell_edited,
     unsubscribe_all_on_destroy,
 )
 from gaphor.UML.classes.datatype import DataTypeItem
@@ -56,50 +54,6 @@ def on_keypress_event(ctrl, keyval, keycode, state, tree):
         model.swap(iter, model.iter_previous(iter))
         return True
     return False
-
-
-class ClassOperations(EditableTreeModel):
-    """GTK tree model to edit class operations."""
-
-    def __init__(self, item):
-        super().__init__(item, cols=(str, bool, bool, object))
-
-    def get_rows(self):
-        for operation in self._item.subject.ownedOperation:
-            yield [
-                format(operation, note=True),
-                operation.isAbstract,
-                operation.isStatic,
-                operation,
-            ]
-
-    def create_object(self):
-        operation = self._item.model.create(UML.Operation)
-        self._item.subject.ownedOperation = operation
-        return operation
-
-    @transactional
-    def set_object_value(self, row, col, value):
-        operation = row[-1]
-        if col == 0:
-            parse(operation, value)
-            row[0] = format(operation, note=True)
-        elif col == 1:
-            operation.isAbstract = not operation.isAbstract
-            row[1] = operation.isAbstract
-        elif col == 2:
-            operation.isStatic = not operation.isStatic
-            row[2] = operation.isStatic
-        elif col == 3:
-            row[0] = format(operation, note=True)
-            row[1] = operation.isAbstract
-            row[2] = operation.isStatic
-
-    def swap_objects(self, o1, o2):
-        return self._item.subject.ownedOperation.swap(o1, o2)
-
-    def sync_model(self, new_order):
-        self._item.subject.ownedOperation.order(new_order.index)
 
 
 class ClassEnumerationLiterals(EditableTreeModel):
@@ -325,9 +279,8 @@ class AttributesPage(PropertyPageBase):
         builder = new_builder(
             "attributes-editor",
             "attributes-info",
-            "static-label",
             signals={
-                "column-view-key-pressed": (list_view_key_handler,),
+                "attributes-key-pressed": (list_view_key_handler,),
                 "show-attributes-changed": (self.on_show_attributes_changed,),
                 "attributes-info-clicked": (self.on_attributes_info_clicked,),
             },
@@ -347,7 +300,7 @@ class AttributesPage(PropertyPageBase):
                     "text-field-cell.ui",
                     klass=AttributeView,
                     attribute=AttributeView.attribute,
-                    placeholder_text="New Attribute…",
+                    placeholder_text=gettext("New Attribute…"),
                     signal_handlers=text_field_handlers("attribute"),
                 ),
                 list_item_factory(
@@ -383,6 +336,85 @@ class AttributesPage(PropertyPageBase):
         self.info.set_visible(True)
 
 
+class OperationView(GObject.Object):
+    def __init__(self, oper: UML.Operation | None, klass: UML.Class):
+        super().__init__()
+        self.oper = oper
+        self.klass = klass
+
+    @GObject.Property(type=str, default="")
+    def operation(self):
+        return format(self.oper, note=True) if self.oper else ""
+
+    @operation.setter  # type: ignore[no-redef]
+    @transactional
+    def operation(self, value):
+        if not self.oper:
+            if not value:
+                return
+
+            model = self.klass.model
+            self.oper = model.create(UML.Operation)
+            self.klass.ownedOperation = self.oper
+        parse(self.oper, value)
+
+    @GObject.Property(type=bool, default=False)
+    def static(self):
+        return self.oper.isStatic if self.oper else False
+
+    @static.setter  # type: ignore[no-redef]
+    @transactional
+    def static(self, value):
+        if not self.oper:
+            return
+
+        self.oper.isStatic = value
+
+    @GObject.Property(type=bool, default=False)
+    def abstract(self):
+        return self.oper.isAbstract if self.oper else False
+
+    @abstract.setter  # type: ignore[no-redef]
+    @transactional
+    def abstract(self, value):
+        if not self.oper:
+            return
+
+        self.oper.isAbstract = value
+
+    editing = GObject.Property(type=bool, default=False)
+
+    def start_editing(self):
+        self.editing = True
+
+    def empty(self):
+        return not self.oper
+
+    def unlink(self):
+        if self.oper:
+            self.oper.unlink()
+
+    def swap(self, item1, item2):
+        return self.klass.ownedOperation.swap(item1.oper, item2.oper)
+
+
+def operation_model(klass: UML.Class) -> Gio.ListStore:
+    return create_list_store(
+        OperationView,
+        klass.ownedOperation,
+        lambda oper: OperationView(oper, klass),
+    )
+
+
+def update_operation_model(store: Gio.ListStore, klass: UML.Class) -> None:
+    update_list_store(
+        store,
+        lambda item: item.oper,
+        klass.ownedOperation,
+        lambda oper: OperationView(oper, klass),
+    )
+
+
 @PropertyPages.register(DataTypeItem)
 @PropertyPages.register(ClassItem)
 @PropertyPages.register(InterfaceItem)
@@ -400,19 +432,13 @@ class OperationsPage(PropertyPageBase):
         if not self.item.subject:
             return
 
-        self.model = ClassOperations(self.item)
-
         builder = new_builder(
             "operations-editor",
             "operations-info",
-            "static-label",
-            "abstract-label",
             signals={
-                "show-operations-changed": (self._on_show_operations_change,),
-                "operations-name-edited": (on_text_cell_edited, self.model, 0),
-                "operations-abstract-edited": (on_bool_cell_edited, self.model, 1),
-                "operations-static-edited": (on_bool_cell_edited, self.model, 2),
-                "operations-info-clicked": (self.on_operations_info_clicked),
+                "operations-key-pressed": (list_view_key_handler,),
+                "show-operations-changed": (self.on_show_operations_changed,),
+                "operations-info-clicked": (self.on_operations_info_clicked,),
             },
         )
 
@@ -422,42 +448,52 @@ class OperationsPage(PropertyPageBase):
         show_operations = builder.get_object("show-operations")
         show_operations.set_active(self.item.show_operations)
 
-        tree_view: Gtk.TreeView = builder.get_object("operations-list")
-        tree_view.set_model(self.model)
-        tree_view_column_tooltips(
-            tree_view, ["", gettext("Abstract"), gettext("Static")]
-        )
-        controller = Gtk.EventControllerKey.new()
-        tree_view.add_controller(controller)
-        controller.connect("key-pressed", on_keypress_event, tree_view)
+        column_view: Gtk.ColumnView = builder.get_object("operations-list")
 
-        def handler(event):
-            operation = event.element
-            for row in self.model:
-                if row[-1] is operation:
-                    row[:] = [
-                        format(operation, note=True),
-                        operation.isAbstract,
-                        operation.isStatic,
-                        operation,
-                    ]
+        for column, factory in zip(
+            column_view.get_columns(),
+            [
+                list_item_factory(
+                    "text-field-cell.ui",
+                    klass=OperationView,
+                    attribute=OperationView.operation,
+                    placeholder_text=gettext("New Operation…"),
+                    signal_handlers=text_field_handlers("operation"),
+                ),
+                list_item_factory(
+                    "check-button-cell.ui",
+                    klass=OperationView,
+                    attribute=OperationView.abstract,
+                    signal_handlers=check_button_handlers("abstract"),
+                ),
+                list_item_factory(
+                    "check-button-cell.ui",
+                    klass=OperationView,
+                    attribute=OperationView.static,
+                    signal_handlers=check_button_handlers("static"),
+                ),
+            ],
+        ):
+            column.set_factory(factory)
 
-        self.watcher.watch("ownedOperation.name", handler).watch(
-            "ownedOperation.isAbstract", handler
-        ).watch("ownedOperation.visibility", handler).watch(
-            "ownedOperation.ownedParameter.lowerValue", handler
-        ).watch("ownedOperation.ownedParameter.upperValue", handler).watch(
-            "ownedOperation.ownedParameter.typeValue", handler
-        ).watch("ownedOperation.ownedParameter.defaultValue", handler)
+        self.model = operation_model(self.item.subject)
+        selection = Gtk.SingleSelection.new(self.model)
+        column_view.set_model(selection)
+
+        if self.watcher:
+            self.watcher.watch("ownedOperation", self.on_operations_changed)
 
         return unsubscribe_all_on_destroy(
             builder.get_object("operations-editor"), self.watcher
         )
 
     @transactional
-    def _on_show_operations_change(self, button, gparam):
+    def on_show_operations_changed(self, button, gparam):
         self.item.show_operations = button.get_active()
         self.item.request_update()
+
+    def on_operations_changed(self, event):
+        update_operation_model(self.model, self.item.subject)
 
     def on_operations_info_clicked(self, image, event):
         self.info.set_visible(True)
