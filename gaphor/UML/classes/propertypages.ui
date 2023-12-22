@@ -358,7 +358,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                 </style>
                 <child>
                   <object class="GtkColumnViewColumn">
-                    <property name="title" translatable="yes">Attribute</property>
+                    <property name="title" translatable="yes">Attributes</property>
                     <property name="expand">1</property>
                   </object>
                 </child>
@@ -559,7 +559,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                 </style>
                 <child>
                   <object class="GtkColumnViewColumn">
-                    <property name="title" translatable="yes">Operation</property>
+                    <property name="title" translatable="yes">Operations</property>
                     <property name="expand">1</property>
                   </object>
                 </child>
@@ -667,7 +667,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                 </style>
                 <child>
                   <object class="GtkColumnViewColumn">
-                    <property name="title" translatable="yes">Enumeration Literal</property>
+                    <property name="title" translatable="yes">Enumeration Literals</property>
                     <property name="expand">1</property>
                   </object>
                 </child>
