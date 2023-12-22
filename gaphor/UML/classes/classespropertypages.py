@@ -2,13 +2,12 @@ from __future__ import annotations
 
 import logging
 
-from gi.repository import Gdk, Gio, GObject, Gtk
+from gi.repository import Gio, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import gettext, transactional
 from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
-    EditableTreeModel,
     NamePropertyPage,
     PropertyPageBase,
     PropertyPages,
@@ -33,75 +32,6 @@ log = logging.getLogger(__name__)
 
 
 new_builder = new_resource_builder("gaphor.UML.classes")
-
-
-@transactional
-def on_keypress_event(ctrl, keyval, keycode, state, tree):
-    k = Gdk.keyval_name(keyval).lower()
-    if state & Gdk.ModifierType.CONTROL_MASK:
-        return False
-
-    if k in ("backspace", "delete"):
-        model, iter = tree.get_selection().get_selected()
-        if iter:
-            model.remove(iter)
-    elif k in ("equal", "plus"):
-        model, iter = tree.get_selection().get_selected()
-        model.swap(iter, model.iter_next(iter))
-        return True
-    elif k in ("minus", "underscore"):
-        model, iter = tree.get_selection().get_selected()
-        model.swap(iter, model.iter_previous(iter))
-        return True
-    return False
-
-
-class ClassEnumerationLiterals(EditableTreeModel):
-    """GTK tree model to edit enumeration literals."""
-
-    def __init__(self, item):
-        super().__init__(item, cols=(str, object))
-
-    def get_rows(self):
-        for literal in self._item.subject.ownedLiteral:
-            yield [format(literal), literal]
-
-    def create_object(self):
-        literal = self._item.model.create(UML.EnumerationLiteral)
-        self._item.subject.ownedLiteral = literal
-        literal.enumeration = self._item.subject
-        return literal
-
-    @transactional
-    def set_object_value(self, row, col, value):
-        literal = row[-1]
-        if col == 0:
-            parse(literal, value)
-            row[0] = format(literal)
-        elif col == 1:
-            # Value in attribute object changed:
-            row[0] = format(literal)
-
-    def swap_objects(self, o1, o2):
-        return self._item.subject.ownedLiteral.swap(o1, o2)
-
-    def sync_model(self, new_order):
-        self._item.subject.ownedLiteral.order(new_order.index)
-
-
-def tree_view_column_tooltips(tree_view, tooltips):
-    assert tree_view.get_n_columns() == len(tooltips)
-
-    def on_query_tooltip(widget, x, y, keyboard_mode, tooltip):
-        if path_and_more := widget.get_path_at_pos(x, y):
-            path, column, cx, cy = path_and_more
-            n = widget.get_columns().index(column)
-            if tooltips[n]:
-                tooltip.set_text(tooltips[n])
-                return True
-        return False
-
-    tree_view.connect("query-tooltip", on_query_tooltip)
 
 
 @PropertyPages.register(UML.NamedElement)

@@ -1,25 +1,84 @@
-from gi.repository import Gtk
+from gi.repository import Gio, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core.format import format
+from gaphor.core import gettext, transactional
+from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
     PropertyPageBase,
     PropertyPages,
     help_link,
-    on_text_cell_edited,
     unsubscribe_all_on_destroy,
 )
-from gaphor.transaction import transactional
 from gaphor.UML.classes.classespropertypages import (
     AttributesPage,
-    ClassEnumerationLiterals,
     OperationsPage,
     new_resource_builder,
-    on_keypress_event,
 )
 from gaphor.UML.classes.enumeration import EnumerationItem
+from gaphor.UML.propertypages import (
+    create_list_store,
+    list_item_factory,
+    list_view_key_handler,
+    text_field_handlers,
+    update_list_store,
+)
 
 new_builder = new_resource_builder("gaphor.UML.classes")
+
+
+class EnumerationView(GObject.Object):
+    def __init__(self, literal: UML.EnumerationLiteral | None, enum: UML.Enumeration):
+        super().__init__()
+        self.literal = literal
+        self.enum = enum
+
+    @GObject.Property(type=str, default="")
+    def enumeration(self):
+        return format(self.literal, note=True) if self.literal else ""
+
+    @enumeration.setter  # type: ignore[no-redef]
+    @transactional
+    def enumeration(self, value):
+        if not self.literal:
+            if not value:
+                return
+
+            model = self.enum.model
+            self.literal = model.create(UML.EnumerationLiteral)
+            self.enum.ownedLiteral = self.literal
+        parse(self.literal, value)
+
+    editing = GObject.Property(type=bool, default=False)
+
+    def start_editing(self):
+        self.editing = True
+
+    def empty(self):
+        return not self.literal
+
+    def unlink(self):
+        if self.literal:
+            self.literal.unlink()
+
+    def swap(self, item1, item2):
+        return self.enum.ownedLiteral.swap(item1.literal, item2.literal)
+
+
+def enumeration_model(enum: UML.Enumeration) -> Gio.ListStore:
+    return create_list_store(
+        EnumerationView,
+        enum.ownedLiteral,
+        lambda literal: EnumerationView(literal, enum),
+    )
+
+
+def update_enumeration_model(store: Gio.ListStore, enum: UML.Enumeration) -> None:
+    update_list_store(
+        store,
+        lambda item: item.literal,
+        enum.ownedLiteral,
+        lambda literal: EnumerationView(literal, enum),
+    )
 
 
 @PropertyPages.register(EnumerationItem)
@@ -37,15 +96,13 @@ class EnumerationPage(PropertyPageBase):
         if not isinstance(self.item.subject, UML.Enumeration):
             return
 
-        self.model = ClassEnumerationLiterals(self.item)
-
         builder = new_builder(
             "enumerations-editor",
             "enumerations-info",
             signals={
-                "show-enumerations-changed": (self._on_show_enumerations_change,),
-                "enumerations-name-edited": (on_text_cell_edited, self.model, 0),
-                "enumerations-info-clicked": (self.on_enumerations_info_clicked),
+                "enumerations-key-pressed": (list_view_key_handler,),
+                "show-enumerations-changed": (self.on_show_enumerations_changed,),
+                "enumerations-info-clicked": (self.on_enumerations_info_clicked,),
             },
         )
 
@@ -55,30 +112,40 @@ class EnumerationPage(PropertyPageBase):
         show_enumerations = builder.get_object("show-enumerations")
         show_enumerations.set_active(self.item.show_enumerations)
 
-        tree_view: Gtk.TreeView = builder.get_object("enumerations-list")
-        tree_view.set_model(self.model)
+        column_view: Gtk.ColumnView = builder.get_object("enumerations-list")
 
-        controller = Gtk.EventControllerKey.new()
-        tree_view.add_controller(controller)
+        for column, factory in zip(
+            column_view.get_columns(),
+            [
+                list_item_factory(
+                    "text-field-cell.ui",
+                    klass=EnumerationView,
+                    attribute=EnumerationView.enumeration,
+                    placeholder_text=gettext("New Enumeration…"),
+                    signal_handlers=text_field_handlers("enumeration"),
+                ),
+            ],
+        ):
+            column.set_factory(factory)
 
-        controller.connect("key-pressed", on_keypress_event, tree_view)
+        self.model = enumeration_model(self.item.subject)
+        selection = Gtk.SingleSelection.new(self.model)
+        column_view.set_model(selection)
 
-        def handler(event):
-            enumeration = event.element
-            for row in self.model:
-                if row[-1] is enumeration:
-                    row[:] = [format(enumeration), enumeration]
-
-        self.watcher.watch("ownedLiteral.name", handler)
+        if self.watcher:
+            self.watcher.watch("ownedLiteral", self.on_enumerations_changed)
 
         return unsubscribe_all_on_destroy(
             builder.get_object("enumerations-editor"), self.watcher
         )
 
     @transactional
-    def _on_show_enumerations_change(self, button, gparam):
+    def on_show_enumerations_changed(self, button, gparam):
         self.item.show_enumerations = button.get_active()
         self.item.request_update()
+
+    def on_enumerations_changed(self, event):
+        update_enumeration_model(self.model, self.item.subject)
 
     def on_enumerations_info_clicked(self, image, event):
         self.info.set_visible(True)

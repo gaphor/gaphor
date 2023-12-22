@@ -659,31 +659,21 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         <child>
           <object class="GtkFrame">
             <property name="child">
-              <object class="GtkTreeView" id="enumerations-list">
+              <object class="GtkColumnView" id="enumerations-list">
                 <property name="height-request">112</property>
                 <property name="focusable">1</property>
-                <property name="headers-clickable">0</property>
-                <property name="enable-search">0</property>
-                <property name="show-expanders">0</property>
-                <property name="enable-grid-lines">horizontal</property>
-                <child internal-child="selection">
-                  <object class="GtkTreeSelection"/>
+                <style>
+                  <class name="data-table"/>
+                </style>
+                <child>
+                  <object class="GtkColumnViewColumn">
+                    <property name="title" translatable="yes">Enumeration Literal</property>
+                    <property name="expand">1</property>
+                  </object>
                 </child>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="title" translatable="yes">Enumeration Literals</property>
-                    <child>
-                      <object class="GtkCellRendererText">
-                        <property name="xpad">2</property>
-                        <property name="ypad">2</property>
-                        <property name="xalign">0</property>
-                        <property name="editable">1</property>
-                        <signal name="edited" handler="enumerations-name-edited" swapped="no"/>
-                      </object>
-                      <attributes>
-                        <attribute name="text">0</attribute>
-                      </attributes>
-                    </child>
+                  <object class="GtkEventControllerKey">
+                    <signal name="key-pressed" handler="enumerations-key-pressed" />
                   </object>
                 </child>
               </object>
