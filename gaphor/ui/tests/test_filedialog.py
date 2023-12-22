@@ -7,6 +7,11 @@ from gi.repository import Gio, Gtk
 from gaphor.ui.filedialog import pretty_path, save_file_dialog
 
 
+class TaskMock:
+    def had_error(self):
+        return False
+
+
 class FileDialogMock(Gtk.FileDialog):
     def __init__(self):
         super().__init__()
@@ -14,7 +19,7 @@ class FileDialogMock(Gtk.FileDialog):
 
     def save(self, parent, cancellable, callback):
         self.save_callback = callback
-        callback(self, "mock result")
+        callback(self, TaskMock())
 
     def save_finish(self, result):
         return self._save_response

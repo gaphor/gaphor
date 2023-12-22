@@ -58,6 +58,10 @@ def open_file_dialog(
         dialog.set_filters(new_filters(filters, image_filter))
 
     def response(dialog, result):
+        if result.had_error():
+            # File dialog was cancelled
+            return
+
         files = dialog.open_multiple_finish(result)
         handler([Path(f.get_path()) for f in files])
 
@@ -82,6 +86,10 @@ def save_file_dialog(
         dialog.set_filters(new_filters(filters))
 
     def response(dialog, result):
+        if result.had_error():
+            # File dialog was cancelled
+            return
+
         filename = Path(dialog.save_finish(result).get_path())
         if extension and filename.suffix != extension:
             filename = filename.with_suffix(extension)
