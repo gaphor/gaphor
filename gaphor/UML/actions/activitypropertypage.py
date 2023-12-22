@@ -1,62 +1,89 @@
-from gi.repository import Gtk
+from __future__ import annotations
+
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import transactional
+from gaphor.core import event_handler, transactional
 from gaphor.core.format import format, parse
+from gaphor.core.modeling import AssociationUpdated
 from gaphor.diagram.propertypages import (
-    EditableTreeModel,
     PropertyPageBase,
     PropertyPages,
     handler_blocking,
     help_link,
     new_resource_builder,
-    on_text_cell_edited,
     unsubscribe_all_on_destroy,
 )
 from gaphor.diagram.propertypages import (
     new_builder as diagram_new_builder,
 )
+from gaphor.i18n import translated_ui_string
 from gaphor.UML.actions.activity import ActivityItem
-from gaphor.UML.classes.classespropertypages import on_keypress_event
 
 new_builder = new_resource_builder("gaphor.UML.actions")
 
 
-class ActivityParameters(EditableTreeModel):
-    """GTK tree model to edit class attributes."""
+class ActivityParameterNodeView(GObject.Object):
+    __gtype_name__ = "ActivityParameterNodeView"
 
-    def __init__(self, item):
-        super().__init__(item, cols=(str, object))
+    def __init__(self, node: UML.ActivityParameterNode | None, activity: UML.Activity):
+        super().__init__()
+        self.node = node
+        self.activity = activity
 
-    def get_rows(self):
-        for node in self._item.subject.node:
-            if isinstance(node, UML.ActivityParameterNode):
-                yield [format(node.parameter), node]
+    editing = GObject.Property(type=bool, default=False)
 
-    def create_object(self):
-        model = self._item.model
-        node = model.create(UML.ActivityParameterNode)
-        node.parameter = model.create(UML.Parameter)
-        self._item.subject.node = node
-        return node
+    @GObject.Property(type=str)
+    def parameter(self) -> str:
+        return format(self.node.parameter) if self.node else ""
 
+    @parameter.setter  # type: ignore[no-redef]
     @transactional
-    def set_object_value(self, row, col, value):
-        node = row[-1]
-        if col == 0:
-            parse(node.parameter, value)
-            row[0] = format(node.parameter)
-        elif col == 1:
-            # Value in attribute object changed:
-            row[0] = format(node.parameter)
+    def parameter(self, value):
+        if not self.node:
+            if not value:
+                return
 
-    def swap_objects(self, o1, o2):
-        return self._item.subject.node.swap(o1, o2)
+            model = self.activity.model
+            node = model.create(UML.ActivityParameterNode)
+            node.parameter = model.create(UML.Parameter)
+            self.node = node
+            self.activity.node = node
+        parse(self.node.parameter, value)
 
-    def sync_model(self, new_order):
-        self._item.subject.node.order(
-            lambda key: new_order.index(key) if key in new_order else -1
-        )
+    def start_editing(self):
+        self.editing = True
+
+
+def activity_parameter_node_model(activity: UML.Activity) -> Gio.ListModel:
+    store = Gio.ListStore.new(ActivityParameterNodeView)
+
+    for node in activity.node:
+        if isinstance(node, UML.ActivityParameterNode) and node.parameter:
+            store.append(ActivityParameterNodeView(node, activity))
+    store.append(ActivityParameterNodeView(None, activity))
+
+    return store
+
+
+def update_activity_parameter_node_model(
+    store: Gio.ListStore, activity: UML.Activity
+) -> None:
+    n = 0
+    for node in activity.node:
+        if node is not store.get_item(n).node:
+            store.remove(n)
+            store.insert(n, ActivityParameterNodeView(node, activity))
+        n += 1
+
+    while store.get_n_items() > n:
+        store.remove(store.get_n_items() - 1)
+
+    if (
+        not store.get_n_items()
+        or store.get_item(store.get_n_items() - 1).node is not None
+    ):
+        store.append(ActivityParameterNodeView(None, activity))
 
 
 @PropertyPages.register(ActivityItem)
@@ -73,13 +100,10 @@ class ActivityItemPage(PropertyPageBase):
         if not subject:
             return
 
-        self.model = ActivityParameters(self.item)
-
         builder = new_builder(
             "activity-editor",
             "parameters-info",
             signals={
-                "parameter-edited": (on_text_cell_edited, self.model, 0),
                 "parameters-info-clicked": (self.on_parameters_info_clicked),
             },
         )
@@ -87,18 +111,92 @@ class ActivityItemPage(PropertyPageBase):
         self.info = builder.get_object("parameters-info")
         help_link(builder, "parameters-info-icon", "parameters-info")
 
-        tree_view: Gtk.TreeView = builder.get_object("parameter-list")
-        tree_view.set_model(self.model)
-        controller = Gtk.EventControllerKey.new()
-        tree_view.add_controller(controller)
-        controller.connect("key-pressed", on_keypress_event, tree_view)
+        list_view: Gtk.ListView = builder.get_object("parameter-list")
+
+        self.model = activity_parameter_node_model(subject)
+        selection = Gtk.SingleSelection.new(self.model)
+        list_view.set_model(selection)
+        list_view.add_controller(keyboard_shortcuts(selection))
+
+        list_view.set_factory(list_item_factory())
+
+        if self.watcher:
+            self.watcher.watch("node", self.on_nodes_changed)
 
         return unsubscribe_all_on_destroy(
             builder.get_object("activity-editor"), self.watcher
         )
 
+    @event_handler(AssociationUpdated)
+    def on_nodes_changed(self, event):
+        update_activity_parameter_node_model(self.model, self.item.subject)
+
     def on_parameters_info_clicked(self, image, event):
         self.info.set_visible(True)
+
+
+def list_item_factory():
+    def on_double_click(ctrl, n_press, x, y):
+        if n_press == 2:
+            text = ctrl.get_widget()
+            text.start_editing()
+
+    def end_editing(list_item, should_commit):
+        text = list_item.get_child()
+        if should_commit:
+            list_item.get_item().parameter = text.editable_text
+
+    ui_string = translated_ui_string("gaphor.UML.actions", "parameter.ui")
+    ui_bytes = GLib.Bytes.new(ui_string.encode("utf-8"))
+
+    return Gtk.BuilderListItemFactory.new_from_bytes(
+        Gtk.Builder.BuilderScope(
+            {
+                "on_double_click": on_double_click,
+                "end_editing": end_editing,
+            }
+        ),
+        ui_bytes,
+    )
+
+
+def keyboard_shortcuts(selection):
+    ctrl = Gtk.EventControllerKey.new()
+    ctrl.connect("key-pressed", list_view_handler, selection)
+    return ctrl
+
+
+@transactional
+def list_view_handler(_list_view, keyval, _keycode, state, selection):
+    item = selection.get_selected_item()
+
+    if keyval in (Gdk.KEY_F2,):
+        item.start_editing()
+        return True
+
+    if not (item and item.node):
+        return False
+
+    if keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace) and not state & (
+        Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
+    ):
+        item.node.unlink()
+        return True
+
+    elif keyval in (Gdk.KEY_equal, Gdk.KEY_plus, Gdk.KEY_minus, Gdk.KEY_underscore):
+        pos = selection.get_selected()
+        swap_pos = pos + 1 if keyval in (Gdk.KEY_equal, Gdk.KEY_plus) else pos - 1
+        if not 0 <= swap_pos < selection.get_n_items():
+            return False
+
+        other = selection.get_item(swap_pos)
+        if not (other and other.node):
+            return False
+
+        if item.activity.node.swap(item.node, other.node):
+            selection.set_selected(swap_pos)
+        return True
+    return False
 
 
 @PropertyPages.register(UML.ActivityParameterNode)
