@@ -23,7 +23,7 @@ class Settings:
         schema_source = Gio.SettingsSchemaSource.get_default()
         self._gio_settings = (
             Gio.Settings.new(APPLICATION_ID)
-            if schema_source.lookup(APPLICATION_ID, False)
+            if schema_source and schema_source.lookup(APPLICATION_ID, False)
             else None
         )
         if not self._gio_settings:
