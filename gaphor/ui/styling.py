@@ -1,4 +1,5 @@
 import importlib
+import sys
 
 from gi.repository import Gdk, Gtk
 
@@ -21,6 +22,9 @@ def init_styling():
     style_provider = Gtk.CssProvider()
     css_file = importlib.resources.files("gaphor.ui") / "styling.css"
     style_provider.load_from_path(str(css_file))
+    if sys.platform == "darwin":
+        macos_css_file = importlib.resources.files("gaphor.ui") / "styling-macos.css"
+        style_provider.load_from_path(str(macos_css_file))
 
     Gtk.StyleContext.add_provider_for_display(
         Gdk.Display.get_default(),
