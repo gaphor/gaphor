@@ -1,0 +1,21 @@
+/*
+ * Styling workarounds on macOS.
+ *
+ * The issue: shadows defined by libadwaita are very wide: up to 60px.
+ * The shadow is drawn inside the (clickable) window.
+ *
+ * These styles change the (window) background to be a lot more compact.
+ * This results in a smaller shadow around the window, and as such a
+ * smaller click surface for the whole window, making it feel less awkward
+ * when you click just outside the window.
+ *
+ * See: https://gitlab.gnome.org/GNOME/gtk/-/issues/6255
+ */
+ .csd {
+    box-shadow: 2px 3px 12px 6px alpha(black, .2),
+                0px 0px 0px 1px alpha(black, .1);
+}
+.csd:backdrop {
+    box-shadow: 2px 3px 12px 6px alpha(black, .1),
+                0px 0px 0px 1px alpha(black, .1);
+}
