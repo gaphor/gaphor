@@ -307,6 +307,11 @@
               <object class="GtkListView" id="parameter-list">
                 <property name="height-request">112</property>
                 <property name="focusable">1</property>
+                <child>
+                  <object class="GtkEventControllerKey">
+                    <signal name="key-pressed" handler="list-view-key-pressed" />
+                  </object>
+                </child>
               </object>
             </property>
           </object>

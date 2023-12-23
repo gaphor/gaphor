@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from gi.repository import Gdk, Gio, GLib, GObject, Gtk
+from gi.repository import Gio, GLib, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import event_handler, transactional
@@ -19,6 +19,11 @@ from gaphor.diagram.propertypages import (
 )
 from gaphor.i18n import translated_ui_string
 from gaphor.UML.actions.activity import ActivityItem
+from gaphor.UML.propertypages import (
+    create_list_store,
+    list_view_key_handler,
+    update_list_store,
+)
 
 new_builder = new_resource_builder("gaphor.UML.actions")
 
@@ -54,36 +59,42 @@ class ActivityParameterNodeView(GObject.Object):
     def start_editing(self):
         self.editing = True
 
+    def empty(self):
+        return not self.node
+
+    def unlink(self):
+        if self.node:
+            self.node.unlink()
+
+    def swap(self, item1, item2):
+        return self.activity.node.swap(item1.node, item2.node)
+
 
 def activity_parameter_node_model(activity: UML.Activity) -> Gio.ListModel:
-    store = Gio.ListStore.new(ActivityParameterNodeView)
-
-    for node in activity.node:
-        if isinstance(node, UML.ActivityParameterNode) and node.parameter:
-            store.append(ActivityParameterNodeView(node, activity))
-    store.append(ActivityParameterNodeView(None, activity))
-
-    return store
+    return create_list_store(
+        ActivityParameterNodeView,
+        (
+            node
+            for node in activity.node
+            if isinstance(node, UML.ActivityParameterNode) and node.parameter
+        ),
+        lambda node: ActivityParameterNodeView(node, activity),
+    )
 
 
 def update_activity_parameter_node_model(
     store: Gio.ListStore, activity: UML.Activity
-) -> None:
-    n = 0
-    for node in activity.node:
-        if node is not store.get_item(n).node:
-            store.remove(n)
-            store.insert(n, ActivityParameterNodeView(node, activity))
-        n += 1
-
-    while store.get_n_items() > n:
-        store.remove(store.get_n_items() - 1)
-
-    if (
-        not store.get_n_items()
-        or store.get_item(store.get_n_items() - 1).node is not None
-    ):
-        store.append(ActivityParameterNodeView(None, activity))
+) -> Gio.ListStore:
+    return update_list_store(
+        store,
+        lambda item: item.node,
+        (
+            node
+            for node in activity.node
+            if isinstance(node, UML.ActivityParameterNode) and node.parameter
+        ),
+        lambda node: ActivityParameterNodeView(node, activity),
+    )
 
 
 @PropertyPages.register(ActivityItem)
@@ -104,7 +115,8 @@ class ActivityItemPage(PropertyPageBase):
             "activity-editor",
             "parameters-info",
             signals={
-                "parameters-info-clicked": (self.on_parameters_info_clicked),
+                "list-view-key-pressed": (list_view_key_handler,),
+                "parameters-info-clicked": (self.on_parameters_info_clicked,),
             },
         )
 
@@ -116,7 +128,6 @@ class ActivityItemPage(PropertyPageBase):
         self.model = activity_parameter_node_model(subject)
         selection = Gtk.SingleSelection.new(self.model)
         list_view.set_model(selection)
-        list_view.add_controller(keyboard_shortcuts(selection))
 
         list_view.set_factory(list_item_factory())
 
@@ -158,45 +169,6 @@ def list_item_factory():
         ),
         ui_bytes,
     )
-
-
-def keyboard_shortcuts(selection):
-    ctrl = Gtk.EventControllerKey.new()
-    ctrl.connect("key-pressed", list_view_handler, selection)
-    return ctrl
-
-
-@transactional
-def list_view_handler(_list_view, keyval, _keycode, state, selection):
-    item = selection.get_selected_item()
-
-    if keyval in (Gdk.KEY_F2,):
-        item.start_editing()
-        return True
-
-    if not (item and item.node):
-        return False
-
-    if keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace) and not state & (
-        Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
-    ):
-        item.node.unlink()
-        return True
-
-    elif keyval in (Gdk.KEY_equal, Gdk.KEY_plus, Gdk.KEY_minus, Gdk.KEY_underscore):
-        pos = selection.get_selected()
-        swap_pos = pos + 1 if keyval in (Gdk.KEY_equal, Gdk.KEY_plus) else pos - 1
-        if not 0 <= swap_pos < selection.get_n_items():
-            return False
-
-        other = selection.get_item(swap_pos)
-        if not (other and other.node):
-            return False
-
-        if item.activity.node.swap(item.node, other.node):
-            selection.set_selected(swap_pos)
-        return True
-    return False
 
 
 @PropertyPages.register(UML.ActivityParameterNode)

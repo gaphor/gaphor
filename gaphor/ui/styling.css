@@ -107,6 +107,15 @@ listview .row {
   padding: 2px 0;
 }
 
+/* Needed only for tables with check boxes */
+.data-table cell checkbutton {
+  padding: 0px;
+}
+
+.data-table textfield {
+  padding: 3px 6px;
+}
+
 textfield text {
   background-color: @theme_bg_color;
   color: @theme_fg_color;

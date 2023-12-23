@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtkColumnViewCell">
+    <property name="child">
+      <object class="GtkCheckButton">
+        <property name="halign">center</property>
+        <binding name="active">
+          <lookup name="{attribute}" type="{gtype_name}">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+        <signal name="toggled" handler="on_toggled" object="GtkColumnViewCell" swapped="no"/>
+      </object>
+    </property>
+  </template>
+</interface>

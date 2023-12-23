@@ -4,12 +4,12 @@ from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.classes.classespropertypages import (
     AttributesPage,
-    ClassAttributes,
     ClassifierPropertyPage,
     Folded,
     InterfacePropertyPage,
     NamedElementPropertyPage,
     OperationsPage,
+    attribute_model,
 )
 
 
@@ -90,35 +90,31 @@ def test_attributes_page_add_attribute(diagram, element_factory):
     property_page = AttributesPage(item)
 
     property_page.construct()
-    iter = property_page.model.get_iter((0,))
-    property_page.model.update(iter, 0, "+ attr: str")
+    property_page.model.get_item(0).attribute = "+ attr: str"
 
     assert item.subject.attribute[0].name == "attr"
     assert item.subject.attribute[0].typeValue == "str"
 
 
-def test_attribute_reorder_after_dnd(diagram, element_factory):
-    item = diagram.create(
+def test_attribute_create_model(diagram, element_factory):
+    class_item = diagram.create(
         UML.classes.ClassItem, subject=element_factory.create(UML.Class)
     )
     attr1 = element_factory.create(UML.Property)
     attr1.name = "attr1"
-    item.subject.ownedAttribute = attr1
+    class_item.subject.ownedAttribute = attr1
     attr2 = element_factory.create(UML.Property)
     attr2.name = "attr2"
-    item.subject.ownedAttribute = attr2
+    class_item.subject.ownedAttribute = attr2
     attr3 = element_factory.create(UML.Property)
     attr3.name = "attr3"
-    item.subject.ownedAttribute = attr3
+    class_item.subject.ownedAttribute = attr3
 
-    list_store = ClassAttributes(item)
+    list_store = attribute_model(class_item.subject)
 
-    new_order = [attr3, attr1, attr2]
-    list_store.sync_model(new_order)
-
-    assert item.subject.ownedAttribute[0] is attr3
-    assert item.subject.ownedAttribute[1] is attr1
-    assert item.subject.ownedAttribute[2] is attr2
+    assert list_store[0].attr is attr1
+    assert list_store[1].attr is attr2
+    assert list_store[2].attr is attr3
 
 
 def test_operations_page(diagram, element_factory):
@@ -141,7 +137,6 @@ def test_operations_page_add_operation(diagram, element_factory):
     property_page = OperationsPage(item)
 
     property_page.construct()
-    iter = property_page.model.get_iter((0,))
-    property_page.model.update(iter, 0, "+ oper()")
+    property_page.model.get_item(0).operation = "+ oper()"
 
     assert item.subject.ownedOperation[0].name == "oper"

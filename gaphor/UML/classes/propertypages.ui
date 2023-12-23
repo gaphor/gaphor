@@ -350,46 +350,26 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         <child>
           <object class="GtkFrame">
             <property name="child">
-              <object class="GtkTreeView" id="attributes-list">
+              <object class="GtkColumnView" id="attributes-list">
                 <property name="height-request">112</property>
                 <property name="focusable">1</property>
-                <property name="headers-clickable">0</property>
-                <property name="enable-search">0</property>
-                <property name="show-expanders">0</property>
-                <property name="enable-grid-lines">horizontal</property>
-                <child internal-child="selection">
-                  <object class="GtkTreeSelection"/>
-                </child>
+                <style>
+                  <class name="data-table"/>
+                </style>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="resizable">1</property>
+                  <object class="GtkColumnViewColumn">
                     <property name="title" translatable="yes">Attributes</property>
                     <property name="expand">1</property>
-                    <child>
-                      <object class="GtkCellRendererText">
-                        <property name="xpad">2</property>
-                        <property name="ypad">2</property>
-                        <property name="xalign">0</property>
-                        <property name="editable">1</property>
-                        <signal name="edited" handler="attributes-name-edited" swapped="no"/>
-                      </object>
-                      <attributes>
-                        <attribute name="text">0</attribute>
-                      </attributes>
-                    </child>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="widget">static-label</property>
-                    <child>
-                      <object class="GtkCellRendererToggle">
-                        <signal name="toggled" handler="attributes-static-edited" swapped="no"/>
-                      </object>
-                      <attributes>
-                        <attribute name="active">1</attribute>
-                      </attributes>
-                    </child>
+                  <object class="GtkColumnViewColumn">
+                    <property name="title" translatable="yes">Static</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEventControllerKey">
+                    <signal name="key-pressed" handler="attributes-key-pressed" />
                   </object>
                 </child>
               </object>
@@ -571,59 +551,31 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         <child>
           <object class="GtkFrame">
             <property name="child">
-              <object class="GtkTreeView" id="operations-list">
+              <object class="GtkColumnView" id="operations-list">
                 <property name="height-request">112</property>
                 <property name="focusable">1</property>
-                <property name="headers-clickable">0</property>
-                <property name="enable-search">0</property>
-                <property name="show-expanders">0</property>
-                <property name="enable-grid-lines">horizontal</property>
-                <child internal-child="selection">
-                  <object class="GtkTreeSelection"/>
-                </child>
+                <style>
+                  <class name="data-table"/>
+                </style>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="resizable">1</property>
+                  <object class="GtkColumnViewColumn">
                     <property name="title" translatable="yes">Operations</property>
                     <property name="expand">1</property>
-                    <child>
-                      <object class="GtkCellRendererText">
-                        <property name="xpad">2</property>
-                        <property name="ypad">2</property>
-                        <property name="xalign">0</property>
-                        <property name="editable">1</property>
-                        <signal name="edited" handler="operations-name-edited" swapped="no"/>
-                      </object>
-                      <attributes>
-                        <attribute name="text">0</attribute>
-                      </attributes>
-                    </child>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="widget">abstract-label</property>
-                    <child>
-                      <object class="GtkCellRendererToggle">
-                        <signal name="toggled" handler="operations-abstract-edited" swapped="no"/>
-                      </object>
-                      <attributes>
-                        <attribute name="active">1</attribute>
-                      </attributes>
-                    </child>
+                  <object class="GtkColumnViewColumn">
+                    <property name="title" translatable="yes">Abstract</property>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="widget">static-label</property>
-                    <child>
-                      <object class="GtkCellRendererToggle">
-                        <signal name="toggled" handler="operations-static-edited" swapped="no"/>
-                      </object>
-                      <attributes>
-                        <attribute name="active">2</attribute>
-                      </attributes>
-                    </child>
+                  <object class="GtkColumnViewColumn">
+                    <property name="title" translatable="yes">Static</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkEventControllerKey">
+                    <signal name="key-pressed" handler="operations-key-pressed" />
                   </object>
                 </child>
               </object>
@@ -707,31 +659,21 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         <child>
           <object class="GtkFrame">
             <property name="child">
-              <object class="GtkTreeView" id="enumerations-list">
+              <object class="GtkColumnView" id="enumerations-list">
                 <property name="height-request">112</property>
                 <property name="focusable">1</property>
-                <property name="headers-clickable">0</property>
-                <property name="enable-search">0</property>
-                <property name="show-expanders">0</property>
-                <property name="enable-grid-lines">horizontal</property>
-                <child internal-child="selection">
-                  <object class="GtkTreeSelection"/>
+                <style>
+                  <class name="data-table"/>
+                </style>
+                <child>
+                  <object class="GtkColumnViewColumn">
+                    <property name="title" translatable="yes">Enumeration Literals</property>
+                    <property name="expand">1</property>
+                  </object>
                 </child>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="title" translatable="yes">Enumeration Literals</property>
-                    <child>
-                      <object class="GtkCellRendererText">
-                        <property name="xpad">2</property>
-                        <property name="ypad">2</property>
-                        <property name="xalign">0</property>
-                        <property name="editable">1</property>
-                        <signal name="edited" handler="enumerations-name-edited" swapped="no"/>
-                      </object>
-                      <attributes>
-                        <attribute name="text">0</attribute>
-                      </attributes>
-                    </child>
+                  <object class="GtkEventControllerKey">
+                    <signal name="key-pressed" handler="enumerations-key-pressed" />
                   </object>
                 </child>
               </object>
@@ -800,13 +742,5 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
     <style>
       <class name="propertypage"/>
     </style>
-  </object>
-  <object class="GtkLabel" id="abstract-label">
-    <property name="label" translatable="yes">A.</property>
-    <property name="tooltip-text" translatable="yes">Abstract</property>
-  </object>
-  <object class="GtkLabel" id="static-label">
-    <property name="label" translatable="yes">S.</property>
-    <property name="tooltip-text" translatable="yes">Static</property>
   </object>
 </interface>
