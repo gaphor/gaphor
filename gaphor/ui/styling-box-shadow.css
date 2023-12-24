@@ -1,7 +1,7 @@
 /*
- * Styling workarounds on macOS.
+ * Styling workarounds on macOS and Windows.
  *
- * The issue: shadows defined by libadwaita are very wide: up to 60px.
+ * The issue: shadows defined by LibAdwaita are very wide: up to 60px.
  * The shadow is drawn inside the (clickable) window.
  *
  * These styles change the (window) background to be a lot more compact.
@@ -11,11 +11,14 @@
  *
  * See: https://gitlab.gnome.org/GNOME/gtk/-/issues/6255
  */
- .csd {
-    box-shadow: 2px 3px 12px 6px alpha(black, .2),
-                0px 0px 0px 1px alpha(black, .1);
+
+.csd {
+    box-shadow: 0 3px 9px 1px alpha(black, 0.35),
+                0 0 0 1px alpha(black, 0.18);
 }
+
 .csd:backdrop {
-    box-shadow: 2px 3px 12px 6px alpha(black, .1),
-                0px 0px 0px 1px alpha(black, .1);
+    box-shadow: 0 3px 9px 1px transparent,
+                0 2px 6px 2px alpha(black, 0.1),
+                0 0 0 1px alpha(black, 0.06);
 }
