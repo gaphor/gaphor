@@ -304,9 +304,18 @@
         <child>
           <object class="GtkFrame">
             <property name="child">
-              <object class="GtkListView" id="parameter-list">
+              <object class="GtkColumnView" id="parameter-list">
+                <style>
+                  <class name="data-table" />
+                </style>
                 <property name="height-request">112</property>
                 <property name="focusable">1</property>
+                <child>
+                  <object class="GtkColumnViewColumn">
+                    <property name="title" translatable="yes">Parameter Nodes</property>
+                    <property name="expand">1</property>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkEventControllerKey">
                     <signal name="key-pressed" handler="list-view-key-pressed" />
