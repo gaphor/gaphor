@@ -1,6 +1,6 @@
 repos:
 - repo: https://github.com/pre-commit/mirrors-mypy
-  rev: v1.7.1
+  rev: v1.8.0
   hooks:
   - id: mypy
     additional_dependencies:
@@ -17,7 +17,7 @@ repos:
   - id: shellcheck
     args: [--exclude, SC1017]
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: 'v0.1.8'
+  rev: 'v0.1.9'
   hooks:
   - id: ruff
     args: [--fix]
