@@ -20,11 +20,14 @@ class Styling(Service):
 
 def init_styling():
     style_provider = Gtk.CssProvider()
-    css_file = importlib.resources.files("gaphor.ui") / "styling.css"
-    style_provider.load_from_path(str(css_file))
-    if sys.platform == "darwin":
-        macos_css_file = importlib.resources.files("gaphor.ui") / "styling-macos.css"
-        style_provider.load_from_path(str(macos_css_file))
+    css = (importlib.resources.files("gaphor.ui") / "styling.css").read_text(
+        encoding="utf-8"
+    )
+    if sys.platform in ("darwin", "win32"):
+        css += (
+            importlib.resources.files("gaphor.ui") / "styling-box-shadow.css"
+        ).read_text(encoding="utf-8")
+    style_provider.load_from_string(css)
 
     Gtk.StyleContext.add_provider_for_display(
         Gdk.Display.get_default(),
