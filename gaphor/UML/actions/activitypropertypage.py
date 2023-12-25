@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from gi.repository import Gio, GLib, GObject, Gtk
+from gi.repository import Gio, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import event_handler, transactional
+from gaphor.core import event_handler, gettext, transactional
 from gaphor.core.format import format, parse
 from gaphor.core.modeling import AssociationUpdated
 from gaphor.diagram.propertypages import (
@@ -17,11 +17,12 @@ from gaphor.diagram.propertypages import (
 from gaphor.diagram.propertypages import (
     new_builder as diagram_new_builder,
 )
-from gaphor.i18n import translated_ui_string
 from gaphor.UML.actions.activity import ActivityItem
 from gaphor.UML.propertypages import (
     create_list_store,
+    list_item_factory,
     list_view_key_handler,
+    text_field_handlers,
     update_list_store,
 )
 
@@ -29,8 +30,6 @@ new_builder = new_resource_builder("gaphor.UML.actions")
 
 
 class ActivityParameterNodeView(GObject.Object):
-    __gtype_name__ = "ActivityParameterNodeView"
-
     def __init__(self, node: UML.ActivityParameterNode | None, activity: UML.Activity):
         super().__init__()
         self.node = node
@@ -123,13 +122,25 @@ class ActivityItemPage(PropertyPageBase):
         self.info = builder.get_object("parameters-info")
         help_link(builder, "parameters-info-icon", "parameters-info")
 
-        list_view: Gtk.ListView = builder.get_object("parameter-list")
+        column_view: Gtk.ListView = builder.get_object("parameter-list")
+
+        for column, factory in zip(
+            column_view.get_columns(),
+            [
+                list_item_factory(
+                    "text-field-cell.ui",
+                    klass=ActivityParameterNodeView,
+                    attribute=ActivityParameterNodeView.parameter,
+                    placeholder_text=gettext("New Parameter…"),
+                    signal_handlers=text_field_handlers("parameter"),
+                ),
+            ],
+        ):
+            column.set_factory(factory)
 
         self.model = activity_parameter_node_model(subject)
         selection = Gtk.SingleSelection.new(self.model)
-        list_view.set_model(selection)
-
-        list_view.set_factory(list_item_factory())
+        column_view.set_model(selection)
 
         if self.watcher:
             self.watcher.watch("node", self.on_nodes_changed)
@@ -144,31 +155,6 @@ class ActivityItemPage(PropertyPageBase):
 
     def on_parameters_info_clicked(self, image, event):
         self.info.set_visible(True)
-
-
-def list_item_factory():
-    def on_double_click(ctrl, n_press, x, y):
-        if n_press == 2:
-            text = ctrl.get_widget()
-            text.start_editing()
-
-    def end_editing(list_item, should_commit):
-        text = list_item.get_child()
-        if should_commit:
-            list_item.get_item().parameter = text.editable_text
-
-    ui_string = translated_ui_string("gaphor.UML.actions", "parameter.ui")
-    ui_bytes = GLib.Bytes.new(ui_string.encode("utf-8"))
-
-    return Gtk.BuilderListItemFactory.new_from_bytes(
-        Gtk.Builder.BuilderScope(
-            {
-                "on_double_click": on_double_click,
-                "end_editing": end_editing,
-            }
-        ),
-        ui_bytes,
-    )
 
 
 @PropertyPages.register(UML.ActivityParameterNode)
