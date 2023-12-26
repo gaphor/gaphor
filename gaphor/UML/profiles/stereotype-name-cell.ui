@@ -4,6 +4,11 @@
     <property name="child">
       <object class="GtkBox">
         <property name="orientation">horizontal</property>
+        <binding name="sensitive">
+          <lookup name="sensitive" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
         <binding name="css-classes">
           <lookup name="indent_classes" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
             <lookup name="item">GtkColumnViewCell</lookup>

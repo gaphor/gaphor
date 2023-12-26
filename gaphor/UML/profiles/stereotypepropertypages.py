@@ -1,7 +1,7 @@
 """Stereotype property page."""
 from unicodedata import normalize
 
-from gi.repository import Gio, GLib, GObject, Gtk
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk
 
 from gaphor import UML
 from gaphor.core import transactional
@@ -28,15 +28,11 @@ class StereotypePage(PropertyPageBase):
         if not stereotypes:
             return None
 
-        # model, toggle_stereotype_handler, set_slot_value_handler = stereotype_model(
-        model = stereotype_model(subject)
-
         builder = new_builder(
             "stereotypes-editor",
             signals={
                 "show-stereotypes-changed": (self._on_show_stereotypes_change,),
-                # "toggle-stereotype": toggle_stereotype_handler,
-                # "set-slot-value": set_slot_value_handler,
+                "stereotype-key-pressed": (key_handler,),
             },
         )
 
@@ -48,12 +44,13 @@ class StereotypePage(PropertyPageBase):
             show_stereotypes.unparent()
 
         stereotype_list = builder.get_object("stereotype-list")
+        model = stereotype_model(subject)
 
         def on_stereotype_toggled(cell):
             button = cell.get_child().get_first_child()
             view = cell.get_item()
             view.applied = button.get_active()
-            update_stereotype_model()
+            update_stereotype_model(model)
 
         for column, factory in zip(
             stereotype_list.get_columns(),
@@ -94,15 +91,7 @@ class StereotypeView(GObject.Object):
 
     @property
     def instance(self):
-        st = self.stereotype
-        return next(
-            (
-                applied
-                for applied in self.target.appliedStereotype
-                if st in applied.classifier
-            ),
-            None,
-        )
+        return stereotype_application(self.stereotype, self.target)
 
     @property
     def slot(self):
@@ -154,6 +143,10 @@ class StereotypeView(GObject.Object):
     def indent_classes(self):
         return ["stereotype-value"] if self.attr else []
 
+    @GObject.Property(type=bool, default=True)
+    def sensitive(self):
+        return not self.attr or self.instance
+
     @GObject.Property(type=str)
     def slot_value(self):
         slot = self.slot
@@ -168,7 +161,10 @@ class StereotypeView(GObject.Object):
                 slot = UML.recipes.add_slot(self.instance, self.attr)
             slot.value = value
         elif slot:
-            del self.stereotype.slot[slot]
+            del self.instance.slot[slot]
+
+    def start_editing(self):
+        self.editing = True
 
 
 def stereotype_model(subject: Element):
@@ -183,11 +179,15 @@ def stereotype_model(subject: Element):
         for attr in all_attributes(st):
             model.append(StereotypeView(subject, st, attr))
 
-    return model  # , (toggle_stereotype, subject, model), (set_value, model)
+    return model
 
 
-def update_stereotype_model():  # model: Gio.ListStore, subject: Element):
-    ...
+def update_stereotype_model(store: Gio.ListStore):
+    for view in store:
+        view.notify("placeholder_text")
+        view.notify("can_edit")
+        view.notify("slot_value")
+        view.notify("sensitive")
 
 
 def all_attributes(stereotype, seen=None):
@@ -199,6 +199,13 @@ def all_attributes(stereotype, seen=None):
             seen.add(super_type)
             yield from all_attributes(super_type)
     yield from (attr for attr in stereotype.ownedAttribute if not attr.association)
+
+
+def stereotype_application(st, subject) -> UML.InstanceSpecification | None:
+    return next(
+        (applied for applied in subject.appliedStereotype if st in applied.classifier),
+        None,
+    )
 
 
 def name_list_item_factory(signal_handlers=None):
@@ -217,3 +224,22 @@ def value_list_item_factory(signal_handlers=None):
         Gtk.Builder.BuilderScope(signal_handlers),
         GLib.Bytes.new(ui_string.encode("utf-8")),
     )
+
+
+@transactional
+def key_handler(ctrl, keyval, _keycode, state):
+    list_view = ctrl.get_widget()
+    selection = list_view.get_model()
+    item = selection.get_selected_item()
+
+    if keyval in (Gdk.KEY_F2,):
+        item.start_editing()
+        return True
+
+    if keyval in (Gdk.KEY_Delete, Gdk.KEY_BackSpace) and not state & (
+        Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK
+    ):
+        item.slot_value = ""
+        return True
+
+    return False
