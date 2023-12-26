@@ -21,7 +21,7 @@
                 <lookup name="item">GtkColumnViewCell</lookup>
               </lookup>
             </binding>
-            <!-- <signal name="toggled" handler="on_toggled" object="GtkColumnViewCell" swapped="no"/> -->
+            <signal name="toggled" handler="on_toggled" object="GtkColumnViewCell" swapped="no"/>
           </object>
         </child>
         <child>

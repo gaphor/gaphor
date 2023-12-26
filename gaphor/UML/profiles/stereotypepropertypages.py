@@ -47,11 +47,18 @@ class StereotypePage(PropertyPageBase):
 
         stereotype_list = builder.get_object("stereotype-list")
 
+        def on_stereotype_toggled(cell):
+            button = cell.get_child().get_first_child()
+            view = cell.get_item()
+            view.applied = button.get_active()
+
         for column, factory in zip(
             stereotype_list.get_columns(),
             [
                 name_list_item_factory(
-                    signal_handlers=None,
+                    signal_handlers={
+                        "on_toggled": (on_stereotype_toggled,),
+                    },
                 ),
                 value_list_item_factory(
                     signal_handlers=None,
@@ -117,7 +124,7 @@ class StereotypeView(GObject.Object):
 
     @GObject.Property(type=bool, default=False)
     def applied(self):
-        return bool(self.attr)
+        return bool(self.instance)
 
     @applied.setter  # type: ignore[no-redef]
     @transactional
