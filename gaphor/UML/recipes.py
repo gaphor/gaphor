@@ -36,6 +36,7 @@ from gaphor.UML.uml import (
     Realization,
     Slot,
     Stereotype,
+    StructuralFeature,
     StructuredClassifier,
     Type,
     Usage,
@@ -44,7 +45,7 @@ from gaphor.UML.uml import (
 T = TypeVar("T", bound=Element)
 
 
-def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
+def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()) -> str:
     """Identify stereotypes of a UML metamodel instance and return coma
     separated stereotypes as string.
 
@@ -66,7 +67,7 @@ def stereotypes_str(element: Element, stereotypes: Sequence[str] = ()):
     return ""
 
 
-def stereotype_name(stereotype):
+def stereotype_name(stereotype: Stereotype) -> str:
     """Return stereotype name suggested by UML specification. First will be
     character lowercase unless the second character is uppercase.
 
@@ -74,7 +75,7 @@ def stereotype_name(stereotype):
      stereotype
         Stereotype UML metamodel instance.
     """
-    name = stereotype.name
+    name: str = stereotype.name
     if not name:
         return ""
     elif len(name) > 1 and name[1].isupper():
@@ -82,7 +83,7 @@ def stereotype_name(stereotype):
     return name[0].lower() + name[1:]
 
 
-def apply_stereotype(element, stereotype):
+def apply_stereotype(element: Element, stereotype: Stereotype) -> InstanceSpecification:
     """Apply a stereotype to an element.
 
     :Parameters:
@@ -101,7 +102,7 @@ def apply_stereotype(element, stereotype):
     return obj
 
 
-def remove_stereotype(element, stereotype):
+def remove_stereotype(element: Element, stereotype: Stereotype) -> None:
     """Remove a stereotype from an element.
 
     :Parameters:
@@ -117,7 +118,7 @@ def remove_stereotype(element, stereotype):
             break
 
 
-def get_stereotypes(element):
+def get_stereotypes(element: Element) -> list[Stereotype]:
     """Get sorted collection of possible stereotypes for specified element."""
     model = element.model
     # UML specs does not allow to extend stereotypes with stereotypes
@@ -130,7 +131,9 @@ def get_stereotypes(element):
     names = {c.__name__ for c in cls.__mro__ if issubclass(c, Element)}
 
     # find stereotypes that extend element class
-    classes = model.select(lambda e: e.isKindOf(Class) and e.name in names)
+    classes: Iterable[Class] = model.select(  # type: ignore[assignment]
+        lambda e: isinstance(e, Class) and e.name in names
+    )
 
     stereotypes = list({ext.ownedEnd.type for cls in classes for ext in cls.extension})
 
@@ -143,9 +146,9 @@ def get_stereotypes(element):
     return sorted(stereotypes, key=lambda st: st.name)
 
 
-def get_applied_stereotypes(element):
+def get_applied_stereotypes(element) -> Sequence[Stereotype]:
     """Get collection of applied stereotypes to an element."""
-    return element.appliedStereotype[:].classifier
+    return element.appliedStereotype[:].classifier  # type: ignore[no-any-return]
 
 
 def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:
@@ -172,7 +175,7 @@ def create_extension(metaclass: Class, stereotype: Stereotype) -> Extension:
     return ext
 
 
-def is_metaclass(element):
+def is_metaclass(element: Element) -> bool:
     return (
         (not isinstance(element, Stereotype))
         and hasattr(element, "extension")
@@ -180,7 +183,9 @@ def is_metaclass(element):
     )
 
 
-def add_slot(instance, definingFeature):
+def add_slot(
+    instance: InstanceSpecification, definingFeature: StructuralFeature
+) -> Slot:
     """Add slot to instance specification for an attribute."""
     assert (
         instance.model is definingFeature.model
