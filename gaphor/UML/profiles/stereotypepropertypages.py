@@ -1,4 +1,6 @@
 """Stereotype property page."""
+from unicodedata import normalize
+
 from gi.repository import Gio, GLib, GObject, Gtk
 
 from gaphor import UML
@@ -7,7 +9,7 @@ from gaphor.core.modeling.element import Element
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.i18n import gettext, translated_ui_string
 from gaphor.UML.profiles.metaclasspropertypage import new_builder
-from gaphor.UML.propertypages import list_item_factory, text_field_handlers
+from gaphor.UML.propertypages import text_field_handlers
 
 
 @PropertyPages.register(UML.Element)
@@ -51,6 +53,7 @@ class StereotypePage(PropertyPageBase):
             button = cell.get_child().get_first_child()
             view = cell.get_item()
             view.applied = button.get_active()
+            update_stereotype_model()
 
         for column, factory in zip(
             stereotype_list.get_columns(),
@@ -61,7 +64,7 @@ class StereotypePage(PropertyPageBase):
                     },
                 ),
                 value_list_item_factory(
-                    signal_handlers=None,
+                    signal_handlers=text_field_handlers("slot_value"),
                 ),
             ],
         ):
@@ -139,9 +142,13 @@ class StereotypeView(GObject.Object):
     def checkbox_visible(self):
         return not bool(self.attr)
 
+    @GObject.Property(type=str)
+    def placeholder_text(self):
+        return gettext("New Slot Value…") if self.attr and self.instance else ""
+
     @GObject.Property(type=bool, default=False)
-    def value_editable(self):
-        return bool(self.attr)
+    def can_edit(self):
+        return bool(self.attr and self.instance)
 
     @GObject.Property(type=GObject.TYPE_STRV)
     def indent_classes(self):
@@ -149,33 +156,38 @@ class StereotypeView(GObject.Object):
 
     @GObject.Property(type=str)
     def slot_value(self):
-        return self.slot.value if self.slot else ""
+        slot = self.slot
+        return slot.value if slot else ""
 
     @slot_value.setter  # type: ignore[no-redef]
     @transactional
     def slot_value(self, value):
+        slot = self.slot
         if value:
-            if self.slot is None:
-                print("create slot")
-                self.slot = UML.recipes.add_slot(self.instance, self.attr)
-            print("set slot value")
-            self.slot.value = value
-        elif self.slot:
-            del self.stereotype.slot[self.slot]
-            self.slot = None
+            if slot is None:
+                slot = UML.recipes.add_slot(self.instance, self.attr)
+            slot.value = value
+        elif slot:
+            del self.stereotype.slot[slot]
 
 
 def stereotype_model(subject: Element):
     model = Gio.ListStore.new(StereotypeView.__gtype__)
     stereotypes = UML.recipes.get_stereotypes(subject)
 
-    for st in stereotypes:
+    for st in sorted(
+        stereotypes, key=lambda s: normalize("NFC", s.name or "").casefold()
+    ):
         model.append(StereotypeView(subject, st, None))
 
         for attr in all_attributes(st):
             model.append(StereotypeView(subject, st, attr))
 
     return model  # , (toggle_stereotype, subject, model), (set_value, model)
+
+
+def update_stereotype_model():  # model: Gio.ListStore, subject: Element):
+    ...
 
 
 def all_attributes(stereotype, seen=None):
@@ -199,10 +211,9 @@ def name_list_item_factory(signal_handlers=None):
 
 
 def value_list_item_factory(signal_handlers=None):
-    return list_item_factory(
-        "text-field-cell.ui",
-        klass=StereotypeView,
-        attribute=StereotypeView.slot_value,
-        placeholder_text=gettext("New Slot Value…"),
-        signal_handlers=text_field_handlers("slot_value"),
+    ui_string = translated_ui_string("gaphor.UML.profiles", "stereotype-value-cell.ui")
+
+    return Gtk.BuilderListItemFactory.new_from_bytes(
+        Gtk.Builder.BuilderScope(signal_handlers),
+        GLib.Bytes.new(ui_string.encode("utf-8")),
     )
