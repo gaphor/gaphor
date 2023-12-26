@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtkColumnViewCell">
+      <object name="GtkBox">
+        <property name="orientation">horizontal</property>
+        <child>
+          <object class="GtkCheckButton">
+            <property name="halign">center</property>
+            <binding name="active">
+              <lookup name="applied" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+                <lookup name="item">GtkColumnViewCell</lookup>
+              </lookup>
+            </binding>
+            <binding name="visible">
+              <lookup name="checkbox_visible" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+                <lookup name="item">GtkColumnViewCell</lookup>
+              </lookup>
+            </binding>
+            <signal name="toggled" handler="on_toggled" object="GtkColumnViewCell" swapped="no"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <binding name="label">
+              <lookup name="name" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+                <lookup name="item">GtkColumnViewCell</lookup>
+              </lookup>
+            </binding>
+          </object>
+        </child>
+      </object>
+    </property>
+  </template>
+</interface>

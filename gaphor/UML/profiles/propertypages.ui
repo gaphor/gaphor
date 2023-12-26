@@ -75,11 +75,11 @@
                     <property name="expand">1</property>
                   </object>
                 </child>
-                <child>
+                <!-- <child>
                   <object class="GtkEventControllerKey">
                     <signal name="key-pressed" handler="stereotype-key-pressed" />
                   </object>
-                </child>
+                </child> -->
               </object>
             </property>
           </object>

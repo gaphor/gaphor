@@ -1,3 +1,5 @@
+from gi.repository import Gtk
+
 from gaphor import UML
 from gaphor.core.format import format, parse
 from gaphor.diagram.propertypages import (
@@ -33,10 +35,12 @@ class AssociationPropertyPage(PropertyPageBase):
         subject = end.subject
 
         if UML.recipes.get_stereotypes(subject):
-            model, toggle_handler, set_value_handler = stereotype_model(subject)
+            model = stereotype_model(subject)
+
+            # TODO: Add real event handlers
             return model, {
-                f"{end_name}-toggle-stereotype": toggle_handler,
-                f"{end_name}-set-slot-value": set_value_handler,
+                f"{end_name}-toggle-stereotype": (_dummy_handler,),
+                f"{end_name}-set-slot-value": (_dummy_handler,),
             }
         return None, {
             f"{end_name}-toggle-stereotype": (_dummy_handler,),
@@ -59,7 +63,8 @@ class AssociationPropertyPage(PropertyPageBase):
 
         if stereotypes_model:
             stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
-            stereotype_list.set_model(stereotypes_model)
+            selection = Gtk.SingleSelection.new(stereotypes_model)
+            stereotype_list.set_model(selection)
         else:
             stereotype_frame = builder.get_object(f"{end_name}-stereotype-frame")
             stereotype_frame.set_visible(False)

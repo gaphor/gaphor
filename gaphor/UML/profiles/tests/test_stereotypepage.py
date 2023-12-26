@@ -17,7 +17,7 @@ def class_(diagram, element_factory):
     del class_
 
 
-def test_stereotype_page_with_no_stereotype(diagram, class_):
+def test_stereotype_page_with_no_stereotype(class_):
     """Test the Stereotype Property Page not created for a Class."""
 
     editor = StereotypePage(class_)
@@ -26,7 +26,7 @@ def test_stereotype_page_with_no_stereotype(diagram, class_):
     assert page is None
 
 
-def test_stereotype_page_with_stereotype(element_factory, diagram, class_):
+def test_stereotype_page_with_stereotype(element_factory, class_):
     """Test creation of a Stereotype Property Page."""
 
     # Create a stereotype applicable to Class types:
@@ -43,6 +43,6 @@ def test_stereotype_page_with_stereotype(element_factory, diagram, class_):
 
     stereotype_view = find(page, "stereotype-list")
 
-    assert isinstance(stereotype_view, Gtk.ListView)
+    assert isinstance(stereotype_view, Gtk.ColumnView)
     assert len(stereotype_view.get_model()) == 1
     assert page is not None

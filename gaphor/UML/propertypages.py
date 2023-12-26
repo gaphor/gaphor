@@ -83,7 +83,7 @@ def list_of_classifiers(element_factory, required_type):
 
 
 def list_item_factory(
-    ui_filename, klass, attribute, placeholder_text=None, signal_handlers=None
+    ui_filename, klass, attribute, placeholder_text="", signal_handlers=None
 ):
     ui_string = translated_ui_string("gaphor.UML", ui_filename).format(
         gtype_name=klass.__gtype__.name,

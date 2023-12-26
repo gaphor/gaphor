@@ -1,11 +1,12 @@
 """Stereotype property page."""
-from gi.repository import Gtk
+from gi.repository import Gio, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import transactional
+from gaphor.core import gettext, transactional
 from gaphor.core.modeling.element import Element
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
 from gaphor.UML.profiles.metaclasspropertypage import new_builder
+from gaphor.UML.propertypages import list_item_factory, text_field_handlers
 
 
 @PropertyPages.register(UML.Element)
@@ -24,16 +25,15 @@ class StereotypePage(PropertyPageBase):
         if not stereotypes:
             return None
 
-        model, toggle_stereotype_handler, set_slot_value_handler = stereotype_model(
-            subject
-        )
+        # model, toggle_stereotype_handler, set_slot_value_handler = stereotype_model(
+        model = stereotype_model(subject)
 
         builder = new_builder(
             "stereotypes-editor",
             signals={
                 "show-stereotypes-changed": (self._on_show_stereotypes_change,),
-                "toggle-stereotype": toggle_stereotype_handler,
-                "set-slot-value": set_slot_value_handler,
+                # "toggle-stereotype": toggle_stereotype_handler,
+                # "set-slot-value": set_slot_value_handler,
             },
         )
 
@@ -45,7 +45,29 @@ class StereotypePage(PropertyPageBase):
             show_stereotypes.unparent()
 
         stereotype_list = builder.get_object("stereotype-list")
-        stereotype_list.set_model(model)
+
+        for column, factory in zip(
+            stereotype_list.get_columns(),
+            [
+                list_item_factory(
+                    "text-field-cell.ui",
+                    klass=StereotypeView,
+                    attribute=StereotypeView.name,
+                    signal_handlers=text_field_handlers("name"),
+                ),
+                list_item_factory(
+                    "text-field-cell.ui",
+                    klass=StereotypeView,
+                    attribute=StereotypeView.slot_value,
+                    placeholder_text=gettext("New Slot Value…"),
+                    signal_handlers=text_field_handlers("slot_value"),
+                ),
+            ],
+        ):
+            column.set_factory(factory)
+
+        selection = Gtk.SingleSelection.new(model)
+        stereotype_list.set_model(selection)
 
         return builder.get_object("stereotypes-editor")
 
@@ -54,49 +76,96 @@ class StereotypePage(PropertyPageBase):
         self.item.show_stereotypes = button.get_active()
 
 
-def stereotype_model(subject):
-    model = Gtk.TreeStore.new(
-        [
-            str,  # stereotype/attribute
-            str,  # value
-            bool,  # active / is applied stereotype
-            bool,  # visible  checkbox (is stereotype)
-            bool,  # value editable
-            object,  # stereotype / attribute
-            object,  # instance specification
-            object,  # slot
-        ]
-    )
-    refresh(subject, model)
+class StereotypeView(GObject.Object):
+    def __init__(
+        self,
+        target: Element,
+        stereotype: UML.Stereotype | None,
+        attr: UML.Property | None,
+        slot: UML.Slot | None,
+    ):
+        super().__init__()
+        self.stereotype = stereotype
+        self.target = target
+        self.attr = attr
+        self.slot = slot
 
-    return model, (toggle_stereotype, subject, model), (set_value, model)
+    @property
+    def instance(self):
+        st = self.stereotype
+        return next(
+            (
+                applied
+                for applied in self.target.appliedStereotype
+                if st in applied.classifier
+            ),
+            None,
+        )
+
+    @GObject.Property(type=str, default="")
+    def name(self):
+        if self.attr:
+            return self.attr.name or ""
+        if self.stereotype:
+            return self.stereotype.name or ""
+        return ""
+
+    @GObject.Property(type=bool, default=False)
+    def applied(self):
+        instances = self.target.appliedStereotype
+        st = self.stereotype
+        if not st:
+            return False
+        return any(applied for applied in instances if st in applied.classifier)
+
+    @applied.setter  # type: ignore[no-redef]
+    @transactional
+    def applied(self, value):
+        if value and not self.instance:
+            self.instance = UML.recipes.apply_stereotype(self.target, self.stereotype)
+        elif self.instance:
+            self.instance = UML.recipes.remove_stereotype(self.target, self.stereotype)
+
+    @GObject.Property(type=bool, default=False)
+    def checkbox_visible(self):
+        return not bool(self.attr)
+
+    @GObject.Property(type=bool, default=False)
+    def value_editable(self):
+        return bool(self.attr)
+
+    @GObject.Property(type=str)
+    def slot_value(self):
+        return self.slot.value if self.slot else ""
+
+    @slot_value.setter  # type: ignore[no-redef]
+    @transactional
+    def slot_value(self, value):
+        if value:
+            if self.slot is None:
+                print("create slot")
+                self.slot = UML.recipes.add_slot(self.instance, self.attr)
+            print("set slot value")
+            self.slot.value = value
+        elif self.slot:
+            del self.stereotype.slot[self.slot]
+            self.slot = None
 
 
-def refresh(subject: Element, model: Gtk.TreeStore):
+def stereotype_model(subject: Element):
+    model = Gio.ListStore.new(StereotypeView.__gtype__)
     stereotypes = UML.recipes.get_stereotypes(subject)
     instances = subject.appliedStereotype
 
-    def upsert(path, parent, row_data):
-        try:
-            new_row = model.get_iter(path)
-        except ValueError:
-            new_row = model.append(parent, row_data)
-        else:
-            row = model[path]
-            row[:] = row_data
-        return new_row
+    for st in stereotypes:
+        model.append(StereotypeView(subject, st, None, None))
 
-    for st_index, st in enumerate(stereotypes):
+        # TODO: Add values/instance spec sub entries
+
         applied = next(
             (applied for applied in instances if st in applied.classifier), None
         )
-
-        parent = upsert(
-            f"{st_index}",
-            None,
-            (st.name, "", bool(applied), True, False, st, None, None),
-        )
-        for attr_index, attr in enumerate(all_attributes(st)):
+        for attr in all_attributes(st):
             slot = (
                 next(
                     (slot for slot in applied.slot if slot.definingFeature is attr),
@@ -105,21 +174,9 @@ def refresh(subject: Element, model: Gtk.TreeStore):
                 if applied
                 else None
             )
-            value = slot.value if slot else ""
-            upsert(
-                f"{st_index}:{attr_index}",
-                parent,
-                (
-                    attr.name,
-                    value,
-                    bool(applied),
-                    False,
-                    bool(applied),
-                    attr,
-                    applied,
-                    slot,
-                ),
-            )
+            model.append(StereotypeView(subject, st, attr, slot))
+
+    return model  # , (toggle_stereotype, subject, model), (set_value, model)
 
 
 def all_attributes(stereotype, seen=None):
@@ -131,48 +188,3 @@ def all_attributes(stereotype, seen=None):
             seen.add(super_type)
             yield from all_attributes(super_type)
     yield from (attr for attr in stereotype.ownedAttribute if not attr.association)
-
-
-@transactional
-def toggle_stereotype(renderer, path, subject, model):
-    row = model[path]
-    _, _, is_applied, _, _, stereotype, _, _ = row
-    value = not is_applied
-
-    if value:
-        UML.recipes.apply_stereotype(subject, stereotype)
-    else:
-        UML.recipes.remove_stereotype(subject, stereotype)
-
-    row[2] = value
-
-    refresh(subject, model)
-
-
-@transactional
-def set_value(renderer, path, value, model):
-    """Set value of stereotype property applied to a UML element."""
-    row = model[path]
-    _, _, _, _, _, attr, applied, slot = row
-    if isinstance(attr, UML.Stereotype):
-        return  # don't edit stereotype rows
-
-    if slot is None:
-        if value:
-            slot = UML.recipes.add_slot(applied, attr)
-
-        else:
-            return  # nothing to do and don't create slot without value
-
-    assert slot
-
-    if value:
-        slot.value = value
-    else:
-        # no value, then remove slot
-        del applied.slot[slot]
-        slot = None
-        value = ""
-
-    row[1] = value
-    row[7] = slot
