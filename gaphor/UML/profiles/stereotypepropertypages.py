@@ -1,10 +1,11 @@
 """Stereotype property page."""
-from gi.repository import Gio, GObject, Gtk
+from gi.repository import Gio, GLib, GObject, Gtk
 
 from gaphor import UML
-from gaphor.core import gettext, transactional
+from gaphor.core import transactional
 from gaphor.core.modeling.element import Element
 from gaphor.diagram.propertypages import PropertyPageBase, PropertyPages
+from gaphor.i18n import gettext, translated_ui_string
 from gaphor.UML.profiles.metaclasspropertypage import new_builder
 from gaphor.UML.propertypages import list_item_factory, text_field_handlers
 
@@ -49,18 +50,11 @@ class StereotypePage(PropertyPageBase):
         for column, factory in zip(
             stereotype_list.get_columns(),
             [
-                list_item_factory(
-                    "text-field-cell.ui",
-                    klass=StereotypeView,
-                    attribute=StereotypeView.name,
-                    signal_handlers=text_field_handlers("name"),
+                name_list_item_factory(
+                    signal_handlers=None,
                 ),
-                list_item_factory(
-                    "text-field-cell.ui",
-                    klass=StereotypeView,
-                    attribute=StereotypeView.slot_value,
-                    placeholder_text=gettext("New Slot Value…"),
-                    signal_handlers=text_field_handlers("slot_value"),
+                value_list_item_factory(
+                    signal_handlers=None,
                 ),
             ],
         ):
@@ -80,15 +74,13 @@ class StereotypeView(GObject.Object):
     def __init__(
         self,
         target: Element,
-        stereotype: UML.Stereotype | None,
+        stereotype: UML.Stereotype,
         attr: UML.Property | None,
-        slot: UML.Slot | None,
     ):
         super().__init__()
         self.stereotype = stereotype
         self.target = target
         self.attr = attr
-        self.slot = slot
 
     @property
     def instance(self):
@@ -102,29 +94,39 @@ class StereotypeView(GObject.Object):
             None,
         )
 
-    @GObject.Property(type=str, default="")
+    @property
+    def slot(self):
+        instance = self.instance
+        attr = self.attr
+        return (
+            next(
+                (slot for slot in instance.slot if slot.definingFeature is attr),
+                None,
+            )
+            if instance
+            else None
+        )
+
+    editing = GObject.Property(type=bool, default=False)
+
+    @GObject.Property(type=str, default="", flags=GObject.ParamFlags.READABLE)
     def name(self):
         if self.attr:
             return self.attr.name or ""
-        if self.stereotype:
-            return self.stereotype.name or ""
-        return ""
+        return self.stereotype.name or ""
 
     @GObject.Property(type=bool, default=False)
     def applied(self):
-        instances = self.target.appliedStereotype
-        st = self.stereotype
-        if not st:
-            return False
-        return any(applied for applied in instances if st in applied.classifier)
+        return bool(self.attr)
 
     @applied.setter  # type: ignore[no-redef]
     @transactional
     def applied(self, value):
-        if value and not self.instance:
-            self.instance = UML.recipes.apply_stereotype(self.target, self.stereotype)
-        elif self.instance:
-            self.instance = UML.recipes.remove_stereotype(self.target, self.stereotype)
+        instance = self.instance
+        if value and not instance:
+            UML.recipes.apply_stereotype(self.target, self.stereotype)
+        elif instance:
+            UML.recipes.remove_stereotype(self.target, self.stereotype)
 
     @GObject.Property(type=bool, default=False)
     def checkbox_visible(self):
@@ -133,6 +135,10 @@ class StereotypeView(GObject.Object):
     @GObject.Property(type=bool, default=False)
     def value_editable(self):
         return bool(self.attr)
+
+    @GObject.Property(type=GObject.TYPE_STRV)
+    def indent_classes(self):
+        return ["stereotype-value"] if self.attr else []
 
     @GObject.Property(type=str)
     def slot_value(self):
@@ -155,26 +161,12 @@ class StereotypeView(GObject.Object):
 def stereotype_model(subject: Element):
     model = Gio.ListStore.new(StereotypeView.__gtype__)
     stereotypes = UML.recipes.get_stereotypes(subject)
-    instances = subject.appliedStereotype
 
     for st in stereotypes:
-        model.append(StereotypeView(subject, st, None, None))
+        model.append(StereotypeView(subject, st, None))
 
-        # TODO: Add values/instance spec sub entries
-
-        applied = next(
-            (applied for applied in instances if st in applied.classifier), None
-        )
         for attr in all_attributes(st):
-            slot = (
-                next(
-                    (slot for slot in applied.slot if slot.definingFeature is attr),
-                    None,
-                )
-                if applied
-                else None
-            )
-            model.append(StereotypeView(subject, st, attr, slot))
+            model.append(StereotypeView(subject, st, attr))
 
     return model  # , (toggle_stereotype, subject, model), (set_value, model)
 
@@ -188,3 +180,22 @@ def all_attributes(stereotype, seen=None):
             seen.add(super_type)
             yield from all_attributes(super_type)
     yield from (attr for attr in stereotype.ownedAttribute if not attr.association)
+
+
+def name_list_item_factory(signal_handlers=None):
+    ui_string = translated_ui_string("gaphor.UML.profiles", "stereotype-name-cell.ui")
+
+    return Gtk.BuilderListItemFactory.new_from_bytes(
+        Gtk.Builder.BuilderScope(signal_handlers),
+        GLib.Bytes.new(ui_string.encode("utf-8")),
+    )
+
+
+def value_list_item_factory(signal_handlers=None):
+    return list_item_factory(
+        "text-field-cell.ui",
+        klass=StereotypeView,
+        attribute=StereotypeView.slot_value,
+        placeholder_text=gettext("New Slot Value…"),
+        signal_handlers=text_field_handlers("slot_value"),
+    )

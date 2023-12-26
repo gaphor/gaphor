@@ -103,18 +103,21 @@ frame > textview {
   padding: 6px;
 }
 
-listview .row {
-  padding: 2px 0;
+row {
+  min-height: 24px;
 }
 
-/* Needed only for tables with check boxes */
 .data-table checkbutton {
   padding: 0px;
 }
 
-.data-table row {
-  min-height: 24px;
-}
+.data-table box checkbutton {
+  margin-right: 4px;
+ }
+
+.data-table .stereotype-value {
+  padding-left: 24px;
+ }
 
 textfield text {
   background-color: @theme_bg_color;
