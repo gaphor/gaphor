@@ -114,9 +114,7 @@ class StereotypeView(GObject.Object):
 
     @GObject.Property(type=str, default="", flags=GObject.ParamFlags.READABLE)
     def name(self):
-        if self.attr:
-            return self.attr.name or ""
-        return self.stereotype.name or ""
+        return self.attr.name or "" if self.attr else self.stereotype.name or ""
 
     @GObject.Property(type=bool, default=False)
     def applied(self):
