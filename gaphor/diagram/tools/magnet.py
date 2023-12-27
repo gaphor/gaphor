@@ -12,7 +12,7 @@ from gi.repository import Gtk
 from gaphor.diagram.event import ToolCompleted
 
 
-def magnet_tool(view: GtkView, event_manager) -> Gtk.GestureDrag:
+def magnet_tool(event_manager) -> Gtk.GestureDrag:
     """Handle item movement and movement of handles."""
     gesture = Gtk.GestureDrag.new()
     drag_state = DragState(event_manager)

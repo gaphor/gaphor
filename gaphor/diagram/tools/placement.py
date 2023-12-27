@@ -4,7 +4,6 @@ from typing import Optional
 from gaphas.decorators import g_async
 from gaphas.handlemove import HandleMove
 from gaphas.move import MoveType
-from gaphas.view import GtkView
 from gi.repository import GLib, Gtk
 
 from gaphor.core.eventmanager import EventManager
@@ -28,9 +27,7 @@ class PlacementState:
         self.moving: Optional[MoveType] = None
 
 
-def placement_tool(
-    view: GtkView, factory: ItemFactory, event_manager, handle_index: int
-):
+def placement_tool(factory: ItemFactory, event_manager, handle_index: int):
     gesture = Gtk.GestureDrag.new()
     placement_state = PlacementState(factory, event_manager, handle_index)
     gesture.connect("drag-begin", on_drag_begin, placement_state)

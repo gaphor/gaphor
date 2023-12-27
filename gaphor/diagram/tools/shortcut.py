@@ -5,7 +5,7 @@ from gaphor.core import Transaction
 from gaphor.core.modeling import Presentation, self_and_owners
 
 
-def shortcut_tool(view, event_manager):
+def shortcut_tool(event_manager):
     ctrl = Gtk.EventControllerKey.new()
     ctrl.connect("key-pressed", on_delete, event_manager)
     return ctrl

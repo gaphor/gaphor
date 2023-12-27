@@ -5,7 +5,7 @@ from gaphor.diagram.event import DiagramOpened
 from gaphor.diagram.instanteditors import instant_editor
 
 
-def text_edit_tools(view, event_manager):
+def text_edit_tools(event_manager):
     key_tool = Gtk.EventControllerKey.new()
     click_tool = Gtk.GestureClick.new()
 
