@@ -32,7 +32,7 @@ class StereotypePage(PropertyPageBase):
             "stereotypes-editor",
             signals={
                 "show-stereotypes-changed": (self._on_show_stereotypes_change,),
-                "stereotype-key-pressed": (key_handler,),
+                "stereotype-key-pressed": (stereotype_key_handler,),
             },
         )
 
@@ -46,35 +46,39 @@ class StereotypePage(PropertyPageBase):
         stereotype_list = builder.get_object("stereotype-list")
         model = stereotype_model(subject)
 
-        def on_stereotype_toggled(cell):
-            button = cell.get_child().get_first_child()
-            view = cell.get_item()
-            view.applied = button.get_active()
-            update_stereotype_model(model)
-
-        for column, factory in zip(
-            stereotype_list.get_columns(),
-            [
-                name_list_item_factory(
-                    signal_handlers={
-                        "on_toggled": (on_stereotype_toggled,),
-                    },
-                ),
-                value_list_item_factory(
-                    signal_handlers=text_field_handlers("slot_value"),
-                ),
-            ],
-        ):
-            column.set_factory(factory)
-
-        selection = Gtk.SingleSelection.new(model)
-        stereotype_list.set_model(selection)
+        stereotype_set_model_with_interaction(stereotype_list, model)
 
         return builder.get_object("stereotypes-editor")
 
     @transactional
     def _on_show_stereotypes_change(self, button, gparam):
         self.item.show_stereotypes = button.get_active()
+
+
+def stereotype_set_model_with_interaction(stereotype_list, model):
+    def on_stereotype_toggled(cell):
+        button = cell.get_child().get_first_child()
+        view = cell.get_item()
+        view.applied = button.get_active()
+        update_stereotype_model(model)
+
+    for column, factory in zip(
+        stereotype_list.get_columns(),
+        [
+            name_list_item_factory(
+                signal_handlers={
+                    "on_toggled": (on_stereotype_toggled,),
+                },
+            ),
+            value_list_item_factory(
+                signal_handlers=text_field_handlers("slot_value"),
+            ),
+        ],
+    ):
+        column.set_factory(factory)
+
+    selection = Gtk.SingleSelection.new(model)
+    stereotype_list.set_model(selection)
 
 
 class StereotypeView(GObject.Object):
@@ -227,7 +231,7 @@ def value_list_item_factory(signal_handlers=None):
 
 
 @transactional
-def key_handler(ctrl, keyval, _keycode, state):
+def stereotype_key_handler(ctrl, keyval, _keycode, state):
     list_view = ctrl.get_widget()
     selection = list_view.get_model()
     item = selection.get_selected_item()
