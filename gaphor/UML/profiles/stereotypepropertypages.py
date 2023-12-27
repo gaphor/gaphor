@@ -41,7 +41,7 @@ class StereotypePage(PropertyPageBase):
         if hasattr(self.item, "show_stereotypes"):
             show_stereotypes.set_active(self.item.show_stereotypes)
         else:
-            show_stereotypes.unparent()
+            show_stereotypes.get_parent().unparent()
 
         stereotype_list = builder.get_object("stereotype-list")
         model = stereotype_model(subject)
