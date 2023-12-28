@@ -17,8 +17,9 @@ from gaphor.diagram.propertypages import (
 from gaphor.diagram.propertypages import (
     new_builder as diagram_new_builder,
 )
-from gaphor.UML.actions.activity import ActivityItem
+from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
 from gaphor.UML.propertypages import (
+    TypedElementPropertyPage,
     create_list_store,
     list_item_factory,
     list_view_key_handler,
@@ -201,3 +202,6 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
     def _on_name_changed(self, entry):
         if self.subject.parameter.name != entry.get_text():
             self.subject.parameter.name = entry.get_text()
+
+
+PropertyPages.register(ActivityParameterNodeItem)(TypedElementPropertyPage)
