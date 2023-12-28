@@ -19,7 +19,7 @@ def _dummy_handler(*args):
 @PropertyPages.register(AssociationItem)
 class AssociationPropertyPage(PropertyPageBase):
     NAVIGABILITY = (None, False, True)
-    AGGREGATION = ("none", "shared", "composite")
+    AGGREGATION = UML.Property.aggregation.values
 
     order = 20
 
