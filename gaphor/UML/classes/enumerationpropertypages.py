@@ -18,6 +18,7 @@ from gaphor.UML.classes.enumeration import EnumerationItem
 from gaphor.UML.propertypages import (
     create_list_store,
     list_item_factory,
+    list_view_activated,
     list_view_key_handler,
     text_field_handlers,
     update_list_store,
@@ -100,6 +101,7 @@ class EnumerationPage(PropertyPageBase):
             "enumerations-editor",
             "enumerations-info",
             signals={
+                "enumerations-activated": (list_view_activated,),
                 "enumerations-key-pressed": (list_view_key_handler,),
                 "show-enumerations-changed": (self.on_show_enumerations_changed,),
                 "enumerations-info-clicked": (self.on_enumerations_info_clicked,),

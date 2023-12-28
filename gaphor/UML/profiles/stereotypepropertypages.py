@@ -32,6 +32,7 @@ class StereotypePage(PropertyPageBase):
             "stereotypes-editor",
             signals={
                 "show-stereotypes-changed": (self._on_show_stereotypes_change,),
+                "stereotype-activated": (stereotype_activated,),
                 "stereotype-key-pressed": (stereotype_key_handler,),
             },
         )
@@ -126,7 +127,7 @@ class StereotypeView(GObject.Object):
         instance = self.instance
         if value and not instance:
             UML.recipes.apply_stereotype(self.target, self.stereotype)
-        elif instance:
+        elif not value and instance:
             UML.recipes.remove_stereotype(self.target, self.stereotype)
 
     @GObject.Property(type=bool, default=False)
@@ -226,6 +227,17 @@ def value_list_item_factory(signal_handlers=None):
         Gtk.Builder.BuilderScope(signal_handlers),
         GLib.Bytes.new(ui_string.encode("utf-8")),
     )
+
+
+@transactional
+def stereotype_activated(list_view, _row):
+    selection = list_view.get_model()
+    item = selection.get_selected_item()
+
+    if item.attr:
+        item.start_editing()
+    else:
+        item.applied = not item.applied
 
 
 @transactional

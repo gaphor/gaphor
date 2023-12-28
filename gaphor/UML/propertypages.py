@@ -130,18 +130,12 @@ def update_list_store(
 
 
 def text_field_handlers(model_field: str):
-    def on_double_click(ctrl, n_press, x, y):
-        if n_press == 2:
-            text = ctrl.get_widget()
-            text.start_editing()
-
     def on_done_editing(list_item, should_commit):
         text = list_item.get_child()
         if should_commit:
             setattr(list_item.get_item(), model_field, text.editable_text)
 
     return {
-        "on_double_click": on_double_click,
         "on_done_editing": on_done_editing,
     }
 
@@ -154,6 +148,15 @@ def check_button_handlers(model_field: str):
     return {
         "on_toggled": on_toggled,
     }
+
+
+@transactional
+def list_view_activated(list_view, _row):
+    """Default action for activation: start editing."""
+    selection = list_view.get_model()
+    item = selection.get_selected_item()
+
+    item.start_editing()
 
 
 @transactional

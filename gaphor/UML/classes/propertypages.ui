@@ -337,6 +337,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                     <signal name="key-pressed" handler="attributes-key-pressed" />
                   </object>
                 </child>
+                <signal name="activate" handler="attributes-activated" />
               </object>
             </property>
           </object>
@@ -543,6 +544,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                     <signal name="key-pressed" handler="operations-key-pressed" />
                   </object>
                 </child>
+                <signal name="activate" handler="operations-activated" />
               </object>
             </property>
           </object>
@@ -641,6 +643,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                     <signal name="key-pressed" handler="enumerations-key-pressed" />
                   </object>
                 </child>
+                <signal name="activate" handler="enumerations-activated" />
               </object>
             </property>
           </object>

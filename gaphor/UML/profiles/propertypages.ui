@@ -80,6 +80,7 @@
                     <signal name="key-pressed" handler="stereotype-key-pressed" />
                   </object>
                 </child>
+                <signal name="activate" handler="stereotype-activated" />
               </object>
             </property>
           </object>
