@@ -66,7 +66,7 @@
                 </style>
                 <child>
                   <object class="GtkColumnViewColumn">
-                    <property name="title" translatable="yes">Attributes</property>
+                    <property name="title" translatable="yes">Stereotypes</property>
                   </object>
                 </child>
                 <child>
