@@ -205,6 +205,13 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
 
 
 @PropertyPages.register(ActivityParameterNodeItem)
+class ActivityParameterNodeTypePropertyPage(TypedElementPropertyPage):
+    @property
+    def typed_element(self):
+        return self.item.subject.parameter
+
+
+@PropertyPages.register(ActivityParameterNodeItem)
 class ActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
     DIRECTION = UML.Parameter.direction.values
     order = 40
@@ -242,6 +249,3 @@ class ActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
     @transactional
     def _on_show_direction_changed(self, button, _gspec):
         self.item.show_direction = button.get_active()
-
-
-PropertyPages.register(ActivityParameterNodeItem)(TypedElementPropertyPage)

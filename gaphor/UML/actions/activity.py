@@ -99,7 +99,9 @@ class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode])
 
         self.watch("subject[ActivityParameterNode].parameter.name").watch(
             "subject[ActivityParameterNode].parameter.type.name"
-        ).watch("show_type").watch("show_direction")
+        ).watch("subject[ActivityParameterNode].parameter.direction").watch(
+            "show_type"
+        ).watch("show_direction")
 
     show_type: attribute[int] = attribute("show_type", int, default=False)
     show_direction: attribute[int] = attribute("show_direction", int, default=False)

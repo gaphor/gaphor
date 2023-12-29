@@ -16,15 +16,22 @@ class TypedElementPropertyPage(PropertyPageBase):
     order = 31
 
     def __init__(self, item):
-        assert (not item.subject) or isinstance(
-            item.subject, UML.TypedElement
-        ), item.subject
         super().__init__()
         self.item = item
 
+        assert (not item.subject) or isinstance(
+            self.typed_element, UML.TypedElement
+        ), item.subject
+
+    @property
+    def typed_element(self):
+        return self.item.subject
+
     def construct(self):
-        if not self.item.subject:
+        if not self.typed_element:
             return
+
+        typed_element = self.typed_element
 
         builder = new_builder(
             "typed-element-editor",
@@ -34,15 +41,13 @@ class TypedElementPropertyPage(PropertyPageBase):
         )
 
         dropdown = builder.get_object("element-type")
-        model = list_of_classifiers(self.item.subject.model, UML.Classifier)
+        model = list_of_classifiers(typed_element.model, UML.Classifier)
         dropdown.set_model(model)
 
-        if self.item.subject.type:
+        if typed_element.type:
             dropdown.set_selected(
                 next(
-                    n
-                    for n, lv in enumerate(model)
-                    if lv.value == self.item.subject.type.id
+                    n for n, lv in enumerate(model) if lv.value == typed_element.type.id
                 )
             )
 
@@ -58,13 +63,13 @@ class TypedElementPropertyPage(PropertyPageBase):
 
     @transactional
     def _on_property_type_changed(self, dropdown, _pspec):
-        subject = self.item.subject
+        typed_element = self.typed_element
         if id := dropdown.get_selected_item().value:
-            element = subject.model.lookup(id)
+            element = typed_element.model.lookup(id)
             assert isinstance(element, UML.Type)
-            subject.type = element
+            typed_element.type = element
         else:
-            del subject.type
+            del typed_element.type
 
     @transactional
     def _on_show_type_change(self, button, _gparam):

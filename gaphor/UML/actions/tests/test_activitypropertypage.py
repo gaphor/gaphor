@@ -7,6 +7,7 @@ from gaphor.UML.actions.activitypropertypage import (
     ActivityItemPage,
     ActivityParameterNodeDirectionPropertyPage,
     ActivityParameterNodeNamePropertyPage,
+    ActivityParameterNodeTypePropertyPage,
     activity_parameter_node_model,
     list_view_key_handler,
 )
@@ -193,6 +194,16 @@ def test_construct_activity_item_property_page(create):
     activity_item = create(ActivityItem, UML.Activity)
 
     property_page = ActivityItemPage(activity_item)
+    widget = property_page.construct()
+
+    assert widget
+
+
+def test_construct_activity_parameter_node_type_property_page(create, element_factory):
+    node_item = create(ActivityParameterNodeItem, UML.ActivityParameterNode)
+    node_item.subject.parameter = element_factory.create(UML.Parameter)
+
+    property_page = ActivityParameterNodeTypePropertyPage(node_item)
     widget = property_page.construct()
 
     assert widget
