@@ -365,6 +365,28 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
     </style>
   </object>
 
+  <object class="GtkBox" id="parameter-direction-editor">
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkDropDown" id="parameter-direction">
+        <property name="model">
+          <object class="GtkStringList">
+            <items>
+              <item translatable="yes">In/Out</item>
+              <item translatable="yes">In</item>
+              <item translatable="yes">Out</item>
+              <item translatable="yes">Return</item>
+            </items>
+          </object>
+        </property>
+        <signal name="notify::selected" handler="parameter-direction-changed" swapped="no"/>
+      </object>
+    </child>
+    <style>
+      <class name="propertypage"/>
+    </style>
+  </object>
+
   <object class="GtkBox" id="pin-editor">
     <property name="orientation">vertical</property>
     <child>

@@ -204,4 +204,34 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
             self.subject.parameter.name = entry.get_text()
 
 
+@PropertyPages.register(UML.ActivityParameterNode)
+class ActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
+    DIRECTION = UML.Parameter.direction.values
+    order = 40
+
+    def __init__(self, subject):
+        super().__init__()
+        self.subject = subject
+
+    def construct(self):
+        if not (self.subject and self.subject.parameter):
+            return
+
+        builder = new_builder(
+            "parameter-direction-editor",
+            signals={
+                "parameter-direction-changed": (self._on_parameter_direction_changed,),
+            },
+        )
+
+        direction = builder.get_object("parameter-direction")
+        direction.set_selected(self.DIRECTION.index(self.subject.parameter.direction))
+
+        return builder.get_object("parameter-direction-editor")
+
+    @transactional
+    def _on_parameter_direction_changed(self, dropdown, _pspec):
+        self.subject.parameter.direction = self.DIRECTION[dropdown.get_selected()]
+
+
 PropertyPages.register(ActivityParameterNodeItem)(TypedElementPropertyPage)
