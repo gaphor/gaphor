@@ -382,6 +382,22 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
         <signal name="notify::selected" handler="parameter-direction-changed" swapped="no"/>
       </object>
     </child>
+    <child>
+      <object class="GtkBox">
+        <child>
+          <object class="GtkLabel">
+            <property name="label" translatable="yes">Show Direction</property>
+            <property name="halign">start</property>
+            <property name="hexpand">yes</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show-direction">
+            <signal name="notify::active" handler="show-direction-changed" swapped="no" />
+          </object>
+        </child>
+      </object>
+    </child>
     <style>
       <class name="propertypage"/>
     </style>

@@ -97,9 +97,12 @@ class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode])
             ),
         )
 
-        self.watch("subject[ActivityParameterNode].parameter.name").watch("show_type")
+        self.watch("subject[ActivityParameterNode].parameter.name").watch(
+            "subject[ActivityParameterNode].parameter.type.name"
+        ).watch("show_type").watch("show_direction")
 
     show_type: attribute[int] = attribute("show_type", int, default=False)
+    show_direction: attribute[int] = attribute("show_direction", int, default=False)
 
     def update(self, context):
         self.width, self.height = super().update(context)
@@ -107,8 +110,15 @@ class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode])
     def _format_name(self):
         if not (self.subject and self.subject.parameter):
             return ""
+        parameter = self.subject.parameter
+        name = parameter.name or ""
+        type = (parameter.type.name) if self.show_type and parameter.type else None
+        direction = parameter.direction if self.show_direction else None
 
-        name = self.subject.parameter.name or ""
-        if self.show_type and self.subject.type:
-            return f"{name}: {self.subject.type.name or ''}"
+        if type and direction:
+            return f"{direction} {name}: {type}"
+        elif type:
+            return f"{name}: {type}"
+        elif direction:
+            return f"{direction} {name}"
         return name

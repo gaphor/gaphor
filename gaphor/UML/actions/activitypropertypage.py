@@ -204,34 +204,44 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
             self.subject.parameter.name = entry.get_text()
 
 
-@PropertyPages.register(UML.ActivityParameterNode)
+@PropertyPages.register(ActivityParameterNodeItem)
 class ActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
     DIRECTION = UML.Parameter.direction.values
     order = 40
 
-    def __init__(self, subject):
+    def __init__(self, item):
         super().__init__()
-        self.subject = subject
+        self.item = item
 
     def construct(self):
-        if not (self.subject and self.subject.parameter):
+        if not (self.item.subject and self.item.subject.parameter):
             return
 
         builder = new_builder(
             "parameter-direction-editor",
             signals={
                 "parameter-direction-changed": (self._on_parameter_direction_changed,),
+                "show-direction-changed": (self._on_show_direction_changed,),
             },
         )
 
         direction = builder.get_object("parameter-direction")
-        direction.set_selected(self.DIRECTION.index(self.subject.parameter.direction))
+        direction.set_selected(
+            self.DIRECTION.index(self.item.subject.parameter.direction)
+        )
+
+        show_direction = builder.get_object("show-direction")
+        show_direction.set_active(self.item.show_direction)
 
         return builder.get_object("parameter-direction-editor")
 
     @transactional
     def _on_parameter_direction_changed(self, dropdown, _pspec):
-        self.subject.parameter.direction = self.DIRECTION[dropdown.get_selected()]
+        self.item.subject.parameter.direction = self.DIRECTION[dropdown.get_selected()]
+
+    @transactional
+    def _on_show_direction_changed(self, button, _gspec):
+        self.item.show_direction = button.get_active()
 
 
 PropertyPages.register(ActivityParameterNodeItem)(TypedElementPropertyPage)

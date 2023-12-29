@@ -2,7 +2,7 @@ from gi.repository import Gdk
 
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
-from gaphor.UML.actions.activity import ActivityItem
+from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
 from gaphor.UML.actions.activitypropertypage import (
     ActivityItemPage,
     ActivityParameterNodeDirectionPropertyPage,
@@ -198,27 +198,29 @@ def test_construct_activity_item_property_page(create):
     assert widget
 
 
-def test_construct_activity_parameter_node_direction_property_page(element_factory):
-    subject = element_factory.create(UML.ActivityParameterNode)
-    subject.parameter = element_factory.create(UML.Parameter)
+def test_construct_activity_parameter_node_direction_property_page(
+    create, element_factory
+):
+    node_item = create(ActivityParameterNodeItem, UML.ActivityParameterNode)
+    node_item.subject.parameter = element_factory.create(UML.Parameter)
 
-    property_page = ActivityParameterNodeDirectionPropertyPage(subject)
+    property_page = ActivityParameterNodeDirectionPropertyPage(node_item)
     widget = property_page.construct()
 
     assert widget
 
 
-def test_construct_activity_parameter_node_direction_changed(element_factory):
-    subject = element_factory.create(UML.ActivityParameterNode)
-    subject.parameter = element_factory.create(UML.Parameter)
+def test_construct_activity_parameter_node_direction_changed(create, element_factory):
+    node_item = create(ActivityParameterNodeItem, UML.ActivityParameterNode)
+    node_item.subject.parameter = element_factory.create(UML.Parameter)
 
-    property_page = ActivityParameterNodeDirectionPropertyPage(subject)
+    property_page = ActivityParameterNodeDirectionPropertyPage(node_item)
     widget = property_page.construct()
 
     direction = find(widget, "parameter-direction")
     direction.set_selected(3)
 
-    assert subject.parameter.direction == "return"
+    assert node_item.subject.parameter.direction == "return"
 
 
 class ControllerStub:
