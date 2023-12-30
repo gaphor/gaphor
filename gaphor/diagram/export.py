@@ -3,7 +3,8 @@
 import re
 
 import cairo
-from gaphas.painter import BoundingBoxPainter, FreeHandPainter, PainterChain
+from gaphas.geometry import Rectangle
+from gaphas.painter import FreeHandPainter, PainterChain
 
 from gaphor.core.modeling.diagram import StyledDiagram
 from gaphor.diagram.painter import DiagramTypePainter, ItemPainter
@@ -57,14 +58,10 @@ def diagram_type_height(diagram):
 
 
 def calc_bounding_box(diagram, painter):
-    with cairo.ImageSurface(cairo.FORMAT_ARGB32, 0, 0) as tmpsurface:
-        tmpcr = cairo.Context(tmpsurface)
-        bounding_box = BoundingBoxPainter(painter).bounding_box(
-            diagram.get_all_items(), tmpcr
-        )
-        tmpcr.show_page()
-        tmpsurface.flush()
-    return bounding_box
+    surface = cairo.RecordingSurface(cairo.Content.COLOR_ALPHA, None)
+    cr = cairo.Context(surface)
+    painter.paint(diagram.get_all_items(), cr)
+    return Rectangle(*surface.ink_extents())
 
 
 def save_svg(filename, diagram):

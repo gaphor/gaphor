@@ -1,5 +1,4 @@
 import pytest
-from gaphas.painter import BoundingBoxPainter
 from gaphas.view import GtkView
 
 from gaphor import UML
@@ -14,7 +13,7 @@ def view(diagram):
     view._qtree.resize((-100, -100, 400, 400))
     item_painter = ItemPainter(view.selection)
     view.painter = item_painter
-    view.bounding_box_painter = BoundingBoxPainter(item_painter)
+    view.bounding_box_painter = item_painter
     return view
 
 

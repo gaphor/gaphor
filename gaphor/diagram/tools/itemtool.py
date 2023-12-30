@@ -1,10 +1,9 @@
 from gaphas.tool import item_tool as _item_tool
-from gaphas.view import GtkView
 from gi.repository import Gtk
 
 
-def item_tool(view: GtkView) -> Gtk.GestureDrag:
-    gesture = _item_tool(view)
+def item_tool() -> Gtk.GestureDrag:
+    gesture = _item_tool()
     gesture.connect_after("drag-end", on_drag_end)
     return gesture
 
