@@ -570,13 +570,13 @@ sphinx-basic-ng = "*"
 
 [[package]]
 name = "gaphas"
-version = "3.11.3"
+version = "4.0.0"
 description = "Gaphas is a GTK diagramming widget"
 optional = false
 python-versions = ">=3.9,<4"
 files = [
-    {file = "gaphas-3.11.3-py3-none-any.whl", hash = "sha256:9df26e9543672f97eeeda4c21292218f9736b284c6f325e45e1a5558fbcb4aba"},
-    {file = "gaphas-3.11.3.tar.gz", hash = "sha256:36998d23066abd60090e45046faf86a5f41a44256d8d0938a1d91a39dd83da89"},
+    {file = "gaphas-4.0.0-py3-none-any.whl", hash = "sha256:ef68df99c75943172c8ebf80840a60fb6ff2f7ae73330d4cd8f90da086380d15"},
+    {file = "gaphas-4.0.0.tar.gz", hash = "sha256:c780956368bf4828eafdcd577f1de0771ee34e29acd5a29dd39ce23780dd1358"},
 ]
 
 [package.dependencies]
