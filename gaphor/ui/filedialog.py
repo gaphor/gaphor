@@ -11,7 +11,7 @@ from gi.repository import Gio, Gtk
 
 from gaphor.i18n import gettext
 
-GAPHOR_FILTER = [(gettext("All Gaphor Models"), "*.gaphor", "application/x-gaphor")]
+GAPHOR_FILTER = [(gettext("Gaphor Models"), "*.gaphor", "application/x-gaphor")]
 
 
 def new_filter(name: str, pattern: str, mime_type: str | None = None) -> Gtk.FileFilter:
@@ -30,22 +30,14 @@ def new_image_filter() -> Gtk.FileFilter:
     return f
 
 
-def _file_dialog_with_filters(
-    title, parent, action, filters, pixbuf_formats: bool
-) -> Gtk.FileChooserNative:
-    dialog = Gtk.FileChooserNative.new(title, parent, action, None, None)
-
-    if parent:
-        dialog.set_transient_for(parent)
-
-    if sys.platform != "darwin":
-        if pixbuf_formats:
-            dialog.add_filter(new_image_filter())
-        else:
-            for name, patterns, mime_type in filters:
-                dialog.add_filter(new_filter(name, patterns, mime_type))
-        dialog.add_filter(new_filter(gettext("All Files"), "*"))
-    return dialog
+def new_filters(filters, images=False):
+    store = Gio.ListStore.new(Gtk.FileFilter)
+    if images:
+        store.append(new_image_filter())
+    for name, pattern, mime_type in filters:
+        store.append(new_filter(name, pattern, mime_type))
+    store.append(new_filter(gettext("All Files"), "*"))
+    return store
 
 
 def open_file_dialog(
@@ -54,29 +46,26 @@ def open_file_dialog(
     parent=None,
     dirname=None,
     filters=None,
-    pixbuf_formats: bool = False,
+    image_filter=False,
 ) -> None:
-    if filters is None:
-        filters = []
-    dialog = _file_dialog_with_filters(
-        title, parent, Gtk.FileChooserAction.OPEN, filters, pixbuf_formats
-    )
-    dialog.set_select_multiple(True)
+    dialog = Gtk.FileDialog.new()
+    dialog.set_title(title)
 
-    def response(_dialog, answer):
-        filenames = (
-            [f.get_path() for f in dialog.get_files()]
-            if answer == Gtk.ResponseType.ACCEPT
-            else []
-        )
-        dialog.destroy()
-        handler(filenames)
-
-    dialog.connect("response", response)
-    dialog.set_modal(True)
     if dirname:
-        dialog.set_current_folder(Gio.File.parse_name(dirname))
-    dialog.show()
+        dialog.set_initial_folder(Gio.File.parse_name(dirname))
+
+    if filters:
+        dialog.set_filters(new_filters(filters, image_filter))
+
+    def response(dialog, result):
+        if result.had_error():
+            # File dialog was cancelled
+            return
+
+        files = dialog.open_multiple_finish(result)
+        handler([Path(f.get_path()) for f in files])
+
+    dialog.open_multiple(parent=parent, cancellable=None, callback=response)
 
 
 def save_file_dialog(
@@ -87,42 +76,30 @@ def save_file_dialog(
     extension=None,
     filters=None,
 ) -> Gtk.FileChooser:
-    if filters is None:
-        filters = []
-    dialog = _file_dialog_with_filters(
-        title, parent, Gtk.FileChooserAction.SAVE, filters, False
-    )
+    dialog = Gtk.FileDialog.new()
+    dialog.set_title(title)
 
-    def get_filename() -> Path:
-        return Path(dialog.get_file().get_path())
+    if filename:
+        dialog.set_initial_file(Gio.File.parse_name(str(filename)))
 
-    def set_filename(filename: Path):
-        dialog.set_current_name(str(filename.name))
+    if filters:
+        dialog.set_filters(new_filters(filters))
 
-    def overwrite_check() -> Path | None:
-        filename = get_filename()
+    def response(dialog, result):
+        if result.had_error():
+            # File dialog was cancelled
+            return
+
+        filename = Path(dialog.save_finish(result).get_path())
         if extension and filename.suffix != extension:
             filename = filename.with_suffix(extension)
-            set_filename(filename)
-            return None if filename.exists() else filename
-        return filename
+            if filename.exists():
+                dialog.set_initial_file(Gio.File.parse_name(str(filename)))
+                dialog.save(parent=parent, cancellable=None, callback=response)
+                return
+        handler(filename)
 
-    def response(_dialog, answer):
-        if answer == Gtk.ResponseType.ACCEPT:
-            if filename := overwrite_check():
-                dialog.destroy()
-                handler(filename)
-            else:
-                dialog.show()
-        else:
-            dialog.destroy()
-
-    dialog.connect("response", response)
-    if filename:
-        set_filename(filename)
-        dialog.set_current_folder(Gio.File.parse_name(str(filename.parent)))
-    dialog.set_modal(True)
-    dialog.show()
+    dialog.save(parent=parent, cancellable=None, callback=response)
     return dialog
 
 

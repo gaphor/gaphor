@@ -2151,7 +2151,7 @@ msgstr "Stato"
 
 #: gaphor/ui/appfilemanager.py:16 gaphor/ui/filedialog.py:13
 #, fuzzy
-msgid "All Gaphor Models"
+msgid "Gaphor Models"
 msgstr "Modelli Gaphor"
 
 #: gaphor/ui/appfilemanager.py:42

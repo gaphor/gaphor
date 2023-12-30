@@ -125,7 +125,7 @@ class PicturePropertyPage(PropertyPageBase):
         open_file_dialog(
             gettext("Select a picture..."),
             self.open_files,
-            pixbuf_formats=True,
+            image_filter=True,
             parent=button.get_root(),
         )
 

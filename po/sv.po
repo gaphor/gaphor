@@ -2095,7 +2095,7 @@ msgstr "Datum"
 
 #: gaphor/ui/appfilemanager.py:16 gaphor/ui/filedialog.py:13
 #, fuzzy
-msgid "All Gaphor Models"
+msgid "Gaphor Models"
 msgstr "Alla Gaphormodeller"
 
 #: gaphor/ui/appfilemanager.py:42
