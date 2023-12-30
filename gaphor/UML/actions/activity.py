@@ -1,4 +1,5 @@
 from gaphor import UML
+from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import (
     AttachedPresentation,
     Classified,
@@ -89,14 +90,37 @@ class ActivityParameterNodeItem(AttachedPresentation[UML.ActivityParameterNode])
             id,
             shape=Box(
                 Text(
-                    text=lambda: self.subject.parameter.name or "",
+                    text=self._format_name,
                 ),
                 style={"padding": (4, 12, 4, 12), "min-width": 120},
                 draw=draw_border,
             ),
         )
 
-        self.watch("subject[ActivityParameterNode].parameter.name")
+        self.watch("subject[ActivityParameterNode].parameter.name").watch(
+            "subject[ActivityParameterNode].parameter.type.name"
+        ).watch("subject[ActivityParameterNode].parameter.direction").watch(
+            "show_type"
+        ).watch("show_direction")
+
+    show_type: attribute[int] = attribute("show_type", int, default=False)
+    show_direction: attribute[int] = attribute("show_direction", int, default=False)
 
     def update(self, context):
         self.width, self.height = super().update(context)
+
+    def _format_name(self):
+        if not (self.subject and self.subject.parameter):
+            return ""
+        parameter = self.subject.parameter
+        name = parameter.name or ""
+        type = (parameter.type.name) if self.show_type and parameter.type else None
+        direction = parameter.direction if self.show_direction else None
+
+        if type and direction:
+            return f"{direction} {name}: {type}"
+        elif type:
+            return f"{name}: {type}"
+        elif direction:
+            return f"{direction} {name}"
+        return name

@@ -17,8 +17,9 @@ from gaphor.diagram.propertypages import (
 from gaphor.diagram.propertypages import (
     new_builder as diagram_new_builder,
 )
-from gaphor.UML.actions.activity import ActivityItem
+from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
 from gaphor.UML.propertypages import (
+    TypedElementPropertyPage,
     create_list_store,
     list_item_factory,
     list_view_key_handler,
@@ -201,3 +202,50 @@ class ActivityParameterNodeNamePropertyPage(PropertyPageBase):
     def _on_name_changed(self, entry):
         if self.subject.parameter.name != entry.get_text():
             self.subject.parameter.name = entry.get_text()
+
+
+@PropertyPages.register(ActivityParameterNodeItem)
+class ActivityParameterNodeTypePropertyPage(TypedElementPropertyPage):
+    @property
+    def typed_element(self):
+        return self.item.subject.parameter
+
+
+@PropertyPages.register(ActivityParameterNodeItem)
+class ActivityParameterNodeDirectionPropertyPage(PropertyPageBase):
+    DIRECTION = UML.Parameter.direction.values
+    order = 40
+
+    def __init__(self, item):
+        super().__init__()
+        self.item = item
+
+    def construct(self):
+        if not (self.item.subject and self.item.subject.parameter):
+            return
+
+        builder = new_builder(
+            "parameter-direction-editor",
+            signals={
+                "parameter-direction-changed": (self._on_parameter_direction_changed,),
+                "show-direction-changed": (self._on_show_direction_changed,),
+            },
+        )
+
+        direction = builder.get_object("parameter-direction")
+        direction.set_selected(
+            self.DIRECTION.index(self.item.subject.parameter.direction)
+        )
+
+        show_direction = builder.get_object("show-direction")
+        show_direction.set_active(self.item.show_direction)
+
+        return builder.get_object("parameter-direction-editor")
+
+    @transactional
+    def _on_parameter_direction_changed(self, dropdown, _pspec):
+        self.item.subject.parameter.direction = self.DIRECTION[dropdown.get_selected()]
+
+    @transactional
+    def _on_show_direction_changed(self, button, _gspec):
+        self.item.show_direction = button.get_active()

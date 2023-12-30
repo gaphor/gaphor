@@ -2,10 +2,12 @@ from gi.repository import Gdk
 
 from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
-from gaphor.UML.actions.activity import ActivityItem
+from gaphor.UML.actions.activity import ActivityItem, ActivityParameterNodeItem
 from gaphor.UML.actions.activitypropertypage import (
     ActivityItemPage,
+    ActivityParameterNodeDirectionPropertyPage,
     ActivityParameterNodeNamePropertyPage,
+    ActivityParameterNodeTypePropertyPage,
     activity_parameter_node_model,
     list_view_key_handler,
 )
@@ -78,7 +80,7 @@ def test_update_model_when_new_parameter_added(create, element_factory):
     assert property_page.model.get_n_items() == 2  # one + empty row
 
 
-def test_activity_parameter_node_name_editing(create, element_factory):
+def test_activity_parameter_node_name_editing(element_factory):
     subject = element_factory.create(UML.ActivityParameterNode)
     subject.parameter = element_factory.create(UML.Parameter)
     property_page = ActivityParameterNodeNamePropertyPage(subject)
@@ -188,13 +190,48 @@ def test_activity_parameter_node_reorder_first_node_up(create, element_factory):
     assert activity_item.subject.node[1] is node_two
 
 
-def test_construct_activity_itemproperty_page(create):
+def test_construct_activity_item_property_page(create):
     activity_item = create(ActivityItem, UML.Activity)
 
     property_page = ActivityItemPage(activity_item)
     widget = property_page.construct()
 
     assert widget
+
+
+def test_construct_activity_parameter_node_type_property_page(create, element_factory):
+    node_item = create(ActivityParameterNodeItem, UML.ActivityParameterNode)
+    node_item.subject.parameter = element_factory.create(UML.Parameter)
+
+    property_page = ActivityParameterNodeTypePropertyPage(node_item)
+    widget = property_page.construct()
+
+    assert widget
+
+
+def test_construct_activity_parameter_node_direction_property_page(
+    create, element_factory
+):
+    node_item = create(ActivityParameterNodeItem, UML.ActivityParameterNode)
+    node_item.subject.parameter = element_factory.create(UML.Parameter)
+
+    property_page = ActivityParameterNodeDirectionPropertyPage(node_item)
+    widget = property_page.construct()
+
+    assert widget
+
+
+def test_construct_activity_parameter_node_direction_changed(create, element_factory):
+    node_item = create(ActivityParameterNodeItem, UML.ActivityParameterNode)
+    node_item.subject.parameter = element_factory.create(UML.Parameter)
+
+    property_page = ActivityParameterNodeDirectionPropertyPage(node_item)
+    widget = property_page.construct()
+
+    direction = find(widget, "parameter-direction")
+    direction.set_selected(3)
+
+    assert node_item.subject.parameter.direction == "return"
 
 
 class ControllerStub:
