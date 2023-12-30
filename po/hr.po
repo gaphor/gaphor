@@ -4,28 +4,27 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gaphor\n"
+"Project-Id-Version:  Gaphor\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-06-30 21:22+0200\n"
+"POT-Creation-Date: 2023-12-30 16:31+0100\n"
 "PO-Revision-Date: 2023-07-19 13:06+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
-"Language-Team: Croatian <https://hosted.weblate.org/projects/gaphor/gaphor/"
-"hr/>\n"
 "Language: hr\n"
+"Language-Team: Croatian "
+"<https://hosted.weblate.org/projects/gaphor/gaphor/hr/>\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.0-dev\n"
-"Generated-By: Babel 2.12.1\n"
+"Generated-By: Babel 2.14.0\n"
 
-#: gaphor/C4Model/modelinglanguage.py:15 gaphor/C4Model/toolbox.py:55
-#: gaphor/ui/greeter.py:55
+#: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
+#: gaphor/ui/greeter.py:56
 msgid "C4 Model"
 msgstr "C4 model"
 
-#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:137
+#: gaphor/C4Model/propertypages.ui:11 gaphor/diagram/propertypages.ui:181
 msgid "Description"
 msgstr "Opis"
 
@@ -33,86 +32,154 @@ msgstr "Opis"
 msgid "Technology"
 msgstr "Tehnologija"
 
-#: gaphor/C4Model/toolbox.py:29
+#: gaphor/C4Model/toolbox.py:41
 msgid "New Software System"
 msgstr "Novi softverski sustav"
 
-#: gaphor/C4Model/toolbox.py:36
+#: gaphor/C4Model/toolbox.py:48
 msgid "New Container"
 msgstr "Novi kontejner"
 
-#: gaphor/C4Model/toolbox.py:43
+#: gaphor/C4Model/toolbox.py:55
 msgid "Database"
 msgstr "Baza podataka"
 
-#: gaphor/C4Model/toolbox.py:44
+#: gaphor/C4Model/toolbox.py:56 gaphor/C4Model/toolbox.py:177
 msgid "New Database"
 msgstr "Nova baza podataka"
 
-#: gaphor/C4Model/toolbox.py:51
+#: gaphor/C4Model/toolbox.py:63 gaphor/C4Model/toolbox.py:167
+#: gaphor/UML/toolbox.py:67
 msgid "New Component"
 msgstr "Nova komponenta"
 
-#: gaphor/C4Model/toolbox.py:59 gaphor/C4Model/toolbox.py:65
+#: gaphor/C4Model/toolbox.py:71 gaphor/C4Model/toolbox.py:77
 msgid "Person"
 msgstr "Osoba"
 
-#: gaphor/C4Model/toolbox.py:71
+#: gaphor/C4Model/toolbox.py:83
 msgid "Software System"
 msgstr "Softverski sustav"
 
-#: gaphor/C4Model/toolbox.py:83
+#: gaphor/C4Model/toolbox.py:95
 msgid "Container"
 msgstr "Kontejner"
 
-#: gaphor/C4Model/toolbox.py:95
+#: gaphor/C4Model/toolbox.py:107
 msgid "Container: Database"
 msgstr "Kontejner: Baza podataka"
 
-#: gaphor/C4Model/toolbox.py:107 gaphor/UML/classes/classestoolbox.py:59
+#: gaphor/C4Model/toolbox.py:119 gaphor/UML/classes/classestoolbox.py:63
 msgid "Component"
 msgstr "Komponenta"
 
-#: gaphor/C4Model/toolbox.py:119 gaphor/RAAML/fta/ftatoolbox.py:16
-#: gaphor/UML/classes/classestoolbox.py:105
-#: gaphor/UML/classes/propertypages.ui:500
+#: gaphor/C4Model/toolbox.py:131 gaphor/RAAML/fta/ftatoolbox.py:16
+#: gaphor/UML/classes/classestoolbox.py:119
+#: gaphor/UML/classes/propertypages.ui:480
 msgid "Dependency"
 msgstr "Ovisnost"
 
-#: gaphor/C4Model/toolbox.py:139
+#: gaphor/C4Model/toolbox.py:151
 msgid "New C4 Diagram"
 msgstr "Novi C4 dijagram"
 
-#: gaphor/C4Model/toolbox.py:140 gaphor/UML/toolbox.py:30
+#: gaphor/C4Model/toolbox.py:152 gaphor/UML/toolbox.py:50
 msgid "New Class Diagram"
 msgstr "Novi dijagram klasa"
 
-#: gaphor/C4Model/toolbox.py:141 gaphor/SysML/toolbox.py:72
-#: gaphor/UML/toolbox.py:34
+#: gaphor/C4Model/toolbox.py:153 gaphor/SysML/toolbox.py:129
+#: gaphor/UML/toolbox.py:54
 msgid "New Activity Diagram"
 msgstr "Novi dijagram aktivnosti"
 
-#: gaphor/C4Model/toolbox.py:142 gaphor/SysML/toolbox.py:73
-#: gaphor/UML/toolbox.py:35
+#: gaphor/C4Model/toolbox.py:154 gaphor/SysML/toolbox.py:139
+#: gaphor/UML/toolbox.py:55
 msgid "New Sequence Diagram"
 msgstr "Novi dijagram slijeda"
 
-#: gaphor/C4Model/toolbox.py:143 gaphor/SysML/toolbox.py:74
-#: gaphor/UML/toolbox.py:37
+#: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
+#: gaphor/UML/toolbox.py:57
 msgid "New State Machine Diagram"
 msgstr "Novi dijagram stanja"
 
-#: gaphor/RAAML/modelinglanguage.py:16 gaphor/ui/greeter.py:48
+#: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
+#: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
+#: gaphor/UML/toolbox.py:63
+#, fuzzy
+msgid "New Activity"
+msgstr "Aktivnost"
+
+#: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
+#: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
+#: gaphor/UML/toolbox.py:80
+#, fuzzy
+msgid "New Interaction"
+msgstr "Interakcija"
+
+#: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
+#: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
+#: gaphor/UML/toolbox.py:86
+#, fuzzy
+msgid "New State Machine"
+msgstr "Automat konačnih stanja"
+
+#: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
+#, fuzzy
+msgid "New Class"
+msgstr "Klasa"
+
+#: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
+#, fuzzy
+msgid "New Data Type"
+msgstr "vrsta podataka"
+
+#: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
+#: gaphor/UML/toolbox.py:71
+#, fuzzy
+msgid "New Enumeration"
+msgstr "nabrajanje"
+
+#: gaphor/C4Model/toolbox.py:173
+#, fuzzy
+msgid "New Primitive Type"
+msgstr "osnovni element"
+
+#: gaphor/C4Model/toolbox.py:175
+#, fuzzy
+msgid "New Person"
+msgstr "Osoba"
+
+#: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:49
 msgid "RAAML"
 msgstr "RAAML"
 
-#: gaphor/RAAML/toolbox.py:19
+#: gaphor/RAAML/toolbox.py:22
 msgid "New FTA Diagram"
 msgstr "Novi dijagram analize kvarova"
 
-#: gaphor/RAAML/toolbox.py:20
+#: gaphor/RAAML/toolbox.py:23
 msgid "New STPA Diagram"
 msgstr "Novi dijagram sustavno-teoretske analize procesa (STPA)"
+
+#: gaphor/RAAML/toolbox.py:27
+#, fuzzy
+msgid "New Top Event"
+msgstr "Top događaj"
+
+#: gaphor/RAAML/toolbox.py:28
+#, fuzzy
+msgid "New Loss"
+msgstr "Gubitak"
+
+#: gaphor/RAAML/toolbox.py:29
+#, fuzzy
+msgid "New Hazard"
+msgstr "Opasnost"
+
+#: gaphor/RAAML/toolbox.py:30
+#, fuzzy
+msgid "New Situation"
+msgstr "Situacija"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -250,12 +317,13 @@ msgstr "Opasnost"
 msgid "Abstract Operational Situation"
 msgstr "Apstraktna operacijska situacija"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:77
-#: gaphor/UML/classes/classestoolbox.py:113
+#: gaphor/RAAML/stpa/stpatoolbox.py:35 gaphor/SysML/blocks/blockstoolbox.py:100
+#: gaphor/UML/classes/classestoolbox.py:127
 msgid "Generalization"
 msgstr "Generalizacija"
 
-#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:65
+#: gaphor/RAAML/stpa/stpatoolbox.py:61 gaphor/SysML/blocks/block.py:60
+#: gaphor/SysML/blocks/interfaceblock.py:59
 msgid "Situation"
 msgstr "Situacija"
 
@@ -284,7 +352,7 @@ msgstr "Nesigurna kontrolna radnja"
 msgid "Relevant To"
 msgstr "Relevantno za"
 
-#: gaphor/SysML/modelinglanguage.py:16 gaphor/ui/greeter.py:41
+#: gaphor/SysML/modelinglanguage.py:24 gaphor/ui/greeter.py:42
 msgid "SysML"
 msgstr "SysML"
 
@@ -308,7 +376,7 @@ msgstr "Preokreni smjer"
 msgid "Allocated Type"
 msgstr "Dodijeljena vrsta"
 
-#: gaphor/SysML/propertypages.ui:93
+#: gaphor/SysML/propertypages.ui:93 gaphor/SysML/propertypages.ui:164
 msgid "Compartments"
 msgstr "Odjeljci"
 
@@ -320,173 +388,244 @@ msgstr "Prikaži dijelove"
 msgid "Show References"
 msgstr "Prikaži reference"
 
-#: gaphor/SysML/propertypages.ui:138
+#: gaphor/SysML/propertypages.ui:138 gaphor/SysML/propertypages.ui:177
 msgid "Show Values"
 msgstr "Prikaži vrijednosti"
 
-#: gaphor/SysML/propertypages.ui:164
+#: gaphor/SysML/propertypages.ui:204
 msgid "Aggregation"
 msgstr "Agregacija"
 
-#: gaphor/SysML/propertypages.ui:176 gaphor/UML/classes/propertypages.ui:116
+#: gaphor/SysML/propertypages.ui:216 gaphor/UML/classes/propertypages.ui:116
 #: gaphor/UML/classes/propertypages.ui:251
 msgid "No aggregation"
 msgstr "Bez agregacije"
 
-#: gaphor/SysML/propertypages.ui:177 gaphor/UML/classes/propertypages.ui:117
+#: gaphor/SysML/propertypages.ui:217 gaphor/UML/classes/propertypages.ui:117
 #: gaphor/UML/classes/propertypages.ui:252
 msgid "Shared"
 msgstr "Dijeljenjo"
 
-#: gaphor/SysML/propertypages.ui:178 gaphor/UML/classes/propertypages.ui:118
+#: gaphor/SysML/propertypages.ui:218 gaphor/UML/classes/propertypages.ui:118
 #: gaphor/UML/classes/propertypages.ui:253
 msgid "Composite"
 msgstr "Sastavljeno"
 
-#: gaphor/SysML/propertypages.ui:187
-msgid "Type"
-msgstr "Vrsta"
-
-#: gaphor/SysML/propertypages.ui:210
+#: gaphor/SysML/propertypages.ui:236
 msgid "Id"
 msgstr "Id"
 
-#: gaphor/SysML/propertypages.ui:224
+#: gaphor/SysML/propertypages.ui:250
 msgid "Text"
 msgstr "Tekst"
 
-#: gaphor/SysML/toolbox.py:25
+#: gaphor/SysML/sysmlfmt.py:10
+#, fuzzy
+msgid "sourceContext: {name}"
+msgstr "proširi: {name}"
+
+#: gaphor/SysML/toolbox.py:43
 msgid "Internal Blocks"
 msgstr "Interni blokovi"
 
-#: gaphor/SysML/toolbox.py:29
+#: gaphor/SysML/toolbox.py:47
 msgid "Connector"
 msgstr "Spojnica"
 
-#: gaphor/SysML/toolbox.py:36
+#: gaphor/SysML/toolbox.py:54
 msgid "Property"
 msgstr "Svojstvo"
 
-#: gaphor/SysML/toolbox.py:45
+#: gaphor/SysML/toolbox.py:63
 msgid "Proxy Port"
 msgstr "Proxy priključak"
 
-#: gaphor/SysML/toolbox.py:68
+#: gaphor/SysML/toolbox.py:90
 msgid "New Block Definition Diagram"
 msgstr "Novi dijagram definicija blokova"
 
-#: gaphor/SysML/toolbox.py:69
+#: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
+#: gaphor/SysML/toolbox.py:125 gaphor/SysML/toolbox.py:167
+#, fuzzy
+msgid "New Package"
+msgstr "Novi paket"
+
+#: gaphor/SysML/toolbox.py:97
 msgid "New Internal Block Diagram"
 msgstr "Novi dijagram internih blokova"
 
-#: gaphor/SysML/toolbox.py:70 gaphor/UML/toolbox.py:31
+#: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
+#: gaphor/SysML/toolbox.py:174
+#, fuzzy
+msgid "New Block"
+msgstr "Blok"
+
+#: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
 msgid "New Package Diagram"
 msgstr "Novi dijagram paketa"
 
-#: gaphor/SysML/toolbox.py:71
+#: gaphor/SysML/toolbox.py:117
 msgid "New Requirement Diagram"
 msgstr "Novi dijagram uvjeta"
 
-#: gaphor/SysML/toolbox.py:75 gaphor/UML/toolbox.py:38
+#: gaphor/SysML/toolbox.py:159 gaphor/UML/toolbox.py:58
 msgid "New Use Case Diagram"
 msgstr "Novi dijagram slučaja korištenja"
 
-#: gaphor/SysML/blocks/block.py:67
+#: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
+#, fuzzy
+msgid "New Actor"
+msgstr "Glavni sudionik"
+
+#: gaphor/SysML/toolbox.py:182
+#, fuzzy
+msgid "New Interface Block"
+msgstr "Novi dijagram internih blokova"
+
+#: gaphor/SysML/toolbox.py:186
+#, fuzzy
+msgid "New Requirement"
+msgstr "Uvjet"
+
+#: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
+#, fuzzy
+msgid "New Use Case"
+msgstr "Slučaj korištenja"
+
+#: gaphor/SysML/toolbox.py:197
+#, fuzzy
+msgid "New Value Type"
+msgstr "vrsta vrijednosti"
+
+#: gaphor/SysML/allocations/allocationstoolbox.py:6
+#, fuzzy
+msgid "Allocations"
+msgstr "Radnje"
+
+#: gaphor/SysML/allocations/allocationstoolbox.py:10
+#, fuzzy
+msgid "Allocate"
+msgstr "Dodijeljena vrsta"
+
+#: gaphor/SysML/allocations/relationships.py:10
+#, fuzzy
+msgid "allocate"
+msgstr "Dodijeljena vrsta"
+
+#: gaphor/SysML/blocks/block.py:62 gaphor/SysML/blocks/interfaceblock.py:61
 msgid "ControlStructure"
 msgstr "Struktura kontrole"
 
-#: gaphor/SysML/blocks/block.py:69
+#: gaphor/SysML/blocks/block.py:64
 msgid "block"
 msgstr "blok"
 
-#: gaphor/SysML/blocks/block.py:105
+#: gaphor/SysML/blocks/block.py:98
 msgid "parts"
 msgstr "dijelovi"
 
-#: gaphor/SysML/blocks/block.py:116
+#: gaphor/SysML/blocks/block.py:111 gaphor/SysML/blocks/interfaceblock.py:97
 msgid "references"
 msgstr "reference"
 
-#: gaphor/SysML/blocks/block.py:127
+#: gaphor/SysML/blocks/block.py:122 gaphor/SysML/blocks/interfaceblock.py:108
 msgid "values"
 msgstr "vrijednost"
 
-#: gaphor/SysML/blocks/block.py:145
+#: gaphor/SysML/blocks/block.py:140 gaphor/SysML/blocks/interfaceblock.py:126
 msgid "operations"
 msgstr "operacije"
 
-#: gaphor/SysML/blocks/block.py:160 gaphor/SysML/blocks/block.py:186
+#: gaphor/SysML/blocks/block.py:155 gaphor/SysML/blocks/block.py:187
+#: gaphor/SysML/blocks/interfaceblock.py:141
+#: gaphor/SysML/blocks/interfaceblock.py:167
 msgid "unnamed"
 msgstr "neimenovano"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:24
+#: gaphor/SysML/blocks/blockstoolbox.py:25
 msgid "Blocks"
 msgstr "Blokovi"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:28
+#: gaphor/SysML/blocks/blockstoolbox.py:29
 msgid "Block"
 msgstr "Blok"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:38
-#: gaphor/UML/classes/classestoolbox.py:47
+#: gaphor/SysML/blocks/blockstoolbox.py:39
+#, fuzzy
+msgid "InterfaceBlock"
+msgstr "sučelje"
+
+#: gaphor/SysML/blocks/blockstoolbox.py:51
+#: gaphor/UML/classes/classestoolbox.py:51
 msgid "Package"
 msgstr "Paket"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:50
-#: gaphor/UML/classes/classestoolbox.py:78
+#: gaphor/SysML/blocks/blockstoolbox.py:63
+#: gaphor/UML/classes/classestoolbox.py:82
 msgid "Composite Association"
 msgstr "Sastavljena veza"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:60
-#: gaphor/UML/classes/classestoolbox.py:88
+#: gaphor/SysML/blocks/blockstoolbox.py:73
+#: gaphor/UML/classes/classestoolbox.py:92
 msgid "Shared Association"
 msgstr "Dijeljena veza"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:70
-#: gaphor/UML/classes/classestoolbox.py:98
+#: gaphor/SysML/blocks/blockstoolbox.py:83
+#: gaphor/UML/classes/classestoolbox.py:102
 #: gaphor/UML/usecases/usecasetoolbox.py:40
 msgid "Association"
 msgstr "Veza"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:84
+#: gaphor/SysML/blocks/blockstoolbox.py:90
+#: gaphor/UML/classes/classestoolbox.py:109
+#, fuzzy
+msgid "Direct Association"
+msgstr "Dijeljena veza"
+
+#: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
 msgstr "Vrsta vrijednosti"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:95
-#: gaphor/UML/classes/classestoolbox.py:140
+#: gaphor/SysML/blocks/blockstoolbox.py:118
+#: gaphor/UML/classes/classestoolbox.py:154
 msgid "Enumeration"
 msgstr "Nabrajanje"
 
-#: gaphor/SysML/blocks/blockstoolbox.py:107
-#: gaphor/UML/classes/classestoolbox.py:152
+#: gaphor/SysML/blocks/blockstoolbox.py:130
+#: gaphor/UML/classes/classestoolbox.py:166
 msgid "Primitive"
 msgstr "Osnovni element"
 
-#: gaphor/SysML/blocks/proxyport.py:35
+#: gaphor/SysML/blocks/interfaceblock.py:63
+#, fuzzy
+msgid "interfaceblock"
+msgstr "sučelje"
+
+#: gaphor/SysML/blocks/proxyport.py:40
 msgid "proxy"
 msgstr "proxy"
 
-#: gaphor/SysML/requirements/relationships.py:36
+#: gaphor/SysML/requirements/relationships.py:12
 msgid "satisfy"
 msgstr "zadovolji"
 
-#: gaphor/SysML/requirements/relationships.py:47
+#: gaphor/SysML/requirements/relationships.py:23
 msgid "deriveReqt"
 msgstr "izvedi zahtjev"
 
-#: gaphor/SysML/requirements/relationships.py:54
+#: gaphor/SysML/requirements/relationships.py:30
 msgid "trace"
 msgstr "trag"
 
-#: gaphor/SysML/requirements/relationships.py:63
+#: gaphor/SysML/requirements/relationships.py:39
 msgid "verify"
 msgstr "provjeri"
 
-#: gaphor/SysML/requirements/relationships.py:72
+#: gaphor/SysML/requirements/relationships.py:48
 msgid "refine"
 msgstr "razradi"
 
-#: gaphor/SysML/requirements/requirement.py:61
+#: gaphor/SysML/requirements/requirement.py:57
 msgid "requirement"
 msgstr "uvjet"
 
@@ -520,15 +659,24 @@ msgid "Verify"
 msgstr "Provjeri"
 
 #: gaphor/SysML/requirements/requirementstoolbox.py:64
-#: gaphor/UML/classes/classestoolbox.py:71
+#: gaphor/UML/classes/classestoolbox.py:75
 msgid "Containment"
 msgstr "Sadrži"
 
-#: gaphor/UML/modelinglanguage.py:16 gaphor/ui/greeter.py:34
+#: gaphor/UML/modelinglanguage.py:20 gaphor/ui/greeter.py:35
 msgid "UML"
 msgstr "UML"
 
-#: gaphor/UML/sanitizerservice.py:71
+#: gaphor/UML/actions/propertypages.ui:372 gaphor/UML/propertypages.ui:9
+msgid "Type"
+msgstr "Vrsta"
+
+#: gaphor/UML/propertypages.ui:28
+#, fuzzy
+msgid "Show Type"
+msgstr "Prikaži vrstu"
+
+#: gaphor/UML/sanitizerservice.py:73
 msgid ""
 "Removed unused elements from the model: they are not used in any other "
 "diagram."
@@ -536,21 +684,56 @@ msgstr ""
 "Iz modela su uklonjeni nekorišteni elementi: ne koriste se u nijednom "
 "drugom dijagramu."
 
-#: gaphor/UML/toolbox.py:32
+#: gaphor/UML/toolbox.py:52
 msgid "New Component Diagram"
 msgstr "Novi dijagram komponenti"
 
-#: gaphor/UML/toolbox.py:33
+#: gaphor/UML/toolbox.py:53
 msgid "New Deployment Diagram"
 msgstr "Novi dijagram implementacije"
 
-#: gaphor/UML/toolbox.py:36
+#: gaphor/UML/toolbox.py:56
 msgid "New Communication Diagram"
 msgstr "Novi dijagram komunikacije"
 
-#: gaphor/UML/toolbox.py:39
+#: gaphor/UML/toolbox.py:59
 msgid "New Profile Diagram"
 msgstr "Novi dijagram profila"
+
+#: gaphor/UML/toolbox.py:65
+#, fuzzy
+msgid "New Artifact"
+msgstr "Artefakt"
+
+#: gaphor/UML/toolbox.py:69
+#, fuzzy
+msgid "New Device"
+msgstr "uređaj"
+
+#: gaphor/UML/toolbox.py:75
+#, fuzzy
+msgid "New Instance Specification"
+msgstr "Specifikacija spajanja"
+
+#: gaphor/UML/toolbox.py:82
+#, fuzzy
+msgid "New Interface"
+msgstr "sučelje"
+
+#: gaphor/UML/toolbox.py:83
+#, fuzzy
+msgid "New Node"
+msgstr "Novi model"
+
+#: gaphor/UML/toolbox.py:84
+#, fuzzy
+msgid "New Profile"
+msgstr "Profil"
+
+#: gaphor/UML/toolbox.py:88
+#, fuzzy
+msgid "New Stereotype"
+msgstr "Stereotip"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -558,24 +741,24 @@ msgstr "Novi dijagram profila"
 msgid "New {name}"
 msgstr "Nova klasa {name}"
 
-#: gaphor/UML/umlfmt.py:203
+#: gaphor/UML/umlfmt.py:218
 msgid "general: {name}"
 msgstr "opće: {name}"
 
-#: gaphor/UML/umlfmt.py:208
+#: gaphor/UML/umlfmt.py:223
 msgid "supplier: {name}"
 msgstr "dobavljač: {name}"
 
-#: gaphor/UML/umlfmt.py:215
+#: gaphor/UML/umlfmt.py:230
 msgid "extend: {name}"
 msgstr "proširi: {name}"
 
-#: gaphor/UML/umlfmt.py:222
+#: gaphor/UML/umlfmt.py:237
 msgid "include: {name}"
 msgstr "uključi: {name}"
 
 #: gaphor/UML/actions/actionstoolbox.py:40
-#: gaphor/UML/actions/actionstoolbox.py:62 gaphor/templates/sysml.gaphor
+#: gaphor/UML/actions/actionstoolbox.py:67 gaphor/templates/sysml.gaphor
 #: gaphor/templates/uml.gaphor
 msgid "Activity"
 msgstr "Aktivnost"
@@ -589,72 +772,91 @@ msgid "Swimlane Two"
 msgstr "Traka dva"
 
 #: gaphor/UML/actions/actionstoolbox.py:58
+#, fuzzy
+msgid "ValueSpecificationAction"
+msgstr "Specifikacija spajanja"
+
+#: gaphor/UML/actions/actionstoolbox.py:63
 msgid "Actions"
 msgstr "Radnje"
 
-#: gaphor/UML/actions/actionstoolbox.py:74
-#: gaphor/UML/actions/actionstoolbox.py:80
+#: gaphor/UML/actions/actionstoolbox.py:79
+#: gaphor/UML/actions/actionstoolbox.py:85
 msgid "Action"
 msgstr "Radnja"
 
-#: gaphor/UML/actions/actionstoolbox.py:86
+#: gaphor/UML/actions/actionstoolbox.py:91
+msgid "Call behavior action"
+msgstr ""
+
+#: gaphor/UML/actions/actionstoolbox.py:98
+#, fuzzy
+msgid "CallBehaviorAction"
+msgstr "Ponašanje"
+
+#: gaphor/UML/actions/actionstoolbox.py:105
+#, fuzzy
+msgid "Value specification action"
+msgstr "Specifikacija spajanja"
+
+#: gaphor/UML/actions/actionstoolbox.py:117
 msgid "Initial node"
 msgstr "Početni čvor"
 
-#: gaphor/UML/actions/actionstoolbox.py:98
+#: gaphor/UML/actions/actionstoolbox.py:129
 msgid "Activity final node"
 msgstr "Završni čvor aktivnosti"
 
-#: gaphor/UML/actions/actionstoolbox.py:110
+#: gaphor/UML/actions/actionstoolbox.py:141
 msgid "Flow final node"
 msgstr "Završni čvor toka"
 
-#: gaphor/UML/actions/actionstoolbox.py:122
+#: gaphor/UML/actions/actionstoolbox.py:153
 msgid "Decision/merge node"
 msgstr "Čvor odluke/sjedinjavanja"
 
-#: gaphor/UML/actions/actionstoolbox.py:134
+#: gaphor/UML/actions/actionstoolbox.py:165
 msgid "Fork/join node"
 msgstr "Čvor grananja/spajanja"
 
-#: gaphor/UML/actions/actionstoolbox.py:146
-#: gaphor/UML/actions/actionstoolbox.py:152
+#: gaphor/UML/actions/actionstoolbox.py:177
+#: gaphor/UML/actions/actionstoolbox.py:183
 msgid "Object node"
 msgstr "Čvor objekta"
 
-#: gaphor/UML/actions/actionstoolbox.py:158
+#: gaphor/UML/actions/actionstoolbox.py:189
 msgid "Swimlane"
 msgstr "Traka"
 
-#: gaphor/UML/actions/actionstoolbox.py:170
+#: gaphor/UML/actions/actionstoolbox.py:201
 msgid "Control flow"
 msgstr "Tok kontrola"
 
-#: gaphor/UML/actions/actionstoolbox.py:177
+#: gaphor/UML/actions/actionstoolbox.py:208
 msgid "Object flow"
 msgstr "Tok objekata"
 
-#: gaphor/UML/actions/actionstoolbox.py:184
+#: gaphor/UML/actions/actionstoolbox.py:215
 msgid "Send signal action"
 msgstr "Radnja slanja signala"
 
-#: gaphor/UML/actions/actionstoolbox.py:190
+#: gaphor/UML/actions/actionstoolbox.py:221
 msgid "Send signal"
 msgstr "Pošalji signal"
 
-#: gaphor/UML/actions/actionstoolbox.py:196
+#: gaphor/UML/actions/actionstoolbox.py:227
 msgid "Accept event action"
 msgstr "Radnja prihvaćanja događaja"
 
-#: gaphor/UML/actions/actionstoolbox.py:202
+#: gaphor/UML/actions/actionstoolbox.py:233
 msgid "Accept event"
 msgstr "Prihvati događaj"
 
-#: gaphor/UML/actions/actionstoolbox.py:208
+#: gaphor/UML/actions/actionstoolbox.py:239
 msgid "Input pin"
 msgstr "Pribadača unosa"
 
-#: gaphor/UML/actions/actionstoolbox.py:215
+#: gaphor/UML/actions/actionstoolbox.py:246
 msgid "Output pin"
 msgstr "Pribadača rezultata"
 
@@ -669,6 +871,11 @@ msgstr "sjedini"
 #: gaphor/UML/actions/activitynodes.py:193
 msgid "decision"
 msgstr "odluka"
+
+#: gaphor/UML/actions/activitypropertypage.py:134
+#, fuzzy
+msgid "New Parameter…"
+msgstr "Novi paket"
 
 #: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:165
 msgid "unordered"
@@ -690,11 +897,11 @@ msgstr "FIFO"
 msgid "New Swimlane"
 msgstr "Nova traka"
 
-#: gaphor/UML/actions/pin.py:58
+#: gaphor/UML/actions/pin.py:62
 msgid "input pin"
 msgstr "pribadača unosa"
 
-#: gaphor/UML/actions/pin.py:64
+#: gaphor/UML/actions/pin.py:68
 msgid "output pin"
 msgstr "pribadača rezultata"
 
@@ -735,29 +942,41 @@ msgid "First In First Out (FIFO)"
 msgstr "Prvi nutra prvi van (FIFO)"
 
 #: gaphor/UML/actions/propertypages.ui:193
-#: gaphor/UML/profiles/propertypages.ui:9 gaphor/diagram/propertypages.ui:36
+#: gaphor/UML/profiles/propertypages.ui:9 gaphor/diagram/propertypages.ui:49
 msgid "Name"
 msgstr "Ime"
 
-#: gaphor/UML/actions/propertypages.ui:228
-#: gaphor/UML/states/propertypages.ui:65
+#: gaphor/UML/actions/propertypages.ui:228 gaphor/templates/sysml.gaphor
+msgid "Behavior"
+msgstr "Ponašanje"
+
+#: gaphor/UML/actions/propertypages.ui:252
+#: gaphor/UML/classes/propertypages.ui:155
+#: gaphor/UML/classes/propertypages.ui:290
+#: gaphor/UML/profiles/propertypages.ui:87
+msgid "Value"
+msgstr "Vrijednost"
+
+#: gaphor/UML/actions/propertypages.ui:273
+#: gaphor/UML/states/propertypages.ui:83
 msgid "Guard"
 msgstr "Provjera"
 
-#: gaphor/UML/actions/propertypages.ui:250
+#: gaphor/UML/actions/propertypages.ui:295
+#: gaphor/UML/actions/propertypages.ui:315
 msgid "Parameter Nodes"
 msgstr "Čvorovi parametara"
 
-#: gaphor/UML/actions/propertypages.ui:272
+#: gaphor/UML/actions/propertypages.ui:331
 #: gaphor/UML/classes/propertypages.ui:67
 #: gaphor/UML/classes/propertypages.ui:202
-#: gaphor/UML/classes/propertypages.ui:402
-#: gaphor/UML/classes/propertypages.ui:637
-#: gaphor/UML/classes/propertypages.ui:745
+#: gaphor/UML/classes/propertypages.ui:382
+#: gaphor/UML/classes/propertypages.ui:589
+#: gaphor/UML/classes/propertypages.ui:687
 msgid "ⓘ Help"
 msgstr "ⓘ Pomoć"
 
-#: gaphor/UML/actions/propertypages.ui:288
+#: gaphor/UML/actions/propertypages.ui:347
 msgid ""
 "Add and edit class activity according to UML syntax.\n"
 "\n"
@@ -783,48 +1002,50 @@ msgstr ""
 "uklanjanje elemenata.\n"
 "Koristi <b>-</b>/<b>=</b> za premještanje elemenata prema gore ili dolje."
 
-#: gaphor/UML/classes/classespropertypages.py:308
-#: gaphor/UML/classes/classespropertypages.py:392
-#: gaphor/UML/classes/propertypages.ui:810
-msgid "Static"
-msgstr "Statički"
+#: gaphor/UML/actions/propertypages.ui:389
+msgid "Multiplicity"
+msgstr ""
 
-#: gaphor/UML/classes/classespropertypages.py:392
-#: gaphor/UML/classes/propertypages.ui:449
-#: gaphor/UML/classes/propertypages.ui:806
-msgid "Abstract"
-msgstr "Apstrakt"
+#: gaphor/UML/classes/classespropertypages.py:233
+#, fuzzy
+msgid "New Attribute…"
+msgstr "Prikaži svojstva"
 
-#: gaphor/UML/classes/classestoolbox.py:21
+#: gaphor/UML/classes/classespropertypages.py:390
+#, fuzzy
+msgid "New Operation…"
+msgstr "Prikaži operacije"
+
+#: gaphor/UML/classes/classestoolbox.py:25
 msgid "Classes"
 msgstr "Klase"
 
-#: gaphor/UML/classes/classestoolbox.py:25
+#: gaphor/UML/classes/classestoolbox.py:29
 #: gaphor/UML/profiles/profilestoolbox.py:14
 msgid "Class"
 msgstr "Klasa"
 
-#: gaphor/UML/classes/classestoolbox.py:35
+#: gaphor/UML/classes/classestoolbox.py:39
 msgid "Interface"
 msgstr "Sučelje"
 
-#: gaphor/UML/classes/classestoolbox.py:121
+#: gaphor/UML/classes/classestoolbox.py:135
 msgid "Interface Realization"
 msgstr "Realizacija sučelja"
 
-#: gaphor/UML/classes/classestoolbox.py:128
+#: gaphor/UML/classes/classestoolbox.py:142
 msgid "DataType"
 msgstr "Vrsta podataka"
 
-#: gaphor/UML/classes/datatype.py:56
+#: gaphor/UML/classes/datatype.py:57
 msgid "primitive"
 msgstr "osnovni element"
 
-#: gaphor/UML/classes/datatype.py:58 gaphor/UML/classes/enumeration.py:73
+#: gaphor/UML/classes/datatype.py:59 gaphor/UML/classes/enumeration.py:70
 msgid "valueType"
 msgstr "vrsta vrijednosti"
 
-#: gaphor/UML/classes/datatype.py:60
+#: gaphor/UML/classes/datatype.py:61
 msgid "dataType"
 msgstr "vrsta podataka"
 
@@ -840,11 +1061,16 @@ msgstr "realiziraj"
 msgid "implements"
 msgstr "implementacije"
 
-#: gaphor/UML/classes/enumeration.py:75
+#: gaphor/UML/classes/enumeration.py:72
 msgid "enumeration"
 msgstr "nabrajanje"
 
-#: gaphor/UML/classes/interface.py:290
+#: gaphor/UML/classes/enumerationpropertypages.py:124
+#, fuzzy
+msgid "New Enumeration…"
+msgstr "nabrajanje"
+
+#: gaphor/UML/classes/interface.py:283
 msgid "interface"
 msgstr "sučelje"
 
@@ -913,16 +1139,10 @@ msgstr "Dostupno"
 #: gaphor/UML/classes/propertypages.ui:135
 #: gaphor/UML/classes/propertypages.ui:270
 #: gaphor/UML/classes/propertypages.ui:324
-#: gaphor/UML/classes/propertypages.ui:366
+#: gaphor/UML/classes/propertypages.ui:361
 #: gaphor/UML/profiles/propertypages.ui:67
 msgid "Attributes"
 msgstr "Svojstva"
-
-#: gaphor/UML/classes/propertypages.ui:155
-#: gaphor/UML/classes/propertypages.ui:290
-#: gaphor/UML/profiles/propertypages.ui:87
-msgid "Value"
-msgstr "Vrijednost"
 
 #: gaphor/UML/classes/propertypages.ui:184
 msgid "Tail:"
@@ -932,7 +1152,12 @@ msgstr "Rep:"
 msgid "Show Attributes"
 msgstr "Prikaži svojstva"
 
-#: gaphor/UML/classes/propertypages.ui:419
+#: gaphor/UML/classes/propertypages.ui:367
+#: gaphor/UML/classes/propertypages.ui:573
+msgid "Static"
+msgstr "Statički"
+
+#: gaphor/UML/classes/propertypages.ui:399
 msgid ""
 "Add and edit class attributes according to UML syntax.\n"
 "\n"
@@ -958,40 +1183,45 @@ msgstr ""
 "uklanjanje elemenata.\n"
 "Koristi <b>-</b>/<b>=</b> za premještanje elemenata prema gore ili dolje."
 
-#: gaphor/UML/classes/propertypages.ui:471
+#: gaphor/UML/classes/propertypages.ui:429
+#: gaphor/UML/classes/propertypages.ui:568
+msgid "Abstract"
+msgstr "Apstrakt"
+
+#: gaphor/UML/classes/propertypages.ui:451
 msgid "Dependency type"
 msgstr "Vrsta ovisnosti"
 
-#: gaphor/UML/classes/propertypages.ui:482
+#: gaphor/UML/classes/propertypages.ui:462
 msgid "Automatic"
 msgstr "Automatski"
 
-#: gaphor/UML/classes/propertypages.ui:501
+#: gaphor/UML/classes/propertypages.ui:481
 msgid "Usage"
 msgstr "Korištenje"
 
-#: gaphor/UML/classes/propertypages.ui:502
+#: gaphor/UML/classes/propertypages.ui:482
 msgid "Realization"
 msgstr "Realizacija"
 
-#: gaphor/UML/classes/propertypages.ui:503
+#: gaphor/UML/classes/propertypages.ui:483
 msgid "Implementation"
 msgstr "Implementacija"
 
-#: gaphor/UML/classes/propertypages.ui:522
+#: gaphor/UML/classes/propertypages.ui:502
 msgid "Folded"
 msgstr "Sklopljeno"
 
-#: gaphor/UML/classes/propertypages.ui:545
-#: gaphor/UML/classes/propertypages.ui:587
+#: gaphor/UML/classes/propertypages.ui:525
+#: gaphor/UML/classes/propertypages.ui:562
 msgid "Operations"
 msgstr "Operacije"
 
-#: gaphor/UML/classes/propertypages.ui:558
+#: gaphor/UML/classes/propertypages.ui:538
 msgid "Show Operations"
 msgstr "Prikaži operacije"
 
-#: gaphor/UML/classes/propertypages.ui:651
+#: gaphor/UML/classes/propertypages.ui:603
 msgid ""
 "Add and edit class operations according to UML syntax.\n"
 "\n"
@@ -1013,16 +1243,16 @@ msgstr ""
 "uklanjanje elemenata.\n"
 "Koristi <b>-</b>/<b>=</b> za premještanje elemenata prema gore ili dolje."
 
-#: gaphor/UML/classes/propertypages.ui:680
-#: gaphor/UML/classes/propertypages.ui:722
+#: gaphor/UML/classes/propertypages.ui:632
+#: gaphor/UML/classes/propertypages.ui:670
 msgid "Enumeration Literals"
 msgstr "Elementi nabrajanja"
 
-#: gaphor/UML/classes/propertypages.ui:693
+#: gaphor/UML/classes/propertypages.ui:645
 msgid "Show Enumeration Literals"
 msgstr "Prikaži elemente nabrajanja"
 
-#: gaphor/UML/classes/propertypages.ui:757
+#: gaphor/UML/classes/propertypages.ui:699
 msgid ""
 "Add and edit enumeration literals according to UML syntax.\n"
 "\n"
@@ -1040,17 +1270,9 @@ msgstr ""
 "uklanjanje elemenata.\n"
 "Koristi <b>-</b>/<b>=</b> za premještanje elemenata prema gore ili dolje."
 
-#: gaphor/UML/classes/propertypages.ui:788
+#: gaphor/UML/classes/propertypages.ui:730
 msgid "Indirectly Instantiated"
 msgstr "Indirektno izrađeno"
-
-#: gaphor/UML/classes/propertypages.ui:805
-msgid "A."
-msgstr "A."
-
-#: gaphor/UML/classes/propertypages.ui:809
-msgid "S."
-msgstr "S."
 
 #: gaphor/UML/deployments/deploymentstoolbox.py:12
 msgid "Deployments"
@@ -1068,7 +1290,7 @@ msgstr "Čvor"
 msgid "Device"
 msgstr "Uređaj"
 
-#: gaphor/UML/deployments/node.py:54
+#: gaphor/UML/deployments/node.py:55
 msgid "device"
 msgstr "uređaj"
 
@@ -1131,6 +1353,11 @@ msgstr "Stvori"
 msgid "Delete"
 msgstr "Izbriši"
 
+#: gaphor/UML/interactions/propertypages.ui:42
+#, fuzzy
+msgid "Connectable Element"
+msgstr "Vanjski element"
+
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
 msgstr "uvoz"
@@ -1175,23 +1402,25 @@ msgstr "Aktivnosti"
 msgid "Entry"
 msgstr "Ulaz"
 
-#: gaphor/UML/states/propertypages.ui:31
+#: gaphor/UML/states/propertypages.ui:37
 msgid "Exit"
 msgstr "Izlaz"
 
-#: gaphor/UML/states/propertypages.ui:42
-msgid "Do Activity"
+#: gaphor/UML/states/propertypages.ui:54
+#, fuzzy
+msgid "Do activity"
 msgstr "Aktivnost koja se može prekinuti"
 
-#: gaphor/UML/states/propertypages.ui:90 gaphor/UML/states/propertypages.ui:119
+#: gaphor/UML/states/propertypages.ui:108
+#: gaphor/UML/states/propertypages.ui:137
 msgid "Regions"
 msgstr "Regije"
 
-#: gaphor/UML/states/propertypages.ui:103
+#: gaphor/UML/states/propertypages.ui:121
 msgid "Show Regions"
 msgstr "Prikaži regije"
 
-#: gaphor/UML/states/statemachine.py:39
+#: gaphor/UML/states/statemachine.py:40
 msgid "statemachine"
 msgstr "automat konačnih stanja"
 
@@ -1285,85 +1514,108 @@ msgstr "Uključi"
 msgid "Extend"
 msgstr "Proširi"
 
-#: gaphor/diagram/diagramtoolbox.py:108 gaphor/ui/help/shortcuts.ui:16
+#: gaphor/diagram/diagramtoolbox.py:131 gaphor/ui/help/shortcuts.ui:16
 msgid "General"
 msgstr "Opće"
 
-#: gaphor/diagram/diagramtoolbox.py:112
+#: gaphor/diagram/diagramtoolbox.py:135
 msgid "Pointer"
 msgstr "Pokazivač"
 
-#: gaphor/diagram/diagramtoolbox.py:119
+#: gaphor/diagram/diagramtoolbox.py:142
 msgid "Magnet"
 msgstr "Magnet"
 
-#: gaphor/diagram/diagramtoolbox.py:126
+#: gaphor/diagram/diagramtoolbox.py:149
 msgid "Line"
 msgstr "Crta"
 
-#: gaphor/diagram/diagramtoolbox.py:133
+#: gaphor/diagram/diagramtoolbox.py:156
 msgid "Box"
 msgstr "Okvir"
 
-#: gaphor/diagram/diagramtoolbox.py:141
+#: gaphor/diagram/diagramtoolbox.py:164
 msgid "Ellipse"
 msgstr "Elipsa"
 
-#: gaphor/diagram/diagramtoolbox.py:149 gaphor/diagram/propertypages.ui:9
+#: gaphor/diagram/diagramtoolbox.py:172 gaphor/diagram/propertypages.ui:9
 msgid "Comment"
 msgstr "Komentar"
 
-#: gaphor/diagram/diagramtoolbox.py:157
+#: gaphor/diagram/diagramtoolbox.py:180
 msgid "Comment line"
 msgstr "Crta komentara"
 
-#: gaphor/diagram/diagramtoolbox.py:164
+#: gaphor/diagram/diagramtoolbox.py:187
 msgid "Diagram metadata"
 msgstr "Metapodaci dijagrama"
 
-#: gaphor/diagram/presentation.py:48
+#: gaphor/diagram/diagramtoolbox.py:194 gaphor/diagram/propertypages.ui:272
+#, fuzzy
+msgid "Picture"
+msgstr "Struktura"
+
+#: gaphor/diagram/presentation.py:51
 msgid "(from {namespace})"
 msgstr "(od {namespace})"
 
-#: gaphor/diagram/propertypages.ui:57
+#: gaphor/diagram/propertypages.ui:70
 msgid "Style"
 msgstr "Stil"
 
-#: gaphor/diagram/propertypages.ui:68
+#: gaphor/diagram/propertypages.ui:85
 msgid "Rectilinear"
 msgstr "Ravna crta"
 
-#: gaphor/diagram/propertypages.ui:74
+#: gaphor/diagram/propertypages.ui:105
 msgid "Flip orientation"
 msgstr "Preokreni smjer"
 
-#: gaphor/diagram/propertypages.ui:89
-msgid "Note or Remark"
-msgstr "Napomena ili opaska"
+#: gaphor/diagram/propertypages.ui:130
+#, fuzzy
+msgid "Note"
+msgstr "NE"
 
-#: gaphor/diagram/propertypages.ui:123
+#: gaphor/diagram/propertypages.ui:167
 msgid "Created By"
 msgstr "Autor"
 
-#: gaphor/diagram/propertypages.ui:151
+#: gaphor/diagram/propertypages.ui:195
 msgid "Website"
 msgstr "Web stranica"
 
-#: gaphor/diagram/propertypages.ui:165
+#: gaphor/diagram/propertypages.ui:209
 msgid "Revision"
 msgstr "Revizija"
 
-#: gaphor/diagram/propertypages.ui:179
+#: gaphor/diagram/propertypages.ui:223
 msgid "License"
 msgstr "Licenca"
 
-#: gaphor/diagram/propertypages.ui:193
+#: gaphor/diagram/propertypages.ui:237
 msgid "Created On"
 msgstr "Stvoreno"
 
-#: gaphor/diagram/propertypages.ui:207
+#: gaphor/diagram/propertypages.ui:251
 msgid "Updated On"
 msgstr "Aktualizirano"
+
+#: gaphor/diagram/propertypages.ui:283
+msgid "Select picture..."
+msgstr ""
+
+#: gaphor/diagram/propertypages.ui:289
+msgid "Set default size"
+msgstr ""
+
+#: gaphor/diagram/general/generalpropertypages.py:126
+msgid "Select a picture..."
+msgstr ""
+
+#: gaphor/diagram/general/generalpropertypages.py:149
+#, fuzzy
+msgid "Unable to parse picture “{filename}”."
+msgstr "Nije moguće spremiti model „{filename}”."
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1376,6 +1628,45 @@ msgstr "Nijedna datoteka modela nije konfigurirana za model '{model_name}'."
 #: gaphor/extensions/sphinx.py:88
 msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Nema dijagrama '{name}' u modelu '{model_name}' ({model_file})."
+
+#: gaphor/plugins/align/align.py:31
+#, fuzzy
+msgid "Align left"
+msgstr "Magnet"
+
+#: gaphor/plugins/align/align.py:35
+msgid "Align right"
+msgstr ""
+
+#: gaphor/plugins/align/align.py:39
+msgid "Align vertical center"
+msgstr ""
+
+#: gaphor/plugins/align/align.py:43
+#, fuzzy
+msgid "Align top"
+msgstr "Glavni sudionik"
+
+#: gaphor/plugins/align/align.py:47
+msgid "Align bottom"
+msgstr ""
+
+#: gaphor/plugins/align/align.py:51
+#, fuzzy
+msgid "Align horizontal center"
+msgstr "Vodoravno"
+
+#: gaphor/plugins/align/align.py:55
+msgid "Max width"
+msgstr ""
+
+#: gaphor/plugins/align/align.py:59
+msgid "Max height"
+msgstr ""
+
+#: gaphor/plugins/align/align.py:63
+msgid "Max size"
+msgstr ""
 
 #: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
@@ -1395,13 +1686,13 @@ msgstr ""
 "{version}\n"
 "Za daljnje informacije upiši \"help\" (pomoć).\n"
 
-#: gaphor/plugins/console/consolewindow.py:19
-msgid "Gaphor Console"
-msgstr "Gaphor konzola"
-
-#: gaphor/plugins/console/consolewindow.py:42
+#: gaphor/plugins/console/consolewindow.py:38
 msgid "Console"
 msgstr "Konzola"
+
+#: gaphor/plugins/console/consolewindow.py:57
+msgid "Gaphor Console"
+msgstr "Gaphor konzola"
 
 #: gaphor/plugins/diagramexport/__init__.py:50
 msgid "All {ext} Files"
@@ -1494,12 +1785,11 @@ msgid "All XMI Files"
 msgstr "Sve XMI datoteke"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:62
-#: gaphor/ui/mainwindow.py:251 gaphor/ui/mainwindow.ui:45
+#: gaphor/ui/mainwindow.py:255 gaphor/ui/mainwindow.ui:46
 msgid "New model"
 msgstr "Novi model"
 
 #: gaphor/templates/blank.gaphor gaphor/ui/filemanager.py:65
-#: gaphor/ui/modelbrowser.py:639
 msgid "New diagram"
 msgstr "Novi dijagram"
 
@@ -1638,10 +1928,6 @@ msgid "Use Case #1"
 msgstr "Slučaj broj 1"
 
 #: gaphor/templates/sysml.gaphor
-msgid "Behavior"
-msgstr "Ponašanje"
-
-#: gaphor/templates/sysml.gaphor
 msgid "Structure"
 msgstr "Struktura"
 
@@ -1769,7 +2055,7 @@ msgstr "Pokreni upravljač"
 msgid "Example Technology Requirement"
 msgstr "Primjer tehnološkog uvjeta"
 
-#: gaphor/templates/sysml.gaphor
+#: gaphor/templates/sysml.gaphor gaphor/ui/help/preferences.ui:20
 msgid "System"
 msgstr "Sustav"
 
@@ -2080,15 +2366,11 @@ msgstr "Znakovni niz"
 msgid "Date"
 msgstr "Datum"
 
-#: gaphor/ui/appfilemanager.py:16 gaphor/ui/filedialog.py:13
-msgid "Gaphor Models"
-msgstr "Svi Gaphor modeli"
-
-#: gaphor/ui/appfilemanager.py:42
+#: gaphor/ui/appfilemanager.py:36
 msgid "Switch to {name}?"
 msgstr "Prijeći na {name}?"
 
-#: gaphor/ui/appfilemanager.py:43
+#: gaphor/ui/appfilemanager.py:37
 msgid ""
 "{name} is already opened. Do you want to switch to the opened window "
 "instead?"
@@ -2096,21 +2378,21 @@ msgstr ""
 "Datoteka {name} je već otvorena. Želiš li umjesto toga prijeći na "
 "otvoreni prozor?"
 
-#: gaphor/ui/appfilemanager.py:51
+#: gaphor/ui/appfilemanager.py:48
 msgid "Open Again"
 msgstr "Ponovo otvori"
 
-#: gaphor/ui/appfilemanager.py:52
+#: gaphor/ui/appfilemanager.py:49
 msgid "Switch"
 msgstr "Prijeđi"
 
-#: gaphor/ui/appfilemanager.py:73
+#: gaphor/ui/appfilemanager.py:71
 msgid "Open a Model"
 msgstr "Otvori model"
 
-#: gaphor/ui/diagrampage.py:94 gaphor/ui/mainwindow.py:270
+#: gaphor/ui/diagrampage.py:90 gaphor/ui/mainwindow.py:274
 #: gaphor/ui/modelmerge/organize.py:135 gaphor/ui/modelmerge/organize.py:166
-#: gaphor/ui/treemodel.py:44
+#: gaphor/ui/treemodel.py:45
 msgid "<None>"
 msgstr "<Bez>"
 
@@ -2193,7 +2475,8 @@ msgid "Editors"
 msgstr "Uređivači"
 
 #: gaphor/ui/elementeditor.ui:230 gaphor/ui/elementeditor.ui:244
-#: gaphor/ui/help/shortcuts.ui:54
+#: gaphor/ui/greeter.ui:14 gaphor/ui/help/preferences.ui:6
+#: gaphor/ui/help/shortcuts.ui:54 gaphor/ui/mainwindow.py:62
 msgid "Preferences"
 msgstr "Postavke"
 
@@ -2210,11 +2493,13 @@ msgid "Automatically remove elements no longer in use in any diagram."
 msgstr "Automatski ukloni elemente koji se više ne koriste u nijednom dijagramu."
 
 #: gaphor/ui/elementeditor.ui:295
-msgid "Language"
+#, fuzzy
+msgid "Diagram Language"
 msgstr "Jezik"
 
 #: gaphor/ui/elementeditor.ui:297 gaphor/ui/elementeditor.ui:305
-msgid "The (spoken) language used in this model."
+#, fuzzy
+msgid "The (natural) language used in this model."
 msgstr "(Govorni) jezik korišten u ovom modelu."
 
 #: gaphor/ui/elementeditor.ui:313
@@ -2265,7 +2550,16 @@ msgstr "Zatvori"
 msgid "Start Debug Session"
 msgstr "Pokreni sesiju otklanjanja grešaka"
 
-#: gaphor/ui/filedialog.py:34
+#: gaphor/ui/filedialog.py:14
+msgid "Gaphor Models"
+msgstr "Svi Gaphor modeli"
+
+#: gaphor/ui/filedialog.py:28
+#, fuzzy
+msgid "Images"
+msgstr "Trake"
+
+#: gaphor/ui/filedialog.py:39
 msgid "All Files"
 msgstr "Sve datoteke"
 
@@ -2389,134 +2683,143 @@ msgid "Discard"
 msgstr "Odbaci"
 
 #: gaphor/ui/filemanager.py:451 gaphor/ui/help/shortcuts.ui:103
-#: gaphor/ui/mainwindow.py:51
+#: gaphor/ui/mainwindow.py:52
 msgid "Save"
 msgstr "Spremi"
 
-#: gaphor/ui/greeter.py:27
+#: gaphor/ui/greeter.py:28
 msgid "Generic"
 msgstr "Generički"
 
-#: gaphor/ui/greeter.py:28
+#: gaphor/ui/greeter.py:29
 msgid "An empty model"
 msgstr "Prazan model"
 
-#: gaphor/ui/greeter.py:35
+#: gaphor/ui/greeter.py:36
 msgid "Unified Modeling Language template"
 msgstr "Predložak za Unified Modeling Language"
 
-#: gaphor/ui/greeter.py:42
+#: gaphor/ui/greeter.py:43
 msgid "Systems Modeling Language template"
 msgstr "Predložak za Systems Modeling Language"
 
-#: gaphor/ui/greeter.py:49
+#: gaphor/ui/greeter.py:50
 msgid "Risk Analysis and Assessment Modeling Language template"
 msgstr "Predložak za Risk Analysis i Assessment Modeling Language"
 
-#: gaphor/ui/greeter.py:56
+#: gaphor/ui/greeter.py:57
 msgid "Layered C4 Model template"
 msgstr "Predložak za slojevit C4 model"
 
-#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:49 gaphor/ui/mainwindow.py:47
+#: gaphor/ui/greeter.ui:8 gaphor/ui/greeter.ui:53 gaphor/ui/mainwindow.py:48
 msgid "Open Model…"
 msgstr "Otvori model …"
 
-#: gaphor/ui/greeter.ui:14 gaphor/ui/mainwindow.py:61
+#: gaphor/ui/greeter.ui:18 gaphor/ui/mainwindow.py:63
 msgid "Keyboard Shortcuts"
 msgstr "Tipkovni prečaci"
 
-#: gaphor/ui/greeter.ui:18 gaphor/ui/help/about.ui:10
-#: gaphor/ui/mainwindow.py:62
+#: gaphor/ui/greeter.ui:22 gaphor/ui/help/about.ui:10
+#: gaphor/ui/mainwindow.py:64
 msgid "About Gaphor"
 msgstr "O programu Gaphor"
 
-#: gaphor/ui/greeter.ui:80
+#: gaphor/ui/greeter.ui:84
 msgid "Recently Opened"
 msgstr "Nedavno otvoreni"
 
-#: gaphor/ui/greeter.ui:85
+#: gaphor/ui/greeter.ui:89
 msgid "Create New Model"
 msgstr "Stori novi model"
 
-#: gaphor/ui/help/shortcuts.ui:87 gaphor/ui/mainwindow.py:46
+#: gaphor/ui/help/shortcuts.ui:87 gaphor/ui/mainwindow.py:47
 msgid "New Model…"
 msgstr "Novi model …"
 
-#: gaphor/ui/help/shortcuts.ui:111 gaphor/ui/mainwindow.py:52
+#: gaphor/ui/help/shortcuts.ui:111 gaphor/ui/mainwindow.py:53
 msgid "Save As…"
 msgstr "Spremi kao …"
 
-#: gaphor/ui/mainwindow.py:53
+#: gaphor/ui/mainwindow.py:54
 msgid "Export"
 msgstr "Izvezi"
 
-#: gaphor/ui/mainwindow.py:57
+#: gaphor/ui/mainwindow.py:58
 msgid "Tools"
 msgstr "Alati"
 
-#: gaphor/ui/mainwindow.py:233
+#: gaphor/ui/mainwindow.py:239
 msgid "Press F11 to exit Fullscreen"
 msgstr "Pritisni F11 za napuštanje cjeloekranskog prikaza"
 
-#: gaphor/ui/mainwindow.py:288
+#: gaphor/ui/mainwindow.py:292
 msgid "Profile: {name}"
 msgstr "Profil: {name}"
 
-#: gaphor/ui/mainwindow.ui:63
+#: gaphor/ui/mainwindow.ui:64
 msgid "New diagram menu"
 msgstr "Izbornik za novi dijagram"
 
-#: gaphor/ui/mainwindow.ui:71
+#: gaphor/ui/mainwindow.ui:72
 msgid "Open application menu"
 msgstr "Otvori izbornik programa"
 
-#: gaphor/ui/help/shortcuts.ui:38 gaphor/ui/mainwindow.ui:78
+#: gaphor/ui/help/shortcuts.ui:38 gaphor/ui/mainwindow.ui:79
 msgid "Toggle Property Editor"
 msgstr "Uklj./Isklj. uređivač svojstava"
 
-#: gaphor/ui/modelbrowser.py:182
+#: gaphor/ui/modelbrowser.py:209
 msgid "{name} package"
 msgstr "Paket {name}"
 
-#: gaphor/ui/modelbrowser.py:184
+#: gaphor/ui/modelbrowser.py:211
 msgid "New package"
 msgstr "Novi paket"
 
-#: gaphor/ui/modelbrowser.py:376 gaphor/ui/modelbrowser.py:587
+#: gaphor/ui/modelbrowser.py:406 gaphor/ui/modelbrowser.py:589
 msgid "New _Package"
 msgstr "Novi _paket"
 
-#: gaphor/ui/modelbrowser.py:576
+#: gaphor/ui/modelbrowser.py:570
 msgid "_Open"
 msgstr "_Otvori"
 
-#: gaphor/ui/modelbrowser.py:576
+#: gaphor/ui/modelbrowser.py:570
 msgid "Add to diagram"
 msgstr "Dodaj u dijagram"
 
-#: gaphor/ui/modelbrowser.py:579
+#: gaphor/ui/modelbrowser.py:573
 msgid "_Rename"
 msgstr "Pre_imenuj"
 
-#: gaphor/ui/modelbrowser.py:584
+#: gaphor/ui/modelbrowser.py:578
 msgid "New _Diagram"
 msgstr "Novi _dijagram"
 
-#: gaphor/ui/modelbrowser.py:591
+#: gaphor/ui/modelbrowser.py:585
+#, fuzzy
+msgid "New _Element"
+msgstr "Vanjski element"
+
+#: gaphor/ui/modelbrowser.py:593
 msgid "De_lete"
 msgstr "Iz_briši"
 
-#: gaphor/ui/modelbrowser.py:601
+#: gaphor/ui/modelbrowser.py:603
 msgid "Show in “{diagram}”"
 msgstr "Prikaži u „{diagram}”"
 
-#: gaphor/ui/modelbrowser.py:627
+#: gaphor/ui/modelbrowser.py:635
 msgid "New Generic Diagram"
 msgstr "Novi generički dijagram"
 
-#: gaphor/ui/tests/test_treemodel.py:200 gaphor/ui/treemodel.py:63
+#: gaphor/ui/tests/test_treemodel.py:200 gaphor/ui/treemodel.py:64
 msgid "<Relationships>"
 msgstr "<Odnosi>"
+
+#: gaphor/ui/help/__init__.py:82
+msgid "Restart Gaphor to enable language changes"
+msgstr ""
 
 #: gaphor/ui/help/about.ui:13
 msgid ""
@@ -2555,6 +2858,31 @@ msgstr ""
 "„KAKVO JE”, BEZ JAMSTVA ILI UVJETA BILO KOJE VRSTE izričitih ili "
 "podrazumijevanih. Pogledaj licencu za određeni jezik koja regulira "
 "dopuštenja i ograničenja u okviru licence."
+
+#: gaphor/ui/help/preferences.ui:9
+msgid "Appearance"
+msgstr ""
+
+#: gaphor/ui/help/preferences.ui:13
+#, fuzzy
+msgid "Colors"
+msgstr "Zatvori"
+
+#: gaphor/ui/help/preferences.ui:21
+msgid "Dark"
+msgstr ""
+
+#: gaphor/ui/help/preferences.ui:22
+msgid "Light"
+msgstr ""
+
+#: gaphor/ui/help/preferences.ui:32
+msgid "Language"
+msgstr "Jezik"
+
+#: gaphor/ui/help/preferences.ui:35
+msgid "Change from System Language to English"
+msgstr ""
 
 #: gaphor/ui/help/shortcuts.ui:22
 msgid "Rename"
@@ -2699,3 +3027,13 @@ msgstr "Ukloni vezu „{name}”"
 #: gaphor/ui/modelmerge/organize.py:331
 msgid "Update relation “{name}”"
 msgstr "Aktualiziraj vezu „{name}”"
+
+#~ msgid "A."
+#~ msgstr "A."
+
+#~ msgid "S."
+#~ msgstr "S."
+
+#~ msgid "Note or Remark"
+#~ msgstr "Napomena ili opaska"
+
