@@ -354,3 +354,32 @@ def test_white_space_normal(white_space_value, result):
     props = compiled_style_sheet.match(Node("node"))
 
     assert props.get("white-space") is result
+
+
+def test_pseudo_element():
+    css = "class::after { content: 'Hi' }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("class", pseudo="after"))
+
+    assert props.get("content") == "Hi"
+
+
+def test_bare_pseudo_element():
+    css = "::after { content: 'Hi' }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("node", pseudo="after"))
+
+    assert props.get("content") == "Hi"
+
+
+def test_combined_normal_and_pseudo_element():
+    css = "node, class::after { content: 'Hi' }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    node_props = compiled_style_sheet.match(Node("node"))
+    class_props = compiled_style_sheet.match(Node("class", pseudo="after"))
+
+    assert node_props.get("content") == "Hi"
+    assert class_props.get("content") == "Hi"

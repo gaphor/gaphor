@@ -250,3 +250,10 @@ def parse_line_style(prop, value) -> float:
                 return float(factor)
     # "normal" value:
     return 0.0
+
+
+@declarations.register(
+    "content",
+)
+def parse_content(prop, value) -> str:
+    return value or ""

@@ -144,7 +144,7 @@ class StyledDiagram:
 
     def children(self) -> Iterator[StyledItem]:
         return (
-            StyledItem(item, self.selection)
+            StyledItem(item, self.selection, dark_mode=self.dark_mode)
             for item in self.diagram.get_all_items()
             if not item.parent
         )
@@ -155,6 +155,9 @@ class StyledDiagram:
 
     def state(self):
         return ()
+
+    def pseudo(self):
+        return None
 
 
 class StyledItem:
@@ -168,12 +171,14 @@ class StyledItem:
         self,
         item: Presentation,
         selection: gaphas.selection.Selection | None = None,
+        pseudo_element: str | None = None,
         dark_mode: bool | None = None,
     ):
         assert item.diagram
         self.item = item
         self.diagram = item.diagram
         self.selection = selection
+        self.pseudo_element = pseudo_element
         self.dark_mode = dark_mode
 
     def name(self) -> str:
@@ -182,14 +187,17 @@ class StyledItem:
     def parent(self) -> StyledItem | StyledDiagram:
         parent = self.item.parent
         return (
-            StyledItem(parent, self.selection, self.dark_mode)
+            StyledItem(parent, self.selection, dark_mode=self.dark_mode)
             if parent
             else StyledDiagram(self.diagram, self.selection, self.dark_mode)
         )
 
     def children(self) -> Iterator[StyledItem]:
         selection = self.selection
-        return (StyledItem(child, selection) for child in self.item.children)
+        return (
+            StyledItem(child, selection, dark_mode=self.dark_mode)
+            for child in self.item.children
+        )
 
     def attribute(self, name: str) -> str:
         fields = name.split(".")
@@ -212,6 +220,9 @@ class StyledItem:
             if selection
             else ()
         )
+
+    def pseudo(self) -> str | None:
+        return self.pseudo_element
 
 
 P = TypeVar("P", bound=Presentation)

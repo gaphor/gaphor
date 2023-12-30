@@ -12,6 +12,7 @@ class Node:
         children=None,
         attributes=None,
         state=(),
+        pseudo=None,
         dark_mode=None,
     ):
         if attributes is None:
@@ -21,6 +22,7 @@ class Node:
         self._children = children or []
         self._attributes = attributes
         self._state = state
+        self._pseudo = pseudo
         self.dark_mode = dark_mode
 
         if parent:
@@ -42,6 +44,9 @@ class Node:
 
     def state(self):
         return self._state
+
+    def pseudo(self):
+        return self._pseudo
 
 
 def test_node_test_object_parent_child():
@@ -298,6 +303,17 @@ def test_has_pseudo_selector_with_combinator_is_not_supported():
     error, payload = next(compile_style_sheet(css))
 
     assert error == "error"
+
+
+def test_parse_empty_pseudo_element():
+    css = "node::after {}"
+
+    (selector, specificity), payload = next(compile_style_sheet(css))
+
+    assert payload == {}
+    assert not selector(Node("node"))
+    assert selector(Node("node", pseudo="after"))
+    assert specificity == (0, 0, 2)
 
 
 def test_has_and_is_selector():

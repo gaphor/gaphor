@@ -31,6 +31,7 @@ Style = TypedDict(
         "background-color": Color,
         "border-radius": Number,
         "color": Color,
+        "content": str,
         "dash-style": Sequence[Number],
         "padding": Padding,
         "font-family": str,
@@ -68,6 +69,9 @@ class StyleNode(Protocol):
         ...
 
     def state(self) -> Sequence[str]:
+        ...
+
+    def pseudo(self) -> str | None:
         ...
 
 
