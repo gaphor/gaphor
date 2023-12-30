@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtkColumnViewCell">
+    <property name="child">
+      <object class="GtkBox">
+        <property name="orientation">horizontal</property>
+        <binding name="sensitive">
+          <lookup name="sensitive" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+        <binding name="css-classes">
+          <lookup name="indent_classes" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+        <child>
+          <object class="GtkCheckButton">
+            <binding name="active">
+              <lookup name="applied" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+                <lookup name="item">GtkColumnViewCell</lookup>
+              </lookup>
+            </binding>
+            <binding name="visible">
+              <lookup name="checkbox_visible" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+                <lookup name="item">GtkColumnViewCell</lookup>
+              </lookup>
+            </binding>
+            <signal name="toggled" handler="on_toggled" object="GtkColumnViewCell" swapped="no"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <binding name="label">
+              <lookup name="name" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+                <lookup name="item">GtkColumnViewCell</lookup>
+              </lookup>
+            </binding>
+          </object>
+        </child>
+      </object>
+    </property>
+  </template>
+</interface>

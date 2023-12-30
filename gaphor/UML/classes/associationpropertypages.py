@@ -9,11 +9,11 @@ from gaphor.diagram.propertypages import (
 from gaphor.transaction import transactional
 from gaphor.UML.classes.association import AssociationItem
 from gaphor.UML.classes.classespropertypages import new_builder
-from gaphor.UML.profiles.stereotypepropertypages import stereotype_model
-
-
-def _dummy_handler(*args):
-    pass
+from gaphor.UML.profiles.stereotypepropertypages import (
+    stereotype_key_handler,
+    stereotype_model,
+    stereotype_set_model_with_interaction,
+)
 
 
 @PropertyPages.register(AssociationItem)
@@ -28,20 +28,6 @@ class AssociationPropertyPage(PropertyPageBase):
         self.subject = item.subject
         self.watcher = item.subject and self.subject.watcher()
         self.semaphore = 0
-
-    def handlers_end(self, end_name, end):
-        subject = end.subject
-
-        if UML.recipes.get_stereotypes(subject):
-            model, toggle_handler, set_value_handler = stereotype_model(subject)
-            return model, {
-                f"{end_name}-toggle-stereotype": toggle_handler,
-                f"{end_name}-set-slot-value": set_value_handler,
-            }
-        return None, {
-            f"{end_name}-toggle-stereotype": (_dummy_handler,),
-            f"{end_name}-set-slot-value": (_dummy_handler,),
-        }
 
     def construct_end(self, builder, end_name, end, stereotypes_model):
         subject = end.subject
@@ -59,7 +45,7 @@ class AssociationPropertyPage(PropertyPageBase):
 
         if stereotypes_model:
             stereotype_list = builder.get_object(f"{end_name}-stereotype-list")
-            stereotype_list.set_model(stereotypes_model)
+            stereotype_set_model_with_interaction(stereotype_list, stereotypes_model)
         else:
             stereotype_frame = builder.get_object(f"{end_name}-stereotype-frame")
             stereotype_frame.set_visible(False)
@@ -88,8 +74,8 @@ class AssociationPropertyPage(PropertyPageBase):
         head = self.item.head_end
         tail = self.item.tail_end
 
-        head_model, head_signal_handlers = self.handlers_end("head", head)
-        tail_model, tail_signal_handlers = self.handlers_end("tail", tail)
+        head_model = stereotype_model(head.subject)
+        tail_model = stereotype_model(tail.subject)
 
         builder = new_builder(
             "association-editor",
@@ -101,12 +87,12 @@ class AssociationPropertyPage(PropertyPageBase):
                 "head-navigation-changed": (self._on_end_navigability_change, head),
                 "head-aggregation-changed": (self._on_end_aggregation_change, head),
                 "head-info-clicked": (self._on_association_info_clicked,),
+                "head-stereotype-key-pressed": (stereotype_key_handler,),
                 "tail-name-changed": (self._on_end_name_change, tail),
                 "tail-navigation-changed": (self._on_end_navigability_change, tail),
                 "tail-aggregation-changed": (self._on_end_aggregation_change, tail),
                 "tail-info-clicked": (self._on_association_info_clicked,),
-                **head_signal_handlers,
-                **tail_signal_handlers,
+                "tail-stereotype-key-pressed": (stereotype_key_handler,),
             },
         )
 

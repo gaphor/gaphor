@@ -58,44 +58,29 @@
         <child>
           <object class="GtkFrame">
             <property name="child">
-              <object class="GtkTreeView" id="stereotype-list">
-                <child internal-child="selection">
-                  <object class="GtkTreeSelection"/>
-                </child>
+              <object class="GtkColumnView" id="stereotype-list">
+                <property name="height-request">112</property>
+                <property name="focusable">1</property>
+                <style>
+                  <class name="data-table"/>
+                </style>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="title" translatable="yes">Attributes</property>
-                    <child>
-                      <object class="GtkCellRendererToggle">
-                        <signal name="toggled" handler="toggle-stereotype" swapped="no"/>
-                      </object>
-                      <attributes>
-                        <attribute name="visible">3</attribute>
-                        <attribute name="active">2</attribute>
-                      </attributes>
-                    </child>
-                    <child>
-                      <object class="GtkCellRendererText"/>
-                      <attributes>
-                        <attribute name="text">0</attribute>
-                      </attributes>
-                    </child>
+                  <object class="GtkColumnViewColumn">
+                    <property name="title" translatable="yes">Stereotypes</property>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkTreeViewColumn">
-                    <property name="title" translatable="yes">Value</property>
-                    <child>
-                      <object class="GtkCellRendererText">
-                        <signal name="edited" handler="set-slot-value" swapped="no"/>
-                      </object>
-                      <attributes>
-                        <attribute name="editable">4</attribute>
-                        <attribute name="text">1</attribute>
-                      </attributes>
-                    </child>
+                  <object class="GtkColumnViewColumn">
+                    <property name="title" translatable="yes">Values</property>
+                    <property name="expand">1</property>
                   </object>
                 </child>
+                <child>
+                  <object class="GtkEventControllerKey">
+                    <signal name="key-pressed" handler="stereotype-key-pressed" />
+                  </object>
+                </child>
+                <signal name="activate" handler="stereotype-activated" />
               </object>
             </property>
           </object>

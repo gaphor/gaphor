@@ -23,6 +23,7 @@ from gaphor.UML.propertypages import (
     check_button_handlers,
     create_list_store,
     list_item_factory,
+    list_view_activated,
     list_view_key_handler,
     text_field_handlers,
     update_list_store,
@@ -210,6 +211,7 @@ class AttributesPage(PropertyPageBase):
             "attributes-editor",
             "attributes-info",
             signals={
+                "attributes-activated": (list_view_activated,),
                 "attributes-key-pressed": (list_view_key_handler,),
                 "show-attributes-changed": (self.on_show_attributes_changed,),
                 "attributes-info-clicked": (self.on_attributes_info_clicked,),
@@ -366,6 +368,7 @@ class OperationsPage(PropertyPageBase):
             "operations-editor",
             "operations-info",
             signals={
+                "operations-activated": (list_view_activated,),
                 "operations-key-pressed": (list_view_key_handler,),
                 "show-operations-changed": (self.on_show_operations_changed,),
                 "operations-info-clicked": (self.on_operations_info_clicked,),

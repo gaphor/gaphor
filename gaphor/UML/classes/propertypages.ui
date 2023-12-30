@@ -125,43 +125,26 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <child>
               <object class="GtkFrame" id="head-stereotype-frame">
                 <property name="child">
-                  <object class="GtkTreeView" id="head-stereotype-list">
+                  <object class="GtkColumnView" id="head-stereotype-list">
+                    <property name="height-request">112</property>
                     <property name="focusable">1</property>
-                    <child internal-child="selection">
-                      <object class="GtkTreeSelection"/>
-                    </child>
+                    <style>
+                      <class name="data-table"/>
+                    </style>
                     <child>
-                      <object class="GtkTreeViewColumn">
-                        <property name="title" translatable="yes">Attributes</property>
-                        <child>
-                          <object class="GtkCellRendererToggle">
-                            <signal name="toggled" handler="head-toggle-stereotype" swapped="no"/>
-                          </object>
-                          <attributes>
-                            <attribute name="visible">3</attribute>
-                            <attribute name="active">2</attribute>
-                          </attributes>
-                        </child>
-                        <child>
-                          <object class="GtkCellRendererText"/>
-                          <attributes>
-                            <attribute name="text">0</attribute>
-                          </attributes>
-                        </child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes">Stereotypes</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkTreeViewColumn">
-                        <property name="title" translatable="yes">Value</property>
-                        <child>
-                          <object class="GtkCellRendererText">
-                            <signal name="edited" handler="head-set-slot-value" swapped="no"/>
-                          </object>
-                          <attributes>
-                            <attribute name="editable">4</attribute>
-                            <attribute name="text">1</attribute>
-                          </attributes>
-                        </child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes">Values</property>
+                        <property name="expand">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEventControllerKey">
+                        <signal name="key-pressed" handler="head-stereotype-key-pressed" />
                       </object>
                     </child>
                   </object>
@@ -260,44 +243,26 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
             <child>
               <object class="GtkFrame" id="tail-stereotype-frame">
                 <property name="child">
-                  <object class="GtkTreeView" id="tail-stereotype-list">
+                  <object class="GtkColumnView" id="tail-stereotype-list">
+                    <property name="height-request">112</property>
                     <property name="focusable">1</property>
-                    <child internal-child="selection">
-                      <object class="GtkTreeSelection"/>
-                    </child>
+                    <style>
+                      <class name="data-table"/>
+                    </style>
                     <child>
-                      <object class="GtkTreeViewColumn">
-                        <property name="title" translatable="yes">Attributes</property>
-                        <child>
-                          <object class="GtkCellRendererToggle">
-                            <signal name="toggled" handler="tail-toggle-stereotype" swapped="no"/>
-                          </object>
-                          <attributes>
-                            <attribute name="visible">3</attribute>
-                            <attribute name="active">2</attribute>
-                          </attributes>
-                        </child>
-                        <child>
-                          <object class="GtkCellRendererText"/>
-                          <attributes>
-                            <attribute name="text">0</attribute>
-                          </attributes>
-                        </child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes">Stereotypes</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkTreeViewColumn">
-                        <property name="title" translatable="yes">Value</property>
-                        <signal name="clicked" handler="tail-set-slot-value" swapped="no"/>
-                        <child>
-                          <object class="GtkCellRendererText">
-                            <signal name="edited" handler="tail-set-slot-value" swapped="no"/>
-                          </object>
-                          <attributes>
-                            <attribute name="editable">4</attribute>
-                            <attribute name="text">1</attribute>
-                          </attributes>
-                        </child>
+                      <object class="GtkColumnViewColumn">
+                        <property name="title" translatable="yes">Values</property>
+                        <property name="expand">1</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEventControllerKey">
+                        <signal name="key-pressed" handler="tail-stereotype-key-pressed" />
                       </object>
                     </child>
                   </object>
@@ -372,6 +337,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                     <signal name="key-pressed" handler="attributes-key-pressed" />
                   </object>
                 </child>
+                <signal name="activate" handler="attributes-activated" />
               </object>
             </property>
           </object>
@@ -578,6 +544,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                     <signal name="key-pressed" handler="operations-key-pressed" />
                   </object>
                 </child>
+                <signal name="activate" handler="operations-activated" />
               </object>
             </property>
           </object>
@@ -676,6 +643,7 @@ Use &lt;b&gt;-&lt;/b&gt;/&lt;b&gt;=&lt;/b&gt; to move items up or down.</propert
                     <signal name="key-pressed" handler="enumerations-key-pressed" />
                   </object>
                 </child>
+                <signal name="activate" handler="enumerations-activated" />
               </object>
             </property>
           </object>

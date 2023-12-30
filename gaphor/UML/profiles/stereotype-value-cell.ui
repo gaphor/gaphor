@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtkColumnViewCell">
+    <property name="child">
+      <object class="TextField">
+        <binding name="placeholder-text">
+          <lookup name="placeholder_text" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+        <binding name="readonly-text">
+          <lookup name="slot_value" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+        <binding name="editable-text">
+          <lookup name="slot_value" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+        <binding name="can_edit">
+          <lookup name="can_edit" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+        <binding name="editing">
+          <lookup name="editing" type="gaphor+UML+profiles+stereotypepropertypages+StereotypeView">
+            <lookup name="item">GtkColumnViewCell</lookup>
+          </lookup>
+        </binding>
+        <signal name="done-editing" handler="on_done_editing" object="GtkColumnViewCell" swapped="no" />
+      </object>
+    </property>
+  </template>
+</interface>

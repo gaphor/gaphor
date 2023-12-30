@@ -22,6 +22,7 @@ from gaphor.UML.propertypages import (
     TypedElementPropertyPage,
     create_list_store,
     list_item_factory,
+    list_view_activated,
     list_view_key_handler,
     text_field_handlers,
     update_list_store,
@@ -115,7 +116,8 @@ class ActivityItemPage(PropertyPageBase):
             "activity-editor",
             "parameters-info",
             signals={
-                "list-view-key-pressed": (list_view_key_handler,),
+                "parameter-activated": (list_view_activated,),
+                "parameter-key-pressed": (list_view_key_handler,),
                 "parameters-info-clicked": (self.on_parameters_info_clicked,),
             },
         )

@@ -318,9 +318,10 @@
                 </child>
                 <child>
                   <object class="GtkEventControllerKey">
-                    <signal name="key-pressed" handler="list-view-key-pressed" />
+                    <signal name="key-pressed" handler="parameter-key-pressed" />
                   </object>
                 </child>
+                <signal name="activate" handler="parameter-activated" />
               </object>
             </property>
           </object>

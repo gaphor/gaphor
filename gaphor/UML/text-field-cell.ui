@@ -19,12 +19,6 @@
             <lookup name="item">GtkColumnViewCell</lookup>
           </lookup>
         </binding>
-        <child>
-          <object class="GtkGestureClick">
-            <property name="button">1</property>
-            <signal name="pressed" handler="on_double_click" />
-          </object>
-        </child>
         <signal name="done-editing" handler="on_done_editing" object="GtkColumnViewCell" swapped="no" />
       </object>
     </property>

@@ -2,8 +2,6 @@ from gaphor import UML
 from gaphor.diagram.tests.fixtures import find
 from gaphor.UML.profiles.stereotypepropertypages import (
     StereotypePage,
-    set_value,
-    toggle_stereotype,
 )
 
 
@@ -46,7 +44,8 @@ def test_stereotype_property_page_apply_stereotype(diagram, element_factory):
     property_page = create_property_page(diagram, element_factory)
     item = property_page.item
     model = get_model(property_page)
-    toggle_stereotype(None, (0,), item.subject, model)
+    view = model[0]
+    view.applied = True
 
     assert stereotype in item.subject.appliedStereotype[0].classifier
 
@@ -62,9 +61,10 @@ def test_stereotype_property_page_slot_value(diagram, element_factory):
     property_page = create_property_page(diagram, element_factory)
     item = property_page.item
     model = get_model(property_page)
-    toggle_stereotype(None, (0,), item.subject, model)
-    set_value(None, (0, 0), "test", model)
-    slot = item.subject.appliedStereotype[0].slot[0]
+    model[0].applied = True
+    model[1].slot_value = "test"
+    applied_stereotype = item.subject.appliedStereotype[0]
+    slot = applied_stereotype.slot[0]
 
     assert stereotype.ownedAttribute[0] is slot.definingFeature
     assert "test" == slot.value
@@ -79,10 +79,10 @@ def test_inherited_stereotype(diagram, element_factory):
     property_page = create_property_page(diagram, element_factory)
     model = get_model(property_page)
 
-    assert model[(0,)]
-    assert model[(0,)][0] == "Stereotype"
-    assert model[(1,)]
-    assert model[(1,)][0] == "SubStereotype"
+    assert model[0]
+    assert model[0].name == "Stereotype"
+    assert model[1]
+    assert model[1].name == "SubStereotype"
 
 
 def test_inherited_stereotype_with_attributes(diagram, element_factory):
@@ -97,9 +97,9 @@ def test_inherited_stereotype_with_attributes(diagram, element_factory):
     property_page = create_property_page(diagram, element_factory)
     model = get_model(property_page)
 
-    assert model[(0,)]
-    assert model[(0,)][0] == "Stereotype"
-    assert model[(0, 0)][0] == "Attr"
-    assert model[(1,)]
-    assert model[(1,)][0] == "SubStereotype"
-    assert model[(1, 0)][0] == "Attr"
+    assert model[0]
+    assert model[0].name == "Stereotype"
+    assert model[1].name == "Attr"
+    assert model[2]
+    assert model[2].name == "SubStereotype"
+    assert model[3].name == "Attr"
