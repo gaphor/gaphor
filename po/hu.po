@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-12-30 16:31+0100\n"
-"PO-Revision-Date: 2023-07-02 19:52+0000\n"
+"PO-Revision-Date: 2024-01-02 00:06+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
+"hu/>\n"
 "Language: hu\n"
-"Language-Team: Hungarian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/hu/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.4-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -105,49 +106,41 @@ msgstr "Új állapotautomataábra"
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
 #: gaphor/UML/toolbox.py:63
-#, fuzzy
 msgid "New Activity"
-msgstr "Tevékenység"
+msgstr "Új tevékenység"
 
 #: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
 #: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
 #: gaphor/UML/toolbox.py:80
-#, fuzzy
 msgid "New Interaction"
-msgstr "Tevékenység"
+msgstr "Új tevékenység"
 
 #: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
 #: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
 #: gaphor/UML/toolbox.py:86
-#, fuzzy
 msgid "New State Machine"
-msgstr "Állapotautomata"
+msgstr "Új állapotautomata"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-#, fuzzy
 msgid "New Class"
-msgstr "Osztály"
+msgstr "Új osztály"
 
 #: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
-#, fuzzy
 msgid "New Data Type"
-msgstr "adattípus"
+msgstr "Új adattípus"
 
 #: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
 #: gaphor/UML/toolbox.py:71
-#, fuzzy
 msgid "New Enumeration"
-msgstr "felsorolás"
+msgstr "Új felsorolás"
 
 #: gaphor/C4Model/toolbox.py:173
-#, fuzzy
 msgid "New Primitive Type"
-msgstr "egyszerű"
+msgstr "Új egyszerűtípus"
 
 #: gaphor/C4Model/toolbox.py:175
-#, fuzzy
 msgid "New Person"
-msgstr "Személy"
+msgstr "Új személy"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:49
 msgid "RAAML"
@@ -162,24 +155,20 @@ msgid "New STPA Diagram"
 msgstr "Új STPA-ábra"
 
 #: gaphor/RAAML/toolbox.py:27
-#, fuzzy
 msgid "New Top Event"
-msgstr "Nemkívánatos esemény"
+msgstr "Új felső esemény"
 
 #: gaphor/RAAML/toolbox.py:28
-#, fuzzy
 msgid "New Loss"
-msgstr "Veszteség"
+msgstr "Új veszteség"
 
 #: gaphor/RAAML/toolbox.py:29
-#, fuzzy
 msgid "New Hazard"
-msgstr "Veszély"
+msgstr "Új veszély"
 
 #: gaphor/RAAML/toolbox.py:30
-#, fuzzy
 msgid "New Situation"
-msgstr "Helyzet"
+msgstr "Új helyzet"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -420,9 +409,8 @@ msgid "Text"
 msgstr "Szöveg"
 
 #: gaphor/SysML/sysmlfmt.py:10
-#, fuzzy
 msgid "sourceContext: {name}"
-msgstr "kiterjesztés: {name}"
+msgstr "forrásSzövegkörnyezet: {name}"
 
 #: gaphor/SysML/toolbox.py:43
 msgid "Internal Blocks"
@@ -446,7 +434,6 @@ msgstr "Új blokkelem-meghatározási ábra"
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
 #: gaphor/SysML/toolbox.py:125 gaphor/SysML/toolbox.py:167
-#, fuzzy
 msgid "New Package"
 msgstr "Új csomag"
 
@@ -456,9 +443,8 @@ msgstr "Új belső blokkelemábra"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
 #: gaphor/SysML/toolbox.py:174
-#, fuzzy
 msgid "New Block"
-msgstr "Blokkelem"
+msgstr "Új blokkelem"
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
 msgid "New Package Diagram"
@@ -473,44 +459,36 @@ msgid "New Use Case Diagram"
 msgstr "Új használati eset ábra"
 
 #: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
-#, fuzzy
 msgid "New Actor"
-msgstr "Főszereplő"
+msgstr "Új szereplő"
 
 #: gaphor/SysML/toolbox.py:182
-#, fuzzy
 msgid "New Interface Block"
-msgstr "Új belső blokkelemábra"
+msgstr "Új felületblokkelem"
 
 #: gaphor/SysML/toolbox.py:186
-#, fuzzy
 msgid "New Requirement"
-msgstr "Követelmény"
+msgstr "Új követelmény"
 
 #: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
-#, fuzzy
 msgid "New Use Case"
-msgstr "Használati eset"
+msgstr "Új használati eset"
 
 #: gaphor/SysML/toolbox.py:197
-#, fuzzy
 msgid "New Value Type"
-msgstr "értéktipus"
+msgstr "Új értéktipus"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
-#, fuzzy
 msgid "Allocations"
-msgstr "Műveletek"
+msgstr "Kiosztások"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:10
-#, fuzzy
 msgid "Allocate"
-msgstr "Lefoglalt típus"
+msgstr "Kiosztás"
 
 #: gaphor/SysML/allocations/relationships.py:10
-#, fuzzy
 msgid "allocate"
-msgstr "Lefoglalt típus"
+msgstr "kiosztás"
 
 #: gaphor/SysML/blocks/block.py:62 gaphor/SysML/blocks/interfaceblock.py:61
 msgid "ControlStructure"
@@ -551,9 +529,8 @@ msgid "Block"
 msgstr "Blokkelem"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:39
-#, fuzzy
 msgid "InterfaceBlock"
-msgstr "felület"
+msgstr "FelületBlokkelem"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:51
 #: gaphor/UML/classes/classestoolbox.py:51
@@ -578,9 +555,8 @@ msgstr "Társítás"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:90
 #: gaphor/UML/classes/classestoolbox.py:109
-#, fuzzy
 msgid "Direct Association"
-msgstr "Közös társítás"
+msgstr "Közvetlen társítás"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
@@ -597,9 +573,8 @@ msgid "Primitive"
 msgstr "Egyszerű"
 
 #: gaphor/SysML/blocks/interfaceblock.py:63
-#, fuzzy
 msgid "interfaceblock"
-msgstr "felület"
+msgstr "felületblokkelem"
 
 #: gaphor/SysML/blocks/proxyport.py:40
 msgid "proxy"
@@ -672,7 +647,6 @@ msgid "Type"
 msgstr "Típus"
 
 #: gaphor/UML/propertypages.ui:28
-#, fuzzy
 msgid "Show Type"
 msgstr "Típus megjelenítése"
 
@@ -3059,4 +3033,3 @@ msgstr "„{name}”-kapcsolat frissítése"
 
 #~ msgid "Note or Remark"
 #~ msgstr "Megjegyzés"
-
