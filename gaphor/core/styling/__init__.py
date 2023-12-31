@@ -127,22 +127,18 @@ def resolve_variables(style: Style, style_layers: Sequence[Style]) -> Style:
 
 class CompiledStyleSheet:
     def __init__(self, *css: str):
-        self.selectors = [
-            (selspec[0], selspec[1], order, declarations)
-            for order, (selspec, declarations) in enumerate(compile_style_sheet(*css))
-            if selspec != "error"
-        ]
+        self.selectors = sorted(
+            (
+                (selspec[1], order, declarations, selspec[0])
+                for order, (selspec, declarations) in enumerate(compile_style_sheet(*css))
+                if selspec != "error"
+            ),
+            key=operator.itemgetter(0, 1),
+        )
 
     def match(self, node: StyleNode) -> Style:
-        results = sorted(
-            (
-                (specificity, order, declarations)
-                for pred, specificity, order, declarations in self.selectors
-                if pred(node)
-            ),
-            key=MATCH_SORT_KEY,
-        )
-        return merge_styles(*(decl for _, _, decl in results))  # type: ignore[arg-type]
-
-
-MATCH_SORT_KEY = operator.itemgetter(0, 1)
+        return merge_styles(*(
+            declarations
+            for _specificity, _order, declarations, pred in self.selectors
+            if pred(node)
+        ))
