@@ -49,7 +49,6 @@ FALLBACK_STYLE: Style = {
     "color": (0, 0, 0, 1),
     "font-family": "sans",
     "font-size": 14,
-    "line-width": 2,
     "padding": (0, 0, 0, 0),
 }
 
@@ -196,6 +195,7 @@ class StyledItem:
             StyledItem(child, selection, dark_mode=self.dark_mode)
             for child in self.item.children
         )
+        # TODO: Return css nodes in a Presentation (traverse shapes) to make :has() and :empty work
 
     def attribute(self, name: str) -> str:
         fields = name.split(".")

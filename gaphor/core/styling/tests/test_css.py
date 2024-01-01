@@ -175,13 +175,17 @@ def test_faulty_font_size(font_size):
     assert props.get("font-size") is None
 
 
+def filter_private(props):
+    return {n: v for n, v in props.items() if not n.startswith("-gaphor-")}
+
+
 def test_empty_compiled_style_sheet():
     css = ""
 
     compiled_style_sheet = CompiledStyleSheet(css)
     props = compiled_style_sheet.match(Node("mytype"))
 
-    assert props == {}
+    assert filter_private(props) == {}
 
 
 def test_color():

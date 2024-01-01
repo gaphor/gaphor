@@ -4,21 +4,24 @@ import math
 from dataclasses import replace
 from enum import Enum
 from math import pi
-from typing import Callable, Protocol
+from typing import Callable, Iterator, Protocol, Sequence
 
 from gaphas.geometry import Rectangle
 
-from gaphor.core.modeling import DrawContext, UpdateContext
+from gaphor.core.modeling import DrawContext, Element, UpdateContext
+from gaphor.core.modeling.diagram import attrstr, rgetattr
 from gaphor.core.styling import (
     JustifyContent,
     Number,
     Padding,
     Style,
+    StyleNode,
     TextAlign,
     VerticalAlign,
     WhiteSpace,
     merge_styles,
 )
+from gaphor.core.styling.inherit import inherit_style
 from gaphor.diagram.text import Layout
 
 
@@ -46,7 +49,7 @@ def stroke(context: DrawContext, fill: bool, dash=True):
     with cairo_state(cr):
         if stroke := style.get("color"):
             cr.set_source_rgba(*stroke)
-        if line_width := style.get("line-width"):
+        if line_width := style.get("line-width", 2):
             cr.set_line_width(line_width)
         if dash:
             cr.set_dash(style.get("dash-style", ()), 0)
@@ -477,13 +480,17 @@ class Text:
         self._inline_style = style
         self._layout = Layout()
 
-    def text(self, style: Style):
+    def text(self, style: Style | None = None):
         try:
             t = self._text()
         except AttributeError:
             t = ""
 
-        if (after := style.get("::after")) and (content := after.get("content")):
+        if (
+            style
+            and (after := style.get("::after"))
+            and (content := after.get("content"))
+        ):
             return f"{t}{content}"
         return t
 
@@ -525,3 +532,63 @@ class Text:
             cr.move_to(text_box.x, text_box.y)
             layout.set(font=style)
             layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
+
+
+class StyledChildElement:
+    def __init__(self, name: str, element: Element):
+        self._name = name
+        self._element = element
+        self.pseudo: str | None = None
+        self.dark_mode: bool | None = None
+
+    def name(self) -> str:
+        return self._name
+
+    def parent(self) -> StyleNode | None:
+        return None
+
+    def children(self) -> Iterator[StyleNode]:
+        return iter(())
+
+    def attribute(self, name: str) -> str:
+        fields = name.split(".")
+        return " ".join(map(attrstr, rgetattr(self._element, fields))).strip()
+
+    def state(self) -> Sequence[str]:
+        return ()
+
+
+class CssNode:
+    """Create custom styling based on the active style and
+    an element/class declaration.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        element: Element,
+        child: Shape,
+        style: Style | None = None,
+    ):
+        self._name = name
+        self._element = element
+        self._child = child
+        self._inline_style = style if style else {}
+
+    def size(
+        self, context: UpdateContext, bounding_box: Rectangle | None = None
+    ) -> tuple[Number, Number]:
+        style = inherit_style(
+            context.style, StyledChildElement(self._name, self._element)
+        )
+        new_context = replace(context, style=style)
+
+        return self._child.size(new_context, bounding_box)
+
+    def draw(self, context: DrawContext, bounding_box: Rectangle):
+        style = inherit_style(
+            context.style, StyledChildElement(self._name, self._element)
+        )
+        new_context = replace(context, style=style)
+
+        self._child.draw(new_context, bounding_box)

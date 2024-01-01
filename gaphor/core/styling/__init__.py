@@ -23,8 +23,9 @@ from gaphor.core.styling.declarations import (
 
 # Style is using SVG properties where possible
 # https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
-# NB. The Style can also contain variables (start with `--`),
-#     however those are not part of the interface.
+# NB1. The Style can also contain variables (start with `--`),
+#      however those are not part of the interface.
+# NB2. The Style can also contain private (`-gaphor-*`) entries.
 
 _Style_after = TypedDict(
     "_Style_after",
@@ -60,11 +61,12 @@ Style = TypedDict(
         "vertical-spacing": Number,
         "white-space": WhiteSpace,
         "::after": _Style_after,
+        # Opaque elements to support inheritance
+        "-gaphor-style-node": object,
+        "-gaphor-compiled-style-sheet": object
     },
     total=False,
 )
-
-INHERITED_DECLARATIONS = ("color", "font-family", "font-size", "font-style", "font-weight", "text-align", "text-color", "white-space")
 
 
 class StyleNode(Protocol):
@@ -180,8 +182,13 @@ class CompiledStyleSheet:
             if pred(PseudoStyleNode(node, "after"))
         ))
 
-        return merge_styles({"::after": after_style} if after_style else {}, *(
-            declarations
-            for _specificity, _order, declarations, pred in self.selectors
-            if pred(node)
-        ))
+        return merge_styles(
+            {"::after": after_style} if after_style else {},
+            {"-gaphor-style-node": node, "-gaphor-compiled-style-sheet": self},
+            *(
+                declarations
+                for _specificity, _order, declarations, pred in self.selectors
+                if pred(node)
+            )
+        )
+
