@@ -1553,17 +1553,22 @@ files = [
 
 [[package]]
 name = "pydot"
-version = "1.4.2"
+version = "2.0.0"
 description = "Python interface to Graphviz's Dot"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+python-versions = ">=3.7"
 files = [
-    {file = "pydot-1.4.2-py2.py3-none-any.whl", hash = "sha256:66c98190c65b8d2e2382a441b4c0edfdb4f4c025ef9cb9874de478fb0793a451"},
-    {file = "pydot-1.4.2.tar.gz", hash = "sha256:248081a39bcb56784deb018977e428605c1c758f10897a339fce1dd728ff007d"},
+    {file = "pydot-2.0.0-py3-none-any.whl", hash = "sha256:408a47913ea7bd5d2d34b274144880c1310c4aee901f353cf21fe2e526a4ea28"},
+    {file = "pydot-2.0.0.tar.gz", hash = "sha256:60246af215123fa062f21cd791be67dda23a6f280df09f68919e637a1e4f3235"},
 ]
 
 [package.dependencies]
-pyparsing = ">=2.1.4"
+pyparsing = ">=3"
+
+[package.extras]
+dev = ["black", "chardet"]
+release = ["zest.releaser[recommended]"]
+tests = ["black", "chardet", "tox"]
 
 [[package]]
 name = "pygit2"
@@ -2730,4 +2735,4 @@ docs = ["furo", "myst-nb", "sphinx", "sphinx-copybutton", "sphinx-intl"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.13"
-content-hash = "0d4c2fb59f15404d319bbc4010b22ae5056eb2035cfec3ebcf63d8baef9efced"
+content-hash = "5cb0a9d98617fed9cfd98c09d5af9ae7b79556d133036b052196e02ce0229eeb"
