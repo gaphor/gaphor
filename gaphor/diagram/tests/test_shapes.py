@@ -279,3 +279,7 @@ def test_text_with_after_pseudo_element():
     text = Text("some")
 
     assert text.text(style) == "some text"
+
+
+def test_box_with_custom_css_name():
+    Box(Box(css_name="special"))

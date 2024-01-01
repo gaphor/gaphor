@@ -57,7 +57,7 @@ class StateItem(ElementPresentation[UML.State], Named):
             style={"padding": (4, 4, 4, 4), "justify-content": JustifyContent.START},
             draw=draw_top_separator,
         )
-        if not any(t.text() for t in compartment.children):
+        if not any(t.text() for t in compartment.children):  # type: ignore[attr-defined]
             compartment = Box()
 
         self.shape = Box(
