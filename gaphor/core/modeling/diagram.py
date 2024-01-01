@@ -134,15 +134,16 @@ class StyledDiagram:
     ):
         self.diagram = diagram
         self.selection = selection or gaphas.selection.Selection()
+        self.pseudo: str | None = None
         self.dark_mode = dark_mode
 
     def name(self) -> str:
         return "diagram"
 
-    def parent(self):
+    def parent(self) -> StyleNode | None:
         return None
 
-    def children(self) -> Iterator[StyledItem]:
+    def children(self) -> Iterator[StyleNode]:
         return (
             StyledItem(item, self.selection, dark_mode=self.dark_mode)
             for item in self.diagram.get_all_items()
@@ -153,11 +154,8 @@ class StyledDiagram:
         fields = name.split(".")
         return " ".join(map(attrstr, rgetattr(self.diagram, fields))).strip()
 
-    def state(self):
+    def state(self) -> Sequence[str]:
         return ()
-
-    def pseudo(self):
-        return None
 
 
 class StyledItem:
@@ -171,20 +169,20 @@ class StyledItem:
         self,
         item: Presentation,
         selection: gaphas.selection.Selection | None = None,
-        pseudo_element: str | None = None,
+        pseudo: str | None = None,
         dark_mode: bool | None = None,
     ):
         assert item.diagram
         self.item = item
         self.diagram = item.diagram
         self.selection = selection
-        self.pseudo_element = pseudo_element
+        self.pseudo = pseudo
         self.dark_mode = dark_mode
 
     def name(self) -> str:
         return type(self.item).__name__.removesuffix("Item").lower()
 
-    def parent(self) -> StyledItem | StyledDiagram:
+    def parent(self) -> StyleNode | None:
         parent = self.item.parent
         return (
             StyledItem(parent, self.selection, dark_mode=self.dark_mode)
@@ -192,7 +190,7 @@ class StyledItem:
             else StyledDiagram(self.diagram, self.selection, self.dark_mode)
         )
 
-    def children(self) -> Iterator[StyledItem]:
+    def children(self) -> Iterator[StyleNode]:
         selection = self.selection
         return (
             StyledItem(child, selection, dark_mode=self.dark_mode)
@@ -220,9 +218,6 @@ class StyledItem:
             if selection
             else ()
         )
-
-    def pseudo(self) -> str | None:
-        return self.pseudo_element
 
 
 P = TypeVar("P", bound=Presentation)

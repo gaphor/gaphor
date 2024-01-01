@@ -22,7 +22,7 @@ class Node:
         self._children = children or []
         self._attributes = attributes
         self._state = state
-        self._pseudo = pseudo
+        self.pseudo = pseudo
         self.dark_mode = dark_mode
 
         if parent:
@@ -44,9 +44,6 @@ class Node:
 
     def state(self):
         return self._state
-
-    def pseudo(self):
-        return self._pseudo
 
 
 def test_node_test_object_parent_child():

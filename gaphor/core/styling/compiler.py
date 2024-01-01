@@ -227,4 +227,4 @@ def compile_pseudo_element_selector(selector: selectors.PseudoElementSelector):
     if name != "after":
         raise selectors.SelectorError("Unknown pseudo-element", name)
 
-    return lambda el: name == el.pseudo()
+    return lambda el: name == el.pseudo

@@ -56,6 +56,10 @@ Style = TypedDict(
 
 
 class StyleNode(Protocol):
+
+    pseudo: str | None
+    dark_mode: bool | None
+
     def name(self) -> str:
         ...
 
@@ -69,9 +73,6 @@ class StyleNode(Protocol):
         ...
 
     def state(self) -> Sequence[str]:
-        ...
-
-    def pseudo(self) -> str | None:
         ...
 
 
