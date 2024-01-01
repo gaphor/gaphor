@@ -7,9 +7,9 @@ import tinycss2.color3
 from tinycss2.ast import FunctionBlock
 from tinycss2.parser import parse_declaration_list
 
-Color = Tuple[float, float, float, float]  # RGBA
-Padding = Tuple[float, float, float, float]  # top/right/bottom/left
 Number = Union[int, float]
+Color = Tuple[float, float, float, float]  # RGBA
+Padding = Tuple[Number, Number, Number, Number]  # top/right/bottom/left
 
 
 class TextAlign(Enum):
@@ -51,6 +51,10 @@ class WhiteSpace(Enum):
     NOWRAP = "nowrap"
 
 
+class Var(NamedTuple):
+    name: str
+
+
 FONT_SIZE_VALUES = {
     "x-small": 3 / 4,
     "small": 8 / 9,
@@ -72,10 +76,6 @@ def parse_declarations(declaration_list):
             )
         elif decl.type == "error":
             yield "error", decl
-
-
-class Var(NamedTuple):
-    name: str
 
 
 class _Declarations:
