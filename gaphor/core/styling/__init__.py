@@ -64,6 +64,8 @@ Style = TypedDict(
     total=False,
 )
 
+INHERITED_DECLARATIONS = ("color", "font-family", "font-size", "font-style", "font-weight", "text-align", "text-color", "white-space")
+
 
 class StyleNode(Protocol):
 
@@ -84,6 +86,7 @@ class StyleNode(Protocol):
 
     def state(self) -> Sequence[str]:
         ...
+
 
 class PseudoStyleNode:
 
