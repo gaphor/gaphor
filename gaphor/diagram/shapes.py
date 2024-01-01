@@ -466,11 +466,15 @@ class Text:
         self._inline_style = style
         self._layout = Layout()
 
-    def text(self):
+    def text(self, style: Style):
         try:
-            return self._text()
+            t = self._text()
         except AttributeError:
-            return ""
+            t = ""
+
+        if (after := style.get("::after")) and (content := after.get("content")):
+            return f"{t}{content}"
+        return t
 
     def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = merge_styles(context.style, self._inline_style)
@@ -481,7 +485,7 @@ class Text:
 
         layout = self._layout
         layout.set(
-            text=self.text(),
+            text=self.text(style),
             font=style,
             width=bounding_box.width
             if bounding_box and white_space == WhiteSpace.NORMAL

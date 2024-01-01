@@ -271,3 +271,11 @@ def test_text_width_min_height(update_context):
 
     _, h = text.size(update_context)
     assert h == 40
+
+
+def test_text_with_after_pseudo_element():
+    after_style = {"content": " text"}
+    style = {"color": (0, 0, 1, 1), "::after": after_style}
+    text = Text("some")
+
+    assert text.text(style) == "some text"

@@ -383,3 +383,13 @@ def test_combined_normal_and_pseudo_element():
 
     assert node_props.get("content") == "Hi"
     assert class_props.get("content") == "Hi"
+
+
+def test_pseudo_element_inherits_normal_declarations():
+    css = "node { color: blue} ::after { content: 'Hi' }"
+
+    compiled_style_sheet = CompiledStyleSheet(css)
+    props = compiled_style_sheet.match(Node("node"))
+
+    assert props.get("::after")
+    assert props.get("::after").get("content") == "Hi"

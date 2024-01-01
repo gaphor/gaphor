@@ -25,6 +25,15 @@ from gaphor.core.styling.declarations import (
 # https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
 # NB. The Style can also contain variables (start with `--`),
 #     however those are not part of the interface.
+
+_Style_after = TypedDict(
+    "_Style_after",
+    {
+        "content": str,
+    },
+    total=False,
+)
+
 Style = TypedDict(
     "Style",
     {
@@ -50,6 +59,7 @@ Style = TypedDict(
         "vertical-align": VerticalAlign,
         "vertical-spacing": Number,
         "white-space": WhiteSpace,
+        "::after": _Style_after,
     },
     total=False,
 )
@@ -74,6 +84,28 @@ class StyleNode(Protocol):
 
     def state(self) -> Sequence[str]:
         ...
+
+class PseudoStyleNode:
+
+    def __init__(self, node: StyleNode, psuedo: str):
+        self._node = node
+        self.pseudo = psuedo
+        self.dark_mode = node.dark_mode
+
+    def name(self) -> str:
+        return self._node.name()
+
+    def parent(self) -> StyleNode | None:
+        return self._node.parent()
+
+    def children(self) -> Iterator[StyleNode]:
+        return self._node.children()
+
+    def attribute(self, name: str) -> str:
+        return self._node.attribute(name)
+
+    def state(self) -> Sequence[str]:
+        return self._node.state()
 
 
 def merge_styles(*styles: Style) -> Style:
@@ -138,7 +170,14 @@ class CompiledStyleSheet:
         )
 
     def match(self, node: StyleNode) -> Style:
-        return merge_styles(*(
+        # TODO: make after_style lazy
+        after_style = merge_styles(*(
+            declarations
+            for _specificity, _order, declarations, pred in self.selectors
+            if pred(PseudoStyleNode(node, "after"))
+        ))
+
+        return merge_styles({"::after": after_style} if after_style else {}, *(
             declarations
             for _specificity, _order, declarations, pred in self.selectors
             if pred(node)
