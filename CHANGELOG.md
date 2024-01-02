@@ -1,24 +1,20 @@
 2.23.0
 ------
-- Add types for parameters
-- Restore windows in maximized and fullscreened state
-- Wrap element names
-- Fix values showing under part compartment
-- Add merge-node icon
+- Support types for parameters
+- Restore windows in maximized and full-screen state
+- Very long element names are now wrapped
 - Format files accessed from Flatpak via portals
-- Update PropertyPages to use Gtk.ColumnView and ListView
+- Update Property Editor to use Gtk.ColumnView and ListView
 - Replace deprecated Gtk.FileChooser by FileDialog
-- Replace deprecated use of CssProvider.load_from_data
 - Replace in-app notifications by Adwaita Toasts
 - macOS: Update app icon
-- macOS: Fix ⓘ icon in PropertyPages isn't displayed
+- macOS: Fix ⓘ icon in Property Editor isn't displayed
 - macOS and Windows: Apply custom window shadow
-- Be very defensive about settings schema sources
+- Fix Gaphor should work if GSettings schema is not available
+- Fix values showing under part compartment in SysML Block elements
+- Fix merge-node icon
 - Fix connecting lines when model is loaded and documentation updates
 - Fix macOS build and documentation generation
-- Update GitHub Actions labeler action to v5
-- Fix pipx install error in Linux
-- Update to Gaphas 4.0
 - Update Russian, Chinese, and German translations
 
 2.22.1
