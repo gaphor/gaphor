@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-12-30 16:31+0100\n"
-"PO-Revision-Date: 2024-01-02 00:06+0000\n"
+"PO-Revision-Date: 2024-01-02 01:29+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
@@ -516,9 +516,8 @@ msgid "values"
 msgstr "значения"
 
 #: gaphor/SysML/blocks/block.py:140 gaphor/SysML/blocks/interfaceblock.py:126
-#, fuzzy
 msgid "operations"
-msgstr "Методы"
+msgstr "методы"
 
 #: gaphor/SysML/blocks/block.py:155 gaphor/SysML/blocks/block.py:187
 #: gaphor/SysML/blocks/interfaceblock.py:141
@@ -700,9 +699,8 @@ msgid "New Interface"
 msgstr "Новый интерфейс"
 
 #: gaphor/UML/toolbox.py:83
-#, fuzzy
 msgid "New Node"
-msgstr "Новая модель"
+msgstr "Новый Узел"
 
 #: gaphor/UML/toolbox.py:84
 msgid "New Profile"
@@ -982,16 +980,15 @@ msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:389
 msgid "Multiplicity"
-msgstr ""
+msgstr "Множественность"
 
 #: gaphor/UML/classes/classespropertypages.py:233
 msgid "New Attribute…"
 msgstr "Новый Атрибут…"
 
 #: gaphor/UML/classes/classespropertypages.py:390
-#, fuzzy
 msgid "New Operation…"
-msgstr "Показывать Методы"
+msgstr "Новый Метод…"
 
 #: gaphor/UML/classes/classestoolbox.py:25
 msgid "Classes"
@@ -1530,9 +1527,8 @@ msgid "Diagram metadata"
 msgstr "Метаданные диаграммы"
 
 #: gaphor/diagram/diagramtoolbox.py:194 gaphor/diagram/propertypages.ui:272
-#, fuzzy
 msgid "Picture"
-msgstr "Структура"
+msgstr "Изображение"
 
 #: gaphor/diagram/presentation.py:51
 msgid "(from {namespace})"
@@ -1551,9 +1547,8 @@ msgid "Flip orientation"
 msgstr "Отразить ориентацию"
 
 #: gaphor/diagram/propertypages.ui:130
-#, fuzzy
 msgid "Note"
-msgstr "НЕ"
+msgstr "Примечание"
 
 #: gaphor/diagram/propertypages.ui:167
 msgid "Created By"
@@ -1581,7 +1576,7 @@ msgstr "Обновлено"
 
 #: gaphor/diagram/propertypages.ui:283
 msgid "Select picture..."
-msgstr ""
+msgstr "Выберите изображение..."
 
 #: gaphor/diagram/propertypages.ui:289
 msgid "Set default size"
@@ -1589,12 +1584,11 @@ msgstr "Размер по умолчанию"
 
 #: gaphor/diagram/general/generalpropertypages.py:126
 msgid "Select a picture..."
-msgstr ""
+msgstr "Выбрать изображение..."
 
 #: gaphor/diagram/general/generalpropertypages.py:149
-#, fuzzy
 msgid "Unable to parse picture “{filename}”."
-msgstr "Не удалось сохранить модель в “{filename}”."
+msgstr "Не удалось проанализировать изображение «{filename}»."
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -2583,7 +2577,7 @@ msgstr "Загрузка модели из {filename}"
 
 #: gaphor/ui/filemanager.py:149
 msgid "Loading current and incoming model"
-msgstr ""
+msgstr "Загрузка текущей и входящей модели"
 
 #: gaphor/ui/filemanager.py:227 gaphor/ui/filemanager.py:283
 msgid "Unable to open model “{filename}”."
@@ -2627,15 +2621,15 @@ msgstr "Отмена"
 
 #: gaphor/ui/filemanager.py:425
 msgid "Open Merge Editor"
-msgstr ""
+msgstr "Открыть редактор слияния"
 
 #: gaphor/ui/filemanager.py:426
 msgid "Open Current"
-msgstr ""
+msgstr "Открыть Текущую"
 
 #: gaphor/ui/filemanager.py:427
 msgid "Open Incoming"
-msgstr ""
+msgstr "Открыть Входящую"
 
 #: gaphor/ui/filemanager.py:440
 msgid "Save Changes?"
@@ -2697,7 +2691,7 @@ msgstr "О Gaphor"
 
 #: gaphor/ui/greeter.ui:84
 msgid "Recently Opened"
-msgstr "Недавно Открытые"
+msgstr "Недавно открытые"
 
 #: gaphor/ui/greeter.ui:89
 msgid "Create New Model"
@@ -2777,7 +2771,7 @@ msgstr "_Удалить"
 
 #: gaphor/ui/modelbrowser.py:603
 msgid "Show in “{diagram}”"
-msgstr "Показать в “{diagram}”"
+msgstr "Показать в «{diagram}»"
 
 #: gaphor/ui/modelbrowser.py:635
 msgid "New Generic Diagram"
@@ -2869,7 +2863,7 @@ msgstr "Закрыть Диаграмму"
 
 #: gaphor/ui/help/shortcuts.ui:62
 msgid "Toggle Fullscreen"
-msgstr "Переключить полноэкранный режим"
+msgstr "Во весь экран"
 
 #: gaphor/ui/help/shortcuts.ui:70
 msgid "Quit Gaphor"
@@ -2937,23 +2931,23 @@ msgstr "Обновить элемент типа «{type}»"
 
 #: gaphor/ui/modelmerge/organize.py:245
 msgid "Update presentation “{type}”"
-msgstr ""
+msgstr "Обновить представление «{type}»"
 
 #: gaphor/ui/modelmerge/organize.py:271
 msgid "Add presentation of type {type}"
-msgstr ""
+msgstr "Добавить представление типа {type}"
 
 #: gaphor/ui/modelmerge/organize.py:275
 msgid "Remove presentation of type {type}"
-msgstr ""
+msgstr "Удалить представление типа {type}"
 
 #: gaphor/ui/modelmerge/organize.py:280
 msgid "Update presentation “{name}”"
-msgstr "Обновить презентацию «{name}»"
+msgstr "Обновить представление «{name}»"
 
 #: gaphor/ui/modelmerge/organize.py:282
 msgid "Update presentation of type {type}"
-msgstr ""
+msgstr "Обновить представление типа {type}"
 
 #: gaphor/ui/modelmerge/organize.py:289
 msgid "Add {type} “{name}”"
