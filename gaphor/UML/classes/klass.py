@@ -7,9 +7,6 @@ from gaphor.core.styling import (
     FontStyle,
     FontWeight,
     JustifyContent,
-    TextAlign,
-    TextDecoration,
-    WhiteSpace,
 )
 from gaphor.diagram.presentation import (
     Classified,
@@ -138,7 +135,7 @@ def operation_watches(presentation, cast):
 
 
 def attributes_compartment(subject):
-    # We need to fix the attribute value, since the for loop changes it.
+    # We need to scope the attribute value, since the for loop changes it.
     def lazy_format(attribute):
         return lambda: format(attribute)
 
@@ -149,13 +146,6 @@ def attributes_compartment(subject):
                 attribute,
                 Text(
                     text=lazy_format(attribute),
-                    style={
-                        "text-align": TextAlign.LEFT,
-                        "text-decoration": TextDecoration.UNDERLINE
-                        if attribute.isStatic
-                        else TextDecoration.NONE,
-                        "white-space": WhiteSpace.NOWRAP,
-                    },
                 ),
             )
             for attribute in subject.ownedAttribute
@@ -183,16 +173,6 @@ def operations_compartment(subject):
                 operation,
                 Text(
                     text=lazy_format(operation),
-                    style={
-                        "text-align": TextAlign.LEFT,
-                        "font-style": FontStyle.ITALIC
-                        if operation.isAbstract
-                        else FontStyle.NORMAL,
-                        "text-decoration": TextDecoration.UNDERLINE
-                        if operation.isStatic
-                        else TextDecoration.NONE,
-                        "white-space": WhiteSpace.NOWRAP,
-                    },
                 ),
             )
             for operation in subject.ownedOperation

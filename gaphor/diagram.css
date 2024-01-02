@@ -55,6 +55,17 @@ executionspecification {
   background-color: var(--opaque-background-color);
 }
 
-* attribute {
+* attribute,
+* operation {
+  text-align: left;
+  white-space: nowrap;
+}
 
+* operation[isabstract] {
+  font-style: italic;
+}
+
+* attribute[isstatic],
+* operation[isstatic] {
+    text-decoration: underline;
 }
