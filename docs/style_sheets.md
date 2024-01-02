@@ -417,9 +417,6 @@ comment[body^="TODO"] {
 
 ## System Style Sheet
 
-```{literalinclude} ../gaphor/core/modeling/stylesheet.py
+```{literalinclude} ../gaphor/diagram.css
 :language: css
-:dedent: 4
-:start-after: /* --start-system-style-sheet-- */
-:end-before: /* --end-system-style-sheet-- */
 ```

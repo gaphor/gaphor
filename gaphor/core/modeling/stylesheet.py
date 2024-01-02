@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.resources
 import textwrap
 
 from gaphor.core.modeling.element import Element
@@ -7,65 +8,8 @@ from gaphor.core.modeling.event import AttributeUpdated
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode
 
-SYSTEM_STYLE_SHEET = textwrap.dedent(
-    """\
-    /* --start-system-style-sheet-- */
-    * {
-      --opaque-background-color: white;
-      background-color: transparent;
-      color: black;
-      font-size: 14;
-      line-width: 2;
-      padding: 0;
-    }
-
-    *:drop {
-      color: #1a5fb4;
-      line-width: 3;
-    }
-
-    *:disabled {
-      opacity: 0.5;
-    }
-
-    @media light-mode {
-      * {
-        --opaque-background-color: #fafafa;
-      }
-    }
-
-    @media dark-mode {
-      * {
-        --opaque-background-color: #242424;
-        color: white;
-      }
-
-      *:drop {
-        color: #62a0ea;
-      }
-    }
-
-    dependency,
-    interfacerealization {
-      dash-style: 7 5;
-    }
-
-    dependency[on_folded_interface = true],
-    interfacerealization[on_folded_interface = true] {
-      dash-style: 0;
-    }
-
-    controlflow {
-      dash-style: 9 3;
-    }
-
-    proxyport,
-    activityparameternode,
-    executionspecification {
-      background-color: var(--opaque-background-color);
-    }
-    /* --end-system-style-sheet-- */
-    """
+SYSTEM_STYLE_SHEET = (importlib.resources.files("gaphor") / "diagram.css").read_text(
+    "utf-8"
 )
 
 DEFAULT_STYLE_SHEET = textwrap.dedent(
