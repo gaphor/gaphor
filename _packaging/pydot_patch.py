@@ -8,7 +8,7 @@ import os
 import subprocess
 import sys
 
-import pydot
+import pydot.core
 
 log = logging.getLogger(__name__)
 
@@ -66,4 +66,4 @@ def call_graphviz(program, arguments, working_dir, **kwargs):
     return stdout_data, stderr_data, process
 
 
-pydot.call_graphviz = call_graphviz
+pydot.core.call_graphviz = call_graphviz
