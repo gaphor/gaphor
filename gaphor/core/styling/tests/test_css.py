@@ -1,6 +1,10 @@
 import pytest
 
-from gaphor.core.styling import CompiledStyleSheet, compile_style_sheet
+from gaphor.core.styling import (
+    CompiledStyleSheet,
+    compile_style_sheet,
+    compute_pseudo_element_style,
+)
 from gaphor.core.styling.declarations import WhiteSpace
 from gaphor.core.styling.tests.test_compiler import Node
 
@@ -394,6 +398,7 @@ def test_pseudo_element_inherits_normal_declarations():
 
     compiled_style_sheet = CompiledStyleSheet(css)
     props = compiled_style_sheet.compute_style(Node("node"))
+    after = compute_pseudo_element_style(props, "after")
 
-    assert props.get("::after")
-    assert props.get("::after").get("content") == "Hi"
+    assert after
+    assert after.get("content") == "Hi"

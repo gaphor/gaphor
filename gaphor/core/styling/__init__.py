@@ -29,14 +29,6 @@ from gaphor.core.styling.declarations import (
 #      however those are not part of the interface.
 # NB2. The Style can also contain private (`-gaphor-*`) entries.
 
-_Style_after = TypedDict(
-    "_Style_after",
-    {
-        "content": str,
-    },
-    total=False,
-)
-
 Style = TypedDict(
     "Style",
     {
@@ -62,7 +54,6 @@ Style = TypedDict(
         "vertical-align": VerticalAlign,
         "vertical-spacing": Number,
         "white-space": WhiteSpace,
-        "::after": _Style_after,
         # Opaque elements to support inheritance
         "-gaphor-style-node": object,
         "-gaphor-compiled-style-sheet": object
@@ -90,39 +81,6 @@ class StyleNode(Hashable, Protocol):
 
     def state(self) -> Sequence[str]:
         ...
-
-
-class PseudoStyleNode:
-
-    def __init__(self, node: StyleNode, psuedo: str):
-        self._node = node
-        self.pseudo = psuedo
-        self.dark_mode = node.dark_mode
-
-    def name(self) -> str:
-        return self._node.name()
-
-    def parent(self) -> StyleNode | None:
-        return self._node.parent()
-
-    def children(self) -> Iterator[StyleNode]:
-        return self._node.children()
-
-    def attribute(self, name: str) -> str:
-        return self._node.attribute(name)
-
-    def state(self) -> Sequence[str]:
-        return self._node.state()
-
-    def __hash__(self):
-        return hash((self._node, self.pseudo))
-
-    def __eq__(self, other):
-        return (
-            isinstance(other, PseudoStyleNode)
-            and self._node == other._node
-            and self.pseudo is other.pseudo
-        )
 
 
 def merge_styles(*styles: Style) -> Style:
@@ -188,15 +146,7 @@ class CompiledStyleSheet:
 
     @functools.lru_cache(maxsize=1000)
     def compute_style(self, node: StyleNode) -> Style:
-        # TODO: make after_style lazy
-        after_style = merge_styles(*(
-            declarations
-            for _specificity, _order, declarations, pred in self.selectors
-            if pred(PseudoStyleNode(node, "after"))
-        ))
-
         return merge_styles(
-            {"::after": after_style} if after_style else {},
             {"-gaphor-style-node": node, "-gaphor-compiled-style-sheet": self},
             *(
                 declarations
@@ -205,3 +155,45 @@ class CompiledStyleSheet:
             )
         )
 
+
+class PseudoStyleNode:
+
+    def __init__(self, node: StyleNode, psuedo: str):
+        self._node = node
+        self.pseudo = psuedo
+        self.dark_mode = node.dark_mode
+
+    def name(self) -> str:
+        return self._node.name()
+
+    def parent(self) -> StyleNode | None:
+        return self._node.parent()
+
+    def children(self) -> Iterator[StyleNode]:
+        return self._node.children()
+
+    def attribute(self, name: str) -> str:
+        return self._node.attribute(name)
+
+    def state(self) -> Sequence[str]:
+        return self._node.state()
+
+    def __hash__(self):
+        return hash((self._node, self.pseudo))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, PseudoStyleNode)
+            and self._node == other._node
+            and self.pseudo is other.pseudo
+        )
+
+
+def compute_pseudo_element_style(style: Style, pseudo: str) -> Style:
+    parent: StyleNode | None = style.get("-gaphor-style-node")  # type: ignore[assignment]
+    if not parent:
+        return style
+
+    compiled_style_sheet: CompiledStyleSheet = style.get("-gaphor-compiled-style-sheet")  # type: ignore[assignment]
+
+    return compiled_style_sheet.compute_style(PseudoStyleNode(parent, pseudo))

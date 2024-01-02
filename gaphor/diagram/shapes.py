@@ -19,6 +19,7 @@ from gaphor.core.styling import (
     TextAlign,
     VerticalAlign,
     WhiteSpace,
+    compute_pseudo_element_style,
     merge_styles,
 )
 from gaphor.core.styling.inherit import inherit_style
@@ -488,7 +489,7 @@ class Text:
 
         if (
             style
-            and (after := style.get("::after"))
+            and (after := compute_pseudo_element_style(style, "after"))
             and (content := after.get("content"))
         ):
             return f"{t}{content}"

@@ -54,10 +54,9 @@ def inherit_style(style: Style, child: StyleNode) -> Style:
     if not parent:
         return style
 
-    node = InheritingStyleNode(parent, child)
     compiled_style_sheet: CompiledStyleSheet = style.get("-gaphor-compiled-style-sheet")  # type: ignore[assignment]
 
-    sub_style = compiled_style_sheet.compute_style(node)
+    sub_style = compiled_style_sheet.compute_style(InheritingStyleNode(parent, child))
 
     return merge_styles(
         {n: v for n, v in style.items() if n in INHERITED_DECLARATIONS},  # type: ignore[arg-type]
