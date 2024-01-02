@@ -4,9 +4,9 @@ from typing import Sequence, Union
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontWeight, JustifyContent
+from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, Text, draw_border
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments
 from gaphor.UML.recipes import stereotypes_str
@@ -48,12 +48,15 @@ class PropertyItem(Named, ElementPresentation[UML.Property]):
                 Text(
                     text=lambda: stereotypes_str(self.subject),
                 ),
-                Text(
-                    text=lambda: format_property(
-                        self.subject, type=True, multiplicity=True
-                    )
-                    or "",
-                    style={"font-weight": FontWeight.BOLD},
+                CssNode(
+                    "name",
+                    self.subject,
+                    Text(
+                        text=lambda: format_property(
+                            self.subject, type=True, multiplicity=True
+                        )
+                        or "",
+                    ),
                 ),
                 style={"padding": (12, 4, 12, 4)},
             ),

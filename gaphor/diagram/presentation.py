@@ -32,7 +32,7 @@ class Classified(Named):
 
 
 def text_name(item: Presentation):
-    """An item's `name` field."""
+    """An item subject's `name` field."""
     return CssNode(
         "name",
         item.subject,

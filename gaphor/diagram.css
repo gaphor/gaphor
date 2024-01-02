@@ -63,8 +63,7 @@ executionspecification {
   font-style: italic;
 }
 
-* attribute,
-* operation {
+* :is(attribute, operation) {
   text-align: left;
   white-space: nowrap;
 }
@@ -73,7 +72,6 @@ executionspecification {
   font-style: italic;
 }
 
-* attribute[isstatic],
-* operation[isstatic] {
+* :is(attribute, operation)[isstatic] {
     text-decoration: underline;
 }
