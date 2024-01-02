@@ -36,6 +36,16 @@ class InheritingStyleNode:
     def state(self) -> Sequence[str]:
         return self._parent.state()
 
+    def __hash__(self):
+        return hash((self._parent, self._child))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, InheritingStyleNode)
+            and self._parent == other._parent
+            and self._child == other._child
+        )
+
 
 def inherit_style(style: Style, child: StyleNode) -> Style:
     parent: StyleNode | None = style.get(  # type: ignore[assignment]

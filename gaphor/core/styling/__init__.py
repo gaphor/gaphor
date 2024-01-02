@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import functools
 import operator
+from collections.abc import Hashable
 from typing import Iterator, Protocol, Sequence, TypedDict, Union
 
 from gaphor.core.styling.compiler import compile_style_sheet
@@ -69,7 +71,7 @@ Style = TypedDict(
 )
 
 
-class StyleNode(Protocol):
+class StyleNode(Hashable, Protocol):
 
     pseudo: str | None
     dark_mode: bool | None
@@ -111,6 +113,16 @@ class PseudoStyleNode:
 
     def state(self) -> Sequence[str]:
         return self._node.state()
+
+    def __hash__(self):
+        return hash((self._node, self.pseudo))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, PseudoStyleNode)
+            and self._node == other._node
+            and self.pseudo is other.pseudo
+        )
 
 
 def merge_styles(*styles: Style) -> Style:
@@ -174,6 +186,7 @@ class CompiledStyleSheet:
             key=operator.itemgetter(0, 1),
         )
 
+    @functools.lru_cache(maxsize=1000)
     def match(self, node: StyleNode) -> Style:
         # TODO: make after_style lazy
         after_style = merge_styles(*(

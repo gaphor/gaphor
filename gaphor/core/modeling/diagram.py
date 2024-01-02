@@ -156,6 +156,17 @@ class StyledDiagram:
     def state(self) -> Sequence[str]:
         return ()
 
+    def __hash__(self):
+        return hash((self.diagram, self.state(), self.dark_mode))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, StyledDiagram)
+            and self.diagram == other.diagram
+            and self.state() == other.state()
+            and self.dark_mode == other.dark_mode
+        )
+
 
 class StyledItem:
     """Wrapper to allow style information to be retrieved.
@@ -168,14 +179,13 @@ class StyledItem:
         self,
         item: Presentation,
         selection: gaphas.selection.Selection | None = None,
-        pseudo: str | None = None,
         dark_mode: bool | None = None,
     ):
         assert item.diagram
         self.item = item
         self.diagram = item.diagram
         self.selection = selection
-        self.pseudo = pseudo
+        self.pseudo: str | None = None
         self.dark_mode = dark_mode
 
     def name(self) -> str:
@@ -217,6 +227,17 @@ class StyledItem:
             )
             if selection
             else ()
+        )
+
+    def __hash__(self):
+        return hash((self.item, self.state(), self.dark_mode))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, StyledItem)
+            and self.item == other.item
+            and self.state() == other.state()
+            and self.dark_mode == other.dark_mode
         )
 
 

@@ -545,7 +545,7 @@ class StyledChildElement:
         return self._name
 
     def parent(self) -> StyleNode | None:
-        return None
+        raise NotImplementedError()
 
     def children(self) -> Iterator[StyleNode]:
         return iter(())
@@ -557,7 +557,17 @@ class StyledChildElement:
         return " ".join(map(attrstr, rgetattr(self._element, fields))).strip()
 
     def state(self) -> Sequence[str]:
-        return ()
+        raise NotImplementedError()
+
+    def __hash__(self):
+        return hash((self.name, self._element))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, StyledChildElement)
+            and self._name == other._name
+            and self._element == other._element
+        )
 
 
 class CssNode:
