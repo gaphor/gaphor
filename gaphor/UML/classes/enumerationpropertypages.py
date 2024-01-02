@@ -86,7 +86,7 @@ def update_enumeration_model(store: Gio.ListStore, enum: UML.Enumeration) -> Non
 class EnumerationPage(PropertyPageBase):
     """An editor for enumeration literals for an enumeration."""
 
-    order = 20
+    order = 19
 
     def __init__(self, item):
         super().__init__()

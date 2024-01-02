@@ -2,14 +2,14 @@ import logging
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import JustifyContent, TextAlign
+from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
     text_name,
 )
-from gaphor.diagram.shapes import Box, Text, draw_border, draw_top_separator
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.klass import (
     attribute_watches,
@@ -113,11 +113,12 @@ def enumerations_compartment(subject):
 
     return Box(
         *(
-            Text(
-                text=lazy_format(literal.name),
-                style={
-                    "text-align": TextAlign.LEFT,
-                },
+            CssNode(
+                "enumeration",
+                literal,
+                Text(
+                    text=lazy_format(literal.name),
+                ),
             )
             for literal in subject.ownedLiteral
         ),

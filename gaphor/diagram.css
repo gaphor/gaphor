@@ -69,7 +69,7 @@ executionspecification {
   font-style: italic;
 }
 
-* :is(attribute, operation, slot) {
+* :is(attribute, operation, enumeration, slot) {
   text-align: left;
   white-space: nowrap;
 }
