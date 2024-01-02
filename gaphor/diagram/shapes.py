@@ -535,7 +535,7 @@ class Text:
 
 
 class StyledChildElement:
-    def __init__(self, name: str, element: Element):
+    def __init__(self, name: str, element: Element | None):
         self._name = name
         self._element = element
         self.pseudo: str | None = None
@@ -551,6 +551,8 @@ class StyledChildElement:
         return iter(())
 
     def attribute(self, name: str) -> str:
+        if not self._element:
+            return ""
         fields = name.split(".")
         return " ".join(map(attrstr, rgetattr(self._element, fields))).strip()
 
@@ -566,7 +568,7 @@ class CssNode:
     def __init__(
         self,
         name: str,
-        element: Element,
+        element: Element | None,
         child: Shape,
         style: Style | None = None,
     ):

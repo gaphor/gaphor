@@ -63,7 +63,13 @@ executionspecification {
   font-style: italic;
 }
 
-* :is(attribute, operation) {
+* heading {
+  padding: 0 0 4 0;
+  font-size: x-small;
+  font-style: italic;
+}
+
+* :is(attribute, operation, slot) {
   text-align: left;
   white-space: nowrap;
 }
