@@ -147,12 +147,12 @@ class CompiledStyleSheet:
     @functools.lru_cache(maxsize=1000)
     def compute_style(self, node: StyleNode) -> Style:
         return merge_styles(
-            {"-gaphor-style-node": node, "-gaphor-compiled-style-sheet": self},
             *(
                 declarations
                 for _specificity, _order, declarations, pred in self.selectors
                 if pred(node)
-            )
+            ),
+            {"-gaphor-style-node": node, "-gaphor-compiled-style-sheet": self}
         )
 
 

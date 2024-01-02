@@ -28,7 +28,7 @@ class ItemPainter:
         if not (diagram := item.diagram):
             return
 
-        style = diagram.style(StyledItem(item, selection, dark_mode=self.dark_mode))
+        style = diagram.style(StyledItem(item, selection, self.dark_mode))
 
         cr.save()
         try:

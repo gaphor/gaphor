@@ -36,9 +36,7 @@ def text_name(item: Presentation):
     return CssNode(
         "name",
         item.subject,
-        Text(
-            text=lambda: item.subject and item.subject.name or "",
-        ),
+        Text(text=lambda: item.subject and item.subject.name or ""),
     )
 
 
