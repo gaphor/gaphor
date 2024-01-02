@@ -15,7 +15,7 @@
 - Fix merge-node icon
 - Fix connecting lines when model is loaded and documentation updates
 - Fix macOS build and documentation generation
-- Update Russian, Chinese, and German translations
+- Update Russian, Chinese, Polish, Hungarian, Turkish and German translations
 
 2.22.1
 ------
