@@ -1,7 +1,7 @@
 from gaphor.C4Model import c4model
-from gaphor.core.styling import FontWeight, JustifyContent, TextAlign
-from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, Text, draw_border
+from gaphor.core.styling import JustifyContent
+from gaphor.diagram.presentation import ElementPresentation, Named, text_name
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_border
 from gaphor.diagram.support import represents
 
 
@@ -18,27 +18,27 @@ class C4ContainerItem(Named, ElementPresentation):
 
     def update_shapes(self, event=None):
         diagram = self.diagram
-        text_align = (
-            TextAlign.LEFT if self.diagram and self.children else TextAlign.CENTER
-        )
         self.shape = Box(
-            Text(
-                text=lambda: self.subject.name or "",
-                style={"font-weight": FontWeight.BOLD, "text-align": text_align},
-            ),
-            Text(
-                text=lambda: self.subject.technology
-                and f"[{diagram.gettext(self.subject.type)}: {self.subject.technology}]"
-                or f"[{diagram.gettext(self.subject.type)}]",
-                style={"font-size": "x-small", "text-align": text_align},
+            text_name(self),
+            CssNode(
+                "technology",
+                self.subject,
+                Text(
+                    text=lambda: self.subject.technology
+                    and f"[{diagram.gettext(self.subject.type)}: {self.subject.technology}]"
+                    or f"[{diagram.gettext(self.subject.type)}]",
+                ),
             ),
             *(
                 ()
                 if self.children
                 else (
-                    Text(
-                        text=lambda: self.subject.description or "",
-                        style={"padding": (4, 4, 0, 4), "text-align": text_align},
+                    CssNode(
+                        "description",
+                        self.subject,
+                        Text(
+                            text=lambda: self.subject.description or "",
+                        ),
                     ),
                 )
             ),

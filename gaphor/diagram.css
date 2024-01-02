@@ -75,3 +75,19 @@ executionspecification {
 * :is(attribute, operation)[isstatic] {
     text-decoration: underline;
 }
+
+c4container {
+  text-align: left;
+}
+
+c4container[children = ""] {
+  text-align: center;
+}
+
+c4container technology {
+  font-size: x-small;
+}
+
+c4container description {
+  padding: 4 4 0 4;
+}
