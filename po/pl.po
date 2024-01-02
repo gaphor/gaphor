@@ -8,16 +8,17 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-12-30 16:31+0100\n"
-"PO-Revision-Date: 2023-04-20 21:49+0000\n"
+"PO-Revision-Date: 2024-01-02 00:06+0000\n"
 "Last-Translator: Eryk Michalak <gnu.ewm@protonmail.com>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/gaphor/gaphor/pl/>"
+"\n"
 "Language: pl\n"
-"Language-Team: Polish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/pl/>\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && "
-"(n%100<10 || n%100>=20) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.4-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -435,7 +436,7 @@ msgstr "Złącze"
 
 #: gaphor/SysML/toolbox.py:54
 msgid "Property"
-msgstr ""
+msgstr "Własność"
 
 #: gaphor/SysML/toolbox.py:63
 msgid "Proxy Port"
@@ -514,19 +515,19 @@ msgstr ""
 
 #: gaphor/SysML/blocks/block.py:64
 msgid "block"
-msgstr ""
+msgstr "blok"
 
 #: gaphor/SysML/blocks/block.py:98
 msgid "parts"
-msgstr ""
+msgstr "części"
 
 #: gaphor/SysML/blocks/block.py:111 gaphor/SysML/blocks/interfaceblock.py:97
 msgid "references"
-msgstr ""
+msgstr "odnośniki"
 
 #: gaphor/SysML/blocks/block.py:122 gaphor/SysML/blocks/interfaceblock.py:108
 msgid "values"
-msgstr ""
+msgstr "wartości"
 
 #: gaphor/SysML/blocks/block.py:140 gaphor/SysML/blocks/interfaceblock.py:126
 msgid "operations"
@@ -536,15 +537,15 @@ msgstr "operacje"
 #: gaphor/SysML/blocks/interfaceblock.py:141
 #: gaphor/SysML/blocks/interfaceblock.py:167
 msgid "unnamed"
-msgstr ""
+msgstr "nienazwane"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:25
 msgid "Blocks"
-msgstr ""
+msgstr "Bloki"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:29
 msgid "Block"
-msgstr ""
+msgstr "Blok"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:39
 msgid "InterfaceBlock"
@@ -569,7 +570,7 @@ msgstr ""
 #: gaphor/UML/classes/classestoolbox.py:102
 #: gaphor/UML/usecases/usecasetoolbox.py:40
 msgid "Association"
-msgstr ""
+msgstr "Stowarzyszenie"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:90
 #: gaphor/UML/classes/classestoolbox.py:109
@@ -3005,4 +3006,3 @@ msgstr ""
 
 #~ msgid "The (spoken) language used in this model."
 #~ msgstr ""
-

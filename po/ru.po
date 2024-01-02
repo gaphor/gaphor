@@ -4,16 +4,17 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-12-30 16:31+0100\n"
-"PO-Revision-Date: 2023-12-30 07:10+0000\n"
+"PO-Revision-Date: 2024-01-02 01:29+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
+"Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
+">\n"
 "Language: ru\n"
-"Language-Team: Russian "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/ru/>\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.4-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -102,16 +103,14 @@ msgstr "Новая Диаграмма Состояний"
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
 #: gaphor/UML/toolbox.py:63
-#, fuzzy
 msgid "New Activity"
-msgstr "Деятельность"
+msgstr "Новая Деятельность"
 
 #: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
 #: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
 #: gaphor/UML/toolbox.py:80
-#, fuzzy
 msgid "New Interaction"
-msgstr "Взаимодействие"
+msgstr "Новое Взаимодействие"
 
 #: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
 #: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
@@ -121,20 +120,17 @@ msgid "New State Machine"
 msgstr "Конечный Автомат"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-#, fuzzy
 msgid "New Class"
-msgstr "Класс"
+msgstr "Новый Класс"
 
 #: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
-#, fuzzy
 msgid "New Data Type"
-msgstr "типДанных"
+msgstr "Новый тип данных"
 
 #: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
 #: gaphor/UML/toolbox.py:71
-#, fuzzy
 msgid "New Enumeration"
-msgstr "перечисление"
+msgstr "Новое Перечисление"
 
 #: gaphor/C4Model/toolbox.py:173
 #, fuzzy
@@ -142,9 +138,8 @@ msgid "New Primitive Type"
 msgstr "примитив"
 
 #: gaphor/C4Model/toolbox.py:175
-#, fuzzy
 msgid "New Person"
-msgstr "Человек"
+msgstr "Новый Человек"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:49
 msgid "RAAML"
@@ -159,24 +154,20 @@ msgid "New STPA Diagram"
 msgstr "Новая Диаграмма STPA"
 
 #: gaphor/RAAML/toolbox.py:27
-#, fuzzy
 msgid "New Top Event"
-msgstr "Верхнее Событие"
+msgstr "Новое Верхнее Событие"
 
 #: gaphor/RAAML/toolbox.py:28
-#, fuzzy
 msgid "New Loss"
-msgstr "Потеря"
+msgstr "Новая Потеря"
 
 #: gaphor/RAAML/toolbox.py:29
-#, fuzzy
 msgid "New Hazard"
-msgstr "Опасность"
+msgstr "Новая Опасность"
 
 #: gaphor/RAAML/toolbox.py:30
-#, fuzzy
 msgid "New Situation"
-msgstr "Ситуация"
+msgstr "Новая Ситуация"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -443,7 +434,6 @@ msgstr "Новая Диаграмма Определения Блоков"
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
 #: gaphor/SysML/toolbox.py:125 gaphor/SysML/toolbox.py:167
-#, fuzzy
 msgid "New Package"
 msgstr "Новый пакет"
 
@@ -453,9 +443,8 @@ msgstr "Новая Внутренняя Блок-схема"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
 #: gaphor/SysML/toolbox.py:174
-#, fuzzy
 msgid "New Block"
-msgstr "Блок"
+msgstr "Новый Блок"
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
 msgid "New Package Diagram"
@@ -470,9 +459,8 @@ msgid "New Use Case Diagram"
 msgstr "Новая Диаграмма Прецедентов"
 
 #: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
-#, fuzzy
 msgid "New Actor"
-msgstr "Главный Актор"
+msgstr "Новый Актор"
 
 #: gaphor/SysML/toolbox.py:182
 #, fuzzy
@@ -480,9 +468,8 @@ msgid "New Interface Block"
 msgstr "Новая Внутренняя Блок-схема"
 
 #: gaphor/SysML/toolbox.py:186
-#, fuzzy
 msgid "New Requirement"
-msgstr "Требование"
+msgstr "Новое Требование"
 
 #: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
 #, fuzzy
@@ -490,9 +477,8 @@ msgid "New Use Case"
 msgstr "Прецедент"
 
 #: gaphor/SysML/toolbox.py:197
-#, fuzzy
 msgid "New Value Type"
-msgstr "типЗначения"
+msgstr "Новый тип Значения"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
 #, fuzzy
@@ -530,9 +516,8 @@ msgid "values"
 msgstr "значения"
 
 #: gaphor/SysML/blocks/block.py:140 gaphor/SysML/blocks/interfaceblock.py:126
-#, fuzzy
 msgid "operations"
-msgstr "Методы"
+msgstr "методы"
 
 #: gaphor/SysML/blocks/block.py:155 gaphor/SysML/blocks/block.py:187
 #: gaphor/SysML/blocks/interfaceblock.py:141
@@ -549,9 +534,8 @@ msgid "Block"
 msgstr "Блок"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:39
-#, fuzzy
 msgid "InterfaceBlock"
-msgstr "интерфейс"
+msgstr "ИнтерфейсБлок"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:51
 #: gaphor/UML/classes/classestoolbox.py:51
@@ -595,9 +579,8 @@ msgid "Primitive"
 msgstr "Примитив"
 
 #: gaphor/SysML/blocks/interfaceblock.py:63
-#, fuzzy
 msgid "interfaceblock"
-msgstr "интерфейс"
+msgstr "интерфейсблок"
 
 #: gaphor/SysML/blocks/proxyport.py:40
 msgid "proxy"
@@ -699,14 +682,12 @@ msgid "New Profile Diagram"
 msgstr "Новая Диаграмма Профилей"
 
 #: gaphor/UML/toolbox.py:65
-#, fuzzy
 msgid "New Artifact"
-msgstr "Артефакт"
+msgstr "Новый Артефакт"
 
 #: gaphor/UML/toolbox.py:69
-#, fuzzy
 msgid "New Device"
-msgstr "устройство"
+msgstr "Новое устройство"
 
 #: gaphor/UML/toolbox.py:75
 #, fuzzy
@@ -714,24 +695,20 @@ msgid "New Instance Specification"
 msgstr "Присоединиться к Спецификации"
 
 #: gaphor/UML/toolbox.py:82
-#, fuzzy
 msgid "New Interface"
-msgstr "интерфейс"
+msgstr "Новый интерфейс"
 
 #: gaphor/UML/toolbox.py:83
-#, fuzzy
 msgid "New Node"
-msgstr "Новая модель"
+msgstr "Новый Узел"
 
 #: gaphor/UML/toolbox.py:84
-#, fuzzy
 msgid "New Profile"
-msgstr "Профиль"
+msgstr "Новый профиль"
 
 #: gaphor/UML/toolbox.py:88
-#, fuzzy
 msgid "New Stereotype"
-msgstr "Стереотип"
+msgstr "Новый Стереотип"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -871,9 +848,8 @@ msgid "decision"
 msgstr "решение"
 
 #: gaphor/UML/actions/activitypropertypage.py:134
-#, fuzzy
 msgid "New Parameter…"
-msgstr "Новый пакет"
+msgstr "Новый параметр…"
 
 #: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:165
 msgid "unordered"
@@ -1004,17 +980,15 @@ msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:389
 msgid "Multiplicity"
-msgstr ""
+msgstr "Множественность"
 
 #: gaphor/UML/classes/classespropertypages.py:233
-#, fuzzy
 msgid "New Attribute…"
-msgstr "Показывать Атрибуты"
+msgstr "Новый Атрибут…"
 
 #: gaphor/UML/classes/classespropertypages.py:390
-#, fuzzy
 msgid "New Operation…"
-msgstr "Показывать Методы"
+msgstr "Новый Метод…"
 
 #: gaphor/UML/classes/classestoolbox.py:25
 msgid "Classes"
@@ -1066,9 +1040,8 @@ msgid "enumeration"
 msgstr "перечисление"
 
 #: gaphor/UML/classes/enumerationpropertypages.py:124
-#, fuzzy
 msgid "New Enumeration…"
-msgstr "перечисление"
+msgstr "Новое перечисление…"
 
 #: gaphor/UML/classes/interface.py:283
 msgid "interface"
@@ -1358,9 +1331,8 @@ msgid "Delete"
 msgstr "Удалить"
 
 #: gaphor/UML/interactions/propertypages.ui:42
-#, fuzzy
 msgid "Connectable Element"
-msgstr "Внешний Элемент"
+msgstr "Новый подключаемый элемент"
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
@@ -1555,9 +1527,8 @@ msgid "Diagram metadata"
 msgstr "Метаданные диаграммы"
 
 #: gaphor/diagram/diagramtoolbox.py:194 gaphor/diagram/propertypages.ui:272
-#, fuzzy
 msgid "Picture"
-msgstr "Структура"
+msgstr "Изображение"
 
 #: gaphor/diagram/presentation.py:51
 msgid "(from {namespace})"
@@ -1576,9 +1547,8 @@ msgid "Flip orientation"
 msgstr "Отразить ориентацию"
 
 #: gaphor/diagram/propertypages.ui:130
-#, fuzzy
 msgid "Note"
-msgstr "НЕ"
+msgstr "Примечание"
 
 #: gaphor/diagram/propertypages.ui:167
 msgid "Created By"
@@ -1606,20 +1576,19 @@ msgstr "Обновлено"
 
 #: gaphor/diagram/propertypages.ui:283
 msgid "Select picture..."
-msgstr ""
+msgstr "Выберите изображение..."
 
 #: gaphor/diagram/propertypages.ui:289
 msgid "Set default size"
-msgstr ""
+msgstr "Размер по умолчанию"
 
 #: gaphor/diagram/general/generalpropertypages.py:126
 msgid "Select a picture..."
-msgstr ""
+msgstr "Выбрать изображение..."
 
 #: gaphor/diagram/general/generalpropertypages.py:149
-#, fuzzy
 msgid "Unable to parse picture “{filename}”."
-msgstr "Не удалось сохранить модель в “{filename}”."
+msgstr "Не удалось проанализировать изображение «{filename}»."
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1634,43 +1603,40 @@ msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Нет диаграммы '{name}' в модели '{model_name}' ({model_file})."
 
 #: gaphor/plugins/align/align.py:31
-#, fuzzy
 msgid "Align left"
-msgstr "Магнит"
+msgstr "Выровнять по левому краю"
 
 #: gaphor/plugins/align/align.py:35
 msgid "Align right"
-msgstr ""
+msgstr "Выровнять по правому краю"
 
 #: gaphor/plugins/align/align.py:39
 msgid "Align vertical center"
-msgstr ""
+msgstr "Выровнять вертикально по центру"
 
 #: gaphor/plugins/align/align.py:43
-#, fuzzy
 msgid "Align top"
-msgstr "Главный Актор"
+msgstr "Выровнять по верхнему краю"
 
 #: gaphor/plugins/align/align.py:47
 msgid "Align bottom"
-msgstr ""
+msgstr "Выровнять по нижнему краю"
 
 #: gaphor/plugins/align/align.py:51
-#, fuzzy
 msgid "Align horizontal center"
-msgstr "Горизонтальный"
+msgstr "Выровнять горизонтально по центру"
 
 #: gaphor/plugins/align/align.py:55
 msgid "Max width"
-msgstr ""
+msgstr "Максимальная ширина"
 
 #: gaphor/plugins/align/align.py:59
 msgid "Max height"
-msgstr ""
+msgstr "Максимальная высота"
 
 #: gaphor/plugins/align/align.py:63
 msgid "Max size"
-msgstr ""
+msgstr "Максимальный размер"
 
 #: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
@@ -2132,9 +2098,8 @@ msgid "Request Actuation"
 msgstr "Первое Действие"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Actuation Command"
-msgstr "Команда Привода"
+msgstr ""
 
 #: gaphor/templates/sysml.gaphor
 #, fuzzy
@@ -2405,6 +2370,8 @@ msgid ""
 "Open a diagram from the model browser, or\n"
 "create a new diagram from the New diagram menu."
 msgstr ""
+"Откройте диаграмму из панели обзора моделей или\n"
+"создайте новую используя пункт меню «Новая диаграмма»."
 
 #: gaphor/ui/elementeditor.ui:11
 msgid "No item selected"
@@ -2419,10 +2386,12 @@ msgid ""
 "Add a model element from the tool box (bottom left) to the diagram. Here "
 "you will see its properties appear."
 msgstr ""
+"Добавьте элемент модели из панели инструментов (внизу слева) на диаграмму. "
+"Здесь вы увидите его свойства."
 
 #: gaphor/ui/elementeditor.ui:52
 msgid "This pane can be hidden by clicking the pane icon in the header."
-msgstr ""
+msgstr "Эту панель можно скрыть, щёлкнув мышью по значку панели в заголовке."
 
 #: gaphor/ui/elementeditor.ui:60
 msgid ""
@@ -2443,6 +2412,8 @@ msgid ""
 "select an element in the model browser and start typing. A search box "
 "will automatically appear."
 msgstr ""
+"<b>Совет:</b> Чтобы найти элемент на панели обзора моделей (вверху слева), "
+"выберите элемент и начните вводить текст. Поле поиска появится автоматически."
 
 #: gaphor/ui/elementeditor.ui:97 gaphor/ui/help/shortcuts.ui:129
 msgid "Undo"
@@ -2489,13 +2460,12 @@ msgstr ""
 " диаграмме."
 
 #: gaphor/ui/elementeditor.ui:295
-#, fuzzy
 msgid "Diagram Language"
-msgstr "Язык"
+msgstr "Язык диаграммы"
 
 #: gaphor/ui/elementeditor.ui:297 gaphor/ui/elementeditor.ui:305
 msgid "The (natural) language used in this model."
-msgstr ""
+msgstr "Язык (естественный), используемый в этой модели."
 
 #: gaphor/ui/elementeditor.ui:313
 msgid "Style Sheet"
@@ -2510,19 +2480,20 @@ msgstr ""
 " стилей в Gaphor</a>"
 
 #: gaphor/ui/elementeditor.ui:354
-#, fuzzy
 msgid "Merge Models"
-msgstr "Новая модель"
+msgstr "Слияние моделей"
 
 #: gaphor/ui/elementeditor.ui:368
 msgid "Merge Model Changes"
-msgstr ""
+msgstr "Изменения при слиянии моделей"
 
 #: gaphor/ui/elementeditor.ui:379
 msgid ""
 "Apply incoming changes from the conflicting model. Use Undo to revert "
 "changes."
 msgstr ""
+"Применить входящие изменения из конфликтующей модели. Используйте «Отменить»"
+", чтобы отменить изменения."
 
 #: gaphor/ui/elementeditor.ui:399
 msgid "Resolve"
@@ -2606,7 +2577,7 @@ msgstr "Загрузка модели из {filename}"
 
 #: gaphor/ui/filemanager.py:149
 msgid "Loading current and incoming model"
-msgstr ""
+msgstr "Загрузка текущей и входящей модели"
 
 #: gaphor/ui/filemanager.py:227 gaphor/ui/filemanager.py:283
 msgid "Unable to open model “{filename}”."
@@ -2650,15 +2621,15 @@ msgstr "Отмена"
 
 #: gaphor/ui/filemanager.py:425
 msgid "Open Merge Editor"
-msgstr ""
+msgstr "Открыть редактор слияния"
 
 #: gaphor/ui/filemanager.py:426
 msgid "Open Current"
-msgstr ""
+msgstr "Открыть Текущую"
 
 #: gaphor/ui/filemanager.py:427
 msgid "Open Incoming"
-msgstr ""
+msgstr "Открыть Входящую"
 
 #: gaphor/ui/filemanager.py:440
 msgid "Save Changes?"
@@ -2720,7 +2691,7 @@ msgstr "О Gaphor"
 
 #: gaphor/ui/greeter.ui:84
 msgid "Recently Opened"
-msgstr "Недавно Открытые"
+msgstr "Недавно открытые"
 
 #: gaphor/ui/greeter.ui:89
 msgid "Create New Model"
@@ -2744,7 +2715,7 @@ msgstr "Инструменты"
 
 #: gaphor/ui/mainwindow.py:239
 msgid "Press F11 to exit Fullscreen"
-msgstr ""
+msgstr "Нажмите F11 для выхода из полноэкранного режима"
 
 #: gaphor/ui/mainwindow.py:292
 msgid "Profile: {name}"
@@ -2791,9 +2762,8 @@ msgid "New _Diagram"
 msgstr "Новая _Диаграмма"
 
 #: gaphor/ui/modelbrowser.py:585
-#, fuzzy
 msgid "New _Element"
-msgstr "Внешний Элемент"
+msgstr "Новый _Элемент"
 
 #: gaphor/ui/modelbrowser.py:593
 msgid "De_lete"
@@ -2801,7 +2771,7 @@ msgstr "_Удалить"
 
 #: gaphor/ui/modelbrowser.py:603
 msgid "Show in “{diagram}”"
-msgstr "Показать в “{diagram}”"
+msgstr "Показать в «{diagram}»"
 
 #: gaphor/ui/modelbrowser.py:635
 msgid "New Generic Diagram"
@@ -2813,10 +2783,9 @@ msgstr "<Отношения>"
 
 #: gaphor/ui/help/__init__.py:82
 msgid "Restart Gaphor to enable language changes"
-msgstr ""
+msgstr "Перезапустите Gaphor, чтобы применить изменения языка"
 
 #: gaphor/ui/help/about.ui:13
-#, fuzzy
 msgid ""
 "Copyright © 2001-2023 Arjan Molenaar and Dan Yeaw.\n"
 "\n"
@@ -2824,11 +2793,11 @@ msgid ""
 "Object Management Group, Inc. in the United States and/or other "
 "countries."
 msgstr ""
-"Авторское право © 2001-2022 Arjan Molenaar и Dan Yeaw.\n"
+"Авторское право © 2001-2023 Arjan Molenaar и Dan Yeaw.\n"
 "\n"
-"UML, SysML и RAAML являются либо зарегистрированными товарными знаками, "
-"либо товарными знаками Object Management Group, Inc. в Соединенных Штатах"
-" и/или других странах."
+"UML, SysML и RAAML являются либо зарегистрированными товарными знаками, либо "
+"товарными знаками Object Management Group, Inc. в Соединенных Штатах и/или "
+"других странах."
 
 #: gaphor/ui/help/about.ui:21
 msgid ""
@@ -2858,20 +2827,19 @@ msgstr ""
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
-msgstr ""
+msgstr "Внешний вид"
 
 #: gaphor/ui/help/preferences.ui:13
-#, fuzzy
 msgid "Colors"
-msgstr "Закрыть"
+msgstr "Цвета"
 
 #: gaphor/ui/help/preferences.ui:21
 msgid "Dark"
-msgstr ""
+msgstr "Тёмный"
 
 #: gaphor/ui/help/preferences.ui:22
 msgid "Light"
-msgstr ""
+msgstr "Светлый"
 
 #: gaphor/ui/help/preferences.ui:32
 msgid "Language"
@@ -2879,7 +2847,7 @@ msgstr "Язык"
 
 #: gaphor/ui/help/preferences.ui:35
 msgid "Change from System Language to English"
-msgstr ""
+msgstr "Переключить с системного языка на английский"
 
 #: gaphor/ui/help/shortcuts.ui:22
 msgid "Rename"
@@ -2895,7 +2863,7 @@ msgstr "Закрыть Диаграмму"
 
 #: gaphor/ui/help/shortcuts.ui:62
 msgid "Toggle Fullscreen"
-msgstr ""
+msgstr "Во весь экран"
 
 #: gaphor/ui/help/shortcuts.ui:70
 msgid "Quit Gaphor"
@@ -2963,23 +2931,23 @@ msgstr "Обновить элемент типа «{type}»"
 
 #: gaphor/ui/modelmerge/organize.py:245
 msgid "Update presentation “{type}”"
-msgstr ""
+msgstr "Обновить представление «{type}»"
 
 #: gaphor/ui/modelmerge/organize.py:271
 msgid "Add presentation of type {type}"
-msgstr ""
+msgstr "Добавить представление типа {type}"
 
 #: gaphor/ui/modelmerge/organize.py:275
 msgid "Remove presentation of type {type}"
-msgstr ""
+msgstr "Удалить представление типа {type}"
 
 #: gaphor/ui/modelmerge/organize.py:280
 msgid "Update presentation “{name}”"
-msgstr "Обновить презентацию «{name}»"
+msgstr "Обновить представление «{name}»"
 
 #: gaphor/ui/modelmerge/organize.py:282
 msgid "Update presentation of type {type}"
-msgstr ""
+msgstr "Обновить представление типа {type}"
 
 #: gaphor/ui/modelmerge/organize.py:289
 msgid "Add {type} “{name}”"
@@ -3036,4 +3004,3 @@ msgstr "Обновить отношение «{name}»"
 
 #~ msgid "The (spoken) language used in this model."
 #~ msgstr ""
-
