@@ -82,6 +82,7 @@ from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
+    text_name,
 )
 from gaphor.diagram.shapes import Box, IconBox, Text, draw_border, stroke
 from gaphor.diagram.support import represents
@@ -283,10 +284,7 @@ class InterfaceItem(Classified, ElementPresentation):
                         self.subject, (self.diagram.gettext("interface"),)
                     ),
                 ),
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={"font-weight": FontWeight.BOLD},
-                ),
+                text_name(self),
                 Text(
                     text=lambda: from_package_str(self),
                     style={"font-size": "x-small"},

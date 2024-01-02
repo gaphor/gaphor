@@ -1,10 +1,9 @@
 """Use case diagram item."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import Classified, ElementPresentation
+from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
 from gaphor.diagram.shapes import Box, Text, draw_ellipse
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.UML.recipes import stereotypes_str
 
 
@@ -24,15 +23,9 @@ class UseCaseItem(Classified, ElementPresentation):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            Text(
-                text=lambda: self.subject.name or "",
-                style={
-                    "padding": (4, 4, 4, 4),
-                    "font-weight": FontWeight.BOLD,
-                    "font-style": FontStyle.ITALIC
-                    if self.subject and self.subject.isAbstract
-                    else FontStyle.NORMAL,
-                },
+            Box(
+                text_name(self),
+                style={"padding": (4, 4, 4, 4)},
             ),
             draw=draw_ellipse,
         )

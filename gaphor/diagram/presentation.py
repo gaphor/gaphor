@@ -15,7 +15,7 @@ from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
-from gaphor.diagram.shapes import stroke
+from gaphor.diagram.shapes import CssNode, Text, stroke
 from gaphor.diagram.text import TextAlign, middle_segment, text_point_at_line
 
 
@@ -29,6 +29,17 @@ class Valued:
 
 class Classified(Named):
     """Marker for Classifier presentations."""
+
+
+def text_name(item: Presentation):
+    """An item's `name` field."""
+    return CssNode(
+        "name",
+        item.subject,
+        Text(
+            text=lambda: item.subject and item.subject.name or "",
+        ),
+    )
 
 
 def from_package_str(item):

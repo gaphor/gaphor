@@ -55,6 +55,14 @@ executionspecification {
   background-color: var(--opaque-background-color);
 }
 
+* name {
+  font-weight: bold;
+}
+
+* name[isabstract] {
+  font-style: italic;
+}
+
 * attribute,
 * operation {
   text-align: left;

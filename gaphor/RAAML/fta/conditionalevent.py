@@ -4,10 +4,10 @@ from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
+    text_name,
 )
 from gaphor.diagram.shapes import Box, IconBox, Text
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.basicevent import draw_basic_event
 from gaphor.UML.recipes import stereotypes_str
@@ -32,13 +32,7 @@ class ConditionalEventItem(Classified, ElementPresentation):
                     self.subject, [self.diagram.gettext("Conditional Event")]
                 ),
             ),
-            Text(
-                text=lambda: self.subject.name or "",
-                style={
-                    "font-weight": FontWeight.BOLD,
-                    "font-style": FontStyle.NORMAL,
-                },
-            ),
+            text_name(self),
             Text(
                 text=lambda: from_package_str(self),
                 style={"font-size": "x-small"},

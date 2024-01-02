@@ -2,11 +2,12 @@ import logging
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontStyle, FontWeight, JustifyContent, TextAlign
+from gaphor.core.styling import JustifyContent, TextAlign
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
+    text_name,
 )
 from gaphor.diagram.shapes import Box, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
@@ -73,15 +74,7 @@ class EnumerationItem(Classified, ElementPresentation[UML.Enumeration]):
                         ],
                     ),
                 ),
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={
-                        "font-weight": FontWeight.BOLD,
-                        "font-style": FontStyle.ITALIC
-                        if self.subject and self.subject.isAbstract
-                        else FontStyle.NORMAL,
-                    },
-                ),
+                text_name(self),
                 Text(
                     text=lambda: from_package_str(self),
                     style={"font-size": "x-small"},

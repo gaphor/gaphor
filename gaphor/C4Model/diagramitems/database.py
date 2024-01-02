@@ -1,6 +1,6 @@
 from gaphor.C4Model import c4model
-from gaphor.core.styling import FontWeight, JustifyContent, TextAlign
-from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.core.styling import JustifyContent, TextAlign
+from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, Text, ellipse, stroke
 from gaphor.diagram.support import represents
 
@@ -19,10 +19,7 @@ class C4DatabaseItem(Named, ElementPresentation):
         diagram = self.diagram
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={"font-weight": FontWeight.BOLD},
-                ),
+                text_name(self),
                 Text(
                     text=lambda: self.subject.technology
                     and f"[{diagram.gettext(self.subject.type)}: {self.subject.technology}]"

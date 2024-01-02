@@ -7,10 +7,10 @@ from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
+    text_name,
 )
 from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.constants import DEFAULT_FTA_MAJOR, DEFAULT_FTA_MINOR
 from gaphor.RAAML.fta.orgate import draw_or_gate
@@ -36,13 +36,7 @@ class XORItem(Classified, ElementPresentation):
                     self.subject, [self.diagram.gettext("XOR Gate")]
                 ),
             ),
-            Text(
-                text=lambda: self.subject.name or "",
-                style={
-                    "font-weight": FontWeight.BOLD,
-                    "font-style": FontStyle.NORMAL,
-                },
-            ),
+            text_name(self),
             Text(
                 text=lambda: from_package_str(self),
                 style={"font-size": "x-small"},

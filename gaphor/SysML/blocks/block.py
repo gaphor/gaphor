@@ -3,6 +3,7 @@ from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
+    text_name,
 )
 from gaphor.diagram.shapes import (
     Box,
@@ -14,7 +15,7 @@ from gaphor.diagram.shapes import (
     draw_top_separator,
 )
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontStyle, FontWeight
+from gaphor.diagram.text import FontStyle
 from gaphor.SysML.sysml import Block, ValueType
 from gaphor.UML.classes.klass import attributes_compartment, operation_watches
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
@@ -72,15 +73,7 @@ class BlockItem(Classified, ElementPresentation[Block]):
                         self.subject, self.additional_stereotypes()
                     )
                 ),
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={
-                        "font-weight": FontWeight.BOLD,
-                        "font-style": FontStyle.ITALIC
-                        if self.subject and self.subject.isAbstract
-                        else FontStyle.NORMAL,
-                    },
-                ),
+                text_name(self),
                 Text(
                     text=lambda: from_package_str(self),
                     style={"font-size": "x-small"},
