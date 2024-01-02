@@ -8,7 +8,7 @@ def test_inherit_from_parent_style():
     css = "node { font-size: 10 } node sub { content: 'Hi' }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    style = compiled_style_sheet.match(Node("node"))
+    style = compiled_style_sheet.compute_style(Node("node"))
     inherited = inherit_style(style, StyledChildElement("sub", None))
 
     assert inherited.get("font-size") == 10
@@ -23,7 +23,7 @@ def test_should_not_inherit_everything():
     """
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    style = compiled_style_sheet.match(Node("node"))
+    style = compiled_style_sheet.compute_style(Node("node"))
     inherited = inherit_style(
         inherit_style(style, StyledChildElement("sub", None)),
         StyledChildElement("sub", None),

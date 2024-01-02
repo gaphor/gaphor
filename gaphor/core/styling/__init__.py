@@ -187,7 +187,7 @@ class CompiledStyleSheet:
         )
 
     @functools.lru_cache(maxsize=1000)
-    def match(self, node: StyleNode) -> Style:
+    def compute_style(self, node: StyleNode) -> Style:
         # TODO: make after_style lazy
         after_style = merge_styles(*(
             declarations

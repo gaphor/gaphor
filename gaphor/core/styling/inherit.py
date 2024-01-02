@@ -1,6 +1,6 @@
 from typing import Iterator, Sequence
 
-from gaphor.core.styling import Style, StyleNode, merge_styles
+from gaphor.core.styling import CompiledStyleSheet, Style, StyleNode, merge_styles
 
 INHERITED_DECLARATIONS = (
     "color",
@@ -55,9 +55,9 @@ def inherit_style(style: Style, child: StyleNode) -> Style:
         return style
 
     node = InheritingStyleNode(parent, child)
-    compiled_style_sheet = style.get("-gaphor-compiled-style-sheet")
+    compiled_style_sheet: CompiledStyleSheet = style.get("-gaphor-compiled-style-sheet")  # type: ignore[assignment]
 
-    sub_style = compiled_style_sheet.match(node)  # type: ignore[attr-defined]
+    sub_style = compiled_style_sheet.compute_style(node)
 
     return merge_styles(
         {n: v for n, v in style.items() if n in INHERITED_DECLARATIONS},  # type: ignore[arg-type]

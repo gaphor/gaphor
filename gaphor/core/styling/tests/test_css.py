@@ -151,7 +151,7 @@ def test_compiled_style_sheet():
     """
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("mytype"))
+    props = compiled_style_sheet.compute_style(Node("mytype"))
 
     assert props.get("font-family") == "sans"
     assert props.get("font-size") == 42
@@ -183,7 +183,7 @@ def test_empty_compiled_style_sheet():
     css = ""
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("mytype"))
+    props = compiled_style_sheet.compute_style(Node("mytype"))
 
     assert filter_private(props) == {}
 
@@ -192,7 +192,7 @@ def test_color():
     css = "mytype { color: #00ff00 }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("mytype"))
+    props = compiled_style_sheet.compute_style(Node("mytype"))
 
     assert props.get("color") == (0, 1, 0, 1)
 
@@ -201,7 +201,7 @@ def test_color_typing_in_progress():
     css = "mytype { color: # }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("mytype"))
+    props = compiled_style_sheet.compute_style(Node("mytype"))
 
     assert props.get("color") is None
 
@@ -222,7 +222,7 @@ def test_line_style(css_value, result):
     css = f"mytype {{ line-style: {css_value} }}"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("mytype"))
+    props = compiled_style_sheet.compute_style(Node("mytype"))
 
     assert props.get("line-style") == result
 
@@ -242,7 +242,7 @@ def test_opacity(css_value, result):
     css = f"mytype {{ opacity: {css_value} }}"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("mytype"))
+    props = compiled_style_sheet.compute_style(Node("mytype"))
 
     assert props.get("opacity") == result
 
@@ -252,7 +252,7 @@ def test_broken_line_style():
     css = "diagram { line-style: sloppy * { }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("mytype"))
+    props = compiled_style_sheet.compute_style(Node("mytype"))
 
     assert props.get("line-style") is None
 
@@ -261,7 +261,7 @@ def test_variable():
     css = "diagram { --myvar: 12; line-width: var(--myvar) }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("diagram"))
+    props = compiled_style_sheet.compute_style(Node("diagram"))
 
     assert props.get("line-width") == 12
 
@@ -270,7 +270,7 @@ def test_variable_color():
     css = "* { --mycolor: #123456 } diagram { color: var(--mycolor) }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("diagram"))
+    props = compiled_style_sheet.compute_style(Node("diagram"))
 
     assert props.get("color") == pytest.approx(
         (0x12 / 255.0, 0x34 / 255.0, 0x56 / 255.0, 1.0)
@@ -281,7 +281,7 @@ def test_unknown_variable():
     css = "diagram { line-width: var(--myvar) }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("diagram"))
+    props = compiled_style_sheet.compute_style(Node("diagram"))
 
     assert props.get("line-width") is None
 
@@ -290,7 +290,7 @@ def test_unknown_variable_should_use_original_value():
     css = "* { line-width: 1.0 } diagram { line-width: var(--myvar) }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("diagram"))
+    props = compiled_style_sheet.compute_style(Node("diagram"))
 
     assert props.get("line-width") == pytest.approx(1.0)
 
@@ -299,7 +299,7 @@ def test_unknown_variable_resolve_original_value():
     css = "* { line-width: var(--lw); --lw: 1.0 } diagram { line-width: var(--myvar) }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("diagram"))
+    props = compiled_style_sheet.compute_style(Node("diagram"))
 
     assert props.get("line-width") == pytest.approx(1.0)
 
@@ -308,7 +308,7 @@ def test_variable_cannot_contain_a_variable():
     css = "* { line-width: var(--a); --a: var(--b); --b: 1.0 }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("diagram"))
+    props = compiled_style_sheet.compute_style(Node("diagram"))
 
     assert props.get("line-width") is None
 
@@ -317,7 +317,7 @@ def test_variable_with_property():
     css = "* { line-width: var(line-width); }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("diagram"))
+    props = compiled_style_sheet.compute_style(Node("diagram"))
 
     assert props.get("line-width") is None
 
@@ -334,9 +334,9 @@ def test_color_schemes():
     """
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    normal_props = compiled_style_sheet.match(Node("node"))
-    dark_props = compiled_style_sheet.match(Node("node", dark_mode=True))
-    light_props = compiled_style_sheet.match(Node("node", dark_mode=False))
+    normal_props = compiled_style_sheet.compute_style(Node("node"))
+    dark_props = compiled_style_sheet.compute_style(Node("node", dark_mode=True))
+    light_props = compiled_style_sheet.compute_style(Node("node", dark_mode=False))
 
     assert normal_props.get("line-width") == pytest.approx(1.0)
     assert dark_props.get("line-width") == pytest.approx(2.0)
@@ -355,7 +355,7 @@ def test_white_space_normal(white_space_value, result):
     css = f"* {{ white-space: {white_space_value} }}"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("node"))
+    props = compiled_style_sheet.compute_style(Node("node"))
 
     assert props.get("white-space") is result
 
@@ -364,7 +364,7 @@ def test_pseudo_element():
     css = "class::after { content: 'Hi' }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("class", pseudo="after"))
+    props = compiled_style_sheet.compute_style(Node("class", pseudo="after"))
 
     assert props.get("content") == "Hi"
 
@@ -373,7 +373,7 @@ def test_bare_pseudo_element():
     css = "::after { content: 'Hi' }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("node", pseudo="after"))
+    props = compiled_style_sheet.compute_style(Node("node", pseudo="after"))
 
     assert props.get("content") == "Hi"
 
@@ -382,8 +382,8 @@ def test_combined_normal_and_pseudo_element():
     css = "node, class::after { content: 'Hi' }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    node_props = compiled_style_sheet.match(Node("node"))
-    class_props = compiled_style_sheet.match(Node("class", pseudo="after"))
+    node_props = compiled_style_sheet.compute_style(Node("node"))
+    class_props = compiled_style_sheet.compute_style(Node("class", pseudo="after"))
 
     assert node_props.get("content") == "Hi"
     assert class_props.get("content") == "Hi"
@@ -393,7 +393,7 @@ def test_pseudo_element_inherits_normal_declarations():
     css = "node { color: blue} ::after { content: 'Hi' }"
 
     compiled_style_sheet = CompiledStyleSheet(css)
-    props = compiled_style_sheet.match(Node("node"))
+    props = compiled_style_sheet.compute_style(Node("node"))
 
     assert props.get("::after")
     assert props.get("::after").get("content") == "Hi"

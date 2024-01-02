@@ -48,8 +48,8 @@ class StyleSheet(Element):
             self.styleSheet,
         )
 
-    def match(self, node: StyleNode) -> Style:
-        return self._compiled_style_sheet.match(node)
+    def compute_style(self, node: StyleNode) -> Style:
+        return self._compiled_style_sheet.compute_style(node)
 
     def postload(self):
         super().postload()

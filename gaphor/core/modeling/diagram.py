@@ -305,7 +305,7 @@ class Diagram(Element):
 
     def style(self, node: StyleNode) -> Style:
         style_sheet = self.styleSheet
-        return style_sheet.match(node) if style_sheet else FALLBACK_STYLE
+        return style_sheet.compute_style(node) if style_sheet else FALLBACK_STYLE
 
     def gettext(self, message):
         """Translate a message to the language used in the model."""
