@@ -112,6 +112,8 @@ of CSS. Below you'll find a summary of all CSS features supported by Gaphor.
 ``:not()``                    Negate the selector.
 
                               E.g. ``:not([subject])``: Any item that has no "subject".
+``::after``                   Provide extra content after a text.
+                              Only the ``content`` property is supported.
 ============================= ============================
 ```
 
@@ -203,6 +205,16 @@ family, size, weight.
 * `dash-style` is a list of numbers (line, gap, line, gap, …)
 * `line-style` only has an effect when defined on a `diagram`. A sloppiness
   factor can be provided in the range of -2 to 2.
+
+### Pseudo elements
+
+Currently, only the `::after` pseudo element is supported.
+
+```{eval-rst}
+======================= =======================================
+``content``             Extra content to be shown after a text.
+======================= =======================================
+```
 
 ### Diagram styles
 
@@ -413,6 +425,23 @@ comment[body^="TODO"] {
 ```{diagram} todo
 :model: style-sheets
 :alt: highlighted todo note
+```
+
+### Emphesize abstract classes and operations
+
+It may be that the italic font used is not distinguishable enough to differentiate between
+concrete and abstract classes or operations.
+To make this work we check if the `isAbstract` attribute is set on the element:
+
+```css
+:is(name, operation)[isabstract]::after {
+  content: " {abstract}"
+}
+```
+
+```{diagram} abstract
+:model: style-sheets
+:alt: emphasize abstract elements
 ```
 
 ## System Style Sheet
