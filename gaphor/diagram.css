@@ -97,3 +97,7 @@ c4container technology {
 c4container description {
   padding: 4 4 0 4;
 }
+
+requirement {
+  justify-content: start;
+}

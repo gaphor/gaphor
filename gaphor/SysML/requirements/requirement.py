@@ -7,7 +7,6 @@ from gaphor.diagram.presentation import (
 )
 from gaphor.diagram.shapes import (
     Box,
-    JustifyContent,
     Text,
     TextAlign,
     draw_border,
@@ -64,7 +63,6 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
                 ),
                 style={
                     "padding": (12, 4, 12, 4),
-                    "justify-content": JustifyContent.START,
                 },
             ),
             *(
@@ -81,9 +79,6 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             self.id_and_text_compartment(),
-            style={
-                "justify-content": JustifyContent.START,
-            },
             draw=draw_border,
         )
 
