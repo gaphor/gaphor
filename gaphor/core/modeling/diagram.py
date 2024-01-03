@@ -49,7 +49,6 @@ FALLBACK_STYLE: Style = {
     "color": (0, 0, 0, 1),
     "font-family": "sans",
     "font-size": 14,
-    "padding": (0, 0, 0, 0),
 }
 
 

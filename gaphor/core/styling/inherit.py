@@ -60,6 +60,5 @@ def inherit_style(style: Style, child: StyleNode) -> Style:
 
     return merge_styles(
         {n: v for n, v in style.items() if n in INHERITED_DECLARATIONS},  # type: ignore[arg-type]
-        {"padding": (0, 0, 0, 0)},
         sub_style,
     )

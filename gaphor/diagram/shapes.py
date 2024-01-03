@@ -204,6 +204,9 @@ class Shape(Protocol):
         ...
 
 
+DEFAULT_PADDING = (0, 0, 0, 0)
+
+
 class Box:
     """A box like shape.
 
@@ -243,7 +246,7 @@ class Box:
         style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
-        padding = style["padding"]
+        padding = style.get("padding", DEFAULT_PADDING)
         new_bounds = rectangle_shrink(bounding_box, padding)
         self.sizes = sizes = [c.size(context, new_bounds) for c in self.children]
         if sizes:
@@ -275,7 +278,9 @@ class Box:
     def draw_vertical(self, context: DrawContext, bounding_box: Rectangle):
         style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style.get(
+            "padding", DEFAULT_PADDING
+        )
         sizes = self.sizes
 
         justify_content = (
@@ -326,7 +331,9 @@ class Box:
     def draw_horizontal(self, context: DrawContext, bounding_box: Rectangle):
         style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style.get(
+            "padding", DEFAULT_PADDING
+        )
         sizes = self.sizes
 
         justify_content = style.get("justify-content", JustifyContent.CENTER)
@@ -416,7 +423,7 @@ class IconBox:
         style = merge_styles(context.style, self._inline_style)
         min_width = style.get("min-width", 0)
         min_height = style.get("min-height", 0)
-        padding = style["padding"]
+        padding = style.get("padding", DEFAULT_PADDING)
 
         new_bounds = rectangle_shrink(bounding_box, padding)
         width, height = self.icon.size(context, new_bounds)
@@ -465,7 +472,10 @@ class IconBox:
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         style = merge_styles(context.style, self._inline_style)
         new_context = replace(context, style=style)
-        self.icon.draw(new_context, rectangle_shrink(bounding_box, style["padding"]))
+        self.icon.draw(
+            new_context,
+            rectangle_shrink(bounding_box, style.get("padding", DEFAULT_PADDING)),
+        )
 
         cx, cy, max_w, total_h = self.child_pos(style, bounding_box)
         for c, (cw, ch) in zip(self.children, self.sizes):
@@ -512,7 +522,9 @@ class Text:
             text_align=text_align,
         )
         width, height = layout.size()
-        padding_top, padding_right, padding_bottom, padding_left = style["padding"]
+        padding_top, padding_right, padding_bottom, padding_left = style.get(
+            "padding", DEFAULT_PADDING
+        )
         return (
             max(min_w, width + padding_right + padding_left),
             max(min_h, height + padding_top + padding_bottom),
@@ -523,7 +535,7 @@ class Text:
         style = merge_styles(context.style, self._inline_style)
         min_w = max(style.get("min-width", 0), bounding_box.width)
         min_h = max(style.get("min-height", 0), bounding_box.height)
-        text_box = rectangle_shrink(bounding_box, style["padding"])
+        text_box = rectangle_shrink(bounding_box, style.get("padding", DEFAULT_PADDING))
 
         with cairo_state(context.cairo) as cr:
             if text_color := style.get("text-color"):
