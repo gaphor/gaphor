@@ -186,6 +186,17 @@ class StyledItem:
         self.selection = selection
         self.pseudo: str | None = None
         self.dark_mode = dark_mode
+        self._state = (
+            (
+                "active" if item in selection.selected_items else "",
+                "focus" if item is selection.focused_item else "",
+                "hover" if item is selection.hovered_item else "",
+                "drop" if item is selection.dropzone_item else "",
+                "disabled" if item in selection.grayed_out_items else "",
+            )
+            if selection
+            else ()
+        )
 
     def name(self) -> str:
         return type(self.item).__name__.removesuffix("Item").lower()
@@ -214,19 +225,7 @@ class StyledItem:
         return a
 
     def state(self) -> Sequence[str]:
-        item = self.item
-        selection = self.selection
-        return (
-            (
-                "active" if item in selection.selected_items else "",
-                "focus" if item is selection.focused_item else "",
-                "hover" if item is selection.hovered_item else "",
-                "drop" if item is selection.dropzone_item else "",
-                "disabled" if item in selection.grayed_out_items else "",
-            )
-            if selection
-            else ()
-        )
+        return self._state
 
     def __hash__(self):
         return hash((self.item, self.state(), self.dark_mode))
