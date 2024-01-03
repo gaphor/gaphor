@@ -19,10 +19,10 @@ from gaphor.core.styling import (
     TextAlign,
     VerticalAlign,
     WhiteSpace,
-    compute_pseudo_element_style,
     merge_styles,
 )
 from gaphor.core.styling.inherit import inherit_style
+from gaphor.core.styling.pseudo import compute_pseudo_element_style
 from gaphor.diagram.text import Layout
 
 
