@@ -60,6 +60,18 @@ Style = TypedDict(
     total=False,
 )
 
+INHERITED_DECLARATIONS = (
+    "color",
+    "font-family",
+    "font-size",
+    "font-style",
+    "font-weight",
+    "line-width",
+    "text-align",
+    "text-color",
+    "white-space",
+)
+
 
 class StyleNode(Hashable, Protocol):
     pseudo: str | None
@@ -148,7 +160,10 @@ class CompiledStyleSheet:
 
     # @functools.lru_cache(maxsize=1000)
     def compute_style(self, node: StyleNode) -> Style:
+        parent = node.parent()
+        parent_style = self.compute_style(parent) if parent else {}
         return merge_styles(
+            {n: v for n, v in parent_style.items() if n in INHERITED_DECLARATIONS},  # type: ignore[arg-type]
             *(
                 declarations
                 for _specificity, _order, declarations, pred in self.selectors

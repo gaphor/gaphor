@@ -286,7 +286,10 @@ def test_text_with_after_pseudo_element():
         pseudo = None
         dark_mode = False
 
-    style = CompiledStyleSheet(css).compute_style(DummyStyleNode)
+        def parent(self):
+            return None
+
+    style = CompiledStyleSheet(css).compute_style(DummyStyleNode())
     text = Text("some")
 
     assert text.text(style) == "some text"

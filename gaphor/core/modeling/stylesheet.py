@@ -44,7 +44,7 @@ class StyleSheet(Element):
     def compile_style_sheet(self) -> None:
         self._compiled_style_sheet = CompiledStyleSheet(
             SYSTEM_STYLE_SHEET,
-            f"* {{ font-family: {self._system_font_family} }}",
+            f"diagram {{ font-family: {self._system_font_family} }}",
             self.styleSheet,
         )
 

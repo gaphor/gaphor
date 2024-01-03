@@ -3,10 +3,6 @@
 * {
   --opaque-background-color: white;
   background-color: transparent;
-  color: black;
-  font-size: 14;
-  line-width: 2;
-  padding: 0;
 }
 
 *:drop {
@@ -33,6 +29,14 @@
   *:drop {
     color: #62a0ea;
   }
+}
+
+diagram {
+  color: black;
+  font-family: sans;
+  font-size: 14;
+  line-width: 2;
+  padding: 0;
 }
 
 dependency,
