@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-12-30 16:31+0100\n"
-"PO-Revision-Date: 2023-10-31 11:03+0000\n"
+"PO-Revision-Date: 2024-01-04 10:07+0000\n"
 "Last-Translator: Pierre Flanet <pierre.flanet@protonmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/gaphor/gaphor/fr/>"
+"\n"
 "Language: fr\n"
-"Language-Team: French "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fr/>\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.4-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -110,62 +111,64 @@ msgstr "Activité"
 #: gaphor/UML/toolbox.py:80
 #, fuzzy
 msgid "New Interaction"
-msgstr "Interaction"
+msgstr "Ajouter une interaction"
 
 #: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
 #: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
 #: gaphor/UML/toolbox.py:86
 #, fuzzy
 msgid "New State Machine"
-msgstr "Machine à états"
+msgstr "Ajouter une machine d'états"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
 #, fuzzy
 msgid "New Class"
-msgstr "Classe"
+msgstr "Ajouter une classe"
 
 #: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
 #, fuzzy
 msgid "New Data Type"
-msgstr "type de Donnée"
+msgstr "Ajouter un type de donnée"
 
 #: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
 #: gaphor/UML/toolbox.py:71
 #, fuzzy
 msgid "New Enumeration"
-msgstr "énumération"
+msgstr "Ajouter une énumération"
 
 #: gaphor/C4Model/toolbox.py:173
 #, fuzzy
 msgid "New Primitive Type"
-msgstr "primitif"
+msgstr "Ajouter une type primitif"
 
 #: gaphor/C4Model/toolbox.py:175
 #, fuzzy
 msgid "New Person"
-msgstr "Personne"
+msgstr "Ajouter un utilisateur"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:49
 msgid "RAAML"
 msgstr "RAAML"
 
 #: gaphor/RAAML/toolbox.py:22
+#, fuzzy
 msgid "New FTA Diagram"
-msgstr "Nouveau diagramme FTA"
+msgstr "Ajouter un diagramme FTA"
 
 #: gaphor/RAAML/toolbox.py:23
+#, fuzzy
 msgid "New STPA Diagram"
-msgstr "Nouveau diagramme STPA"
+msgstr "Ajouter un diagramme STPA"
 
 #: gaphor/RAAML/toolbox.py:27
 #, fuzzy
 msgid "New Top Event"
-msgstr "Evènement au sommet"
+msgstr "Ajouter un évènement principal"
 
 #: gaphor/RAAML/toolbox.py:28
 #, fuzzy
 msgid "New Loss"
-msgstr "Perte"
+msgstr "Ajouter une perte"
 
 #: gaphor/RAAML/toolbox.py:29
 #, fuzzy
@@ -3044,4 +3047,3 @@ msgstr ""
 
 #~ msgid "The (spoken) language used in this model."
 #~ msgstr ""
-

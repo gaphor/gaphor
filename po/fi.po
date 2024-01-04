@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-12-30 16:31+0100\n"
-"PO-Revision-Date: 2023-07-02 19:52+0000\n"
+"PO-Revision-Date: 2024-01-04 10:07+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/gaphor/gaphor/fi/"
+">\n"
 "Language: fi\n"
-"Language-Team: Finnish "
-"<https://hosted.weblate.org/projects/gaphor/gaphor/fi/>\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.4-dev\n"
 "Generated-By: Babel 2.14.0\n"
 
 #: gaphor/C4Model/modelinglanguage.py:23 gaphor/C4Model/toolbox.py:67
@@ -105,49 +106,41 @@ msgstr "Uusi tilakaavio"
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
 #: gaphor/UML/toolbox.py:63
-#, fuzzy
 msgid "New Activity"
-msgstr "Aktiviteetti"
+msgstr "Uusi aktiviteetti"
 
 #: gaphor/C4Model/toolbox.py:161 gaphor/SysML/toolbox.py:143
 #: gaphor/SysML/toolbox.py:144 gaphor/SysML/toolbox.py:179
 #: gaphor/UML/toolbox.py:80
-#, fuzzy
 msgid "New Interaction"
-msgstr "Interaktio"
+msgstr "Uusi interaktio"
 
 #: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
 #: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
 #: gaphor/UML/toolbox.py:86
-#, fuzzy
 msgid "New State Machine"
-msgstr "Tilakone"
+msgstr "Uusi tilakone"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
-#, fuzzy
 msgid "New Class"
-msgstr "Luokka"
+msgstr "Uusi luokka"
 
 #: gaphor/C4Model/toolbox.py:168 gaphor/UML/toolbox.py:68
-#, fuzzy
 msgid "New Data Type"
-msgstr "dataTyyppi"
+msgstr "Uusi datatyyppi"
 
 #: gaphor/C4Model/toolbox.py:170 gaphor/SysML/toolbox.py:176
 #: gaphor/UML/toolbox.py:71
-#, fuzzy
 msgid "New Enumeration"
-msgstr "enumeraatio"
+msgstr "Uusi enumeraatio"
 
 #: gaphor/C4Model/toolbox.py:173
-#, fuzzy
 msgid "New Primitive Type"
-msgstr "primitiivi"
+msgstr "Uusi primitiivityyppi"
 
 #: gaphor/C4Model/toolbox.py:175
-#, fuzzy
 msgid "New Person"
-msgstr "Henkilö"
+msgstr "Uusi henkilö"
 
 #: gaphor/RAAML/modelinglanguage.py:24 gaphor/ui/greeter.py:49
 msgid "RAAML"
@@ -162,24 +155,20 @@ msgid "New STPA Diagram"
 msgstr "Uusi STPA-kaavio"
 
 #: gaphor/RAAML/toolbox.py:27
-#, fuzzy
 msgid "New Top Event"
-msgstr "Ylätapahtuma"
+msgstr "Uusi ylätapahtuma"
 
 #: gaphor/RAAML/toolbox.py:28
-#, fuzzy
 msgid "New Loss"
-msgstr "Menetys"
+msgstr "Uusi menetys"
 
 #: gaphor/RAAML/toolbox.py:29
-#, fuzzy
 msgid "New Hazard"
-msgstr "Hasardi"
+msgstr "Uusi hasardi"
 
 #: gaphor/RAAML/toolbox.py:30
-#, fuzzy
 msgid "New Situation"
-msgstr "Tilanne"
+msgstr "Uusi tilanne"
 
 #: gaphor/RAAML/fta/andgate.py:37 gaphor/RAAML/fta/ftatoolbox.py:24
 msgid "AND Gate"
@@ -450,7 +439,6 @@ msgstr "Uusi lohkomäärityskaavio"
 
 #: gaphor/SysML/toolbox.py:93 gaphor/SysML/toolbox.py:113
 #: gaphor/SysML/toolbox.py:125 gaphor/SysML/toolbox.py:167
-#, fuzzy
 msgid "New Package"
 msgstr "Uusi pakkaus"
 
@@ -460,9 +448,8 @@ msgstr "Uusi sisäisen lohkon kaavio"
 
 #: gaphor/SysML/toolbox.py:104 gaphor/SysML/toolbox.py:105
 #: gaphor/SysML/toolbox.py:174
-#, fuzzy
 msgid "New Block"
-msgstr "Lohko"
+msgstr "Uusi lohko"
 
 #: gaphor/SysML/toolbox.py:110 gaphor/UML/toolbox.py:51
 msgid "New Package Diagram"
@@ -477,9 +464,8 @@ msgid "New Use Case Diagram"
 msgstr "Uusi käyttötapauskaavio"
 
 #: gaphor/SysML/toolbox.py:173 gaphor/UML/toolbox.py:64
-#, fuzzy
 msgid "New Actor"
-msgstr "Ensisijainen toimija"
+msgstr "Uusi toimija"
 
 #: gaphor/SysML/toolbox.py:182
 #, fuzzy
@@ -487,19 +473,16 @@ msgid "New Interface Block"
 msgstr "Uusi sisäisen lohkon kaavio"
 
 #: gaphor/SysML/toolbox.py:186
-#, fuzzy
 msgid "New Requirement"
-msgstr "Vaatimus"
+msgstr "Uusi vaatimus"
 
 #: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
-#, fuzzy
 msgid "New Use Case"
-msgstr "Käyttötapaus"
+msgstr "Uusi käyttötapaus"
 
 #: gaphor/SysML/toolbox.py:197
-#, fuzzy
 msgid "New Value Type"
-msgstr "arvoTyyppi"
+msgstr "Uusi arvotyyppi"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
 #, fuzzy
@@ -673,12 +656,10 @@ msgid "UML"
 msgstr "UML"
 
 #: gaphor/UML/actions/propertypages.ui:372 gaphor/UML/propertypages.ui:9
-#, fuzzy
 msgid "Type"
-msgstr "Tyyli"
+msgstr "Tyyppi"
 
 #: gaphor/UML/propertypages.ui:28
-#, fuzzy
 msgid "Show Type"
 msgstr "Näytä tyyppi"
 
@@ -707,14 +688,12 @@ msgid "New Profile Diagram"
 msgstr "Uusi profiilikaavio"
 
 #: gaphor/UML/toolbox.py:65
-#, fuzzy
 msgid "New Artifact"
-msgstr "Artefakti"
+msgstr "Uusi artefakti"
 
 #: gaphor/UML/toolbox.py:69
-#, fuzzy
 msgid "New Device"
-msgstr "laite"
+msgstr "Uusi laite"
 
 #: gaphor/UML/toolbox.py:75
 #, fuzzy
@@ -722,24 +701,20 @@ msgid "New Instance Specification"
 msgstr "Liitosspesifikaatio"
 
 #: gaphor/UML/toolbox.py:82
-#, fuzzy
 msgid "New Interface"
-msgstr "rajapinta"
+msgstr "Uusi rajapinta"
 
 #: gaphor/UML/toolbox.py:83
-#, fuzzy
 msgid "New Node"
-msgstr "Uusi malli"
+msgstr "Uusi solmu"
 
 #: gaphor/UML/toolbox.py:84
-#, fuzzy
 msgid "New Profile"
-msgstr "Profiili"
+msgstr "Uusi profiili"
 
 #: gaphor/UML/toolbox.py:88
-#, fuzzy
 msgid "New Stereotype"
-msgstr "Stereotyyppi"
+msgstr "Uusi stereotyyppi"
 
 #: gaphor/UML/actions/actionstoolbox.py:17
 #: gaphor/UML/interactions/interactionstoolbox.py:16
@@ -880,9 +855,8 @@ msgid "decision"
 msgstr "päätös"
 
 #: gaphor/UML/actions/activitypropertypage.py:134
-#, fuzzy
 msgid "New Parameter…"
-msgstr "Uusi pakkaus"
+msgstr "Uusi parametri…"
 
 #: gaphor/UML/actions/objectnode.py:14 gaphor/UML/actions/propertypages.ui:165
 msgid "unordered"
@@ -1003,14 +977,12 @@ msgid "Multiplicity"
 msgstr ""
 
 #: gaphor/UML/classes/classespropertypages.py:233
-#, fuzzy
 msgid "New Attribute…"
-msgstr "Näytä attribuutit"
+msgstr "Uusi attribuutti…"
 
 #: gaphor/UML/classes/classespropertypages.py:390
-#, fuzzy
 msgid "New Operation…"
-msgstr "Näytä operaatiot"
+msgstr "Uusi operaatio…"
 
 #: gaphor/UML/classes/classestoolbox.py:25
 msgid "Classes"
@@ -1062,9 +1034,8 @@ msgid "enumeration"
 msgstr "enumeraatio"
 
 #: gaphor/UML/classes/enumerationpropertypages.py:124
-#, fuzzy
 msgid "New Enumeration…"
-msgstr "enumeraatio"
+msgstr "Uusi enumeraatio…"
 
 #: gaphor/UML/classes/interface.py:283
 msgid "interface"
@@ -1522,9 +1493,8 @@ msgid "Diagram metadata"
 msgstr "Kaavion metatieto"
 
 #: gaphor/diagram/diagramtoolbox.py:194 gaphor/diagram/propertypages.ui:272
-#, fuzzy
 msgid "Picture"
-msgstr "Rakenne"
+msgstr "Kuva"
 
 #: gaphor/diagram/presentation.py:51
 msgid "(from {namespace})"
@@ -1573,20 +1543,19 @@ msgstr "Päivitetty"
 
 #: gaphor/diagram/propertypages.ui:283
 msgid "Select picture..."
-msgstr ""
+msgstr "Valitse kuva…"
 
 #: gaphor/diagram/propertypages.ui:289
 msgid "Set default size"
-msgstr ""
+msgstr "Aseta oletuskoko"
 
 #: gaphor/diagram/general/generalpropertypages.py:126
 msgid "Select a picture..."
-msgstr ""
+msgstr "Valitse kuva…"
 
 #: gaphor/diagram/general/generalpropertypages.py:149
-#, fuzzy
 msgid "Unable to parse picture “{filename}”."
-msgstr "Ei voi tallentaa mallia “{filename}”."
+msgstr "Ei voi jäsentää kuvaa “{filename}”."
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1601,43 +1570,40 @@ msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Kaaviota '{name}' ei ole mallissa '{model_name}' ({model_file})."
 
 #: gaphor/plugins/align/align.py:31
-#, fuzzy
 msgid "Align left"
-msgstr "Magneetti"
+msgstr "Tasaa vasemmalle"
 
 #: gaphor/plugins/align/align.py:35
 msgid "Align right"
-msgstr ""
+msgstr "Tasaa oikealle"
 
 #: gaphor/plugins/align/align.py:39
 msgid "Align vertical center"
-msgstr ""
+msgstr "Tasaa pystysuunnassa keskelle"
 
 #: gaphor/plugins/align/align.py:43
-#, fuzzy
 msgid "Align top"
-msgstr "Ensisijainen toimija"
+msgstr "Tasaa ylös"
 
 #: gaphor/plugins/align/align.py:47
 msgid "Align bottom"
-msgstr ""
+msgstr "Tasaa alas"
 
 #: gaphor/plugins/align/align.py:51
-#, fuzzy
 msgid "Align horizontal center"
-msgstr "Vaakatasossa"
+msgstr "Tasaa vaakasuunnassa keskelle"
 
 #: gaphor/plugins/align/align.py:55
 msgid "Max width"
-msgstr ""
+msgstr "Enimmäisleveys"
 
 #: gaphor/plugins/align/align.py:59
 msgid "Max height"
-msgstr ""
+msgstr "Enimmäiskorkeus"
 
 #: gaphor/plugins/align/align.py:63
 msgid "Max size"
-msgstr ""
+msgstr "Enimmäiskoko"
 
 #: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
@@ -2110,14 +2076,12 @@ msgid "Model Navigation"
 msgstr "Tuntematon navigaatio"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Concept"
-msgstr "Yhdistäjä"
+msgstr "Konsepti"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical"
-msgstr "Kirjautuminen"
+msgstr "Looginen"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Pillar"
@@ -2474,12 +2438,10 @@ msgstr ""
 "kaaviossa."
 
 #: gaphor/ui/elementeditor.ui:295
-#, fuzzy
 msgid "Diagram Language"
-msgstr "Kieli"
+msgstr "Kaavion kieli"
 
 #: gaphor/ui/elementeditor.ui:297 gaphor/ui/elementeditor.ui:305
-#, fuzzy
 msgid "The (natural) language used in this model."
 msgstr "Tässä mallissa käytettävä (puhuttu) kieli."
 
@@ -2537,9 +2499,8 @@ msgid "Gaphor Models"
 msgstr "Kaikki Gaphor-mallit"
 
 #: gaphor/ui/filedialog.py:28
-#, fuzzy
 msgid "Images"
-msgstr "Uimaradat"
+msgstr "Kuvat"
 
 #: gaphor/ui/filedialog.py:39
 msgid "All Files"
@@ -2778,9 +2739,8 @@ msgid "New _Diagram"
 msgstr "Uusi k_aavio"
 
 #: gaphor/ui/modelbrowser.py:585
-#, fuzzy
 msgid "New _Element"
-msgstr "Ulkoinen elementti"
+msgstr "Uusi _elementti"
 
 #: gaphor/ui/modelbrowser.py:593
 msgid "De_lete"
@@ -2800,7 +2760,7 @@ msgstr "<Suhteet>"
 
 #: gaphor/ui/help/__init__.py:82
 msgid "Restart Gaphor to enable language changes"
-msgstr ""
+msgstr "Käynnistä Gaphor uudelleen, jotta kielimuutokset tulevat voimaan"
 
 #: gaphor/ui/help/about.ui:13
 msgid ""
@@ -2828,20 +2788,19 @@ msgstr ""
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
-msgstr ""
+msgstr "Ulkoasu"
 
 #: gaphor/ui/help/preferences.ui:13
-#, fuzzy
 msgid "Colors"
-msgstr "Sulje"
+msgstr "Värit"
 
 #: gaphor/ui/help/preferences.ui:21
 msgid "Dark"
-msgstr ""
+msgstr "Tumma"
 
 #: gaphor/ui/help/preferences.ui:22
 msgid "Light"
-msgstr ""
+msgstr "Vaalea"
 
 #: gaphor/ui/help/preferences.ui:32
 msgid "Language"
@@ -2849,7 +2808,7 @@ msgstr "Kieli"
 
 #: gaphor/ui/help/preferences.ui:35
 msgid "Change from System Language to English"
-msgstr ""
+msgstr "Vaihda järjestelmän kielestä englantiin"
 
 #: gaphor/ui/help/shortcuts.ui:22
 msgid "Rename"
@@ -3003,4 +2962,3 @@ msgstr "Päivitä relaatio “{name}”"
 
 #~ msgid "Note or Remark"
 #~ msgstr "Huomautus tai muistutus"
-

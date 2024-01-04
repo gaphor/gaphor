@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-12-30 16:31+0100\n"
-"PO-Revision-Date: 2024-01-02 01:29+0000\n"
+"PO-Revision-Date: 2024-01-04 10:07+0000\n"
 "Last-Translator: ovari <ovari123@zoho.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/gaphor/gaphor/"
 "hu/>\n"
@@ -969,17 +969,15 @@ msgstr ""
 
 #: gaphor/UML/actions/propertypages.ui:389
 msgid "Multiplicity"
-msgstr ""
+msgstr "Multiplicitás"
 
 #: gaphor/UML/classes/classespropertypages.py:233
-#, fuzzy
 msgid "New Attribute…"
-msgstr "Attribútumok megjelenítése"
+msgstr "Új attribútum…"
 
 #: gaphor/UML/classes/classespropertypages.py:390
-#, fuzzy
 msgid "New Operation…"
-msgstr "Műveletek megjelenítése"
+msgstr "Új művelet…"
 
 #: gaphor/UML/classes/classestoolbox.py:25
 msgid "Classes"
@@ -1031,9 +1029,8 @@ msgid "enumeration"
 msgstr "felsorolás"
 
 #: gaphor/UML/classes/enumerationpropertypages.py:124
-#, fuzzy
 msgid "New Enumeration…"
-msgstr "felsorolás"
+msgstr "Új felsorolás…"
 
 #: gaphor/UML/classes/interface.py:283
 msgid "interface"
@@ -1329,9 +1326,8 @@ msgid "Delete"
 msgstr "Törlés"
 
 #: gaphor/UML/interactions/propertypages.ui:42
-#, fuzzy
 msgid "Connectable Element"
-msgstr "Külső elem"
+msgstr "Összeköthető elem"
 
 #: gaphor/UML/profiles/packageimport.py:24
 msgid "import"
@@ -1382,7 +1378,6 @@ msgid "Exit"
 msgstr "Kilépés"
 
 #: gaphor/UML/states/propertypages.ui:54
-#, fuzzy
 msgid "Do activity"
 msgstr "Tevékenység végrehajtása"
 
@@ -1526,9 +1521,8 @@ msgid "Diagram metadata"
 msgstr "Ábra metaadatai"
 
 #: gaphor/diagram/diagramtoolbox.py:194 gaphor/diagram/propertypages.ui:272
-#, fuzzy
 msgid "Picture"
-msgstr "Szerkezet"
+msgstr "Kép"
 
 #: gaphor/diagram/presentation.py:51
 msgid "(from {namespace})"
@@ -1547,9 +1541,8 @@ msgid "Flip orientation"
 msgstr "Tájolás váltása"
 
 #: gaphor/diagram/propertypages.ui:130
-#, fuzzy
 msgid "Note"
-msgstr "NEM kapu"
+msgstr "Jegyzet"
 
 #: gaphor/diagram/propertypages.ui:167
 msgid "Created By"
@@ -1577,20 +1570,19 @@ msgstr "Frissítve"
 
 #: gaphor/diagram/propertypages.ui:283
 msgid "Select picture..."
-msgstr ""
+msgstr "Kép kijelölése…"
 
 #: gaphor/diagram/propertypages.ui:289
 msgid "Set default size"
-msgstr ""
+msgstr "Alapértelmezett méret beállítása"
 
 #: gaphor/diagram/general/generalpropertypages.py:126
 msgid "Select a picture..."
-msgstr ""
+msgstr "Kép kijelölése…"
 
 #: gaphor/diagram/general/generalpropertypages.py:149
-#, fuzzy
 msgid "Unable to parse picture “{filename}”."
-msgstr "Nem sikerült menteni a(z) „{filename}”-modellfájlt."
+msgstr "Nem sikerült elemezni a(z) „{filename}” képet."
 
 #: gaphor/diagram/tools/dnd.py:50
 msgid "Element can’t be represented on a diagram."
@@ -1605,43 +1597,40 @@ msgid "No diagram '{name}' in model '{model_name}' ({model_file})."
 msgstr "Nincs ábra „{name}” a(z) „{model_name}”-modellben ({model_file})."
 
 #: gaphor/plugins/align/align.py:31
-#, fuzzy
 msgid "Align left"
-msgstr "Mágnes"
+msgstr "Balra igazítás"
 
 #: gaphor/plugins/align/align.py:35
 msgid "Align right"
-msgstr ""
+msgstr "Jobbra igazítás"
 
 #: gaphor/plugins/align/align.py:39
 msgid "Align vertical center"
-msgstr ""
+msgstr "Függőleges középre igazítás"
 
 #: gaphor/plugins/align/align.py:43
-#, fuzzy
 msgid "Align top"
-msgstr "Főszereplő"
+msgstr "Felülre igazítás"
 
 #: gaphor/plugins/align/align.py:47
 msgid "Align bottom"
-msgstr ""
+msgstr "Alulra igazítás"
 
 #: gaphor/plugins/align/align.py:51
-#, fuzzy
 msgid "Align horizontal center"
-msgstr "Vízszintes"
+msgstr "Vízszintes középre igazítás"
 
 #: gaphor/plugins/align/align.py:55
 msgid "Max width"
-msgstr ""
+msgstr "Maximális szélesség"
 
 #: gaphor/plugins/align/align.py:59
 msgid "Max height"
-msgstr ""
+msgstr "Maximális magasság"
 
 #: gaphor/plugins/align/align.py:63
 msgid "Max size"
-msgstr ""
+msgstr "Maximális méret"
 
 #: gaphor/plugins/autolayout/pydot.py:45
 msgid "Auto Layout"
@@ -2476,14 +2465,12 @@ msgstr ""
 "az ábrákban."
 
 #: gaphor/ui/elementeditor.ui:295
-#, fuzzy
 msgid "Diagram Language"
-msgstr "Nyelv"
+msgstr "Ábra nyelve"
 
 #: gaphor/ui/elementeditor.ui:297 gaphor/ui/elementeditor.ui:305
-#, fuzzy
 msgid "The (natural) language used in this model."
-msgstr "A modellben használt (beszélt) nyelv."
+msgstr "A modellben használt (természetes) nyelv."
 
 #: gaphor/ui/elementeditor.ui:313
 msgid "Style Sheet"
@@ -2538,9 +2525,8 @@ msgid "Gaphor Models"
 msgstr "Minden Gaphor-modell"
 
 #: gaphor/ui/filedialog.py:28
-#, fuzzy
 msgid "Images"
-msgstr "Sávok"
+msgstr "Képek"
 
 #: gaphor/ui/filedialog.py:39
 msgid "All Files"
@@ -2782,9 +2768,8 @@ msgid "New _Diagram"
 msgstr "Új á_bra"
 
 #: gaphor/ui/modelbrowser.py:585
-#, fuzzy
 msgid "New _Element"
-msgstr "Külső elem"
+msgstr "Új _elem"
 
 #: gaphor/ui/modelbrowser.py:593
 msgid "De_lete"
@@ -2804,7 +2789,7 @@ msgstr "<Kapcsolatok>"
 
 #: gaphor/ui/help/__init__.py:82
 msgid "Restart Gaphor to enable language changes"
-msgstr ""
+msgstr "Indítsa újra a Gaphort a nyelvi módosítások engedélyezéséhez"
 
 #: gaphor/ui/help/about.ui:13
 msgid ""
@@ -2847,20 +2832,19 @@ msgstr ""
 
 #: gaphor/ui/help/preferences.ui:9
 msgid "Appearance"
-msgstr ""
+msgstr "Megjelenés"
 
 #: gaphor/ui/help/preferences.ui:13
-#, fuzzy
 msgid "Colors"
-msgstr "Bezárás"
+msgstr "Színek"
 
 #: gaphor/ui/help/preferences.ui:21
 msgid "Dark"
-msgstr ""
+msgstr "Sötét"
 
 #: gaphor/ui/help/preferences.ui:22
 msgid "Light"
-msgstr ""
+msgstr "Világos"
 
 #: gaphor/ui/help/preferences.ui:32
 msgid "Language"
@@ -2868,7 +2852,7 @@ msgstr "Nyelv"
 
 #: gaphor/ui/help/preferences.ui:35
 msgid "Change from System Language to English"
-msgstr ""
+msgstr "Váltás a rendszer nyelvéről angolra"
 
 #: gaphor/ui/help/shortcuts.ui:22
 msgid "Rename"

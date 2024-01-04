@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-12-30 16:31+0100\n"
-"PO-Revision-Date: 2024-01-02 01:29+0000\n"
+"PO-Revision-Date: 2024-01-04 10:07+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
@@ -98,7 +98,7 @@ msgstr "Новая Диаграмма Последовательности"
 #: gaphor/C4Model/toolbox.py:155 gaphor/SysML/toolbox.py:149
 #: gaphor/UML/toolbox.py:57
 msgid "New State Machine Diagram"
-msgstr "Новая Диаграмма Состояний"
+msgstr "Новая диаграмма Конечного Автомата"
 
 #: gaphor/C4Model/toolbox.py:159 gaphor/SysML/toolbox.py:133
 #: gaphor/SysML/toolbox.py:134 gaphor/SysML/toolbox.py:172
@@ -115,9 +115,8 @@ msgstr "Новое Взаимодействие"
 #: gaphor/C4Model/toolbox.py:164 gaphor/SysML/toolbox.py:153
 #: gaphor/SysML/toolbox.py:154 gaphor/SysML/toolbox.py:194
 #: gaphor/UML/toolbox.py:86
-#, fuzzy
 msgid "New State Machine"
-msgstr "Конечный Автомат"
+msgstr "Новый Конечный Автомат"
 
 #: gaphor/C4Model/toolbox.py:166 gaphor/UML/toolbox.py:66
 msgid "New Class"
@@ -133,9 +132,8 @@ msgid "New Enumeration"
 msgstr "Новое Перечисление"
 
 #: gaphor/C4Model/toolbox.py:173
-#, fuzzy
 msgid "New Primitive Type"
-msgstr "примитив"
+msgstr "Новый Примитивный тип"
 
 #: gaphor/C4Model/toolbox.py:175
 msgid "New Person"
