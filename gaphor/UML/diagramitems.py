@@ -3,6 +3,8 @@
 This module makes it easier to load a diagram item.
 """
 
+# ruff: noqa: F403
+
 from gaphor.diagram.general import *
 from gaphor.UML.actions import *
 from gaphor.UML.classes import *
