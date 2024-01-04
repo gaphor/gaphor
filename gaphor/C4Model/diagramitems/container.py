@@ -25,7 +25,7 @@ class C4ContainerItem(Named, ElementPresentation):
                 Text(
                     text=lambda: self.subject.technology
                     and f"[{diagram.gettext(self.subject.type)}: {self.subject.technology}]"
-                    or f"[{diagram.gettext(self.subject.type)}]",
+                    or f"[{diagram.gettext(self.subject.type)}]"
                 ),
             ),
             *(
@@ -35,9 +35,7 @@ class C4ContainerItem(Named, ElementPresentation):
                     CssNode(
                         "description",
                         self.subject,
-                        Text(
-                            text=lambda: self.subject.description or "",
-                        ),
+                        Text(text=lambda: self.subject.description or ""),
                     ),
                 )
             ),

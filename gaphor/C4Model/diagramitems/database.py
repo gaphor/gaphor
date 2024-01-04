@@ -1,7 +1,6 @@
 from gaphor.C4Model import c4model
-from gaphor.core.styling import JustifyContent, TextAlign
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
-from gaphor.diagram.shapes import Box, Text, ellipse, stroke
+from gaphor.diagram.shapes import Box, CssNode, Text, ellipse, stroke
 from gaphor.diagram.support import represents
 
 
@@ -14,32 +13,32 @@ class C4DatabaseItem(Named, ElementPresentation):
         self.watch("subject[C4Container].technology")
         self.watch("subject[C4Container].description")
         self.watch("subject[C4Container].type")
+        self.watch("children", self.update_shapes)
 
     def update_shapes(self, event=None):
         diagram = self.diagram
         self.shape = Box(
-            Box(
-                text_name(self),
+            text_name(self),
+            CssNode(
+                "technology",
+                self.subject,
                 Text(
                     text=lambda: self.subject.technology
                     and f"[{diagram.gettext(self.subject.type)}: {self.subject.technology}]"
                     or f"[{diagram.gettext(self.subject.type)}]",
-                    style={"font-size": "x-small"},
                 ),
-                Text(
-                    text=lambda: self.subject.description or "",
-                    style={"padding": (4, 4, 0, 4)},
-                ),
-                style={"padding": (20, 4, 4, 4)},
             ),
-            style={
-                "text-align": TextAlign.LEFT
-                if self.diagram and self.children
-                else TextAlign.CENTER,
-                "justify-content": JustifyContent.END
-                if self.diagram and self.children
-                else JustifyContent.CENTER,
-            },
+            *(
+                ()
+                if self.children
+                else (
+                    CssNode(
+                        "description",
+                        self.subject,
+                        Text(text=lambda: self.subject.description or ""),
+                    ),
+                )
+            ),
             draw=draw_database,
         )
 

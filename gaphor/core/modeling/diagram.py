@@ -236,6 +236,7 @@ class StyledItem:
             and self.item == other.item
             and self.state() == other.state()
             and self.dark_mode == other.dark_mode
+            and tuple(self.children()) == tuple(other.children())
         )
 
 

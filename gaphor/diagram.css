@@ -90,19 +90,23 @@ c4container {
   padding: 4 4 4 4;
 }
 
-c4container:not([children = ""]) {
+c4database {
+  padding: 20 4 4 4;
+}
+
+:is(c4container, c4database):not([children = ""]) {
   justify-content: end;
 }
 
-c4container:not([children = ""]) > :is(name,technology) {
+:is(c4container, c4database):not([children = ""]) > :is(name, technology) {
   text-align: left;
 }
 
-c4container technology {
+:is(c4container, c4database) technology {
   font-size: x-small;
 }
 
-c4container description {
+:is(c4container, c4database) description {
   padding: 4 4 0 4;
 }
 
