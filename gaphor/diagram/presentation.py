@@ -11,6 +11,7 @@ from gaphas.geometry import Rectangle, distance_rectangle_point
 from gaphas.solver.constraint import BaseConstraint
 
 from gaphor.core.modeling.diagram import Diagram, DrawContext
+from gaphor.core.modeling.element import Id
 from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
@@ -124,7 +125,14 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
 
     _port_sides = ("top", "right", "bottom", "left")
 
-    def __init__(self, diagram: Diagram, id=None, shape=None, width=100, height=50):
+    def __init__(
+        self,
+        diagram: Diagram,
+        id: Id | None = None,
+        shape: Shape | None = None,
+        width=100,
+        height=50,
+    ):
         super().__init__(
             connections=diagram.connections,
             diagram=diagram,
@@ -169,14 +177,18 @@ class ElementPresentation(gaphas.Element, HandlePositionUpdate, Presentation[S])
                 context, bounding_box=Rectangle(0, 0, self.width, self.height)
             )
 
+    def css_nodes(self):
+        return traverse_css_nodes(self._shape) if self._shape else ()
+
     def draw(self, context):
         x, y = self.handles()[0].pos
         cairo = context.cairo
         cairo.translate(x, y)
-        self._shape.draw(
-            context,
-            Rectangle(0, 0, self.width, self.height),
-        )
+        if self._shape:
+            self._shape.draw(
+                context,
+                Rectangle(0, 0, self.width, self.height),
+            )
 
     def save(self, save_func):
         save_func("matrix", tuple(self.matrix))
@@ -220,7 +232,7 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
     def __init__(
         self,
         diagram: Diagram,
-        id=None,
+        id: Id | None = None,
         style: Style | None = None,
         shape_head: Shape | None = None,
         shape_middle: Shape | None = None,
@@ -424,11 +436,18 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
     E.g. ports, pins and parameter nodes.
     """
 
-    def __init__(self, diagram, id=None, shape=None, width=16, height=16):
+    def __init__(
+        self,
+        diagram: Diagram,
+        id: Id | None = None,
+        shape: Shape | None = None,
+        width=16,
+        height=16,
+    ):
         super().__init__(diagram, id)
         self._connections = diagram.connections
-        self._width_constraints = []
-        self._height_constraints = []
+        self._width_constraints: list[BaseConstraint] = []
+        self._height_constraints: list[BaseConstraint] = []
         self._last_connected_side = None
         self._shape = shape
 
