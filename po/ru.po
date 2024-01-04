@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Gaphor 0.13.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2023-12-30 16:31+0100\n"
-"PO-Revision-Date: 2024-01-04 10:07+0000\n"
+"PO-Revision-Date: 2024-01-06 01:10+0000\n"
 "Last-Translator: Сергей <asvmail.as@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/gaphor/gaphor/ru/"
 ">\n"
@@ -406,9 +406,8 @@ msgid "Text"
 msgstr "Текст"
 
 #: gaphor/SysML/sysmlfmt.py:10
-#, fuzzy
 msgid "sourceContext: {name}"
-msgstr "расширение: {name}"
+msgstr "sourceContext: {name}"
 
 #: gaphor/SysML/toolbox.py:43
 msgid "Internal Blocks"
@@ -461,37 +460,32 @@ msgid "New Actor"
 msgstr "Новый Актор"
 
 #: gaphor/SysML/toolbox.py:182
-#, fuzzy
 msgid "New Interface Block"
-msgstr "Новая Внутренняя Блок-схема"
+msgstr "Новый Блок Интерфейса"
 
 #: gaphor/SysML/toolbox.py:186
 msgid "New Requirement"
 msgstr "Новое Требование"
 
 #: gaphor/SysML/toolbox.py:196 gaphor/UML/toolbox.py:89
-#, fuzzy
 msgid "New Use Case"
-msgstr "Прецедент"
+msgstr "Новый Прецедент"
 
 #: gaphor/SysML/toolbox.py:197
 msgid "New Value Type"
 msgstr "Новый тип Значения"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:6
-#, fuzzy
 msgid "Allocations"
-msgstr "Действия"
+msgstr "Привязки"
 
 #: gaphor/SysML/allocations/allocationstoolbox.py:10
-#, fuzzy
 msgid "Allocate"
-msgstr "Выделенный Тип"
+msgstr "Привязка"
 
 #: gaphor/SysML/allocations/relationships.py:10
-#, fuzzy
 msgid "allocate"
-msgstr "Выделенный Тип"
+msgstr "привязка"
 
 #: gaphor/SysML/blocks/block.py:62 gaphor/SysML/blocks/interfaceblock.py:61
 msgid "ControlStructure"
@@ -558,9 +552,8 @@ msgstr "Ассоциация"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:90
 #: gaphor/UML/classes/classestoolbox.py:109
-#, fuzzy
 msgid "Direct Association"
-msgstr "Общая Ассоциация"
+msgstr "Прямая Ассоциация"
 
 #: gaphor/SysML/blocks/blockstoolbox.py:107
 msgid "ValueType"
@@ -651,9 +644,8 @@ msgid "Type"
 msgstr "Тип"
 
 #: gaphor/UML/propertypages.ui:28
-#, fuzzy
 msgid "Show Type"
-msgstr "Показывать тип"
+msgstr "Показать тип"
 
 #: gaphor/UML/sanitizerservice.py:73
 msgid ""
@@ -688,9 +680,8 @@ msgid "New Device"
 msgstr "Новое устройство"
 
 #: gaphor/UML/toolbox.py:75
-#, fuzzy
 msgid "New Instance Specification"
-msgstr "Присоединиться к Спецификации"
+msgstr "Новая спецификация экземпляра"
 
 #: gaphor/UML/toolbox.py:82
 msgid "New Interface"
@@ -745,9 +736,8 @@ msgid "Swimlane Two"
 msgstr "Вторая Дорожка"
 
 #: gaphor/UML/actions/actionstoolbox.py:58
-#, fuzzy
 msgid "ValueSpecificationAction"
-msgstr "Присоединиться к Спецификации"
+msgstr "ДействиеПоЗначениюСпецификации"
 
 #: gaphor/UML/actions/actionstoolbox.py:63
 msgid "Actions"
@@ -760,17 +750,15 @@ msgstr "Действие"
 
 #: gaphor/UML/actions/actionstoolbox.py:91
 msgid "Call behavior action"
-msgstr ""
+msgstr "Вызов действия Поведение"
 
 #: gaphor/UML/actions/actionstoolbox.py:98
-#, fuzzy
 msgid "CallBehaviorAction"
-msgstr "Поведение"
+msgstr "ВызовДействияПоведение"
 
 #: gaphor/UML/actions/actionstoolbox.py:105
-#, fuzzy
 msgid "Value specification action"
-msgstr "Присоединиться к Спецификации"
+msgstr "Действие по значению спецификации"
 
 #: gaphor/UML/actions/actionstoolbox.py:117
 msgid "Initial node"
@@ -2110,9 +2098,8 @@ msgid "Concept"
 msgstr "Соединитель"
 
 #: gaphor/templates/sysml.gaphor
-#, fuzzy
 msgid "Logical"
-msgstr "Вход"
+msgstr "Логический"
 
 #: gaphor/templates/sysml.gaphor
 msgid "Pillar"
