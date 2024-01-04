@@ -144,7 +144,7 @@ class CompiledStyleSheet:
             key=operator.itemgetter(0, 1),
         )
 
-    @functools.lru_cache(maxsize=1000)
+    # @functools.lru_cache(maxsize=1000)
     def compute_style(self, node: StyleNode) -> Style:
         return merge_styles(
             *(
@@ -158,7 +158,7 @@ class CompiledStyleSheet:
 
 class PseudoStyleNode:
 
-    def __init__(self, node: StyleNode, psuedo: str):
+    def __init__(self, node: StyleNode, psuedo: str | None):
         self._node = node
         self.pseudo = psuedo
         self.dark_mode = node.dark_mode
