@@ -1,3 +1,5 @@
+# ruff: noqa: F401
+
 from gaphor.UML.usecases import usecasegroup
 from gaphor.UML.usecases.actor import ActorItem
 from gaphor.UML.usecases.extend import ExtendItem

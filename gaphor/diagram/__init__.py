@@ -2,6 +2,8 @@
 for interacting with the diagram) and interfaces (used for adapting the
 diagram)."""
 
+# ruff: noqa: E402,F401
+
 import gi
 
 gi.require_version("Pango", "1.0")

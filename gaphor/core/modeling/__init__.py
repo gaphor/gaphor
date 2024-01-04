@@ -1,10 +1,12 @@
+# ruff: noqa: F401,F403
+
 from gaphor.core.modeling.coremodel import (
     Comment,
     ElementChange,
     PendingChange,
+    Picture,
     RefChange,
     ValueChange,
-    Picture,
 )
 from gaphor.core.modeling.diagram import Diagram, DrawContext, UpdateContext
 from gaphor.core.modeling.element import Element, self_and_owners

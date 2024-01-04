@@ -1,3 +1,5 @@
+# ruff: noqa: F401
+
 import gaphor.RAAML.stpa.block
 from gaphor.RAAML.stpa.controlaction import ControlActionItem
 from gaphor.RAAML.stpa.operationalsituation import OperationalSituationItem

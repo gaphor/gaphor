@@ -1,4 +1,4 @@
-from gaphor.UML.deployments import (
+from gaphor.UML.deployments import (  # noqa: F401
     connectorconnect,
     copypaste,
     deploymentsgroup,

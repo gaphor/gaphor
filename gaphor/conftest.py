@@ -13,7 +13,7 @@ from pathlib import Path
 import pytest
 
 # Load gaphor.ui first, so GTK library versions are set corrently
-import gaphor.ui
+import gaphor.ui  # noqa: F401
 
 from gaphor.core import Transaction
 from gaphor.core.eventmanager import EventManager

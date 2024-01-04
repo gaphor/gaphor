@@ -246,15 +246,11 @@ ignore_errors = true
 exclude = [
     ".venv",
     "dist",
-    "__init__.py",
-    "conftest.py",
-    "sysml.py",
-    "uml.py",
-    "coremodel.py",
-    "diagramitems.py",
-    "docs/conf.py",
-    "gaphor/RAAML/raaml.py",
+    "gaphor/core/modeling/coremodel.py",
     "gaphor/C4Model/c4model.py",
+    "gaphor/RAAML/raaml.py",
+    "gaphor/SysML/sysml.py",
+    "gaphor/UML/uml.py",
 ]
 ignore = ["E501"]
 line-length = 88

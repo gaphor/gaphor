@@ -1,3 +1,5 @@
+# ruff: noqa: F401
+
 from gaphor.RAAML.fta.andgate import ANDItem
 from gaphor.RAAML.fta.basicevent import BasicEventItem
 from gaphor.RAAML.fta.conditionalevent import ConditionalEventItem

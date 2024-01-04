@@ -1,4 +1,4 @@
-from gaphor.UML.interactions import (
+from gaphor.UML.interactions import (  # noqa: F401
     copypaste,
     interactionsconnect,
     interactionsgroup,

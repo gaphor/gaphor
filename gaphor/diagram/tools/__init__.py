@@ -1,4 +1,7 @@
 """Tools for handling items on a diagram."""
+
+# ruff: noqa: F401
+
 from gaphas.tool import hover_tool, rubberband_tool, view_focus_tool, zoom_tools
 from gaphas.tool.scroll import pan_tool
 
@@ -19,9 +22,7 @@ def apply_default_tool_set(view, modeling_language, event_manager, rubberband_st
     view.remove_all_controllers()
     view.add_controller(hover_tool())
     view.add_controller(*text_edit_tools(event_manager))
-    view.add_controller(
-        *transactional_tool(item_tool(), event_manager=event_manager)
-    )
+    view.add_controller(*transactional_tool(item_tool(), event_manager=event_manager))
     view.add_controller(rubberband_tool(rubberband_state))
     add_basic_tools(view, modeling_language, event_manager)
 
@@ -30,9 +31,7 @@ def apply_magnet_tool_set(view, modeling_language, event_manager):
     """The default tool set."""
     view.remove_all_controllers()
     view.add_controller(
-        *transactional_tool(
-            magnet_tool(event_manager), event_manager=event_manager
-        )
+        *transactional_tool(magnet_tool(event_manager), event_manager=event_manager)
     )
     add_basic_tools(view, modeling_language, event_manager)
 

@@ -16,9 +16,9 @@ from gaphor.core.styling.declarations import (
     TextDecoration,
     Var,
     VerticalAlign,
+    WhiteSpace,
     declarations,
     number,
-    WhiteSpace,
 )
 
 # Style is using SVG properties where possible
@@ -83,7 +83,9 @@ def merge_styles(*styles: Style) -> Style:
     resolved_style = resolve_variables(style, styles)
 
     if abs_font_size and resolved_style["font-size"] in FONT_SIZE_VALUES:
-        resolved_style["font-size"] = abs_font_size * FONT_SIZE_VALUES[resolved_style["font-size"]]  # type: ignore[index,operator]
+        resolved_style["font-size"] = (
+            abs_font_size * FONT_SIZE_VALUES[resolved_style["font-size"]]  # type: ignore[index]
+        )
 
     if "opacity" in resolved_style:
         opacity = resolved_style["opacity"]

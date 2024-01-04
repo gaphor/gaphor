@@ -3,19 +3,16 @@
 (help browser anyone?)
 """
 import logging
-
-import webbrowser
 import sys
-from enum import Enum
+import webbrowser
 
 from gi.repository import Adw, GObject, Gtk
 
 from gaphor.abc import ActionProvider, Service
 from gaphor.application import distribution
 from gaphor.core import action
-from gaphor.i18n import translated_ui_string, gettext
-from gaphor.settings import settings, StyleVariant
-
+from gaphor.i18n import gettext, translated_ui_string
+from gaphor.settings import StyleVariant, settings
 
 logger = logging.getLogger(__name__)
 
@@ -66,14 +63,14 @@ class HelpService(Service, ActionProvider):
         return shortcuts
 
     def _on_style_variant_selected(self, combo_row: Adw.ComboRow, param) -> None:
-        if gtk_app := self.application.gtk_app:
+        if self.application.gtk_app:
             selected = combo_row.props.selected_item
             if selected.props.string == "Dark":
                 settings.style_variant = StyleVariant.DARK
             elif selected.props.string == "Light":
-                settings.style_variant =  StyleVariant.LIGHT
+                settings.style_variant = StyleVariant.LIGHT
             else:
-                settings.style_variant =  StyleVariant.SYSTEM
+                settings.style_variant = StyleVariant.SYSTEM
 
     def _on_use_english_selected(self, switch_row: Adw.SwitchRow, param) -> None:
         if self.preferences_window:
@@ -101,9 +98,7 @@ class HelpService(Service, ActionProvider):
         use_english.connect("notify::active", self._on_use_english_selected)
 
         settings.bind_style_variant(style_variant, "selected")
-        style_variant.connect(
-            "notify::selected-item", self._on_style_variant_selected
-        )
+        style_variant.connect("notify::selected-item", self._on_style_variant_selected)
 
         self.preferences_window.set_visible(True)
         return self.preferences_window
