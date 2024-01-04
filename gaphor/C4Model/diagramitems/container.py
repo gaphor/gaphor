@@ -1,5 +1,4 @@
 from gaphor.C4Model import c4model
-from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, CssNode, Text, draw_border
 from gaphor.diagram.support import represents
@@ -42,11 +41,5 @@ class C4ContainerItem(Named, ElementPresentation):
                     ),
                 )
             ),
-            style={
-                "padding": (4, 4, 4, 4),
-                "justify-content": JustifyContent.END
-                if self.diagram and self.children
-                else JustifyContent.CENTER,
-            },
             draw=draw_border,
         )

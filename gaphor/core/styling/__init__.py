@@ -66,7 +66,7 @@ INHERITED_DECLARATIONS = (
     "font-size",
     "font-style",
     "font-weight",
-    "line-width",
+    "line-width",  # a.k.a. stroke-width
     "text-align",
     "text-color",
     "white-space",

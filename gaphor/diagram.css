@@ -87,11 +87,15 @@ executionspecification {
 }
 
 c4container {
-  text-align: left;
+  padding: 4 4 4 4;
 }
 
-c4container[children = ""] {
-  text-align: center;
+c4container:not([children = ""]) {
+  justify-content: end;
+}
+
+c4container:not([children = ""]) > :is(name,technology) {
+  text-align: left;
 }
 
 c4container technology {
