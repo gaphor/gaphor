@@ -9,6 +9,7 @@ from gaphor.core.styling import (
 )
 from gaphor.diagram.shapes import (
     Box,
+    CssNode,
     DrawContext,
     IconBox,
     Orientation,
@@ -16,6 +17,7 @@ from gaphor.diagram.shapes import (
     TextAlign,
     UpdateContext,
     VerticalAlign,
+    traverse_css_nodes,
 )
 
 
@@ -293,3 +295,15 @@ def test_text_with_after_pseudo_element():
     text = Text("some")
 
     assert text.text(style) == "some text"
+
+
+def test_iterate_css_node():
+    shape = Box(
+        CssNode("first", None, Box(CssNode("nested", None, Text("nested")))),
+        CssNode("second", None, Box()),
+    )
+
+    assert [n.style_node().name() for n in traverse_css_nodes(shape)] == [
+        "first",
+        "second",
+    ]

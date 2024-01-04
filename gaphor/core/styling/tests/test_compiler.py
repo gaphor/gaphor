@@ -220,9 +220,19 @@ def test_empty_pseudo_selector_with_name():
     assert specificity == (0, 1, 1)
 
 
+def test_root_pseudo_selector_with_name():
+    css = ":root {}"
+
+    (selector, specificity), payload = next(compile_style_sheet(css))
+
+    assert selector(Node("node"))
+    assert not selector(Node("node", parent=Node("child")))
+    assert specificity == (0, 1, 0)
+
+
 @pytest.mark.parametrize(
     "state",
-    ["root", "hover", "focus", "active", "drop", "disabled"],
+    ["hover", "focus", "active", "drop", "disabled"],
 )
 def test_hovered_pseudo_selector(state):
     css = f":{state} {{}}"
@@ -265,6 +275,19 @@ def test_has_pseudo_selector():
 
     assert selector(Node("classitem", children=[Node("nested")]))
     assert specificity == (0, 0, 2)
+    assert selector(
+        Node("classitem", children=[Node("middle", children=[Node("nested")])])
+    )
+    assert not selector(Node("classitem"))
+
+
+def test_has_pseudo_selector_with_wildcard():
+    css = "classitem:has(*) {}"
+
+    (selector, specificity), payload = next(compile_style_sheet(css))
+
+    assert selector(Node("classitem", children=[Node("nested")]))
+    assert specificity == (0, 0, 1)
     assert selector(
         Node("classitem", children=[Node("middle", children=[Node("nested")])])
     )

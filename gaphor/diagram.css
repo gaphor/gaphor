@@ -31,10 +31,10 @@
   }
 }
 
-diagram {
+:root {
   color: black;
   font-family: sans;
-  font-size: 14;
+  font-size: 14 ;
   line-width: 2;
   padding: 0;
 }

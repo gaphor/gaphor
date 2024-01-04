@@ -195,7 +195,9 @@ def compile_pseudo_class_selector(selector: selectors.PseudoClassSelector):
     name = selector.name
     if name == "empty":
         return lambda el: not next(el.children(), 0)
-    elif name in ("root", "hover", "focus", "active", "drop", "disabled"):
+    elif name == "root":
+        return lambda el: not el.parent()
+    elif name in ("hover", "focus", "active", "drop", "disabled"):
         return lambda el: name in el.state()
     else:
         raise selectors.SelectorError("Unknown pseudo-class", name)

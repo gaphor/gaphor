@@ -392,6 +392,9 @@ class BoundedBox(Box):
         super().__init__(*children, style=style, draw=draw)
         self.bounding_box = Rectangle()
 
+    def __iter__(self):
+        return iter(self.children)
+
     def draw(self, context: DrawContext, bounding_box: Rectangle):
         self.bounding_box = bounding_box
         return super().draw(context, bounding_box)
@@ -418,6 +421,9 @@ class IconBox:
         self.children = children
         self.sizes: list[tuple[Number, Number]] = []
         self._inline_style = style
+
+    def __iter__(self):
+        return iter((self.icon, *self.children))
 
     def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = merge_styles(context.style, self._inline_style)
@@ -491,6 +497,9 @@ class Text:
         self._inline_style = style
         self._layout = Layout()
 
+    def __iter__(self):
+        return iter(())
+
     def text(self, style: Style | None = None):
         try:
             t = self._text()
@@ -548,7 +557,8 @@ class Text:
 
 
 class StyledChildElement:
-    def __init__(self, name: str, element: Element | None):
+    def __init__(self, shape: Shape, name: str, element: Element | None):
+        self._shape = shape
         self._name = name
         self._element = element
         self.pseudo: str | None = None
@@ -561,7 +571,7 @@ class StyledChildElement:
         raise NotImplementedError()
 
     def children(self) -> Iterator[StyleNode]:
-        return iter(())
+        return (node.style_node() for node in traverse_css_nodes(self._shape))
 
     def attribute(self, name: str) -> str:
         if not self._element:
@@ -573,7 +583,7 @@ class StyledChildElement:
         raise NotImplementedError()
 
     def __hash__(self):
-        return hash((self.name, self._element))
+        return hash((self._name, self._element))
 
     def __eq__(self, other):
         return (
@@ -600,20 +610,30 @@ class CssNode:
         self._child = child
         self._inline_style = style if style else {}
 
+    def __iter__(self):
+        return iter((self._child,))
+
+    def style_node(self):
+        return StyledChildElement(self._child, self._name, self._element)
+
     def size(
         self, context: UpdateContext, bounding_box: Rectangle | None = None
     ) -> tuple[Number, Number]:
-        style = inherit_style(
-            context.style, StyledChildElement(self._name, self._element)
-        )
+        style = inherit_style(context.style, self.style_node())
         new_context = replace(context, style=style)
 
         return self._child.size(new_context, bounding_box)
 
     def draw(self, context: DrawContext, bounding_box: Rectangle):
-        style = inherit_style(
-            context.style, StyledChildElement(self._name, self._element)
-        )
+        style = inherit_style(context.style, self.style_node())
         new_context = replace(context, style=style)
 
         self._child.draw(new_context, bounding_box)
+
+
+def traverse_css_nodes(shape):
+    for s in shape:
+        if isinstance(s, CssNode):
+            yield s
+        else:
+            traverse_css_nodes(s)
