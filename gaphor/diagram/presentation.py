@@ -15,7 +15,7 @@ from gaphor.core.modeling.event import AttributeUpdated, RevertibleEvent
 from gaphor.core.modeling.presentation import Presentation, S, literal_eval
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import Style, merge_styles
-from gaphor.diagram.shapes import CssNode, Text, stroke
+from gaphor.diagram.shapes import CssNode, Shape, Text, stroke, traverse_css_nodes
 from gaphor.diagram.text import TextAlign, middle_segment, text_point_at_line
 
 
@@ -222,9 +222,9 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         diagram: Diagram,
         id=None,
         style: Style | None = None,
-        shape_head=None,
-        shape_middle=None,
-        shape_tail=None,
+        shape_head: Shape | None = None,
+        shape_middle: Shape | None = None,
+        shape_tail: Shape | None = None,
     ):
         super().__init__(connections=diagram.connections, diagram=diagram, id=id)  # type: ignore[call-arg]
 
@@ -288,6 +288,14 @@ class LinePresentation(gaphas.Line, HandlePositionUpdate, Presentation[S]):
         self._shape_head_rect = shape_bounds(self._shape_head, TextAlign.LEFT)
         self._shape_middle_rect = shape_bounds(self._shape_middle, TextAlign.CENTER)
         self._shape_tail_rect = shape_bounds(self._shape_tail, TextAlign.RIGHT)
+
+    def css_nodes(self):
+        if self._shape_head:
+            yield from traverse_css_nodes(self._shape_head)
+        if self._shape_middle:
+            yield from traverse_css_nodes(self._shape_middle)
+        if self._shape_tail:
+            yield from traverse_css_nodes(self._shape_tail)
 
     def point(self, x, y):
         """Given a point (x, y) return the distance to the diagram item."""
@@ -512,6 +520,9 @@ class AttachedPresentation(HandlePositionUpdate, Presentation[S]):
     def shape(self, shape) -> None:
         self._shape = shape
         self.request_update()
+
+    def css_nodes(self):
+        return traverse_css_nodes(self._shape) if self._shape else ()
 
     def handles(self):
         return [self._handle]

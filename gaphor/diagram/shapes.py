@@ -4,7 +4,7 @@ import math
 from dataclasses import replace
 from enum import Enum
 from math import pi
-from typing import Callable, Iterator, Protocol, Sequence
+from typing import Callable, Iterator, Protocol
 
 from gaphas.geometry import Rectangle
 
@@ -561,14 +561,9 @@ class StyledChildElement:
         self._shape = shape
         self._name = name
         self._element = element
-        self.pseudo: str | None = None
-        self.dark_mode: bool | None = None
 
     def name(self) -> str:
         return self._name
-
-    def parent(self) -> StyleNode | None:
-        raise NotImplementedError()
 
     def children(self) -> Iterator[StyleNode]:
         return (node.style_node() for node in traverse_css_nodes(self._shape))
@@ -578,9 +573,6 @@ class StyledChildElement:
             return ""
         fields = name.split(".")
         return " ".join(map(attrstr, rgetattr(self._element, fields))).strip()
-
-    def state(self) -> Sequence[str]:
-        raise NotImplementedError()
 
     def __hash__(self):
         return hash((self._name, self._element))

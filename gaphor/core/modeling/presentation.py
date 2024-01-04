@@ -82,6 +82,9 @@ class Presentation(Matrices, Element, Generic[S]):
             m = m * new_parent.matrix_i2c.inverse()
         self.matrix.set(*m)
 
+    def css_nodes(self):
+        return ()
+
     def load(self, name, value):
         if name == "matrix":
             self.matrix.set(*literal_eval(value))

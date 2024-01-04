@@ -210,12 +210,12 @@ class StyledItem:
         )
 
     def children(self) -> Iterator[StyleNode]:
+        children = self.item.children
         selection = self.selection
-        return (
-            StyledItem(child, selection, dark_mode=self.dark_mode)
-            for child in self.item.children
+        yield from (
+            StyledItem(child, selection, dark_mode=self.dark_mode) for child in children
         )
-        # TODO: Return css nodes in a Presentation (traverse shapes) to make :has() and :empty work
+        yield from (node for child in children for node in child.css_nodes())
 
     def attribute(self, name: str) -> str:
         fields = name.split(".")
