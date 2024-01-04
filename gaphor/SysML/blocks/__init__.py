@@ -1,3 +1,5 @@
+# ruff: noqa: F401
+
 import gaphor.SysML.blocks.connectors
 import gaphor.SysML.blocks.datatype
 import gaphor.SysML.blocks.group

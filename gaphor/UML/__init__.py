@@ -1,3 +1,5 @@
+# ruff: noqa: I001,F401,F403
+
 # Here, order matters
 import gaphor.UML.umloverrides
 from gaphor.UML.uml import *

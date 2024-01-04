@@ -1,4 +1,4 @@
-from gaphor.UML.states import copypaste, group, vertexconnect
+from gaphor.UML.states import copypaste, group, vertexconnect  # noqa: F401
 from gaphor.UML.states.finalstate import FinalStateItem
 from gaphor.UML.states.pseudostates import PseudostateItem
 from gaphor.UML.states.state import StateItem

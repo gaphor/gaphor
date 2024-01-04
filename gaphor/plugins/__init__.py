@@ -19,8 +19,8 @@ import contextlib
 import importlib.abc
 import importlib.machinery
 import importlib.metadata
-import pathlib
 import os
+import pathlib
 import sys
 
 from gaphor import entrypoint

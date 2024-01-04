@@ -1,6 +1,8 @@
 """This module contains user interface related code, such as the main screen
 and diagram windows."""
 
+# ruff: noqa: E402,F401
+
 from __future__ import annotations
 
 import sys
@@ -19,7 +21,7 @@ import gaphor.ui.textfield
 from gaphor.application import Application, Session
 from gaphor.core import event_handler
 from gaphor.event import ActiveSessionChanged, ApplicationShutdown, SessionCreated
-from gaphor.settings import APPLICATION_ID, settings, StyleVariant
+from gaphor.settings import APPLICATION_ID, StyleVariant, settings
 from gaphor.ui.actiongroup import apply_application_actions
 
 Adw.init()
@@ -27,11 +29,14 @@ GtkSource.init()
 
 if sys.platform == "darwin":
     from gaphor.ui.macosshim import init_macos_shortcuts
+
     try:
         init_macos_shortcuts()
     except TypeError:
         # Initialization can fail if Gtk is mocked
-        warnings.warn("macOS shortcuts were not initialized", RuntimeWarning)
+        warnings.warn(
+            "macOS shortcuts were not initialized", RuntimeWarning, stacklevel=1
+        )
 
 
 def run(argv: list[str]) -> int:
@@ -98,7 +103,7 @@ def run(argv: list[str]) -> int:
     gtk_app = Adw.Application(
         application_id=APPLICATION_ID,
         flags=Gio.ApplicationFlags.HANDLES_OPEN,
-        register_session=(sys.platform == "darwin")
+        register_session=(sys.platform == "darwin"),
     )
 
     settings.style_variant_changed(update_color_scheme)
