@@ -1,0 +1,3707 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2001-2023, Arjan Molenaar
+# This file is distributed under the same license as the Gaphor package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Gaphor 2.18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-09 15:06-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../connect.md:1
+msgid "Connection Protocol"
+msgstr ""
+
+#: ../connect.md:3
+msgid "In Gaphor, if a connection is made on a diagram between an element and a relationship, the connection is also made at semantic level (the model). From a GUI point of view, a button release event is what kicks of the decision whether the connection is allowed."
+msgstr ""
+
+#: ../connect.md:12
+msgid "The check if a connection is allowed should also check if it is valid to create a relation to/from the same element (like associations, but not generalizations)."
+msgstr ""
+
+#: ../container.md:1
+msgid "Gaphor in a Container"
+msgstr ""
+
+#: ../container.md:3
+msgid "Instead of setting up a development environment locally, the easiest way to contribute to the project is using GitHub Codespaces."
+msgstr ""
+
+#: ../container.md:6
+msgid "GitHub Codespaces"
+msgstr ""
+
+#: ../container.md:8
+msgid "Follow these steps to open Gaphor in a Codespace:"
+msgstr ""
+
+#: ../container.md:9
+msgid "Navigate to https://github.com/gaphor/gaphor"
+msgstr ""
+
+#: ../container.md:10
+msgid "Click the Code drop-down menu and select the **Open with Codespaces** option."
+msgstr ""
+
+#: ../container.md:11
+msgid "Select **+ New codespace** at the bottom on the pane."
+msgstr ""
+
+#: ../container.md:13
+msgid "For more info, check out the [GitHub documentation](https://docs.github.com/en/free-pro-team@latest/github/developing-online-with-codespaces/creating-a-codespace#creating-a-codespace)."
+msgstr ""
+
+#: ../design_principles.md:1
+msgid "Design Principles"
+msgstr ""
+
+#: ../design_principles.md:3
+msgid "Gaphor has been around for quite a few years. In those years we (the Gaphor developers) learned a few things on how to build it. Gaphor tries to be easily accessible for novice users as well as a useful tool for more experienced users."
+msgstr ""
+
+#: ../design_principles.md:7
+msgid "Gaphor is not your average editor. It's a modeling environment. This implies there is a language underpinning the models. Languages adhere to rules and Gaphor tries to follow those rules."
+msgstr ""
+
+#: ../design_principles.md:11
+msgid "Usability is very important. When you're new to Gaphor, it should be easy to find your way around. Minimal knowledge of UML should at least allow you to create a class diagram."
+msgstr ""
+
+#: ../design_principles.md:15
+msgid "Guidance"
+msgstr ""
+
+#: ../design_principles.md:17
+msgid "To help users, Gaphor should provide guidance where it can."
+msgstr ""
+
+#: ../design_principles.md:19
+msgid "Help with relationships"
+msgstr ""
+
+#: ../design_principles.md:21
+msgid "The diagram has a feature that it grays out all elements a relationship can not connect to. This helps you to decide where a relation can connect to. You can still mix different elements, but we try to make it as simple as possible to make consistent models."
+msgstr ""
+
+#: ../design_principles.md:26
+msgid "Keep the model in sync"
+msgstr ""
+
+#: ../design_principles.md:28
+msgid "An important part of modeling is to design a system in abstractions and be able to explain those to others. As systems become more complicated, it's important to have the design (model) layed out in diagrams."
+msgstr ""
+
+#: ../design_principles.md:32
+msgid "Gaphor goes through great lengths to keep the model in sync with the diagrams. In doing so, unused elements can be automatically removed from the model if they're no longer shown in any diagram."
+msgstr ""
+
+#: ../design_principles.md:36
+msgid "Out of your way"
+msgstr ""
+
+#: ../design_principles.md:38
+msgid "When modeling, you should be busy with your problem or solution domain, not with the tool. Gaphor tries to stay out of your way as much as possible. It does not try to nag you with error messages, because the model is not \"correct\"."
+msgstr ""
+
+#: ../design_principles.md:42
+msgid "Avoid dialogs"
+msgstr ""
+
+#: ../design_principles.md:44
+msgid "In doing the right thing, and staying out of the way of users, Gaphor avoids the use of dialogs as much as possible."
+msgstr ""
+
+#: ../design_principles.md:47
+msgid "Gaphor should allow you to do the sensible thing (see above) and not get you out of your flow with all sorts of questions."
+msgstr ""
+
+#: ../design_principles.md:50
+msgid "Notify on changes"
+msgstr ""
+
+#: ../design_principles.md:52
+msgid "When Gaphor is doing something that is not directly visible, you'll see a notification, for example, an element that's indirectly removed from the model. It will not interrupt you with dialogs, but only provide a small in-app notification. If the change is undesired, hit `undo`."
+msgstr ""
+
+#: ../design_principles.md:57
+msgid "Balanced"
+msgstr ""
+
+#: ../design_principles.md:59
+msgid "Although Gaphor implements quite a bit of the UML 2 model, it's not complete. We try to find the right balance in features to suite both expert and novice modellers."
+msgstr ""
+
+#: ../design_principles.md:63
+msgid "Continuity"
+msgstr ""
+
+#: ../design_principles.md:65
+msgid "A model that is created should be usable in the future. Gaphor does acknowledge that. We care about compatibility."
+msgstr ""
+
+#: ../design_principles.md:68
+msgid "Backwards compatibility"
+msgstr ""
+
+#: ../design_principles.md:70
+msgid "Gaphor is capable of loading models going back to Gaphor 1.0. It's important for a tool to always allow older models to be loaded."
+msgstr ""
+
+#: ../design_principles.md:73
+msgid "Multi-platform"
+msgstr ""
+
+#: ../design_principles.md:75
+msgid "We put a lot of effort in making Gaphor run on all major platforms: Windows, macOS, and Linux. Having Gaphor available on all platforms is essential if the model needs to be shared. It would be awful if you need to run one specific operating system in order to open a model."
+msgstr ""
+
+#: ../design_principles.md:80
+msgid "So far, we do not support the fourth major platform (web). Native applications provide a better user experience (once installed). But this may change."
+msgstr ""
+
+#: ../design_principles.md:83
+msgid "User interaction"
+msgstr ""
+
+#: ../design_principles.md:85
+msgid "Gaphor is originally written on Linux. It uses [GTK](https://gtk.org) as it's user interface toolkit. This sort of implies that Gaphor follows the [GNOME Human Interface Guidelines (HIG)](https://developer.gnome.org/hig/). Gaphor is also a multi-platform application. We try to stay close to the GNOME HIG, but try not to introduce concepts that are not available on Windows and macOS."
+msgstr ""
+
+#: ../design_principles.md:91
+msgid "User interface components are not generated. We found that UI generation (like many enterprise modeling tools do) provides an awful user experience. We want users to use Gaphor on a regular basis, so we aim for it to be a tool that's pleasant to look at and easy to work with."
+msgstr ""
+
+#: ../design_principles.md:97
+msgid "What else?"
+msgstr ""
+
+#: ../design_principles.md:99
+msgid "**Idempotency** Allow the same operation to be applied multiple times. This should not affect the result."
+msgstr ""
+
+#: ../design_principles.md:101
+msgid "**Event Driven** Gaphor is a user application. It acts to user events. The application uses an internal event dispatches (event bus) to distribute events to interested parties. Everyone should be able to listen to events."
+msgstr ""
+
+#: ../event_system.md:1
+msgid "Event System"
+msgstr ""
+
+#: ../event_system.md:3
+msgid "The event system in Gaphor provides an API to *handle* events and to *subscribe* to events."
+msgstr ""
+
+#: ../event_system.md:6
+msgid "In Gaphor we manage event handler subscriptions through the `EventManager` service. Gaphor is highly event driven:"
+msgstr ""
+
+#: ../event_system.md:9
+msgid "Changes in the loaded model are emitted as events"
+msgstr ""
+
+#: ../event_system.md:10
+msgid "Changes on diagrams are emitted as events"
+msgstr ""
+
+#: ../event_system.md:11
+msgid "Changes in the UI are emitted as events"
+msgstr ""
+
+#: ../event_system.md:13
+msgid "Although Gaphor depends heavily on GTK for its user interface, Gaphor is using its own event dispatcher. Events can be structured in hierarchies. For example, an `AttributeUpdated` event is a subtype of `ElementUpdated`. If we are interested in all changes to elements, we can also register `ElementUpdated` and receive all `AttributeUpdated` events as well."
+msgstr ""
+
+#: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager:1
+msgid "The Event Manager."
+msgstr ""
+
+#: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.handle:1
+msgid "Send event notifications to registered handlers."
+msgstr ""
+
+#: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:1
+#: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:1
+msgid "Register a handler."
+msgstr ""
+
+#: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:3
+msgid "Priority handlers are executed directly. They should not raise other events, cause that can cause a problem in the exection order."
+msgstr ""
+
+#: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.priority_subscribe:6
+msgid "It's basically to make sure that all events are recorded by the undo manager."
+msgstr ""
+
+#: ../../gaphor/abc.py:docstring of gaphor.abc.Service.shutdown:1
+#: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.shutdown:1
+msgid "Shutdown the services, free resources."
+msgstr ""
+
+#: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.subscribe:3
+msgid "Handlers are triggered (executed) when specific events are emitted through the handle() method."
+msgstr ""
+
+#: ../../gaphor/core/eventmanager.py:docstring of gaphor.core.eventmanager.EventManager.unsubscribe:1
+msgid "Unregister a previously registered handler."
+msgstr ""
+
+#: ../event_system.md:24
+msgid "Under the hood events are handled by the Generics library. For more information about how the Generic library handles events see the [Generic documentation](https://generic.readthedocs.io)."
+msgstr ""
+
+#: ../first_model.md:1
+msgid "Your First Model"
+msgstr ""
+
+#: ../first_model.md:4
+msgid "In this tutorial we refer to the different parts of the gaphor interface: {ref}`Model Browser <getting_started:model browser>`, [Toolbox](getting_started:toolbox), {ref}`Property Editor <getting_started:property editor>`."
+msgstr ""
+
+#: ../first_model.md:8
+msgid "Although the names should speak for themselves, you can check out the [Getting Started](getting_started) page for more information about those sections."
+msgstr ""
+
+#: ../first_model.md:12
+msgid "Once Gaphor is started, and you can start a new model with the _Generic_ template. The initial diagram is already open in the Diagram section."
+msgstr ""
+
+#: ../first_model.md:15
+msgid "Select an element you want to place, in this case a Class (![new class](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-class-symbolic.svg)) by clicking on the icon in the Toolbox and click on the diagram. This will place a new Class item instance on the diagram and add a new Class to the model -- it shows up in the Model Browser. The selected tool will reset itself to the Pointer tool after the element is placed on the diagram."
+msgstr ""
+
+#: ../first_model.md:15
+msgid "newclass"
+msgstr ""
+
+#: ../first_model.md:22
+msgid "The Property Editor on the right side will show you details about the newly added class, such as its name (_New Class_), attributes and operations (methods)."
+msgstr ""
+
+#: ../first_model.md:25
+msgid "![image](images/first-model-class.png)"
+msgstr ""
+
+#: ../first_model.md:25
+#: ../first_model.md:48
+#: ../first_model.md:60
+msgid "image"
+msgstr ""
+
+#: ../first_model.md:27
+msgid "It's simple to add elements to a diagram."
+msgstr ""
+
+#: ../first_model.md:29
+msgid "Gaphor does not make any assumptions about which elements should be placed on a diagram. A diagram is a diagram. UML defines all different kinds of diagrams, such as Class diagrams, Component diagrams, Action diagrams, Sequence diagrams. But Gaphor does not place any restrictions."
+msgstr ""
+
+#: ../first_model.md:34
+msgid "Adding Relations"
+msgstr ""
+
+#: ../first_model.md:36
+msgid "Add another Class. Change the names to `Shape` and `Circle`. Let's define that `Circle` is a sub-type of `Shape`. You can do this by selecting one and changing the name in the Property Editor, or by double-clicking the element."
+msgstr ""
+
+#: ../first_model.md:40
+msgid "Select Generalization (![new generalization](../gaphor/ui/icons/hicolor/scalable/actions/gaphor-generalization-symbolic.svg))."
+msgstr ""
+
+#: ../first_model.md:40
+msgid "newgeneralization"
+msgstr ""
+
+#: ../first_model.md:43
+msgid "Move the mouse cursor over `Shape`. Click, hold and drag the line end over `Circle`. Release the mouse button, and you should have your relationship between `Shape` and `Circle`. You can see both ends of the relation are red, indicating they are connected to their class."
+msgstr ""
+
+#: ../first_model.md:48
+msgid "![image](images/first-model-generalization.png)"
+msgstr ""
+
+#: ../first_model.md:50
+msgid "Optionally you can run the auto-layout (![open menu](images/open-menu-symbolic.svg) → Tools → Auto Layout) to align the elements on the diagram."
+msgstr ""
+
+#: ../first_model.md:50
+msgid "openmenu"
+msgstr ""
+
+#: ../first_model.md:54
+msgid "Creating New Diagrams"
+msgstr ""
+
+#: ../first_model.md:56
+msgid "To create a new diagram, use the Model Browser. Select the element that should contain the new diagram. For now, select _New Model_. Click the New Diagram menu (![new diagram](images/list-add-symbolic.svg)) in the header bar."
+msgstr ""
+
+#: ../first_model.md:56
+msgid "new diagram"
+msgstr ""
+
+#: ../first_model.md:60
+msgid "![image](/images/first-model-new-diagram-popup.png)"
+msgstr ""
+
+#: ../first_model.md:62
+msgid "Select _New Generic Diagram_ and a new diagram is created."
+msgstr ""
+
+#: ../first_model.md:64
+msgid "Now drag the elements from the Model Browser onto the new diagram. First the classes `Shape` and `Circle`. Add the generalization last. Drop it somewhere between the two classes. The relation will be created to the diagram."
+msgstr ""
+
+#: ../first_model.md:68
+msgid "Now change the name of class `Circle` to `Ellipse`. Check the other diagram. The name has been changed there as well."
+msgstr ""
+
+#: ../first_model.md:73
+msgid "Elements in a diagram are only a _representation_ of the elements in the underlying model. The model is what you see in the Model Browser."
+msgstr ""
+
+#: ../first_model.md:76
+msgid "Elements in the model are automatically removed when there are no more representations in any of the diagrams."
+msgstr ""
+
+#: ../framework.md:1
+msgid "Framework"
+msgstr ""
+
+#: ../framework.md:3
+msgid "Overview"
+msgstr ""
+
+#: ../framework.md:5
+msgid "Gaphor is built in a light, service oriented fashion. The application is split in a series of services, such as a file, event, and undo managers. Those services are loaded based on entry points defined in the `pyproject.toml` file. To learn more about the architecture, please see the description about the [Service Oriented Architecture](service_oriented.md)."
+msgstr ""
+
+#: ../framework.md:11
+msgid "Event driven"
+msgstr ""
+
+#: ../framework.md:13
+msgid "Parts of Gaphor communicate with each other through events. Whenever something important happens, for example, an attribute of a model element changes, an event is sent. When other parts of the application are interested in a change, they register an event handler for that event type. Events are emitted though a central broker so you do not have to register on every individual element that can send an event they are interested in. For example, a diagram item could register an event rule and then check if the element that sent the event is actually the event the item is representing. For more information see the full description of the [event system](event_system.md)."
+msgstr ""
+
+#: ../framework.md:23
+msgid "Transactional"
+msgstr ""
+
+#: ../framework.md:25
+msgid "Gaphor is [transactional](transaction.md), which means it keeps track of the functions it performs as a series of transactions. The transactions work by sending an event when a transaction starts and sending another when a transaction ends. This allows, for example, the undo manager to keep a running log of the previous transactions so that a transaction can be reversed if the undo button is pressed."
+msgstr ""
+
+#: ../framework.md:32
+msgid "Main Components"
+msgstr ""
+
+#: ../framework.md:34
+msgid "The main portion of Gaphor that executes first is called the `Application`. Gaphor can have multiple models open at any time. Each model is kept in a `Session`. Only one Application instance is active. Each session will load its own services defined as [gaphor.services](service_oriented.md)."
+msgstr ""
+
+#: ../framework.md:40
+msgid "The most notable services are:"
+msgstr ""
+
+#: ../framework.md:42
+msgid "event_manager"
+msgstr ""
+
+#: ../framework.md:44
+msgid "This is the central component used for event dispatching. Every service that does something with events (both sending and receiving) depends on this component."
+msgstr ""
+
+#: ../framework.md:48
+msgid "file_manager"
+msgstr ""
+
+#: ../framework.md:50
+msgid "Loading and saving a model is done through this service."
+msgstr ""
+
+#: ../framework.md:52
+msgid "element_factory"
+msgstr ""
+
+#: ../framework.md:54
+msgid "The [data model](models/core.md) itself is maintained in the element factory (`gaphor.core.modeling.elementfactory`). This service is used to create model elements, as well as to lookup elements or query for a set of elements."
+msgstr ""
+
+#: ../framework.md:58
+msgid "undo_manager"
+msgstr ""
+
+#: ../framework.md:60
+msgid "One of the most appreciated services. It allows users to make a mistake every now and then!"
+msgstr ""
+
+#: ../framework.md:63
+msgid "The undo manager is transactional. Actions performed by a user are only stored if a transaction is active. If a transaction is completed (committed) a new undo action is stored. Transactions can also be rolled back, in which case all changes are played back directly. For more information see the full description of the [undo manager](undo.md)."
+msgstr ""
+
+#: ../gaphor-services.md:5
+msgid "Example: Gaphor services"
+msgstr ""
+
+#: ../gaphor-services.md:7
+msgid "In this example we're doing something a little less trivial. In Gaphor, services are defined as entry points. Each service is a class, and takes parameters with names that match other services. This allows services to depend on other services."
+msgstr ""
+
+#: ../gaphor-services.md:12
+msgid "It looks something like this:"
+msgstr ""
+
+#: ../gaphor-services.md:43
+msgid "Let's first load the entry points."
+msgstr ""
+
+#: ../gaphor-services.md:53
+msgid "Now let's create a component in our model for every service."
+msgstr ""
+
+#: ../gaphor-services.md:70
+msgid "With all components mapped, we can create dependencies between those components, based on the constructor parameter names."
+msgstr ""
+
+#: ../gaphor-services.md:86
+msgid "With all elements in the model, we can create a diagram. Let's drop the components and dependencies on the diagram and let auto-layout do its magic."
+msgstr ""
+
+#: ../gaphor-services.md:89
+msgid "To make the dependency look good, we have to add a style sheet. If you create a new diagram via the GUI, this element is automatically added."
+msgstr ""
+
+#: ../gaphor-services.md:103
+msgid "Last step is to layout and draw the diagram."
+msgstr ""
+
+#: ../gaphor-services.md:113
+msgid "That's all. As you can see from the diagram, a lot of services rely on `EventManager`."
+msgstr ""
+
+#: ../getting_started.md:1
+msgid "Get Started with Gaphor"
+msgstr ""
+
+#: ../getting_started.md:3
+msgid "Gaphor is more than a diagram editor: it's a modeling environment. Where simple diagram editors such as Microsoft Visio and [draw.io](https://draw.io) allow you to create pictures, Gaphor actually keeps track of the elements you add to the model. In Gaphor you can create diagrams to track and visualize different aspects of the system you're developing."
+msgstr ""
+
+#: ../getting_started.md:9
+msgid "Enough talk, let's get started."
+msgstr ""
+
+#: ../getting_started.md:11
+msgid "You can find installers for Gaphor on the [Gaphor Website](https://gaphor.org/download). Gaphor can be installed on Linux (Flatpak, AppImage), Windows, and macOS."
+msgstr ""
+
+#: ../getting_started.md:14
+msgid "Once Gaphor is launched, it provides you a welcome screen. It shows you previously opened models and model templates."
+msgstr ""
+
+#: ../getting_started.md:17
+msgid "![welcome screen](images/getting-started-greeter.png)"
+msgstr ""
+
+#: ../getting_started.md:17
+msgid "welcome screen"
+msgstr ""
+
+#: ../getting_started.md:19
+msgid "You can select a template to get started."
+msgstr ""
+
+#: ../getting_started.md:21
+msgid "**Generic:** a blank model to start with"
+msgstr ""
+
+#: ../getting_started.md:22
+msgid "**UML:** A template for the *Unified Modeling Language* for modeling a software system"
+msgstr ""
+
+#: ../getting_started.md:23
+msgid "**SysML:** A template for the *Systems Modeling Language* for modeling a wide range of systems and systems-of-systems"
+msgstr ""
+
+#: ../getting_started.md:24
+msgid "**RAAML:** A template for the *Risk Analysis and Assessment Modeling language* for safety and reliability analysis"
+msgstr ""
+
+#: ../getting_started.md:25
+msgid "**C4 Model:** A template for *Context, Containers, Components, and Code* which for lean modeling of software architecture"
+msgstr ""
+
+#: ../getting_started.md:27
+msgid "Once the model interface is loaded you'll see the modeling interface."
+msgstr ""
+
+#: ../getting_started.md:29
+msgid "![new model](images/getting-started-new-model.png)"
+msgstr ""
+
+#: ../getting_started.md:29
+msgid "new model"
+msgstr ""
+
+#: ../getting_started.md:31
+msgid "The layout of the Gaphor interface is divided into four sections, namely:"
+msgstr ""
+
+#: ../getting_started.md:34
+#: ../getting_started.md:41
+msgid "Model Browser"
+msgstr ""
+
+#: ../getting_started.md:35
+msgid "Diagram Element Toolbox"
+msgstr ""
+
+#: ../getting_started.md:36
+#: ../getting_started.md:80
+msgid "Diagrams"
+msgstr ""
+
+#: ../getting_started.md:37
+#: ../getting_started.md:130
+msgid "Property Editor"
+msgstr ""
+
+#: ../getting_started.md:39
+msgid "Each section has its own specific function."
+msgstr ""
+
+#: ../getting_started.md:43
+msgid "The Model Browser section of the interface displays a hierarchical view of your model. Every model element you create will be inserted into the Model Browser. This view acts as a tree where you can expand and collapse different elements of your model. This provides an easy way to view the elements of your model from an elided perspective. That is, you can collapse those model elements that are irrelevant to the task at hand."
+msgstr ""
+
+#: ../getting_started.md:51
+msgid "In the figure above, you will see that there are two elements in the Model Browser. The root element, _New Model_ is a package. Notice the small arrow beside _New Model_ that is pointing downward. This indicates that the element is expanded. You will also notice the two sub-elements are slightly indented in relation to _New Model_. The _main_ element is a diagram."
+msgstr ""
+
+#: ../getting_started.md:58
+msgid "In the Model Browser view, you can also right-click the model elements to get a context menu. This context menu allows you to find out in which diagram model elements are shown, add new diagrams and packages, and delete an element."
+msgstr ""
+
+#: ../getting_started.md:63
+msgid "Double-clicking on a diagram element will show it in the Diagram section. Elements such as classes and packages can be dragged from the tree view on the diagrams."
+msgstr ""
+
+#: ../getting_started.md:67
+msgid "Toolbox"
+msgstr ""
+
+#: ../getting_started.md:69
+msgid "The toolbox is used to add new items to a diagram. Select the element you want to add by clicking on it. When you click on the diagram, the selected element is created. The arrow is selected again, so the element can be manipulated."
+msgstr ""
+
+#: ../getting_started.md:73
+msgid "Tools can be selected by simply left-clicking on them. By default, the pointer tool is selected after every item placement. This can be changed by disabling the \"Reset tool\" option in the Preferences window. Tools can also be selected by keyboard shortcuts. The keyboard shortcut can be displayed as a tooltip by hovering over the tool button in the toolbox. Finally, it is also possible to drag elements on the Diagram from the toolbox."
+msgstr ""
+
+#: ../getting_started.md:82
+msgid "The diagram section contains diagrams of the model and takes up the most space in the UI because it is where most of the modeling is done. Diagrams consist of items placed on the diagram. There are two main types of items:"
+msgstr ""
+
+#: ../getting_started.md:86
+#: ../getting_started.md:93
+msgid "Elements"
+msgstr ""
+
+#: ../getting_started.md:87
+msgid "Relationships"
+msgstr ""
+
+#: ../getting_started.md:89
+msgid "Multiple diagrams can be opened at once: they are shown in tabs. Tabs can be closed by pressing <kbd>Ctrl</kbd>+<kbd>w</kbd> or left-clicking on the x in the diagram tab."
+msgstr ""
+
+#: ../getting_started.md:95
+msgid "Elements are the shapes that you add to a diagram, and together with Relations, allow you to build up a model."
+msgstr ""
+
+#: ../getting_started.md:98
+msgid "To resize an element on the diagram, left-click on the element to select it and then drag the resize handles that appear at each corner."
+msgstr ""
+
+#: ../getting_started.md:101
+msgid "To move an element on the diagram, drag the element where you want to place it by pressing and holding the left mouse button, and moving the mouse before releasing the button."
+msgstr ""
+
+#: ../getting_started.md:105
+msgid "Relations"
+msgstr ""
+
+#: ../getting_started.md:107
+msgid "Relations are line-like elements that form relationships between elements in the diagram. Each end of a relation is in one of two states:"
+msgstr ""
+
+#: ../getting_started.md:110
+msgid "Connected to an element and the handle turns red"
+msgstr ""
+
+#: ../getting_started.md:111
+msgid "Disconnected from an element and the handle turns green"
+msgstr ""
+
+#: ../getting_started.md:113
+msgid "If both ends of a relation are disconnected, the relation can be moved by left-clicking and dragging it."
+msgstr ""
+
+#: ../getting_started.md:116
+msgid "A new segment in a relation can be added by left-clicking on the relation to select it and then by hovering your mouse over it. A green handle will appear in the middle of the line segments that exist. Drag the handle to add another segment. For example, when you first create a new relation, it will have only one segment. If you drag the segment handle, then it will now have two segments with the knee of the two segments where the handle was."
+msgstr ""
+
+#: ../getting_started.md:123
+msgid "Undo and Redo"
+msgstr ""
+
+#: ../getting_started.md:125
+msgid "Undo a change press <kbd>Ctrl</kbd>+<kbd>z</kbd> or left-click on the back arrow at the top of the Property Editor. To re-do a change, hit <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>z</kbd> or press the forward arrow at the top of the Property Editor."
+msgstr ""
+
+#: ../getting_started.md:132
+msgid "The Property Editor is present on the right side of the diagrams. When no item is selected in the diagram, it shows you some tips and tricks. When an item is selected on the diagram, it contains the item details like name, attributes and stereotypes. It can be opened with <kbd>F9</kbd> and the ![sidebar-show-right-symbolic](images/sidebar-show-right-symbolic.svg) icon in the header bar."
+msgstr ""
+
+#: ../getting_started.md:132
+msgid "sidebar-show-right-symbolic"
+msgstr ""
+
+#: ../getting_started.md:139
+msgid "The properties that are shown depend on the item that is selected."
+msgstr ""
+
+#: ../getting_started.md:141
+msgid "Model Preferences"
+msgstr ""
+
+#: ../getting_started.md:143
+msgid "The Property Editor also contains model preferences: Click the ![document-properties-symbolic](images/document-properties-symbolic.svg) button. Here you can set a few model related settings and edit the [style sheet](style_sheets)."
+msgstr ""
+
+#: ../getting_started.md:143
+msgid "document-properties-symbolic"
+msgstr ""
+
+#: ../index.rst:29
+msgid "Getting Started"
+msgstr ""
+
+#: ../index.rst:36
+msgid "Features"
+msgstr ""
+
+#: ../index.rst:46
+msgid "Installation"
+msgstr ""
+
+#: ../index.rst:55
+msgid "Modeling languages"
+msgstr ""
+
+#: ../index.rst:65
+msgid "Concepts"
+msgstr ""
+
+#: ../index.rst:75
+msgid "Internals"
+msgstr ""
+
+#: ../index.rst:2
+msgid "About Gaphor"
+msgstr ""
+
+#: ../index.rst:6
+msgid "The documentation is up to date for Gaphor |version|"
+msgstr ""
+
+#: ../index.rst:8
+msgid "Gaphor is a UML and SysML modeling application written in Python. It is designed to be easy to use, while still being powerful. Gaphor implements a fully-compliant UML 2 data model, so it is much more than a picture drawing tool."
+msgstr ""
+
+#: ../index.rst:13
+msgid "You can use Gaphor to quickly visualize different aspects of a system as well as create complete, highly complex models."
+msgstr ""
+
+#: ../index.rst:18
+msgid "Gaphor is 100% Open source. The code and issue tracker can be found on `GitHub <https://github.com/gaphor/gaphor>`_."
+msgstr ""
+
+#: ../index.rst:21
+msgid "What are you waiting for? :doc:`Let's get started <getting_started>`!"
+msgstr ""
+
+#: ../index.rst:23
+msgid "For download instructions, and the blog, please visit the `Gaphor Website <https://gaphor.org>`_."
+msgstr ""
+
+#: ../index.rst:26
+msgid "Gaphor has excellent integration with :doc:`Sphinx <sphinx>` and :doc:`Jupyter notebooks <scripting>`."
+msgstr ""
+
+#: ../linux.md:1
+msgid "Gaphor on Linux"
+msgstr ""
+
+#: ../linux.md:3
+msgid "Gaphor can be installed as Flatpak and AppImage on Linux, some distributions provide packages. Check out the [Gaphor download page](https://gaphor.org/download#linux) for details."
+msgstr ""
+
+#: ../linux.md:7
+#: ../macos.md:5
+#: ../windows.md:7
+msgid "Older releases are available from [GitHub](https://github.com/gaphor/gaphor/releases)."
+msgstr ""
+
+#: ../linux.md:9
+#: ../macos.md:7
+#: ../windows.md:9
+msgid "[CI builds](https://github.com/gaphor/gaphor/actions/workflows/full-build.yml) are also available."
+msgstr ""
+
+#: ../linux.md:11
+#: ../macos.md:10
+#: ../windows.md:11
+msgid "Development Environment"
+msgstr ""
+
+#: ../linux.md:13
+msgid "There are two ways to set up a development environment:"
+msgstr ""
+
+#: ../linux.md:15
+msgid "[GNOME Builder](#gnome-builder), ideal for “drive by” contributions."
+msgstr ""
+
+#: ../linux.md:16
+msgid "[A local environment](#a-local-environment)."
+msgstr ""
+
+#: ../linux.md:18
+msgid "GNOME Builder"
+msgstr ""
+
+#: ../linux.md:20
+msgid "Open [GNOME Builder](https://flathub.org/apps/details/org.gnome.Builder) 43 or newer, [clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository). Check if the _Build Profile_ is set to `org.gaphor.Gaphor.json`. If so, hit the _Run_ button to start the application."
+msgstr ""
+
+#: ../linux.md:25
+msgid "A Local Environment"
+msgstr ""
+
+#: ../linux.md:27
+msgid "To set up a development environment with Linux, you first need a fairly new Linux distribution version. For example, the latest Ubuntu LTS or newer, Arch, Debian Testing, SUSE Tumbleweed, or similar. Gaphor depends on newer versions of GTK, and we don't test for backwards compatibility. You will also need the latest stable version of Python. In order to get the latest stable version without interfering with your system-wide Python version, we recommend that you install [pyenv](https://github.com/pyenv/pyenv)."
+msgstr ""
+
+#: ../linux.md:35
+msgid "Install the pyenv [prerequisites](https://github.com/pyenv/pyenv/wiki/Common-build-problems) first, and then install pyenv:"
+msgstr ""
+
+#: ../linux.md:42
+msgid "Make sure you follow the instruction at the end of the installation script to install the commands in your shell's rc file. Next install the latest version of Python by executing:"
+msgstr ""
+
+#: ../linux.md:50
+msgid "Where 3.x.x is replaced by the latest stable version of Python (pyenv should let you tab-complete available versions)."
+msgstr ""
+
+#: ../linux.md:52
+msgid "Next install the Gaphor prerequisites by installing the gobject introspection and cairo build dependencies, for example, in Ubuntu execute:"
+msgstr ""
+
+#: ../linux.md:61
+#: ../macos.md:18
+msgid "Install [Poetry](https://python-poetry.org) using [pipx](https://pypa.github.io/pipx/):"
+msgstr ""
+
+#: ../linux.md:66
+#: ../macos.md:23
+msgid "[Clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository)."
+msgstr ""
+
+#: ../linux.md:79
+msgid "NOTE: Gaphor requires GTK 4. It works best with GTK >=4.8 and libadwaita >=1.2."
+msgstr ""
+
+#: ../linux.md:81
+msgid "Create a Flatpak Package"
+msgstr ""
+
+#: ../linux.md:83
+msgid "The main method that Gaphor is packaged for Linux is with a Flatpak package. [Flatpak](https://flatpak.org) is a software utility for software deployment and package management for Linux. It offer a sandbox environment in which users can run application software in isolation from the rest of the system."
+msgstr ""
+
+#: ../linux.md:88
+msgid "We distribute the official Flatpak using [Flathub](https://flathub.org), and building of the image is done at the [Gaphor Flathub repository](https://github.com/flathub/org.gaphor.Gaphor)."
+msgstr ""
+
+#: ../linux.md:92
+msgid "[Install Flatpak](https://flatpak.org/setup)"
+msgstr ""
+
+#: ../linux.md:94
+msgid "Install flatpak-builder"
+msgstr ""
+
+#: ../linux.md:98
+msgid "Install the GNOME SDK"
+msgstr ""
+
+#: ../linux.md:102
+msgid "Clone the Flathub repository and install the necessary SDK:"
+msgstr ""
+
+#: ../linux.md:108
+msgid "Build Gaphor Flatpak"
+msgstr ""
+
+#: ../linux.md:112
+msgid "Install the Flatpak"
+msgstr ""
+
+#: ../linux.md:116
+msgid "Create an AppImage Package"
+msgstr ""
+
+#: ../linux.md:118
+msgid "[AppImage](https://appimage.org/) is a format for distributing portable software on Linux without needing superuser permissions to install the application. The AppImage file is one executable which contains both Gaphor and Python. It allows Gaphor to be run on any AppImage supported platform without installation or root access."
+msgstr ""
+
+#: ../linux.md:124
+msgid "We build our AppImage by first bundling Gaphor with PyInstaller and then converting it in to an AppImage."
+msgstr ""
+
+#: ../linux.md:127
+msgid "In order for the built AppImage to be compatible with older versions of Linux, we build the release versions using Docker with an older LTS version of Ubuntu."
+msgstr ""
+
+#: ../linux.md:135
+msgid "Linux Distribution Packages"
+msgstr ""
+
+#: ../linux.md:137
+msgid "Examples of Gaphor and Gaphas RPM spec files can be found in [PLD Linux](https://www.pld-linux.org/) [repository](https://github.com/pld-linux/):"
+msgstr ""
+
+#: ../linux.md:141
+msgid "https://github.com/pld-linux/python-gaphas"
+msgstr ""
+
+#: ../linux.md:142
+msgid "https://github.com/pld-linux/gaphor"
+msgstr ""
+
+#: ../linux.md:144
+msgid "There is also an [Arch User Repository (AUR) for Gaphor](https://aur.archlinux.org/packages/python-gaphor) available for Arch users."
+msgstr ""
+
+#: ../linux.md:148
+msgid "Please, do not hesitate to contact us if you need help to create a Linux package for Gaphor or Gaphas."
+msgstr ""
+
+#: ../macos.md:1
+msgid "Gaphor on macOS"
+msgstr ""
+
+#: ../macos.md:3
+msgid "The latest release of Gaphor can be downloaded from the [Gaphor download page](https://gaphor.org/download#macos). Gaphor can also be installed as a [Homebrew cask](https://formulae.brew.sh/cask/gaphor)."
+msgstr ""
+
+#: ../macos.md:12
+msgid "To setup a development environment with macOS:"
+msgstr ""
+
+#: ../macos.md:13
+msgid "Install [Homebrew](https://brew.sh)"
+msgstr ""
+
+#: ../macos.md:14
+msgid "Open a terminal and execute:"
+msgstr ""
+
+#: ../macos.md:32
+msgid "If PyGObject does not compile and complains about a missing `ffi.h` file, set the following environment variable and run `poetry install` again:"
+msgstr ""
+
+#: ../macos.md:39
+msgid "Packaging for macOS"
+msgstr ""
+
+#: ../macos.md:41
+msgid "In order to create an exe installation package for macOS, we utilize [PyInstaller](https://pyinstaller.org) which analyzes Gaphor to find all the dependencies and bundle them in to a single folder."
+msgstr ""
+
+#: ../macos.md:45
+msgid "Follow the instructions for settings up a development environment above"
+msgstr ""
+
+#: ../macos.md:46
+msgid "Open a terminal and execute the following from the repository directory:"
+msgstr ""
+
+#: ../merge_conflicts.md:1
+msgid "Resolve Merge Conflicts"
+msgstr ""
+
+#: ../merge_conflicts.md:3
+msgid "Suppose you’re working on a model. If you create a change, while someone else has also made changes, there’s a fair chance you'll end up with a merge conflict."
+msgstr ""
+
+#: ../merge_conflicts.md:6
+msgid "Gaphor tries to make the changes to a model as small as possible: all elements are stored in the same order. However, since a Gaphor model is a persisted graph of objects, merging changes is not as simple as opening a text editor."
+msgstr ""
+
+#: ../merge_conflicts.md:10
+msgid "From Gaphor 2.18 onwards Gaphor is also capable of merging models. Once a merge conflict has been detected, Gaphor will offer the option to open the current model, the incoming model or merge changes manually via the Merge Editor."
+msgstr ""
+
+#: ../merge_conflicts.md:14
+msgid "![merge dialog](images/merge-dialog.png)"
+msgstr ""
+
+#: ../merge_conflicts.md:14
+msgid "merge dialog"
+msgstr ""
+
+#: ../merge_conflicts.md:16
+msgid "If you choose *Open Merge Editor*, both models will be loaded. The current model remains as is. In addition, the changes made to the incoming model are calculated. Those changes are stored as _pending change_ objects in the model."
+msgstr ""
+
+#: ../merge_conflicts.md:20
+msgid "Pending changes are part of the model, you can save the model with changes and resolve those at a later point."
+msgstr ""
+
+#: ../merge_conflicts.md:23
+msgid "The Merge Editor is shown on the right side, replacing the (normal) Property Editor."
+msgstr ""
+
+#: ../merge_conflicts.md:25
+msgid "![merge conflict window](images/merge-conflict-window.png)"
+msgstr ""
+
+#: ../merge_conflicts.md:25
+msgid "merge conflict window"
+msgstr ""
+
+#: ../merge_conflicts.md:27
+msgid "Merge actions are grouped by diagram, where possible. When you apply a change, all changes listed as children are also applied. Once changes are applied, they can only be reverted by undoing the change (hit _Undo_)."
+msgstr ""
+
+#: ../merge_conflicts.md:32
+msgid "The Merge Editor replaces the Property Editor, as long as there are pending changes in the model."
+msgstr ""
+
+#: ../merge_conflicts.md:34
+msgid "It is concidered good practice to resolve the merge conflict before you continue modeling."
+msgstr ""
+
+#: ../merge_conflicts.md:37
+msgid "When all conflicts have been resolved, press *Resolve* to finish merge conflict resolution."
+msgstr ""
+
+#: ../modeling_language.md:1
+msgid "Modeling Languages"
+msgstr ""
+
+#: ../modeling_language.md:3
+msgid "Since version 2.0, Gaphor supports the concept of Modeling languages. This allows for development of separate modeling languages separate from the Gaphor core application."
+msgstr ""
+
+#: ../modeling_language.md:7
+msgid "The main language was, and will be UML. Gaphor now also supports a subset of SysML, RAAML and the C4 model."
+msgstr ""
+
+#: ../modeling_language.md:10
+msgid "A modeling language in Gaphor is defined by a class implementing the `gaphor.abc.ModelingLanguage` abstract base class. The modeling language should be registered as a `gaphor.modelinglanguage` entry point."
+msgstr ""
+
+#: ../modeling_language.md:14
+msgid "The `ModelingLanguage` interface is fairly minimal. It allows other services to look up elements and diagram items, as well as a toolbox, and diagram types. However, the responsibilities of a modeling language do not stop there. Parts of functionality will be implemented by registering handlers to a set of generic functions."
+msgstr ""
+
+#: ../modeling_language.md:20
+msgid "But let's not get ahead of ourselves. What is the functionality a modeling language implementation can offer?"
+msgstr ""
+
+#: ../modeling_language.md:23
+msgid "A data model (elements) and diagram items"
+msgstr ""
+
+#: ../modeling_language.md:24
+msgid "Diagram types"
+msgstr ""
+
+#: ../modeling_language.md:25
+msgid "A toolbox definition"
+msgstr ""
+
+#: ../modeling_language.md:26
+msgid "[Connectors](#connectors), allow diagram items to connect"
+msgstr ""
+
+#: ../modeling_language.md:27
+msgid "[Copy/paste](#copy-and-paste) behavior when element copying is not trivial, for example with more than one element is involved"
+msgstr ""
+
+#: ../modeling_language.md:29
+msgid "[Grouping](#grouping), allow elements to be nested in one another"
+msgstr ""
+
+#: ../modeling_language.md:30
+msgid "[Dropping](#dropping), allow elements to be dragged from the tree view onto a diagram"
+msgstr ""
+
+#: ../modeling_language.md:31
+msgid "[Automatic cleanup rules](#automated-model-cleanup) to keep the model consistent"
+msgstr ""
+
+#: ../modeling_language.md:33
+msgid "The first three by functionalities are exposed by the `ModelingLanguage` class. The other functionalities can be extended by adding handlers to the respective generic functions."
+msgstr ""
+
+#: ../modeling_language.md:37
+msgid "Modeling languages can also provide new UI components. Those components are not loaded directly when you import a modeling language package. Instead they should be imported via the `gaphor.modules` entrypoint."
+msgstr ""
+
+#: ../modeling_language.md:41
+msgid "[Editor pages](#editor-property-pages), shown in the collapsible pane on the right side"
+msgstr ""
+
+#: ../modeling_language.md:42
+msgid "[Instant (diagram) editor popups](#instant-diagram-editor-popups)"
+msgstr ""
+
+#: ../modeling_language.md:43
+msgid "Special diagram interactions"
+msgstr ""
+
+#: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage:1
+msgid "A model provider is a special service that provides an entrypoint to a model implementation, such as UML, SysML, RAAML."
+msgstr ""
+
+#: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.diagram_types:1
+msgid "Iterate diagram types."
+msgstr ""
+
+#: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.lookup_element:1
+msgid "Look up a model element type by (class) name."
+msgstr ""
+
+#: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.name:1
+msgid "Human-readable name of the modeling language."
+msgstr ""
+
+#: ../../gaphor/abc.py:docstring of gaphor.abc.ModelingLanguage.toolbox_definition:1
+msgid "Get structure for the toolbox."
+msgstr ""
+
+#: ../modeling_language.md:51
+msgid "Connectors"
+msgstr ""
+
+#: ../modeling_language.md:53
+msgid "Connectors are used to connect one element to another."
+msgstr ""
+
+#: ../modeling_language.md:55
+msgid "Connectors should adhere to the `ConnectorProtocol`. Normally you would inherit from `BaseConnector`."
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:1
+msgid "Connection adapter for Gaphor diagram items."
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:3
+msgid "Line item ``line`` connects with a handle to a connectable item ``element``."
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:0
+msgid "Parameters"
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:5
+msgid "connecting item"
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:7
+msgid "connectable item"
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:10
+msgid "The following methods are required to make this work:"
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:12
+msgid "``allow()``: is the connection allowed at all (during mouse movement for example)."
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:13
+msgid "``connect()``: Establish a connection between element and line. Also takes care of disconnects, if required (e.g. 1:1 relationships)"
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:15
+msgid "``disconnect()``: Break connection, called when dropping a handle on a point where it can not connect."
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector:18
+msgid "By convention the adapters are registered by (element, line) -- in that order."
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.allow:1
+msgid "Determine if items can be connected."
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.allow:3
+msgid "Returns `True` if connection is allowed."
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.connect:1
+msgid "Connect to an element. Note that at this point the line may be connected to some other, or the same element. The connection at model level also still exists."
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.connect:5
+msgid "Returns `True` if a connection is established."
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.disconnect:1
+msgid "Disconnect model level connections."
+msgstr ""
+
+#: ../../gaphor/diagram/connectors.py:docstring of gaphor.diagram.connectors.BaseConnector.get_connected:1
+msgid "Get item connected to a handle."
+msgstr ""
+
+#: ../modeling_language.md:63
+msgid "Copy and paste"
+msgstr ""
+
+#: ../modeling_language.md:65
+msgid "Copy and paste works out of the box for simple items: one diagram item with one model element (the `subject`). It leveages the `load()` and `save()` methods of the elements to ensure all relevant data is copied."
+msgstr ""
+
+#: ../modeling_language.md:68
+msgid "Sometimes items need more than one model element to work. For example an Association: it has two association ends."
+msgstr ""
+
+#: ../modeling_language.md:70
+msgid "In those specific cases you need to implement your own copy and paste functions. To create such a thing you'll need to create two functions: one for copying and one for pasting."
+msgstr ""
+
+#: ../modeling_language.md:76
+msgid "Create a copy of an element (or list of elements). The returned type should be distinct, so the `paste()` function can properly dispatch."
+msgstr ""
+
+#: ../modeling_language.md:82
+msgid "Paste previously copied data. Based on the data type created in the ``copy()`` function, try to duplicate the copied elements. Returns the newly created item or element"
+msgstr ""
+
+#: ../modeling_language.md:88
+msgid "Create a copy of the Presentation element, but try to link the underlying model element. A shallow copy."
+msgstr ""
+
+#: ../modeling_language.md:93
+msgid "Create a copy of both Presentation and model element. A deep copy."
+msgstr ""
+
+#: ../modeling_language.md:96
+msgid "To serialize the copied elements and deserialize them again, there are two functions available:"
+msgstr ""
+
+#: ../modeling_language.md:101
+msgid "Return a serialized version of a value. If the ``value`` is an element, it's referenced."
+msgstr ""
+
+#: ../modeling_language.md:106
+msgid "Deserialize a value previously serialized with ``serialize()``. The ``lookup`` function is used to resolve references to other elements."
+msgstr ""
+
+#: ../modeling_language.md:110
+msgid "Grouping"
+msgstr ""
+
+#: ../modeling_language.md:112
+msgid "Grouping is done by dragging one item on top of another, in a diagram or in the tree view."
+msgstr ""
+
+#: ../modeling_language.md:117
+msgid "Group an element in a parent element. The grouping can be based on ownership, but other types of grouping are also possible."
+msgstr ""
+
+#: ../modeling_language.md:122
+msgid "Remove the grouping from an element. The function needs to check if the provided `parent` node is the right one."
+msgstr ""
+
+#: ../modeling_language.md:127
+msgid "This function tries to determine if grouping is possible, without actually performing a group operation. This is not 100% accurate."
+msgstr ""
+
+#: ../modeling_language.md:132
+msgid "Dropping"
+msgstr ""
+
+#: ../modeling_language.md:134
+msgid "Dropping is performed by dragging an element from the tree view and drop it on a diagram. This is an easy way to extend a diagram with already existing model elements."
+msgstr ""
+
+#: ../modeling_language.md:140
+msgid "The drop function creates a new presentation for an element on the diagram. For relationships, a drop only works if both connected elements are present in the same diagram."
+msgstr ""
+
+#: ../modeling_language.md:144
+msgid "The big difference with dragging an element from the toolbox, is that dragging from the toolbox will actually place a new ``Presentation`` element on the diagram. ``drop`` works the other way around: it starts with a model element and creates an accompanying ``Presentation``."
+msgstr ""
+
+#: ../modeling_language.md:149
+msgid "Automated model cleanup"
+msgstr ""
+
+#: ../modeling_language.md:151
+msgid "Gaphor wants to keep the model in sync with the diagrams."
+msgstr ""
+
+#: ../modeling_language.md:153
+msgid "A little dispatch function is used to determine if a model element can be removed."
+msgstr ""
+
+#: ../modeling_language.md:158
+msgid "Determine if a model element can safely be removed."
+msgstr ""
+
+#: ../modeling_language.md:161
+msgid "Editor property pages"
+msgstr ""
+
+#: ../modeling_language.md:163
+msgid "The editor page is constructed from snippets. For example: almost each element has a name, so there is a UI snippet that allows you to edit a name."
+msgstr ""
+
+#: ../modeling_language.md:166
+msgid "Each property page (snippet) should inherit from `PropertyPageBase`."
+msgstr ""
+
+#: ../../gaphor/diagram/propertypages.py:docstring of gaphor.diagram.propertypages.PropertyPageBase:1
+msgid "A property page which can display itself in a notebook."
+msgstr ""
+
+#: ../../gaphor/diagram/propertypages.py:docstring of gaphor.diagram.propertypages.PropertyPageBase.construct:1
+msgid "Create the page (Gtk.Widget) that belongs to the Property page."
+msgstr ""
+
+#: ../../gaphor/diagram/propertypages.py:docstring of gaphor.diagram.propertypages.PropertyPageBase.construct:3
+msgid "Returns the page's toplevel widget (Gtk.Widget)."
+msgstr ""
+
+#: ../modeling_language.md:173
+msgid "Instant (diagram) editor popups"
+msgstr ""
+
+#: ../modeling_language.md:175
+msgid "When you double click on an item in a diagram, a popup can show up so you can easily change the name."
+msgstr ""
+
+#: ../modeling_language.md:177
+msgid "By default this works for any named element. You can register your own inline editor function if you need to."
+msgstr ""
+
+#: ../modeling_language.md:182
+msgid "Show a small editor popup in the diagram. Makes for easy editing without resorting to the Element editor."
+msgstr ""
+
+#: ../modeling_language.md:185
+msgid "In case of a mouse press event, the mouse position (relative to the element) are also provided."
+msgstr ""
+
+#: ../models/c4model.md:1
+#: ../style_sheets.md:301
+#: ../style_sheets.md:302
+#: ../style_sheets.md:303
+#: ../style_sheets.md:304
+#: ../style_sheets.md:305
+msgid "C4 Model"
+msgstr ""
+
+#: ../models/c4model.md:3
+msgid "The [C4 model](https://c4model.com/) is a simple visual language to describe the static structure of a software system."
+msgstr ""
+
+#: ../models/c4model.md:5
+msgid "It’s based on the [UML](uml.md) language."
+msgstr ""
+
+#: ../models/core.md:1
+msgid "Modeling Language Core"
+msgstr ""
+
+#: ../models/core.md:3
+msgid "The Core modeling language is the the basis for any other language."
+msgstr ""
+
+#: ../models/core.md:5
+msgid "The `Element` class acts as the root for all gaphor domain classes. `Diagram` and `Presentation` form the basis for everything you see in a diagram."
+msgstr ""
+
+#: ../models/core.md:9
+msgid "All data models in Gaphor are generated from actual Gaphor model files. This allows us to provide you nice diagrams of Gaphor’s internal model."
+msgstr ""
+
+#: ../models/core.md:16
+msgid "The `Element` base class provides event notification and integrates with the model repository (internally known as `ElementFactory`). Bi-directional relationships are also possible, as well as derived relations."
+msgstr ""
+
+#: ../models/raaml.md:10
+#: ../models/sysml.md:9
+#: ../models/uml.md:15
+msgid "Packages"
+msgstr ""
+
+#: ../models/raaml.md:1
+msgid "Risk Analysis and Assessment Modeling Language"
+msgstr ""
+
+#: ../models/raaml.md:3
+msgid "Gaphor implements parts of the [RAAML 1.0 specification](https://www.omg.org/spec/RAAML)."
+msgstr ""
+
+#: ../models/raaml/Core.rst:2
+msgid "Core"
+msgstr ""
+
+#: ../models/raaml/Core.rst:5
+msgid "Core Library/Any Situation"
+msgstr ""
+
+#: ../models/raaml/Core.rst:11
+msgid "Core Profile/Controlling Measure"
+msgstr ""
+
+#: ../models/raaml/Core.rst:17
+msgid "Core Profile/Relevant To"
+msgstr ""
+
+#: ../models/raaml/Core.rst:23
+msgid "Core Profile/Situation"
+msgstr ""
+
+#: ../models/raaml/Core.rst:29
+msgid "Core Profile/Violates"
+msgstr ""
+
+#: ../models/raaml/General.rst:2
+msgid "General"
+msgstr ""
+
+#: ../models/raaml/General.rst:5
+msgid "Basic Event"
+msgstr ""
+
+#: ../models/raaml/General.rst:11
+msgid "General Concepts Library/Abstract Cause"
+msgstr ""
+
+#: ../models/raaml/General.rst:17
+msgid "General Concepts Library/Abstract Effect"
+msgstr ""
+
+#: ../models/raaml/General.rst:23
+msgid "General Concepts Library/Abstract Event"
+msgstr ""
+
+#: ../models/raaml/General.rst:29
+msgid "General Concepts Library/Abstract Failure Mode"
+msgstr ""
+
+#: ../models/raaml/General.rst:35
+msgid "General Concepts Library/Abstract Risk"
+msgstr ""
+
+#: ../models/raaml/General.rst:41
+msgid "General Concepts Library/Activation"
+msgstr ""
+
+#: ../models/raaml/General.rst:47
+msgid "General Concepts Library/Cause"
+msgstr ""
+
+#: ../models/raaml/General.rst:53
+msgid "General Concepts Library/Dysfunctional Event"
+msgstr ""
+
+#: ../models/raaml/General.rst:59
+msgid "General Concepts Library/Effect"
+msgstr ""
+
+#: ../models/raaml/General.rst:65
+msgid "General Concepts Library/Error Propagation"
+msgstr ""
+
+#: ../models/raaml/General.rst:71
+msgid "General Concepts Library/Error Realization"
+msgstr ""
+
+#: ../models/raaml/General.rst:77
+msgid "General Concepts Library/Harm Potential"
+msgstr ""
+
+#: ../models/raaml/General.rst:83
+msgid "General Concepts Library/Hazard"
+msgstr ""
+
+#: ../models/raaml/General.rst:89
+msgid "General Concepts Library/Scenario"
+msgstr ""
+
+#: ../models/raaml/General.rst:95
+msgid "General Concepts Library/Undesired State"
+msgstr ""
+
+#: ../models/raaml/General.rst:101
+msgid "General Concepts Profile/Detection"
+msgstr ""
+
+#: ../models/raaml/General.rst:107
+msgid "General Concepts Profile/Failure State"
+msgstr ""
+
+#: ../models/raaml/General.rst:113
+msgid "General Concepts Profile/Mitigation"
+msgstr ""
+
+#: ../models/raaml/General.rst:119
+msgid "General Concepts Profile/Prevention"
+msgstr ""
+
+#: ../models/raaml/General.rst:125
+msgid "General Concepts Profile/Recommendation"
+msgstr ""
+
+#: ../models/raaml/General.rst:131
+msgid "General Concepts Profile/Undeveloped"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:2
+msgid "Methods"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:5
+msgid "FTA/FTA Library/Events/Basic Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:11
+msgid "FTA/FTA Library/Events/Conditional Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:17
+msgid "FTA/FTA Library/Events/Dormant Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:23
+msgid "FTA/FTA Library/Events/Events"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:29
+msgid "FTA/FTA Library/Events/Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:35
+msgid "FTA/FTA Library/Events/House Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:41
+msgid "FTA/FTA Library/Events/Intermediate Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:47
+msgid "FTA/FTA Library/Events/Top Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:53
+msgid "FTA/FTA Library/Events/Undeveloped Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:59
+msgid "FTA/FTA Library/Events/Zero Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:65
+msgid "FTA/FTA Library/FTA Element"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:71
+msgid "FTA/FTA Library/FTA Library"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:77
+msgid "FTA/FTA Library/FTA Tree"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:83
+msgid "FTA/FTA Library/Gates/AND"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:89
+msgid "FTA/FTA Library/Gates/Gate"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:95
+msgid "FTA/FTA Library/Gates/INHIBIT"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:101
+msgid "FTA/FTA Library/Gates/MAJORITY_VOTE"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:107
+msgid "FTA/FTA Library/Gates/NOT"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:113
+msgid "FTA/FTA Library/Gates/OR"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:119
+msgid "FTA/FTA Library/Gates/SEQ"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:125
+msgid "FTA/FTA Library/Gates/XOR"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:131
+msgid "FTA/FTA Profile/AND"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:137
+msgid "FTA/FTA Profile/Conditional Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:143
+msgid "FTA/FTA Profile/Dormant Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:149
+msgid "FTA/FTA Profile/Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:155
+msgid "FTA/FTA Profile/Gate"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:161
+msgid "FTA/FTA Profile/House Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:167
+msgid "FTA/FTA Profile/INHIBIT"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:173
+msgid "FTA/FTA Profile/Intermediate Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:179
+msgid "FTA/FTA Profile/MAJORITY_VOTE"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:185
+msgid "FTA/FTA Profile/NOT"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:191
+msgid "FTA/FTA Profile/OR"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:197
+msgid "FTA/FTA Profile/SEQ"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:203
+msgid "FTA/FTA Profile/Top Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:209
+msgid "FTA/FTA Profile/Transfer In"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:215
+msgid "FTA/FTA Profile/Transfer Out"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:221
+msgid "FTA/FTA Profile/Tree"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:227
+msgid "FTA/FTA Profile/XOR"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:233
+msgid "FTA/FTA Profile/Zero Event"
+msgstr ""
+
+#: ../models/raaml/Methods.rst:239
+msgid "FTA/FTA"
+msgstr ""
+
+#: ../models/sysml.md:1
+msgid "Systems Modeling Language"
+msgstr ""
+
+#: ../models/sysml.md:3
+msgid "Gaphor implements part of the [SysML 1.6](https://www.omg.org/spec/SysML) specification."
+msgstr ""
+
+#: ../models/sysml/Activities.rst:2
+msgid "Activities"
+msgstr ""
+
+#: ../models/sysml/Allocations.rst:2
+msgid "Allocations"
+msgstr ""
+
+#: ../models/sysml/Allocations.rst:5
+msgid "AllocatedActivityPartition"
+msgstr ""
+
+#: ../models/sysml/Allocations.rst:11
+msgid "Allocation"
+msgstr ""
+
+#: ../models/sysml/Blocks.rst:2
+#: ../style_sheets.md:306
+#: ../style_sheets.md:307
+msgid "Blocks"
+msgstr ""
+
+#: ../models/sysml/Blocks.rst:8
+msgid "Adjunt and Classifier Behavior Properties"
+msgstr ""
+
+#: ../models/sysml/Blocks.rst:14
+msgid "Bound References"
+msgstr ""
+
+#: ../models/sysml/Blocks.rst:20
+msgid "Connector Ends"
+msgstr ""
+
+#: ../models/sysml/Blocks.rst:26
+msgid "Properties"
+msgstr ""
+
+#: ../models/sysml/Blocks.rst:32
+msgid "Property Paths"
+msgstr ""
+
+#: ../models/sysml/Blocks.rst:38
+msgid "Property-Specific Types"
+msgstr ""
+
+#: ../models/sysml/Blocks.rst:44
+msgid "Property Strings"
+msgstr ""
+
+#: ../models/sysml/Blocks.rst:50
+msgid "Value Types"
+msgstr ""
+
+#: ../models/sysml/ConstraintBlocks.rst:2
+msgid "ConstraintBlocks"
+msgstr ""
+
+#: ../models/sysml/Libraries.rst:2
+msgid "Libraries"
+msgstr ""
+
+#: ../models/sysml/ModelElements.rst:2
+msgid "ModelElements"
+msgstr ""
+
+#: ../models/sysml/PortsAndFlows.rst:2
+msgid "PortsAndFlows"
+msgstr ""
+
+#: ../models/sysml/PortsAndFlows.rst:5
+msgid "Actions on Nested Ports"
+msgstr ""
+
+#: ../models/sysml/PortsAndFlows.rst:11
+msgid "Port Stereotypes"
+msgstr ""
+
+#: ../models/sysml/PortsAndFlows.rst:17
+msgid "Property Value Change Events"
+msgstr ""
+
+#: ../models/sysml/PortsAndFlows.rst:23
+msgid "Provided and Required Features"
+msgstr ""
+
+#: ../models/sysml/PortsAndFlows.rst:29
+msgid "Item Flow"
+msgstr ""
+
+#: ../models/sysml/Requirements.rst:2
+#: ../style_sheets.md:308
+msgid "Requirements"
+msgstr ""
+
+#: ../models/uml.md:1
+msgid "Unified Modeling Language"
+msgstr ""
+
+#: ../models/uml.md:3
+msgid "The UML model is the most extensive model in Gaphor. It is used as a base language for [SysML](sysml.md), [RAAML](raaml.md), and [C4](c4model.md)."
+msgstr ""
+
+#: ../models/uml.md:7
+msgid "Gaphor follows the [official UML 2.5.1 data model](https://www.omg.org/spec/UML/). Where changes have been made a comment has been added to the model. In particular where _m:n_ relationships subset _1:n_ relationships."
+msgstr ""
+
+#: ../models/uml/01._Common_Structure.rst:2
+msgid "01. Common Structure"
+msgstr ""
+
+#: ../models/uml/01._Common_Structure.rst:5
+msgid "1. Root"
+msgstr ""
+
+#: ../models/uml/01._Common_Structure.rst:11
+msgid "2. Templates"
+msgstr ""
+
+#: ../models/uml/01._Common_Structure.rst:13
+msgid "Not implemented."
+msgstr ""
+
+#: ../models/uml/01._Common_Structure.rst:16
+msgid "3. Namespaces"
+msgstr ""
+
+#: ../models/uml/01._Common_Structure.rst:22
+msgid "4. Types and Multiplicity"
+msgstr ""
+
+#: ../models/uml/01._Common_Structure.rst:28
+msgid "5. Constraints"
+msgstr ""
+
+#: ../models/uml/01._Common_Structure.rst:34
+msgid "6. Dependencies"
+msgstr ""
+
+#: ../models/uml/02._Values.rst:2
+msgid "02. Values"
+msgstr ""
+
+#: ../models/uml/02._Values.rst:5
+msgid "1. Literals"
+msgstr ""
+
+#: ../models/uml/02._Values.rst:11
+msgid "2. Expressions"
+msgstr ""
+
+#: ../models/uml/03._Classification.rst:2
+msgid "03. Classification"
+msgstr ""
+
+#: ../models/uml/03._Classification.rst:5
+msgid "1. Classifiers"
+msgstr ""
+
+#: ../models/uml/03._Classification.rst:11
+msgid "3. Features"
+msgstr ""
+
+#: ../models/uml/03._Classification.rst:17
+msgid "4. Properties"
+msgstr ""
+
+#: ../models/uml/03._Classification.rst:23
+msgid "5. Operations"
+msgstr ""
+
+#: ../models/uml/03._Classification.rst:29
+msgid "7. Instances"
+msgstr ""
+
+#: ../models/uml/04._Simple_Classifiers.rst:2
+msgid "04. Simple Classifiers"
+msgstr ""
+
+#: ../models/uml/04._Simple_Classifiers.rst:5
+msgid "1. Data Types"
+msgstr ""
+
+#: ../models/uml/04._Simple_Classifiers.rst:11
+msgid "3. Interfaces"
+msgstr ""
+
+#: ../models/uml/05._Structured_Classifiers.rst:2
+msgid "05. Structured Classifiers"
+msgstr ""
+
+#: ../models/uml/05._Structured_Classifiers.rst:5
+msgid "1. Structured Classifiers"
+msgstr ""
+
+#: ../models/uml/05._Structured_Classifiers.rst:11
+msgid "2. Encapsulated Classifiers"
+msgstr ""
+
+#: ../models/uml/05._Structured_Classifiers.rst:17
+msgid "3. Classes"
+msgstr ""
+
+#: ../models/uml/05._Structured_Classifiers.rst:23
+msgid "4. Associations"
+msgstr ""
+
+#: ../models/uml/05._Structured_Classifiers.rst:29
+msgid "5. Components"
+msgstr ""
+
+#: ../models/uml/05._Structured_Classifiers.rst:35
+msgid "6. Collaborations"
+msgstr ""
+
+#: ../models/uml/06._Packaging.rst:2
+msgid "06. Packaging"
+msgstr ""
+
+#: ../models/uml/06._Packaging.rst:5
+msgid "1. Packages"
+msgstr ""
+
+#: ../models/uml/06._Packaging.rst:11
+msgid "2. Profiles"
+msgstr ""
+
+#: ../models/uml/07._Common_Behaviors.rst:2
+msgid "07. Common Behaviors"
+msgstr ""
+
+#: ../models/uml/07._Common_Behaviors.rst:5
+msgid "1. Behaviors"
+msgstr ""
+
+#: ../models/uml/07._Common_Behaviors.rst:11
+msgid "2. Events"
+msgstr ""
+
+#: ../models/uml/08._State_Machines.rst:2
+msgid "08. State Machines"
+msgstr ""
+
+#: ../models/uml/08._State_Machines.rst:5
+msgid "1. Behavior State Machines"
+msgstr ""
+
+#: ../models/uml/09._Activities.rst:2
+msgid "09. Activities"
+msgstr ""
+
+#: ../models/uml/09._Activities.rst:5
+msgid "1. Activities"
+msgstr ""
+
+#: ../models/uml/09._Activities.rst:11
+msgid "2. Control Nodes"
+msgstr ""
+
+#: ../models/uml/09._Activities.rst:17
+msgid "3. Object Nodes"
+msgstr ""
+
+#: ../models/uml/09._Activities.rst:23
+msgid "4. Executable Nodes"
+msgstr ""
+
+#: ../models/uml/09._Activities.rst:29
+msgid "5. Activity Groups"
+msgstr ""
+
+#: ../models/uml/10._Actions.rst:2
+msgid "10. Actions"
+msgstr ""
+
+#: ../models/uml/10._Actions.rst:5
+msgid "1. Actions"
+msgstr ""
+
+#: ../models/uml/10._Actions.rst:11
+msgid "2. Invocation Actions"
+msgstr ""
+
+#: ../models/uml/10._Actions.rst:17
+msgid "7. Structural Feature Actions"
+msgstr ""
+
+#: ../models/uml/10._Actions.rst:23
+msgid "9. Accept Event Actions"
+msgstr ""
+
+#: ../models/uml/11._Interactions.rst:2
+msgid "11. Interactions"
+msgstr ""
+
+#: ../models/uml/11._Interactions.rst:5
+msgid "1. Interactions"
+msgstr ""
+
+#: ../models/uml/11._Interactions.rst:11
+msgid "2. Lifelines"
+msgstr ""
+
+#: ../models/uml/11._Interactions.rst:17
+msgid "3. Messages"
+msgstr ""
+
+#: ../models/uml/11._Interactions.rst:23
+msgid "4. Occurrences"
+msgstr ""
+
+#: ../models/uml/12._Use_Cases.rst:2
+msgid "12. Use Cases"
+msgstr ""
+
+#: ../models/uml/12._Use_Cases.rst:5
+msgid "UseCases"
+msgstr ""
+
+#: ../models/uml/13._Deployments.rst:2
+msgid "13. Deployments"
+msgstr ""
+
+#: ../models/uml/13._Deployments.rst:5
+msgid "1. Deployments"
+msgstr ""
+
+#: ../models/uml/13._Deployments.rst:11
+msgid "2. Artifacts"
+msgstr ""
+
+#: ../models/uml/13._Deployments.rst:17
+msgid "3. Nodes"
+msgstr ""
+
+#: ../models/uml/14._Information_Flows.rst:2
+msgid "14. Information Flows"
+msgstr ""
+
+#: ../models/uml/A._Gaphor_Specific_Constructs.rst:2
+msgid "A. Gaphor Specific Constructs"
+msgstr ""
+
+#: ../models/uml/A._Gaphor_Specific_Constructs.rst:5
+msgid "1. Stereotype Applications"
+msgstr ""
+
+#: ../models/uml/B._Gaphor_Profile.rst:2
+msgid "B. Gaphor Profile"
+msgstr ""
+
+#: ../models/uml/B._Gaphor_Profile.rst:4
+msgid "In order to provide extra information to the diagram elements (mainly association ends), the Gaphor model has been extended with stereotypes."
+msgstr ""
+
+#: ../scripting.md:5
+msgid "Jupyter and Scripting"
+msgstr ""
+
+#: ../scripting.md:7
+msgid "One way to work with models is through the GUI. However, you may also be interested in getting more out of your models by interacting with them through Python scripts and [Jupyter notebooks](https://jupyter.org/)."
+msgstr ""
+
+#: ../scripting.md:11
+msgid "You can use scripts to:"
+msgstr ""
+
+#: ../scripting.md:13
+msgid "Explore the model, check for (in)valid conditions."
+msgstr ""
+
+#: ../scripting.md:14
+msgid "Generate code, as is done for Gaphor’s data model."
+msgstr ""
+
+#: ../scripting.md:15
+msgid "Update a model from another source, like a CSV file."
+msgstr ""
+
+#: ../scripting.md:17
+msgid "Since Gaphor is written in Python, it also functions as a library."
+msgstr ""
+
+#: ../scripting.md:19
+msgid "Getting started"
+msgstr ""
+
+#: ../scripting.md:21
+msgid "To get started, you’ll need a Python console. You can use the interactive console in Gaphor, use a Jupyter notebook, although that will require setting up a Python development environment."
+msgstr ""
+
+#: ../scripting.md:25
+msgid "Query a model"
+msgstr ""
+
+#: ../scripting.md:27
+msgid "The first step is to load a model. For this you’ll need an `ElementFactory`. The `ElementFactory` is responsible to creating and maintaining the model. It acts as a repository for the model while you’re working on it."
+msgstr ""
+
+#: ../scripting.md:37
+msgid "The module `gaphor.storage` contains everything to load and save models. Gaphor supports multiple [modeling languages](modeling_language). The `ModelingLanguageService` consolidates those languages and makes it easy for the loader logic to find the appropriate classes."
+msgstr ""
+
+#: ../scripting.md:43
+msgid "In versions before 2.13, an `EventManager` is required. In later versions, the `ModelingLanguageService` can be initialized without event manager."
+msgstr ""
+
+#: ../scripting.md:65
+msgid "At this point the model is loaded in the `element_factory` and can be queried."
+msgstr ""
+
+#: ../scripting.md:68
+msgid "A modeling language consists of the model elements, and diagram items. Graphical components are loaded separately. For the most basic manupilations, GTK (the GUI toolkit we use) is not required, but you may run into situations where Gaphor tries to load the GTK library."
+msgstr ""
+
+#: ../scripting.md:73
+msgid "One trick to avoid this (when generating Sphinx docs at least) is to use autodoc’s mock function to mock out the GTK and GDK libraries. However, Pango needs to be installed for text rendering."
+msgstr ""
+
+#: ../scripting.md:78
+msgid "A simple query only tells you what elements are in the model. The method `ElementFactory.select()` returns an iterator. Sometimes it’s easier to obtain a list directly. For those cases you can use `ElementFatory.lselect()`. Here we select the last five elements:"
+msgstr ""
+
+#: ../scripting.md:88
+msgid "Elements can also be queried by type and with a predicate function:"
+msgstr ""
+
+#: ../scripting.md:103
+msgid "Now, let’s say we want to do some simple (pseudo-)code generation. We can iterate class attributes and write some output."
+msgstr ""
+
+#: ../scripting.md:124
+msgid "To find out which relations can be queried, have a look at the [modeling language](modeling_language) documentation. Gaphor’s data models have been built using the [UML](models/uml) language."
+msgstr ""
+
+#: ../scripting.md:128
+msgid "You can find out more about a model property by printing it."
+msgstr ""
+
+#: ../scripting.md:134
+msgid "In this case it tells us that the type of `UML.Class.ownedAttribute` is `UML.Property`. `UML.Property.class_` is set to the owner class when `ownedAttribute` is set. It is a bidirectional relation."
+msgstr ""
+
+#: ../scripting.md:138
+msgid "Draw a diagram"
+msgstr ""
+
+#: ../scripting.md:140
+msgid "Another nice feature is drawing the diagrams. At this moment this requires a function. This behavior is similar to the [`diagram` directive](sphinx)."
+msgstr ""
+
+#: ../scripting.md:151
+msgid "Create a diagram"
+msgstr ""
+
+#: ../scripting.md:153
+msgid "(Requires Gaphor 2.13)"
+msgstr ""
+
+#: ../scripting.md:155
+msgid "Now let's make something a little more fancy. We still have the core model loaded in the element factory. From this model we can create a custom diagram. With a little help of the auto-layout service, we can make it a readable diagram."
+msgstr ""
+
+#: ../scripting.md:160
+msgid "To create the diagram, we [`drop` elements](modeling_language:dropping) on the diagram. Items on a diagram represent an element in the model. We'll also drop all associations on the model. Only if both ends can connect, the association will be added."
+msgstr ""
+
+#: ../scripting.md:186
+msgid "The diagram is not perfect, but you get the picture."
+msgstr ""
+
+#: ../scripting.md:188
+msgid "Update a model"
+msgstr ""
+
+#: ../scripting.md:190
+msgid "Updating a model always starts with the element factory: that’s where elements are created."
+msgstr ""
+
+#: ../scripting.md:193
+msgid "To create a UML Class instance, you can:"
+msgstr ""
+
+#: ../scripting.md:200
+msgid "To give it an attribute, create an attribute type (`UML.Property`) and then assign the attribute values."
+msgstr ""
+
+#: ../scripting.md:210
+msgid "Adding it to the diagram looks like this:"
+msgstr ""
+
+#: ../scripting.md:218
+msgid "If you save the model, your changes are persisted:"
+msgstr ""
+
+#: ../scripting.md:225
+msgid "What else"
+msgstr ""
+
+#: ../scripting.md:227
+msgid "What else is there to know…"
+msgstr ""
+
+#: ../scripting.md:229
+msgid "Gaphor supports derived associations. For example, `element.owner` points to the owner element. For an attribute that would be its containing class."
+msgstr ""
+
+#: ../scripting.md:230
+msgid "All data models are described in the `Modeling Languages` section of the docs."
+msgstr ""
+
+#: ../scripting.md:231
+msgid "If you use Gaphor’s Console, you’ll need to apply all changes in a transaction, or they will result in an error."
+msgstr ""
+
+#: ../scripting.md:232
+msgid "If you want a comprehensive example of a code generator, have a look at [Gaphor’s `coder` module](https://github.com/gaphor/gaphor/blob/main/gaphor/codegen/coder.py). This module is used to generate the code for the data models used by Gaphor."
+msgstr ""
+
+#: ../scripting.md:233
+msgid "This page is rendered with [MyST-NB](https://myst-nb.readthedocs.io/). It’s actually a Jupyter Notebook!"
+msgstr ""
+
+#: ../scripting.md:235
+msgid "Examples"
+msgstr ""
+
+#: ../scripting.md:237
+msgid "Here is another example:"
+msgstr ""
+
+#: ../service_oriented.md:1
+msgid "Service Oriented Architecture"
+msgstr ""
+
+#: ../service_oriented.md:3
+msgid "Gaphor has a service oriented architecture. What does this mean? Well, Gaphor is built as a set of small islands (services). Each island provides a specific piece of functionality. For example, we use separate services to load/save models, provide the menu structure, and to handle the undo system."
+msgstr ""
+
+#: ../service_oriented.md:8
+msgid "We define services as entry points in the `pyproject.toml`. With entry points, applications can register functionality for specific purposes. We also group entry points in to *entry point groups*. For example, we use the console_scripts entry point group to start an application from the command line."
+msgstr ""
+
+#: ../service_oriented.md:15
+msgid "Services"
+msgstr ""
+
+#: ../service_oriented.md:17
+msgid "Gaphor is modeled around the concept of services. Each service can be registered with the application and then it can be used by other services or other objects living within the application."
+msgstr ""
+
+#: ../service_oriented.md:21
+msgid "Each service should implement the Service interface. This interface defines one method:"
+msgstr ""
+
+#: ../service_oriented.md:26
+msgid "Which is called when a service needs to be cleaned up."
+msgstr ""
+
+#: ../service_oriented.md:28
+msgid "We allow each service to define its own methods, as long as the service is implemented too."
+msgstr ""
+
+#: ../service_oriented.md:31
+msgid "Services should be defined as entry points in the `pyproject.toml` file."
+msgstr ""
+
+#: ../service_oriented.md:33
+msgid "Typically, a service does some work in the background. Services can also expose actions that can be invoked by users. For example, the _Ctrl-z_ key combo (undo) is implemented by the UndoManager service."
+msgstr ""
+
+#: ../service_oriented.md:37
+msgid "A service can also depend on another services. Service initialization resolves these dependencies. To define a service dependency, just add it to the constructor by its name defined in the entry point:"
+msgstr ""
+
+#: ../service_oriented.md:54
+msgid "Services that expose actions should also inherit from the ActionProvider interface. This interface does not require any additional methods to be implemented. Action methods should be annotated with an `@action` annotation."
+msgstr ""
+
+#: ../service_oriented.md:58
+msgid "Example: ElementFactory"
+msgstr ""
+
+#: ../service_oriented.md:60
+msgid "A nice example of a service in use is the ElementFactory. It is one of the core services."
+msgstr ""
+
+#: ../service_oriented.md:62
+msgid "The UndoManager depends on the events emitted by the ElementFactory. When an important events occurs, like an element is created or destroyed, that event is emitted. We then use an event handler for ElementFactory that stores the add/remove signals in the undo system. Another example of events that are emitted are with `UML.Element`s. Those classes, or more specifically, the properties, send notifications every time their state changes."
+msgstr ""
+
+#: ../service_oriented.md:69
+msgid "Entry Points"
+msgstr ""
+
+#: ../service_oriented.md:71
+msgid "Gaphor uses a main entry point group called `gaphor.services`."
+msgstr ""
+
+#: ../service_oriented.md:73
+msgid "Services are used to perform the core functionality of the application while breaking the functions in to individual components. For example, the element factory and undo manager are both services."
+msgstr ""
+
+#: ../service_oriented.md:77
+msgid "Plugins can also be created to extend Gaphor beyond the core functionality as an add-on. For example, a plugin could be created to connect model data to other applications. Plugins are also defined as services. For example a new XMI export plugin would be defined as follows in the `pyproject.toml`:"
+msgstr ""
+
+#: ../service_oriented.md:87
+msgid "Interfaces"
+msgstr ""
+
+#: ../service_oriented.md:89
+msgid "Each service (and plugin) should implement the `gaphor.abc.Service` interface:"
+msgstr ""
+
+#: ../../gaphor/abc.py:docstring of gaphor.abc.Service:1
+msgid "Base interface for all services in Gaphor."
+msgstr ""
+
+#: ../service_oriented.md:96
+msgid "Another more specialized service that also inherits from `gaphor.abc.Service`, is the UI Component service. Services that use this interface are used to define windows and user interface functionality. A UI component should implement the `gaphor.ui.abc.UIComponent` interface:"
+msgstr ""
+
+#: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent:1
+msgid "A user interface component."
+msgstr ""
+
+#: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent.close:1
+msgid "Close the UI component."
+msgstr ""
+
+#: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent.close:3
+msgid "The component can decide to hide or destroy the UI components."
+msgstr ""
+
+#: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent.open:1
+msgid "Create and display the UI components (windows)."
+msgstr ""
+
+#: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent.shutdown:1
+msgid "Shut down this component."
+msgstr ""
+
+#: ../../gaphor/ui/abc.py:docstring of gaphor.ui.abc.UIComponent.shutdown:3
+msgid "It's not supposed to be opened again."
+msgstr ""
+
+#: ../service_oriented.md:106
+msgid "Typically a service and UI component would like to present some actions to the user, by means of menu entries. Every service and UI component can advertise actions by implementing the `gaphor.abc.ActionProvider` interface:"
+msgstr ""
+
+#: ../../gaphor/abc.py:docstring of gaphor.abc.ActionProvider:1
+msgid "An action provider is a special service that provides actions via ``@action`` decorators on its methods (see gaphor/action.py)."
+msgstr ""
+
+#: ../service_oriented.md:116
+msgid "Example plugin"
+msgstr ""
+
+#: ../service_oriented.md:118
+msgid "A small example is provided by means of the Hello world plugin. Take a look at the files at [GitHub](https://github.com/gaphor/gaphor.plugins.helloworld). The example plugin needs to be updated to support versions 1.0.0 and later of Gaphor."
+msgstr ""
+
+#: ../service_oriented.md:122
+msgid "The [setup.py](https://github.com/gaphor/gaphor.plugins.helloworld/blob/master/setup.py) file contains an entry point:"
+msgstr ""
+
+#: ../service_oriented.md:132
+msgid "This refers to the class `HelloWorldPlugin` in package/module [gaphor.plugins.helloworld](https://github.com/gaphor/gaphor.plugins.helloworld/blob/master/gaphor/plugins/helloworld/__init__.py)."
+msgstr ""
+
+#: ../service_oriented.md:135
+msgid "Here is a stripped version of the hello world plugin:"
+msgstr ""
+
+#: ../service_oriented.md:160
+msgid "As stated before, a plugin should implement the `Service` interface. It also implements `ActionProvider`, saying it has some actions to be performed by the user."
+msgstr ""
+
+#: ../service_oriented.md:163
+msgid "The menu entry will be part of the \"Tools\" extension menu. This extension point is created as a service. Other services can also be passed as dependencies. Services can get references to other services by defining them as arguments of the constructor."
+msgstr ""
+
+#: ../service_oriented.md:167
+msgid "All action defined in this service are registered."
+msgstr ""
+
+#: ../service_oriented.md:168
+msgid "Each service has a `shutdown()` method. This allows the service to perform some cleanup when it's shut down."
+msgstr ""
+
+#: ../service_oriented.md:170
+msgid "The action that can be invoked. The action is defined and will be picked up by `add_actions()` method (see 3.)"
+msgstr ""
+
+#: ../sphinx.rst:2
+msgid "Sphinx Extension"
+msgstr ""
+
+#: ../sphinx.rst:4
+msgid "What's more awesome than to use Gaphor diagrams directly in your `Sphinx`_ documentation. Whether you write your docs in `reStructured Text`_ or `Markdown`_, we've got you covered."
+msgstr ""
+
+#: ../sphinx.rst:9
+msgid "Here we cover the reStructured Text syntax. If you prefer markdown, we suggest you have a look at the `MyST-parser <https://myst-parser.readthedocs.io/>`_, as it `supports Sphinx directives <https://myst-parser.readthedocs.io/en/latest/syntax/syntax.html>`_."
+msgstr ""
+
+#: ../sphinx.rst:13
+msgid "It requires `minimal effort to set up <#configuration>`_. Adding a diagram is as simple as:"
+msgstr ""
+
+#: ../sphinx.rst:22
+msgid "In case you use multiple Gaphor source files, you need to define a ``:model:`` attribute and add the model names to the Sphinx configuration file (``conf.py``)."
+msgstr ""
+
+#: ../sphinx.rst:30
+msgid "Diagrams can be referenced by their name, or by their fully qualified name."
+msgstr ""
+
+#: ../sphinx.rst:36
+msgid "`Image properties`_ can also be applied:"
+msgstr ""
+
+#: ../sphinx.rst:-1
+msgid "A description suitable for an example"
+msgstr ""
+
+#: ../sphinx.rst:53
+msgid "Configuration"
+msgstr ""
+
+#: ../sphinx.rst:55
+msgid "To add Gaphor diagram support to Sphinx, make sure Gaphor is listed as a dependency."
+msgstr ""
+
+#: ../sphinx.rst:59
+msgid "Gaphor requires at least Python 3.9."
+msgstr ""
+
+#: ../sphinx.rst:61
+msgid "Secondly, add the following to your ``conf.py`` file:"
+msgstr ""
+
+#: ../sphinx.rst:63
+msgid "Step 1: Add gaphor as extension."
+msgstr ""
+
+#: ../sphinx.rst:71
+msgid "Step 2: Add references to models"
+msgstr ""
+
+#: ../sphinx.rst:84
+msgid "Now include ``diagram`` directives in your documents."
+msgstr ""
+
+#: ../sphinx.rst:88
+msgid "Read the Docs"
+msgstr ""
+
+#: ../sphinx.rst:90
+msgid "The diagram directive plays nice with `Read the docs`_. To make diagrams render, it's best to use a `.readthedocs.yaml`_ file in your project. Make sure to include the extra ``apt_packages`` as shown below."
+msgstr ""
+
+#: ../sphinx.rst:94
+msgid "This is the ``.readthedocs.yaml`` file we use for Gaphor:"
+msgstr ""
+
+#: ../sphinx.rst:99
+msgid "``libgirepository1.0-dev`` is required to build PyGObject."
+msgstr ""
+
+#: ../sphinx.rst:100
+msgid "``gir1.2-pango-1.0`` is required for text rendering."
+msgstr ""
+
+#: ../sphinx.rst:104
+msgid "For Gaphor 2.7.0, ``gir1.2-gtk-3.0`` and ``gir1.2-gtksource-4`` are required ``apt_packages``, although we do not use the GUI. From Gaphor 2.7.1 onwards all you need is GI-repository and Pango."
+msgstr ""
+
+#: ../sphinx.rst:109
+msgid "Errors"
+msgstr ""
+
+#: ../sphinx.rst:111
+msgid "Errors are shown on the console when the documentation is built and in the document."
+msgstr ""
+
+#: ../sphinx.rst:113
+msgid "An error will appear in the documentation. Something like this:"
+msgstr ""
+
+#: ../sphinx.rst:117
+msgid "No diagram ‘Wrong name’ in model ‘example’ (../examples/sequence-diagram.gaphor)."
+msgstr ""
+
+#: ../stereotypes.md:1
+msgid "Stereotypes"
+msgstr ""
+
+#: ../stereotypes.md:3
+msgid "In UML, stereotypes are way to extend the application of the UML language to new domains. For example: SysML started as a profile for UML."
+msgstr ""
+
+#: ../stereotypes.md:6
+msgid "Gaphor supports stereotypes too. They're *the* way for you to adapt your models to your specific needs."
+msgstr ""
+
+#: ../stereotypes.md:9
+msgid "The UML, SysML, RAAML and other models used in Gaphor – the code is generated from Gaphor model files – make use of stereotypes to provide specific information used when generating the data model code."
+msgstr ""
+
+#: ../stereotypes.md:13
+msgid "To create a stereotype, ensure the UML Profile is active and open the *Profile* section of the toolbox. First add a *Metaclass* to your diagram. Next add a *Stereotype*, and connect both with a *Extension*. The `«metaclass»` stereotype will only show once the *Extension* is connected both class and stereotype."
+msgstr ""
+
+#: ../stereotypes.md:20
+msgid "The class names in the metaclass should be a class name from the UML model, such as `Class`, `Interface`, `Property`, `Association`. Or even `Element` if you want to use the stereotype on all elements."
+msgstr ""
+
+#: ../stereotypes.md:25
+msgid "Your stereotype declaration may look something like this:"
+msgstr ""
+
+#: ../stereotypes.md:31
+msgid "The `Asynchronous` stereotype has a property `priority`. This property can be proved a value once the stereotype is applied to a *Property*, such as an association end."
+msgstr ""
+
+#: ../stereotypes.md:35
+msgid "When a stereotype can be applied to a model element, a *Stereotype* section will appear in the editor."
+msgstr ""
+
+#: ../stereotypes.md:38
+msgid "![Stereotype usage example](images/stereotype-usage.png)"
+msgstr ""
+
+#: ../stereotypes.md:38
+msgid "Stereotype usage example"
+msgstr ""
+
+#: ../storage.md:1
+msgid "File Format"
+msgstr ""
+
+#: ../storage.md:3
+msgid "The root element of Gaphor models is the `Gaphor` tag, all other elements are contained in this. The Gaphor element delimits the beginning and the end of an Gaphor model."
+msgstr ""
+
+#: ../storage.md:7
+msgid "The idea is to keep the file format as simple and extensible as possible: UML elements (including Diagram) are at the top level with no nesting. A UML element can have two tags: references (`ref`) and values (`val`). References are used to point to other UML elements. Values have a value inside (an integer or a string)."
+msgstr ""
+
+#: ../storage.md:11
+msgid "Since many references are bi-directional, you'll find both ends defined in the file (e.g. `Package.ownedType` - `Actor.package`, and `Diagram.ownedPresentation` and `UseCaseItem.diagram`)."
+msgstr ""
+
+#: ../style_sheets.md:1
+msgid "Style Sheets"
+msgstr ""
+
+#: ../style_sheets.md:3
+msgid "Since Gaphor 2.0, diagrams can have a different look by means of style sheets. Style sheets use the Cascading Style Sheets (CSS) syntax. CSS is used to describe the presentation of a document written in a markup language, and is most commonly used with HTML for web pages."
+msgstr ""
+
+#: ../style_sheets.md:8
+msgid "On the [W3C CSS home page](https://www.w3.org/Style/CSS/Overview.en.html), CSS is described as:"
+msgstr ""
+
+#: ../style_sheets.md:11
+msgid "Cascading Style Sheets (CSS) is a simple mechanism for adding style (e.g., fonts, colors, spacing) to Web documents."
+msgstr ""
+
+#: ../style_sheets.md:14
+msgid "Its application goes well beyond web documents, though. Gaphor uses CSS to provide style elements to items in diagrams. CSS allows us, users of Gaphor, to change the visual appearance of our diagrams. Color and line styles can be changed to make it easier to read the diagrams."
+msgstr ""
+
+#: ../style_sheets.md:19
+msgid "Since we're dealing with a diagram, and not a HTML document, some CSS features have been left out."
+msgstr ""
+
+#: ../style_sheets.md:22
+msgid "The style is part of the model, so everyone working on a model will have the same style. To edit the style press the tools page button at the top right corner in gaphor:"
+msgstr ""
+
+#: ../style_sheets.md:26
+msgid "![Button to access style code](images/css-button.png)"
+msgstr ""
+
+#: ../style_sheets.md:26
+msgid "Button to access style code"
+msgstr ""
+
+#: ../style_sheets.md:28
+msgid "Here is a simple example of how to change the background color of a class:"
+msgstr ""
+
+#: ../style_sheets.md:36
+msgid "background beige"
+msgstr ""
+
+#: ../style_sheets.md:41
+msgid "Or change the color of a component, only when it's nested in a node:"
+msgstr ""
+
+#: ../style_sheets.md:49
+msgid "nested component"
+msgstr ""
+
+#: ../style_sheets.md:54
+msgid "The diagram itself is also expressed as a CSS node. It's pretty easy to define a \"dark\" style:"
+msgstr ""
+
+#: ../style_sheets.md:68
+msgid "dark-style"
+msgstr ""
+
+#: ../style_sheets.md:75
+msgid "Here you already see the first custom attribute: `text-color`. This property allows you to control the color of the text drawn in an item. `color` is used for the lines (strokes) that make the layout of a diagram item."
+msgstr ""
+
+#: ../style_sheets.md:79
+msgid "Supported selectors"
+msgstr ""
+
+#: ../style_sheets.md:81
+msgid "Since we are dealing with diagrams and models, we do not need all the features of CSS. Below you'll find a summary of all CSS features supported by Gaphor."
+msgstr ""
+
+#: ../style_sheets.md:86
+msgid "``*``"
+msgstr ""
+
+#: ../style_sheets.md:86
+msgid "All items on the diagram, including the diagram itself."
+msgstr ""
+
+#: ../style_sheets.md:87
+msgid "``node component``"
+msgstr ""
+
+#: ../style_sheets.md:87
+msgid "Any component item which is a descendant of a node."
+msgstr ""
+
+#: ../style_sheets.md:88
+msgid "``node > component``"
+msgstr ""
+
+#: ../style_sheets.md:88
+msgid "A component item which is a child of a node."
+msgstr ""
+
+#: ../style_sheets.md:89
+msgid "``generaliation[subject]``"
+msgstr ""
+
+#: ../style_sheets.md:89
+msgid "A generalization item with a subject present."
+msgstr ""
+
+#: ../style_sheets.md:90
+msgid "``class[name=Foo]``"
+msgstr ""
+
+#: ../style_sheets.md:90
+msgid "A class with name \"Foo\"."
+msgstr ""
+
+#: ../style_sheets.md:91
+msgid "``diagram[name^=draft]``"
+msgstr ""
+
+#: ../style_sheets.md:91
+msgid "A diagram with a name starting with \"draft\"."
+msgstr ""
+
+#: ../style_sheets.md:92
+msgid "``diagram[name$=draft]``"
+msgstr ""
+
+#: ../style_sheets.md:92
+msgid "A diagram with a name ends with \"draft\"."
+msgstr ""
+
+#: ../style_sheets.md:93
+msgid "``diagram[name*=draft]``"
+msgstr ""
+
+#: ../style_sheets.md:93
+msgid "A diagram with a name containing the text \"draft\"."
+msgstr ""
+
+#: ../style_sheets.md:94
+msgid "``diagram[name~=draft item]``"
+msgstr ""
+
+#: ../style_sheets.md:94
+msgid "A diagram with a name of \"draft\" or \"item\"."
+msgstr ""
+
+#: ../style_sheets.md:95
+msgid "``diagram[name|=draft]``"
+msgstr ""
+
+#: ../style_sheets.md:95
+msgid "A diagram with a name is \"draft\" or starts with \"draft-\"."
+msgstr ""
+
+#: ../style_sheets.md:96
+msgid "``*:focus``"
+msgstr ""
+
+#: ../style_sheets.md:96
+msgid "The focused item. Other pseudo classes are:"
+msgstr ""
+
+#: ../style_sheets.md:98
+msgid "``:active`` selected items"
+msgstr ""
+
+#: ../style_sheets.md:99
+msgid "``:hover`` for the item under the mouse"
+msgstr ""
+
+#: ../style_sheets.md:100
+msgid "``:drop`` if an item is dragged and can be dropped on this item"
+msgstr ""
+
+#: ../style_sheets.md:101
+msgid "``:disabled`` if an element is grayed out during handle movement"
+msgstr ""
+
+#: ../style_sheets.md:102
+msgid "``node:empty``"
+msgstr ""
+
+#: ../style_sheets.md:102
+msgid "A node containing no child nodes in the diagram."
+msgstr ""
+
+#: ../style_sheets.md:103
+msgid "``:root``"
+msgstr ""
+
+#: ../style_sheets.md:103
+msgid "An item is at the top level of the diagram."
+msgstr ""
+
+#: ../style_sheets.md:105
+msgid "This is only applicable for the diagram"
+msgstr ""
+
+#: ../style_sheets.md:106
+msgid "``:has()``"
+msgstr ""
+
+#: ../style_sheets.md:106
+msgid "The item contains any of the provided selectors."
+msgstr ""
+
+#: ../style_sheets.md:108
+msgid "E.g. ``node:has(component)``: a node containing a component item."
+msgstr ""
+
+#: ../style_sheets.md:109
+msgid "``:is()``"
+msgstr ""
+
+#: ../style_sheets.md:109
+msgid "Match any of the provided selectors."
+msgstr ""
+
+#: ../style_sheets.md:111
+msgid "E.g. ``:is(node, subsystem) > component``: a node or subsystem."
+msgstr ""
+
+#: ../style_sheets.md:112
+msgid "``:not()``"
+msgstr ""
+
+#: ../style_sheets.md:112
+msgid "Negate the selector."
+msgstr ""
+
+#: ../style_sheets.md:114
+msgid "E.g. ``:not([subject])``: Any item that has no \"subject\"."
+msgstr ""
+
+#: ../style_sheets.md:118
+msgid "The official specification of [CSS3 attribute selectors](https://www.w3.org/TR/2018/REC-selectors-3-20181106/#attribute-selectors)."
+msgstr ""
+
+#: ../style_sheets.md:119
+msgid "Gaphor provides the `|=` attribute selector for the sake of completeness. It's probably not very useful in this context, though."
+msgstr ""
+
+#: ../style_sheets.md:121
+msgid "Please note that Gaphor CSS does not support IDs for diagram items, so the CSS syntax for IDs (`#some-id`) is not used. Also, class syntax (`.some-class`) is not supported currently."
+msgstr ""
+
+#: ../style_sheets.md:125
+msgid "Style properties"
+msgstr ""
+
+#: ../style_sheets.md:127
+msgid "Gaphor supports a subset of CSS properties and some Gaphor specific properties. The style sheet interpreter is relatively straight forward. All widths, heights, and sizes are measured in pixels. You can’t use complex style declarations, like the `font` property in HTML/CSS which can contain font family, size, weight."
+msgstr ""
+
+#: ../style_sheets.md:133
+msgid "Colors"
+msgstr ""
+
+#: ../style_sheets.md:137
+msgid "``background-color``"
+msgstr ""
+
+#: ../style_sheets.md:137
+msgid "Examples:"
+msgstr ""
+
+#: ../style_sheets.md:139
+msgid "``background-color: azure;``"
+msgstr ""
+
+#: ../style_sheets.md:141
+msgid "``background-color: rgb(255, 255, 255);``"
+msgstr ""
+
+#: ../style_sheets.md:143
+msgid "``background-color: hsl(130, 95%, 10%);``"
+msgstr ""
+
+#: ../style_sheets.md:144
+msgid "``color``"
+msgstr ""
+
+#: ../style_sheets.md:144
+msgid "Color used for lines."
+msgstr ""
+
+#: ../style_sheets.md:145
+msgid "``text-color``"
+msgstr ""
+
+#: ../style_sheets.md:145
+msgid "Color for text."
+msgstr ""
+
+#: ../style_sheets.md:146
+msgid "``opacity``"
+msgstr ""
+
+#: ../style_sheets.md:146
+msgid "Color opacity factor (``0.0`` - ``1.0``), applied to all colors."
+msgstr ""
+
+#: ../style_sheets.md:151
+msgid "A color can be any [CSS3 color code](https://www.w3.org/TR/2018/REC-css-color-3-20180619/), as described in the CSS documentation. Gaphor supports all color notations: `rgb()`, `rgba()`, `hsl()`, `hsla()`, Hex code (`#ffffff`) and color names."
+msgstr ""
+
+#: ../style_sheets.md:155
+msgid "Text and fonts"
+msgstr ""
+
+#: ../style_sheets.md:159
+msgid "``font-family``"
+msgstr ""
+
+#: ../style_sheets.md:159
+msgid "A single font name (e.g. ``sans``, ``serif``, ``courier``)."
+msgstr ""
+
+#: ../style_sheets.md:160
+msgid "``font-size``"
+msgstr ""
+
+#: ../style_sheets.md:160
+msgid "An absolute size (e.g. ``14``) or a size value (e.g. ``small``)."
+msgstr ""
+
+#: ../style_sheets.md:161
+msgid "``font-style``"
+msgstr ""
+
+#: ../style_sheets.md:161
+msgid "Either ``normal`` or ``italic``."
+msgstr ""
+
+#: ../style_sheets.md:162
+msgid "``font-weight``"
+msgstr ""
+
+#: ../style_sheets.md:162
+msgid "Either ``normal`` or ``bold``."
+msgstr ""
+
+#: ../style_sheets.md:163
+msgid "``text-align``"
+msgstr ""
+
+#: ../style_sheets.md:163
+msgid "Either ``left``, ``center``, ``right``."
+msgstr ""
+
+#: ../style_sheets.md:164
+msgid "``text-decoration``"
+msgstr ""
+
+#: ../style_sheets.md:164
+msgid "Either ``none`` or ``underline``."
+msgstr ""
+
+#: ../style_sheets.md:165
+msgid "``vertical-align``"
+msgstr ""
+
+#: ../style_sheets.md:165
+msgid "Vertical alignment for text."
+msgstr ""
+
+#: ../style_sheets.md:167
+msgid "Either ``top``, ``middle`` or ``bottom``."
+msgstr ""
+
+#: ../style_sheets.md:168
+msgid "``vertical-spacing``"
+msgstr ""
+
+#: ../style_sheets.md:168
+msgid "Set vertical spacing for icon-like items (actors, start state)."
+msgstr ""
+
+#: ../style_sheets.md:170
+msgid "Example: ``vertical-spacing: 4``."
+msgstr ""
+
+#: ../style_sheets.md:174
+msgid "`font-family` can be only one font name, not a list of (fallback) names, as is used for HTML."
+msgstr ""
+
+#: ../style_sheets.md:176
+msgid "`font-size` can be a number or [CSS absolute-size values](https://drafts.csswg.org/css-fonts-3/#font-size-prop). Only the values `x-small`, `small`, `medium`, `large` and `x-large` are supported."
+msgstr ""
+
+#: ../style_sheets.md:179
+msgid "Drawing and spacing"
+msgstr ""
+
+#: ../style_sheets.md:183
+msgid "``border-radius``"
+msgstr ""
+
+#: ../style_sheets.md:183
+msgid "Radius for rectangles: ``border-radius: 4``."
+msgstr ""
+
+#: ../style_sheets.md:184
+msgid "``dash-style``"
+msgstr ""
+
+#: ../style_sheets.md:184
+msgid "Style for dashed lines: ``dash-style: 7 5``."
+msgstr ""
+
+#: ../style_sheets.md:185
+msgid "``justify-content``"
+msgstr ""
+
+#: ../style_sheets.md:185
+msgid "Content alignment for boxes."
+msgstr ""
+
+#: ../style_sheets.md:187
+msgid "Either ``start``, ``end``, ``center`` or ``stretch``."
+msgstr ""
+
+#: ../style_sheets.md:188
+msgid "``line-style``"
+msgstr ""
+
+#: ../style_sheets.md:188
+msgid "Either ``normal`` or ``sloppy [factor]``."
+msgstr ""
+
+#: ../style_sheets.md:189
+msgid "``line-width``"
+msgstr ""
+
+#: ../style_sheets.md:189
+msgid "Set the width for lines: ``line-width: 2``."
+msgstr ""
+
+#: ../style_sheets.md:190
+msgid "``min-height``"
+msgstr ""
+
+#: ../style_sheets.md:190
+msgid "Set minimal height for an item: ``min-height: 50``."
+msgstr ""
+
+#: ../style_sheets.md:191
+msgid "``min-width``"
+msgstr ""
+
+#: ../style_sheets.md:191
+msgid "Set minimal width for an item: ``min-width: 100``."
+msgstr ""
+
+#: ../style_sheets.md:192
+msgid "``padding``"
+msgstr ""
+
+#: ../style_sheets.md:192
+msgid "CSS style padding (top, right, bottom, left)."
+msgstr ""
+
+#: ../style_sheets.md:194
+msgid "Example: ``padding: 3 4``."
+msgstr ""
+
+#: ../style_sheets.md:198
+msgid "`padding` is defined by integers in the range of 1 to 4. No unit (px, pt, em) needs to be used. All values are in pixel distance."
+msgstr ""
+
+#: ../style_sheets.md:200
+msgid "`dash-style` is a list of numbers (line, gap, line, gap, …)"
+msgstr ""
+
+#: ../style_sheets.md:201
+msgid "`line-style` only has an effect when defined on a `diagram`. A sloppiness factor can be provided in the range of -2 to 2."
+msgstr ""
+
+#: ../style_sheets.md:204
+msgid "Diagram styles"
+msgstr ""
+
+#: ../style_sheets.md:206
+msgid "Only a few properties can be defined on a diagram, namely `background-color` and `line-style`. You define the diagram style separately from the diagram item styles. That way it's possible to set the background color for diagrams specifically. The line style can be the normal straight lines, or a more playful \"sloppy\" style. For the sloppy style an optional wobliness factor can be provided to set the level of line wobbliness. 0.5 is default, 0.0 is a straight line. The value should be between -2.0 and 2.0. Values between 0.0 and 0.5 make for a subtle effect."
+msgstr ""
+
+#: ../style_sheets.md:215
+msgid "Gaphor supports dark and light mode since 2.16.0. Dark and light color schemes are exclusively used for on-screen editing. When exporting images, only the default color scheme is applied. Color schemes can be defined with `@media` queries. The official `prefers-color-scheme = dark` query is supported, as well as a more convenient `dark-mode`."
+msgstr ""
+
+#: ../style_sheets.md:241
+msgid "Variables"
+msgstr ""
+
+#: ../style_sheets.md:243
+msgid "Since Gaphor 2.16.0 you can use [CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) in your style sheets."
+msgstr ""
+
+#: ../style_sheets.md:245
+msgid "This allows you to define often used values in a more generic way. Think of things like line dash style and colors."
+msgstr ""
+
+#: ../style_sheets.md:248
+msgid "The `var()` function has some limitations:"
+msgstr ""
+
+#: ../style_sheets.md:250
+msgid "Values can’t have a default value."
+msgstr ""
+
+#: ../style_sheets.md:251
+msgid "Variables can’t have a variable as their value."
+msgstr ""
+
+#: ../style_sheets.md:253
+msgid "Example:"
+msgstr ""
+
+#: ../style_sheets.md:266
+msgid "All diagrams have a white background. Sequence diagrams get a blue-ish background."
+msgstr ""
+
+#: ../style_sheets.md:268
+msgid "Working with model elements"
+msgstr ""
+
+#: ../style_sheets.md:270
+msgid "Gaphor has many model elements. How can you find out which item should be styled?"
+msgstr ""
+
+#: ../style_sheets.md:272
+msgid "Gaphor only styles the elements that are in the model, so you should be explicit on their names. For example: `Component` inherits from `Class` in the UML model, but changing a color for `Class` does not change it for `Component`."
+msgstr ""
+
+#: ../style_sheets.md:276
+msgid "If you hover over a button the toolbox (bottom-left section), a popup will appear with the item's name and a shortcut. As a general rule, you can use the component name, glued together as the name in the stylesheet. A *Component* can be addressed as `component`, *Use Case* as `usecase`. The name matching is case insensitive. CSS names are written in lower case by default."
+msgstr ""
+
+#: ../style_sheets.md:283
+msgid "However, since the CSS element names are derived from names used within Gaphor, there are a few exceptions."
+msgstr ""
+
+#: ../style_sheets.md:287
+msgid "Profile"
+msgstr ""
+
+#: ../style_sheets.md:287
+msgid "Group"
+msgstr ""
+
+#: ../style_sheets.md:287
+msgid "Element"
+msgstr ""
+
+#: ../style_sheets.md:287
+msgid "CSS element"
+msgstr ""
+
+#: ../style_sheets.md:289
+msgid "\\*"
+msgstr ""
+
+#: ../style_sheets.md:289
+msgid "*element name*"
+msgstr ""
+
+#: ../style_sheets.md:289
+msgid "element name without spaces"
+msgstr ""
+
+#: ../style_sheets.md:291
+msgid "E.g. ``class``, ``usecase``."
+msgstr ""
+
+#: ../style_sheets.md:292
+#: ../style_sheets.md:293
+#: ../style_sheets.md:294
+#: ../style_sheets.md:295
+#: ../style_sheets.md:296
+#: ../style_sheets.md:297
+#: ../style_sheets.md:298
+#: ../style_sheets.md:299
+#: ../style_sheets.md:300
+msgid "UML"
+msgstr ""
+
+#: ../style_sheets.md:292
+msgid "Classes"
+msgstr ""
+
+#: ../style_sheets.md:292
+msgid "all Association's"
+msgstr ""
+
+#: ../style_sheets.md:292
+msgid "``association``"
+msgstr ""
+
+#: ../style_sheets.md:293
+msgid "Components"
+msgstr ""
+
+#: ../style_sheets.md:293
+msgid "Device/Node"
+msgstr ""
+
+#: ../style_sheets.md:293
+msgid "``node``"
+msgstr ""
+
+#: ../style_sheets.md:294
+#: ../style_sheets.md:295
+#: ../style_sheets.md:296
+msgid "Actions"
+msgstr ""
+
+#: ../style_sheets.md:294
+msgid "Decision/Merge Node"
+msgstr ""
+
+#: ../style_sheets.md:294
+msgid "``decisionnode``"
+msgstr ""
+
+#: ../style_sheets.md:295
+msgid "Fork/Join Node"
+msgstr ""
+
+#: ../style_sheets.md:295
+msgid "``forknode``"
+msgstr ""
+
+#: ../style_sheets.md:296
+msgid "Swimlane"
+msgstr ""
+
+#: ../style_sheets.md:296
+msgid "``partition``"
+msgstr ""
+
+#: ../style_sheets.md:297
+msgid "Interactions"
+msgstr ""
+
+#: ../style_sheets.md:297
+msgid "Reflexive message"
+msgstr ""
+
+#: ../style_sheets.md:297
+msgid "``message``"
+msgstr ""
+
+#: ../style_sheets.md:298
+#: ../style_sheets.md:299
+msgid "States"
+msgstr ""
+
+#: ../style_sheets.md:298
+msgid "Initial Pseudostate"
+msgstr ""
+
+#: ../style_sheets.md:298
+#: ../style_sheets.md:299
+msgid "``pseudostate``"
+msgstr ""
+
+#: ../style_sheets.md:299
+msgid "History Pseudostate"
+msgstr ""
+
+#: ../style_sheets.md:300
+msgid "Profiles"
+msgstr ""
+
+#: ../style_sheets.md:300
+msgid "Metaclass"
+msgstr ""
+
+#: ../style_sheets.md:300
+msgid "``class``"
+msgstr ""
+
+#: ../style_sheets.md:301
+msgid "Person"
+msgstr ""
+
+#: ../style_sheets.md:301
+msgid "``c4person``"
+msgstr ""
+
+#: ../style_sheets.md:302
+msgid "Software System"
+msgstr ""
+
+#: ../style_sheets.md:302
+msgid "``c4container[type=\"Software System\"]``"
+msgstr ""
+
+#: ../style_sheets.md:303
+msgid "Component"
+msgstr ""
+
+#: ../style_sheets.md:303
+msgid "``c4container[type=\"Component\"]``"
+msgstr ""
+
+#: ../style_sheets.md:304
+msgid "Container"
+msgstr ""
+
+#: ../style_sheets.md:304
+msgid "``c4container[type=\"Container\"]``"
+msgstr ""
+
+#: ../style_sheets.md:305
+msgid "Container: Database"
+msgstr ""
+
+#: ../style_sheets.md:305
+msgid "``c4database``"
+msgstr ""
+
+#: ../style_sheets.md:306
+#: ../style_sheets.md:307
+#: ../style_sheets.md:308
+msgid "SysML"
+msgstr ""
+
+#: ../style_sheets.md:306
+msgid "ValueType"
+msgstr ""
+
+#: ../style_sheets.md:306
+#: ../style_sheets.md:307
+msgid "``datatype``"
+msgstr ""
+
+#: ../style_sheets.md:307
+msgid "Primitive"
+msgstr ""
+
+#: ../style_sheets.md:308
+msgid "Derive Requirement"
+msgstr ""
+
+#: ../style_sheets.md:308
+msgid "``derivedreq``"
+msgstr ""
+
+#: ../style_sheets.md:309
+msgid "RAAML"
+msgstr ""
+
+#: ../style_sheets.md:309
+msgid "FTA"
+msgstr ""
+
+#: ../style_sheets.md:309
+msgid "any AND/OR/… Gate"
+msgstr ""
+
+#: ../style_sheets.md:309
+msgid "``and``, ``or``, etc."
+msgstr ""
+
+#: ../style_sheets.md:314
+msgid "Ideas"
+msgstr ""
+
+#: ../style_sheets.md:316
+msgid "Here are some ideas that go just beyond changing a color or a font. With the following examples we dig in to Gaphor's model structure to reveal more information to the users."
+msgstr ""
+
+#: ../style_sheets.md:320
+msgid "To create your own expression you may want to use the Console (Tools -> Console, in the Hamburger menu). Drop us a line on [Gitter](https://gitter.im/gaphor/Lobby) and we would be happy to help you."
+msgstr ""
+
+#: ../style_sheets.md:324
+msgid "The drafts package"
+msgstr ""
+
+#: ../style_sheets.md:326
+msgid "All diagrams in the package \"Drafts\" should be drawn using sloppy lines:"
+msgstr ""
+
+#: ../style_sheets.md:338
+msgid "draft style"
+msgstr ""
+
+#: ../style_sheets.md:343
+msgid "Unconnected relationships"
+msgstr ""
+
+#: ../style_sheets.md:345
+msgid "All items on a diagram that are not backed by a model element, should be drawn in a dark red color. This can be used to spot not-so-well connected relationships, such as Generalization, Implementation, and Dependency. These items will only be backed by a model element once you connect both line ends. This rule will exclude simple elements, like lines and boxes, which will never have a backing model element."
+msgstr ""
+
+#: ../style_sheets.md:358
+msgid "unconnected relationship"
+msgstr ""
+
+#: ../style_sheets.md:363
+msgid "Navigable associations"
+msgstr ""
+
+#: ../style_sheets.md:365
+msgid "An example of how to apply a style to a navigable association is to color an association blue if neither of the ends are navigable. This color could act as a validation rule for a model where at least one end of each association should be navigable. This is actually the case for the model file used to create Gaphor's data model."
+msgstr ""
+
+#: ../style_sheets.md:377
+msgid "navigable association"
+msgstr ""
+
+#: ../style_sheets.md:382
+msgid "Solid Control Flow lines"
+msgstr ""
+
+#: ../style_sheets.md:384
+msgid "In Gaphor, Control Flow lines follow the SysML styling: dashed. If you want, or need to strictly follow the official UML specifications, you can simply make those solid lines."
+msgstr ""
+
+#: ../style_sheets.md:394
+msgid "control flow"
+msgstr ""
+
+#: ../style_sheets.md:399
+msgid "Todo note highlight"
+msgstr ""
+
+#: ../style_sheets.md:401
+msgid "All comments beginning with the phrase \"todo\" can be highlighted in a different user-specific colour. This can be used to make yourself aware that you have to do some additional work to finalize the diagram."
+msgstr ""
+
+#: ../style_sheets.md:411
+msgid "highlighted todo note"
+msgstr ""
+
+#: ../transaction.md:1
+msgid "Transaction support"
+msgstr ""
+
+#: ../transaction.md:3
+msgid "Transaction support is located in module `gaphor.transaction`:"
+msgstr ""
+
+#: ../transaction.md:10
+msgid "Do some basic initialization, so event emission will work. Since the transaction decorator does not know about the active user session (window), it emits it's events via a global list of subscribers:"
+msgstr ""
+
+#: ../transaction.md:18
+msgid "The Transaction class is used mainly to signal the begin and end of a transaction. This is done by the TransactionBegin, TransactionCommit and TransactionRollback events:"
+msgstr ""
+
+#: ../transaction.md:26
+msgid "Same goes for commit and rollback events:"
+msgstr ""
+
+#: ../transaction.md:37
+msgid "A Transaction is started by initiating a Transaction instance:"
+msgstr ""
+
+#: ../transaction.md:42
+msgid "On success, a transaction can be committed:"
+msgstr ""
+
+#: ../transaction.md:47
+msgid "After a commit, a rollback is no longer allowed (the transaction is closed):"
+msgstr ""
+
+#: ../transaction.md:55
+msgid "Transactions may be nested:"
+msgstr ""
+
+#: ../transaction.md:64
+msgid "Transactions should be closed in the right order (subtransactions first):"
+msgstr ""
+
+#: ../transaction.md:79
+msgid "The transactional decorator can be used to mark functions as transactional:"
+msgstr ""
+
+#: ../transaction.md:89
+msgid "If an exception is raised from within the decorated function a rollback is performed:"
+msgstr ""
+
+#: ../transaction.md:103
+msgid "Cleanup:"
+msgstr ""
+
+#: ../undo.md:1
+msgid "Undo Manager"
+msgstr ""
+
+#: ../undo.md:3
+msgid "Undo is a required feature in modern applications. Gaphor is no exception. Having an undo function in place means you can change the model and easily revert to an older state."
+msgstr ""
+
+#: ../undo.md:7
+msgid "Overview of Transactions"
+msgstr ""
+
+#: ../undo.md:9
+msgid "The recording and playback of changes in Gaphor is handled by the the Undo Manager. The Undo Manager works transactionally. A transaction must succeed or fail as a complete unit. If the transaction fails in the middle, it is rolled back. In Gaphor this is achieved by the `transaction` module, which provides a context manager `Transaction` and a decorator called `@transactional`."
+msgstr ""
+
+#: ../undo.md:16
+msgid "When transactions take place, they emit event notifications on the key transaction milestones so that other services can make use of the events. The event notifications are for the begin of the transaction, and the commit of the transaction if it is successful or the rollback of the transaction if it fails."
+msgstr ""
+
+#: ../undo.md:21
+msgid "Start of a Transaction"
+msgstr ""
+
+#: ../undo.md:23
+msgid "A `Transaction` object is created."
+msgstr ""
+
+#: ../undo.md:24
+msgid "`TransactionBegin` event is emitted."
+msgstr ""
+
+#: ../undo.md:25
+msgid "The `UndoManager` instantiates a new `ActionStack` which is the transaction object, and adds the undo action to the stack."
+msgstr ""
+
+#: ../undo.md:28
+msgid "Nested transactions are supported to allow a transaction to be added inside of another transaction that is already in progress."
+msgstr ""
+
+#: ../undo.md:31
+msgid "Successful Transaction"
+msgstr ""
+
+#: ../undo.md:33
+msgid "A `TransactionCommit` event is emitted"
+msgstr ""
+
+#: ../undo.md:34
+msgid "The `UndoManager` closes and stores the transaction."
+msgstr ""
+
+#: ../undo.md:36
+msgid "Failed Transaction"
+msgstr ""
+
+#: ../undo.md:38
+msgid "A `TransactionRollback` event is emitted."
+msgstr ""
+
+#: ../undo.md:39
+msgid "The `UndoManager` plays back all the recorded actions, but does not store it."
+msgstr ""
+
+#: ../undo.md:42
+msgid "References"
+msgstr ""
+
+#: ../undo.md:44
+msgid "[A Framework for Undoing Actions in Collaborative Systems](http://web.eecs.umich.edu/~aprakash/papers/undo-tochi94.pdf)"
+msgstr ""
+
+#: ../undo.md:46
+msgid "[Undoing Actions in Collaborative Work: Framework and Experience](https://www.eecs.umich.edu/techreports/cse/94/CSE-TR-196-94.pdf)"
+msgstr ""
+
+#: ../undo.md:48
+msgid "[Implementing a Selective Undo Framework in Python](https://legacy.python.org/workshops/1997-10/proceedings/zukowski.html)"
+msgstr ""
+
+#: ../windows.md:1
+msgid "Gaphor on Windows"
+msgstr ""
+
+#: ../windows.md:3
+msgid "Gaphor can be installed as with our our installer. Check out the [Gaphor download page](https://gaphor.org/download#windows) for details."
+msgstr ""
+
+#: ../windows.md:13
+msgid "Choco"
+msgstr ""
+
+#: ../windows.md:15
+msgid "We recommend using [Chocolately](https://chocolatey.org/) as a package manager in Windows."
+msgstr ""
+
+#: ../windows.md:18
+msgid "To install it, open PowerShell as an administrator, then execute:"
+msgstr ""
+
+#: ../windows.md:24
+msgid "To run local scripts in follow-on steps, also execute"
+msgstr ""
+
+#: ../windows.md:30
+msgid "This allows for local PowerShell scripts to run without signing, but still requires signing for remote scripts."
+msgstr ""
+
+#: ../windows.md:33
+msgid "Git"
+msgstr ""
+
+#: ../windows.md:35
+msgid "To setup a development environment in Windows first install [Git](https://gitforwindows.org) by executing as an administrator:"
+msgstr ""
+
+#: ../windows.md:42
+msgid "MSYS2"
+msgstr ""
+
+#: ../windows.md:44
+msgid "The development environment in the next step needs MSYS2 installed to provide some Linux command line tools in Windows."
+msgstr ""
+
+#: ../windows.md:47
+msgid "Keep PowerShell open as administrator and install [MSYS2](http://www.msys2.org/):"
+msgstr ""
+
+#: ../windows.md:53
+msgid "GTK and Python with gvsbuild"
+msgstr ""
+
+#: ../windows.md:55
+msgid "gvsbuild provides a Python script helps you build the GTK library stack for Windows using Visual Studio. By compiling GTK with Visual Studio, we can then use a standard Python development environment in Windows."
+msgstr ""
+
+#: ../windows.md:59
+msgid "First we will install the gvsbuild dependencies:"
+msgstr ""
+
+#: ../windows.md:60
+msgid "Visual C++ build tools workload for Visual Studio 2022 Build Tools"
+msgstr ""
+
+#: ../windows.md:61
+msgid "Python"
+msgstr ""
+
+#: ../windows.md:63
+msgid "Install Visual Studio 2022"
+msgstr ""
+
+#: ../windows.md:65
+msgid "With your admin PowerShell terminal:"
+msgstr ""
+
+#: ../windows.md:71
+msgid "Install the Latest Python"
+msgstr ""
+
+#: ../windows.md:73
+msgid "In Windows, The full installer contains all the Python components and is the best option for developers using Python for any kind of project."
+msgstr ""
+
+#: ../windows.md:76
+msgid "For more information on how to use the official installer, please see the [full installer instructions](https://docs.python.org/3/using/windows.html#windows-full). The default installation options should be fine for use with Gaphor."
+msgstr ""
+
+#: ../windows.md:80
+msgid "Install the latest Python version using the [official installer](https://www.python.org/downloads/windows/)."
+msgstr ""
+
+#: ../windows.md:83
+msgid "Open a PowerShell terminal as a normal user and check the python version:"
+msgstr ""
+
+#: ../windows.md:89
+msgid "Install Graphviz"
+msgstr ""
+
+#: ../windows.md:91
+msgid "Graphviz is used by Gaphor for automatic diagram formatting."
+msgstr ""
+
+#: ../windows.md:93
+msgid "Install from Chocolately with administrator PowerShell:"
+msgstr ""
+
+#: ../windows.md:99
+msgid "Restart your PowerShell terminal as a normal user and check that the dot command is available:"
+msgstr ""
+
+#: ../windows.md:106
+msgid "Install pipx"
+msgstr ""
+
+#: ../windows.md:108
+#: ../windows.md:116
+msgid "From the regular user PowerShell terminal execute:"
+msgstr ""
+
+#: ../windows.md:114
+msgid "Install gvsbuild"
+msgstr ""
+
+#: ../windows.md:122
+msgid "Build GTK"
+msgstr ""
+
+#: ../windows.md:124
+msgid "In the same PowerShell terminal, execute:"
+msgstr ""
+
+#: ../windows.md:129
+msgid "Grab a coffee, the build will take a few minutes to complete."
+msgstr ""
+
+#: ../windows.md:131
+msgid "Setup Gaphor"
+msgstr ""
+
+#: ../windows.md:133
+msgid "In the same PowerShell terminal, clone the repository:"
+msgstr ""
+
+#: ../windows.md:140
+msgid "Install Poetry"
+msgstr ""
+
+#: ../windows.md:146
+msgid "Add GTK to your environmental variables:"
+msgstr ""
+
+#: ../windows.md:153
+msgid "You can also edit your account's Environmental Variables to persist across PowerShell sessions."
+msgstr ""
+
+#: ../windows.md:156
+msgid "Install Gaphor's dependencies"
+msgstr ""
+
+#: ../windows.md:161
+msgid "Reinstall PyGObject and pycairo using gvsbuild wheels"
+msgstr ""
+
+#: ../windows.md:167
+msgid "Launch Gaphor!"
+msgstr ""
+
+#: ../windows.md:172
+msgid "Debugging using Visual Studio Code"
+msgstr ""
+
+#: ../windows.md:174
+msgid "Start a new PowerShell terminal, and set current directory to the project folder:"
+msgstr ""
+
+#: ../windows.md:179
+msgid "Ensure that path environment variable is set:"
+msgstr ""
+
+#: ../windows.md:184
+msgid "Start Visual Studio Code:"
+msgstr ""
+
+#: ../windows.md:189
+msgid "To start the debugger, execute the following steps:"
+msgstr ""
+
+#: ../windows.md:190
+msgid "Open `__main__.py` file from `gaphor` folder"
+msgstr ""
+
+#: ../windows.md:191
+msgid "Add a breakpoint on line `main(sys.argv)`"
+msgstr ""
+
+#: ../windows.md:192
+msgid "In the menu, select Run → Start debugging"
+msgstr ""
+
+#: ../windows.md:193
+msgid "Choose Select module from the list"
+msgstr ""
+
+#: ../windows.md:194
+msgid "Enter `gaphor` as module name"
+msgstr ""
+
+#: ../windows.md:196
+msgid "Visual Studio Code will start the application in debug mode, and will stop at main."
+msgstr ""
+
+#: ../windows.md:198
+msgid "Packaging for Windows"
+msgstr ""
+
+#: ../windows.md:200
+msgid "In order to create an exe installation package for Windows, we utilize [PyInstaller](https://pyinstaller.org) which analyzes Gaphor to find all the dependencies and bundle them in to a single folder. We then use a custom bash script that creates a Windows installer using [NSIS](https://nsis.sourceforge.io/Main_Page) and a portable installer using [7-Zip](https://www.7-zip.org). To install them, open PowerShell as an administrator, then execute:"
+msgstr ""
+
+#: ../windows.md:212
+msgid "Then build your installer using:"
+msgstr ""
