@@ -1,3 +1,5 @@
+# ruff: noqa: F401
+
 from hypothesis import settings
 
 from gaphor.conftest import (
