@@ -2,6 +2,7 @@
 ------
 - Support types for parameters
 - Restore windows in maximized and full-screen state
+- Fine grained CSS: elements in a presentation item can be changed from CSS (experimental)
 - Very long element names are now wrapped
 - Format files accessed from Flatpak via portals
 - Update Property Editor to use Gtk.ColumnView and ListView

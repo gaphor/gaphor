@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import functools
 import operator
+from collections.abc import Hashable
 from typing import Iterator, Protocol, Sequence, TypedDict, Union
 
 from gaphor.core.styling.compiler import compile_style_sheet
@@ -23,14 +25,17 @@ from gaphor.core.styling.declarations import (
 
 # Style is using SVG properties where possible
 # https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute
-# NB. The Style can also contain variables (start with `--`),
-#     however those are not part of the interface.
+# NB1. The Style can also contain variables (start with `--`),
+#      however those are not part of the interface.
+# NB2. The Style can also contain private (`-gaphor-*`) entries.
+
 Style = TypedDict(
     "Style",
     {
         "background-color": Color,
         "border-radius": Number,
         "color": Color,
+        "content": str,
         "dash-style": Sequence[Number],
         "padding": Padding,
         "font-family": str,
@@ -49,12 +54,19 @@ Style = TypedDict(
         "vertical-align": VerticalAlign,
         "vertical-spacing": Number,
         "white-space": WhiteSpace,
+        # Opaque elements to support inheritance
+        "-gaphor-style-node": object,
+        "-gaphor-compiled-style-sheet": object
     },
     total=False,
 )
 
 
-class StyleNode(Protocol):
+class StyleNode(Hashable, Protocol):
+
+    pseudo: str | None
+    dark_mode: bool | None
+
     def name(self) -> str:
         ...
 
@@ -125,22 +137,65 @@ def resolve_variables(style: Style, style_layers: Sequence[Style]) -> Style:
 
 class CompiledStyleSheet:
     def __init__(self, *css: str):
-        self.selectors = [
-            (selspec[0], selspec[1], order, declarations)
-            for order, (selspec, declarations) in enumerate(compile_style_sheet(*css))
-            if selspec != "error"
-        ]
-
-    def match(self, node: StyleNode) -> Style:
-        results = sorted(
+        self.selectors = sorted(
             (
-                (specificity, order, declarations)
-                for pred, specificity, order, declarations in self.selectors
+                (selspec[1], order, declarations, selspec[0])
+                for order, (selspec, declarations) in enumerate(compile_style_sheet(*css))
+                if selspec != "error"
+            ),
+            key=operator.itemgetter(0, 1),
+        )
+
+    # @functools.lru_cache(maxsize=1000)
+    def compute_style(self, node: StyleNode) -> Style:
+        return merge_styles(
+            *(
+                declarations
+                for _specificity, _order, declarations, pred in self.selectors
                 if pred(node)
             ),
-            key=MATCH_SORT_KEY,
+            {"-gaphor-style-node": node, "-gaphor-compiled-style-sheet": self}
         )
-        return merge_styles(*(decl for _, _, decl in results))  # type: ignore[arg-type]
 
 
-MATCH_SORT_KEY = operator.itemgetter(0, 1)
+class PseudoStyleNode:
+
+    def __init__(self, node: StyleNode, psuedo: str | None):
+        self._node = node
+        self.pseudo = psuedo
+        self.dark_mode = node.dark_mode
+
+    def name(self) -> str:
+        return self._node.name()
+
+    def parent(self) -> StyleNode | None:
+        return self._node.parent()
+
+    def children(self) -> Iterator[StyleNode]:
+        return self._node.children()
+
+    def attribute(self, name: str) -> str:
+        return self._node.attribute(name)
+
+    def state(self) -> Sequence[str]:
+        return self._node.state()
+
+    def __hash__(self):
+        return hash((self._node, self.pseudo))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, PseudoStyleNode)
+            and self._node == other._node
+            and self.pseudo is other.pseudo
+        )
+
+
+def compute_pseudo_element_style(style: Style, pseudo: str) -> Style:
+    parent: StyleNode | None = style.get("-gaphor-style-node")  # type: ignore[assignment]
+    if not parent:
+        return style
+
+    compiled_style_sheet: CompiledStyleSheet = style.get("-gaphor-compiled-style-sheet")  # type: ignore[assignment]
+
+    return compiled_style_sheet.compute_style(PseudoStyleNode(parent, pseudo))

@@ -7,10 +7,10 @@ from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
+    text_name,
 )
 from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.constants import DEFAULT_FTA_MAJOR
 from gaphor.RAAML.fta.transferin import draw_transfer_in
@@ -36,13 +36,7 @@ class TransferOutItem(Classified, ElementPresentation):
                     self.subject, [self.diagram.gettext("Transfer Out")]
                 ),
             ),
-            Text(
-                text=lambda: self.subject.name or "",
-                style={
-                    "font-weight": FontWeight.BOLD,
-                    "font-style": FontStyle.NORMAL,
-                },
-            ),
+            text_name(self),
             Text(
                 text=lambda: from_package_str(self),
                 style={"font-size": "x-small"},

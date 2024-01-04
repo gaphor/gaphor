@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.13.0">
+<gaphor xmlns="http://gaphor.sourceforge.net/model" version="3.0" gaphor-version="2.22.1">
 <Package id="9d588440-d7c2-11ea-b8c5-37ef9fca94cd">
 <name>
 <val>style-sheets</val>
@@ -14,6 +14,7 @@
 <ref refid="b1cdfe7e-d7c6-11ea-b8c5-37ef9fca94cd"/>
 <ref refid="380f8d3c-fd67-11ec-9897-a87eeaeedf68"/>
 <ref refid="98156b60-78ce-11ed-825f-0456e5e540ed"/>
+<ref refid="3803e134-a98d-11ee-b5e8-be7f4daace3f"/>
 </reflist>
 </ownedDiagram>
 <ownedType>
@@ -29,6 +30,7 @@
 <ref refid="d165979e-d7c4-11ea-b8c5-37ef9fca94cd"/>
 <ref refid="d419722e-d7c6-11ea-b8c5-37ef9fca94cd"/>
 <ref refid="a28fadf8-78ce-11ed-825f-0456e5e540ed"/>
+<ref refid="4accd6f4-a98d-11ee-b5e8-be7f4daace3f"/>
 </reflist>
 </ownedType>
 </Package>
@@ -109,6 +111,11 @@ diagram[name=todo] comment[body^="TODO"] {
 diagram[name=controlflow] controlflow {
   dash-style: 0;
 }
+
+diagram[name=abstract] :is(name, operation)[isabstract]::after {
+  content: " {abstract}"
+}
+
 </val>
 </styleSheet>
 </StyleSheet>
@@ -629,9 +636,6 @@ diagram[name=controlflow] controlflow {
 <orthogonal>
 <val>0</val>
 </orthogonal>
-<show_direction>
-<val>0</val>
-</show_direction>
 <subject>
 <ref refid="b2db9e86-d7c4-11ea-b8c5-37ef9fca94cd"/>
 </subject>
@@ -664,9 +668,6 @@ diagram[name=controlflow] controlflow {
 <orthogonal>
 <val>0</val>
 </orthogonal>
-<show_direction>
-<val>0</val>
-</show_direction>
 <subject>
 <ref refid="d165979e-d7c4-11ea-b8c5-37ef9fca94cd"/>
 </subject>
@@ -881,9 +882,6 @@ diagram[name=controlflow] controlflow {
 <orthogonal>
 <val>0</val>
 </orthogonal>
-<show_direction>
-<val>0</val>
-</show_direction>
 <subject>
 <ref refid="d419722e-d7c6-11ea-b8c5-37ef9fca94cd"/>
 </subject>
@@ -1143,6 +1141,9 @@ diagram[name=controlflow] controlflow {
 <horizontal>
 <val>0</val>
 </horizontal>
+<orthogonal>
+<val>0</val>
+</orthogonal>
 <subject>
 <ref refid="ad76aadc-78ce-11ed-825f-0456e5e540ed"/>
 </subject>
@@ -1175,4 +1176,81 @@ diagram[name=controlflow] controlflow {
 <ref refid="a6b17eca-78ce-11ed-825f-0456e5e540ed"/>
 </target>
 </ControlFlow>
+<Diagram id="3803e134-a98d-11ee-b5e8-be7f4daace3f">
+<diagramType>
+<val></val>
+</diagramType>
+<element>
+<ref refid="9d588440-d7c2-11ea-b8c5-37ef9fca94cd"/>
+</element>
+<name>
+<val>abstract</val>
+</name>
+<ownedPresentation>
+<reflist>
+<ref refid="4acd6d9e-a98d-11ee-b5e8-be7f4daace3f"/>
+</reflist>
+</ownedPresentation>
+</Diagram>
+<Class id="4accd6f4-a98d-11ee-b5e8-be7f4daace3f">
+<isAbstract>
+<val>1</val>
+</isAbstract>
+<name>
+<val>MyClass</val>
+</name>
+<ownedOperation>
+<reflist>
+<ref refid="6d5189b8-a98d-11ee-b5e8-be7f4daace3f"/>
+<ref refid="6651b9bc-a98d-11ee-b5e8-be7f4daace3f"/>
+</reflist>
+</ownedOperation>
+<package>
+<ref refid="9d588440-d7c2-11ea-b8c5-37ef9fca94cd"/>
+</package>
+<presentation>
+<reflist>
+<ref refid="4acd6d9e-a98d-11ee-b5e8-be7f4daace3f"/>
+</reflist>
+</presentation>
+</Class>
+<ClassItem id="4acd6d9e-a98d-11ee-b5e8-be7f4daace3f">
+<matrix>
+<val>(1.0, 0.0, 0.0, 1.0, 112.53125, 101.546875)</val>
+</matrix>
+<top-left>
+<val>(0.0, 0.0)</val>
+</top-left>
+<width>
+<val>187.0</val>
+</width>
+<height>
+<val>98.0</val>
+</height>
+<diagram>
+<ref refid="3803e134-a98d-11ee-b5e8-be7f4daace3f"/>
+</diagram>
+<subject>
+<ref refid="4accd6f4-a98d-11ee-b5e8-be7f4daace3f"/>
+</subject>
+</ClassItem>
+<Operation id="6651b9bc-a98d-11ee-b5e8-be7f4daace3f">
+<class_>
+<ref refid="4accd6f4-a98d-11ee-b5e8-be7f4daace3f"/>
+</class_>
+<isAbstract>
+<val>1</val>
+</isAbstract>
+<name>
+<val>myOperation</val>
+</name>
+</Operation>
+<Operation id="6d5189b8-a98d-11ee-b5e8-be7f4daace3f">
+<class_>
+<ref refid="4accd6f4-a98d-11ee-b5e8-be7f4daace3f"/>
+</class_>
+<name>
+<val>normalOperation</val>
+</name>
+</Operation>
 </gaphor>

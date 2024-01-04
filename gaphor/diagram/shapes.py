@@ -4,20 +4,25 @@ import math
 from dataclasses import replace
 from enum import Enum
 from math import pi
-from typing import Callable
+from typing import Callable, Iterator, Protocol, Sequence
 
 from gaphas.geometry import Rectangle
 
-from gaphor.core.modeling import DrawContext, UpdateContext
+from gaphor.core.modeling import DrawContext, Element, UpdateContext
+from gaphor.core.modeling.diagram import attrstr, rgetattr
 from gaphor.core.styling import (
     JustifyContent,
+    Number,
     Padding,
     Style,
+    StyleNode,
     TextAlign,
     VerticalAlign,
     WhiteSpace,
+    compute_pseudo_element_style,
     merge_styles,
 )
+from gaphor.core.styling.inherit import inherit_style
 from gaphor.diagram.text import Layout
 
 
@@ -45,7 +50,7 @@ def stroke(context: DrawContext, fill: bool, dash=True):
     with cairo_state(cr):
         if stroke := style.get("color"):
             cr.set_source_rgba(*stroke)
-        if line_width := style.get("line-width"):
+        if line_width := style.get("line-width", 2):
             cr.set_line_width(line_width)
         if dash:
             cr.set_dash(style.get("dash-style", ()), 0)
@@ -189,6 +194,16 @@ def rectangle_shrink(rect: Rectangle | None, padding: Padding) -> Rectangle:
     )
 
 
+class Shape(Protocol):
+    def size(
+        self, context: UpdateContext, bounding_box: Rectangle | None = None
+    ) -> tuple[Number, Number]:
+        ...
+
+    def draw(self, context: DrawContext, bounding_box: Rectangle) -> None:
+        ...
+
+
 class Box:
     """A box like shape.
 
@@ -202,7 +217,7 @@ class Box:
 
     def __init__(
         self,
-        *children,
+        *children: Shape,
         orientation: Orientation = Orientation.VERTICAL,
         style: Style | None = None,
         draw: Callable[[Box, DrawContext, Rectangle], None] | None = None,
@@ -210,7 +225,7 @@ class Box:
         if style is None:
             style = {}
         self.children = children
-        self.sizes: list[tuple[int, int]] = []
+        self.sizes: list[tuple[Number, Number]] = []
         self._orientation = orientation
         self._inline_style = style
         self._draw_border = draw
@@ -361,8 +376,8 @@ class BoundedBox(Box):
 
     def __init__(
         self,
-        *children,
-        style=None,
+        *children: Shape,
+        style: Style | None = None,
         draw: Callable[[Box, DrawContext, Rectangle], None] | None = None,
     ):
         if style is None:
@@ -389,12 +404,12 @@ class IconBox:
     - padding: a tuple (top, right, bottom, left)
     """
 
-    def __init__(self, icon, *children, style=None):
+    def __init__(self, icon: Shape, *children: Shape, style: Style | None = None):
         if style is None:
             style = {}
         self.icon = icon
         self.children = children
-        self.sizes: list[tuple[int, int]] = []
+        self.sizes: list[tuple[Number, Number]] = []
         self._inline_style = style
 
     def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
@@ -466,11 +481,19 @@ class Text:
         self._inline_style = style
         self._layout = Layout()
 
-    def text(self):
+    def text(self, style: Style | None = None):
         try:
-            return self._text()
+            t = self._text()
         except AttributeError:
-            return ""
+            t = ""
+
+        if (
+            style
+            and (after := compute_pseudo_element_style(style, "after"))
+            and (content := after.get("content"))
+        ):
+            return f"{t}{content}"
+        return t
 
     def size(self, context: UpdateContext, bounding_box: Rectangle | None = None):
         style = merge_styles(context.style, self._inline_style)
@@ -481,7 +504,7 @@ class Text:
 
         layout = self._layout
         layout.set(
-            text=self.text(),
+            text=self.text(style),
             font=style,
             width=bounding_box.width
             if bounding_box and white_space == WhiteSpace.NORMAL
@@ -510,3 +533,75 @@ class Text:
             cr.move_to(text_box.x, text_box.y)
             layout.set(font=style)
             layout.show_layout(cr, text_box.width, default_size=(min_w, min_h))
+
+
+class StyledChildElement:
+    def __init__(self, name: str, element: Element | None):
+        self._name = name
+        self._element = element
+        self.pseudo: str | None = None
+        self.dark_mode: bool | None = None
+
+    def name(self) -> str:
+        return self._name
+
+    def parent(self) -> StyleNode | None:
+        raise NotImplementedError()
+
+    def children(self) -> Iterator[StyleNode]:
+        return iter(())
+
+    def attribute(self, name: str) -> str:
+        if not self._element:
+            return ""
+        fields = name.split(".")
+        return " ".join(map(attrstr, rgetattr(self._element, fields))).strip()
+
+    def state(self) -> Sequence[str]:
+        raise NotImplementedError()
+
+    def __hash__(self):
+        return hash((self.name, self._element))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, StyledChildElement)
+            and self._name == other._name
+            and self._element == other._element
+        )
+
+
+class CssNode:
+    """Create custom styling based on the active style and
+    an element/class declaration.
+    """
+
+    def __init__(
+        self,
+        name: str,
+        element: Element | None,
+        child: Shape,
+        style: Style | None = None,
+    ):
+        self._name = name
+        self._element = element
+        self._child = child
+        self._inline_style = style if style else {}
+
+    def size(
+        self, context: UpdateContext, bounding_box: Rectangle | None = None
+    ) -> tuple[Number, Number]:
+        style = inherit_style(
+            context.style, StyledChildElement(self._name, self._element)
+        )
+        new_context = replace(context, style=style)
+
+        return self._child.size(new_context, bounding_box)
+
+    def draw(self, context: DrawContext, bounding_box: Rectangle):
+        style = inherit_style(
+            context.style, StyledChildElement(self._name, self._element)
+        )
+        new_context = replace(context, style=style)
+
+        self._child.draw(new_context, bounding_box)

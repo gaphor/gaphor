@@ -17,10 +17,9 @@ module.
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import JustifyContent
-from gaphor.diagram.presentation import Classified, ElementPresentation
+from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
 from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontWeight
 from gaphor.UML.classes.stereotype import stereotype_compartments
 from gaphor.UML.recipes import stereotypes_str
 
@@ -56,10 +55,7 @@ class NodeItem(Classified, ElementPresentation):
                         or (),
                     ),
                 ),
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={"font-weight": FontWeight.BOLD},
-                ),
+                text_name(self),
                 style={
                     "padding": (4, 4, 4, 4),
                     "justify-content": JustifyContent.START,

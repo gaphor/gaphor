@@ -5,8 +5,8 @@ from gaphas.types import Pos
 from gaphor import UML
 from gaphor.core.modeling.element import Element
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontWeight, JustifyContent
-from gaphor.diagram.presentation import Classified, ElementPresentation
+from gaphor.core.styling import JustifyContent
+from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
 from gaphor.diagram.shapes import Box, Text, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
@@ -40,10 +40,7 @@ class StateMachineItem(Classified, ElementPresentation[UML.StateMachine]):
                         self.subject, [self.diagram.gettext("statemachine")]
                     ),
                 ),
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={"font-weight": FontWeight.BOLD},
-                ),
+                text_name(self),
                 style={"padding": (4, 4, 4, 4)},
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),

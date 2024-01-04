@@ -3,17 +3,17 @@ from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
+    text_name,
 )
 from gaphor.diagram.shapes import (
     Box,
+    CssNode,
     JustifyContent,
     Text,
-    TextAlign,
     draw_border,
     draw_top_separator,
 )
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.SysML.sysml import InterfaceBlock, ValueType
 from gaphor.UML.classes.klass import attributes_compartment, operation_watches
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
@@ -71,15 +71,7 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
                         self.subject, self.additional_stereotypes()
                     )
                 ),
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={
-                        "font-weight": FontWeight.BOLD,
-                        "font-style": FontStyle.ITALIC
-                        if self.subject and self.subject.isAbstract
-                        else FontStyle.NORMAL,
-                    },
-                ),
+                text_name(self),
                 Text(
                     text=lambda: from_package_str(self),
                     style={"font-size": "x-small"},
@@ -96,6 +88,7 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
                     self.block_compartment(
                         self.diagram.gettext("references"),
                         lambda a: not a.association and a.aggregation != "composite",
+                        "reference",
                     )
                 ]
                 or []
@@ -108,6 +101,7 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
                         self.diagram.gettext("values"),
                         lambda a: isinstance(a.type, ValueType)
                         and a.aggregation == "composite",
+                        "value",
                     )
                 ]
                 or []
@@ -135,22 +129,19 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
             draw=draw_border,
         )
 
-    def block_compartment(self, name, predicate):
+    def block_compartment(self, name, predicate, css_name):
         # We need to fix the attribute value, since the for loop changes it.
         def lazy_format(attribute):
             return lambda: format_property(attribute) or self.diagram.gettext("unnamed")
 
         return Box(
-            Text(
-                text=name,
-                style={
-                    "padding": (0, 0, 4, 0),
-                    "font-size": "x-small",
-                    "font-style": FontStyle.ITALIC,
-                },
+            CssNode(
+                "heading",
+                self.subject,
+                Text(text=name),
             ),
             *(
-                Text(text=lazy_format(attribute), style={"text-align": TextAlign.LEFT})
+                CssNode(css_name, attribute, Text(text=lazy_format(attribute)))
                 for attribute in self.subject.ownedAttribute
                 if predicate(attribute)
             ),
@@ -169,16 +160,13 @@ class InterfaceBlockItem(Classified, ElementPresentation[InterfaceBlock]):
             )
 
         return Box(
-            Text(
-                text=name,
-                style={
-                    "padding": (0, 0, 4, 0),
-                    "font-size": "x-small",
-                    "font-style": FontStyle.ITALIC,
-                },
+            CssNode(
+                "heading",
+                self.subject,
+                Text(text=name),
             ),
             *(
-                Text(text=lazy_format(operation), style={"text-align": TextAlign.LEFT})
+                CssNode("operation", operation, Text(text=lazy_format(operation)))
                 for operation in self.subject.ownedOperation
             ),
             style={

@@ -3,17 +3,16 @@ from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
+    text_name,
 )
 from gaphor.diagram.shapes import (
     Box,
-    JustifyContent,
     Text,
     TextAlign,
     draw_border,
     draw_top_separator,
 )
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.SysML.sysml import Requirement
 from gaphor.UML.classes.klass import (
     attribute_watches,
@@ -57,22 +56,13 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
                         self.subject, [self.diagram.gettext("requirement")]
                     ),
                 ),
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={
-                        "font-weight": FontWeight.BOLD,
-                        "font-style": FontStyle.ITALIC
-                        if self.subject and self.subject.isAbstract
-                        else FontStyle.NORMAL,
-                    },
-                ),
+                text_name(self),
                 Text(
                     text=lambda: from_package_str(self),
                     style={"font-size": "x-small"},
                 ),
                 style={
                     "padding": (12, 4, 12, 4),
-                    "justify-content": JustifyContent.START,
                 },
             ),
             *(
@@ -89,9 +79,6 @@ class RequirementItem(Classified, ElementPresentation[Requirement]):
             ),
             *(self.show_stereotypes and stereotype_compartments(self.subject) or []),
             self.id_and_text_compartment(),
-            style={
-                "justify-content": JustifyContent.START,
-            },
             draw=draw_border,
         )
 

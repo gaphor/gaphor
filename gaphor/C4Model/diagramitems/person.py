@@ -1,8 +1,8 @@
 from math import pi
 
 from gaphor.C4Model import c4model
-from gaphor.core.styling import FontWeight, JustifyContent, TextAlign
-from gaphor.diagram.presentation import ElementPresentation, Named
+from gaphor.core.styling import JustifyContent, TextAlign
+from gaphor.diagram.presentation import ElementPresentation, Named, text_name
 from gaphor.diagram.shapes import Box, Text, stroke
 from gaphor.diagram.support import represents
 
@@ -18,10 +18,7 @@ class C4PersonItem(Named, ElementPresentation):
     def update_shapes(self, event=None):
         self.shape = Box(
             Box(
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={"font-weight": FontWeight.BOLD},
-                ),
+                text_name(self),
                 Text(
                     text=lambda: f"[{self.diagram.gettext('Person')}]",
                     style={"font-size": "x-small"},

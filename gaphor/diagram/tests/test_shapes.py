@@ -3,7 +3,10 @@ import pytest
 from gaphas.geometry import Rectangle
 
 from gaphor.core.modeling.diagram import FALLBACK_STYLE
-from gaphor.core.styling import JustifyContent
+from gaphor.core.styling import (
+    CompiledStyleSheet,
+    JustifyContent,
+)
 from gaphor.diagram.shapes import (
     Box,
     DrawContext,
@@ -271,3 +274,19 @@ def test_text_width_min_height(update_context):
 
     _, h = text.size(update_context)
     assert h == 40
+
+
+def test_text_with_after_pseudo_element():
+    css = """
+    ::after { content: " text" }
+    """
+
+    class DummyStyleNode:
+        name = "text"
+        pseudo = None
+        dark_mode = False
+
+    style = CompiledStyleSheet(css).compute_style(DummyStyleNode)
+    text = Text("some")
+
+    assert text.text(style) == "some text"

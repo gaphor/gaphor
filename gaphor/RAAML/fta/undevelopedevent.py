@@ -7,10 +7,10 @@ from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
+    text_name,
 )
 from gaphor.diagram.shapes import Box, IconBox, Text, draw_diamond
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.RAAML import raaml
 from gaphor.RAAML.fta.constants import WIDE_FTA_HEIGHT, WIDE_FTA_WIDTH
 from gaphor.UML.recipes import stereotypes_str
@@ -35,13 +35,7 @@ class UndevelopedEventItem(Classified, ElementPresentation):
                     self.subject, [self.diagram.gettext("Undeveloped Event")]
                 ),
             ),
-            Text(
-                text=lambda: self.subject.name or "",
-                style={
-                    "font-weight": FontWeight.BOLD,
-                    "font-style": FontStyle.NORMAL,
-                },
-            ),
+            text_name(self),
             Text(
                 text=lambda: from_package_str(self),
                 style={"font-size": "x-small"},

@@ -31,9 +31,8 @@ from gaphas.solver.constraint import BaseConstraint
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
 from gaphor.diagram.presentation import ElementPresentation, Named
-from gaphor.diagram.shapes import Box, Text, cairo_state, stroke
+from gaphor.diagram.shapes import Box, CssNode, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontWeight
 from gaphor.UML.recipes import stereotypes_str
 
 
@@ -166,9 +165,12 @@ class LifelineItem(Named, ElementPresentation[UML.Lifeline]):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            Text(
-                text=self._format_name,
-                style={"font-weight": FontWeight.BOLD},
+            CssNode(
+                "name",
+                self.subject,
+                Text(
+                    text=self._format_name,
+                ),
             ),
             draw=self.draw_lifeline,
         )

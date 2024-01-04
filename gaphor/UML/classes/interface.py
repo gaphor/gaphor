@@ -77,11 +77,12 @@ from gaphas.item import NE, NW, SE, SW
 from gaphor import UML
 from gaphor.core.modeling.presentation import literal_eval
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontWeight, JustifyContent
+from gaphor.core.styling import JustifyContent
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
+    text_name,
 )
 from gaphor.diagram.shapes import Box, IconBox, Text, draw_border, stroke
 from gaphor.diagram.support import represents
@@ -283,10 +284,7 @@ class InterfaceItem(Classified, ElementPresentation):
                         self.subject, (self.diagram.gettext("interface"),)
                     ),
                 ),
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={"font-weight": FontWeight.BOLD},
-                ),
+                text_name(self),
                 Text(
                     text=lambda: from_package_str(self),
                     style={"font-size": "x-small"},
@@ -328,12 +326,7 @@ class InterfaceItem(Classified, ElementPresentation):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            Text(
-                text=lambda: self.subject.name or "",
-                style={
-                    "font-weight": FontWeight.NORMAL if connectors else FontWeight.BOLD
-                },
-            ),
+            text_name(self),
         )
 
     def draw_interface_ball_and_socket(self, _box, context, _bounding_box):

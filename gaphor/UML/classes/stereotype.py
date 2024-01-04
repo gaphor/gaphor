@@ -1,8 +1,8 @@
 """Support code for dealing with stereotypes in diagrams."""
 
 from gaphor.core.format import format
-from gaphor.core.styling import JustifyContent, TextAlign, WhiteSpace
-from gaphor.diagram.shapes import Box, Text, draw_top_separator
+from gaphor.core.styling import JustifyContent
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_top_separator
 
 
 def stereotype_watches(presentation):
@@ -33,19 +33,22 @@ def _create_stereotype_compartment(appliedStereotype):
 
     if slots:
         return Box(
-            Text(
-                text=lazy_format(appliedStereotype.classifier[0])
-                if appliedStereotype.classifier
-                else "",
-                style={"padding": (0, 0, 4, 0)},
+            CssNode(
+                "heading",
+                appliedStereotype.classifier,
+                Text(
+                    text=lazy_format(appliedStereotype.classifier[0])
+                    if appliedStereotype.classifier
+                    else "",
+                ),
             ),
             *(
-                Text(
-                    text=lazy_format(slot),
-                    style={
-                        "text-align": TextAlign.LEFT,
-                        "white-space": WhiteSpace.NOWRAP,
-                    },
+                CssNode(
+                    "slot",
+                    slot,
+                    Text(
+                        text=lazy_format(slot),
+                    ),
                 )
                 for slot in slots
             ),

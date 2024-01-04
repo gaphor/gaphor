@@ -1,0 +1,103 @@
+/* Gaphor diagram style sheet */
+
+* {
+  --opaque-background-color: white;
+  background-color: transparent;
+  color: black;
+  font-size: 14;
+  line-width: 2;
+  padding: 0;
+}
+
+*:drop {
+  color: #1a5fb4;
+  line-width: 3;
+}
+
+*:disabled {
+  opacity: 0.5;
+}
+
+@media light-mode {
+  * {
+    --opaque-background-color: #fafafa;
+  }
+}
+
+@media dark-mode {
+  * {
+    --opaque-background-color: #242424;
+    color: white;
+  }
+
+  *:drop {
+    color: #62a0ea;
+  }
+}
+
+dependency,
+interfacerealization {
+  dash-style: 7 5;
+}
+
+dependency[on_folded_interface = true],
+interfacerealization[on_folded_interface = true] {
+  dash-style: 0;
+}
+
+controlflow {
+  dash-style: 9 3;
+}
+
+proxyport,
+activityparameternode,
+executionspecification {
+  background-color: var(--opaque-background-color);
+}
+
+* name {
+  font-weight: bold;
+}
+
+* name[isabstract] {
+  font-style: italic;
+}
+
+* heading {
+  padding: 0 0 4 0;
+  font-size: x-small;
+  font-style: italic;
+}
+
+* :is(attribute, operation, enumeration, slot, part, reference, value) {
+  text-align: left;
+  white-space: nowrap;
+}
+
+* operation[isabstract] {
+  font-style: italic;
+}
+
+* :is(attribute, operation)[isstatic] {
+    text-decoration: underline;
+}
+
+c4container {
+  text-align: left;
+}
+
+c4container[children = ""] {
+  text-align: center;
+}
+
+c4container technology {
+  font-size: x-small;
+}
+
+c4container description {
+  padding: 4 4 0 4;
+}
+
+requirement {
+  justify-content: start;
+}

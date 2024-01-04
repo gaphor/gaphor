@@ -1,10 +1,14 @@
 """Package diagram item."""
 
 from gaphor import UML
-from gaphor.diagram.presentation import ElementPresentation, Named, from_package_str
+from gaphor.diagram.presentation import (
+    ElementPresentation,
+    Named,
+    from_package_str,
+    text_name,
+)
 from gaphor.diagram.shapes import Box, JustifyContent, Text, cairo_state, stroke
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontWeight
 from gaphor.UML.recipes import stereotypes_str
 
 
@@ -29,10 +33,7 @@ class PackageItem(Named, ElementPresentation):
                     or (),
                 ),
             ),
-            Text(
-                text=lambda: self.subject and self.subject.name or "",
-                style={"font-weight": FontWeight.BOLD},
-            ),
+            text_name(self),
             Text(
                 text=lambda: from_package_str(self),
                 style={"font-size": "x-small"},

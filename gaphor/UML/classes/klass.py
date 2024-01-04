@@ -4,19 +4,15 @@ from gaphor import UML
 from gaphor.core.format import format
 from gaphor.core.modeling.properties import attribute
 from gaphor.core.styling import (
-    FontStyle,
-    FontWeight,
     JustifyContent,
-    TextAlign,
-    TextDecoration,
-    WhiteSpace,
 )
 from gaphor.diagram.presentation import (
     Classified,
     ElementPresentation,
     from_package_str,
+    text_name,
 )
-from gaphor.diagram.shapes import Box, Text, draw_border, draw_top_separator
+from gaphor.diagram.shapes import Box, CssNode, Text, draw_border, draw_top_separator
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments, stereotype_watches
 from gaphor.UML.recipes import stereotypes_str
@@ -68,15 +64,7 @@ class ClassItem(Classified, ElementPresentation[UML.Class]):
                         self.subject, self.additional_stereotypes()
                     ),
                 ),
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={
-                        "font-weight": FontWeight.BOLD,
-                        "font-style": FontStyle.ITALIC
-                        if self.subject and self.subject.isAbstract
-                        else FontStyle.NORMAL,
-                    },
-                ),
+                text_name(self),
                 Text(
                     text=lambda: from_package_str(self),
                     style={"font-size": "x-small"},
@@ -134,21 +122,18 @@ def operation_watches(presentation, cast):
 
 
 def attributes_compartment(subject):
-    # We need to fix the attribute value, since the for loop changes it.
+    # We need to scope the attribute value, since the for loop changes it.
     def lazy_format(attribute):
         return lambda: format(attribute)
 
     return Box(
         *(
-            Text(
-                text=lazy_format(attribute),
-                style={
-                    "text-align": TextAlign.LEFT,
-                    "text-decoration": TextDecoration.UNDERLINE
-                    if attribute.isStatic
-                    else TextDecoration.NONE,
-                    "white-space": WhiteSpace.NOWRAP,
-                },
+            CssNode(
+                "attribute",
+                attribute,
+                Text(
+                    text=lazy_format(attribute),
+                ),
             )
             for attribute in subject.ownedAttribute
             if not attribute.association
@@ -170,18 +155,12 @@ def operations_compartment(subject):
 
     return Box(
         *(
-            Text(
-                text=lazy_format(operation),
-                style={
-                    "text-align": TextAlign.LEFT,
-                    "font-style": FontStyle.ITALIC
-                    if operation.isAbstract
-                    else FontStyle.NORMAL,
-                    "text-decoration": TextDecoration.UNDERLINE
-                    if operation.isStatic
-                    else TextDecoration.NONE,
-                    "white-space": WhiteSpace.NOWRAP,
-                },
+            CssNode(
+                "operation",
+                operation,
+                Text(
+                    text=lazy_format(operation),
+                ),
             )
             for operation in subject.ownedOperation
         ),

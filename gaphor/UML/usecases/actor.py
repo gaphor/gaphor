@@ -10,10 +10,9 @@ from gaphas.position import Position
 from gaphas.solver import REQUIRED, STRONG, variable
 
 from gaphor import UML
-from gaphor.diagram.presentation import Classified, ElementPresentation
+from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
 from gaphor.diagram.shapes import Box, IconBox, Text, stroke
 from gaphor.diagram.support import represents
-from gaphor.diagram.text import FontStyle, FontWeight
 from gaphor.UML.recipes import stereotypes_str
 
 HEAD = 11
@@ -76,15 +75,7 @@ class ActorItem(Classified, ElementPresentation):
             Text(
                 text=lambda: stereotypes_str(self.subject),
             ),
-            Text(
-                text=lambda: self.subject.name or "",
-                style={
-                    "font-weight": FontWeight.BOLD,
-                    "font-style": FontStyle.ITALIC
-                    if self.subject and self.subject.isAbstract
-                    else FontStyle.NORMAL,
-                },
-            ),
+            text_name(self),
         )
 
     def update(self, context):

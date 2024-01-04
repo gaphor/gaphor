@@ -2,8 +2,8 @@
 
 from gaphor import UML
 from gaphor.core.modeling.properties import attribute
-from gaphor.core.styling import FontWeight, JustifyContent
-from gaphor.diagram.presentation import Classified, ElementPresentation
+from gaphor.core.styling import JustifyContent
+from gaphor.diagram.presentation import Classified, ElementPresentation, text_name
 from gaphor.diagram.shapes import Box, Text, cairo_state, draw_border
 from gaphor.diagram.support import represents
 from gaphor.UML.classes.stereotype import stereotype_compartments
@@ -31,10 +31,7 @@ class ArtifactItem(Classified, ElementPresentation):
                 Text(
                     text=lambda: stereotypes_str(self.subject),
                 ),
-                Text(
-                    text=lambda: self.subject.name or "",
-                    style={"font-weight": FontWeight.BOLD},
-                ),
+                text_name(self),
                 style={"padding": (4, 32, 4, 4)},
                 draw=draw_artifact_icon,
             ),

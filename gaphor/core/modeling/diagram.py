@@ -49,7 +49,6 @@ FALLBACK_STYLE: Style = {
     "color": (0, 0, 0, 1),
     "font-family": "sans",
     "font-size": 14,
-    "line-width": 2,
     "padding": (0, 0, 0, 0),
 }
 
@@ -134,17 +133,18 @@ class StyledDiagram:
     ):
         self.diagram = diagram
         self.selection = selection or gaphas.selection.Selection()
+        self.pseudo: str | None = None
         self.dark_mode = dark_mode
 
     def name(self) -> str:
         return "diagram"
 
-    def parent(self):
+    def parent(self) -> StyleNode | None:
         return None
 
-    def children(self) -> Iterator[StyledItem]:
+    def children(self) -> Iterator[StyleNode]:
         return (
-            StyledItem(item, self.selection)
+            StyledItem(item, self.selection, dark_mode=self.dark_mode)
             for item in self.diagram.get_all_items()
             if not item.parent
         )
@@ -153,8 +153,19 @@ class StyledDiagram:
         fields = name.split(".")
         return " ".join(map(attrstr, rgetattr(self.diagram, fields))).strip()
 
-    def state(self):
+    def state(self) -> Sequence[str]:
         return ()
+
+    def __hash__(self):
+        return hash((self.diagram, self.state(), self.dark_mode))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, StyledDiagram)
+            and self.diagram == other.diagram
+            and self.state() == other.state()
+            and self.dark_mode == other.dark_mode
+        )
 
 
 class StyledItem:
@@ -174,22 +185,27 @@ class StyledItem:
         self.item = item
         self.diagram = item.diagram
         self.selection = selection
+        self.pseudo: str | None = None
         self.dark_mode = dark_mode
 
     def name(self) -> str:
         return type(self.item).__name__.removesuffix("Item").lower()
 
-    def parent(self) -> StyledItem | StyledDiagram:
+    def parent(self) -> StyleNode | None:
         parent = self.item.parent
         return (
-            StyledItem(parent, self.selection, self.dark_mode)
+            StyledItem(parent, self.selection, dark_mode=self.dark_mode)
             if parent
             else StyledDiagram(self.diagram, self.selection, self.dark_mode)
         )
 
-    def children(self) -> Iterator[StyledItem]:
+    def children(self) -> Iterator[StyleNode]:
         selection = self.selection
-        return (StyledItem(child, selection) for child in self.item.children)
+        return (
+            StyledItem(child, selection, dark_mode=self.dark_mode)
+            for child in self.item.children
+        )
+        # TODO: Return css nodes in a Presentation (traverse shapes) to make :has() and :empty work
 
     def attribute(self, name: str) -> str:
         fields = name.split(".")
@@ -211,6 +227,17 @@ class StyledItem:
             )
             if selection
             else ()
+        )
+
+    def __hash__(self):
+        return hash((self.item, self.state(), self.dark_mode))
+
+    def __eq__(self, other):
+        return (
+            isinstance(other, StyledItem)
+            and self.item == other.item
+            and self.state() == other.state()
+            and self.dark_mode == other.dark_mode
         )
 
 
@@ -278,7 +305,7 @@ class Diagram(Element):
 
     def style(self, node: StyleNode) -> Style:
         style_sheet = self.styleSheet
-        return style_sheet.match(node) if style_sheet else FALLBACK_STYLE
+        return style_sheet.compute_style(node) if style_sheet else FALLBACK_STYLE
 
     def gettext(self, message):
         """Translate a message to the language used in the model."""

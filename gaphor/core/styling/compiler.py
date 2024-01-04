@@ -219,3 +219,12 @@ def compile_functional_pseudo_class_selector(
         return lambda el: any(sel(el) for sel, _ in sub_selectors)
     elif name == "not":
         return lambda el: not any(sel(el) for sel, _ in sub_selectors)
+
+
+@compile_node.register
+def compile_pseudo_element_selector(selector: selectors.PseudoElementSelector):
+    name = selector.name
+    if name != "after":
+        raise selectors.SelectorError("Unknown pseudo-element", name)
+
+    return lambda el: name == el.pseudo
